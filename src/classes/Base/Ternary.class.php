@@ -1,0 +1,109 @@
+<?php
+/***************************************************************************
+ *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   voxus@gentoo.org                                                      *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+/* $Id$ */
+
+	class Ternary
+	{
+		private $trinity	= null;	// ;-)
+		
+		public function __construct($boolean = null)
+		{
+			return $this->setValue($boolean);
+		}
+		
+		public static function create($boolean = null)
+		{
+			return new Ternary($boolean);
+		}
+		
+		public function isNull()
+		{
+			return (null === $this->trinity);
+		}
+		
+		public function isTrue()
+		{
+			return (true === $this->trinity);
+		}
+		
+		public function isFalse()
+		{
+			return (false === $this->trinity);
+		}
+		
+		public function setNull()
+		{
+			$this->trinity = null;
+			
+			return $this;
+		}
+		
+		public function setTrue()
+		{
+			$this->trinity = true;
+			
+			return $this;
+		}
+		
+		public function setFalse()
+		{
+			$this->trinity = false;
+			
+			return $this;
+		}
+
+		public function getValue()
+		{
+			return $this->trinity;
+		}
+		
+		public function setValue($boolean = null)
+		{
+			Assert::isTernaryBase($boolean);
+
+			$this->trinity = $boolean;
+
+			return $this;
+		}
+		
+		public function decide(&$true, &$false, &$null = null)
+		{
+			if ($this->trinity === true)
+				return $true;
+			elseif ($this->trinity === false)
+				return $false;
+			elseif ($null) {
+				if ($this->trinity === null)
+					return $null;
+				else
+					return null;
+			} else
+				throw new WrongStateException(
+					'mama, weer all crazee now!'
+				);
+		}
+		
+		public function toString()
+		{
+			if ($this->isTrue())
+				return 'true';
+			elseif ($this->isFalse())
+				return 'false';
+			elseif ($this->isNull())
+				return 'null';
+			else
+				throw new WrongStateException(
+					'prepare for segfault'
+				);
+		}
+	}
+?>
