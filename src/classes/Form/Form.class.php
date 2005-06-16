@@ -142,7 +142,7 @@
 		
 		private function importPrimitive(&$scope, BasePrimitive $prm)
 		{
-			$name	= &$prm->getName();
+			$name	= $prm->getName();
 			$result	= $prm->import($scope);
 			
 			if (null === $result) {

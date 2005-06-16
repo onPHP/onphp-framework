@@ -37,7 +37,7 @@
 		
 		public function add(BasePrimitive $prm, $alias = null)
 		{
-			$name = &$prm->getName();
+			$name = $prm->getName();
 			
 			if (isset($this->primitives[$name]))
 				throw new DuplicateObjectException("i'm already exists!");
