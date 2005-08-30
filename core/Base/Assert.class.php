@@ -34,9 +34,9 @@
 		{
 			if (
 				!(
-					is_numeric($variable) &&
-					$variable == (int) $variable &&
-					strlen($variable) == strlen((int) $variable)
+					is_numeric($variable)
+					&& $variable == (int) $variable
+					&& strlen($variable) == strlen((int) $variable)
 				)
 			)
 				throw new WrongArgumentException($message);
@@ -56,11 +56,11 @@
 
 		public static function isTernaryBase(&$variable, $message = null)
 		{
-			if (!
-				(
-					($variable === true) ||
-					($variable === false) ||
-					($variable === null)
+			if (
+				!(
+					($variable === true)
+					|| ($variable === false)
+					|| ($variable === null)
 				)
 			)
 				throw new WrongArgumentException($message);

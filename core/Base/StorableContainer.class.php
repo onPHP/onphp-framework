@@ -93,6 +93,7 @@
 			
 			$this->deleted[$id] = $this->saved[$id];
 			unset($this->saved[$id]);
+
 			return $this;
 		}
 
@@ -115,6 +116,7 @@
 		public function getIdsList()
 		{
 			$this->checkLoaded();
+
 			if (count($this->new))
 				throw WrongStateException(
 					'can not enumerate objects without id, save them first'
@@ -126,6 +128,7 @@
 		public function getCount()
 		{
 			$this->checkLoaded();
+
 			return count($this->saved) + count($this->insert);
 		}
 
@@ -151,6 +154,7 @@
 				$this->partDAO->insert($parentId, $insert);
 				$this->addSaved($insert);
 			}
+
 			$this->insert = array();
 
 			return $this;
@@ -172,6 +176,7 @@
 				$this->partDAO->import($parentId, $insert);
 				$this->addSaved($insert);
 			}
+
 			$this->insert = array();
 
 			return $this;
@@ -183,6 +188,7 @@
 			$container->loaded = self::LOAD_OBJECTS;
 			$container->partDAO = $childDAO;
 			$container->parentId = $parentId;
+
 			return $container;
 		}
 
@@ -192,6 +198,7 @@
 			$container->loaded = self::LOAD_IDS;
 			$container->partDAO = $childDAO;
 			$container->parentId = $parentId;
+
 			return $container;
 		}
 			
@@ -224,6 +231,7 @@
 				throw WrongStateException('container in a bad state');
 
 			$this->loaded = self::LOADED;
+
 			return $this;
 		}
 		

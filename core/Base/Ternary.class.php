@@ -106,16 +106,7 @@
 		
 		public function toString()
 		{
-			if ($this->trinity === true)
-				return 'true';
-			elseif ($this->trinity === false)
-				return 'false';
-			elseif ($this->trinity === null)
-				return 'null';
-
-			throw new WrongStateException(
-				'prepare for segfault'
-			);
+			return $this->decide('true', 'false', 'null');
 		}
 	}
 ?>

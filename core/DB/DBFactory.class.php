@@ -33,7 +33,9 @@
 		 * @param string default database connect to
 		 * @desc BOVM goes here..
 		**/
-		public static function getCustomInstance($userName, $passWord, $host, $base = null)
+		public static function getCustomInstance(
+			$userName, $passWord, $host, $base = null
+		)
 		{
 			if (!defined('DB_CLASS'))
 				throw new WrongStateException(
