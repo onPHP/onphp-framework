@@ -68,12 +68,10 @@
 		.ONPHP_MAIN_PATH.'XML'			.PATH_SEPARATOR
 
 		// incubator's stuff
-		/**
 		.ONPHP_INCUBATOR_PATH.'CMF'					.PATH_SEPARATOR
 		.ONPHP_INCUBATOR_PATH.'NetTools'			.PATH_SEPARATOR
 		.ONPHP_INCUBATOR_PATH.'SimpleTestWrapper'	.PATH_SEPARATOR
 		.ONPHP_INCUBATOR_PATH.'Utils'				.PATH_SEPARATOR
-		**/
 	);
     
 	// file extensions
