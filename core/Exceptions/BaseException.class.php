@@ -13,48 +13,16 @@
  
 	class BaseException extends Exception
 	{
-		protected $message 	= 'Base exception';
-
-		/**
-		 * @var		integer		user defined exception code
-		 * @access	protected
-		**/
-		protected $code 	= 0;
 		
-		/**
-		 * @var		string		source filename of exception
-		 * @access	protected
-		**/
-		protected $file		= null;
-		
-		/**
-		 * @var		integer		source line of exception
-		 * @access	protected
-		**/
-		protected $line		= 0;
-
-		private $trace		= null;
-		
-		// FIXME: useless, see http://www.php.net/manual/en/language.exceptions.php
 		public function __construct($message = null, $code = 0, $file = null, $line = null)
 		{
 			parent::__construct($message, $code);
 			
-			if ($message)
-				$this->message = $message;
-
-			$this->code 	= $code;
-			$this->trace	= debug_backtrace();
-			
 			if ($file)
 				$this->file		= $file;
-			else
-				$this->file		= $this->trace[0]['file'];
 
 			if ($line)
 				$this->line		= $line;
-			else
-				$this->line		= $this->trace[0]['line'];
 		}
 		
 		function __toString()
