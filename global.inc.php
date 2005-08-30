@@ -18,7 +18,7 @@
 		throw new BaseException($string, $code, $file, $line);
 	}
 
-	//  __autoload
+	// classes autoload magic
 	function __autoload($classname)
 	{
 		// and yes, there is no error handling, 'cause we're
