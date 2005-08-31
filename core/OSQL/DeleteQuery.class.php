@@ -30,7 +30,8 @@
 		public function toString(Dialect $dialect)
 		{
 			if (sizeof($this->where) > 0)
-				return "DELETE FROM {$this->table} ".parent::toString($dialect);
+				return "DELETE FROM {$dialect->quoteTable($this->table)} "
+					.parent::toString($dialect);
 			else
 				throw new WrongArgumentException(
 					"leave '{$this->table}' table alone in peace, bastard"
