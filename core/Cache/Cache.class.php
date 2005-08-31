@@ -27,7 +27,7 @@
 		public static function me()
 		{
 			if (!self::$peer || !self::$peer->isAlive())
-				self::$peer = new RuntimeMemory(); // may be NoCache?
+				self::$peer = new RuntimeMemory();
 			
 			return self::$peer;
 		}

@@ -86,8 +86,8 @@
 			
 			if ($this->peers[$label]['object']->isAlive())
 				return $this->peers[$label]['object']->get($key);
-
-			$this->checkAlive();
+			else
+				$this->checkAlive();
 			
 			return null;			
 		}
@@ -102,9 +102,9 @@
 						$key, 
 						$value, 
 						$expires
-					); 
-			
-			$this->checkAlive();
+					);
+			else
+				$this->checkAlive();
 			
 			return false;			
 		}
@@ -120,8 +120,8 @@
 						$value, 
 						$expires
 					); 
-			
-			$this->checkAlive();
+			else
+				$this->checkAlive();
 			
 			return false;			
 		}
@@ -137,19 +137,23 @@
 						$value, 
 						$expires
 					); 
-			
-			$this->checkAlive();
+			else
+				$this->checkAlive();
 			
 			return false;			
 		}
 		
 		public function delete($key)
 		{
-			if (!$this->checkAlive()) 
+			$label = $this->guessLabel($key);
+			
+			if (!$this->peers[$label]['object']->isAlive()) {
+				$this->checkAlive();
 				return false;
+			}
 
 			return
-				$this->peers[$this->guessLabel($key)]['object']->
+				$this->peers[$label]['object']->
 					delete($key);
 		}
 
