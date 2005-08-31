@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov, Anton Lebedevich        *
+ *   Copyright (C) 2005 by Anton Lebedevich, Konstantin V. Arkhipov        *
  *   voxus@gentoo.org                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
