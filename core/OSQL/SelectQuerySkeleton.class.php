@@ -205,7 +205,7 @@
 				$field = new DBField($field, $this->getLastTable());
 			
 			$this->fields[] =
-				DBFunction::create($function, $field)->setAlias($alias);
+				SQLFunction::create($function, $field)->setAlias($alias);
 			
 			return $this;
 		}

@@ -11,7 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class DBFunction extends Castable implements DialectString
+	class SQLFunction extends Castable implements DialectString
 	{
 		private $name	= null;
 		private $alias	= null;
@@ -23,9 +23,9 @@
 			if (func_num_args() > 1) {
 				$args = func_get_args();
 				array_shift($args);
-				return new DBFunction($name, $args);
+				return new SQLFunction($name, $args);
 			} else
-				return new DBFunction($name);
+				return new SQLFunction($name);
 		}
 		
 		public function __construct($name)
