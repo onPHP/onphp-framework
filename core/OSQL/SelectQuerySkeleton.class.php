@@ -198,19 +198,15 @@
 			return $this->getFunction('COUNT', $field, $alias);
 		}
 		
-		// obsoleted. use DBFunction instead
+		// wrapper for backward compatibility
 		public function getFunction($function, $field, $alias = null)
 		{
+			if (!$field instanceof DBField)
+				$field = new DBField($field, $this->getLastTable());
+			
 			$this->fields[] =
-				new SQLFunction(
-					new DBField(
-						$field,
-						$this->getLastTable()
-					), 
-					$function,
-					$alias
-				);
-
+				DBFunction::create($function, $field)->setAlias($alias);
+			
 			return $this;
 		}
 	}

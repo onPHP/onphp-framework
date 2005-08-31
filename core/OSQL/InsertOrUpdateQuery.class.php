@@ -32,20 +32,17 @@
 			return $this;
 		}
 		
-		public function setId($var, $object = null)
+		public function setId($field, Identifiable $object)
 		{
-			if ($object && $object instanceof Identifiable)
-				return $this->set($var, $object->getId());
-
-			return $this;
+			return $this->set($field, $object->getId());
 		}
 		
-		public function setBoolean($var, $val = false)
+		public function setBoolean($field, $value = false)
 		{
-			if (true === $val)
-				return $this->set($var, 'true');
+			if (true === $value)
+				return $this->set($field, 'true');
 			else
-				return $this->set($var, 'false');
+				return $this->set($field, 'false');
 		}
 		
 		/**

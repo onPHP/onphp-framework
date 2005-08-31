@@ -13,7 +13,7 @@
 
 	class TextFilter extends BaseFilter
 	{
-		public function filter($value)
+		public static function filter($value)
 		{
 			return htmlspecialchars(strip_tags(trim($value)));
 		}

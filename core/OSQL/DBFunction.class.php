@@ -13,8 +13,10 @@
 
 	class DBFunction extends Castable implements DialectString
 	{
-		private $name = null;
-		private $args = array();
+		private $name	= null;
+		private $alias	= null;
+
+		private $args	= array();
 		
 		public static function create($name)
 		{
@@ -42,6 +44,13 @@
 			}
 		}
 		
+		public function setAlias($alias)
+		{
+			$this->alias = $alias;
+			
+			return $this;
+		}
+		
 		public function toString(Dialect $dialect)
 		{
 			$args = array();
@@ -59,9 +68,14 @@
 				.($args == array() ? '' : implode(', ', $args))
 				.')';
 			
-			return
+			$out =
 				$this->cast
 					? $dialect->toCasted($out, $this->cast)
+					: $out;
+			
+			return 
+				$this->alias
+					? "{$out} AS {$this->alias}"
 					: $out;
 		}
 	}

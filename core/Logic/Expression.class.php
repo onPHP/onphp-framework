@@ -16,6 +16,10 @@
 		const LOGIC_AND	= 'AND';
 		const LOGIC_OR	= 'OR';
 
+		/**
+		 * common cast methods
+		**/
+		
 		public static function toBoolean($logic, $left, $right)
 		{
 			switch ($logic) {
@@ -39,6 +43,10 @@
 					? $form->getValue($value->getName())
 					: $value;
 		}
+		
+		/**
+		 * factory
+		**/
 		
 		public static function expAnd($left, $right)
 		{
@@ -212,12 +220,12 @@
 			
 		public static function orBlock()
 		{
-			return self::block(func_get_args(), 'OR');
+			return self::block(func_get_args(), self::LOGIC_OR);
 		}
 
 		public static function andBlock()
 		{
-			return self::block(func_get_args(), 'AND');
+			return self::block(func_get_args(), self::LOGIC_AND);
 		}
 		
 		public static function chain()

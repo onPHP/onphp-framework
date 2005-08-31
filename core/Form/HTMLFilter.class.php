@@ -13,7 +13,7 @@
 
 	class HTMLFilter extends BaseFilter
 	{
-		public function filter($value)
+		public static function filter($value)
 		{
 			return htmlspecialchars(trim($value));
 		}

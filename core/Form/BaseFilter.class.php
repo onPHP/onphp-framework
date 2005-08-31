@@ -13,6 +13,6 @@
 
 	abstract class BaseFilter extends Singletone
 	{
-		abstract public function filter($value);
+		abstract public static function filter($value);
 	}
 ?>

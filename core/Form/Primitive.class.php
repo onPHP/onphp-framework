@@ -13,15 +13,7 @@
 
 	class Primitive /* Factory */
 	{
-		/**
-		 * Returns object of passed class
-		 * 
-		 * @param	string		primitive class name
-		 * @param	string		primitive name
-		 * @access	public
-		 * @return	object of passed class name
-		**/
-		public static function get($primitive, $name)
+		public static function spawn($primitive, $name)
 		{
 			return new $primitive($name);
 		}

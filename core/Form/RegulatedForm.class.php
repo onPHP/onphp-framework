@@ -39,7 +39,7 @@
 		
 		public function checkRules()
 		{
-			foreach ($this->rules as $name => $logicalObject) {
+			foreach ($this->rules as $name => &$logicalObject) {
 				if (!$logicalObject->toBoolean($this))
 					$this->violated[$name] = Form::WRONG;
 			}

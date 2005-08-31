@@ -20,7 +20,8 @@
 
 		protected $persistent	= false;
 
-		private $transaction	= false; // flag to indicate current transaction
+		// flag to indicate whether we're in transaction
+		private $transaction	= false;
 		
 		private $queue			= array();
 		private $toQueue		= false;
@@ -74,7 +75,7 @@
 				$begin .= ' '.$mode->toString();
 
 			if ($this->toQueue)
-				$this->queue[] = "{$begin}";
+				$this->queue[] = $begin;
 			else
 				$this->queryRaw("{$begin};\n");
 			
