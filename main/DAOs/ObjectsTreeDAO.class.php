@@ -19,11 +19,14 @@
 		
 		final public function setTreeQueryFields(InsertOrUpdateQuery $query, ObjectsTree $tree)
 		{
-			return
-				$query->
-					set('id', $tree->getId())->
-					set('name', $tree->getName())->
-					setId('parent_id', $tree->getParent());
+			$query->
+				set('id', $tree->getId())->
+				set('name', $tree->getName());
+			
+			if ($parent = $tree->getParent())
+				$query->setId('parent_id', $parent);
+			
+			return $query;
 		}
 		
 		final public function makeTreeObject(&$array, ObjectsTree $tree, $prefix = null)
