@@ -32,9 +32,12 @@
 			return $this;
 		}
 		
-		public function setId($field, Identifiable $object)
+		public function setId($field, /* Identifiable */ $object = null)
 		{
-			return $this->set($field, $object->getId());
+			if ($object instanceof Identifiable)
+				$this->set($field, $object->getId());
+
+			return $this;
 		}
 		
 		public function setBoolean($field, $value = false)
