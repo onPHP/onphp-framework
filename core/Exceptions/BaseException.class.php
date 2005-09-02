@@ -30,7 +30,7 @@
 		{
 			return
 				"[$this->message] in: \n".
-				var_export($this->trace, true);
+				$this->getTrace();
 		}
 	}
 ?>

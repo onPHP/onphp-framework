@@ -33,12 +33,12 @@
 			return "`$table`";
 		}
 		
-		public static function fullTextSearch($field, $words, $logic)
+		public function fullTextSearch($field, $words, $logic)
 		{
 			throw new UnimplementedFeatureException('implement me first!');
 		}
 		
-		public static function fullTextRank($field, $words, $logic)
+		public function fullTextRank($field, $words, $logic)
 		{
 			throw new UnimplementedFeatureException('implement me first!');
 		}
