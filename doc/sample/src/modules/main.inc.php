@@ -77,7 +77,7 @@
 			try {
 				$this->messageList = Message::dao()->getList($oq);
 			} catch (ObjectNotFoundException $e) {
-				// simple ignore empty list
+				// ignore empty list
 			}
 			
 			return $this;

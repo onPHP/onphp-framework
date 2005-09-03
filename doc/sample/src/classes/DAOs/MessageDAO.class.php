@@ -16,7 +16,10 @@
 		// sets by constructor
 		protected $fields = null;
 		
-		// quite plain mapping
+		/**
+		 * plain property-to-field(s) mapping
+		 * you can map class' property to a single field or to field's array()
+		**/
 		protected $mapping = array(
 			'id'		=> 'id',
 			'nickname'	=> 'nickname',

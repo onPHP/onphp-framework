@@ -9,14 +9,14 @@
 
 	// paths
 	define('PATH_BASE', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
-	define('PATH_WEB', 'http://localhost/php/onPHP/sample/src/www/');
+	define('PATH_WEB', 'http://localhost/php/onPHP/trunk/doc/sample/src/www/');
 	define('PATH_CLASSES', PATH_BASE.'classes'.DIRECTORY_SEPARATOR);
 	define('PATH_MODULES', PATH_BASE.'modules'.DIRECTORY_SEPARATOR);
 	define('PATH_TEMPLATES', PATH_BASE.'templates'.DIRECTORY_SEPARATOR);
 	
 	// onPHP
-	require realpath(PATH_BASE.'../../src/global.inc.php');
-
+	require realpath(PATH_BASE.'../../../global.inc.php.tpl');
+	
 	// db settings
 	define('DB_BASE', 'gb');
 	define('DB_USER', 'voxus');
