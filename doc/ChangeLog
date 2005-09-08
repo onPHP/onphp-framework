@@ -1,6 +1,6 @@
 # $Id$
 
-2005-09-09	Konstantin Arkhipov	<voxus@shadanakar.org>
+2005-09-09	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * main/DAOs/CommonDAO.class.php: cleanups and minor optimizations.
 
@@ -13,6 +13,6 @@ pg_quote_string().
 * core/DB/AccessLevel.class.php, core/DB/IsolationLevel.class.php: avoid
 zero-valued constants.
 
-2005-09-03	Konstantin Arkhipov	<voxus@shadanakar.org>
+2005-09-03	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * Initial release - 0.2.0.
