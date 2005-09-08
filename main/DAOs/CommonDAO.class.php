@@ -117,7 +117,7 @@
 
 		public function getListByIds(&$ids, $expires = Cache::EXPIRES_MEDIUM)
 		{
-			if ($expires !== Cache::DO_NOT_CACHE && Cache::me()->isAlive()) {
+			if ($expires !== Cache::DO_NOT_CACHE) {
 				$list = array();
 				$toFetch = array();
 				
@@ -202,9 +202,6 @@
 		{
 			$db = DBFactory::getDefaultInstance();
 			
-			if (!Cache::me()->isAlive())
-				$expires = Cache::DO_NOT_CACHE;
-				
 			if (
 				($expires !== Cache::DO_NOT_CACHE) && 
 				($list = $this->getCachedByQuery($query))
