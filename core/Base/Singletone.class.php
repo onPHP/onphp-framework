@@ -42,11 +42,11 @@
 			$class = 'SingletoneInstance', $args = null
 		)
 		{
-            // for Singletone::getInstance('class_name', $arg1, ...) calling
-            if (2 < func_num_args()) {
-                $args = func_get_args();
-                array_shift($args);
-            }
+			// for Singletone::getInstance('class_name', $arg1, ...) calling
+			if (2 < func_num_args()) {
+				$args = func_get_args();
+				array_shift($args);
+			}
 
 			try {
 				return new $class($class, $args);
@@ -60,7 +60,7 @@
 	
 	final class SingletoneInstance extends Singletone
 	{
-		protected function __construct($class = null, $args = null)
+		protected function __construct(/* $class = null, $args = null */)
 		{
 			static $self = null;
 			
@@ -70,7 +70,7 @@
 			return $self;
 		}
 		
-		public function __call($class, $args)
+		public function __call($class, $args = null)
 		{
 			return Singletone::getInstance($class, $args);
 		}
