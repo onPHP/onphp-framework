@@ -13,8 +13,8 @@
 
 	final class AccessMode extends Enumeration
 	{
-		const READ_ONLY		= 0x00;
-		const READ_WRITE	= 0x01;
+		const READ_ONLY		= 0x01;
+		const READ_WRITE	= 0x02;
 		
 		protected $names	= array(
 			0 => 'read only',

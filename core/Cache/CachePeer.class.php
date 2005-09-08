@@ -28,7 +28,7 @@
 	
 		store this data:
 		
-			public function set($key, $value, $expires = Cache::EXPIRES_MINIMUM) 
+			public function set($key, $value, $expires = Cache::EXPIRES_MINIMUM)
 
 		store this data, but only if peer *doesn't* already
 		hold data for this key:
@@ -95,7 +95,9 @@
 		abstract public function delete($key);
 		abstract public function clean();
 
-		abstract protected function store($action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM);
+		abstract protected function store(
+			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
+		);
 
 		public function mark($className)
 		{

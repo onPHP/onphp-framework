@@ -25,6 +25,11 @@
 			self::$tsConfiguration = $configuration;
 		}
 		
+		public static function quoteValue(&$value)
+		{
+			return "'".pg_escape_string($value)."'";
+		}
+
 		public static function toCasted($field, $type)
 		{
 			return "{$field}::{$type}";

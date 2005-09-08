@@ -53,7 +53,7 @@
 				.($base ? " dbname={$base}" : '')
 				.($port ? " port={$port}" : '');
 
-			if ($persistent)
+			if ($persistent === true)
 				$this->link = pg_pconnect($conn);
 			else 
 				$this->link = pg_connect($conn);

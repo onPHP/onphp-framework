@@ -68,10 +68,10 @@
 		{
 			$begin = 'start transaction';
 			
-			if ($level)
+			if ($level && $level instanceof IsolationLevel)
 				$begin .= ' '.$level->toString();
 			
-			if ($mode)
+			if ($mode && $mode instanceof AccessMode)
 				$begin .= ' '.$mode->toString();
 
 			if ($this->toQueue)
@@ -199,14 +199,7 @@
 			return is_resource($this->link);
 		}
 
-		public function setPersistent($persistent)
-		{
-			$this->persistent = $persistent;
-			
-			return $this;
-		}
-		
-		public function getPersistent()
+		public function isPersistent()
 		{
 			return $this->persistent;
 		}
