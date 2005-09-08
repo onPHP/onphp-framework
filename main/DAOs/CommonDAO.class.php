@@ -79,27 +79,23 @@
 				&& ($object = $this->getCachedById($id))
 			)
 				return $object;
-			elseif ($expires === Cache::DO_NOT_CACHE)
-				return
-					$this->getByLogic(
-						Expression::eq(
-							new DBField('id', $this->getTable()),
-							$id
-						),
-						$expires
-					);
-			else
-				return 
-					$this->cacheById(
-						$this->getByLogic(
+			else {
+				$object =
+					DBFactory::getDefaultInstance()->queryObjectRow(
+						$this->makeSelectHead()->where(
 							Expression::eq(
-								new DBField('id', $this->getTable()),
+								DBField::create('id', $this->getTable()),
 								$id
-							),
-							$expires
+							)
 						),
-						$expires
+						$this
 					);
+				
+				return
+					$expires === Cache::DO_NOT_CACHE
+						? $object
+						: $this->cacheById($object, $expires);
+			}
 		}
 		
 		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
@@ -303,8 +299,7 @@
 					return $list;
 				else
 					return $this->cacheByQuery($query, $list, $expires);
-			}
-			else
+			} else
 				throw new ObjectNotFoundException(
 					"zero list for query such query - '{$query->toString($db->getDialect())}'"
 				);
