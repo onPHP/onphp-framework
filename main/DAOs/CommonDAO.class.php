@@ -129,7 +129,7 @@
 					try {
 						$list[] = $this->getById($id, $expires);
 					} catch (ObjectNotFoundException $e) {
-						// TODO: to drop or ! 2drop
+						// ignore
 					}
 				}
 
@@ -253,8 +253,7 @@
 					return $result;
 				else
 					return $this->cacheByQueryResult($result, $expires);
-			}
-			else
+			} else
 				throw new ObjectNotFoundException(
 					"zero list for query such query - '{$query->toString($db->getDialect())}'"
 				);
@@ -290,7 +289,8 @@
 			
 			$db = DBFactory::getDefaultInstance();
 
-			if (($expires !== Cache::DO_NOT_CACHE)
+			if (
+				($expires !== Cache::DO_NOT_CACHE)
 				&& ($list = $this->getCachedByQuery($query))
 			)
 				return $list;
@@ -322,8 +322,10 @@
 				OSQL::select()->
 				from($this->getTable());
 			
+			$table = $this->getTable();
+			
 			foreach ($this->getFields() as $field)
-				$query->get(new DBField($field, $this->getTable()));
+				$query->get(new DBField($field, $table));
 			
 			return $query;
 		}
