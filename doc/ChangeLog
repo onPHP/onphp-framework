@@ -4,6 +4,8 @@
 
 * main/DAOs/CommonDAO.class.php: cleanups and minor optimizations.
 
+* main/DAOs/ObjectQuery.class.php: added support for values in query's logic.
+
 * core/DB/DB.class.php: setPersistent() dropped - we can't change connection
 type on the fly; getPersistent() renamed to isPersistent().
 

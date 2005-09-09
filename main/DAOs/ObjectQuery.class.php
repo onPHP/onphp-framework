@@ -208,6 +208,20 @@
 							);
 					else
 						$query->andWhere($exp);
+				} else {
+					if (!isset($map[$left]))
+						$left = new DBValue($left);
+					else
+						$left = new DBField($map[$left]);
+					
+					if (!isset($map[$right]))
+						$right = new DBValue($right);
+					else
+						$right = new DBField($map[$right]);
+					
+					$query->andWhere(
+						new LogicalExpression($left, $right, $logic)
+					);
 				}
 			}
 
