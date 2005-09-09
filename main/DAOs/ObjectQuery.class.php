@@ -223,6 +223,8 @@
 			
 			$this->sort[$this->current] = $constant;
 			
+			$this->current = null;
+			
 			return $this;
 		}
 	}
