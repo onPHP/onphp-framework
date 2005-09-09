@@ -15,6 +15,8 @@ pg_quote_string().
 * core/DB/AccessLevel.class.php, core/DB/IsolationLevel.class.php: avoid
 zero-valued constants.
 
+* core/OSQL/PreQuery.class.php: deprecated in favour of ObjectQuery.
+
 2005-09-03	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * Initial release - 0.2.0.

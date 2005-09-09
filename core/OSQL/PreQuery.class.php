@@ -13,6 +13,8 @@
 
 	/**
 	 * Half wrapper, half holder for passing data between modules and DAO's
+	 * 
+	 * @deprecated since 0.2.1 in favour of ObjectQuery
 	**/
 	class PreQuery
 	{
