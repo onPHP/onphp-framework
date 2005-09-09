@@ -89,34 +89,6 @@
 		}
 	}
 
-	class PrimitiveInteger extends FiltrablePrimitive
-	{
-		public function import(&$scope)
-		{
-			if (!BasePrimitive::import($scope))
-				return null;
-
-			try {
-				Assert::isInteger($scope[$this->name]);
-			} catch (WrongArgumentException $e) {
-				return false;
-			}
-			
-			if (
-				!(null !== $this->min && $scope[$this->name] < $this->min) &&
-				!(null !== $this->max && $scope[$this->name] > $this->max)
-			) {
-				$this->value = (int) $scope[$this->name];
-
-				$this->selfFilter();
-				
-				return true;
-			}
-			
-			return false;
-		}
-	}
-	
 	class PrimitiveArray extends RangedPrimitive
 	{
 		public function import(&$scope)
