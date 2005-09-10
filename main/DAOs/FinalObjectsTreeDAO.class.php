@@ -13,6 +13,16 @@
 
 	abstract class FinalObjectsTreeDAO extends ObjectsTreeDAO
 	{
+		final public function getListByParentId($id = null)
+		{
+			return
+				$this->getListByLogic(
+					$id === null
+						? Expression::isNull('parent_id')
+						: Expression::eq('parent_id', $id)
+				);
+		}
+		
 		final public function import(ObjectsTree $tree)
 		{
 			return parent::importTree($tree);
