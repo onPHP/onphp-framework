@@ -1,0 +1,55 @@
+onPHP's features list (always incomplete)
+=========================================
+- $Id$ -
+
+	Base/
+
+		StorableContainer:
+			handling identifiable objects collections.
+		
+	Cache/
+
+		Universal multi-peer weight-based cache support. Currently
+		supports Memcached and RubberFileSystem, soon - EAccelerator,
+		and offers PlainDatabase class as example of cache peer.
+
+	DAOs/
+
+		{Common,Cacheable}DAO:
+			basic instruments for building DAO's hierarchy.
+
+	DB/
+
+		DB, {Pg,My}SQL, {ANSI,Postgres,My}Dialect:
+			database abstraction layer.
+
+	Exceptions/
+
+		Bunch of very useful exceptions. ;-)
+
+	Form/
+
+		HTML forms' data checking and validation tools. Supports rules 
+		based on logical expressions, data filtering, etc.
+	
+	Logic/
+
+		Logical expressions used in OSQL and Form.
+
+	Module/
+
+		Quite common tools for implementing MVCv2::Controllers.
+
+	OSQL/
+
+		{Select,Insert,Update,Delete}Query:
+			SQL query builders.
+	
+	Template/
+
+		Easy template package. Main [and single] aim is incapsulating of template variables.
+		Separating of view and model should be done on language level.
+
+	Utils/
+
+		Random accompanying utilities.
