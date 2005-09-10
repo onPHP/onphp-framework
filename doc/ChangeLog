@@ -1,5 +1,9 @@
 # $Id$
 
+2005-09-10	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/FinalObjectsTreeDAO.class.php: getListByParentId added.
+
 2005-09-09	Igor V. Gulyaev			<igor_vg@mail.ru>
 
 * main/DAOs/ObjectQuery.class.php: sticky property name fixed.
