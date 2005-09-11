@@ -13,8 +13,6 @@
 
 	final class DBTransaction extends TransactionSkeleton
 	{
-		private $db			= null;
-
 		private $started	= false;
 		
 		public function __destruct()
