@@ -18,7 +18,23 @@
 			return 'fti';
 		}
 		
+		public function lookup($string)
+		{
+			return
+				$this->getByQuery(
+					$this->makeQuery($string)->limit(1)
+				);
+		}
+		
 		public function lookupList($string)
+		{
+			return
+				$this->getListByQuery(
+					$this->makeQuery($string)
+				);
+		}
+		
+		private function makeQuery($string)
 		{
 			Assert::isString(
 				$string,
@@ -38,23 +54,21 @@
 
 			if (!$array)
 				throw new ObjectNotFoundException();
-
+			
 			return
-				$this->getListByQuery(
-					$this->makeSelectHead()->
-					where(
-						Expression::fullTextOr(
-							new DBField($this->getIndexField(), $this->getTable()),
-							$array
-						)
-					)->
-					orderBy(
-						Expression::fullTextRankOr(
-							new DBField($this->getIndexField(), $this->getTable()),
-							$array
-						)
-					)->desc()
-				);
+				$this->makeSelectHead()->
+				where(
+					Expression::fullTextOr(
+						new DBField($this->getIndexField(), $this->getTable()),
+						$array
+					)
+				)->
+				orderBy(
+					Expression::fullTextRankOr(
+						new DBField($this->getIndexField(), $this->getTable()),
+						$array
+					)
+				)->desc();
 		}
 	}
 ?>

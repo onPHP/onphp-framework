@@ -132,7 +132,7 @@
 		private function makeMassUpdateQuery(&$ids)
 		{
 			return
-				OSQL::update($dao->getTable())->
+				OSQL::update($this->dao->getTable())->
 				set($this->getParentIdField(), null)->
 				where(
 					Expression::in(
