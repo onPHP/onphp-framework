@@ -13,7 +13,7 @@
 
 	class ArrayUtils
 	{
-		public static function &convertObjectList(&$list = null)
+		public static function convertObjectList($list = null)
 		{
 			$out = array();
 
