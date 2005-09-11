@@ -58,7 +58,7 @@ class FormedPrimitive extends BasePrimitive
 		if ($this->form->import($scope[$this->name])
 			->getErrors()
 		) {
-			return false;
+			return null;
 		}
 
 		$this->value = $this->form;
