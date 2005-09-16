@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005 by Anton Lebedevich, Konstantin V. Arkhipov        *
  *   voxus@gentoo.org                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -52,13 +52,6 @@
 			return $this;
 		}
 
-		public function setFilter(BaseFilter $filter) // FIXME: deprecated
-		{
-			$this->importFilter->dropAll()->add($filter);
-			
-			return $this;
-		}
-		
 		protected function selfFilter()
 		{
 			$this->value = $this->importFilter->apply($this->value);

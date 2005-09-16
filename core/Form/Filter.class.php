@@ -13,22 +13,12 @@
 
 	final class Filter /* Factory */
 	{
-		public static function text() // FIXME: deprecated
-		{
-			return Singletone::getInstance('TextFilter');
-		}
-
 		public static function textImport()
 		{
 			return 
 				FilterChain::create()->
 					add(Filter::trim())->
 					add(Filter::stripTags());
-		}
-		
-		public static function html() // FIXME: deprecated
-		{
-			return Singletone::getInstance('HTMLFilter');
 		}
 		
 		public static function hash()

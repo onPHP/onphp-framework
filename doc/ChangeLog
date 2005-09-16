@@ -1,9 +1,21 @@
 # $Id$
 
-2005-09-16 Anton E. Lebedevich <noiselist@pochta.ru>
-* introduced display and import filters` chain in FiltrablePrimitive
-* added more basic filters
-* added csc to docs
+2005-09-17	Konstantin V. Arkhipov	<voxus@gentoo.org>
+
+* doc/sample: synced with Form's related changes.
+
+* core/Form/FiltrablePrimitive.class.php: setFilter() removed.
+
+2005-09-16	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* core/Form/FiltrablePrimitive.class.php: introduced display and import
+filters chain.
+
+* core/Form/HTMLFilter.class.php, core/Form/TextFilter.class.php: removed in
+favour of filter' chains.
+
+* core/Form: added more basic filters, "Coding Style Convention" added to
+documentation.
 
 2005-09-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
