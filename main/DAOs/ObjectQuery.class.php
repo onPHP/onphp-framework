@@ -95,7 +95,7 @@
 			$query = $dao->makeSelectHead();
 			
 			foreach ($this->sort as $property => $direction) {
-				if (array_key_exists($map[$property])) {
+				if (array_key_exists($property, $map)) {
 					
 					if ($map[$property] === null)
 						$field = $property;
