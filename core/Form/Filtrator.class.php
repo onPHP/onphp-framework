@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
- *   voxus@gentoo.org                                                      *
+ *   Copyright (C) 2005 by Anton Lebedevich                                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,11 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class TextFilter extends BaseFilter // FIXME: deprecated
+	interface Filtrator
 	{
-		public function apply($value)
-		{
-			return htmlspecialchars(strip_tags(trim($value)));
-		}
+		public function apply($value);
 	}
 ?>

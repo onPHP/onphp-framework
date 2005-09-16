@@ -11,8 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class BaseFilter extends Singletone
+	abstract class BaseFilter extends Singletone implements Filtrator
 	{
-		abstract public static function filter($value);
 	}
 ?>

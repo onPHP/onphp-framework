@@ -13,12 +13,20 @@
 
 	final class Filter /* Factory */
 	{
-		public static function text()
+		public static function text() // FIXME: deprecated
 		{
 			return Singletone::getInstance('TextFilter');
 		}
+
+		public static function textImport()
+		{
+			return 
+				FilterChain::create()->
+					add(Filter::trim())->
+					add(Filter::stripTags());
+		}
 		
-		public static function html()
+		public static function html() // FIXME: deprecated
 		{
 			return Singletone::getInstance('HTMLFilter');
 		}
@@ -26,6 +34,21 @@
 		public static function hash()
 		{
 			return Singletone::getInstance('HashFilter');
+		}
+
+		public static function trim()
+		{
+			return Singletone::getInstance('TrimFilter');
+		}
+
+		public static function stripTags()
+		{
+			return Singletone::getInstance('StripTagsFilter');
+		}
+
+		public static function htmlSpecialChars()
+		{
+			return Singletone::getInstance('HtmlSpecialCharsFilter');
 		}
 	}
 ?>

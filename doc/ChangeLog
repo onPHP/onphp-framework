@@ -1,5 +1,10 @@
 # $Id$
 
+2005-09-16 Anton E. Lebedevich <noiselist@pochta.ru>
+* introduced display and import filters` chain in FiltrablePrimitive
+* added more basic filters
+* added csc to docs
+
 2005-09-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * main/DAOs/ObjectQuery.class.php: treat mapping keys with null values as

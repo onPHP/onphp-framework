@@ -11,9 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class HTMLFilter extends BaseFilter
+	class HTMLFilter extends BaseFilter // FIXME: deprecated
 	{
-		public static function filter($value)
+		public function apply($value)
 		{
 			return htmlspecialchars(trim($value));
 		}

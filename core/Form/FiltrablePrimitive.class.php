@@ -13,19 +13,55 @@
 
 	abstract class FiltrablePrimitive extends RangedPrimitive
 	{
-		private $filter	= null;
+		private $importFilter	= null;
+		private $displayFilter 	= null;
 
-		public function setFilter(BaseFilter $filter)
+		public function __construct($name)
 		{
-			$this->filter = $filter;
+			parent::__construct($name);
+			$this->displayFilter = new FilterChain();
+			$this->importFilter = new FilterChain();
+		}
+
+		public function addDisplayFilter(Filtrator $filter)
+		{
+			$this->displayFilter->add($filter);
+			return $this;
+		}
+
+		public function dropDisplayFilters()
+		{
+			$this->displayFilter->dropAll();
+			return $this;
+		}
+
+		public function getDisplayValue()
+		{
+			return $this->displayFilter->apply($this->getActualValue());
+		}
+
+		public function addImportFilter(Filtrator $filter)
+		{
+			$this->importFilter->add($filter);
+			return $this;
+		}
+
+		public function dropImportFilters()
+		{
+			$this->importFilter->dropAll();
+			return $this;
+		}
+
+		public function setFilter(BaseFilter $filter) // FIXME: deprecated
+		{
+			$this->importFilter->dropAll()->add($filter);
 			
 			return $this;
 		}
 		
 		protected function selfFilter()
 		{
-			if ($this->filter)
-				$this->value = $this->filter->filter($this->value);
+			$this->value = $this->importFilter->apply($this->value);
 
 			return $this;
 		}

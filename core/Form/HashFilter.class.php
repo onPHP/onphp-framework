@@ -13,7 +13,7 @@
 
 	class HashFilter extends BaseFilter
 	{
-		public static function filter($value)
+		public function apply($value)
 		{
 			return sha1($value);
 		}

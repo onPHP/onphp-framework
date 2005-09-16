@@ -75,6 +75,16 @@
 			return $this->get($name)->getActualValue();
 		}
 
+		public function getDisplayValue($name)
+		{
+			$primitive = $this->get($name);
+			// FIXME; don't use instanceof
+			if ($primitive instanceof FiltrablePrimitive) 
+				return $primitive->getDisplayValue();
+			else
+				return $primitive->getActualValue();		
+		}
+
 		public function getChoiceValue($name)
 		{
 			$prm		= $this->get($name);
