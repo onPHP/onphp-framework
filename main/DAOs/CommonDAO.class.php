@@ -80,21 +80,29 @@
 			)
 				return $object;
 			else {
-				$object =
-					DBFactory::getDefaultInstance()->queryObjectRow(
-						$this->makeSelectHead()->where(
+				$db = DBFactory::getDefaultInstance();
+
+				$query = 
+					$this->
+						makeSelectHead()->
+						where(
 							Expression::eq(
 								DBField::create('id', $this->getTable()),
 								$id
 							)
-						),
-						$this
+						);
+
+				if ($object = $db->queryObjectRow($query, $this)) {
+					return
+						$expires === Cache::DO_NOT_CACHE
+							? $object
+							: $this->cacheById($object, $expires);
+				} else { 
+					throw new ObjectNotFoundException(
+						"there is no such object for '".get_class($this)
+						."' with query == {$query->toString($db->getDialect())}"
 					);
-				
-				return
-					$expires === Cache::DO_NOT_CACHE
-						? $object
-						: $this->cacheById($object, $expires);
+				}
 			}
 		}
 		
