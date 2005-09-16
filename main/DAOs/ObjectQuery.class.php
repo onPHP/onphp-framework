@@ -95,9 +95,12 @@
 			$query = $dao->makeSelectHead();
 			
 			foreach ($this->sort as $property => $direction) {
-				if (isset($map[$property])) {
+				if (array_key_exists($map[$property])) {
 					
-					$field = &$map[$property];
+					if ($map[$property] === null)
+						$field = $property;
+					else
+						$field = $map[$property];
 					
 					if (is_array($field)) {
 						switch ($direction) {
@@ -139,7 +142,7 @@
 							
 							default:
 
-								throw new StateExpression('unknown direction');
+								throw new WrongStateException('unknown direction');
 						}
 					} else {
 						switch ($direction) {
@@ -165,7 +168,7 @@
 								break;
 
 							default:
-								throw new StateExpression('unknown direction');
+								throw new WrongStateException('unknown direction');
 						}
 					}
 				} else
