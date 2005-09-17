@@ -20,18 +20,18 @@
 			$this->form->
 				add(
 					Primitive::string('name')->
-					addFilter(Filter::textImport())->
+					addImportFilter(Filter::textImport())->
 					required()
 				)->
 				add(
 					Primitive::string('nickname')->
-					addFilter(Filter::textImport())->
+					addImportFilter(Filter::textImport())->
 					required()->
 					setDefault('anonymous')
 				)->
 				add(
 					Primitive::string('content')->
-					addFilter(Filter::textImport())->
+					addImportFilter(Filter::textImport())->
 					required()
 				)->
 				add(
