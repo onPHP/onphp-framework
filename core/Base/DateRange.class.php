@@ -50,6 +50,21 @@
 			$this->end = $end;
 			return $this;
 		}
+		
+		public function lazySet($start = null, $end = null)
+		{
+			if ($start instanceof Timestamp && $end instanceof Timestamp) {
+				if ($start->toStamp() > $end->toStamp())
+					$this->setEnd($start)->setStart($end);
+				else
+					$this->setStart($start)->setEnd($end);
+			} elseif ($start instanceof Timestamp)
+				$this->setStart($start);
+			elseif ($end instanceof Timestamp)
+				$this->setEnd($end);
+			
+			return $this;
+		}
 
 		public function dropStart()
 		{
