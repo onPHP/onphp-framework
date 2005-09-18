@@ -12,8 +12,8 @@
 
 	class DateRange
 	{
-		private $start	= null;
-		private $end	= null;
+		protected $start	= null;
+		protected $end		= null;
 		
 		public static function create()
 		{
