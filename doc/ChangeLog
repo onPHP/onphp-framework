@@ -14,8 +14,9 @@ filters chain.
 * core/Form/HTMLFilter.class.php, core/Form/TextFilter.class.php: removed in
 favour of filter' chains.
 
-* core/Form: added more basic filters, "Coding Style Convention" added to
-documentation.
+* core/Form: added more basic filters.
+
+* doc/: "Coding Style Convention" added to documentation.
 
 2005-09-16	Konstantin Scheglov	<gnuman@yandex.ru>
 
