@@ -17,6 +17,11 @@ favour of filter' chains.
 * core/Form: added more basic filters, "Coding Style Convention" added to
 documentation.
 
+2005-09-16	Konstantin Scheglov	<gnuman@yandex.ru>
+
+* main/DAOs/CommonDAO.class.php: getById should throw ObjectNotFoundException
+instead of null returning.
+
 2005-09-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * main/DAOs/ObjectQuery.class.php: treat mapping keys with null values as
