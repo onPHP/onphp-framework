@@ -25,16 +25,13 @@
 			abstract protected function getChildIdField()
 			abstract protected function getParentIdField()
 
-		overrideable:
-			protected function preQuerize(SelectQuery $query)
-
 		all we need from outer world:
 			public function __construct(
 				Identifiable $parent, UnifiedContainer $dao, $lazy = true
 			)
 
-		if you want to apply PreQuery's "filter":
-			public function setPreQuery(PreQuery $pq)
+		if you want to apply ObjectQuery's "filter":
+			public function setObjectQuery(ObjectQuery $oq)
 
 		first you should fetch whatever you want:
 			public function fetch()
@@ -67,7 +64,7 @@
 		protected $parent	= null;
 
 		protected $dao		= null;
-		protected $pq		= null;
+		protected $oq		= null;
 		
 		protected $lazy		= true;
 
@@ -101,14 +98,14 @@
 			);
 		}
 
-		public function setPreQuery(PreQuery $pq)
+		public function setObjectQuery(ObjectQuery $oq)
 		{
-			Assert::brothers(
-				$this->parent, $pq->getObject(),
-				"wtf?"
+			Assert::isTrue(
+				$this->dao instanceof MappedDAO,
+				'you should implement MappedDAO to be able to use ObjectQueries'
 			);
-
-			$this->pq = $pq;
+			
+			$this->oq = $oq;
 
 			return $this;
 		}
@@ -174,20 +171,20 @@
 					$delete[] = $clones[$id];
 			}
 			
-			$db = &DBFactory::getDefaultInstance();
+			$db = DBFactory::getDefaultInstance();
 
 			$db->begin()->queueStart();
-			
+
 			try {
 				$this->lazy
 					? $this->syncIds($insert, $delete)
 					: $this->syncList($insert, $update, $delete);
+				
+				$db->commit()->queueFlush();
 			} catch (DatabaseException $e) {
 				$db->queueDrop()->rollback();
 				throw $e;
 			}
-
-			$db->commit()->queueFlush();
 
 			return $this;
 		}
@@ -218,23 +215,6 @@
 			}
 
 			return $this;
-		}
-
-		protected function preQuerize(SelectQuery $query)
-		{
-			if ($pq = &$this->pq) {
-				$pq->pointQuery(
-					$pq->limitQuery($query)
-				);
-
-				if ($this->chain->getSize())
-					$query->andWhere($this->chain);
-
-				if ($order = $pq->getOrder())
-					$query->orderBy($order, $pq->dao()->getTable());
-			}
-
-			return $query;
 		}
 	}
 ?>

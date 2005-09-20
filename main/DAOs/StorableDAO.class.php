@@ -55,7 +55,9 @@
 		)
 		{
 			DBFactory::getDefaultInstance()->queryNull(
-				$this->setQueryFields($query->setTable($this->getTable()), $object)
+				$this->setQueryFields(
+					$query->setTable($this->getTable()), $object
+				)
 			);
 			
 			$this->uncacheIdentifiable($object);

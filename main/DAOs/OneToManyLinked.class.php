@@ -36,21 +36,25 @@
 		protected function makeListFetchQuery()
 		{
 			return
-				$this->limitize(
-					$this->preQuerize(
-						$this->dao->makeSelectHead()
-					)
+				$this->targetize(
+					$this->oq
+						? $this->oq->toSelectQuery($this->dao)
+						: $this->dao->makeSelectHead()
 				);
 		}
 
 		protected function makeIdsFetchQuery()
 		{
 			return
-				$this->limitize(
-					$this->preQuerize(
-						OSQL::select()->from($this->dao->getTable())->
-						get($this->getChildIdField())
-					)
+				$this->targetize(
+					$this->oq
+						?
+							$this->oq->toSelectQuery($this->dao)->
+							dropFields()->
+							get($this->getChildIdField())
+						:
+							OSQL::select()->from($this->dao->getTable())->
+							get($this->getChildIdField())
 				);
 		}
 
@@ -117,18 +121,17 @@
 			return $this;
 		}
 		
-		private function limitize(SelectQuery $query)
+		private function targetize(SelectQuery $query)
 		{
 			return
-				$query->
-					where(
-						Expression::eq(
-							new DBField($this->getParentIdField()),
-							new DBValue($this->parent->getId())
-						)
-					);
+				$query->where(
+					Expression::eqId(
+						new DBField($this->getParentIdField()),
+						$this->parent
+					)
+				);
 		}
-
+		
 		private function makeMassUpdateQuery(&$ids)
 		{
 			return

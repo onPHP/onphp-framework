@@ -95,14 +95,16 @@
 			return $this->end;
 		}
 
-		public function toDateString()
+		public function toDateString($delimiter = '-')
 		{
 			if ($this->start && $this->end)
-				return "{$this->start->toDate()} - {$this->end->toDate()}";
+				return
+					"{$this->start->toDate($delimiter)} - "
+					."{$this->end->toDate($delimiter)}";
 			elseif ($this->start)
-				return $this->start->toDate();
+				return $this->start->toDate($delimiter);
 			elseif ($this->end)
-				return $this->end->toDate();
+				return $this->end->toDate($delimiter);
 			else
 				return null;
 		}

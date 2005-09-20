@@ -1,11 +1,24 @@
 # $Id$
 
+2005-09-20	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/Base/: added delimiters for date'n'time-related stringoization methods,
+Time.class.php introduced.
+
+* core/DB/DBTransaction.class.php: extremly evil typo fixed, so now
+transaction doesn't start every time you're adding new Query to it.
+
+* core/OSQL/PreQuery.class.php: obsoleted, will be removed at 0.2.5.
+
+* main/DAOs/: UnifiedContainer and friends ported to ObjectQuery from
+obsoleted PreQuery.
+
 2005-09-20	Anton E. Lebedevich	<noiselist@pochta.ru>
 
 * core/Base/NamedObject.class.php: added static compareNames() for using in
 usort().
 
-2005-09-17	Konstantin V. Arkhipov	<voxus@gentoo.org>
+2005-09-17	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * doc/sample: synced with Form's related changes.
 

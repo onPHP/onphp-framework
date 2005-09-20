@@ -49,19 +49,35 @@
 			return $this->int;
 		}
 		
-		public function toDate()
+		public function toDate($delimiter = '-')
 		{
-			return "{$this->year}-{$this->month}-{$this->day}";
+			return
+				$this->year
+				.$delimiter
+				.$this->month
+				.$delimiter
+				.$this->day;
 		}
 		
-		public function toTime()
+		public function toTime($timeDelimiter = ':', $secondDelimiter = '.')
 		{
-			return "{$this->hour}-{$this->minute}.{$this->second}";
+			return
+				$this->hour
+				.$timeDelimiter
+				.$this->minute
+				.$secondDelimiter
+				.$this->second;
 		}
 		
-		public function toDateTime()
+		public function toDateTime(
+			$dateDelimiter = '-',
+			$timeDelimiter = ':',
+			$secondDelimiter = '.'
+		)
 		{
-			return "{$this->toDate()} {$this->hour}:{$this->minute}:{$this->second}";
+			return
+				$this->toDate($dateDelimiter).' '
+				.$this->toTime($timeDelimiter, $secondDelimiter);
 		}
 
 		public function getYear()
@@ -132,9 +148,9 @@
 			return date('Y-m-d H:i:s');
 		}
 		
-		public static function today()
+		public static function today($delimiter = '-')
 		{
-			return date('Y-m-d');
+			return date("Y{$delimiter}m{$delimiter}d");
 		}
 		
 		private function import($string)

@@ -22,7 +22,7 @@
 
 		protected function syncList(&$insert, &$update, &$delete)
 		{
-			$db = &DBFactory::getDefaultInstance();
+			$db = DBFactory::getDefaultInstance();
 			$dao = &$this->dao;
 
 			if ($insert)
@@ -52,7 +52,7 @@
 
 		protected function syncIds(&$insert, &$delete)
 		{
-			$db = &DBFactory::getDefaultInstance();
+			$db = DBFactory::getDefaultInstance();
 			
 			if ($insert)
 				for ($i = 0; $i < sizeof($insert); $i++)
@@ -66,9 +66,13 @@
 
 		protected function makeListFetchQuery()
 		{
+			if ($this->oq)
+				$query = $this->oq->toSelectQuery($this->dao);
+			else
+				$query = $this->dao->makeSelectHead();
+			
 			return
-				$this->preQuerize(
-					$this->dao->makeSelectHead()->
+				$query->
 					distinct()->
 					join(
 						$this->getHelperTable(),
@@ -88,24 +92,27 @@
 							new DBField($this->getParentIdField()),
 							new DBValue($this->parent->getId())
 						)
-					)
-				);
+					);
 		}
 
 		protected function makeIdsFetchQuery()
 		{
+			if ($this->oq)
+				$query =
+					$this->oq->toSelectQuery($this->dao)->dropFields();
+			else
+				$query = OSQL::select()->from($this->getHelperTable());
+			
 			return
-				$this->preQuerize(
-					OSQL::select()->from($this->getHelperTable())->
-					distinct()->
+				$query->
 					get($this->getChildIdField())->
+					distinct()->
 					where(
 						Expression::eq(
 							new DBField($this->getParentIdField()),
 							new DBValue($this->parent->getId())
 						)
-					)
-				);
+					);
 		}
 
 		private function makeInsertQuery($childId)

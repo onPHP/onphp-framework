@@ -40,8 +40,10 @@
 		
 		public function add(Query $query)
 		{
-			if (!$this->isStarted())
+			if (!$this->isStarted()) {
 				$this->db->queryRaw($this->getBeginString());
+				$this->started = true;
+			}
 			
 			$this->db->queryNull($query);
 			
