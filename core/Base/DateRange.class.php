@@ -77,6 +77,13 @@
 			$this->end = null;
 			return $this;
 		}
+		
+		public function isEmpty()
+		{
+			return
+				($this->start === null)
+				&& ($this->end === null);
+		}
 
 		public function getStart()
 		{
