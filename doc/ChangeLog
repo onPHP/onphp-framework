@@ -1,5 +1,8 @@
 # $Id$
 
+2005-09-20 Anton E. Lebedevich <noiselist@pochta.ru>
+* core/Base/NamedObject.class.php added static compareNames() for using in usort
+
 2005-09-17	Konstantin V. Arkhipov	<voxus@gentoo.org>
 
 * doc/sample: synced with Form's related changes.

@@ -39,5 +39,10 @@
 			
 			return $this;
 		}
+
+		public static function compareNames(NamedObject $left, NamedObject $right)
+		{
+			return strcasecmp($left->name, $right->name);
+		}
 	}
 ?>
