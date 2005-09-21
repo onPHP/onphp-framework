@@ -35,7 +35,7 @@
 			
 			$out = array();
 			
-			foreach ($objectsList as $object)
+			foreach ($objectsList as &$object)
 				$out[] = $object->getId();
 
 			return $out;

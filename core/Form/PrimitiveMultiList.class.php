@@ -20,13 +20,16 @@
 			if ($this->list) {
 				if (is_array($scope[$this->name])) {
 					$values = array();
+
 					foreach ($scope[$this->name] as $value)
 						if (isset($this->list[$value]))
 							$values[] = $value;
+
 					if (count($values))
 						$this->value = $values;
 					else
 						return false;
+
 				} else {
 					if (isset($this->list[$scope[$this->name]]))
 						$this->value = $scope[$this->name];
@@ -36,7 +39,7 @@
 			} else
 				$this->value = $scope[$this->name];
 
-			return true;
+			/* NOTREACHED */
 		}
 	}
 ?>
