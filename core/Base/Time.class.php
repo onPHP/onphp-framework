@@ -7,9 +7,9 @@
 
 	class Time
 	{
-		private $hour	= 0;
-		private $minute	= 0;
-		private $second	= 0;
+		protected $hour		= 0;
+		protected $minute	= 0;
+		protected $second	= 0;
 		
 		public static function create($input)
 		{
@@ -157,39 +157,6 @@
 				$int <= 9
 					? "0{$int}"
 					: $int;
-		}
-
-		public function isAfter(Timestamp $base)
-		{
-			return 
-				self::compare(
-					$this, 
-					new Time(date('H:i:s', $base->toStamp()))
-				) === 1;
-		}
-
-		public static function compare(Time $left, Time $right)
-		{
-			if (
-				($left->hour > 6) && ($right->hour > 6) 
-				|| ($left->hour <= 6) && ($right->hour <= 6) 
-			) {
-				$leftStamp = mktime($left->hour, $left->minute, $left->second);
-				$rightStamp = mktime(
-					$right->hour, 
-					$right->minute, 
-					$right->second
-				);
-
-				if ($leftStamp == $rightStamp)
-					return 0;
-				else 
-					return $leftStamp > $rightStamp ? 1 : -1;
-
-			} elseif ($left->hour <= 6 && $right->hour > 6 )
-				return 1;
-			elseif ($left->hour > 6 && $right->hour <= 6)
-				return -1;
 		}
 	}
 ?>
