@@ -36,7 +36,7 @@
 			} else
 				$this->value = $scope[$this->name];
 
-			/* NOTREACHED */
+			return true;
 		}
 	}
 ?>

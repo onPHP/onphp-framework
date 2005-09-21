@@ -26,7 +26,7 @@
 			return $out;
 		}
 		
-		public static function &getIdsArray(&$objectsList)
+		public static function getIdsArray($objectsList)
 		{
 			Assert::isTrue(
 				current($objectsList) instanceof Identifiable,
@@ -35,7 +35,7 @@
 			
 			$out = array();
 			
-			foreach ($objectsList as &$object)
+			foreach ($objectsList as $object)
 				$out[] = $object->getId();
 
 			return $out;
