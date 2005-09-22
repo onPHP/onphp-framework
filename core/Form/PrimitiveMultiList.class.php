@@ -36,8 +36,11 @@
 					else
 						return false;
 				}
-			} else
+			} else {
 				$this->value = $scope[$this->name];
+				
+				return true;
+			}
 
 			/* NOTREACHED */
 		}
