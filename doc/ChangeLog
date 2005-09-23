@@ -2,6 +2,8 @@
 
 2005-09-23	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+* 0.2.2 released.
+
 * main/Utils/LogicUtils.class.php: new place for common used logic patterns.
 
 2005-09-20	Konstantin V. Arkhipov	<voxus@shadanakar.org>
