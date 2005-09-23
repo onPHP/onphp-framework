@@ -119,6 +119,13 @@
 					$this->max === $range->getMax());
 		}
 		
+		public function isEmpty()
+		{
+			return
+				($this->min === null) &&
+				($this->max === null);
+		}
+		
 		public static function buildObject(
 			$min = null, $max = null, $swapAllowed = true
 		)
