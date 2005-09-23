@@ -1,0 +1,84 @@
+# $Id$
+
+2005-09-23	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* 0.2.2 released.
+
+* main/Utils/LogicUtils.class.php: new place for common used logic patterns.
+
+2005-09-20	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/Base/: added delimiters for date'n'time-related stringoization methods,
+Time.class.php introduced.
+
+* core/DB/DBTransaction.class.php: extremly evil typo fixed, so now
+transaction doesn't start every time you're adding new Query to it.
+
+* core/OSQL/PreQuery.class.php: obsoleted, will be removed at 0.2.5.
+
+* main/DAOs/: UnifiedContainer and friends ported to ObjectQuery from
+obsoleted PreQuery.
+
+2005-09-20	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* core/Base/NamedObject.class.php: added static compareNames() for using in
+usort().
+
+2005-09-17	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* doc/sample: synced with Form's related changes.
+
+* core/Form/FiltrablePrimitive.class.php: setFilter() removed.
+
+2005-09-16	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* core/Form/FiltrablePrimitive.class.php: introduced display and import
+filters chain.
+
+* core/Form/HTMLFilter.class.php, core/Form/TextFilter.class.php: removed in
+favour of filter' chains.
+
+* core/Form: added more basic filters.
+
+* doc/: "Coding Style Convention" added to documentation.
+
+2005-09-16	Konstantin Scheglov	<gnuman@yandex.ru>
+
+* main/DAOs/CommonDAO.class.php: getById should throw ObjectNotFoundException
+instead of null returning.
+
+2005-09-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/ObjectQuery.class.php: treat mapping keys with null values as
+field names.
+
+2005-09-10	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* 0.2.1 released.
+
+* main/DAOs/FinalObjectsTreeDAO.class.php: getListByParentId added.
+
+2005-09-09	Igor V. Gulyaev			<igor_vg@mail.ru>
+
+* main/DAOs/ObjectQuery.class.php: sticky property name fixed.
+
+2005-09-09	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/CommonDAO.class.php: cleanups and minor optimizations.
+
+* main/DAOs/ObjectQuery.class.php: added support for values in query's logic.
+
+* core/DB/DB.class.php: setPersistent() dropped - we can't change connection
+type on the fly; getPersistent() renamed to isPersistent().
+
+* core/DB/PostgresDialect.class.php: quoteValue() moved to generic
+pg_quote_string().
+
+* core/DB/AccessLevel.class.php, core/DB/IsolationLevel.class.php: avoid
+zero-valued constants.
+
+* core/OSQL/PreQuery.class.php: deprecated in favour of ObjectQuery.
+
+2005-09-03	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* Initial release - 0.2.0.
