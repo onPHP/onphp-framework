@@ -67,6 +67,7 @@
 		protected $oq		= null;
 		
 		protected $lazy		= true;
+		protected $fetched	= false;
 
 		protected $list		= null;
 		protected $clones	= null;
@@ -96,6 +97,16 @@
 				new $childClass instanceof Identifiable,
 				"child object should be at least Identifiable"
 			);
+		}
+
+		public function isLazy()
+		{
+			return $this->lazy;
+		}
+		
+		public function isFetched()
+		{
+			return $this->fetched;
 		}
 
 		public function setObjectQuery(ObjectQuery $oq)
@@ -131,10 +142,14 @@
 					'save parent object first'
 				);
 			
-			return
+			$list =
 				$this->lazy
 					? $this->fetchIdsList()
 					: $this->fetchList();
+			
+			$this->fetched = true;
+			
+			return $list;
 		}
 		
 		public function save()
