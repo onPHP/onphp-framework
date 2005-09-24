@@ -142,10 +142,14 @@
 					'save parent object first'
 				);
 			
-			$list =
-				$this->lazy
-					? $this->fetchIdsList()
-					: $this->fetchList();
+			try {
+				$list =
+					$this->lazy
+						? $this->fetchIdsList()
+						: $this->fetchList();
+			} catch (ObjectNotFoundException $e) {
+				$list = /* empty */ array();
+			}
 			
 			$this->fetched = true;
 			
