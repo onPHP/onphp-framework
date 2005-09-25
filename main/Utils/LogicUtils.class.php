@@ -36,8 +36,10 @@
 						Expression::andBlock(
 							Expression::notNull($left),
 							Expression::notNull($right),
-							Expression::between($min, $left, $right),
-							Expression::between($left, $min, $max)
+							Expression::expOr(
+								Expression::between($min, $left, $right),
+								Expression::between($left, $min, $max)
+							)
 						),
 						Expression::andBlock(
 							Expression::isNull($left),
