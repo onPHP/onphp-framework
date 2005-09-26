@@ -28,7 +28,8 @@
 **/
 class FormedPrimitive extends BasePrimitive
 {
-	private $form;
+	protected $form;
+	protected $aliases = array();
 	
 	public function __construct($name)
 	{
@@ -39,6 +40,15 @@ class FormedPrimitive extends BasePrimitive
 	public function add(BasePrimitive $primitive)
 	{
 		$this->form->add($primitive);
+		
+		return $this;
+	}
+	
+	public function addAlias($primitiveName, $alias)
+	{
+		$this->form->addAlias($primitiveName, $alias);
+		
+		$this->aliases[$alias] = $primitiveName;
 		
 		return $this;
 	}
