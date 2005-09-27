@@ -1,5 +1,10 @@
 # $Id$
 
+2005-09-27	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* main/Utils/LogicUtils.class.php: corrected conditions.
+* core/Base/DateRange.class.php: compare, overlaps methods added.
+
 2005-09-24	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * main/DAOs/UnifiedContainer.class.php: do not throw ObjectNotFoundException

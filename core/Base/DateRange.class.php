@@ -120,5 +120,77 @@
 			else
 				return null;
 		}
+
+		public static function compare(DateRange $left, DateRange $right)
+		{
+			return strcmp($left->toString(), $right->toString());
+		}
+
+		public function overlaps(DateRange $range)
+		{
+			if ($this->isEmpty() || $range->isEmpty())
+				return true;
+
+			if ($this->start)
+				$left = $this->start->toStamp();
+			else
+				$left = null;
+
+			if ($this->end)
+				$right = $this->end->toStamp();
+			else
+				$right = null;
+
+			if ($range->start)
+				$min = $range->start->toStamp();
+			else
+				$min = null;
+
+			if ($range->end)
+				$max = $range->end->toStamp();
+			else
+				$max = null;
+
+			return (
+				( $min && $max 
+					&& (
+						( 
+							$left 
+							&& $right
+							&& (
+								$left <= $min && $min <= $right
+								|| $min <= $left && $left <= $max
+							)
+						)
+						|| ( 
+							!$left
+							&& $min <= $right
+						)
+						|| ( 
+							!$right 
+							&& $left <= $max
+						)
+					)
+				)
+				|| ( $min && !$max
+					&& (
+						( 
+							$right
+							&& $min <= $right
+						)
+						|| !$right
+					)
+				)
+				|| ( !$min && $max
+					&& (
+						( 
+							$left 
+							&& $left <= $max
+						)
+						|| !$left
+					)
+				)
+			);
+		} 
 	}
 ?>

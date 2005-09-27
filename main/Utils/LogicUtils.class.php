@@ -43,11 +43,15 @@
 						),
 						Expression::andBlock(
 							Expression::isNull($left),
-							Expression::between($right, $min, $max)
+							Expression::ltEq($min, $right)
 						),
 						Expression::andBlock(
 							Expression::isNull($right),
-							Expression::between($left, $min, $max)
+							Expression::ltEq($left, $max)
+						),
+						Expression::andBlock(
+							Expression::isNull($left),
+							Expression::isNull($right)
 						)
 					)
 				);
@@ -55,18 +59,10 @@
 				$chain->expOr(
 					Expression::orBlock(
 						Expression::andBlock(
-							Expression::notNull($left),
 							Expression::notNull($right),
-							Expression::between($min, $left, $right)
+							Expression::ltEq($min, $right)
 						),
-						Expression::andBlock(
-							Expression::isNull($left),
-							Expression::gtEq($right, $min)
-						),
-						Expression::andBlock(
-							Expression::isNull($right),
-							Expression::gtEq($left, $min)
-						)
+						Expression::isNull($right)
 					)
 				);
 			} elseif ($max !== null && $min === null) {
@@ -74,17 +70,9 @@
 					Expression::orBlock(
 						Expression::andBlock(
 							Expression::notNull($left),
-							Expression::notNull($right),
-							Expression::between($max, $left, $right)
-						),
-						Expression::andBlock(
-							Expression::isNull($left),
-							Expression::ltEq($right, $max)
-						),
-						Expression::andBlock(
-							Expression::isNull($right),
 							Expression::ltEq($left, $max)
-						)
+						),
+						Expression::isNull($left)
 					)
 				);
 			}
