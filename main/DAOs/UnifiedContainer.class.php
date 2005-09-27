@@ -143,17 +143,16 @@
 				);
 			
 			try {
-				$list =
-					$this->lazy
-						? $this->fetchIdsList()
-						: $this->fetchList();
+				$this->lazy
+					? $this->fetchIdsList()
+					: $this->fetchList();
 			} catch (ObjectNotFoundException $e) {
-				$list = /* empty */ array();
+				// yummy
 			}
 			
 			$this->fetched = true;
 			
-			return $list;
+			return $this;
 		}
 		
 		public function save()
