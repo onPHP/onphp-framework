@@ -192,5 +192,83 @@
 				)
 			);
 		} 
+
+		public function contains(Timestamp $date)
+		{
+			if ($this->start)
+				$start = mktime(
+					0,0,0,
+					$this->start->getMonth(),
+					$this->start->getDay(),
+					$this->start->getYear()
+				);
+			else
+				$start = null;
+
+			if ($this->end)
+				$end = mktime(
+					23,59,59,
+					$this->end->getMonth(),
+					$this->end->getDay(),
+					$this->end->getYear()
+				);
+			else 
+				$end = null;
+
+			$probe = $date->toStamp();
+
+			if (
+				(!$start && !$end)
+				|| (!$start && $end >= $probe)
+				|| (!$end && $start <= $probe)
+				|| ($start <= $probe && $end >= $probe)
+			)
+				return true;
+			else 
+				return false;
+		}
+
+		public function split()
+		{
+			Assert::isTrue(
+				$this->start && $this->end, 
+				"open range can't be splitted"
+			);
+			$timestamps = array();
+
+			$start = new Timestamp(
+				mktime(
+					0,0,0,
+					$this->start->getMonth(),
+					$this->start->getDay(),
+					$this->start->getYear()
+				)
+			);
+
+			$end = new Timestamp(
+				mktime(
+					23,59,59,
+					$this->end->getMonth(),
+					$this->end->getDay(),
+					$this->end->getYear()
+				)
+			);
+
+			for (
+				$current = $start; 
+				$current->toStamp() < $end->toStamp();
+				$current->modify('+1 day')
+			)
+				$timestamps[] = new Timestamp(
+					mktime(
+						0,0,0,
+						$current->getMonth(),
+						$current->getDay(),
+						$current->getYear()
+					)
+				);
+
+			return $timestamps;
+		}
 	}
 ?>
