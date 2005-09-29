@@ -132,22 +132,42 @@
 				return true;
 
 			if ($this->start)
-				$left = $this->start->toStamp();
+				$left = mktime(
+					0,0,0,
+					$this->start->getMonth(),
+					$this->start->getDay(),
+					$this->start->getYear()
+				);
 			else
 				$left = null;
 
 			if ($this->end)
-				$right = $this->end->toStamp();
+				$right = mktime(
+					23,59,59,
+					$this->end->getMonth(),
+					$this->end->getDay(),
+					$this->end->getYear()
+				);
 			else
 				$right = null;
 
 			if ($range->start)
-				$min = $range->start->toStamp();
+				$min = mktime(
+					0,0,0,
+					$range->start->getMonth(),
+					$range->start->getDay(),
+					$range->start->getYear()
+				);
 			else
 				$min = null;
 
 			if ($range->end)
-				$max = $range->end->toStamp();
+				$max = mktime(
+					23,59,59,
+					$range->end->getMonth(),
+					$range->end->getDay(),
+					$range->end->getYear()
+				);
 			else
 				$max = null;
 
