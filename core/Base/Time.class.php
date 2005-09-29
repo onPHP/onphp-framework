@@ -139,10 +139,10 @@
 			return $this;
 		}
 		
-		public function toString()
+		public function toString($delimiter = ':')
 		{
 			return
-				$this->doublize($this->hour).':'.
+				$this->doublize($this->hour).$delimiter.
 				$this->doublize($this->minute);
 		}
 

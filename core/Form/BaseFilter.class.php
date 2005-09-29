@@ -11,7 +11,5 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class BaseFilter extends Singletone implements Filtrator
-	{
-	}
+	abstract class BaseFilter extends Singletone implements Filtrator {/*_*/}
 ?>
