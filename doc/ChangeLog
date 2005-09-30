@@ -1,6 +1,6 @@
 # $Id$
 
-2005-09-28	Anton E. Lebedevich	<noiselist@pochta.ru>
+2005-09-30	Anton E. Lebedevich	<noiselist@pochta.ru>
 
 * core/Base/Timestamp.class.php: useful compare method added.
 
