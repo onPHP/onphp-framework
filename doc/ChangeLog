@@ -2,6 +2,12 @@
 
 2005-09-28	Anton E. Lebedevich	<noiselist@pochta.ru>
 
+* core/Base/Timestamp.class.php: useful compare method added.
+
+* core/Base/DateRange.class.php: useless compare method removed.
+
+2005-09-28	Anton E. Lebedevich	<noiselist@pochta.ru>
+
 * core/Base/DateRange.class.php: contains, split methods added.
 
 2005-09-27	Konstantin V. Arkhipov	<voxus@shadanakar.org>

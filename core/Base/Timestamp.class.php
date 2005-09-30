@@ -163,5 +163,13 @@
 			list($this->hour, $this->minute, $this->second) =
 				explode(':', $time);
 		}
+
+		public static function compare(Timestamp $left, Timestamp $right)
+		{
+			if ($left->int == $right->int)
+				return 0;
+			else
+				return ($left->int > $right->int ? 1 : -1);
+		}
 	}
 ?>

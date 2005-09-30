@@ -121,11 +121,6 @@
 				return null;
 		}
 
-		public static function compare(DateRange $left, DateRange $right)
-		{
-			return strcmp($left->toString(), $right->toString());
-		}
-
 		public function overlaps(DateRange $range)
 		{
 			if ($this->isEmpty() || $range->isEmpty())
