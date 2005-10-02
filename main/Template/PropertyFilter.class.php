@@ -258,7 +258,7 @@
 			} elseif ($this->templates) {
 				foreach ($this->templates as $template) {
 					try {
-						include $this->templateDir . $template . $this->extension;
+						include $this->templateDir . DIRECTORY_SEPARATOR . $template . $this->extension;
 					} catch (BaseException $e) {
 						// do nothing
 					}
