@@ -72,6 +72,21 @@
 			return $this;
 		}
 
+		public function addParameters($parameters)
+		{
+			Assert::isArray($parameters);
+			
+			$this->setParameters(array_merge($this->getParameters(), $parameters));
+			
+			return $this;
+		}
+		
+		public function getParameter($name)
+		{
+			$parameters = $this->getParameters();
+			return $parameters[$name];
+		}
+	
 		public function getTemplatePath($name = null)
 		{
 			if (!$name)
