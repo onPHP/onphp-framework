@@ -76,17 +76,11 @@
 		{
 			Assert::isArray($parameters);
 			
-			$this->setParameters(array_merge($this->getParameters(), $parameters));
+			$this->parameters = array_merge($this->parameters, $parameters)
 			
 			return $this;
 		}
-		
-		public function getParameter($name)
-		{
-			$parameters = $this->getParameters();
-			return $parameters[$name];
-		}
-	
+
 		public function getTemplatePath($name = null)
 		{
 			if (!$name)
@@ -94,6 +88,5 @@
 			
 			return ModuleFactory::getTemplateDirectory().$name.EXT_TPL;
 		}
-		
 	}
 ?>
