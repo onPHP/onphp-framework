@@ -54,7 +54,7 @@
 		public function lazySet($start = null, $end = null)
 		{
 			if ($start instanceof Timestamp && $end instanceof Timestamp) {
-				if ($start->toStamp() > $end->toStamp())
+				if ($start->toStamp() >= $end->toStamp())
 					$this->setEnd($start)->setStart($end);
 				else
 					$this->setStart($start)->setEnd($end);
