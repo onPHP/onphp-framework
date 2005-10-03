@@ -76,7 +76,7 @@
 		{
 			Assert::isArray($parameters);
 			
-			$this->parameters = array_merge($this->parameters, $parameters)
+			$this->parameters = array_merge($this->parameters, $parameters);
 			
 			return $this;
 		}
