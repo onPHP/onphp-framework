@@ -217,10 +217,10 @@
 					else
 						$left = new DBField($map[$left]);
 					
-					if (!isset($map[$right]))
-						$right = new DBValue($right);
-					else
+					if (isset($map[$right]))
 						$right = new DBField($map[$right]);
+					elseif (!is_null($right))
+						$right = new DBValue($right);
 					
 					$query->andWhere(
 						new LogicalExpression($left, $right, $logic)
