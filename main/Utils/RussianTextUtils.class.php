@@ -118,5 +118,15 @@
 		{
 			return $number;
 		}
+		
+		public static function getDayOfWeek($day)
+		{
+			static $weekDays = array(
+				'вс', 'пн', 'вт', 'ср',
+				'чт', 'пт', 'сб', 'вс'
+			);
+			
+			return $weekDays[$day];
+		}
 	}
 ?>
