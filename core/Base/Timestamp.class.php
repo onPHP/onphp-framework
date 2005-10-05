@@ -94,6 +94,11 @@
 		{
 			return $this->day;
 		}
+
+		public function getWeekDay()
+		{
+			return strftime('%w', $this->int);
+		}
 		
 		public function getHour()
 		{
