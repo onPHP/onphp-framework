@@ -21,12 +21,10 @@
 			self::$dialect = new MyDialect();
 		}
 		
-		
 		public static function getDialect()
 		{
 			return self::$dialect;
 		}
-		
 		
 		public function connect(
 			$user, $pass, $host,
@@ -64,22 +62,6 @@
 				mysql_close($this->link);
 
 			return $this;
-		}
-		
-		// FIXME: use parent's query()
-		public function query(Query $query)
-		{
-			//	echo $query->toString($this).'<hr>'; flush();
-			//	echo $query->toString($this)."\n"; flush();
-			
-			if (!($result = mysql_query($query->toString($this->getDialect()), $this->link))) {
-				throw new DatabaseException(
-					"failed to execute such query - '{$query->toString($this->getDialect())}': ".
-					mysql_error($this->link)
-				);
-			}
-
-			return $result;
 		}
 		
 		/**
@@ -164,7 +146,7 @@
 		
 		public function queryRaw($queryString)
 		{
-			if (!$result = mysql_query($this->link, $queryString))
+			if (!$result = mysql_query($queryString, $this->link))
 				throw new DatabaseException(
 					"failed to execute such query - '{$queryString}': ".
 					mysql_error($this->link)
