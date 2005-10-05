@@ -196,8 +196,9 @@
 		{
 			$result = '';
 			socket_write($socket, $out, strlen($out));
-			while ($out = socket_read($socket, 2048)) {
-				$result .= $out;
+			
+			while ($in = socket_read($socket, 2048)) {
+				$result .= $in;
 			}
 			
 			socket_close($socket);
