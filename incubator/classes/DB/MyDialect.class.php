@@ -13,6 +13,8 @@
 
 	final class MyDialect extends Dialect
 	{
+		const IN_BOOLEAN_MODE = 1;
+		
 		public static function quoteValue(&$value)
 		{
 			return "'" . mysql_real_escape_string($value) . "'";
@@ -33,14 +35,31 @@
 			return "`$table`";
 		}
 		
-		public function fullTextSearch($field, $words, $logic)
+		public function fullTextSearch($fields, $words, $logic)
 		{
-			throw new UnimplementedFeatureException('implement me first!');
+			return ' MATCH ('
+							. implode(', ', array_map(array($this, 'fieldToString'), $fields))
+							. ') AGAINST ('
+							. self::$prepareFullText($words, $logic)
+							. ')';
 		}
 		
 		public function fullTextRank($field, $words, $logic)
 		{
 			throw new UnimplementedFeatureException('implement me first!');
+		}
+		
+		private static function prepareFullText($words, $logic)
+		{
+			Assert::isArray($words);
+			
+			$retval = self::quoteValue(implode(' ', $words));
+			
+			if (self::IN_BOOLEAN_MODE === $logic) {
+				return addcslashes($retval, '+-<>()~*"') . ' ' . 'IN BOOLEAN MODE';
+			} else {
+				return $retval;
+			}
 		}
 	}
 ?>

@@ -48,12 +48,14 @@
 		
 		public function asyncQuery(Query $query)
 		{
-			throw new UnimplementedFeatureException();
+			// I don't know: better implement the feature by hand
+			// or stay as is?
+			return $this->query($query);
 		}
 
 		public function isBusy()
 		{
-			throw new UnimplementedFeatureException();
+			return !mysql_ping($this->link);
 		}
 		
 		public function disconnect()
