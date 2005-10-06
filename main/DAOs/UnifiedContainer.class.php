@@ -48,7 +48,7 @@
 	OneToManyLinked <- UnifiedContainer:
 
 		indicates whether child can be free (parent_id nullable):
-			protected function isUnlinkinable()
+			protected function isUnlinkable()
 
 	ManyToManyLinked <- UnifiedContainer:
 

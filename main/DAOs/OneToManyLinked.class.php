@@ -28,7 +28,7 @@
 			return 'id';
 		}
 
-		protected function isUnlinkinable()
+		protected function isUnlinkable()
 		{
 			return false;
 		}
@@ -103,7 +103,7 @@
 
 			if ($delete) {
 				// unlink or drop
-				$this->isUnlinkinable
+				$this->isUnlinkable()
 					?
 						$db->queryNull($this->makeMassUpdateQuery($delete))
 					:

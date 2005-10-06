@@ -1,5 +1,17 @@
 # $Id$
 
+2005-10-06	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/: Lazy/full fetching logic separated from UnifiedContainer's
+childs into corresponding classes to simplify internal API. Constructor now
+takes only one argument - DAOConnected' parent.
+
+* core/OSQL/SelectQuerySkeleton.class.php: merged back to SelectQuery as
+suggested by Antony.
+
+* core/Base/StorableContainer.class.php, core/Base/DAOConnected.class.php:
+moved to main/DAOs/.
+
 2005-09-30	Anton E. Lebedevich	<noiselist@pochta.ru>
 
 * core/Base/Timestamp.class.php: useful compare method added.

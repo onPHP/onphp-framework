@@ -13,6 +13,8 @@
 /*
 	$Id$
 	
+	06 Oct 2005: Skeleton merged back.
+	
 	07 Jun 2005: Separation of {get,set}ters.
 	
 	28 Mar 2005: Fourth rewrite by Anton.
@@ -20,11 +22,99 @@
 	04 Jan 2005: Third rewrite. Main goal now - simplicity.
 */
 
-	final class SelectQuery extends SelectQuerySkeleton
+	class GroupBy extends FieldTable {/*_*/}
+
+	final class SelectQuery extends QuerySkeleton
 	{
+		private $distinct		= false;
+
+		private $limit			= null;
+		private $offset			= null;
+
+		private $fields			= array();
+		private $from			= array();
+		private $order			= array();
+		private $group			= array();
+
+		public function distinct()
+		{
+			$this->distinct = true;
+			return $this;
+		}
+
 		public function isDistinct()
 		{
-			return ($this->distinct === true);
+			return $this->distinct;
+		}
+
+		public function unDistinct()
+		{
+			$this->distinct = false;
+			return $this;
+		}
+
+		public function joinQuery(SelectQuery $query, LogicalObject $logic, $alias)
+		{
+			$this->from[] = new SQLQueryJoin($query, $logic, $alias);
+			return $this;
+		}
+		
+		public function join($table, LogicalObject $logic, $alias = null)
+		{
+			$this->from[] = new SQLJoin($table, $logic, $alias);
+			return $this;
+		}
+		
+		public function leftJoin($table, LogicalObject $logic, $alias = null)
+		{
+			$this->from[] = new SQLLeftJoin($table, $logic, $alias);
+			return $this;
+		}
+
+		public function orderBy($field, $table = null)
+		{
+			if ($field instanceof DialectString)
+				$this->order[] = new OrderBy($field);
+			else
+				$this->order[] =
+					new OrderBy(
+						new DBField($field, $this->getLastTable($table))
+					);
+
+			return $this;
+		}
+
+		public function desc()
+		{
+			if (!sizeof($this->order))
+				throw new WrongStateException("no fields to sort");
+
+			$this->order[sizeof($this->order) - 1]->desc();
+
+			return $this;
+		}
+		
+		public function asc()
+		{
+			if (!sizeof($this->order))
+				throw new WrongStateException("no fields to sort");
+
+			$this->order[sizeof($this->order) - 1]->asc();
+
+			return $this;
+		}
+
+		public function groupBy($field, $table = null)
+		{
+			if ($field instanceof DBField)
+				$this->group[] = new GroupBy($field);
+			else 
+				$this->group[] =
+					new GroupBy(
+						new DBField($field, $this->getLastTable($table))
+					);
+
+			return $this;
 		}
 
 		public function getLimit()
@@ -35,6 +125,83 @@
 		public function getOffset()
 		{
 			return $this->offset;
+		}
+
+		public function limit($limit = null, $offset = null)
+		{
+			$this->limit = $limit;
+			$this->offset = $offset;
+			return $this;
+		}
+
+		public function from($table, $alias = null)
+		{
+			$this->from[] = new FromTable($table, $alias);
+
+			return $this;
+		}
+		
+		// BOVM: achtung!
+		public function get($field, $alias = null)
+		{
+			$table = null;
+			if (is_object($field)) {
+				if ($field instanceof DBField) {
+					if ($field->getTable() === null)
+						$this->fields[] = new SelectField(
+							$field->setTable($this->getLastTable()),
+							$alias
+						);
+					else
+						$this->fields[] = new SelectField($field, $alias);
+
+					return $this;
+				} elseif ($field instanceof DialectString) {
+					$this->fields[] = $field;
+					
+					return $this;
+				} else
+					throw new WrongArgumentException('unknown field type');
+
+			} elseif (false !== strpos($field, '*'))
+				throw new WrongArgumentException(
+					'do not fsck with us: specify fields explicitly'
+				);
+			elseif (false !== strpos($field, '.'))
+				throw new WrongArgumentException(
+					'forget about dot: use DBField'
+				);
+			else
+				$fieldName = $field;
+				
+			$this->fields[] = new SelectField(
+				new DBField($fieldName, $this->getLastTable($table)), $alias
+			);
+
+			return $this;
+		}
+
+		public function multiGet()
+		{
+			$size = func_num_args();
+		
+			if ($size && $args = func_get_args())
+				for ($i = 0; $i < $size; $i++)
+					$this->get($args[$i]);
+		
+			return $this;
+		}
+		
+		public function arrayGet($array, $prefix = null)
+		{
+			if ($prefix)
+				for ($i = 0; $i < sizeof($array); $i++)
+					$this->get($array[$i], $prefix.$array[$i]);
+			else
+				for ($i = 0; $i < sizeof($array); $i++)
+					$this->get($array[$i]);
+					
+			return $this;
 		}
 
 		public function getFieldsCount()
@@ -102,8 +269,20 @@
 	
 			return $query;
 		}
+		
+		public function dropFields()
+		{
+			$this->fields = array();
+			return $this;
+		}
+		
+		public function dropOrder()
+		{
+			$this->order = array();
+			return $this;
+		}
 
-		protected function getLastTable($table = null)
+		private function getLastTable($table = null)
 		{
 			if (!$table && sizeof($this->from))
 				return $this->from[sizeof($this->from) - 1]->getTable();
