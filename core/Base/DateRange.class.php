@@ -126,25 +126,10 @@
 			if ($this->isEmpty() || $range->isEmpty())
 				return true;
 
-			if ($this->start)
-				$left = $this->start->getDayStartStamp();
-			else
-				$left = null;
-
-			if ($this->end)
-				$right = $this->end->getDayEndStamp();
-			else
-				$right = null;
-
-			if ($range->start)
-				$min = $range->start->getDayStartStamp();
-			else
-				$min = null;
-
-			if ($range->end)
-				$max = $range->end->getDayEndStamp();
-			else
-				$max = null;
+			$left = $this->getStartStamp();
+			$right = $this->getEndStamp();
+			$min = $range->getStartStamp();
+			$max = $range->getEndStamp();
 
 			return (
 				( $min && $max 
@@ -190,16 +175,8 @@
 
 		public function contains(Timestamp $date)
 		{
-			if ($this->start)
-				$start = $this->start->getDayStartStamp();
-			else
-				$start = null;
-
-			if ($this->end)
-				$end = $this->end->getDayEndStamp();
-			else 
-				$end = null;
-
+			$start = $this->getStartStamp();
+			$end = $this->getEndStamp();
 			$probe = $date->toStamp();
 
 			if (
@@ -233,6 +210,116 @@
 				$timestamps[] = new Timestamp($current->getDayStartStamp());
 
 			return $timestamps;
+		}
+
+		// this will contain both range and old this
+		public function enlarge(DateRange $range)
+		{
+			if (!$range->start)
+				$this->start = null;
+			elseif (
+				$this->start 
+				&& $this->start->toStamp() > $range->start->toStamp()
+			)
+				$this->start = clone $range->start;
+
+			if (!$range->end)
+				$this->end = null;
+			elseif (
+				$this->end
+				&& $this->end->toStamp() < $range->end->toStamp()
+			)
+				$this->end = clone $range->end;
+
+			return $this;
+		}
+
+		// this will be intersection of this and range
+		public function clip(DateRange $range)
+		{
+			Assert::isTrue($this->overlaps($range));
+
+			if ($range->start 
+				&& (
+					$this->start 
+					&& $range->start->toStamp() > $this->start->toStamp()
+					|| !$this->start
+				)
+			)
+				$this->start = clone $range->start;
+
+			if ($range->end 
+				&& (
+					$this->end 
+					&& $range->end->toStamp() < $this->end->toStamp()
+					|| !$this->end
+				)
+
+			)
+				$this->end = clone $range->end;
+
+			return $this;
+		}
+
+		protected function getStartStamp() // null if start is null
+		{
+			if ($this->start)
+				return $this->start->getDayStartStamp();
+			else
+				return null;
+		}
+
+		protected function getEndStamp() // null if end is null
+		{
+			if ($this->end)
+				return $this->end->getDayEndStamp();
+			else 
+				return null;
+
+		}
+
+		public static function compare(DateRange $left, DateRange $right)
+		{
+			if ($left->isEmpty() && $right->isEmpty())
+				return 0;
+			elseif ($left->isEmpty())
+				return 1;
+			elseif ($right->isEmpty())
+				return -1;
+
+			$leftStart = $left->getStartStamp();
+			$leftEnd = $left->getEndStamp();
+
+			$rightStart = $right->getStartStamp();
+			$rightEnd = $right->getEndStamp();
+
+			if (
+				!$leftStart && !$rightStart 
+				|| $leftStart && $rightStart && ($leftStart == $rightStart)
+			) {
+
+				if (
+					!$leftEnd && !$rightEnd
+					|| $leftEnd && $rightEnd && ($leftEnd == $rightEnd)
+				)
+					return 0;
+				elseif (!$leftEnd && $rightEnd)
+					return 1;
+				elseif($leftEnd && !$rightEnd)
+					return -1;
+				elseif ($leftEnd < $rightEnd)
+					return -1;
+				else
+					return 1;
+
+			} elseif ( !$leftStart && $rightStart) 
+				return -1;
+			elseif ( $leftStart && !$rightStart) 
+				return 1;
+			elseif ($leftStart < $rightStart)
+				return -1;
+			else
+				return 1;
 		}
 	}
 ?>
