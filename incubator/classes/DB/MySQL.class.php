@@ -48,14 +48,12 @@
 		
 		public function asyncQuery(Query $query)
 		{
-			// I don't know: better implement the feature by hand
-			// or stay as is?
-			return $this->query($query);
+			throw new UnsupportedMethodException;
 		}
 
 		public function isBusy()
 		{
-			return !mysql_ping($this->link);
+			throw new UnsupportedMethodException;
 		}
 		
 		public function disconnect()
