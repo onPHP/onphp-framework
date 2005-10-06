@@ -1,5 +1,11 @@
 # $Id$
 
+2005-10-06	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* core/Base/Timestamp.class.php: getDayStartStamp, getDayEndStamp methods added
+
+* core/Base/DateRange.class.php: enlarge, clip, compare methods added
+
 2005-10-06	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * core/OSQL/SelectQuerySkeleton.class.php: merged back to SelectQuery as
