@@ -127,42 +127,22 @@
 				return true;
 
 			if ($this->start)
-				$left = mktime(
-					0,0,0,
-					$this->start->getMonth(),
-					$this->start->getDay(),
-					$this->start->getYear()
-				);
+				$left = $this->start->getDayStartStamp();
 			else
 				$left = null;
 
 			if ($this->end)
-				$right = mktime(
-					23,59,59,
-					$this->end->getMonth(),
-					$this->end->getDay(),
-					$this->end->getYear()
-				);
+				$right = $this->end->getDayEndStamp();
 			else
 				$right = null;
 
 			if ($range->start)
-				$min = mktime(
-					0,0,0,
-					$range->start->getMonth(),
-					$range->start->getDay(),
-					$range->start->getYear()
-				);
+				$min = $range->start->getDayStartStamp();
 			else
 				$min = null;
 
 			if ($range->end)
-				$max = mktime(
-					23,59,59,
-					$range->end->getMonth(),
-					$range->end->getDay(),
-					$range->end->getYear()
-				);
+				$max = $range->end->getDayEndStamp();
 			else
 				$max = null;
 
@@ -211,22 +191,12 @@
 		public function contains(Timestamp $date)
 		{
 			if ($this->start)
-				$start = mktime(
-					0,0,0,
-					$this->start->getMonth(),
-					$this->start->getDay(),
-					$this->start->getYear()
-				);
+				$start = $this->start->getDayStartStamp();
 			else
 				$start = null;
 
 			if ($this->end)
-				$end = mktime(
-					23,59,59,
-					$this->end->getMonth(),
-					$this->end->getDay(),
-					$this->end->getYear()
-				);
+				$end = $this->end->getDayEndStamp();
 			else 
 				$end = null;
 
@@ -251,37 +221,16 @@
 			);
 			$timestamps = array();
 
-			$start = new Timestamp(
-				mktime(
-					0,0,0,
-					$this->start->getMonth(),
-					$this->start->getDay(),
-					$this->start->getYear()
-				)
-			);
+			$start = new Timestamp($this->start->getDayStartStamp());
 
-			$end = new Timestamp(
-				mktime(
-					23,59,59,
-					$this->end->getMonth(),
-					$this->end->getDay(),
-					$this->end->getYear()
-				)
-			);
+			$end = new Timestamp($this->end->getDayEndStamp());
 
 			for (
 				$current = $start; 
 				$current->toStamp() < $end->toStamp();
 				$current->modify('+1 day')
 			)
-				$timestamps[] = new Timestamp(
-					mktime(
-						0,0,0,
-						$current->getMonth(),
-						$current->getDay(),
-						$current->getYear()
-					)
-				);
+				$timestamps[] = new Timestamp($current->getDayStartStamp());
 
 			return $timestamps;
 		}

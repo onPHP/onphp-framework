@@ -157,6 +157,26 @@
 		{
 			return date("Y{$delimiter}m{$delimiter}d");
 		}
+
+		public function getDayStartStamp()
+		{
+			return mktime(
+					0,0,0,
+					$this->month,
+					$this->day,
+					$this->year
+				);
+		}
+
+		public function getDayEndStamp()
+		{
+			return mktime(
+					23,59,59,
+					$this->month,
+					$this->day,
+					$this->year
+				);
+		}
 		
 		private function import($string)
 		{
