@@ -12,13 +12,13 @@
 /* $Id$ */
 
 	// FIXME: too many features not implemented
-	class MySQL extends DB
+	class MSSQL extends DB
 	{
 		private static $dialect = null;
 		
 		public function __construct()
 		{
-			self::$dialect = new MyDialect();
+			self::$dialect = new MSDialect();
 		}
 		
 		public static function getDialect()
@@ -33,12 +33,12 @@
 		{
 			$this->link =
 				($persistent)
-					? mysql_pconnect($host, $user, $pass)
-					: mysql_connect($host, $user, $pass);
+					? mssql_pconnect($host, $user, $pass)
+					: mssql_connect($host, $user, $pass);
 							
-			if (!$this->link || ($base && !mysql_select_db($base, $this->link)))
+			if (!$this->link || ($base && !mssql_select_db($base, $this->link)))
 				throw new DatabaseException(
-					'can not connect to MySQL server: '.mysql_error($this->link)
+					'can not connect to MSSQL server: ' . mssql_get_last_message()
 				);
 			
 			$this->persistent = $persistent;
@@ -59,7 +59,7 @@
 		public function disconnect()
 		{
 			if ($this->isConnected())
-				mysql_close($this->link);
+				mssql_close($this->link);
 
 			return $this;
 		}
@@ -74,7 +74,7 @@
 		**/
 		public function queryCount(Query $query)
 		{
-			return mysql_affected_rows($this->query($query));
+			return mssql_rows_affected($this->query($query));
 		}
 		
 		public function queryObjectRow(Query $query, CommonDAO $dao)
@@ -82,7 +82,7 @@
 			$res = $this->query($query);
 			
 			if ($res)
-				if ($row = mysql_fetch_assoc($res))
+				if ($row = mssql_fetch_assoc($res))
 					return $dao->makeObject($row);
 
 			return null;
@@ -93,7 +93,7 @@
 			$res = $this->query($query);
 			
 			if ($res)
-				return mysql_fetch_assoc($res);
+				return mssql_fetch_assoc($res);
 			else
 				return null;
 		}
@@ -105,7 +105,7 @@
 			if ($res) {
 				$array = array();
 				
-				while ($row = mysql_fetch_assoc($res))
+				while ($row = mssql_fetch_assoc($res))
 					$array[] = $dao->makeObject($row);
 
 				return $array;
@@ -121,7 +121,7 @@
 			if ($res) {
 				$array = array();
 
-				while ($row = mysql_fetch_row($res))
+				while ($row = mssql_fetch_row($res))
 					$array[] = $row[0];
 
 				return $array;
@@ -136,7 +136,7 @@
 			if ($res) {
 				$array = array();
 
-				while ($row = mysql_fetch_assoc($res))
+				while ($row = mssql_fetch_assoc($res))
 					$array[] = $row;
 
 				return $array;
@@ -146,10 +146,10 @@
 		
 		public function queryRaw($queryString)
 		{
-			if (!$result = mysql_query($queryString, $this->link))
+			if (!$result = mssql_query($queryString, $this->link))
 				throw new DatabaseException(
 					"failed to execute such query - '{$queryString}': ".
-					mysql_error($this->link)
+					mssql_get_last_message()
 				);
 
 			return $result;
