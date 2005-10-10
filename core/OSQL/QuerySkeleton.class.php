@@ -11,15 +11,27 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class QuerySkeleton implements Query
+	abstract class QuerySkeleton implements Query
 	{
 		protected $where		= array();	// where clauses
 		protected $whereLogic	= array();	// logic between where's
 
+		public function getId()
+		{
+			return sha1(serialize($this));
+		}
+		
+		public function setId($id)
+		{
+			throw new UnsupportedMethodException();
+		}
+
 		public function where(LogicalObject $exp, $logic = null)
 		{
 			if (sizeof($this->where) > 0 && !$logic)
-				throw new WrongArgumentException('you have to specify expression logic');
+				throw new WrongArgumentException(
+					'you have to specify expression logic'
+				);
 			else {
 				if (sizeof($this->where) == 0 && $logic)
 					$logic = null;
@@ -39,11 +51,6 @@
 		public function orWhere(LogicalObject $exp)
 		{
 			return $this->where($exp, 'OR');
-		}
-
-		public function getHash()
-		{
-			return sha1(serialize($this));
 		}
 
 		public function toString(Dialect $dialect)

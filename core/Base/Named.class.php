@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
- *   voxus@gentoo.org                                                      *
+ *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   voxus@shadanakar.org                                                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,8 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-	interface Query extends DialectString, Identifiable
+	interface Named extends Identifiable
 	{
-		// getId() from Identifiable is the former getHash()
+		public function getName();
+		public function setName($name);
 	}
 ?>

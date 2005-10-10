@@ -82,7 +82,7 @@
 			$className = $this->getObjectName();
 			
 			Cache::me()->mark($className)->
-				add('query_'.$query->getHash(), $object, $expires);
+				add('query_'.$query->getId(), $object, $expires);
 			
 			return $object;
 		}
@@ -92,7 +92,7 @@
 			$className = $this->getObjectName();
 			
 			Cache::me()->mark($className)->
-				add('result_'.$result->getQuery()->getHash(), $result, $expires);
+				add('result_'.$result->getQuery()->getId(), $result, $expires);
 			
 			return $result;
 		}
@@ -115,21 +115,21 @@
 		{
 			return
 				Cache::me()->mark($this->getObjectName())->
-					get('query_'.$query->getHash());
+					get('query_'.$query->getId());
 		}
 		
 		public function uncacheByQuery(Query $query)
 		{
 			return
 				Cache::me()->mark($this->getObjectName())->
-					delete('query_'.$query->getHash());
+					delete('query_'.$query->getId());
 		}
 		
 		public function getCachedQueryResult(SelectQuery $query)
 		{
 			return
 				Cache::me()->mark($this->getObjectName())->
-					get('result_'.$query->getHash());
+					get('result_'.$query->getId());
 		}
 		
 		public function uncacheByKey($key)

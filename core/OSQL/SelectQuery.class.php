@@ -24,10 +24,12 @@
 
 	class GroupBy extends FieldTable {/*_*/}
 
-	final class SelectQuery extends QuerySkeleton
+	final class SelectQuery extends QuerySkeleton implements Named
 	{
 		private $distinct		= false;
 
+		private $name			= null;
+		
 		private $limit			= null;
 		private $offset			= null;
 
@@ -35,6 +37,18 @@
 		private $from			= array();
 		private $order			= array();
 		private $group			= array();
+		
+		public function getName()
+		{
+			return $this->name;
+		}
+		
+		public function setName($name)
+		{
+			$this->name = $name;
+			
+			return $this;
+		}
 
 		public function distinct()
 		{
@@ -213,7 +227,19 @@
 		{
 			$fieldList = array();
 			foreach ($this->fields as &$field) {
-				$fieldList[] = $field->toString($dialect);
+				
+				if ($field instanceof SelectQuery) {
+					
+					Assert::isTrue(
+						null !== $alias = $field->getName(),
+						'can not use selectQueriy without name as get field'
+					);
+					
+					$fieldList[] =
+						"({$field->toString($dialect)}) AS ".
+						$dialect->quoteField($alias);
+				} else
+					$fieldList[] = $field->toString($dialect);
 			}
 
 			$query = 

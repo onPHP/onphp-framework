@@ -15,6 +15,11 @@
 	{
 		private $table	= null;
 		
+		public function getId()
+		{
+			throw new UnsupportedMethodException();
+		}
+
 		public function from($table)
 		{
 			$this->table = $table;
@@ -36,11 +41,6 @@
 				throw new WrongArgumentException(
 					"leave '{$this->table}' table alone in peace, bastard"
 				);
-		}
-
-		public function getHash()
-		{
-			throw new UnsupportedMethodException();
 		}
 	}
 ?>

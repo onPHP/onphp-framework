@@ -20,6 +20,16 @@
 			return new Queue();
 		}
 
+		public function getId()
+		{
+			return sha1(serialize($this->queue));
+		}
+		
+		public function setId($id)
+		{
+			throw new UnsupportedMethodException();
+		}
+
 		public function getQueue()
 		{
 			return $this->queue;
@@ -59,11 +69,6 @@
 		public function flush(DB $db)
 		{
 			return $this->run($db)->drop();
-		}
-		
-		public function getHash()
-		{
-			return sha1(serialize($this->queue));
 		}
 		
 		public function toString(Dialect $dialect)

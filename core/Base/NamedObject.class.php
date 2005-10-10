@@ -11,7 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class NamedObject implements Identifiable
+	abstract class NamedObject implements Named
 	{
 		protected $id	= null;
 		protected $name	= null;

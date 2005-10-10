@@ -1,10 +1,16 @@
 # $Id$
 
+2005-10-10	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/OSQL/: SelectQueries as select fields implemented as requested by
+Sergeev Sergey <serge@rdw.ru>. Minor internal API changes.
+
 2005-10-06	Anton E. Lebedevich	<noiselist@pochta.ru>
 
-* core/Base/Timestamp.class.php: getDayStartStamp, getDayEndStamp methods added
+* core/Base/Timestamp.class.php: getDayStartStamp, getDayEndStamp methods
+added.
 
-* core/Base/DateRange.class.php: enlarge, clip, compare methods added
+* core/Base/DateRange.class.php: enlarge, clip, compare methods added.
 
 2005-10-06	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 

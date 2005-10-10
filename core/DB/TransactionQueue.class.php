@@ -21,6 +21,16 @@
 			$this->queue = new Queue();
 		}
 		
+		public function getId()
+		{
+			return sha1(serialize($this));
+		}
+		
+		public function setId($id)
+		{
+			throw new UnsupportedMethodException();
+		}
+		
 		public function setDB(DB $db)
 		{
 			$this->db = $db;
@@ -47,11 +57,6 @@
 			}
 			
 			return $this;
-		}
-		
-		public function getHash()
-		{
-			return sha1(serialize($this->queue));
 		}
 		
 		// to satisfy Query interface
