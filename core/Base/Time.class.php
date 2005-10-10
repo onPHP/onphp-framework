@@ -59,7 +59,7 @@
 						else
 							$this->
 								setHour($assumedHour)->
-								setMinute($input{2});
+								setMinute("{$input{2}}0");
 
 						break;
 
