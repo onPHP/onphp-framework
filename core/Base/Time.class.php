@@ -27,17 +27,19 @@
 		{
 			$input = (string) $input;
 			
-			$count = substr_count($input, ':');
+			$time = split('[:\.]', $input);
 			
 			$lenght = strlen($input);
 			
-			if (($count === 1) || ($count === 2)) {
-				list($hour, $minute, $second) = explode(':', $input, ($count + 1));
-				
+			if (count($time) === 2) {
 				$this->
-					setHour($hour)->
-					setMinute($minute)->
-					setSecond($second);
+					setHour($time[0])->
+					setMinute($time[1]);
+			} elseif (count($time) === 3) {
+				$this->
+					setHour($time[0])->
+					setMinute($time[1])->
+					setSecond($time[2]);
 			} else {
 				switch ($lenght) {
 					case 1:
