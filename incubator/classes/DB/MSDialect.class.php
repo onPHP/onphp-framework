@@ -13,26 +13,6 @@
 
 	final class MSDialect extends Dialect
 	{
-		public static function quoteValue(&$value)
-		{
-			return "'" . mysql_real_escape_string($value) . "'";
-		}
-		
-		public static function quoteField(&$field)
-		{
-			if (strpos($field, '.') !== false)
-				throw new WrongArgumentException();
-			elseif (strpos($field, '::') !== false)
-				throw new WrongArgumentException();
-
-			return "`$field`";
-		}
-		
-		public static function quoteTable(&$table)
-		{
-			return "`$table`";
-		}
-		
 		public function fullTextSearch($fields, $words, $logic)
 		{
 			throw new UnimplementedFeatureException('implement me first!');
