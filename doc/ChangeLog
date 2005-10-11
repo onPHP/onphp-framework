@@ -1,5 +1,9 @@
 # $Id$
 
+2005-10-11	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* core/DB/DBTransaction.class.php: "neverending" transactions fixed.
+
 2005-10-10	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * core/OSQL/: SelectQueries as select fields implemented as requested by
