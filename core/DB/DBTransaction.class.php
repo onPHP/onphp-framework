@@ -52,6 +52,8 @@
 		
 		public function flush()
 		{
+			$this->started = false;
+			
 			try {
 				$this->db->queryRaw("commit;\n");
 			} catch (DatabaseException $e) {
