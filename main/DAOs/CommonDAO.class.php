@@ -119,7 +119,7 @@
 				);
 		}
 
-		public function getListByIds(&$ids, $expires = Cache::EXPIRES_MEDIUM)
+		public function getListByIds($ids, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			if ($expires !== Cache::DO_NOT_CACHE) {
 				$list = array();
