@@ -1,5 +1,10 @@
 # $Id$
 
+2005-10-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/Cache/ReferencePool.class.php: new CachePeer wrapper, obsoletes
+IdentityMap-in-DAOs idea.
+
 2005-10-11	Anton E. Lebedevich	<noiselist@pochta.ru>
 
 * core/DB/DBTransaction.class.php: "neverending" transactions fixed.

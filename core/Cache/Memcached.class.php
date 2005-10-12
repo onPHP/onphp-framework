@@ -24,7 +24,7 @@
 		private $link		= null;
 
 		private $buffer		= Memcached::DEFAULT_BUFFER;
-
+		
 		public static function create(
 			$host = Memcached::DEFAULT_HOST,
 			$port = Memcached::DEFAULT_PORT,
@@ -120,10 +120,7 @@
 						if ($flags & 2)
 							$result = gzuncompress($result);
 
-						if ($flags & 1)
-							$result = unserialize($result);
-							
-						return $result;
+						return unserialize($result);
 					} else
 						return null;
 				}
