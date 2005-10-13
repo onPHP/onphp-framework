@@ -182,7 +182,7 @@
 			$count =
 				$this->queryRow(
 					$count->dropFields()->dropOrder()->
-					getCount('*', 'count')->limit(null, null)
+					get(SQLFunction::create('COUNT', '*')->setAlias('count'))
 				);
 
 			$res = new QueryResult();

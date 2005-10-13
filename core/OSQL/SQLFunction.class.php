@@ -59,6 +59,9 @@
 				foreach ($this->args as &$arg)
 					if ($arg instanceof DBValue)
 						$args[] = $arg->toString($dialect);
+					// we're not using * anywhere but COUNT()
+					elseif ($arg === '*')
+						$args[] = $dialect->quoteValue($arg);
 					else
 						$args[] = $dialect->fieldToString($arg);
 			}
