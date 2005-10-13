@@ -31,6 +31,8 @@ class LoggerTest extends UnitTestCase
 						->setLogFile($this->file)
 						->setStartLine($this->startLine)
 						->setEndLine($this->endLine)
+						;
+		Singletone::getInstance()->Logger()
 						->write($this->testString)
 						;
 		$this->assertEqual($this->startLine
