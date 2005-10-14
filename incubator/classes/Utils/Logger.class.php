@@ -59,6 +59,8 @@ class Logger extends Singletone
 		$file = fopen($this->logFile, 'a');
 		fwrite($file, strftime($this->startLine) . $line . strftime($this->endLine));
 		fclose($file);
+		
+		return $this;
 	}
 	
 }
