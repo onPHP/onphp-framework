@@ -15,14 +15,16 @@
 	{
 		private $instance = null;
 		
-		public function __construct($instance = null)
-		{
-			$this->instance = $instance;
-		}
-		
 		public function getInstance()
 		{
 			return $this->instance;
+		}
+		
+		public function setInstance(Singletone $instance)
+		{
+			$this->instance = $instance;
+			
+			return $this;
 		}
 	}
 	
@@ -31,14 +33,18 @@
 		protected function __construct($class = null)
 		{
 			static $instances = array();
+			static $container = null;
+			
+			if (null === $container)
+				$container = new SingletoneException();
 			
 			if (isset($instances[$class]))
-				throw new SingletoneException($instances[$class]);
+				throw $container->setInstance($instances[$class]);
 			else
 				$instances[$class] = $this;
 		}
 		
-		public static function getInstance(
+		final public static function getInstance(
 			$class = 'SingletoneInstance', $args = null
 		)
 		{
@@ -60,16 +66,6 @@
 	
 	final class SingletoneInstance extends Singletone
 	{
-		protected function __construct(/* $class = null, $args = null */)
-		{
-			static $self = null;
-			
-			if (!$self)
-				$self = $this;
-
-			return $self;
-		}
-		
 		public function __call($class, $args = null)
 		{
 			return Singletone::getInstance($class, $args);

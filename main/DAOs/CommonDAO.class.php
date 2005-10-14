@@ -13,6 +13,8 @@
 
 	abstract class CommonDAO extends CacheableDAO
 	{
+		protected $selectHead = null;
+		
 		/**
 		 * quite common and must-have methods
 		**/
@@ -326,16 +328,18 @@
 		**/
 		public function makeSelectHead()
 		{
-			$query = 
-				OSQL::select()->
-				from($this->getTable());
+			if (null === $this->selectHead) {
+				$this->selectHead = 
+					OSQL::select()->
+					from($this->getTable());
+				
+				$table = $this->getTable();
+				
+				foreach ($this->getFields() as $field)
+					$this->selectHead->get(new DBField($field, $table));
+			}
 			
-			$table = $this->getTable();
-			
-			foreach ($this->getFields() as $field)
-				$query->get(new DBField($field, $table));
-			
-			return $query;
+			return clone $this->selectHead;
 		}
 	}
 ?>
