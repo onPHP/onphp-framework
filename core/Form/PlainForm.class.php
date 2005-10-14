@@ -89,7 +89,7 @@
 		{
 			$prm		= $this->get($name);
 			$list	= $prm->getList();
-			$value	= $prm->getValue();
+			$value	= $prm->getActualValue();
 
 			if ($value !== null)
 				return $list[$value];
