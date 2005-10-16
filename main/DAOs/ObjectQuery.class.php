@@ -212,10 +212,13 @@
 					else
 						$query->andWhere($exp);
 				} else {
-					if (!isset($map[$left]))
+					if (array_key_exists($left, $map)) {
+						if ($map[$left])
+							$left = new DBField($map[$left]);
+						else
+							$left = new DBField($left);
+					} else
 						$left = new DBValue($left);
-					else
-						$left = new DBField($map[$left]);
 					
 					if (isset($map[$right]))
 						$right = new DBField($map[$right]);
