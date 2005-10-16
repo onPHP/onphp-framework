@@ -1,5 +1,9 @@
 # $Id$
 
+2005-10-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/ObjectQuery.class.php: null-valued mappings handling logic fixed.
+
 2005-10-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * core/Cache/ReferencePool.class.php: new CachePeer wrapper, obsoletes
