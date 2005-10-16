@@ -26,5 +26,15 @@
 		{
 			return $this->form;
 		}
+
+		protected function blowOut()
+		{
+			if (!HeaderUtils::redirectBack())
+				HeaderUtils::redirect(
+					ModuleFactory::spawn(DEFAULT_MODULE)
+				);
+			
+			return $this;
+		}
 	}
 ?>
