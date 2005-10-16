@@ -4,6 +4,8 @@
 
 * main/DAOs/ObjectQuery.class.php: null-valued mappings handling logic fixed.
 
+* core/DB/DB.class.php: drop as much as we can at objectQuery().
+
 2005-10-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * core/Cache/ReferencePool.class.php: new CachePeer wrapper, obsoletes
