@@ -49,7 +49,7 @@
 				
 					if ($id = $form->getValue('id')) {
 						$dao->dropById($id);
-						return $this->selfredirect();
+						return $this->selfRedirect();
 					}
 					
 					break;
@@ -75,7 +75,7 @@
 							$this->subject
 						);
 						
-						return $this->selfredirect();
+						return $this->selfRedirect();
 					}
 					
 					break;
@@ -83,9 +83,15 @@
 				case 'add':
 
 					if (!$form->getErrors()) {
-						$dao->add($this->subject);
+						
+						try {
+							$dao->add($this->subject);
+						} catch (DuplicateObjectException $e) {
+							$form->markWrong('id');
+							return $this;
+						}
 
-						return $this->selfredirect();
+						return $this->selfRedirect();
 					}
 					
 					break;
