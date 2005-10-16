@@ -87,7 +87,19 @@
 
 		public function getChoiceValue($name)
 		{
-			$prm		= $this->get($name);
+			$prm	= $this->get($name);
+			$list	= $prm->getList();
+			$value	= $prm->getValue();
+
+			if ($value !== null)
+				return $list[$value];
+
+			return null;
+		}
+		
+		public function getActualChoiceValue($name)
+		{
+			$prm	= $this->get($name);
 			$list	= $prm->getList();
 			$value	= $prm->getActualValue();
 
@@ -96,7 +108,7 @@
 
 			return null;
 		}
-		
+
 		public function getRangeMax($name)
 		{
 			$range = &$this->get($name)->getValue();
