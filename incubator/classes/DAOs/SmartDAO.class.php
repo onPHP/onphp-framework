@@ -13,6 +13,11 @@
 
 	abstract class SmartDAO extends GenericDAO
 	{
+		const SUFFIX_MAP	= '_map';
+		const SUFFIX_LIST	= '_list_';
+		const SUFFIX_INDEX	= '_lists_index';
+		const SUFFIX_RESULT	= '_result_';
+		
 		public function dropByIds($ids)
 		{
 			foreach ($ids as $id)
@@ -34,6 +39,24 @@
 					OSQL::delete()->from($this->getTable())->
 					where(Expression::eq('id', $id))
 				);
+		}
+		
+		public function dropLists()
+		{
+			$className = $this->getObjectName();
+			
+			$indexKey = $className.self::SUFFIX_INDEX;
+			
+			$cache = Cache::me();
+			
+			$indexList = $cache->mark($className)->get($indexKey);
+			
+			$cache->mark($className)->delete($indexKey);
+			
+			foreach ($indexList as $key => &$true)
+				$cache->mark($className)->delete($key);
+			
+			return $true;
 		}
 		
 		public function getCachedById($id)
@@ -142,7 +165,7 @@
 
 			$className = $this->getObjectName();
 			
-			$countKey = $className.'_result_'.$query->getId();
+			$countKey = $className.self::SUFFIX_RESULT.$query->getId();
 			
 			$cache = Cache::me();
 			
@@ -213,7 +236,7 @@
 			
 			$key = $className.'_query_'.$query->getId();
 			
-			$this->syncMap($className.'_'.$object->getId().'_map', $key);
+			$this->syncMap($className.'_'.$object->getId().self::SUFFIX_MAP, $key);
 			
 			Cache::me()->mark($this->getObjectName())->
 				add($key, $object, Cache::EXPIRES_FOREVER);
@@ -227,7 +250,7 @@
 			
 			return
 				Cache::me()->mark($className)->
-					get($className.'_list_'.$query->getId());
+					get($className.self::SUFFIX_LIST.$query->getId());
 		}
 		
 		protected function cacheList(SelectQuery $query, /* array */ $array)
@@ -238,11 +261,12 @@
 			$cache = Cache::me();
 			$className = $this->getObjectName();
 			
-			$listKey = $className.'_list_'.$query->getId();
+			$listKey = $className.self::SUFFIX_LIST.$query->getId();
+			$indexKey = $className.self::SUFFIX_INDEX;
 			
 			foreach ($array as $key => $object) {
 				
-				$mapKey = $className.'_'.$object->getId().'_map';
+				$mapKey = $className.'_'.$object->getId().self::SUFFIX_MAP;
 				
 				$this->syncMap($mapKey, $listKey);
 				
@@ -252,6 +276,8 @@
 			$cache->mark($className)->
 				add($listKey, $array, Cache::EXPIRES_FOREVER);
 			
+			$this->syncMap($indexKey, $listKey);
+			
 			return $array;
 		}
 
@@ -259,18 +285,36 @@
 		{
 			$className = $this->getObjectName();
 			$objectKey = $className.'_'.$id;
-			$mapKey = $objectKey.'_map';
+			$mapKey = $objectKey.self::SUFFIX_MAP;
 			
 			$cache = Cache::me();
 			
 			if ($map = $cache->get($mapKey)) {
-				$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true);
-				Assert::isTrue(sem_acquire($sem));
 				
-				foreach ($map as $key => $true)
+				$indexKey = $className.self::SUFFIX_INDEX;
+				
+				$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true);
+				$indexSem = sem_get($this->keyToInt($indexKey), 1, 0600, true);
+				
+				Assert::isTrue(sem_acquire($sem) && sem_acquire($indexSem));
+				
+				if (!$indexList = $cache->mark($className)->get($indexKey)) {
+					sem_remove($indexSem);
+					$indexSem = null;
+					$indexList = array();
+				}
+				
+				foreach ($map as $key => $true) {
 					$cache->mark($className)->delete($key);
+					unset($indexList[$key]);
+				}
 				
 				sem_remove($sem);
+
+				if ($indexSem) {
+					$cache->set($indexKey, $indexList, Cache::EXPIRES_FOREVER);
+					sem_remove($indexSem);
+				}
 			}
 			
 			return $cache->mark($className)->delete($objectKey);
