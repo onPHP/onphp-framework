@@ -126,14 +126,6 @@
 			if ($expires !== Cache::DO_NOT_CACHE) {
 				$list = array();
 				
-				if (sizeof($ids) == 1) {
-					try {
-						return array($this->getById(current($ids)));
-					} catch (ObjectNotFoundException $e) {
-						return array();
-					}
-				}
-				
 				foreach ($ids as $id) {
 					try {
 						$list[] = $this->getById($id, $expires);
