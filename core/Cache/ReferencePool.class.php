@@ -66,7 +66,7 @@
 		{
 			$this->pool[$key] = $value;
 			
-			return $this->peer->set($key, $value, $expires);
+			return $this->peer->replace($key, $value, $expires);
 		}
 		
 		protected function store(
