@@ -131,7 +131,7 @@
 			else
 				throw new ObjectNotFoundException();
 		}
-
+		
 		protected function cacheObject(Identifiable $object)
 		{
 			$className = $this->getObjectName();

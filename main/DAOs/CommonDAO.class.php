@@ -175,23 +175,6 @@
 		{
 			return $this->getListByQuery($this->makeSelectHead(), $expires);
 		}
-
-		public function getQueryResult(SelectQuery $query, $expires = Cache::DO_NOT_CACHE)
-		{
-			$db = DBFactory::getDefaultInstance();
-
-			if ($result = $this->getCachedQueryResult($query))
-				return $result;
-			elseif ($result = $db->objectQuery($query, $this)) {
-				if ($expires === Cache::DO_NOT_CACHE)
-					return $result;
-				else
-					return $this->cacheByQueryResult($result, $expires);
-			} else
-				throw new ObjectNotFoundException(
-					"zero list for query such query - '{$query->toString($db->getDialect())}'"
-				);
-		}
 		
 		public function getListByLogic(LogicalObject $logic, $expires = Cache::DO_NOT_CACHE)
 		{

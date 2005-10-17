@@ -173,27 +173,6 @@
 				return $this->query($query);
 		}
 
-		public function objectQuery(SelectQuery $query, GenericDAO $dao)
-		{
-			$list = $this->queryObjectSet($query, $dao);
-			
-			$count = clone $query;
-			
-			$count =
-				$this->queryRow(
-					$count->dropFields()->dropOrder()->limit(null, null)->
-					get(SQLFunction::create('COUNT', '*')->setAlias('count'))
-				);
-
-			$res = new QueryResult();
-
-			return
-				$res->
-					setList($list)->
-					setCount($count['count'])->
-					setQuery($query);
-		}
-
 		public function isConnected()
 		{
 			return is_resource($this->link);

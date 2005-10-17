@@ -20,9 +20,6 @@
 		
 		abstract protected function makeObject(&$array, $prefix = null);
 		
-		// TODO: move to DAO-level instead of DB
-		// abstract public function getQueryResult(SelectQuery $query);
-
 		abstract public function getById($id);
 		abstract public function getByLogic(LogicalObject $logic);
 		abstract public function getByQuery(SelectQuery $query);
@@ -58,6 +55,31 @@
 			}
 			
 			return clone $this->selectHead;
+		}
+		
+		// TODO: separate implementation:
+		// cached for SmartDAO, this one for CommonDAO
+		public function getQueryResult(SelectQuery $query)
+		{
+			$db = DBFactory::getDefaultInstance();
+			
+			$list = $db->queryObjectSet($query, $this);
+			
+			$count = clone $query;
+			
+			$count =
+				$db->queryRow(
+					$count->dropFields()->dropOrder()->limit(null, null)->
+					get(SQLFunction::create('COUNT', '*')->setAlias('count'))
+				);
+
+			$res = new QueryResult();
+
+			return
+				$res->
+					setList($list)->
+					setCount($count['count'])->
+					setQuery($query);
 		}
 
 		public function getCustom(SelectQuery $query)
