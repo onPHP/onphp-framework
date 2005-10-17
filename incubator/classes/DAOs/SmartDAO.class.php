@@ -126,12 +126,62 @@
 		{
 			if ($list = $this->getCachedList($query))
 				return $list;
-			elseif ($list = DBFactory::getDefaultInstance()->queryObjectSet($query, $this))
+			elseif (
+				$list = DBFactory::getDefaultInstance()->queryObjectSet(
+					$query, $this
+				)
+			)
 				return $this->cacheList($query, $list);
 			else
 				throw new ObjectNotFoundException();
 		}
 		
+		public function getQueryResult(SelectQuery $query)
+		{
+			$db = DBFactory::getDefaultInstance();
+
+			$className = $this->getObjectName();
+			
+			$countKey = $className.'_result_'.$query->getId();
+			
+			$cache = Cache::me();
+			
+			$res = new QueryResult();
+			
+			if ($list = $this->getCachedList($query)) {
+				return
+					$res->
+						setList($list)->
+						setCount(
+							$cache->mark($className)->
+								get($countKey)
+						)->
+						setQuery($query);
+			} elseif ($list = $db->queryObjectSet($query, $this)) {
+				$count = clone $query;
+			
+				$count =
+					$db->queryRow(
+						$count->dropFields()->dropOrder()->limit(null, null)->
+						get(SQLFunction::create('COUNT', '*')->setAlias('count'))
+					);
+
+				$cache->mark($className)->
+					set(
+						$countKey,
+						$count['count'],
+						Cache::EXPIRES_FOREVER
+					);
+
+				return
+					$res->
+						setList($list)->
+						setCount($count['count'])->
+						setQuery($query);
+			} else
+				throw new ObjectNotFoundException();
+		}
+
 		protected function cacheObject(Identifiable $object)
 		{
 			$className = $this->getObjectName();

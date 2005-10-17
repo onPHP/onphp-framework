@@ -171,6 +171,29 @@
 			}
 		}
 
+		public function getQueryResult(SelectQuery $query)
+		{
+			$db = DBFactory::getDefaultInstance();
+			
+			$list = $db->queryObjectSet($query, $this);
+			
+			$count = clone $query;
+			
+			$count =
+				$db->queryRow(
+					$count->dropFields()->dropOrder()->limit(null, null)->
+					get(SQLFunction::create('COUNT', '*')->setAlias('count'))
+				);
+
+			$res = new QueryResult();
+
+			return
+				$res->
+					setList($list)->
+					setCount($count['count'])->
+					setQuery($query);
+		}
+
 		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->getListByQuery($this->makeSelectHead(), $expires);
