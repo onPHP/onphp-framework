@@ -11,25 +11,8 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class SmartDAO extends Singletone
+	abstract class SmartDAO extends GenericDAO
 	{
-		protected $selectHead = null;
-
-		abstract public function getTable();
-		abstract public function getObjectName();
-		
-		abstract protected function makeObject(&$array, $prefix = null);
-
-		public function getFields()
-		{
-			return $this->fields;
-		}
-		
-		public function getSequence()
-		{
-			return $this->getTable().'_id';
-		}
-
 		public function dropByIds($ids)
 		{
 			foreach ($ids as $id)
@@ -112,56 +95,41 @@
 
 		public function getByQuery(SelectQuery $query)
 		{
-			$db = DBFactory::getDefaultInstance();
-			
 			if ($object = $this->getCachedByQuery($query))
 				return $object;
-			elseif ($object = $db->queryObjectRow($query, $this)) {
+			elseif (
+				$object = DBFactory::getDefaultInstance()->queryObjectRow(
+					$query, $this
+				)
+			) {
 				return $this->cacheObjectByQuery($query, $object);
 			} else
-				throw new ObjectNotFoundException(
-					"there is no such object for '".$this->getObjectName()
-					."' with query == {$query->toString($db->getDialect())}"
-				);
+				throw new ObjectNotFoundException();
 		}
 		
-		public function getListByQuery(SelectQuery $query)
+		public function getList(ObjectQuery $oq)
 		{
-			$db = DBFactory::getDefaultInstance();
-			
-			if ($list = $this->getCachedList($query))
-				return $list;
-			elseif ($list = $db->queryObjectSet($query, $this))
-				return $this->cacheList($query, $list);
-			else
-				throw new ObjectNotFoundException(
-					'zero list for query such query - '
-					.$query->toString($db->getDialect())
-				);
+			return $this->getListByQuery($oq->toSelectQuery($this));
 		}
-
+		
+		public function getPlainList()
+		{
+			return $this->getListByQuery($this->makeSelectHead());
+		}
+		
 		public function getListByLogic(LogicalObject $logic)
 		{
 			return $this->getListByQuery($this->makeSelectHead()->where($logic));
 		}
 
-		/**
-		 * default makeSelectHead's behaviour
-		**/
-		public function makeSelectHead()
+		public function getListByQuery(SelectQuery $query)
 		{
-			if (null === $this->selectHead) {
-				$this->selectHead = 
-					OSQL::select()->
-					from($this->getTable());
-				
-				$table = $this->getTable();
-				
-				foreach ($this->getFields() as $field)
-					$this->selectHead->get(new DBField($field, $table));
-			}
-			
-			return clone $this->selectHead;
+			if ($list = $this->getCachedList($query))
+				return $list;
+			elseif ($list = DBFactory::getDefaultInstance()->queryObjectSet($query, $this))
+				return $this->cacheList($query, $list);
+			else
+				throw new ObjectNotFoundException();
 		}
 
 		protected function cacheObject(Identifiable $object)
@@ -209,7 +177,7 @@
 			
 			return
 				Cache::me()->mark($className)->
-					get($className.'_ist_'.$query->getId());
+					get($className.'_list_'.$query->getId());
 		}
 		
 		protected function cacheList(SelectQuery $query, /* array */ $array)
@@ -246,32 +214,39 @@
 			$cache = Cache::me();
 			
 			if ($map = $cache->get($mapKey)) {
-				$sem = sem_get($mapKey, 1, 0600, true);
+				$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true);
 				Assert::isTrue(sem_acquire($sem));
 				
 				foreach ($map as $key => $true)
-					$cache->mark($className)->drop($key);
+					$cache->mark($className)->delete($key);
 				
-				sem_release($sem);
+				sem_remove($sem);
 			}
 			
-			return $cache->mark($className)->drop($objectKey);
+			return $cache->mark($className)->delete($objectKey);
 		}
 
 		private function syncMap($mapKey, $objectKey)
 		{
+			$cache = Cache::me();
+			
 			if (!$map = $cache->get($mapKey))
 				$map = array();
 			
-			$sem = sem_get($mapKey, 1, 0600, true);
+			$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true);
 			Assert::isTrue(sem_acquire($sem));
 			
 			$map[$objectKey] = true;
 			
 			$cache->mark($this->getObjectName())->
-				replace($mapKey, $map, Cache::EXPIRES_FOREVER);
+				set($mapKey, $map, Cache::EXPIRES_FOREVER);
 			
-			sem_release($sem);
+			sem_remove($sem);
+		}
+		
+		private function keyToInt($key)
+		{
+			return hexdec(substr(md5($key), 0, 16));
 		}
 	}
 ?>

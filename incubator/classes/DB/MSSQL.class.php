@@ -77,7 +77,7 @@
 			return mssql_rows_affected($this->query($query));
 		}
 		
-		public function queryObjectRow(Query $query, CommonDAO $dao)
+		public function queryObjectRow(Query $query, GenericDAO $dao)
 		{
 			$res = $this->query($query);
 			
@@ -98,7 +98,7 @@
 				return null;
 		}
 		
-		public function queryObjectSet(Query $query, CommonDAO $dao)
+		public function queryObjectSet(Query $query, GenericDAO $dao)
 		{
 			$res = $this->query($query);
 			

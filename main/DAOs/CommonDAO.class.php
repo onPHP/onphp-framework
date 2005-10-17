@@ -13,24 +13,6 @@
 
 	abstract class CommonDAO extends CacheableDAO
 	{
-		protected $selectHead = null;
-		
-		/**
-		 * quite common and must-have methods
-		**/
-		abstract protected function makeObject(&$array, $prefix = null);
-		abstract public function getTable();
-		
-		public function getFields()
-		{
-			return $this->fields;
-		}
-		
-		public function getSequence()
-		{
-			return $this->getTable().'_id';
-		}
-
 		/**
 		 * erasers area
 		**/
@@ -106,11 +88,6 @@
 					);
 				}
 			}
-		}
-		
-		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
-		{
-			return $this->getListByQuery($this->makeSelectHead(), $expires);
 		}
 		
 		public function getByLogic(LogicalObject $logic, $expires = Cache::DO_NOT_CACHE)
@@ -194,30 +171,9 @@
 			}
 		}
 
-		public function getCustom(SelectQuery $query, $expires = Cache::DO_NOT_CACHE)
+		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
 		{
-			$db = DBFactory::getDefaultInstance();
-			
-			if ($query->getLimit() > 1)
-				throw new WrongArgumentException(
-					'can not handle non-single row queries'
-				);
-			
-			if (
-				($expires !== Cache::DO_NOT_CACHE) &&
-				($object = $this->getCachedByQuery($query))
-			)
-				return $object;
-			elseif ($object = $db->queryRow($query)) {
-				if ($expires === Cache::DO_NOT_CACHE)
-					return $object;
-				else
-					return $this->cacheByQuery($query, $object, $expires);
-			} else {
-				throw new ObjectNotFoundException(
-					"zero for query == {$query->toString($db->getDialect())}"
-				);
-			}
+			return $this->getListByQuery($this->makeSelectHead(), $expires);
 		}
 
 		public function getQueryResult(SelectQuery $query, $expires = Cache::DO_NOT_CACHE)
@@ -237,77 +193,12 @@
 				);
 		}
 		
-		public function getCustomList(SelectQuery $query, $expires = Cache::DO_NOT_CACHE)
-		{
-			$db = DBFactory::getDefaultInstance();
-			
-			if (
-				($expires !== Cache::DO_NOT_CACHE)
-				&& ($list = $this->getCachedByQuery($query))
-			)
-				return $list;
-			elseif ($list = $db->querySet($query)) {
-				if ($expires === Cache::DO_NOT_CACHE)
-					return $list;
-				else {
-					return $this->cacheByQuery($query, $list, $expires);
-				}
-			} else
-				throw new ObjectNotFoundException(
-					"zero list for query such query - '{$query->toString($db->getDialect())}'"
-				);
-		}
-		
-		public function getCustomRowList(SelectQuery $query, $expires = Cache::DO_NOT_CACHE)
-		{
-			if ($query->getFieldsCount() !== 1)
-				throw new WrongArgumentException(
-					'you should select only one row when using this method'
-				);
-			
-			$db = DBFactory::getDefaultInstance();
-
-			if (
-				($expires !== Cache::DO_NOT_CACHE)
-				&& ($list = $this->getCachedByQuery($query))
-			)
-				return $list;
-			elseif ($list = $db->queryColumn($query)) {
-				if ($expires === Cache::DO_NOT_CACHE)
-					return $list;
-				else
-					return $this->cacheByQuery($query, $list, $expires);
-			} else
-				throw new ObjectNotFoundException(
-					"zero list for query such query - '{$query->toString($db->getDialect())}'"
-				);
-		}
-		
 		public function getListByLogic(LogicalObject $logic, $expires = Cache::DO_NOT_CACHE)
 		{
 			return
 				$this->getListByQuery(
 					$this->makeSelectHead()->where($logic), $expires
 				);
-		}
-		
-		/**
-		 * default makeSelectHead's behaviour
-		**/
-		public function makeSelectHead()
-		{
-			if (null === $this->selectHead) {
-				$this->selectHead = 
-					OSQL::select()->
-					from($this->getTable());
-				
-				$table = $this->getTable();
-				
-				foreach ($this->getFields() as $field)
-					$this->selectHead->get(new DBField($field, $table));
-			}
-			
-			return clone $this->selectHead;
 		}
 	}
 ?>

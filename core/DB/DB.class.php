@@ -37,10 +37,10 @@
 		abstract public function queryRaw($queryString);
 
 		abstract public function queryRow(Query $query);
-		abstract public function queryObjectRow(Query $query, CommonDAO $dao);
+		abstract public function queryObjectRow(Query $query, GenericDAO $dao);
 
 		abstract public function querySet(Query $query);
-		abstract public function queryObjectSet(Query $query, CommonDAO $dao);
+		abstract public function queryObjectSet(Query $query, GenericDAO $dao);
 
 		abstract public function queryColumn(Query $query);
 		abstract public function queryCount(Query $query);
@@ -173,7 +173,7 @@
 				return $this->query($query);
 		}
 
-		public function objectQuery(SelectQuery $query, CommonDAO $dao)
+		public function objectQuery(SelectQuery $query, GenericDAO $dao)
 		{
 			$list = $this->queryObjectSet($query, $dao);
 			

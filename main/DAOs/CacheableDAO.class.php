@@ -63,10 +63,8 @@
 		public function getListByQuery(SelectQuery $query, $expires = Cache::DO_NOT_CACHE)
 **/
 
-	abstract class CacheableDAO extends Singletone
+	abstract class CacheableDAO extends GenericDAO
 	{
-		abstract public function getObjectName();
-		
 		public function cacheById(Identifiable $object, $expires = null)
 		{
 			$className = $this->getObjectName();
