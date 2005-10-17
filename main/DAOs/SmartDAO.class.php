@@ -135,6 +135,11 @@
 			return $this->getListByQuery($oq->toSelectQuery($this));
 		}
 		
+		public function getCountedList(ObjectQuery $oq)
+		{
+			return $this->getQueryResult($oq->toSelectQuery($this));
+		}
+		
 		public function getPlainList()
 		{
 			return $this->getListByQuery($this->makeSelectHead());

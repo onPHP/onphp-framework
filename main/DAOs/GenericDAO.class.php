@@ -18,20 +18,19 @@
 		abstract public function getTable();
 		abstract public function getObjectName();
 		
-		abstract protected function makeObject(&$array, $prefix = null);
-		
-		abstract public function getQueryResult(SelectQuery $query);
-		
 		abstract public function getById($id);
 		abstract public function getByLogic(LogicalObject $logic);
 		abstract public function getByQuery(SelectQuery $query);
 
-		abstract public function getListByIds($ids);
 		abstract public function getListByQuery(SelectQuery $query);
 		abstract public function getListByLogic(LogicalObject $logic);
 
+		abstract public function getQueryResult(SelectQuery $query);
+
 		abstract public function dropById($id);
 		abstract public function dropByIds($ids);
+
+		abstract protected function makeObject(&$array, $prefix = null);
 
 		public function getFields()
 		{
@@ -46,17 +45,32 @@
 		public function makeSelectHead()
 		{
 			if (null === $this->selectHead) {
+				$table = $this->getTable();
+
 				$this->selectHead = 
 					OSQL::select()->
-					from($this->getTable());
-				
-				$table = $this->getTable();
+					from($table);
 				
 				foreach ($this->getFields() as $field)
 					$this->selectHead->get(new DBField($field, $table));
 			}
 			
 			return clone $this->selectHead;
+		}
+		
+		public function getListByIds($ids)
+		{
+			$list = array();
+			
+			foreach ($ids as $id) {
+				try {
+					$list[] = $this->getById($id, $expires);
+				} catch (ObjectNotFoundException $e) {
+					// ignore
+				}
+			}
+
+			return $list;
 		}
 
 		public function getCustom(SelectQuery $query)

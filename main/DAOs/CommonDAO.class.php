@@ -90,7 +90,9 @@
 			}
 		}
 		
-		public function getByLogic(LogicalObject $logic, $expires = Cache::DO_NOT_CACHE)
+		public function getByLogic(
+			LogicalObject $logic, $expires = Cache::DO_NOT_CACHE
+		)
 		{
 			return
 				$this->getByQuery(
@@ -101,17 +103,9 @@
 		public function getListByIds($ids, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			if ($expires !== Cache::DO_NOT_CACHE) {
-				$list = array();
 				
-				foreach ($ids as $id) {
-					try {
-						$list[] = $this->getById($id, $expires);
-					} catch (ObjectNotFoundException $e) {
-						// ignore
-					}
-				}
-
-				return $list;
+				return parent::getListByIds($ids);
+				
 			} elseif (sizeof($ids)) {
 				return
 					$this->getListByLogic(
