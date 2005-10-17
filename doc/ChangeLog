@@ -2,6 +2,8 @@
 
 2005-10-17	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+* main/DAOs/: transparent cache handling introduced by SmartDAO.
+
 * main/DAOs/, core/DB/: GenericDAO introduced for SmartDAO's compatibility
 with DB.
 
