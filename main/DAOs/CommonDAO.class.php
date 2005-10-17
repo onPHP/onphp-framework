@@ -125,7 +125,6 @@
 		{
 			if ($expires !== Cache::DO_NOT_CACHE) {
 				$list = array();
-				$toFetch = array();
 				
 				if (sizeof($ids) == 1) {
 					try {
@@ -141,29 +140,6 @@
 					} catch (ObjectNotFoundException $e) {
 						// ignore
 					}
-				}
-
-				if ($size = sizeof($toFetch)) {
-					if ($size == 1) {
-						try {
-							return array($this->getById($toFetch[0]));
-						} catch (ObjectNotFoundException $e) {
-							return array();
-						}
-					} else {
-						$fetchedList = 
-							$this->getListByLogic(
-								Expression::in(
-									new DBField('id', $this->getTable()),
-									$toFetch
-								)
-							);
-					}
-						
-					for ($i = 0; $i < sizeof($fetchedList); $i++)
-						$this->cacheById($fetchedList[$i], $expires);
-
-					return array_merge($list, $fetchedList);
 				}
 
 				return $list;
