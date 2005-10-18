@@ -50,11 +50,13 @@
 			$cache = Cache::me();
 			
 			$indexList = $cache->mark($className)->get($indexKey);
-			
-			$cache->mark($className)->delete($indexKey);
-			
-			foreach ($indexList as $key => &$true)
-				$cache->mark($className)->delete($key);
+
+			if ($indexList) {
+				$cache->mark($className)->delete($indexKey);
+				
+				foreach ($indexList as $key => &$true)
+					$cache->mark($className)->delete($key);
+			}
 			
 			return true;
 		}
