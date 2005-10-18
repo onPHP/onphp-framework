@@ -15,6 +15,7 @@
 	{
 		const EQUALS			= '=';
 		const NOT_EQUALS		= '!=';
+		const EQUALS_LOWER		= ' = '; // to avoid collision with EQUALS
 
 		const IS_NULL			= 'IS NULL';
 		const IS_NOT_NULL		= 'IS NOT NULL';
@@ -146,6 +147,9 @@
 
 				case self::EXPRESSION_OR:
 					return $both && ($left || $right->toBoolean($form));
+				
+				case self::EQUALS_LOWER:
+					return $both && (strtolower($left) === strtolower($right));
 
 				/*
 					unsupported atm:

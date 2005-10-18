@@ -11,6 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
+	// @deprecated by LogicalExpression
 	class LogicalEqLower implements LogicalObject
 	{
 		private $field = null;

@@ -149,7 +149,11 @@
 		
 		public static function eqLower($field, $value)
 		{
-			return new LogicalEqLower($field, $value);
+			return new LogicalExpression(
+				SQLFunction::create('lower', $field),
+				SQLFunction::create('lower', $value),
+				LogicalExpression::EQUALS_LOWER
+			);
 		}
 		
 		public static function between($field, $left, $right)

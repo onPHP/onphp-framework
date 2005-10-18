@@ -66,6 +66,11 @@
 			return Cache::me()->mark($className)->get($className.'_'.$id);
 		}
 		
+		public function get(ObjectQuery $oq)
+		{
+			return $this->getByQuery($oq->toSelectQuery($this));
+		}
+		
 		public function getById($id)
 		{
 			if ($object = $this->getCachedById($id))

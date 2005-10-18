@@ -1,5 +1,10 @@
 # $Id$
 
+2005-10-18	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/OSQL/: LogicalEqLower implemented through LogicalExpression, so it's
+deprecated now.
+
 2005-10-17	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * main/DAOs/: transparent cache handling introduced by SmartDAO.
