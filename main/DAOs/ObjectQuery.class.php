@@ -75,7 +75,7 @@
 			return $this;
 		}
 		
-		public function addLogic(LogicalObject $exp)
+		public function addLogic(LogicalExpression $exp)
 		{
 			$this->logic[] = $exp;
 			
