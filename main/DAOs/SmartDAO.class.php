@@ -56,7 +56,7 @@
 			foreach ($indexList as $key => &$true)
 				$cache->mark($className)->delete($key);
 			
-			return $true;
+			return true;
 		}
 		
 		public function getCachedById($id)
