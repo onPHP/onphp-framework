@@ -48,7 +48,7 @@
 				$this->uncacheByKey($this->getNameCacheKey($name));
 		}
 		
-		final protected function saveNamed(NamedObject $no)
+		final protected function saveNamed(Named $no)
 		{
 			return
 				self::injectNamed(
@@ -58,7 +58,7 @@
 				);
 		}
 
-		final protected function addNamed(NamedObject $no)
+		final protected function addNamed(Named $no)
 		{
 			return
 				self::importNamed(
@@ -69,7 +69,7 @@
 				);
 		}
 
-		final protected function importNamed(NamedObject $no)
+		final protected function importNamed(Named $no)
 		{
 			return
 				self::injectNamed(
@@ -77,7 +77,9 @@
 				);
 		}
 
-		final protected function injectNamed(InsertOrUpdateQuery $query, NamedObject $no)
+		final protected function injectNamed(
+			InsertOrUpdateQuery $query, Named $no
+		)
 		{
 			DBFactory::getDefaultInstance()->queryNull(
 				$this->setQueryFields($query, $no)
@@ -88,7 +90,9 @@
 			return $no;
 		}
 
-		final protected function setNamedQueryFields(InsertOrUpdateQuery $query, NamedObject $no)
+		final protected function setNamedQueryFields(
+			InsertOrUpdateQuery $query, Named $no
+		)
 		{
 			$query->set('name', $no->getName());
 			
@@ -99,7 +103,7 @@
 				return $query;
 		}
 
-		final protected function makeNamedObject(&$array, NamedObject $no, $prefix = null)
+		final protected function makeNamedObject(&$array, Named $no, $prefix = null)
 		{
 			return $no->setId($array[$prefix.'id'])->setName($array[$prefix.'name']);
 		}

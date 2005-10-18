@@ -2,6 +2,8 @@
 
 2005-10-18	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+* main/DAOs/NamedObjectDAO.class.php: accept Named implementations too.
+
 * main/DAOs/MappedStorableDAO.class.php: hybrid child of SmartDAO.
 
 * core/OSQL/: LogicalEqLower implemented through LogicalExpression, so it's
