@@ -253,7 +253,7 @@
 			Cache::me()->mark($this->getObjectName())->
 				add($key, $object, Cache::EXPIRES_FOREVER);
 			
-			return $this;
+			return $object;
 		}
 		
 		protected function getCachedList(SelectQuery $query)
