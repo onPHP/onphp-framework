@@ -13,9 +13,17 @@
 
 	abstract class MappedStorableDAO extends SmartDAO implements MappedDAO
 	{
+		// override later
+		protected $mapping = array();
+		
 		public function getIdName()
 		{
 			return 'id';
+		}
+		
+		public function getMapping()
+		{
+			return $this->mapping;
 		}
 		
 		public function getFields()
