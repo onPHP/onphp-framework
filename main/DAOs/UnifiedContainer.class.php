@@ -82,7 +82,7 @@
 		abstract protected function syncIds(&$insert, &$delete);
 
 		public function __construct(
-			DAOConnected $parent, CommonDAO $dao, $lazy = true
+			DAOConnected $parent, GenericDAO $dao, $lazy = true
 		)
 		{
 			Assert::isBoolean($lazy);
