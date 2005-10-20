@@ -30,6 +30,7 @@
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
 	set_error_handler ('error2Exception', E_ALL);
+	define('ONPHP_VERSION', '0.2.2.99');
     
 	// paths
 	define('ONPHP_ROOT_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
