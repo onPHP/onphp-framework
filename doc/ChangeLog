@@ -1,5 +1,9 @@
 # $Id$
 
+2005-10-20	Garmonbozia R. G.	<garmonbozia@shadanakar.org>
+
+* doc/www/: major site update - css, examples, propaganda, etc.
+
 2005-10-18	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * main/DAOs/NamedObjectDAO.class.php: accept Named implementations too.
