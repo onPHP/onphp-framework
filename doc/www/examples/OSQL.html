@@ -1,0 +1,47 @@
+<!--# include file="head.html" -->
+
+<h2>core/<a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2F&rev=0&sc=0">OSQL</a></h2>
+
+<p><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FSelectQuery.class.php&rev=0&sc=0">SelectQuery.class.php</a>:</p>
+
+<pre>
+<span style="color: #007700">echo
+    </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2F&rev=0&sc=0">OSQL</a></span><span style="color: #007700">::</span><span style="color: #0000BB">select</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">from</span><span style="color: #007700">(</span><span style="color: #DD0000">'employer'</span><span style="color: #007700">)-&gt;
+    </span><span style="color: #0000BB">get</span><span style="color: #007700">(</span><span style="color: #DD0000">'id'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">get</span><span style="color: #007700">(</span><span style="color: #DD0000">'name'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">get</span><span style="color: #007700">(</span><span style="color: #DD0000">'birth_date'</span><span style="color: #007700">)-&gt;
+    </span><span style="color: #0000BB">where</span><span style="color: #007700">(
+        </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FLogic%2FExpression.class.php&rev=0&sc=0">Expression</a></span><span style="color: #007700">::</span><span style="color: #0000BB">between</span><span style="color: #007700">(</span>
+            </span><span style="color: #DD0000">'birth_date'</span><span style="color: #007700">,
+            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FDBValue.class.php&rev=0&sc=0">DBValue</a></span><span style="color: #007700">::</span><span style="color: #0000BB">create</span><span style="color: #007700">(</span><span style="color: #0000BB">1980</span><span style="color: #007700">),
+            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FSQLFunction.class.php&rev=0&sc=0">SQLFunction</a></span><span style="color: #007700">::</span><span style="color: #0000BB">create</span><span style="color: #007700">(</span><span style="color: #DD0000">'now'</span><span style="color: #007700">)
+        )
+    )-&gt;
+        </span><span style="color: #0000BB">toString</span><span style="color: #007700">(
+            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FDB%2FDBFactory.class.php&rev=0&sc=0">DBFactory</a></span><span style="color: #007700">::</span><span style="color: #0000BB">getDefaultInstance</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">getDialect</span><span style="color: #007700">()
+        );</span>
+</pre>
+<p style="text-align: center;">==</p>
+<pre>
+    <b>SELECT</b> <span style="color: #007700">"employer"</span>.<span style="color: #007700">"id"</span>, <span style="color: #007700">"employer"</span>.<span style="color: #007700">"name"</span>, <span style="color: #007700">"employer"</span>.<span style="color: #007700">"birth_date"</span>
+    <b>FROM</b> <span style="color: #007700">"employer"</span>
+    <b>WHERE (</b><span style="color: #007700">"birth_date"</span> <b>BETWEEN</b> <span style="color: #DD0000">'1980'</span> <b>AND</b> now()<b>)</b>
+</pre>
+
+<hr>
+
+<p><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FDeleteQuery.class.php&rev=0&sc=0">DeleteQuery.class.php</a>:</p>
+
+<pre>
+<span style="color: #007700">echo
+    </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2F&rev=0&sc=0">OSQL</a></span><span style="color: #007700">::</span><span style="color: #0000BB">delete</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">from</span><span style="color: #007700">(</span><span style="color: #DD0000">'pity_table'</span><span style="color: #007700">)-&gt;
+    </span><span style="color: #0000BB">toString</span><span style="color: #007700">(
+        </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FDB%2FDBFactory.class.php&rev=0&sc=0">DBFactory</a></span><span style="color: #007700">::</span><span style="color: #0000BB">getDefaultInstance</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">getDialect</span><span style="color: #007700">()
+    );</span>
+</pre>
+<p style="text-align: center;">==</p>
+<pre>
+    Fatal error: Uncaught [leave 'pity_table' table alone in peace] in: ...
+</pre>
+
+<hr>
+
+<!--# include file="../parts/heel.html" -->
