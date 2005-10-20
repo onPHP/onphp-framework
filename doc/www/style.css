@@ -37,6 +37,12 @@
 		padding: 1% 1% 1% 1%;
 	}
 	
+	pre.warning {
+		background-color: #FFD2D5;
+		font-family: times, "times new roman";
+		font-size: 125%;
+	}
+	
 	a:link {
 		color: blue;
 		text-decoration: none;
