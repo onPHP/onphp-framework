@@ -1,0 +1,47 @@
+<!--# include file="head.html" -->
+
+<h2>core/<a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2F&rev=0&sc=0">Cache</a></h2>
+
+<p><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FRubberFileSystem.class.php&rev=0&sc=0">RubberFileSystem.class.php</a>:</p>
+
+<pre>
+    <span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FCache.class.php&rev=0&sc=0">Cache</a></span><span style="color: #007700">::</span><span style="color: #0000BB">setPeer</span><span style="color: #007700">(</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FRubberFileSystem.class.php&rev=0&sc=0">RubberFileSystem</a></span><span style="color: #007700">::</span><span style="color: #0000BB">create</span><span style="color: #007700">(</span><span style="color: #DD0000">'/tmp/onPHP/cache/'</span><span style="color: #007700">));</span>
+</pre>
+
+<p><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FMemcached.class.php&rev=0&sc=0">Memcached.class.php</a>:</p>
+
+<pre>
+    <span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FCache.class.php&rev=0&sc=0">Cache</a></span><span style="color: #007700">::</span><span style="color: #0000BB">setPeer</span><span style="color: #007700">(</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FMemcached.class.php&rev=0&sc=0">Memcached</a></span><span style="color: #007700">::</span><span style="color: #0000BB">create</span><span style="color: #007700">(</span><span style="color: #DD0000">'127.0.0.1'</span><span style="color: #007700">, </span><span style="color: #DD0000">'11211'</span><span style="color: #007700">, </span><span style="color: #0000BB">8192</span><span style="color: #007700">));</span>
+</pre>
+
+<p>Scalable <a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FAggregateCache.class.php&rev=0&sc=0">AggregateCache.class.php</a>:</p>
+
+<pre>
+    <span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FCache.class.php&rev=0&sc=0">Cache</a></span><span style="color: #007700">::</span><span style="color: #0000BB">setPeer</span><span style="color: #007700">(
+        <span style="color: #FF8000">// wrap cache system to keep all objects in one pool</span>
+        <span style="color: #FF8000">// only references will be returned</span>
+        <span style="color: #FF8000">// globalized Java's IdentityMap idea</span>
+        new </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FReferencePool.class.php&rev=0&sc=0">ReferencePool</a></span><span style="color: #007700">(
+            <span style="color: #FF8000">// Cache' Master ;-)</span>
+            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FAggregateCache.class.php&rev=0&sc=0">AggregateCache</a></span><span style="color: #007700">::</span><span style="color: #0000BB">create</span><span style="color: #007700">()-&gt;
+            </span><span style="color: #0000BB">addPeer</span><span style="color: #007700">(
+                </span><span style="color: #DD0000">'memcached at localhost'</span><span style="color: #007700">, </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FMemcached.class.php&rev=0&sc=0">Memcached</a></span><span style="color: #007700">::</span><span style="color: #0000BB">create</span><span style="color: #007700">()
+            )-&gt;
+            </span><span style="color: #0000BB">addPeer</span><span style="color: #007700">(
+                </span><span style="color: #DD0000">'remote memcached'</span><span style="color: #007700">, </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FMemcached.class.php&rev=0&sc=0">Memcached</a></span><span style="color: #007700">::</span><span style="color: #0000BB">create</span><span style="color: #007700">(</span><span style="color: #DD0000">'12.34.56.78'</span><span style="color: #007700">)
+            )-&gt;
+            </span><span style="color: #0000BB">addPeer</span><span style="color: #007700">(
+                <span style="color: #FF8000">// when everyone else is dead</span>
+                </span><span style="color: #DD0000">'fall back to local filesystem'</span><span style="color: #007700">,
+                </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FRubberFileSystem.class.php&rev=0&sc=0">RubberFileSystem</a></span><span style="color: #007700">::</span><span style="color: #0000BB">create</span><span style="color: #007700">(),
+                </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FAggregateCache.class.php&rev=0&sc=0">AggregateCache</a></span><span style="color: #007700">::</span><span style="color: #0000BB">LEVEL_VERYLOW
+            </span><span style="color: #007700">)-&gt;
+            <span style="color: #FF8000">// BOVM</span>
+            </span><span style="color: #0000BB">setClassLevel</span><span style="color: #007700">(</span><span style="color: #DD0000">'RarelyUsedClass'</span><span style="color: #007700">, </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FAggregateCache.class.php&rev=0&sc=0">AggregateCache</a></span><span style="color: #007700">::</span><span style="color: #0000BB">LEVEL_VERYLOW</span><span style="color: #007700">)
+        )
+    );</span>
+</pre>
+
+<hr>
+
+<!--# include file="../parts/heel.html" -->
