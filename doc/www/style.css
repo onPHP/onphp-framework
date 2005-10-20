@@ -57,16 +57,8 @@
 		text-decoration: none;
 	}
 	
-	#navigation {
-		text-align: left;
-	}
-	
-	#navigation li {
-		list-style-type: none;
-		display: block;
-	}
-	
 	hr {
 		border: 1px dotted deepSkyBlue;
 		width: 75%;
 	}
+	
