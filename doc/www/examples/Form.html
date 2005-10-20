@@ -44,11 +44,19 @@
         )-&gt;
         </span><span style="color: #0000BB">add</span><span style="color: #007700">(
             <span style="color: #FF8000">// required password</span>
-            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span style="color: #007700">(</span><span style="color: #DD0000">'firstPassword'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">required</span><span style="color: #007700">()
+            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span style="color: #007700">(</span><span style="color: #DD0000">'firstPassword'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">required</span><span style="color: #007700">()-&gt;
+            <span style="color: #FF8000">// hash it upon importing</span>
+            </span><span style="color: #0000BB">addImportFilter</span><span style="color: #007700">(
+                </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FHashFilter.class.php&rev=0&sc=0">hash</a></span><span style="color: #007700">()
+            )
         )-&gt;
         </span><span style="color: #0000BB">add</span><span style="color: #007700">(
             <span style="color: #FF8000">// second one for verification</span>
-            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span style="color: #007700">(</span><span style="color: #DD0000">'secondPassword'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">required</span><span style="color: #007700">()
+            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span style="color: #007700">(</span><span style="color: #DD0000">'secondPassword'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">required</span><span style="color: #007700">()-&gt;
+            <span style="color: #FF8000">// hash it too</span>
+            </span><span style="color: #0000BB">addImportFilter</span><span style="color: #007700">(
+                </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FHashFilter.class.php&rev=0&sc=0">hash</a></span><span style="color: #007700">()
+            )
         )-&gt;
         <span style="color: #FF8000">// import our emulation</span>
         </span><span style="color: #0000BB">import</span><span style="color: #007700">(</span><span style="color: #0000BB">$_GET</span><span style="color: #007700">)-&gt;
