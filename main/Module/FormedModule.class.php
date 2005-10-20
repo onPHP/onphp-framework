@@ -27,11 +27,11 @@
 			return $this->form;
 		}
 
-		protected function blowOut()
+		protected function blowOut($module = DEFAULT_MODULE)
 		{
 			if (!HeaderUtils::redirectBack())
 				HeaderUtils::redirect(
-					ModuleFactory::spawn(DEFAULT_MODULE)
+					ModuleFactory::spawn($module)
 				);
 			
 			return $this;

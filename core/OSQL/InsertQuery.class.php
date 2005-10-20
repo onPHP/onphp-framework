@@ -30,8 +30,8 @@
 		{
 			$query = "INSERT INTO ".$dialect->quoteTable($this->table)." ";
 			
-			$fields = '';
-			$values = '';
+			$fields = array();
+			$values = array();
 			
 			foreach ($this->fields as $var => $val) {
 				$fields[] = $dialect->quoteField($var);
@@ -40,6 +40,9 @@
 				else
 					$values[] = $dialect->quoteValue($val);
 			}
+			
+			if (!$fields || !$values)
+				throw new WrongStateException('what should i insert?');
 			
 			$fields = implode(', ', $fields);
 			$values = implode(', ', $values);
