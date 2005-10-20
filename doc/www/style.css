@@ -1,0 +1,72 @@
+
+	h1, h2, h3, h4 {
+		background-color: lightSkyBlue;
+		font-family: georgia, "times new roman";
+		border: 1px dotted black;
+		margin-top: 0;
+		padding-top: 5;
+		padding-bottom: 5;
+	}
+	
+	h1 {
+		padding-left: 0.5%;
+	}
+	
+	h2 {
+		padding-left: 1%;
+	}
+	
+	h3 {
+		padding-left: 2%;
+	}
+	
+	h4 {
+		padding-left: 3%;
+	}
+
+	p {
+		text-align: justify;
+		padding: 5px 0 0 12px;
+	}
+	
+	pre {
+		background-color: whiteSmoke;
+		border: 1px solid black;
+		margin-left: 10%;
+		margin-right: 10%;
+		padding: 1% 1% 1% 1%;
+	}
+	
+	a:link {
+		color: blue;
+		text-decoration: none;
+	}
+	
+	a:visited {
+		color: blue;
+		text-decoration: none;
+	}
+	
+	a:hover {
+		color: darkBlue;
+		text-decoration: underline;
+	}
+	
+	a:active {
+		color: red;
+		text-decoration: none;
+	}
+	
+	#navigation {
+		text-align: left;
+	}
+	
+	#navigation li {
+		list-style-type: none;
+		display: block;
+	}
+	
+	hr {
+		border: 1px dotted deepSkyBlue;
+		width: 75%;
+	}
