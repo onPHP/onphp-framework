@@ -1,13 +1,22 @@
 // $Id$
 
 Q: I am using PHP4 and I...
+Q: I'm using feature, which obsoleted since revision N...
+
 A: You're doomed.
 
 //
 
-Q: Are there any {unit,}-tests for onPHP?
+Q: Are there any {unit-,}tests for onPHP?
 
 A: Not yet. Feel free to write them yourself.
+
+//
+
+Q: I've found a Bug at...
+Q: I can't live without <image something cool> feature!
+
+A: 24/7 patch(es) acceptance: onphp-dev-{ru|en}@lists.shadanakar.org
 
 //
 
