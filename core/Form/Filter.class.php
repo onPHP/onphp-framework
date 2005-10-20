@@ -21,6 +21,11 @@
 					add(Filter::stripTags());
 		}
 		
+		public static function chain()
+		{
+			return new FilterChain();
+		}
+		
 		public static function hash()
 		{
 			return Singletone::getInstance('HashFilter');
