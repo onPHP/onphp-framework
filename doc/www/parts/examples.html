@@ -1,7 +1,52 @@
 <p>
+	<a href="#handout">handout</a>
 	<a href="#OSQL">OSQL</a>
 	<a href="#DAOs">DAOs</a>
 </p>
+
+<h2><a name="handout">handout</a></h2>
+
+<p>DB stuff:</p>
+
+<pre>
+    <b>create sequence</b> employer_id;
+
+    <b>create table</b> employer(
+        id         <span style="color: #DD0000">bigint</span> default nextval(<span style="color: #DD0000">'employer_id'</span>) <b>primary key</b>,
+        name       <span style="color: #DD0000">varchar</span>(<span style="color: #0000DD">255</span>) <b>not null</b>,
+        birth_date <span style="color: #DD0000">timestamp</span> <b>not null</b>,
+        created    <span style="color: #DD0000">timestamp</span> <b>not null default</b>(now()),
+        modified   <span style="color: #DD0000">timestamp</span> <b>not null default</b>(now())
+    );
+</pre>
+
+<p>business class:</p>
+
+<pre>
+    </span><span style="color: #007700">final class </span><span style="color: #0000BB">Employer </span><span style="color: #007700">extends </span><span style="color: #0000BB">NamedObject
+    </span><span style="color: #007700">{
+        private </span><span style="color: #0000BB">$birthDate   </span><span style="color: #007700">= </span><span style="color: #0000BB">null</span><span style="color: #007700">;
+
+        private </span><span style="color: #0000BB">$created     </span><span style="color: #007700">= </span><span style="color: #0000BB">null</span><span style="color: #007700">;
+        private </span><span style="color: #0000BB">$modified    </span><span style="color: #007700">= </span><span style="color: #0000BB">null</span><span style="color: #007700">;
+
+        public function </span><span style="color: #0000BB">getBirthDate</span><span style="color: #007700">()
+        {
+            return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">birthDate</span><span style="color: #007700">;
+        }
+
+        public function </span><span style="color: #0000BB">setBirthDate</span><span style="color: #007700">(</span><span style="color: #0000BB">Timestamp $birth</span><span style="color: #007700">)
+        {
+            </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">birth </span><span style="color: #007700">= </span><span style="color: #0000BB">$birth</span><span style="color: #007700">;
+
+            return </span><span style="color: #0000BB">$this</span><span style="color: #007700">;
+        }
+
+        <span style="color: #DD0000">... and so on ...</span>
+    }</span>
+</pre>
+
+<hr>
 
 <h2><a name="OSQL">OSQL</a></h2>
 
@@ -9,7 +54,7 @@
 
 <pre>
 <span style="color: #007700">echo
-    </span><span style="color: #0000BB">OSQL</span><span style="color: #007700">::</span><span style="color: #0000BB">select</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">from</span><span style="color: #007700">(</span><span style="color: #DD0000">'employers'</span><span style="color: #007700">)-&gt;
+    </span><span style="color: #0000BB">OSQL</span><span style="color: #007700">::</span><span style="color: #0000BB">select</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">from</span><span style="color: #007700">(</span><span style="color: #DD0000">'employer'</span><span style="color: #007700">)-&gt;
     </span><span style="color: #0000BB">get</span><span style="color: #007700">(</span><span style="color: #DD0000">'id'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">get</span><span style="color: #007700">(</span><span style="color: #DD0000">'name'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">get</span><span style="color: #007700">(</span><span style="color: #DD0000">'birth_date'</span><span style="color: #007700">)-&gt;
     </span><span style="color: #0000BB">where</span><span style="color: #007700">(
         </span><span style="color: #0000BB">Expression</span><span style="color: #007700">::</span><span style="color: #0000BB">between</span><span style="color: #007700">(</span>
@@ -24,8 +69,8 @@
 </pre>
 <p style="text-align: center;">==</p>
 <pre>
-    <b>SELECT</b> <span style="color: #007700">"employers"</span>.<span style="color: #007700">"id"</span>, <span style="color: #007700">"employers"</span>.<span style="color: #007700">"name"</span>, <span style="color: #007700">"employers"</span>.<span style="color: #007700">"birth_date"</span>
-    <b>FROM</b> <span style="color: #007700">"employers"</span>
+    <b>SELECT</b> <span style="color: #007700">"employer"</span>.<span style="color: #007700">"id"</span>, <span style="color: #007700">"employer"</span>.<span style="color: #007700">"name"</span>, <span style="color: #007700">"employer"</span>.<span style="color: #007700">"birth_date"</span>
+    <b>FROM</b> <span style="color: #007700">"employer"</span>
     <b>WHERE (</b><span style="color: #007700">"birth_date"</span> <b>BETWEEN</b> <span style="color: #DD0000">'1980'</span> <b>AND</b> now()<b>)</b>
 </pre>
 
@@ -47,6 +92,119 @@
 
 <hr>
 
-<h2><a name="DAO">DAOs</a></h2>
+<h2><a name="DAOs">DAOs</a></h2>
 
-<p>TBD</p>
+<p>SmartDAO's child:</p>
+
+<pre>
+    <span style="color: #007700">final class </span><span style="color: #0000BB">EmployerDAO </span><span style="color: #007700">extends </span><span style="color: #0000BB">MappedStorableDAO
+    </span><span style="color: #007700">{</span>
+
+    ...
+</pre>
+
+<p>CommonDAO's child:</p>
+
+<pre>
+    <span style="color: #007700">final class </span><span style="color: #0000BB">EmployerDAO </span><span style="color: #007700">extends </span><span style="color: #0000BB">CommonDAO <span style="color: #007700">implements </span><span style="color: #0000BB">MapeddDAO</span>
+    </span>
+        <span style="color: #007700">protected </span><span style="color: #0000BB">$fields </span><span style="color: #007700">= array(
+            </span><span style="color: #DD0000">'id'</span><span style="color: #007700">, </span><span style="color: #DD0000">'name'</span><span style="color: #007700">, </span><span style="color: #DD0000">'birthDate'</span><span style="color: #007700">, </span><span style="color: #DD0000">'modified'
+        </span><span style="color: #007700">);</span>
+
+        <span style="color: #007700">public function </span><span style="color: #0000BB">getMapping</span><span style="color: #007700">()
+        {
+            return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">mapping</span><span style="color: #007700">;
+        }</span>
+
+    ...
+</pre>
+
+<p>Parent-independed part:</p>
+
+<pre>
+    ...
+
+        <span style="color: #007700">protected </span><span style="color: #0000BB">$mapping </span><span style="color: #007700">= array(
+            </span><span style="color: #DD0000">'id'          </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">null</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'name'        </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">null</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'birthDate'   </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'birth_date'</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'modified'    </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">null
+        </span><span style="color: #007700">);</span>
+
+        <span style="color: #007700">public </span><span style="color: #0000BB">functino getTable</span><span style="color: #007700">()
+        {
+            return </span><span style="color: #DD0000">'employer'</span><span style="color: #007700">;
+        }
+
+        public function </span><span style="color: #0000BB">getObjectName</span><span style="color: #007700">()
+        {
+            return </span><span style="color: #DD0000">'Employer'</span><span style="color: #007700">;
+        }
+
+        public function </span><span style="color: #0000BB">makeObject</span><span style="color: #007700">(&amp;</span><span style="color: #0000BB">$array</span><span style="color: #007700">, </span><span style="color: #0000BB">$prefix </span><span style="color: #007700">= </span><span style="color: #0000BB">null</span><span style="color: #007700">)
+        {
+            </span><span style="color: #0000BB">$employer </span><span style="color: #007700">= new </span><span style="color: #0000BB">Employer</span><span style="color: #007700">();
+            
+            return
+                </span><span style="color: #0000BB">$employer</span><span style="color: #007700">-&gt;
+                    </span><span style="color: #0000BB">setId</span><span style="color: #007700">(</span><span style="color: #0000BB">$array</span><span style="color: #007700">[</span><span style="color: #0000BB">$prefix</span><span style="color: #007700">.</span><span style="color: #DD0000">'id'</span><span style="color: #007700">])-&gt;
+                    </span><span style="color: #0000BB">setName</span><span style="color: #007700">(</span><span style="color: #0000BB">$array</span><span style="color: #007700">[</span><span style="color: #0000BB">$prefix</span><span style="color: #007700">.</span><span style="color: #DD0000">'name'</span><span style="color: #007700">])-&gt;
+                    </span><span style="color: #0000BB">setBirthDate</span><span style="color: #007700">(new </span><span style="color: #0000BB">Timestamp</span><span style="color: #007700">(</span><span style="color: #0000BB">$array</span><span style="color: #007700">[</span><span style="color: #0000BB">$prefix</span><span style="color: #007700">.</span><span style="color: #DD0000">'birth_date'</span><span style="color: #007700">]))-&gt;
+                    </span><span style="color: #0000BB">setModified</span><span style="color: #007700">(new </span><span style="color: #0000BB">Timestamp</span><span style="color: #007700">(</span><span style="color: #0000BB">$array</span><span style="color: #007700">[</span><span style="color: #0000BB">$prefix</span><span style="color: #007700">.</span><span style="color: #DD0000">'modified'</span><span style="color: #007700">]));
+        }
+        
+        public function </span><span style="color: #0000BB">setQueryFields</span><span style="color: #007700">(
+            </span><span style="color: #0000BB">InsertOrUpdateQuery $query</span><span style="color: #007700">, </span><span style="color: #0000BB">Employer $employer
+        </span><span style="color: #007700">)
+        {
+            if (</span><span style="color: #0000BB">$query </span><span style="color: #007700">instanceof </span><span style="color: #0000BB">UpdateQuery</span><span style="color: #007700">)
+                </span><span style="color: #0000BB">$query</span><span style="color: #007700">-&gt;
+                    </span><span style="color: #0000BB">set</span><span style="color: #007700">(
+                        </span><span style="color: #DD0000">'modified'</span><span style="color: #007700">,
+                        </span><span style="color: #0000BB">$employer</span><span style="color: #007700">-&gt;
+                            </span><span style="color: #0000BB">setModified</span><span style="color: #007700">(new </span><span style="color: #0000BB">Timestamp</span><span style="color: #007700">(</span><span style="color: #0000BB">time</span><span style="color: #007700">()))-&gt;
+                            </span><span style="color: #0000BB">getModified</span><span style="color: #007700">()-&gt;
+                                </span><span style="color: #0000BB">toString</span><span style="color: #007700">()
+                    );
+            
+            return
+                </span><span style="color: #0000BB">$query</span><span style="color: #007700">-&gt;
+                    </span><span style="color: #0000BB">set</span><span style="color: #007700">(</span><span style="color: #DD0000">'id'</span><span style="color: #007700">, </span><span style="color: #0000BB">$employer</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getId</span><span style="color: #007700">())-&gt;
+                    </span><span style="color: #0000BB">set</span><span style="color: #007700">(</span><span style="color: #DD0000">'name'</span><span style="color: #007700">, </span><span style="color: #0000BB">$employer</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getName</span><span style="color: #007700">())-&gt;
+                    </span><span style="color: #0000BB">set</span><span style="color: #007700">(</span><span style="color: #DD0000">'birth_date'</span><span style="color: #007700">, </span><span style="color: #0000BB">$employer</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getBirthDate</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">toString</span><span style="color: #007700">());
+        }
+    }</span>
+</pre>
+
+<p>hint:</p>
+
+<pre>
+    <span style="color: #007700">final class </span><span style="color: #0000BB">DAO
+    </span><span style="color: #007700">{
+        public static function </span><span style="color: #0000BB">employer</span><span style="color: #007700">()
+        {
+            return </span><span style="color: #0000BB">Singletone</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">(</span><span style="color: #DD0000">'EmployerDAO'</span><span style="color: #007700">);
+        }
+    }</span>
+</pre>
+
+<p>usage:</p>
+
+<pre>
+    <span style="color: #FF8000">// get youn gemployers list sorted by birth date</span>
+    <span style="color: #0000BB">$employer </span><span style="color: #007700">= </span><span style="color: #0000BB">DAO</span><span style="color: #007700">::</span><span style="color: #0000BB">employer</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">getById</span><span style="color: #007700">(</span><span style="color: #0000BB">2</span><span style="color: #007700">);
+
+    <span style="color: #FF8000">// get young employers list sorted by birth date</span>
+    </span><span style="color: #0000BB">$youngEmployersList </span><span style="color: #007700">=
+        </span><span style="color: #0000BB">DAO</span><span style="color: #007700">::</span><span style="color: #0000BB">employer</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">getList</span><span style="color: #007700">(
+            </span><span style="color: #0000BB">ObjectQuery</span><span style="color: #007700">::</span><span style="color: #0000BB">create</span><span style="color: #007700">()-&gt;
+            </span><span style="color: #0000BB">sort</span><span style="color: #007700">(</span><span style="color: #DD0000">'birthDate'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">asc</span><span style="color: #007700">()-&gt;
+            </span><span style="color: #0000BB">addLogic</span><span style="color: #007700">(
+                </span><span style="color: #0000BB">Expression</span><span style="color: #007700">::</span><span style="color: #0000BB">gt</span><span style="color: #007700">(
+                    </span><span style="color: #DD0000">'birthDate'</span><span style="color: #007700">,
+                    </span><span style="color: #0000BB">DBValue</span><span style="color: #007700">::</span><span style="color: #0000BB">create</span><span style="color: #007700">(</span><span style="color: #0000BB">1970</span><span style="color: #007700">)
+                )
+            )
+        );</span>
+</pre>
