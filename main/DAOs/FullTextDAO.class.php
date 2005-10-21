@@ -11,7 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class FullTextDAO extends StorableDAO
+	abstract class FullTextDAO extends MappedStorableDAO
 	{
 		public function getIndexField()
 		{
