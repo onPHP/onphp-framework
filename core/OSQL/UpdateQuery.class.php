@@ -37,10 +37,10 @@
 			$sets = array();
 
 			foreach ($this->fields as $var => $val) {
-				if ($val instanceof LogicalObject)
+				if ($val instanceof DialectString)
 					$sets[] =
 						$dialect->quoteField($var)
-						.' '
+						.' = '
 						.$val->toString($dialect);
 				elseif (is_null($val))
 					$sets[] = $dialect->quoteField($var).' = NULL';
