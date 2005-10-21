@@ -49,5 +49,18 @@
 			
 			return implode($delimiter, $name);
 		}
+
+		public function getRoot()
+		{
+			$current = $this;
+			$next = $this;
+			
+			while ($next) {
+				$current = $next;
+				$next = $next->getParent();
+			}
+
+			return $current;
+		}
 	}
 ?>
