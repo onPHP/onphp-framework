@@ -77,7 +77,10 @@
 
 			if (null !== $left = $this->left) {
 				if ($left instanceof DialectString)
-					$string .= $left->toString($dialect);
+					if ($left instanceof SelectQuery)
+						$string .= '('.$left->toString($dialect).')';
+					else
+						$string .= $left->toString($dialect);
 				else
 					$string .= $dialect->quoteField($left);
 			}
@@ -86,7 +89,10 @@
 			
 			if (null !== $right = $this->right) {
 				if ($right instanceof DialectString)
-					$string .= $right->toString($dialect);
+					if ($right instanceof SelectQuery)
+						$string .= '('.$right->toString($dialect).')';
+					else
+						$string .= $right->toString($dialect);
 				else
 					$string .= $dialect->quoteValue($this->right);
 			}

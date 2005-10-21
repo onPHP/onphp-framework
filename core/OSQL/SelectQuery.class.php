@@ -264,9 +264,6 @@
 			if ($fromString)
 				$query .= ' FROM '.$fromString;
 
-			if ($this->name)
-				$query .= ' AS '.$this->name;
-
 			// WHERE
 			$query .= parent::toString($dialect);
 
