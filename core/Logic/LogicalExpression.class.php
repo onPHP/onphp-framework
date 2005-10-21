@@ -107,6 +107,14 @@
 		
 		public function toBoolean(Form $form)
 		{
+			if ($this->left instanceof LogicalObject) {
+				$this->left = $this->left->toBoolean($form);
+			}
+			
+			if ($this->right instanceof LogicalObject) {
+				$this->right = $this->right->toBoolean($form);
+			}
+			
 			$both = 
 				(null !== $this->left) &&
 				(null !== $this->right);

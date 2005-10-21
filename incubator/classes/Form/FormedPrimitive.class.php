@@ -36,6 +36,13 @@ class FormedPrimitive extends BasePrimitive
 		parent::__construct($name);
 		$this->form = Form::create();
 	}
+
+	public function addRule($name, LogicalObject $rule)
+	{
+		$this->form->addRule($name, $rule);
+		
+		return $this;
+	}
 	
 	public function add(BasePrimitive $primitive)
 	{
@@ -75,6 +82,8 @@ class FormedPrimitive extends BasePrimitive
 		
 		return true;
 	}
+	
+	
 }
 
 ?>
