@@ -45,6 +45,9 @@
 		const MULTIPLY			= '*';
 		const DIVIDE			= '/';
 
+		const IN				= 'in';
+		const NOT_IN			= 'not in';
+
 		private $left	= null;
 		private $right	= null;
 		private $logic	= null;
@@ -76,24 +79,24 @@
 			$string = '(';
 
 			if (null !== $left = $this->left) {
-				if ($left instanceof DialectString)
+				if ($left instanceof DialectString) {
 					if ($left instanceof SelectQuery)
 						$string .= '('.$left->toString($dialect).')';
 					else
 						$string .= $left->toString($dialect);
-				else
+				} else
 					$string .= $dialect->quoteField($left);
 			}
 
 			$string .= " {$this->logic} ";
 			
 			if (null !== $right = $this->right) {
-				if ($right instanceof DialectString)
+				if ($right instanceof DialectString) {
 					if ($right instanceof SelectQuery)
 						$string .= '('.$right->toString($dialect).')';
 					else
 						$string .= $right->toString($dialect);
-				else
+				} else
 					$string .= $dialect->quoteValue($this->right);
 			}
 
@@ -150,9 +153,15 @@
 				
 				case self::EXPRESSION_AND:
 					return $both && ($left && $right->toBoolean($form));
-
+				
 				case self::EXPRESSION_OR:
 					return $both && ($left || $right->toBoolean($form));
+				
+				case self::IN:
+					return $both && (in_array($left, $right));
+				
+				case self::NOT_IN:
+					return $both && (!in_array($left, $right));
 				
 				case self::EQUALS_LOWER:
 					return $both && (strtolower($left) === strtolower($right));

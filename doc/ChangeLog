@@ -1,5 +1,10 @@
 # $Id$
 
+2005-10-21	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/OSQL/: LogicalIn implemented through LogicalExpression, so it's
+deprecated now just like LogicalEqLower.
+
 2005-10-20	Garmonbozia R. G.	<garmonbozia@shadanakar.org>
 
 * doc/www/: major site update - css, examples, propaganda, etc.

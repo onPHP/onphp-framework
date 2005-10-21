@@ -36,6 +36,21 @@
 			
 			return $fields;
 		}
+		
+		public function get(ObjectQuery $oq)
+		{
+			return $this->getByQuery($oq->toSelectQuery($this));
+		}
+
+		public function getList(ObjectQuery $oq)
+		{
+			return $this->getListByQuery($oq->toSelectQuery($this));
+		}
+		
+		public function getCountedList(ObjectQuery $oq)
+		{
+			return $this->getQueryResult($oq->toSelectQuery($this));
+		}
 
 		public function take(Identifiable $object)
 		{

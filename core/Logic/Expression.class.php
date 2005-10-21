@@ -168,8 +168,15 @@
 				return self::eq($field, $value);
 			elseif (is_array($value) && sizeof($value) == 1)
 				return self::eq($field, current($value));
-			else
-				return new LogicalIn($field, $value, LogicalIn::IN);
+			else {
+				
+				if (is_array($value))
+					$value = new SQLArray($value);
+				
+				return new LogicalExpression(
+					$field, $value, LogicalExpression::IN
+				);
+			}
 		}
 		
 		public static function notIn($field, $value)
@@ -178,8 +185,15 @@
 				return self::notEq($field, $value);
 			elseif (is_array($value) && sizeof($value) == 1)
 				return self::notEq($field, current($value));
-			else
-				return new LogicalIn($field, $value, LogicalIn::NOT_IN);
+			else {
+				
+				if (is_array($value))
+					$value = new SQLArray($value);
+				
+				return new LogicalExpression(
+					$field, $value, LogicalExpression::NOT_IN
+				);
+			}
 		}
 		
 		public static function add($field, $value)

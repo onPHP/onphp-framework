@@ -11,6 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
+	// @deprecated by LogicalExpression
 	class LogicalIn implements LogicalObject
 	{
 		const IN		= 'in';

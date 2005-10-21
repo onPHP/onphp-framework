@@ -245,7 +245,7 @@
 			$query = 
 				'SELECT '.($this->distinct ? 'DISTINCT ' : '').
 				implode(', ', $fieldList);
-
+				
 			$fromString = "";
 			for ($i = 0; $i < sizeof($this->from); $i++) {
 				if ($i == 0)
