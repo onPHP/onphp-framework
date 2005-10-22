@@ -3,89 +3,89 @@
 <h2>core/<a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2F&rev=0&sc=0">Form</a></h2>
 
 <pre>
-    <span style="color: #FF8000">// user's unput emulation</span>
-    <span style="color: #0000BB">$_GET </span><span style="color: #007700">= array(
-        </span><span style="color: #DD0000">'icqNumber'       </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'LICQ 1.3.2'</span><span style="color: #007700">,
-        </span><span style="color: #DD0000">'shortOne'        </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'i am loooong'</span><span style="color: #007700">,
-        </span><span style="color: #DD0000">'quiteLongText'   </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">"onPHP &gt;is&lt; the GPL'ed multi-purpose object-oriented \"PHP\" &lt;b&gt;framework&lt;/b&gt;."</span><span style="color: #007700">,
-        </span><span style="color: #DD0000">'firstPassword'   </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'security is'</span><span style="color: #007700">,
-        </span><span style="color: #DD0000">'secondPassword'  </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'a good thing'
-    </span><span style="color: #007700">);
+    <span class="orange">// user's unput emulation</span>
+    <span class="blue">$_GET </span><span class="green">= array(
+        </span><span class="red">'icqNumber'       </span><span class="green">=&gt; </span><span class="red">'LICQ 1.3.2'</span><span class="green">,
+        </span><span class="red">'shortOne'        </span><span class="green">=&gt; </span><span class="red">'i am loooong'</span><span class="green">,
+        </span><span class="red">'quiteLongText'   </span><span class="green">=&gt; </span><span class="red">"onPHP &gt;is&lt; the GPL'ed multi-purpose object-oriented \"PHP\" &lt;b&gt;framework&lt;/b&gt;."</span><span class="green">,
+        </span><span class="red">'firstPassword'   </span><span class="green">=&gt; </span><span class="red">'security is'</span><span class="green">,
+        </span><span class="red">'secondPassword'  </span><span class="green">=&gt; </span><span class="red">'a good thing'
+    </span><span class="green">);
 
-    </span><span style="color: #0000BB">$form </span><span style="color: #007700">=
-        </span><span style="color: #0000BB">Form</span><span style="color: #007700">::</span><span style="color: #0000BB">create</span><span style="color: #007700">()-&gt;
-        </span><span style="color: #0000BB">add</span><span style="color: #007700">(
-            <span style="color: #FF8000">// only integers accepted here</span>
-            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveInteger.class.php&rev=0&sc=0">integer</a></span><span style="color: #007700">(</span><span style="color: #DD0000">'icqNumber'</span><span style="color: #007700">)
+    </span><span class="blue">$form </span><span class="green">=
+        </span><span class="blue">Form</span><span class="green">::</span><span class="blue">create</span><span class="green">()-&gt;
+        </span><span class="blue">add</span><span class="green">(
+            <span class="orange">// only integers accepted here</span>
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveInteger.class.php&rev=0&sc=0">integer</a></span><span class="green">(</span><span class="red">'icqNumber'</span><span class="green">)
         )-&gt;
-        </span><span style="color: #0000BB">add</span><span style="color: #007700">(
-            <span style="color: #FF8000">// non-optional element</span>
-            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveDate.class.php&rev=0&sc=0">date</a></span><span style="color: #007700">(</span><span style="color: #DD0000">'requiredElement'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">required</span><span style="color: #007700">()
+        </span><span class="blue">add</span><span class="green">(
+            <span class="orange">// non-optional element</span>
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveDate.class.php&rev=0&sc=0">date</a></span><span class="green">(</span><span class="red">'requiredElement'</span><span class="green">)-&gt;</span><span class="blue">required</span><span class="green">()
         )-&gt;
-        </span><span style="color: #0000BB">add</span><span style="color: #007700">(
-            <span style="color: #FF8000">// strlen($thisOne) should be equal or lower 2</span>
-            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span style="color: #007700">(</span><span style="color: #DD0000">'shortOne'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">setMax</span><span style="color: #007700">(</span><span style="color: #0000BB">2</span><span style="color: #007700">)
+        </span><span class="blue">add</span><span class="green">(
+            <span class="orange">// strlen($thisOne) should be equal or lower 2</span>
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span class="green">(</span><span class="red">'shortOne'</span><span class="green">)-&gt;</span><span class="blue">setMax</span><span class="green">(</span><span class="blue">2</span><span class="green">)
         )-&gt;
-        </span><span style="color: #0000BB">add</span><span style="color: #007700">(
-            <span style="color: #FF8000">// arbitrary text</span>
-            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span style="color: #007700">(</span><span style="color: #DD0000">'quiteLongText'</span><span style="color: #007700">)-&gt;
-            </span><span style="color: #0000BB">addImportFilter</span><span style="color: #007700">(
-                </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span style="color: #007700">::</span><span style="color: #0000BB">textImport</span><span style="color: #007700">()
+        </span><span class="blue">add</span><span class="green">(
+            <span class="orange">// arbitrary text</span>
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span class="green">(</span><span class="red">'quiteLongText'</span><span class="green">)-&gt;
+            </span><span class="blue">addImportFilter</span><span class="green">(
+                </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span class="green">::</span><span class="blue">textImport</span><span class="green">()
             )-&gt;
-            </span><span style="color: #0000BB">addDisplayFilter</span><span style="color: #007700">(
-                </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilterChain.class.php&rev=0&sc=0">chain</a></span><span style="color: #007700">()-&gt;
-                </span><span style="color: #0000BB">add</span><span style="color: #007700">(
-                    </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span style="color: #007700">::</span><span style="color: #0000BB">htmlSpecialChars</span><span style="color: #007700">()
+            </span><span class="blue">addDisplayFilter</span><span class="green">(
+                </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilterChain.class.php&rev=0&sc=0">chain</a></span><span class="green">()-&gt;
+                </span><span class="blue">add</span><span class="green">(
+                    </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span class="green">::</span><span class="blue">htmlSpecialChars</span><span class="green">()
                 )-&gt;
-                </span><span style="color: #0000BB">add</span><span style="color: #007700">(
-                	<span style="color: #FF8000">... more filters here ...</span>
+                </span><span class="blue">add</span><span class="green">(
+                	<span class="orange">... more filters here ...</span>
                 )
             )
         )-&gt;
-        </span><span style="color: #0000BB">add</span><span style="color: #007700">(
-            <span style="color: #FF8000">// required password</span>
-            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span style="color: #007700">(</span><span style="color: #DD0000">'firstPassword'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">required</span><span style="color: #007700">()-&gt;
-            <span style="color: #FF8000">// hash it upon importing</span>
-            </span><span style="color: #0000BB">addImportFilter</span><span style="color: #007700">(
-                </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FHashFilter.class.php&rev=0&sc=0">hash</a></span><span style="color: #007700">()
+        </span><span class="blue">add</span><span class="green">(
+            <span class="orange">// required password</span>
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span class="green">(</span><span class="red">'firstPassword'</span><span class="green">)-&gt;</span><span class="blue">required</span><span class="green">()-&gt;
+            <span class="orange">// hash it upon importing</span>
+            </span><span class="blue">addImportFilter</span><span class="green">(
+                </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FHashFilter.class.php&rev=0&sc=0">hash</a></span><span class="green">()
             )
         )-&gt;
-        </span><span style="color: #0000BB">add</span><span style="color: #007700">(
-            <span style="color: #FF8000">// second one for verification</span>
-            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span style="color: #007700">(</span><span style="color: #DD0000">'secondPassword'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">required</span><span style="color: #007700">()-&gt;
-            <span style="color: #FF8000">// hash it too</span>
-            </span><span style="color: #0000BB">addImportFilter</span><span style="color: #007700">(
-                </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span style="color: #007700">::</span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FHashFilter.class.php&rev=0&sc=0">hash</a></span><span style="color: #007700">()
+        </span><span class="blue">add</span><span class="green">(
+            <span class="orange">// second one for verification</span>
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span class="green">(</span><span class="red">'secondPassword'</span><span class="green">)-&gt;</span><span class="blue">required</span><span class="green">()-&gt;
+            <span class="orange">// hash it too</span>
+            </span><span class="blue">addImportFilter</span><span class="green">(
+                </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FHashFilter.class.php&rev=0&sc=0">hash</a></span><span class="green">()
             )
         )-&gt;
-        <span style="color: #FF8000">// import our emulation</span>
-        </span><span style="color: #0000BB">import</span><span style="color: #007700">(</span><span style="color: #0000BB">$_GET</span><span style="color: #007700">)-&gt;
-        <span style="color: #FF8000">// add optional rules by OSQL-like expressions</span>
-        </span><span style="color: #0000BB">addRule</span><span style="color: #007700">(
-            </span><span style="color: #DD0000">'equalPasswords'</span><span style="color: #007700">,
-            </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FLogic%2FExpression.class.php&rev=0&sc=0">Expression</a></span><span style="color: #007700">::</span><span style="color: #0000BB">eq</span><span style="color: #007700">(
-                new </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFormField.class.php&rev=0&sc=0">FormField</a></span><span style="color: #007700">(</span><span style="color: #DD0000">'firstPassword'</span><span style="color: #007700">),
-                new </span><span style="color: #0000BB"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFormField.class.php&rev=0&sc=0">FormField</a></span><span style="color: #007700">(</span><span style="color: #DD0000">'secondPassword'</span><span style="color: #007700">)
+        <span class="orange">// import our emulation</span>
+        </span><span class="blue">import</span><span class="green">(</span><span class="blue">$_GET</span><span class="green">)-&gt;
+        <span class="orange">// add optional rules by OSQL-like expressions</span>
+        </span><span class="blue">addRule</span><span class="green">(
+            </span><span class="red">'equalPasswords'</span><span class="green">,
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FLogic%2FExpression.class.php&rev=0&sc=0">Expression</a></span><span class="green">::</span><span class="blue">eq</span><span class="green">(
+                new </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFormField.class.php&rev=0&sc=0">FormField</a></span><span class="green">(</span><span class="red">'firstPassword'</span><span class="green">),
+                new </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFormField.class.php&rev=0&sc=0">FormField</a></span><span class="green">(</span><span class="red">'secondPassword'</span><span class="green">)
             )
         )-&gt;
-        <span style="color: #FF8000">// check 'em</span>
-        </span><span style="color: #0000BB">checkRules</span><span style="color: #007700">();
+        <span class="orange">// check 'em</span>
+        </span><span class="blue">checkRules</span><span class="green">();
 
-    </span><span style="color: #FF8000">// of course, we have errors    
-    </span><span style="color: #007700">if (</span><span style="color: #0000BB">$errors </span><span style="color: #007700">= </span><span style="color: #0000BB">$form</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getErrors</span><span style="color: #007700">()) {
+    </span><span class="orange">// of course, we have errors    
+    </span><span class="green">if (</span><span class="blue">$errors </span><span class="green">= </span><span class="blue">$form</span><span class="green">-&gt;</span><span class="blue">getErrors</span><span class="green">()) {
 
-        <span style="color: #FF8000">// define error labels</span>
-        </span><span style="color: #0000BB">$form</span><span style="color: #007700">-&gt;
-            </span><span style="color: #0000BB">addWrongLabel</span><span style="color: #007700">(</span><span style="color: #DD0000">'icqNumber'</span><span style="color: #007700">,         </span><span style="color: #DD0000">'non-integer given'</span><span style="color: #007700">)-&gt;
-            </span><span style="color: #0000BB">addWrongLabel</span><span style="color: #007700">(</span><span style="color: #DD0000">'shortOne'</span><span style="color: #007700">,          </span><span style="color: #DD0000">'way too long value given'</span><span style="color: #007700">)-&gt;
-            </span><span style="color: #0000BB">addWrongLabel</span><span style="color: #007700">(</span><span style="color: #DD0000">'equalPasswords'</span><span style="color: #007700">,    </span><span style="color: #DD0000">"'security is' != 'a good thing'"</span><span style="color: #007700">)-&gt;
-            </span><span style="color: #0000BB">addWrongLabel</span><span style="color: #007700">(</span><span style="color: #DD0000">'quiteLongText'</span><span style="color: #007700">,     </span><span style="color: #DD0000">"i'm ok!"</span><span style="color: #007700">)-&gt;
-            </span><span style="color: #0000BB">addMissingLabel</span><span style="color: #007700">(</span><span style="color: #DD0000">'requiredElement'</span><span style="color: #007700">, </span><span style="color: #DD0000">'i defined, therefore i am'</span><span style="color: #007700">-&gt;
-            </span><span style="color: #0000BB">addMissingLabel</span><span style="color: #007700">(</span><span style="color: #DD0000">'requiredElement'</span><span style="color: #007700">, </span><span style="color: #DD0000">'where is my value?'</span><span style="color: #007700">);
+        <span class="orange">// define error labels</span>
+        </span><span class="blue">$form</span><span class="green">-&gt;
+            </span><span class="blue">addWrongLabel</span><span class="green">(</span><span class="red">'icqNumber'</span><span class="green">,         </span><span class="red">'non-integer given'</span><span class="green">)-&gt;
+            </span><span class="blue">addWrongLabel</span><span class="green">(</span><span class="red">'shortOne'</span><span class="green">,          </span><span class="red">'way too long value given'</span><span class="green">)-&gt;
+            </span><span class="blue">addWrongLabel</span><span class="green">(</span><span class="red">'equalPasswords'</span><span class="green">,    </span><span class="red">"'security is' != 'a good thing'"</span><span class="green">)-&gt;
+            </span><span class="blue">addWrongLabel</span><span class="green">(</span><span class="red">'quiteLongText'</span><span class="green">,     </span><span class="red">"i'm ok!"</span><span class="green">)-&gt;
+            </span><span class="blue">addMissingLabel</span><span class="green">(</span><span class="red">'requiredElement'</span><span class="green">, </span><span class="red">'i defined, therefore i am'</span><span class="green">-&gt;
+            </span><span class="blue">addMissingLabel</span><span class="green">(</span><span class="red">'requiredElement'</span><span class="green">, </span><span class="red">'where is my value?'</span><span class="green">);
 
-        <span style="color: #FF8000">// and give some feedback to user</span>
-        foreach (</span><span style="color: #0000BB">$form</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getTexturalErrors</span><span style="color: #007700">() as </span><span style="color: #0000BB">$label</span><span style="color: #007700">)
-            echo </span><span style="color: #0000BB">$label</span><span style="color: #007700">.</span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;
+        <span class="orange">// and give some feedback to user</span>
+        foreach (</span><span class="blue">$form</span><span class="green">-&gt;</span><span class="blue">getTexturalErrors</span><span class="green">() as </span><span class="blue">$label</span><span class="green">)
+            echo </span><span class="blue">$label</span><span class="green">.</span><span class="red">"\n"</span><span class="green">;
     }</span>
 </pre>
 <p style="text-align: center;">==</p>
@@ -99,8 +99,8 @@
 <p>PS:</p>
 
 <pre>
-    <span style="color: #FF8000">// was: onPHP &gt;is&lt; the GPL'ed multi-purpose object-oriented &quot;PHP&quot; &lt;b&gt;framework&lt;/b&gt;.</span>
-    echo </span><span style="color: #0000BB">$form</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getDisplayValue</span><span style="color: #007700">(</span><span style="color: #DD0000">'quiteLongText'</span><span style="color: #007700">);</span>
+    <span class="orange">// was: onPHP &gt;is&lt; the GPL'ed multi-purpose object-oriented &quot;PHP&quot; &lt;b&gt;framework&lt;/b&gt;.</span>
+    echo </span><span class="blue">$form</span><span class="green">-&gt;</span><span class="blue">getDisplayValue</span><span class="green">(</span><span class="red">'quiteLongText'</span><span class="green">);</span>
 </pre>
 <p style="text-align: center;">==</p>
 <pre>

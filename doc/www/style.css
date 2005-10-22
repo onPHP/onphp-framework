@@ -68,3 +68,10 @@
 		width: 75%;
 	}
 	
+<!-- php's coloring -->
+
+	span.red	{ color: #DD0000; }
+	span.green	{ color: #007700; }
+	span.blue	{ color: #0000BB; }
+	span.orange	{ color: #FF8000; }
+	
