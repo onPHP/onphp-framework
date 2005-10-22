@@ -1,5 +1,9 @@
 # $Id$
 
+2005-10-23	Sveta Smirnova		<sveta@microbecal.com>
+
+* core/DB/: MySQL support is back from incubator.
+
 2005-10-21	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * main/DAOs/FullTextDAO.class.php: silently moved to MappedStorableDAO.
