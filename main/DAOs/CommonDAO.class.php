@@ -104,7 +104,17 @@
 		{
 			if ($expires !== Cache::DO_NOT_CACHE) {
 				
-				return parent::getListByIds($ids);
+				$list = array();
+				
+				foreach ($ids as $id) {
+					try {
+						$list[] = $this->getById($id, $expires);
+					} catch (ObjectNotFoundException $e) {
+						// ignore
+					}
+				}
+	
+				return $list;
 				
 			} elseif (sizeof($ids)) {
 				return

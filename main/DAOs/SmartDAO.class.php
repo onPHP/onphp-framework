@@ -95,13 +95,13 @@
 			}
 		}
 		
-		public function getListByIds($ids, $expires = Cache::EXPIRES_MEDIUM)
+		public function getListByIds($ids)
 		{
 			$list = array();
 			
 			foreach ($ids as $id) {
 				try {
-					$list[] = $this->getById($id, $expires);
+					$list[] = $this->getById($id);
 				} catch (ObjectNotFoundException $e) {
 					// ignore
 				}

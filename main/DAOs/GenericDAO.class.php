@@ -22,6 +22,7 @@
 		abstract public function getByLogic(LogicalObject $logic);
 		abstract public function getByQuery(SelectQuery $query);
 
+		abstract public function getListByIds($ids);
 		abstract public function getListByQuery(SelectQuery $query);
 		abstract public function getListByLogic(LogicalObject $logic);
 
@@ -58,21 +59,6 @@
 			return clone $this->selectHead;
 		}
 		
-		public function getListByIds($ids)
-		{
-			$list = array();
-			
-			foreach ($ids as $id) {
-				try {
-					$list[] = $this->getById($id);
-				} catch (ObjectNotFoundException $e) {
-					// ignore
-				}
-			}
-
-			return $list;
-		}
-
 		public function getCustom(SelectQuery $query)
 		{
 			if ($query->getLimit() > 1)
