@@ -51,7 +51,7 @@
 				return false;
 		}
 		
-		public static function getParsedURI()
+		public static function getParsedURI(/* ... */)
 		{
 			if ($num = func_num_args()) {
 				$out = self::getURI();

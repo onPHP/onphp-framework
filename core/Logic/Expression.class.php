@@ -236,12 +236,12 @@
 			return new FullTextRank($field, $wordsList, DB::FULL_TEXT_AND);
 		}
 			
-		public static function orBlock()
+		public static function orBlock(/* ... */)
 		{
 			return self::block(func_get_args(), self::LOGIC_OR);
 		}
 
-		public static function andBlock()
+		public static function andBlock(/* ... */)
 		{
 			return self::block(func_get_args(), self::LOGIC_AND);
 		}

@@ -195,7 +195,7 @@
 			return $this;
 		}
 
-		public function multiGet()
+		public function multiGet(/* ... */)
 		{
 			$size = func_num_args();
 		

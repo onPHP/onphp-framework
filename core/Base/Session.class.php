@@ -61,7 +61,7 @@
 				throw new SessionNotStartedException();
 		}
 		
-		public static function exist()
+		public static function exist(/* ... */)
 		{
 			if (Session::isStarted())
 				if (func_num_args()) {
@@ -90,7 +90,7 @@
 			return $_SESSION;
 		}
 		
-		public static function drop()
+		public static function drop(/* ... */)
 		{
 			if (Session::isStarted())
 				if (func_num_args())

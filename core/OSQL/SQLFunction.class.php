@@ -18,7 +18,7 @@
 
 		private $args	= array();
 		
-		public static function create($name)
+		public static function create($name /* , ... */)
 		{
 			if (func_num_args() > 1) {
 				$args = func_get_args();
@@ -28,7 +28,7 @@
 				return new SQLFunction($name);
 		}
 		
-		public function __construct($name)
+		public function __construct($name /* , ... */)
 		{
 			$this->name = $name;
 			

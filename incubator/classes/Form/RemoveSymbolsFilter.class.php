@@ -14,7 +14,7 @@
 	{
 		private $symbols = array();
 		
-		public function setSymbols()
+		public function setSymbols(/* ... */)
 		{
 			$this->symbols = func_get_args();
 			
@@ -28,7 +28,12 @@
 		
 		public function apply($value)
 		{
-			return str_replace($this->symbols, array_fill(0, count($this->symbols), ''), $value);
+			return
+				str_replace(
+					$this->symbols,
+					array_fill(0, count($this->symbols), ''),
+					$value
+				);
 		}
 	}
 ?>

@@ -137,7 +137,9 @@
 		 * @return		PropertyFilter		PropertyFilter instance
 		 * @access		public
 		**/
-		public static function getInstance($class = 'PropertyFilter', $args = null)
+		public static function getInstance(
+			$class = 'PropertyFilter', $args = null /* , ... */
+		)
 		{
 			$args = func_get_args();
 			return parent::getInstance('PropertyFilter', $args);
@@ -205,7 +207,7 @@
 		 * @return	void
 		 * @access	public
 		**/
-		public function setTemplates($template)
+		public function setTemplates(/* ... */)
 		{
 			$this->templates = func_get_args();
 			

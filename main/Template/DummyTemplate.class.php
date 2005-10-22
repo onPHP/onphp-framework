@@ -154,7 +154,7 @@
 		 *									was set, default value otherwise
 		 * @access	public
 		**/
-		public function __call($functionName, $params)
+		public function __call($functionName, $params /* , ... */)
 		{
 			if (array_key_exists($functionName, $this->functions)) {
 				if (2 == func_num_args()) {

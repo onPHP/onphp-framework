@@ -49,7 +49,9 @@
 		 * @return		PropertyFilterForm 	PropertyFilterForm instance
 		 * @access		public
 		**/
-		public static function getInstance($class = 'PropertyFilterForm', $args = null)
+		public static function getInstance(
+			$class = 'PropertyFilterForm', $args = null /* , ... */
+		)
 		{
 			$args = func_get_args();
 			return Singletone::getInstance('PropertyFilterForm', $args);

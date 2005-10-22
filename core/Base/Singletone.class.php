@@ -45,7 +45,7 @@
 		}
 		
 		final public static function getInstance(
-			$class = 'SingletoneInstance', $args = null
+			$class = 'SingletoneInstance', $args = null /* , ... */
 		)
 		{
 			// for Singletone::getInstance('class_name', $arg1, ...) calling
