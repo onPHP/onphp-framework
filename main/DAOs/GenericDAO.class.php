@@ -64,7 +64,7 @@
 			
 			foreach ($ids as $id) {
 				try {
-					$list[] = $this->getById($id, $expires);
+					$list[] = $this->getById($id);
 				} catch (ObjectNotFoundException $e) {
 					// ignore
 				}
