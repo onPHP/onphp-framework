@@ -40,6 +40,11 @@
 			throw new UnsupportedMethodException();
 		}
 
+		public function obtainSequence($sequence)
+		{
+			throw new UnsupportedMethodException();
+		}
+
 		public function connect(
 			$user, $pass, $host,
 			$base = null, $persistent = false
@@ -157,17 +162,6 @@
 				);
 
 			return $result;
-		}
-		
-		public function obtainSequence($sequence)
-		{
-			$res = $this->queryRow(
-				OSQL::select()->get(
-					SQLFunction::create('nextval', $sequence)->setAlias('seq')
-				)
-			);
-
-			return $res['seq'];
 		}
 	}
 ?>
