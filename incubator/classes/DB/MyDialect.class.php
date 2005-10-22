@@ -27,21 +27,28 @@
 			elseif (strpos($field, '::') !== false)
 				throw new WrongArgumentException();
 
-			return "`$field`";
+			return "`{$field}`";
 		}
 		
 		public static function quoteTable(&$table)
 		{
-			return "`$table`";
+			return "`{$table}`";
 		}
 		
 		public function fullTextSearch($fields, $words, $logic)
 		{
-			return ' MATCH ('
-							. implode(', ', array_map(array($this, 'fieldToString'), $fields))
-							. ') AGAINST ('
-							. self::$prepareFullText($words, $logic)
-							. ')';
+			return
+				' MATCH ('
+					.implode(
+						', ',
+						array_map(
+							array($this, 'fieldToString'),
+							$fields
+						)
+					)
+					.') AGAINST ('
+					.self::$prepareFullText($words, $logic)
+				.')';
 		}
 		
 		public function fullTextRank($field, $words, $logic)
@@ -56,7 +63,7 @@
 			$retval = self::quoteValue(implode(' ', $words));
 			
 			if (self::IN_BOOLEAN_MODE === $logic) {
-				return addcslashes($retval, '+-<>()~*"') . ' ' . 'IN BOOLEAN MODE';
+				return addcslashes($retval, '+-<>()~*"').' '.'IN BOOLEAN MODE';
 			} else {
 				return $retval;
 			}
