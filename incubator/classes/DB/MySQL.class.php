@@ -11,7 +11,6 @@
  ***************************************************************************/
 /* $Id$ */
 
-	// FIXME: too many features not implemented
 	class MySQL extends DB
 	{
 		private static $dialect = null;
@@ -26,6 +25,21 @@
 			return self::$dialect;
 		}
 		
+		public function asyncQuery(Query $query)
+		{
+			throw new UnsupportedMethodException();
+		}
+
+		public function isBusy()
+		{
+			throw new UnsupportedMethodException();
+		}
+
+		public function setEncoding($encoding)
+		{
+			throw new UnsupportedMethodException();
+		}
+
 		public function connect(
 			$user, $pass, $host,
 			$base = null, $persistent = false
@@ -44,16 +58,6 @@
 			$this->persistent = $persistent;
 			
 			return $this;
-		}
-		
-		public function asyncQuery(Query $query)
-		{
-			throw new UnsupportedMethodException;
-		}
-
-		public function isBusy()
-		{
-			throw new UnsupportedMethodException;
 		}
 		
 		public function disconnect()
@@ -157,15 +161,13 @@
 		
 		public function obtainSequence($sequence)
 		{
-			$res = $this->queryRow(OSQL::select()->getFunction('nextval', $sequence, 'seq'));
+			$res = $this->queryRow(
+				OSQL::select()->get(
+					SQLFunction::create('nextval', $sequence)->setAlias('seq')
+				)
+			);
 
 			return $res['seq'];
 		}
-
-		public function setEncoding($encoding)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
 	}
 ?>
