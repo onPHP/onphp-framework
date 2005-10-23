@@ -20,28 +20,32 @@
 		
 		public function dropByIds($ids)
 		{
-			foreach ($ids as $id)
-				$this->uncacheById($id);
-				
-			$this->dropLists();
-
-			return
+			$result =
 				DBFactory::getDefaultInstance()->queryNull(
 					OSQL::delete()->from($this->getTable())->
 					where(Expression::in('id', $ids))
 				);
+			
+			foreach ($ids as $id)
+				$this->uncacheById($id);
+				
+			$this->dropLists();
+			
+			return $result;
 		}
 
 		public function dropById($id)
 		{
-			$this->uncacheById($id);
-			$this->dropLists();
-			
-			return
+			$result =
 				DBFactory::getDefaultInstance()->queryNull(
 					OSQL::delete()->from($this->getTable())->
 					where(Expression::eq('id', $id))
 				);
+			
+			$this->uncacheById($id);
+			$this->dropLists();
+			
+			return $result;
 		}
 		
 		public function dropLists()
