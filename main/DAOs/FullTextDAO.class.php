@@ -22,7 +22,7 @@
 		{
 			return
 				$this->getByQuery(
-					$this->makeQuery($string)->limit(1)
+					$this->makeFullTextQuery($string)->limit(1)
 				);
 		}
 		
@@ -30,11 +30,11 @@
 		{
 			return
 				$this->getListByQuery(
-					$this->makeQuery($string)
+					$this->makeFullTextQuery($string)
 				);
 		}
 		
-		private function makeQuery($string)
+		protected function makeFullTextQuery($string)
 		{
 			Assert::isString(
 				$string,

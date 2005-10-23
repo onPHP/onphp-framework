@@ -41,6 +41,14 @@
 			return $this;
 		}
 		
+		public function dropSort()
+		{
+			$this->current = null;
+			$this->sort = array();
+			
+			return $this;
+		}
+		
 		public function asc()
 		{
 			return $this->direction(self::SORT_ASC);
@@ -173,7 +181,7 @@
 					}
 				} else
 					throw new WrongStateException(
-						'known nothing about such property'
+						"known nothing about '{$property}' property"
 					);
 			}
 			

@@ -1,5 +1,9 @@
 # $Id$
 
+2005-10-23	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/FullTextDAO.class.php: added ability to override full text queries.
+
 2005-10-23	Sveta Smirnova		<sveta@microbecal.com>
 
 * core/DB/: MySQL support is back from incubator.
