@@ -60,5 +60,16 @@
 
 			return null;
 		}
+		
+		public static function columnFromSet($column, &$array) {
+			$result = array();
+			Assert::isArray($array);
+			
+			foreach ($array as $row)
+				if (isset($row[$column]))
+					$result[] = $row[$column];
+			
+			return $result;
+		}
 	}
 ?>

@@ -42,10 +42,9 @@
 		public function toString(Dialect $dialect)
 		{
 			if ($this->chain) {
-				$out = '(';
-				$this->logic[0] = '';
+				$out = "({$this->chain[0]->toString($dialect)} ";
 	
-				for ($i = 0; $i < sizeof($this->chain); $i++)
+				for ($i = 1; $i < sizeof($this->chain); $i++)
 					$out .= "{$this->logic[$i]} {$this->chain[$i]->toString($dialect)} ";
 	
 				return $out.')';

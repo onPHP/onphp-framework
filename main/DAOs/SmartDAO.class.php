@@ -144,15 +144,15 @@
 
 		public function getListByQuery(SelectQuery $query)
 		{
-			if ($list = $this->getCachedList($query))
+			if ($list = $this->getCachedList($query)) {
 				return $list;
-			elseif (
+			} elseif (
 				$list = DBFactory::getDefaultInstance()->queryObjectSet(
 					$query, $this
 				)
-			)
+			) {
 				return $this->cacheList($query, $list);
-			else
+			} else
 				throw new ObjectNotFoundException();
 		}
 		
@@ -244,7 +244,6 @@
 		protected function getCachedList(SelectQuery $query)
 		{
 			$className = $this->getObjectName();
-			
 			return
 				Cache::me()->mark($className)->
 					get($className.self::SUFFIX_LIST.$query->getId());
