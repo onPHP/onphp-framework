@@ -1,5 +1,5 @@
 <?php
-/*$Id: Logic.unit.php 116 2005-07-25 20:08:58Z ssmirnova $*/
+/*$Id$*/
 
 class PgSQLTest extends UnitTestCase
 {

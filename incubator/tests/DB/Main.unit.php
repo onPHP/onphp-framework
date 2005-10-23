@@ -1,5 +1,5 @@
 <?php
-/*$Id: WorkPage.unit.php 116 2005-07-25 20:08:58Z ssmirnova $*/
+/*$Id$*/
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' .
                                     DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'config.inc.php';
