@@ -22,6 +22,8 @@
 		{
 			foreach ($ids as $id)
 				$this->uncacheById($id);
+				
+			$this->dropLists();
 
 			return
 				DBFactory::getDefaultInstance()->queryNull(
@@ -33,6 +35,7 @@
 		public function dropById($id)
 		{
 			$this->uncacheById($id);
+			$this->dropLists();
 			
 			return
 				DBFactory::getDefaultInstance()->queryNull(
