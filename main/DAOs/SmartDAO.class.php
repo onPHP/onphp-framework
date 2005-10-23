@@ -98,16 +98,37 @@
 		public function getListByIds($ids)
 		{
 			$list = array();
+			$toFetch = array();
 			
 			foreach ($ids as $id) {
-				try {
-					$list[] = $this->getById($id);
-				} catch (ObjectNotFoundException $e) {
-					// ignore
-				}
+				if (!$list[] = $this->getCachedById($id))
+					$toFetch[] = $id;
 			}
+			
+			if (!$toFetch)
+				return $list;
+			
+			try {
+				return
+					array_merge(
+						$list,
+						$this->getListByLogic(
+							Expression::in('id', $toFetch)
+						)
+					);
+			} catch (ObjectNotFoundException $e) {
+				foreach ($toFetch as $id) {
+					try {
+						$list[] = $this->getById($id);
+					} catch (ObjectNotFoundException $e) {
+						// ignore
+					}
+				}
 
-			return $list;
+				return $list;
+			}
+			
+			/* NOTREACHED */
 		}
 
 		public function getByLogic(LogicalObject $logic)

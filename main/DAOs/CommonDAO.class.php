@@ -105,16 +105,50 @@
 			if ($expires !== Cache::DO_NOT_CACHE) {
 				
 				$list = array();
-				
-				foreach ($ids as $id) {
-					try {
-						$list[] = $this->getById($id, $expires);
-					} catch (ObjectNotFoundException $e) {
-						// ignore
+				$toFetch = array();
+
+				if ($expires === Cache::DO_NOT_CACHE) {
+					foreach ($ids as $id) {
+						try {
+							$list[] = $this->getById($id, $expires);
+						} catch (ObjectNotFoundException $e) {
+							// ignore
+						}
+					}
+					
+					return $list;
+					
+				} else {
+					foreach ($ids as $id) {
+						if (!$list[] = $this->getCachedById($id));
+							$toFetch[] = $id;
 					}
 				}
+				
+				if (!$toFetch)
+					return $list;
+				
+				try {
+					return
+						array_merge(
+							$list,
+							$this->getListByLogic(
+								Expression::in('id', $toFetch), $expires
+							)
+						);
+				} catch (ObjectNotFoundException $e) {
+					foreach ($toFetch as $id) {
+						try {
+							$list[] = $this->getById($id, $expires);
+						} catch (ObjectNotFoundException $e) {
+							// ignore
+						}
+					}
+
+					return $list;
+				}
 	
-				return $list;
+				/* NOTREACHED */
 				
 			} elseif (sizeof($ids)) {
 				return
