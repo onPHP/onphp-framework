@@ -1,0 +1,86 @@
+<!--# include file="head.html" -->
+
+<h2>core/<a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2F&rev=0&sc=0">OSQL</a></h2>
+
+<p><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FSelectQuery.class.php&rev=0&sc=0">SelectQuery.class.php</a>:</p>
+
+<pre>
+<span class="green">echo
+    </span><span class="blue"><a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2F&rev=0&sc=0">OSQL</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FSelectQuery.class.php&rev=0&sc=0">select</a></span><span class="green">()-&gt;</span><span class="blue">from</span><span class="green">(</span><span class="red">'employer'</span><span class="green">)-&gt;
+    </span><span class="blue">get</span><span class="green">(</span><span class="red">'id'</span><span class="green">)-&gt;</span><span class="blue">get</span><span class="green">(</span><span class="red">'name'</span><span class="green">)-&gt;</span><span class="blue">get</span><span class="green">(</span><span class="red">'birth_date'</span><span class="green">)-&gt;
+    </span><span class="blue">where</span><span class="green">(
+        </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FLogic%2FExpression.class.php&rev=0&sc=0">Expression</a></span><span class="green">::</span><span class="blue">between</span><span class="green">(</span>
+            </span><span class="red">'birth_date'</span><span class="green">,
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FDBValue.class.php&rev=0&sc=0">DBValue</a></span><span class="green">::</span><span class="blue">create</span><span class="green">(</span><span class="blue">1980</span><span class="green">),
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FSQLFunction.class.php&rev=0&sc=0">SQLFunction</a></span><span class="green">::</span><span class="blue">create</span><span class="green">(</span><span class="red">'now'</span><span class="green">)
+        )
+    )-&gt;
+        </span><span class="blue">toString</span><span class="green">(
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FDB%2FDBFactory.class.php&rev=0&sc=0">DBFactory</a></span><span class="green">::</span><span class="blue">getDefaultInstance</span><span class="green">()-&gt;</span><span class="blue">getDialect</span><span class="green">()
+        );</span>
+</pre>
+<p style="text-align: center;">==</p>
+<pre>
+    <b>SELECT</b> <span class="green">"employer"</span>.<span class="green">"id"</span>, <span class="green">"employer"</span>.<span class="green">"name"</span>, <span class="green">"employer"</span>.<span class="green">"birth_date"</span>
+    <b>FROM</b> <span class="green">"employer"</span>
+    <b>WHERE (</b><span class="green">"birth_date"</span> <b>BETWEEN</b> <span class="red">'1980'</span> <b>AND</b> now()<b>)</b>
+</pre>
+
+<hr>
+
+<p><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FUpdateQuery.class.php&rev=0&sc=0">UpdateQuery.class.php</a>:</p>
+
+<pre>
+    <span class="green">echo
+        </span><span class="blue"><a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2F&rev=0&sc=0">OSQL</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FUpdateQuery.class.php&rev=0&sc=0">update</a></span><span class="green">(</span><span class="red">'imaginary_table'</span><span class="green">)-&gt;
+        </span><span class="blue">set</span><span class="green">(</span><span class="red">'field'</span><span class="green">, </span><span class="blue">25</span><span class="green">)-&gt;
+        </span><span class="blue">set</span><span class="green">(
+            </span><span class="red">'counter'</span><span class="green">,
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FLogic%2FExpression.class.php&rev=0&sc=0">Expression</a></span><span class="green">::</span><span class="blue">add</span><span class="green">(
+                </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FDBField.class.php&rev=0&sc=0">DBField</a></span><span class="green">::</span><span class="blue">create</span><span class="green">(</span><span class="red">'counter'</span><span class="green">),
+                </span><span class="blue">1
+            </span><span class="green">)
+        )-&gt;
+        </span><span class="blue">setBoolean</span><span class="green">(</span><span class="red">'boolean'</span><span class="green">, </span><span class="blue">true</span><span class="green">)-&gt;
+        </span><span class="blue">where</span><span class="green">(
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FLogic%2FExpression.class.php&rev=0&sc=0">Expression</a></span><span class="green">::</span><span class="blue">in</span><span class="green">(
+                </span><span class="red">'id'</span><span class="green">,
+                </span><span class="blue"><a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2F&rev=0&sc=0">OSQL</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FSelectQuery.class.php&rev=0&sc=0">select</a></span><span class="green">()-&gt;</span><span class="blue">from</span><span class="green">(</span><span class="red">'update_queue'</span><span class="green">)-&gt;
+                    </span><span class="blue">get</span><span class="green">(</span><span class="red">'id'</span><span class="green">)
+            )
+        )-&gt;
+            </span><span class="blue">toString</span><span class="green">(
+                </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FDB%2FDBFactory.class.php&rev=0&sc=0">DBFactory</a></span><span class="green">::</span><span class="blue">getDefaultInstance</span><span class="green">()-&gt;</span><span class="blue">getDialect</span><span class="green">()
+            );</span>
+</pre>
+<p style="text-align: center;">==</p>
+<pre>
+    <b>UPDATE</b> <span class="green">"imaginary_table"</span>
+    <b>SET</b>
+        <span class="green">"field"</span>   = <span class="red">'25'</span>,
+        <span class="green">"counter"</span> = (<span class="green">"counter"</span> + <span class="red">'1'</span>),
+        <span class="green">"boolean"</span> = <span class="red">'true'</span>
+    <b>WHERE</b> (
+        <span class="green">"id"</span> <b>in</b> (<b>SELECT</b> <span class="green">"update_queue"</span>.<span class="green">"id"</span> <b>FROM</b> <span class="green">"update_queue"</span>)
+    )
+</pre>
+
+<hr>
+
+<p><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FDeleteQuery.class.php&rev=0&sc=0">DeleteQuery.class.php</a>:</p>
+
+<pre>
+<span class="green">echo
+    </span><span class="blue"><a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2F&rev=0&sc=0">OSQL</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FUpdateQuery.class.php&rev=0&sc=0">delete</a></span><span class="green">()-&gt;</span><span class="blue">from</span><span class="green">(</span><span class="red">'pity_table'</span><span class="green">)-&gt;
+    </span><span class="blue">toString</span><span class="green">(
+        </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FDB%2FDBFactory.class.php&rev=0&sc=0">DBFactory</a></span><span class="green">::</span><span class="blue">getDefaultInstance</span><span class="green">()-&gt;</span><span class="blue">getDialect</span><span class="green">()
+    );</span>
+</pre>
+<p style="text-align: center;">==</p>
+<pre>
+    Fatal error: Uncaught [leave 'pity_table' table alone in peace] in: ...
+</pre>
+
+<hr>
+
+<!--# include file="../parts/heel.html" -->

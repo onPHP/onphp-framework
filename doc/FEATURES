@@ -1,0 +1,56 @@
+onPHP feature list (still and always incomplete)
+=========================================
+- $Id$ -
+
+	core/Cache/
+
+		Universal multi-peer weight-based cache support. Currently
+		supports Memcached and RubberFileSystem with or without
+		ReferencePool wrapper, and offers PlainDatabase class as an
+		example of cache peer.
+
+	main/DAOs/
+
+		{Generic,(Smart|Common)}DAO:
+			basic yet powerful tools for building DAO's
+			hierarchy.
+
+		StorableContainer:
+			handling of identifiable objects collections.
+		
+	core/DB/
+
+		DB, {Pg,My,MS,Ora}SQL, {ANSI,Postgres,My,MS,Oracle}Dialect:
+			database abstraction layer.
+
+	core/Exceptions/
+
+		Bunch of very useful exceptions. ;-)
+
+	core/Form/
+
+		HTML forms' data checking and validation tools. Supports rules 
+		based on logical expressions, data filtering, etc.
+	
+	core/Logic/
+
+		Logical expressions used in OSQL and Form.
+
+	main/Module/
+
+		Quite common tools for implementing MVCv2::Controllers.
+
+	core/OSQL/
+
+		{Select,Insert,Update,Delete}Query:
+			SQL query builders.
+	
+	main/Template/
+
+		Easy template package. Main [and single] aim is incapsulation
+		of template variables.
+		Separation of view and model should be done on language level.
+
+	main/Utils/
+
+		Random accompanying utilities.
