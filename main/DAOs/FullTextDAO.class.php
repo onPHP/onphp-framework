@@ -59,7 +59,7 @@
 				)->desc();
 		}
 		
-		protected static function prepareSearchString($string)
+		public static function prepareSearchString($string)
 		{
 			$array =
 				explode(
