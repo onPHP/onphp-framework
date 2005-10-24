@@ -55,19 +55,16 @@
 			if (!$array)
 				throw new ObjectNotFoundException();
 			
+			if (!($field = $this->getIndexField()) instanceof DBField)
+				$field = new DBField($this->getIndexField(), $this->getTable());
+			
 			return
 				$this->makeSelectHead()->
 				where(
-					Expression::fullTextOr(
-						new DBField($this->getIndexField(), $this->getTable()),
-						$array
-					)
+					Expression::fullTextOr($field, $array)
 				)->
 				orderBy(
-					Expression::fullTextRankOr(
-						new DBField($this->getIndexField(), $this->getTable()),
-						$array
-					)
+					Expression::fullTextRankOr($field, $array)
 				)->desc();
 		}
 	}

@@ -112,7 +112,7 @@
 		 * @param	string		gender
 		 * @access	public
 		 * @return	string
-		 * @deprecated
+		 * @obsoleted since 0.2.3, target removal release - 0.2.4
 		**/
 		public static function getAsInOrder($number, $gender)
 		{
