@@ -41,7 +41,6 @@
 				'only strings accepted today'
 			);
 
-
 			$array = $this->prepareSearchString($string);
 
 			if (!$array)
@@ -52,7 +51,7 @@
 			
 			return
 				$oq->toSelectQuery($this)->
-				where(
+				andWhere(
 					Expression::fullTextOr($field, $array)
 				)->
 				orderBy(
