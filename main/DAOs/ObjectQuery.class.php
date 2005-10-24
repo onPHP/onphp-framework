@@ -69,6 +69,11 @@
 			return $this->direction(self::SORT_NOT_NULL);
 		}
 		
+		public function getLimit()
+		{
+			return $this->limit;
+		}
+		
 		public function setLimit($limit)
 		{
 			$this->limit = $limit;
@@ -76,11 +81,21 @@
 			return $this;
 		}
 		
+		public function getOffset()
+		{
+			return $this->offset;
+		}
+		
 		public function setOffset($offset)
 		{
 			$this->offset = $offset;
 			
 			return $this;
+		}
+		
+		public function getLogic()
+		{
+			return $this->logic;
 		}
 		
 		public function addLogic(LogicalExpression $exp)

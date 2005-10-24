@@ -18,29 +18,50 @@
 			return 'fti';
 		}
 		
-		public function lookup($string)
+		public function lookup(ObjectQuery $oq, $string)
 		{
 			return
 				$this->getByQuery(
-					$this->makeFullTextQuery($string)->limit(1)
+					$this->makeFullTextQuery($oq, $string)->limit(1)
 				);
 		}
 		
-		public function lookupList($string)
+		public function lookupList(ObjectQuery $oq, $string)
 		{
 			return
 				$this->getListByQuery(
-					$this->makeFullTextQuery($string)
+					$this->makeFullTextQuery($oq, $string)
 				);
 		}
 		
-		protected function makeFullTextQuery($string)
+		protected function makeFullTextQuery(ObjectQuery $oq, $string)
 		{
 			Assert::isString(
 				$string,
 				'only strings accepted today'
 			);
 
+
+			$array = $this->prepareSearchString($string);
+
+			if (!$array)
+				throw new ObjectNotFoundException();
+			
+			if (!($field = $this->getIndexField()) instanceof DBField)
+				$field = new DBField($this->getIndexField(), $this->getTable());
+			
+			return
+				$oq->toSelectQuery($this)->
+				where(
+					Expression::fullTextOr($field, $array)
+				)->
+				orderBy(
+					Expression::fullTextRankOr($field, $array)
+				)->desc();
+		}
+		
+		protected static function prepareSearchString($string)
+		{
 			$array =
 				explode(
 					' ',
@@ -51,21 +72,8 @@
 			for ($i = 0; $i < sizeof($array); $i++)
 				if (empty($array[$i]) || strlen($array[$i]) < 2)
 					unset($array[$i]);
-
-			if (!$array)
-				throw new ObjectNotFoundException();
 			
-			if (!($field = $this->getIndexField()) instanceof DBField)
-				$field = new DBField($this->getIndexField(), $this->getTable());
-			
-			return
-				$this->makeSelectHead()->
-				where(
-					Expression::fullTextOr($field, $array)
-				)->
-				orderBy(
-					Expression::fullTextRankOr($field, $array)
-				)->desc();
+			return $array;
 		}
 	}
 ?>

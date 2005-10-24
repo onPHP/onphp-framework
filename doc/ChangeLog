@@ -2,6 +2,9 @@
 
 2005-10-24	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+* main/DAOs/FullTextDAO.class.php: ObjectQuery is now mandatory for looking up
+object or list.
+
 * 0.2.3 released.
 
 2005-10-23	Konstantin V. Arkhipov	<voxus@shadanakar.org>
