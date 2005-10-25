@@ -192,8 +192,8 @@
 
 		public function split()
 		{
-			Assert::isTrue(
-				$this->start && $this->end, 
+			Assert::isFalse(
+				$this->isOpen(),
 				"open range can't be splitted"
 			);
 			$timestamps = array();
@@ -210,6 +210,11 @@
 				$timestamps[] = new Timestamp($current->getDayStartStamp());
 
 			return $timestamps;
+		}
+		
+		public function isOpen()
+		{
+			return !$this->start || !$this->end;
 		}
 
 		// this will contain both range and old this
