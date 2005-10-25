@@ -42,22 +42,6 @@
 		private $_area = null;
 		
 		/**
-		 * Creates PropertyFilterForm
-		 *
-		 * @deprecated						use standart Singletone method
-		 * @param		string				default handler
-		 * @return		PropertyFilterForm 	PropertyFilterForm instance
-		 * @access		public
-		**/
-		public static function getInstance(
-			$class = 'PropertyFilterForm', $args = null /* , ... */
-		)
-		{
-			$args = func_get_args();
-			return Singletone::getInstance('PropertyFilterForm', $args);
-		}
-		
-		/**
 		 * Sets value of $_form
 		 * 
 		 * @param	Form	ready Form

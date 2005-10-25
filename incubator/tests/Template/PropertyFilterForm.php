@@ -14,8 +14,8 @@
 	/**
 	 * Test for test case
 	**/
-	require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' .
-                                    DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'config.inc.php';
+	require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..'
+                                    . DIRECTORY_SEPARATOR . 'global.inc.php';
 	error_reporting(E_ALL);
 	require_once 'PHPUnit2/Framework/TestSuite.php';
 	require_once 'PHPUnit2/Framework/TestCase.php';

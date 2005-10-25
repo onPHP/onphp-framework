@@ -129,22 +129,6 @@
 		**/
 		private $defaultParams = null;
 
-		/**
-		 * Creates PropertyFilter
-		 *
-		 * @deprecated						use standart Singletone method
-		 * @param		string				default handler
-		 * @return		PropertyFilter		PropertyFilter instance
-		 * @access		public
-		**/
-		public static function getInstance(
-			$class = 'PropertyFilter', $args = null /* , ... */
-		)
-		{
-			$args = func_get_args();
-			return parent::getInstance('PropertyFilter', $args);
-		}
-	
 		public function getRaw($var)
 		{
 			return parent::__get($var);
