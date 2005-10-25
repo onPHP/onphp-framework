@@ -1,5 +1,9 @@
 # $Id$
 
+2005-10-25	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/Form/Form.class.php: clean violated rules too upon dropAllErrors().
+
 2005-10-24	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * main/DAOs/FullTextDAO.class.php: ObjectQuery is now mandatory for looking up

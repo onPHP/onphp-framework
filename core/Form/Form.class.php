@@ -33,7 +33,8 @@
 
 		public function dropAllErrors()
 		{
-			$this->errors = array();
+			$this->errors	= array();
+			$this->violated	= array();
 			
 			return $this;
 		}
