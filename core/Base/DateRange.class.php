@@ -212,6 +212,39 @@
 			return $timestamps;
 		}
 		
+		public static function merge($array) // of DateRanges
+		{
+			$out = array();
+			foreach ($array as $range) {
+				$accepted = false;
+				foreach ($out as $outRange)
+					if ($outRange->isNeighbour($range)) {
+						$outRange->enlarge($range);
+						$accepted = true;
+					}
+					
+				if (!$accepted)
+					$out[] = clone $range;
+			}
+			
+			return $out;
+		}
+		
+		public function isNeighbour(DateRange $range)
+		{
+			Assert::isTrue(! $this->isOpen() && ! $range->isOpen());
+			if (
+				$this->overlaps($range)
+				|| $this->start->spawn('-1 day')->getDayStartStamp() 
+					== $range->end->getDayStartStamp()
+				|| $this->end->spawn('+1 day')->getDayStartStamp()
+					== $range->start->getDayStartStamp()
+			)
+				return true;
+			else			
+				return false;
+		}
+		
 		public function isOpen()
 		{
 			return !$this->start || !$this->end;
