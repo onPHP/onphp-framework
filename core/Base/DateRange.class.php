@@ -36,7 +36,7 @@
 					'start must be lower than end'
 				);
 
-			$this->start = clone $start;
+			$this->start = $start;
 			return $this;
 		}
 
@@ -47,7 +47,7 @@
 					'end must be higher than start'
 				);
 
-			$this->end = clone $end;
+			$this->end = $end;
 			return $this;
 		}
 		
