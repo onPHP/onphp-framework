@@ -33,7 +33,13 @@
 				return null;
 			}
 			
-			if (isset($this->list[$scope[$this->name]])) {
+			if (
+				(
+					is_string($scope[$this->name])
+					|| is_integer($scope[$this->name])
+				)
+				&& isset($this->list[$scope[$this->name]])
+			) {
 				$this->value = $scope[$this->name];
 				return true;
 			} else
