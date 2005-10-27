@@ -24,7 +24,7 @@
 		private static $redirectSent	= false;
 		private static $cacheLifeTime   = 3600;
 		
-		public static function raw($url)
+		public static function redirectRaw($url)
 		{
 			header("Location: {$url}");
 
