@@ -67,12 +67,14 @@
 					$string,
 					substr_count($string, ' ') + 1
 				);
+			
+			$out = array();
 
 			for ($i = 0; $i < sizeof($array); $i++)
-				if (empty($array[$i]) || strlen($array[$i]) < 2)
-					unset($array[$i]);
+				if (!empty($array[$i]) && strlen($array[$i]) > 2)
+					$out[] = $array[$i];
 			
-			return $array;
+			return $out;
 		}
 	}
 ?>

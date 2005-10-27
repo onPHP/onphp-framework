@@ -104,7 +104,7 @@
 		
 		public function queryRaw($queryString)
 		{
-//			echo $queryString.'<hr>'; flush();
+			// echo $queryString.'<hr>'; flush();
 			// error_log($queryString);
 			try {
 				return pg_query($this->link, $queryString);
