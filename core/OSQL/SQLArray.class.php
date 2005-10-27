@@ -25,11 +25,11 @@
 			$array = $this->array;
 
 			if (is_array($array)) {
-				$qouted = array();
-
+				$quoted = array();
+				
 				foreach ($array as $item)
 					$quoted[] = $dialect->quoteValue($item);
-				
+
 				$value = implode(', ', $quoted);
 			} else
 				$value = $dialect->quoteValue($array);
