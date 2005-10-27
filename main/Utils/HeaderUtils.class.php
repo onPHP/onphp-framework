@@ -23,6 +23,14 @@
 		private static $headerSent		= false;
 		private static $redirectSent	= false;
 		private static $cacheLifeTime   = 3600;
+		
+		public static function raw($url)
+		{
+			header("Location: {$url}");
+
+			self::$headerSent = true;
+			self::$redirectSent = true;
+		}
 
 		public static function redirect(BaseModule $mod)
 		{
