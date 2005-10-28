@@ -2,6 +2,8 @@
 
 2005-10-28	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+* main/DAOs/UnifiedContainer.class.php: is now cache-aware.
+
 * main/DAOs/SmartDAO.class.php: negative (aka pessimistic) cache model
 implemented.
 

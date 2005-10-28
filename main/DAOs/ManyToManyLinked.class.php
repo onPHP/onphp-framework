@@ -44,8 +44,12 @@
 				for ($i = 0; $i < sizeof($update); $i++)
 					$dao->save($update[$i]);
 
-			if ($delete)
+			if ($delete) {
 				$db->queryNull($this->makeDeleteQuery($delete));
+				
+				foreach ($delete as $id)
+					$dao->uncacheById($id);
+			}
 
 			return $this;
 		}
@@ -58,8 +62,12 @@
 				for ($i = 0; $i < sizeof($insert); $i++)
 					$db->queryNull($this->makeInsertQuery($insert[$i]));
 
-			if ($delete)
+			if ($delete) {
 				$db->queryNull($this->makeDeleteQuery($delete));
+				
+				foreach ($delete as $id)
+					$dao->uncacheById($id);
+			}
 
 			return $this;
 		}

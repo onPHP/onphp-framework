@@ -276,6 +276,45 @@
 			}
 		}
 
+		public function uncacheById($id)
+		{
+			$className = $this->getObjectName();
+			$objectKey = $className.'_'.$id;
+			$mapKey = $objectKey.self::SUFFIX_MAP;
+			
+			$cache = Cache::me();
+			
+			if ($map = $cache->get($mapKey)) {
+				
+				$indexKey = $className.self::SUFFIX_INDEX;
+				
+				$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true);
+				$indexSem = sem_get($this->keyToInt($indexKey), 1, 0600, true);
+				
+				Assert::isTrue(sem_acquire($sem) && sem_acquire($indexSem));
+				
+				if (!$indexList = $cache->mark($className)->get($indexKey)) {
+					sem_remove($indexSem);
+					$indexSem = null;
+					$indexList = array();
+				}
+				
+				foreach ($map as $key => $true) {
+					$cache->mark($className)->delete($key);
+					unset($indexList[$key]);
+				}
+				
+				sem_remove($sem);
+
+				if ($indexSem) {
+					$cache->set($indexKey, $indexList, Cache::EXPIRES_FOREVER);
+					sem_remove($indexSem);
+				}
+			}
+			
+			return $cache->mark($className)->delete($objectKey);
+		}
+
 		protected function cacheObject(Identifiable $object)
 		{
 			$className = $this->getObjectName();
@@ -292,13 +331,15 @@
 		
 		protected function cacheNullById($id)
 		{
+			static $null = Cache::NOT_FOUND;
+			
 			$className = $this->getObjectName();
 			
 			return 
 				Cache::me()->mark($className)->
 					add(
 						$className.'_'.$id,
-						Cache::NOT_FOUND,
+						$null,
 						Cache::EXPIRES_FOREVER
 					);
 		}
@@ -367,45 +408,6 @@
 			$this->syncMap($indexKey, $listKey);
 			
 			return $array;
-		}
-
-		protected function uncacheById($id)
-		{
-			$className = $this->getObjectName();
-			$objectKey = $className.'_'.$id;
-			$mapKey = $objectKey.self::SUFFIX_MAP;
-			
-			$cache = Cache::me();
-			
-			if ($map = $cache->get($mapKey)) {
-				
-				$indexKey = $className.self::SUFFIX_INDEX;
-				
-				$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true);
-				$indexSem = sem_get($this->keyToInt($indexKey), 1, 0600, true);
-				
-				Assert::isTrue(sem_acquire($sem) && sem_acquire($indexSem));
-				
-				if (!$indexList = $cache->mark($className)->get($indexKey)) {
-					sem_remove($indexSem);
-					$indexSem = null;
-					$indexList = array();
-				}
-				
-				foreach ($map as $key => $true) {
-					$cache->mark($className)->delete($key);
-					unset($indexList[$key]);
-				}
-				
-				sem_remove($sem);
-
-				if ($indexSem) {
-					$cache->set($indexKey, $indexList, Cache::EXPIRES_FOREVER);
-					sem_remove($indexSem);
-				}
-			}
-			
-			return $cache->mark($className)->delete($objectKey);
 		}
 
 		private function syncMap($mapKey, $objectKey)
