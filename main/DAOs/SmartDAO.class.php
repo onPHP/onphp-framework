@@ -265,14 +265,22 @@
 						get(SQLFunction::create('COUNT', '*')->setAlias('count'))
 					);
 
-				return
-					$this->cacheByQuery(
-						$query,
-						$res->
-							setList($list)->
-							setCount($count['count'])->
-							setQuery($query)
-					);
+				if (!$list) {
+					$list = Cache::NOT_FOUND;
+					
+					$this->cacheByQuery($query, $list);
+					
+					throw new ObjectNotFoundException();
+				} else {
+					return
+						$this->cacheByQuery(
+							$query,
+							$res->
+								setList($list)->
+								setCount($count['count'])->
+								setQuery($query)
+						);
+				}
 			}
 		}
 
