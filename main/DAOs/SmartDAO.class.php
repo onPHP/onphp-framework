@@ -16,6 +16,7 @@
 		const SUFFIX_MAP	= '_map';
 		const SUFFIX_LIST	= '_list_';
 		const SUFFIX_INDEX	= '_lists_index';
+		const SUFFIX_QUERY	= '_query_';
 		const SUFFIX_RESULT	= '_result_';
 		
 		public function dropByIds($ids)
@@ -77,9 +78,14 @@
 		
 		public function getById($id)
 		{
-			if ($object = $this->getCachedById($id))
-				return $object;
-			else {
+			$object = $this->getCachedById($id);
+			
+			if ($object) {
+				if ($object === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				else
+					return $object;
+			} else {
 				$db = DBFactory::getDefaultInstance();
 
 				$query = 
@@ -94,10 +100,8 @@
 				if ($object = $db->queryObjectRow($query, $this)) {
 					return $this->cacheObject($object);
 				} else {
-					throw new ObjectNotFoundException(
-						"there is no such object for '".$this->getObjectName()
-						."' with query == {$query->toString($db->getDialect())}"
-					);
+					$this->cacheNullById($id);
+					throw new ObjectNotFoundException();
 				}
 			}
 		}
@@ -137,7 +141,33 @@
 			
 			/* NOTREACHED */
 		}
+		
+		public function getCustom(SelectQuery $query)
+		{
+			if ($query->getLimit() > 1)
+				throw new WrongArgumentException(
+					'can not handle non-single row queries'
+				);
 
+			$custom = $this->getCachedByQuery($query);
+			
+			if ($custom) {
+				if ($custom === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				else
+					return $custom;
+			} else {
+				$custom = DBFactory::getDefaultInstance()->queryRow($query);
+				
+				if ($custom)
+					return $this->cacheByQuery($query, $custom);
+				else {
+					$this->cacheByQuery($query, Cache::NOT_FOUND);
+					throw new ObjectNotFoundException();
+				}
+			}
+		}
+		
 		public function getByLogic(LogicalObject $logic)
 		{
 			return
@@ -148,16 +178,27 @@
 
 		public function getByQuery(SelectQuery $query)
 		{
-			if ($object = $this->getCachedByQuery($query))
-				return $object;
-			elseif (
+			$object = $this->getCachedByQuery($query);
+			
+			if ($object) {
+				
+				if ($object === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				else
+					return $object;
+				
+			} else {
 				$object = DBFactory::getDefaultInstance()->queryObjectRow(
 					$query, $this
-				)
-			) {
-				return $this->cacheObjectByQuery($query, $object);
-			} else
-				throw new ObjectNotFoundException();
+				);
+				
+				if ($object)
+					return $this->cacheByQuery($query, $object);
+				else {
+					$this->cacheByQuery($query, Cache::NOT_FOUND);
+					throw new ObjectNotFoundException();
+				}
+			}
 		}
 		
 		public function getPlainList()
@@ -172,16 +213,25 @@
 
 		public function getListByQuery(SelectQuery $query)
 		{
-			if ($list = $this->getCachedList($query)) {
-				return $list;
-			} elseif (
+			$list = $this->getCachedList($query);
+			
+			if ($list) {
+				if ($list === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				else
+					return $list;
+			} else {
 				$list = DBFactory::getDefaultInstance()->queryObjectSet(
 					$query, $this
-				)
-			) {
-				return $this->cacheList($query, $list);
-			} else
-				throw new ObjectNotFoundException();
+				);
+				
+				if ($list)
+					return $this->cacheList($query, $list);
+				else {
+					$this->cacheList($query, Cache::NOT_FOUND);
+					throw new ObjectNotFoundException();
+				}
+			}
 		}
 		
 		public function getQueryResult(SelectQuery $query)
@@ -190,22 +240,23 @@
 
 			$className = $this->getObjectName();
 			
-			$countKey = $className.self::SUFFIX_RESULT.$query->getId();
-			
 			$cache = Cache::me();
 			
 			$res = new QueryResult();
 			
-			if ($list = $this->getCachedList($query)) {
-				return
-					$res->
-						setList($list)->
-						setCount(
-							$cache->mark($className)->
-								get($countKey)
-						)->
-						setQuery($query);
-			} elseif ($list = $db->queryObjectSet($query, $this)) {
+			$result = $this->getCachedByQuery($query);
+			
+			if ($result) {
+				
+				if ($result === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				else
+					return $result;
+
+			} else {
+				
+				$list = $db->queryObjectSet($query, $this);
+				
 				$count = clone $query;
 			
 				$count =
@@ -214,20 +265,15 @@
 						get(SQLFunction::create('COUNT', '*')->setAlias('count'))
 					);
 
-				$cache->mark($className)->
-					set(
-						$countKey,
-						$count['count'],
-						Cache::EXPIRES_FOREVER
-					);
-
 				return
-					$res->
-						setList($list)->
-						setCount($count['count'])->
-						setQuery($query);
-			} else
-				throw new ObjectNotFoundException();
+					$this->cacheByQuery(
+						$query,
+						$res->
+							setList($list)->
+							setCount($count['count'])->
+							setQuery($query)
+					);
+			}
 		}
 
 		protected function cacheObject(Identifiable $object)
@@ -244,24 +290,37 @@
 			return $object;
 		}
 		
+		protected function cacheNullById($id)
+		{
+			$className = $this->getObjectName();
+			
+			return 
+				Cache::me()->mark($className)->
+					add(
+						$className.'_'.$id,
+						Cache::NOT_FOUND,
+						Cache::EXPIRES_FOREVER
+					);
+		}
+		
 		protected function getCachedByQuery(SelectQuery $query)
 		{
 			$className = $this->getObjectName();
 			
 			return
 				Cache::me()->mark($className)->
-					get($className.'_query_'.$query->getId());
+					get($className.self::SUFFIX_QUERY.$query->getId());
 		}
 
-		protected function cacheObjectByQuery(
-			SelectQuery $query, Identifiable $object
+		protected function cacheByQuery(
+			SelectQuery $query, /* Identifiable */ $object
 		)
 		{
 			$className = $this->getObjectName();
+			$queryId = $query->getId();
+			$key = $className.self::SUFFIX_QUERY.$queryId;
 			
-			$key = $className.'_query_'.$query->getId();
-			
-			$this->syncMap($className.'_'.$object->getId().self::SUFFIX_MAP, $key);
+			$this->syncMap($className.'_'.$queryId.self::SUFFIX_MAP, $key);
 			
 			Cache::me()->mark($this->getObjectName())->
 				add($key, $object, Cache::EXPIRES_FOREVER);
@@ -279,8 +338,10 @@
 		
 		protected function cacheList(SelectQuery $query, /* array */ $array)
 		{
-			Assert::isArray($array);
-			Assert::isTrue(current($array) instanceof Identifiable);
+			if ($array !== Cache::NOT_FOUND) {
+				Assert::isArray($array);
+				Assert::isTrue(current($array) instanceof Identifiable);
+			}
 			
 			$cache = Cache::me();
 			$className = $this->getObjectName();
@@ -288,13 +349,16 @@
 			$listKey = $className.self::SUFFIX_LIST.$query->getId();
 			$indexKey = $className.self::SUFFIX_INDEX;
 			
-			foreach ($array as $key => $object) {
-				
-				$mapKey = $className.'_'.$object->getId().self::SUFFIX_MAP;
-				
-				$this->syncMap($mapKey, $listKey);
-				
-				$this->cacheObject($object);
+			if ($array !== Cache::NOT_FOUND) {
+				foreach ($array as $key => $object) {
+					
+					$mapKey = $className.'_'.$object->getId().self::SUFFIX_MAP;
+					
+					$this->syncMap($mapKey, $listKey);
+					
+					$this->cacheObject($object);
+	
+				}
 			}
 			
 			$cache->mark($className)->

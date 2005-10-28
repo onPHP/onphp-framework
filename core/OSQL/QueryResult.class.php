@@ -11,7 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class QueryResult
+	class QueryResult implements Identifiable
 	{
 		private $list		= null;
 		private $count		= null;
@@ -21,6 +21,16 @@
 		public static function create()
 		{
 			return new QueryResult();
+		}
+		
+		public function getId()
+		{
+			return '_result_'.$this->query->getId();
+		}
+		
+		public function setId($id)
+		{
+			throw new UnsupportedMethodException();
 		}
 		
 		public function getQuery()

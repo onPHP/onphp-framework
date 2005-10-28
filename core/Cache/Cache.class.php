@@ -13,6 +13,8 @@
 	
 	final class Cache 
 	{
+		const NOT_FOUND			= 'nil';
+
 		const EXPIRES_FOREVER	= 259200; // 3 days
 		const EXPIRES_MAXIMUM	= 21600; // 6 hrs
 		const EXPIRES_MEDIUM	= 3600; // 1 hr

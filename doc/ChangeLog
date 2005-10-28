@@ -1,5 +1,10 @@
 # $Id$
 
+2005-10-28	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/SmartDAO.class.php: negative (aka pessimistic) cache model
+implemented.
+
 2005-10-25	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * core/Form/Form.class.php: clean violated rules too upon dropAllErrors().
