@@ -13,7 +13,6 @@
 
 	abstract class SmartDAO extends GenericDAO
 	{
-		const SUFFIX_MAP	= '_map';
 		const SUFFIX_LIST	= '_list_';
 		const SUFFIX_INDEX	= '_lists_index';
 		const SUFFIX_QUERY	= '_query_';
@@ -29,8 +28,6 @@
 			
 			foreach ($ids as $id)
 				$this->uncacheById($id);
-				
-			$this->dropLists();
 			
 			return $result;
 		}
@@ -44,7 +41,6 @@
 				);
 			
 			$this->uncacheById($id);
-			$this->dropLists();
 			
 			return $result;
 		}
@@ -288,37 +284,10 @@
 		{
 			$className = $this->getObjectName();
 			$objectKey = $className.'_'.$id;
-			$mapKey = $objectKey.self::SUFFIX_MAP;
 			
 			$cache = Cache::me();
 			
-			if ($map = $cache->get($mapKey)) {
-				
-				$indexKey = $className.self::SUFFIX_INDEX;
-				
-				$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true);
-				$indexSem = sem_get($this->keyToInt($indexKey), 1, 0600, true);
-				
-				Assert::isTrue(sem_acquire($sem) && sem_acquire($indexSem));
-				
-				if (!$indexList = $cache->mark($className)->get($indexKey)) {
-					sem_remove($indexSem);
-					$indexSem = null;
-					$indexList = array();
-				}
-				
-				foreach ($map as $key => $true) {
-					$cache->mark($className)->delete($key);
-					unset($indexList[$key]);
-				}
-				
-				sem_remove($sem);
-
-				if ($indexSem) {
-					$cache->set($indexKey, $indexList, Cache::EXPIRES_FOREVER);
-					sem_remove($indexSem);
-				}
-			}
+			$this->dropLists();
 			
 			return $cache->mark($className)->delete($objectKey);
 		}
@@ -369,7 +338,7 @@
 			$queryId = $query->getId();
 			$key = $className.self::SUFFIX_QUERY.$queryId;
 			
-			$this->syncMap($className.'_'.$queryId.self::SUFFIX_MAP, $key);
+			$this->syncMap($className.self::SUFFIX_INDEX, $key);
 			
 			Cache::me()->mark($this->getObjectName())->
 				add($key, $object, Cache::EXPIRES_FOREVER);
@@ -400,13 +369,7 @@
 			
 			if ($array !== Cache::NOT_FOUND) {
 				foreach ($array as $key => $object) {
-					
-					$mapKey = $className.'_'.$object->getId().self::SUFFIX_MAP;
-					
-					$this->syncMap($mapKey, $listKey);
-					
 					$this->cacheObject($object);
-	
 				}
 			}
 			

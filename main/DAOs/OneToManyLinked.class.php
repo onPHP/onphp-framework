@@ -87,8 +87,8 @@
 					)
 				);
 				
-				foreach ($delete as $id)
-					$dao->uncacheById($id);
+				foreach ($delete as $object)
+					$dao->uncacheById($object->getId());
 			}
 
 			return $this;

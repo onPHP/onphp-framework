@@ -72,8 +72,6 @@
 					)
 				);
 			
-			$this->dropLists();
-			
 			return $object;
 		}
 		
