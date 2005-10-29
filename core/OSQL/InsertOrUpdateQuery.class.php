@@ -36,6 +36,8 @@
 		{
 			if ($object instanceof Identifiable)
 				$this->set($field, $object->getId());
+			elseif (is_null($object))
+				$this->set($field, null);
 
 			return $this;
 		}
