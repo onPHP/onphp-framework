@@ -299,7 +299,7 @@
 			return $this;
 		}
 
-		protected function getStartStamp() // null if start is null
+		public function getStartStamp() // null if start is null
 		{
 			if ($this->start)
 				return $this->start->getDayStartStamp();
@@ -307,7 +307,7 @@
 				return null;
 		}
 
-		protected function getEndStamp() // null if end is null
+		public function getEndStamp() // null if end is null
 		{
 			if ($this->end)
 				return $this->end->getDayEndStamp();
