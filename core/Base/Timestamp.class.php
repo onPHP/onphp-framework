@@ -31,7 +31,12 @@
 				$this->string = date('Y-m-d H:i:s', $timestamp);
 			} elseif (is_string($timestamp)) { 
 				$this->int = strtotime($timestamp);
-				$this->string = date('Y-m-d H:i:s', $this->int);
+				if (preg_match('/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/', $timestamp))
+					$this->string = $timestamp;
+				elseif (preg_match('/^\d{4}-\d{2}-\d{2}$/', $timestamp))
+					$this->string = $timestamp . ' 00:00:00';
+				else
+					$this->string = date('Y-m-d H:i:s', $this->int);
 			} else {
 				throw new WrongArgumentException('strange timestamp given');
 			}
