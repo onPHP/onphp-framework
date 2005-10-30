@@ -20,11 +20,6 @@
 		
 		public function setTable($table)
 		{
-			Assert::isTrue(
-				$this->table === null,
-				"don't touch my table!"
-			);
-			
 			$this->table = $table;
 			
 			return $this;
