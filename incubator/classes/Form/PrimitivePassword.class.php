@@ -15,11 +15,7 @@
 	 * Password holder has the different with PrimitiveString: min and max 
 	 * are required
 	 * 
-	 * @package		Form
-	 * @author		Sveta Smirnova <sveta@microbecal.com>
-	 * @version		1.0
-	 * @copyright	2005
-	 * @obsoleted	by PrimitiveString
+	 * @deprecated	by PrimitiveString
 	**/
 	class PrimitivePassword extends PrimitiveString
 	{

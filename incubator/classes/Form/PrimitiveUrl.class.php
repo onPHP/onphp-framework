@@ -15,11 +15,8 @@
 	 * Holds validated url
 	 * 
 	 * Attention! Validation algoritm is primitive
-	 * @package		Form
-	 * @author		Sveta Smirnova <sveta@microbecal.com>
-	 * @version		1.0
-	 * @copyright	2005
-	 * @obsoleted	by PrimitiveString
+	 * 
+	 * @deprecated	by PrimitiveString
 	**/
 	class PrimitiveUrl extends PrimitiveString
 	{

@@ -9,17 +9,11 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+/* $Id$ */
 
 	/**
 	 * Just container of members and methods
 	 * for next their using in output shablons
-	 *
-	 * @author		Sveta Smirnova <sveta@microbecal.com>
-	 * @access		public
-	 * @version		1.0.0
-	 * @since		PHP 5.0.0
-	 * @package		Template_Dummy
-	 * @category	Template
 	**/
 	class DummyTemplate 
 	{

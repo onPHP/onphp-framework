@@ -15,11 +15,7 @@
 	 * Idea of the primitive is checking minimum length and possible random
 	 * letters
 	 * 
-	 * @package		Form
-	 * @author		Sveta Smirnova <sveta@microbecal.com>
-	 * @version		1.0
-	 * @copyright	2005
-	 * @obsoleted	by PrimitiveString
+	 * @deprecated	by PrimitiveString
 	*/
 	class PrimitiveNick extends PrimitiveString
 	{

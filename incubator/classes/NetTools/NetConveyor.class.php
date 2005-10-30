@@ -9,17 +9,11 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
- /* $Id$ **/
+/* $Id$ **/
  
 	/**
 	 * Conveyor for NetTests
-	 * 
-	 * @package		Unit
-	 * @author		Sveta Smirnova <sveta@microbecal.com>
-	 * @version		1.0
-	 * @copyright	2005
 	***/
-
 	class NetConveyor
 	{
 		/**

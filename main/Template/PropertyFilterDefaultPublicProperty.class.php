@@ -13,14 +13,7 @@
 
 	/**
 	 * Empty class-container for variables
-	 * with unusuall PropertyFilter behavior
-	 *
-	 * @author	 Sveta Smirnova <sveta@microbecal.com>
-	 * @access	 public
-	 * @version	 1.0.0
-	 * @since	 PHP 5.0.0
-	 * @package	 Template_Dummy
-	 * @category Template
+	 * with unusual PropertyFilter behavior
 	**/
 	class PropertyFilterDefaultPublicProperty {}
 ?>

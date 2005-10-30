@@ -13,13 +13,7 @@
 
 	/**
 	 * NetTest with easy HTML handler
-	 * 
-	 * @package		Unit
-	 * @author		Sveta Smirnova <sveta@microbecal.com>
-	 * @version		1.0
-	 * @copyright	2005
 	**/
-
 	class HTMLTest implements NetTest
 	{
 		/**

@@ -12,13 +12,7 @@
 /* $Id$*/
 
 	/**
-	 * Contains utilities for files handling
-	 * 
-	 * 
-	 * @package		Utils
-	 * @author		Sveta Smirnova <sveta@microbecal.com>
-	 * @version		1.0
-	 * @copyright	2005
+	 * Utilities for file handling
 	**/
 	class FileUtils
 	{

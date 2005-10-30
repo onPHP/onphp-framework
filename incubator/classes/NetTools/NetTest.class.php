@@ -9,16 +9,12 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
- /* $Id$ **/
+/* $Id$ **/
  
 	/**
 	 * The interface which should realize classes which will be processed
 	 * by NetQueue class
 	 * 
-	 * @package		Unit
-	 * @author		Sveta Smirnova <sveta@microbecal.com>
-	 * @version		1.0
-	 * @copyright	2005
 	**/
 	interface NetTest
 	{

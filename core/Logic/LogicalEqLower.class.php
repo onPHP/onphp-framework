@@ -13,7 +13,7 @@
 
 	/**
 	 * @deprecated by LogicalExpression
-	 * @obsoleted since 0.2.3, target removal release - 0.2.4
+	 * @deprecated and obsoleted since 0.2.3, target removal release - 0.2.5
 	**/
 	class LogicalEqLower implements LogicalObject
 	{

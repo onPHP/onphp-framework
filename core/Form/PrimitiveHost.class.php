@@ -14,10 +14,6 @@
 	/**
 	 * Holds only hosts without url to documents
 	 * 
-	 * @package		Form
-	 * @author		Sveta Smirnova <sveta@microbecal.com>
-	 * @version		1.0
-	 * @copyright	2005
 	 * @deprecated	use PrimitiveString and filters
 	**/
 	class PrimitiveHost extends PrimitiveUrl

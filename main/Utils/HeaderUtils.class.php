@@ -13,10 +13,6 @@
 
 	/**
 	 * Collection of static header functions
-	 * 
-	 * @package		Utils
-	 * @version		1.0
-	 * @copyright	2005
 	**/
 	class HeaderUtils
 	{

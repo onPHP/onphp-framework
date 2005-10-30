@@ -22,10 +22,6 @@
 	 *						...
 	 *					)
 	 * 
-	 * @package		Form
-	 * @author		Sveta Smirnova <sveta@microbecal.com>
-	 * @version		1.0
-	 * @copyright	2005
 	**/
 	class FormedPrimitive extends BasePrimitive
 	{

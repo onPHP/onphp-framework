@@ -9,22 +9,16 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
- /* $Id$ **/
+/* $Id$ **/
 
 	/**
 	 * Contains class for net query processing and UnsupportedMethodException class
-	 * 
-	 * @package		Unit
-	 * @author		Sveta Smirnova <sveta@microbecal.com>
-	 * @version		1.0
-	 * @copyright	2005
 	**/
 
 	/**
 	 * Processes query and returns result
 	 * 
 	 * @package		Unit
-	 * @author		Sveta Smirnova <sveta@microbecal.com>
 	 * @version		1.0
 	 * @copyright	2005
 	**/
