@@ -1,5 +1,12 @@
 # $Id$
 
+2005-10-29	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* main/DAOs/SmartDAO.class.php: per object lists map removed, it's useless
+bacause dropLists() incorporated into uncacheById() and friends.
+
+* main/DAOs/OneToManyLinked.class.php: cache cleanup fixed.
+
 2005-10-28	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * main/DAOs/UnifiedContainer.class.php: is now cache-aware.
