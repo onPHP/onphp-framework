@@ -20,6 +20,10 @@
 		
 		public function dropByIds($ids)
 		{
+			$className = $this->getObjectName();
+
+			$cache = Cache::me();
+			
 			$result =
 				DBFactory::getDefaultInstance()->queryNull(
 					OSQL::delete()->from($this->getTable())->
@@ -27,8 +31,10 @@
 				);
 			
 			foreach ($ids as $id)
-				$this->uncacheById($id);
+				$cache->mark($className)->delete($className.'_'.$id);
 			
+			$this->dropLists();
+
 			return $result;
 		}
 

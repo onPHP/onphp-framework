@@ -119,10 +119,8 @@
 						
 						if ($flags & 2)
 							$result = gzuncompress($result);
-						
-						$object = unserialize($result);
-
-						return $object;
+							
+						return unserialize($result);
 					} else
 						return null;
 				}
