@@ -1,0 +1,208 @@
+# $Id$
+
+2005-10-30	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* Released 0.2.4.
+
+2005-10-29	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* main/DAOs/SmartDAO.class.php: per object lists map removed, it's useless
+bacause dropLists() incorporated into uncacheById() and friends.
+
+* main/DAOs/OneToManyLinked.class.php: cache cleanup fixed.
+
+2005-10-28	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/UnifiedContainer.class.php: is now cache-aware.
+
+* main/DAOs/SmartDAO.class.php: negative (aka pessimistic) cache model
+implemented.
+
+2005-10-25	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/Form/Form.class.php: clean violated rules too upon dropAllErrors().
+
+2005-10-24	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/FullTextDAO.class.php: ObjectQuery is now mandatory for looking up
+object or list.
+
+* 0.2.3 released.
+
+2005-10-23	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/FullTextDAO.class.php: added ability to override full text queries.
+
+2005-10-23	Sveta Smirnova		<sveta@microbecal.com>
+
+* core/DB/: MySQL support is back from incubator.
+
+2005-10-21	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/FullTextDAO.class.php: silently moved to MappedStorableDAO.
+
+* core/OSQL/: LogicalIn implemented through LogicalExpression, so it's
+deprecated now just like LogicalEqLower.
+
+2005-10-20	Garmonbozia R. G.	<garmonbozia@shadanakar.org>
+
+* doc/www/: major site update - css, examples, propaganda, etc.
+
+2005-10-18	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/NamedObjectDAO.class.php: accept Named implementations too.
+
+* main/DAOs/MappedStorableDAO.class.php: hybrid child of SmartDAO.
+
+* core/OSQL/: LogicalEqLower implemented through LogicalExpression, so it's
+deprecated now.
+
+2005-10-17	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/: transparent cache handling introduced by SmartDAO.
+
+* main/DAOs/, core/DB/: GenericDAO introduced for SmartDAO's compatibility
+with DB.
+
+2005-10-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/ObjectQuery.class.php: null-valued mappings handling logic fixed.
+
+* core/DB/DB.class.php: drop as much as we can at objectQuery().
+
+2005-10-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/Cache/ReferencePool.class.php: new CachePeer wrapper, obsoletes
+IdentityMap-in-DAOs idea.
+
+2005-10-11	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* core/DB/DBTransaction.class.php: "neverending" transactions fixed.
+
+2005-10-10	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/OSQL/: SelectQueries as select fields implemented as requested by
+Sergeev Sergey <serge@rdw.ru>. Minor internal API changes.
+
+2005-10-06	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* core/Base/Timestamp.class.php: getDayStartStamp, getDayEndStamp methods
+added.
+
+* core/Base/DateRange.class.php: enlarge, clip, compare methods added.
+
+2005-10-06	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/OSQL/SelectQuerySkeleton.class.php: merged back to SelectQuery as
+suggested by Antony.
+
+* core/Base/StorableContainer.class.php, core/Base/DAOConnected.class.php:
+moved to main/DAOs/.
+
+2005-09-30	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* core/Base/Timestamp.class.php: useful compare method added.
+
+* core/Base/DateRange.class.php: useless compare method removed.
+
+2005-09-28	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* core/Base/DateRange.class.php: contains, split methods added.
+
+2005-09-27	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/UnifiedContainer.class.php: correct fetch() behaviour.
+
+2005-09-27	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* main/Utils/LogicUtils.class.php: corrected conditions.
+
+* core/Base/DateRange.class.php: compare, overlaps methods added.
+
+2005-09-24	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/UnifiedContainer.class.php: do not throw ObjectNotFoundException
+on empty lists.
+
+2005-09-23	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* 0.2.2 released.
+
+* main/Utils/LogicUtils.class.php: new place for common used logic patterns.
+
+2005-09-20	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/Base/: added delimiters for date'n'time-related stringoization methods,
+Time.class.php introduced.
+
+* core/DB/DBTransaction.class.php: extremly evil typo fixed, so now
+transaction doesn't start every time you're adding new Query to it.
+
+* core/OSQL/PreQuery.class.php: obsoleted, will be removed at 0.2.5.
+
+* main/DAOs/: UnifiedContainer and friends ported to ObjectQuery from
+obsoleted PreQuery.
+
+2005-09-20	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* core/Base/NamedObject.class.php: added static compareNames() for using in
+usort().
+
+2005-09-17	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* doc/sample: synced with Form's related changes.
+
+* core/Form/FiltrablePrimitive.class.php: setFilter() removed.
+
+2005-09-16	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* core/Form/FiltrablePrimitive.class.php: introduced display and import
+filters chain.
+
+* core/Form/HTMLFilter.class.php, core/Form/TextFilter.class.php: removed in
+favour of filter' chains.
+
+* core/Form: added more basic filters.
+
+* doc/: "Coding Style Convention" added to documentation.
+
+2005-09-16	Konstantin Scheglov	<gnuman@yandex.ru>
+
+* main/DAOs/CommonDAO.class.php: getById should throw ObjectNotFoundException
+instead of null returning.
+
+2005-09-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/ObjectQuery.class.php: treat mapping keys with null values as
+field names.
+
+2005-09-10	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* 0.2.1 released.
+
+* main/DAOs/FinalObjectsTreeDAO.class.php: getListByParentId added.
+
+2005-09-09	Igor V. Gulyaev			<igor_vg@mail.ru>
+
+* main/DAOs/ObjectQuery.class.php: sticky property name fixed.
+
+2005-09-09	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/CommonDAO.class.php: cleanups and minor optimizations.
+
+* main/DAOs/ObjectQuery.class.php: added support for values in query's logic.
+
+* core/DB/DB.class.php: setPersistent() dropped - we can't change connection
+type on the fly; getPersistent() renamed to isPersistent().
+
+* core/DB/PostgresDialect.class.php: quoteValue() moved to generic
+pg_quote_string().
+
+* core/DB/AccessLevel.class.php, core/DB/IsolationLevel.class.php: avoid
+zero-valued constants.
+
+* core/OSQL/PreQuery.class.php: deprecated in favour of ObjectQuery.
+
+2005-09-03	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* Initial release - 0.2.0.
