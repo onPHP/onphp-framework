@@ -166,7 +166,7 @@
 		public function getDayStartStamp()
 		{
 			return mktime(
-					0,0,0,
+					0, 0, 0,
 					$this->month,
 					$this->day,
 					$this->year
@@ -176,7 +176,7 @@
 		public function getDayEndStamp()
 		{
 			return mktime(
-					23,59,59,
+					23, 59, 59,
 					$this->month,
 					$this->day,
 					$this->year
@@ -188,10 +188,10 @@
 			list($date, $time) = explode(' ', $string, 2);
 			
 			list($this->year, $this->month, $this->day) =
-				explode('-', $date);
+				explode('-', $date, 3);
 			
 			list($this->hour, $this->minute, $this->second) =
-				explode(':', $time);
+				explode(':', $time, 3);
 		}
 
 		public static function compare(Timestamp $left, Timestamp $right)
