@@ -1,5 +1,9 @@
 # $Id$
 
+2005-10-30	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* Released 0.2.4.
+
 2005-10-29	Anton E. Lebedevich	<noiselist@pochta.ru>
 
 * main/DAOs/SmartDAO.class.php: per object lists map removed, it's useless
