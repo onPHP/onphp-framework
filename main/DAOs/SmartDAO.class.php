@@ -378,11 +378,15 @@
 					$this->cacheObject($object);
 				}
 			}
-			
-			$cache->mark($className)->
-				add($listKey, $array, Cache::EXPIRES_FOREVER);
-			
-			$this->syncMap($indexKey, $listKey);
+
+			try {
+				$this->syncMap($indexKey, $listKey);
+				
+				$cache->mark($className)->
+					add($listKey, $array, Cache::EXPIRES_FOREVER);
+			} catch (BaseException $e) {
+				// failed to acquire semaphore
+			}
 			
 			return $array;
 		}
@@ -395,7 +399,7 @@
 				$map = array();
 			
 			$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true);
-			Assert::isTrue(sem_acquire($sem));
+			sem_acquire($sem);
 			
 			$map[$objectKey] = true;
 			
