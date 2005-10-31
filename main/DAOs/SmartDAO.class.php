@@ -398,8 +398,11 @@
 			if (!$map = $cache->get($mapKey))
 				$map = array();
 			
-			$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true);
-			sem_acquire($sem);
+			if (!$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true))
+				throw new WrongStateException();
+			
+			if (!sem_acquire($sem))
+				throw new WrongStateException();
 			
 			$map[$objectKey] = true;
 			
