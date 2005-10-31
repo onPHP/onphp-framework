@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * SQL's BETWEEN or logical check whether value in-between given limits.
+	**/
 	class LogicalBetween implements LogicalObject
 	{
 		private $field  = null;

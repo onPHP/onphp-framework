@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * IdentifiableObject childs collection handling.
+	 * 
+	 * @see UnifiedContainer
+	**/
 	abstract class StorableDAO extends CommonDAO
 	{
 		public function getIdName()

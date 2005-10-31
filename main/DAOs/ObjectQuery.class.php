@@ -11,6 +11,13 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Various information holder for communication
+	 * between MappedDAO implementations and modules.
+	 * 
+	 * @see MappedDAO
+	 * @see BaseModule
+	**/
 	class ObjectQuery
 	{
 		const SORT_ASC		= 0x0001;
@@ -165,7 +172,10 @@
 							
 							default:
 
-								throw new WrongStateException('unknown direction');
+								throw new WrongStateException(
+									'unknown or unsupported '.
+									"direction '{$direction}'"
+								);
 						}
 					} else {
 						switch ($direction) {
@@ -191,7 +201,10 @@
 								break;
 
 							default:
-								throw new WrongStateException('unknown direction');
+								throw new WrongStateException(
+									'unknown or unsupported '.
+									"direction '{$direction}'"
+								);
 						}
 					}
 				} else

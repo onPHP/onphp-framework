@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Ideal Identifiable interface implementation. ;-)
+	 *
+	 * @see Identifiable
+	**/
 	class /* spirit of */ IdentifiableObject implements Identifiable
 	{
 		private $id = null;

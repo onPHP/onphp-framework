@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Common Primitive-handling.
+	**/
 	abstract class PlainForm
 	{
 		protected $aliases		= array();

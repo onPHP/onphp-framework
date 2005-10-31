@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Time's container and utilities.
+	**/
 	class Time
 	{
 		protected $hour		= 0;

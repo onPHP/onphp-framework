@@ -11,7 +11,10 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class LogicalExpression implements LogicalObject
+	/**
+	 * Name says it all. :-)
+	**/
+	final class LogicalExpression implements LogicalObject
 	{
 		const EQUALS			= '=';
 		const NOT_EQUALS		= '!=';

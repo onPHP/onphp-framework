@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Chained Filtrator.
+	**/
 	class FilterChain implements Filtrator
 	{
 		protected $chain = array();

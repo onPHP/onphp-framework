@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Helper for file uploads.
+	**/
 	class PrimitiveFile extends RangedPrimitive
 	{
 		private $originalName		= null;

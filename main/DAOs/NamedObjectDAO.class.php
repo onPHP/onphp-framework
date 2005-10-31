@@ -11,16 +11,21 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Simple DAO for simple NamedObject.
+	**/
 	abstract class NamedObjectDAO extends CommonDAO
 	{
 		// if you will override it later - append this fields to your array
 		protected $fields = array('id', 'name');
 		
-		/**
-		 * do not forget to declare
-		 *  protected function setQueryFields(InsertOrUpdateQuery $query, NamedObject $no)
-		 * in your childs at least
-		**/
+		/*
+			do not forget to declare in every child:
+			
+			protected function setQueryFields(
+				InsertOrUpdateQuery $query, NamedObject $no
+			)
+		*/
 		
 		final public function getByName($name)
 		{

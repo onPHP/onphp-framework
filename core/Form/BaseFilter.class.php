@@ -11,5 +11,8 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Filter's template.
+	**/
 	abstract class BaseFilter extends Singletone implements Filtrator {/*_*/}
 ?>

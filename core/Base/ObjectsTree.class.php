@@ -11,6 +11,12 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Straight and inefficient implementation of object's tree.
+	 *
+	 * @see ObjectsTreeDAO
+	 * @see FinalObjectsTreeDAO
+	**/
 	abstract class ObjectsTree extends NamedObject
 	{
 		private $parent	= null;

@@ -11,7 +11,10 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class Transaction
+	/**
+	 * Transaction's factory.
+	**/
+	final class Transaction /* Factory */
 	{
 		private function __construct() {/*-*/}
 		

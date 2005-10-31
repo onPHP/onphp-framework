@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Factory for various Primitives.
+	**/
 	class Primitive /* Factory */
 	{
 		public static function spawn($primitive, $name)

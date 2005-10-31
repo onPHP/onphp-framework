@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Quite common information collection.
+	**/
 	class Credentials
 	{
 		private $host		= null;
@@ -74,7 +77,9 @@
 			if (($port > 0) && ($port < 65536))
 				$this->post = $port;
 			else
-				throw new WrongArgumentException('invalid port number specified');
+				throw new WrongArgumentException(
+					'invalid port number specified'
+				);
 
 			return $this;
 		}

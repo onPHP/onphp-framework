@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Default process RAM cache.
+	 *
+	 * @see ReferencePool
+	**/
 	final class RuntimeMemory extends CachePeer
 	{
 		private $cache = array();

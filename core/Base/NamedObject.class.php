@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @see Named.class.php
+	**/
 	abstract class NamedObject implements Named
 	{
 		protected $id	= null;

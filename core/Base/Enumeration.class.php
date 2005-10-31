@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Parent of all enumeration classes.
+	**/
 	abstract class Enumeration extends NamedObject
 	{
 		protected $names = array(/* override me */);

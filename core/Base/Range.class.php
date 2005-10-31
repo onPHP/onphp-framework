@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Integer's interval implementation and accompanying utility methods.
+	**/
 	class Range
 	{
 		private $min			= null;

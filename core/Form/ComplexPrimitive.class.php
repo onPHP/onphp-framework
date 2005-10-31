@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Basis for primitives which can be scattered across import scope.
+	**/
 	abstract class ComplexPrimitive extends RangedPrimitive
 	{
 		private $single = null;	// single, not single or fsck it

@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Tunable (aka manual) caching DAO.
+	 * 
+	 * @see SmartDAO for auto-caching one.
+	**/
 	abstract class CommonDAO extends CacheableDAO
 	{
 		/**

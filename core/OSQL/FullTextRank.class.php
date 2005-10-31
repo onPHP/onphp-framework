@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Full-text ranking. Mostly used in "ORDER BY".
+	**/
 	final class FullTextRank extends FullText
 	{
 		public function toString(Dialect $dialect)

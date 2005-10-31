@@ -12,7 +12,7 @@
 /* $Id$ */
 
 	/**
-	 * Half wrapper, half holder for passing data between modules and DAO's
+	 * Half-wrapper half-holder used for passing data between modules and DAO's.
 	 * 
 	 * @deprecated since 0.2.1 in favour of ObjectQuery
 	 * @deprecated and obsoleted since 0.2.2, target removal release - 0.2.5

@@ -11,7 +11,10 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class Form extends RegulatedForm
+	/**
+	 * Complete Form class.
+	**/
+	final class Form extends RegulatedForm
 	{
 		const WRONG 		= 0x0001;
 		const MISSING 		= 0x0002;
@@ -62,7 +65,10 @@
 		// rule or primitive
 		public function markWrong($name)
 		{
-			if (isset($this->rules[$name]) || ($name == $this->get($name)->getName()))
+			if (
+				isset($this->rules[$name])
+				|| ($name == $this->get($name)->getName())
+			)
 				$this->errors[$name] = Form::WRONG;
 			
 			return $this;
@@ -138,18 +144,19 @@
 			if (null === $result) {
 				if ($prm->isRequired())
 					$this->errors[$name] = self::MISSING;
-
-				return;
 			} elseif (true === $result) {
 				unset($this->errors[$name]);
 				if ($this->cleanup)
 					unset($scope[$name]);
 			} else
 				$this->errors[$name] = self::WRONG;
+			
+			/* NOTREACHED */
 		}
 		
 		/**
-		 * Assigns specific label for given primitive and error type
+		 * Assigns specific label for given primitive and error type.
+		 * One more example of horrible documentation style.
 		 *
 		 * @param $name				string	primitive or rule name
 		 * @param $errorType		enum	Form::(WRONG|MISSING)
@@ -160,9 +167,14 @@
 		{
 			if (
 				!($errorType == Form::WRONG && isset($this->violated[$name])) 
-				&& (!isset($this->rules[$name]) && !$name = $this->get($name)->getName())
+				&& (
+					!isset($this->rules[$name])
+					&& !$name = $this->get($name)->getName()
+				)
 			)
-				throw new ObjectNotFoundException("knows nothing about '{$name}'");
+				throw new ObjectNotFoundException(
+					"knows nothing about '{$name}'"
+				);
 
 			$this->labels[$name][$errorType] = $label;
 

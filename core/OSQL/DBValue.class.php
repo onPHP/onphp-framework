@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Container for passing values into OSQL queries.
+	**/
 	class DBValue extends Castable implements DialectString
 	{
 		private $value = null;

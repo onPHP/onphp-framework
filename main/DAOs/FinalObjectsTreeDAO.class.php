@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Fully implemented DAO for ObjectTree child.
+	**/
 	abstract class FinalObjectsTreeDAO extends ObjectsTreeDAO
 	{
 		final public function getListByParentId($id = null)

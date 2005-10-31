@@ -10,6 +10,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * HTML Special Characters replacer.
+	 * 
+	 * @see FiltrablePrimitive::getDisplayValue()
+	**/
 	class HtmlSpecialCharsFilter extends BaseFilter
 	{
 		public function apply($value)

@@ -11,58 +11,12 @@
  ***************************************************************************/
 /* $Id$ */
 
-/**
-	CacheableDAO <- Singletone:
-	
-		abstract public function getObjectName()
-		
-		public function cacheById(Identifiable $object, $expires = null)
-		public function cacheByQuery(Query $query, &$object, $expires = null)
-		public function cacheByQueryResult(QueryResult $result, $expires = null)
-		protected function cacheByKey($key, &$object, $expires = null)
-
-		public function getCachedById($id)
-		public function getCachedByQuery(Query $query)
-		public function getCachedQueryResult(SelectQuery $query)
-		protected function getCachedByKey($key)
-
-		public function uncacheById($id)
-		public function uncacheByQuery(Query $query)
-		public function uncacheByKey($key)
-		
-	CommonDAO <- CacheableDAO:
-
-		abstract protected function makeObject(&$array, $prefix = null);
-		abstract public function getTable();
-		
-		public function getFields()
-		public function getSequence()
-
-
-		public function makeSelectHead()
-
-		public function dropById($id)
-		public function dropByIds($ids)
-		
-		public function uncacheList()
-		public function uncacheIdentifiable(Identifiable $object)
-
-		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
-		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
-		public function getListByIds(&$ids, $expires = Cache::EXPIRES_MEDIUM)
-		public function getByQuery(SelectQuery $query, $expires = Cache::EXPIRES_MEDIUM)
-
-		public function getByLogic(LogicalObject $logic, $expires = Cache::DO_NOT_CACHE)
-		public function getCustom(SelectQuery $query, $expires = Cache::DO_NOT_CACHE)
-		public function getQueryResult(SelectQuery $query, $expires = Cache::DO_NOT_CACHE)
-
-		public function getCustomList(SelectQuery $query, $expires = Cache::DO_NOT_CACHE)
-		public function getCustomRowList(SelectQuery $query, $expires = Cache::DO_NOT_CACHE)
-
-		public function getListByLogic(LogicalObject $logic, $expires = Cache::DO_NOT_CACHE)
-		public function getListByQuery(SelectQuery $query, $expires = Cache::DO_NOT_CACHE)
-**/
-
+	/**
+	 * Cache related part of CommonDAO.
+	 * 
+	 * @see Cache
+	 * @see CachePeer
+	**/
 	abstract class CacheableDAO extends GenericDAO
 	{
 		public function cacheById(Identifiable $object, $expires = null)

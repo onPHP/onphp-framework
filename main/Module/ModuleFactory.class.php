@@ -25,8 +25,13 @@
 		
 		public static function inject($name)
 		{
-			if (!is_dir(self::$moduleDirectory) || !is_dir(self::$templateDirectory))
-				throw new WrongArgumentException('specify existent directories, please');
+			if (
+				!is_dir(self::$moduleDirectory)
+				|| !is_dir(self::$templateDirectory)
+			)
+				throw new WrongArgumentException(
+					'specify existent directories and readable, please'
+				);
 
 			$path = self::$moduleDirectory.$name.EXT_MOD;
 			

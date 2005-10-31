@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Single roof for InsertQuery and UpdateQuery.
+	**/
 	abstract class InsertOrUpdateQuery
 		extends QuerySkeleton
 		implements SQLTableName
@@ -51,11 +54,7 @@
 		}
 		
 		/**
-		 * Adds values from associative array
-		 * 
-		 * @param	array	associative array('name' => 'value')
-		 * @access	public
-		 * @return	InsertQuery
+		 * Adds values from associative array.
 		**/
 		public function arraySet($fields)
 		{

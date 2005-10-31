@@ -11,11 +11,14 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Basis for modules - business-logic containers.
+	**/
 	abstract class BaseModule
 	{
-		private $url				= null;
+		private $url		= null;
 
-		private $parameters			= array();
+		private $parameters	= array();
 		
 		public function __construct()
 		{

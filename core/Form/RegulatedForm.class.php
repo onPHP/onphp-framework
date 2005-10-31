@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Rules support for final Form.
+	**/
 	abstract class RegulatedForm extends PlainForm
 	{
 		protected $rules		= array(); // forever

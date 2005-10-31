@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Holder for query's execution information.
+	**/
 	class QueryResult implements Identifiable
 	{
 		private $list		= null;

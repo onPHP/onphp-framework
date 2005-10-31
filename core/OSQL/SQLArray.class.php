@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Values row implementation.
+	**/
 	class SQLArray implements DialectString
 	{
 		private $array = array();

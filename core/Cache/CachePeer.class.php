@@ -85,6 +85,9 @@
 		public function __construct()
 **/
 
+	/**
+	 * Abstract cache peer base class.
+	**/
 	abstract class CachePeer
 	{
 		protected $alive		= false;

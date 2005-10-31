@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * PostgreSQL DB connector.
+	 *
+	 * @link		http://www.postgresql.org/
+	**/
 	class PgSQL extends DB
 	{
 		private static $dialect = null;

@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Karma's destroyer.
+	 * 
+	 * @deprecated since the begining of time
+	**/
 	final class DBRaw implements LogicalObject
 	{
 		private $string = null;

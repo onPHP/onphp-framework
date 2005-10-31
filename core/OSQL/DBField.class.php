@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Reference for actual DB-table column.
+	**/
 	class DBField extends Castable implements DialectString, SQLTableName 
 	{
 		private $field	= null;

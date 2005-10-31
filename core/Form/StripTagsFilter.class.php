@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @see RegulatedPrimitive::addImportFilter()
+	**/
 	class StripTagsFilter extends BaseFilter
 	{
 		public function apply($value)

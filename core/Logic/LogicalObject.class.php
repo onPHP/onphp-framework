@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Support interface for Form's logic rules.
+	**/
 	interface LogicalObject extends DialectString
 	{
 		public function toBoolean(Form $form);

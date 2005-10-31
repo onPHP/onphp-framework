@@ -11,6 +11,10 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * A wrapper to multiple cache for workload
+	 * distribution using CachePeer childs.
+	**/
 	class AggregateCache extends CachePeer
 	{
 		const LEVEL_ULTRAHIGH	= 0xFFFF;
@@ -29,7 +33,9 @@
 			return new AggregateCache();
 		}
 
-		public function addPeer($label, CachePeer $peer, $level = self::LEVEL_NORMAL)
+		public function addPeer(
+			$label, CachePeer $peer, $level = self::LEVEL_NORMAL
+		)
 		{
 			if (isset($this->peers[$label]))
 				throw new DuplicateObjectException(
@@ -177,7 +183,9 @@
 			return $stats;
 		}
 
-		protected function store($action, $key, &$value, $expires = Cache::EXPIRES_MINIMUM)
+		protected function store(
+			$action, $key, &$value, $expires = Cache::EXPIRES_MINIMUM
+		)
 		{
 			throw new UnsupportedMethodException();
 		}
@@ -185,7 +193,6 @@
 		/**
 		 * brain 
 		**/
-
 		private function guessLabel($key)
 		{
 			if (!$this->className)

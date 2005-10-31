@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Transaction-wrapped queries queue.
+	 *
+	 * @see Queue
+	**/
 	final class TransactionQueue extends TransactionSkeleton implements Query
 	{
 		private $queue = null;

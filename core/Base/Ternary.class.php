@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Atom for ternary-based logic.
+	**/
 	class Ternary
 	{
 		private $trinity = null;	// ;-)

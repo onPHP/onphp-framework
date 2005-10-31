@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Cast-able SQL parts.
+	**/
 	abstract class Castable
 	{
 		protected $cast	= null;

@@ -11,7 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-	// requires sysvipc (--enable-sysvmsg)
+	/**
+	 * Simple filesystem cache requiring external manual cleanup.
+	**/
 	final class RubberFileSystem extends CachePeer
 	{
 		const TIME_SWITCH = 2592000; // 60 * 60 * 24 * 30

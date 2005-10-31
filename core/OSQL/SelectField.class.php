@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Connected to concrete table DBField.
+	**/
 	class SelectField extends FieldTable
 	{
 		private $alias = null;

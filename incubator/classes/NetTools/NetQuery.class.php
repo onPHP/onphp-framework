@@ -12,15 +12,9 @@
 /* $Id$ **/
 
 	/**
-	 * Contains class for net query processing and UnsupportedMethodException class
-	**/
-
-	/**
-	 * Processes query and returns result
+	 * Contains class for net query processing.
 	 * 
-	 * @package		Unit
-	 * @version		1.0
-	 * @copyright	2005
+	 * Processes query and returns result.
 	**/
 	class NetQuery
 	{

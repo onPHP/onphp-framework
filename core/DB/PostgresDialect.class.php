@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * PostgreSQL dialect.
+	 *
+	 * @link		http://www.postgresql.org/
+	**/
 	final class PostgresDialect extends Dialect
 	{
 		private static $tsConfiguration = 'default_russian';

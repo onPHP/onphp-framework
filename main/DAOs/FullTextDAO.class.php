@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Full-text stuff DAO support.
+	**/
 	abstract class FullTextDAO extends MappedStorableDAO
 	{
 		public function getIndexField()

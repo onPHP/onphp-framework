@@ -11,23 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class SingletoneException extends Exception
-	{
-		private $instance = null;
-		
-		public function getInstance()
-		{
-			return $this->instance;
-		}
-		
-		public function setInstance(Singletone $instance)
-		{
-			$this->instance = $instance;
-			
-			return $this;
-		}
-	}
-	
+	/**
+	 * Inheritable Singletone's pattern implementation.
+	**/
 	abstract class Singletone
 	{
 		protected function __construct($class = null)
@@ -69,6 +55,23 @@
 		public function __call($class, $args = null)
 		{
 			return Singletone::getInstance($class, $args);
+		}
+	}
+	
+	final class SingletoneException extends Exception
+	{
+		private $instance = null;
+		
+		public function getInstance()
+		{
+			return $this->instance;
+		}
+		
+		public function setInstance(Singletone $instance)
+		{
+			$this->instance = $instance;
+			
+			return $this;
 		}
 	}
 ?>

@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Fully implemented DAO for NamedObject child.
+	**/
 	abstract class FinalNamedObjectDAO extends NamedObjectDAO
 	{
 		final public function import(NamedObject $no)
@@ -40,7 +43,9 @@
 			return $this->getPlainList();
 		}
 
-		final protected function setQueryFields(InsertOrUpdateQuery $query, NamedObject $no)
+		final protected function setQueryFields(
+			InsertOrUpdateQuery $query, NamedObject $no
+		)
 		{
 			return parent::setNamedQueryFields($query, $no);
 		}

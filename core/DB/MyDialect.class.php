@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * MySQL dialect.
+	 *
+	 * @link		http://www.mysql.com/
+	**/
 	final class MyDialect extends Dialect
 	{
 		const IN_BOOLEAN_MODE = 1;

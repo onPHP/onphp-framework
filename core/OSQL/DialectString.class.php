@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Basis for almost all implementations of SQL parts.
+	**/
 	interface DialectString
 	{
 		public function toString(Dialect $dialect);

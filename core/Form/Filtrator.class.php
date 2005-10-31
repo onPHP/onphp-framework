@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Interface for primitive's filters.
+	**/
 	interface Filtrator
 	{
 		public function apply($value);

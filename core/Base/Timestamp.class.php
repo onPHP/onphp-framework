@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Date's container and utilities.
+	 *
+	 * @see DateRange
+	**/
 	class Timestamp
 	{
 		private $string		= null;
@@ -31,12 +36,19 @@
 				$this->string = date('Y-m-d H:i:s', $timestamp);
 			} elseif (is_string($timestamp)) { 
 				$this->int = strtotime($timestamp);
-				if (preg_match('/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/', $timestamp))
+
+				if (
+					preg_match(
+						'/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/',
+						$timestamp
+					)
+				)
 					$this->string = $timestamp;
 				elseif (preg_match('/^\d{4}-\d{2}-\d{2}$/', $timestamp))
 					$this->string = $timestamp . ' 00:00:00';
 				else
 					$this->string = date('Y-m-d H:i:s', $this->int);
+
 			} else {
 				throw new WrongArgumentException('strange timestamp given');
 			}
@@ -152,7 +164,9 @@
 			return $this->string;
 		}
 		
-		// FIXME: should return Timestamp instance
+		/**
+		 * @todo break API by returning Timestamp instance instead
+		**/
 		public static function now()
 		{
 			return date('Y-m-d H:i:s');

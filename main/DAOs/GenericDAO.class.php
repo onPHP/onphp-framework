@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Basis of all DAO's.
+	**/
 	abstract class GenericDAO extends Singletone
 	{
 		protected $selectHead = null;

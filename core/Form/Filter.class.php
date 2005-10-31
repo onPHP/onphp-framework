@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Factory for Filtrator implementations.
+	**/
 	final class Filter /* Factory */
 	{
 		public static function textImport()

@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * A wrapper to single cache to prevent cloning of returned cached objects.
+	**/
 	final class ReferencePool extends CachePeer
 	{
 		private $peer = null;

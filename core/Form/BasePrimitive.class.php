@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Parent of every Primitive.
+	**/
 	abstract class BasePrimitive
 	{
 		protected $name		= null;

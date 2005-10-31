@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Essential interface for DAO-related operations.
+	 * 
+	 * @see IdentifiableObject
+	**/
 	interface Identifiable
 	{
 		public function getId();

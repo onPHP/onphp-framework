@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Base (aka ANSI) SQL dialect.
+	**/
 	abstract class /* ANSI's */ Dialect
 	{
 		abstract public function fullTextSearch($field, $words, $logic);

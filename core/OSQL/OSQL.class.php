@@ -11,7 +11,10 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class OSQL
+	/**
+	 * Factory for OSQL's queries.
+	**/
+	final class OSQL /* Factory */
 	{
 		private function __construct() {}
 		

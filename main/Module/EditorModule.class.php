@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Experimental object's editing business-logic.
+	**/
 	abstract class EditorModule extends FormedModule
 	{
 		// we're editing him

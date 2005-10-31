@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Helper for identifying object's DAO.
+	**/
 	interface DAOConnected extends Identifiable
 	{
 		public static function dao();

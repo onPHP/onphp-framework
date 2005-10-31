@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Transaction isolation levels.
+	 *
+	 * @link		http://www.postgresql.org/docs/8.0/interactive/sql-start-transaction.html
+	**/
 	final class IsolationLevel extends Enumeration
 	{
 		const READ_COMMITTED	= 0x01;

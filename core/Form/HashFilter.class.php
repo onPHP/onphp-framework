@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * SHA-1 based filter: passwords.
+	**/
 	class HashFilter extends BaseFilter
 	{
 		public function apply($value)

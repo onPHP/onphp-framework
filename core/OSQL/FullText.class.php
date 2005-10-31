@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Base for all full-text stuff.
+	**/
 	abstract class FullText implements LogicalObject
 	{
 		protected $logic = null;

@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Transaction access modes.
+	 *
+	 * @link		http://www.postgresql.org/docs/8.0/interactive/sql-start-transaction.html
+	**/
 	final class AccessMode extends Enumeration
 	{
 		const READ_ONLY		= 0x01;

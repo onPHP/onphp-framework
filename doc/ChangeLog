@@ -1,5 +1,11 @@
 # $Id$
 
+2005-10-31	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/SmartDAO.class.php: checks for semaphore's acquiring problem.
+
+* core/Cache/Cache.class.php: ReferencePool usage is now default behaviour.
+
 2005-10-30	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * Released 0.2.4.

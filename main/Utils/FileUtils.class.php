@@ -12,22 +12,17 @@
 /* $Id$*/
 
 	/**
-	 * Utilities for file handling
+	 * Utilities for file handling.
 	**/
-	class FileUtils
+	final class FileUtils
 	{
 		/**
-		 * Recursive walk through $dir and converts line endings of all files instead
-		 * having extentions founded in $ignore array
-		 * 
-		 * @param	string		path to source directory
-		 * @param	array		extentions for ignoring
-		 * @param	string		from which line endings convert
-		 * @param	string		to which line endings convert
-		 * @access	public
-		 * @return	integer		quantity of handled files
+		 * Recursively walks through $dir and converts line
+		 * endings of all but listed in $ignore files.
 		**/
-		public static function convertLineEndings($dir, $ignore, $from = "\r\n", $to = "\n")
+		public static function convertLineEndings(
+			$dir, $ignore, $from = "\r\n", $to = "\n"
+		)
 		{
 			$converted = 0;
 
@@ -38,14 +33,28 @@
 			$files = scandir($dir);
 
 			foreach ($files as $file) {
-				if ('.' != $file && '..' != $file &&
-					!in_array(substr($file, strrpos($file, '.')), $ignore, true))
-				{
+				if (
+					'.' != $file
+					&& '..' != $file
+					&&
+					!in_array(
+						substr($file, strrpos($file, '.')), $ignore, true
+					)
+				) {
 					if (is_dir($path = $dir . DIRECTORY_SEPARATOR . $file)) {
-						$converted += FileUtils::convertLineEndings($path, $ignore, $from, $to);
+						$converted += self::convertLineEndings(
+							$path, $ignore, $from, $to
+						);
 					} else {
-						file_put_contents($path, preg_replace("/$from/", $to, file_get_contents($path)));
-						$converted ++;
+						file_put_contents(
+							$path,
+							preg_replace(
+								"/$from/",
+								$to,
+								file_get_contents($path)
+							)
+						);
+						$converted++;
 					}
 				}
 			}

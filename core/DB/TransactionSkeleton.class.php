@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Transaction's basis.
+	**/
 	abstract class TransactionSkeleton
 	{
 		protected $db		= null;

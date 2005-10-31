@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Database transaction implementation.
+	**/
 	final class DBTransaction extends TransactionSkeleton
 	{
 		private $started	= false;

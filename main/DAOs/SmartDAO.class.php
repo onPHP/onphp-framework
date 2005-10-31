@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Transparent caching DAO.
+	 * 
+	 * @see SmartDAO for manual-caching one.
+	**/
 	abstract class SmartDAO extends GenericDAO
 	{
 		const SUFFIX_LIST	= '_list_';
@@ -344,10 +349,14 @@
 			$queryId = $query->getId();
 			$key = $className.self::SUFFIX_QUERY.$queryId;
 			
-			$this->syncMap($className.self::SUFFIX_INDEX, $key);
+			try {
+				$this->syncMap($className.self::SUFFIX_INDEX, $key);
 			
-			Cache::me()->mark($this->getObjectName())->
-				add($key, $object, Cache::EXPIRES_FOREVER);
+				Cache::me()->mark($this->getObjectName())->
+					add($key, $object, Cache::EXPIRES_FOREVER);
+			} catch (BaseException $e) {
+				// failed to acquire semaphore
+			}
 			
 			return $object;
 		}
@@ -398,11 +407,8 @@
 			if (!$map = $cache->get($mapKey))
 				$map = array();
 			
-			if (!$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true))
-				throw new WrongStateException();
-			
-			if (!sem_acquire($sem))
-				throw new WrongStateException();
+			$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true);
+			sem_acquire($sem);
 			
 			$map[$objectKey] = true;
 			

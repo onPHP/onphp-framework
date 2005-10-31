@@ -11,7 +11,10 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class SQLFunction extends Castable implements DialectString
+	/**
+	 * Reference for calling built-in database functions.
+	**/
+	final class SQLFunction extends Castable implements DialectString
 	{
 		private $name	= null;
 		private $alias	= null;

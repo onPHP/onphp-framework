@@ -11,15 +11,17 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Factory for various childs of LogicalObject and LogicalExpression.
+	**/
 	final class Expression /* Factory */
 	{
 		const LOGIC_AND	= 'AND';
 		const LOGIC_OR	= 'OR';
 
 		/**
-		 * common cast methods
+		 * common cast methods.
 		**/
-		
 		public static function toBoolean($logic, $left, $right)
 		{
 			switch ($logic) {
@@ -70,31 +72,41 @@
 		
 		public static function notEq($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::NOT_EQUALS);
+			return new LogicalExpression(
+				$field, $value, LogicalExpression::NOT_EQUALS
+			);
 		}
 		
-		// greater than
+		/// greater than
 		public static function gt($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::GREATER_THAN);
+			return new LogicalExpression(
+				$field, $value, LogicalExpression::GREATER_THAN
+			);
 		}
 		
-		// greater than or equals
+		/// greater than or equals
 		public static function gtEq($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::GREATER_OR_EQUALS);
+			return new LogicalExpression(
+				$field, $value, LogicalExpression::GREATER_OR_EQUALS
+			);
 		}
 		
-		// lower than
+		/// lower than
 		public static function lt($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::LOWER_THAN);
+			return new LogicalExpression(
+				$field, $value, LogicalExpression::LOWER_THAN
+			);
 		}
 		
-		// lower than or equals
+		/// lower than or equals
 		public static function ltEq($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::LOWER_OR_EQUALS);
+			return new LogicalExpression(
+				$field, $value, LogicalExpression::LOWER_OR_EQUALS
+			);
 		}
 
 		public static function notNull($field)
@@ -196,21 +208,25 @@
 			}
 		}
 		
+		/// +
 		public static function add($field, $value)
 		{
 			return new LogicalExpression($field, $value, LogicalExpression::ADD);
 		}
 		
+		/// -
 		public static function sub($field, $value)
 		{
 			return new LogicalExpression($field, $value, LogicalExpression::SUBSTRACT);
 		}
 		
+		/// *
 		public static function mul($field, $value)
 		{
 			return new LogicalExpression($field, $value, LogicalExpression::MULTIPLY);
 		}
 		
+		/// /
 		public static function div($field, $value)
 		{
 			return new LogicalExpression($field, $value, LogicalExpression::DIVIDE);

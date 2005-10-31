@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 	
+	/**
+	 * System-wide access to selected CachePeer.
+	 *
+	 * @see CachePeer
+	**/
 	final class Cache 
 	{
 		const NOT_FOUND			= 'nil';
@@ -29,7 +34,7 @@
 		public static function me()
 		{
 			if (!self::$peer || !self::$peer->isAlive())
-				self::$peer = new RuntimeMemory();
+				self::$peer = new ReferencePool(new RuntimeMemory());
 			
 			return self::$peer;
 		}

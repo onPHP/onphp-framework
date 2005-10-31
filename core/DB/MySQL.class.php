@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * MySQL DB connector.
+	 *
+	 * @link		http://www.mysql.com/
+	**/
 	class MySQL extends DB
 	{
 		private static $dialect = null;
@@ -74,12 +79,8 @@
 		}
 		
 		/**
-		 * Same as query, but returns number of affected rows
-		 * 
-		 * Use it for returns number of affected rows in insert/update queries
-		 * @param	Query
-		 * @access	public
-		 * @return	integer
+		 * Same as query, but returns number of
+		 * affected rows in insert/update queries
 		**/
 		public function queryCount(Query $query)
 		{

@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * OSQL's queries queue.
+	 *
+	 * @see OSQL
+	**/
 	final class Queue implements Query
 	{
 		private $queue = array();

@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Module with incapsulated Form object.
+	**/
 	abstract class FormedModule extends BaseModule
 	{
 		protected $form = null;

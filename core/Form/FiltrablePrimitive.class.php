@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Basis for Primitives which can be filtered.
+	**/
 	abstract class FiltrablePrimitive extends RangedPrimitive
 	{
 		private $importFilter	= null;

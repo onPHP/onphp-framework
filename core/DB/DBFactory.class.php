@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * System-wide factory with predefined DB instance.
+	**/
 	final class DBFactory
 	{
 		private static $defaultDB = null;
@@ -26,6 +29,8 @@
 		}
 
 		/**
+		 * Weird documentation example.
+		 * 
 		 * @return DB resource
 		 * @param string guess, what's this?
 		 * @param string see above

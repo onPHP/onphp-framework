@@ -11,7 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-/**
+/*
 	UnifiedContainer:
 
 		must have for internal usage:
@@ -57,8 +57,13 @@
 
 		id field name at parent's primary table:
 			protected function getParentTableIdField()
-**/
+*/
 
+	/**
+	 * IdentifiableObject childs collection handling.
+	 * 
+	 * @see StorableContainer
+	**/
 	abstract class UnifiedContainer
 	{
 		protected $parent	= null;

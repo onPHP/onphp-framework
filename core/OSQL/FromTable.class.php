@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * SQL's "FROM"-member implementation.
+	**/
 	class FromTable implements SQLTableName
 	{
 		private $table = null;

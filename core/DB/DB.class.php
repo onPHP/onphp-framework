@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * DB-connector's implementation basis.
+	**/
 	abstract class DB
 	{
 		const FULL_TEXT_AND		= 1;
@@ -20,7 +23,9 @@
 
 		protected $persistent	= false;
 
-		// flag to indicate whether we're in transaction
+		/**
+		 * flag to indicate whether we're in transaction
+		**/
 		private $transaction	= false;
 		
 		private $queue			= array();

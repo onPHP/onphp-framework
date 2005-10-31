@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @see NamedObject.class.php
+	**/
 	interface Named extends Identifiable
 	{
 		public function getName();

@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Wrapper around given childs of LogicalObject with single logic-glue.
+	**/
 	class LogicalBlock implements LogicalObject
 	{
 		private $args = null;

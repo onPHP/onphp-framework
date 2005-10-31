@@ -10,6 +10,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Date's interval implementation and accompanying utility methods.
+	 *
+	 * @see Timestamp
+	**/
 	class DateRange
 	{
 		protected $start	= null;
@@ -132,7 +137,7 @@
 			$max = $range->getEndStamp();
 
 			return (
-				( $min && $max 
+				($min && $max 
 					&& (
 						( 
 							$left 
@@ -152,7 +157,7 @@
 						)
 					)
 				)
-				|| ( $min && !$max
+				|| ($min && !$max
 					&& (
 						( 
 							$right
@@ -161,7 +166,7 @@
 						|| !$right
 					)
 				)
-				|| ( !$min && $max
+				|| (!$min && $max
 					&& (
 						( 
 							$left 
@@ -212,7 +217,7 @@
 			return $timestamps;
 		}
 		
-		public static function merge($array) // of DateRanges
+		public static function merge($array /* of DateRanges */)
 		{
 			$out = array();
 			foreach ($array as $range) {
@@ -250,7 +255,9 @@
 			return !$this->start || !$this->end;
 		}
 
-		// this will contain both range and old this
+		/**
+		 * enlarges $this by given $range, if last one is wider
+		**/
 		public function enlarge(DateRange $range)
 		{
 			if (!$range->start)
@@ -272,7 +279,9 @@
 			return $this;
 		}
 
-		// this will be intersection of this and range
+		/**
+		 * intersection of $this and given $range
+		**/
 		public function clip(DateRange $range)
 		{
 			Assert::isTrue($this->overlaps($range));
@@ -313,7 +322,6 @@
 				return $this->end->getDayEndStamp();
 			else 
 				return null;
-
 		}
 
 		public static function compare(DateRange $left, DateRange $right)
@@ -350,9 +358,9 @@
 				else
 					return 1;
 
-			} elseif ( !$leftStart && $rightStart) 
+			} elseif (!$leftStart && $rightStart) 
 				return -1;
-			elseif ( $leftStart && !$rightStart) 
+			elseif ($leftStart && !$rightStart) 
 				return 1;
 			elseif ($leftStart < $rightStart)
 				return -1;

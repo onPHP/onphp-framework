@@ -10,11 +10,15 @@
  *                                                                         *
  *   Based on version by Ryan Gilfether <hotrodder@rocketmail.com>         *
  *   Copyright (c) 2003 under GPL || Artistic license                      *
- *   http://www.danga.com/memcached/                                       *
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Memcached-based cache.
+	 *
+	 * @link		http://www.danga.com/memcached/
+	**/
 	final class Memcached extends CachePeer
 	{
 		const DEFAULT_PORT		= 11211;

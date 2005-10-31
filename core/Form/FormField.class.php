@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * Atom for using in LogicalExpression.
+	 * 
+	 * @see DBField
+	**/
 	final class FormField
 	{
 		private $primitiveName	= null;

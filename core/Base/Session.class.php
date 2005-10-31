@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @see Session
+	**/
 	class SessionNotStartedException extends BaseException 
 	{
 		function __construct()
@@ -22,6 +25,9 @@
 		}
 	}
 
+	/**
+	 * Simple static wrapper around session_*() functions.
+	**/
 	final class Session
 	{
 		private static $isStarted = false;
@@ -108,12 +114,7 @@
 		}
 		
 		/**
-		 * Assigns to $_SESSION scope variables defined in vars
-		 * 
-		 * @param	array	source scope
-		 * @param	array	list of key names in scope which should be imported
-		 * @access	public
-		 * @return	void
+		 * assigns to $_SESSION scope variables defined in given array
 		**/
 		public static function arrayAssign(&$scope, $array)
 		{
