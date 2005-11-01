@@ -175,6 +175,27 @@
 			}
 		}
 		
+		public function getCustomList(SelectQuery $query)
+		{
+			$custom = $this->getCachedByQuery($query);
+			
+			if ($custom) {
+				if ($custom === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				else
+					return $custom;
+			} else {
+				$custom = DBFactory::getDefaultInstance()->querySet($query);
+				
+				if ($custom)
+					return $this->cacheByQuery($query, $custom);
+				else {
+					$this->cacheByQuery($query, Cache::NOT_FOUND);
+					throw new ObjectNotFoundException();
+				}
+			}
+		}
+
 		public function getByLogic(LogicalObject $logic)
 		{
 			return
