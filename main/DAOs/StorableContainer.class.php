@@ -1,6 +1,7 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Anton Lebedevich                                *
+ *   Copyright (C) 2005 by Anton E. Lebedevich                             *
+ *   noiselist@pochta.ru                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -64,7 +65,9 @@
 			if (($id = $object->getId()) && isset($this->saved[$id]))
 				$this->saved[$id] = $object;
 			else
-				throw new WrongStateException('you should use add for new objects');
+				throw new WrongStateException(
+					'you should use add for new objects'
+				);
 
 			return $this;
 		}

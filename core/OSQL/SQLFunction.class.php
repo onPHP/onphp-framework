@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Anton Lebedevich, Konstantin V. Arkhipov        *
- *   voxus@gentoo.org                                                      *
+ *   Copyright (C) 2005 by Anton E. Lebedevich, Konstantin V. Arkhipov     *
+ *   noiselist@pochta.ru, voxus@shadanakar.org                             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
