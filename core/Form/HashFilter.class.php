@@ -14,11 +14,32 @@
 	/**
 	 * SHA-1 based filter: passwords.
 	**/
-	class HashFilter extends BaseFilter
+	class HashFilter implements Filtrator 
 	{
+		private $binary = false;
+		
+		public function binary()
+		{
+			$this->binary = true;
+			
+			return $this;
+		}
+		
+		public function notBinary()
+		{
+			$this->binary = false;
+			
+			return $this;
+		}
+		
+		public function isBinary()
+		{
+			return $this->binary;
+		}
+		
 		public function apply($value)
 		{
-			return sha1($value);
+			return sha1($value, $this->binary);
 		}
 	}
 ?>
