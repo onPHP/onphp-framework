@@ -50,6 +50,11 @@
 			throw new UnsupportedMethodException();
 		}
 
+		public function getLastInsertId()
+		{
+			return mysql_insert_id($this->link);
+		}
+
 		public function connect(
 			$user, $pass, $host,
 			$base = null, $persistent = false
@@ -76,6 +81,17 @@
 				mysql_close($this->link);
 
 			return $this;
+		}
+		
+		/**
+<<<<<<< .mine
+		 * Only for using with MySQL last_insert_id
+		**/
+		public function queryInsert(InsertQuery $query)
+		{
+			$this->query($query);
+			
+			return $this->getLastInsertId();
 		}
 		
 		/**

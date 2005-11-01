@@ -61,6 +61,9 @@
 			)
 			{
 				$this->value = $scope[$this->name];
+				
+				$this->selfFilter();
+				
 				return true;
 			}
 
