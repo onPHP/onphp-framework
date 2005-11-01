@@ -15,6 +15,16 @@
 	{
 		abstract public function getParentIdField();
 
+		/**
+		**	We must do it, because we have collision:
+		**	method getById() defined in interface
+		**	and in abstract class
+		**/
+		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
+		{
+			return parent::getById($id, $expires);
+		}
+		
 		public function add($parentId, Identifiable $child)
 		{
 			$this->checkType($child);
