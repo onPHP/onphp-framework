@@ -122,9 +122,13 @@
 				if (!($this->min && $this->min->toStamp() < $stamp) &&
 					!($this->max && $this->max->toStamp() > $stamp)
 				) {
-					$this->value = new Timestamp($stamp);
-
-					return true;
+					try {
+						$this->value = new Timestamp($stamp);
+						
+						return true;
+					} catch (WrongArgumentException $e) {
+						return false;
+					}
 				}
 			}
 
