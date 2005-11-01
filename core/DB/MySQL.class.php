@@ -84,7 +84,6 @@
 		}
 		
 		/**
-<<<<<<< .mine
 		 * Only for using with MySQL last_insert_id
 		**/
 		public function queryInsert(InsertQuery $query)
