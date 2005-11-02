@@ -17,7 +17,7 @@
 	/**
 	 * Memcached-based cache.
 	 *
-	 * @link		http://www.danga.com/memcached/
+	 * @link http://www.danga.com/memcached/
 	**/
 	final class Memcached extends CachePeer
 	{

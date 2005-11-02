@@ -14,7 +14,7 @@
 	/**
 	 * Transaction isolation levels.
 	 *
-	 * @link		http://www.postgresql.org/docs/8.0/interactive/sql-start-transaction.html
+	 * @link http://www.postgresql.org/docs/8.0/interactive/sql-start-transaction.html
 	**/
 	final class IsolationLevel extends Enumeration
 	{

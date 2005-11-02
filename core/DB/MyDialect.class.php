@@ -14,7 +14,7 @@
 	/**
 	 * MySQL dialect.
 	 *
-	 * @link		http://www.mysql.com/
+	 * @link http://www.mysql.com/
 	**/
 	final class MyDialect extends Dialect
 	{

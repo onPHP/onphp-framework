@@ -14,7 +14,7 @@
 	/**
 	 * PostgreSQL DB connector.
 	 *
-	 * @link		http://www.postgresql.org/
+	 * @link http://www.postgresql.org/
 	**/
 	class PgSQL extends DB
 	{
@@ -123,10 +123,6 @@
 		/**
 		 * Same as query, but returns number of affected rows
 		 * Returns number of affected rows in insert/update queries
-		 *
-		 * @param	Query
-		 * @access	public
-		 * @return	integer
 		**/
 		public function queryCount(Query $query)
 		{

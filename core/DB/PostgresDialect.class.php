@@ -14,7 +14,7 @@
 	/**
 	 * PostgreSQL dialect.
 	 *
-	 * @link		http://www.postgresql.org/
+	 * @link http://www.postgresql.org/
 	**/
 	final class PostgresDialect extends Dialect
 	{
