@@ -428,7 +428,7 @@
 			if (!$map = $cache->get($mapKey))
 				$map = array();
 			
-			$sem = sem_get($this->keyToInt($mapKey), 1, 0600, true);
+			$sem = sem_get($this->keyToInt($mapKey), 1, 0644, true);
 			sem_acquire($sem);
 			
 			$map[$objectKey] = true;
