@@ -11,27 +11,19 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class MessageDAO extends NamedObjectDAO implements MappedDAO
+	final class MessageDAO extends MappedStorableDAO
 	{
-		// sets by constructor
-		protected $fields = null;
-		
 		/**
 		 * plain property-to-field(s) mapping
 		 * you can map class' property to a single field or to field's array()
 		**/
 		protected $mapping = array(
-			'id'		=> 'id',
-			'nickname'	=> 'nickname',
-			'name'		=> 'name',
-			'content'	=> 'content',
-			'posted'	=> 'posted'
+			'id'		=> null,
+			'nickname'	=> null,
+			'name'		=> null,
+			'content'	=> null,
+			'posted'	=> null
 		);
-		
-		public function	__construct()
-		{
-			$this->fields = array_values($this->mapping);
-		}
 		
 		public function getTable()
 		{
@@ -48,44 +40,6 @@
 			return $this->mapping;
 		}
 		
-		public function take(Message $message)
-		{
-			return
-				$message->getId()
-					? $this->save($message)
-					: $this->add($message);
-		}
-		
-		public function save(Message $message)
-		{
-			return
-				$this->inject(
-					OSQL::update()->where(Expression::eqId('id', $message)),
-					$message
-				);
-		}
-		
-		public function add(Message $message)
-		{
-			return 
-				$this->inject(
-					OSQL::insert(),
-					$message->setId(
-						DBFactory::getDefaultInstance()->obtainSequence(
-							$this->getSequence()
-						)
-					)
-				);
-		}
-		
-		public function getList(ObjectQuery $oq)
-		{
-			return
-				$this->getListByQuery(
-					$oq->toSelectQuery($this)
-				);
-		}
-		
 		public function makeObject(&$array, $prefix = null)
 		{
 			return
@@ -99,23 +53,19 @@
 		
 		public function setQueryFields(InsertOrUpdateQuery $query, Message $message)
 		{
-			return
-				parent::setNamedQueryFields($query, $message)->
-				set('nickname', $message->getNickname())->
-				set('content', $message->getContent())->
-				set('posted', $message->getPosted()->toString());
-		}
-		
-		private function inject(InsertOrUpdateQuery $query, Message $message)
-		{
-			DBFactory::getDefaultInstance()->queryNull(
-				$this->setQueryFields(
-					$query->setTable($this->getTable()),
-					$message
-				)
-			);
+			if ($query instanceof InsertQuery)
+				$query->set(
+					'posted',
+					$message->setPosted(new Timestamp(time()))->
+						getPosted()->toString()
+				);
 			
-			return $message;
+			return
+				$query->
+					set('id', $message->getId())->
+					set('name', $message->getName())->
+					set('nickname', $message->getNickname())->
+					set('content', $message->getContent());
 		}
 	}
 ?>

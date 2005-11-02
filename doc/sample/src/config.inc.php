@@ -6,10 +6,11 @@
 	ini_set('display_erorrs', true);
 	setlocale(LC_CTYPE, "ru_RU.UTF8");
 	setlocale(LC_TIME, "ru_RU.UTF8");
+	date_default_timezone_set('Europe/Moscow');
 
 	// paths
 	define('PATH_BASE', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
-	define('PATH_WEB', 'http://localhost/php/onPHP/trunk/doc/sample/src/www/');
+	define('PATH_WEB', 'http://localhost/php/onPHP/doc/sample/src/www/');
 	define('PATH_CLASSES', PATH_BASE.'classes'.DIRECTORY_SEPARATOR);
 	define('PATH_MODULES', PATH_BASE.'modules'.DIRECTORY_SEPARATOR);
 	define('PATH_TEMPLATES', PATH_BASE.'templates'.DIRECTORY_SEPARATOR);

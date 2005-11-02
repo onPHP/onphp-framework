@@ -48,24 +48,27 @@
 			$form = $this->form;
 			
 			if ($form->getValue('add')) {
+
 				if (!$form->getErrors()) {
 					$message =
 						Message::create()->
 						setName($form->getValue('name'))->
 						setNickname($form->getValue('nickname'))->
-						setContent($form->getValue('content'))->
-						setPosted(new Timestamp(time()));
+						setContent($form->getValue('content'));
 					
 					try {
+						
 						$message->dao()->add($message);
 	
 						HeaderUtils::redirect($this);
 	
 						return $this;
+						
 					} catch (DatabaseException $e) {
 						$form->markMissing('add');
 					}
 				}
+				
 			} else
 				$form->dropAllErrors();
 			

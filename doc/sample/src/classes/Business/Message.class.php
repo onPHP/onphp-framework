@@ -11,8 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class Message extends NamedObject implements DAOConnected
+	final class Message extends IdentifiableObject implements DAOConnected
 	{
+		private $name		= null;
 		private $nickname	= null;
 		private $content	= null;
 		private $posted		= null;
@@ -25,6 +26,18 @@
 		public static function create()
 		{
 			return new Message();
+		}
+		
+		public function getName()
+		{
+			return $this->name;
+		}
+		
+		public function setName($name)
+		{
+			$this->name = $name;
+			
+			return $this;
 		}
 		
 		public function getNickname()
