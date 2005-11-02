@@ -22,6 +22,11 @@
 		
 		public static function quoteValue(&$value)
 		{
+			/// @see MySQL for this convention
+			
+			if ($value instanceof Identifier && !$value->isFinalized())
+				return 'null';
+			
 			return "'" . mysql_real_escape_string($value) . "'";
 		}
 		
