@@ -107,19 +107,6 @@
 		 * query methods
 		**/
 		
-		public function queryInsert(InsertQuery $query, $sequence = null)
-		{
-			$this->query($query);
-			
-			if ($returnId) {
-				$res = $this->queryRaw("select currval('{$sequence}') as seq");
-				$row = pg_fetch_assoc($res);
-				pg_free_result($res);
-				return $row['seq'];
-			} else
-				return true;
-		}
-		
 		public function queryRaw($queryString)
 		{
 			//	echo $queryString.'<hr>'; flush();

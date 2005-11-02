@@ -1,5 +1,10 @@
 # $Id$
 
+2005-11-02	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/DB/MySQL.class.php: implemented convention-based transparent sequences
+handling.
+
 2005-10-31	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * main/DAOs/SmartDAO.class.php: checks for semaphore's acquiring problem.

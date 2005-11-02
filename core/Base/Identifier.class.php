@@ -12,17 +12,16 @@
 /* $Id$ */
 
 	/**
-	 * Ideal Identifiable interface implementation. ;-)
-	 *
 	 * @see Identifiable
 	**/
-	class /* spirit of */ IdentifiableObject implements Identifiable
+	final class Identifier implements Identifiable
 	{
-		private $id = null;
+		private $id		= null;
+		private $final	= false;
 		
 		public static function create()
 		{
-			return new IdentifiableObject();
+			return new Identifier();
 		}
 		
 		public static function wrap($id)
@@ -30,22 +29,28 @@
 			return self::create()->setId($id);
 		}
 		
-		final public function getId()
+		public function getId()
 		{
-			if (
-				$this->id instanceof Identifier
-				&& $this->id->isFinalized()
-			)
-				return $this->id->getId();
-			else
-				return $this->id;
+			return $this->id;
 		}
 		
-		final public function setId($id)
+		public function setId($id)
 		{
 			$this->id = $id;
 			
 			return $this;
+		}
+		
+		public function finalize()
+		{
+			$this->final = true;
+			
+			return $this;
+		}
+		
+		public function isFinalized()
+		{
+			return $this->final;
 		}
 	}
 ?>

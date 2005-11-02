@@ -50,12 +50,6 @@
 		abstract public function queryColumn(Query $query);
 		abstract public function queryCount(Query $query);
 		
-		/**
-		 * For using with databases having last_insert_id method,
-		 * but not having sequences
-		**/
-		abstract public function queryInsert(InsertQuery $query, $sequence = null);
-		
 		abstract public function asyncQuery(Query $query);
 		abstract public function isBusy();
 

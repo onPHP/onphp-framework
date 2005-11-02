@@ -13,11 +13,19 @@
 
 	/**
 	 * MySQL DB connector.
+	 * 
+	 * You should follow two conventions, when stornig objects thru this one:
+	 * 
+	 * 1) objects should be childs of IdentifiableObject;
+	 * 2) sequence name should equal table name.
 	 *
-	 * @link		http://www.mysql.com/
+	 * @see IdentifiableOjbect
+	 * @link http://www.mysql.com/
 	**/
 	class MySQL extends DB
 	{
+		private $sequencePool = array();
+		
 		private static $dialect = null;
 		
 		public function __construct()
@@ -47,7 +55,11 @@
 
 		public function obtainSequence($sequence)
 		{
-			throw new UnsupportedMethodException();
+			$id = Identifier::create();
+			
+			$this->sequencePool[$sequence][] = $id;
+			
+			return $id;
 		}
 
 		public function connect(
@@ -78,16 +90,30 @@
 			return $this;
 		}
 		
-		public function queryInsert(InsertQuery $query, $sequence = null)
+		public function query(Query $query)
 		{
-			$this->query($query);
+			$result = $this->queryRaw($query->toString($this->getDialect()));
 			
-			if ($sequence)
-				return mysql_insert_id($this->link);
-			else
-				return true;
+			if (
+				($query instanceof InsertQuery)
+				&& isset($this->sequencePool[$query->getTable()])
+			) {
+				$id = current($this->sequencePool[$query->getTable()]);
+				
+				$id->setId(mysql_insert_id($this->link))->finalize();
+				
+				unset(
+					$this->sequencePool[
+						$query->getTable()
+					][
+						key($this->sequencePool)
+					]
+				);
+			}
+			
+			return $result;
 		}
-		
+
 		/**
 		 * Same as query, but returns number of
 		 * affected rows in insert/update queries
