@@ -18,7 +18,7 @@
 	**/
 	class /* spirit of */ IdentifiableObject implements Identifiable
 	{
-		private $id = null;
+		protected $id = null;
 		
 		public static function create()
 		{
