@@ -17,7 +17,7 @@
 	 * You should follow two conventions, when stornig objects thru this one:
 	 * 
 	 * 1) objects should be childs of IdentifiableObject;
-	 * 2) sequence name should equal table name.
+	 * 2) sequence name should equal table name + '_id'.
 	 *
 	 * @see IdentifiableOjbect
 	 * @link http://www.mysql.com/
@@ -96,15 +96,15 @@
 			
 			if (
 				($query instanceof InsertQuery)
-				&& isset($this->sequencePool[$query->getTable()])
+				&& isset($this->sequencePool[$name = $query->getTable().'_id'])
 			) {
-				$id = current($this->sequencePool[$query->getTable()]);
+				$id = current($this->sequencePool[$name]);
 				
 				$id->setId(mysql_insert_id($this->link))->finalize();
 				
 				unset(
 					$this->sequencePool[
-						$query->getTable()
+						$name
 					][
 						key($this->sequencePool)
 					]
