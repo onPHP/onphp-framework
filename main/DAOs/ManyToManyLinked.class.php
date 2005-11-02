@@ -57,6 +57,7 @@
 		protected function syncIds(&$insert, &$delete)
 		{
 			$db = DBFactory::getDefaultInstance();
+			$dao = &$this->dao;
 			
 			if ($insert)
 				for ($i = 0; $i < sizeof($insert); $i++)
