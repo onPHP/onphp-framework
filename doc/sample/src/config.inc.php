@@ -23,7 +23,7 @@
 	define('DB_USER', 'voxus');
 	define('DB_PASS', '');
 	define('DB_HOST', 'localhost');
-	define('DB_CLASS', 'PgSQL');
+	define('DB_CLASS', 'MySQL');
 
 	// everything else
 	define('DEFAULT_ENCODING', 'UTF8');
