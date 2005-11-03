@@ -424,24 +424,30 @@
 		private function syncMap($mapKey, $objectKey)
 		{
 			$cache = Cache::me();
+			static $semaphores = array();
 			
 			if (!$map = $cache->get($mapKey))
 				$map = array();
+			$semKey = $this->keyToInt($mapKey);
 			
-			$sem = sem_get($this->keyToInt($mapKey), 1, 0644, true);
-			sem_acquire($sem);
+			if (! isset($semaphores[$semKey])) {
+				$sem = sem_get($semKey, 1, 0644, true);
+				$semaphores[$semKey] = $sem;
+			}
+			
+			sem_acquire($semaphores[$semKey]);
 			
 			$map[$objectKey] = true;
 			
 			$cache->mark($this->getObjectName())->
 				set($mapKey, $map, Cache::EXPIRES_FOREVER);
 			
-			sem_remove($sem);
+			sem_release($semaphores[$semKey]);
 		}
 		
 		private function keyToInt($key)
 		{
-			return hexdec(substr(md5($key), 0, 16));
+			return hexdec(substr(md5($key), 0, 7));
 		}
 	}
 ?>
