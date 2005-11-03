@@ -1,5 +1,9 @@
 # $Id$
 
+2005-11-03	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+* main/DAOs/SmartDAO.class.php: fixed semaphore obscure locking problems. 
+
 2005-11-02	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * doc/sample/: updated to reflect current situation.

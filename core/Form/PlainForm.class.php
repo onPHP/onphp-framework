@@ -105,9 +105,12 @@
 			$prm	= $this->get($name);
 			$list	= $prm->getList();
 			$value	= $prm->getActualValue();
-
-			if ($value !== null)
+			$default= $prm->getDefault();
+			
+			if ($value !== null && isset($list[$value]))
 				return $list[$value];
+			elseif (isset($list[$default]))
+				return $list[$default];
 
 			return null;
 		}
