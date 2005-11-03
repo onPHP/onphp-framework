@@ -435,7 +435,9 @@
 				$semaphores[$semKey] = $sem;
 			}
 			
-			sem_acquire($semaphores[$semKey]);
+			if (!sem_acquire($semaphores[$semKey])) {
+				throw BaseException('failed to acquire');
+			}
 			
 			$map[$objectKey] = true;
 			
