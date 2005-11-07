@@ -35,8 +35,9 @@
 				if ($val instanceof DialectString)
 					$sets[] =
 						$dialect->quoteField($var)
-						.' = '
-						.$val->toString($dialect);
+						.' = ('
+						.$val->toString($dialect)
+						.')';
 				elseif (is_null($val))
 					$sets[] = $dialect->quoteField($var).' = NULL';
 				else
