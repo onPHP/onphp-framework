@@ -35,7 +35,10 @@
 
 		private $fields			= array();
 		private $from			= array();
+		
+		private $currentOrder	= null;
 		private $order			= array();
+		
 		private $group			= array();
 		
 		public function getName()
@@ -88,32 +91,55 @@
 		public function orderBy($field, $table = null)
 		{
 			if ($field instanceof DialectString)
-				$this->order[] = new OrderBy($field);
+				$order = new OrderBy($field);
 			else
-				$this->order[] =
+				$order =
 					new OrderBy(
 						new DBField($field, $this->getLastTable($table))
 					);
+
+			$this->order[] = $order;
+			$this->currentOrder = &$order;
+			
+			return $this;
+		}
+		
+		public function prependOrderBy($field, $table = null)
+		{
+			if ($field instanceof DialectString)
+				$order = new OrderBy($field);
+			else
+				$order =
+					new OrderBy(
+						new DBField($field, $this->getLastTable($table))
+					);
+			
+			if ($this->order)
+				array_unshift($this->order, $order);
+			else
+				$this->order[] = $order;
+			
+			$this->currentOrder = &$order;
 
 			return $this;
 		}
 
 		public function desc()
 		{
-			if (!sizeof($this->order))
+			if (!$this->currentOrder)
 				throw new WrongStateException("no fields to sort");
 
-			$this->order[sizeof($this->order) - 1]->desc();
+			$this->currentOrder->desc();
 
 			return $this;
 		}
 		
 		public function asc()
 		{
-			if (!sizeof($this->order))
+			if (!$this->currentOrder)
 				throw new WrongStateException("no fields to sort");
 
-			$this->order[sizeof($this->order) - 1]->asc();
+			$this->currentOrder->asc();
 
 			return $this;
 		}

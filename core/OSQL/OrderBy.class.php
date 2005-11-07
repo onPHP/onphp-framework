@@ -37,8 +37,8 @@
 		public function toString(Dialect $dialect)
 		{
 			return
-				parent::toString($dialect).
-				$this->direction->decide(' ASC', ' DESC');
+				parent::toString($dialect)
+				.$this->direction->decide(' ASC', ' DESC');
 		}
 	}
 ?>

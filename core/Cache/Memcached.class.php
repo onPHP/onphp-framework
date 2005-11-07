@@ -98,11 +98,22 @@
 						if (sizeof($array) <> 4)
 							continue;
 						else
-							list ($crap, $key, $flags, $bytes) = explode(' ', $header);
+							list (
+								$crap, $key, $flags, $bytes
+							) = explode(' ', $header);
 						
-						if (is_string($key) && is_numeric($flags) && is_numeric($bytes))
-							$line = substr($line, strpos($line, "\r\n") + 2, strlen($line));
-						else
+						if (
+							is_string($key)
+							&& is_numeric($flags)
+							&& is_numeric($bytes)
+						) {
+							$line =
+								substr(
+									$line,
+									strpos($line, "\r\n") + 2,
+									strlen($line)
+								);
+						} else
 							return null;
 	
 						$lenght = $bytes;
@@ -150,7 +161,9 @@
 				return false;
 		}
 
-		protected function store($method, $index, &$value, $expires = Cache::EXPIRES_MINIMUM)
+		protected function store(
+			$method, $index, &$value, $expires = Cache::EXPIRES_MINIMUM
+		)
 		{
 			if ($expires === Cache::DO_NOT_CACHE)
 				return false;

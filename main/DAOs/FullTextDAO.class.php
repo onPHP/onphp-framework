@@ -50,15 +50,18 @@
 				throw new ObjectNotFoundException();
 			
 			if (!($field = $this->getIndexField()) instanceof DBField)
-				$field = new DBField($this->getIndexField(), $this->getTable());
+				$field = new DBField(
+					$this->getIndexField(),
+					$this->getTable()
+				);
 			
 			return
 				$oq->toSelectQuery($this)->
 				andWhere(
 					Expression::fullTextOr($field, $array)
 				)->
-				orderBy(
-					Expression::fullTextRankOr($field, $array)
+				prependOrderBy(
+					Expression::fullTextRankAnd($field, $array)
 				)->desc();
 		}
 		
