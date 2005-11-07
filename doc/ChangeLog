@@ -2,8 +2,7 @@
 
 2005-11-07	Sergey S. Sergeev	<webs.support@gmail.com>
 
-* core/OSQL/: combining queries (union{,All}, intersect{,All}, except{,All})
-implemented.
+* core/OSQL/: combining queries ({union,intersect,except}{,All}) implemented.
 
 2005-11-03	Anton E. Lebedevich	<noiselist@pochta.ru>
 
