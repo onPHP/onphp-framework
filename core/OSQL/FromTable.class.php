@@ -22,11 +22,16 @@
 		public function __construct($table, $alias = null)
 		{
 			if (
-				$table instanceof SelectQuery && !$alias ||
-				$table instanceof LogicalObject && !$alias
-			   )
+				!$alias
+				&&
+					(
+						$table instanceof SelectQuery
+						|| $table instanceof LogicalObject
+					)
+			)
 				throw new WrongArgumentException(
-					"you should specify alias, when using selectQuery or LogicalObject as table"
+					'you should specify alias, when using '.
+					'SelectQuery or LogicalObject as table'
 				);
 
 			$this->table = $table;
@@ -36,9 +41,9 @@
 		public function toString(Dialect $dialect)
 		{
 			if (
-				$this->table instanceof SelectQuery ||
-				$this->table instanceof LogicalObject
-			   )
+				$this->table instanceof SelectQuery
+				|| $this->table instanceof LogicalObject
+			)
 				return
 					"({$this->table->toString($dialect)}) AS "
 					.$dialect->quoteTable($this->alias);

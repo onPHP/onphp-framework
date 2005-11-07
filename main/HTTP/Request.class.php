@@ -476,8 +476,8 @@
 						if (is_array($value['name'])) {
 							$varname = $name . ($this->isUseBrackets() ? '[]': '');
 						} else {
-							$varname       = $name;
-							$value['name'] = array($value['name']);
+							$varname		= $name;
+							$value['name']	= array($value['name']);
 						}
 
 						foreach ($value['name'] as $key => $fileName) {
@@ -490,10 +490,17 @@
 										? $value['type'][$key] 
 										: $value['type'];
 
-							$postData .= '--' . $boundary . "\r\n";
-							$postData .= 'Content-Disposition: form-data; name="' . $varname . '"; fileName="' . $basename . '"';
-							$postData .= "\r\nContent-Type: " . $type;
-							$postData .= "\r\n\r\n" . $data . "\r\n";
+							$postData .=
+								'--' . $boundary . "\r\n"
+								.'Content-Disposition: form-data; name="'
+								.$varname
+								.'"; fileName="'
+								.$basename
+								. '"'
+								."\r\nContent-Type: ".$type
+								."\r\n\r\n"
+								.$data
+								."\r\n";
 						}
 					}
 

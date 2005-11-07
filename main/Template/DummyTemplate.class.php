@@ -17,9 +17,11 @@
 	**/
 	class DummyTemplate 
 	{
-		const FUNCTION_EXISTS       = 'Function with same name already exists: use another one';
-		const FUNCTION_NOT_EXISTS   = 'Function does not exists';
-    
+		const FUNCTION_EXISTS		=
+			'Function with same name already exists: use another one';
+		
+		const FUNCTION_NOT_EXISTS	= 'Function does not exists';
+    	
 		/**
 		 * @var		array		contains inner variables
 		 * @access	protected

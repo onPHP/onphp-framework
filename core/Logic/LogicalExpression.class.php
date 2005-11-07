@@ -51,14 +51,14 @@
 		const IN				= 'in';
 		const NOT_IN			= 'not in';
 		
-		const UNION         = 'UNION';
-		const UNION_ALL     = 'UNION ALL';
+		const UNION				= 'UNION';
+		const UNION_ALL			= 'UNION ALL';
 	
-		const INTERSECT     = 'INTERSECT';
-		const INTERSECT_ALL = 'INTERSECT ALL';
+		const INTERSECT			= 'INTERSECT';
+		const INTERSECT_ALL		= 'INTERSECT ALL';
 	
-		const EXCEPT		= 'EXCEPT';
-		const EXCEPT_ALL	= 'EXCEPT ALL';
+		const EXCEPT			= 'EXCEPT';
+		const EXCEPT_ALL		= 'EXCEPT ALL';
 		
 		private $left	= null;
 		private $right	= null;
@@ -189,12 +189,12 @@
 				/*
 					unsupported atm:
 
-					LIKE, NOT_LIKE
-					ILIKE, NOT_ILIKE
-					ADD, SUBSTRACT, MULTIPLY, DIVIDE
-					UNION, UNION ALL,
+					LIKE, NOT_LIKE,
+					ILIKE, NOT_ILIKE,
+					ADD, SUBSTRACT, MULTIPLY, DIVIDE,
+					UNION, UNION_ALL,
 					INTERSECT, INTERSECT_ALL,
-					EXCEPT, EXCEPT;
+					EXCEPT, EXCEPT_ALL;
 				*/
 				default:
 					throw new UnsupportedMethodException();

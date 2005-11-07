@@ -71,7 +71,10 @@
 
 		public function getHeader($headerName)
 		{
-			return (isset($this->headers[$headerName])) ? $this->headers[$headerName] : null;
+			return
+				(isset($this->headers[$headerName]))
+					? $this->headers[$headerName]
+					: null;
 		}
 
 		public function setCookies($cookie)
@@ -133,8 +136,13 @@
 				
 			} while (100 == $this->code);
 
-			$chunked = isset($this->headers['transfer-encoding']) && ('chunked' == $this->headers['transfer-encoding']);
-			$gzipped = isset($this->headers['content-encoding']) && ('gzip' == $this->headers['content-encoding']);
+			$chunked =
+				isset($this->headers['transfer-encoding'])
+				&& ('chunked' == $this->headers['transfer-encoding']);
+			
+			$gzipped =
+				isset($this->headers['content-encoding'])
+				&& ('gzip' == $this->headers['content-encoding']);
 
 			$hasBody = false;
 
@@ -172,7 +180,7 @@
 			$headerValue	= ltrim($headerValue);
 
 			if ('set-cookie' != $headerNameTmp) {
-				$this->setHeader($headerName,    $headerValue);
+				$this->setHeader($headerName, $headerValue);
 				$this->setHeader($headerNameTmp, $headerValue);
 			} else 
 				$this->parseCookie($headerValue);
@@ -183,10 +191,10 @@
 		private function parseCookie($headerValue)
 		{
 			$cookie = array(
-				'expires' => null,
-				'domain'  => null,
-				'path'    => null,
-				'secure'  => false
+				'expires'	=> null,
+				'domain'	=> null,
+				'path'		=> null,
+				'secure'	=> false
 			);
 
 			if (!strpos($headerValue, ';')) {

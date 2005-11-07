@@ -1,27 +1,26 @@
 <?php
 /***************************************************************************
-*   Copyright (C) 2004-2005 by Sergey S. Sergeev  						  *
-*   webs.support@gmail.com                                                *
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-***************************************************************************/
+ *   Copyright (C) 2004-2005 by Sergey S. Sergeev                          *
+ *   webs.support@gmail.com                                                *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 /* $Id$ */
 	
 	/**
 	 * The results of queries can be combined using the set 
-	 * operations union, intersection, and difference
+	 * operations union, intersection, and difference.
 	 * 
 	 * query1 UNION [ALL] query2 ....
 	 * query1 INTERSECT [ALL] query2 ....
 	 * query1 EXCEPT [ALL] query2 .... 
 	 * 
 	 * @see PostgreSQL Documentation, Chapter Combining Queries 
-	 * @link  
-	 */
+	**/
 	final class CombineQuery /* Factory */
 	{		
 		public static function union($left, $right)
@@ -43,7 +42,7 @@
 		public static function unionAllBlock()
 		{
 			$args = func_get_args();
-			return self::block($args, LogicalExpression::UNION_ALL);		
+			return self::block($args, LogicalExpression::UNION_ALL);
 		}
 		
 		public static function intersect($left, $right)
@@ -54,7 +53,7 @@
 		public static function intersectBlock()
 		{
 			$args = func_get_args();
-			return self::block($args, LogicalExpression::INTERSECT);		
+			return self::block($args, LogicalExpression::INTERSECT);
 		}
 		
 		public static function intersectAll($left, $right)
@@ -65,7 +64,7 @@
 		public static function intersectAllBlock()
 		{
 			$args = func_get_args();
-			return self::block($args, LogicalExpression::INTERSECT_ALL);		
+			return self::block($args, LogicalExpression::INTERSECT_ALL);
 		}
 		
 		public static function except($left, $right)
@@ -76,7 +75,7 @@
 		public static function exceptBlock()
 		{
 			$args = func_get_args();
-			return self::block($args, LogicalExpression::EXCEPT);		
+			return self::block($args, LogicalExpression::EXCEPT);
 		}
 	
 		public static function exceptAll($left, $right)
@@ -87,12 +86,7 @@
 		public static function exceptAllBlock()
 		{
 			$args = func_get_args();
-			return self::block($args, LogicalExpression::EXCEPT_ALL);		
-		}
-		
-		public static function chain()
-		{
-			return new LogicalChain();
+			return self::block($args, LogicalExpression::EXCEPT_ALL);
 		}
 		
 		private static function block($args, $logic)
@@ -100,8 +94,9 @@
 			return new LogicalBlock($args, $logic);
 		}
 		
-		//use public as well as possible
-		private static function create($left, $right, $logic){
+		/// public methods should be enough
+		private static function create($left, $right, $logic)
+		{
 			return new LogicalExpression($left, $right, $logic);
 		}	
 	}

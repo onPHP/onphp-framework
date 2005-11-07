@@ -235,14 +235,15 @@
 		public function getStandardPort($scheme)
 		{
 			switch (strtolower($scheme)) {
-				case 'http':    return 80;
-				case 'https':   return 443;
-				case 'ftp':     return 21;
-				case 'imap':    return 143;
-				case 'imaps':   return 993;
-				case 'pop3':    return 110;
-				case 'pop3s':   return 995;
-				default:        return null;
+				case 'http':	return 80;
+				case 'https':	return 443;
+				case 'ftp':		return 21;
+				case 'imap':	return 143;
+				case 'imaps':	return 993;
+				case 'pop3':	return 110;
+				case 'pop3s':	return 995;
+				
+				default:		return null;
 		   }
 		}
 

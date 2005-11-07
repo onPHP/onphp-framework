@@ -25,8 +25,10 @@
 				if (
 					!$arg instanceof LogicalObject &&
 					!$arg instanceof SelectQuery 
-				    )
-					throw new WrongArgumentException();
+				)
+					throw new WrongArgumentException(
+						'unsupported object type: '.get_class($arg)
+					);
 			}
 			
 			$this->args		= $args;

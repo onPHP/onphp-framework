@@ -21,12 +21,12 @@
 		private $filePointer	= null;
 
 		private $handler = array(
-			'character_data_handler'            => 'cdataHandler',
-			'default_handler'                   => 'defaultHandler',
-			'processing_instruction_handler'    => 'piHandler',
-			'unparsed_entity_decl_handler'      => 'unparsedHandler',
-			'notation_decl_handler'             => 'notationHandler',
-			'external_entity_ref_handler'       => 'entityrefHandler'
+			'character_data_handler'			=> 'cdataHandler',
+			'default_handler'					=> 'defaultHandler',
+			'processing_instruction_handler'	=> 'piHandler',
+			'unparsed_entity_decl_handler'		=> 'unparsedHandler',
+			'notation_decl_handler'				=> 'notationHandler',
+			'external_entity_ref_handler'		=> 'entityrefHandler'
 		);
 	
 		abstract public function startHandler($parser, $name, &$attrib);
