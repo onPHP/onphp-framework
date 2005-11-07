@@ -50,7 +50,16 @@
 
 		const IN				= 'in';
 		const NOT_IN			= 'not in';
-
+		
+		const UNION         = 'UNION';
+		const UNION_ALL     = 'UNION ALL';
+	
+		const INTERSECT     = 'INTERSECT';
+		const INTERSECT_ALL = 'INTERSECT ALL';
+	
+		const EXCEPT		= 'EXCEPT';
+		const EXCEPT_ALL	= 'EXCEPT ALL';
+		
 		private $left	= null;
 		private $right	= null;
 		private $logic	= null;
@@ -183,6 +192,9 @@
 					LIKE, NOT_LIKE
 					ILIKE, NOT_ILIKE
 					ADD, SUBSTRACT, MULTIPLY, DIVIDE
+					UNION, UNION ALL,
+					INTERSECT, INTERSECT_ALL,
+					EXCEPT, EXCEPT;
 				*/
 				default:
 					throw new UnsupportedMethodException();

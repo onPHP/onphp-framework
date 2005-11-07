@@ -29,7 +29,37 @@
 			return $this->exp($exp, Expression::LOGIC_OR);
 		}
 		
-		private function exp(LogicalObject $exp, $logic)
+		public function union(SelectQuery $query)
+		{
+			return $this->exp($query, LogicalExpression::UNION);
+		}
+		
+		public function unionAll(SelectQuery $query)
+		{
+			return $this->exp($query, LogicalExpression::UNION_ALL);
+		}
+		
+		public function intersect(SelectQuery $query)
+		{
+			return $this->exp($query, LogicalExpression::INTERSECT);
+		}
+		
+		public function intersectAll(SelectQuery $query)
+		{
+			return $this->exp($query, LogicalExpression::INTERSECT_ALL);
+		}
+		
+		public function except(SelectQuery $query)
+		{
+			return $this->exp($query, LogicalExpression::EXCEPT);
+		}
+		
+		public function exceptAll(SelectQuery $query)
+		{
+			return $this->exp($query, LogicalExpression::EXCEPT_ALL);
+		}
+		
+		private function exp(DialectString $exp, $logic)
 		{
 			$this->chain[] = $exp;
 			$this->logic[] = $logic;

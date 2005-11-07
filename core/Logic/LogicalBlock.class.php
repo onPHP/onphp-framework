@@ -21,10 +21,14 @@
 
 		public function __construct($args, $logic)
 		{
-			foreach ($args as &$arg)
-				if (!$arg instanceof LogicalObject)
+			foreach ($args as &$arg){				
+				if (
+					!$arg instanceof LogicalObject &&
+					!$arg instanceof SelectQuery 
+				    )
 					throw new WrongArgumentException();
-
+			}
+			
 			$this->args		= $args;
 			$this->logic	= $logic;
 		}
