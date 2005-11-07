@@ -1,5 +1,10 @@
 # $Id$
 
+2005-11-03	Sergey S. Sergeev	<webs.support@gmail.com>
+
+* core/OSQL/: combining queries (union{,All}, intersect{,All}, except{,All})
+implemented.
+
 2005-11-03	Anton E. Lebedevich	<noiselist@pochta.ru>
 
 * main/DAOs/SmartDAO.class.php: fixed semaphore obscure locking problems. 
