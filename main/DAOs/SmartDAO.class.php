@@ -311,6 +311,19 @@
 				}
 			}
 		}
+		
+		public function uncacheByIds($ids)
+		{
+			$className = $this->getObjectName();
+			$cache = Cache::me();
+			
+			foreach ($ids as $id)
+				$cache->mark($className)->delete(
+					$className.'_'.$id
+				);
+			
+			return $this->dropLists();
+		}
 
 		public function uncacheById($id)
 		{
