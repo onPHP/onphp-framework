@@ -13,6 +13,8 @@
 
 	/**
 	 * Parent of all enumeration classes.
+	 * 
+	 * @see AccessMode for example
 	**/
 	abstract class Enumeration extends NamedObject
 	{

@@ -28,17 +28,23 @@
 	
 		store this data:
 		
-			public function set($key, $value, $expires = Cache::EXPIRES_MINIMUM)
+			public function set(
+				$key, $value, $expires = Cache::EXPIRES_MEDIUM
+			)
 
 		store this data, but only if peer *doesn't* already
 		hold data for this key:
 		
-			public function add($key, $value, $expires = Cache::EXPIRES_MINIMUM)
+			public function add(
+				$key, $value, $expires = Cache::EXPIRES_MEDIUM
+			)
 		
 		store this data, but only if the server *does* already
 		hold data for this key:
 		
-			public function replace($key, $value, $expires = )
+			public function replace(
+				$key, $value, $expires = Cache::EXPIRES_MEDIUM
+			)
 
 		drop object from cache:
 

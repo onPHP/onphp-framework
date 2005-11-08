@@ -13,7 +13,7 @@
 
 	/**
 	 * Widely used assertions.
-	 */
+	**/
 	final class Assert
 	{
 		public static function isTrue($boolean, $message = null)

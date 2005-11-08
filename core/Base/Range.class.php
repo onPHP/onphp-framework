@@ -74,15 +74,16 @@
 			return $max;
 		}
 
-		public function toString()
+		/// atavism wrt BC
+		public function toString($from = 'от', $to = 'до')
 		{
 			$out = '';
 			
 			if ($this->min)
-				$out .= 'от '.$this->min;
+				$out .= "{$from} ".$this->min;
 
 			if ($this->max)
-				$out .= ' до '.$this->max;
+				$out .= " {$to} ".$this->max;
 				
 			return trim($out);
 		}
@@ -109,13 +110,6 @@
 			return $this;
 		}
 
-		public static function swap(&$a, &$b)
-		{
-			$c = $a;
-			$a = $b;
-			$b = $c;
-		}
-
 		public function equals(Range $range)
 		{
 			return ($this->min === $range->getMin() &&
@@ -129,6 +123,13 @@
 				($this->max === null);
 		}
 		
+		public static function swap(&$a, &$b)
+		{
+			$c = $a;
+			$a = $b;
+			$b = $c;
+		}
+
 		public static function buildObject(
 			$min = null, $max = null, $swapAllowed = true
 		)
@@ -150,6 +151,7 @@
 				
 				if ($min && ((int) $min))
 					$range->setMin($min);
+				
 				if ($max && ((int) $max))
 					$range->setMax($max);
 
