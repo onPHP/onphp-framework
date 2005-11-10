@@ -1,10 +1,12 @@
 # $Id$
 
-2005-11-10 Sveta Smirnova <sveta@microbecal.com>
+2005-11-10	Sveta Smirnova		<sveta@microbecal.com>
 
-* core/DB/MySQL.class.php: added error number as error code in throwing DatabaseException
+* core/DB/MySQL.class.php: added error number as error code in throwing
+DatabaseException.
 
-* core/Form/: PCRE and hash filter are not singletones now; PCRE moved from incubator
+* core/Form/: PCRE and hash filter are not singletones now; PCRE moved from
+incubator.
 
 2005-11-07	Sergey S. Sergeev	<webs.support@gmail.com>
 

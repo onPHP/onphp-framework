@@ -16,7 +16,7 @@
 		private $search 	= null;
 		private $replace	= null;
 		
-		public function create()
+		public static function create()
 		{
 			return new self;
 		}
