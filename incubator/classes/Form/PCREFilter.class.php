@@ -11,10 +11,15 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class PCREFilter extends BaseFilter
+	class PCREFilter implements Filtrator
 	{
 		private $search 	= null;
 		private $replace	= null;
+		
+		public function create()
+		{
+			return new self;
+		}
 		
 		public function setExpression($search, $replace)
 		{

@@ -18,6 +18,16 @@
 	{
 		private $binary = false;
 		
+		public function create($binary = false)
+		{
+			$hashFilter =  new self;
+			
+			if ($binary)
+				$hashFilter->binary();
+			
+			return $hashFilter;
+		}
+		
 		public function binary()
 		{
 			$this->binary = true;

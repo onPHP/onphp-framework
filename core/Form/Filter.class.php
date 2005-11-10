@@ -29,9 +29,9 @@
 			return new FilterChain();
 		}
 		
-		public static function hash()
+		public static function hash($binary = false)
 		{
-			return Singletone::getInstance('HashFilter');
+			return HashFilter::create($binary);
 		}
 
 		public static function trim()

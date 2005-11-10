@@ -74,7 +74,8 @@
 							
 			if (!$this->link || ($base && !mysql_select_db($base, $this->link)))
 				throw new DatabaseException(
-					'can not connect to MySQL server: '.mysql_error($this->link)
+					'can not connect to MySQL server: '.mysql_error($this->link),
+					mysql_errno($this->link)
 				);
 			
 			$this->persistent = $persistent;
@@ -195,7 +196,8 @@
 			if (!$result = mysql_query($queryString, $this->link))
 				throw new DatabaseException(
 					"failed to execute such query - '{$queryString}': ".
-					mysql_error($this->link)
+					mysql_error($this->link),
+					mysql_errno($this->link)
 				);
 
 			return $result;
