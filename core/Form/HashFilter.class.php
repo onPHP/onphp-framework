@@ -18,28 +18,14 @@
 	{
 		private $binary = false;
 		
-		public function create($binary = false)
+		public function __construct($binary = false)
 		{
-			$hashFilter =  new self;
-			
-			if ($binary)
-				$hashFilter->binary();
-			
-			return $hashFilter;
+			$this->binary = ($binary === true);
 		}
 		
-		public function binary()
+		public static function create($binary = false)
 		{
-			$this->binary = true;
-			
-			return $this;
-		}
-		
-		public function notBinary()
-		{
-			$this->binary = false;
-			
-			return $this;
+			return new self($binary);
 		}
 		
 		public function isBinary()
