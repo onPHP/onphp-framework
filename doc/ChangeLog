@@ -4,7 +4,7 @@
 
 * main/Utils/RussianTextUtils.class.php::getAsInOrder(),
 core/Logic/LogicalEqLower.class.php, core/Logic/LogicalIn.class.php,
-core/OSQL/PreQuery.class.php: dropped, since thier removal-release was
+core/OSQL/PreQuery.class.php: dropped, since their removal-release was
 upcoming 0.2.5.
 
 2005-11-10	Sveta Smirnova		<sveta@microbecal.com>
