@@ -104,20 +104,6 @@
 
 			return $months[$month - 1];
 		}
-	
-		/**
-		 * Returns string representation of number in order list
-		 * 
-		 * @param	integer		number
-		 * @param	string		gender
-		 * @access	public
-		 * @return	string
-		 * @deprecated and obsoleted since 0.2.3, target removal release - 0.2.5
-		**/
-		public static function getAsInOrder($number, $gender)
-		{
-			return $number;
-		}
 		
 		public static function getDayOfWeek($day)
 		{
