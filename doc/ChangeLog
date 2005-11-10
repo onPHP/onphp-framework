@@ -1,5 +1,12 @@
 # $Id$
 
+2005-11-11	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/Utils/RussianTextUtils.class.php::getAsInOrder(),
+core/Logic/LogicalEqLower.class.php, core/Logic/LogicalIn.class.php,
+core/OSQL/PreQuery.class.php: dropped, since thier removal-release was
+upcoming 0.2.5.
+
 2005-11-10	Sveta Smirnova		<sveta@microbecal.com>
 
 * core/DB/MySQL.class.php: added error number as error code in throwing
