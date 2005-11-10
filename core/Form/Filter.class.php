@@ -34,6 +34,11 @@
 			return HashFilter::create($binary);
 		}
 
+		public static function pcre()
+		{
+			return PCREFilter::create();
+		}
+
 		public static function trim()
 		{
 			return Singletone::getInstance('TrimFilter');
