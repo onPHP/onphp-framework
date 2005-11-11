@@ -134,8 +134,11 @@
 						
 						if ($flags & 2)
 							$result = gzuncompress($result);
-							
-						return unserialize($result);
+
+						if (is_scalar($result) || ($result === Cache::NOT_FOUND))
+							return $result;
+						else
+							return unserialize($result);
 					} else
 						return null;
 				}
