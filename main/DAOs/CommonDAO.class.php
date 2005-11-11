@@ -125,7 +125,11 @@
 					
 				} else {
 					foreach ($ids as $id) {
-						if (!$list[] = $this->getCachedById($id));
+						$cached = $this->getCachedById($id);
+
+						if ($cached)
+							$list[] = $cached;
+						else
 							$toFetch[] = $id;
 					}
 				}
@@ -138,7 +142,11 @@
 						array_merge(
 							$list,
 							$this->getListByLogic(
-								Expression::in('id', $toFetch), $expires
+								Expression::in(
+									new DBField('id', $this->getTable()), 
+									$toFetch
+								), 
+								$expires
 							)
 						);
 				} catch (ObjectNotFoundException $e) {
