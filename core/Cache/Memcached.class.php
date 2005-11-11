@@ -134,8 +134,12 @@
 						
 						if ($flags & 2)
 							$result = gzuncompress($result);
-							
-						return unserialize($result);
+
+						try {
+							return unserialize($result);
+						} catch (BaseException $e) {
+							return $result;
+						}
 					} else
 						return null;
 				}
