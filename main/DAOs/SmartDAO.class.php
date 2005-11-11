@@ -446,8 +446,7 @@
 			$semKey = $this->keyToInt($mapKey);
 			
 			if (!isset($semaphores[$semKey])) {
-				$sem = sem_get($semKey, 1, 0644, true);
-				$semaphores[$semKey] = $sem;
+				$semaphores[$semKey] = sem_get($semKey, 1, 0644, true);
 			}
 			
 			if (!sem_acquire($semaphores[$semKey])) {

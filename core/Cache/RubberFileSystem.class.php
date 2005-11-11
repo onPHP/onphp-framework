@@ -33,7 +33,7 @@
 			if ($directory{strlen($directory) - 1} != DIRECTORY_SEPARATOR)
 				$directory .= DIRECTORY_SEPARATOR;
 			
-			$this->directory	= $directory;
+			$this->directory = $directory;
 		}
 		
 		public function isAlive()
@@ -55,22 +55,11 @@
 			if (is_readable($path)) {
 				
 				if (filemtime($path) <= time()) {
-					var_dump(filemtime($path), time());
-					
 					@unlink($path);
 					return null;
 				}
 				
-				$sem = null;
-
-				if (!$fp = $this->getFilePointer($sem, $path, true))
-					return null;
-
-				$data = fread($fp, filesize($path));
-				
-				fclose($fp); sem_remove($sem);
-				
-				return $this->restoreData($data);
+				return $this->operate($path);
 			}
 			
 			return null;
@@ -96,8 +85,6 @@
 			if (!file_exists($directory))
 				mkdir($directory);
 			
-			$sem = null;
-			
 			// do not add, if file exist and not expired
 			if (
 				$action == 'add'
@@ -118,12 +105,7 @@
 				}
 			}
 			
-			if (!$fp = $this->getFilePointer($sem, $path, false))
-				return false;
-			
-			fwrite($fp, $this->prepareData($value));
-			
-			fclose($fp); sem_remove($sem);
+			$this->operate($path, $value);
 			
 			if ($expires < self::TIME_SWITCH)
 				$expires += time();
@@ -132,44 +114,45 @@
 			
 			return true;
 		}
-				
-		private function getFilePointer(&$semaphore, $path, $readOnly = true)
+		
+		private function operate($path, $value = null)
 		{
-			$semaphore = sem_get(
-				hexdec(
-					hexdec(substr(sha1($path), 0, 7))
-				),
-				1,
-				0644,
-				true
-			);
+			$key = hexdec(substr(md5($path), 1, 8));
 			
-			if (!sem_acquire($semaphore))
+			$sem = sem_get($key, 1, 0644, true);
+			
+			if (!sem_acquire($sem))
 				return null;
 			
 			try {
-				$fp = fopen(
-					$path,
-					$readOnly === false ? 'wb' : 'rb'
-				);
+				$fp = fopen($path, $value !== null ? 'wb' : 'rb');
 			} catch (BaseException $e) {
-				sem_remove($semaphore);
+				sem_remove($sem);
 				return null;
 			}
 			
 			try {
-				flock(
-					$fp,
-					$readOnly === false ? LOCK_EX : LOCK_SH
-				);
-				
-				return $fp;
+				flock($fp, $value !== null ? LOCK_EX : LOCK_SH);
 			} catch (BaseException $e) {
-				sem_remove($semaphore);
+				sem_remove($sem);
+				return null;
+			}
+			
+			if ($value !== null) {
+				fwrite($fp, $this->prepareData($value));
 				fclose($fp);
+				sem_remove($sem);
+				
+				return;
+			} else {
+				$data = fread($fp, filesize($path));
+				fclose($fp);
+				sem_remove($sem);
+				
+				return $this->restoreData($data);
 			}
 			
-			return null;
+			/* NOTREACHED */
 		}
 		
 		private function makePath($key)
