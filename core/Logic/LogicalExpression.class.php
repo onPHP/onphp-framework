@@ -172,10 +172,10 @@
 					return $both && (soundex($left) != soundex($right));
 				
 				case self::EXPRESSION_AND:
-					return $both && ($left && $right->toBoolean($form));
+					return $both && ($left && $right);
 				
 				case self::EXPRESSION_OR:
-					return $both && ($left || $right->toBoolean($form));
+					return $both && ($left || $right);
 				
 				case self::IN:
 					return $both && (in_array($left, $right));
