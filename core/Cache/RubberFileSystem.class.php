@@ -28,7 +28,7 @@
 		public function __construct($directory = '/tmp/onPHP/cache/')
 		{
 			if (!is_writable($directory))
-				return null;
+				throw new WrongArgumentException();
 			
 			if ($directory{strlen($directory) - 1} != DIRECTORY_SEPARATOR)
 				$directory .= DIRECTORY_SEPARATOR;
