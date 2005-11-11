@@ -68,7 +68,7 @@
 
 				$data = fread($fp, filesize($path));
 				
-				fclose($fp); sem_release($sem);
+				fclose($fp); sem_remove($sem);
 				
 				return $this->restoreData($data);
 			}
@@ -123,7 +123,7 @@
 			
 			fwrite($fp, $this->prepareData($value));
 			
-			fclose($fp); sem_release($sem);
+			fclose($fp); sem_remove($sem);
 			
 			if ($expires < self::TIME_SWITCH)
 				$expires += time();
@@ -135,7 +135,14 @@
 				
 		private function getFilePointer(&$semaphore, $path, $readOnly = true)
 		{
-			$semaphore = sem_get(hexdec(substr(md5($path), 3, 7)), 1, 0600, true);
+			$semaphore = sem_get(
+				hexdec(
+					hexdec(substr(sha1($path), 0, 7))
+				),
+				1,
+				0644,
+				true
+			);
 			
 			if (!sem_acquire($semaphore))
 				return null;
@@ -146,7 +153,7 @@
 					$readOnly === false ? 'wb' : 'rb'
 				);
 			} catch (BaseException $e) {
-				sem_release($semaphore);
+				sem_remove($semaphore);
 				return null;
 			}
 			
@@ -158,7 +165,7 @@
 				
 				return $fp;
 			} catch (BaseException $e) {
-				sem_release($semaphore);
+				sem_remove($semaphore);
 				fclose($fp);
 			}
 			

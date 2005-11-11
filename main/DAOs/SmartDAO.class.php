@@ -436,14 +436,16 @@
 
 		private function syncMap($mapKey, $objectKey)
 		{
-			$cache = Cache::me();
 			static $semaphores = array();
+
+			$cache = Cache::me();
 			
 			if (!$map = $cache->get($mapKey))
 				$map = array();
+			
 			$semKey = $this->keyToInt($mapKey);
 			
-			if (! isset($semaphores[$semKey])) {
+			if (!isset($semaphores[$semKey])) {
 				$sem = sem_get($semKey, 1, 0644, true);
 				$semaphores[$semKey] = $sem;
 			}
