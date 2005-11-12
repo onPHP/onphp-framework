@@ -1,5 +1,10 @@
 # $Id$
 
+2005-11-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/Cache/: marking bug fixed in ReferencePool; SharedMemory cache
+introduced for memcachedless systems.
+
 2005-11-11	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * main/Utils/RussianTextUtils.class.php::getAsInOrder(),

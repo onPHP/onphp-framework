@@ -16,8 +16,6 @@
 	**/
 	final class RubberFileSystem extends CachePeer
 	{
-		const TIME_SWITCH = 2592000; // 60 * 60 * 24 * 30
-		
 		private $directory	= null;
 		
 		public static function create($directory = '/tmp/onPHP/cache/')
@@ -107,7 +105,7 @@
 			
 			$this->operate($path, $value);
 			
-			if ($expires < self::TIME_SWITCH)
+			if ($expires < parent::TIME_SWITCH)
 				$expires += time();
 
 			touch($path, time() + $expires);

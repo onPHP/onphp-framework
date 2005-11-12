@@ -23,8 +23,6 @@
 		const LEVEL_LOW			= 0x4000;
 		const LEVEL_VERYLOW		= 0x0001;
 
-		const MARGINAL_VALUE	= 'i_am_declassed_element'; // Yanka R.I.P.
-		
 		private $peers	= array();
 		private $levels	= array();
 
@@ -195,13 +193,8 @@
 		**/
 		private function guessLabel($key)
 		{
-			if (!$this->className)
-				$class = self::MARGINAL_VALUE;
-			else 
-				$class = $this->className;
+			$class = $this->getClassName();
 
-			$this->className = null; // eat it after use
-			
 			if (isset($this->levels[$class]))
 				$classLevel = $this->levels[$class];
 			else

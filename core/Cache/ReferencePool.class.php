@@ -24,6 +24,12 @@
 			$this->peer = $peer;
 		}
 		
+		public function mark($className)
+		{
+			$this->peer->mark($className);
+			return $this;
+		}
+		
 		public function get($key)
 		{
 			if (isset($this->pool[$key]) && $this->pool[$key])

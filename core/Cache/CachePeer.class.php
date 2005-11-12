@@ -89,6 +89,15 @@
 		useful for cache fallback, when all other's peers are dead
 		
 		public function __construct()
+	
+	SharedMemory <- CachePeer:
+	
+		Sys-V shared memory, for memcachedless installations.
+		
+		public function __construct(
+			$defaultSize = self::DEFAULT_SEGMENT_SIZE,
+			$customSized = array() // 'className' => sizeInBytes
+		)
 */
 
 	/**
@@ -96,6 +105,9 @@
 	**/
 	abstract class CachePeer
 	{
+		const TIME_SWITCH		= 2592000; // 60 * 60 * 24 * 30
+		const MARGINAL_VALUE	= 'i_am_declassed_element'; // Yanka R.I.P.
+
 		protected $alive		= false;
 		protected $compress		= false;
 		protected $className	= null;
@@ -107,13 +119,13 @@
 		abstract protected function store(
 			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
 		);
-
+		
 		public function mark($className)
 		{
 			$this->className = $className;
 			return $this;
 		}
-	
+		
 		public function set($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->store('set', $key, $value, $expires);
@@ -144,6 +156,18 @@
 		{
 			$this->compress = false;
 			return $this;
+		}
+
+		protected function getClassName()
+		{
+			if (!$this->className)
+				$class = self::MARGINAL_VALUE;
+			else 
+				$class = $this->className;
+				
+			$this->className = null; // eat it after use
+
+			return $class;
 		}
 
 		protected function prepareData(&$value)
