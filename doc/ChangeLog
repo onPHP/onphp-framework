@@ -1,5 +1,10 @@
 # $Id$
 
+2005-11-13	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/Containers/: Storable, Unified and their's company moved to separate
+directory.
+
 2005-11-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * core/Cache/: marking bug fixed in ReferencePool; SharedMemory cache

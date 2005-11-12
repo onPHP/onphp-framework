@@ -29,7 +29,7 @@
     
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
-	set_error_handler ('error2Exception', E_ALL);
+	set_error_handler('error2Exception', E_ALL);
 	define('ONPHP_VERSION', '0.2.4.99');
     
 	// paths
@@ -61,6 +61,7 @@
 		// main framework
 		.ONPHP_MAIN_PATH.'Base'			.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'DAOs'			.PATH_SEPARATOR
+		.ONPHP_MAIN_PATH.'Containers'	.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'HTTP'			.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Module'		.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Net'			.PATH_SEPARATOR
