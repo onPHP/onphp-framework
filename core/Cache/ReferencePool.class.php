@@ -14,7 +14,7 @@
 	/**
 	 * A wrapper to single cache to prevent cloning of returned cached objects.
 	**/
-	final class ReferencePool extends CachePeer
+	final class ReferencePool extends SelectivePeer
 	{
 		private $peer = null;
 		private $pool = array();

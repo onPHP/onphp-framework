@@ -15,7 +15,7 @@
 	 * A wrapper to multiple cache for workload
 	 * distribution using CachePeer childs.
 	**/
-	class AggregateCache extends CachePeer
+	class AggregateCache extends SelectivePeer
 	{
 		const LEVEL_ULTRAHIGH	= 0xFFFF;
 		const LEVEL_HIGH		= 0xC000;

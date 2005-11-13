@@ -41,9 +41,7 @@
 		
 		public function clean()
 		{
-			parent::clean();
-			
-			// TODO: rm -rf $this->directory
+			return `rm -rf {$this->directory}*`;
 		}
 
 		public function get($key)

@@ -54,10 +54,6 @@
 		
 			abstract public function isAlive()
 
-		drop everything
-		
-			abstract public function clean() 
-
 	Memcached <- CachePeer:
 	
 		public function __construct(
@@ -72,16 +68,6 @@
 	
 		public function __construct(
 			$directory = '/tmp/onPHP/'
-		)
-	
-	PlainDatabase <- CachePeer:
-	
-		just an example, do not ever use it even for your homePage
-		(and yes, i won't provide SQL schema of used table for you)
-		&& btw, - YANETUT ;-)
-	
-		public function __construct(
-			DB $db, $tableName
 		)
 	
 	RuntimeMemory <- CachePeer:
@@ -106,25 +92,22 @@
 	abstract class CachePeer
 	{
 		const TIME_SWITCH		= 2592000; // 60 * 60 * 24 * 30
-		const MARGINAL_VALUE	= 'i_am_declassed_element'; // Yanka R.I.P.
 
 		protected $alive		= false;
 		protected $compress		= false;
-		protected $className	= null;
 
 		abstract public function get($key);
 		abstract public function delete($key);
 		abstract public function clean();
+		
+		public function mark($className)
+		{
+			return $this;
+		}
 
 		abstract protected function store(
 			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
 		);
-		
-		public function mark($className)
-		{
-			$this->className = $className;
-			return $this;
-		}
 		
 		public function set($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{
@@ -156,18 +139,6 @@
 		{
 			$this->compress = false;
 			return $this;
-		}
-
-		protected function getClassName()
-		{
-			if (!$this->className)
-				$class = self::MARGINAL_VALUE;
-			else 
-				$class = $this->className;
-				
-			$this->className = null; // eat it after use
-
-			return $class;
 		}
 
 		protected function prepareData(&$value)
