@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
- *   voxus@gentoo.org                                                      *
+ *   voxus@shadanakar.org                                                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,40 +11,24 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class OneToManyLinked extends UnifiedContainer
+	abstract class UnifiedContainerWorker
 	{
-		public function __construct(
-			DAOConnected $parent, GenericDAO $dao, $lazy = true
-		)
+		protected $oq			= null;
+		protected $container	= null;
+		
+		abstract public function makeFetchQuery();
+		abstract public function sync(&$insert, &$update, &$delete = array());
+		
+		public function __construct(UnifiedContainer $uc)
 		{
-			parent::__construct($parent, $dao, $lazy);
-			
-			$worker =
-				$lazy
-					? 'OneToManyLinkedLazy'
-					: 'OneToManyLinkedFull';
-			
-			$this->worker = new $worker($this);
+			$this->container = $uc;
 		}
 		
-		public function getParentIdField()
+		public function setObjectQuery(ObjectQuery $oq)
 		{
-			static $name = null;
-
-			if ($name === null)
-				$name = get_class($this->parent).'_id';
-
-			return $name;
-		}
-
-		public function getChildIdField()
-		{
-			return 'id';
-		}
-
-		public function isUnlinkable()
-		{
-			return false;
+			$this->oq = $oq;
+			
+			return $this;
 		}
 	}
 ?>

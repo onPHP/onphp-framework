@@ -14,16 +14,9 @@
 /*
 	UnifiedContainer:
 
-		must have for internal usage:
-			abstract protected function makeListFetchQuery()
-			abstract protected function makeIdsFetchQuery()
-
-			abstract protected function syncList(&$insert, &$update, &$delete)
-			abstract protected function syncIds(&$insert, &$delete)
-
 		child's and parent's field names:
-			abstract protected function getChildIdField()
-			abstract protected function getParentIdField()
+			abstract public function getChildIdField()
+			abstract public function getParentIdField()
 
 		all we need from outer world:
 			public function __construct(
@@ -66,25 +59,19 @@
 	**/
 	abstract class UnifiedContainer
 	{
+		protected $worker	= null;
 		protected $parent	= null;
 
 		protected $dao		= null;
-		protected $oq		= null;
 		
 		protected $lazy		= true;
 		protected $fetched	= false;
 
 		protected $list		= null;
 		protected $clones	= null;
-
+		
 		abstract protected function getChildIdField();
 		abstract protected function getParentIdField();
-
-		abstract protected function makeListFetchQuery();
-		abstract protected function makeIdsFetchQuery();
-
-		abstract protected function syncList(&$insert, &$update, &$delete);
-		abstract protected function syncIds(&$insert, &$delete);
 
 		public function __construct(
 			DAOConnected $parent, GenericDAO $dao, $lazy = true
@@ -103,7 +90,17 @@
 				"child object should be at least Identifiable"
 			);
 		}
-
+		
+		public function getParentObject()
+		{
+			return $this->parent;
+		}
+		
+		public function getDao()
+		{
+			return $this->dao;
+		}
+		
 		public function isLazy()
 		{
 			return $this->lazy;
@@ -121,7 +118,7 @@
 				'you should implement MappedDAO to be able to use ObjectQueries'
 			);
 			
-			$this->oq = $oq;
+			$this->worker->setObjectQuery($oq);
 
 			return $this;
 		}
@@ -148,9 +145,7 @@
 				);
 			
 			try {
-				$this->lazy
-					? $this->fetchIdsList()
-					: $this->fetchList();
+				$this->fetchList();
 			} catch (ObjectNotFoundException $e) {
 				// yummy
 			}
@@ -199,9 +194,7 @@
 			$db->begin()->queueStart();
 
 			try {
-				$this->lazy
-					? $this->syncIds($insert, $delete)
-					: $this->syncList($insert, $update, $delete);
+				$this->worker->sync($insert, $update, $delete);
 				
 				$db->commit()->queueFlush();
 			} catch (DatabaseException $e) {
@@ -219,27 +212,20 @@
 
 		protected function fetchList()
 		{
-			$this->list =
-				$this->dao->getListByQuery(
-					$this->makeListFetchQuery()
-				);
-
-			foreach ($this->list as $id => &$object)
-				$this->clones[$id] = clone $object;
-
-			return $this;
-		}
-
-		protected function fetchIdsList()
-		{
-			$ids =
-				$this->dao->getCustomRowList(
-					$this->makeIdsFetchQuery()
-				);
+			$query = $this->worker->makeFetchQuery();
+			
+			if ($this->lazy) {
+				$ids = $this->dao->getCustomRowList($query);
+		
+				foreach ($ids as $id) {
+					$this->list[$id] = $id;
+					$this->clones[$id] = $id;
+				}
+			} else {
+				$this->list = $this->dao->getListByQuery($query);
 	
-			foreach ($ids as $id) {
-				$this->list[$id] = $id;
-				$this->clones[$id] = $id;
+				foreach ($this->list as $id => &$object)
+					$this->clones[$id] = clone $object;
 			}
 
 			return $this;

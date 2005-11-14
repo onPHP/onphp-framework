@@ -97,7 +97,13 @@
 		
 		public function delete($key)
 		{
-			return shm_remove_var($this->getSegment(), $this->stringToInt($key));
+			try {
+				return shm_remove_var(
+					$this->getSegment(), $this->stringToInt($key)
+				);
+			} catch (BaseException $e) {
+				return false;
+			}
 		}
 		
 		public function isAlive()

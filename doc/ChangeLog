@@ -1,6 +1,9 @@
 # $Id$
 
-2005-11-13	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-14	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/Containers/: major refactoring at UnifiedContainer & Co. to simplify
+internal API and separate lazy/full handling logic.
 
 * core/Form/DateRangeList.class.php, core/Form/TimeList.class.php:
 time/date-handling primitives; moved from closed-source project.

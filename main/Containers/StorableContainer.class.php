@@ -220,7 +220,7 @@
 					foreach ($list as $id)
 						$this->saved[$id] = $id;
 
-				} catch (ObjectNotFoundException $e) { /* we don't care */}
+				} catch (ObjectNotFoundException $e) {/* we don't care */}
 
 			} elseif ($this->loaded == self::LOAD_OBJECTS && $this->parentId) {
 
@@ -228,7 +228,7 @@
 					$list = $this->partDAO->getListByParentId($this->parentId);
 					$this->saved = ArrayUtils::convertObjectList($list);
 
-				} catch (ObjectNotFoundException $e) { /* we don't care */ }
+				} catch (ObjectNotFoundException $e) {/* we don't care */}
 
 			} elseif ($this->loaded != self::LOADED)
 				throw WrongStateException('container in a bad state');
