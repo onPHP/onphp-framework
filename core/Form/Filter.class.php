@@ -14,7 +14,7 @@
 	/**
 	 * Factory for Filtrator implementations.
 	**/
-	final class Filter /* Factory */
+	final class Filter extends StaticFactory
 	{
 		public static function textImport()
 		{

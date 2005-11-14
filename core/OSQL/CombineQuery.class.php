@@ -21,7 +21,7 @@
 	 * 
 	 * @see PostgreSQL Documentation, Chapter Combining Queries 
 	**/
-	final class CombineQuery /* Factory */
+	final class CombineQuery extends StaticFactory
 	{		
 		public static function union($left, $right)
 		{

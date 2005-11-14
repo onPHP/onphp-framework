@@ -11,7 +11,7 @@
 ***************************************************************************/
 /* $Id$ */
 
-	class RussianTextUtils
+	final class RussianTextUtils extends StaticFactory
 	{
 		const MALE		= 0;
 		const FEMALE	= 1;
@@ -62,8 +62,14 @@
 		**/
 		public static function getSuffix($number, $suffixes)
 		{
-			if (in_array(intval(substr($number, strlen($number) - 2, 2)), self::$secondDecade, true))
+			if (
+				in_array(
+					intval(substr($number, strlen($number) - 2, 2)),
+					self::$secondDecade, true
+				)
+			) {
 				return $suffixes[2];
+			}
 
 			$lastDigit = substr($number, strlen($number) - 1, 1);
 

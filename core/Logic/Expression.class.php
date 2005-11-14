@@ -14,7 +14,7 @@
 	/**
 	 * Factory for various childs of LogicalObject and LogicalExpression.
 	**/
-	final class Expression /* Factory */
+	final class Expression extends StaticFactory
 	{
 		const LOGIC_AND	= 'AND';
 		const LOGIC_OR	= 'OR';

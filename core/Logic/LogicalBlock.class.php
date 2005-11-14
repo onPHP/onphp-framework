@@ -14,14 +14,14 @@
 	/**
 	 * Wrapper around given childs of LogicalObject with single logic-glue.
 	**/
-	class LogicalBlock implements LogicalObject
+	final class LogicalBlock implements LogicalObject
 	{
 		private $args = null;
 		private $logic = null;
 
 		public function __construct($args, $logic)
 		{
-			foreach ($args as &$arg){				
+			foreach ($args as &$arg) {
 				if (
 					!$arg instanceof LogicalObject &&
 					!$arg instanceof SelectQuery 
@@ -47,7 +47,7 @@
 		
 		public function toBoolean(Form $form)
 		{
-			$args	= &$this->args;
+			$args = &$this->args;
 			
 			switch ($this->logic) {
 				case Expression::LOGIC_AND:

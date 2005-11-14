@@ -14,7 +14,7 @@
 	/**
 	 * Wrapper around given childs of LogicalObject with custom logic-glue's.
 	**/
-	class LogicalChain implements LogicalObject
+	final class LogicalChain implements LogicalObject
 	{
 		private $chain = array();
 		private $logic = array();

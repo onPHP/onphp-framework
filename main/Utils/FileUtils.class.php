@@ -14,7 +14,7 @@
 	/**
 	 * Utilities for file handling.
 	**/
-	final class FileUtils
+	final class FileUtils extends StaticFactory
 	{
 		/**
 		 * Recursively walks through $dir and converts line

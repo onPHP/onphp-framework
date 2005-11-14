@@ -14,12 +14,10 @@
 	/**
 	 * System-wide factory with predefined DB instance.
 	**/
-	final class DBFactory
+	final class DBFactory extends StaticFactory
 	{
 		private static $defaultDB = null;
 	
-		private function __construct() {/* generic hack :-) */}
-
 		public static function &getDefaultInstance()
 		{
 			if (self::$defaultDB === null)

@@ -16,7 +16,7 @@
 	 *
 	 * @see CachePeer
 	**/
-	final class Cache 
+	final class Cache extends StaticFactory
 	{
 		const NOT_FOUND			= 'nil';
 
@@ -28,8 +28,6 @@
 		const DO_NOT_CACHE		= -2005;
 		
 		private static $peer	= null;
-		
-		private function __construct() {/*_*/}
 		
 		public static function me()
 		{

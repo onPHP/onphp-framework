@@ -28,11 +28,9 @@
 	/**
 	 * Simple static wrapper around session_*() functions.
 	**/
-	final class Session
+	final class Session extends StaticFactory
 	{
 		private static $isStarted = false;
-		
-		private function __construct() {/* bah! */}
 		
 		public static function start()
 		{

@@ -2,6 +2,13 @@
 
 2005-11-13	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+* core/Form/DateRangeList.class.php, core/Form/TimeList.class.php:
+time/date-handling primitives; moved from closed-source project.
+
+* core/Base/StaticFactory.class.php: introduced to group all static factories.
+
+2005-11-13	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
 * main/Containers/: Storable, Unified and their's company moved to separate
 directory.
 

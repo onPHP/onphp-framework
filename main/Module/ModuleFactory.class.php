@@ -11,7 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class ModuleFactory
+	class ModuleFactory extends StaticFactory
 	{
 		private static $templateDirectory = null;
 		private static $moduleDirectory = null;

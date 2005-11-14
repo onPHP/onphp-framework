@@ -11,7 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class LogicUtils
+	final class LogicUtils extends StaticFactory
 	{
 		public static function getOpenRange(
 			DBField $left, DBField $right, $min = null, $max = null

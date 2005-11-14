@@ -14,7 +14,7 @@
 	/**
 	 * Factory for various Primitives.
 	**/
-	class Primitive /* Factory */
+	final class Primitive extends StaticFactory
 	{
 		public static function spawn($primitive, $name)
 		{

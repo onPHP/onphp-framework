@@ -83,7 +83,9 @@
 				throw new ObjectNotFoundException();
 		}
 		
-		public function getCustomRowList(SelectQuery $query, $expires = Cache::DO_NOT_CACHE)
+		public function getCustomRowList(
+			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
+		)
 		{
 			if ($query->getFieldsCount() !== 1)
 				throw new WrongArgumentException(

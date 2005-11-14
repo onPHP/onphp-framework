@@ -14,7 +14,7 @@
 	/**
 	 * Transaction's factory.
 	**/
-	final class Transaction /* Factory */
+	final class Transaction extends StaticFactory
 	{
 		private function __construct() {/*-*/}
 		

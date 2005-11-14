@@ -14,7 +14,7 @@
 	/**
 	 * Widely used assertions.
 	**/
-	final class Assert
+	final class Assert extends StaticFactory
 	{
 		public static function isTrue($boolean, $message = null)
 		{

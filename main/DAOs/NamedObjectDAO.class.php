@@ -108,9 +108,14 @@
 				return $query;
 		}
 
-		final protected function makeNamedObject(&$array, Named $no, $prefix = null)
+		final protected function makeNamedObject(
+			&$array, Named $no, $prefix = null
+		)
 		{
-			return $no->setId($array[$prefix.'id'])->setName($array[$prefix.'name']);
+			return
+				$no->
+					setId($array[$prefix.'id'])->
+					setName($array[$prefix.'name']);
 		}
 		
 		private function getNameCacheKey($name)

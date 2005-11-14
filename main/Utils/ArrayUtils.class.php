@@ -11,7 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class ArrayUtils
+	final class ArrayUtils extends StaticFactory
 	{
 		public static function convertObjectList($list = null)
 		{
@@ -61,9 +61,10 @@
 			return null;
 		}
 		
-		public static function columnFromSet($column, &$array) {
-			$result = array();
+		public static function columnFromSet($column, &$array)
+		{
 			Assert::isArray($array);
+			$result = array();
 			
 			foreach ($array as $row)
 				if (isset($row[$column]))

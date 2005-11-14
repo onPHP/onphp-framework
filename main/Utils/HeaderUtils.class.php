@@ -14,7 +14,7 @@
 	/**
 	 * Collection of static header functions
 	**/
-	class HeaderUtils
+	final class HeaderUtils extends StaticFactory
 	{
 		private static $headerSent		= false;
 		private static $redirectSent	= false;
@@ -36,7 +36,13 @@
 				foreach ($mod->getParameters() as $key => $val)
 					$qs .= "&{$key}={$val}";
 			
-			$url = (defined('ADMIN_AREA') ? PATH_WEB_ADMIN : PATH_WEB).'?area='.$mod->getName().$qs;
+			$url =
+				(defined('ADMIN_AREA')
+					? PATH_WEB_ADMIN
+					: PATH_WEB)
+				.'?area='
+				.$mod->getName()
+				.$qs;
 			
 			header("Location: {$url}");
 
@@ -81,14 +87,25 @@
 		
 		public static function sendCachedHeader()
 		{
-			Header("Cache-control: private, max-age=3600");
-			Header("Expires: " . gmdate("D, d M Y H:i:s", date("U") + self::$cacheLifeTime) . " GMT");
+			header('Cache-control: private, max-age=3600');
+			
+			header(
+				'Expires: '
+				.gmdate('D, d M Y H:i:s', date('U') + self::$cacheLifeTime)
+				.' GMT'
+			);
+			
 			self::$headerSent = true;
 		}
 
 		public static function sendNotCachedHeader()
 		{
-			Header("Expires: " . gmdate("D, d M Y H:i:s", date("U") - 3600) . " GMT");
+			header(
+				'Expires: '
+				.gmdate('D, d M Y H:i:s', date('U') - self::$$cacheLifeTime)
+				.' GMT'
+			);
+			
 			self::$headerSent = true;
 		}
 		
