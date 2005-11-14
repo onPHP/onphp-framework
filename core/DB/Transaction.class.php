@@ -16,7 +16,7 @@
 	**/
 	final class Transaction extends StaticFactory
 	{
-		private function __construct() {/*-*/}
+		final private function __construct() {/*-*/}
 		
 		public static function immediate(DB $db)
 		{
