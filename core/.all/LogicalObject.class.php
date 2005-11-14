@@ -1,0 +1,1 @@
+../Logic/LogicalObject.class.php

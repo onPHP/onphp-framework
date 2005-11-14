@@ -1,0 +1,1 @@
+../Base/NamedObject.class.php

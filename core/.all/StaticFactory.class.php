@@ -1,0 +1,1 @@
+../Base/StaticFactory.class.php

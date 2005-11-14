@@ -1,0 +1,1 @@
+../OSQL/DeleteQuery.class.php

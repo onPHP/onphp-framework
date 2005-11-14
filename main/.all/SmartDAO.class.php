@@ -1,0 +1,1 @@
+../DAOs/SmartDAO.class.php

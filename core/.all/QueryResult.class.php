@@ -1,0 +1,1 @@
+../OSQL/QueryResult.class.php

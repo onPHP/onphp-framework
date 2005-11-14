@@ -1,0 +1,1 @@
+../DAOs/MappedStorableDAO.class.php

@@ -1,0 +1,1 @@
+../OSQL/FullTextSearch.class.php
