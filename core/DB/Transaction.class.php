@@ -16,8 +16,6 @@
 	**/
 	final class Transaction extends StaticFactory
 	{
-		final private function __construct() {/*-*/}
-		
 		public static function immediate(DB $db)
 		{
 			return new DBTransaction($db);
