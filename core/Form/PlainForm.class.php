@@ -117,7 +117,7 @@
 
 		public function getRangeMax($name)
 		{
-			$range = &$this->get($name)->getValue();
+			$range = $this->get($name)->getValue();
 
 			return
 				$range instanceof Range
@@ -127,7 +127,7 @@
 		
 		public function getRangeMin($name)
 		{
-			$range = &$this->get($name)->getValue();
+			$range = $this->get($name)->getValue();
 
 			return
 				$range instanceof Range
@@ -137,7 +137,7 @@
 
 		public function getActualRangeMax($name)
 		{
-			$range = &$this->get($name)->getActualValue();
+			$range = $this->get($name)->getActualValue();
 
 			return
 				$range instanceof Range
@@ -147,7 +147,7 @@
 		
 		public function getActualRangeMin($name)
 		{
-			$range = &$this->get($name)->getActualValue();
+			$range = $this->get($name)->getActualValue();
 
 			return
 				$range instanceof Range
