@@ -182,7 +182,7 @@
 		
 		private function stringToInt($string)
 		{
-			return hexdec(substr(md5($string), 3, 6));
+			return hexdec(substr(md5($string), 0, 8));
 		}
 	}
 ?>

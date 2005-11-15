@@ -117,31 +117,31 @@
 		
 		private function operate($path, $value = null, $expires = null)
 		{
-			static $semaphores = array();
-			
-			$key = hexdec(substr(md5($path), 6, 9));
-			
-			if (!isset($semaphores[$key]))
-				$semaphores[$key] = sem_get($key, 1, 0600, true);
+			$key = hexdec(substr(md5($path), 3, 2)) + 1;
+
+			$sem = sem_get($key, 1, 0600, false);
 			
 			try {
-				sem_acquire($semaphores[$key]);
+				sem_acquire($sem);
 			} catch (BaseException $e) {
 				// failed to acquire
 				return null;
 			}
 			
 			try {
+				$old = umask();
+				umask(0077);
 				$fp = fopen($path, $value !== null ? 'wb' : 'rb');
+				umask($old);
 			} catch (BaseException $e) {
-				sem_release($semaphores[$key]);
+				sem_remove($sem);
 				return null;
 			}
 			
 			try {
 				flock($fp, $value !== null ? LOCK_EX : LOCK_SH);
 			} catch (BaseException $e) {
-				sem_release($semaphores[$key]);
+				sem_remove($sem);
 				return null;
 			}
 			
@@ -154,7 +154,7 @@
 	
 				touch($path, time() + $expires);
 				
-				sem_release($semaphores[$key]);
+				sem_remove($sem);
 				
 				return;
 			} else {
@@ -162,7 +162,7 @@
 					$data = fread($fp, $size);
 				
 				fclose($fp);
-				sem_release($semaphores[$key]);
+				sem_remove($sem);
 				
 				return $this->restoreData($data);
 			}

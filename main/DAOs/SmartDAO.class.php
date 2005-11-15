@@ -437,13 +437,10 @@
 			
 			$semKey = $this->keyToInt($mapKey);
 			
-			if (!isset($semaphores[$semKey])) {
+			if (!isset($semaphores[$semKey]))
 				$semaphores[$semKey] = sem_get($semKey, 1, 0600, true);
-			}
 			
-			if (!sem_acquire($semaphores[$semKey])) {
-				throw BaseException('failed to acquire');
-			}
+			sem_acquire($semaphores[$semKey]);
 			
 			$map[$objectKey] = true;
 			
@@ -455,7 +452,7 @@
 		
 		private function keyToInt($key)
 		{
-			return hexdec(substr(md5($key), 0, 3));
+			return hexdec(substr(md5($key), 0, 6)) + 1;
 		}
 	}
 ?>
