@@ -41,7 +41,7 @@
 			
 			// sync classes
 			$segment = shm_attach(
-				self::INDEX_SEGMENT, self::DEFAULT_SEGMENT_SIZE, 0644
+				self::INDEX_SEGMENT, self::DEFAULT_SEGMENT_SIZE, 0600
 			);
 			
 			try {
@@ -174,7 +174,7 @@
 					isset($this->customSized[$class])
 						? $this->customSized[$class]
 						: $this->defaultSize,
-					0644
+					0600
 				);
 
 			return self::$attached[$class];
@@ -182,7 +182,7 @@
 		
 		private function stringToInt($string)
 		{
-			return hexdec(substr(md5($string), 0, 6));
+			return hexdec(substr(md5($string), 3, 6));
 		}
 	}
 ?>

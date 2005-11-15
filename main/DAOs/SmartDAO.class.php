@@ -383,14 +383,10 @@
 			$queryId = $query->getId();
 			$key = $className.self::SUFFIX_QUERY.$queryId;
 			
-			try {
-				$this->syncMap($className.self::SUFFIX_INDEX, $key);
+			$this->syncMap($className.self::SUFFIX_INDEX, $key);
 			
-				Cache::me()->mark($this->getObjectName())->
-					add($key, $object, Cache::EXPIRES_FOREVER);
-			} catch (BaseException $e) {
-				// failed to acquire semaphore
-			}
+			Cache::me()->mark($this->getObjectName())->
+				add($key, $object, Cache::EXPIRES_FOREVER);
 			
 			return $object;
 		}
@@ -422,14 +418,10 @@
 				}
 			}
 
-			try {
-				$this->syncMap($indexKey, $listKey);
-				
-				$cache->mark($className)->
-					add($listKey, $array, Cache::EXPIRES_FOREVER);
-			} catch (BaseException $e) {
-				// failed to acquire semaphore
-			}
+			$this->syncMap($indexKey, $listKey);
+			
+			$cache->mark($className)->
+				add($listKey, $array, Cache::EXPIRES_FOREVER);
 			
 			return $array;
 		}
@@ -446,7 +438,7 @@
 			$semKey = $this->keyToInt($mapKey);
 			
 			if (!isset($semaphores[$semKey])) {
-				$semaphores[$semKey] = sem_get($semKey, 1, 0644, true);
+				$semaphores[$semKey] = sem_get($semKey, 1, 0600, true);
 			}
 			
 			if (!sem_acquire($semaphores[$semKey])) {
@@ -463,7 +455,7 @@
 		
 		private function keyToInt($key)
 		{
-			return hexdec(substr(md5($key), 0, 7));
+			return hexdec(substr(md5($key), 0, 3));
 		}
 	}
 ?>

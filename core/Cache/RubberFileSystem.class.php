@@ -51,7 +51,11 @@
 			if (is_readable($path)) {
 				
 				if (filemtime($path) <= time()) {
-					@unlink($path);
+					try {
+						unlink($path);
+					} catch (BaseException $e) {
+						// we're in race with unexpected clean()
+					}
 					return null;
 				}
 				
@@ -78,8 +82,13 @@
 			
 			$directory = dirname($path);
 			
-			if (!file_exists($directory))
-				mkdir($directory);
+			if (!file_exists($directory)) {
+				try {
+					mkdir($directory);
+				} catch (ObjectNotFoundException $e) {
+					// we're in race
+				}
+			}
 			
 			// do not add, if file exist and not expired
 			if (
@@ -101,49 +110,59 @@
 				}
 			}
 			
-			$this->operate($path, $value);
-			
-			if ($expires < parent::TIME_SWITCH)
-				$expires += time();
-
-			touch($path, time() + $expires);
+			$this->operate($path, $value, $expires);
 			
 			return true;
 		}
 		
-		private function operate($path, $value = null)
+		private function operate($path, $value = null, $expires = null)
 		{
-			$key = hexdec(substr(md5($path), 1, 8));
+			static $semaphores = array();
 			
-			$sem = sem_get($key, 1, 0644, true);
+			$key = hexdec(substr(md5($path), 6, 9));
 			
-			if (!sem_acquire($sem))
+			if (!isset($semaphores[$key]))
+				$semaphores[$key] = sem_get($key, 1, 0600, true);
+			
+			try {
+				sem_acquire($semaphores[$key]);
+			} catch (BaseException $e) {
+				// failed to acquire
 				return null;
+			}
 			
 			try {
 				$fp = fopen($path, $value !== null ? 'wb' : 'rb');
 			} catch (BaseException $e) {
-				sem_remove($sem);
+				sem_release($semaphores[$key]);
 				return null;
 			}
 			
 			try {
 				flock($fp, $value !== null ? LOCK_EX : LOCK_SH);
 			} catch (BaseException $e) {
-				sem_remove($sem);
+				sem_release($semaphores[$key]);
 				return null;
 			}
 			
 			if ($value !== null) {
 				fwrite($fp, $this->prepareData($value));
 				fclose($fp);
-				sem_remove($sem);
+				
+				if ($expires < parent::TIME_SWITCH)
+					$expires += time();
+	
+				touch($path, time() + $expires);
+				
+				sem_release($semaphores[$key]);
 				
 				return;
 			} else {
-				$data = fread($fp, filesize($path));
+				if (($size = filesize($path)) > 0)
+					$data = fread($fp, $size);
+				
 				fclose($fp);
-				sem_remove($sem);
+				sem_release($semaphores[$key]);
 				
 				return $this->restoreData($data);
 			}
