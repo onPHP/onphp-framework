@@ -28,7 +28,7 @@
 			if (!is_writable($directory))
 				throw new WrongArgumentException();
 			
-			if ($directory{strlen($directory) - 1} != DIRECTORY_SEPARATOR)
+			if ($directory[strlen($directory) - 1] != DIRECTORY_SEPARATOR)
 				$directory .= DIRECTORY_SEPARATOR;
 			
 			$this->directory = $directory;
@@ -174,7 +174,7 @@
 		{
 			return
 				$this->directory
-				.$key{0}.$key{1}
+				.$key[0].$key[1]
 				.DIRECTORY_SEPARATOR
 				.substr($key, 2);
 		}

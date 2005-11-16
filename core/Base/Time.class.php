@@ -57,12 +57,12 @@
 						
 						if ($assumedHour > 12)
 							$this->
-								setHour($input{0})->
+								setHour($input[0])->
 								setMinute(substr($input, 1, 3));
 						else
 							$this->
 								setHour($assumedHour)->
-								setMinute("{$input{2}}0");
+								setMinute("{$input[2]}0");
 
 						break;
 
