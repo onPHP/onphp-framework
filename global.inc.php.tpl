@@ -49,12 +49,14 @@
 		// current path
 		get_include_path().PATH_SEPARATOR
 		
-		// if your OS doesn't support symlinks - uncomment paths below
+		// to reduce include path - run incubator/misc/renewSymLinks.sh
+		// and uncomment this two paths
+		/**
 		.ONPHP_CORE_PATH.'.all'.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'.all'.PATH_SEPARATOR
-
+		**/
+		
 		// core classes
-		/**
 		.ONPHP_CORE_PATH.'Base'			.PATH_SEPARATOR
 		.ONPHP_CORE_PATH.'Cache'		.PATH_SEPARATOR
 		.ONPHP_CORE_PATH.'DB'			.PATH_SEPARATOR
@@ -62,10 +64,8 @@
 		.ONPHP_CORE_PATH.'Form'			.PATH_SEPARATOR
 		.ONPHP_CORE_PATH.'Logic'		.PATH_SEPARATOR
 		.ONPHP_CORE_PATH.'OSQL'			.PATH_SEPARATOR
-		**/
 		
 		// main framework
-		/**
 		.ONPHP_MAIN_PATH.'Base'			.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'DAOs'			.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Containers'	.PATH_SEPARATOR
@@ -75,7 +75,6 @@
 		.ONPHP_MAIN_PATH.'Template'		.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Utils'		.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'XML'			.PATH_SEPARATOR
-		**/
 
 		// incubator's stuff
 		/**

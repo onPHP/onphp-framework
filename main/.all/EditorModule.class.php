@@ -1,1 +1,0 @@
-../Module/EditorModule.class.php

@@ -1,1 +1,0 @@
-../OSQL/SelectQuery.class.php

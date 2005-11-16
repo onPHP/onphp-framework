@@ -1,1 +1,0 @@
-../DAOs/FullTextDAO.class.php

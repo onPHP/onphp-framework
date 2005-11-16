@@ -1,1 +1,0 @@
-../Template/PropertyFilterDefaultPublicProperty.class.php

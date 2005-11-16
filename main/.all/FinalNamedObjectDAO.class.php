@@ -1,1 +1,0 @@
-../DAOs/FinalNamedObjectDAO.class.php

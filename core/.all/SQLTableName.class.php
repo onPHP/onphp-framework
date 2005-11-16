@@ -1,1 +1,0 @@
-../OSQL/SQLTableName.class.php

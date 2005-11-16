@@ -1,1 +1,0 @@
-../OSQL/InsertQuery.class.php

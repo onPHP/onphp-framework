@@ -1,1 +1,0 @@
-../Base/Named.class.php

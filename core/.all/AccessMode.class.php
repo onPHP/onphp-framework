@@ -1,1 +1,0 @@
-../DB/AccessMode.class.php

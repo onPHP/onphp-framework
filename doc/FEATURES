@@ -1,5 +1,5 @@
 onPHP feature list (still and always incomplete)
-=========================================
+================================================
 - $Id$ -
 
 	core/Cache/
@@ -15,7 +15,9 @@ onPHP feature list (still and always incomplete)
 			basic yet powerful tools for building DAO's
 			hierarchy.
 
-		StorableContainer:
+	main/Containers/
+
+		StorableContainer and UnifiedContainer:
 			handling of identifiable objects collections.
 		
 	core/DB/

@@ -1,1 +1,0 @@
-../OSQL/QuerySkeleton.class.php

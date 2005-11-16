@@ -1,1 +1,0 @@
-../DAOs/NamedObjectDAO.class.php

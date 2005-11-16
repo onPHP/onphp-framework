@@ -1,1 +1,0 @@
-../OSQL/FullTextRank.class.php

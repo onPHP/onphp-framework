@@ -1,1 +1,0 @@
-../OSQL/SQLLeftJoin.class.php
