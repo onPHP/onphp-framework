@@ -401,6 +401,8 @@
 		
 		protected function cacheList(SelectQuery $query, /* array */ $array)
 		{
+			$successMapped = false;
+			
 			if ($array !== Cache::NOT_FOUND) {
 				Assert::isArray($array);
 				Assert::isTrue(current($array) instanceof Identifiable);
@@ -412,17 +414,22 @@
 			$listKey = $className.self::SUFFIX_LIST.$query->getId();
 			$indexKey = $className.self::SUFFIX_INDEX;
 			
-			if ($array !== Cache::NOT_FOUND) {
-				foreach ($array as $key => $object) {
-					$this->cacheObject($object);
+			try {
+				$this->syncMap($indexKey, $listKey);
+				$successMapped = true;
+			} catch (BaseException $e) {/**/}
+			
+			if ($successMapped == true) {
+				if ($array !== Cache::NOT_FOUND) {
+					foreach ($array as $key => $object) {
+						$this->cacheObject($object);
+					}
 				}
+				
+				$cache->mark($className)->
+					add($listKey, $array, Cache::EXPIRES_FOREVER);
 			}
 
-			$this->syncMap($indexKey, $listKey);
-			
-			$cache->mark($className)->
-				add($listKey, $array, Cache::EXPIRES_FOREVER);
-			
 			return $array;
 		}
 
