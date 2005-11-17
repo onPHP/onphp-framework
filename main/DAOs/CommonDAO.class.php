@@ -197,6 +197,34 @@
 				);
 		}
 		
+		public function getCustom(
+			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
+		)
+		{
+			$db = DBFactory::getDefaultInstance();
+		
+			if ($query->getLimit() > 1)
+				throw new WrongArgumentException(
+					'can not handle non-single row queries'
+				);
+		
+			if (
+				($expires !== Cache::DO_NOT_CACHE) &&
+				($object = $this->getCachedByQuery($query))
+			)
+				return $object;
+			elseif ($object = $db->queryRow($query)) {
+				if ($expires === Cache::DO_NOT_CACHE)
+					return $object;
+				else
+					return $this->cacheByQuery($query, $object, $expires);
+			} else {
+				throw new ObjectNotFoundException(
+					"zero for query == {$query->toString($db->getDialect())}"
+				);
+			}
+		}
+		
 		/**
 		 * list operations and things we can not drop from cache at any time
 		**/

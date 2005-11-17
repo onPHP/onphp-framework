@@ -29,6 +29,7 @@
 		abstract public function getListByQuery(SelectQuery $query);
 		abstract public function getListByLogic(LogicalObject $logic);
 
+		abstract public function getCustom(SelectQuery $query);
 		abstract public function getQueryResult(SelectQuery $query);
 
 		abstract public function dropById($id);
@@ -62,19 +63,6 @@
 			return clone $this->selectHead;
 		}
 		
-		public function getCustom(SelectQuery $query)
-		{
-			if ($query->getLimit() > 1)
-				throw new WrongArgumentException(
-					'can not handle non-single row queries'
-				);
-			
-			if ($object = DBFactory::getDefaultInstance()->queryRow($query))
-				return $object;
-			else
-				throw new ObjectNotFoundException();
-		}
-
 		public function getCustomList(SelectQuery $query)
 		{
 			if ($list = DBFactory::getDefaultInstance()->querySet($query))
