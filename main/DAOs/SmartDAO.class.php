@@ -382,11 +382,15 @@
 			$className = $this->getObjectName();
 			$queryId = $query->getId();
 			$key = $className.self::SUFFIX_QUERY.$queryId;
-			
-			$this->syncMap($className.self::SUFFIX_INDEX, $key);
-			
-			Cache::me()->mark($this->getObjectName())->
-				add($key, $object, Cache::EXPIRES_FOREVER);
+
+			try {
+				$this->syncMap($className.self::SUFFIX_INDEX, $key);
+				
+				Cache::me()->mark($this->getObjectName())->
+					add($key, $object, Cache::EXPIRES_FOREVER);
+			} catch (BaseException $e) {
+				// syncMap failed
+			}
 			
 			return $object;
 		}
@@ -401,8 +405,6 @@
 		
 		protected function cacheList(SelectQuery $query, /* array */ $array)
 		{
-			$successMapped = false;
-			
 			if ($array !== Cache::NOT_FOUND) {
 				Assert::isArray($array);
 				Assert::isTrue(current($array) instanceof Identifiable);
@@ -416,18 +418,17 @@
 			
 			try {
 				$this->syncMap($indexKey, $listKey);
-				$successMapped = true;
-			} catch (BaseException $e) {/**/}
-			
-			if ($successMapped == true) {
-				if ($array !== Cache::NOT_FOUND) {
-					foreach ($array as $key => $object) {
-						$this->cacheObject($object);
-					}
-				}
 				
 				$cache->mark($className)->
 					add($listKey, $array, Cache::EXPIRES_FOREVER);
+			} catch (BaseException $e) {
+				// syncMap failed
+			}
+			
+			if ($array !== Cache::NOT_FOUND) {
+				foreach ($array as $key => $object) {
+					$this->cacheObject($object);
+				}
 			}
 
 			return $array;
