@@ -34,7 +34,7 @@
 					OSQL::delete()->from($this->getTable())->
 					where(Expression::in('id', $ids))
 				);
-			
+
 			foreach ($ids as $id)
 				$cache->mark($className)->delete($className.'_'.$id);
 			
@@ -61,8 +61,12 @@
 			$className = $this->getObjectName();
 			
 			$indexKey = $className.self::SUFFIX_INDEX;
+			$intKey	= $this->keyToInt($indexKey);
 			
 			$cache = Cache::me();
+			$pool = SemaphorePool::me();
+
+			$pool->get($intKey);
 			
 			$indexList = $cache->mark($className)->get($indexKey);
 
@@ -72,6 +76,8 @@
 				foreach ($indexList as $key => &$true)
 					$cache->mark($className)->delete($key);
 			}
+			
+			$pool->free($intKey);
 			
 			return true;
 		}
