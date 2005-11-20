@@ -119,14 +119,10 @@
 		{
 			$key = hexdec(substr(md5($path), 3, 2)) + 1;
 
-			$sem = sem_get($key, 1, 0600, false);
+			$pool = SemaphorePool::me();
 			
-			try {
-				sem_acquire($sem);
-			} catch (BaseException $e) {
-				// failed to acquire
+			if (!$pool->get($key))
 				return null;
-			}
 			
 			try {
 				$old = umask();
@@ -134,14 +130,14 @@
 				$fp = fopen($path, $value !== null ? 'wb' : 'rb');
 				umask($old);
 			} catch (BaseException $e) {
-				sem_remove($sem);
+				$pool->drop($key);
 				return null;
 			}
 			
 			try {
 				flock($fp, $value !== null ? LOCK_EX : LOCK_SH);
 			} catch (BaseException $e) {
-				sem_remove($sem);
+				$pool->drop($key);
 				return null;
 			}
 			
@@ -154,15 +150,14 @@
 	
 				touch($path, time() + $expires);
 				
-				sem_remove($sem);
-				
-				return;
+				return $pool->drop($key);
 			} else {
 				if (($size = filesize($path)) > 0)
 					$data = fread($fp, $size);
 				
 				fclose($fp);
-				sem_remove($sem);
+				
+				$pool->drop($key);
 				
 				return $this->restoreData($data);
 			}
