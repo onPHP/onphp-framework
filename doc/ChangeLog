@@ -1,5 +1,9 @@
 # $Id$
 
+2005-11-20	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/DB/ImaginaryDialect.class.php: query's self-identification helper.
+
 2005-11-18	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * core/Cache/: proof-of-concept global SemaphorePool implemented.

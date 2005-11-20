@@ -18,7 +18,12 @@
 
 		public function getId()
 		{
-			return sha1(serialize($this));
+			static $dialect = null;
+			
+			if ($dialect === null)
+				$dialect = new ImaginaryDialect();
+
+			return sha1($this->toString($dialect));
 		}
 		
 		public function setId($id)
