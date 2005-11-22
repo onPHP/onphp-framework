@@ -50,7 +50,7 @@
 			$times = split('([,; ]+)', $string);
 			
 			for ($i = 0; $i < sizeof($times); $i++) {
-				$time = mb_ereg_replace('[^0-9:\.]', '', $times[$i]);
+				$time = mb_ereg_replace('[^0-9:]', ':', $times[$i]);
 				
 				try {
 					$list[] = Time::create($time);

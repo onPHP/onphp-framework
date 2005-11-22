@@ -30,7 +30,7 @@
 		{
 			$input = (string) $input;
 			
-			$time = split('[:\.]', $input);
+			$time = split(':', $input);
 			
 			$lenght = strlen($input);
 			
