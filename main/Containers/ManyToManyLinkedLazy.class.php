@@ -15,7 +15,7 @@
 	{
 		public function sync(&$insert, &$update, &$delete = array())
 		{
-			Assert::isTrue($delete === array());
+			Assert::isTrue(is_array($delete));
 			
 			$db = DBFactory::getDefaultInstance();
 			
