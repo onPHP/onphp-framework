@@ -17,7 +17,7 @@
 		protected $container	= null;
 		
 		abstract public function makeFetchQuery();
-		abstract public function sync(&$insert, &$update, &$delete = array());
+		abstract public function sync(&$insert, &$update = array(), &$delete);
 		
 		public function __construct(UnifiedContainer $uc)
 		{

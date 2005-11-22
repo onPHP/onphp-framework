@@ -13,9 +13,9 @@
 
 	final class ManyToManyLinkedLazy extends ManyToManyLinkedWorker
 	{
-		public function sync(&$insert, &$update, &$delete = array())
+		public function sync(&$insert, &$update = array(), &$delete)
 		{
-			Assert::isTrue(is_array($delete));
+			Assert::isTrue($update === array());
 			
 			$db = DBFactory::getDefaultInstance();
 			

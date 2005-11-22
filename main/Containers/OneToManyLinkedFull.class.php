@@ -25,7 +25,7 @@
 				);
 		}
 
-		public function sync(&$insert, &$update, &$delete = array())
+		public function sync(&$insert, &$update = array(), &$delete)
 		{
 			$uc = $this->container;
 			$dao = $uc->getDao();

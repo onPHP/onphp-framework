@@ -30,9 +30,9 @@
 				);
 		}
 		
-		public function sync(&$insert, &$delete, &$delete = array())
+		public function sync(&$insert, &$update = array(), &$delete)
 		{
-			Assert::isTrue($delete === array());
+			Assert::isTrue($update === array());
 			
 			$db = &DBFactory::getDefaultInstance();
 			

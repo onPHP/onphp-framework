@@ -13,7 +13,7 @@
 
 	final class ManyToManyLinkedFull extends ManyToManyLinkedWorker
 	{
-		public function sync(&$insert, &$update, &$delete = array())
+		public function sync(&$insert, &$update = array(), &$delete)
 		{
 			$db = DBFactory::getDefaultInstance();
 
