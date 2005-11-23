@@ -48,7 +48,7 @@
 		{
 			$list = array();
 
-			$times = split('([,; ]+)', $string);
+			$times = split("([,; \n]+)", $string);
 			
 			for ($i = 0; $i < sizeof($times); $i++) {
 				$time = mb_ereg_replace('[^0-9:]', ':', $times[$i]);
