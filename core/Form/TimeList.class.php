@@ -26,7 +26,8 @@
 			$list = array();
 
 			foreach ($array as $string)
-				$list[] = self::stringToTimeList($string);
+				if (array() !== self::stringToTimeList($string))
+					$list[] = self::stringToTimeList($string);
 			
 			$this->value = $list;
 			

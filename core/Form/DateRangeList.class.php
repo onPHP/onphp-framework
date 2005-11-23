@@ -30,11 +30,21 @@
 			$array = $scope[$this->name];
 			$list = array();
 
-			foreach ($array as $string) {
-				if (empty($string)) {
-					continue;
-				}
-				
+			foreach ($array as $string)
+				if (array() !== self::stringToDateRangeList($string))
+					foreach (self::stringToDateRangeList($string) as $range)
+						$list[] = $range;
+			
+			$this->value = $list;
+
+			return ($this->value !== array());
+		}
+		
+		public static function stringToDateRangeList($string)
+		{
+			$list = array();
+			
+			if (!empty($string)) {
 				if (strpos($string, ',') !== false)
 					$dates = explode(',', $string);
 				else
@@ -42,16 +52,14 @@
 				
 				foreach ($dates as $date) {
 					try {
-						$list[] = self::makeTimestamp($string);
+						$list[] = self::makeTimestamp($date);
 					} catch (WrongArgumentException $e) {
 						// ignore?
 					}
 				}
 			}
 			
-			$this->value = $list;
-
-			return ($this->value !== array());
+			return $list;
 		}
 		
 		public static function makeTimestamp($string)
