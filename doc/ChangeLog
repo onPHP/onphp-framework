@@ -1,5 +1,13 @@
 # $Id$
 
+2005-11-23	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/SmartDAO.class.php: yet another race prevention.
+
+2005-11-22	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/Containers/: wrongly defined worker's interface fixed.
+
 2005-11-20	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * core/DB/ImaginaryDialect.class.php: query's self-identification helper.

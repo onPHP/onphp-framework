@@ -387,11 +387,21 @@
 		{
 			$className = $this->getObjectName();
 			$queryId = $query->getId();
+			
+			$indexKey = $className.self::SUFFIX_INDEX;
+			$semKey = $this->keyToInt($indexKey);
 			$key = $className.self::SUFFIX_QUERY.$queryId;
+			
+			$pool = SemaphorePool::me();
 
-			if ($this->syncMap($className.self::SUFFIX_INDEX, $key))
+			if ($pool->get($semKey)) {
+				$this->syncMap($indexKey, $key);
+				
 				Cache::me()->mark($this->getObjectName())->
 					add($key, $object, Cache::EXPIRES_FOREVER);
+				
+				$pool->free($semKey);
+			}
 			
 			return $object;
 		}
@@ -416,15 +426,24 @@
 			
 			$listKey = $className.self::SUFFIX_LIST.$query->getId();
 			$indexKey = $className.self::SUFFIX_INDEX;
+			$semKey = $this->keyToInt($indexKey);
 			
-			if ($this->syncMap($indexKey, $listKey))
+			$pool = SemaphorePool::me();
+			
+			if ($pool->get($semKey)) {
+			
+				$this->syncMap($indexKey, $listKey);
+				
 				$cache->mark($className)->
 					add($listKey, $array, Cache::EXPIRES_FOREVER);
-			
-			if ($array !== Cache::NOT_FOUND) {
-				foreach ($array as $key => $object) {
-					$this->cacheObject($object);
+				
+				if ($array !== Cache::NOT_FOUND) {
+					foreach ($array as $key => $object) {
+						$this->cacheObject($object);
+					}
 				}
+				
+				$pool->free($semKey);
 			}
 
 			return $array;
@@ -433,25 +452,18 @@
 		private function syncMap($mapKey, $objectKey)
 		{
 			$cache = Cache::me();
-			$pool = SemaphorePool::me();
 			
 			if (!$map = $cache->get($mapKey))
 				$map = array();
 			
 			$semKey = $this->keyToInt($mapKey);
 			
-			if ($pool->get($semKey)) {
-				$map[$objectKey] = true;
-				
-				$cache->mark($this->getObjectName())->
-					set($mapKey, $map, Cache::EXPIRES_FOREVER);
-				
-				$pool->free($semKey);
-				
-				return true;
-			}
+			$map[$objectKey] = true;
 			
-			return false;
+			$cache->mark($this->getObjectName())->
+				set($mapKey, $map, Cache::EXPIRES_FOREVER);
+			
+			return true;
 		}
 		
 		private function keyToInt($key)
