@@ -1,5 +1,9 @@
 # $Id$
 
+2005-11-24	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* 0.2.6 released.
+
 2005-11-23	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * main/DAOs/SmartDAO.class.php: yet another race prevention.
