@@ -5,9 +5,9 @@ onPHP feature list (still and always incomplete)
 	core/Cache/
 
 		Universal multi-peer weight-based cache support. Currently
-		supports Memcached and RubberFileSystem with or without
-		ReferencePool wrapper, and offers PlainDatabase class as an
-		example of cache peer.
+		supports SharedMemory, Memcached and RubberFileSystem with or
+		without ReferencePool wrapper. Multi-peer's ability provided
+		by AggregateCache.
 
 	main/DAOs/
 
