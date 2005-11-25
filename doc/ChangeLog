@@ -1,5 +1,9 @@
 # $Id$
 
+2005-11-26	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* core/DB/: Interbase connector implemented.
+
 2005-11-24	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * 0.2.6 released.
