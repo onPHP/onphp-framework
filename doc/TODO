@@ -2,5 +2,3 @@
 
 * implement separate OrderBy chain-like class which should be able to perform
   self transformations accoring to given mapping. As suggested by Anton.
-
-* pg's single checks in all db-connectors.

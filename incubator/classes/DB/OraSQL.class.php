@@ -112,7 +112,7 @@
 		{
 			$res = $this->query($query);
 			
-			if ($res) {
+			if ($this->checkSingle($res)) {
 				if (oci_num_rows($res) > 1)
 					throw new DatabaseException(
 						"query returned too many rows (we need only one) : "
@@ -133,7 +133,7 @@
 		{
 			$res = $this->query($query);
 			
-			if ($res) {
+			if ($this->checkSingle($res)) {
 				$ret = oci_fetch_assoc($res);
 				oci_free_statement($res);
 				return $ret;
@@ -188,6 +188,17 @@
 				return $array;
 			} else
 				return null;
+		}
+		
+		private function checkSingle($result)
+		{
+			if (oci_num_rows($result) > 1)
+				throw new DatabaseException(
+					"query returned too many rows (we need only one): "
+					.$query->toString($this->getDialect())
+				);
+			
+			return $result;
 		}
 	}
 ?>

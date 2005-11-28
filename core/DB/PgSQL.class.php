@@ -209,7 +209,7 @@
 		{
 			if (pg_num_rows($result) > 1)
 				throw new DatabaseException(
-					"query returned too many rows (we need only one) : "
+					"query returned too many rows (we need only one): "
 					.$query->toString($this->getDialect())
 				);
 			

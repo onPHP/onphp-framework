@@ -128,7 +128,7 @@
 		{
 			$res = $this->query($query);
 			
-			if ($res)
+			if ($this->checkSingle($res))
 				if ($row = mysql_fetch_assoc($res))
 					return $dao->makeObject($row);
 
@@ -139,7 +139,7 @@
 		{
 			$res = $this->query($query);
 			
-			if ($res)
+			if ($this->checkSingle($res))
 				return mysql_fetch_assoc($res);
 			else
 				return null;
@@ -200,6 +200,17 @@
 					mysql_errno($this->link)
 				);
 
+			return $result;
+		}
+		
+		private function checkSingle($result)
+		{
+			if (mysql_num_rows($result) > 1)
+				throw new DatabaseException(
+					"query returned too many rows (we need only one): "
+					.$query->toString($this->getDialect())
+				);
+			
 			return $result;
 		}
 	}

@@ -81,7 +81,7 @@
 		{
 			$res = $this->query($query);
 			
-			if ($res)
+			if ($this->checkSingle($res))
 				if ($row = mssql_fetch_assoc($res))
 					return $dao->makeObject($row);
 
@@ -92,7 +92,7 @@
 		{
 			$res = $this->query($query);
 			
-			if ($res)
+			if ($this->checkSingle($res))
 				return mssql_fetch_assoc($res);
 			else
 				return null;
@@ -167,5 +167,15 @@
 			throw new UnsupportedMethodException();
 		}
 		
+		private function checkSingle($result)
+		{
+			if (mssql_num_rows($result) > 1)
+				throw new DatabaseException(
+					"query returned too many rows (we need only one): "
+					.$query->toString($this->getDialect())
+				);
+			
+			return $result;
+		}
 	}
 ?>
