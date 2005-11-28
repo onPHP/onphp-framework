@@ -133,13 +133,7 @@
 		{
 			$res = $this->query($query);
 			
-			if ($res) {
-				if (pg_num_rows($res) > 1)
-					throw new DatabaseException(
-						"query returned too many rows (we need only one) : "
-						.$query->toString($this->getDialect())
-					);
-
+			if ($this->checkSingle($res)) {
 				if ($row = pg_fetch_assoc($res)) {
 					pg_free_result($res);
 					return $dao->makeObject($row);
@@ -154,7 +148,7 @@
 		{
 			$res = $this->query($query);
 			
-			if ($res) {
+			if ($this->checkSingle($res)) {
 				$ret = pg_fetch_assoc($res);
 				pg_free_result($res);
 				return $ret;
@@ -209,6 +203,17 @@
 				return $array;
 			} else
 				return null;
+		}
+		
+		private function checkSingle($result)
+		{
+			if (pg_num_rows($result) > 1)
+				throw new DatabaseException(
+					"query returned too many rows (we need only one) : "
+					.$query->toString($this->getDialect())
+				);
+			
+			return $result;
 		}
 	}
 ?>
