@@ -71,7 +71,7 @@
 					implode(
 						$glue, 
 						array_map(
-							array('self', 'quoteValue'), 
+							array('PostgresDialect', 'quoteValue'), 
 							$words
 						)
 					)
