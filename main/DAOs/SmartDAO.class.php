@@ -14,7 +14,7 @@
 	/**
 	 * Transparent caching DAO.
 	 * 
-	 * @see SmartDAO for manual-caching one.
+	 * @see CommonDAO for manual-caching one.
 	**/
 	abstract class SmartDAO extends GenericDAO
 	{
