@@ -14,7 +14,7 @@
 	/**
 	 * Interbase DB connector.
 	 *
-	 * @link http://firebird.sourceforge.net/
+	 * @see http://firebird.sourceforge.net/
 	**/
 	class IBase extends DB
 	{

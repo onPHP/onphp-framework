@@ -14,7 +14,7 @@
 	/**
 	 * Transaction access modes.
 	 *
-	 * @link http://www.postgresql.org/docs/8.0/interactive/sql-start-transaction.html
+	 * @see http://www.postgresql.org/docs/8.0/interactive/sql-start-transaction.html
 	**/
 	final class AccessMode extends Enumeration
 	{

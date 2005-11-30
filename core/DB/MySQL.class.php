@@ -20,7 +20,7 @@
 	 * 2) sequence name should equal table name + '_id'.
 	 *
 	 * @see IdentifiableOjbect
-	 * @link http://www.mysql.com/
+	 * @see http://www.mysql.com/
 	**/
 	class MySQL extends DB
 	{

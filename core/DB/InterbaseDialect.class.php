@@ -14,7 +14,7 @@
 	/**
 	 * Interbase dialect.
 	 *
-	 * @link http://firebird.sourceforge.net/
+	 * @see http://firebird.sourceforge.net/
 	**/
 	final class InterbaseDialect extends Dialect
 	{

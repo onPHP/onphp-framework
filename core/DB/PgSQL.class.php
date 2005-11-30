@@ -14,7 +14,7 @@
 	/**
 	 * PostgreSQL DB connector.
 	 *
-	 * @link http://www.postgresql.org/
+	 * @see http://www.postgresql.org/
 	**/
 	class PgSQL extends DB
 	{
