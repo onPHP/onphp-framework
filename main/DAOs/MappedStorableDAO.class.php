@@ -11,15 +11,10 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class MappedStorableDAO extends SmartDAO implements MappedDAO
+	abstract class MappedStorableDAO extends StorableDAO implements MappedDAO
 	{
 		// override later
 		protected $mapping = array();
-		
-		public function getIdName()
-		{
-			return 'id';
-		}
 		
 		public function getMapping()
 		{
@@ -35,70 +30,6 @@
 					$fields[] = ($field === null ? $prop : $field);
 			
 			return $fields;
-		}
-		
-		public function get(ObjectQuery $oq)
-		{
-			return $this->getByQuery($oq->toSelectQuery($this));
-		}
-
-		public function getList(ObjectQuery $oq)
-		{
-			return $this->getListByQuery($oq->toSelectQuery($this));
-		}
-		
-		public function getCountedList(ObjectQuery $oq)
-		{
-			return $this->getQueryResult($oq->toSelectQuery($this));
-		}
-
-		public function take(Identifiable $object)
-		{
-			return
-				$object->getId()
-					? $this->save($object)
-					: $this->add($object);
-		}
-		
-		public function add(Identifiable $object)
-		{
-			$object =
-				$this->inject(
-					OSQL::insert(),
-					$object->setId(
-						DBFactory::getDefaultInstance()->obtainSequence(
-							$this->getSequence()
-						)
-					)
-				);
-			
-			return $object;
-		}
-		
-		public function save(Identifiable $object)
-		{
-			return
-				$this->inject(
-					OSQL::update()->where(
-						Expression::eqId($this->getIdName(), $object)
-					),
-					$object
-				);
-		}
-
-		protected function inject(
-			InsertOrUpdateQuery $query, Identifiable $object
-		)
-		{
-			DBFactory::getDefaultInstance()->queryNull(
-				$this->setQueryFields(
-					$query->setTable($this->getTable()), $object
-				)
-			);
-			
-			$this->uncacheById($object->getId());
-			
-			return $object;
 		}
 	}
 ?>

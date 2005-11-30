@@ -14,7 +14,7 @@
 	/**
 	 * Simple DAO for simple NamedObject.
 	**/
-	abstract class NamedObjectDAO extends CommonDAO
+	abstract class NamedObjectDAO extends GenericDAO
 	{
 		// if you will override it later - append this fields to your array
 		protected $fields = array('id', 'name');

@@ -1,6 +1,10 @@
 # $Id$
 
-2005-11-28	Igor V. Gulyaev			<igor_vg@mail.ru>
+2005-11-30	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* main/DAOs/: all DAOs moved to workers-based single hierarchy.
+
+2005-11-28	Igor V. Gulyaev		<igor_vg@mail.ru>
 
 * core/DB/: single-check added for single row queries.
 

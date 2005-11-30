@@ -12,7 +12,7 @@
 /* $Id$ */
 	
 	/**
-	 * System-wide access to selected CachePeer.
+	 * System-wide access to selected CachePeer and DaoWorker.
 	 *
 	 * @see CachePeer
 	**/
@@ -27,7 +27,14 @@
 		
 		const DO_NOT_CACHE		= -2005;
 		
+		/// map dao -> worker
+		private static $map		= null;
+		
+		/// selected peer
 		private static $peer	= null;
+		
+		/// default worker
+		private static $worker	= null;
 		
 		public static function me()
 		{
@@ -40,6 +47,30 @@
 		public static function setPeer(CachePeer $peer)
 		{
 			self::$peer = $peer;
+		}
+		
+		public static function setDefaultWorker($worker)
+		{
+			self::$worker = $worker;
+		}
+		
+		public static function worker(GenericDAO $dao)
+		{
+			static $instances = array();
+			
+			$class = get_class($dao);
+			
+			if (!isset($instances[$class])) {
+				
+				if (isset(self::$map[$class]))
+					$instances[$class] = new $map[$class]($dao);
+				elseif (self::$worker)
+					$instances[$class] = new self::$worker($dao);
+				else
+					$instances[$class] = new CommonDaoWorker($dao);
+			}
+			
+			return $instances[$class];
 		}
 	}
 ?>

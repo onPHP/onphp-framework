@@ -11,12 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * IdentifiableObject childs collection handling.
-	 * 
-	 * @see UnifiedContainer
-	**/
-	abstract class StorableDAO extends CommonDAO
+	abstract class StorableDAO extends GenericDAO
 	{
 		public function getIdName()
 		{
@@ -65,7 +60,7 @@
 				)
 			);
 			
-			$this->uncacheIdentifiable($object);
+			$this->uncacheById($object->getId());
 			
 			return $object;
 		}

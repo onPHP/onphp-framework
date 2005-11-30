@@ -11,13 +11,15 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class ObjectsTreeDAO extends CommonDAO
+	abstract class ObjectsTreeDAO extends GenericDAO
 	{
 		protected $fields = array(
 			'id', 'parent_id', 'name'
 		);
 		
-		final public function setTreeQueryFields(InsertOrUpdateQuery $query, ObjectsTree $tree)
+		final public function setTreeQueryFields(
+			InsertOrUpdateQuery $query, ObjectsTree $tree
+		)
 		{
 			$query->
 				set('id', $tree->getId())->
@@ -29,7 +31,9 @@
 			return $query;
 		}
 		
-		final public function makeTreeObject(&$array, ObjectsTree $tree, $prefix = null)
+		final public function makeTreeObject(
+			&$array, ObjectsTree $tree, $prefix = null
+		)
 		{
 			$tree->
 				setId($array[$prefix.'id'])->
@@ -74,7 +78,9 @@
 				);
 		}
 		
-		final protected function injectTree(InsertOrUpdateQuery $query, ObjectsTree $tree)
+		final protected function injectTree(
+			InsertOrUpdateQuery $query, ObjectsTree $tree
+		)
 		{
 			DBFactory::getDefaultInstance()->queryNull(
 				$this->setQueryFields($query, $tree)

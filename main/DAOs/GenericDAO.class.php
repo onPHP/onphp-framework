@@ -14,27 +14,13 @@
 	/**
 	 * Basis of all DAO's.
 	**/
-	abstract class GenericDAO extends Singletone
+	abstract class GenericDAO extends Singletone implements BaseDAO
 	{
 		protected $selectHead = null;
 		
 		abstract public function getTable();
 		abstract public function getObjectName();
 		
-		abstract public function getById($id);
-		abstract public function getByLogic(LogicalObject $logic);
-		abstract public function getByQuery(SelectQuery $query);
-
-		abstract public function getListByIds($ids);
-		abstract public function getListByQuery(SelectQuery $query);
-		abstract public function getListByLogic(LogicalObject $logic);
-
-		abstract public function getCustom(SelectQuery $query);
-		abstract public function getQueryResult(SelectQuery $query);
-
-		abstract public function dropById($id);
-		abstract public function dropByIds($ids);
-
 		abstract protected function makeObject(&$array, $prefix = null);
 
 		public function getFields()
@@ -63,27 +49,153 @@
 			return clone $this->selectHead;
 		}
 		
-		public function getCustomList(SelectQuery $query)
+		//@{
+		// boring delegates
+		public function get(ObjectQuery $oq, $expires = Cache::DO_NOT_CACHE)
 		{
-			if ($list = DBFactory::getDefaultInstance()->querySet($query))
-				return $list;
-			else
-				throw new ObjectNotFoundException();
+			return Cache::worker($this)->get($oq, $expires);
+		}
+
+		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
+		{
+			return Cache::worker($this)->getById($id, $expires);
+		}
+
+		public function getByLogic(
+			LogicalObject $logic, $expires = Cache::DO_NOT_CACHE
+		)
+		{
+			return Cache::worker($this)->getByLogic($logic, $expires);
+		}
+
+		public function getByQuery(
+			SelectQuery $query, $expires = Cache::EXPIRES_MEDIUM
+		)
+		{
+			return Cache::worker($this)->getByQuery($query, $expires);
+		}
+		
+		public function getCustom(
+			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
+		)
+		{
+			return Cache::worker($this)->getCustom($query, $expires);
+		}
+		
+		public function getList(ObjectQuery $oq, $expires = Cache::DO_NOT_CACHE)
+		{
+			return Cache::worker($this)->getList($oq, $expires);
+		}
+		
+		public function getListByIds(
+			/* array */ $ids, $expires = Cache::EXPIRES_MEDIUM
+		)
+		{
+			return Cache::worker($this)->getListByIds($ids, $expires);
+		}
+		
+		public function getListByQuery(
+			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
+		)
+		{
+			return Cache::worker($this)->getListByQuery($query, $expires);
+		}
+		
+		public function getListByLogic(
+			LogicalObject $logic, $expires = Cache::DO_NOT_CACHE
+		)
+		{
+			return Cache::worker($this)->getListByLogic($logic, $expires);
+		}
+		
+		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
+		{
+			return Cache::worker($this)->getPlainList($expires);
+		}
+		
+		public function getCustomList(
+			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
+		)
+		{
+			return Cache::worker($this)->getCustomList($query, $expires);
 		}
 		
 		public function getCustomRowList(
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			if ($query->getFieldsCount() !== 1)
-				throw new WrongArgumentException(
-					'you should select only one row when using this method'
-				);
-			
-			if ($list = DBFactory::getDefaultInstance()->queryColumn($query))
-				return $list;
-			else
-				throw new ObjectNotFoundException();
+			return Cache::worker($this)->getCustomRowList($query, $expires);
 		}
+		
+		public function getCountedList(
+			ObjectQuery $oq, $expires = Cache::DO_NOT_CACHE
+		)
+		{
+			return Cache::worker($this)->getCountedList($oq, $expires);
+		}
+		
+		public function getQueryResult(
+			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
+		)
+		{
+			return Cache::worker($this)->getQueryResult($query, $expires);
+		}
+		
+		public function cacheById(
+			Identifiable $object, $expires = Cache::EXPIRES_MEDIUM
+		)
+		{
+			return Cache::worker($this)->cacheById($object, $expires);
+		}
+		
+		public function cacheByQuery(
+			SelectQuery $query,
+			/* Identifiable */ $object,
+			$expires = Cache::DO_NOT_CACHE
+		)
+		{
+			return Cache::worker($this)->cacheByQuery($query, $object, $expires);
+		}
+		
+		public function cacheListByQuery(SelectQuery $query, /* array */ $array)
+		{
+			return Cache::worker($this)->cacheListByQuery($query, $array);
+		}
+		
+		public function getCachedById($id)
+		{
+			return Cache::worker($this)->getCachedById($id);
+		}
+		
+		public function getCachedByQuery(Query $query)
+		{
+			return Cache::worker($this)->getCachedByQuery($query);
+		}
+		
+		public function dropById($id)
+		{
+			return Cache::worker($this)->dropById($id);
+		}
+		
+		public function dropByIds($ids)
+		{
+			return Cache::worker($this)->dropByIds($ids);
+		}
+		
+		public function uncacheById($id)
+		{
+			return Cache::worker($this)->uncacheById($id);
+		}
+		
+		public function uncacheByIds($ids)
+		{
+			return Cache::worker($this)->uncacheByIds($ids);
+		}
+		
+		public function uncacheLists()
+		{
+			return Cache::worker($this)->uncacheLists();
+		}
+		//@}
 	}
 ?>

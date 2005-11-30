@@ -38,11 +38,6 @@
 			return parent::makeNamedObject($array, new $class, $prefix);
 		}
 		
-		public function getList()
-		{
-			return $this->getPlainList();
-		}
-
 		final protected function setQueryFields(
 			InsertOrUpdateQuery $query, NamedObject $no
 		)
