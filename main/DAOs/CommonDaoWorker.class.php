@@ -406,7 +406,7 @@
 					$className.'_'.$id
 				);
 			
-			return $this->dropLists();
+			return $this->uncacheLists();
 		}
 		
 		public function uncacheLists()
