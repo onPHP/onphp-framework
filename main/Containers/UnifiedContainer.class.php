@@ -202,10 +202,7 @@
 				throw $e;
 			}
 			
-			if ($this->dao instanceof SmartDAO)
-				$this->dao->dropLists();
-			elseif ($this->dao instanceof CommonDAO)
-				$this->dao->uncacheList();
+			$this->dao->uncacheLists();
 
 			return $this;
 		}

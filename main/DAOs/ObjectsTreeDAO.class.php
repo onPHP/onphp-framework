@@ -86,7 +86,7 @@
 				$this->setQueryFields($query, $tree)
 			);
 			
-			$this->uncacheIdentifiable($tree);
+			$this->uncacheById($tree->getId());
 			
 			return $tree;
 		}

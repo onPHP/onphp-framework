@@ -90,7 +90,7 @@
 				$this->setQueryFields($query, $no)
 			);
 			
-			$this->uncacheIdentifiable($no);
+			$this->uncacheById($no->getId());
 			
 			return $no;
 		}
