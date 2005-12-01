@@ -76,7 +76,7 @@
 				
 			} else {
 				$object = DBFactory::getDefaultInstance()->queryObjectRow(
-					$query, $this
+					$query, $this->dao
 				);
 				
 				if ($object)
