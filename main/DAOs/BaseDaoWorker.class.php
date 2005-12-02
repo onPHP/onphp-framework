@@ -51,6 +51,32 @@
 		//@}
 		
 		//@{
+		// erasers
+		public function dropById($id)
+		{
+			$result =
+				DBFactory::getDefaultInstance()->queryNull(
+					OSQL::delete()->from($this->getTable())->
+					where(Expression::eq('id', $id))
+				);
+			
+			$this->uncacheById($id);
+			
+			return $result;
+		}
+		//@}
+
+		//@{
+		// uncachers
+		public function uncacheById($id)
+		{
+			$className = $this->getObjectName();
+			
+			return Cache::me()->mark($className)->delete($className.'_'.$id);
+		}
+		//@}
+		
+		//@{
 		// cache getters
 		public function getCachedById($id)
 		{

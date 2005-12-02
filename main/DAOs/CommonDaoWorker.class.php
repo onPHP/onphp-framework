@@ -362,14 +362,12 @@
 		// erasers
 		public function dropById($id)
 		{
-			$this->uncacheById($id);
+			$result =
+				parent::dropById($id);
+			
 			$this->uncacheLists();
 			
-			return
-				DBFactory::getDefaultInstance()->queryNull(
-					OSQL::delete()->from($this->getTable())->
-					where(Expression::eq('id', $id))
-				);
+			return $result;
 		}
 		
 		public function dropByIds($ids)
@@ -389,13 +387,6 @@
 
 		//@{
 		// uncachers
-		public function uncacheById($id)
-		{
-			$className = $this->getObjectName();
-			
-			return Cache::me()->mark($className)->delete($className.'_'.$id);
-		}
-		
 		public function uncacheByIds($ids)
 		{
 			$className = $this->getObjectName();
