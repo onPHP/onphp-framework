@@ -410,20 +410,22 @@
 			$cache = Cache::me();
 			$pool = SemaphorePool::me();
 
-			$pool->get($intKey);
-			
-			$indexList = $cache->mark($className)->get($indexKey);
-
-			if ($indexList) {
-				$cache->mark($className)->delete($indexKey);
+			if ($pool->get($intKey)) {
+				$indexList = $cache->mark($className)->get($indexKey);
+	
+				if ($indexList) {
+					$cache->mark($className)->delete($indexKey);
+					
+					foreach ($indexList as $key => &$true)
+						$cache->mark($className)->delete($key);
+				}
 				
-				foreach ($indexList as $key => &$true)
-					$cache->mark($className)->delete($key);
+				$pool->free($intKey);
+				
+				return true;
 			}
 			
-			$pool->free($intKey);
-			
-			return true;
+			return false;
 		}
 		//@}
 		

@@ -79,7 +79,7 @@
 			for ($i = 0; $i < sizeof($array); $i++)
 				if (!empty($array[$i]) && strlen($array[$i]) > 2)
 					if ($element = mb_ereg_replace(
-						'[^а-яА-Яa-zA-Z 0-9]', '', $array[$i]
+						'[^а-яА-Яa-zA-Z0-9 \-]', '', $array[$i]
 						)
 					)
 						$out[] = $element;
