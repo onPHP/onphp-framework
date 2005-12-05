@@ -34,4 +34,13 @@ create table "message" (
 	posted timestamp not null
 );
 
+-- SQLite:
+
+create table message(
+	id integer not null primary key,
+	nickname varchar(50) not null,
+	name varchar(255) not null, -- aka subject, aka title
+	content text not null,
+	posted timestamp not null
+);
 

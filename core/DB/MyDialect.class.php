@@ -22,7 +22,7 @@
 		
 		public static function quoteValue(&$value)
 		{
-			/// @see MySQL for this convention
+			/// @see Sequenceless for this convention
 			
 			if ($value instanceof Identifier && !$value->isFinalized())
 				return 'null';

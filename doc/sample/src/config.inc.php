@@ -19,11 +19,11 @@
 	require realpath(PATH_BASE.'../../../global.inc.php.tpl');
 	
 	// db settings
-	define('DB_BASE', '/home/voxus/bases/gb');
+	define('DB_BASE', '/home/voxus/bases/litegb');
 	define('DB_USER', 'voxus');
 	define('DB_PASS', '12345');
 	define('DB_HOST', 'localhost');
-	define('DB_CLASS', 'IBase'); // or: PgSQL, MySQL, OraSQL
+	define('DB_CLASS', 'SQLite'); // or: PgSQL, MySQL, OraSQL, IBase
 
 	// everything else
 	define('DEFAULT_ENCODING', 'UTF8');

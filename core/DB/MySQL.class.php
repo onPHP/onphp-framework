@@ -14,18 +14,10 @@
 	/**
 	 * MySQL DB connector.
 	 * 
-	 * You should follow two conventions, when stornig objects thru this one:
-	 * 
-	 * 1) objects should be childs of IdentifiableObject;
-	 * 2) sequence name should equal table name + '_id'.
-	 *
-	 * @see IdentifiableOjbect
 	 * @see http://www.mysql.com/
 	**/
-	class MySQL extends DB
+	class MySQL extends Sequenceless
 	{
-		private $sequencePool = array();
-		
 		private static $dialect = null;
 		
 		public function __construct()
@@ -51,15 +43,6 @@
 		public function setEncoding($encoding)
 		{
 			throw new UnsupportedMethodException();
-		}
-
-		public function obtainSequence($sequence)
-		{
-			$id = Identifier::create();
-			
-			$this->sequencePool[$sequence][] = $id;
-			
-			return $id;
 		}
 
 		public function connect(
@@ -91,30 +74,6 @@
 			return $this;
 		}
 		
-		public function query(Query $query)
-		{
-			$result = $this->queryRaw($query->toString($this->getDialect()));
-			
-			if (
-				($query instanceof InsertQuery)
-				&& isset($this->sequencePool[$name = $query->getTable().'_id'])
-			) {
-				$id = current($this->sequencePool[$name]);
-				
-				$id->setId(mysql_insert_id($this->link))->finalize();
-				
-				unset(
-					$this->sequencePool[
-						$name
-					][
-						key($this->sequencePool)
-					]
-				);
-			}
-			
-			return $result;
-		}
-
 		/**
 		 * Same as query, but returns number of
 		 * affected rows in insert/update queries
@@ -201,6 +160,11 @@
 				);
 
 			return $result;
+		}
+		
+		protected function getInsertId()
+		{
+			return mysql_insert_id($this->link);
 		}
 		
 		private function checkSingle($result)

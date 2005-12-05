@@ -23,6 +23,11 @@
 			parent::__construct($field);
 			$this->alias = $alias;
 		}
+		
+		public function getName()
+		{
+			return $this->field->getField();
+		}
 
 		public function toString(Dialect $dialect)
 		{

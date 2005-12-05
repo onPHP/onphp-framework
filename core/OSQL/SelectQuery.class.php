@@ -249,6 +249,16 @@
 			return sizeof($this->fields);
 		}
 		
+		public function getFieldNames()
+		{
+			$nameList = array();
+			
+			foreach ($this->fields as &$field)
+				$nameList[] = $field->getName();
+			
+			return $nameList;
+		}
+		
 		public function toString(Dialect $dialect)
 		{
 			$fieldList = array();
@@ -258,7 +268,7 @@
 					
 					Assert::isTrue(
 						null !== $alias = $field->getName(),
-						'can not use selectQueriy without name as get field'
+						'can not use SelectQuery without name as get field'
 					);
 					
 					$fieldList[] =
