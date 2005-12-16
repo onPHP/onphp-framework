@@ -62,6 +62,21 @@
 			return $list;
 		}
 		
+		public static function printRange(DateRange $range)
+		{
+			$rangeString = '';
+			
+			if ($range->getStart())
+				$rangeString .= $range->getStart()->toDate('.');
+				
+			$rangeString .= ' - ';
+			
+			if ($range->getEnd())
+				$rangeString .= $range->getEnd()->toDate('.');
+				
+			return $rangeString;
+		}
+		
 		public static function makeTimestamp($string)
 		{
 			if (
