@@ -62,17 +62,17 @@
 			return $list;
 		}
 		
-		public static function printRange(DateRange $range)
+		public static function printRange(DateRange $range, $delimiter = '-')
 		{
 			$rangeString = '';
 			
 			if ($range->getStart())
-				$rangeString .= $range->getStart()->toDate('.');
+				$rangeString .= $range->getStart()->toDate($delimiter);
 				
 			$rangeString .= ' - ';
 			
 			if ($range->getEnd())
-				$rangeString .= $range->getEnd()->toDate('.');
+				$rangeString .= $range->getEnd()->toDate($delimiter);
 				
 			return $rangeString;
 		}
