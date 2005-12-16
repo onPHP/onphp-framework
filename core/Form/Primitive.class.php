@@ -116,9 +116,7 @@
 	{
 		public function import(&$scope) // to be compatible with BasePrimitive
 		{
-			if (isset($scope[$this->name])
-				&& $scope[$this->name]
-				)
+			if (isset($scope[$this->name]))
 				$this->value = true;
 			else
 				$this->value = false;
