@@ -208,7 +208,7 @@
 		private function checkSingle($result)
 		{
 			if (pg_num_rows($result) > 1)
-				throw new DatabaseException(
+				throw new TooManyRowsException(
 					"query returned too many rows (we need only one)"
 				);
 			
