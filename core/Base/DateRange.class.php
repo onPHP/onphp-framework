@@ -368,5 +368,11 @@
 			else
 				return 1;
 		}
+		
+		public function isPoint()
+		{
+			return (!$this->isOpen()) 
+				&& ($this->start->toDate() == $this->end->toDate()); 
+		}
 	}
 ?>
