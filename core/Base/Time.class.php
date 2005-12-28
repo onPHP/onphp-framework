@@ -151,14 +151,14 @@
 				$this->doublize($this->minute);
 		}
 
-		public function toFullString()
+		public function toFullString($delimiter = ':')
 		{
 			return
-				$this->toString().
+				$this->toString($delimiter = ':').
 				(
 					$this->second
-						? ':'.$this->doublize($this->second)
-						: ''
+						? $delimiter.$this->doublize($this->second)
+						: $delimiter.'00'
 				);
 		}
 
