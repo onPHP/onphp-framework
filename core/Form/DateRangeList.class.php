@@ -40,6 +40,20 @@
 			return ($this->value !== array());
 		}
 		
+		public function toString()
+		{
+			if ($this->value) {
+				$out = array();
+				
+				foreach ($this->value as $range)
+					$out[] = $range->toDateString();
+					
+				return implode(', ', $out);
+			}
+			
+			return null;
+		}
+		
 		public static function stringToDateRangeList($string)
 		{
 			$list = array();
@@ -117,20 +131,6 @@
 			);
 		}
 		
-		public function toString()
-		{
-			if ($this->value) {
-				$out = array();
-				
-				foreach ($this->value as $range)
-					$out[] = $range->toDateString();
-					
-				return implode(', ', $out);
-			}
-			
-			return null;
-		}
-
 		private static function toDate($date)
 		{
 			if (strpos($date, '.') !== false) {
