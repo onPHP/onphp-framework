@@ -22,8 +22,8 @@ onPHP feature list (still and always incomplete)
 		
 	core/DB/
 
-		DB, {Pg,My,MS,Ora}SQL and IBase,
-		{ANSI,Postgres,My,MS,Oracle,Interbase}Dialect:
+		DB, {Pg,My,MS,Ora}SQL, SQLite and IBase,
+		{ANSI,Postgres,My,MS,Oracle,Interbase,Lite}Dialect:
 			database abstraction layer.
 
 	core/Exceptions/
