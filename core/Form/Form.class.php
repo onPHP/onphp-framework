@@ -139,9 +139,10 @@
 		public function importOneMore($primitiveName, &$scope)
 		{
 			$prm = $this->get($primitiveName);
+			
 			if (
-				$prm->getValue() === null ||
-				($prm instanceof PrimitiveBoolean && !$prm->getValue())
+				$prm->getValue() === null
+				|| ($prm instanceof PrimitiveBoolean && !$prm->getValue())
 			)
 				$this->importPrimitive($scope, $prm);
 
