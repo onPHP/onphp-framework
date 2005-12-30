@@ -18,7 +18,7 @@
 	**/
 	final class PostgresDialect extends Dialect
 	{
-		private static $tsConfiguration = 'default_russian';
+		public static $tsConfiguration = 'default_russian';
 
 		public static function getTsConfiguration()
 		{
@@ -60,7 +60,7 @@
 				self::quoteValue($searchString)."))";
 		}
 
-		private static function prepareFullText($words, $logic)
+		public static function prepareFullText($words, $logic)
 		{
 			Assert::isArray($words);
 			
