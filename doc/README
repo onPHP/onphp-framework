@@ -1,0 +1,35 @@
+This is, surprisely, onPHP repository (or just checkout).
+UTF8 is mandatory.
+
+SVN: http://svn.shadanakar.org/
+Web: http://onphp.shadanakar.org/
+
+IRC:
+
+	irc.freenode.org, #onPHP-dev
+	English and Russian (koi8-r is mandatory for Russian-speaking people)
+
+Lists:
+
+	General discussion in Russian:
+	
+		onphp-dev-ru+subscribe@lists.shadanakar.org
+
+	General discussion in English:
+
+		onphp-dev-en+subscribe@lists.shadanakar.org
+
+	SVN-commits:
+
+		onphp-commits+subscribe@lists.shadanakar.org
+
+
+Quite useful information:
+
+	$Id$
+
+Quick start:
+
+	cp src/global.inc.php.tpl src/global.inc.php
+
+	include copied file in your script and enjoy

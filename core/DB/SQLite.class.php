@@ -1,0 +1,232 @@
+<?php
+/***************************************************************************
+ *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   voxus@shadanakar.org                                                  *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+/* $Id$ */
+
+	/**
+	 * SQLite DB connector.
+	 *
+	 * @see http://www.sqlite.org/
+	**/
+	class SQLite extends Sequenceless
+	{
+		private static $dialect = null;
+		
+		public function __construct()
+		{
+			self::$dialect = new LiteDialect();
+		}
+		
+		public static function getDialect()
+		{
+			return self::$dialect;
+		}
+		
+		public function isBusy()
+		{
+			throw new UnsupportedMethodException();
+		}
+		
+		public function asyncQuery(Query $query)
+		{
+			throw new UnsupportedMethodException();
+		}
+
+		public function connect(
+			$user, $pass, $host,
+			$base = null, $persistent = false
+		)
+		{
+			if ($persistent === true)
+				$this->link = sqlite_popen($base);
+			else 
+				$this->link = sqlite_open($base);
+
+			$this->persistent = $persistent;
+
+			if (!$this->link)
+				throw new DatabaseException(
+					'can not open SQLite base: '
+					.sqlite_error_string(sqlite_last_error($this->link))
+				);
+
+			return $this;
+		}
+		
+		public function disconnect()
+		{
+			if ($this->isConnected())
+				sqlite_close($this->link);
+
+			return $this;
+		}
+		
+		public function isConnected()
+		{
+			return is_resource($this->link);
+		}
+		
+		/**
+		 * misc
+		**/
+		
+		public function setEncoding($encoding)
+		{
+			throw new UnsupportedMethodException();
+		}
+		
+		/**
+		 * query methods
+		**/
+		
+		public function queryRaw($queryString)
+		{
+			//	echo $queryString.'<hr>'; flush();
+			//	error_log($queryString);
+			try {
+				return sqlite_query($queryString, $this->link);
+			} catch (BaseException $e) {
+				throw new DatabaseException(
+					sqlite_error_string(sqlite_last_error($this->link))
+					.' - '
+					.$queryString
+				);
+			}
+		}
+
+		/**
+		 * Same as query, but returns number of affected rows
+		 * Returns number of affected rows in insert/update queries
+		**/
+		public function queryCount(Query $query)
+		{
+			return sqlite_changes($this->query($query));
+		}
+		
+		public function queryObjectRow(Query $query, GenericDAO $dao)
+		{
+			$res = $this->query($query);
+			
+			$names = $query->getFieldNames();
+			$width = sizeof($names);
+			
+			if ($this->checkSingle($res)) {
+				if ($row = sqlite_fetch_array($res, SQLITE_NUM)) {
+					$assoc = array();
+					
+					for ($i = 0; $i < $width; $i++)
+						$assoc[$names[$i]] = $row[$i];
+					
+					return $dao->makeObject($assoc);
+				}
+			}
+
+			return null;
+		}
+		
+		public function queryRow(Query $query)
+		{
+			$res = $this->query($query);
+			
+			if ($this->checkSingle($res)) {
+				$names = $query->getFieldNames();
+				$width = sizeof($names);
+
+				$row = sqlite_fetch_array($res, SQLITE_NUM);
+				
+				for ($i = 0; $i < $width; $i++)
+					$assoc[$names[$i]] = $row[$i];
+				
+				return $row;
+			}
+			else
+				return null;
+		}
+		
+		public function queryObjectSet(Query $query, GenericDAO $dao)
+		{
+			$res = $this->query($query);
+			
+			if ($res) {
+				$array = array();
+				$names = $query->getFieldNames();
+				$width = sizeof($names);
+				
+				while ($row = sqlite_fetch_array($res, SQLITE_NUM)) {
+					
+					$assoc = array();
+					
+					for ($i = 0; $i < $width; $i++)
+						$assoc[$names[$i]] = $row[$i];
+					
+					$array[] = $dao->makeObject($assoc);
+				}
+				
+				return $array;
+			}
+			
+			return null;
+		}
+		
+		public function queryColumn(Query $query)
+		{
+			$res = $this->query($query);
+			
+			if ($res) {
+				$array = array();
+
+				while ($row = sqlite_fetch_single($res))
+					$array[] = $row;
+
+				return $array;
+			} else
+				return null;
+		}
+		
+		public function querySet(Query $query)
+		{
+			$res = $this->query($query);
+			
+			if ($res) {
+				$array = array();
+				$names = $query->getFieldNames();
+				$width = sizeof($names);
+				
+				while ($row = sqlite_fetch_array($res, SQLITE_NUM)) {
+					$assoc = array();
+					
+					for ($i = 0; $i < $width; $i++)
+						$assoc[$names[$i]] = $row[$i];
+					
+					$array[] = $assoc;
+				}
+
+				return $array;
+			} else
+				return null;
+		}
+		
+		protected function getInsertId()
+		{
+			return sqlite_last_insert_rowid($this->link);
+		}
+		
+		private function checkSingle($result)
+		{
+			if (sqlite_num_rows($result) > 1)
+				throw new TooManyRowsException(
+					"query returned too many rows (we need only one)"
+				);
+			
+			return $result;
+		}
+	}
+?>

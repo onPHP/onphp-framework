@@ -1,0 +1,66 @@
+<?php
+/***************************************************************************
+ *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   voxus@shadanakar.org                                                  *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+/* $Id$ */
+
+	/**
+	 * Workaround for sequenceless DB's.
+	 * 
+	 * You should follow two conventions, when stornig objects thru this one:
+	 * 
+	 * 1) objects should be childs of IdentifiableObject;
+	 * 2) sequence name should equal table name + '_id'.
+	 *
+	 * @see IdentifiableOjbect
+	 * 
+	 * @see MySQL
+	 * @see SQLite
+	**/
+	abstract class Sequenceless extends DB
+	{
+		protected $sequencePool = array();
+		
+		abstract protected function getInsertId();
+
+		public function obtainSequence($sequence)
+		{
+			$id = Identifier::create();
+			
+			$this->sequencePool[$sequence][] = $id;
+			
+			return $id;
+		}
+		
+		public function query(Query $query)
+		{
+			$result = $this->queryRaw($query->toString($this->getDialect()));
+			
+			if (
+				($query instanceof InsertQuery)
+				&& isset($this->sequencePool[$name = $query->getTable().'_id'])
+			) {
+				$id = current($this->sequencePool[$name]);
+				
+				$id->setId($this->getInsertId())->finalize();
+				
+				unset(
+					$this->sequencePool[
+						$name
+					][
+						key($this->sequencePool)
+					]
+				);
+			}
+			
+			return $result;
+		}
+	}
+?>
