@@ -1,5 +1,9 @@
 # $Id$
 
+2005-12-31	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* 0.2.7 released.
+
 2005-12-05	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * core/DB/: SQLite support implemented.
