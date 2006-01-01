@@ -128,8 +128,11 @@
 			$toFetch = array();
 			
 			foreach ($ids as $id) {
-				if (!$list[] = $this->getCachedById($id))
+				if (!$cached = $this->getCachedById($id)) {
 					$toFetch[] = $id;
+				} else {
+					$list[] = $cached;
+				}
 			}
 			
 			if (!$toFetch)

@@ -16,7 +16,7 @@
 	**/
 	class QueryResult implements Identifiable
 	{
-		private $list		= null;
+		private $list		= array();
 		private $count		= null;
 		private $affected	= null;
 		private $query		= null;
