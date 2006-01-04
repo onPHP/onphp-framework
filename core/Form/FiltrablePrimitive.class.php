@@ -54,6 +54,11 @@
 			$this->importFilter->dropAll();
 			return $this;
 		}
+		
+		public function getImportFilter()
+		{
+			return $this->importFilter;
+		}
 
 		protected function selfFilter()
 		{
