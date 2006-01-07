@@ -165,7 +165,8 @@ abstract class BaseBusiness {
 			} else{
 				return null;
 			}
-			break;
+			
+			/* NOTREACHED */
 			
 			//установка свойства
 			case 'set':
@@ -177,7 +178,8 @@ abstract class BaseBusiness {
 			}
 			$this->vars[$property] = &$args['0'];
 			return $this;
-			break;
+			
+			/* NOTREACHED */
 			
 			//ошибка
 			default:
