@@ -21,6 +21,19 @@
 				ONPHP_META_AUTO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
 				AutoDaoBuilder::build($class)
 			);
+			
+			$userFile = ONPHP_META_DAO_DIR.$class->getName().'DAO'.EXT_CLASS;
+			
+//			if (!file_exists($userFile))
+				$this->dumpFile(
+					$userFile,
+					DaoBuilder::build($class)
+				);
+		}
+		
+		public function daoExist()
+		{
+			return true;
 		}
 	}
 ?>

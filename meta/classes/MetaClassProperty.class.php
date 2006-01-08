@@ -14,6 +14,7 @@
 	class MetaClassProperty
 	{
 		private $name		= null;
+		private $dumbName	= null;
 		private $type		= null;
 		private $size		= null;
 		
@@ -25,12 +26,21 @@
 		public function __construct($name, BasePropertyType $type)
 		{
 			$this->name = $name;
+			$this->dumbName = strtolower(
+				preg_replace(':([A-Z]):', '_\1', $name)
+			);
+			
 			$this->type = $type;
 		}
 		
 		public function getName()
 		{
 			return $this->name;
+		}
+		
+		public function getDumbName()
+		{
+			return $this->dumbName;
 		}
 		
 		public function getType()

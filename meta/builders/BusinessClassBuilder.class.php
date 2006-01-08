@@ -22,6 +22,17 @@
 			else
 				$type = null;
 			
+			if ($class->getPattern()->daoExist()) {
+				$dao = <<<EOT
+		public static function dao()
+		{
+			return Singletone::getInstance('{$class->getName()}DAO');
+		}
+
+EOT;
+			} else
+				$dao = null;
+			
 			$out .= <<<EOT
 	{$type}class {$class->getName()} extends Auto{$class->getName()}
 	{
@@ -30,6 +41,7 @@
 			return new {$class->getName()}();
 		}
 		
+{$dao}
 		// your brilliant stuff goes here
 	}
 

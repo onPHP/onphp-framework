@@ -15,6 +15,17 @@
 	{
 		public static function build(MetaClass $class)
 		{
+			$out = self::getHead();
+			
+			$out .= <<<EOT
+	class {$class->getName()}DAO extends Auto{$class->getName()}DAO
+	{
+		// your brilliant stuff goes here
+	}
+
+EOT;
+			
+			return $out.self::getHeel();
 		}
 	}
 ?>

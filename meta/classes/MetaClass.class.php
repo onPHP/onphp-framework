@@ -13,9 +13,10 @@
 
 	class MetaClass
 	{
-		private $name	= null;
-		private $type	= null;
-		private $parent	= null;
+		private $name		= null;
+		private $dumbName	= null;
+		private $type		= null;
+		private $parent		= null;
 		
 		private $properties	= array();
 		private $interfaces	= array();
@@ -25,11 +26,20 @@
 		public function __construct($name)
 		{
 			$this->name = $name;
+			
+			$this->dumbName = strtolower(
+				preg_replace(':([A-Z]):', '_\1', $name)
+			);
 		}
 		
 		public function getName()
 		{
 			return $this->name;
+		}
+		
+		public function getDumbName()
+		{
+			return $this->dumbName;
 		}
 		
 		public function getType()

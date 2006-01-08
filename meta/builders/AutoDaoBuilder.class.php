@@ -17,11 +17,16 @@
 		{
 			$out = self::getHead();
 			
-			$out .= "\tabstract class Auto{$class->getName()}DAO extends MappedStorableDAO\n";
+			if ($parent = $class->getParent())
+				$parent = $parent->getName().'DAO';
+			else
+				$parent = 'MappedStorableDAO';
 			
-			$out .= "\t{\n";
-
-			//			
+			$out .=
+				"\tabstract class Auto{$class->getName()}DAO extends {$parent}\n"
+				."\t{\n";
+			
+			// bah.
 			
 			$out .= "\t}\n";
 			$out .= self::getHeel();

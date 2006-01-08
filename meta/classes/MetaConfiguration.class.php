@@ -85,11 +85,21 @@
 			}
 			
 			foreach ($liaisons as $class => $parent) {
-				if (isset($this->classes[$parent]))
+				if (isset($this->classes[$parent])) {
+					
+					if (
+						$this->classes[$class]->getPattern()
+							instanceof DictionaryClassPattern
+					)
+						throw new WrongStateException(
+							'DictionaryClass pattern doesn '
+							.'not support inheritance'
+						);
+					
 					$this->classes[$class]->setParent(
 						$this->classes[$parent]
 					);
-				else
+				} else
 					throw new ObjectNotFoundException(
 						"unknown parent class '{$parent}'"
 					);

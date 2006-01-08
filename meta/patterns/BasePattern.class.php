@@ -20,6 +20,11 @@
 			return get_class($this);
 		}
 		
+		public function daoExist()
+		{
+			return false;
+		}
+		
 		protected function dumpFile($path, $content)
 		{
 			$fp = fopen($path, 'wb');
