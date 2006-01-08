@@ -70,21 +70,43 @@ EOT;
 		{
 			return
 				\$query->
-					// TODO
+
+EOT;
+			
+			$setters = array();
+			$fillers = array();
+			
+			foreach ($class->getProperties() as $property) {
+				$method = ucfirst($property->getName());
+				$dumbName = $property->getDumbName();
+				
+				$setters[] =
+					"\t\t\t\t\t"
+					."set('{$dumbName}', \${$varName}->get{$method}())";
+				
+				$fillers[] =
+					"\t\t\t\t"
+					."set{$method}(\$array[\$prefix.'{$dumbName}'])";
+			}
+			
+			$out .= implode("->\n", $setters).";\n";
+
+			$out .= <<<EOT
 		}
 		
 		public function makeObject(&\$array, \$prefix = null)
 		{
 			return
 				{$className}::create()->
-				// TODO
-		}
+
 EOT;
-			
-			// bah.
-			
-			$out .= "\t}\n";
-			$out .= self::getHeel();
+
+			$out .= implode("->\n", $fillers).";\n";
+
+			$out .=
+				"\t\t}\n"
+				."\t}\n"
+				.self::getHeel();
 			
 			return $out;
 		}
