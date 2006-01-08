@@ -1,5 +1,9 @@
 # $Id$
 
+2006-01-07	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+* meta/: root for metaconfiguration' stuff.
+
 2005-12-31	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 * 0.2.7 released.

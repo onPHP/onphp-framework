@@ -1,0 +1,33 @@
+<!ELEMENT metaconfiguration (classes+)>
+
+<!ELEMENT classes (class+)>
+
+<!ELEMENT class (implements*, properties*, pattern)>
+<!ATTLIST class
+		name		ID #REQUIRED
+		type		(final|abstract) #IMPLIED
+		extends		CDATA #IMPLIED
+>
+
+<!ELEMENT implement EMPTY>
+<!ATTLIST implement
+		interface	CDATA #REQUIRED
+>
+
+<!ELEMENT properties (property*, identifier?)>
+
+<!ELEMENT property EMPTY>
+<!ATTLIST property
+		name		CDATA #REQUIRED
+		type		CDATA #REQUIRED
+		size		CDATA #IMPLIED
+		default		CDATA #IMPLIED
+		required	(true|false) "false"
+		identifier	(true|false) "false"
+		relation	CDATA #IMPLIED
+>
+
+<!ELEMENT pattern EMPTY>
+<!ATTLIST pattern
+		name		(DictionaryClass|AbstractClass|StraightMapping) #REQUIRED
+>
