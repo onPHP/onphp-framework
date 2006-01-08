@@ -11,20 +11,34 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class BasePattern extends Singletone
+	final class AutoClassBuilder extends BaseBuilder
 	{
-		abstract public function build(MetaClass $class);
-		
-		public function getName()
+		public static function build(MetaClass $class)
 		{
-			return get_class($this);
-		}
-		
-		protected function dumpFile($path, $content)
-		{
-			$fp = fopen($path, 'wb');
-			fwrite($fp, $content);
-			fclose($fp);
+			$out = self::getHead();
+			
+			$out .= "\tabstract class Auto{$class->getName()}";
+			
+			if ($interfaces = $class->getInterfaces())
+				$out .= ' implements '.implode(', ', $interfaces);
+			
+			$out .= "\n\t{\n";
+			
+			foreach ($class->getProperties() as $property) {
+				$out .=
+					"\t\tprotected \${$property->getName()} = "
+					."{$property->getType()->getDeclaration()};\n";
+			}
+			
+			$out .= "\n";
+			
+			foreach ($class->getProperties() as $property)
+				$out .= $property->toMethods();
+			
+			$out .= "\t}\n";
+			$out .= self::getHeel();
+			
+			return $out;
 		}
 	}
 ?>

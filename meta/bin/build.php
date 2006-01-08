@@ -26,6 +26,15 @@ Usage: build.php project-configuration-file.inc.php metaconfiguration.xml
 			.ONPHP_META_CLASSES.PATH_SEPARATOR
 			.ONPHP_META_TYPES.PATH_SEPARATOR
 		);
+		
+		define('ONPHP_META_AUTO_DIR', PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR);
+		define('ONPHP_META_BUSINESS_DIR', PATH_CLASSES.'Business'.DIRECTORY_SEPARATOR);
+		
+		if (!is_dir(ONPHP_META_AUTO_DIR))
+			mkdir(ONPHP_META_AUTO_DIR);
+		
+		if (!is_dir(ONPHP_META_BUSINESS_DIR))
+			mkdir(ONPHP_META_BUSINESS_DIR);
 	}
 
 	if (sizeof($_SERVER['argv']) < 3) {

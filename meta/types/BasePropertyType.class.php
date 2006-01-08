@@ -57,7 +57,7 @@ EOT;
 			$method = <<<EOT
 {$tabs}public function {$methodName}(\${$name})
 {$tabs}{
-{$tabs}{$tab}\$this->{$name} = {$name};
+{$tabs}{$tab}\$this->{$name} = \${$name};
 
 {$tabs}{$tab}return \$this;
 {$tabs}}

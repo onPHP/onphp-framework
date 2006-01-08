@@ -11,36 +11,36 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class ClassBuilder extends BaseBuilder
+	final class BusinessClassBuilder extends BaseBuilder
 	{
 		public static function build(MetaClass $class)
 		{
 			$out = self::getHead();
 			
-			$out .= "\tabstract class Auto{$class->getName()}";
+			if ($type = $class->getType())
+				$type = $type->toString().' ';
+			else
+				$type = null;
 			
-			if ($interfaces = $class->getInterfaces())
-				$out .= ' implements '.implode(', ', $interfaces);
+			$out .=
+				"\t{$type}class {$class->getName()} extends Auto{$class->getName()}"
+				."\n\t{\n"
+				."\t\t// your brilliant stuff goes here\n"
+				."\t}\n"
+				.self::getHeel();
 			
-			$out .= "\n\t{\n";
+			return $out;
+		}
+		
+		protected static function getHead()
+		{
+			$head = self::startCap();
 			
-			foreach ($class->getProperties() as $property) {
-				$out .=
-					"\t\tprotected \${$property->getName()} = "
-					."{$property->getType()->getDeclaration()};\n";
-			}
-			
-			$out .= "\n";
-			
-			foreach ($class->getProperties() as $property)
-				$out .= $property->toMethods();
-			
-			$out .= "\t}\n";
-			$out .= self::getHeel();
-			
-			echo $out."\n\n";
-			
-			die();
+			$head .=
+				' *   This file will never be generated again -'
+				.' feel free to edit.            *';
+
+			return $head."\n".self::endCap();
 		}
 	}
 ?>

@@ -15,7 +15,18 @@
 	{
 		public function build(MetaClass $class)
 		{
-			echo ClassBuilder::build($class);
+			$this->dumpFile(
+				ONPHP_META_AUTO_DIR.'Auto'.$class->getName().EXT_CLASS,
+				AutoClassBuilder::build($class)
+			);
+			
+			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
+			
+			if (!file_exists($userFile))
+				$this->dumpFile(
+					$userFile,
+					BusinessClassBuilder::build($class)
+				);
 		}
 	}
 ?>
