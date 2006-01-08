@@ -17,7 +17,7 @@
 		{
 			$out = self::getHead();
 			
-			$out .= "\tabstract class {$class->getName()}";
+			$out .= "\tabstract class Auto{$class->getName()}";
 			
 			if ($interfaces = $class->getInterfaces())
 				$out .= ' implements '.implode(', ', $interfaces);
@@ -26,19 +26,14 @@
 			
 			foreach ($class->getProperties() as $property) {
 				$out .=
-					"\t\tprotected {$property->getName()} = "
+					"\t\tprotected \${$property->getName()} = "
 					."{$property->getType()->getDeclaration()};\n";
 			}
 			
 			$out .= "\n";
 			
-			foreach ($class->getProperties() as $property) {
-				$out .= MethodUtils::getter($property);
-				$out .= MethodUtils::setter($property);
-				
-				if ($property->getType() instanceof ObjectType)
-					$out .= MethodUtils::dropper($property);
-			}
+			foreach ($class->getProperties() as $property)
+				$out .= $property->toMethods();
 			
 			$out .= "\t}\n";
 			$out .= self::getHeel();

@@ -39,5 +39,54 @@
 		{
 			return false;
 		}
+		
+		public function toMethods($name)
+		{
+			return
+				parent::toMethods($name)
+				.$this->toDropper($name);
+		}
+		
+		public function toSetter($name, $indent = 2)
+		{
+			$tab = "\t";
+			$tabs = str_pad(null, $indent, $tab, STR_PAD_LEFT);
+			
+			$methodName = 'set'.ucfirst($name);
+			
+			$method = <<<EOT
+{$tabs}public function {$methodName}({$this->class} \${$name})
+{$tabs}{
+{$tabs}{$tab}\$this->{$name} = \${$name};
+
+{$tabs}{$tab}return \$this;
+{$tabs}}
+
+
+EOT;
+
+			return $method;
+		}
+		
+		public function toDropper($name, $indent = 2)
+		{
+			$tab = "\t";
+			$tabs = str_pad(null, $indent, $tab, STR_PAD_LEFT);
+			
+			$methodName = 'drop'.ucfirst($name);
+			
+			$method = <<<EOT
+{$tabs}public function {$methodName}()
+{$tabs}{
+{$tabs}{$tab}\$this->{$name} = null;
+
+{$tabs}{$tab}return \$this;
+{$tabs}}
+
+
+EOT;
+
+			return $method;
+		}
 	}
 ?>

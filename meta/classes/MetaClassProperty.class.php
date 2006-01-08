@@ -107,5 +107,10 @@
 			
 			return $this;
 		}
+		
+		public function toMethods()
+		{
+			return $this->type->toMethods($this->name);
+		}
 	}
 ?>
