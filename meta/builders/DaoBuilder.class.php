@@ -13,6 +13,8 @@
 
 	final class DaoBuilder extends BaseBuilder
 	{
-		
+		public static function build(MetaClass $class)
+		{
+		}
 	}
 ?>

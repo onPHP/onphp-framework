@@ -11,22 +11,22 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class AbstractClassPattern extends BasePattern
+	final class AutoDaoBuilder extends BaseBuilder
 	{
-		public function build(MetaClass $class)
+		public static function build(MetaClass $class)
 		{
-			$this->dumpFile(
-				ONPHP_META_AUTO_DIR.'Auto'.$class->getName().EXT_CLASS,
-				AutoClassBuilder::build($class)
-			);
+			$out = self::getHead();
 			
-			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
+			$out .= "\tabstract class Auto{$class->getName()}DAO extends MappedStorableDAO\n";
 			
-//			if (!file_exists($userFile))
-				$this->dumpFile(
-					$userFile,
-					BusinessClassBuilder::build($class)
-				);
+			$out .= "\t{\n";
+
+			//			
+			
+			$out .= "\t}\n";
+			$out .= self::getHeel();
+			
+			return $out;
 		}
 	}
 ?>

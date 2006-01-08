@@ -22,14 +22,20 @@
 			else
 				$type = null;
 			
-			$out .=
-				"\t{$type}class {$class->getName()} extends Auto{$class->getName()}"
-				."\n\t{\n"
-				."\t\t// your brilliant stuff goes here\n"
-				."\t}\n"
-				.self::getHeel();
+			$out .= <<<EOT
+	{$type}class {$class->getName()} extends Auto{$class->getName()}
+	{
+		public static function create()
+		{
+			return new {$class->getName()}();
+		}
+		
+		// your brilliant stuff goes here
+	}
+
+EOT;
 			
-			return $out;
+			return $out.self::getHeel();
 		}
 		
 		protected static function getHead()

@@ -19,6 +19,9 @@
 			
 			$out .= "\tabstract class Auto{$class->getName()}";
 			
+			if ($parent = $class->getParent())
+				$out .= " extends {$parent->getName()}";
+			
 			if ($interfaces = $class->getInterfaces())
 				$out .= ' implements '.implode(', ', $interfaces);
 			

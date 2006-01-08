@@ -19,9 +19,10 @@
 		{
 			$xml = simplexml_load_file($metafile);
 			
+			$liaisons = array();
+			
 			foreach ($xml->classes[0] as $xmlClass) {
 				
-				$liaisons = array();
 				$class = new MetaClass((string) $xmlClass['name']);
 				
 				if (isset($xmlClass['type']))

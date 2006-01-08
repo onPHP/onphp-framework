@@ -11,11 +11,16 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class StraightMappingPattern extends BasePattern
+	final class StraightMappingPattern extends AbstractClassPattern
 	{
 		public function build(MetaClass $class)
 		{
+			parent::build($class);
 			
+			$this->dumpFile(
+				ONPHP_META_AUTO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
+				AutoDaoBuilder::build($class)
+			);
 		}
 	}
 ?>
