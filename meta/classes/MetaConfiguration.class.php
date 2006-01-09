@@ -11,11 +11,16 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class MetaConfiguration
+	final class MetaConfiguration extends Singletone
 	{
 		private $classes = array();
 		
-		public function __construct($metafile)
+		public static function me()
+		{
+			return Singletone::getInstance('MetaConfiguration');
+		}
+		
+		public function load($metafile)
 		{
 			$xml = simplexml_load_file($metafile);
 			
@@ -104,14 +109,26 @@
 						"unknown parent class '{$parent}'"
 					);
 			}
+			
+			return $this;
 		}
 		
 		public function build()
 		{
 			foreach ($this->classes as $name => $class) {
-				echo $name.":\n";
-				echo $class->dump();
+				echo $name."\n";
+				$class->dump();
 			}
+		}
+		
+		public function getClassByName($name)
+		{
+			if (isset($this->classes[$name]))
+				return $this->classes[$name];
+			
+			throw new ObjectNotFoundException(
+				"knows nothing about '{$name}' class"
+			);
 		}
 		
 		private function buildProperty($name, $type)

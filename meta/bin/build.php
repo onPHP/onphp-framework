@@ -6,6 +6,11 @@
 ?>
 Usage: build.php project-configuration-file.inc.php metaconfiguration.xml
 
+Things not supported by design:
+
+* composite identifiers;
+* obscurantism.
+
 <?php
 		exit(0);
 	}
@@ -56,9 +61,9 @@ Usage: build.php project-configuration-file.inc.php metaconfiguration.xml
 			
 			init();
 			
-			$meta = new MetaConfiguration($_SERVER['argv'][2]);
-			
-			$meta->build();
+			MetaConfiguration::me()->
+				load($_SERVER['argv'][2])->
+				build();
 			
 		} else {
 			echo "Metaconfiguration file not found.\n";

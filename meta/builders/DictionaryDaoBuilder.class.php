@@ -80,9 +80,7 @@ EOT;
 				$method = ucfirst($property->getName());
 				$dumbName = $property->getDumbName();
 				
-				$setters[] =
-					"\t\t\t\t\t"
-					."set('{$dumbName}', \${$varName}->get{$method}())";
+				$setters[] = $property->toDaoField($className);
 				
 				$fillers[] =
 					"\t\t\t\t"

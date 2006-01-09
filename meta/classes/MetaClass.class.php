@@ -21,15 +21,21 @@
 		private $properties	= array();
 		private $interfaces	= array();
 		
-		private $pattern = null;
+		private $pattern	= null;
+		private $identifier	= null;
 		
 		public function __construct($name)
 		{
 			$this->name = $name;
 			
-			$this->dumbName = strtolower(
+			$dumb = strtolower(
 				preg_replace(':([A-Z]):', '_\1', $name)
 			);
+			
+			if ($dumb[0] == '_')
+				$this->dumbName = substr($dumb, 1);
+			else
+				$this->dumbName = $dumb;
 		}
 		
 		public function getName()
@@ -82,14 +88,22 @@
 					"property '{$name}' already exist"
 				);
 			
+			if ($property->isIdentifier())
+				$this->identifier = $property;
+			
 			return $this;
 		}
 		
 		public function dropProperty($name)
 		{
-			if (isset($this->properties[$name]))
+			if (isset($this->properties[$name])) {
+				
+				if ($this->properties[$name]->isIdentifier())
+					unset($this->identifier);
+				
 				unset($this->properties[$name]);
-			else
+			
+			} else
 				throw new ObjectNotFoundException(
 					"property '{$name}' does not exist"
 				);
@@ -117,6 +131,11 @@
 		public function setPattern(BasePattern $pattern)
 		{
 			$this->pattern = $pattern;
+		}
+		
+		public function getIdentifier()
+		{
+			return $this->identifier;
 		}
 		
 		public function dump()

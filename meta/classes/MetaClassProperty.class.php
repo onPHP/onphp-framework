@@ -122,5 +122,79 @@
 		{
 			return $this->type->toMethods($this->name);
 		}
+		
+		public function toDaoField($className, $indent = 5)
+		{
+			$tabs = str_pad(null, $indent, "\t", STR_PAD_LEFT);
+			
+			$varName = $this->toVarName($className);
+			$method = ucfirst($this->name);
+
+			$out = null;
+			
+			if (!$this->type->isGeneric()) {
+				
+				switch ($this->relation->getId()) {
+					
+					case MetaRelation::ONE_TO_ONE:
+						
+						$idName =
+							$this->toVarName(
+								MetaConfiguration::me()->
+								getClassByName(
+									$this->type->getClass()
+								)->
+									getIdentifier()->
+										getName()
+							);
+						
+						$out =
+							"{$tabs}set('{$this->dumbName}_{$idName}', ";
+						
+						if ($this->required)
+							$out .=
+								"\${$varName}->get{$method}()->get{$idName}())";
+						else
+							$out .=
+								"\n{$tabs}\t"
+								."\${$varName}->get{$method}()\n"
+								."{$tabs}\t\t"
+								."? \${$varName}->get{$method}()->get{$idName}()\n"
+								."{$tabs}\t\t"
+								.": null\n"
+								."{$tabs})";
+					
+				}
+			} else {
+
+				$out = "{$tabs}set('{$this->dumbName}', ";
+				
+				if ($this->type instanceof ObjectType) {
+					if ($this->required)
+						$out .=
+							"\${$varName}->get{$method}()->toString()";
+					else
+						$out .=
+							"\n{$tabs}\t"
+							."\${$varName}->get{$method}()\n"
+							."{$tabs}\t\t"
+							."? \${$varName}->get{$method}()->toString()\n"
+							."{$tabs}\t\t"
+							.": null\n"
+							.$tabs;
+				} else {
+					$out .=	"\${$varName}->get{$method}()";
+				}
+				
+				$out .= ')';
+			}
+			
+			return $out;
+		}
+		
+		private function toVarName($name)
+		{
+			return strtolower($name[0]).substr($name, 1);
+		}
 	}
 ?>
