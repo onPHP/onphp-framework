@@ -125,9 +125,6 @@
 		
 		public function toDaoSetter($className)
 		{
-			//	"\t\t\t\t"
-			//	."set{$method}(\$array[\$prefix.'{$dumbName}'])";
-
 			$varName = $this->toVarName($className);
 			$method = ucfirst($this->name);
 			

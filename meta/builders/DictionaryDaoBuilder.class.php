@@ -32,12 +32,30 @@ EOT;
 				
 				$row = $tabs;
 				
-				if ($property->getName() == $property->getDumbName())
-					$map = 'null';
-				else
-					$map = $property->getDumbName();
-				
-				$row .= "'{$property->getName()}' => '{$map}'";
+				if ($property->getType()->isGeneric()) {
+					
+					if ($property->getName() == $property->getDumbName())
+						$map = 'null';
+					else
+						$map = $property->getDumbName();
+					
+					$row .= "'{$property->getName()}' => '{$map}'";
+					
+				} else {
+					
+					$remoteClass =
+						MetaConfiguration::me()->
+						getClassByName(
+							$property->getType()->getClass()
+						);
+					
+					$identifier = $remoteClass->getIdentifier();
+					
+					$row .=
+						"'{$property->getName()}".ucfirst($identifier->getName())
+						."' => '{$remoteClass->getDumbName()}_"
+						."{$identifier->getDumbName()}'";
+				}
 				
 				$mapping[] = $row;
 			}
