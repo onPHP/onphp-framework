@@ -74,17 +74,32 @@ EOT;
 EOT;
 			
 			$setters = array();
-			$fillers = array();
+			
+			$standaloneFillers = array();
+			$chainFillers = array();
 			
 			foreach ($class->getProperties() as $property) {
-				$method = ucfirst($property->getName());
-				$dumbName = $property->getDumbName();
-				
 				$setters[] = $property->toDaoField($className);
 				
-				$fillers[] =
-					"\t\t\t\t"
-					."set{$method}(\$array[\$prefix.'{$dumbName}'])";
+				$filler = $property->toDaoSetter($className);
+				
+				if (
+					!$property->getType()->isGeneric()
+					&& !$property->isRequired()
+				)
+					$standaloneFillers[] =
+						$tabs
+						.implode(
+							"\n{$tabs}",
+							explode("\n", $filler)
+						);
+				else
+					$chainFillers[] =
+						"{$tabs}\t"
+						.implode(
+							"\n{$tabs}\t",
+							explode("\n", $filler)
+						);
 			}
 			
 			$out .= implode("->\n", $setters).";\n";
@@ -94,15 +109,26 @@ EOT;
 		
 		public function makeObject(&\$array, \$prefix = null)
 		{
-			return
-				{$className}::create()->
+			\${$varName} = new {$className}();
+
 
 EOT;
 
-			$out .= implode("->\n", $fillers).";\n";
+			if ($chainFillers) {
+				
+				$out .= "{$tabs}\${$varName}->\n";
+				
+				$out .= implode("->\n", $chainFillers).";\n\n";
+			}
+			
+			if ($standaloneFillers) {
+				
+				$out .= implode("->\n", $standaloneFillers)."\n";
+			}
 
 			$out .=
-				"\t\t}\n"
+				"{$tabs}return \${$varName};\n"
+				."\t\t}\n"
 				."\t}\n"
 				.self::getHeel();
 			

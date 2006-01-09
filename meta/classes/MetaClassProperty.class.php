@@ -123,6 +123,91 @@
 			return $this->type->toMethods($this->name);
 		}
 		
+		public function toDaoSetter($className)
+		{
+			//	"\t\t\t\t"
+			//	."set{$method}(\$array[\$prefix.'{$dumbName}'])";
+
+			$varName = $this->toVarName($className);
+			$method = ucfirst($this->name);
+			
+			$out = null;
+			
+			if (!$this->type->isGeneric()) {
+				
+				switch ($this->relation->getId()) {
+					
+					case MetaRelation::ONE_TO_ONE:
+						
+						$idName =
+							$this->toVarName(
+								MetaConfiguration::me()->
+								getClassByName(
+									$this->type->getClass()
+								)->
+									getIdentifier()->
+										getName()
+							);
+						
+						if ($this->required) {
+							
+							$out =
+								"set{$method}("
+								."{$className}::dao()->getById("
+								."\$array[\$prefix.'{$this->dumbName}_{$idName}']"
+								."))";
+							
+						} else {
+							
+							$out = <<<EOT
+if (isset(\$array[\$prefix.'{$this->dumbName}_{$idName}']))
+	\${$varName}->set{$method}(
+		{$className}::dao()->getById(\$array[\$prefix.'{$this->dumbName}_{$idName}'])
+	);
+
+EOT;
+							
+						}
+						
+						break;
+					
+					default:
+						
+						throw new UnsupportedMethodException();
+				}
+			} else {
+				
+				if ($this->type instanceof ObjectType) {
+					
+					$value =
+						"new {$this->type->getClass()}("
+						."\$array[\$prefix.'{$this->dumbName}'])";
+					
+				} else
+					$value = "\$array[\$prefix.'{$this->dumbName}']";
+				
+				if ($this->required) {
+					
+					$out =
+						"set{$method}("
+						.$value
+						.")";
+					
+				} else {
+					
+					$out = <<<EOT
+set{$method}(
+	isset(\$array[\$prefix.'{$this->dumbName}'])
+		? {$value}
+		: null
+)
+EOT;
+				}
+			}
+			
+			return $out;
+		}
+		
 		public function toDaoField($className, $indent = 5)
 		{
 			$tabs = str_pad(null, $indent, "\t", STR_PAD_LEFT);
@@ -163,7 +248,12 @@
 								."{$tabs}\t\t"
 								.": null\n"
 								."{$tabs})";
+						
+						break;
 					
+					default:
+						
+						throw new UnsupportedMethodException();
 				}
 			} else {
 
