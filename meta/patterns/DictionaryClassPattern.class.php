@@ -11,11 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class DictionaryClassPattern extends AbstractClassPattern
+	final class DictionaryClassPattern extends BasePattern
 	{
 		public function build(MetaClass $class)
 		{
-			parent::build($class);
+			parent::fullBuild($class);
 			
 			// huh?
 		}

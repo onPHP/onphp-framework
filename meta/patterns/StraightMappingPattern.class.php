@@ -11,11 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class StraightMappingPattern extends AbstractClassPattern
+	final class StraightMappingPattern extends BasePattern
 	{
 		public function build(MetaClass $class)
 		{
-			parent::build($class);
+			parent::fullBuild($class);
 			
 			// huh?
 		}

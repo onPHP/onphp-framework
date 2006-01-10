@@ -17,20 +17,36 @@
 		{
 			$out = self::getHead();
 			
-			if ($class->getType()->getId() == MetaClassType::CLASS_ABSTRACT)
+			$type = $class->getType();
+			
+			if ($type && $type->getId() == MetaClassType::CLASS_ABSTRACT) {
 				$abstract = 'abstract ';
-			else
+				$notes = 'nothing';
+			} else {
 				$abstract = null;
+				$notes = 'your brilliant stuff goes here';
+			}
 			
 			$out .= <<<EOT
 	{$abstract}class {$class->getName()}DAO extends Auto{$class->getName()}DAO
 	{
-		// your brilliant stuff goes here
+		// {$notes}
 	}
 
 EOT;
 			
 			return $out.self::getHeel();
+		}
+		
+		protected static function getHead()
+		{
+			$head = self::startCap();
+			
+			$head .=
+				' *   This file will never be generated again -'
+				.' feel free to edit.            *';
+
+			return $head."\n".self::endCap();
 		}
 	}
 ?>

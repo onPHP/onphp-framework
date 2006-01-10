@@ -18,9 +18,9 @@
 			$out = self::getHead();
 			
 			if ($type = $class->getType())
-				$type = $type->toString().' ';
+				$typeName = $type->toString().' ';
 			else
-				$type = null;
+				$typeName = null;
 			
 			if ($class->getPattern()->daoExist()) {
 				$dao = <<<EOT
@@ -34,14 +34,24 @@ EOT;
 				$dao = null;
 			
 			$out .= <<<EOT
-	{$type}class {$class->getName()} extends Auto{$class->getName()}
+	{$typeName}class {$class->getName()} extends Auto{$class->getName()}
 	{
+EOT;
+
+			if (!$type || $type->getId() !== MetaClassType::CLASS_ABSTRACT) {
+				$out .= <<<EOT
+			
 		public static function create()
 		{
 			return new {$class->getName()}();
 		}
 		
 {$dao}
+EOT;
+			}
+
+			$out .= <<<EOT
+
 		// your brilliant stuff goes here
 	}
 
