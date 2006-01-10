@@ -25,8 +25,39 @@
 			return false;
 		}
 		
+		protected function fullBuild(MetaClass $class)
+		{
+			$this->dumpFile(
+				ONPHP_META_AUTO_DIR.'Auto'.$class->getName().EXT_CLASS,
+				AutoClassBuilder::build($class)
+			);
+			
+			$this->dumpFile(
+				ONPHP_META_AUTO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
+				AutoDaoBuilder::build($class)
+			);
+			
+			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
+			
+//			if (!file_exists($userFile))
+				$this->dumpFile(
+					$userFile,
+					BusinessClassBuilder::build($class)
+				);
+			
+			$userFile = ONPHP_META_DAO_DIR.$class->getName().'DAO'.EXT_CLASS;
+			
+//			if (!file_exists($userFile))
+				$this->dumpFile(
+					$userFile,
+					DaoBuilder::build($class)
+				);
+		}
+		
 		protected function dumpFile($path, $content)
 		{
+			echo "* ".$path."\n";
+			
 			$fp = fopen($path, 'wb');
 			fwrite($fp, $content);
 			fclose($fp);

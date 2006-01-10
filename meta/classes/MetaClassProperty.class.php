@@ -150,7 +150,7 @@
 							
 							$out =
 								"set{$method}("
-								."{$className}::dao()->getById("
+								."{$this->type->getClass()}::dao()->getById("
 								."\$array[\$prefix.'{$this->dumbName}_{$idName}']"
 								."))";
 							
@@ -159,7 +159,7 @@
 							$out = <<<EOT
 if (isset(\$array[\$prefix.'{$this->dumbName}_{$idName}']))
 	\${$varName}->set{$method}(
-		{$className}::dao()->getById(\$array[\$prefix.'{$this->dumbName}_{$idName}'])
+		{$this->type->getClass()}::dao()->getById(\$array[\$prefix.'{$this->dumbName}_{$idName}'])
 	);
 
 EOT;

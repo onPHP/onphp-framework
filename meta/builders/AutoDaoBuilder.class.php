@@ -15,23 +15,51 @@
 	{
 		public static function build(MetaClass $class)
 		{
+			if (!$parent = $class->getParent())
+				return DictionaryDaoBuilder::build($class);
+			
+			$parentName = $parent->getName().'DAO';
+			$className = $class->getName();
+			$varName = strtolower($className[0]).substr($className, 1);
+
 			$out = self::getHead();
 			
-			if ($parent = $class->getParent())
-				$parent = $parent->getName().'DAO';
-			else
-				$parent = 'MappedStorableDAO';
+			$out .= <<<EOT
+	abstract class Auto{$class->getName()}DAO extends {$parentName}
+	{
+		public function __construct()
+		{
+			\$this->mapping = array_merge(
+				\$this->mapping,
+				array(
+
+EOT;
+			if ($parent->getPattern() instanceof StraightMappingPattern) {
+				$out .= "\t\t\tparent::__construct();\n\n";
+			}
 			
-			$out .=
-				"\tabstract class Auto{$class->getName()}DAO extends {$parent}\n"
-				."\t{\n";
+			$mapping = self::buildMapping($class, 5);
+			$pointers = self::buildPointers($class);
 			
-			// bah.
+			$out .= implode(",\n", $mapping)."\n";
+
+			$out .= <<<EOT
+				)
+			);
+		}
+
+{$pointers}
+
+		public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \${$varName})
+		{
+			return
+				parent::setQueryFields(\$query, \${$varName})->
+
+EOT;
+
+			$out .= self::buildFillers($class);
 			
-			$out .= "\t}\n";
-			$out .= self::getHeel();
-			
-			return $out;
+			return $out.self::getHeel();
 		}
 	}
 ?>

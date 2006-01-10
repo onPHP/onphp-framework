@@ -17,8 +17,13 @@
 		{
 			$out = self::getHead();
 			
+			if ($class->getType()->getId() == MetaClassType::CLASS_ABSTRACT)
+				$abstract = 'abstract ';
+			else
+				$abstract = null;
+			
 			$out .= <<<EOT
-	class {$class->getName()}DAO extends Auto{$class->getName()}DAO
+	{$abstract}class {$class->getName()}DAO extends Auto{$class->getName()}DAO
 	{
 		// your brilliant stuff goes here
 	}

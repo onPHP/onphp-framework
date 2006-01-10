@@ -24,6 +24,8 @@
 		private $pattern	= null;
 		private $identifier	= null;
 		
+		private $childs		= false;
+		
 		public function __construct($name)
 		{
 			$this->name = $name;
@@ -136,6 +138,18 @@
 		public function getIdentifier()
 		{
 			return $this->identifier;
+		}
+		
+		public function hasChilds()
+		{
+			return $this->childs;
+		}
+		
+		public function setChilds($exist = false)
+		{
+			$this->childs = ($exist === true);
+			
+			return $this;
 		}
 		
 		public function dump()

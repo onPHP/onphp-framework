@@ -15,6 +15,172 @@
 	{
 		abstract public static function build(MetaClass $class);
 		
+		protected static function buildFillers(MetaClass $class)
+		{
+			$out = null;
+			
+			$className = $class->getName();
+			$varName = strtolower($className[0]).substr($className, 1);
+
+			$tabs = "\t\t\t";
+
+			$setters = array();
+			
+			$standaloneFillers = array();
+			$chainFillers = array();
+			
+			if ($class->getParent())
+				$setterIndent = 4;
+			else
+				$setterIndent = 5;
+			
+			foreach ($class->getProperties() as $property) {
+				$setters[] = $property->toDaoField($className, $setterIndent);
+				
+				$filler = $property->toDaoSetter($className);
+				
+				if (
+					!$property->getType()->isGeneric()
+					&& !$property->isRequired()
+				)
+					$standaloneFillers[] =
+						$tabs
+						.implode(
+							"\n{$tabs}",
+							explode("\n", $filler)
+						);
+				else
+					$chainFillers[] =
+						"{$tabs}\t"
+						.implode(
+							"\n{$tabs}\t",
+							explode("\n", $filler)
+						);
+			}
+			
+			$out .= implode("->\n", $setters).";\n";
+
+			$out .= <<<EOT
+		}
+
+EOT;
+
+			if (
+				$class->getPattern() instanceof StraightMappingPattern
+				|| $class->getPattern() instanceof DictionaryClassPattern
+			) {
+				$out .= <<<EOT
+			
+		public function makeObject(&\$array, \$prefix = null)
+		{
+			return \$this->fillObject(new {$className}(), &\$array, \$prefix);
+		}
+
+EOT;
+			} else {
+				$out .= <<<EOT
+				
+		// there is no makeObject because of abstract nature of meta-class
+				
+EOT;
+			}
+			
+			$out .= <<<EOT
+
+		protected function fillObject(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
+		{
+
+EOT;
+			if ($class->getParent()) {
+				$out .= <<<EOT
+			parent::fillObject(\${$varName}, \$array, \$prefix);
+
+
+EOT;
+			}
+			
+			if ($chainFillers) {
+				
+				$out .= "{$tabs}\${$varName}->\n";
+				
+				$out .= implode("->\n", $chainFillers).";\n\n";
+			}
+			
+			if ($standaloneFillers) {
+				
+				$out .= implode("->\n", $standaloneFillers)."\n";
+			}
+
+			$out .= <<<EOT
+			return \${$varName};
+		}
+	}
+
+EOT;
+			return $out;
+		}
+		
+		protected static function buildPointers(MetaClass $class)
+		{
+			return <<<EOT
+		public function getTable()
+		{
+			return '{$class->getDumbName()}';
+		}
+		
+		public function getObjectName()
+		{
+			return '{$class->getName()}';
+		}
+		
+		public function getSequence()
+		{
+			return '{$class->getDumbName()}_id';
+		}
+EOT;
+		}
+		
+		protected static function buildMapping(MetaClass $class, $indent = 3)
+		{
+			$tabs = str_pad(null, $indent, "\t", STR_PAD_LEFT);
+			
+			$mapping = array();
+			
+			foreach ($class->getProperties() as $property) {
+				
+				$row = $tabs;
+				
+				if ($property->getType()->isGeneric()) {
+					
+					if ($property->getName() == $property->getDumbName())
+						$map = 'null';
+					else
+						$map = $property->getDumbName();
+					
+					$row .= "'{$property->getName()}' => '{$map}'";
+					
+				} else {
+					
+					$remoteClass =
+						MetaConfiguration::me()->
+						getClassByName(
+							$property->getType()->getClass()
+						);
+					
+					$identifier = $remoteClass->getIdentifier();
+					
+					$row .=
+						"'{$property->getName()}".ucfirst($identifier->getName())
+						."' => '{$remoteClass->getDumbName()}_"
+						."{$identifier->getDumbName()}'";
+				}
+				
+				$mapping[] = $row;
+			}
+			
+			return $mapping;
+		}
+		
 		protected static function getHead()
 		{
 			$head = self::startCap();

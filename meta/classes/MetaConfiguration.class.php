@@ -102,7 +102,7 @@
 						);
 					
 					$this->classes[$class]->setParent(
-						$this->classes[$parent]
+						$this->classes[$parent]->setChilds(true)
 					);
 				} else
 					throw new ObjectNotFoundException(
