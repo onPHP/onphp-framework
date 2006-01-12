@@ -68,7 +68,7 @@
 				return move_uploaded_file($this->value, $path.$name);
 			} else
 				throw new WrongStateException(
-					"can not move '{$this->value}' to '{($path.$name)}'"
+					"can not move '{$this->value}' to '{($path"."$name)}'"
 				);
 		}
 		
