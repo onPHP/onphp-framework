@@ -66,7 +66,7 @@
 				
 				foreach ($dates as $date) {
 					try {
-						$list[] = self::makeTimestamp($date);
+						$list[] = self::makeRange($date);
 					} catch (WrongArgumentException $e) {
 						// ignore?
 					}
@@ -91,7 +91,7 @@
 			return $rangeString;
 		}
 		
-		public static function makeTimestamp($string)
+		public static function makeRange($string)
 		{
 			if (
 				(substr_count($string, ' - ') === 1)
