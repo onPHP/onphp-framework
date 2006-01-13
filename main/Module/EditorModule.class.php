@@ -41,8 +41,6 @@
 				);
 			
 			$form = $this->form;
-
-			$this->importForm($this->subject);
 			
 			$dao = $this->subject->dao();
 			
@@ -87,6 +85,8 @@
 
 					if (!$form->getErrors()) {
 						
+						$this->importForm();
+						
 						try {
 							$dao->add($this->subject);
 						} catch (DuplicateObjectException $e) {
@@ -102,6 +102,7 @@
 				default:
 				
 					$form->dropAllErrors();
+					$this->importForm();
 
 					break;
 			}
