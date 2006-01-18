@@ -33,7 +33,7 @@ A: You should use rewrite rules. An example for nginx
 (http://sysoev.ru/nginx/):
 
 	rewrite /(.*)/\?(.*)	/index.php?area=$1&$2	last;
-	rewrite /(.*)/&(.*)		/index.php?area=$1&$2	last;
+	rewrite /(.*)/&(.*)	/index.php?area=$1&$2	last;
 	rewrite ^/([a-zA-Z]+)/$	/index.php?area=$1	last;
 
 //
