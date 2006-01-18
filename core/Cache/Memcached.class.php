@@ -78,7 +78,7 @@
 			if (!$this->sendRequest($command))
 				return null;
 
-			$buffer = '';
+			$buffer = null;
 			$lenght = 0;
 			$bytesRead = 0;
 			

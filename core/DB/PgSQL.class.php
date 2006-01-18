@@ -54,9 +54,9 @@
 			
 			$conn =
 				"host={$host} user={$user}"
-				.($pass ? " password={$pass}" : '')
-				.($base ? " dbname={$base}" : '')
-				.($port ? " port={$port}" : '');
+				.($pass ? " password={$pass}" : null)
+				.($base ? " dbname={$base}" : null)
+				.($port ? " port={$port}" : null);
 
 			if ($persistent === true)
 				$this->link = pg_pconnect($conn);

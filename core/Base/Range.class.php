@@ -77,7 +77,7 @@
 		/// atavism wrt BC
 		public function toString($from = 'от', $to = 'до')
 		{
-			$out = '';
+			$out = null;
 			
 			if ($this->min)
 				$out .= "{$from} ".$this->min;

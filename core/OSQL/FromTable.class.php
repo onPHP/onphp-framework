@@ -49,11 +49,11 @@
 					.$dialect->quoteTable($this->alias);
 			else
 				return
-					$dialect->quoteTable($this->table).
-					(
+					$dialect->quoteTable($this->table)
+					.(
 						$this->alias
 							? ' AS '.$dialect->quoteTable($this->alias)
-							: ''
+							: null
 					);
 		}
 

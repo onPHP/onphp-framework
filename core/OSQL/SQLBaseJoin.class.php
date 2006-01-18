@@ -33,7 +33,7 @@
 		{
 			return
 				$logic.'JOIN '.$dialect->quoteTable($this->subject).
-				($this->alias ? ' AS '.$dialect->quoteTable($this->alias) : '').
+				($this->alias ? ' AS '.$dialect->quoteTable($this->alias) : null).
 				' ON '.$this->logic->toString($dialect);
 		}
 	}

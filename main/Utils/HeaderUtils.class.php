@@ -30,7 +30,7 @@
 
 		public static function redirect(BaseModule $mod)
 		{
-			$qs = '';
+			$qs = null;
 			
 			if ($mod->getParameters())
 				foreach ($mod->getParameters() as $key => $val)
@@ -65,7 +65,7 @@
 		{
 			if ($num = func_num_args()) {
 				$out = self::getURI();
-				$uri = '';
+				$uri = null;
 				$arr = func_get_args();
 				
 				for ($i = 0; $i < $num; $i++)

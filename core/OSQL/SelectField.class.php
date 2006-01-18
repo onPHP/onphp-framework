@@ -33,7 +33,7 @@
 		{
 			return
 				parent::toString($dialect).
-				($this->alias ? ' AS '.$dialect->quoteField($this->alias) : '');
+				($this->alias ? ' AS '.$dialect->quoteField($this->alias) : null);
 		}
 	}
 ?>

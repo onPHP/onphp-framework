@@ -71,7 +71,7 @@
 			
 			$out =
 				$this->name.'('
-				.($args == array() ? '' : implode(', ', $args))
+				.($args == array() ? null : implode(', ', $args))
 				.')';
 			
 			$out =

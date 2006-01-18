@@ -33,7 +33,7 @@
 		public function toString(Dialect $dialect)
 		{
 			$field =
-				($this->table ? $dialect->quoteTable($this->table).'.' : '').
+				($this->table ? $dialect->quoteTable($this->table).'.' : null).
 				$dialect->quoteField($this->field);
 			
 			return

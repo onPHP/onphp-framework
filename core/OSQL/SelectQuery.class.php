@@ -279,13 +279,13 @@
 			}
 
 			$query = 
-				'SELECT '.($this->distinct ? 'DISTINCT ' : '').
+				'SELECT '.($this->distinct ? 'DISTINCT ' : null).
 				implode(', ', $fieldList);
 				
 			$fromString = "";
 			for ($i = 0; $i < sizeof($this->from); $i++) {
 				if ($i == 0)
-					$separator = '';
+					$separator = null;
 				elseif (
 					$this->from[$i] instanceof FromTable &&
 					!$this->from[$i]->getTable() instanceof SelectQuery

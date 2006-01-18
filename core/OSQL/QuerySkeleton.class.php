@@ -64,13 +64,17 @@
 				$clause = ' WHERE';
 				$outputLogic = false;
 				
-				for ($i = 0; $i < sizeof($this->where); $i++)
+				for ($i = 0; $i < sizeof($this->where); $i++) {
+					
 					if ($exp = $this->where[$i]->toString($dialect)) {
+						
 						$clause .= "{$this->whereLogic[$i]} {$exp} ";
 						$outputLogic = true;
-					}
-					elseif (!$outputLogic && isset($this->whereLogic[$i + 1]))
+						
+					} elseif (!$outputLogic && isset($this->whereLogic[$i + 1]))
 						$this->whereLogic[$i + 1] = null;
+					
+				}
 
 				return $clause;
 			}

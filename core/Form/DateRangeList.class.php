@@ -78,7 +78,7 @@
 		
 		public static function printRange(DateRange $range, $delimiter = '-')
 		{
-			$rangeString = '';
+			$rangeString = null;
 			
 			if ($range->getStart())
 				$rangeString .= $range->getStart()->toDate($delimiter);

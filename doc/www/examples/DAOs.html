@@ -47,37 +47,11 @@
 
 <h2>main/<a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FDAOs%2F&rev=0&sc=0">DAOs</a></h2>
 
-<p><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FDAOs%2FSmartDAO.class.php&rev=0&sc=0">SmartDAO</a>'s child:</p>
+<p>Sample DAO:</p>
 
 <pre>
     <span class="green">final class </span><span class="blue">EmployerDAO </span><span class="green">extends </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FDAOs%2FMappedStorableDAO.class.php&rev=0&sc=0">MappedStorableDAO</a>
     </span><span class="green">{</span>
-
-    ...
-</pre>
-
-<p><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FDAOs%2FCommonDAO.class.php&rev=0&sc=0">CommonDAO</a>'s child:</p>
-
-<pre>
-    <span class="green">final class </span><span class="blue">EmployerDAO </span><span class="green">extends </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FDAOs%2FCommonDAO.class.php&rev=0&sc=0">CommonDAO</a> <span class="green">implements </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FDAOs%2FMappedDAO.class.php&rev=0&sc=0">MappedDAO</a></span>
-    </span><span class="green">{</span>
-        <span class="green">protected </span><span class="blue">$fields </span><span class="green">= array(
-            </span><span class="red">'id'</span><span class="green">, </span><span class="red">'name'</span><span class="green">, </span><span class="red">'birthDate'</span><span class="green">, </span><span class="red">'modified'
-        </span><span class="green">);</span>
-
-        <span class="green">public function </span><span class="blue">getMapping</span><span class="green">()
-        {
-            return </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">mapping</span><span class="green">;
-        }</span>
-
-    ...
-</pre>
-
-<p>Parent-independent part:</p>
-
-<pre>
-    ...
-
         <span class="green">protected </span><span class="blue">$mapping </span><span class="green">= array(
             </span><span class="red">'id'          </span><span class="green">=&gt; </span><span class="blue">null</span><span class="green">,
             </span><span class="red">'name'        </span><span class="green">=&gt; </span><span class="blue">null</span><span class="green">,
@@ -85,7 +59,7 @@
             </span><span class="red">'modified'    </span><span class="green">=&gt; </span><span class="blue">null
         </span><span class="green">);</span>
 
-        <span class="green">public </span><span class="blue">function getTable</span><span class="green">()
+        <span class="green">public function</span> <span class="blue">getTable</span><span class="green">()
         {
             return </span><span class="red">'employer'</span><span class="green">;
         }
@@ -145,10 +119,10 @@
 <p>usage:</p>
 
 <pre>
-    <span class="orange">// get youn gemployers list sorted by birth date</span>
+    <span class="orange">// get employer with id == 2</span>
     <span class="blue">$employer </span><span class="green">= </span><span class="blue">DAO</span><span class="green">::</span><span class="blue">employer</span><span class="green">()-&gt;</span><span class="blue">getById</span><span class="green">(</span><span class="blue">2</span><span class="green">);
 
-    <span class="orange">// get young employers list sorted by birth date</span>
+    <span class="orange">// get employers list sorted by birth date</span>
     </span><span class="blue">$youngEmployersList </span><span class="green">=
         </span><span class="blue">DAO</span><span class="green">::</span><span class="blue">employer</span><span class="green">()-&gt;</span><span class="blue">getList</span><span class="green">(
             </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FDAOs%2FObjectQuery.class.php&rev=0&sc=0">ObjectQuery</a></span><span class="green">::</span><span class="blue">create</span><span class="green">()-&gt;
@@ -161,6 +135,10 @@
             )
         );</span>
 </pre>
+
+<hr>
+
+<p>See also <a href="Meta.html">metaconfiguration</a> example.</p>
 
 <hr>
 
