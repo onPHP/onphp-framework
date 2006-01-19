@@ -62,6 +62,13 @@
 			$buffer = Memcached::DEFAULT_BUFFER
 		)
 	
+	PeclMemcached <- CachePeer
+	
+		public function __construct(
+			$host = Memcached::DEFAULT_PORT,
+			$port = Memcached::DEFAULT_HOST
+		)
+	
 	RubberFileSystem <- CachePeer:
 	
 		very simple fileSystem cache

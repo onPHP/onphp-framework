@@ -38,10 +38,10 @@
 				$db = DBFactory::getDefaultInstance();
 
 				$query = 
-					$this->makeSelectHead()->
+					$this->dao->makeSelectHead()->
 					where(
 						Expression::eq(
-							DBField::create('id', $this->getTable()),
+							DBField::create('id', $this->dao->getTable()),
 							$id
 						)
 					);
@@ -59,7 +59,7 @@
 		{
 			return
 				$this->getByQuery(
-					$this->makeSelectHead()->where($logic)
+					$this->dao->makeSelectHead()->where($logic)
 				);
 		}
 		
@@ -186,12 +186,16 @@
 		
 		public function getListByLogic(LogicalObject $logic)
 		{
-			return $this->getListByQuery($this->makeSelectHead()->where($logic));
+			return $this->getListByQuery(
+				$this->dao->makeSelectHead()->where($logic)
+			);
 		}
 		
 		public function getPlainList()
 		{
-			return $this->getListByQuery($this->makeSelectHead());
+			return $this->getListByQuery(
+				$this->dao->makeSelectHead()
+			);
 		}
 		//@}
 
@@ -234,7 +238,7 @@
 		{
 			$db = DBFactory::getDefaultInstance();
 
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 			
 			$cache = Cache::me();
 			
@@ -285,13 +289,13 @@
 		// erasers
 		public function dropByIds($ids)
 		{
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 
 			$cache = Cache::me();
 			
 			$result =
 				DBFactory::getDefaultInstance()->queryNull(
-					OSQL::delete()->from($this->getTable())->
+					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::in('id', $ids))
 				);
 
@@ -308,7 +312,7 @@
 		// cachers
 		public function cacheById(Identifiable $object)
 		{
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 			
 			Cache::me()->mark($className)->
 				add(
@@ -324,7 +328,7 @@
 			SelectQuery $query, /* Identifiable */ $object
 		)
 		{
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 			$queryId = $query->getId();
 			
 			$indexKey = $className.self::SUFFIX_INDEX;
@@ -336,7 +340,7 @@
 			if ($pool->get($semKey)) {
 				$this->syncMap($indexKey, $key);
 				
-				Cache::me()->mark($this->getObjectName())->
+				Cache::me()->mark($this->dao->getObjectName())->
 					add($key, $object, Cache::EXPIRES_FOREVER);
 				
 				$pool->free($semKey);
@@ -353,7 +357,7 @@
 			}
 			
 			$cache = Cache::me();
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 			
 			$listKey = $className.self::SUFFIX_LIST.$query->getId();
 			$indexKey = $className.self::SUFFIX_INDEX;
@@ -392,7 +396,7 @@
 		
 		public function uncacheByIds($ids)
 		{
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 			$cache = Cache::me();
 			
 			foreach ($ids as $id)
@@ -405,7 +409,7 @@
 		
 		public function uncacheLists()
 		{
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 			
 			$indexKey = $className.self::SUFFIX_INDEX;
 			$intKey	= $this->keyToInt($indexKey);
@@ -438,7 +442,7 @@
 		{
 			static $null = Cache::NOT_FOUND;
 			
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 			
 			return 
 				Cache::me()->mark($className)->
@@ -451,7 +455,7 @@
 
 		protected function getCachedList(SelectQuery $query)
 		{
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 			
 			return
 				Cache::me()->mark($className)->
@@ -469,7 +473,7 @@
 			
 			$map[$objectKey] = true;
 			
-			$cache->mark($this->getObjectName())->
+			$cache->mark($this->dao->getObjectName())->
 				set($mapKey, $map, Cache::EXPIRES_FOREVER);
 			
 			return true;

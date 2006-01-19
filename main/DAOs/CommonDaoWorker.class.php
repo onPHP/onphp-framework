@@ -37,11 +37,11 @@
 				$db = DBFactory::getDefaultInstance();
 
 				$query = 
-					$this->
+					$this->dao->
 						makeSelectHead()->
 						where(
 							Expression::eq(
-								DBField::create('id', $this->getTable()),
+								DBField::create('id', $this->dao->getTable()),
 								$id
 							)
 						);
@@ -66,7 +66,7 @@
 		{
 			return
 				$this->getByQuery(
-					$this->makeSelectHead()->where($logic), $expires
+					$this->dao->makeSelectHead()->where($logic), $expires
 				);
 		}
 
@@ -170,7 +170,7 @@
 							$list,
 							$this->getListByLogic(
 								Expression::in(
-									new DBField('id', $this->getTable()), 
+									new DBField('id', $this->dao->getTable()), 
 									$toFetch
 								), 
 								$expires
@@ -194,7 +194,7 @@
 				return
 					$this->getListByLogic(
 						Expression::in(
-							new DBField('id', $this->getTable()),
+							new DBField('id', $this->dao->getTable()),
 							$ids
 						),
 						Cache::DO_NOT_CACHE
@@ -234,13 +234,15 @@
 		{
 			return
 				$this->getListByQuery(
-					$this->makeSelectHead()->where($logic), $expires
+					$this->dao->makeSelectHead()->where($logic), $expires
 				);
 		}
 		
 		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
 		{
-			return $this->getListByQuery($this->makeSelectHead(), $expires);
+			return $this->getListByQuery(
+				$this->dao->makeSelectHead(), $expires
+			);
 		}
 		//@}
 		
@@ -318,7 +320,7 @@
 		{
 			if ($expires !== Cache::DO_NOT_CACHE) {
 				
-				$className = $this->getObjectName();
+				$className = $this->dao->getObjectName();
 				
 				Cache::me()->mark($className)->
 					add(
@@ -339,7 +341,7 @@
 		{
 			if ($expires !== Cache::DO_NOT_CACHE) {
 			
-				$className = $this->getObjectName();
+				$className = $this->dao->getObjectName();
 				
 				Cache::me()->mark($className)->
 					add(
@@ -379,7 +381,7 @@
 
 			return
 				DBFactory::getDefaultInstance()->queryNull(
-					OSQL::delete()->from($this->getTable())->
+					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::in('id', $ids))
 				);
 		}
@@ -389,7 +391,7 @@
 		// uncachers
 		public function uncacheByIds($ids)
 		{
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 			$cache = Cache::me();
 			
 			foreach ($ids as $id)
@@ -402,7 +404,7 @@
 		
 		public function uncacheLists()
 		{
-			return $this->uncacheByQuery($this->makeSelectHead());
+			return $this->uncacheByQuery($this->dao->makeSelectHead());
 		}
 		//@}
 	}

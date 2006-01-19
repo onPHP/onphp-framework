@@ -33,30 +33,12 @@
 		}
 		
 		//@{
-		// DAO proxy
-		protected function getObjectName()
-		{
-			return $this->dao->getObjectName();
-		}
-		
-		protected function getTable()
-		{
-			return $this->dao->getTable();
-		}
-		
-		protected function makeSelectHead()
-		{
-			return $this->dao->makeSelectHead();
-		}
-		//@}
-		
-		//@{
 		// erasers
 		public function dropById($id)
 		{
 			$result =
 				DBFactory::getDefaultInstance()->queryNull(
-					OSQL::delete()->from($this->getTable())->
+					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::eq('id', $id))
 				);
 			
@@ -70,7 +52,7 @@
 		// uncachers
 		public function uncacheById($id)
 		{
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 			
 			return Cache::me()->mark($className)->delete($className.'_'.$id);
 		}
@@ -80,14 +62,14 @@
 		// cache getters
 		public function getCachedById($id)
 		{
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 			
 			return Cache::me()->mark($className)->get($className.'_'.$id);
 		}
 		
 		public function getCachedByQuery(Query $query)
 		{
-			$className = $this->getObjectName();
+			$className = $this->dao->getObjectName();
 			
 			return
 				Cache::me()->mark($className)->

@@ -2,6 +2,8 @@
 
 2006-01-19	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* main/DAOs/: removed unneeded wrapper in DAO-workers.
+
 	* core/Cache/PeclMemcached.class.php: connector for PECL's memcache
 	extension.
 
