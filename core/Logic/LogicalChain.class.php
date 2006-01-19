@@ -77,7 +77,7 @@
 			if ($this->chain) {
 				$out = "({$this->chain[0]->toString($dialect)} ";
 	
-				for ($i = 1; $i < sizeof($this->chain); $i++)
+				for ($i = 1, $size = sizeof($this->chain); $i < $size; $i++)
 					$out .= "{$this->logic[$i]} {$this->chain[$i]->toString($dialect)} ";
 	
 				return $out.')';
@@ -92,7 +92,7 @@
 			
 			$out = null;
 			
-			for ($i = 0; $i < sizeof($chain); $i++) {
+			for ($i = 0, $size = sizeof($chain); $i < $size; $i++) {
 				if (isset($chain[$i + 1]))
 					$out =
 						Expression::toBoolean(

@@ -16,8 +16,9 @@
 	**/
 	class FromTable implements SQLTableName
 	{
-		private $table = null;
-		private $alias = null;
+		private $table	= null;
+		private $alias	= null;
+		private $schema	= null;
 
 		public function __construct($table, $alias = null)
 		{
@@ -34,7 +35,11 @@
 					'SelectQuery or LogicalObject as table'
 				);
 
-			$this->table = $table;
+			if (strpos($table, '.'))
+				list($this->schema, $this->table) = explode('.', $table, 2);
+			else
+				$this->table = $table;
+			
 			$this->alias = $alias;
 		}
 
@@ -49,7 +54,12 @@
 					.$dialect->quoteTable($this->alias);
 			else
 				return
-					$dialect->quoteTable($this->table)
+					(
+						$this->schema
+							? $dialect->quoteTable($this->schema)."."
+							: null
+					)
+					.$dialect->quoteTable($this->table)
 					.(
 						$this->alias
 							? ' AS '.$dialect->quoteTable($this->alias)

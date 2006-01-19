@@ -1,5 +1,13 @@
 # $Id$
 
+2006-01-19	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/, main/: removed sizeof() abusing in for() loops.
+
+	* core/DB/Dialect.class.php, core/OSQL/FromTable.class.php: table's
+	schema "support" moved away from Dialect to lowerize strpos() calls at
+	least by order; spotted by Antony.
+
 2006-01-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* doc/www/: DAO example updated, added Meta example.

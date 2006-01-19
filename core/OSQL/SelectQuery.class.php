@@ -234,11 +234,13 @@
 		
 		public function arrayGet($array, $prefix = null)
 		{
+			$size = sizeof($array);
+			
 			if ($prefix)
-				for ($i = 0; $i < sizeof($array); $i++)
+				for ($i = 0; $i < $size; $i++)
 					$this->get($array[$i], $prefix.$array[$i]);
 			else
-				for ($i = 0; $i < sizeof($array); $i++)
+				for ($i = 0; $i < $size; $i++)
 					$this->get($array[$i]);
 					
 			return $this;
@@ -282,8 +284,9 @@
 				'SELECT '.($this->distinct ? 'DISTINCT ' : null).
 				implode(', ', $fieldList);
 				
-			$fromString = "";
-			for ($i = 0; $i < sizeof($this->from); $i++) {
+			$fromString = null;
+			
+			for ($i = 0, $size = sizeof($this->from); $i < $size; $i++) {
 				if ($i == 0)
 					$separator = null;
 				elseif (
@@ -309,7 +312,7 @@
 				foreach ($this->group as $group)
 					$groupList[] = $group->toString($dialect);
 
-				if (sizeof($groupList))
+				if ($groupList)
 					$query .= " GROUP BY ".implode(', ', $groupList);
 			}
 
@@ -319,7 +322,7 @@
 				foreach($this->order as $order)
 					$orderList[] = $order->toString($dialect);
 
-				if (sizeof($orderList))
+				if ($orderList)
 					$query .= " ORDER BY ".implode(', ', $orderList);
 			}
 	
@@ -346,7 +349,7 @@
 
 		private function getLastTable($table = null)
 		{
-			if (!$table && sizeof($this->from))
+			if (!$table && $this->from)
 				return $this->from[sizeof($this->from) - 1]->getTable();
 			else 
 				return $table;

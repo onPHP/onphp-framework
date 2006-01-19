@@ -48,13 +48,14 @@
 		public function toBoolean(Form $form)
 		{
 			$args = &$this->args;
+			$size = sizeof($args);
+			
+			$out = true;
 			
 			switch ($this->logic) {
 				case Expression::LOGIC_AND:
-
-					$out = true;
 					
-					for ($i = 0; $i < sizeof($args); $i++)
+					for ($i = 0; $i < $size; $i++)
 						if (isset($args[$i + 1]))
 							$out =
 								$out
@@ -67,9 +68,7 @@
 			
 				case Expression::LOGIC_OR:
 					
-					$out = false;
-
-					for ($i = 0; $i < sizeof($args); $i++)
+					for ($i = 0; $i < $size; $i++)
 						if (isset($args[$i + 1]))
 							$out =
 								$out
@@ -77,6 +76,7 @@
 								|| $args[$i + 1]->toBoolean($form);
 						else
 							$out = $out || $args[$i]->toBoolean($form);
+					
 					return $out;
 
 				default:

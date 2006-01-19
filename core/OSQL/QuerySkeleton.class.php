@@ -33,12 +33,12 @@
 
 		public function where(LogicalObject $exp, $logic = null)
 		{
-			if (sizeof($this->where) > 0 && !$logic)
+			if ($this->where && !$logic)
 				throw new WrongArgumentException(
 					'you have to specify expression logic'
 				);
 			else {
-				if (sizeof($this->where) == 0 && $logic)
+				if (!$this->where && $logic)
 					$logic = null;
 
 				$this->whereLogic[] = $logic;
@@ -64,7 +64,7 @@
 				$clause = ' WHERE';
 				$outputLogic = false;
 				
-				for ($i = 0; $i < sizeof($this->where); $i++) {
+				for ($i = 0, $size = sizeof($this->where); $i < $size; $i++) {
 					
 					if ($exp = $this->where[$i]->toString($dialect)) {
 						
