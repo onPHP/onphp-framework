@@ -85,13 +85,15 @@ WARN_LOGFILE           =
 INPUT                  = ./onphp.doxy.php ../
 FILE_PATTERNS          = *.php
 RECURSIVE              = YES
-EXCLUDE                =  ../meta \
-			 ../incubator
+EXCLUDE                = ../meta \
+			 ../incubator \
+			 sample/ \
+			 examples/
 EXCLUDE_SYMLINKS       = NO
-EXCLUDE_PATTERNS       = *.svn/* *doc/
-EXAMPLE_PATH           = 
-EXAMPLE_PATTERNS       = *
-EXAMPLE_RECURSIVE      = NO
+EXCLUDE_PATTERNS       = 
+EXAMPLE_PATH           = ./examples/
+EXAMPLE_PATTERNS       = *.php
+EXAMPLE_RECURSIVE      = YES
 IMAGE_PATH             = 
 INPUT_FILTER           = 
 FILTER_PATTERNS        = 

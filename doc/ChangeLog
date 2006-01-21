@@ -1,5 +1,10 @@
 # $Id$
 
+2006-01-21	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/Base/Singletone.class.php: reworked and simplified,
+	SingletoneException dropped.
+
 2006-01-19	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/DAOs/: removed unneeded wrapper in DAO-workers.

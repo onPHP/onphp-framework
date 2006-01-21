@@ -15,26 +15,35 @@
 	 *   - InsertQuery;
 	 *   - UpdateQuery;
 	 *   - DeleteQuery;
-	 * - DB abstraction layer:
-	 *  - connectors:
-	 *   - PgSQL;
-	 *   - MySQL;
-	 *   - IBase;
-	 *   - SQLite;
-	 *   - MSSQL (incubator);
-	 *   - OraSQL (incubator);
+	 *  - DB abstraction layer:
+	 *   - connectors:
+	 *    - PgSQL;
+	 *    - MySQL;
+	 *    - IBase;
+	 *    - SQLite;
+	 *    - MSSQL (incubator);
+	 *    - OraSQL (incubator);
+	 *   - utils:
+	 *    - Queue;
+	 *    - TransactionQueue;
+	 *    - DBTransaction;
+	 *  - DAO hierarchies:
+	 *   - GenericDAO workers:
+	 *    - NullDaoWorker;
+	 *    - CommonDaoWorker;
+	 *    - SmartDaoWorker;
+	 * - IdentifiableObject collections:
+	 *  - StorableContainer;
+	 *  - UnifiedContainer;
+	 * - Cache subsystem:
+	 *  - peers:
+	 *   - Memcached (and PeclMemcached);
+	 *   - RubberFileSystem;
+	 *   - SharedMemory;
+	 *   - RuntimeMemory;
 	 *  - utils:
-	 *   - Queue;
-	 *   - TransactionQueue;
-	 *   - DBTransaction;
-	 * - DAO hierarchies:
-	 *  - GenericDAO workers:
-	 *   - NullDaoWorker;
-	 *   - CommonDaoWorker;
-	 *   - SmartDaoWorker;
-	 *  - IdentifiableObject collections:
-	 *   - StorableContainer;
-	 *   - UnifiedContainer;
+	 *   - AggregateCache;
+	 *   - ReferencePool;
 	 *
 	 * ...
 	 *

@@ -93,7 +93,10 @@
 			return new PrimitiveHost($name);
 		}
 	}
-
+	
+	/**
+	 * @ingroup Primitives
+	**/
 	class PrimitiveArray extends RangedPrimitive
 	{
 		public function import(&$scope)
@@ -114,6 +117,9 @@
 		}
 	}
 	
+	/**
+	 * @ingroup Primitives
+	**/
 	class PrimitiveBoolean extends BasePrimitive
 	{
 		public function import(&$scope) // to be compatible with BasePrimitive

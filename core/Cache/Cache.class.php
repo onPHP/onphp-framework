@@ -17,6 +17,8 @@
 	 * @see CachePeer
 	 * 
 	 * @ingroup Cache
+	 * 
+	 * @example cacheSettings.php
 	**/
 	final class Cache extends StaticFactory
 	{
