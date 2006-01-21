@@ -13,6 +13,8 @@
 
 	/**
 	 * Quite common information collection.
+	 * 
+	 * @ingroup main
 	**/
 	class Credentials
 	{

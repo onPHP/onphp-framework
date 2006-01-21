@@ -15,6 +15,8 @@
 	 * MySQL DB connector.
 	 * 
 	 * @see http://www.mysql.com/
+	 * 
+	 * @ingroup DB
 	**/
 	class MySQL extends Sequenceless
 	{

@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Containers
+	**/
 	abstract class IndependentLinkDAO extends Singletone implements PartDAO
 	{
 		abstract public function getParentIdField();

@@ -13,6 +13,8 @@
 
 	/**
 	 * Inheritable Singletone's pattern implementation.
+	 * 
+	 * @ingroup Base
 	**/
 	abstract class Singletone
 	{

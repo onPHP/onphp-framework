@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Primitives
+	**/
 	class PrimitiveMultiList extends PrimitiveList
 	{
 		public function import(&$scope)

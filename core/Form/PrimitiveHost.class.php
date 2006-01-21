@@ -15,6 +15,8 @@
 	 * Holds only hosts without url to documents
 	 * 
 	 * @deprecated	use PrimitiveString and filters
+	 * 
+	 * @ingroup Primitives
 	**/
 	class PrimitiveHost extends PrimitiveUrl
 	{

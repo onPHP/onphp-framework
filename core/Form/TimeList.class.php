@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2005 by Konstantin V. Arkhipov, Igor V. Gulyaev         *
- *   voxus@shadanakar.org, giv@msk.timeout.ru                              *
+ *   voxus@onphp.org, giv@msk.timeout.ru                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Primitives
+	**/
 	class TimeList extends BasePrimitive
 	{
 		public function import(&$scope)

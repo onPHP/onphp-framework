@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup OSQL
+	**/
 	class SQLQueryJoin extends SQLBaseJoin implements SQLTableName
 	{
 		public function __construct(

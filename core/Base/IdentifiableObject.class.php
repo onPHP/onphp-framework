@@ -15,6 +15,8 @@
 	 * Ideal Identifiable interface implementation. ;-)
 	 *
 	 * @see Identifiable
+	 * 
+	 * @ingroup Base
 	**/
 	class /* spirit of */ IdentifiableObject implements Identifiable
 	{

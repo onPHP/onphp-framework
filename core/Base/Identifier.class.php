@@ -13,6 +13,8 @@
 
 	/**
 	 * @see Identifiable
+	 * 
+	 * @ingroup Base
 	**/
 	final class Identifier implements Identifiable
 	{

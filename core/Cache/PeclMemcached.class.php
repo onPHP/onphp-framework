@@ -15,6 +15,8 @@
 	 * Connector for PECL's Memcache extension by Antony Dovgal.
 	 *
 	 * @see http://tony2001.phpclub.net/
+	 * 
+	 * @ingroup Cache
 	**/
 	final class PeclMemcached extends CachePeer
 	{

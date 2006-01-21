@@ -1,7 +1,7 @@
 <?php
 /****************************************************************************
  *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov, Anton E. Lebedevich *
- *   voxus@gentoo.org, noiselist@pochta.ru                                  *
+ *   voxus@onphp.org, noiselist@pochta.ru                                   *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -13,6 +13,8 @@
 
 	/**
 	 * Complete Form class.
+	 * 
+	 * @ingroup Form
 	**/
 	final class Form extends RegulatedForm
 	{

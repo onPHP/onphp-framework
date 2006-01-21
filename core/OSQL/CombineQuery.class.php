@@ -20,6 +20,8 @@
 	 * query1 EXCEPT [ALL] query2 .... 
 	 * 
 	 * @see PostgreSQL Documentation, Chapter Combining Queries 
+	 * 
+	 * @ingroup OSQL
 	**/
 	final class CombineQuery extends StaticFactory
 	{		

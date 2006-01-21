@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup OSQL
+	**/
 	class OrderBy extends FieldTable
 	{
 		private $direction = null;

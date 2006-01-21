@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup OSQL
+	**/
 	class SQLJoin extends SQLBaseJoin
 	{
 		public function toString(Dialect $dialect)

@@ -13,6 +13,8 @@
 
 	/**
 	 * @see RegulatedPrimitive::addImportFilter()
+	 * 
+	 * @ingroup Filters
 	**/
 	class StripTagsFilter extends BaseFilter
 	{

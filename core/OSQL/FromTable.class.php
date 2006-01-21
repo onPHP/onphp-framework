@@ -13,6 +13,8 @@
 
 	/**
 	 * SQL's "FROM"-member implementation.
+	 * 
+	 * @ingroup OSQL
 	**/
 	class FromTable implements SQLTableName
 	{

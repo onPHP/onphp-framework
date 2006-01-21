@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov, Sveta Smirnova     *
- *   voxus@gentoo.org, sveta@microbecal.com                                *
+ *   voxus@onphp.org, sveta@microbecal.com                                 *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Primitives
+	**/
 	class PrimitiveString extends FiltrablePrimitive
 	{
 		private $pattern = null;

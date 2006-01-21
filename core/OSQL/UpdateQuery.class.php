@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup OSQL
+	**/
 	final class UpdateQuery extends InsertOrUpdateQuery
 	{
 		public function __construct($table = null)

@@ -11,5 +11,8 @@
  ****************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Exceptions
+	**/
 	class TooManyRowsException extends DatabaseException {/*_*/}
 ?>

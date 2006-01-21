@@ -13,6 +13,8 @@
 
 	/**
 	 * Basis for almost all implementations of SQL parts.
+	 * 
+	 * @ingroup OSQL
 	**/
 	interface DialectString
 	{

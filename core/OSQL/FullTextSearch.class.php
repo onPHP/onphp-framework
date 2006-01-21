@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup OSQL
+	**/
 	final class FullTextSearch extends FullText
 	{
 		public function toString(Dialect $dialect)

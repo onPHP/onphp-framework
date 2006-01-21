@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup OSQL
+	**/
 	abstract class SQLBaseJoin implements SQLTableName, DialectString
 	{
 		protected $subject	= null;

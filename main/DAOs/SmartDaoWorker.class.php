@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
- *   voxus@shadanakar.org                                                  *
+ *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,6 +15,8 @@
 	 * Transparent caching DAO worker.
 	 * 
 	 * @see CommonDaoWorker for manual-caching one.
+	 * 
+	 * @ingroup DAOs
 	**/
 	final class SmartDaoWorker extends BaseDaoWorker
 	{

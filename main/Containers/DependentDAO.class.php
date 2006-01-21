@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Containers
+	**/
 	abstract class DependentDAO extends GenericDAO implements PartDAO
 	{
 		abstract public function getParentIdField();

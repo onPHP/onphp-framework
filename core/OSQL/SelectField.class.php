@@ -13,6 +13,8 @@
 
 	/**
 	 * Connected to concrete table DBField.
+	 * 
+	 * @ingroup OSQL
 	**/
 	class SelectField extends FieldTable
 	{

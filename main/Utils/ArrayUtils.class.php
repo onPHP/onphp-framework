@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
- *   voxus@gentoo.org                                                      *
+ *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Utils
+	**/
 	final class ArrayUtils extends StaticFactory
 	{
 		public static function convertObjectList($list = null)

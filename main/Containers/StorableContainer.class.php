@@ -11,6 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @see UnifiedContainer for alternative
+	 * 
+	 * @ingroup Containers
+	**/
 	class StorableContainer
 	{
 		// lazy loading state

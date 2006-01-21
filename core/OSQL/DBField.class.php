@@ -13,6 +13,8 @@
 
 	/**
 	 * Reference for actual DB-table column.
+	 * 
+	 * @ingroup OSQL
 	**/
 	class DBField extends Castable implements DialectString, SQLTableName 
 	{

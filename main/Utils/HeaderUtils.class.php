@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
- *   voxus@shadanakar.org                                                  *
+ *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,7 +12,9 @@
 /* $Id$ */
 
 	/**
-	 * Collection of static header functions
+	 * Collection of static header functions.
+	 * 
+	 * @ingroup Utils
 	**/
 	final class HeaderUtils extends StaticFactory
 	{

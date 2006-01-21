@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
- *   voxus@gentoo.org                                                      *
+ *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -55,7 +55,9 @@
 	/**
 	 * IdentifiableObject childs collection handling.
 	 * 
-	 * @see StorableContainer
+	 * @see StorableContainer for alternative
+	 * 
+	 * @ingroup Containers
 	**/
 	abstract class UnifiedContainer
 	{

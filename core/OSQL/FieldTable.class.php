@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup OSQL
+	**/
 	abstract class FieldTable extends Castable implements DialectString
 	{
 		protected $field = null;

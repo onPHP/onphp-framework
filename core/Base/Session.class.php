@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
- *   voxus@gentoo.org                                                      *
+ *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,6 +13,8 @@
 
 	/**
 	 * @see Session
+	 * 
+	 * @ingroup Base
 	**/
 	class SessionNotStartedException extends BaseException 
 	{
@@ -27,6 +29,8 @@
 
 	/**
 	 * Simple static wrapper around session_*() functions.
+	 * 
+	 * @ingroup core
 	**/
 	final class Session extends StaticFactory
 	{

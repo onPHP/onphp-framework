@@ -15,6 +15,8 @@
 	 * Date's interval implementation and accompanying utility methods.
 	 *
 	 * @see Timestamp
+	 * 
+	 * @ingroup Base
 	**/
 	class DateRange
 	{

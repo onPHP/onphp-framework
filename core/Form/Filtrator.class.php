@@ -13,6 +13,8 @@
 
 	/**
 	 * Interface for primitive's filters.
+	 * 
+	 * @ingroup Filters
 	**/
 	interface Filtrator
 	{

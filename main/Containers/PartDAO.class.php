@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Containers
+	**/
 	interface PartDAO
 	{
 		public function dropByParentId($parentId);

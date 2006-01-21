@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Filters
+	**/
 	class TrimFilter extends BaseFilter
 	{
 		public function apply($value)

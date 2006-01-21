@@ -13,6 +13,8 @@
 
 	/**
 	 * Chained Filtrator.
+	 * 
+	 * @ingroup Form
 	**/
 	class FilterChain implements Filtrator
 	{

@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Filters
+	**/
 	class PCREFilter implements Filtrator
 	{
 		private $search 	= null;

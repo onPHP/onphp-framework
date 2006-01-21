@@ -15,6 +15,8 @@
 	 * HTML Special Characters replacer.
 	 * 
 	 * @see FiltrablePrimitive::getDisplayValue()
+	 * 
+	 * @ingroup Filters
 	**/
 	class HtmlSpecialCharsFilter extends BaseFilter
 	{

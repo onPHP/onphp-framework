@@ -11,6 +11,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup OSQL
+	**/
 	class SQLLeftJoin extends SQLBaseJoin
 	{
 		public function toString(Dialect $dialect)

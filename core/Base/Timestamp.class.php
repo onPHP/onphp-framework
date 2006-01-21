@@ -15,6 +15,8 @@
 	 * Date's container and utilities.
 	 *
 	 * @see DateRange
+	 * 
+	 * @ingroup Base
 	**/
 	class Timestamp
 	{

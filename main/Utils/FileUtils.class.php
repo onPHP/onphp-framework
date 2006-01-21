@@ -13,6 +13,8 @@
 
 	/**
 	 * Utilities for file handling.
+	 * 
+	 * @ingroup Utils
 	**/
 	final class FileUtils extends StaticFactory
 	{

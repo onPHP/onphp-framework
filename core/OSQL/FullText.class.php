@@ -13,6 +13,8 @@
 
 	/**
 	 * Base for all full-text stuff.
+	 * 
+	 * @ingroup OSQL
 	**/
 	abstract class FullText implements LogicalObject
 	{

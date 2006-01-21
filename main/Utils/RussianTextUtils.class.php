@@ -11,6 +11,9 @@
 ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Utils
+	**/
 	final class RussianTextUtils extends StaticFactory
 	{
 		const MALE		= 0;
