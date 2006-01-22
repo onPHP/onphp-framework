@@ -35,10 +35,10 @@
 			$db = DBFactory::getDefaultInstance();
 
 			$query = 
-				$this->makeSelectHead()->
+				$this->dao->makeSelectHead()->
 				where(
 					Expression::eq(
-						DBField::create('id', $this->getTable()),
+						DBField::create('id', $this->dao->getTable()),
 						$id
 					)
 				);
@@ -55,7 +55,7 @@
 		{
 			return
 				$this->getByQuery(
-					$this->makeSelectHead()->where($logic)
+					$this->dao->makeSelectHead()->where($logic)
 				);
 		}
 		
@@ -129,12 +129,12 @@
 		
 		public function getListByLogic(LogicalObject $logic)
 		{
-			return $this->getListByQuery($this->makeSelectHead()->where($logic));
+			return $this->getListByQuery($this->dao->makeSelectHead()->where($logic));
 		}
 		
 		public function getPlainList()
 		{
-			return $this->getListByQuery($this->makeSelectHead());
+			return $this->getListByQuery($this->dao->makeSelectHead());
 		}
 		//@}
 
@@ -203,7 +203,7 @@
 		{
 			return
 				DBFactory::getDefaultInstance()->queryNull(
-					OSQL::delete()->from($this->getTable())->
+					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::eq('id', $id))
 				);
 		}
@@ -212,7 +212,7 @@
 		{
 			return 
 				DBFactory::getDefaultInstance()->queryNull(
-					OSQL::delete()->from($this->getTable())->
+					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::in('id', $ids))
 				);
 		}
@@ -263,7 +263,7 @@
 			return null;
 		}
 		
-		public function getCachedByQuery(Query $query)
+		public function getCachedByQuery(SelectQuery $query)
 		{
 			return null;
 		}

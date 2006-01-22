@@ -20,6 +20,15 @@
 	**/
 	final class SmartDaoWorker extends BaseDaoWorker
 	{
+		private $indexKey	= null;
+		
+		public function __construct(GenericDAO $dao)
+		{
+			parent::__construct($dao);
+			
+			$this->indexKey = $this->className.self::SUFFIX_INDEX;
+		}
+		
 		//@{
 		// single object getters
 		public function get(ObjectQuery $oq)
@@ -240,8 +249,6 @@
 		{
 			$db = DBFactory::getDefaultInstance();
 
-			$className = $this->dao->getObjectName();
-			
 			$cache = Cache::me();
 			
 			$res = new QueryResult();
@@ -291,8 +298,6 @@
 		// erasers
 		public function dropByIds($ids)
 		{
-			$className = $this->dao->getObjectName();
-
 			$cache = Cache::me();
 			
 			$result =
@@ -302,7 +307,7 @@
 				);
 
 			foreach ($ids as $id)
-				$cache->mark($className)->delete($className.'_'.$id);
+				$cache->mark($this->className)->delete($this->className.'_'.$id);
 			
 			$this->uncacheLists();
 
@@ -314,11 +319,9 @@
 		// cachers
 		public function cacheById(Identifiable $object)
 		{
-			$className = $this->dao->getObjectName();
-			
-			Cache::me()->mark($className)->
+			Cache::me()->mark($this->className)->
 				add(
-					$className.'_'.$object->getId(),
+					$this->className.'_'.$object->getId(),
 					$object,
 					Cache::EXPIRES_FOREVER
 				);
@@ -330,19 +333,18 @@
 			SelectQuery $query, /* Identifiable */ $object
 		)
 		{
-			$className = $this->dao->getObjectName();
 			$queryId = $query->getId();
 			
-			$indexKey = $className.self::SUFFIX_INDEX;
-			$semKey = $this->keyToInt($indexKey);
-			$key = $className.self::SUFFIX_QUERY.$queryId;
+			$semKey = $this->keyToInt($this->indexKey);
+			
+			$key = $this->className.self::SUFFIX_QUERY.$queryId;
 			
 			$pool = SemaphorePool::me();
 
 			if ($pool->get($semKey)) {
-				$this->syncMap($indexKey, $key);
+				$this->syncMap($key);
 				
-				Cache::me()->mark($this->dao->getObjectName())->
+				Cache::me()->mark($this->className)->
 					add($key, $object, Cache::EXPIRES_FOREVER);
 				
 				$pool->free($semKey);
@@ -359,19 +361,18 @@
 			}
 			
 			$cache = Cache::me();
-			$className = $this->dao->getObjectName();
 			
-			$listKey = $className.self::SUFFIX_LIST.$query->getId();
-			$indexKey = $className.self::SUFFIX_INDEX;
-			$semKey = $this->keyToInt($indexKey);
+			$listKey = $this->className.self::SUFFIX_LIST.$query->getId();
+			
+			$semKey = $this->keyToInt($this->indexKey);
 			
 			$pool = SemaphorePool::me();
 			
 			if ($pool->get($semKey)) {
 			
-				$this->syncMap($indexKey, $listKey);
+				$this->syncMap($listKey);
 				
-				$cache->mark($className)->
+				$cache->mark($this->className)->
 					add($listKey, $array, Cache::EXPIRES_FOREVER);
 				
 				if ($array !== Cache::NOT_FOUND) {
@@ -398,12 +399,11 @@
 		
 		public function uncacheByIds($ids)
 		{
-			$className = $this->dao->getObjectName();
 			$cache = Cache::me();
 			
 			foreach ($ids as $id)
-				$cache->mark($className)->delete(
-					$className.'_'.$id
+				$cache->mark($this->className)->delete(
+					$this->className.'_'.$id
 				);
 			
 			return $this->uncacheLists();
@@ -411,22 +411,18 @@
 		
 		public function uncacheLists()
 		{
-			$className = $this->dao->getObjectName();
-			
-			$indexKey = $className.self::SUFFIX_INDEX;
-			$intKey	= $this->keyToInt($indexKey);
+			$intKey	= $this->keyToInt($this->indexKey);
 			
 			$cache = Cache::me();
 			$pool = SemaphorePool::me();
-
+			
 			if ($pool->get($intKey)) {
-				$indexList = $cache->mark($className)->get($indexKey);
+				$indexList = $cache->mark($this->className)->get($this->indexKey);
+				$cache->mark($this->className)->delete($this->indexKey);
 	
 				if ($indexList) {
-					$cache->mark($className)->delete($indexKey);
-					
 					foreach ($indexList as $key => &$true)
-						$cache->mark($className)->delete($key);
+						$cache->mark($this->className)->delete($key);
 				}
 				
 				$pool->free($intKey);
@@ -434,56 +430,98 @@
 				return true;
 			}
 			
+			$cache->mark($this->className)->delete($this->indexKey);
+			
 			return false;
 		}
 		//@}
 		
 		//@{
 		// internal helpers
+		public function getCachedByQuery(SelectQuery $query)
+		{
+			return
+				$this->carefulGetByKey(
+					$this->className.self::SUFFIX_QUERY.$query->getId()
+				);
+		}
+		
+		protected function getCachedList(SelectQuery $query)
+		{
+			return
+				$this->carefulGetByKey(
+					$this->className.self::SUFFIX_LIST.$query->getId()
+				);
+		}
+		
 		protected function cacheNullById($id)
 		{
 			static $null = Cache::NOT_FOUND;
 			
-			$className = $this->dao->getObjectName();
-			
 			return 
-				Cache::me()->mark($className)->
+				Cache::me()->mark($this->className)->
 					add(
-						$className.'_'.$id,
+						$this->className.'_'.$id,
 						$null,
 						Cache::EXPIRES_FOREVER
 					);
 		}
 
-		protected function getCachedList(SelectQuery $query)
+		private function carefulGetByKey($key)
 		{
-			$className = $this->dao->getObjectName();
+			if ($object = Cache::me()->mark($this->className)->get($key)) {
+				if ($this->checkMap($key)) {
+					return $object;
+				} else {
+					Cache::me()->mark($this->className)->delete($key);
+				}
+			}
 			
-			return
-				Cache::me()->mark($className)->
-					get($className.self::SUFFIX_LIST.$query->getId());
+			return null;
 		}
 		
-		private function syncMap($mapKey, $objectKey)
+		private function syncMap($objectKey)
 		{
 			$cache = Cache::me();
 			
-			if (!$map = $cache->get($mapKey))
+			if (!$map = $cache->mark($this->className)->get($this->indexKey))
 				$map = array();
 			
-			$semKey = $this->keyToInt($mapKey);
+			$semKey = $this->keyToInt($this->indexKey);
 			
 			$map[$objectKey] = true;
 			
-			$cache->mark($this->dao->getObjectName())->
-				set($mapKey, $map, Cache::EXPIRES_FOREVER);
+			$cache->mark($this->className)->
+				set($this->indexKey, $map, Cache::EXPIRES_FOREVER);
+			
+			return true;
+		}
+		
+		private function checkMap($objectKey)
+		{
+			$pool = SemaphorePool::me();
+			
+			if (!$pool->get($this->indexKey))
+				return false;
+			
+			if (!$map = Cache::me()->get($this->indexKey)) {
+				$pool->free($this->indexKey);
+				return false;
+			}
+			
+			if (!isset($map[$objectKey])) {
+				$pool->free($this->indexKey);
+				return false;
+			}
+			
+			$pool->free($this->indexKey);
 			
 			return true;
 		}
 		
 		private function keyToInt($key)
 		{
-			return hexdec(substr(md5($key), 0, 6)) + 1;
+			return hexdec(substr(md5($key), 0, 8)) + 1;
 		}
 		//@}
 	}

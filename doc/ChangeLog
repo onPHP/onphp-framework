@@ -1,5 +1,12 @@
 # $Id$
 
+2006-01-22	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/DAOs/: minor speed up's.
+
+	* main/DAOs/SmartDaoWorker.class.php: fixed giv's lovely 'index
+	page'-bug (racy uncacheLists()).
+
 2006-01-21	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/Base/Singletone.class.php: reworked and simplified,

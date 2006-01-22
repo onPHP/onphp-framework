@@ -322,11 +322,9 @@
 		{
 			if ($expires !== Cache::DO_NOT_CACHE) {
 				
-				$className = $this->dao->getObjectName();
-				
-				Cache::me()->mark($className)->
+				Cache::me()->mark($this->className)->
 					add(
-						$className.'_'.$object->getId(),
+						$this->className.'_'.$object->getId(),
 						$object,
 						$expires
 					);
@@ -343,11 +341,9 @@
 		{
 			if ($expires !== Cache::DO_NOT_CACHE) {
 			
-				$className = $this->dao->getObjectName();
-				
-				Cache::me()->mark($className)->
+				Cache::me()->mark($this->className)->
 					add(
-						$className.self::SUFFIX_QUERY.$query->getId(),
+						$this->className.self::SUFFIX_QUERY.$query->getId(),
 						$object,
 						$expires
 					);
@@ -393,12 +389,11 @@
 		// uncachers
 		public function uncacheByIds($ids)
 		{
-			$className = $this->dao->getObjectName();
 			$cache = Cache::me();
 			
 			foreach ($ids as $id)
-				$cache->mark($className)->delete(
-					$className.'_'.$id
+				$cache->mark($this->className)->delete(
+					$this->className.'_'.$id
 				);
 			
 			return $this->uncacheLists();

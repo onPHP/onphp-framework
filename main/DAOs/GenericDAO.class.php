@@ -169,7 +169,7 @@
 			return Cache::worker($this)->getCachedById($id);
 		}
 		
-		public function getCachedByQuery(Query $query)
+		public function getCachedByQuery(SelectQuery $query)
 		{
 			return Cache::worker($this)->getCachedByQuery($query);
 		}

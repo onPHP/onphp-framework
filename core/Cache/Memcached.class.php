@@ -149,9 +149,13 @@
 			return null;
 		}
 		
-		public function delete($index)
+		public function delete($index, $time = null)
 		{
-			$command = "delete $index\r\n";
+			$command =
+				$time
+					? "delete {$index} {$time}\r\n"
+					: "delete {$index}\r\n";
+			
 			$result = $this->sendRequest($command);
 
 			try {
@@ -159,7 +163,7 @@
 			} catch (BaseException $e) {
 				return false;
 			}
-
+			
 			if ($response === 'DELETED')
 				return true;
 			else

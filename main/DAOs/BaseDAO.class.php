@@ -49,7 +49,7 @@
 		//@{
 		// cache getters
 		public function getCachedById($id);
-		public function getCachedByQuery(Query $query);
+		public function getCachedByQuery(SelectQuery $query);
 		//@}
 		
 		//@{

@@ -23,9 +23,13 @@
 
 		protected $dao = null;
 		
+		protected $className = null;
+		
 		public function __construct(GenericDAO $dao)
 		{
 			$this->dao = $dao;
+			
+			$this->className = $dao->getObjectName();
 		}
 		
 		public function setDao(GenericDAO $dao)
@@ -55,9 +59,9 @@
 		// uncachers
 		public function uncacheById($id)
 		{
-			$className = $this->dao->getObjectName();
-			
-			return Cache::me()->mark($className)->delete($className.'_'.$id);
+			return
+				Cache::me()->mark($this->className)->
+					delete($this->className.'_'.$id);
 		}
 		//@}
 		
@@ -65,18 +69,16 @@
 		// cache getters
 		public function getCachedById($id)
 		{
-			$className = $this->dao->getObjectName();
-			
-			return Cache::me()->mark($className)->get($className.'_'.$id);
+			return
+				Cache::me()->mark($this->className)->
+					get($this->className.'_'.$id);
 		}
 		
-		public function getCachedByQuery(Query $query)
+		public function getCachedByQuery(SelectQuery $query)
 		{
-			$className = $this->dao->getObjectName();
-			
 			return
-				Cache::me()->mark($className)->
-					get($className.self::SUFFIX_QUERY.$query->getId());
+				Cache::me()->mark($this->className)->
+					get($this->className.self::SUFFIX_QUERY.$query->getId());
 		}
 		//@}
 	}
