@@ -20,7 +20,7 @@
 	**/
 	abstract class Singletone
 	{
-		final protected function __construct() {/* you can't create me */}
+		protected function __construct() {/* you can't create me */}
 		
 		final public static function getInstance(
 			$class = null, $args = null /* , ... */
