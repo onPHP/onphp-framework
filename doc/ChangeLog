@@ -6,6 +6,20 @@
 
 2006-01-22	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* core/Base/ObjectsTree.class.php, core/Base/Range.class.php,
+	core/Base/DateRange.class.php: moved to main/Base/.
+
+	* global.inc.php.tpl: new ONPHP_TEMP_PATH constant defines storing
+	place for temporary stuff like locking files/directories, cache files,
+	etc.
+
+	* core/cache/: SemaphorePool ported to worker-based approach,
+	available workers - System-V semaphores, local file (flock()) and
+	directories (mkdir()).
+
+	* core/Cache/RubberFileSystem.class.php: explicit file locking
+	removed.
+
 	* main/DAOs/: minor speed up's.
 
 	* main/DAOs/SmartDaoWorker.class.php: fixed giv's lovely 'index

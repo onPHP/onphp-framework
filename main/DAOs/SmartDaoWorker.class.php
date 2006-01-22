@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -441,7 +441,7 @@
 		public function getCachedByQuery(SelectQuery $query)
 		{
 			return
-				$this->carefulGetByKey(
+				$this->gentlyGetByKey(
 					$this->className.self::SUFFIX_QUERY.$query->getId()
 				);
 		}
@@ -449,7 +449,7 @@
 		protected function getCachedList(SelectQuery $query)
 		{
 			return
-				$this->carefulGetByKey(
+				$this->gentlyGetByKey(
 					$this->className.self::SUFFIX_LIST.$query->getId()
 				);
 		}
@@ -467,7 +467,7 @@
 					);
 		}
 
-		private function carefulGetByKey($key)
+		private function gentlyGetByKey($key)
 		{
 			if ($object = Cache::me()->mark($this->className)->get($key)) {
 				if ($this->checkMap($key)) {
@@ -501,20 +501,22 @@
 		{
 			$pool = SemaphorePool::me();
 			
-			if (!$pool->get($this->indexKey))
+			$semKey = $this->keyToInt($this->indexKey);
+			
+			if (!$pool->get($semKey))
 				return false;
 			
 			if (!$map = Cache::me()->get($this->indexKey)) {
-				$pool->free($this->indexKey);
+				$pool->free($semKey);
 				return false;
 			}
 			
 			if (!isset($map[$objectKey])) {
-				$pool->free($this->indexKey);
+				$pool->free($semKey);
 				return false;
 			}
 			
-			$pool->free($this->indexKey);
+			$pool->free($semKey);
 			
 			return true;
 		}

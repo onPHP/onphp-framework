@@ -20,17 +20,22 @@
 	{
 		private $directory	= null;
 		
-		public static function create($directory = '/tmp/onPHP/cache/')
+		public static function create($directory = 'cache/')
 		{
 			return new RubberFileSystem($directory);
 		}
 
-		public function __construct($directory = '/tmp/onPHP/cache/')
+		public function __construct($directory = 'cache/')
 		{
-			if (!is_writable($directory))
-				throw new WrongArgumentException(
-					"can not write to '{$directory}'"
-				);
+			$directory = ONPHP_TEMP_PATH.$directory;
+			
+			if (!is_writable($directory)) {
+				if (!mkdir($directory, 0700, true)) {
+					throw new WrongArgumentException(
+						"can not write to '{$directory}'"
+					);
+				}
+			}
 			
 			if ($directory[strlen($directory) - 1] != DIRECTORY_SEPARATOR)
 				$directory .= DIRECTORY_SEPARATOR;
@@ -45,6 +50,7 @@
 		
 		public function clean()
 		{
+			// TODO: reimplement on php-level
 			return `rm -rf {$this->directory}*`;
 		}
 
@@ -133,13 +139,6 @@
 				umask(0077);
 				$fp = fopen($path, $value !== null ? 'wb' : 'rb');
 				umask($old);
-			} catch (BaseException $e) {
-				$pool->drop($key);
-				return null;
-			}
-			
-			try {
-				flock($fp, $value !== null ? LOCK_EX : LOCK_SH);
 			} catch (BaseException $e) {
 				$pool->drop($key);
 				return null;

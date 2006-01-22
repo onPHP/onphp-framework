@@ -42,9 +42,12 @@
 				$args = func_get_args();
 				array_shift($args);
 			}
-
+			
 			if (!isset($instances[$class]))
-				return $instances[$class] = new $class($class, $args);
+				return $instances[$class] =
+					$args
+						? new $class($args)
+						: new $class();
 			else
 				return $instances[$class];
 		}

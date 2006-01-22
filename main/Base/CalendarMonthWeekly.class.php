@@ -12,9 +12,9 @@
 /* $Id$ */
 
 	/**
-	 * Calendar month representation splitted by weeks
+	 * Calendar month representation splitted by weeks.
 	 *
-	 * @ingroup Base
+	 * @ingroup Helpers
 	**/
 	class CalendarMonthWeekly
 	{

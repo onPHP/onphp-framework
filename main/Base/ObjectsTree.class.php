@@ -17,7 +17,7 @@
 	 * @see ObjectsTreeDAO
 	 * @see FinalObjectsTreeDAO
 	 * 
-	 * @ingroup Base
+	 * @ingroup Helpers
 	**/
 	abstract class ObjectsTree extends NamedObject
 	{

@@ -16,7 +16,7 @@
 	 *
 	 * @see Timestamp
 	 * 
-	 * @ingroup Base
+	 * @ingroup Helpers
 	**/
 	class DateRange
 	{

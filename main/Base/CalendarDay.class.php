@@ -12,9 +12,9 @@
 /* $Id$ */
 
 	/**
-	 * Calendar day representation
+	 * Calendar day representation.
 	 *
-	 * @ingroup Base
+	 * @ingroup Helpers
 	**/
 	class CalendarDay extends Timestamp 
 	{

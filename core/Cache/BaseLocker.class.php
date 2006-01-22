@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Anton E. Lebedevich                             *
- *   noiselist@pochta.ru                                                   *
+ *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,29 +11,26 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * Calendar week representation.
-	 *
-	 * @ingroup Helpers
-	**/
-	class CalendarWeek
+	abstract class BaseLocker extends Singletone
 	{
-		// TODO: quite empty class, consider replacement or pull up all methods
-		private $days = array();
+		protected $pool = array();
 		
-		public static function create()
-		{
-			return new CalendarWeek();
-		}
+		/// acquire lock
+		abstract public function get($key);
 		
-		public function getDays()
-		{
-			return $this->days;
-		}
+		/// release lock
+		abstract public function free($key);
 		
-		public function addDay(CalendarDay $day)
+		/// completely remove lock
+		abstract public function drop($key);
+		
+		/// drop all acquired/released locks
+		public function clean()
 		{
-			$this->days[$day->toDate()] = $day;
+			foreach (array_keys($this->pool) as $key)
+				$this->drop($key);
+			
+			return true;
 		}
 	}
 ?>

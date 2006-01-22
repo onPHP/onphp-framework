@@ -41,6 +41,10 @@
 	 *   - RubberFileSystem;
 	 *   - SharedMemory;
 	 *   - RuntimeMemory;
+	 *  - locking thru SemaphorePool:
+	 *   - SystemFiveLocker;
+	 *   - FileLocker;
+	 *   - DirectoryLocker;
 	 *  - utils:
 	 *   - AggregateCache;
 	 *   - ReferencePool;
@@ -56,6 +60,9 @@
 	 *
 	 * @defgroup Cache Application-wide cache subsystem
 	 * @ingroup Core
+	 *
+	 * @defgroup Lockers Different locking methods implementation
+	 * @ingroup Cache
 	 *
 	 * @defgroup DB Connectors and dialects for various databases
 	 * @ingroup Core
@@ -79,6 +86,9 @@
 	 * @ingroup Core
 	 *
 	 * @defgroup Main Higher level classes
+	 *
+	 * @defgroup Helpers Common wrapper and helper classes
+	 * @ingroup Main
 	 *
 	 * @defgroup Containers IdentifiableObject collections handlers
 	 * @ingroup Main

@@ -14,7 +14,7 @@
 	/**
 	 * Integer's interval implementation and accompanying utility methods.
 	 * 
-	 * @ingroup Base
+	 * @ingroup Helpers
 	**/
 	class Range
 	{

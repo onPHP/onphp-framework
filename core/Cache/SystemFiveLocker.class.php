@@ -12,58 +12,54 @@
 /* $Id$ */
 
 	/**
-	 * Single access point to application-wide locker implementation.
-	 * 
-	 * @see SystemFiveLocker for default locker
-	 * @see FileLocker for 'universal' locker
-	 * @see DirectoryLocker for slow and dirty locker
+	 * System-V semaphores based locking.
 	 * 
 	 * @ingroup Lockers
 	**/
-	final class SemaphorePool extends BaseLocker
+	final class SystemFiveLocker extends BaseLocker
 	{
-		private static $lockerName	= 'DirectoryLocker';
-		private static $locker		= null;
-		
-		protected function __construct()
-		{
-			self::$locker = Singletone::getInstance(self::$lockerName);
-		}
-		
-		public static function setDefaultLocker($name)
-		{
-			self::$lockerName = $locker;
-			self::$locker = Singletone::getInstance($name);
-		}
-		
-		public static function me()
-		{
-			return Singletone::getInstance(__CLASS__);
-		}
-		
 		public function get($key)
 		{
-			return self::$locker->get($key);
+			try {
+				if (!isset($this->pool[$key]))
+					$this->pool[$key] = sem_get($key, 1, 0600, false);
+				
+				sem_acquire($this->pool[$key]);
+				
+				return $this->pool[$key];
+			} catch (BaseException $e) {
+				return null;
+			}
+			
+			/* NOTREACHED */
 		}
 		
 		public function free($key)
 		{
-			return self::$locker->free($key);
+			if (isset($this->pool[$key])) {
+				try {
+					return sem_release($this->pool[$key]);
+				} catch (BaseException $e) {
+					// acquired by another process
+					return false;
+				}
+			}
+			
+			return null;
 		}
 		
 		public function drop($key)
 		{
-			return self::$locker->drop($key);
-		}
-		
-		public function clean()
-		{
-			return self::$locker->clean();
-		}
-		
-		public function __destruct()
-		{
-			self::$locker->clean();
+			if (isset($this->pool[$key])) {
+				try {
+					return sem_remove($this->pool[$key]);
+				} catch (BaseException $e) {
+					unset($this->pool[$key]); // already race-removed
+					return false;
+				}
+			}
+			
+			return null;
 		}
 	}
 ?>

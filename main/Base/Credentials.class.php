@@ -14,7 +14,7 @@
 	/**
 	 * Quite common information collection.
 	 * 
-	 * @ingroup main
+	 * @ingroup Helpers
 	**/
 	class Credentials
 	{

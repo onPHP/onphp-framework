@@ -33,6 +33,7 @@
 	define('ONPHP_VERSION', '0.2.7.99');
     
 	// paths
+	define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
 	define('ONPHP_ROOT_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
 	define('ONPHP_CORE_PATH', ONPHP_ROOT_PATH.'core'.DIRECTORY_SEPARATOR);
 	define('ONPHP_MAIN_PATH', ONPHP_ROOT_PATH.'main'.DIRECTORY_SEPARATOR);
