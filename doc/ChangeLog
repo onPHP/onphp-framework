@@ -1,5 +1,9 @@
 # $Id$
 
+2006-01-22	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+	* main/Base/Calendar*: calendar helper classes added. 
+
 2006-01-22	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/DAOs/: minor speed up's.
