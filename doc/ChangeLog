@@ -1,7 +1,8 @@
 # $Id$
 
 2006-01-23	Anton E. Lebedevich	<noiselist@pochta.ru>
-	* core/OSQL/FromTable.class.php: SQLFunction support added
+
+	* core/OSQL/FromTable.class.php: SQLFunction support added.
 
 2006-01-22	Anton E. Lebedevich	<noiselist@pochta.ru>
 
