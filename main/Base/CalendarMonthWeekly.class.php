@@ -106,9 +106,9 @@
 		public function setSelected(Timestamp $day)
 		{
 			if (!isset($this->days[$day->toDate()]))
-				throw WrongArgumentException($day->toDate().' not in calendar');
+				throw new WrongArgumentException($day->toDate().' not in calendar');
 			
-			$this->days[$day->toDate()]->setSelected();
+			$this->days[$day->toDate()]->setSelected(true);
 			
 			return $this;
 		}

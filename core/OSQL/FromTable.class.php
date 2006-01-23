@@ -30,6 +30,7 @@
 					(
 						$table instanceof SelectQuery
 						|| $table instanceof LogicalObject
+						|| $table instanceof SQLFunction 
 					)
 			)
 				throw new WrongArgumentException(
@@ -53,6 +54,10 @@
 			)
 				return
 					"({$this->table->toString($dialect)}) AS "
+					.$dialect->quoteTable($this->alias);
+			elseif ($this->table instanceof SQLFunction)
+				return
+					"{$this->table->toString($dialect)} AS "
 					.$dialect->quoteTable($this->alias);
 			else
 				return
