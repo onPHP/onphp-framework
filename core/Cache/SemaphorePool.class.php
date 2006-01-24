@@ -22,7 +22,7 @@
 	**/
 	final class SemaphorePool extends BaseLocker
 	{
-		private static $lockerName	= 'DirectoryLocker';
+		private static $lockerName	= 'SystemFiveLocker';
 		private static $locker		= null;
 		
 		protected function __construct()
