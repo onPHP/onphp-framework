@@ -38,8 +38,8 @@
 		
 		public static function start()
 		{
-			Session::$isStarted = true;
 			session_start();
+			Session::$isStarted = true;
 		}
 		
 		public static function destroy()
@@ -87,8 +87,7 @@
 		public static function get($var)
 		{
 			if (Session::isStarted())
-				return
-					isset($_SESSION[$var]) ? $_SESSION[$var] : null;
+				return isset($_SESSION[$var]) ? $_SESSION[$var] : null;
 			else
 				throw new SessionNotStartedException();
 		}
@@ -100,13 +99,13 @@
 		
 		public static function drop(/* ... */)
 		{
-			if (Session::isStarted())
+			if (Session::isStarted()) {
 				if (func_num_args())
 					foreach (func_get_args() as $arg)
 						unset($_SESSION[$arg]);
 				else
 					throw new WrongArgumentException('argument(s) missing');
-			else 
+			} else 
 				throw new SessionNotStartedException();
 		}
 		
