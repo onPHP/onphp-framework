@@ -144,6 +144,11 @@
 			try {
 				$time = strtotime($string, $this->int);
 				
+				if ($time === false)
+					throw new WrongArgumentException(
+						"modification yielded false '{$string}'"
+					);
+				
 				$this->int = $time;
 				$this->string = date('Y-m-d H:i:s', $time);
 				$this->import($this->string);

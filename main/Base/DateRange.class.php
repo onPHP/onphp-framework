@@ -214,8 +214,9 @@
 				$current = $start; 
 				$current->toStamp() < $end->toStamp();
 				$current->modify('+1 day')
-			)
+			) {
 				$timestamps[] = new Timestamp($current->getDayStartStamp());
+			}
 
 			return $timestamps;
 		}
