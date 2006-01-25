@@ -1,5 +1,9 @@
 # $Id$
 
+2006-01-25	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* test/: first SimpleTest-based tests. Baden. Baden.
+
 2006-01-23	Anton E. Lebedevich	<noiselist@pochta.ru>
 
 	* core/OSQL/FromTable.class.php: SQLFunction support added.
