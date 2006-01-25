@@ -9,7 +9,7 @@
 	
 	$test = new GroupTest('onPHP-'.ONPHP_VERSION);
 	
-	foreach (glob(ONPHP_TEST_PATH.'*/*.class.php') as $file)
+	foreach (glob(ONPHP_TEST_PATH.'{core,main}/*.class.php', GLOB_BRACE) as $file)
 		$test->addTestFile($file);
 	
 	$test->run($reporter);
