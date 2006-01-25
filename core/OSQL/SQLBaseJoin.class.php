@@ -35,7 +35,7 @@
 		protected function baseToString(Dialect $dialect, $logic = null)
 		{
 			return
-				$logic.'JOIN '.$dialect->quoteTable($this->subject).
+				$logic.'JOIN '.(($this->subject instanceof DialectString) ? $this->subject->toString($dialect) : $dialect->quoteTable($this->subject)).
 				($this->alias ? ' AS '.$dialect->quoteTable($this->alias) : null).
 				' ON '.$this->logic->toString($dialect);
 		}
