@@ -45,7 +45,10 @@
 		
 		public static function quoteTable(&$table)
 		{
-			return '"'.$table.'"';
+			if (strpos($table, '.') !== false)
+				return '"' . implode('"."', explode('.', $table, 2)) . '"';
+			else
+				return '"'.$table.'"';
 		}
 
 		public static function toCasted($field, $type)
