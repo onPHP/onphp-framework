@@ -110,11 +110,14 @@
 				if (isset($scope[$this->name][self::MINUTES]))
 					$minutes = (int) $scope[$this->name][self::MINUTES];
 
+				if (isset($scope[$this->name][self::SECONDS]))
+					$seconds = (int) $scope[$this->name][self::SECONDS];
+				
 				try {
 					$stamp = mktime(
-						$hours, $minutes, 0,
-						$scope[$this->name][self::MONTH],
-						$scope[$this->name][self::DAY],
+						$hours, $minutes, $seconds,
+						(int) $scope[$this->name][self::MONTH],
+						(int) $scope[$this->name][self::DAY],
 						(int) $scope[$this->name][self::YEAR]
 					);
 				} catch (BaseException $e) {
