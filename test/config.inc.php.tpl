@@ -12,6 +12,18 @@
 		get_include_path().PATH_SEPARATOR
 		.ONPHP_TEST_PATH.'core'.PATH_SEPARATOR
 		.ONPHP_TEST_PATH.'base'.PATH_SEPARATOR
+		.ONPHP_TEST_PATH.'misc'.PATH_SEPARATOR
+	);
+	
+	$dbs = array(
+/*
+		'PgSQL' => array(
+			'user'	=> 'onphp',
+			'pass'	=> null,
+			'host'	=> 'localhost',
+			'base'	=> 'onphp'
+		)
+*/
 	);
 	
 	define('SIMPLETEST_PATH', '/usr/share/php/simpletest/');
