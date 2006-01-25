@@ -1,15 +1,21 @@
 <?php
 /*$Id$*/
 
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR
+                                    . '..' . DIRECTORY_SEPARATOR . 'global.inc.php';
+error_reporting(E_ALL);
+
+set_include_path(get_include_path(). PATH_SEPARATOR . dirname(__FILE__));
+
 require_once 'simpletest/unit_tester.php';
 require_once 'simpletest/reporter.php';
-require_once 'CMF/Controller.class.php';
+require_once 'Controller.class.php';
 
 class TestedController extends Controller
 {
 	public function getCurrentAction()
 	{
-		return parent::getCurrentAction();
+		return parent::getCurrentAction(true);
 	}
 	
 	public function moduleHandler()
@@ -107,7 +113,7 @@ class ControllerTest extends UnitTestCase
 		$this->assertEqual(array('second'), $this->controller->getCurrentAction());
 		$this->assertNotEqual(array('invalid'), $this->controller->getCurrentAction());
 		$_GET['second'] = 'third';
-		$this->assertEqual(array('second', 'third'), $this->controller->getCurrentAction());
+		$this->assertEqual(array('second', 'third'), $t = $this->controller->getCurrentAction());
 		$_GET['third'] = 'fourth';
 		$this->assertEqual(array('second', 'third', 'fourth'), $this->controller->getCurrentAction());
 	}

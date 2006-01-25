@@ -460,7 +460,6 @@
 		**/
 		protected function moduleHandler()
 		{
-			clearstatcache();
 			if ($action = $this->getCurrentAction()) {
 				while (true) {
 					$needed = $this->moduleDir . DIRECTORY_SEPARATOR .
@@ -493,7 +492,6 @@
 		**/
 		protected function templateHandler()
 		{
-			clearstatcache();
 			if ($action = $this->getCurrentAction()) {
 				while (true) {
 					$candidate = $this->templateDir . DIRECTORY_SEPARATOR .
@@ -568,13 +566,13 @@
 		 * @access  protected
 		 * @return  array	   list of actions
 		**/
-		protected function getCurrentAction()
+		protected function getCurrentAction($override = false)
 		{
 			static $result;
 			
-			if ($result)
+			if ($result && !$override) {
 				return $result;
-			else
+			} else
 				$result = array();
 			
 			$action = null;
