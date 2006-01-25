@@ -24,7 +24,9 @@
 		public function __construct($field, $table = null)
 		{
 			$this->field = $field;
-			$this->table = $table;
+			
+			if ($table)
+				$this->table = new FromTable($table);
 		}
 		
 		public static function create($field, $table = null)
@@ -35,7 +37,7 @@
 		public function toString(Dialect $dialect)
 		{
 			$field =
-				($this->table ? $dialect->quoteTable($this->table).'.' : null).
+				($this->table ? $this->table->toString($dialect).'.' : null).
 				$dialect->quoteField($this->field);
 			
 			return
