@@ -570,9 +570,9 @@
 		{
 			static $result;
 			
-			if ($result && !$override) {
+			if ($result && !$override)
 				return $result;
-			} else
+			else
 				$result = array();
 			
 			$action = null;
