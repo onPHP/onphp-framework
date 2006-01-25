@@ -19,81 +19,67 @@
 		const NOT_SUPPORTED_GLOBAL = 'Not supported global array';
 		
 		/**
-		 * @var	 CommonModule	current active module
-		 * @access  private
+		 * CommonModule	current active module
 		**/
 		protected $module;
 		
 		/**
-		 * @var	 string	  current template file basename
-		 * @access  private
+		 * current template file basename
 		**/
 		protected $template;
 		
 		/**
-		 * @var	 mixed	   template engine instance
-		 * @access  private
+		 * template engine instance
 		**/
 		protected $templateEngine;
 		
 		/**
-		 * @var	 boolean	 flag, showed using of environment variable for
-		 *					  action selecting
-		 * @access  private
+		 * environment variable for action selecting
 		**/
 		private $globals = array('_GET', '_POST', '_SESSION', '_COOKIE');
 		
 		/**
-		 * @var	 string
-		 * @access  name of action key
+		 * name of action key
 		**/
 		private $action	 = 'action';
 		
 		/**
-		 * @var	 mixed   handler of module loading callable by call_user_func
-		 * @access  private
+		 * handler of module loading callable by call_user_func
 		**/
 		private $moduleHandler = null;
 		
 		/**
-		 * @var	 mixed   handler for template choice callable by call_user_func
-		 * @access  private
+		 * handler for template choice callable by call_user_func
 		**/
 		private $templateHandler = null;
 		
 		/**
-		 * @var	 string	  full path to directory with modules
-		 * @access  private
+		 * full path to directory with modules
 		**/
 		protected $moduleDir = null;
 		
 		/**
-		 * @var	 string	  full path to directory with templates
-		 * @access  private
+		 * full path to directory with templates
 		**/
 		protected $templateDir = null;
 		
 		/**
-		 * @var	 string  extension of module
-		 * @access  private
+		 * extension of module
 		**/
 		protected $moduleExt = '.inc.php';
 		
 		/**
-		 * @var	 string  extension of module
-		 * @access  private
+		 * extension of module
 		**/
 		protected $templateExt = '.tpl.html';
 		
 		/**
-		 * @var	 string	  name of file contains default module name
-		 * @access  private
+		 * name of file contains default module name
 		**/
 		protected $default = 'default';
 		
 		/**
-		 * @var		array		array of parametres which should be assigned to template
-		 * @access	private
+		 * array of parametres which should be assigned to template
 		**/
 		protected $parameters		= array();
 	
@@ -440,11 +426,6 @@
 			return $this;
 		}
 		
-		/**
-		 * Empty awhile
-		 * 
-		 * @access  public
-		**/
 		public function __construct()
 		{
 			$this->setModuleHandler(array($this, 'moduleHandler'));
