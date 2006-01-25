@@ -102,7 +102,7 @@
 				!empty($scope[$this->name][self::MONTH]) &&
 				!empty($scope[$this->name][self::YEAR])
 			) {
-				$hours = $minutes = 0;
+				$hours = $minutes = $seconds = 0;
 				
 				if (isset($scope[$this->name][self::HOURS]))
 					$hours = (int) $scope[$this->name][self::HOURS];
