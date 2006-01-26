@@ -35,8 +35,7 @@
 					"column '{$name}' already exist"
 				);
 			
-			$this->columns[$name] = $column;
-			$this->order[] = $name;
+			$this->order[] = $this->columns[$name] = $column;
 			
 			$column->setTable($this);
 			

@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup OSQL
 	**/
-	class FromTable implements SQLTableName
+	class FromTable implements SQLTableName // also abused in DBColumn
 	{
 		private $table	= null;
 		private $alias	= null;

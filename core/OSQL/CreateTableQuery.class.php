@@ -32,12 +32,30 @@
 			$order = $this->table->getOrder();
 			
 			$columns = array();
+			$primary = array();
+			$unique  = array();
 			
-			foreach ($order as $name) {
-				$columns[] = $this->table->getColumnByName($name)->toString($dialect);
+			foreach ($order as $column) {
+				$columns[] = $column->toString($dialect);
+				
+				if ($column->isUnique())
+					$unique[] = $column->getName();
+				
+				if ($column->isPrimaryKey())
+					$primary[] = $column->getName();
 			}
 			
 			$out .= implode(",\n", $columns);
+			
+			if ($primary || $unique) {
+				
+				if ($primary)
+					$out .= ",\nPRIMARY KEY(".implode(', ', $primary).')';
+				
+				if ($unique)
+					$out .= ",\nUNIQUE(".implode(', ', $unique).')';
+				
+			}
 			
 			return $out."\n);\n";
 		}

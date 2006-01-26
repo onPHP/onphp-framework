@@ -14,14 +14,16 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	final class DBColumn implements DialectString
-	/* not implements SQLTableName to avoid API breakage */
+	final class DBColumn implements SQLTableName // also abused in FromTable
 	{
 		private $type		= null;
 		private $name		= null;
 		
 		private $table		= null;
 		private $reference	= null;
+		
+		private $primary	= null;
+		private $unique		= null;
 		
 		public static function create(DataType $type, $name)
 		{
@@ -49,6 +51,30 @@
 		public function getTable()
 		{
 			return $this->table;
+		}
+		
+		public function isPrimaryKey()
+		{
+			return $this->primary;
+		}
+		
+		public function setPrimaryKey($primary = false)
+		{
+			$this->primary = true === $primary;
+			
+			return $this;
+		}
+		
+		public function isUnique()
+		{
+			return $this->unique;
+		}
+		
+		public function setUnique($unique = false)
+		{
+			$this->unique = true === $unique;
+			
+			return $this;
 		}
 		
 		public function toString(Dialect $dialect)
