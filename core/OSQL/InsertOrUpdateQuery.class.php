@@ -37,7 +37,7 @@
 			return $this;
 		}
 		
-		public function setId($field, /* Identifiable */ $object = null)
+		public function lazySet($field, /* Identifiable */ $object = null)
 		{
 			if ($object instanceof Identifiable)
 				$this->set($field, $object->getId());

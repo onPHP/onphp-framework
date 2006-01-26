@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -14,25 +14,10 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	abstract class QuerySkeleton implements Query
+	abstract class QuerySkeleton extends QueryIdentification
 	{
 		protected $where		= array();	// where clauses
 		protected $whereLogic	= array();	// logic between where's
-
-		public function getId()
-		{
-			static $dialect = null;
-			
-			if ($dialect === null)
-				$dialect = new ImaginaryDialect();
-
-			return sha1($this->toString($dialect));
-		}
-		
-		public function setId($id)
-		{
-			throw new UnsupportedMethodException();
-		}
 
 		public function where(LogicalObject $exp, $logic = null)
 		{

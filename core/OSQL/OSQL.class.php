@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -36,6 +36,11 @@
 		public static function delete()
 		{
 			return new DeleteQuery();
+		}
+		
+		public static function createTable(DBTable $table)
+		{
+			return new CreateTableQuery($table);
 		}
 	}
 ?>
