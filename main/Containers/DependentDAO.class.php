@@ -19,9 +19,9 @@
 		abstract public function getParentIdField();
 
 		/**
-		**	We must do it, because we have collision:
-		**	method getById() defined in interface
-		**	and in abstract class
+		 *	We must do it, because we have collision:
+		 *	method getById() defined in interface
+		 *	and in abstract class
 		**/
 		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
 		{
