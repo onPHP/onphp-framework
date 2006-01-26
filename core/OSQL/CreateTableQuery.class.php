@@ -27,7 +27,7 @@
 		{
 			$name = $this->table->getName();
 			
-			$out = "CREATE TABLE {$dialect->quoteTable($name)} (\n";
+			$out = "CREATE TABLE {$dialect->quoteTable($name)} (\n    ";
 			
 			$order = $this->table->getOrder();
 			
@@ -37,23 +37,25 @@
 			
 			foreach ($order as $column) {
 				$columns[] = $column->toString($dialect);
+
+				$name = $column->getName();
 				
 				if ($column->isUnique())
-					$unique[] = $column->getName();
+					$unique[] = $dialect->quoteField($name);
 				
 				if ($column->isPrimaryKey())
-					$primary[] = $column->getName();
+					$primary[] = $dialect->quoteField($name);
 			}
 			
-			$out .= implode(",\n", $columns);
+			$out .= implode(",\n    ", $columns);
 			
 			if ($primary || $unique) {
 				
 				if ($primary)
-					$out .= ",\nPRIMARY KEY(".implode(', ', $primary).')';
+					$out .= ",\n    PRIMARY KEY(".implode(', ', $primary).')';
 				
 				if ($unique)
-					$out .= ",\nUNIQUE(".implode(', ', $unique).')';
+					$out .= ",\n    UNIQUE(".implode(', ', $unique).')';
 				
 			}
 			
