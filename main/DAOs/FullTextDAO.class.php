@@ -39,7 +39,7 @@
 				);
 		}
 		
-		protected function makeFullTextQuery(ObjectQuery $oq, $string)
+		public function makeFullTextQuery(ObjectQuery $oq, $string)
 		{
 			Assert::isString(
 				$string,
