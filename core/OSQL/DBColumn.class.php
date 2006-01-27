@@ -29,6 +29,8 @@
 		private $primary	= null;
 		private $unique		= null;
 		
+		private $sequenced	= null;
+		
 		public static function create(DataType $type, $name)
 		{
 			return new DBColumn($type, $name);
@@ -124,14 +126,32 @@
 			return $this;
 		}
 		
+		public function setAutoincrement($auto = false)
+		{
+			$this->sequenced = true === $auto;
+			
+			return $this;
+		}
+		
+		public function isAutoincrement()
+		{
+			return $this->sequenced;
+		}
+		
 		public function toString(Dialect $dialect)
 		{
 			$out =
 				"{$dialect->quoteField($this->name)} "
 				.$this->type->toString($dialect);
-			
+
 			if ($this->default)
-				$out .= ' DEFAULT '.$dialect->valueToString($this->default);
+				$out .=
+					' DEFAULT '
+					.(
+						$this->default instanceof DialectString
+							? $this->default->toString($dialect)
+							: $dialect->valueToString($this->default)
+					);
 			
 			if ($this->reference) {
 				

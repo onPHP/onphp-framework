@@ -63,9 +63,9 @@
 				.')';
 		}
 		
-		public function fullTextRank($field, $words, $logic)
+		public function autoincrementize(DBColumn $column, &$prepend)
 		{
-			throw new UnimplementedFeatureException('implement me first!');
+			return 'AUTO_INCREMENT';
 		}
 		
 		private static function prepareFullText($words, $logic)

@@ -42,6 +42,24 @@
 			return "{$field}::{$type}";
 		}
 
+		public static function prepareFullText($words, $logic)
+		{
+			Assert::isArray($words);
+			
+			$glue = ($logic == DB::FULL_TEXT_AND) ? ' & ' : ' | ';
+
+			return
+				strtolower(
+					implode(
+						$glue, 
+						array_map(
+							array('PostgresDialect', 'quoteValue'), 
+							$words
+						)
+					)
+				);
+		}
+		
 		public function fullTextSearch($field, $words, $logic)
 		{
 			$searchString = self::prepareFullText($words, $logic);
@@ -61,23 +79,23 @@
 				"rank({$field}, to_tsquery('".self::$tsConfiguration."', ".
 				self::quoteValue($searchString)."))";
 		}
-
-		public static function prepareFullText($words, $logic)
+		
+		public function autoincrementize(DBColumn $column, &$prepend)
 		{
-			Assert::isArray($words);
+			Assert::isTrue(
+				(($table = $column->getTable()) !== null)
+				&& ($column->getDefault() === null)
+			);
 			
-			$glue = ($logic == DB::FULL_TEXT_AND) ? ' & ' : ' | ';
-
-			return
-				strtolower(
-					implode(
-						$glue, 
-						array_map(
-							array('PostgresDialect', 'quoteValue'), 
-							$words
-						)
-					)
-				);
+			$sequenceName = $table->getName().'_id';
+			
+			$prepend = 'CREATE SEQUENCE "'.$sequenceName.'";';
+			
+			$column->setDefault(
+				new SQLFunction('nextval', new DBValue($sequenceName))
+			);
+			
+			return null;
 		}
 	}
 ?>

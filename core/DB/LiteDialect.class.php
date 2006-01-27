@@ -39,5 +39,10 @@
 		{
 			throw new UnsupportedMethodException();
 		}
+		
+		public function autoincrementize(DBColumn $column, &$prepend)
+		{
+			return 'AUTOINCREMENT';
+		}
 	}
 ?>

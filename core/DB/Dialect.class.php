@@ -18,8 +18,7 @@
 	**/
 	abstract class /* ANSI's */ Dialect
 	{
-		abstract public function fullTextSearch($field, $words, $logic);
-		abstract public function fullTextRank($field, $words, $logic);
+		abstract public function autoincrementize(DBColumn $column, &$prepend);
 		
 		public static function quoteValue(&$value)
 		{
@@ -72,6 +71,16 @@
 				$value instanceof DBValue
 					? $value->toString($this)
 					: $this->quoteValue($value);
+		}
+		
+		public function fullTextSearch($field, $words, $logic)
+		{
+			throw new UnimplementedFeatureException();
+		}
+		
+		public function fullTextRank($field, $words, $logic)
+		{
+			throw new UnimplementedFeatureException();
 		}
 	}
 ?>

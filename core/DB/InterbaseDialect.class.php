@@ -27,15 +27,19 @@
 			else
 				return $field;
 		}
-
-		public function fullTextSearch($field, $words, $logic)
-		{
-			throw new UnimplementedFeatureException();
-		}
 		
-		public function fullTextRank($field, $words, $logic)
+		/// TODO: consider trigger generation too.
+		public function autoincrementize(DBColumn $column, &$prepend)
 		{
-			throw new UnimplementedFeatureException();
+			Assert::isTrue(
+				($table = $column->getTable()) !== null
+			);
+			
+			$sequenceName = $table->getName().'_id';
+			
+			$prepend = 'CREATE GENERATOR '.$sequenceName.';';
+			
+			return null;
 		}
 	}
 ?>

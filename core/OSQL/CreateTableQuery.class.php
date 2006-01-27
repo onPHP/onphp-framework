@@ -36,7 +36,22 @@
 			$unique  = array();
 			
 			foreach ($order as $column) {
-				$columns[] = $column->toString($dialect);
+				
+				if ($column->isAutoincrement()) {
+					
+					$append =
+						$dialect->autoincrementize($column, $prepend = null);
+					
+					if ($append)
+						$append = ' '.$append;
+					
+					$columns[] = $column->toString($dialect).$append;
+					
+					if ($prepend)
+						$out = $prepend."\n".$out;
+					
+				} else
+					$columns[] = $column->toString($dialect);
 
 				$name = $column->getName();
 				
