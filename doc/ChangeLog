@@ -2,6 +2,8 @@
 
 2006-01-27	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* core/Base/Singletone.class.php: renamed to Singleton.class.php.
+
 	* core/OSQL/: implemented auto-increment columns generation for PgSQL,
 	MySQL, IBase and SQLite.
 
