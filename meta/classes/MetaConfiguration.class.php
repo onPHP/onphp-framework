@@ -11,13 +11,13 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class MetaConfiguration extends Singletone
+	final class MetaConfiguration extends Singleton
 	{
 		private $classes = array();
 		
 		public static function me()
 		{
-			return Singletone::getInstance('MetaConfiguration');
+			return Singleton::getInstance('MetaConfiguration');
 		}
 		
 		public function load($metafile)
@@ -146,7 +146,7 @@
 			$class = $name.'Pattern';
 			
 			if (is_readable(ONPHP_META_PATTERNS.$class.EXT_CLASS))
-				return Singletone::getInstance($class);
+				return Singleton::getInstance($class);
 			
 			throw new ObjectNotFoundException(
 				"unknown pattern '{$name}'"

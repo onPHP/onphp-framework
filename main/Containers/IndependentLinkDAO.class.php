@@ -14,7 +14,7 @@
 	/**
 	 * @ingroup Containers
 	**/
-	abstract class IndependentLinkDAO extends Singletone implements PartDAO
+	abstract class IndependentLinkDAO extends Singleton implements PartDAO
 	{
 		abstract public function getParentIdField();
 		abstract public function getChildIdField();

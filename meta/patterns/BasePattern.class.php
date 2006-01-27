@@ -11,7 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class BasePattern extends Singletone
+	abstract class BasePattern extends Singleton
 	{
 		abstract public function build(MetaClass $class);
 		

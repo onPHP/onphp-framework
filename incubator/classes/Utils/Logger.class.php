@@ -6,7 +6,7 @@
 *	Logs errors into file
 *
 **/
-class Logger extends Singletone
+class Logger extends Singleton
 {
 	const DEFINE_LOG_FILE_FIRST = 'You should define log file name first';
 	

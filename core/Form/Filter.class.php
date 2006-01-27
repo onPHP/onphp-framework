@@ -43,17 +43,17 @@
 
 		public static function trim()
 		{
-			return Singletone::getInstance('TrimFilter');
+			return Singleton::getInstance('TrimFilter');
 		}
 
 		public static function stripTags()
 		{
-			return Singletone::getInstance('StripTagsFilter');
+			return Singleton::getInstance('StripTagsFilter');
 		}
 
 		public static function htmlSpecialChars()
 		{
-			return Singletone::getInstance('HtmlSpecialCharsFilter');
+			return Singleton::getInstance('HtmlSpecialCharsFilter');
 		}
 	}
 ?>

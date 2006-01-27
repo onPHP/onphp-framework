@@ -26,7 +26,7 @@
         
         function setUP()
         {
-            $this->setting = Singletone::getInstance()->PropertyFilterForm();
+            $this->setting = Singleton::getInstance()->PropertyFilterForm();
             $this->setting->setDefaultHandler('htmlspecialchars');
         }
         

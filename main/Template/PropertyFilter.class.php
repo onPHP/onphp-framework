@@ -61,7 +61,7 @@
 		
 	}
 	
-	class PropertyFilter extends Singletone /*, DummyTemplate*/
+	class PropertyFilter extends Singleton /*, DummyTemplate*/
 	{
 		/**
 		 * Default template's extention

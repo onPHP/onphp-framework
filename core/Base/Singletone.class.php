@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
- *   voxus@onphp.org                                                       *
+ *   Copyright (C) 2004-2006 by Sveta Smirnova                             *
+ *   sveta@microbecal.com                                                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,9 +12,11 @@
 /* $Id$ */
 
 	/**
-	 * Filter's template.
+	 * Common mistyped name for Singleton pattern.
 	 * 
-	 * @ingroup Filter
+	 * @deprecated indeed.
+	 * 
+	 * @ingroup Base
 	**/
-	abstract class BaseFilter extends Singleton implements Filtrator {/*_*/}
+	abstract class Singletone extends Singleton {/*_*/}
 ?>

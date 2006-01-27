@@ -18,7 +18,7 @@ class PropertyFilter_Test extends PHPUnit_TestCase {
     
     //{{{ setUP()
     function setUP() {
-        $this->setting = Singletone::getInstance()->PropertyFilter('foo', 'bar', 'zoo');
+        $this->setting = Singleton::getInstance()->PropertyFilter('foo', 'bar', 'zoo');
         $this->setting->var1 = array(3 => 1, 4, 5);
         $this->setting->var2 = '<var2>';
         $this->setting->setDefault('test');

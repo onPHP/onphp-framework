@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup DAOs
 	**/
-	abstract class GenericDAO extends Singletone implements BaseDAO
+	abstract class GenericDAO extends Singleton implements BaseDAO
 	{
 		protected $selectHead = null;
 		

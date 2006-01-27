@@ -27,12 +27,12 @@ class LoggerTest extends UnitTestCase
 	
 	function testWrite()
 	{
-		Singletone::getInstance()->Logger()
+		Singleton::getInstance()->Logger()
 						->setLogFile($this->file)
 						->setStartLine($this->startLine)
 						->setEndLine($this->endLine)
 						;
-		Singletone::getInstance()->Logger()
+		Singleton::getInstance()->Logger()
 						->write($this->testString)
 						;
 		$this->assertEqual($this->startLine

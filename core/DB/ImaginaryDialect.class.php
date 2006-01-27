@@ -18,6 +18,11 @@
 	**/
 	final class ImaginaryDialect extends Dialect
 	{
+		public function autoincrementize(DBColumn $column, &$prepend)
+		{
+			throw new UnsupportedMethodException();
+		}
+		
 		public function fullTextSearch($field, $words, $logic)
 		{
 			return '("'.$field.'" contains "'.implode($logic, $words).'")';

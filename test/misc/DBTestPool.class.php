@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class DBTestPool extends Singletone
+	final class DBTestPool extends Singleton
 	{
 		private $pool	= array();
 		private $info	= array();

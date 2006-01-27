@@ -11,7 +11,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class BaseLocker extends Singletone
+	abstract class BaseLocker extends Singleton
 	{
 		protected $pool = array();
 		

@@ -1,17 +1,17 @@
 <?php
 	/* $Id$ */
 	
-	final class SingletoneTestInstance extends Singletone {/*_*/}
+	final class SingletonTestInstance extends Singleton {/*_*/}
 	
-	final class SingletoneTest extends UnitTestCase
+	final class SingletonTest extends UnitTestCase
 	{
-		private $childName = 'SingletoneTestInstance';
+		private $childName = 'SingletonTestInstance';
 		
 		public function testFactoryLikeCall()
 		{
 			$this->assertTrue(
-				Singletone::getInstance($this->childName)
-				=== Singletone::getInstance($this->childName)
+				Singleton::getInstance($this->childName)
+				=== Singleton::getInstance($this->childName)
 			);
 		}
 		
@@ -20,8 +20,8 @@
 			$name = $this->childName;
 			
 			$this->assertTrue(
-				Singletone::getInstance()->$name()
-				=== Singletone::getInstance()->$name()
+				Singleton::getInstance()->$name()
+				=== Singleton::getInstance()->$name()
 			);
 		}
 		

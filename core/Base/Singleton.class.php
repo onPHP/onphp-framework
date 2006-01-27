@@ -12,13 +12,13 @@
 /* $Id$ */
 
 	/**
-	 * Inheritable Singletone's pattern implementation.
+	 * Inheritable Singleton's pattern implementation.
 	 * 
 	 * @ingroup Base
 	 * 
-	 * @example singletone.php
+	 * @example singleton.php
 	**/
-	abstract class Singletone
+	abstract class Singleton
 	{
 		protected function __construct() {/* you can't create me */}
 		
@@ -32,12 +32,12 @@
 				static $wrapper = null;
 				
 				if (null == $wrapper)
-					$wrapper = new SingletoneInstance();
+					$wrapper = new SingletonInstance();
 				
 				return $wrapper;
 			}
 			
-			// for Singletone::getInstance('class_name', $arg1, ...) calling
+			// for Singleton::getInstance('class_name', $arg1, ...) calling
 			if (2 < func_num_args()) {
 				$args = func_get_args();
 				array_shift($args);
@@ -58,11 +58,11 @@
 	/**
 	 * @ingroup Base
 	**/
-	final class SingletoneInstance extends Singletone
+	final class SingletonInstance extends Singleton
 	{
 		public function __call($class, $args = null)
 		{
-			return Singletone::getInstance($class, $args);
+			return Singleton::getInstance($class, $args);
 		}
 	}
 ?>

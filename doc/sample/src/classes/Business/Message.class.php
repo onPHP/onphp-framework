@@ -20,7 +20,7 @@
 		
 		public static function dao()
 		{
-			return Singletone::getInstance('MessageDAO');
+			return Singleton::getInstance('MessageDAO');
 		}
 		
 		public static function create()

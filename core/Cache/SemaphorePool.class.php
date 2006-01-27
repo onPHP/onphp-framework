@@ -27,18 +27,18 @@
 		
 		protected function __construct()
 		{
-			self::$locker = Singletone::getInstance(self::$lockerName);
+			self::$locker = Singleton::getInstance(self::$lockerName);
 		}
 		
 		public static function setDefaultLocker($name)
 		{
 			self::$lockerName = $locker;
-			self::$locker = Singletone::getInstance($name);
+			self::$locker = Singleton::getInstance($name);
 		}
 		
 		public static function me()
 		{
-			return Singletone::getInstance(__CLASS__);
+			return Singleton::getInstance(__CLASS__);
 		}
 		
 		public function get($key)

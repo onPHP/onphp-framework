@@ -26,7 +26,7 @@
 				$dao = <<<EOT
 		public static function dao()
 		{
-			return Singletone::getInstance('{$class->getName()}DAO');
+			return Singleton::getInstance('{$class->getName()}DAO');
 		}
 
 EOT;
