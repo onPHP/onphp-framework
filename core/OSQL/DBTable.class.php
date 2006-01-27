@@ -21,6 +21,11 @@
 		private $columns	= array();
 		private $order		= array();
 		
+		public static function create($name)
+		{
+			return new self($name);
+		}
+		
 		public function __construct($name)
 		{
 			$this->name = $name;

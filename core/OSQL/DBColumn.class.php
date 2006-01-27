@@ -81,6 +81,18 @@
 			return $this;
 		}
 		
+		public function setDefault($default)
+		{
+			$this->default = $default;
+			
+			return $this;
+		}
+		
+		public function getDefault()
+		{
+			return $this->default;
+		}
+		
 		public function setReference(
 			DBColumn $column,
 			/* ForeignChangeAction */ $onDelete = null,
@@ -117,6 +129,9 @@
 			$out =
 				"{$dialect->quoteField($this->name)} "
 				.$this->type->toString($dialect);
+			
+			if ($this->default)
+				$out .= ' DEFAULT '.$dialect->valueToString($this->default);
 			
 			if ($this->reference) {
 				
