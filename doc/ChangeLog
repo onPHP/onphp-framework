@@ -5,7 +5,7 @@
 	* core/OSQL/InsertOrUpdateQuery.class.php: setId() renamed to
 	lazySet() to avoid collision with Query interface.
 
-	* core/OSQL/: basic support for table creation implemented.
+	* core/OSQL/: support for table creation added.
 
 2006-01-25	Sveta Smirnova		<sveta@microbecal.com>
 
