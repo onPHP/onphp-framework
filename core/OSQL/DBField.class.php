@@ -25,10 +25,10 @@
 		{
 			$this->field = $field;
 			
-			if ($table)
-				$this->table = ($table instanceof DialectString)
-									? $table
-									: new FromTable($table);
+			if ($table && !$table instanceof DialectString)
+				$this->table = new FromTable($table);
+			else
+				$this->table = $table;
 		}
 		
 		public static function create($field, $table = null)
