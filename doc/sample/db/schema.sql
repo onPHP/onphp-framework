@@ -37,7 +37,7 @@ create table "message" (
 -- SQLite:
 
 create table message(
-	id integer not null primary key,
+	id integer not null primary key autoincrement,
 	nickname varchar(50) not null,
 	name varchar(255) not null, -- aka subject, aka title
 	content text not null,
