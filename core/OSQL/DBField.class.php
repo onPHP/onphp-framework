@@ -26,7 +26,9 @@
 			$this->field = $field;
 			
 			if ($table)
-				$this->table = new FromTable($table);
+				$this->table = ($table instanceof DialectString)
+									? $table
+									: new FromTable($table);
 		}
 		
 		public static function create($field, $table = null)
