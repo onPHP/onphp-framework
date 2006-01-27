@@ -52,13 +52,6 @@
 			return $this->columns[$name];
 		}
 		
-		public function getColumnByPosition($position)
-		{
-			Assert::isTrue(sizeof($this->columns) < $position);
-			
-			return $this->columns[$this->order[$position]];
-		}
-		
 		public function dropColumnByName($name)
 		{
 			if (!isset($this->columns[$name]))
