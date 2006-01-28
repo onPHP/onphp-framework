@@ -88,5 +88,14 @@ EOT;
 
 			return $method;
 		}
+		
+		public function toColumnType()
+		{
+			return
+				MetaConfiguration::me()->
+					getClassByName($this->class)->
+						getIdentifier()->
+							getType()->toColumnType();
+		}
 	}
 ?>

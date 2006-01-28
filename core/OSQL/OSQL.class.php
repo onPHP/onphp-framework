@@ -15,6 +15,8 @@
 	 * Factory for OSQL's queries.
 	 * 
 	 * @ingroup OSQL
+	 * 
+	 * @see http://onphp.org/examples/OSQL.html
 	**/
 	final class OSQL extends StaticFactory
 	{

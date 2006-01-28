@@ -11,35 +11,47 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class AutoClassBuilder extends BaseBuilder
+	/**
+	 * @ingroup OSQL
+	**/
+	final class DBSchema implements DialectString
 	{
-		public static function build(MetaClass $class)
+		private $tables = array();
+		
+		public function addTable(DBTable $table)
 		{
-			$out = self::getHead();
+			$name = $table->getName();
 			
-			$out .= "\tabstract class Auto{$class->getName()}";
+			Assert::isFalse(
+				isset($this->tables[$name]),
+				"table '{$name}' already exist"
+			);
 			
-			if ($parent = $class->getParent())
-				$out .= " extends {$parent->getName()}";
+			$this->tables[$table->getName()] = $table;
 			
-			if ($interfaces = $class->getInterfaces())
-				$out .= ' implements '.implode(', ', $interfaces);
+			return $this;
+		}
+		
+		public function getTableByName($name)
+		{
+			Assert::isTrue(
+				isset($this->tables[$name]),
+				"table '{$name}' does not exist"
+			);
 			
-			$out .= "\n\t{\n";
+			return $this->tables[$name];
+		}
+		
+		// TODO: respect dependency order
+		public function toString(Dialect $dialect)
+		{
+			$out = array();
 			
-			foreach ($class->getProperties() as $property) {
-				$out .=
-					"\t\tprotected \${$property->getName()} = "
-					."{$property->getType()->getDeclaration()};\n";
+			foreach ($this->tables as $name => $table) {
+				$out[] = $table->toString($dialect);
 			}
 			
-			foreach ($class->getProperties() as $property)
-				$out .= $property->toMethods();
-			
-			$out .= "\t}\n";
-			$out .= self::getHeel();
-			
-			return $out;
+			return implode("\n\n", $out);
 		}
 	}
 ?>

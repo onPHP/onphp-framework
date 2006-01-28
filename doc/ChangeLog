@@ -1,5 +1,9 @@
 # $Id$
 
+2006-01-28	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* meta/: first and dirty schema generation implementation.
+
 2006-01-27	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/Base/Singletone.class.php: renamed to Singleton.class.php.

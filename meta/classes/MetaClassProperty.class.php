@@ -31,6 +31,9 @@
 			);
 			
 			$this->type = $type;
+			
+			if ($type instanceof PasswordType)
+				$this->size = 40; // strlen(sha1())
 		}
 		
 		public function getName()
@@ -116,6 +119,11 @@
 			$this->relation = $relation;
 			
 			return $this;
+		}
+		
+		public function getRelation()
+		{
+			return $this->relation;
 		}
 		
 		public function toMethods()
@@ -277,6 +285,57 @@ EOT;
 			}
 			
 			return $out;
+		}
+		
+		public function toColumn($indent = 3)
+		{
+			$tab = "\t";
+			$tabs = str_pad(null, $indent, $tab, STR_PAD_LEFT);
+
+			$dumbName = $this->dumbName;
+			
+			if ($this->type instanceof ObjectType)
+				$dumbName .= '_id';
+			
+			$column = <<<EOT
+{$tabs}addColumn(
+{$tabs}{$tab}DBColumn::create(
+{$tabs}{$tab}{$tab}{$this->type->toColumnType()}
+EOT;
+
+			if ($this->required) {
+				$column .= <<<EOT
+->
+{$tabs}{$tab}{$tab}setNull(false)
+EOT;
+			}
+			
+			if ($this->size) {
+				$column .= <<<EOT
+->
+{$tabs}{$tab}{$tab}setSize({$this->size})
+EOT;
+			}
+			
+			$column .= <<<EOT
+,
+{$tabs}{$tab}{$tab}'{$dumbName}'
+{$tabs}{$tab})
+EOT;
+
+			if ($this->identifier) {
+				$column .= <<<EOT
+->
+{$tabs}{$tab}setPrimaryKey(true)
+EOT;
+			}
+			
+			$column .= <<<EOT
+
+{$tabs})
+EOT;
+
+			return $column;
 		}
 		
 		private function toVarName($name)

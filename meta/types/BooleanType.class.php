@@ -22,5 +22,10 @@
 		{
 			return false;
 		}
+		
+		public function toColumnType()
+		{
+			return 'DataType::create(DataType::BOOLEAN)';
+		}
 	}
 ?>

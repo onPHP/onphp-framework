@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE metaconfiguration SYSTEM "meta.dtd">
+
+<!-- $Id$ -->
+
+<metaconfiguration><classes>
+
+	<class name="TestCity" type="final">
+		<properties>
+			
+			<property name="id" type="BigInteger" required="true" identifier="true" />
+			<property name="name" type="String" size="50" required="true" />
+			
+		</properties>
+		
+		<pattern name="DictionaryClass" />
+	</class>
+	
+	<class name="TestUser" type="final">
+		<properties>
+			
+			<property name="id" type="BigInteger" required="true" identifier="true" />
+			
+			<property name="nickname" type="String" size="255" required="true" />
+			<property name="password" type="Password" required="true" />
+			
+			<property name="lastLogin" type="Timestamp" required="true" />
+			<property name="registered" type="Timestamp" required="true" />
+			
+			<property name="city" type="TestCity" relation="OneToOne" required="true" />
+			
+		</properties>
+		
+		<pattern name="StraightMapping" />
+	</class>
+	
+</classes></metaconfiguration>

@@ -119,6 +119,22 @@
 				echo $name."\n";
 				$class->dump();
 			}
+			
+			$fp = fopen(ONPHP_META_AUTO_DIR.'AutoSchema.php', 'wb');
+			
+			fwrite($fp, SchemaBuilder::getHead());
+			
+			foreach ($this->classes as $name => $class) {
+				fwrite($fp, SchemaBuilder::build($class));
+			}
+			
+			foreach ($this->classes as $name => $class) {
+				fwrite($fp, SchemaBuilder::buildRelations($class));
+			}
+			
+			fwrite($fp, "\n\techo \$schema->toString(new ImaginaryDialect());\n?>");
+			
+			fclose($fp);
 		}
 		
 		public function getClassByName($name)

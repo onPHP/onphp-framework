@@ -15,6 +15,7 @@
 	{
 		abstract public function getDeclaration();
 		abstract public function isMeasurable();
+		abstract public function toColumnType();
 		
 		public function isGeneric()
 		{
@@ -36,11 +37,11 @@
 			$methodName = 'get'.ucfirst($name);
 			
 			$method = <<<EOT
+
 {$tabs}public function {$methodName}()
 {$tabs}{
 {$tabs}{$tab}return \$this->{$name};
 {$tabs}}
-
 
 EOT;
 
@@ -55,13 +56,13 @@ EOT;
 			$methodName = 'set'.ucfirst($name);
 			
 			$method = <<<EOT
+
 {$tabs}public function {$methodName}(\${$name})
 {$tabs}{
 {$tabs}{$tab}\$this->{$name} = \${$name};
 
 {$tabs}{$tab}return \$this;
 {$tabs}}
-
 
 EOT;
 

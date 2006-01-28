@@ -15,6 +15,8 @@
 	 * Complete Form class.
 	 * 
 	 * @ingroup Form
+	 * 
+	 * @see http://onphp.org/examples/Form.html
 	**/
 	final class Form extends RegulatedForm
 	{

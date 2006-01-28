@@ -17,12 +17,16 @@ Things not supported by design:
 	
 	function init()
 	{
-		define('ONPHP_META_ROOT', ONPHP_ROOT_PATH.'meta'.DIRECTORY_SEPARATOR);
+		if (!defined('ONPHP_META_PATH'))
+			define(
+				'ONPHP_META_PATH',
+				ONPHP_ROOT_PATH.'meta'.DIRECTORY_SEPARATOR
+			);
 		
-		define('ONPHP_META_BUILDERS', ONPHP_META_ROOT.'builders'.DIRECTORY_SEPARATOR);
-		define('ONPHP_META_PATTERNS', ONPHP_META_ROOT.'patterns'.DIRECTORY_SEPARATOR);
-		define('ONPHP_META_CLASSES', ONPHP_META_ROOT.'classes'.DIRECTORY_SEPARATOR);
-		define('ONPHP_META_TYPES', ONPHP_META_ROOT.'types'.DIRECTORY_SEPARATOR);
+		define('ONPHP_META_BUILDERS', ONPHP_META_PATH.'builders'.DIRECTORY_SEPARATOR);
+		define('ONPHP_META_PATTERNS', ONPHP_META_PATH.'patterns'.DIRECTORY_SEPARATOR);
+		define('ONPHP_META_CLASSES', ONPHP_META_PATH.'classes'.DIRECTORY_SEPARATOR);
+		define('ONPHP_META_TYPES', ONPHP_META_PATH.'types'.DIRECTORY_SEPARATOR);
 		
 		set_include_path(
 			get_include_path().PATH_SEPARATOR
@@ -37,13 +41,13 @@ Things not supported by design:
 		define('ONPHP_META_BUSINESS_DIR', PATH_CLASSES.'Business'.DIRECTORY_SEPARATOR);
 		
 		if (!is_dir(ONPHP_META_DAO_DIR))
-			mkdir(ONPHP_META_DAO_DIR);
+			mkdir(ONPHP_META_DAO_DIR, 0700, true);
 		
 		if (!is_dir(ONPHP_META_AUTO_DIR))
-			mkdir(ONPHP_META_AUTO_DIR);
+			mkdir(ONPHP_META_AUTO_DIR, 0700, true);
 		
 		if (!is_dir(ONPHP_META_BUSINESS_DIR))
-			mkdir(ONPHP_META_BUSINESS_DIR);
+			mkdir(ONPHP_META_BUSINESS_DIR, 0700, true);
 	}
 
 	if (sizeof($_SERVER['argv']) < 3) {

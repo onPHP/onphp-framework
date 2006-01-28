@@ -11,5 +11,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class BigIntegerType extends IntegerType {/*_*/}
+	final class BigIntegerType extends IntegerType
+	{
+		public function toColumnType()
+		{
+			return 'DataType::create(DataType::BIGINT)';
+		}
+	}
 ?>

@@ -17,5 +17,10 @@
 		{
 			return true;
 		}
+		
+		public function toColumnType()
+		{
+			return 'DataType::create(DataType::TIMESTAMP)';
+		}
 	}
 ?>

@@ -166,7 +166,7 @@
 					$out .= ' ON DELETE '.$this->onDelete->toString();
 				
 				if ($this->onUpdate)
-					$out .= ' ON UPDATE'.$this->onUpdate->toString();
+					$out .= ' ON UPDATE '.$this->onUpdate->toString();
 			}
 			
 			return $out;

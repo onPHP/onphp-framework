@@ -165,7 +165,9 @@
 			if ($this->id & self::HAVE_SIZE) {
 				
 				if (!$this->size)
-					throw new WrongStateException();
+					throw new WrongStateException(
+						"type '{$this->name}' should have size set"
+					);
 				
 				$out .= "({$this->size})";
 			}
