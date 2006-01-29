@@ -57,6 +57,14 @@
 			return $type->getName();
 		}
 		
+		public static function timeZone($exist = false)
+		{
+			return
+				$exist
+					? ' WITH TIME ZONE'
+					: ' WITHOUT TIME ZONE';
+		}
+		
 		public function fieldToString(&$field)
 		{
 			return

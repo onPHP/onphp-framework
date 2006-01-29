@@ -21,9 +21,9 @@
 			$pool = DBTestPool::me()->getPool();
 			
 			foreach ($pool as $name => $db) {
-				$db->queryNull(
-					$this->schema
-				);
+				foreach ($this->schema->getTables() as $name => $table) {
+					$db->queryRaw($table->toString($db->getDialect()));
+				}
 			}
 		}
 		
@@ -31,14 +31,14 @@
 		{
 			$pool = DBTestPool::me()->getPool();
 			
-			$drop = new Queue();
-			
-			foreach ($this->schema->getTableNames() as $name) {
-				$drop->add(OSQL::dropTable($name, true));
-			}
-			
 			foreach ($pool as $name => $db) {
-				$drop->run($db);
+				foreach ($this->schema->getTableNames() as $name) {
+					$db->queryRaw(
+						OSQL::dropTable($name, true)->toString(
+							$db->getDialect()
+						)
+					);
+				}
 			}
 		}
 	}

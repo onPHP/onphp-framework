@@ -200,12 +200,8 @@
 				}
 			}
 			
-			if ($this->id & self::HAVE_TIMEZONE) {
-				$out .=
-					$this->timezone
-						? ' WITH TIME ZONE'
-						: ' WITHOUT TIME ZONE';
-			}
+			if ($this->id & self::HAVE_TIMEZONE)
+				$out .= $dialect->timeZone($this->timezone);
 			
 			$out .=
 				$this->null

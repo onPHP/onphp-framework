@@ -18,6 +18,11 @@
 	{
 		private $tables = array();
 		
+		public function getTables()
+		{
+			return $this->tables;
+		}
+		
 		public function getTableNames()
 		{
 			return array_keys($this->tables);

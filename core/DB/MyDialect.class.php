@@ -47,6 +47,11 @@
 			return "`{$table}`";
 		}
 		
+		public static function timeZone($exist = false)
+		{
+			return null;
+		}
+		
 		public function fullTextSearch($fields, $words, $logic)
 		{
 			return

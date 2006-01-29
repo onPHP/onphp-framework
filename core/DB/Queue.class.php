@@ -17,6 +17,8 @@
 	 * @see OSQL
 	 * 
 	 * @ingroup DB
+	 * 
+	 * @todo introduce DBs without multi-query support handling
 	**/
 	final class Queue implements Query
 	{
