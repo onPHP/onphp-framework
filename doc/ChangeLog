@@ -1,5 +1,9 @@
 # $Id$
 
+2006-01-29	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/OSQL/DropTableQuery.class.php: drop table implementation.
+
 2006-01-28	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* meta/: first and dirty schema generation implementation.

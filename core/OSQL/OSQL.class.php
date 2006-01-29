@@ -44,5 +44,10 @@
 		{
 			return new CreateTableQuery($table);
 		}
+		
+		public static function dropTable($name, $cascade = false)
+		{
+			return new DropTableQuery($name, $cascade);
+		}
 	}
 ?>

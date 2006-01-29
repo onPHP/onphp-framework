@@ -132,7 +132,7 @@
 				fwrite($fp, SchemaBuilder::buildRelations($class));
 			}
 			
-			fwrite($fp, "\n\techo \$schema->toString(new ImaginaryDialect());\n?>");
+			fwrite($fp, "?>");
 			
 			fclose($fp);
 		}

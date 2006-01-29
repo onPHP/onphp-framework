@@ -6,6 +6,11 @@
 		private $pool	= array();
 		private $info	= array();
 		
+		public static function me()
+		{
+			return Singleton::getInstance(__CLASS__);
+		}
+		
 		public function __construct(/* array */ $dbs)
 		{
 			Assert::isArray($dbs);
@@ -31,6 +36,11 @@
 					$persistent === true
 				);
 			}
+		}
+		
+		public function getPool()
+		{
+			return $this->pool;
 		}
 	}
 ?>

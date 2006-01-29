@@ -76,8 +76,6 @@ EOT;
 		{
 			$out = parent::getHead();
 			
-			$out .= "\trequire '".ONPHP_ROOT_PATH."global.inc.php.tpl';\n\n";
-			
 			$out .= "\t\$schema = new DBSchema();\n\n";
 			
 			return $out;

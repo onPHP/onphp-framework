@@ -14,7 +14,7 @@
 	
 	// meta, DB and DAOs ordered tests portion
 	if (isset($dbs) && $dbs) {
-		Singleton::getInstance('DBTestPool', $dbs);
+		Singleton::getInstance('DBTestPool', $dbs)->connect();
 		
 		// build stuff from meta
 		
@@ -25,6 +25,8 @@
 		$_SERVER['argv'][2] = $metaDir.'config.meta.xml';
 		
 		require ONPHP_META_PATH.'bin'.DIRECTORY_SEPARATOR.'build.php';
+		
+		$test->addTestClass(new DAOTest());
 	}
 	
 	$test->run($reporter);

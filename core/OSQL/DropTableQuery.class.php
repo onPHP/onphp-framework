@@ -14,49 +14,32 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	final class DBSchema extends QueryIdentification
+	final class DropTableQuery extends QueryIdentification
 	{
-		private $tables = array();
+		private $name		= null;
 		
-		public function getTableNames()
+		private $cascade	= false;
+		
+		public function getId()
 		{
-			return array_keys($this->tables);
+			throw new UnsupportedMethodException();
 		}
 		
-		public function addTable(DBTable $table)
+		public function __construct($name, $cascade = false)
 		{
-			$name = $table->getName();
-			
-			Assert::isFalse(
-				isset($this->tables[$name]),
-				"table '{$name}' already exist"
-			);
-			
-			$this->tables[$table->getName()] = $table;
-			
-			return $this;
+			$this->name = $name;
+			$this->cascade = (true === $cascade);
 		}
 		
-		public function getTableByName($name)
-		{
-			Assert::isTrue(
-				isset($this->tables[$name]),
-				"table '{$name}' does not exist"
-			);
-			
-			return $this->tables[$name];
-		}
-		
-		// TODO: respect dependency order
 		public function toString(Dialect $dialect)
 		{
-			$out = array();
-			
-			foreach ($this->tables as $name => $table) {
-				$out[] = $table->toString($dialect);
-			}
-			
-			return implode("\n\n", $out);
+			return
+				'DROP TABLE '.$dialect->quoteTable($this->name)
+				.(
+					$this->cascade
+						? ' CASCADE'
+						: ' RESTRICT'
+				);
 		}
 	}
 ?>
