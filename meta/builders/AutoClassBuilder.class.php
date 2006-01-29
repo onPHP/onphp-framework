@@ -21,6 +21,8 @@
 			
 			if ($parent = $class->getParent())
 				$out .= " extends {$parent->getName()}";
+			else
+				$out .= " extends IdentifiableObject";
 			
 			if ($interfaces = $class->getInterfaces())
 				$out .= ' implements '.implode(', ', $interfaces);
@@ -28,13 +30,21 @@
 			$out .= "\n\t{\n";
 			
 			foreach ($class->getProperties() as $property) {
+				if ($property->getName() == 'id' && !$parent)
+					continue;
+				
 				$out .=
 					"\t\tprotected \${$property->getName()} = "
 					."{$property->getType()->getDeclaration()};\n";
 			}
 			
-			foreach ($class->getProperties() as $property)
+			foreach ($class->getProperties() as $property) {
+				
+				if ($property->getName() == 'id' && !$parent)
+					continue;
+				
 				$out .= $property->toMethods();
+			}
 			
 			$out .= "\t}\n";
 			$out .= self::getHeel();

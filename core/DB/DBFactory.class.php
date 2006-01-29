@@ -19,6 +19,13 @@
 	final class DBFactory extends StaticFactory
 	{
 		private static $defaultDB = null;
+		
+		public static function setDefaultInstance(DB $db)
+		{
+			Assert::isTrue($db->isConnected());
+			
+			self::$defaultDB = $db;
+		}
 	
 		public static function &getDefaultInstance()
 		{

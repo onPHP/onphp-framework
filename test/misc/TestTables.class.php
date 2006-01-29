@@ -14,9 +14,33 @@
 				.'AutoSchema.php';
 			
 			$this->schema = $schema;
+			
+			// in case of unclean shutdown of previous tests
+			foreach (DBTestPool::me()->getPool() as $name => $db) {
+				foreach ($this->schema->getTableNames() as $name) {
+					try {
+						$db->queryRaw(
+							OSQL::dropTable($name, true)->toString(
+								$db->getDialect()
+							)
+						);
+					} catch (DatabaseException $e) {
+						// ok
+					}
+					
+					// FIXME: dirty hack
+					try {
+						$db->queryRaw(
+							"DROP SEQUENCE {$name}_id;"
+						);
+					} catch (DatabaseException $e) {
+						// ok
+					}
+				}
+			}
 		}
 		
-		public function create()
+		protected function create()
 		{
 			$pool = DBTestPool::me()->getPool();
 			
@@ -27,7 +51,7 @@
 			}
 		}
 		
-		public function drop()
+		protected function drop()
 		{
 			$pool = DBTestPool::me()->getPool();
 			
@@ -38,6 +62,15 @@
 							$db->getDialect()
 						)
 					);
+					
+					// FIXME: dirty hack
+					try {
+						$db->queryRaw(
+							"DROP SEQUENCE {$name}_id;"
+						);
+					} catch (DatabaseException $e) {
+						// ok
+					}
 				}
 			}
 		}

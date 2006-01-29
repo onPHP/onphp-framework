@@ -42,6 +42,11 @@
 			$this->name = $name;
 		}
 		
+		public function getType()
+		{
+			return $this->type;
+		}
+		
 		public function setTable(DBTable $table)
 		{
 			$this->table = $table;

@@ -294,7 +294,7 @@ EOT;
 
 			$dumbName = $this->dumbName;
 			
-			if ($this->type instanceof ObjectType)
+			if ($this->type instanceof ObjectType && !$this->type->isGeneric())
 				$dumbName .= '_id';
 			
 			$column = <<<EOT
@@ -326,7 +326,8 @@ EOT;
 			if ($this->identifier) {
 				$column .= <<<EOT
 ->
-{$tabs}{$tab}setPrimaryKey(true)
+{$tabs}{$tab}setPrimaryKey(true)->
+{$tabs}{$tab}setAutoincrement(true)
 EOT;
 			}
 			

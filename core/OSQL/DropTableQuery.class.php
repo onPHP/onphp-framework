@@ -39,7 +39,8 @@
 					$this->cascade
 						? ' CASCADE'
 						: ' RESTRICT'
-				);
+				)
+				.';';
 		}
 	}
 ?>

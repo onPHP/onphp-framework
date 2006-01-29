@@ -57,7 +57,7 @@
 					$this->sequencePool[
 						$name
 					][
-						key($this->sequencePool)
+						key($this->sequencePool[$name])
 					]
 				);
 			}

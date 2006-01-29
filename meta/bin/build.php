@@ -50,7 +50,7 @@ Things not supported by design:
 			mkdir(ONPHP_META_BUSINESS_DIR, 0700, true);
 	}
 
-	if (sizeof($_SERVER['argv']) < 3) {
+	if (!isset($_SERVER['argv'][1], $_SERVER['argv'][2])) {
 		help();
 	} else {
 		

@@ -70,6 +70,8 @@
 		
 		public function autoincrementize(DBColumn $column, &$prepend)
 		{
+			$column->setDefault(null);
+			
 			return 'AUTO_INCREMENT';
 		}
 		
