@@ -155,9 +155,9 @@ EOT;
 					if ($property->getName() == $property->getDumbName())
 						$map = 'null';
 					else
-						$map = $property->getDumbName();
+						$map = "'{$property->getDumbName()}'";
 					
-					$row .= "'{$property->getName()}' => '{$map}'";
+					$row .= "'{$property->getName()}' => {$map}";
 					
 				} else {
 					
@@ -171,7 +171,7 @@ EOT;
 					
 					$row .=
 						"'{$property->getName()}".ucfirst($identifier->getName())
-						."' => '{$remoteClass->getDumbName()}_"
+						."' => '{$property->getDumbName()}_"
 						."{$identifier->getDumbName()}'";
 				}
 				

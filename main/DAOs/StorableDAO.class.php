@@ -65,7 +65,8 @@
 			
 			$this->uncacheById($object->getId());
 			
-			return $object;
+			// clean out Identifier, if any
+			return $object->setId($object->getId());
 		}
 	}
 ?>

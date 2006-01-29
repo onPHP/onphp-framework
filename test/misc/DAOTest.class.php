@@ -56,11 +56,21 @@
 			$this->assertEqual($piter->getId(), 1);
 			$this->assertEqual($moscow->getId(), 2);
 			
-//			$postgreser = TestUser::dao()->add($postgreser);
-//			$mysqler = TestUser::dao()->add($mysqler);
+			$postgreser = TestUser::dao()->add($postgreser);
+			$mysqler = TestUser::dao()->add($mysqler);
 			
-//			$this->assertEqual($postgreser->getId(), 1);
-//			$this->assertEqual($mysqler->getId(), 2);
+			$this->assertEqual($postgreser->getId(), 1);
+			$this->assertEqual($mysqler->getId(), 2);
+			
+			Cache::me()->clean();
+			
+			$this->assertTrue(
+				($postgreser == TestUser::dao()->getById(1))
+			);
+			
+			$this->assertTrue(
+				($mysqler == TestUser::dao()->getById(2))
+			);
 		}
 	}
 ?>

@@ -292,10 +292,10 @@ EOT;
 			$tab = "\t";
 			$tabs = str_pad(null, $indent, $tab, STR_PAD_LEFT);
 
-			$dumbName = $this->dumbName;
-			
 			if ($this->type instanceof ObjectType && !$this->type->isGeneric())
-				$dumbName .= '_id';
+				$dumbName = "{$this->dumbName}_id";
+			else
+				$dumbName = $this->dumbName;
 			
 			$column = <<<EOT
 {$tabs}addColumn(
