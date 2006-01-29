@@ -23,6 +23,7 @@
 				$typeName = null;
 			
 			if ($class->getPattern()->daoExist()) {
+				$interfaces = ' implements DAOConnected';
 				$dao = <<<EOT
 		public static function dao()
 		{
@@ -31,10 +32,10 @@
 
 EOT;
 			} else
-				$dao = null;
+				$dao = $interfaces = null;
 			
 			$out .= <<<EOT
-	{$typeName}class {$class->getName()} extends Auto{$class->getName()}
+	{$typeName}class {$class->getName()} extends Auto{$class->getName()}{$interfaces}
 	{
 EOT;
 
