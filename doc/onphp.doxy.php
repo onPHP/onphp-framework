@@ -19,8 +19,8 @@
 	 *   - connectors:
 	 *    - PgSQL;
 	 *    - MySQL;
-	 *    - IBase;
 	 *    - SQLite;
+	 *    - IBase (incubator);
 	 *    - MSSQL (incubator);
 	 *    - OraSQL (incubator);
 	 *   - utils:
