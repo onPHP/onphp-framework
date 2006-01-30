@@ -58,7 +58,8 @@
 				$conn = 'ibase_connect';
 			
 			$this->link = $conn(
-				"{$host}:{$base}", $user, $pass, DEFAULT_ENCODING
+				"{$host}:{$base}", $user, $pass,
+				defined('DEFAULT_ENCODING') ? DEFAULT_ENCODING : null
 			);
 
 			$this->persistent = $persistent;
