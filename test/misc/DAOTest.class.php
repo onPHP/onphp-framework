@@ -96,6 +96,11 @@
 				)
 				== TestUser::dao()->getById(2)
 			);
+			
+			$this->assertEqual(
+				sizeof(TestUser::dao()->getPlainList()),
+				sizeof(TestCity::dao()->getPlainList())
+			);
 		}
 	}
 ?>
