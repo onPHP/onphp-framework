@@ -1,5 +1,11 @@
 # $Id$
 
+2006-01-30	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/DB/InterbaseDialect.class.php,
+	incubator/classes/DB/IBase.class.php: moved to incubator, since i
+	don't want to support it anymore.
+
 2006-01-29	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/OSQL/DropTableQuery.class.php: drop table implementation.
