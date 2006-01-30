@@ -47,6 +47,11 @@
 			return "`{$table}`";
 		}
 		
+		public static function dropTableMode($cascade = false)
+		{
+			return null;
+		}
+		
 		public static function timeZone($exist = false)
 		{
 			return null;
@@ -68,7 +73,7 @@
 				.')';
 		}
 		
-		public function autoincrementize(DBColumn $column, &$prepend)
+		public static function autoincrementize(DBColumn $column, &$prepend)
 		{
 			$column->setDefault(null);
 			

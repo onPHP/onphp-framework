@@ -18,7 +18,7 @@
 	**/
 	final class ImaginaryDialect extends Dialect
 	{
-		public function autoincrementize(DBColumn $column, &$prepend)
+		public static function autoincrementize(DBColumn $column, &$prepend)
 		{
 			throw new UnsupportedMethodException();
 		}

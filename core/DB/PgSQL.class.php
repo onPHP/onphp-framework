@@ -207,6 +207,11 @@
 				return null;
 		}
 		
+		public function supportSequences()
+		{
+			return true;
+		}
+		
 		private function checkSingle($result)
 		{
 			if (pg_num_rows($result) > 1)

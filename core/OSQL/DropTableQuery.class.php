@@ -35,11 +35,7 @@
 		{
 			return
 				'DROP TABLE '.$dialect->quoteTable($this->name)
-				.(
-					$this->cascade
-						? ' CASCADE'
-						: ' RESTRICT'
-				)
+				.$dialect->dropTableMode($this->cascade)
 				.';';
 		}
 	}

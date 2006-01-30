@@ -29,12 +29,14 @@
 					}
 					
 					// FIXME: dirty hack
-					try {
-						$db->queryRaw(
-							"DROP SEQUENCE {$name}_id;"
-						);
-					} catch (DatabaseException $e) {
-						// ok
+					if ($db->supportSequences()) {
+						try {
+							$db->queryRaw(
+								"DROP SEQUENCE {$name}_id;"
+							);
+						} catch (DatabaseException $e) {
+							// ok
+						}
 					}
 				}
 			}
@@ -64,12 +66,14 @@
 					);
 					
 					// FIXME: dirty hack
-					try {
-						$db->queryRaw(
-							"DROP SEQUENCE {$name}_id;"
-						);
-					} catch (DatabaseException $e) {
-						// ok
+					if ($db->supportSequences()) {
+						try {
+							$db->queryRaw(
+								"DROP SEQUENCE {$name}_id;"
+							);
+						} catch (DatabaseException $e) {
+							// ok
+						}
 					}
 				}
 			}

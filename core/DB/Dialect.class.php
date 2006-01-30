@@ -18,7 +18,7 @@
 	**/
 	abstract class /* ANSI's */ Dialect
 	{
-		abstract public function autoincrementize(DBColumn $column, &$prepend);
+		abstract public static function autoincrementize(DBColumn $column, &$prepend);
 		
 		public static function quoteValue(&$value)
 		{
@@ -63,6 +63,14 @@
 				$exist
 					? ' WITH TIME ZONE'
 					: ' WITHOUT TIME ZONE';
+		}
+		
+		public static function dropTableMode($cascade = false)
+		{
+			return 
+				$cascade
+					? ' CASCADE'
+					: ' RESTRICT';
 		}
 		
 		public function fieldToString(&$field)

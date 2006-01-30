@@ -29,20 +29,33 @@
 			
 			return "'" .sqlite_escape_string($value)."'";
 		}
+		
+		public static function typeToString(DataType $type)
+		{
+			if ($type->getId() == DataType::BIGINT)
+				$type = new DataType(DataType::INTEGER);
+			
+			return $type->getName();
+		}
 
-		public function fullTextSearch($field, $words, $logic)
+		public static function dropTableMode($cascade = false)
 		{
-			throw new UnsupportedMethodException();
+			return null;
 		}
 		
-		public function fullTextRank($field, $words, $logic)
+		public static function autoincrementize(DBColumn $column, &$prepend)
 		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function autoincrementize(DBColumn $column, &$prepend)
-		{
-			return 'AUTOINCREMENT';
+			$type = $column->getType();
+			
+			Assert::isTrue(
+				(
+					$type->getId() == DataType::BIGINT
+					|| $type->getId() == DataType::INTEGER
+				)
+				&& $column->isPrimaryKey()
+			);
+			
+			return null; // or even 'AUTOINCREMENT'?
 		}
 	}
 ?>

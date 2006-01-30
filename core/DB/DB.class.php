@@ -184,6 +184,11 @@
 		{
 			return is_resource($this->link);
 		}
+		
+		public function supportSequences()
+		{
+			return false;
+		}
 
 		public function isPersistent()
 		{

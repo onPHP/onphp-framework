@@ -29,7 +29,7 @@
 		}
 		
 		/// TODO: consider trigger generation too.
-		public function autoincrementize(DBColumn $column, &$prepend)
+		public static function autoincrementize(DBColumn $column, &$prepend)
 		{
 			Assert::isTrue(
 				($table = $column->getTable()) !== null
