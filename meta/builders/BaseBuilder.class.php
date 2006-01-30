@@ -73,7 +73,7 @@ EOT;
 			
 		public function makeObject(&\$array, \$prefix = null)
 		{
-			return \$this->fillObject(new {$className}(), &\$array, \$prefix);
+			return \$this->fillObject(new {$className}(), \$array, \$prefix);
 		}
 
 EOT;
