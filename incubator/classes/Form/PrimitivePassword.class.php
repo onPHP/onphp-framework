@@ -31,7 +31,6 @@
 		/**
 		 * @var		string	Contains regular expression range of NOT allowed
 		 *					symbols. Will be used as "/^[$this->allowed]+$/"
-		 * @access	private
 		**/
 		private $banned = '\s';
 		
@@ -44,8 +43,6 @@
 		/**
 		 * Additional checks min length
 		 * 
-		 * @param	array
-		 * @access	public
 		 * @return	boolean
 		**/
 		public function import(&$scope)

@@ -27,13 +27,11 @@
 		
 		/**
 		 * @var		string	default protocol
-		 * @access	private
 		**/
 		protected $defaultProtocol = 'http://';
 		
 		/**
 		 * @var		array	allowed protocols
-		 * @access	private
 		**/
 		private $alloweds = array('http', 'ftp', 'https', 'mailto', 'gopher');
 		
@@ -47,7 +45,6 @@
 		 * Sets protocol which will be used if importing url contains no protocol
 		 * 
 		 * @param	string			new protocol
-		 * @access	public
 		 * @return	PrimitiveUrl	self
 		**/
 		public function setDefaultProtocol($protocol)
@@ -59,7 +56,6 @@
 		/**
 		 * Returns protocol which will be used if importing url contains no protocol
 		 * 
-		 * @access	public
 		 * @return	string
 		**/
 		public function getDefaultProtocol()
@@ -71,7 +67,6 @@
 		 * Fills array of allowed protocols
 		 * 
 		 * @param	array			new values
-		 * @access	public
 		 * @return	PrimitiveUrl	self
 		**/
 		public function setAlloweds($alloweds)
@@ -86,7 +81,6 @@
 		/**
 		 * Returns array of allowed protocols
 		 * 
-		 * @access	public
 		 * @return	array
 		**/
 		public function getAlloweds()
@@ -98,7 +92,6 @@
 		 * Checks $scope[$this->name] is possible url before importing
 		 * 
 		 * @param	array	associative array
-		 * @access	public
 		 * @return	boolean
 		**/
 		public function import(&$scope)

@@ -35,16 +35,6 @@
 			return self::$defaultDB;
 		}
 
-		/**
-		 * Weird documentation example.
-		 * 
-		 * @return DB resource
-		 * @param string guess, what's this?
-		 * @param string see above
-		 * @param string host:port
-		 * @param string default database connect to
-		 * @desc BOVM goes here..
-		**/
 		public static function getCustomInstance(
 			$userName, $passWord, $host, $base = null
 		)

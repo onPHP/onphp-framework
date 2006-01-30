@@ -18,29 +18,25 @@
 	{
 		// properties
 		/**
+		 * Form object.
+		 * 
 		 * @todo 	what if document will contain several forms?
-		 * @var		Form	Form object
-		 * @access	private
 		**/
 		private $_form = null;
 		
 		/**
-		 * @var		string	full qualified url to main script
-		 * @access	private
+		 * full qualified url to main script
 		**/
 		private $_url = null;
 		
 		/**
-		 * @var		string	area flag
-		 * @access	private
+		 * area flag
 		**/
 		private $_area = null;
 		
 		/**
 		 * Sets value of $_form
 		 * 
-		 * @param	Form	ready Form
-		 * @access	public
 		 * @return	void
 		**/
 		public function setForm(Form $form)
@@ -53,7 +49,6 @@
 		/**
 		 * Returns form property
 		 * 
-		 * @access	public
 		 * @return	Form
 		**/
 		public function getForm()
@@ -64,8 +59,6 @@
 		/**
 		 * Returns Form Primitive as string
 		 * 
-		 * @param	string	Primitive name
-		 * @access	public
 		 * @return	string	Form Primitive as string
 		**/
 		public function getRawValue($primitiveName)
@@ -84,8 +77,6 @@
 		/**
 		 * Returns Form Primitive as filtered string
 		 * 
-		 * @param	string	Primitive name
-		 * @access	public
 		 * @return	string	Primitive as string handled by default handler
 		*/
 		public function getValue($primitiveName)
@@ -106,8 +97,6 @@
 		/**
 		 * Sets url
 		 * 
-		 * @param	string	url
-		 * @access	public
 		 * @return	void
 		**/
 		public function setUrl($url)
@@ -120,9 +109,6 @@
 		/**
 		 * A bit odd: sets main url and area flag
 		 * 
-		 * @param	string	url
-		 * @param	string	area flag
-		 * @access	public
 		 * @return	void
 		**/
 		public function setArea($url, $area)
@@ -136,8 +122,6 @@
 		/**
 		 * Returns full path to specified area
 		 * 
-		 * @param	string	area name
-		 * @access	public
 		 * @return	string	full path to specified by $name parameter area
 		**/
 		public function getArea($name)

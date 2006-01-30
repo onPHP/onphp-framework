@@ -29,8 +29,7 @@
 		/**
 		 * Checks $scope[$this->name] is possible host before importing
 		 * 
-		 * @param	array	associative array
-		 * @access	public
+		 * @param	$scope	associative array
 		 * @return	boolean
 		**/
 		public function import(&$scope)

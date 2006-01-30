@@ -68,8 +68,7 @@
 		 * Same as query, but returns number of affected rows
 		 * 
 		 * Use it for returns number of affected rows in insert/update queries
-		 * @param	Query
-		 * @access	public
+		 * 
 		 * @return	integer
 		**/
 		public function queryCount(Query $query)

@@ -91,9 +91,9 @@
 		/**
 		 * Sets flag of using global
 		 * 
-		 * @param   string	  global array name
-		 * @param   integer	 position in array of globals (starts from 0)
-		 * @access  public
+		 * @param	$global		string	global array name
+		 * @param   $position	integer	position in array of globals (starts from 0)
+		 * 
 		 * @return  self
 		**/
 		public function useGlobal($global, $position = null)
@@ -114,8 +114,8 @@
 		/**
 		 * Remove array from queue
 		 * 
-		 * @param   string	  global array name
-		 * @access  public
+		 * @param	$global	string	global array name
+		 * 
 		 * @return  self
 		**/
 		public function dontUseGlobal($global)
@@ -136,8 +136,8 @@
 		/**
 		 * Sets function name of module handler, default bundled
 		 * 
-		 * @param   mixed   array or string callable of call_user_func
-		 * @access  public
+		 * @param	$handler	array or string callable of call_user_func
+		 * 
 		 * @return  self
 		**/
 		public function setModuleHandler($handler)
@@ -150,8 +150,7 @@
 		/**
 		 * Returns function name of module handler, default bundled
 		 * 
-		 * @access  public
-		 * @return  mixed   array or string callable of call_user_func
+		 * @return  mixed array or string callable of call_user_func
 		**/
 		public function getModuleHandler()
 		{
@@ -161,8 +160,7 @@
 		/**
 		 * Sets function name of template handler, default bundled
 		 * 
-		 * @param   mixed   array or string callable of call_user_func
-		 * @access  public
+		 * @param   mixed array or string callable of call_user_func
 		 * @return  self
 		**/
 		public function setTemplateHandler($handler)
@@ -175,8 +173,7 @@
 		/**
 		 * Returns function name of template handler, default bundled
 		 * 
-		 * @access  public
-		 * @return  mixed   array or string callable of call_user_func
+		 * @return  mixed array or string callable of call_user_func
 		**/
 		public function getTemplateHandler()
 		{
@@ -186,8 +183,7 @@
 		/**
 		 * Sets path modules directory
 		 * 
-		 * @param   string	  full path to modules directory
-		 * @access  public
+		 * @param   string full path to modules directory
 		 * @return  self
 		**/
 		public function setModuleDir($dir)
@@ -200,8 +196,7 @@
 		/**
 		 * Returns full path to modules directtory
 		 * 
-		 * @access  public
-		 * @return  string
+		 * @return string
 		**/
 		public function getModuleDir()
 		{
@@ -211,9 +206,8 @@
 		/**
 		 * Sets path templates directory
 		 * 
-		 * @param   string	  full path to templates directory
-		 * @access  public
-		 * @return  self
+		 * @param	string	full path to templates directory
+		 * @return	self
 		**/
 		public function setTemplateDir($dir)
 		{
@@ -225,8 +219,7 @@
 		/**
 		 * Returns full path to templates directtory
 		 * 
-		 * @access  public
-		 * @return  string
+		 * @return	string
 		**/
 		public function getTemplateDir()
 		{
@@ -236,9 +229,8 @@
 		/**
 		 * Sets modules extension
 		 * 
-		 * @param   string	  new modules extension
-		 * @access  public
-		 * @return  self
+		 * @param	string	new modules extension
+		 * @return	self
 		**/
 		public function setModuleExt($ext)
 		{
@@ -250,8 +242,7 @@
 		/**
 		 * Returns modules extension
 		 * 
-		 * @access  public
-		 * @return  string
+		 * @return string
 		**/
 		public function getModuleExt()
 		{
@@ -261,9 +252,9 @@
 		/**
 		 * Sets templates extension
 		 * 
-		 * @param   string	  new templates extension
-		 * @access  public
-		 * @return  self
+		 * @param	string	  new templates extension
+		 * 
+		 * @return	self
 		**/
 		public function setTemplateExt($ext)
 		{
@@ -275,8 +266,7 @@
 		/**
 		 * Returns full path to templates extension
 		 * 
-		 * @access  public
-		 * @return  string
+		 * @return string
 		**/
 		public function getTemplateExt()
 		{
@@ -286,9 +276,9 @@
 		/**
 		 * Sets template engine instance
 		 * 
-		 * @param   mixed	   new template engine instance
-		 * @access  public
-		 * @return  self
+		 * @param	$templateEngine	new template engine instance
+		 * 
+		 * @return	self
 		**/
 		public function setTemplateEngine($templateEngine)
 		{
@@ -300,8 +290,7 @@
 		/**
 		 * Returns template engine instance
 		 * 
-		 * @access  public
-		 * @return  mixed
+		 * @return mixed
 		**/
 		public function getTemplateEngine()
 		{
@@ -311,9 +300,9 @@
 		/**
 		 * Sets action env flag
 		 * 
-		 * @param   string	  new action env flag
-		 * @access  public
-		 * @return  self
+		 * @param	$action	string	new action env flag
+		 * 
+		 * @return	self
 		**/
 		public function setAction($action)
 		{
@@ -325,8 +314,7 @@
 		/**
 		 * Returns action env flag
 		 * 
-		 * @access  public
-		 * @return  string
+		 * @return string
 		**/
 		public function getAction()
 		{
@@ -336,9 +324,9 @@
 		/**
 		 * Sets file with default module name
 		 * 
-		 * @param   string	  new file with default module name
-		 * @access  public
-		 * @return  self
+		 * @param	$default	string	new file with default module name
+		 * 
+		 * @return	self
 		**/
 		public function setDefault($default)
 		{
@@ -350,8 +338,7 @@
 		/**
 		 * Returns file with default module name
 		 * 
-		 * @access  public
-		 * @return  string
+		 * @return string
 		**/
 		public function getDefault()
 		{
@@ -373,8 +360,7 @@
 		/**
 		 * Returns loaded module
 		 * 
-		 * @access  public
-		 * @return  CommonModule
+		 * @return CommonModule
 		**/
 		public function getModule()
 		{
@@ -384,8 +370,7 @@
 		/**
 		 * Returns current template name
 		 * 
-		 * @access  public
-		 * @return  string
+		 * @return string
 		**/
 		public function getTemplate()
 		{
@@ -395,8 +380,7 @@
 		/**
 		 * Main module handler
 		 * 
-		 * @access  public
-		 * @return  self
+		 * @return self
 		**/
 		public function doModel()
 		{
@@ -411,8 +395,7 @@
 		/**
 		 * Main view handler
 		 * 
-		 * @access  public
-		 * @return  self
+		 * @return self
 		**/
 		public function doView()
 		{
@@ -435,9 +418,7 @@
 		/**
 		 * Default module loader
 		 * 
-		 * 
-		 * @access  protected
-		 * @return  self
+		 * @return self
 		**/
 		protected function moduleHandler()
 		{
@@ -468,8 +449,7 @@
 		/**
 		 * Default template choicer
 		 * 
-		 * @access  protected
-		 * @return  self
+		 * @return self
 		**/
 		protected function templateHandler()
 		{
@@ -498,9 +478,9 @@
 		/**
 		 * Loads default module file from passed directory
 		 * 
-		 * @param   string  path to directory with default module from module directory
-		 * @access  protected
-		 * @return  self
+		 * @param	$path	string	path to directory with default module from module directory
+		 * 
+		 * @return	self
 		**/
 		protected function loadDefaultModule($path = '')
 		{
@@ -518,9 +498,9 @@
 		/**
 		 * Loads default template file from passed directory
 		 * 
-		 * @param   string  path to directory with default module from module directory
-		 * @access  protected
-		 * @return  self
+		 * @param	$path	string	path to directory with default module from module directory
+		 * 
+		 * @return	self
 		**/
 		protected function loadDefaultTemplate($path = '')
 		{
@@ -544,8 +524,7 @@
 		/**
 		 * Returns current action taked from defined environment
 		 * 
-		 * @access  protected
-		 * @return  array	   list of actions
+		 * @return	array	list of actions
 		**/
 		protected function getCurrentAction($override = false)
 		{

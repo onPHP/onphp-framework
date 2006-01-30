@@ -42,12 +42,7 @@
 		);
 	
 		/**
-		* Returns text representation of digit
-		* 
-		* @param	numeric		number
-		* @param	
-		* @access
-		* @return
+		 * Returns text representation of digit
 		**/
 		public static function getAsText($number, $gender)
 		{
@@ -55,13 +50,10 @@
 		}
 	
 		/**
-		* Returns suffix for word
-		* 
-		* @param	numeric		number
-		* @param	array		array of suffixes as
-		*						array('ца', 'цы', '')
-		* @access
-		* @return
+		 * Returns suffix for word
+		 * 
+		 * @param	$number		integer variable
+		 * @param	$suffixes	array of suffixes as array('ца', 'цы', '')
 		**/
 		public static function getSuffix($number, $suffixes)
 		{
@@ -79,10 +71,12 @@
 			switch ($lastDigit) {
 				case '1':
 					return $suffixes[0];
+				
 				case '2':
 				case '3':
 				case '4':
 					return $suffixes[1];
+				
 				default:
 					return $suffixes[2];
 			}

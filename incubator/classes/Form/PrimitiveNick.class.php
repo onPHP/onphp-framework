@@ -31,7 +31,6 @@
 		/**
 		 * @var		string	Contains regular expression range of allowed
 		 *					symbols. Will be used as "/^[$this->allowed]+$/"
-		 * @access	private
 		 * @todo	move away from class to business modules
 		*/
 		private $allowed = '([а-яА-Я]|\w|\s)+';
@@ -58,7 +57,6 @@
 		 * Additional checks min length and adequacy to allowed patterns
 		 * 
 		 * @param	array
-		 * @access	public
 		 * @return	boolean
 		*/
 		public function import(&$scope)

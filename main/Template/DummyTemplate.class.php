@@ -23,37 +23,30 @@
 		const FUNCTION_NOT_EXISTS	= 'Function does not exists';
     	
 		/**
-		 * @var		array		contains inner variables
-		 * @access	protected
+		 * contains inner variables
 		**/
 		protected $variables = array();
 
 		/**
-		 * @var		array		contains inner functions
-		 * @access	private
+		 * contains inner functions
 		**/
 		private $functions = array();
 
 		/**
-		 * @var		mixed	contains value which Dummy returns when no inner variable or function
-		 *					named as called was set
-		 * @access	private
+		 * contains value which Dummy returns when no inner variable or function
+		 * named as called was set
 		**/
 		private $default = '';
 
-		/**
-		 * @var      boolean flag shows: set somebody $default or it has default value
-		 * @access   private
-		**/
+		/// boolean flag shows: set somebody $default or it has default value
 		private $defaultSet = false;
 
 		/**
 		 * sets value which Dummy returns when no variable or function
 		 * named as called set
 		 * 
-		 * @param	mixed	$default	new default value
+		 * @param	$default	mixed	new default value
 		 * @return	void
-		 * @access	public
 		**/
 		public function setDefault($default)
 		{
@@ -68,7 +61,6 @@
 		 * is not set
 		 * 
 		 * @return	mixed	Dummy default value
-		 * @access	public
 		**/
 		public function getDefault()
 		{
@@ -80,7 +72,6 @@
 		 * 
 		 * @return	boolean	true if somebody set Dummy::$default
 		 *					false otherwise
-		 * @access	public
 		**/
 		public function issetDefault()
 		{
@@ -90,17 +81,18 @@
 		/**
 		 * Creates Dummy::functionFame($args) using create_Fnction
 		 * 
-		 * @param	string	$functionName	name of function
-		 * @param	string	$args			function args
-		 * @param	string	$functionBody	code
-		 * @return	string					unique name of lambda-style function in success
-		 *									error otherwise
-		 * @access	public
+		 * @param	$functionName	name of function
+		 * @param	$arguments		function args
+		 * @param	$functionBody	code
+		 * @return					unique name of lambda-style function in success
+		 *							error otherwise
 		**/
 		public function createFunction($functionName, $arguments, $functionBody)
 		{
 			if (!array_key_exists ($functionName, $this->functions)) {
-				$this->functions[$functionName] = create_function($arguments, $functionBody);
+				$this->functions[$functionName] =
+					create_function($arguments, $functionBody);
+				
 				return $this->functions[$functionName];
 			} else {
 				throw new Exception(self::FUNCTION_EXISTS);
@@ -110,11 +102,10 @@
 		/**
 		 * Returns value of Dummy::variable_name
 		 * 
-		 * @param	string	$variable_name	variable name
+		 * @param	$variableName	string	variable name
 		 * @return	mixed					value of variable_name
 		 *									if variable_name was set
 		 *									default value otherwise
-		 * @access	public
 		**/
 		public function __get($variableName)
 		{
@@ -129,10 +120,7 @@
 		 * creates Dummy::variable_name if not exists and
 		 * sets $value to Dummy::variable_name
 		 * 
-		 * @param	string	$variable_name	variable name
-		 * @param	mixed	$value			variable value
 		 * @return	void
-		 * @access	public
 		**/
 		public function __set($variableName, $value)
 		{
@@ -144,11 +132,8 @@
 		/**
 		 * Calls StaticDummy::function_name($params)
 		 * 
-		 * @param	string	$function_name	function name
-		 * @param	mixed	$params			function parametres
-		 * @return	mixed					function result if function_name
-		 *									was set, default value otherwise
-		 * @access	public
+		 * @return	mixed	function result if function_name
+		 *					was set, default value otherwise
 		**/
 		public function __call($functionName, $params /* , ... */)
 		{

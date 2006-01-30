@@ -24,7 +24,6 @@
 		 * Checks $scope[$this->name] is possible e-mail before importing
 		 * 
 		 * @param	array	associative array
-		 * @access	public
 		 * @return	boolean
 		**/
 		public function import(&$scope) // TODO: consider checkMail from MiscUtils

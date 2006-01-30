@@ -21,18 +21,15 @@
 		private $parent = null;
 		
 		/**
-		 * Returns value of PropertyFilter::variable_name
+		 * Returns value of PropertyFilter::$variableName
 		 * hanled by default handler
 		 * 
-		 * @param	string	$variable_name	variable name
-		 * @return	mixed					value of variable_name
-		 *									if variable_name was set
-		 *									default value otherwise
-		 * @access	public
+		 * @return	mixed	value of variable_name
+		 *					if variable_name was set
+		 *					default value otherwise
 		**/
 		public function __get($var)
 		{
-
 			$params = $this->parent->getDefaultParams();
 
 			if (isset($this->variables[$var])) {
@@ -74,17 +71,15 @@
 		const AW_SUFFIX			= 'AW';
 		
 		/**
-		 * @var		DummyTemplate	DummyTemplate instance
-		 * @access	private
+		 * DummyTemplate instance
 		**/
 		private $dummyTemplate = null;
 		
 		/**
-		 * @var		PropertyFilterDefaultPP contains public property with special behavior
-         * 									Important! Made to be public for out
-         *                                  free access: mock in some situation.
-         *                                  Use carefull.
-		 * @access	public
+		 * Contains public property with special behavior.
+         * Important! Made to be public for out free access:
+         * mock in some situation.
+         * Use carefull.
 		**/
 		public $publicProperty = null;
 		
@@ -104,20 +99,17 @@
 		private $extension = PropertyFilter::DEFAULT_EXTENTION;
 		
 		/**
-		 * @var		string	default output handler
-		 * @access	private
+		 * default output handler
 		**/
 		private $defaultHandler = null;
 		
 		/**
-		 * @var		string	default output array_walk handler
-		 * @access	private
+		 * default output array_walk handler
 		**/
 		private $defaultAWHandler = null;
 		
 		/**
-		 * @var		array	default output handler parameters
-		 * @access	private
+		 * default output handler parameters
 		**/
 		private $defaultParams = null;
 
@@ -129,9 +121,7 @@
 		/**
 		 * Set extension for templates
 		 *
-		 * @param	string	$ext	new extension
 		 * @return	void
-		 * @access	public
 		**/
 		public function setExtension($extension)
 		{
@@ -144,7 +134,6 @@
 		 * Returns templates extension
 		 *
 		 * @return	string	templates extension
-		 * @access	public
 		**/
 		public function getExtension()
 		{
@@ -154,9 +143,7 @@
 		/**
 		 * Sets templates directory
 		 *
-		 * @param	string	$dir	new templates directory
 		 * @return	void
-		 * @access	public
 		**/
 		public function setTemplateDir($dir)
 		{
@@ -169,7 +156,6 @@
 		 * Returns templates directory
 		 *
 		 * @return	string	templates directory
-		 * @access	public
 		**/
 		public function getTemplateDir()
 		{
@@ -177,11 +163,9 @@
 		}
 	
 		/**
-		 * Sets templates array
-		 *
-		 * @param	string	$template	list of strings: files names without extensions
+		 * Sets templates array as list of file names
+		 * 
 		 * @return	void
-		 * @access	public
 		**/
 		public function setTemplates(/* ... */)
 		{
@@ -193,10 +177,9 @@
 		/**
 		 * Sets templates array
 		 *
-		 * @param	mixed	$templates	array contains templates files names
-         * 								without extensions
+		 * @param	$templates	array contains templates files names
+         * 						without extensions
 		 * @return	void
-		 * @access	public
 		**/
 		public function setTemplatesArray($templates)
 		{
@@ -209,7 +192,6 @@
 		 * Returns array of templates names
 		 *
 		 * @return	array
-		 * @access	public
 		**/
 		public function getTemplates()
 		{
@@ -219,9 +201,8 @@
 		/**
 		 * Displays all templates into stdout
 		 *
-		 * @param	string	template name
+		 * @param	$template	template name
 		 * @return	void
-		 * @access	public
 		**/
 		public function display($template = null)
 		{
@@ -248,11 +229,10 @@
 		 * Fills template container by values from
 		 * haystack
 		 * 
-		 * @todo		is_array($haystack)
-		 * @todo		is_string(each of $haystack keys)
-		 * @param	array	$haystack	haystack
+		 * @todo	is_array($haystack)
+		 * @todo	is_string(each of $haystack keys)
+		 * 
 		 * @return	void
-		 * @access	public
 		**/
 		public function fill($haystack)
 		{
@@ -266,10 +246,10 @@
 		/**
 		 * Sets default output handler
 		 * 
-		 * @param	string	$handler	handler name
-		 * @param	array	$params		default params
+		 * @param	$handler	string	handler name
+		 * @param	$params		array	default params
+		 * 
 		 * @return	void
-		 * @access	public
 		**/
 		public function setDefaultHandler($handler, $params = array())
 		{
@@ -285,7 +265,6 @@
 		 * Returns default output handler
 		 * 
 		 * @return	string	default output handler name
-		 * @access	public
 		**/
 		public function getDefaultHandler()
 		{
@@ -296,7 +275,6 @@
 		 * Returns default output params
 		 * 
 		 * @return	array	default output params
-		 * @access	public
 		**/
 		public function getDefaultParams()
 		{
@@ -327,10 +305,7 @@
 		/**
 		 * calls Dummy::__set()
 		 * 
-		 * @param	string	$variable_name	variable name
-		 * @param	mixed	$value			variable value
 		 * @return	void
-		 * @access	public
 		**/
 		public function __set($variableName, $value)
 		{
@@ -340,23 +315,20 @@
 		/**
 		 * calls Dummy::__get()
 		 * 
-		 * @param	string	$variable_name	variable name
-		 * @param	mixed	$value			variable value
 		 * @return	void
-		 * @access	public
 		**/
 		public function __get($variableName)
 		{
 			return $this->dummyTemplate->__get($variableName);
 		}
 
-	/**
-	 * @todo insertTemplate
-	 * @todo insertTemplates
-	 * @todo removeTemplate
-	 * @todo removeTemplates
-	 * @todo getTemplates
-	**/
+		/**
+		 * @todo insertTemplate
+		 * @todo insertTemplates
+		 * @todo removeTemplate
+		 * @todo removeTemplates
+		 * @todo getTemplates
+		**/
 	
 		protected function __construct()
 		{
@@ -375,7 +347,6 @@
 		 * Returns default output handler for array_walk
 		 * 
 		 * @return	string	default output handler name
-		 * @access	private
 		**/
 		public function getDefaultAWHandler()
 		{
