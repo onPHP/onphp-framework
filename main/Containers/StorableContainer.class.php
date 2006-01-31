@@ -108,19 +108,15 @@
 		public function getList()
 		{
 			$this->checkLoaded();
-			if (count($this->new))
-				throw new WrongStateException(
-					'can not enumerate objects without id, save them first'
-				);
 
 			// populate saved
 			foreach ($this->saved as $id => &$val) {
 				$this->getById($id);
 			}
 
-			return $this->saved + $this->insert;
+			return $this->new + $this->saved + $this->insert;
 		}
-
+		
 		public function getIdsList()
 		{
 			$this->checkLoaded();

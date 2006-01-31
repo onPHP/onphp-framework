@@ -43,6 +43,8 @@
 				$this->set($field, $object->getId());
 			elseif (is_null($object))
 				$this->set($field, null);
+			else
+				$this->set($field, $object);
 
 			return $this;
 		}

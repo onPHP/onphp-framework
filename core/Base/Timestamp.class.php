@@ -30,6 +30,8 @@
 		private $hour		= null;
 		private $minute		= null;
 		private $second		= null;
+
+		const WEEKDAY_MONDAY = 1;
 		
 		public function __construct($timestamp)
 		{
@@ -221,6 +223,20 @@
 				return 0;
 			else
 				return ($left->int > $right->int ? 1 : -1);
+		}
+		
+		public function getFirstDayOfWeek($weekStart = Timestamp::WEEKDAY_MONDAY)
+		{
+			return $this->spawn(
+				'-'.((7 + $this->getWeekDay() - $weekStart) % 7).' days'
+			);
+		}
+		
+		public function getLastDayOfWeek($weekStart = Timestamp::WEEKDAY_MONDAY)
+		{
+			return $this->spawn(
+				'+'.((13 - $this->getWeekDay() + $weekStart) % 7).' days'
+			);
 		}
 	}
 ?>

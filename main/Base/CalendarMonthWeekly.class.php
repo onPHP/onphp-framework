@@ -18,7 +18,6 @@
 	**/
 	class CalendarMonthWeekly
 	{
-		const WEEKDAY_MONDAY = 1;
 
 		private $monthRange	= null;
 		private $fullRange	= null;
@@ -27,7 +26,7 @@
 		private $weeks		= array();
 		private $days		= array();
 		
-		public function __construct(Timestamp $base, $weekStart = self::WEEKDAY_MONDAY)
+		public function __construct(Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY)
 		{
 			$firstDayOfMonth = Timestamp::create(
 				$base->getYear().'-'.$base->getMonth().'-01'
@@ -36,13 +35,9 @@
 				$base->getYear().'-'.$base->getMonth().'-'
 				.date('t', $base->toStamp()));
 			
-			$start = $firstDayOfMonth->spawn(
-				'-'.((7 + $firstDayOfMonth->getWeekDay() - $weekStart) % 7).' days'
-			);
+			$start = $firstDayOfMonth->getFirstDayOfWeek($weekStart);
 			
-			$end = $lastDayOfMonth->spawn(
-				'+'.((13 - $lastDayOfMonth->getWeekDay() + $weekStart) % 7).' days'
-			);
+			$end = $lastDayOfMonth->getLastDayOfWeek($weekStart);
 			
 			$this->monthRange = DateRange::create()->lazySet(
 				$firstDayOfMonth, $lastDayOfMonth
@@ -73,7 +68,7 @@
 			$this->fullLength++;
 		}
 		
-		public static function create(Timestamp $base, $weekStart = self::WEEKDAY_MONDAY)
+		public static function create(Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY)
 		{
 			return new CalendarMonthWeekly($base, $weekStart);
 		}
