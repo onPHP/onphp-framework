@@ -111,6 +111,17 @@
 			self::$headerSent = true;
 		}
 		
+		public static function sendContentLength($length)
+		{
+			Assert::isInteger($length);
+			
+			header(
+				"Content-Length: {$length}"
+			);
+			
+			self::$headerSent = true;
+		}
+		
 		public static function isHeaderSent()
 		{
 			return self::$headerSent;
