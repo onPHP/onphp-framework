@@ -1,5 +1,16 @@
 # $Id$
 
+2006-01-31	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+	* core/Base/Timestamp.class.php,
+	main/Base/CalendarMonthWeekly.class.php: week start and end day moved
+	to Timestamp from CalendarMonthWeekly.
+
+	* main/Containers/StorableContainer.class.php: don't be so strict in
+	getList().
+
+	* core/OSQL/InsertOrUpdateQuery.class.php: lazySet now even lazier.
+
 2006-01-30	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/DB/InterbaseDialect.class.php,
