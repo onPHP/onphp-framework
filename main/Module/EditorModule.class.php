@@ -90,7 +90,7 @@
 						$this->importForm();
 						
 						try {
-							$dao->add($this->subject);
+							$this->subject = $dao->add($this->subject);
 						} catch (DuplicateObjectException $e) {
 							$form->markWrong('id');
 							return $this;
@@ -110,7 +110,7 @@
 			}
 		}
 		
-		private function selfRedirect()
+		protected function selfRedirect()
 		{
 			if ($this->form->primitiveExist('page')) {
 				$page = $this->form->getActualValue('page');
@@ -118,7 +118,7 @@
 				if ($page > 1)
 					$this->setParameters(array('page' => $page));
 			}
-
+			
 			HeaderUtils::redirect($this);
 			
 			return $this;
