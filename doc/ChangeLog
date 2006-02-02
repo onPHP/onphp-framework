@@ -1,5 +1,10 @@
 # $Id$
 
+2006-02-02	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/Form/Form.class.php: simple reflection-based object importer
+	implemented.
+
 2006-01-31	Anton E. Lebedevich	<noiselist@pochta.ru>
 
 	* core/Base/Timestamp.class.php,

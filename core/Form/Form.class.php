@@ -153,6 +153,24 @@
 			return $this;
 		}
 		
+		public function importObject($object)
+		{
+			$class = new ReflectionClass(get_class($object));
+			
+			foreach ($class->getProperties() as $property) {
+				$name = $property->getName();
+				
+				if (isset($this->primitives[$name])) {
+					
+					$getter = 'get'.ucfirst($name);
+					
+					if ($class->hasMethod($getter)) {
+						$this->primitives[$name]->setValue($object->$getter());
+					}
+				}
+			}
+		}
+		
 		private function importPrimitive(&$scope, BasePrimitive $prm)
 		{
 			$name	= $prm->getName();
