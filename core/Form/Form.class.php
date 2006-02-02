@@ -153,7 +153,7 @@
 			return $this;
 		}
 		
-		public function importObject($object)
+		/* void */ public function importObject($object)
 		{
 			$class = new ReflectionClass(get_class($object));
 			
