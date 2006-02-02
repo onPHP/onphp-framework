@@ -2,6 +2,8 @@
 
 2006-02-02	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* main/Module/EditorModule.class.php: allow selfRedirect() tweaking.
+
 	* core/Form/Form.class.php: simple reflection-based object importer
 	implemented.
 
