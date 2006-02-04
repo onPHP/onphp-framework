@@ -116,7 +116,7 @@
 				$page = $this->form->getActualValue('page');
 				
 				if ($page > 1)
-					$this->setParameters(array('page' => $page));
+					$this->addParameters(array('page' => $page));
 			}
 			
 			HeaderUtils::redirect($this);

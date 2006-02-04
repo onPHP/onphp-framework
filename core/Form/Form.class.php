@@ -171,6 +171,20 @@
 			}
 		}
 		
+		public function exportObject($object)
+		{
+			$class = new ReflectionClass(get_class($object));
+			
+			foreach ($this->primitives as $name => $prm) {
+				$setter = 'set'.ucfirst($name);
+				
+				if ($class->hasMethod($setter))
+					$object->$setter($prm->getValue());
+			}
+			
+			return $object;
+		}
+		
 		private function importPrimitive(&$scope, BasePrimitive $prm)
 		{
 			$name	= $prm->getName();

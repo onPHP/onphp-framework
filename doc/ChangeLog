@@ -1,5 +1,9 @@
 # $Id$
 
+2006-02-04	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/Form/Form.class.php: reflection-based object exporter.
+
 2006-02-02	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/Module/EditorModule.class.php: allow selfRedirect() tweaking.
