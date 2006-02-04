@@ -164,8 +164,8 @@
 					
 					$getter = 'get'.ucfirst($name);
 					
-					if ($class->hasMethod($getter)) {
-						$this->primitives[$name]->setValue($object->$getter());
+					if ($class->hasMethod($getter) && $value = $object->$getter()) {
+						$this->primitives[$name]->setValue($value);
 					}
 				}
 			}
@@ -178,8 +178,8 @@
 			foreach ($this->primitives as $name => $prm) {
 				$setter = 'set'.ucfirst($name);
 				
-				if ($class->hasMethod($setter))
-					$object->$setter($prm->getValue());
+				if ($class->hasMethod($setter) && $value = $prm->getValue())
+					$object->$setter($value);
 			}
 			
 			return $object;
