@@ -399,6 +399,13 @@
 			return $this->uncacheLists();
 		}
 		
+		public function uncacheByQuery(SelectQuery $query)
+		{
+			return
+				Cache::me()->mark($this->className)->
+					delete($this->className.self::SUFFIX_QUERY.$query->getId());
+		}
+		
 		public function uncacheLists()
 		{
 			return $this->uncacheByQuery($this->dao->makeSelectHead());
