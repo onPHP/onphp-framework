@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Sveta Smirnova							   *
- *   sveta@microbecal.com												   *
+ *   Copyright (C) 2004-2006 by Sveta Smirnova                             *
+ *   sveta@microbecal.com                                                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -9,7 +9,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-/* $Id:$ */
+/* $Id$ */
 
 	/**
 	 * Features are not in Dummy:
@@ -59,5 +59,4 @@
 		}
 		
 	}
-	
 ?>
