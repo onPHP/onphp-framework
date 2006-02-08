@@ -2,6 +2,9 @@
 
 2006-02-08	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* main/Base/ImageType.class.php, core/Form/PrimitiveImage.class.php:
+	image uploading helpers.
+
 	* 0.2.8 released.
 
 2006-02-04	Konstantin V. Arkhipov	<voxus@shadanakar.org>
