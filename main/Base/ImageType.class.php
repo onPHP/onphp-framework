@@ -34,7 +34,7 @@
 		const IFF		= IMAGETYPE_IFF;
 		const WBMP		= IMAGETYPE_WBMP;
 		const JPEG2000	= IMAGETYPE_JPEG2000;
-		const XDM		= IMAGETYPE_XBM;
+		const XBM		= IMAGETYPE_XBM;
 		
 		protected $names = array(
 			IMAGETYPE_GIF		=> 'gif',
