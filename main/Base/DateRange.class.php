@@ -23,6 +23,9 @@
 		protected $start	= null;
 		protected $end		= null;
 		
+		protected $dayStartStamp	= null;
+		protected $dayEndStamp		= null;
+		
 		public static function create()
 		{
 			return new DateRange();
@@ -45,6 +48,7 @@
 				);
 
 			$this->start = $start;
+			$this->dayStartStamp = null;
 			return $this;
 		}
 
@@ -56,6 +60,7 @@
 				);
 
 			$this->end = $end;
+			$this->dayEndStamp = null;
 			return $this;
 		}
 		
@@ -77,12 +82,14 @@
 		public function dropStart()
 		{
 			$this->start = null;
+			$this->dayStartStamp = null;
 			return $this;
 		}
 
 		public function dropEnd()
 		{
 			$this->end = null;
+			$this->dayEndStamp = null;
 			return $this;
 		}
 		
@@ -312,19 +319,63 @@
 			return $this;
 		}
 
+		// result is read-only, no error checking
+		public function lightCopyOnClip(DateRange $range)
+		{
+			$copy = DateRange::create();
+
+			if ($range->start 
+				&& (
+					$this->start 
+					&& $range->start->toStamp() > $this->start->toStamp()
+					|| !$this->start
+				)
+			)
+				$copy->start = $range->start;
+			else
+				$copy->start = $this->start;
+
+			if ($range->end 
+				&& (
+					$this->end 
+					&& $range->end->toStamp() < $this->end->toStamp()
+					|| !$this->end
+				)
+
+			)
+				$copy->end = $range->end;
+			else
+				$copy->end = $this->end;
+
+			return $copy;
+		}
+
 		public function getStartStamp() // null if start is null
 		{
-			if ($this->start)
-				return $this->start->getDayStartStamp();
-			else
+			if ($this->start) {
+				
+				if (! $this->dayStartStamp) {
+					$this->dayStartStamp = 
+						$this->start->getDayStartStamp();
+				}
+
+				return $this->dayStartStamp;
+				
+			} else
 				return null;
 		}
 
 		public function getEndStamp() // null if end is null
 		{
-			if ($this->end)
-				return $this->end->getDayEndStamp();
-			else 
+			if ($this->end) {
+				
+				if (! $this->dayEndStamp) {
+					$this->dayEndStamp =
+						$this->end->getDayEndStamp();
+				}
+				
+				return $this->dayEndStamp;
+			} else 
 				return null;
 		}
 

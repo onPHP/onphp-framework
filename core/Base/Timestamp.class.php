@@ -188,12 +188,15 @@
 
 		public function getDayStartStamp()
 		{
-			return mktime(
-					0, 0, 0,
-					$this->month,
-					$this->day,
-					$this->year
-				);
+			if (!$this->hour && !$this->minute && !$this->second)
+				return $this->int;
+			else
+				return mktime(
+						0, 0, 0,
+						$this->month,
+						$this->day,
+						$this->year
+					);
 		}
 
 		public function getDayEndStamp()
