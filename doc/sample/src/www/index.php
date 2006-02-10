@@ -8,7 +8,7 @@
 	ModuleFactory::setModuleDirectory(PATH_MODULES);
 
 	/**
-		if we ever will need some type of authenticated users, we
+		if we ever need some type of authenticated users, we
 		will use something like this:
  
 		if (!isset($_GET['area']) || $_GET['area'] == 'main') {
