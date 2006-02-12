@@ -31,6 +31,11 @@
 			$this->name = $name;
 		}
 		
+		public function getColumns()
+		{
+			return $this->columns;
+		}
+		
 		public function addColumn(DBColumn $column)
 		{
 			$name = $column->getName();

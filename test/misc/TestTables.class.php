@@ -28,14 +28,17 @@
 						// ok
 					}
 					
-					// FIXME: dirty hack
 					if ($db->supportSequences()) {
-						try {
-							$db->queryRaw(
-								"DROP SEQUENCE {$name}_id;"
-							);
-						} catch (DatabaseException $e) {
-							// ok
+						foreach (
+							$this->schema->getTableByName($name)->getColumns()
+								as $columnName => $column)
+						{
+							try {
+								if ($column->isAutoincrement())
+									$db->queryRaw("DROP SEQUENCE {$name}_id;");
+							} catch (DatabaseException $e) {
+								// ok
+							}
 						}
 					}
 				}
@@ -65,14 +68,13 @@
 						)
 					);
 					
-					// FIXME: dirty hack
 					if ($db->supportSequences()) {
-						try {
-							$db->queryRaw(
-								"DROP SEQUENCE {$name}_id;"
-							);
-						} catch (DatabaseException $e) {
-							// ok
+						foreach (
+							$this->schema->getTableByName($name)->getColumns()
+								as $columnName => $column)
+						{
+							if ($column->isAutoincrement())
+								$db->queryRaw("DROP SEQUENCE {$name}_id;");
 						}
 					}
 				}
