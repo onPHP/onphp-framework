@@ -74,9 +74,7 @@
 						$this->subject = $dao->getById($id);
 						$this->importForm();
 						 
-						$dao->save(
-							$this->subject
-						);
+						$this->subject = $dao->save($this->subject);
 						
 						return $this->selfRedirect();
 					}
