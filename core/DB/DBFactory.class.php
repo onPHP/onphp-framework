@@ -49,9 +49,11 @@
 			$db = new $dbClass;
 			$db->connect($userName, $passWord, $host, $base);
 
-			try {
-				$db->setEncoding(DEFAULT_ENCODING);
-			} catch (UnsupportedMethodException $ume) {/*_*/}
+			if (defined('DEFAULT_ENCODING')) {
+				try {
+					$db->setEncoding(DEFAULT_ENCODING);
+				} catch (UnsupportedMethodException $ume) {/*_*/}
+			}
 
 			return $db;
 		}

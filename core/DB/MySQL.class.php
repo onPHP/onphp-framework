@@ -44,7 +44,7 @@
 
 		public function setEncoding($encoding)
 		{
-			throw new UnsupportedMethodException();
+			return mysql_query("SET CHARACTER SET '{$encoding}'", $this->link);
 		}
 
 		public function connect(
