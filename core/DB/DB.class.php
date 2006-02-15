@@ -24,6 +24,8 @@
 		protected $link			= null;
 
 		protected $persistent	= false;
+		
+		protected $queueSupported	= true;
 
 		/**
 		 * flag to indicate whether we're in transaction
@@ -94,7 +96,7 @@
 		public function commit()
 		{
 			if ($this->toQueue)
-				$this->queue[] = "commit";
+				$this->queue[] = "commit;";
 			else
 				$this->queryRaw("commit;\n");
 			
@@ -106,7 +108,7 @@
 		public function rollback()
 		{
 			if ($this->toQueue)
-				$this->queue[] = "rollback";
+				$this->queue[] = "rollback;";
 			else
 				$this->queryRaw("rollback;\n");
 			
@@ -122,7 +124,8 @@
 
 		public function queueStart()
 		{
-			$this->toQueue = true;
+			if ($this->queueSupported)
+				$this->toQueue = true;
 			
 			return $this;
 		}
@@ -179,7 +182,7 @@
 			} else
 				return $this->query($query);
 		}
-
+		
 		public function isConnected()
 		{
 			return is_resource($this->link);

@@ -20,6 +20,8 @@
 	**/
 	class MySQL extends Sequenceless
 	{
+		protected $queueSupported	= false;
+		
 		private static $dialect = null;
 		
 		public function __construct()

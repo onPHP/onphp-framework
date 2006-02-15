@@ -69,8 +69,8 @@
 		protected $lazy		= true;
 		protected $fetched	= false;
 
-		protected $list		= null;
-		protected $clones	= null;
+		protected $list		= array();
+		protected $clones	= array();
 		
 		abstract protected function getChildIdField();
 		abstract protected function getParentIdField();
@@ -193,7 +193,7 @@
 			
 			$db = DBFactory::getDefaultInstance();
 
-			$db->begin()->queueStart();
+			$db->queueStart()->begin();
 
 			try {
 				$this->worker->sync($insert, $update, $delete);

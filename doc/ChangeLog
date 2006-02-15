@@ -1,5 +1,12 @@
 # $Id$
 
+2006-02-15	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/DB/: correct handling for MySQL's forcing of single queries.
+
+	* main/Containers/UnifiedContainer.class.php: wrong list/clones
+	default fixed.
+
 2006-02-08	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/Base/ImageType.class.php, core/Form/PrimitiveImage.class.php:

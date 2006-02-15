@@ -12,6 +12,8 @@
 /* $Id$ */
 
 	/**
+	 * @see UnifiedContainer
+	 * 
 	 * @ingroup Containers
 	**/
 	abstract class UnifiedContainerWorker
