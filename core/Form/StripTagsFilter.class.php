@@ -16,11 +16,28 @@
 	 * 
 	 * @ingroup Filters
 	**/
-	class StripTagsFilter extends BaseFilter
+	class StripTagsFilter implements Filtrator
 	{
+		private $exclude = null;
+		
+		public static function create()
+		{
+			return new self;
+		}
+		
+		public function setAllowableTags($exclude)
+		{
+			if (null !== $exclude)
+				Assert::isString($exclude);
+			
+			$this->exclude = $exclude;
+			
+			return $this;
+		}
+		
 		public function apply($value)
 		{
-			return strip_tags($value);
+			return strip_tags($value, $this->exclude);
 		}
 	}
 ?>

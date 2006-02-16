@@ -1,5 +1,9 @@
 # $Id$
 
+2006-02-16	Denis Gabaidulin	<gabaden@gmail.com>
+
+	* core/Form/StripTagsFilter.class.php: support for tags exclusion.
+
 2006-02-15	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/DB/: correct handling for MySQL's forcing of single queries.
