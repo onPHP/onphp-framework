@@ -164,11 +164,16 @@
 					
 					$getter = 'get'.ucfirst($name);
 					
-					if (
-						$class->hasMethod($getter)
-						&& ($value = $object->$getter()) !== null
-					) {
-						$this->primitives[$name]->setValue($value);
+					// hasMethod() is 5.1 only
+					try {
+						if (
+							$class->getMethod($getter)
+							&& ($value = $object->$getter()) !== null
+						) {
+							$this->primitives[$name]->setValue($value);
+						}
+					} catch (ReflectionException $e) {
+						// no such method
 					}
 				}
 			}
@@ -181,11 +186,16 @@
 			foreach ($this->primitives as $name => $prm) {
 				$setter = 'set'.ucfirst($name);
 				
-				if (
-					$class->hasMethod($setter)
-					&& ($value = $prm->getValue()) !== null
-				)
-					$object->$setter($value);
+				// hasMethod() is 5.1 only
+				try {
+					if (
+						$class->getMethod($setter)
+						&& ($value = $prm->getValue()) !== null
+					)
+						$object->$setter($value);
+				} catch (ReflectionException $e) {
+					// no such method
+				}
 			}
 			
 			return $object;

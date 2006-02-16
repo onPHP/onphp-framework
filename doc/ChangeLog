@@ -1,5 +1,10 @@
 # $Id$
 
+2006-02-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/Form/Form.class.php: import/export object is now compatible
+	with php-5.0.
+
 2006-02-16	Denis Gabaidulin	<gabaden@gmail.com>
 
 	* core/Form/StripTagsFilter.class.php: support for tags exclusion.
