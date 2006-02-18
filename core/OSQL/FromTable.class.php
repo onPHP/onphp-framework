@@ -38,7 +38,7 @@
 					'SelectQuery or LogicalObject as table'
 				);
 
-			if (is_string($table) && strpos($table, '.'))
+			if (is_string($table) && strpos($table, '.') !== false)
 				list($this->schema, $this->table) = explode('.', $table, 2);
 			else
 				$this->table = $table;
