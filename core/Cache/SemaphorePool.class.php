@@ -32,7 +32,7 @@
 		
 		public static function setDefaultLocker($name)
 		{
-			self::$lockerName = $locker;
+			self::$lockerName = $name;
 			self::$locker = Singleton::getInstance($name);
 		}
 		

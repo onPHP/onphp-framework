@@ -75,9 +75,10 @@
 			
 			if (!isset($instances[$class])) {
 				
-				if (isset(self::$map[$class]))
-					$instances[$class] = new self::$map[$class]($dao);
-				elseif ($worker = self::$worker)
+				if (isset(self::$map[$class])) {
+					$className = self::$map[$class]($dao);					
+					$instances[$class] = new $className;
+				} elseif ($worker = self::$worker)
 					$instances[$class] = new $worker($dao);
 				else
 					$instances[$class] = new CommonDaoWorker($dao);

@@ -13,6 +13,8 @@
 				.'Auto'.DIRECTORY_SEPARATOR
 				.'AutoSchema.php';
 			
+			Assert::isTrue(isset($schema));
+			
 			$this->schema = $schema;
 			
 			// in case of unclean shutdown of previous tests
