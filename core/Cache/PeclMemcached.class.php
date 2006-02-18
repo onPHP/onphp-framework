@@ -38,7 +38,7 @@
 			$port = Memcached::DEFAULT_PORT
 		)
 		{
-			$this->instance = new Memcache();
+			$this->instance = new PeclMemcached();
 			
 			try {
 				$this->instance->connect($host, $port);

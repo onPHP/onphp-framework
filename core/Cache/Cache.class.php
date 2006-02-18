@@ -76,8 +76,8 @@
 			if (!isset($instances[$class])) {
 				
 				if (isset(self::$map[$class])) {
-					$className = self::$map[$class]($dao);					
-					$instances[$class] = new $className;
+					$className = self::$map[$class];
+					$instances[$class] = new $className($dao);
 				} elseif ($worker = self::$worker)
 					$instances[$class] = new $worker($dao);
 				else
