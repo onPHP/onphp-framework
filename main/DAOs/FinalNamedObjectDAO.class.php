@@ -23,16 +23,6 @@
 			return parent::importNamed($no);
 		}
 		
-		final public function save(NamedObject $no)
-		{
-			return parent::saveNamed($no);
-		}
-		
-		final public function add(NamedObject $no)
-		{
-			return parent::addNamed($no);
-		}
-		
 		final public function makeObject(&$array, $prefix = null)
 		{
 			$class = $this->getObjectName();

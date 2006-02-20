@@ -16,10 +16,13 @@
 	 * 
 	 * @ingroup DAOs
 	**/
-	abstract class NamedObjectDAO extends GenericDAO
+	abstract class NamedObjectDAO extends MappedStorableDAO
 	{
 		// if you will override it later - append this fields to your array
-		protected $fields = array('id', 'name');
+		protected $mapping = array(
+			'id'	=> null,
+			'name'	=> null
+		);
 		
 		/*
 			do not forget to declare in every child:
@@ -31,72 +34,28 @@
 		
 		final public function getByName($name)
 		{
-			$key = $this->getNameCacheKey($name);
-			
-			if ($no = $this->getCachedByKey($this->getNameCacheKey($name)))
-				return $no;
-			else {
-				$no =
-					$this->getByLogic(
-						Expression::eq(
-							new DBField('name', $this->getTable()),
-							new DBValue($name)
+			return
+				$this->getByLogic(
+					Expression::eq(
+						new DBField(
+							$this->mapping['name']
+								? $this->mapping['name']
+								: 'name',
+							$this->getTable()
 						),
-						Cache::DO_NOT_CACHE
-					);
-
-				return $this->cacheByKey($key, $no, Cache::EXPIRES_MEDIUM);
-			}
-		}
-		
-		final public function uncacheByName($name)
-		{
-			return
-				$this->uncacheByKey($this->getNameCacheKey($name));
-		}
-		
-		final protected function saveNamed(Named $no)
-		{
-			return
-				self::injectNamed(
-					OSQL::update($this->getTable())->
-						where(Expression::eqId('id', $no)),
-					$no
-				);
-		}
-
-		final protected function addNamed(Named $no)
-		{
-			return
-				self::importNamed(
-					$no->setId(
-						DBFactory::getDefaultInstance()->
-						obtainSequence($this->getSequence())
+						new DBValue($name)
 					)
 				);
 		}
-
+		
 		final protected function importNamed(Named $no)
 		{
 			return
-				self::injectNamed(
+				$this->inject(
 					OSQL::insert()->into($this->getTable()), $no
 				);
 		}
-
-		final protected function injectNamed(
-			InsertOrUpdateQuery $query, Named $no
-		)
-		{
-			DBFactory::getDefaultInstance()->queryNull(
-				$this->setQueryFields($query, $no)
-			);
-			
-			$this->uncacheById($no->getId());
-			
-			return $no;
-		}
-
+		
 		final protected function setNamedQueryFields(
 			InsertOrUpdateQuery $query, Named $no
 		)
@@ -117,11 +76,6 @@
 				$no->
 					setId($array[$prefix.'id'])->
 					setName($array[$prefix.'name']);
-		}
-		
-		private function getNameCacheKey($name)
-		{
-			return $this->getObjectName().'_name_'.sha1($name);
 		}
 	}
 ?>
