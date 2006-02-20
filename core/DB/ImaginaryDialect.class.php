@@ -23,6 +23,42 @@
 			throw new UnsupportedMethodException();
 		}
 		
+		public static function quoteValue(&$value)
+		{
+			return $value;
+		}
+		
+		public static function quoteField(&$field)
+		{
+			return $field;
+		}
+		
+		public static function quoteTable(&$table)
+		{
+			return $table;
+		}
+
+		public static function toCasted($field, $type)
+		{
+			return "CAST ({$field} AS {$type})";
+		}
+		
+		public function fieldToString(&$field)
+		{
+			return
+				$field instanceof DialectString
+					? $field->toString($this)
+					: $field;
+		}
+		
+		public function valueToString(&$value)
+		{
+			return
+				$value instanceof DBValue
+					? $value->toString($this)
+					: $value;
+		}
+
 		public function fullTextSearch($field, $words, $logic)
 		{
 			return '("'.$field.'" contains "'.implode($logic, $words).'")';
