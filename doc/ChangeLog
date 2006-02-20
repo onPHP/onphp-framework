@@ -4,6 +4,9 @@
 
 	* core/DB/MyDialect.class.php: is now compatible with MySQL-4.
 
+	* core/DB/ImaginaryDialect.class.php: removed unnecessary quoting
+	stuff, since we're using it only for internal purposes.
+
 2006-02-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/Form/Form.class.php: import/export object is now compatible
