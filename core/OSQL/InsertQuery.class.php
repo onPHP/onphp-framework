@@ -38,6 +38,7 @@
 			
 			foreach ($this->fields as $var => $val) {
 				$fields[] = $dialect->quoteField($var);
+				
 				if (is_null($val))
 					$values[] = 'NULL';
 				else

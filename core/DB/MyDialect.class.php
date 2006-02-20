@@ -27,7 +27,7 @@
 			/// @see Sequenceless for this convention
 			
 			if ($value instanceof Identifier && !$value->isFinalized())
-				return 'null';
+				return "''"; // instead of 'null', to be compatible with v. 4
 			
 			return "'" . mysql_real_escape_string($value) . "'";
 		}
