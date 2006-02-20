@@ -52,7 +52,7 @@
 				$clause = ' WHERE';
 				$outputLogic = false;
 				
-				for ($i = 0, $size = sizeof($this->where); $i < $size; $i++) {
+				for ($i = 0, $size = sizeof($this->where); $i < $size; ++$i) {
 					
 					if ($exp = $this->where[$i]->toString($dialect)) {
 						

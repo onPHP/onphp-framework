@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov, Igor V. Gulyaev         *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov, Igor V. Gulyaev    *
  *   voxus@onphp.org, giv@msk.timeout.ru                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -53,7 +53,7 @@
 
 			$times = split("([,; \n]+)", $string);
 			
-			for ($i = 0, $size = sizeof($times); $i < $size; $i++) {
+			for ($i = 0, $size = sizeof($times); $i < $size; ++$i) {
 				$time = mb_ereg_replace('[^0-9:]', ':', $times[$i]);
 				
 				try {

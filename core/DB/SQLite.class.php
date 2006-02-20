@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -124,7 +124,7 @@
 				if ($row = sqlite_fetch_array($res, SQLITE_NUM)) {
 					$assoc = array();
 					
-					for ($i = 0; $i < $width; $i++)
+					for ($i = 0; $i < $width; ++$i)
 						$assoc[$names[$i]] = $row[$i];
 					
 					return $dao->makeObject($assoc);
@@ -144,7 +144,7 @@
 
 				$row = sqlite_fetch_array($res, SQLITE_NUM);
 				
-				for ($i = 0; $i < $width; $i++)
+				for ($i = 0; $i < $width; ++$i)
 					$assoc[$names[$i]] = $row[$i];
 				
 				return $row;
@@ -166,7 +166,7 @@
 					
 					$assoc = array();
 					
-					for ($i = 0; $i < $width; $i++)
+					for ($i = 0; $i < $width; ++$i)
 						$assoc[$names[$i]] = $row[$i];
 					
 					$array[] = $dao->makeObject($assoc);
@@ -205,7 +205,7 @@
 				while ($row = sqlite_fetch_array($res, SQLITE_NUM)) {
 					$assoc = array();
 					
-					for ($i = 0; $i < $width; $i++)
+					for ($i = 0; $i < $width; ++$i)
 						$assoc[$names[$i]] = $row[$i];
 					
 					$array[] = $assoc;

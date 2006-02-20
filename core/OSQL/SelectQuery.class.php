@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *   voxus@onphp.org, noiselist@pochta.ru                                   *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
@@ -232,7 +232,7 @@
 			$size = func_num_args();
 		
 			if ($size && $args = func_get_args())
-				for ($i = 0; $i < $size; $i++)
+				for ($i = 0; $i < $size; ++$i)
 					$this->get($args[$i]);
 		
 			return $this;
@@ -243,10 +243,10 @@
 			$size = sizeof($array);
 			
 			if ($prefix)
-				for ($i = 0; $i < $size; $i++)
+				for ($i = 0; $i < $size; ++$i)
 					$this->get($array[$i], $prefix.$array[$i]);
 			else
-				for ($i = 0; $i < $size; $i++)
+				for ($i = 0; $i < $size; ++$i)
 					$this->get($array[$i]);
 					
 			return $this;
@@ -292,7 +292,7 @@
 				
 			$fromString = null;
 			
-			for ($i = 0, $size = sizeof($this->from); $i < $size; $i++) {
+			for ($i = 0, $size = sizeof($this->from); $i < $size; ++$i) {
 				if ($i == 0)
 					$separator = null;
 				elseif (

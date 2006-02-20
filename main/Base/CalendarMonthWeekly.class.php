@@ -49,6 +49,7 @@
 			
 			$rawDays = $this->fullRange->split();
 			$this->fullLength = 0;
+			
 			foreach ($rawDays as $rawDay) {
 				$day = CalendarDay::create($rawDay->toStamp());
 				if ($this->monthRange->contains($day))
@@ -63,9 +64,10 @@
 					$this->weeks[$weekNumber] = CalendarWeek::create();
 				
 				$this->weeks[$weekNumber]->addDay($day);
-				$this->fullLength++;
+				++$this->fullLength;
 			}
-			$this->fullLength++;
+			
+			++$this->fullLength;
 		}
 		
 		public static function create(Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY)

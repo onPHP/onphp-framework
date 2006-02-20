@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -70,7 +70,7 @@
 				$uri = null;
 				$arr = func_get_args();
 				
-				for ($i = 0; $i < $num; $i++)
+				for ($i = 0; $i < $num; ++$i)
 					unset($out[$arr[$i]]);
 				
 				foreach ($out as $key => $val) {

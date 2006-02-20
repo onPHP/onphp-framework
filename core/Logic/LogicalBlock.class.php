@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *   voxus@onphp.org, noiselist@pochta.ru                                   *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
@@ -57,7 +57,7 @@
 			switch ($this->logic) {
 				case Expression::LOGIC_AND:
 					
-					for ($i = 0; $i < $size; $i++)
+					for ($i = 0; $i < $size; ++$i)
 						if (isset($args[$i + 1]))
 							$out =
 								$out
@@ -70,7 +70,7 @@
 			
 				case Expression::LOGIC_OR:
 					
-					for ($i = 0; $i < $size; $i++)
+					for ($i = 0; $i < $size; ++$i)
 						if (isset($args[$i + 1]))
 							$out =
 								$out

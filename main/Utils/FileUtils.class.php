@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Sveta Smirnova                             *
+ *   Copyright (C) 2004-2006 by Sveta Smirnova                             *
  *   sveta@microbecal.com                                                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -56,7 +56,8 @@
 								file_get_contents($path)
 							)
 						);
-						$converted++;
+						
+						++$converted;
 					}
 				}
 			}

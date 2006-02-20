@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Sveta Smirnova                             	   *
+ *   Copyright (C) 2005-2006 by Sveta Smirnova                             *
  *   sveta@microbecal.com                                                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -74,7 +74,7 @@
 			foreach ($this->tests as $test) {
 				$result = $this->doTest($test);
 				(true === $result) ?
-				$this->successfuls ++ :
+				++$this->successfuls:
 				$this->failures[] = array(
 					NetConveyor::EXPECTED 	=> $test->getExpected(),
 					NetConveyor::ACTUAL		=> $result
