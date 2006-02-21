@@ -25,10 +25,8 @@
 		{
 			$this->field = $field;
 			
-			if ($table && !$table instanceof DialectString)
-				$this->table = new FromTable($table);
-			else
-				$this->table = $table;
+			if ($table)
+				$this->setTable($table);
 		}
 		
 		public static function create($field, $table = null)
@@ -65,7 +63,10 @@
 					'you should not override setted table'
 				);
 
-			$this->table = $table;
+			if (!$table instanceof DialectString)
+				$this->table = new FromTable($table);
+			else
+				$this->table = $table;
 			
 			return $this;
 		}
