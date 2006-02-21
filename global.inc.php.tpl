@@ -30,6 +30,7 @@
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
 	set_error_handler('error2Exception', E_ALL);
+	ignore_user_abort(true);
 	define('ONPHP_VERSION', '0.2.8.99');
     
 	// paths
