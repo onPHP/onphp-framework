@@ -2,6 +2,15 @@
 
 2006-02-22	Sergey S. Sergeev	<webs.support@gmail.com>
 
+	* main/DAOs/CommonDaoWorker.class.php,
+	main/DAOs/BaseDaoWorker.class.php: uncacheByQuery() was replaced to
+	BaseDaoWorker.
+
+	* main/DAOs/GenericDAO.class.php, main/DAOs/BaseDAO.class.php:
+	uncacheByQuery() implemented.
+
+2006-02-22	Sergey S. Sergeev	<webs.support@gmail.com>
+
 	* main/Utils/HeaderUtils.class.php: bugfixed access to undeclared
 	static property.
 

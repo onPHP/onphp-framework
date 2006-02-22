@@ -194,6 +194,11 @@
 			return Cache::worker($this)->uncacheByIds($ids);
 		}
 		
+		public function uncacheByQuery(SelectQuery $query)
+		{
+			return Cache::worker($this)->uncacheByQuery($query);
+		}
+		
 		public function uncacheLists()
 		{
 			return Cache::worker($this)->uncacheLists();

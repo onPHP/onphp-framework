@@ -71,6 +71,7 @@
 		// uncachers
 		public function uncacheById($id);
 		public function uncacheByIds($ids);
+		public function uncacheByQuery(SelectQuery $query);
 		public function uncacheLists();
 		//@}
 	}

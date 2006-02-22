@@ -63,6 +63,13 @@
 				Cache::me()->mark($this->className)->
 					delete($this->className.'_'.$id);
 		}
+		
+		public function uncacheByQuery(SelectQuery $query)
+		{
+			return
+				Cache::me()->mark($this->className)->
+					delete($this->className.self::SUFFIX_QUERY.$query->getId());
+		}
 		//@}
 		
 		//@{
