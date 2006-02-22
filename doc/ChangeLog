@@ -1,10 +1,10 @@
 # $Id$
 
-2006-02-22      Sergey S. Sergeev  <webs.support@gmail.com>
+2006-02-22	Sergey S. Sergeev	<webs.support@gmail.com>
 
-	* main/Utils/HeaderUtils.class.php: bugfixed access to undeclared 
-	static property
-	
+	* main/Utils/HeaderUtils.class.php: bugfixed access to undeclared
+	static property.
+
 2006-02-20	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/DB/MyDialect.class.php: is now compatible with MySQL-4.
