@@ -104,7 +104,7 @@
 		{
 			header(
 				'Expires: '
-				.date('D, d M Y H:i:s', date('U') - self::$$cacheLifeTime)
+				.date('D, d M Y H:i:s', date('U') - self::$cacheLifeTime)
 				.' GMT'
 			);
 			
