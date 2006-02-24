@@ -215,61 +215,76 @@
 					);
 			}
 			
-			foreach ($this->logic as &$exp) {
-				
-				$left	= $exp->getLeft();
-				$right	= $exp->getRight();
-				$logic	= $exp->getLogic();
-				
-				if (
-					isset($map[$left])
-					&& isset($map[$right])
-				) {
-					if (is_array($map[$left]) && is_array($map[$right]))
-						foreach ($map[$left] as $leftField)
-							foreach ($map[$right] as $rightField)
-								$query->andWhere(
-									new LogicalExpression(
-										$leftField, $rightField, $logic 
-									)
-								);
-					elseif (is_array($map[$left]))
-						foreach ($map[$left] as $field)
-							$query->andWhere(
-								new LogicalExpression(
-									$field, $right, $logic
-								)
-							);
-					elseif (is_array($map[$right]))
-						foreach ($map[$right] as $field)
-							$query->andWhere(
-								new LogicalExpression(
-									$left, $field, $logic
-								)
-							);
-					else
-						$query->andWhere($exp);
-				} else {
-					if (array_key_exists($left, $map)) {
-						if ($map[$left])
-							$left = new DBField($map[$left]);
-						else
-							$left = new DBField($left);
-					} else
-						$left = new DBValue($left);
-					
-					if (isset($map[$right]))
-						$right = new DBField($map[$right]);
-					elseif (!is_null($right))
-						$right = new DBValue($right);
-					
-					$query->andWhere(
-						new LogicalExpression($left, $right, $logic)
-					);
-				}
-			}
+			foreach ($this->logic as &$exp)
+				$this->parseLogic($query, $exp, $map);
 
 			return $query->limit($this->limit, $this->offset);
+		}
+		
+		// recursive one
+		private function parseLogic(
+			SelectQuery $query, LogicalExpression $exp, /* array */ &$map
+		)
+		{
+			$left	= $exp->getLeft();
+			$right	= $exp->getRight();
+			$logic	= $exp->getLogic();
+			
+			if (
+				$left instanceof LogicalExpression
+				|| $right instanceof LogicalExpression
+			) {
+				throw new WrongArgumentException(
+					'only flat expressions supported atm'
+				);
+			}
+			
+			if (
+				isset($map[$left])
+				&& isset($map[$right])
+			) {
+				if (is_array($map[$left]) && is_array($map[$right]))
+					foreach ($map[$left] as $leftField)
+						foreach ($map[$right] as $rightField)
+							$query->andWhere(
+								new LogicalExpression(
+									$leftField, $rightField, $logic 
+								)
+							);
+				elseif (is_array($map[$left]))
+					foreach ($map[$left] as $field)
+						$query->andWhere(
+							new LogicalExpression(
+								$field, $right, $logic
+							)
+						);
+				elseif (is_array($map[$right]))
+					foreach ($map[$right] as $field)
+						$query->andWhere(
+							new LogicalExpression(
+								$left, $field, $logic
+							)
+						);
+				else
+					$query->andWhere($exp);
+			} else {
+				if (array_key_exists($left, $map)) {
+					if ($map[$left])
+						$left = new DBField($map[$left]);
+					else
+						$left = new DBField($left);
+				} else
+					$left = new DBValue($left);
+				
+				if (isset($map[$right]))
+					$right = new DBField($map[$right]);
+				elseif (!is_null($right))
+					$right = new DBValue($right);
+				
+				$query->andWhere(
+					new LogicalExpression($left, $right, $logic)
+				);
+			}
 		}
 		
 		private function direction($constant)
