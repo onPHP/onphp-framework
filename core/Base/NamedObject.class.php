@@ -16,22 +16,9 @@
 	 * 
 	 * @ingroup Base
 	**/
-	abstract class NamedObject implements Named
+	abstract class NamedObject extends IdentifiableObject implements Named
 	{
-		protected $id	= null;
 		protected $name	= null;
-		
-		public function getId()
-		{
-			return $this->id;
-		}
-		
-		public function setId($id)
-		{
-			$this->id = $id;
-			
-			return $this;
-		}
 		
 		public function getName()
 		{

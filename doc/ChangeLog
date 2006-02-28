@@ -1,5 +1,11 @@
 # $Id$
 
+2006-03-01	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/DAOs/NamedObjectDAO.class.php: typo spotted.
+
+	* core/Base/NamedObject.class.php: now IdentifiableObject's child.
+
 2006-02-22	Sergey S. Sergeev	<webs.support@gmail.com>
 
 	* main/Utils/HeaderUtils.class.php: bugfixed access to undeclared

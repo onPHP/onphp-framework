@@ -63,7 +63,7 @@
 			$query->set('name', $no->getName());
 			
 			if ($query instanceof InsertQuery)
-				return $query->setId('id', $no);
+				return $query->set('id', $no->getId());
 			else
 				return $query;
 		}
