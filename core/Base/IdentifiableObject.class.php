@@ -22,11 +22,6 @@
 	{
 		protected $id = null;
 		
-		public static function create()
-		{
-			return new IdentifiableObject();
-		}
-		
 		public static function wrap($id)
 		{
 			return self::create()->setId($id);
