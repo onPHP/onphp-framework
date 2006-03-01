@@ -22,8 +22,19 @@
 		
 		abstract public function getTable();
 		abstract public function getObjectName();
-		
-		abstract protected function makeObject(&$array, $prefix = null);
+
+		/**
+		 * Builds complete object.
+		 * 
+		 * @see http://onphp.org/examples/DAOs.html
+		 *
+		 * @param $array	associative array('fieldName' => 'value')
+		 * @param $prefix	prefix (if any) of all fieldNames
+		**/
+		abstract protected function makeObject(
+			/* array */ &$array,
+			$prefix = null
+		);
 
 		public function getFields()
 		{
