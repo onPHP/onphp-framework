@@ -160,7 +160,7 @@
 		/**
 		 * Sets function name of template handler, default bundled
 		 * 
-		 * @param   mixed array or string callable of call_user_func
+		 * @param   $handler	mixed	array or string callable of call_user_func
 		 * @return  self
 		**/
 		public function setTemplateHandler($handler)
@@ -183,7 +183,7 @@
 		/**
 		 * Sets path modules directory
 		 * 
-		 * @param   string full path to modules directory
+		 * @param   $dir	string	full path to modules directory
 		 * @return  self
 		**/
 		public function setModuleDir($dir)
@@ -206,7 +206,7 @@
 		/**
 		 * Sets path templates directory
 		 * 
-		 * @param	string	full path to templates directory
+		 * @param	$dir	string	full path to templates directory
 		 * @return	self
 		**/
 		public function setTemplateDir($dir)
@@ -229,7 +229,7 @@
 		/**
 		 * Sets modules extension
 		 * 
-		 * @param	string	new modules extension
+		 * @param	$ext	string	new modules extension
 		 * @return	self
 		**/
 		public function setModuleExt($ext)
@@ -252,7 +252,7 @@
 		/**
 		 * Sets templates extension
 		 * 
-		 * @param	string	  new templates extension
+		 * @param	$ext	string	  new templates extension
 		 * 
 		 * @return	self
 		**/
