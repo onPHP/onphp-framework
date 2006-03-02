@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Sveta Smirnova                             *
+ *   Copyright (C) 2004-2006 by Sveta Smirnova                             *
  *   sveta@microbecal.com                                                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -385,11 +385,14 @@
 		public function doModel()
 		{
 			$this->moduleHandler();
-			return $this->setParameters(
-							 $this->module->init()
-											->process()
-											->getParameters()
-							);
+			
+			return
+				$this->setParameters(
+					$this->module->
+						init()->
+						process()->
+						getParameters()
+				);
 		}
 		
 		/**
@@ -457,14 +460,17 @@
 		{
 			if ($action = $this->getCurrentAction()) {
 				while (true) {
-					$candidate = $this->templateDir . DIRECTORY_SEPARATOR .
-							implode(DIRECTORY_SEPARATOR, $action);
+					$candidate =
+						$this->templateDir . DIRECTORY_SEPARATOR
+						.implode(DIRECTORY_SEPARATOR, $action);
+					
 					if (is_file($candidate . $this->templateExt)) {
 						$this->template = implode(DIRECTORY_SEPARATOR, $action);
 						break;
 					} elseif (is_dir($candidate)) {
-						return $this->loadDefaultTemplate(
-							implode(DIRECTORY_SEPARATOR, $action)
+						return
+							$this->loadDefaultTemplate(
+								implode(DIRECTORY_SEPARATOR, $action)
 							);
 					} elseif ($action) {
 						array_pop($action);
@@ -488,17 +494,27 @@
 		**/
 		protected function loadDefaultModule($path = '')
 		{
-			$module = trim(
-						file_get_contents($this->moduleDir . DIRECTORY_SEPARATOR .
-											$path . DIRECTORY_SEPARATOR . $this->default
-											)
-						);
-			if (is_dir($this->moduleDir . DIRECTORY_SEPARATOR . $path .
-											DIRECTORY_SEPARATOR . $module)) {
+			$module =
+				trim(
+					file_get_contents(
+						$this->moduleDir . DIRECTORY_SEPARATOR
+						. $path . DIRECTORY_SEPARATOR . $this->default
+					)
+				);
+			
+			if (
+				is_dir(
+					$this->moduleDir . DIRECTORY_SEPARATOR 
+					. $path . DIRECTORY_SEPARATOR . $module
+				)
+			) {
 				return $this->loadDefaultModule($path . DIRECTORY_SEPARATOR . $module);
 			} else {
-				require_once $this->moduleDir . DIRECTORY_SEPARATOR . $path .
-								DIRECTORY_SEPARATOR . $module . $this->moduleExt;
+				require_once
+					$this->moduleDir . DIRECTORY_SEPARATOR 
+					. $path . DIRECTORY_SEPARATOR 
+					. $module . $this->moduleExt;
+				
 				$this->module = new $module;
 			}
 			
@@ -514,21 +530,27 @@
 		**/
 		protected function loadDefaultTemplate($path = '')
 		{
-			if (!is_file($this->templateDir . DIRECTORY_SEPARATOR .
-								$path . DIRECTORY_SEPARATOR . $this->default)
-				&& '' != $path
-				) {
-				return $this->loadDefaultTemplate(
-					substr($path, 0, strrpos($path, DIRECTORY_SEPARATOR))
+			if (
+				!is_file(
+					$this->templateDir . DIRECTORY_SEPARATOR 
+					. $path . DIRECTORY_SEPARATOR . $this->default
+				)
+				&& '' !== $path
+			) {
+				return
+					$this->loadDefaultTemplate(
+						substr($path, 0, strrpos($path, DIRECTORY_SEPARATOR))
 					);
 			}
 			
-			$this->template = trim(
-								file_get_contents(
-									$this->templateDir . DIRECTORY_SEPARATOR .
-									$path . DIRECTORY_SEPARATOR . $this->default
-									)
-									);
+			$this->template =
+				trim(
+					file_get_contents(
+						$this->templateDir . DIRECTORY_SEPARATOR 
+						. $path . DIRECTORY_SEPARATOR . $this->default
+					)
+				);
+			
 			if ($path) {
 				$this->template = $path . DIRECTORY_SEPARATOR . $this->template;
 			}
@@ -561,6 +583,7 @@
 				} else {
 					continue;
 				}
+				
 				if (isset($global[$this->action])
 					&& preg_match('/^\w+$/', $global[$this->action])
 				) {
