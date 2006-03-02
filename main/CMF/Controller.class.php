@@ -432,7 +432,9 @@
 						$this->module = new $module;
 						break;
 					} elseif (is_dir($needed)) {
-						return $this->loadDefaultModule(implode(DIRECTORY_SEPARATOR, $action));
+						return $this->loadDefaultModule(
+							implode(DIRECTORY_SEPARATOR, $action)
+							);
 					} elseif ($action) {
 						array_pop($action);
 					} else {
@@ -461,7 +463,9 @@
 						$this->template = implode(DIRECTORY_SEPARATOR, $action);
 						break;
 					} elseif (is_dir($candidate)) {
-						return $this->loadDefaultTemplate(implode(DIRECTORY_SEPARATOR, $action));
+						return $this->loadDefaultTemplate(
+							implode(DIRECTORY_SEPARATOR, $action)
+							);
 					} elseif ($action) {
 						array_pop($action);
 					} else {
@@ -484,11 +488,17 @@
 		**/
 		protected function loadDefaultModule($path = '')
 		{
-			$module = trim(file_get_contents($this->moduleDir . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $this->default));
-			if (is_dir($this->moduleDir . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $module)) {
+			$module = trim(
+						file_get_contents($this->moduleDir . DIRECTORY_SEPARATOR .
+											$path . DIRECTORY_SEPARATOR . $this->default
+											)
+						);
+			if (is_dir($this->moduleDir . DIRECTORY_SEPARATOR . $path .
+											DIRECTORY_SEPARATOR . $module)) {
 				return $this->loadDefaultModule($path . DIRECTORY_SEPARATOR . $module);
 			} else {
-				require_once $this->moduleDir . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $module . $this->moduleExt;
+				require_once $this->moduleDir . DIRECTORY_SEPARATOR . $path .
+								DIRECTORY_SEPARATOR . $module . $this->moduleExt;
 				$this->module = new $module;
 			}
 			
@@ -504,13 +514,21 @@
 		**/
 		protected function loadDefaultTemplate($path = '')
 		{
-			if (!is_file($this->templateDir . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $this->default)
+			if (!is_file($this->templateDir . DIRECTORY_SEPARATOR .
+								$path . DIRECTORY_SEPARATOR . $this->default)
 				&& '' != $path
 				) {
-				return $this->loadDefaultTemplate(substr($path, 0, strrpos($path, DIRECTORY_SEPARATOR)));
+				return $this->loadDefaultTemplate(
+					substr($path, 0, strrpos($path, DIRECTORY_SEPARATOR))
+					);
 			}
 			
-			$this->template = trim(file_get_contents($this->templateDir . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $this->default));
+			$this->template = trim(
+								file_get_contents(
+									$this->templateDir . DIRECTORY_SEPARATOR .
+									$path . DIRECTORY_SEPARATOR . $this->default
+									)
+									);
 			if ($path) {
 				$this->template = $path . DIRECTORY_SEPARATOR . $this->template;
 			}
