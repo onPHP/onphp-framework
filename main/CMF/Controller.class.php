@@ -66,12 +66,12 @@
 		/**
 		 * extension of module
 		**/
-		protected $moduleExt = '.inc.php';
+		protected $moduleExt = EXT_MOD;
 		
 		/**
 		 * extension of module
 		**/
-		protected $templateExt = '.tpl.html';
+		protected $templateExt = EXT_TPL;
 		
 		/**
 		 * name of file contains default module name
