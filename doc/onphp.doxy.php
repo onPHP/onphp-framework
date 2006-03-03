@@ -32,6 +32,7 @@
 	 *    - NullDaoWorker;
 	 *    - CommonDaoWorker;
 	 *    - SmartDaoWorker;
+	 *    - VoodooDaoWorker;
 	 * - IdentifiableObject collections:
 	 *  - StorableContainer;
 	 *  - UnifiedContainer;

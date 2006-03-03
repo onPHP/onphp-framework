@@ -1,5 +1,12 @@
 # $Id$
 
+2006-03-03	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/DAOs/VoodooDaoWorker.class.php,
+	main/DAOs/SmartDaoWorker.class.php,
+	main/DAOs/TransparentDaoWorker.class.php: fourth dao worker
+	implemented: lockingless, transparent, greedy and damn fast.
+
 2006-03-01	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/DAOs/NamedObjectDAO.class.php: typo spotted.
