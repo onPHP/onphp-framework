@@ -87,8 +87,7 @@
 				if ($object)
 					return $this->cacheByQuery($query, $object);
 				else {
-					// should be dropped upon uncacheLists()
-					$this->cacheListByQuery($query, Cache::NOT_FOUND);
+					$this->cacheByQuery($query, Cache::NOT_FOUND);
 					throw new ObjectNotFoundException();
 				}
 			}
@@ -114,8 +113,7 @@
 				if ($custom)
 					return $this->cacheByQuery($query, $custom);
 				else {
-					// should be dropped upon uncacheLists()
-					$this->cacheListByQuery($query, Cache::NOT_FOUND);
+					$this->cacheByQuery($query, Cache::NOT_FOUND);
 					throw new ObjectNotFoundException();
 				}
 			}
@@ -411,9 +409,9 @@
 					);
 		}
 		
-		protected function keyToInt($key)
+		protected function keyToInt($key, $precision = 8)
 		{
-			return hexdec(substr(md5($key), 0, 8)) + 1;
+			return hexdec(substr(md5($key), 0, $precision)) + 1;
 		}
 		//@}
 	}

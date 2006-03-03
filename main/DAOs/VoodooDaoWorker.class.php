@@ -78,28 +78,6 @@
 
 		//@{
 		// uncachers
-		public function uncacheById($id)
-		{
-			$key = $this->className.'_'.$id;
-			
-			$this->unlink($key);
-			
-			return
-				Cache::me()->mark($this->className)->
-					delete($key);
-		}
-		
-		public function uncacheByQuery(SelectQuery $query)
-		{
-			$key = $this->className.self::SUFFIX_QUERY.$query->getId();
-			
-			$this->unlink($key);
-			
-			return
-				Cache::me()->mark($this->className)->
-					delete($key);
-		}
-		
 		public function uncacheLists()
 		{
 			try {
@@ -108,7 +86,11 @@
 				return false;
 			}
 			
-			return shm_remove($shm);
+			$result = shm_remove($shm);
+			
+			shm_detach($shm);
+			
+			return $result;
 		}
 		//@}
 		
@@ -132,9 +114,7 @@
 				return false;
 			}
 			
-			$result = shm_put_var($shm, $key, true);
-			
-			shm_detach($shm);
+			$result = shm_put_var($shm, $this->keyToInt($key, 15), true);
 			
 			return $result;
 		}
@@ -148,7 +128,7 @@
 			}
 			
 			try {
-				$result = shm_remove_var($shm, $key);
+				$result = shm_remove_var($shm, $this->keyToInt($key, 15));
 				shm_detach($shm);
 				return $result;
 			} catch (BaseException $e) {
@@ -169,9 +149,10 @@
 			}
 			
 			try {
-				$result = shm_get_var($shm, $key);
+				$result = shm_get_var($shm, $this->keyToInt($key, 15));
 			} catch (BaseException $e) {
 				// variable key N doesn't exist, bleh
+				shm_detach($shm);
 				return false;
 			}
 			

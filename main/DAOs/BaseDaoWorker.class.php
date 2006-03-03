@@ -17,7 +17,7 @@
 	abstract class BaseDaoWorker implements BaseDAO
 	{
 		const SUFFIX_LIST	= '_list_';
-		const SUFFIX_INDEX	= '_lists_index';
+		const SUFFIX_INDEX	= '_lists_index_';
 		const SUFFIX_QUERY	= '_query_';
 		const SUFFIX_RESULT	= '_result_';
 
