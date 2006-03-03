@@ -31,8 +31,9 @@
 	 *   - GenericDAO workers:
 	 *    - NullDaoWorker;
 	 *    - CommonDaoWorker;
-	 *    - SmartDaoWorker;
-	 *    - VoodooDaoWorker;
+	 *    - TransparentDaoWorker:
+	 *     - SmartDaoWorker;
+	 *     - VoodooDaoWorker;
 	 * - IdentifiableObject collections:
 	 *  - StorableContainer;
 	 *  - UnifiedContainer;
