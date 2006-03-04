@@ -21,7 +21,7 @@
 	**/
 	final class VoodooDaoWorker extends TransparentDaoWorker
 	{
-		const SEGMENT_SIZE = 1048576; // 2 ^ 20
+		const SEGMENT_SIZE = 2097152; // 2 ^ 21
 		
 		private $classKey = null;
 		
@@ -113,8 +113,16 @@
 			} catch (BaseException $e) {
 				return false;
 			}
-			
-			$result = shm_put_var($shm, $this->keyToInt($key, 15), true);
+
+			try {
+				$result = shm_put_var($shm, $this->keyToInt($key, 15), true);
+				shm_detach($shm);
+			} catch (BaseException $e) {
+				// not enough shared memory left, rotate it.
+				shm_detach($shm);
+				$this->uncacheLists();
+				return false;
+			}
 			
 			return $result;
 		}
