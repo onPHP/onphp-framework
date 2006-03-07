@@ -1,5 +1,9 @@
 # $Id$
 
+2006-03-08	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/OSQL/DBValue.class.php: don't quote integer values.
+
 2006-03-03	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/DAOs/VoodooDaoWorker.class.php,

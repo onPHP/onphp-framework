@@ -20,6 +20,8 @@
 	{
 		private $value = null;
 		
+		private $unquotable = false; // indeed
+		
 		public static function create($value)
 		{
 			return new DBValue($value);
@@ -27,6 +29,9 @@
 
 		public function __construct($value)
 		{
+			if ($value === (int) $value)
+				$this->unquotable = true;
+			
 			$this->value = $value;
 		}
 
@@ -37,7 +42,10 @@
 
 		public function toString(Dialect $dialect)
 		{
-			$out = $dialect->quoteValue($this->value);
+			$out =
+				$this->unquotable
+					? $this->value
+					: $dialect->quoteValue($this->value);
 			
 			return
 				$this->cast
