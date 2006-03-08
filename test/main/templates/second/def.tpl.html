@@ -1,9 +1,9 @@
 <?php
-/*$Id$*/
+	/* $Id$ */
 
-class def/* extends CommonModule*/
-{
-	
-}
+	class def /* extends CommonModule */
+	{
+		
+	}
 
 ?>

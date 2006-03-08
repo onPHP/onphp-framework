@@ -1,9 +1,8 @@
 <?php
-/*$Id$*/
+	/* $Id$ */
 
-class first/* extends CommonModule*/
-{
-	
-}
-
+	class first /* extends CommonModule */
+	{
+		
+	}
 ?>
