@@ -1,0 +1,145 @@
+<!--# include file="head.html" -->
+
+<h2>handout</h2>
+
+<p>DB stuff:</p>
+
+<pre>
+    <b>create sequence</b> employer_id;
+
+    <b>create table</b> employer(
+        id         <span class="red">bigint</span> default nextval(<span class="red">'employer_id'</span>) <b>primary key</b>,
+        name       <span class="red">varchar</span>(<span class="blue">255</span>) <b>not null</b>,
+        birth_date <span class="red">timestamp</span> <b>not null</b>,
+        created    <span class="red">timestamp</span> <b>not null default</b>(now()),
+        modified   <span class="red">timestamp</span> <b>not null default</b>(now())
+    );
+</pre>
+
+<p>business class:</p>
+
+<pre>
+    </span><span class="green">final class </span><span class="blue">Employer </span><span class="green">extends </span><span class="blue">NamedObject
+    </span><span class="green">{
+        private </span><span class="blue">$birthDate   </span><span class="green">= </span><span class="blue">null</span><span class="green">;
+
+        private </span><span class="blue">$created     </span><span class="green">= </span><span class="blue">null</span><span class="green">;
+        private </span><span class="blue">$modified    </span><span class="green">= </span><span class="blue">null</span><span class="green">;
+
+        public function </span><span class="blue">getBirthDate</span><span class="green">()
+        {
+            return </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">birthDate</span><span class="green">;
+        }
+
+        public function </span><span class="blue">setBirthDate</span><span class="green">(</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FBase%2FTimestamp.class.php&rev=0&sc=0">Timestamp</a> $birth</span><span class="green">)
+        {
+            </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">birth </span><span class="green">= </span><span class="blue">$birth</span><span class="green">;
+
+            return </span><span class="blue">$this</span><span class="green">;
+        }
+
+        <span class="red">... and so on ...</span>
+    }</span>
+</pre>
+
+<hr>
+
+
+<h2>main/<a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FDAOs%2F&rev=0&sc=0">DAOs</a></h2>
+
+<p>Sample DAO:</p>
+
+<pre>
+    <span class="green">final class </span><span class="blue">EmployerDAO </span><span class="green">extends </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FDAOs%2FMappedStorableDAO.class.php&rev=0&sc=0">MappedStorableDAO</a>
+    </span><span class="green">{</span>
+        <span class="green">protected </span><span class="blue">$mapping </span><span class="green">= array(
+            </span><span class="red">'id'          </span><span class="green">=&gt; </span><span class="blue">null</span><span class="green">,
+            </span><span class="red">'name'        </span><span class="green">=&gt; </span><span class="blue">null</span><span class="green">,
+            </span><span class="red">'birthDate'   </span><span class="green">=&gt; </span><span class="red">'birth_date'</span><span class="green">,
+            </span><span class="red">'modified'    </span><span class="green">=&gt; </span><span class="blue">null
+        </span><span class="green">);</span>
+
+        <span class="green">public function</span> <span class="blue">getTable</span><span class="green">()
+        {
+            return </span><span class="red">'employer'</span><span class="green">;
+        }
+
+        public function </span><span class="blue">getObjectName</span><span class="green">()
+        {
+            return </span><span class="red">'Employer'</span><span class="green">;
+        }
+
+        public function </span><span class="blue">makeObject</span><span class="green">(&amp;</span><span class="blue">$array</span><span class="green">, </span><span class="blue">$prefix </span><span class="green">= </span><span class="blue">null</span><span class="green">)
+        {
+            </span><span class="blue">$employer </span><span class="green">= new </span><span class="blue">Employer</span><span class="green">();
+            
+            return
+                </span><span class="blue">$employer</span><span class="green">-&gt;
+                    </span><span class="blue">setId</span><span class="green">(</span><span class="blue">$array</span><span class="green">[</span><span class="blue">$prefix</span><span class="green">.</span><span class="red">'id'</span><span class="green">])-&gt;
+                    </span><span class="blue">setName</span><span class="green">(</span><span class="blue">$array</span><span class="green">[</span><span class="blue">$prefix</span><span class="green">.</span><span class="red">'name'</span><span class="green">])-&gt;
+                    </span><span class="blue">setBirthDate</span><span class="green">(new </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FBase%2FTimestamp.class.php&rev=0&sc=0">Timestamp</a></span><span class="green">(</span><span class="blue">$array</span><span class="green">[</span><span class="blue">$prefix</span><span class="green">.</span><span class="red">'birth_date'</span><span class="green">]))-&gt;
+                    </span><span class="blue">setModified</span><span class="green">(new </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FBase%2FTimestamp.class.php&rev=0&sc=0">Timestamp</a></span><span class="green">(</span><span class="blue">$array</span><span class="green">[</span><span class="blue">$prefix</span><span class="green">.</span><span class="red">'modified'</span><span class="green">]));
+        }
+        
+        public function </span><span class="blue">setQueryFields</span><span class="green">(
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FInsertOrUpdateQuery.class.php&rev=0&sc=0">InsertOrUpdateQuery</a> $query</span><span class="green">, </span><span class="blue">Employer $employer
+        </span><span class="green">)
+        {
+            if (</span><span class="blue">$query </span><span class="green">instanceof </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FUpdateQuery.class.php&rev=0&sc=0">UpdateQuery</a></span><span class="green">)
+                </span><span class="blue">$query</span><span class="green">-&gt;
+                    </span><span class="blue">set</span><span class="green">(
+                        </span><span class="red">'modified'</span><span class="green">,
+                        </span><span class="blue">$employer</span><span class="green">-&gt;
+                            </span><span class="blue">setModified</span><span class="green">(new </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FBase%2FTimestamp.class.php&rev=0&sc=0">Timestamp</a></span><span class="green">(</span><span class="blue">time</span><span class="green">()))-&gt;
+                            </span><span class="blue">getModified</span><span class="green">()-&gt;
+                                </span><span class="blue">toString</span><span class="green">()
+                    );
+            
+            return
+                </span><span class="blue">$query</span><span class="green">-&gt;
+                    </span><span class="blue">set</span><span class="green">(</span><span class="red">'id'</span><span class="green">, </span><span class="blue">$employer</span><span class="green">-&gt;</span><span class="blue">getId</span><span class="green">())-&gt;
+                    </span><span class="blue">set</span><span class="green">(</span><span class="red">'name'</span><span class="green">, </span><span class="blue">$employer</span><span class="green">-&gt;</span><span class="blue">getName</span><span class="green">())-&gt;
+                    </span><span class="blue">set</span><span class="green">(</span><span class="red">'birth_date'</span><span class="green">, </span><span class="blue">$employer</span><span class="green">-&gt;</span><span class="blue">getBirthDate</span><span class="green">()-&gt;</span><span class="blue">toString</span><span class="green">());
+        }
+    }</span>
+</pre>
+
+<p>hint:</p>
+
+<pre>
+    <span class="green">final class </span><span class="blue">DAO
+    </span><span class="green">{
+        public static function </span><span class="blue">employer</span><span class="green">()
+        {
+            return </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FBase%2FSingleton.class.php&rev=0&sc=0">Singleton</a></span><span class="green">::</span><span class="blue">getInstance</span><span class="green">(</span><span class="red">'EmployerDAO'</span><span class="green">);
+        }
+    }</span>
+</pre>
+
+<p>usage:</p>
+
+<pre>
+    <span class="orange">// get employer with id == 2</span>
+    <span class="blue">$employer </span><span class="green">= </span><span class="blue">DAO</span><span class="green">::</span><span class="blue">employer</span><span class="green">()-&gt;</span><span class="blue">getById</span><span class="green">(</span><span class="blue">2</span><span class="green">);
+
+    <span class="orange">// get employers list sorted by birth date</span>
+    </span><span class="blue">$youngEmployersList </span><span class="green">=
+        </span><span class="blue">DAO</span><span class="green">::</span><span class="blue">employer</span><span class="green">()-&gt;</span><span class="blue">getList</span><span class="green">(
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FDAOs%2FObjectQuery.class.php&rev=0&sc=0">ObjectQuery</a></span><span class="green">::</span><span class="blue">create</span><span class="green">()-&gt;
+            </span><span class="blue">sort</span><span class="green">(</span><span class="red">'birthDate'</span><span class="green">)-&gt;</span><span class="blue">asc</span><span class="green">()-&gt;
+            </span><span class="blue">addLogic</span><span class="green">(
+                </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FLogic%2FExpression.class.php&rev=0&sc=0">Expression</a></span><span class="green">::</span><span class="blue">gt</span><span class="green">(
+                    </span><span class="red">'birthDate'</span><span class="green">,
+                    </span><span class="blue">1970</span><span class="green">
+                )
+            )
+        );</span>
+</pre>
+
+<hr>
+
+<p>See also <a href="Meta.html">metaconfiguration</a> example.</p>
+
+<hr>
+
+<!--# include file="heel.html" -->
