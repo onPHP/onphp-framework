@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -31,7 +31,7 @@
 	error_reporting(E_ALL | E_STRICT);
 	set_error_handler('error2Exception', E_ALL);
 	ignore_user_abort(true);
-	define('ONPHP_VERSION', '0.2.8.99');
+	define('ONPHP_VERSION', '0.2.9.99');
     
 	// paths
 	define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
