@@ -2,6 +2,8 @@
 
 2006-03-09	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* core/Form/: two last primitives separated from factory file.
+
 	* meta/: all formatting stuff moved to separate class.
 
 	* 0.2.9 released.

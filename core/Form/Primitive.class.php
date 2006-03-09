@@ -98,43 +98,4 @@
 			return new PrimitiveHost($name);
 		}
 	}
-	
-	/**
-	 * @ingroup Primitives
-	**/
-	class PrimitiveArray extends RangedPrimitive
-	{
-		public function import(&$scope)
-		{
-			if (!BasePrimitive::import($scope))
-				return null;
-
-			if (is_array($scope[$this->name]) &&
-				!($this->min && sizeof($scope[$this->name]) < $this->min) &&
-				!($this->min && sizeof($scope[$this->name]) > $this->max))
-			{
-				$this->value = $scope[$this->name];
-
-				return true;
-			}
-
-			return false;
-		}
-	}
-	
-	/**
-	 * @ingroup Primitives
-	**/
-	class PrimitiveBoolean extends BasePrimitive
-	{
-		public function import(&$scope) // to be compatible with BasePrimitive
-		{
-			if (isset($scope[$this->name]))
-				$this->value = true;
-			else
-				$this->value = false;
-
-			return true;
-		}
-	}
 ?>
