@@ -17,7 +17,7 @@
 		{
 			$out = self::getHead();
 			
-			$out .= "\tabstract class Auto{$class->getName()}";
+			$out .= "abstract class Auto{$class->getName()}";
 			
 			if ($parent = $class->getParent())
 				$out .= " extends {$parent->getName()}";
@@ -27,14 +27,14 @@
 			if ($interfaces = $class->getInterfaces())
 				$out .= ' implements '.implode(', ', $interfaces);
 			
-			$out .= "\n\t{\n";
+			$out .= "\n{\n";
 			
 			foreach ($class->getProperties() as $property) {
 				if ($property->getName() == 'id' && !$parent)
 					continue;
 				
 				$out .=
-					"\t\tprotected \${$property->getName()} = "
+					"protected \${$property->getName()} = "
 					."{$property->getType()->getDeclaration()};\n";
 			}
 			
@@ -46,7 +46,7 @@
 				$out .= $property->toMethods();
 			}
 			
-			$out .= "\t}\n";
+			$out .= "}\n";
 			$out .= self::getHeel();
 			
 			return $out;

@@ -287,53 +287,50 @@ EOT;
 			return $out;
 		}
 		
-		public function toColumn($indent = 3)
+		public function toColumn()
 		{
-			$tab = "\t";
-			$tabs = str_pad(null, $indent, $tab, STR_PAD_LEFT);
-
 			if ($this->type instanceof ObjectType && !$this->type->isGeneric())
 				$dumbName = "{$this->dumbName}_id";
 			else
 				$dumbName = $this->dumbName;
 			
 			$column = <<<EOT
-{$tabs}addColumn(
-{$tabs}{$tab}DBColumn::create(
-{$tabs}{$tab}{$tab}{$this->type->toColumnType()}
+addColumn(
+	DBColumn::create(
+		{$this->type->toColumnType()}
 EOT;
 
 			if ($this->required) {
 				$column .= <<<EOT
 ->
-{$tabs}{$tab}{$tab}setNull(false)
+setNull(false)
 EOT;
 			}
 			
 			if ($this->size) {
 				$column .= <<<EOT
 ->
-{$tabs}{$tab}{$tab}setSize({$this->size})
+setSize({$this->size})
 EOT;
 			}
 			
 			$column .= <<<EOT
 ,
-{$tabs}{$tab}{$tab}'{$dumbName}'
-{$tabs}{$tab})
+'{$dumbName}'
+)
 EOT;
 
 			if ($this->identifier) {
 				$column .= <<<EOT
 ->
-{$tabs}{$tab}setPrimaryKey(true)->
-{$tabs}{$tab}setAutoincrement(true)
+setPrimaryKey(true)->
+setAutoincrement(true)
 EOT;
 			}
 			
 			$column .= <<<EOT
 
-{$tabs})
+)
 EOT;
 
 			return $column;

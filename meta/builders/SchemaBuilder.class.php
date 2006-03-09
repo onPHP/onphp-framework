@@ -16,9 +16,9 @@
 		public static function build(MetaClass $class)
 		{
 			$out = <<<EOT
-	\$schema->
-		addTable(
-			DBTable::create('{$class->getDumbName()}')->
+\$schema->
+	addTable(
+		DBTable::create('{$class->getDumbName()}')->
 
 EOT;
 
@@ -30,7 +30,7 @@ EOT;
 			
 			$out .= implode("->\n", $columns);
 			
-			return $out."\n\t\t);\n\n";
+			return $out."\n);\n\n";
 		}
 		
 		// TODO: implement ManyTo{One,Many} relations
@@ -53,16 +53,17 @@ EOT;
 					$targetColumn = $foreignClass->getIdentifier()->getDumbName();
 					
 					$out .= <<<EOT
-	// {$sourceTable}.{$sourceColumn} -> {$targetTable}.{$targetColumn}
-	\$schema->
-		getTableByName('{$sourceTable}')->
-			getColumnByName('{$sourceColumn}')->
-				setReference(
-					\$schema->getTableByName('{$targetTable}')->
-						getColumnByName('{$targetColumn}'),
-					ForeignChangeAction::restrict(),
-					ForeignChangeAction::cascade()
-				);
+// {$sourceTable}.{$sourceColumn} -> {$targetTable}.{$targetColumn}
+\$schema->
+	getTableByName('{$sourceTable}')->
+		getColumnByName('{$sourceColumn}')->
+			setReference(
+				\$schema->
+					getTableByName('{$targetTable}')->
+					getColumnByName('{$targetColumn}'),
+				ForeignChangeAction::restrict(),
+				ForeignChangeAction::cascade()
+			);
 
 EOT;
 					
@@ -76,7 +77,7 @@ EOT;
 		{
 			$out = parent::getHead();
 			
-			$out .= "\t\$schema = new DBSchema();\n\n";
+			$out .= "\$schema = new DBSchema();\n\n";
 			
 			return $out;
 		}

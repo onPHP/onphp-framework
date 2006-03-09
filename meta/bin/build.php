@@ -12,7 +12,7 @@ Things not supported by design:
 * obscurantism.
 
 <?php
-		exit(0);
+		exit(1);
 	}
 	
 	function init()

@@ -29,12 +29,12 @@
 		{
 			$this->dumpFile(
 				ONPHP_META_AUTO_DIR.'Auto'.$class->getName().EXT_CLASS,
-				AutoClassBuilder::build($class)
+				Format::indentize(AutoClassBuilder::build($class))
 			);
 			
 			$this->dumpFile(
 				ONPHP_META_AUTO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
-				AutoDaoBuilder::build($class)
+				Format::indentize(AutoDaoBuilder::build($class))
 			);
 			
 			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
@@ -42,7 +42,7 @@
 			if (!file_exists($userFile))
 				$this->dumpFile(
 					$userFile,
-					BusinessClassBuilder::build($class)
+					Format::indentize(BusinessClassBuilder::build($class))
 				);
 			
 			$userFile = ONPHP_META_DAO_DIR.$class->getName().'DAO'.EXT_CLASS;
@@ -50,7 +50,7 @@
 			if (!file_exists($userFile))
 				$this->dumpFile(
 					$userFile,
-					DaoBuilder::build($class)
+					Format::indentize(DaoBuilder::build($class))
 				);
 		}
 		

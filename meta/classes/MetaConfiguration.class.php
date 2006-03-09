@@ -120,20 +120,20 @@
 				$class->dump();
 			}
 			
+			$schema = SchemaBuilder::getHead();
+			
+			foreach ($this->classes as $name => $class) {
+				$schema .= SchemaBuilder::build($class);
+			}
+			
+			foreach ($this->classes as $name => $class) {
+				$schema .= SchemaBuilder::buildRelations($class);
+			}
+			
+			$schema .= '?>';
+			
 			$fp = fopen(ONPHP_META_AUTO_DIR.'AutoSchema.php', 'wb');
-			
-			fwrite($fp, SchemaBuilder::getHead());
-			
-			foreach ($this->classes as $name => $class) {
-				fwrite($fp, SchemaBuilder::build($class));
-			}
-			
-			foreach ($this->classes as $name => $class) {
-				fwrite($fp, SchemaBuilder::buildRelations($class));
-			}
-			
-			fwrite($fp, "?>");
-			
+			fwrite($fp, Format::indentize($schema));
 			fclose($fp);
 		}
 		

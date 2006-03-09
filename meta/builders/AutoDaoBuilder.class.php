@@ -25,17 +25,17 @@
 			$out = self::getHead();
 			
 			$out .= <<<EOT
-	abstract class Auto{$class->getName()}DAO extends {$parentName}
+abstract class Auto{$class->getName()}DAO extends {$parentName}
+{
+	public function __construct()
 	{
-		public function __construct()
-		{
-			\$this->mapping = array_merge(
-				\$this->mapping,
-				array(
+		\$this->mapping = array_merge(
+			\$this->mapping,
+			array(
 
 EOT;
 			if ($parent->getPattern() instanceof StraightMappingPattern) {
-				$out .= "\t\t\tparent::__construct();\n\n";
+				$out .= "parent::__construct();\n\n";
 			}
 			
 			$mapping = self::buildMapping($class, 5);
@@ -50,10 +50,10 @@ EOT;
 
 {$pointers}
 
-		public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \${$varName})
-		{
-			return
-				parent::setQueryFields(\$query, \${$varName})->
+public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \${$varName})
+{
+	return
+		parent::setQueryFields(\$query, \${$varName})->
 
 EOT;
 

@@ -28,10 +28,10 @@
 			}
 			
 			$out .= <<<EOT
-	{$abstract}class {$class->getName()}DAO extends Auto{$class->getName()}DAO
-	{
-		// {$notes}
-	}
+{$abstract}class {$class->getName()}DAO extends Auto{$class->getName()}DAO
+{
+	// {$notes}
+}
 
 EOT;
 			

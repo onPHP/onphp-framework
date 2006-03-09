@@ -25,27 +25,27 @@
 			if ($class->getPattern()->daoExist()) {
 				$interfaces = ' implements DAOConnected';
 				$dao = <<<EOT
-		public static function dao()
-		{
-			return Singleton::getInstance('{$class->getName()}DAO');
-		}
+	public static function dao()
+	{
+		return Singleton::getInstance('{$class->getName()}DAO');
+	}
 
 EOT;
 			} else
 				$dao = $interfaces = null;
 			
 			$out .= <<<EOT
-	{$typeName}class {$class->getName()} extends Auto{$class->getName()}{$interfaces}
-	{
+{$typeName}class {$class->getName()} extends Auto{$class->getName()}{$interfaces}
+{
 EOT;
 
 			if (!$type || $type->getId() !== MetaClassType::CLASS_ABSTRACT) {
 				$out .= <<<EOT
 			
-		public static function create()
-		{
-			return new {$class->getName()}();
-		}
+	public static function create()
+	{
+		return new {$class->getName()}();
+	}
 		
 {$dao}
 EOT;
@@ -53,8 +53,8 @@ EOT;
 
 			$out .= <<<EOT
 
-		// your brilliant stuff goes here
-	}
+	// your brilliant stuff goes here
+}
 
 EOT;
 			

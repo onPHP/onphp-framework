@@ -29,40 +29,34 @@
 				.$this->toSetter($name);
 		}
 		
-		public function toGetter($name, $indent = 2)
+		public function toGetter($name)
 		{
-			$tab = "\t";
-			$tabs = str_pad(null, $indent, $tab, STR_PAD_LEFT);
-			
 			$methodName = 'get'.ucfirst($name);
 			
 			$method = <<<EOT
 
-{$tabs}public function {$methodName}()
-{$tabs}{
-{$tabs}{$tab}return \$this->{$name};
-{$tabs}}
+public function {$methodName}()
+{
+	return \$this->{$name};
+}
 
 EOT;
 
 			return $method;
 		}
 		
-		public function toSetter($name, $indent = 2)
+		public function toSetter($name)
 		{
-			$tab = "\t";
-			$tabs = str_pad(null, $indent, $tab, STR_PAD_LEFT);
-			
 			$methodName = 'set'.ucfirst($name);
 			
 			$method = <<<EOT
 
-{$tabs}public function {$methodName}(\${$name})
-{$tabs}{
-{$tabs}{$tab}\$this->{$name} = \${$name};
+public function {$methodName}(\${$name})
+{
+	\$this->{$name} = \${$name};
 
-{$tabs}{$tab}return \$this;
-{$tabs}}
+	return \$this;
+}
 
 EOT;
 

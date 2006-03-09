@@ -47,42 +47,36 @@
 				.$this->toDropper($name);
 		}
 		
-		public function toSetter($name, $indent = 2)
+		public function toSetter($name)
 		{
-			$tab = "\t";
-			$tabs = str_pad(null, $indent, $tab, STR_PAD_LEFT);
-			
 			$methodName = 'set'.ucfirst($name);
 			
 			$method = <<<EOT
-{$tabs}public function {$methodName}({$this->class} \${$name})
-{$tabs}{
-{$tabs}{$tab}\$this->{$name} = \${$name};
 
-{$tabs}{$tab}return \$this;
-{$tabs}}
+public function {$methodName}({$this->class} \${$name})
+{
+	\$this->{$name} = \${$name};
 
+	return \$this;
+}
 
 EOT;
 
 			return $method;
 		}
 		
-		public function toDropper($name, $indent = 2)
+		public function toDropper($name)
 		{
-			$tab = "\t";
-			$tabs = str_pad(null, $indent, $tab, STR_PAD_LEFT);
-			
 			$methodName = 'drop'.ucfirst($name);
 			
 			$method = <<<EOT
-{$tabs}public function {$methodName}()
-{$tabs}{
-{$tabs}{$tab}\$this->{$name} = null;
 
-{$tabs}{$tab}return \$this;
-{$tabs}}
+public function {$methodName}()
+{
+	\$this->{$name} = null;
 
+	return \$this;
+}
 
 EOT;
 

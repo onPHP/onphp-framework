@@ -18,9 +18,9 @@
 			$out = self::getHead();
 			
 			$out .= <<<EOT
-	abstract class Auto{$class->getName()}DAO extends MappedStorableDAO
-	{
-		protected \$mapping = array(
+abstract class Auto{$class->getName()}DAO extends MappedStorableDAO
+{
+	protected \$mapping = array(
 
 EOT;
 
@@ -42,21 +42,21 @@ EOT;
 			if ($class->getPattern() instanceof AbstractClassPattern) {
 				$out .= <<<EOT
 
-		public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \${$varName})
+	public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \${$varName})
 
 EOT;
 			} else {
 				$out .= <<<EOT
 
-		public function setQueryFields(InsertOrUpdateQuery \$query, {$className} \${$varName})
+	public function setQueryFields(InsertOrUpdateQuery \$query, {$className} \${$varName})
 
 EOT;
 			}
 			
 			$out .= <<<EOT
-		{
-			return
-				\$query->
+	{
+		return
+			\$query->
 
 EOT;
 			

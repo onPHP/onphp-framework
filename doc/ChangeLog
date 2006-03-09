@@ -2,6 +2,8 @@
 
 2006-03-09	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* meta/: all formatting stuff moved to separate class.
+
 	* 0.2.9 released.
 
 2006-03-08	Konstantin V. Arkhipov	<voxus@shadanakar.org>
