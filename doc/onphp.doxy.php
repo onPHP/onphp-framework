@@ -104,6 +104,9 @@
 	 * @defgroup Utils Various accompanying utilities
 	 * @ingroup Main
 	 *
+	 * @defgroup Flow Spring-like webflow tools.
+	 * @ingroup Main
+	 *
 	 * Useful stuff for building complex and scalable applications.
 	**/
 ?>
