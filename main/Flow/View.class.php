@@ -16,6 +16,9 @@
 	**/
 	interface View
 	{
-		public function render(/* array */ $model);
+		/**
+		 * @param $model null or Model
+		 */
+		public function render($model = null);
 	}
 ?>

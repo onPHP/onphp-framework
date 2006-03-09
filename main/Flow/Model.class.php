@@ -14,16 +14,24 @@
 	/**
 	 * @ingroup Flow
 	**/
-	interface HandlerInterceptor
+	class Model
 	{
-		/**
-		 * @return	null if execution should continue,
-		 * 			ModelAndView if we should stop and render view
-		**/
-		public function preHandle(HttpRequest $request);
+		private $vars = array();
 		
-		public function postHandle(
-			HttpRequest $request, ModelAndView $modelAndView
-		);
+		public function asArray()
+		{
+			return $this->vars;
+		}
+		
+		public function setVar($name, $var)
+		{
+			$this->vars[$name] = $var;
+			return $this;
+		}
+		
+		public function getVar($name)
+		{
+			return $this->vars[$name];
+		}
 	}
 ?>

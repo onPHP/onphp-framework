@@ -23,8 +23,10 @@
 			$this->viewResolver = $resolver;
 		}
 		
-		public function view($partName, /* array */ $model)
+		public function view($partName, $model = null)
 		{
+			Assert::isTrue($model === null || $model instanceof Model);
+			
 			$this->viewResolver->resolveViewName($partName)->render($model);
 			
 			return $this;

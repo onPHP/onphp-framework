@@ -30,6 +30,9 @@
 		
 		// reference, not copy
 		private $session	= array();
+
+		// all other shit
+		private $attached	= array();
 		
 		public function getGet()
 		{
@@ -89,6 +92,28 @@
 			$this->session = $session;
 			
 			return $this;
+		}
+		
+		public function setAttachedVar($name, $var)
+		{
+			$this->attached[$name] = $var;
+			return $this;
+		}
+		
+		public function getAttachedVar($name)
+		{
+			return $this->attached[$name];
+		}
+		
+		public function unsetAttachedVar($name)
+		{
+			unset($this->attached[$name]);
+			return $this;
+		}
+		
+		public function getAttachedAsArray()
+		{
+			return $this->attached;
 		}
 	}
 ?>

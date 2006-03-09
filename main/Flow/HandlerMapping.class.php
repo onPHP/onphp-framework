@@ -17,7 +17,7 @@
 	interface HandlerMapping
 	{
 		/**
-		 * @return HandlerExecutionChain
+		 * @return Controller
 		**/
 		public function getHandler(HttpRequest $request);
 	}

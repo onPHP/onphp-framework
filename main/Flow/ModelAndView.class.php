@@ -16,8 +16,7 @@
 	**/
 	class ModelAndView
 	{
-		// array of 'objectName' => object
-		private $model 	= array();
+		private $model 	= null;
 		
 		private $view	= null;
 		
@@ -26,10 +25,8 @@
 			return $this->model;
 		}
 		
-		public function setModel(/* array */ $model)
+		public function setModel(Model $model)
 		{
-			Assert::isArray($model);
-
 			$this->model = $model;
 			
 			return $this;

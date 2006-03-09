@@ -25,9 +25,12 @@
 			$this->partViewResolver = $partViewer;
 		}
 		
-		public function render($model)
+		public function render($model = null)
 		{
-			extract($model);
+			Assert::isTrue($model === null || $model instanceof Model);
+			
+			if ($model instanceof Model)
+				extract($model->asArray());
 			
 			$partViewer = new PartViewer($this->partViewResolver);
 			
