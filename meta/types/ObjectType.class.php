@@ -83,6 +83,11 @@ EOT;
 			return $method;
 		}
 		
+		public function toPrimitive()
+		{
+			throw new UnsupportedMethodException();
+		}
+		
 		public function toColumnType()
 		{
 			return

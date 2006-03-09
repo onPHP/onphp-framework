@@ -28,6 +28,11 @@
 			return new PrimitiveInteger($name);
 		}
 		
+		public static function identifier($name)
+		{
+			return new PrimitiveIdentifier($name);
+		}
+		
 		public static function date($name)
 		{
 			return new PrimitiveDate($name);

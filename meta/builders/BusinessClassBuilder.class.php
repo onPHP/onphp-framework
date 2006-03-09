@@ -22,8 +22,10 @@
 			else
 				$typeName = null;
 			
+			$interfaces = ' implements Prototyped';
+			
 			if ($class->getPattern()->daoExist()) {
-				$interfaces = ' implements DAOConnected';
+				$interfaces .= ', DAOConnected';
 				$dao = <<<EOT
 	public static function dao()
 	{
@@ -32,7 +34,7 @@
 
 EOT;
 			} else
-				$dao = $interfaces = null;
+				$dao = null;
 			
 			$out .= <<<EOT
 {$typeName}class {$class->getName()} extends Auto{$class->getName()}{$interfaces}
@@ -50,6 +52,15 @@ EOT;
 {$dao}
 EOT;
 			}
+			
+			$out .= <<<EOT
+
+	public static function proto()
+	{
+		return Singleton::getInstance('Proto{$class->getName()}');
+	}
+
+EOT;
 
 			$out .= <<<EOT
 

@@ -27,5 +27,10 @@
 		{
 			return 'DataType::create(DataType::INTEGER)';
 		}
+		
+		public function toPrimitive()
+		{
+			return 'Primitive::integer';
+		}
 	}
 ?>

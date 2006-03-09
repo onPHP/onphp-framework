@@ -27,5 +27,10 @@
 		{
 			return 'DataType::create(DataType::VARCHAR)';
 		}
+		
+		public function toPrimitive()
+		{
+			return 'Primitive::string';
+		}
 	}
 ?>

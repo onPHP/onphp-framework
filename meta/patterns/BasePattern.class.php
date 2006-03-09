@@ -28,6 +28,11 @@
 		protected function fullBuild(MetaClass $class)
 		{
 			$this->dumpFile(
+				ONPHP_META_AUTO_DIR.'Proto'.$class->getName().EXT_CLASS,
+				Format::indentize(ProtoClassBuilder::build($class))
+			);
+			
+			$this->dumpFile(
 				ONPHP_META_AUTO_DIR.'Auto'.$class->getName().EXT_CLASS,
 				Format::indentize(AutoClassBuilder::build($class))
 			);

@@ -54,17 +54,28 @@
 					$return = true;
 				}
 				
-				if ($return && strpos($string, ");\n") !== false) {
-					$return = false;
-					$indent -= $chain + 1;
-					$chain = 0;
+				if (strpos($string, ");\n") !== false) {
+					if ($return) {
+						$return = false;
+						$indent -= $chain + 1;
+						$chain = 0;
+					} elseif ($chain) {
+						$indent -= $chain;
+						$chain--;
+					}
 				}
 				
 				$indent += substr_count($string, '{');
 				$indent += substr_count($string, "(\n");
 				
 				if (
-					(strpos($string, "->\n") !== false)
+					(
+						(strpos($string, "->\n") !== false)
+						|| (
+							strlen($string) > 2
+							&& substr($string, -2, 2) == "=\n"
+						)
+					)
 					&& $string[0] == '$'
 				) {
 					$chain++;

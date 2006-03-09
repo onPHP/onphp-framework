@@ -27,5 +27,10 @@
 		{
 			return 'DataType::create(DataType::BOOLEAN)';
 		}
+		
+		public function toPrimitive()
+		{
+			return 'Primitive::boolean';
+		}
 	}
 ?>

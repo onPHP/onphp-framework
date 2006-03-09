@@ -131,6 +131,24 @@
 			return $this->type->toMethods($this->name);
 		}
 		
+		public function toPrimitive()
+		{
+			$required = ($this->required ? 'required' : 'optional');
+			
+			$size = null;
+			
+			if ($this->size) {
+				$size = "->\nsetMax({$this->size})";
+			}
+			
+			return <<<EOT
+
+{$this->type->toPrimitive()}('{$this->name}')->
+$required()$size
+
+EOT;
+		}
+		
 		public function toDaoSetter($className)
 		{
 			$varName = $this->toVarName($className);

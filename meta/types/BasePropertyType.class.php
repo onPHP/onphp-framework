@@ -16,6 +16,7 @@
 		abstract public function getDeclaration();
 		abstract public function isMeasurable();
 		abstract public function toColumnType();
+		abstract public function toPrimitive();
 		
 		public function isGeneric()
 		{

@@ -11,21 +11,8 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class TimestampType extends ObjectType
+	interface Prototyped
 	{
-		public function isGeneric()
-		{
-			return true;
-		}
-		
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::TIMESTAMP)';
-		}
-		
-		public function toPrimitive()
-		{
-			return 'Primitive::date';
-		}
+		public static function proto();
 	}
 ?>

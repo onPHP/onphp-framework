@@ -2,6 +2,11 @@
 
 2006-03-09	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* meta/: creation of prototyped classes implemented.
+
+	* core/Form/PrimitiveIdentifier.class.php: for resolving incapsulated
+	objects.
+
 	* core/Form/: two last primitives separated from factory file.
 
 	* meta/: all formatting stuff moved to separate class.
