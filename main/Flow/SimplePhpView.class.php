@@ -29,7 +29,7 @@
 		{
 			Assert::isTrue($model === null || $model instanceof Model);
 			
-			if ($model instanceof Model)
+			if ($model)
 				extract($model->asArray());
 			
 			$partViewer = new PartViewer($this->partViewResolver);

@@ -18,7 +18,7 @@
 	{
 		private $vars = array();
 		
-		public function asArray()
+		public function getList()
 		{
 			return $this->vars;
 		}
@@ -26,6 +26,7 @@
 		public function setVar($name, $var)
 		{
 			$this->vars[$name] = $var;
+			
 			return $this;
 		}
 		
