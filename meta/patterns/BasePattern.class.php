@@ -59,13 +59,20 @@
 				);
 		}
 		
-		protected function dumpFile($path, $content)
+		public static function dumpFile($path, $content)
 		{
 			echo "* ".$path."\n";
 			
-			$fp = fopen($path, 'wb');
-			fwrite($fp, $content);
-			fclose($fp);
+			$pattern = '@\/\*(.*)\*\/@sU';
+			
+			$old = preg_replace($pattern, null, file_get_contents($path));
+			$new = preg_replace($pattern, null, $content);
+			
+			if ($old !== $new) {
+				$fp = fopen($path, 'wb');
+				fwrite($fp, $content);
+				fclose($fp);
+			}
 		}
 	}
 ?>

@@ -132,9 +132,10 @@
 			
 			$schema .= '?>';
 			
-			$fp = fopen(ONPHP_META_AUTO_DIR.'AutoSchema.php', 'wb');
-			fwrite($fp, Format::indentize($schema));
-			fclose($fp);
+			BasePattern::dumpFile(
+				ONPHP_META_AUTO_DIR.'AutoSchema.php',
+				Format::indentize($schema)
+			);
 		}
 		
 		public function getClassByName($name)
