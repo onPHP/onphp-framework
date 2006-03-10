@@ -44,6 +44,11 @@
 		
 		public function setView($view)
 		{
+			Assert::isTrue(
+				($view instanceof View)	|| is_string($view),
+				"what should i do with '{$view}'?"
+			);
+			
 			$this->view = $view;
 			
 			return $this;
