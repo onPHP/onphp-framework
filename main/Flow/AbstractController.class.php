@@ -23,10 +23,14 @@
 		
 		public function handleRequest(HttpRequest $request)
 		{
-			if (!$model = $this->handleRequestInternal($request))
-				$model = new ModelAndView();
+			if (!$mav = $this->handleRequestInternal($request))
+				$mav =
+					ModelAndView::create()->
+					setModel(
+						$this->dumpProtected($this->makeModel())
+					);
 			
-			return $model->setModel($this->dumpProtected($this->makeModel()));
+			return $mav;
 		}
 		
 		protected function dumpProtected(Model $model)
@@ -47,6 +51,17 @@
 		protected function makeModel()
 		{
 			return new Model();
+		}
+		
+		protected function blowOut($area = DEFAULT_MODULE)
+		{
+			return
+				ModelAndView::create()->setView(
+					new RedirectView()
+				)->
+				setModel(
+					Model::create()->setVar('area', $area)
+				);
 		}
 	}
 ?>
