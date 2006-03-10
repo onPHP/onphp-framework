@@ -14,8 +14,9 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class DefaultHandlerController implements HandlerMapping
+	class DefaultHandlerMapping implements HandlerMapping
 	{
+		// FIXME: project specific, move to project
 		public function getController(HttpRequest $request)
 		{
 			$controller = null;

@@ -14,7 +14,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	abstract class FormedController extends AbstractController
+	abstract class FormedController implements Controller
 	{
 		protected $form = null;
 		
