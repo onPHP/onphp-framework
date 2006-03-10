@@ -42,7 +42,7 @@
 			return $this->view;
 		}
 		
-		public function setView(View $view)
+		public function setView($view)
 		{
 			$this->view = $view;
 			
