@@ -16,17 +16,23 @@
 	**/
 	class PartViewer
 	{
-		private $viewResolver = null;
+		private $viewResolver 	= null;
+		private $model			= null;
 		
-		public function __construct(ViewResolver $resolver)
+		public function __construct(ViewResolver $resolver, $model = null)
 		{
 			$this->viewResolver = $resolver;
+			$this->model = $model;
 		}
 		
 		public function view($partName, $model = null)
 		{
 			Assert::isTrue($model === null || $model instanceof Model);
 			
+			// use model from outer template if none specified
+			if ($model === null)
+				$model = $this->model;
+				
 			$this->viewResolver->resolveViewName($partName)->render($model);
 			
 			return $this;

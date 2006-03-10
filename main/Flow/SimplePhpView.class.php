@@ -32,7 +32,7 @@
 			if ($model)
 				extract($model->getList());
 			
-			$partViewer = new PartViewer($this->partViewResolver);
+			$partViewer = new PartViewer($this->partViewResolver, $model);
 			
 			require $this->templatePath;
 		}
