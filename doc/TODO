@@ -6,4 +6,4 @@
 * implement per-project "watermark" in cache subsystem to avoid namespace
   collisions in it.
 
-* introduce a bit order in exceptions hierarchy.
+* introduce a bit of order in exceptions hierarchy.
