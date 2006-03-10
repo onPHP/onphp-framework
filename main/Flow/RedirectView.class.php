@@ -16,32 +16,22 @@
 	**/
 	final class RedirectView implements View
 	{
-		public function render($model = null)
+		private $url = null;
+		
+		public function __construct($url) {
+			$this->url = $url;
+		}
+		
+		public function render ($model = null)
 		{
-			Assert::isTrue($model === null || $model instanceof Model);
-			
-			if (!$model || !$model->getList()) {
-				if (!HeaderUtils::redirectBack())
-					HeaderUtils::redirectRaw(
-						PATH_WEB.'?area='.DEFAULT_MODULE
-					);
-			} else {
+			$postfix = '';
+			if ($model && !$model->getList()) {
 				$qs = array();
-				
 				foreach ($model->getList() as $key => $val)
 					$qs[] = "{$key}={$val}";
-				
-				$url =
-					(defined('ADMIN_AREA')
-						? PATH_WEB_ADMIN
-						: PATH_WEB)
-					.'?'
-					.implode('&', $qs);
-				
-				var_dump($url); die();
-				
-				header("Location: {$url}");
+				$postfix = '?'.implode('&', $qs);
 			}
+			HeaderUtils::redirectRaw($this->url.$postfix);
 		}
 	}
 ?>
