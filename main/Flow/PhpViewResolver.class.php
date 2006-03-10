@@ -19,6 +19,12 @@
 		private $prefix		= null;
 		private $postfix	= null;
 		
+		public function __construct($prefix = null, $postfix = null)
+		{
+			$this->prefix	= $prefix;
+			$this->postfix	= $postfix;
+		}
+		
 		public function resolveViewName($viewName)
 		{
 			return

@@ -22,7 +22,7 @@
 		public function __construct($templatePath, ViewResolver $partViewResolver)
 		{
 			$this->templatePath = $templatePath;
-			$this->partViewResolver = $partViewer;
+			$this->partViewResolver = $partViewResolver;
 		}
 		
 		public function render($model = null)
@@ -30,7 +30,7 @@
 			Assert::isTrue($model === null || $model instanceof Model);
 			
 			if ($model)
-				extract($model->asArray());
+				extract($model->getList());
 			
 			$partViewer = new PartViewer($this->partViewResolver);
 			

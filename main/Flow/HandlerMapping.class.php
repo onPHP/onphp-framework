@@ -19,6 +19,6 @@
 		/**
 		 * @return Controller
 		**/
-		public function getHandler(HttpRequest $request);
+		public function getController(HttpRequest $request);
 	}
 ?>

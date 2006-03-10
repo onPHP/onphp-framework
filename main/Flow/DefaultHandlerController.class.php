@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Anton E. Lebedevich                             *
- *   noiselist@pochta.ru                                                   *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -14,39 +14,22 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class ModelAndView
+	class DefaultHandlerController implements HandlerMapping
 	{
-		private $model 	= null;
-		
-		private $view	= null;
-		
-		public static function create()
+		public function getController(HttpRequest $request)
 		{
-			return new self;
-		}
-		
-		public function getModel()
-		{
-			return $this->model;
-		}
-		
-		public function setModel(Model $model)
-		{
-			$this->model = $model;
+			$controller = null;
 			
-			return $this;
-		}
-		
-		public function getView()
-		{
-			return $this->view;
-		}
-		
-		public function setView(View $view)
-		{
-			$this->view = $view;
-			
-			return $this;
+			if (!isset($_GET['area']) || $_GET['area'] == DEFAULT_MODULE) {
+				$controller = DEFAULT_MODULE;
+			} elseif (
+				defined('PATH_MODULES')
+				&& is_readable(PATH_MODULES.$_GET['area'].EXT_CLASS)
+			) {
+				$controller = $_GET['area'];
+			}
+
+			return new $controller;
 		}
 	}
 ?>
