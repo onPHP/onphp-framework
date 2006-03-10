@@ -14,39 +14,13 @@
 	/**
 	 * @ingroup Flow
 	**/
-	abstract class AbstractController implements Controller
+	abstract class FormedController extends AbstractController
 	{
-		/**
-		 * @return ModelAndView
-		**/
-		abstract protected function handleRequestInternal(HttpRequest $request);
+		protected $form = null;
 		
-		public function handleRequest(HttpRequest $request)
+		public function __construct()
 		{
-			if (!$model = $this->handleRequestInternal($request))
-				$model = new ModelAndView();
-			
-			return $model->setModel($this->dumpProtected($this->makeModel()));
-		}
-		
-		protected function dumpProtected(Model $model)
-		{
-			$class = new ReflectionClass($this);
-			
-			foreach ($class->getProperties() as $property) {
-				if ($property->isProtected() && !$property->isStatic())
-					$model->setVar(
-						$property->getName(),
-						$this->{$property->getName()}
-					);
-			}
-			
-			return $model;
-		}
-		
-		protected function makeModel()
-		{
-			return new Model();
+			$this->form = Form::create();
 		}
 	}
 ?>

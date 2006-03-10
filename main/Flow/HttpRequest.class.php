@@ -34,7 +34,12 @@
 		// all other sh1t
 		private $attached	= array();
 		
-		public function getGet()
+		public static function create()
+		{
+			return new self;
+		}
+		
+		public function &getGet()
 		{
 			return $this->get;
 		}
@@ -46,7 +51,7 @@
 			return $this;
 		}
 		
-		public function getPost()
+		public function &getPost()
 		{
 			return $this->post;
 		}
@@ -58,7 +63,7 @@
 			return $this;
 		}
 		
-		public function getServer()
+		public function &getServer()
 		{
 			return $this->server;
 		}
@@ -70,7 +75,7 @@
 			return $this;
 		}
 		
-		public function getCookie()
+		public function &getCookie()
 		{
 			return $this->cookie;
 		}
@@ -82,7 +87,7 @@
 			return $this;
 		}
 		
-		public function getSession()
+		public function &getSession()
 		{
 			return $this->session;
 		}
@@ -113,7 +118,7 @@
 			return $this;
 		}
 		
-		public function getAttachedList()
+		public function &getAttachedList()
 		{
 			return $this->attached;
 		}

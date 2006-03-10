@@ -23,12 +23,12 @@
 			if (!isset($_GET['area']) || $_GET['area'] == DEFAULT_MODULE) {
 				$controller = DEFAULT_MODULE;
 			} elseif (
-				defined('PATH_MODULES')
-				&& is_readable(PATH_MODULES.$_GET['area'].EXT_CLASS)
+				defined('PATH_MODULES_DIR')
+				&& is_readable(PATH_MODULES_DIR.$_GET['area'].EXT_CLASS)
 			) {
 				$controller = $_GET['area'];
 			}
-
+			
 			return new $controller;
 		}
 	}

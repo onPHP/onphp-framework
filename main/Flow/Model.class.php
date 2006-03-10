@@ -18,6 +18,11 @@
 	{
 		private $vars = array();
 		
+		public static function create()
+		{
+			return new self;
+		}
+		
 		public function getList()
 		{
 			return $this->vars;
