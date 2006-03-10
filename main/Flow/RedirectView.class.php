@@ -18,19 +18,30 @@
 	{
 		private $url = null;
 		
-		public function __construct($url) {
+		public function __construct($url)
+		{
 			$this->url = $url;
 		}
 		
-		public function render ($model = null)
+		public function render($model = null)
 		{
-			$postfix = '';
-			if ($model && !$model->getList()) {
+			$postfix = null;
+			
+			if ($model && $model->getList()) {
 				$qs = array();
+				
 				foreach ($model->getList() as $key => $val)
 					$qs[] = "{$key}={$val}";
-				$postfix = '?'.implode('&', $qs);
+			
+				if (strpos($this->url, '?') === false)
+					$first = '?';
+				else
+					$first = '&';
+					
+				if ($qs)
+					$postfix = $first.implode('&', $qs);
 			}
+			
 			HeaderUtils::redirectRaw($this->url.$postfix);
 		}
 	}
