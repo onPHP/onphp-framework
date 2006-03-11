@@ -274,7 +274,7 @@ EOT;
 						
 						if ($remote->getPattern() instanceof EnumerationClassPattern) {
 							if ($this->required)
-								$out .= "\${$varName}->get{$method}->getId())";
+								$out .= "\${$varName}->get{$method}()->getId())";
 							else
 								$out .=
 									"\n"
