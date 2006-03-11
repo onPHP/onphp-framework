@@ -4,7 +4,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = onPHP
-PROJECT_NUMBER         = 0.2-dev
+PROJECT_NUMBER         = 0.3-dev
 OUTPUT_DIRECTORY       = ./doxy/
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
