@@ -41,13 +41,13 @@ Things not supported by design:
 		define('ONPHP_META_BUSINESS_DIR', PATH_CLASSES.'Business'.DIRECTORY_SEPARATOR);
 		
 		if (!is_dir(ONPHP_META_DAO_DIR))
-			mkdir(ONPHP_META_DAO_DIR, 0700, true);
+			mkdir(ONPHP_META_DAO_DIR, 0755, true);
 		
 		if (!is_dir(ONPHP_META_AUTO_DIR))
-			mkdir(ONPHP_META_AUTO_DIR, 0700, true);
+			mkdir(ONPHP_META_AUTO_DIR, 0755, true);
 		
 		if (!is_dir(ONPHP_META_BUSINESS_DIR))
-			mkdir(ONPHP_META_BUSINESS_DIR, 0700, true);
+			mkdir(ONPHP_META_BUSINESS_DIR, 0755, true);
 	}
 
 	if (!isset($_SERVER['argv'][1], $_SERVER['argv'][2])) {
