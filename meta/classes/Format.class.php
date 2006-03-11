@@ -97,7 +97,6 @@
 				
 				if ($chain && $string[0] == ':') {
 					$chain--;
-					$indent--;
 				}
 			}
 			

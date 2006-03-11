@@ -162,54 +162,52 @@ EOT;
 					
 					case MetaRelation::ONE_TO_ONE:
 						
-						$idName =
-							$this->toVarName(
-								MetaConfiguration::me()->
-								getClassByName(
-									$this->type->getClass()
-								)->
-									getIdentifier()->
-										getName()
+						$remote =
+							MetaConfiguration::me()->getClassByName(
+								$this->type->getClass()
 							);
 						
-						if ($this->required) {
-							
-							$out =
-								"set{$method}("
-								."{$this->type->getClass()}::dao()->getById("
-								."\$array[\$prefix.'{$this->dumbName}_{$idName}']"
-								."))";
-							
-						} else {
-							
-							$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->dumbName}_{$idName}']))
-	\${$varName}->set{$method}(
-		{$this->type->getClass()}::dao()->getById(\$array[\$prefix.'{$this->dumbName}_{$idName}'])
-	);
-
-EOT;
-							
-						}
+						$idName =
+							$this->toVarName(
+								$remote->getIdentifier()->getName()
+							);
 						
-						break;
-					
-					case MetaRelation::ENUMERATION:
-						
-						if ($this->required) {
-							$out =
-								"set{$method}("
-								."new {$this->type->getClass()}("
-								."\$array[\$prefix.'{$this->dumbName}_id']"
-								."))";
-						} else {
-							$out = <<<EOT
+						if ($remote->getPattern() instanceof EnumerationClassPattern) {
+							if ($this->required) {
+								$out =
+									"set{$method}("
+									."new {$this->type->getClass()}("
+									."\$array[\$prefix.'{$this->dumbName}_id']"
+									."))";
+							} else {
+								$out = <<<EOT
 if (isset(\$array[\$prefix.'{$this->dumbName}_id']))
 	\${$varName}->set{$method}(
 		new {$this->type->getClass()}(\$array[\$prefix.'{$this->dumbName}_id'])
 	);
-
+	
 EOT;
+							}
+						} else {
+							if ($this->required) {
+								
+								$out =
+									"set{$method}("
+									."{$this->type->getClass()}::dao()->getById("
+									."\$array[\$prefix.'{$this->dumbName}_{$idName}']"
+									."))";
+								
+							} else {
+								
+								$out = <<<EOT
+if (isset(\$array[\$prefix.'{$this->dumbName}_{$idName}']))
+	\${$varName}->set{$method}(
+		{$this->type->getClass()}::dao()->getById(\$array[\$prefix.'{$this->dumbName}_{$idName}'])
+	);
+	
+EOT;
+								
+							}
 						}
 						
 						break;
@@ -264,45 +262,36 @@ EOT;
 					
 					case MetaRelation::ONE_TO_ONE:
 						
-						$idName =
-							ucfirst(
-								$this->toVarName(
-									MetaConfiguration::me()->
-									getClassByName(
-										$this->type->getClass()
-									)->
-										getIdentifier()->
-											getName()
-								)
+						$remote =
+							MetaConfiguration::me()->getClassByName(
+								$this->type->getClass()
 							);
+						
+						$idName =ucfirst($remote->getIdentifier()->getName());
 						
 						$out =
 							"set('{$this->dumbName}_{$idName}', ";
 						
-						if ($this->required)
-							$out .=
-								"\${$varName}->get{$method}()->get{$idName}())";
-						else
-							$out .=
-								"\n"
-								."\${$varName}->get{$method}()\n"
-								."? \${$varName}->get{$method}()->get{$idName}()\n"
-								.": null\n)";
-						
-						break;
-					
-					case MetaRelation::ENUMERATION:
-						
-						$out = "set('{$this->dumbName}_id', ";
-						
-						if ($this->required)
-							$out .= "\${$varName}->get{$method}->getId()";
-						else
-							$out .=
-								"\n"
-								."\${$varName}->get{$method}()\n"
-								."? \${$varName}->get{$method}()->get{$idName}()\n"
-								.": null\n)";
+						if ($remote->getPattern() instanceof EnumerationClassPattern) {
+							if ($this->required)
+								$out .= "\${$varName}->get{$method}->getId())";
+							else
+								$out .=
+									"\n"
+									."\${$varName}->get{$method}()\n"
+									."? \${$varName}->get{$method}()->get{$idName}()\n"
+									.": null\n)";
+						} else {
+							if ($this->required)
+								$out .=
+									"\${$varName}->get{$method}()->get{$idName}())";
+							else
+								$out .=
+									"\n"
+									."\${$varName}->get{$method}()\n"
+									."? \${$varName}->get{$method}()->get{$idName}()\n"
+									.": null\n)";
+						}
 						
 						break;
 					

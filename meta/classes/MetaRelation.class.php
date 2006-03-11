@@ -17,14 +17,10 @@
 		const MANY_TO_ONE	= 'ManyToOne';
 		const MANY_TO_MANY	= 'ManyToMany';
 		
-		const ENUMERATION	= 'Enumeration';
-		
 		protected $names = array(
 			self::ONE_TO_ONE		=> 'OneToOne',
 			self::MANY_TO_ONE		=> 'ManyToOne',
-			self::MANY_TO_MANY		=> 'ManyToMany',
-			
-			self::ENUMERATION		=> 'Enumeration'
+			self::MANY_TO_MANY		=> 'ManyToMany'
 		);
 	}
 ?>

@@ -28,17 +28,17 @@
 		protected function fullBuild(MetaClass $class)
 		{
 			$this->dumpFile(
-				ONPHP_META_AUTO_DIR.'Proto'.$class->getName().EXT_CLASS,
+				ONPHP_META_AUTO_PROTO_DIR.'Proto'.$class->getName().EXT_CLASS,
 				Format::indentize(ProtoClassBuilder::build($class))
 			);
 			
 			$this->dumpFile(
-				ONPHP_META_AUTO_DIR.'Auto'.$class->getName().EXT_CLASS,
+				ONPHP_META_AUTO_BUSINESS_DIR.'Auto'.$class->getName().EXT_CLASS,
 				Format::indentize(AutoClassBuilder::build($class))
 			);
 			
 			$this->dumpFile(
-				ONPHP_META_AUTO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
+				ONPHP_META_AUTO_DAO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
 				Format::indentize(AutoDaoBuilder::build($class))
 			);
 			

@@ -133,7 +133,7 @@
 			$schema .= '?>';
 			
 			BasePattern::dumpFile(
-				ONPHP_META_AUTO_DIR.'AutoSchema.php',
+				ONPHP_META_AUTO_DIR.'schema.php',
 				Format::indentize($schema)
 			);
 		}
