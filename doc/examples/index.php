@@ -28,7 +28,11 @@
 		
 		if (
 			isset($_GET['area'])
-			&& class_exists($_GET['area'], true)
+			&& defined('PATH_MODULES_DIR')
+			&& is_readable(
+				// PATH_MODULES_DIR.'admin'.DIRECTORY_SEPARATOR.
+				$_GET['area'].EXT_CLASS
+			)
 		) {
 			$controllerName = $_GET['area'];
 		}
