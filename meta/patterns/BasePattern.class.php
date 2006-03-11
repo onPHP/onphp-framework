@@ -61,8 +61,6 @@
 		
 		public static function dumpFile($path, $content)
 		{
-			echo "* ".$path."\n";
-			
 			$content = trim($content);
 			
 			if (is_readable($path)) {
@@ -75,6 +73,8 @@
 			}
 			
 			if ($old !== $new) {
+				echo "* ".$path."\n";
+				
 				$fp = fopen($path, 'wb');
 				fwrite($fp, $content);
 				fclose($fp);
