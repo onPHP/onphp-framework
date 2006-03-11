@@ -21,10 +21,14 @@
 
 		$controllerName = DEFAULT_MODULE;
 		
+		set_include_path(
+			get_include_path().PATH_SEPARATOR
+			.PATH_MODULES_DIR /* .'admin' */
+		);
+		
 		if (
 			isset($_GET['area'])
-			&& defined('PATH_MODULES_DIR')
-			&& is_readable(PATH_MODULES_DIR.$_GET['area'].EXT_CLASS)
+			&& class_exists($_GET['area'], true)
 		) {
 			$controllerName = $_GET['area'];
 		}
