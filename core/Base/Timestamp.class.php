@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup Base
 	**/
-	class Timestamp
+	class Timestamp implements Stringable
 	{
 		private $string		= null;
 		private $int		= null;

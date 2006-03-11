@@ -37,10 +37,5 @@
 			
 			return $this;
 		}
-		
-		public function getSelfUrl()
-		{
-			return $_SERVER['PHP_SELF'];
-		}
 	}
 ?>

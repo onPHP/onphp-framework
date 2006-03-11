@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -11,39 +11,8 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @see Named.class.php
-	 * 
-	 * @ingroup Base
-	**/
-	abstract class NamedObject
-		extends IdentifiableObject
-		implements Named, Stringable
+	interface Stringable
 	{
-		protected $name	= null;
-		
-		public function getName()
-		{
-			return $this->name;
-		}
-		
-		public function setName($name)
-		{
-			$this->name = $name;
-			
-			return $this;
-		}
-		
-		public function toString()
-		{
-			return $this->name.'#'.$this->id;
-		}
-
-		public static function compareNames(
-			NamedObject $left, NamedObject $right
-		)
-		{
-			return strcasecmp($left->name, $right->name);
-		}
+		public function toString();
 	}
 ?>

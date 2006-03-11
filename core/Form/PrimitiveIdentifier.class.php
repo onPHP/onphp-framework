@@ -53,7 +53,7 @@
 			
 			if (parent::import($scope)) {
 				
-				$dao = call_user_method_array(array($this->class, 'dao'));
+				$dao = call_user_func(array($this->class->getName(), 'dao'));
 				
 				try {
 					$this->value = $dao->getById($this->value);
