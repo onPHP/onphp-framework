@@ -11,20 +11,22 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class MetaRelation extends Enumeration
+	final class EnumerationClassPattern extends BasePattern
 	{
-		const ONE_TO_ONE	= 'OneToOne';
-		const MANY_TO_ONE	= 'ManyToOne';
-		const MANY_TO_MANY	= 'ManyToMany';
+		public function daoExist()
+		{
+			return false;
+		}
 		
-		const ENUMERATION	= 'Enumeration';
-		
-		protected $names = array(
-			self::ONE_TO_ONE		=> 'OneToOne',
-			self::MANY_TO_ONE		=> 'ManyToOne',
-			self::MANY_TO_MANY		=> 'ManyToMany',
+		public function build(MetaClass $class)
+		{
+			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
 			
-			self::ENUMERATION		=> 'Enumeration'
-		);
+			if (!file_exists($userFile))
+				$this->dumpFile(
+					$userFile,
+					Format::indentize(EnumerationClassBuilder::build($class))
+				);
+		}
 	}
 ?>

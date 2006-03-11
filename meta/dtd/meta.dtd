@@ -29,5 +29,5 @@
 
 <!ELEMENT pattern EMPTY>
 <!ATTLIST pattern
-		name		(DictionaryClass|AbstractClass|StraightMapping) #REQUIRED
+		name		(DictionaryClass|AbstractClass|StraightMapping|EnumerationClass) #REQUIRED
 >

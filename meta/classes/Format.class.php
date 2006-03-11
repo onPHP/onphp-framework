@@ -39,6 +39,9 @@
 						$indent -= $chain;
 					else
 						$indent--;
+				} elseif ($string[0] == '?') {
+					$chain++;
+					$indent++;
 				}
 
 				if ($indent > 0)
@@ -89,6 +92,11 @@
 				
 				if ($string == "\n" && $indent == 0) {
 					$indent++;
+				}
+				
+				if ($chain && $string[0] == ':') {
+					$chain--;
+					$indent--;
 				}
 			}
 			

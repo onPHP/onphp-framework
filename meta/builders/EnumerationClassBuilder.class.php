@@ -11,20 +11,26 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class MetaRelation extends Enumeration
+	final class EnumerationClassBuilder extends BaseBuilder
 	{
-		const ONE_TO_ONE	= 'OneToOne';
-		const MANY_TO_ONE	= 'ManyToOne';
-		const MANY_TO_MANY	= 'ManyToMany';
-		
-		const ENUMERATION	= 'Enumeration';
-		
-		protected $names = array(
-			self::ONE_TO_ONE		=> 'OneToOne',
-			self::MANY_TO_ONE		=> 'ManyToOne',
-			self::MANY_TO_MANY		=> 'ManyToMany',
+		public static function build(MetaClass $class)
+		{
+			$out = self::getHead();
 			
-			self::ENUMERATION		=> 'Enumeration'
-		);
+			if ($type = $class->getType())
+				$type = "{$type->getName()} ";
+			else
+				$type = null;
+			
+			$out .= <<<EOT
+{$type}class {$class->getName()} extends Enumeration
+{
+	// implement me!
+}
+
+EOT;
+			
+			return $out.self::getHeel();
+		}
 	}
 ?>

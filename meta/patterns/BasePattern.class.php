@@ -63,6 +63,8 @@
 		{
 			echo "* ".$path."\n";
 			
+			$content = trim($content);
+			
 			if (is_readable($path)) {
 				$pattern = '@\/\*(.*)\*\/@sU';
 				

@@ -194,6 +194,26 @@ EOT;
 						
 						break;
 					
+					case MetaRelation::ENUMERATION:
+						
+						if ($this->required) {
+							$out =
+								"set{$method}("
+								."new {$this->type->getClass()}("
+								."\$array[\$prefix.'{$this->dumbName}_id']"
+								."))";
+						} else {
+							$out = <<<EOT
+if (isset(\$array[\$prefix.'{$this->dumbName}_id']))
+	\${$varName}->set{$method}(
+		new {$this->type->getClass()}(\$array[\$prefix.'{$this->dumbName}_id'])
+	);
+
+EOT;
+						}
+						
+						break;
+					
 					default:
 						
 						throw new UnsupportedMethodException();
@@ -233,8 +253,6 @@ EOT;
 		
 		public function toDaoField($className, $indent = 5)
 		{
-			$tabs = str_pad(null, $indent, "\t", STR_PAD_LEFT);
-			
 			$varName = $this->toVarName($className);
 			$method = ucfirst($this->name);
 
@@ -257,20 +275,32 @@ EOT;
 							);
 						
 						$out =
-							"{$tabs}set('{$this->dumbName}_{$idName}', ";
+							"set('{$this->dumbName}_{$idName}', ";
 						
 						if ($this->required)
 							$out .=
 								"\${$varName}->get{$method}()->get{$idName}())";
 						else
 							$out .=
-								"\n{$tabs}\t"
+								"\n"
 								."\${$varName}->get{$method}()\n"
-								."{$tabs}\t\t"
 								."? \${$varName}->get{$method}()->get{$idName}()\n"
-								."{$tabs}\t\t"
-								.": null\n"
-								."{$tabs})";
+								.": null\n)";
+						
+						break;
+					
+					case MetaRelation::ENUMERATION:
+						
+						$out = "set('{$this->dumbName}_id', ";
+						
+						if ($this->required)
+							$out .= "\${$varName}->get{$method}->getId()";
+						else
+							$out .=
+								"\n"
+								."\${$varName}->get{$method}()\n"
+								."? \${$varName}->get{$method}()->get{$idName}()\n"
+								.": null\n)";
 						
 						break;
 					
@@ -280,7 +310,7 @@ EOT;
 				}
 			} else {
 
-				$out = "{$tabs}set('{$this->dumbName}', ";
+				$out = "set('{$this->dumbName}', ";
 				
 				if ($this->type instanceof ObjectType) {
 					if ($this->required)
@@ -288,13 +318,10 @@ EOT;
 							"\${$varName}->get{$method}()->toString()";
 					else
 						$out .=
-							"\n{$tabs}\t"
+							"\n"
 							."\${$varName}->get{$method}()\n"
-							."{$tabs}\t\t"
 							."? \${$varName}->get{$method}()->toString()\n"
-							."{$tabs}\t\t"
-							.": null\n"
-							.$tabs;
+							.": null\n";
 				} else {
 					$out .=	"\${$varName}->get{$method}()";
 				}
