@@ -19,9 +19,17 @@
 			
 			$out .= "abstract class Auto{$class->getName()}";
 			
+			$isNamed = false;
+			
 			if ($parent = $class->getParent())
 				$out .= " extends {$parent->getName()}";
-			else
+			elseif (
+				$class->getPattern() instanceof DictionaryClassPattern
+				&& $class->hasProperty('name')
+			) {
+				$out .= " extends NamedObject";
+				$isNamed = true;
+			} else
 				$out .= " extends IdentifiableObject";
 			
 			if ($interfaces = $class->getInterfaces())
@@ -30,6 +38,10 @@
 			$out .= "\n{\n";
 			
 			foreach ($class->getProperties() as $property) {
+				
+				if ($isNamed && $property->getName() == 'name')
+					continue;
+				
 				if ($property->getName() == 'id' && !$parent)
 					continue;
 				
@@ -39,6 +51,9 @@
 			}
 			
 			foreach ($class->getProperties() as $property) {
+				
+				if ($isNamed && $property->getName() == 'name')
+					continue;
 				
 				if ($property->getName() == 'id' && !$parent)
 					continue;

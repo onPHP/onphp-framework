@@ -94,6 +94,11 @@
 			return $this;
 		}
 		
+		public function hasProperty($name)
+		{
+			return isset($this->properties[$name]);
+		}
+		
 		public function dropProperty($name)
 		{
 			if (isset($this->properties[$name])) {
