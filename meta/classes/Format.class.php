@@ -35,9 +35,10 @@
 				elseif ($string == "?>\n")
 					$indent = 0;
 				elseif ($string == ");\n") {
-					if ($chain)
-						$indent -= $chain;
-					else
+					if ($chain) {
+						$indent -= $chain + 1;
+						$chain--;
+					} else
 						$indent--;
 				} elseif ($string[0] == '?') {
 					$chain++;
