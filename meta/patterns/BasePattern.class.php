@@ -63,10 +63,14 @@
 		{
 			echo "* ".$path."\n";
 			
-			$pattern = '@\/\*(.*)\*\/@sU';
-			
-			$old = preg_replace($pattern, null, file_get_contents($path));
-			$new = preg_replace($pattern, null, $content);
+			if (is_readable($path)) {
+				$pattern = '@\/\*(.*)\*\/@sU';
+				
+				$old = preg_replace($pattern, null, file_get_contents($path));
+				$new = preg_replace($pattern, null, $content);
+			} else {
+				$old = 1; $new = 2;
+			}
 			
 			if ($old !== $new) {
 				$fp = fopen($path, 'wb');
