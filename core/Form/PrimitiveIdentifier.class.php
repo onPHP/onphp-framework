@@ -36,7 +36,7 @@
 			
 			Assert::isTrue(
 				$class->implementsInterface('DAOConnected'),
-				"class '{$class}' should implement DAOConnected interface"
+				"class '{$class->getName()}' should implement DAOConnected interface"
 			);
 			
 			$this->class = $class;

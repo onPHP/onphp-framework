@@ -35,12 +35,59 @@ EOT;
 			foreach ($class->getProperties() as $property) {
 				
 				if (
-					$property->getType() instanceof ObjectType
-					&& !$property->getType()->isGeneric()
+					(
+						$property->getType() instanceof ObjectType
+						&& !$property->getType()->isGeneric()
+					)
+					|| $property->isIdentifier()
 				) {
-					$primitive =
-						"\nPrimitive::identifier('{$property->getName()}Id')->\n"
-						."of('{$property->getType()->getClass()}')\n";
+					
+					if (
+						!$property->isIdentifier() 
+						&&
+							MetaConfiguration::me()->getClassByName(
+								$property->getType()->getClass()
+							)->
+							getPattern() instanceof EnumerationClassPattern
+					)
+						$isEnum = true;
+					else
+						$isEnum = false;
+
+					if ($isEnum) {
+						$className = MetaConfiguration::me()->getClassByName(
+							$property->getType()->getClass()
+						)->getName();
+						
+						$primitiveName = $property->getName().'Id';
+					} elseif ($property->isIdentifier()) {
+						$className = $class->getName();
+						$primitiveName = 'id';
+					} else {
+						$className = $property->getType()->getClass();
+						$primitiveName = $property->getName().'Id';
+					}
+					
+					if ($isEnum) {
+						// FIXME: any better way to get enum's list?
+						$primitive =
+							"\nPrimitive::choice('{$primitiveName}')->\n"
+							."setList(\n"
+							."ArrayUtils::convertObjectList(\n"
+							."{$className}::getList(new {$className}(1))\n"
+							.")\n"
+							.")->\n";
+					} else {
+						$primitive =
+							"\nPrimitive::identifier('{$primitiveName}')->\n"
+							."of('{$className}')->\n";
+					}
+					
+					if ($property->isRequired())
+						$primitive .= "required()\n";
+					else
+						$primitive .= "optional()\n";
+					
 				} else
 					$primitive = $property->toPrimitive();
 				
