@@ -46,7 +46,7 @@ EOT;
 			
 	public static function create()
 	{
-		return new {$class->getName()}();
+		return new self;
 	}
 		
 {$dao}
