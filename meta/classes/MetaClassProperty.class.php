@@ -255,7 +255,7 @@ EOT;
 		{
 			$varName = $this->toVarName($className);
 			$method = ucfirst($this->name);
-
+			
 			$out = null;
 			
 			if (!$this->type->isGeneric()) {
@@ -265,13 +265,15 @@ EOT;
 					case MetaRelation::ONE_TO_ONE:
 						
 						$idName =
-							$this->toVarName(
-								MetaConfiguration::me()->
-								getClassByName(
-									$this->type->getClass()
-								)->
-									getIdentifier()->
-										getName()
+							ucfirst(
+								$this->toVarName(
+									MetaConfiguration::me()->
+									getClassByName(
+										$this->type->getClass()
+									)->
+										getIdentifier()->
+											getName()
+								)
 							);
 						
 						$out =
