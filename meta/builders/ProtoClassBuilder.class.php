@@ -18,7 +18,7 @@
 			$out = self::getHead();
 			
 			$out .= <<<EOT
-final class Proto{$class->getName()} extends Singletone
+final class Proto{$class->getName()} extends AbstractProtoClass
 {
 	private \$form = null;
 
@@ -59,13 +59,13 @@ EOT;
 							$property->getType()->getClass()
 						)->getName();
 						
-						$primitiveName = $property->getName().'Id';
+						$primitiveName = $property->getName()/*.'Id'*/;
 					} elseif ($property->isIdentifier()) {
 						$className = $class->getName();
 						$primitiveName = 'id';
 					} else {
 						$className = $property->getType()->getClass();
-						$primitiveName = $property->getName().'Id';
+						$primitiveName = $property->getName()/*.'Id'*/;
 					}
 					
 					if ($isEnum) {
@@ -104,58 +104,10 @@ EOT;
 	{
 		return \$this->form;
 	}
-	
-	public function importForm()
-	{
-		\$form = &\$this->form;
-
-
-EOT;
-
-			$get = $post = array();
-			
-			foreach ($class->getProperties() as $property) {
-				
-				if (
-					$property->getType() instanceof ObjectType
-					&& !$property->getType()->isGeneric()
-				) {
-					$name = "{$property->getName()}Id";
-				} else
-					$name = $property->getName();
-				
-				if ($property->isIdentifier())
-					$get[] = $name;
-				else
-					$post[] = $name;
-			}
-			
-			if ($get) {
-				$out .= "// GET\n";
-				
-				foreach ($get as $name) {
-					$out .= "\$form->importOne('{$name}', \$_GET);\n";
-				}
-			}
-			
-			if ($get) {
-				$out .= "\n// POST\n";
-				
-				foreach ($post as $name) {
-					$out .= "\$form->importOne('{$name}', \$_POST);\n";
-				}
-			}
-			
-			$out .= <<<EOT
-
-		return \$this;
-	}
 }
 
 EOT;
-			
-			
-			
+
 			return $out.self::getHeel();
 		}
 	}

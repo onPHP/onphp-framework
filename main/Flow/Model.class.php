@@ -39,5 +39,10 @@
 		{
 			return $this->vars[$name];
 		}
+		
+		public function hasVar($name)
+		{
+			return isset($this->vars[$name]);
+		}
 	}
 ?>

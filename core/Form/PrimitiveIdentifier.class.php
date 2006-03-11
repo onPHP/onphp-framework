@@ -16,11 +16,13 @@
 	**/
 	final class PrimitiveIdentifier extends PrimitiveInteger
 	{
-		private $class	= null;
+		private $class = null;
 		
 		public function setValue($value)
 		{
-			Assert::isTrue($value instanceof $this->class);
+			$className = $this->class->getName();
+			
+			Assert::isTrue($value instanceof $className);
 			
 			return parent::setValue($value);
 		}
@@ -44,6 +46,11 @@
 			return $this;
 		}
 		
+		public function dao()
+		{
+			return call_user_func(array($this->class->getName(), 'dao'));
+		}
+		
 		public function import(&$scope)
 		{
 			if (!$this->class)
@@ -52,11 +59,8 @@
 				);
 			
 			if (parent::import($scope)) {
-				
-				$dao = call_user_func(array($this->class->getName(), 'dao'));
-				
 				try {
-					$this->value = $dao->getById($this->value);
+					$this->value = $this->dao()->getById($this->value);
 				} catch (ObjectNotFoundException $e) {
 					return false;
 				}

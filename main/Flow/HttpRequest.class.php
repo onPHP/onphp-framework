@@ -30,6 +30,9 @@
 		
 		// reference, not copy
 		private $session	= array();
+		
+		// uploads
+		private $files		= array();
 
 		// all other sh1t
 		private $attached	= array();
@@ -92,6 +95,18 @@
 			return $this->session;
 		}
 		
+		public function setFiles(/* array */ $files)
+		{
+			$this->files = $files;
+			
+			return $this;
+		}
+		
+		public function getFiles()
+		{
+			return $this->files;
+		}
+		
 		public function setSession(/* array */ &$session)
 		{
 			$this->session = $session;
@@ -121,6 +136,11 @@
 		public function &getAttachedList()
 		{
 			return $this->attached;
+		}
+		
+		public function getByType(RequestType $type)
+		{
+			return $this->{$type->getName()};
 		}
 	}
 ?>

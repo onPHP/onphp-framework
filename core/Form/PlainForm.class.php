@@ -31,6 +31,7 @@
 			return $this;
 		}
 		
+		// FIXME: rename to correct name (primitiveExists)
 		public function primitiveExist($name)
 		{
 			return
@@ -51,6 +52,18 @@
 			
 			if ($alias)
 				$this->addAlias($name, $alias);
+			
+			return $this;
+		}
+		
+		public function drop($name)
+		{
+			if (!isset($this->primitives[$name]))
+				throw new ObjectNotFoundException(
+					"can not drop inexistent primitive '{$name}'"
+				);
+			
+			unset($this->primitives[$name]);
 			
 			return $this;
 		}

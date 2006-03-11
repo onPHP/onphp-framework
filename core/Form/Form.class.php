@@ -163,6 +163,7 @@
 				if (isset($this->primitives[$name])) {
 					
 					$getter = 'get'.ucfirst($name);
+					$prm = $this->primitives[$name];
 					
 					// hasMethod() is 5.1 only
 					try {
@@ -170,18 +171,32 @@
 							$class->getMethod($getter)
 							&& ($value = $object->$getter()) !== null
 						) {
-							$this->primitives[$name]->setValue($value);
+							if (
+								$prm instanceof PrimitiveIdentifier
+							) {
+								$fake = array($name => $value);
+								$this->importOne($name, $fake);
+							} elseif (
+								$prm instanceof PrimitiveList
+								&& $value instanceof Enumeration
+							) {
+								$prm->setValue($value->getId());
+							} else {
+								$prm->setValue($value);
+							}
 						}
 					} catch (ReflectionException $e) {
 						// no such method
 					}
 				}
 			}
+			
+			return $this;
 		}
 		
 		public function exportObject($object)
 		{
-			$class = new ReflectionClass(get_class($object));
+			$class = new ReflectionClass($object);
 			
 			foreach ($this->primitives as $name => $prm) {
 				$setter = 'set'.ucfirst($name);
@@ -191,8 +206,15 @@
 					if (
 						$class->getMethod($setter)
 						&& ($value = $prm->getValue()) !== null
-					)
+					) {
+						if ($prm instanceof PrimitiveList) {
+							$list = $prm->getList();
+							$value = $list[$value];
+						} elseif ($prm->getName() == 'id') // magic!
+							$value = $value->getId();
+						
 						$object->$setter($value);
+					}
 				} catch (ReflectionException $e) {
 					// no such method
 				}
