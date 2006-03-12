@@ -37,14 +37,16 @@
 							$class->getMethod($getter)
 							&& ($value = $object->$getter()) !== null
 						) {
-							$fake =
-								array(
-									$name =>
-										$value instanceof Identifiable
-											? $value->getId()
-											: $value
-								);
-							
+							// PrimitiveIdentifier, Enumerations
+							if ($value instanceof Identifiable)
+								$fake = array($name => $value->getId());
+							// PrimitiveDate
+							elseif ($value instanceof Stringable)
+								$fake = array($name => $value->toString());
+							// everything else
+							else
+								$fake = array($name => $value);
+								
 							$form->importOne($name, $fake);
 						}
 					} catch (ReflectionException $e) {
