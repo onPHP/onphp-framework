@@ -65,8 +65,7 @@
 				
 				if ($command == 'add') {
 					$mav->getModel()->
-						setVar('action', 'edit')->
-						setVar('id', $object->getId());
+						setVar('action', 'edit');
 				}
 				
 			} else {

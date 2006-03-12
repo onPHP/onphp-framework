@@ -21,7 +21,7 @@
 			if (!$form->getErrors()) {
 				FormUtils::form2object($form, $subject);
 				
-				$object = $subject->dao()->take($subject);
+				$subject = $subject->dao()->take($subject);
 				
 				return ModelAndView::create()->setView('success');
 			}

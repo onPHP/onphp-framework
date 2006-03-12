@@ -19,7 +19,13 @@
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
 			$form->markGood('id');
-			return parent::run($subject, $form, $request);
+			
+			$mav = parent::run($subject, $form, $request);
+			
+			if ($id = $subject->getId())
+				$mav->getModel()->setVar('id', $id);
+			
+			return $mav;
 		}
 	}
 ?>
