@@ -1,0 +1,39 @@
+<?php
+/***************************************************************************
+ *   Copyright (C) 2006 by Anton E. Lebedevich                             *
+ *   noiselist@pochta.ru                                                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+/* $Id$ */
+
+	/**
+	 * @ingroup Flow
+	**/
+	abstract class InjectCommand implements EditorCommand
+	{
+		public function run(Prototyped $subject, Form $form, HttpRequest $request)
+		{
+			FormUtils::getValuesFrom($subject, $form);
+			
+			if ($object = $form->getValue('id')) {
+				FormUtils::setPropertiesTo($object, $form);
+			
+				if (!$form->getErrors()) {
+					$object = $dao->take($object);
+					
+					return ModelAndView::create()->setModel(
+						Model::create()->
+						setVar('object', $object)
+					);
+				}
+			}
+			
+			return new ModelAndView();
+		}
+	}
+?>

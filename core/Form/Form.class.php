@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *   voxus@onphp.org, noiselist@pochta.ru                                   *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
@@ -26,11 +26,9 @@
 		private $errors		= array();
 		private $labels		= array();
 		
-		private $cleanup	= false;
-		
 		public static function create()
 		{
-			return new Form();
+			return new self;
 		}
 		
 		public function getErrors()
@@ -42,13 +40,6 @@
 		{
 			$this->errors	= array();
 			$this->violated	= array();
-			
-			return $this;
-		}
-		
-		public function enableScopeCleanup()
-		{
-			$this->cleanup = true;
 			
 			return $this;
 		}
@@ -153,76 +144,6 @@
 			return $this;
 		}
 		
-		/* void */ public function importObject($object)
-		{
-			$class = new ReflectionClass(get_class($object));
-			
-			foreach ($class->getProperties() as $property) {
-				$name = $property->getName();
-				
-				if (isset($this->primitives[$name])) {
-					
-					$getter = 'get'.ucfirst($name);
-					$prm = $this->primitives[$name];
-					
-					// hasMethod() is 5.1 only
-					try {
-						if (
-							$class->getMethod($getter)
-							&& ($value = $object->$getter()) !== null
-						) {
-							if (
-								$prm instanceof PrimitiveIdentifier
-							) {
-								$fake = array($name => $value);
-								$this->importOne($name, $fake);
-							} elseif (
-								$prm instanceof PrimitiveList
-								&& $value instanceof Enumeration
-							) {
-								$prm->setValue($value->getId());
-							} else {
-								$prm->setValue($value);
-							}
-						}
-					} catch (ReflectionException $e) {
-						// no such method
-					}
-				}
-			}
-			
-			return $this;
-		}
-		
-		public function exportObject($object)
-		{
-			$class = new ReflectionClass($object);
-			
-			foreach ($this->primitives as $name => $prm) {
-				$setter = 'set'.ucfirst($name);
-				
-				// hasMethod() is 5.1 only
-				try {
-					if (
-						$class->getMethod($setter)
-						&& ($value = $prm->getValue()) !== null
-					) {
-						if ($prm instanceof PrimitiveList) {
-							$list = $prm->getList();
-							$value = $list[$value];
-						} elseif ($prm->getName() == 'id') // magic!
-							$value = $value->getId();
-						
-						$object->$setter($value);
-					}
-				} catch (ReflectionException $e) {
-					// no such method
-				}
-			}
-			
-			return $object;
-		}
-		
 		private function importPrimitive(&$scope, BasePrimitive $prm)
 		{
 			$name	= $prm->getName();
@@ -233,8 +154,6 @@
 					$this->errors[$name] = self::MISSING;
 			} elseif (true === $result) {
 				unset($this->errors[$name]);
-				if ($this->cleanup)
-					unset($scope[$name]);
 			} else
 				$this->errors[$name] = self::WRONG;
 			
@@ -245,10 +164,10 @@
 		 * Assigns specific label for given primitive and error type.
 		 * One more example of horrible documentation style.
 		 *
-		 * @param	$name			string	primitive or rule name
-		 * @param	$errorType		enum	Form::(WRONG|MISSING)
-		 * @param	$label			string	YDFB WTF is this :-) (c) /.
-		 * @return	$this			Form	itself
+		 * @param	$name		string	primitive or rule name
+		 * @param	$errorType	enum	Form::(WRONG|MISSING)
+		 * @param	$label		string	YDFB WTF is this :-) (c) /.
+		 * @return	$this		Form	itself
 		**/
 		private function addErrorLabel($name, $errorType, $label)
 		{

@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
- *   voxus@onphp.org                                                       *
+ *   Copyright (C) 2006 by Anton E. Lebedevich                             *
+ *   noiselist@pochta.ru                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,9 +10,18 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-
+	
 	/**
-	 * @ingroup Helpers
+	 * @ingroup Flow
 	**/
-	abstract class AbstractProtoClass extends Singleton {/*_*/}
+	class DropCommand implements EditorCommand 
+	{
+		public function run(Prototyped $subject, Form $form, HttpRequest $request)
+		{
+			if ($object = $form->getValue('id'))
+				$object->dao->dropById($object->getId());
+			
+			return new ModelAndView();
+		}
+	}
 ?>

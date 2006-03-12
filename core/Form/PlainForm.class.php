@@ -31,8 +31,7 @@
 			return $this;
 		}
 		
-		// FIXME: rename to correct name (primitiveExists)
-		public function primitiveExist($name)
+		public function primitiveExists($name)
 		{
 			return
 				(

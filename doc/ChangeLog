@@ -1,5 +1,15 @@
 # $Id$
 
+2006-03-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* meta/: proto classes implementation finished.
+
+	* core/Form/FormUtils.class.php: import/export utilities, extracted
+	from Form.
+
+	* core/Form/Form.class.php: ability to scope's cleanup dropped;
+	method primitiveExist renamed to primitiveExists;
+
 2006-03-09	Anton E. Lebedevich	<noiselist@pochta.ru>
 
 	* main/Flow/: initial import.
