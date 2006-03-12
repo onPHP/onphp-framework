@@ -44,5 +44,10 @@
 		{
 			return isset($this->vars[$name]);
 		}
+		
+		public function isEmpty()
+		{
+			return ($this->vars === array());
+		}
 	}
 ?>

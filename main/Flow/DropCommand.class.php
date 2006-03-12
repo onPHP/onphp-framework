@@ -18,10 +18,21 @@
 	{
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
-			if ($object = $form->getValue('id'))
-				$object->dao->dropById($object->getId());
+			if ($object = $form->getValue('id')) {
+				try {
+					if (!$object instanceof Identifiable)
+						// already deleted
+						throw new ObjectNotFoundException();
+					
+					$object->dao()->dropById($object->getId());
+				} catch (ObjectNotFoundException $e) {
+					$form->markMissing('id');
+				}
+			}
 			
-			return new ModelAndView();
+			return
+				ModelAndView::create()->
+				setView('selfRedirect');
 		}
 	}
 ?>

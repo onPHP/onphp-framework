@@ -64,16 +64,13 @@
 			else {
 				$mav->setView(get_class($this));
 				
-				if (!$model = $mav->getModel())
-					$model = Model::create();
-				
 				if ($command)
-					$model->setVar('action', $command);
+					$mav->getModel()->setVar('action', $command);
 				else
 					$form->dropAllErrors();
 					
 				$mav->setModel(
-					$model->setVar('form', $form)
+					$mav->getModel()->setVar('form', $form)
 				);
 			}
 			

@@ -25,6 +25,11 @@
 			return new self;
 		}
 		
+		public function __construct()
+		{
+			$this->model = new Model();
+		}
+		
 		public function getModel()
 		{
 			return $this->model;
