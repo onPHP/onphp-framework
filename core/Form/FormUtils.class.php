@@ -16,7 +16,7 @@
 	**/
 	final class FormUtils extends StaticFactory
 	{
-		/* void */ public static function getValuesFrom(
+		/* void */ public static function object2form(
 			Identifiable $object, Form $form
 		)
 		{
@@ -54,8 +54,8 @@
 			}
 		}
 		
-		/* void */ public static function setPropertiesTo(
-			Identifiable $object, Form $form
+		/* void */ public static function form2object(
+			Form $form, Identifiable $object
 		)
 		{
 			$class = new ReflectionClass($object);

@@ -63,7 +63,7 @@
 
 					if ($id = $form->getValue('id')) {
 						$this->subject = $dao->getById($id);
-						FormUtils::getValuesFrom($this->subject, $this->form);
+						FormUtils::object2form($this->subject, $this->form);
 					} else
 						$form->markMissing('id');
 						

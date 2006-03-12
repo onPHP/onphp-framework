@@ -14,27 +14,16 @@
 	/**
 	 * @ingroup Flow
 	**/
-	abstract class InjectCommand implements EditorCommand
+	class TakeCommand implements EditorCommand
 	{
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
-			if ($this instanceof AddCommand)
-				$form->markGood('id');
-			
 			if (!$form->getErrors()) {
-				FormUtils::setPropertiesTo($subject, $form);
+				FormUtils::form2object($form, $subject);
 				
 				$object = $subject->dao()->take($subject);
 				
-				$mav = ModelAndView::create()->setView('selfRedirect');
-				
-				if ($form->getValue('action') == 'add') {
-					$mav->getModel()->
-						setVar('action', 'edit')->
-						setVar('id', $object->getId());
-				}
-				
-				return $mav;
+				return ModelAndView::create()->setView('success');
 			}
 			
 			return new ModelAndView();

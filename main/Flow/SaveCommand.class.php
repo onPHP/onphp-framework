@@ -14,5 +14,8 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class SaveCommand extends InjectCommand {/*_*/}
+	class SaveCommand extends TakeCommand 
+	{
+		// nothing to do
+	}
 ?>

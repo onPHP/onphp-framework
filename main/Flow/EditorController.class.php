@@ -59,9 +59,17 @@
 			else
 				$mav = ModelAndView::create();
 			
-			if ($mav->getView() == 'selfRedirect')
+			if ($mav->getView() == 'success') {
+				
 				$mav->setView('redirect:'.get_class($this));
-			else {
+				
+				if ($command == 'add') {
+					$mav->getModel()->
+						setVar('action', 'edit')->
+						setVar('id', $object->getId());
+				}
+				
+			} else {
 				$mav->setView(get_class($this));
 				
 				if ($command)

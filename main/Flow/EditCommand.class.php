@@ -18,10 +18,10 @@
 	{
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
-			FormUtils::getValuesFrom($subject, $form);
+			FormUtils::object2form($subject, $form);
 			
 			if ($object = $form->getValue('id'))
-				FormUtils::getValuesFrom($object, $form);
+				FormUtils::object2form($object, $form);
 			
 			return ModelAndView::create();
 		}

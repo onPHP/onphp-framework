@@ -25,14 +25,16 @@
 						throw new ObjectNotFoundException();
 					
 					$object->dao()->dropById($object->getId());
+					
+					return ModelAndView::create()->
+						setView('success');
+						
 				} catch (ObjectNotFoundException $e) {
 					$form->markMissing('id');
 				}
 			}
 			
-			return
-				ModelAndView::create()->
-				setView('selfRedirect');
+			return ModelAndView::create();
 		}
 	}
 ?>

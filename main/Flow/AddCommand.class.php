@@ -14,5 +14,12 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class AddCommand extends InjectCommand {/*_*/}
+	class AddCommand extends TakeCommand 
+	{
+		public function run(Prototyped $subject, Form $form, HttpRequest $request)
+		{
+			$form->markGood('id');
+			return parent::run($subject, $form, $request);
+		}
+	}
 ?>
