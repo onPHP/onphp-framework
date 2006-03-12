@@ -45,6 +45,13 @@
 			return isset($this->vars[$name]);
 		}
 		
+		public function dropVar($name)
+		{
+			unset($this->vars[$name]);
+			
+			return $this;
+		}
+		
 		public function clean()
 		{
 			$this->vars = array();
