@@ -37,25 +37,15 @@
 							$class->getMethod($getter)
 							&& ($value = $object->$getter()) !== null
 						) {
-							if (
-								$prm instanceof PrimitiveIdentifier
-							) {
-								$fake = array(
+							$fake =
+								array(
 									$name =>
 										$value instanceof Identifiable
 											? $value->getId()
 											: $value
 								);
-								
-								$form->importOne($name, $fake);
-							} elseif (
-								$prm instanceof PrimitiveList
-								&& $value instanceof Identifiable
-							) {
-								$prm->setValue($value->getId());
-							} else {
-								$prm->setValue($value);
-							}
+							
+							$form->importOne($name, $fake);
 						}
 					} catch (ReflectionException $e) {
 						// no such method
