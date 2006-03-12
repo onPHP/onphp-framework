@@ -20,8 +20,10 @@
 		{
 			FormUtils::getValuesFrom($subject, $form);
 			
-			if ($object = $form->getValue('id'))
+			if ($object = $form->getValue('id')) {
 				FormUtils::getValuesFrom($object, $form);
+				$form->dropAllErrors();
+			}
 			
 			return ModelAndView::create();
 		}

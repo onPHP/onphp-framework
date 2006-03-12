@@ -23,7 +23,8 @@
 			
 			if (!$form->getErrors()) {
 				FormUtils::setPropertiesTo($subject, $form);
-				$object = $dao->take($subject);
+				
+				$object = $subject->dao()->take($subject);
 				
 				return
 					ModelAndView::create()->setModel(

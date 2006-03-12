@@ -14,7 +14,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class EditorController implements Controller 
+	abstract class EditorController implements Controller 
 	{
 		// to be redefined in __construct
 		protected $commandMap	= array();
@@ -38,7 +38,7 @@
 			$this->map =
 				MappedForm::create(
 					$this->subject->proto()->getForm()->add(
-						Primitive::choice('action')->setList($this->commandMap)
+						Primitive::choice('action')->setList(&$this->commandMap)
 					)
 				)->
 				addSource('id', RequestType::get())->
@@ -52,8 +52,10 @@
 			
 			$form = $this->map->getForm();
 			
-			if ($command = $form->getChoiceValue('action'))
-				$mav = $command->run($this->subject, $form, $request);
+			if ($command = $form->getValue('action'))
+				$mav = $this->commandMap[$command]->run(
+					$this->subject, $form, $request
+				);
 			else
 				$mav = ModelAndView::create();
 			
@@ -64,6 +66,11 @@
 				
 				if (!$model = $mav->getModel())
 					$model = Model::create();
+				
+				if ($command)
+					$model->setVar('action', $command);
+				else
+					$form->dropAllErrors();
 					
 				$mav->setModel(
 					$model->setVar('form', $form)

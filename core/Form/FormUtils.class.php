@@ -40,11 +40,17 @@
 							if (
 								$prm instanceof PrimitiveIdentifier
 							) {
-								$fake = array($name => $value);
+								$fake = array(
+									$name =>
+										$value instanceof Identifiable
+											? $value->getId()
+											: $value
+								);
+								
 								$form->importOne($name, $fake);
 							} elseif (
 								$prm instanceof PrimitiveList
-								&& $value instanceof Enumeration
+								&& $value instanceof Identifiable
 							) {
 								$prm->setValue($value->getId());
 							} else {
