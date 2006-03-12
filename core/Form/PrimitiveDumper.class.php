@@ -22,15 +22,19 @@
 		
 		public static function text(BasePrimitive $prm)
 		{
+			$class = self::$class;
+			
 			return <<<EOT
-<input type="text" name="{$prm->getName()}" class="{self::$class}" value="{$prm->getActualValue()}">
+<input type="text" name="{$prm->getName()}" class="{$class}" value="{$prm->getActualValue()}">
 EOT;
 		}
 		
 		public static function password(BasePrimitive $prm)
 		{
+			$class = self::$class;
+			
 			return <<<EOT
-<intput type="password" name="{$prm->getName()}" class="{self::$class}" value="{$prm->getActualValue()}">
+<intput type="password" name="{$prm->getName()}" class="{$class}" value="{$prm->getActualValue()}">
 EOT;
 		}
 		
@@ -57,8 +61,10 @@ EOT;
 		
 		public static function textarea(BasePrimitive $prm)
 		{
+			$class = self::$class;
+			
 			return <<<EOT
-<textarea name="{$prm->getName()}" class="{self::$class}">{$prm->getActualValue()}</textarea>
+<textarea name="{$prm->getName()}" class="{$class}">{$prm->getActualValue()}</textarea>
 EOT;
 		}
 		

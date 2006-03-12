@@ -16,9 +16,7 @@
 	 * 
 	 * @ingroup Base
 	**/
-	abstract class NamedObject
-		extends IdentifiableObject
-		implements Named, Stringable
+	abstract class NamedObject extends IdentifiableObject implements Named
 	{
 		protected $name	= null;
 		
@@ -34,11 +32,6 @@
 			return $this;
 		}
 		
-		public function toString()
-		{
-			return $this->name.'#'.$this->id;
-		}
-
 		public static function compareNames(
 			NamedObject $left, NamedObject $right
 		)

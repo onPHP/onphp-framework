@@ -61,9 +61,10 @@
 				
 					$form->dropAllErrors();
 
-					if ($id = $form->getValue('id'))
+					if ($id = $form->getValue('id')) {
 						$this->subject = $dao->getById($id);
-					else
+						FormUtils::getValuesFrom($this->subject, $this->form);
+					} else
 						$form->markMissing('id');
 						
 					break;
