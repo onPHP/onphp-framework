@@ -30,7 +30,6 @@
 				'drop'	=> new DropCommand(),
 				'save'	=> new SaveCommand(),
 				'edit'	=> new EditCommand(),
-				'list'	=> new ListCommand(),
 				'add'	=> new AddCommand()
 			);
 			
@@ -53,21 +52,14 @@
 			
 			$form = $this->map->getForm();
 			
-			if (!$command = $form->getChoiceValue('action'))
-				$command = $this->commandMap['list'];
+			if ($command = $form->getChoiceValue('action'))
+				$mav = $command->run($this->subject, $form, $request);
+			else
+				$mav = ModelAndView::create();
 			
-			$mav = $command->run($this->subject, $form, $request);
-			
-			if (
-				!$form->getErrors()
-				&& (
-					$command instanceof DropCommand
-					|| $command instanceof SaveCommand
-					|| $command instanceof AddCommand
-				)
-			) {
+			if ($mav->getView() == 'selfRedirect')
 				$mav->setView('redirect:'.get_class($this));
-			} else {
+			else {
 				$mav->setView(get_class($this));
 				
 				if (!$model = $mav->getModel())

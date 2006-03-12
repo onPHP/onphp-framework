@@ -15,6 +15,7 @@
 			HttpRequest::create()->
 			setGet($_GET)->
 			setPost($_POST)->
+			setFiles($_FILES)->
 			setCookie($_COOKIE)->
 			setServer($_SERVER)->
 			setSession($_SESSION);

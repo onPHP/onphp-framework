@@ -18,19 +18,20 @@
 	{
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
-			FormUtils::getValuesFrom($subject, $form);
+			if ($this instanceof AddCommand)
+				$form->markGood('id');
 			
-			if ($object = $form->getValue('id')) {
-				FormUtils::setPropertiesTo($object, $form);
-			
-				if (!$form->getErrors()) {
-					$object = $dao->take($object);
-					
-					return ModelAndView::create()->setModel(
+			if (!$form->getErrors()) {
+				FormUtils::setPropertiesTo($subject, $form);
+				$object = $dao->take($subject);
+				
+				return
+					ModelAndView::create()->setModel(
 						Model::create()->
-						setVar('object', $object)
-					);
-				}
+							setVar('action', 'edit')->
+							setVar('id', $object->getId())
+					)->
+					setView('selfRedirect');
 			}
 			
 			return new ModelAndView();
