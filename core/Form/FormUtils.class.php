@@ -76,8 +76,12 @@
 						if ($prm instanceof PrimitiveList) {
 							$list = $prm->getList();
 							$value = $list[$value];
-						} elseif ($prm->getName() == 'id') // magic!
+						} elseif ( // magic!
+							$prm->getName() == 'id'
+							&& $value instanceof Identifiable
+						) {
 							$value = $value->getId();
+						}
 						
 						$object->$setter($value);
 					}

@@ -110,7 +110,7 @@
 		
 		protected function selfRedirect()
 		{
-			if ($this->form->primitiveExist('page')) {
+			if ($this->form->primitiveExists('page')) {
 				$page = $this->form->getActualValue('page');
 				
 				if ($page > 1)
