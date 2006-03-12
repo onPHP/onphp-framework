@@ -26,7 +26,8 @@
 					
 					$object->dao()->dropById($object->getId());
 					
-					return ModelAndView::create()->
+					return
+						ModelAndView::create()->
 						setView('success');
 						
 				} catch (ObjectNotFoundException $e) {

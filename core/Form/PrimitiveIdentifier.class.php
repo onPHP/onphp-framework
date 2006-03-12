@@ -58,7 +58,9 @@
 					"no defined class for PrimitiveIdentifier '{$this->name}'"
 				);
 			
-			if (parent::import($scope)) {
+			$result = parent::import($scope);
+				
+			if ($result === true) {
 				try {
 					$this->value = $this->dao()->getById($this->value);
 				} catch (ObjectNotFoundException $e) {
@@ -68,7 +70,7 @@
 				return true;
 			}
 			
-			return false;
+			return $result;
 		}
 	}
 ?>
