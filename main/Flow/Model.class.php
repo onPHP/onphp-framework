@@ -45,6 +45,13 @@
 			return isset($this->vars[$name]);
 		}
 		
+		public function clean()
+		{
+			$this->vars = array();
+			
+			return $this;
+		}
+		
 		public function isEmpty()
 		{
 			return ($this->vars === array());
