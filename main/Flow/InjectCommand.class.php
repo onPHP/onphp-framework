@@ -26,13 +26,15 @@
 				
 				$object = $subject->dao()->take($subject);
 				
-				return
-					ModelAndView::create()->setModel(
-						Model::create()->
-							setVar('action', 'edit')->
-							setVar('id', $object->getId())
-					)->
-					setView('selfRedirect');
+				$mav = ModelAndView::create()->setView('selfRedirect');
+				
+				if ($form->getValue('action') == 'add') {
+					$mav->getModel()->
+						setVar('action', 'edit')->
+						setVar('id', $object->getId());
+				}
+				
+				return $mav;
 			}
 			
 			return new ModelAndView();
