@@ -23,7 +23,11 @@
 				
 				$subject = $subject->dao()->take($subject);
 				
-				return ModelAndView::create()->setView('success');
+				return ModelAndView::create()->setView('success')->
+					setModel(
+						Model::create()->
+						setVar('id', $subject->getId())
+					);
 			}
 			
 			return new ModelAndView();

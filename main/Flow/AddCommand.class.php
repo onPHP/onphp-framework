@@ -20,12 +20,7 @@
 		{
 			$form->markGood('id');
 			
-			$mav = parent::run($subject, $form, $request);
-			
-			if ($id = $subject->getId())
-				$mav->getModel()->setVar('id', $id);
-			
-			return $mav;
+			return parent::run($subject, $form, $request);
 		}
 	}
 ?>
