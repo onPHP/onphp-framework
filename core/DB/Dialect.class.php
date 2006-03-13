@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,7 +18,9 @@
 	**/
 	abstract class /* ANSI's */ Dialect
 	{
-		abstract public static function autoincrementize(DBColumn $column, &$prepend);
+		abstract public static function autoincrementize(
+			DBColumn $column, &$prepend
+		);
 		
 		public static function quoteValue(&$value)
 		{
@@ -77,7 +79,7 @@
 		{
 			return
 				$field instanceof DialectString
-					? $field->toString($this)
+					? $field->toDialectString($this)
 					: $this->quoteField($field);
 		}
 		
@@ -85,7 +87,7 @@
 		{
 			return
 				$value instanceof DBValue
-					? $value->toString($this)
+					? $value->toDialectString($this)
 					: $this->quoteValue($value);
 		}
 		

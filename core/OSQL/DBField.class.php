@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2005-2006 by Anton E. Lebedevich                        *
  *   noiselist@pochta.ru                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -34,11 +34,15 @@
 			return new DBField($field, $table);
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			$field =
-				($this->table ? $this->table->toString($dialect).'.' : null).
-				$dialect->quoteField($this->field);
+				(
+					$this->table
+						? $this->table->toDialectString($dialect).'.'
+						: null
+				)
+				.$dialect->quoteField($this->field);
 			
 			return
 				$this->cast

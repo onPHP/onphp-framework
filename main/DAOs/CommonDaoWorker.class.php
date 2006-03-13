@@ -56,7 +56,7 @@
 				} else { 
 					throw new ObjectNotFoundException(
 						"there is no such object for '".get_class($this->dao)
-						."' with query == {$query->toString($db->getDialect())}"
+						."' with query == {$query->toDialectString($db->getDialect())}"
 					);
 				}
 			}
@@ -91,7 +91,7 @@
 			} else
 				throw new ObjectNotFoundException(
 					"there is no such object for '".get_class($this->dao)
-					."' with query == {$query->toString($db->getDialect())}"
+					."' with query == {$query->toDialectString($db->getDialect())}"
 				);
 		}
 		
@@ -118,7 +118,7 @@
 					return $this->cacheByQuery($query, $object, $expires);
 			} else {
 				throw new ObjectNotFoundException(
-					"zero for query == {$query->toString($db->getDialect())}"
+					"zero for query == {$query->toDialectString($db->getDialect())}"
 				);
 			}
 		}
@@ -225,7 +225,7 @@
 			} else {
 				throw new ObjectNotFoundException(
 					"zero list for query such query - "
-					."'{$query->toString($db->getDialect())}'"
+					."'{$query->toDialectString($db->getDialect())}'"
 				);
 			}
 		}

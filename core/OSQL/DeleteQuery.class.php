@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -35,11 +35,11 @@
 			return $this->table;
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			if (sizeof($this->where) > 0)
 				return "DELETE FROM {$dialect->quoteTable($this->table)} "
-					.parent::toString($dialect);
+					.parent::toDialectString($dialect);
 			else
 				throw new WrongArgumentException(
 					"leave '{$this->table}' table alone in peace, bastard"

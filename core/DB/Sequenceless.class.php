@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -43,7 +43,9 @@
 		
 		public function query(Query $query)
 		{
-			$result = $this->queryRaw($query->toString($this->getDialect()));
+			$result = $this->queryRaw(
+				$query->toDialectString($this->getDialect())
+			);
 			
 			if (
 				($query instanceof InsertQuery)

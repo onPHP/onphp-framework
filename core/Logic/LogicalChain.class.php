@@ -74,14 +74,20 @@
 			return sizeof($this->chain);
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			if ($this->chain) {
-				$out = "({$this->chain[0]->toString($dialect)} ";
+				$out = "({$this->chain[0]->toDialectString($dialect)} ";
 	
 				for ($i = 1, $size = sizeof($this->chain); $i < $size; ++$i)
-					$out .= "{$this->logic[$i]} {$this->chain[$i]->toString($dialect)} ";
-	
+					$out .=
+						$this->logic[$i]
+						.' '
+						.$this->chain[$i]->toDialectString($dialect)
+						.' ';
+
+				$out[strlen($out) - 1] = null; // trailing space
+				
 				return $out.')';
 			}
 			

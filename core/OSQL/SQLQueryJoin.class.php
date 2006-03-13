@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2005-2006 by Anton E. Lebedevich                        *
  *   noiselist@pochta.ru                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -23,12 +23,12 @@
 			parent::__construct($query, $logic, $alias);
 		}
 
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			return
-				'JOIN ('.$this->subject->toString($dialect).') AS '.
+				'JOIN ('.$this->subject->toDialectString($dialect).') AS '.
 				$dialect->quoteTable($this->alias).
-				' ON '.$this->logic->toString($dialect);
+				' ON '.$this->logic->toDialectString($dialect);
 		}
 
 		public function getTable()

@@ -30,7 +30,7 @@
 		public static function dumpQuery($query)
 		{
 			if ($query instanceof SelectQuery)
-				echo $query->toString(DBFactory::getDefaultInstance()->getDialect());
+				echo $query->toDialectString(DBFactory::getDefaultInstance()->getDialect());
 		}
 	}
 ?>

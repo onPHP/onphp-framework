@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -47,7 +47,7 @@
 		{
 			return
 				$field instanceof DialectString
-					? $field->toString($this)
+					? $field->toDialectString($this)
 					: $field;
 		}
 		
@@ -55,7 +55,7 @@
 		{
 			return
 				$value instanceof DBValue
-					? $value->toString($this)
+					? $value->toDialectString($this)
 					: $value;
 		}
 

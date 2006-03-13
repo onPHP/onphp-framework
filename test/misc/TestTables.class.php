@@ -22,7 +22,7 @@
 				foreach ($this->schema->getTableNames() as $name) {
 					try {
 						$db->queryRaw(
-							OSQL::dropTable($name, true)->toString(
+							OSQL::dropTable($name, true)->toDialectString(
 								$db->getDialect()
 							)
 						);
@@ -53,7 +53,7 @@
 			
 			foreach ($pool as $name => $db) {
 				foreach ($this->schema->getTables() as $name => $table) {
-					$db->queryRaw($table->toString($db->getDialect()));
+					$db->queryRaw($table->toDialectString($db->getDialect()));
 				}
 			}
 		}
@@ -65,7 +65,7 @@
 			foreach ($pool as $name => $db) {
 				foreach ($this->schema->getTableNames() as $name) {
 					$db->queryRaw(
-						OSQL::dropTable($name, true)->toString(
+						OSQL::dropTable($name, true)->toDialectString(
 							$db->getDialect()
 						)
 					);

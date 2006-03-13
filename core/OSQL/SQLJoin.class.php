@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2005-2006 by Anton E. Lebedevich                        *
  *   noiselist@pochta.ru                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -16,7 +16,7 @@
 	**/
 	class SQLJoin extends SQLBaseJoin
 	{
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			return parent::baseToString($dialect, null);
 		}

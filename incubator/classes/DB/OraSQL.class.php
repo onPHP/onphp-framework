@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -116,7 +116,7 @@
 				if (oci_num_rows($res) > 1)
 					throw new DatabaseException(
 						"query returned too many rows (we need only one) : "
-						.$query->toString($this->getDialect())
+						.$query->toDialectString($this->getDialect())
 					);
 
 				if ($row = oci_fetch_assoc($res)) {

@@ -23,7 +23,7 @@
 			if ($dialect === null)
 				$dialect = new ImaginaryDialect();
 
-			return sha1($this->toString($dialect));
+			return sha1($this->toDialectString($dialect));
 		}
 		
 		final public function setId($id)

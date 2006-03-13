@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -29,7 +29,7 @@
 			return $this->into($table);
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			$query = "INSERT INTO ".$dialect->quoteTable($this->table)." ";
 			

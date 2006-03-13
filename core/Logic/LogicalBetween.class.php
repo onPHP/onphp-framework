@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *   voxus@onphp.org, noiselist@pochta.ru                                   *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
@@ -29,7 +29,7 @@
 			$this->field	= $field;
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			return
 				'('.
@@ -55,7 +55,7 @@
 		private function fieldOrValue(Dialect $dialect, $something)
 		{
 			if ($something instanceof DialectString)
-				return $something->toString($dialect);
+				return $something->toDialectString($dialect);
 			else
 				return $dialect->quoteField($something);
 		}

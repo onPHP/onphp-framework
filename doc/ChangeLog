@@ -1,5 +1,10 @@
 # $Id$
 
+2006-03-13	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/OSQL/DialectString.class.php: toString() renamed to
+	toDialectString(), to avoid collision with Stringable interface.
+
 2006-03-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* meta/: proto classes implementation finished.

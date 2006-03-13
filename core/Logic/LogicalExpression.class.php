@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *   voxus@onphp.org, noiselist@pochta.ru                                   *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
@@ -88,16 +88,16 @@
 			return $this->logic;
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			$string = '(';
 
 			if (null !== $left = $this->left) {
 				if ($left instanceof DialectString) {
 					if ($left instanceof SelectQuery)
-						$string .= '('.$left->toString($dialect).')';
+						$string .= '('.$left->toDialectString($dialect).')';
 					else
-						$string .= $left->toString($dialect);
+						$string .= $left->toDialectString($dialect);
 				} else
 					$string .= $dialect->quoteField($left);
 			}
@@ -107,9 +107,9 @@
 			if (null !== $right = $this->right) {
 				if ($right instanceof DialectString) {
 					if ($right instanceof SelectQuery)
-						$string .= '('.$right->toString($dialect).')';
+						$string .= '('.$right->toDialectString($dialect).')';
 					else
-						$string .= $right->toString($dialect);
+						$string .= $right->toDialectString($dialect);
 				} else
 					$string .= $dialect->quoteValue($this->right);
 			}

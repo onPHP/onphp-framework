@@ -162,11 +162,11 @@
 		
 		public function query(Query $query)
 		{
-			//	echo $query->toString($this->getDialect()).'<hr>'; flush();
-			//	echo $query->toString($this->getDialect())."\n";
-			//	MiscUtils::el($query->toString($this->getDialect()), __LINE__);
+			//	echo $query->toDialectString($this->getDialect()).'<hr>'; flush();
+			//	echo $query->toDialectString($this->getDialect())."\n";
+			//	MiscUtils::el($query->toDialectString($this->getDialect()), __LINE__);
 			
-			return $this->queryRaw($query->toString($this->getDialect()));
+			return $this->queryRaw($query->toDialectString($this->getDialect()));
 		}
 
 		public function queryNull(Query $query)
@@ -177,7 +177,7 @@
 				);
 			
 			if ($this->toQueue) {
-				$this->queue[] = $query->toString($this->getDialect());
+				$this->queue[] = $query->toDialectString($this->getDialect());
 				return true;
 			} else
 				return $this->query($query);

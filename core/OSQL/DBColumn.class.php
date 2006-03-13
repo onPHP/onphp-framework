@@ -143,18 +143,18 @@
 			return $this->sequenced;
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			$out =
 				"{$dialect->quoteField($this->name)} "
-				.$this->type->toString($dialect);
+				.$this->type->toDialectString($dialect);
 
 			if ($this->default)
 				$out .=
 					' DEFAULT '
 					.(
 						$this->default instanceof DialectString
-							? $this->default->toString($dialect)
+							? $this->default->toDialectString($dialect)
 							: $dialect->valueToString($this->default)
 					);
 			
@@ -168,10 +168,10 @@
 					."({$dialect->quoteField($column)})";
 				
 				if ($this->onDelete)
-					$out .= ' ON DELETE '.$this->onDelete->toString();
+					$out .= ' ON DELETE '.$this->onDelete->toDialectString();
 				
 				if ($this->onUpdate)
-					$out .= ' ON UPDATE '.$this->onUpdate->toString();
+					$out .= ' ON UPDATE '.$this->onUpdate->toDialectString();
 			}
 			
 			return $out;

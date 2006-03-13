@@ -16,7 +16,9 @@
 	 * 
 	 * @ingroup Base
 	**/
-	abstract class NamedObject extends IdentifiableObject implements Named
+	abstract class NamedObject
+		extends IdentifiableObject
+		implements Named, Stringable
 	{
 		protected $name	= null;
 		
@@ -37,6 +39,11 @@
 		)
 		{
 			return strcasecmp($left->name, $right->name);
+		}
+		
+		public function toString()
+		{
+			return "{$this->id}: {$this->name}";
 		}
 	}
 ?>

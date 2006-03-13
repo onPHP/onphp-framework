@@ -53,12 +53,12 @@
 		}
 		
 		// TODO: respect dependency order
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			$out = array();
 			
 			foreach ($this->tables as $name => $table) {
-				$out[] = $table->toString($dialect);
+				$out[] = $table->toDialectString($dialect);
 			}
 			
 			return implode("\n\n", $out);

@@ -31,7 +31,7 @@
 			$this->cascade = (true === $cascade);
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			return
 				'DROP TABLE '.$dialect->quoteTable($this->name)

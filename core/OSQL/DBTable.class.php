@@ -85,9 +85,9 @@
 			return $this->order;
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
-			return OSQL::createTable($this)->toString($dialect);
+			return OSQL::createTable($this)->toDialectString($dialect);
 		}
 	}
 ?>

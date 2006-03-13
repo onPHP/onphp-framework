@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -40,7 +40,7 @@
 		public function asyncQuery(Query $query)
 		{
 			return pg_send_query(
-				$this->link, $query->toString($this->getDialect())
+				$this->link, $query->toDialectString($this->getDialect())
 			);
 		}
 

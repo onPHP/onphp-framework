@@ -46,7 +46,7 @@
 			return $this->where($exp, 'OR');
 		}
 
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			if ($this->where) {
 				$clause = ' WHERE';
@@ -54,7 +54,7 @@
 				
 				for ($i = 0, $size = sizeof($this->where); $i < $size; ++$i) {
 					
-					if ($exp = $this->where[$i]->toString($dialect)) {
+					if ($exp = $this->where[$i]->toDialectString($dialect)) {
 						
 						$clause .= "{$this->whereLogic[$i]} {$exp} ";
 						$outputLogic = true;

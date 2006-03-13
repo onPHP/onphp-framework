@@ -158,7 +158,7 @@
 			return $this->null;
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			$out = $dialect->typeToString($this);
 			

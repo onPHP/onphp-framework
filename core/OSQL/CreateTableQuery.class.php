@@ -23,7 +23,7 @@
 			$this->table = $table;
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			$name = $this->table->getName();
 			
@@ -45,13 +45,13 @@
 					if ($append)
 						$append = ' '.$append;
 					
-					$columns[] = $column->toString($dialect).$append;
+					$columns[] = $column->toDialectString($dialect).$append;
 					
 					if ($prepend)
 						$out = $prepend."\n".$out;
 					
 				} else
-					$columns[] = $column->toString($dialect);
+					$columns[] = $column->toDialectString($dialect);
 
 				$name = $column->getName();
 				

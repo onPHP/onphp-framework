@@ -25,7 +25,7 @@
 	$queryUnion1 = CombineQuery::union($queryUnion1, $query3);
 	
 	echo "<pre>";
-	print_r($queryUnion1->toString($db->getDialect()));
+	print_r($queryUnion1->toDialectString($db->getDialect()));
 	echo "</pre>";
 	
 	// example Chain
@@ -35,19 +35,19 @@
 	$queryUnion2->except($query3);
 	
 	echo "<pre>";
-	print_r($queryUnion2->toString($db->getDialect()));
+	print_r($queryUnion2->toDialectString($db->getDialect()));
 	echo "</pre>";
 	
 	// example Block
 	$queryUnion3 = CombineQuery::exceptBlock($query1, $query2, $query3);
 	echo "<pre>";
-	print_r($queryUnion3->toString($db->getDialect()));
+	print_r($queryUnion3->toDialectString($db->getDialect()));
 	echo "</pre>";
 	
 	// example composite
 	$queryUnion4 = CombineQuery::union($query1, $queryUnion3);
 	echo "<pre>";
-	print_r($queryUnion4->toString($db->getDialect()));
+	print_r($queryUnion4->toDialectString($db->getDialect()));
 	echo "</pre>";
 	
 	$query5 =
@@ -56,7 +56,7 @@
 		from($queryUnion3, "foo");
 	
 	echo "<pre>";
-	print_r($query5->toString($db->getDialect()));
+	print_r($query5->toDialectString($db->getDialect()));
 	echo "</pre>";
 	
 	$query6 =
@@ -67,7 +67,7 @@
 		);
 	
 	echo "<pre>";
-	print_r($query6->toString($db->getDialect()));
+	print_r($query6->toDialectString($db->getDialect()));
 	echo "</pre>";
 	
 	$query7 =
@@ -76,6 +76,6 @@
 		from(CombineQuery::union($query1, $query2), 'foo');
 	
 	echo "<pre>";
-	print_r($query7->toString($db->getDialect()));
+	print_r($query7->toDialectString($db->getDialect()));
 	echo "</pre>";
 ?>

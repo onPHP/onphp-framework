@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2005-2006 by Anton E. Lebedevich                        *
  *   noiselist@pochta.ru                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -46,18 +46,18 @@
 			$this->alias = $alias;
 		}
 
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			if (
 				$this->table instanceof SelectQuery
 				|| $this->table instanceof LogicalObject
 			)
 				return
-					"({$this->table->toString($dialect)}) AS "
+					"({$this->table->toDialectString($dialect)}) AS "
 					.$dialect->quoteTable($this->alias);
 			elseif ($this->table instanceof SQLFunction)
 				return
-					"{$this->table->toString($dialect)} AS "
+					"{$this->table->toDialectString($dialect)} AS "
 					.$dialect->quoteTable($this->alias);
 			else
 				return

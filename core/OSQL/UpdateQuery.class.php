@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2004-2006 by Anton E. Lebedevich                        *
  *   noiselist@pochta.ru                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -28,7 +28,7 @@
 			return $this;
 		}
 
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			$query = "UPDATE ".$dialect->quoteTable($this->table)." SET ";
 			
@@ -39,7 +39,7 @@
 					$sets[] =
 						$dialect->quoteField($var)
 						.' = ('
-						.$val->toString($dialect)
+						.$val->toDialectString($dialect)
 						.')';
 				elseif (is_null($val))
 					$sets[] = $dialect->quoteField($var).' = NULL';
@@ -52,7 +52,7 @@
 			
 			$query .= implode(', ', $sets);
 			
-			$query .= parent::toString($dialect);
+			$query .= parent::toDialectString($dialect);
 
 			return $query;
 		}

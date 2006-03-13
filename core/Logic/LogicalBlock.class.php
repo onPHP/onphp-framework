@@ -37,12 +37,12 @@
 			$this->logic	= $logic;
 		}
 
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			$quotedArgs = array();
 			
 			foreach ($this->args as &$arg)
-				$quotedArgs[] = $arg->toString($dialect);
+				$quotedArgs[] = $arg->toDialectString($dialect);
 
 			return '('.implode(' '.$this->logic.' ', $quotedArgs).')';
 		}

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -70,7 +70,7 @@
 		
 		public function run(DB $db)
 		{
-			$db->queryRaw($this->toString($db->getDialect()));
+			$db->queryRaw($this->toDialectString($db->getDialect()));
 			
 			return $this;
 		}
@@ -80,12 +80,12 @@
 			return $this->run($db)->drop();
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			$out = array();
 
 			foreach ($this->queue as &$query)
-				$out[] = $query->toString($dialect);
+				$out[] = $query->toDialectString($dialect);
 			
 			return implode(";\n", $out);
 		}
