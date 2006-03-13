@@ -98,9 +98,6 @@
 	 * @defgroup DAOs Root classes for building DAO hierarchies
 	 * @ingroup Main
 	 *
-	 * @defgroup Module Business logic containers
-	 * @ingroup Main
-	 *
 	 * @defgroup Utils Various accompanying utilities
 	 * @ingroup Main
 	 *
