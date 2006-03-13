@@ -2,6 +2,9 @@
 
 2006-03-13	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* meta/classes/: fixed indentation issues, now 100% compatible with
+	our coding style standarts.
+
 	* core/OSQL/DialectString.class.php: toString() renamed to
 	toDialectString(), to avoid collision with Stringable interface.
 

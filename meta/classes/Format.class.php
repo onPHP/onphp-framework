@@ -19,84 +19,55 @@
 			$out	= null;
 			
 			$indent	= 0;
-			$chain	= 0;
+			$chain	= 1;
 			
 			$return	= false;
 			
 			foreach (explode("\n", $data) as $string) {
 				$string = str_replace("\t", null, $string)."\n";
 				
-				$indent -= substr_count($string, '}');
-				
-				if ($string == ")->\n")
+				if ($string == "}\n") {
+					$indent -= $chain;
+					$chain = 1;
+				} elseif ($string == ")->\n")
 					$indent--;
 				elseif ($string == ")\n")
 					$indent--;
+				elseif ($string == ");\n")
+					$indent--;
 				elseif ($string == "?>\n")
 					$indent = 0;
-				elseif ($string == ");\n") {
-					if ($chain) {
-						$indent -= $chain + 1;
-						$chain--;
-					} else
-						$indent--;
-				} elseif ($string[0] == '?') {
-					$chain++;
+				elseif ($string[0] == '?')
 					$indent++;
-				}
-
+				
 				if ($indent > 0)
 					$out .= str_pad(null, $indent, "\t", STR_PAD_LEFT).$string;
 				else
 					$out .= $string;
 
-				if (
-					(strpos($string, "return\n") !== false)
-					&& (strpos($string, ';') === false)
-				) {
+				if (substr($string, -2 ,2) == "{\n")
 					$indent++;
-					$return = true;
-				}
-				
-				if (strpos($string, ");\n") !== false) {
-					if ($return) {
-						$return = false;
-						$indent -= $chain + 1;
-						$chain = 0;
-					} elseif ($chain) {
-						$indent -= $chain;
-						$chain--;
-					}
-				}
-				
-				$indent += substr_count($string, '{');
-				$indent += substr_count($string, "(\n");
-				
-				if (
-					(
-						(strpos($string, "->\n") !== false)
-						|| (
-							strlen($string) > 2
-							&& substr($string, -2, 2) == "=\n"
-						)
+				elseif (
+					$string[0] == '$'
+					&& (
+						substr($string, -2, 2) == "=\n"
+						|| substr($string, -3, 3) == "->\n"
 					)
-					&& $string[0] == '$'
 				) {
+					$indent++;
 					$chain++;
+				} elseif (substr($string, -2, 2) == "(\n")
 					$indent++;
-				}
-				
-				if ($chain && $string == "\n") {
-					$indent -= $chain;
-					$chain--;
-				}
-				
-				if ($string == "\n" && $indent == 0) {
+				elseif ($string == "\n" && $indent == 0) {
 					$indent++;
-				}
-				
-				if ($chain && $string[0] == ':') {
-					$chain--;
+				} elseif ($string == "return\n") {
+					$indent++;
+					$chain++;
+				} elseif ($string == "\n" && $chain > 1) {
+					$indent -= $chain - 1;
+					$chain = 1;
+				} elseif ($string[0] == ':') {
+					$indent--;
 				}
 			}
 			

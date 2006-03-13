@@ -181,11 +181,12 @@ EOT;
 									."))";
 							} else {
 								$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->dumbName}_id']))
+if (isset(\$array[\$prefix.'{$this->dumbName}_id'])) {
 	\${$varName}->set{$method}(
 		new {$this->type->getClass()}(\$array[\$prefix.'{$this->dumbName}_id'])
 	);
-	
+}
+
 EOT;
 							}
 						} else {
@@ -200,11 +201,12 @@ EOT;
 							} else {
 								
 								$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->dumbName}_{$idName}']))
+if (isset(\$array[\$prefix.'{$this->dumbName}_{$idName}'])) {
 	\${$varName}->set{$method}(
 		{$this->type->getClass()}::dao()->getById(\$array[\$prefix.'{$this->dumbName}_{$idName}'])
 	);
-	
+}
+
 EOT;
 								
 							}
@@ -269,8 +271,10 @@ EOT;
 						
 						$idName =ucfirst($remote->getIdentifier()->getName());
 						
-						$out =
-							"set('{$this->dumbName}_{$idName}', ";
+						if ($this->required)
+							$out = "set('{$this->dumbName}_{$idName}', ";
+						else
+							$out = "set(\n'{$this->dumbName}_{$idName}', ";
 						
 						if ($remote->getPattern() instanceof EnumerationClassPattern) {
 							if ($this->required)
