@@ -162,10 +162,6 @@
 		
 		public function query(Query $query)
 		{
-			//	echo $query->toDialectString($this->getDialect()).'<hr>'; flush();
-			//	echo $query->toDialectString($this->getDialect())."\n";
-			//	MiscUtils::el($query->toDialectString($this->getDialect()), __LINE__);
-			
 			return $this->queryRaw($query->toDialectString($this->getDialect()));
 		}
 

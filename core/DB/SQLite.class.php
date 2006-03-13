@@ -91,8 +91,6 @@
 		
 		public function queryRaw($queryString)
 		{
-			//	echo $queryString.'<hr>'; flush();
-			//	error_log($queryString);
 			try {
 				return sqlite_query($queryString, $this->link);
 			} catch (BaseException $e) {
