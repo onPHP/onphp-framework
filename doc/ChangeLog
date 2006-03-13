@@ -6,7 +6,7 @@
 	trunk.
 
 	* core/Form/FormUtils.clas.php, core/Form/MappedForm.class.php,
-	main/Base/RequestType.class.php,
+	main/Base/RequestType.class.php, main/Base/HttpRequest.class.php,
 	main/Base/AbstractProtoClass.class.php: arrived from trunk too.
 
 2006-03-09	Anton E. Lebedevich	<noiselist@pochta.ru>
