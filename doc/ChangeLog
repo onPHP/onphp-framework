@@ -1,5 +1,14 @@
 # $Id$
 
+2006-03-13	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/Form/: merged changes for PrimitiveIdentifiable and Form from
+	trunk.
+
+	* core/Form/FormUtils.clas.php, core/Form/MappedForm.class.php,
+	main/Base/RequestType.class.php,
+	main/Base/AbstractProtoClass.class.php: arrived from trunk too.
+
 2006-03-09	Anton E. Lebedevich	<noiselist@pochta.ru>
 
 	* main/Flow/: initial import.
