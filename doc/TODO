@@ -4,6 +4,6 @@
   self transformations accoring to given mapping. As suggested by Anton.
 
 * implement per-project "watermark" in cache subsystem to avoid namespace
-  collisions in it.
+  collisions.
 
 * introduce a bit of order in exceptions hierarchy.
