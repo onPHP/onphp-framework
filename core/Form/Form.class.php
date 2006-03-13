@@ -104,7 +104,7 @@
 			return $this->addErrorLabel($primitiveName, Form::MISSING, $label);
 		}
 		
-		public function import(&$scope)
+		public function import($scope)
 		{
 			foreach ($this->primitives as $name => $prm)
 				$this->importPrimitive($scope, $prm);
@@ -112,7 +112,7 @@
 			return $this;
 		}
 		
-		public function importMore(&$scope)
+		public function importMore($scope)
 		{
 			foreach ($this->primitives as $name => $prm)
 				if (
@@ -124,14 +124,14 @@
 			return $this;
 		}
 		
-		public function importOne($primitiveName, &$scope)
+		public function importOne($primitiveName, $scope)
 		{
 			$this->importPrimitive($scope, $this->get($primitiveName));
 			
 			return $this;
 		}
 		
-		public function importOneMore($primitiveName, &$scope)
+		public function importOneMore($primitiveName, $scope)
 		{
 			$prm = $this->get($primitiveName);
 			
@@ -144,7 +144,7 @@
 			return $this;
 		}
 		
-		private function importPrimitive(&$scope, BasePrimitive $prm)
+		private function importPrimitive($scope, BasePrimitive $prm)
 		{
 			$name	= $prm->getName();
 			$result	= $prm->import($scope);
