@@ -133,6 +133,18 @@
 			
 			return $this;
 		}
+		
+		public function setListWithClones($list)
+		{
+			Assert::isArray($list);
+			
+			$this->list = $list;
+			
+			foreach ($this->list as $id => &$object)
+				$this->clones[$id] = clone $object;
+			
+			return $this;
+		}
 
 		public function getList()
 		{
