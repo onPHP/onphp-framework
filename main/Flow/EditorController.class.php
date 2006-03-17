@@ -63,13 +63,8 @@
 				
 				$mav->setView('redirect:'.get_class($this));
 				
-				if ($command == 'add') {
-					$mav->getModel()->
-						setVar('action', 'edit');
-				} elseif ($command == 'save') {
-					$mav->getModel()->
-						dropVar('id');
-				}
+				$mav->getModel()->
+					dropVar('id');
 				
 			} else {
 				$mav->setView(get_class($this));
