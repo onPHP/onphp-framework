@@ -3,54 +3,59 @@ Coding Style Convention
 
 PHP:
 
-class SomeClassName
-{
-	private $privateVariable	= null;
-	private $yetAnotherVariable	= null;
+/*
+	copyright, license, blah-blah
+*/
+/* $Id$ */
 
-	public function someOddMethodName(FooInterface $someObject)
+	class SomeClassName
 	{
-		if (!$someObject) {
-			TrashClass::staticMethod();
-			throw new FooException("help me!");
-		} else {
-			$someObject->shortMethod(
-				$firstLongParameter,
-				$secondLongParameter->anotherMethod(
-					$foo,
-					$bah
-				)
-			);
+		private $privateVariable	= null;
+		private $yetAnotherVariable	= null;
 
-			// do something useful
+		public function someOddMethodName(FooInterface $someObject)
+		{
+			if (!$someObject) {
+				TrashClass::staticMethod();
+				throw new FooException("help me!");
+			} else {
+				$someObject->shortMethod(
+					$firstLongParameter,
+					$secondLongParameter->anotherMethod(
+						$foo,
+						$bah
+					)
+				);
+
+				// do something useful
+			}
+
+			if (
+				$condition
+				|| $incindent
+				|| $whatEverElse
+			) {
+				// bah!
+			}
+
+			$longString =
+				'foo'
+				.'bar'
+				.'blah';
+
+			return $this;
 		}
 
-		if (
-			$condition
-			|| $incindent
-			|| $whatEverElse
-		) {
-			// bah!
+		final public static anotherOddMethod()
+		{
+			try {
+				self::someOddMethodName(new FooImplementation());
+			} catch (FooException $e) {
+				// do something
+				throw $e; // try to not "eat" exceptions
+			}
 		}
-
-		$longString =
-			'foo'
-			.'bar'
-			.'blah';
-
-		return $this;
 	}
-
-	final public static anotherOddMethod()
-	{
-		try {
-			self::someOddMethodName(new FooImplementation());
-		} catch (FooException $e) {
-			// do something
-			throw $e; // try to not "eat" exceptions
-		}
-	}
-}
 
 --
 
