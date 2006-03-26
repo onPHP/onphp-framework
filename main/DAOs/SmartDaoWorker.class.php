@@ -27,7 +27,7 @@
 		{
 			parent::__construct($dao);
 			
-			$this->indexKey = $this->className.self::SUFFIX_INDEX;
+			$this->indexKey = $this->className.'@'.DB_BASE.self::SUFFIX_INDEX;
 		}
 		
 		//@{

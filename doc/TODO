@@ -3,9 +3,6 @@
 * implement separate OrderBy chain-like class which should be able to perform
   self transformations accoring to given mapping. As suggested by Anton.
 
-* implement per-project "watermark" in cache subsystem to avoid namespace
-  collisions.
-
 * introduce a bit of order in exceptions hierarchy.
 
 * OQL?

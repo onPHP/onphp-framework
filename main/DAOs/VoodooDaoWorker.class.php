@@ -29,7 +29,7 @@
 		{
 			parent::__construct($dao);
 			
-			$this->classKey = $this->keyToInt($this->className);
+			$this->classKey = $this->keyToInt($this->className.DB_BASE);
 		}
 		
 		//@{

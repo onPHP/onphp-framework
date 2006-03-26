@@ -1,5 +1,13 @@
 # $Id$
 
+2006-03-26	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/DAOs/SmartDaoWorker.class.php,
+	main/DAOs/VoodooDaoWorker.class.php,
+	core/Cache/WatermarkedPeer.class.php: implemented ability to avoid
+	project's namespace in-cache collisions by watermarking all cache'
+	activity.
+
 2006-03-13	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* meta/classes/: fixed indentation issues, now 100% compatible with
