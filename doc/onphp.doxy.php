@@ -50,11 +50,11 @@
 	 *  - utils:
 	 *   - AggregateCache;
 	 *   - ReferencePool;
+	 *   - WatermarkedPeer;
 	 *
 	 * ...
 	 *
 	 * @defgroup Core Core classes
-	 *
 	 * Core classes and interfaces you just can't live without
 	 *
 	 * @defgroup Base Widely used base classes and interfaces
@@ -88,6 +88,7 @@
 	 * @ingroup Core
 	 *
 	 * @defgroup Main Higher level classes
+	 * Useful stuff for building complex and scalable applications.
 	 *
 	 * @defgroup Helpers Common wrapper and helper classes
 	 * @ingroup Main
@@ -101,9 +102,10 @@
 	 * @defgroup Utils Various accompanying utilities
 	 * @ingroup Main
 	 *
-	 * @defgroup Flow Spring-like webflow tools.
+	 * @defgroup Flow Spring-like webflow tools
 	 * @ingroup Main
 	 *
-	 * Useful stuff for building complex and scalable applications.
+	 * @defgroup Calendar Calendar representation's helpers
+	 * @ingroup Main
 	**/
 ?>

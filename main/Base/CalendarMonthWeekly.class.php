@@ -14,11 +14,10 @@
 	/**
 	 * Calendar month representation splitted by weeks.
 	 *
-	 * @ingroup Helpers
+	 * @ingroup Calendar
 	**/
 	class CalendarMonthWeekly
 	{
-
 		private $monthRange	= null;
 		private $fullRange	= null;
 		private $fullLength	= null;
@@ -26,11 +25,14 @@
 		private $weeks		= array();
 		private $days		= array();
 		
-		public function __construct(Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY)
+		public function __construct(
+			Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY
+		)
 		{
 			$firstDayOfMonth = Timestamp::create(
 				$base->getYear().'-'.$base->getMonth().'-01'
 			);
+			
 			$lastDayOfMonth	= Timestamp::create(
 				$base->getYear().'-'.$base->getMonth().'-'
 				.date('t', $base->toStamp()));
@@ -52,6 +54,7 @@
 			
 			foreach ($rawDays as $rawDay) {
 				$day = CalendarDay::create($rawDay->toStamp());
+				
 				if ($this->monthRange->contains($day))
 					$day->setOutside(false);
 				else 
@@ -60,6 +63,7 @@
 				$this->days[$day->toDate()] = $day;
 				
 				$weekNumber = floor($this->fullLength/7);
+				
 				if (!isset($this->weeks[$weekNumber]))
 					$this->weeks[$weekNumber] = CalendarWeek::create();
 				
@@ -70,7 +74,9 @@
 			++$this->fullLength;
 		}
 		
-		public static function create(Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY)
+		public static function create(
+			Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY
+		)
 		{
 			return new CalendarMonthWeekly($base, $weekStart);
 		}
