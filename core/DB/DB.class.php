@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
- *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -168,7 +167,7 @@
 		public function queryNull(Query $query)
 		{
 			if ($query instanceof SelectQuery)
-				throw new UnsupportedMethodException(
+				throw new WrongArgumentException(
 					'only non-select queries supported'
 				);
 			

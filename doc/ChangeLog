@@ -1,6 +1,14 @@
 # $Id$
 
-2006-03-26	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-03-26	Konstantin V. Arkhipov
+
+	* doc/THANKS: for various suggestions, critics, patches, etc.
+
+	* doc/AUTHORS: all email addresses moved to single file.
+
+	* core/Exceptions/MissingElementException.class.php: closing
+	exception's TODO item by removing abuse of ObjectNotFoundException
+	mostly.
 
 	* global.inc.php.tpl: throw exceptions on E_STRICT violations too.
 
@@ -17,7 +25,7 @@
 	project's namespace in-cache collisions by watermarking all cache'
 	activity.
 
-2006-03-13	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-03-13	Konstantin V. Arkhipov
 
 	* meta/classes/: fixed indentation issues, now 100% compatible with
 	our coding style standarts.
@@ -25,7 +33,7 @@
 	* core/OSQL/DialectString.class.php: toString() renamed to
 	toDialectString(), to avoid collision with Stringable interface.
 
-2006-03-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-03-12	Konstantin V. Arkhipov
 
 	* meta/: proto classes implementation finished.
 
@@ -35,11 +43,11 @@
 	* core/Form/Form.class.php: ability to scope's cleanup dropped;
 	method primitiveExist renamed to primitiveExists;
 
-2006-03-09	Anton E. Lebedevich	<noiselist@pochta.ru>
+2006-03-09	Anton E. Lebedevich
 
 	* main/Flow/: initial import.
 
-2006-03-09	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-03-09	Konstantin V. Arkhipov
 
 	* meta/: creation of prototyped classes implemented.
 
@@ -52,24 +60,24 @@
 
 	* 0.2.9 released.
 
-2006-03-08	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-03-08	Konstantin V. Arkhipov
 
 	* core/OSQL/DBValue.class.php: don't quote integer values.
 
-2006-03-03	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-03-03	Konstantin V. Arkhipov
 
 	* main/DAOs/VoodooDaoWorker.class.php,
 	main/DAOs/SmartDaoWorker.class.php,
 	main/DAOs/TransparentDaoWorker.class.php: fourth dao worker
 	implemented: lockingless, transparent, greedy and damn fast.
 
-2006-03-01	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-03-01	Konstantin V. Arkhipov
 
 	* main/DAOs/NamedObjectDAO.class.php: typo spotted.
 
 	* core/Base/NamedObject.class.php: now IdentifiableObject's child.
 
-2006-02-22	Sergey S. Sergeev	<webs.support@gmail.com>
+2006-02-22	Sergey S. Sergeev
 
 	* main/Utils/HeaderUtils.class.php: bugfixed access to undeclared
 	static property.
@@ -81,48 +89,48 @@
 	* main/DAOs/GenericDAO.class.php, main/DAOs/BaseDAO.class.php:
 	uncacheByQuery() implemented.
 
-2006-02-20	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-02-20	Konstantin V. Arkhipov
 
 	* core/DB/MyDialect.class.php: is now compatible with MySQL-4.
 
 	* core/DB/ImaginaryDialect.class.php: removed unnecessary quoting
 	stuff, since we're using it only for internal purposes.
 
-2006-02-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-02-16	Konstantin V. Arkhipov
 
 	* core/Form/Form.class.php: import/export object is now compatible
 	with php-5.0.
 
-2006-02-16	Denis Gabaidulin	<gabaden@gmail.com>
+2006-02-16	Denis Gabaidulin
 
 	* core/Form/StripTagsFilter.class.php: support for tags exclusion.
 
-2006-02-15	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-02-15	Konstantin V. Arkhipov
 
 	* core/DB/: correct handling for MySQL's forcing of single queries.
 
 	* main/Containers/UnifiedContainer.class.php: wrong list/clones
 	default fixed.
 
-2006-02-08	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-02-08	Konstantin V. Arkhipov
 
 	* main/Base/ImageType.class.php, core/Form/PrimitiveImage.class.php:
 	image uploading helpers.
 
 	* 0.2.8 released.
 
-2006-02-04	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-02-04	Konstantin V. Arkhipov
 
 	* core/Form/Form.class.php: reflection-based object exporter.
 
-2006-02-02	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-02-02	Konstantin V. Arkhipov
 
 	* main/Module/EditorModule.class.php: allow selfRedirect() tweaking.
 
 	* core/Form/Form.class.php: simple reflection-based object importer
 	implemented.
 
-2006-01-31	Anton E. Lebedevich	<noiselist@pochta.ru>
+2006-01-31	Anton E. Lebedevich
 
 	* core/Base/Timestamp.class.php,
 	main/Base/CalendarMonthWeekly.class.php: week start and end day moved
@@ -133,56 +141,56 @@
 
 	* core/OSQL/InsertOrUpdateQuery.class.php: lazySet now even lazier.
 
-2006-01-30	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-01-30	Konstantin V. Arkhipov
 
 	* core/DB/InterbaseDialect.class.php,
 	incubator/classes/DB/IBase.class.php: moved to incubator, since i
 	don't want to support it anymore.
 
-2006-01-29	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-01-29	Konstantin V. Arkhipov
 
 	* core/OSQL/DropTableQuery.class.php: drop table implementation.
 
-2006-01-28	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-01-28	Konstantin V. Arkhipov
 
 	* meta/: first and dirty schema generation implementation.
 
-2006-01-27	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-01-27	Konstantin V. Arkhipov
 
 	* core/Base/Singletone.class.php: renamed to Singleton.class.php.
 
 	* core/OSQL/: implemented auto-increment columns generation for PgSQL,
 	MySQL, IBase and SQLite.
 
-2006-01-26	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-01-26	Konstantin V. Arkhipov
 
 	* core/OSQL/InsertOrUpdateQuery.class.php: setId() renamed to
 	lazySet() to avoid collision with Query interface.
 
 	* core/OSQL/: support for table creation added.
 
-2006-01-25	Sveta Smirnova		<sveta@microbecal.com>
+2006-01-25	Sveta Smirnova
 
 	* core/OSQL/: schema's support introduced in several common cases.
 
-2006-01-25	Igor V. Gulyaev		<igor_vg@mail.ru>
+2006-01-25	Igor V. Gulyaev
 
 	* core/Form/PrimitiveDate.class.php: seconds support fixed for complex
 	imports.
 
-2006-01-25	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-01-25	Konstantin V. Arkhipov
 
 	* test/: first SimpleTest-based tests. Baden. Baden.
 
-2006-01-23	Anton E. Lebedevich	<noiselist@pochta.ru>
+2006-01-23	Anton E. Lebedevich
 
 	* core/OSQL/FromTable.class.php: SQLFunction support added.
 
-2006-01-22	Anton E. Lebedevich	<noiselist@pochta.ru>
+2006-01-22	Anton E. Lebedevich
 
 	* main/Base/Calendar*: calendar helper classes added. 
 
-2006-01-22	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-01-22	Konstantin V. Arkhipov
 
 	* core/Base/ObjectsTree.class.php, core/Base/Range.class.php,
 	core/Base/DateRange.class.php: moved to main/Base/.
@@ -203,12 +211,12 @@
 	* main/DAOs/SmartDaoWorker.class.php: fixed giv's lovely 'index
 	page'-bug (racy uncacheLists()).
 
-2006-01-21	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-01-21	Konstantin V. Arkhipov
 
 	* core/Base/Singletone.class.php: reworked and simplified,
 	SingletoneException dropped.
 
-2006-01-19	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-01-19	Konstantin V. Arkhipov
 
 	* main/DAOs/: removed unneeded wrapper in DAO-workers.
 
@@ -221,70 +229,70 @@
 	schema "support" moved away from Dialect to reduce the number of
 	strpos() calls at least by a factor; spotted by Antony.
 
-2006-01-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-01-16	Konstantin V. Arkhipov
 
 	* doc/www/: DAO example updated, added Meta example.
 
-2006-01-10	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-01-10	Konstantin V. Arkhipov
 
 	* meta/: implemented {Abstract,Dictionary}Class and StraightMapping
 	patterns.
 
-2006-01-07	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2006-01-07	Konstantin V. Arkhipov
 
 	* meta/: root for metaconfiguration' stuff.
 
-2005-12-31	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-12-31	Konstantin V. Arkhipov
 
 	* 0.2.7 released.
 
-2005-12-05	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-12-05	Konstantin V. Arkhipov
 
 	* core/DB/: SQLite support implemented.
 
-2005-11-30	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-30	Konstantin V. Arkhipov
 
 	* main/DAOs/: all DAOs moved to workers-based single hierarchy.
 
-2005-11-28	Igor V. Gulyaev		<igor_vg@mail.ru>
+2005-11-28	Igor V. Gulyaev
 
 	* core/DB/: single-check added for single row queries.
 
-2005-11-26	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-26	Konstantin V. Arkhipov
 
 	* core/DB/: Interbase connector implemented.
 
-2005-11-24	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-24	Konstantin V. Arkhipov
 
 	* 0.2.6 released.
 
-2005-11-23	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-23	Konstantin V. Arkhipov
 
 	* main/DAOs/SmartDAO.class.php: yet another race prevention.
 
-2005-11-22	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-22	Konstantin V. Arkhipov
 
 	* main/Containers/: wrongly defined worker's interface fixed.
 
-2005-11-20	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-20	Konstantin V. Arkhipov
 
 	* core/DB/ImaginaryDialect.class.php: query's self-identification helper.
 
 	* core/Cache/RubberFileSystem.class.php: ported to SemaphorePool.
 
-2005-11-18	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-18	Konstantin V. Arkhipov
 
 	* core/Cache/: proof-of-concept global SemaphorePool implemented.
 
-2005-11-17	Sergey N. Lasunov	<sergey@microbecal.com>
+2005-11-17	Sergey N. Lasunov
 
 	* doc/www/: new banners.
 
-2005-11-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-16	Konstantin V. Arkhipov
 
 	* 0.2.5 released.
 
-2005-11-14	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-14	Konstantin V. Arkhipov
 
 	* main/Containers/: major refactoring at UnifiedContainer & Co. to simplify
 	internal API and separate lazy/full handling logic.
@@ -295,24 +303,24 @@
 	* core/Base/StaticFactory.class.php: introduced to group all static
 	factories.
 
-2005-11-13	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-13	Konstantin V. Arkhipov
 
 	* main/Containers/: Storable, Unified and their's company moved to separate
 	directory.
 
-2005-11-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-12	Konstantin V. Arkhipov
 
 	* core/Cache/: marking bug fixed in ReferencePool; SharedMemory cache
 	introduced for memcachedless systems.
 
-2005-11-11	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-11	Konstantin V. Arkhipov
 
 	* main/Utils/RussianTextUtils.class.php::getAsInOrder(),
 	core/Logic/LogicalEqLower.class.php, core/Logic/LogicalIn.class.php,
 	core/OSQL/PreQuery.class.php: dropped, since their removal-release was the
 	upcoming 0.2.5.
 
-2005-11-10	Sveta Smirnova		<sveta@microbecal.com>
+2005-11-10	Sveta Smirnova
 
 	* core/DB/MySQL.class.php: added error number as error code in throwing
 	DatabaseException.
@@ -320,78 +328,78 @@
 	* core/Form/: PCRE and hash filter are not singletones now; PCRE moved from
 	incubator.
 
-2005-11-07	Sergey S. Sergeev	<webs.support@gmail.com>
+2005-11-07	Sergey S. Sergeev
 
 	* core/OSQL/: combining queries ({union,intersect,except}{,All})
 	implemented.
 
-2005-11-03	Anton E. Lebedevich	<noiselist@pochta.ru>
+2005-11-03	Anton E. Lebedevich
 
 	* main/DAOs/SmartDAO.class.php: fixed semaphore obscure locking problems. 
 
-2005-11-02	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-11-02	Konstantin V. Arkhipov
 
 	* doc/sample/: updated to reflect current situation.
 
 	* core/DB/MySQL.class.php: implemented convention-based transparent
 	sequences handling.
 
-2005-10-31	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-31	Konstantin V. Arkhipov
 
 	* main/DAOs/SmartDAO.class.php: checks for semaphore's acquiring problem.
 
 	* core/Cache/Cache.class.php: ReferencePool usage is now default behaviour.
 
-2005-10-30	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-30	Konstantin V. Arkhipov
 
 	* Released 0.2.4.
 
-2005-10-29	Anton E. Lebedevich	<noiselist@pochta.ru>
+2005-10-29	Anton E. Lebedevich
 
 	* main/DAOs/SmartDAO.class.php: per object lists map removed, it's useless
 	bacause dropLists() incorporated into uncacheById() and friends.
 
 	* main/DAOs/OneToManyLinked.class.php: cache cleanup fixed.
 
-2005-10-28	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-28	Konstantin V. Arkhipov
 
 	* main/DAOs/UnifiedContainer.class.php: is now cache-aware.
 
 	* main/DAOs/SmartDAO.class.php: negative (aka pessimistic) cache model
 	implemented.
 
-2005-10-25	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-25	Konstantin V. Arkhipov
 
 	* core/Form/Form.class.php: clean violated rules too upon dropAllErrors().
 
-2005-10-24	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-24	Konstantin V. Arkhipov
 
 	* main/DAOs/FullTextDAO.class.php: ObjectQuery is now mandatory for looking
 	up object or list.
 
 	* 0.2.3 released.
 
-2005-10-23	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-23	Konstantin V. Arkhipov
 
 	* main/DAOs/FullTextDAO.class.php: added ability to override full text
 	queries.
 
-2005-10-23	Sveta Smirnova		<sveta@microbecal.com>
+2005-10-23	Sveta Smirnova
 
 	* core/DB/: MySQL support is back from incubator.
 
-2005-10-21	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-21	Konstantin V. Arkhipov
 
 	* main/DAOs/FullTextDAO.class.php: silently moved to MappedStorableDAO.
 
 	* core/OSQL/: LogicalIn implemented through LogicalExpression, so it's
 	deprecated now just like LogicalEqLower.
 
-2005-10-20	Garmonbozia R. G.	<garmonbozia@shadanakar.org>
+2005-10-20	Garmonbozia Research Group
 
 	* doc/www/: major site update - css, examples, propaganda, etc.
 
-2005-10-18	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-18	Konstantin V. Arkhipov
 
 	* main/DAOs/NamedObjectDAO.class.php: accept Named implementations too.
 
@@ -400,42 +408,42 @@
 	* core/OSQL/: LogicalEqLower implemented through LogicalExpression, so it's
 	deprecated now.
 
-2005-10-17	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-17	Konstantin V. Arkhipov
 
 	* main/DAOs/: transparent cache handling introduced by SmartDAO.
 
 	* main/DAOs/, core/DB/: GenericDAO introduced for SmartDAO's compatibility
 	with DB.
 
-2005-10-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-16	Konstantin V. Arkhipov
 
 	* main/DAOs/ObjectQuery.class.php: null-valued mappings handling logic
 	fixed.
 
 	* core/DB/DB.class.php: drop as much as we can at objectQuery().
 
-2005-10-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-12	Konstantin V. Arkhipov
 
 	* core/Cache/ReferencePool.class.php: new CachePeer wrapper, obsoletes
 	IdentityMap-in-DAOs idea.
 
-2005-10-11	Anton E. Lebedevich	<noiselist@pochta.ru>
+2005-10-11	Anton E. Lebedevich
 
 	* core/DB/DBTransaction.class.php: "neverending" transactions fixed.
 
-2005-10-10	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-10	Konstantin V. Arkhipov
 
 	* core/OSQL/: SelectQueries as select fields implemented as requested by
-	Sergeev Sergey <serge@rdw.ru>. Minor internal API changes.
+	Sergeev S. Sergey. Minor internal API changes.
 
-2005-10-06	Anton E. Lebedevich	<noiselist@pochta.ru>
+2005-10-06	Anton E. Lebedevich
 
 	* core/Base/Timestamp.class.php: getDayStartStamp, getDayEndStamp methods
 	added.
 
 	* core/Base/DateRange.class.php: enlarge, clip, compare methods added.
 
-2005-10-06	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-10-06	Konstantin V. Arkhipov
 
 	* core/OSQL/SelectQuerySkeleton.class.php: merged back to SelectQuery as
 	suggested by Antony.
@@ -443,38 +451,38 @@
 	* core/Base/StorableContainer.class.php, core/Base/DAOConnected.class.php:
 	moved to main/DAOs/.
 
-2005-09-30	Anton E. Lebedevich	<noiselist@pochta.ru>
+2005-09-30	Anton E. Lebedevich
 
 	* core/Base/Timestamp.class.php: useful compare method added.
 
 	* core/Base/DateRange.class.php: useless compare method removed.
 
-2005-09-28	Anton E. Lebedevich	<noiselist@pochta.ru>
+2005-09-28	Anton E. Lebedevich
 
 	* core/Base/DateRange.class.php: contains, split methods added.
 
-2005-09-27	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-09-27	Konstantin V. Arkhipov
 
 	* main/DAOs/UnifiedContainer.class.php: correct fetch() behaviour.
 
-2005-09-27	Anton E. Lebedevich	<noiselist@pochta.ru>
+2005-09-27	Anton E. Lebedevich
 
 	* main/Utils/LogicUtils.class.php: corrected conditions.
 
 	* core/Base/DateRange.class.php: compare, overlaps methods added.
 
-2005-09-24	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-09-24	Konstantin V. Arkhipov
 
 	* main/DAOs/UnifiedContainer.class.php: do not throw ObjectNotFoundException
 	on empty lists.
 
-2005-09-23	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-09-23	Konstantin V. Arkhipov
 
 	* 0.2.2 released.
 
 	* main/Utils/LogicUtils.class.php: new place for common used logic patterns.
 
-2005-09-20	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-09-20	Konstantin V. Arkhipov
 
 	* core/Base/: added delimiters for date'n'time-related stringoization
 	methods, Time.class.php introduced.
@@ -487,18 +495,18 @@
 	* main/DAOs/: UnifiedContainer and friends ported to ObjectQuery from
 	obsoleted PreQuery.
 
-2005-09-20	Anton E. Lebedevich	<noiselist@pochta.ru>
+2005-09-20	Anton E. Lebedevich
 
 	* core/Base/NamedObject.class.php: added static compareNames() for using in
 	usort().
 
-2005-09-17	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-09-17	Konstantin V. Arkhipov
 
 	* doc/sample: synced with Form's related changes.
 
 	* core/Form/FiltrablePrimitive.class.php: setFilter() removed.
 
-2005-09-16	Anton E. Lebedevich	<noiselist@pochta.ru>
+2005-09-16	Anton E. Lebedevich
 
 	* core/Form/FiltrablePrimitive.class.php: introduced display and import
 	filters chain.
@@ -510,27 +518,27 @@
 
 	* doc/: "Coding Style Convention" added to documentation.
 
-2005-09-16	Konstantin Scheglov	<gnuman@yandex.ru>
+2005-09-16	Konstantin Scheglov
 
 	* main/DAOs/CommonDAO.class.php: getById should throw
 	ObjectNotFoundException instead of null returning.
 
-2005-09-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-09-16	Konstantin V. Arkhipov
 
 	* main/DAOs/ObjectQuery.class.php: treat mapping keys with null values as
 	field names.
 
-2005-09-10	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-09-10	Konstantin V. Arkhipov
 
 	* 0.2.1 released.
 
 	* main/DAOs/FinalObjectsTreeDAO.class.php: getListByParentId added.
 
-2005-09-09	Igor V. Gulyaev			<igor_vg@mail.ru>
+2005-09-09	Igor V. Gulyaev
 
 	* main/DAOs/ObjectQuery.class.php: sticky property name fixed.
 
-2005-09-09	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-09-09	Konstantin V. Arkhipov
 
 	* main/DAOs/CommonDAO.class.php: cleanups and minor optimizations.
 
@@ -548,6 +556,6 @@
 
 	* core/OSQL/PreQuery.class.php: deprecated in favour of ObjectQuery.
 
-2005-09-03	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+2005-09-03	Konstantin V. Arkhipov
 
 	* Initial release - 0.2.0.

@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
- *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -55,7 +54,7 @@
 		{
 			if (!$this->class)
 				throw new WrongStateException(
-					"no defined class for PrimitiveIdentifier '{$this->name}'"
+					"no class defined for PrimitiveIdentifier '{$this->name}'"
 				);
 			
 			$result = parent::import($scope);

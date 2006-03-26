@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
- *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -69,7 +68,7 @@
 			if (is_readable($this->value) && is_writable($path)) {
 				return move_uploaded_file($this->value, $path.$name);
 			} else
-				throw new WrongStateException(
+				throw new WrongArgumentException(
 					"can not move '{$this->value}' to '{($path"."$name)}'"
 				);
 		}

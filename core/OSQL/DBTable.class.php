@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
- *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -55,7 +54,7 @@
 		public function getColumnByName($name)
 		{
 			if (!isset($this->columns[$name]))
-				throw new WrongArgumentException(
+				throw new MissingElementException(
 					"column '{$name}' does not exist"
 				);
 			
@@ -65,7 +64,7 @@
 		public function dropColumnByName($name)
 		{
 			if (!isset($this->columns[$name]))
-				throw new WrongArgumentException(
+				throw new MissingElementException(
 					"column '{$name}' does not exist"
 				);
 			

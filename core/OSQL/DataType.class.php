@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
- *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,10 +15,7 @@
 	 * 
 	 * @ingroup OSQL
 	**/
-	final class DataType
-		extends NamedObject
-		/* mimics Enumeration */
-		implements DialectString
+	final class DataType extends Enumeration implements DialectString
 	{
 		const SMALLINT			= 0x000001;
 		const INTEGER			= 0x000002;
@@ -77,7 +73,7 @@
 				$this->id = $id;
 				$this->name = $this->names[$id];
 			} else
-				throw new WrongArgumentException(
+				throw new MissingElementException(
 					"knows nothing about such id == {$id}"
 				);
 		}

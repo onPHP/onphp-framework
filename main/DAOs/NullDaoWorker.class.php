@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
- *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -208,7 +207,7 @@
 				);
 		}
 		
-		public function dropByIds($ids)
+		public function dropByIds(/* array */ $ids)
 		{
 			return 
 				DBFactory::getDefaultInstance()->queryNull(

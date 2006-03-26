@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
- *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -84,7 +83,7 @@
 			if (!isset($this->properties[$name]))
 				$this->properties[$name] = $property;
 			else
-				throw new DuplicateObjectException(
+				throw new WrongArgumentException(
 					"property '{$name}' already exist"
 				);
 			
@@ -109,7 +108,7 @@
 				unset($this->properties[$name]);
 			
 			} else
-				throw new ObjectNotFoundException(
+				throw new MissingElementException(
 					"property '{$name}' does not exist"
 				);
 			

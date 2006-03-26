@@ -1,7 +1,6 @@
 <?php
 /****************************************************************************
  *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
- *   voxus@onphp.org, noiselist@pochta.ru                                   *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -32,6 +31,13 @@
 						'unsupported object type: '.get_class($arg)
 					);
 			}
+			
+			Assert::isTrue(
+				($logic == Expression::LOGIC_AND)
+				|| ($logic == Expression::LOGIC_OR),
+				
+				"unknown logic '{$logic}'"
+			);
 			
 			$this->args		= $args;
 			$this->logic	= $logic;
@@ -82,7 +88,9 @@
 					return $out;
 
 				default:
-					throw new WrongStateException();
+					throw new WrongStateException(
+						'the thing that should not be, indeed'
+					);
 			}
 		}
 	}

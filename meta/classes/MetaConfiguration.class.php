@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
- *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -65,7 +64,7 @@
 					if (!$property->getType()->isGeneric()) {
 						
 						if (!isset($xmlProperty['relation']))
-							throw new WrongArgumentException(
+							throw new MissingElementException(
 								'relation should be set for non-generic '
 								."type '".get_class($property->getType())."'"
 								." of '{$class->getName()}' class"
@@ -96,7 +95,7 @@
 						$this->classes[$class]->getPattern()
 							instanceof DictionaryClassPattern
 					)
-						throw new WrongStateException(
+						throw new UnsupportedMethodException(
 							'DictionaryClass pattern doesn '
 							.'not support inheritance'
 						);
@@ -105,7 +104,7 @@
 						$this->classes[$parent]
 					);
 				} else
-					throw new ObjectNotFoundException(
+					throw new MissingElementException(
 						"unknown parent class '{$parent}'"
 					);
 			}
@@ -143,7 +142,7 @@
 			if (isset($this->classes[$name]))
 				return $this->classes[$name];
 			
-			throw new ObjectNotFoundException(
+			throw new MissingElementException(
 				"knows nothing about '{$name}' class"
 			);
 		}
@@ -165,7 +164,7 @@
 			if (is_readable(ONPHP_META_PATTERNS.$class.EXT_CLASS))
 				return Singleton::getInstance($class);
 			
-			throw new ObjectNotFoundException(
+			throw new MissingElementException(
 				"unknown pattern '{$name}'"
 			);
 		}

@@ -1,7 +1,6 @@
 <?php
 /****************************************************************************
  *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
- *   voxus@onphp.org, noiselist@pochta.ru                                   *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -362,15 +361,14 @@
 		// erasers
 		public function dropById($id)
 		{
-			$result =
-				parent::dropById($id);
+			$result = parent::dropById($id);
 			
 			$this->uncacheLists();
 			
 			return $result;
 		}
 		
-		public function dropByIds($ids)
+		public function dropByIds(/* array */ $ids)
 		{
 			foreach ($ids as $id)
 				$this->uncacheById($id);

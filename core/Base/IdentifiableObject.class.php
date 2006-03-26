@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Garmonbozia Research Group                      *
- *   garmonbozia@shadanakar.org                                            *
+ *   Copyright (C) 2005-2006 by Garmonbozia Research Group                 *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *

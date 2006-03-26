@@ -1,7 +1,6 @@
 <?php
 /****************************************************************************
  *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
- *   voxus@onphp.org, noiselist@pochta.ru                                   *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -24,7 +23,9 @@
 		public function addAlias($primitiveName, $alias)
 		{
 			if (!isset($this->primitives[$primitiveName]))
-				throw new ObjectNotFoundException("{$primitiveName} does not exist");
+				throw new MissingElementException(
+					"{$primitiveName} does not exist"
+				);
 
 			$this->aliases[$alias] = $primitiveName;
 			
@@ -45,7 +46,9 @@
 			$name = $prm->getName();
 			
 			if (isset($this->primitives[$name]))
-				throw new DuplicateObjectException("i'm already exists!");
+				throw new WrongArgumentException(
+					"i'm already exists!"
+				);
 
 			$this->primitives[$name] = $prm;
 			
@@ -58,7 +61,7 @@
 		public function drop($name)
 		{
 			if (!isset($this->primitives[$name]))
-				throw new ObjectNotFoundException(
+				throw new MissingElementException(
 					"can not drop inexistent primitive '{$name}'"
 				);
 			
@@ -74,7 +77,7 @@
 			elseif (isset($this->primitives[$name]))
 				return $this->primitives[$name];
 
-			throw new ObjectNotFoundException("knows nothing about '{$name}'");
+			throw new MissingElementException("knows nothing about '{$name}'");
 		}
 		
 		public function getValue($name)

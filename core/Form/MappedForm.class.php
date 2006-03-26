@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
- *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -81,7 +80,7 @@
 		private function checkExistence($name)
 		{
 			if (!$this->form->primitiveExists($name))
-				throw new ObjectNotFoundException(
+				throw new MissingElementException(
 					"there is no '{$name}' primitive"
 				);
 		}
