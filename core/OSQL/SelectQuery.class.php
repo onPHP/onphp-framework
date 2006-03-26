@@ -175,8 +175,12 @@
 
 		public function limit($limit = null, $offset = null)
 		{
+			Assert::isInteger($limit, 'invalid limit specified');
+			Assert::isInteger($offset, 'invalid offset specified');
+			
 			$this->limit = $limit;
 			$this->offset = $offset;
+			
 			return $this;
 		}
 
