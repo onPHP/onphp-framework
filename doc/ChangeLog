@@ -2,6 +2,11 @@
 
 2006-03-26	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* core/OSQL/QueryIdentification.class.php: now implements Stringable
+	for debugging purposes.
+
+	* core/Base/Singletone.class.php: dropped in the sake of sanity.
+
 	* main/DAOs/SmartDaoWorker.class.php,
 	main/DAOs/VoodooDaoWorker.class.php,
 	core/Cache/WatermarkedPeer.class.php: implemented ability to avoid

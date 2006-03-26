@@ -14,21 +14,26 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	abstract class QueryIdentification implements Query
+	abstract class QueryIdentification implements Query, Stringable
 	{
 		public function getId()
 		{
-			static $dialect = null;
-			
-			if ($dialect === null)
-				$dialect = new ImaginaryDialect();
-
-			return sha1($this->toDialectString($dialect));
+			return sha1($this->toString());
 		}
 		
 		final public function setId($id)
 		{
 			throw new UnsupportedMethodException();
+		}
+		
+		public function toString()
+		{
+			static $dialect = null;
+			
+			if ($dialect === null)
+				$dialect = new ImaginaryDialect();
+			
+			return $this->toDialectString($dialect);
 		}
 	}
 ?>

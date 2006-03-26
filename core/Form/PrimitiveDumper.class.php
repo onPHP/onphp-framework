@@ -39,7 +39,8 @@ EOT;
 		}
 		
 		/**
-		 * @param $list array of identifiable stringable objects
+		 * @param $prm	target primitive
+		 * @param $list	array of identifiable stringable objects
 		**/
 		public static function select(BasePrimitive $prm, $list)
 		{
