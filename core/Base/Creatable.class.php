@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */	
 
+	/**
+	 * @ingroup Base
+	**/
 	interface Creatable
 	{
 		public static function create();
