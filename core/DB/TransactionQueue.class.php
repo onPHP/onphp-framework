@@ -69,13 +69,7 @@
 		// to satisfy Query interface
 		public function toDialectString(Dialect $dialect)
 		{
-			$out	= array();
-			$list	= $this->queue->getQueueList();
-			
-			foreach ($list as &$query)
-				$out[] = $query->toDialectString($dialect);
-			
-			return implode("\n;", $out);
+			return $this->queue->toDialectString($dialect);
 		}
 	}
 ?>
