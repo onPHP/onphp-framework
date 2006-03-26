@@ -29,7 +29,7 @@
     
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
-	set_error_handler('error2Exception', E_ALL);
+	set_error_handler('error2Exception', E_ALL | E_STRICT);
 	ignore_user_abort(true);
 	define('ONPHP_VERSION', '0.3.0.99');
     

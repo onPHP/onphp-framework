@@ -28,6 +28,11 @@
 	
 	define('SIMPLETEST_PATH', '/usr/share/php/simpletest/');
 	
+	define('__LOCAL_DEBUG__', true);
+	
+	// avoid E_STRICT, because SimpleTest doesn't support it
+	set_error_handler('error2Exception', E_ALL);
+	
 	require SIMPLETEST_PATH.'unit_tester.php';
 	require SIMPLETEST_PATH.'reporter.php';
 ?>

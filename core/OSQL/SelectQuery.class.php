@@ -274,7 +274,7 @@
 			return $nameList;
 		}
 		
-		public function toString(Dialect $dialect)
+		public function toDialectString(Dialect $dialect)
 		{
 			$fieldList = array();
 			foreach ($this->fields as &$field) {
@@ -287,10 +287,10 @@
 					);
 					
 					$fieldList[] =
-						"({$field->toString($dialect)}) AS ".
+						"({$field->toDialectString($dialect)}) AS ".
 						$dialect->quoteField($alias);
 				} else
-					$fieldList[] = $field->toString($dialect);
+					$fieldList[] = $field->toDialectString($dialect);
 			}
 
 			$query = 
@@ -310,20 +310,20 @@
 				else
 					$separator = ' ';
 
-				$fromString .= $separator.$this->from[$i]->toString($dialect);
+				$fromString .= $separator.$this->from[$i]->toDialectString($dialect);
 			}
 
 			if ($fromString)
 				$query .= ' FROM '.$fromString;
 
 			// WHERE
-			$query .= parent::toString($dialect);
+			$query .= parent::toDialectString($dialect);
 
 			/* GROUP */ {
 				$groupList = array();
 
 				foreach ($this->group as $group)
-					$groupList[] = $group->toString($dialect);
+					$groupList[] = $group->toDialectString($dialect);
 
 				if ($groupList)
 					$query .= " GROUP BY ".implode(', ', $groupList);
@@ -333,7 +333,7 @@
 				$orderList = array();
 
 				foreach($this->order as $order)
-					$orderList[] = $order->toString($dialect);
+					$orderList[] = $order->toDialectString($dialect);
 
 				if ($orderList)
 					$query .= " ORDER BY ".implode(', ', $orderList);

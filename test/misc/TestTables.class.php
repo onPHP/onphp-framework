@@ -7,11 +7,7 @@
 		
 		public function __construct()
 		{
-			require
-				ONPHP_TEST_PATH
-				.'meta'.DIRECTORY_SEPARATOR
-				.'Auto'.DIRECTORY_SEPARATOR
-				.'AutoSchema.php';
+			require ONPHP_META_AUTO_DIR.'schema.php';
 			
 			Assert::isTrue(isset($schema));
 			
@@ -33,7 +29,8 @@
 					if ($db->supportSequences()) {
 						foreach (
 							$this->schema->getTableByName($name)->getColumns()
-								as $columnName => $column)
+								as $columnName => $column
+						)
 						{
 							try {
 								if ($column->isAutoincrement())

@@ -168,10 +168,10 @@
 					."({$dialect->quoteField($column)})";
 				
 				if ($this->onDelete)
-					$out .= ' ON DELETE '.$this->onDelete->toDialectString();
+					$out .= ' ON DELETE '.$this->onDelete->toString();
 				
 				if ($this->onUpdate)
-					$out .= ' ON UPDATE '.$this->onUpdate->toDialectString();
+					$out .= ' ON UPDATE '.$this->onUpdate->toString();
 			}
 			
 			return $out;

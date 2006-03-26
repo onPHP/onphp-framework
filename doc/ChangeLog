@@ -2,6 +2,10 @@
 
 2006-03-26	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* global.inc.php.tpl: throw exceptions on E_STRICT violations too.
+
+	* main/Flow/Model.class.php: deprecated 'Var'-suffixed methods.
+
 	* core/OSQL/QueryIdentification.class.php: now implements Stringable
 	for debugging purposes.
 
