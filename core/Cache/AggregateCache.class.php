@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup Cache
 	**/
-	class AggregateCache extends SelectivePeer
+	class AggregateCache extends SelectivePeer implements Creatable
 	{
 		const LEVEL_ULTRAHIGH	= 0xFFFF;
 		const LEVEL_HIGH		= 0xC000;
@@ -29,7 +29,7 @@
 
 		public static function create()
 		{
-			return new AggregateCache();
+			return new self;
 		}
 
 		public function addPeer(

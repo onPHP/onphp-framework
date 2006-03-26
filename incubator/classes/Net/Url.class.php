@@ -15,7 +15,7 @@
 	
 	class UrlException extends BaseException {}
 
-	class Url
+	class Url implements Creatable
 	{	
 		private $url 	  		= null;
 		private $protocol 		= "http";
@@ -30,7 +30,7 @@
 		
 		public static function create()
 		{
-			return new Url();
+			return new self;
 		}
 		
 		public function setCredentials(Credentials $credentials)

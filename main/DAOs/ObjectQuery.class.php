@@ -19,7 +19,7 @@
 	 * 
 	 * @ingroup DAOs
 	**/
-	class ObjectQuery
+	class ObjectQuery implements Creatable
 	{
 		const SORT_ASC		= 0x0001;
 		const SORT_DESC		= 0x0002;
@@ -36,7 +36,7 @@
 		
 		public static function create()
 		{
-			return new ObjectQuery();
+			return new self;
 		}
 
 		public function sort($name)

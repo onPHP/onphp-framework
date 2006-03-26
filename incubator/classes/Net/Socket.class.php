@@ -16,7 +16,7 @@
 	
 	class SocketException extends BaseException {/*_*/}
 
-	class Socket 
+	class Socket implements Creatable
 	{
 		const BLOCK_SIZE				= 1024;
 
@@ -42,7 +42,7 @@
 		
 		public static function create()
 		{
-			return new Socket();
+			return new self;
 		}
 		
 		public function setPort($port)

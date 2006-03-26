@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class Model
+	class Model implements Creatable
 	{
 		private $vars = array();
 		

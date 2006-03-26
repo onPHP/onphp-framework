@@ -17,7 +17,7 @@
 	 * 
 	 * @see http://onphp.org/examples/Form.html
 	**/
-	final class Form extends RegulatedForm
+	final class Form extends RegulatedForm implements Creatable
 	{
 		const WRONG 		= 0x0001;
 		const MISSING 		= 0x0002;

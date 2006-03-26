@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Filters
 	**/
-	class PCREFilter implements Filtrator
+	class PCREFilter implements Filtrator, Creatable
 	{
 		private $search 	= null;
 		private $replace	= null;

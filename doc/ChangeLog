@@ -1,5 +1,9 @@
 # $Id$
 
+2006-03-27	Konstantin V. Arkhipov
+
+	* core/Base/Creatable.class.php: new obvious interface introduced.
+
 2006-03-26	Konstantin V. Arkhipov
 
 	* doc/THANKS: for various suggestions, critics, patches, etc.

@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class ModelAndView
+	class ModelAndView implements Creatable
 	{
 		private $model 	= null;
 		

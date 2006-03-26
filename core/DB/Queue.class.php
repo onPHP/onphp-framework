@@ -19,7 +19,7 @@
 	 * 
 	 * @todo introduce DBs without multi-query support handling
 	**/
-	final class Queue implements Query
+	final class Queue implements Query, Creatable
 	{
 		private $queue = array();
 		
