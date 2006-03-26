@@ -26,7 +26,7 @@
 					ModelAndView::create()->setView('success')->
 					setModel(
 						Model::create()->
-						setVar('id', $subject->getId())
+						set('id', $subject->getId())
 					);
 			}
 			

@@ -63,18 +63,18 @@
 				$mav->setView('redirect:'.get_class($this));
 				
 				$mav->getModel()->
-					dropVar('id');
+					drop('id');
 				
 			} else {
 				$mav->setView(get_class($this));
 				
 				if ($command)
-					$mav->getModel()->setVar('action', $command);
+					$mav->getModel()->set('action', $command);
 				else
 					$form->dropAllErrors();
 					
 				$mav->setModel(
-					$mav->getModel()->setVar('form', $form)
+					$mav->getModel()->set('form', $form)
 				);
 			}
 			
