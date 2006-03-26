@@ -44,7 +44,7 @@
 		public static function me()
 		{
 			if (!self::$peer || !self::$peer->isAlive())
-				self::$peer = new ReferencePool(new RuntimeMemory());
+				self::$peer = new RuntimeMemory();
 			
 			return self::$peer;
 		}
