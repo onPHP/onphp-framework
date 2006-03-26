@@ -14,7 +14,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class DateRangeList extends BasePrimitive
+	class DateRangeList extends BasePrimitive implements Stringable
 	{
 		public function import(&$scope)
 		{
