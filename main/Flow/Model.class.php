@@ -62,33 +62,5 @@
 			
 			return $this;
 		}
-		
-		/// @deprecated by set
-		public function setVar($name, $var)
-		{
-			$this->vars[$name] = $var;
-			
-			return $this;
-		}
-		
-		/// @deprecated by get
-		public function getVar($name)
-		{
-			return $this->vars[$name];
-		}
-		
-		/// @deprecated by has
-		public function hasVar($name)
-		{
-			return isset($this->vars[$name]);
-		}
-		
-		/// @deprecated by drop
-		public function dropVar($name)
-		{
-			unset($this->vars[$name]);
-			
-			return $this;
-		}
 	}
 ?>
