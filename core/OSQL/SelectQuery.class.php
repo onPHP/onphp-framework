@@ -175,8 +175,11 @@
 
 		public function limit($limit = null, $offset = null)
 		{
-			Assert::isInteger($limit, 'invalid limit specified');
-			Assert::isInteger($offset, 'invalid offset specified');
+			if ($limit !== null) 
+				Assert::isInteger($limit, 'invalid limit specified');
+				
+			if ($offset !== null)
+				Assert::isInteger($offset, 'invalid offset specified');
 			
 			$this->limit = $limit;
 			$this->offset = $offset;
@@ -271,7 +274,7 @@
 			return $nameList;
 		}
 		
-		public function toDialectString(Dialect $dialect)
+		public function toString(Dialect $dialect)
 		{
 			$fieldList = array();
 			foreach ($this->fields as &$field) {
@@ -284,10 +287,10 @@
 					);
 					
 					$fieldList[] =
-						"({$field->toDialectString($dialect)}) AS ".
+						"({$field->toString($dialect)}) AS ".
 						$dialect->quoteField($alias);
 				} else
-					$fieldList[] = $field->toDialectString($dialect);
+					$fieldList[] = $field->toString($dialect);
 			}
 
 			$query = 
@@ -307,23 +310,20 @@
 				else
 					$separator = ' ';
 
-				$fromString .=
-					$separator
-					.$this->from[$i]->
-						toDialectString($dialect);
+				$fromString .= $separator.$this->from[$i]->toString($dialect);
 			}
 
 			if ($fromString)
 				$query .= ' FROM '.$fromString;
 
 			// WHERE
-			$query .= parent::toDialectString($dialect);
+			$query .= parent::toString($dialect);
 
 			/* GROUP */ {
 				$groupList = array();
 
 				foreach ($this->group as $group)
-					$groupList[] = $group->toDialectString($dialect);
+					$groupList[] = $group->toString($dialect);
 
 				if ($groupList)
 					$query .= " GROUP BY ".implode(', ', $groupList);
@@ -333,7 +333,7 @@
 				$orderList = array();
 
 				foreach($this->order as $order)
-					$orderList[] = $order->toDialectString($dialect);
+					$orderList[] = $order->toString($dialect);
 
 				if ($orderList)
 					$query .= " ORDER BY ".implode(', ', $orderList);

@@ -16,11 +16,13 @@
 	 * 
 	 * @ingroup Base
 	**/
-	class Time implements Stringable
+	class Time
 	{
 		protected $hour		= 0;
 		protected $minute	= 0;
 		protected $second	= 0;
+		
+		private $string		= null;
 		
 		public static function create($input)
 		{
@@ -103,7 +105,8 @@
 			);
 			
 			$this->hour = $hour;
-			
+			$this->string = null;
+
 			return $this;
 		}
 		
@@ -123,6 +126,7 @@
 			);
 			
 			$this->minute = $minute;
+			$this->string = null;
 			
 			return $this;
 		}
@@ -142,15 +146,18 @@
 			);
 			
 			$this->second = $second;
+			$this->string = null;
 			
 			return $this;
 		}
 		
 		public function toString($delimiter = ':')
 		{
-			return
-				$this->doublize($this->hour).$delimiter.
-				$this->doublize($this->minute);
+			if ($this->string === null)
+				$this->string = $this->doublize($this->hour).$delimiter
+					.$this->doublize($this->minute);
+
+			return $this->string;
 		}
 
 		public function toFullString($delimiter = ':')
