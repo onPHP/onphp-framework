@@ -268,7 +268,7 @@ EOT;
 								$this->type->getClass()
 							);
 						
-						$idName =ucfirst($remote->getIdentifier()->getName());
+						$idName = $remote->getIdentifier()->getName();
 						
 						if ($this->required)
 							$out = "set('{$this->dumbName}_{$idName}', ";
