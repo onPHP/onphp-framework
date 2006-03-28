@@ -63,7 +63,11 @@
 			$content = trim($content);
 			
 			if (is_readable($path)) {
-				$pattern = '@\/\*(.*)\*\/@sU';
+				$pattern =
+					array(
+						'@\/\*(.*)\*\/@sU',
+						'@[\r\n]@sU'
+					);
 				
 				$old = preg_replace($pattern, null, file_get_contents($path));
 				$new = preg_replace($pattern, null, $content);
