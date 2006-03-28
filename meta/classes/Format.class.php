@@ -23,7 +23,7 @@
 			$return	= false;
 			
 			foreach (explode("\n", $data) as $string) {
-				$string = str_replace("\t", null, $string)."\n";
+				$string = str_replace("\t", null, trim($string))."\n";
 				
 				if ($string == "}\n") {
 					$indent -= $chain;
