@@ -31,7 +31,7 @@
 			return
 				str_replace(
 					$this->symbols,
-					array_fill(0, count($this->symbols), ''),
+					null,
 					$value
 				);
 		}
