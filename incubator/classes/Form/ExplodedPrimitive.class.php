@@ -9,35 +9,34 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
 ***************************************************************************/
-/*$Id$*/
+/* $Id$ */
 
-class ExplodedPrimitive extends PrimitiveString
-{
-	protected $separator;
-	
-	public function setSeparator($separator)
+	class ExplodedPrimitive extends PrimitiveString
 	{
-		$this->separator = $separator;
+		protected $separator;
 		
-		return $this;
-	}
+		public function setSeparator($separator)
+		{
+			$this->separator = $separator;
+			
+			return $this;
+		}
+		
+		public function getSeparator()
+		{
+			return $this->separator;
+		}
+		
+		public function import(&$scope)
+		{
+			if (!$temp = parent::import($scope))
+				return $temp;
 	
-	public function getSeparator()
-	{
-		return $this->separator;
-	}
-	
-	public function import(&$scope)
-	{
-		if (!$temp = parent::import($scope))
-			return $temp;
-
-		if ($this->value = explode($this->separator, $this->value)) {
-			return true;
-		} else {
-			return false;
+			if ($this->value = explode($this->separator, $this->value)) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
-}
-
 ?>
