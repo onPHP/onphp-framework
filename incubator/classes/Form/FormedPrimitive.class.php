@@ -67,8 +67,9 @@
 		{
 			if (!parent::import($scope))
 				return null;
-	
-			Assert::isTrue(is_array($scope[$this->name]));
+
+			if (!is_array($scope[$this->name]))
+				return null;
 			
 			if ($this->form->import($scope[$this->name])->getErrors())
 				return null;
