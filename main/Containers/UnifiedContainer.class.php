@@ -232,7 +232,9 @@
 					$this->clones[$id] = $id;
 				}
 			} else {
-				$this->list = $this->dao->getListByQuery($query);
+				$this->list = ArrayUtils::convertObjectList(
+					$this->dao->getListByQuery($query)
+				);
 	
 				foreach ($this->list as $id => &$object)
 					$this->clones[$id] = clone $object;
