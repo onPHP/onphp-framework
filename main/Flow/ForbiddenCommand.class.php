@@ -14,7 +14,10 @@
 	{
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
-			return ModelAndView::create()->setView('error');
+			return
+				ModelAndView::create()->setView(
+					EditorController::COMMAND_FAILED
+				);
 		}
 	}
 ?>

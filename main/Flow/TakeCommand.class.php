@@ -23,7 +23,10 @@
 				$subject = $subject->dao()->take($subject);
 				
 				return
-					ModelAndView::create()->setView('success')->
+					ModelAndView::create()->
+					setView(
+						EditorController::COMMAND_SUCCEEDED
+					)->
 					setModel(
 						Model::create()->
 						set('id', $subject->getId())

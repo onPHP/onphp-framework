@@ -15,6 +15,9 @@
 	**/
 	abstract class EditorController implements Controller 
 	{
+		const COMMAND_SUCCEEDED	= 'success';
+		const COMMAND_FAILED	= 'error';
+		
 		// to be redefined in __construct
 		protected $commandMap	= array();
 		
@@ -58,7 +61,7 @@
 			else
 				$mav = ModelAndView::create();
 			
-			if ($mav->getView() == 'success') {
+			if ($mav->getView() == self::COMMAND_SUCCEEDED) {
 				
 				$mav->setView('redirect:'.get_class($this));
 				
