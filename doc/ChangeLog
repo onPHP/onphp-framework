@@ -1,5 +1,9 @@
 # $Id$
 
+2006-03-30	Anton E. Lebedevich
+	* main/Containers/UnifiedContainer.class.php: wrong index in list and
+	clones fixed
+
 2006-03-27	Konstantin V. Arkhipov
 
 	* core/Base/Creatable.class.php: new obvious interface introduced.
