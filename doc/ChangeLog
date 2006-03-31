@@ -1,8 +1,13 @@
 # $Id$
 
+2006-03-30	Konstantin V. Arkhipov
+
+	* main/Containers/UnifiedContainer.class.php: bibb added.
+
 2006-03-30	Anton E. Lebedevich
+
 	* main/Containers/UnifiedContainer.class.php: wrong index in list and
-	clones fixed
+	clones fixed.
 
 2006-03-27	Konstantin V. Arkhipov
 
