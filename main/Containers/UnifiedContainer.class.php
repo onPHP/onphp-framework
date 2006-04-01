@@ -133,7 +133,7 @@
 			return $this;
 		}
 		
-		public function replaceList($list)
+		public function replaceList(/* array */ $list)
 		{
 			Assert::isArray($list);
 			
