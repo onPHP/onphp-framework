@@ -1,5 +1,10 @@
 /* $Id$ */
 
+	body {
+		margin: 0px 0px 0px 0px;
+		padding: 0px 0px 0px 0px;
+	}
+	
 /* headings */
 
 	h1, h2, h3, h4 {
