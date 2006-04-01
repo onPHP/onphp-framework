@@ -131,6 +131,7 @@
 	
 	a:hover {
 		color: darkBlue;
+		background-color: whiteSmoke;
 		text-decoration: underline;
 	}
 	
@@ -142,8 +143,8 @@
 /* unused line */
 	
 	hr {
-		border: 1px dotted black;
 		width: 75%;
+		height: 1px;
 	}
 	
 /* php's coloring and random stuff */

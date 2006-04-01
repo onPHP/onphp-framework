@@ -1,4 +1,9 @@
-/* tabs styles, based on http://www.alistapart.com/articles/slidingdoors */
+/*
+	tabs styles, based on http://www.alistapart.com/articles/slidingdoors
+	stripped down to fit onPHP's web style
+	
+	$Id$
+*/
 
 DIV.tabs
 {
@@ -30,8 +35,6 @@ DIV.tabs A
 {
    float            : left;
    border-bottom    : 1px solid #7D767D;
-   font-size        : x-small;
-   font-weight      : bold;
    text-decoration  : none;
 }
 
@@ -58,13 +61,10 @@ DIV.tabs INPUT
 {
    float            : right;
    display          : inline;
-   font-size        : 1em;
 }
 
 DIV.tabs TD
 {
-   font-size        : x-small;
-   font-weight      : bold;
    text-decoration  : none;
 }
 
