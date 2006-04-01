@@ -134,16 +134,11 @@
 			return $this;
 		}
 		
-		public function setListWithClones($list)
+		public function setListWithClones(/* array */ $list)
 		{
 			Assert::isArray($list);
 			
-			$this->list = $list;
-			
-			foreach ($this->list as $id => &$object)
-				$this->clones[$id] = clone $object;
-			
-			return $this;
+			return $this->importList($list);
 		}
 
 		public function getList()
@@ -175,34 +170,44 @@
 				$this->list,
 				"that's not an array :-/"
 			);
+
+			if (!$this->fetched)
+				$this->fetch();
 			
 			$list	= $this->list;
 			$clones	= $this->clones;
 			
-			$insert = $delete = $update = array();
-			
-			if ($clones)
-				$ids =
-					array_merge(
-						array_keys($list),
-						array_keys($clones)
-					);
-			else
-				$ids = array_keys($list);
-			
-			foreach ($ids as $id) {
-				if (
-					!$this->lazy
-					&& isset($list[$id], $clones[$id])
-					&& $list[$id] != $clones[$id]
-				)
-					$update[] = $list[$id];
-				elseif (isset($list[$id]) && !isset($clones[$id]))
-					$insert[] = $list[$id];
-				elseif (isset($clones[$id]) && !isset($list[$id]))
-					$delete[] = $clones[$id];
+			$ids = $insert = $delete = $update = array();
+
+			if ($this->lazy) {
+				foreach ($list as $id) {
+					if (!isset($clones[$id]))
+						$insert[] = $ids[$id] = $id;
+					else
+						$ids[$id] = $id;
+				}
+				
+				foreach ($clones as $id) {
+					if (!isset($ids[$id]))
+						$delete[] = $id;
+				}
+			} else {
+				foreach ($list as $object) {
+
+					$id = $object->getId();
+					
+					if (isset($clones[$id]) && $object != $clones[$id])
+						$update[] = $ids[$id] = $object;
+					elseif (!isset($clones[$id]))
+						$insert[] = $ids[$id] = $object;
+				}
+				
+				foreach ($clones as $id => $object) {
+					if (!isset($ids[$id]))
+						$delete[] = $object;
+				}
 			}
-			
+
 			$db = DBFactory::getDefaultInstance();
 
 			$db->queueStart()->begin();
@@ -225,23 +230,27 @@
 		{
 			$query = $this->worker->makeFetchQuery();
 			
-			if ($this->lazy) {
-				$ids = $this->dao->getCustomRowList($query);
+			if ($this->lazy)
+				$list = $this->dao->getCustomRowList($query);
+			else
+				$list = $this->dao->getListByQuery($query);
+
+			return $this->importList($list);
+		}
 		
-				foreach ($ids as $id) {
+		private function importList(/* array */ $list)
+		{
+			if ($this->lazy) {
+				foreach ($list as $id) {
 					$this->list[$id] = $id;
 					$this->clones[$id] = $id;
 				}
 			} else {
-				$this->list = ArrayUtils::convertObjectList(
-					$this->dao->getListByQuery($query)
-				);
-	
-				foreach ($this->list as $id => &$object)
-					$this->clones[$id] = clone $object;
+				$this->list = $list;
+				
+				foreach ($list as $object)
+					$this->clones[$object->getId()] = clone $object;
 			}
-
-			return $this;
 		}
 	}
 ?>

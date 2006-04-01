@@ -1,5 +1,10 @@
 # $Id$
 
+2006-04-01	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/Containers/UnifiedContainer.class.php: save logic fix merged
+	back from trunk.
+
 2006-03-13	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/Form/: merged changes for PrimitiveIdentifiable and Form from
