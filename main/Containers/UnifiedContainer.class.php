@@ -134,7 +134,7 @@
 			return $this;
 		}
 		
-		public function setListWithClones(/* array */ $list)
+		public function replaceList(/* array */ $list)
 		{
 			Assert::isArray($list);
 			
