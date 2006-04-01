@@ -93,12 +93,12 @@
 	 * @defgroup Helpers Common wrapper and helper classes
 	 * @ingroup Main
 	 *
-	 * @defgroup Containers IdentifiableObject collections handlers
-	 * @ingroup Main
-	 *
 	 * @defgroup DAOs Root classes for building DAO hierarchies
 	 * @ingroup Main
 	 *
+	 * @defgroup Containers IdentifiableObject collections handlers
+	 * @ingroup DAOs
+	 * 
 	 * @defgroup Utils Various accompanying utilities
 	 * @ingroup Main
 	 *
