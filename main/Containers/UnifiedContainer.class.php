@@ -176,7 +176,6 @@
 			$ids = $insert = $delete = $update = array();
 
 			if ($this->lazy) {
-				
 				foreach ($list as $id) {
 					if (!isset($clones[$id]))
 						$insert[] = $ids[$id] = $id;
