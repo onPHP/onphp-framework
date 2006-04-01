@@ -37,7 +37,7 @@ EOT;
 				$out .= "parent::__construct();\n\n";
 			}
 			
-			$mapping = self::buildMapping($class, 5);
+			$mapping = self::buildMapping($class);
 			$pointers = self::buildPointers($class);
 			
 			$out .= implode(",\n", $mapping)."\n";

@@ -32,25 +32,29 @@
 				$setterIndent = 5;
 			
 			foreach ($class->getProperties() as $property) {
-				$setters[] = $property->toDaoField($className, $setterIndent);
 				
 				$filler = $property->toDaoSetter($className);
 				
-				if (
-					!$property->getType()->isGeneric()
-					&& !$property->isRequired()
-				)
-					$standaloneFillers[] =
-						implode(
-							"\n",
-							explode("\n", $filler)
-						);
-				else
-					$chainFillers[] =
-						implode(
-							"\n",
-							explode("\n", $filler)
-						);
+				if ($filler !== null) {
+					
+					$setters[] = $property->toDaoField($className, $setterIndent);
+					
+					if (
+						!$property->getType()->isGeneric()
+						&& !$property->isRequired()
+					)
+						$standaloneFillers[] =
+							implode(
+								"\n",
+								explode("\n", $filler)
+							);
+					else
+						$chainFillers[] =
+							implode(
+								"\n",
+								explode("\n", $filler)
+							);
+				}
 			}
 			
 			$out .= implode("->\n", $setters).";\n";
@@ -135,7 +139,7 @@ public function getSequence()
 EOT;
 		}
 		
-		protected static function buildMapping(MetaClass $class, $indent = 3)
+		protected static function buildMapping(MetaClass $class)
 		{
 			$mapping = array();
 			
@@ -154,21 +158,29 @@ EOT;
 					
 				} else {
 					
-					$remoteClass =
-						MetaConfiguration::me()->
-						getClassByName(
-							$property->getType()->getClass()
-						);
+					$relation = $property->getRelation();
 					
-					$identifier = $remoteClass->getIdentifier();
-					
-					$row .=
-						"'{$property->getName()}".ucfirst($identifier->getName())
-						."' => '{$property->getDumbName()}_"
-						."{$identifier->getDumbName()}'";
+					if (
+						$relation->getId() == MetaRelation::ONE_TO_ONE
+					) {
+						$remoteClass =
+							MetaConfiguration::me()->
+							getClassByName(
+								$property->getType()->getClass()
+							);
+						
+						$identifier = $remoteClass->getIdentifier();
+						
+						$row .=
+							"'{$property->getName()}".ucfirst($identifier->getName())
+							."' => '{$property->getDumbName()}_"
+							."{$identifier->getDumbName()}'";
+					} else
+						$row = null;
 				}
 				
-				$mapping[] = $row;
+				if ($row)
+					$mapping[] = $row;
 			}
 			
 			return $mapping;

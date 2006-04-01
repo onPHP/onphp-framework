@@ -56,6 +56,35 @@
 					$userFile,
 					Format::indentize(DaoBuilder::build($class))
 				);
+			
+			// supplementary classes check
+			foreach ($class->getProperties() as $property) {
+				if (
+					$property->getRelation()
+					&& (
+						$property->getRelation()->getId()
+						!= MetaRelation::ONE_TO_ONE
+					)
+				) {
+					$userFile =
+						ONPHP_META_DAO_DIR
+						.$class->getName().'To'.$property->getType()->getClass()
+						.'DAO'
+						.EXT_CLASS;
+					
+					if (!file_exists($userFile)) {
+						$this->dumpFile(
+							$userFile,
+							Format::indentize(
+								ContainerClassBuilder::buildContainer(
+									$class,
+									$property
+								)
+							)
+						);
+					}
+				}
+			}
 		}
 		
 		public static function dumpFile($path, $content)

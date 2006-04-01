@@ -213,6 +213,11 @@ EOT;
 						
 						break;
 					
+					case MetaRelation::ONE_TO_MANY:
+					case MetaRelation::MANY_TO_MANY:
+						
+						return null;
+					
 					default:
 						
 						throw new UnsupportedMethodException();
@@ -297,6 +302,11 @@ EOT;
 						}
 						
 						break;
+					
+					case MetaRelation::ONE_TO_MANY:
+					case MetaRelation::MANY_TO_MANY:
+
+						return null;
 					
 					default:
 						

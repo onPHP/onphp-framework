@@ -57,7 +57,36 @@
 				if ($property->getName() == 'id' && !$parent)
 					continue;
 				
-				$out .= $property->toMethods();
+				if (
+					!$property->getRelation()
+					|| (
+						$property->getRealtion()->getId()
+						== MetaRelation::ONE_TO_ONE
+					)
+				) {
+					$out .= $property->toMethods();
+				} else { // OneToMany || ManyToMany
+					$name = $property->getName();
+					$methodName = ucfirst($name);
+					$remoteName = $property->getType()->getClass();
+					
+					$out .= <<<EOT
+
+public function get{$methodName}(\$lazy = false)
+{
+	if (!\$this->{$name}) {
+		\$this->{$name} = new {$class->getName()}To{$remoteName}DAO(\$this, \$lazy);
+		
+		if (\$this->id) {
+			\$this->{$name}->fetch();
+		}
+	}
+	
+	return \$this->{$name};
+}
+
+EOT;
+				}
 			}
 			
 			$out .= "}\n";

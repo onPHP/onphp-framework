@@ -1,8 +1,15 @@
 # $Id$
 
+2006-04-01	Konstantin V. Arkhipov
+
+	* main/Containers/UnifiedContainer.class.php: API changed a bit -
+	setListWithClones() -> replaceList(); once again refixed save logic.
+
+	* meta/: support for OneToMany and ManyToMany relations implemented.
+
 2006-03-30	Konstantin V. Arkhipov
 
-	* main/Containers/UnifiedContainer.class.php: bibb added.
+	* main/Flow/ForbiddenCommand.class.php: bibb added.
 
 2006-03-30	Anton E. Lebedevich
 
