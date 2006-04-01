@@ -196,11 +196,11 @@
 						$update[] = $ids[$id] = $object;
 					elseif (!isset($clones[$id]))
 						$insert[] = $ids[$id] = $object;
-					
-					foreach ($clones as $id => $object) {
-						if (!isset($ids[$id]))
-							$delete[] = $object;
-					}
+				}
+				
+				foreach ($clones as $id => $object) {
+					if (!isset($ids[$id]))
+						$delete[] = $object;
 				}
 			}
 
