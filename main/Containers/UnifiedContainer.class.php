@@ -169,6 +169,9 @@
 				$this->list,
 				"that's not an array :-/"
 			);
+
+			if (!$this->fetched)
+				$this->fetch();
 			
 			$list	= $this->list;
 			$clones	= $this->clones;
