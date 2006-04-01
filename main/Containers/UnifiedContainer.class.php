@@ -178,27 +178,38 @@
 			$list	= $this->list;
 			$clones	= $this->clones;
 			
-			$insert = $delete = $update = array();
-			
-			// tricky plain list checking
-			if (isset($list[0]))
-				$list = ArrayUtils::convertObjectList($list);
+			$ids = $insert = $delete = $update = array();
 
-			foreach ($clones as $id => $object) {
-				if (isset($list[$id]) && ($object != $list[$id])) {
-					
-					$update[] = $object;
-					
-					unset($list[$id]);
+			if ($this->lazy) {
 				
-				} elseif (!isset($list[$id])) {
-					$delete[] = $object;
+				foreach ($list as $id) {
+					if (!isset($clones[$id]))
+						$insert[] = $ids[$id] = $id;
+					else
+						$ids[$id] = $id;
+				}
+				
+				foreach ($clones as $id) {
+					if (!isset($ids[$id]))
+						$delete[] = $id;
+				}
+			} else {
+				foreach ($list as $object) {
+
+					$id = $object->getId();
+					
+					if (isset($clones[$id]) && $object != $clones[$id])
+						$update[] = $ids[$id] = $object;
+					elseif (!isset($clones[$id]))
+						$insert[] = $ids[$id] = $object;
+					
+					foreach ($clones as $id => $object) {
+						if (!isset($ids[$id]))
+							$delete[] = $object;
+					}
 				}
 			}
 
-			foreach ($list as $object)
-				$insert[] = $object;
-			
 			$db = DBFactory::getDefaultInstance();
 
 			$db->queueStart()->begin();
