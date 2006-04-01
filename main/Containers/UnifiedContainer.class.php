@@ -180,27 +180,24 @@
 			
 			$insert = $delete = $update = array();
 			
-			if ($clones)
-				$ids =
-					array_merge(
-						array_keys($list),
-						array_keys($clones)
-					);
-			else
-				$ids = array_keys($list);
-			
-			foreach ($ids as $id) {
-				if (
-					!$this->lazy
-					&& isset($list[$id], $clones[$id])
-					&& $list[$id] != $clones[$id]
-				)
-					$update[] = $list[$id];
-				elseif (isset($list[$id]) && !isset($clones[$id]))
-					$insert[] = $list[$id];
-				elseif (isset($clones[$id]) && !isset($list[$id]))
-					$delete[] = $clones[$id];
+			// tricky plain list checking
+			if (isset($list[0]))
+				$list = ArrayUtils::convertObjectList($list);
+
+			foreach ($clones as $id => $object) {
+				if (isset($list[$id]) && ($object != $list[$id])) {
+					
+					$update[] = $object;
+					
+					unset($list[$id]);
+				
+				} elseif (!isset($list[$id])) {
+					$delete[] = $object;
+				}
 			}
+
+			foreach ($list as $object)
+				$insert[] = $object;
 			
 			$db = DBFactory::getDefaultInstance();
 
@@ -234,8 +231,8 @@
 			} else {
 				$this->list = $this->dao->getListByQuery($query);
 	
-				foreach ($this->list as $id => &$object)
-					$this->clones[$id] = clone $object;
+				foreach ($this->list as $object)
+					$this->clones[$object->getId()] = clone $object;
 			}
 
 			return $this;
