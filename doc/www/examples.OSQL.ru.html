@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>onPHP: contacts</title>
+	<title>onPHP: пример метаконфигурации</title>
 	<style type="text/css" media="all">@import "style.css";</style>
 <!--# include file="parts/google.html" -->
 </head>
@@ -20,9 +20,11 @@
 			</td>
 			<td class="bottomLine" width="3%"><img src="pix/spacer.gif" width="1" height="47" border="0"></td>
 			<td class="bottomLine" colspan="2" valign="bottom">
-				<p class="mini">
-					onPHP is the <strong>mature</strong> <a href="http://www.gnu.org/copyleft/gpl.html">GPL</a>'ed
-					multi-purpose object-oriented <a href="http://www.php.net/">PHP</a> framework.
+				<p class="damnSmall">
+					onPHP &mdash; это <b>зрелый</b>, лицензированный под
+					<a href="http://www.gnu.org/copyleft/gpl.html">GPL</a>,
+					многоцелевой объектно-ориентированный инструментарий
+					для языка <a href="http://www.php.net/">PHP</a>.
 				</p>
 			</td>
 			<td class="bottomLine" width="3%"><img src="pix/spacer.gif" width="1" height="26" border="0"></td>
@@ -34,19 +36,19 @@
 				<table width="100%">
 				<tr>
 					<td class="links">
-						<a href="index.en.html">Home</a>
+						<a href="index.html.ru">Главная</a>
 					</td>
 					<td class="links">
-						<a href="examples.en.html">Examples</a>
+						<span class="current">Примеры</span>
 					</td>
 					<td class="links">
-						<a href="doxy/">API documentation</a>
+						<a href="doxy/">API документация</a>
 					</td>
 					<td class="links">
-						<a href="forum/"><strong>Forum</strong></a>
+						<a href="forum/"><strong>Форум</strong></a>
 					</td>
 					<td class="links">
-						<span class="current">Contacts</span>
+						<a href="contacts.ru.html">Контакты</a>
 					</td>
 				</p>
 				</table>
@@ -55,7 +57,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td align="center"><p class="language">en / <a href="contacts.ru.html">ru</a></p></td>
+			<td align="center"><p class="language"><a href="examples.OSQL.en.html">en</a> / ru</p></td>
 			<td colspan="4">&nbsp;</td>
 		</tr>
 		</table>
@@ -69,42 +71,22 @@
 				<table width="98%" cellpadding="5" cellspacing="5">
 				<tr>
 					<td class="mainLight" width="15%" valign="top">
-						<!--# include file="parts/contactLinks.html" -->
+						<p class="miniCenter">
+							<span class="current">OSQL</span><br>
+							<a href="examples.DAOs.ru.html">DAOs</a><br>
+							<a href="examples.Form.ru.html">Form</a><br>
+							<a href="examples.Cache.ru.html">Cache</a><br>
+							<a href="examples.Forum.ru.html">Приложение</a><br>
+							<a href="examples.Meta.ru.html">Метаконфигурация</a></span>
+						</p>
 					</td>
 					<td width="3%">&nbsp;</td>
 					<td width="82%" valign="top">
-<h2>contacts</h2>
+<!--# include file="parts/examples/OSQL.SelectQuery.html" -->
 
-<h3>inbox</h3>
+<!--# include file="parts/examples/OSQL.UpdateQuery.html" -->
 
-<p>
-	<a href="mailto:inboxAT@ATonphp.org">inbox at onphp dot org</a> (remove anti-spam cookies before mailing there).
-</p>
-
-<h3>IRC</h3>
-
-<p>
-	<a href="http://www.freenode.org">irc.freenode.org</a>, 
-	<a href="irc://freenode.org/#onPHP-dev">#onPHP-dev</a><br />
-	English and Russian (<a href="http://www.ietf.org/rfc/rfc1489.txt">koi8-r</a> is mandatory for Russian-speaking people)
-</p>
-
-<h3>Lists:</h3>
-
-<p>
-	General discussion in Russian language:
-	<a href="mailto:onphp-dev-ru+subscribe@lists.shadanakar.org">onphp-dev-ru@lists.shadanakar.org</a>
-</p>
-
-<p>
-	General discussion in English language:
-	<a href="mailto:onphp-dev-en+subscribe@lists.shadanakar.org">onphp-dev-en@lists.shadanakar.org</a>
-</p>
-<p>
-	SVN-commits:
-	<a href="mailto:onphp-commits+subscribe@lists.shadanakar.org">onphp-commits@lists.shadanakar.org</a>
-</p>
-
+<!--# include file="parts/examples/OSQL.DeleteQuery.html" -->
 					</td>
 				</tr>
 				</table>

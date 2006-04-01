@@ -1,5 +1,3 @@
-<!--# include file="head.html" -->
-
 <h2>core/<a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2F&rev=0&sc=0">Form</a></h2>
 
 <pre>
@@ -7,7 +5,10 @@
     <span class="blue">$_GET </span><span class="green">= array(
         </span><span class="red">'icqNumber'       </span><span class="green">=&gt; </span><span class="red">'LICQ 1.3.2'</span><span class="green">,
         </span><span class="red">'shortOne'        </span><span class="green">=&gt; </span><span class="red">'i am loooong'</span><span class="green">,
-        </span><span class="red">'quiteLongText'   </span><span class="green">=&gt; </span><span class="red">"onPHP &gt;is&lt; the GPL'ed multi-purpose object-oriented \"PHP\" &lt;b&gt;framework&lt;/b&gt;."</span><span class="green">,
+        </span><span class="red">'quiteLongText'   </span><span class="green">=&gt;</span>
+            <span class="red">"onPHP &gt;is&lt; the GPL'ed"
+            ." multi-purpose object-oriented"
+            ." \"PHP\" &lt;b&gt;framework&lt;/b&gt;."</span><span class="green">,
         </span><span class="red">'firstPassword'   </span><span class="green">=&gt; </span><span class="red">'security is'</span><span class="green">,
         </span><span class="red">'secondPassword'  </span><span class="green">=&gt; </span><span class="red">'a good thing'
     </span><span class="green">);
@@ -76,11 +77,19 @@
 
         <span class="orange">// define error labels</span>
         </span><span class="blue">$form</span><span class="green">-&gt;
-            </span><span class="blue">addWrongLabel</span><span class="green">(</span><span class="red">'icqNumber'</span><span class="green">,         </span><span class="red">'non-integer given'</span><span class="green">)-&gt;
-            </span><span class="blue">addWrongLabel</span><span class="green">(</span><span class="red">'shortOne'</span><span class="green">,          </span><span class="red">'way too long value given'</span><span class="green">)-&gt;
-            </span><span class="blue">addWrongLabel</span><span class="green">(</span><span class="red">'equalPasswords'</span><span class="green">,    </span><span class="red">"'security is' != 'a good thing'"</span><span class="green">)-&gt;
-            </span><span class="blue">addWrongLabel</span><span class="green">(</span><span class="red">'quiteLongText'</span><span class="green">,     </span><span class="red">"i'm ok!"</span><span class="green">)-&gt;
-            </span><span class="blue">addMissingLabel</span><span class="green">(</span><span class="red">'requiredElement'</span><span class="green">, </span><span class="red">'i defined, therefore i am'</span><span class="green">-&gt;
+            </span><span class="blue">addWrongLabel</span><span class="green">(</span>
+                <span class="red">'icqNumber'</span><span class="green">, </span><span class="red">'non-integer given'</span>
+            <span class="green">)-&gt;</span>
+            <span class="blue">addWrongLabel</span><span class="green">(</span>
+                <span class="red">'shortOne'</span><span class="green">, </span><span class="red">'way too long value given'</span>
+            <span class="green">)-&gt;</span>
+            <span class="blue">addWrongLabel</span><span class="green">(</span>
+                <span class="red">'equalPasswords'</span><span class="green">, </span><span class="red">"'security is' != 'a good thing'"</span>
+            <span class="green">)-&gt;</span>
+            <span class="blue">addWrongLabel</span><span class="green">(</span><span class="red">'quiteLongText'</span><span class="green">, </span><span class="red">"i'm ok!"</span><span class="green">)-&gt;</span>
+            <span class="blue">addMissingLabel</span><span class="green">(</span>
+                <span class="red">'requiredElement'</span><span class="green">, </span><span class="red">'i defined, therefore i am'</span>
+            <span class="green">)-&gt;</span>
             </span><span class="blue">addMissingLabel</span><span class="green">(</span><span class="red">'requiredElement'</span><span class="green">, </span><span class="red">'where is my value?'</span><span class="green">);
 
         <span class="orange">// and give some feedback to user</span>
@@ -99,14 +108,14 @@
 <p>PS:</p>
 
 <pre>
-    <span class="orange">// was: onPHP &gt;is&lt; the GPL'ed multi-purpose object-oriented &quot;PHP&quot; &lt;b&gt;framework&lt;/b&gt;.</span>
+    <span class="orange">// onPHP &gt;is&lt; the GPL'ed
+    // multi-purpose object-oriented
+    // &quot;PHP&quot; &lt;b&gt;framework&lt;/b&gt;.</span>
     echo </span><span class="blue">$form</span><span class="green">-&gt;</span><span class="blue">getDisplayValue</span><span class="green">(</span><span class="red">'quiteLongText'</span><span class="green">);</span>
 </pre>
 <p style="text-align: center;">==</p>
 <pre>
-    onPHP &amp;gt;is&amp;lt; the GPL'ed multi-purpose object-oriented &amp;quot;PHP&amp;quot; framework.
+    onPHP &amp;gt;is&amp;lt; the GPL'ed
+    multi-purpose object-oriented
+    &amp;quot;PHP&amp;quot; framework.
 </pre>
-
-<hr>
-
-<!--# include file="heel.html" -->

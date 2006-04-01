@@ -1,25 +1,3 @@
-<!--# include file="head.html" -->
-
-<h2>core/<a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2F&rev=0&sc=0">Cache</a></h2>
-
-<pre class="warning">
-    Cache system (if any) <b>must</b> be defined <b>before</b> any DAO-calls.
-</pre>
-
-<p><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FRubberFileSystem.class.php&rev=0&sc=0">RubberFileSystem.class.php</a>:</p>
-
-<pre>
-    <span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FCache.class.php&rev=0&sc=0">Cache</a></span><span class="green">::</span><span class="blue">setPeer</span><span class="green">(</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FRubberFileSystem.class.php&rev=0&sc=0">RubberFileSystem</a></span><span class="green">::</span><span class="blue">create</span><span class="green">(</span><span class="red">'/tmp/onPHP/cache/'</span><span class="green">));</span>
-</pre>
-
-<p><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FMemcached.class.php&rev=0&sc=0">Memcached.class.php</a>:</p>
-
-<pre>
-    <span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FCache.class.php&rev=0&sc=0">Cache</a></span><span class="green">::</span><span class="blue">setPeer</span><span class="green">(</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FMemcached.class.php&rev=0&sc=0">Memcached</a></span><span class="green">::</span><span class="blue">create</span><span class="green">(</span><span class="red">'127.0.0.1'</span><span class="green">, </span><span class="red">'11211'</span><span class="green">, </span><span class="blue">8192</span><span class="green">));</span>
-</pre>
-
-<p>Scalable <a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FAggregateCache.class.php&rev=0&sc=0">AggregateCache.class.php</a>:</p>
-
 <pre>
     <span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FCache%2FCache.class.php&rev=0&sc=0">Cache</a></span><span class="green">::</span><span class="blue">setPeer</span><span class="green">(
         <span class="orange">// wrap cache system to keep all objects in one pool</span>
@@ -45,7 +23,3 @@
         )
     );</span>
 </pre>
-
-<hr>
-
-<!--# include file="heel.html" -->
