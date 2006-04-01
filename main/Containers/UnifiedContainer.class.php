@@ -133,16 +133,11 @@
 			return $this;
 		}
 		
-		public function setListWithClones($list)
+		public function replaceList($list)
 		{
 			Assert::isArray($list);
 			
-			$this->list = $list;
-			
-			foreach ($this->list as $id => &$object)
-				$this->clones[$id] = clone $object;
-			
-			return $this;
+			return $this->importList($list);
 		}
 
 		public function getList()
@@ -232,21 +227,27 @@
 		{
 			$query = $this->worker->makeFetchQuery();
 			
-			if ($this->lazy) {
-				$ids = $this->dao->getCustomRowList($query);
+			if ($this->lazy)
+				$list = $this->dao->getCustomRowList($query);
+			else
+				$list = $this->dao->getListByQuery($query);
+
+			return $this->importList($list);
+		}
 		
-				foreach ($ids as $id) {
+		private function importList(/* array */ $list)
+		{
+			if ($this->lazy) {
+				foreach ($list as $id) {
 					$this->list[$id] = $id;
 					$this->clones[$id] = $id;
 				}
 			} else {
-				$this->list = $this->dao->getListByQuery($query);
-	
-				foreach ($this->list as $object)
+				$this->list = $list;
+				
+				foreach ($list as $object)
 					$this->clones[$object->getId()] = clone $object;
 			}
-
-			return $this;
 		}
 	}
 ?>
