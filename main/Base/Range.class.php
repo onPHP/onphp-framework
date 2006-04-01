@@ -15,30 +15,34 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	class Range implements Stringable
+	class Range implements Stringable, Creatable
 	{
-		private $min			= null;
-		private $max			= null;
-		private $swapAllowed	= true;
+		private $min = null;
+		private $max = null;
 		
 		public function __construct($min = null, $max = null)
 		{
+			if ($min !== null)
+				Assert::isInteger($min);
+			
+			if ($max !== null)
+				Assert::isInteger($max);
+			
 			$this->min = $min;
 			$this->max = $max;
 		}
 		
-		public function setSwapAllowed()
+		public static function create($min = null, $max = null)
 		{
-			$this->swapAllowed = true;
-			
-			return $this;
+			return new self($min, $max);
 		}
 		
-		public function setSwapDisallowed()
+		public static function lazyCreate($min = null, $max = null)
 		{
-			$this->swapAllowed = false;
+			if ($min > $max)
+				self::swap($min, $max);
 			
-			return $this;
+			return new self($min, $max);
 		}
 		
 		public function getMin()
@@ -48,12 +52,17 @@
 		
 		public function setMin($min = null)
 		{
-			iF (($this->max) && (int) $min > $this->max && $this->swapAllowed)
+			if ($min !== null)
+				Assert::isInteger($min);
+			else
+				return $this;
+			
+			iF (($this->max !== null) && $min > $this->max)
 				throw new WrongArgumentException(
 					'can not set minimal value, which is greater than maximum one'
 				);
 			else
-				$this->min = (int) $min;
+				$this->min = $min;
 			
 			return $this;
 		}
@@ -65,12 +74,17 @@
 		
 		public function setMax($max = null)
 		{
-			if (($this->min) && (int) $max < $this->min && $this->swapAllowed)
+			if ($max !== null)
+				Assert::isInteger($max);
+			else
+				return $this;
+			
+			if (($this->min !== null) && $max < $this->min)
 				throw new WrongArgumentException(
 					'can not set maximal value, which is lower than minimum one'
 				);
 			else
-				$this->max = (int) $max;
+				$this->max = $max;
 			
 			return $max;
 		}
@@ -129,37 +143,6 @@
 			$c = $a;
 			$a = $b;
 			$b = $c;
-		}
-
-		public static function buildObject(
-			$min = null, $max = null, $swapAllowed = true
-		)
-		{
-			if ($min || $max) {
-				$range = new Range();
-
-				if ($swapAllowed)
-					$range->setSwapAllowed();
-				else
-					$range->setSwapDisallowed();
-
-				if (
-					isset($min, $max)
-					&& ((int) $min > (int) $max)
-					&& $swapAllowed
-				)
-					self::swap($min, $max);
-				
-				if ($min && ((int) $min))
-					$range->setMin($min);
-				
-				if ($max && ((int) $max))
-					$range->setMax($max);
-
-				return $range;
-			}
-
-			return null;
 		}
 	}
 ?>

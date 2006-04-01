@@ -2,6 +2,9 @@
 
 2006-04-01	Konstantin V. Arkhipov
 
+	* main/Base/Range.class.php: implementation simplified a bit wrt
+	swapAllowed-logic removal.
+
 	* main/Containers/UnifiedContainer.class.php: API changed a bit -
 	setListWithClones() -> replaceList(); once again refixed save logic.
 
