@@ -230,6 +230,8 @@ EOT;
 						"new {$this->type->getClass()}("
 						."\$array[\$prefix.'{$this->dumbName}'])";
 					
+				} elseif ($this->type instanceof BooleanType) {
+					$value = "\$array[\$prefix.'{$this->dumbName}'][0] == 't'";
 				} else
 					$value = "\$array[\$prefix.'{$this->dumbName}']";
 				
@@ -274,7 +276,7 @@ EOT;
 							);
 						
 						$idName = $remote->getIdentifier()->getName();
-						
+
 						if ($this->required)
 							$out = "set('{$this->dumbName}_{$idName}', ";
 						else
@@ -314,7 +316,12 @@ EOT;
 				}
 			} else {
 
-				$out = "set('{$this->dumbName}', ";
+				if ($this->type instanceof BooleanType)
+					$set = 'setBoolean';
+				else
+					$set = 'set';
+				
+				$out = "{$set}('{$this->dumbName}', ";
 				
 				if ($this->type instanceof ObjectType) {
 					if ($this->required)

@@ -31,5 +31,39 @@
 		{
 			return 'Primitive::boolean';
 		}
+		
+		public function toGetter($name)
+		{
+			$methodName = 'is'.ucfirst($name);
+			
+			$method = <<<EOT
+
+public function {$methodName}()
+{
+	return \$this->{$name};
+}
+
+EOT;
+
+			return $method;
+		}
+		
+		public function toSetter($name)
+		{
+			$methodName = 'set'.ucfirst($name);
+			
+			$method = <<<EOT
+
+public function {$methodName}(\${$name} = false)
+{
+	\$this->{$name} = (\${$name} === true);
+
+	return \$this;
+}
+
+EOT;
+
+			return $method;
+		}
 	}
 ?>
