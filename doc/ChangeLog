@@ -1,6 +1,16 @@
 # $Id$
 
+2006-04-02	Konstantin V. Arkhipov
+
+	* meta/: correct boolean-type handling implemented and minor typos
+	fixed.
+
+	* core/Base/Enumeration.class.php: getObjectList() introduced as
+	alternative to static getList().
+
 2006-04-01	Konstantin V. Arkhipov
+
+	* doc/www/: site updated to new design and layout.
 
 	* main/Base/Range.class.php: implementation simplified a bit wrt
 	swapAllowed-logic removal.
