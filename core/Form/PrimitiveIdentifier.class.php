@@ -55,7 +55,7 @@
 		{
 			if (!$this->class)
 				throw new WrongStateException(
-					"no defined class for PrimitiveIdentifier '{$this->name}'"
+					"no class defined for PrimitiveIdentifier '{$this->name}'"
 				);
 			
 			$result = parent::import($scope);

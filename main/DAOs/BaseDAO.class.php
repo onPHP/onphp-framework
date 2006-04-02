@@ -55,7 +55,7 @@
 		//@{
 		// erasers
 		public function dropById($id);
-		public function dropByIds($ids);
+		public function dropByIds(/* array */ $ids);
 		//@}
 		
 		//@{

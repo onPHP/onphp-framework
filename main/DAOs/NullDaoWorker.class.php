@@ -208,7 +208,7 @@
 				);
 		}
 		
-		public function dropByIds($ids)
+		public function dropByIds(/* array */ $ids)
 		{
 			return 
 				DBFactory::getDefaultInstance()->queryNull(

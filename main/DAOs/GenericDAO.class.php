@@ -190,7 +190,7 @@
 			return Cache::worker($this)->dropById($id);
 		}
 		
-		public function dropByIds($ids)
+		public function dropByIds(/* array */ $ids)
 		{
 			return Cache::worker($this)->dropByIds($ids);
 		}

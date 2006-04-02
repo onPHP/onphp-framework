@@ -34,7 +34,9 @@
 					return $left || $right;
 
 				default:
-					throw new WrongArgumentException();
+					throw new WrongArgumentException(
+						"unknown logic - '{$logic}'"
+					);
 			}
 
 			/* NOTREACHED */

@@ -18,7 +18,9 @@
 	**/
 	abstract class /* ANSI's */ Dialect
 	{
-		abstract public static function autoincrementize(DBColumn $column, &$prepend);
+		abstract public static function autoincrementize(
+			DBColumn $column, &$prepend
+		);
 		
 		public static function quoteValue(&$value)
 		{

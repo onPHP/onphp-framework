@@ -105,7 +105,7 @@
 				return $null;
 
 			throw new WrongStateException(
-				'mama, weer all crazee now!'
+				'mama, weer all crazee now!' // (c) Slade
 			);
 		}
 		

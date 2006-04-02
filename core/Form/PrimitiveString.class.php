@@ -18,6 +18,7 @@
 	{
 		private $pattern = null;
 		
+		// hint: /^[^@]*\w+@[\w|\.|\-]+\.\w{2,6}$/
 		public function setAllowedPattern($pattern)
 		{
 			$this->pattern = $pattern;

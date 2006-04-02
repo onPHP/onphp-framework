@@ -37,12 +37,16 @@
 		
 		public static function getList(Enumeration $enum)
 		{
+			return $enum->getObjectList();
+		}
+		
+		public function getObjectList()
+		{
 			$list = array();
-			$class = get_class($enum);
-			$names = $enum->getNameList();
+			$names = $this->getNameList();
 			
 			foreach ($names as $id => &$val)
-				$list[] = new $class($id);
+				$list[] = new $this($id);
 
 			return $list;
 		}

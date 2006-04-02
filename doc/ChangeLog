@@ -1,5 +1,10 @@
 # $Id$
 
+2006-04-02	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/, main/: last sync with 0.3 series - one-liners and minor
+	cosmetics mostly.
+
 2006-04-01	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/Containers/UnifiedContainer.class.php: save logic fix merged

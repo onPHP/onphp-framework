@@ -54,7 +54,9 @@
 					$this->string = date('Y-m-d H:i:s', $this->int);
 
 			} else {
-				throw new WrongArgumentException('strange timestamp given');
+				throw new WrongArgumentException(
+					"strange timestamp given - '{$timestamp}'"
+				);
 			}
 			
 			$this->import($this->string);

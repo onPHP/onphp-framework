@@ -20,7 +20,7 @@
 	{
 		public static function autoincrementize(DBColumn $column, &$prepend)
 		{
-			throw new UnsupportedMethodException();
+			return 'AUTOINCREMENT';
 		}
 		
 		public static function quoteValue(&$value)

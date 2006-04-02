@@ -55,7 +55,9 @@
 		public function dropPeer($label)
 		{
 			if (!isset($this->peers[$label]))
-				throw new ObjectNotFoundException();
+				throw new MissingElementException(
+					"there is no peer with '{$label}' label"
+				);
 
 			unset($this->peer[$label]);
 			

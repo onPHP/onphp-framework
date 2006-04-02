@@ -33,6 +33,13 @@
 					);
 			}
 			
+			Assert::isTrue(
+				($logic == Expression::LOGIC_AND)
+				|| ($logic == Expression::LOGIC_OR),
+				
+				"unknown logic '{$logic}'"
+			);
+			
 			$this->args		= $args;
 			$this->logic	= $logic;
 		}
@@ -82,7 +89,9 @@
 					return $out;
 
 				default:
-					throw new WrongStateException();
+					throw new WrongStateException(
+						'the thing that should not be, indeed'
+					);
 			}
 		}
 	}

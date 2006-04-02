@@ -362,15 +362,14 @@
 		// erasers
 		public function dropById($id)
 		{
-			$result =
-				parent::dropById($id);
+			$result = parent::dropById($id);
 			
 			$this->uncacheLists();
 			
 			return $result;
 		}
 		
-		public function dropByIds($ids)
+		public function dropByIds(/* array */ $ids)
 		{
 			foreach ($ids as $id)
 				$this->uncacheById($id);

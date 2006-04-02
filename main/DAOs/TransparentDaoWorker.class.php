@@ -322,7 +322,7 @@
 
 		//@{
 		// erasers
-		public function dropByIds($ids)
+		public function dropByIds(/* array */ $ids)
 		{
 			$cache = Cache::me();
 			

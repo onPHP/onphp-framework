@@ -54,6 +54,18 @@
 			
 			return $this;
 		}
+		
+		public function drop($name)
+		{
+			if (!isset($this->primitives[$name]))
+				throw new MissingElementException(
+					"can not drop inexistent primitive '{$name}'"
+				);
+			
+			unset($this->primitives[$name]);
+			
+			return $this;
+		}
 
 		public function &get($name)
 		{
@@ -160,6 +172,11 @@
 		public function getPrimitiveNames()
 		{
 			return array_keys($this->primitives);
+		}
+		
+		public function getPrimitiveList()
+		{
+			return $this->primitives;
 		}
 	}
 ?>

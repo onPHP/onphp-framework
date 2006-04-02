@@ -26,11 +26,14 @@
 		private $weeks		= array();
 		private $days		= array();
 		
-		public function __construct(Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY)
+		public function __construct(
+			Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY
+		)
 		{
 			$firstDayOfMonth = Timestamp::create(
 				$base->getYear().'-'.$base->getMonth().'-01'
 			);
+			
 			$lastDayOfMonth	= Timestamp::create(
 				$base->getYear().'-'.$base->getMonth().'-'
 				.date('t', $base->toStamp()));
@@ -70,7 +73,9 @@
 			++$this->fullLength;
 		}
 		
-		public static function create(Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY)
+		public static function create(
+			Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY
+		)
 		{
 			return new CalendarMonthWeekly($base, $weekStart);
 		}
