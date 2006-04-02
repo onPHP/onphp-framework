@@ -1,0 +1,92 @@
+<?php
+/***************************************************************************
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+/* $Id$ */
+
+	final class ContainerClassBuilder extends BaseBuilder
+	{
+		public static function build(MetaClass $class)
+		{
+			throw new UnsupportedMethodException();
+		}
+		
+		public static function buildContainer(
+			MetaClass $class, MetaClassProperty $holder
+		)
+		{
+			$out = self::getHead();
+			
+			$out .=
+				'final class '
+				."{$class->getName()}To{$holder->getType()->getClass()}DAO"
+				.' extends '
+				.$holder->getRealtion()->toString().'Linked'
+				."\n{\n";
+
+			$className = $class->getName();
+			$propertyName = strtolower($className[0]).substr($className, 1);
+			
+			$remoteDumbName =
+				MetaConfiguration::me()->getClassByName(
+					$holder->getType()->getClass()
+				)->
+				getDumbName();
+			
+			$out .= <<<EOT
+public function __construct({$className} \${$propertyName}, \$lazy = false)
+{
+	parent::__construct(
+		\${$propertyName},
+		{$holder->getType()->getClass()}::dao(),
+		\$lazy
+	);
+}
+
+public static function create({$className} \${$propertyName}, \$lazy = false)
+{
+	return new self(\${$propertyName}, \$lazy);
+}
+
+public function getHelperTable()
+{
+	return '{$class->getDumbName()}_{$remoteDumbName}';
+}
+
+public function getChildIdField()
+{
+	return '{$remoteDumbName}_id';
+}
+
+public function getParentIdField()
+{
+	return '{$class->getDumbName()}_id';
+}
+
+EOT;
+			
+			
+			$out .= "}\n";
+			$out .= self::getHeel();
+			
+			return $out;
+		}
+		
+		protected static function getHead()
+		{
+			$head = self::startCap();
+			
+			$head .=
+				' *   This file will never be generated again -'
+				.' feel free to edit.            *';
+
+			return $head."\n".self::endCap();
+		}
+	}
+?>

@@ -1,0 +1,23 @@
+<p><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FSelectQuery.class.php&rev=0&sc=0">SelectQuery.class.php</a>:</p>
+
+<pre>
+<span class="green">echo
+    </span><span class="blue"><a href="http://svn.shadanakar.org/listing.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2F&rev=0&sc=0">OSQL</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FSelectQuery.class.php&rev=0&sc=0">select</a></span><span class="green">()-&gt;</span><span class="blue">from</span><span class="green">(</span><span class="red">'employer'</span><span class="green">)-&gt;
+    </span><span class="blue">get</span><span class="green">(</span><span class="red">'id'</span><span class="green">)-&gt;</span><span class="blue">get</span><span class="green">(</span><span class="red">'name'</span><span class="green">)-&gt;</span><span class="blue">get</span><span class="green">(</span><span class="red">'birth_date'</span><span class="green">)-&gt;
+    </span><span class="blue">where</span><span class="green">(
+        </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FLogic%2FExpression.class.php&rev=0&sc=0">Expression</a></span><span class="green">::</span><span class="blue">between</span><span class="green">(</span>
+            </span><span class="red">'birth_date'</span><span class="green">,
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FDBValue.class.php&rev=0&sc=0">DBValue</a></span><span class="green">::</span><span class="blue">create</span><span class="green">(</span><span class="blue">1980</span><span class="green">),
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FOSQL%2FSQLFunction.class.php&rev=0&sc=0">SQLFunction</a></span><span class="green">::</span><span class="blue">create</span><span class="green">(</span><span class="red">'now'</span><span class="green">)
+        )
+    )-&gt;
+        </span><span class="blue">toString</span><span class="green">(
+            </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FDB%2FDBFactory.class.php&rev=0&sc=0">DBFactory</a></span><span class="green">::</span><span class="blue">getDefaultInstance</span><span class="green">()-&gt;</span><span class="blue">getDialect</span><span class="green">()
+        );</span>
+</pre>
+<p style="text-align: center;">==</p>
+<pre>
+    <b>SELECT</b> <span class="green">"employer"</span>.<span class="green">"id"</span>, <span class="green">"employer"</span>.<span class="green">"name"</span>, <span class="green">"employer"</span>.<span class="green">"birth_date"</span>
+    <b>FROM</b> <span class="green">"employer"</span>
+    <b>WHERE (</b><span class="green">"birth_date"</span> <b>BETWEEN</b> <span class="red">'1980'</span> <b>AND</b> now()<b>)</b>
+</pre>
