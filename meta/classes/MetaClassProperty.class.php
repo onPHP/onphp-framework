@@ -316,10 +316,13 @@ EOT;
 				}
 			} else {
 
-				if ($this->type instanceof BooleanType)
+				if ($this->type instanceof BooleanType) {
 					$set = 'setBoolean';
-				else
+					$get = 'is';
+				} else {
 					$set = 'set';
+					$get = 'get';
+				}
 				
 				$out = "{$set}('{$this->dumbName}', ";
 				
@@ -334,7 +337,7 @@ EOT;
 							."? \${$varName}->get{$method}()->toString()\n"
 							.": null\n";
 				} else {
-					$out .=	"\${$varName}->get{$method}()";
+					$out .=	"\${$varName}->{$get}{$method}()";
 				}
 				
 				$out .= ')';
