@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Form
 	 * 
-	 * @see http://onphp.org/examples/Form.html
+	 * @see http://onphp.org/examples.Form.en.html
 	**/
 	final class Form extends RegulatedForm implements Creatable
 	{
