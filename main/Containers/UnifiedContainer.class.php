@@ -250,6 +250,8 @@
 				foreach ($list as $object)
 					$this->clones[$object->getId()] = clone $object;
 			}
+			
+			return $this;
 		}
 	}
 ?>
