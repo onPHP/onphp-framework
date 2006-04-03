@@ -33,11 +33,14 @@
 
 /* paragraphs */
 	
-	p {
+	p, ul, li {
 		font-family: verdana;
+		color: #7D767D;
+	}
+	
+	p {
 		text-align: justify;
 		padding: 5px 0 0 12px;
-		color: #7D767D;
 	}
 	
 	p.plain {
