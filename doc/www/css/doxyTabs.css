@@ -38,11 +38,6 @@ DIV.tabs A
    text-decoration  : none;
 }
 
-DIV.tabs A:hover
-{
-   background-position	: 100% -150px;
-}
-
 DIV.tabs A:link, DIV.tabs A:visited,
 DIV.tabs A:active, DIV.tabs A:hover
 {
@@ -72,20 +67,16 @@ DIV.tabs TD
 DIV.tabs SPAN {float : none;}
 /* End IE5-Mac hack */
 
-DIV.tabs A:hover SPAN
-{
-   background-position: 0% -150px;
-}
-
 DIV.tabs LI#current A
 {
-   background-position: 100% -150px;
-   border-width     : 0px;
+   border-bottom    	: 0px;
+   border-top			: 1px solid black;
+   border-left			: 1px solid black;
+   border-right			: 1px solid black;
 }
 
 DIV.tabs LI#current SPAN
 {
-   background-position: 0% -150px;
    padding-bottom   : 6px;
 }
 
