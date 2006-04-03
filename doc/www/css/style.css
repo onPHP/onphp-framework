@@ -84,8 +84,9 @@
 	td.links {
 		padding: 0px 0 0 12px;
 		text-align: center;
-		font-size: 110%;
-		font-family: "times new roman";
+		font-size: 100%;
+		font-family: arial;
+		font-weight: lighter;
 	}
 	
 	table.main, td.main {
