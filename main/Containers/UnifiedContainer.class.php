@@ -196,10 +196,21 @@
 
 					$id = $object->getId();
 					
-					if (isset($clones[$id]) && $object != $clones[$id])
-						$update[] = $ids[$id] = $object;
-					elseif (!isset($clones[$id]))
-						$insert[] = $ids[$id] = $object;
+					if (!$id) {
+						$insert[] = $object;
+						
+					} elseif (
+						isset($clones[$id])
+						&& $object != $clones[$id]
+					) {
+						$update[] = $object;
+						
+					} elseif (!isset($clones[$id])) {
+						$insert[] = $object;
+					}
+					
+					if ($id)
+						$ids[$id] = $object;
 				}
 				
 				foreach ($clones as $id => $object) {
