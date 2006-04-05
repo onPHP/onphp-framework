@@ -226,16 +226,24 @@ EOT;
 				
 				if ($this->type instanceof ObjectType) {
 					
-					$value =
-						"new {$this->type->getClass()}("
-						."\$array[\$prefix.'{$this->dumbName}'])";
+					$value = "\nnew {$this->type->getClass()}(\n";
 					
+					if ($this->type instanceof RangeType) {
+						$value .=
+							"ArrayUtils::getArrayVar(\$array, '{$this->dumbName}_min'), "
+							."\nArrayUtils::getArrayVar(\$array, '{$this->dumbName}_max')\n)\n";
+					} else {
+						$value .= "\$array[\$prefix.'{$this->dumbName}']\n)\n";
+					}
 				} elseif ($this->type instanceof BooleanType) {
 					$value = "\$array[\$prefix.'{$this->dumbName}'][0] == 't'";
 				} else
 					$value = "\$array[\$prefix.'{$this->dumbName}']";
 				
-				if ($this->required) {
+				if (
+					$this->required
+					|| $this->type instanceof RangeType
+				) {
 					
 					$out =
 						"set{$method}("
@@ -319,6 +327,9 @@ EOT;
 				if ($this->type instanceof BooleanType) {
 					$set = 'setBoolean';
 					$get = 'is';
+				} elseif ($this->type instanceof RangeType) {
+					$set = 'lazySet';
+					$get = 'get';
 				} else {
 					$set = 'set';
 					$get = 'get';
@@ -327,7 +338,9 @@ EOT;
 				$out = "{$set}('{$this->dumbName}', ";
 				
 				if ($this->type instanceof ObjectType) {
-					if ($this->required)
+					if ($this->type instanceof RangeType)
+						$out .= "\${$varName}->get{$method}()";
+					elseif ($this->required)
 						$out .=
 							"\${$varName}->get{$method}()->toString()";
 					else

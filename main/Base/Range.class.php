@@ -134,8 +134,8 @@
 		public function isEmpty()
 		{
 			return
-				($this->min === null) &&
-				($this->max === null);
+				($this->min === null)
+				&& ($this->max === null);
 		}
 		
 		public static function swap(&$a, &$b)

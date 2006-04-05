@@ -149,13 +149,25 @@ EOT;
 				
 				if ($property->getType()->isGeneric()) {
 					
-					if ($property->getName() == $property->getDumbName())
-						$map = 'null';
-					else
-						$map = "'{$property->getDumbName()}'";
+					$name = $property->getName();
+					$dumbName = $property->getDumbName();
 					
-					$row .= "'{$property->getName()}' => {$map}";
-					
+					if ($property->getType() instanceof RangeType) {
+						
+						$row =
+							array(
+								"'{$name}Min' => '{$dumbName}_min'",
+								"'{$name}Max' => '{$dumbName}_max'"
+							);
+						
+					} else {
+						if ($name == $dumbName)
+							$map = 'null';
+						else
+							$map = "'{$dumbName}'";
+						
+						$row .= "'{$name}' => {$map}";
+					}
 				} else {
 					
 					$relation = $property->getRelation();
@@ -179,8 +191,12 @@ EOT;
 						$row = null;
 				}
 				
-				if ($row)
-					$mapping[] = $row;
+				if ($row) {
+					if (is_array($row))
+						$mapping = array_merge($mapping, $row);
+					else // string
+						$mapping[] = $row;
+				}
 			}
 			
 			return $mapping;

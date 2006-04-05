@@ -2,6 +2,8 @@
 
 2006-04-05	Konstantin V. Arkhipov
 
+	* meta/: integer's Range support implemented.
+
 	* core/OSQL/InsertOrUpdateQuery.class.php: added Range support in
 	lazySet.
 
