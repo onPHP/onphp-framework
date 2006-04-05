@@ -226,14 +226,15 @@ EOT;
 				
 				if ($this->type instanceof ObjectType) {
 					
-					$value = "\nnew {$this->type->getClass()}(\n";
+					$value = "new {$this->type->getClass()}(";
 					
 					if ($this->type instanceof RangeType) {
-						$value .=
-							"ArrayUtils::getArrayVar(\$array, '{$this->dumbName}_min'), "
+						$value =
+							"\n{$value}\n"
+							."ArrayUtils::getArrayVar(\$array, '{$this->dumbName}_min'), "
 							."\nArrayUtils::getArrayVar(\$array, '{$this->dumbName}_max')\n)\n";
 					} else {
-						$value .= "\$array[\$prefix.'{$this->dumbName}']\n)\n";
+						$value .= "\$array[\$prefix.'{$this->dumbName}'])";
 					}
 				} elseif ($this->type instanceof BooleanType) {
 					$value = "\$array[\$prefix.'{$this->dumbName}'][0] == 't'";
