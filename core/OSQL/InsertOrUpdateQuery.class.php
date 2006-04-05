@@ -41,6 +41,12 @@
 		{
 			if ($object instanceof Identifiable)
 				$this->set($field, $object->getId());
+			elseif ($object instanceof Timestamp)
+				$this->set($field, $object->toString());
+			elseif ($object instanceof Range)
+				$this->
+					set("{$field}_min", $object->getMin())->
+					set("{$field}_max", $object->getMax());
 			elseif (is_null($object))
 				$this->set($field, null);
 			else

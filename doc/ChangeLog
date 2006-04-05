@@ -1,5 +1,10 @@
 # $Id$
 
+2006-04-05	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/OSQL/InsertOrUpdateQuery.class.php: support for Range and
+	Timestamp in lazySet; arrived from trunk.
+
 2006-04-05	Anton E. Lebedevich	<noiselist@pochta.ru>
 
 	* main/Containers/UnifiedContainer.class.php: quite evil bug during
