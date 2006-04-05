@@ -40,6 +40,8 @@
 		{
 			if ($object instanceof Identifiable)
 				$this->set($field, $object->getId());
+			elseif ($object instanceof Timestamp)
+				$this->set($field, $object->toString());
 			elseif (is_null($object))
 				$this->set($field, null);
 			else
