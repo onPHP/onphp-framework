@@ -1,5 +1,10 @@
 # $Id$
 
+2006-04-05	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+	* main/Containers/UnifiedContainer.class.php: quite evil bug during
+	non-lazy collections saving fixed.
+
 2006-04-03	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* 0.2.10 released.
