@@ -24,7 +24,12 @@ EOT;
 			$columns = array();
 			
 			foreach ($class->getProperties() as $name => $property) {
-				$columns[] = $property->toColumn();
+				$column = $property->toColumn();
+				
+				if (is_array($column))
+					$columns = array_merge($columns, $column);
+				else
+					$columns[] = $property->toColumn();
 			}
 			
 			$out .= implode("->\n", $columns);

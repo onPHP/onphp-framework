@@ -364,9 +364,20 @@ EOT;
 		{
 			if ($this->type instanceof ObjectType && !$this->type->isGeneric())
 				$dumbName = "{$this->dumbName}_id";
-			else
+			elseif ($this->type instanceof RangeType) {
+				return
+					array(
+						$this->buildColumn("{$this->dumbName}_min"),
+						$this->buildColumn("{$this->dumbName}_max")
+					);
+			} else
 				$dumbName = $this->dumbName;
 			
+			return $this->buildColumn($dumbName);
+		}
+		
+		private function buildColumn($dumbName)
+		{
 			$column = <<<EOT
 addColumn(
 	DBColumn::create(
@@ -405,7 +416,6 @@ EOT;
 
 )
 EOT;
-
 			return $column;
 		}
 		
