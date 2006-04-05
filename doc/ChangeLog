@@ -2,9 +2,11 @@
 
 2006-04-05	Anton E. Lebedevich
 
-	* main/Containers/UnifiedContainer.class.php: 1489 propagated to trunk
-	* main/Utils/DebugUtils.class.php: added
-	* core/OSQL/InsertOrUpdateQuery.class.php: added Timestamp support in lazySet
+	* main/Containers/UnifiedContainer.class.php: 1489 propagated to
+	trunk.
+	* main/Utils/DebugUtils.class.php: added.
+	* core/OSQL/InsertOrUpdateQuery.class.php: added Timestamp support in
+	lazySet.
 
 2006-04-03	Konstantin V. Arkhipov
 
