@@ -195,13 +195,16 @@
 					$id = $object->getId();
 					
 					if (null === $id) {
-						$insert[] = $ids[$id] = $object;
+						$insert[] = $object;
 					} elseif (isset($clones[$id]) && $object != $clones[$id]) {
 						$update[] = $object;
 					} elseif (!isset($clones[$id])) {
 						$insert[] = $object;
 					}
 				}
+				
+				if (null !== $id)
+					$ids[$id] = $object;
 				
 				foreach ($clones as $id => $object) {
 					if (!isset($ids[$id]))
