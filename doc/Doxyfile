@@ -85,8 +85,7 @@ WARN_LOGFILE           =
 INPUT                  = ./onphp.doxy.php ../
 FILE_PATTERNS          = *.php
 RECURSIVE              = YES
-EXCLUDE                = ../meta \
-			 ../test \
+EXCLUDE                = ../test \
 			 ../incubator \
 			 sample/ \
 			 examples/
