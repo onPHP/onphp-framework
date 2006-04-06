@@ -192,24 +192,15 @@
 				}
 			} else {
 				foreach ($list as $object) {
-
 					$id = $object->getId();
 					
-					if (!$id) {
-						$insert[] = $object;
-						
-					} elseif (
-						isset($clones[$id])
-						&& $object != $clones[$id]
-					) {
+					if (null === $id) {
+						$insert[] = $ids[$id] = $object;
+					} elseif (isset($clones[$id]) && $object != $clones[$id]) {
 						$update[] = $object;
-						
 					} elseif (!isset($clones[$id])) {
 						$insert[] = $object;
 					}
-					
-					if ($id)
-						$ids[$id] = $object;
 				}
 				
 				foreach ($clones as $id => $object) {
