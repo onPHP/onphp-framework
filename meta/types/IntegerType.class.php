@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Types
+	**/
 	class IntegerType extends BasePropertyType
 	{
 		public function getDeclaration()

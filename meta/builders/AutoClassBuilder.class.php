@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Builders
+	**/
 	final class AutoClassBuilder extends BaseBuilder
 	{
 		public static function build(MetaClass $class)

@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Types
+	**/
 	abstract class BasePropertyType
 	{
 		abstract public function getDeclaration();

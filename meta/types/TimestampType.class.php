@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Types
+	**/
 	final class TimestampType extends ObjectType
 	{
 		public function isGeneric()

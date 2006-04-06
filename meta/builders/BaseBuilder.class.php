@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Builders
+	**/
 	abstract class BaseBuilder extends StaticFactory
 	{
 		abstract public static function build(MetaClass $class);

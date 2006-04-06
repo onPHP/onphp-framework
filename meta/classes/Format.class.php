@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup MetaBase
+	**/
 	final class Format extends StaticFactory
 	{
 		// dumb and straigh beautifier

@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Patterns
+	**/
 	final class StraightMappingPattern extends BasePattern
 	{
 		public function build(MetaClass $class)

@@ -107,5 +107,19 @@
 	 *
 	 * @defgroup Calendar Calendar representation's helpers
 	 * @ingroup Main
+	 *
+	 * @defgroup Meta MetaConfiguration
+	 *
+	 * @defgroup Builders Class builders
+	 * @ingroup Meta
+	 *
+	 * @defgroup MetaBase MetaConfiguration's base classes
+	 * @ingroup Meta
+	 *
+	 * @defgroup Patterns Patterns used to build classes
+	 * @ingroup Meta
+	 *
+	 * @defgroup Types Supported meta-types
+	 * @ingroup Meta
 	**/
 ?>

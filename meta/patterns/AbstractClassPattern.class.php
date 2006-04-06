@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Patterns
+	**/
 	class AbstractClassPattern extends BasePattern
 	{
 		public function build(MetaClass $class)

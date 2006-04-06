@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Types
+	**/
 	final class BigIntegerType extends IntegerType
 	{
 		public function toColumnType()

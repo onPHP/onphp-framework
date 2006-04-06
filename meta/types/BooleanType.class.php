@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Types
+	**/
 	class BooleanType extends BasePropertyType
 	{
 		public function getDeclaration()

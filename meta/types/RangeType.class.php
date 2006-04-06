@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Types
+	**/
 	final class RangeType extends ObjectType
 	{
 		public function isGeneric()

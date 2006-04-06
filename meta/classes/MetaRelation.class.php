@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup MetaBase
+	**/
 	final class MetaRelation extends Enumeration
 	{
 		const ONE_TO_ONE	= 'OneToOne';

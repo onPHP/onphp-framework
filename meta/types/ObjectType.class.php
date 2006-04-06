@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Types
+	**/
 	class ObjectType extends BasePropertyType
 	{
 		private $class = null;

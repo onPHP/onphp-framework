@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup MetaBase
+	**/
 	final class MetaConfiguration extends Singleton
 	{
 		private $classes = array();

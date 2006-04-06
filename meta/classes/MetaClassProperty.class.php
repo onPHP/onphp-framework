@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup MetaBase
+	**/
 	class MetaClassProperty
 	{
 		private $name		= null;

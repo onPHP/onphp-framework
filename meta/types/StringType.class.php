@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Types
+	**/
 	class StringType extends BasePropertyType
 	{
 		public function getDeclaration()

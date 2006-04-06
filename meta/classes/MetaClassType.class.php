@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup MetaBase
+	**/
 	final class MetaClassType extends Enumeration
 	{
 		const CLASS_FINAL		= 'final';

@@ -10,5 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Types
+	**/
 	final class PasswordType extends StringType {/*_*/}
 ?>

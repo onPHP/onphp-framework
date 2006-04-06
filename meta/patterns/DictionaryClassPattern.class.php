@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Patterns
+	**/
 	final class DictionaryClassPattern extends BasePattern
 	{
 		public function build(MetaClass $class)

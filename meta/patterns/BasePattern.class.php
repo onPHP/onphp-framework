@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Patterns
+	**/
 	abstract class BasePattern extends Singleton
 	{
 		abstract public function build(MetaClass $class);

@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Patterns
+	**/
 	final class EnumerationClassPattern extends BasePattern
 	{
 		public function daoExist()
