@@ -25,7 +25,7 @@
 		/**
 		 * Builds complete object.
 		 * 
-		 * @see http://onphp.org/examples/DAOs.html
+		 * @see http://onphp.org/examples.DAOs.en.html
 		 *
 		 * @param $array	associative array('fieldName' => 'value')
 		 * @param $prefix	prefix (if any) of all fieldNames
