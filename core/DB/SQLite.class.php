@@ -108,7 +108,7 @@
 			$res = $this->query($query);
 			
 			$names = $query->getFieldNames();
-			$width = sizeof($names);
+			$width = count($names);
 			
 			if ($this->checkSingle($res)) {
 				if ($row = sqlite_fetch_array($res, SQLITE_NUM)) {
@@ -130,7 +130,7 @@
 			
 			if ($this->checkSingle($res)) {
 				$names = $query->getFieldNames();
-				$width = sizeof($names);
+				$width = count($names);
 
 				$row = sqlite_fetch_array($res, SQLITE_NUM);
 				
@@ -150,7 +150,7 @@
 			if ($res) {
 				$array = array();
 				$names = $query->getFieldNames();
-				$width = sizeof($names);
+				$width = count($names);
 				
 				while ($row = sqlite_fetch_array($res, SQLITE_NUM)) {
 					
@@ -190,7 +190,7 @@
 			if ($res) {
 				$array = array();
 				$names = $query->getFieldNames();
-				$width = sizeof($names);
+				$width = count($names);
 				
 				while ($row = sqlite_fetch_array($res, SQLITE_NUM)) {
 					$assoc = array();

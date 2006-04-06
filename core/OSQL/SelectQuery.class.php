@@ -246,7 +246,7 @@
 		
 		public function arrayGet($array, $prefix = null)
 		{
-			$size = sizeof($array);
+			$size = count($array);
 			
 			if ($prefix)
 				for ($i = 0; $i < $size; ++$i)
@@ -260,7 +260,7 @@
 
 		public function getFieldsCount()
 		{
-			return sizeof($this->fields);
+			return count($this->fields);
 		}
 		
 		public function getFieldNames()
@@ -298,7 +298,7 @@
 				
 			$fromString = null;
 			
-			for ($i = 0, $size = sizeof($this->from); $i < $size; ++$i) {
+			for ($i = 0, $size = count($this->from); $i < $size; ++$i) {
 				if ($i == 0)
 					$separator = null;
 				elseif (
@@ -362,7 +362,7 @@
 		private function getLastTable($table = null)
 		{
 			if (!$table && $this->from)
-				return $this->from[sizeof($this->from) - 1]->getTable();
+				return $this->from[count($this->from) - 1]->getTable();
 			else 
 				return $table;
 		}

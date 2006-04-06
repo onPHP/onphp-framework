@@ -33,11 +33,11 @@
 			$dao = $uc->getDao();
 
 			if ($insert)
-				for ($i = 0, $size = sizeof($insert); $i < $size; ++$i)
+				for ($i = 0, $size = count($insert); $i < $size; ++$i)
 					$dao->add($insert[$i]);
 
 			if ($update)
-				for ($i = 0, $size = sizeof($update); $i < $size; ++$i)
+				for ($i = 0, $size = count($update); $i < $size; ++$i)
 					$dao->save($update[$i]);
 
 			if ($delete) {

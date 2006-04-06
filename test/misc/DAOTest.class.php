@@ -98,8 +98,8 @@
 			);
 			
 			$this->assertEqual(
-				sizeof(TestUser::dao()->getPlainList()),
-				sizeof(TestCity::dao()->getPlainList())
+				count(TestUser::dao()->getPlainList()),
+				count(TestCity::dao()->getPlainList())
 			);
 		}
 	}

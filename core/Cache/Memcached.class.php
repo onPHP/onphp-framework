@@ -96,7 +96,7 @@
 					if ($header !== 'END') {
 						$array = explode(' ', $header, 4);
 
-						if (sizeof($array) <> 4)
+						if (count($array) <> 4)
 							continue;
 						else
 							list (

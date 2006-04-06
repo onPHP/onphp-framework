@@ -36,7 +36,7 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			if (sizeof($this->where) > 0)
+			if (count($this->where) > 0)
 				return
 					"DELETE FROM {$dialect->quoteTable($this->table)} "
 					.parent::toDialectString($dialect);
