@@ -22,8 +22,8 @@
 				return null;
 
 			if (is_array($scope[$this->name]) &&
-				!($this->min && sizeof($scope[$this->name]) < $this->min) &&
-				!($this->min && sizeof($scope[$this->name]) > $this->max))
+				!($this->min && count($scope[$this->name]) < $this->min) &&
+				!($this->min && count($scope[$this->name]) > $this->max))
 			{
 				$this->value = $scope[$this->name];
 

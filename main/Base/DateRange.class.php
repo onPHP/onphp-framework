@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	class DateRange
+	class DateRange implements Creatable
 	{
 		protected $start	= null;
 		protected $end		= null;
@@ -28,7 +28,7 @@
 		
 		public static function create()
 		{
-			return new DateRange();
+			return new self;
 		}
 
 		public function __clone()

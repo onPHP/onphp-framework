@@ -16,14 +16,14 @@
 	 * 
 	 * @ingroup Base
 	**/
-	final class Identifier implements Identifiable
+	final class Identifier implements Identifiable, Creatable
 	{
 		private $id		= null;
 		private $final	= false;
 		
 		public static function create()
 		{
-			return new Identifier();
+			return new self;
 		}
 		
 		public static function wrap($id)

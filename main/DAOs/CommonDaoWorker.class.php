@@ -192,7 +192,7 @@
 	
 				/* NOTREACHED */
 				
-			} elseif (sizeof($ids)) {
+			} elseif (count($ids)) {
 				return
 					$this->getListByLogic(
 						Expression::in(

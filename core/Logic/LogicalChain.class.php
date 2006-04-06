@@ -71,7 +71,7 @@
 		
 		public function getSize()
 		{
-			return sizeof($this->chain);
+			return count($this->chain);
 		}
 		
 		public function toString(Dialect $dialect)
@@ -79,7 +79,7 @@
 			if ($this->chain) {
 				$out = "({$this->chain[0]->toString($dialect)} ";
 	
-				for ($i = 1, $size = sizeof($this->chain); $i < $size; ++$i)
+				for ($i = 1, $size = count($this->chain); $i < $size; ++$i)
 					$out .= "{$this->logic[$i]} {$this->chain[$i]->toString($dialect)} ";
 	
 				return $out.')';
@@ -94,7 +94,7 @@
 			
 			$out = null;
 			
-			for ($i = 0, $size = sizeof($chain); $i < $size; ++$i) {
+			for ($i = 0, $size = count($chain); $i < $size; ++$i) {
 				if (isset($chain[$i + 1]))
 					$out =
 						Expression::toBoolean(

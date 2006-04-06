@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup Cache
 	**/
-	final class PeclMemcached extends CachePeer
+	final class PeclMemcached extends CachePeer implements Creatable
 	{
 		const DEFAULT_PORT		= 11211;
 		const DEFAULT_HOST		= '127.0.0.1';

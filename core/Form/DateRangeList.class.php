@@ -24,7 +24,7 @@
 				|| empty($scope[$this->name])
 				||
 					(
-						sizeof($scope[$this->name]) == 1
+						count($scope[$this->name]) == 1
 						&& !current($scope[$this->name])
 					)
 			)

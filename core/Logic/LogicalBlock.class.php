@@ -57,7 +57,7 @@
 		public function toBoolean(Form $form)
 		{
 			$args = &$this->args;
-			$size = sizeof($args);
+			$size = count($args);
 			
 			$out = true;
 			

@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	class Credentials
+	class Credentials implements Creatable
 	{
 		private $host		= null;
 		private $port		= 80;
@@ -25,7 +25,7 @@
 		
 		public static function create()
 		{
-			return new Credentials();
+			return new self;
 		}
 		
 		public function import($host, $port, $username, $password)

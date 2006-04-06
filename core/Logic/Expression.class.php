@@ -182,7 +182,7 @@
 		{
 			if (is_numeric($value) && $value == (int) $value)
 				return self::eq($field, $value);
-			elseif (is_array($value) && sizeof($value) == 1)
+			elseif (is_array($value) && count($value) == 1)
 				return self::eq($field, current($value));
 			else {
 				
@@ -199,7 +199,7 @@
 		{
 			if (is_numeric($value) && $value == (int) $value)
 				return self::notEq($field, $value);
-			elseif (is_array($value) && sizeof($value) == 1)
+			elseif (is_array($value) && count($value) == 1)
 				return self::notEq($field, current($value));
 			else {
 				

@@ -16,14 +16,14 @@
 	 *
 	 * @ingroup Helpers
 	**/
-	class CalendarWeek
+	class CalendarWeek implements Creatable
 	{
 		// TODO: quite empty class, consider replacement or pull up all methods
 		private $days = array();
 		
 		public static function create()
 		{
-			return new CalendarWeek();
+			return new self;
 		}
 		
 		public function getDays()

@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup OSQL
 	 * 
-	 * @see http://onphp.org/examples/OSQL.html
+	 * @see http://onphp.org/examples.OSQL.en.html
 	**/
 	final class OSQL extends StaticFactory
 	{

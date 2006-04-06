@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup OSQL
 	**/
-	class QueryResult implements Identifiable
+	class QueryResult implements Identifiable, Creatable
 	{
 		private $list		= array();
 		private $count		= null;
@@ -25,7 +25,7 @@
 		
 		public static function create()
 		{
-			return new QueryResult();
+			return new self;
 		}
 		
 		public function getId()

@@ -16,13 +16,13 @@
 	 * 
 	 * @ingroup Form
 	**/
-	class FilterChain implements Filtrator
+	class FilterChain implements Filtrator, Creatable
 	{
 		protected $chain = array();
 
 		public static function create()
 		{
-			return new FilterChain();
+			return new self;
 		}
 		
 		public function add(Filtrator $filter)

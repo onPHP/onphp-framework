@@ -15,13 +15,13 @@
 	 * System-wide access to selected CachePeer and DaoWorker.
 	 *
 	 * @see CachePeer
-	 * @see http://onphp.org/examples/Cache.html
+	 * @see http://onphp.org/examples.Cache.en.html
 	 * 
 	 * @ingroup Cache
 	 * 
 	 * @example cacheSettings.php
 	**/
-	final class Cache extends StaticFactory
+	final class Cache extends StaticFactory implements Instantiatable
 	{
 		const NOT_FOUND			= 'nil';
 

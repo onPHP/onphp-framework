@@ -18,13 +18,13 @@
 	 * 
 	 * @ingroup Cache
 	**/
-	final class RuntimeMemory extends CachePeer
+	final class RuntimeMemory extends CachePeer implements Creatable
 	{
 		private $cache = array();
 		
 		public static function create()
 		{
-			return new RuntimeMemory();
+			return new self;
 		}
 		
 		public function isAlive()

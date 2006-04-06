@@ -25,7 +25,7 @@
 			$dao = $this->container->getDao();
 			
 			if ($insert)
-				for ($i = 0, $size = sizeof($insert); $i < $size; ++$i)
+				for ($i = 0, $size = count($insert); $i < $size; ++$i)
 					$db->queryNull($this->makeInsertQuery($insert[$i]));
 
 			if ($delete) {

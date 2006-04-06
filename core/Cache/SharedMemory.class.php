@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup Cache
 	**/
-	final class SharedMemory extends SelectivePeer
+	final class SharedMemory extends SelectivePeer implements Creatable
 	{
 		const INDEX_SEGMENT			= 12345678;
 		

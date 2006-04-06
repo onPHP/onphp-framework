@@ -1,5 +1,11 @@
 # $Id$
 
+2006-04-06	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/Cache/WatermarkedPeer.class.php, 
+	core/Base/Instantiatable.class.php, core/Base/Creatable.class.php: new
+	classes introduced by trunk's sync.
+
 2006-04-05	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/OSQL/InsertOrUpdateQuery.class.php: support for Range and

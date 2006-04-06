@@ -55,6 +55,7 @@
 			
 			foreach ($rawDays as $rawDay) {
 				$day = CalendarDay::create($rawDay->toStamp());
+				
 				if ($this->monthRange->contains($day))
 					$day->setOutside(false);
 				else 
@@ -63,6 +64,7 @@
 				$this->days[$day->toDate()] = $day;
 				
 				$weekNumber = floor($this->fullLength/7);
+				
 				if (!isset($this->weeks[$weekNumber]))
 					$this->weeks[$weekNumber] = CalendarWeek::create();
 				

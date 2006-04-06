@@ -53,7 +53,7 @@
 
 			$times = split("([,; \n]+)", $string);
 			
-			for ($i = 0, $size = sizeof($times); $i < $size; ++$i) {
+			for ($i = 0, $size = count($times); $i < $size; ++$i) {
 				$time = mb_ereg_replace('[^0-9:]', ':', $times[$i]);
 				
 				try {
