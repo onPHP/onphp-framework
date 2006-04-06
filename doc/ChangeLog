@@ -1,5 +1,15 @@
 # $Id$
 
+2006-04-06	Konstantin V. Arkhipov
+
+	* core/Base/Instantiatable.class.php: new grouping interface
+	introduced.
+
+	* core/DB/: dialects are now singletones.
+
+	* core/OSQL/QueryIdentification.class.php: Stringable dependency moved
+	to Query interface in the sake of debug pleasure.
+
 2006-04-05	Konstantin V. Arkhipov
 
 	* meta/: integer's Range support implemented.

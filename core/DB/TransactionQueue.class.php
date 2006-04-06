@@ -70,5 +70,10 @@
 		{
 			return $this->queue->toDialectString($dialect);
 		}
+		
+		public function toString()
+		{
+			return $this->queue->toDialectString(ImaginaryDialect::me());
+		}
 	}
 ?>

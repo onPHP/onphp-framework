@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup MetaBase
 	**/
-	final class MetaConfiguration extends Singleton
+	final class MetaConfiguration extends Singleton implements Instantiatable
 	{
 		private $classes = array();
 		

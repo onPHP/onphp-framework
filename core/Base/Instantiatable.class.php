@@ -10,24 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup OSQL
-	**/
-	abstract class QueryIdentification implements Query
+	interface Instantiatable
 	{
-		public function getId()
-		{
-			return sha1($this->toString());
-		}
-		
-		final public function setId($id)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function toString()
-		{
-			return $this->toDialectString(ImaginaryDialect::me());
-		}
+		public static function me();
 	}
 ?>

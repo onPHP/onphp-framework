@@ -20,6 +20,11 @@
 	final class PostgresDialect extends Dialect
 	{
 		public static $tsConfiguration = 'default_russian';
+		
+		public static function me()
+		{
+			return Singleton::getInstance(__CLASS__);
+		}
 
 		public static function getTsConfiguration()
 		{

@@ -21,6 +21,11 @@
 	{
 		const IN_BOOLEAN_MODE = 1;
 		
+		public static function me()
+		{
+			return Singleton::getInstance(__CLASS__);
+		}
+		
 		public static function quoteValue(&$value)
 		{
 			/// @see Sequenceless for this convention

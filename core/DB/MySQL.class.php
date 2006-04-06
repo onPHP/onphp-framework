@@ -21,16 +21,9 @@
 	{
 		protected $queueSupported	= false;
 		
-		private static $dialect = null;
-		
-		public function __construct()
-		{
-			self::$dialect = new MyDialect();
-		}
-		
 		public static function getDialect()
 		{
-			return self::$dialect;
+			return MyDialect::me();
 		}
 		
 		public function asyncQuery(Query $query)

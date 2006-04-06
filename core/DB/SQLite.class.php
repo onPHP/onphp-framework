@@ -19,16 +19,9 @@
 	**/
 	class SQLite extends Sequenceless
 	{
-		private static $dialect = null;
-		
-		public function __construct()
-		{
-			self::$dialect = new LiteDialect();
-		}
-		
 		public static function getDialect()
 		{
-			return self::$dialect;
+			return LiteDialect::me();
 		}
 		
 		public function isBusy()

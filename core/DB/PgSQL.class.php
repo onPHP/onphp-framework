@@ -19,16 +19,9 @@
 	**/
 	class PgSQL extends DB
 	{
-		private static $dialect = null;
-		
-		public function __construct()
-		{
-			self::$dialect = new PostgresDialect();
-		}
-		
 		public static function getDialect()
 		{
-			return self::$dialect;
+			return PostgresDialect::me();
 		}
 		
 		public function isBusy()

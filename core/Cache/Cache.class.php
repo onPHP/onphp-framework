@@ -20,7 +20,7 @@
 	 * 
 	 * @example cacheSettings.php
 	**/
-	final class Cache extends StaticFactory
+	final class Cache extends StaticFactory implements Instantiatable
 	{
 		const NOT_FOUND			= 'nil';
 

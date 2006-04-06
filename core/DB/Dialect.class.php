@@ -16,6 +16,8 @@
 	 * @ingroup DB
 	**/
 	abstract class /* ANSI's */ Dialect
+		extends Singleton
+		implements Instantiatable
 	{
 		abstract public static function autoincrementize(
 			DBColumn $column, &$prepend

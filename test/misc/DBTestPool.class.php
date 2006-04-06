@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class DBTestPool extends Singleton
+	final class DBTestPool extends Singleton implements Instantiatable
 	{
 		private $pool	= array();
 		private $info	= array();

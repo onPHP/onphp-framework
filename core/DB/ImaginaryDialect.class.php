@@ -17,6 +17,11 @@
 	**/
 	final class ImaginaryDialect extends Dialect
 	{
+		public static function me()
+		{
+			return Singleton::getInstance(__CLASS__);
+		}
+		
 		public static function autoincrementize(DBColumn $column, &$prepend)
 		{
 			return 'AUTOINCREMENT';
