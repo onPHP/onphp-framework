@@ -132,6 +132,11 @@
 			return $this;
 		}
 		
+		public function hasAttached($name)
+		{
+			return isset($this->attached[$name]);
+		}
+		
 		public function &getAttachedList()
 		{
 			return $this->attached;
