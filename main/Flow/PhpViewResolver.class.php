@@ -23,6 +23,11 @@
 			$this->prefix	= $prefix;
 			$this->postfix	= $postfix;
 		}
+
+		public static function create($prefix = null, $postfix = null)
+		{
+			return new self($prefix, $postfix);
+		}
 		
 		public function resolveViewName($viewName)
 		{
