@@ -17,18 +17,11 @@
 	{
 		private $templatePath		= null;
 		private $partViewResolver	= null;
-		private $notCached			= null;
 		
 		public function __construct($templatePath, ViewResolver $partViewResolver)
 		{
 			$this->templatePath = $templatePath;
 			$this->partViewResolver = $partViewResolver;
-		}
-		
-		public function setNotCached()
-		{
-			$this->notCached = true;
-			return $this;
 		}
 		
 		public function render($model = null)
@@ -40,9 +33,6 @@
 			
 			$partViewer = new PartViewer($this->partViewResolver, $model);
 			
-			if ($this->notCached)
-				HeaderUtils::sendNotCachedHeader();
-				
 			require $this->templatePath;
 		}
 	}
