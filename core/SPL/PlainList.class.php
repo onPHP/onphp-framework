@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Garmonbozia Research Group                 *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,40 +11,22 @@
 /* $Id$ */
 
 	/**
-	 * Ideal Identifiable interface implementation. ;-)
-	 *
-	 * @see Identifiable
+	 * Ordered unindexed list of Identifiable objects.
 	 * 
-	 * @ingroup Base
+	 * @ingroup onSPL
 	**/
-	class /* spirit of */ IdentifiableObject implements Identifiable, Creatable
+	final class PlainList extends AbstractList implements Creatable
 	{
-		protected $id = null;
-		
 		public static function create()
 		{
 			return new self;
 		}
 		
-		public static function wrap($id)
+		public function offsetSet($offset, $value)
 		{
-			return self::create()->setId($id);
-		}
-		
-		final public function getId()
-		{
-			if (
-				$this->id instanceof Identifier
-				&& $this->id->isFinalized()
-			)
-				return $this->id->getId();
-			else
-				return $this->id;
-		}
-		
-		final public function setId($id)
-		{
-			$this->id = $id;
+			Assert::isTrue($value instanceof Identifiable);
+			
+			$this->list[] = $value;
 			
 			return $this;
 		}

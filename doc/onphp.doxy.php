@@ -75,6 +75,9 @@
 	 * @defgroup Form Data validation layer
 	 * @ingroup Core
 	 *
+	 * @defgroup onSPL Things based on Standard PHP Library
+	 * @ingroup Core
+	 *
 	 * @defgroup Filters Tools for primitive's filtration
 	 * @ingroup Form
 	 *

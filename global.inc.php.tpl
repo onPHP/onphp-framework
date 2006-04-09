@@ -66,6 +66,7 @@
 		.ONPHP_CORE_PATH.'Exceptions'	.PATH_SEPARATOR
 		.ONPHP_CORE_PATH.'Form'			.PATH_SEPARATOR
 		.ONPHP_CORE_PATH.'Logic'		.PATH_SEPARATOR
+		.ONPHP_CORE_PATH.'SPL'			.PATH_SEPARATOR
 		.ONPHP_CORE_PATH.'OSQL'			.PATH_SEPARATOR
 		
 		// main framework
@@ -74,6 +75,10 @@
 		.ONPHP_MAIN_PATH.'Flow'			.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Containers'	.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Utils'		.PATH_SEPARATOR
+		
+		// uncomment this one, if your php compiled without spl extension:
+		//
+		// .ONPHP_CORE_PATH.'SPL'.DIRECTORY_SEPARATOR.'bundled'.PATH_SEPARATOR
 	);
     
 	// file extensions

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,56 +11,71 @@
 /* $Id$ */
 
 	/**
-	 * @ingroup Flow
+	 * Base for handling Identifiable object's lists.
+	 * 
+	 * @ingroup onSPL
 	**/
-	class Model implements Creatable, SimplifiedArrayAccess
+	abstract class AbstractList implements ArrayAccess, SimplifiedArrayAccess
 	{
-		private $vars = array();
+		protected $list = array();
 		
-		public static function create()
+		public function offsetGet($offset)
 		{
-			return new self;
+			if (isset($this->list[$offset]))
+				return $this->list[$offset];
+			
+			throw new MissingElementException(
+				"no object found with index == '{$offset}'"
+			);
 		}
+		
+		public function offsetUnset($offset)
+		{
+			unset($this->list[$offset]);
+			
+			return $this;
+		}
+		
+		public function offsetExists($offset)
+		{
+			return isset($this->list[$offset]);
+		}
+		
+		// SAA goes here
 		
 		public function clean()
 		{
-			$this->vars = array();
-			
-			return $this;
+			$this->list = array();
 		}
 		
 		public function isEmpty()
 		{
-			return ($this->vars === array());
+			return ($this->list === array());
 		}
 		
 		public function getList()
 		{
-			return $this->vars;
+			return $this->list;
 		}
 		
 		public function set($name, $var)
 		{
-			$this->vars[$name] = $var;
-			
-			return $this;
+			return $this->offsetSet($name, $var);
 		}
 		
 		public function get($name)
 		{
-			return $this->vars[$name];
+			return $this->offsetGet($name);
 		}
 		
 		public function has($name)
 		{
-			return isset($this->vars[$name]);
+			return $this->offsetExists($name);
 		}
 		
 		public function drop($name)
 		{
-			unset($this->vars[$name]);
-			
-			return $this;
+			return $this->offsetUnset($name);
 		}
 	}
 ?>
