@@ -31,7 +31,7 @@
 	error_reporting(E_ALL | E_STRICT);
 	set_error_handler('error2Exception', E_ALL | E_STRICT);
 	ignore_user_abort(true);
-	define('ONPHP_VERSION', '0.4.0.99');
+	define('ONPHP_VERSION', '0.4.1.99');
     
 	// paths
 	define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
@@ -74,20 +74,6 @@
 		.ONPHP_MAIN_PATH.'Flow'			.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Containers'	.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Utils'		.PATH_SEPARATOR
-
-		// incubator's stuff
-		/**
-		.ONPHP_INCUBATOR_PATH.'Business'			.PATH_SEPARATOR
-		.ONPHP_INCUBATOR_PATH.'CMF'					.PATH_SEPARATOR
-		.ONPHP_INCUBATOR_PATH.'DB'					.PATH_SEPARATOR
-		.ONPHP_INCUBATOR_PATH.'HTTP'				.PATH_SEPARATOR
-		.ONPHP_INCUBATOR_PATH.'XML'					.PATH_SEPARATOR
-		.ONPHP_INCUBATOR_PATH.'NetTools'			.PATH_SEPARATOR
-		.ONPHP_INCUBATOR_PATH.'Template'			.PATH_SEPARATOR
-		.ONPHP_INCUBATOR_PATH.'SimpleTestWrapper'	.PATH_SEPARATOR
-		.ONPHP_INCUBATOR_PATH.'Utils'				.PATH_SEPARATOR
-		.ONPHP_INCUBATOR_PATH.'Form'				.PATH_SEPARATOR
-		**/
 	);
     
 	// file extensions

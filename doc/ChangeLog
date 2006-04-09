@@ -1,5 +1,9 @@
 # $Id$
 
+2006-04-09	Konstantin V. Arkhipov
+
+	* 0.4.1 released.
+
 2006-04-06	Konstantin V. Arkhipov
 
 	* core/Base/Instantiatable.class.php: new grouping interface
