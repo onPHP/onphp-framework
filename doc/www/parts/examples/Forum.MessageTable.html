@@ -1,0 +1,24 @@
+<pre>
+<b>create sequence</b> message_id;
+<b>create table</b> message(
+    id          bigint <b>default</b> nextval(<span class="red">'message_id'</span>) <b>primary key</b>,
+
+    forum_id    <span class="red">integer</span> <b>not null references</b> forum(<b>id</b>)
+                <b>on delete restrict on update cascade,</b>
+
+    person_id   <span class="red">bigint</span> <b>not null references</b> person(<b>id</b>)
+                <b>on delete restrict on update cascade</b>,
+
+    -- parent is null when top level
+    parent_id   <span class="red">bigint</span> <b>null references</b> message(<b>id</b>)
+                <b>on delete cascade on update cascade</b>,
+
+    -- thread == id, when top level
+    thread_id   <span class="red">bigint</span> <b>not null references</b> message(<b>id</b>)
+                <b>on delete cascade on update cascade</b>,
+
+    name        <span class="red">varchar</span>(<span class="blue">255</span>) <b>not null</b>,
+    content     text <b>not null</b>,
+    created     timestamp <b>not null</b>
+);
+</pre>
