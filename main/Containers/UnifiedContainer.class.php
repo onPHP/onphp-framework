@@ -171,6 +171,7 @@
 				"that's not an array :-/"
 			);
 
+			// FIXME: dangerous, possible to drop list supplied by setList
 			if (!$this->fetched)
 				$this->fetch();
 			
@@ -202,10 +203,9 @@
 					} elseif (!isset($clones[$id])) {
 						$insert[] = $object;
 					}
+					if (null !== $id)
+						$ids[$id] = $object;
 				}
-				
-				if (null !== $id)
-					$ids[$id] = $object;
 				
 				foreach ($clones as $id => $object) {
 					if (!isset($ids[$id]))
@@ -256,6 +256,8 @@
 				foreach ($list as $object)
 					$this->clones[$object->getId()] = clone $object;
 			}
+			
+			$this->fetched = true;
 			
 			return $this;
 		}
