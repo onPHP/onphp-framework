@@ -13,31 +13,17 @@
 	/**
 	 * @ingroup Builders
 	**/
-	final class DaoBuilder extends OnceBuilder
+	abstract class OnceBuilder extends BaseBuilder
 	{
-		public static function build(MetaClass $class)
+		protected static function getHead()
 		{
-			$out = self::getHead();
+			$head = self::startCap();
 			
-			$type = $class->getType();
-			
-			if ($type && $type->getId() == MetaClassType::CLASS_ABSTRACT) {
-				$abstract = 'abstract ';
-				$notes = 'nothing';
-			} else {
-				$abstract = null;
-				$notes = 'your brilliant stuff goes here';
-			}
-			
-			$out .= <<<EOT
-{$abstract}class {$class->getName()}DAO extends Auto{$class->getName()}DAO
-{
-	// {$notes}
-}
+			$head .=
+				' *   This file will never be generated again -'
+				.' feel free to edit.            *';
 
-EOT;
-			
-			return $out.self::getHeel();
+			return $head."\n".self::endCap();
 		}
 	}
 ?>

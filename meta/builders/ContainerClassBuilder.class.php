@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Builders
 	**/
-	final class ContainerClassBuilder extends BaseBuilder
+	final class ContainerClassBuilder extends OnceBuilder
 	{
 		public static function build(MetaClass $class)
 		{
@@ -79,17 +79,6 @@ EOT;
 			$out .= self::getHeel();
 			
 			return $out;
-		}
-		
-		protected static function getHead()
-		{
-			$head = self::startCap();
-			
-			$head .=
-				' *   This file will never be generated again -'
-				.' feel free to edit.            *';
-
-			return $head."\n".self::endCap();
 		}
 	}
 ?>

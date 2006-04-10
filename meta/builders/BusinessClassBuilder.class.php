@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Builders
 	**/
-	final class BusinessClassBuilder extends BaseBuilder
+	final class BusinessClassBuilder extends OnceBuilder
 	{
 		public static function build(MetaClass $class)
 		{
@@ -75,17 +75,6 @@ EOT;
 EOT;
 			
 			return $out.self::getHeel();
-		}
-		
-		protected static function getHead()
-		{
-			$head = self::startCap();
-			
-			$head .=
-				' *   This file will never be generated again -'
-				.' feel free to edit.            *';
-
-			return $head."\n".self::endCap();
 		}
 	}
 ?>
