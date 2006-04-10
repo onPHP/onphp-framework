@@ -26,10 +26,10 @@
 
 		public function getById($id, $expires = Cache::EXPIRES_MEDIUM);
 		public function getListByParentId(
-			$parentId, $expires = Cache::EXPIRES_MEDIUM
+			$parentId, $expires = Cache::DO_NOT_CACHE
 		);
 		public function getChildIdsList(
-			$parentId, $expires = Cache::EXPIRES_MEDIUM
+			$parentId, $expires = Cache::DO_NOT_CACHE
 		);
 	}
 ?>

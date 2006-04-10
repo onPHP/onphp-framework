@@ -101,15 +101,20 @@
 			return $this;
 		}
 
-		public function getListByParentId($parentId)
+		public function getListByParentId(
+			$parentId, $expires = Cache::DO_NOT_CACHE
+		)
 		{
 			return
 				$this->getListByLogic(
-					Expression::eq($this->getParentIdField(), $parentId)
+					Expression::eq($this->getParentIdField(), $parentId),
+					$expires
 				);
 		}
 
-		public function getChildIdsList($parentId)
+		public function getChildIdsList(
+			$parentId, $expires = Cache::DO_NOT_CACHE
+		)
 		{ 
 			return
 				$this->getCustomRowList(
@@ -120,7 +125,9 @@
 							new DBField($this->getParentIdField()),
 							new DBValue($parentId)
 						)
-					)
+					),
+					
+					$expires
 				);
 		}
 
