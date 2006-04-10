@@ -171,7 +171,9 @@
 			);
 
 			if (!$this->fetched)
-				$this->fetch();
+				throw new WrongStateException(
+					'do not want to save non-fetched collection'
+				);
 			
 			$list	= $this->list;
 			$clones	= $this->clones;
@@ -201,10 +203,10 @@
 					} elseif (!isset($clones[$id])) {
 						$insert[] = $object;
 					}
+					
+					if (null !== $id)
+						$ids[$id] = $object;
 				}
-				
-				if (null !== $id)
-					$ids[$id] = $object;
 				
 				foreach ($clones as $id => $object) {
 					if (!isset($ids[$id]))
@@ -255,6 +257,8 @@
 				foreach ($list as $object)
 					$this->clones[$object->getId()] = clone $object;
 			}
+			
+			$this->fetched = true;
 			
 			return $this;
 		}

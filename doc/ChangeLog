@@ -1,5 +1,10 @@
 # $Id$
 
+2006-04-11	Anton E. Lebedevich
+
+	* main/Containers/UnifiedContainer.class.php: one more evil typo
+	fixed, propagated from 0.2.
+
 2006-04-11	Konstantin V. Arkhipov
 
 	* core/DB/DBFactory.class.php: introduced ability to specify
