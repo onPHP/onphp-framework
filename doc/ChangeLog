@@ -1,5 +1,10 @@
 # $Id$
 
+2006-04-11	Konstantin V. Arkhipov
+
+	* core/DB/DBFactory.class.php: introduced ability to specify
+	conntector's type for custom connections.
+
 2006-04-09	Konstantin V. Arkhipov
 
 	* 0.4.1 released.
