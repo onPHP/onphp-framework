@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup Base
 	**/
-	class Ternary implements Creatable
+	class Ternary
 	{
 		private $trinity = null;	// ;-)
 		

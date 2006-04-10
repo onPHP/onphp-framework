@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	class DateRange implements Creatable
+	class DateRange
 	{
 		protected $start	= null;
 		protected $end		= null;

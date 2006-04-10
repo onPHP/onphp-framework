@@ -20,7 +20,7 @@
 	 * 
 	 * @ingroup DAOs
 	**/
-	class ObjectQuery implements Creatable
+	class ObjectQuery
 	{
 		const SORT_ASC		= 0x0001;
 		const SORT_DESC		= 0x0002;

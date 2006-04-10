@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup Base
 	**/
-	final class Identifier implements Identifiable, Creatable
+	final class Identifier implements Identifiable
 	{
 		private $id		= null;
 		private $final	= false;

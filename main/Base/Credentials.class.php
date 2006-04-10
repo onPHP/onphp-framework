@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	class Credentials implements Creatable
+	class Credentials
 	{
 		private $host		= null;
 		private $port		= 80;

@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup Filters
 	**/
-	class StripTagsFilter implements Filtrator, Creatable
+	class StripTagsFilter implements Filtrator
 	{
 		private $exclude = null;
 		
