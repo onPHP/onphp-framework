@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Filters
 	**/
-	class HashFilter implements Filtrator, Creatable
+	class HashFilter implements Filtrator
 	{
 		private $binary = false;
 		

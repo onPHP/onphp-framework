@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class PhpViewResolver implements ViewResolver, Creatable
+	class PhpViewResolver implements ViewResolver
 	{
 		private $prefix		= null;
 		private $postfix	= null;

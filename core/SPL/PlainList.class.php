@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup onSPL
 	**/
-	final class PlainList extends AbstractList implements Creatable
+	final class PlainList extends AbstractList
 	{
 		public static function create()
 		{

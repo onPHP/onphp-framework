@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Base
 	**/
-	class Ternary implements Stringable, Creatable
+	class Ternary implements Stringable
 	{
 		private $trinity = null;	// ;-)
 		

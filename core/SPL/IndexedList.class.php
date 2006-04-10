@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup onSPL
 	**/
-	final class IndexedList extends AbstractList implements Creatable
+	final class IndexedList extends AbstractList
 	{
 		public static function create()
 		{

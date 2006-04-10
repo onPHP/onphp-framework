@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup OSQL
 	**/
-	class QueryResult implements Identifiable, Creatable
+	class QueryResult implements Identifiable
 	{
 		private $list		= array();
 		private $count		= null;

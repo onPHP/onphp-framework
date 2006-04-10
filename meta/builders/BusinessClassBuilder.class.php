@@ -26,9 +26,6 @@
 			
 			$interfaces = ' implements Prototyped';
 			
-			if (!$type || $type->getId() !== MetaClassType::CLASS_ABSTRACT)
-				$interfaces .= ', Creatable';
-			
 			if ($class->getPattern()->daoExist()) {
 				$interfaces .= ', DAOConnected';
 				$dao = <<<EOT

@@ -17,7 +17,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	class DateRange implements Stringable, Creatable
+	class DateRange implements Stringable
 	{
 		protected $start	= null;
 		protected $end		= null;

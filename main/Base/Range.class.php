@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	class Range implements Stringable, Creatable
+	class Range implements Stringable
 	{
 		private $min = null;
 		private $max = null;

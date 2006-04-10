@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	final class HttpRequest implements Creatable
+	final class HttpRequest
 	{
 		// contains all variables from $_GET
 		private $get 		= array();

@@ -17,7 +17,7 @@
 	 * 
 	 * @ingroup Cache
 	**/
-	final class RuntimeMemory extends CachePeer implements Creatable
+	final class RuntimeMemory extends CachePeer
 	{
 		private $cache = array();
 		

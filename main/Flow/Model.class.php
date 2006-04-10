@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class Model implements Creatable, SimplifiedArrayAccess
+	class Model implements SimplifiedArrayAccess
 	{
 		private $vars = array();
 		

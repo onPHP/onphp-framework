@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Form
 	**/
-	class FilterChain implements Filtrator, Creatable
+	class FilterChain implements Filtrator
 	{
 		protected $chain = array();
 

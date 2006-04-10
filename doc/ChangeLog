@@ -4,6 +4,10 @@
 
 	* core/DB/DBFactory.class.php: introduced ability to specify
 	conntector's type for custom connections.
+	
+	* core/Base/Creatable.class.php: deprecated.
+	
+	* meta/: removed support for Creatable interface.
 
 2006-04-09	Konstantin V. Arkhipov
 

@@ -11,6 +11,8 @@
 /* $Id$ */	
 
 	/**
+	 * @deprecated since it's usefulness is unproved
+	 * 
 	 * @ingroup Base
 	**/
 	interface Creatable

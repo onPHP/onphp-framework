@@ -17,7 +17,7 @@
 	 * 
 	 * @ingroup Base
 	**/
-	class /* spirit of */ IdentifiableObject implements Identifiable, Creatable
+	class /* spirit of */ IdentifiableObject implements Identifiable
 	{
 		protected $id = null;
 		
