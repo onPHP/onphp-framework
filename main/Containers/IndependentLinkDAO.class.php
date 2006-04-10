@@ -23,9 +23,9 @@
 
 		abstract public function getObjectName();
 
-		public function getById($id)
+		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
 		{
-			return $this->getChildDAO()->getById($id);
+			return $this->getChildDAO()->getById($id, $expires);
 		}
 
 		private function checkType(Identifiable $child)

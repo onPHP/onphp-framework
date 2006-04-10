@@ -5,6 +5,11 @@
 	* main/Containers/UnifiedContainer.class.php: one more evil typo
 	fixed.
 
+	* main/Containers/PartDAO.class.php,
+	main/Containers/IndependentLinkDAO.class.php,
+	main/Containers/StorableContainer.class.php: custom cache expires time
+	implemented, as requested by Sergey S. Sergeev.
+
 2006-04-11	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/Base/Creatable.class.php: deprecated.
