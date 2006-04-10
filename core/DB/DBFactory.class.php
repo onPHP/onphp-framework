@@ -35,17 +35,19 @@
 		}
 
 		public static function getCustomInstance(
-			$userName, $passWord, $host, $base = null
+			$userName, $passWord, $host, $base = null, $connector = null
 		)
 		{
-			if (!defined('DB_CLASS'))
-				throw new WrongStateException(
-					'you should define DB_CLASS in your config file'
-				);
+			if (!$connector) {
+				if (!defined('DB_CLASS'))
+					throw new WrongStateException(
+						'you should define DB_CLASS in your config file'
+					);
+				
+				$connector = DB_CLASS;
+			}
 
-			$dbClass = DB_CLASS;
-
-			$db = new $dbClass;
+			$db = new $connector;
 			$db->connect($userName, $passWord, $host, $base);
 
 			if (defined('DEFAULT_ENCODING')) {
