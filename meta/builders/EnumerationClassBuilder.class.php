@@ -34,5 +34,16 @@ EOT;
 			
 			return $out.self::getHeel();
 		}
+		
+		protected static function getHead()
+		{
+			$head = self::startCap();
+			
+			$head .=
+				' *   This file will never be generated again -'
+				.' feel free to edit.            *';
+
+			return $head."\n".self::endCap();
+		}
 	}
 ?>
