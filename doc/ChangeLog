@@ -1,5 +1,10 @@
 # $Id$
 
+2006-04-11	Anton E. Lebedevich	<noiselist@pochta.ru>
+
+	* main/Containers/UnifiedContainer.class.php: one more evil typo
+	fixed.
+
 2006-04-11	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/Base/Creatable.class.php: deprecated.

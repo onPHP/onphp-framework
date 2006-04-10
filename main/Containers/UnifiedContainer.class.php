@@ -171,9 +171,10 @@
 				"that's not an array :-/"
 			);
 
-			// FIXME: dangerous, possible to drop list supplied by setList
 			if (!$this->fetched)
-				$this->fetch();
+				throw new WrongStateException(
+					'do not want to save non-fetched collection'
+				);
 			
 			$list	= $this->list;
 			$clones	= $this->clones;
@@ -203,6 +204,7 @@
 					} elseif (!isset($clones[$id])) {
 						$insert[] = $object;
 					}
+					
 					if (null !== $id)
 						$ids[$id] = $object;
 				}
