@@ -1,5 +1,11 @@
 # $Id$
 
+2006-04-11	Sergey S. Sergeev <webs.support@gmail.com>
+
+	* main/Containers/StorableContainer.class.php,
+	main/Containers/IndependentLinkDAO.class.php: forgotten argument's 
+	method fix.
+
 2006-04-11	Anton E. Lebedevich	<noiselist@pochta.ru>
 
 	* main/Containers/UnifiedContainer.class.php: one more evil typo

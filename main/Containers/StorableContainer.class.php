@@ -38,7 +38,7 @@
 			PartDAO $partDAO, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			return new StorableContainer($partDAO);
+			return new StorableContainer($partDAO, $expires);
 		}
 
 		public function __construct(
@@ -118,7 +118,7 @@
 
 			// populate saved
 			foreach ($this->saved as $id => &$val) {
-				$this->getById($id, $this->expires);
+				$this->getById($id);
 			}
 
 			return $this->new + $this->saved + $this->insert;

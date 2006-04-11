@@ -113,7 +113,7 @@
 			return $this->import($parentId, $child);
 		}
 
-		public function getListByParentId($parentId)
+		public function getListByParentId($parentId, $expires = Cache::DO_NOT_CACHE)
 		{
 			return $this->getChildDAO()->getListByQuery(
 				$this->getChildDAO()->
@@ -139,11 +139,12 @@
 								new DBValue($parentId)
 							)
 						)
-					)
+					),
+                $expires
 			);
 		}
 
-		public function getChildIdsList($parentId)
+		public function getChildIdsList($parentId, $expires = Cache::DO_NOT_CACHE)
 		{
 			return
 				$this->getChildDAO()->
@@ -155,7 +156,8 @@
 								new DBField($this->getParentIdField()),
 								new DBValue($parentId)
 							)
-						)
+						),
+                        $expires
 					);
 		}
 	}
