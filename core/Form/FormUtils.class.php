@@ -46,8 +46,11 @@
 							// everything else
 							else
 								$fake = array($name => $value);
-								
-							$form->importOne($name, $fake);
+
+							if ($prm instanceof ComplexPrimitive)
+								$prm->importSingle($fake);
+							else
+								$form->importOne($name, $fake);
 						}
 					} catch (ReflectionException $e) {
 						// no such method

@@ -97,10 +97,11 @@
 					$scope[$this->name][self::DAY], 
 					$scope[$this->name][self::MONTH], 
 					$scope[$this->name][self::YEAR]
-				) &&
-				!empty($scope[$this->name][self::DAY]) &&
-				!empty($scope[$this->name][self::MONTH]) &&
-				!empty($scope[$this->name][self::YEAR])
+				)
+				&& is_array($scope[$this->name])
+				&& !empty($scope[$this->name][self::DAY])
+				&& !empty($scope[$this->name][self::MONTH])
+				&& !empty($scope[$this->name][self::YEAR])
 			) {
 				$hours = $minutes = $seconds = 0;
 				
