@@ -1,5 +1,12 @@
 # $Id$
 
+2006-04-12	Konstantin V. Arkhipov
+
+	* core/Form/PrimitiveDate.class.php: complexity detection fixed.
+
+	* core/Form/FormUtils.class.php: forced usage of single import for
+	complex primitives.
+
 2006-04-11	Anton E. Lebedevich
 
 	* main/Containers/UnifiedContainer.class.php: one more evil typo
