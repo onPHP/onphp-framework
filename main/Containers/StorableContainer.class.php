@@ -31,15 +31,22 @@
 		private $deleted	= array();
 		
 		private $partDAO	= null;
+		private $expires	= null;
 		
-		public static function create(PartDAO $partDAO)
+		public static function create(
+			PartDAO $partDAO, $expires = Cache::EXPIRES_MEDIUM
+		)
 		{
-			return new StorableContainer($partDAO);
+			return new StorableContainer($partDAO, $expires);
 		}
 
-		public function __construct(PartDAO $partDAO)
+		public function __construct(
+			PartDAO $partDAO, $expires = Cache::EXPIRES_MEDIUM
+		)
 		{
 			$this->partDAO = $partDAO;
+			$this->expires = $expires;
+			
 			$this->loaded = self::LOADED;
 		}
 
@@ -85,7 +92,7 @@
 				);
 
 			if (!is_object($this->saved[$id]))
-				$this->saved[$id] = $this->partDAO->getById($id);
+				$this->saved[$id] = $this->partDAO->getById($id, $this->expires);
 
 			return $this->saved[$id]; 
 		}
@@ -185,21 +192,23 @@
 			return $this;
 		}
 
-		public static function getByParentId($parentId, PartDAO $childDAO)
+		public static function getByParentId(
+			$parentId, PartDAO $childDAO, $expires = Cache::EXPIRES_MEDIUM
+		)
 		{
-			$container = new StorableContainer($childDAO);
+			$container = new StorableContainer($childDAO, $expires);
 			$container->loaded = self::LOAD_OBJECTS;
-			$container->partDAO = $childDAO;
 			$container->parentId = $parentId;
 
 			return $container;
 		}
 
-		public static function getIdsByParentId($parentId, PartDAO $childDAO)
+		public static function getIdsByParentId(
+			$parentId, PartDAO $childDAO, $expires = Cache::EXPIRES_MEDIUM
+		)
 		{
-			$container = new StorableContainer($childDAO);
+			$container = new StorableContainer($childDAO, $expires);
 			$container->loaded = self::LOAD_IDS;
-			$container->partDAO = $childDAO;
 			$container->parentId = $parentId;
 
 			return $container;

@@ -23,8 +23,12 @@
 		public function import($parentId, Identifiable $child);
 		public function insert($parentId, Identifiable $child);
 
-		public function getById($id);
-		public function getListByParentId($parentId);
-		public function getChildIdsList($parentId);
+		public function getById($id, $expires = Cache::EXPIRES_MEDIUM);
+		public function getListByParentId(
+			$parentId, $expires = Cache::DO_NOT_CACHE
+		);
+		public function getChildIdsList(
+			$parentId, $expires = Cache::DO_NOT_CACHE
+		);
 	}
 ?>

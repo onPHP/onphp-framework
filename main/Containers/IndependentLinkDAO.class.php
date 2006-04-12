@@ -22,9 +22,9 @@
 
 		abstract public function getObjectName();
 
-		public function getById($id)
+		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
 		{
-			return $this->getChildDAO()->getById($id);
+			return $this->getChildDAO()->getById($id, $expires);
 		}
 
 		private function checkType(Identifiable $child)
@@ -112,7 +112,7 @@
 			return $this->import($parentId, $child);
 		}
 
-		public function getListByParentId($parentId)
+		public function getListByParentId($parentId, $expires = Cache::DO_NOT_CACHE)
 		{
 			return $this->getChildDAO()->getListByQuery(
 				$this->getChildDAO()->
@@ -138,11 +138,12 @@
 								new DBValue($parentId)
 							)
 						)
-					)
+					),
+                $expires
 			);
 		}
 
-		public function getChildIdsList($parentId)
+		public function getChildIdsList($parentId, $expires = Cache::DO_NOT_CACHE)
 		{
 			return
 				$this->getChildDAO()->
@@ -154,7 +155,8 @@
 								new DBField($this->getParentIdField()),
 								new DBValue($parentId)
 							)
-						)
+						),
+                        $expires
 					);
 		}
 	}
