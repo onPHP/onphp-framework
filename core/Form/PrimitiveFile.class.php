@@ -76,10 +76,11 @@
 		public function import(&$scope)
 		{
 			if (
-				!BasePrimitive::import($scope) ||
-				(
-					isset($scope[$this->name], $scope[$this->name]['error']) &&
-					$scope[$this->name]['error'] == UPLOAD_ERR_NO_FILE
+				!BasePrimitive::import($scope)
+				|| !is_array($scope[$this->name])
+				|| (
+					isset($scope[$this->name], $scope[$this->name]['error'])
+					&& $scope[$this->name]['error'] == UPLOAD_ERR_NO_FILE
 				)
 			)
 				return null;
