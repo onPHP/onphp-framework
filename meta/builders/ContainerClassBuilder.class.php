@@ -66,6 +66,7 @@ public function getHelperTable()
 {
 	return '{$class->getDumbName()}_{$remoteDumbName}';
 }
+
 EOT;
 			}
 			
