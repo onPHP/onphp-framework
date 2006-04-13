@@ -2,6 +2,9 @@
 
 2006-04-12	Konstantin V. Arkhipov
 
+	* meta/builders/ContainerClassBuilder.class.php: removed unneeded
+	method for OneToMany-based containers.
+
 	* core/Form/PrimitiveDate.class.php: complexity detection fixed.
 
 	* core/Form/FormUtils.class.php: forced usage of single import for

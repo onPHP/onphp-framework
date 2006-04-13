@@ -57,10 +57,19 @@ public static function create({$className} \${$propertyName}, \$lazy = false)
 	return new self(\${$propertyName}, \$lazy);
 }
 
+EOT;
+
+			if ($holder->getRealtion()->getId() == MetaRelation::MANY_TO_MANY) {
+				$out .= <<<EOT
+
 public function getHelperTable()
 {
 	return '{$class->getDumbName()}_{$remoteDumbName}';
 }
+EOT;
+			}
+			
+			$out .= <<<EOT
 
 public function getChildIdField()
 {
