@@ -30,7 +30,7 @@
 				'final class '
 				."{$class->getName()}To{$holder->getType()->getClass()}DAO"
 				.' extends '
-				.$holder->getRealtion()->toString().'Linked'
+				.$holder->getRelation()->toString().'Linked'
 				."\n{\n";
 
 			$className = $class->getName();
@@ -59,7 +59,7 @@ public static function create({$className} \${$propertyName}, \$lazy = false)
 
 EOT;
 
-			if ($holder->getRealtion()->getId() == MetaRelation::MANY_TO_MANY) {
+			if ($holder->getRelation()->getId() == MetaRelation::MANY_TO_MANY) {
 				$out .= <<<EOT
 
 public function getHelperTable()

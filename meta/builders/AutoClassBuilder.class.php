@@ -63,7 +63,7 @@
 				if (
 					!$property->getRelation()
 					|| (
-						$property->getRealtion()->getId()
+						$property->getRelation()->getId()
 						== MetaRelation::ONE_TO_ONE
 					)
 				) {

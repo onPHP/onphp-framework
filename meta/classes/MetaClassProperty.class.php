@@ -111,8 +111,7 @@
 			return $this;
 		}
 		
-		// FIXME: strange name
-		public function getRealtion()
+		public function getRelation()
 		{
 			return $this->relation;
 		}
