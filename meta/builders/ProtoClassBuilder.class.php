@@ -80,6 +80,7 @@ EOT;
 							.")\n"
 							.")->\n";
 					} else {
+						// FIXME: handle different relation types here
 						$primitive =
 							"\nPrimitive::identifier('{$primitiveName}')->\n"
 							."of('{$className}')->\n";
