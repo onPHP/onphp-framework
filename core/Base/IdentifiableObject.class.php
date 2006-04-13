@@ -21,11 +21,6 @@
 	{
 		protected $id = null;
 		
-		public static function create()
-		{
-			return new self;
-		}
-		
 		public static function wrap($id)
 		{
 			return self::create()->setId($id);
