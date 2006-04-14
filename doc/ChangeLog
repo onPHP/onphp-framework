@@ -1,5 +1,10 @@
 # $Id$
 
+2006-04-14	Konstantin V. Arkhipov
+
+	* meta/builders/ProtoClassBuilder.class.php: tricky relations handling
+	implemented in proto classes, fixme closed.
+
 2006-04-12	Konstantin V. Arkhipov
 
 	* meta/builders/ContainerClassBuilder.class.php: removed unneeded

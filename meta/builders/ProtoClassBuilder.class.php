@@ -80,21 +80,32 @@ EOT;
 							.")\n"
 							.")->\n";
 					} else {
-						// FIXME: handle different relation types here
-						$primitive =
-							"\nPrimitive::identifier('{$primitiveName}')->\n"
-							."of('{$className}')->\n";
+						if (
+							!$property->getRelation()
+							|| (
+								$property->getRelation()->getId()
+								== MetaRelation::ONE_TO_ONE
+							)
+						) {
+							$primitive =
+								"\nPrimitive::identifier('{$primitiveName}')->\n"
+								."of('{$className}')->\n";
+						} else {
+							$primitive = null;
+						}
 					}
 					
-					if ($property->isRequired())
-						$primitive .= "required()\n";
-					else
-						$primitive .= "optional()\n";
-					
+					if ($primitive) {
+						if ($property->isRequired())
+							$primitive .= "required()\n";
+						else
+							$primitive .= "optional()\n";
+					}
 				} else
 					$primitive = $property->toPrimitive();
 				
-				$prms[] = $primitive;
+				if ($primitive)
+					$prms[] = $primitive;
 			}
 			
 			$out .= implode(")->\nadd(", $prms).");";
