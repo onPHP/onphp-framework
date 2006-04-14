@@ -123,11 +123,6 @@
 			return $this;
 		}
 		
-		public function getRelation()
-		{
-			return $this->relation;
-		}
-		
 		public function toMethods()
 		{
 			return $this->type->toMethods($this->name);
