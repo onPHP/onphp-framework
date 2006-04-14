@@ -46,9 +46,10 @@
 							else
 								$fake = array($name => $value);
 
-							if ($prm instanceof ComplexPrimitive)
-								$prm->importSingle($fake);
-							else
+							if ($prm instanceof ComplexPrimitive) {
+								if ($prm->importSingle($fake) === true)
+									$form->markGood($name);
+							} else
 								$form->importOne($name, $fake);
 						}
 					} catch (ReflectionException $e) {
