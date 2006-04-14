@@ -71,7 +71,7 @@ EOT;
 					}
 					
 					if ($isEnum) {
-						// FIXME: any better way to get enum's list?
+						// TODO: any better way to get enum's list?
 						$primitive =
 							"\nPrimitive::choice('{$primitiveName}')->\n"
 							."setList(\n"
