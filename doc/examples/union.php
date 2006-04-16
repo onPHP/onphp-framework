@@ -9,7 +9,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-/* $Id: main.inc.php 1188 2006-01-21 03:02:20Z voxus $ */
+/* $Id$ */
 
 	require dirname(__FILE__).'/../../global.inc.php.tpl';
 	
