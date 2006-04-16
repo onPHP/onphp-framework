@@ -1,0 +1,162 @@
+<html>
+<head>
+	<title>onPHP: sample application</title>
+	<style type="text/css" media="all">@import "css/style.css";</style>
+<!--# include file="parts/google.html" -->
+</head>
+<body>
+
+<table width="100%" cellpadding="0" cellspacing="0">
+<tr>
+	<td width="100%">
+		<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td colspan="6">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="bottomLine" width="3%"><img src="pix/spacer.gif" width="1" height="47" border="0"></td>
+			<td class="main" rowspan="2" align="center" valign="middle" width="181">
+				<img src="pix/logo.png" width="202" height="93" border="0" alt="onPHP"><br>
+			</td>
+			<td class="bottomLine" width="3%"><img src="pix/spacer.gif" width="1" height="47" border="0"></td>
+			<td class="bottomLine" colspan="2" valign="bottom">
+				<p class="mini">
+					Sample application.
+				</p>
+			</td>
+			<td class="bottomLine" width="3%"><img src="pix/spacer.gif" width="1" height="26" border="0"></td>
+		</tr>
+		<tr>
+			<td class="topLine" width="3%"><img src="pix/spacer.gif" width="1" height="26" border="0"></td>
+			<td class="topLine" width="3%"><img src="pix/spacer.gif" width="1" height="26" border="0"></td>
+			<td class="topLine" colspan="2" valign="top">
+				<table width="100%">
+				<tr>
+					<td class="links">
+						<a href="index.en.html">home</a>
+					</td>
+					<td class="links">
+						<a href="about.en.html">about</a>
+					</td>
+					<td class="links">
+						<span class="current">examples</span>
+					</td>
+					<td class="links">
+						<a href="api.en.html">API documentation</a>
+					</td>
+					<td class="links">
+						<a href="download.en.html">download</a>
+					</td>
+					<td class="links">
+						<a href="forum/">forum</a>
+					</td>
+					<td class="links">
+						<a href="contacts.ru.html">contacts</a>
+					</td>
+				</p>
+				</table>
+			</td>
+			<td class="topLine" width="3%"><img src="pix/spacer.gif" width="1" height="26" border="0"></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td align="center"><p class="language">en / <a href="examples.Forum.ru.html">ru</a></p></td>
+			<td colspan="4">&nbsp;</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td align="center">
+		<table cellpadding="7" cellpadding="7" class="mainLight" width="94%">
+		<tr>
+			<td>
+				<table width="98%" cellpadding="5" cellspacing="5">
+				<tr>
+					<td class="mainLight" width="15%" valign="top">
+						<p class="miniCenter">
+							<a href="examples.OSQL.en.html">OSQL</a><br>
+							<a href="examples.DAOs.en.html">DAOs</a><br>
+							<a href="examples.Form.en.html">Form</a><br>
+							<a href="examples.Cache.en.html">Cache</a><br>
+							<span class="current">Application</span><br>
+							<a href="examples.Meta.en.html">Metaconfiguration</a>
+						</p>
+					</td>
+					<td width="3%">&nbsp;</td>
+					<td width="82%" valign="top">
+<h2>sample Forum application</h2>
+
+<pre class="warning">
+    This example is relevant only for legacy 0.2.x series.
+</pre>
+
+<p>define user's table:</p>
+
+<!--# include file="parts/examples/Forum.UserTable.html" -->
+
+<p>and it's business class:</p>
+
+<!--# include file="parts/examples/Forum.UserClass.html" -->
+
+<p>forum's table:</p>
+
+<!--# include file="parts/examples/Forum.ForumTable.html" -->
+
+<p>forum's class:</p>
+
+<!--# include file="parts/examples/Forum.ForumClass.html" -->
+
+<p>forum's message table finally:</p>
+
+<!--# include file="parts/examples/Forum.MessageTable.html" -->
+
+<p>and it's business class:</p>
+
+<!--# include file="parts/examples/Forum.MessageClass.html" -->
+
+<p>let's simplify our life by DAO-wrapper:</p>
+
+<!--# include file="parts/examples/Forum.Wrapper.html" -->
+
+<p>ok, 1 of 3 DAOs:</p>
+
+<!--# include file="parts/examples/Forum.PersonDAO.html" -->
+
+<p>2 of 3:</p>
+
+<!--# include file="parts/examples/Forum.ForumDAO.html" -->
+
+<p>final and most interesting:</p>
+
+<!--# include file="parts/examples/Forum.MessageDAO.html" -->
+
+<p>current forum threads list with ability to add new threads:</p>
+
+<!--# include file="parts/examples/Forum.ThreadList.html" -->
+
+<p>single thread view with ability to {un,}fold messages and to post replies:</p>
+
+<!--# include file="parts/examples/Forum.ThreadView.html" -->
+
+<p>that's really <b>so</b> simple. you're almost onPHP's guru now, congratulations.</p>
+					</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td>
+		<p class="note">
+			<!-- origin: Andrew Morton (http://www.zipworld.com.au/~akpm/) -->
+			powered by `tar xfj /dev/tty`<br>
+			$Id$
+		</p>
+	</td>
+</tr>
+</table>
+
+</body></html>

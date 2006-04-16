@@ -1,0 +1,47 @@
+<?php
+/***************************************************************************
+ *   Copyright (C) 2006 by Anton E. Lebedevich                             *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+/* $Id$ */
+
+	/**
+	 * @ingroup Utils
+	**/
+	final class DebugUtils extends StaticFactory
+	{
+		public static function el($vr, $prefix = null)
+		{
+			if ($prefix === null) {
+				$trace = debug_backtrace();
+				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
+			}
+			error_log($prefix.": ".var_export($vr, true));
+		}
+		
+		public static function ev($vr, $prefix = null)
+		{
+			if ($prefix === null) {
+				$trace = debug_backtrace();
+				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
+			}
+			echo '<pre>'.$prefix.": ".var_export($vr, true).'</pre>';
+		}
+		
+		public static function eq(Query $query, $prefix = null)
+		{
+			if ($prefix === null) {
+				$trace = debug_backtrace();
+				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
+			}
+			error_log(
+				$prefix.": ".$query->toString()
+			);
+		}
+	}
+?>

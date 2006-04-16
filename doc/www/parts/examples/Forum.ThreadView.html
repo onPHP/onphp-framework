@@ -1,0 +1,142 @@
+<pre>
+    <span class="green">final class </span><span class="blue">threadView </span><span class="green">extends </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FModule%2FFormedModule.class.php&rev=0&sc=0">FormedModule</a>
+    </span><span class="green">{
+        </span><span class="orange">// current forum
+        </span><span class="green">protected </span><span class="blue">$forum          </span><span class="green">= </span><span class="blue">null</span><span class="green">;
+
+        </span><span class="orange">// current viewed message
+        </span><span class="green">protected </span><span class="blue">$message        </span><span class="green">= </span><span class="blue">null</span><span class="green">;
+        
+        </span><span class="orange">// all messages list
+        </span><span class="green">protected </span><span class="blue">$messageList    </span><span class="green">= </span><span class="blue">null</span><span class="green">;
+        
+        public function </span><span class="blue">init</span><span class="green">()
+        {
+            </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">form</span><span class="green">-&gt;
+                </span><span class="blue">add</span><span class="green">(
+                    </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveInteger.class.php&rev=0&sc=0">integer</a></span><span class="green">(</span><span class="red">'id'</span><span class="green">)-&gt;</span><span class="blue">required</span><span class="green">()
+                )-&gt;
+                </span><span class="blue">add</span><span class="green">(
+                    </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span class="green">::</span><span class="blue">boolean</span><span class="green">(</span><span class="red">'post'</span><span class="green">)
+                )-&gt;
+                </span><span class="blue">add</span><span class="green">(
+                    </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span class="green">::</span><span class="blue">boolean</span><span class="green">(</span><span class="red">'unfold'</span><span class="green">)-&gt;</span><span class="blue">setDefault</span><span class="green">(</span><span class="blue">false</span><span class="green">)
+                )-&gt;
+                </span><span class="blue">import</span><span class="green">(</span><span class="blue">$_GET</span><span class="green">);
+            
+            </span><span class="orange">// same logic as in threadList module
+            </span><span class="green">if (</span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">form</span><span class="green">-&gt;</span><span class="blue">getErrors</span><span class="green">())
+                return </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">blowOut</span><span class="green">(</span><span class="red">'forumList'</span><span class="green">);
+
+            </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">form</span><span class="green">-&gt;
+                </span><span class="blue">add</span><span class="green">(
+                    </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span class="green">(</span><span class="red">'name'</span><span class="green">)-&gt;</span><span class="blue">setMax</span><span class="green">(</span><span class="blue">255</span><span class="green">)-&gt;</span><span class="blue">required</span><span class="green">()-&gt;
+                    </span><span class="blue">addImportFilter</span><span class="green">(</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span class="green">::</span><span class="blue">textImport</span><span class="green">())-&gt;
+                    </span><span class="blue">addDisplayFilter</span><span class="green">(</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span class="green">::</span><span class="blue">htmlSpecialChars</span><span class="green">())
+                )-&gt;
+                </span><span class="blue">add</span><span class="green">(
+                    </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitive.class.php&rev=0&sc=0">Primitive</a></span><span class="green">::</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FPrimitiveString.class.php&rev=0&sc=0">string</a></span><span class="green">(</span><span class="red">'content'</span><span class="green">)-&gt;</span><span class="blue">setMax</span><span class="green">(</span><span class="blue">40960</span><span class="green">)-&gt;</span><span class="blue">required</span><span class="green">()-&gt; </span><span class="orange">// ~40Kb
+                    </span><span class="blue">addImportFilter</span><span class="green">(</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span class="green">::</span><span class="blue">textImport</span><span class="green">())-&gt;
+                    </span><span class="blue">addDisplayFilter</span><span class="green">(</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FForm%2FFilter.class.php&rev=0&sc=0">Filter</a></span><span class="green">::</span><span class="blue">htmlSpecialChars</span><span class="green">())
+                )-&gt;
+                </span><span class="blue">importMore</span><span class="green">(</span><span class="blue">$_POST</span><span class="green">);
+            
+            return </span><span class="blue">$this</span><span class="green">;
+        }
+        
+        public function </span><span class="blue">process</span><span class="green">()
+        {
+            </span><span class="blue">$form </span><span class="green">= </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">form</span><span class="green">;
+            
+            try {
+                </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">message </span><span class="green">= </span><span class="blue">DAO</span><span class="green">::</span><span class="blue">message</span><span class="green">()-&gt;</span><span class="blue">getById</span><span class="green">(
+                    </span><span class="blue">$form</span><span class="green">-&gt;</span><span class="blue">getValue</span><span class="green">(</span><span class="red">'id'</span><span class="green">),
+                    </span><span class="orange">// get content, if user requested so
+                    </span><span class="blue">$form</span><span class="green">-&gt;</span><span class="blue">getActualValue</span><span class="green">(</span><span class="red">'unfold'</span><span class="green">)
+                );
+            } catch (</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FExceptions%2FObjectNotFoundException.class.php&rev=0&sc=0">ObjectNotFoundException</a> $e</span><span class="green">) {
+                </span><span class="orange">// there is no such message
+                </span><span class="green">return </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">blowOut</span><span class="green">(</span><span class="red">'forumList'</span><span class="green">);
+            }
+            
+            </span><span class="orange">// POST-trigger
+            </span><span class="green">if (</span><span class="blue">$form</span><span class="green">-&gt;</span><span class="blue">getValue</span><span class="green">(</span><span class="red">'post'</span><span class="green">)) {
+
+                </span><span class="orange">// imaginary class again
+                </span><span class="green">if (!</span><span class="blue">SecurityManager</span><span class="green">::</span><span class="blue">isLoggedIn</span><span class="green">())
+                    return </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">blowOut</span><span class="green">();
+                
+                if (!</span><span class="blue">$form</span><span class="green">-&gt;</span><span class="blue">getErrors</span><span class="green">()) {
+                
+                    </span><span class="orange">// build full message object
+                    </span><span class="blue">$message </span><span class="green">=
+                        </span><span class="blue">Message</span><span class="green">::</span><span class="blue">create</span><span class="green">()-&gt;
+                        </span><span class="blue">setPerson</span><span class="green">(
+                            </span><span class="blue">SecurityManager</span><span class="green">::</span><span class="blue">getUser</span><span class="green">()
+                        )-&gt;
+                        </span><span class="blue">setForumId</span><span class="green">(
+                            </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">message</span><span class="green">-&gt;</span><span class="blue">getForumId</span><span class="green">()
+                        )-&gt;
+                        </span><span class="blue">setParentId</span><span class="green">(
+                            </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">message</span><span class="green">-&gt;</span><span class="blue">getId</span><span class="green">()
+                        )-&gt;
+                        </span><span class="blue">setThreadId</span><span class="green">(
+                            </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">message</span><span class="green">-&gt;</span><span class="blue">getThreadId</span><span class="green">()
+                        )-&gt;
+                        </span><span class="blue">setName</span><span class="green">(
+                            </span><span class="blue">$form</span><span class="green">-&gt;</span><span class="blue">getValue</span><span class="green">(</span><span class="red">'name'</span><span class="green">)
+                        )-&gt;
+                        </span><span class="blue">setContent</span><span class="green">(
+                            </span><span class="blue">$form</span><span class="green">-&gt;</span><span class="blue">getValue</span><span class="green">(</span><span class="red">'content'</span><span class="green">)
+                        );
+                    
+                    </span><span class="orange">// save it
+                    </span><span class="blue">$message </span><span class="green">= </span><span class="blue">DAO</span><span class="green">::</span><span class="blue">message</span><span class="green">()-&gt;</span><span class="blue">add</span><span class="green">(</span><span class="blue">$message</span><span class="green">);
+                    
+                    </span><span class="orange">// finally redirect to it's view
+                    </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FUtils%2FHeaderUtils.class.php&rev=0&sc=0">HeaderUtils</a></span><span class="green">::</span><span class="blue">redirect</span><span class="green">(
+                        </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">setParameters</span><span class="green">(
+                            array(
+                                </span><span class="red">'id' </span><span class="green">=&gt; </span><span class="blue">$message</span><span class="green">-&gt;</span><span class="blue">getId</span><span class="green">()
+                            )
+                        )
+                    );
+
+                    return </span><span class="blue">$this</span><span class="green">;
+                }
+            } else
+                </span><span class="orange">// there was no user input
+                </span><span class="blue">$form</span><span class="green">-&gt;</span><span class="blue">dropAllErrors</span><span class="green">();
+            
+            try {
+                </span><span class="orange">// get current thread message's list
+                </span><span class="blue">$list </span><span class="green">= </span><span class="blue">DAO</span><span class="green">::</span><span class="blue">message</span><span class="green">()-&gt;</span><span class="blue">getList</span><span class="green">(
+                    </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FDAOs%2FObjectQuery.class.php&rev=0&sc=0">ObjectQuery</a></span><span class="green">::</span><span class="blue">create</span><span class="green">()-&gt;
+                    </span><span class="blue">addLogic</span><span class="green">(
+                        </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FLogic%2FExpression.class.php&rev=0&sc=0">Expression</a></span><span class="green">::</span><span class="blue">eq</span><span class="green">(
+                            </span><span class="red">'threadId'</span><span class="green">,
+                            </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">message</span><span class="green">-&gt;</span><span class="blue">getThreadId</span><span class="green">()
+                        )
+                    ),
+                    </span><span class="blue">$form</span><span class="green">-&gt;</span><span class="blue">getActualValue</span><span class="green">(</span><span class="red">'unfold'</span><span class="green">)
+                );
+                
+                </span><span class="orange">// build simple tree to simplify it's displaying
+                </span><span class="green">foreach (</span><span class="blue">$list </span><span class="green">as &amp;</span><span class="blue">$message</span><span class="green">) {
+                    if ((</span><span class="blue">$parentId </span><span class="green">= </span><span class="blue">$message</span><span class="green">-&gt;</span><span class="blue">getParentId</span><span class="green">()) === </span><span class="blue">null</span><span class="green">)
+                        </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">messageList</span><span class="green">[</span><span class="blue">0</span><span class="green">][] = </span><span class="blue">$message</span><span class="green">;
+                    else
+                        </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">messageList</span><span class="green">[</span><span class="blue">$parentId</span><span class="green">][] = </span><span class="blue">$message</span><span class="green">;
+                }
+                        
+            } catch (</span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FExceptions%2FObjectNotFoundException.class.php&rev=0&sc=0">ObjectNotFoundException</a> $e</span><span class="green">) {
+                </span><span class="orange">// such thread does not even exist
+                </span><span class="green">return </span><span class="blue">$this</span><span class="green">-&gt;</span><span class="blue">blowOut</span><span class="green">(</span><span class="red">'forumList'</span><span class="green">);
+            }
+            
+            return </span><span class="blue">$this</span><span class="green">;
+        }
+
+        <span class="orange">/* don't forget to include your favorite template at dump() */</span>
+    }</span>
+</pre>
