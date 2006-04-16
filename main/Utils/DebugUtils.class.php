@@ -24,7 +24,7 @@
 			error_log($prefix.": ".var_export($vr, true));
 		}
 		
-		public static function ev($vr, $prefix = '')
+		public static function ev($vr, $prefix = null)
 		{
 			if ($prefix === null) {
 				$trace = debug_backtrace();
