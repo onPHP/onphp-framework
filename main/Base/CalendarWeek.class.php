@@ -13,7 +13,7 @@
 	/**
 	 * Calendar week representation.
 	 *
-	 * @ingroup Helpers
+	 * @ingroup Calendar
 	**/
 	class CalendarWeek
 	{

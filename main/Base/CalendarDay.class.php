@@ -13,7 +13,7 @@
 	/**
 	 * Calendar day representation.
 	 *
-	 * @ingroup Helpers
+	 * @ingroup Calendar
 	**/
 	class CalendarDay extends Timestamp 
 	{

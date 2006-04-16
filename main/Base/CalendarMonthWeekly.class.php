@@ -13,11 +13,10 @@
 	/**
 	 * Calendar month representation splitted by weeks.
 	 *
-	 * @ingroup Helpers
+	 * @ingroup Calendar
 	**/
 	class CalendarMonthWeekly
 	{
-
 		private $monthRange	= null;
 		private $fullRange	= null;
 		private $fullLength	= null;

@@ -104,6 +104,9 @@
 	 * @defgroup Utils Various accompanying utilities
 	 * @ingroup Main
 	 *
+	 * @defgroup Calendar Calendar representation's helpers
+	 * @ingroup Main
+	 *
 	 * @defgroup Flow Spring-like webflow tools.
 	 * @ingroup Main
 	 *
