@@ -40,9 +40,7 @@
 				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
 			}
 			error_log(
-				$prefix.": ".$query->toString(
-					DBFactory::getDefaultInstance()->getDialect()
-				)
+				$prefix.": ".$query->toString()
 			);
 		}
 	}
