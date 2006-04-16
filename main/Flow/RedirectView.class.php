@@ -29,8 +29,14 @@
 			if ($model && $model->getList()) {
 				$qs = array();
 				
-				foreach ($model->getList() as $key => $val)
+				foreach ($model->getList() as $key => $val) {
+					if (is_object($val) && $val instanceof Stringable)
+						$val = $val->toString();
+					else
+						continue;
+					
 					$qs[] = "{$key}={$val}";
+				}
 			
 				if (strpos($this->url, '?') === false)
 					$first = '?';
