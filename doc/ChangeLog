@@ -2,6 +2,14 @@
 
 2006-04-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* core/Exceptions/MissingElementException.class.php,
+	main/Utils/DebugUtils.class.php,
+	core/Form/StringReplaceFilter.class.php,
+	core/Form/PrimitiveDumper.class.php,
+	core/Form/UrlEncodeFilter.class.php,
+	core/Form/UrlDecodeFilter.class.php,
+	core/Form/RemoveSymbolsFilter.class.php: came from trunk.
+
 	* core/, main/: emails removed from copyright headers, minor fixes
 	synced back from trunk.
 
