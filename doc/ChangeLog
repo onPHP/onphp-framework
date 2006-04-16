@@ -2,6 +2,8 @@
 
 2006-04-16	Konstantin V. Arkhipov
 
+	* 0.4.2 released.
+
 	* core/Form/UrlEncodeFilter.class.php,
 	core/Form/UrlDecodeFilter.class.php,
 	core/Form/StringReplaceFilter.class.php: more wrappers.
