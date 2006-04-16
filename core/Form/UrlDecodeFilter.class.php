@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Filters
 	**/
-	class UrlDecodeFilter extends BaseFilter
+	final class UrlDecodeFilter extends BaseFilter
 	{
 		public function apply($value)
 		{
