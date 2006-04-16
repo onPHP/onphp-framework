@@ -54,5 +54,15 @@
 		{
 			return Singleton::getInstance('HtmlSpecialCharsFilter');
 		}
+		
+		public static function urlencode()
+		{
+			return Singleton::getInstance('UrlEncodeFilter');
+		}
+		
+		public static function urldecode()
+		{
+			return Singleton::getInstance('UrlDecodeFilter');
+		}
 	}
 ?>

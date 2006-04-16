@@ -120,8 +120,9 @@
 		{
 			if (isset($scope[$firstDimension]) && is_array($scope[$firstDimension])) {
 				if (
-					isset($scope[$firstDimension][$secondDimension]) &&
-					!empty($scope[$firstDimension][$secondDimension])
+					isset($scope[$firstDimension][$secondDimension])
+					&& is_array($scope[$firstDimension])
+					&& !empty($scope[$firstDimension][$secondDimension])
 				) {
 					return $scope[$firstDimension][$secondDimension];
 				}
