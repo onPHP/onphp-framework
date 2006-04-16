@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Garmonbozia Research Group                 *
- *   garmonbozia@shadanakar.org                                            *
+ *   Copyright (C) 2004-2006 by Garmonbozia Research Group,                *
+ *   Anton E. Lebedevich, Konstantin V. Arkhipov                           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *

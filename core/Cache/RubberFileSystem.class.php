@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
- *   voxus@onphp.org                                                       *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -95,7 +94,7 @@
 			if (!file_exists($directory)) {
 				try {
 					mkdir($directory);
-				} catch (ObjectNotFoundException $e) {
+				} catch (BaseException $e) {
 					// we're in race
 				}
 			}

@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
- *   voxus@onphp.org                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -36,17 +35,19 @@
 		}
 
 		public static function getCustomInstance(
-			$userName, $passWord, $host, $base = null
+			$userName, $passWord, $host, $base = null, $connector = null
 		)
 		{
-			if (!defined('DB_CLASS'))
-				throw new WrongStateException(
-					'you should define DB_CLASS in your config file'
-				);
+			if (!$connector) {
+				if (!defined('DB_CLASS'))
+					throw new WrongStateException(
+						'you should define DB_CLASS in your config file'
+					);
+				
+				$connector = DB_CLASS;
+			}
 
-			$dbClass = DB_CLASS;
-
-			$db = new $dbClass;
+			$db = new $connector;
 			$db->connect($userName, $passWord, $host, $base);
 
 			if (defined('DEFAULT_ENCODING')) {

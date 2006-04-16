@@ -1,5 +1,10 @@
 # $Id$
 
+2006-04-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/, main/: emails removed from copyright headers, minor fixes
+	synced back from trunk.
+
 2006-04-11	Sergey S. Sergeev <webs.support@gmail.com>
 
 	* main/Containers/StorableContainer.class.php,
