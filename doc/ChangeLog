@@ -1,5 +1,10 @@
 # $Id$
 
+2006-04-16	Konstantin V. Arkhipov
+
+	* core/Form/UrlEncodeFilter.class.php,
+	core/Form/UrlDecodeFilter.class.php: more wrappers.
+
 2006-04-14	Konstantin V. Arkhipov
 
 	* meta/builders/ProtoClassBuilder.class.php: tricky relations handling
