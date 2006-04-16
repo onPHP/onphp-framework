@@ -2,6 +2,8 @@
 
 2006-04-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
+	* 0.2.12 released.
+
 	* core/Exceptions/MissingElementException.class.php,
 	main/Utils/DebugUtils.class.php,
 	core/Form/StringReplaceFilter.class.php,

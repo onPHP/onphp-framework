@@ -31,7 +31,7 @@
 	error_reporting(E_ALL | E_STRICT);
 	set_error_handler('error2Exception', E_ALL);
 	ignore_user_abort(true);
-	define('ONPHP_VERSION', '0.2.11.99');
+	define('ONPHP_VERSION', '0.2.12.99');
     
 	// paths
 	define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
