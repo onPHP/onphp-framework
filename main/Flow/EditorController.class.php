@@ -28,12 +28,10 @@
 		
 		public function __construct(Prototyped $subject)
 		{
-			$this->commandMap = array(
-				'drop'	=> new DropCommand(),
-				'save'	=> new SaveCommand(),
-				'edit'	=> new EditCommand(),
-				'add'	=> new AddCommand()
-			);
+			$this->commandMap['drop'] = new DropCommand();
+			$this->commandMap['save'] = new SaveCommand();
+			$this->commandMap['edit'] = new EditCommand();
+			$this->commandMap['add'] = new AddCommand();
 			
 			$this->subject = $subject;
 			

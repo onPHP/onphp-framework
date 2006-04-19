@@ -1,5 +1,12 @@
 # $Id$
 
+2006-04-20	Konstantin V. Arkhipov
+
+	* main/Flow/EditorController.class.php: do not override child's
+	command map, if any.
+
+	* main/Flow/RedirectView.class.php: query string generation fixed.
+
 2006-04-16	Konstantin V. Arkhipov
 
 	* 0.4.2 released.
