@@ -1,5 +1,12 @@
 # $Id$
 
+2006-04-21	Anton E. Lebedevich
+
+	* main/Utils/DebugUtils.class.php: fixed html output, functions ec
+	and microtime added.
+
+	* main/Utils/XmlRpcClient.class.php: simple wrapper for XML-RPC.
+
 2006-04-20	Konstantin V. Arkhipov
 
 	* main/Flow/EditorController.class.php: do not override child's
