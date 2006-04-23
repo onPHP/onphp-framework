@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @deprecated useless constraint on constructor args
+	 */
 	interface FilterController extends Controller
 	{
 		public function __construct(Controller $controller);
