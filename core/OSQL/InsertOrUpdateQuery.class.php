@@ -36,6 +36,16 @@
 			return $this;
 		}
 		
+		public function drop($field)
+		{
+			if (!array_key_exists($field, $this->fields))
+				throw new MissingElementException("unknown field '{$field}'");
+			
+			unset($this->fields[$field]);
+			
+			return $this;
+		}
+		
 		public function lazySet($field, /* Identifiable */ $object = null)
 		{
 			if ($object instanceof Identifiable)
@@ -57,9 +67,9 @@
 		public function setBoolean($field, $value = false)
 		{
 			if (true === $value)
-				return $this->set($field, 'true');
+				return $this->set($field, true);
 			else
-				return $this->set($field, 'false');
+				return $this->set($field, false);
 		}
 		
 		/**

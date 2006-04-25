@@ -1,5 +1,15 @@
 # $Id$
 
+2006-04-26	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/Utils/TextUtils.class.php, main/Utils/XmlRpcClient.class.php:
+	arrived from trunk.
+
+	* main/Utils/DebugUtils.class.php, core/Form/PrimitiveFile.class.php,
+	core/Form/FormUtils.class.php, 	core/OSQL/InsertOrUpdateQuery.class.php,
+	core/OSQL/UpdateQuery.class.php: synced with trunk, refer for it's own
+	ChangeLog for details.
+
 2006-04-16	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* 0.2.12 released.

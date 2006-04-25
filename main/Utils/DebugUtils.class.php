@@ -30,7 +30,16 @@
 				$trace = debug_backtrace();
 				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
 			}
-			echo '<pre>'.$prefix.": ".var_export($vr, true).'</pre>';
+			echo '<pre>'.$prefix.": ".htmlspecialchars(var_export($vr, true)).'</pre>';
+		}
+
+		public static function ec($vr, $prefix = null)
+		{
+			if ($prefix === null) {
+				$trace = debug_backtrace();
+				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
+			}
+			echo "\n".$prefix.": ".var_export($vr, true)."\n";
 		}
 		
 		public static function eq(Query $query, $prefix = null)
@@ -40,10 +49,14 @@
 				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
 			}
 			error_log(
-				$prefix.": ".$query->toString(
-					DBFactory::getDefaultInstance()->getDialect()
-				)
+				$prefix.": ".$query->toString()
 			);
+		}
+		
+		public static function microtime()
+		{
+			list($usec, $sec) = explode(" ", microtime());
+			return ((float)$usec + (float)$sec);		
 		}
 	}
 ?>
