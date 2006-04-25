@@ -19,7 +19,7 @@
 		{
 			static $units = array('', 'k' , 'm', 't', 'p');
 			
-			if($size >= 1024 && $order < 4)
+			if ($size >= 1024 && $order < 4)
 				return self::friendlyFileSize($size / 1024, $order + 1);
 			elseif (isset($units[$order]))
 				return round($size, 2).$units[$order];
