@@ -42,10 +42,13 @@
 							// PrimitiveDate
 							elseif ($value instanceof Stringable)
 								$fake = array($name => $value->toString());
+							// PrimitiveBoolean
+							elseif (is_bool($value) && $value === false) 
+								$fake = array();
 							// everything else
 							else
 								$fake = array($name => $value);
-
+							
 							if ($prm instanceof ComplexPrimitive) {
 								if ($prm->importSingle($fake) === true)
 									$form->markGood($name);
@@ -83,7 +86,7 @@
 						) {
 							$value = $value->getId();
 						}
-						
+
 						$object->$setter($value);
 					}
 				} catch (ReflectionException $e) {

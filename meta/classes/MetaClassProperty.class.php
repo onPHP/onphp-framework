@@ -237,7 +237,7 @@ EOT;
 				} elseif ($this->type instanceof BooleanType) {
 					// FIXME: it's plain ugly
 					if (defined('DB_CLASS') && DB_CLASS == 'MySQL')
-						$value = "\$array[\$prefix.'{$this->dumbName}']";
+						$value = "\$array[\$prefix.'{$this->dumbName}'] ? true : false";
 					else
 						$value = "\$array[\$prefix.'{$this->dumbName}'][0] == 't'";
 				} else
