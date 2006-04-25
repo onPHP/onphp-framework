@@ -1,5 +1,9 @@
 # $Id$
 
+2006-04-25 Anton E. Lebedevich
+
+	* main/Utils/TextUtils.class.php: added friendlyFileSize() method
+
 2006-04-21	Anton E. Lebedevich
 
 	* main/Utils/DebugUtils.class.php: fixed html output, functions ec
