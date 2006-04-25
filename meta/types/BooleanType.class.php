@@ -37,9 +37,17 @@
 		
 		public function toGetter($name)
 		{
-			$methodName = 'is'.ucfirst($name);
+			$camelName = ucfirst($name);
+			
+			$methodName = "is{$camelName}";
+			$compatName = "get{$camelName}";
 			
 			$method = <<<EOT
+
+public function {$compatName}()
+{
+	return \$this->{$name};
+}
 
 public function {$methodName}()
 {
