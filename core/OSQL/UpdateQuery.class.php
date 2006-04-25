@@ -42,6 +42,10 @@
 						.')';
 				elseif (is_null($val))
 					$sets[] = $dialect->quoteField($var).' = NULL';
+				elseif (true === $val)
+					$sets[] = $dialect->quoteField($var).' = TRUE';
+				elseif (false === $val)
+					$sets[] = $dialect->quoteField($var).' = FALSE';
 				else
 					$sets[] =
 						$dialect->quoteField($var)
