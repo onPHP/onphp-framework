@@ -43,6 +43,9 @@ PHP:
 				.'bar'
 				.'blah';
 
+			// try to avoid casts
+			$castedValue = (int) $rawVariable;
+
 			return $this;
 		}
 
