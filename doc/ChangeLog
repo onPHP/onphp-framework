@@ -1,5 +1,9 @@
 # $Id$
 
+2006-04-30	Konstantin V. Arkhipov
+
+	* 0.4.3 released.
+
 2006-04-29	Konstantin V. Arkhipov
 
 	* core/Form/IdentifiablePrimitive.class.php: basis for enumeration and
