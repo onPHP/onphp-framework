@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,20 +11,21 @@
 /* $Id$ */
 
 	/**
-	 * @ingroup Utils
+	 * @ingroup Primitives
 	**/
-	final class TextUtils extends StaticFactory
+	abstract class IdentifiablePrimitive extends PrimitiveInteger
 	{
-		public static function friendlyFileSize($size, $order = 0)
+		protected $className = null;
+		
+		abstract public function of($className);
+		
+		public function setValue($value)
 		{
-			static $units = array('', 'k' , 'm', 't', 'p');
+			$className = $this->className;
 			
-			if ($size >= 1024 && $order < 4)
-				return self::friendlyFileSize($size / 1024, $order + 1);
-			elseif (isset($units[$order]))
-				return round($size, 2).$units[$order];
-				
-			return $size;
+			Assert::isTrue($value instanceof $className);
+			
+			return parent::setValue($value);
 		}
 	}
 ?>

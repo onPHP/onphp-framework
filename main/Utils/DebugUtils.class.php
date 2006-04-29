@@ -21,6 +21,7 @@
 				$trace = debug_backtrace();
 				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
 			}
+			
 			error_log($prefix.": ".var_export($vr, true));
 		}
 		
@@ -30,6 +31,7 @@
 				$trace = debug_backtrace();
 				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
 			}
+			
 			echo '<pre>'.$prefix.": ".htmlspecialchars(var_export($vr, true)).'</pre>';
 		}
 
@@ -39,6 +41,7 @@
 				$trace = debug_backtrace();
 				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
 			}
+			
 			echo "\n".$prefix.": ".var_export($vr, true)."\n";
 		}
 		
@@ -48,6 +51,7 @@
 				$trace = debug_backtrace();
 				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
 			}
+			
 			error_log(
 				$prefix.": ".$query->toString()
 			);
@@ -55,8 +59,8 @@
 		
 		public static function microtime()
 		{
-			list($usec, $sec) = explode(" ", microtime());
-			return ((float)$usec + (float)$sec);		
+			list($usec, $sec) = explode(" ", microtime(), 2);
+			return ((float) $usec + (float) $sec);		
 		}
 	}
 ?>

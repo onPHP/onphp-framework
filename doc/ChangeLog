@@ -1,5 +1,15 @@
 # $Id$
 
+2006-04-29	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/Form/IdentifiablePrimitive.class.php,
+	core/Form/PrimitiveEnumeration.class.php,
+	core/Form/ExplodedPrimitive.class.php: arrived from trunk.
+
+	* main/Utils/TextUtils.class.php, main/Utils/DebugUtils.class.php,
+	core/Form/PrimitiveIdentifier.class.php,
+	core/Form/Primitive.class.php: synced with trunk.
+
 2006-04-26	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/Utils/TextUtils.class.php, main/Utils/XmlRpcClient.class.php:

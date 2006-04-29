@@ -31,6 +31,11 @@
 		{
 			return new PrimitiveIdentifier($name);
 		}
+
+		public static function enumeration($name)
+		{
+			return new PrimitiveEnumeration($name);
+		}
 		
 		public static function date($name)
 		{
@@ -100,6 +105,11 @@
 		public static function host($name)
 		{
 			return new PrimitiveHost($name);
+		}
+		
+		public static function exploded($name)
+		{
+			return new ExplodedPrimitive($name);
 		}
 	}
 ?>
