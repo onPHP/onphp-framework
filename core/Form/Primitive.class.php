@@ -106,5 +106,10 @@
 		{
 			return new PrimitiveHost($name);
 		}
+		
+		public static function exploded($name)
+		{
+			return new ExplodedPrimitive($name);
+		}
 	}
 ?>
