@@ -31,6 +31,11 @@
 		{
 			return new PrimitiveIdentifier($name);
 		}
+
+		public static function enumeration($name)
+		{
+			return new PrimitiveEnumeration($name);
+		}
 		
 		public static function date($name)
 		{
