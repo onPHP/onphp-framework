@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Ivan Y. Khvostishkov,                           *
- *   Konstantin V. Arkhipov
+ *   Copyright (C) 2006 by Ivan Y. Khvostishkov, Konstantin V. Arkhipov    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -14,36 +13,28 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveEnumeration extends PrimitiveInteger
+	final class PrimitiveEnumeration extends IdentifiablePrimitive
 	{
-		private $class = null;
-		
-		public function setValue($value)
-		{
-			$className = $this->class->getName();
-			
-			Assert::isTrue($value instanceof $className);
-			
-			return parent::setValue($value);
-		}
-		
-		public function of($class)
+		public function of($className)
 		{
 			Assert::isTrue(
-				class_exists($class, true),
-				"knows nothing about '{$class}' class"
+				class_exists($className, true),
+				"knows nothing about '{$className}' class"
 			);
 			
-			// TODO: assert class named $class is instance of Enumeration
+			Assert::isTrue(
+				is_subclass_of($className, 'Enumeration'),
+				"non-enumeration child given"
+			);
 			
-			$this->class = $class;
+			$this->className = $className;
 			
 			return $this;
 		}
 		
 		public function import(&$scope)
 		{
-			if (!$this->class)
+			if (!$this->className)
 				throw new WrongStateException(
 					"no class defined for PrimitiveEnumeration '{$this->name}'"
 				);
@@ -52,8 +43,7 @@
 				
 			if ($result === true) {
 				try {
-					$class = $this->class;
-					$this->value = new $class($this->value);
+					$this->value = new $this->className($this->value);
 				} catch (MissingElementException $e) {
 					return false;
 				}

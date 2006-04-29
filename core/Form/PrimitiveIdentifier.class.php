@@ -13,46 +13,35 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveIdentifier extends PrimitiveInteger
+	final class PrimitiveIdentifier extends IdentifiablePrimitive
 	{
-		private $class = null;
-		
-		public function setValue($value)
-		{
-			$className = $this->class->getName();
-			
-			Assert::isTrue($value instanceof $className);
-			
-			return parent::setValue($value);
-		}
-		
-		public function of($class)
+		public function of($className)
 		{
 			Assert::isTrue(
-				class_exists($class, true),
-				"knows nothing about '{$class}' class"
+				class_exists($className, true),
+				"knows nothing about '{$className}' class"
 			);
 			
-			$class = new ReflectionClass($class);
+			$class = new ReflectionClass($className);
 			
 			Assert::isTrue(
 				$class->implementsInterface('DAOConnected'),
 				"class '{$class->getName()}' should implement DAOConnected interface"
 			);
 			
-			$this->class = $class;
+			$this->className = $className;
 			
 			return $this;
 		}
 		
 		public function dao()
 		{
-			return call_user_func(array($this->class->getName(), 'dao'));
+			return call_user_func(array($this->className, 'dao'));
 		}
 		
 		public function import(&$scope)
 		{
-			if (!$this->class)
+			if (!$this->className)
 				throw new WrongStateException(
 					"no class defined for PrimitiveIdentifier '{$this->name}'"
 				);

@@ -1,5 +1,10 @@
 # $Id$
 
+2006-04-29	Konstantin V. Arkhipov
+
+	* core/Form/IdentifiablePrimitive.class.php: basis for enumeration and
+	identifier primitives.
+
 2006-04-29	Ivan Y. Khvostishkov
 
 	* core/Form/Primitive.class.php: added support for enumeration
