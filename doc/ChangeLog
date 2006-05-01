@@ -1,5 +1,10 @@
 # $Id$
 
+2006-05-01	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/Base/Stringable.class.php: arrived from trunk, since it's
+	referenced by FormUtils.
+
 2006-04-30	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* 0.2.13 released.
