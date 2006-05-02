@@ -1,5 +1,15 @@
 # $Id$
 
+2006-05-02	Sergey S. Sergeev
+
+	* core/Form/Primitive.class.php: deleted deprecated methods.
+
+	* core/Base/IdentifiableObject.class.php: added create() forgotten
+	method.
+
+	* core/Form/Filter.class.php: added replaceSymbols(), removeSymbols()
+	filters.
+
 2006-04-30	Konstantin V. Arkhipov
 
 	* 0.4.3 released.
