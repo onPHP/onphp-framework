@@ -43,5 +43,10 @@
 			
 			return $this;
 		}
+		
+		private static function create()
+		{
+			return new self;
+		}
 	}
 ?>

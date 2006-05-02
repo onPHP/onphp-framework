@@ -82,31 +82,6 @@
 			return new PrimitiveImage($name);
 		}
 		
-		public static function email($name)
-		{
-			return new PrimitiveEmail($name);
-		}
-		
-		public static function password($name)
-		{
-			return new PrimitivePassword($name);
-		}
-		
-		public static function nick($name)
-		{
-			return new PrimitiveNick($name);
-		}
-		
-		public static function url($name)
-		{
-			return new PrimitiveUrl($name);
-		}
-		
-		public static function host($name)
-		{
-			return new PrimitiveHost($name);
-		}
-		
 		public static function exploded($name)
 		{
 			return new ExplodedPrimitive($name);

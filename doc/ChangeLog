@@ -1,5 +1,10 @@
 # $Id$
 
+2006-05-02	Sergey S. Sergeev	<webs.support@gmail.com>
+
+	* core/Form/Filter.class.php, core/Form/Primitive.class.php,
+	core/Base/IdentifiableObject.class.php: synced with trunk.
+
 2006-05-01	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/Base/Stringable.class.php: arrived from trunk, since it's

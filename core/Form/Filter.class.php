@@ -64,5 +64,15 @@
 		{
 			return Singleton::getInstance('UrlDecodeFilter');
 		}
+		
+		public static function replaceSymbols($search = null, $replace = null)
+		{
+			return StringReplaceFilter::create($search, $replace);
+		}
+		
+		public static function removeSymbols()
+		{
+			return Singleton::getInstance('RemoveSymbolsFilter');
+		}
 	}
 ?>
