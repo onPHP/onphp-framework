@@ -1,5 +1,10 @@
 # $Id$
 
+2006-05-02	Konstantin V. Arkhipov
+
+	* trunk/core/Base/IdentifiableObject.class.php: removed create()
+	method, since it's conflicting with Enumeration's one.
+
 2006-05-02	Sergey S. Sergeev
 
 	* core/Form/Primitive.class.php: deleted deprecated methods.

@@ -23,7 +23,9 @@
 		
 		public static function wrap($id)
 		{
-			return self::create()->setId($id);
+			$io = new self;
+			
+			return $io->setId($id);
 		}
 		
 		final public function getId()
@@ -42,11 +44,6 @@
 			$this->id = $id;
 			
 			return $this;
-		}
-		
-		private static function create()
-		{
-			return new self;
 		}
 	}
 ?>
