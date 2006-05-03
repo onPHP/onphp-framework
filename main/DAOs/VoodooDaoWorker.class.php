@@ -13,6 +13,9 @@
 	/**
 	 * Transparent though quite obscure and greedy DAO worker.
 	 * 
+	 * @warning Do not ever think about using it on production systems, unless
+	 * you're fully understand every code line here.
+	 * 
 	 * @see CommonDaoWorker for manual-caching one.
 	 * @see SmartDaoWorker for less obscure, but locking-based worker.
 	 * 
