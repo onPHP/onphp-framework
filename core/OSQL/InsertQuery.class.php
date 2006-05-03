@@ -40,6 +40,10 @@
 				
 				if (is_null($val))
 					$values[] = 'NULL';
+				elseif (true === $val)
+					$values[] = 'TRUE';
+				elseif (false === $val)
+					$values[] = 'FALSE';
 				else
 					$values[] = $dialect->quoteValue($val);
 			}
