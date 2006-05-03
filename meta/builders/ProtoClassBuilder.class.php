@@ -71,14 +71,9 @@ EOT;
 					}
 					
 					if ($isEnum) {
-						// TODO: any better way to get enum's list?
 						$primitive =
-							"\nPrimitive::choice('{$primitiveName}')->\n"
-							."setList(\n"
-							."ArrayUtils::convertObjectList(\n"
-							."{$className}::getList(new {$className}(1))\n"
-							.")\n"
-							.")->\n";
+							"\nPrimitive::enumeration('{$primitiveName}')->\n"
+							."of('{$className}')->\n";
 					} else {
 						if (
 							!$property->getRelation()
