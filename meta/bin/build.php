@@ -67,12 +67,14 @@ Things not supported by design:
 		if (!is_dir(ONPHP_META_DAO_DIR))
 			mkdir(ONPHP_META_DAO_DIR, 0755, true);
 		
-		if (!is_dir(ONPHP_META_AUTO_DIR)) {
+		if (!is_dir(ONPHP_META_AUTO_DIR))
 			mkdir(ONPHP_META_AUTO_DIR, 0755, true);
-			
+		
+		if (!is_dir(ONPHP_META_AUTO_BUSINESS_DIR))
 			mkdir(ONPHP_META_AUTO_BUSINESS_DIR, 0755);
+			
+		if (!is_dir(ONPHP_META_AUTO_PROTO_DIR))
 			mkdir(ONPHP_META_AUTO_PROTO_DIR, 0755);
-		}
 		
 		if (!is_dir(ONPHP_META_AUTO_DAO_DIR))
 			mkdir(ONPHP_META_AUTO_DAO_DIR, 0755);

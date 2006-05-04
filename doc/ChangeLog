@@ -1,5 +1,9 @@
 # $Id$
 
+2006-05-04	Anton E. Lebedevich
+
+	* main/Utils/Mail.class.php: added
+
 2006-05-03	Konstantin V. Arkhipov
 
 	* meta/builders/ProtoClassBuilder.class.php: PrimitiveEnumeration
