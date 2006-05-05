@@ -240,7 +240,7 @@
 				} catch (ObjectNotFoundException $e) {/* we don't care */}
 
 			} elseif ($this->loaded != self::LOADED)
-				throw WrongStateException('container in a bad state');
+				throw new WrongStateException('container in a bad state');
 
 			$this->loaded = self::LOADED;
 
@@ -264,7 +264,7 @@
 			if ($object !== null && $object->getId())
 				$this->saved[$object->getId()] = $object;
 			else
-				throw WrongArgumentException('saved object must have an id');
+				throw new WrongArgumentException('saved object must have an id');
 
 			return $this;
 		}

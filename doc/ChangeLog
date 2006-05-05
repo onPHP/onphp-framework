@@ -1,5 +1,10 @@
 # $Id$
 
+2006-05-05	Sergey S. Sergeev
+
+	* main/Containers/StorableContainer.class.php: bugfixed call to undefined
+	function WrongStateException().
+
 2006-05-04	Anton E. Lebedevich
 
 	* main/Utils/Mail.class.php: added
