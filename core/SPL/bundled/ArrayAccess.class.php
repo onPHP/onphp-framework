@@ -29,7 +29,7 @@
 		/**
 		 * @param $offset to retrieve
 		 * @return value at given offset
-		*/
+		**/
 		public function offsetGet($offset);
 		
 		/// @param $offset to delete
