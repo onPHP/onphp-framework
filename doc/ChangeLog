@@ -2,9 +2,9 @@
 
 2006-05-08	Anton E. Lebedevich
 
-	* main/Utils/Mail.class.php: encoding interface simplified
+	* main/Utils/Mail.class.php: encoding interface simplified.
 
-	* main/Flow/SimplePhpView.class.php: toString function added
+	* main/Flow/SimplePhpView.class.php: toString function added.
 
 2006-05-05	Sergey S. Sergeev
 
@@ -13,7 +13,7 @@
 
 2006-05-04	Anton E. Lebedevich
 
-	* main/Utils/Mail.class.php: added
+	* main/Utils/Mail.class.php: added.
 
 2006-05-03	Konstantin V. Arkhipov
 
