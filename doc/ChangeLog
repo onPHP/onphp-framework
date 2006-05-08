@@ -1,5 +1,11 @@
 # $Id$
 
+2006-05-08	Anton E. Lebedevich
+
+	* main/Utils/Mail.class.php: encoding interface simplified
+
+	* main/Flow/SimplePhpView.class.php: toString function added
+
 2006-05-05	Sergey S. Sergeev
 
 	* main/Containers/StorableContainer.class.php: bugfixed call to undefined

@@ -35,5 +35,12 @@
 			
 			require $this->templatePath;
 		}
+		
+		public function toString($model = null) 
+		{
+			ob_start();
+			$this->render($model);
+			return ob_get_clean();
+		}
 	}
 ?>
