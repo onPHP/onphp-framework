@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class SimplePhpView implements View 
+	class SimplePhpView implements View, Stringable
 	{
 		private $templatePath		= null;
 		private $partViewResolver	= null;
