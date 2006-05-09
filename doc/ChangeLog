@@ -6,7 +6,7 @@
 
 	* main/Flow/SimplePhpView.class.php: toString function added.
 	
-	* core/Form/Form.class.php: getTextualErrorFor function added
+	* core/Form/Form.class.php: getTextualErrorFor function added.
 
 2006-05-05	Sergey S. Sergeev
 
