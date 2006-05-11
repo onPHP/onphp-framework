@@ -67,7 +67,7 @@
 				);
 			}
 
-			$headers = '';
+			$headers = null;
 			if (!empty($this->from)) {
 				$headers .= "From: ".$this->from."\n";
 				$headers .= "Return-Path: ".$this->from."\n";
