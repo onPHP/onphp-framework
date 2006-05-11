@@ -13,11 +13,9 @@
 	/**
 	 * @ingroup Flow
 	**/
-	final class RedirectToView implements View, Stringable
+	final class RedirectToView extends RedirectView
 	{
-		const PREFIX = 'redirect:';
-		
-		private $name = null;
+		private $prefix	= null;
 		
 		public function __construct($controllerName)
 		{
@@ -26,30 +24,47 @@
 				&& $controllerName instanceof Controller
 			);
 			
-			$this->name = $controllerName;
+			$this->url = $controllerName;
 		}
 		
-		public function getName()
+		public function getPrefix()
 		{
-			return $this->name;
+			return $this->prefix;
 		}
 		
-		public function setName($name)
+		public function setPrefix($prefix)
 		{
-			$this->name = $name;
+			$this->prefix = $prefix;
 			
 			return $this;
 		}
 		
-		public function toString()
+		public function getName()
 		{
-			return self::PREFIX.$this->name;
+			return $this->url;
 		}
 		
-		// to satisfy View interface
+		public function setName($name)
+		{
+			$this->url = $name;
+			
+			return $this;
+		}
+		
 		public function render($model = null)
 		{
-			return $this->toString();
+			// saving
+			$url = $this->url;
+			$this->url = $this->prefix.$this->url;
+			
+			// processing
+			$out = parent::render($model);
+			
+			// restoring
+			$this->url = $url;
+			
+			// returning!
+			return $out;
 		}
 	}
 ?>

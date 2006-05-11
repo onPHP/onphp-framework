@@ -48,13 +48,7 @@
 			if ($view == 'error')
 				$view = new RedirectView(PATH_WEB_ADMIN.'?area=main');
 			elseif ($view instanceof RedirectToView)
-				$view = new RedirectView(PATH_WEB.'?area='.$view->getName());
-			// compatibility with <=onPHP-0.4.3
-			elseif (strpos($view, 'redirect:') !== false) {
-				list(, $area) = explode(':', $view, 2);
-				
-				$view = new RedirectView(PATH_WEB_ADMIN.'?area='.$area);
-			}
+				$view->setPrefix(PATH_WEB_ADMIN);
 		}
 		
 		if (!$view instanceof View) {

@@ -15,7 +15,7 @@
 	**/
 	final class RedirectView implements View
 	{
-		private $url = null;
+		protected $url = null;
 		
 		public function __construct($url)
 		{
