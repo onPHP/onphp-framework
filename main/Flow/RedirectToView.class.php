@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	final class RedirectToView implements Stringable
+	final class RedirectToView implements View, Stringable
 	{
 		const PREFIX = 'redirect:';
 		
@@ -44,6 +44,12 @@
 		public function toString()
 		{
 			return self::PREFIX.$this->name;
+		}
+		
+		// to satisfy View interface
+		public function render($model = null)
+		{
+			return $this->toString();
 		}
 	}
 ?>
