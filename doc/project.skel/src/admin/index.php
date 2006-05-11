@@ -42,16 +42,14 @@
 		$view = $modelAndView->getView();
 		$model = $modelAndView->getModel();
 		
+		$prefix = PATH_WEB_ADMIN.'?area=';
+		
 		if (!$view)
 			$view = $controllerName;
-		elseif (is_string($view)) {
-			$prefix = PATH_WEB_ADMIN.'?area=main';
-			
-			if ($view == 'error')
-				$view = new RedirectView($prefix);
-			elseif ($view instanceof RedirectToView)
-				$view->setPrefix($prefix);
-		}
+		elseif (is_string($view) && $view == 'error')
+			$view = new RedirectView($prefix);
+		elseif ($view instanceof RedirectToView)
+			$view->setPrefix($prefix);
 		
 		if (!$view instanceof View) {
 			$viewName = $view;

@@ -40,7 +40,7 @@
 					$qs[] = "{$key}={$val}";
 				}
 			
-				if (strpos($this->url, '?') === false)
+				if (strpos($this->getUrl(), '?') === false)
 					$first = '?';
 				else
 					$first = '&';
@@ -49,7 +49,12 @@
 					$postfix = $first.implode('&', $qs);
 			}
 			
-			HeaderUtils::redirectRaw($this->url.$postfix);
+			HeaderUtils::redirectRaw($this->getUrl().$postfix);
+		}
+		
+		protected function getUrl()
+		{
+			return $this->url;
 		}
 	}
 ?>

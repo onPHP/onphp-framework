@@ -21,7 +21,6 @@
 		{
 			Assert::isTrue(
 				class_exists($controllerName, true)
-				&& $controllerName instanceof Controller
 			);
 			
 			$this->url = $controllerName;
@@ -51,22 +50,9 @@
 			return $this;
 		}
 		
-		public function render($model = null)
+		protected function getUrl()
 		{
-			// saving
-			$url = $this->url;
-			
-			// overriding
-			$this->url = $this->prefix.$this->url;
-			
-			// processing
-			$out = parent::render($model);
-			
-			// restoring
-			$this->url = $url;
-			
-			// returning!
-			return $out;
+			return $this->prefix.$this->url;
 		}
 	}
 ?>
