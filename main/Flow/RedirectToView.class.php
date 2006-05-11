@@ -55,7 +55,9 @@
 		{
 			// saving
 			$url = $this->url;
-			$this->url = $this->prefix.$this->url;
+			
+			// overriding
+			$this->url = $this->prefix.$this->url.$this->suffix;
 			
 			// processing
 			$out = parent::render($model);

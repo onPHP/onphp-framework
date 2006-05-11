@@ -40,10 +40,12 @@
 		if (!$view)
 			$view = $controllerName;
 		elseif (is_string($view)) {
+			$prefix = PATH_WEB.'?area=main';
+			
 			if ($view == 'error')
-				$view = new RedirectView(PATH_WEB.'?area=main');
+				$view = new RedirectView($prefix);
 			elseif ($view instanceof RedirectToView)
-				$view->setPrefix(PATH_WEB_ADMIN);
+				$view->setPrefix($prefix);
 		}
 		
 		if (!$view instanceof View) {

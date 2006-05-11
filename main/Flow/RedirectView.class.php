@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	final class RedirectView implements View
+	class RedirectView implements View
 	{
 		protected $url = null;
 		
