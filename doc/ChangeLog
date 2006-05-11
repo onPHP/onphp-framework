@@ -1,5 +1,10 @@
 # $Id$
 
+2006-05-11	Konstantin V. Arkhipov
+
+	* main/Flow/RedirectToView.class.php: helper to avoid constant
+	string's abuse.
+
 2006-05-08	Anton E. Lebedevich
 
 	* main/Utils/Mail.class.php: encoding interface simplified.
