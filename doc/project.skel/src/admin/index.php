@@ -47,6 +47,8 @@
 		elseif (is_string($view)) {
 			if ($view == 'error')
 				$view = new RedirectView(PATH_WEB_ADMIN.'?area=main');
+			elseif ($view instanceof RedirectToView)
+				$view = new RedirectView(PATH_WEB.'?area='.$view->getName());
 			elseif (strpos($view, 'redirect:') !== false) {
 				list(, $area) = explode(':', $view, 2);
 				
