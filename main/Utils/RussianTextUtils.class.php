@@ -23,8 +23,8 @@
 	
 		private static $orderedSuffixes = array(
 			self::MALE 		=> array('ый', 'ой', 'ий'),
-			self::FEMALE 	=> array('ая', 'ья', ''),
-			self::NEUTRAL 	=> array('ое', 'ье', '')
+			self::FEMALE 	=> array('ая', 'ья', null),
+			self::NEUTRAL 	=> array('ое', 'ье', null)
 		);
 	
 		private static $orederedDigits = array(
@@ -52,7 +52,7 @@
 		 * Returns suffix for word
 		 * 
 		 * @param	$number		integer variable
-		 * @param	$suffixes	array of suffixes as array('ца', 'цы', '')
+		 * @param	$suffixes	array of suffixes as array('ца', 'цы', null)
 		**/
 		public static function getSuffix($number, $suffixes)
 		{
