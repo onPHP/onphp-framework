@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Anton E. Lebedevich                           *
+ *   Copyright (C) 2004-2006 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,15 +10,15 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class MailException extends BaseException {};
-	class MailNotSentException extends MailException {};
+	class MailException extends BaseException {/*_*/};
+	class MailNotSentException extends MailException {/*_*/};
 	
 	class Mail
 	{
-		private $to				= null;
-		private $text			= null;
-		private $subject		= null;
-		private $from			= null;
+		private $to			= null;
+		private $text		= null;
+		private $subject	= null;
+		private $from		= null;
 		private $encoding	= null;
 		
 		public static function create()
@@ -33,7 +33,7 @@
 				
 			$siteEncoding = mb_get_info('internal_encoding');
 			
-			if (! $this->encoding 
+			if (!$this->encoding 
 				|| $this->encoding == $siteEncoding
 			) {
 				$encoding = $siteEncoding;
