@@ -93,6 +93,16 @@
 			return $list;
 		}
 		
+		public function getTextualErrorFor($name)
+		{
+			if (isset($this->violated[$name], $this->labels[$name][$this->violated[$name]]))
+				return $this->labels[$name][$this->violated[$name]];
+			elseif (isset($this->errors[$name], $this->labels[$name][$this->errors[$name]]))
+				return $this->labels[$name][$this->errors[$name]];
+			else
+				return null;
+		}
+		
 		public function addWrongLabel($primitiveName, $label)
 		{
 			return $this->addErrorLabel($primitiveName, Form::WRONG, $label);

@@ -52,6 +52,7 @@
 				try {
 					$this->value = $this->dao()->getById($this->value);
 				} catch (ObjectNotFoundException $e) {
+					$this->value = null;
 					return false;
 				}
 				

@@ -1,6 +1,16 @@
 # $Id$
 
-2006-05-02  Sergey S. Sergeev   <webs.support@gmail.com>
+2006-05-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/Utils/RussianTextUtils.class.php,
+	main/Base/CalendarMonthWeekly.class.php,
+	core/Form/PrimitiveIdentifier.class.php, core/Form/Form.class.php:
+	synced with trunk.
+
+	* main/Utils/Mail.class.php: arrived from trunk.
+
+
+2006-05-02	Sergey S. Sergeev   <webs.support@gmail.com>
 
 	* main/Containers/StorableContainer.class.php: synced with trunk.
 
