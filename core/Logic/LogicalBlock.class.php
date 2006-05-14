@@ -58,11 +58,11 @@
 			$args = &$this->args;
 			$size = count($args);
 			
-			$out = true;
 			
 			switch ($this->logic) {
 				case Expression::LOGIC_AND:
 					
+					$out = true;
 					for ($i = 0; $i < $size; ++$i)
 						if (isset($args[$i + 1]))
 							$out =
@@ -76,6 +76,7 @@
 			
 				case Expression::LOGIC_OR:
 					
+					$out = false;
 					for ($i = 0; $i < $size; ++$i)
 						if (isset($args[$i + 1]))
 							$out =
