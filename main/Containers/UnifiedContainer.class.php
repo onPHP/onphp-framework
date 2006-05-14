@@ -75,7 +75,7 @@
 		abstract protected function getParentIdField();
 
 		public function __construct(
-			DAOConnected $parent, GenericDAO $dao, $lazy = true
+			Identifiable $parent, GenericDAO $dao, $lazy = true
 		)
 		{
 			Assert::isBoolean($lazy);

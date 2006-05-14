@@ -18,7 +18,7 @@
 		abstract public function getHelperTable();
 
 		public function __construct(
-			DAOConnected $parent, GenericDAO $dao, $lazy = true
+			Identifiable $parent, GenericDAO $dao, $lazy = true
 		)
 		{
 			parent::__construct($parent, $dao, $lazy);
