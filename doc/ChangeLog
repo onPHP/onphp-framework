@@ -1,5 +1,13 @@
 # $Id$
 
+2006-05-15	Konstantin V. Arkhipov
+
+	* core/Form/ListedPrimitive.class.php: list and enumeration's
+	primitives grouped a bit.
+
+	* core/Base/Enumeration.class.php: quite hacky method added, which
+	can help to instantiate arbitrary Enumeration.
+
 2006-05-11	Konstantin V. Arkhipov
 
 	* main/Flow/RedirectToView.class.php: helper to avoid constant

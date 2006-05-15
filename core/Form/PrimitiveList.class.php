@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class PrimitiveList extends BasePrimitive
+	class PrimitiveList extends BasePrimitive implements ListedPrimitive
 	{
 		protected $list = array();
 		
@@ -43,6 +43,7 @@
 				&& isset($this->list[$scope[$this->name]])
 			) {
 				$this->value = $scope[$this->name];
+				
 				return true;
 			} else
 				return false;

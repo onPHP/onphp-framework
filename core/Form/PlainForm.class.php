@@ -108,8 +108,14 @@
 		public function getChoiceValue($name)
 		{
 			$prm	= $this->get($name);
+			
+			Assert::isTrue($prm instanceof ListedPrimitive);
+			
 			$list	= $prm->getList();
 			$value	= $prm->getValue();
+			
+			if ($value instanceof Identifiable)
+				$value = $value->getId();
 
 			if ($value !== null)
 				return $list[$value];
@@ -120,9 +126,19 @@
 		public function getActualChoiceValue($name)
 		{
 			$prm	= $this->get($name);
+			
+			Assert::isTrue($prm instanceof ListedPrimitive);
+			
 			$list	= $prm->getList();
 			$value	= $prm->getActualValue();
 			$default= $prm->getDefault();
+			
+			if ($value instanceof Identifiable) {
+				$value = $value->getId();
+				
+				if ($default)
+					$default = $default->getId();
+			}
 			
 			if ($value !== null && isset($list[$value]))
 				return $list[$value];
