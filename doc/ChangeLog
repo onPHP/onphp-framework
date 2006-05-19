@@ -1,5 +1,9 @@
 # $Id$
 
+2006-05-18	Anton E. Lebedevich
+	* main/Utils/RussianTextUtils.class.php: selectCaseForNumber added
+	to replace getSuffix.
+
 2006-05-15	Konstantin V. Arkhipov
 
 	* core/Form/ListedPrimitive.class.php: list and enumeration's
