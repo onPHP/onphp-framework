@@ -13,6 +13,9 @@
 	class MailException extends BaseException {/*_*/};
 	class MailNotSentException extends MailException {/*_*/};
 	
+	/**
+	 * @ingroup Utils
+	**/
 	class Mail
 	{
 		private $to			= null;
