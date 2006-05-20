@@ -1,0 +1,163 @@
+<html>
+<head>
+	<title>onPHP: приложения пример</title>
+	<link rel="stylesheet" href="css/style.css">
+<!--# include file="parts/google.html" -->
+</head>
+<body>
+
+<table width="100%" cellpadding="0" cellspacing="0">
+<tr>
+	<td width="100%">
+		<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td colspan="6">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="bottomLine" width="3%"><img src="pix/spacer.gif" width="1" height="47" border="0"></td>
+			<td class="main" rowspan="2" align="center" valign="middle" width="181">
+				<img src="pix/logo.png" width="202" height="93" border="0" alt="onPHP"><br>
+			</td>
+			<td class="bottomLine" width="3%"><img src="pix/spacer.gif" width="1" height="47" border="0"></td>
+			<td class="bottomLine" colspan="2" valign="bottom">
+				<p class="mini">
+					Приложения пример.
+				</p>
+			</td>
+			<td class="bottomLine" width="3%"><img src="pix/spacer.gif" width="1" height="26" border="0"></td>
+		</tr>
+		<tr>
+			<td class="topLine" width="3%"><img src="pix/spacer.gif" width="1" height="26" border="0"></td>
+			<td class="topLine" width="3%"><img src="pix/spacer.gif" width="1" height="26" border="0"></td>
+			<td class="topLine" colspan="2" valign="top">
+				<table width="100%">
+				<tr>
+					<td class="links">
+						<a href="index.ru.html">главная</a>
+					</td>
+					<td class="links">
+						<a href="about.ru.html">о проекте</a>
+					</td>
+					<td class="links">
+						<span class="current">примеры</span>
+					</td>
+					<td class="links">
+						<a href="api.ru.html">API документация</a>
+					</td>
+					<td class="links">
+						<a href="download.ru.html">скачать</a>
+					</td>
+					<td class="links">
+						<a href="forum/">форум</a>
+					</td>
+					<td class="links">
+						<a href="contacts.ru.html">контакты</a>
+					</td>
+				</p>
+				</table>
+			</td>
+			<td class="topLine" width="3%"><img src="pix/spacer.gif" width="1" height="26" border="0"></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td align="center"><p class="language"><a href="examples.Forum.en.html">en</a> / ru</p></td>
+			<td colspan="4">&nbsp;</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td align="center">
+		<table cellpadding="7" cellpadding="7" class="mainLight" width="94%">
+		<tr>
+			<td>
+				<table width="98%" cellpadding="5" cellspacing="5">
+				<tr>
+					<td class="mainLight" width="15%" valign="top">
+						<p class="miniCenter">
+							<a href="examples.OSQL.ru.html">OSQL</a><br>
+							<a href="examples.DAOs.ru.html">DAOs</a><br>
+							<a href="examples.Form.ru.html">Form</a><br>
+							<a href="examples.Cache.ru.html">Cache</a><br>
+							<span class="current">Приложение</span><br>
+							<a href="examples.Meta.ru.html">Метаконфигурация</a>
+						</p>
+					</td>
+					<td width="3%">&nbsp;</td>
+					<td width="82%" valign="top">
+<h2>демонстрационное приложение</h2>
+
+<pre class="warning">
+    Данный пример актуален только для 0.2.x версий.
+</pre>
+
+<p>таблица пользователей:</p>
+
+<!--# include file="parts/examples/Forum.UserTable.html" -->
+
+<p>бизнес-класс пользователя:</p>
+
+<!--# include file="parts/examples/Forum.UserClass.html" -->
+
+<p>таблица форумов:</p>
+
+<!--# include file="parts/examples/Forum.ForumTable.html" -->
+
+<p>бизнес-класс форума:</p>
+
+<!--# include file="parts/examples/Forum.ForumClass.html" -->
+
+<p>таблица сообщений:</p>
+
+<!--# include file="parts/examples/Forum.MessageTable.html" -->
+
+<p>бизнес-класс сообщения:</p>
+
+<!--# include file="parts/examples/Forum.MessageClass.html" -->
+
+<p>небольшая обёртка для облегчения жизни:</p>
+
+<!--# include file="parts/examples/Forum.Wrapper.html" -->
+
+<p>поехали, первый из трёх DAO-классов:</p>
+
+<!--# include file="parts/examples/Forum.PersonDAO.html" -->
+
+<p>второй из трёх:</p>
+
+<!--# include file="parts/examples/Forum.ForumDAO.html" -->
+
+<p>третий и самый интересный:</p>
+
+<!--# include file="parts/examples/Forum.MessageDAO.html" -->
+
+<p>просмотр веток сообщений:</p>
+
+<!--# include file="parts/examples/Forum.ThreadList.html" -->
+
+<p>просмотр отдельной ветки с возможностью &laquo;скрывать&raquo; и &laquo;раскрывать&raquo; её:</p>
+
+<!--# include file="parts/examples/Forum.ThreadView.html" -->
+
+
+<p>это все действительно <strong>так</strong> просто.</p>
+					</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td>
+		<p class="note">
+			<!-- origin: Andrew Morton (http://www.zipworld.com.au/~akpm/) -->
+			powered by `tar xfj /dev/tty`<br>
+			$Id$
+		</p>
+	</td>
+</tr>
+</table>
+
+</body></html>

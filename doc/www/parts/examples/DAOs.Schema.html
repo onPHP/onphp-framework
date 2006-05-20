@@ -1,0 +1,11 @@
+<pre>
+    <b>create sequence</b> employer_id;
+
+    <b>create table</b> employer(
+        id         <span class="red">bigint</span> default nextval(<span class="red">'employer_id'</span>) <b>primary key</b>,
+        name       <span class="red">varchar</span>(<span class="blue">255</span>) <b>not null</b>,
+        birth_date <span class="red">timestamp</span> <b>not null</b>,
+        created    <span class="red">timestamp</span> <b>not null default</b>(now()),
+        modified   <span class="red">timestamp</span> <b>not null default</b>(now())
+    );
+</pre>
