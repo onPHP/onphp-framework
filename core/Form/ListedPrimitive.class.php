@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,29 +11,11 @@
 /* $Id$ */
 
 	/**
-	 * @ingroup Containers
+	 * @ingroup Primitives
 	**/
-	abstract class ManyToManyLinked extends UnifiedContainer
+	interface ListedPrimitive
 	{
-		abstract public function getHelperTable();
-
-		public function __construct(
-			Identifiable $parent, GenericDAO $dao, $lazy = true
-		)
-		{
-			parent::__construct($parent, $dao, $lazy);
-			
-			$worker =
-				$lazy
-					? 'ManyToManyLinkedLazy'
-					: 'ManyToManyLinkedFull';
-			
-			$this->worker = new $worker($this);
-		}
-
-		public function getParentTableIdField()
-		{
-			return 'id';
-		}
+		/// @return plain array of possible primitive choices
+		public function getList();
 	}
 ?>

@@ -19,6 +19,7 @@
 		const FEMALE	= 1;
 		const NEUTRAL	= 2;
 	
+		// TODO: deprecated by selectCaseForNumber
 		private static $secondDecade = array(11, 12, 13, 14, 15, 16, 17, 18, 19);
 	
 		private static $orderedSuffixes = array(
@@ -51,6 +52,7 @@
 		/**
 		 * Returns suffix for word
 		 * 
+		 * @deprecated by selectCaseForNumber
 		 * @param	$number		integer variable
 		 * @param	$suffixes	array of suffixes as array('ца', 'цы', null)
 		**/
@@ -78,6 +80,34 @@
 				
 				default:
 					return $suffixes[2];
+			}
+		}
+		
+		/**
+		 * Select russian case for number
+		 * for example:
+		 * 	1 результат
+		 * 	2 результата
+		 * 	5 результатов
+		 * @param $number integer
+		 * @param $cases words to select from array('результат', 'результата', 'результатов')
+		 */
+		public static function selectCaseForNumber($number, $cases)
+		{
+			if (($number % 10) == 1 && ($number % 100) != 11) {
+				
+				return $cases[0];
+				
+			} elseif (
+				($number % 10) > 1
+				&& ($number % 10) < 5
+				&& ($number < 10 || $number > 20)
+			) {
+				
+				return $cases[1];
+				
+			} else {
+				return $cases[2];
 			}
 		}
 

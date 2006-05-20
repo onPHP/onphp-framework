@@ -101,6 +101,7 @@
 
 		public static function sendNotCachedHeader()
 		{
+			header('Cache-control: no-cache');
 			header(
 				'Expires: '
 				.date('D, d M Y H:i:s', date('U') - self::$cacheLifeTime)

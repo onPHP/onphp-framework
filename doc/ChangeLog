@@ -1,5 +1,20 @@
 # $Id$
 
+2006-05-20	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/Utils/HeaderUtils.class.php,
+	main/Utils/RussianTextUtils.class.php, main/Utils/Mail.class.php,
+	main/Containers/UnifiedContainer.class.php,
+	main/Containers/OneToManyLinked.class.php,
+	main/Containers/ManyToManyLinked.class.php,
+	core/Form/PlainForm.class.php,
+	core/Form/PrimitiveEnumeration.class.php,
+	core/Form/PrimitiveList.class.php, core/Base/Enumeration.class.php,
+	core/Logic/LogicalBlock.class.php: synced with trunk.
+
+	* branches/0.2/core/Form/ListedPrimitive.class.php: arrived from
+	trunk.
+
 2006-05-12	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/Utils/RussianTextUtils.class.php,

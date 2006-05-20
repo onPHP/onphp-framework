@@ -39,6 +39,15 @@
 			return $enum->getObjectList();
 		}
 		
+		/**
+		 * must return any existent ID
+		 * 1 should be ok for most enumerations
+		**/
+		public static function getAnyId()
+		{
+			return 1;
+		}
+		
 		public function getObjectList()
 		{
 			$list = array();
