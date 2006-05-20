@@ -1,6 +1,7 @@
 # $Id$
 
 2006-05-18	Anton E. Lebedevich
+
 	* main/Utils/RussianTextUtils.class.php: selectCaseForNumber added
 	to replace getSuffix.
 
