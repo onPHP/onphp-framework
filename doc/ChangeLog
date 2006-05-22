@@ -2,6 +2,9 @@
 
 2006-05-22	Konstantin V. Arkhipov
 
+	* main/Flow/PartViewer.class.php, main/Flow/PhpViewResolver.class.php:
+	ability to check existence added.
+
 	* main/DAOs/FileSystemDaoWorker.class.php: file system incarnation of
 	VoodooDaoWorker, quite simple, but transparent and lockless too.
 

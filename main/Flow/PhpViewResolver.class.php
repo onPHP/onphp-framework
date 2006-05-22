@@ -38,6 +38,11 @@
 				);
 		}
 		
+		public function viewExists($viewName)
+		{
+			return is_readable($this->prefix.$viewName.$this->postfix);
+		}
+		
 		public function getPrefix()
 		{
 			return $this->prefix;

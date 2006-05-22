@@ -36,5 +36,10 @@
 			
 			return $this;
 		}
+		
+		public function partExists($partName)
+		{
+			return $this->viewResolver->viewExists($partName);
+		}
 	}
 ?>
