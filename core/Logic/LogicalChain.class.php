@@ -85,9 +85,7 @@
 						.$this->chain[$i]->toDialectString($dialect)
 						.' ';
 
-				$out[strlen($out) - 1] = null; // trailing space
-				
-				return $out.')';
+				return rtrim($out).')'; // trailing space, if any
 			}
 			
 			return null;

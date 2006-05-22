@@ -32,6 +32,16 @@
 			return $this;
 		}
 		
+		/**
+		 * Bogus spelling of method defined below.
+		 *
+		 * @deprecated by primitiveExists($name)
+		**/
+		public function primitiveExist($name)
+		{
+			return $this->primitiveExists($name);
+		}
+		
 		public function primitiveExists($name)
 		{
 			return
