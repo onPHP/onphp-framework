@@ -34,6 +34,7 @@
 	 *    - TransparentDaoWorker:
 	 *     - SmartDaoWorker;
 	 *     - VoodooDaoWorker;
+	 *      - FileSystemDaoWorker;
 	 * - IdentifiableObject collections:
 	 *  - StorableContainer;
 	 *  - UnifiedContainer;

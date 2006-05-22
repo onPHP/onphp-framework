@@ -88,6 +88,7 @@ RECURSIVE              = YES
 EXCLUDE                = ../test/ \
 			 ../incubator/ \
 			 ../core/SPL/bundled/ \
+			 project.skel/ \
 			 examples/ \
 			 spl/
 EXCLUDE_SYMLINKS       = NO
