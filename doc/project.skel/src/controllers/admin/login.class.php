@@ -42,7 +42,9 @@
 				
 				Session::assign(Administrator::LABEL, $admin);
 
-				return ModelAndView::create()->setView('redirect:main');
+				return
+					ModelAndView::create()->
+					setView(new RedirectToView('main'));
 			}
 			
 			return ModelAndView::create()->setView('login');
