@@ -1,5 +1,10 @@
 # $Id$
 
+2006-05-22	Konstantin V. Arkhipov
+
+	* main/DAOs/FileSystemDaoWorker.class.php: file system incarnation of
+	VoodooDaoWorker, quite simple, but transparent and lockless too.
+
 2006-05-20	Konstantin V. Arkhipov
 
 	* 0.4.4 released.

@@ -32,9 +32,12 @@
 	set_error_handler('error2Exception', E_ALL | E_STRICT);
 	ignore_user_abort(true);
 	define('ONPHP_VERSION', '0.4.4.99');
-    
+
+	// overridable constant, don't forget for trailing slash
+	if (!defined('ONPHP_TEMP_PATH'))
+		define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
+
 	// paths
-	define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
 	define('ONPHP_ROOT_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
 	define('ONPHP_CORE_PATH', ONPHP_ROOT_PATH.'core'.DIRECTORY_SEPARATOR);
 	define('ONPHP_MAIN_PATH', ONPHP_ROOT_PATH.'main'.DIRECTORY_SEPARATOR);
