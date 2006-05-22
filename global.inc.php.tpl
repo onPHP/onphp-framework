@@ -12,12 +12,12 @@
 /* $Id$ */
 
 	// sample system-wide configuration file
-    
+	
 	function error2Exception($code, $string, $file, $line)
 	{
 		throw new BaseException($string, $code, $file, $line);
 	}
-
+	
 	// classes autoload magic
 	function __autoload($classname)
 	{
@@ -26,7 +26,7 @@
 		// contain everything (classes/modules) everytime...
 		require $classname . EXT_CLASS;
 	}
-    
+	
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
 	set_error_handler('error2Exception', E_ALL | E_STRICT);
@@ -34,6 +34,7 @@
 	define('ONPHP_VERSION', '0.4.4.99');
 
 	// overridable constant, don't forget for trailing slash
+	// also you may consider using /dev/shm/ for cache purposes
 	if (!defined('ONPHP_TEMP_PATH'))
 		define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
 
@@ -83,7 +84,7 @@
 		//
 		// .ONPHP_CORE_PATH.'SPL'.DIRECTORY_SEPARATOR.'bundled'.PATH_SEPARATOR
 	);
-    
+	
 	// file extensions
 	define('EXT_CLASS', '.class.php');
 	define('EXT_TPL', '.tpl.html');
