@@ -18,14 +18,15 @@
 	 * 
 	 * @see CommonDaoWorker for manual-caching one.
 	 * @see SmartDaoWorker for less obscure, but locking-based worker.
+	 * @see FileSystemDaoWorker for filesystem based child.
 	 * 
 	 * @ingroup DAOs
 	**/
-	final class VoodooDaoWorker extends TransparentDaoWorker
+	class VoodooDaoWorker extends TransparentDaoWorker
 	{
 		const SEGMENT_SIZE = 2097152; // 2 ^ 21
 		
-		private $classKey = null;
+		protected $classKey = null;
 		
 		public function __construct(GenericDAO $dao)
 		{
@@ -108,7 +109,7 @@
 			}
 		}
 		
-		private function touch($key)
+		protected function touch($key)
 		{
 			try {
 				$shm = shm_attach($this->classKey, self::SEGMENT_SIZE, 0600);
@@ -128,7 +129,7 @@
 			return $result;
 		}
 		
-		private function unlink($key)
+		protected function unlink($key)
 		{
 			try {
 				$shm = shm_attach($this->classKey, self::SEGMENT_SIZE, 0600);
@@ -149,7 +150,7 @@
 			/* NOTREACHED */
 		}
 		
-		private function ping($key)
+		protected function ping($key)
 		{
 			try {
 				$shm = shm_attach($this->classKey, self::SEGMENT_SIZE, 0600);

@@ -12,12 +12,12 @@
 /* $Id$ */
 
 	// sample system-wide configuration file
-    
+	
 	function error2Exception($code, $string, $file, $line)
 	{
 		throw new BaseException($string, $code, $file, $line);
 	}
-
+	
 	// classes autoload magic
 	function __autoload($classname)
 	{
@@ -26,15 +26,19 @@
 		// contain everything (classes/modules) everytime...
 		require $classname . EXT_CLASS;
 	}
-    
+	
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
 	set_error_handler('error2Exception', E_ALL);
 	ignore_user_abort(true);
 	define('ONPHP_VERSION', '0.2.13.99');
-    
+	
+	// overridable constant, don't forget for trailing slash
+	// also you may consider using /dev/shm/ for cache purposes
+	if (!defined('ONPHP_TEMP_PATH'))
+		define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
+	
 	// paths
-	define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
 	define('ONPHP_ROOT_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
 	define('ONPHP_CORE_PATH', ONPHP_ROOT_PATH.'core'.DIRECTORY_SEPARATOR);
 	define('ONPHP_MAIN_PATH', ONPHP_ROOT_PATH.'main'.DIRECTORY_SEPARATOR);
@@ -47,7 +51,7 @@
 			.'classes'
 			.DIRECTORY_SEPARATOR
 	);
-
+	
 	set_include_path(
 		// current path
 		get_include_path().PATH_SEPARATOR
@@ -91,7 +95,7 @@
 		.ONPHP_INCUBATOR_PATH.'Form'				.PATH_SEPARATOR
 		**/
 	);
-    
+	
 	// file extensions
 	define('EXT_CLASS', '.class.php');
 	define('EXT_TPL', '.tpl.html');

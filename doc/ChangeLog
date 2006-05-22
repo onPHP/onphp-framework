@@ -1,5 +1,9 @@
 # $Id$
 
+2006-05-22	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/DAOs/FileSystemDaoWorker.class.php: arrived from trunk.
+
 2006-05-20	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/Utils/HeaderUtils.class.php,
