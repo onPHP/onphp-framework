@@ -21,9 +21,27 @@
 			
 			$type = $class->getType();
 			
-			if ($type && $type->getId() == MetaClassType::CLASS_ABSTRACT) {
-				$abstract = 'abstract ';
-				$notes = 'nothing';
+			if ($type) {
+				switch ($type->getId()) {
+					
+					case MetaClassType::CLASS_ABSTRACT:
+					
+						$abstract = 'abstract ';
+						$notes = 'nothing here yet';
+						
+						break;
+					
+					case MetaClassType::CLASS_FINAL:
+					
+						$abstract = 'final ';
+						$notes = 'last chance for customization';
+						
+						break;
+					
+					default:
+						
+						throw new WrongStateException('unknown class type');
+				}
 			} else {
 				$abstract = null;
 				$notes = 'your brilliant stuff goes here';
