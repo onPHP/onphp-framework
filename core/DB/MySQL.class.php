@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Sveta Smirnova                             *
+ *   Copyright (C) 2004-2006 by Sveta Smirnova                             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -45,7 +45,7 @@
 
 		public function setEncoding($encoding)
 		{
-			return mysql_query("SET CHARACTER SET '{$encoding}'", $this->link);
+			return mysql_query("SET NAMES '{$encoding}'", $this->link);
 		}
 
 		public function connect(
