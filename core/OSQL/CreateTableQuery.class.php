@@ -37,9 +37,10 @@
 			foreach ($order as $column) {
 				
 				if ($column->isAutoincrement()) {
+
+					$prepend = null;
 					
-					$append =
-						$dialect->autoincrementize($column, $prepend = null);
+					$append = $dialect->autoincrementize($column, $prepend);
 					
 					if ($append)
 						$append = ' '.$append;
