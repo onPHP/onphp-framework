@@ -254,14 +254,26 @@ EOT;
 						.")";
 					
 				} else {
+					if ($this->type instanceof ObjectType) {
+						
+						$out = <<<EOT
+if (isset(\$array[\$prefix.'{$this->dumbName}'])) {
+	\${$varName}->set{$method}(
+		new {$this->type->getClass()}(\$array[\$prefix.'{$this->dumbName}'])
+	);
+}
+
+EOT;
+					} else {
 					
-					$out = <<<EOT
+						$out = <<<EOT
 set{$method}(
 	isset(\$array[\$prefix.'{$this->dumbName}'])
 		? {$value}
 		: null
 )
 EOT;
+					}
 				}
 			}
 			
@@ -338,22 +350,26 @@ EOT;
 					$get = 'get';
 				}
 				
-				$out = "{$set}('{$this->dumbName}', ";
-				
 				if ($this->type instanceof ObjectType) {
 					if ($this->type instanceof RangeType)
-						$out .= "\${$varName}->get{$method}()";
+						$out .=
+							"{$set}('{$this->dumbName}', "
+							."\${$varName}->get{$method}()";
 					elseif ($this->required)
 						$out .=
-							"\${$varName}->get{$method}()->toString()";
+							"{$set}('{$this->dumbName}', "
+							."\${$varName}->get{$method}()->toString()";
 					else
 						$out .=
-							"\n"
+							"{$set}(\n'{$this->dumbName}', "
+							."\n"
 							."\${$varName}->get{$method}()\n"
 							."? \${$varName}->get{$method}()->toString()\n"
 							.": null\n";
 				} else {
-					$out .=	"\${$varName}->{$get}{$method}()";
+					$out .=
+						"{$set}('{$this->dumbName}', "
+						."\${$varName}->{$get}{$method}()";
 				}
 				
 				$out .= ')';

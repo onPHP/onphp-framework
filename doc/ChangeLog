@@ -1,5 +1,12 @@
 # $Id$
 
+2006-05-25	Konstantin V. Arkhipov
+
+	* meta/classes/MetaClassProperty.class.php,
+	meta/builders/BaseBuilder.class.php: formatting issues with
+	non-required generic types fixed, also fixed bug with illegal handling
+	non-required generic object types in DAO' setters.
+
 2006-05-24	Konstantin V. Arkhipov
 
 	* meta/builders/DaoBuilder.class.php: handling of final	classes

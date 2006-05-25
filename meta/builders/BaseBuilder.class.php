@@ -43,7 +43,10 @@
 					$setters[] = $property->toDaoField($className, $setterIndent);
 					
 					if (
-						!$property->getType()->isGeneric()
+						(
+							!$property->getType()->isGeneric()
+							|| $property->getType() instanceof ObjectType
+						)
 						&& !$property->isRequired()
 					)
 						$standaloneFillers[] =
