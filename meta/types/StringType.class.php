@@ -25,9 +25,12 @@
 			return true;
 		}
 		
-		public function toColumnType()
+		public function toColumnType($length = null)
 		{
-			return 'DataType::create(DataType::VARCHAR)';
+			return
+				$length
+					? 'DataType::create(DataType::VARCHAR)'
+					: 'DataType::create(DataType::TEXT)';
 		}
 		
 		public function toPrimitive()

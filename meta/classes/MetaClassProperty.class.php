@@ -399,7 +399,7 @@ EOT;
 			$column = <<<EOT
 addColumn(
 	DBColumn::create(
-		{$this->type->toColumnType()}
+		{$this->type->toColumnType($this->size)}
 EOT;
 
 			if ($this->required) {
