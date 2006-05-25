@@ -430,10 +430,18 @@ setAutoincrement(true)
 EOT;
 			}
 			
+			if ($this->type->hasDefault()) {
+				$column .= <<<EOT
+->
+setDefault({$this->type->getDefault()})
+EOT;
+			}
+			
 			$column .= <<<EOT
 
 )
 EOT;
+			
 			return $column;
 		}
 		

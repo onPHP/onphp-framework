@@ -15,8 +15,28 @@
 	**/
 	class BooleanType extends BasePropertyType
 	{
+		public function setDefault($default)
+		{
+			static $boolean = array('true' => true, 'false' => false);
+			
+			if (!isset($boolean[$default]))
+				throw new WrongArgumentException(
+					"strange default value given - '{$default}'"
+				);
+
+			$this->default = $boolean[$default];
+			
+			return $this;
+		}
+		
 		public function getDeclaration()
 		{
+			if ($this->hasDefault())
+				return
+					$this->default
+						? 'true'
+						: 'false';
+			
 			return 'false';
 		}
 		

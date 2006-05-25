@@ -20,6 +20,8 @@
 		abstract public function toColumnType();
 		abstract public function toPrimitive();
 		
+		protected $default = null;
+		
 		public function isGeneric()
 		{
 			return true;
@@ -30,6 +32,23 @@
 			return
 				$this->toGetter($name)
 				.$this->toSetter($name);
+		}
+		
+		public function hasDefault()
+		{
+			return ($this->default !== null);
+		}
+		
+		public function getDefault()
+		{
+			return $this->default;
+		}
+		
+		public function setDefault($default)
+		{
+			throw new UnsupportedMethodException(
+				'only generic non-object types can have default values atm'
+			);
 		}
 		
 		public function toGetter($name)

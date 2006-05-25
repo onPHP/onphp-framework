@@ -91,10 +91,15 @@ EOT;
 					}
 					
 					if ($primitive) {
+						if ($property->getType()->hasDefault())
+							$primitive .=
+								"setDefault({$property->getType()->getDefault()})->\n";
+						
 						if ($property->isRequired())
 							$primitive .= "required()\n";
 						else
 							$primitive .= "optional()\n";
+						
 					}
 				} else
 					$primitive = $property->toPrimitive();

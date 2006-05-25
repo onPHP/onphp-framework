@@ -15,8 +15,23 @@
 	**/
 	class StringType extends BasePropertyType
 	{
+		public function setDefault($default)
+		{
+			Assert::isString(
+				$default,
+				"strange default value given - '{$default}'"
+			);
+
+			$this->default = $default;
+			
+			return $this;
+		}
+		
 		public function getDeclaration()
 		{
+			if ($this->hasDefault())
+				return $this->default;
+			
 			return 'null';
 		}
 		

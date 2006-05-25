@@ -81,6 +81,12 @@
 						}
 					}
 					
+					if (isset($xmlProperty['default']))
+						// will be correctly autocasted further down the code
+						$property->getType()->setDefault(
+							(string) $xmlProperty['default']
+						);
+					
 					$class->addProperty($property);
 				}
 				

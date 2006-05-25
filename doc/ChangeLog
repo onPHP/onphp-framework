@@ -2,6 +2,9 @@
 
 2006-05-25	Konstantin V. Arkhipov
 
+	* meta/, core/DB/: default values for generic non-object types
+	implemented.
+
 	* meta/types/StringType.class.php,
 	meta/classes/MetaClassProperty.class.php: correct column type guessing
 	for meta's StringType.
