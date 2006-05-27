@@ -20,7 +20,7 @@
 
 2006-05-24	Konstantin V. Arkhipov
 
-	* meta/builders/DaoBuilder.class.php: handling of final	classes
+	* meta/builders/DaoBuilder.class.php: handling of final classes
 	implemented.
 
 2006-05-22	Konstantin V. Arkhipov
