@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Patterns
 	**/
-	final class SpookedClassPattern implements GenerationPattern
+	final class SpookedClassPattern extends Singleton implements GenerationPattern
 	{
 		public function build(MetaClass $class)
 		{

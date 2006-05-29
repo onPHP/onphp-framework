@@ -20,5 +20,10 @@
 		
 		/// indicates DAO availability for classes which uses this pattern
 		public function daoExists();
+		
+		/// forcing patterns to be singleton's
+		public static function getInstance(
+			$class = null, $args = null /* , ... */
+		);
 	}
 ?>
