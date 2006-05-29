@@ -37,6 +37,9 @@
 			.ONPHP_META_BUSINESS_DIR
 		);
 		
+		// provide fake spooked class
+		class Spook extends IdentifiableObject {/*_*/}
+		
 		$test->addTestClass(new DAOTest());
 	}
 	

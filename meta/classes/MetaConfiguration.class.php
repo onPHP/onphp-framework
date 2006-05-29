@@ -58,8 +58,20 @@
 					if ((string) $xmlProperty['required'] == 'true')
 						$property->required();
 					
-					if ((string) $xmlProperty['identifier'] == 'true')
+					if ((string) $xmlProperty['identifier'] == 'true') {
 						$property->setIdentifier(true);
+						
+						// we don't need anything but
+						// only identifier for spooked classes
+						if (
+							$class->getType()->getId()
+							== MetaClassType::CLASS_SPOOKED
+						) {
+							$class->addProperty($property);
+							
+							break;
+						}
+					}
 					
 					if (isset($xmlProperty['size']))
 						$property->setSize((int) $xmlProperty['size']);
@@ -94,6 +106,9 @@
 					$this->guessPattern((string) $xmlClass->pattern['name'])
 				);
 				
+				// and finally..
+				$this->checkSanity($class);
+				
 				$this->classes[$class->getName()] = $class;
 			}
 			
@@ -105,7 +120,7 @@
 							instanceof DictionaryClassPattern
 					)
 						throw new UnsupportedMethodException(
-							'DictionaryClass pattern doesn '
+							'DictionaryClass pattern does '
 							.'not support inheritance'
 						);
 					
@@ -176,6 +191,29 @@
 			throw new MissingElementException(
 				"unknown pattern '{$name}'"
 			);
+		}
+		
+		private function checkSanity(MetaClass $class)
+		{
+			Assert::isTrue(
+				$class->getIdentifier() !== null,
+				
+				'no one can live without identifier'
+			);
+			
+			if ($class->getType()->getId() == MetaClassType::CLASS_SPOOKED) {
+				Assert::isFalse(
+					count($class->getProperties()) > 1,
+					'spooked classes must have only identifier'
+				);
+			
+				Assert::isTrue(
+					$class->getPattern() instanceof SpookedClassPattern,
+					'spooked classes must use SpookedClass pattern only'
+				);
+			}
+			
+			return $this;
 		}
 	}
 ?>

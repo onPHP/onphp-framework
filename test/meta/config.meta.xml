@@ -5,6 +5,14 @@
 
 <metaconfiguration><classes>
 
+	<class name="Spook" type="spooked">
+		<properties>
+			<property name="id" type="Integer" required="true" identifier="true" />
+		</properties>
+		
+		<pattern name="SpookedClass" />
+	</class>
+
 	<class name="TestCity" type="final">
 		<properties>
 			
@@ -28,6 +36,8 @@
 			<property name="registered" type="Timestamp" required="true" />
 			
 			<property name="city" type="TestCity" relation="OneToOne" required="true" />
+			
+			<property name="spook" type="Spook" relation="OneToOne" required="false" />
 			
 		</properties>
 		

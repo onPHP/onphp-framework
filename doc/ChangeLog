@@ -1,5 +1,10 @@
 # $Id$
 
+2006-05-29	Konstantin V. Arkhipov
+
+	* meta/: spooked classes implemented, which is never generated and
+	used only for referencing inside one meta-config.
+
 2006-05-27	Konstantin V. Arkhipov
 
 	* 0.4.5 released.

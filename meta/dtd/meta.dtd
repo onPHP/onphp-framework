@@ -5,7 +5,7 @@
 <!ELEMENT class (implements*, properties*, pattern)>
 <!ATTLIST class
 		name		ID #REQUIRED
-		type		(final|abstract) #IMPLIED
+		type		(final|abstract|spooked) #IMPLIED
 		extends		CDATA #IMPLIED
 >
 
@@ -29,5 +29,5 @@
 
 <!ELEMENT pattern EMPTY>
 <!ATTLIST pattern
-		name		(DictionaryClass|AbstractClass|StraightMapping|EnumerationClass) #REQUIRED
+		name		(DictionaryClass|AbstractClass|StraightMapping|EnumerationClass|SpookedClass) #REQUIRED
 >
