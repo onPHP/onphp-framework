@@ -21,7 +21,7 @@
 		/// indicates DAO availability for classes which uses this pattern
 		public function daoExists();
 		
-		/// forcing patterns to be singleton's
+		/// forcing patterns to be singletones
 		public static function getInstance(
 			$class = null, $args = null /* , ... */
 		);
