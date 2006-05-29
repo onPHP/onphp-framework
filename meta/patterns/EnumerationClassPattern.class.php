@@ -15,7 +15,7 @@
 	**/
 	final class EnumerationClassPattern extends BasePattern
 	{
-		public function daoExist()
+		public function daoExists()
 		{
 			return false;
 		}

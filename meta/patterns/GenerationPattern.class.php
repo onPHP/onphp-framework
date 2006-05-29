@@ -13,18 +13,12 @@
 	/**
 	 * @ingroup Patterns
 	**/
-	final class StraightMappingPattern extends BasePattern
+	interface GenerationPattern
 	{
-		public function build(MetaClass $class)
-		{
-			parent::fullBuild($class);
-			
-			// huh?
-		}
+		/// builds everything for given class
+		public function build(MetaClass $class);
 		
-		public function daoExists()
-		{
-			return true;
-		}
+		/// indicates DAO availability for classes which uses this pattern
+		public function daoExists();
 	}
 ?>

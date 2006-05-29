@@ -13,18 +13,16 @@
 	/**
 	 * @ingroup Patterns
 	**/
-	final class StraightMappingPattern extends BasePattern
+	final class SpookedClassPattern implements GenerationPattern
 	{
 		public function build(MetaClass $class)
 		{
-			parent::fullBuild($class);
-			
-			// huh?
+			return null;
 		}
 		
 		public function daoExists()
 		{
-			return true;
+			return false;
 		}
 	}
 ?>

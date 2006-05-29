@@ -13,18 +13,37 @@
 	/**
 	 * @ingroup Patterns
 	**/
-	abstract class BasePattern extends Singleton
+	abstract class BasePattern extends Singleton implements GenerationPattern
 	{
-		abstract public function build(MetaClass $class);
-		
-		public function getName()
-		{
-			return get_class($this);
-		}
-		
-		public function daoExist()
+		public function daoExists()
 		{
 			return false;
+		}
+		
+		public static function dumpFile($path, $content)
+		{
+			$content = trim($content);
+			
+			if (is_readable($path)) {
+				$pattern =
+					array(
+						'@\/\*(.*)\*\/@sU',
+						'@[\r\n]@sU'
+					);
+				
+				$old = preg_replace($pattern, null, file_get_contents($path));
+				$new = preg_replace($pattern, null, $content);
+			} else {
+				$old = 1; $new = 2;
+			}
+			
+			if ($old !== $new) {
+				echo "* ".$path."\n";
+				
+				$fp = fopen($path, 'wb');
+				fwrite($fp, $content);
+				fclose($fp);
+			}
 		}
 		
 		protected function fullBuild(MetaClass $class)
@@ -87,32 +106,6 @@
 						);
 					}
 				}
-			}
-		}
-		
-		public static function dumpFile($path, $content)
-		{
-			$content = trim($content);
-			
-			if (is_readable($path)) {
-				$pattern =
-					array(
-						'@\/\*(.*)\*\/@sU',
-						'@[\r\n]@sU'
-					);
-				
-				$old = preg_replace($pattern, null, file_get_contents($path));
-				$new = preg_replace($pattern, null, $content);
-			} else {
-				$old = 1; $new = 2;
-			}
-			
-			if ($old !== $new) {
-				echo "* ".$path."\n";
-				
-				$fp = fopen($path, 'wb');
-				fwrite($fp, $content);
-				fclose($fp);
 			}
 		}
 	}

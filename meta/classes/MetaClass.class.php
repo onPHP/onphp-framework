@@ -135,7 +135,7 @@
 			return $this->pattern;
 		}
 		
-		public function setPattern(BasePattern $pattern)
+		public function setPattern(GenerationPattern $pattern)
 		{
 			$this->pattern = $pattern;
 		}

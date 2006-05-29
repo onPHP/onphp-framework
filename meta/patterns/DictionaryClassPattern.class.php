@@ -22,7 +22,7 @@
 			// huh?
 		}
 		
-		public function daoExist()
+		public function daoExists()
 		{
 			return true;
 		}
