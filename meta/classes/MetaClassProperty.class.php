@@ -299,6 +299,7 @@ EOT;
 							);
 						
 						$idName = $remote->getIdentifier()->getName();
+						$idMethod = ucfirst($idName);
 
 						if ($this->required)
 							$out = "set('{$this->dumbName}_{$idName}', ";
@@ -312,17 +313,17 @@ EOT;
 								$out .=
 									"\n"
 									."\${$varName}->get{$method}()\n"
-									."? \${$varName}->get{$method}()->get{$idName}()\n"
+									."? \${$varName}->get{$method}()->get{$idMethod}()\n"
 									.": null\n)";
 						} else {
 							if ($this->required)
 								$out .=
-									"\${$varName}->get{$method}()->get{$idName}())";
+									"\${$varName}->get{$method}()->get{$idMethod}())";
 							else
 								$out .=
 									"\n"
 									."\${$varName}->get{$method}()\n"
-									."? \${$varName}->get{$method}()->get{$idName}()\n"
+									."? \${$varName}->get{$method}()->get{$idMethod}()\n"
 									.": null\n)";
 						}
 						
