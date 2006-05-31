@@ -50,7 +50,7 @@
 		{
 			$this->map->import($request);
 			
-			$form = $this->map->getForm();
+			$form = $this->map->getForm()->checkRules();
 			
 			if ($command = $form->getValue('action'))
 				$mav = $this->commandMap[$command]->run(

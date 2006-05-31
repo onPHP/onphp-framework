@@ -1,5 +1,11 @@
 # $Id$
 
+2006-05-31 Anton E. Lebedevich
+	
+	* main/Flow/EditorController.class.php: rules used.
+
+	* core/Logic/PregMatch.class.php: added regular expression checker for forms.
+
 2006-05-29	Konstantin V. Arkhipov
 
 	* meta/: spooked classes implemented, which is never generated and
