@@ -269,11 +269,6 @@
 		{
 			return new LogicalChain();
 		}
-		
-		public static function pregMatch($pattern, $field)
-		{
-			return new PregMatch($pattern, $field);
-		}
 
 		private static function block($args, $logic)
 		{
