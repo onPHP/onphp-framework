@@ -41,10 +41,14 @@
 					$dao->save($update[$i]);
 
 			if ($delete) {
-				$db->queryNull($this->makeDeleteQuery($delete));
+				$ids = array();
 				
-				foreach ($delete as $id)
-					$dao->uncacheById($id);
+				foreach ($delete as $object)
+					$ids[] = $object->getId();
+				
+				$db->queryNull($this->makeDeleteQuery($ids));
+				
+				$dao->uncacheById($ids);
 			}
 
 			return $this;
