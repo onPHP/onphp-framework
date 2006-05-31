@@ -64,8 +64,9 @@
 						// we don't need anything but
 						// only identifier for spooked classes
 						if (
-							$class->getType()->getId()
-							== MetaClassType::CLASS_SPOOKED
+							$class->getType()
+							&& $class->getType()->getId()
+								== MetaClassType::CLASS_SPOOKED
 						) {
 							$class->addProperty($property);
 							
@@ -201,7 +202,11 @@
 				'no one can live without identifier'
 			);
 			
-			if ($class->getType()->getId() == MetaClassType::CLASS_SPOOKED) {
+			if (
+				$class->getType() 
+				&& $class->getType()->getId() 
+					== MetaClassType::CLASS_SPOOKED
+			) {
 				Assert::isFalse(
 					count($class->getProperties()) > 1,
 					'spooked classes must have only identifier'
