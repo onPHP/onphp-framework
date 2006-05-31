@@ -26,7 +26,7 @@
 			
 			$interfaces = ' implements Prototyped';
 			
-			if ($class->getPattern()->daoExist()) {
+			if ($class->getPattern()->daoExists()) {
 				$interfaces .= ', DAOConnected';
 				$dao = <<<EOT
 	public static function dao()
