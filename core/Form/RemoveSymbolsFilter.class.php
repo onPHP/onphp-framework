@@ -10,9 +10,14 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class RemoveSymbolsFilter extends BaseFilter
+	class RemoveSymbolsFilter implements Filtrator
 	{
 		private $symbols = array();
+		
+		public static function create()
+		{
+			return new RemoveSymbolsFilter();
+		}
 		
 		public function setSymbols(/* ... */)
 		{
