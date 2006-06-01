@@ -1,5 +1,10 @@
 # $Id$
 
+2006-06-01	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/Containers/ManyToManyLinkedFull.class.php: unlinking bugfix
+	from trunk.
+
 2006-05-27	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* 0.2.14 released.
