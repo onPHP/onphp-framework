@@ -42,6 +42,7 @@
 					&& $variable == (int) $variable
 					&& strlen($variable) == strlen((int) $variable)
 				)
+				&& !($variable == 0) // (string) '00' == (int) 0
 			)
 				self::fail($message);
 		}
