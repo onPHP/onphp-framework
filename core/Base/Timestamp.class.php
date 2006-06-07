@@ -31,7 +31,13 @@
 		private $minute		= null;
 		private $second		= null;
 
-		const WEEKDAY_MONDAY = 1;
+		const WEEKDAY_MONDAY 	= 1;
+		const WEEKDAY_TUESDAY	= 2;
+		const WEEKDAY_WEDNESDAY	= 3;
+		const WEEKDAY_THURSDAY	= 4;
+		const WEEKDAY_FRIDAY	= 5;
+		const WEEKDAY_SATURDAY	= 6;
+		const WEEKDAY_SUNDAY	= 0;
 		
 		public function __construct($timestamp)
 		{
