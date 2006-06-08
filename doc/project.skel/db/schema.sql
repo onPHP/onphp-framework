@@ -2,8 +2,8 @@
 
 create table administrator(
 	id			bigint not null primary key,
-	username	varchar(64),
-	password	varchar(40) -- sha1()
+	username	varchar(64) not null,
+	password	varchar(40) not null -- sha1()
 );
 
 -- default admin with 's1kr33t' as password
