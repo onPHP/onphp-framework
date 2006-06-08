@@ -1,5 +1,9 @@
 # $Id$
 
+2006-06-08	Konstantin V. Arkhipov
+
+	* meta/: two minor typo-caused bugs.
+
 2006-05-29	Konstantin V. Arkhipov
 
 	* meta/: spooked classes implemented, which is never generated and
