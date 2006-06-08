@@ -112,8 +112,7 @@ EOT;
 			}
 			
 			if ($standaloneFillers) {
-				
-				$out .= implode("->\n", $standaloneFillers)."\n";
+				$out .= implode("\n", $standaloneFillers)."\n";
 			}
 
 			$out .= <<<EOT

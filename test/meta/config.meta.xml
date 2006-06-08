@@ -39,6 +39,9 @@
 			
 			<property name="spook" type="Spook" relation="OneToOne" required="false" />
 			
+			<property name="firstOptional" type="TestCity" relation="OneToOne" required="false" />
+			<property name="secondOptional" type="TestCity" relation="OneToOne" required="false" />
+			
 		</properties>
 		
 		<pattern name="StraightMapping" />
