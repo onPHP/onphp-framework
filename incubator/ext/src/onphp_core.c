@@ -14,7 +14,7 @@ static zend_object_handlers onphp_identifiable_object_handlers;
 
 static void onphp_identifiable_object_free_storage(void *object TSRMLS_DC)
 {
-	zval_ptr_dtor(&object);
+	zval_ptr_dtor(object);
 	efree(object);
 }
 
@@ -154,6 +154,8 @@ PHP_MINIT_FUNCTION(onphp_core)
 	);
 
 	REGISTER_ONPHP_IMPLEMENTS(IdentifiableObject, Identifiable);
+
+	REGISTER_ONPHP_PROPERTY(IdentifiableObject, "id", 0, ZEND_ACC_PROTECTED);
 	
 	memcpy(&onphp_identifiable_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
 }
