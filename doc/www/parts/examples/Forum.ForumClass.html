@@ -1,0 +1,22 @@
+<pre>
+    <span class="green">final class </span><span class="blue">Forum </span><span class="green">extends </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fcore%2FBase%2FNamedObject.class.php&rev=0&sc=0">NamedObject</a> </span><span class="green">implements </span><span class="blue"><a href="http://svn.shadanakar.org/filedetails.php?repname=onPHP&path=%2Ftrunk%2Fmain%2FDAOs%2FDAOConnected.class.php&rev=0&sc=0">DAOConnected</a>
+    </span><span class="green">{
+        private </span><span class="blue">$description     </span><span class="green">= </span><span class="blue">null</span><span class="green">;
+        private </span><span class="blue">$messageCount    </span><span class="green">= </span><span class="blue">null</span><span class="green">;
+        
+        private </span><span class="blue">$created         </span><span class="green">= </span><span class="blue">null</span><span class="green">;
+        private </span><span class="blue">$modified        </span><span class="green">= </span><span class="blue">null</span><span class="green">;
+        
+        public static function </span><span class="blue">create</span><span class="green">()
+        {
+            return new </span><span class="blue">Forum</span><span class="green">();
+        }
+        
+        public static function </span><span class="blue">dao</span><span class="green">()
+        {
+            return </span><span class="blue">DAO</span><span class="green">::</span><span class="blue">forum</span><span class="green">();
+        }
+
+        </span><span class="orange">/* even more boring methods */
+    </span><span class="green">}</span>
+</pre>
