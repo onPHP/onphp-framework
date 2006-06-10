@@ -14,7 +14,6 @@ static zend_object_handlers onphp_identifiable_object_handlers;
 
 static void onphp_identifiable_object_free_storage(void *object TSRMLS_DC)
 {
-	zval_ptr_dtor(object);
 	efree(object);
 }
 
