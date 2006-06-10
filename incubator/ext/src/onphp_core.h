@@ -14,7 +14,6 @@ typedef struct _onphp_identifiable_object onphp_identifiable_object;
 
 struct _onphp_identifiable_object {
 	zend_object		std;
-	zval			*id;
 };
 
 PHP_MINIT_FUNCTION(onphp_core);

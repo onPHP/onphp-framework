@@ -60,20 +60,21 @@ static zend_object_value onphp_identifiable_object_new(zend_class_entry *class_t
 }
 
 static void onphp_identifiable_object_set_id(
-	onphp_identifiable_object *identifiable,
 	zval *object,
 	zval *id TSRMLS_DC
 )
 {
-	ALLOC_INIT_ZVAL(identifiable->id);
-	ZVAL_ZVAL(identifiable->id, id, 1, 1);
+	zval *value = NULL;
+
+	ALLOC_INIT_ZVAL(value);
+	ZVAL_ZVAL(value, id, 1, 1);
 
 	zend_update_property(
 		onphp_ce_IdentifiableObject,
 		object,
 		"id",
-		sizeof("id") - 1,
-		identifiable->id TSRMLS_CC
+		strlen("id"),
+		value TSRMLS_CC
 	);
 
 	zval_ptr_dtor(&id);
@@ -89,12 +90,7 @@ ONPHP_METHOD(IdentifiableObject, wrap)
 	Z_TYPE_P(object) = IS_OBJECT;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == SUCCESS) {
-		onphp_identifiable_object *identifiable =
-			(onphp_identifiable_object *) zend_object_store_get_object(
-				object TSRMLS_CC
-			);
-
-		onphp_identifiable_object_set_id(identifiable, object, id TSRMLS_CC);
+		onphp_identifiable_object_set_id(object, id TSRMLS_CC);
 	}
 	
 	RETURN_ZVAL(object, 1, 0);
@@ -102,12 +98,16 @@ ONPHP_METHOD(IdentifiableObject, wrap)
 
 ONPHP_METHOD(IdentifiableObject, getId)
 {
+	zval *id = NULL;
+
 	onphp_identifiable_object *object = (onphp_identifiable_object *) zend_object_store_get_object(
 		getThis() TSRMLS_CC
 	);
 
-	if (object->id) {
-		RETURN_ZVAL(object->id, 1, 0);
+	id = zend_read_property(Z_OBJCE_P(getThis()), getThis(), "id", strlen("id"), 1 TSRMLS_CC);
+
+	if (id) {
+		RETURN_ZVAL(id, 1, 0);
 	} else {
 		RETURN_NULL();
 	}
@@ -118,15 +118,9 @@ static zend_object_handlers *zend_std_obj_handlers;
 ONPHP_METHOD(IdentifiableObject, setId)
 {
 	zval *id = NULL, *this = getThis();
-
-	onphp_identifiable_object *identifiable = (onphp_identifiable_object *) zend_object_store_get_object(
-		this TSRMLS_CC
-	);
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == SUCCESS) {
-		onphp_identifiable_object_set_id(identifiable, this, id TSRMLS_CC);
-
-		zval_ptr_dtor(&id);
+		onphp_identifiable_object_set_id(this, id TSRMLS_CC);
 	}
 
 	RETURN_ZVAL(getThis(), 1, 0);

@@ -22,7 +22,7 @@
 	spl_register_std_class(&onphp_ce_ ## class_name, # class_name, obj_ctor, funcs TSRMLS_CC);
 
 #define REGISTER_ONPHP_PROPERTY(class_name, prop_name, prop_flags) \
-	zend_declare_property_null(onphp_ce_ ## class_name, prop_name, sizeof(prop_name) - 1, prop_flags TSRMLS_CC);
+	zend_declare_property_null(onphp_ce_ ## class_name, prop_name, strlen(prop_name), prop_flags TSRMLS_CC);
 
 #define ONPHP_METHOD(class_name, function_name) \
 	PHP_METHOD(onphp_ ## class_name, function_name)
