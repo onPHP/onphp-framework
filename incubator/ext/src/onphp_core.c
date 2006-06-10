@@ -60,6 +60,26 @@ static zend_object_value onphp_identifiable_object_new(zend_class_entry *class_t
 	return onphp_identifiable_object_new_ex(class_type, NULL TSRMLS_CC);
 }
 
+static void onphp_identifiable_object_set_id(
+	onphp_identifiable_object *identifiable,
+	zval *object,
+	zval *id TSRMLS_DC
+)
+{
+	ALLOC_INIT_ZVAL(identifiable->id);
+	ZVAL_ZVAL(identifiable->id, id, 1, 1);
+
+	zend_update_property(
+		onphp_ce_IdentifiableObject,
+		object,
+		"id",
+		sizeof("id") - 1,
+		identifiable->id TSRMLS_CC
+	);
+
+	zval_ptr_dtor(&id);
+}
+
 ONPHP_METHOD(IdentifiableObject, wrap)
 {
 	zval *id = NULL, *object = NULL;
@@ -75,12 +95,7 @@ ONPHP_METHOD(IdentifiableObject, wrap)
 				object TSRMLS_CC
 			);
 
-		ALLOC_INIT_ZVAL(identifiable->id);
-		ZVAL_ZVAL(identifiable->id, id, 1, 1);
-
-		zend_update_property(onphp_ce_IdentifiableObject, object, "id", sizeof("id") - 1, identifiable->id TSRMLS_CC);
-		
-		zval_ptr_dtor(&id);
+		onphp_identifiable_object_set_id(identifiable, object, id TSRMLS_CC);
 	}
 	
 	RETURN_ZVAL(object, 1, 0);
@@ -105,15 +120,12 @@ ONPHP_METHOD(IdentifiableObject, setId)
 {
 	zval *id = NULL, *this = getThis();
 
-	onphp_identifiable_object *object = (onphp_identifiable_object *) zend_object_store_get_object(
+	onphp_identifiable_object *identifiable = (onphp_identifiable_object *) zend_object_store_get_object(
 		this TSRMLS_CC
 	);
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == SUCCESS) {
-		ALLOC_INIT_ZVAL(object->id);
-		ZVAL_ZVAL(object->id, id, 1, 1);
-
-		zend_update_property(onphp_ce_IdentifiableObject, this, "id", sizeof("id") - 1, object->id TSRMLS_CC);
+		onphp_identifiable_object_set_id(identifiable, this, id TSRMLS_CC);
 
 		zval_ptr_dtor(&id);
 	}
