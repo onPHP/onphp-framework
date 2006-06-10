@@ -82,7 +82,7 @@
 			
 			return 
 				$this->alias
-					? "{$out} AS {$this->alias}"
+					? "{$out} AS {$dialect->quoteTable($this->alias)}"
 					: $out;
 		}
 	}
