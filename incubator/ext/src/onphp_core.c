@@ -66,7 +66,7 @@ static void onphp_identifiable_object_set_id(
 {
 	zval *value = NULL;
 
-	ALLOC_INIT_ZVAL(value);
+	MAKE_STD_ZVAL(value);
 	ZVAL_ZVAL(value, id, 1, 1);
 
 	zend_update_property(
@@ -108,9 +108,9 @@ ONPHP_METHOD(IdentifiableObject, getId)
 
 	if (id) {
 		RETURN_ZVAL(id, 1, 0);
-	} else {
-		RETURN_NULL();
 	}
+	
+	RETURN_NULL();
 }
 
 static zend_object_handlers *zend_std_obj_handlers;
@@ -123,7 +123,7 @@ ONPHP_METHOD(IdentifiableObject, setId)
 		onphp_identifiable_object_set_id(this, id TSRMLS_CC);
 	}
 
-	RETURN_ZVAL(getThis(), 1, 0);
+	RETURN_ZVAL(this, 1, 0);
 }
 
 static
