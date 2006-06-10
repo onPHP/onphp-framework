@@ -1,0 +1,81 @@
+/* $Id$ */
+
+#ifdef HAVE_CONFIG_H
+	#include "config.h"
+#endif
+
+#include "php.h"
+
+#include "onphp.h"
+#include "onphp_core.h"
+
+#define ONPHP_ADD_CLASS(class_name, z_list, sub, allow, ce_flags) \
+	spl_add_classes(&onphp_ce_ ## class_name, z_list, sub, allow, ce_flags TSRMLS_CC)
+
+#define ONPHP_LIST_CLASSES(z_list, sub, allow, ce_flags) \
+	ONPHP_ADD_CLASS(Identifiable, z_list, sub, allow, ce_flags); \
+	ONPHP_ADD_CLASS(IdentifiableObject, z_list, sub, allow, ce_flags);
+
+PHP_FUNCTION(onphp_classes)
+{
+	array_init(return_value);
+	
+	ONPHP_LIST_CLASSES(return_value, 0, 0, 0)
+}
+
+
+zend_function_entry onphp_functions[] = {
+	PHP_FE(onphp_classes, NULL)
+	{NULL, NULL, NULL}
+};
+
+
+PHP_MINFO_FUNCTION(onphp)
+{
+	php_info_print_table_start();
+	php_info_print_table_header(2, "onPHP support", "enabled");
+	php_info_print_table_end();
+}
+
+
+PHP_MINIT_FUNCTION(onphp)
+{
+	PHP_MINIT(onphp_core)(INIT_FUNC_ARGS_PASSTHRU);
+
+	return SUCCESS;
+}
+
+
+PHP_RINIT_FUNCTION(onphp)
+{
+	return SUCCESS;
+}
+
+
+PHP_RSHUTDOWN_FUNCTION(onphp)
+{
+	return SUCCESS;
+}
+
+
+static zend_module_dep onphp_deps[] = {
+	ZEND_MOD_REQUIRED("spl")
+	{NULL, NULL, NULL}
+};
+
+
+zend_module_entry onphp_module_entry = {
+	STANDARD_MODULE_HEADER_EX, NULL,
+	onphp_deps,
+	"onPHP",
+	onphp_functions,
+	PHP_MINIT(onphp),
+	NULL,
+	PHP_RINIT(onphp),
+	PHP_RSHUTDOWN(onphp),
+	PHP_MINFO(onphp),
+	"0.0.1",
+	STANDARD_MODULE_PROPERTIES
+};
+
+ZEND_GET_MODULE(onphp)
