@@ -226,11 +226,6 @@ zend_function_entry onphp_funcs_Identifiable[] = {
 	{NULL, NULL, NULL}
 };
 
-static
-ZEND_BEGIN_ARG_INFO(arginfo_IdentifiableObject_setId, 0)
-	ZEND_ARG_INFO(0, id)
-ZEND_END_ARG_INFO()
-
 static zend_function_entry onphp_funcs_IdentifiableObject[] = {
 	ONPHP_ME(IdentifiableObject, getId,	NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(IdentifiableObject, setId,	arginfo_id, ZEND_ACC_PUBLIC)
