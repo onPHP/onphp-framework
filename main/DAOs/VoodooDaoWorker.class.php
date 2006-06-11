@@ -31,8 +31,13 @@
 		public function __construct(GenericDAO $dao)
 		{
 			parent::__construct($dao);
+
+			if (($cache = Cache::me()) instanceof WatermarkedPeer)
+				$watermark = $cache->getWatermark();
+			else
+				$watermark = null;
 			
-			$this->classKey = $this->keyToInt($this->className.DB_BASE);
+			$this->classKey = $this->keyToInt($watermark.$this->className);
 		}
 		
 		//@{
