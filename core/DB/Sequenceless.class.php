@@ -52,6 +52,11 @@
 			) {
 				$id = current($this->sequencePool[$name]);
 				
+				Assert::isTrue(
+					$id instanceof Identifier,
+					'identifier was lost in the way'
+				);
+				
 				$id->setId($this->getInsertId())->finalize();
 				
 				unset(
