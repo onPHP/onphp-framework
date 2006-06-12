@@ -125,7 +125,7 @@ ONPHP_METHOD(Identifier, finalize)
 {
 	zval *this = getThis(), *true;
 
-	ALLOC_ZVAL(true);
+	ALLOC_INIT_ZVAL(true);
 	ZVAL_TRUE(true);
 	
 	zend_update_property(
@@ -147,7 +147,6 @@ ONPHP_METHOD(Identifier, isFinalized)
 
 	RETURN_ZVAL(final, 1, 0);
 }
-
 
 ONPHP_METHOD(IdentifiableObject, wrap)
 {
