@@ -70,7 +70,7 @@ ONPHP_METHOD(Identifier, create)
 	object->value.obj = onphp_empty_object_new(onphp_ce_Identifier TSRMLS_CC);
 	Z_TYPE_P(object) = IS_OBJECT;
 
-	RETURN_ZVAL(object, 1, 0);
+	RETURN_ZVAL(object, 1, 1);
 }
 
 ONPHP_METHOD(Identifier, wrap)
@@ -92,7 +92,7 @@ ONPHP_METHOD(Identifier, wrap)
 		);
 	}
 
-	RETURN_ZVAL(object, 1, 0);
+	RETURN_ZVAL(object, 1, 1);
 }
 
 ONPHP_METHOD(Identifier, getId)
@@ -168,7 +168,7 @@ ONPHP_METHOD(IdentifiableObject, wrap)
 		);
 	}
 	
-	RETURN_ZVAL(object, 1, 0);
+	RETURN_ZVAL(object, 1, 1);
 }
 
 ONPHP_METHOD(IdentifiableObject, getId)
