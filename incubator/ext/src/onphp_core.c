@@ -176,7 +176,7 @@ ONPHP_METHOD(IdentifiableObject, getId)
 	zval *id = NULL, *this = getThis();
 
 	onphp_identifiable_object *object = (onphp_identifiable_object *) zend_object_store_get_object(
-		getThis() TSRMLS_CC
+		this TSRMLS_CC
 	);
 
 	id = zend_read_property(Z_OBJCE_P(this), this, "id", strlen("id"), 1 TSRMLS_CC);
