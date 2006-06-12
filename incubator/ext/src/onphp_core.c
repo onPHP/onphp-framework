@@ -12,6 +12,10 @@ static zend_object_handlers zend_std_obj_handlers;
 
 static void onphp_empty_object_free_storage(void *object TSRMLS_DC)
 {
+	onphp_empty_object *empty = (onphp_empty_object *) object;
+
+	zend_object_std_dtor(&empty->std TSRMLS_CC);
+
 	efree(object);
 }
 
@@ -48,7 +52,7 @@ static zend_object_value onphp_empty_object_spawn(
 	);
 	
 	objval.handlers = &zend_std_obj_handlers;
-	
+
 	return objval;
 }
 
@@ -59,7 +63,7 @@ static zend_object_value onphp_empty_object_new(zend_class_entry *class_type TSR
 
 ONPHP_METHOD(Identifier, create)
 {
-	zval *id = NULL, *object = NULL;
+	zval *object = NULL;
 
 	MAKE_STD_ZVAL(object);
 
@@ -87,7 +91,7 @@ ONPHP_METHOD(Identifier, wrap)
 			id TSRMLS_CC
 		);
 	}
-	
+
 	RETURN_ZVAL(object, 1, 0);
 }
 
@@ -181,11 +185,7 @@ ONPHP_METHOD(IdentifiableObject, getId)
 		Z_TYPE_P(id) == IS_OBJECT
 		&& instanceof_function(Z_OBJCE_P(id), onphp_ce_Identifier TSRMLS_CC)
 	) {
-		zval *final = NULL;
-
-		final = zend_read_property(Z_OBJCE_P(id), id, "final", strlen("final"), 1 TSRMLS_CC);
-
-		if (zval_is_true(final)) {
+		if (zval_is_true(zend_read_property(Z_OBJCE_P(id), id, "final", strlen("final"), 1 TSRMLS_CC))) {
 			id = zend_read_property(Z_OBJCE_P(id), id, "id", strlen("id"), 1 TSRMLS_CC);
 		}
 	}

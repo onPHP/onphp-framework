@@ -34,6 +34,7 @@ PHP_MINFO_FUNCTION(onphp)
 {
 	php_info_print_table_start();
 	php_info_print_table_header(2, "onPHP support", "enabled");
+	php_info_print_table_row(2, "Version", ONPHP_VERSION);
 	php_info_print_table_end();
 }
 
@@ -42,18 +43,6 @@ PHP_MINIT_FUNCTION(onphp)
 {
 	PHP_MINIT(onphp_core)(INIT_FUNC_ARGS_PASSTHRU);
 
-	return SUCCESS;
-}
-
-
-PHP_RINIT_FUNCTION(onphp)
-{
-	return SUCCESS;
-}
-
-
-PHP_RSHUTDOWN_FUNCTION(onphp)
-{
 	return SUCCESS;
 }
 
@@ -71,10 +60,10 @@ zend_module_entry onphp_module_entry = {
 	onphp_functions,
 	PHP_MINIT(onphp),
 	NULL,
-	PHP_RINIT(onphp),
-	PHP_RSHUTDOWN(onphp),
+	NULL,
+	NULL,
 	PHP_MINFO(onphp),
-	"0.0.1",
+	ONPHP_VERSION,
 	STANDARD_MODULE_PROPERTIES
 };
 
