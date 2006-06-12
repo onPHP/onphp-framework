@@ -190,11 +190,7 @@ ONPHP_METHOD(IdentifiableObject, getId)
 		}
 	}
 
-	if (id) {
-		RETURN_ZVAL(id, 1, 0);
-	}
-	
-	RETURN_NULL();
+	RETURN_ZVAL(id, 1, 0);
 }
 
 ONPHP_METHOD(IdentifiableObject, setId)
