@@ -63,7 +63,7 @@ static zend_object_value onphp_empty_object_new(zend_class_entry *class_type TSR
 
 ONPHP_METHOD(Identifier, create)
 {
-	zval *object = NULL;
+	zval *object;
 
 	MAKE_STD_ZVAL(object);
 
@@ -75,7 +75,7 @@ ONPHP_METHOD(Identifier, create)
 
 ONPHP_METHOD(Identifier, wrap)
 {
-	zval *object = NULL, *id = NULL;
+	zval *object, *id;
 
 	MAKE_STD_ZVAL(object);
 
@@ -97,7 +97,7 @@ ONPHP_METHOD(Identifier, wrap)
 
 ONPHP_METHOD(Identifier, getId)
 {
-	zval *this = getThis(), *id = NULL;
+	zval *this = getThis(), *id;
 
 	id = zend_read_property(Z_OBJCE_P(this), this, "id", strlen("id"), 1 TSRMLS_CC);
 
@@ -106,7 +106,7 @@ ONPHP_METHOD(Identifier, getId)
 
 ONPHP_METHOD(Identifier, setId)
 {
-	zval *id = NULL, *this = getThis();
+	zval *this = getThis(), *id;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == SUCCESS) {
 		zend_update_property(
@@ -123,7 +123,7 @@ ONPHP_METHOD(Identifier, setId)
 
 ONPHP_METHOD(Identifier, finalize)
 {
-	zval *this = getThis(), *true = NULL;
+	zval *this = getThis(), *true;
 
 	ALLOC_ZVAL(true);
 	ZVAL_TRUE(true);
@@ -141,7 +141,7 @@ ONPHP_METHOD(Identifier, finalize)
 
 ONPHP_METHOD(Identifier, isFinalized)
 {
-	zval *this = getThis(), *final = NULL;
+	zval *this = getThis(), *final;
 
 	final = zend_read_property(Z_OBJCE_P(this), this, "final", strlen("final"), 1 TSRMLS_CC);
 
@@ -151,7 +151,7 @@ ONPHP_METHOD(Identifier, isFinalized)
 
 ONPHP_METHOD(IdentifiableObject, wrap)
 {
-	zval *id = NULL, *object = NULL;
+	zval *object, *id;
 
 	MAKE_STD_ZVAL(object);
 
@@ -173,7 +173,7 @@ ONPHP_METHOD(IdentifiableObject, wrap)
 
 ONPHP_METHOD(IdentifiableObject, getId)
 {
-	zval *id = NULL, *this = getThis();
+	zval *this = getThis(), *id;
 
 	onphp_identifiable_object *object = (onphp_identifiable_object *) zend_object_store_get_object(
 		this TSRMLS_CC
@@ -195,7 +195,7 @@ ONPHP_METHOD(IdentifiableObject, getId)
 
 ONPHP_METHOD(IdentifiableObject, setId)
 {
-	zval *id = NULL, *this = getThis();
+	zval *this = getThis(), *id;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == SUCCESS) {
 		zend_update_property(
