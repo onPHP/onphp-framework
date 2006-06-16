@@ -14,6 +14,7 @@
 	 * @see NamedObject.class.php
 	 * 
 	 * @ingroup Base
+	 * @ingroup Module
 	**/
 	interface Named extends Identifiable
 	{

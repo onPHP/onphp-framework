@@ -14,6 +14,7 @@
 	 * @see Named.class.php
 	 * 
 	 * @ingroup Base
+	 * @ingroup Module
 	**/
 	abstract class NamedObject
 		extends IdentifiableObject

@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Module
+	**/
 	interface Stringable
 	{
 		public function toString();
