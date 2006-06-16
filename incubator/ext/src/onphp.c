@@ -3,14 +3,16 @@
 #include "onphp.h"
 
 #include "onphp_core.h"
+#include "core/Base/IdentifiableObject.h"
 #include "core/Base/Identifiable.h"
 #include "core/Base/Identifier.h"
-#include "core/Base/IdentifiableObject.h"
+#include "core/Base/Named.h"
 
 #define ONPHP_ADD_CLASS(class_name, z_list, sub, allow, ce_flags) \
 	spl_add_classes(&onphp_ce_ ## class_name, z_list, sub, allow, ce_flags TSRMLS_CC)
 
 #define ONPHP_LIST_CLASSES(z_list, sub, allow, ce_flags) \
+	ONPHP_ADD_CLASS(Named, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(Identifiable, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(IdentifiableObject, z_list, sub, allow, ce_flags);
 
