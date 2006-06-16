@@ -16,6 +16,7 @@
 	 * @see IdentifiableObject
 	 * 
 	 * @ingroup Base
+	 * @ingroup Module
 	**/
 	interface Identifiable
 	{

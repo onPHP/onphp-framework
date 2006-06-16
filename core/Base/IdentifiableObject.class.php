@@ -16,6 +16,7 @@
 	 * @see Identifiable
 	 * 
 	 * @ingroup Base
+	 * @ingroup Module
 	**/
 	class /* spirit of */ IdentifiableObject implements Identifiable
 	{

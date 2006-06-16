@@ -14,6 +14,7 @@
 	 * @see Identifiable
 	 * 
 	 * @ingroup Base
+	 * @ingroup Module
 	**/
 	final class Identifier implements Identifiable
 	{

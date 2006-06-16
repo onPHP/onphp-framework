@@ -125,5 +125,7 @@
 	 *
 	 * @defgroup Types Supported meta-types
 	 * @ingroup Meta
+	 * 
+	 * @defgroup Module Classes implemented in PHP's extension.
 	**/
 ?>
