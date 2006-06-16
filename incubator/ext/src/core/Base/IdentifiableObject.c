@@ -16,9 +16,11 @@ ONPHP_METHOD(IdentifiableObject, wrap)
 	object->value.obj = onphp_empty_object_new(onphp_ce_IdentifiableObject TSRMLS_CC);
 	Z_TYPE_P(object) = IS_OBJECT;
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == SUCCESS) {
-		ONPHP_UPDATE_PROPERTY(object, "id", id);
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
+		WRONG_PARAM_COUNT;
 	}
+
+	ONPHP_UPDATE_PROPERTY(object, "id", id);
 	
 	RETURN_ZVAL(object, 1, 1);
 }
@@ -51,9 +53,11 @@ ONPHP_METHOD(IdentifiableObject, setId)
 {
 	zval *this = getThis(), *id;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == SUCCESS) {
-		ONPHP_UPDATE_PROPERTY(this, "id", id);
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
+		WRONG_PARAM_COUNT;
 	}
+
+	ONPHP_UPDATE_PROPERTY(this, "id", id);
 
 	RETURN_ZVAL(this, 1, 0);
 }
