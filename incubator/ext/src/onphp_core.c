@@ -1,13 +1,14 @@
 /* $Id$ */
 
-#include "core/Base/IdentifiableObject.h"
-#include "core/Base/Identifiable.h"
-#include "core/Base/Identifier.h"
-#include "core/Base/Named.h"
+#include "zend_interfaces.h"
 
 #include "onphp_core.h"
 
-#include "zend_interfaces.h"
+#include "core/Base/IdentifiableObject.h"
+#include "core/Base/Identifiable.h"
+#include "core/Base/Identifier.h"
+#include "core/Base/Stringable.h"
+#include "core/Base/Named.h"
 
 static zend_object_handlers zend_std_obj_handlers;
 
@@ -64,6 +65,7 @@ zend_object_value onphp_empty_object_new(zend_class_entry *class_type TSRMLS_DC)
 
 PHP_MINIT_FUNCTION(onphp_core)
 {
+	REGISTER_ONPHP_INTERFACE(Stringable);
 	REGISTER_ONPHP_INTERFACE(Identifiable);
 	REGISTER_ONPHP_INTERFACE(Named);
 	REGISTER_ONPHP_IMPLEMENTS(Named, Identifiable);
