@@ -17,13 +17,7 @@ ONPHP_METHOD(IdentifiableObject, wrap)
 	Z_TYPE_P(object) = IS_OBJECT;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == SUCCESS) {
-		zend_update_property(
-			onphp_ce_IdentifiableObject,
-			object,
-			"id",
-			strlen("id"),
-			id TSRMLS_CC
-		);
+		ONPHP_UPDATE_PROPERTY(object, "id", id);
 	}
 	
 	RETURN_ZVAL(object, 1, 1);
@@ -37,14 +31,18 @@ ONPHP_METHOD(IdentifiableObject, getId)
 		this TSRMLS_CC
 	);
 
-	id = zend_read_property(Z_OBJCE_P(this), this, "id", strlen("id"), 1 TSRMLS_CC);
+	id = ONPHP_READ_PROPERTY(this, "id");
 
 	if (
 		Z_TYPE_P(id) == IS_OBJECT
 		&& instanceof_function(Z_OBJCE_P(id), onphp_ce_Identifier TSRMLS_CC)
 	) {
-		if (zval_is_true(zend_read_property(Z_OBJCE_P(id), id, "final", strlen("final"), 1 TSRMLS_CC))) {
-			id = zend_read_property(Z_OBJCE_P(id), id, "id", strlen("id"), 1 TSRMLS_CC);
+		zval *final = ONPHP_READ_PROPERTY(id, "final");
+	
+		if (
+			zval_is_true(final)
+		) {
+			id = ONPHP_READ_PROPERTY(id, "id");
 		}
 	}
 
@@ -56,13 +54,7 @@ ONPHP_METHOD(IdentifiableObject, setId)
 	zval *this = getThis(), *id;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == SUCCESS) {
-		zend_update_property(
-			onphp_ce_IdentifiableObject,
-			this,
-			"id",
-			strlen("id"),
-			id TSRMLS_CC
-		);
+		ONPHP_UPDATE_PROPERTY(this, "id", id);
 	}
 
 	RETURN_ZVAL(this, 1, 0);
