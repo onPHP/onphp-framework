@@ -3,9 +3,9 @@
 #include "onphp.h"
 
 #include "onphp_core.h"
-#include "core/Main/Identifiable.h"
-#include "core/Main/Identifier.h"
-#include "core/Main/IdentifiableObject.h"
+#include "core/Base/Identifiable.h"
+#include "core/Base/Identifier.h"
+#include "core/Base/IdentifiableObject.h"
 
 #define ONPHP_ADD_CLASS(class_name, z_list, sub, allow, ce_flags) \
 	spl_add_classes(&onphp_ce_ ## class_name, z_list, sub, allow, ce_flags TSRMLS_CC)

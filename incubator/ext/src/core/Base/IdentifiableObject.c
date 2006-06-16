@@ -2,8 +2,8 @@
 
 #include "onphp.h"
 
-#include "core/Main/Identifier.h"
-#include "core/Main/IdentifiableObject.h"
+#include "core/Base/Identifier.h"
+#include "core/Base/IdentifiableObject.h"
 
 PHPAPI zend_class_entry *onphp_ce_IdentifiableObject;
 

@@ -1,8 +1,8 @@
 /* $Id$ */
 
-#include "core/Main/IdentifiableObject.h"
-#include "core/Main/Identifiable.h"
-#include "core/Main/Identifier.h"
+#include "core/Base/IdentifiableObject.h"
+#include "core/Base/Identifiable.h"
+#include "core/Base/Identifier.h"
 
 #include "onphp_core.h"
 
