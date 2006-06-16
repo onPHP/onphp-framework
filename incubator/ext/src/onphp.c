@@ -16,6 +16,7 @@
 #define ONPHP_LIST_CLASSES(z_list, sub, allow, ce_flags) \
 	ONPHP_ADD_CLASS(Named, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(NamedObject, z_list, sub, allow, ce_flags); \
+	ONPHP_ADD_CLASS(Identifier, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(Identifiable, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(IdentifiableObject, z_list, sub, allow, ce_flags);
 
