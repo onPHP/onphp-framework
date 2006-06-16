@@ -3,12 +3,12 @@
 #include "zend_interfaces.h"
 
 #include "onphp_core.h"
-
-#include "core/Base/IdentifiableObject.h"
-#include "core/Base/Identifiable.h"
 #include "core/Base/Identifier.h"
+#include "core/Base/Identifiable.h"
+#include "core/Base/IdentifiableObject.h"
 #include "core/Base/Stringable.h"
 #include "core/Base/Named.h"
+#include "core/Base/NamedObject.h"
 
 static zend_object_handlers zend_std_obj_handlers;
 
@@ -77,7 +77,7 @@ PHP_MINIT_FUNCTION(onphp_core)
 	);
 	REGISTER_ONPHP_PROPERTY(Identifier, "id", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_PROPERTY(Identifier, "final", ZEND_ACC_PRIVATE);
-	onphp_ce_Identifier->ce_flags |= ZEND_ACC_FINAL;
+	onphp_ce_Identifier->ce_flags |= ZEND_ACC_FINAL_CLASS;
 	
 	REGISTER_ONPHP_STD_CLASS_EX(
 		IdentifiableObject,
@@ -88,6 +88,17 @@ PHP_MINIT_FUNCTION(onphp_core)
 	
 	REGISTER_ONPHP_IMPLEMENTS(Identifier, Identifiable);
 	REGISTER_ONPHP_IMPLEMENTS(IdentifiableObject, Identifiable);
+
+	REGISTER_ONPHP_SUB_CLASS_EX(
+		NamedObject,
+		IdentifiableObject,
+		onphp_empty_object_new,
+		onphp_funcs_NamedObject
+	);
+	REGISTER_ONPHP_PROPERTY(NamedObject, "name", ZEND_ACC_PROTECTED);
+	onphp_ce_NamedObject->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+
+	REGISTER_ONPHP_IMPLEMENTS(NamedObject, Named);
 	
 	memcpy(&zend_std_obj_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
 }

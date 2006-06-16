@@ -11,8 +11,9 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/Base/Identifiable.c \
 		src/core/Base/Identifier.c \
 		src/core/Base/IdentifiableObject.c \
-		src/core/Base/Named.c \
 		src/core/Base/Stringable.c \
+		src/core/Base/Named.c \
+		src/core/Base/NamedObject.c \
 	"
 
 	ONPHP_INCLUDES="-I./src/"

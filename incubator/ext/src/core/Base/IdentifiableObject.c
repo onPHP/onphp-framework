@@ -37,10 +37,8 @@ ONPHP_METHOD(IdentifiableObject, getId)
 		Z_TYPE_P(id) == IS_OBJECT
 		&& instanceof_function(Z_OBJCE_P(id), onphp_ce_Identifier TSRMLS_CC)
 	) {
-		zval *final = ONPHP_READ_PROPERTY(id, "final");
-	
 		if (
-			zval_is_true(final)
+			zval_is_true(ONPHP_READ_PROPERTY(id, "final"))
 		) {
 			id = ONPHP_READ_PROPERTY(id, "id");
 		}
