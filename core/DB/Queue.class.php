@@ -79,6 +79,12 @@
 			return $this->run($db)->drop();
 		}
 		
+		// to satisfy Query interface
+		public function toString()
+		{
+			return $this->toDialectString(ImaginaryDialect::me());
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			$out = array();
