@@ -7,18 +7,18 @@
 
 #include "onphp.h"
 
-extern PHPAPI zend_class_entry *onphp_ce_Identifier;
-extern PHPAPI zend_class_entry *onphp_ce_Identifiable;
-extern PHPAPI zend_class_entry *onphp_ce_IdentifiableObject;
+extern zend_object_value onphp_empty_object_new(zend_class_entry *class_type TSRMLS_DC);
 
 typedef struct _onphp_empty_object onphp_empty_object;
-
-typedef struct _onphp_empty_object onphp_identifier;
-typedef struct _onphp_empty_object onphp_identifiable_object;
 
 struct _onphp_empty_object {
 	zend_object std;
 };
+
+static
+ZEND_BEGIN_ARG_INFO(arginfo_id, 0)
+	ZEND_ARG_INFO(0, id)
+ZEND_END_ARG_INFO()
 
 PHP_MINIT_FUNCTION(onphp_core);
 

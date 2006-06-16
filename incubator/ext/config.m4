@@ -8,6 +8,9 @@ if test "$PHP_ONPHP" != "no"; then
 	onphp_sources="\
 		src/onphp.c \
 		src/onphp_core.c \
+		src/core/Main/Identifiable.c \
+		src/core/Main/Identifier.c \
+		src/core/Main/IdentifiableObject.c \
 	"
 
 	ONPHP_INCLUDES="-I./src/"
