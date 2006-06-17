@@ -12,6 +12,7 @@
 
 	/**
 	 * @ingroup Exceptions
+	 * @ingroup Module
 	**/
 	class ObjectNotFoundException extends DatabaseException {/*_*/}
 ?>

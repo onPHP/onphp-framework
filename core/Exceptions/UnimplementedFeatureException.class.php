@@ -14,6 +14,7 @@
 
 	/**
 	 * @ingroup Exceptions
+	 * @ingroup Module
 	**/
 	class UnimplementedFeatureException extends Exception {/*_*/}
 ?>

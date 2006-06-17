@@ -10,6 +10,8 @@
 #include "core/Base/Named.h"
 #include "core/Base/NamedObject.h"
 
+#include "core/Exceptions.h"
+
 static zend_object_handlers zend_std_obj_handlers;
 
 static void onphp_empty_object_free_storage(void *object TSRMLS_DC)
@@ -101,4 +103,6 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(NamedObject, Named);
 	
 	memcpy(&zend_std_obj_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
+
+	PHP_MINIT_FUNCTION(Exceptions);
 }

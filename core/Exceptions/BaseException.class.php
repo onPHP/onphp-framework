@@ -12,6 +12,7 @@
  
 	/**
 	 * @ingroup Exceptions
+	 * @ingroup Module
 	**/
 	class BaseException extends Exception
 	{

@@ -13,6 +13,7 @@
 #define ONPHP_ADD_CLASS(class_name, z_list, sub, allow, ce_flags) \
 	spl_add_classes(&onphp_ce_ ## class_name, z_list, sub, allow, ce_flags TSRMLS_CC)
 
+// Exceptions omitted here
 #define ONPHP_LIST_CLASSES(z_list, sub, allow, ce_flags) \
 	ONPHP_ADD_CLASS(Named, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(NamedObject, z_list, sub, allow, ce_flags); \

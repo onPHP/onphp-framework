@@ -14,6 +14,7 @@
 
 	/**
 	 * @ingroup Exceptions
+	 * @ingroup Module
 	**/
 	class DuplicateObjectException extends DatabaseException {/*_*/}
 ?>
