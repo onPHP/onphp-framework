@@ -26,7 +26,12 @@ final class Proto{$class->getName()} extends AbstractProtoClass
 
 	protected function __construct()
 	{
-		\$this->form =
+		\$this->form = \$this->makeForm();
+	}
+	
+	public function makeForm()
+	{
+		return
 			Form::create()->
 			add(
 EOT;
@@ -114,6 +119,7 @@ EOT;
 
 	}
 	
+	/// @deprecated by makeForm, will be removed after 0.4.7
 	public function getForm()
 	{
 		return \$this->form;
