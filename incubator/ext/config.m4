@@ -8,6 +8,7 @@ if test "$PHP_ONPHP" != "no"; then
 	onphp_sources="\
 		src/onphp.c \
 		src/onphp_core.c \
+		src/core/Exceptions.c \
 		src/core/Base/Identifiable.c \
 		src/core/Base/Identifier.c \
 		src/core/Base/IdentifiableObject.c \
@@ -15,7 +16,11 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/Base/Named.c \
 		src/core/Base/NamedObject.c \
 		src/core/Base/Singleton.c \
-		src/core/Exceptions.c \
+		src/core/Base/Instantiatable.c \
+		src/core/DB/Dialect.c \
+		src/core/OSQL/Castable.c \
+		src/core/OSQL/DialectString.c \
+		src/core/OSQL/SQLTableName.c \
 	"
 
 	ONPHP_INCLUDES="-I./src/"
