@@ -42,12 +42,19 @@
 				array_shift($args);
 			}
 			
-			if (!isset($instances[$class]))
-				return $instances[$class] =
+			if (!isset($instances[$class])) {
+				$object =
 					$args
 						? new $class($args)
 						: new $class();
-			else
+				
+				Assert::isTrue(
+					$object instanceof Singleton,
+					"Class '{$class}' is something not a Singleton's child"
+				);
+
+				return $instances[$class] = $object;
+			} else
 				return $instances[$class];
 		}
 		

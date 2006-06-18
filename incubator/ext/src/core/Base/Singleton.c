@@ -66,7 +66,6 @@ ONPHP_METHOD(Singleton, getInstance)
 			// can use ce->name instead
 			efree(name);
 			
-			// TODO: move this sanity check into php source
 			if (!instanceof_function(ce, onphp_ce_Singleton TSRMLS_CC)) {
 				zend_throw_exception_ex(
 					onphp_ce_WrongArgumentException,
