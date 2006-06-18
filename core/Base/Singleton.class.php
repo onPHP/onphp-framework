@@ -14,6 +14,7 @@
 	 * Inheritable Singleton's pattern implementation.
 	 * 
 	 * @ingroup Base
+	 * @ingroup Module
 	 * 
 	 * @example singleton.php
 	**/
