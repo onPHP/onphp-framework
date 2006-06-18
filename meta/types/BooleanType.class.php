@@ -18,17 +18,17 @@
 		public function setDefault($default)
 		{
 			static $boolean = array('true' => true, 'false' => false);
-			
+
 			if (!isset($boolean[$default]))
 				throw new WrongArgumentException(
 					"strange default value given - '{$default}'"
 				);
 
 			$this->default = $boolean[$default];
-			
+
 			return $this;
 		}
-		
+
 		public function getDeclaration()
 		{
 			if ($this->hasDefault())
@@ -36,32 +36,32 @@
 					$this->default
 						? 'true'
 						: 'false';
-			
+
 			return 'false';
 		}
-		
+
 		public function isMeasurable()
 		{
 			return false;
 		}
-		
+
 		public function toColumnType()
 		{
 			return 'DataType::create(DataType::BOOLEAN)';
 		}
-		
+
 		public function toPrimitive()
 		{
 			return 'Primitive::boolean';
 		}
-		
+
 		public function toGetter($name)
 		{
 			$camelName = ucfirst($name);
-			
+
 			$methodName = "is{$camelName}";
 			$compatName = "get{$camelName}";
-			
+
 			$method = <<<EOT
 
 public function {$compatName}()
@@ -78,17 +78,24 @@ EOT;
 
 			return $method;
 		}
-		
+
 		public function toSetter($name)
 		{
 			$methodName = 'set'.ucfirst($name);
-			
+
 			$method = <<<EOT
 
-public function {$methodName}(\${$name} = false)
+public function {$methodName}(\${$name} = null)
 {
-	\$this->{$name} = (\${$name} === true);
+	try {
+		Assert::isTernaryBase(\${$name});
+	}
+	catch (WrongArgumentException \$e) {
+		// ok, ignoring
+		return \$this;
+	}
 
+	\$this->{$name} = \${$name};
 	return \$this;
 }
 
