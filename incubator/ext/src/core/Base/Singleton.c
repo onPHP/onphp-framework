@@ -26,29 +26,26 @@ ONPHP_METHOD(Singleton, getInstance)
 		array_init(instances);
 	}
 	
-	if (!argc) {
-		zend_throw_exception_ex(
-			onphp_ce_WrongArgumentException,
-			0 TSRMLS_CC,
-			"At least one parameter expected, but nothing given"
-		);
-		RETURN_NULL();
-	}
-
-	params = safe_emalloc(sizeof(zval **), argc, 0);
-
-	if (zend_get_parameters_array_ex(argc, params) == FAILURE) {
-		zend_throw_exception_ex(
-			onphp_ce_BaseException,
-			0 TSRMLS_CC,
-			"Failed to get calling arguments for '%s' creation",
-			name
-		);
-		efree(params);
-		RETURN_NULL();
-	}
+	if (argc) {
+		params = safe_emalloc(sizeof(zval **), argc, 0);
 	
-	name = estrdup(Z_STRVAL_PP(params[0]));
+		if (zend_get_parameters_array_ex(argc, params) == FAILURE) {
+			zend_throw_exception_ex(
+				onphp_ce_BaseException,
+				0 TSRMLS_CC,
+				"Failed to get calling arguments for '%s' creation",
+				name
+			);
+			efree(params);
+			RETURN_NULL();
+		}
+		
+		name = estrdup(Z_STRVAL_PP(params[0]));
+	} else {
+		// ignore params stuff, since he's constructorless
+		name = estrdup("SingletonInstance");
+	}
+		
 	length = strlen(name);
 	
 	if (
@@ -64,7 +61,6 @@ ONPHP_METHOD(Singleton, getInstance)
 	} else {
 		// stolen from Reflection's newInstance()
 		if (zend_lookup_class(name, length, &cep TSRMLS_CC) == SUCCESS) {
-			
 			zend_class_entry *ce = *cep;
 			
 			// can use ce->name instead
@@ -78,7 +74,9 @@ ONPHP_METHOD(Singleton, getInstance)
 					"Class '%s' is something not a Singleton's child",
 					ce->name
 				);
-				efree(params);
+				if (argc) {
+					efree(params);
+				}
 				RETURN_NULL();
 			}
 			
@@ -99,7 +97,9 @@ ONPHP_METHOD(Singleton, getInstance)
 						"Can not call private constructor for '%s' creation",
 						ce->name
 					);
-					efree(params);
+					if (argc) {
+						efree(params);
+					}
 					RETURN_NULL();
 				} else if (ce->constructor->common.fn_flags & ZEND_ACC_PUBLIC) {
 					zend_throw_exception_ex(
@@ -109,7 +109,9 @@ ONPHP_METHOD(Singleton, getInstance)
 							"due to public constructor there",
 						ce->name
 					);
-					efree(params);
+					if (argc) {
+						efree(params);
+					}
 					RETURN_NULL();
 				}
 
@@ -119,9 +121,12 @@ ONPHP_METHOD(Singleton, getInstance)
 				fci.symbol_table = NULL;
 				fci.object_pp = &object;
 				fci.retval_ptr_ptr = &retval_ptr;
-				fci.param_count = argc - 1;
-				fci.params = params + 1;
-				fci.no_separation = 1;
+				if (argc) {
+					fci.param_count = argc - 1;
+					fci.params = params + 1;
+				} else {
+					fci.param_count = 0;
+				}
 				
 				fcc.initialized = 1;
 				fcc.function_handler = ce->constructor;
@@ -136,12 +141,14 @@ ONPHP_METHOD(Singleton, getInstance)
 						ce->name
 					);
 				}
-
+				
 				if (retval_ptr) {
 					zval_ptr_dtor(&retval_ptr);
 				}
 				
-				efree(params);
+				if (argc) {
+					efree(params);
+				}
 			}
 
 			add_assoc_zval_ex(instances, ce->name, length + 1, object);
