@@ -11,7 +11,7 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 		
-		public function __construct(/* array */ $dbs)
+		protected function __construct(/* array */ $dbs)
 		{
 			Assert::isArray($dbs);
 			
