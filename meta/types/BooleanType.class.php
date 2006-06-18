@@ -55,8 +55,9 @@
 			return 'Primitive::boolean';
 		}
 
-		public function toGetter($name)
+		public function toGetter(MetaClassProperty $property)
 		{
+			$name = $property->getName();
 			$camelName = ucfirst($name);
 
 			$methodName = "is{$camelName}";
@@ -79,28 +80,39 @@ EOT;
 			return $method;
 		}
 
-		public function toSetter($name)
+		public function toSetter(MetaClassProperty $property)
 		{
+			$name = $property->getName();
 			$methodName = 'set'.ucfirst($name);
+			
+			if ($property->isRequired()) {
+				$method = <<<EOT
 
-			$method = <<<EOT
+public function {$methodName}(\${$name} = false)
+{
+	\$this->{$name} = (\${$name} === true);
+
+	return \$this;
+}
+
+EOT;
+			} else {
+				$method = <<<EOT
 
 public function {$methodName}(\${$name} = null)
 {
 	try {
 		Assert::isTernaryBase(\${$name});
+		\$this->{$name} = \${$name};
 	}
-	catch (WrongArgumentException \$e) {
-		// ok, ignoring
-		return \$this;
-	}
+	catch (WrongArgumentException \$e) {/*_*/}
 
-	\$this->{$name} = \${$name};
 	return \$this;
 }
 
 EOT;
-
+			}
+			
 			return $method;
 		}
 	}

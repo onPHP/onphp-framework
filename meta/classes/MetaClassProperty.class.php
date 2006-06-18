@@ -125,7 +125,7 @@
 		
 		public function toMethods()
 		{
-			return $this->type->toMethods($this->name);
+			return $this->type->toMethods($this);
 		}
 		
 		public function toPrimitive()

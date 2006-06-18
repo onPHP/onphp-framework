@@ -42,15 +42,16 @@
 			return false;
 		}
 		
-		public function toMethods($name)
+		public function toMethods(MetaClassProperty $property)
 		{
 			return
-				parent::toMethods($name)
-				.$this->toDropper($name);
+				parent::toMethods($property)
+				.$this->toDropper($property);
 		}
 		
-		public function toSetter($name)
+		public function toSetter(MetaClassProperty $property)
 		{
+			$name = $property->getName();
 			$methodName = 'set'.ucfirst($name);
 			
 			$method = <<<EOT
@@ -67,8 +68,9 @@ EOT;
 			return $method;
 		}
 		
-		public function toDropper($name)
+		public function toDropper(MetaClassProperty $property)
 		{
+			$name = $property->getName();
 			$methodName = 'drop'.ucfirst($name);
 			
 			$method = <<<EOT

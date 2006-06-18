@@ -27,11 +27,11 @@
 			return true;
 		}
 		
-		public function toMethods($name)
+		public function toMethods(MetaClassProperty $property)
 		{
 			return
-				$this->toGetter($name)
-				.$this->toSetter($name);
+				$this->toGetter($property)
+				.$this->toSetter($property);
 		}
 		
 		public function hasDefault()
@@ -51,8 +51,9 @@
 			);
 		}
 		
-		public function toGetter($name)
+		public function toGetter(MetaClassProperty $property)
 		{
+			$name = $property->getName();
 			$methodName = 'get'.ucfirst($name);
 			
 			$method = <<<EOT
@@ -67,8 +68,9 @@ EOT;
 			return $method;
 		}
 		
-		public function toSetter($name)
+		public function toSetter(MetaClassProperty $property)
 		{
+			$name = $property->getName();
 			$methodName = 'set'.ucfirst($name);
 			
 			$method = <<<EOT
