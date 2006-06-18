@@ -6,6 +6,7 @@
 #include "core/Base/Identifier.h"
 #include "core/Base/Identifiable.h"
 #include "core/Base/IdentifiableObject.h"
+#include "core/Base/Singleton.h"
 #include "core/Base/Stringable.h"
 #include "core/Base/Named.h"
 #include "core/Base/NamedObject.h"
@@ -65,6 +66,11 @@ zend_object_value onphp_empty_object_new(zend_class_entry *class_type TSRMLS_DC)
 	return onphp_empty_object_spawn(class_type, NULL TSRMLS_CC);
 }
 
+PHP_RSHUTDOWN_FUNCTION(onphp_core)
+{
+	PHP_RSHUTDOWN(Singleton)(INIT_FUNC_ARGS_PASSTHRU);
+}
+
 PHP_MINIT_FUNCTION(onphp_core)
 {
 	REGISTER_ONPHP_INTERFACE(Stringable);
@@ -101,6 +107,21 @@ PHP_MINIT_FUNCTION(onphp_core)
 	onphp_ce_NamedObject->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 
 	REGISTER_ONPHP_IMPLEMENTS(NamedObject, Named);
+
+	REGISTER_ONPHP_STD_CLASS_EX(
+		Singleton,
+		onphp_empty_object_new,
+		onphp_funcs_Singleton
+	);
+	onphp_ce_Singleton->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+
+	REGISTER_ONPHP_SUB_CLASS_EX(
+		SingletonInstance,
+		Singleton,
+		onphp_empty_object_new,
+		onphp_funcs_SingletonInstance
+	);
+	onphp_ce_SingletonInstance->ce_flags |= ZEND_ACC_FINAL_CLASS;
 	
 	memcpy(&zend_std_obj_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
 

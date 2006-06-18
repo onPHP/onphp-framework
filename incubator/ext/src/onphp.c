@@ -7,6 +7,7 @@
 #include "core/Base/Identifiable.h"
 #include "core/Base/IdentifiableObject.h"
 #include "core/Base/Stringable.h"
+#include "core/Base/Singleton.h"
 #include "core/Base/Named.h"
 #include "core/Base/NamedObject.h"
 
@@ -15,6 +16,9 @@
 
 // Exceptions omitted here
 #define ONPHP_LIST_CLASSES(z_list, sub, allow, ce_flags) \
+	ONPHP_ADD_CLASS(Stringable, z_list, sub, allow, ce_flags); \
+	ONPHP_ADD_CLASS(Singleton, z_list, sub, allow, ce_flags); \
+	ONPHP_ADD_CLASS(SingletonInstance, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(Named, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(NamedObject, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(Identifier, z_list, sub, allow, ce_flags); \
@@ -51,6 +55,10 @@ PHP_MINIT_FUNCTION(onphp)
 	return SUCCESS;
 }
 
+PHP_RSHUTDOWN_FUNCTION(onphp)
+{
+	PHP_RSHUTDOWN(onphp_core)(INIT_FUNC_ARGS_PASSTHRU);
+}
 
 static zend_module_dep onphp_deps[] = {
 	ZEND_MOD_REQUIRED("spl")
@@ -66,7 +74,7 @@ zend_module_entry onphp_module_entry = {
 	PHP_MINIT(onphp),
 	NULL,
 	NULL,
-	NULL,
+	PHP_RSHUTDOWN(onphp),
 	PHP_MINFO(onphp),
 	ONPHP_VERSION,
 	STANDARD_MODULE_PROPERTIES

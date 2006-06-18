@@ -25,6 +25,7 @@ ZEND_BEGIN_ARG_INFO(arginfo_name, 0)
 	ZEND_ARG_INFO(0, name)
 ZEND_END_ARG_INFO()
 
-PHP_MINIT_FUNCTION(onphp_core);
+extern PHP_MINIT_FUNCTION(onphp_core);
+extern PHP_RSHUTDOWN_FUNCTION(onphp_core);
 
 #endif /* ONPHP_CORE_H */
