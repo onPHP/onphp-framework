@@ -15,13 +15,12 @@
 	 * 
 	 * @ingroup Base
 	 * @ingroup Module
-	 * 
-	 * @example singleton.php
 	**/
 	abstract class Singleton
 	{
 		protected function __construct() {/* you can't create me */}
 		
+		/// @example singleton.php
 		final public static function getInstance(
 			$class = null, $args = null /* , ... */
 		)

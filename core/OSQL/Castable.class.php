@@ -14,6 +14,7 @@
 	 * Cast-able SQL parts.
 	 * 
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	abstract class Castable
 	{

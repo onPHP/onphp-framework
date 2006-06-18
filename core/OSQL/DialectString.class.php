@@ -14,6 +14,7 @@
 	 * Basis for almost all implementations of SQL parts.
 	 * 
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	interface DialectString
 	{

@@ -14,6 +14,7 @@
 	 * Base (aka ANSI) SQL dialect.
 	 * 
 	 * @ingroup DB
+	 * @ingroup Module
 	**/
 	abstract class /* ANSI's */ Dialect
 		extends Singleton
