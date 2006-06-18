@@ -81,6 +81,16 @@ ONPHP_METHOD(Singleton, getInstance)
 						"Can not call private constructor for '%s' creation",
 						name
 					);
+					RETURN_NULL();
+				} else if (ce->constructor->common.fn_flags & ZEND_ACC_PUBLIC) {
+					zend_throw_exception_ex(
+						onphp_ce_BaseException,
+						0 TSRMLS_CC,
+						"Don't want to deal with '%s' class "
+							"due to public constructor there",
+						name
+					);
+					RETURN_NULL();
 				}
 
 				params = safe_emalloc(sizeof(zval **), argc, 0);
@@ -90,9 +100,10 @@ ONPHP_METHOD(Singleton, getInstance)
 					zend_throw_exception_ex(
 						onphp_ce_BaseException,
 						0 TSRMLS_CC,
-						"Failed to get calling arguments '%s' creation",
+						"Failed to get calling arguments for '%s' creation",
 						name
 					);
+					RETURN_NULL();
 				}
 				
 				fci.size = sizeof(fci);
@@ -112,7 +123,6 @@ ONPHP_METHOD(Singleton, getInstance)
 				
 				if (zend_call_function(&fci, &fcc TSRMLS_CC) == FAILURE) {
 					efree(params);
-					zval_ptr_dtor(&retval_ptr);
 
 					zend_throw_exception_ex(
 						onphp_ce_BaseException,
