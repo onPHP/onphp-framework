@@ -12,7 +12,7 @@
 
 	/**
 	 * Single roof for InsertQuery and UpdateQuery.
-	 * 
+	 *
 	 * @ingroup OSQL
 	**/
 	abstract class InsertOrUpdateQuery
@@ -21,9 +21,9 @@
 	{
 		protected $table	= null;
 		protected $fields	= array();
-		
+
 		abstract public function setTable($table);
-		
+
 		public function getTable()
 		{
 			return $this->table;
@@ -32,20 +32,20 @@
 		public function set($field, $value = null)
 		{
 			$this->fields[$field] = $value;
-			
+
 			return $this;
 		}
-		
+
 		public function drop($field)
 		{
 			if (!array_key_exists($field, $this->fields))
 				throw new MissingElementException("unknown field '{$field}'");
-			
+
 			unset($this->fields[$field]);
-			
+
 			return $this;
 		}
-		
+
 		public function lazySet($field, /* Identifiable */ $object = null)
 		{
 			if ($object instanceof Identifiable)
@@ -63,15 +63,20 @@
 
 			return $this;
 		}
-		
+
 		public function setBoolean($field, $value = false)
 		{
-			if (true === $value)
-				return $this->set($field, true);
-			else
-				return $this->set($field, false);
+			try {
+				Assert::isTernaryBase($value);
+			}
+			catch (WrongArgumentException $e) {
+				// ok, ignoring
+				return $this;
+			}
+
+			return $this->set($field, $value);
 		}
-		
+
 		/**
 		 * Adds values from associative array.
 		**/
