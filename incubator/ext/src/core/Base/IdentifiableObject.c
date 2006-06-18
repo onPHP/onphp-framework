@@ -64,7 +64,7 @@ ONPHP_METHOD(IdentifiableObject, setId)
 
 zend_function_entry onphp_funcs_IdentifiableObject[] = {
 	ONPHP_ME(IdentifiableObject, getId,	NULL, ZEND_ACC_PUBLIC)
-	ONPHP_ME(IdentifiableObject, setId,	arginfo_id, ZEND_ACC_PUBLIC)
-	ONPHP_ME(IdentifiableObject, wrap,	arginfo_id, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(IdentifiableObject, setId,	arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(IdentifiableObject, wrap,	arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	{NULL, NULL, NULL}
 };

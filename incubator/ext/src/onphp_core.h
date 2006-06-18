@@ -16,13 +16,14 @@ struct _onphp_empty_object {
 };
 
 static
-ZEND_BEGIN_ARG_INFO(arginfo_id, 0)
-	ZEND_ARG_INFO(0, id)
+ZEND_BEGIN_ARG_INFO(arginfo_one, 0)
+	ZEND_ARG_INFO(0, first)
 ZEND_END_ARG_INFO()
 
 static
-ZEND_BEGIN_ARG_INFO(arginfo_name, 0)
-	ZEND_ARG_INFO(0, name)
+ZEND_BEGIN_ARG_INFO(arginfo_two, 0)
+	ZEND_ARG_INFO(0, first)
+	ZEND_ARG_INFO(0, second)
 ZEND_END_ARG_INFO()
 
 extern PHP_MINIT_FUNCTION(onphp_core);

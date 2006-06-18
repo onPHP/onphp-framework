@@ -81,9 +81,9 @@ ONPHP_METHOD(Identifier, isFinalized)
 
 zend_function_entry onphp_funcs_Identifier[] = {
 	ONPHP_ME(Identifier, create,		NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-	ONPHP_ME(Identifier, wrap,			arginfo_id, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Identifier, wrap,			arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Identifier, getId,			NULL, ZEND_ACC_PUBLIC)
-	ONPHP_ME(Identifier, setId,			arginfo_id, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Identifier, setId,			arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Identifier, finalize,		NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Identifier, isFinalized,	NULL, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
