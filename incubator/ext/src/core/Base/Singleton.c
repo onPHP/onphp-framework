@@ -17,7 +17,7 @@ ONPHP_METHOD(Singleton, getInstance)
 	char *name;
 	int length, argc = ZEND_NUM_ARGS();
 	zend_class_entry **cep;
-	zval *object;
+	zval *object, *args;
 	zval **stored;
 	zval ***params;
 
@@ -28,7 +28,7 @@ ONPHP_METHOD(Singleton, getInstance)
 	
 	if (argc) {
 		params = safe_emalloc(sizeof(zval **), argc, 0);
-	
+		
 		if (zend_get_parameters_array_ex(argc, params) == FAILURE) {
 			zend_throw_exception_ex(
 				onphp_ce_BaseException,
@@ -38,6 +38,20 @@ ONPHP_METHOD(Singleton, getInstance)
 			);
 			efree(params);
 			RETURN_NULL();
+		}
+		
+		// replica of historical Singleton's behaviour
+		if (argc > 2) {
+			int i;
+			ALLOC_INIT_ZVAL(args);
+			array_init(args);
+			
+			for (i = 1; i < argc; i++) {
+				add_next_index_zval(args, *params[i]);
+			}
+			
+			params[1] = &args;
+			argc = 2;
 		}
 		
 		name = estrdup(Z_STRVAL_PP(params[0]));
