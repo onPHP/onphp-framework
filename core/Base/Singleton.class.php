@@ -53,15 +53,4 @@
 		
 		final private function __clone() {/* do not clone me */}
 	}
-	
-	/**
-	 * @ingroup Base
-	**/
-	final class SingletonInstance extends Singleton
-	{
-		public function __call($class, $args = null)
-		{
-			return Singleton::getInstance($class, $args);
-		}
-	}
 ?>
