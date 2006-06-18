@@ -18,7 +18,6 @@
 #define ONPHP_LIST_CLASSES(z_list, sub, allow, ce_flags) \
 	ONPHP_ADD_CLASS(Stringable, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(Singleton, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(SingletonInstance, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(Named, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(NamedObject, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(Identifier, z_list, sub, allow, ce_flags); \

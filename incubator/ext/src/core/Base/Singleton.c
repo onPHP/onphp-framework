@@ -6,7 +6,6 @@
 #include "core/Exceptions.h"
 
 PHPAPI zend_class_entry *onphp_ce_Singleton;
-PHPAPI zend_class_entry *onphp_ce_SingletonInstance;
 
 static zval *instances = NULL;
 
@@ -165,19 +164,5 @@ zend_function_entry onphp_funcs_Singleton[] = {
 	ONPHP_ME(Singleton, __construct,	NULL, ZEND_ACC_PROTECTED)
 	ONPHP_ME(Singleton, getInstance,	NULL, ZEND_ACC_FINAL | ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Singleton, __clone,		NULL, ZEND_ACC_FINAL | ZEND_ACC_PRIVATE)
-	{NULL, NULL, NULL}
-};
-
-ONPHP_METHOD(SingletonInstance, __call)
-{
-	zend_throw_exception_ex(
-		onphp_ce_UnimplementedFeatureException,
-		0 TSRMLS_CC,
-		"TODO"
-	);
-}
-
-zend_function_entry onphp_funcs_SingletonInstance[] = {
-	ONPHP_ME(SingletonInstance, __call,	arginfo_magic_call, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };

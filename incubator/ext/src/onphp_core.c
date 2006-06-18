@@ -115,14 +115,6 @@ PHP_MINIT_FUNCTION(onphp_core)
 	);
 	onphp_ce_Singleton->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 
-	REGISTER_ONPHP_SUB_CLASS_EX(
-		SingletonInstance,
-		Singleton,
-		onphp_empty_object_new,
-		onphp_funcs_SingletonInstance
-	);
-	onphp_ce_SingletonInstance->ce_flags |= ZEND_ACC_FINAL_CLASS;
-	
 	memcpy(&zend_std_obj_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
 
 	PHP_MINIT_FUNCTION(Exceptions);
