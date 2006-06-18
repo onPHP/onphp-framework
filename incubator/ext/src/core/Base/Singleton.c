@@ -67,6 +67,8 @@ ONPHP_METHOD(Singleton, getInstance)
 		if (zend_lookup_class(name, length, &cep TSRMLS_CC) == SUCCESS) {
 			
 			zend_class_entry *ce = *cep;
+			
+			// can use ce->name instead
 			efree(name);
 			
 			// TODO: move this sanity check into php source
@@ -143,7 +145,7 @@ ONPHP_METHOD(Singleton, getInstance)
 				efree(params);
 			}
 
-			add_assoc_zval_ex(instances, name, length + 1, object);
+			add_assoc_zval_ex(instances, ce->name, length + 1, object);
 		}
 	}
 	
@@ -161,7 +163,7 @@ PHP_RSHUTDOWN_FUNCTION(Singleton)
 
 zend_function_entry onphp_funcs_Singleton[] = {
 	ONPHP_ME(Singleton, __construct,	NULL, ZEND_ACC_PROTECTED)
-	ONPHP_ME(Singleton, getInstance,	arginfo_name, ZEND_ACC_FINAL | ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Singleton, getInstance,	NULL, ZEND_ACC_FINAL | ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Singleton, __clone,		NULL, ZEND_ACC_FINAL | ZEND_ACC_PRIVATE)
 	{NULL, NULL, NULL}
 };
