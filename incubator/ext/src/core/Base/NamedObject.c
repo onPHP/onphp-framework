@@ -8,6 +8,12 @@
 
 PHPAPI zend_class_entry *onphp_ce_NamedObject;
 
+static 
+ZEND_BEGIN_ARG_INFO(arginfo_two_named_objects, 0)
+	ZEND_ARG_OBJ_INFO(0, Named, Named, 0)
+	ZEND_ARG_OBJ_INFO(0, Named, Named, 0)
+ZEND_END_ARG_INFO();
+
 ONPHP_METHOD(NamedObject, getName)
 {
 	zval *this = getThis(), *name;
@@ -96,7 +102,7 @@ ONPHP_METHOD(NamedObject, compareNames)
 zend_function_entry onphp_funcs_NamedObject[] = {
 	ONPHP_ME(NamedObject, getName,		NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(NamedObject, setName,		arginfo_one, ZEND_ACC_PUBLIC)
-	ONPHP_ME(NamedObject, compareNames,	arginfo_two, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(NamedObject, compareNames,	arginfo_two_named_objects, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(NamedObject, toString,		NULL, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };
