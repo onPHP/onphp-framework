@@ -18,7 +18,10 @@
 	{
 		public function __call($class, $args = null)
 		{
-			return Singleton::getInstance($class, $args);
+			return call_user_func_array(
+				array('Singleton', 'getInstance'),
+				$args
+			);
 		}
 	}
 ?>
