@@ -68,13 +68,10 @@
 		{
 			try {
 				Assert::isTernaryBase($value);
-			}
-			catch (WrongArgumentException $e) {
-				// ok, ignoring
-				return $this;
-			}
+				$this->set($field, $value);
+			} catch (WrongArgumentException $e) {/*_*/}
 
-			return $this->set($field, $value);
+			return $this;
 		}
 
 		/**
