@@ -10,6 +10,11 @@
 #include "core/Base/Singleton.h"
 #include "core/Base/Named.h"
 #include "core/Base/NamedObject.h"
+#include "core/Base/Instantiatable.h"
+#include "core/DB/Dialect.h"
+#include "core/OSQL/Castable.h"
+#include "core/OSQL/DialectString.h"
+#include "core/OSQL/SQLTableName.h"
 
 #define ONPHP_ADD_CLASS(class_name, z_list, sub, allow, ce_flags) \
 	spl_add_classes(&onphp_ce_ ## class_name, z_list, sub, allow, ce_flags TSRMLS_CC)
@@ -22,7 +27,12 @@
 	ONPHP_ADD_CLASS(NamedObject, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(Identifier, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(Identifiable, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(IdentifiableObject, z_list, sub, allow, ce_flags);
+	ONPHP_ADD_CLASS(IdentifiableObject, z_list, sub, allow, ce_flags); \
+	ONPHP_ADD_CLASS(Instantiatable, z_list, sub, allow, ce_flags); \
+	ONPHP_ADD_CLASS(Dialect, z_list, sub, allow, ce_flags); \
+	ONPHP_ADD_CLASS(Castable, z_list, sub, allow, ce_flags); \
+	ONPHP_ADD_CLASS(DialectString, z_list, sub, allow, ce_flags); \
+	ONPHP_ADD_CLASS(SQLTableName, z_list, sub, allow, ce_flags);
 
 PHP_FUNCTION(onphp_classes)
 {

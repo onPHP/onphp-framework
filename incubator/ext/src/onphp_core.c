@@ -10,6 +10,11 @@
 #include "core/Base/Stringable.h"
 #include "core/Base/Named.h"
 #include "core/Base/NamedObject.h"
+#include "core/Base/Instantiatable.h"
+#include "core/DB/Dialect.h"
+#include "core/OSQL/Castable.h"
+#include "core/OSQL/DialectString.h"
+#include "core/OSQL/SQLTableName.h"
 
 #include "core/Exceptions.h"
 
@@ -75,8 +80,13 @@ PHP_MINIT_FUNCTION(onphp_core)
 {
 	REGISTER_ONPHP_INTERFACE(Stringable);
 	REGISTER_ONPHP_INTERFACE(Identifiable);
+	REGISTER_ONPHP_INTERFACE(Instantiatable);
+	
 	REGISTER_ONPHP_INTERFACE(Named);
 	REGISTER_ONPHP_IMPLEMENTS(Named, Identifiable);
+	
+	REGISTER_ONPHP_INTERFACE(DialectString);
+	REGISTER_ONPHP_INTERFACE(SQLTableName);
 	
 	REGISTER_ONPHP_STD_CLASS_EX(
 		Identifier,
@@ -114,6 +124,23 @@ PHP_MINIT_FUNCTION(onphp_core)
 		onphp_funcs_Singleton
 	);
 	onphp_ce_Singleton->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+	
+	REGISTER_ONPHP_SUB_CLASS_EX(
+		Dialect,
+		Singleton,
+		onphp_empty_object_new,
+		onphp_funcs_Dialect
+	);
+	REGISTER_ONPHP_IMPLEMENTS(Dialect, Instantiatable);
+	onphp_ce_Dialect->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+	
+	REGISTER_ONPHP_STD_CLASS_EX(
+		Castable,
+		onphp_empty_object_new,
+		onphp_funcs_Castable
+	);
+	REGISTER_ONPHP_PROPERTY(Castable, "cast", ZEND_ACC_PROTECTED);
+	onphp_ce_Castable->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 
 	memcpy(&zend_std_obj_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
 
