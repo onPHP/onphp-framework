@@ -1,5 +1,13 @@
 # $Id$
 
+2006-06-17	Konstantin V. Arkhipov
+
+	* main/Flow/EditorController.class.php: uses makeForm() now.
+
+	* meta/builders/ProtoClassBuilder.class.php: getForm() (single global
+	Form object) deprecated in
+	favor of makeForm() (Form's object factory) as suggested by sloory.
+
 2006-06-11	Konstantin V. Arkhipov
 
 	* main/DAOs/FileSystemDaoWorker.class.php,
