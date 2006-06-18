@@ -10,31 +10,48 @@ PHPAPI zend_class_entry *onphp_ce_SingletonInstance;
 
 static zval *instances = NULL;
 
-ONPHP_METHOD(Singleton, __construct)
-{
-	RETURN_NULL();
-}
+/* protected */		ONPHP_METHOD(Singleton, __construct)	{/*_*/}
+/* final private */	ONPHP_METHOD(Singleton, __clone)		{/*_*/}
 
 ONPHP_METHOD(Singleton, getInstance)
 {
 	char *name;
-	int length;
+	int length, argc = ZEND_NUM_ARGS();
 	zend_class_entry **cep;
 	zval *object;
 	zval **stored;
+	zval ***params;
 
 	if (!instances) {
 		ALLOC_INIT_ZVAL(instances);
 		array_init(instances);
 	}
-
-	if (
-		(ZEND_NUM_ARGS() != 1)
-		|| zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &name, &length) == FAILURE
-	) {
-		WRONG_PARAM_COUNT;
+	
+	if (!argc) {
+		zend_throw_exception_ex(
+			onphp_ce_WrongArgumentException,
+			0 TSRMLS_CC,
+			"At least one parameter expected, but nothing given"
+		);
+		RETURN_NULL();
 	}
 
+	params = safe_emalloc(sizeof(zval **), argc, 0);
+
+	if (zend_get_parameters_array_ex(argc, params) == FAILURE) {
+		zend_throw_exception_ex(
+			onphp_ce_BaseException,
+			0 TSRMLS_CC,
+			"Failed to get calling arguments for '%s' creation",
+			name
+		);
+		efree(params);
+		RETURN_NULL();
+	}
+	
+	name = estrdup(Z_STRVAL_PP(params[0]));
+	length = strlen(name);
+	
 	if (
 		zend_hash_find(
 			Z_ARRVAL_P(instances),
@@ -50,6 +67,7 @@ ONPHP_METHOD(Singleton, getInstance)
 		if (zend_lookup_class(name, length, &cep TSRMLS_CC) == SUCCESS) {
 			
 			zend_class_entry *ce = *cep;
+			efree(name);
 			
 			// TODO: move this sanity check into php source
 			if (!instanceof_function(ce, onphp_ce_Singleton TSRMLS_CC)) {
@@ -59,8 +77,10 @@ ONPHP_METHOD(Singleton, getInstance)
 					"Class '%s' is something not a Singleton's child",
 					ce->name
 				);
+				efree(params);
+				RETURN_NULL();
 			}
-
+			
 			MAKE_STD_ZVAL(object);
 			object_init_ex(object, ce);
 
@@ -69,9 +89,6 @@ ONPHP_METHOD(Singleton, getInstance)
 				zend_fcall_info_cache fcc;
 				zval *retval_ptr;
 				
-				zval ***params;
-				int argc = ZEND_NUM_ARGS();
-
 				// we can call protected consturctors,
 				// since all classes are childs of Singleton
 				if (ce->constructor->common.fn_flags & ZEND_ACC_PRIVATE) {
@@ -79,8 +96,9 @@ ONPHP_METHOD(Singleton, getInstance)
 						onphp_ce_BaseException,
 						0 TSRMLS_CC,
 						"Can not call private constructor for '%s' creation",
-						name
+						ce->name
 					);
+					efree(params);
 					RETURN_NULL();
 				} else if (ce->constructor->common.fn_flags & ZEND_ACC_PUBLIC) {
 					zend_throw_exception_ex(
@@ -88,32 +106,20 @@ ONPHP_METHOD(Singleton, getInstance)
 						0 TSRMLS_CC,
 						"Don't want to deal with '%s' class "
 							"due to public constructor there",
-						name
+						ce->name
 					);
-					RETURN_NULL();
-				}
-
-				params = safe_emalloc(sizeof(zval **), argc, 0);
-
-				if (zend_get_parameters_array_ex(argc, params) == FAILURE) {
 					efree(params);
-					zend_throw_exception_ex(
-						onphp_ce_BaseException,
-						0 TSRMLS_CC,
-						"Failed to get calling arguments for '%s' creation",
-						name
-					);
 					RETURN_NULL();
 				}
-				
+
 				fci.size = sizeof(fci);
 				fci.function_table = EG(function_table);
 				fci.function_name = NULL;
 				fci.symbol_table = NULL;
 				fci.object_pp = &object;
 				fci.retval_ptr_ptr = &retval_ptr;
-				fci.param_count = argc;
-				fci.params = params;
+				fci.param_count = argc - 1;
+				fci.params = params + 1;
 				fci.no_separation = 1;
 				
 				fcc.initialized = 1;
@@ -122,13 +128,11 @@ ONPHP_METHOD(Singleton, getInstance)
 				fcc.object_pp = &object;
 				
 				if (zend_call_function(&fci, &fcc TSRMLS_CC) == FAILURE) {
-					efree(params);
-
 					zend_throw_exception_ex(
 						onphp_ce_BaseException,
 						0 TSRMLS_CC,
 						"Failed to call '%s' constructor",
-						name
+						ce->name
 					);
 				}
 
@@ -144,11 +148,6 @@ ONPHP_METHOD(Singleton, getInstance)
 	}
 	
 	RETURN_ZVAL(object, 1, 0);
-}
-
-ONPHP_METHOD(Singleton, __clone)
-{
-	RETURN_NULL();
 }
 
 PHP_RSHUTDOWN_FUNCTION(Singleton)
@@ -169,14 +168,11 @@ zend_function_entry onphp_funcs_Singleton[] = {
 
 ONPHP_METHOD(SingletonInstance, __call)
 {
-	char *name;
-	int length;
-
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &name, &length) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
-
-	// huh?
+	zend_throw_exception_ex(
+		onphp_ce_UnimplementedFeatureException,
+		0 TSRMLS_CC,
+		"TODO"
+	);
 }
 
 zend_function_entry onphp_funcs_SingletonInstance[] = {
