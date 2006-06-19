@@ -9,7 +9,7 @@
 	PHP_ME(onphp_ ## class_name, function_name, arg_info, flags)
 
 #define ONPHP_ABSTRACT_ME(class_name, function_name, arg_info, flags) \
-	ZEND_FENTRY(onphp_ ## class_name, NULL, arg_info, flags)
+	ZEND_FENTRY(function_name, NULL, arg_info, flags|ZEND_ACC_ABSTRACT)
 
 #define REGISTER_ONPHP_INTERFACE(class_name) \
 	spl_register_interface(&onphp_ce_ ## class_name, # class_name, onphp_funcs_ ## class_name TSRMLS_CC);
