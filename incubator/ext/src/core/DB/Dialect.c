@@ -1,5 +1,8 @@
 /* $Id$ */
 
+#include "php.h"
+#include "ext/standard/php_string.h"
+
 #include "onphp.h"
 #include "onphp_core.h"
 
@@ -31,7 +34,13 @@ ONPHP_METHOD(Dialect, quoteValue)
 		char *slashed;
 		int length = 0;
 		
-		slashed = php_addslashes((char *) Z_STRVAL_P(value), Z_STRLEN_P(value), &length, 0 TSRMLS_CC);
+		slashed =
+			php_addslashes(
+				Z_STRVAL_P(value),
+				Z_STRLEN_P(value),
+				&length,
+				0 TSRMLS_CC
+			);
 		
 		length += 2;
 		
