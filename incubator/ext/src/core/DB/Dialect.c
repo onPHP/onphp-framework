@@ -28,22 +28,23 @@ ONPHP_METHOD(Dialect, quoteValue)
 	if (Z_TYPE_P(value) == IS_LONG) {
 		RETURN_LONG(Z_LVAL_P(value));
 	} else {
-		char *slashed, *original;
-		int length;
+		char *slashed;
+		int length = 0;
 		
-		original = estrdup(Z_STRVAL_P(value));
+		slashed = php_addslashes((char *) Z_STRVAL_P(value), Z_STRLEN_P(value), &length, 0 TSRMLS_CC);
 		
-		convert_to_string(value);
-			
-		slashed =
-			php_addslashes(
-				original,
-				0,
-				&length,
-				0 TSRMLS_CC
-			);
+		length += 2;
 		
-		RETURN_STRINGL(slashed, length, 1);
+		slashed = erealloc(slashed, length);
+		
+		slashed[length] = 0;
+		
+		memmove(slashed + 1, slashed, length - 2);
+		
+		slashed[0] = 39;
+		slashed[length - 1] = 39;
+		
+		RETURN_STRINGL(slashed, length, 0);
 	}
 }
 
