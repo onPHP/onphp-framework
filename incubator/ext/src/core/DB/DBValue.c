@@ -30,10 +30,6 @@ ONPHP_METHOD(DBValue, __construct)
 {
 	zval *this = getThis(), *value;
 
-	onphp_db_value *object = (onphp_db_value *) zend_object_store_get_object(
-		this TSRMLS_CC
-	);
-	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
@@ -58,9 +54,9 @@ ONPHP_METHOD(DBValue, toDialectString)
 }
 
 zend_function_entry onphp_funcs_DBValue[] = {
-	ONPHP_ABSTRACT_ME(DBValue, create, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(DBValue, create, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(DBValue, __construct, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(DBValue, getValue, NULL, ZEND_ACC_PUBLIC)
-	ONPHP_ME(DBValue, toDialectString, NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(DBValue, toDialectString, arginfo_dialect, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };

@@ -87,8 +87,6 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(Named, Identifiable);
 	
 	REGISTER_ONPHP_INTERFACE(DialectString);
-	REGISTER_ONPHP_IMPLEMENTS(DBValue, DialectString);
-	
 	REGISTER_ONPHP_INTERFACE(SQLTableName);
 	
 	REGISTER_ONPHP_STD_CLASS_EX(
@@ -117,9 +115,8 @@ PHP_MINIT_FUNCTION(onphp_core)
 		onphp_funcs_NamedObject
 	);
 	REGISTER_ONPHP_PROPERTY(NamedObject, "name", ZEND_ACC_PROTECTED);
-	onphp_ce_NamedObject->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
-
 	REGISTER_ONPHP_IMPLEMENTS(NamedObject, Named);
+	onphp_ce_NamedObject->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 
 	REGISTER_ONPHP_STD_CLASS_EX(
 		Singleton,
@@ -153,6 +150,7 @@ PHP_MINIT_FUNCTION(onphp_core)
 	);
 	REGISTER_ONPHP_PROPERTY(DBValue, "value", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_PROPERTY_BOOL(DBValue, "unquotable", 0, ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_IMPLEMENTS(DBValue, DialectString);
 
 	memcpy(&zend_std_obj_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
 

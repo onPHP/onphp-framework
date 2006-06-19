@@ -15,13 +15,7 @@ ZEND_END_ARG_INFO();
 
 ONPHP_METHOD(NamedObject, getName)
 {
-	zval *this = getThis(), *name;
-
-	onphp_named_object *object = (onphp_named_object *) zend_object_store_get_object(
-		this TSRMLS_CC
-	);
-
-	name = ONPHP_READ_PROPERTY(this, "name");
+	zval *name = ONPHP_READ_PROPERTY(getThis(), "name");
 
 	RETURN_ZVAL(name, 1, 0);
 }

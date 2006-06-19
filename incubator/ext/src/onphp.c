@@ -61,14 +61,12 @@ PHP_MINFO_FUNCTION(onphp)
 
 PHP_MINIT_FUNCTION(onphp)
 {
-	PHP_MINIT(onphp_core)(INIT_FUNC_ARGS_PASSTHRU);
-
-	return SUCCESS;
+	return PHP_MINIT(onphp_core)(INIT_FUNC_ARGS_PASSTHRU);
 }
 
 PHP_RSHUTDOWN_FUNCTION(onphp)
 {
-	PHP_RSHUTDOWN(onphp_core)(INIT_FUNC_ARGS_PASSTHRU);
+	return PHP_RSHUTDOWN(onphp_core)(INIT_FUNC_ARGS_PASSTHRU);
 }
 
 static zend_module_dep onphp_deps[] = {

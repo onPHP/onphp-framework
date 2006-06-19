@@ -29,10 +29,6 @@ ONPHP_METHOD(IdentifiableObject, getId)
 {
 	zval *this = getThis(), *id;
 
-	onphp_identifiable_object *object = (onphp_identifiable_object *) zend_object_store_get_object(
-		this TSRMLS_CC
-	);
-
 	id = ONPHP_READ_PROPERTY(this, "id");
 
 	if (

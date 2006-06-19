@@ -2,6 +2,8 @@
 
 #include "onphp_core.h"
 
+#include "zend_exceptions.h"
+
 #include "core/Base/Singleton.h"
 #include "core/Exceptions.h"
 
@@ -19,7 +21,7 @@ ONPHP_METHOD(Singleton, getInstance)
 	zend_class_entry **cep;
 	zval *object, *args;
 	zval **stored;
-	zval ***params;
+	zval ***params = NULL;
 
 	if (!instances) {
 		ALLOC_INIT_ZVAL(instances);
@@ -33,8 +35,7 @@ ONPHP_METHOD(Singleton, getInstance)
 			zend_throw_exception_ex(
 				onphp_ce_BaseException,
 				0 TSRMLS_CC,
-				"Failed to get calling arguments for '%s' creation",
-				name
+				"Failed to get calling arguments for object creation"
 			);
 			efree(params);
 			RETURN_NULL();
