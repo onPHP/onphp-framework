@@ -29,6 +29,9 @@
 #define REGISTER_ONPHP_PROPERTY(class_name, prop_name, prop_flags) \
 	zend_declare_property_null(onphp_ce_ ## class_name, prop_name, strlen(prop_name), prop_flags TSRMLS_CC);
 
+#define REGISTER_ONPHP_PROPERTY_BOOL(class_name, prop_name, bool, prop_flags) \
+	zend_declare_property_bool(onphp_ce_ ## class_name, prop_name, strlen(prop_name), bool, prop_flags TSRMLS_CC);
+
 #define ONPHP_READ_PROPERTY(class, property) \
 	zend_read_property(Z_OBJCE_P(class), class, property, strlen(property), 1 TSRMLS_CC)
 

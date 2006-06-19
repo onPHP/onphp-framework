@@ -11,6 +11,7 @@
 #include "core/Base/Named.h"
 #include "core/Base/NamedObject.h"
 #include "core/Base/Instantiatable.h"
+#include "core/DB/DBValue.h"
 #include "core/DB/Dialect.h"
 #include "core/OSQL/Castable.h"
 #include "core/OSQL/DialectString.h"
@@ -86,6 +87,8 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(Named, Identifiable);
 	
 	REGISTER_ONPHP_INTERFACE(DialectString);
+	REGISTER_ONPHP_IMPLEMENTS(DBValue, DialectString);
+	
 	REGISTER_ONPHP_INTERFACE(SQLTableName);
 	
 	REGISTER_ONPHP_STD_CLASS_EX(
@@ -141,6 +144,15 @@ PHP_MINIT_FUNCTION(onphp_core)
 	);
 	REGISTER_ONPHP_PROPERTY(Castable, "cast", ZEND_ACC_PROTECTED);
 	onphp_ce_Castable->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+	
+	REGISTER_ONPHP_SUB_CLASS_EX(
+		DBValue,
+		Castable,
+		onphp_empty_object_new,
+		onphp_funcs_DBValue
+	);
+	REGISTER_ONPHP_PROPERTY(DBValue, "value", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_PROPERTY_BOOL(DBValue, "unquotable", 0, ZEND_ACC_PRIVATE);
 
 	memcpy(&zend_std_obj_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
 

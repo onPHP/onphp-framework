@@ -1,11 +1,11 @@
 /* $Id$ */
 
-#include "php.h"
-#include "ext/standard/php_string.h"
-
 #include "onphp.h"
 #include "onphp_core.h"
 #include "onphp_util.h"
+
+#include "ext/standard/php_string.h"
+#include "zend_exceptions.h"
 
 #include "core/OSQL/DialectString.h"
 #include "core/Exceptions.h"
@@ -206,9 +206,7 @@ static zval * onphp_something_to_string(zval *this, zval *something, char *quote
 	fci.param_count = 1;
 	fci.params = params;
 	
-	if (zend_call_function(&fci, NULL TSRMLS_CC) == SUCCESS) {
-		return retval;
-	} else {
+	if (!zend_call_function(&fci, NULL TSRMLS_CC) == SUCCESS) {
 		zend_throw_exception_ex(
 			onphp_ce_BaseException,
 			0 TSRMLS_CC,
@@ -217,6 +215,8 @@ static zval * onphp_something_to_string(zval *this, zval *something, char *quote
 			Z_STRVAL_P(function_name)
 		);
 	}
+	
+	return retval;
 }
 
 ONPHP_METHOD(Dialect, fieldToString)
@@ -249,7 +249,8 @@ ONPHP_METHOD(Dialect, fullTextSearch)
 {
 	zend_throw_exception_ex(
 		onphp_ce_UnimplementedFeatureException,
-		0 TSRMLS_CC
+		0 TSRMLS_CC,
+		"Implement me first"
 	);
 }
 
@@ -257,7 +258,8 @@ ONPHP_METHOD(Dialect, fullTextRank)
 {
 	zend_throw_exception_ex(
 		onphp_ce_UnimplementedFeatureException,
-		0 TSRMLS_CC
+		0 TSRMLS_CC,
+		"Implement me first"
 	);
 }
 

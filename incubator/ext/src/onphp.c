@@ -11,6 +11,7 @@
 #include "core/Base/Named.h"
 #include "core/Base/NamedObject.h"
 #include "core/Base/Instantiatable.h"
+#include "core/DB/DBValue.h"
 #include "core/DB/Dialect.h"
 #include "core/OSQL/Castable.h"
 #include "core/OSQL/DialectString.h"
@@ -29,6 +30,7 @@
 	ONPHP_ADD_CLASS(Identifiable, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(IdentifiableObject, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(Instantiatable, z_list, sub, allow, ce_flags); \
+	ONPHP_ADD_CLASS(DBValue, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(Dialect, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(Castable, z_list, sub, allow, ce_flags); \
 	ONPHP_ADD_CLASS(DialectString, z_list, sub, allow, ce_flags); \
