@@ -172,14 +172,8 @@ ONPHP_METHOD(Dialect, dropTableMode)
 	}
 }
 
-ONPHP_METHOD(Dialect, fieldToString)
+static zval * onphp_something_to_string(zval *this, zval *something, char *quoter TSRMLS_DC)
 {
-	zval *field;
-	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
-		return;
-	}
-	
 	zend_fcall_info fci;
 	zval *function_name, *retval;
 	zval ***params = (zval ***) safe_emalloc(sizeof(zval **), 1, 0);
@@ -187,21 +181,22 @@ ONPHP_METHOD(Dialect, fieldToString)
 	ALLOC_INIT_ZVAL(function_name);
 	
 	if (
-		Z_TYPE_P(field) == IS_OBJECT
-		&& instanceof_function(Z_OBJCE_P(field), onphp_ce_DialectString TSRMLS_CC)
+		Z_TYPE_P(something) == IS_OBJECT
+		// FIXME: instanceof DBValue in fieldToString's case
+		&& instanceof_function(Z_OBJCE_P(something), onphp_ce_DialectString TSRMLS_CC)
 	) {
 		ZVAL_STRING(function_name, "toDialectString", 0);
-		params[0] = &getThis();
+		params[0] = &this;
 	
 		fci.function_table = &onphp_ce_DialectString->function_table;
-		fci.object_pp = &field;
+		fci.object_pp = &something;
 		fci.retval_ptr_ptr = &retval;
 	} else {
-		ZVAL_STRING(function_name, "quoteField", 0);
-		params[0] = &field;
+		ZVAL_STRING(function_name, quoter, 1);
+		params[0] = &something;
 	
 		fci.function_table = &onphp_ce_Dialect->function_table;
-		fci.object_pp = &getThis();
+		fci.object_pp = &this;
 		fci.retval_ptr_ptr = &retval;
 	}
 	
@@ -212,7 +207,7 @@ ONPHP_METHOD(Dialect, fieldToString)
 	fci.params = params;
 	
 	if (zend_call_function(&fci, NULL TSRMLS_CC) == SUCCESS) {
-		RETURN_ZVAL(retval, 1, 0);
+		return retval;
 	} else {
 		zend_throw_exception_ex(
 			onphp_ce_BaseException,
@@ -224,6 +219,19 @@ ONPHP_METHOD(Dialect, fieldToString)
 	}
 }
 
+ONPHP_METHOD(Dialect, fieldToString)
+{
+	zval *field;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
+		return;
+	}
+	
+	field = onphp_something_to_string(getThis(), field, "quoteField" TSRMLS_CC);
+	
+	RETURN_ZVAL(field, 1, 0);
+}
+
 ONPHP_METHOD(Dialect, valueToString)
 {
 	zval *value;
@@ -232,49 +240,9 @@ ONPHP_METHOD(Dialect, valueToString)
 		return;
 	}
 	
-	zend_fcall_info fci;
-	zval *function_name, *retval;
-	zval ***params = (zval ***) safe_emalloc(sizeof(zval **), 1, 0);
+	value = onphp_something_to_string(getThis(), value, "quoteValue" TSRMLS_CC);
 	
-	ALLOC_INIT_ZVAL(function_name);
-	
-	if (
-		Z_TYPE_P(value) == IS_OBJECT
-		// FIXME: instanceof DBValue in fact
-		&& instanceof_function(Z_OBJCE_P(value), onphp_ce_DialectString TSRMLS_CC)
-	) {
-		ZVAL_STRING(function_name, "toDialectString", 0);
-		params[0] = &getThis();
-	
-		fci.function_table = &onphp_ce_DialectString->function_table;
-		fci.object_pp = &value;
-		fci.retval_ptr_ptr = &retval;
-	} else {
-		ZVAL_STRING(function_name, "quoteValue", 0);
-		params[0] = &value;
-	
-		fci.function_table = &onphp_ce_Dialect->function_table;
-		fci.object_pp = &getThis();
-		fci.retval_ptr_ptr = &retval;
-	}
-	
-	fci.size = sizeof(fci);
-	fci.function_name = function_name;
-	fci.symbol_table = NULL;
-	fci.param_count = 1;
-	fci.params = params;
-	
-	if (zend_call_function(&fci, NULL TSRMLS_CC) == SUCCESS) {
-		RETURN_ZVAL(retval, 1, 0);
-	} else {
-		zend_throw_exception_ex(
-			onphp_ce_BaseException,
-			0 TSRMLS_CC,
-			"Failed to call %s::%s()",
-			Z_OBJCE_PP(fci.object_pp)->name,
-			Z_STRVAL_P(function_name)
-		);
-	}
+	RETURN_ZVAL(value, 1, 0);
 }
 
 ONPHP_METHOD(Dialect, fullTextSearch)
