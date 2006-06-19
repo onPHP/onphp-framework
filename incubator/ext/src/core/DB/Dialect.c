@@ -145,11 +145,57 @@ ONPHP_METHOD(Dialect, toCasted)
 	RETURN_STRINGL(string.c, string.len, 0);
 }
 
+ONPHP_METHOD(Dialect, timeZone)
+{
+	zend_bool exist = 0;
+
+	zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "b", &exist);
+	
+	if (exist) {
+		RETURN_STRING(" WITH TIME ZONE", 0);
+	} else {
+		RETURN_STRING(" WITHOUT TIME ZONE", 0);
+	}
+}
+
+ONPHP_METHOD(Dialect, dropTableMode)
+{
+	zend_bool cascade = 0;
+
+	zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "b", &cascade);
+	
+	if (cascade) {
+		RETURN_STRING(" CASCADE", 0);
+	} else {
+		RETURN_STRING(" RESTRICT", 0);
+	}
+}
+
+ONPHP_METHOD(Dialect, fullTextSearch)
+{
+	zend_throw_exception_ex(
+		onphp_ce_UnimplementedFeatureException,
+		0 TSRMLS_CC
+	);
+}
+
+ONPHP_METHOD(Dialect, fullTextRank)
+{
+	zend_throw_exception_ex(
+		onphp_ce_UnimplementedFeatureException,
+		0 TSRMLS_CC
+	);
+}
+
 zend_function_entry onphp_funcs_Dialect[] = {
 	ONPHP_ABSTRACT_ME(Dialect, autoincrementize, arginfo_autoincrementize, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, quoteValue, arginfo_one_ref, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, quoteField, arginfo_one_ref, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, quoteTable, arginfo_one_ref, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, toCasted, arginfo_two, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Dialect, timeZone, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Dialect, dropTableMode, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Dialect, fullTextSearch, arginfo_three, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Dialect, fullTextRank, arginfo_three, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };
