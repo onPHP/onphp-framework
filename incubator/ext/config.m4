@@ -7,6 +7,7 @@ if test "$PHP_ONPHP" != "no"; then
 
 	onphp_sources="\
 		src/onphp.c \
+		src/onphp_util.c \
 		src/onphp_core.c \
 		src/core/Exceptions.c \
 		src/core/Base/Identifiable.c \

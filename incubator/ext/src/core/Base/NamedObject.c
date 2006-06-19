@@ -1,8 +1,7 @@
 /* $Id$ */
 
-#include "ext/standard/php_smart_str.h"
-
 #include "onphp.h"
+#include "onphp_util.h"
 
 #include "core/Base/NamedObject.h"
 
@@ -38,29 +37,9 @@ ONPHP_METHOD(NamedObject, setName)
 	RETURN_ZVAL(this, 1, 0);
 }
 
-void onphp_append_zval_to_smart_string(smart_str *string, zval *value)
-{
-	zval copy;
-
-	if (Z_TYPE_P(value) == IS_STRING) {
-		smart_str_appends(string, Z_STRVAL_P(value));
-	} else {
-		int use_copy;
-		
-		zend_make_printable_zval(value, &copy, &use_copy);
-		smart_str_appends(string, Z_STRVAL(copy));
-		
-		if (use_copy) {
-			zval_dtor(&copy);
-		}
-	}
-}
-
 ONPHP_METHOD(NamedObject, toString)
 {
-	zval *this = getThis(), *id, *name;
-	zval id_copy, name_copy;
-	int use_id_copy, use_name_copy;
+	zval *this = getThis();
 	smart_str string = {0};
 
 	onphp_append_zval_to_smart_string(&string, ONPHP_READ_PROPERTY(this, "id"));
@@ -82,15 +61,6 @@ ONPHP_METHOD(NamedObject, compareNames)
 		WRONG_PARAM_COUNT;
 	}
 	
-	if (
-		Z_TYPE_P(first) != IS_OBJECT
-		|| Z_TYPE_P(second) != IS_OBJECT
-		|| !instanceof_function(Z_OBJCE_P(first), onphp_ce_NamedObject TSRMLS_CC)
-		|| !instanceof_function(Z_OBJCE_P(second), onphp_ce_NamedObject TSRMLS_CC)
-	) {
-		zend_error(E_ERROR, "NamedObject::compareNames() expects two NamedObject instances");
-	}
-
 	RETURN_LONG(
 		strcasecmp(
 			Z_STRVAL_P(ONPHP_READ_PROPERTY(first, "name")),

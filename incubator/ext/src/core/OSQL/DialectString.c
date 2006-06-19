@@ -12,6 +12,6 @@ ZEND_BEGIN_ARG_INFO(arginfo_dialect, 0)
 ZEND_END_ARG_INFO();
 
 zend_function_entry onphp_funcs_DialectString[] = {
-	ONPHP_ABSTRACT_ME(DialectString, getId, arginfo_dialect, ZEND_ACC_PUBLIC)
+	ONPHP_ABSTRACT_ME(DialectString, toDialectString, arginfo_dialect, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };
