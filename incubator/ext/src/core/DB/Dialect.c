@@ -7,6 +7,7 @@
 #include "onphp_core.h"
 #include "onphp_util.h"
 
+#include "core/OSQL/DialectString.h"
 #include "core/Exceptions.h"
 
 PHPAPI zend_class_entry *onphp_ce_Dialect;
@@ -152,9 +153,9 @@ ONPHP_METHOD(Dialect, timeZone)
 	zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "b", &exist);
 	
 	if (exist) {
-		RETURN_STRING(" WITH TIME ZONE", 0);
+		RETURN_STRING(" WITH TIME ZONE", 1);
 	} else {
-		RETURN_STRING(" WITHOUT TIME ZONE", 0);
+		RETURN_STRING(" WITHOUT TIME ZONE", 1);
 	}
 }
 
@@ -165,9 +166,114 @@ ONPHP_METHOD(Dialect, dropTableMode)
 	zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "b", &cascade);
 	
 	if (cascade) {
-		RETURN_STRING(" CASCADE", 0);
+		RETURN_STRING(" CASCADE", 1);
 	} else {
-		RETURN_STRING(" RESTRICT", 0);
+		RETURN_STRING(" RESTRICT", 1);
+	}
+}
+
+ONPHP_METHOD(Dialect, fieldToString)
+{
+	zval *field;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
+		return;
+	}
+	
+	zend_fcall_info fci;
+	zval *function_name, *retval;
+	zval ***params = (zval ***) safe_emalloc(sizeof(zval **), 1, 0);
+	
+	ALLOC_INIT_ZVAL(function_name);
+	
+	if (
+		Z_TYPE_P(field) == IS_OBJECT
+		&& instanceof_function(Z_OBJCE_P(field), onphp_ce_DialectString TSRMLS_CC)
+	) {
+		ZVAL_STRING(function_name, "toDialectString", 0);
+		params[0] = &getThis();
+	
+		fci.function_table = &onphp_ce_DialectString->function_table;
+		fci.object_pp = &field;
+		fci.retval_ptr_ptr = &retval;
+	} else {
+		ZVAL_STRING(function_name, "quoteField", 0);
+		params[0] = &field;
+	
+		fci.function_table = &onphp_ce_Dialect->function_table;
+		fci.object_pp = &getThis();
+		fci.retval_ptr_ptr = &retval;
+	}
+	
+	fci.size = sizeof(fci);
+	fci.function_name = function_name;
+	fci.symbol_table = NULL;
+	fci.param_count = 1;
+	fci.params = params;
+	
+	if (zend_call_function(&fci, NULL TSRMLS_CC) == SUCCESS) {
+		RETURN_ZVAL(retval, 1, 0);
+	} else {
+		zend_throw_exception_ex(
+			onphp_ce_BaseException,
+			0 TSRMLS_CC,
+			"Failed to call %s::%s()",
+			Z_OBJCE_PP(fci.object_pp)->name,
+			Z_STRVAL_P(function_name)
+		);
+	}
+}
+
+ONPHP_METHOD(Dialect, valueToString)
+{
+	zval *value;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
+		return;
+	}
+	
+	zend_fcall_info fci;
+	zval *function_name, *retval;
+	zval ***params = (zval ***) safe_emalloc(sizeof(zval **), 1, 0);
+	
+	ALLOC_INIT_ZVAL(function_name);
+	
+	if (
+		Z_TYPE_P(value) == IS_OBJECT
+		// FIXME: instanceof DBValue in fact
+		&& instanceof_function(Z_OBJCE_P(value), onphp_ce_DialectString TSRMLS_CC)
+	) {
+		ZVAL_STRING(function_name, "toDialectString", 0);
+		params[0] = &getThis();
+	
+		fci.function_table = &onphp_ce_DialectString->function_table;
+		fci.object_pp = &value;
+		fci.retval_ptr_ptr = &retval;
+	} else {
+		ZVAL_STRING(function_name, "quoteValue", 0);
+		params[0] = &value;
+	
+		fci.function_table = &onphp_ce_Dialect->function_table;
+		fci.object_pp = &getThis();
+		fci.retval_ptr_ptr = &retval;
+	}
+	
+	fci.size = sizeof(fci);
+	fci.function_name = function_name;
+	fci.symbol_table = NULL;
+	fci.param_count = 1;
+	fci.params = params;
+	
+	if (zend_call_function(&fci, NULL TSRMLS_CC) == SUCCESS) {
+		RETURN_ZVAL(retval, 1, 0);
+	} else {
+		zend_throw_exception_ex(
+			onphp_ce_BaseException,
+			0 TSRMLS_CC,
+			"Failed to call %s::%s()",
+			Z_OBJCE_PP(fci.object_pp)->name,
+			Z_STRVAL_P(function_name)
+		);
 	}
 }
 
@@ -195,6 +301,8 @@ zend_function_entry onphp_funcs_Dialect[] = {
 	ONPHP_ME(Dialect, toCasted, arginfo_two, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, timeZone, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, dropTableMode, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Dialect, fieldToString, arginfo_one_ref, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Dialect, valueToString, arginfo_one_ref, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Dialect, fullTextSearch, arginfo_three, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Dialect, fullTextRank, arginfo_three, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
