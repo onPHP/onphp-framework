@@ -67,17 +67,6 @@
 			self::TIMESTAMP		=> 'TIMESTAMP'
 		);
 		
-		public function __construct($id)
-		{
-			if (isset($this->names[$id])) {
-				$this->id = $id;
-				$this->name = $this->names[$id];
-			} else
-				throw new MissingElementException(
-					"knows nothing about such id == {$id}"
-				);
-		}
-		
 		public static function create($id)
 		{
 			return new DataType($id);
