@@ -56,11 +56,6 @@
 			return "CAST ({$field} AS {$type})";
 		}
 		
-		public static function typeToString(DataType $type)
-		{
-			return $type->getName();
-		}
-		
 		public static function timeZone($exist = false)
 		{
 			return

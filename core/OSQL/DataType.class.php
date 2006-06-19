@@ -143,9 +143,21 @@
 			return $this->null;
 		}
 		
+		public function typeToString(Dialect $dialect)
+		{
+			if (
+				$this->id == self::BIGINT
+				&& $dialect instanceof LiteDialect
+			) {
+				return $this->names[self::INTEGER];
+			}
+			
+			return $this->name;
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
-			$out = $dialect->typeToString($this);
+			$out = $this->typeToString($dialect);
 			
 			if ($this->id & self::HAVE_SIZE) {
 				
