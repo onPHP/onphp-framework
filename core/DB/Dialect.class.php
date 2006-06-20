@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -51,11 +51,6 @@
 		public static function toCasted($field, $type)
 		{
 			return "CAST ({$field} AS {$type})";
-		}
-		
-		public static function typeToString(DataType $type)
-		{
-			return $type->getName();
 		}
 		
 		public static function timeZone($exist = false)

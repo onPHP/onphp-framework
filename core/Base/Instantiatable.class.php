@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Base
+	**/
 	interface Instantiatable
 	{
 		public static function me();

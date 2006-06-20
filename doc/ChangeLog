@@ -1,5 +1,17 @@
 # $Id$
 
+2006-06-21	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/DAOs/FileSystemDaoWorker.class.php,
+	main/DAOs/SmartDaoWorker.class.php,
+	main/DAOs/VoodooDaoWorker.class.php,
+	core/Cache/WatermarkedPeer.class.php, core/DB/Sequenceless.class.php,
+	core/DB/Dialect.class.php, core/DB/LiteDialect.class.php,
+	core/Base/Stringable.class.php, core/Base/Instantiatable.class.php,
+	core/Base/Session.class.php, core/OSQL/InsertOrUpdateQuery.class.php,
+	core/OSQL/DBColumn.class.php, core/OSQL/DataType.class.php:
+	synced with trunk.
+
 2006-06-01	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/Containers/ManyToManyLinkedFull.class.php: unlinking bugfix

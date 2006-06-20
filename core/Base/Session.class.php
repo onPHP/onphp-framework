@@ -78,7 +78,7 @@
 					}
 					return true;
 				} else
-					throw new WrongArgumentException('argument(s) missing');
+					throw new WrongArgumentException('missing argument(s)');
 
 			throw new SessionNotStartedException();
 		}
@@ -103,7 +103,7 @@
 					foreach (func_get_args() as $arg)
 						unset($_SESSION[$arg]);
 				else
-					throw new WrongArgumentException('argument(s) missing');
+					throw new WrongArgumentException('missing argument(s)');
 			} else 
 				throw new SessionNotStartedException();
 		}

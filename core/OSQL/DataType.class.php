@@ -70,17 +70,6 @@
 			self::TIMESTAMP		=> 'TIMESTAMP'
 		);
 		
-		public function __construct($id)
-		{
-			if (isset($this->names[$id])) {
-				$this->id = $id;
-				$this->name = $this->names[$id];
-			} else
-				throw new WrongArgumentException(
-					"knows nothing about such id == {$id}"
-				);
-		}
-		
 		public static function create($id)
 		{
 			return new DataType($id);
@@ -157,9 +146,21 @@
 			return $this->null;
 		}
 		
+		public function typeToString(Dialect $dialect)
+		{
+			if (
+				$this->id == self::BIGINT
+				&& $dialect instanceof LiteDialect
+			) {
+				return $this->names[self::INTEGER];
+			}
+			
+			return $this->name;
+		}
+		
 		public function toString(Dialect $dialect)
 		{
-			$out = $dialect->typeToString($this);
+			$out = $this->typeToString($dialect);
 			
 			if ($this->id & self::HAVE_SIZE) {
 				

@@ -27,9 +27,15 @@
 		{
 			parent::__construct($dao);
 			
+			if (($cache = Cache::me()) instanceof WatermarkedPeer)
+				$watermark = $cache->getWatermark().DIRECTORY_SEPARATOR;
+			else
+				$watermark = null;
+			
 			$this->segmentPath =
 				ONPHP_TEMP_PATH
 				.'fsdw'.DIRECTORY_SEPARATOR
+				.$watermark
 				.$this->classKey
 				.DIRECTORY_SEPARATOR;
 			

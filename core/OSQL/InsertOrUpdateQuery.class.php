@@ -63,15 +63,17 @@
 
 			return $this;
 		}
-		
+
 		public function setBoolean($field, $value = false)
 		{
-			if (true === $value)
-				return $this->set($field, true);
-			else
-				return $this->set($field, false);
+			try {
+				Assert::isTernaryBase($value);
+				$this->set($field, $value);
+			} catch (WrongArgumentException $e) {/*_*/}
+
+			return $this;
 		}
-		
+
 		/**
 		 * Adds values from associative array.
 		**/

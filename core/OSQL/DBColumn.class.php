@@ -147,15 +147,22 @@
 			$out =
 				"{$dialect->quoteField($this->name)} "
 				.$this->type->toString($dialect);
-
-			if ($this->default)
+			
+			if (null !== $this->default) {
+				
+				if ($this->type->getId() == DataType::BOOLEAN)
+					$default = $this->default ? 'true' : 'false';
+				else
+					$default = $this->default;
+					
 				$out .=
 					' DEFAULT '
 					.(
 						$this->default instanceof DialectString
 							? $this->default->toString($dialect)
-							: $dialect->valueToString($this->default)
+							: $dialect->valueToString($default)
 					);
+			}
 			
 			if ($this->reference) {
 				

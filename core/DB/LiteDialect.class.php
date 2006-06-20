@@ -29,14 +29,6 @@
 			return "'" .sqlite_escape_string($value)."'";
 		}
 		
-		public static function typeToString(DataType $type)
-		{
-			if ($type->getId() == DataType::BIGINT)
-				$type = new DataType(DataType::INTEGER);
-			
-			return $type->getName();
-		}
-
 		public static function dropTableMode($cascade = false)
 		{
 			return null;

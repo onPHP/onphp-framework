@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Base
+	**/
 	interface Stringable
 	{
 		public function toString();

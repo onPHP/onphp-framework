@@ -29,6 +29,11 @@
 			$this->watermark = md5($watermark.'::');
 		}
 		
+		public function getWatermark()
+		{
+			return $this->watermark;
+		}
+		
 		public function mark($className)
 		{
 			$this->peer->mark($className);
