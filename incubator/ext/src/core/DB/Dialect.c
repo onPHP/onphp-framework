@@ -167,6 +167,7 @@ ONPHP_METHOD(Dialect, fieldToString)
 			&this,
 			Z_OBJCE_P(this),
 			NULL,
+			// lowercased because of external class
 			"quotefield",
 			&out,
 			field
