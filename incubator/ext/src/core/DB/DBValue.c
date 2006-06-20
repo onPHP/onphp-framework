@@ -1,5 +1,7 @@
 /* $Id$ */
 
+#include "zend_interfaces.h"
+
 #include "onphp.h"
 #include "onphp_core.h"
 
@@ -37,7 +39,7 @@ ONPHP_METHOD(DBValue, __construct)
 	ONPHP_UPDATE_PROPERTY(this, "value", value);
 	
 	if (Z_TYPE_P(value) == IS_LONG) {
-		ONPHP_UPDATE_PROPERTY(this, "unquotable", 0);
+		ONPHP_UPDATE_PROPERTY_BOOL(this, "unquotable", 1);
 	}
 }
 
@@ -50,7 +52,46 @@ ONPHP_METHOD(DBValue, getValue)
 
 ONPHP_METHOD(DBValue, toDialectString)
 {
-	// TODO: implement.
+	zval *this = getThis(), *dialect, *property, *value, *out;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &dialect) == FAILURE) {
+		return;
+	}
+	
+	property = ONPHP_READ_PROPERTY(this, "unquotable");
+	value = ONPHP_READ_PROPERTY(this, "value");
+	
+	if (!zval_is_true(property)) {
+		zend_call_method_with_1_params(
+			&dialect,
+			Z_OBJCE_P(dialect),
+			NULL,
+			"quotevalue",
+			&out,
+			value
+		);
+	} else {
+		MAKE_STD_ZVAL(out);
+		ZVAL_LONG(out, Z_LVAL_P(value));
+	}
+	
+	property = ONPHP_READ_PROPERTY(this, "cast");
+	
+	if (Z_STRLEN_P(property)) {
+		zend_call_method_with_2_params(
+			&dialect,
+			Z_OBJCE_P(dialect),
+			NULL,
+			"toCasted",
+			&out,
+			out,
+			property
+		);
+	} else {
+		// nothing
+	}
+	
+	RETURN_ZVAL(out, 1, 1);
 }
 
 zend_function_entry onphp_funcs_DBValue[] = {

@@ -38,6 +38,9 @@
 #define ONPHP_UPDATE_PROPERTY(class, property, value) \
 	zend_update_property(Z_OBJCE_P(class), class, property, strlen(property), value TSRMLS_CC)
 
+#define ONPHP_UPDATE_PROPERTY_BOOL(class, property, value) \
+	zend_update_property_bool(Z_OBJCE_P(class), class, property, strlen(property), value TSRMLS_CC)
+
 #define ONPHP_METHOD(class_name, function_name) \
 	PHP_METHOD(onphp_ ## class_name, function_name)
 
