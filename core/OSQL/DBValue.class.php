@@ -14,6 +14,7 @@
 	 * Container for passing values into OSQL queries.
 	 * 
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	class DBValue extends Castable implements DialectString
 	{

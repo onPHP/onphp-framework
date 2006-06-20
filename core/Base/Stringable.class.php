@@ -11,6 +11,7 @@
 /* $Id$ */
 
 	/**
+	 * @ingroup Base
 	 * @ingroup Module
 	**/
 	interface Stringable
