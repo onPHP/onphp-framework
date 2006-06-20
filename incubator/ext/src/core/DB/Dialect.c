@@ -9,7 +9,7 @@
 #include "ext/standard/php_string.h"
 #include "zend_exceptions.h"
 
-#include "core/DB/DBValue.h"
+#include "core/OSQL/DBValue.h"
 #include "core/OSQL/DialectString.h"
 #include "core/Exceptions.h"
 

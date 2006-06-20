@@ -11,9 +11,9 @@
 #include "core/Base/Named.h"
 #include "core/Base/NamedObject.h"
 #include "core/Base/Instantiatable.h"
-#include "core/DB/DBValue.h"
 #include "core/DB/Dialect.h"
 #include "core/OSQL/Castable.h"
+#include "core/OSQL/DBValue.h"
 #include "core/OSQL/DialectString.h"
 #include "core/OSQL/SQLTableName.h"
 

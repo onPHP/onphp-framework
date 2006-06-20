@@ -5,7 +5,7 @@
 #include "onphp.h"
 #include "onphp_core.h"
 
-#include "core/DB/DBValue.h"
+#include "core/OSQL/DBValue.h"
 #include "core/OSQL/DialectString.h"
 
 PHPAPI zend_class_entry *onphp_ce_DBValue;
