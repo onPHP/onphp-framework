@@ -160,7 +160,7 @@ ONPHP_METHOD(Dialect, fieldToString)
 			// lowercased because of external class
 			"todialectstring",
 			&out,
-			field
+			this
 		);
 	} else {
 		zend_call_method_with_1_params(
