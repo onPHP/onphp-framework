@@ -7,6 +7,8 @@
 
 PHPAPI zend_class_entry *onphp_ce_NamedObject;
 
+static ONPHP_ARGINFO_ONE;
+
 static
 ZEND_BEGIN_ARG_INFO(arginfo_two_named_objects, 0)
 	ZEND_ARG_OBJ_INFO(0, Named, Named, 0)

@@ -26,9 +26,10 @@ if test "$PHP_ONPHP" != "no"; then
 	"
 
 	ONPHP_INCLUDES="-I./src/"
+	ONPHP_SANITY="-Wall"
 
 	PHP_SUBST(ONPHP_INCLUDES)
 
-	PHP_NEW_EXTENSION(onphp, $onphp_sources, $ext_shared,, $ONPHP_INCLUDES)
+	PHP_NEW_EXTENSION(onphp, $onphp_sources, $ext_shared,, $ONPHP_INCLUDES $ONPHP_SANITY)
 	AC_DEFINE(HAVE_ONPHP, 1, [ ])
 fi

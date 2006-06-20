@@ -5,6 +5,11 @@
 
 #include "onphp_core.h"
 
+#define ONPHP_ARGINFO_DIALECT \
+	ZEND_BEGIN_ARG_INFO(arginfo_dialect, 0) \
+		ZEND_ARG_OBJ_INFO(0, dialect, Dialect, 0) \
+	ZEND_END_ARG_INFO()
+
 extern PHPAPI zend_class_entry *onphp_ce_Dialect;
 
 typedef struct _onphp_empty_object onphp_dialect;

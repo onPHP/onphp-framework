@@ -6,6 +6,8 @@
 
 PHPAPI zend_class_entry *onphp_ce_Identifier;
 
+static ONPHP_ARGINFO_ONE;
+
 ONPHP_METHOD(Identifier, create)
 {
 	zval *object;

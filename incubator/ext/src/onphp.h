@@ -44,4 +44,22 @@
 #define ONPHP_METHOD(class_name, function_name) \
 	PHP_METHOD(onphp_ ## class_name, function_name)
 
+#define ONPHP_ARGINFO_ONE \
+	ZEND_BEGIN_ARG_INFO(arginfo_one, 0) \
+		ZEND_ARG_INFO(0, first) \
+	ZEND_END_ARG_INFO()
+
+#define ONPHP_ARGINFO_TWO \
+	ZEND_BEGIN_ARG_INFO(arginfo_two, 0) \
+		ZEND_ARG_INFO(0, first) \
+		ZEND_ARG_INFO(0, second) \
+	ZEND_END_ARG_INFO()
+
+#define ONPHP_ARGINFO_THREE \
+	ZEND_BEGIN_ARG_INFO(arginfo_three, 0) \
+		ZEND_ARG_INFO(0, first) \
+		ZEND_ARG_INFO(0, second) \
+		ZEND_ARG_INFO(0, third) \
+	ZEND_END_ARG_INFO()
+
 #endif /* ONPHP_H */

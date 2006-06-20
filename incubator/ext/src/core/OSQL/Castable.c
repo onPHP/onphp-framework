@@ -4,6 +4,8 @@
 
 PHPAPI zend_class_entry *onphp_ce_Castable;
 
+static ONPHP_ARGINFO_ONE;
+
 ONPHP_METHOD(Castable, castTo)
 {
 	zval *this = getThis(), *cast;

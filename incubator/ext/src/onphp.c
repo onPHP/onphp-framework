@@ -1,5 +1,8 @@
 /* $Id$ */
 
+#include "php.h"
+#include "ext/standard/info.h"
+
 #include "onphp.h"
 
 #include "onphp_core.h"
@@ -16,39 +19,6 @@
 #include "core/OSQL/DBValue.h"
 #include "core/OSQL/DialectString.h"
 #include "core/OSQL/SQLTableName.h"
-
-#define ONPHP_ADD_CLASS(class_name, z_list, sub, allow, ce_flags) \
-	spl_add_classes(&onphp_ce_ ## class_name, z_list, sub, allow, ce_flags TSRMLS_CC)
-
-// Exceptions omitted here
-#define ONPHP_LIST_CLASSES(z_list, sub, allow, ce_flags) \
-	ONPHP_ADD_CLASS(Stringable, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(Singleton, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(Named, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(NamedObject, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(Identifier, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(Identifiable, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(IdentifiableObject, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(Instantiatable, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(DBValue, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(Dialect, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(Castable, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(DialectString, z_list, sub, allow, ce_flags); \
-	ONPHP_ADD_CLASS(SQLTableName, z_list, sub, allow, ce_flags);
-
-PHP_FUNCTION(onphp_classes)
-{
-	array_init(return_value);
-	
-	ONPHP_LIST_CLASSES(return_value, 0, 0, 0)
-}
-
-
-zend_function_entry onphp_functions[] = {
-	PHP_FE(onphp_classes, NULL)
-	{NULL, NULL, NULL}
-};
-
 
 PHP_MINFO_FUNCTION(onphp)
 {
@@ -79,7 +49,7 @@ zend_module_entry onphp_module_entry = {
 	STANDARD_MODULE_HEADER_EX, NULL,
 	onphp_deps,
 	"onPHP",
-	onphp_functions,
+	NULL,
 	PHP_MINIT(onphp),
 	NULL,
 	NULL,

@@ -155,4 +155,6 @@ PHP_MINIT_FUNCTION(onphp_core)
 	memcpy(&zend_std_obj_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
 
 	PHP_MINIT_FUNCTION(Exceptions);
+	
+	return SUCCESS;
 }
