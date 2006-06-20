@@ -59,4 +59,4 @@ zend_module_entry onphp_module_entry = {
 	STANDARD_MODULE_PROPERTIES
 };
 
-ZEND_GET_MODULE(onphp)
+ZEND_GET_MODULE(onphp);
