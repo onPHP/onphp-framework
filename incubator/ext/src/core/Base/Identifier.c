@@ -62,23 +62,20 @@ ONPHP_METHOD(Identifier, setId)
 
 ONPHP_METHOD(Identifier, finalize)
 {
-	zval *this = getThis(), *true;
+	zval *this = getThis();
 
-	ALLOC_INIT_ZVAL(true);
-	ZVAL_TRUE(true);
-
-	ONPHP_UPDATE_PROPERTY(this, "final", true);
+	ONPHP_UPDATE_PROPERTY_BOOL(this, "final", 1);
 
 	RETURN_ZVAL(this, 1, 0);
 }
 
 ONPHP_METHOD(Identifier, isFinalized)
 {
-	zval *this = getThis(), *final;
-
-	final = ONPHP_READ_PROPERTY(this, "final");
-
-	RETURN_ZVAL(final, 1, 0);
+	if (zval_is_true(ONPHP_READ_PROPERTY(getThis(), "final"))) {
+		RETURN_TRUE;
+	}
+	
+	RETURN_FALSE;
 }
 
 zend_function_entry onphp_funcs_Identifier[] = {

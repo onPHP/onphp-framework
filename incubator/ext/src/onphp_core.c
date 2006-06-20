@@ -95,7 +95,7 @@ PHP_MINIT_FUNCTION(onphp_core)
 		onphp_funcs_Identifier
 	);
 	REGISTER_ONPHP_PROPERTY(Identifier, "id", ZEND_ACC_PRIVATE);
-	REGISTER_ONPHP_PROPERTY(Identifier, "final", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_PROPERTY_BOOL(Identifier, "final", 0, ZEND_ACC_PRIVATE);
 	onphp_ce_Identifier->ce_flags |= ZEND_ACC_FINAL_CLASS;
 	
 	REGISTER_ONPHP_STD_CLASS_EX(
