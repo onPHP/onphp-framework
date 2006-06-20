@@ -56,13 +56,6 @@
 		// current path
 		get_include_path().PATH_SEPARATOR
 		
-		// to reduce include path - run incubator/misc/renewSymLinks.sh
-		// and uncomment this two paths
-		/**
-		.ONPHP_CORE_PATH.'.all'.PATH_SEPARATOR
-		.ONPHP_MAIN_PATH.'.all'.PATH_SEPARATOR
-		**/
-		
 		// core classes
 		.ONPHP_CORE_PATH.'Base'			.PATH_SEPARATOR
 		.ONPHP_CORE_PATH.'Cache'		.PATH_SEPARATOR
