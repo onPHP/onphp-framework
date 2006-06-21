@@ -68,12 +68,6 @@
 			
 			Cache::me()->clean();
 			
-			// TODO: investigate why with onphp.so you'll get:
-			//
-			// Unexpected PHP error [Object of class TestUser
-			// could not be converted to int] severity [E_NOTICE]
-			//
-			// and why it's not reproduces with $mysqler below
 			$this->assertTrue(
 				($postgreser == TestUser::dao()->getById(1))
 			);
