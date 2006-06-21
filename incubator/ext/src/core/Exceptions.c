@@ -35,4 +35,7 @@ PHP_MINIT_FUNCTION(Exceptions)
 	REGISTER_ONPHP_SUB_CLASS_EX(DuplicateObjectException,		DatabaseException,	NULL, NULL);
 	REGISTER_ONPHP_SUB_CLASS_EX(ObjectNotFoundException,		DatabaseException,	NULL, NULL);
 	REGISTER_ONPHP_SUB_CLASS_EX(TooManyRowsException,			DatabaseException,	NULL, NULL);
+
+	return SUCCESS;
 }
+

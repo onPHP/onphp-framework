@@ -26,7 +26,7 @@ if test "$PHP_ONPHP" != "no"; then
 	"
 
 	ONPHP_INCLUDES="-I./src/"
-	ONPHP_SANITY="-Wall"
+	ONPHP_SANITY="-Wall -Wno-implicit-function-declaration -fno-strict-aliasing"
 
 	PHP_SUBST(ONPHP_INCLUDES)
 
