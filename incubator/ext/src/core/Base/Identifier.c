@@ -24,15 +24,15 @@ ONPHP_METHOD(Identifier, wrap)
 {
 	zval *object, *id;
 
-	MAKE_STD_ZVAL(object);
-
-	object->value.obj = onphp_empty_object_new(onphp_ce_Identifier TSRMLS_CC);
-	Z_TYPE_P(object) = IS_OBJECT;
-
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
 
+	MAKE_STD_ZVAL(object);
+
+	object->value.obj = onphp_empty_object_new(onphp_ce_Identifier TSRMLS_CC);
+	Z_TYPE_P(object) = IS_OBJECT;
+	
 	ONPHP_UPDATE_PROPERTY(object, "id", id);
 
 	RETURN_ZVAL(object, 1, 1);
@@ -40,33 +40,31 @@ ONPHP_METHOD(Identifier, wrap)
 
 ONPHP_METHOD(Identifier, getId)
 {
-	zval *this = getThis(), *id;
+	zval *id;
 
-	id = ONPHP_READ_PROPERTY(this, "id");
+	id = ONPHP_READ_PROPERTY(getThis(), "id");
 
 	RETURN_ZVAL(id, 1, 0);
 }
 
 ONPHP_METHOD(Identifier, setId)
 {
-	zval *this = getThis(), *id;
+	zval *id;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
 
-	ONPHP_UPDATE_PROPERTY(this, "id", id);
+	ONPHP_UPDATE_PROPERTY(getThis(), "id", id);
 
-	RETURN_ZVAL(this, 1, 0);
+	RETURN_ZVAL(getThis(), 1, 0);
 }
 
 ONPHP_METHOD(Identifier, finalize)
 {
-	zval *this = getThis();
+	ONPHP_UPDATE_PROPERTY_BOOL(getThis(), "final", 1);
 
-	ONPHP_UPDATE_PROPERTY_BOOL(this, "final", 1);
-
-	RETURN_ZVAL(this, 1, 0);
+	RETURN_ZVAL(getThis(), 1, 0);
 }
 
 ONPHP_METHOD(Identifier, isFinalized)

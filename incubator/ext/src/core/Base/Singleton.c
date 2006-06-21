@@ -57,7 +57,7 @@ ONPHP_METHOD(Singleton, getInstance)
 		
 		name = estrdup(Z_STRVAL_PP(params[0]));
 	} else {
-		// ignore params stuff, since he's constructorless
+		// ignore params stuff, since it's constructorless
 		name = estrdup("SingletonInstance");
 	}
 		
@@ -76,9 +76,12 @@ ONPHP_METHOD(Singleton, getInstance)
 	} else {
 		// stolen from Reflection's newInstance()
 		if (zend_lookup_class(name, length, &cep TSRMLS_CC) == SUCCESS) {
+			zval *retval_ptr;
+			zend_fcall_info fci;
+			zend_fcall_info_cache fcc;
 			zend_class_entry *ce = *cep;
 			
-			// can use ce->name instead
+			// can use ce->name instead now
 			efree(name);
 			
 			if (!instanceof_function(ce, onphp_ce_Singleton TSRMLS_CC)) {
@@ -94,75 +97,69 @@ ONPHP_METHOD(Singleton, getInstance)
 				RETURN_NULL();
 			}
 			
-			MAKE_STD_ZVAL(object);
-			object_init_ex(object, ce);
-
-			if (ce->constructor) {
-				zend_fcall_info fci;
-				zend_fcall_info_cache fcc;
-				zval *retval_ptr;
-				
-				// we can call protected consturctors,
-				// since all classes are childs of Singleton
-				if (ce->constructor->common.fn_flags & ZEND_ACC_PRIVATE) {
-					zend_throw_exception_ex(
-						onphp_ce_BaseException,
-						0 TSRMLS_CC,
-						"Can not call private constructor for '%s' creation",
-						ce->name
-					);
-					if (argc) {
-						efree(params);
-					}
-					RETURN_NULL();
-				} else if (ce->constructor->common.fn_flags & ZEND_ACC_PUBLIC) {
-					zend_throw_exception_ex(
-						onphp_ce_BaseException,
-						0 TSRMLS_CC,
-						"Don't want to deal with '%s' class "
-							"due to public constructor there",
-						ce->name
-					);
-					if (argc) {
-						efree(params);
-					}
-					RETURN_NULL();
-				}
-
-				fci.size = sizeof(fci);
-				fci.function_table = EG(function_table);
-				fci.function_name = NULL;
-				fci.symbol_table = NULL;
-				fci.object_pp = &object;
-				fci.retval_ptr_ptr = &retval_ptr;
-				if (argc) {
-					fci.param_count = argc - 1;
-					fci.params = params + 1;
-				} else {
-					fci.param_count = 0;
-				}
-				
-				fcc.initialized = 1;
-				fcc.function_handler = ce->constructor;
-				fcc.calling_scope = EG(scope);
-				fcc.object_pp = &object;
-				
-				if (zend_call_function(&fci, &fcc TSRMLS_CC) == FAILURE) {
-					zend_throw_exception_ex(
-						onphp_ce_BaseException,
-						0 TSRMLS_CC,
-						"Failed to call '%s' constructor",
-						ce->name
-					);
-				}
-				
-				if (retval_ptr) {
-					zval_ptr_dtor(&retval_ptr);
-				}
-				
+			// we can call protected consturctors,
+			// since all classes are childs of Singleton
+			if (ce->constructor->common.fn_flags & ZEND_ACC_PRIVATE) {
+				zend_throw_exception_ex(
+					onphp_ce_BaseException,
+					0 TSRMLS_CC,
+					"Can not call private constructor for '%s' creation",
+					ce->name
+				);
 				if (argc) {
 					efree(params);
 				}
+				RETURN_NULL();
+			} else if (ce->constructor->common.fn_flags & ZEND_ACC_PUBLIC) {
+				zend_throw_exception_ex(
+					onphp_ce_BaseException,
+					0 TSRMLS_CC,
+					"Don't want to deal with '%s' class "
+						"due to public constructor there",
+					ce->name
+				);
+				if (argc) {
+					efree(params);
+				}
+				RETURN_NULL();
+			}
+
+			MAKE_STD_ZVAL(object);
+			object_init_ex(object, ce);
+			
+			fci.size = sizeof(fci);
+			fci.function_table = EG(function_table);
+			fci.function_name = NULL;
+			fci.symbol_table = NULL;
+			fci.object_pp = &object;
+			fci.retval_ptr_ptr = &retval_ptr;
+			if (argc) {
+				fci.param_count = argc - 1;
+				fci.params = params + 1;
+			} else {
+				fci.param_count = 0;
+			}
+			
+			fcc.initialized = 1;
+			fcc.function_handler = ce->constructor;
+			fcc.calling_scope = EG(scope);
+			fcc.object_pp = &object;
+			
+			if (zend_call_function(&fci, &fcc TSRMLS_CC) == FAILURE) {
+				zend_throw_exception_ex(
+					onphp_ce_BaseException,
+					0 TSRMLS_CC,
+					"Failed to call '%s' constructor",
+					ce->name
+				);
+			}
+			
+			if (retval_ptr) {
+				zval_ptr_dtor(&retval_ptr);
+			}
+			
+			if (argc) {
+				efree(params);
 			}
 
 			add_assoc_zval_ex(instances, ce->name, length + 1, object);

@@ -24,23 +24,22 @@ ONPHP_METHOD(NamedObject, getName)
 
 ONPHP_METHOD(NamedObject, setName)
 {
-	zval *this = getThis(), *name;
+	zval *name;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &name) == SUCCESS) {
-		ONPHP_UPDATE_PROPERTY(this, "name", name);
+		ONPHP_UPDATE_PROPERTY(getThis(), "name", name);
 	}
 
-	RETURN_ZVAL(this, 1, 0);
+	RETURN_ZVAL(getThis(), 1, 0);
 }
 
 ONPHP_METHOD(NamedObject, toString)
 {
-	zval *this = getThis();
 	smart_str string = {0};
 
-	onphp_append_zval_to_smart_string(&string, ONPHP_READ_PROPERTY(this, "id"));
+	onphp_append_zval_to_smart_string(&string, ONPHP_READ_PROPERTY(getThis(), "id"));
 	smart_str_appends(&string, ": ");
-	onphp_append_zval_to_smart_string(&string, ONPHP_READ_PROPERTY(this, "name"));
+	onphp_append_zval_to_smart_string(&string, ONPHP_READ_PROPERTY(getThis(), "name"));
 	smart_str_0(&string);
 
 	RETURN_STRINGL(string.c, string.len, 0);

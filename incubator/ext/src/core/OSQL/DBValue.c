@@ -17,15 +17,15 @@ ONPHP_METHOD(DBValue, create)
 {
 	zval *object, *value;
 
-	MAKE_STD_ZVAL(object);
-
-	object->value.obj = onphp_empty_object_new(onphp_ce_DBValue TSRMLS_CC);
-	Z_TYPE_P(object) = IS_OBJECT;
-
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
 
+	MAKE_STD_ZVAL(object);
+
+	object->value.obj = onphp_empty_object_new(onphp_ce_DBValue TSRMLS_CC);
+	Z_TYPE_P(object) = IS_OBJECT;
+	
 	ONPHP_UPDATE_PROPERTY(object, "value", value);
 
 	RETURN_ZVAL(object, 1, 1);
@@ -33,16 +33,16 @@ ONPHP_METHOD(DBValue, create)
 
 ONPHP_METHOD(DBValue, __construct)
 {
-	zval *this = getThis(), *value;
+	zval *value;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
 
-	ONPHP_UPDATE_PROPERTY(this, "value", value);
+	ONPHP_UPDATE_PROPERTY(getThis(), "value", value);
 	
 	if (Z_TYPE_P(value) == IS_LONG) {
-		ONPHP_UPDATE_PROPERTY_BOOL(this, "unquotable", 1);
+		ONPHP_UPDATE_PROPERTY_BOOL(getThis(), "unquotable", 1);
 	}
 }
 
@@ -55,14 +55,14 @@ ONPHP_METHOD(DBValue, getValue)
 
 ONPHP_METHOD(DBValue, toDialectString)
 {
-	zval *this = getThis(), *dialect, *property, *value, *out;
+	zval *dialect, *property, *value, *out;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &dialect) == FAILURE) {
 		return;
 	}
 	
-	property = ONPHP_READ_PROPERTY(this, "unquotable");
-	value = ONPHP_READ_PROPERTY(this, "value");
+	property = ONPHP_READ_PROPERTY(getThis(), "unquotable");
+	value = ONPHP_READ_PROPERTY(getThis(), "value");
 	
 	if (!zval_is_true(property)) {
 		zend_call_method_with_1_params(
@@ -74,12 +74,17 @@ ONPHP_METHOD(DBValue, toDialectString)
 			&out,
 			value
 		);
+		
+		if (!out) {
+			// exception was thrown
+			return;
+		}
 	} else {
 		MAKE_STD_ZVAL(out);
 		ZVAL_LONG(out, Z_LVAL_P(value));
 	}
 	
-	property = ONPHP_READ_PROPERTY(this, "cast");
+	property = ONPHP_READ_PROPERTY(getThis(), "cast");
 	
 	if (Z_STRLEN_P(property)) {
 		zend_call_method_with_2_params(

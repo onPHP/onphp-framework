@@ -19,8 +19,6 @@
 
 #include "core/Exceptions.h"
 
-static zend_object_handlers zend_std_obj_handlers;
-
 static void onphp_empty_object_free_storage(void *object TSRMLS_DC)
 {
 	onphp_empty_object *empty = (onphp_empty_object *) object;
@@ -62,7 +60,7 @@ static zend_object_value onphp_empty_object_spawn(
 		NULL TSRMLS_CC
 	);
 	
-	objval.handlers = &zend_std_obj_handlers;
+	objval.handlers = zend_get_std_object_handlers();
 
 	return objval;
 }
@@ -74,7 +72,7 @@ zend_object_value onphp_empty_object_new(zend_class_entry *class_type TSRMLS_DC)
 
 PHP_RSHUTDOWN_FUNCTION(onphp_core)
 {
-	PHP_RSHUTDOWN(Singleton)(INIT_FUNC_ARGS_PASSTHRU);
+	return PHP_RSHUTDOWN(Singleton)(INIT_FUNC_ARGS_PASSTHRU);
 }
 
 PHP_MINIT_FUNCTION(onphp_core)
@@ -151,8 +149,6 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_PROPERTY(DBValue, "value", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_PROPERTY_BOOL(DBValue, "unquotable", 0, ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_IMPLEMENTS(DBValue, DialectString);
-
-	memcpy(&zend_std_obj_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
 
 	PHP_MINIT_FUNCTION(Exceptions);
 	

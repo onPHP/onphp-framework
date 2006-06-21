@@ -47,6 +47,7 @@ ONPHP_METHOD(Dialect, quoteValue)
 		int length = 0;
 		
 		slashed =
+			// FIXME
 			php_addslashes(
 				Z_STRVAL_P(value),
 				Z_STRLEN_P(value),
@@ -57,6 +58,7 @@ ONPHP_METHOD(Dialect, quoteValue)
 		smart_str_appends(&string, "'");
 		smart_str_appends(&string, slashed);
 		smart_str_appends(&string, "'");
+		smart_str_0(&string);
 		
 		efree(slashed);
 		
@@ -70,12 +72,13 @@ ONPHP_METHOD(Dialect, quoteField)
 	smart_str string = {0};
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
-		return;
+		WRONG_PARAM_COUNT;
 	}
 	
 	smart_str_appends(&string, "\"");
 	onphp_append_zval_to_smart_string(&string, field);
 	smart_str_appends(&string, "\"");
+	smart_str_0(&string);
 	
 	RETURN_STRINGL(string.c, string.len, 0);
 }
@@ -86,12 +89,13 @@ ONPHP_METHOD(Dialect, quoteTable)
 	smart_str string = {0};
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &table) == FAILURE) {
-		return;
+		WRONG_PARAM_COUNT;
 	}
 	
 	smart_str_appends(&string, "\"");
 	onphp_append_zval_to_smart_string(&string, table);
 	smart_str_appends(&string, "\"");
+	smart_str_0(&string);
 	
 	RETURN_STRINGL(string.c, string.len, 0);
 }
@@ -143,7 +147,7 @@ ONPHP_METHOD(Dialect, dropTableMode)
 
 ONPHP_METHOD(Dialect, fieldToString)
 {
-	zval *this = getThis(), *field, *out;
+	zval *field, *out;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
 		return;
@@ -160,12 +164,12 @@ ONPHP_METHOD(Dialect, fieldToString)
 			// lowercased because of external class
 			"todialectstring",
 			&out,
-			this
+			getThis()
 		);
 	} else {
 		zend_call_method_with_1_params(
-			&this,
-			Z_OBJCE_P(this),
+			&getThis(),
+			Z_OBJCE_P(getThis()),
 			NULL,
 			// lowercased because of external class
 			"quotefield",

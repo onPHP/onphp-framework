@@ -4,21 +4,7 @@
 #include "ext/standard/info.h"
 
 #include "onphp.h"
-
 #include "onphp_core.h"
-#include "core/Base/Identifier.h"
-#include "core/Base/Identifiable.h"
-#include "core/Base/IdentifiableObject.h"
-#include "core/Base/Stringable.h"
-#include "core/Base/Singleton.h"
-#include "core/Base/Named.h"
-#include "core/Base/NamedObject.h"
-#include "core/Base/Instantiatable.h"
-#include "core/DB/Dialect.h"
-#include "core/OSQL/Castable.h"
-#include "core/OSQL/DBValue.h"
-#include "core/OSQL/DialectString.h"
-#include "core/OSQL/SQLTableName.h"
 
 PHP_MINFO_FUNCTION(onphp)
 {

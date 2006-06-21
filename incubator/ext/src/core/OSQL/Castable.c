@@ -8,15 +8,15 @@ static ONPHP_ARGINFO_ONE;
 
 ONPHP_METHOD(Castable, castTo)
 {
-	zval *this = getThis(), *cast;
+	zval *cast;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &cast) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
 
-	ONPHP_UPDATE_PROPERTY(this, "cast", cast);
+	ONPHP_UPDATE_PROPERTY(getThis(), "cast", cast);
 
-	RETURN_ZVAL(this, 1, 0);
+	RETURN_ZVAL(getThis(), 1, 0);
 }
 
 zend_function_entry onphp_funcs_Castable[] = {
