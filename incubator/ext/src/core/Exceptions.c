@@ -38,4 +38,3 @@ PHP_MINIT_FUNCTION(Exceptions)
 
 	return SUCCESS;
 }
-
