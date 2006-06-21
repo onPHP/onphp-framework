@@ -46,11 +46,25 @@ ONPHP_METHOD(Dialect, quoteValue)
 		char *slashed;
 		int length = 0;
 		
+		if (Z_TYPE_P(value) == IS_STRING) {
+			slashed = estrndup(Z_STRVAL_P(value), Z_STRLEN_P(value));
+		} else {
+			zval *copy;
+			
+			MAKE_STD_ZVAL(copy);
+			ZVAL_ZVAL(copy, value, 1, 0);
+			
+			convert_to_string(copy);
+			
+			slashed = estrndup(Z_STRVAL_P(copy), Z_STRLEN_P(copy));
+		}
+		
+		length = strlen(slashed);
+		
 		slashed =
-			// FIXME
 			php_addslashes(
-				Z_STRVAL_P(value),
-				Z_STRLEN_P(value),
+				slashed,
+				length,
 				&length,
 				0 TSRMLS_CC
 			);
@@ -106,7 +120,7 @@ ONPHP_METHOD(Dialect, toCasted)
 	smart_str string = {0};
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "zz", &field, &type) == FAILURE) {
-		return;
+		WRONG_PARAM_COUNT;
 	}
 	
 	smart_str_appends(&string, "CAST (");
@@ -150,7 +164,7 @@ ONPHP_METHOD(Dialect, fieldToString)
 	zval *field, *out;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
-		return;
+		WRONG_PARAM_COUNT;
 	}
 	
 	if (
@@ -176,6 +190,11 @@ ONPHP_METHOD(Dialect, fieldToString)
 			&out,
 			field
 		);
+	}
+	
+	if (!out) {
+		// exception was thrown
+		return;
 	}
 	
 	RETURN_ZVAL(out, 1, 1);
