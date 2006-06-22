@@ -47,7 +47,7 @@
 
 		public static function stripTags()
 		{
-			return Singleton::getInstance('StripTagsFilter');
+			return StripTagsFilter::create();
 		}
 
 		public static function htmlSpecialChars()
