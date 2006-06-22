@@ -24,6 +24,11 @@
 			$this->array = $array;
 		}
 		
+		public function getArray()
+		{
+			return $this->array;
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			$array = $this->array;

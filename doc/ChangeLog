@@ -1,5 +1,9 @@
 # $Id$
 
+2006-06-22	Konstantin V. Arkhipov
+
+	* main/DAOs/ObjectQuery.class.php: SQLArray support implemented.
+
 2006-06-17	Konstantin V. Arkhipov
 
 	* main/Flow/EditorController.class.php: uses makeForm() now.

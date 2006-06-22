@@ -229,14 +229,16 @@
 			$right	= $exp->getRight();
 			$logic	= $exp->getLogic();
 			
-			if (
-				$left instanceof LogicalExpression
-				|| $right instanceof LogicalExpression
-			) {
-				throw new WrongArgumentException(
-					'only flat expressions supported atm'
-				);
-			}
+			if ($left instanceof SQLArray)
+				$left = $left->getArray();
+			elseif ($right instanceof SQLArray)
+				$right = $right->getArray();
+			
+			Assert::isFalse(
+				is_object($left) || is_object($right),
+				
+				'only flat expressions supported atm'
+			);
 			
 			if (
 				isset($map[$left])
