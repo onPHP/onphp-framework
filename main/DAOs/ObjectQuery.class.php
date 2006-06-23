@@ -222,27 +222,32 @@
 		
 		// recursive one
 		private function parseLogic(
-			SelectQuery $query, LogicalExpression $exp, /* array */ &$map
+			SelectQuery $query, LogicalExpression $exp,
+			/* array */ &$map, $onlyParse = false
 		)
 		{
 			$left	= $exp->getLeft();
 			$right	= $exp->getRight();
 			$logic	= $exp->getLogic();
 			
-			if ($left instanceof SQLArray)
-				$left = $left->getArray();
-			elseif ($right instanceof SQLArray)
-				$right = $right->getArray();
-			
-			Assert::isFalse(
-				is_object($left) || is_object($right),
+			if (
+				$left instanceof LogicalExpression
+				|| $right instanceof LogicalExpression
+			) {
+				if ($left instanceof LogicalExpression)
+					$this->parseLogic($query, $left, $map, true);
 				
-				'only flat expressions supported atm'
-			);
+				if ($right instanceof LogicalExpression)
+					$this->parseLogic($query, $right, $map, true);
+				
+				$query->andWhere($exp);
+				
+				return $this;
+			}
 			
 			if (
-				isset($map[$left])
-				&& isset($map[$right])
+				!is_object($left) && isset($map[$left])
+				&& !is_object($right) && isset($map[$right])
 			) {
 				if (is_array($map[$left]) && is_array($map[$right]))
 					foreach ($map[$left] as $leftField)
@@ -266,25 +271,37 @@
 								$left, $field, $logic
 							)
 						);
-				else
+				elseif (!$onlyParse)
 					$query->andWhere($exp);
 			} else {
-				if (array_key_exists($left, $map)) {
-					if ($map[$left])
-						$left = new DBField($map[$left]);
-					else
-						$left = new DBField($left);
-				} else
-					$left = new DBValue($left);
-				
-				if (isset($map[$right]))
-					$right = new DBField($map[$right]);
-				elseif (!is_null($right))
-					$right = new DBValue($right);
-				
-				$query->andWhere(
-					new LogicalExpression($left, $right, $logic)
+				Assert::isFalse(
+					(is_object($left) && $left instanceof SQLArray)
+					&& (is_object($right) && $right instanceof SQLArray),
+					
+					'strange object passed'
 				);
+				
+				if (!is_object($left)) {
+					if (array_key_exists($left, $map)) {
+						if ($map[$left])
+							$left = new DBField($map[$left]);
+						else
+							$left = new DBField($left);
+					} else
+						$left = new DBValue($left);
+				}
+				
+				if (!is_object($right)) {
+					if (isset($map[$right]))
+						$right = new DBField($map[$right]);
+					elseif (!is_null($right))
+						$right = new DBValue($right);
+				}
+				
+				if (!$onlyParse)
+					$query->andWhere(
+						new LogicalExpression($left, $right, $logic)
+					);
 			}
 		}
 		
