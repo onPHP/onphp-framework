@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE metaconfiguration SYSTEM "meta.dtd">
+
+<!-- $Id$ -->
+
+<metaconfiguration><classes>
+
+	<class name="Administrator" type="final">
+		<properties>
+			
+			<property name="id" type="Integer" required="true" identifier="true" />
+			
+			<property name="username" type="String" size="64" required="true" />
+			<property name="password" type="Password" size="40" required="true" />
+			
+		</properties>
+		
+		<pattern name="DictionaryClass" />
+	</class>
+
+</classes></metaconfiguration>
