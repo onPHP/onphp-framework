@@ -1,5 +1,9 @@
 # $Id$
 
+2006-06-25	Konstantin V. Arkhipov
+
+	* 0.4.7 released.
+
 2006-06-24	Anton E. Lebedevich
 	
 	* main/Utils/TextUtils.class.php: UrlSafeBase64Encode(),
