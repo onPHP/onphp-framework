@@ -26,5 +26,35 @@
 				
 			return $size;
 		}
+		
+		public static function getHostFromUrl($url)
+		{
+			if (
+				strpos($url, '//') !== false
+				&& (strpos($url, '//') + 2) < strlen($url)
+			)
+				$offset = strpos($url, '//') + 2;
+			else 
+				$offset = 0;
+				
+			return substr(
+				$url, 
+				0, 
+				strpos(
+					$url, 
+					'/',
+					$offset
+				) + 1
+			);
+		}
+		
+		public static function getPathFromUrl($url)
+		{
+			$parsed = parse_url($url);
+			if ($parsed === false or !isset($parsed['path']))
+				return '/';
+			else 
+				return $parsed['path'];
+		}
 	}
 ?>

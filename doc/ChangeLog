@@ -1,5 +1,10 @@
 # $Id$
 
+2006-06-24	Anton E. Lebedevich
+	
+	* main/Utils/TextUtils.class.php: getHostFromUrl(), getPathFromUrl()
+	added.
+
 2006-06-22	Konstantin V. Arkhipov
 
 	* main/DAOs/ObjectQuery.class.php: SQLArray support implemented.
