@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE metaconfiguration SYSTEM "meta.dtd">
+
+<!-- $Id$ -->
+
+<metaconfiguration><classes>
+
+	<class name="Spook" type="spooked">
+		<properties>
+			<property name="id" type="Integer" required="true" identifier="true" />
+		</properties>
+		
+		<pattern name="SpookedClass" />
+	</class>
+
+	<class name="TestCity" type="final">
+		<properties>
+			
+			<property name="id" type="BigInteger" required="true" identifier="true" />
+			<property name="name" type="String" size="50" required="true" />
+			
+		</properties>
+		
+		<pattern name="DictionaryClass" />
+	</class>
+	
+	<class name="TestUser" type="final">
+		<properties>
+			
+			<property name="id" type="BigInteger" required="true" identifier="true" />
+			
+			<property name="nickname" type="String" size="255" required="true" />
+			<property name="password" type="Password" required="true" />
+			
+			<property name="lastLogin" type="Timestamp" required="true" />
+			<property name="registered" type="Timestamp" required="true" />
+			
+			<property name="city" type="TestCity" relation="OneToOne" required="true" />
+			
+			<property name="spook" type="Spook" relation="OneToOne" required="false" />
+			
+			<property name="firstOptional" type="TestCity" relation="OneToOne" required="false" />
+			<property name="secondOptional" type="TestCity" relation="OneToOne" required="false" />
+			
+		</properties>
+		
+		<pattern name="StraightMapping" />
+	</class>
+	
+</classes></metaconfiguration>
