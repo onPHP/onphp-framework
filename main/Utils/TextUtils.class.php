@@ -7,6 +7,10 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
+ *    UrlSaveBase64* functions borrowed from comments on                   *
+ *    http://www.php.net/manual/en/function.base64-encode.php              *
+ *    by massimo dot scamarcia at gmail dot com                            *
+ *                                                                         *
  ***************************************************************************/
 /* $Id$ */
 
@@ -25,6 +29,60 @@
 				return round($size, 2).$units[$order];
 				
 			return $size;
+		}
+		
+		public static function getHostFromUrl($url)
+		{
+			if (
+				strpos($url, '//') !== false
+				&& (strpos($url, '//') + 2) < strlen($url)
+			)
+				$offset = strpos($url, '//') + 2;
+			else 
+				$offset = 0;
+				
+			return substr(
+				$url, 
+				0, 
+				strpos(
+					$url, 
+					'/',
+					$offset
+				) + 1
+			);
+		}
+		
+		public static function getPathFromUrl($url)
+		{
+			$parsed = parse_url($url);
+			if ($parsed === false or !isset($parsed['path']))
+				return '/';
+			else 
+				return $parsed['path'];
+		}
+		
+		public static function UrlSafeBase64Encode($string)
+		{
+			$data = base64_encode($string);
+			$data = str_replace(
+				array('+', '/' , '='),
+				array('-', '_', ''),
+				$data
+			);
+			return $data;
+		}
+		
+		public static function UrlSafeBase64Decode($string) {
+			$data = str_replace(
+				array('-', '_'),
+				array('+', '/'),
+				$string
+			);
+			$mod4 = strlen($data) % 4;
+			if ($mod4) {
+				$data .= substr('====', $mod4);
+			}
+			return base64_decode($data);
 		}
 	}
 ?>

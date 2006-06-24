@@ -1,5 +1,10 @@
 # $Id$
 
+2006-06-25	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/Utils/TextUtils.class.php, core/Form/Filter.class.php: synced
+	with trunk.
+
 2006-06-21	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/DAOs/FileSystemDaoWorker.class.php,
