@@ -15,16 +15,6 @@
 			);
 		}
 		
-		public function testOverloadedCall()
-		{
-			$name = $this->childName;
-			
-			$this->assertTrue(
-				Singleton::getInstance()->$name()
-				=== Singleton::getInstance()->$name()
-			);
-		}
-		
 		public function testCreationProhibition()
 		{
 			$child = new ReflectionClass($this->childName);

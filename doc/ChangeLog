@@ -2,7 +2,8 @@
 
 2006-06-25	Konstantin V. Arkhipov
 
-	* core/Base/Creatable.class.php: removed.
+	* core/Base/Creatable.class.php,
+	core/Base/SingletonInstance.class.php: removed.
 
 2006-06-25	Anton E. Lebedevich
 

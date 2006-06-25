@@ -22,19 +22,10 @@
 		
 		/// @example singleton.php
 		final public static function getInstance(
-			$class = null, $args = null /* , ... */
+			$class, $args = null /* , ... */
 		)
 		{
 			static $instances = array();
-			
-			if (null == $class) {
-				static $wrapper = null;
-				
-				if (null == $wrapper)
-					$wrapper = new SingletonInstance();
-				
-				return $wrapper;
-			}
 			
 			// for Singleton::getInstance('class_name', $arg1, ...) calling
 			if (2 < func_num_args()) {
