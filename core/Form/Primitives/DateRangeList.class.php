@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov, Igor V. Gulyaev         *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov, Igor V. Gulyaev    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,11 +21,10 @@
 				!isset($scope[$this->name])
 				|| !is_array($scope[$this->name])
 				|| empty($scope[$this->name])
-				||
-					(
-						count($scope[$this->name]) == 1
-						&& !current($scope[$this->name])
-					)
+				|| (
+					count($scope[$this->name]) == 1
+					&& !current($scope[$this->name])
+				)
 			)
 				return null;
 				
@@ -162,7 +161,7 @@
 				
 				if ($year === null)
 					$year = date('Y');
-				// we're all die in 2100+ anyway
+				// we're all dead in 2100+ anyway
 				elseif (strlen($year) === 2)
 					$year = "20{$year}";
 				
