@@ -69,10 +69,5 @@
 		{
 			return StringReplaceFilter::create($search, $replace);
 		}
-		
-		public static function removeSymbols()
-		{
-			return Singleton::getInstance('RemoveSymbolsFilter');
-		}
 	}
 ?>

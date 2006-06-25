@@ -62,15 +62,8 @@
 		
 		public function apply($value)
 		{
-			if(
-				$this->search === $this->replace
-				|| (
-					$this->search === null
-					&& $this->replace === null
-				)
-			) {
+			if ($this->search === $this->replace)
 				return $value;
-			}
 			
 			return
 				str_replace(

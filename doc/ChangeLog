@@ -2,6 +2,9 @@
 
 2006-06-25	Konstantin V. Arkhipov
 
+	* core/Form/Filters/RemoveSymbolsFilter.class.php: removed in favour
+	of StringReplaceFilter.
+
 	* core/Form/PlainForm.class.php: Range-related methods moved to
 	PrimitiveRange.
 
