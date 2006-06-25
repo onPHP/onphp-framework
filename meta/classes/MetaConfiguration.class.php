@@ -107,9 +107,6 @@
 					$this->guessPattern((string) $xmlClass->pattern['name'])
 				);
 				
-				// and finally..
-				$this->checkSanity($class);
-				
 				$this->classes[$class->getName()] = $class;
 			}
 			
@@ -132,6 +129,11 @@
 					throw new MissingElementException(
 						"unknown parent class '{$parent}'"
 					);
+			}
+			
+			// final sanity checking
+			foreach ($this->classes as $name => $class) {
+				$this->checkSanity($class);
 			}
 			
 			return $this;
@@ -196,11 +198,24 @@
 		
 		private function checkSanity(MetaClass $class)
 		{
-			Assert::isTrue(
-				$class->getIdentifier() !== null,
+			if (!$class->getParent()) {
+				Assert::isTrue(
+					$class->getIdentifier() !== null,
+					
+					'no one can live without identifier'
+				);
+			} else {
+				$parent = $class->getParent();
 				
-				'no one can live without identifier'
-			);
+				while ($parent->getParent())
+					$parent = $parent->getParent();
+				
+				Assert::isTrue(
+					$parent->getIdentifier() !== null,
+					
+					'can not find parent with identifier'
+				);
+			}
 			
 			if (
 				$class->getType() 
