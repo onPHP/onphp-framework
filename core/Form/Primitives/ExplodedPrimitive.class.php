@@ -15,7 +15,7 @@
 	**/
 	final class ExplodedPrimitive extends PrimitiveString
 	{
-		protected $separator;
+		protected $separator = ' ';
 		
 		public function setSeparator($separator)
 		{
