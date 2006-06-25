@@ -20,6 +20,14 @@
 	**/
 	class Timestamp implements Stringable
 	{
+		const WEEKDAY_MONDAY 	= 1;
+		const WEEKDAY_TUESDAY	= 2;
+		const WEEKDAY_WEDNESDAY	= 3;
+		const WEEKDAY_THURSDAY	= 4;
+		const WEEKDAY_FRIDAY	= 5;
+		const WEEKDAY_SATURDAY	= 6;
+		const WEEKDAY_SUNDAY	= 7;
+		
 		private $string		= null;
 		private $int		= null;
 		
@@ -31,13 +39,38 @@
 		private $minute		= null;
 		private $second		= null;
 
-		const WEEKDAY_MONDAY 	= 1;
-		const WEEKDAY_TUESDAY	= 2;
-		const WEEKDAY_WEDNESDAY	= 3;
-		const WEEKDAY_THURSDAY	= 4;
-		const WEEKDAY_FRIDAY	= 5;
-		const WEEKDAY_SATURDAY	= 6;
-		const WEEKDAY_SUNDAY	= 7;
+		public static function create($timestamp)
+		{
+			return new Timestamp($timestamp);
+		}
+		
+		public static function compare(Timestamp $left, Timestamp $right)
+		{
+			if ($left->int == $right->int)
+				return 0;
+			else
+				return ($left->int > $right->int ? 1 : -1);
+		}
+		
+		public static function now()
+		{
+			return date('Y-m-d H:i:s');
+		}
+		
+		public static function makeNow()
+		{
+			return new self(time());
+		}
+		
+		public static function today($delimiter = '-')
+		{
+			return date("Y{$delimiter}m{$delimiter}d");
+		}
+		
+		public static function makeToday()
+		{
+			return new self(self::today());
+		}
 		
 		public function __construct($timestamp)
 		{
@@ -68,11 +101,6 @@
 			$this->import($this->string);
 		}
 		
-		public static function create($timestamp)
-		{
-			return new Timestamp($timestamp);
-		}
-
 		public function toStamp()
 		{
 			return $this->int;
@@ -181,19 +209,6 @@
 			return $this->string;
 		}
 		
-		/**
-		 * @todo break API by returning Timestamp instance instead
-		**/
-		public static function now()
-		{
-			return date('Y-m-d H:i:s');
-		}
-		
-		public static function today($delimiter = '-')
-		{
-			return date("Y{$delimiter}m{$delimiter}d");
-		}
-
 		public function getDayStartStamp()
 		{
 			if (!$this->hour && !$this->minute && !$this->second)
@@ -217,25 +232,6 @@
 				);
 		}
 		
-		private function import($string)
-		{
-			list($date, $time) = explode(' ', $string, 2);
-			
-			list($this->year, $this->month, $this->day) =
-				explode('-', $date, 3);
-			
-			list($this->hour, $this->minute, $this->second) =
-				explode(':', $time, 3);
-		}
-
-		public static function compare(Timestamp $left, Timestamp $right)
-		{
-			if ($left->int == $right->int)
-				return 0;
-			else
-				return ($left->int > $right->int ? 1 : -1);
-		}
-		
 		public function getFirstDayOfWeek($weekStart = Timestamp::WEEKDAY_MONDAY)
 		{
 			return $this->spawn(
@@ -248,6 +244,17 @@
 			return $this->spawn(
 				'+'.((13 - $this->getWeekDay() + $weekStart) % 7).' days'
 			);
+		}
+		
+		private function import($string)
+		{
+			list($date, $time) = explode(' ', $string, 2);
+			
+			list($this->year, $this->month, $this->day) =
+				explode('-', $date, 3);
+			
+			list($this->hour, $this->minute, $this->second) =
+				explode(':', $time, 3);
 		}
 	}
 ?>

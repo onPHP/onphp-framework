@@ -22,6 +22,13 @@
 	{
 		protected $name	= null;
 		
+		public static function compareNames(
+			NamedObject $left, NamedObject $right
+		)
+		{
+			return strcasecmp($left->name, $right->name);
+		}
+		
 		public function getName()
 		{
 			return $this->name;
@@ -32,13 +39,6 @@
 			$this->name = $name;
 			
 			return $this;
-		}
-		
-		public static function compareNames(
-			NamedObject $left, NamedObject $right
-		)
-		{
-			return strcasecmp($left->name, $right->name);
 		}
 		
 		public function toString()

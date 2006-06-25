@@ -2,6 +2,8 @@
 
 2006-06-25	Konstantin V. Arkhipov
 
+	* core/Base/Timestamp.class.php: makeNow() and makeToday() added.
+
 	* core/Base/Creatable.class.php,
 	core/Base/SingletonInstance.class.php: removed.
 
