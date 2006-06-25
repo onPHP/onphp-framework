@@ -1,6 +1,10 @@
 # $Id$
 
-2006-06-25 Anton E. Lebedevich
+2006-06-25	Konstantin V. Arkhipov
+
+	* core/Base/Creatable.class.php: removed.
+
+2006-06-25	Anton E. Lebedevich
 
 	* main/Utils/TextUtils.class.php: getHostFromUrl() renamed to 
 	getRootFromUrl().
