@@ -31,7 +31,7 @@
 			return $size;
 		}
 		
-		public static function getHostFromUrl($url)
+		public static function getRootFromUrl($url)
 		{
 			if (
 				strpos($url, '//') !== false
