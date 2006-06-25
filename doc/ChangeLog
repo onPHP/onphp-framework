@@ -2,6 +2,8 @@
 
 2006-06-25	Konstantin V. Arkhipov
 
+	* core/Form/: sub-directories for Filters and Primitives introduced.
+
 	* core/Form/PlainForm.class.php: backward compatibility with 0.2
 	removed.
 
