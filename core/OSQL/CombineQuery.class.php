@@ -32,6 +32,7 @@
 		public static function unionBlock()
 		{
 			$args = func_get_args();
+			
 			return self::block($args, LogicalExpression::UNION);		
 		}
 		
@@ -43,6 +44,7 @@
 		public static function unionAllBlock()
 		{
 			$args = func_get_args();
+			
 			return self::block($args, LogicalExpression::UNION_ALL);
 		}
 		
@@ -54,6 +56,7 @@
 		public static function intersectBlock()
 		{
 			$args = func_get_args();
+			
 			return self::block($args, LogicalExpression::INTERSECT);
 		}
 		
@@ -65,6 +68,7 @@
 		public static function intersectAllBlock()
 		{
 			$args = func_get_args();
+			
 			return self::block($args, LogicalExpression::INTERSECT_ALL);
 		}
 		
@@ -76,6 +80,7 @@
 		public static function exceptBlock()
 		{
 			$args = func_get_args();
+			
 			return self::block($args, LogicalExpression::EXCEPT);
 		}
 	
@@ -87,6 +92,7 @@
 		public static function exceptAllBlock()
 		{
 			$args = func_get_args();
+			
 			return self::block($args, LogicalExpression::EXCEPT_ALL);
 		}
 		
