@@ -15,7 +15,7 @@
 					setClassLevel('one', 0xb000)
 			);
 		
-			for ($i = 0; $i < 10000; $i++) {
+			for ($i = 0; $i < 1000; $i++) {
 				Cache::me()->mark('one')->set($i, $i);
 				Cache::me()->mark('two')->set($i, $i);
 			}
@@ -23,7 +23,7 @@
 			$oneHit = 0;
 			$twoHit = 0;
 		
-			for ($i = 0; $i < 10000; $i++) {
+			for ($i = 0; $i < 1000; $i++) {
 				if (Cache::me()->mark('one')->get($i) == $i)
 					$oneHit++;
 				if (Cache::me()->mark('two')->get($i) == $i)
@@ -32,7 +32,7 @@
 			
 			$this->assertTrue(	
 				($oneHit == $twoHit)
-				&& $twoHit == 10000
+				&& $twoHit == 1000
 			);
 		}
 	}
