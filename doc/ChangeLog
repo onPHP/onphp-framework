@@ -2,6 +2,9 @@
 
 2006-06-25	Konstantin V. Arkhipov
 
+	* core/Form/FormUtils.class.php: backward compatibility with php-5.0
+	dropped.
+
 	* core/Form/: sub-directories for Filters and Primitives introduced.
 
 	* core/Form/PlainForm.class.php: backward compatibility with 0.2

@@ -30,10 +30,9 @@
 					$getter = 'get'.ucfirst($name);
 					$prm = $primitives[$name];
 					
-					// hasMethod() is 5.1 only
 					try {
 						if (
-							$class->getMethod($getter)
+							$class->hasMethod($getter)
 							&& ($value = $object->$getter()) !== null
 						) {
 							// PrimitiveIdentifier, Enumerations
@@ -71,10 +70,9 @@
 			foreach ($form->getPrimitiveList() as $name => $prm) {
 				$setter = 'set'.ucfirst($name);
 				
-				// hasMethod() is 5.1 only
 				try {
 					if (
-						$class->getMethod($setter)
+						$class->hasMethod($setter)
 						&& ($value = $prm->getValue()) !== null
 					) {
 						if ($prm instanceof PrimitiveList) {
