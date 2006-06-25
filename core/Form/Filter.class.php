@@ -70,6 +70,7 @@
 			return StringReplaceFilter::create($search, $replace);
 		}
 		
+		/// @deprecated by StringReplaceFilter
 		public static function removeSymbols()
 		{
 			return Singleton::getInstance('RemoveSymbolsFilter');

@@ -2,6 +2,9 @@
 
 2006-06-25	Konstantin V. Arkhipov
 
+	* core/Form/RemoveSymbolsFilter.class.php: deprecated by
+	StringReplaceFilter, already removed in 0.5.
+
 	* core/Form/PrimitiveRange.class.php: fixed finally and partially
 	synced with trunk.
 

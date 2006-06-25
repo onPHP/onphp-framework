@@ -10,6 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/// @deprecated by StringReplaceFilter
 	class RemoveSymbolsFilter implements Filtrator
 	{
 		private $symbols = array();
