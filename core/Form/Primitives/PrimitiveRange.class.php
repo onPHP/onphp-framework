@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,22 +18,6 @@
 		const MIN	= 'min';
 		const MAX	= 'max';
 
-		private $swapAllowed = true;
-
-		public function setSwapAllowed()
-		{
-			$this->swapAllowed = true;
-
-			return $this;
-		}
-
-		public function setSwapDisallowed()
-		{
-			$this->swapAllowed = false;
-
-			return $this;
-		}
-
 		// to be E_STRICT compatible
 		public function setValue(/* Range */ $range)
 		{
@@ -46,7 +30,39 @@
 
 			return $this;
 		}
+		
+		public function getMax()
+		{
+			if ($this->value)
+				return $this->value->getMax();
+			
+			return null;
+		}
+		
+		public function getMin()
+		{
+			if ($this->value)
+				return $this->value->getMin();
+			
+			return null;
+		}
 
+		public function getActualMax()
+		{
+			if ($range = $this->getActualValue())
+				return $range->getMax();
+			
+			return null;
+		}
+		
+		public function getActualMin()
+		{
+			if ($range = $this->getActualValue())
+				return $range->getMin();
+			
+			return null;
+		}
+		
 		public function importSingle(&$scope)
 		{
 			if (!BasePrimitive::import($scope) || is_array($scope[$this->name]))
@@ -56,10 +72,9 @@
 				$arr = explode('-', $scope[$this->name], 2);
 
 				$range =
-					Range::buildObject(
+					Range::lazyCreate(
 						ArrayUtils::getArrayVar($arr, 0),
-						ArrayUtils::getArrayVar($arr, 1),
-						$this->swapAllowed
+						ArrayUtils::getArrayVar($arr, 1)
 					);
 
 				if ($range &&
@@ -86,16 +101,15 @@
 			$name = &$this->name;
 
 			if (
-				($this->safeGet($scope, $name, self::MIN) === null) &&
-				($this->safeGet($scope, $name, self::MAX) === null)
+				($this->safeGet($scope, $name, self::MIN) === null)
+				&& ($this->safeGet($scope, $name, self::MAX) === null)
 			)
 				return null;
 
 			$range =
-				Range::buildObject(
+				Range::lazyCreate(
 					$this->safeGet($scope, $name, self::MIN),
-					$this->safeGet($scope, $name, self::MAX),
-					$this->swapAllowed
+					$this->safeGet($scope, $name, self::MAX)
 				);
 
 			if ($range &&

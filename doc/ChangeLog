@@ -2,6 +2,9 @@
 
 2006-06-25	Konstantin V. Arkhipov
 
+	* core/Form/PlainForm.class.php: Range-related methods moved to
+	PrimitiveRange.
+
 	* core/Form/FormUtils.class.php: backward compatibility with php-5.0
 	dropped.
 

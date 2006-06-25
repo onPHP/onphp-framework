@@ -148,46 +148,6 @@
 			return null;
 		}
 
-		public function getRangeMax($name)
-		{
-			$range = $this->get($name)->getValue();
-
-			return
-				$range instanceof Range
-					? $range->getMax()
-					: null;
-		}
-		
-		public function getRangeMin($name)
-		{
-			$range = $this->get($name)->getValue();
-
-			return
-				$range instanceof Range
-					? $range->getMin()
-					: null;
-		}
-
-		public function getActualRangeMax($name)
-		{
-			$range = $this->get($name)->getActualValue();
-
-			return
-				$range instanceof Range
-					? $range->getMax()
-					: null;
-		}
-		
-		public function getActualRangeMin($name)
-		{
-			$range = $this->get($name)->getActualValue();
-
-			return
-				$range instanceof Range
-					? $range->getMin()
-					: null;
-		}
-		
 		public function getPrimitiveNames()
 		{
 			return array_keys($this->primitives);
