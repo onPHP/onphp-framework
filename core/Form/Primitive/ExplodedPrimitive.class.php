@@ -10,6 +10,9 @@
 ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Primitives
+	**/
 	final class ExplodedPrimitive extends PrimitiveString
 	{
 		protected $separator;
