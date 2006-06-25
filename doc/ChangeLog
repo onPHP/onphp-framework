@@ -1,16 +1,18 @@
 # $Id$
 
+2006-06-25 Anton E. Lebedevich
+
+	* main/Utils/TextUtils.class.php: getHostFromUrl() renamed to 
+	getRootFromUrl().
+
 2006-06-25	Konstantin V. Arkhipov
 
 	* 0.4.7 released.
 
 2006-06-24	Anton E. Lebedevich
 	
-	* main/Utils/TextUtils.class.php: UrlSafeBase64Encode(),
-	UrlSafeBase64Decode() added.
-
-	* main/Utils/TextUtils.class.php: getHostFromUrl(), getPathFromUrl()
-	added.
+	* main/Utils/TextUtils.class.php: getHostFromUrl(), getPathFromUrl(), 
+	UrlSafeBase64Encode(), UrlSafeBase64Decode() added.
 
 2006-06-22	Konstantin V. Arkhipov
 
