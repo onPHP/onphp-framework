@@ -129,8 +129,8 @@
 			}
 			
 			$both = 
-				(null !== $this->left) &&
-				(null !== $this->right);
+				(null !== $this->left)
+				&& (null !== $this->right);
 
 			$left	= Expression::toValue($form, $this->left);
 			$right	= Expression::toValue($form, $this->right);
@@ -198,8 +198,10 @@
 					EXCEPT, EXCEPT_ALL;
 				*/
 				default:
-					throw new UnsupportedMethodException();
-					break;
+					
+					throw new UnsupportedMethodException(
+						"'{$this->logic}' doesn't supported yet"
+					);
 			}
 		}
 	}

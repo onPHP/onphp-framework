@@ -46,9 +46,8 @@
 			$right	= Expression::toValue($form, $this->right);
 			$value	= Expression::toValue($form, $this->field);
 			
-			return
-				($left	<= $value) &&
-				($value	>= $right);
+			return ($left	<= $value)
+				&& ($value	>= $right);
 		}
 
 		private function fieldOrValue(Dialect $dialect, $something)

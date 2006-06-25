@@ -24,8 +24,8 @@
 		{
 			foreach ($args as &$arg) {
 				if (
-					!$arg instanceof LogicalObject &&
-					!$arg instanceof SelectQuery 
+					!$arg instanceof LogicalObject
+					&& !$arg instanceof SelectQuery 
 				)
 					throw new WrongArgumentException(
 						'unsupported object type: '.get_class($arg)
@@ -57,7 +57,6 @@
 		{
 			$args = &$this->args;
 			$size = count($args);
-			
 			
 			switch ($this->logic) {
 				case Expression::LOGIC_AND:

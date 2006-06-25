@@ -184,7 +184,6 @@
 			elseif (is_array($value) && count($value) == 1)
 				return self::eq($field, current($value));
 			else {
-				
 				if (is_array($value))
 					$value = new SQLArray($value);
 				
@@ -201,7 +200,6 @@
 			elseif (is_array($value) && count($value) == 1)
 				return self::notEq($field, current($value));
 			else {
-				
 				if (is_array($value))
 					$value = new SQLArray($value);
 				
