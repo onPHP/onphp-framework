@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Filters
+	**/
 	class RemoveSymbolsFilter implements Filtrator
 	{
 		private $symbols = array();

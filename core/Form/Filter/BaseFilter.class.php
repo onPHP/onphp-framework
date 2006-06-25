@@ -13,7 +13,7 @@
 	/**
 	 * Filter's template.
 	 * 
-	 * @ingroup Filter
+	 * @ingroup Filters
 	**/
 	abstract class BaseFilter extends Singleton implements Filtrator {/*_*/}
 ?>

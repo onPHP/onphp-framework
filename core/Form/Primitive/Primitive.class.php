@@ -13,7 +13,7 @@
 	/**
 	 * Factory for various Primitives.
 	 * 
-	 * @ingroup Primitives
+	 * @ingroup Form
 	**/
 	final class Primitive extends StaticFactory
 	{
