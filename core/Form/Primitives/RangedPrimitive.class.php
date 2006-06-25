@@ -15,8 +15,8 @@
 	**/
 	abstract class RangedPrimitive extends BasePrimitive
 	{
-		protected $min		= null;
-		protected $max		= null;
+		protected $min = null;
+		protected $max = null;
 		
 		public function getMin()
 		{

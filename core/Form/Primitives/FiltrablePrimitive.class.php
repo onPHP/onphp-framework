@@ -23,6 +23,7 @@
 		public function __construct($name)
 		{
 			parent::__construct($name);
+			
 			$this->displayFilter = new FilterChain();
 			$this->importFilter = new FilterChain();
 		}
@@ -30,12 +31,14 @@
 		public function addDisplayFilter(Filtrator $filter)
 		{
 			$this->displayFilter->add($filter);
+			
 			return $this;
 		}
 
 		public function dropDisplayFilters()
 		{
 			$this->displayFilter->dropAll();
+			
 			return $this;
 		}
 
@@ -47,12 +50,14 @@
 		public function addImportFilter(Filtrator $filter)
 		{
 			$this->importFilter->add($filter);
+			
 			return $this;
 		}
 
 		public function dropImportFilters()
 		{
 			$this->importFilter->dropAll();
+			
 			return $this;
 		}
 		
