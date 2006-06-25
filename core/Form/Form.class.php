@@ -84,20 +84,29 @@
 		{
 			$list = array();
 			
-			foreach ($this->labels as $name => $error)
-				if (isset($this->violated[$name], $error[$this->violated[$name]]))
-					$list[] = $error[$this->violated[$name]];
-				elseif (isset($this->errors[$name], $error[$this->errors[$name]]))
-					$list[] = $error[$this->errors[$name]];
+			foreach ($this->labels as $name => $error) {
+				if ($label = $this->getTextualErrorFor($name))
+					$list[] = $label;
+			}
 					
 			return $list;
 		}
 		
 		public function getTextualErrorFor($name)
 		{
-			if (isset($this->violated[$name], $this->labels[$name][$this->violated[$name]]))
+			if (
+				isset(
+					$this->violated[$name],
+					$this->labels[$name][$this->violated[$name]]
+				)
+			)
 				return $this->labels[$name][$this->violated[$name]];
-			elseif (isset($this->errors[$name], $this->labels[$name][$this->errors[$name]]))
+			elseif (
+				isset(
+					$this->errors[$name],
+					$this->labels[$name][$this->errors[$name]]
+				)
+			)
 				return $this->labels[$name][$this->errors[$name]];
 			else
 				return null;
