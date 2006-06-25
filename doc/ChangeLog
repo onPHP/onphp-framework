@@ -2,6 +2,9 @@
 
 2006-06-25	Konstantin V. Arkhipov
 
+	* core/Form/PlainForm.class.php: backward compatibility with 0.2
+	removed.
+
 	* core/Base/Timestamp.class.php: makeNow() and makeToday() added.
 
 	* core/Base/Creatable.class.php,
