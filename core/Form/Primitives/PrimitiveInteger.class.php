@@ -27,8 +27,8 @@
 			}
 			
 			if (
-				!(null !== $this->min && $scope[$this->name] < $this->min) &&
-				!(null !== $this->max && $scope[$this->name] > $this->max)
+				!(null !== $this->min && $scope[$this->name] < $this->min)
+				&& !(null !== $this->max && $scope[$this->name] > $this->max)
 			) {
 				$this->value = (int) $scope[$this->name];
 

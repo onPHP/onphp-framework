@@ -2,6 +2,12 @@
 
 2006-06-25	Konstantin V. Arkhipov
 
+	* core/Base/Timestamp.class.php: extended support of malformed dates,
+	normalization introduced for such cases.
+
+	* core/Form/Primitives/PrimitiveDate.class.php: introduced support of
+	dates from Jesus' birthday to 9999-12-31.
+
 	* core/Form/Filters/RemoveSymbolsFilter.class.php: removed in favour
 	of StringReplaceFilter.
 

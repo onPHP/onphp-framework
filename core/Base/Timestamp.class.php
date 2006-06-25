@@ -79,19 +79,19 @@
 				$this->string = date('Y-m-d H:i:s', $timestamp);
 			} elseif (is_string($timestamp)) { 
 				$this->int = strtotime($timestamp);
-
+				
 				if (
 					preg_match(
-						'/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/',
+						'/^\d{1,4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}$/',
 						$timestamp
 					)
-				)
+				) {
 					$this->string = $timestamp;
-				elseif (preg_match('/^\d{4}-\d{2}-\d{2}$/', $timestamp))
+				}
+				elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $timestamp))
 					$this->string = $timestamp . ' 00:00:00';
 				else
 					$this->string = date('Y-m-d H:i:s', $this->int);
-
 			} else {
 				throw new WrongArgumentException(
 					"strange timestamp given - '{$timestamp}'"
@@ -214,7 +214,8 @@
 			if (!$this->hour && !$this->minute && !$this->second)
 				return $this->int;
 			else
-				return mktime(
+				return
+					mktime(
 						0, 0, 0,
 						$this->month,
 						$this->day,
@@ -224,7 +225,8 @@
 
 		public function getDayEndStamp()
 		{
-			return mktime(
+			return
+				mktime(
 					23, 59, 59,
 					$this->month,
 					$this->day,
@@ -255,6 +257,29 @@
 			
 			list($this->hour, $this->minute, $this->second) =
 				explode(':', $time, 3);
+			
+			$this->normalizeSelf();
+		}
+		
+		private function normalizeSelf()
+		{
+			if (strlen($this->year) < 4)
+				$this->year = str_pad($this->year, 4, '0', STR_PAD_LEFT);
+			
+			if (strlen($this->month) < 2)
+				$this->month = str_pad($this->month, 2, '0', STR_PAD_LEFT);
+			
+			if (strlen($this->day) < 2)
+				$this->day = str_pad($this->day, 2, '0', STR_PAD_LEFT);
+			
+			if (strlen($this->hour) < 2)
+				$this->hour = str_pad($this->hour, 2, '0', STR_PAD_LEFT);
+			
+			if (strlen($this->minute) < 2)
+				$this->minute = str_pad($this->minute, 2, '0', STR_PAD_LEFT);
+			
+			if (strlen($this->second) < 2)
+				$this->second = str_pad($this->second, 2, '0', STR_PAD_LEFT);
 		}
 	}
 ?>

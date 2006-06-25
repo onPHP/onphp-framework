@@ -67,7 +67,7 @@
 				&& is_string($scope[$this->name])
 			) {
 				try {
-					$ts = new Timestamp($time);
+					$ts = new Timestamp($scope[$this->name]);
 				} catch (WrongArgumentException $e) {
 					return false;
 				}
@@ -120,22 +120,24 @@
 					$seconds = (int) $scope[$this->name][self::SECONDS];
 				
 				try {
-					$stamp = mktime(
-						$hours, $minutes, $seconds,
-						(int) $scope[$this->name][self::MONTH],
-						(int) $scope[$this->name][self::DAY],
-						(int) $scope[$this->name][self::YEAR]
+					// TODO: optimize a bit this voodoo
+					$stamp = new Timestamp(
+						(int) $scope[$this->name][self::YEAR].'-'
+						.(int) $scope[$this->name][self::MONTH].'-'
+						.(int) $scope[$this->name][self::DAY].' '
+						.$hours.':'.$minutes.':'.$seconds
 					);
 				} catch (BaseException $e) {
 					// fsck wrong stamps
 					return false;
 				}
-
-				if (!($this->min && $this->min->toStamp() < $stamp) &&
-					!($this->max && $this->max->toStamp() > $stamp)
+				
+				if (
+					!($this->min && $this->min->toStamp() < $stamp->toStamp())
+					&& !($this->max && $this->max->toStamp() > $stamp->toStamp())
 				) {
 					try {
-						$this->value = new Timestamp($stamp);
+						$this->value = $stamp;
 						
 						return true;
 					} catch (WrongArgumentException $e) {

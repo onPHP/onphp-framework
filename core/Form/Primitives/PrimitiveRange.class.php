@@ -77,15 +77,9 @@
 						ArrayUtils::getArrayVar($arr, 1)
 					);
 
-				if ($range &&
-					!(
-						($this->min && $range->getMin()) &&
-						$range->getMin() < $this->min
-					) &&
-					!(
-						($this->max && $range->getMax()) &&
-						$range->getMax() > $this->max
-					)
+				if (
+					$range
+					&& $this->checkLimits($range)
 				) {
 					$this->value = $range;
 
@@ -112,21 +106,33 @@
 					$this->safeGet($scope, $name, self::MAX)
 				);
 
-			if ($range &&
-					!(
-						($this->min && $range->getMin()) &&
-						$range->getMin() < $this->min
-					) &&
-					!(
-						($this->max && $range->getMax()) &&
-						$range->getMax() > $this->max
-					)
+			if (
+				$range
+				&& $this->checkLimits($range)
 			) {
 				$this->value = $range;
 
 				return true;
 			}
 
+			return false;
+		}
+		
+		private function checkLimits(Range $range)
+		{
+			if (
+				!(
+					($this->min && $range->getMin())
+					&& $range->getMin() < $this->min
+				) &&
+				!(
+					($this->max && $range->getMax())
+					&& $range->getMax() > $this->max
+				)
+			) {
+				return true;
+			}
+			
 			return false;
 		}
 
