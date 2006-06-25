@@ -18,20 +18,16 @@
 		const MIN	= 'min';
 		const MAX	= 'max';
 
-		private $swapAllowed = true;
-
+		/// @deprecated and dropped in 0.6
 		public function setSwapAllowed()
 		{
-			$this->swapAllowed = true;
-
-			return $this;
+			throw new UnsupportedMethodException();
 		}
 
+		/// @deprecated and dropped in 0.6
 		public function setSwapDisallowed()
 		{
-			$this->swapAllowed = false;
-
-			return $this;
+			throw new UnsupportedMethodException();
 		}
 
 		// to be E_STRICT compatible
@@ -56,10 +52,9 @@
 				$arr = explode('-', $scope[$this->name], 2);
 
 				$range =
-					Range::buildObject(
+					Range::lazyCreate(
 						ArrayUtils::getArrayVar($arr, 0),
-						ArrayUtils::getArrayVar($arr, 1),
-						$this->swapAllowed
+						ArrayUtils::getArrayVar($arr, 1)
 					);
 
 				if ($range &&
@@ -92,10 +87,9 @@
 				return null;
 
 			$range =
-				Range::buildObject(
+				Range::lazyCreate(
 					$this->safeGet($scope, $name, self::MIN),
-					$this->safeGet($scope, $name, self::MAX),
-					$this->swapAllowed
+					$this->safeGet($scope, $name, self::MAX)
 				);
 
 			if ($range &&

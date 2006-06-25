@@ -2,6 +2,9 @@
 
 2006-06-25	Konstantin V. Arkhipov
 
+	* core/Form/PrimitiveRange.class.php: fixed finally and partially
+	synced with trunk.
+
 	* 0.4.7 released.
 
 2006-06-24	Anton E. Lebedevich
