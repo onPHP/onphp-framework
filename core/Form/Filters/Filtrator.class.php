@@ -13,6 +13,8 @@
 	/**
 	 * Interface for primitive's filters.
 	 * 
+	 * @see FiltrablePrimitive::getDisplayValue()
+	 * 
 	 * @ingroup Filters
 	**/
 	interface Filtrator
