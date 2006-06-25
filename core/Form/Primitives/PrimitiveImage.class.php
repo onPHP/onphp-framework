@@ -87,8 +87,7 @@
 					&& !($this->minWidth && ($width < $this->minWidth))
 					&& !($this->maxHeight && ($height > $this->maxHeight))
 					&& !($this->minHeight && ($height < $this->minHeight))
-				)
-				{
+				) {
 					$this->type = new ImageType($type);
 					$this->width = $width;
 					$this->height = $height;
