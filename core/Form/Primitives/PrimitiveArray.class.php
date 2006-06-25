@@ -20,9 +20,10 @@
 			if (!BasePrimitive::import($scope))
 				return null;
 
-			if (is_array($scope[$this->name]) &&
-				!($this->min && count($scope[$this->name]) < $this->min) &&
-				!($this->min && count($scope[$this->name]) > $this->max))
+			if (
+				is_array($scope[$this->name])
+				&& !($this->min && count($scope[$this->name]) < $this->min)
+				&& !($this->min && count($scope[$this->name]) > $this->max))
 			{
 				$this->value = $scope[$this->name];
 

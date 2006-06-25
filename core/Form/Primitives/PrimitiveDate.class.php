@@ -62,15 +62,22 @@
 		
 		public function importSingle(&$scope)
 		{
-			if (isset($scope[$this->name]) &&
-				is_string($scope[$this->name]) &&
-				$time = strtotime($scope[$this->name])
+			if (
+				isset($scope[$this->name])
+				&& is_string($scope[$this->name])
 			) {
-				$tstamp = new Timestamp($time);
-				if (!($this->min && $this->min->toStamp() > $tstamp->toStamp())
-					&& !($this->max && $this->max->toStamp() < $tstamp->toStamp())
+				try {
+					$ts = new Timestamp($time);
+				} catch (WrongArgumentException $e) {
+					return false;
+				}
+				
+				if (
+					!($this->min && $this->min->toStamp() > $ts->toStamp())
+					&& !($this->max && $this->max->toStamp() < $ts->toStamp())
 				) {
-					$this->value = $tstamp;
+					$this->value = $ts;
+					
 					return true;
 				}
 			}
@@ -81,10 +88,9 @@
 		public function isEmpty(&$scope)
 		{
 			if ($this->getState()->isFalse()) {
-				return 
-					empty($scope[$this->name][self::DAY]) ||
-					empty($scope[$this->name][self::MONTH]) ||
-					empty($scope[$this->name][self::YEAR]);
+				return empty($scope[$this->name][self::DAY])
+					|| empty($scope[$this->name][self::MONTH])
+					|| empty($scope[$this->name][self::YEAR]);
 			} else 
 				return empty($scope[$this->name]);
 		}
