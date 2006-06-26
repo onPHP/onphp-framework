@@ -66,6 +66,8 @@
 					// we're not using * anywhere but COUNT()
 					elseif ($arg === '*')
 						$args[] = $dialect->quoteValue($arg);
+					elseif ($arg instanceof SelectQuery)
+						$args[] = '('.$dialect->fieldToString($arg).')';
 					else
 						$args[] = $dialect->fieldToString($arg);
 			}
