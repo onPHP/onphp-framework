@@ -2,6 +2,9 @@
 
 2006-06-25	Konstantin V. Arkhipov
 
+	* main/Containers/: sub-directories for Storable and Unified
+	containers introduced.
+
 	* core/Base/Timestamp.class.php: extended support of malformed dates,
 	normalization introduced for such cases.
 

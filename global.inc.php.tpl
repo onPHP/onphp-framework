@@ -74,7 +74,10 @@
 		.ONPHP_MAIN_PATH.'DAOs'			.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Flow'			.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'SPL'			.PATH_SEPARATOR
-		.ONPHP_MAIN_PATH.'Containers'	.PATH_SEPARATOR
+		
+		.ONPHP_MAIN_PATH.'Containers'.DIRECTORY_SEPARATOR.'Storable'.PATH_SEPARATOR
+		.ONPHP_MAIN_PATH.'Containers'.DIRECTORY_SEPARATOR.'Unified'.PATH_SEPARATOR
+		
 		.ONPHP_MAIN_PATH.'Utils'		.PATH_SEPARATOR
 		
 		// uncomment this one, if your php compiled without spl extension:
