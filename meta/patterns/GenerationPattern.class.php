@@ -22,6 +22,6 @@
 		public function daoExists();
 		
 		/// forcing patterns to be singletones
-		public static function getInstance($class, $args = null);
+		public static function getInstance($class /*, $args = null*/);
 	}
 ?>
