@@ -4,6 +4,10 @@
 
 	* ext/: php's extension moved from incubator.
 
+2006-06-27	Anton E. Lebedevich
+
+	* core/OSQL/SelectQuery.class.php: GroupBy class dropped.
+
 2006-06-25	Konstantin V. Arkhipov
 
 	* main/Containers/: sub-directories for Storable and Unified
