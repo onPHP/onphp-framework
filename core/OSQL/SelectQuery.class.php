@@ -24,11 +24,6 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	class GroupBy extends FieldTable {/*_*/}
-
-	/**
-	 * @ingroup OSQL
-	**/
 	final class SelectQuery extends QuerySkeleton implements Named
 	{
 		private $distinct		= false;
@@ -151,13 +146,11 @@
 
 		public function groupBy($field, $table = null)
 		{
-			if ($field instanceof DBField)
-				$this->group[] = new GroupBy($field);
+			if ($field instanceof DialectString)
+				$this->group[] = $field;
 			else 
 				$this->group[] =
-					new GroupBy(
-						new DBField($field, $this->getLastTable($table))
-					);
+						new DBField($field, $this->getLastTable($table));
 
 			return $this;
 		}
@@ -320,10 +313,10 @@
 
 			/* GROUP */ {
 				$groupList = array();
-
+DebugUtils::el($this->group);
 				foreach ($this->group as $group)
 					$groupList[] = $group->toDialectString($dialect);
-
+DebugUtils::el($groupList);
 				if ($groupList)
 					$query .= " GROUP BY ".implode(', ', $groupList);
 			}
