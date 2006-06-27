@@ -313,10 +313,8 @@
 
 			/* GROUP */ {
 				$groupList = array();
-DebugUtils::el($this->group);
 				foreach ($this->group as $group)
 					$groupList[] = $group->toDialectString($dialect);
-DebugUtils::el($groupList);
 				if ($groupList)
 					$query .= " GROUP BY ".implode(', ', $groupList);
 			}
