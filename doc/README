@@ -42,3 +42,22 @@ Quick start:
 	cp src/global.inc.php.tpl src/global.inc.php
 
 	include copied file in your script and enjoy
+
+PHP's extension quick start:
+
+	as shared module:
+
+		phpize
+		./configure
+	
+	with php:
+
+		cd into php's source
+		cp /path/to/onphp/ext ext/onphp
+		./buildconf --force
+		./configure --enable-onphp
+	
+	and finally:
+
+		make
+		su -c make install
