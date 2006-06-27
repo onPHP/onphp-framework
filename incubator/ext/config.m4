@@ -24,8 +24,13 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/DialectString.c \
 		src/core/OSQL/SQLTableName.c \
 	"
-
-	ONPHP_INCLUDES="-I./src/"
+	ONPHP_INCLUDES="\
+		-I@ext_srcdir@/src \
+		-I@ext_srcdir@/src/core \
+		-I@ext_srcdir@/src/core/Base \
+		-I@ext_srcdir@/src/core/DB \
+		-I@ext_srcdir@/src/core/OSQL \
+	"
 	ONPHP_SANITY="-Wall -Wno-implicit-function-declaration -fno-strict-aliasing"
 
 	PHP_SUBST(ONPHP_INCLUDES)
