@@ -39,7 +39,7 @@ static zend_module_dep onphp_deps[] = {
 zend_module_entry onphp_module_entry = {
 	STANDARD_MODULE_HEADER_EX, NULL,
 	onphp_deps,
-	"onPHP",
+	ONPHP_MODULE_NAME,
 	NULL,
 	PHP_MINIT(onphp),
 	NULL,

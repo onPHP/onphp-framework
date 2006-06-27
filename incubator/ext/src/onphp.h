@@ -3,7 +3,8 @@
 #ifndef ONPHP_H
 #define ONPHP_H
 
-#define ONPHP_VERSION "$Id$"
+#define ONPHP_VERSION "0.5"
+#define ONPHP_MODULE_NAME "onPHP"
 
 #define ONPHP_ME(class_name, function_name, arg_info, flags) \
 	PHP_ME(onphp_ ## class_name, function_name, arg_info, flags)
