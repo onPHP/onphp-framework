@@ -20,6 +20,11 @@ PHP_MINIT_FUNCTION(onphp)
 	return PHP_MINIT(onphp_core)(INIT_FUNC_ARGS_PASSTHRU);
 }
 
+PHP_RINIT_FUNCTION(onphp)
+{
+	return PHP_RINIT(onphp_core)(INIT_FUNC_ARGS_PASSTHRU);
+}
+
 PHP_RSHUTDOWN_FUNCTION(onphp)
 {
 	return PHP_RSHUTDOWN(onphp_core)(INIT_FUNC_ARGS_PASSTHRU);
@@ -38,7 +43,7 @@ zend_module_entry onphp_module_entry = {
 	NULL,
 	PHP_MINIT(onphp),
 	NULL,
-	NULL,
+	PHP_RINIT(onphp),
 	PHP_RSHUTDOWN(onphp),
 	PHP_MINFO(onphp),
 	ONPHP_VERSION,

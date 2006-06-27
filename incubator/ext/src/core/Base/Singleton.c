@@ -1,5 +1,6 @@
 /* $Id$ */
 
+#include "onphp.h"
 #include "onphp_core.h"
 
 #include "zend_exceptions.h"
@@ -8,6 +9,8 @@
 #include "core/Exceptions.h"
 
 PHPAPI zend_class_entry *onphp_ce_Singleton;
+
+static ONPHP_ARGINFO_ONE;
 
 static zval *instances = NULL;
 
@@ -23,11 +26,6 @@ ONPHP_METHOD(Singleton, getInstance)
 	zval **stored;
 	zval ***params = NULL;
 
-	if (!instances) {
-		ALLOC_INIT_ZVAL(instances);
-		array_init(instances);
-	}
-	
 	if (argc) {
 		params = safe_emalloc(sizeof(zval **), argc, 0);
 		
@@ -169,18 +167,24 @@ ONPHP_METHOD(Singleton, getInstance)
 	RETURN_ZVAL(object, 1, 0);
 }
 
+PHP_RINIT_FUNCTION(Singleton)
+{
+	ALLOC_INIT_ZVAL(instances);
+	array_init(instances);
+	
+	return SUCCESS;
+}
+
 PHP_RSHUTDOWN_FUNCTION(Singleton)
 {
-	if (instances) {
-		zval_ptr_dtor(&instances);
-	}
+	zval_ptr_dtor(&instances);
 
 	return SUCCESS;
 }
 
 zend_function_entry onphp_funcs_Singleton[] = {
 	ONPHP_ME(Singleton, __construct,	NULL, ZEND_ACC_PROTECTED)
-	ONPHP_ME(Singleton, getInstance,	NULL, ZEND_ACC_FINAL | ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Singleton, getInstance,	arginfo_one, ZEND_ACC_FINAL | ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Singleton, __clone,		NULL, ZEND_ACC_FINAL | ZEND_ACC_PRIVATE)
 	{NULL, NULL, NULL}
 };

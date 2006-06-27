@@ -40,10 +40,6 @@ ONPHP_METHOD(DBValue, __construct)
 	}
 
 	ONPHP_UPDATE_PROPERTY(getThis(), "value", value);
-	
-	if (Z_TYPE_P(value) == IS_LONG) {
-		ONPHP_UPDATE_PROPERTY_BOOL(getThis(), "unquotable", 1);
-	}
 }
 
 ONPHP_METHOD(DBValue, getValue)
@@ -55,38 +51,32 @@ ONPHP_METHOD(DBValue, getValue)
 
 ONPHP_METHOD(DBValue, toDialectString)
 {
-	zval *dialect, *property, *value, *out;
+	zval *dialect, *cast, *value, *out;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &dialect) == FAILURE) {
 		return;
 	}
 	
-	property = ONPHP_READ_PROPERTY(getThis(), "unquotable");
 	value = ONPHP_READ_PROPERTY(getThis(), "value");
 	
-	if (!zval_is_true(property)) {
-		zend_call_method_with_1_params(
-			&dialect,
-			Z_OBJCE_P(dialect),
-			NULL,
-			// lowercased because of external class
-			"quotevalue",
-			&out,
-			value
-		);
-		
-		if (!out) {
-			// exception was thrown
-			return;
-		}
-	} else {
-		MAKE_STD_ZVAL(out);
-		ZVAL_LONG(out, Z_LVAL_P(value));
+	zend_call_method_with_1_params(
+		&dialect,
+		Z_OBJCE_P(dialect),
+		NULL,
+		// lowercased because of external class
+		"quotevalue",
+		&out,
+		value
+	);
+	
+	if (!out) {
+		// exception was thrown
+		return;
 	}
 	
-	property = ONPHP_READ_PROPERTY(getThis(), "cast");
+	cast = ONPHP_READ_PROPERTY(getThis(), "cast");
 	
-	if (Z_STRLEN_P(property)) {
+	if (Z_STRLEN_P(cast)) {
 		zend_call_method_with_2_params(
 			&dialect,
 			Z_OBJCE_P(dialect),
@@ -94,7 +84,7 @@ ONPHP_METHOD(DBValue, toDialectString)
 			"toCasted",
 			&out,
 			out,
-			property
+			cast
 		);
 	} else {
 		// nothing

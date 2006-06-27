@@ -70,6 +70,11 @@ zend_object_value onphp_empty_object_new(zend_class_entry *class_type TSRMLS_DC)
 	return onphp_empty_object_spawn(class_type, NULL TSRMLS_CC);
 }
 
+PHP_RINIT_FUNCTION(onphp_core)
+{
+	return PHP_RINIT(Singleton)(INIT_FUNC_ARGS_PASSTHRU);
+}
+
 PHP_RSHUTDOWN_FUNCTION(onphp_core)
 {
 	return PHP_RSHUTDOWN(Singleton)(INIT_FUNC_ARGS_PASSTHRU);
@@ -147,7 +152,6 @@ PHP_MINIT_FUNCTION(onphp_core)
 		onphp_funcs_DBValue
 	);
 	REGISTER_ONPHP_PROPERTY(DBValue, "value", ZEND_ACC_PRIVATE);
-	REGISTER_ONPHP_PROPERTY_BOOL(DBValue, "unquotable", 0, ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_IMPLEMENTS(DBValue, DialectString);
 
 	PHP_MINIT_FUNCTION(Exceptions);
