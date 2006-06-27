@@ -1,5 +1,9 @@
 # $Id$
 
+2006-06-27	Konstantin V. Arkhipov
+
+	* ext/: php's extension moved from incubator.
+
 2006-06-25	Konstantin V. Arkhipov
 
 	* main/Containers/: sub-directories for Storable and Unified

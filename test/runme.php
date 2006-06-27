@@ -1,5 +1,15 @@
 <?php
 	/* $Id$ */
+
+	if (!extension_loaded('onphp')) {
+		echo 'Trying to load onPHP extension.. ';
+		
+		if (!@dl('onphp.so')) {
+			echo "failed.\n";
+		} else {
+			echo "done.\n";
+		}
+	}
 	
 	$config = dirname(__FILE__).'/config.inc.php';
 	
