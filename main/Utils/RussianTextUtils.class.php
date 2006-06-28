@@ -50,40 +50,6 @@
 		}
 	
 		/**
-		 * Returns suffix for word
-		 * 
-		 * @deprecated by selectCaseForNumber
-		 * @param	$number		integer variable
-		 * @param	$suffixes	array of suffixes as array('ца', 'цы', null)
-		**/
-		public static function getSuffix($number, $suffixes)
-		{
-			if (
-				in_array(
-					intval(substr($number, strlen($number) - 2, 2)),
-					self::$secondDecade, true
-				)
-			) {
-				return $suffixes[2];
-			}
-
-			$lastDigit = substr($number, strlen($number) - 1, 1);
-
-			switch ($lastDigit) {
-				case '1':
-					return $suffixes[0];
-				
-				case '2':
-				case '3':
-				case '4':
-					return $suffixes[1];
-				
-				default:
-					return $suffixes[2];
-			}
-		}
-		
-		/**
 		 * Select russian case for number
 		 * for example:
 		 * 	1 результат

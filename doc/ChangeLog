@@ -2,6 +2,12 @@
 
 2006-06-28	Konstantin V. Arkhipov
 
+	* meta/builders/ProtoClassBuilder.class.php: deprecated getForm()
+	dropped.
+
+	* main/Utils/RussianTextUtils.class.php: deprecated getSuffix()
+	dropped.
+
 	* main/DAOs/Handlers/: segment's handling logic separated from
 	DAO-workers.
 

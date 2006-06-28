@@ -118,12 +118,6 @@ EOT;
 			$out .= <<<EOT
 
 	}
-	
-	/// @deprecated by makeForm, will be removed after 0.4.7
-	public function getForm()
-	{
-		return \$this->form;
-	}
 }
 
 EOT;
