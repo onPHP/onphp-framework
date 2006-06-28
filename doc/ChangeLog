@@ -1,5 +1,10 @@
 # $Id$
 
+2006-06-28	Konstantin V. Arkhipov
+
+	* main/DAOs/: sub-directories for Workers and upcoming Handlers
+	introduced.
+
 2006-06-27	Konstantin V. Arkhipov
 
 	* ext/: php's extension moved from incubator.
