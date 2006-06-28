@@ -30,10 +30,8 @@
 					$twoHit++;
 			}
 			
-			$this->assertTrue(	
-				($oneHit == $twoHit)
-				&& $twoHit == 1000
-			);
+			$this->assertEqual($oneHit, $twoHit);
+			$this->assertEqual($twoHit, 1000);
 		}
 	}
 ?>
