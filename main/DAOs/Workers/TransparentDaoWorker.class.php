@@ -20,6 +20,8 @@
 	**/
 	abstract class TransparentDaoWorker extends BaseDaoWorker
 	{
+		protected $handler = null;
+		
 		abstract protected function gentlyGetByKey($key);
 		
 		//@{
