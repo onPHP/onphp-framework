@@ -1,5 +1,10 @@
 # $Id$
 
+2006-06-28	Konstantin V. Arkhipov
+
+	* meta/builders/ProtoClassBuilder.class.php: removed generation of
+	deprecated getForm() method.
+
 2006-06-25	Konstantin V. Arkhipov
 
 	* core/Form/RemoveSymbolsFilter.class.php: deprecated by
