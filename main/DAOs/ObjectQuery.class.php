@@ -12,14 +12,14 @@
 
 	/**
 	 * Various information holder for communication
-	 * between MappedDAO implementations and modules.
+	 * between MappedDAO implementations and controllers.
 	 * 
 	 * @see MappedDAO
-	 * @see BaseModule
+	 * @see Controller
 	 * 
 	 * @ingroup DAOs
 	**/
-	class ObjectQuery
+	final class ObjectQuery
 	{
 		const SORT_ASC		= 0x0001;
 		const SORT_DESC		= 0x0002;

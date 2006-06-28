@@ -13,6 +13,10 @@
 	/**
 	 * Fully implemented DAO for NamedObject child.
 	 * 
+	 * @see Named
+	 * @see NamedObjectDAO
+	 * @see FinalNamedObjectDAO
+	 * 
 	 * @ingroup DAOs
 	**/
 	abstract class FinalNamedObjectDAO extends NamedObjectDAO

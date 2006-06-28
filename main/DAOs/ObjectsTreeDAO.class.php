@@ -11,6 +11,9 @@
 /* $Id$ */
 
 	/**
+	 * @see ObjectsTree
+	 * @see FinalObjectsTreeDAO
+	 * 
 	 * @ingroup DAOs
 	**/
 	abstract class ObjectsTreeDAO extends GenericDAO

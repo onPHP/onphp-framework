@@ -13,6 +13,9 @@
 	/**
 	 * Fully implemented DAO for ObjectTree child.
 	 * 
+	 * @see ObjectsTree
+	 * @see ObjectsTreeDAO
+	 * 
 	 * @ingroup DAOs
 	**/
 	abstract class FinalObjectsTreeDAO extends ObjectsTreeDAO

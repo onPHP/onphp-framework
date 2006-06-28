@@ -11,7 +11,9 @@
 /* $Id$ */
 
 	/**
-	 * @see Named.class.php
+	 * @see Named
+	 * @see NamedObjectDAO
+	 * @see FinalNamedObjectDAO
 	 * 
 	 * @ingroup Base
 	 * @ingroup Module

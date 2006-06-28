@@ -2,6 +2,8 @@
 
 2006-06-28	Konstantin V. Arkhipov
 
+	* main/DAOs/ObjectQuery.class.php: final class now.
+
 	* meta/builders/ProtoClassBuilder.class.php: deprecated getForm()
 	dropped.
 
