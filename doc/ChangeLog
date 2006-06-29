@@ -1,5 +1,9 @@
 # $Id$
 
+2006-06-29	Konstantin V. Arkhipov
+
+	* main/DAOs/ObjectQuery.class.php: final now, as is trunk.
+
 2006-06-28	Konstantin V. Arkhipov
 
 	* meta/builders/ProtoClassBuilder.class.php: removed generation of
