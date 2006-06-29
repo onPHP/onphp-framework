@@ -1,5 +1,11 @@
 # $Id$
 
+2006-06-29	Konstantin V. Arkhipov
+
+	* meta/builders/ContainerClassBuilder.class.php: naming of
+	container's classes changed to avoid collisions with two or more
+	self-collected ones.
+
 2006-06-28	Konstantin V. Arkhipov
 
 	* main/DAOs/ObjectQuery.class.php: final class now.

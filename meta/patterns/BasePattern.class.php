@@ -90,7 +90,7 @@
 				) {
 					$userFile =
 						ONPHP_META_DAO_DIR
-						.$class->getName().'To'.$property->getType()->getClass()
+						.$class->getName().ucfirst($property->getName())
 						.'DAO'
 						.EXT_CLASS;
 					
@@ -105,6 +105,18 @@
 							)
 						);
 					}
+					
+					// check for old-style naming
+					$oldStlye = 
+						ONPHP_META_DAO_DIR
+						.$class->getName()
+						.'To'
+						.$property->getType()->getClass()
+						.'DAO'
+						.EXT_CLASS;
+					
+					if (is_readable($oldStlye))
+						echo '! remove manually: '.$oldStlye."\n";
 				}
 			}
 		}

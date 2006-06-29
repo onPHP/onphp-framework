@@ -28,7 +28,7 @@
 			
 			$out .=
 				'final class '
-				."{$class->getName()}To{$holder->getType()->getClass()}DAO"
+				.$class->getName().ucfirst($holder->getName()).'DAO'
 				.' extends '
 				.$holder->getRelation()->toString().'Linked'
 				."\n{\n";

@@ -71,14 +71,14 @@
 				} else { // OneToMany || ManyToMany
 					$name = $property->getName();
 					$methodName = ucfirst($name);
-					$remoteName = $property->getType()->getClass();
+					$remoteName = ucfirst($property->getName());
 					
 					$out .= <<<EOT
 
 public function get{$methodName}(\$lazy = false)
 {
 	if (!\$this->{$name}) {
-		\$this->{$name} = new {$class->getName()}To{$remoteName}DAO(\$this, \$lazy);
+		\$this->{$name} = new {$class->getName()}{$remoteName}DAO(\$this, \$lazy);
 		
 		if (\$this->id) {
 			\$this->{$name}->fetch();
