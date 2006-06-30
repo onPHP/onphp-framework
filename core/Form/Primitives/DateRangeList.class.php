@@ -96,7 +96,7 @@
 		{
 			if (
 				(substr_count($string, ' - ') === 1)
-				|| (substr_count($string, '-'))
+				|| (substr_count($string, '-') === 1)
 			) {
 				$delimiter = ' - ';
 				
