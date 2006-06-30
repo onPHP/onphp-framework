@@ -53,7 +53,9 @@
 			}
 			
 			error_log(
-				$prefix.": ".$query->toString()
+				$prefix.": ".$query->toDialectString(
+					DBFactory::getDefaultInstance()->getDialect()
+				)
 			);
 		}
 		
