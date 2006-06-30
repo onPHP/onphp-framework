@@ -19,7 +19,7 @@
 	{
 		private $alias = null;
 
-		public function __construct(DBField $field, $alias)
+		public function __construct(DialectString $field, $alias)
 		{
 			parent::__construct($field);
 			$this->alias = $alias;
@@ -27,7 +27,10 @@
 		
 		public function getName()
 		{
-			return $this->field->getField();
+			if ($this->field instanceof DBField)
+				return $this->field->getField();
+			
+			return null;
 		}
 
 		public function toDialectString(Dialect $dialect)
