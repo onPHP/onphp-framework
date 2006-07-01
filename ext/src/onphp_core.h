@@ -7,14 +7,7 @@
 
 #include "onphp.h"
 
-extern zend_object_value onphp_empty_object_new(zend_class_entry *class_type TSRMLS_DC);
-
-typedef struct _onphp_empty_object onphp_empty_object;
-
-struct _onphp_empty_object {
-	zend_object std;
-};
-
+extern PHP_RINIT_FUNCTION(onphp_core);
 extern PHP_MINIT_FUNCTION(onphp_core);
 extern PHP_RSHUTDOWN_FUNCTION(onphp_core);
 

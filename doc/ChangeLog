@@ -1,5 +1,9 @@
 # $Id$
 
+2006-07-01	Konstantin V. Arkhipov
+
+	* ext/: SegmentHandler interface implemented.
+
 2006-06-30	Konstantin V. Arkhipov
 
 	* core/OSQL/SelectField.class.php: now supports any instance of

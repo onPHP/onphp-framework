@@ -12,6 +12,7 @@
 
 	/**
 	 * @ingroup DAOs
+	 * @ingroup Module
 	**/
 	interface SegmentHandler
 	{

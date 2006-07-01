@@ -3,6 +3,9 @@
 #ifndef ONPHP_H
 #define ONPHP_H
 
+#include "php.h"
+#include "zend_interfaces.h"
+
 #define ONPHP_VERSION "0.5"
 #define ONPHP_MODULE_NAME "onPHP"
 
@@ -62,5 +65,20 @@
 		ZEND_ARG_INFO(0, second) \
 		ZEND_ARG_INFO(0, third) \
 	ZEND_END_ARG_INFO()
+
+typedef struct _onphp_empty_object onphp_empty_object;
+
+struct _onphp_empty_object {
+	zend_object std;
+};
+
+extern void onphp_empty_object_free_storage(void *object TSRMLS_DC);
+extern zend_object_value onphp_empty_object_spawn(
+	zend_class_entry *class_type,
+	onphp_empty_object **object TSRMLS_DC
+);
+extern zend_object_value onphp_empty_object_new(
+	zend_class_entry *class_type TSRMLS_DC
+);
 
 #endif /* ONPHP_H */

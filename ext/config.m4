@@ -9,6 +9,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/onphp.c \
 		src/onphp_util.c \
 		src/onphp_core.c \
+		src/onphp_main.c \
 		src/core/Exceptions.c \
 		src/core/Base/Identifiable.c \
 		src/core/Base/Identifier.c \
@@ -23,6 +24,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/DBValue.c \
 		src/core/OSQL/DialectString.c \
 		src/core/OSQL/SQLTableName.c \
+		src/main/DAOs/Handlers/SegmentHandler.c \
 	"
 	ONPHP_INCLUDES="\
 		-I@ext_srcdir@/src \
@@ -30,6 +32,9 @@ if test "$PHP_ONPHP" != "no"; then
 		-I@ext_srcdir@/src/core/Base \
 		-I@ext_srcdir@/src/core/DB \
 		-I@ext_srcdir@/src/core/OSQL \
+		-I@ext_srcdir@/src/main \
+		-I@ext_srcdir@/src/main/DAOs \
+		-I@ext_srcdir@/src/main/DAOs/Handlers \
 	"
 	ONPHP_SANITY="-Wall -Wno-implicit-function-declaration -fno-strict-aliasing"
 
