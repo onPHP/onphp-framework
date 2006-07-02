@@ -82,7 +82,8 @@
 						if (!isset($xmlProperty['relation']))
 							throw new MissingElementException(
 								'relation should be set for non-generic '
-								."type '".get_class($property->getType())."'"
+								."property '{$property->getName()}' type '"
+								.get_class($property->getType())."'"
 								." of '{$class->getName()}' class"
 							);
 						else {
