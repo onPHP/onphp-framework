@@ -8,6 +8,16 @@ PHPAPI zend_class_entry *onphp_ce_SharedMemorySegmentHandler;
 
 static ONPHP_ARGINFO_ONE;
 
+PHP_MINIT_FUNCTION(SharedMemorySegmentHandler)
+{
+	return SUCCESS;
+}
+
+PHP_MSHUTDOWN_FUNCTION(SharedMemorySegmentHandler)
+{
+	return SUCCESS;
+}
+
 ONPHP_METHOD(SharedMemorySegmentHandler, __construct)
 {
 }

@@ -10,7 +10,7 @@
 		ZEND_ARG_OBJ_INFO(0, dialect, Dialect, 0) \
 	ZEND_END_ARG_INFO()
 
-extern PHPAPI zend_class_entry *onphp_ce_Dialect;
+PHPAPI zend_class_entry *onphp_ce_Dialect;
 
 extern zend_function_entry onphp_funcs_Dialect[];
 

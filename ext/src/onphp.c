@@ -75,6 +75,11 @@ PHP_MINIT_FUNCTION(onphp)
 		& PHP_MINIT(onphp_main)(INIT_FUNC_ARGS_PASSTHRU);
 }
 
+PHP_MSHUTDOWN_FUNCTION(onphp)
+{
+	return PHP_MSHUTDOWN(onphp_main)(INIT_FUNC_ARGS_PASSTHRU);
+}
+
 PHP_RINIT_FUNCTION(onphp)
 {
 	return

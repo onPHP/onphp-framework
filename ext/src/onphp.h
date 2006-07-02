@@ -36,6 +36,9 @@
 #define REGISTER_ONPHP_PROPERTY_BOOL(class_name, prop_name, bool, prop_flags) \
 	zend_declare_property_bool(onphp_ce_ ## class_name, prop_name, strlen(prop_name), bool, prop_flags TSRMLS_CC);
 
+#define REGISTER_ONPHP_CLASS_CONST_LONG(class_name, const_name, value) \
+	zend_declare_class_constant_long(onphp_ce_ ## class_name, const_name, strlen(const_name), (long) value TSRMLS_CC);
+
 #define ONPHP_READ_PROPERTY(class, property) \
 	zend_read_property(Z_OBJCE_P(class), class, property, strlen(property), 1 TSRMLS_CC)
 

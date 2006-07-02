@@ -5,7 +5,7 @@
 
 #include "onphp_core.h"
 
-extern PHPAPI zend_class_entry *onphp_ce_NamedObject;
+PHPAPI zend_class_entry *onphp_ce_NamedObject;
 
 extern zend_function_entry onphp_funcs_NamedObject[];
 
