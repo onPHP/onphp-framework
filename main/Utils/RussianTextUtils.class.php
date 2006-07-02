@@ -50,14 +50,14 @@
 		}
 	
 		/**
-		 * Select russian case for number
+		 * Selects russian case for number.
 		 * for example:
 		 * 	1 результат
 		 * 	2 результата
 		 * 	5 результатов
 		 * @param $number integer
 		 * @param $cases words to select from array('результат', 'результата', 'результатов')
-		 */
+		**/
 		public static function selectCaseForNumber($number, $cases)
 		{
 			if (($number % 10) == 1 && ($number % 100) != 11) {
