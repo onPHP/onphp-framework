@@ -34,7 +34,7 @@
 					try {
 						if (
 							$class->hasMethod($getter)
-							&& ($ignoreNull && ($value !== null)
+							&& ($ignoreNull && ($value !== null))
 						) {
 							// PrimitiveIdentifier, Enumerations
 							if ($value instanceof Identifiable)
