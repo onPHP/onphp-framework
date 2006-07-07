@@ -27,16 +27,14 @@
 				
 				if (isset($primitives[$name])) {
 					
-					$getter = 'get'.ucfirst($name);
-					$prm = $primitives[$name];
+					$getter	= 'get'.ucfirst($name);
+					$value	= $object->$getter();
+					$prm	= $primitives[$name];
 					
 					try {
 						if (
 							$class->hasMethod($getter)
-							&& (
-								$ignoreNull
-								&& ($value = $object->$getter()) !== null
-							)
+							&& ($ignoreNull && ($value !== null)
 						) {
 							// PrimitiveIdentifier, Enumerations
 							if ($value instanceof Identifiable)
@@ -72,14 +70,12 @@
 			
 			foreach ($form->getPrimitiveList() as $name => $prm) {
 				$setter = 'set'.ucfirst($name);
+				$value = $prm->getValue();
 				
 				try {
 					if (
 						$class->hasMethod($setter)
-						&& (
-							$ignoreNull
-							&& ($value = $prm->getValue()) !== null
-						)
+						&& ($ignoreNull && ($value !== null))
 					) {
 						if ($prm instanceof PrimitiveList) {
 							$list = $prm->getList();
