@@ -34,7 +34,7 @@
 					try {
 						if (
 							$class->hasMethod($getter)
-							&& ($ignoreNull && ($value !== null))
+							&& (!$ignoreNull || ($value !== null))
 						) {
 							// PrimitiveIdentifier, Enumerations
 							if ($value instanceof Identifiable)
@@ -75,7 +75,7 @@
 				try {
 					if (
 						$class->hasMethod($setter)
-						&& ($ignoreNull && ($value !== null))
+						&& (!$ignoreNull || ($value !== null))
 					) {
 						if ($prm instanceof PrimitiveList) {
 							$list = $prm->getList();
@@ -90,8 +90,10 @@
 						if ($value === null) {
 							$dropper = 'drop'.ucfirst($name);
 							
-							if ($class->hasMethod($dropper))
+							if ($class->hasMethod($dropper)) {
 								$object->$dropper();
+								continue;
+							}
 						}
 
 						$object->$setter($value);
