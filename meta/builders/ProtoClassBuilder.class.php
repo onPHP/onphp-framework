@@ -20,7 +20,7 @@
 			$out = self::getHead();
 			
 			$out .= <<<EOT
-final class Proto{$class->getName()} extends AbstractProtoClass
+class Proto{$class->getName()} extends AbstractProtoClass
 {
 	private \$form = null;
 
