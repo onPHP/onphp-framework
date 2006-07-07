@@ -1,5 +1,10 @@
 # $Id$
 
+2006-07-07	Konstantin V. Arkhipov
+
+	* core/Form/FormUtils.class.php: null's handling are now optional, as
+	requested by nk.
+
 2006-07-01	Konstantin V. Arkhipov
 
 	* ext/: SegmentHandler interface implemented.

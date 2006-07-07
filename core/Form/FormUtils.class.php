@@ -16,7 +16,7 @@
 	final class FormUtils extends StaticFactory
 	{
 		/* void */ public static function object2form(
-			Identifiable $object, Form $form
+			Identifiable $object, Form $form, $ignoreNull = true
 		)
 		{
 			$class = new ReflectionClass($object);
@@ -33,7 +33,10 @@
 					try {
 						if (
 							$class->hasMethod($getter)
-							&& ($value = $object->$getter()) !== null
+							&& (
+								$ignoreNull
+								&& ($value = $object->$getter()) !== null
+							)
 						) {
 							// PrimitiveIdentifier, Enumerations
 							if ($value instanceof Identifiable)
@@ -62,7 +65,7 @@
 		}
 		
 		/* void */ public static function form2object(
-			Form $form, Identifiable $object
+			Form $form, Identifiable $object, $ignoreNull = true
 		)
 		{
 			$class = new ReflectionClass($object);
@@ -73,7 +76,10 @@
 				try {
 					if (
 						$class->hasMethod($setter)
-						&& ($value = $prm->getValue()) !== null
+						&& (
+							$ignoreNull
+							&& ($value = $prm->getValue()) !== null
+						)
 					) {
 						if ($prm instanceof PrimitiveList) {
 							$list = $prm->getList();
@@ -83,6 +89,13 @@
 							&& $value instanceof Identifiable
 						) {
 							$value = $value->getId();
+						}
+						
+						if ($value === null) {
+							$dropper = 'drop'.ucfirst($name);
+							
+							if ($class->hasMethod($dropper))
+								$object->$dropper();
 						}
 
 						$object->$setter($value);
