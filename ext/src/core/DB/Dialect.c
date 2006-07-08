@@ -174,6 +174,8 @@ ONPHP_METHOD(Dialect, fieldToString)
 			getThis()
 		);
 	} else {
+		SEPARATE_ZVAL_TO_MAKE_IS_REF(&field);
+		
 		zend_call_method_with_1_params(
 			&getThis(),
 			Z_OBJCE_P(getThis()),
@@ -204,6 +206,8 @@ ONPHP_METHOD(Dialect, valueToString)
 		Z_TYPE_P(value) == IS_OBJECT
 		&& instanceof_function(Z_OBJCE_P(value), onphp_ce_DBValue TSRMLS_CC)
 	) {
+		SEPARATE_ZVAL_TO_MAKE_IS_REF(&value);
+		
 		zend_call_method_with_1_params(
 			&this,
 			Z_OBJCE_P(this),
