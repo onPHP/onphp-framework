@@ -69,8 +69,7 @@ ONPHP_METHOD(DBValue, toDialectString)
 		value
 	);
 	
-	if (!out) {
-		// exception was thrown
+	if (EG(exception)) {
 		return;
 	}
 	

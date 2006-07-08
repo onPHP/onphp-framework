@@ -199,8 +199,7 @@ ONPHP_METHOD(Dialect, fieldToString)
 		);
 	}
 	
-	if (!out) {
-		// exception was thrown
+	if (EG(exception)) {
 		return;
 	}
 	
