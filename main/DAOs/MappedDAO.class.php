@@ -15,6 +15,10 @@
 	**/
 	interface MappedDAO
 	{
+		/**
+		 * Must return associative array [propertyName] => [fieldName]
+		 * fieldName can be null if there is no difference with propertyName
+		**/
 		public function getMapping();
 	}
 ?>
