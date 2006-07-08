@@ -58,7 +58,7 @@ static HashTable *onphp_smsh_find_segment(long id TSRMLS_DC)
 		zend_hash_init(ht, 0, NULL, NULL, 1);
 		
 		new_le.type = le_onphp_smsh;
-		new_le.ptr	= ht;
+		new_le.ptr = ht;
 		
 		if (
 			zend_hash_update(
