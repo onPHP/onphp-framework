@@ -12,11 +12,7 @@ static int le_onphp_smsh;
 
 static void _onphp_smsh_pool_list_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
-	HashTable *segment = (HashTable *) rsrc->ptr;
-	
-	php_printf("**** %d\n", segment);
-	
-	zend_hash_destroy(segment);
+	zend_hash_destroy((HashTable *) rsrc->ptr);
 }
 
 PHP_MINIT_FUNCTION(SharedMemorySegmentHandler)
