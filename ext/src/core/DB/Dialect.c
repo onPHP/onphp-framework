@@ -227,6 +227,10 @@ ONPHP_METHOD(Dialect, valueToString)
 			&value,
 			value
 		);
+		
+		if (EG(exception)) {
+			return;
+		}
 	}
 	
 	RETURN_ZVAL(value, 1, 0);

@@ -54,7 +54,7 @@ ONPHP_METHOD(DBValue, toDialectString)
 	zval *dialect, *cast, *value, *out;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &dialect) == FAILURE) {
-		return;
+		WRONG_PARAM_COUNT;
 	}
 	
 	value = ONPHP_READ_PROPERTY(getThis(), "value");
