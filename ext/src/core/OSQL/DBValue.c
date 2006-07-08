@@ -83,6 +83,10 @@ ONPHP_METHOD(DBValue, toDialectString)
 			out,
 			cast
 		);
+		
+		if (EG(exception)) {
+			return;
+		}
 	} else {
 		// nothing
 	}

@@ -197,7 +197,7 @@ ONPHP_METHOD(Dialect, valueToString)
 	zval *this = getThis(), *value;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
-		return;
+		WRONG_PARAM_COUNT;
 	}
 	
 	if (
