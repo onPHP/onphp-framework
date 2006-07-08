@@ -12,7 +12,11 @@ static int le_onphp_smsh;
 
 static void _onphp_smsh_pool_list_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
-	zend_hash_destroy((HashTable *) rsrc->ptr);
+	HashTable *segment = (HashTable *) rsrc->ptr;
+	
+	if (segment) {
+		zend_hash_destroy(segment);
+	}
 }
 
 PHP_MINIT_FUNCTION(SharedMemorySegmentHandler)
@@ -50,7 +54,7 @@ static HashTable *onphp_smsh_find_segment(long id TSRMLS_DC)
 		list_entry new_le;
 		HashTable *ht;
 		
-		ALLOC_HASHTABLE(ht);
+		ht = pemalloc(sizeof(HashTable), 1);
 		zend_hash_init(ht, 0, NULL, NULL, 1);
 		
 		new_le.type = le_onphp_smsh;
