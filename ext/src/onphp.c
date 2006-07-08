@@ -77,21 +77,17 @@ PHP_MINIT_FUNCTION(onphp)
 
 PHP_MSHUTDOWN_FUNCTION(onphp)
 {
-	return PHP_MSHUTDOWN(onphp_main)(INIT_FUNC_ARGS_PASSTHRU);
+	return SUCCESS;
 }
 
 PHP_RINIT_FUNCTION(onphp)
 {
-	return
-		PHP_RINIT(onphp_core)(INIT_FUNC_ARGS_PASSTHRU)
-		& PHP_RINIT(onphp_main)(INIT_FUNC_ARGS_PASSTHRU);
+	return PHP_RINIT(onphp_core)(INIT_FUNC_ARGS_PASSTHRU);
 }
 
 PHP_RSHUTDOWN_FUNCTION(onphp)
 {
-	return
-		PHP_RSHUTDOWN(onphp_core)(INIT_FUNC_ARGS_PASSTHRU)
-		& PHP_RSHUTDOWN(onphp_main)(INIT_FUNC_ARGS_PASSTHRU);
+	return PHP_RSHUTDOWN(onphp_core)(INIT_FUNC_ARGS_PASSTHRU);
 }
 
 static zend_module_dep onphp_deps[] = {

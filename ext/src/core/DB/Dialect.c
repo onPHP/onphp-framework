@@ -34,7 +34,7 @@ ONPHP_METHOD(Dialect, quoteValue)
 	zval *value;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
-		return;
+		WRONG_PARAM_COUNT;
 	}
 
 	// don't know, how to replicate original voodoo
