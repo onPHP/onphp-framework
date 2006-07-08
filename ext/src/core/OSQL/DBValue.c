@@ -81,7 +81,8 @@ ONPHP_METHOD(DBValue, toDialectString)
 			&dialect,
 			Z_OBJCE_P(dialect),
 			NULL,
-			"toCasted",
+			// lowercased because of external class
+			"tocasted",
 			&out,
 			out,
 			cast
