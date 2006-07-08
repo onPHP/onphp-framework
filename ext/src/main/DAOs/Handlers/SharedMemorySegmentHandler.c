@@ -48,13 +48,13 @@ static HashTable *onphp_smsh_find_segment(long id TSRMLS_DC)
 		== FAILURE
 	) {
 		list_entry new_le;
-		HashTable ht;
+		HashTable *ht;
 		
-		zend_hash_init(&ht, 0, NULL, NULL, 0);
+		ALLOC_HASHTABLE(ht);
+		zend_hash_init(ht, 0, NULL, NULL, 1);
 		
 		new_le.type = le_onphp_smsh;
-		new_le.ptr	= &ht;
-		retval = &ht;
+		new_le.ptr	= ht;
 		
 		if (
 			zend_hash_update(
@@ -67,15 +67,18 @@ static HashTable *onphp_smsh_find_segment(long id TSRMLS_DC)
 			)
 			== FAILURE
 		) {
-			zend_hash_destroy(&ht);
+			zend_hash_destroy(ht);
+			retval = NULL;
 		} else {
-			zend_list_insert(&ht, le_onphp_smsh);
+			zend_list_insert(ht, le_onphp_smsh);
+			retval = ht;
 		}
 	} else {
 		retval = le->ptr;
 	}
 	
 	efree(hash_key);
+	
 	return retval;
 }
 
@@ -95,6 +98,7 @@ ONPHP_METHOD(SharedMemorySegmentHandler, touch)
 	long id;
 	zval *key;
 	HashTable *segment;
+	zend_bool true = 1;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &key) == FAILURE) {
 		WRONG_PARAM_COUNT;
@@ -108,11 +112,11 @@ ONPHP_METHOD(SharedMemorySegmentHandler, touch)
 	
 	if (
 		zend_hash_update(
-			&EG(persistent_list),
+			segment,
 			Z_STRVAL_P(key),
 			Z_STRLEN_P(key) + 1,
-			(void *) &id,
-			sizeof(long),
+			&true,
+			sizeof(zend_bool *),
 			NULL
 		)
 		== FAILURE
@@ -141,7 +145,7 @@ ONPHP_METHOD(SharedMemorySegmentHandler, unlink)
 	
 	if (
 		zend_hash_del(
-			&EG(persistent_list),
+			segment,
 			Z_STRVAL_P(key),
 			Z_STRLEN_P(key) + 1
 		)
@@ -171,7 +175,7 @@ ONPHP_METHOD(SharedMemorySegmentHandler, ping)
 	
 	if (
 		zend_hash_find(
-			&EG(persistent_list),
+			segment,
 			Z_STRVAL_P(key),
 			Z_STRLEN_P(key) + 1,
 			(void *) &id
@@ -186,15 +190,12 @@ ONPHP_METHOD(SharedMemorySegmentHandler, ping)
 
 ONPHP_METHOD(SharedMemorySegmentHandler, drop)
 {
-	zend_hash_destroy(
+	zend_hash_clean(
 		onphp_smsh_find_segment(
-			Z_LVAL_P(
-				ONPHP_READ_PROPERTY(getThis(), "id")
-			)
-			TSRMLS_CC
+			Z_LVAL_P(ONPHP_READ_PROPERTY(getThis(), "id")) TSRMLS_CC
 		)
 	);
-	
+
 	RETURN_TRUE;
 }
 
