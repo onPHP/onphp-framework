@@ -7,8 +7,6 @@
 
 PHPAPI zend_class_entry *onphp_ce_IdentifiableObject;
 
-static ONPHP_ARGINFO_ONE;
-
 ONPHP_METHOD(IdentifiableObject, wrap)
 {
 	zval *object, *id;
@@ -59,6 +57,8 @@ ONPHP_METHOD(IdentifiableObject, setId)
 
 	RETURN_ZVAL(getThis(), 1, 0);
 }
+
+static ONPHP_ARGINFO_ONE;
 
 zend_function_entry onphp_funcs_IdentifiableObject[] = {
 	ONPHP_ME(IdentifiableObject, getId,	NULL, ZEND_ACC_PUBLIC)

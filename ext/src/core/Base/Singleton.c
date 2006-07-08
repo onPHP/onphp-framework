@@ -10,8 +10,6 @@
 
 PHPAPI zend_class_entry *onphp_ce_Singleton;
 
-static ONPHP_ARGINFO_ONE;
-
 static zval *instances = NULL;
 
 /* protected */		ONPHP_METHOD(Singleton, __construct)	{/*_*/}
@@ -181,6 +179,8 @@ PHP_RSHUTDOWN_FUNCTION(Singleton)
 
 	return SUCCESS;
 }
+
+static ONPHP_ARGINFO_ONE;
 
 zend_function_entry onphp_funcs_Singleton[] = {
 	ONPHP_ME(Singleton, __construct,	NULL, ZEND_ACC_PROTECTED)

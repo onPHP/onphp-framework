@@ -10,9 +10,6 @@
 
 PHPAPI zend_class_entry *onphp_ce_DBValue;
 
-static ONPHP_ARGINFO_ONE;
-static ONPHP_ARGINFO_DIALECT;
-
 ONPHP_METHOD(DBValue, create)
 {
 	zval *object, *value;
@@ -92,6 +89,9 @@ ONPHP_METHOD(DBValue, toDialectString)
 	
 	RETURN_ZVAL(out, 1, 1);
 }
+
+static ONPHP_ARGINFO_ONE;
+static ONPHP_ARGINFO_DIALECT;
 
 zend_function_entry onphp_funcs_DBValue[] = {
 	ONPHP_ME(DBValue, create, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)

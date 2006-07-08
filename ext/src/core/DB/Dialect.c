@@ -15,20 +15,6 @@
 
 PHPAPI zend_class_entry *onphp_ce_Dialect;
 
-static ONPHP_ARGINFO_TWO;
-static ONPHP_ARGINFO_THREE;
-
-static
-ZEND_BEGIN_ARG_INFO(arginfo_autoincrementize, 0)
-	ZEND_ARG_OBJ_INFO(0, column, DBColumn, 0)
-	ZEND_ARG_INFO(1, prepend)
-ZEND_END_ARG_INFO();
-
-static
-ZEND_BEGIN_ARG_INFO(arginfo_one_ref, 0)
-	ZEND_ARG_INFO(1, value)
-ZEND_END_ARG_INFO();
-
 ONPHP_METHOD(Dialect, quoteValue)
 {
 	zval *value;
@@ -253,6 +239,20 @@ ONPHP_METHOD(Dialect, fullTextRank)
 		"Implement me first"
 	);
 }
+
+static ONPHP_ARGINFO_TWO;
+static ONPHP_ARGINFO_THREE;
+
+static
+ZEND_BEGIN_ARG_INFO(arginfo_autoincrementize, 0)
+	ZEND_ARG_OBJ_INFO(0, column, DBColumn, 0)
+	ZEND_ARG_INFO(1, prepend)
+ZEND_END_ARG_INFO();
+
+static
+ZEND_BEGIN_ARG_INFO(arginfo_one_ref, 0)
+	ZEND_ARG_INFO(1, value)
+ZEND_END_ARG_INFO();
 
 zend_function_entry onphp_funcs_Dialect[] = {
 	ONPHP_ABSTRACT_ME(Dialect, autoincrementize, arginfo_autoincrementize, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)

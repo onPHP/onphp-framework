@@ -6,8 +6,6 @@
 
 PHPAPI zend_class_entry *onphp_ce_Identifier;
 
-static ONPHP_ARGINFO_ONE;
-
 ONPHP_METHOD(Identifier, create)
 {
 	zval *object;
@@ -75,6 +73,8 @@ ONPHP_METHOD(Identifier, isFinalized)
 	
 	RETURN_FALSE;
 }
+
+static ONPHP_ARGINFO_ONE;
 
 zend_function_entry onphp_funcs_Identifier[] = {
 	ONPHP_ME(Identifier, create,		NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
