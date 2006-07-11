@@ -26,6 +26,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/Castable.c \
 		src/core/OSQL/DBValue.c \
 		src/core/OSQL/DialectString.c \
+		src/core/OSQL/FieldTable.c \
 		src/core/OSQL/SQLTableName.c \
 		src/main/DAOs/Handlers/SegmentHandler.c \
 		src/main/DAOs/Handlers/SharedMemorySegmentHandler.c \

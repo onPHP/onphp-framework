@@ -12,6 +12,7 @@
 
 	/**
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	abstract class FieldTable extends Castable implements DialectString
 	{

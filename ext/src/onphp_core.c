@@ -18,6 +18,7 @@
 #include "core/OSQL/Castable.h"
 #include "core/OSQL/DBValue.h"
 #include "core/OSQL/DialectString.h"
+#include "core/OSQL/FieldTable.h"
 #include "core/OSQL/SQLTableName.h"
 
 #include "core/Exceptions.h"
@@ -113,6 +114,16 @@ PHP_MINIT_FUNCTION(onphp_core)
 	);
 	REGISTER_ONPHP_PROPERTY(Castable, "cast", ZEND_ACC_PROTECTED);
 	onphp_ce_Castable->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+	
+	REGISTER_ONPHP_SUB_CLASS_EX(
+		FieldTable,
+		Castable,
+		onphp_empty_object_new,
+		onphp_funcs_FieldTable
+	);
+	REGISTER_ONPHP_PROPERTY(FieldTable, "field", ZEND_ACC_PROTECTED);
+	REGISTER_ONPHP_IMPLEMENTS(FieldTable, DialectString);
+	onphp_ce_FieldTable->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
 	REGISTER_ONPHP_SUB_CLASS_EX(
 		DBValue,
