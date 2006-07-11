@@ -7,6 +7,7 @@
 #include "core/Base/Identifiable.h"
 #include "core/Base/IdentifiableObject.h"
 #include "core/Base/Singleton.h"
+#include "core/Base/StaticFactory.h"
 #include "core/Base/Stringable.h"
 #include "core/Base/Named.h"
 #include "core/Base/NamedObject.h"
@@ -74,6 +75,13 @@ PHP_MINIT_FUNCTION(onphp_core)
 		Singleton,
 		onphp_empty_object_new,
 		onphp_funcs_Singleton
+	);
+	onphp_ce_Singleton->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+	
+	REGISTER_ONPHP_STD_CLASS_EX(
+		StaticFactory,
+		onphp_empty_object_new,
+		onphp_funcs_StaticFactory
 	);
 	onphp_ce_Singleton->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	

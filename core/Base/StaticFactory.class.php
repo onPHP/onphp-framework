@@ -14,6 +14,7 @@
 	 * Simple grouping class.
 	 * 
 	 * @ingroup Base
+	 * @ingroup Module
 	**/
 	abstract class StaticFactory
 	{

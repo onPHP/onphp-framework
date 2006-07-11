@@ -1,5 +1,9 @@
 # $Id$
 
+2006-07-11	Konstantin V. Arkhipov
+
+	* ext/: StaticFactory implemented.
+
 2006-07-08	Konstantin V. Arkhipov
 
 	* ext/src/main/DAOs/Handlers/SharedMemorySegmentHandler.c: implemented

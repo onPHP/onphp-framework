@@ -18,6 +18,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/Base/Named.c \
 		src/core/Base/NamedObject.c \
 		src/core/Base/Singleton.c \
+		src/core/Base/StaticFactory.c \
 		src/core/Base/Instantiatable.c \
 		src/core/DB/Dialect.c \
 		src/core/OSQL/Castable.c \
