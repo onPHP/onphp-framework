@@ -1,6 +1,7 @@
 /* $Id$ */
 
 #include "php.h"
+#include "SAPI.h"
 #include "ext/standard/info.h"
 
 #include "onphp.h"
@@ -58,18 +59,44 @@ zend_object_value onphp_empty_object_new(zend_class_entry *class_type TSRMLS_DC)
 	return onphp_empty_object_spawn(class_type, NULL TSRMLS_CC);
 }
 
+#include "onphp_logo.c"
 
 PHP_MINFO_FUNCTION(onphp)
 {
+	char pr = 
+		!sapi_module.phpinfo_as_text
+		&& zend_ini_long("expose_php", sizeof("expose_php"), 0);
+
 	php_info_print_table_start();
+	if (pr) {
+		PUTS("<tr><td rowspan=\"4\" width=\"202\">");
+		PUTS("<a href=\"http://onphp.org/\"><img border=\"0\" src=\"");
+		PUTS("?="ONPHP_LOGO_GUID"\" alt=\"onPHP Logo\"");
+		PUTS("width=\"202\" height=\"93\" /></a>");
+		PUTS("</td></tr>\n");
+	}
 	php_info_print_table_header(2, "onPHP support", "enabled");
 	php_info_print_table_row(2, "Version", ONPHP_VERSION);
+	if (pr) {
+		PUTS("<tr><td colspan=\"2\">&nbsp;</td></tr>");
+	}
 	php_info_print_table_end();
 }
 
-
 PHP_MINIT_FUNCTION(onphp)
 {
+	if (
+		!sapi_module.phpinfo_as_text
+		&& zend_ini_long("expose_php", sizeof("expose_php"), 0)
+	) {
+		php_register_info_logo(
+			ONPHP_LOGO_GUID,
+			"image/png",
+			(unsigned char *) onphp_logo,
+			sizeof(onphp_logo)
+		);
+	}
+
 	return
 		PHP_MINIT(onphp_core)(INIT_FUNC_ARGS_PASSTHRU)
 		& PHP_MINIT(onphp_main)(INIT_FUNC_ARGS_PASSTHRU);
