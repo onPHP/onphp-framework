@@ -28,7 +28,7 @@
 			
 			return
 				$this->cast
-					? $dialect->toCasted($out)
+					? $dialect->toCasted($out, $this->cast)
 					: $out;
 		}
 	}
