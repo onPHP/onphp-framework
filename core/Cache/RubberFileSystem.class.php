@@ -149,8 +149,8 @@
 				
 				if ($expires < parent::TIME_SWITCH)
 					$expires += time();
-	
-				touch($path, time() + $expires);
+				
+				touch($path, $expires);
 				
 				return $pool->drop($key);
 			} else {
