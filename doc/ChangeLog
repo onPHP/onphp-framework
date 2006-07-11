@@ -2,8 +2,8 @@
 
 2006-07-11	Konstantin V. Arkhipov
 
-	* ext/: StaticFactory, Enumeration, Prototyped, FieldTable, Query and
-	ImaginaryDialect are implemented.
+	* ext/: StaticFactory, Enumeration, Prototyped, FieldTable, Query,
+	QueryIdentification and ImaginaryDialect are implemented.
 
 2006-07-08	Konstantin V. Arkhipov
 

@@ -22,6 +22,7 @@
 #include "core/OSQL/FieldTable.h"
 #include "core/OSQL/SQLTableName.h"
 #include "core/OSQL/Query.h"
+#include "core/OSQL/QueryIdentification.h"
 
 #include "core/Exceptions.h"
 
@@ -98,6 +99,10 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_SUB_CLASS_EX(DBValue, Castable);
 	REGISTER_ONPHP_PROPERTY(DBValue, "value", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_IMPLEMENTS(DBValue, DialectString);
+	
+	REGISTER_ONPHP_STD_CLASS_EX(QueryIdentification);
+	REGISTER_ONPHP_IMPLEMENTS(QueryIdentification, Query);
+	onphp_ce_QueryIdentification->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 
 	PHP_MINIT_FUNCTION(Exceptions);
 	
