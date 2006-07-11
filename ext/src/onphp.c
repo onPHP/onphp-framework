@@ -60,15 +60,15 @@ zend_object_value onphp_empty_object_new(zend_class_entry *class_type TSRMLS_DC)
 }
 
 #include "onphp_logo.c"
+#define ONPHP_PR (\
+	!sapi_module.phpinfo_as_text \
+	&& zend_ini_long("expose_php", sizeof("expose_php"), 0) \
+)
 
 PHP_MINFO_FUNCTION(onphp)
 {
-	char pr = 
-		!sapi_module.phpinfo_as_text
-		&& zend_ini_long("expose_php", sizeof("expose_php"), 0);
-
 	php_info_print_table_start();
-	if (pr) {
+	if (ONPHP_PR) {
 		PUTS("<tr><td rowspan=\"4\" width=\"202\">");
 		PUTS("<a href=\"http://onphp.org/\"><img border=\"0\" src=\"");
 		PUTS("?="ONPHP_LOGO_GUID"\" alt=\"onPHP Logo\"");
@@ -77,7 +77,7 @@ PHP_MINFO_FUNCTION(onphp)
 	}
 	php_info_print_table_header(2, "onPHP support", "enabled");
 	php_info_print_table_row(2, "Version", ONPHP_VERSION);
-	if (pr) {
+	if (ONPHP_PR) {
 		PUTS("<tr><td colspan=\"2\">&nbsp;</td></tr>");
 	}
 	php_info_print_table_end();
@@ -85,10 +85,7 @@ PHP_MINFO_FUNCTION(onphp)
 
 PHP_MINIT_FUNCTION(onphp)
 {
-	if (
-		!sapi_module.phpinfo_as_text
-		&& zend_ini_long("expose_php", sizeof("expose_php"), 0)
-	) {
+	if (ONPHP_PR) {
 		php_register_info_logo(
 			ONPHP_LOGO_GUID,
 			"image/png",
