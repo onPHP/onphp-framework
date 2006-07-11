@@ -20,6 +20,7 @@
 #include "core/OSQL/DialectString.h"
 #include "core/OSQL/FieldTable.h"
 #include "core/OSQL/SQLTableName.h"
+#include "core/OSQL/Query.h"
 
 #include "core/Exceptions.h"
 
@@ -45,6 +46,11 @@ PHP_MINIT_FUNCTION(onphp_core)
 	
 	REGISTER_ONPHP_INTERFACE(DialectString);
 	REGISTER_ONPHP_INTERFACE(SQLTableName);
+	
+	REGISTER_ONPHP_INTERFACE(Query);
+	REGISTER_ONPHP_IMPLEMENTS(Query, DialectString);
+	REGISTER_ONPHP_IMPLEMENTS(Query, Identifiable);
+	REGISTER_ONPHP_IMPLEMENTS(Query, Stringable);
 	
 	REGISTER_ONPHP_STD_CLASS_EX(
 		Identifier,

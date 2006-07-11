@@ -28,6 +28,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/DialectString.c \
 		src/core/OSQL/FieldTable.c \
 		src/core/OSQL/SQLTableName.c \
+		src/core/OSQL/Query.c \
 		src/main/DAOs/Handlers/SegmentHandler.c \
 		src/main/DAOs/Handlers/SharedMemorySegmentHandler.c \
 	"
