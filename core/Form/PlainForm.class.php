@@ -30,6 +30,13 @@
 			return $this;
 		}
 		
+		// wrt forward compatibility
+		public function primitiveExists($name)
+		{
+			return $this->primitiveExist($name);
+		}
+		
+		// @deprecated and removed during 0.5
 		public function primitiveExist($name)
 		{
 			return
