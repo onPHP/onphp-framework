@@ -1,14 +1,14 @@
 /* $Id$ */
 
-#include "zend_interfaces.h"
-
 #include "onphp.h"
 #include "onphp_core.h"
 #include "onphp_util.h"
 
 #include "ext/standard/php_string.h"
 #include "zend_exceptions.h"
+#include "zend_interfaces.h"
 
+#include "core/DB/Dialect.h"
 #include "core/OSQL/DBValue.h"
 #include "core/OSQL/DialectString.h"
 #include "core/Exceptions.h"
@@ -168,7 +168,6 @@ ONPHP_METHOD(Dialect, fieldToString)
 			&field,
 			Z_OBJCE_P(field),
 			NULL,
-			// lowercased because of external class
 			"todialectstring",
 			&out,
 			getThis()
@@ -180,7 +179,6 @@ ONPHP_METHOD(Dialect, fieldToString)
 			&getThis(),
 			Z_OBJCE_P(getThis()),
 			NULL,
-			// lowercased because of external class
 			"quotefield",
 			&out,
 			field
@@ -196,7 +194,7 @@ ONPHP_METHOD(Dialect, fieldToString)
 
 ONPHP_METHOD(Dialect, valueToString)
 {
-	zval *this = getThis(), *value;
+	zval *value;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
 		WRONG_PARAM_COUNT;
@@ -209,10 +207,9 @@ ONPHP_METHOD(Dialect, valueToString)
 		SEPARATE_ZVAL_TO_MAKE_IS_REF(&value);
 		
 		zend_call_method_with_1_params(
-			&this,
-			Z_OBJCE_P(this),
+			&getThis(),
+			Z_OBJCE_P(getThis()),
 			NULL,
-			// lowercased because of external class
 			"quotevalue",
 			&value,
 			value
@@ -244,19 +241,10 @@ ONPHP_METHOD(Dialect, fullTextRank)
 	);
 }
 
+static ONPHP_ARGINFO_ONE_REF;
 static ONPHP_ARGINFO_TWO;
 static ONPHP_ARGINFO_THREE;
-
-static
-ZEND_BEGIN_ARG_INFO(arginfo_autoincrementize, 0)
-	ZEND_ARG_OBJ_INFO(0, column, DBColumn, 0)
-	ZEND_ARG_INFO(1, prepend)
-ZEND_END_ARG_INFO();
-
-static
-ZEND_BEGIN_ARG_INFO(arginfo_one_ref, 0)
-	ZEND_ARG_INFO(1, value)
-ZEND_END_ARG_INFO();
+static ONPHP_ARGINFO_AUTOINCREMENTIZE;
 
 zend_function_entry onphp_funcs_Dialect[] = {
 	ONPHP_ABSTRACT_ME(Dialect, autoincrementize, arginfo_autoincrementize, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)

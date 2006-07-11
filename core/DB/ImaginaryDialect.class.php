@@ -14,6 +14,7 @@
 	 * Inexistent imaginary helper for OSQL's Query self-identification.
 	 * 
 	 * @ingroup DB
+	 * @ingroup Module
 	**/
 	final class ImaginaryDialect extends Dialect
 	{

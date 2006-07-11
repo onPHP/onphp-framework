@@ -37,7 +37,6 @@ ONPHP_METHOD(FieldTable, toDialectString)
 		&dialect,
 		Z_OBJCE_P(dialect),
 		NULL,
-		// lowercased because of external class
 		"fieldtostring",
 		&out,
 		field
@@ -54,7 +53,6 @@ ONPHP_METHOD(FieldTable, toDialectString)
 			&dialect,
 			Z_OBJCE_P(dialect),
 			NULL,
-			// lowercased because of external class
 			"tocasted",
 			&out,
 			out,

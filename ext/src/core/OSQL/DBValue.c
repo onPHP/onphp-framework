@@ -62,7 +62,6 @@ ONPHP_METHOD(DBValue, toDialectString)
 		&dialect,
 		Z_OBJCE_P(dialect),
 		NULL,
-		// lowercased because of external class
 		"quotevalue",
 		&out,
 		value
@@ -79,7 +78,6 @@ ONPHP_METHOD(DBValue, toDialectString)
 			&dialect,
 			Z_OBJCE_P(dialect),
 			NULL,
-			// lowercased because of external class
 			"tocasted",
 			&out,
 			out,

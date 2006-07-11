@@ -15,6 +15,7 @@
 #include "core/Base/Prototyped.h"
 #include "core/Base/Instantiatable.h"
 #include "core/DB/Dialect.h"
+#include "core/DB/ImaginaryDialect.h"
 #include "core/OSQL/Castable.h"
 #include "core/OSQL/DBValue.h"
 #include "core/OSQL/DialectString.h"
@@ -112,6 +113,14 @@ PHP_MINIT_FUNCTION(onphp_core)
 	);
 	REGISTER_ONPHP_IMPLEMENTS(Dialect, Instantiatable);
 	onphp_ce_Dialect->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+	
+	REGISTER_ONPHP_SUB_CLASS_EX(
+		ImaginaryDialect,
+		Dialect,
+		onphp_empty_object_new,
+		onphp_funcs_ImaginaryDialect
+	);
+	onphp_ce_ImaginaryDialect->ce_flags = ZEND_ACC_FINAL_CLASS;
 	
 	REGISTER_ONPHP_STD_CLASS_EX(
 		Castable,

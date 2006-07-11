@@ -59,6 +59,11 @@
 		ZEND_ARG_INFO(0, first) \
 	ZEND_END_ARG_INFO()
 
+#define ONPHP_ARGINFO_ONE_REF \
+	ZEND_BEGIN_ARG_INFO(arginfo_one_ref, 0) \
+		ZEND_ARG_INFO(1, value) \
+	ZEND_END_ARG_INFO() \
+
 #define ONPHP_ARGINFO_TWO \
 	ZEND_BEGIN_ARG_INFO(arginfo_two, 0) \
 		ZEND_ARG_INFO(0, first) \

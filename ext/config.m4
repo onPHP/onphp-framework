@@ -23,6 +23,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/Base/StaticFactory.c \
 		src/core/Base/Instantiatable.c \
 		src/core/DB/Dialect.c \
+		src/core/DB/ImaginaryDialect.c \
 		src/core/OSQL/Castable.c \
 		src/core/OSQL/DBValue.c \
 		src/core/OSQL/DialectString.c \

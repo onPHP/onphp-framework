@@ -21,7 +21,6 @@ ONPHP_METHOD(Enumeration, __construct)
 		&getThis(),
 		Z_OBJCE_P(getThis()),
 		NULL,
-		// lowercased because of external class
 		"getnamelist",
 		&names
 	);
@@ -82,7 +81,6 @@ ONPHP_METHOD(Enumeration, getList)
 		&enm,
 		Z_OBJCE_P(enm),
 		NULL,
-		// lowercased because of external class
 		"getobjectlist",
 		&out
 	);
@@ -113,7 +111,6 @@ ONPHP_METHOD(Enumeration, getObjectList)
 		&getThis(),
 		Z_OBJCE_P(getThis()),
 		NULL,
-		// lowercased because of external class
 		"getnamelist",
 		&names
 	);
