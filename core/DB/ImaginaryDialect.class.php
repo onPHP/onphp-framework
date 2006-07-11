@@ -42,11 +42,6 @@
 			return $table;
 		}
 
-		public static function toCasted($field, $type)
-		{
-			return "CAST ({$field} AS {$type})";
-		}
-		
 		public function fieldToString(&$field)
 		{
 			return
