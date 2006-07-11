@@ -35,7 +35,7 @@
 		/**
 		 * Bogus spelling of method defined below.
 		 *
-		 * @deprecated by primitiveExists($name)
+		 * @deprecated by primitiveExists($name) and removed during 0.5
 		**/
 		public function primitiveExist($name)
 		{
