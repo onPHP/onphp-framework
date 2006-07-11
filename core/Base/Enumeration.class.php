@@ -16,6 +16,7 @@
 	 * @see AccessMode for example
 	 * 
 	 * @ingroup Base
+	 * @ingroup Module
 	**/
 	abstract class Enumeration extends NamedObject
 	{

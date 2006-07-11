@@ -11,6 +11,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/onphp_core.c \
 		src/onphp_main.c \
 		src/core/Exceptions.c \
+		src/core/Base/Enumeration.c \
 		src/core/Base/Identifiable.c \
 		src/core/Base/Identifier.c \
 		src/core/Base/IdentifiableObject.c \

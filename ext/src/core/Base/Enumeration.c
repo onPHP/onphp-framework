@@ -1,0 +1,219 @@
+/* $Id$ */
+
+#include "onphp.h"
+
+#include "core/Base/Enumeration.h"
+#include "core/Exceptions.h"
+
+PHPAPI zend_class_entry *onphp_ce_Enumeration;
+
+ONPHP_METHOD(Enumeration, __construct)
+{
+	zval *id, *names;
+	zval **found;
+	int result;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
+		WRONG_PARAM_COUNT;
+	}
+	
+	zend_call_method_with_0_params(
+		&getThis(),
+		Z_OBJCE_P(getThis()),
+		NULL,
+		// lowercased because of external class
+		"getnamelist",
+		&names
+	);
+	
+	if (EG(exception)) {
+		return;
+	}
+	
+	if (Z_TYPE_P(names) != IS_ARRAY) {
+		zend_throw_exception_ex(
+			onphp_ce_WrongStateException,
+			0 TSRMLS_CC,
+			"names array is not an array"
+		);
+	}
+	
+	if (Z_TYPE_P(id) == IS_LONG) {
+		result =
+			zend_hash_index_find(
+				Z_ARRVAL_P(names),
+				Z_LVAL_P(id),
+				(void **) &found
+			);
+	} else {
+		convert_to_string(id);
+		
+		result =
+			zend_hash_find(
+				Z_ARRVAL_P(names),
+				Z_STRVAL_P(id),
+				Z_STRLEN_P(id) + 1,
+				(void **) &found
+			);
+	}
+	
+	if (result == SUCCESS) {
+		ONPHP_UPDATE_PROPERTY(getThis(), "id", id);
+		ONPHP_UPDATE_PROPERTY(getThis(), "name", *found);
+	} else {
+		zend_throw_exception_ex(
+			onphp_ce_MissingElementException,
+			0 TSRMLS_CC,
+			"knows nothing about such id == {%s}",
+			Z_STRVAL_P(id)
+		);
+	}
+}
+
+ONPHP_METHOD(Enumeration, getList)
+{
+	zval *enm, *out;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &enm) == FAILURE) {
+		WRONG_PARAM_COUNT;
+	}
+	
+	zend_call_method_with_0_params(
+		&enm,
+		Z_OBJCE_P(enm),
+		NULL,
+		// lowercased because of external class
+		"getobjectlist",
+		&out
+	);
+	
+	if (EG(exception)) {
+		return;
+	} else {
+		RETURN_ZVAL(out, 1, 0);
+	}
+}
+
+ONPHP_METHOD(Enumeration, getAnyId)
+{
+	RETURN_LONG(1);
+}
+
+ONPHP_METHOD(Enumeration, getObjectList)
+{
+	zval *names, *list;
+	zval **element;
+	HashTable *table;
+	HashPosition pointer;
+	
+	ALLOC_INIT_ZVAL(list);
+	array_init(list);
+	
+	zend_call_method_with_0_params(
+		&getThis(),
+		Z_OBJCE_P(getThis()),
+		NULL,
+		// lowercased because of external class
+		"getnamelist",
+		&names
+	);
+	
+	if (
+		Z_TYPE_P(names) != IS_ARRAY
+	) {
+		RETURN_ZVAL(list, 1, 1);
+	} else if (EG(exception)) {
+		return;
+	}
+	
+	table = Z_ARRVAL_P(names);
+	
+	for (
+		zend_hash_internal_pointer_reset_ex(table, &pointer);
+		zend_hash_get_current_data_ex(table, (void **) &element, &pointer) == SUCCESS; zend_hash_move_forward_ex(table, &pointer)
+	) {
+		char *key;
+		unsigned long index;
+		unsigned int length;
+		int result;
+		zval *object, *arg, *out;
+		
+		result = 
+			zend_hash_get_current_key_ex(
+				table,
+				&key,
+				&length,
+				&index,
+				0,
+				&pointer
+			);
+		
+		MAKE_STD_ZVAL(arg);
+		MAKE_STD_ZVAL(object);
+		
+		if (result == HASH_KEY_IS_STRING) {
+			ZVAL_STRINGL(arg, key, length, 1);
+		} else if (result == HASH_KEY_IS_LONG) {
+			ZVAL_LONG(arg, index);
+		} else {
+			zend_throw_exception_ex(
+				onphp_ce_WrongStateException,
+				0 TSRMLS_CC,
+				"weird key found"
+			);
+			zval_dtor(list);
+			return;
+		}
+		
+		object->value.obj = onphp_empty_object_new(Z_OBJCE_P(getThis()) TSRMLS_CC);
+		Z_TYPE_P(object) = IS_OBJECT;
+		
+		zend_call_method_with_1_params(
+			&object,
+			Z_OBJCE_P(object),
+			NULL,
+			"__construct",
+			&out,
+			arg
+		);
+		
+		if (EG(exception)) {
+			return;
+		} else {
+			add_next_index_zval(list, object);
+		}
+	}
+	
+	RETURN_ZVAL(list, 1, 1);
+}
+
+ONPHP_METHOD(Enumeration, toString)
+{
+	zval *name = ONPHP_READ_PROPERTY(getThis(), "name");
+	
+	RETURN_ZVAL(name, 1, 0);
+}
+
+ONPHP_METHOD(Enumeration, getNameList)
+{
+	zval *names = ONPHP_READ_PROPERTY(getThis(), "names");
+
+	RETURN_ZVAL(names, 1, 0);
+}
+
+static ONPHP_ARGINFO_ONE;
+
+static
+ZEND_BEGIN_ARG_INFO(arginfo_enum, 0) \
+	ZEND_ARG_OBJ_INFO(0, enumeration, Enumeration, 0) \
+ZEND_END_ARG_INFO();
+
+zend_function_entry onphp_funcs_Enumeration[] = {
+	ONPHP_ME(Enumeration, __construct,	arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Enumeration, getList,		arginfo_enum, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Enumeration, getAnyId,		NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Enumeration, getObjectList,NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Enumeration, toString,		NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Enumeration, getNameList,	NULL, ZEND_ACC_PUBLIC)
+	{NULL, NULL, NULL}
+};

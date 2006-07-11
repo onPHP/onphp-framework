@@ -3,6 +3,7 @@
 #include "onphp_core.h"
 #include "onphp_util.h"
 
+#include "core/Base/Enumeration.h"
 #include "core/Base/Identifier.h"
 #include "core/Base/Identifiable.h"
 #include "core/Base/IdentifiableObject.h"
@@ -71,6 +72,15 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(NamedObject, Named);
 	onphp_ce_NamedObject->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 
+	REGISTER_ONPHP_SUB_CLASS_EX(
+		Enumeration,
+		NamedObject,
+		onphp_empty_object_new,
+		onphp_funcs_Enumeration
+	);
+	REGISTER_ONPHP_PROPERTY(Enumeration, "names", ZEND_ACC_PROTECTED);
+	onphp_ce_Enumeration->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+
 	REGISTER_ONPHP_STD_CLASS_EX(
 		Singleton,
 		onphp_empty_object_new,
@@ -83,7 +93,7 @@ PHP_MINIT_FUNCTION(onphp_core)
 		onphp_empty_object_new,
 		onphp_funcs_StaticFactory
 	);
-	onphp_ce_Singleton->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+	onphp_ce_StaticFactory->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
 	REGISTER_ONPHP_SUB_CLASS_EX(
 		Dialect,
