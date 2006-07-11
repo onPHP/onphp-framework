@@ -60,13 +60,13 @@
 
 		public function fullTextSearch($field, $words, $logic)
 		{
-			return '("'.$field.'" contains "'.implode($logic, $words).'")';
+			return '("'.$field.'" CONTAINS "'.implode($logic, $words).'")';
 		}
 		
 		public function fullTextRank($field, $words, $logic)
 		{
 			return
-				'(rank by "'.$field.'" which contains "'
+				'(RANK BY "'.$field.'" WHICH CONTAINS "'
 					.implode($logic, $words)
 				.'")';
 		}
