@@ -12,11 +12,7 @@ PHP_MINIT_FUNCTION(onphp_main)
 /*
 	broken by design
 	
-	REGISTER_ONPHP_STD_CLASS_EX(
-		SharedMemorySegmentHandler,
-		onphp_empty_object_new,
-		onphp_funcs_SharedMemorySegmentHandler
-	);
+	REGISTER_ONPHP_STD_CLASS_EX(SharedMemorySegmentHandler);
 	REGISTER_ONPHP_PROPERTY(SharedMemorySegmentHandler, "id", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_IMPLEMENTS(SharedMemorySegmentHandler, SegmentHandler);
 	REGISTER_ONPHP_CLASS_CONST_LONG(SharedMemorySegmentHandler, "SEGMENT_SIZE", SMSH_SEGMENT_SIZE);

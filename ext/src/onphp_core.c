@@ -53,99 +53,49 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(Query, Identifiable);
 	REGISTER_ONPHP_IMPLEMENTS(Query, Stringable);
 	
-	REGISTER_ONPHP_STD_CLASS_EX(
-		Identifier,
-		onphp_empty_object_new,
-		onphp_funcs_Identifier
-	);
+	REGISTER_ONPHP_STD_CLASS_EX(Identifier);
 	REGISTER_ONPHP_PROPERTY(Identifier, "id", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_PROPERTY_BOOL(Identifier, "final", 0, ZEND_ACC_PRIVATE);
 	onphp_ce_Identifier->ce_flags |= ZEND_ACC_FINAL_CLASS;
 	
-	REGISTER_ONPHP_STD_CLASS_EX(
-		IdentifiableObject,
-		onphp_empty_object_new,
-		onphp_funcs_IdentifiableObject
-	);
+	REGISTER_ONPHP_STD_CLASS_EX(IdentifiableObject);
 	REGISTER_ONPHP_PROPERTY(IdentifiableObject, "id", ZEND_ACC_PROTECTED);
 	
 	REGISTER_ONPHP_IMPLEMENTS(Identifier, Identifiable);
 	REGISTER_ONPHP_IMPLEMENTS(IdentifiableObject, Identifiable);
 
-	REGISTER_ONPHP_SUB_CLASS_EX(
-		NamedObject,
-		IdentifiableObject,
-		onphp_empty_object_new,
-		onphp_funcs_NamedObject
-	);
+	REGISTER_ONPHP_SUB_CLASS_EX(NamedObject, IdentifiableObject);
 	REGISTER_ONPHP_PROPERTY(NamedObject, "name", ZEND_ACC_PROTECTED);
 	REGISTER_ONPHP_IMPLEMENTS(NamedObject, Named);
 	onphp_ce_NamedObject->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 
-	REGISTER_ONPHP_SUB_CLASS_EX(
-		Enumeration,
-		NamedObject,
-		onphp_empty_object_new,
-		onphp_funcs_Enumeration
-	);
+	REGISTER_ONPHP_SUB_CLASS_EX(Enumeration, NamedObject);
 	REGISTER_ONPHP_PROPERTY(Enumeration, "names", ZEND_ACC_PROTECTED);
 	onphp_ce_Enumeration->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 
-	REGISTER_ONPHP_STD_CLASS_EX(
-		Singleton,
-		onphp_empty_object_new,
-		onphp_funcs_Singleton
-	);
+	REGISTER_ONPHP_STD_CLASS_EX(Singleton);
 	onphp_ce_Singleton->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
-	REGISTER_ONPHP_STD_CLASS_EX(
-		StaticFactory,
-		onphp_empty_object_new,
-		onphp_funcs_StaticFactory
-	);
+	REGISTER_ONPHP_STD_CLASS_EX(StaticFactory);
 	onphp_ce_StaticFactory->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
-	REGISTER_ONPHP_SUB_CLASS_EX(
-		Dialect,
-		Singleton,
-		onphp_empty_object_new,
-		onphp_funcs_Dialect
-	);
+	REGISTER_ONPHP_SUB_CLASS_EX(Dialect, Singleton);
 	REGISTER_ONPHP_IMPLEMENTS(Dialect, Instantiatable);
 	onphp_ce_Dialect->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
-	REGISTER_ONPHP_SUB_CLASS_EX(
-		ImaginaryDialect,
-		Dialect,
-		onphp_empty_object_new,
-		onphp_funcs_ImaginaryDialect
-	);
+	REGISTER_ONPHP_SUB_CLASS_EX(ImaginaryDialect, Dialect);
 	onphp_ce_ImaginaryDialect->ce_flags = ZEND_ACC_FINAL_CLASS;
 	
-	REGISTER_ONPHP_STD_CLASS_EX(
-		Castable,
-		onphp_empty_object_new,
-		onphp_funcs_Castable
-	);
+	REGISTER_ONPHP_STD_CLASS_EX(Castable);
 	REGISTER_ONPHP_PROPERTY(Castable, "cast", ZEND_ACC_PROTECTED);
 	onphp_ce_Castable->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
-	REGISTER_ONPHP_SUB_CLASS_EX(
-		FieldTable,
-		Castable,
-		onphp_empty_object_new,
-		onphp_funcs_FieldTable
-	);
+	REGISTER_ONPHP_SUB_CLASS_EX(FieldTable, Castable);
 	REGISTER_ONPHP_PROPERTY(FieldTable, "field", ZEND_ACC_PROTECTED);
 	REGISTER_ONPHP_IMPLEMENTS(FieldTable, DialectString);
 	onphp_ce_FieldTable->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
-	REGISTER_ONPHP_SUB_CLASS_EX(
-		DBValue,
-		Castable,
-		onphp_empty_object_new,
-		onphp_funcs_DBValue
-	);
+	REGISTER_ONPHP_SUB_CLASS_EX(DBValue, Castable);
 	REGISTER_ONPHP_PROPERTY(DBValue, "value", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_IMPLEMENTS(DBValue, DialectString);
 
