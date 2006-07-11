@@ -12,6 +12,7 @@
 #include "core/Base/Stringable.h"
 #include "core/Base/Named.h"
 #include "core/Base/NamedObject.h"
+#include "core/Base/Prototyped.h"
 #include "core/Base/Instantiatable.h"
 #include "core/DB/Dialect.h"
 #include "core/OSQL/Castable.h"
@@ -36,6 +37,7 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_INTERFACE(Stringable);
 	REGISTER_ONPHP_INTERFACE(Identifiable);
 	REGISTER_ONPHP_INTERFACE(Instantiatable);
+	REGISTER_ONPHP_INTERFACE(Prototyped);
 	
 	REGISTER_ONPHP_INTERFACE(Named);
 	REGISTER_ONPHP_IMPLEMENTS(Named, Identifiable);

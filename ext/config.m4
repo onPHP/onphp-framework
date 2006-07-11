@@ -18,6 +18,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/Base/Stringable.c \
 		src/core/Base/Named.c \
 		src/core/Base/NamedObject.c \
+		src/core/Base/Prototyped.c \
 		src/core/Base/Singleton.c \
 		src/core/Base/StaticFactory.c \
 		src/core/Base/Instantiatable.c \

@@ -10,6 +10,10 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Base
+	 * @ingroup Module
+	**/
 	interface Prototyped
 	{
 		public static function proto();
