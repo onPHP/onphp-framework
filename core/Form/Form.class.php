@@ -80,7 +80,7 @@
 		/**
 		 * Returns plain list of error's labels
 		**/
-		public function getTexturalErrors()
+		public function getTextualErrors()
 		{
 			$list = array();
 			
