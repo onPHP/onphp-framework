@@ -78,9 +78,19 @@
 		}
 
 		/**
-		 * Returns plain list of error's labels
+		 * Bogus spelling of method's name below.
+		 *
+		 * @deprecated and removed in 0.5
 		**/
 		public function getTexturalErrors()
+		{
+			return $this->getTextualErrors();
+		}
+		
+		/**
+		 * Returns plain list of error's labels
+		**/
+		public function getTextualErrors()
 		{
 			$list = array();
 			
