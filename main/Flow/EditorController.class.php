@@ -74,9 +74,7 @@
 				else
 					$form->dropAllErrors();
 					
-				$mav->setModel(
-					$mav->getModel()->set('form', $form)
-				);
+				$mav->getModel()->set('form', $form);
 			}
 			
 			return $mav;
