@@ -94,4 +94,4 @@
 				HeaderUtils::redirectRaw('/');
 		}
 	}
-?>	
+?>
