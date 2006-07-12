@@ -2,6 +2,8 @@
 
 #include "onphp.h"
 
+#include "zend_exceptions.h"
+
 #include "core/Base/Enumeration.h"
 #include "core/Exceptions.h"
 

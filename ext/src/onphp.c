@@ -2,6 +2,8 @@
 
 #include "php.h"
 #include "SAPI.h"
+#include "zend_ini.h" // zend_ini_long
+#include "php_logos.h" // php_register_info_logo
 #include "ext/standard/info.h"
 
 #include "onphp.h"
@@ -60,26 +62,27 @@ zend_object_value onphp_empty_object_new(zend_class_entry *class_type TSRMLS_DC)
 }
 
 #include "onphp_logo.c"
-#define ONPHP_PR (\
-	!sapi_module.phpinfo_as_text \
-	&& zend_ini_long("expose_php", sizeof("expose_php"), 0) \
-)
 
 PHP_MINFO_FUNCTION(onphp)
 {
 	php_info_print_table_start();
 	if (ONPHP_PR) {
-		PUTS("<tr><td rowspan=\"4\" width=\"202\">");
+		PUTS("<tr><td rowspan=\"6\" width=\"202\" style=\"vertical-align: middle;\">");
 		PUTS("<a href=\"http://onphp.org/\"><img border=\"0\" src=\"");
+		if (SG(request_info).request_uri) {
+			char *elem_esc = php_info_html_esc(SG(request_info).request_uri TSRMLS_CC);
+			PUTS(elem_esc);
+			efree(elem_esc);
+		}
 		PUTS("?="ONPHP_LOGO_GUID"\" alt=\"onPHP Logo\"");
 		PUTS("width=\"202\" height=\"93\" /></a>");
 		PUTS("</td></tr>\n");
 	}
 	php_info_print_table_header(2, "onPHP support", "enabled");
 	php_info_print_table_row(2, "Version", ONPHP_VERSION);
-	if (ONPHP_PR) {
-		PUTS("<tr><td colspan=\"2\">&nbsp;</td></tr>");
-	}
+	php_info_print_table_row(2, "Exceptions", ONPHP_EXCEPTIONS_LIST);
+	php_info_print_table_row(2, "Interfaces", ONPHP_INTERFACES_LIST);
+	php_info_print_table_row(2, "Classes", ONPHP_CLASSES_LIST);
 	php_info_print_table_end();
 }
 

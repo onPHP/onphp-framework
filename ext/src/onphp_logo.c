@@ -2,7 +2,51 @@
 
 // http://onphp.org/pix/logo.png
 
-#define ONPHP_LOGO_GUID "PHPE1C85E90-600D-C0DE-9804-B622A1EF5492"
+#define ONPHP_LOGO_GUID "PHPE1C85E90-600D-C0DE-DADA-B622A1EF5492"
+
+#define ONPHP_PR (\
+	!sapi_module.phpinfo_as_text \
+	&& zend_ini_long("expose_php", sizeof("expose_php"), 0) \
+)
+
+#define ONPHP_EXCEPTIONS_LIST "\
+BaseException, \
+BusinessLogicException, \
+DatabaseException, \
+DuplicateObjectException, \
+MissingElementException, \
+NetworkException, \
+ObjectNotFoundException, \
+TooManyRowsException, \
+UnimplementedFeatureException, \
+UnsupportedMethodException, \
+WrongArgumentException, \
+WrongStateException."
+
+#define ONPHP_INTERFACES_LIST "\
+DialectString, \
+Identifiable, \
+Instantiatable, \
+Named, \
+Prototyped, \
+Query, \
+SegmentHandler, \
+Stringable, \
+SQLTableName."
+
+#define ONPHP_CLASSES_LIST "\
+Castable, \
+Dialect, \
+DBValue, \
+Enumeration, \
+FieldTable, \
+IdentifiableObject, \
+Identifier, \
+ImaginaryDialect, \
+NamedObject, \
+QueryIdentification, \
+Singleton, \
+StaticFactory."
 
 static const unsigned char onphp_logo[] = {
  137,   80,   78,   71,   13,   10,   26,   10,    0,    0,    0,   13,   73,

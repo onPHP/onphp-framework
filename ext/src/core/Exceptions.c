@@ -2,6 +2,8 @@
 
 #include "onphp.h"
 
+#include "zend_exceptions.h"
+
 #include "core/Exceptions.h"
 
 PHPAPI zend_class_entry *onphp_ce_BaseException;
