@@ -1,5 +1,12 @@
 # $Id$
 
+2006-07-13	Konstantin V. Arkhipov
+
+	* main/Flow/CarefulCommand.class.php,
+	main/Flow/CommandChain.class.php: support for something like a
+	transactions in EditorController implemented, as requested by
+	dedmajor.
+
 2006-07-12	Konstantin V. Arkhipov
 	
 	* core/Form/Form.class.php: markCustom() added, as requested by
