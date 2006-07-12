@@ -2,6 +2,9 @@
 
 2006-07-13	Konstantin V. Arkhipov
 
+	* main/Flow/CarefulDatabaseRunner.class.php: careful container for
+	DB-related commands.
+
 	* main/Flow/CarefulCommand.class.php,
 	main/Flow/CommandChain.class.php: support for something like a
 	transactions in EditorController implemented, as requested by
