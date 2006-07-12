@@ -2,6 +2,8 @@
 
 #include "onphp_core.h"
 
+#include "core/Base/Instantiatable.h"
+
 PHPAPI zend_class_entry *onphp_ce_Instantiatable;
 
 zend_function_entry onphp_funcs_Instantiatable[] = {

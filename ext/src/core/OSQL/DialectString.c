@@ -3,6 +3,7 @@
 #include "onphp_core.h"
 
 #include "core/DB/Dialect.h"
+#include "core/OSQL/DialectString.h"
 
 PHPAPI zend_class_entry *onphp_ce_DialectString;
 

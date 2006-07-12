@@ -7,6 +7,7 @@
 
 #include "core/Exceptions.h"
 #include "core/DB/ImaginaryDialect.h"
+#include "core/OSQL/QueryIdentification.h"
 
 PHPAPI zend_class_entry *onphp_ce_QueryIdentification;
 

@@ -2,6 +2,8 @@
 
 #include "onphp_core.h"
 
+#include "core/Base/Named.h"
+
 PHPAPI zend_class_entry *onphp_ce_Named;
 
 static ONPHP_ARGINFO_ONE;
