@@ -1,5 +1,10 @@
 # $Id$
 
+2006-07-12	Konstantin V. Arkhipov
+
+	* core/Form/Form.class.php: getTexturalErrors() is deprecated in
+	favour of getTextualErrors().
+
 2006-06-29	Konstantin V. Arkhipov
 
 	* main/DAOs/ObjectQuery.class.php: final now, as is trunk.
