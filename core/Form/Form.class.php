@@ -80,7 +80,7 @@
 		/**
 		 * Bogus spelling of method's name below.
 		 *
-		 * @deprecated and removed in 0.5
+		 * @deprecated and removed during 0.5
 		**/
 		public function getTexturalErrors()
 		{
