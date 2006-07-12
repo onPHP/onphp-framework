@@ -1,6 +1,9 @@
 # $Id$
 
 2006-07-12	Konstantin V. Arkhipov
+	
+	* core/Form/Form.class.php: markCustom() added, as requested by
+	dedmajor.
 
 	* core/Form/Form.class.php: API breakage: getTexturalErrors() ->
 	getTextualErrors(); typo spotted by dedmajor.

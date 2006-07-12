@@ -46,14 +46,10 @@
 		/**
 		 * primitive marking
 		**/
-
+		
 		public function markMissing($primitiveName)
 		{
-			$prm = $this->get($primitiveName);
-
-			$this->errors[$prm->getName()] = Form::MISSING;
-			
-			return $this;
+			return $this->markCustom($primitiveName, Form::MISSING);
 		}
 		
 		// rule or primitive
@@ -73,6 +69,18 @@
 			$prm = $this->get($primitiveName);
 
 			unset($this->errors[$prm->getName()]);
+			
+			return $this;
+		}
+
+		/**
+		 * Set's custom error mark for primitive.
+		**/
+		public function markCustom($primitiveName, $customMark)
+		{
+			Assert::isInteger($customMark);
+			
+			$this->errors[$this->get($primitiveName)->getName()] = $customMark;
 			
 			return $this;
 		}
