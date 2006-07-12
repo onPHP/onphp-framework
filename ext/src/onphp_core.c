@@ -14,8 +14,10 @@
 #include "core/Base/NamedObject.h"
 #include "core/Base/Prototyped.h"
 #include "core/Base/Instantiatable.h"
+
 #include "core/DB/Dialect.h"
 #include "core/DB/ImaginaryDialect.h"
+
 #include "core/OSQL/Castable.h"
 #include "core/OSQL/DBValue.h"
 #include "core/OSQL/DialectString.h"
