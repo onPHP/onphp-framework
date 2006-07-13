@@ -39,27 +39,62 @@ ONPHP_METHOD(Enumeration, __construct)
 		);
 	}
 	
-	if (Z_TYPE_P(id) == IS_LONG) {
-		result =
-			zend_hash_index_find(
-				Z_ARRVAL_P(names),
-				Z_LVAL_P(id),
-				(void **) &found
+	switch (Z_TYPE_P(id)) {
+		case IS_LONG:
+			
+			result =
+				zend_hash_index_find(
+					Z_ARRVAL_P(names),
+					Z_LVAL_P(id),
+					(void **) &found
+				);
+			
+			break;
+		
+		case IS_STRING:
+			
+			result =
+				zend_symtable_find(
+					Z_ARRVAL_P(names),
+					Z_STRVAL_P(id),
+					Z_STRLEN_P(id) + 1,
+					(void **) &found
+				);
+			
+			break;
+			
+		case IS_NULL:
+		
+			result =
+				zend_hash_find(
+					Z_ARRVAL_P(names),
+					"",
+					1,
+					(void **) &found
+				);
+			
+			break;
+			
+		default:
+			
+			zend_throw_exception_ex(
+				onphp_ce_WrongArgumentException,
+				0 TSRMLS_CC,
+				"string or an integer expected"
 			);
-	} else {
-		result =
-			zend_symtable_find(
-				Z_ARRVAL_P(names),
-				Z_STRVAL_P(id),
-				Z_STRLEN_P(id) + 1,
-				(void **) &found
-			);
+			
+			return;
 	}
 	
 	if (result == SUCCESS) {
 		ONPHP_UPDATE_PROPERTY(getThis(), "id", id);
 		ONPHP_UPDATE_PROPERTY(getThis(), "name", *found);
 	} else {
+		if (Z_TYPE_P(id) != IS_STRING) {
+			SEPARATE_ARG_IF_REF(id);
+			convert_to_string(id);
+		}
+		
 		zend_throw_exception_ex(
 			onphp_ce_MissingElementException,
 			0 TSRMLS_CC,
