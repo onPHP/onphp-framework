@@ -47,10 +47,8 @@ ONPHP_METHOD(Enumeration, __construct)
 				(void **) &found
 			);
 	} else {
-		convert_to_string(id);
-		
 		result =
-			zend_hash_find(
+			zend_symtable_find(
 				Z_ARRVAL_P(names),
 				Z_STRVAL_P(id),
 				Z_STRLEN_P(id) + 1,
