@@ -23,8 +23,8 @@
 		const READ_WRITE	= 0x02;
 		
 		protected $names	= array(
-			0 => 'read only',
-			1 => 'read write'
+			self::READ_ONLY		=> 'read only',
+			self::READ_WRITE	=> 'read write'
 		);
 	}
 ?>
