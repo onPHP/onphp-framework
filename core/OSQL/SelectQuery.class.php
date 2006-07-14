@@ -311,18 +311,20 @@
 			// WHERE
 			$query .= parent::toDialectString($dialect);
 
-			/* GROUP */ {
+			if ($this->group) {
 				$groupList = array();
+				
 				foreach ($this->group as $group)
 					$groupList[] = $group->toDialectString($dialect);
+				
 				if ($groupList)
 					$query .= " GROUP BY ".implode(', ', $groupList);
 			}
 
-			/* ORDER */ {
+			if ($this->order) {
 				$orderList = array();
 
-				foreach($this->order as $order)
+				foreach ($this->order as $order)
 					$orderList[] = $order->toDialectString($dialect);
 
 				if ($orderList)
