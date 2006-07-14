@@ -57,8 +57,8 @@ ONPHP_METHOD(DBValue, toDialectString)
 	
 	value = ONPHP_READ_PROPERTY(getThis(), "value");
 	
-	SEPARATE_ZVAL_TO_MAKE_IS_REF(&value);
-	
+	//SEPARATE_ZVAL_TO_MAKE_IS_REF(&value);
+	SEPARATE_ARG_IF_REF(value);
 	
 	zend_call_method_with_1_params(
 		&dialect,
