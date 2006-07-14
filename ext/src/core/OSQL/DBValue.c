@@ -1,9 +1,10 @@
 /* $Id$ */
 
-#include "zend_interfaces.h"
-
 #include "onphp.h"
 #include "onphp_core.h"
+
+#include "zend_interfaces.h"
+#include "zend_globals.h"
 
 #include "core/DB/Dialect.h"
 #include "core/OSQL/DBValue.h"
@@ -57,6 +58,7 @@ ONPHP_METHOD(DBValue, toDialectString)
 	value = ONPHP_READ_PROPERTY(getThis(), "value");
 	
 	SEPARATE_ZVAL_TO_MAKE_IS_REF(&value);
+	
 	
 	zend_call_method_with_1_params(
 		&dialect,

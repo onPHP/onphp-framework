@@ -4,6 +4,7 @@
 #include "onphp_util.h"
 
 #include "ext/standard/php_string.h"
+#include "zend_globals.h"
 #include "zend_exceptions.h"
 #include "zend_interfaces.h"
 
@@ -97,11 +98,11 @@ ONPHP_METHOD(ImaginaryDialect, fieldToString)
 			getThis()
 		);
 		
-		RETURN_ZVAL(out, 1, 1);
-		
 		if (EG(exception)) {
 			return;
 		}
+		
+		RETURN_ZVAL(out, 1, 1);
 	} else {
 		RETURN_ZVAL(field, 1, 0);
 	}
@@ -119,20 +120,25 @@ ONPHP_METHOD(ImaginaryDialect, valueToString)
 		Z_TYPE_P(value) == IS_OBJECT
 		&& instanceof_function(Z_OBJCE_P(value), onphp_ce_DBValue TSRMLS_CC)
 	) {
+		zval *out;
+		
 		SEPARATE_ZVAL_TO_MAKE_IS_REF(&value);
+		
 		
 		zend_call_method_with_1_params(
 			&value,
 			Z_OBJCE_P(value),
 			NULL,
 			"todialectstring",
-			&value,
+			&out,
 			value
 		);
 		
 		if (EG(exception)) {
 			return;
 		}
+		
+		RETURN_ZVAL(out, 1, 1);
 	}
 	
 	RETURN_ZVAL(value, 1, 0);

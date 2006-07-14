@@ -2,6 +2,8 @@
 
 #include "onphp.h"
 
+#include "zend_globals.h"
+
 #include "main/DAOs/Handlers/SharedMemorySegmentHandler.h"
 
 PHPAPI zend_class_entry *onphp_ce_SharedMemorySegmentHandler;

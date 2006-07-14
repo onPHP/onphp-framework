@@ -5,6 +5,7 @@
 #include "onphp_util.h"
 
 #include "ext/standard/php_string.h"
+#include "zend_globals.h"
 #include "zend_exceptions.h"
 #include "zend_interfaces.h"
 
@@ -194,7 +195,7 @@ ONPHP_METHOD(Dialect, fieldToString)
 
 ONPHP_METHOD(Dialect, valueToString)
 {
-	zval *value;
+	zval *value, *out;
 	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
 		WRONG_PARAM_COUNT;
@@ -206,12 +207,13 @@ ONPHP_METHOD(Dialect, valueToString)
 	) {
 		SEPARATE_ZVAL_TO_MAKE_IS_REF(&value);
 		
+		
 		zend_call_method_with_1_params(
 			&getThis(),
 			Z_OBJCE_P(getThis()),
 			NULL,
 			"quotevalue",
-			&value,
+			&out,
 			value
 		);
 		
@@ -220,7 +222,7 @@ ONPHP_METHOD(Dialect, valueToString)
 		}
 	}
 	
-	RETURN_ZVAL(value, 1, 0);
+	RETURN_ZVAL(out, 1, 1);
 }
 
 ONPHP_METHOD(Dialect, fullTextSearch)

@@ -3,6 +3,7 @@
 #include "onphp.h"
 #include "onphp_core.h"
 
+#include "zend_globals.h"
 #include "zend_exceptions.h"
 
 #include "core/Base/Singleton.h"
@@ -157,7 +158,11 @@ ONPHP_METHOD(Singleton, getInstance)
 			if (argc) {
 				efree(params);
 			}
-
+			
+			if (EG(exception)) {
+				return;
+			}
+			
 			add_assoc_zval_ex(instances, ce->name, length + 1, object);
 		}
 	}
