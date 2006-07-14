@@ -57,7 +57,12 @@
 		
 		public function drop($key)
 		{
-			return fclose($this->pool[$key]);
+			try {
+				return fclose($this->pool[$key]);
+			} catch (BaseException $e) {
+				unset($this->pool[$key]); // already race-removed
+				return false;
+			}
 		}
 	}
 ?>
