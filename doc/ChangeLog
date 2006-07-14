@@ -1,5 +1,10 @@
 # $Id$
 
+2006-07-15	Konstantin V. Arkhipov
+
+	* core/OSQL/, ext/: support for TRUNCATE-query implemented, as
+	requested by unnamed hero.
+
 2006-07-14	Konstantin V. Arkhipov
 
 	* core/DB/PostgresDialect.class.php, core/DB/Dialect.class.php,

@@ -61,6 +61,23 @@
 			return null;
 		}
 		
+		public static function hasTruncate()
+		{
+			return true;
+		}
+		
+		public static function hasMultipleTruncate()
+		{
+			return false;
+		}
+		
+		public static function autoincrementize(DBColumn $column, &$prepend)
+		{
+			$column->setDefault(null);
+			
+			return 'AUTO_INCREMENT';
+		}
+		
 		public function fullTextSearch($fields, $words, $logic)
 		{
 			return
@@ -75,13 +92,6 @@
 					.') AGAINST ('
 					.self::$prepareFullText($words, $logic)
 				.')';
-		}
-		
-		public static function autoincrementize(DBColumn $column, &$prepend)
-		{
-			$column->setDefault(null);
-			
-			return 'AUTO_INCREMENT';
 		}
 		
 		private static function prepareFullText($words, $logic)

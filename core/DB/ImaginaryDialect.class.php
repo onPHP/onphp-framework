@@ -42,6 +42,16 @@
 		{
 			return $table;
 		}
+		
+		public static function hasTruncate()
+		{
+			return false;
+		}
+		
+		public static function hasMultipleTruncate()
+		{
+			return false;
+		}
 
 		public function fieldToString($field)
 		{

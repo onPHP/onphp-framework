@@ -41,6 +41,21 @@ ONPHP_METHOD(ImaginaryDialect, me)
 	RETURN_ZVAL(instance, 1, 1);
 }
 
+ONPHP_METHOD(ImaginaryDialect, autoincrementize)
+{
+	RETURN_STRING("AUTOINCREMENT", 1);
+}
+
+ONPHP_METHOD(ImaginaryDialect, hasTruncate)
+{
+	RETURN_FALSE;
+}
+
+ONPHP_METHOD(ImaginaryDialect, hasMultipleTruncate)
+{
+	RETURN_FALSE;
+}
+
 ONPHP_METHOD(ImaginaryDialect, quoteValue)
 {
 	zval *value;
@@ -72,11 +87,6 @@ ONPHP_METHOD(ImaginaryDialect, quoteTable)
 	}
 	
 	RETURN_ZVAL(table, 1, 0);
-}
-
-ONPHP_METHOD(ImaginaryDialect, autoincrementize)
-{
-	RETURN_STRING("AUTOINCREMENT", 1);
 }
 
 ONPHP_METHOD(ImaginaryDialect, fieldToString)
@@ -210,6 +220,8 @@ static ONPHP_ARGINFO_AUTOINCREMENTIZE;
 zend_function_entry onphp_funcs_ImaginaryDialect[] = {
 	ONPHP_ME(ImaginaryDialect, me,	NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(ImaginaryDialect, autoincrementize, arginfo_autoincrementize, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(ImaginaryDialect, hasTruncate, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(ImaginaryDialect, hasMultipleTruncate, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(ImaginaryDialect, quoteValue, arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)
 	ONPHP_ME(ImaginaryDialect, quoteField, arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)
 	ONPHP_ME(ImaginaryDialect, quoteTable, arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)

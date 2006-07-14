@@ -53,5 +53,15 @@
 			
 			return null; // or even 'AUTOINCREMENT'?
 		}
+		
+		public static function hasTruncate()
+		{
+			return false;
+		}
+		
+		public static function hasMultipleTruncate()
+		{
+			return false;
+		}
 	}
 ?>

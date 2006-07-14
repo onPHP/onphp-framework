@@ -39,6 +39,11 @@
 			return new DeleteQuery();
 		}
 		
+		public static function truncate($whom = null)
+		{
+			return new TruncateQuery($whom);
+		}
+		
 		public static function createTable(DBTable $table)
 		{
 			return new CreateTableQuery($table);

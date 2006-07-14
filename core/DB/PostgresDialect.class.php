@@ -64,6 +64,16 @@
 				);
 		}
 		
+		public static function hasTruncate()
+		{
+			return true;
+		}
+		
+		public static function hasMultipleTruncate()
+		{
+			return true;
+		}
+		
 		public function fullTextSearch($field, $words, $logic)
 		{
 			$searchString = self::prepareFullText($words, $logic);

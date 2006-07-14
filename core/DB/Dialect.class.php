@@ -24,6 +24,9 @@
 			DBColumn $column, &$prepend
 		);
 		
+		abstract public static function hasTruncate();
+		abstract public static function hasMultipleTruncate();
+		
 		public static function quoteValue($value)
 		{
 			return
