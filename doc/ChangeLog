@@ -1,5 +1,14 @@
 # $Id$
 
+2006-07-14	Konstantin V. Arkhipov
+
+	* core/DB/PostgresDialect.class.php, core/DB/Dialect.class.php,
+	core/DB/ImaginaryDialect.class.php, core/DB/MyDialect.class.php,
+	core/DB/LiteDialect.class.php: pass-by-reference removed from all
+	methods.
+
+	* ext/: synced with dialects and sanitized.
+
 2006-07-13	Konstantin V. Arkhipov
 
 	* main/Flow/CarefulDatabaseRunner.class.php: careful container for

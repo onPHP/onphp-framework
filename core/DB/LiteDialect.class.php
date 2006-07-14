@@ -24,7 +24,7 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 		
-		public static function quoteValue(&$value)
+		public static function quoteValue($value)
 		{
 			/// @see Sequenceless for this convention
 			

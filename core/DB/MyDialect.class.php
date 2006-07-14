@@ -26,7 +26,7 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 		
-		public static function quoteValue(&$value)
+		public static function quoteValue($value)
 		{
 			/// @see Sequenceless for this convention
 			
@@ -36,7 +36,7 @@
 			return "'" . mysql_real_escape_string($value) . "'";
 		}
 		
-		public static function quoteField(&$field)
+		public static function quoteField($field)
 		{
 			if (strpos($field, '.') !== false)
 				throw new WrongArgumentException();
@@ -46,7 +46,7 @@
 			return "`{$field}`";
 		}
 		
-		public static function quoteTable(&$table)
+		public static function quoteTable($table)
 		{
 			return "`{$table}`";
 		}

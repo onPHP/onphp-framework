@@ -32,10 +32,12 @@ ONPHP_METHOD(ImaginaryDialect, me)
 		class
 	);
 	
+	ZVAL_FREE(class);
+
 	if (EG(exception)) {
 		return;
 	}
-
+	
 	RETURN_ZVAL(instance, 1, 1);
 }
 
@@ -122,9 +124,6 @@ ONPHP_METHOD(ImaginaryDialect, valueToString)
 	) {
 		zval *out;
 		
-		SEPARATE_ZVAL_TO_MAKE_IS_REF(&value);
-		
-		
 		zend_call_method_with_1_params(
 			&value,
 			Z_OBJCE_P(value),
@@ -204,18 +203,18 @@ ONPHP_METHOD(ImaginaryDialect, fullTextRank)
 	RETURN_STRINGL(out.c, out.len, 0);
 }
 
-static ONPHP_ARGINFO_AUTOINCREMENTIZE;
-static ONPHP_ARGINFO_ONE_REF;
+static ONPHP_ARGINFO_ONE;
 static ONPHP_ARGINFO_THREE;
+static ONPHP_ARGINFO_AUTOINCREMENTIZE;
 
 zend_function_entry onphp_funcs_ImaginaryDialect[] = {
 	ONPHP_ME(ImaginaryDialect, me,	NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(ImaginaryDialect, autoincrementize, arginfo_autoincrementize, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-	ONPHP_ME(ImaginaryDialect, quoteValue, arginfo_one_ref, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)
-	ONPHP_ME(ImaginaryDialect, quoteField, arginfo_one_ref, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)
-	ONPHP_ME(ImaginaryDialect, quoteTable, arginfo_one_ref, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)
-	ONPHP_ME(ImaginaryDialect, fieldToString, arginfo_one_ref, ZEND_ACC_PUBLIC)
-	ONPHP_ME(ImaginaryDialect, valueToString, arginfo_one_ref, ZEND_ACC_PUBLIC)
+	ONPHP_ME(ImaginaryDialect, quoteValue, arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)
+	ONPHP_ME(ImaginaryDialect, quoteField, arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)
+	ONPHP_ME(ImaginaryDialect, quoteTable, arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)
+	ONPHP_ME(ImaginaryDialect, fieldToString, arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(ImaginaryDialect, valueToString, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(ImaginaryDialect, fullTextSearch, arginfo_three, ZEND_ACC_PUBLIC)
 	ONPHP_ME(ImaginaryDialect, fullTextRank, arginfo_three, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}

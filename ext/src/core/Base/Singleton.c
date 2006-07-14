@@ -24,39 +24,38 @@ ONPHP_METHOD(Singleton, getInstance)
 	zval *object, *args;
 	zval **stored;
 	zval ***params = NULL;
-
-	if (argc) {
-		params = safe_emalloc(sizeof(zval **), argc, 0);
-		
-		if (zend_get_parameters_array_ex(argc, params) == FAILURE) {
-			zend_throw_exception_ex(
-				onphp_ce_BaseException,
-				0 TSRMLS_CC,
-				"Failed to get calling arguments for object creation"
-			);
-			efree(params);
-			RETURN_NULL();
-		}
-		
-		// replica of historical Singleton's behaviour
-		if (argc > 2) {
-			int i;
-			ALLOC_INIT_ZVAL(args);
-			array_init(args);
-			
-			for (i = 1; i < argc; i++) {
-				add_next_index_zval(args, *params[i]);
-			}
-			
-			params[1] = &args;
-			argc = 2;
-		}
-		
-		name = estrdup(Z_STRVAL_PP(params[0]));
-	} else {
-		// ignore params stuff, since it's constructorless
-		name = estrdup("SingletonInstance");
+	
+	if (argc < 1) {
+		WRONG_PARAM_COUNT;
 	}
+
+	params = safe_emalloc(sizeof(zval **), argc, 0);
+	
+	if (zend_get_parameters_array_ex(argc, params) == FAILURE) {
+		zend_throw_exception_ex(
+			onphp_ce_BaseException,
+			0 TSRMLS_CC,
+			"Failed to get calling arguments for object creation"
+		);
+		efree(params);
+		RETURN_NULL();
+	}
+	
+	// replica of historical Singleton's behaviour
+	if (argc > 2) {
+		int i;
+		ALLOC_INIT_ZVAL(args);
+		array_init(args);
+		
+		for (i = 1; i < argc; i++) {
+			add_next_index_zval(args, *params[i]);
+		}
+		
+		params[1] = &args;
+		argc = 2;
+	}
+	
+	name = estrdup(Z_STRVAL_PP(params[0]));
 		
 	length = strlen(name);
 	
@@ -68,6 +67,9 @@ ONPHP_METHOD(Singleton, getInstance)
 			(void **) &stored
 		) == SUCCESS
 	) {
+		efree(params);
+		efree(name);
+		
 		object = *stored;
 		zval_copy_ctor(object);
 	} else {
@@ -88,10 +90,8 @@ ONPHP_METHOD(Singleton, getInstance)
 					"Class '%s' is something not a Singleton's child",
 					ce->name
 				);
-				if (argc) {
-					efree(params);
-				}
-				RETURN_NULL();
+				efree(params);
+				return;
 			}
 			
 			// we can call protected consturctors,
@@ -103,10 +103,8 @@ ONPHP_METHOD(Singleton, getInstance)
 					"Can not call private constructor for '%s' creation",
 					ce->name
 				);
-				if (argc) {
-					efree(params);
-				}
-				RETURN_NULL();
+				efree(params);
+				return;
 			} else if (ce->constructor->common.fn_flags & ZEND_ACC_PUBLIC) {
 				zend_throw_exception_ex(
 					onphp_ce_BaseException,
@@ -115,10 +113,8 @@ ONPHP_METHOD(Singleton, getInstance)
 						"due to public constructor there",
 					ce->name
 				);
-				if (argc) {
-					efree(params);
-				}
-				RETURN_NULL();
+				efree(params);
+				return;
 			}
 
 			MAKE_STD_ZVAL(object);
@@ -130,12 +126,8 @@ ONPHP_METHOD(Singleton, getInstance)
 			fci.symbol_table = NULL;
 			fci.object_pp = &object;
 			fci.retval_ptr_ptr = &retval_ptr;
-			if (argc) {
-				fci.param_count = argc - 1;
-				fci.params = params + 1;
-			} else {
-				fci.param_count = 0;
-			}
+			fci.param_count = argc - 1;
+			fci.params = params + 1;
 			
 			fcc.initialized = 1;
 			fcc.function_handler = ce->constructor;
@@ -151,12 +143,10 @@ ONPHP_METHOD(Singleton, getInstance)
 				);
 			}
 			
+			efree(params);
+			
 			if (retval_ptr) {
 				zval_ptr_dtor(&retval_ptr);
-			}
-			
-			if (argc) {
-				efree(params);
 			}
 			
 			if (EG(exception)) {

@@ -14,7 +14,7 @@ PHPAPI zend_class_entry *onphp_ce_QueryIdentification;
 
 ONPHP_METHOD(QueryIdentification, getId)
 {
-	zval *out;
+	zval *out, *hashed;
 	
 	zend_call_method_with_0_params(
 		&getThis(),
@@ -33,15 +33,17 @@ ONPHP_METHOD(QueryIdentification, getId)
 		NULL,
 		NULL,
 		"sha1",
-		&out,
+		&hashed,
 		out
 	);
+	
+	ZVAL_FREE(out);
 	
 	if (EG(exception)) {
 		return;
 	}
 	
-	RETURN_ZVAL(out, 1, 1);
+	RETURN_ZVAL(hashed, 1, 1);
 }
 
 ONPHP_METHOD(QueryIdentification, toString)

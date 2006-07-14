@@ -38,6 +38,7 @@ ONPHP_METHOD(Enumeration, __construct)
 			0 TSRMLS_CC,
 			"names array is not an array"
 		);
+		return;
 	}
 	
 	switch (Z_TYPE_P(id)) {
@@ -124,7 +125,7 @@ ONPHP_METHOD(Enumeration, getList)
 	if (EG(exception)) {
 		return;
 	} else {
-		RETURN_ZVAL(out, 1, 0);
+		RETURN_ZVAL(out, 1, 1);
 	}
 }
 
@@ -182,7 +183,6 @@ ONPHP_METHOD(Enumeration, getObjectList)
 			);
 		
 		MAKE_STD_ZVAL(arg);
-		MAKE_STD_ZVAL(object);
 		
 		if (result == HASH_KEY_IS_STRING) {
 			ZVAL_STRINGL(arg, key, length, 1);
@@ -194,10 +194,12 @@ ONPHP_METHOD(Enumeration, getObjectList)
 				0 TSRMLS_CC,
 				"weird key found"
 			);
-			zval_dtor(list);
+			ZVAL_FREE(arg);
+			ZVAL_FREE(list);
 			return;
 		}
 		
+		MAKE_STD_ZVAL(object);
 		object->value.obj = onphp_empty_object_new(Z_OBJCE_P(getThis()) TSRMLS_CC);
 		Z_TYPE_P(object) = IS_OBJECT;
 		
@@ -211,8 +213,13 @@ ONPHP_METHOD(Enumeration, getObjectList)
 		);
 		
 		if (EG(exception)) {
+			ZVAL_FREE(object);
+			ZVAL_FREE(list);
+			ZVAL_FREE(arg);
 			return;
 		} else {
+			zval_dtor(arg);
+			
 			add_next_index_zval(list, object);
 		}
 	}

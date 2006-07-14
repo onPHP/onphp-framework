@@ -32,9 +32,6 @@ ONPHP_METHOD(FieldTable, toDialectString)
 	
 	field = ONPHP_READ_PROPERTY(getThis(), "field");
 	
-	SEPARATE_ZVAL_TO_MAKE_IS_REF(&field);
-	
-	
 	zend_call_method_with_1_params(
 		&dialect,
 		Z_OBJCE_P(dialect),

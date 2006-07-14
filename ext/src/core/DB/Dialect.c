@@ -174,8 +174,6 @@ ONPHP_METHOD(Dialect, fieldToString)
 			getThis()
 		);
 	} else {
-		SEPARATE_ZVAL_TO_MAKE_IS_REF(&field);
-		
 		zend_call_method_with_1_params(
 			&getThis(),
 			Z_OBJCE_P(getThis()),
@@ -205,9 +203,6 @@ ONPHP_METHOD(Dialect, valueToString)
 		Z_TYPE_P(value) == IS_OBJECT
 		&& instanceof_function(Z_OBJCE_P(value), onphp_ce_DBValue TSRMLS_CC)
 	) {
-		SEPARATE_ZVAL_TO_MAKE_IS_REF(&value);
-		
-		
 		zend_call_method_with_1_params(
 			&getThis(),
 			Z_OBJCE_P(getThis()),
@@ -243,21 +238,21 @@ ONPHP_METHOD(Dialect, fullTextRank)
 	);
 }
 
-static ONPHP_ARGINFO_ONE_REF;
+static ONPHP_ARGINFO_ONE;
 static ONPHP_ARGINFO_TWO;
 static ONPHP_ARGINFO_THREE;
 static ONPHP_ARGINFO_AUTOINCREMENTIZE;
 
 zend_function_entry onphp_funcs_Dialect[] = {
 	ONPHP_ABSTRACT_ME(Dialect, autoincrementize, arginfo_autoincrementize, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-	ONPHP_ME(Dialect, quoteValue, arginfo_one_ref, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-	ONPHP_ME(Dialect, quoteField, arginfo_one_ref, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-	ONPHP_ME(Dialect, quoteTable, arginfo_one_ref, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Dialect, quoteValue, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Dialect, quoteField, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Dialect, quoteTable, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, toCasted, arginfo_two, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, timeZone, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, dropTableMode, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-	ONPHP_ME(Dialect, fieldToString, arginfo_one_ref, ZEND_ACC_PUBLIC)
-	ONPHP_ME(Dialect, valueToString, arginfo_one_ref, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Dialect, fieldToString, arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Dialect, valueToString, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Dialect, fullTextSearch, arginfo_three, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Dialect, fullTextRank, arginfo_three, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}

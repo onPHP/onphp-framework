@@ -36,7 +36,7 @@
 			self::$tsConfiguration = $configuration;
 		}
 		
-		public static function quoteValue(&$value)
+		public static function quoteValue($value)
 		{
 			return "'".pg_escape_string($value)."'";
 		}

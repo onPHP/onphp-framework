@@ -24,7 +24,7 @@
 			DBColumn $column, &$prepend
 		);
 		
-		public static function quoteValue(&$value)
+		public static function quoteValue($value)
 		{
 			return
 				(
@@ -41,12 +41,12 @@
 					: "'".addslashes($value)."'";
 		}
 		
-		public static function quoteField(&$field)
+		public static function quoteField($field)
 		{
 			return self::quoteTable($field);
 		}
 		
-		public static function quoteTable(&$table)
+		public static function quoteTable($table)
 		{
 			return '"'.$table.'"';
 		}
@@ -72,7 +72,7 @@
 					: ' RESTRICT';
 		}
 		
-		public function fieldToString(&$field)
+		public function fieldToString($field)
 		{
 			return
 				$field instanceof DialectString
@@ -80,7 +80,7 @@
 					: $this->quoteField($field);
 		}
 		
-		public function valueToString(&$value)
+		public function valueToString($value)
 		{
 			return
 				$value instanceof DBValue
