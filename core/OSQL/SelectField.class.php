@@ -30,7 +30,7 @@
 			if ($this->field instanceof DBField)
 				return $this->field->getField();
 			
-			return null;
+			return $this->alias;
 		}
 
 		public function toDialectString(Dialect $dialect)
