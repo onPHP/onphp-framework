@@ -140,21 +140,27 @@
 		
 		public function importMore($scope)
 		{
-			foreach ($this->primitives as $name => $prm)
+			foreach ($this->primitives as $name => $prm) {
 				if (
 					$prm->getValue() === null ||
 					($prm instanceof PrimitiveBoolean && !$prm->getValue())
 				)
 					$this->importPrimitive($scope, $prm);
+			}
 
 			return $this;
 		}
 		
 		public function importOne($primitiveName, $scope)
 		{
-			$this->importPrimitive($scope, $this->get($primitiveName));
+			return $this->importPrimitive($scope, $this->get($primitiveName));
+		}
+		
+		public function importValue($primitiveName, $value)
+		{
+			$prm = $this->get($primitiveName);
 			
-			return $this;
+			return $this->checkImportResult($prm, $prm->importValue($value));
 		}
 		
 		public function importOneMore($primitiveName, $scope)
@@ -165,15 +171,19 @@
 				$prm->getValue() === null
 				|| ($prm instanceof PrimitiveBoolean && !$prm->getValue())
 			)
-				$this->importPrimitive($scope, $prm);
+				return $this->importPrimitive($scope, $prm);
 
 			return $this;
 		}
 		
 		private function importPrimitive($scope, BasePrimitive $prm)
 		{
-			$name	= $prm->getName();
-			$result	= $prm->import($scope);
+			return $this->checkImportResult($prm, $prm->import($scope));
+		}
+		
+		private function checkImportResult(BasePrimitive $prm, $result)
+		{
+			$name = $prm->getName();
 			
 			if (null === $result) {
 				if ($prm->isRequired())
@@ -183,7 +193,7 @@
 			} else
 				$this->errors[$name] = self::WRONG;
 			
-			/* NOTREACHED */
+			return $this;
 		}
 		
 		/**

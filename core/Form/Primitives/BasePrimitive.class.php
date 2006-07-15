@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -112,6 +112,11 @@
 			$this->required = false;
 			
 			return $this;
+		}
+		
+		public function importValue($value)
+		{
+			return $this->import(array($this->getName() => $value));
 		}
 		
 		protected function import($scope)

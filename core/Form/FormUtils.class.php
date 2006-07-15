@@ -31,32 +31,11 @@
 					$value	= $object->$getter();
 					$prm	= $primitives[$name];
 					
-					try {
-						if (
-							$class->hasMethod($getter)
-							&& (!$ignoreNull || ($value !== null))
-						) {
-							// PrimitiveIdentifier, Enumerations
-							if ($value instanceof Identifiable)
-								$fake = array($name => $value->getId());
-							// PrimitiveDate
-							elseif ($value instanceof Stringable)
-								$fake = array($name => $value->toString());
-							// PrimitiveBoolean
-							elseif (is_bool($value) && $value === false) 
-								$fake = array();
-							// everything else
-							else
-								$fake = array($name => $value);
-							
-							if ($prm instanceof ComplexPrimitive) {
-								if ($prm->importSingle($fake) === true)
-									$form->markGood($name);
-							} else
-								$form->importOne($name, $fake);
-						}
-					} catch (ReflectionException $e) {
-						// no such method
+					if (
+						$class->hasMethod($getter)
+						&& (!$ignoreNull || ($value !== null))
+					) {
+						$form->importValue($name, $value);
 					}
 				}
 			}
@@ -72,34 +51,30 @@
 				$setter = 'set'.ucfirst($name);
 				$value = $prm->getValue();
 				
-				try {
-					if (
-						$class->hasMethod($setter)
-						&& (!$ignoreNull || ($value !== null))
+				if (
+					$class->hasMethod($setter)
+					&& (!$ignoreNull || ($value !== null))
+				) {
+					if ($prm instanceof PrimitiveList) {
+						$list = $prm->getList();
+						$value = $list[$value];
+					} elseif ( // magic!
+						$prm->getName() == 'id'
+						&& $value instanceof Identifiable
 					) {
-						if ($prm instanceof PrimitiveList) {
-							$list = $prm->getList();
-							$value = $list[$value];
-						} elseif ( // magic!
-							$prm->getName() == 'id'
-							&& $value instanceof Identifiable
-						) {
-							$value = $value->getId();
-						}
-						
-						if ($value === null) {
-							$dropper = 'drop'.ucfirst($name);
-							
-							if ($class->hasMethod($dropper)) {
-								$object->$dropper();
-								continue;
-							}
-						}
-
-						$object->$setter($value);
+						$value = $value->getId();
 					}
-				} catch (ReflectionException $e) {
-					// no such method
+					
+					if ($value === null) {
+						$dropper = 'drop'.ucfirst($name);
+						
+						if ($class->hasMethod($dropper)) {
+							$object->$dropper();
+							continue;
+						}
+					}
+
+					$object->$setter($value);
 				}
 			}
 		}

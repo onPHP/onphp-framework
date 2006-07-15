@@ -24,5 +24,18 @@
 
 			return true;
 		}
+		
+		public function importValue($value)
+		{
+			if (
+				false === $value
+				|| null === $value
+			)
+				$this->value = false;
+			else
+				$this->value = true;
+			
+			return true;
+		}
 	}
 ?>
