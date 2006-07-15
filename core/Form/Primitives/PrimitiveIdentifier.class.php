@@ -39,7 +39,7 @@
 			return call_user_func(array($this->className, 'dao'));
 		}
 		
-		public function import(&$scope)
+		public function import($scope)
 		{
 			if (!$this->className)
 				throw new WrongStateException(

@@ -29,7 +29,7 @@
 			return $this->separator;
 		}
 		
-		public function import(&$scope)
+		public function import($scope)
 		{
 			if (!$temp = parent::import($scope))
 				return $temp;

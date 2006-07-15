@@ -59,10 +59,10 @@
 		}
 
 		// implement me, child :-)
-		abstract protected function importSingle(&$scope);
-		abstract protected function importMarried(&$scope);
+		abstract protected function importSingle($scope);
+		abstract protected function importMarried($scope);
 
-		public function import(&$scope)
+		public function import($scope)
 		{
 			parent::import($scope);
 			

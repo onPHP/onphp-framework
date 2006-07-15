@@ -15,7 +15,7 @@
 	**/
 	class DateRangeList extends BasePrimitive implements Stringable
 	{
-		public function import(&$scope)
+		public function import($scope)
 		{
 			if (
 				!isset($scope[$this->name])

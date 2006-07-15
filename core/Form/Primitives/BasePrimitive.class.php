@@ -113,8 +113,8 @@
 			
 			return $this;
 		}
-
-		protected function import(&$scope)
+		
+		protected function import($scope)
 		{
 			if (
 				isset($scope[$this->name]) &&

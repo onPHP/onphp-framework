@@ -63,7 +63,7 @@
 			return null;
 		}
 		
-		public function importSingle(&$scope)
+		public function importSingle($scope)
 		{
 			if (!BasePrimitive::import($scope) || is_array($scope[$this->name]))
 				return null;
@@ -90,7 +90,7 @@
 			return false;
 		}
 
-		public function importMarried(&$scope) // ;-)
+		public function importMarried($scope) // ;-)
 		{
 			$name = &$this->name;
 
@@ -136,7 +136,7 @@
 			return false;
 		}
 
-		private function safeGet(&$scope, $firstDimension, $secondDimension)
+		private function safeGet($scope, $firstDimension, $secondDimension)
 		{
 			if (isset($scope[$firstDimension]) && is_array($scope[$firstDimension])) {
 				if (

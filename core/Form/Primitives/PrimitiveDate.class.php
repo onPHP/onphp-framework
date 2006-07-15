@@ -60,7 +60,7 @@
 			return $this;
 		}
 		
-		public function importSingle(&$scope)
+		public function importSingle($scope)
 		{
 			if (
 				isset($scope[$this->name])
@@ -85,7 +85,7 @@
 			return false;
 		}
 
-		public function isEmpty(&$scope)
+		public function isEmpty($scope)
 		{
 			if ($this->getState()->isFalse()) {
 				return empty($scope[$this->name][self::DAY])
@@ -95,7 +95,7 @@
 				return empty($scope[$this->name]);
 		}
 		
-		public function importMarried(&$scope)
+		public function importMarried($scope)
 		{
 			if (
 				isset(
@@ -149,7 +149,7 @@
 			return false;
 		}
 		
-		public function import(&$scope)
+		public function import($scope)
 		{
 			if ($this->isEmpty($scope))
 				return null;

@@ -2,6 +2,8 @@
 
 2006-07-15	Konstantin V. Arkhipov
 
+	* core/Form/: pass-by-reference removed from all methods.
+
 	* core/OSQL/, ext/: support for TRUNCATE-query implemented, as
 	requested by unnamed hero.
 

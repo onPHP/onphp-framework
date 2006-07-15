@@ -15,7 +15,7 @@
 	**/
 	class PrimitiveBoolean extends BasePrimitive
 	{
-		public function import(&$scope) // to be compatible with BasePrimitive
+		public function import($scope) // to be compatible with BasePrimitive
 		{
 			if (isset($scope[$this->name]))
 				$this->value = true;

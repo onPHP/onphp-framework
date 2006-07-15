@@ -29,7 +29,7 @@
 			return $this;
 		}
 		
-		public function import(&$scope)
+		public function import($scope)
 		{
 			if (!parent::import($scope)) {
 				return null;

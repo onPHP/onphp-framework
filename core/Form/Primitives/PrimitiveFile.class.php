@@ -73,7 +73,7 @@
 				);
 		}
 		
-		public function import(&$scope)
+		public function import($scope)
 		{
 			if (
 				!BasePrimitive::import($scope)

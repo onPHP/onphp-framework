@@ -71,7 +71,7 @@
 			return $this;
 		}
 		
-		public function import(&$scope)
+		public function import($scope)
 		{
 			if ($result = parent::import($scope)) {
 				

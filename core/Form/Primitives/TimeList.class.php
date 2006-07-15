@@ -15,7 +15,7 @@
 	**/
 	class TimeList extends BasePrimitive
 	{
-		public function import(&$scope)
+		public function import($scope)
 		{
 			if (
 				!isset($scope[$this->name])
