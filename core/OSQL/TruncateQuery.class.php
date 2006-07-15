@@ -27,6 +27,11 @@
 			}
 		}
 		
+		public function getId()
+		{
+			throw new UnsupportedMethodException();
+		}
+		
 		public function table($table)
 		{
 			if ($table instanceof SQLTableName)
@@ -35,11 +40,6 @@
 				$this->tables[] = $table;
 			
 			return $this;
-		}
-		
-		public function getId()
-		{
-			throw new UnsupportedMethodException();
 		}
 		
 		public function toDialectString(Dialect $dialect)
@@ -75,9 +75,14 @@
 				
 				foreach ($this->targets as $target) {
 					if ($target instanceof DialectString)
-						$tables[] = $prepend.$target->toDialectString($dialect);
+						$table =
+							$dialect->quoteTable(
+								$target->toDialectString($dialect)
+							);
 					else
-						$tables[] = $prepend.$target;
+						$table = $dialect->quoteTable($target);
+					
+					$tables[] = $prepend.$table;
 				}
 				
 				return implode($append.' ', $tables);
