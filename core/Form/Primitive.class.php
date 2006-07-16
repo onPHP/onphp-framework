@@ -72,6 +72,11 @@
 			return new PrimitiveBoolean($name);
 		}
 		
+		public static function ternary($name)
+		{
+			return new PrimitiveTernary($name);
+		}
+		
 		public static function file($name)
 		{
 			return new PrimitiveFile($name);
