@@ -53,7 +53,7 @@
 		 	
 		 	$this->value = $value;
 		 	
-		 	return $this;
+		 	return true;
 		}
 	}
 ?>
