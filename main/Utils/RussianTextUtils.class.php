@@ -19,9 +19,6 @@
 		const FEMALE	= 1;
 		const NEUTRAL	= 2;
 	
-		// TODO: deprecated by selectCaseForNumber
-		private static $secondDecade = array(11, 12, 13, 14, 15, 16, 17, 18, 19);
-	
 		private static $orderedSuffixes = array(
 			self::MALE 		=> array('ый', 'ой', 'ий'),
 			self::FEMALE 	=> array('ая', 'ья', null),
