@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class PrimitiveRange extends ComplexPrimitive
+	final class PrimitiveRange extends ComplexPrimitive
 	{
 		const MIN	= 'min';
 		const MAX	= 'max';

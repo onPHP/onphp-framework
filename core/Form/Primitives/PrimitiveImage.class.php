@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Primitives
 	**/
-	class PrimitiveImage extends PrimitiveFile
+	final class PrimitiveImage extends PrimitiveFile
 	{
 		private $width		= null;
 		private $height		= null;

@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class PrimitiveArray extends RangedPrimitive
+	final class PrimitiveArray extends RangedPrimitive
 	{
 		public function import($scope)
 		{

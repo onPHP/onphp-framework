@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class DateRangeList extends BasePrimitive implements Stringable
+	final class DateRangeList extends BasePrimitive implements Stringable
 	{
 		public function import($scope)
 		{

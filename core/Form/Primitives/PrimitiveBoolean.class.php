@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class PrimitiveBoolean extends BasePrimitive
+	final class PrimitiveBoolean extends BasePrimitive
 	{
 		public function import($scope)
 		{

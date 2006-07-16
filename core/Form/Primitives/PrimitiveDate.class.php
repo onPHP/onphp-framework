@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class PrimitiveDate extends ComplexPrimitive
+	final class PrimitiveDate extends ComplexPrimitive
 	{
 		const DAY		= 'day';
 		const MONTH		= 'month';

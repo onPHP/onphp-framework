@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class TimeList extends BasePrimitive
+	final class TimeList extends BasePrimitive
 	{
 		public function import($scope)
 		{

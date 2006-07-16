@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class PrimitiveMultiList extends PrimitiveList
+	final class PrimitiveMultiList extends PrimitiveList
 	{
 		public function import($scope)
 		{
