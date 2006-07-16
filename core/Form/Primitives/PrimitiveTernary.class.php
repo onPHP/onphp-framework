@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov						*
+ *   Copyright (C) 2006 by Dmitry E. Demidov                                *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -49,9 +49,11 @@
 		
 		public function importValue($value)
 		{
-		 	Assert::isTernaryBase($value, 'Only boolean accepted');
+		 	Assert::isTernaryBase($value, 'only ternary based accepted');
 		 	
 		 	$this->value = $value;
+		 	
+		 	return $this;
 		}
 	}
 ?>

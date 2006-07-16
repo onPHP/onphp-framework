@@ -3,6 +3,7 @@
 2006-07-16	Dmitry E. Demidov
 
 	* core/Form/Primitives/PrimitiveTernary.class.php: added.
+
 	* core/Form/Primitive.class.php: ternary() added.
 
 2006-07-15	Konstantin V. Arkhipov

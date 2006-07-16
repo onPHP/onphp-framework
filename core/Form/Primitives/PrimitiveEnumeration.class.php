@@ -49,6 +49,16 @@
 			return $this;
 		}
 		
+		public function importValue(/* Identifiable */ $value)
+		{
+			if ($value)
+				Assert::isTrue(get_class($value) == $this->className);
+			else
+				return parent::importValue(null);
+			
+			return $this->import(array($this->getName() => $value->getId()));
+		}
+		
 		public function import($scope)
 		{
 			if (!$this->className)

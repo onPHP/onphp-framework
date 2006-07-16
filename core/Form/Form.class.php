@@ -159,16 +159,8 @@
 		public function importValue($primitiveName, $value)
 		{
 			$prm = $this->get($primitiveName);
-			// magic :(
-			if ($prm->getName() == 'id') {
-				$fake = array($primitiveName => $value);
-				$result = $prm->import($fake);
-			}
-			else
-				$result = $prm->importValue($value);
-				
 			
-			return $this->checkImportResult($prm, $result);
+			return $this->checkImportResult($prm, $prm->importValue($value));
 		}
 		
 		public function importOneMore($primitiveName, $scope)

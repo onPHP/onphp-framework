@@ -39,6 +39,24 @@
 			return call_user_func(array($this->className, 'dao'));
 		}
 		
+		public function importValue($value)
+		{
+			if ($value instanceof Identifiable) {
+				Assert::isTrue($this->className == get_class($value));
+				
+				return
+					$this->import(
+						array($this->getName() => $value->getId())
+					);
+			} elseif ($value) {
+				Assert::isInteger($value);
+				
+				return $this->import(array($this->getName() => $value));
+			}
+			
+			return parent::importValue(null);
+		}
+		
 		public function import($scope)
 		{
 			if (!$this->className)

@@ -27,15 +27,5 @@
 			
 			return parent::setValue($value);
 		}
-		
-		public function importValue(/* Identifiable */ $value)
-		{
-			if ($value)
-				Assert::isTrue($value instanceof Identifiable);
-			else
-				return parent::importValue(null);
-			
-			return $this->import(array($this->getName() => $value->getId()));
-		}
 	}
 ?>
