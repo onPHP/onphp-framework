@@ -38,6 +38,7 @@ ONPHP_METHOD(Enumeration, __construct)
 			0 TSRMLS_CC,
 			"names array is not an array"
 		);
+		ZVAL_FREE(names);
 		return;
 	}
 	
@@ -84,9 +85,11 @@ ONPHP_METHOD(Enumeration, __construct)
 				0 TSRMLS_CC,
 				"string or an integer expected"
 			);
-			
+			ZVAL_FREE(names);
 			return;
 	}
+	
+	ZVAL_FREE(names);
 	
 	if (result == SUCCESS) {
 		ONPHP_UPDATE_PROPERTY(getThis(), "id", id);

@@ -21,21 +21,12 @@ static zval *instances = NULL;
 /* final private */	ONPHP_METHOD(Singleton, __clone)		{/*_*/}
 
 
-static void _onphp_singleton_list_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
-{
-	zval *class = (zval *) rsrc->ptr;
-	
-	if (class) {
-		zval_dtor(class);
-	}
-}
-
 PHP_MINIT_FUNCTION(Singleton)
 {
 	le_onphp_singleton =
 		zend_register_list_destructors_ex(
 			NULL,
-			_onphp_singleton_list_dtor,
+			NULL,
 			"Singleton's class pool",
 			module_number
 		);
