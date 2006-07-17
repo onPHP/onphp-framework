@@ -46,6 +46,21 @@
 				// populate implemented interfaces
 				foreach ($xmlClass->implement as $xmlImplement)
 					$class->addInterface((string) $xmlImplement['interface']);
+
+				if (isset($xmlClass->properties[0]->identifier)) {
+					$property = $this->buildProperty(
+						(string) $xmlClass->properties[0]->identifier['name'],
+						'BigInteger'
+					);
+					
+					$property->
+						setIdentifier(true)->
+						required();
+					
+					$class->addProperty($property);
+					
+					unset($xmlClass->properties[0]->identifier);
+				}
 				
 				// populate properties
 				foreach ($xmlClass->properties[0] as $xmlProperty) {
@@ -59,6 +74,17 @@
 						$property->required();
 					
 					if ((string) $xmlProperty['identifier'] == 'true') {
+						
+						Assert::isTrue(
+							$property->isRequired(),
+							'identifier can not be optional'
+						);
+						
+						Assert::isTrue(
+							$class->getIdentifier() === null,
+							'composite identifiers are not supported'
+						);
+						
 						$property->setIdentifier(true);
 						
 						// we don't need anything but
