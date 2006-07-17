@@ -13,9 +13,9 @@
 
 	// sample system-wide configuration file
 	
-	function error2Exception($code, $string, $file, $line)
+	function error2Exception($code, $string, $file, $line, $context)
 	{
-		throw new BaseException($string, $code, $file, $line);
+		throw new BaseException($string, $code);
 	}
 	
 	// classes autoload magic
