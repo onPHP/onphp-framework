@@ -71,6 +71,8 @@ ONPHP_METHOD(QueryIdentification, toString)
 		imdi
 	);
 	
+	ZVAL_FREE(imdi);
+	
 	if (EG(exception)) {
 		return;
 	}
