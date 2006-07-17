@@ -16,20 +16,7 @@
 	**/
 	class BaseException extends Exception
 	{
-		public function __construct(
-			$message = null, $code = 0, $file = null, $line = null
-		)
-		{
-			parent::__construct($message, $code);
-			
-			if ($file)
-				$this->file = $file;
-
-			if ($line)
-				$this->line = $line;
-		}
-		
-		function __toString()
+		public function __toString()
 		{
 			return
 				"[$this->message] in: \n".
