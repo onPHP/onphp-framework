@@ -2,7 +2,7 @@
 
 <!ELEMENT classes (class+)>
 
-<!ELEMENT class (implements*, properties*, pattern)>
+<!ELEMENT class (implement*, properties*, pattern)>
 <!ATTLIST class
 		name		ID #REQUIRED
 		type		(final|abstract|spooked) #IMPLIED
@@ -14,7 +14,12 @@
 		interface	CDATA #REQUIRED
 >
 
-<!ELEMENT properties (property*, identifier?)>
+<!ELEMENT properties (identifier?, property*)>
+
+<!ELEMENT identifier EMPTY>
+<!ATTLIST identifier
+		name	CDATA #REQUIRED
+>
 
 <!ELEMENT property EMPTY>
 <!ATTLIST property

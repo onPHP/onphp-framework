@@ -7,9 +7,8 @@
 
 	<class name="Administrator" type="final">
 		<properties>
-			
-			<property name="id" type="Integer" required="true" identifier="true" />
-			
+			<identifier name="id" />
+
 			<property name="username" type="String" size="64" required="true" />
 			<property name="password" type="Password" size="40" required="true" />
 			
