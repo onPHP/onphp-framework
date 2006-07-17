@@ -106,7 +106,5 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(QueryIdentification, Query);
 	onphp_ce_QueryIdentification->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 
-	return
-		PHP_MINIT(Exceptions)(INIT_FUNC_ARGS_PASSTHRU)
-		& PHP_MINIT(Singleton)(INIT_FUNC_ARGS_PASSTHRU);
+	return PHP_MINIT(Exceptions)(INIT_FUNC_ARGS_PASSTHRU);
 }

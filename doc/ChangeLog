@@ -2,9 +2,6 @@
 
 2006-07-17	Konstantin V. Arkhipov
 
-	* src/core/Base/Singleton.c: instances are now cached during module's
-	lifetime.
-
 	* meta/: DTD updated, forgotten shortcut to identifier implemented.
 
 2006-07-16	Dmitry E. Demidov
