@@ -11,15 +11,42 @@
 
 PHPAPI zend_class_entry *onphp_ce_Singleton;
 
+// module's scope class list
+static int le_onphp_singleton;
+
+// request's scope
 static zval *instances = NULL;
 
 /* protected */		ONPHP_METHOD(Singleton, __construct)	{/*_*/}
 /* final private */	ONPHP_METHOD(Singleton, __clone)		{/*_*/}
 
+
+static void _onphp_singleton_list_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
+{
+	zval *class = (zval *) rsrc->ptr;
+	
+	if (class) {
+		zval_dtor(class);
+	}
+}
+
+PHP_MINIT_FUNCTION(Singleton)
+{
+	le_onphp_singleton =
+		zend_register_list_destructors_ex(
+			NULL,
+			_onphp_singleton_list_dtor,
+			"Singleton's class pool",
+			module_number
+		);
+	
+	return SUCCESS;
+}
+
 ONPHP_METHOD(Singleton, getInstance)
 {
 	char *name;
-	int length, argc = ZEND_NUM_ARGS();
+	int length, result = FAILURE, argc = ZEND_NUM_ARGS();
 	zend_class_entry **cep;
 	zval *object, *args;
 	zval **stored;
@@ -59,18 +86,39 @@ ONPHP_METHOD(Singleton, getInstance)
 		
 	length = strlen(name);
 	
-	if (
-		zend_hash_find(
-			Z_ARRVAL_P(instances),
+	if (argc == 1) {
+		list_entry *le;
+		
+		result = zend_hash_find(
+			&EG(persistent_list),
 			name,
 			length + 1,
-			(void **) &stored
-		) == SUCCESS
-	) {
+			(void **) &le
+		);
+		
+		if (result == SUCCESS) {
+			object = le->ptr;
+		}
+	}
+	 
+	if (result == FAILURE || argc > 1) {
+		result = 
+			zend_hash_find(
+				Z_ARRVAL_P(instances),
+				name,
+				length + 1,
+				(void **) &stored
+			);
+		
+		if (result == SUCCESS) {
+			object = *stored;
+		}
+	}
+	
+	if (result == SUCCESS) {
 		efree(params);
 		efree(name);
 		
-		object = *stored;
 		zval_copy_ctor(object);
 	} else {
 		// stolen from Reflection's newInstance()
@@ -154,6 +202,30 @@ ONPHP_METHOD(Singleton, getInstance)
 			}
 			
 			add_assoc_zval_ex(instances, ce->name, length + 1, object);
+			
+			// store forever only "sane" singletons
+			if (ce->constructor->common.num_args == 0) {
+				list_entry new_le;
+				
+				new_le.type = le_onphp_singleton;
+				new_le.ptr = object;
+				
+				if (
+					zend_hash_update(
+						&EG(persistent_list),
+						ce->name,
+						length + 1,
+						(void *) &new_le,
+						sizeof(zval),
+						NULL
+					)
+					== FAILURE
+				) {
+					// huh?
+				} else {
+					zend_list_insert(object, le_onphp_singleton);
+				}
+			}
 		}
 	}
 	
