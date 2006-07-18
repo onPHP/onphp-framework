@@ -78,10 +78,12 @@ PHP_MINIT_FUNCTION(onphp_core)
 
 	REGISTER_ONPHP_STD_CLASS_EX(Singleton);
 	onphp_ce_Singleton->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+/*
+	triggers weird and unfixed yet bug in eAccelerator
 	
 	REGISTER_ONPHP_STD_CLASS_EX(StaticFactory);
 	onphp_ce_StaticFactory->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
-	
+*/
 	REGISTER_ONPHP_SUB_CLASS_EX(Dialect, Singleton);
 	REGISTER_ONPHP_IMPLEMENTS(Dialect, Instantiatable);
 	onphp_ce_Dialect->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
