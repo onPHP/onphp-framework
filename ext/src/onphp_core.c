@@ -87,7 +87,7 @@ PHP_MINIT_FUNCTION(onphp_core)
 	onphp_ce_Dialect->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
 	REGISTER_ONPHP_SUB_CLASS_EX(ImaginaryDialect, Dialect);
-	onphp_ce_ImaginaryDialect->ce_flags = ZEND_ACC_FINAL_CLASS;
+	onphp_ce_ImaginaryDialect->ce_flags |= ZEND_ACC_FINAL_CLASS;
 	
 	REGISTER_ONPHP_STD_CLASS_EX(Castable);
 	REGISTER_ONPHP_PROPERTY(Castable, "cast", ZEND_ACC_PROTECTED);
