@@ -166,7 +166,7 @@
 			
 			return
 				$this->importSingle(
-					array($this->getName() => $value->toString)
+					array($this->getName() => $value->toString())
 				);
 		}
 	}
