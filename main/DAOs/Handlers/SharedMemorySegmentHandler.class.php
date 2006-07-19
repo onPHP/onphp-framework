@@ -40,7 +40,7 @@
 			} catch (BaseException $e) {
 				// not enough shared memory left, rotate it.
 				shm_detach($shm);
-				return $this->uncacheLists();
+				return $this->drop();
 			}
 			
 			return $result;
