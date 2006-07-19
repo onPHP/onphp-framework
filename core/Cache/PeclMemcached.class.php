@@ -37,10 +37,15 @@
 			$port = Memcached::DEFAULT_PORT
 		)
 		{
-			$this->instance = new PeclMemcached();
+			$this->instance = new Memcache();
 			
 			try {
-				$this->instance->connect($host, $port);
+				try {
+					$this->instance->pconnect($host, $port);
+				} catch (BaseException $e) {
+					$this->instance->connect($host, $port);
+				}
+				
 				$this->alive = true;
 			} catch (BaseException $e) {
 				return null;
@@ -62,10 +67,15 @@
 		
 		public function get($index)
 		{
-			if ($result = $this->instance->get($index))
-				return $this->restoreData($result);
-			else
+			try {
+				$result = $this->instance->get($index);
+			} catch (BaseException $e) {
+				$this->alive = false;
+				
 				return null;
+			}
+			
+			return $result;
 		}
 		
 		public function delete($index)
@@ -80,8 +90,10 @@
 			return
 				$this->instance->$action(
 					$key,
-					$this->prepareData($value),
-					false,
+					$value,
+					$this->compress
+						? MEMCACHE_COMPRESSED
+						: false,
 					$expires
 				);
 		}
