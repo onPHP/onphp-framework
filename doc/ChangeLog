@@ -1,5 +1,9 @@
 # $Id$
 
+2006-07-21	Konstantin V. Arkhipov
+
+	* 0.6.0 released.
+
 2006-07-17	Konstantin V. Arkhipov
 
 	* meta/: DTD updated, forgotten shortcut to identifier implemented.
