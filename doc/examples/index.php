@@ -9,8 +9,6 @@
 	
 	try {
 			
-		$module = null;
-		
 		$request =
 			HttpRequest::create()->
 			setGet($_GET)->
