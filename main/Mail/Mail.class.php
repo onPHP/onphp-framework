@@ -10,11 +10,18 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Exceptions
+	**/
 	class MailException extends BaseException {/*_*/};
+	
+	/**
+	 * @ingroup Exceptions
+	**/
 	class MailNotSentException extends MailException {/*_*/};
 	
 	/**
-	 * @ingroup Utils
+	 * @ingroup Mail
 	**/
 	class Mail
 	{

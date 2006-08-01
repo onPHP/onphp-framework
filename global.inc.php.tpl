@@ -82,6 +82,7 @@
 		.ONPHP_MAIN_PATH.'Containers'.DIRECTORY_SEPARATOR.'Storable'.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Containers'.DIRECTORY_SEPARATOR.'Unified'.PATH_SEPARATOR
 		
+		.ONPHP_MAIN_PATH.'Mail'			.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Utils'		.PATH_SEPARATOR
 		
 		// uncomment this one, if your php compiled without spl extension:

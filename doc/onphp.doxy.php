@@ -113,6 +113,9 @@
 	 * @defgroup Calendar Calendar representation's helpers
 	 * @ingroup Main
 	 *
+	 * @defgroup Mail Mail utilities
+	 * @ingroup Main
+	 *
 	 * @defgroup Meta MetaConfiguration
 	 *
 	 * @defgroup Builders Class builders
