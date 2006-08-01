@@ -19,6 +19,7 @@
 	class Mail
 	{
 		private $to			= null;
+		private $cc			= null;
 		private $text		= null;
 		private $subject	= null;
 		private $from		= null;
@@ -31,7 +32,7 @@
 
 		public function send()
 		{
-			if (empty($this->to))
+			if ($this->to == null)
 				throw new WrongArgumentException("mail to: is not specified");
 				
 			$siteEncoding = mb_get_info('internal_encoding');
@@ -71,12 +72,16 @@
 			}
 
 			$headers = null;
-			if (!empty($this->from)) {
+			
+			if ($this->from != null) {
 				$headers .= "From: ".$this->from."\n";
 				$headers .= "Return-Path: ".$this->from."\n";
 			}
-			$headers .= "MIME-Version: 1.0\n";
-			$headers .= "Content-type: text/html; charset=".$encoding."\n";
+			
+			if ($this->cc != null)
+				$headers .= "Cc: ".$this->cc."\n";
+
+			$headers .= "Content-type: text/plain; charset=".$encoding."\n";
 			$headers .= "Content-Transfer-Encoding: 8bit\n";
 			$headers .= "Date: ".date('r')."\n";
 
@@ -89,6 +94,12 @@
 			$this->to = $to;
 			return $this;
 		}
+		
+		public function setCc($cc)
+		{
+			$this->cc = $cc;
+			return $this;
+		}		
 
 		public function setSubject($subject)
 		{
