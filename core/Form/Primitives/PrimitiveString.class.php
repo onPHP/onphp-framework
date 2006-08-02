@@ -17,7 +17,7 @@
 	{
 		private $pattern = null;
 		
-		// mail hint: /^[^@]*\w+@[\w|\.|\-]+\.\w{2,6}$/
+		// mail hint: /^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/
 		public function setAllowedPattern($pattern)
 		{
 			$this->pattern = $pattern;

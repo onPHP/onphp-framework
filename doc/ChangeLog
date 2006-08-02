@@ -1,5 +1,9 @@
 # $Id$
 
+2006-08-02 Anton E. Lebedevich
+	
+	* main/Mail/Mail.class.php: contentType added.
+
 2006-08-01	Konstantin V. Arkhipov
 
 	* main/Mail/: unfinished mime-mail added.

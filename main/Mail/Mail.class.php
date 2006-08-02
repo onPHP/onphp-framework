@@ -25,12 +25,13 @@
 	**/
 	class Mail
 	{
-		private $to			= null;
-		private $cc			= null;
-		private $text		= null;
-		private $subject	= null;
-		private $from		= null;
-		private $encoding	= null;
+		private $to				= null;
+		private $cc				= null;
+		private $text			= null;
+		private $subject		= null;
+		private $from			= null;
+		private $encoding		= null;
+		private $contentType	= null;
 		
 		public static function create()
 		{
@@ -87,8 +88,12 @@
 			
 			if ($this->cc != null)
 				$headers .= "Cc: ".$this->cc."\n";
+			
+			if ($this->contentType === null)
+				$this->contentType = 'text/plain';
 
-			$headers .= "Content-type: text/plain; charset=".$encoding."\n";
+			$headers .= "Content-type: ".$this->contentType
+				."; charset=".$encoding."\n";
 			$headers .= "Content-Transfer-Encoding: 8bit\n";
 			$headers .= "Date: ".date('r')."\n";
 
@@ -129,6 +134,17 @@
 		public function setEncoding($encoding)
 		{
 			$this->encoding = $encoding;
+			return $this;
+		}
+		
+		public function getContentType()
+		{
+			return $this->contentType;
+		}
+		
+		public function setContentType($contentType)
+		{
+			$this->contentType = $contentType;
 			return $this;
 		}
 	}
