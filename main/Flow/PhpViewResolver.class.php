@@ -15,8 +15,8 @@
 	**/
 	class PhpViewResolver implements ViewResolver
 	{
-		private $prefix		= null;
-		private $postfix	= null;
+		protected $prefix		= null;
+		protected $postfix	= null;
 		
 		public function __construct($prefix = null, $postfix = null)
 		{

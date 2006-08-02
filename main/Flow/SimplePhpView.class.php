@@ -15,8 +15,8 @@
 	**/
 	class SimplePhpView implements View, Stringable
 	{
-		private $templatePath		= null;
-		private $partViewResolver	= null;
+		protected $templatePath		= null;
+		protected $partViewResolver	= null;
 		
 		public function __construct($templatePath, ViewResolver $partViewResolver)
 		{
