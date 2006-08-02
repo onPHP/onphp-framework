@@ -72,6 +72,21 @@
 			return new self(self::today());
 		}
 		
+		public static function dayDifference(Timestamp $left, Timestamp $right)
+		{
+			return 
+				gregoriantojd(
+					$right->getMonth(),
+					$right->getDay(),
+					$right->getYear()
+				)
+				- gregoriantojd(
+					$left->getMonth(), 
+					$left->getDay(), 
+					$left->getYear()
+				);
+		}
+		
 		public function __construct($timestamp)
 		{
 			if (is_int($timestamp)) { // unix timestamp

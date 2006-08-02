@@ -3,6 +3,7 @@
 2006-08-02 Anton E. Lebedevich
 	
 	* main/Mail/Mail.class.php: contentType added.
+	* core/Base/Timestamp.class.php: dayDifference() function added
 
 2006-08-01	Konstantin V. Arkhipov
 
