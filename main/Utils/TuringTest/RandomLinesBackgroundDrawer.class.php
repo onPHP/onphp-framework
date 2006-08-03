@@ -9,8 +9,10 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
+	/**
+	 * @ingroup Turing
+	**/
 	class RandomLinesBackgroundDrawer extends BackgroundDrawer
 	{
 		private $count = null;

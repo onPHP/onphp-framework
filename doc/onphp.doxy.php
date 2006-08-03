@@ -118,6 +118,9 @@
 	 * @defgroup Mail Mail utilities
 	 * @ingroup Main
 	 *
+	 * @defgroup Turing CAPTCHA's implementation
+	 * @ingroup Main
+	 *
 	 * @defgroup Meta MetaConfiguration
 	 *
 	 * @defgroup Builders Class builders
