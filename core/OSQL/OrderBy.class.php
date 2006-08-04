@@ -38,10 +38,10 @@
 
 		public function toDialectString(Dialect $dialect)
 		{
-			if ($this->field instanceof SelectQuery )
+			if ($this->field instanceof SelectQuery)
 				return 
-					'(' . $this->field->toDialectString($dialect) . ')'
-					. $this->direction->decide(' ASC', ' DESC');
+					'('.$this->field->toDialectString($dialect).')'
+					.$this->direction->decide(' ASC', ' DESC');
 			else
 				return
 					parent::toDialectString($dialect)
