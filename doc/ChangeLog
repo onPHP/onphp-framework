@@ -1,15 +1,15 @@
 # $Id$
 
-2006-08-03	Dmitry E. Demidov
-	  
-	* core/OSQL/OrderBy.class.php: added ability group by SelectQuery
+2006-08-04	Dmitry E. Demidov
+
+	* core/OSQL/OrderBy.class.php: added ability group by SelectQuery.
 
 2006-08-03	Dmitry E. Demidov
-	
+
 	* main/Utils/TuringTest/: added classes for Turing test.
 
 2006-08-02	Anton E. Lebedevich
-	
+
 	* main/Mail/Mail.class.php: contentType added.
 
 	* core/Base/Timestamp.class.php: dayDifference() function added.
