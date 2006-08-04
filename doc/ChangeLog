@@ -1,6 +1,10 @@
 # $Id$
 
 2006-08-03	Dmitry E. Demidov
+	  
+	* core/OSQL/OrderBy.class.php: added ability group by SelectQuery
+
+2006-08-03	Dmitry E. Demidov
 	
 	* main/Utils/TuringTest/: added classes for Turing test.
 

@@ -38,9 +38,14 @@
 
 		public function toDialectString(Dialect $dialect)
 		{
-			return
-				parent::toDialectString($dialect)
-				.$this->direction->decide(' ASC', ' DESC');
+			if ($this->field instanceof SelectQuery )
+				return 
+					'(' . $this->field->toDialectString($dialect) . ')'
+					. $this->direction->decide(' ASC', ' DESC');
+			else
+				return
+					parent::toDialectString($dialect)
+					.$this->direction->decide(' ASC', ' DESC');
 		}
 	}
 ?>
