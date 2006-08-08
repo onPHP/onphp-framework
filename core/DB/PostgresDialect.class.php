@@ -64,12 +64,12 @@
 				);
 		}
 		
-		public static function hasTruncate()
+		public function hasTruncate()
 		{
 			return true;
 		}
 		
-		public static function hasMultipleTruncate()
+		public function hasMultipleTruncate()
 		{
 			return true;
 		}
@@ -94,7 +94,7 @@
 				self::quoteValue($searchString)."))";
 		}
 		
-		public static function autoincrementize(DBColumn $column, &$prepend)
+		public function autoincrementize(DBColumn $column, &$prepend)
 		{
 			Assert::isTrue(
 				(($table = $column->getTable()) !== null)
