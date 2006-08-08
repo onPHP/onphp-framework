@@ -17,13 +17,28 @@
 	{
 		const FONT_SIZE	= 4;
 		
+		private static $drawError	= true; 		
+		
+		public static function setDrawError($drawError = false)
+		{
+			ErrorDrawer::$drawError = $drawError;
+		}
+		
+		public static function isDrawError()
+		{
+			return ErrorDrawer::$drawError;
+		}
+
 		public function __construct($turingImage)
 		{
 			$this->turingImage = $turingImage;
-		}
-	
+		}	
+		
 		public function draw($string = 'ERROR!')
 		{
+			if (!ErrorDrawer::isDrawError())
+				return $this;
+				
 			$y = round(
 				$this->turingImage->getHeight() / 2
 				- imagefontheight(ErrorDrawer::FONT_SIZE) / 2

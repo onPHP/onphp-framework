@@ -1,5 +1,10 @@
 # $Id$
 
+2006-08-08	Dmitry E. Demidov
+
+	* main/Utils/TuringTest/ErrorDrawer.class.php: added ability 
+	enable/disable error drawer.
+
 2006-08-04	Dmitry E. Demidov
 
 	* core/OSQL/OrderBy.class.php: added ability group by SelectQuery.
