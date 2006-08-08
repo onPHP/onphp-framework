@@ -26,7 +26,7 @@
 		const WEEKDAY_THURSDAY	= 4;
 		const WEEKDAY_FRIDAY	= 5;
 		const WEEKDAY_SATURDAY	= 6;
-		const WEEKDAY_SUNDAY	= 7;
+		const WEEKDAY_SUNDAY	= 0; // because strftime('%w') is 0 on Sunday
 		
 		private $string		= null;
 		private $int		= null;
