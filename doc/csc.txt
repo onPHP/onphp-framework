@@ -78,9 +78,7 @@ switch ($foo) {
 
 Class Method Sorting:
 	* abstract public
-	* abstract public static
 	* abstract protected
-	* abstract protected static
 	* final public
 	* final public static
 	* public

@@ -17,9 +17,10 @@
 	**/
 	abstract class /* ANSI's */ Dialect
 	{
-		abstract public static function autoincrementize(
-			DBColumn $column, &$prepend
-		);
+		public static function autoincrementize(DBColumn $column, &$prepend)
+		{
+			throw new UnimplementedFeatureException('boo');
+		}
 		
 		public static function quoteValue(&$value)
 		{
