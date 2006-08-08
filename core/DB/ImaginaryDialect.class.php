@@ -23,7 +23,7 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 		
-		public function autoincrementize(DBColumn $column, &$prepend)
+		public static function autoincrementize(DBColumn $column, &$prepend)
 		{
 			return 'AUTOINCREMENT';
 		}
@@ -43,12 +43,12 @@
 			return $table;
 		}
 		
-		public function hasTruncate()
+		public static function hasTruncate()
 		{
 			return false;
 		}
 		
-		public function hasMultipleTruncate()
+		public static function hasMultipleTruncate()
 		{
 			return false;
 		}

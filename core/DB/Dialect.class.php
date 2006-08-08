@@ -20,12 +20,12 @@
 		extends Singleton
 		implements Instantiatable
 	{
-		abstract public function autoincrementize(
+		abstract public static function autoincrementize(
 			DBColumn $column, &$prepend
 		);
 		
-		abstract public function hasTruncate();
-		abstract public function hasMultipleTruncate();
+		abstract public static function hasTruncate();
+		abstract public static function hasMultipleTruncate();
 		
 		public static function quoteValue($value)
 		{

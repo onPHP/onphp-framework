@@ -1,10 +1,5 @@
 # $Id$
 
-2006-08-08	Konstantin V. Arkhipov
-
-	* core/DB/, ext/: 'abstract static' methods are now just 'abstract' to
-	be compatible with upcoming php-5.2, wrt to php's bug #38219.
-
 2006-08-08	Dmitry E. Demidov
 
 	* main/Utils/TuringTest/ErrorDrawer.class.php: added ability 

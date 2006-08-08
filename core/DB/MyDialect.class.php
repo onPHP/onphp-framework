@@ -61,17 +61,17 @@
 			return null;
 		}
 		
-		public function hasTruncate()
+		public static function hasTruncate()
 		{
 			return true;
 		}
 		
-		public function hasMultipleTruncate()
+		public static function hasMultipleTruncate()
 		{
 			return false;
 		}
 		
-		public function autoincrementize(DBColumn $column, &$prepend)
+		public static function autoincrementize(DBColumn $column, &$prepend)
 		{
 			$column->setDefault(null);
 			

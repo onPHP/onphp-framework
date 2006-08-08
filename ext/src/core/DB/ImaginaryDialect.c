@@ -219,9 +219,9 @@ static ONPHP_ARGINFO_AUTOINCREMENTIZE;
 
 zend_function_entry onphp_funcs_ImaginaryDialect[] = {
 	ONPHP_ME(ImaginaryDialect, me,	NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-	ONPHP_ME(ImaginaryDialect, autoincrementize, arginfo_autoincrementize, ZEND_ACC_PUBLIC)
-	ONPHP_ME(ImaginaryDialect, hasTruncate, NULL, ZEND_ACC_PUBLIC)
-	ONPHP_ME(ImaginaryDialect, hasMultipleTruncate, NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(ImaginaryDialect, autoincrementize, arginfo_autoincrementize, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(ImaginaryDialect, hasTruncate, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(ImaginaryDialect, hasMultipleTruncate, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(ImaginaryDialect, quoteValue, arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)
 	ONPHP_ME(ImaginaryDialect, quoteField, arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)
 	ONPHP_ME(ImaginaryDialect, quoteTable, arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)

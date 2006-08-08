@@ -39,7 +39,7 @@
 			return null;
 		}
 		
-		public function autoincrementize(DBColumn $column, &$prepend)
+		public static function autoincrementize(DBColumn $column, &$prepend)
 		{
 			$type = $column->getType();
 			
@@ -54,12 +54,12 @@
 			return null; // or even 'AUTOINCREMENT'?
 		}
 		
-		public function hasTruncate()
+		public static function hasTruncate()
 		{
 			return false;
 		}
 		
-		public function hasMultipleTruncate()
+		public static function hasMultipleTruncate()
 		{
 			return false;
 		}
