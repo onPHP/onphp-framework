@@ -15,7 +15,10 @@
 	**/
 	abstract class BaseBuilder extends StaticFactory
 	{
-		abstract public static function build(MetaClass $class);
+		public static function build(MetaClass $class)
+		{
+			return null;
+		}
 		
 		protected static function buildFillers(MetaClass $class)
 		{

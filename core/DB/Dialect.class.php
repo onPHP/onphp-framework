@@ -20,9 +20,10 @@
 		extends Singleton
 		implements Instantiatable
 	{
-		abstract public static function autoincrementize(
-			DBColumn $column, &$prepend
-		);
+		public static function autoincrementize(DBColumn $column, &$prepend)
+		{
+			throw new UnimplementedFeatureException('do not forget about me');
+		}
 		
 		public static function quoteValue(&$value)
 		{

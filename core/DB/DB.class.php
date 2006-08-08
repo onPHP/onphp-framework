@@ -34,8 +34,6 @@
 		private $queue			= array();
 		private $toQueue		= false;
 		
-		abstract public static function getDialect();
-		
 		abstract public function connect(
 			$user, $pass, $host,
 			$base = null, $persistent = false
@@ -65,6 +63,11 @@
 				if (!$this->persistent)
 					$this->disconnect();
 			}
+		}
+		
+		public static function getDialect()
+		{
+			throw new UnimplementedFeatureException('implement me, please');
 		}
 		
 		/**
