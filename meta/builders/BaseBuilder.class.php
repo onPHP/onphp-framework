@@ -15,7 +15,10 @@
 	**/
 	abstract class BaseBuilder extends StaticFactory
 	{
-		abstract public static function build(MetaClass $class);
+		public static function build(MetaClass $class)
+		{
+			throw new UnimplementedFeatureException('i am forgotten method');
+		}
 		
 		protected static function buildFillers(MetaClass $class)
 		{
