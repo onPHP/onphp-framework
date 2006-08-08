@@ -127,7 +127,7 @@
 						.(int) $scope[$this->name][self::DAY].' '
 						.$hours.':'.$minutes.':'.$seconds
 					);
-				} catch (BaseException $e) {
+				} catch (WrongArgumentException $e) {
 					// fsck wrong stamps
 					return false;
 				}
