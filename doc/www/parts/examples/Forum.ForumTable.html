@@ -1,0 +1,11 @@
+<pre>
+<b>create sequence</b> forum_id;
+<b>create table</b> forum(
+    id              <span class="red">integer</span> default nextval(<span class="red">'forum_id'</span>) <b>primary key</b>,
+    name            <span class="red">varchar</span>(<span class="blue">255</span>)    <b>not null</b>,
+    description     text            null,
+    created         <span class="red">timestamp</span>       <b>not null</b>,
+    modified        <span class="red">timestamp</span>       <b>not null</b>,
+    message_count   bigint          <b>not null</b>
+);
+</pre>
