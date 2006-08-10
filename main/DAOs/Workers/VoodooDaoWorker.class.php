@@ -40,6 +40,8 @@
 			if (!extension_loaded('sysvshm')) {
 				if (extension_loaded('eaccelerator')) {
 					$this->handler = new eAcceleratorSegmentHandler($this->classKey);
+				} elseif (extension_loaded('apc')) {
+					$this->handler = new ApcSegmentHandler($this->classKey);
 				} else {
 					throw new UnsupportedMethodException(
 						'can not find suitable segment handler'

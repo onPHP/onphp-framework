@@ -2,6 +2,9 @@
 
 2006-08-11	Konstantin V. Arkhipov
 
+	* main/DAOs/Handlers/ApcSegmentHandler.class.php: integration with APC
+	too.
+
 	* main/DAOs/Handlers/eAcceleratorSegmentHandler.class.php,
 	core/Cache/eAcceleratorLocker.class.php: integration with
 	eAccelerator.

@@ -11,28 +11,28 @@
 /* $Id$ */
 
 	/**
-	 * @see http://eaccelerator.net/
+	 * @see http://pecl.php.net/package/APC
 	 * 
 	 * @ingroup DAOs
 	**/
-	final class eAcceleratorSegmentHandler extends OptimizerSegmentHandler
+	final class ApcSegmentHandler extends OptimizerSegmentHandler
 	{
 		public function __construct($segmentId)
 		{
 			$this->id = $segmentId;
-			$this->locker = Singleton::getInstance('eAcceleratorLocker');
+			$this->locker = SemaphorePool::me();
 		}
 		
 		public function drop()
 		{
-			return eaccelerator_rm($this->id);
+			return apc_delete($this->id);
 		}
 		
 		protected function getMap()
 		{
 			$this->locker->get($this->id);
 			
-			if (!$map = eaccelerator_get($this->id)) {
+			if (!$map = apc_fetch($this->id)) {
 				$map = array();
 			}
 			
@@ -41,7 +41,7 @@
 		
 		protected function storeMap(array $map)
 		{
-			$result = eaccelerator_put($this->id, $map, Cache::EXPIRES_FOREVER);
+			$result = apc_store($this->id, $map, Cache::EXPIRES_FOREVER);
 			
 			$this->locker->free($this->id);
 			

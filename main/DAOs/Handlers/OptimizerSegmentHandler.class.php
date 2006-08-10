@@ -11,41 +11,56 @@
 /* $Id$ */
 
 	/**
-	 * @see http://eaccelerator.net/
+	 * @see eAcceleratorSegmentHandler
+	 * @see ApcSegmentHandler
 	 * 
 	 * @ingroup DAOs
 	**/
-	final class eAcceleratorSegmentHandler extends OptimizerSegmentHandler
+	abstract class OptimizerSegmentHandler implements SegmentHandler
 	{
-		public function __construct($segmentId)
-		{
-			$this->id = $segmentId;
-			$this->locker = Singleton::getInstance('eAcceleratorLocker');
-		}
+		protected $id		= null;
+		protected $locker	= null;
 		
-		public function drop()
+		abstract protected function getMap();
+		abstract protected function storeMap(array $map);
+
+		public function touch($key)
 		{
-			return eaccelerator_rm($this->id);
-		}
-		
-		protected function getMap()
-		{
-			$this->locker->get($this->id);
+			$map = $this->getMap();
 			
-			if (!$map = eaccelerator_get($this->id)) {
-				$map = array();
+			if (!isset($map[$key])) {
+				$map[$key] = true;
+				return $this->storeMap($map);
 			}
 			
-			return $map;
+			$this->locker->free($this->id);
+			return true;
 		}
 		
-		protected function storeMap(array $map)
+		public function unlink($key)
 		{
-			$result = eaccelerator_put($this->id, $map, Cache::EXPIRES_FOREVER);
+			$map = $this->getMap();
+			
+			if (isset($map[$key])) {
+				unset($map[$key]);
+				return $this->storeMap($map);
+			}
+			
+			$this->locker->free($this->id);
+			return true;
+		}
+		
+		public function ping($key)
+		{
+			$map = $this->getMap();
 			
 			$this->locker->free($this->id);
 			
-			return $result;
+			if (isset($map[$key])) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 ?>
