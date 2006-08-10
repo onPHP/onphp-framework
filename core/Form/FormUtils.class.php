@@ -78,5 +78,14 @@
 				}
 			}
 		}
+		
+		public static function checkPrototyped(Prototyped $object)
+		{
+			$form = $object->proto()->makeForm();
+			
+			self::object2form($object, $form, false);
+			
+			return $form->getErrors();
+		}
 	}
 ?>
