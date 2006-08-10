@@ -1,5 +1,11 @@
 # $Id$
 
+2006-08-11	Konstantin V. Arkhipov
+
+	* main/DAOs/Handlers/eAcceleratorSegmentHandler.class.php,
+	core/Cache/eAcceleratorLocker.class.php: integration with
+	eAccelerator.
+
 2006-08-10	Konstantin V. Arkhipov
 
 	* core/Form/FormUtils.class.php: checkPrototyped() added.

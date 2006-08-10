@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,27 +11,30 @@
 /* $Id$ */
 
 	/**
+	 * @see http://eaccelerator.net/
+	 * 
 	 * @ingroup Lockers
 	**/
-	abstract class BaseLocker extends Singleton
+	final class eAcceleratorLocker extends BaseLocker
 	{
-		protected $pool = array();
+		public function get($key)
+		{
+			eaccelerator_lock($key);
+		}
 		
-		/// acquire lock
-		abstract public function get($key);
+		public function free($key)
+		{
+			eaccelerator_unlock($key);
+		}
 		
-		/// release lock
-		abstract public function free($key);
+		public function drop($key)
+		{
+			return $this->free($key);
+		}
 		
-		/// completely remove lock
-		abstract public function drop($key);
-		
-		/// drop all acquired/released locks
 		public function clean()
 		{
-			foreach (array_keys($this->pool) as $key)
-				$this->drop($key);
-			
+			// will be cleaned out upon script's shutdown
 			return true;
 		}
 	}

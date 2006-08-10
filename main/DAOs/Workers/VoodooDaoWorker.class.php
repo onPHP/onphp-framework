@@ -14,7 +14,7 @@
 	 * Transparent though quite obscure and greedy DAO worker.
 	 * 
 	 * @warning Do not ever think about using it on production systems, unless
-	 * you're fully understand every code line here.
+	 * you're fully understand every line of code here.
 	 * 
 	 * @see CommonDaoWorker for manual-caching one.
 	 * @see SmartDaoWorker for less obscure, but locking-based worker.
@@ -36,6 +36,16 @@
 				$watermark = null;
 			
 			$this->classKey = $this->keyToInt($watermark.$this->className);
+			
+			if (!extension_loaded('sysvshm')) {
+				if (extension_loaded('eaccelerator')) {
+					$this->handler = new eAcceleratorSegmentHandler($this->classKey);
+				} else {
+					throw new UnsupportedMethodException(
+						'can not find suitable segment handler'
+					);
+				}
+			}
 			
 			$this->handler = new SharedMemorySegmentHandler($this->classKey);
 		}
