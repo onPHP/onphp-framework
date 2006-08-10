@@ -11,6 +11,8 @@
 /* $Id$ */
 
 	/**
+	 * @see http://eaccelerator.net/
+	 * 
 	 * @ingroup DAOs
 	**/
 	final class eAcceleratorSegmentHandler implements SegmentHandler
