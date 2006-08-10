@@ -89,8 +89,6 @@ ONPHP_METHOD(Enumeration, __construct)
 			return;
 	}
 	
-	ZVAL_FREE(names);
-	
 	if (result == SUCCESS) {
 		ONPHP_UPDATE_PROPERTY(getThis(), "id", id);
 		ONPHP_UPDATE_PROPERTY(getThis(), "name", *found);
@@ -107,6 +105,8 @@ ONPHP_METHOD(Enumeration, __construct)
 			Z_STRVAL_P(id)
 		);
 	}
+	
+	ZVAL_FREE(names);
 }
 
 ONPHP_METHOD(Enumeration, getList)
