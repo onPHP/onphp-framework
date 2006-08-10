@@ -6,7 +6,7 @@
 #include "php.h"
 #include "zend_interfaces.h"
 
-#define ONPHP_VERSION "0.6.0"
+#define ONPHP_VERSION "0.6.1.99"
 #define ONPHP_MODULE_NAME "onPHP"
 
 #define ZVAL_FREE(z) zval_dtor(z); FREE_ZVAL(z);

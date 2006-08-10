@@ -1,5 +1,9 @@
 # $Id$
 
+2006-08-10	Konstantin V. Arkhipov
+
+	* 0.6.1 released.
+
 2006-08-08	Konstantin V. Arkhipov
 
 	* core/DB/, ext/: 'abstract static' methods are now just 'abstract' to
