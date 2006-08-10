@@ -2,6 +2,9 @@
 
 2006-08-11	Konstantin V. Arkhipov
 
+	* core/Cache/SemaphorePool.class.php: now trying to detect and use
+	eAccelerator's locking when sysvsem extension is missing.
+
 	* main/DAOs/Handlers/ApcSegmentHandler.class.php: integration with APC
 	too.
 

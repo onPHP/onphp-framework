@@ -26,6 +26,16 @@
 		
 		protected function __construct()
 		{
+			if (!extension_loaded('sysvsem')) {
+				if (extension_loaded('eaccelerator')) {
+					self::$lockerName = 'eAcceleratorLocker';
+				} else {
+					throw new UnsupportedMethodException(
+						'can not find suitable locker'
+					);
+				}
+			}
+			
 			self::$locker = Singleton::getInstance(self::$lockerName);
 		}
 		
