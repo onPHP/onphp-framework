@@ -37,11 +37,13 @@
 			
 			$this->classKey = $this->keyToInt($watermark.$this->className);
 			
+			$handlerName = 'SharedMemorySegmentHandler';
+			
 			if (!extension_loaded('sysvshm')) {
 				if (extension_loaded('eaccelerator')) {
-					$this->handler = new eAcceleratorSegmentHandler($this->classKey);
+					$handlerName = 'eAcceleratorSegmentHandler';
 				} elseif (extension_loaded('apc')) {
-					$this->handler = new ApcSegmentHandler($this->classKey);
+					$handlerName = 'ApcSegmentHandler';
 				} else {
 					throw new UnsupportedMethodException(
 						'can not find suitable segment handler'
@@ -49,7 +51,7 @@
 				}
 			}
 			
-			$this->handler = new SharedMemorySegmentHandler($this->classKey);
+			$this->handler = new $handlerName($this->classKey);
 		}
 		
 		//@{
