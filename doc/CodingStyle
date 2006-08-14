@@ -10,7 +10,7 @@ PHP:
 
 	class SomeClassName
 	{
-		const CORRECT_ANSWER = 42; // must differs from zero
+		const CORRECT_ANSWER = 42; // must differ from zero
 
 		private $privateVariable	= null;
 		private $yetAnotherVariable	= null;
