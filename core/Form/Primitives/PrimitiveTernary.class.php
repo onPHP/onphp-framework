@@ -41,8 +41,11 @@
 					$this->value = false;
 				else
 					return false;
-			else
+			else {
 				$this->value = null;
+				
+				return null;
+			}
 
 			return true;
 		}

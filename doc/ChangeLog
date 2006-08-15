@@ -1,5 +1,10 @@
 # $Id$
 
+2006-08-15	Dmitry E. Demidov
+
+	* core/Form/Primitives/PrimitiveTernary.class.php: ternary primitive 
+	can be required
+
 2006-08-11	Konstantin V. Arkhipov
 
 	* core/Cache/SemaphorePool.class.php: now trying to detect and use
