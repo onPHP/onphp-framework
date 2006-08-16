@@ -26,6 +26,8 @@
 	{
 		protected $classKey = null;
 		
+		private static $handlerName = null;
+		
 		public function __construct(GenericDAO $dao)
 		{
 			parent::__construct($dao);
@@ -37,21 +39,23 @@
 			
 			$this->classKey = $this->keyToInt($watermark.$this->className);
 			
-			$handlerName = 'SharedMemorySegmentHandler';
-			
-			if (!extension_loaded('sysvshm')) {
-				if (extension_loaded('eaccelerator')) {
-					$handlerName = 'eAcceleratorSegmentHandler';
-				} elseif (extension_loaded('apc')) {
-					$handlerName = 'ApcSegmentHandler';
+			if (!self::$handlerName) {
+				if (!extension_loaded('sysvshm')) {
+					if (extension_loaded('eaccelerator')) {
+						self::$handlerName = 'eAcceleratorSegmentHandler';
+					} elseif (extension_loaded('apc')) {
+						self::$handlerName = 'ApcSegmentHandler';
+					} else {
+						throw new UnsupportedMethodException(
+							'can not find suitable segment handler'
+						);
+					}
 				} else {
-					throw new UnsupportedMethodException(
-						'can not find suitable segment handler'
-					);
+					self::$handlerName = 'SharedMemorySegmentHandler';
 				}
 			}
 			
-			$this->handler = new $handlerName($this->classKey);
+			$this->handler = new self::$handlerName($this->classKey);
 		}
 		
 		//@{
