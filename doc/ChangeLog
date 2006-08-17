@@ -1,5 +1,9 @@
 # $Id$
 
+2006-08-17	Konstantin V. Arkhipov
+
+	* 0.4.9 released.
+
 2006-08-08	Konstantin V. Arkhipov
 
 	* core/DB/, meta/builders/: now php-5.2 compatible, backported from
