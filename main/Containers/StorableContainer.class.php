@@ -132,7 +132,7 @@
 					'can not enumerate objects without id, save them first'
 				);
 
-			return array_keys($this->saved) + array_keys($this->insert);
+			return array_keys($this->saved + $this->insert);
 		}
 
 		public function getCount()
