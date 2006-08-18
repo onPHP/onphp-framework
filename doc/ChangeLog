@@ -1,5 +1,10 @@
 # $Id$
 
+2006-08-18	Konstantin V. Arkhipov
+
+	* main/Containers/Storable/StorableContainer.class.php: fixed issue
+	with lost keys in getIdsList(). Spotted by serge, approved by antony.
+
 2006-08-15	Dmitry E. Demidov
 
 	* core/Form/Primitives/PrimitiveTernary.class.php: ternary primitive 
