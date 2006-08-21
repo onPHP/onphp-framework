@@ -15,8 +15,8 @@
 	**/
 	class PartViewer
 	{
-		private $viewResolver 	= null;
-		private $model			= null;
+		protected $viewResolver 	= null;
+		protected $model			= null;
 		
 		public function __construct(ViewResolver $resolver, $model = null)
 		{
