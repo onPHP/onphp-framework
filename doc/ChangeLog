@@ -1,5 +1,12 @@
 # $Id$
 
+2006-08-22	Dmitry E. Demidov
+	
+	* main/Utils/HttpStatus.class.php: added enumeration of 
+	http status codes
+	
+	* main/Utils/HeaderUtils.class.php: changed method sendHttpStatus
+
 2006-08-21	Dmitry E. Demidov
 	
 	* main/Utils/HeaderUtils.class.php: added method sendHttpStatus
