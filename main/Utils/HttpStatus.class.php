@@ -58,49 +58,59 @@
 		const CODE_504	= 504;
 		const CODE_507	= 507;
 		const CODE_510	= 510;
+		
+		public static function getAnyId()
+		{
+			return 200;
+		}
 					
 		protected $names = array(
-			self::CODE_100 => 'HTTP/1.1 100 Continue',
-			self::CODE_101 => 'HTTP/1.1 101 Switching Protocols',
-			self::CODE_200 => 'HTTP/1.1 200 OK',
-			self::CODE_201 => 'HTTP/1.1 201 Created',
-			self::CODE_202 => 'HTTP/1.1 202 Accepted',
-			self::CODE_203 => 'HTTP/1.1 203 Non-Authoritative Information',
-			self::CODE_204 => 'HTTP/1.1 204 No Content',
-			self::CODE_205 => 'HTTP/1.1 205 Reset Content',
-			self::CODE_206 => 'HTTP/1.1 206 Partial Content',
-			self::CODE_300 => 'HTTP/1.1 300 Multiple Choices',
-			self::CODE_301 => 'HTTP/1.1 301 Moved Permanently',
-			self::CODE_302 => 'HTTP/1.1 302 Found',
-			self::CODE_303 => 'HTTP/1.1 303 See Other',
-			self::CODE_304 => 'HTTP/1.1 304 Not Modified',
-			self::CODE_305 => 'HTTP/1.1 305 Use Proxy',
-			self::CODE_307 => 'HTTP/1.1 307 Temporary Redirect',
-			self::CODE_400 => 'HTTP/1.1 400 Bad Request',
-			self::CODE_401 => 'HTTP/1.1 401 Unauthorized',
-			self::CODE_402 => 'HTTP/1.1 402 Payment Required',
-			self::CODE_403 => 'HTTP/1.1 403 Forbidden',
-			self::CODE_404 => 'HTTP/1.1 404 Not Found',
-			self::CODE_405 => 'HTTP/1.1 405 Method Not Allowed',
-			self::CODE_406 => 'HTTP/1.1 406 Not Acceptable',
-			self::CODE_407 => 'HTTP/1.1 407 Proxy Authentication Required',
-			self::CODE_408 => 'HTTP/1.1 408 Request Time-out',
-			self::CODE_409 => 'HTTP/1.1 409 Conflict',
-			self::CODE_410 => 'HTTP/1.1 410 Gone',
-			self::CODE_411 => 'HTTP/1.1 411 Length Required',
-			self::CODE_412 => 'HTTP/1.1 412 Precondition Failed',
-			self::CODE_413 => 'HTTP/1.1 413 Request Entity Too Large',
-			self::CODE_414 => 'HTTP/1.1 414 Request-URI Too Large',
-			self::CODE_415 => 'HTTP/1.1 415 Unsupported Media Type',
-			self::CODE_416 => 'HTTP/1.1 416 Requested range not satisfiable',
-			self::CODE_417 => 'HTTP/1.1 417 Expectation Failed',
-			self::CODE_500 => 'HTTP/1.1 500 Internal Server Error',
-			self::CODE_501 => 'HTTP/1.1 501 Not Implemented',
-			self::CODE_502 => 'HTTP/1.1 502 Bad Gateway',
-			self::CODE_503 => 'HTTP/1.1 503 Service Unavailable',
-			self::CODE_504 => 'HTTP/1.1 504 Gateway Time-out',
-			self::CODE_507 => 'HTTP/1.1 507 Insufficient Storage',
-			self::CODE_510 => 'HTTP/1.1 510 Not Extended'
+			self::CODE_100 => 'Continue',
+			self::CODE_101 => 'Switching Protocols',
+			self::CODE_200 => 'OK',
+			self::CODE_201 => 'Created',
+			self::CODE_202 => 'Accepted',
+			self::CODE_203 => 'Non-Authoritative Information',
+			self::CODE_204 => 'No Content',
+			self::CODE_205 => 'Reset Content',
+			self::CODE_206 => 'Partial Content',
+			self::CODE_300 => 'Multiple Choices',
+			self::CODE_301 => 'Moved Permanently',
+			self::CODE_302 => 'Found',
+			self::CODE_303 => 'See Other',
+			self::CODE_304 => 'Not Modified',
+			self::CODE_305 => 'Use Proxy',
+			self::CODE_307 => 'Temporary Redirect',
+			self::CODE_400 => 'Bad Request',
+			self::CODE_401 => 'Unauthorized',
+			self::CODE_402 => 'Payment Required',
+			self::CODE_403 => 'Forbidden',
+			self::CODE_404 => 'Not Found',
+			self::CODE_405 => 'Method Not Allowed',
+			self::CODE_406 => 'Not Acceptable',
+			self::CODE_407 => 'Proxy Authentication Required',
+			self::CODE_408 => 'Request Time-out',
+			self::CODE_409 => 'Conflict',
+			self::CODE_410 => 'Gone',
+			self::CODE_411 => 'Length Required',
+			self::CODE_412 => 'Precondition Failed',
+			self::CODE_413 => 'Request Entity Too Large',
+			self::CODE_414 => 'Request-URI Too Large',
+			self::CODE_415 => 'Unsupported Media Type',
+			self::CODE_416 => 'Requested range not satisfiable',
+			self::CODE_417 => 'Expectation Failed',
+			self::CODE_500 => 'Internal Server Error',
+			self::CODE_501 => 'Not Implemented',
+			self::CODE_502 => 'Bad Gateway',
+			self::CODE_503 => 'Service Unavailable',
+			self::CODE_504 => 'Gateway Time-out',
+			self::CODE_507 => 'Insufficient Storage',
+			self::CODE_510 => 'Not Extended'
 		);
+		
+		public function toString()
+		{
+			return 'HTTP/1.1 '.$this->id.' '.$this->name;
+		}
 	}
 ?>
