@@ -14,6 +14,7 @@
 	 * Connector for PECL's Memcache extension by Antony Dovgal.
 	 *
 	 * @see http://tony2001.phpclub.net/
+	 * @see http://pecl.php.net/package/memcache
 	 * 
 	 * @ingroup Cache
 	**/
@@ -48,19 +49,28 @@
 				
 				$this->alive = true;
 			} catch (BaseException $e) {
-				return null;
+				// bad luck.
 			}
 		}
 		
 		public function __destruct()
 		{
-			if ($this->instance)
-				$this->instance->close();
+			if ($this->alive) {
+				try {
+					$this->instance->close();
+				} catch (BaseException $e) {
+					// shhhh.
+				}
+			}
 		}
 		
 		public function clean()
 		{
-			$this->instance->flush();
+			try {
+				$this->instance->flush();
+			} catch (BaseException $e) {
+				$this->alive = false;
+			}
 
 			return $this;
 		}
@@ -80,22 +90,34 @@
 		
 		public function delete($index)
 		{
-			return $this->instance->delete($index);
+			try {
+				return $this->instance->delete($index);
+			} catch (BaseException $e) {
+				return $this->alive = false;
+			}
+			
+			/* NOTREACHED */
 		}
 		
 		protected function store(
 			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			return
-				$this->instance->$action(
-					$key,
-					$value,
-					$this->compress
-						? MEMCACHE_COMPRESSED
-						: false,
-					$expires
-				);
+			try {
+				return
+					$this->instance->$action(
+						$key,
+						$value,
+						$this->compress
+							? MEMCACHE_COMPRESSED
+							: false,
+						$expires
+					);
+			} catch (BaseException $e) {
+				return $this->alive = false;
+			}
+			
+			/* NOTREACHED */
 		}
 	}
 ?>
