@@ -1,16 +1,22 @@
 # $Id$
 
+2006-08-23	Konstantin V. Arkhipov
+
+	* core/Cache/PeclMemcached.class.php: corrected behaviour in cases
+	when memcached's gone.
+
 2006-08-22	Dmitry E. Demidov
-	
-	* main/Utils/HttpStatus.class.php: added enumeration of 
-	http status codes
-	
-	* main/Utils/HeaderUtils.class.php: changed method sendHttpStatus
+
+	* main/Utils/HttpStatus.class.php: added enumeration of http status
+	codes.
+
+	* main/Utils/HeaderUtils.class.php: changed method sendHttpStatus to
+	use introduced enumeration..
 
 2006-08-21	Dmitry E. Demidov
-	
-	* main/Utils/HeaderUtils.class.php: added method sendHttpStatus
-	
+
+	* main/Utils/HeaderUtils.class.php: added method sendHttpStatus.
+
 2006-08-18	Konstantin V. Arkhipov
 
 	* main/Containers/Storable/StorableContainer.class.php: fixed issue
