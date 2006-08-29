@@ -99,6 +99,8 @@
 
 			if (!mail($to, $subject, $body, $headers))
 				throw new MailNotSentException();
+				
+			return $this;
 		}
 		
 		public function setTo($to)
