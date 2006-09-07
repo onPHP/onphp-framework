@@ -129,6 +129,11 @@
 		{
 			return $this->addErrorLabel($primitiveName, Form::MISSING, $label);
 		}
+
+		public function addCustomLabel($primitiveName, $customMark, $label)
+		{
+			return $this->addErrorLabel($primitiveName, $customMark, $label);
+		}
 		
 		public function import($scope)
 		{
