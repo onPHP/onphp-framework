@@ -20,6 +20,9 @@
 		private	$lowerAllowed		= true;
 		private $upperAllowed		= true;
 		private $numbersAllowed		= true;
+		private $similarAllowed		= true;
+		
+		static private $similarSymbols	= array('0', 'o');
 	
 		function generate()
 		{
@@ -53,6 +56,13 @@
 			
 			return $this;
 		}
+
+		public function setSimilarAllowed($similarAllowed = true)
+		{
+			$this->similarAllowed = $similarAllowed;
+			
+			return $this;
+		}
 		
 		public function setNumbersAllowed($numbersAllowed = true)
 		{
@@ -73,18 +83,26 @@
 				'what exactly should i generate?'
 			);
 			
-			if ($this->lowerAllowed)
-				$variants[] = $this->randomChar();
+			do {
+				if ($this->lowerAllowed)
+					$variants[] = $this->randomChar();
+					
+				if ($this->upperAllowed)
+					$variants[]= strtoupper($this->randomChar());
+					
+				if ($this->numbersAllowed)
+					$variants[]= $this->randomNumber();
 				
-			if ($this->upperAllowed)
-				$variants[]= strtoupper($this->randomChar());
+				shuffle($variants);
 				
-			if ($this->numbersAllowed)
-				$variants[]= $this->randomNumber();
+				$symbol = $variants[0];
+				
+			} while (
+				(!$this->similarAllowed)
+				&& (in_array($symbol, self::$similarSymbols))
+			);
 			
-			shuffle($variants);
-			
-			return $variants[0];
+			return $symbol;
 	    }
 	
 	    private function randomNumber()

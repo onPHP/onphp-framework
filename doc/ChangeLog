@@ -1,5 +1,14 @@
 # $Id$
 
+2006-09-08	Dmitry E. Demidov
+
+	* main/Utils/TuringTest/CodeGenerator.class.php: added restriction generation 
+	of similar symbols ability.
+
+2006-09-07	Dmitry E. Demidov
+
+	* core/Form/Form.class.php: addCustomLabel() added.
+
 2006-08-23	Konstantin V. Arkhipov
 
 	* core/Cache/PeclMemcached.class.php: corrected behaviour in cases
