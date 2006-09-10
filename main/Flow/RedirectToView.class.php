@@ -15,7 +15,8 @@
 	**/
 	final class RedirectToView extends RedirectView
 	{
-		private $prefix	= null;
+		private $prefix = null;
+		private $suffix = null;
 		
 		public function __construct($controllerName)
 		{
@@ -38,6 +39,18 @@
 			return $this;
 		}
 		
+		public function getSuffix()
+		{
+			return $this->suffix;
+		}
+		
+		public function setSuffix($suffix)
+		{
+			$this->suffix = $suffix;
+			
+			return $this;
+		}
+		
 		public function getName()
 		{
 			return $this->url;
@@ -52,7 +65,7 @@
 		
 		protected function getUrl()
 		{
-			return $this->prefix.$this->url;
+			return $this->prefix.$this->url.$this->suffix;
 		}
 	}
 ?>

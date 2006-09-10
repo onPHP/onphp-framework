@@ -12,7 +12,8 @@
 			setPost($_POST)->
 			setCookie($_COOKIE)->
 			setServer($_SERVER)->
-			setSession($_SESSION)->
+			// don't forget to set it after session's starting
+			// setSession($_SESSION)->
 			setFiles($_FILES);
 
 		$controllerName = 'main';
