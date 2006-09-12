@@ -28,7 +28,7 @@
 			NamedObject $left, NamedObject $right
 		)
 		{
-			return strcasecmp($left->name, $right->name);
+			return strcasecmp($left->getName(), $right->getName());
 		}
 		
 		public function getName()
