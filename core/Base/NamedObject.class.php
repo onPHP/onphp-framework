@@ -25,7 +25,7 @@
 		protected $name	= null;
 		
 		public static function compareNames(
-			NamedObject $left, NamedObject $right
+			Named $left, Named $right
 		)
 		{
 			return strcasecmp($left->getName(), $right->getName());
