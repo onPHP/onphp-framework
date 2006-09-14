@@ -40,6 +40,8 @@ ONPHP_METHOD(NamedObject, toString)
 ONPHP_METHOD(NamedObject, compareNames)
 {
 	zval *first, *second;
+	zval *left, *right;
+	int result;
 
 	if (
 		(ZEND_NUM_ARGS() != 2)
@@ -48,12 +50,23 @@ ONPHP_METHOD(NamedObject, compareNames)
 		WRONG_PARAM_COUNT;
 	}
 	
-	RETURN_LONG(
-		strcasecmp(
-			Z_STRVAL_P(ONPHP_READ_PROPERTY(first, "name")),
-			Z_STRVAL_P(ONPHP_READ_PROPERTY(second, "name"))
-		)
-	);
+	zend_call_method_with_0_params(&first, Z_OBJCE_P(first), NULL, "getname", &left);
+	
+	if (EG(exception)) {
+		return;
+	}
+	
+	zend_call_method_with_0_params(&second, Z_OBJCE_P(second), NULL, "getname", &right);
+	
+	if (EG(exception)) {
+		return;
+	}
+	
+	result = strcasecmp(Z_STRVAL_P(left), Z_STRVAL_P(right));
+	
+	ZVAL_FREE(left); ZVAL_FREE(right);
+	
+	RETURN_LONG(result);
 }
 
 static ONPHP_ARGINFO_ONE;
