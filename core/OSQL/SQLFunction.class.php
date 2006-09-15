@@ -48,6 +48,11 @@
 			}
 		}
 		
+		public function getName()
+		{
+			return $this->name;
+		}
+		
 		public function setAlias($alias)
 		{
 			$this->alias = $alias;

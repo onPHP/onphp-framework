@@ -1,5 +1,11 @@
 # $Id$
 
+2006-09-14	Konstantin V. Arkhipov
+
+	* core/OSQL/SelectQuery.class.php: arrayGet() now detects two
+	DialectString childs in should-be-prefixed cases, as requested by
+	Sherman.
+
 2006-09-10	Konstantin V. Arkhipov
 
 	* main/Flow/RedirectToView.class.php: {get,set}Suffix added.

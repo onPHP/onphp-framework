@@ -243,7 +243,19 @@
 			
 			if ($prefix)
 				for ($i = 0; $i < $size; ++$i)
-					$this->get($array[$i], $prefix.$array[$i]);
+					$this->get(
+						$array[$i],
+						$array[$i] instanceof DialectString
+							? $array[$i] instanceof DBField
+								? $prefix.$array[$i]->getField()
+								: $array[$i] instanceof SQLFunction
+									?
+										$array[$i]->setAlias(
+											$prefix.$array[$i]->getName()
+										)
+									: $array[$i]
+							: $prefix.$array[$i]
+					);
 			else
 				for ($i = 0; $i < $size; ++$i)
 					$this->get($array[$i]);
