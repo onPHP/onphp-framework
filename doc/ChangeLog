@@ -1,5 +1,9 @@
 # $Id$
 
+2006-09-17	Konstantin V. Arkhipov
+
+	* 0.6.2 released.
+
 2006-09-14	Konstantin V. Arkhipov
 
 	* core/OSQL/SelectQuery.class.php: arrayGet() now detects two
