@@ -1,5 +1,11 @@
 # $Id$
 
+2006-09-18	Konstantin V. Arkhipov
+
+	* meta/classes/MetaConfiguration.class.php: name in identifier's
+	shortcut is now optional, the default is 'id'; identifier's type can
+	be specified now, the default is 'BigInteger'.
+
 2006-09-17	Konstantin V. Arkhipov
 
 	* 0.6.2 released.

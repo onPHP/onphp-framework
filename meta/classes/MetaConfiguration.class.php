@@ -48,10 +48,20 @@
 					$class->addInterface((string) $xmlImplement['interface']);
 
 				if (isset($xmlClass->properties[0]->identifier)) {
-					$property = $this->buildProperty(
-						(string) $xmlClass->properties[0]->identifier['name'],
-						'BigInteger'
-					);
+					
+					$id = $xmlClass->properties[0]->identifier;
+					
+					if (!isset($id['name']))
+						$name = 'id';
+					else
+						$name = (string) $id['name'];
+					
+					if (!isset($id['type']))
+						$type = 'BigInteger';
+					else
+						$type = (string) $id['type'];
+					
+					$property = $this->buildProperty($name, $type);
 					
 					$property->
 						setIdentifier(true)->
