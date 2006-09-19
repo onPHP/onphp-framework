@@ -19,6 +19,16 @@
 		{
 			$out = self::getHead();
 			
+			if (sizeof($properties = $class->getProperties()) == 2) {
+				if (isset($properties['id'], $properties['name'])) {
+					$out .=
+						"abstract class Auto{$class->getName()}DAO "
+						."extends FinalNamedObjectDAO {/*_*/}\n";
+					
+					return $out.self::getHeel();
+				}
+			}
+			
 			$out .= <<<EOT
 abstract class Auto{$class->getName()}DAO extends MappedStorableDAO
 {

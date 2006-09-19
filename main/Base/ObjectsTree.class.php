@@ -16,6 +16,8 @@
 	 * @see ObjectsTreeDAO
 	 * @see FinalObjectsTreeDAO
 	 * 
+	 * @deprecated will be removed during 0.7 session
+	 * 
 	 * @ingroup Helpers
 	**/
 	abstract class ObjectsTree extends NamedObject

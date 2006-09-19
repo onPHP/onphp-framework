@@ -1,5 +1,14 @@
 # $Id$
 
+2006-09-19	Konstantin V. Arkhipov
+
+	* main/Base/ObjectsTree.class.php, main/DAOs/ObjectsTreeDAO.class.php,
+	main/DAOs/FinalObjectsTreeDAO.class.php: are now deprecated, pending
+	removal during upcoming 0.7-session.
+
+	* meta/builders/DictionaryDaoBuilder.class.php: now detects whether
+	FinalNamedObjectDAO can be used.
+
 2006-09-18	Konstantin V. Arkhipov
 
 	* meta/classes/MetaConfiguration.class.php: name in identifier's

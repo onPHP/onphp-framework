@@ -16,6 +16,8 @@
 	 * @see ObjectsTree
 	 * @see ObjectsTreeDAO
 	 * 
+	 * @deprecated will be removed during 0.7 session
+	 * 
 	 * @ingroup DAOs
 	**/
 	abstract class FinalObjectsTreeDAO extends ObjectsTreeDAO
