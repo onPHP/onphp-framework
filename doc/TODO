@@ -1,3 +1,3 @@
 # $Id$
 
-* allow use differ schema in insert and uptade queries
+* allow use different schema's in insert and uptade queries (giv);
