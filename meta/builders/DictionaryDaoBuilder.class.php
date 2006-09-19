@@ -23,9 +23,13 @@
 				if (isset($properties['id'], $properties['name'])) {
 					$out .=
 						"abstract class Auto{$class->getName()}DAO "
-						."extends FinalNamedObjectDAO {/*_*/}\n";
+						."extends FinalNamedObjectDAO\n{\n";
 					
-					return $out.self::getHeel();
+					return
+						$out
+						.self::buildPointers($class)
+						."\n}\n"
+						.self::getHeel();
 				}
 			}
 			
