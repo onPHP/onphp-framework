@@ -39,9 +39,8 @@ Quite useful information:
 
 Quick start:
 
-	cp src/global.inc.php.tpl src/global.inc.php
-
-	include copied file in your script and enjoy
+	refer to doc/project.skel/ - copy config.inc.php.tpl to config.inc.php,
+	edit copied file and try to launch that simple project.
 
 PHP's extension quick start:
 
@@ -53,7 +52,7 @@ PHP's extension quick start:
 	with php:
 
 		cd into php's source
-		cp /path/to/onphp/ext ext/onphp
+		cp -a /path/to/onphp/ext ext/onphp
 		./buildconf --force
 		./configure --enable-onphp
 	
