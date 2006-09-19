@@ -7,6 +7,18 @@ A: You're doomed.
 
 //
 
+Q: What PHP versions are supported?
+
+A: onphp vs. php:
+
+    0.2     >=5.0
+    0.4     >=5.0
+    0.6     >=5.1
+
+0.6 (module) - >=php-5.1.4 with built-in SPL
+
+//
+
 Q: Are there any {unit-,}tests for onPHP?
 
 A: Not yet. Feel free to write them yourself.
