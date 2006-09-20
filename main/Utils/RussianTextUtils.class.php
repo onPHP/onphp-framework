@@ -112,7 +112,7 @@
 		}
 
 		/**
-		 * doesn't duplicate strtolower('%B', ...)
+		 * doesn't duplicate strftime('%B', ...)
 		 * only when 'russian' locale set in windoze
 		**/
 		public static function getMonthInGenitiveCase($month)
