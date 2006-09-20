@@ -104,7 +104,7 @@
 						unset($_SESSION[$arg]);
 				else
 					throw new WrongArgumentException('missing argument(s)');
-			} else 
+			} else
 				throw new SessionNotStartedException();
 		}
 		
@@ -112,11 +112,11 @@
 		{
 			if (Session::isStarted()) {
 				if (!empty($_SESSION)) {
-					foreach ($_SESSION as $key => $value) {
+					foreach ($_SESSION as $key => &$value) {
 						Session::drop($key);
 					}
 				}
-			} else 
+			} else
 				throw new SessionNotStartedException();
 		}
 		
