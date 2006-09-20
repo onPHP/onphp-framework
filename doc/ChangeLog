@@ -1,8 +1,8 @@
 # $Id$
 
-2006-09-20  Denis M. Gabaidulin
+2006-09-20	Denis M. Gabaidulin
 
-	* core/Base/Session.class.php : dropAll method was added.
+	* core/Base/Session.class.php: dropAll() method was added.
 
 2006-09-19	Konstantin V. Arkhipov
 
