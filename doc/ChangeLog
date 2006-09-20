@@ -1,5 +1,9 @@
 # $Id$
 
+2006-09-20  Denis M. Gabaidulin
+
+	* core/Base/Session.class.php : dropAll method was added.
+
 2006-09-19	Konstantin V. Arkhipov
 
 	* main/Base/ObjectsTree.class.php, main/DAOs/ObjectsTreeDAO.class.php,
