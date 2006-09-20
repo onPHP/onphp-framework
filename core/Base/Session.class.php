@@ -108,6 +108,18 @@
 				throw new SessionNotStartedException();
 		}
 		
+		public static function dropAll()
+		{
+			if (Session::isStarted()) {
+				if (!empty($_SESSION)) {
+					foreach ($_SESSION as $key => $value) {
+						Session::drop($key);
+					}
+				}
+			} else 
+				throw new SessionNotStartedException();
+		}
+		
 		public static function isStarted()
 		{
 			return Session::$isStarted;
