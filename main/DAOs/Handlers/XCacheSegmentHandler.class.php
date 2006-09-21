@@ -11,11 +11,11 @@
 /* $Id$ */
 
 	/**
-	 * @see http://pecl.php.net/package/APC
+	 * @see http://trac.lighttpd.net/xcache/
 	 * 
 	 * @ingroup DAOs
 	**/
-	final class ApcSegmentHandler extends OptimizerSegmentHandler
+	final class XCacheSegmentHandler extends OptimizerSegmentHandler
 	{
 		public function __construct($segmentId)
 		{
@@ -26,14 +26,24 @@
 		
 		public function drop()
 		{
-			return apc_delete($this->id);
+			var_dump($this->id);
+			
+			return xcache_unset($this->id);
+		}
+		
+		public function ping($key)
+		{
+			if (xcache_isset($this->id))
+				return parent::ping($key);
+			else
+				return false;
 		}
 		
 		protected function getMap()
 		{
 			$this->locker->get($this->id);
 			
-			if (!$map = apc_fetch($this->id)) {
+			if (!$map = xcache_get($this->id)) {
 				$map = array();
 			}
 			
@@ -42,7 +52,7 @@
 		
 		protected function storeMap(array $map)
 		{
-			$result = apc_store($this->id, $map, Cache::EXPIRES_FOREVER);
+			$result = xcache_set($this->id, $map);
 			
 			$this->locker->free($this->id);
 			

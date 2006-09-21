@@ -1,5 +1,10 @@
 # $Id$
 
+2006-09-21	Konstantin V. Arkhipov
+
+	* main/DAOs/Handlers/XCacheSegmentHandler.class.php: one more
+	segment handler added.
+
 2006-09-20	Denis M. Gabaidulin
 
 	* core/Base/Session.class.php: dropAll() method was added.

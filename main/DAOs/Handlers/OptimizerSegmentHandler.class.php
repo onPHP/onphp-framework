@@ -23,6 +23,11 @@
 		
 		abstract protected function getMap();
 		abstract protected function storeMap(array $map);
+		
+		public function __construct($segmentId)
+		{
+			$this->id = $segmentId;
+		}
 
 		public function touch($key)
 		{

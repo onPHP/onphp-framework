@@ -45,6 +45,8 @@
 						self::$handlerName = 'eAcceleratorSegmentHandler';
 					} elseif (extension_loaded('apc')) {
 						self::$handlerName = 'ApcSegmentHandler';
+					} elseif (extension_loaded('xcache')) {
+						self::$handlerName = 'XCacheSegmentHandler';
 					} else {
 						throw new UnsupportedMethodException(
 							'can not find suitable segment handler'

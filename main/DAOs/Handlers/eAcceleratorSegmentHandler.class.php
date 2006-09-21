@@ -19,7 +19,8 @@
 	{
 		public function __construct($segmentId)
 		{
-			$this->id = $segmentId;
+			parent::__construct($segmentId);
+			
 			$this->locker = Singleton::getInstance('eAcceleratorLocker');
 		}
 		
