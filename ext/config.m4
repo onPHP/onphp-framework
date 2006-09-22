@@ -32,7 +32,6 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/Query.c \
 		src/core/OSQL/QueryIdentification.c \
 		src/main/DAOs/Handlers/SegmentHandler.c \
-		src/main/DAOs/Handlers/SharedMemorySegmentHandler.c \
 	"
 	ONPHP_INCLUDES="\
 		-I@ext_srcdir@/src \

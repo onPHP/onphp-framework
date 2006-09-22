@@ -2,6 +2,8 @@
 
 2006-09-22	Konstantin V. Arkhipov
 
+	* ext/src/main/DAOs/Handlers/SharedMemorySegmentHandler.c: dropped.
+
 	* main/DAOs/FullTextDAO.class.php: deprecated.
 
 	* core/Cache/ReferencePool.class.php,
