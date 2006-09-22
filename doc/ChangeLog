@@ -2,7 +2,8 @@
 
 2006-09-22	Konstantin V. Arkhipov
 
-	* core/Cache/ReferencePool.class.php: simplified a bit.
+	* core/Cache/ReferencePool.class.php,
+	core/Cache/WatermarkedPeer.class.php: simplified a bit.
 
 2006-09-21	Konstantin V. Arkhipov
 
