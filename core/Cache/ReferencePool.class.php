@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -58,32 +58,13 @@
 			return $this->peer->isAlive();
 		}
 
-		public function set($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
-		{
-			$this->pool[$key] = $value;
-			
-			return $this->peer->set($key, $value, $expires);
-		} 
-		
-		public function add($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
-		{
-			$this->pool[$key] = $value;
-			
-			return $this->peer->add($key, $value, $expires);
-		} 
-
-		public function replace($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
-		{
-			$this->pool[$key] = $value;
-			
-			return $this->peer->replace($key, $value, $expires);
-		}
-		
 		protected function store(
 			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			throw new UnsupportedMethodException();
+			$this->pool[$key] = $value;
+			
+			return $this->peer->$action($key, $value, $expires);
 		}
 	}
 ?>

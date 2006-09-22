@@ -1,5 +1,9 @@
 # $Id$
 
+2006-09-22	Konstantin V. Arkhipov
+
+	* core/Cache/ReferencePool.class.php: simplified a bit.
+
 2006-09-21	Konstantin V. Arkhipov
 
 	* main/DAOs/Handlers/XCacheSegmentHandler.class.php: one more
