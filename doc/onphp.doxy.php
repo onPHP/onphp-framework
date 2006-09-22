@@ -12,6 +12,8 @@
 	 *
 	 * <hr>
 	 *
+	 * <h2>a brief overview:</h2>
+	 *
 	 * - quasi-persistent layer:
 	 *  - OSQL query builder:
 	 *   - SelectQuery;
@@ -36,8 +38,12 @@
 	 *    - CommonDaoWorker;
 	 *    - TransparentDaoWorker:
 	 *     - SmartDaoWorker;
-	 *     - VoodooDaoWorker;
-	 *      - FileSystemDaoWorker;
+	 *     - VoodooDaoWorker (and FileSystemDaoWorker):
+	 *      - SharedMemorySegmentHandler;
+	 *      - FileSystemSegmentHandler;
+	 *      - ApcSegmentHandler;
+	 *      - eAcceleratorSegmentHandler;
+	 *      - XCacheSegmentHandler;
 	 * - IdentifiableObject collections:
 	 *  - StorableContainer;
 	 *  - UnifiedContainer;
@@ -55,6 +61,27 @@
 	 *   - AggregateCache;
 	 *   - ReferencePool;
 	 *   - WatermarkedPeer;
+	 * - web flow:
+	 *  - Model:
+	 *   - ModelAndView;
+	 *  - View:
+	 *   - PartViewer;
+	 *   - ViewResolver:
+	 *    - PhpViewResolver;
+	 *   - RedirectView;
+	 *   - RedirectToView;
+	 *   - SimplePhpView;
+	 *  - Controller:
+	 *   - EditorController:
+	 *    - CommandChain:
+	 *    - AddCommand;
+	 *    - SaveCommand;
+	 *    - EditCommand;
+	 *    - DropCommand;
+	 *    - TakeCommand;
+	 *    - CarefulCommand:
+	 *     - CarefulDatabaseRunner;
+	 *    - ForbiddenCommand;
 	 *
 	 * ...
 	 *
