@@ -2,6 +2,8 @@
 
 2006-09-22	Konstantin V. Arkhipov
 
+	* main/DAOs/FullTextDAO.class.php: deprecated.
+
 	* core/Cache/ReferencePool.class.php,
 	core/Cache/WatermarkedPeer.class.php: simplified a bit.
 

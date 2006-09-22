@@ -13,6 +13,8 @@
 	/**
 	 * Full-text stuff DAO support.
 	 * 
+	 * @deprecated will be removed during 0.7 session
+	 * 
 	 * @ingroup DAOs
 	**/
 	abstract class FullTextDAO extends MappedStorableDAO
