@@ -15,6 +15,7 @@
 	 * 
 	 * @see VoodooDaoWorker for obscure and greedy worker.
 	 * @see SmartDaoWorker for less obscure locking-based worker.
+	 * @see FileSystemDaoWorker for Voodoo's filesystem-based child.
 	 * 
 	 * @ingroup DAOs
 	**/
