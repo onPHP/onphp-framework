@@ -1,3 +1,4 @@
 # $Id$
 
 * allow use different schema's in insert and uptade queries (giv);
+* drop or undeprecate main/Flow/FilterController.class.php (antony);

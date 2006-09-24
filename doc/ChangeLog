@@ -1,5 +1,11 @@
 # $Id$
 
+2006-09-24	Konstantin V. Arkhipov
+
+	* main/DAOs/FinalObjectsTreeDAO.class.php,
+	main/DAOs/ObjectsTreeDAO.class.php, main/Base/ObjectsTree.class.php:
+	deprecated classes dropped.
+
 2006-09-22	Konstantin V. Arkhipov
 
 	* ext/src/main/DAOs/Handlers/SharedMemorySegmentHandler.c: dropped.
