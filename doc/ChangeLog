@@ -2,6 +2,8 @@
 
 2006-09-24	Konstantin V. Arkhipov
 
+	* main/Base/Credentials.class.php: dropped.
+
 	* FinalNamedObjectDAO.class.php, NamedObjectDAO.class.php: useless
 	classes dropped.
 
