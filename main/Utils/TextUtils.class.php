@@ -63,16 +63,16 @@
 		
 		public static function UrlSafeBase64Encode($string)
 		{
-			$data = base64_encode($string);
-			$data = str_replace(
-				array('+', '/' , '='),
-				array('-', '_', ''),
-				$data
-			);
-			return $data;
+			return
+				str_replace(
+					array('+', '/' , '='),
+					array('-', '_', ''),
+					base64_encode($string)
+				);
 		}
 		
-		public static function UrlSafeBase64Decode($string) {
+		public static function UrlSafeBase64Decode($string)
+		{
 			$data = str_replace(
 				array('-', '_'),
 				array('+', '/'),
