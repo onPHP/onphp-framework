@@ -2,6 +2,9 @@
 
 2006-09-24	Konstantin V. Arkhipov
 
+	* main/DAOs/FullTextDAO.class.php: is now interface-helper for
+	introduced FullTextUtils.
+
 	* main/DAOs/MappedDAO.class.php,
 	main/DAOs/MappedStorableDAO.class.php: dropped, since all Storable's
 	childs are now Mapped too.

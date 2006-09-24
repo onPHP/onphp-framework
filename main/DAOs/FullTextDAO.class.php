@@ -11,83 +11,13 @@
 /* $Id$ */
 
 	/**
-	 * Full-text stuff DAO support.
-	 * 
-	 * @deprecated will be removed during 0.7 session
+	 * Support interface for use with FullTextUtils.
 	 * 
 	 * @ingroup DAOs
 	**/
-	abstract class FullTextDAO extends MappedStorableDAO
+	interface FullTextDAO extends BaseDAO
 	{
-		public function getIndexField()
-		{
-			return 'fti';
-		}
-		
-		public function lookup(ObjectQuery $oq, $string)
-		{
-			return
-				$this->getByQuery(
-					$this->makeFullTextQuery($oq, $string)->limit(1)
-				);
-		}
-		
-		public function lookupList(ObjectQuery $oq, $string)
-		{
-			return
-				$this->getListByQuery(
-					$this->makeFullTextQuery($oq, $string)
-				);
-		}
-		
-		public function makeFullTextQuery(ObjectQuery $oq, $string)
-		{
-			Assert::isString(
-				$string,
-				'only strings accepted today'
-			);
-
-			$array = $this->prepareSearchString($string);
-
-			if (!$array)
-				throw new ObjectNotFoundException();
-			
-			if (!($field = $this->getIndexField()) instanceof DBField)
-				$field = new DBField(
-					$this->getIndexField(),
-					$this->getTable()
-				);
-			
-			return
-				$oq->toSelectQuery($this)->
-				andWhere(
-					Expression::fullTextOr($field, $array)
-				)->
-				prependOrderBy(
-					Expression::fullTextRankAnd($field, $array)
-				)->desc();
-		}
-		
-		public static function prepareSearchString($string)
-		{
-			$array =
-				explode(
-					' ',
-					$string,
-					substr_count($string, ' ') + 1
-				);
-			
-			$out = array();
-
-			for ($i = 0, $size = count($array); $i < $size; ++$i)
-				if (!empty($array[$i]))
-					if ($element = mb_ereg_replace(
-						'[^а-яА-Яa-zA-Z0-9 \-\./]', null, $array[$i]
-						)
-					)
-						$out[] = $element;
-			
-			return $out;
-		}
+		// index' field name
+		public function getIndexField();
 	}
 ?>
