@@ -2,6 +2,9 @@
 
 2006-09-24	Konstantin V. Arkhipov
 
+	* FinalNamedObjectDAO.class.php, NamedObjectDAO.class.php: useless
+	classes dropped.
+
 	* main/DAOs/FinalObjectsTreeDAO.class.php,
 	main/DAOs/ObjectsTreeDAO.class.php, main/Base/ObjectsTree.class.php:
 	deprecated classes dropped.
