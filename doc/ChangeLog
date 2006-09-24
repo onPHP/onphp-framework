@@ -2,6 +2,10 @@
 
 2006-09-24	Konstantin V. Arkhipov
 
+	* main/DAOs/MappedDAO.class.php,
+	main/DAOs/MappedStorableDAO.class.php: dropped, since all Storable's
+	childs are now Mapped too.
+
 	* main/Base/Credentials.class.php: dropped.
 
 	* FinalNamedObjectDAO.class.php, NamedObjectDAO.class.php: useless

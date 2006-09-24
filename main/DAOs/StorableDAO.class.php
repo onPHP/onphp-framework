@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,9 +15,28 @@
 	**/
 	abstract class StorableDAO extends GenericDAO
 	{
+		// override later
+		protected $mapping = array();
+		
 		public function getIdName()
 		{
 			return 'id';
+		}
+		
+		public function getMapping()
+		{
+			return $this->mapping;
+		}
+		
+		public function getFields()
+		{
+			static $fields = null;
+			
+			if ($fields === null)
+				foreach ($this->getMapping() as $prop => $field)
+					$fields[] = ($field === null ? $prop : $field);
+			
+			return $fields;
 		}
 		
 		public function take(Identifiable $object)

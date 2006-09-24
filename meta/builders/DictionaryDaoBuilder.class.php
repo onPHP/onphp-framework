@@ -20,7 +20,7 @@
 			$out = self::getHead();
 			
 			$out .= <<<EOT
-abstract class Auto{$class->getName()}DAO extends MappedStorableDAO
+abstract class Auto{$class->getName()}DAO extends StorableDAO
 {
 	protected \$mapping = array(
 
