@@ -22,7 +22,7 @@
 				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
 			}
 			
-			error_log($prefix.": ".var_export($vr, true));
+			error_log($prefix.': '.var_export($vr, true));
 		}
 		
 		public static function ev($vr, $prefix = null)
@@ -32,7 +32,10 @@
 				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
 			}
 			
-			echo '<pre>'.$prefix.": ".htmlspecialchars(var_export($vr, true)).'</pre>';
+			echo
+				'<pre>'
+				.$prefix.': '.htmlspecialchars(var_export($vr, true))
+				.'</pre>';
 		}
 
 		public static function ec($vr, $prefix = null)
@@ -42,7 +45,7 @@
 				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
 			}
 			
-			echo "\n".$prefix.": ".var_export($vr, true)."\n";
+			echo "\n".$prefix.': '.var_export($vr, true)."\n";
 		}
 		
 		public static function eq(Query $query, $prefix = null)
@@ -61,7 +64,7 @@
 		
 		public static function microtime()
 		{
-			list($usec, $sec) = explode(" ", microtime(), 2);
+			list($usec, $sec) = explode(' ', microtime(), 2);
 			return ((float) $usec + (float) $sec);		
 		}
 	}
