@@ -142,6 +142,10 @@
 		
 		public function getIdentifier()
 		{
+			// return parent's identifier, if we're child
+			if (!$this->identifier && $this->parent)
+				return $this->parent->getIdentifier();
+			
 			return $this->identifier;
 		}
 		

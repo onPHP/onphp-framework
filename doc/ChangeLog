@@ -1,5 +1,10 @@
 # $Id$
 
+2006-09-25	Konstantin V. Arkhipov
+
+	* meta/classes/MetaClass.class.php: try to resolve parent's identifier
+	in cases where child doesn't own one.
+
 2006-09-24	Konstantin V. Arkhipov
 
 	* main/DAOs/FullTextDAO.class.php: is now interface-helper for
