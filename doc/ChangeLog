@@ -2,6 +2,9 @@
 
 2006-09-25	Konstantin V. Arkhipov
 
+	* meta/builders/ProtoClassBuilder.class.php: corrected handling of
+	parent's identifiers (if any).
+
 	* meta/builders/ProtoClassBuilder.class.php: inheritance support
 	implemented, useless constructor and private property dropped.
 
