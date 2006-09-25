@@ -12,9 +12,9 @@
 
 	/**
 	 * Various information holder for communication
-	 * between MappedDAO implementations and controllers.
+	 * between StorableDAO implementations and controllers.
 	 * 
-	 * @see MappedDAO
+	 * @see StorableDAO
 	 * @see Controller
 	 * 
 	 * @ingroup DAOs
@@ -113,7 +113,7 @@
 			return $this;
 		}
 		
-		public function toSelectQuery(MappedDAO $dao)
+		public function toSelectQuery(StorableDAO $dao)
 		{
 			// cleanup
 			if ($this->current) {

@@ -115,8 +115,8 @@
 		public function setObjectQuery(ObjectQuery $oq)
 		{
 			Assert::isTrue(
-				$this->dao instanceof MappedDAO,
-				'you should implement MappedDAO to be able to use ObjectQueries'
+				$this->dao instanceof StorableDAO,
+				'you must extends from StorableDAO to be able to use ObjectQueries'
 			);
 			
 			$this->worker->setObjectQuery($oq);
