@@ -5,8 +5,30 @@
 	{
 		public function testQuery()
 		{
+			$query = OSQL::truncate('single_table');
+			
+			$this->assertEqual(
+				$query->toDialectString(ImaginaryDialect::me()),
+				'DELETE FROM single_table;'
+			);
+			
+			$this->assertEqual(
+				$query->toDialectString(PostgresDialect::me()),
+				'TRUNCATE TABLE "single_table";'
+			);
+			
+			$this->assertEqual(
+				$query->toDialectString(LiteDialect::me()),
+				'DELETE FROM "single_table";'
+			);
+			
+			$this->assertEqual(
+				$query->toDialectString(MyDialect::me()),
+				'TRUNCATE TABLE `single_table`;'
+			);
+			
 			$query = OSQL::truncate(array('foo', 'bar', 'bleh'));
-
+			
 			$this->assertEqual(
 				$query->toDialectString(ImaginaryDialect::me()),
 				'DELETE FROM foo; DELETE FROM bar; DELETE FROM bleh;'

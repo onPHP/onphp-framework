@@ -2,6 +2,10 @@
 
 2006-09-25	Konstantin V. Arkhipov
 
+	* core/OSQL/TruncateQuery.class.php,
+	test/core/TruncateQueryTest.class.php: single table handling fixed,
+	test updated.
+
 	* meta/classes/MetaClass.class.php: try to resolve parent's identifier
 	in cases where child doesn't own one, arrived from trunk.
 
