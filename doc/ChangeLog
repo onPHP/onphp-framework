@@ -2,6 +2,9 @@
 
 2006-09-26	Konstantin V. Arkhipov
 
+	* meta/builders/SchemaBuilder.class.php: handling of property-less
+	classes fixed too.
+
 	* meta/builders/AutoDaoBuilder.class.php: fixed bug with inherited
 	property-less DAO's.
 
