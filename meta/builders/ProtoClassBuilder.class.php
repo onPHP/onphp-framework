@@ -19,23 +19,35 @@
 		{
 			$out = self::getHead();
 			
-			$out .= <<<EOT
-class Proto{$class->getName()} extends AbstractProtoClass
-{
-	private \$form = null;
+			if ($type = $class->getType())
+				$type = $type->toString().' ';
+			else
+				$type = null;
 
-	protected function __construct()
+			$parent = $class->getParent();
+			
+			if ($parent) {
+				$out .= <<<EOT
+{$type}class Proto{$class->getName()} extends Proto{$parent->getName()}
+{
+	public function makeForm()
 	{
-		\$this->form = \$this->makeForm();
-	}
-	
+		return
+			parent::makeForm()->
+			add(
+EOT;
+			} else {
+				$out .= <<<EOT
+{$type}class Proto{$class->getName()} extends AbstractProtoClass
+{
 	public function makeForm()
 	{
 		return
 			Form::create()->
 			add(
 EOT;
-
+			}
+			
 			// sort out for wise and common defaults
 			$prms = array();
 			
