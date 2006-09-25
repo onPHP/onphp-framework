@@ -32,7 +32,7 @@
 {
 	public function makeForm()
 	{
-		return
+		\$form =
 			parent::makeForm()->
 			add(
 EOT;
@@ -100,8 +100,20 @@ EOT;
 							)
 						) {
 							$primitive =
-								"\nPrimitive::identifier('{$primitiveName}')->\n"
-								."of('{$className}')->\n";
+								"\nPrimitive::identifier('{$primitiveName}')->\n";
+							
+							// should be specified only in childs
+							if (
+								!$property->isIdentifier()
+								&& !(
+									$class->getType()
+									&&
+										$class->getType()->getId()
+										== MetaClassType::CLASS_ABSTRACT
+								)
+							) {
+								$primitive .= "of('{$className}')->\n";
+							}
 						} else {
 							$primitive = null;
 						}
@@ -126,6 +138,19 @@ EOT;
 			}
 			
 			$out .= implode(")->\nadd(", $prms).");";
+			
+			// parent's identificator should be concretized in childs
+			if ($parent) {
+				
+				if ($parent->getIdentifier()) {
+					$out .=
+						"\n\n"
+						."\$form->\nget('{$parent->getIdentifier()->getName()}')->"
+						."of('{$class->getName()}');\n\n";
+				}
+				
+				$out .= "return \$form;";
+			}
 			
 			$out .= <<<EOT
 
