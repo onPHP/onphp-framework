@@ -1,5 +1,10 @@
 # $Id$
 
+2006-09-26	Konstantin V. Arkhipov
+
+	* meta/builders/AutoDaoBuilder.class.php: fixed bug with inherited
+	property-less DAO's.
+
 2006-09-25	Konstantin V. Arkhipov
 
 	* meta/builders/ProtoClassBuilder.class.php: corrected handling of

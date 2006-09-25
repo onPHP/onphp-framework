@@ -29,28 +29,42 @@
 			$out .= <<<EOT
 abstract class Auto{$class->getName()}DAO extends {$parentName}
 {
+
+EOT;
+
+			if (sizeof($class->getProperties())) {
+				$out .= <<<EOT
 	public function __construct()
 	{
+
+EOT;
+				if ($parent->getPattern() instanceof StraightMappingPattern) {
+					$out .= "parent::__construct();\n\n";
+				}
+			
+				$out .= <<<EOT
 		\$this->mapping = array_merge(
 			\$this->mapping,
 			array(
 
 EOT;
-			if ($parent->getPattern() instanceof StraightMappingPattern) {
-				$out .= "parent::__construct();\n\n";
-			}
 			
-			$mapping = self::buildMapping($class);
-			$pointers = self::buildPointers($class);
+				$mapping = self::buildMapping($class);
 			
-			$out .= implode(",\n", $mapping)."\n";
+				$out .= implode(",\n", $mapping)."\n";
 
-			$out .= <<<EOT
+				$out .= <<<EOT
 				)
 			);
-		}
+	}
 
-{$pointers}
+
+EOT;
+
+				$out .= self::buildPointers($class);
+				
+				$out .= <<<EOT
+
 
 public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \${$varName})
 {
@@ -58,8 +72,10 @@ public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \
 		parent::setQueryFields(\$query, \${$varName})->
 
 EOT;
-
-			$out .= self::buildFillers($class);
+				$out .= self::buildFillers($class);
+			} else {
+				$out .= self::buildPointers($class)."\n}\n";
+			}
 			
 			return $out.self::getHeel();
 		}
