@@ -1,5 +1,10 @@
 # $Id$
 
+2006-09-25	Konstantin V. Arkhipov
+
+	* meta/classes/MetaClass.class.php: try to resolve parent's identifier
+	in cases where child doesn't own one, arrived from trunk.
+
 2006-09-22	Konstantin V. Arkhipov
 
 	* ext/src/main/DAOs/Handlers/SharedMemorySegmentHandler.c: dropped.
