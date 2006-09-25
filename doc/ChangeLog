@@ -2,6 +2,9 @@
 
 2006-09-25	Konstantin V. Arkhipov
 
+	* meta/builders/ProtoClassBuilder.class.php: inheritance support
+	implemented, useless constructor and private property dropped.
+
 	* meta/classes/MetaClass.class.php: try to resolve parent's identifier
 	in cases where child doesn't own one, arrived from trunk.
 
