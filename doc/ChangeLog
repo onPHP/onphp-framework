@@ -1,5 +1,10 @@
 # $Id$
 
+2006-09-25	Konstantin V. Arkhipov
+
+	* meta/classes/MetaClass.class.php: try to resolve parent's identifier
+	in cases where child doesn't own one, arrived from trunk.
+
 2006-08-23	Konstantin V. Arkhipov
 
 	* * core/Cache/PeclMemcached.class.php: several stfu's from trunk.
