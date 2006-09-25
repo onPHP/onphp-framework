@@ -17,6 +17,9 @@
 	{
 		public static function build(MetaClass $class)
 		{
+			if (!count($class->getProperties()))
+				return null;
+			
 			$out = <<<EOT
 \$schema->
 	addTable(
