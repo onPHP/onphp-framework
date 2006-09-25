@@ -69,7 +69,7 @@
 		)
 		{
 			if (count($this->targets) == 1) {
-				return $prepend.reset($this->targets).$append;
+				return $prepend.$dialect->quoteTable(reset($this->targets));
 			} else {
 				$tables = array();
 				
