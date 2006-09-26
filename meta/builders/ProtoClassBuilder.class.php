@@ -104,12 +104,13 @@ EOT;
 							
 							// should be specified only in childs
 							if (
-								!$property->isIdentifier()
-								&& !(
+								!(
 									$class->getType()
-									&&
+									&& (
 										$class->getType()->getId()
 										== MetaClassType::CLASS_ABSTRACT
+									)
+									&& $property->isIdentifier()
 								)
 							) {
 								$primitive .= "of('{$className}')->\n";
