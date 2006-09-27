@@ -129,7 +129,19 @@ EOT;
 		
 		protected static function buildPointers(MetaClass $class)
 		{
-			return <<<EOT
+			if ($source = $class->getSourceLink()) {
+				$out = <<<EOT
+public function getLinkName()
+{
+	return '{$source}';
+}
+
+
+EOT;
+			} else
+				$out = null;
+			
+			return $out.<<<EOT
 public function getTable()
 {
 	return '{$class->getDumbName()}';

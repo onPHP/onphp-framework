@@ -16,6 +16,9 @@
 	final class MetaConfiguration extends Singleton implements Instantiatable
 	{
 		private $classes = array();
+		private $sources = array();
+		
+		private $defaultSource = null;
 		
 		public static function me()
 		{
@@ -28,9 +31,31 @@
 			
 			$liaisons = array();
 			
+			// populate sources (if any)
+			if (isset($xml->sources[0])) {
+				foreach ($xml->sources[0] as $source) {
+					$this->addSource($source);
+				}
+			}
+			
 			foreach ($xml->classes[0] as $xmlClass) {
 				
 				$class = new MetaClass((string) $xmlClass['name']);
+				
+				if (isset($xmlClass['source'])) {
+					
+					$source = (string) $xmlClass['source'];
+					
+					Assert::isTrue(
+						isset($this->sources[$source]),
+						"unknown source '{$source}' specified "
+						."for class '{$class->getName()}'"
+					);
+					
+					$class->setSourceLink($source);
+				} elseif ($this->defaultSource) {
+					$class->setSourceLink($this->defaultSource);
+				}
 				
 				if (isset($xmlClass['type']))
 					$class->setType(
@@ -209,6 +234,33 @@
 			throw new MissingElementException(
 				"knows nothing about '{$name}' class"
 			);
+		}
+		
+		private function addSource(SimpleXMLElement $source)
+		{
+			$name = (string) $source['name'];
+			
+			$default =
+				isset($source['default']) && (string) $source['default'] == 'true'
+					? true
+					: false;
+			
+			Assert::isFalse(
+				isset($this->sources[$name]),
+				"duplicate source - '{$name}'"
+			);
+			
+			Assert::isFalse(
+				$default && $this->defaultSource !== null,
+				'too many default sources'
+			);
+			
+			$this->sources[$name] = $default;
+			
+			if ($default)
+				$this->defaultSource = $name;
+			
+			return $this;
 		}
 		
 		private function buildProperty($name, $type)

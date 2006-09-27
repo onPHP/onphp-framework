@@ -26,6 +26,8 @@
 		private $pattern	= null;
 		private $identifier	= null;
 		
+		private $source		= null;
+		
 		public function __construct($name)
 		{
 			$this->name = $name;
@@ -147,6 +149,18 @@
 				return $this->parent->getIdentifier();
 			
 			return $this->identifier;
+		}
+		
+		public function setSourceLink($link)
+		{
+			$this->source = $link;
+			
+			return $this;
+		}
+		
+		public function getSourceLink()
+		{
+			return $this->source;
 		}
 		
 		public function dump()

@@ -17,7 +17,8 @@
 	**/
 	abstract class GenericDAO extends Singleton implements BaseDAO
 	{
-		protected $selectHead = null;
+		protected $link			= null;
+		protected $selectHead	= null;
 		
 		abstract public function getTable();
 		abstract public function getObjectName();
@@ -43,6 +44,17 @@
 		public function getSequence()
 		{
 			return $this->getTable().'_id';
+		}
+		
+		/**
+		 * Returns link name which is used to get actual db-link from DBPool,
+		 * returning null by default for backwards compatibility.
+		 * 
+		 * @see DBPool
+		**/
+		public function getLinkName()
+		{
+			return null;
 		}
 
 		public function makeSelectHead()

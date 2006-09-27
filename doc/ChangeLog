@@ -2,6 +2,8 @@
 
 2006-09-27	Konstantin V. Arkhipov
 
+	* meta/: 'source link' support in DAO's implemented.
+
 	* core/DB/DBPool.class.php: new way for handling multi-DB's projects.
 
 2006-09-26	Konstantin V. Arkhipov
