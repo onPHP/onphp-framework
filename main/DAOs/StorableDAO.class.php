@@ -53,7 +53,7 @@
 				$this->inject(
 					OSQL::insert(),
 					$object->setId(
-						DBFactory::getDefaultInstance()->obtainSequence(
+						DBPool::getByDao($this)->obtainSequence(
 							$this->getSequence()
 						)
 					)
@@ -75,7 +75,7 @@
 			InsertOrUpdateQuery $query, Identifiable $object
 		)
 		{
-			DBFactory::getDefaultInstance()->queryNull(
+			DBPool::getByDao($this)->queryNull(
 				$this->setQueryFields(
 					$query->setTable($this->getTable()), $object
 				)

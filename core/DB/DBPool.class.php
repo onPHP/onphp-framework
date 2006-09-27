@@ -15,13 +15,18 @@
 	 * 
 	 * @ingroup DB
 	**/
-	final class DBPool implements Instantiatable
+	final class DBPool extends Singleton implements Instantiatable
 	{
 		private $pool = array();
 		
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
+		}
+		
+		public static function getByDao(GenericDAO $dao)
+		{
+			return self::me()->getLink($dao->getLinkName());
 		}
 		
 		public function addLink($name, DB $db)

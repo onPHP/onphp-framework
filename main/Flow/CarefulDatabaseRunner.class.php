@@ -15,23 +15,22 @@
 	**/
 	final class CarefulDatabaseRunner implements CarefulCommand
 	{
-		private $db			= null;
 		private $command	= null;
+		private $db			= null;
 		
 		private $running = false;
 		
-		final public function __construct(EditorCommand $command, DB $db = null)
+		final public function __construct(EditorCommand $command)
 		{
-			if (!$db)
-				$db = DBFactory::getDefaultInstance();
-			
-			$this->db = $db;
 			$this->command = $command;
 		}
 		
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
 			Assert::isFalse($this->running, 'command already running');
+			Assert::isTrue($subject instanceof DAOConnected);
+			
+			$this->db = DBPool::getByDao($subject->dao());
 			
 			$this->db->begin();
 			

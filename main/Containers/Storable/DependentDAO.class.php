@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2005-2006 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -34,7 +34,7 @@
 			return
 				$this->import($parentId,
 					$child->setId(
-						DBFactory::getDefaultInstance()->
+						DBPool::getByDao($this)->
 						obtainSequence(
 							$this->getSequence()
 						)
@@ -49,7 +49,7 @@
 
 		public function dropByParentId($parentId)
 		{
-			DBFactory::getDefaultInstance()->queryNull(
+			DBPool::getByDao($this)->queryNull(
 				OSQL::delete()->from($this->getTable())->where(
 					Expression::eq($this->getParentIdField(), $parentId)
 				)
@@ -69,7 +69,7 @@
 		{
 			$this->checkType($child);
 			
-			DBFactory::getDefaultInstance()->queryNull(
+			DBPool::getByDao($this)->queryNull(
 				$this->setQueryFields(
 					OSQL::insert()->into($this->getTable())->
 						set('id', $child->getId())->
@@ -87,7 +87,7 @@
 		{
 			$this->checkType($child);
 
-			DBFactory::getDefaultInstance()->queryNull(
+			DBPool::getByDao($this)->queryNull(
 				$this->setQueryFields(
 					OSQL::update($this->getTable())->
 						where(Expression::eq('id', $child->getId())),

@@ -17,9 +17,9 @@
 	{
 		public function sync(&$insert, &$update = array(), &$delete)
 		{
-			$db = DBFactory::getDefaultInstance();
-
 			$dao = $this->container->getDao();
+
+			$db = DBPool::getByDao($dao);
 
 			if ($insert)
 				for ($i = 0, $size = count($insert); $i < $size; ++$i) {

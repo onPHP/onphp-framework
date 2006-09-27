@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2005-2006 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -45,7 +45,7 @@
 		public function dropByBothId($parentId, $childId)
 		{
 			try {
-				DBFactory::getDefaultInstance()->queryNull(
+				DBPool::getByDao($this->getChildDAO())->queryNull(
 					OSQL::delete()->from($this->getTable())->where(
 						Expression::expAnd(
 							Expression::eq(
@@ -73,7 +73,7 @@
 		public function dropByParentId($parentId)
 		{
 			try {
-				DBFactory::getDefaultInstance()->queryNull(
+				DBPool::getByDao($this->getChildDAO())->queryNull(
 					OSQL::delete()->from($this->getTable())->where(
 						Expression::eq($this->getParentIdField(), $parentId)
 					)
@@ -98,7 +98,7 @@
 		{
 			$this->checkType($child);
 
-			DBFactory::getDefaultInstance()->queryNull(
+			DBPool::getByDao($this->getChildDAO())->queryNull(
 				OSQL::insert()->into($this->getTable())->
 					set($this->getChildIdField(), $child->getId())->
 					set($this->getParentIdField(), $parentId)

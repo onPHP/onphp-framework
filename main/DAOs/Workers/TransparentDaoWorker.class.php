@@ -42,7 +42,7 @@
 				else
 					return $object;
 			} else {
-				$db = DBFactory::getDefaultInstance();
+				$db = DBPool::getByDao($this->dao);
 
 				$query = 
 					$this->dao->makeSelectHead()->
@@ -82,7 +82,7 @@
 					return $object;
 				
 			} else {
-				$object = DBFactory::getDefaultInstance()->queryObjectRow(
+				$object = DBPool::getByDao($this->dao)->queryObjectRow(
 					$query, $this->dao
 				);
 				
@@ -110,7 +110,7 @@
 				else
 					return $custom;
 			} else {
-				$custom = DBFactory::getDefaultInstance()->queryRow($query);
+				$custom = DBPool::getByDao($this->dao)->queryRow($query);
 				
 				if ($custom)
 					return $this->cacheByQuery($query, $custom);
@@ -178,7 +178,7 @@
 				else
 					return $list;
 			} else {
-				$list = DBFactory::getDefaultInstance()->queryObjectSet(
+				$list = DBPool::getByDao($this->dao)->queryObjectSet(
 					$query, $this->dao
 				);
 				
@@ -222,7 +222,7 @@
 				else
 					return $list;
 			} else {
-				$list = DBFactory::getDefaultInstance()->querySet($query);
+				$list = DBPool::getByDao($this->dao)->querySet($query);
 				
 				if ($list)
 					return $this->cacheByQuery($query, $list);
@@ -253,7 +253,7 @@
 				else
 					return $list;
 			} else {
-				$list = DBFactory::getDefaultInstance()->queryColumn($query);
+				$list = DBPool::getByDao($this->dao)->queryColumn($query);
 				
 				if ($list)
 					return $this->cacheByQuery($query, $list);
@@ -276,7 +276,7 @@
 		
 		public function getQueryResult(SelectQuery $query)
 		{
-			$db = DBFactory::getDefaultInstance();
+			$db = DBPool::getByDao($this->dao);
 
 			$cache = Cache::me();
 			
@@ -330,7 +330,7 @@
 			$cache = Cache::me();
 			
 			$result =
-				DBFactory::getDefaultInstance()->queryNull(
+				DBPool::getByDao($this->dao)->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::in('id', $ids))
 				);

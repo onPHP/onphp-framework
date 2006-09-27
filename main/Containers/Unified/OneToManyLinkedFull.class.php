@@ -41,7 +41,7 @@
 					$dao->save($update[$i]);
 
 			if ($delete) {
-				DBFactory::getDefaultInstance()->queryNull(
+				DBPool::getByDao($dao)->queryNull(
 					OSQL::delete()->from($dao->getTable())->
 					where(
 						Expression::eq(

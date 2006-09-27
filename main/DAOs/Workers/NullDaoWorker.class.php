@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -31,7 +31,7 @@
 		{
 			$object = $this->getCachedById($id);
 			
-			$db = DBFactory::getDefaultInstance();
+			$db = DBPool::getByDao($this->dao);
 
 			$query = 
 				$this->dao->makeSelectHead()->
@@ -60,7 +60,7 @@
 		
 		public function getByQuery(SelectQuery $query)
 		{
-			$object = DBFactory::getDefaultInstance()->queryObjectRow(
+			$object = DBPool::getByDao($this->dao)->queryObjectRow(
 				$query, $this->dao
 			);
 			
@@ -79,7 +79,7 @@
 					'can not handle non-single row queries'
 				);
 
-			$custom = DBFactory::getDefaultInstance()->queryRow($query);
+			$custom = DBPool::getByDao($this->dao)->queryRow($query);
 			
 			if ($custom)
 				return $this->cacheByQuery($query, $custom);
@@ -114,7 +114,7 @@
 		
 		public function getListByQuery(SelectQuery $query)
 		{
-			$list = DBFactory::getDefaultInstance()->queryObjectSet(
+			$list = DBPool::getByDao($this->dao)->queryObjectSet(
 				$query, $this->dao
 			);
 			
@@ -143,7 +143,7 @@
 			SelectQuery $query, $expres = Cache::DO_NOT_CACHE
 		)
 		{
-			if ($list = DBFactory::getDefaultInstance()->querySet($query))
+			if ($list = DBPool::getByDao($this->dao)->querySet($query))
 				return $list;
 			else
 				throw new ObjectNotFoundException();
@@ -158,7 +158,7 @@
 					'you should select only one row when using this method'
 				);
 			
-			if ($list = DBFactory::getDefaultInstance()->queryColumn($query))
+			if ($list = DBPool::getByDao($this->dao)->queryColumn($query))
 				return $list;
 			else
 				throw new ObjectNotFoundException();
@@ -174,7 +174,7 @@
 		
 		public function getQueryResult(SelectQuery $query)
 		{
-			$db = DBFactory::getDefaultInstance();
+			$db = DBPool::getByDao($this->dao);
 			
 			$list = $db->queryObjectSet($query, $this->dao);
 			
@@ -201,7 +201,7 @@
 		public function dropById($id)
 		{
 			return
-				DBFactory::getDefaultInstance()->queryNull(
+				DBPool::getByDao($this->dao)->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::eq('id', $id))
 				);
@@ -210,7 +210,7 @@
 		public function dropByIds(/* array */ $ids)
 		{
 			return 
-				DBFactory::getDefaultInstance()->queryNull(
+				DBPool::getByDao($this->dao)->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::in('id', $ids))
 				);

@@ -35,7 +35,7 @@
 				return $object;
 			}
 			else {
-				$db = DBFactory::getDefaultInstance();
+				$db = DBPool::getByDao($this->dao);
 
 				$query = 
 					$this->dao->
@@ -75,7 +75,7 @@
 			SelectQuery $query, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			$db = DBFactory::getDefaultInstance();
+			$db = DBPool::getByDao($this->dao);
 			
 			if (
 				($expires !== Cache::DO_NOT_CACHE) &&
@@ -98,7 +98,7 @@
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			$db = DBFactory::getDefaultInstance();
+			$db = DBPool::getByDao($this->dao);
 		
 			if ($query->getLimit() > 1)
 				throw new WrongArgumentException(
@@ -208,7 +208,7 @@
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			$db = DBFactory::getDefaultInstance();
+			$db = DBPool::getByDao($this->dao);
 			
 			if (
 				($expires !== Cache::DO_NOT_CACHE) && 
@@ -253,7 +253,7 @@
 			SelectQuery $query, $expres = Cache::DO_NOT_CACHE
 		)
 		{
-			if ($list = DBFactory::getDefaultInstance()->querySet($query))
+			if ($list = DBPool::getByDao($this->dao)->querySet($query))
 				return $list;
 			else
 				throw new ObjectNotFoundException();
@@ -268,7 +268,7 @@
 					'you should select only one row when using this method'
 				);
 			
-			if ($list = DBFactory::getDefaultInstance()->queryColumn($query))
+			if ($list = DBPool::getByDao($this->dao)->queryColumn($query))
 				return $list;
 			else
 				throw new ObjectNotFoundException();
@@ -291,7 +291,7 @@
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			$db = DBFactory::getDefaultInstance();
+			$db = DBPool::getByDao($this->dao);
 			
 			$list = $db->queryObjectSet($query, $this->dao);
 			
@@ -376,7 +376,7 @@
 			$this->uncacheLists();
 
 			return
-				DBFactory::getDefaultInstance()->queryNull(
+				DBPool::getByDao($this->dao)->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::in('id', $ids))
 				);
