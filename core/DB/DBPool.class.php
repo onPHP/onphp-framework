@@ -44,7 +44,7 @@
 			elseif (isset($this->pool[$name]))
 				return $this->pool[$name];
 			
-			throw new WrongArgumentException(
+			throw new MissingElementException(
 				"can't find link with '{$name}' name"
 			);
 		}
