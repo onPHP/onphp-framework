@@ -29,9 +29,10 @@
 	 *    - MSSQL (incubator);
 	 *    - OraSQL (incubator);
 	 *   - utils:
-	 *    - Queue;
-	 *    - TransactionQueue;
-	 *    - DBTransaction;
+	 *    - Transaction:
+	 *     - TransactionQueue (Queue);
+	 *     - DBTransaction;
+	 *    - DBPool;
 	 *  - DAO hierarchies:
 	 *   - GenericDAO workers:
 	 *    - NullDaoWorker;
