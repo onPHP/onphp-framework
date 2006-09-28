@@ -1,5 +1,9 @@
 # $Id$
 
+2006-09-28	Konstantin V. Arkhipov
+
+	* main/Base/ObjectsTree.class.php: ressurected.
+
 2006-09-27	Konstantin V. Arkhipov
 
 	* meta/: 'source link' support in DAO's implemented.

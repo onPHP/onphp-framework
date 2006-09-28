@@ -17,6 +17,24 @@
 	**/
 	final class FullTextUtils extends StaticFactory
 	{
+		public static function lookup(FullTextDAO $dao, ObjectQuery $oq, $string)
+		{
+			return
+				$dao->getByQuery(
+					self::makeFullTextQuery($dao, $oq, $string)->limit(1)
+				);
+		}
+		
+		public static function lookupList(
+			FullTextDAO $dao, ObjectQuery $oq, $string
+		)
+		{
+			return
+				$dao->getListByQuery(
+					self::makeFullTextQuery($dao, $oq, $string)
+				);
+		}
+		
 		public static function makeFullTextQuery(
 			FullTextDAO $dao, ObjectQuery $oq, $string
 		)
