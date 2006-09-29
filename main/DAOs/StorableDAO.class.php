@@ -32,9 +32,18 @@
 		{
 			static $fields = null;
 			
-			if ($fields === null)
-				foreach ($this->getMapping() as $prop => $field)
-					$fields[] = ($field === null ? $prop : $field);
+			if ($fields === null) {
+				if ($this->mapping)
+					foreach ($this->getMapping() as $prop => $field)
+						$fields[] = ($field === null ? $prop : $field);
+				elseif ($this->fields)
+					$fields = &$this->fields;
+				else
+					throw new WrongStateException(
+						'there are no fields specified for '
+						."'{$this->getObjectName()}DAO'"
+					);
+			}
 			
 			return $fields;
 		}

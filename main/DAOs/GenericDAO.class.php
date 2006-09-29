@@ -20,6 +20,9 @@
 		protected $link			= null;
 		protected $selectHead	= null;
 		
+		// backwards compatibility
+		protected $fields = array();
+		
 		abstract public function getTable();
 		abstract public function getObjectName();
 
