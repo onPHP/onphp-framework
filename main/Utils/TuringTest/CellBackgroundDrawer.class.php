@@ -28,7 +28,7 @@
 			$width = $this->getTuringImage()->getWidth();
 			
 			while ($x < $width) {
-				$color = $this->getColor();
+				$color = $this->makeColor();
 				$colorId = $this->getTuringImage()->getColorIdentifier($color);
 
 				imageline(
@@ -47,7 +47,7 @@
 			$height = $this->getTuringImage()->getHeight();
 			
 			while ($y < $height) {
-				$color = $this->getColor();
+				$color = $this->makeColor();
 				$colorId = $this->getTuringImage()->getColorIdentifier($color);
 
 				imageline(
