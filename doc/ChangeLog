@@ -1,5 +1,10 @@
 # $Id$
 
+2006-10-02	Konstantin V. Arkhipov
+
+	* meta/builders/SchemaBuilder.class.php: do not generate unsupported
+	relations in schema.
+
 2006-09-29	Konstantin V. Arkhipov
 
 	* main/DAOs/GenericDAO.class.php, main/DAOs/StorableDAO.class.php:

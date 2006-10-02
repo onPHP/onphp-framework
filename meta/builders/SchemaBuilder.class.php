@@ -30,6 +30,13 @@ EOT;
 			$columns = array();
 			
 			foreach ($class->getProperties() as $name => $property) {
+				if (
+					($relation = $property->getRelation())
+					&& $relation->getId() <> MetaRelation::ONE_TO_ONE
+				) {
+					continue;
+				}
+				
 				$column = $property->toColumn();
 				
 				if (is_array($column))
@@ -50,6 +57,12 @@ EOT;
 			
 			foreach ($class->getProperties() as $name => $property) {
 				if ($relation = $property->getRelation()) {
+					
+					if (
+						$relation->getId() <> MetaRelation::ONE_TO_ONE
+					) {
+						continue;
+					}
 					
 					$foreignClass =
 						MetaConfiguration::me()->getClassByName(
