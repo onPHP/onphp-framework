@@ -43,7 +43,7 @@
 		{
 			try {
 				Assert::isInteger($string);
-				$this->fail();
+				$this->fail("'{$string}' is integer!");
 			} catch (WrongArgumentException $e) {
 				$this->pass();
 			}
