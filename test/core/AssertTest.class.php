@@ -30,23 +30,19 @@
 		public function testInteger()
 		{
 			Assert::isInteger(2006);
+			Assert::isInteger(0);
+			Assert::isInteger('095');
 			
+			$this->nonIntegerCheck('1e9');
+			$this->nonIntegerCheck(20.06);
+			$this->nonIntegerCheck(acos(20.06));
+			$this->nonIntegerCheck(log(0));
+		}
+		
+		public function nonIntegerCheck($string)
+		{
 			try {
-				Assert::isInteger(20.06);
-				$this->fail();
-			} catch (WrongArgumentException $e) {
-				$this->pass();
-			}
-			
-			try {
-				Assert::isInteger(acos(20.06));
-				$this->fail();
-			} catch (WrongArgumentException $e) {
-				$this->pass();
-			}
-			
-			try {
-				Assert::isInteger(log(0));
+				Assert::isInteger($string);
 				$this->fail();
 			} catch (WrongArgumentException $e) {
 				$this->pass();
