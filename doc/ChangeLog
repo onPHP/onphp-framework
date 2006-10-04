@@ -1,5 +1,10 @@
 # $Id$
 
+2006-10-04	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/Base/Assert.class.php: simplified isInteger-checking, succeeds
+	on integer's with leading zeros now; arrived from trunk.
+
 2006-08-23	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/Cache/PeclMemcached.class.php: several stfu's from trunk.

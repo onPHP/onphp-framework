@@ -38,11 +38,9 @@
 		{
 			if (
 				!(
-					is_numeric($variable)
-					&& $variable == (int) $variable
-					&& strlen($variable) == strlen((int) $variable)
+					$variable == (int) $variable
+					&& is_numeric($variable)
 				)
-				&& !($variable == 0) // (string) '00' == (int) 0
 			)
 				self::fail($message);
 		}
