@@ -12,6 +12,8 @@
 
 	/**
 	 * @deprecated useless constraint on constructor args
+	 *
+	 * @ingroup Flow
 	**/
 	interface FilterController extends Controller
 	{
