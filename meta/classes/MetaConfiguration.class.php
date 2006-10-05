@@ -141,7 +141,7 @@
 				if (isset($this->classes[$parent])) {
 					
 					Assert::isFalse(
-						$this->classes[$parent]->getType()
+						$this->classes[$parent]->getTypeId()
 						== MetaClassType::CLASS_FINAL,
 						
 						"'{$parent}' is final, thus can not have childs"
