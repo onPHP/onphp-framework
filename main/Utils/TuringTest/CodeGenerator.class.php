@@ -22,7 +22,7 @@
 		private $numbersAllowed		= true;
 		private $similarAllowed		= true;
 		
-		static private $similarSymbols	= array('0', 'o');
+		static private $similarSymbols	= array('0', 'o', '1', 'l');
 	
 		function generate()
 		{
