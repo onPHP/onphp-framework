@@ -1,4 +1,3 @@
 # $Id$
 
 * allow use different schema's in insert and uptade queries (giv);
-* customizable db-instance's on per-dao level (voxus);
