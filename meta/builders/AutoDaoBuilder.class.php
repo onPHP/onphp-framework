@@ -34,7 +34,7 @@ EOT;
 
 			if (sizeof($class->getProperties())) {
 				$out .= <<<EOT
-	public function __construct()
+	protected function __construct()
 	{
 
 EOT;
