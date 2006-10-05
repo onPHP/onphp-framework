@@ -57,6 +57,14 @@
 			return $this->type;
 		}
 		
+		public function getTypeId()
+		{
+			return
+				$this->type
+					? $this->type->getId()
+					: null;
+		}
+		
 		public function setType(MetaClassType $type)
 		{
 			$this->type = $type;
