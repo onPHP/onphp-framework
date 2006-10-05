@@ -5,7 +5,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class AuthorizationFilter implements FilterController
+	final class AuthorizationFilter
 	{
 		private $controller = null;
 		
