@@ -33,6 +33,7 @@
 			Assert::isInteger(0);
 			Assert::isInteger('095');
 			
+			$this->nonIntegerCheck(null);
 			$this->nonIntegerCheck('1e9');
 			$this->nonIntegerCheck(20.06);
 			$this->nonIntegerCheck(acos(20.06));
