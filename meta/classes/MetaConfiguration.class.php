@@ -175,6 +175,13 @@
 			foreach ($liaisons as $class => $parent) {
 				if (isset($this->classes[$parent])) {
 					
+					Assert::isFalse(
+						$this->classes[$parent]->getType()
+						== MetaClassType::CLASS_FINAL,
+						
+						"'{$parent}' is final, thus can not have childs"
+					);
+					
 					if (
 						$this->classes[$class]->getPattern()
 							instanceof DictionaryClassPattern
