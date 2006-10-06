@@ -18,7 +18,7 @@ PHPAPI zend_class_entry *onphp_ce_Castable;
 ONPHP_METHOD(Castable, castTo)
 {
 	zval *cast;
-
+	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &cast) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}

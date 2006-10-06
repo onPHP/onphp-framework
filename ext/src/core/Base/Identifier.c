@@ -39,7 +39,7 @@ ONPHP_METHOD(Identifier, wrap)
 
 	object->value.obj = onphp_empty_object_new(onphp_ce_Identifier TSRMLS_CC);
 	Z_TYPE_P(object) = IS_OBJECT;
-
+	
 	ONPHP_UPDATE_PROPERTY(object, "id", id);
 
 	RETURN_ZVAL(object, 1, 1);
@@ -57,7 +57,7 @@ ONPHP_METHOD(Identifier, getId)
 ONPHP_METHOD(Identifier, setId)
 {
 	zval *id;
-
+	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
@@ -79,7 +79,7 @@ ONPHP_METHOD(Identifier, isFinalized)
 	if (zval_is_true(ONPHP_READ_PROPERTY(getThis(), "final"))) {
 		RETURN_TRUE;
 	}
-
+	
 	RETURN_FALSE;
 }
 

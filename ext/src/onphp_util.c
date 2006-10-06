@@ -19,10 +19,10 @@ void onphp_append_zval_to_smart_string(smart_str *string, zval *value)
 		smart_str_appends(string, Z_STRVAL_P(value));
 	} else {
 		int use_copy;
-
+		
 		zend_make_printable_zval(value, &copy, &use_copy);
 		smart_str_appends(string, Z_STRVAL(copy));
-
+		
 		if (use_copy) {
 			zval_dtor(&copy);
 		}
