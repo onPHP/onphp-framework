@@ -1,3 +1,12 @@
+/***************************************************************************
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 /* $Id$ */
 
 #include "onphp.h"
@@ -15,7 +24,7 @@ PHPAPI zend_class_entry *onphp_ce_QueryIdentification;
 ONPHP_METHOD(QueryIdentification, getId)
 {
 	zval *out, *hashed;
-	
+
 	zend_call_method_with_0_params(
 		&getThis(),
 		Z_OBJCE_P(getThis()),
@@ -23,11 +32,11 @@ ONPHP_METHOD(QueryIdentification, getId)
 		"tostring",
 		&out
 	);
-	
+
 	if (EG(exception)) {
 		return;
 	}
-	
+
 	zend_call_method_with_1_params(
 		NULL,
 		NULL,
@@ -36,20 +45,20 @@ ONPHP_METHOD(QueryIdentification, getId)
 		&hashed,
 		out
 	);
-	
+
 	ZVAL_FREE(out);
-	
+
 	if (EG(exception)) {
 		return;
 	}
-	
+
 	RETURN_ZVAL(hashed, 1, 1);
 }
 
 ONPHP_METHOD(QueryIdentification, toString)
 {
 	zval *out, *imdi;
-	
+
 	zend_call_method_with_0_params(
 		NULL,
 		onphp_ce_ImaginaryDialect,
@@ -57,11 +66,11 @@ ONPHP_METHOD(QueryIdentification, toString)
 		"me",
 		&imdi
 	);
-	
+
 	if (EG(exception)) {
 		return;
 	}
-	
+
 	zend_call_method_with_1_params(
 		&getThis(),
 		Z_OBJCE_P(getThis()),
@@ -70,13 +79,13 @@ ONPHP_METHOD(QueryIdentification, toString)
 		&out,
 		imdi
 	);
-	
+
 	ZVAL_FREE(imdi);
-	
+
 	if (EG(exception)) {
 		return;
 	}
-	
+
 	RETURN_ZVAL(out, 1, 1);
 }
 

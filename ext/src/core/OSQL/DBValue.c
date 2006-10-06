@@ -1,3 +1,12 @@
+/***************************************************************************
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 /* $Id$ */
 
 #include "onphp.h"
@@ -23,7 +32,7 @@ ONPHP_METHOD(DBValue, create)
 
 	object->value.obj = onphp_empty_object_new(onphp_ce_DBValue TSRMLS_CC);
 	Z_TYPE_P(object) = IS_OBJECT;
-	
+
 	ONPHP_UPDATE_PROPERTY(object, "value", value);
 
 	RETURN_ZVAL(object, 1, 1);
@@ -50,13 +59,13 @@ ONPHP_METHOD(DBValue, getValue)
 ONPHP_METHOD(DBValue, toDialectString)
 {
 	zval *dialect, *cast, *value, *out;
-	
+
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &dialect) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
-	
+
 	value = ONPHP_READ_PROPERTY(getThis(), "value");
-	
+
 	zend_call_method_with_1_params(
 		&dialect,
 		Z_OBJCE_P(dialect),
@@ -65,16 +74,16 @@ ONPHP_METHOD(DBValue, toDialectString)
 		&out,
 		value
 	);
-	
+
 	if (EG(exception)) {
 		return;
 	}
-	
+
 	cast = ONPHP_READ_PROPERTY(getThis(), "cast");
-	
+
 	if (Z_STRLEN_P(cast)) {
 		zval *casted;
-		
+
 		zend_call_method_with_2_params(
 			&dialect,
 			Z_OBJCE_P(dialect),
@@ -84,18 +93,18 @@ ONPHP_METHOD(DBValue, toDialectString)
 			out,
 			cast
 		);
-		
+
 		ZVAL_FREE(out);
-		
+
 		if (EG(exception)) {
 			return;
 		}
-		
+
 		RETURN_ZVAL(casted, 1, 1);
 	} else {
 		// nothing
 	}
-	
+
 	RETURN_ZVAL(out, 1, 1);
 }
 

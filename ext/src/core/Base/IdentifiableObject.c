@@ -1,3 +1,12 @@
+/***************************************************************************
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 /* $Id$ */
 
 #include "onphp.h"
@@ -19,9 +28,9 @@ ONPHP_METHOD(IdentifiableObject, wrap)
 
 	object->value.obj = onphp_empty_object_new(onphp_ce_IdentifiableObject TSRMLS_CC);
 	Z_TYPE_P(object) = IS_OBJECT;
-	
+
 	ONPHP_UPDATE_PROPERTY(object, "id", id);
-	
+
 	RETURN_ZVAL(object, 1, 1);
 }
 
@@ -48,7 +57,7 @@ ONPHP_METHOD(IdentifiableObject, getId)
 ONPHP_METHOD(IdentifiableObject, setId)
 {
 	zval *id;
-	
+
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}

@@ -1,3 +1,12 @@
+/***************************************************************************
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 /* $Id$ */
 
 #include "php.h"
@@ -50,7 +59,7 @@ zend_object_value onphp_empty_object_spawn(
 		(zend_objects_free_object_storage_t) onphp_empty_object_free_storage,
 		NULL TSRMLS_CC
 	);
-	
+
 	objval.handlers = zend_get_std_object_handlers();
 
 	return objval;
