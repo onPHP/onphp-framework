@@ -17,6 +17,6 @@
 PHP_MINIT_FUNCTION(onphp_main)
 {
 	REGISTER_ONPHP_INTERFACE(SegmentHandler);
-
+	
 	return SUCCESS;
 }

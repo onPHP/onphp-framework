@@ -59,7 +59,7 @@ zend_object_value onphp_empty_object_spawn(
 		(zend_objects_free_object_storage_t) onphp_empty_object_free_storage,
 		NULL TSRMLS_CC
 	);
-
+	
 	objval.handlers = zend_get_std_object_handlers();
 
 	return objval;

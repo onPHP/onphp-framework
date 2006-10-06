@@ -42,7 +42,7 @@ PHP_MINIT_FUNCTION(Exceptions)
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(WrongArgumentException,			BaseException,		NULL, NULL);
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(WrongStateException,				BaseException,		NULL, NULL);
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(DatabaseException,				BaseException,		NULL, NULL);
-
+	
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(DuplicateObjectException,		DatabaseException,	NULL, NULL);
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(ObjectNotFoundException,			DatabaseException,	NULL, NULL);
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(TooManyRowsException,			DatabaseException,	NULL, NULL);

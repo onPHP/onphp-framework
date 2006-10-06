@@ -34,13 +34,13 @@ ONPHP_METHOD(FieldTable, __construct)
 ONPHP_METHOD(FieldTable, toDialectString)
 {
 	zval *dialect, *cast, *field, *out;
-
+	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &dialect) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
-
+	
 	field = ONPHP_READ_PROPERTY(getThis(), "field");
-
+	
 	zend_call_method_with_1_params(
 		&dialect,
 		Z_OBJCE_P(dialect),
@@ -49,13 +49,13 @@ ONPHP_METHOD(FieldTable, toDialectString)
 		&out,
 		field
 	);
-
+	
 	if (EG(exception)) {
 		return;
 	}
-
+	
 	cast = ONPHP_READ_PROPERTY(getThis(), "cast");
-
+	
 	if (Z_STRLEN_P(cast)) {
 		zend_call_method_with_2_params(
 			&dialect,
@@ -66,14 +66,14 @@ ONPHP_METHOD(FieldTable, toDialectString)
 			out,
 			cast
 		);
-
+		
 		if (EG(exception)) {
 			return;
 		}
 	} else {
 		// nothing
 	}
-
+	
 	RETURN_ZVAL(out, 1, 1);
 }
 
