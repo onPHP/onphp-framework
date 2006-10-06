@@ -17,6 +17,7 @@
 	{
 		private $name		= null;
 		private $dumbName	= null;
+		private $idName		= null;
 		private $type		= null;
 		private $size		= null;
 		
@@ -48,9 +49,10 @@
 			return $this->dumbName;
 		}
 		
+		/// overrides both idName and dumbName
 		public function setDumbName($name)
 		{
-			$this->dumbName = $name;
+			$this->dumbName = $this->idName = $name;
 			
 			return $this;
 		}
@@ -116,6 +118,26 @@
 			$this->identifier = ($really === true);
 			
 			return $this;
+		}
+		
+		public function getIdName()
+		{
+			$this->idNameCheck();
+			
+			if (!$this->idName)
+				return $this->name.'Id';
+			
+			return $this->idName;
+		}
+		
+		public function getDumbIdName()
+		{
+			$this->idNameCheck();
+			
+			if (!$this->idName)
+				return $this->dumbName.'_id';
+			
+			return $this->idName;
 		}
 		
 		public function getRelation()
@@ -400,6 +422,14 @@ EOT;
 				$dumbName = $this->dumbName;
 			
 			return $this->buildColumn($dumbName);
+		}
+		
+		private function idNameCheck()
+		{
+			Assert::isTrue(
+				$this->isIdentifier() || $this->relation,
+				'hey, i am just a property!'
+			);
 		}
 		
 		private function buildColumn($dumbName)

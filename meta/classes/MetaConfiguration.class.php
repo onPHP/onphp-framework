@@ -132,7 +132,7 @@
 						// only identifier for spooked classes
 						if (
 							$class->getType()
-							&& $class->getType()->getId()
+							&& $class->getTypeId()
 								== MetaClassType::CLASS_SPOOKED
 						) {
 							$class->addProperty($property);
@@ -321,7 +321,7 @@
 			
 			if (
 				$class->getType() 
-				&& $class->getType()->getId() 
+				&& $class->getTypeId() 
 					== MetaClassType::CLASS_SPOOKED
 			) {
 				Assert::isFalse(

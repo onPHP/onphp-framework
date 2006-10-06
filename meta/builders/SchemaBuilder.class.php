@@ -70,7 +70,7 @@ EOT;
 						);
 					
 					$sourceTable = $class->getDumbName();
-					$sourceColumn = $property->getDumbName().'_id';
+					$sourceColumn = $property->getDumbIdName();
 					
 					$targetTable = $foreignClass->getDumbName();
 					$targetColumn = $foreignClass->getIdentifier()->getDumbName();

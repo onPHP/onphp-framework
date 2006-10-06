@@ -107,7 +107,7 @@ EOT;
 								!(
 									$class->getType()
 									&& (
-										$class->getType()->getId()
+										$class->getTypeId()
 										== MetaClassType::CLASS_ABSTRACT
 									)
 									&& $property->isIdentifier()

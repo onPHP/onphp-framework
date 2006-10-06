@@ -205,8 +205,7 @@ EOT;
 						
 						$row .=
 							"'{$property->getName()}".ucfirst($identifier->getName())
-							."' => '{$property->getDumbName()}_"
-							."{$identifier->getDumbName()}'";
+							."' => '{$property->getDumbIdName()}'";
 					} else
 						$row = null;
 				}
