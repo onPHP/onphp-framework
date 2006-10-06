@@ -32,7 +32,7 @@
 			<property name="nickname" type="String" size="255" required="true" />
 			<property name="password" type="Password" required="true" />
 			
-			<property name="lastLogin" type="Timestamp" required="true" column="bleh_foo" />
+			<property name="lastLogin" type="Timestamp" required="true" column="very_custom_field_name" />
 			<property name="registered" type="Timestamp" required="true" />
 			
 			<property name="city" type="TestCity" relation="OneToOne" required="true" />
