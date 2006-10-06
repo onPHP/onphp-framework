@@ -1,3 +1,12 @@
+/***************************************************************************
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 /* $Id$ */
 
 #include "onphp.h"
@@ -19,7 +28,7 @@ PHPAPI zend_class_entry *onphp_ce_Dialect;
 ONPHP_METHOD(Dialect, quoteValue)
 {
 	zval *value;
-	
+
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
@@ -31,22 +40,22 @@ ONPHP_METHOD(Dialect, quoteValue)
 		smart_str string = {0};
 		char *slashed;
 		int length = 0;
-		
+
 		if (Z_TYPE_P(value) == IS_STRING) {
 			slashed = estrndup(Z_STRVAL_P(value), Z_STRLEN_P(value));
 		} else {
 			zval *copy;
-			
+
 			MAKE_STD_ZVAL(copy);
 			ZVAL_ZVAL(copy, value, 1, 0);
-			
+
 			convert_to_string(copy);
-			
+
 			slashed = estrndup(Z_STRVAL_P(copy), Z_STRLEN_P(copy));
 		}
-		
+
 		length = strlen(slashed);
-		
+
 		slashed =
 			php_addslashes(
 				slashed,
@@ -54,14 +63,14 @@ ONPHP_METHOD(Dialect, quoteValue)
 				&length,
 				0 TSRMLS_CC
 			);
-		
+
 		smart_str_appends(&string, "'");
 		smart_str_appends(&string, slashed);
 		smart_str_appends(&string, "'");
 		smart_str_0(&string);
-		
+
 		efree(slashed);
-		
+
 		RETURN_STRINGL(string.c, string.len, 0);
 	}
 }
@@ -74,12 +83,12 @@ ONPHP_METHOD(Dialect, quoteField)
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
-	
+
 	smart_str_appends(&string, "\"");
 	onphp_append_zval_to_smart_string(&string, field);
 	smart_str_appends(&string, "\"");
 	smart_str_0(&string);
-	
+
 	RETURN_STRINGL(string.c, string.len, 0);
 }
 
@@ -91,12 +100,12 @@ ONPHP_METHOD(Dialect, quoteTable)
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &table) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
-	
+
 	smart_str_appends(&string, "\"");
 	onphp_append_zval_to_smart_string(&string, table);
 	smart_str_appends(&string, "\"");
 	smart_str_0(&string);
-	
+
 	RETURN_STRINGL(string.c, string.len, 0);
 }
 
@@ -104,11 +113,11 @@ ONPHP_METHOD(Dialect, toCasted)
 {
 	zval *field, *type;
 	smart_str string = {0};
-	
+
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "zz", &field, &type) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
-	
+
 	smart_str_appends(&string, "CAST (");
 	onphp_append_zval_to_smart_string(&string, field);
 	smart_str_appends(&string, " AS ");
@@ -125,42 +134,42 @@ ONPHP_METHOD(Dialect, timeZone)
 
 	if (argc) {
 		zend_bool exist = 0;
-		
+
 		zend_parse_parameters(argc TSRMLS_CC, "b", &exist);
-	
+
 		if (exist) {
 			RETURN_STRING(" WITH TIME ZONE", 1);
 		}
 	}
-	
+
 	RETURN_STRING(" WITHOUT TIME ZONE", 1);
 }
 
 ONPHP_METHOD(Dialect, dropTableMode)
 {
 	unsigned char argc = ZEND_NUM_ARGS();
-	
+
 	if (argc) {
 		zend_bool cascade = 0;
-		
+
 		zend_parse_parameters(argc TSRMLS_CC, "b", &cascade);
-	
+
 		if (cascade) {
 			RETURN_STRING(" CASCADE", 1);
 		}
 	}
-	
+
 	RETURN_STRING(" RESTRICT", 1);
 }
 
 ONPHP_METHOD(Dialect, fieldToString)
 {
 	zval *field, *out;
-	
+
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
-	
+
 	if (
 		Z_TYPE_P(field) == IS_OBJECT
 		&& instanceof_function(Z_OBJCE_P(field), onphp_ce_DialectString TSRMLS_CC)
@@ -183,22 +192,22 @@ ONPHP_METHOD(Dialect, fieldToString)
 			field
 		);
 	}
-	
+
 	if (EG(exception)) {
 		return;
 	}
-	
+
 	RETURN_ZVAL(out, 1, 1);
 }
 
 ONPHP_METHOD(Dialect, valueToString)
 {
 	zval *value, *out;
-	
+
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
-	
+
 	if (
 		Z_TYPE_P(value) == IS_OBJECT
 		&& instanceof_function(Z_OBJCE_P(value), onphp_ce_DBValue TSRMLS_CC)
@@ -211,12 +220,12 @@ ONPHP_METHOD(Dialect, valueToString)
 			&out,
 			value
 		);
-		
+
 		if (EG(exception)) {
 			return;
 		}
 	}
-	
+
 	RETURN_ZVAL(out, 1, 1);
 }
 

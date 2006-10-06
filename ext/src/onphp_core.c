@@ -1,3 +1,12 @@
+/***************************************************************************
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 /* $Id$ */
 
 #include "onphp_core.h"
@@ -44,26 +53,26 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_INTERFACE(Identifiable);
 	REGISTER_ONPHP_INTERFACE(Instantiatable);
 	REGISTER_ONPHP_INTERFACE(Prototyped);
-	
+
 	REGISTER_ONPHP_INTERFACE(Named);
 	REGISTER_ONPHP_IMPLEMENTS(Named, Identifiable);
-	
+
 	REGISTER_ONPHP_INTERFACE(DialectString);
 	REGISTER_ONPHP_INTERFACE(SQLTableName);
-	
+
 	REGISTER_ONPHP_INTERFACE(Query);
 	REGISTER_ONPHP_IMPLEMENTS(Query, DialectString);
 	REGISTER_ONPHP_IMPLEMENTS(Query, Identifiable);
 	REGISTER_ONPHP_IMPLEMENTS(Query, Stringable);
-	
+
 	REGISTER_ONPHP_STD_CLASS_EX(Identifier);
 	REGISTER_ONPHP_PROPERTY(Identifier, "id", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_PROPERTY_BOOL(Identifier, "final", 0, ZEND_ACC_PRIVATE);
 	onphp_ce_Identifier->ce_flags |= ZEND_ACC_FINAL_CLASS;
-	
+
 	REGISTER_ONPHP_STD_CLASS_EX(IdentifiableObject);
 	REGISTER_ONPHP_PROPERTY(IdentifiableObject, "id", ZEND_ACC_PROTECTED);
-	
+
 	REGISTER_ONPHP_IMPLEMENTS(Identifier, Identifiable);
 	REGISTER_ONPHP_IMPLEMENTS(IdentifiableObject, Identifiable);
 
@@ -78,30 +87,30 @@ PHP_MINIT_FUNCTION(onphp_core)
 
 	REGISTER_ONPHP_STD_CLASS_EX(Singleton);
 	onphp_ce_Singleton->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
-	
+
 	REGISTER_ONPHP_STD_CLASS_EX(StaticFactory);
 	onphp_ce_StaticFactory->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
-	
+
 	REGISTER_ONPHP_SUB_CLASS_EX(Dialect, Singleton);
 	REGISTER_ONPHP_IMPLEMENTS(Dialect, Instantiatable);
 	onphp_ce_Dialect->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
-	
+
 	REGISTER_ONPHP_SUB_CLASS_EX(ImaginaryDialect, Dialect);
 	onphp_ce_ImaginaryDialect->ce_flags |= ZEND_ACC_FINAL_CLASS;
-	
+
 	REGISTER_ONPHP_STD_CLASS_EX(Castable);
 	REGISTER_ONPHP_PROPERTY(Castable, "cast", ZEND_ACC_PROTECTED);
 	onphp_ce_Castable->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
-	
+
 	REGISTER_ONPHP_SUB_CLASS_EX(FieldTable, Castable);
 	REGISTER_ONPHP_PROPERTY(FieldTable, "field", ZEND_ACC_PROTECTED);
 	REGISTER_ONPHP_IMPLEMENTS(FieldTable, DialectString);
 	onphp_ce_FieldTable->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
-	
+
 	REGISTER_ONPHP_SUB_CLASS_EX(DBValue, Castable);
 	REGISTER_ONPHP_PROPERTY(DBValue, "value", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_IMPLEMENTS(DBValue, DialectString);
-	
+
 	REGISTER_ONPHP_STD_CLASS_EX(QueryIdentification);
 	REGISTER_ONPHP_IMPLEMENTS(QueryIdentification, Query);
 	onphp_ce_QueryIdentification->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;

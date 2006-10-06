@@ -1,3 +1,12 @@
+/***************************************************************************
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 /* $Id$ */
 
 #include "onphp.h"
@@ -25,13 +34,13 @@ ONPHP_METHOD(FieldTable, __construct)
 ONPHP_METHOD(FieldTable, toDialectString)
 {
 	zval *dialect, *cast, *field, *out;
-	
+
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &dialect) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
-	
+
 	field = ONPHP_READ_PROPERTY(getThis(), "field");
-	
+
 	zend_call_method_with_1_params(
 		&dialect,
 		Z_OBJCE_P(dialect),
@@ -40,13 +49,13 @@ ONPHP_METHOD(FieldTable, toDialectString)
 		&out,
 		field
 	);
-	
+
 	if (EG(exception)) {
 		return;
 	}
-	
+
 	cast = ONPHP_READ_PROPERTY(getThis(), "cast");
-	
+
 	if (Z_STRLEN_P(cast)) {
 		zend_call_method_with_2_params(
 			&dialect,
@@ -57,14 +66,14 @@ ONPHP_METHOD(FieldTable, toDialectString)
 			out,
 			cast
 		);
-		
+
 		if (EG(exception)) {
 			return;
 		}
 	} else {
 		// nothing
 	}
-	
+
 	RETURN_ZVAL(out, 1, 1);
 }
 

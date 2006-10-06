@@ -1,3 +1,12 @@
+/***************************************************************************
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 /* $Id$ */
 
 #include "onphp.h"
@@ -25,13 +34,13 @@ ONPHP_METHOD(Singleton, getInstance)
 	zval *object, *args;
 	zval **stored;
 	zval ***params = NULL;
-	
+
 	if (argc < 1) {
 		WRONG_PARAM_COUNT;
 	}
 
 	params = safe_emalloc(sizeof(zval **), argc, 0);
-	
+
 	if (zend_get_parameters_array_ex(argc, params) == FAILURE) {
 		zend_throw_exception_ex(
 			onphp_ce_BaseException,
@@ -41,25 +50,25 @@ ONPHP_METHOD(Singleton, getInstance)
 		efree(params);
 		RETURN_NULL();
 	}
-	
+
 	// replica of historical Singleton's behaviour
 	if (argc > 2) {
 		int i;
 		ALLOC_INIT_ZVAL(args);
 		array_init(args);
-		
+
 		for (i = 1; i < argc; i++) {
 			add_next_index_zval(args, *params[i]);
 		}
-		
+
 		params[1] = &args;
 		argc = 2;
 	}
-	
+
 	name = estrdup(Z_STRVAL_PP(params[0]));
-	
+
 	length = strlen(name);
-	
+
 	if (
 		zend_hash_find(
 			Z_ARRVAL_P(instances),
@@ -71,9 +80,9 @@ ONPHP_METHOD(Singleton, getInstance)
 	) {
 		efree(params);
 		efree(name);
-		
+
 		object = *stored;
-		
+
 		zval_copy_ctor(object);
 	} else {
 		// stolen from Reflection's newInstance()
@@ -82,10 +91,10 @@ ONPHP_METHOD(Singleton, getInstance)
 			zend_fcall_info fci;
 			zend_fcall_info_cache fcc;
 			zend_class_entry *ce = *cep;
-			
+
 			// can use ce->name instead now
 			efree(name);
-			
+
 			if (!instanceof_function(ce, onphp_ce_Singleton TSRMLS_CC)) {
 				zend_throw_exception_ex(
 					onphp_ce_WrongArgumentException,
@@ -96,7 +105,7 @@ ONPHP_METHOD(Singleton, getInstance)
 				efree(params);
 				return;
 			}
-			
+
 			// we can call protected consturctors,
 			// since all classes are childs of Singleton
 			if (ce->constructor->common.fn_flags & ZEND_ACC_PRIVATE) {
@@ -119,10 +128,10 @@ ONPHP_METHOD(Singleton, getInstance)
 				efree(params);
 				return;
 			}
-			
+
 			MAKE_STD_ZVAL(object);
 			object_init_ex(object, ce);
-			
+
 			fci.size = sizeof(fci);
 			fci.function_table = EG(function_table);
 			fci.function_name = NULL;
@@ -131,12 +140,12 @@ ONPHP_METHOD(Singleton, getInstance)
 			fci.retval_ptr_ptr = &retval_ptr;
 			fci.param_count = argc - 1;
 			fci.params = params + 1;
-			
+
 			fcc.initialized = 1;
 			fcc.function_handler = ce->constructor;
 			fcc.calling_scope = EG(scope);
 			fcc.object_pp = &object;
-			
+
 			if (zend_call_function(&fci, &fcc TSRMLS_CC) == FAILURE) {
 				zend_throw_exception_ex(
 					onphp_ce_BaseException,
@@ -145,21 +154,21 @@ ONPHP_METHOD(Singleton, getInstance)
 					ce->name
 				);
 			}
-			
+
 			efree(params);
-			
+
 			if (retval_ptr) {
 				zval_ptr_dtor(&retval_ptr);
 			}
-			
+
 			if (EG(exception)) {
 				return;
 			}
-			
+
 			add_assoc_zval_ex(instances, ce->name, length + 1, object);
 		}
 	}
-	
+
 	RETURN_ZVAL(object, 1, 0);
 }
 
@@ -167,7 +176,7 @@ PHP_RINIT_FUNCTION(Singleton)
 {
 	ALLOC_INIT_ZVAL(instances);
 	array_init(instances);
-	
+
 	return SUCCESS;
 }
 

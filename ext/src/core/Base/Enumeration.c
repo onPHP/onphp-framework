@@ -1,3 +1,12 @@
+/***************************************************************************
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 /* $Id$ */
 
 #include "onphp.h"
@@ -15,11 +24,11 @@ ONPHP_METHOD(Enumeration, __construct)
 	zval *id, *names;
 	zval **found;
 	int result;
-	
+
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
-	
+
 	zend_call_method_with_0_params(
 		&getThis(),
 		Z_OBJCE_P(getThis()),
@@ -27,11 +36,11 @@ ONPHP_METHOD(Enumeration, __construct)
 		"getnamelist",
 		&names
 	);
-	
+
 	if (EG(exception)) {
 		return;
 	}
-	
+
 	if (Z_TYPE_P(names) != IS_ARRAY) {
 		zend_throw_exception_ex(
 			onphp_ce_WrongStateException,
@@ -41,21 +50,21 @@ ONPHP_METHOD(Enumeration, __construct)
 		ZVAL_FREE(names);
 		return;
 	}
-	
+
 	switch (Z_TYPE_P(id)) {
 		case IS_LONG:
-			
+
 			result =
 				zend_hash_index_find(
 					Z_ARRVAL_P(names),
 					Z_LVAL_P(id),
 					(void **) &found
 				);
-			
+
 			break;
-		
+
 		case IS_STRING:
-			
+
 			result =
 				zend_symtable_find(
 					Z_ARRVAL_P(names),
@@ -63,11 +72,11 @@ ONPHP_METHOD(Enumeration, __construct)
 					Z_STRLEN_P(id) + 1,
 					(void **) &found
 				);
-			
+
 			break;
-			
+
 		case IS_NULL:
-		
+
 			result =
 				zend_hash_find(
 					Z_ARRVAL_P(names),
@@ -75,11 +84,11 @@ ONPHP_METHOD(Enumeration, __construct)
 					1,
 					(void **) &found
 				);
-			
+
 			break;
-			
+
 		default:
-			
+
 			zend_throw_exception_ex(
 				onphp_ce_WrongArgumentException,
 				0 TSRMLS_CC,
@@ -88,7 +97,7 @@ ONPHP_METHOD(Enumeration, __construct)
 			ZVAL_FREE(names);
 			return;
 	}
-	
+
 	if (result == SUCCESS) {
 		ONPHP_UPDATE_PROPERTY(getThis(), "id", id);
 		ONPHP_UPDATE_PROPERTY(getThis(), "name", *found);
@@ -97,7 +106,7 @@ ONPHP_METHOD(Enumeration, __construct)
 			SEPARATE_ARG_IF_REF(id);
 			convert_to_string(id);
 		}
-		
+
 		zend_throw_exception_ex(
 			onphp_ce_MissingElementException,
 			0 TSRMLS_CC,
@@ -105,18 +114,18 @@ ONPHP_METHOD(Enumeration, __construct)
 			Z_STRVAL_P(id)
 		);
 	}
-	
+
 	ZVAL_FREE(names);
 }
 
 ONPHP_METHOD(Enumeration, getList)
 {
 	zval *enm, *out;
-	
+
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &enm) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
-	
+
 	zend_call_method_with_0_params(
 		&enm,
 		Z_OBJCE_P(enm),
@@ -124,7 +133,7 @@ ONPHP_METHOD(Enumeration, getList)
 		"getobjectlist",
 		&out
 	);
-	
+
 	if (EG(exception)) {
 		return;
 	} else {
@@ -143,10 +152,10 @@ ONPHP_METHOD(Enumeration, getObjectList)
 	zval **element;
 	HashTable *table;
 	HashPosition pointer;
-	
+
 	ALLOC_INIT_ZVAL(list);
 	array_init(list);
-	
+
 	zend_call_method_with_0_params(
 		&getThis(),
 		Z_OBJCE_P(getThis()),
@@ -154,7 +163,7 @@ ONPHP_METHOD(Enumeration, getObjectList)
 		"getnamelist",
 		&names
 	);
-	
+
 	if (
 		Z_TYPE_P(names) != IS_ARRAY
 	) {
@@ -162,9 +171,9 @@ ONPHP_METHOD(Enumeration, getObjectList)
 	} else if (EG(exception)) {
 		return;
 	}
-	
+
 	table = Z_ARRVAL_P(names);
-	
+
 	for (
 		zend_hash_internal_pointer_reset_ex(table, &pointer);
 		zend_hash_get_current_data_ex(table, (void **) &element, &pointer) == SUCCESS; zend_hash_move_forward_ex(table, &pointer)
@@ -174,8 +183,8 @@ ONPHP_METHOD(Enumeration, getObjectList)
 		unsigned int length;
 		int result;
 		zval *object, *arg, *out;
-		
-		result = 
+
+		result =
 			zend_hash_get_current_key_ex(
 				table,
 				&key,
@@ -184,9 +193,9 @@ ONPHP_METHOD(Enumeration, getObjectList)
 				0,
 				&pointer
 			);
-		
+
 		MAKE_STD_ZVAL(arg);
-		
+
 		if (result == HASH_KEY_IS_STRING) {
 			ZVAL_STRINGL(arg, key, length, 1);
 		} else if (result == HASH_KEY_IS_LONG) {
@@ -201,11 +210,11 @@ ONPHP_METHOD(Enumeration, getObjectList)
 			ZVAL_FREE(list);
 			return;
 		}
-		
+
 		MAKE_STD_ZVAL(object);
 		object->value.obj = onphp_empty_object_new(Z_OBJCE_P(getThis()) TSRMLS_CC);
 		Z_TYPE_P(object) = IS_OBJECT;
-		
+
 		zend_call_method_with_1_params(
 			&object,
 			Z_OBJCE_P(object),
@@ -214,7 +223,7 @@ ONPHP_METHOD(Enumeration, getObjectList)
 			&out,
 			arg
 		);
-		
+
 		if (EG(exception)) {
 			ZVAL_FREE(object);
 			ZVAL_FREE(list);
@@ -222,18 +231,18 @@ ONPHP_METHOD(Enumeration, getObjectList)
 			return;
 		} else {
 			zval_dtor(arg);
-			
+
 			add_next_index_zval(list, object);
 		}
 	}
-	
+
 	RETURN_ZVAL(list, 1, 1);
 }
 
 ONPHP_METHOD(Enumeration, toString)
 {
 	zval *name = ONPHP_READ_PROPERTY(getThis(), "name");
-	
+
 	RETURN_ZVAL(name, 1, 0);
 }
 

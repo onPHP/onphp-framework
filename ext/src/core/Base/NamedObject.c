@@ -1,3 +1,12 @@
+/***************************************************************************
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 /* $Id$ */
 
 #include "onphp.h"
@@ -17,7 +26,7 @@ ONPHP_METHOD(NamedObject, getName)
 ONPHP_METHOD(NamedObject, setName)
 {
 	zval *name;
-	
+
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &name) == SUCCESS) {
 		ONPHP_UPDATE_PROPERTY(getThis(), "name", name);
 	}
@@ -49,23 +58,23 @@ ONPHP_METHOD(NamedObject, compareNames)
 	) {
 		WRONG_PARAM_COUNT;
 	}
-	
+
 	zend_call_method_with_0_params(&first, Z_OBJCE_P(first), NULL, "getname", &left);
-	
+
 	if (EG(exception)) {
 		return;
 	}
-	
+
 	zend_call_method_with_0_params(&second, Z_OBJCE_P(second), NULL, "getname", &right);
-	
+
 	if (EG(exception)) {
 		return;
 	}
-	
+
 	result = strcasecmp(Z_STRVAL_P(left), Z_STRVAL_P(right));
-	
+
 	ZVAL_FREE(left); ZVAL_FREE(right);
-	
+
 	RETURN_LONG(result);
 }
 
