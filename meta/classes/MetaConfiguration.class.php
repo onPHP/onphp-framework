@@ -106,7 +106,7 @@
 					);
 					
 					if (isset($xmlProperty['column'])) {
-						$property->setDumbName(
+						$property->setColumnName(
 							(string) $xmlProperty['column']
 						);
 					}

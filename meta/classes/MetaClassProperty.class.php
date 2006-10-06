@@ -17,7 +17,8 @@
 	{
 		private $name		= null;
 		private $dumbName	= null;
-		private $idName		= null;
+		private $columnName	= null;
+		
 		private $type		= null;
 		private $size		= null;
 		
@@ -46,13 +47,28 @@
 		
 		public function getDumbName()
 		{
+			if ($this->columnName)
+				return $this->columnName;
+			
 			return $this->dumbName;
 		}
 		
-		/// overrides both idName and dumbName
-		public function setDumbName($name)
+		public function getDumbIdName()
 		{
-			$this->dumbName = $this->idName = $name;
+			Assert::isTrue(
+				$this->isIdentifier() || $this->relation,
+				'hey, i am just a property!'
+			);
+			
+			if ($this->columnName)
+				return $this->columnName;
+			
+			return $this->dumbName.'_id';
+		}
+		
+		public function setColumnName($name)
+		{
+			$this->columnName = $name;
 			
 			return $this;
 		}
@@ -120,26 +136,6 @@
 			return $this;
 		}
 		
-		public function getIdName()
-		{
-			$this->idNameCheck();
-			
-			if (!$this->idName)
-				return $this->name.'Id';
-			
-			return $this->idName;
-		}
-		
-		public function getDumbIdName()
-		{
-			$this->idNameCheck();
-			
-			if (!$this->idName)
-				return $this->dumbName.'_id';
-			
-			return $this->idName;
-		}
-		
 		public function getRelation()
 		{
 			return $this->relation;
@@ -203,13 +199,13 @@ EOT;
 								$out =
 									"set{$method}("
 									."new {$this->type->getClass()}("
-									."\$array[\$prefix.'{$this->dumbName}_id']"
+									."\$array[\$prefix.'{$this->getDumbIdName()}']"
 									."))";
 							} else {
 								$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->dumbName}_id'])) {
+if (isset(\$array[\$prefix.'{$this->getDumbIdName()}'])) {
 	\${$varName}->set{$method}(
-		new {$this->type->getClass()}(\$array[\$prefix.'{$this->dumbName}_id'])
+		new {$this->type->getClass()}(\$array[\$prefix.'{$this->getDumbIdName()}'])
 	);
 }
 
@@ -221,15 +217,15 @@ EOT;
 								$out =
 									"set{$method}("
 									."{$this->type->getClass()}::dao()->getById("
-									."\$array[\$prefix.'{$this->dumbName}_{$idName}']"
+									."\$array[\$prefix.'{$this->getDumbIdName()}']"
 									."))";
 								
 							} else {
 								
 								$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->dumbName}_{$idName}'])) {
+if (isset(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])) {
 	\${$varName}->set{$method}(
-		{$this->type->getClass()}::dao()->getById(\$array[\$prefix.'{$this->dumbName}_{$idName}'])
+		{$this->type->getClass()}::dao()->getById(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])
 	);
 }
 
@@ -258,19 +254,19 @@ EOT;
 					if ($this->type instanceof RangeType) {
 						$value =
 							"\n{$value}\n"
-							."ArrayUtils::getArrayVar(\$array, '{$this->dumbName}_min'), "
-							."\nArrayUtils::getArrayVar(\$array, '{$this->dumbName}_max')\n)\n";
+							."ArrayUtils::getArrayVar(\$array, '{$this->getDumbName()}_min'), "
+							."\nArrayUtils::getArrayVar(\$array, '{$this->getDumbName()}_max')\n)\n";
 					} else {
-						$value .= "\$array[\$prefix.'{$this->dumbName}'])";
+						$value .= "\$array[\$prefix.'{$this->getDumbName()}'])";
 					}
 				} elseif ($this->type instanceof BooleanType) {
 					// FIXME: it's plain ugly
 					if (defined('DB_CLASS') && DB_CLASS == 'MySQL')
-						$value = "\$array[\$prefix.'{$this->dumbName}'] ? true : false";
+						$value = "\$array[\$prefix.'{$this->getDumbName()}'] ? true : false";
 					else
-						$value = "\$array[\$prefix.'{$this->dumbName}'][0] == 't'";
+						$value = "\$array[\$prefix.'{$this->getDumbName()}'][0] == 't'";
 				} else
-					$value = "\$array[\$prefix.'{$this->dumbName}']";
+					$value = "\$array[\$prefix.'{$this->getDumbName()}']";
 				
 				if (
 					$this->required
@@ -286,9 +282,9 @@ EOT;
 					if ($this->type instanceof ObjectType) {
 						
 						$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->dumbName}'])) {
+if (isset(\$array[\$prefix.'{$this->getDumbName()}'])) {
 	\${$varName}->set{$method}(
-		new {$this->type->getClass()}(\$array[\$prefix.'{$this->dumbName}'])
+		new {$this->type->getClass()}(\$array[\$prefix.'{$this->getDumbName()}'])
 	);
 }
 
@@ -297,7 +293,7 @@ EOT;
 					
 						$out = <<<EOT
 set{$method}(
-	isset(\$array[\$prefix.'{$this->dumbName}'])
+	isset(\$array[\$prefix.'{$this->getDumbName()}'])
 		? {$value}
 		: null
 )
@@ -329,11 +325,16 @@ EOT;
 						
 						$idName = $remote->getIdentifier()->getName();
 						$idMethod = ucfirst($idName);
+						
+						if ($this->columnName)
+							$dumbIdName = $this->getDumbIdName();
+						else
+							$dumbIdName = $this->getDumbName().'_'.$idName;
 
 						if ($this->required)
-							$out = "set('{$this->dumbName}_{$idName}', ";
+							$out = "set('{$dumbIdName}', ";
 						else
-							$out = "set(\n'{$this->dumbName}_{$idName}', ";
+							$out = "set(\n'{$dumbIdName}', ";
 						
 						if ($remote->getPattern() instanceof EnumerationClassPattern) {
 							if ($this->required)
@@ -383,22 +384,22 @@ EOT;
 				if ($this->type instanceof ObjectType) {
 					if ($this->type instanceof RangeType)
 						$out .=
-							"{$set}('{$this->dumbName}', "
+							"{$set}('{$this->getDumbName()}', "
 							."\${$varName}->get{$method}()";
 					elseif ($this->required)
 						$out .=
-							"{$set}('{$this->dumbName}', "
+							"{$set}('{$this->getDumbName()}', "
 							."\${$varName}->get{$method}()->toString()";
 					else
 						$out .=
-							"{$set}(\n'{$this->dumbName}', "
+							"{$set}(\n'{$this->getDumbName()}', "
 							."\n"
 							."\${$varName}->get{$method}()\n"
 							."? \${$varName}->get{$method}()->toString()\n"
 							.": null\n";
 				} else {
 					$out .=
-						"{$set}('{$this->dumbName}', "
+						"{$set}('{$this->getDumbName()}', "
 						."\${$varName}->{$get}{$method}()";
 				}
 				
@@ -411,25 +412,17 @@ EOT;
 		public function toColumn()
 		{
 			if ($this->type instanceof ObjectType && !$this->type->isGeneric())
-				$dumbName = "{$this->dumbName}_id";
+				$dumbName = $this->getDumbIdName();
 			elseif ($this->type instanceof RangeType) {
 				return
 					array(
-						$this->buildColumn("{$this->dumbName}_min"),
-						$this->buildColumn("{$this->dumbName}_max")
+						$this->buildColumn("{$this->getDumbName()}_min"),
+						$this->buildColumn("{$this->getDumbName()}_max")
 					);
 			} else
-				$dumbName = $this->dumbName;
+				$dumbName = $this->getDumbName();
 			
 			return $this->buildColumn($dumbName);
-		}
-		
-		private function idNameCheck()
-		{
-			Assert::isTrue(
-				$this->isIdentifier() || $this->relation,
-				'hey, i am just a property!'
-			);
 		}
 		
 		private function buildColumn($dumbName)
