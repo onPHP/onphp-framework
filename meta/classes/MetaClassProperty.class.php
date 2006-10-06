@@ -48,6 +48,13 @@
 			return $this->dumbName;
 		}
 		
+		public function setDumbName($name)
+		{
+			$this->dumbName = $name;
+			
+			return $this;
+		}
+		
 		public function getType()
 		{
 			return $this->type;

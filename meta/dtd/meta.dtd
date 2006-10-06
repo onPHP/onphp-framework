@@ -28,6 +28,7 @@
 		name		CDATA #REQUIRED
 		type		CDATA #REQUIRED
 		size		CDATA #IMPLIED
+		column		CDATA #IMPLIED
 		default		CDATA #IMPLIED
 		required	(true|false) "false"
 		identifier	(true|false) "false"

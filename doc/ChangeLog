@@ -1,5 +1,10 @@
 # $Id$
 
+2006-10-06	Konstantin V. Arkhipov
+
+	* meta/classes/MetaConfiguration.class.php: added ability to override
+	column names for properties.
+
 2006-10-05	Anton E. Lebedevich
 
 	* main/Flow/FilterController.class.php: removed.

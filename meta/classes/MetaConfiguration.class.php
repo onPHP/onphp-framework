@@ -105,6 +105,12 @@
 						(string) $xmlProperty['type']
 					);
 					
+					if (isset($xmlProperty['column'])) {
+						$property->setDumbName(
+							(string) $xmlProperty['column']
+						);
+					}
+					
 					if ((string) $xmlProperty['required'] == 'true')
 						$property->required();
 					
