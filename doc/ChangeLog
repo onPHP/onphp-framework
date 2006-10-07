@@ -1,5 +1,10 @@
 # $Id$
 
+2006-10-07	Konstantin V. Arkhipov
+
+	* meta/: dropped support of <property identifier="true" ... />; use
+	<identifier ... /> now.
+
 2006-10-06	Anton E. Lebedevich
 
 	* main/Base/ObjectsTree.class.php: removed.

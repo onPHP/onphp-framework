@@ -114,31 +114,12 @@
 					if ((string) $xmlProperty['required'] == 'true')
 						$property->required();
 					
-					if ((string) $xmlProperty['identifier'] == 'true') {
-						
-						Assert::isTrue(
-							$property->isRequired(),
-							'identifier can not be optional'
+					if (isset($xmlProperty['identifier'])) {
+						throw new WrongArgumentException(
+							'obsoleted identifier description found in '
+							."{$class->getName()} class;\n"
+							.'you must use <identifier /> instead.'
 						);
-						
-						Assert::isTrue(
-							$class->getIdentifier() === null,
-							'composite identifiers are not supported'
-						);
-						
-						$property->setIdentifier(true);
-						
-						// we don't need anything but
-						// only identifier for spooked classes
-						if (
-							$class->getType()
-							&& $class->getTypeId()
-								== MetaClassType::CLASS_SPOOKED
-						) {
-							$class->addProperty($property);
-							
-							break;
-						}
 					}
 					
 					if (isset($xmlProperty['size']))

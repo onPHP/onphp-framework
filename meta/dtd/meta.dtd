@@ -31,7 +31,6 @@
 		column		CDATA #IMPLIED
 		default		CDATA #IMPLIED
 		required	(true|false) "false"
-		identifier	(true|false) "false"
 		relation	CDATA #IMPLIED
 >
 
