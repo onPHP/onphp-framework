@@ -1,5 +1,10 @@
 # $Id$
 
+2006-10-07	Konstantin V. Arkhipov
+
+	* meta/: deprecated identifier's description thru property's
+	identifier="true"; use shortcut instead - <identifier />.
+
 2006-10-05	Konstantin V. Arkhipov
 
 	* meta/builders/AutoDaoBuilder.class.php: public constructor's

@@ -85,6 +85,11 @@
 					
 					if ((string) $xmlProperty['identifier'] == 'true') {
 						
+						echo
+							'! deprecated usage of identifier\'s description '
+							."at '{$class->getName()}' class; "
+							.'use <identifier /> instead'."\n";
+						
 						Assert::isTrue(
 							$property->isRequired(),
 							'identifier can not be optional'
