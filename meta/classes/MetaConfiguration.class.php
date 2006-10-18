@@ -88,6 +88,12 @@
 					
 					$property = $this->buildProperty($name, $type);
 					
+					if (isset($id['column'])) {
+						$property->setColumnName(
+							(string) $id['column']
+						);
+					}
+					
 					$property->
 						setIdentifier(true)->
 						required();

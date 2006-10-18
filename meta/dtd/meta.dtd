@@ -21,6 +21,7 @@
 <!ATTLIST identifier
 		name	CDATA #IMPLIED
 		type	CDATA #IMPLIED
+		column	CDATA #IMPLIED
 >
 
 <!ELEMENT property EMPTY>
