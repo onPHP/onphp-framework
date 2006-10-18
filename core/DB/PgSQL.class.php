@@ -63,6 +63,8 @@
 				throw new DatabaseException(
 					'can not connect to PostgreSQL server: '.pg_errormessage()
 				);
+			
+			pg_set_error_verbosity($this->link, PGSQL_ERRORS_VERBOSE);
 
 			return $this;
 		}
@@ -106,9 +108,17 @@
 			try {
 				return pg_query($this->link, $queryString);
 			} catch (BaseException $e) {
-				throw new DatabaseException(
-					pg_errormessage($this->link).' - '.$queryString
-				);
+				// manual parsing, since pg_send_query() and
+				// pg_get_result() is too slow in our case
+				list($error, ) = explode("\n", pg_errormessage($this->link));
+				$code = substr($error, 8, 5);
+				
+				if ($code == PostgresError::UNIQUE_VIOLATION)
+					$e = 'DuplicateObjectException';
+				else
+					$e = 'DatabaseException';
+					
+				throw new $e($error.' - '.$queryString);
 			}
 		}
 

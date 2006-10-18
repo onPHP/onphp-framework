@@ -2,6 +2,9 @@
 
 2006-10-18	Konstantin V. Arkhipov
 
+	* core/DB/PostgresError.class.php, core/DB/PgSQL.class.php: queryRaw()
+	now throws DuplicateObjectException upon PG's UNIQUE_VIOLATION.
+
 	* core/OSQL/SQLQueryJoin.class.php: dropped.
 
 	* core/OSQL/SelectQuery.class.php: joinQuery() is now deprecated in
