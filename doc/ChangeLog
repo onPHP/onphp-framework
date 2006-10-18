@@ -1,10 +1,18 @@
 # $Id$
 
+2006-10-18	Konstantin V. Arkhipov
+
+	* core/OSQL/SQLQueryJoin.class.php: dropped.
+
+	* core/OSQL/SelectQuery.class.php: joinQuery() is now deprecated in
+	favour of join; leftJoinQuery is dropped.
+
 2006-10-18	Dmitry E. Demidov
 
-	* core/OSQL/SelectQuery.class.php added method leftJoinQuery.
-	* core/OSQL/SQLQueryJoin.class.php added property left for ability 
-	generate left outer join with query
+	* core/OSQL/SelectQuery.class.php: added method leftJoinQuery.
+
+	* core/OSQL/SQLQueryJoin.class.php: added property left for ability 
+	generate left outer join with query.
 
 2006-10-18	Konstantin V. Arkhipov
 

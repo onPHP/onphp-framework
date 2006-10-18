@@ -70,19 +70,13 @@
 			return $this;
 		}
 
+		/// @deprecated by join()
 		public function joinQuery(SelectQuery $query, LogicalObject $logic, $alias)
 		{
-			$this->from[] = new SQLQueryJoin($query, $logic, $alias);
+			$this->from[] = new SQLJoin($query, $logic, $alias);
 			return $this;
 		}
 		
-		public function leftJoinQuery(SelectQuery $query, LogicalObject $logic, $alias)
-		{
-			$sqlQueryJoun = new SQLQueryJoin($query, $logic, $alias);
-			$this->from[] = $sqlQueryJoun->left();
-			return $this;
-		}
-
 		public function join($table, LogicalObject $logic, $alias = null)
 		{
 			$this->from[] = new SQLJoin($table, $logic, $alias);
