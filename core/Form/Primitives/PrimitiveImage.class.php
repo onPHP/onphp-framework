@@ -73,8 +73,7 @@
 		
 		public function import($scope)
 		{
-			if ($result = parent::import($scope)) {
-				
+			if (parent::import($scope)) {
 				try {
 					list($width, $height, $type) = getimagesize($this->value);
 				} catch (BaseException $e) {
@@ -96,7 +95,7 @@
 				}
 			}
 			
-			return $result;
+			return false;
 		}
 	}
 ?>
