@@ -15,16 +15,26 @@
 	**/
 	class SQLQueryJoin extends SQLBaseJoin implements SQLTableName
 	{
+		private	$left	= false;
+		
 		public function __construct(
 			SelectQuery $query, LogicalObject $logic, $alias
 		)
 		{
 			parent::__construct($query, $logic, $alias);
 		}
+		
+		public function left()
+		{
+			$this->left = true;
+			
+			return $this;
+		}
 
 		public function toDialectString(Dialect $dialect)
 		{
 			return
+				($this->left === true ? 'LEFT ' : null).
 				'JOIN ('.$this->subject->toDialectString($dialect).') AS '.
 				$dialect->quoteTable($this->alias).
 				' ON '.$this->logic->toDialectString($dialect);
