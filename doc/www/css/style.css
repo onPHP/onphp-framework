@@ -165,3 +165,8 @@
 	span.date {
 		color: black;
 	}
+	
+	span.damnSmall {
+		text-align: left;
+		font-size: 80%;
+	}
