@@ -83,7 +83,7 @@ PHP_MINFO_FUNCTION(onphp)
 			PUTS(elem_esc);
 			efree(elem_esc);
 		}
-		PUTS("?="ONPHP_LOGO_GUID"\" alt=\"onPHP Logo\"");
+		PUTS("?="ONPHP_LOGO_GUID"\" alt=\"onPHP Logo\" ");
 		PUTS("width=\"202\" height=\"93\" /></a>");
 		PUTS("</td></tr>\n");
 	}
