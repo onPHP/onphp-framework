@@ -1,5 +1,10 @@
 # $Id$
 
+2006-10-18	Konstantin V. Arkhipov
+
+	* core/Form/Primitives/PrimitiveImage.class.php: big images' handling
+	fixed.
+
 2006-10-07	Konstantin V. Arkhipov
 
 	* meta/: dropped support of <property identifier="true" ... />; use
