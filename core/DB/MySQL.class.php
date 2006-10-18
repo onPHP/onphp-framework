@@ -148,12 +148,20 @@
 		
 		public function queryRaw($queryString)
 		{
-			if (!$result = mysql_query($queryString, $this->link))
-				throw new DatabaseException(
-					"failed to execute such query - '{$queryString}': ".
-					mysql_error($this->link),
-					mysql_errno($this->link)
+			if (!$result = mysql_query($queryString, $this->link)) {
+				
+				$code = mysql_errno($this->link);
+				
+				if ($code == 1062)
+					$e = 'DuplicateObjectException';
+				else
+					$e = 'DatabaseException';
+
+				throw new $e(
+					mysql_error($this->link).' - '.$queryString,
+					$code
 				);
+			}
 
 			return $result;
 		}

@@ -2,6 +2,9 @@
 
 2006-10-18	Konstantin V. Arkhipov
 
+	* core/DB/SQLite.class.php, core/DB/MySQL.class.php: duplicated
+	inserts are now detected too.
+
 	* core/DB/PostgresError.class.php, core/DB/PgSQL.class.php: queryRaw()
 	now throws DuplicateObjectException upon PG's UNIQUE_VIOLATION.
 

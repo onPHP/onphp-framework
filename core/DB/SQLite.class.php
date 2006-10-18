@@ -86,10 +86,16 @@
 			try {
 				return sqlite_query($queryString, $this->link);
 			} catch (BaseException $e) {
-				throw new DatabaseException(
-					sqlite_error_string(sqlite_last_error($this->link))
-					.' - '
-					.$queryString
+				$code = sqlite_last_error($this->link);
+				
+				if ($code == 19)
+					$e = 'DuplicateObjectException';
+				else
+					$e = 'DatabaseException';
+					
+				throw new $e(
+					sqlite_error_string($code).' - '.$queryString,
+					$code
 				);
 			}
 		}
