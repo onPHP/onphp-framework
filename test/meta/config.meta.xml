@@ -32,6 +32,7 @@
 			
 			<property name="lastLogin" type="Timestamp" required="true" column="very_custom_field_name" />
 			<property name="registered" type="Timestamp" required="true" />
+			<property name="strangeTime" type="Time" required="false" />
 			
 			<property name="city" type="TestCity" relation="OneToOne" required="true" />
 			

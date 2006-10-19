@@ -42,6 +42,11 @@
 			return new PrimitiveDate($name);
 		}
 		
+		public static function time($name)
+		{
+			return new PrimitiveTime($name);
+		}
+		
 		public static function string($name)
 		{
 			return new PrimitiveString($name);

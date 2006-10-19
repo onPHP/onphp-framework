@@ -119,9 +119,10 @@
 			$minute = (int) $minute;
 			
 			Assert::isTrue(
-				$minute >= 0  &&
-				$minute <= 60,
-				"wrong minute specified"
+				$minute >= 0
+				&& $minute <= 60,
+				
+				'wrong minute specified'
 			);
 			
 			$this->minute = $minute;
@@ -140,8 +141,10 @@
 			$second = (int) $second;
 			
 			Assert::isTrue(
-				$second >= 0 &&
-				$second <= 60
+				$second >= 0
+				&& $second <= 60,
+				
+				'wrong second specified'
 			);
 			
 			$this->second = $second;
@@ -153,7 +156,9 @@
 		public function toString($delimiter = ':')
 		{
 			if ($this->string === null)
-				$this->string = $this->doublize($this->hour).$delimiter
+				$this->string =
+					$this->doublize($this->hour)
+					.$delimiter
 					.$this->doublize($this->minute);
 
 			return $this->string;
@@ -169,12 +174,28 @@
 						: $delimiter.'00'
 				);
 		}
+		
+		public function toMinutes()
+		{
+			return
+				($this->hour * 60)
+				+ $this->minute
+				+ round($this->second / 100, 0);
+		}
+		
+		public function toSeconds()
+		{
+			return
+				($this->hour * 3600)
+				+ ($this->minute * 60)
+				+ $this->second;
+		}
 
 		private function doublize($int)
 		{
 			return
 				$int <= 9
-					? "0{$int}"
+					? '0'.$int
 					: $int;
 		}
 	}
