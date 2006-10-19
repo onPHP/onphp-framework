@@ -20,9 +20,8 @@
 		extends Singleton
 		implements Instantiatable
 	{
-		abstract public function autoincrementize(
-			DBColumn $column, &$prepend
-		);
+		abstract public function preAutoincrement(DBColumn $column);
+		abstract public function postAutoincrement(DBColumn $column);
 		
 		abstract public function hasTruncate();
 		abstract public function hasMultipleTruncate();

@@ -23,7 +23,12 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 		
-		public function autoincrementize(DBColumn $column, &$prepend)
+		public function preAutoincrement(DBColumn $column)
+		{
+			return null;
+		}
+		
+		public function postAutoincrement(DBColumn $column)
 		{
 			return 'AUTOINCREMENT';
 		}
