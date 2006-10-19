@@ -94,31 +94,35 @@
 				self::quoteValue($searchString)."))";
 		}
 		
-		protected function  makeSequenceName(DBColumn $column) 
-		{
-			return $column->getTable()->getName().'_'.$column->getName();
-		}
-		
 		public function preAutoincrement(DBColumn $column)
 		{
-			Assert::isTrue(
-				(($table = $column->getTable()) !== null)
-				&& ($column->getDefault() === null)
-			);
+			self::checkColumn($column);
 			
-			return 'CREATE SEQUENCE "'
+			return
+				'CREATE SEQUENCE "'
 				.$this->makeSequenceName($column).'";';
 		}
 		
 		public function postAutoincrement(DBColumn $column)
 		{
+			self::checkColumn($column);
+			
+			return
+				'default nextval(\''
+				.$this->makeSequenceName($column).'\')';
+		}
+		
+		protected function makeSequenceName(DBColumn $column) 
+		{
+			return $column->getTable()->getName().'_'.$column->getName();
+		}
+		
+		private static function checkColumn(DBColumn $column)
+		{
 			Assert::isTrue(
-				(($table = $column->getTable()) !== null)
+				($column->getTable() !== null)
 				&& ($column->getDefault() === null)
 			);
-			
-			return 'default nextval(\''
-				.$this->makeSequenceName($column).'\')';
 		}
 	}
 ?>

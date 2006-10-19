@@ -39,17 +39,16 @@
 			return null;
 		}
 		
-		public function autoincrementize(DBColumn $column, &$prepend)
+		public function preAutoincrement(DBColumn $column)
 		{
-			$type = $column->getType();
+			self::checkColumn($column);
 			
-			Assert::isTrue(
-				(
-					$type->getId() == DataType::BIGINT
-					|| $type->getId() == DataType::INTEGER
-				)
-				&& $column->isPrimaryKey()
-			);
+			return null;
+		}
+		
+		public function postAutoincrement(DBColumn $column)
+		{
+			self::checkColumn($column);
 			
 			return null; // or even 'AUTOINCREMENT'?
 		}
@@ -62,6 +61,19 @@
 		public function hasMultipleTruncate()
 		{
 			return false;
+		}
+		
+		private static function checkColumn(DBColumn $column)
+		{
+			$type = $column->getType();
+			
+			Assert::isTrue(
+				(
+					$type->getId() == DataType::BIGINT
+					|| $type->getId() == DataType::INTEGER
+				)
+				&& $column->isPrimaryKey()
+			);
 		}
 	}
 ?>

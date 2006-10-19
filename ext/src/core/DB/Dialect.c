@@ -250,10 +250,11 @@ ONPHP_METHOD(Dialect, fullTextRank)
 static ONPHP_ARGINFO_ONE;
 static ONPHP_ARGINFO_TWO;
 static ONPHP_ARGINFO_THREE;
-static ONPHP_ARGINFO_AUTOINCREMENTIZE;
+static ONPHP_ARGINFO_DBCOLUMN;
 
 zend_function_entry onphp_funcs_Dialect[] = {
-	ONPHP_ABSTRACT_ME(Dialect, autoincrementize, arginfo_autoincrementize, ZEND_ACC_PUBLIC)
+	ONPHP_ABSTRACT_ME(Dialect, preAutoincrement, arginfo_dbcolumn, ZEND_ACC_PUBLIC)
+	ONPHP_ABSTRACT_ME(Dialect, postAutoincrement, arginfo_dbcolumn, ZEND_ACC_PUBLIC)
 	ONPHP_ABSTRACT_ME(Dialect, hasTruncate, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ABSTRACT_ME(Dialect, hasMultipleTruncate, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Dialect, quoteValue, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
