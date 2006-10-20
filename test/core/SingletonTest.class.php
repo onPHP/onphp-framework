@@ -15,12 +15,22 @@
 			);
 		}
 		
+		public function testNonSingletonChilds()
+		{
+			try {
+				Singleton::getInstance('Timestamp');
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				$this->pass();
+			}
+		}
+		
 		public function testCreationProhibition()
 		{
 			$child = new ReflectionClass($this->childName);
 			
-			$this->assertTrue(
-				!$child->getMethod('__construct')->isPublic()
+			$this->assertFalse(
+				$child->getMethod('__construct')->isPublic()
 			);
 			
 			$this->assertTrue(
