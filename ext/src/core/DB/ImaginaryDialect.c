@@ -50,7 +50,12 @@ ONPHP_METHOD(ImaginaryDialect, me)
 	RETURN_ZVAL(instance, 1, 1);
 }
 
-ONPHP_METHOD(ImaginaryDialect, autoincrementize)
+ONPHP_METHOD(ImaginaryDialect, preAutoincrement)
+{
+	RETURN_NULL();
+}
+
+ONPHP_METHOD(ImaginaryDialect, postAutoincrement)
 {
 	RETURN_STRING("AUTOINCREMENT", 1);
 }
@@ -224,11 +229,12 @@ ONPHP_METHOD(ImaginaryDialect, fullTextRank)
 
 static ONPHP_ARGINFO_ONE;
 static ONPHP_ARGINFO_THREE;
-static ONPHP_ARGINFO_AUTOINCREMENTIZE;
+static ONPHP_ARGINFO_DBCOLUMN;
 
 zend_function_entry onphp_funcs_ImaginaryDialect[] = {
 	ONPHP_ME(ImaginaryDialect, me,	NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-	ONPHP_ME(ImaginaryDialect, autoincrementize, arginfo_autoincrementize, ZEND_ACC_PUBLIC)
+	ONPHP_ME(ImaginaryDialect, preAutoincrement, arginfo_dbcolumn, ZEND_ACC_PUBLIC)
+	ONPHP_ME(ImaginaryDialect, postAutoincrement, arginfo_dbcolumn, ZEND_ACC_PUBLIC)
 	ONPHP_ME(ImaginaryDialect, hasTruncate, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(ImaginaryDialect, hasMultipleTruncate, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(ImaginaryDialect, quoteValue, arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_STATIC)

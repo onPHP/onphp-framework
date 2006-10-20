@@ -26,30 +26,27 @@
 		{
 			$name = $this->table->getName();
 			
-			$out = "CREATE TABLE {$dialect->quoteTable($name)} (\n    ";
+			$middle = "CREATE TABLE {$dialect->quoteTable($name)} (\n    ";
 			
-			$order = $this->table->getOrder();
-			
+			$prepend = array();
 			$columns = array();
 			$primary = array();
 			$unique  = array();
+			
+			$order = $this->table->getOrder();
 			
 			foreach ($order as $column) {
 				
 				if ($column->isAutoincrement()) {
 
-					$prepend = null;
+					$prepend[] = $dialect->preAutoincrement($column);
 					
-					$append = $dialect->autoincrementize($column, $prepend);
-					
-					if ($append)
-						$append = ' '.$append;
-					
-					$columns[] = $column->toDialectString($dialect).$append;
-					
-					if ($prepend)
-						$out = $prepend."\n".$out;
-					
+					$columns[] = implode(' ',
+						array(
+							$column->toDialectString($dialect),
+							$dialect->postAutoincrement($column)
+						)
+					);
 				} else
 					$columns[] = $column->toDialectString($dialect);
 
@@ -62,7 +59,9 @@
 					$primary[] = $dialect->quoteField($name);
 			}
 			
-			$out .= implode(",\n    ", $columns);
+			$out = implode(' ', $prepend)
+				.$middle
+				.implode(",\n    ", $columns);
 			
 			if ($primary || $unique) {
 				

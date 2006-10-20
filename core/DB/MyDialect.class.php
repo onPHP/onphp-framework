@@ -71,10 +71,15 @@
 			return false;
 		}
 		
-		public function autoincrementize(DBColumn $column, &$prepend)
+		public function preAutoincrement(DBColumn $column)
 		{
 			$column->setDefault(null);
 			
+			return null;
+		}
+		
+		public function postAutoincrement(DBColumn $column)
+		{
 			return 'AUTO_INCREMENT';
 		}
 		
