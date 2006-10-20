@@ -73,26 +73,27 @@
 		
 		public function import($scope)
 		{
-			if (parent::import($scope)) {
-				try {
-					list($width, $height, $type) = getimagesize($this->value);
-				} catch (BaseException $e) {
-					$this->value = null;
-					return false;
-				}
+			if (!parent::import($scope))
+				return null;
+			
+			try {
+				list($width, $height, $type) = getimagesize($this->value);
+			} catch (BaseException $e) {
+				$this->value = null;
+				return false;
+			}
+			
+			if (
+				!($this->maxWidth && ($width > $this->maxWidth))
+				&& !($this->minWidth && ($width < $this->minWidth))
+				&& !($this->maxHeight && ($height > $this->maxHeight))
+				&& !($this->minHeight && ($height < $this->minHeight))
+			) {
+				$this->type = new ImageType($type);
+				$this->width = $width;
+				$this->height = $height;
 				
-				if (
-					!($this->maxWidth && ($width > $this->maxWidth))
-					&& !($this->minWidth && ($width < $this->minWidth))
-					&& !($this->maxHeight && ($height > $this->maxHeight))
-					&& !($this->minHeight && ($height < $this->minHeight))
-				) {
-					$this->type = new ImageType($type);
-					$this->width = $width;
-					$this->height = $height;
-					
-					return true;
-				}
+				return true;
 			}
 			
 			return false;
