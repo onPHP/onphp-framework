@@ -1,5 +1,9 @@
 # $Id$
 
+2006-10-21	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* 0.2.17 released.
+
 2006-10-18	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/Form/PrimitiveImage.class.php: big images' handling
