@@ -1,5 +1,9 @@
 # $Id$
 
+2006-10-21	Konstantin V. Arkhipov
+
+	* 0.8.0 released.
+
 2006-10-19	Konstantin V. Arkhipov
 
 	* meta/types/TimeType.class.php,
