@@ -111,7 +111,7 @@
 		public static function dropAll()
 		{
 			if (Session::isStarted()) {
-				if (!empty($_SESSION)) {
+				if ($_SESSION) {
 					foreach ($_SESSION as $key => &$value) {
 						Session::drop($key);
 					}

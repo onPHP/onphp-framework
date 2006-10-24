@@ -59,7 +59,7 @@
 		{
 			$list = array();
 			
-			if (!empty($string)) {
+			if ($string) {
 				if (strpos($string, ',') !== false)
 					$dates = explode(',', $string);
 				else
