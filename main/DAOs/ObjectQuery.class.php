@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -294,7 +294,7 @@
 				if (!is_object($right)) {
 					if (isset($map[$right]))
 						$right = new DBField($map[$right]);
-					elseif (!is_null($right))
+					elseif ($right !== null)
 						$right = new DBValue($right);
 				}
 				

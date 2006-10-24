@@ -38,7 +38,7 @@
 			foreach ($this->fields as $var => $val) {
 				$fields[] = $dialect->quoteField($var);
 				
-				if (is_null($val))
+				if ($val === null)
 					$values[] = 'NULL';
 				elseif (true === $val)
 					$values[] = 'TRUE';

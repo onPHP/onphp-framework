@@ -40,7 +40,7 @@
 						.' = ('
 						.$val->toDialectString($dialect)
 						.')';
-				elseif (is_null($val))
+				elseif ($val === null)
 					$sets[] = $dialect->quoteField($var).' = NULL';
 				elseif (true === $val)
 					$sets[] = $dialect->quoteField($var).' = TRUE';
