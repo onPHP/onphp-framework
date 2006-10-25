@@ -196,5 +196,77 @@
 				)->toDialectString($dialect)
 			);
 		}
+		
+		public function testFormCalculation()
+		{
+			$form = Form::create()->
+				add(
+					Primitive::string('a')
+				)->
+				add(
+					Primitive::boolean('b')
+				)->
+				add(
+					Primitive::integer('c')
+				)->
+				add(
+					Primitive::integer('d')
+				)->
+				add(
+					Primitive::integer('e')
+				)->
+				add(
+					Primitive::boolean('f')
+				)->
+				import(
+					array(
+						'a' => 'asDfg',
+						'b' => 'true',
+						'c' => '1',
+						'd' => '2',
+						'e' => '3'
+					)
+				);
+			
+			$this->assertTrue(
+				Expression::isTrue(new FormField('b'))->toBoolean($form)
+			);
+			
+			$this->assertFalse(
+				Expression::isTrue(new FormField('f'))->toBoolean($form)
+			);
+			
+			$this->assertFalse(
+				Expression::eq('asdf', new FormField('a'))->toBoolean($form)
+			);
+			
+			$this->assertTrue(
+				Expression::eqLower('asdfg', new FormField('a'))->toBoolean($form)
+			);
+			
+			$this->assertTrue(
+				Expression::eq('asDfg', new FormField('a'))->toBoolean($form)
+			);
+			
+			$this->assertTrue(
+				Expression::andBlock(
+					Expression::expOr(
+						new FormField('b'),
+						new FormField('f')
+					),
+					Expression::eq(
+						7,
+						Expression::add(
+							new FormField('c'),
+							Expression::mul(
+								new FormField('d'),
+								new FormField('e')
+							)
+						)
+					)
+				)
+			);
+			
+		}
 	}
 ?>

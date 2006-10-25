@@ -92,6 +92,9 @@
 			$string = '(';
 
 			if (null !== $left = $this->left) {
+				if ($this->logic == self::EQUALS_LOWER )
+					$left = SQLFunction::create('lower', $left);
+					
 				if ($left instanceof DialectString) {
 					if ($left instanceof SelectQuery)
 						$string .= '('.$left->toDialectString($dialect).')';
@@ -104,6 +107,10 @@
 			$string .= " {$this->logic} ";
 			
 			if (null !== $right = $this->right) {
+				
+				if ($this->logic == self::EQUALS_LOWER )
+					$right = SQLFunction::create('lower', $right);
+					
 				if ($right instanceof DialectString) {
 					if ($right instanceof SelectQuery)
 						$string .= '('.$right->toDialectString($dialect).')';
