@@ -163,5 +163,38 @@
 				Expression::div('a', 'b')->toDialectString($dialect)
 			);
 		}
+		
+		public function testPgGeneration()
+		{
+			$dialect = PostgresDialect::me();
+			$this->assertWantedPattern(
+				'/^\(\(\(\(\'asdf\' = "b"\) (AND|and) \("e" != \("i" \/ \'123\'\)\) (AND|and) \(\(lower\("a"\)  =  lower\("b"\)\) ((IS TRUE)|(is true)) \)\) (OR|or) \("table"\."c" ((IS NOT NULL)|(is not null)) \)\) (AND|and) \("sometable"\."a" ((not in)|(NOT IN)) \(\'q\', \'qwer\', \'xcvzxc\', \'wer\'\)\)\)$/',
+				Expression::expAnd(
+					Expression::expOr(
+						Expression::andBlock(
+							Expression::eq(
+								new DBValue('asdf'),
+								new DBField('b')
+							),
+							Expression::notEq(
+								new DBField('e'),
+								Expression::div(
+									new DBField('i'),
+									new DBValue('123')
+								)
+							),
+							Expression::isTrue(
+								Expression::eqLower('a', 'b')
+							)
+						),
+						Expression::notNull(new DBField('c', 'table'))
+					),
+					Expression::notIn(
+						new DBField('a', 'sometable'),
+						array('q', 'qwer', 'xcvzxc', 'wer')
+					)
+				)->toDialectString($dialect)
+			);
+		}
 	}
 ?>
