@@ -18,7 +18,7 @@
 		public function testNonSingletonChilds()
 		{
 			try {
-				Singleton::getInstance('Timestamp');
+				Singleton::getInstance('Ternary');
 				$this->fail();
 			} catch (WrongArgumentException $e) {
 				$this->pass();
