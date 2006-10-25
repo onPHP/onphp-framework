@@ -1,9 +1,11 @@
 # $Id$
 
 2006-10-25	Anton E. Lebedevich
-	* test/core/LogicTest.class.php: added tests for LogicalExpression
-	* core/Logic/LogicalExpression.class.php, core/Logic/Expression.class.php:
-	eqLower fixed for Forms
+
+	* test/core/LogicTest.class.php: added tests for LogicalExpression.
+
+	* core/Logic/LogicalExpression.class.php,
+	core/Logic/Expression.class.php: eqLower fixed for Forms.
 
 2006-10-25	Konstantin V. Arkhipov
 
