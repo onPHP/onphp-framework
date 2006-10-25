@@ -49,7 +49,7 @@
 			$this->link =
 				($persistent)
 					? mysql_pconnect($host, $user, $pass)
-					: mysql_connect($host, $user, $pass);
+					: mysql_connect($host, $user, $pass, true);
 							
 			if (!$this->link || ($base && !mysql_select_db($base, $this->link)))
 				throw new DatabaseException(
