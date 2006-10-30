@@ -33,8 +33,8 @@
 			}
 			
 			Assert::isTrue(
-				($logic == Expression::LOGIC_AND)
-				|| ($logic == Expression::LOGIC_OR),
+				($logic == LogicalExpression::EXPRESSION_AND)
+				|| ($logic == LogicalExpression::EXPRESSION_OR),
 				
 				"unknown logic '{$logic}'"
 			);
@@ -59,7 +59,7 @@
 			$size = count($args);
 			
 			switch ($this->logic) {
-				case Expression::LOGIC_AND:
+				case LogicalExpression::EXPRESSION_AND:
 					
 					$out = true;
 					for ($i = 0; $i < $size; ++$i)
@@ -73,7 +73,7 @@
 
 					return $out;
 			
-				case Expression::LOGIC_OR:
+				case LogicalExpression::EXPRESSION_OR:
 					
 					$out = false;
 					for ($i = 0; $i < $size; ++$i)

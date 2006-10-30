@@ -17,17 +17,37 @@
 	**/
 	final class LogicalChain implements LogicalObject
 	{
+		// TODO: split to AndChain and OrChain
+		
 		private $chain = array();
 		private $logic = array();
+
+		public static function calculateBoolean($logic, $left, $right)
+		{
+			switch ($logic) {
+				case LogicalExpression::EXPRESSION_AND:
+					return $left && $right;
+
+				case LogicalExpression::EXPRESSION_OR:
+					return $left || $right;
+
+				default:
+					throw new WrongArgumentException(
+						"unknown logic - '{$logic}'"
+					);
+			}
+
+			/* NOTREACHED */
+		}
 		
 		public function expAnd(LogicalObject $exp)
 		{
-			return $this->exp($exp, Expression::LOGIC_AND);
+			return $this->exp($exp, LogicalExpression::EXPRESSION_AND);
 		}
 		
 		public function expOr(LogicalObject $exp)
 		{
-			return $this->exp($exp, Expression::LOGIC_OR);
+			return $this->exp($exp, LogicalExpression::EXPRESSION_OR);
 		}
 		
 		public function union(SelectQuery $query)
@@ -100,14 +120,14 @@
 			for ($i = 0, $size = count($chain); $i < $size; ++$i) {
 				if (isset($chain[$i + 1])) {
 					$out =
-						Expression::calculateBoolean(
+						self::calculateBoolean(
 							$this->logic[$i + 1],
 							$chain[$i]->toBoolean($form),
 							$chain[$i + 1]->toBoolean($form)
 						);
 				} else {
 					$out =
-						Expression::calculateBoolean(
+						self::calculateBoolean(
 							$this->logic[$i],
 							$out, 
 							$chain[$i]->toBoolean($form)

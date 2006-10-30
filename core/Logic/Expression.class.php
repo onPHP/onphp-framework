@@ -17,29 +17,9 @@
 	**/
 	final class Expression extends StaticFactory
 	{
-		const LOGIC_AND	= 'AND';
-		const LOGIC_OR	= 'OR';
-
 		/**
 		 * common cast methods.
 		**/
-		public static function calculateBoolean($logic, $left, $right)
-		{
-			switch ($logic) {
-				case self::LOGIC_AND:
-					return $left && $right;
-
-				case self::LOGIC_OR:
-					return $left || $right;
-
-				default:
-					throw new WrongArgumentException(
-						"unknown logic - '{$logic}'"
-					);
-			}
-
-			/* NOTREACHED */
-		}
 		
 		public static function toValue(Form $form, $value)
 		{
@@ -55,12 +35,12 @@
 		
 		public static function expAnd($left, $right)
 		{
-			return new LogicalExpression($left, $right, self::LOGIC_AND);
+			return new LogicalExpression($left, $right, LogicalExpression::EXPRESSION_AND);
 		}
 		
 		public static function expOr($left, $right)
 		{
-			return new LogicalExpression($left, $right, self::LOGIC_OR);
+			return new LogicalExpression($left, $right, LogicalExpression::EXPRESSION_OR);
 		}
 		
 		public static function eq($field, $value)
@@ -249,12 +229,18 @@
 			
 		public static function orBlock(/* ... */)
 		{
-			return self::block(func_get_args(), self::LOGIC_OR);
+			return self::block(
+				func_get_args(), 
+				LogicalExpression::EXPRESSION_OR
+			);
 		}
 
 		public static function andBlock(/* ... */)
 		{
-			return self::block(func_get_args(), self::LOGIC_AND);
+			return self::block(
+				func_get_args(), 
+				LogicalExpression::EXPRESSION_AND
+			);
 		}
 		
 		public static function chain()
