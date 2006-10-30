@@ -34,15 +34,17 @@
 
 		public function import($scope)
 		{
-			if (isset($scope[$this->name]))
+			if (isset($scope[$this->name])) {
 				if ($this->trueValue == $scope[$this->name])
 					$this->value = true;
 				elseif ($this->falseValue == $scope[$this->name])
 					$this->value = false;
 				else
 					return false;
-			else {
+			} else {
+				
 				$this->value = null;
+				$this->raw = null;
 				
 				return null;
 			}

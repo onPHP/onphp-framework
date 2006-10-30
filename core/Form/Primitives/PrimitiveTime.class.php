@@ -133,8 +133,11 @@
 		
 		public function import($scope)
 		{
-			if ($this->isEmpty($scope))
+			if ($this->isEmpty($scope)) {
+				$this->value = null;
+				$this->raw = null;
 				return null;
+			}
 
 			return parent::import($scope);
 		}

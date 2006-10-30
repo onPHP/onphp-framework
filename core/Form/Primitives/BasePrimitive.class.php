@@ -130,6 +130,9 @@
 				return true;
 			}
 			
+			$this->raw = null;
+			$this->value = null;
+			
 			return null;
 		}
 	}
