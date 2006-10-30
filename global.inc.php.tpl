@@ -30,7 +30,7 @@
 	error_reporting(E_ALL | E_STRICT);
 	set_error_handler('error2Exception', E_ALL | E_STRICT);
 	ignore_user_abort(true);
-	define('ONPHP_VERSION', '0.8.0.99');
+	define('ONPHP_VERSION', '0.9');
 
 	// overridable constant, don't forget for trailing slash
 	// also you may consider using /dev/shm/ for cache purposes
