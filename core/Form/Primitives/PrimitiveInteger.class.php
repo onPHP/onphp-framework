@@ -13,31 +13,16 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class PrimitiveInteger extends FiltrablePrimitive
+	class PrimitiveInteger extends PrimitiveNumber
 	{
-		public function import($scope)
+		protected function checkNumber($number)
 		{
-			if (!BasePrimitive::import($scope))
-				return null;
-
-			try {
-				Assert::isInteger($scope[$this->name]);
-			} catch (WrongArgumentException $e) {
-				return false;
-			}
-			
-			if (
-				!(null !== $this->min && $scope[$this->name] < $this->min)
-				&& !(null !== $this->max && $scope[$this->name] > $this->max)
-			) {
-				$this->value = (int) $scope[$this->name];
-
-				$this->selfFilter();
-				
-				return true;
-			}
-			
-			return false;
+			Assert::isInteger($number);
+		}
+		
+		protected function castNumber($number)
+		{
+			return (int) $number;
 		}
 	}
 ?>
