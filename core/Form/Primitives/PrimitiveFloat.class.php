@@ -1,6 +1,7 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich,*
+ *   Nickolay Korolyov                                                      *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -20,11 +21,11 @@
 			if (!BasePrimitive::import($scope))
 				return null;
 
-			/*try {
+			try {
 				Assert::isFloat($scope[$this->name]);
 			} catch (WrongArgumentException $e) {
 				return false;
-			}*/
+			}
 
 			if (
 				!(null !== $this->min && $scope[$this->name] < $this->min)
