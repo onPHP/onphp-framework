@@ -95,23 +95,24 @@
 		{
 			$chain = &$this->chain;
 			
-			$out = null;
+			$out = null; // FIXME: fails on single expression with AND logic
 			
 			for ($i = 0, $size = count($chain); $i < $size; ++$i) {
-				if (isset($chain[$i + 1]))
+				if (isset($chain[$i + 1])) {
 					$out =
 						Expression::calculateBoolean(
 							$this->logic[$i + 1],
 							$chain[$i]->toBoolean($form),
 							$chain[$i + 1]->toBoolean($form)
 						);
-				else
+				} else {
 					$out =
 						Expression::calculateBoolean(
 							$this->logic[$i],
-							$out,
-							$chain[$i]
+							$out, 
+							$chain[$i]->toBoolean($form)
 						);
+				}
 			}
 			
 			return $out;

@@ -304,5 +304,106 @@
 					toDialectString(ImaginaryDialect::me())
 			);
 		}
+
+		public function testChainForm()
+		{
+			$form = Form::create()->
+				add(
+					Primitive::string('a')
+				)->
+				add(
+					Primitive::string('b')
+				)->
+				add(
+					Primitive::integer('c')
+				)->
+				add(
+					Primitive::integer('d')
+				)->
+				add(
+					Primitive::boolean('e')
+				)->
+				add(
+					Primitive::string('f')
+				)->
+				import(
+					array(
+						'a' => 'true',
+						'c' => 123,
+						'd'	=> 123,
+					)
+				);
+			
+			$andChain = Expression::chain()->
+				expAnd(
+					Expression::expOr(
+						new FormField('a'),
+						Expression::notNull(new FormField('b'))
+					)
+				)->
+				expAnd(
+					Expression::eq(
+						new FormField('c'),
+						new FormField('d'))
+				)->
+				expAnd(
+					Expression::isFalse(new FormField('e'))
+				);
+
+			$this->assertTrue($andChain->toBoolean($form));
+			
+			$form->importMore(array('e' => 'on'));
+			$this->assertFalse($andChain->toBoolean($form));
+
+			$orChain = Expression::chain()->
+				expOr(
+					Expression::eq(new FormField('a'), new FormField('b'))
+				)->
+				expOr(
+					Expression::expOr(
+						new FormField('e'),
+						Expression::gt(
+							new FormField('c'), 
+							new FormField('d')
+						)
+					)
+				)->
+				expOr(
+					Expression::in(new FormField('f'), array('qwer', 'asdf', 'zxcv'))
+				);
+
+			$form->import(array());
+			$this->assertFalse($orChain->toBoolean($form));
+			
+			$form->import(array(
+				'e' => '1'
+			));
+			$this->assertTrue($orChain->toBoolean($form));
+			
+			$form->import(array(
+				'a' => 'asdf',
+				'b' => 'qwerq',
+				'c' => '13',
+				'd' => '1313',
+				'f' => 'iukj'
+			));
+			$this->assertFalse($orChain->toBoolean($form));
+			
+			$form->import(array(
+				'c' => '13',
+				'd' => '12'
+			));
+			$this->assertTrue($orChain->toBoolean($form));
+			
+			$form->import(array(
+				'f' => 'asdfwer'
+			));
+			$this->assertFalse($orChain->toBoolean($form));
+			
+			$form->import(array(
+				'f' => 'qwer'
+			));
+			$this->assertTrue($orChain->toBoolean($form));
+		}
 	}
 ?>

@@ -111,6 +111,15 @@
 				if ($this->logic == self::EQUALS_LOWER )
 					$right = SQLFunction::create('lower', $right);
 					
+				if (
+					(
+						$this->logic == self::IN
+						|| $this->logic == self::NOT_IN
+					)
+					&& is_array($right)
+				)
+					$right = new SQLArray($right);
+					
 				if ($right instanceof DialectString) {
 					if ($right instanceof SelectQuery)
 						$string .= '('.$right->toDialectString($dialect).')';
@@ -127,20 +136,22 @@
 		
 		public function toBoolean(Form $form)
 		{
-			if ($this->left instanceof LogicalObject) {
-				$this->left = $this->left->toBoolean($form);
-			}
+			if ($this->left instanceof LogicalObject)
+				$left = $this->left->toBoolean($form);
+			else 
+				$left = $this->left;
 			
-			if ($this->right instanceof LogicalObject) {
-				$this->right = $this->right->toBoolean($form);
-			}
+			if ($this->right instanceof LogicalObject)
+				$right = $this->right->toBoolean($form);
+			else 
+				$right = $this->right;
 			
 			$both = 
-				(null !== $this->left)
-				&& (null !== $this->right);
+				(null !== $left)
+				&& (null !== $right);
 
-			$left	= Expression::toValue($form, $this->left);
-			$right	= Expression::toValue($form, $this->right);
+			$left	= Expression::toValue($form, $left);
+			$right	= Expression::toValue($form, $right);
 				
 			switch ($this->logic) {
 				case self::EQUALS:
