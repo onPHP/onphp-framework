@@ -268,5 +268,41 @@
 			);
 			
 		}
+		
+		public function testChainSQL()
+		{
+			$this->assertWantedPattern(
+				'/^\(\(a OR|or \(b ((IS NOT NULL)|(is not null)) *\)\) AND|and \(c = d\) AND|and \(e ((IS FALSE)|(is false)) *\)\)$/',
+				Expression::chain()->
+					expAnd(
+						Expression::expOr(
+							'a',
+							Expression::notNull('b')
+						)
+					)->
+					expAnd(
+						Expression::eq('c', 'd')
+					)->
+					expAnd(
+						Expression::isFalse('e')
+					)->
+					toDialectString(ImaginaryDialect::me())
+			);
+			
+			$this->assertWantedPattern(
+				'/^\(\(a = b\) OR|or \(d OR|or c > e\)\) OR|or \(f in|IN \(qwer, asdf, zxcv\)\)\)$/',
+				Expression::chain()->
+					expOr(
+						Expression::eq('a', 'b')
+					)->
+					expOr(
+						Expression::expOr('d', Expression::gt('c', 'e'))
+					)->
+					expOr(
+						Expression::in('f', array('qwer', 'asdf', 'zxcv'))
+					)->
+					toDialectString(ImaginaryDialect::me())
+			);
+		}
 	}
 ?>

@@ -23,7 +23,7 @@
 		/**
 		 * common cast methods.
 		**/
-		public static function toBoolean($logic, $left, $right)
+		public static function calculateBoolean($logic, $left, $right)
 		{
 			switch ($logic) {
 				case self::LOGIC_AND:

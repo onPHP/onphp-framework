@@ -100,14 +100,14 @@
 			for ($i = 0, $size = count($chain); $i < $size; ++$i) {
 				if (isset($chain[$i + 1]))
 					$out =
-						Expression::toBoolean(
+						Expression::calculateBoolean(
 							$this->logic[$i + 1],
 							$chain[$i]->toBoolean($form),
 							$chain[$i + 1]->toBoolean($form)
 						);
 				else
 					$out =
-						Expression::toBoolean(
+						Expression::calculateBoolean(
 							$this->logic[$i],
 							$out,
 							$chain[$i]
