@@ -31,17 +31,12 @@
 		{
 			return new PrimitiveFloat($name);
 		}
-		
-		public static function float($name)
-		{
-			return new PrimitiveFloat($name);
-		}
-		
+
 		public static function identifier($name)
 		{
 			return new PrimitiveIdentifier($name);
 		}
-		
+
 		public static function enumeration($name)
 		{
 			return new PrimitiveEnumeration($name);
@@ -76,7 +71,7 @@
 		{
 			return new PrimitiveArray($name);
 		}
-		
+
 		public static function multiChoice($name)
 		{
 			return new PrimitiveMultiList($name);

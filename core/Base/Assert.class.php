@@ -22,18 +22,18 @@
 			if ($boolean !== true)
 				self::fail($message);
 		}
-		
+
 		public static function isFalse($boolean, $message = null)
 		{
 			self::isTrue(!$boolean);
 		}
-		
+
 		public static function isArray(&$variable, $message = null)
 		{
 			if (!is_array($variable))
 				self::fail($message);
 		}
-		
+
 		public static function isInteger($variable, $message = null)
 		{
 			if (
@@ -44,18 +44,18 @@
 			)
 				self::fail($message);
 		}
-		
+
 		public static function isFloat($variable, $message = null)
 		{
 			if (
 				!(
 					$variable == (float) $variable
-					&& is_numeric($variable)
+					&& is_float($variable)
 				)
 			)
 				self::fail($message);
 		}
-		
+
 		public static function isString(&$variable, $message = null)
 		{
 			if (!is_string($variable))
@@ -67,7 +67,7 @@
 			if (!($variable === true || $variable === false))
 				self::fail($message);
 		}
-		
+
 		public static function isTernaryBase(&$variable, $message = null)
 		{
 			if (
@@ -79,7 +79,7 @@
 			)
 				self::fail($message);
 		}
-		
+
 		public static function brothers(&$first, &$second, $message = null)
 		{
 			if (get_class($first) !== get_class($second))
