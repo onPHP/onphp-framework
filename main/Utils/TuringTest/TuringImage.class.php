@@ -202,8 +202,16 @@
 		private function outputImage(ImageType $imageType)
 		{
 			$gdImageTypes = imagetypes();
-			
+
 			switch ($imageType->getId()) {
+				
+				case ImageType::WBMP:
+
+					if ($gdImageTypes & IMG_WBMP) {
+						header("Content-type: image/vnd.wap.wbmp");
+						imagewbmp($this->imageId);
+						break;
+					}
 				
 				case ImageType::PNG:
 					
