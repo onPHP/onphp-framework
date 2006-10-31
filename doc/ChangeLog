@@ -2,8 +2,8 @@
 
 2006-10-31	Dmitry E. Demidov
 
-	* main/Utils/TuringTest/TuringImage.class.php: added ability 
-	generate IMG_WBMP
+	* main/Utils/TuringTest/TuringImage.class.php: added ability to
+	generate IMG_WBMP.
 
 2006-10-25	Anton E. Lebedevich
 
