@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,25 +11,22 @@
 /* $Id$ */
 
 	/**
-	 * Transaction's factory.
+	 * Transaction-like wrapper around DB's queryNull.
 	 * 
-	 * @ingroup DB
+	 * @ingroup Transaction
 	**/
-	final class Transaction extends StaticFactory
+	final class FakeTransaction extends BaseTransaction
 	{
-		public static function immediate(DB $db)
+		public function add(Query $query)
 		{
-			return new DBTransaction($db);
+			$this->db->queryNull($query);
+			
+			return $this;
 		}
 		
-		public static function deferred(DB $db)
+		public function flush()
 		{
-			return new TransactionQueue($db);
-		}
-		
-		public static function fake(DB $db)
-		{
-			return new FakeTransaction($db);
+			return $this;
 		}
 	}
 ?>

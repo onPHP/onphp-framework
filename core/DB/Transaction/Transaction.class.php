@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,20 +11,25 @@
 /* $Id$ */
 
 	/**
-	 * Transaction access modes.
-	 *
-	 * @see http://www.postgresql.org/docs/8.0/interactive/sql-start-transaction.html
+	 * Transaction's factory.
 	 * 
-	 * @ingroup DB
+	 * @ingroup Transaction
 	**/
-	final class AccessMode extends Enumeration
+	final class Transaction extends StaticFactory
 	{
-		const READ_ONLY		= 0x01;
-		const READ_WRITE	= 0x02;
+		public static function immediate(DB $db)
+		{
+			return new DBTransaction($db);
+		}
 		
-		protected $names	= array(
-			self::READ_ONLY		=> 'read only',
-			self::READ_WRITE	=> 'read write'
-		);
+		public static function deferred(DB $db)
+		{
+			return new TransactionQueue($db);
+		}
+		
+		public static function fake(DB $db)
+		{
+			return new FakeTransaction($db);
+		}
 	}
 ?>

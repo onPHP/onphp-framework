@@ -13,7 +13,7 @@
 	/**
 	 * Transaction's basis.
 	 * 
-	 * @ingroup DB
+	 * @ingroup Transaction
 	**/
 	abstract class BaseTransaction
 	{

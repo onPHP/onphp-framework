@@ -11,24 +11,20 @@
 /* $Id$ */
 
 	/**
-	 * Transaction isolation levels.
+	 * Transaction access modes.
 	 *
 	 * @see http://www.postgresql.org/docs/8.0/interactive/sql-start-transaction.html
 	 * 
-	 * @ingroup DB
+	 * @ingroup Transaction
 	**/
-	final class IsolationLevel extends Enumeration
+	final class AccessMode extends Enumeration
 	{
-		const READ_COMMITTED	= 0x01;
-		const READ_UNCOMMITTED	= 0x02;
-		const REPEATABLE_READ	= 0x03;
-		const SERIALIZABLE		= 0x04;
+		const READ_ONLY		= 0x01;
+		const READ_WRITE	= 0x02;
 		
 		protected $names	= array(
-			0 => 'read commited',
-			1 => 'read uncommitted',
-			2 => 'repeatable read',
-			3 => 'serializable'
+			self::READ_ONLY		=> 'read only',
+			self::READ_WRITE	=> 'read write'
 		);
 	}
 ?>

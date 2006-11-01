@@ -101,6 +101,9 @@
 	 * @defgroup DB Connectors and dialects for various databases
 	 * @ingroup Core
 	 *
+	 * @defgroup Transaction Tools for working with transactions
+	 * @ingroup DB
+	 *
 	 * @defgroup Exceptions Exceptions
 	 * @ingroup Core
 	 *

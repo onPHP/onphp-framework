@@ -11,52 +11,44 @@
 /* $Id$ */
 
 	/**
-	 * Database transaction implementation.
+	 * Transaction-wrapped queries queue.
+	 *
+	 * @see Queue
 	 * 
-	 * @ingroup DB
+	 * @ingroup Transaction
 	**/
-	final class DBTransaction extends BaseTransaction
+	final class TransactionQueue extends BaseTransaction implements Query
 	{
-		private $started	= false;
+		private $queue = null;
 		
-		public function __destruct()
+		public function __construct(DB $db)
 		{
-			if ($this->isStarted())
-				$this->db->queryRaw("rollback;\n");
+			parent::__construct($db);
+			$this->queue = new Queue();
 		}
 		
-		public function setDB(DB $db)
+		public function getId()
 		{
-			if ($this->isStarted())
-				throw new WrongStateException(
-					'transaction already started, can not switch to another db'
-				);
-
-			return parent::setDB($db);
+			return sha1(serialize($this));
 		}
 		
-		public function isStarted()
+		public function setId($id)
 		{
-			return $this->started;
+			throw new UnsupportedMethodException();
 		}
 		
 		public function add(Query $query)
 		{
-			if (!$this->isStarted()) {
-				$this->db->queryRaw($this->getBeginString());
-				$this->started = true;
-			}
-			
-			$this->db->queryNull($query);
+			$this->queue->add($query);
 			
 			return $this;
 		}
 		
 		public function flush()
 		{
-			$this->started = false;
-			
 			try {
+				$this->db->queryRaw($this->getBeginString());
+				$this->queue->flush($this->db);
 				$this->db->queryRaw("commit;\n");
 			} catch (DatabaseException $e) {
 				$this->db->queryRaw("rollback;\n");
@@ -64,6 +56,17 @@
 			}
 			
 			return $this;
+		}
+		
+		// to satisfy Query interface
+		public function toDialectString(Dialect $dialect)
+		{
+			return $this->queue->toDialectString($dialect);
+		}
+		
+		public function toString()
+		{
+			return $this->queue->toDialectString(ImaginaryDialect::me());
 		}
 	}
 ?>
