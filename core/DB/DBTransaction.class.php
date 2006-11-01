@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup DB
 	**/
-	final class DBTransaction extends TransactionSkeleton
+	final class DBTransaction extends BaseTransaction
 	{
 		private $started	= false;
 		
@@ -32,9 +32,7 @@
 					'transaction already started, can not switch to another db'
 				);
 
-			$this->db = $db;
-			
-			return $this;
+			return parent::setDB($db);
 		}
 		
 		public function isStarted()

@@ -17,7 +17,7 @@
 	 * 
 	 * @ingroup DB
 	**/
-	final class TransactionQueue extends TransactionSkeleton implements Query
+	final class TransactionQueue extends BaseTransaction implements Query
 	{
 		private $queue = null;
 		
@@ -37,13 +37,6 @@
 			throw new UnsupportedMethodException();
 		}
 		
-		public function setDB(DB $db)
-		{
-			$this->db = $db;
-			
-			return $this;
-		}
-
 		public function add(Query $query)
 		{
 			$this->queue->add($query);

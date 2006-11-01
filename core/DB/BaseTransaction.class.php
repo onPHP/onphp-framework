@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,18 +15,25 @@
 	 * 
 	 * @ingroup DB
 	**/
-	abstract class TransactionSkeleton
+	abstract class BaseTransaction
 	{
 		protected $db		= null;
 		
 		protected $isoLevel	= null;
 		protected $mode		= null;
 		
-		abstract public function setDB(DB $db);
+		abstract public function flush();
 		
 		public function __construct(DB $db)
 		{
 			$this->db = $db;
+		}
+		
+		public function setDB(DB $db)
+		{
+			$this->db = $db;
+			
+			return $this;
 		}
 		
 		public function getDB()

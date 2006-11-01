@@ -2,6 +2,8 @@
 
 2006-11-01	Konstantin V. Arkhipov
 
+	* core/DB/FakeTransaction.class.php: dummy queryNull's wrapper added.
+
 	* main/Containers/Unified/UnifiedContainer.class.php: do not interrupt
 	so-called 'global transaction', if any.
 
