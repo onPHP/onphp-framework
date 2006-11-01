@@ -35,17 +35,17 @@
 		
 		public static function expAnd($left, $right)
 		{
-			return new LogicalExpression($left, $right, LogicalExpression::EXPRESSION_AND);
+			return new BinaryExpression($left, $right, BinaryExpression::EXPRESSION_AND);
 		}
 		
 		public static function expOr($left, $right)
 		{
-			return new LogicalExpression($left, $right, LogicalExpression::EXPRESSION_OR);
+			return new BinaryExpression($left, $right, BinaryExpression::EXPRESSION_OR);
 		}
 		
 		public static function eq($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::EQUALS);
+			return new BinaryExpression($field, $value, BinaryExpression::EQUALS);
 		}
 		
 		public static function eqId($field, Identifiable $object)
@@ -55,40 +55,40 @@
 		
 		public static function notEq($field, $value)
 		{
-			return new LogicalExpression(
-				$field, $value, LogicalExpression::NOT_EQUALS
+			return new BinaryExpression(
+				$field, $value, BinaryExpression::NOT_EQUALS
 			);
 		}
 		
 		/// greater than
 		public static function gt($field, $value)
 		{
-			return new LogicalExpression(
-				$field, $value, LogicalExpression::GREATER_THAN
+			return new BinaryExpression(
+				$field, $value, BinaryExpression::GREATER_THAN
 			);
 		}
 		
 		/// greater than or equals
 		public static function gtEq($field, $value)
 		{
-			return new LogicalExpression(
-				$field, $value, LogicalExpression::GREATER_OR_EQUALS
+			return new BinaryExpression(
+				$field, $value, BinaryExpression::GREATER_OR_EQUALS
 			);
 		}
 		
 		/// lower than
 		public static function lt($field, $value)
 		{
-			return new LogicalExpression(
-				$field, $value, LogicalExpression::LOWER_THAN
+			return new BinaryExpression(
+				$field, $value, BinaryExpression::LOWER_THAN
 			);
 		}
 		
 		/// lower than or equals
 		public static function ltEq($field, $value)
 		{
-			return new LogicalExpression(
-				$field, $value, LogicalExpression::LOWER_OR_EQUALS
+			return new BinaryExpression(
+				$field, $value, BinaryExpression::LOWER_OR_EQUALS
 			);
 		}
 
@@ -114,32 +114,32 @@
 		
 		public static function like($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::LIKE);
+			return new BinaryExpression($field, $value, BinaryExpression::LIKE);
 		}
 		
 		public static function notLike($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::NOT_LIKE);
+			return new BinaryExpression($field, $value, BinaryExpression::NOT_LIKE);
 		}
 
 		public static function ilike($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::ILIKE);
+			return new BinaryExpression($field, $value, BinaryExpression::ILIKE);
 		}
 		
 		public static function notIlike($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::NOT_ILIKE);
+			return new BinaryExpression($field, $value, BinaryExpression::NOT_ILIKE);
 		}
 		
 		public static function similar($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::SIMILAR_TO);
+			return new BinaryExpression($field, $value, BinaryExpression::SIMILAR_TO);
 		}
 		
 		public static function notSimilar($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::NOT_SIMILAR_TO);
+			return new BinaryExpression($field, $value, BinaryExpression::NOT_SIMILAR_TO);
 		}
 		
 		public static function eqLower($field, $value)
@@ -186,25 +186,25 @@
 		/// +
 		public static function add($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::ADD);
+			return new BinaryExpression($field, $value, BinaryExpression::ADD);
 		}
 		
 		/// -
 		public static function sub($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::SUBSTRACT);
+			return new BinaryExpression($field, $value, BinaryExpression::SUBSTRACT);
 		}
 		
 		/// *
 		public static function mul($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::MULTIPLY);
+			return new BinaryExpression($field, $value, BinaryExpression::MULTIPLY);
 		}
 		
 		/// /
 		public static function div($field, $value)
 		{
-			return new LogicalExpression($field, $value, LogicalExpression::DIVIDE);
+			return new BinaryExpression($field, $value, BinaryExpression::DIVIDE);
 		}
 
 		public static function fullTextAnd($field, $wordsList)
@@ -231,7 +231,7 @@
 		{
 			return self::block(
 				func_get_args(), 
-				LogicalExpression::EXPRESSION_OR
+				BinaryExpression::EXPRESSION_OR
 			);
 		}
 
@@ -239,7 +239,7 @@
 		{
 			return self::block(
 				func_get_args(), 
-				LogicalExpression::EXPRESSION_AND
+				BinaryExpression::EXPRESSION_AND
 			);
 		}
 		

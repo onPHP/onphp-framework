@@ -11,32 +11,36 @@
 /* $Id$ */
 
 	/**
-	 * Name says it all. :-)
-	 * 
 	 * @ingroup Logic
 	**/
-	final class LogicalExpression implements LogicalObject
+	final class BinaryExpression implements LogicalObject
 	{
-		const EQUALS_LOWER		= ' = '; // to avoid collision with EQUALS
-
-		const IS_NULL			= 'IS NULL';
-		const IS_NOT_NULL		= 'IS NOT NULL';
-
-		const IS_TRUE			= 'IS TRUE';
-		const IS_FALSE			= 'IS FALSE';
-
-		const IN				= 'in';
-		const NOT_IN			= 'not in';
+		const EQUALS			= '=';
+		const NOT_EQUALS		= '!=';
 		
-		const UNION				= 'UNION';
-		const UNION_ALL			= 'UNION ALL';
-	
-		const INTERSECT			= 'INTERSECT';
-		const INTERSECT_ALL		= 'INTERSECT ALL';
-	
-		const EXCEPT			= 'EXCEPT';
-		const EXCEPT_ALL		= 'EXCEPT ALL';
+		const EXPRESSION_AND	= 'AND';
+		const EXPRESSION_OR		= 'OR';
 
+		const GREATER_THAN		= '>';
+		const GREATER_OR_EQUALS	= '>=';
+
+		const LOWER_THAN		= '<';
+		const LOWER_OR_EQUALS	= '<=';
+
+		const LIKE				= 'LIKE';
+		const NOT_LIKE			= 'NOT LIKE';
+		const ILIKE				= 'ILIKE';
+		const NOT_ILIKE			= 'NOT ILIKE';
+
+		const SIMILAR_TO		= 'SIMILAR TO';
+		const NOT_SIMILAR_TO	= 'NOT SIMILAR TO';
+		
+		const ADD				= '+';
+		const SUBSTRACT			= '-';
+		const MULTIPLY			= '*';
+		const DIVIDE			= '/';
+
+		
 		private $left	= null;
 		private $right	= null;
 		private $logic	= null;
@@ -68,8 +72,6 @@
 			$string = '(';
 
 			if (null !== $left = $this->left) {
-				if ($this->logic == self::EQUALS_LOWER )
-					$left = SQLFunction::create('lower', $left);
 					
 				if ($left instanceof DialectString) {
 					if ($left instanceof SelectQuery)
@@ -84,18 +86,6 @@
 			
 			if (null !== $right = $this->right) {
 				
-				if ($this->logic == self::EQUALS_LOWER )
-					$right = SQLFunction::create('lower', $right);
-					
-				if (
-					(
-						$this->logic == self::IN
-						|| $this->logic == self::NOT_IN
-					)
-					&& is_array($right)
-				)
-					$right = new SQLArray($right);
-					
 				if ($right instanceof DialectString) {
 					if ($right instanceof SelectQuery)
 						$string .= '('.$right->toDialectString($dialect).')';
@@ -130,39 +120,31 @@
 			$right	= Expression::toValue($form, $right);
 				
 			switch ($this->logic) {
-				case self::IS_NULL:
-					return null === $left;
+				case self::EQUALS:
+					return $both && ($left == $right);
 
-				case self::IS_NOT_NULL:
-					return null !== $left;
+				case self::NOT_EQUALS:
+					return $both && ($left != $right);
 
-				case self::IS_TRUE:
-					return true === $left;
+				case self::GREATER_THAN:
+					return $both && ($left > $right);
 
-				case self::IS_FALSE:
-					return false === $left;
+				case self::GREATER_OR_EQUALS:
+					return $both && ($left >= $right);
 
-				case self::IN:
-					return $both && (in_array($left, $right));
+				case self::LOWER_THAN:
+					return $both && ($left < $right);
+
+				case self::LOWER_OR_EQUALS:
+					return $both && ($left <= $right);
+
+				case self::EXPRESSION_AND:
+					return $both && ($left && $right);
 				
-				case self::NOT_IN:
-					return $both && (!in_array($left, $right));
+				case self::EXPRESSION_OR:
+					return $both && ($left || $right);
 				
-				case self::EQUALS_LOWER:
-					return $both && (strtolower($left) === strtolower($right));
-
-				/*
-					unsupported atm:
-
-					LIKE, NOT_LIKE,
-					ILIKE, NOT_ILIKE,
-					ADD, SUBSTRACT, MULTIPLY, DIVIDE,
-					UNION, UNION_ALL,
-					INTERSECT, INTERSECT_ALL,
-					EXCEPT, EXCEPT_ALL;
-				*/
 				default:
-					
 					throw new UnsupportedMethodException(
 						"'{$this->logic}' doesn't supported yet"
 					);
