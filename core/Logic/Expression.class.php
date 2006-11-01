@@ -94,22 +94,22 @@
 
 		public static function notNull($field)
 		{
-			return new LogicalExpression($field, null, LogicalExpression::IS_NOT_NULL);
+			return new UnaryExpression($field, UnaryExpression::IS_NOT_NULL);
 		}
 		
 		public static function isNull($field)
 		{
-			return new LogicalExpression($field, null, LogicalExpression::IS_NULL);
+			return new UnaryExpression($field, UnaryExpression::IS_NULL);
 		}
 		
 		public static function isTrue($field)
 		{
-			return new LogicalExpression($field, null, LogicalExpression::IS_TRUE);
+			return new UnaryExpression($field, UnaryExpression::IS_TRUE);
 		}
 		
 		public static function isFalse($field)
 		{
-			return new LogicalExpression($field, null, LogicalExpression::IS_FALSE);
+			return new UnaryExpression($field, UnaryExpression::IS_FALSE);
 		}
 		
 		public static function like($field, $value)

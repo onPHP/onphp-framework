@@ -19,12 +19,6 @@
 	{
 		const EQUALS_LOWER		= ' = '; // to avoid collision with EQUALS
 
-		const IS_NULL			= 'IS NULL';
-		const IS_NOT_NULL		= 'IS NOT NULL';
-
-		const IS_TRUE			= 'IS TRUE';
-		const IS_FALSE			= 'IS FALSE';
-
 		const IN				= 'in';
 		const NOT_IN			= 'not in';
 		
@@ -130,18 +124,7 @@
 			$right	= Expression::toValue($form, $right);
 				
 			switch ($this->logic) {
-				case self::IS_NULL:
-					return null === $left;
-
-				case self::IS_NOT_NULL:
-					return null !== $left;
-
-				case self::IS_TRUE:
-					return true === $left;
-
-				case self::IS_FALSE:
-					return false === $left;
-
+				
 				case self::IN:
 					return $both && (in_array($left, $right));
 				
