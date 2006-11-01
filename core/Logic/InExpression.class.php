@@ -15,25 +15,22 @@
 	 * 
 	 * @ingroup Logic
 	**/
-	final class LogicalExpression implements LogicalObject
+	final class InExpression implements LogicalObject
 	{
-		const EQUALS_LOWER		= ' = '; // to avoid collision with EQUALS
-
-		const UNION				= 'UNION';
-		const UNION_ALL			= 'UNION ALL';
-	
-		const INTERSECT			= 'INTERSECT';
-		const INTERSECT_ALL		= 'INTERSECT ALL';
-	
-		const EXCEPT			= 'EXCEPT';
-		const EXCEPT_ALL		= 'EXCEPT ALL';
-
+		const IN				= 'in';
+		const NOT_IN			= 'not in';
+		
 		private $left	= null;
 		private $right	= null;
 		private $logic	= null;
 		
 		public function __construct($left, $right, $logic)
 		{
+			Assert::isTrue(
+				($right instanceof SelectQuery )
+				|| is_array($right)
+			);
+			
 			$this->left		= $left;
 			$this->right	= $right;
 			$this->logic	= $logic;
@@ -59,8 +56,6 @@
 			$string = '(';
 
 			if (null !== $left = $this->left) {
-				if ($this->logic == self::EQUALS_LOWER )
-					$left = SQLFunction::create('lower', $left);
 					
 				if ($left instanceof DialectString) {
 					if ($left instanceof SelectQuery)
@@ -73,19 +68,19 @@
 
 			$string .= " {$this->logic} ";
 			
-			if (null !== $right = $this->right) {
+			$right = $this->right;
+			
+			if ($right instanceof SelectQuery) {
+			
+				$string .= '('.$right->toDialectString($dialect).')';
 				
-				if ($this->logic == self::EQUALS_LOWER )
-					$right = SQLFunction::create('lower', $right);
+			} elseif (is_array($right)) {
+				
+				$string .= SQLArray::create($right)->
+					toDialectString($dialect);
 					
-				if ($right instanceof DialectString) {
-					if ($right instanceof SelectQuery)
-						$string .= '('.$right->toDialectString($dialect).')';
-					else
-						$string .= $right->toDialectString($dialect);
-				} else
-					$string .= $dialect->quoteValue($this->right);
-			}
+			} else
+				throw new WrongArgumentException('sql select or array accepted by '.$this->logic);
 
 			$string .= ')';
 
@@ -99,27 +94,26 @@
 			else 
 				$left = $this->left;
 			
-			if ($this->right instanceof LogicalObject)
-				$right = $this->right->toBoolean($form);
-			else 
-				$right = $this->right;
+			$right = $this->right;
 			
 			$both = 
 				(null !== $left)
 				&& (null !== $right);
 
 			$left	= Expression::toValue($form, $left);
-			$right	= Expression::toValue($form, $right);
 				
 			switch ($this->logic) {
 				
-				case self::EQUALS_LOWER:
-					return $both && (strtolower($left) === strtolower($right));
-
+				case self::IN:
+					return $both && (in_array($left, $right));
+				
+				case self::NOT_IN:
+					return $both && (!in_array($left, $right));
+				
 				default:
 					
 					throw new UnsupportedMethodException(
-						"'{$this->logic}' doesn't supported yet"
+						"'{$this->logic}' doesn't supported"
 					);
 			}
 		}

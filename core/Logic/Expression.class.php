@@ -164,8 +164,8 @@
 			elseif (is_array($value) && count($value) == 1)
 				return self::eq($field, current($value));
 			else {
-				return new LogicalExpression(
-					$field, $value, LogicalExpression::IN
+				return new InExpression(
+					$field, $value, InExpression::IN
 				);
 			}
 		}
@@ -177,8 +177,8 @@
 			elseif (is_array($value) && count($value) == 1)
 				return self::notEq($field, current($value));
 			else {
-				return new LogicalExpression(
-					$field, $value, LogicalExpression::NOT_IN
+				return new InExpression(
+					$field, $value, InExpression::NOT_IN
 				);
 			}
 		}

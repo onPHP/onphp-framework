@@ -19,6 +19,11 @@
 	{
 		private $array = array();
 		
+		public static function create($array)
+		{
+			return new self($array);
+		}
+		
 		public function __construct($array)
 		{
 			$this->array = $array;
