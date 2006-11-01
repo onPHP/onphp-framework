@@ -215,16 +215,20 @@
 			}
 
 			$db = DBPool::getByDao($this->getDao());
+			
+			if (!$db->inTransaction()) {
+				$db->queueStart()->begin();
 
-			$db->queueStart()->begin();
-
-			try {
+				try {
+					$this->worker->sync($insert, $update, $delete);
+					
+					$db->commit()->queueFlush();
+				} catch (DatabaseException $e) {
+					$db->queueDrop()->rollback();
+					throw $e;
+				}
+			} else {
 				$this->worker->sync($insert, $update, $delete);
-				
-				$db->commit()->queueFlush();
-			} catch (DatabaseException $e) {
-				$db->queueDrop()->rollback();
-				throw $e;
 			}
 			
 			$this->dao->uncacheLists();
