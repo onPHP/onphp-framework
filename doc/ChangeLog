@@ -1,5 +1,10 @@
 # $Id$
 
+2006-11-02	Konstantin V. Arkhipov
+
+	* main/DAOs/ObjectQuery.class.php: dropped due to massive
+	incompatibilities with new core/Logic stuff.
+
 2006-11-01	Konstantin V. Arkhipov
 
 	* core/DB/Transaction/: new sub-category added.
