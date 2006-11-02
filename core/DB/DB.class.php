@@ -119,6 +119,11 @@
 			return $this;
 		}
 		
+		public function inTransaction()
+		{
+			return $this->transaction;
+		}
+		
 		/**
 		 * queue handling
 		 * @deprecated by Queue class

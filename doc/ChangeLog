@@ -2,6 +2,9 @@
 
 2006-11-02	Konstantin V. Arkhipov
 
+	* main/Containers/Unified/UnifiedContainer.class.php: do not interrupt
+	so-called 'global transaction', if any; arrived from trunk.
+
 	* core/Form/Primitives/, meta/: backported float-related stuff from
 	trunk.
 
