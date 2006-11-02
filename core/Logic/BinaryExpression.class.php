@@ -69,35 +69,12 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			$string = '(';
-
-			if (null !== $left = $this->left) {
-					
-				if ($left instanceof DialectString) {
-					if ($left instanceof SelectQuery)
-						$string .= '('.$left->toDialectString($dialect).')';
-					else
-						$string .= $left->toDialectString($dialect);
-				} else
-					$string .= $dialect->quoteField($left);
-			}
-
-			$string .= " {$this->logic} ";
-			
-			if (null !== $right = $this->right) {
-				
-				if ($right instanceof DialectString) {
-					if ($right instanceof SelectQuery)
-						$string .= '('.$right->toDialectString($dialect).')';
-					else
-						$string .= $right->toDialectString($dialect);
-				} else
-					$string .= $dialect->quoteValue($this->right);
-			}
-
-			$string .= ')';
-
-			return $string;
+			return 
+				'('
+				.Expression::toExpressionString($this->left, $dialect)
+				." {$this->logic} "
+				.Expression::toExpressionString($this->right, $dialect)
+				.')';
 		}
 		
 		public function toBoolean(Form $form)

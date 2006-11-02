@@ -29,6 +29,22 @@
 					: $value;
 		}
 		
+		// TODO: consider moving to Dialect
+		public static function toExpressionString($expression, Dialect $dialect)
+		{
+			$string = '';
+			if (null !== $expression) {
+				if ($expression instanceof DialectString) {
+					if ($expression instanceof SelectQuery)
+						$string .= '('.$expression->toDialectString($dialect).')';
+					else
+						$string .= $expression->toDialectString($dialect);
+				} else
+					$string .= $dialect->quoteField($expression);
+			}
+			return $string;
+		}
+		
 		/**
 		 * factory
 		**/

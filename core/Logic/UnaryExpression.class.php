@@ -42,23 +42,12 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			$string = '(';
-
-			if (null !== $subject = $this->subject) {
-					
-				if ($subject instanceof DialectString) {
-					if ($subject instanceof SelectQuery)
-						$string .= '('.$subject->toDialectString($dialect).')';
-					else
-						$string .= $subject->toDialectString($dialect);
-				} else
-					$string .= $dialect->quoteField($subject);
-			}
-
 			// TODO: incorrect for prefix operators like '-' and 'NOT'
-			$string .= " {$this->logic})"; 
+			return 
+				'('
+				.Expression::toExpressionString($this->subject, $dialect)
+				." {$this->logic})"; 
 			
-			return $string;
 		}
 		
 		public function toBoolean(Form $form)
