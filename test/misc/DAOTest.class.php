@@ -79,23 +79,27 @@
 		
 		protected function getSome()
 		{
-			$this->assertTrue(
-				TestUser::dao()->getByLogic(
-					Expression::eq(
-						'city_id', 1
+			for ($i = 1; $i < 3; ++$i) {
+				$this->assertTrue(
+					TestUser::dao()->getByLogic(
+						Expression::eq(
+							'city_id', $i
+						)
 					)
-				)
-				== TestUser::dao()->getById(1)
-			);
-			
-			$this->assertTrue(
-				TestUser::dao()->getByLogic(
-					Expression::eq(
-						'city_id', 2
+					== TestUser::dao()->getById($i)
+				);
+				
+				$this->assertTrue(
+					TestUser::dao()->get(
+						ObjectQuery::create()->
+						addLogic(
+							Expression::eq('city_id', $i)
+						)->
+						setLimit(1)
 					)
-				)
-				== TestUser::dao()->getById(2)
-			);
+					== TestUser::dao()->getById($i)
+				);
+			}
 			
 			$this->assertEqual(
 				count(TestUser::dao()->getPlainList()),
