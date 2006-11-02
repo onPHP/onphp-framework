@@ -30,16 +30,6 @@
 			$this->logic	= $logic;
 		}
 		
-		public function getSubject()
-		{
-			return $this->subject;
-		}
-		
-		public function getLogic()
-		{
-			return $this->logic;
-		}
-		
 		public function toDialectString(Dialect $dialect)
 		{
 			// TODO: incorrect for prefix operators like '-' and 'NOT'

@@ -24,16 +24,6 @@
 			$this->right	= $right;
 		}
 		
-		public function getLeft()
-		{
-			return $this->left;
-		}
-		
-		public function getRight()
-		{
-			return $this->right;
-		}
-		
 		public function toDialectString(Dialect $dialect)
 		{
 			return 

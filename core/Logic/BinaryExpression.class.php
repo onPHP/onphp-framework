@@ -39,7 +39,6 @@
 		const SUBSTRACT			= '-';
 		const MULTIPLY			= '*';
 		const DIVIDE			= '/';
-
 		
 		private $left	= null;
 		private $right	= null;
@@ -50,21 +49,6 @@
 			$this->left		= $left;
 			$this->right	= $right;
 			$this->logic	= $logic;
-		}
-		
-		public function getLeft()
-		{
-			return $this->left;
-		}
-		
-		public function getRight()
-		{
-			return $this->right;
-		}
-		
-		public function getLogic()
-		{
-			return $this->logic;
 		}
 		
 		public function toDialectString(Dialect $dialect)
