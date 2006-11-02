@@ -21,12 +21,14 @@
 		 * common cast methods.
 		**/
 		
-		public static function toValue(Form $form, $value)
+		public static function toFormValue(Form $form, $value)
 		{
-			return
-				$value instanceof FormField
-					? $form->getValue($value->getName())
-					: $value;
+			if ($value instanceof FormField)
+				return $form->getValue($value->getName());
+			elseif ($value instanceof LogicalObject)
+				return $value->toBoolean($form);
+			else
+				return $value;
 		}
 		
 		// TODO: consider moving to Dialect
@@ -177,11 +179,7 @@
 		
 		public static function eqLower($field, $value)
 		{
-			return new LogicalExpression(
-				$field,
-				$value,
-				LogicalExpression::EQUALS_LOWER
-			);
+			return new EqualsLowerExpression($field, $value);
 		}
 		
 		public static function between($field, $left, $right)

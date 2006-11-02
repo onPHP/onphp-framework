@@ -11,14 +11,11 @@
 /* $Id$ */
 
 	/**
-	 * Name says it all. :-)
-	 * 
 	 * @ingroup Logic
+	 * @deprecated 
 	**/
 	final class LogicalExpression implements LogicalObject
 	{
-		const EQUALS_LOWER		= ' = '; // to avoid collision with EQUALS
-
 		const UNION				= 'UNION';
 		const UNION_ALL			= 'UNION ALL';
 	
@@ -56,72 +53,19 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			$string = '(';
-
-			if (null !== $left = $this->left) {
-				if ($this->logic == self::EQUALS_LOWER )
-					$left = SQLFunction::create('lower', $left);
-					
-				if ($left instanceof DialectString) {
-					if ($left instanceof SelectQuery)
-						$string .= '('.$left->toDialectString($dialect).')';
-					else
-						$string .= $left->toDialectString($dialect);
-				} else
-					$string .= $dialect->quoteField($left);
-			}
-
-			$string .= " {$this->logic} ";
-			
-			if (null !== $right = $this->right) {
-				
-				if ($this->logic == self::EQUALS_LOWER )
-					$right = SQLFunction::create('lower', $right);
-					
-				if ($right instanceof DialectString) {
-					if ($right instanceof SelectQuery)
-						$string .= '('.$right->toDialectString($dialect).')';
-					else
-						$string .= $right->toDialectString($dialect);
-				} else
-					$string .= $dialect->quoteValue($this->right);
-			}
-
-			$string .= ')';
-
-			return $string;
+			return 
+				'('
+				.Expression::toFieldString($this->left, $dialect)
+				." {$this->logic} "
+				.Expression::toValueString($this->right, $dialect)
+				.')';
 		}
 		
 		public function toBoolean(Form $form)
 		{
-			if ($this->left instanceof LogicalObject)
-				$left = $this->left->toBoolean($form);
-			else 
-				$left = $this->left;
-			
-			if ($this->right instanceof LogicalObject)
-				$right = $this->right->toBoolean($form);
-			else 
-				$right = $this->right;
-			
-			$both = 
-				(null !== $left)
-				&& (null !== $right);
-
-			$left	= Expression::toValue($form, $left);
-			$right	= Expression::toValue($form, $right);
-				
-			switch ($this->logic) {
-				
-				case self::EQUALS_LOWER:
-					return $both && (strtolower($left) === strtolower($right));
-
-				default:
-					
-					throw new UnsupportedMethodException(
-						"'{$this->logic}' doesn't supported yet"
-					);
-			}
+			throw new UnsupportedMethodException(
+				"'{$this->logic}' doesn't supported yet"
+			);
 		}
 	}
 ?>

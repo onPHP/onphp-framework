@@ -79,22 +79,12 @@
 		
 		public function toBoolean(Form $form)
 		{
-			if ($this->left instanceof LogicalObject)
-				$left = $this->left->toBoolean($form);
-			else 
-				$left = $this->left;
+			$left	= Expression::toFormValue($form, $this->left);
+			$right	= Expression::toFormValue($form, $this->right);
 			
-			if ($this->right instanceof LogicalObject)
-				$right = $this->right->toBoolean($form);
-			else 
-				$right = $this->right;
-			
-			$both = 
+			$both =
 				(null !== $left)
 				&& (null !== $right);
-
-			$left	= Expression::toValue($form, $left);
-			$right	= Expression::toValue($form, $right);
 				
 			switch ($this->logic) {
 				case self::EQUALS:

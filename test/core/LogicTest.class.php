@@ -168,7 +168,7 @@
 		{
 			$dialect = PostgresDialect::me();
 			$this->assertWantedPattern(
-				'/^\(\(\(\(\'asdf\' = "b"\) (AND|and) \("e" != \("i" \/ \'123\'\)\) (AND|and) \(\(lower\("a"\)  =  lower\("b"\)\) ((IS TRUE)|(is true))\s*\) AND|and \("g" = \'12\'\)\) (OR|or) \("table"\."c" ((IS NOT NULL)|(is not null))\s*\)\) (AND|and) \("sometable"\."a" ((not in)|(NOT IN)) \(\'q\', \'qwer\', \'xcvzxc\', \'wer\'\)\)\)$/',
+				'/^\(\(\(\(\'asdf\' = "b"\) (AND|and) \("e" != \("i" \/ \'123\'\)\) (AND|and) \(\(lower\("a"\)\s+=\s+lower\("b"\)\) ((IS TRUE)|(is true))\s*\) AND|and \("g" = \'12\'\)\) (OR|or) \("table"\."c" ((IS NOT NULL)|(is not null))\s*\)\) (AND|and) \("sometable"\."a" ((not in)|(NOT IN)) \(\'q\', \'qwer\', \'xcvzxc\', \'wer\'\)\)\)$/',
 				Expression::expAnd(
 					Expression::expOr(
 						Expression::andBlock(

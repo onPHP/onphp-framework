@@ -11,29 +11,17 @@
 /* $Id$ */
 
 	/**
-	 * Name says it all. :-)
-	 * 
 	 * @ingroup Logic
 	**/
-	final class InExpression implements LogicalObject
+	final class EqualsLowerExpression implements LogicalObject
 	{
-		const IN				= 'in';
-		const NOT_IN			= 'not in';
-		
 		private $left	= null;
 		private $right	= null;
-		private $logic	= null;
 		
-		public function __construct($left, $right, $logic)
+		public function __construct($left, $right)
 		{
-			Assert::isTrue(
-				($right instanceof SelectQuery )
-				|| is_array($right)
-			);
-			
 			$this->left		= $left;
 			$this->right	= $right;
-			$this->logic	= $logic;
 		}
 		
 		public function getLeft()
@@ -46,60 +34,32 @@
 			return $this->right;
 		}
 		
-		public function getLogic()
-		{
-			return $this->logic;
-		}
-		
 		public function toDialectString(Dialect $dialect)
 		{
-			$string = 
+			return 
 				'('
-				.Expression::toFieldString($this->left, $dialect)
-				.' '.$this->logic.' ';
-			
-			$right = $this->right;
-			
-			if ($right instanceof SelectQuery) {
-			
-				$string .= '('.$right->toDialectString($dialect).')';
-				
-			} elseif (is_array($right)) {
-				
-				$string .= SQLArray::create($right)->
-					toDialectString($dialect);
-					
-			} else
-				throw new WrongArgumentException('sql select or array accepted by '.$this->logic);
-
-			$string .= ')';
-
-			return $string;
+				.Expression::toFieldString(
+					SQLFunction::create('lower', $this->left), 
+					$dialect
+				)
+				." = "
+				.Expression::toValueString(
+					SQLFunction::create('lower', $this->right),
+					$dialect
+				)
+				.')';
 		}
 		
 		public function toBoolean(Form $form)
 		{
 			$left	= Expression::toFormValue($form, $this->left);
-			$right	= $this->right;
+			$right	= Expression::toFormValue($form, $this->right);
 			
 			$both = 
 				(null !== $left)
 				&& (null !== $right);
-
-			switch ($this->logic) {
 				
-				case self::IN:
-					return $both && (in_array($left, $right));
-				
-				case self::NOT_IN:
-					return $both && (!in_array($left, $right));
-				
-				default:
-					
-					throw new UnsupportedMethodException(
-						"'{$this->logic}' doesn't supported"
-					);
-			}
+			return $both && (mb_strtolower($left) === mb_strtolower($right));
 		}
 	}
 ?>

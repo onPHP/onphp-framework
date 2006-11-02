@@ -52,12 +52,7 @@
 		
 		public function toBoolean(Form $form)
 		{
-			if ($this->subject instanceof LogicalObject)
-				$subject = $this->subject->toBoolean($form);
-			else 
-				$subject = $this->subject;
-			
-			$subject = Expression::toValue($form, $subject);
+			$subject = Expression::toFormValue($form, $this->subject);
 				
 			switch ($this->logic) {
 				case self::IS_NULL:
