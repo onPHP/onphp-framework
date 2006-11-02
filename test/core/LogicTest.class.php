@@ -54,22 +54,22 @@
 			);
 			
 			$this->assertWantedPattern(
-				'/^\(a ((IS NOT NULL)|(is not null))\s*\)$/',
+				'/^\(a ((IS NOT NULL)|(is not null)) *\)$/',
 				Expression::notNull('a')->toDialectString($dialect)
 			);
 			
 			$this->assertWantedPattern(
-				'/^\(a ((IS NULL)|(is null))\s*\)$/',
+				'/^\(a ((IS NULL)|(is null)) *\)$/',
 				Expression::isNull('a')->toDialectString($dialect)
 			);
 			
 			$this->assertWantedPattern(
-				'/^\(a ((IS TRUE)|(is true))\s*\)$/',
+				'/^\(a ((IS TRUE)|(is true)) *\)$/',
 				Expression::isTrue('a')->toDialectString($dialect)
 			);
 			
 			$this->assertWantedPattern(
-				'/^\(a ((IS FALSE)|(is false))\s*\)$/',
+				'/^\(a ((IS FALSE)|(is false)) *\)$/',
 				Expression::isFalse('a')->toDialectString($dialect)
 			);
 			
@@ -104,7 +104,7 @@
 			);
 			
 			$this->assertWantedPattern(
-				'/^\(lower\(a\)\s+=\s+lower\(b\)\)$/',
+				'/^\(lower\(a\) += +lower\(b\)\)$/',
 				Expression::eqLower('a', 'b')->toDialectString($dialect)
 			);
 			
@@ -162,13 +162,18 @@
 				'(a / b)',
 				Expression::div('a', 'b')->toDialectString($dialect)
 			);
+			
+			$this->assertWantedPattern(
+				'/^\(a (between|BETWEEN) b (and|AND) c\)$/',
+				Expression::between('a', 'b', 'c')->toDialectString($dialect)
+			);
 		}
 		
 		public function testPgGeneration()
 		{
 			$dialect = PostgresDialect::me();
 			$this->assertWantedPattern(
-				'/^\(\(\(\(\'asdf\' = "b"\) (AND|and) \("e" != \("i" \/ \'123\'\)\) (AND|and) \(\(lower\("a"\)\s+=\s+lower\("b"\)\) ((IS TRUE)|(is true))\s*\) AND|and \("g" = \'12\'\)\) (OR|or) \("table"\."c" ((IS NOT NULL)|(is not null))\s*\)\) (AND|and) \("sometable"\."a" ((not in)|(NOT IN)) \(\'q\', \'qwer\', \'xcvzxc\', \'wer\'\)\)\)$/',
+				'/^\(\(\(\(\'asdf\' = "b"\) (AND|and) \("e" != \("i" \/ \'123\'\)\) (AND|and) \(\(lower\("a"\) += +lower\("b"\)\) ((IS TRUE)|(is true))\) (AND|and) \("g" = \'12\'\) (AND|and) \("j" (BETWEEN|between) \'3\' (AND|and) "p"\)\) (OR|or) \("table"\."c" ((IS NOT NULL)|(is not null))\)\) (AND|and) \("sometable"\."a" ((not in)|(NOT IN)) \(\'q\', \'qwer\', \'xcvzxc\', \'wer\'\)\)\)$/',
 				Expression::expAnd(
 					Expression::expOr(
 						Expression::andBlock(
@@ -187,6 +192,8 @@
 								Expression::eqLower('a', 'b')
 							),
 							Expression::eq(new DBField('g'), new DBValue(12))
+							,
+							Expression::between('j', new DBValue(3), new DBField('p'))
 						),
 						Expression::notNull(new DBField('c', 'table'))
 					),
@@ -273,7 +280,7 @@
 		public function testChainSQL()
 		{
 			$this->assertWantedPattern(
-				'/^\(\(a OR|or \(b ((IS NOT NULL)|(is not null))\s*\)\) AND|and \(c = d\) AND|and \(e ((IS FALSE)|(is false))\s*\)\)$/',
+				'/^\(\(a (OR|or) \(b ((IS NOT NULL)|(is not null)) *\)\) (AND|and) \(c = d\) (AND|and) \(e ((IS FALSE)|(is false)) *\)\)$/',
 				Expression::chain()->
 					expAnd(
 						Expression::expOr(
@@ -291,7 +298,7 @@
 			);
 			
 			$this->assertWantedPattern(
-				'/^\(\(a = b\) OR|or \(d OR|or c > e\)\) OR|or \(f in|IN \(qwer, asdf, zxcv\)\)\)$/',
+				'/^\(\(a = b\) (OR|or) \(d (OR|or) \(c > e\)\) (OR|or) \(f (in|IN) \(qwer, asdf, zxcv\)\)\)$/',
 				Expression::chain()->
 					expOr(
 						Expression::eq('a', 'b')
