@@ -275,6 +275,14 @@
 				)
 			);
 			
+			$this->assertTrue(
+				Expression::between(new FormField('d'), new FormField('c'), new FormField('e'))->toBoolean($form)
+			);
+			
+			$this->assertFalse(
+				Expression::between(new FormField('c'), new FormField('d'), new FormField('e'))->toBoolean($form)
+			);
+			
 		}
 		
 		public function testChainSQL()

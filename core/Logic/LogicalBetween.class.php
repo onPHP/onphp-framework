@@ -31,31 +31,23 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			return
-				'('.
-					$this->fieldOrValue($dialect, $this->field).
-					' BETWEEN '.
-						$this->fieldOrValue($dialect, $this->left).
-					' AND '.
-						$this->fieldOrValue($dialect, $this->right).
-				')';
+				'('
+				.Expression::toFieldString($this->field, $dialect)
+				.' BETWEEN '
+				.Expression::toValueString($this->left, $dialect)
+				.' AND '
+				.Expression::toValueString($this->right, $dialect)
+				.')';
 		}
 		
 		public function toBoolean(Form $form)
 		{
-			$left	= Expression::toValue($form, $this->left);
-			$right	= Expression::toValue($form, $this->right);
-			$value	= Expression::toValue($form, $this->field);
+			$left	= Expression::toFormValue($form, $this->left);
+			$right	= Expression::toFormValue($form, $this->right);
+			$value	= Expression::toFormValue($form, $this->field);
 			
 			return ($left	<= $value)
-				&& ($value	>= $right);
-		}
-
-		private function fieldOrValue(Dialect $dialect, $something)
-		{
-			if ($something instanceof DialectString)
-				return $something->toDialectString($dialect);
-			else
-				return $dialect->quoteField($something);
+				&& ($value	<= $right);
 		}
 	}
 ?>
