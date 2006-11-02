@@ -168,7 +168,7 @@
 		{
 			$dialect = PostgresDialect::me();
 			$this->assertWantedPattern(
-				'/^\(\(\(\(\'asdf\' = "b"\) (AND|and) \("e" != \("i" \/ \'123\'\)\) (AND|and) \(\(lower\("a"\)  =  lower\("b"\)\) ((IS TRUE)|(is true)) *\)\) (OR|or) \("table"\."c" ((IS NOT NULL)|(is not null)) *\)\) (AND|and) \("sometable"\."a" ((not in)|(NOT IN)) \(\'q\', \'qwer\', \'xcvzxc\', \'wer\'\)\)\)$/',
+				'/^\(\(\(\(\'asdf\' = "b"\) (AND|and) \("e" != \("i" \/ \'123\'\)\) (AND|and) \(\(lower\("a"\)  =  lower\("b"\)\) ((IS TRUE)|(is true))\s*\) AND|and \("g" = \'12\'\)\) (OR|or) \("table"\."c" ((IS NOT NULL)|(is not null))\s*\)\) (AND|and) \("sometable"\."a" ((not in)|(NOT IN)) \(\'q\', \'qwer\', \'xcvzxc\', \'wer\'\)\)\)$/',
 				Expression::expAnd(
 					Expression::expOr(
 						Expression::andBlock(
@@ -180,12 +180,13 @@
 								new DBField('e'),
 								Expression::div(
 									new DBField('i'),
-									new DBValue('123')
+									new DBValue(123)
 								)
 							),
 							Expression::isTrue(
 								Expression::eqLower('a', 'b')
-							)
+							),
+							Expression::eq(new DBField('g'), new DBValue(12))
 						),
 						Expression::notNull(new DBField('c', 'table'))
 					),
@@ -272,7 +273,7 @@
 		public function testChainSQL()
 		{
 			$this->assertWantedPattern(
-				'/^\(\(a OR|or \(b ((IS NOT NULL)|(is not null)) *\)\) AND|and \(c = d\) AND|and \(e ((IS FALSE)|(is false)) *\)\)$/',
+				'/^\(\(a OR|or \(b ((IS NOT NULL)|(is not null))\s*\)\) AND|and \(c = d\) AND|and \(e ((IS FALSE)|(is false))\s*\)\)$/',
 				Expression::chain()->
 					expAnd(
 						Expression::expOr(

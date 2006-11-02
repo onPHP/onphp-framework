@@ -45,8 +45,8 @@
 			// TODO: incorrect for prefix operators like '-' and 'NOT'
 			return 
 				'('
-				.Expression::toExpressionString($this->subject, $dialect)
-				." {$this->logic})"; 
+				.Expression::toFieldString($this->subject, $dialect)
+				.' '.$this->logic.')'; 
 			
 		}
 		

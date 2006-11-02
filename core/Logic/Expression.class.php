@@ -30,7 +30,7 @@
 		}
 		
 		// TODO: consider moving to Dialect
-		public static function toExpressionString($expression, Dialect $dialect)
+		public static function toFieldString($expression, Dialect $dialect)
 		{
 			$string = '';
 			if (null !== $expression) {
@@ -44,6 +44,23 @@
 			}
 			return $string;
 		}
+		
+		// TODO: consider moving to Dialect
+		public static function toValueString($expression, Dialect $dialect)
+		{
+			$string = '';
+			if (null !== $expression) {
+				if ($expression instanceof DialectString) {
+					if ($expression instanceof SelectQuery)
+						$string .= '('.$expression->toDialectString($dialect).')';
+					else
+						$string .= $expression->toDialectString($dialect);
+				} else
+					$string .= $dialect->quoteValue($expression);
+			}
+			return $string;
+		}
+
 		
 		/**
 		 * factory

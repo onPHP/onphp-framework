@@ -53,20 +53,10 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			$string = '(';
-
-			if (null !== $left = $this->left) {
-					
-				if ($left instanceof DialectString) {
-					if ($left instanceof SelectQuery)
-						$string .= '('.$left->toDialectString($dialect).')';
-					else
-						$string .= $left->toDialectString($dialect);
-				} else
-					$string .= $dialect->quoteField($left);
-			}
-
-			$string .= " {$this->logic} ";
+			$string = 
+				'('
+				.Expression::toFieldString($this->left, $dialect)
+				.' '.$this->logic.' ';
 			
 			$right = $this->right;
 			

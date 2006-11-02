@@ -71,9 +71,9 @@
 		{
 			return 
 				'('
-				.Expression::toExpressionString($this->left, $dialect)
+				.Expression::toFieldString($this->left, $dialect)
 				." {$this->logic} "
-				.Expression::toExpressionString($this->right, $dialect)
+				.Expression::toValueString($this->right, $dialect)
 				.')';
 		}
 		
