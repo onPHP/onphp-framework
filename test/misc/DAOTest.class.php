@@ -82,9 +82,7 @@
 			for ($i = 1; $i < 3; ++$i) {
 				$this->assertTrue(
 					TestUser::dao()->getByLogic(
-						Expression::eq(
-							'city_id', $i
-						)
+						Expression::eq('city_id', $i)
 					)
 					== TestUser::dao()->getById($i)
 				);
