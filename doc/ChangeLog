@@ -1,5 +1,10 @@
 # $Id$
 
+2006-11-02	Konstantin V. Arkhipov
+
+	* core/Form/Primitives/, meta/: backported float-related stuff from
+	trunk.
+
 2006-10-25	Anton E. Lebedevich
 
 	* test/core/LogicTest.class.php: added tests for LogicalExpression.

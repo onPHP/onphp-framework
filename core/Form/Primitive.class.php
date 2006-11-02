@@ -27,6 +27,11 @@
 			return new PrimitiveInteger($name);
 		}
 		
+		public static function float($name)
+		{
+			return new PrimitiveFloat($name);
+		}
+
 		public static function identifier($name)
 		{
 			return new PrimitiveIdentifier($name);

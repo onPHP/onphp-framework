@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                           *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -13,16 +13,16 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class PrimitiveInteger extends PrimitiveNumber
+	class PrimitiveFloat extends PrimitiveNumber
 	{
 		protected function checkNumber($number)
 		{
-			Assert::isInteger($number);
+			Assert::isFloat($number);
 		}
 		
 		protected function castNumber($number)
 		{
-			return (int) $number;
+			return (float) $number;
 		}
 	}
 ?>
