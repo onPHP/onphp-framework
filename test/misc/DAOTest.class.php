@@ -86,17 +86,6 @@
 					)
 					== TestUser::dao()->getById($i)
 				);
-				
-				$this->assertTrue(
-					TestUser::dao()->get(
-						ObjectQuery::create()->
-						addLogic(
-							Expression::eq('city_id', $i)
-						)->
-						setLimit(1)
-					)
-					== TestUser::dao()->getById($i)
-				);
 			}
 			
 			$this->assertEqual(
