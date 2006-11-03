@@ -75,14 +75,6 @@
 			return $this->exp($query, CombineQuery::EXCEPT_ALL);
 		}
 		
-		private function exp(DialectString $exp, $logic)
-		{
-			$this->chain[] = $exp;
-			$this->logic[] = $logic;
-			
-			return $this;
-		}
-		
 		public function toBoolean(Form $form)
 		{
 			$chain = &$this->chain;
@@ -91,12 +83,13 @@
 			
 			if (! $size)
 				throw new WrongArgumentException('empty chain can\'t be calculated');
-			elseif ($size = 1)
+			elseif ($size == 1)
 				return $chain[0]->toBoolean($form);
 			else {
 				$out = null;
 				
-				for ($i = 0, $size = count($chain); $i < $size; ++$i) {
+				for ($i = 0; $i < $size; ++$i) {
+					
 					if (isset($chain[$i + 1])) {
 						$out =
 							self::calculateBoolean(
