@@ -281,7 +281,7 @@
 
 		private static function block($args, $logic)
 		{
-			return new LogicalBlock($args, $logic);
+			return LogicalChain::block($args, $logic);
 		}
 	}
 ?>

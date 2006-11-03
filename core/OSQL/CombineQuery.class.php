@@ -42,7 +42,7 @@
 		{
 			$args = func_get_args();
 			
-			return new LogicalBlock($args, CombineQuery::UNION);		
+			return QueryChain::block($args, CombineQuery::UNION);		
 		}
 		
 		public static function unionAll($left, $right)
@@ -54,7 +54,7 @@
 		{
 			$args = func_get_args();
 			
-			return new LogicalBlock($args, CombineQuery::UNION_ALL);
+			return QueryChain::block($args, CombineQuery::UNION_ALL);
 		}
 		
 		public static function intersect($left, $right)
@@ -66,7 +66,7 @@
 		{
 			$args = func_get_args();
 			
-			return new LogicalBlock($args, CombineQuery::INTERSECT);
+			return QueryChain::block($args, CombineQuery::INTERSECT);
 		}
 		
 		public static function intersectAll($left, $right)
@@ -78,7 +78,7 @@
 		{
 			$args = func_get_args();
 			
-			return new LogicalBlock($args, CombineQuery::INTERSECT_ALL);
+			return QueryChain::block($args, CombineQuery::INTERSECT_ALL);
 		}
 		
 		public static function except($left, $right)
@@ -90,7 +90,7 @@
 		{
 			$args = func_get_args();
 			
-			return new LogicalBlock($args, CombineQuery::EXCEPT);
+			return QueryChain::block($args, CombineQuery::EXCEPT);
 		}
 	
 		public static function exceptAll($left, $right)
@@ -102,7 +102,7 @@
 		{
 			$args = func_get_args();
 			
-			return new LogicalBlock($args, CombineQuery::EXCEPT_ALL);
+			return QueryChain::block($args, CombineQuery::EXCEPT_ALL);
 		}
 	}
 ?>

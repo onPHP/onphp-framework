@@ -35,13 +35,13 @@
 		{
 			if ($this->chain) {
 				$out = "({$this->chain[0]->toDialectString($dialect)} ";
-	
-				for ($i = 1, $size = count($this->chain); $i < $size; ++$i)
+				for ($i = 1, $size = count($this->chain); $i < $size; ++$i) {
 					$out .=
 						$this->logic[$i]
 						.' '
 						.$this->chain[$i]->toDialectString($dialect)
 						.' ';
+				}
 
 				return rtrim($out).')'; // trailing space, if any
 			}
