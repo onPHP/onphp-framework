@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup OSQL
 	**/
-	abstract class FullText implements LogicalObject
+	abstract class FullText implements DialectString
 	{
 		protected $logic = null;
 		protected $field = null;
@@ -32,11 +32,6 @@
 			$this->field = $field;
 			$this->words = $words;
 			$this->logic = $logic;
-		}
-
-		final public function toBoolean(Form $form)
-		{
-			throw new UnsupportedMethodException();
 		}
 	}
 ?>
