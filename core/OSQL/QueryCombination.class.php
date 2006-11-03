@@ -30,22 +30,6 @@
 			$this->logic	= $logic;
 		}
 		
-		// TODO: getters useless?
-		public function getLeft()
-		{
-			return $this->left;
-		}
-		
-		public function getRight()
-		{
-			return $this->right;
-		}
-		
-		public function getLogic()
-		{
-			return $this->logic;
-		}
-		
 		public function toDialectString(Dialect $dialect)
 		{
 			return 
