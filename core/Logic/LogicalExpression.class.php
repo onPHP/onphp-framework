@@ -16,15 +16,6 @@
 	**/
 	final class LogicalExpression implements LogicalObject
 	{
-		const UNION				= 'UNION';
-		const UNION_ALL			= 'UNION ALL';
-	
-		const INTERSECT			= 'INTERSECT';
-		const INTERSECT_ALL		= 'INTERSECT ALL';
-	
-		const EXCEPT			= 'EXCEPT';
-		const EXCEPT_ALL		= 'EXCEPT ALL';
-
 		private $left	= null;
 		private $right	= null;
 		private $logic	= null;

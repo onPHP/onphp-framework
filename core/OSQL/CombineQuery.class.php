@@ -24,87 +24,90 @@
 	**/
 	final class CombineQuery extends StaticFactory
 	{		
+		const UNION				= 'UNION';
+		const UNION_ALL			= 'UNION ALL';
+	
+		const INTERSECT			= 'INTERSECT';
+		const INTERSECT_ALL		= 'INTERSECT ALL';
+	
+		const EXCEPT			= 'EXCEPT';
+		const EXCEPT_ALL		= 'EXCEPT ALL';
+		
 		public static function union($left, $right)
 		{
-			return self::create($left, $right, LogicalExpression::UNION);
+			return new LogicalExpression($left, $right, CombineQuery::UNION);
 		}	
 		
 		public static function unionBlock()
 		{
 			$args = func_get_args();
 			
-			return self::block($args, LogicalExpression::UNION);		
+			return self::block($args, CombineQuery::UNION);		
 		}
 		
 		public static function unionAll($left, $right)
 		{
-			return self::create($left, $right, LogicalExpression::UNION_ALL);
+			return new LogicalExpression($left, $right, CombineQuery::UNION_ALL);
 		}	
 		
 		public static function unionAllBlock()
 		{
 			$args = func_get_args();
 			
-			return self::block($args, LogicalExpression::UNION_ALL);
+			return self::block($args, CombineQuery::UNION_ALL);
 		}
 		
 		public static function intersect($left, $right)
 		{
-			return self::create($left, $right, LogicalExpression::INTERSECT);
+			return new LogicalExpression($left, $right, CombineQuery::INTERSECT);
 		}
 		
 		public static function intersectBlock()
 		{
 			$args = func_get_args();
 			
-			return self::block($args, LogicalExpression::INTERSECT);
+			return self::block($args, CombineQuery::INTERSECT);
 		}
 		
 		public static function intersectAll($left, $right)
 		{
-			return self::create($left, $right, LogicalExpression::INTERSECT_ALL);
+			return new LogicalExpression($left, $right, CombineQuery::INTERSECT_ALL);
 		}	
 		
 		public static function intersectAllBlock()
 		{
 			$args = func_get_args();
 			
-			return self::block($args, LogicalExpression::INTERSECT_ALL);
+			return self::block($args, CombineQuery::INTERSECT_ALL);
 		}
 		
 		public static function except($left, $right)
 		{
-			return self::create($left, $right, LogicalExpression::EXCEPT);
+			return new LogicalExpression($left, $right, CombineQuery::EXCEPT);
 		}
 		
 		public static function exceptBlock()
 		{
 			$args = func_get_args();
 			
-			return self::block($args, LogicalExpression::EXCEPT);
+			return self::block($args, CombineQuery::EXCEPT);
 		}
 	
 		public static function exceptAll($left, $right)
 		{
-			return self::create($left, $right, LogicalExpression::EXCEPT_ALL);
+			return new LogicalExpression($left, $right, CombineQuery::EXCEPT_ALL);
 		}
 		
 		public static function exceptAllBlock()
 		{
 			$args = func_get_args();
 			
-			return self::block($args, LogicalExpression::EXCEPT_ALL);
+			return self::block($args, CombineQuery::EXCEPT_ALL);
 		}
 		
 		private static function block($args, $logic)
 		{
 			return new LogicalBlock($args, $logic);
 		}
-		
-		/// public methods should be enough
-		private static function create($left, $right, $logic)
-		{
-			return new LogicalExpression($left, $right, $logic);
-		}	
 	}
 ?>
