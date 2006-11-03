@@ -15,14 +15,8 @@
 	 * 
 	 * @ingroup Logic
 	**/
-	final class LogicalChain implements LogicalObject
+	final class LogicalChain extends SQLChain implements LogicalObject
 	{
-		// TODO: split to AndChain and OrChain
-		// TODO: merge with LogicalBlock
-		
-		private $chain = array();
-		private $logic = array();
-
 		public static function calculateBoolean($logic, $left, $right)
 		{
 			switch ($logic) {
@@ -89,54 +83,40 @@
 			return $this;
 		}
 		
-		public function getSize()
-		{
-			return count($this->chain);
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			if ($this->chain) {
-				$out = "({$this->chain[0]->toDialectString($dialect)} ";
-	
-				for ($i = 1, $size = count($this->chain); $i < $size; ++$i)
-					$out .=
-						$this->logic[$i]
-						.' '
-						.$this->chain[$i]->toDialectString($dialect)
-						.' ';
-
-				return rtrim($out).')'; // trailing space, if any
-			}
-			
-			return null;
-		}
-		
 		public function toBoolean(Form $form)
 		{
 			$chain = &$this->chain;
 			
-			$out = null; // FIXME: fails on single expression with AND logic
+			$size = count($chain);
 			
-			for ($i = 0, $size = count($chain); $i < $size; ++$i) {
-				if (isset($chain[$i + 1])) {
-					$out =
-						self::calculateBoolean(
-							$this->logic[$i + 1],
-							$chain[$i]->toBoolean($form),
-							$chain[$i + 1]->toBoolean($form)
-						);
-				} else {
-					$out =
-						self::calculateBoolean(
-							$this->logic[$i],
-							$out, 
-							$chain[$i]->toBoolean($form)
-						);
+			if (! $size)
+				throw new WrongArgumentException('empty chain can\'t be calculated');
+			elseif ($size = 1)
+				return $chain[0]->toBoolean($form);
+			else {
+				$out = null;
+				
+				for ($i = 0, $size = count($chain); $i < $size; ++$i) {
+					if (isset($chain[$i + 1])) {
+						$out =
+							self::calculateBoolean(
+								$this->logic[$i + 1],
+								$chain[$i]->toBoolean($form),
+								$chain[$i + 1]->toBoolean($form)
+							);
+					} else {
+						$out =
+							self::calculateBoolean(
+								$this->logic[$i],
+								$out, 
+								$chain[$i]->toBoolean($form)
+							);
+					}
 				}
+				return $out;
 			}
 			
-			return $out;
+			// notreached
 		}
 	}
 ?>

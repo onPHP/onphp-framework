@@ -33,7 +33,7 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			return 
-				'('
+				'(' // TODO: parenthesis useless?
 				.$this->left->toDialectString($dialect)
 				." {$this->logic} "
 				.$this->right->toDialectString($dialect)
