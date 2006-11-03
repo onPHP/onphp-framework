@@ -11,7 +11,7 @@
 /* $Id$ */
 
 	/**
-	 * Factory for various childs of LogicalObject and LogicalExpression.
+	 * Factory for various childs of LogicalObjects
 	 * 
 	 * @ingroup Logic
 	**/

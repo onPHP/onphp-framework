@@ -53,32 +53,32 @@
 		
 		public function union(SelectQuery $query)
 		{
-			return $this->exp($query, LogicalExpression::UNION);
+			return $this->exp($query, CombineQuery::UNION);
 		}
 		
 		public function unionAll(SelectQuery $query)
 		{
-			return $this->exp($query, LogicalExpression::UNION_ALL);
+			return $this->exp($query, CombineQuery::UNION_ALL);
 		}
 		
 		public function intersect(SelectQuery $query)
 		{
-			return $this->exp($query, LogicalExpression::INTERSECT);
+			return $this->exp($query, CombineQuery::INTERSECT);
 		}
 		
 		public function intersectAll(SelectQuery $query)
 		{
-			return $this->exp($query, LogicalExpression::INTERSECT_ALL);
+			return $this->exp($query, CombineQuery::INTERSECT_ALL);
 		}
 		
 		public function except(SelectQuery $query)
 		{
-			return $this->exp($query, LogicalExpression::EXCEPT);
+			return $this->exp($query, CombineQuery::EXCEPT);
 		}
 		
 		public function exceptAll(SelectQuery $query)
 		{
-			return $this->exp($query, LogicalExpression::EXCEPT_ALL);
+			return $this->exp($query, CombineQuery::EXCEPT_ALL);
 		}
 		
 		private function exp(DialectString $exp, $logic)

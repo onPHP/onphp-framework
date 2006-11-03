@@ -11,22 +11,26 @@
 /* $Id$ */
 
 	/**
-	 * @ingroup Logic
-	 * @deprecated 
+	 * @ingroup OSQL
 	**/
-	final class LogicalExpression implements LogicalObject
+	final class QueryCombination implements DialectString
 	{
 		private $left	= null;
 		private $right	= null;
 		private $logic	= null;
 		
-		public function __construct($left, $right, $logic)
+		public function __construct(
+			SelectQuery $left, 
+			SelectQuery $right, 
+			$logic
+		)
 		{
 			$this->left		= $left;
 			$this->right	= $right;
 			$this->logic	= $logic;
 		}
 		
+		// TODO: getters useless?
 		public function getLeft()
 		{
 			return $this->left;
@@ -46,17 +50,10 @@
 		{
 			return 
 				'('
-				.Expression::toFieldString($this->left, $dialect)
+				.$this->left->toDialectString($dialect)
 				." {$this->logic} "
-				.Expression::toValueString($this->right, $dialect)
+				.$this->right->toDialectString($dialect)
 				.')';
-		}
-		
-		public function toBoolean(Form $form)
-		{
-			throw new UnsupportedMethodException(
-				"'{$this->logic}' doesn't supported yet"
-			);
 		}
 	}
 ?>
