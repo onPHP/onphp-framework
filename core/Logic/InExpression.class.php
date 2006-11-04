@@ -40,7 +40,7 @@
 		{
 			$string = 
 				'('
-				.$dialect->toFieldString($this->left, $dialect)
+				.$dialect->toFieldString($this->left)
 				.' '.$this->logic
 				.' ';
 			
