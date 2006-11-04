@@ -1,5 +1,15 @@
 # $Id$
 
+2006-11-04 Anton E. Lebedevich
+	* core/Logic/: backward incompatible reorganization.
+	LogicalBlock merged with LogicalChain;
+	LogicalExpression splitted to UnaryExpression, BinaryExpression,
+	EqualsLowerExpression, InExpression;
+	SIMILAR and NOT_SIMILAR removed from logical toBoolean() because they are
+	not soundex();
+	getters dropped from LogicalObjects;
+	unions moved to QueryCombination and QueryChain.
+
 2006-11-02	Konstantin V. Arkhipov
 
 	* main/DAOs/ObjectQuery.class.php: dropped due to massive
