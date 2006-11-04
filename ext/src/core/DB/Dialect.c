@@ -231,7 +231,7 @@ ONPHP_METHOD(Dialect, valueToString)
 }
 
 smart_str onphp_dialect_to_needed_string(
-	zval *this, zval *expression, unsigned const char fieldMethod TSRMLS_DC
+	zval *this, zval *expression, char *method TSRMLS_DC
 )
 {
 	smart_str string = {0};
@@ -266,26 +266,20 @@ smart_str onphp_dialect_to_needed_string(
 			onphp_append_zval_to_smart_string(&string, out);
 		}
 	} else {
-		if (fieldMethod) {
-			zend_call_method_with_1_params(
-				&this,
-				Z_OBJCE_P(this),
-				NULL,
-				"quotefield",
-				&out,
-				expression
-			);
-		} else {
-			zend_call_method_with_1_params(
-				&this,
-				Z_OBJCE_P(this),
-				NULL,
-				"quotevalue",
-				&out,
-				expression
-			);
-		}
-		
+		// unwrapped zend_call_method_with_1_params()
+		// since sizeof(method) != strlen(method)
+		zend_call_method(
+			&this,
+			Z_OBJCE_P(this),
+			NULL,
+			method,
+			strlen(method),
+			&out,
+			1,
+			expression,
+			NULL TSRMLS_CC
+		);
+	
 		if (EG(exception)) {
 			return string;
 		}
@@ -315,7 +309,7 @@ ONPHP_METHOD(Dialect, toFieldString)
 		onphp_dialect_to_needed_string(
 			getThis(),
 			expression,
-			1 TSRMLS_CC
+			"quotefield" TSRMLS_CC
 		).c,
 		0
 	);
@@ -337,7 +331,7 @@ ONPHP_METHOD(Dialect, toValueString)
 		onphp_dialect_to_needed_string(
 			getThis(),
 			expression,
-			0 TSRMLS_CC
+			"quotevalue" TSRMLS_CC
 		).c,
 		0
 	);
