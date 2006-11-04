@@ -181,6 +181,16 @@
 			return $this;
 		}
 		
+		public function toFormValue($value)
+		{
+			if ($value instanceof FormField)
+				return $this->getValue($value->getName());
+			elseif ($value instanceof LogicalObject)
+				return $value->toBoolean($this);
+			else
+				return $value;
+		}
+		
 		private function importPrimitive($scope, BasePrimitive $prm)
 		{
 			return $this->checkImportResult($prm, $prm->import($scope));

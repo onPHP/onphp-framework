@@ -55,16 +55,16 @@
 		{
 			return 
 				'('
-				.Expression::toFieldString($this->left, $dialect)
+				.$dialect->toFieldString($this->left)
 				." {$this->logic} "
-				.Expression::toValueString($this->right, $dialect)
+				.$dialect->toValueString($this->right)
 				.')';
 		}
 		
 		public function toBoolean(Form $form)
 		{
-			$left	= Expression::toFormValue($form, $this->left);
-			$right	= Expression::toFormValue($form, $this->right);
+			$left	= $form->toFormValue($this->left);
+			$right	= $form->toFormValue($this->right);
 			
 			$both =
 				(null !== $left)

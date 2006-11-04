@@ -17,65 +17,18 @@
 	**/
 	final class Expression extends StaticFactory
 	{
-		/**
-		 * common cast methods.
-		**/
-		
-		public static function toFormValue(Form $form, $value)
-		{
-			if ($value instanceof FormField)
-				return $form->getValue($value->getName());
-			elseif ($value instanceof LogicalObject)
-				return $value->toBoolean($form);
-			else
-				return $value;
-		}
-		
-		// TODO: consider moving to Dialect
-		public static function toFieldString($expression, Dialect $dialect)
-		{
-			$string = '';
-			if (null !== $expression) {
-				if ($expression instanceof DialectString) {
-					if ($expression instanceof SelectQuery)
-						$string .= '('.$expression->toDialectString($dialect).')';
-					else
-						$string .= $expression->toDialectString($dialect);
-				} else
-					$string .= $dialect->quoteField($expression);
-			}
-			return $string;
-		}
-		
-		// TODO: consider moving to Dialect
-		public static function toValueString($expression, Dialect $dialect)
-		{
-			$string = '';
-			if (null !== $expression) {
-				if ($expression instanceof DialectString) {
-					if ($expression instanceof SelectQuery)
-						$string .= '('.$expression->toDialectString($dialect).')';
-					else
-						$string .= $expression->toDialectString($dialect);
-				} else
-					$string .= $dialect->quoteValue($expression);
-			}
-			return $string;
-		}
-
-		
-		/**
-		 * factory
-		**/
-		
 		public static function expAnd($left, $right)
 		{
-			return new BinaryExpression($left, $right, BinaryExpression::EXPRESSION_AND);
+			return new BinaryExpression(
+				$left, $right, BinaryExpression::EXPRESSION_AND
+			);
 		}
 		
 		public static function expOr($left, $right)
 		{
-			return new BinaryExpression($left, $right, BinaryExpression::EXPRESSION_OR);
+			return new BinaryExpression(
+				$left, $right, BinaryExpression::EXPRESSION_OR
+			);
 		}
 		
 		public static function eq($field, $value)

@@ -74,6 +74,34 @@
 					: ' RESTRICT';
 		}
 		
+		public function toFieldString($expression)
+		{
+			return $this->toNeededString($expression, 'quoteField');
+		}
+		
+		public function toValueString($expression)
+		{
+			return $this->toNeededString($expression, 'quoteValue');
+		}
+		
+		private function toNeededString($expression, $method)
+		{
+			$string = null;
+			
+			if (null !== $expression) {
+				if ($expression instanceof DialectString) {
+					if ($expression instanceof SelectQuery)
+						$string .= '('.$expression->toDialectString($this).')';
+					else
+						$string .= $expression->toDialectString($this);
+				} else {
+					$string .= $this->$method($expression);
+				}
+			}
+			
+			return $string;
+		}
+		
 		public function fieldToString($field)
 		{
 			return

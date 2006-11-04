@@ -40,8 +40,9 @@
 		{
 			$string = 
 				'('
-				.Expression::toFieldString($this->left, $dialect)
-				.' '.$this->logic.' ';
+				.$dialect->toFieldString($this->left, $dialect)
+				.' '.$this->logic
+				.' ';
 			
 			$right = $this->right;
 			
@@ -55,7 +56,9 @@
 					toDialectString($dialect);
 					
 			} else
-				throw new WrongArgumentException('sql select or array accepted by '.$this->logic);
+				throw new WrongArgumentException(
+					'sql select or array accepted by '.$this->logic
+				);
 
 			$string .= ')';
 
@@ -64,7 +67,7 @@
 		
 		public function toBoolean(Form $form)
 		{
-			$left	= Expression::toFormValue($form, $this->left);
+			$left	= $form->toFormValue($this->left);
 			$right	= $this->right;
 			
 			$both = 

@@ -32,19 +32,19 @@
 		{
 			return
 				'('
-				.Expression::toFieldString($this->field, $dialect)
+				.$dialect->toFieldString($this->field)
 				.' BETWEEN '
-				.Expression::toValueString($this->left, $dialect)
+				.$dialect->toValueString($this->left)
 				.' AND '
-				.Expression::toValueString($this->right, $dialect)
+				.$dialect->toValueString($this->right)
 				.')';
 		}
 		
 		public function toBoolean(Form $form)
 		{
-			$left	= Expression::toFormValue($form, $this->left);
-			$right	= Expression::toFormValue($form, $this->right);
-			$value	= Expression::toFormValue($form, $this->field);
+			$left	= $form->toFormValue($this->left);
+			$right	= $form->toFormValue($this->right);
+			$value	= $form->toFormValue($this->field);
 			
 			return ($left	<= $value)
 				&& ($value	<= $right);

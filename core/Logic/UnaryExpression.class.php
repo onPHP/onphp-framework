@@ -35,14 +35,14 @@
 			// TODO: incorrect for prefix operators like '-' and 'NOT'
 			return 
 				'('
-				.Expression::toFieldString($this->subject, $dialect)
-				.' '.$this->logic.')'; 
-			
+				.$dialect->toFieldString($this->subject)
+				.' '.$this->logic
+				.')'; 
 		}
 		
 		public function toBoolean(Form $form)
 		{
-			$subject = Expression::toFormValue($form, $this->subject);
+			$subject = $form->toFormValue($this->subject);
 				
 			switch ($this->logic) {
 				case self::IS_NULL:

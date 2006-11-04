@@ -28,22 +28,20 @@
 		{
 			return 
 				'('
-				.Expression::toFieldString(
-					SQLFunction::create('lower', $this->left), 
-					$dialect
+				.$dialect->toFieldString(
+					SQLFunction::create('lower', $this->left)
 				)
 				." = "
-				.Expression::toValueString(
-					SQLFunction::create('lower', $this->right),
-					$dialect
+				.$dialect->toValueString(
+					SQLFunction::create('lower', $this->right)
 				)
 				.')';
 		}
 		
 		public function toBoolean(Form $form)
 		{
-			$left	= Expression::toFormValue($form, $this->left);
-			$right	= Expression::toFormValue($form, $this->right);
+			$left	= $form->toFormValue($this->left);
+			$right	= $form->toFormValue($this->right);
 			
 			$both = 
 				(null !== $left)
