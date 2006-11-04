@@ -1,5 +1,9 @@
 # $Id$
 
+2006-11-05	Konstantin V. Arkhipov
+
+	* 0.8.1 released.
+
 2006-11-02	Konstantin V. Arkhipov
 
 	* main/Containers/Unified/UnifiedContainer.class.php: do not interrupt
