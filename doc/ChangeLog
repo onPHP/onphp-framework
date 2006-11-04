@@ -2,6 +2,8 @@
 
 2006-11-04	Konstantin V. Arkhipov
 
+	* ext/src/core/DB/Dialect.c: synced with php-version.
+
 	* core/Logic/Expression.class.php: toValueString(), toFieldString()
 	moved to Dialect, as suggested by Antony; toFormValue moved to Form.
 

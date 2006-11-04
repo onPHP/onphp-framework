@@ -21,6 +21,7 @@
 #include "core/DB/Dialect.h"
 #include "core/OSQL/DBValue.h"
 #include "core/OSQL/DialectString.h"
+#include "core/OSQL/Query.h"
 #include "core/Exceptions.h"
 
 PHPAPI zend_class_entry *onphp_ce_Dialect;
@@ -229,6 +230,119 @@ ONPHP_METHOD(Dialect, valueToString)
 	RETURN_ZVAL(out, 1, 1);
 }
 
+smart_str onphp_dialect_to_needed_string(
+	zval *this, zval *expression, unsigned const char fieldMethod TSRMLS_DC
+)
+{
+	smart_str string = {0};
+	zval *out;
+	
+	if (
+		Z_TYPE_P(expression) == IS_OBJECT
+		&&
+			instanceof_function(
+				Z_OBJCE_P(expression),
+				onphp_ce_DialectString TSRMLS_CC
+			)
+	) {
+		zend_call_method_with_1_params(
+			&expression,
+			Z_OBJCE_P(expression),
+			NULL,
+			"todialectstring",
+			&out,
+			this
+		);
+		
+		if (EG(exception)) {
+			return string;
+		}
+		
+		if (instanceof_function(Z_OBJCE_P(expression), onphp_ce_Query TSRMLS_CC)) {
+			smart_str_appends(&string, "(");
+			onphp_append_zval_to_smart_string(&string, out);
+			smart_str_appends(&string, ")");
+		} else {
+			onphp_append_zval_to_smart_string(&string, out);
+		}
+	} else {
+		if (fieldMethod) {
+			zend_call_method_with_1_params(
+				&this,
+				Z_OBJCE_P(this),
+				NULL,
+				"quotefield",
+				&out,
+				expression
+			);
+		} else {
+			zend_call_method_with_1_params(
+				&this,
+				Z_OBJCE_P(this),
+				NULL,
+				"quotevalue",
+				&out,
+				expression
+			);
+		}
+		
+		if (EG(exception)) {
+			return string;
+		}
+		
+		onphp_append_zval_to_smart_string(&string, out);
+	}
+	
+	smart_str_0(&string);
+	ZVAL_FREE(out);
+	
+	return string;
+}
+
+ONPHP_METHOD(Dialect, toFieldString)
+{
+	zval *expression;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &expression) == FAILURE) {
+		WRONG_PARAM_COUNT;
+	}
+	
+	if (Z_TYPE_P(expression) == IS_NULL) {
+		RETURN_NULL();
+	}
+	
+	RETURN_STRING(
+		onphp_dialect_to_needed_string(
+			getThis(),
+			expression,
+			1 TSRMLS_CC
+		).c,
+		0
+	);
+}
+
+ONPHP_METHOD(Dialect, toValueString)
+{
+	zval *expression;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &expression) == FAILURE) {
+		WRONG_PARAM_COUNT;
+	}
+	
+	if (Z_TYPE_P(expression) == IS_NULL) {
+		RETURN_NULL();
+	}
+	
+	RETURN_STRING(
+		onphp_dialect_to_needed_string(
+			getThis(),
+			expression,
+			0 TSRMLS_CC
+		).c,
+		0
+	);
+}
+
 ONPHP_METHOD(Dialect, fullTextSearch)
 {
 	zend_throw_exception_ex(
@@ -263,6 +377,8 @@ zend_function_entry onphp_funcs_Dialect[] = {
 	ONPHP_ME(Dialect, toCasted, arginfo_two, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, timeZone, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, dropTableMode, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Dialect, toFieldString, arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Dialect, toValueString, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Dialect, fieldToString, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Dialect, valueToString, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Dialect, fullTextSearch, arginfo_three, ZEND_ACC_PUBLIC)
