@@ -8,6 +8,17 @@
 	* core/Form/Primitives/, meta/: backported float-related stuff from
 	trunk.
 
+2006-10-31	Nickolay Korolyov
+
+	* core/Form/Primitives/PrimitiveFloat.class.php,
+	meta/types/FloatType.class.php: float support in Form and meta;
+	arrived from trunk.
+
+2006-10-31	Dmitry E. Demidov
+
+	* main/Utils/TuringTest/TuringImage.class.php: added ability to
+	generate IMG_WBMP; backported from trunk.
+
 2006-10-25	Anton E. Lebedevich
 
 	* test/core/LogicTest.class.php: added tests for LogicalExpression.
