@@ -90,7 +90,7 @@
 			
 			if (null !== $expression) {
 				if ($expression instanceof DialectString) {
-					if ($expression instanceof SelectQuery)
+					if ($expression instanceof Query)
 						$string .= '('.$expression->toDialectString($this).')';
 					else
 						$string .= $expression->toDialectString($this);
