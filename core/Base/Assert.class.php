@@ -45,6 +45,17 @@
 				self::fail($message);
 		}
 
+		public static function isFloat($variable, $message = null)
+		{
+			if (
+				!(
+					$variable == (float) $variable
+					&& is_numeric($variable)
+				)
+			)
+				self::fail($message);
+		}
+
 		public static function isString(&$variable, $message = null)
 		{
 			if (!is_string($variable))
