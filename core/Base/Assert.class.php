@@ -50,7 +50,7 @@
 			if (
 				!(
 					$variable == (float) $variable
-					&& is_float($variable)
+					&& is_numeric($variable)
 				)
 			)
 				self::fail($message);

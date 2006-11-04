@@ -27,6 +27,14 @@
 			}
 		}
 		
+		public function testFloat()
+		{
+			Assert::isFloat(4.2);
+			Assert::isFloat('28.82');
+			
+			$this->nonFloatCheck(null);
+		}
+		
 		public function testInteger()
 		{
 			Assert::isInteger(2006);
@@ -38,6 +46,16 @@
 			$this->nonIntegerCheck(20.06);
 			$this->nonIntegerCheck(acos(20.06));
 			$this->nonIntegerCheck(log(0));
+		}
+		
+		public function nonFloatCheck($string)
+		{
+			try {
+				Assert::isFloat($string);
+				$this->fail("'{$string}' is float!");
+			} catch (WrongArgumentException $e) {
+				$this->pass();
+			}
 		}
 		
 		public function nonIntegerCheck($string)
