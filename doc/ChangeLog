@@ -30,7 +30,7 @@
 	* main/Containers/Unified/UnifiedContainer.class.php: do not interrupt
 	so-called 'global transaction', if any.
 
-2006-10-31	Nickolay Korolyov
+2006-10-31	Nickolay G. Korolyov
 
 	* core/Form/Primitives/PrimitiveFloat.class.php,
 	meta/types/FloatType.class.php: float support in Form and meta.
