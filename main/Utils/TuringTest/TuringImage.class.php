@@ -166,7 +166,7 @@
 
 		private function init()
 		{
-			$imageId = imagecreate ($this->getWidth(), $this->getHeight());
+			$imageId = imagecreate($this->getWidth(), $this->getHeight());
 			$this->imageId = $imageId;
 			
 			$this->getColorIdentifier(new Color('FFFFFF')); // white background
