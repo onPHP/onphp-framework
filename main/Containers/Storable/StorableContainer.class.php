@@ -116,7 +116,7 @@
 			$this->checkLoaded();
 
 			// populate saved
-			foreach ($this->saved as $id => &$val) {
+			foreach (array_keys($this->saved) as $id) {
 				$this->getById($id);
 			}
 
@@ -148,7 +148,7 @@
 			if ($this->loaded != self::LOADED)
 				return $this;
 
-			foreach ($this->deleted as $id => &$deleted)
+			foreach (array_keys($this->deleted) as $id)
 				$this->partDAO->dropByBothId($parentId, $id);
 
 			$this->deleted = array();

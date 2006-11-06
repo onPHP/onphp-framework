@@ -31,14 +31,14 @@
 		{
 			Assert::isTrue(
 				get_class($child) === $this->getObjectName(),
-				"child type doesn't match DAO type"
+				'child type does not match DAO type'
 			);
 		}
 
 		public function add($parentId, Identifiable $child)
 		{
 			throw new UnsupportedMethodException(
-				"independent link can't use objects without id"
+				'independent link can not use objects without id'
 			);
 		}
 

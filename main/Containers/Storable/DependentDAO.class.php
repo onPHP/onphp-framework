@@ -61,7 +61,7 @@
 		public function insert($parentId, Identifiable $child)
 		{
 			throw new UnsupportedMethodException(
-				'insert is not applicaple to dependent objects'
+				'insert is not applicable to dependent objects'
 			);
 		}
 
