@@ -51,6 +51,7 @@
 							|| $property->getType() instanceof ObjectType
 						)
 						&& !$property->isRequired()
+						&& !$property->getType() instanceof RangeType
 					)
 						$standaloneFillers[] =
 							implode(
