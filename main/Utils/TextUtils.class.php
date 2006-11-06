@@ -55,13 +55,14 @@
 		public static function getPathFromUrl($url)
 		{
 			$parsed = parse_url($url);
+			
 			if ($parsed === false or !isset($parsed['path']))
 				return '/';
 			else 
 				return $parsed['path'];
 		}
 		
-		public static function UrlSafeBase64Encode($string)
+		public static function urlSafeBase64Encode($string)
 		{
 			return
 				str_replace(
@@ -71,17 +72,20 @@
 				);
 		}
 		
-		public static function UrlSafeBase64Decode($string)
+		public static function urlSafeBase64Decode($string)
 		{
 			$data = str_replace(
 				array('-', '_'),
 				array('+', '/'),
 				$string
 			);
+			
 			$mod4 = strlen($data) % 4;
+			
 			if ($mod4) {
 				$data .= substr('====', $mod4);
 			}
+			
 			return base64_decode($data);
 		}
 	}
