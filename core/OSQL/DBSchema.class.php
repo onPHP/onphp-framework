@@ -56,7 +56,7 @@
 		{
 			$out = array();
 			
-			foreach ($this->tables as $name => $table) {
+			foreach ($this->tables as $table) {
 				$out[] = $table->toDialectString($dialect);
 			}
 			

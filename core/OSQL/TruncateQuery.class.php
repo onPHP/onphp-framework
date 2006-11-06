@@ -45,7 +45,7 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			Assert::isTrue(
-				($count = count($this->targets)) > 0,
+				count($this->targets) > 0,
 				'do not know who should i truncate'
 			);
 
