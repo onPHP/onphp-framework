@@ -25,7 +25,8 @@
 
 		public static function isFalse($boolean, $message = null)
 		{
-			self::isTrue(!$boolean);
+			if ($boolean !== false)
+				self::fail($message);
 		}
 
 		public static function isArray(&$variable, $message = null)
