@@ -2,6 +2,10 @@
 
 2006-11-06	Konstantin V. Arkhipov
 
+	* main/Mail/MimePart.class.php: strange typo in quoted encoding fixed.
+
+	* main/Mail/Mail.class.php: fixed from-address encoding's handling.
+
 	* meta/builders/BaseBuilder.class.php: backported fix for non-required
 	Ranges generation.
 

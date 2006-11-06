@@ -174,7 +174,7 @@
 				case MailEncoding::SEVEN_BITS:
 				case MailEncoding::EIGHT_BITS:
 					
-					$body = "{$this->body}";
+					$body = $this->body;
 					break;
 				
 				/**
@@ -193,7 +193,7 @@
 					
 					$matches = array();
 					
-					preg_match_all('/.{1,73}([^=]{0,3})?/', $body, $matches);
+					preg_match_all('/.{1,73}([^=]{0,3})?/', $string, $matches);
 					
 					$body = implode("=\r\n", $matches[0]);
 				
