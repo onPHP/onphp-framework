@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Logic
 	**/
-	final class BinaryExpression implements LogicalObject
+	final class BinaryExpression extends DualTransformableExpression
 	{
 		const EQUALS			= '=';
 		const NOT_EQUALS		= '!=';
@@ -40,8 +40,9 @@
 		const MULTIPLY			= '*';
 		const DIVIDE			= '/';
 		
-		private $left	= null;
-		private $right	= null;
+		protected $left		= null;
+		protected $right	= null;
+		
 		private $logic	= null;
 		
 		public function __construct($left, $right, $logic)

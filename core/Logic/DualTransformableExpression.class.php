@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,14 +10,14 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * Support interface for Form's logic rules.
-	 * 
-	 * @ingroup Logic
-	**/
-	interface LogicalObject extends DialectString
+	abstract class DualTransformableExpression extends TransformableExpression
 	{
-		public function toBoolean(Form $form);
-		public function applyMapping(StorableDAO $dao);
+		public function applyMapping(StorableDAO $dao)
+		{
+			$this->left		= $this->transformProperty($this->left);
+			$this->right	= $this->transformProperty($this->right);
+			
+			return $this;
+		}
 	}
 ?>

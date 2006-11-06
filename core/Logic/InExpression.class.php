@@ -15,13 +15,14 @@
 	 * 
 	 * @ingroup Logic
 	**/
-	final class InExpression implements LogicalObject
+	final class InExpression extends DualTransformableExpression
 	{
 		const IN		= 'in';
 		const NOT_IN	= 'not in';
 		
-		private $left	= null;
-		private $right	= null;
+		protected $left		= null;
+		protected $right	= null;
+		
 		private $logic	= null;
 		
 		public function __construct($left, $right, $logic)

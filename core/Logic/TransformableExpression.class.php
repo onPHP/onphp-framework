@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,14 +10,19 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * Support interface for Form's logic rules.
-	 * 
-	 * @ingroup Logic
-	**/
-	interface LogicalObject extends DialectString
+	abstract class TransformableExpression implements LogicalObject
 	{
-		public function toBoolean(Form $form);
-		public function applyMapping(StorableDAO $dao);
+		protected function transformProperty(StorableDAO $dao, $property)
+		{
+			if ($property instanceof LogicalObject)
+				return $property->applyMapping($dao);
+			
+			$mapping = $dao->getMapping();
+			
+			if ($mapping[$property] === null)
+				return $property;
+			
+			return $mapping[$property];
+		}
 	}
 ?>

@@ -2,6 +2,8 @@
 
 2006-11-06	Konstantin V. Arkhipov
 
+	* core/Logic/: applyMapping() added to LogicalObject interface.
+
 	* meta/builders/BaseBuilder.class.php: fixed generation of
 	non-required Ranges.
 

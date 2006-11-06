@@ -13,10 +13,10 @@
 	/**
 	 * @ingroup Logic
 	**/
-	final class EqualsLowerExpression implements LogicalObject
+	final class EqualsLowerExpression extends DualTransformableExpression
 	{
-		private $left	= null;
-		private $right	= null;
+		protected $left		= null;
+		protected $right	= null;
 		
 		public function __construct($left, $right)
 		{

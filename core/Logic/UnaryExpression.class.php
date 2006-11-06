@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Logic
 	**/
-	final class UnaryExpression implements LogicalObject
+	final class UnaryExpression extends TransformableExpression
 	{
 		const IS_NULL			= 'IS NULL';
 		const IS_NOT_NULL		= 'IS NOT NULL';
@@ -38,6 +38,13 @@
 				.$dialect->toFieldString($this->subject)
 				.' '.$this->logic
 				.')'; 
+		}
+		
+		public function applyMapping(StorableDAO $dao)
+		{
+			$this->subject = $this->transformProperty($dao, $this->subject);
+			
+			return $this;
 		}
 		
 		public function toBoolean(Form $form)
