@@ -305,7 +305,7 @@ EOT;
 			return $out;
 		}
 		
-		public function toDaoField($className, $indent = 5)
+		public function toDaoField($className)
 		{
 			$varName = $this->toVarName($className);
 			$method = ucfirst($this->name);
