@@ -92,7 +92,7 @@
 		{
 			$list = array();
 			
-			foreach ($this->labels as $name => $error) {
+			foreach (array_keys($this->labels) as $name) {
 				if ($label = $this->getTextualErrorFor($name))
 					$list[] = $label;
 			}
@@ -137,7 +137,7 @@
 		
 		public function import($scope)
 		{
-			foreach ($this->primitives as $name => $prm)
+			foreach ($this->primitives as $prm)
 				$this->importPrimitive($scope, $prm);
 					
 			return $this;
@@ -145,7 +145,7 @@
 		
 		public function importMore($scope)
 		{
-			foreach ($this->primitives as $name => $prm) {
+			foreach ($this->primitives as $prm) {
 				if (
 					$prm->getValue() === null ||
 					($prm instanceof PrimitiveBoolean && !$prm->getValue())

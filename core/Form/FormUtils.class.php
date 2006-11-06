@@ -29,7 +29,6 @@
 					
 					$getter	= 'get'.ucfirst($name);
 					$value	= $object->$getter();
-					$prm	= $primitives[$name];
 					
 					if (
 						$class->hasMethod($getter)
