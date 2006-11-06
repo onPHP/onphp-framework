@@ -17,8 +17,8 @@
 		
 		public function applyMapping(StorableDAO $dao)
 		{
-			$this->left		= $this->transformProperty($this->left);
-			$this->right	= $this->transformProperty($this->right);
+			$this->left		= $this->transformProperty($dao, $this->left);
+			$this->right	= $this->transformProperty($dao, $this->right);
 			
 			return $this;
 		}
