@@ -204,13 +204,13 @@
 				$this->int = $time;
 				$this->string = date('Y-m-d H:i:s', $time);
 				$this->import($this->string);
-
-				return $this;
 			} catch (BaseException $e) {
 				throw new WrongArgumentException(
 					"wrong time string '{$string}'"
 				);
 			}
+			
+			return $this;
 		}
 		
 		public function equals(Timestamp $timestamp)
