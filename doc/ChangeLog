@@ -1,5 +1,10 @@
 # $Id$
 
+2006-11-06	Konstantin V. Arkhipov
+
+	* meta/builders/BaseBuilder.class.php: backported fix for non-required
+	Ranges generation.
+
 2006-11-05	Konstantin V. Arkhipov
 
 	* 0.8.1 released.
