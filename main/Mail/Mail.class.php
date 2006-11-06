@@ -60,7 +60,11 @@
 			} else {
 				$encoding = $this->encoding;
 				$to = mb_convert_encoding($this->to, $encoding);
-				$from = mb_convert_encoding($this->from, $encoding);
+				
+				if ($this->from)
+					$from = mb_convert_encoding($this->from, $encoding);
+				else
+					$from = null;
 	
 				$subject =
 					 "=?".$encoding."?B?"
@@ -81,9 +85,9 @@
 
 			$headers = null;
 			
-			if ($this->from != null) {
-				$headers .= "From: ".$this->from."\n";
-				$headers .= "Return-Path: ".$this->from."\n";
+			if ($from != null) {
+				$headers .= "From: ".$from."\n";
+				$headers .= "Return-Path: ".$from."\n";
 			}
 			
 			if ($this->cc != null)
