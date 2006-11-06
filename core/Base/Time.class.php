@@ -162,7 +162,7 @@
 		public function toFullString($delimiter = ':')
 		{
 			return
-				$this->toString($delimiter = ':').
+				$this->toString($delimiter).
 				(
 					$this->second
 						? $delimiter.$this->doublize($this->second)
