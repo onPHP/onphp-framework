@@ -22,7 +22,7 @@
 		
 		public function toColumnType()
 		{
-			// XXX: hacky
+			// will be called twice with suffixes _min and _max
 			return 'DataType::create(DataType::INTEGER)';
 		}
 		
