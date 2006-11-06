@@ -137,13 +137,14 @@
 			if ($this->checkSingle($res)) {
 				$names = $query->getFieldNames();
 				$width = count($names);
+				$assoc = array();
 
 				$row = sqlite_fetch_array($res, SQLITE_NUM);
 				
 				for ($i = 0; $i < $width; ++$i)
 					$assoc[$names[$i]] = $row[$i];
 				
-				return $row;
+				return $assoc;
 			}
 			else
 				return null;
