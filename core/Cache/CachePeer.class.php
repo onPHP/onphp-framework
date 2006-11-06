@@ -108,11 +108,6 @@
 		abstract public function delete($key);
 		abstract public function clean();
 		
-		public function mark($className)
-		{
-			return $this;
-		}
-
 		abstract protected function store(
 			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
 		);
