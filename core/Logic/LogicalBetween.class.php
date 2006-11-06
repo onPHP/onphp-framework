@@ -15,9 +15,11 @@
 	 * 
 	 * @ingroup Logic
 	**/
-	class LogicalBetween extends DualTransformableExpression
+	class LogicalBetween implements LogicalObject
 	{
 		private $field  = null;
+		private $left   = null;
+		private $right  = null;
 		
 		public function __construct($field, $left, $right)
 		{
@@ -36,13 +38,6 @@
 				.' AND '
 				.$dialect->toValueString($this->right)
 				.')';
-		}
-		
-		public function applyMapping(StorableDAO $dao)
-		{
-			$this->field = $this->transformProperty($dao, $this->field);
-			
-			return parent::applyMapping($dao);
 		}
 		
 		public function toBoolean(Form $form)

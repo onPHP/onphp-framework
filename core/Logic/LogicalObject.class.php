@@ -18,6 +18,5 @@
 	interface LogicalObject extends DialectString
 	{
 		public function toBoolean(Form $form);
-		public function applyMapping(StorableDAO $dao);
 	}
 ?>

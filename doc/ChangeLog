@@ -6,8 +6,6 @@
 
 	* main/Mail/Mail.class.php: fixed from-address encoding's handling.
 
-	* core/Logic/: applyMapping() added to LogicalObject interface.
-
 	* meta/builders/BaseBuilder.class.php: fixed generation of
 	non-required Ranges.
 

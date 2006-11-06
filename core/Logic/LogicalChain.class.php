@@ -90,14 +90,6 @@
 			/* NOTREACHED */
 		}
 		
-		public function applyMapping(StorableDAO $dao)
-		{
-			foreach ($this->chain as $exp)
-				$exp->applyMapping($dao);
-			
-			return $this;
-		}
-		
 		private static function calculateBoolean($logic, $left, $right)
 		{
 			switch ($logic) {
