@@ -57,19 +57,19 @@
 				self::fail($message);
 		}
 
-		public static function isString(&$variable, $message = null)
+		public static function isString($variable, $message = null)
 		{
 			if (!is_string($variable))
 				self::fail($message);
 		}
 		
-		public static function isBoolean(&$variable, $message = null)
+		public static function isBoolean($variable, $message = null)
 		{
 			if (!($variable === true || $variable === false))
 				self::fail($message);
 		}
 
-		public static function isTernaryBase(&$variable, $message = null)
+		public static function isTernaryBase($variable, $message = null)
 		{
 			if (
 				!(
