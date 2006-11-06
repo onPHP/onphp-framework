@@ -40,9 +40,6 @@
 		const MULTIPLY			= '*';
 		const DIVIDE			= '/';
 		
-		protected $left		= null;
-		protected $right	= null;
-		
 		private $logic	= null;
 		
 		public function __construct($left, $right, $logic)

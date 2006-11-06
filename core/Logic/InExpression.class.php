@@ -20,9 +20,6 @@
 		const IN		= 'in';
 		const NOT_IN	= 'not in';
 		
-		protected $left		= null;
-		protected $right	= null;
-		
 		private $logic	= null;
 		
 		public function __construct($left, $right, $logic)

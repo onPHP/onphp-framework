@@ -12,6 +12,9 @@
 
 	abstract class DualTransformableExpression extends TransformableExpression
 	{
+		protected $left		= null;
+		protected $right	= null;
+		
 		public function applyMapping(StorableDAO $dao)
 		{
 			$this->left		= $this->transformProperty($this->left);

@@ -15,9 +15,6 @@
 	**/
 	final class EqualsLowerExpression extends DualTransformableExpression
 	{
-		protected $left		= null;
-		protected $right	= null;
-		
 		public function __construct($left, $right)
 		{
 			$this->left		= $left;

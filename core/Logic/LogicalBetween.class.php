@@ -17,9 +17,6 @@
 	**/
 	class LogicalBetween extends DualTransformableExpression
 	{
-		protected $left   = null;
-		protected $right  = null;
-		
 		private $field  = null;
 		
 		public function __construct($field, $left, $right)
