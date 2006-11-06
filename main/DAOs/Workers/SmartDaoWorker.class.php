@@ -92,7 +92,7 @@
 					add($listKey, $array, Cache::EXPIRES_FOREVER);
 				
 				if ($array !== Cache::NOT_FOUND)
-					foreach ($array as $key => $object)
+					foreach ($array as $object)
 						$this->cacheById($object);
 				
 				$pool->free($semKey);
@@ -116,7 +116,7 @@
 				$cache->mark($this->className)->delete($this->indexKey);
 	
 				if ($indexList) {
-					foreach ($indexList as $key => &$true)
+					foreach (array_keys($indexList) as $key)
 						$cache->mark($this->className)->delete($key);
 				}
 				
@@ -152,8 +152,6 @@
 			
 			if (!$map = $cache->mark($this->className)->get($this->indexKey))
 				$map = array();
-			
-			$semKey = $this->keyToInt($this->indexKey);
 			
 			$map[$objectKey] = true;
 			

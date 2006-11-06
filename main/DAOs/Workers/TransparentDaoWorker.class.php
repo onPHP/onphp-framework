@@ -278,8 +278,6 @@
 		{
 			$db = DBPool::getByDao($this->dao);
 
-			$cache = Cache::me();
-			
 			$res = new QueryResult();
 			
 			$result = $this->getCachedByQuery($query);

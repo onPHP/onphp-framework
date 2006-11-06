@@ -29,8 +29,6 @@
 		
 		public function getById($id)
 		{
-			$object = $this->getCachedById($id);
-			
 			$db = DBPool::getByDao($this->dao);
 
 			$query = 
