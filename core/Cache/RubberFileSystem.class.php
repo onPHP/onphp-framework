@@ -78,10 +78,11 @@
 		{
 			try {
 				unlink($this->makePath($key));
-				return true;
 			} catch (BaseException $e) {
 				return false;
 			}
+			
+			return true;
 		}
 		
 		protected function store($action, $key, &$value, $expires = 0)

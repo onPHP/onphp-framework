@@ -105,6 +105,8 @@
 			} catch (BaseException $e) {
 				return false;
 			}
+			
+			/* NOTREACHED */
 		}
 		
 		public function isAlive()
