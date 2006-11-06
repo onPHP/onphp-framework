@@ -39,6 +39,7 @@
 					
 				$logicalChain->exp($arg, $logic);
 			}
+			
 			return $logicalChain;
 		}
 		
@@ -58,15 +59,14 @@
 			
 			$size = count($chain);
 			
-			if (! $size)
-				throw new WrongArgumentException('empty chain can\'t be calculated');
+			if (!$size)
+				throw new WrongArgumentException(
+					'empty chain can not be calculated'
+				);
 			elseif ($size == 1)
 				return $chain[0]->toBoolean($form);
 			else {
-				$out = null;
-				
 				for ($i = 0; $i < $size; ++$i) {
-					
 					if (isset($chain[$i + 1])) {
 						$out =
 							self::calculateBoolean(
@@ -83,10 +83,11 @@
 							);
 					}
 				}
+				
 				return $out;
 			}
 			
-			// notreached
+			/* NOTREACHED */
 		}
 		
 		private static function calculateBoolean($logic, $left, $right)

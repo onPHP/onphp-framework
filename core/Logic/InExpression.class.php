@@ -17,8 +17,8 @@
 	**/
 	final class InExpression implements LogicalObject
 	{
-		const IN				= 'in';
-		const NOT_IN			= 'not in';
+		const IN		= 'in';
+		const NOT_IN	= 'not in';
 		
 		private $left	= null;
 		private $right	= null;
@@ -27,7 +27,7 @@
 		public function __construct($left, $right, $logic)
 		{
 			Assert::isTrue(
-				($right instanceof SelectQuery )
+				($right instanceof SelectQuery)
 				|| is_array($right)
 			);
 			
