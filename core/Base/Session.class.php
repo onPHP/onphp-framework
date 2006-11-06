@@ -112,7 +112,7 @@
 		{
 			if (Session::isStarted()) {
 				if ($_SESSION) {
-					foreach ($_SESSION as $key => &$value) {
+					foreach (array_keys($_SESSION) as $key) {
 						Session::drop($key);
 					}
 				}

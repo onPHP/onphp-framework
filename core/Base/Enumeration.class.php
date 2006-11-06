@@ -54,7 +54,7 @@
 			$list = array();
 			$names = $this->getNameList();
 			
-			foreach ($names as $id => &$val)
+			foreach (array_keys($names) as $id)
 				$list[] = new $this($id);
 
 			return $list;
