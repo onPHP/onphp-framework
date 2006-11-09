@@ -24,11 +24,17 @@
 			return $this->setValue($boolean);
 		}
 		
+		/**
+		 * @return Ternary
+		**/
 		public static function create($boolean = null)
 		{
-			return new Ternary($boolean);
+			return new self($boolean);
 		}
 
+		/**
+		 * @return Ternary
+		**/
 		public static function spawn($value, $true, $false, $null = null)
 		{
 			if ($value === $true)
@@ -59,6 +65,9 @@
 			return (false === $this->trinity);
 		}
 		
+		/**
+		 * @return Ternary
+		**/
 		public function setNull()
 		{
 			$this->trinity = null;
@@ -66,6 +75,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Ternary
+		**/
 		public function setTrue()
 		{
 			$this->trinity = true;
@@ -73,6 +85,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Ternary
+		**/
 		public function setFalse()
 		{
 			$this->trinity = false;
@@ -85,6 +100,9 @@
 			return $this->trinity;
 		}
 		
+		/**
+		 * @return Ternary
+		**/
 		public function setValue($boolean = null)
 		{
 			Assert::isTernaryBase($boolean);

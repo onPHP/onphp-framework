@@ -36,6 +36,9 @@
 			return $this->name;
 		}
 		
+		/**
+		 * @return NamedObject
+		**/
 		public function setName($name)
 		{
 			$this->name = $name;

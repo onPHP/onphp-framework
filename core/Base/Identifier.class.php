@@ -21,11 +21,17 @@
 		private $id		= null;
 		private $final	= false;
 		
+		/**
+		 * @return Identifier
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return Identifier
+		**/
 		public static function wrap($id)
 		{
 			return self::create()->setId($id);
@@ -36,6 +42,9 @@
 			return $this->id;
 		}
 		
+		/**
+		 * @return Identifier
+		**/
 		public function setId($id)
 		{
 			$this->id = $id;
@@ -43,6 +52,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Identifier
+		**/
 		public function finalize()
 		{
 			$this->final = true;

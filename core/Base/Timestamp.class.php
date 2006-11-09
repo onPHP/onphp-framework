@@ -39,9 +39,12 @@
 		private $minute		= null;
 		private $second		= null;
 
+		/**
+		 * @return Timestamp
+		**/
 		public static function create($timestamp)
 		{
-			return new Timestamp($timestamp);
+			return new self($timestamp);
 		}
 		
 		public static function compare(Timestamp $left, Timestamp $right)
@@ -57,6 +60,9 @@
 			return date('Y-m-d H:i:s');
 		}
 		
+		/**
+		 * @return Timestamp
+		**/
 		public static function makeNow()
 		{
 			return new self(time());
@@ -67,6 +73,9 @@
 			return date("Y{$delimiter}m{$delimiter}d");
 		}
 		
+		/**
+		 * @return Timestamp
+		**/
 		public static function makeToday()
 		{
 			return new self(self::today());
@@ -181,6 +190,9 @@
 			return $this->minute;
 		}
 		
+		/**
+		 * @return Timestamp
+		**/
 		public function spawn($modification = null)
 		{
 			$child = new Timestamp($this->string);
@@ -191,6 +203,10 @@
 				return $child;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return Timestamp
+		**/
 		public function modify($string)
 		{
 			try {
@@ -248,6 +264,9 @@
 				);
 		}
 		
+		/**
+		 * @return Timestamp
+		**/
 		public function getFirstDayOfWeek($weekStart = Timestamp::WEEKDAY_MONDAY)
 		{
 			return $this->spawn(
@@ -255,6 +274,9 @@
 			);
 		}
 		
+		/**
+		 * @return Timestamp
+		**/
 		public function getLastDayOfWeek($weekStart = Timestamp::WEEKDAY_MONDAY)
 		{
 			return $this->spawn(

@@ -23,9 +23,12 @@
 		
 		private $string		= null;
 		
+		/**
+		 * @return Time
+		**/
 		public static function create($input)
 		{
-			return new Time($input);
+			return new self($input);
 		}
 		
 		// currently supports '01:23:45', '012345', '1234', '12'
@@ -93,6 +96,9 @@
 			return $this->hour;
 		}
 		
+		/**
+		 * @return Time
+		**/
 		public function setHour($hour)
 		{
 			$hour = (int) $hour;
@@ -114,6 +120,9 @@
 			return $this->minute;
 		}
 		
+		/**
+		 * @return Time
+		**/
 		public function setMinute($minute)
 		{
 			$minute = (int) $minute;
@@ -136,6 +145,9 @@
 			return $this->second;
 		}
 		
+		/**
+		 * @return Time
+		**/
 		public function setSecond($second)
 		{
 			$second = (int) $second;

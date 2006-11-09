@@ -22,6 +22,9 @@
 	{
 		protected $id = null;
 		
+		/**
+		 * @return IdentifiableObject
+		**/
 		public static function wrap($id)
 		{
 			$io = new self;
@@ -40,6 +43,9 @@
 				return $this->id;
 		}
 		
+		/**
+		 * @return IdentifiableObject
+		**/
 		final public function setId($id)
 		{
 			$this->id = $id;
