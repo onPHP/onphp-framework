@@ -132,12 +132,18 @@
 			return $this->alive;
 		}
 		
+		/**
+		 * @return CachePeer
+		**/
 		public function enableCompression()
 		{
 			$this->compress = true;
 			return $this;
 		}
 
+		/**
+		 * @return CachePeer
+		**/
 		public function disableCompression()
 		{
 			$this->compress = false;

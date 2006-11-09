@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup Cache
 	**/
-	class AggregateCache extends SelectivePeer
+	final class AggregateCache extends SelectivePeer
 	{
 		const LEVEL_ULTRAHIGH	= 0xFFFF;
 		const LEVEL_HIGH		= 0xC000;
@@ -27,11 +27,17 @@
 		private $peers	= array();
 		private $levels	= array();
 
+		/**
+		 * @return AggregateCache
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 
+		/**
+		 * @return AggregateCache
+		**/
 		public function addPeer(
 			$label, CachePeer $peer, $level = self::LEVEL_NORMAL
 		)
@@ -51,6 +57,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return AggregateCache
+		**/
 		public function dropPeer($label)
 		{
 			if (!isset($this->peers[$label]))
@@ -63,6 +72,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return AggregateCache
+		**/
 		public function setClassLevel($class, $level)
 		{
 			$this->levels[$class] = $level;
@@ -164,6 +176,9 @@
 					delete($key);
 		}
 
+		/**
+		 * @return AggregateCache
+		**/
 		public function clean()
 		{
 			foreach ($this->peers as &$peer)

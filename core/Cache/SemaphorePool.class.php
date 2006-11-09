@@ -35,7 +35,10 @@
 			self::$lockerName = $name;
 			self::$locker = Singleton::getInstance($name);
 		}
-		
+
+		/**
+		 * @return SemaphorePool
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);

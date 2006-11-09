@@ -19,6 +19,9 @@
 		
 		protected $className	= null;
 		
+		/**
+		 * @return SelectivePeer
+		**/
 		public function mark($className)
 		{
 			$this->className = $className;

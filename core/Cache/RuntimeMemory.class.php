@@ -21,6 +21,9 @@
 	{
 		private $cache = array();
 		
+		/**
+		 * @return RuntimeMemory
+		**/
 		public static function create()
 		{
 			return new self;
@@ -49,6 +52,9 @@
 			return false;
 		}
 		
+		/**
+		 * @return RuntimeMemory
+		**/
 		public function clean()
 		{
 			$this->cache = array();

@@ -25,12 +25,15 @@
 		
 		private $instance = null;
 
+		/**
+		 * @return PeclMemcached
+		**/
 		public static function create(
 			$host = Memcached::DEFAULT_HOST,
 			$port = Memcached::DEFAULT_PORT
 		)
 		{
-			return new PeclMemcached($host, $port);
+			return new self($host, $port);
 		}
 		
 		public function __construct(
@@ -64,6 +67,9 @@
 			}
 		}
 		
+		/**
+		 * @return PeclMemcached
+		**/
 		public function clean()
 		{
 			try {

@@ -30,6 +30,9 @@
 
 		private $buffer		= Memcached::DEFAULT_BUFFER;
 		
+		/**
+		 * @return Memcached
+		**/
 		public static function create(
 			$host = Memcached::DEFAULT_HOST,
 			$port = Memcached::DEFAULT_PORT,
@@ -58,6 +61,9 @@
 			stream_set_timeout($this->link, 1);
 		}
 		
+		/**
+		 * @return Memcached
+		**/
 		public function clean()
 		{
 			$this->sendRequest("flush_all\r\n");
@@ -249,6 +255,8 @@
 					return $this->alive = false; 
 				}
 			}
+			
+			/* NOTREACHED */
 		}
 	}
 ?>

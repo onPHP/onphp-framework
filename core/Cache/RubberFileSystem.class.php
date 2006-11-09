@@ -19,9 +19,12 @@
 	{
 		private $directory	= null;
 		
+		/**
+		 * @return RubberFileSystem
+		**/
 		public static function create($directory = 'cache/')
 		{
-			return new RubberFileSystem($directory);
+			return new self($directory);
 		}
 
 		public function __construct($directory = 'cache/')
@@ -47,6 +50,9 @@
 			return is_writable($this->directory);
 		}
 		
+		/**
+		 * @return RubberFileSystem
+		**/
 		public function clean()
 		{
 			// TODO: reimplement on php-level

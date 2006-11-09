@@ -34,6 +34,9 @@
 			return $this->watermark;
 		}
 		
+		/**
+		 * @return CachePeer
+		**/
 		public function mark($className)
 		{
 			$this->peer->mark($className);
@@ -50,6 +53,9 @@
 			return $this->peer->delete($this->watermark.$key);
 		}
 		
+		/**
+		 * @return CachePeer
+		**/
 		public function clean()
 		{
 			return $this->peer->clean();

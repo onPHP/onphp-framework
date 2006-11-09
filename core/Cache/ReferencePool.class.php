@@ -25,6 +25,9 @@
 			$this->peer = $peer;
 		}
 		
+		/**
+		 * @return ReferencePool
+		**/
 		public function mark($className)
 		{
 			$this->peer->mark($className);
@@ -46,6 +49,9 @@
 			return $this->peer->delete($key);
 		}
 		
+		/**
+		 * @return CachePeer
+		**/
 		public function clean()
 		{
 			$this->pool = array();

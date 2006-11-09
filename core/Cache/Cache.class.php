@@ -40,6 +40,9 @@
 		/// default worker
 		private static $worker	= null;
 		
+		/**
+		 * @return CachePeer
+		**/
 		public static function me()
 		{
 			if (!self::$peer || !self::$peer->isAlive())
@@ -66,6 +69,9 @@
 			self::$map = $map;
 		}
 		
+		/**
+		 * @return BaseDaoWorker
+		**/
 		public static function worker(GenericDAO $dao)
 		{
 			static $instances = array();

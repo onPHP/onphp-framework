@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -26,6 +26,20 @@
 		
 		private static $attached = array();
 		
+		/**
+		 * @return SharedMemory
+		**/
+		public static function create(
+			$defaultSize = self::DEFAULT_SEGMENT_SIZE,
+			$customSized = array()
+		)
+		{
+			return new self($defaultSize, $customSized);
+		}
+		
+		/**
+		 * @return SharedMemory
+		**/
 		public function __construct(
 			$defaultSize = self::DEFAULT_SEGMENT_SIZE,
 			$customSized = array() // 'className' => segmentSizeInBytes
@@ -51,25 +65,21 @@
 				$index = array();
 			}
 			
-			shm_put_var(
-				$segment,
-				1,
-				array_unique(
-					array_merge(
-						$index, array_keys(self::$attached)
+			try {
+				shm_put_var(
+					$segment,
+					1,
+					array_unique(
+						array_merge(
+							$index, array_keys(self::$attached)
+						)
 					)
-				)
-			);
+				);
+			} catch (BaseException $e) {/*_*/}
 			
-			shm_detach($segment);
-		}
-		
-		public static function create(
-			$defaultSize = self::DEFAULT_SEGMENT_SIZE,
-			$customSized = array() // 'className' => segmentSizeInBytes
-		)
-		{
-			return new SharedMemory($defaultSize, $customSized);
+			try {
+				shm_detach($segment);
+			} catch (BaseException $e) {/*_*/}
 		}
 		
 		public function get($key)
@@ -115,6 +125,9 @@
 			return true;
 		}
 		
+		/**
+		 * @return SharedMemory
+		**/
 		public function clean()
 		{
 			$segment = shm_attach(self::INDEX_SEGMENT);
