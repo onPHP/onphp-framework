@@ -29,26 +29,41 @@
 			self::SET_DEFAULT	=> 'SET DEFAULT'
 		);
 		
+		/**
+		 * @return ForeignChangeAction
+		 */
 		public static function noAction()
 		{
 			return new self(self::NO_ACTION);
 		}
 		
+		/**
+		 * @return ForeignChangeAction
+		 */
 		public static function restrict()
 		{
 			return new self(self::RESTRICT);
 		}
 		
+		/**
+		 * @return ForeignChangeAction
+		 */
 		public static function cascade()
 		{
 			return new self(self::CASCADE);
 		}
 		
+		/**
+		 * @return ForeignChangeAction
+		 */
 		public static function setNull()
 		{
 			return new self(self::SET_NULL);
 		}
 		
+		/**
+		 * @return ForeignChangeAction
+		 */
 		public static function setDefault()
 		{
 			return new self(self::SET_DEFAULT);

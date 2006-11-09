@@ -27,6 +27,10 @@
 			return array_keys($this->tables);
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return DBSchema
+		 */
 		public function addTable(DBTable $table)
 		{
 			$name = $table->getName();
@@ -41,6 +45,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws MissingElementException
+		 * @return DBTable
+		 */
 		public function getTableByName($name)
 		{
 			if (!isset($this->tables[$name]))

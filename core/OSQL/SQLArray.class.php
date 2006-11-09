@@ -19,6 +19,9 @@
 	{
 		private $array = array();
 		
+		/**
+		 * @return SQLArray
+		 */
 		public static function create($array)
 		{
 			return new self($array);

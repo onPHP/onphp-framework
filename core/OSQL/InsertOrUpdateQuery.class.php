@@ -28,7 +28,10 @@
 		{
 			return $this->table;
 		}
-
+		
+		/**
+		 * @return InsertOrUpdateQuery
+		 */
 		public function set($field, $value = null)
 		{
 			$this->fields[$field] = $value;
@@ -36,6 +39,10 @@
 			return $this;
 		}
 
+		/**
+		 * @throws MissingElementException
+		 * @return InsertOrUpdateQuery
+		 */
 		public function drop($field)
 		{
 			if (!array_key_exists($field, $this->fields))
@@ -46,6 +53,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return InsertOrUpdateQuery
+		 */
 		public function lazySet($field, /* Identifiable */ $object = null)
 		{
 			if ($object instanceof Identifiable)
@@ -64,6 +74,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return InsertOrUpdateQuery
+		 */
 		public function setBoolean($field, $value = false)
 		{
 			try {
@@ -76,7 +89,9 @@
 
 		/**
 		 * Adds values from associative array.
-		**/
+		 * 
+		 * @return InsertOrUpdateQuery
+		 */
 		public function arraySet($fields)
 		{
 			Assert::isArray($fields);

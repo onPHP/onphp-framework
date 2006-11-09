@@ -22,6 +22,9 @@
 
 		private $args	= array();
 		
+		/**
+		 * @return SQLFunction
+		 */
 		public static function create($name /* , ... */)
 		{
 			if (func_num_args() > 1) {
@@ -53,6 +56,9 @@
 			return $this->name;
 		}
 		
+		/**
+		 * @return SQLFunction
+		 */
 		public function setAlias($alias)
 		{
 			$this->alias = $alias;

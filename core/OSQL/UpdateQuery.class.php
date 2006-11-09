@@ -20,6 +20,9 @@
 			$this->table = $table;
 		}
 		
+		/**
+		 * @return UpdateQuery
+		 */
 		public function setTable($table)
 		{
 			$this->table = $table;

@@ -30,9 +30,12 @@
 		
 		private $sequenced	= null;
 		
+		/**
+		 * @return DBColumn
+		 */
 		public static function create(DataType $type, $name)
 		{
-			return new DBColumn($type, $name);
+			return new self($type, $name);
 		}
 		
 		public function __construct(DataType $type, $name)
@@ -46,6 +49,9 @@
 			return $this->type;
 		}
 		
+		/**
+		 * @return DBColumn
+		 */
 		public function setTable(DBTable $table)
 		{
 			$this->table = $table;
@@ -58,6 +64,9 @@
 			return $this->name;
 		}
 		
+		/**
+		 * @return DBTable
+		 */
 		public function getTable()
 		{
 			return $this->table;
@@ -68,6 +77,9 @@
 			return $this->primary;
 		}
 		
+		/**
+		 * @return DBColumn
+		 */
 		public function setPrimaryKey($primary = false)
 		{
 			$this->primary = true === $primary;
@@ -80,6 +92,9 @@
 			return $this->unique;
 		}
 		
+		/**
+		 * @return DBColumn
+		 */
 		public function setUnique($unique = false)
 		{
 			$this->unique = true === $unique;
@@ -87,6 +102,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return DBColumn
+		 */
 		public function setDefault($default)
 		{
 			$this->default = $default;
@@ -99,6 +117,10 @@
 			return $this->default;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return DBColumn
+		 */
 		public function setReference(
 			DBColumn $column,
 			/* ForeignChangeAction */ $onDelete = null,
@@ -119,8 +141,13 @@
 			$this->reference	= $column;
 			$this->onDelete		= $onDelete;
 			$this->onUpdate		= $onUpdate;
+			
+			return $this;
 		}
 		
+		/**
+		 * @return DBColumn
+		 */
 		public function dropReference()
 		{
 			$this->reference	= null;
@@ -135,6 +162,9 @@
 			return ($this->reference !== null);
 		}
 		
+		/**
+		 * @return DBColumn
+		 */
 		public function setAutoincrement($auto = false)
 		{
 			$this->sequenced = true === $auto;

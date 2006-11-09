@@ -17,7 +17,11 @@
 	{
 		protected $where		= array();	// where clauses
 		protected $whereLogic	= array();	// logic between where's
-
+		
+		/**
+		 * @throws WrongArgumentException
+		 * @return QuerySkeleton
+		 */
 		public function where(LogicalObject $exp, $logic = null)
 		{
 			if ($this->where && !$logic)
@@ -35,11 +39,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return QuerySkeleton
+		 */
 		public function andWhere(LogicalObject $exp)
 		{
 			return $this->where($exp, 'AND');
 		}
 		
+		/**
+		 * @return QuerySkeleton
+		 */
 		public function orWhere(LogicalObject $exp)
 		{
 			return $this->where($exp, 'OR');

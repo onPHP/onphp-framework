@@ -32,6 +32,9 @@
 			throw new UnsupportedMethodException();
 		}
 		
+		/**
+		 * @return TruncateQuery
+		 */
 		public function table($table)
 		{
 			if ($table instanceof SQLTableName)

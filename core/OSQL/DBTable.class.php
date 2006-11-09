@@ -20,6 +20,9 @@
 		private $columns	= array();
 		private $order		= array();
 		
+		/**
+		 * @return DBTable
+		 */
 		public static function create($name)
 		{
 			return new self($name);
@@ -35,14 +38,18 @@
 			return $this->columns;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return DBTable
+		 */
 		public function addColumn(DBColumn $column)
 		{
 			$name = $column->getName();
 			
-			if (isset($this->columns[$name]))
-				throw new WrongArgumentException(
-					"column '{$name}' already exist"
-				);
+			Assert::isFalse(
+				isset($this->columns[$name]),
+				"column '{$name}' already exist"
+			);
 			
 			$this->order[] = $this->columns[$name] = $column;
 			
@@ -51,6 +58,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws MissingElementException
+		 * @return DBColumn
+		 */
 		public function getColumnByName($name)
 		{
 			if (!isset($this->columns[$name]))
@@ -61,6 +72,9 @@
 			return $this->columns[$name];
 		}
 		
+		/**
+		 * @return DBTable
+		 */
 		public function dropColumnByName($name)
 		{
 			if (!isset($this->columns[$name]))

@@ -24,12 +24,18 @@
 			$this->direction = new Ternary(null);
 		}
 
+		/**
+		 * @return OrderBy
+		 */
 		public function desc()
 		{
 			$this->direction->setFalse();
 			return $this;
 		}
 
+		/**
+		 * @return OrderBy
+		 */
 		public function asc()
 		{
 			$this->direction->setTrue();

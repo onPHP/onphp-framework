@@ -19,7 +19,10 @@
 	abstract class Castable
 	{
 		protected $cast	= null;
-
+		
+		/**
+		 * @return Castable
+		 */
 		public function castTo($cast)
 		{
 			$this->cast = $cast;

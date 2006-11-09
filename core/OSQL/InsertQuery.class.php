@@ -15,6 +15,9 @@
 	**/
 	final class InsertQuery extends InsertOrUpdateQuery
 	{
+		/**
+		 * @return InsertQuery
+		 */
 		public function into($table)
 		{
 			$this->table = $table;
@@ -22,7 +25,11 @@
 			return $this;
 		}
 		
-		// just alias to behave like UpdateQuery
+		/**
+		 * Just an alias to behave like UpdateQuery.
+		 * 
+		 * @return InsertQuery
+		 */
 		public function setTable($table)
 		{
 			return $this->into($table);

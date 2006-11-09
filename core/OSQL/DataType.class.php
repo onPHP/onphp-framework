@@ -67,9 +67,12 @@
 			self::TIMESTAMP		=> 'TIMESTAMP'
 		);
 		
+		/**
+		 * @return DataType
+		 */
 		public static function create($id)
 		{
-			return new DataType($id);
+			return new self($id);
 		}
 		
 		public function getSize()
@@ -77,6 +80,10 @@
 			return $this->size;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return DataType
+		 */
 		public function setSize($size)
 		{
 			Assert::isInteger($size);
@@ -92,6 +99,10 @@
 			return $this->precision;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return DataType
+		 */
 		public function setPrecision($precision)
 		{
 			Assert::isInteger($precision);
@@ -107,6 +118,10 @@
 			return $this->scale;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return DataType
+		 */
 		public function setScale($scale)
 		{
 			Assert::isInteger($scale);
@@ -117,6 +132,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return DataType
+		 */
 		public function setTimezoned($zoned = false)
 		{
 			Assert::isTrue(($this->id & self::HAVE_TIMEZONE) > 0);
@@ -131,6 +150,9 @@
 			return $this->timezone;
 		}
 		
+		/**
+		 * @return DataType
+		 */
 		public function setNull($isNull = false)
 		{
 			$this->null = $isNull === true;

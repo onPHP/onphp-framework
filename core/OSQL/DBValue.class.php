@@ -20,9 +20,12 @@
 	{
 		private $value = null;
 		
+		/**
+		 * @return DBValue
+		 */
 		public static function create($value)
 		{
-			return new DBValue($value);
+			return new self($value);
 		}
 
 		public function __construct($value)

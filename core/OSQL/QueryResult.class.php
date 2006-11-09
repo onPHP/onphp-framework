@@ -22,6 +22,9 @@
 		private $affected	= null;
 		private $query		= null;
 		
+		/**
+		 * @return QueryResult
+		 */
 		public static function create()
 		{
 			return new self;
@@ -37,11 +40,17 @@
 			throw new UnsupportedMethodException();
 		}
 		
+		/**
+		 * @return SelectQuery
+		 */
 		public function getQuery()
 		{
 			return $this->query;
 		}
 		
+		/**
+		 * @return QueryResult
+		 */
 		public function setQuery(SelectQuery $query)
 		{
 			$this->query = $query;
@@ -54,6 +63,9 @@
 			return $this->list;
 		}
 		
+		/**
+		 * @return QueryResult
+		 */
 		public function setList($list)
 		{
 			$this->list = $list;
@@ -66,6 +78,9 @@
 			return $this->count;
 		}
 		
+		/**
+		 * @return QueryResult
+		 */
 		public function setCount($count)
 		{
 			$this->count = $count;
@@ -78,6 +93,9 @@
 			return $this->affected;
 		}
 		
+		/**
+		 * @return QueryResult
+		 */
 		public function setAffected($affected)
 		{
 			$this->affected = $affected;

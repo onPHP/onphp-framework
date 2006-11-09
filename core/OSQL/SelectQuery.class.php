@@ -46,6 +46,9 @@
 			return $this->name;
 		}
 		
+		/**
+		 * @return SelectQuery
+		 */
 		public function setName($name)
 		{
 			$this->name = $name;
@@ -53,6 +56,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return SelectQuery
+		 */
 		public function distinct()
 		{
 			$this->distinct = true;
@@ -64,31 +70,36 @@
 			return $this->distinct;
 		}
 
+		/**
+		 * @return SelectQuery
+		 */
 		public function unDistinct()
 		{
 			$this->distinct = false;
 			return $this;
 		}
 
-		/// @deprecated by join()
-		public function joinQuery(SelectQuery $query, LogicalObject $logic, $alias)
-		{
-			$this->from[] = new SQLJoin($query, $logic, $alias);
-			return $this;
-		}
-		
+		/**
+		 * @return SelectQuery
+		 */
 		public function join($table, LogicalObject $logic, $alias = null)
 		{
 			$this->from[] = new SQLJoin($table, $logic, $alias);
 			return $this;
 		}
 		
+		/**
+		 * @return SelectQuery
+		 */
 		public function leftJoin($table, LogicalObject $logic, $alias = null)
 		{
 			$this->from[] = new SQLLeftJoin($table, $logic, $alias);
 			return $this;
 		}
 
+		/**
+		 * @return SelectQuery
+		 */
 		public function orderBy($field, $table = null)
 		{
 			if ($field instanceof DialectString)
@@ -105,6 +116,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return SelectQuery
+		 */
 		public function prependOrderBy($field, $table = null)
 		{
 			if ($field instanceof DialectString)
@@ -125,6 +139,10 @@
 			return $this;
 		}
 
+		/**
+		 * @throws WrongStateException
+		 * @return SelectQuery
+		 */
 		public function desc()
 		{
 			if (!$this->currentOrder)
@@ -135,6 +153,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongStateException
+		 * @return SelectQuery
+		 */
 		public function asc()
 		{
 			if (!$this->currentOrder)
@@ -145,6 +167,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return SelectQuery
+		 */
 		public function groupBy($field, $table = null)
 		{
 			if ($field instanceof DialectString)
@@ -166,6 +191,10 @@
 			return $this->offset;
 		}
 
+		/**
+		 * @throws WrongArgumentException
+		 * @return SelectQuery
+		 */
 		public function limit($limit = null, $offset = null)
 		{
 			if ($limit !== null) 
@@ -180,6 +209,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return SelectQuery
+		 */
 		public function from($table, $alias = null)
 		{
 			$this->from[] = new FromTable($table, $alias);
@@ -187,7 +219,12 @@
 			return $this;
 		}
 		
-		// BOVM: achtung!
+		/**
+		 * BOVM: achtung!
+		 * 
+		 * @throws WrongArgumentException
+		 * @return SelectQuery
+		 */
 		public function get($field, $alias = null)
 		{
 			$table = null;
@@ -226,7 +263,10 @@
 
 			return $this;
 		}
-
+		
+		/**
+		 * @return SelectQuery
+		 */
 		public function multiGet(/* ... */)
 		{
 			$size = func_num_args();
@@ -238,6 +278,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return SelectQuery
+		 */
 		public function arrayGet($array, $prefix = null)
 		{
 			$size = count($array);
@@ -353,12 +396,18 @@
 			return $query;
 		}
 		
+		/**
+		 * @return SelectQuery
+		 */
 		public function dropFields()
 		{
 			$this->fields = array();
 			return $this;
 		}
 		
+		/**
+		 * @return SelectQuery
+		 */
 		public function dropOrder()
 		{
 			$this->order = array();
