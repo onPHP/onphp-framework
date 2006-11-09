@@ -28,10 +28,14 @@
 			
 			if ($class->getPattern()->daoExists()) {
 				$interfaces .= ', DAOConnected';
+				$daoName = $class->getName().'DAO';
 				$dao = <<<EOT
+	/**
+	 * @return {$daoName}
+	**/
 	public static function dao()
 	{
-		return Singleton::getInstance('{$class->getName()}DAO');
+		return Singleton::getInstance('{$daoName}');
 	}
 
 EOT;
@@ -45,7 +49,10 @@ EOT;
 
 			if (!$type || $type->getId() !== MetaClassType::CLASS_ABSTRACT) {
 				$out .= <<<EOT
-			
+
+	/**
+	 * @return {$class->getName()}
+	**/
 	public static function create()
 	{
 		return new self;
@@ -55,11 +62,16 @@ EOT;
 EOT;
 			}
 			
+			$protoName = 'Proto'.$class->getName();
+			
 			$out .= <<<EOT
 
+	/**
+	 * @return {$protoName}
+	**/
 	public static function proto()
 	{
-		return Singleton::getInstance('Proto{$class->getName()}');
+		return Singleton::getInstance('{$protoName}');
 	}
 
 EOT;

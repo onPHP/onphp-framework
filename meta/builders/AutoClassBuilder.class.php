@@ -67,18 +67,23 @@
 						== MetaRelation::ONE_TO_ONE
 					)
 				) {
-					$out .= $property->toMethods();
+					$out .= $property->toMethods($class);
 				} else { // OneToMany || ManyToMany
 					$name = $property->getName();
 					$methodName = ucfirst($name);
 					$remoteName = ucfirst($property->getName());
 					
+					$containerName = $class->getName().$remoteName.'DAO';
+					
 					$out .= <<<EOT
 
+/**
+ * @return {$containerName}
+**/
 public function get{$methodName}(\$lazy = false)
 {
 	if (!\$this->{$name}) {
-		\$this->{$name} = new {$class->getName()}{$remoteName}DAO(\$this, \$lazy);
+		\$this->{$name} = new {$containerName}(\$this, \$lazy);
 		
 		if (\$this->id) {
 			\$this->{$name}->fetch();

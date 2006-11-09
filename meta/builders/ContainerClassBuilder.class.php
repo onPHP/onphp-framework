@@ -26,9 +26,11 @@
 		{
 			$out = self::getHead();
 			
+			$containerName = $class->getName().ucfirst($holder->getName()).'DAO';
+			
 			$out .=
 				'final class '
-				.$class->getName().ucfirst($holder->getName()).'DAO'
+				.$containerName
 				.' extends '
 				.$holder->getRelation()->toString().'Linked'
 				."\n{\n";
@@ -52,6 +54,9 @@ public function __construct({$className} \${$propertyName}, \$lazy = false)
 	);
 }
 
+/**
+ * @return {$containerName}
+**/
 public static function create({$className} \${$propertyName}, \$lazy = false)
 {
 	return new self(\${$propertyName}, \$lazy);

@@ -65,7 +65,9 @@ EOT;
 				
 				$out .= <<<EOT
 
-
+/**
+ * @return InsertOrUpdateQuery
+**/
 public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \${$varName})
 {
 	return

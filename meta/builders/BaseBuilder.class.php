@@ -79,7 +79,10 @@ EOT;
 				|| $class->getPattern() instanceof DictionaryClassPattern
 			) {
 				$out .= <<<EOT
-			
+
+/**
+ * @return {$className}
+**/
 public function makeObject(&\$array, \$prefix = null)
 {
 	return \$this->fillObject(new {$className}(), \$array, \$prefix);
@@ -96,6 +99,9 @@ EOT;
 			
 			$out .= <<<EOT
 
+/**
+ * @return {$className}
+**/
 protected function fillObject(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
 {
 

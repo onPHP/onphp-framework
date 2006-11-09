@@ -30,6 +30,9 @@
 				$out .= <<<EOT
 {$type}class Proto{$class->getName()} extends Proto{$parent->getName()}
 {
+	/**
+	 * @return Form
+	**/
 	public function makeForm()
 	{
 		\$form =
@@ -42,6 +45,9 @@ EOT;
 {
 	public function makeForm()
 	{
+		/**
+		 * @return Form
+		**/
 		return
 			Form::create()->
 			add(

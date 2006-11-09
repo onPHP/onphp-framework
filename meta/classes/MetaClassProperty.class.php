@@ -173,9 +173,9 @@
 			return $this;
 		}
 		
-		public function toMethods()
+		public function toMethods(MetaClass $class)
 		{
-			return $this->type->toMethods($this);
+			return $this->type->toMethods($class, $this);
 		}
 		
 		public function toPrimitive()
