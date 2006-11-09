@@ -130,6 +130,11 @@
 			return $this;
 		}
 		
+		public function hasReference()
+		{
+			return ($this->reference !== null);
+		}
+		
 		public function setAutoincrement($auto = false)
 		{
 			$this->sequenced = true === $auto;

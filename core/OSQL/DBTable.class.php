@@ -144,6 +144,13 @@
 						$head
 						.' ADD COLUMN '
 						.$column->toDialectString($dialect).';';
+					
+					if ($column->hasReference()) {
+						$out[] =
+							'CREATE INDEX '.$dialect->quoteField($name.'_idx')
+							.' ON '.$dialect->quoteTable($target->getName()).
+							'('.$dialect->quoteField($name).');';
+					}
 				}
 			}
 			
