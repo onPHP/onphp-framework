@@ -32,11 +32,17 @@
 			$this->max = $max;
 		}
 		
+		/**
+		 * @return Range
+		**/
 		public static function create($min = null, $max = null)
 		{
 			return new self($min, $max);
 		}
 		
+		/**
+		 * @return Range
+		**/
 		public static function lazyCreate($min = null, $max = null)
 		{
 			if ($min > $max)
@@ -50,6 +56,10 @@
 			return $this->min;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return Range
+		**/
 		public function setMin($min = null)
 		{
 			if ($min !== null)
@@ -72,6 +82,10 @@
 			return $this->max;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return Range
+		**/
 		public function setMax($max = null)
 		{
 			if ($max !== null)
@@ -103,6 +117,9 @@
 			return trim($out);
 		}
 		
+		/**
+		 * @return Range
+		**/
 		public function divide($factor, $precision = null)
 		{
 			if ($this->min)
@@ -114,6 +131,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Range
+		**/
 		public function multiply($multiplier)
 		{
 			if ($this->min)

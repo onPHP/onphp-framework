@@ -24,7 +24,7 @@
 
 		/**
 		 * @return DeleteQuery
-		 */
+		**/
 		public function from($table)
 		{
 			$this->table = $table;

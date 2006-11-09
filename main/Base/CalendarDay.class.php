@@ -20,9 +20,12 @@
 		private $selected	= null;
 		private $outside	= null;
 		
+		/**
+		 * @return CalendarDay
+		**/
 		public static function create($timestamp)
 		{
-			return new CalendarDay($timestamp);
+			return new self($timestamp);
 		}
 		
 		public function isSelected()
@@ -30,9 +33,14 @@
 			return $this->selected === true;
 		}
 		
+		/**
+		 * @return CalendarDay
+		**/
 		public function setSelected($selected)
 		{
 			$this->selected = $selected === true;
+			
+			return $this;
 		}
 		
 		public function isOutside()
@@ -40,9 +48,14 @@
 			return $this->outside;
 		}
 		
+		/**
+		 * @return CalendarDay
+		**/
 		public function setOutside($outside)
 		{
 			$this->outside = $outside === true;
+			
+			return $this;
 		}
 	}
 ?>

@@ -17,7 +17,7 @@
 	{
 		/**
 		 * @return QueryChain
-		 */
+		**/
 		public static function block($args, $logic)
 		{
 			$queryChain = new self;
@@ -34,7 +34,7 @@
 		
 		/**
 		 * @return QueryChain
-		 */
+		**/
 		public function union(SelectQuery $query)
 		{
 			return $this->exp($query, CombineQuery::UNION);
@@ -42,7 +42,7 @@
 		
 		/**
 		 * @return QueryChain
-		 */
+		**/
 		public function unionAll(SelectQuery $query)
 		{
 			return $this->exp($query, CombineQuery::UNION_ALL);
@@ -50,7 +50,7 @@
 		
 		/**
 		 * @return QueryChain
-		 */
+		**/
 		public function intersect(SelectQuery $query)
 		{
 			return $this->exp($query, CombineQuery::INTERSECT);
@@ -58,7 +58,7 @@
 		
 		/**
 		 * @return QueryChain
-		 */
+		**/
 		public function intersectAll(SelectQuery $query)
 		{
 			return $this->exp($query, CombineQuery::INTERSECT_ALL);
@@ -66,7 +66,7 @@
 		
 		/**
 		 * @return QueryChain
-		 */
+		**/
 		public function except(SelectQuery $query)
 		{
 			return $this->exp($query, CombineQuery::EXCEPT);
@@ -74,7 +74,7 @@
 		
 		/**
 		 * @return QueryChain
-		 */
+		**/
 		public function exceptAll(SelectQuery $query)
 		{
 			return $this->exp($query, CombineQuery::EXCEPT_ALL);

@@ -20,6 +20,9 @@
 		// TODO: quite empty class, consider replacement or pull up all methods
 		private $days = array();
 		
+		/**
+		 * @return CalendarWeek
+		**/
 		public static function create()
 		{
 			return new self;
@@ -30,9 +33,14 @@
 			return $this->days;
 		}
 		
+		/**
+		 * @return CalendarWeek
+		**/
 		public function addDay(CalendarDay $day)
 		{
 			$this->days[$day->toDate()] = $day;
+			
+			return $this;
 		}
 	}
 ?>

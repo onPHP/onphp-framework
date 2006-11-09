@@ -22,7 +22,7 @@
 		
 		/**
 		 * @return DBTable
-		 */
+		**/
 		public static function create($name)
 		{
 			return new self($name);
@@ -41,7 +41,7 @@
 		/**
 		 * @throws WrongArgumentException
 		 * @return DBTable
-		 */
+		**/
 		public function addColumn(DBColumn $column)
 		{
 			$name = $column->getName();
@@ -61,7 +61,7 @@
 		/**
 		 * @throws MissingElementException
 		 * @return DBColumn
-		 */
+		**/
 		public function getColumnByName($name)
 		{
 			if (!isset($this->columns[$name]))
@@ -74,7 +74,7 @@
 		
 		/**
 		 * @return DBTable
-		 */
+		**/
 		public function dropColumnByName($name)
 		{
 			if (!isset($this->columns[$name]))

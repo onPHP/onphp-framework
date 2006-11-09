@@ -22,7 +22,7 @@
 		
 		/**
 		 * @return DBValue
-		 */
+		**/
 		public static function create($value)
 		{
 			return new self($value);

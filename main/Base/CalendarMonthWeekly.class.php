@@ -73,11 +73,14 @@
 			++$this->fullLength;
 		}
 		
+		/**
+		 * @return CalendarMonthWeekly
+		**/
 		public static function create(
 			Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY
 		)
 		{
-			return new CalendarMonthWeekly($base, $weekStart);
+			return new self($base, $weekStart);
 		}
 		
 		public function getWeeks()
@@ -105,6 +108,10 @@
 			return $this->monthRange;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return CalendarMonthWeekly
+		**/
 		public function setSelected(Timestamp $day)
 		{
 			if (!isset($this->days[$day->toDate()]))

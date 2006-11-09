@@ -17,7 +17,7 @@
 	{
 		/**
 		 * @return InsertQuery
-		 */
+		**/
 		public function into($table)
 		{
 			$this->table = $table;
@@ -29,7 +29,7 @@
 		 * Just an alias to behave like UpdateQuery.
 		 * 
 		 * @return InsertQuery
-		 */
+		**/
 		public function setTable($table)
 		{
 			return $this->into($table);

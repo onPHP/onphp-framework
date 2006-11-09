@@ -26,7 +26,7 @@
 
 		/**
 		 * @return OrderBy
-		 */
+		**/
 		public function desc()
 		{
 			$this->direction->setFalse();
@@ -35,7 +35,7 @@
 
 		/**
 		 * @return OrderBy
-		 */
+		**/
 		public function asc()
 		{
 			$this->direction->setTrue();

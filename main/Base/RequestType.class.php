@@ -29,26 +29,41 @@
 			self::SESSION	=> 'session'
 		);
 		
+		/**
+		 * @return RequestType
+		**/
 		public static function get()
 		{
 			return new self(self::GET);
 		}
 		
+		/**
+		 * @return RequestType
+		**/
 		public static function post()
 		{
 			return new self(self::POST);
 		}
 		
+		/**
+		 * @return RequestType
+		**/
 		public static function files()
 		{
 			return new self(self::FILES);
 		}
 		
+		/**
+		 * @return RequestType
+		**/
 		public static function cookie()
 		{
 			return new self(self::COOKIE);
 		}
 		
+		/**
+		 * @return RequestType
+		**/
 		public static function session()
 		{
 			return new self(self::SESSION);

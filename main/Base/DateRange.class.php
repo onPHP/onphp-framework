@@ -25,6 +25,9 @@
 		protected $dayStartStamp	= null;
 		protected $dayEndStamp		= null;
 		
+		/**
+		 * @return DateRange
+		**/
 		public static function create()
 		{
 			return new self;
@@ -39,6 +42,10 @@
 				$this->end = clone $this->end;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return DateRange
+		**/
 		public function setStart(Timestamp $start)
 		{
 			if ($this->end && $this->end->toStamp() < $start->toStamp())
@@ -51,6 +58,10 @@
 			return $this;
 		}
 
+		/**
+		 * @throws WrongArgumentException
+		 * @return DateRange
+		**/
 		public function setEnd(Timestamp $end)
 		{
 			if ($this->start && $this->start->toStamp() > $end->toStamp())
@@ -63,6 +74,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return DateRange
+		**/
 		public function lazySet($start = null, $end = null)
 		{
 			if ($start instanceof Timestamp && $end instanceof Timestamp) {
@@ -78,6 +92,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return DateRange
+		**/
 		public function dropStart()
 		{
 			$this->start = null;
@@ -85,6 +102,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return DateRange
+		**/
 		public function dropEnd()
 		{
 			$this->end = null;
@@ -99,11 +119,17 @@
 				&& ($this->end === null);
 		}
 
+		/**
+		 * @return Timestamp
+		**/
 		public function getStart()
 		{
 			return $this->start;
 		}
 
+		/**
+		 * @return Timestamp
+		**/
 		public function getEnd()
 		{
 			return $this->end;
@@ -267,6 +293,8 @@
 
 		/**
 		 * enlarges $this by given $range, if last one is wider
+		 * 
+		 * @return DateRange
 		**/
 		public function enlarge(DateRange $range)
 		{
@@ -291,6 +319,8 @@
 
 		/**
 		 * intersection of $this and given $range
+		 * 
+		 * @return DateRange
 		**/
 		public function clip(DateRange $range)
 		{
@@ -318,7 +348,11 @@
 			return $this;
 		}
 
-		// result is read-only, no error checking
+		/**
+		 * result is read-only, no error checking
+		 * 
+		 * @return DateRange
+		**/
 		public function lightCopyOnClip(DateRange $range)
 		{
 			$copy = DateRange::create();

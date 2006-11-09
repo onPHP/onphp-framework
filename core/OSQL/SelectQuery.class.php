@@ -48,7 +48,7 @@
 		
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function setName($name)
 		{
 			$this->name = $name;
@@ -58,7 +58,7 @@
 
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function distinct()
 		{
 			$this->distinct = true;
@@ -72,7 +72,7 @@
 
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function unDistinct()
 		{
 			$this->distinct = false;
@@ -81,7 +81,7 @@
 
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function join($table, LogicalObject $logic, $alias = null)
 		{
 			$this->from[] = new SQLJoin($table, $logic, $alias);
@@ -90,7 +90,7 @@
 		
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function leftJoin($table, LogicalObject $logic, $alias = null)
 		{
 			$this->from[] = new SQLLeftJoin($table, $logic, $alias);
@@ -99,7 +99,7 @@
 
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function orderBy($field, $table = null)
 		{
 			if ($field instanceof DialectString)
@@ -118,7 +118,7 @@
 		
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function prependOrderBy($field, $table = null)
 		{
 			if ($field instanceof DialectString)
@@ -142,7 +142,7 @@
 		/**
 		 * @throws WrongStateException
 		 * @return SelectQuery
-		 */
+		**/
 		public function desc()
 		{
 			if (!$this->currentOrder)
@@ -156,7 +156,7 @@
 		/**
 		 * @throws WrongStateException
 		 * @return SelectQuery
-		 */
+		**/
 		public function asc()
 		{
 			if (!$this->currentOrder)
@@ -169,7 +169,7 @@
 
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function groupBy($field, $table = null)
 		{
 			if ($field instanceof DialectString)
@@ -194,7 +194,7 @@
 		/**
 		 * @throws WrongArgumentException
 		 * @return SelectQuery
-		 */
+		**/
 		public function limit($limit = null, $offset = null)
 		{
 			if ($limit !== null) 
@@ -211,7 +211,7 @@
 
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function from($table, $alias = null)
 		{
 			$this->from[] = new FromTable($table, $alias);
@@ -224,7 +224,7 @@
 		 * 
 		 * @throws WrongArgumentException
 		 * @return SelectQuery
-		 */
+		**/
 		public function get($field, $alias = null)
 		{
 			$table = null;
@@ -266,7 +266,7 @@
 		
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function multiGet(/* ... */)
 		{
 			$size = func_num_args();
@@ -280,7 +280,7 @@
 		
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function arrayGet($array, $prefix = null)
 		{
 			$size = count($array);
@@ -398,7 +398,7 @@
 		
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function dropFields()
 		{
 			$this->fields = array();
@@ -407,7 +407,7 @@
 		
 		/**
 		 * @return SelectQuery
-		 */
+		**/
 		public function dropOrder()
 		{
 			$this->order = array();

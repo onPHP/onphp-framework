@@ -30,7 +30,7 @@
 		
 		/**
 		 * @return DBField
-		 */
+		**/
 		public static function create($field, $table = null)
 		{
 			return new self($field, $table);
@@ -65,7 +65,7 @@
 		/**
 		 * @throws WrongStateException
 		 * @return DBField
-		 */
+		**/
 		public function setTable($table)
 		{
 			if ($this->table !== null)

@@ -19,7 +19,7 @@
 	{
 		/**
 		 * @return LogicalChain
-		 */
+		**/
 		public static function block($args, $logic)
 		{
 			Assert::isTrue(
@@ -48,7 +48,7 @@
 		
 		/**
 		 * @return LogicalChain
-		 */
+		**/
 		public function expAnd(LogicalObject $exp)
 		{
 			return $this->exp($exp, BinaryExpression::EXPRESSION_AND);
@@ -56,7 +56,7 @@
 		
 		/**
 		 * @return LogicalChain
-		 */
+		**/
 		public function expOr(LogicalObject $exp)
 		{
 			return $this->exp($exp, BinaryExpression::EXPRESSION_OR);

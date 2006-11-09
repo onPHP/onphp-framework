@@ -69,7 +69,7 @@
 		
 		/**
 		 * @return DataType
-		 */
+		**/
 		public static function create($id)
 		{
 			return new self($id);
@@ -83,7 +83,7 @@
 		/**
 		 * @throws WrongArgumentException
 		 * @return DataType
-		 */
+		**/
 		public function setSize($size)
 		{
 			Assert::isInteger($size);
@@ -102,7 +102,7 @@
 		/**
 		 * @throws WrongArgumentException
 		 * @return DataType
-		 */
+		**/
 		public function setPrecision($precision)
 		{
 			Assert::isInteger($precision);
@@ -121,7 +121,7 @@
 		/**
 		 * @throws WrongArgumentException
 		 * @return DataType
-		 */
+		**/
 		public function setScale($scale)
 		{
 			Assert::isInteger($scale);
@@ -135,7 +135,7 @@
 		/**
 		 * @throws WrongArgumentException
 		 * @return DataType
-		 */
+		**/
 		public function setTimezoned($zoned = false)
 		{
 			Assert::isTrue(($this->id & self::HAVE_TIMEZONE) > 0);
@@ -152,7 +152,7 @@
 		
 		/**
 		 * @return DataType
-		 */
+		**/
 		public function setNull($isNull = false)
 		{
 			$this->null = $isNull === true;

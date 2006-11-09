@@ -32,7 +32,7 @@
 		
 		/**
 		 * @return DBColumn
-		 */
+		**/
 		public static function create(DataType $type, $name)
 		{
 			return new self($type, $name);
@@ -51,7 +51,7 @@
 		
 		/**
 		 * @return DBColumn
-		 */
+		**/
 		public function setTable(DBTable $table)
 		{
 			$this->table = $table;
@@ -66,7 +66,7 @@
 		
 		/**
 		 * @return DBTable
-		 */
+		**/
 		public function getTable()
 		{
 			return $this->table;
@@ -79,7 +79,7 @@
 		
 		/**
 		 * @return DBColumn
-		 */
+		**/
 		public function setPrimaryKey($primary = false)
 		{
 			$this->primary = true === $primary;
@@ -94,7 +94,7 @@
 		
 		/**
 		 * @return DBColumn
-		 */
+		**/
 		public function setUnique($unique = false)
 		{
 			$this->unique = true === $unique;
@@ -104,7 +104,7 @@
 		
 		/**
 		 * @return DBColumn
-		 */
+		**/
 		public function setDefault($default)
 		{
 			$this->default = $default;
@@ -120,7 +120,7 @@
 		/**
 		 * @throws WrongArgumentException
 		 * @return DBColumn
-		 */
+		**/
 		public function setReference(
 			DBColumn $column,
 			/* ForeignChangeAction */ $onDelete = null,
@@ -147,7 +147,7 @@
 		
 		/**
 		 * @return DBColumn
-		 */
+		**/
 		public function dropReference()
 		{
 			$this->reference	= null;
@@ -164,7 +164,7 @@
 		
 		/**
 		 * @return DBColumn
-		 */
+		**/
 		public function setAutoincrement($auto = false)
 		{
 			$this->sequenced = true === $auto;

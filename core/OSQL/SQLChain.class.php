@@ -20,7 +20,7 @@
 		
 		/**
 		 * @return SQLChain
-		 */
+		**/
 		protected function exp(DialectString $exp, $logic)
 		{
 			$this->chain[] = $exp;

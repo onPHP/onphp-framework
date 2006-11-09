@@ -30,7 +30,7 @@
 		/**
 		 * @throws WrongArgumentException
 		 * @return DBSchema
-		 */
+		**/
 		public function addTable(DBTable $table)
 		{
 			$name = $table->getName();
@@ -48,7 +48,7 @@
 		/**
 		 * @throws MissingElementException
 		 * @return DBTable
-		 */
+		**/
 		public function getTableByName($name)
 		{
 			if (!isset($this->tables[$name]))

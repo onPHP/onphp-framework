@@ -22,7 +22,7 @@
 		
 		/**
 		 * @return Castable
-		 */
+		**/
 		public function castTo($cast)
 		{
 			$this->cast = $cast;
