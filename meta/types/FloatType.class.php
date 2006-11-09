@@ -29,7 +29,7 @@
 
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::FLOAT)';
+			return 'DataType::create(DataType::REAL)';
 		}
 
 		public function toPrimitive()
