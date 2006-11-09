@@ -20,7 +20,10 @@
 	class MySQL extends Sequenceless
 	{
 		protected $queueSupported	= false;
-		
+
+		/**
+		 * @return MyDialect
+		**/
 		public static function getDialect()
 		{
 			return MyDialect::me();
@@ -41,6 +44,9 @@
 			return mysql_query("SET NAMES '{$encoding}'", $this->link);
 		}
 
+		/**
+		 * @return MySQL
+		**/
 		public function connect(
 			$user, $pass, $host,
 			$base = null, $persistent = false
@@ -62,6 +68,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MySQL
+		**/
 		public function disconnect()
 		{
 			if ($this->isConnected())

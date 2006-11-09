@@ -29,6 +29,9 @@
 			$this->db = $db;
 		}
 		
+		/**
+		 * @return BaseTransaction
+		**/
 		public function setDB(DB $db)
 		{
 			$this->db = $db;
@@ -36,11 +39,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return DB
+		**/
 		public function getDB()
 		{
 			return $this->db;
 		}
 		
+		/**
+		 * @return BaseTransaction
+		**/
 		public function setIsolationLevel(IsolationLevel $level)
 		{
 			$this->isoLevel = $level;
@@ -48,6 +57,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return BaseTransaction
+		**/
 		public function setAccessMode(AccessMode $mode)
 		{
 			$this->mode = $mode;

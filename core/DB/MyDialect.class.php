@@ -21,6 +21,9 @@
 	{
 		const IN_BOOLEAN_MODE = 1;
 		
+		/**
+		 * @return MyDialect
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);

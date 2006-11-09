@@ -21,6 +21,9 @@
 	{
 		public static $tsConfiguration = 'default_russian';
 		
+		/**
+		 * @return PostgresDialect
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);

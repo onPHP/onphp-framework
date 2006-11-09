@@ -36,6 +36,9 @@
 			);
 		}
 
+		/**
+		 * @return PgSQL
+		**/
 		public function connect(
 			$user, $pass, $host,
 			$base = null, $persistent = false
@@ -69,6 +72,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return PgSQL
+		**/
 		public function disconnect()
 		{
 			if ($this->isConnected())

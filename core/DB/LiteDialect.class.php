@@ -19,6 +19,9 @@
 	**/
 	final class LiteDialect extends Dialect
 	{
+		/**
+		 * @return LiteDialect
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);

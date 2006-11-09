@@ -19,16 +19,25 @@
 	{
 		private $pool = array();
 		
+		/**
+		 * @return DBPool
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
 		}
 		
+		/**
+		 * @return DB
+		**/
 		public static function getByDao(GenericDAO $dao)
 		{
 			return self::me()->getLink($dao->getLinkName());
 		}
 		
+		/**
+		 * @return DBPool
+		**/
 		public function addLink($name, DB $db)
 		{
 			if (isset($this->pool[$name]))
@@ -41,6 +50,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws MissingElementException
+		 * @return DB
+		**/
 		public function getLink($name = null)
 		{
 			// backwards compatibility

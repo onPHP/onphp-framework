@@ -23,9 +23,12 @@
 	{
 		private $queue = array();
 		
+		/**
+		 * @return Queue
+		**/
 		public static function create()
 		{
-			return new Queue();
+			return new self;
 		}
 
 		public function getId()
@@ -43,6 +46,9 @@
 			return $this->queue;
 		}
 
+		/**
+		 * @return Queue
+		**/
 		public function add(Query $query)
 		{
 			$this->queue[] = $query;
@@ -50,6 +56,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Queue
+		**/
 		public function remove(Query $query)
 		{
 			if (!$id = array_search($query, $this->queue))
@@ -60,6 +69,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Queue
+		**/
 		public function drop()
 		{
 			$this->queue = array();
@@ -67,6 +79,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Queue
+		**/
 		public function run(DB $db)
 		{
 			$db->queryRaw($this->toDialectString($db->getDialect()));
@@ -74,6 +89,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Queue
+		**/
 		public function flush(DB $db)
 		{
 			return $this->run($db)->drop();

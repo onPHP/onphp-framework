@@ -19,6 +19,9 @@
 	{
 		private static $defaultDB = null;
 		
+		/**
+		 * @throws WrongArgumentException
+		**/
 		public static function setDefaultInstance(DB $db)
 		{
 			Assert::isTrue($db->isConnected());
@@ -26,6 +29,9 @@
 			self::$defaultDB = $db;
 		}
 	
+		/**
+		 * @return DB
+		**/
 		public static function &getDefaultInstance()
 		{
 			if (self::$defaultDB === null)
@@ -34,6 +40,9 @@
 			return self::$defaultDB;
 		}
 
+		/**
+		 * @return DB
+		**/
 		public static function getCustomInstance(
 			$userName, $passWord, $host, $base = null, $connector = null
 		)

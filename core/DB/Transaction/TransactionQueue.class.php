@@ -37,6 +37,9 @@
 			throw new UnsupportedMethodException();
 		}
 		
+		/**
+		 * @return TransactionQueue
+		**/
 		public function add(Query $query)
 		{
 			$this->queue->add($query);
@@ -44,6 +47,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws DatabaseException
+		 * @return TransactionQueue
+		**/
 		public function flush()
 		{
 			try {

@@ -18,6 +18,9 @@
 	**/
 	final class ImaginaryDialect extends Dialect
 	{
+		/**
+		 * @return ImaginaryDialect
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);

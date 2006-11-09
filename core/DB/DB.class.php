@@ -76,7 +76,10 @@
 		 * transaction handling
 		 * @deprecated by Transaction class
 		**/
-
+		
+		/**
+		 * @return DB
+		**/
 		public function begin($level = null, $mode = null)
 		{
 			$begin = 'start transaction';
@@ -97,6 +100,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return DB
+		**/
 		public function commit()
 		{
 			if ($this->toQueue)
@@ -109,6 +115,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return DB
+		**/
 		public function rollback()
 		{
 			if ($this->toQueue)
@@ -131,6 +140,9 @@
 		 * @deprecated by Queue class
 		**/
 
+		/**
+		 * @return DB
+		**/
 		public function queueStart()
 		{
 			if ($this->queueSupported)
@@ -139,6 +151,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return DB
+		**/
 		public function queueStop()
 		{
 			$this->toQueue = false;
@@ -146,6 +161,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return DB
+		**/
 		public function queueDrop()
 		{
 			$this->queue = array();
@@ -153,6 +171,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return DB
+		**/
 		public function queueFlush()
 		{
 			if ($this->queue)

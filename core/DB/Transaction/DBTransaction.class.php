@@ -25,6 +25,9 @@
 				$this->db->queryRaw("rollback;\n");
 		}
 		
+		/**
+		 * @return DBTransaction
+		**/
 		public function setDB(DB $db)
 		{
 			if ($this->isStarted())
@@ -40,6 +43,9 @@
 			return $this->started;
 		}
 		
+		/**
+		 * @return DBTransaction
+		**/
 		public function add(Query $query)
 		{
 			if (!$this->isStarted()) {
@@ -52,6 +58,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return DBTransaction
+		**/
 		public function flush()
 		{
 			$this->started = false;

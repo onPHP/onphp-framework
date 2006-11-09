@@ -19,6 +19,9 @@
 	**/
 	class SQLite extends Sequenceless
 	{
+		/**
+		 * @return LiteDialect
+		**/
 		public static function getDialect()
 		{
 			return LiteDialect::me();
@@ -34,6 +37,9 @@
 			throw new UnsupportedMethodException();
 		}
 
+		/**
+		 * @return SQLite
+		**/
 		public function connect(
 			$user, $pass, $host,
 			$base = null, $persistent = false
@@ -55,6 +61,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return SQLite
+		**/
 		public function disconnect()
 		{
 			if ($this->isConnected())

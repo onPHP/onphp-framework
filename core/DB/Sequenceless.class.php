@@ -31,6 +31,9 @@
 		
 		abstract protected function getInsertId();
 
+		/**
+		 * @return Identifier
+		**/
 		public function obtainSequence($sequence)
 		{
 			$id = Identifier::create();
