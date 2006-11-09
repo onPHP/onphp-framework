@@ -84,6 +84,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return TuringImage
+		**/
 		public function setTextDrawer(TextDrawer $drawer)
 		{
 			$drawer->setTuringImage($this);
@@ -92,6 +95,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return TuringImage
+		**/
 		public function setBackgroundDrawer(BackgroundDrawer $drawer)
 		{
 			$drawer->setTuringImage($this);
@@ -134,7 +140,9 @@
 			return $this->getColorIdentifier($textColor);
 		}
 
-
+		/**
+		 * @return TuringImage
+		**/
 		public function toImage(ImageType $imageType)
 		{
 			if ($this->drawer === null)
@@ -157,6 +165,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return TuringImage
+		**/
 		protected function setCode($code)
 		{
 			Session::assign(TuringImage::SESSION_LABEL, $code);
@@ -164,6 +175,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return TuringImage
+		**/
 		private function init()
 		{
 			$imageId = imagecreate($this->getWidth(), $this->getHeight());
@@ -174,6 +188,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return TuringImage
+		**/
 		private function drawBackGround()
 		{
 			if (!$this->backgroundColors->isEmpty()) {
@@ -199,6 +216,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return TuringImage
+		**/
 		private function outputImage(ImageType $imageType)
 		{
 			$gdImageTypes = imagetypes();

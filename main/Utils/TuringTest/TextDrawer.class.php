@@ -25,7 +25,10 @@
 		{
 			$this->size = $size;
 		}
-
+		
+		/**
+		 * @return TextDrawer
+		**/
 		public function drawCraracter($angle, $x, $y, $character)
 		{
 			$color = $this->getTuringImage()->getOneCharacterColor();
@@ -49,6 +52,9 @@
 			return $this->size;
 		}
 		
+		/**
+		 * @return TextDrawer
+		**/
 		protected function showError()
 		{
 			$drawer = new ErrorDrawer($this->getTuringImage());

@@ -19,6 +19,9 @@
 		const MAX_WAVE_DISTANCE	= 20;
 		const MAX_WAVE_OFFSET	= 5;
 		
+		/**
+		 * @return WavesBackgroundDrawer
+		**/
 		public function draw()
 		{
 			$y = mt_rand(-self::MAX_WAVE_OFFSET, self::MAX_WAVE_OFFSET);

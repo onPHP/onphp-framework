@@ -39,14 +39,6 @@
 		);
 	
 		/**
-		 * Returns text representation of digit
-		**/
-		public static function getAsText($number, $gender)
-		{
-			throw new UnsupportedMethodException();
-		}
-	
-		/**
 		 * Selects russian case for number.
 		 * for example:
 		 * 	1 результат

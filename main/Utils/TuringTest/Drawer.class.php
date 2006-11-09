@@ -17,6 +17,9 @@
 	{
 		private	$turingImage	= null;
 		
+		/**
+		 * @return Drawer
+		**/
 		public function setTuringImage(TuringImage $turingImage)
 		{
 			$this->turingImage = $turingImage;
@@ -24,6 +27,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return TuringImage
+		**/
 		public function getTuringImage()
 		{
 			return $this->turingImage;

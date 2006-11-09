@@ -35,7 +35,10 @@
 	        	
 			return $code;
 		}
-
+		
+		/**
+		 * @return CodeGenerator
+		**/
 		public function setLength($length)
 		{
 			$this->length = $length;
@@ -43,6 +46,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return CodeGenerator
+		**/
 		public function setLowerAllowed($lowerAllowed = true)
 		{
 			$this->lowerAllowed = $lowerAllowed;
@@ -50,6 +56,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return CodeGenerator
+		**/
 		public function setUpperAllowed($upperAllowed = true)
 		{
 			$this->upperAllowed = $upperAllowed;
@@ -57,6 +66,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return CodeGenerator
+		**/
 		public function setSimilarAllowed($similarAllowed = true)
 		{
 			$this->similarAllowed = $similarAllowed;
@@ -64,6 +76,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return CodeGenerator
+		**/
 		public function setNumbersAllowed($numbersAllowed = true)
 		{
 			$this->numbersAllowed = $numbersAllowed;

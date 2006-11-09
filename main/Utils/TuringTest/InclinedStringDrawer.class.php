@@ -17,6 +17,9 @@
 	{
 		const MAX_ANGLE	= 70;
 		
+		/**
+		 * @return InclinedStringDrawer
+		**/
 		public function draw($string)
 		{
 			$textWidth = $this->getTextWidth($string);

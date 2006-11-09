@@ -23,6 +23,9 @@
 			$this->url = $url;
 		}
 		
+		/**
+		 * @return XmlRpcClient
+		**/
 		public static function create($url = null)
 		{
 			return new self($url);
@@ -33,6 +36,9 @@
 			return $this->url;
 		}
 		
+		/**
+		 * @return XmlRpcClient
+		**/
 		public function setUrl($url)
 		{
 			$this->url = $url;
@@ -44,6 +50,9 @@
 			return $this->timeout;
 		}
 		
+		/**
+		 * @return XmlRpcClient
+		**/
 		public function setTimeout($timeout)
 		{
 			$this->timeout = $timeout;

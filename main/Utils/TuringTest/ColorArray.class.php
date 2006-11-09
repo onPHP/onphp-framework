@@ -16,7 +16,10 @@
 	class ColorArray
 	{
 		private $colors = array();
-	
+		
+		/**
+		 * @return ColorArray
+		**/
 		public function add(Color $color)
 		{
 			$this->colors[] = $color;
@@ -29,6 +32,10 @@
 			unset($this->colors);
 		}
 	
+		/**
+		 * @throws MissingElementException
+		 * @return Color
+		**/
 		public function getRandomTextColor()
 		{
 			if ($this->isEmpty())

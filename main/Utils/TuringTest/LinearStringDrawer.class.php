@@ -15,6 +15,9 @@
 	**/
 	class LinearStringDrawer extends TextDrawer
 	{
+		/**
+		 * @return LinearStringDrawer
+		**/
 		public function draw($string)
 		{
 			$maxHeight = $this->getMaxCharacterHeight();

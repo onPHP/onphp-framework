@@ -35,6 +35,10 @@
 				);
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return SelectQuery
+		**/
 		public static function makeFullTextQuery(
 			FullTextDAO $dao, ObjectQuery $oq, $string
 		)

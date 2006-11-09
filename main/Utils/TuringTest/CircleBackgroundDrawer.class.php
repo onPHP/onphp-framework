@@ -31,6 +31,9 @@
 			$this->count = $count;
 		}
 		
+		/**
+		 * @return CircleBackgroundDrawer
+		**/
 		public function draw()
 		{
 			for ($i = 0; $i < $this->count; $i++) {

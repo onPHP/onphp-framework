@@ -36,7 +36,10 @@
 			$this->green	= hexdec($rgb[2] . $rgb[3]);
 			$this->blue		= hexdec($rgb[4] . $rgb[5]);
 		}
-
+		
+		/**
+		 * @return Color
+		**/
 		public function setRed($red)
 		{
 			$this->red = $red;
@@ -49,6 +52,9 @@
 			return $this->red;
 		}
 
+		/**
+		 * @return Color
+		**/
 		public function setGreen($green)
 		{
 			$this->green = $green;
@@ -61,6 +67,9 @@
 			return $this->green;
 		}
 
+		/**
+		 * @return Color
+		**/
 		public function setBlue($blue)
 		{
 			$this->blue = $blue;
@@ -73,6 +82,9 @@
 			return $this->blue;
 		}
 	
+		/**
+		 * @return Color
+		**/
 		public function invertColor()
 		{
 			$this->setRed(255 - $this->getRed());

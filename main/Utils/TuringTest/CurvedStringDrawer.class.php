@@ -18,7 +18,10 @@
 		const MAX_ANGLE_CHANGE 				= 40;
 		const MAX_ANGLE 					= 45;
 		const MAX_VERTIVAL_POSITION_CHANGE 	= 1.5;
-	
+		
+		/**
+		 * @return CurvedStringDrawer
+		**/
 		public function draw($string)
 		{
 			$turingImage = $this->getTuringImage();
@@ -70,9 +73,13 @@
 					$this->drawCraracter($angle, $x, $y, $character);
 					
 					$x += $this->getStringWidth($character) + $this->getSize() / 2;
+					
+					return $this;
 				}
 			} else
-				$this->showError();
+				return $this->showError();
+			
+			/* NOTREACHED */
 		}
 	}
 ?>

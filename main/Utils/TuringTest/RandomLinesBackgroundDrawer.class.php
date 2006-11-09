@@ -21,7 +21,10 @@
 		{
 			$this->count = $count;
 		}
-	
+		
+		/**
+		 * @return RandomLinesBackgroundDrawer
+		**/
 		public function draw()
 		{
 			$imageId = $this->getTuringImage()->getImageId();

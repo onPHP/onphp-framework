@@ -21,7 +21,10 @@
 		{
 			$this->step = $step;
 		}
-
+		
+		/**
+		 * @return CellBackgroundDrawer
+		**/
 		public function draw()
 		{
 			$x = mt_rand(-$this->step, $this->step);

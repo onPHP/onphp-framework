@@ -34,6 +34,9 @@
 			$this->turingImage = $turingImage;
 		}	
 		
+		/**
+		 * @return ErrorDrawer
+		**/
 		public function draw($string = 'ERROR!')
 		{
 			if (!ErrorDrawer::isDrawError())

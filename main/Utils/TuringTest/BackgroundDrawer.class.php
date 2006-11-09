@@ -17,6 +17,9 @@
 	{
 		abstract public function draw();
 		
+		/**
+		 * @return Color
+		**/
 		public function makeColor()
 		{
 			$color = $this->getTuringImage()->getTextColors()->getRandomTextColor();
