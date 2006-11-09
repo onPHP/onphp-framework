@@ -29,7 +29,7 @@ EOT;
 
 			$columns = array();
 			
-			foreach ($class->getProperties() as $property) {
+			foreach ($class->getAllProperties() as $property) {
 				if (
 					($relation = $property->getRelation())
 					&& $relation->getId() <> MetaRelation::ONE_TO_ONE
@@ -55,7 +55,7 @@ EOT;
 		{
 			$out = null;
 			
-			foreach ($class->getProperties() as $property) {
+			foreach ($class->getAllProperties() as $property) {
 				if ($relation = $property->getRelation()) {
 					
 					$foreignClass =
@@ -64,10 +64,7 @@ EOT;
 						);
 					
 					if (
-						($relation->getId() <> MetaRelation::ONE_TO_ONE)
-						|| (
-							$foreignClass->getParent()
-						)
+						$relation->getId() <> MetaRelation::ONE_TO_ONE
 					) {
 						continue;
 					}

@@ -89,6 +89,18 @@
 			return $this->properties;
 		}
 		
+		/// with parent ones
+		public function getAllProperties()
+		{
+			if ($this->parent)
+				return array_merge(
+					$this->parent->getProperties(),
+					$this->properties
+				);
+			
+			return $this->getProperties();
+		}
+		
 		public function addProperty(MetaClassProperty $property)
 		{
 			$name = $property->getName();
