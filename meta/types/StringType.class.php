@@ -15,6 +15,10 @@
 	**/
 	class StringType extends BasePropertyType
 	{
+		/**
+		 * @throws WrongArgumentException
+		 * @return StringType
+		**/
 		public function setDefault($default)
 		{
 			Assert::isString(

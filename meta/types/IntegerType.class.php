@@ -15,6 +15,10 @@
 	**/
 	class IntegerType extends BasePropertyType
 	{
+		/**
+		 * @throws WrongArgumentException
+		 * @return IntegerType
+		**/
 		public function setDefault($default)
 		{
 			Assert::isInteger(

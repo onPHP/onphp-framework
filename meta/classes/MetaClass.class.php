@@ -52,6 +52,9 @@
 			return $this->dumbName;
 		}
 		
+		/**
+		 * @return MetaClassType
+		**/
 		public function getType()
 		{
 			return $this->type;
@@ -65,6 +68,9 @@
 					: null;
 		}
 		
+		/**
+		 * @return MetaClass
+		**/
 		public function setType(MetaClassType $type)
 		{
 			$this->type = $type;
@@ -72,11 +78,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MetaClass
+		**/
 		public function getParent()
 		{
 			return $this->parent;
 		}
 		
+		/**
+		 * @return MetaClass
+		**/
 		public function setParent(MetaClass $parent)
 		{
 			$this->parent = $parent;
@@ -101,6 +113,9 @@
 			return $this->getProperties();
 		}
 		
+		/**
+		 * @return MetaClass
+		**/
 		public function addProperty(MetaClassProperty $property)
 		{
 			$name = $property->getName();
@@ -123,6 +138,9 @@
 			return isset($this->properties[$name]);
 		}
 		
+		/**
+		 * @return MetaClass
+		**/
 		public function dropProperty($name)
 		{
 			if (isset($this->properties[$name])) {
@@ -145,6 +163,9 @@
 			return $this->interfaces;
 		}
 		
+		/**
+		 * @return MetaClass
+		**/
 		public function addInterface($name)
 		{
 			$this->interfaces[] = $name;
@@ -152,16 +173,27 @@
 			return $this;
 		}
 		
+		/**
+		 * @return GenerationPattern
+		**/
 		public function getPattern()
 		{
 			return $this->pattern;
 		}
 		
+		/**
+		 * @return MetaClass
+		**/
 		public function setPattern(GenerationPattern $pattern)
 		{
 			$this->pattern = $pattern;
+			
+			return $this;
 		}
 		
+		/**
+		 * @return MetaClassProperty
+		**/
 		public function getIdentifier()
 		{
 			// return parent's identifier, if we're child
@@ -171,6 +203,9 @@
 			return $this->identifier;
 		}
 		
+		/**
+		 * @return MetaClass
+		**/
 		public function setSourceLink($link)
 		{
 			$this->source = $link;

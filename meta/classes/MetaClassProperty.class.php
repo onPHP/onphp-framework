@@ -66,6 +66,9 @@
 			return $this->dumbName.'_id';
 		}
 		
+		/**
+		 * @return MetaClassProperty
+		**/
 		public function setColumnName($name)
 		{
 			$this->columnName = $name;
@@ -73,6 +76,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return BasePropertyType
+		**/
 		public function getType()
 		{
 			return $this->type;
@@ -83,6 +89,10 @@
 			return $this->size;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return MetaClassProperty
+		**/
 		public function setSize($size)
 		{
 			Assert::isInteger(
@@ -110,6 +120,9 @@
 			return !$this->required;
 		}
 		
+		/**
+		 * @return MetaClassProperty
+		**/
 		public function required()
 		{
 			$this->required = true;
@@ -117,6 +130,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MetaClassProperty
+		**/
 		public function optional()
 		{
 			$this->required = false;
@@ -129,6 +145,9 @@
 			return $this->identifier;
 		}
 		
+		/**
+		 * @return MetaClassProperty
+		**/
 		public function setIdentifier($really = false)
 		{
 			$this->identifier = ($really === true);
@@ -136,11 +155,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MetaRelation
+		**/
 		public function getRelation()
 		{
 			return $this->relation;
 		}
 		
+		/**
+		 * @return MetaClassProperty
+		**/
 		public function setRelation(MetaRelation $relation)
 		{
 			$this->relation = $relation;

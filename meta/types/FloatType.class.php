@@ -15,6 +15,10 @@
 	**/
 	final class FloatType extends IntegerType
 	{
+		/**
+		 * @throws WrongArgumentException
+		 * @return FloatType
+		**/
 		public function setDefault($default)
 		{
 			Assert::isFloat(

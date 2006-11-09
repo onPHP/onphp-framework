@@ -15,6 +15,9 @@
 	**/
 	final class ColoredTextOutput extends TextOutput
 	{
+		/**
+		 * @return ColoredTextOutput
+		**/
 		public function setMode(
 			$attribute = ConsoleMode::ATTR_RESET_ALL,
 			$foreground = ConsoleMode::FG_WHITE,
@@ -30,6 +33,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return ColoredTextOutput
+		**/
 		public function resetAll()
 		{
 			echo chr(0x1B).'[0m';

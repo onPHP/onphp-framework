@@ -22,16 +22,25 @@
 		
 		private $defaultSource = null;
 		
+		/**
+		 * @return MetaConfiguration
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance('MetaConfiguration');
 		}
 		
+		/**
+		 * @return MetaOutput
+		**/
 		public static function out()
 		{
 			return self::me()->getOutput();
 		}
 		
+		/**
+		 * @return MetaConfiguration
+		**/
 		public function load($metafile)
 		{
 			$xml = simplexml_load_file($metafile);
@@ -208,6 +217,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MetaConfiguration
+		**/
 		public function build()
 		{
 			$out = $this->getOutput();
@@ -300,8 +312,14 @@
 					$out->newLine();
 				}
 			}
+			
+			return $this;
 		}
 		
+		/**
+		 * @throws MissingElementException
+		 * @return MetaClass
+		**/
 		public function getClassByName($name)
 		{
 			if (isset($this->classes[$name]))
@@ -312,6 +330,9 @@
 			);
 		}
 		
+		/**
+		 * @return MetaConfiguration
+		**/
 		public function setOutput(MetaOutput $out)
 		{
 			$this->out = $out;
@@ -327,6 +348,9 @@
 			return $this->out;
 		}
 		
+		/**
+		 * @return MetaConfiguration
+		**/
 		private function addSource(SimpleXMLElement $source)
 		{
 			$name = (string) $source['name'];
@@ -354,6 +378,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MetaClassProperty
+		**/
 		private function buildProperty($name, $type)
 		{
 			if (is_readable(ONPHP_META_TYPES.$type.'Type'.EXT_CLASS))
@@ -364,6 +391,10 @@
 			return new MetaClassProperty($name, new $class($type));
 		}
 		
+		/**
+		 * @throws MissingElementException
+		 * @return GenerationPattern
+		**/
 		private function guessPattern($name)
 		{
 			$class = $name.'Pattern';
@@ -376,6 +407,9 @@
 			);
 		}
 		
+		/**
+		 * @return MetaConfiguration
+		**/
 		private function checkSanity(MetaClass $class)
 		{
 			if (!$class->getParent()) {

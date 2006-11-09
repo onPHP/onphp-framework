@@ -15,6 +15,10 @@
 	**/
 	class BooleanType extends BasePropertyType
 	{
+		/**
+		 * @throws WrongArgumentException
+		 * @return BooleanType
+		**/
 		public function setDefault($default)
 		{
 			static $boolean = array('true' => true, 'false' => false);
