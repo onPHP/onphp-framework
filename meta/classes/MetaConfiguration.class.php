@@ -262,7 +262,16 @@
 					continue;
 				}
 				
-				$db = DBPool::me()->getLink($class->getSourceLink());
+				try {
+					$db = DBPool::me()->getLink($class->getSourceLink());
+				} catch (BaseException $e) {
+					$out->
+						errorLine(
+							'Can not connect using source link in \''
+							.$class->getName().'\' class, skipping this step.');
+					
+					break;
+				}
 				
 				try {
 					$source = $db->getTableInfo($class->getDumbName());
