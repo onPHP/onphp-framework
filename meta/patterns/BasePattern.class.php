@@ -37,12 +37,26 @@
 				$old = 1; $new = 2;
 			}
 			
+			$out = MetaConfiguration::out();
+			$className = basename($path, EXT_CLASS);
+			
 			if ($old !== $new) {
-				echo "* ".$path."\n";
+				$out->
+					warning("\t\t".$className.' ');
 				
 				$fp = fopen($path, 'wb');
 				fwrite($fp, $content);
 				fclose($fp);
+				
+				$out->
+					log('(')->
+					remark(
+						str_replace($_SERVER['PWD'].DIRECTORY_SEPARATOR, null, $path)
+					)->
+					logLine(')');
+			} else {
+				$out->
+					infoLine("\t\t".$className.' ', true);
 			}
 		}
 		
@@ -115,8 +129,13 @@
 						.'DAO'
 						.EXT_CLASS;
 					
-					if (is_readable($oldStlye))
-						echo '! remove manually: '.$oldStlye."\n";
+					if (is_readable($oldStlye)) {
+						MetaConfiguration::out()->
+							newLine()->
+							error(
+								'remove manually: '.$oldStlye
+							);
+					}
 				}
 			}
 		}

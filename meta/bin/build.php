@@ -98,12 +98,44 @@ Things not supported by design:
 			
 			init();
 			
-			MetaConfiguration::me()->
-				load($_SERVER['argv'][2])->
-				build();
+			if (
+				isset($_SERVER['TERM'])
+				&& (
+					$_SERVER['TERM'] == 'xterm'
+					|| $_SERVER['TERM'] == 'linux'
+				)
+			) {
+				$out = new ColoredTextOutput();
+			} else {
+				$out = new TextOutput();
+			}
+			
+			$out = new MetaOutput($out);
+			
+			$out->
+				infoLine('onPHP-'.ONPHP_VERSION.': MetaConfiguration builder.', true)->
+				newLine();
+			
+			try {
+				MetaConfiguration::me()->
+					load($_SERVER['argv'][2])->
+					setOutput($out)->
+					build();
+			} catch (BaseException $e) {
+				$out->
+					newLine()->
+					errorLine($e->getMessage(), true)->
+					newLine()->
+					logLine(
+						$e->getTraceAsString()
+					);
+			}
+			
+			$out->getOutput()->resetAll();
+			$out->newLine();
 			
 		} else {
-			echo "Metaconfiguration file not found.\n";
+			echo "MetaConfiguration file not found.\n";
 			help();
 		}
 	}

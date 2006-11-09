@@ -15,6 +15,8 @@
 	**/
 	final class MetaConfiguration extends Singleton implements Instantiatable
 	{
+		private $out = null;
+		
 		private $classes = array();
 		private $sources = array();
 		
@@ -23,6 +25,11 @@
 		public static function me()
 		{
 			return Singleton::getInstance('MetaConfiguration');
+		}
+		
+		public static function out()
+		{
+			return self::me()->getOutput();
 		}
 		
 		public function load($metafile)
@@ -203,10 +210,20 @@
 		
 		public function build()
 		{
+			$out = $this->getOutput();
+			
+			$out->
+				infoLine('Building meta-classes:');
+			
 			foreach ($this->classes as $name => $class) {
-				echo $name."\n";
+				$out->infoLine("\t".$class->getName().':');
 				$class->dump();
+				$out->newLine();
 			}
+			
+			$out->
+				newLine()->
+				infoLine('Building DB schema:');
 			
 			$schema = SchemaBuilder::getHead();
 			
@@ -234,6 +251,21 @@
 			throw new MissingElementException(
 				"knows nothing about '{$name}' class"
 			);
+		}
+		
+		public function setOutput(MetaOutput $out)
+		{
+			$this->out = $out;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return MetaOutput
+		**/
+		public function getOutput()
+		{
+			return $this->out;
 		}
 		
 		private function addSource(SimpleXMLElement $source)
