@@ -34,6 +34,9 @@
 		// sub-parts aka childrens
 		private $parts			= array();
 		
+		/**
+		 * @return MimePart
+		**/
 		public static function create()
 		{
 			return new self;
@@ -47,6 +50,9 @@
 			$this->contentType	= 'text/plain';
 		}
 		
+		/**
+		 * @return MimePart
+		**/
 		public function setBoundary($boundary)
 		{
 			$this->boundary = $boundary;
@@ -64,6 +70,9 @@
 			return $this->contentId;
 		}
 		
+		/**
+		 * @return MimePart
+		**/
 		public function setContentId($id)
 		{
 			$this->contentId = $id;
@@ -76,6 +85,9 @@
 			return $this->contentType;
 		}
 		
+		/**
+		 * @return MimePart
+		**/
 		public function setContentType($type)
 		{
 			$this->contentType = $type;
@@ -83,11 +95,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MailEncoding
+		**/
 		public function getEncoding()
 		{
 			return $this->encoding;
 		}
 		
+		/**
+		 * @return MimePart
+		**/
 		public function setEncoding(MailEncoding $encoding)
 		{
 			$this->encoding = $encoding;
@@ -100,6 +118,9 @@
 			return $this->charset;
 		}
 		
+		/**
+		 * @return MimePart
+		**/
 		public function setCharset($charset)
 		{
 			$this->charset = $charset;
@@ -112,6 +133,9 @@
 			return $this->filename;
 		}
 		
+		/**
+		 * @return MimePart
+		**/
 		public function setFilename($name)
 		{
 			$this->filename = $name;
@@ -124,6 +148,9 @@
 			return $this->description;
 		}
 		
+		/**
+		 * @return MimePart
+		**/
 		public function setDescription($description)
 		{
 			$this->description = $description;
@@ -131,6 +158,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return MimePart
+		**/
 		public function loadBodyFromFile($path)
 		{
 			Assert::isTrue(is_readable($path));
@@ -140,6 +171,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MimePart
+		**/
 		public function setBody($body)
 		{
 			$this->body = $body;
@@ -152,6 +186,9 @@
 			return $this->body;
 		}
 		
+		/**
+		 * @return MimePart
+		**/
 		public function addSubPart(MimePart $part)
 		{
 			$this->parts[] = $part;
@@ -159,6 +196,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MimePart
+		**/
 		public function setInline($inline = true)
 		{
 			$this->inline = $inline;

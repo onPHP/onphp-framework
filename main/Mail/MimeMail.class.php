@@ -23,6 +23,9 @@
 		private $body		= null;
 		private $headers	= null;
 		
+		/**
+		 * @return MimeMail
+		**/
 		public function addPart(MimePart $part)
 		{
 			$this->parts[] = $part;
@@ -54,7 +57,6 @@
 					.$part->getEncodedBody()."\r\n";
 			
 			$this->body .= '--'.$boundary."--"."\r\n\r\n";
-
 		}
 		
 		public function getEncodedBody()

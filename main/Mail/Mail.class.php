@@ -33,11 +33,17 @@
 		private $encoding		= null;
 		private $contentType	= null;
 		
+		/**
+		 * @return Mail
+		**/
 		public static function create()
 		{
-			return new self();
+			return new self;
 		}
 
+		/**
+		 * @return Mail
+		**/
 		public function send()
 		{
 			if ($this->to == null)
@@ -107,36 +113,54 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Mail
+		**/
 		public function setTo($to)
 		{
 			$this->to = $to;
 			return $this;
 		}
 		
+		/**
+		 * @return Mail
+		**/
 		public function setCc($cc)
 		{
 			$this->cc = $cc;
 			return $this;
 		}		
 
+		/**
+		 * @return Mail
+		**/
 		public function setSubject($subject)
 		{
 			$this->subject = $subject;
 			return $this;
 		}
 		
+		/**
+		 * @return Mail
+		**/
 		public function setText($text)
 		{
 			$this->text = $text;
 			return $this;
 		}
 		
+		/**
+		 * @return Mail
+		**/
 		public function setFrom($from)
 		{
 			$this->from = $from;
 			return $this;
 		}
 		
+		/**
+		 * @return Mail
+		**/
 		public function setEncoding($encoding)
 		{
 			$this->encoding = $encoding;
@@ -148,6 +172,9 @@
 			return $this->contentType;
 		}
 		
+		/**
+		 * @return Mail
+		**/
 		public function setContentType($contentType)
 		{
 			$this->contentType = $contentType;

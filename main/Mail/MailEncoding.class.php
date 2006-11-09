@@ -27,21 +27,33 @@
 			self::QUOTED		=> 'quoted-printable'
 		);
 		
+		/**
+		 * @return MailEncoding
+		**/
 		public static function seven()
 		{
 			return new self(self::SEVEN_BITS);
 		}
 		
+		/**
+		 * @return MailEncoding
+		**/
 		public static function eight()
 		{
 			return new self(self::EIGHT_BITS);
 		}
 		
+		/**
+		 * @return MailEncoding
+		**/
 		public static function base64()
 		{
 			return new self(self::BASE64);
 		}
 		
+		/**
+		 * @return MailEncoding
+		**/
 		public static function quoted()
 		{
 			return new self(self::QUOTED);
