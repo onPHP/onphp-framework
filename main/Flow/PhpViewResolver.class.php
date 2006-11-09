@@ -23,12 +23,18 @@
 			$this->prefix	= $prefix;
 			$this->postfix	= $postfix;
 		}
-
+		
+		/**
+		 * @return PhpViewResolver
+		**/
 		public static function create($prefix = null, $postfix = null)
 		{
 			return new self($prefix, $postfix);
 		}
 		
+		/**
+		 * @return SimplePhpView
+		**/
 		public function resolveViewName($viewName)
 		{
 			return
@@ -48,6 +54,9 @@
 			return $this->prefix;
 		}
 		
+		/**
+		 * @return PhpViewResolver
+		**/
 		public function setPrefix($prefix)
 		{
 			$this->prefix = $prefix;
@@ -60,6 +69,9 @@
 			return $this->postfix;
 		}
 		
+		/**
+		 * @return PhpViewResolver
+		**/
 		public function setPostfix($postfix)
 		{
 			$this->postfix = $postfix;

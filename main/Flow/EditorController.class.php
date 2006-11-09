@@ -46,6 +46,9 @@
 				setDefaultType(RequestType::post());
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function handleRequest(HttpRequest $request)
 		{
 			$this->map->import($request);

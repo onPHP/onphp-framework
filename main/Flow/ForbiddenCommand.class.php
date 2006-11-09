@@ -12,6 +12,9 @@
 
 	final class ForbiddenCommand implements EditorCommand
 	{
+		/**
+		 * @return ModelAndView
+		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
 			return

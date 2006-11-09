@@ -32,6 +32,9 @@
 			return $this->prefix;
 		}
 		
+		/**
+		 * @return RedirectToView
+		**/
 		public function setPrefix($prefix)
 		{
 			$this->prefix = $prefix;
@@ -44,6 +47,9 @@
 			return $this->suffix;
 		}
 		
+		/**
+		 * @return RedirectToView
+		**/
 		public function setSuffix($suffix)
 		{
 			$this->suffix = $suffix;
@@ -56,6 +62,9 @@
 			return $this->url;
 		}
 		
+		/**
+		 * @return RedirectToView
+		**/
 		public function setName($name)
 		{
 			$this->url = $name;

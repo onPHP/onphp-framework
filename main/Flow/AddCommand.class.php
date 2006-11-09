@@ -15,6 +15,9 @@
 	**/
 	class AddCommand extends TakeCommand 
 	{
+		/**
+		 * @return ModelAndView
+		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
 			$form->markGood('id');

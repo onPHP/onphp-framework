@@ -17,16 +17,28 @@
 	{
 		private $chain = array();
 		
+		/**
+		 * @return CommandChain
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return CommandChain
+		**/
 		public function add(EditorCommand $command)
 		{
 			$this->chain[] = $command;
+			
+			return $this;
 		}
 		
+		/**
+		 * @throws BaseException
+		 * @return ModelAndView
+		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
 			Assert::isTrue(
@@ -54,6 +66,9 @@
 			return $mav;
 		}
 		
+		/**
+		 * @return CommandChain
+		**/
 		private function rollback($position)
 		{
 			for ($i = $position; $i > -1; --$i) {
@@ -70,6 +85,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return CommandChain
+		**/
 		private function commit()
 		{
 			for ($size = count($this->chain), $i = 0; $i < $size; --$i) {

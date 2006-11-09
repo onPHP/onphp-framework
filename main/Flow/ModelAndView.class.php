@@ -19,6 +19,9 @@
 		
 		private $view	= null;
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public static function create()
 		{
 			return new self;
@@ -29,11 +32,17 @@
 			$this->model = new Model();
 		}
 		
+		/**
+		 * @return Model
+		**/
 		public function getModel()
 		{
 			return $this->model;
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function setModel(Model $model)
 		{
 			$this->model = $model;
@@ -46,6 +55,9 @@
 			return $this->view;
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function setView($view)
 		{
 			Assert::isTrue(

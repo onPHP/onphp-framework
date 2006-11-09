@@ -36,6 +36,9 @@
 		// all other sh1t
 		private $attached	= array();
 		
+		/**
+		 * @return HttpRequest
+		**/
 		public static function create()
 		{
 			return new self;
@@ -46,6 +49,9 @@
 			return $this->get;
 		}
 		
+		/**
+		 * @return HttpRequest
+		**/
 		public function setGet(/* array */ $get)
 		{
 			$this->get = $get;
@@ -58,6 +64,9 @@
 			return $this->post;
 		}
 		
+		/**
+		 * @return HttpRequest
+		**/
 		public function setPost(/* array */ $post)
 		{
 			$this->post = $post;
@@ -70,6 +79,9 @@
 			return $this->server;
 		}
 		
+		/**
+		 * @return HttpRequest
+		**/
 		public function setServer(/* array */ $server)
 		{
 			$this->server = $server;
@@ -82,6 +94,9 @@
 			return $this->cookie;
 		}
 		
+		/**
+		 * @return HttpRequest
+		**/
 		public function setCookie(/* array */ $cookie)
 		{
 			$this->cookie = $cookie;
@@ -94,6 +109,9 @@
 			return $this->session;
 		}
 		
+		/**
+		 * @return HttpRequest
+		**/
 		public function setFiles(/* array */ $files)
 		{
 			$this->files = $files;
@@ -106,6 +124,9 @@
 			return $this->files;
 		}
 		
+		/**
+		 * @return HttpRequest
+		**/
 		public function setSession(/* array */ &$session)
 		{
 			$this->session = $session;
@@ -113,6 +134,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return HttpRequest
+		**/
 		public function setAttached($name, $var)
 		{
 			$this->attached[$name] = $var;
@@ -125,6 +149,9 @@
 			return $this->attached[$name];
 		}
 		
+		/**
+		 * @return HttpRequest
+		**/
 		public function unsetAttached($name)
 		{
 			unset($this->attached[$name]);

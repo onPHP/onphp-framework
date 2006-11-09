@@ -15,6 +15,9 @@
 	**/
 	class DropCommand implements EditorCommand 
 	{
+		/**
+		 * @return ModelAndView
+		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
 			if ($object = $form->getValue('id')) {

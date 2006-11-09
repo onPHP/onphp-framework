@@ -25,6 +25,10 @@
 			$this->command = $command;
 		}
 		
+		/**
+		 * @throws BaseException
+		 * @return ModelAndView
+		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
 			Assert::isFalse($this->running, 'command already running');
@@ -49,6 +53,9 @@
 			/* NOTREACHED */
 		}
 		
+		/**
+		 * @return CarefulDatabaseRunner
+		**/
 		public function commit()
 		{
 			if ($this->running) {
@@ -59,6 +66,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return CarefulDatabaseRunner
+		**/
 		public function rollback()
 		{
 			if ($this->running) {

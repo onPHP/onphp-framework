@@ -17,11 +17,17 @@
 	{
 		private $vars = array();
 		
+		/**
+		 * @return Model
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return Model
+		**/
 		public function clean()
 		{
 			$this->vars = array();
@@ -39,6 +45,9 @@
 			return $this->vars;
 		}
 		
+		/**
+		 * @return Model
+		**/
 		public function set($name, $var)
 		{
 			$this->vars[$name] = $var;
@@ -56,6 +65,9 @@
 			return isset($this->vars[$name]);
 		}
 		
+		/**
+		 * @return Model
+		**/
 		public function drop($name)
 		{
 			unset($this->vars[$name]);

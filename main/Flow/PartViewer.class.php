@@ -24,6 +24,9 @@
 			$this->model = $model;
 		}
 		
+		/**
+		 * @return PartViewer
+		**/
 		public function view($partName, $model = null)
 		{
 			Assert::isTrue($model === null || $model instanceof Model);
