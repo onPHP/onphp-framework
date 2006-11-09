@@ -2,6 +2,8 @@
 
 2006-11-09	Konstantin V. Arkhipov
 
+	* meta/types/: float type corrected, double type added.
+
 	* meta/: colored embellishments.
 
 2006-11-06	Konstantin V. Arkhipov
