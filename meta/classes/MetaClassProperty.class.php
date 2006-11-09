@@ -462,9 +462,19 @@ EOT;
 			}
 			
 			if ($this->type->hasDefault()) {
+				
+				$default = $this->type->getDefault();
+				
+				if (is_bool($default)) {
+					if ($default)
+						$default = 'true';
+					else
+						$default = 'false';
+				}
+				
 				$column .= <<<EOT
 ->
-setDefault({$this->type->getDefault()})
+setDefault({$default})
 EOT;
 			}
 			

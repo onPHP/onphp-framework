@@ -58,16 +58,19 @@ EOT;
 			foreach ($class->getProperties() as $property) {
 				if ($relation = $property->getRelation()) {
 					
-					if (
-						$relation->getId() <> MetaRelation::ONE_TO_ONE
-					) {
-						continue;
-					}
-					
 					$foreignClass =
 						MetaConfiguration::me()->getClassByName(
 							$property->getType()->getClass()
 						);
+					
+					if (
+						($relation->getId() <> MetaRelation::ONE_TO_ONE)
+						|| (
+							$foreignClass->getParent()
+						)
+					) {
+						continue;
+					}
 					
 					$sourceTable = $class->getDumbName();
 					$sourceColumn = $property->getDumbIdName();
