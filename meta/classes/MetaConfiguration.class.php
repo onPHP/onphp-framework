@@ -241,8 +241,6 @@
 				ONPHP_META_AUTO_DIR.'schema.php',
 				Format::indentize($schema)
 			);
-			
-			DBFactory::getDefaultInstance()->getTableInfo('banner');
 		}
 		
 		public function getClassByName($name)
