@@ -22,8 +22,6 @@
 		public function __construct($segmentId)
 		{
 			$this->id = $segmentId;
-			
-			return $this;
 		}
 		
 		public function touch($key)

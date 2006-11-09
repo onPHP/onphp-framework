@@ -31,6 +31,9 @@
 			$this->className = $dao->getObjectName();
 		}
 		
+		/**
+		 * @return BaseDaoWorker
+		**/
 		public function setDao(GenericDAO $dao)
 		{
 			$this->dao = $dao;

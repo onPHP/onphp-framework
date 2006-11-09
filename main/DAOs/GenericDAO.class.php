@@ -59,7 +59,10 @@
 		{
 			return null;
 		}
-
+		
+		/**
+		 * @return SelectQuery
+		**/
 		public function makeSelectHead()
 		{
 			if (null === $this->selectHead) {
