@@ -166,6 +166,11 @@
 			return $result;
 		}
 		
+		public function getTableInfo($table)
+		{
+			throw new UnimplementedFeatureException();
+		}
+		
 		protected function getInsertId()
 		{
 			return mysql_insert_id($this->link);

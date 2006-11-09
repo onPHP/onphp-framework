@@ -88,5 +88,66 @@
 		{
 			return OSQL::createTable($this)->toDialectString($dialect);
 		}
+		
+		// TODO: consider port to AlterTable class (unimplemented yet)
+		public static function findDifferences(
+			Dialect $dialect,
+			DBTable $source,
+			DBTable $target
+		)
+		{
+			$out = array();
+			
+			$head = 'ALTER TABLE '.$dialect->quoteTable($target->getName());
+			
+			$sourceColumns = $source->getColumns();
+			$targetColumns = $target->getColumns();
+			
+			foreach ($sourceColumns as $name => $column) {
+				if (isset($targetColumns[$name])) {
+					if (
+						$column->getType()->getId()
+						!= $targetColumns[$name]->getType()->getId()
+					) {
+						$out[] =
+							$head
+							.' ALTER COLUMN '.$dialect->quoteField($name)
+							.' TYPE '.$targetColumns[$name]->getType()->toString()
+							.';';
+					}
+					
+					if (
+						$column->getType()->isNull()
+						!= $targetColumns[$name]->getType()->isNull()
+					) {
+						$out[] =
+							$head
+							.' ALTER COLUMN '.$dialect->quoteField($name)
+							.' '
+							.(
+								$targetColumns[$name]->getType()->isNull()
+									? 'DROP'
+									: 'SET'
+							)
+							.' NOT NULL;';
+					}
+				} else {
+					$out[] =
+						$head
+						.' DROP COLUMN '.$dialect->quoteField($name).';';
+				}
+			}
+			
+			foreach ($targetColumns as $name => $column) {
+				if (!isset($sourceColumns[$name])) {
+					$out[] =
+						$head
+						.' ADD COLUMN '
+						.$column->toDialectString($dialect).';';
+				}
+			}
+			
+			return $out;
+		}
 	}
 ?>

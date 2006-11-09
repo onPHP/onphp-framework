@@ -241,6 +241,56 @@
 				ONPHP_META_AUTO_DIR.'schema.php',
 				Format::indentize($schema)
 			);
+			
+			$out->
+				newLine()->
+				infoLine('Suggested DB-schema changes: ');
+			
+			require ONPHP_META_AUTO_DIR.'schema.php';
+			
+			foreach ($this->classes as $name => $class) {
+				if (
+					$class->getTypeId() == MetaClassType::CLASS_ABSTRACT
+					|| $class->getPattern() instanceof EnumerationClassPattern
+				)
+					continue;
+				
+				try {
+					$target = $schema->getTableByName($class->getDumbName());
+				} catch (MissingElementException $e) {
+					// dropped or tableless
+					continue;
+				}
+				
+				$db = DBPool::me()->getLink($class->getSourceLink());
+				
+				try {
+					$source = $db->getTableInfo($class->getDumbName());
+				} catch (UnsupportedMethodException $e) {
+					$out->
+						errorLine(
+							get_class($db)
+							.' does not support tables introspection yet.',
+							
+							true
+						);
+					
+					break;
+				}
+				
+				$diff = DBTable::findDifferences(
+					$db->getDialect(),
+					$source,
+					$target
+				);
+				
+				if ($diff) {
+					foreach ($diff as $line)
+						$out->warningLine($line);
+					
+					$out->newLine();
+				}
+			}
 		}
 		
 		public function getClassByName($name)

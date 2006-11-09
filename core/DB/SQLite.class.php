@@ -213,6 +213,11 @@
 				return null;
 		}
 		
+		public function getTableInfo($table)
+		{
+			throw new UnimplementedFeatureException();
+		}
+		
 		protected function getInsertId()
 		{
 			return sqlite_last_insert_rowid($this->link);

@@ -212,6 +212,63 @@
 			return true;
 		}
 		
+		/**
+		 * @throws ObjectNotFoundException
+		 * @return DBTable
+		**/
+		public function getTableInfo($table)
+		{
+			static $types = array(
+				'time'			=> DataType::TIME,
+				'date'			=> DataType::DATE,
+				'timestamp'		=> DataType::TIMESTAMP,
+				
+				'bool'			=> DataType::BOOLEAN,
+				
+				'int2'			=> DataType::SMALLINT,
+				'int4'			=> DataType::INTEGER,
+				'int8'			=> DataType::BIGINT,
+				'numeric'		=> DataType::NUMERIC,
+				
+				'float4'		=> DataType::REAL,
+				'float8'		=> DataType::DOUBLE,
+				
+				'varchar'		=> DataType::VARCHAR,
+				'bpchar'		=> DataType::CHAR,
+				'text'			=> DataType::TEXT
+			);
+			
+			try {
+				$res = pg_meta_data($this->link, $table);
+			} catch (BaseException $e) {
+				throw new ObjectNotFoundException(
+					"unknown table '{$table}'"
+				);
+			}
+			
+			$table = new DBTable($table);
+			
+			foreach ($res as $name => $info) {
+				
+				Assert::isTrue(
+					isset($types[$info['type']]),
+					"unknown type '{$types[$info['type']]}' found in column '{$name}'"
+				);
+				
+				$column =
+					new DBColumn(
+						DataType::create($types[$info['type']])->
+						setNull(!$info['not null']),
+						
+						$name
+					);
+				
+				$table->addColumn($column);
+			}
+			
+			return $table;
+		}
+		
 		private function checkSingle($result)
 		{
 			if (pg_num_rows($result) > 1)

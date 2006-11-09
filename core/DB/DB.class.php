@@ -53,6 +53,8 @@
 		
 		abstract public function asyncQuery(Query $query);
 		abstract public function isBusy();
+		
+		abstract public function getTableInfo($table);
 
 		public function __destruct()
 		{

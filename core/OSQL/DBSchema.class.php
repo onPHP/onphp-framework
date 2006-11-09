@@ -43,10 +43,10 @@
 		
 		public function getTableByName($name)
 		{
-			Assert::isTrue(
-				isset($this->tables[$name]),
-				"table '{$name}' does not exist"
-			);
+			if (!isset($this->tables[$name]))
+				throw new MissingElementException(
+					"table '{$name}' does not exist"
+				);
 			
 			return $this->tables[$name];
 		}
