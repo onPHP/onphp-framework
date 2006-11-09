@@ -2,6 +2,9 @@
 
 2006-11-09	Konstantin V. Arkhipov
 
+	* meta/: now suggests DB-changes by diff'ing current and generated
+	schemas.
+
 	* meta/types/: float type corrected, double type added.
 
 	* meta/: colored embellishments.
