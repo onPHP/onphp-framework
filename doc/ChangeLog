@@ -2,6 +2,10 @@
 
 2006-11-09	Konstantin V. Arkhipov
 
+	* main/Utils/RussianTextUtils.class.php: dropped unused getAsText().
+
+	* core/OSQL/SelectQuery.class.php: dropped deprecated joinQuery().
+
 	* meta/: now suggests DB-changes by diff'ing current and generated
 	schemas.
 
