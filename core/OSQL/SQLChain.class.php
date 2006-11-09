@@ -18,6 +18,9 @@
 		protected $chain = array();
 		protected $logic = array();
 		
+		/**
+		 * @return SQLChain
+		 */
 		protected function exp(DialectString $exp, $logic)
 		{
 			$this->chain[] = $exp;
