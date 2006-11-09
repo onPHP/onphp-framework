@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Nickolay G. Korolyov                            *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,28 +13,11 @@
 	/**
 	 * @ingroup Types
 	**/
-	final class FloatType extends IntegerType
+	final class DoubleType extends FloatType
 	{
-		public function setDefault($default)
-		{
-			Assert::isFloat(
-				$default,
-				"strange default value given - '{$default}'"
-			);
-
-			$this->default = $default;
-
-			return $this;
-		}
-
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::FLOAT)';
-		}
-
-		public function toPrimitive()
-		{
-			return 'Primitive::float';
+			return 'DataType::create(DataType::DOUBLE)';
 		}
 	}
 ?>

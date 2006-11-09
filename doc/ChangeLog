@@ -1,5 +1,9 @@
 # $Id$
 
+2006-11-09	Konstantin V. Arkhipov
+
+	* meta/types/: float type corrected, double type added.
+
 2006-11-06	Konstantin V. Arkhipov
 
 	* main/Mail/MimePart.class.php: strange typo in quoted encoding fixed.
