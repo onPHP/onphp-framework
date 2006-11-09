@@ -15,6 +15,10 @@
 	**/
 	final class ManyToManyLinkedLazy extends ManyToManyLinkedWorker
 	{
+		/**
+		 * @throws WrongArgumentException
+		 * @return ManyToManyLinkedLazy
+		**/
 		public function sync(&$insert, &$update = array(), &$delete)
 		{
 			Assert::isTrue($update === array());
@@ -37,6 +41,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return SelectQuery
+		**/
 		public function makeFetchQuery()
 		{
 			$uc = $this->container;

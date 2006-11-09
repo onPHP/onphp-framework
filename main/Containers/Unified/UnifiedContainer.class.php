@@ -97,6 +97,9 @@
 			return $this->parent;
 		}
 		
+		/**
+		 * @return GenericDAO
+		**/
 		public function getDao()
 		{
 			return $this->dao;
@@ -111,7 +114,11 @@
 		{
 			return $this->fetched;
 		}
-
+		
+		/**
+		 * @throws WrongArgumentException
+		 * @return UnifiedContainer
+		**/
 		public function setObjectQuery(ObjectQuery $oq)
 		{
 			Assert::isTrue(
@@ -124,6 +131,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return UnifiedContainer
+		**/
 		public function setList($list)
 		{
 			Assert::isArray($list);
@@ -145,6 +156,10 @@
 			return $this->list;
 		}
 		
+		/**
+		 * @throws WrongStateException
+		 * @return UnifiedContainer
+		**/
 		public function fetch()
 		{
 			if (!$this->parent->getId())
@@ -163,6 +178,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return UnifiedContainer
+		**/
 		public function save()
 		{
 			Assert::isArray(
@@ -248,6 +267,9 @@
 			return $this->importList($list);
 		}
 		
+		/**
+		 * @return UnifiedContainer
+		**/
 		private function importList(/* array */ $list)
 		{
 			if ($this->lazy) {

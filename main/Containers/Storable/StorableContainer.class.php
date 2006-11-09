@@ -33,11 +33,14 @@
 		private $partDAO	= null;
 		private $expires	= null;
 		
+		/**
+		 * @return StorableContainer
+		**/
 		public static function create(
 			PartDAO $partDAO, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			return new StorableContainer($partDAO, $expires);
+			return new self($partDAO, $expires);
 		}
 
 		public function __construct(
@@ -49,12 +52,18 @@
 			
 			$this->loaded = self::LOADED;
 		}
-
+		
+		/**
+		 * @return PartDAO
+		**/
 		public function getPartDAO()
 		{
 			return $this->partDAO;
 		}
 
+		/**
+		 * @return StorableContainer
+		**/
 		public function add(Identifiable $object)
 		{
 			$this->checkLoaded();
@@ -70,6 +79,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongStateException
+		 * @return StorableContainer
+		**/
 		public function update(Identifiable $object)
 		{
 			$this->checkLoaded();
@@ -97,6 +110,10 @@
 			return $this->saved[$id]; 
 		}
 
+		/**
+		 * @throws WrongStateException
+		 * @return StorableContainer
+		**/
 		public function dropById($id)
 		{
 			$this->checkLoaded();
@@ -143,6 +160,10 @@
 		}
 
 		// DAO part
+		
+		/**
+		 * @return StorableContainer
+		**/
 		public function save($parentId)
 		{
 			if ($this->loaded != self::LOADED)
@@ -170,6 +191,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongStateException
+		 * @return StorableContainer
+		**/
 		public function import($parentId)
 		{
 			if ($this->loaded != self::LOADED)
@@ -192,6 +217,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return StorableContainer
+		**/
 		public static function getByParentId(
 			$parentId, PartDAO $childDAO, $expires = Cache::EXPIRES_MEDIUM
 		)
@@ -203,6 +231,9 @@
 			return $container;
 		}
 
+		/**
+		 * @return StorableContainer
+		**/
 		public static function getIdsByParentId(
 			$parentId, PartDAO $childDAO, $expires = Cache::EXPIRES_MEDIUM
 		)
@@ -219,6 +250,10 @@
 			return $childDAO->dropByParentId($parentId);
 		}
 
+		/**
+		 * @throws WrongStateException
+		 * @return StorableContainer
+		**/
 		private function checkLoaded()
 		{
 			if ($this->loaded == self::LOAD_IDS && $this->parentId) {
@@ -247,6 +282,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return StorableContainer
+		**/
 		private function processAdd($parentId)
 		{
 			foreach ($this->new as &$new) {
@@ -259,6 +297,10 @@
 			return $this;
 		}
 
+		/**
+		 * @throws WrongArgumentException
+		 * @return StorableContainer
+		**/
 		private function addSaved(Identifiable $object)
 		{
 			if ($object !== null && $object->getId())

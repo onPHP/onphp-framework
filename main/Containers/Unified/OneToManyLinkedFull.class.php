@@ -15,6 +15,9 @@
 	**/
 	final class OneToManyLinkedFull extends OneToManyLinkedWorker
 	{
+		/**
+		 * @return SelectQuery
+		**/
 		public function makeFetchQuery()
 		{
 			$uc = $this->container;
@@ -26,7 +29,10 @@
 						: $uc->getDao()->makeSelectHead()
 				);
 		}
-
+		
+		/**
+		 * @return OneToManyLinkedFull
+		**/
 		public function sync(&$insert, &$update = array(), &$delete)
 		{
 			$uc = $this->container;

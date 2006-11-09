@@ -18,9 +18,9 @@
 		abstract public function getParentIdField();
 
 		/**
-		 *	We must do it, because we have collision:
-		 *	method getById() defined in interface
-		 *	and in abstract class
+		 * We must do it, because we have collision:
+		 * method getById() defined in interface
+		 * and in abstract class
 		**/
 		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
 		{
@@ -46,7 +46,10 @@
 		{
 			return parent::dropById($childId);
 		}
-
+		
+		/**
+		 * @return DependentDAO
+		**/
 		public function dropByParentId($parentId)
 		{
 			DBPool::getByDao($this)->queryNull(
@@ -64,7 +67,10 @@
 				'insert is not applicable to dependent objects'
 			);
 		}
-
+		
+		/**
+		 * @return DependentDAO
+		**/
 		public function import($parentId, Identifiable $child)
 		{
 			$this->checkType($child);
@@ -83,6 +89,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return DependentDAO
+		**/
 		public function save($parentId, Identifiable $child)
 		{
 			$this->checkType($child);

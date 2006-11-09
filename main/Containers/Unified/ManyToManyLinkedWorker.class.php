@@ -15,6 +15,9 @@
 	**/
 	abstract class ManyToManyLinkedWorker extends UnifiedContainerWorker
 	{
+		/**
+		 * @return InsertQuery
+		**/
 		protected function makeInsertQuery($childId)
 		{
 			$uc = $this->container;
@@ -28,7 +31,11 @@
 				set($uc->getChildIdField(), $childId);
 		}
 		
-		// only unlinking, we don't want to drop original object
+		/**
+		 * only unlinking, we don't want to drop original object
+		 * 
+		 * @return DeleteQuery
+		**/
 		protected function makeDeleteQuery(&$delete)
 		{
 			$uc = $this->container;

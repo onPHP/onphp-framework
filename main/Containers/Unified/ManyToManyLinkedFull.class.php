@@ -15,6 +15,9 @@
 	**/
 	final class ManyToManyLinkedFull extends ManyToManyLinkedWorker
 	{
+		/**
+		 * @return ManyToManyLinkedFull
+		**/
 		public function sync(&$insert, &$update = array(), &$delete)
 		{
 			$dao = $this->container->getDao();
@@ -54,6 +57,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return SelectQuery
+		**/
 		public function makeFetchQuery()
 		{
 			$uc = $this->container;

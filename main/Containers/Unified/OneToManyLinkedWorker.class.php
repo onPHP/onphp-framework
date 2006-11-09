@@ -15,6 +15,9 @@
 	**/
 	abstract class OneToManyLinkedWorker extends UnifiedContainerWorker
 	{
+		/**
+		 * @return SelectQuery
+		**/
 		protected function targetize(SelectQuery $query)
 		{
 			return

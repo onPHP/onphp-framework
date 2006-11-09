@@ -15,6 +15,9 @@
 	**/
 	final class OneToManyLinkedLazy extends OneToManyLinkedWorker
 	{
+		/**
+		 * @return SelectQuery
+		**/
 		public function makeFetchQuery()
 		{
 			$uc = $this->container;
@@ -32,6 +35,10 @@
 				);
 		}
 		
+		/**
+		 * @throws WrongArgumentException 
+		 * @return OneToManyLinkedLazy
+		**/
 		public function sync(&$insert, &$update = array(), &$delete)
 		{
 			Assert::isTrue($update === array());
@@ -67,6 +74,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return UpdateQuery
+		**/
 		private function makeMassUpdateQuery(&$ids)
 		{
 			$uc = $this->container;

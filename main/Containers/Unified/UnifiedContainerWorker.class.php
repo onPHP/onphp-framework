@@ -28,6 +28,9 @@
 			$this->container = $uc;
 		}
 		
+		/**
+		 * @return UnifiedContainerWorker
+		**/
 		public function setObjectQuery(ObjectQuery $oq)
 		{
 			$this->oq = $oq;

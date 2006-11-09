@@ -41,7 +41,10 @@
 				'independent link can not use objects without id'
 			);
 		}
-
+		
+		/**
+		 * @return IndependentLinkDAO
+		**/
 		public function dropByBothId($parentId, $childId)
 		{
 			try {
@@ -69,7 +72,10 @@
 
 			return $this;
 		}
-
+		
+		/**
+		 * @return IndependentLinkDAO
+		**/
 		public function dropByParentId($parentId)
 		{
 			try {
@@ -87,6 +93,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return IndependentLinkDAO
+		**/
 		public function save($parentId, Identifiable $child)
 		{
 			// do not throw anything here - we're too often calling it,
@@ -94,6 +103,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return IndependentLinkDAO
+		**/
 		public function import($parentId, Identifiable $child)
 		{
 			$this->checkType($child);
