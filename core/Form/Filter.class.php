@@ -17,6 +17,9 @@
 	**/
 	final class Filter extends StaticFactory
 	{
+		/**
+		 * @return FilterChain
+		**/
 		public static function textImport()
 		{
 			return 
@@ -25,46 +28,73 @@
 					add(Filter::stripTags());
 		}
 		
+		/**
+		 * @return FilterChain
+		**/
 		public static function chain()
 		{
 			return new FilterChain();
 		}
 		
+		/**
+		 * @return HashFilter
+		**/
 		public static function hash($binary = false)
 		{
 			return HashFilter::create($binary);
 		}
 
+		/**
+		 * @return PCREFilter
+		**/
 		public static function pcre()
 		{
 			return PCREFilter::create();
 		}
 
+		/**
+		 * @return TrimFilter
+		**/
 		public static function trim()
 		{
 			return Singleton::getInstance('TrimFilter');
 		}
 
+		/**
+		 * @return StripTagsFilter
+		**/
 		public static function stripTags()
 		{
 			return StripTagsFilter::create();
 		}
 
+		/**
+		 * @return HtmlSpecialCharsFilter
+		**/
 		public static function htmlSpecialChars()
 		{
 			return Singleton::getInstance('HtmlSpecialCharsFilter');
 		}
 		
+		/**
+		 * @return UrlEncodeFilter
+		**/
 		public static function urlencode()
 		{
 			return Singleton::getInstance('UrlEncodeFilter');
 		}
 		
+		/**
+		 * @return UrlDecodeFilter
+		**/
 		public static function urldecode()
 		{
 			return Singleton::getInstance('UrlDecodeFilter');
 		}
 		
+		/**
+		 * @return StringReplaceFilter
+		**/
 		public static function replaceSymbols($search = null, $replace = null)
 		{
 			return StringReplaceFilter::create($search, $replace);

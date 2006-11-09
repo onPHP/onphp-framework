@@ -18,6 +18,9 @@
 		private $falseValue		= 0;
 		private	$trueValue		= 1;
 		
+		/**
+		 * @return PrimitiveTernary
+		**/
 		public function setTrueValue($trueValue)
 		{
 			$this->trueValue = $trueValue;
@@ -25,6 +28,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return PrimitiveTernary
+		**/
 		public function setFalseValue($falseValue)
 		{
 			$this->falseValue = $falseValue;

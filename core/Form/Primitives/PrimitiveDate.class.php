@@ -23,7 +23,10 @@
 		const MINUTES	= 'min';
 		const SECONDS	= 'sec';
 		
-		// typeHinting commented out due to stupid E_STRICT
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveDate
+		**/
 		public function setValue(/* Timestamp */ $stamp)
 		{
 			Assert::isTrue($stamp instanceof Timestamp);
@@ -33,6 +36,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveDate
+		**/
 		public function setMin(/* Timestamp */ $stamp)
 		{
 			Assert::isTrue($stamp instanceof Timestamp);
@@ -42,6 +49,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveDate
+		**/
 		public function setMax(/* Timestamp */ $stamp)
 		{
 			Assert::isTrue($stamp instanceof Timestamp);
@@ -51,6 +62,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveDate
+		**/
 		public function setDefault(/* Timestamp */ $stamp)
 		{
 			Assert::isTrue($stamp instanceof Timestamp);

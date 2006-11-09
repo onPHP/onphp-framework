@@ -32,6 +32,10 @@
 			/* NOTREACHED */
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveEnumeration
+		**/
 		public function of($className)
 		{
 			Assert::isTrue(

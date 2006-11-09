@@ -92,6 +92,10 @@
 			return $rangeString;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return DateRange
+		**/
 		public static function makeRange($string)
 		{
 			if (
@@ -132,6 +136,10 @@
 			);
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return Timestamp
+		**/
 		private static function toDate($date)
 		{
 			if (strpos($date, '.') !== false) {

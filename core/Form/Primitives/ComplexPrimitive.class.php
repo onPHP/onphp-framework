@@ -25,11 +25,17 @@
 			parent::__construct($name);
 		}
 
+		/**
+		 * @return Ternary
+		**/
 		public function getState()
 		{
 			return $this->single;
 		}
 
+		/**
+		 * @return ComplexPrimitive
+		**/
 		public function setState(Ternary $ternary)
 		{
 			$this->single->setValue($ternary->getValue());
@@ -37,6 +43,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return ComplexPrimitive
+		**/
 		public function setSingle()
 		{
 			$this->single->setTrue();
@@ -44,6 +53,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return ComplexPrimitive
+		**/
 		public function setComplex()
 		{
 			$this->single->setFalse();
@@ -51,6 +63,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return ComplexPrimitive
+		**/
 		public function setAnyState()
 		{
 			$this->single->setNull();

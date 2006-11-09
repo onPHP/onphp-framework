@@ -22,6 +22,9 @@
 			return $this->list;
 		}
 		
+		/**
+		 * @return PrimitiveImage
+		**/
 		public function setList($list)
 		{
 			$this->list = $list;

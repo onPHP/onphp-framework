@@ -23,6 +23,9 @@
 			return $this->min;
 		}
 		
+		/**
+		 * @return RangedPrimitive
+		**/
 		public function setMin($min)
 		{
 			$this->min = $min;
@@ -35,6 +38,9 @@
 			return $this->max;
 		}
 		
+		/**
+		 * @return RangedPrimitive
+		**/
 		public function setMax($max)
 		{
 			$this->max = $max;

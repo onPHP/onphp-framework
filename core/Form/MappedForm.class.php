@@ -20,6 +20,9 @@
 		
 		private $map = array();
 		
+		/**
+		 * @return MappedForm
+		**/
 		public static function create(Form $form)
 		{
 			return new self($form);
@@ -29,12 +32,18 @@
 		{
 			$this->form = $form;
 		}
+		/**
+		 * @return Form
+		**/
 		
 		public function getForm()
 		{
 			return $this->form;
 		}
 		
+		/**
+		 * @return MappedForm
+		**/
 		public function setDefaultType(RequestType $type)
 		{
 			$this->type = $type;
@@ -42,6 +51,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MappedForm
+		**/
 		public function addSource($primitiveName, RequestType $type)
 		{
 			$this->checkExistence($primitiveName);

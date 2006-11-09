@@ -20,6 +20,10 @@
 		protected $rules		= array(); // forever
 		protected $violated		= array(); // rules
 
+		/**
+		 * @throws WrongArgumentException
+		 * @return RegulatedForm
+		**/
 		public function addRule($name, LogicalObject $rule)
 		{
 			Assert::isString($name);
@@ -29,6 +33,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws MissingElementException
+		 * @return RegulatedForm
+		**/
 		public function dropRuleByName($name)
 		{
 			if (isset($this->rules[$name])) {
@@ -41,6 +49,9 @@
 			);
 		}
 		
+		/**
+		 * @return RegulatedForm
+		**/
 		public function checkRules()
 		{
 			foreach ($this->rules as $name => &$logicalObject) {

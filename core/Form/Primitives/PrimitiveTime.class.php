@@ -19,6 +19,10 @@
 		const MINUTES	= PrimitiveDate::MINUTES;
 		const SECONDS	= PrimitiveDate::SECONDS;
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveTime
+		**/
 		public function setValue(/* Time */ $time)
 		{
 			Assert::isTrue($time instanceof Time);
@@ -28,6 +32,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveTime
+		**/
 		public function setMin(/* Time */ $time)
 		{
 			Assert::isTrue($time instanceof Time);
@@ -37,6 +45,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveTime
+		**/
 		public function setMax(/* Time */ $time)
 		{
 			Assert::isTrue($time instanceof Time);
@@ -46,6 +58,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveTime
+		**/
 		public function setDefault(/* Time */ $time)
 		{
 			Assert::isTrue($time instanceof Time);

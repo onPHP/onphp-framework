@@ -32,6 +32,10 @@
 			return $this->mimeType;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveFile
+		**/
 		public function setAllowedMimeTypes($mimes)
 		{
 			Assert::isArray($mimes);
@@ -41,6 +45,10 @@
 			return $this;
 		}
 
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveFile
+		**/
 		public function addAllowedMimeType($mime)
 		{
 			Assert::isString($mime);

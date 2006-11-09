@@ -19,17 +19,26 @@
 	{
 		protected $chain = array();
 
+		/**
+		 * @return FilterChain
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return FilterChain
+		**/
 		public function add(Filtrator $filter)
 		{
 			$this->chain[] = $filter;
 			return $this;
 		}
 
+		/**
+		 * @return FilterChain
+		**/
 		public function dropAll()
 		{
 			$this->chain = array();

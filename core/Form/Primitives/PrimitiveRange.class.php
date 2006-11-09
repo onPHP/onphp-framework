@@ -18,7 +18,10 @@
 		const MIN	= 'min';
 		const MAX	= 'max';
 
-		// to be E_STRICT compatible
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveRange
+		**/
 		public function setValue(/* Range */ $range)
 		{
 			Assert::isTrue(

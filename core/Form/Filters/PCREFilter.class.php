@@ -18,11 +18,17 @@
 		private $search 	= null;
 		private $replace	= null;
 		
+		/**
+		 * @return PCREFilter
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return PCREFilter
+		**/
 		public function setExpression($search, $replace)
 		{
 			$this->search = $search;

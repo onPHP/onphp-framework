@@ -15,6 +15,10 @@
 	**/
 	final class PrimitiveIdentifier extends IdentifiablePrimitive
 	{
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveIdentifier
+		**/
 		public function of($className)
 		{
 			Assert::isTrue(

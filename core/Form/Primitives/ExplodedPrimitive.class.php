@@ -17,6 +17,9 @@
 	{
 		protected $separator = ' ';
 		
+		/**
+		 * @return ExplodedPrimitive
+		**/
 		public function setSeparator($separator)
 		{
 			$this->separator = $separator;

@@ -43,6 +43,9 @@
 			return $this->type;
 		}
 
+		/**
+		 * @return PrimitiveImage
+		**/
 		public function setMaxWidth($max)
 		{
 			$this->maxWidth = $max;
@@ -50,6 +53,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return PrimitiveImage
+		**/
 		public function setMinWidth($min)
 		{
 			$this->minWidth = $min;
@@ -57,6 +63,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return PrimitiveImage
+		**/
 		public function setMaxHeight($max)
 		{
 			$this->maxHeight = $max;
@@ -64,6 +73,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return PrimitiveImage
+		**/
 		public function setMinHeight($min)
 		{
 			$this->minHeight = $min;

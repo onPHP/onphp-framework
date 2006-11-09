@@ -25,6 +25,9 @@
 		private $errors		= array();
 		private $labels		= array();
 		
+		/**
+		 * @return Form
+		**/
 		public static function create()
 		{
 			return new self;
@@ -35,6 +38,9 @@
 			return $this->errors + $this->violated;
 		}
 
+		/**
+		 * @return Form
+		**/
 		public function dropAllErrors()
 		{
 			$this->errors	= array();
@@ -47,12 +53,19 @@
 		 * primitive marking
 		**/
 		
+		/**
+		 * @return Form
+		**/
 		public function markMissing($primitiveName)
 		{
 			return $this->markCustom($primitiveName, Form::MISSING);
 		}
 		
-		// rule or primitive
+		/**
+		 * rule or primitive
+		 * 
+		 * @return Form
+		**/
 		public function markWrong($name)
 		{
 			if (
@@ -64,6 +77,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return Form
+		**/
 		public function markGood($primitiveName)
 		{
 			$prm = $this->get($primitiveName);
@@ -75,6 +91,8 @@
 
 		/**
 		 * Set's custom error mark for primitive.
+		 * 
+		 * @return Form
 		**/
 		public function markCustom($primitiveName, $customMark)
 		{
@@ -120,21 +138,33 @@
 				return null;
 		}
 		
+		/**
+		 * @return Form
+		**/
 		public function addWrongLabel($primitiveName, $label)
 		{
 			return $this->addErrorLabel($primitiveName, Form::WRONG, $label);
 		}
 		
+		/**
+		 * @return Form
+		**/
 		public function addMissingLabel($primitiveName, $label)
 		{
 			return $this->addErrorLabel($primitiveName, Form::MISSING, $label);
 		}
 
+		/**
+		 * @return Form
+		**/
 		public function addCustomLabel($primitiveName, $customMark, $label)
 		{
 			return $this->addErrorLabel($primitiveName, $customMark, $label);
 		}
 		
+		/**
+		 * @return Form
+		**/
 		public function import($scope)
 		{
 			foreach ($this->primitives as $prm)
@@ -143,6 +173,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Form
+		**/
 		public function importMore($scope)
 		{
 			foreach ($this->primitives as $prm) {
@@ -156,11 +189,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Form
+		**/
 		public function importOne($primitiveName, $scope)
 		{
 			return $this->importPrimitive($scope, $this->get($primitiveName));
 		}
 		
+		/**
+		 * @return Form
+		**/
 		public function importValue($primitiveName, $value)
 		{
 			$prm = $this->get($primitiveName);
@@ -168,6 +207,9 @@
 			return $this->checkImportResult($prm, $prm->importValue($value));
 		}
 		
+		/**
+		 * @return Form
+		**/
 		public function importOneMore($primitiveName, $scope)
 		{
 			$prm = $this->get($primitiveName);
@@ -191,11 +233,17 @@
 				return $value;
 		}
 		
+		/**
+		 * @return Form
+		**/
 		private function importPrimitive($scope, BasePrimitive $prm)
 		{
 			return $this->checkImportResult($prm, $prm->import($scope));
 		}
 		
+		/**
+		 * @return Form
+		**/
 		private function checkImportResult(BasePrimitive $prm, $result)
 		{
 			$name = $prm->getName();
@@ -218,7 +266,7 @@
 		 * @param	$name		string	primitive or rule name
 		 * @param	$errorType	enum	Form::(WRONG|MISSING)
 		 * @param	$label		string	YDFB WTF is this :-) (c) /.
-		 * @return	$this		Form	itself
+		 * @return	Form
 		**/
 		private function addErrorLabel($name, $errorType, $label)
 		{

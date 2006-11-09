@@ -17,7 +17,11 @@
 	{
 		private $pattern = null;
 		
-		// mail hint: /^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/
+		/**
+		 * mail hint: /^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/
+		 * 
+		 * @return PrimitiveString
+		**/
 		public function setAllowedPattern($pattern)
 		{
 			$this->pattern = $pattern;

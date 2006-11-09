@@ -20,6 +20,9 @@
 		
 		private $count		= null;
 		
+		/**
+		 * @return StringReplaceFilter
+		**/
 		public static function create($search = null, $replace = null)
 		{
 			return new self($search, $replace);
@@ -31,6 +34,9 @@
 			$this->replace = $replace;
 		}
 		
+		/**
+		 * @return StringReplaceFilter
+		**/
 		public function setSearch($search)
 		{
 			$this->search = $search;
@@ -43,6 +49,9 @@
 			return $this->search;
 		}
 		
+		/**
+		 * @return StringReplaceFilter
+		**/
 		public function setReplace($replace)
 		{
 			$this->replace = $replace;

@@ -24,6 +24,9 @@
 			$this->binary = ($binary === true);
 		}
 		
+		/**
+		 * @return HashFilter
+		**/
 		public static function create($binary = false)
 		{
 			return new self($binary);

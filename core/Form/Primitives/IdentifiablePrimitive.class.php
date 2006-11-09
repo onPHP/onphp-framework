@@ -19,6 +19,10 @@
 		
 		abstract public function of($className);
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return IdentifiablePrimitive
+		**/
 		public function setValue($value)
 		{
 			$className = $this->className;

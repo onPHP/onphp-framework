@@ -20,6 +20,10 @@
 		protected $aliases		= array();
 		protected $primitives	= array();
 		
+		/**
+		 * @throws MissingElementException
+		 * @return PlainForm
+		**/
 		public function addAlias($primitiveName, $alias)
 		{
 			if (!isset($this->primitives[$primitiveName]))
@@ -41,14 +45,18 @@
 				);
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PlainForm
+		**/
 		public function add(BasePrimitive $prm, $alias = null)
 		{
 			$name = $prm->getName();
 			
-			if (isset($this->primitives[$name]))
-				throw new WrongArgumentException(
+			Assert::isTrue(
+				isset($this->primitives[$name]),
 					"i'm already exists!"
-				);
+			);
 
 			$this->primitives[$name] = $prm;
 			
@@ -58,6 +66,10 @@
 			return $this;
 		}
 		
+		/**
+		 * @throws MissingElementException
+		 * @return PlainForm
+		**/
 		public function drop($name)
 		{
 			if (!isset($this->primitives[$name]))
@@ -70,6 +82,10 @@
 			return $this;
 		}
 
+		/**
+		 * @throws MissingElementException
+		 * @return BasePrimitive
+		**/
 		public function &get($name)
 		{
 			if (isset($this->aliases[$name], $this->primitives[$this->aliases[$name]]))

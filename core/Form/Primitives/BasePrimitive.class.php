@@ -35,6 +35,9 @@
 			return $this->name;
 		}
 		
+		/**
+		 * @return BasePrimitive
+		**/
 		public function setName($name)
 		{
 			$this->name = $name;
@@ -47,6 +50,9 @@
 			return $this->default;
 		}
 		
+		/**
+		 * @return BasePrimitive
+		**/
 		public function setDefault($default)
 		{
 			$this->default = $default;
@@ -74,6 +80,9 @@
 			return $this->default;
 		}
 		
+		/**
+		 * @return BasePrimitive
+		**/
 		public function setValue($value)
 		{
 			$this->value = $value;
@@ -81,6 +90,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return BasePrimitive
+		**/
 		public function setRawValue($raw)
 		{
 			$this->raw = $raw;
@@ -93,6 +105,9 @@
 			return $this->required;
 		}
 		
+		/**
+		 * @return BasePrimitive
+		**/
 		public function setRequired($really = false)
 		{
 			$this->required = (true === $really ? true : false);
@@ -100,6 +115,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return BasePrimitive
+		**/
 		public function required()
 		{
 			$this->required = true;
@@ -107,6 +125,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return BasePrimitive
+		**/
 		public function optional()
 		{
 			$this->required = false;

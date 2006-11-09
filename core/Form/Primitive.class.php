@@ -17,86 +17,137 @@
 	**/
 	final class Primitive extends StaticFactory
 	{
+		/**
+		 * @return BasePrimitive
+		**/
 		public static function spawn($primitive, $name)
 		{
 			return new $primitive($name);
 		}
 		
+		/**
+		 * @return PrimitiveInteger
+		**/
 		public static function integer($name)
 		{
 			return new PrimitiveInteger($name);
 		}
 		
+		/**
+		 * @return PrimitiveFloat
+		**/
 		public static function float($name)
 		{
 			return new PrimitiveFloat($name);
 		}
 
+		/**
+		 * @return PrimitiveIdentifier
+		**/
 		public static function identifier($name)
 		{
 			return new PrimitiveIdentifier($name);
 		}
 
+		/**
+		 * @return PrimitiveEnumeration
+		**/
 		public static function enumeration($name)
 		{
 			return new PrimitiveEnumeration($name);
 		}
 		
+		/**
+		 * @return PrimitiveDate
+		**/
 		public static function date($name)
 		{
 			return new PrimitiveDate($name);
 		}
 		
+		/**
+		 * @return PrimitiveTime
+		**/
 		public static function time($name)
 		{
 			return new PrimitiveTime($name);
 		}
 		
+		/**
+		 * @return PrimitiveString
+		**/
 		public static function string($name)
 		{
 			return new PrimitiveString($name);
 		}
 		
+		/**
+		 * @return PrimitiveRange
+		**/
 		public static function range($name)
 		{
 			return new PrimitiveRange($name);
 		}
 		
+		/**
+		 * @return PrimitiveList
+		**/
 		public static function choice($name)
 		{
 			return new PrimitiveList($name);
 		}
 		
+		/**
+		 * @return PrimitiveArray
+		**/
 		public static function set($name)
 		{
 			return new PrimitiveArray($name);
 		}
 
+		/**
+		 * @return PrimitiveMultiList
+		**/
 		public static function multiChoice($name)
 		{
 			return new PrimitiveMultiList($name);
 		}
 		
+		/**
+		 * @return PrimitiveBoolean
+		**/
 		public static function boolean($name)
 		{
 			return new PrimitiveBoolean($name);
 		}
 		
+		/**
+		 * @return PrimitiveTernary
+		**/
 		public static function ternary($name)
 		{
 			return new PrimitiveTernary($name);
 		}
 		
+		/**
+		 * @return PrimitiveFile
+		**/
 		public static function file($name)
 		{
 			return new PrimitiveFile($name);
 		}
 		
+		/**
+		 * @return PrimitiveImage
+		**/
 		public static function image($name)
 		{
 			return new PrimitiveImage($name);
 		}
 		
+		/**
+		 * @return ExplodedPrimitive
+		**/
 		public static function exploded($name)
 		{
 			return new ExplodedPrimitive($name);
