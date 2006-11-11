@@ -1,5 +1,9 @@
 # $Id$
 
+2006-11-12	Konstantin V. Arkhipov
+
+	* 0.8.2 released.
+
 2006-11-11	Konstantin V. Arkhipov
 
 	* doc/project.skel/: synced with current onPHP's state.
