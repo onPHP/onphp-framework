@@ -62,7 +62,7 @@
 		{
 			Assert::isTrue(
 				($view instanceof View)	|| is_string($view),
-				"what should i do with '{$view}'?"
+				'do not know, what to do with such view'
 			);
 			
 			$this->view = $view;
