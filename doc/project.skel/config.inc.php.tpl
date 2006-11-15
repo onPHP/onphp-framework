@@ -7,17 +7,26 @@
 	error_reporting(E_ALL | E_STRICT);
 	setlocale(LC_CTYPE, "ru_RU.UTF8");
 	setlocale(LC_TIME, "ru_RU.UTF8");
+	
+	if (!defined('PATH_SOURCE_DIR'))
+		// defaults to user mode
+		define('PATH_SOURCE_DIR', 'user'.DIRECTORY_SEPARATOR);
 
 	// paths
-	define('PATH_BASE', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
-	define('PATH_WEB', 'http://path/to/src/www/');
+	define('PATH_BASE', dirname(__FILE__).DIRECTORY_SEPARATOR);
+	define('PATH_SOURCE', PATH_BASE.'src'.DIRECTORY_SEPARATOR.PATH_SOURCE_DIR);
+	define('PATH_WEB', 'http://path/to/src/user/htdocs/');
+	define('PATH_WEB_ADMIN', 'http://path/to/src/admin/htdocs/');
 	define('PATH_WEB_PIX', '/pix/'); // dynamic stuff
 	define('PATH_WEB_IMG', '/img/'); // static stuff
-	define('PATH_WEB_ADMIN', 'http://path/to/src/admin/');
 	
-	define('PATH_CLASSES', PATH_BASE.'classes'.DIRECTORY_SEPARATOR);
-	define('PATH_CONTROLLERS', PATH_BASE.'controllers'.DIRECTORY_SEPARATOR);
-	define('PATH_TEMPLATES', PATH_BASE.'templates'.DIRECTORY_SEPARATOR);
+	// shared classes
+	define(
+		'PATH_CLASSES',
+		PATH_BASE.'src'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR
+	);
+	define('PATH_CONTROLLERS', PATH_SOURCE.'controllers'.DIRECTORY_SEPARATOR);
+	define('PATH_TEMPLATES', PATH_SOURCE.'templates'.DIRECTORY_SEPARATOR);
 
 	// onPHP init
 	require realpath('/path/to/onPHP/global.inc.php.tpl');
@@ -33,10 +42,11 @@
 	define('DEFAULT_ENCODING', 'UTF8');
 	mb_internal_encoding(DEFAULT_ENCODING);
 	mb_regex_encoding(DEFAULT_ENCODING);
-
+	
 	ini_set(
 		'include_path', get_include_path().PATH_SEPARATOR
 		.PATH_CLASSES.PATH_SEPARATOR
+		.PATH_CONTROLLERS.PATH_SEPARATOR
 		.PATH_CLASSES.'DAOs'.PATH_SEPARATOR
 		.PATH_CLASSES.'Flow'.PATH_SEPARATOR
 		.PATH_CLASSES.'Business'.PATH_SEPARATOR

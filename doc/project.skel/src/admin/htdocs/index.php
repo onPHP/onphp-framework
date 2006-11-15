@@ -3,7 +3,9 @@
 	 * $Id$
 	**/
 	
-	require '../config.inc.php';
+	define('PATH_SOURCE_DIR', 'admin'.DIRECTORY_SEPARATOR);
+	
+	require '../../../config.inc.php';
 	
 	try {
 		$request =
@@ -16,21 +18,10 @@
 			setFiles($_FILES);
 
 		$controllerName = 'main';
-		
-		set_include_path(
-			get_include_path()
-			.PATH_SEPARATOR
-			.PATH_CONTROLLERS.'admin'.DIRECTORY_SEPARATOR
-		);
 	
 		if (
 			isset($_GET['area'])
-			&&
-				is_readable(
-					PATH_CONTROLLERS
-					.'admin'.DIRECTORY_SEPARATOR
-					.$_GET['area'].EXT_CLASS
-				)
+			&& is_readable(PATH_CONTROLLERS.$_GET['area'].EXT_CLASS)
 		) {
 			$controllerName = $_GET['area'];
 		}
@@ -54,10 +45,7 @@
 		if (!$view instanceof View) {
 			$viewName = $view;
 			$view =
-				PhpViewResolver::create(
-					PATH_TEMPLATES.'admin'.DIRECTORY_SEPARATOR,
-					EXT_TPL
-				)->
+				PhpViewResolver::create(PATH_TEMPLATES, EXT_TPL)->
 				resolveViewName($viewName);
 		}
 		

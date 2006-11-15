@@ -1,5 +1,9 @@
 # $Id$
 
+2006-11-15	Konstantin V. Arkhipov
+
+	* doc/project.skel/: moved to new layout, invented by Antony.
+
 2006-11-10	Konstantin V. Arkhipov
 
 	* meta/: return type-hints are now generated for every class.

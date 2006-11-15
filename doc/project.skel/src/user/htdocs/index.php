@@ -3,7 +3,7 @@
 	 * $Id$
 	**/
 	
-	require '../config.inc.php';
+	require '../../../config.inc.php';
 	
 	try {
 		$request =
@@ -17,12 +17,6 @@
 			setFiles($_FILES);
 
 		$controllerName = 'main';
-	
-		set_include_path(
-			get_include_path()
-			.PATH_SEPARATOR
-			.PATH_CONTROLLERS
-		);
 		
 		if (
 			isset($_GET['area'])
