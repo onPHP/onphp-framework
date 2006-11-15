@@ -53,9 +53,9 @@
 		{
 			$name = $prm->getName();
 			
-			Assert::isTrue(
+			Assert::isFalse(
 				isset($this->primitives[$name]),
-					"i'm already exists!"
+				'i am already exists!'
 			);
 
 			$this->primitives[$name] = $prm;
