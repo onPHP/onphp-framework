@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	abstract class SQLBaseJoin implements SQLTableName, DialectString
+	abstract class SQLBaseJoin implements SQLTableName
 	{
 		protected $subject	= null;
 		protected $alias	= null;
