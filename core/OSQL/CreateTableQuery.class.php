@@ -39,8 +39,8 @@
 				
 				if ($column->isAutoincrement()) {
 					
-					if ($dialect->preAutoincrement($column))
-						$prepend[] = $dialect->preAutoincrement($column);
+					if ($pre = $dialect->preAutoincrement($column))
+						$prepend[] = $pre;
 					
 					$columns[] = implode(' ',
 						array(
@@ -60,7 +60,12 @@
 					$primary[] = $dialect->quoteField($name);
 			}
 			
-			$out = ($prepend ? implode("\n", $prepend)."\n" : '')
+			$out =
+				(
+					$prepend
+						? implode("\n", $prepend)."\n"
+						: null
+				)
 				.$middle
 				.implode(",\n    ", $columns);
 			
