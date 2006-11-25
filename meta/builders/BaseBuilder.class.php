@@ -136,6 +136,8 @@ EOT;
 		
 		protected static function buildPointers(MetaClass $class)
 		{
+			$out = null;
+			
 			if ($source = $class->getSourceLink()) {
 				$out = <<<EOT
 public function getLinkName()
@@ -145,10 +147,10 @@ public function getLinkName()
 
 
 EOT;
-			} else
-				$out = null;
-			
-			return $out.<<<EOT
+			}
+				
+			if (!$class->getPattern() instanceof AbstractClassPattern) {
+				$out .= <<<EOT
 public function getTable()
 {
 	return '{$class->getDumbName()}';
@@ -164,6 +166,9 @@ public function getSequence()
 	return '{$class->getDumbName()}_id';
 }
 EOT;
+			}
+			
+			return $out;
 		}
 		
 		protected static function buildMapping(MetaClass $class)

@@ -17,7 +17,10 @@
 	{
 		public static function build(MetaClass $class)
 		{
-			if (!count($class->getProperties()))
+			if (
+				!count($class->getProperties())
+				|| $class->getPattern() instanceof AbstractClassPattern
+			)
 				return null;
 			
 			$out = <<<EOT
@@ -53,6 +56,9 @@ EOT;
 		// TODO: implement ManyTo{One,Many} relations
 		public static function buildRelations(MetaClass $class)
 		{
+			if ($class->getPattern() instanceof AbstractClassPattern)
+				return null;
+			
 			$out = null;
 			
 			foreach ($class->getAllProperties() as $property) {

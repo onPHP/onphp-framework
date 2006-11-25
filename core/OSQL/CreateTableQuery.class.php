@@ -38,8 +38,9 @@
 			foreach ($order as $column) {
 				
 				if ($column->isAutoincrement()) {
-
-					$prepend[] = $dialect->preAutoincrement($column);
+					
+					if ($pre = $dialect->preAutoincrement($column))
+						$prepend[] = $pre;
 					
 					$columns[] = implode(' ',
 						array(
@@ -59,7 +60,12 @@
 					$primary[] = $dialect->quoteField($name);
 			}
 			
-			$out = implode(' ', $prepend)
+			$out =
+				(
+					$prepend
+						? implode("\n", $prepend)."\n"
+						: null
+				)
 				.$middle
 				.implode(",\n    ", $columns);
 			
