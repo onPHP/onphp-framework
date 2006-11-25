@@ -100,7 +100,7 @@
 			
 			return
 				'CREATE SEQUENCE "'
-				.$this->makeSequenceName($column).'";';
+				.$this->makeSequenceName($column).'";'."\n";
 		}
 		
 		public function postAutoincrement(DBColumn $column)
