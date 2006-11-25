@@ -211,12 +211,10 @@
 			$schema = SchemaBuilder::getHead();
 			
 			foreach ($this->classes as $name => $class) {
-				if (!$class->getPattern() instanceof AbstractClassPattern)
 				$schema .= SchemaBuilder::build($class);
 			}
 			
 			foreach ($this->classes as $name => $class) {
-				if (!$class->getPattern() instanceof AbstractClassPattern)
 				$schema .= SchemaBuilder::buildRelations($class);
 			}
 			
