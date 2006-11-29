@@ -114,20 +114,20 @@
 		}
 
 		abstract protected function store(
-			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
+			$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
 		);
 		
-		public function set($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
+		public function set($key, $value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->store('set', $key, $value, $expires);
 		} 
 		
-		public function add($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
+		public function add($key, $value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->store('add', $key, $value, $expires);
 		} 
 		
-		public function replace($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
+		public function replace($key, $value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->store('replace', $key, $value, $expires);
 		}
@@ -149,7 +149,7 @@
 			return $this;
 		}
 
-		protected function prepareData(&$value)
+		protected function prepareData($value)
 		{
 			if ($this->compress)
 				return gzcompress(serialize($value));
@@ -157,7 +157,7 @@
 				return serialize($value);
 		}
 		
-		protected function restoreData(&$value)
+		protected function restoreData($value)
 		{
 			if ($this->compress)
 				return unserialize(gzuncompress($value));

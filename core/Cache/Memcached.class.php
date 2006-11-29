@@ -170,7 +170,7 @@
 		}
 
 		protected function store(
-			$method, $index, &$value, $expires = Cache::EXPIRES_MINIMUM
+			$method, $index, $value, $expires = Cache::EXPIRES_MINIMUM
 		)
 		{
 			if ($expires === Cache::DO_NOT_CACHE)
