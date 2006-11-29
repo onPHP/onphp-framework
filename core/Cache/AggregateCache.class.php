@@ -86,7 +86,7 @@
 		{
 			$this->alive = false;
 			
-			foreach ($this->peers as $label => &$peer)
+			foreach ($this->peers as $label => $peer)
 				if ($peer['object']->isAlive())
 					$this->alive = true; 
 				else
@@ -111,7 +111,7 @@
 			return null;			
 		}
 		
-		public function add($key, &$value, $expires = Cache::EXPIRES_MINIMUM)
+		public function add($key, $value, $expires = Cache::EXPIRES_MINIMUM)
 		{
 			$label = $this->guessLabel($key);
 			
@@ -128,7 +128,7 @@
 			return false;			
 		}
 
-		public function replace($key, &$value, $expires = Cache::EXPIRES_MINIMUM)
+		public function replace($key, $value, $expires = Cache::EXPIRES_MINIMUM)
 		{
 			$label = $this->guessLabel($key);
 			
@@ -145,7 +145,7 @@
 			return false;			
 		}
 
-		public function set($key, &$value, $expires = Cache::EXPIRES_MINIMUM)
+		public function set($key, $value, $expires = Cache::EXPIRES_MINIMUM)
 		{
 			$label = $this->guessLabel($key);
 			
@@ -181,7 +181,7 @@
 		**/
 		public function clean()
 		{
-			foreach ($this->peers as &$peer)
+			foreach ($this->peers as $peer)
 				$peer['object']->clean();
 
 			$this->checkAlive();
@@ -193,14 +193,14 @@
 		{
 			$stats = array();
 
-			foreach ($this->peers as $level => &$peer)
+			foreach ($this->peers as $level => $peer)
 				$stats[$level] = $peer['stat'];
 
 			return $stats;
 		}
 
 		protected function store(
-			$action, $key, &$value, $expires = Cache::EXPIRES_MINIMUM
+			$action, $key, $value, $expires = Cache::EXPIRES_MINIMUM
 		)
 		{
 			throw new UnsupportedMethodException();

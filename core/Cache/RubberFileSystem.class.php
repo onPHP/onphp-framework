@@ -91,7 +91,7 @@
 			return true;
 		}
 		
-		protected function store($action, $key, &$value, $expires = 0)
+		protected function store($action, $key, $value, $expires = 0)
 		{
 			$path = $this->makePath($key);
 			$time = time();

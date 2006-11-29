@@ -106,7 +106,7 @@
 		}
 		
 		protected function store(
-			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
+			$action, $key, $alue, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
 			try {
