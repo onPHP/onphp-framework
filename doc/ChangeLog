@@ -1,5 +1,9 @@
 # $Id$
 
+2006-11-29	Konstantin V. Arkhipov
+
+	* core/Cache/: no more pass-by-reference.
+
 2006-11-12	Konstantin V. Arkhipov
 
 	* 0.8.2 released.
