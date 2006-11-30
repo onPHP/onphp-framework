@@ -1,9 +1,5 @@
 # $Id$
 
-2006-11-29	Konstantin V. Arkhipov	<voxus@shadanakar.org>
-
-	* core/Cache/: no more pass-by-reference.
-
 2006-10-25	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/DB/MySQL.class.php: always force new link creation for
