@@ -35,6 +35,18 @@
 				);
 		}
 		
+		// @{ prevent's serialization of names' array
+		public function __sleep()
+		{
+			return array('id');
+		}
+		
+		public function __wakeup()
+		{
+			$this->name = $this->names[$this->id];
+		}
+		/// @}
+		
 		public static function getList(Enumeration $enum)
 		{
 			return $enum->getObjectList();

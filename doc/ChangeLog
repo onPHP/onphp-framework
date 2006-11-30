@@ -1,5 +1,10 @@
 # $Id$
 
+2006-11-30	Konstantin V. Arkhipov
+
+	* core/Base/Enumeration.class.php: only 'id' and 'name' are stored
+	upon serialization by default.
+
 2006-11-15	Konstantin V. Arkhipov
 
 	* doc/project.skel/: moved to new layout, invented by Antony.
