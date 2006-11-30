@@ -1,9 +1,5 @@
 # $Id$
 
-2006-11-29	Konstantin V. Arkhipov
-
-	* core/Cache/: no more pass-by-reference.
-
 2006-11-06	Konstantin V. Arkhipov
 
 	* main/Mail/MimePart.class.php: strange typo in quoted encoding fixed.
