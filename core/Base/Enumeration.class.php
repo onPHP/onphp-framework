@@ -18,24 +18,17 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
-	abstract class Enumeration extends NamedObject
+	abstract class Enumeration extends NamedObject implements Serializable
 	{
 		protected $names = array(/* override me */);
 		
 		public function __construct($id)
 		{
-			$names = $this->getNameList();
-
-			if (isset($names[$id])) {
-				$this->id = $id;
-				$this->name = $names[$id];
-			} else
-				throw new MissingElementException(
-					"knows nothing about such id == {$id}"
-				);
+			$this->changeId($id);
 		}
 		
-		// @{ prevent's serialization of names' array
+		/// @{ prevent's serialization of names' array
+		// TODO: sync with module's Enumeration
 		public function __sleep()
 		{
 			return array('id');
@@ -43,7 +36,17 @@
 		
 		public function __wakeup()
 		{
-			$this->name = $this->names[$this->id];
+			$this->changeId($this->id);
+		}
+		
+		public function serialize()
+		{
+			return (string) $this->id;
+		}
+		
+		public function unserialize($serialized)
+		{
+			$this->changeId($serialized);
 		}
 		/// @}
 		
@@ -80,6 +83,21 @@
 		public function getNameList()
 		{
 			return $this->names;
+		}
+		
+		protected function changeId($id)
+		{
+			$names = $this->getNameList();
+
+			if (isset($names[$id])) {
+				$this->id = $id;
+				$this->name = $names[$id];
+			} else
+				throw new MissingElementException(
+					"knows nothing about such id == {$id}"
+				);
+			
+			return $this;
 		}
 	}
 ?>
