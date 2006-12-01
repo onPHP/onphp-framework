@@ -1,5 +1,9 @@
 # $Id$
 
+2006-12-01	Konstantin V. Arkhipov
+
+	* main/SPL/bundled/: Serializable interface added.
+
 2006-11-30	Konstantin V. Arkhipov
 
 	* core/Base/Enumeration.class.php: only 'id' and 'name' are stored
