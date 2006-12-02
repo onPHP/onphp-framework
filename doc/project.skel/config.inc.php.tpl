@@ -29,7 +29,7 @@
 	define('PATH_TEMPLATES', PATH_SOURCE.'templates'.DIRECTORY_SEPARATOR);
 
 	// onPHP init
-	require realpath('/path/to/onPHP/global.inc.php.tpl');
+	require '/path/to/onPHP/global.inc.php.tpl';
 	
 	// default db settings
 	define('DB_BASE', 'baseName');
