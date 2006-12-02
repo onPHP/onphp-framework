@@ -221,7 +221,7 @@
 		protected function import($string)
 		{
 			list($this->year, $this->month, $this->day) =
-				explode('-', $date, 3);
+				explode('-', $string, 3);
 			
 			$this->normalizeSelf();
 		}
