@@ -2,6 +2,8 @@
 
 2006-12-02	Konstantin V. Arkhipov
 
+	* core/Base/Date.class.php: extracted from Timestamp.
+
 	* meta/types/DateType.class.php: Timestamp-based pseudo Date type.
 
 2006-12-01	Konstantin V. Arkhipov

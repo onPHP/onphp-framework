@@ -12,29 +12,14 @@
 /* $Id$ */
 
 	/**
-	 * Date's container and utilities.
+	 * Date and time container and utilities.
 	 *
-	 * @see DateRange
+	 * @see Date
 	 * 
 	 * @ingroup Base
 	**/
-	class Timestamp implements Stringable
+	class Timestamp extends Date
 	{
-		const WEEKDAY_MONDAY 	= 1;
-		const WEEKDAY_TUESDAY	= 2;
-		const WEEKDAY_WEDNESDAY	= 3;
-		const WEEKDAY_THURSDAY	= 4;
-		const WEEKDAY_FRIDAY	= 5;
-		const WEEKDAY_SATURDAY	= 6;
-		const WEEKDAY_SUNDAY	= 0; // because strftime('%w') is 0 on Sunday
-		
-		private $string		= null;
-		private $int		= null;
-		
-		private $year		= null;
-		private $month		= null;
-		private $day		= null;
-		
 		private $hour		= null;
 		private $minute		= null;
 		private $second		= null;
@@ -47,7 +32,7 @@
 			return new self($timestamp);
 		}
 		
-		public static function compare(Timestamp $left, Timestamp $right)
+		public static function compare(Date $left, Date $right)
 		{
 			if ($left->int == $right->int)
 				return 0;
@@ -57,7 +42,7 @@
 		
 		public static function now()
 		{
-			return date('Y-m-d H:i:s');
+			return date($this->getFormat());
 		}
 		
 		/**
@@ -68,11 +53,6 @@
 			return new self(time());
 		}
 		
-		public static function today($delimiter = '-')
-		{
-			return date("Y{$delimiter}m{$delimiter}d");
-		}
-		
 		/**
 		 * @return Timestamp
 		**/
@@ -81,26 +61,11 @@
 			return new self(self::today());
 		}
 		
-		public static function dayDifference(Timestamp $left, Timestamp $right)
-		{
-			return 
-				gregoriantojd(
-					$right->getMonth(),
-					$right->getDay(),
-					$right->getYear()
-				)
-				- gregoriantojd(
-					$left->getMonth(), 
-					$left->getDay(), 
-					$left->getYear()
-				);
-		}
-		
 		public function __construct($timestamp)
 		{
 			if (is_int($timestamp)) { // unix timestamp
 				$this->int = $timestamp;
-				$this->string = date('Y-m-d H:i:s', $timestamp);
+				$this->string = date($this->getFormat(), $timestamp);
 			} elseif (is_string($timestamp)) { 
 				$this->int = strtotime($timestamp);
 				
@@ -114,7 +79,7 @@
 				} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $timestamp))
 					$this->string = $timestamp . ' 00:00:00';
 				else
-					$this->string = date('Y-m-d H:i:s', $this->int);
+					$this->string = date($this->getFormat(), $this->int);
 			} else {
 				throw new WrongArgumentException(
 					"strange timestamp given - '{$timestamp}'"
@@ -122,21 +87,6 @@
 			}
 			
 			$this->import($this->string);
-		}
-		
-		public function toStamp()
-		{
-			return $this->int;
-		}
-		
-		public function toDate($delimiter = '-')
-		{
-			return
-				$this->year
-				.$delimiter
-				.$this->month
-				.$delimiter
-				.$this->day;
 		}
 		
 		public function toTime($timeDelimiter = ':', $secondDelimiter = '.')
@@ -160,26 +110,6 @@
 				.$this->toTime($timeDelimiter, $secondDelimiter);
 		}
 
-		public function getYear()
-		{
-			return $this->year;
-		}
-
-		public function getMonth()
-		{
-			return $this->month;
-		}
-
-		public function getDay()
-		{
-			return $this->day;
-		}
-
-		public function getWeekDay()
-		{
-			return strftime('%w', $this->int);
-		}
-		
 		public function getHour()
 		{
 			return $this->hour;
@@ -190,43 +120,9 @@
 			return $this->minute;
 		}
 		
-		/**
-		 * @return Timestamp
-		**/
-		public function spawn($modification = null)
+		public function getSecond()
 		{
-			$child = new Timestamp($this->string);
-			
-			if ($modification)
-				return $child->modify($modification);
-			else
-				return $child;
-		}
-		
-		/**
-		 * @throws WrongArgumentException
-		 * @return Timestamp
-		**/
-		public function modify($string)
-		{
-			try {
-				$time = strtotime($string, $this->int);
-				
-				if ($time === false)
-					throw new WrongArgumentException(
-						"modification yielded false '{$string}'"
-					);
-				
-				$this->int = $time;
-				$this->string = date('Y-m-d H:i:s', $time);
-				$this->import($this->string);
-			} catch (BaseException $e) {
-				throw new WrongArgumentException(
-					"wrong time string '{$string}'"
-				);
-			}
-			
-			return $this;
+			return $this->second;
 		}
 		
 		public function equals(Timestamp $timestamp)
@@ -234,57 +130,20 @@
 			return ($this->toDateTime() === $timestamp->toDateTime());
 		}
 		
-		public function toString()
-		{
-			return $this->string;
-		}
-		
 		public function getDayStartStamp()
 		{
 			if (!$this->hour && !$this->minute && !$this->second)
 				return $this->int;
 			else
-				return
-					mktime(
-						0, 0, 0,
-						$this->month,
-						$this->day,
-						$this->year
-					);
+				return parent::getDayStartStamp();
 		}
 
-		public function getDayEndStamp()
+		protected function getFormat()
 		{
-			return
-				mktime(
-					23, 59, 59,
-					$this->month,
-					$this->day,
-					$this->year
-				);
+			return 'Y-m-d H:i:s';
 		}
 		
-		/**
-		 * @return Timestamp
-		**/
-		public function getFirstDayOfWeek($weekStart = Timestamp::WEEKDAY_MONDAY)
-		{
-			return $this->spawn(
-				'-'.((7 + $this->getWeekDay() - $weekStart) % 7).' days'
-			);
-		}
-		
-		/**
-		 * @return Timestamp
-		**/
-		public function getLastDayOfWeek($weekStart = Timestamp::WEEKDAY_MONDAY)
-		{
-			return $this->spawn(
-				'+'.((13 - $this->getWeekDay() + $weekStart) % 7).' days'
-			);
-		}
-		
-		private function import($string)
+		protected function import($string)
 		{
 			list($date, $time) = explode(' ', $string, 2);
 			
@@ -297,16 +156,9 @@
 			$this->normalizeSelf();
 		}
 		
-		private function normalizeSelf()
+		/* void */ protected function normalizeSelf()
 		{
-			if (strlen($this->year) < 4)
-				$this->year = str_pad($this->year, 4, '0', STR_PAD_LEFT);
-			
-			if (strlen($this->month) < 2)
-				$this->month = str_pad($this->month, 2, '0', STR_PAD_LEFT);
-			
-			if (strlen($this->day) < 2)
-				$this->day = str_pad($this->day, 2, '0', STR_PAD_LEFT);
+			parent::normalizeSelf();
 			
 			if (strlen($this->hour) < 2)
 				$this->hour = str_pad($this->hour, 2, '0', STR_PAD_LEFT);

@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Types
 	**/
-	final class TimestampType extends ObjectType
+	class TimestampType extends ObjectType
 	{
 		public function isGeneric()
 		{
