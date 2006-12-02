@@ -1,5 +1,9 @@
 # $Id$
 
+2006-12-02	Konstantin V. Arkhipov
+
+	* meta/types/SmallIntegerType.class.php: arrived from trunk.
+
 2006-11-12	Konstantin V. Arkhipov
 
 	* 0.8.2 released.
