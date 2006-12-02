@@ -13,21 +13,11 @@
 	/**
 	 * @ingroup Types
 	**/
-	class TimestampType extends ObjectType
+	final class TimestampType extends DateType
 	{
-		public function isGeneric()
-		{
-			return true;
-		}
-		
 		public function toColumnType()
 		{
 			return 'DataType::create(DataType::TIMESTAMP)';
-		}
-		
-		public function toPrimitive()
-		{
-			return 'Primitive::date';
 		}
 	}
 ?>
