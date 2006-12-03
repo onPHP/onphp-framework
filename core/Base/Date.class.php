@@ -213,7 +213,7 @@
 			return $this->string;
 		}
 		
-		protected function getFormat()
+		protected static function getFormat()
 		{
 			return 'Y-m-d';
 		}

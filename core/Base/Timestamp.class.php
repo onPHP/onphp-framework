@@ -42,7 +42,7 @@
 		
 		public static function now()
 		{
-			return date($this->getFormat());
+			return date(self::getFormat());
 		}
 		
 		/**
@@ -138,7 +138,7 @@
 				return parent::getDayStartStamp();
 		}
 
-		protected function getFormat()
+		protected static function getFormat()
 		{
 			return 'Y-m-d H:i:s';
 		}
