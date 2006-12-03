@@ -64,7 +64,7 @@
 			
 			if ($mav->getView() == self::COMMAND_SUCCEEDED) {
 				
-				$mav->setView('redirect:'.get_class($this));
+				$mav->setView(new RedirectToView(get_class($this)));
 				
 				$mav->getModel()->
 					drop('id');
