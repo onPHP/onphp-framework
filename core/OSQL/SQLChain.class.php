@@ -40,7 +40,7 @@
 			
 			Assert::isTrue($size > 0, 'empty chain');
 			
-			$chain = new self;
+			$chain = new $this;
 			
 			for ($i = 0; $i < $size; ++$i) {
 				$chain->exp(

@@ -84,7 +84,7 @@
 		{
 			if ($atom instanceof Property)
 				return $this->mapProperty($atom, $query);
-			elseif (array_key_exists($atom, $this->mapping))
+			elseif (is_string($atom) && array_key_exists($atom, $this->mapping))
 				return $this->mapProperty(new Property($atom), $query);
 			elseif ($atom instanceof LogicalObject)
 				return $atom->toMapped($this, $query);

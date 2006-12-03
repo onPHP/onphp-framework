@@ -50,7 +50,7 @@
 		**/
 		public function add(LogicalObject $logic)
 		{
-			$this->logic->andWhere($logic);
+			$this->logic->expAnd($logic);
 			
 			return $this;
 		}

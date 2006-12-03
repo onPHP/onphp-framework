@@ -40,7 +40,7 @@
 		{
 			return new self(
 				$dao->guessAtom($this->left, $query),
-				$dao->guessAtom($this->right, $query),
+				$this->right, // array/SelectQuery don't need to be transformed
 				$this->logic
 			);
 		}
