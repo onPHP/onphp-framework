@@ -40,6 +40,14 @@
 				.')'; 
 		}
 		
+		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		{
+			return new self(
+				$dao->guessAtom($this->subject, $query),
+				$this->logic
+			);
+		}
+		
 		public function toBoolean(Form $form)
 		{
 			$subject = $form->toFormValue($this->subject);

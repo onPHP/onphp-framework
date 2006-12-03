@@ -79,6 +79,37 @@
 					$object
 				);
 		}
+		
+		public function guessAtom($atom, JoinCapableQuery $query)
+		{
+			if ($atom instanceof Property)
+				return $this->mapProperty($atom, $query);
+			elseif (array_key_exists($atom, $this->mapping))
+				return $this->mapProperty(new Property($atom), $query);
+			elseif ($atom instanceof LogicalObject)
+				return $atom->toMapped($this, $query);
+			elseif ($atom instanceof DBValue)
+				return $atom;
+			
+			return new DBValue($atom);
+		}
+		
+		protected function mapProperty(Property $property, JoinCapableQuery $query)
+		{
+			$name = $property->getName();
+			
+			Assert::isTrue(
+				array_key_exists(
+					$name,
+					$this->mapping
+				)
+			);
+			
+			if (!$this->mapping[$name])
+				return $name;
+			
+			return $this->mapping[$name];
+		}
 
 		protected function inject(
 			InsertOrUpdateQuery $query, Identifiable $object

@@ -36,6 +36,15 @@
 			$this->logic	= $logic;
 		}
 		
+		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		{
+			return new self(
+				$dao->guessAtom($this->left, $query),
+				$dao->guessAtom($this->right, $query),
+				$this->logic
+			);
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			$string = 

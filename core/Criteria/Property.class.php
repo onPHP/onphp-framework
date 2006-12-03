@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov, Anton E. Lebedevich     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,13 +11,28 @@
 /* $Id$ */
 
 	/**
-	 * Support interface for Form's logic rules.
-	 * 
-	 * @ingroup Logic
+	 * @ingroup Criteria
 	**/
-	interface LogicalObject extends DialectString
+	final class Property
 	{
-		public function toBoolean(Form $form);
-		public function toMapped(StorableDAO $dao, JoinCapableQuery $query);
+		private $name = null;
+		
+		/**
+		 * @return Property
+		**/
+		public static function create()
+		{
+			return new self;
+		}
+		
+		public function __construct($name)
+		{
+			$this->name = $name;
+		}
+		
+		public function getName()
+		{
+			return $this->name;
+		}
 	}
 ?>

@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Logic
 	**/
-	final class LogicalChain extends SQLChain implements LogicalObject
+	final class LogicalChain extends SQLChain
 	{
 		/**
 		 * @return LogicalChain

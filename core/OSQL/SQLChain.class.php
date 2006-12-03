@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	abstract class SQLChain implements DialectString
+	abstract class SQLChain implements LogicalObject
 	{
 		protected $chain = array();
 		protected $logic = array();
@@ -32,6 +32,24 @@
 		public function getSize()
 		{
 			return count($this->chain);
+		}
+		
+		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		{
+			$size = count($this->chain);
+			
+			Assert::isTrue($size > 0, 'empty chain');
+			
+			$chain = new self;
+			
+			for ($i = 0; $i < $size; ++$i) {
+				$chain->exp(
+					$dao->guessAtom($this->chain[$i], $query),
+					$this->logic[$i]
+				);
+			}
+			
+			return $chain;
 		}
 		
 		public function toDialectString(Dialect $dialect)

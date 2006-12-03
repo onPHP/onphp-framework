@@ -119,6 +119,9 @@
 	 * @defgroup Logic Logical expressions used in OSQL and Form
 	 * @ingroup Core
 	 *
+	 * @defgroup Criteria Object queries API
+	 * @ingroup Core
+	 *
 	 * @defgroup OSQL Dynamic query builder
 	 * @ingroup Core
 	 *
