@@ -13,14 +13,22 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	class OrderBy extends FieldTable
+	final class OrderBy extends FieldTable implements LogicalObject
 	{
 		private $direction = null;
-
-		public function __construct(DialectString $field)
+		
+		/**
+		 * @return OrderBy
+		**/
+		public static function create($field)
+		{
+			return new self($field);
+		}
+		
+		public function __construct($field)
 		{
 			parent::__construct($field);
-
+			
 			$this->direction = new Ternary(null);
 		}
 
@@ -41,17 +49,35 @@
 			$this->direction->setTrue();
 			return $this;
 		}
-
+		
+		/**
+		 * @return OrderBy
+		**/
+		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		{
+			$order = self::create($dao->guessAtom($this->field, $query));
+			
+			if ($this->direction->isNull())
+				return $order;
+				
+			return $order->{$this->direction->decide('asc', 'desc')}();
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			if ($this->field instanceof SelectQuery)
 				return 
-					'('.$this->field->toDialectString($dialect).')'
+					'('.$dialect->fieldToString($this->field).')'
 					.$this->direction->decide(' ASC', ' DESC');
 			else
 				return
 					parent::toDialectString($dialect)
 					.$this->direction->decide(' ASC', ' DESC');
+		}
+		
+		public function toBoolean(Form $form)
+		{
+			throw new UnsupportedMethodException();
 		}
 	}
 ?>

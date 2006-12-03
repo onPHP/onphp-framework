@@ -77,7 +77,7 @@ ONPHP_METHOD(FieldTable, toDialectString)
 	RETURN_ZVAL(out, 1, 1);
 }
 
-
+static ONPHP_ARGINFO_ONE;
 static ONPHP_ARGINFO_DIALECT;
 
 static
@@ -86,7 +86,7 @@ ZEND_BEGIN_ARG_INFO(arginfo_dialect_string, 0) \
 ZEND_END_ARG_INFO()
 
 zend_function_entry onphp_funcs_FieldTable[] = {
-	ONPHP_ME(FieldTable, __construct, arginfo_dialect_string, ZEND_ACC_PUBLIC)
+	ONPHP_ME(FieldTable, __construct, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(FieldTable, toDialectString, arginfo_dialect, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };

@@ -18,7 +18,7 @@
 	{
 		protected $field = null;
 
-		public function __construct(DialectString $field)
+		public function __construct($field)
 		{
 			$this->field = $field;
 		}

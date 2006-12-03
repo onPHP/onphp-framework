@@ -17,6 +17,7 @@
 	{
 		private $dao	= null;
 		private $logic	= null;
+		private $order	= null;
 		
 		/**
 		 * @return Criteria
@@ -55,15 +56,29 @@
 			return $this;
 		}
 		
+		public function addOrder(OrderBy $order)
+		{
+			$this->order[] = $order;
+			
+			return $this;
+		}
+		
 		public function getList()
 		{
 			$query = $this->dao->makeSelectHead();
 			
-			if ($this->logic) {
-				for ($size = count($this->logic), $i = 0; $i < $size; ++$i) {
+			if ($this->logic->getSize()) {
+				$query->
+					andWhere(
+						$this->logic->toMapped($this->dao, $query)
+					);
+			}
+			
+			if ($this->order) {
+				for ($size = count($this->order), $i = 0; $i < $size; ++$i) {
 					$query->
-						andWhere(
-							$this->logic->toMapped($this->dao, $query)
+						orderBy(
+							$this->order[$i]->toMapped($this->dao, $query)
 						);
 				}
 			}
