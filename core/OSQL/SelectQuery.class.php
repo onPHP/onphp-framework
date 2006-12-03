@@ -24,22 +24,30 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	final class SelectQuery extends QuerySkeleton implements Named
+	final class SelectQuery
+		extends QuerySkeleton
+		implements Named, JoinCapableQuery
 	{
 		private $distinct		= false;
 
 		private $name			= null;
 		
+		private $joiner			= null;
+		
 		private $limit			= null;
 		private $offset			= null;
 
 		private $fields			= array();
-		private $from			= array();
 		
 		private $currentOrder	= null;
 		private $order			= array();
 		
 		private $group			= array();
+		
+		public function __construct()
+		{
+			$this->joiner = new Joiner();
+		}
 		
 		public function getName()
 		{
@@ -84,7 +92,7 @@
 		**/
 		public function join($table, LogicalObject $logic, $alias = null)
 		{
-			$this->from[] = new SQLJoin($table, $logic, $alias);
+			$this->joiner->join(new SQLJoin($table, $logic, $alias));
 			return $this;
 		}
 		
@@ -93,7 +101,7 @@
 		**/
 		public function leftJoin($table, LogicalObject $logic, $alias = null)
 		{
-			$this->from[] = new SQLLeftJoin($table, $logic, $alias);
+			$this->joiner->leftJoin(new SQLLeftJoin($table, $logic, $alias));
 			return $this;
 		}
 
@@ -214,7 +222,7 @@
 		**/
 		public function from($table, $alias = null)
 		{
-			$this->from[] = new FromTable($table, $alias);
+			$this->joiner->from(new FromTable($table, $alias));
 
 			return $this;
 		}
@@ -342,28 +350,10 @@
 			}
 
 			$query = 
-				'SELECT '.($this->distinct ? 'DISTINCT ' : null).
-				implode(', ', $fieldList);
+				'SELECT '.($this->distinct ? 'DISTINCT ' : null)
+				.implode(', ', $fieldList)
+				.$this->joiner->toDialectString($dialect);
 				
-			$fromString = null;
-			
-			for ($i = 0, $size = count($this->from); $i < $size; ++$i) {
-				if ($i == 0)
-					$separator = null;
-				elseif (
-					$this->from[$i] instanceof FromTable &&
-					!$this->from[$i]->getTable() instanceof SelectQuery
-				)
-					$separator = ', ';
-				else
-					$separator = ' ';
-
-				$fromString .= $separator.$this->from[$i]->toDialectString($dialect);
-			}
-
-			if ($fromString)
-				$query .= ' FROM '.$fromString;
-
 			// WHERE
 			$query .= parent::toDialectString($dialect);
 
@@ -416,10 +406,10 @@
 
 		private function getLastTable($table = null)
 		{
-			if (!$table && $this->from)
-				return $this->from[count($this->from) - 1]->getTable();
-			else 
-				return $table;
+			if (!$table && ($last = $this->joiner->getLastTable()))
+				return $last;
+			
+			return $table;
 		}
 	}
 ?>

@@ -13,11 +13,44 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	final class UpdateQuery extends InsertOrUpdateQuery
+	final class UpdateQuery
+		extends InsertOrUpdateQuery
+		implements JoinCapableQuery
 	{
+		private $joiner = null;
+		
 		public function __construct($table = null)
 		{
 			$this->table = $table;
+			$this->joiner = new Joiner();
+		}
+		
+		/**
+		 * @return UpdateQuery
+		**/
+		public function from($table, $alias = null)
+		{
+			$this->joiner->from(new FromTable($table, $alias));
+
+			return $this;
+		}
+		
+		/**
+		 * @return UpdateQuery
+		**/
+		public function join($table, LogicalObject $logic, $alias = null)
+		{
+			$this->joiner->join(new SQLJoin($table, $logic, $alias));
+			return $this;
+		}
+		
+		/**
+		 * @return UpdateQuery
+		**/
+		public function leftJoin($table, LogicalObject $logic, $alias = null)
+		{
+			$this->joiner->leftJoin(new SQLLeftJoin($table, $logic, $alias));
+			return $this;
 		}
 		
 		/**
@@ -56,11 +89,11 @@
 						.$dialect->quoteValue($val);
 			}
 			
-			$query .= implode(', ', $sets);
-			
-			$query .= parent::toDialectString($dialect);
-
-			return $query;
+			return
+				$query
+				.implode(', ', $sets)
+				.$this->joiner->toDialectString($dialect)
+				.parent::toDialectString($dialect);
 		}
 	}
 ?>
