@@ -73,11 +73,11 @@
 		public function viewIsRedirect()
 		{
 			return
-				($view instanceof RedirectView)
-				|| ($view instanceof RedirectToView)
+				($this->view instanceof RedirectView)
+				|| ($this->view instanceof RedirectToView)
 				|| (
-					is_string($view)
-					&& strpos($view, 'redirect') === 0
+					is_string($this->view)
+					&& strpos($this->view, 'redirect') === 0
 				);
 		}
 	}
