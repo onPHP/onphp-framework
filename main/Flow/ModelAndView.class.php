@@ -69,5 +69,16 @@
 			
 			return $this;
 		}
+		
+		public function viewIsRedirect()
+		{
+			return
+				($view instanceof RedirectView)
+				|| ($view instanceof RedirectToView)
+				|| (
+					is_string($view)
+					&& strpos($view, 'redirect') === 0
+				);
+		}
 	}
 ?>
