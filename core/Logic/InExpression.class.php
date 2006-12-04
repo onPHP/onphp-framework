@@ -38,9 +38,17 @@
 		
 		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
 		{
+			if (is_array($this->right)) {
+				$right = array();
+				foreach ($this->right as $atom) {
+					$right[] = $dao->guessAtom($atom, $query);
+				}
+			} else
+				$right = $this->right; // untransformable
+			
 			return new self(
 				$dao->guessAtom($this->left, $query),
-				$this->right, // array/SelectQuery don't need to be transformed
+				$right,
 				$this->logic
 			);
 		}
