@@ -4,6 +4,11 @@
 
 	* meta/types/SmallIntegerType.class.php: arrived from trunk.
 
+2006-11-25	Igor V. Gulyaev
+
+	* meta/builders/BaseBuilder.class.php: do not generate getTable,
+	getObjectName, getSequence for abstract DAO's.
+
 2006-11-12	Konstantin V. Arkhipov
 
 	* 0.8.2 released.
