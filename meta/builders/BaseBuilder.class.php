@@ -166,6 +166,10 @@ public function getSequence()
 	return '{$class->getDumbName()}_id';
 }
 EOT;
+			} else {
+				$out .= <<<EOT
+// no get{Table,ObjectName,Sequence} for abstract class
+EOT;
 			}
 			
 			return $out;
