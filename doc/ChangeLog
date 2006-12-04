@@ -27,6 +27,11 @@
 	* core/Base/Enumeration.class.php: only 'id' and 'name' are stored
 	upon serialization by default.
 
+2006-11-25	Igor V. Gulyaev
+
+	* meta/builders/BaseBuilder.class.php: do not generate getTable,
+	getObjectName, getSequence for abstract DAO's.
+
 2006-11-15	Konstantin V. Arkhipov
 
 	* doc/project.skel/: moved to new layout, invented by Antony.
