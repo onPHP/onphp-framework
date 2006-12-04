@@ -49,6 +49,11 @@
 			$this->joiner = new Joiner();
 		}
 		
+		public function __clone()
+		{
+			$this->joiner = clone $this->joiner;
+		}
+		
 		public function getName()
 		{
 			return $this->name;

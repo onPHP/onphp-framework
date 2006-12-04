@@ -25,6 +25,11 @@
 			$this->joiner = new Joiner();
 		}
 		
+		public function __clone()
+		{
+			$this->joiner = clone $this->joiner;
+		}
+		
 		/**
 		 * @return UpdateQuery
 		**/
