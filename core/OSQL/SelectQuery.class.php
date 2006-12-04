@@ -110,14 +110,8 @@
 		**/
 		public function orderBy($field, $table = null)
 		{
-			if ($field instanceof DialectString)
-				$order = new OrderBy($field);
-			else
-				$order =
-					new OrderBy(
-						new DBField($field, $this->getLastTable($table))
-					);
-
+			$order = $this->makeOrder($field, $table);
+			
 			$this->order[] = $order;
 			$this->currentOrder = &$order;
 			
@@ -129,13 +123,7 @@
 		**/
 		public function prependOrderBy($field, $table = null)
 		{
-			if ($field instanceof DialectString)
-				$order = new OrderBy($field);
-			else
-				$order =
-					new OrderBy(
-						new DBField($field, $this->getLastTable($table))
-					);
+			$order = $this->makeOrder($field, $table);
 			
 			if ($this->order)
 				array_unshift($this->order, $order);
@@ -410,6 +398,22 @@
 				return $last;
 			
 			return $table;
+		}
+		
+		/**
+		 * @return OrderBy
+		**/
+		private function makeOrder($field, $table = null)
+		{
+			if ($field instanceof DialectString)
+				return new OrderBy($field);
+			elseif ($order instanceof OrderBy)
+				return $order;
+			
+			return
+				new OrderBy(
+					new DBField($field, $this->getLastTable($table))
+				);
 		}
 	}
 ?>
