@@ -39,7 +39,7 @@
 				.'test_user WHERE (1 = 1) AND (2 != 3) AND (id > bar) AND '
 				.'(nick >= baz) AND (password < fi) AND '
 				.'(very_custom_field_name <= boo)  '
-				.'ORDER BY test_user.city_id DESC, test_user.spook_id ASC '
+				.'ORDER BY city_id DESC, spook_id ASC '
 				.'LIMIT 28 OFFSET 42',
 				
 				$oq->toSelectQuery(TestUser::dao())->toString()
