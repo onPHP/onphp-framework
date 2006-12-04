@@ -407,8 +407,8 @@
 		{
 			if ($field instanceof DialectString)
 				return new OrderBy($field);
-			elseif ($order instanceof OrderBy)
-				return $order;
+			elseif ($field instanceof OrderBy)
+				return $field;
 			
 			return
 				new OrderBy(
