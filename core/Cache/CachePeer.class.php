@@ -135,6 +135,14 @@
 		/**
 		 * @return CachePeer
 		**/
+		public function mark($className)
+		{
+			return $this;
+		}
+		
+		/**
+		 * @return CachePeer
+		**/
 		public function enableCompression()
 		{
 			$this->compress = true;

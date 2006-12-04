@@ -30,8 +30,7 @@
 		**/
 		public function mark($className)
 		{
-			if ($this->peer instanceof SelectivePeer)
-				$this->peer->mark($className);
+			$this->peer->mark($className);
 			
 			return $this;
 		}
