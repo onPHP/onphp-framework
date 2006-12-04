@@ -51,7 +51,7 @@
 				$out->
 					log('(')->
 					remark(
-						str_replace($_SERVER['PWD'].DIRECTORY_SEPARATOR, null, $path)
+						str_replace(getcwd().DIRECTORY_SEPARATOR, null, $path)
 					)->
 					logLine(')');
 			} else {
