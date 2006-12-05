@@ -58,7 +58,7 @@
 			if ($command = $form->getValue('action')) {
 				$hookName = 'pre'.ucfirst($command);
 				if (method_exists($this, $hookName))
-					$this->{$hookName}();
+					$this->{$hookName}($this->subject, $form, $request);
 				
 				$mav = $this->commandMap[$command]->run(
 					$this->subject, $form, $request
@@ -66,7 +66,7 @@
 				
 				$hookName = 'post'.ucfirst($command);
 				if (method_exists($this, $hookName))
-					$this->{$hookName}();
+					$this->{$hookName}($this->subject, $form, $request);
 			} else
 				$mav = ModelAndView::create();
 			
