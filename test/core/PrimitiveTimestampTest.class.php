@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class PrimitiveDateTest extends UnitTestCase
+	final class PrimitiveTimestampTest extends UnitTestCase
 	{
 		public function testMarried()
 		{
