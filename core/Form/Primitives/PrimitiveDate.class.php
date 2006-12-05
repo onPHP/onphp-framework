@@ -148,7 +148,7 @@
 		public function importValue($value)
 		{
 			if ($value)
-				Assert::isTrue($this->checkType($value));
+				Assert::isTrue(get_class($value) == $this->getObjectName());
 			else
 				return parent::importValue(null);
 			
