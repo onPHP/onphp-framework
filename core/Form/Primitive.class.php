@@ -66,6 +66,14 @@
 		}
 		
 		/**
+		 * @return PrimitiveTimestamp
+		**/
+		public static function timestamp($name)
+		{
+			return new PrimitiveTimestamp($name);
+		}
+		
+		/**
 		 * @return PrimitiveTime
 		**/
 		public static function time($name)

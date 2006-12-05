@@ -19,5 +19,10 @@
 		{
 			return 'DataType::create(DataType::TIMESTAMP)';
 		}
+		
+		public function toPrimitive()
+		{
+			return 'Primitive::timestamp';
+		}
 	}
 ?>

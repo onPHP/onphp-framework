@@ -13,25 +13,21 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveDate extends ComplexPrimitive
+	class PrimitiveDate extends ComplexPrimitive
 	{
 		const DAY		= 'day';
 		const MONTH		= 'month';
 		const YEAR		= 'year';
 
-		const HOURS		= 'hrs';
-		const MINUTES	= 'min';
-		const SECONDS	= 'sec';
-		
 		/**
 		 * @throws WrongArgumentException
 		 * @return PrimitiveDate
 		**/
-		public function setValue(/* Timestamp */ $stamp)
+		public function setValue(/* Date */ $object)
 		{
-			Assert::isTrue($stamp instanceof Timestamp);
+			Assert::isTrue(get_class($object) == $this->getObjectName());
 
-			$this->value = $stamp;
+			$this->value = $object;
 			
 			return $this;
 		}
@@ -40,11 +36,11 @@
 		 * @throws WrongArgumentException
 		 * @return PrimitiveDate
 		**/
-		public function setMin(/* Timestamp */ $stamp)
+		public function setMin(/* Date */ $object)
 		{
-			Assert::isTrue($stamp instanceof Timestamp);
+			Assert::isTrue(get_class($object) == $this->getObjectName());
 
-			$this->min = $stamp;
+			$this->min = $object;
 			
 			return $this;
 		}
@@ -53,11 +49,11 @@
 		 * @throws WrongArgumentException
 		 * @return PrimitiveDate
 		**/
-		public function setMax(/* Timestamp */ $stamp)
+		public function setMax(/* Date */ $object)
 		{
-			Assert::isTrue($stamp instanceof Timestamp);
+			Assert::isTrue(get_class($object) == $this->getObjectName());
 			
-			$this->max = $stamp;
+			$this->max = $object;
 			
 			return $this;
 		}
@@ -66,11 +62,11 @@
 		 * @throws WrongArgumentException
 		 * @return PrimitiveDate
 		**/
-		public function setDefault(/* Timestamp */ $stamp)
+		public function setDefault(/* Date */ $object)
 		{
-			Assert::isTrue($stamp instanceof Timestamp);
+			Assert::isTrue(get_class($object) == $this->getObjectName());
 			
-			$this->default = $stamp;
+			$this->default = $object;
 			
 			return $this;
 		}
@@ -82,17 +78,14 @@
 				&& is_string($scope[$this->name])
 			) {
 				try {
-					$ts = new Timestamp($scope[$this->name]);
+					$class = $this->getObjectName();
+					$ts = new $class($scope[$this->name]);
 				} catch (WrongArgumentException $e) {
 					return false;
 				}
 				
-				if (
-					!($this->min && $this->min->toStamp() > $ts->toStamp())
-					&& !($this->max && $this->max->toStamp() < $ts->toStamp())
-				) {
+				if ($this->checkRanges($ts)) {
 					$this->value = $ts;
-					
 					return true;
 				}
 			}
@@ -119,45 +112,22 @@
 					$scope[$this->name][self::YEAR]
 				)
 				&& is_array($scope[$this->name])
-				&& !empty($scope[$this->name][self::DAY])
-				&& !empty($scope[$this->name][self::MONTH])
-				&& !empty($scope[$this->name][self::YEAR])
+				&& !$this->isEmpty($scope)
 			) {
-				$hours = $minutes = $seconds = 0;
-				
-				if (isset($scope[$this->name][self::HOURS]))
-					$hours = (int) $scope[$this->name][self::HOURS];
-
-				if (isset($scope[$this->name][self::MINUTES]))
-					$minutes = (int) $scope[$this->name][self::MINUTES];
-
-				if (isset($scope[$this->name][self::SECONDS]))
-					$seconds = (int) $scope[$this->name][self::SECONDS];
-				
 				try {
-					// TODO: optimize a bit this voodoo
-					$stamp = new Timestamp(
+					$date = new Date(
 						(int) $scope[$this->name][self::YEAR].'-'
 						.(int) $scope[$this->name][self::MONTH].'-'
 						.(int) $scope[$this->name][self::DAY].' '
-						.$hours.':'.$minutes.':'.$seconds
 					);
 				} catch (WrongArgumentException $e) {
-					// fsck wrong stamps
+					// fsck wrong dates
 					return false;
 				}
 				
-				if (
-					!($this->min && $this->min->toStamp() < $stamp->toStamp())
-					&& !($this->max && $this->max->toStamp() > $stamp->toStamp())
-				) {
-					try {
-						$this->value = $stamp;
-						
-						return true;
-					} catch (WrongArgumentException $e) {
-						return false;
-					}
+				if ($this->checkRanges($date)) {
+					$this->value = $date;
+					return true;
 				}
 			}
 
@@ -178,7 +148,7 @@
 		public function importValue($value)
 		{
 			if ($value)
-				Assert::isTrue($value instanceof Timestamp);
+				Assert::isTrue($this->checkType($value));
 			else
 				return parent::importValue(null);
 			
@@ -186,6 +156,18 @@
 				$this->importSingle(
 					array($this->getName() => $value->toString())
 				);
+		}
+		
+		protected function checkRanges(Date $date)
+		{
+			return
+				!($this->min && $this->min->toStamp() < $stamp->toStamp())
+				&& !($this->max && $this->max->toStamp() > $stamp->toStamp());
+		}
+		
+		protected function getObjectName()
+		{
+			return 'Date';
 		}
 	}
 ?>
