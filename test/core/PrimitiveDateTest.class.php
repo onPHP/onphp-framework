@@ -5,16 +5,16 @@
 	{
 		public function testMarried()
 		{
-			$prm = Primitive::date('test')->setComplex();
+			$prm = Primitive::timestamp('test')->setComplex();
 			
 			$array = array(
 				'test' => array(
 					PrimitiveDate::DAY		=> '1',
 					PrimitiveDate::MONTH	=> '2',
 					PrimitiveDate::YEAR		=> '3456',
-					PrimitiveDate::HOURS	=> '17',
-					PrimitiveDate::MINUTES	=> '38',
-					PrimitiveDate::SECONDS	=> '59'
+					PrimitiveTimestamp::HOURS	=> '17',
+					PrimitiveTimestamp::MINUTES	=> '38',
+					PrimitiveTimestamp::SECONDS	=> '59'
 				)
 			);
 			
@@ -34,7 +34,7 @@
 		
 		public function testSingle()
 		{
-			$prm = Primitive::date('test')->setSingle();
+			$prm = Primitive::timestamp('test')->setSingle();
 			
 			$array = array('test' => '1234-1-2 17:38:59');
 			
