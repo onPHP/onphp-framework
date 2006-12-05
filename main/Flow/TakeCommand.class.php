@@ -16,6 +16,14 @@
 	class TakeCommand implements EditorCommand
 	{
 		/**
+		 * @return TakeCommand
+		**/
+		public static function create()
+		{
+			return new self;
+		}
+		
+		/**
 		 * @return ModelAndView
 		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)

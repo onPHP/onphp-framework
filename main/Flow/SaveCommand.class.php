@@ -15,6 +15,12 @@
 	**/
 	class SaveCommand extends TakeCommand 
 	{
-		// nothing to do
+		/**
+		 * @return SaveCommand
+		**/
+		public static function create()
+		{
+			return new self;
+		}
 	}
 ?>
