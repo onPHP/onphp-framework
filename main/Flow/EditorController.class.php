@@ -55,11 +55,19 @@
 			
 			$form = $this->map->getForm();
 			
-			if ($command = $form->getValue('action'))
+			if ($command = $form->getValue('action')) {
+				$hookName = 'pre'.ucfirst($command);
+				if (method_exists($this, $hookName))
+					$this->{$hookName}();
+				
 				$mav = $this->commandMap[$command]->run(
 					$this->subject, $form, $request
 				);
-			else
+				
+				$hookName = 'post'.ucfirst($command);
+				if (method_exists($this, $hookName))
+					$this->{$hookName}();
+			} else
 				$mav = ModelAndView::create();
 			
 			if ($mav->getView() == self::COMMAND_SUCCEEDED) {
