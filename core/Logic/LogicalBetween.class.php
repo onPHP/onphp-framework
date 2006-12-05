@@ -43,9 +43,9 @@
 		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
 		{
 			return new self(
+				$dao->guessAtom($this->field, $query),
 				$dao->guessAtom($this->left, $query),
-				$dao->guessAtom($this->right, $query),
-				$dao->guessAtom($this->field, $query)
+				$dao->guessAtom($this->right, $query)
 			);
 		}
 		
