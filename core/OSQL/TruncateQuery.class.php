@@ -40,7 +40,7 @@
 			if ($table instanceof SQLTableName)
 				$this->targets[] = $table->getTable();
 			else
-				$this->tables[] = $table;
+				$this->targets[] = $table;
 			
 			return $this;
 		}
