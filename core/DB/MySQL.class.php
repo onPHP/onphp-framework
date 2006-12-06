@@ -17,7 +17,7 @@
 	 * 
 	 * @ingroup DB
 	**/
-	class MySQL extends Sequenceless
+	final class MySQL extends Sequenceless
 	{
 		protected $queueSupported	= false;
 

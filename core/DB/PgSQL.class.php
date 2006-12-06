@@ -17,8 +17,11 @@
 	 * 
 	 * @ingroup DB
 	**/
-	class PgSQL extends DB
+	final class PgSQL extends DB
 	{
+		/**
+		 * @return PostgresDialect
+		**/
 		public static function getDialect()
 		{
 			return PostgresDialect::me();

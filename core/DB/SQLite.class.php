@@ -17,7 +17,7 @@
 	 * 
 	 * @ingroup DB
 	**/
-	class SQLite extends Sequenceless
+	final class SQLite extends Sequenceless
 	{
 		/**
 		 * @return LiteDialect
