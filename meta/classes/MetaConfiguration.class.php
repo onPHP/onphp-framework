@@ -299,8 +299,7 @@
 					break;
 				} catch (ObjectNotFoundException $e) {
 					$out->errorLine(
-						"table '{$class->getDumbName()}' not found, skipping.",
-						true
+						"table '{$class->getDumbName()}' not found, skipping."
 					);
 					continue;
 				}
