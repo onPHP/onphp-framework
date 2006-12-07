@@ -297,6 +297,12 @@
 						);
 					
 					break;
+				} catch (ObjectNotFoundException $e) {
+					$out->errorLine(
+						"table '{$class->getDumbName()}' not found, skipping.",
+						true
+					);
+					continue;
 				}
 				
 				$diff = DBTable::findDifferences(
