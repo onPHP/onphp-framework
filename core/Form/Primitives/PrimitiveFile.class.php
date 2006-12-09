@@ -78,8 +78,8 @@
 		
 		public function copyToPath($path)
 		{
-			if (is_readable($this->value) && is_writable($path)) {
-				return move_uploaded_file($this->value, $path.$name);
+			if (is_readable($this->value) && is_writable(dirname($path))) {
+				return move_uploaded_file($this->value, $path);
 			} else
 				throw new WrongArgumentException(
 					"can not move '{$this->value}' to '{$path}'"
