@@ -115,6 +115,11 @@
 			InsertOrUpdateQuery $query, Identifiable $object
 		)
 		{
+			Assert::isTrue(
+				get_class($object) === $this->getObjectName(),
+				'strange object given, i can not inject it'
+			);
+			
 			DBPool::getByDao($this)->queryNull(
 				$this->setQueryFields(
 					$query->setTable($this->getTable()), $object
