@@ -1,5 +1,9 @@
 # $Id$
 
+2006-12-11	Konstantin V. Arkhipov
+
+	* meta/: lazy one-to-one relation implemented.
+
 2006-12-05	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/PrimitiveFile.class.php: copyToPath() added.

@@ -54,7 +54,50 @@
 			$name = $property->getName();
 			$methodName = 'get'.ucfirst($name);
 			
-			$method = <<<EOT
+			if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+				$className = $property->getType()->getClass();
+				
+				if ($property->isRequired()) {
+					$method = <<<EOT
+
+public function {$methodName}()
+{
+	if (!\$this->{$name}) {
+		\$this->{$name} = {$className}::dao()->getById(\$this->{$name}Id);
+	}
+
+	return \$this->{$name};
+}
+
+EOT;
+				} else {
+					$method = <<<EOT
+
+/**
+ * @return {$this->class}
+**/
+public function {$methodName}()
+{
+	if (!\$this->{$name} && \$this->{$name}Id) {
+		\$this->{$name} = {$className}::dao()->getById(\$this->{$name}Id);
+	}
+	
+	return \$this->{$name};
+}
+
+EOT;
+				}
+				
+				$method .= <<<EOT
+
+public function {$methodName}Id()
+{
+	return \$this->{$name}Id;
+}
+
+EOT;
+			} else {
+				$method = <<<EOT
 
 /**
  * @return {$this->class}
@@ -65,7 +108,8 @@ public function {$methodName}()
 }
 
 EOT;
-
+			}
+			
 			return $method;
 		}
 		
@@ -74,7 +118,34 @@ EOT;
 			$name = $property->getName();
 			$methodName = 'set'.ucfirst($name);
 			
-			$method = <<<EOT
+			if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+				$method = <<<EOT
+
+/**
+ * @return {$class->getName()}
+**/
+public function {$methodName}({$this->class} \${$name})
+{
+	\$this->{$name} = \${$name};
+	\$this->{$name}Id = \${$name}->getId();
+
+	return \$this;
+}
+
+/**
+ * @return {$class->getName()}
+**/
+public function {$methodName}Id(\$id)
+{
+	\$this->{$name} = null;
+	\$this->{$name}Id = \$id;
+
+	return \$this;
+}
+
+EOT;
+			} else {
+				$method = <<<EOT
 
 /**
  * @return {$class->getName()}
@@ -87,7 +158,8 @@ public function {$methodName}({$this->class} \${$name})
 }
 
 EOT;
-
+			}
+			
 			return $method;
 		}
 		
@@ -96,7 +168,23 @@ EOT;
 			$name = $property->getName();
 			$methodName = 'drop'.ucfirst($name);
 			
-			$method = <<<EOT
+			if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+				$method = <<<EOT
+
+/**
+ * @return {$class->getName()}
+**/
+public function {$methodName}()
+{
+	\$this->{$name} = null;
+	\$this->{$name}Id = null;
+
+	return \$this;
+}
+
+EOT;
+			} else {
+				$method = <<<EOT
 
 /**
  * @return {$class->getName()}
@@ -109,7 +197,8 @@ public function {$methodName}()
 }
 
 EOT;
-
+			}
+			
 			return $method;
 		}
 		

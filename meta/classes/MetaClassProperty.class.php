@@ -163,6 +163,14 @@
 			return $this->relation;
 		}
 		
+		public function getRelationId()
+		{
+			if ($this->relation)
+				return $this->relation->getId();
+			
+			return null;
+		}
+		
 		/**
 		 * @return MetaClassProperty
 		**/
@@ -208,6 +216,7 @@ EOT;
 				switch ($this->relation->getId()) {
 					
 					case MetaRelation::ONE_TO_ONE:
+					case MetaRelation::LAZY_ONE_TO_ONE:
 						
 						$remote =
 							MetaConfiguration::me()->getClassByName(
@@ -237,17 +246,32 @@ if (isset(\$array[\$prefix.'{$this->getDumbIdName()}'])) {
 EOT;
 							}
 						} else {
-							if ($this->required) {
-								
-								$out =
-									"set{$method}("
-									."{$this->type->getClass()}::dao()->getById("
-									."\$array[\$prefix.'{$this->getDumbIdName()}']"
-									."))";
-								
+							if ($this->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+								if ($this->required) {
+									$out =
+										"set{$method}Id("
+										."\$array[\$prefix.'{$this->getDumbIdName()}']"
+										.'))';
+								} else {
+									$out = <<<EOT
+if (isset(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])) {
+	\${$varName}->set{$method}Id(\$array[\$prefix.'{$this->getDumbName()}_{$idName}']);
+}
+
+EOT;
+								}
 							} else {
-								
-								$out = <<<EOT
+								if ($this->required) {
+									
+									$out =
+										"set{$method}("
+										."{$this->type->getClass()}::dao()->getById("
+										."\$array[\$prefix.'{$this->getDumbIdName()}']"
+										.'))';
+									
+								} else {
+									
+									$out = <<<EOT
 if (isset(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])) {
 	\${$varName}->set{$method}(
 		{$this->type->getClass()}::dao()->getById(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])
@@ -256,6 +280,7 @@ if (isset(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])) {
 
 EOT;
 								
+								}
 							}
 						}
 						
@@ -342,6 +367,7 @@ EOT;
 				switch ($this->relation->getId()) {
 					
 					case MetaRelation::ONE_TO_ONE:
+					case MetaRelation::LAZY_ONE_TO_ONE:
 						
 						$remote =
 							MetaConfiguration::me()->getClassByName(
@@ -356,21 +382,16 @@ EOT;
 						else
 							$dumbIdName = $this->getDumbName().'_'.$idName;
 
-						if ($this->required)
-							$out = "set('{$dumbIdName}', ";
-						else
-							$out = "set(\n'{$dumbIdName}', ";
-						
-						if ($remote->getPattern() instanceof EnumerationClassPattern) {
-							if ($this->required)
-								$out .= "\${$varName}->get{$method}()->getId())";
-							else
-								$out .=
-									"\n"
-									."\${$varName}->get{$method}()\n"
-									."? \${$varName}->get{$method}()->get{$idMethod}()\n"
-									.": null\n)";
+						if ($this->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+							$out .=
+								"set('{$dumbIdName}', "
+								."\${$varName}->get{$method}Id())";
 						} else {
+							if ($this->required)
+								$out = "set('{$dumbIdName}', ";
+							else
+								$out = "set(\n'{$dumbIdName}', ";
+						
 							if ($this->required)
 								$out .=
 									"\${$varName}->get{$method}()->get{$idMethod}())";

@@ -210,6 +210,7 @@ EOT;
 					
 					if (
 						$relation->getId() == MetaRelation::ONE_TO_ONE
+						|| $relation->getId() == MetaRelation::LAZY_ONE_TO_ONE
 					) {
 						$remoteClass =
 							MetaConfiguration::me()->

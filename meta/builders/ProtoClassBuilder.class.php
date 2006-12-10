@@ -101,8 +101,10 @@ EOT;
 						if (
 							!$property->getRelation()
 							|| (
-								$property->getRelation()->getId()
-								== MetaRelation::ONE_TO_ONE
+								$property->getRelationId()
+									== MetaRelation::ONE_TO_ONE
+								|| $property->getRelationId()
+									== MetaRelation::LAZY_ONE_TO_ONE
 							)
 						) {
 							$primitive =

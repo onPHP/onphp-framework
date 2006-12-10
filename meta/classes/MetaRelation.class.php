@@ -15,12 +15,14 @@
 	**/
 	final class MetaRelation extends Enumeration
 	{
-		const ONE_TO_ONE	= 'OneToOne';
-		const ONE_TO_MANY	= 'OneToMany';
-		const MANY_TO_MANY	= 'ManyToMany';
+		const ONE_TO_ONE		= 'OneToOne';
+		const LAZY_ONE_TO_ONE	= 'LazyOneToOne';
+		const ONE_TO_MANY		= 'OneToMany';
+		const MANY_TO_MANY		= 'ManyToMany';
 		
 		protected $names = array(
 			self::ONE_TO_ONE		=> 'OneToOne',
+			self::LAZY_ONE_TO_ONE	=> 'LazyOneToOne',
 			self::ONE_TO_MANY		=> 'OneToMany',
 			self::MANY_TO_MANY		=> 'ManyToMany'
 		);

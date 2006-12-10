@@ -35,7 +35,10 @@ EOT;
 			foreach ($class->getAllProperties() as $property) {
 				if (
 					($relation = $property->getRelation())
-					&& $relation->getId() <> MetaRelation::ONE_TO_ONE
+					&& (
+						$relation->getId() != MetaRelation::ONE_TO_ONE
+						&& $relation->getId() != MetaRelation::LAZY_ONE_TO_ONE
+					)
 				) {
 					continue;
 				}
@@ -70,7 +73,8 @@ EOT;
 						);
 					
 					if (
-						$relation->getId() <> MetaRelation::ONE_TO_ONE
+						$relation->getId() != MetaRelation::ONE_TO_ONE
+						&& $relation->getId() != MetaRelation::LAZY_ONE_TO_ONE
 					) {
 						continue;
 					}
