@@ -4,7 +4,6 @@
 * generate class-hints in DAO's for encapsulated classes; (voxus)
 * store serialized MetaClass in Proto's (?); (voxus)
 * implement multiGet @ CachePeer's (?); (voxus)
-* spl exports it's headers since 5.2.0, use it; (voxus)
-* dot-style property names mapping for Criteria
-* fetch strategy for Criteria
-* dao for value objects (Range and other without table)
+* dot-style property names mapping for Criteria;
+* fetch strategy for Criteria;
+* dao for value objects (Range and other without table);
