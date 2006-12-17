@@ -33,7 +33,9 @@ WrongArgumentException, \
 WrongStateException."
 
 #define ONPHP_INTERFACES_LIST "\
+DAOConnected, \
 DialectString, \
+FullTextDAO, \
 Identifiable, \
 Instantiatable, \
 Named, \
@@ -41,7 +43,8 @@ Prototyped, \
 Query, \
 SegmentHandler, \
 Stringable, \
-SQLTableName."
+SQLTableName, \
+ViewResolver."
 
 #define ONPHP_CLASSES_LIST "\
 Castable, \

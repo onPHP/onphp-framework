@@ -2,6 +2,9 @@
 
 2006-12-17	Konstantin V. Arkhipov
 
+	* ext/main/: DAOConnected, FullTextDAO and ViewResolver interfaces
+	added.
+
 	* core/Base/Enumeration.class.php: synced with php version.
 
 	* core/Form/Primitives/PrimitiveDumper.class.php: removed.

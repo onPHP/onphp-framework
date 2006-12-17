@@ -1,6 +1,5 @@
-<?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,14 +9,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * Helper for identifying object's DAO.
-	 * 
-	 * @ingroup DAOs
-	 * @ingroup Module
-	**/
-	interface DAOConnected extends Identifiable
-	{
-		public static function dao();
-	}
-?>
+#ifndef ONPHP_MAIN_DAO_CONNECTED_H
+#define ONPHP_MAIN_DAO_CONNECTED_H
+
+PHPAPI zend_class_entry *onphp_ce_DAOConnected;
+
+extern zend_function_entry onphp_funcs_DAOConnected[];
+
+#endif /* ONPHP_MAIN_DAO_CONNECTED_H */

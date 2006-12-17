@@ -14,6 +14,7 @@
 	 * Support interface for use with FullTextUtils.
 	 * 
 	 * @ingroup DAOs
+	 * @ingroup Module
 	**/
 	interface FullTextDAO extends BaseDAO
 	{

@@ -1,6 +1,5 @@
-<?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,14 +9,14 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * Helper for identifying object's DAO.
-	 * 
-	 * @ingroup DAOs
-	 * @ingroup Module
-	**/
-	interface DAOConnected extends Identifiable
-	{
-		public static function dao();
-	}
-?>
+#include "onphp.h"
+
+#include "main/Flow/ViewResolver.h"
+
+PHPAPI zend_class_entry *onphp_ce_ViewResolver;
+
+static ONPHP_ARGINFO_ONE;
+
+zend_function_entry onphp_funcs_ViewResolver[] = {
+	ONPHP_ABSTRACT_ME(ViewResolver, resolveViewName, arginfo_one, ZEND_ACC_PUBLIC)
+};

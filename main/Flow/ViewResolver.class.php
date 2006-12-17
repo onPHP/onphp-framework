@@ -12,6 +12,7 @@
 
 	/**
 	 * @ingroup Flow
+	 * @ingroup Module
 	**/
 	interface ViewResolver
 	{
