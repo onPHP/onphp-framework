@@ -21,6 +21,97 @@ PHPAPI zend_class_entry *onphp_ce_Enumeration;
 
 ONPHP_METHOD(Enumeration, __construct)
 {
+	zval *id;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
+		WRONG_PARAM_COUNT;
+	}
+	
+	zend_call_method_with_1_params(
+		&getThis(),
+		Z_OBJCE_P(getThis()),
+		NULL,
+		"changeid",
+		NULL,
+		id
+	);
+}
+
+ONPHP_METHOD(Enumeration, __sleep)
+{
+	zval *out;
+	
+	array_init(out);
+	
+	add_next_index_string(
+		out,
+		"id",
+		1
+	);
+	
+	RETURN_ZVAL(out, 1, 1);
+}
+
+ONPHP_METHOD(Enumeration, __wakeup)
+{
+	zend_call_method_with_1_params(
+		&getThis(),
+		Z_OBJCE_P(getThis()),
+		NULL,
+		"changeid",
+		NULL,
+		ONPHP_READ_PROPERTY(getThis(), "id")
+	);
+}
+
+ONPHP_METHOD(Enumeration, serialize)
+{
+	zval *id;
+			char *out = NULL;
+			unsigned int length = 0;
+	
+	id = ONPHP_READ_PROPERTY(getThis(), "id");
+	
+	switch (Z_TYPE_P(id)) {
+		case IS_LONG:
+			
+			
+			out = emalloc(MAX_LENGTH_OF_LONG + 1 + 1);
+			length = sprintf(out, "%ld", Z_LVAL_P(id));
+			
+			RETURN_STRINGL(out, length, 1);
+		
+		case IS_STRING:
+			
+			RETURN_ZVAL(id, 1, 0);
+			
+		case IS_NULL:
+		default:
+		
+			RETURN_STRING("", 1);
+	}
+}
+
+ONPHP_METHOD(Enumeration, unserialize)
+{
+	zval *id;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
+		WRONG_PARAM_COUNT;
+	}
+	
+	zend_call_method_with_1_params(
+		&getThis(),
+		Z_OBJCE_P(getThis()),
+		NULL,
+		"changeid",
+		NULL,
+		id
+	);
+}
+
+ONPHP_METHOD(Enumeration, changeId)
+{
 	zval *id, *names;
 	zval **found;
 	int result;
@@ -267,5 +358,10 @@ zend_function_entry onphp_funcs_Enumeration[] = {
 	ONPHP_ME(Enumeration, getObjectList,NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, toString,		NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, getNameList,	NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Enumeration, __sleep,		NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Enumeration, __wakeup,		NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Enumeration, serialize,	NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Enumeration, unserialize,	arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Enumeration, changeId,		arginfo_one, ZEND_ACC_PROTECTED)
 	{NULL, NULL, NULL}
 };

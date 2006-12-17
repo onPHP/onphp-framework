@@ -13,6 +13,7 @@
 #define ONPHP_CORE_EXCEPTIONS_H
 
 #include "php.h"
+#include "ext/spl/spl_functions.h"
 
 PHPAPI zend_class_entry *onphp_ce_BaseException;
 PHPAPI zend_class_entry *onphp_ce_BusinessLogicException;

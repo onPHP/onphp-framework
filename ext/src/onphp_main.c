@@ -18,6 +18,8 @@
  ***************************************************************************/
 /* $Id$ */
 
+#include "ext/spl/spl_functions.h"
+
 #include "onphp_main.h"
 #include "onphp_util.h"
 

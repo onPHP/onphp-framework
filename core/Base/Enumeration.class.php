@@ -28,7 +28,6 @@
 		}
 		
 		/// @{ prevent's serialization of names' array
-		// TODO: sync with module's Enumeration
 		public function __sleep()
 		{
 			return array('id');
