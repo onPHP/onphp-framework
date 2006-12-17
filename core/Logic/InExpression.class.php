@@ -36,6 +36,9 @@
 			$this->logic	= $logic;
 		}
 		
+		/**
+		 * @return InExpression
+		**/
 		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
 		{
 			if (is_array($this->right)) {

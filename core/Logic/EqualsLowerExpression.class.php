@@ -38,6 +38,9 @@
 				.')';
 		}
 		
+		/**
+		 * @return EqualsLowerExpression
+		**/
 		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
 		{
 			return new self(

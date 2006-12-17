@@ -40,6 +40,9 @@
 				.')';
 		}
 		
+		/**
+		 * @return LogicalBetween
+		**/
 		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
 		{
 			return new self(
