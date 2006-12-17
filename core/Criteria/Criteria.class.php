@@ -19,6 +19,9 @@
 		private $logic	= null;
 		private $order	= null;
 		
+		private $limit	= null;
+		private $offset	= null;
+		
 		/**
 		 * @return Criteria
 		**/
@@ -63,9 +66,22 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Criteria
+		**/
+		public function limit($limit = null, $offset = null)
+		{
+			$this->limit = $limit;
+			$this->offset = $offset;
+			
+			return $this;
+		}
+		
 		public function getList()
 		{
-			$query = $this->dao->makeSelectHead();
+			$query =
+				$this->dao->makeSelectHead()->
+				limit($this->limit, $this->offset);
 			
 			if ($this->logic->getSize()) {
 				$query->
