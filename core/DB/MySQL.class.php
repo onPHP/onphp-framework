@@ -19,8 +19,6 @@
 	**/
 	final class MySQL extends Sequenceless
 	{
-		protected $queueSupported	= false;
-
 		/**
 		 * @return MyDialect
 		**/
@@ -29,16 +27,6 @@
 			return MyDialect::me();
 		}
 		
-		public function asyncQuery(Query $query)
-		{
-			throw new UnsupportedMethodException();
-		}
-
-		public function isBusy()
-		{
-			throw new UnsupportedMethodException();
-		}
-
 		public function setEncoding($encoding)
 		{
 			return mysql_query("SET NAMES '{$encoding}'", $this->link);
@@ -178,6 +166,11 @@
 		public function getTableInfo($table)
 		{
 			throw new UnimplementedFeatureException();
+		}
+		
+		public function hasQueue()
+		{
+			return false;
 		}
 		
 		protected function getInsertId()

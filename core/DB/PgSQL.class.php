@@ -27,18 +27,6 @@
 			return PostgresDialect::me();
 		}
 		
-		public function isBusy()
-		{
-			return pg_connection_busy($this->link);
-		}
-		
-		public function asyncQuery(Query $query)
-		{
-			return pg_send_query(
-				$this->link, $query->toDialectString($this->getDialect())
-			);
-		}
-
 		/**
 		 * @return PgSQL
 		**/
@@ -216,7 +204,7 @@
 				return null;
 		}
 		
-		public function supportSequences()
+		public function hasSequences()
 		{
 			return true;
 		}

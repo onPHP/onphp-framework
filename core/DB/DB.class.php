@@ -24,8 +24,6 @@
 
 		protected $persistent	= false;
 		
-		protected $queueSupported	= true;
-
 		/**
 		 * flag to indicate whether we're in transaction
 		**/
@@ -50,9 +48,6 @@
 
 		abstract public function queryColumn(Query $query);
 		abstract public function queryCount(Query $query);
-		
-		abstract public function asyncQuery(Query $query);
-		abstract public function isBusy();
 		
 		abstract public function getTableInfo($table);
 
@@ -145,7 +140,7 @@
 		**/
 		public function queueStart()
 		{
-			if ($this->queueSupported)
+			if ($this->hasQueue())
 				$this->toQueue = true;
 			
 			return $this;
@@ -214,9 +209,14 @@
 			return is_resource($this->link);
 		}
 		
-		public function supportSequences()
+		public function hasSequences()
 		{
 			return false;
+		}
+		
+		public function hasQueue()
+		{
+			return true;
 		}
 
 		public function isPersistent()

@@ -1,5 +1,12 @@
 # $Id$
 
+2006-12-17	Konstantin V. Arkhipov
+
+	* core/DB/: asyncQuery()/isBusy() dropped; queueSuppored and
+	supportSequences() renamed to hasQueue() and hasSequences().
+
+	* core/Criteria/Criteria.class.php: limit/offset support added.
+
 2006-12-11	Konstantin V. Arkhipov
 
 	* meta/: lazy one-to-one relation implemented.

@@ -26,16 +26,6 @@
 		{
 			return LiteDialect::me();
 		}
-		
-		public function isBusy()
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function asyncQuery(Query $query)
-		{
-			throw new UnsupportedMethodException();
-		}
 
 		/**
 		 * @return SQLite
