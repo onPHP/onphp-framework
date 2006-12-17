@@ -26,7 +26,7 @@
 						// ok
 					}
 					
-					if ($db->supportSequences()) {
+					if ($db->hasSequences()) {
 						foreach (
 							$this->schema->getTableByName($name)->getColumns()
 								as $columnName => $column
@@ -67,7 +67,7 @@
 						)
 					);
 					
-					if ($db->supportSequences()) {
+					if ($db->hasSequences()) {
 						foreach (
 							$this->schema->getTableByName($name)->getColumns()
 								as $columnName => $column)
