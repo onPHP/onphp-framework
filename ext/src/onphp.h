@@ -91,11 +91,7 @@
 		ZEND_ARG_INFO(0, third) \
 	ZEND_END_ARG_INFO()
 
-typedef struct _onphp_empty_object onphp_empty_object;
-
-struct _onphp_empty_object {
-	zend_object std;
-};
+#define onphp_empty_object zend_object
 
 extern void onphp_empty_object_free_storage(void *object TSRMLS_DC);
 extern zend_object_value onphp_empty_object_spawn(

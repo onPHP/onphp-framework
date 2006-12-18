@@ -83,7 +83,7 @@ WARN_LOGFILE           =
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 INPUT                  = ./onphp.doxy.php ../
-FILE_PATTERNS          = *.php
+FILE_PATTERNS          = *.php *.c *.h
 RECURSIVE              = YES
 EXCLUDE                = ../test/ \
 			 ../incubator/ \

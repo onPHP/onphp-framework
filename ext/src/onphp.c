@@ -23,7 +23,7 @@ void onphp_empty_object_free_storage(void *object TSRMLS_DC)
 {
 	onphp_empty_object *empty = (onphp_empty_object *) object;
 
-	zend_object_std_dtor(&empty->std TSRMLS_CC);
+	zend_object_std_dtor(empty TSRMLS_CC);
 
 	efree(object);
 }
@@ -43,10 +43,10 @@ zend_object_value onphp_empty_object_spawn(
 	if (object)
 		*object = intern;
 
-	zend_object_std_init(&intern->std, class_type TSRMLS_CC);
+	zend_object_std_init(intern, class_type TSRMLS_CC);
 
 	zend_hash_copy(
-		intern->std.properties,
+		intern->properties,
 		&class_type->default_properties,
 		(copy_ctor_func_t) zval_add_ref,
 		(void *) &tmp,
