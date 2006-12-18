@@ -59,6 +59,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Criteria
+		**/
 		public function addOrder(OrderBy $order)
 		{
 			$this->order[] = $order;
@@ -99,7 +102,11 @@
 				}
 			}
 			
-			return $this->dao->getListByQuery($query);
+			try {
+				return $this->dao->getListByQuery($query);
+			} catch (ObjectNotFoundException $e) {
+				return array();
+			}
 		}
 	}
 ?>
