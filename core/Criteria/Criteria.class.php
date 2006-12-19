@@ -94,7 +94,7 @@
 			return
 				$this->toSelectQuery()->
 				toDialectString(
-					DBPool::getByDao($this->dao)
+					DBPool::getByDao($this->dao)->getDialect()
 				);
 		}
 		
