@@ -177,7 +177,7 @@
 				$this->group[] = $field;
 			else 
 				$this->group[] =
-						new DBField($field, $this->getLastTable($table));
+					new DBField($field, $this->getLastTable($table));
 
 			return $this;
 		}
