@@ -45,7 +45,7 @@
 				$quoted = array();
 				
 				foreach ($array as $item)
-					$quoted[] = $dialect->quoteValue($item);
+					$quoted[] = $dialect->valueToString($item);
 
 				$value = implode(', ', $quoted);
 			} else
