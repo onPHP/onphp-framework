@@ -1,5 +1,9 @@
 # $Id$
 
+2006-12-19	Konstantin V. Arkhipov
+
+	* main/Utils/TextUtils.class.php: famous upFirst() method added.
+
 2006-12-17	Konstantin V. Arkhipov
 
 	* ext/main/: DAOConnected, FullTextDAO and ViewResolver interfaces

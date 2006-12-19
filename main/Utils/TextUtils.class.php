@@ -88,5 +88,12 @@
 			
 			return base64_decode($data);
 		}
+		
+		public static function upFirst($string)
+		{
+			$firstOne = mb_strtoupper(mb_substr($string, 0, 1));
+			
+			return $firstOne.mb_substr($string, 1);
+		}
 	}
 ?>
