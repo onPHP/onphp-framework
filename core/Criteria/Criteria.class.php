@@ -101,7 +101,7 @@
 		/**
 		 * @return SelectQuery
 		**/
-		protected function toSelectQuery()
+		public function toSelectQuery()
 		{
 			$query =
 				$this->dao->makeSelectHead()->
