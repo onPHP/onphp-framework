@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Criteria
 	**/
-	final class Criteria
+	final class Criteria implements Stringable
 	{
 		private $dao	= null;
 		private $logic	= null;
@@ -82,6 +82,27 @@
 		
 		public function getList()
 		{
+			try {
+				return $this->dao->getListByQuery($this->toSelectQuery());
+			} catch (ObjectNotFoundException $e) {
+				return array();
+			}
+		}
+		
+		public function toString()
+		{
+			return
+				$this->toSelectQuery()->
+				toDialectString(
+					DBPool::getByDao($this->dao)
+				);
+		}
+		
+		/**
+		 * @return SelectQuery
+		**/
+		protected function toSelectQuery()
+		{
 			$query =
 				$this->dao->makeSelectHead()->
 				limit($this->limit, $this->offset);
@@ -102,11 +123,7 @@
 				}
 			}
 			
-			try {
-				return $this->dao->getListByQuery($query);
-			} catch (ObjectNotFoundException $e) {
-				return array();
-			}
+			return $query;
 		}
 	}
 ?>
