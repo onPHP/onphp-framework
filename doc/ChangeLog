@@ -1,5 +1,10 @@
 # $Id$
 
+2006-12-21	Konstantin V. Arkhipov
+
+	* core/Base/Date.class.php: now implements DialectString, so you can
+	use Date/Timestamp in OSQL-related logic.
+
 2006-12-20	Konstantin V. Arkhipov
 
 	* main/Flow/RedirectView.class.php: now skips arrays and objects in

@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup Base
 	**/
-	class Date implements Stringable
+	class Date implements Stringable, DialectString
 	{
 		const WEEKDAY_MONDAY 	= 1;
 		const WEEKDAY_TUESDAY	= 2;
@@ -211,6 +211,12 @@
 		public function toString()
 		{
 			return $this->string;
+		}
+		
+		public function toDialectString(Dialect $dialect)
+		{
+			// there are no known differences yet
+			return $this->toString();
 		}
 		
 		protected static function getFormat()
