@@ -68,7 +68,7 @@
 		/**
 		 * @return Criteria
 		**/
-		public function addOrder(OrderBy $order)
+		public function addOrder(LogicalObject $order)
 		{
 			$this->order[] = $order;
 			
