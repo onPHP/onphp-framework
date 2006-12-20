@@ -54,6 +54,12 @@
 		**/
 		public function add(LogicalObject $logic)
 		{
+			Assert::isFalse(
+				$logic instanceof OrderBy,
+				
+				'common typo'
+			);
+			
 			$this->logic->expAnd($logic);
 			
 			return $this;
