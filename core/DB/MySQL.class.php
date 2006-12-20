@@ -182,7 +182,7 @@
 		{
 			if (mysql_num_rows($result) > 1)
 				throw new TooManyRowsException(
-					"query returned too many rows (we need only one)"
+					'query returned too many rows (we need only one)'
 				);
 			
 			return $result;

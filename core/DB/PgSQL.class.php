@@ -249,7 +249,10 @@
 				
 				Assert::isTrue(
 					isset($types[$info['type']]),
-					"unknown type '{$types[$info['type']]}' found in column '{$name}'"
+					
+					'unknown type "'
+					.$types[$info['type']]
+					.'" found in column "'.$name.'"'
 				);
 				
 				$column =
@@ -270,7 +273,7 @@
 		{
 			if (pg_num_rows($result) > 1)
 				throw new TooManyRowsException(
-					"query returned too many rows (we need only one)"
+					'query returned too many rows (we need only one)'
 				);
 			
 			return $result;
