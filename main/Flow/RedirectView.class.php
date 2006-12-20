@@ -30,7 +30,8 @@
 				$qs = array();
 				
 				foreach ($model->getList() as $key => $val) {
-					$qs[] = $key.'='.$val;
+					if (!is_object($val) && !is_array($val))
+						$qs[] = $key.'='.$val;
 				}
 			
 				if (strpos($this->getUrl(), '?') === false)
