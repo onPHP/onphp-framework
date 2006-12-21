@@ -202,6 +202,11 @@
 			return Cache::worker($this)->getCachedByQuery($query);
 		}
 		
+		public function drop(Identifiable $object)
+		{
+			return $this->dropById($object->getId());
+		}
+		
 		public function dropById($id)
 		{
 			return Cache::worker($this)->dropById($id);

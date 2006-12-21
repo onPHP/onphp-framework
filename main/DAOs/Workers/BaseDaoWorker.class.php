@@ -43,6 +43,11 @@
 		
 		//@{
 		// erasers
+		public function drop(Identifiable $object)
+		{
+			return $this->dropById($object->getId());
+		}
+		
 		public function dropById($id)
 		{
 			$result =

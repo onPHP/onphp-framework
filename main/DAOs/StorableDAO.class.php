@@ -80,6 +80,15 @@
 				);
 		}
 		
+		public function import(Identifiable $object)
+		{
+			return
+				$this->inject(
+					OSQL::insert(),
+					$object
+				);
+		}
+		
 		public function guessAtom($atom, JoinCapableQuery $query)
 		{
 			if ($atom instanceof Property)

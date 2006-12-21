@@ -53,6 +53,7 @@
 		
 		//@{
 		// erasers
+		public function drop(Identifiable $object);
 		public function dropById($id);
 		public function dropByIds(/* array */ $ids);
 		//@}
