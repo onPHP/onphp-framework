@@ -19,6 +19,7 @@
 	{
 		private static $symbols =
 			array(
+				' '		=> ' ', // bovm
 				' < '	=> ' &lt; ',
 				' > '	=> ' &gt; ',
 				'…'		=> '&#133;',
@@ -49,7 +50,7 @@
 		private static $from = array(
 			'~\-{2,}~',						// --
 			'~([\w\pL]+)\s\-\s~',			// foo - bar
-			'~\s([\w\pL]{1,2})\s~U',		// a foo
+			'~([\s\pP])([\w\pL]{1,2})\s~U',	// bar a foo
 			'~\"(.*)\"~De',					// "qu"o"te"
 			'~([\w\pL\']+)~e'				// rock'n'roll
 		);
@@ -57,7 +58,7 @@
 		private static $to = array(
 			'-',
 			'$1&nbsp;&#151; ',
-			' $1&nbsp;',
+			'$1$2&nbsp;',
 			'\'&laquo;\'.$this->innerQuotes(\'$1\').\'&raquo;\'',
 			'str_replace("\'", \'&#146;\', \'$1\')'
 		);
@@ -74,12 +75,12 @@
 		{
 			return preg_replace(
 				array(
-					'~([^<>]+)<~e',
-					'~>([^<]+)~e'
+					'~([^<>]+)<>?~e',
+					'~>([^<>]+)~e',
 				),
 				array(
 					'$this->typographize(\'$1\').\'<\'',
-					'\'>\'.$this->typographize(\'$1\')'
+					'\'>\'.$this->typographize(\'$1\')',
 				),
 				strtr($value, self::$symbols)
 			);
@@ -87,6 +88,9 @@
 		
 		private function typographize($text)
 		{
+			if (strlen($text) < 2)
+				return $text;
+			
 			return
 				preg_replace(
 					self::$from,
