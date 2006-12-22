@@ -1,5 +1,9 @@
 # $Id$
 
+2006-12-22	Konstantin V. Arkhipov
+
+	* core/Form/Filters/RussianTypograph.class.php: hi, Tema.
+
 2006-12-21	Konstantin V. Arkhipov
 
 	* main/DAOs/GenericDAO.class.php: drop() added.
