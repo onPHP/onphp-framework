@@ -19,6 +19,8 @@
 	{
 		private static $symbols =
 			array(
+				' < '	=> ' &lt; ',
+				' > '	=> ' &gt; ',
 				'…'		=> '&#133;',
 				'...'	=> '&#133;',
 				'™'		=> '&trade;',
@@ -49,7 +51,7 @@
 			'~([\w\pL]+)\s\-\s~',			// foo - bar
 			'~\s([\w\pL]{1,2})\s~U',		// a foo
 			'~\"(.*)\"~De',					// "qu"o"te"
-			'~([\w\pL\']+)~e',					// rock'n'roll
+			'~([\w\pL\']+)~e'				// rock'n'roll
 		);
 		
 		private static $to = array(
@@ -70,15 +72,30 @@
 		
 		public function apply($value)
 		{
+			return preg_replace(
+				array(
+					'~([^<>]+)<~e',
+					'~>([^<]+)~e'
+				),
+				array(
+					'$this->typographize(\'$1\').\'<\'',
+					'\'>\'.$this->typographize(\'$1\')'
+				),
+				strtr($value, self::$symbols)
+			);
+		}
+		
+		private function typographize($text)
+		{
 			return
 				preg_replace(
 					self::$from,
 					self::$to,
-					strtr($value, self::$symbols)
+					stripslashes($text)
 				);
 		}
 		
-		protected function innerQuotes($text)
+		private function innerQuotes($text)
 		{
 			return
 				preg_replace(
