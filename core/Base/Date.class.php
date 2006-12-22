@@ -121,6 +121,11 @@
 		{
 			return $this->day;
 		}
+		
+		public function getWeek()
+		{
+			return date('W', $this->int);
+		}
 
 		public function getWeekDay()
 		{
