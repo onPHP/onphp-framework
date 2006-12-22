@@ -171,6 +171,11 @@
 			return strftime('%w', $this->int);
 		}
 		
+		public function getWeek()
+		{
+			return date('W', $this->int);
+		}
+		
 		public function getHour()
 		{
 			return $this->hour;
