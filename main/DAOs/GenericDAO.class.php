@@ -204,7 +204,9 @@
 		
 		public function drop(Identifiable $object)
 		{
-			return $this->dropById($object->getId());
+			$this->checkObjectType($object);
+			
+			return Cache::worker($this)->dropById($object->getId());
 		}
 		
 		public function dropById($id)
@@ -237,5 +239,13 @@
 			return Cache::worker($this)->uncacheLists();
 		}
 		//@}
+		
+		/* void */ protected function checkObjectType(Identifiable $object)
+		{
+			Assert::isTrue(
+				get_class($object) === $this->getObjectName(),
+				'strange object given, i can not inject it'
+			);
+		}
 	}
 ?>
