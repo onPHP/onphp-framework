@@ -74,6 +74,7 @@
 					
 					$className = $this->getClassFor($property);
 					
+					// TODO: don't join container's table if only id is requested
 					if (is_array($className)) { // container
 						$containerName = $className[0];
 						$objectName = $className[1];
