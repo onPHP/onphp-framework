@@ -22,9 +22,9 @@
 	{
 		protected $names = array(/* override me */);
 		
-		public function __construct($id)
+		final public function __construct($id)
 		{
-			$this->changeId($id);
+			$this->setId($id);
 		}
 		
 		/// @{ prevent's serialization of names' array
@@ -35,7 +35,7 @@
 		
 		public function __wakeup()
 		{
-			$this->changeId($this->id);
+			$this->setId($this->id);
 		}
 		
 		public function serialize()
@@ -45,7 +45,7 @@
 		
 		public function unserialize($serialized)
 		{
-			$this->changeId($serialized);
+			$this->setId($serialized);
 		}
 		/// @}
 		
@@ -61,6 +61,12 @@
 		public static function getAnyId()
 		{
 			return 1;
+		}
+		
+		/// parent's getId() is too complex in our case
+		public function getId()
+		{
+			return $this->id;
 		}
 		
 		public function getObjectList()
@@ -84,7 +90,7 @@
 			return $this->names;
 		}
 		
-		protected function changeId($id)
+		public function setId($id)
 		{
 			$names = $this->getNameList();
 

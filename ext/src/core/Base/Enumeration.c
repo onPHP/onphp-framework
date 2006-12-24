@@ -31,7 +31,7 @@ ONPHP_METHOD(Enumeration, __construct)
 		&getThis(),
 		Z_OBJCE_P(getThis()),
 		NULL,
-		"changeid",
+		"setid",
 		NULL,
 		id
 	);
@@ -58,7 +58,7 @@ ONPHP_METHOD(Enumeration, __wakeup)
 		&getThis(),
 		Z_OBJCE_P(getThis()),
 		NULL,
-		"changeid",
+		"setid",
 		NULL,
 		ONPHP_READ_PROPERTY(getThis(), "id")
 	);
@@ -104,13 +104,22 @@ ONPHP_METHOD(Enumeration, unserialize)
 		&getThis(),
 		Z_OBJCE_P(getThis()),
 		NULL,
-		"changeid",
+		"setid",
 		NULL,
 		id
 	);
 }
 
-ONPHP_METHOD(Enumeration, changeId)
+ONPHP_METHOD(Enumeration, getId)
+{
+	zval *id;
+	
+	id = ONPHP_READ_PROPERTY(getThis(), "id");
+	
+	RETURN_ZVAL(id, 1, 0);
+}
+
+ONPHP_METHOD(Enumeration, setId)
 {
 	zval *id, *names;
 	zval **found;
@@ -352,7 +361,7 @@ ZEND_BEGIN_ARG_INFO(arginfo_enum, 0) \
 ZEND_END_ARG_INFO();
 
 zend_function_entry onphp_funcs_Enumeration[] = {
-	ONPHP_ME(Enumeration, __construct,	arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Enumeration, __construct,	arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_FINAL)
 	ONPHP_ME(Enumeration, getList,		arginfo_enum, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Enumeration, getAnyId,		NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Enumeration, getObjectList,NULL, ZEND_ACC_PUBLIC)
@@ -362,6 +371,6 @@ zend_function_entry onphp_funcs_Enumeration[] = {
 	ONPHP_ME(Enumeration, __wakeup,		NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, serialize,	NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, unserialize,	arginfo_one, ZEND_ACC_PUBLIC)
-	ONPHP_ME(Enumeration, changeId,		arginfo_one, ZEND_ACC_PROTECTED)
+	ONPHP_ME(Enumeration, setId,		arginfo_one, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };

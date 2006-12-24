@@ -2,6 +2,9 @@
 
 2006-12-24	Konstantin V. Arkhipov
 
+	* core/Base/Enumeration.class.php: changeId() renamed to setId(),
+	constructor is final now, should help during migration.
+
 	* core/Base/IdentifiableObject.class.php: getId/setId are not longer
 	final.
 
