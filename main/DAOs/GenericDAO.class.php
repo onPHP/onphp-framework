@@ -59,6 +59,26 @@
 			return $this->classes;
 		}
 		
+		public function getClassFor($property)
+		{
+			if (isset($this->classes[$property]))
+				return $this->classes[$property];
+			
+			throw new MissingElementException('no hints for '.$property);
+		}
+		
+		public function getFieldFor($property)
+		{
+			if (array_key_exists($property, $this->mapping)) {
+				return
+					$this->mapping[$property] === null
+						? $property
+						: $this->mapping[$property];
+			}
+			
+			throw new MissingElementException('unknown property '.$property);
+		}
+		
 		/**
 		 * @return SelectQuery
 		**/
@@ -74,10 +94,8 @@
 					OSQL::select()->
 					from($table);
 				
-				foreach ($this->getMapping() as $prop => $field)
-					$this->selectHead->get(
-						new DBField(($field === null ? $prop : $field), $table)
-					);
+				foreach (array_keys($this->getMapping()) as $property)
+					$this->selectHead->get($this->getFieldFor($property));
 			}
 			
 			return clone $this->selectHead;

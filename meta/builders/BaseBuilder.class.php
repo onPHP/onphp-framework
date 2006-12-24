@@ -194,9 +194,31 @@ EOT;
 				if (
 					($type = $property->getType()) instanceof ObjectType
 					&& (!$type->isGeneric())
-				)
+				) {
+					switch ($property->getRelationId()) {
+						case MetaRelation::ONE_TO_ONE:
+						case MetaRelation::LAZY_ONE_TO_ONE:
+							$className = "'{$type->getClass()}'";
+							break;
+							
+						case MetaRelation::ONE_TO_MANY:
+						case MetaRelation::MANY_TO_MANY:
+							$className =
+								"array('"
+								.$class->getName()
+								.ucfirst($property->getName())
+								."DAO', '"
+								.$type->getClass()
+								."')";
+							break;
+							
+						default:
+							throw new WrongStateException('strange relation type');
+					}
+					
 					$hints[] =
-						"'{$property->getName()}' => '{$type->getClass()}'";
+						"'{$property->getName()}' => {$className}";
+				}
 			}
 			
 			return $hints;
@@ -245,10 +267,8 @@ EOT;
 								$property->getType()->getClass()
 							);
 						
-						$identifier = $remoteClass->getIdentifier();
-						
 						$row .=
-							"'{$property->getName()}".ucfirst($identifier->getName())
+							"'{$property->getName()}"
 							."' => '{$property->getDumbIdName()}'";
 					} else
 						$row = null;

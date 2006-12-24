@@ -2,6 +2,9 @@
 
 2006-12-24	Konstantin V. Arkhipov
 
+	* main/DAOs/: initial support for dot-style property names
+	implemented.
+
 	* main/Containers/Unified/: all pointer-methods are now static too.
 
 	* main/DAOs/InformedDAO.class.php: support interface for DAO's
