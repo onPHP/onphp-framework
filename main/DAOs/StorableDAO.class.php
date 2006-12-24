@@ -72,9 +72,19 @@
 					$property = $path[0];
 					unset($path[0]);
 					
+					// prevents useless joins
+					if (
+						isset($path[1])
+						&& ($path[1] == 'id')
+						&& (count($path) == 1)
+					) {
+						$onlyId = true;
+					} else {
+						$onlyId = false;
+					}
+					
 					$className = $this->getClassFor($property);
 					
-					// TODO: don't join container's table if only id is requested
 					if (is_array($className)) { // container
 						$containerName = $className[0];
 						$objectName = $className[1];
@@ -103,8 +113,18 @@
 										$table
 									)
 								)
-							)->
-							join(
+							);
+						
+						if ($onlyId)
+							return
+								DBField::create(
+									call_user_func(
+										array($containerName, 'getChildIdField')
+									),
+									$table
+								);
+						else
+							$query->join(
 								$dao->getTable(),
 								
 								Expression::eq(
@@ -122,6 +142,13 @@
 								)
 							);
 					} else {
+						if ($onlyId)
+							return
+								new DBField(
+									$this->getFieldFor($property),
+									$this->getTable()
+								);
+
 						$dao = call_user_func(array($className, 'dao'));
 						
 						$query->
