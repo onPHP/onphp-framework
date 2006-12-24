@@ -1,5 +1,10 @@
 # $Id$
 
+2006-12-24	Konstantin V. Arkhipov
+
+	* core/Base/IdentifiableObject.class.php: getId/setId are not longer
+	final.
+
 2006-12-22	Konstantin V. Arkhipov
 
 	* core/Form/Filters/RussianTypograph.class.php: hi, Tema.

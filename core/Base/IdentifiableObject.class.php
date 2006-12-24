@@ -32,7 +32,7 @@
 			return $io->setId($id);
 		}
 		
-		final public function getId()
+		public function getId()
 		{
 			if (
 				$this->id instanceof Identifier
@@ -46,7 +46,7 @@
 		/**
 		 * @return IdentifiableObject
 		**/
-		final public function setId($id)
+		public function setId($id)
 		{
 			$this->id = $id;
 			
