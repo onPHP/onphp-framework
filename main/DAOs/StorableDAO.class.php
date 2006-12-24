@@ -15,37 +15,9 @@
 	**/
 	abstract class StorableDAO extends GenericDAO
 	{
-		// override later
-		protected $mapping = array();
-		
 		public function getIdName()
 		{
 			return 'id';
-		}
-		
-		public function getMapping()
-		{
-			return $this->mapping;
-		}
-		
-		public function getFields()
-		{
-			static $fields = null;
-			
-			if ($fields === null) {
-				if ($this->mapping)
-					foreach ($this->getMapping() as $prop => $field)
-						$fields[] = ($field === null ? $prop : $field);
-				elseif ($this->fields)
-					$fields = &$this->fields;
-				else
-					throw new WrongStateException(
-						'there are no fields specified for '
-						."'{$this->getObjectName()}DAO'"
-					);
-			}
-			
-			return $fields;
 		}
 		
 		public function take(Identifiable $object)

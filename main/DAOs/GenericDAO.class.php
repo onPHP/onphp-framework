@@ -17,11 +17,11 @@
 	**/
 	abstract class GenericDAO extends Singleton implements BaseDAO
 	{
+		// override later
+		protected $mapping = array();
+		
 		protected $link			= null;
 		protected $selectHead	= null;
-		
-		// backwards compatibility
-		protected $fields = array();
 		
 		abstract public function getTable();
 		abstract public function getObjectName();
@@ -39,11 +39,6 @@
 			$prefix = null
 		);
 
-		public function getFields()
-		{
-			return $this->fields;
-		}
-		
 		public function getSequence()
 		{
 			return $this->getTable().'_id';
@@ -60,20 +55,30 @@
 			return null;
 		}
 		
+		public function getMapping()
+		{
+			return $this->mapping;
+		}
+		
 		/**
 		 * @return SelectQuery
 		**/
 		public function makeSelectHead()
 		{
 			if (null === $this->selectHead) {
+				if (!$this->mapping)
+					throw new WrongStateException('empty mapping');
+				
 				$table = $this->getTable();
 
 				$this->selectHead = 
 					OSQL::select()->
 					from($table);
 				
-				foreach ($this->getFields() as $field)
-					$this->selectHead->get(new DBField($field, $table));
+				foreach ($this->getMapping() as $prop => $field)
+					$this->selectHead->get(
+						new DBField(($field === null ? $prop : $field), $table)
+					);
 			}
 			
 			return clone $this->selectHead;
