@@ -1,4 +1,4 @@
 # $Id$
 
-* fetch strategy for Criteria;
-* dao for value objects (Range and other without table);
+* fetch strategy for Criteria (Antony);
+* dao for value objects (Range and others without table) (voxus);
