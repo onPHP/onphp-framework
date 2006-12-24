@@ -21,9 +21,9 @@
 	{
 		public static function friendlyFileSize($size, $order = 0)
 		{
-			static $units = array('', 'k' , 'm', 't', 'p');
+			static $units = array('', 'k' , 'M', 'G', 'T', 'P');
 			
-			if ($size >= 1024 && $order < 4)
+			if ($size >= 1024 && $order < 5)
 				return self::friendlyFileSize($size / 1024, $order + 1);
 			elseif (isset($units[$order]))
 				return round($size, 2).$units[$order];
