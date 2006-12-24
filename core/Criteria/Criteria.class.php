@@ -75,12 +75,31 @@
 			return $this;
 		}
 		
+		public function getLimit()
+		{
+			return $this->limit;
+		}
+		
 		/**
 		 * @return Criteria
 		**/
-		public function limit($limit = null, $offset = null)
+		public function setLimit($limit)
 		{
 			$this->limit = $limit;
+			
+			return $this;
+		}
+		
+		public function getOffset()
+		{
+			return $this->offset;
+		}
+		
+		/**
+		 * @return Criteria
+		**/
+		public function setOffset($offset)
+		{
 			$this->offset = $offset;
 			
 			return $this;
