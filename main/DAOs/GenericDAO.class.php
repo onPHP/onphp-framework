@@ -54,6 +54,11 @@
 			return $this->mapping;
 		}
 		
+		public function getClasses()
+		{
+			return $this->classes;
+		}
+		
 		/**
 		 * @return SelectQuery
 		**/
