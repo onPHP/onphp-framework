@@ -221,7 +221,7 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			// there are no known differences yet
-			return $this->toString();
+			return $dialect->quoteValue($this->toString());
 		}
 		
 		protected static function getFormat()
