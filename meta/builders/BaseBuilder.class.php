@@ -138,30 +138,30 @@ EOT;
 		{
 			$out = null;
 			
-			if ($source = $class->getSourceLink()) {
-				$out = <<<EOT
-public function getLinkName()
+			if (!$class->getPattern() instanceof AbstractClassPattern) {
+				
+				if ($class->getIdentifier()->getName() !== 'id') {
+					$out .= <<<EOT
+public static function getIdName()
 {
-	return '{$source}';
+	return '{$class->getIdentifier()->getName()}';
 }
 
-
 EOT;
-			}
+				}
 				
-			if (!$class->getPattern() instanceof AbstractClassPattern) {
 				$out .= <<<EOT
-public function getTable()
+public static function getTable()
 {
 	return '{$class->getDumbName()}';
 }
 
-public function getObjectName()
+public static function getObjectName()
 {
 	return '{$class->getName()}';
 }
 
-public function getSequence()
+public static function getSequence()
 {
 	return '{$class->getDumbName()}_id';
 }
@@ -169,6 +169,17 @@ EOT;
 			} else {
 				$out .= <<<EOT
 // no get{Table,ObjectName,Sequence} for abstract class
+EOT;
+			}
+			
+			if ($source = $class->getSourceLink()) {
+				$out .= <<<EOT
+public function getLinkName()
+{
+	return '{$source}';
+}
+
+
 EOT;
 			}
 			

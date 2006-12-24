@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup DAOs
 	**/
-	abstract class GenericDAO extends Singleton implements BaseDAO
+	abstract class GenericDAO extends Singleton implements BaseDAO, InformedDAO
 	{
 		// override later
 		protected $mapping = array();
@@ -23,9 +23,6 @@
 		protected $link			= null;
 		protected $selectHead	= null;
 		
-		abstract public function getTable();
-		abstract public function getObjectName();
-
 		/**
 		 * Builds complete object.
 		 * 
@@ -39,11 +36,6 @@
 			$prefix = null
 		);
 
-		public function getSequence()
-		{
-			return $this->getTable().'_id';
-		}
-		
 		/**
 		 * Returns link name which is used to get actual db-link from DBPool,
 		 * returning null by default for backwards compatibility.

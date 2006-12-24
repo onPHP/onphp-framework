@@ -15,7 +15,7 @@
 	**/
 	abstract class StorableDAO extends GenericDAO
 	{
-		public function getIdName()
+		public static function getIdName()
 		{
 			return 'id';
 		}
