@@ -13,7 +13,9 @@
 	/**
 	 * @ingroup Containers
 	**/
-	abstract class OneToManyLinked extends UnifiedContainer
+	abstract class OneToManyLinked
+		extends UnifiedContainer
+		implements OneToManyLinkedInfo
 	{
 		public function __construct(
 			Identifiable $parent, GenericDAO $dao, $lazy = true
@@ -29,22 +31,12 @@
 			$this->worker = new $worker($this);
 		}
 		
-		public function getParentIdField()
-		{
-			static $name = null;
-
-			if ($name === null)
-				$name = get_class($this->parent).'_id';
-
-			return $name;
-		}
-
-		public function getChildIdField()
+		public static function getChildIdField()
 		{
 			return 'id';
 		}
 
-		public function isUnlinkable()
+		public static function isUnlinkable()
 		{
 			return false;
 		}

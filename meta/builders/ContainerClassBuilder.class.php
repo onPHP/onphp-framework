@@ -67,7 +67,7 @@ EOT;
 			if ($holder->getRelation()->getId() == MetaRelation::MANY_TO_MANY) {
 				$out .= <<<EOT
 
-public function getHelperTable()
+public static function getHelperTable()
 {
 	return '{$class->getDumbName()}_{$remoteDumbName}';
 }
@@ -77,12 +77,12 @@ EOT;
 			
 			$out .= <<<EOT
 
-public function getChildIdField()
+public static function getChildIdField()
 {
 	return '{$remoteDumbName}_id';
 }
 
-public function getParentIdField()
+public static function getParentIdField()
 {
 	return '{$class->getDumbName()}_id';
 }
