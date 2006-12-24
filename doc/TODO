@@ -2,6 +2,5 @@
 
 * fix OrderBy: logical expressions, queries, etc; (antony?)
 * store serialized MetaClass in Proto's (?); (voxus)
-* implement multiGet @ CachePeer's (?); (voxus)
 * fetch strategy for Criteria;
 * dao for value objects (Range and other without table);
