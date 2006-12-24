@@ -1,5 +1,4 @@
 # $Id$
 
-* fix OrderBy: logical expressions, queries, etc; (antony?)
 * fetch strategy for Criteria;
 * dao for value objects (Range and other without table);
