@@ -36,7 +36,25 @@ EOT;
 			
 			$out .= <<<EOT
 
-		);
+	);
+
+EOT;
+
+			$hints = self::buildHints($class);
+			
+			if ($hints) {
+				$classes = implode(",\n", $hints);
+				
+				$out .= <<<EOT
+
+	protected \$classes = array(
+		{$classes}
+	);
+
+EOT;
+			}
+			
+			$out .= <<<EOT
 		
 {$pointers}
 

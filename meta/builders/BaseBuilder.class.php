@@ -186,6 +186,22 @@ EOT;
 			return $out;
 		}
 		
+		protected static function buildHints(MetaClass $class)
+		{
+			$hints = array();
+			
+			foreach ($class->getProperties() as $property) {
+				if (
+					($type = $property->getType()) instanceof ObjectType
+					&& (!$type->isGeneric())
+				)
+					$hints[] =
+						"'{$property->getName()}' => '{$type->getClass()}'";
+			}
+			
+			return $hints;
+		}
+		
 		protected static function buildMapping(MetaClass $class)
 		{
 			$mapping = array();

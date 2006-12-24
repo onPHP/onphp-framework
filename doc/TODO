@@ -1,7 +1,6 @@
 # $Id$
 
 * fix OrderBy: logical expressions, queries, etc; (antony?)
-* generate class-hints in DAO's for encapsulated classes; (voxus)
 * store serialized MetaClass in Proto's (?); (voxus)
 * implement multiGet @ CachePeer's (?); (voxus)
 * dot-style property names mapping for Criteria;

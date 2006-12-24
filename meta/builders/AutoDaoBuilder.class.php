@@ -41,6 +41,10 @@ EOT;
 				if ($parent->getPattern() instanceof StraightMappingPattern) {
 					$out .= "parent::__construct();\n\n";
 				}
+				
+				if ($hints = self::buildHints($class)) {
+					$classes = implode(",\n", $hints);
+				}
 			
 				$out .= <<<EOT
 		\$this->mapping = array_merge(
@@ -56,6 +60,22 @@ EOT;
 				$out .= <<<EOT
 				)
 			);
+
+EOT;
+
+				if ($classes) {
+					$out .= <<<EOT
+
+		\$this->classes = array_merge(
+			\$this->classes,
+			array(
+				{$classes}
+			);
+
+EOT;
+				}
+				
+				$out .= <<<EOT
 	}
 
 

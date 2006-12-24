@@ -19,6 +19,8 @@
 	{
 		// override later
 		protected $mapping = array();
+		// encapsulated classes
+		protected $classes = array();
 		
 		protected $link			= null;
 		protected $selectHead	= null;
