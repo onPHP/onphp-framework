@@ -42,6 +42,8 @@ EOT;
 					$out .= "parent::__construct();\n\n";
 				}
 				
+				$classes = null;
+				
 				if ($hints = self::buildHints($class)) {
 					$classes = implode(",\n", $hints);
 				}
