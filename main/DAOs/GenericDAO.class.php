@@ -27,31 +27,7 @@
 		protected $link			= null;
 		protected $selectHead	= null;
 		
-		abstract protected function makeSelf(&$array, $prefix = null);
-		
-		protected function makeCascade(/* Identifiable */ $object, &$array, $prefix = null)
-		{
-			return $object;
-		}
-		
-		protected function makeJoiners(/* Identifiable */ $object, &$array, $prefix = null)
-		{
-			return $object;
-		}
-		
-		public function makeObject(&$array, $prefix = null)
-		{
-			$object = $this->selfSpawn($array, $prefix);
-			
-			return $this->makeCascade($object, $array, $prefix);
-		}
-		
-		public function makeJoinedObject(&$array, $prefix = null)
-		{
-			$object = $this->selfSpawn($array, $prefix);
-			
-			return $this->makeJoiners($object, $array, $prefix);
-		}
+		abstract protected function makeObject(&$array, $prefix = null);
 		
 		/**
 		 * Returns link name which is used to get actual db-link from DBPool,
@@ -286,18 +262,6 @@
 				get_class($object) === $this->getObjectName(),
 				'strange object given, i can not inject it'
 			);
-		}
-		
-		private function selfSpawn(&$array, $prefix = null)
-		{
-			if (isset($this->identityMap[$array[$prefix.'id']]))
-				$object = $this->identityMap[$array[$prefix.'id']];
-			else {
-				$object = $this->makeSelf($array, $prefix);
-				$this->identityMap[$object->getId()] = $object;
-			}
-			
-			return $object;
 		}
 	}
 ?>
