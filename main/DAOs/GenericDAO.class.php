@@ -22,22 +22,37 @@
 		// encapsulated classes
 		protected $classes = array();
 		
+		protected $identityMap	= array();
+		
 		protected $link			= null;
 		protected $selectHead	= null;
 		
-		/**
-		 * Builds complete object.
-		 * 
-		 * @see http://onphp.org/examples.DAOs.en.html
-		 *
-		 * @param $array	associative array('fieldName' => 'value')
-		 * @param $prefix	prefix (if any) of all fieldNames
-		**/
-		abstract protected function makeObject(
-			/* array */ &$array,
-			$prefix = null
-		);
-
+		abstract protected function makeSelf(&$array, $prefix = null);
+		
+		protected function makeCascade(/* Identifiable */ $object, &$array, $prefix = null)
+		{
+			return $object;
+		}
+		
+		protected function makeJoiners(/* Identifiable */ $object, &$array, $prefix = null)
+		{
+			return $object;
+		}
+		
+		public function makeObject(&$array, $prefix = null)
+		{
+			$object = $this->selfSpawn($array, $prefix);
+			
+			return $this->makeCascade($object, $array, $prefix);
+		}
+		
+		public function makeJoinedObject(&$array, $prefix = null)
+		{
+			$object = $this->selfSpawn($array, $prefix);
+			
+			return $this->makeJoiners($object, $array, $prefix);
+		}
+		
 		/**
 		 * Returns link name which is used to get actual db-link from DBPool,
 		 * returning null by default for backwards compatibility.
@@ -110,6 +125,9 @@
 
 		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
 		{
+			if (isset($this->identityMap[$id]))
+				return $this->identityMap[$id];
+			
 			return Cache::worker($this)->getById($id, $expires);
 		}
 
@@ -268,6 +286,18 @@
 				get_class($object) === $this->getObjectName(),
 				'strange object given, i can not inject it'
 			);
+		}
+		
+		private function selfSpawn(&$array, $prefix = null)
+		{
+			if (isset($this->identityMap[$array[$prefix.'id']]))
+				$object = $this->identityMap[$array[$prefix.'id']];
+			else {
+				$object = $this->makeSelf($array, $prefix);
+				$this->identityMap[$object->getId()] = $object;
+			}
+			
+			return $object;
 		}
 	}
 ?>

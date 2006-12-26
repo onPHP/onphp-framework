@@ -32,33 +32,51 @@
 			$standaloneFillers = array();
 			$chainFillers = array();
 			
+			$joinedFillers = array();
+			$cascadeStandaloneFillers = array();
+			$cascadeChainFillers = array();
+			
 			foreach ($class->getProperties() as $property) {
 				
-				$filler = $property->toDaoSetter($className);
-				
-				if ($filler !== null) {
+				if (
+					$property->getRelationId() == MetaRelation::ONE_TO_ONE
+					|| $property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE
+				) {
+					$buildSetter = false;
 					
-					$setters[] = $property->toDaoField($className);
+					if ($filler = $property->toDaoSetter($className, true)) {
+						self::processFiller(
+							$property,
+							$cascadeStandaloneFillers,
+							$cascadeChainFillers,
+							$filler
+						);
+						
+						$buildSetter = true;
+					}
 					
-					if (
-						(
-							!$property->getType()->isGeneric()
-							|| $property->getType() instanceof ObjectType
-						)
-						&& !$property->isRequired()
-						&& !$property->getType() instanceof RangeType
-					)
-						$standaloneFillers[] =
-							implode(
-								"\n",
-								explode("\n", $filler)
-							);
-					else
-						$chainFillers[] =
-							implode(
-								"\n",
-								explode("\n", $filler)
-							);
+					if ($filler = $property->toDaoSetter($className, false)) {
+						$joinedFillers[] = $filler;
+						
+						$buildSetter = true;
+					}
+					
+					if ($buildSetter)
+						$setters[] = $property->toDaoField($className);
+				} else {
+					$filler = $property->toDaoSetter($className);
+					
+					if ($filler !== null) {
+						
+						$setters[] = $property->toDaoField($className);
+						
+						self::processFiller(
+							$property,
+							$standaloneFillers,
+							$chainFillers,
+							$filler
+						);
+					}
 				}
 			}
 			
@@ -69,41 +87,24 @@
 
 EOT;
 
-			if (
-				$class->getPattern() instanceof StraightMappingPattern
-				|| $class->getPattern() instanceof DictionaryClassPattern
-			) {
-				$out .= <<<EOT
-
-/**
- * @return {$className}
-**/
-public function makeObject(&\$array, \$prefix = null)
-{
-	return \$this->fillObject(new {$className}(), \$array, \$prefix);
-}
-
-EOT;
-			} else {
-				$out .= <<<EOT
-				
-// there is no makeObject because of abstract nature of meta-class
-				
-EOT;
-			}
-			
 			$out .= <<<EOT
 
 /**
  * @return {$className}
 **/
-protected function fillObject(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
+protected function makeSelf(&\$array, \$prefix = null)
 {
 
 EOT;
 			if ($class->getParent()) {
 				$out .= <<<EOT
-parent::fillObject(\${$varName}, \$array, \$prefix);
+\${$varName} = parent::makeSelf(\$array, \$prefix);
+
+
+EOT;
+			} else {
+				$out .= <<<EOT
+\${$varName} = new {$className}();
 
 
 EOT;
@@ -123,9 +124,74 @@ EOT;
 			$out .= <<<EOT
 			return \${$varName};
 		}
-	}
 
 EOT;
+			if ($cascadeChainFillers || $cascadeStandaloneFillers) {
+				$out .= <<<EOT
+
+/**
+ * @return {$className}
+**/
+protected function makeCascade(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
+{
+
+EOT;
+				if ($class->getParent()) {
+					$out .= <<<EOT
+\${$varName} = parent::makeCascade(\${$varName});
+
+EOT;
+				}
+				
+				if ($cascadeChainFillers) {
+					$out .= "\${$varName}->\n";
+					
+					$out .= implode("->\n", $cascadeChainFillers).";\n\n";
+				}
+				
+				if ($cascadeStandaloneFillers) {
+					$out .= implode("\n", $cascadeStandaloneFillers)."\n";
+				}
+				
+				$out .= <<<EOT
+return \${$varName};
+}
+
+EOT;
+			}
+			
+			if ($joinedFillers) {
+				$fillers = implode("\n", $joinedFillers);
+				
+				$out .= <<<EOT
+
+/**
+ * @return {$className}
+**/
+protected function makeJoiners(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
+{
+
+EOT;
+				if ($class->getParent()) {
+					$out .= <<<EOT
+\${$varName} = parent::makeJoiners(\${$varName}, \$array, \$prefix);
+
+EOT;
+				}
+				
+				$out .= <<<EOT
+{$fillers}
+return \${$varName};
+}
+
+EOT;
+			}
+			
+			$out .= <<<EOT
+}
+
+EOT;
+			
 			return $out;
 		}
 		
@@ -324,6 +390,34 @@ EOT;
 		protected static function getHeel()
 		{
 			return '?>';
+		}
+		
+		/* void */ private static function processFiller(
+			MetaClassProperty $property,
+			/* array */ &$standaloneFillers,
+			/* array */ &$chainFillers,
+			$filler
+		)
+		{
+			if (
+				(
+					!$property->getType()->isGeneric()
+					|| $property->getType() instanceof ObjectType
+				)
+				&& !$property->isRequired()
+				&& !$property->getType() instanceof RangeType
+			)
+				$standaloneFillers[] =
+					implode(
+						"\n",
+						explode("\n", $filler)
+					);
+			else
+				$chainFillers[] =
+					implode(
+						"\n",
+						explode("\n", $filler)
+					);
 		}
 	}
 ?>

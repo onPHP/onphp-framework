@@ -199,12 +199,12 @@
 			return <<<EOT
 
 {$this->type->toPrimitive()}('{$this->name}')->
-$required()$size
+{$required}(){$size}
 
 EOT;
 		}
 		
-		public function toDaoSetter($className)
+		public function toDaoSetter($className, $cascade = true)
 		{
 			$varName = $this->toVarName($className);
 			$method = ucfirst($this->name);
@@ -261,17 +261,18 @@ if (isset(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])) {
 EOT;
 								}
 							} else {
-								if ($this->required) {
-									
-									$out =
-										"set{$method}("
-										."{$this->type->getClass()}::dao()->getById("
-										."\$array[\$prefix.'{$this->getDumbIdName()}']"
-										.'))';
-									
-								} else {
-									
-									$out = <<<EOT
+								if ($cascade) {
+									if ($this->required) {
+										
+										$out =
+											"set{$method}("
+											."{$this->type->getClass()}::dao()->getById("
+											."\$array[\$prefix.'{$this->getDumbIdName()}']"
+											.'))';
+										
+									} else {
+										
+										$out = <<<EOT
 if (isset(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])) {
 	\${$varName}->set{$method}(
 		{$this->type->getClass()}::dao()->getById(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])
@@ -279,7 +280,14 @@ if (isset(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])) {
 }
 
 EOT;
-								
+									}
+								} else {
+									$out = <<<EOT
+\${$varName}->set{$method}(
+	{$this->type->getClass()}::dao()->makeSelf(\$array, \$prefix)
+);
+
+EOT;
 								}
 							}
 						}

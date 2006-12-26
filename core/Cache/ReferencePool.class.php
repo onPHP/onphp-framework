@@ -69,7 +69,8 @@
 			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			$this->pool[$key] = $value;
+			if (!is_object($value) && (!$value instanceof DAOConnected))
+				$this->pool[$key] = $value;
 			
 			return $this->peer->$action($key, $value, $expires);
 		}

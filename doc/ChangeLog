@@ -2,6 +2,14 @@
 
 2006-12-26	Konstantin V. Arkhipov
 
+	* core/Cache/ReferencePool.class.php: doesn't stores single
+	dao-connected objects.
+
+	* main/DAOs/GenericDAO.class.php: so-called 'identity map' addded.
+
+	* meta/: now generates make-methods for cascading and batch object's
+	building.
+
 	* meta/patterns/SpookedEnumerationPattern.class.php: one more pattern,
 	as requested by Sherman.
 
