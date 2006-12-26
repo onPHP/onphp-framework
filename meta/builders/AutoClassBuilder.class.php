@@ -89,7 +89,7 @@
 **/
 public function get{$methodName}(\$lazy = false)
 {
-	if (!\$this->{$name}) {
+	if (!\$this->{$name} || (\$this->{$name} != \$lazy)) {
 		\$this->{$name} = new {$containerName}(\$this, \$lazy);
 		
 		if (\$this->id) {
