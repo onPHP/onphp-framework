@@ -460,8 +460,6 @@
 					'spooked classes must have only identifier'
 				);
 				
-				var_dump($class->getPattern());
-			
 				Assert::isTrue(
 					($class->getPattern() instanceof SpookedClassPattern
 					|| $class->getPattern() instanceof SpookedEnumerationPattern),
