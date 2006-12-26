@@ -17,12 +17,10 @@
 	{
 		public function __construct(Prototyped $subject)
 		{
-			$this->commandMap = array(
-				'drop'		=> 'doDrop',
-				'save'		=> 'doSave',
-				'edit'		=> 'doEdit',
-				'add'		=> 'doAdd'
-			);
+			$this->commandMap['drop']	= 'doDrop';
+			$this->commandMap['save']	= 'doSave';
+			$this->commandMap['edit']	= 'doEdit';
+			$this->commandMap['add']	= 'doAdd';
 			
 			parent::__construct($subject);
 		}
