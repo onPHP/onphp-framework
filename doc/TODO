@@ -1,4 +1,5 @@
 # $Id$
 
+* fix OrderBy: logical expressions, queries, etc; (Antony?)
 * fetch strategy for Criteria (Antony);
 * dao for value objects (Range and others without table) (voxus);
