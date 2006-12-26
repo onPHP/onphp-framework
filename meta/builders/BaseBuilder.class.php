@@ -32,18 +32,13 @@
 			$standaloneFillers = array();
 			$chainFillers = array();
 			
-			if ($class->getParent())
-				$setterIndent = 4;
-			else
-				$setterIndent = 5;
-			
 			foreach ($class->getProperties() as $property) {
 				
 				$filler = $property->toDaoSetter($className);
 				
 				if ($filler !== null) {
 					
-					$setters[] = $property->toDaoField($className, $setterIndent);
+					$setters[] = $property->toDaoField($className);
 					
 					if (
 						(
