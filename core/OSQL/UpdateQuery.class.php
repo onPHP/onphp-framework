@@ -40,6 +40,11 @@
 			return $this;
 		}
 		
+		public function hasJoinedTable($table)
+		{
+			return $this->joiner->hasJoinedTable($table);
+		}
+		
 		/**
 		 * @return UpdateQuery
 		**/
