@@ -181,7 +181,7 @@
 					if ($onlyId)
 						return
 							new DBField(
-								$this->getFieldFor($property),
+								$property->getDumbIdName(),
 								$this->getTable()
 							);
 	
