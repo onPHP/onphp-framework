@@ -297,12 +297,23 @@ if (isset(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])) {
 EOT;
 									}
 								} else {
-									$out = <<<EOT
+									if ($this->required) {
+										$out = <<<EOT
 \${$varName}->set{$method}(
 	{$this->type->getClass()}::dao()->makeJoinedObject(\$array, {$this->type->getClass()}::dao()->getJoinPrefix())
 );
 
 EOT;
+									} else {
+										$out = <<<EOT
+if (isset(\$array[{$this->type->getClass()}::dao()->getJoinPrefix().'{$this->getDumbName()}_{$idName}'])) {
+	\${$varName}->set{$method}(
+		{$this->type->getClass()}::dao()->makeJoinedObject(\$array, {$this->type->getClass()}::dao()->getJoinPrefix())
+	);
+}
+
+EOT;
+									}
 								}
 							}
 						}
