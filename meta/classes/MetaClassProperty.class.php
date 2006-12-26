@@ -66,6 +66,21 @@
 			return $this->dumbName.'_id';
 		}
 		
+		public function getContainerName($holderName)
+		{
+			Assert::isTrue(
+				(
+					$this->relation->getId() == MetaRelation::ONE_TO_MANY
+				) || (
+					$this->relation->getId() == MetaRelation::MANY_TO_MANY
+				),
+				
+				'huh?'
+			);
+			
+			return $holderName.ucfirst($this->getName()).'DAO';
+		}
+		
 		/**
 		 * @return MetaClassProperty
 		**/
@@ -251,7 +266,7 @@ EOT;
 									$out =
 										"set{$method}Id("
 										."\$array[\$prefix.'{$this->getDumbIdName()}']"
-										.'))';
+										.')';
 								} else {
 									$out = <<<EOT
 if (isset(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])) {

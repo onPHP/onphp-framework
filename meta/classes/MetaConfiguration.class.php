@@ -46,6 +46,7 @@
 			$xml = simplexml_load_file($metafile);
 			
 			$liaisons = array();
+			$references = array();
 			
 			// populate sources (if any)
 			if (isset($xml->sources[0])) {
@@ -176,6 +177,24 @@
 									.')'
 								);
 							}
+							
+							if (
+								(
+									(
+										$property->getRelationId()
+											== MetaRelation::ONE_TO_ONE
+									) || (
+										$property->getRelationId()
+											== MetaRelation::LAZY_ONE_TO_ONE
+									)
+								) && (
+									$property->getType()->getClass()
+									<> $class->getName()
+								)
+							) {
+								$references[$property->getType()->getClass()][]
+									= $class->getName();
+							}
 						}
 					}
 					
@@ -221,6 +240,12 @@
 					throw new MissingElementException(
 						"unknown parent class '{$parent}'"
 					);
+			}
+			
+			foreach ($references as $className => $list) {
+				foreach ($list as $refer) {
+					$this->classes[$className]->setReferencingClass($refer);
+				}
 			}
 			
 			// final sanity checking

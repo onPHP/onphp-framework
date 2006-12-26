@@ -22,6 +22,7 @@
 		
 		private $properties	= array();
 		private $interfaces	= array();
+		private $references	= array();
 		
 		private $pattern	= null;
 		private $identifier	= null;
@@ -133,6 +134,18 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MetaClassProperty
+		 * @throws MissingElementException
+		**/
+		public function getPropertyByName($name)
+		{
+			if (isset($this->properties[$name]))
+				return $this->properties[$name];
+			
+			throw new MissingElementException("unknown property '{$name}'");
+		}
+		
 		public function hasProperty($name)
 		{
 			return isset($this->properties[$name]);
@@ -216,6 +229,21 @@
 		public function getSourceLink()
 		{
 			return $this->source;
+		}
+		
+		/**
+		 * @return MetaClass
+		**/
+		public function setReferencingClass($className)
+		{
+			$this->references[$className] = true;
+			
+			return $this;
+		}
+		
+		public function getReferencingClasses()
+		{
+			return array_keys($this->references);
 		}
 		
 		public function dump()

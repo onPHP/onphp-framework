@@ -44,7 +44,7 @@ EOT;
 				
 				$classes = null;
 				
-				if ($hints = self::buildHints($class)) {
+				if (0 /* $hints = self::buildHints($class) */) {
 					$classes = implode(",\n", $hints);
 				}
 			

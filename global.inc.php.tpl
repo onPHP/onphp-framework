@@ -89,6 +89,10 @@
 		.ONPHP_MAIN_PATH.'Utils'		.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'TuringTest'.PATH_SEPARATOR
 		
+		.ONPHP_META_PATH.'types'.PATH_SEPARATOR
+		.ONPHP_META_PATH.'classes'.PATH_SEPARATOR
+		.ONPHP_META_PATH.'patterns'.PATH_SEPARATOR
+		
 		// uncomment this one, if your php compiled without spl extension:
 		//
 		// .ONPHP_CORE_PATH.'SPL'.DIRECTORY_SEPARATOR.'bundled'.PATH_SEPARATOR

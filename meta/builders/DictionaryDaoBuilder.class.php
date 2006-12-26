@@ -42,7 +42,7 @@ EOT;
 
 			$hints = self::buildHints($class);
 			
-			if ($hints) {
+			if (0 /* $hints */) {
 				$classes = implode(",\n", $hints);
 				
 				$out .= <<<EOT

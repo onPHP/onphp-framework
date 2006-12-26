@@ -38,10 +38,7 @@
 			
 			foreach ($class->getProperties() as $property) {
 				
-				if (
-					$property->getRelationId() == MetaRelation::ONE_TO_ONE
-					|| $property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE
-				) {
+				if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
 					$buildSetter = false;
 					
 					if ($filler = $property->toDaoSetter($className, true)) {
@@ -230,6 +227,24 @@ EOT;
 			} else {
 				$out .= <<<EOT
 // no get{Table,ObjectName,Sequence} for abstract class
+EOT;
+			}
+			
+			if ($liaisons = $class->getReferencingClasses()) {
+				$uncachers = array();
+				foreach ($liaisons as $className)
+					$uncachers[] = $className.'::dao()->uncacheLists();';
+				$uncachers = implode("\n", $uncachers);
+				
+				$out .= <<<EOT
+
+
+public function uncacheLists()
+{
+{$uncachers}
+
+return parent::uncacheLists();
+}
 EOT;
 			}
 			

@@ -174,21 +174,23 @@
 			}
 			
 			if ($this->strategy->getId() == FetchStrategy::JOIN) {
-				foreach ($this->dao->getClasses() as $property => $className) {
-					// container
-					if (is_array($className))
-						continue;
-					
-					$dao = call_user_func(array($className, 'dao'));
+				$proto = call_user_func(array($this->dao->getObjectName(), 'proto'));
+				$meta = $proto->getMetaClass();
 				
-					if (!$query->hasJoinedTable($dao->getTable()))
-						$query->
-							join(
-								$dao->getTable(),
-								
+				foreach ($meta->getAllProperties() as $property) {
+					if (
+						$property->getRelationId() == MetaRelation::ONE_TO_ONE
+						&& !$property->getType()->isGeneric()
+					) {
+						$dao = call_user_func(
+							array($property->getType()->getClass(), 'dao')
+						);
+						
+						if (!$query->hasJoinedTable($dao->getTable())) {
+							$logic =
 								Expression::eq(
 									DBField::create(
-										$this->dao->getFieldFor($property),
+										$property->getDumbIdName(),
 										$this->dao->getTable()
 									),
 									
@@ -196,13 +198,19 @@
 										$dao->getIdName(),
 										$dao->getTable()
 									)
-								)
-							);
-					
-					$query->arrayGet(
-						$dao->getFields(),
-						$dao->getJoinPrefix()
-					);
+								);
+							
+							if ($property->isRequired())
+								$query->join($dao->getTable(), $logic);
+							else
+								$query->leftJoin($dao->getTable(), $logic);
+						}
+						
+						$query->arrayGet(
+							$dao->getFields(),
+							$dao->getJoinPrefix()
+						);
+					}
 				}
 			}
 			

@@ -16,6 +16,7 @@
 	final class Property
 	{
 		private $name = null;
+		private $class = null;
 		
 		/**
 		 * @return Property

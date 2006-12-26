@@ -66,9 +66,10 @@
 			if ($atom instanceof Property)
 				return $this->mapProperty($atom, $query);
 			elseif (is_string($atom)) {
-				if (strpos($atom, '.') !== false)
-					return $this->processPath($atom, $query);
-				elseif (array_key_exists($atom, $this->mapping))
+				if (strpos($atom, '.') !== false) {
+					$proto = call_user_func(array($this->getObjectName(), 'proto'));
+					return $this->processPath($proto->getMetaClass(), $atom, $query);
+				} elseif (array_key_exists($atom, $this->mapping))
 					return $this->mapProperty(new Property($atom), $query);
 			} elseif ($atom instanceof LogicalObject)
 				return $atom->toMapped($this, $query);
@@ -78,12 +79,19 @@
 			return new DBValue($atom);
 		}
 		
-		protected function processPath($path, JoinCapableQuery $query)
+		protected function processPath(
+			MetaClass $class, $path, JoinCapableQuery $query
+		)
 		{
 			$path = explode('.', $path);
 			
-			$property = $path[0];
+			$property = $class->getPropertyByName($path[0]);
 			unset($path[0]);
+			
+			Assert::isTrue(
+				$property->getRelationId() != null
+				&& !$property->getType()->isGeneric()
+			);
 			
 			// prevents useless joins
 			if (
@@ -96,24 +104,25 @@
 				$onlyId = false;
 			}
 			
-			$className = $this->getClassFor($property);
+			$className = $property->getType()->getClass();
 			
-			if (is_array($className)) { // container
-				$containerName = $className[0];
-				$objectName = $className[1];
+			switch ($property->getRelationId()) {
 				
-				$table =
-					call_user_func(
-						array($containerName, 'getHelperTable')
-					);
+				case MetaRelation::ONE_TO_MANY:
+				case MetaRelation::MANY_TO_MANY:
 				
-				$dao = call_user_func(array($objectName, 'dao'));
-				
-				if (!$query->hasJoinedTable($table))
-					$query->
-						join(
-							$table,
-							
+					$containerName = $property->getContainerName($this->getObjectName());
+					$objectName = $property->getType()->getClass();
+					
+					$table =
+						call_user_func(
+							array($containerName, 'getHelperTable')
+						);
+					
+					$dao = call_user_func(array($objectName, 'dao'));
+					
+					if (!$query->hasJoinedTable($table)) {
+						$logic =
 							Expression::eq(
 								DBField::create(
 									$this->getIdName(),
@@ -126,50 +135,60 @@
 									),
 									$table
 								)
-							)
-						);
-				
-				if ($onlyId)
-					return
-						DBField::create(
-							call_user_func(
-								array($containerName, 'getChildIdField')
-							),
-							$table
-						);
-				elseif (!$query->hasJoinedTable($dao->getTable()))
-					$query->join(
-						$dao->getTable(),
+							);
 						
-						Expression::eq(
-							DBField::create(
-								$dao->getIdName(),
-								$dao->getTable()
-							),
-							
+						if ($property->isRequired())
+							$query->join($table, $logic);
+						else
+							$query->leftJoin($table, $logic);
+					}
+					
+					if ($onlyId)
+						return
 							DBField::create(
 								call_user_func(
 									array($containerName, 'getChildIdField')
 								),
 								$table
-							)
-						)
-					);
-			} else {
-				if ($onlyId)
-					return
-						new DBField(
-							$this->getFieldFor($property),
-							$this->getTable()
-						);
-
-				$dao = call_user_func(array($className, 'dao'));
+							);
+					elseif (!$query->hasJoinedTable($dao->getTable())) {
+						$logic =
+							Expression::eq(
+								DBField::create(
+									$dao->getIdName(),
+									$dao->getTable()
+								),
+								
+								DBField::create(
+									call_user_func(
+										array($containerName, 'getChildIdField')
+									),
+									$table
+								)
+							);
+						
+						if ($property->isRequired())
+							$query->join($dao->getTable(), $logic);
+						else
+							$query->leftJoin($dao->getTable(), $logic);
+					}
+					
+					break;
 				
-				if (!$query->hasJoinedTable($dao->getTable()))
-					$query->
-						join(
-							$dao->getTable(),
-							
+				case MetaRelation::ONE_TO_ONE:
+				case MetaRelation::LAZY_ONE_TO_ONE:
+					
+					if ($onlyId)
+						return
+							new DBField(
+								$this->getFieldFor($property),
+								$this->getTable()
+							);
+	
+					$dao = call_user_func(array($className, 'dao'));
+					
+					if (!$query->hasJoinedTable($dao->getTable())) {
+						$logic =
 							Expression::eq(
 								DBField::create(
 									$this->getFieldFor($property),
@@ -180,8 +199,15 @@
 									$dao->getIdName(),
 									$dao->getTable()
 								)
-							)
-						);
+							);
+						
+						if ($property->isRequired())
+							$query->join($dao->getTable(), $logic);
+						else
+							$query->leftJoin($dao->getTable(), $logic);
+					}
+				
+				break;
 			}
 			
 			return $dao->guessAtom(implode('.', $path), $query);

@@ -26,10 +26,13 @@
 
 			$parent = $class->getParent();
 			
+			$classDump = self::dumpMetaClass($class);
+			
 			if ($parent) {
 				$out .= <<<EOT
 {$type}class Proto{$class->getName()} extends Proto{$parent->getName()}
 {
+{$classDump}
 	/**
 	 * @return Form
 	**/
@@ -43,6 +46,7 @@ EOT;
 				$out .= <<<EOT
 {$type}class Proto{$class->getName()} extends AbstractProtoClass
 {
+{$classDump}
 	public function makeForm()
 	{
 		/**
@@ -169,6 +173,28 @@ EOT;
 EOT;
 
 			return $out.self::getHeel();
+		}
+		
+		private static function dumpMetaClass(MetaClass $class)
+		{
+			$serialized = serialize($class);
+			
+			return <<<EOT
+	/**
+	 * @return MetaClass
+	**/
+	public function getMetaClass()
+	{
+		static \$class = null;
+		
+		if (!\$class) {
+			\$class = unserialize('{$serialized}');
+		}
+		
+		return \$class;
+	}
+
+EOT;
 		}
 	}
 ?>
