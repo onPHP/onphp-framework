@@ -2,6 +2,9 @@
 
 2006-12-26	Konstantin V. Arkhipov
 
+	* meta/builders/AutoDaoBuilder.class.php: uncacheLists() now call's
+	same method in all referencing objects.
+
 	* core/DB/, main/DAOs/, main/Criteria/: joined fetching strategy
 	implemented.
 
