@@ -15,7 +15,8 @@
 	**/
 	final class Joiner implements DialectString
 	{
-		private $from = array();
+		private $from	= array();
+		private $tables	= array();
 		
 		/**
 		 * @return Joiner
@@ -27,12 +28,18 @@
 			return $this;
 		}
 		
+		public function hasJoinedTable($table)
+		{
+			return isset($this->tables[$table]);
+		}
+		
 		/**
 		 * @return Joiner
 		**/
 		public function join(SQLJoin $join)
 		{
 			$this->from[] = $join;
+			$this->tables[$join->getTable()] = true;
 			
 			return $this;
 		}
@@ -43,6 +50,7 @@
 		public function leftJoin(SQLLeftJoin $join)
 		{
 			$this->from[] = $join;
+			$this->tables[$join->getTable()] = true;
 			
 			return $this;
 		}

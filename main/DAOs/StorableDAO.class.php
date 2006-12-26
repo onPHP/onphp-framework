@@ -109,24 +109,25 @@
 				
 				$dao = call_user_func(array($objectName, 'dao'));
 				
-				$query->
-					join(
-						$table,
-						
-						Expression::eq(
-							DBField::create(
-								$this->getIdName(),
-								$this->getTable()
-							),
+				if (!$query->hasJoinedTable($table))
+					$query->
+						join(
+							$table,
 							
-							DBField::create(
-								call_user_func(
-									array($containerName, 'getParentIdField')
+							Expression::eq(
+								DBField::create(
+									$this->getIdName(),
+									$this->getTable()
 								),
-								$table
+								
+								DBField::create(
+									call_user_func(
+										array($containerName, 'getParentIdField')
+									),
+									$table
+								)
 							)
-						)
-					);
+						);
 				
 				if ($onlyId)
 					return
@@ -136,7 +137,7 @@
 							),
 							$table
 						);
-				else
+				elseif (!$query->hasJoinedTable($dao->getTable()))
 					$query->join(
 						$dao->getTable(),
 						
@@ -164,22 +165,23 @@
 
 				$dao = call_user_func(array($className, 'dao'));
 				
-				$query->
-					join(
-						$dao->getTable(),
-						
-						Expression::eq(
-							DBField::create(
-								$this->getFieldFor($property),
-								$this->getTable()
-							),
+				if (!$query->hasJoinedTable($dao->getTable()))
+					$query->
+						join(
+							$dao->getTable(),
 							
-							DBField::create(
-								$dao->getIdName(),
-								$dao->getTable()
+							Expression::eq(
+								DBField::create(
+									$this->getFieldFor($property),
+									$this->getTable()
+								),
+								
+								DBField::create(
+									$dao->getIdName(),
+									$dao->getTable()
+								)
 							)
-						)
-					);
+						);
 			}
 			
 			return $dao->guessAtom(implode('.', $path), $query);

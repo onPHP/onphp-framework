@@ -91,6 +91,11 @@
 			$this->distinct = false;
 			return $this;
 		}
+		
+		public function hasJoinedTable($table)
+		{
+			return $this->joiner->hasJoinedTable($table);
+		}
 
 		/**
 		 * @return SelectQuery

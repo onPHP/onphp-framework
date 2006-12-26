@@ -18,5 +18,7 @@
 		public function from($table, $alias = null);
 		public function join($table, LogicalObject $logic, $alias = null);
 		public function leftJoin($table, LogicalObject $logic, $alias = null);
+		
+		public function hasJoinedTable($table);
 	}
 ?>
