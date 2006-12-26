@@ -177,7 +177,8 @@ EOT;
 		
 		private static function dumpMetaClass(MetaClass $class)
 		{
-			$serialized = serialize($class);
+			// it must be an evil bug, if there are any newlines anyway.
+			$serialized = str_replace(chr(0), chr(9), serialize($class));
 			
 			return <<<EOT
 	/**
@@ -188,7 +189,7 @@ EOT;
 		static \$class = null;
 		
 		if (!\$class) {
-			\$class = unserialize('{$serialized}');
+			\$class = unserialize(str_replace(chr(9), chr(0), '{$serialized}'));
 		}
 		
 		return \$class;

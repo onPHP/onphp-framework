@@ -26,7 +26,7 @@
 			$return	= false;
 			
 			foreach (explode("\n", $data) as $string) {
-				$string = str_replace("\t", null, rtrim($string))."\n";
+				$string = preg_replace('~^[\t]+~', null, rtrim($string))."\n";
 				
 				if ($string == "}\n") {
 					$indent -= $chain;
