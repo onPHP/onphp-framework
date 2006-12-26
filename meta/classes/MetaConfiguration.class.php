@@ -315,10 +315,13 @@
 					count($class->getProperties()) > 1,
 					'spooked classes must have only identifier'
 				);
+				
+				var_dump($class->getPattern());
 			
 				Assert::isTrue(
-					$class->getPattern() instanceof SpookedClassPattern,
-					'spooked classes must use SpookedClass pattern only'
+					($class->getPattern() instanceof SpookedClassPattern
+					|| $class->getPattern() instanceof SpookedEnumerationPattern),
+					'spooked classes must use spooked patterns only'
 				);
 			}
 			

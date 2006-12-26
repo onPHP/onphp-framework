@@ -13,22 +13,16 @@
 	/**
 	 * @ingroup Patterns
 	**/
-	class EnumerationClassPattern extends BasePattern
+	final class SpookedEnumerationPattern extends EnumerationClassPattern
 	{
+		public function build(MetaClass $class)
+		{
+			return null;
+		}
+		
 		public function daoExists()
 		{
 			return false;
-		}
-		
-		public function build(MetaClass $class)
-		{
-			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
-			
-			if (!file_exists($userFile))
-				$this->dumpFile(
-					$userFile,
-					Format::indentize(EnumerationClassBuilder::build($class))
-				);
 		}
 	}
 ?>
