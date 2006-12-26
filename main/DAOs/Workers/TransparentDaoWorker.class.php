@@ -193,6 +193,32 @@
 			/* NOTREACHED */
 		}
 		
+		public function getListByCriteria(Criteria $criteria)
+		{
+			$query = $criteria->toSelectQuery();
+			$list = $this->getCachedList($query);
+			
+			if ($list) {
+				if ($list === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				else
+					return $list;
+			} else {
+				$list = DBPool::getByDao($this->dao)->queryJoinedObjectSet(
+					$query, $this->dao
+				);
+				
+				if ($list)
+					return $this->cacheListByQuery($query, $list);
+				else {
+					$this->cacheListByQuery($query, Cache::NOT_FOUND);
+					throw new ObjectNotFoundException();
+				}
+			}
+			
+			/* NOTREACHED */
+		}
+		
 		public function getListByLogic(LogicalObject $logic)
 		{
 			return $this->getListByQuery(

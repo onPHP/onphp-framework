@@ -15,9 +15,11 @@
 	**/
 	final class Criteria implements Stringable
 	{
-		private $dao	= null;
-		private $logic	= null;
-		private $order	= null;
+		private $dao		= null;
+		private $logic		= null;
+		private $strategy	= null;
+		
+		private $order	= array();
 		
 		private $limit	= null;
 		private $offset	= null;
@@ -37,6 +39,11 @@
 			
 			$this->dao = $dao;
 			$this->logic = Expression::andBlock();
+			
+			if ($dao instanceof ComplexBuilderDAO)
+				$this->strategy = FetchStrategy::join();
+			else
+				$this->strategy = FetchStrategy::cascade();
 		}
 		
 		/**
@@ -105,10 +112,28 @@
 			return $this;
 		}
 		
+		/**
+		 * @return FetchStrategy
+		**/
+		public function getFetchStrategy()
+		{
+			return $this->strategy;
+		}
+		
+		/**
+		 * @return Criteria
+		**/
+		public function setFetchStrategy(FetchStrategy $strategy)
+		{
+			$this->strategy = $strategy;
+			
+			return $this;
+		}
+		
 		public function getList()
 		{
 			try {
-				return $this->dao->getListByQuery($this->toSelectQuery());
+				return $this->dao->getListByCriteria($this);
 			} catch (ObjectNotFoundException $e) {
 				return array();
 			}
@@ -145,6 +170,39 @@
 						orderBy(
 							$this->order[$i]->toMapped($this->dao, $query)
 						);
+				}
+			}
+			
+			if ($this->strategy->getId() == FetchStrategy::JOIN) {
+				foreach ($this->dao->getClasses() as $property => $className) {
+					// container
+					if (is_array($className))
+						continue;
+					
+					$dao = call_user_func(array($className, 'dao'));
+				
+					if (!$query->hasJoinedTable($dao->getTable()))
+						$query->
+							join(
+								$dao->getTable(),
+								
+								Expression::eq(
+									DBField::create(
+										$this->dao->getFieldFor($property),
+										$this->dao->getTable()
+									),
+									
+									DBField::create(
+										$dao->getIdName(),
+										$dao->getTable()
+									)
+								)
+							);
+					
+					$query->arrayGet(
+						$dao->getFields(),
+						$dao->getJoinPrefix()
+					);
 				}
 			}
 			

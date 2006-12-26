@@ -284,7 +284,7 @@ EOT;
 								} else {
 									$out = <<<EOT
 \${$varName}->set{$method}(
-	{$this->type->getClass()}::dao()->makeSelf(\$array, \$prefix)
+	{$this->type->getClass()}::dao()->makeJoinedObject(\$array, {$this->type->getClass()}::dao()->getJoinPrefix())
 );
 
 EOT;

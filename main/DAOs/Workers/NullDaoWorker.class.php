@@ -124,6 +124,22 @@
 			/* NOTREACHED */
 		}
 		
+		public function getListByCriteria(Criteria $criteria)
+		{
+			$query = $criteria->toSelectQuery();
+			
+			$list = DBPool::getByDao($this->dao)->queryJoinedObjectSet(
+				$query, $this->dao
+			);
+			
+			if ($list)
+				return $this->cacheListByQuery($query, $list);
+			else
+				throw new ObjectNotFoundException();
+			
+			/* NOTREACHED */
+		}
+		
 		public function getListByLogic(LogicalObject $logic)
 		{
 			return $this->getListByQuery($this->dao->makeSelectHead()->where($logic));

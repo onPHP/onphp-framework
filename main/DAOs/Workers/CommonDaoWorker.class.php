@@ -224,7 +224,33 @@
 			} else {
 				throw new ObjectNotFoundException(
 					"zero list for query such query - "
-					."'{$query->toDialectString($db->getDialect())}'"
+					.$query->toDialectString($db->getDialect())
+				);
+			}
+		}
+		
+		public function getListByCriteria(
+			Criteria $criteria, $expires = Cache::DO_NOT_CACHE
+		)
+		{
+			$db = DBPool::getByDao($this->dao);
+			$query = $criteria->toSelectQuery();
+			
+			if (
+				($expires !== Cache::DO_NOT_CACHE) && 
+				($list = $this->getCachedByQuery($query))
+			)
+				return $list;
+			elseif ($list = $db->queryJoinedObjectSet($query, $this->dao)) {
+				if (Cache::DO_NOT_CACHE === $expires) {
+					return $list;
+				} else {
+					return $this->cacheByQuery($query, $list, $expires);
+				}
+			} else {
+				throw new ObjectNotFoundException(
+					"zero list for query such query - "
+					.$query->toDialectString($db->getDialect())
 				);
 			}
 		}

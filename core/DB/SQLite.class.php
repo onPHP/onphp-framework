@@ -174,6 +174,31 @@
 			return null;
 		}
 		
+		public function queryJoinedObjectSet(Query $query, ComplexBuilderDAO $dao)
+		{
+			$res = $this->query($query);
+			
+			if ($res) {
+				$array = array();
+				$names = $query->getFieldNames();
+				$width = count($names);
+				
+				while ($row = sqlite_fetch_array($res, SQLITE_NUM)) {
+					
+					$assoc = array();
+					
+					for ($i = 0; $i < $width; ++$i)
+						$assoc[$names[$i]] = $row[$i];
+					
+					$array[] = $dao->makeJoinedObject($assoc);
+				}
+				
+				return $array;
+			}
+			
+			return null;
+		}
+		
 		public function queryColumn(Query $query)
 		{
 			$res = $this->query($query);

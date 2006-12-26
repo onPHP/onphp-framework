@@ -85,11 +85,23 @@
 					OSQL::select()->
 					from($table);
 				
-				foreach (array_keys($this->getMapping()) as $property)
-					$this->selectHead->get($this->getFieldFor($property));
+				foreach ($this->getFields() as $field)
+					$this->selectHead->get(new DBField($field, $table));
 			}
 			
 			return clone $this->selectHead;
+		}
+		
+		public function getFields()
+		{
+			static $fields = null;
+			
+			if (!$fields) {
+				foreach ($this->getMapping() as $property => $field)
+					$fields[] = $field === null ? $property : $field;
+			}
+			
+			return $fields;
 		}
 		
 		//@{
@@ -145,6 +157,12 @@
 		)
 		{
 			return Cache::worker($this)->getListByQuery($query, $expires);
+		}
+		
+		public function getListByCriteria(
+			Criteria $criteria, $expires = Cache::DO_NOT_CACHE)
+		{
+			return Cache::worker($this)->getListByCriteria($criteria, $expires);
 		}
 		
 		public function getListByLogic(

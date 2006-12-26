@@ -172,6 +172,23 @@
 			return null;
 		}
 		
+		public function queryJoinedObjectSet(Query $query, ComplexBuilderDAO $dao)
+		{
+			$res = $this->query($query);
+			
+			if ($res) {
+				$array = array();
+				
+				while ($row = pg_fetch_assoc($res))
+					$array[] = $dao->makeJoinedObject($row);
+				
+				pg_free_result($res);
+				return $array;
+			}
+			
+			return null;
+		}
+		
 		public function queryColumn(Query $query)
 		{
 			$res = $this->query($query);

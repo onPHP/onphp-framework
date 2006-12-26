@@ -17,6 +17,11 @@
 	{
 		abstract protected function makeSelf(&$array, $prefix = null);
 		
+		public function getJoinPrefix()
+		{
+			return $this->getTable().'__';
+		}
+		
 		public function makeObject(&$array, $prefix = null)
 		{
 			$object = $this->selfSpawn($array, $prefix);

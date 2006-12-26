@@ -29,6 +29,7 @@
 		public function getList(ObjectQuery $oq);
 		public function getListByIds($ids);
 		public function getListByQuery(SelectQuery $query);
+		public function getListByCriteria(Criteria $criteria);
 		public function getListByLogic(LogicalObject $logic);
 		public function getPlainList();
 		//@}

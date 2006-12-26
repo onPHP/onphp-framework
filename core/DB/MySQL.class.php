@@ -113,6 +113,22 @@
 			return null;
 		}
 		
+		public function queryJoinedObjectSet(Query $query, ComplexBuilderDAO $dao)
+		{
+			$res = $this->query($query);
+			
+			if ($res) {
+				$array = array();
+				
+				while ($row = mysql_fetch_assoc($res))
+					$array[] = $dao->makeJoinedObject($row);
+
+				return $array;
+			}
+			
+			return null;
+		}
+		
 		public function queryColumn(Query $query)
 		{
 			$res = $this->query($query);
