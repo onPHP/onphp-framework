@@ -143,8 +143,7 @@
 		protected function import($scope)
 		{
 			if (
-				isset($scope[$this->name]) &&
-				$scope[$this->name] !== ''
+				!empty($scope[$this->name])
 			) {
 				$this->raw = $scope[$this->name];
 				
