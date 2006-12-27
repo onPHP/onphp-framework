@@ -22,6 +22,14 @@
 
 		private $allowedMimeTypes	= array();
 
+		public function clean()
+		{
+			$this->originalName = null;
+			$this->mimeType = null;
+			
+			return parent::clean();
+		}
+		
 		public function getOriginalName()
 		{
 			return $this->originalName;

@@ -20,6 +20,14 @@
 		protected $aliases		= array();
 		protected $primitives	= array();
 		
+		public function clean()
+		{
+			foreach ($this->primitives as $prm)
+				$prm->clean();
+			
+			return $this;
+		}
+		
 		public function addAlias($primitiveName, $alias)
 		{
 			if (!isset($this->primitives[$primitiveName]))

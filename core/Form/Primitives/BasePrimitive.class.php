@@ -114,6 +114,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return BasePrimitive
+		**/
+		public function clean()
+		{
+			$this->raw = null;
+			$this->value = null;
+			
+			return $this;
+		}
+		
 		public function importValue($value)
 		{
 			return $this->import(array($this->getName() => $value));

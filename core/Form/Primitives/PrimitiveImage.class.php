@@ -28,6 +28,18 @@
 		
 		private $type		= null;
 		
+		/**
+		 * @return PrimitiveImage
+		**/
+		public function clean()
+		{
+			$this->width = $this->height = null;
+			
+			$this->type = null;
+			
+			return parent::clean();
+		}
+		
 		public function getWidth()
 		{
 			return $this->width;
