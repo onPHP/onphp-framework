@@ -48,9 +48,7 @@
 				else
 					return false;
 			} else {
-				
-				$this->value = null;
-				$this->raw = null;
+				$this->clean();
 				
 				return null;
 			}

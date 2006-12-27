@@ -33,6 +33,17 @@
 		}
 		
 		/**
+		 * @return PrimitiveFile
+		**/
+		public function clean()
+		{
+			$this->originalName = null;
+			$this->mimeType = null;
+			
+			return parent::clean();
+		}
+		
+		/**
 		 * @throws WrongArgumentException
 		 * @return PrimitiveFile
 		**/

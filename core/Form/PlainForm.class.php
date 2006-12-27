@@ -21,6 +21,17 @@
 		protected $primitives	= array();
 		
 		/**
+		 * @return PlainForm
+		**/
+		public function clean()
+		{
+			foreach ($this->primitives as $prm)
+				$prm->clean();
+			
+			return $this;
+		}
+		
+		/**
 		 * @throws MissingElementException
 		 * @return PlainForm
 		**/

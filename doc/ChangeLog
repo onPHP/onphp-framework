@@ -1,5 +1,10 @@
 # $Id$
 
+2006-12-27	Konstantin V. Arkhipov
+
+	* core/Form/PlainForm.class.php, core/Form/Primitives/: clean()
+	implemented.
+
 2006-12-26	Konstantin V. Arkhipov
 
 	* meta/builders/AutoDaoBuilder.class.php: uncacheLists() now call's
