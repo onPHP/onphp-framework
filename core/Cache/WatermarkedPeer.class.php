@@ -39,7 +39,7 @@
 		**/
 		public function mark($className)
 		{
-			$this->peer->mark($className);
+			$this->peer->mark($this->watermark.$className);
 			return $this;
 		}
 		
