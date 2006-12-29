@@ -19,6 +19,8 @@ Things not supported by design:
 	function init()
 	{
 		define('ONPHP_META_BUILDERS', ONPHP_META_PATH.'builders'.DIRECTORY_SEPARATOR);
+		define('ONPHP_META_PATTERNS', ONPHP_META_PATH.'patterns'.DIRECTORY_SEPARATOR);
+		define('ONPHP_META_TYPES', ONPHP_META_PATH.'types'.DIRECTORY_SEPARATOR);
 		
 		set_include_path(
 			get_include_path().PATH_SEPARATOR
