@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,45 +11,33 @@
 /* $Id$ */
 
 	/**
-	 * Connected to concrete table DBField.
-	 * 
 	 * @ingroup OSQL
 	**/
-	class SelectField extends FieldTable
+	final class FieldGroup implements DialectString
 	{
-		private $alias = null;
+		private $list = array();
 		
 		/**
-		 * @return SelectField
+		 * @return FieldGroup
 		**/
-		public static function create(DialectString $field, $alias)
+		public function add(Castable $field)
 		{
-			return new self($field, $alias);
-		}
-
-		public function __construct(DialectString $field, $alias)
-		{
-			parent::__construct($field);
-			$this->alias = $alias;
+			$this->list[] = $field;
+			
+			return $this;
 		}
 		
-		public function getName()
-		{
-			if ($this->field instanceof DBField)
-				return $this->field->getField();
-			
-			return $this->alias;
-		}
-
 		public function toDialectString(Dialect $dialect)
 		{
-			return
-				parent::toDialectString($dialect)
-				.(
-					$this->alias
-						? ' AS '.$dialect->quoteField($this->alias)
-						: null
-				);
+			if (!$this->list)
+				return null;
+			
+			$out = array();
+			
+			foreach ($this->list as $field)
+				$out[] = $field->toDialectString($dialect);
+			
+			return implode(', ', $out);
 		}
 	}
 ?>

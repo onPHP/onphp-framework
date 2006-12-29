@@ -122,6 +122,9 @@
 	 * @defgroup Criteria Object queries API
 	 * @ingroup Core
 	 *
+	 * @defgroup Projections Object projections for use in Criteria queries
+	 * @ingroup Criteria
+	 *
 	 * @defgroup OSQL Dynamic query builder
 	 * @ingroup Core
 	 *

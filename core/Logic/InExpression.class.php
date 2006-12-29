@@ -28,6 +28,7 @@
 		{
 			Assert::isTrue(
 				($right instanceof SelectQuery)
+				|| ($right instanceof Criteria)
 				|| is_array($right)
 			);
 			
@@ -66,7 +67,10 @@
 			
 			$right = $this->right;
 			
-			if ($right instanceof SelectQuery) {
+			if (
+				($right instanceof SelectQuery)
+				|| ($right instanceof Criteria)
+			) {
 			
 				$string .= '('.$right->toDialectString($dialect).')';
 				

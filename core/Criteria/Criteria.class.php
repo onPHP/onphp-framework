@@ -11,13 +11,16 @@
 /* $Id$ */
 
 	/**
+	 * @see http://www.hibernate.org/hib_docs/v3/reference/en/html/querycriteria.html
+	 * 
 	 * @ingroup Criteria
 	**/
-	final class Criteria implements Stringable
+	final class Criteria implements Stringable, DialectString
 	{
 		private $dao		= null;
 		private $logic		= null;
 		private $strategy	= null;
+		private $projection	= null;
 		
 		private $distinct	= false;
 		
@@ -46,6 +49,14 @@
 				$this->strategy = FetchStrategy::join();
 			else
 				$this->strategy = FetchStrategy::cascade();
+		}
+		
+		/**
+		 * @return StorableDAO
+		**/
+		public function getDao()
+		{
+			return $this->dao;
 		}
 		
 		/**
@@ -135,6 +146,24 @@
 		/**
 		 * @return Criteria
 		**/
+		public function setProjection(ObjectProjection $chain)
+		{
+			$this->projection = $chain;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return ProjectionChain
+		**/
+		public function getProjection()
+		{
+			return $this->projection;
+		}
+		
+		/**
+		 * @return Criteria
+		**/
 		public function setDistinct($orly = true)
 		{
 			$this->distinct = ($orly === true);
@@ -156,13 +185,34 @@
 			}
 		}
 		
+		public function getCustomList()
+		{
+			try {
+				$this->dao->getCustomList($this->toSelectQuery());
+			} catch (ObjectNotFoundException $e) {
+				return array();
+			}
+		}
+		
+		public function getPropertyList()
+		{
+			try {
+				$this->dao->getCustomRowList($this->toSelectQuery());
+			} catch (ObjectNotFoundException $e) {
+				return array();
+			}
+		}
+		
 		public function toString()
 		{
-			return
-				$this->toSelectQuery()->
-				toDialectString(
-					DBPool::getByDao($this->dao)->getDialect()
-				);
+			return $this->toDialectString(
+				DBPool::getByDao($this->dao)->getDialect()
+			);
+		}
+		
+		public function toDialectString(Dialect $dialect)
+		{
+			return $this->toSelectQuery()->toDialectString($dialect);
 		}
 		
 		/**
@@ -170,9 +220,13 @@
 		**/
 		public function toSelectQuery()
 		{
-			$query =
-				$this->dao->makeSelectHead()->
-				limit($this->limit, $this->offset);
+			if ($this->projection) {
+				$query = OSQL::select()->from($this->dao->getTable());
+				$query->get($this->getProjection()->toField($this, $query));
+			} else
+				$query = $this->dao->makeSelectHead();
+			
+			$query->limit($this->limit, $this->offset);
 			
 			if ($this->distinct)
 				$query->distinct();
@@ -193,7 +247,10 @@
 				}
 			}
 			
-			if ($this->strategy->getId() == FetchStrategy::JOIN) {
+			if (
+				!$this->projection
+				&& $this->strategy->getId() == FetchStrategy::JOIN
+			) {
 				$proto = call_user_func(array($this->dao->getObjectName(), 'proto'));
 				
 				foreach ($proto->getPropertyList() as $property) {
