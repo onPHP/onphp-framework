@@ -49,6 +49,16 @@
 			return $this->get;
 		}
 		
+		public function getGetVar($name)
+		{
+			return $this->get[$name];
+		}
+		
+		public function hasGetVar($name)
+		{
+			return isset($this->get[$name]);
+		}
+		
 		/**
 		 * @return HttpRequest
 		**/
@@ -62,6 +72,16 @@
 		public function &getPost()
 		{
 			return $this->post;
+		}
+		
+		public function getPostVar($name)
+		{
+			return $this->post[$name];
+		}
+		
+		public function hasPostVar($name)
+		{
+			return isset($this->post[$name]);
 		}
 		
 		/**
@@ -79,6 +99,16 @@
 			return $this->server;
 		}
 		
+		public function getServerVar($name)
+		{
+			return $this->server[$name];
+		}
+		
+		public function hasServerVar($name)
+		{
+			return isset($this->server[$name]);
+		}
+		
 		/**
 		 * @return HttpRequest
 		**/
@@ -92,6 +122,16 @@
 		public function &getCookie()
 		{
 			return $this->cookie;
+		}
+		
+		public function getCookieVar($name)
+		{
+			return $this->cookie[$name];
+		}
+		
+		public function hasCookieVar($name)
+		{
+			return isset($this->cookie[$name]);
 		}
 		
 		/**
@@ -109,6 +149,16 @@
 			return $this->session;
 		}
 		
+		public function getSessionVar($name)
+		{
+			return $this->session[$name];
+		}
+		
+		public function hasSessionVar($name)
+		{
+			return isset($this->session[$name]);
+		}
+		
 		/**
 		 * @return HttpRequest
 		**/
@@ -122,6 +172,16 @@
 		public function getFiles()
 		{
 			return $this->files;
+		}
+		
+		public function getFilesVar($name)
+		{
+			return $this->files[$name];
+		}
+		
+		public function hasFilesVar($name)
+		{
+			return isset($this->files[$name]);
 		}
 		
 		/**
@@ -149,6 +209,11 @@
 			return $this->attached[$name];
 		}
 		
+		public function getAttachedVar($name)
+		{
+			return $this->attached[$name];
+		}
+		
 		/**
 		 * @return HttpRequest
 		**/
@@ -159,7 +224,7 @@
 			return $this;
 		}
 		
-		public function hasAttached($name)
+		public function hasAttachedVar($name)
 		{
 			return isset($this->attached[$name]);
 		}

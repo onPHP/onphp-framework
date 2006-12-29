@@ -2,6 +2,9 @@
 
 2006-12-29	Konstantin V. Arkhipov
 
+	* main/Flow/HttpRequest.class.php: get*Var() and has*Var() added;
+	hasAttached() removed in favour of hasAttachedVar().
+
 	* core/Cache/WatermarkedPeer.class.php: evil typo spotted and fixed.
 
 	* core/Criteria/Projections: several simple object projections added
