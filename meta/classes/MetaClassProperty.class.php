@@ -306,7 +306,7 @@ EOT;
 EOT;
 									} else {
 										$out = <<<EOT
-if (isset(\$array[{$this->type->getClass()}::dao()->getJoinPrefix().'{$this->getDumbName()}_{$idName}'])) {
+if (isset(\$array[{$this->type->getClass()}::dao()->getJoinPrefix().'{$idName}'])) {
 	\${$varName}->set{$method}(
 		{$this->type->getClass()}::dao()->makeJoinedObject(\$array, {$this->type->getClass()}::dao()->getJoinPrefix())
 	);
