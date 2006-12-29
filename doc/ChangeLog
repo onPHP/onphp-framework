@@ -2,6 +2,9 @@
 
 2006-12-29	Konstantin V. Arkhipov
 
+	* main/Base/LightMetaProperty.class.php: light version of
+	MetaClassProperty for usage in userspace.
+
 	* core/Criteria/Criteria.class.php: distinct support added.
 
 	* main/DAOs/StorableDAO.class.php: correct support for OneToMany

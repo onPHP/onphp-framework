@@ -56,7 +56,7 @@
 		public function getDumbIdName()
 		{
 			Assert::isTrue(
-				$this->isIdentifier() || $this->relation,
+				$this->hasDumbIdName(),
 				'hey, i am just a property!'
 			);
 			
@@ -66,19 +66,9 @@
 			return $this->dumbName.'_id';
 		}
 		
-		public function getContainerName($holderName)
+		public function hasDumbIdName()
 		{
-			Assert::isTrue(
-				(
-					$this->relation->getId() == MetaRelation::ONE_TO_MANY
-				) || (
-					$this->relation->getId() == MetaRelation::MANY_TO_MANY
-				),
-				
-				'huh?'
-			);
-			
-			return $holderName.ucfirst($this->getName()).'DAO';
+			return ($this->isIdentifier() || $this->relation);
 		}
 		
 		/**
@@ -503,6 +493,24 @@ EOT;
 				$dumbName = $this->getDumbName();
 			
 			return $this->buildColumn($dumbName);
+		}
+		
+		public function toLightProperty()
+		{
+			return
+				LightMetaProperty::make(
+					$this->getName(),
+					$this->getDumbName(),
+					$this->hasDumbIdName()
+						? $this->getDumbIdName()
+						: null,
+					$this->getType() instanceof ObjectType
+						? $this->getType()->getClass()
+						: null,
+					$this->isRequired(),
+					$this->getType()->isGeneric(),
+					$this->getRelationId()
+				);
 		}
 		
 		private function buildColumn($dumbName)

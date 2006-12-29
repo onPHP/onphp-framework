@@ -67,8 +67,14 @@
 				return $this->mapProperty($atom, $query);
 			elseif (is_string($atom)) {
 				if (strpos($atom, '.') !== false) {
-					$proto = call_user_func(array($this->getObjectName(), 'proto'));
-					return $this->processPath($proto->getMetaClass(), $atom, $query);
+					return
+						$this->processPath(
+							call_user_func(
+								array($this->getObjectName(), 'proto')
+							),
+							$atom,
+							$query
+						);
 				} elseif (array_key_exists($atom, $this->mapping))
 					return $this->mapProperty(new Property($atom), $query);
 			} elseif ($atom instanceof LogicalObject)
@@ -80,17 +86,17 @@
 		}
 		
 		protected function processPath(
-			MetaClass $class, $path, JoinCapableQuery $query
+			AbstractProtoClass $proto, $path, JoinCapableQuery $query
 		)
 		{
 			$path = explode('.', $path);
 			
-			$property = $class->getPropertyByName($path[0]);
+			$property = $proto->getPropertyByName($path[0]);
 			unset($path[0]);
 			
 			Assert::isTrue(
 				$property->getRelationId() != null
-				&& !$property->getType()->isGeneric()
+				&& !$property->isGenericType()
 			);
 			
 			// prevents useless joins
@@ -104,14 +110,12 @@
 				$onlyId = false;
 			}
 			
-			$className = $property->getType()->getClass();
-			
 			if (
 				$property->getRelationId() == MetaRelation::ONE_TO_MANY
 				|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
 			) {
 				$containerName = $property->getContainerName($this->getObjectName());
-				$objectName = $property->getType()->getClass();
+				$objectName = $property->getClassName();
 				$dao = call_user_func(array($objectName, 'dao'));
 				
 				if ($property->getRelationId() == MetaRelation::MANY_TO_MANY) {
@@ -173,6 +177,8 @@
 						$query->leftJoin($dao->getTable(), $logic);
 				}
 			} else { // OneToOne, LazyOneToOne
+				$className = $property->getClassName();
+				
 				if ($onlyId)
 					return
 						new DBField(
@@ -186,7 +192,7 @@
 					$logic =
 						Expression::eq(
 							DBField::create(
-								$this->getFieldFor($property),
+								$this->getFieldFor($property->getName()),
 								$this->getTable()
 							),
 							

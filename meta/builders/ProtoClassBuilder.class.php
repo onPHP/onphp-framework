@@ -180,22 +180,33 @@ EOT;
 			// it must be an evil bug, if there are any newlines anyway.
 			$serialized = str_replace(chr(0), chr(9), serialize($class));
 			
-			return <<<EOT
+			$out = <<<EOT
 	/**
 	 * @return MetaClass
 	**/
-	public function getMetaClass()
+	public function getPropertyList()
 	{
-		static \$class = null;
+		static \$list = null;
 		
-		if (!\$class) {
-			\$class = unserialize(str_replace(chr(9), chr(0), '{$serialized}'));
+		if (!\$list) {
+
+EOT;
+
+			foreach ($class->getProperties() as $property) {
+				$out .=
+					"\$list['{$property->getName()}'] = "
+					.$property->toLightProperty()->toString()
+					."\n";
+			}
+			
+			$out .= <<<EOT
 		}
 		
-		return \$class;
+		return \$list;
 	}
 
 EOT;
+			return $out;
 		}
 	}
 ?>

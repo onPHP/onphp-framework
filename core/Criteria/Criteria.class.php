@@ -195,15 +195,14 @@
 			
 			if ($this->strategy->getId() == FetchStrategy::JOIN) {
 				$proto = call_user_func(array($this->dao->getObjectName(), 'proto'));
-				$meta = $proto->getMetaClass();
 				
-				foreach ($meta->getAllProperties() as $property) {
+				foreach ($proto->getPropertyList() as $property) {
 					if (
 						$property->getRelationId() == MetaRelation::ONE_TO_ONE
-						&& !$property->getType()->isGeneric()
+						&& !$property->isGenericType()
 					) {
 						$dao = call_user_func(
-							array($property->getType()->getClass(), 'dao')
+							array($property->getClassName(), 'dao')
 						);
 						
 						if (!$query->hasJoinedTable($dao->getTable())) {

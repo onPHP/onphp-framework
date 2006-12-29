@@ -13,5 +13,24 @@
 	/**
 	 * @ingroup Helpers
 	**/
-	abstract class AbstractProtoClass extends Singleton {/*_*/}
+	abstract class AbstractProtoClass extends Singleton
+	{
+		abstract public function getPropertyList();
+		
+		/**
+		 * @return LightMetaProperty
+		 * @throws MissingElementException
+		**/
+		public function getPropertyByName($name)
+		{
+			$list = $this->getPropertyList();
+			
+			if (isset($list[$name]))
+				return $list[$name];
+			
+			throw new MissingElementException(
+				'unknown property requested by name '."'{$name}'"
+			);
+		}
+	}
 ?>
