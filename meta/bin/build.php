@@ -25,6 +25,8 @@ Things not supported by design:
 		set_include_path(
 			get_include_path().PATH_SEPARATOR
 			.ONPHP_META_BUILDERS.PATH_SEPARATOR
+			.ONPHP_META_PATTERNS.PATH_SEPARATOR
+			.ONPHP_META_TYPES.PATH_SEPARATOR
 		);
 		
 		if (!defined('ONPHP_META_DAO_DIR'))
