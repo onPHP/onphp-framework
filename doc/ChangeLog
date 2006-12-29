@@ -2,6 +2,8 @@
 
 2006-12-29	Konstantin V. Arkhipov
 
+	* core/Criteria/Criteria.class.php: distinct support added.
+
 	* main/DAOs/StorableDAO.class.php: correct support for OneToMany
 	relations implemented in property's path digging.
 

@@ -19,6 +19,8 @@
 		private $logic		= null;
 		private $strategy	= null;
 		
+		private $distinct	= false;
+		
 		private $order	= array();
 		
 		private $limit	= null;
@@ -130,6 +132,21 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Criteria
+		**/
+		public function setDistinct($orly = true)
+		{
+			$this->distinct = ($orly === true);
+			
+			return $this;
+		}
+		
+		public function isDistinct()
+		{
+			return $this->distinct;
+		}
+		
 		public function getList()
 		{
 			try {
@@ -156,6 +173,9 @@
 			$query =
 				$this->dao->makeSelectHead()->
 				limit($this->limit, $this->offset);
+			
+			if ($this->distinct)
+				$query->distinct();
 			
 			if ($this->logic->getSize()) {
 				$query->
