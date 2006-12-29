@@ -1,5 +1,10 @@
 # $Id$
 
+2006-12-29	Konstantin V. Arkhipov
+
+	* core/Cache/WatermarkedPeer.class.php: fix for possible cache
+	corruption backported from trunk.
+
 2006-12-27	Konstantin V. Arkhipov
 
 	* core/Form/PlainForm.class.php, core/Form/Primitives/: clean()
