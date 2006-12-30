@@ -56,7 +56,6 @@
 			return
 				$query->
 					get($uc->getChildIdField())->
-					distinct()->
 					where(
 						Expression::eq(
 							new DBField($uc->getParentIdField()),

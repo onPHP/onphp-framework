@@ -2,6 +2,10 @@
 
 2006-12-30	Konstantin V. Arkhipov
 
+	* main/Containers/Unified/ManyToManyLinkedFull.class.php,
+	main/Containers/Unified/ManyToManyLinkedLazy.class.php: removed
+	distinct clause from fetch queries.
+
 	* core/Criteria/: moved to main/.
 
 	* core/DB/PostgresDialect.class.php: do-not-quote-integer's logic

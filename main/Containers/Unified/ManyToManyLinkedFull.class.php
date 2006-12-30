@@ -71,7 +71,6 @@
 			
 			return
 				$query->
-					distinct()->
 					join(
 						$uc->getHelperTable(),
 						Expression::eq(
