@@ -64,5 +64,13 @@
 		{
 			return new ProjectionChain();
 		}
+		
+		/**
+		 * @return GroupByPropertyProjection
+		**/
+		public static function group($property)
+		{
+			return new GroupByPropertyProjection($property);
+		}
 	}
 ?>
