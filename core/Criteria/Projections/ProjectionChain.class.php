@@ -34,16 +34,14 @@
 		}
 		
 		/**
-		 * @return FieldGroup
+		 * @return JoinCapableQuery
 		**/
-		public function toField(Criteria $criteria, JoinCapableQuery $query)
+		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
-			$group = new FieldGroup();
-			
 			foreach ($this->list as $projection)
-				$group->add($projection->toField($criteria, $query));
+				$query->get($projection->process($criteria, $query));
 			
-			return $group;
+			return $query;
 		}
 	}
 ?>

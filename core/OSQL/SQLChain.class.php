@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	abstract class SQLChain implements LogicalObject
+	abstract class SQLChain implements LogicalObject, MappableObject
 	{
 		protected $chain = array();
 		protected $logic = array();

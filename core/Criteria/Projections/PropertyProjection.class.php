@@ -18,11 +18,13 @@
 		protected $property	= null;
 		protected $alias	= null;
 		
-		public function toField(Criteria $criteria, JoinCapableQuery $query)
+		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
-			return SelectField::create(
-				$criteria->getDao()->guessAtom($this->property, $query),
-				$this->alias
+			return $query->get(
+				SelectField::create(
+					$criteria->getDao()->guessAtom($this->property, $query),
+					$this->alias
+				)
 			);
 		}
 	}

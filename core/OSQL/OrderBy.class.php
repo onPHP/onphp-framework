@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	final class OrderBy extends FieldTable implements LogicalObject
+	final class OrderBy extends FieldTable implements MappableObject
 	{
 		private $direction = null;
 		
@@ -76,11 +76,6 @@
 				return
 					parent::toDialectString($dialect)
 					.$this->direction->decide(' ASC', ' DESC');
-		}
-		
-		public function toBoolean(Form $form)
-		{
-			throw new UnsupportedMethodException();
 		}
 	}
 ?>

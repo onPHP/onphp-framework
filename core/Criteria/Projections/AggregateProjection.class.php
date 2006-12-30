@@ -17,16 +17,18 @@
 	{
 		abstract public function getFunctionName();
 		
-		public function toField(Criteria $criteria, JoinCapableQuery $query)
+		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
 			Assert::isFalse(!$this->property);
 			
-			return
-				SQLFunction::create(
-					$this->getFunctionName(),
-					$criteria->getDao()->guessAtom($this->property, $query)
-				)->
-				setAlias($this->alias);
+			return $query->
+				get(
+					SQLFunction::create(
+						$this->getFunctionName(),
+						$criteria->getDao()->guessAtom($this->property, $query)
+					)->
+					setAlias($this->alias)
+				);
 		}
 	}
 ?>

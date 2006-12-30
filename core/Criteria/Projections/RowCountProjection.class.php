@@ -18,13 +18,15 @@
 		public function toField(Criteria $criteria, JoinCapableQuery $query)
 		{
 			return
-				SQLFunction::create(
-					'count',
-					$this->property
-						? $criteria->getDao()->guessAtom($this->property, $query)
-						: '*'
-				)->
-				setAlias($this->alias);
+				$query->get(
+					SQLFunction::create(
+						'count',
+						$this->property
+							? $criteria->getDao()->guessAtom($this->property, $query)
+							: '*'
+					)->
+					setAlias($this->alias)
+				);
 		}
 	}
 ?>

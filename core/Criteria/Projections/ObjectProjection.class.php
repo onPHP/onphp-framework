@@ -15,6 +15,9 @@
 	**/
 	interface ObjectProjection
 	{
-		public function toField(Criteria $criteria, JoinCapableQuery $query);
+		/**
+		 * @return JoinCapableQuery
+		**/
+		public function process(Criteria $criteria, JoinCapableQuery $query);
 	}
 ?>

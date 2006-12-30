@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Logic
 	**/
-	final class EqualsLowerExpression implements LogicalObject
+	final class EqualsLowerExpression implements LogicalObject, MappableObject
 	{
 		private $left	= null;
 		private $right	= null;

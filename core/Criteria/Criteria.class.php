@@ -88,8 +88,11 @@
 		/**
 		 * @return Criteria
 		**/
-		public function addOrder(LogicalObject $order)
+		public function addOrder(/* MapableObject */ $order)
 		{
+			if (!$order instanceof MappableObject)
+				$order = new OrderBy($order);
+			
 			$this->order[] = $order;
 			
 			return $this;
@@ -221,8 +224,11 @@
 		public function toSelectQuery()
 		{
 			if ($this->projection) {
-				$query = OSQL::select()->from($this->dao->getTable());
-				$query->get($this->getProjection()->toField($this, $query));
+				$query =
+					$this->getProjection()->process(
+						$this,
+						OSQL::select()->from($this->dao->getTable())
+					);
 			} else
 				$query = $this->dao->makeSelectHead();
 			

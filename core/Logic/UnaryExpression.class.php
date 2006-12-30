@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Logic
 	**/
-	final class UnaryExpression implements LogicalObject
+	final class UnaryExpression implements LogicalObject, MappableObject
 	{
 		const IS_NULL			= 'IS NULL';
 		const IS_NOT_NULL		= 'IS NOT NULL';
