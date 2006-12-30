@@ -241,7 +241,11 @@
 				($list = $this->getCachedByQuery($query))
 			)
 				return $list;
-			elseif ($list = $db->queryJoinedObjectSet($query, $this->dao)) {
+			elseif (
+				$list = $db->{$criteria->getFetchStrategy()->toString()}(
+					$query, $this->dao
+				)
+			) {
 				if (Cache::DO_NOT_CACHE === $expires) {
 					return $list;
 				} else {

@@ -128,9 +128,10 @@
 		{
 			$query = $criteria->toSelectQuery();
 			
-			$list = DBPool::getByDao($this->dao)->queryJoinedObjectSet(
-				$query, $this->dao
-			);
+			$list = DBPool::getByDao($this->dao)->
+				{$criteria->getFetchStrategy()->toString()}(
+					$query, $this->dao
+				);
 			
 			if ($list)
 				return $this->cacheListByQuery($query, $list);

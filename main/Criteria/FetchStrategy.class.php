@@ -19,8 +19,8 @@
 		const CASCADE	= 2;
 		
 		protected $names = array(
-			self::JOIN		=> 'makeObject',
-			self::CASCADE	=> 'makeJoinedObject'
+			self::JOIN		=> 'queryJoinedObjectSet',
+			self::CASCADE	=> 'queryObjectSet'
 		);
 		
 		/**
