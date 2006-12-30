@@ -119,12 +119,6 @@
 	 * @defgroup Logic Logical expressions used in OSQL and Form
 	 * @ingroup Core
 	 *
-	 * @defgroup Criteria Object queries API
-	 * @ingroup Core
-	 *
-	 * @defgroup Projections Object projections for use in Criteria queries
-	 * @ingroup Criteria
-	 *
 	 * @defgroup OSQL Dynamic query builder
 	 * @ingroup Core
 	 *
@@ -140,6 +134,12 @@
 	 * @defgroup Containers IdentifiableObject collections handlers
 	 * @ingroup DAOs
 	 * 
+	 * @defgroup Criteria Object queries API
+	 * @ingroup Main
+	 *
+	 * @defgroup Projections Object projections for use in Criteria queries
+	 * @ingroup Criteria
+	 *
 	 * @defgroup onSPL Things based on Standard PHP Library
 	 * @ingroup Main
 	 *
