@@ -182,7 +182,10 @@
 		public function getList()
 		{
 			try {
-				return $this->dao->getListByCriteria($this);
+				if ($this->strategy->getId() == FetchStrategy::JOIN)
+					return $this->dao->getListByCriteria($this);
+				
+				return $this->dao->getListByQuery($this->toSelectQuery());
 			} catch (ObjectNotFoundException $e) {
 				return array();
 			}
