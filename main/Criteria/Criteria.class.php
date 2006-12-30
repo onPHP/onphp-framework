@@ -268,6 +268,24 @@
 							array($property->getClassName(), 'dao')
 						);
 						
+						if ($dao->getTable() == $this->dao->getTable()) {
+							$alias = $property->getDumbName();
+							
+							$fields = $dao->getFields();
+							
+							$fields[
+								array_search($this->dao->getIdName(), $fields)
+							] = new SelectField(
+								new DBField($property->getDumbIdName(), $dao->getTable()),
+								
+								$this->dao->getJoinPrefix($property->getDumbName())
+								.$dao->getIdName()
+							);
+						} else {
+							$alias = null;
+							$fields = $dao->getFields();
+						}
+						
 						if (!$query->hasJoinedTable($dao->getTable())) {
 							$logic =
 								Expression::eq(
@@ -278,19 +296,21 @@
 									
 									DBField::create(
 										$dao->getIdName(),
-										$dao->getTable()
+										$alias
+											? $alias
+											: $dao->getTable()
 									)
 								);
 							
 							if ($property->isRequired())
-								$query->join($dao->getTable(), $logic);
+								$query->join($dao->getTable(), $logic, $alias);
 							else
-								$query->leftJoin($dao->getTable(), $logic);
+								$query->leftJoin($dao->getTable(), $logic, $alias);
 						}
 						
 						$query->arrayGet(
-							$dao->getFields(),
-							$dao->getJoinPrefix()
+							$fields,
+							$dao->getJoinPrefix($property->getDumbName())
 						);
 					}
 				}

@@ -2,6 +2,9 @@
 
 2006-12-30	Konstantin V. Arkhipov
 
+	* meta/, main/Criteria/Criteria.class.php: correct handling of
+	self-encapsulating classes implemented.
+
 	* main/Criteria/Criteria.class.php: cascading fetch-strategy is
 	working again.
 

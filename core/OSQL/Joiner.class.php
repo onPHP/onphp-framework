@@ -24,7 +24,6 @@
 		public function from(FromTable $from)
 		{
 			$this->from[] = $from;
-			$this->tables[$from->getTable()] = true;
 			
 			return $this;
 		}

@@ -288,17 +288,37 @@ EOT;
 									}
 								} else {
 									if ($this->required) {
-										$out = <<<EOT
+										// avoid infinite recursion
+										if ($this->type->getClass() == $className) {
+											$out = <<<EOT
 \${$varName}->set{$method}(
-	{$this->type->getClass()}::dao()->makeJoinedObject(\$array, {$this->type->getClass()}::dao()->getJoinPrefix())
+	\$this->makeSelf(\$array, \$this->getJoinPrefix('{$this->getDumbName()}'))
+);
+
+EOT;
+										} else
+											$out = <<<EOT
+\${$varName}->set{$method}(
+	{$this->type->getClass()}::dao()->makeJoinedObject(\$array, {$this->type->getClass()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
 );
 
 EOT;
 									} else {
-										$out = <<<EOT
-if (isset(\$array[{$this->type->getClass()}::dao()->getJoinPrefix().'{$idName}'])) {
+										// avoid infinite recursion
+										if ($this->type->getClass() == $className) {
+											$out = <<<EOT
+if (isset(\$array[{$this->type->getClass()}::dao()->getJoinPrefix('{$this->getDumbName()}').'{$idName}'])) {
 	\${$varName}->set{$method}(
-		{$this->type->getClass()}::dao()->makeJoinedObject(\$array, {$this->type->getClass()}::dao()->getJoinPrefix())
+		\$this->makeSelf(\$array, \$this->getJoinPrefix('{$this->getDumbName()}'))
+	);
+}
+
+EOT;
+										} else
+											$out = <<<EOT
+if (isset(\$array[{$this->type->getClass()}::dao()->getJoinPrefix('{$this->getDumbName()}').'{$idName}'])) {
+	\${$varName}->set{$method}(
+		{$this->type->getClass()}::dao()->makeJoinedObject(\$array, {$this->type->getClass()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
 	);
 }
 

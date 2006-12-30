@@ -17,9 +17,9 @@
 	{
 		abstract protected function makeSelf(&$array, $prefix = null);
 		
-		public function getJoinPrefix()
+		public function getJoinPrefix($field)
 		{
-			return $this->getTable().'__';
+			return $this->getTable().'_'.$field.'__';
 		}
 		
 		public function makeObject(&$array, $prefix = null)
