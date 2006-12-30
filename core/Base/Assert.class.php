@@ -39,8 +39,8 @@
 		{
 			if (
 				!(
-					$variable == (int) $variable
-					&& is_numeric($variable)
+					is_numeric($variable)
+					&& $variable == (int) $variable
 				)
 			)
 				self::fail($message);
@@ -86,6 +86,18 @@
 			if (get_class($first) !== get_class($second))
 				self::fail($message);
 		}
+		
+		/// @{
+		/// exceptionless methods
+		public static function checkInteger($value)
+		{
+			return (
+				is_numeric($value)
+				&& ($value == (int) $value)
+				&& (strlen($value) == strlen((int) $value))
+			);
+		}
+		/// @}
 		
 		private static function fail($message = null)
 		{

@@ -34,6 +34,9 @@
 			if ($value instanceof Identifier && !$value->isFinalized())
 				return 'null';
 			
+			if (Assert::checkInteger($value))
+				return $value;
+			
 			return "'" .sqlite_escape_string($value)."'";
 		}
 		
