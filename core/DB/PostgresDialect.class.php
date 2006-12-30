@@ -41,6 +41,13 @@
 		
 		public static function quoteValue($value)
 		{
+			if (
+				is_numeric($value)
+				&& ($value == (int) $value)
+				&& (strlen($value) == strlen((int) $value))
+			)
+				return $value;
+			
 			return "'".pg_escape_string($value)."'";
 		}
 
