@@ -1,4 +1,3 @@
 # $Id$
 
-* fix OrderBy: logical expressions, queries, etc; (Antony?)
 * dao for value objects (Range and others without table) (voxus);

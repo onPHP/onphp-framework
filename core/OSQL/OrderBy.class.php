@@ -65,7 +65,10 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			if ($this->field instanceof SelectQuery)
+			if (
+				$this->field instanceof SelectQuery
+				|| $this->field instanceof LogicalObject
+			)
 				return 
 					'('.$dialect->fieldToString($this->field).')'
 					.$this->direction->decide(' ASC', ' DESC');
