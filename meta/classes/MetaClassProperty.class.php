@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -364,11 +364,8 @@ EOT;
 						$value .= "\$array[\$prefix.'{$this->getDumbName()}'])";
 					}
 				} elseif ($this->type instanceof BooleanType) {
-					// FIXME: it's plain ugly
-					if (defined('DB_CLASS') && DB_CLASS == 'MySQL')
-						$value = "\$array[\$prefix.'{$this->getDumbName()}'] ? true : false";
-					else
-						$value = "\$array[\$prefix.'{$this->getDumbName()}'][0] == 't'";
+					// MySQL returns 0/1, others - t/f
+					$value = "(bool) strtr(\$array[\$prefix.'{$this->getDumbName()}'], array('f' => null))";
 				} else
 					$value = "\$array[\$prefix.'{$this->getDumbName()}']";
 				

@@ -2,6 +2,9 @@
 
 2007-01-03	Konstantin V. Arkhipov
 
+	* meta/classes/MetaClassProperty.class.php: removed evil hack for
+	MySQL's booleans.
+
 	* meta/builders/SchemaBuilder.class.php: ManyToMany relations building
 	implemented.
 
