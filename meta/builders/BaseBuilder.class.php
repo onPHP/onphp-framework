@@ -259,7 +259,7 @@ EOT;
 			$cap = <<<EOT
 <?php
 /*****************************************************************************
- *   Copyright (C) 2006, onPHP's MetaConfiguration Builder.                  *
+ *   Copyright (C) 2006-2007, onPHP's MetaConfiguration Builder.             *
 {$info}
 
 EOT;
