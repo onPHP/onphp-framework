@@ -56,7 +56,6 @@ EOT;
 			return $out."\n);\n\n";
 		}
 		
-		// TODO: implement ManyTo{One,Many} relations
 		public static function buildRelations(MetaClass $class)
 		{
 			if ($class->getPattern() instanceof AbstractClassPattern)
@@ -73,19 +72,42 @@ EOT;
 						);
 					
 					if (
-						$relation->getId() != MetaRelation::ONE_TO_ONE
-						&& $relation->getId() != MetaRelation::LAZY_ONE_TO_ONE
+						$relation->getId() == MetaRelation::ONE_TO_MANY
 					) {
 						continue;
-					}
-					
-					$sourceTable = $class->getDumbName();
-					$sourceColumn = $property->getDumbIdName();
-					
-					$targetTable = $foreignClass->getDumbName();
-					$targetColumn = $foreignClass->getIdentifier()->getDumbName();
-					
-					$out .= <<<EOT
+					} elseif ($relation->getId() == MetaRelation::MANY_TO_MANY) {
+						$tableName =
+							$class->getDumbName()
+							.'_'
+							.$foreignClass->getDumbName();
+						
+						$foreignPropery = clone $foreignClass->getIdentifier();
+						
+						$name = $class->getName();
+						$name = strtolower($name[0]).substr($name, 1);
+						$name .= 'Id';
+						
+						$foreignPropery->setName($name);
+						
+						$out .= <<<EOT
+\$schema->
+	addTable(
+		DBTable::create('{$tableName}')->
+		{$property->toColumn()}->
+		{$foreignPropery->toColumn()}
+	);
+
+
+EOT;
+
+					} else {
+						$sourceTable = $class->getDumbName();
+						$sourceColumn = $property->getDumbIdName();
+						
+						$targetTable = $foreignClass->getDumbName();
+						$targetColumn = $foreignClass->getIdentifier()->getDumbName();
+						
+						$out .= <<<EOT
 
 // {$sourceTable}.{$sourceColumn} -> {$targetTable}.{$targetColumn}
 \$schema->
@@ -99,8 +121,10 @@ EOT;
 				ForeignChangeAction::cascade()
 			);
 
+
 EOT;
 					
+					}
 				}
 			}
 			

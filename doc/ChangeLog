@@ -2,6 +2,9 @@
 
 2007-01-03	Konstantin V. Arkhipov
 
+	* meta/builders/SchemaBuilder.class.php: ManyToMany relations building
+	implemented.
+
 	* ext/src/core/DB/Dialect.c: rare memory corruption fixed.
 
 2007-01-02	Konstantin V. Arkhipov

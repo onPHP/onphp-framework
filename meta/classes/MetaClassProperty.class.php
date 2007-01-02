@@ -29,10 +29,7 @@
 		
 		public function __construct($name, BasePropertyType $type)
 		{
-			$this->name = $name;
-			$this->dumbName = strtolower(
-				preg_replace(':([A-Z]):', '_\1', $name)
-			);
+			$this->setName($name);
 			
 			$this->type = $type;
 			
@@ -43,6 +40,19 @@
 		public function getName()
 		{
 			return $this->name;
+		}
+		
+		/**
+		 * @return MetaClassProperty
+		**/
+		public function setName($name)
+		{
+			$this->name = $name;
+			$this->dumbName = strtolower(
+				preg_replace(':([A-Z]):', '_\1', $name)
+			);
+			
+			return $this;
 		}
 		
 		public function getDumbName()
@@ -502,7 +512,14 @@ EOT;
 		public function toColumn()
 		{
 			if ($this->type instanceof ObjectType && !$this->type->isGeneric())
-				$dumbName = $this->getDumbIdName();
+				if ($this->relation->getId() == MetaRelation::MANY_TO_MANY)
+					$dumbName =
+						MetaConfiguration::me()->
+						getClassByName($this->type->getClass())->
+							getDumbName()
+							.'_id';
+				else
+					$dumbName = $this->getDumbIdName();
 			elseif ($this->type instanceof RangeType) {
 				return
 					array(
