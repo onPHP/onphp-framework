@@ -99,16 +99,6 @@
 				&& !$property->isGenericType()
 			);
 			
-			// prevents useless joins
-			if (
-				isset($path[1])
-				&& ($path[1] == 'id')
-				&& (count($path) == 1)
-			) {
-				$onlyId = true;
-			} else {
-				$onlyId = false;
-			}
 			
 			if (
 				$property->getRelationId() == MetaRelation::ONE_TO_MANY
@@ -145,17 +135,7 @@
 						else
 							$query->leftJoin($table, $logic);
 					}
-				}
-				
-				if ($onlyId)
-					return
-						DBField::create(
-							call_user_func(
-								array($containerName, 'getChildIdField')
-							),
-							$table
-						);
-				elseif (!$query->hasJoinedTable($dao->getTable())) {
+					
 					$logic =
 						Expression::eq(
 							DBField::create(
@@ -170,7 +150,24 @@
 								$table
 							)
 						);
-					
+				} else {
+					$logic =
+						Expression::eq(
+							DBField::create(
+								call_user_func(
+									array($containerName, 'getParentIdField')
+								),
+								$dao->getTable()
+							),
+							
+							DBField::create(
+								$this->getIdName(),
+								$this->getTable()
+							)
+						);
+				}
+				
+				if (!$query->hasJoinedTable($dao->getTable())) {
 					if ($property->isRequired())
 						$query->join($dao->getTable(), $logic);
 					else
@@ -179,7 +176,12 @@
 			} else { // OneToOne, LazyOneToOne
 				$className = $property->getClassName();
 				
-				if ($onlyId)
+				// prevents useless joins
+				if (
+					isset($path[1])
+					&& ($path[1] == 'id')
+					&& (count($path) == 1)
+				)
 					return
 						new DBField(
 							$property->getDumbIdName(),
