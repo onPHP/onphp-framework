@@ -42,7 +42,6 @@
 					$seconds = (int) $scope[$this->name][self::SECONDS];
 				
 				try {
-					// TODO: optimize a bit this voodoo
 					$stamp = new Timestamp(
 						(int) $scope[$this->name][self::YEAR].'-'
 						.(int) $scope[$this->name][self::MONTH].'-'
