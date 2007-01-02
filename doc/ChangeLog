@@ -2,6 +2,14 @@
 
 2007-01-02	Konstantin V. Arkhipov
 
+	* meta/builders/AutoClassBuilder.class.php: added method for filling
+	encapsulated containers.
+
+	* meta/builders/ContainerClassBuilder.class.php: no more
+	getChildIdField() for OneToMany containers.
+
+	* main/Criteria/Criteria.class.php: collection's fetching implemented.
+
 	* main/DAOs/StorableDAO.class.php: path's digging simplified a bit.
 
 2006-12-30	Konstantin V. Arkhipov

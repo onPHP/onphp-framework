@@ -72,15 +72,15 @@ public static function getHelperTable()
 	return '{$class->getDumbName()}_{$remoteDumbName}';
 }
 
-EOT;
-			}
-			
-			$out .= <<<EOT
-
 public static function getChildIdField()
 {
 	return '{$remoteDumbName}_id';
 }
+
+EOT;
+			}
+			
+			$out .= <<<EOT
 
 public static function getParentIdField()
 {

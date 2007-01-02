@@ -89,7 +89,7 @@
 **/
 public function get{$methodName}(\$lazy = false)
 {
-	if (!\$this->{$name} || (\$this->{$name} != \$lazy)) {
+	if (!\$this->{$name} || (\$this->{$name}->isLazy() != \$lazy)) {
 		\$this->{$name} = new {$containerName}(\$this, \$lazy);
 		
 		if (\$this->id) {
@@ -98,6 +98,26 @@ public function get{$methodName}(\$lazy = false)
 	}
 	
 	return \$this->{$name};
+}
+
+/**
+ * @return {$class->getName()}
+**/
+public function fill{$methodName}(\$collection, \$lazy = false)
+{
+	if (!\$this->{$name} || (\$this->{$name}->isLazy() != \$lazy)) {
+		\$this->{$name} = new {$containerName}(\$this, \$lazy);
+		
+		if (!\$this->id) {
+			throw new WrongStateException(
+				'i do not know which object i belongs to'
+			);
+		}
+		
+		\$this->{$name}->replaceList(\$collection);
+	}
+	
+	return \$this;
 }
 
 EOT;

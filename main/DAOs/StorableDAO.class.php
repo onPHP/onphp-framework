@@ -85,7 +85,7 @@
 			return new DBValue($atom);
 		}
 		
-		protected function processPath(
+		public function processPath(
 			AbstractProtoClass $proto, $path, JoinCapableQuery $query
 		)
 		{
@@ -98,7 +98,6 @@
 				$property->getRelationId() != null
 				&& !$property->isGenericType()
 			);
-			
 			
 			if (
 				$property->getRelationId() == MetaRelation::ONE_TO_MANY
