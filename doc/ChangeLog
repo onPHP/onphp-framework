@@ -1,5 +1,9 @@
 # $Id$
 
+2007-01-03	Konstantin V. Arkhipov
+
+	* ext/src/core/DB/Dialect.c: rare memory corruption fixed.
+
 2007-01-02	Konstantin V. Arkhipov
 
 	* meta/builders/AutoClassBuilder.class.php: added method for filling

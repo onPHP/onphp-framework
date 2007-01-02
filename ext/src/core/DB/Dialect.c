@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -214,6 +214,15 @@ ONPHP_METHOD(Dialect, valueToString)
 		&& instanceof_function(Z_OBJCE_P(value), onphp_ce_DBValue TSRMLS_CC)
 	) {
 		zend_call_method_with_1_params(
+			&value,
+			Z_OBJCE_P(value),
+			NULL,
+			"todialectstring",
+			&out,
+			getThis()
+		);
+	} else {
+		zend_call_method_with_1_params(
 			&getThis(),
 			Z_OBJCE_P(getThis()),
 			NULL,
@@ -221,10 +230,10 @@ ONPHP_METHOD(Dialect, valueToString)
 			&out,
 			value
 		);
-		
-		if (EG(exception)) {
-			return;
-		}
+	}
+	
+	if (EG(exception)) {
+		return;
 	}
 	
 	RETURN_ZVAL(out, 1, 1);
@@ -279,7 +288,7 @@ smart_str onphp_dialect_to_needed_string(
 			expression,
 			NULL TSRMLS_CC
 		);
-	
+		
 		if (EG(exception)) {
 			return string;
 		}
@@ -288,7 +297,7 @@ smart_str onphp_dialect_to_needed_string(
 	}
 	
 	smart_str_0(&string);
-	ZVAL_FREE(out);
+	zval_dtor(out);
 	
 	return string;
 }
