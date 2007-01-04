@@ -184,11 +184,11 @@
 		/**
 		 * @return Criteria
 		**/
-		public function fetchCollection($name, $lazy = false)
+		public function fetchCollection($path, $lazy = false)
 		{
 			Assert::isBoolean($lazy);
 			
-			$this->collections[$name] = $lazy;
+			$this->collections[$path] = $lazy;
 			
 			return $this;
 		}
