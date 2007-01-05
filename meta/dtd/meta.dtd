@@ -37,7 +37,15 @@
 
 <!ELEMENT pattern EMPTY>
 <!ATTLIST pattern
-		name		(DictionaryClass|AbstractClass|StraightMapping|EnumerationClass|SpookedClass) #REQUIRED
+		name		(
+			DictionaryClass
+			|AbstractClass
+			|StraightMapping
+			|EnumerationClass
+			|SpookedClass
+			|SpookedEnumeration
+			|ValueObject
+		) #REQUIRED
 >
 
 <!ELEMENT sources (source+)>
