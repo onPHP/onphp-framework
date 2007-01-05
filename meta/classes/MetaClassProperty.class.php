@@ -119,7 +119,7 @@
 				$this->size = $size;
 			else
 				throw new WrongArgumentException(
-					"size not allowed for '{$this->type->getClass()}' type" 
+					"size not allowed for '{$this->type->getClassName()}' type" 
 				);
 			
 			return $this;
@@ -233,34 +233,37 @@ EOT;
 					case MetaRelation::ONE_TO_ONE:
 					case MetaRelation::LAZY_ONE_TO_ONE:
 						
-						$remote =
-							MetaConfiguration::me()->getClassByName(
-								$this->type->getClass()
-							);
+						$remote = $this->type->getClass();
 						
-						$idName =
-							$this->toVarName(
-								$remote->getIdentifier()->getName()
-							);
-						
-						if ($remote->getPattern() instanceof EnumerationClassPattern) {
+						if ($remote->getPattern() instanceof ValueObjectPattern) {
+							$out =
+								"set{$method}("
+								."Singleton::getInstance('{$this->type->getClassName()}')->makeSelf("
+								."\$array, \$prefix"
+								.'))';
+						} elseif ($remote->getPattern() instanceof EnumerationClassPattern) {
 							if ($this->required) {
 								$out =
 									"set{$method}("
-									."new {$this->type->getClass()}("
+									."new {$this->type->getClassName()}("
 									."\$array[\$prefix.'{$this->getDumbIdName()}']"
 									."))";
 							} else {
 								$out = <<<EOT
 if (isset(\$array[\$prefix.'{$this->getDumbIdName()}'])) {
 	\${$varName}->set{$method}(
-		new {$this->type->getClass()}(\$array[\$prefix.'{$this->getDumbIdName()}'])
+		new {$this->type->getClassName()}(\$array[\$prefix.'{$this->getDumbIdName()}'])
 	);
 }
 
 EOT;
 							}
 						} else {
+							$idName =
+								$this->toVarName(
+									$remote->getIdentifier()->getName()
+								);
+							
 							if ($this->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
 								if ($this->required) {
 									$out =
@@ -281,7 +284,7 @@ EOT;
 										
 										$out =
 											"set{$method}("
-											."{$this->type->getClass()}::dao()->getById("
+											."{$this->type->getClassName()}::dao()->getById("
 											."\$array[\$prefix.'{$this->getDumbIdName()}']"
 											.'))';
 										
@@ -290,7 +293,7 @@ EOT;
 										$out = <<<EOT
 if (isset(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])) {
 	\${$varName}->set{$method}(
-		{$this->type->getClass()}::dao()->getById(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])
+		{$this->type->getClassName()}::dao()->getById(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])
 	);
 }
 
@@ -299,7 +302,7 @@ EOT;
 								} else {
 									if ($this->required) {
 										// avoid infinite recursion
-										if ($this->type->getClass() == $className) {
+										if ($this->type->getClassName() == $className) {
 											$out = <<<EOT
 \${$varName}->set{$method}(
 	\$this->makeSelf(\$array, \$this->getJoinPrefix('{$this->getDumbName()}'))
@@ -309,15 +312,15 @@ EOT;
 										} else
 											$out = <<<EOT
 \${$varName}->set{$method}(
-	{$this->type->getClass()}::dao()->makeJoinedObject(\$array, {$this->type->getClass()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
+	{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, {$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
 );
 
 EOT;
 									} else {
 										// avoid infinite recursion
-										if ($this->type->getClass() == $className) {
+										if ($this->type->getClassName() == $className) {
 											$out = <<<EOT
-if (isset(\$array[{$this->type->getClass()}::dao()->getJoinPrefix('{$this->getDumbName()}').'{$idName}'])) {
+if (isset(\$array[{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}').'{$idName}'])) {
 	\${$varName}->set{$method}(
 		\$this->makeSelf(\$array, \$this->getJoinPrefix('{$this->getDumbName()}'))
 	);
@@ -326,9 +329,9 @@ if (isset(\$array[{$this->type->getClass()}::dao()->getJoinPrefix('{$this->getDu
 EOT;
 										} else
 											$out = <<<EOT
-if (isset(\$array[{$this->type->getClass()}::dao()->getJoinPrefix('{$this->getDumbName()}').'{$idName}'])) {
+if (isset(\$array[{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}').'{$idName}'])) {
 	\${$varName}->set{$method}(
-		{$this->type->getClass()}::dao()->makeJoinedObject(\$array, {$this->type->getClass()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
+		{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, {$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
 	);
 }
 
@@ -353,7 +356,7 @@ EOT;
 				
 				if ($this->type instanceof ObjectType) {
 					
-					$value = "new {$this->type->getClass()}(";
+					$value = "new {$this->type->getClassName()}(";
 					
 					if ($this->type instanceof RangeType) {
 						$value =
@@ -385,7 +388,7 @@ EOT;
 						$out = <<<EOT
 if (isset(\$array[\$prefix.'{$this->getDumbName()}'])) {
 	\${$varName}->set{$method}(
-		new {$this->type->getClass()}(\$array[\$prefix.'{$this->getDumbName()}'])
+		new {$this->type->getClassName()}(\$array[\$prefix.'{$this->getDumbName()}'])
 	);
 }
 
@@ -420,10 +423,12 @@ EOT;
 					case MetaRelation::ONE_TO_ONE:
 					case MetaRelation::LAZY_ONE_TO_ONE:
 						
-						$remote =
-							MetaConfiguration::me()->getClassByName(
-								$this->type->getClass()
-							);
+						$remote = $this->type->getClass();
+						
+						if ($remote->getPattern() instanceof ValueObjectPattern) {
+							// sould be handled by builder
+							Assert::isTrue(false, 'unreacheble place reached');
+						}
 						
 						$idName = $remote->getIdentifier()->getName();
 						$idMethod = ucfirst($idName);
@@ -508,13 +513,26 @@ EOT;
 		
 		public function toColumn()
 		{
-			if ($this->type instanceof ObjectType && !$this->type->isGeneric())
+			if (
+				$this->getType() instanceof ObjectType
+				&& !$this->getType()->isGeneric()
+				&& (
+					$this->getType()->getClass()->getPattern()
+						instanceof ValueObjectPattern
+				)
+			) {
+				$columns = array();
+				
+				$remote = $this->getType()->getClass();
+				
+				foreach ($remote->getProperties() as $property) {
+					$columns[] = $property->buildColumn($property->getDumbName());
+				}
+				
+				return $columns;
+			} elseif ($this->type instanceof ObjectType && !$this->type->isGeneric())
 				if ($this->relation->getId() == MetaRelation::MANY_TO_MANY)
-					$dumbName =
-						MetaConfiguration::me()->
-						getClassByName($this->type->getClass())->
-							getDumbName()
-							.'_id';
+					$dumbName = $this->type->getClass()->getDumbName().'_id';
 				else
 					$dumbName = $this->getDumbIdName();
 			elseif ($this->type instanceof RangeType) {
@@ -539,7 +557,7 @@ EOT;
 						? $this->getDumbIdName()
 						: null,
 					$this->getType() instanceof ObjectType
-						? $this->getType()->getClass()
+						? $this->getType()->getClassName()
 						: null,
 					$this->isRequired(),
 					$this->getType()->isGeneric(),

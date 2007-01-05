@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -38,18 +38,14 @@
 			$className = $class->getName();
 			$propertyName = strtolower($className[0]).substr($className, 1);
 			
-			$remoteDumbName =
-				MetaConfiguration::me()->getClassByName(
-					$holder->getType()->getClass()
-				)->
-				getDumbName();
+			$remoteDumbName = $holder->getClass()->getDumbName();
 			
 			$out .= <<<EOT
 public function __construct({$className} \${$propertyName}, \$lazy = false)
 {
 	parent::__construct(
 		\${$propertyName},
-		{$holder->getType()->getClass()}::dao(),
+		{$holder->getType()->getClassName()}::dao(),
 		\$lazy
 	);
 }

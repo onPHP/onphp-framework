@@ -125,7 +125,7 @@
 						ONPHP_META_DAO_DIR
 						.$class->getName()
 						.'To'
-						.$property->getType()->getClass()
+						.$property->getType()->getClassName()
 						.'DAO'
 						.EXT_CLASS;
 					

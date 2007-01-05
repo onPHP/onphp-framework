@@ -5,6 +5,15 @@
 
 <metaconfiguration><classes>
 
+	<class name="Credentials" type="final">
+		<properties>
+			<property name="nickname" type="String" size="255" required="true" />
+			<property name="password" type="Password" required="true" />
+		</properties>
+		
+		<pattern name="ValueObject" />
+	</class>
+
 	<class name="Spook" type="spooked">
 		<properties>
 			<identifier type="Integer" />
@@ -27,8 +36,7 @@
 		<properties>
 			<identifier />
 			
-			<property name="nickname" type="String" size="255" required="true" />
-			<property name="password" type="Password" required="true" />
+			<property name="credentials" type="Credentials" required="true" relation="OneToOne" />
 			
 			<property name="lastLogin" type="Timestamp" required="true" column="very_custom_field_name" />
 			<property name="registered" type="Timestamp" required="true" />

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -73,27 +73,24 @@ EOT;
 					
 					if (
 						!$property->isIdentifier() 
-						&&
-							MetaConfiguration::me()->getClassByName(
-								$property->getType()->getClass()
-							)->
-							getPattern() instanceof EnumerationClassPattern
+						&& (
+							$property->getType()->getClass()->getPattern()
+								instanceof EnumerationClassPattern
+						)
 					)
 						$isEnum = true;
 					else
 						$isEnum = false;
 
 					if ($isEnum) {
-						$className = MetaConfiguration::me()->getClassByName(
-							$property->getType()->getClass()
-						)->getName();
+						$className = $property->getType()->getClassName();
 						
 						$primitiveName = $property->getName()/*.'Id'*/;
 					} elseif ($property->isIdentifier()) {
 						$className = $class->getName();
 						$primitiveName = 'id';
 					} else {
-						$className = $property->getType()->getClass();
+						$className = $property->getType()->getClassName();
 						$primitiveName = $property->getName()/*.'Id'*/;
 					}
 					
@@ -111,28 +108,44 @@ EOT;
 									== MetaRelation::LAZY_ONE_TO_ONE
 							)
 						) {
-							$primitive =
-								"\nPrimitive::identifier('{$primitiveName}')->\n";
-							
-							// should be specified only in childs
 							if (
-								!(
-									$class->getType()
-									&& (
-										$class->getTypeId()
-										== MetaClassType::CLASS_ABSTRACT
-									)
-									&& $property->isIdentifier()
+								!$property->getType()->isGeneric()
+								&& $property->getType() instanceof ObjectType
+								&& (
+									$property->getType()->getClass()->getPattern()
+										instanceof ValueObjectPattern
 								)
 							) {
-								$primitive .= "of('{$className}')->\n";
+								$primitive = array();
+								$remote = $property->getType()->getClass();
+								
+								foreach ($remote->getProperties() as $remoteProperty) {
+									$primitive[] = $remoteProperty->toPrimitive();
+								}
+							} else {
+								$primitive =
+									"\nPrimitive::identifier('{$primitiveName}')->\n";
+								
+								// should be specified only in childs
+								if (
+									!(
+										$class->getType()
+										&& (
+											$class->getTypeId()
+											== MetaClassType::CLASS_ABSTRACT
+										)
+										&& $property->isIdentifier()
+									)
+								) {
+									$primitive .= "of('{$className}')->\n";
+								}
 							}
 						} else {
 							$primitive = null;
 						}
 					}
 					
-					if ($primitive) {
+					if ($primitive && !is_array($primitive)) {
 						if ($property->getType()->hasDefault())
 							$primitive .=
 								"setDefault({$property->getType()->getDefault()})->\n";
@@ -146,8 +159,12 @@ EOT;
 				} else
 					$primitive = $property->toPrimitive();
 				
-				if ($primitive)
-					$prms[] = $primitive;
+				if ($primitive) {
+					if (is_array($primitive))
+						$prms = array_merge($prms, $primitive);
+					else
+						$prms[] = $primitive;
+				}
 			}
 			
 			$out .= implode(")->\nadd(", $prms).");";
@@ -193,10 +210,28 @@ EOT;
 EOT;
 
 			foreach ($class->getProperties() as $property) {
-				$out .=
-					"\$list['{$property->getName()}'] = "
-					.$property->toLightProperty()->toString()
-					."\n";
+				if (
+					!$property->getType()->isGeneric()
+					&& $property->getType() instanceof ObjectType
+					&& (
+						$property->getType()->getClass()->getPattern()
+							instanceof ValueObjectPattern
+					)
+				) {
+					$remote = $property->getType()->getClass();
+					
+					foreach ($remote->getProperties() as $remoteProperty) {
+						$out .=
+							"\$list['{$remoteProperty->getName()}'] = "
+							.$remoteProperty->toLightProperty()->toString()
+							."\n";
+					}
+				} else {
+					$out .=
+						"\$list['{$property->getName()}'] = "
+						.$property->toLightProperty()->toString()
+						."\n";
+				}
 			}
 			
 			$out .= <<<EOT

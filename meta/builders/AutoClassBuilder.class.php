@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -31,7 +31,7 @@
 			) {
 				$out .= " extends NamedObject";
 				$isNamed = true;
-			} else
+			} elseif (!$class->getPattern() instanceof ValueObjectPattern)
 				$out .= " extends IdentifiableObject";
 			
 			if ($interfaces = $class->getInterfaces())

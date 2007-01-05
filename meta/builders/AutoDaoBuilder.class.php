@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -42,12 +42,6 @@ EOT;
 					$out .= "parent::__construct();\n\n";
 				}
 				
-				$classes = null;
-				
-				if (0 /* $hints = self::buildHints($class) */) {
-					$classes = implode(",\n", $hints);
-				}
-			
 				$out .= <<<EOT
 		\$this->mapping = array_merge(
 			\$this->mapping,
@@ -65,18 +59,6 @@ EOT;
 
 EOT;
 
-				if ($classes) {
-					$out .= <<<EOT
-
-		\$this->classes = array_merge(
-			\$this->classes,
-			array(
-				{$classes}
-			);
-
-EOT;
-				}
-				
 				$out .= <<<EOT
 	}
 
@@ -92,8 +74,8 @@ EOT;
 **/
 public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \${$varName})
 {
-	return
-		parent::setQueryFields(\$query, \${$varName})->
+	parent::setQueryFields(\$query, \${$varName});
+
 
 EOT;
 				$out .= self::buildFillers($class);

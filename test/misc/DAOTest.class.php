@@ -38,8 +38,11 @@
 			$mysqler =
 				TestUser::create()->
 				setCity($moscow)->
-				setNickname('mysqler')->
-				setPassword(sha1('mysqler'))->
+				setCredentials(
+					Credentials::create()->
+					setNickname('mysqler')->
+					setPassword(sha1('mysqler'))
+				)->
 				setLastLogin(
 					Timestamp::create(time())
 				)->
@@ -50,8 +53,11 @@
 			$postgreser = clone $mysqler;
 			
 			$postgreser->
-				setNickName('postgreser')->
-				setPassword(sha1('postgreser'))->
+				setCredentials(
+					Credentials::create()->
+					setNickName('postgreser')->
+					setPassword(sha1('postgreser'))
+				)->
 				setCity($piter);
 			
 			$piter = TestCity::dao()->add($piter);

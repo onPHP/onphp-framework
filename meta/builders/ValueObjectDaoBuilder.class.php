@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,47 +13,18 @@
 	/**
 	 * @ingroup Builders
 	**/
-	final class DictionaryDaoBuilder extends BaseBuilder
+	final class ValueObjectDaoBuilder extends BaseBuilder
 	{
 		public static function build(MetaClass $class)
 		{
-			$out = self::getHead();
-			
-			$out .= <<<EOT
-abstract class Auto{$class->getName()}DAO extends ComplexBuilderDAO
-{
-	protected \$mapping = array(
-
-EOT;
-
-			$mapping = self::buildMapping($class);
-			$pointers = self::buildPointers($class);
-			
-			$out .= implode(",\n", $mapping);
-			
 			$className = $class->getName();
 			$varName = strtolower($className[0]).substr($className, 1);
 			
+			$out = self::getHead();
+			
 			$out .= <<<EOT
-
-	);
-
-{$pointers}
-
-EOT;
-			if ($class->getPattern() instanceof AbstractClassPattern) {
-				$out .= <<<EOT
-
-	/**
-	 * @return InsertOrUpdateQuery
-	**/
-	public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \${$varName})
-	{
-
-EOT;
-			} else {
-				$out .= <<<EOT
-
+abstract class Auto{$class->getName()}DAO extends ValueObjectDAO
+{
 	/**
 	 * @return InsertOrUpdateQuery
 	**/
@@ -61,7 +32,6 @@ EOT;
 	{
 
 EOT;
-			}
 			
 			$out .= self::buildFillers($class);
 			

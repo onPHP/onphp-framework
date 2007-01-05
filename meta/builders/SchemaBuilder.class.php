@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,7 +19,8 @@
 		{
 			if (
 				!count($class->getProperties())
-				|| $class->getPattern() instanceof AbstractClassPattern
+				|| ($class->getPattern() instanceof AbstractClassPattern)
+				|| ($class->getPattern() instanceof ValueObjectPattern)
 			)
 				return null;
 			
@@ -66,13 +67,12 @@ EOT;
 			foreach ($class->getAllProperties() as $property) {
 				if ($relation = $property->getRelation()) {
 					
-					$foreignClass =
-						MetaConfiguration::me()->getClassByName(
-							$property->getType()->getClass()
-						);
+					$foreignClass = $property->getType()->getClass();
 					
 					if (
 						$relation->getId() == MetaRelation::ONE_TO_MANY
+						// nothing to build, it's in the same table
+						|| $foreignClass->getPattern() instanceof ValueObjectPattern
 					) {
 						continue;
 					} elseif ($relation->getId() == MetaRelation::MANY_TO_MANY) {

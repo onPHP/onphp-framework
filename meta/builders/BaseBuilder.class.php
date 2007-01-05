@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -28,6 +28,7 @@
 			$varName = strtolower($className[0]).substr($className, 1);
 
 			$setters = array();
+			$valueObjects = array();
 			
 			$standaloneFillers = array();
 			$chainFillers = array();
@@ -38,7 +39,24 @@
 			
 			foreach ($class->getProperties() as $property) {
 				
-				if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
+				if (
+					$property->getRelationId() == MetaRelation::ONE_TO_ONE
+					&& (
+						!$property->getType()->isGeneric()
+						&& $property->getType() instanceof ObjectType
+						&& (
+							$property->getType()->getClass()->getPattern()
+								instanceof ValueObjectPattern
+						)
+					)
+				) {
+					$filler = $property->toDaoSetter($className);
+					
+					$valueObjects[ucfirst($property->getName())] =
+						$property->getType()->getClassName();
+				} elseif (
+					$property->getRelationId() == MetaRelation::ONE_TO_ONE
+				) {
 					$buildSetter = false;
 					
 					if ($filler = $property->toDaoSetter($className, true)) {
@@ -77,6 +95,21 @@
 				}
 			}
 			
+			if ($valueObjects) {
+				foreach ($valueObjects as $valueName => $valueClass) {
+					$out .=
+						"Singleton::getInstance('{$valueClass}DAO')->"
+						."setQueryFields(\$query, \${$varName}->get{$valueName}());\n";
+				}
+				
+				$out .= "\n";
+			}
+			
+			$out .= <<<EOT
+		return
+			\$query->
+
+EOT;
 			$out .= implode("->\n", $setters).";\n";
 
 			$out .= <<<EOT
@@ -262,44 +295,6 @@ EOT;
 			return $out;
 		}
 		
-		protected static function buildHints(MetaClass $class)
-		{
-			$hints = array();
-			
-			foreach ($class->getProperties() as $property) {
-				if (
-					($type = $property->getType()) instanceof ObjectType
-					&& (!$type->isGeneric())
-				) {
-					switch ($property->getRelationId()) {
-						case MetaRelation::ONE_TO_ONE:
-						case MetaRelation::LAZY_ONE_TO_ONE:
-							$className = "'{$type->getClass()}'";
-							break;
-							
-						case MetaRelation::ONE_TO_MANY:
-						case MetaRelation::MANY_TO_MANY:
-							$className =
-								"array('"
-								.$class->getName()
-								.ucfirst($property->getName())
-								."DAO', '"
-								.$type->getClass()
-								."')";
-							break;
-							
-						default:
-							throw new WrongStateException('strange relation type');
-					}
-					
-					$hints[] =
-						"'{$property->getName()}' => {$className}";
-				}
-			}
-			
-			return $hints;
-		}
-		
 		protected static function buildMapping(MetaClass $class)
 		{
 			$mapping = array();
@@ -337,15 +332,15 @@ EOT;
 						$relation->getId() == MetaRelation::ONE_TO_ONE
 						|| $relation->getId() == MetaRelation::LAZY_ONE_TO_ONE
 					) {
-						$remoteClass =
-							MetaConfiguration::me()->
-							getClassByName(
-								$property->getType()->getClass()
-							);
+						$remoteClass = $property->getType()->getClass();
 						
-						$row .=
-							"'{$property->getName()}"
-							."' => '{$property->getDumbIdName()}'";
+						if ($remoteClass->getPattern() instanceof ValueObjectPattern) {
+							$row = self::buildMapping($remoteClass);
+						} else {
+							$row .=
+								"'{$property->getName()}"
+								."' => '{$property->getDumbIdName()}'";
+						}
 					} else
 						$row = null;
 				}
@@ -421,6 +416,14 @@ EOT;
 				)
 				&& !$property->isRequired()
 				&& !$property->getType() instanceof RangeType
+				&& !(
+					$property->getType() instanceof ObjectType
+					&& !$property->getType()->isGeneric()
+					&& (
+						$property->getType()->getClass()->getPattern()
+							instanceof ValueObjectPattern
+					)
+				)
 			)
 				$standaloneFillers[] =
 					implode(

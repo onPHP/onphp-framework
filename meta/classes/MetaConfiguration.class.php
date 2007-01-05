@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -188,11 +188,11 @@
 											== MetaRelation::LAZY_ONE_TO_ONE
 									)
 								) && (
-									$property->getType()->getClass()
+									$property->getType()->getClassName()
 									<> $class->getName()
 								)
 							) {
-								$references[$property->getType()->getClass()][]
+								$references[$property->getType()->getClassName()][]
 									= $class->getName();
 							}
 						}
@@ -457,11 +457,13 @@
 		private function checkSanity(MetaClass $class)
 		{
 			if (!$class->getParent()) {
-				Assert::isTrue(
-					$class->getIdentifier() !== null,
-					
-					'no one can live without identifier'
-				);
+				if (!$class->getPattern() instanceof ValueObjectPattern)
+					Assert::isTrue(
+						$class->getIdentifier() !== null,
+						
+						'only value objects can live without identifiers. '
+						.'do not use them anyway'
+					);
 			} else {
 				$parent = $class->getParent();
 				
@@ -490,6 +492,26 @@
 					|| $class->getPattern() instanceof SpookedEnumerationPattern),
 					'spooked classes must use spooked patterns only'
 				);
+			}
+			
+			foreach ($class->getProperties() as $property) {
+				if (
+					!$property->getType()->isGeneric()
+					&& $property->getType() instanceof ObjectType
+					&&
+						$property->getType()->getClass()->getPattern()
+							instanceof ValueObjectPattern
+				) {
+					Assert::isTrue(
+						$property->isRequired(),
+						'optional value object is not supported'
+					);
+					
+					Assert::isTrue(
+						$property->getRelationId() == MetaRelation::ONE_TO_ONE,
+						'value objects must have OneToOne relation'
+					);
+				}
 			}
 			
 			return $this;

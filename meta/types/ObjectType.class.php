@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,16 +15,21 @@
 	**/
 	class ObjectType extends BasePropertyType
 	{
-		private $class = null;
+		private $className = null;
 		
-		public function __construct($class)
+		public function __construct($className)
 		{
-			$this->class = $class;
+			$this->className = $className;
 		}
 		
 		public function getClass()
 		{
-			return $this->class;
+			return MetaConfiguration::me()->getClassByName($this->className);
+		}
+		
+		public function getClassName()
+		{
+			return $this->className;
 		}
 		
 		public function getDeclaration()
@@ -55,7 +60,7 @@
 			$methodName = 'get'.ucfirst($name);
 			
 			if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
-				$className = $property->getType()->getClass();
+				$className = $property->getType()->getClassName();
 				
 				if ($property->isRequired()) {
 					$method = <<<EOT
@@ -100,7 +105,7 @@ EOT;
 				$method = <<<EOT
 
 /**
- * @return {$this->class}
+ * @return {$this->className}
 **/
 public function {$methodName}()
 {
@@ -124,7 +129,7 @@ EOT;
 /**
  * @return {$class->getName()}
 **/
-public function {$methodName}({$this->class} \${$name})
+public function {$methodName}({$this->className} \${$name})
 {
 	\$this->{$name} = \${$name};
 	\$this->{$name}Id = \${$name}->getId();
@@ -150,7 +155,7 @@ EOT;
 /**
  * @return {$class->getName()}
 **/
-public function {$methodName}({$this->class} \${$name})
+public function {$methodName}({$this->className} \${$name})
 {
 	\$this->{$name} = \${$name};
 
@@ -209,11 +214,7 @@ EOT;
 		
 		public function toColumnType()
 		{
-			return
-				MetaConfiguration::me()->
-					getClassByName($this->class)->
-						getIdentifier()->
-							getType()->toColumnType();
+			return $this->getClass()->getIdentifier()->getType()->toColumnType();
 		}
 	}
 ?>
