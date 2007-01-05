@@ -31,7 +31,7 @@
 		
 		/**
 		 * Returns link name which is used to get actual db-link from DBPool,
-		 * returning null by default for backwards compatibility.
+		 * returning null by default for single-source projects.
 		 * 
 		 * @see DBPool
 		**/
