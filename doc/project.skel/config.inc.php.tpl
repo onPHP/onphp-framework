@@ -31,17 +31,15 @@
 	// onPHP init
 	require '/path/to/onPHP/global.inc.php.tpl';
 	
-	// default db settings
-	define('DB_BASE', 'baseName');
-	define('DB_USER', 'userName');
-	define('DB_PASS', 'userPassword');
-	define('DB_HOST', 'localhost');
-	define('DB_CLASS', 'PgSQL');
-	
 	// everything else
-	define('DEFAULT_ENCODING', 'UTF8');
+	define('DEFAULT_ENCODING', 'UTF-8');
 	mb_internal_encoding(DEFAULT_ENCODING);
 	mb_regex_encoding(DEFAULT_ENCODING);
+	
+	DBPool::me()->setDefault(
+		DB::spawn('PgSQL', 'userName', 'passWord', 'hostName', 'baseName')->
+		setEncoding(DEFAULT_ENCODING)
+	);
 	
 	ini_set(
 		'include_path', get_include_path().PATH_SEPARATOR

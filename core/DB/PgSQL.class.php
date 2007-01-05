@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -30,33 +30,26 @@
 		/**
 		 * @return PgSQL
 		**/
-		public function connect(
-			$user, $pass, $host,
-			$base = null, $persistent = false
-		)
+		public function connect()
 		{
-			$port = null;
-			
-			if (strpos($host, ':') !== false)
-				list($host, $port) = explode(':', $host, 2);
-			
 			$conn =
-				"host={$host} user={$user}"
-				.($pass ? " password={$pass}" : null)
-				.($base ? " dbname={$base}" : null)
-				.($port ? " port={$port}" : null);
+				"host={$this->hostname} user={$this->username}"
+				.($this->password ? " password={$this->password}" : null)
+				.($this->basename ? " dbname={$this->basename}" : null)
+				.($this->port ? " port={$this->port}" : null);
 
-			if ($persistent === true)
+			if ($this->persistent)
 				$this->link = pg_pconnect($conn);
 			else 
 				$this->link = pg_connect($conn);
-
-			$this->persistent = $persistent;
 
 			if (!$this->link)
 				throw new DatabaseException(
 					'can not connect to PostgreSQL server: '.pg_errormessage()
 				);
+			
+			if ($this->encoding)
+				$this->setDbEncoding();
 			
 			pg_set_error_verbosity($this->link, PGSQL_ERRORS_VERBOSE);
 
@@ -90,10 +83,15 @@
 			pg_free_result($res);
 			return $row['seq'];
 		}
-
-		public function setEncoding($encoding)
+		
+		/**
+		 * @return PgSQL
+		**/
+		public function setDbEncoding()
 		{
-			return pg_set_client_encoding($this->link, $encoding);
+			pg_set_client_encoding($this->link, $this->encoding);
+			
+			return $this;
 		}
 		
 		/**

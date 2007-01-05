@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,6 +17,8 @@
 	**/
 	final class DBPool extends Singleton implements Instantiatable
 	{
+		private $default = null;
+		
 		private $pool = array();
 		
 		/**
@@ -33,6 +35,16 @@
 		public static function getByDao(GenericDAO $dao)
 		{
 			return self::me()->getLink($dao->getLinkName());
+		}
+		
+		/**
+		 * @return DBPool
+		**/
+		public function setDefault(DB $db)
+		{
+			$this->default = $db;
+			
+			return $this;
 		}
 		
 		/**
@@ -56,11 +68,25 @@
 		**/
 		public function getLink($name = null)
 		{
-			// backwards compatibility
-			if (!$name)
-				return DBFactory::getDefaultInstance();
-			elseif (isset($this->pool[$name]))
-				return $this->pool[$name];
+			$link = null;
+			
+			// single-DB project
+			if (!$name) {
+				if (!$this->default)
+					throw new MissingElementException(
+						'i have to default link and requested link name is null'
+					);
+				
+				$link = $this->default;
+			} elseif (isset($this->pool[$name]))
+				$link = $this->pool[$name];
+			
+			if ($link) {
+				if (!$link->isConnected())
+					$link->connect();
+				
+				return $link;
+			}
 			
 			throw new MissingElementException(
 				"can't find link with '{$name}' name"

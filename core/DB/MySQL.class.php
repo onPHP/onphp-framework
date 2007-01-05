@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Sveta Smirnova                             *
+ *   Copyright (C) 2004-2007 by Sveta Smirnova                             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -27,31 +27,48 @@
 			return MyDialect::me();
 		}
 		
-		public function setEncoding($encoding)
+		/**
+		 * @return MySQL
+		**/
+		public function setDbEncoding()
 		{
-			return mysql_query("SET NAMES '{$encoding}'", $this->link);
+			mysql_query("SET NAMES '{$this->encoding}'", $this->link);
+			
+			return $this;
 		}
 
 		/**
 		 * @return MySQL
 		**/
-		public function connect(
-			$user, $pass, $host,
-			$base = null, $persistent = false
-		)
+		public function connect()
 		{
 			$this->link =
-				($persistent)
-					? mysql_pconnect($host, $user, $pass)
-					: mysql_connect($host, $user, $pass, true);
+				$this->persistent
+					?
+						mysql_pconnect(
+							$this->hostname,
+							$this->username,
+							$this->password
+						)
+					:
+						mysql_connect(
+							$this->hostname,
+							$this->username,
+							$this->password,
+							true
+						);
 							
-			if (!$this->link || ($base && !mysql_select_db($base, $this->link)))
+			if (
+				!$this->link
+				|| (
+					$this->basename
+					&& !mysql_select_db($this->basename, $this->link)
+				)
+			)
 				throw new DatabaseException(
 					'can not connect to MySQL server: '.mysql_error($this->link),
 					mysql_errno($this->link)
 				);
-			
-			$this->persistent = $persistent;
 			
 			return $this;
 		}

@@ -13,7 +13,7 @@
 
 	require dirname(__FILE__).'/../../global.inc.php.tpl';
 	
-	$db = DBFactory::getDefaultInstance();
+	$db = DBPool::me()->getLink();
 	
 	// example queries
 	$query1 = OSQL::select()->from('message1')->get(new DBField('id', 'message1'));

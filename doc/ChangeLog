@@ -1,5 +1,13 @@
 # $Id$
 
+2007-01-06	Konstantin V. Arkhipov
+
+	* doc/project.skel/: meta and config updated.
+
+	* core/DB/DBFactory.class.php: removed in favour of DBPool.
+
+	* core/DB/: cleaned out DB class and all available connectors.
+
 2007-01-05	Konstantin V. Arkhipov
 
 	* meta/: ValueObject pattern implemented, as requested by Antony;

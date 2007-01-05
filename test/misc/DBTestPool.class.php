@@ -3,8 +3,7 @@
 	
 	final class DBTestPool extends Singleton implements Instantiatable
 	{
-		private $pool	= array();
-		private $info	= array();
+		private $pool = array();
 		
 		public static function me()
 		{
@@ -16,8 +15,13 @@
 			Assert::isArray($dbs);
 			
 			foreach ($dbs as $connector => $credentials) {
-				$this->pool[$connector] = new $connector();
-				$this->info[$connector] = $credentials;
+				$this->pool[$connector] = DB::spawn(
+					$connector,
+					$credentials['user'],
+					$credentials['pass'],
+					$credentials['host'],
+					$credentials['base']
+				);
 			}
 		}
 		
@@ -29,12 +33,8 @@
 		
 		public function connect($persistent = false)
 		{
-			foreach ($this->info as $connector => $credentials) {
-				$this->pool[$connector]->connect(
-					$credentials['user'], $credentials['pass'],
-					$credentials['host'], $credentials['base'],
-					$persistent === true
-				);
+			foreach ($this->pool as $connector) {
+				$connector->setPersistent($persistent)->connect();
 			}
 		}
 		

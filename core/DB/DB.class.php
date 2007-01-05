@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -24,6 +24,14 @@
 
 		protected $persistent	= false;
 		
+		// credentials
+		protected $username	= null;
+		protected $password	= null;
+		protected $hostname	= null;
+		protected $port		= null;
+		protected $basename	= null;
+		protected $encoding	= null;
+		
 		/**
 		 * flag to indicate whether we're in transaction
 		**/
@@ -32,11 +40,10 @@
 		private $queue			= array();
 		private $toQueue		= false;
 		
-		abstract public function connect(
-			$user, $pass, $host,
-			$base = null, $persistent = false
-		);
+		abstract public function connect();
 		abstract public function disconnect();
+		
+		abstract public function getTableInfo($table);
 
 		abstract public function queryRaw($queryString);
 
@@ -52,7 +59,8 @@
 		abstract public function queryColumn(Query $query);
 		abstract public function queryCount(Query $query);
 		
-		abstract public function getTableInfo($table);
+		// actually set's encoding
+		abstract public function setDbEncoding();
 
 		public function __destruct()
 		{
@@ -71,6 +79,29 @@
 		}
 		
 		/**
+		 * Shortcut.
+		 * 
+		 * @return DB
+		**/
+		public static function spawn(
+			$connector, $user, $pass, $host,
+			$base = null, $persistent = false, $encoding = null
+		)
+		{
+			$db = new $connector;
+			
+			$db->
+				setUsername($user)->
+				setPassword($pass)->
+				setHostname($host)->
+				setBasename($base)->
+				setPersistent($persistent)->
+				setEncoding($encoding);
+			
+			return $db;
+		}
+		
+		/**
 		 * transaction handling
 		 * @deprecated by Transaction class
 		**/
@@ -78,7 +109,10 @@
 		/**
 		 * @return DB
 		**/
-		public function begin($level = null, $mode = null)
+		public function begin(
+			/* IsolationLevel */ $level = null,
+			/* AccessMode */ $mode = null
+		)
 		{
 			$begin = 'start transaction';
 			
@@ -104,7 +138,7 @@
 		public function commit()
 		{
 			if ($this->toQueue)
-				$this->queue[] = "commit;";
+				$this->queue[] = 'commit;';
 			else
 				$this->queryRaw("commit;\n");
 			
@@ -119,7 +153,7 @@
 		public function rollback()
 		{
 			if ($this->toQueue)
-				$this->queue[] = "rollback;";
+				$this->queue[] = 'rollback;';
 			else
 				$this->queryRaw("rollback;\n");
 			
@@ -225,6 +259,72 @@
 		public function isPersistent()
 		{
 			return $this->persistent;
+		}
+		
+		/**
+		 * @return DB
+		**/
+		public function setPersistent($really = false)
+		{
+			$this->persistent = ($really === true);
+			
+			return $this;
+		}
+		
+		/**
+		 * @return DB
+		**/
+		public function setUsername($name)
+		{
+			$this->username = $name;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return DB
+		**/
+		public function setPassword($password)
+		{
+			$this->password = $password;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return DB
+		**/
+		public function setHostname($host)
+		{
+			$port = null;
+			
+			if (strpos($host, ':') !== false)
+				list($host, $port) = explode(':', $host, 2);
+			
+			$this->hostname = $host;
+			$this->port = $port;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return DB
+		**/
+		public function setBasename($base)
+		{
+			$this->basename = $base;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return DB
+		**/
+		public function setEncoding($encoding)
+		{
+			$this->encoding = $encoding;
+			
+			return $this;
 		}
 	}
 ?>

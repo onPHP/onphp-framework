@@ -57,7 +57,7 @@
 			
 			error_log(
 				$prefix.": ".$query->toDialectString(
-					DBFactory::getDefaultInstance()->getDialect()
+					DBPool::me()->getLink()->getDialect()
 				)
 			);
 		}

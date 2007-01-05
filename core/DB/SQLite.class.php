@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -30,17 +30,12 @@
 		/**
 		 * @return SQLite
 		**/
-		public function connect(
-			$user, $pass, $host,
-			$base = null, $persistent = false
-		)
+		public function connect()
 		{
-			if ($persistent === true)
-				$this->link = sqlite_popen($base);
+			if ($this->persistent)
+				$this->link = sqlite_popen($this->basename);
 			else 
-				$this->link = sqlite_open($base);
-
-			$this->persistent = $persistent;
+				$this->link = sqlite_open($this->basename);
 
 			if (!$this->link)
 				throw new DatabaseException(
@@ -71,7 +66,7 @@
 		 * misc
 		**/
 		
-		public function setEncoding($encoding)
+		public function setDbEncoding()
 		{
 			throw new UnsupportedMethodException();
 		}

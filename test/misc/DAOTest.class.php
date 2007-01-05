@@ -14,7 +14,7 @@
 			$this->create();
 			
 			foreach (DBTestPool::me()->getPool() as $connector => $db) {
-				DBFactory::setDefaultInstance($db);
+				DBPool::me()->setDefault($db);
 				$this->fill();
 				
 				$this->getSome(); // 41!
