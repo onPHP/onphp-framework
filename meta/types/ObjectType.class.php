@@ -22,6 +22,9 @@
 			$this->className = $className;
 		}
 		
+		/**
+		 * @return MetaClass
+		**/
 		public function getClass()
 		{
 			return MetaConfiguration::me()->getClassByName($this->className);
