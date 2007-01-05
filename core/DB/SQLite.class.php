@@ -71,6 +71,11 @@
 			throw new UnsupportedMethodException();
 		}
 		
+		public function setEncoding($encoding)
+		{
+			throw new UnsupportedMethodException();
+		}
+		
 		/**
 		 * query methods
 		**/

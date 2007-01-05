@@ -70,6 +70,9 @@
 					mysql_errno($this->link)
 				);
 			
+			if ($this->encoding)
+				$this->setDbEncoding();
+			
 			return $this;
 		}
 		
