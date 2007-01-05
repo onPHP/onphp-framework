@@ -264,7 +264,7 @@
 			$out = $this->getOutput();
 			
 			$out->
-				infoLine('Building meta-classes:');
+				infoLine('Building classes:');
 			
 			foreach ($this->classes as $name => $class) {
 				$out->infoLine("\t".$class->getName().':');
