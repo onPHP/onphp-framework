@@ -2,6 +2,8 @@
 
 2007-01-06	Konstantin V. Arkhipov
 
+	* core/OSQL/DataType.class.php: fulltext type added.
+
 	* ext/src/core/DB/ImaginaryDialect.c: segfault spotted and fixed.
 
 	* core/DB/PostgresDialect.class.php: default tsearch configuration

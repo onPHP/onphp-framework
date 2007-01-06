@@ -247,7 +247,8 @@
 				
 				'varchar'		=> DataType::VARCHAR,
 				'bpchar'		=> DataType::CHAR,
-				'text'			=> DataType::TEXT
+				'text'			=> DataType::TEXT,
+				'tsvector'		=> DataType::FULLTEXT
 			);
 			
 			try {
