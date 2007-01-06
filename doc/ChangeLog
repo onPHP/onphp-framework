@@ -2,6 +2,9 @@
 
 2007-01-06	Konstantin V. Arkhipov
 
+	* core/DB/Sequenceless.class.php: obtainSequence() and query() are
+	final now.
+
 	* doc/project.skel/: meta and config updated.
 
 	* core/DB/DBFactory.class.php: removed in favour of DBPool.
