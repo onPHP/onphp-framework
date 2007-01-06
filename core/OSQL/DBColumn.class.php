@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -26,7 +26,6 @@
 		private $onDelete	= null;
 		
 		private $primary	= null;
-		private $unique		= null;
 		
 		private $sequenced	= null;
 		
@@ -83,21 +82,6 @@
 		public function setPrimaryKey($primary = false)
 		{
 			$this->primary = true === $primary;
-			
-			return $this;
-		}
-		
-		public function isUnique()
-		{
-			return $this->unique;
-		}
-		
-		/**
-		 * @return DBColumn
-		**/
-		public function setUnique($unique = false)
-		{
-			$this->unique = true === $unique;
 			
 			return $this;
 		}

@@ -2,6 +2,13 @@
 
 2007-01-06	Konstantin V. Arkhipov
 
+	* meta/builders/SchemaBuilder.class.php: fixed creation ManyToMany
+	helper tables.
+
+	* core/OSQL/DBTable.class.php: ability to add unique indexes added.
+
+	* core/OSQL/DBColumn.class.php: unique property dropped.
+
 	* core/DB/Sequenceless.class.php: obtainSequence() and query() are
 	final now.
 

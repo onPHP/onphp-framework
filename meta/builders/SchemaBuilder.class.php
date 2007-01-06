@@ -87,19 +87,22 @@ EOT;
 						$name = strtolower($name[0]).substr($name, 1);
 						$name .= 'Id';
 						
-						$foreignPropery->setName($name);
+						$foreignPropery->
+							setName($name)->
+							// we don't need primary key here
+							setIdentifier(false);
 						
 						$out .= <<<EOT
 \$schema->
 	addTable(
 		DBTable::create('{$tableName}')->
 		{$property->toColumn()}->
-		{$foreignPropery->toColumn()}
+		{$foreignPropery->toColumn()}->
+		addUniques('{$class->getDumbName()}_id', '{$foreignClass->getDumbName()}_id')
 	);
 
 
 EOT;
-
 					} else {
 						$sourceTable = $class->getDumbName();
 						$sourceColumn = $property->getDumbIdName();

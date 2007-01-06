@@ -32,6 +32,22 @@
 		<pattern name="DictionaryClass" />
 	</class>
 	
+	<class name="TestPart">
+		<properties>
+			<identifier />
+			<property name="name" type="String" size="50" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="TestIncapsulant">
+		<properties>
+			<identifier />
+			<property name="name" type="String" size="50" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
 	<class name="TestUser" type="final">
 		<properties>
 			<identifier />
@@ -48,6 +64,8 @@
 			
 			<property name="firstOptional" type="TestCity" relation="OneToOne" required="false" />
 			<property name="secondOptional" type="TestCity" relation="OneToOne" required="false" />
+			<property name="parts" type="TestPart" relation="OneToMany" />
+			<property name="incapsulants" type="TestIncapsulant" relation="ManyToMany" />
 			
 		</properties>
 		

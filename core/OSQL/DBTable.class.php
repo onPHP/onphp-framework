@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,6 +20,8 @@
 		private $columns	= array();
 		private $order		= array();
 		
+		private $uniques	= array();
+		
 		/**
 		 * @return DBTable
 		**/
@@ -36,6 +38,32 @@
 		public function getColumns()
 		{
 			return $this->columns;
+		}
+		
+		/**
+		 * @return DBTable
+		**/
+		public function addUniques(/* ... */)
+		{
+			Assert::isTrue(func_num_args() > 0);
+			
+			$uniques = array();
+			
+			foreach (func_get_args() as $name) {
+				// check existence
+				$this->getColumnByName($name);
+				
+				$uniques[] = $name;
+			}
+			
+			$this->uniques[] = $uniques;
+			
+			return $this;
+		}
+		
+		public function getUniques()
+		{
+			return $this->uniques;
 		}
 		
 		/**

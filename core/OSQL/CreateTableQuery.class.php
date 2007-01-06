@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -31,7 +31,6 @@
 			$prepend = array();
 			$columns = array();
 			$primary = array();
-			$unique  = array();
 			
 			$order = $this->table->getOrder();
 			
@@ -53,9 +52,6 @@
 
 				$name = $column->getName();
 				
-				if ($column->isUnique())
-					$unique[] = $dialect->quoteField($name);
-				
 				if ($column->isPrimaryKey())
 					$primary[] = $dialect->quoteField($name);
 			}
@@ -69,14 +65,19 @@
 				.$middle
 				.implode(",\n    ", $columns);
 			
-			if ($primary || $unique) {
+			if ($primary)
+				$out .= ",\n    PRIMARY KEY(".implode(', ', $primary).')';
 				
-				if ($primary)
-					$out .= ",\n    PRIMARY KEY(".implode(', ', $primary).')';
+			if ($uniques = $this->table->getUniques()) {
+				$names = array();
 				
-				if ($unique)
-					$out .= ",\n    UNIQUE(".implode(', ', $unique).')';
-				
+				foreach ($uniques as $row) {
+					foreach ($row as $name) {
+						$names[] = $dialect->quoteField($name);
+					}
+					
+					$out .= ",\n    UNIQUE(".implode(', ', $names).')';
+				}
 			}
 			
 			return $out."\n);\n";
