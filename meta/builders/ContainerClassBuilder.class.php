@@ -38,7 +38,7 @@
 			$className = $class->getName();
 			$propertyName = strtolower($className[0]).substr($className, 1);
 			
-			$remoteDumbName = $holder->getClass()->getDumbName();
+			$remoteDumbName = $holder->getType()->getClass()->getDumbName();
 			
 			$out .= <<<EOT
 public function __construct({$className} \${$propertyName}, \$lazy = false)
