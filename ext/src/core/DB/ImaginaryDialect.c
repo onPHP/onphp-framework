@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -170,12 +170,13 @@ ONPHP_METHOD(ImaginaryDialect, valueToString)
 ONPHP_METHOD(ImaginaryDialect, fullTextSearch)
 {
 	smart_str out = {0};
-	zval *field, *words, *logic;
+	zval *field, *words, *copy, *glue;
+	long logic;
 	
 	if (
 		zend_parse_parameters(
 			ZEND_NUM_ARGS() TSRMLS_CC,
-			"zzz",
+			"zzl",
 			&field,
 			&words,
 			&logic
@@ -185,27 +186,68 @@ ONPHP_METHOD(ImaginaryDialect, fullTextSearch)
 		WRONG_PARAM_COUNT;
 	}
 	
-	php_implode(logic, words, return_value);
-
+	MAKE_STD_ZVAL(glue);
+	MAKE_STD_ZVAL(copy);
+	
+	ZVAL_ZVAL(copy, words, 1, 0);
+	
+	if (logic == 1) {
+		ZVAL_STRING(glue, " & ", 1);
+	} else {
+		ZVAL_STRING(glue, " | ", 1);
+	} 
+	
+	php_implode(glue, words, copy);
+	
 	smart_str_appends(&out, "(\"");
-	onphp_append_zval_to_smart_string(&out, field);
+	
+	if (
+		Z_TYPE_P(field) == IS_OBJECT
+		&& instanceof_function(Z_OBJCE_P(field), onphp_ce_DialectString TSRMLS_CC)
+	) {
+		zval *string;
+		
+		zend_call_method_with_1_params(
+			&getThis(),
+			Z_OBJCE_P(getThis()),
+			NULL,
+			"fieldtostring",
+			&string,
+			field
+		);
+		
+		if (EG(exception)) {
+			goto out;
+		}
+		
+		onphp_append_zval_to_smart_string(&out, string);
+		zval_dtor(string);
+	} else {
+		onphp_append_zval_to_smart_string(&out, field);
+	}
+	
 	smart_str_appends(&out, "\" CONTAINS \"");
-	smart_str_appends(&out, Z_STRVAL_P(return_value));
+	smart_str_appends(&out, Z_STRVAL_P(copy));
 	smart_str_appends(&out, "\")");
 	smart_str_0(&out);
 	
-	RETURN_STRINGL(out.c, out.len, 0);
+	RETVAL_STRINGL(out.c, out.len, 0);
+	
+out:
+	ZVAL_FREE(glue);
+	ZVAL_FREE(copy);
 }
 
 ONPHP_METHOD(ImaginaryDialect, fullTextRank)
 {
 	smart_str out = {0};
-	zval *field, *words, *logic;
+	zval *field, *words, *copy, *glue;
+	long logic;
 	
 	if (
 		zend_parse_parameters(
 			ZEND_NUM_ARGS() TSRMLS_CC,
-			"zzz",
+			"zzl",
 			&field,
 			&words,
 			&logic
@@ -215,16 +257,56 @@ ONPHP_METHOD(ImaginaryDialect, fullTextRank)
 		WRONG_PARAM_COUNT;
 	}
 	
-	php_implode(logic, words, return_value);
+	MAKE_STD_ZVAL(glue);
+	MAKE_STD_ZVAL(copy);
+	
+	ZVAL_ZVAL(copy, words, 1, 0);
+	
+	if (logic == 1) {
+		ZVAL_STRING(glue, " & ", 1);
+	} else {
+		ZVAL_STRING(glue, " | ", 1);
+	} 
+	
+	php_implode(glue, words, copy);
 	
 	smart_str_appends(&out, "(RANK BY \"");
-	onphp_append_zval_to_smart_string(&out, field);
+	
+	if (
+		Z_TYPE_P(field) == IS_OBJECT
+		&& instanceof_function(Z_OBJCE_P(field), onphp_ce_DialectString TSRMLS_CC)
+	) {
+		zval *string;
+		
+		zend_call_method_with_1_params(
+			&getThis(),
+			Z_OBJCE_P(getThis()),
+			NULL,
+			"fieldtostring",
+			&string,
+			field
+		);
+		
+		if (EG(exception)) {
+			goto out;
+		}
+		
+		onphp_append_zval_to_smart_string(&out, string);
+		zval_dtor(string);
+	} else {
+		onphp_append_zval_to_smart_string(&out, field);
+	}
+	
 	smart_str_appends(&out, "\" WHICH CONTAINS \"");
-	smart_str_appends(&out, Z_STRVAL_P(return_value));
+	smart_str_appends(&out, Z_STRVAL_P(copy));
 	smart_str_appends(&out, "\")");
 	smart_str_0(&out);
 	
-	RETURN_STRINGL(out.c, out.len, 0);
+	RETVAL_STRINGL(out.c, out.len, 0);
+	
+out:
+	ZVAL_FREE(glue);
+	ZVAL_FREE(copy);
 }
 
 static ONPHP_ARGINFO_ONE;
