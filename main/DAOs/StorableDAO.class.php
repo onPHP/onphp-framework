@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -79,8 +79,12 @@
 					return $this->mapProperty(new Property($atom), $query);
 			} elseif ($atom instanceof LogicalObject)
 				return $atom->toMapped($this, $query);
-			elseif ($atom instanceof DBValue)
+			elseif (
+				($atom instanceof DBValue)
+				|| ($atom instanceof DBField)
+			) {
 				return $atom;
+			}
 			
 			return new DBValue($atom);
 		}

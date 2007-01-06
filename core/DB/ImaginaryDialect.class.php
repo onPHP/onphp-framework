@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -79,13 +79,18 @@
 
 		public function fullTextSearch($field, $words, $logic)
 		{
-			return '("'.$field.'" CONTAINS "'.implode($logic, $words).'")';
+			return
+				'("'
+					.$this->fieldToString($field)
+					.'" CONTAINS "'
+					.implode($logic, $words)
+				.'")';
 		}
 		
 		public function fullTextRank($field, $words, $logic)
 		{
 			return
-				'(RANK BY "'.$field.'" WHICH CONTAINS "'
+				'(RANK BY "'.$this->fieldToString($field).'" WHICH CONTAINS "'
 					.implode($logic, $words)
 				.'")';
 		}
