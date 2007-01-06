@@ -101,6 +101,11 @@
 			return $db;
 		}
 		
+		public function getLink()
+		{
+			return $this->link;
+		}
+		
 		/**
 		 * transaction handling
 		 * @deprecated by Transaction class

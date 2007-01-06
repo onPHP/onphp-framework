@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Sveta Smirnova                             *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -14,62 +14,52 @@
 	 * MySQL DB connector.
 	 * 
 	 * @see http://www.mysql.com/
-	 * @see http://www.php.net/mysql
+	 * @see http://www.php.net/mysqli
 	 * 
 	 * @ingroup DB
 	**/
-	final class MySQL extends Sequenceless
+	final class MySQLim extends Sequenceless
 	{
 		/**
-		 * @return MyDialect
+		 * @return MyImprovedDialect
 		**/
 		public static function getDialect()
 		{
-			return MyDialect::me();
+			return MyImprovedDialect::me();
 		}
 		
 		/**
-		 * @return MySQL
+		 * @return MySQLim
 		**/
 		public function setDbEncoding()
 		{
-			mysql_query("SET NAMES '{$this->encoding}'", $this->link);
+			mysqli_set_charset($this->link, $this->encoding);
 			
 			return $this;
 		}
 
 		/**
-		 * @return MySQL
+		 * @return MySQLim
 		**/
 		public function connect()
 		{
-			$this->link =
-				$this->persistent
-					?
-						mysql_pconnect(
-							$this->hostname,
-							$this->username,
-							$this->password
-						)
-					:
-						mysql_connect(
-							$this->hostname,
-							$this->username,
-							$this->password,
-							true
-						);
-							
-			if (
-				!$this->link
-				|| (
-					$this->basename
-					&& !mysql_select_db($this->basename, $this->link)
-				)
-			)
+			if ($this->persistent)
+				throw new UnsupportedMethodException();
+			
+			try {
+				$this->link =
+					mysqli_connect(
+						$this->hostname,
+						$this->username,
+						$this->password,
+						$this->basename,
+						$this->port
+					);
+			} catch (BaseException $e) {
 				throw new DatabaseException(
-					'can not connect to MySQL server: '.mysql_error($this->link),
-					mysql_errno($this->link)
+					'can not connect to MySQL server: '.$e->getMessage()
 				);
+			}
 			
 			if ($this->encoding)
 				$this->setDbEncoding();
@@ -78,12 +68,12 @@
 		}
 		
 		/**
-		 * @return MySQL
+		 * @return MySQLim
 		**/
 		public function disconnect()
 		{
 			if ($this->isConnected())
-				mysql_close($this->link);
+				mysqli_close($this->link);
 
 			return $this;
 		}
@@ -94,7 +84,7 @@
 		**/
 		public function queryCount(Query $query)
 		{
-			return mysql_affected_rows($this->query($query));
+			return mysqli_affected_rows($this->query($query));
 		}
 		
 		public function queryObjectRow(Query $query, GenericDAO $dao)
@@ -102,7 +92,7 @@
 			$res = $this->query($query);
 			
 			if ($this->checkSingle($res))
-				if ($row = mysql_fetch_assoc($res))
+				if ($row = mysqli_fetch_assoc($res))
 					return $dao->makeObject($row);
 
 			return null;
@@ -113,7 +103,7 @@
 			$res = $this->query($query);
 			
 			if ($this->checkSingle($res))
-				return mysql_fetch_assoc($res);
+				return mysqli_fetch_assoc($res);
 			else
 				return null;
 		}
@@ -125,7 +115,7 @@
 			if ($res) {
 				$array = array();
 				
-				while ($row = mysql_fetch_assoc($res))
+				while ($row = mysqli_fetch_assoc($res))
 					$array[] = $dao->makeObject($row);
 
 				return $array;
@@ -141,7 +131,7 @@
 			if ($res) {
 				$array = array();
 				
-				while ($row = mysql_fetch_assoc($res))
+				while ($row = mysqli_fetch_assoc($res))
 					$array[] = $dao->makeJoinedObject($row);
 
 				return $array;
@@ -157,7 +147,7 @@
 			if ($res) {
 				$array = array();
 
-				while ($row = mysql_fetch_row($res))
+				while ($row = mysqli_fetch_row($res))
 					$array[] = $row[0];
 
 				return $array;
@@ -172,7 +162,7 @@
 			if ($res) {
 				$array = array();
 
-				while ($row = mysql_fetch_assoc($res))
+				while ($row = mysqli_fetch_assoc($res))
 					$array[] = $row;
 
 				return $array;
@@ -182,22 +172,23 @@
 		
 		public function queryRaw($queryString)
 		{
-			if (!$result = mysql_query($queryString, $this->link)) {
-				
-				$code = mysql_errno($this->link);
-				
-				if ($code == 1062)
-					$e = 'DuplicateObjectException';
-				else
-					$e = 'DatabaseException';
-
-				throw new $e(
-					mysql_error($this->link).' - '.$queryString,
-					$code
+			return $this->realQueryRaw($queryString, false);
+		}
+		
+		/**
+		 * @return MySQLim
+		**/
+		public function queueFlush()
+		{
+			if ($this->queue)
+				$this->realQueryRaw(
+					implode(";\n", $this->queue),
+					true
 				);
-			}
-
-			return $result;
+			
+			$this->toQueue = false;
+			
+			return $this->queueDrop();
 		}
 		
 		public function getTableInfo($table)
@@ -205,19 +196,36 @@
 			throw new UnimplementedFeatureException();
 		}
 		
-		public function hasQueue()
-		{
-			return false;
-		}
-		
 		protected function getInsertId()
 		{
-			return mysql_insert_id($this->link);
+			return mysqli_insert_id($this->link);
+		}
+		
+		private function realQueryRaw($queryString, $multi = false)
+		{
+			$function = $multi ? 'mysqli_multi_query' : 'mysqli_query';
+			
+			if (!$result = $function($this->link, $queryString)) {
+				
+				$code = mysqli_errno($this->link);
+				
+				if ($code == 1062)
+					$e = 'DuplicateObjectException';
+				else
+					$e = 'DatabaseException';
+
+				throw new $e(
+					mysqli_error($this->link).' - '.$queryString,
+					$code
+				);
+			}
+
+			return $result;
 		}
 		
 		private function checkSingle($result)
 		{
-			if (mysql_num_rows($result) > 1)
+			if (mysqli_num_rows($result) > 1)
 				throw new TooManyRowsException(
 					'query returned too many rows (we need only one)'
 				);

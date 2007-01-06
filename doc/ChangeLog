@@ -2,6 +2,9 @@
 
 2007-01-06	Konstantin V. Arkhipov
 
+	* core/DB/MyImprovedDialect.class.php, core/DB/MySQLim.class.php: new
+	DB connector.
+
 	* meta/builders/SchemaBuilder.class.php: fixed creation ManyToMany
 	helper tables.
 

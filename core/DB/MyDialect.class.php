@@ -14,10 +14,11 @@
 	 * MySQL dialect.
 	 *
 	 * @see http://www.mysql.com/
+	 * @see http://www.php.net/mysql
 	 * 
 	 * @ingroup DB
 	**/
-	final class MyDialect extends Dialect
+	class MyDialect extends Dialect
 	{
 		const IN_BOOLEAN_MODE = 1;
 		
