@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,8 +19,6 @@
 	{
 		// override later
 		protected $mapping = array();
-		// encapsulated classes
-		protected $classes = array();
 		
 		protected $identityMap	= array();
 		
@@ -43,19 +41,6 @@
 		public function getMapping()
 		{
 			return $this->mapping;
-		}
-		
-		public function getClasses()
-		{
-			return $this->classes;
-		}
-		
-		public function getClassFor($property)
-		{
-			if (isset($this->classes[$property]))
-				return $this->classes[$property];
-			
-			throw new MissingElementException('no hints for '.$property);
 		}
 		
 		public function getFieldFor($property)
