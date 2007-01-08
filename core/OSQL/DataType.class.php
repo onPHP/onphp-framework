@@ -31,11 +31,9 @@
 		const VARCHAR			= 0x000109;
 		const TEXT				= 0x00000A;
 		
-		const FULLTEXT			= 0x00000B;
-		
-		const DATE				= 0x00000C;
-		const TIME				= 0x10100D;
-		const TIMESTAMP			= 0x10100E;
+		const DATE				= 0x00000B;
+		const TIME				= 0x10100C;
+		const TIMESTAMP			= 0x10100D;
 		
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x001000;
@@ -63,8 +61,6 @@
 			self::CHAR			=> 'CHARACTER',
 			self::VARCHAR		=> 'CHARACTER VARYING',
 			self::TEXT			=> 'TEXT',
-			
-			self::FULLTEXT		=> 'FULLTEXT',
 			
 			self::DATE			=> 'DATE',
 			self::TIME			=> 'TIME',
@@ -176,11 +172,6 @@
 				&& $dialect instanceof LiteDialect
 			) {
 				return $this->names[self::INTEGER];
-			} elseif ($this->id == self::FULLTEXT) {
-				if ($dialect instanceof PostgresDialect)
-					return 'tsvector';
-				
-				throw new UnimplementedFeatureException();
 			}
 			
 			return $this->name;

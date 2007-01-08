@@ -1,8 +1,11 @@
 # $Id$
 
-2007-01-06	Konstantin V. Arkhipov
+2007-01-08	Konstantin V. Arkhipov
 
-	* core/OSQL/DataType.class.php: fulltext type added.
+	* core/DB/PgSQL.class.php: ignores unknown column types in
+	getTableInfo().
+
+2007-01-06	Konstantin V. Arkhipov
 
 	* ext/src/core/DB/ImaginaryDialect.c: segfault spotted and fixed.
 

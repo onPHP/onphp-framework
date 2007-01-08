@@ -248,7 +248,9 @@
 				'varchar'		=> DataType::VARCHAR,
 				'bpchar'		=> DataType::CHAR,
 				'text'			=> DataType::TEXT,
-				'tsvector'		=> DataType::FULLTEXT
+				
+				// unhandled types, not ours anyway
+				'tsvector'		=> null
 			);
 			
 			try {
@@ -264,12 +266,15 @@
 			foreach ($res as $name => $info) {
 				
 				Assert::isTrue(
-					isset($types[$info['type']]),
+					array_key_exists($info['type'], $types),
 					
 					'unknown type "'
 					.$types[$info['type']]
 					.'" found in column "'.$name.'"'
 				);
+				
+				if (empty($types[$info['type']]))
+					continue;
 				
 				$column =
 					new DBColumn(
