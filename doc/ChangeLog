@@ -1,5 +1,9 @@
 # $Id$
 
+2007-01-08	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* 0.2.18 released.
+
 2006-12-29	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/Cache/WatermarkedPeer.class.php: fix for possible cache
