@@ -1,5 +1,9 @@
 # $Id$
 
+2007-01-08	Konstantin V. Arkhipov
+
+	* 0.6.4 released.
+
 2007-01-06	Konstantin V. Arkhipov
 
 	* ext/src/core/DB/ImaginaryDialect.c: segfault's fix backported from
