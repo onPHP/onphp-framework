@@ -57,7 +57,7 @@
 				header("Location: {$_SERVER['HTTP_REFERER']}");
 				self::$headerSent = true;
 				self::$redirectSent = true;
-				return true;
+				return $_SERVER['HTTP_REFERER'];
 			} else
 				return false;
 		}

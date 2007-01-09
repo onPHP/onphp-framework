@@ -2,6 +2,11 @@
 
 2007-01-08	Konstantin V. Arkhipov
 
+	* main/Utils/HeaderUtils.class.php: redirectBack() now return
+	redirecting url if any.
+
+2007-01-08	Konstantin V. Arkhipov
+
 	* core/DB/PgSQL.class.php: ignores unknown column types in
 	getTableInfo().
 
