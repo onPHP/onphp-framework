@@ -274,15 +274,18 @@
 						$childId = $dao->getIdName();
 					}
 					
+					$alias = 'cid'; // childId, collectionId, whatever
+					
 					$query->get(
-						DBField::create($childId, $table)
+						DBField::create($childId, $table), $alias
 					);
 					
 					try {
 						$rows = $dao->getCustomList($query);
 						
 						foreach ($rows as $row)
-							$collection[$row[$id]][] = $row[$childId];
+							if (!empty($row[$alias]))
+								$collection[$row[$id]][] = $row[$alias];
 						
 					} catch (ObjectNotFoundException $e) {/*_*/}
 				} else {
@@ -298,7 +301,7 @@
 					if ($rows) {
 						foreach ($rows as $row) {
 							if (!empty($row[$prefix.$id]))
-								$collection[$row[$id]][] =
+								$collection[$row[$prefix.$id]][] =
 									$dao->makeObject($row, $prefix);
 						}
 					}
