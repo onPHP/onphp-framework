@@ -74,7 +74,7 @@
 			if (!$name) {
 				if (!$this->default)
 					throw new MissingElementException(
-						'i have to default link and requested link name is null'
+						'i have no default link and requested link name is null'
 					);
 				
 				$link = $this->default;
