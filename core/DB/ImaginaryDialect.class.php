@@ -76,13 +76,13 @@
 
 		public function fullTextSearch($field, $words, $logic)
 		{
-			return '("'.$field.'" CONTAINS "'.implode($logic, $words).'")';
+			return '("'.$this->fieldToString($field).'" CONTAINS "'.implode($logic, $words).'")';
 		}
 		
 		public function fullTextRank($field, $words, $logic)
 		{
 			return
-				'(RANK BY "'.$field.'" WHICH CONTAINS "'
+				'(RANK BY "'.$this->fieldToString($field).'" WHICH CONTAINS "'
 					.implode($logic, $words)
 				.'")';
 		}
