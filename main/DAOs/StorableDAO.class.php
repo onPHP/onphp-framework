@@ -90,12 +90,18 @@
 		}
 		
 		public function processPath(
-			AbstractProtoClass $proto, $path, JoinCapableQuery $query
+			AbstractProtoClass $proto, $probablyPath, JoinCapableQuery $query
 		)
 		{
-			$path = explode('.', $path);
+			$path = explode('.', $probablyPath);
 			
-			$property = $proto->getPropertyByName($path[0]);
+			try {
+				$property = $proto->getPropertyByName($path[0]);
+			} catch (MissingElementException $e) {
+				// oh, it's a value, not a property
+				return new DBValue($probablyPath);
+			}
+			
 			unset($path[0]);
 			
 			Assert::isTrue(

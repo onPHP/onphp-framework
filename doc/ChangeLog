@@ -2,6 +2,8 @@
 
 2007-01-11	Konstantin V. Arkhipov
 
+	* main/Criteria/Criteria.class.php: get() implemented.
+
 	* main/Criteria/Criteria.class.php: optimized fetching of non-required
 	non-lazy collections.
 
