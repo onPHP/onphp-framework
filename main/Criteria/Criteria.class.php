@@ -66,6 +66,12 @@
 		**/
 		public function setDao(StorableDAO $dao)
 		{
+			if ($this->strategy->getId() == FetchStrategy::JOIN)
+				Assert::isTrue(
+					$dao instanceof ComplexBuilderDAO,
+					'your DAO does not support join fetch strategy'
+				);
+			
 			$this->dao = $dao;
 			
 			return $this;
@@ -137,6 +143,16 @@
 		**/
 		public function setFetchStrategy(FetchStrategy $strategy)
 		{
+			if (
+				$this->dao
+				&& ($strategy->getId() == FetchStrategy::JOIN)
+			) {
+				Assert::isTrue(
+					$this->dao instanceof ComplexBuilderDAO,
+					'your DAO does not support join fetch strategy'
+				);
+			}
+			
 			$this->strategy = $strategy;
 			
 			return $this;
