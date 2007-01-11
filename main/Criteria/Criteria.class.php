@@ -375,7 +375,7 @@
 				);
 		}
 		
-		private function processCollections(array $list)
+		private function processCollections(/* array */ $list)
 		{
 			$ids = array();
 			
