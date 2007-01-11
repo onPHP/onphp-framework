@@ -190,7 +190,7 @@
 		public function getList()
 		{
 			try {
-				$list = $this->dao->getListByCriteria($this);
+				$list = $this->dao->getListByQuery($this->toSelectQuery());
 			} catch (ObjectNotFoundException $e) {
 				return array();
 			}
@@ -290,15 +290,15 @@
 						$prefix
 					);
 					
-					$rows = DBPool::getByDao($dao)->querySet($query);
-					
-					if ($rows) {
+					try {
+						$rows = $dao->getCustomList($query);
+						
 						foreach ($rows as $row) {
 							if (!empty($row[$prefix.$id]))
 								$collection[$row[$prefix.$id]][] =
 									$dao->makeObject($row, $prefix);
 						}
-					}
+					} catch (ObjectNotFoundException $e) {/*_*/}
 				}
 				
 				$method = 'fill'.ucfirst($property->getName());
@@ -358,7 +358,9 @@
 			} else
 				$query = $this->dao->makeSelectHead();
 			
-			$query->limit($this->limit, $this->offset);
+			$query->
+				limit($this->limit, $this->offset)->
+				setFetchStrategyId($this->strategy->getId());
 			
 			if ($this->distinct)
 				$query->distinct();

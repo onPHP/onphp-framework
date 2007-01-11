@@ -100,6 +100,8 @@
 		
 		public function queryRaw($queryString)
 		{
+			echo $queryString.'<Hr>';
+			
 			try {
 				return pg_query($this->link, $queryString);
 			} catch (BaseException $e) {
@@ -126,21 +128,6 @@
 			return pg_affected_rows($this->query($query));
 		}
 		
-		public function queryObjectRow(Query $query, GenericDAO $dao)
-		{
-			$res = $this->query($query);
-			
-			if ($this->checkSingle($res)) {
-				if ($row = pg_fetch_assoc($res)) {
-					pg_free_result($res);
-					return $dao->makeObject($row);
-				} else 
-					pg_free_result($res);
-			}
-
-			return null;
-		}
-		
 		public function queryRow(Query $query)
 		{
 			$res = $this->query($query);
@@ -151,40 +138,6 @@
 				return $ret;
 			} else
 				return null;
-		}
-		
-		public function queryObjectSet(Query $query, GenericDAO $dao)
-		{
-			$res = $this->query($query);
-			
-			if ($res) {
-				$array = array();
-				
-				while ($row = pg_fetch_assoc($res))
-					$array[] = $dao->makeObject($row);
-				
-				pg_free_result($res);
-				return $array;
-			}
-			
-			return null;
-		}
-		
-		public function queryJoinedObjectSet(Query $query, ComplexBuilderDAO $dao)
-		{
-			$res = $this->query($query);
-			
-			if ($res) {
-				$array = array();
-				
-				while ($row = pg_fetch_assoc($res))
-					$array[] = $dao->makeJoinedObject($row);
-				
-				pg_free_result($res);
-				return $array;
-			}
-			
-			return null;
 		}
 		
 		public function queryColumn(Query $query)

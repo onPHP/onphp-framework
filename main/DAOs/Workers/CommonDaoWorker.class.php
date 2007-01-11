@@ -35,8 +35,6 @@
 				return $object;
 			}
 			else {
-				$db = DBPool::getByDao($this->dao);
-
 				$query = 
 					$this->dao->
 						makeSelectHead()->
@@ -47,15 +45,24 @@
 							)
 						);
 
-				if ($object = $db->queryObjectRow($query, $this->dao)) {
+				if ($object = $this->fetchObject($query)) {
 					return
 						$expires === Cache::DO_NOT_CACHE
 							? $object
 							: $this->cacheById($object, $expires);
 				} else { 
 					throw new ObjectNotFoundException(
-						"there is no such object for '".get_class($this->dao)
-						."' with query == {$query->toDialectString($db->getDialect())}"
+						"there is no such object for '".$this->dao->getObjectName()
+						.(
+							defined('__LOCAL_DEBUG__')
+								?
+									"' with query == "
+									.$query->toDialectString(
+										DBPool::me()->getByDao($this->dao)->
+											getDialect()
+									)
+								: null
+						)
 					);
 				}
 			}
@@ -75,22 +82,29 @@
 			SelectQuery $query, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			$db = DBPool::getByDao($this->dao);
-			
 			if (
 				($expires !== Cache::DO_NOT_CACHE) &&
 				($object = $this->getCachedByQuery($query))
 			)
 				return $object;
-			elseif ($object = $db->queryObjectRow($query, $this->dao)) {
+			elseif ($object = $this->fetchObject($query)) {
 				if ($expires === Cache::DO_NOT_CACHE)
 					return $object;
 				else
 					return $this->cacheByQuery($query, $object, $expires);
 			} else
 				throw new ObjectNotFoundException(
-					"there is no such object for '".get_class($this->dao)
-					."' with query == {$query->toDialectString($db->getDialect())}"
+					"there is no such object for '".$this->dao->getObjectName()
+						.(
+							defined('__LOCAL_DEBUG__')
+								?
+									"' with query == "
+									.$query->toDialectString(
+										DBPool::me()->getByDao($this->dao)->
+											getDialect()
+									)
+								: null
+						)
 				);
 		}
 		
@@ -117,7 +131,17 @@
 					return $this->cacheByQuery($query, $object, $expires);
 			} else {
 				throw new ObjectNotFoundException(
-					"zero for query == {$query->toDialectString($db->getDialect())}"
+					"zero"
+					.(
+						defined('__LOCAL_DEBUG__')
+							?
+								"for query == "
+								.$query->toDialectString(
+									DBPool::me()->getByDao($this->dao)->
+										getDialect()
+								)
+							: null
+					)
 				);
 			}
 		}
@@ -208,14 +232,12 @@
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			$db = DBPool::getByDao($this->dao);
-			
 			if (
 				($expires !== Cache::DO_NOT_CACHE) && 
 				($list = $this->getCachedByQuery($query))
 			)
 				return $list;
-			elseif ($list = $db->queryObjectSet($query, $this->dao)) {
+			elseif ($list = $this->fetchList($query)) {
 				if (Cache::DO_NOT_CACHE === $expires) {
 					return $list;
 				} else {
@@ -223,8 +245,17 @@
 				}
 			} else {
 				throw new ObjectNotFoundException(
-					"zero list for query such query - "
-					.$query->toDialectString($db->getDialect())
+					"empty list"
+					.(
+						defined('__LOCAL_DEBUG__')
+							?
+								" for such query - "
+								.$query->toDialectString(
+									DBPool::me()->getByDao($this->dao)->
+										getDialect()
+								)
+							: null
+					)
 				);
 			}
 		}
@@ -233,7 +264,6 @@
 			Criteria $criteria, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			$db = DBPool::getByDao($this->dao);
 			$query = $criteria->toSelectQuery();
 			
 			if (
@@ -242,9 +272,7 @@
 			)
 				return $list;
 			elseif (
-				$list = $db->{$criteria->getFetchStrategy()->toString()}(
-					$query, $this->dao
-				)
+				$list = $this->fetchList($query)
 			) {
 				if (Cache::DO_NOT_CACHE === $expires) {
 					return $list;
@@ -253,8 +281,17 @@
 				}
 			} else {
 				throw new ObjectNotFoundException(
-					"zero list for query such query - "
-					.$query->toDialectString($db->getDialect())
+					"empty list"
+					.(
+						defined('__LOCAL_DEBUG__')
+							?
+								" for such query - "
+								.$query->toDialectString(
+									DBPool::me()->getByDao($this->dao)->
+										getDialect()
+								)
+							: null
+					)
 				);
 			}
 		}
@@ -321,9 +358,7 @@
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			$db = DBPool::getByDao($this->dao);
-			
-			$list = $db->queryObjectSet($query, $this->dao);
+			$list = $this->fetchList($query);
 			
 			$count = clone $query;
 			

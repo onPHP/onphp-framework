@@ -29,8 +29,6 @@
 		
 		public function getById($id)
 		{
-			$db = DBPool::getByDao($this->dao);
-
 			$query = 
 				$this->dao->makeSelectHead()->
 				where(
@@ -40,8 +38,8 @@
 					)
 				);
 
-			if ($object = $db->queryObjectRow($query, $this->dao))
-				return $this->cacheById($object);
+			if ($object = $this->fetchObject($query))
+				return $object;
 			else
 				throw new ObjectNotFoundException();
 			
@@ -58,12 +56,8 @@
 		
 		public function getByQuery(SelectQuery $query)
 		{
-			$object = DBPool::getByDao($this->dao)->queryObjectRow(
-				$query, $this->dao
-			);
-			
-			if ($object)
-				return $this->cacheByQuery($query, $object);
+			if ($object = $this->fetchObject($query))
+				return $object;
 			else
 				throw new ObjectNotFoundException();
 			
@@ -112,12 +106,8 @@
 		
 		public function getListByQuery(SelectQuery $query)
 		{
-			$list = DBPool::getByDao($this->dao)->queryObjectSet(
-				$query, $this->dao
-			);
-			
-			if ($list)
-				return $this->cacheListByQuery($query, $list);
+			if ($list = $this->fetchList($query))
+				return $list;
 			else
 				throw new ObjectNotFoundException();
 			
@@ -126,15 +116,8 @@
 		
 		public function getListByCriteria(Criteria $criteria)
 		{
-			$query = $criteria->toSelectQuery();
-			
-			$list = DBPool::getByDao($this->dao)->
-				{$criteria->getFetchStrategy()->toString()}(
-					$query, $this->dao
-				);
-			
-			if ($list)
-				return $this->cacheListByQuery($query, $list);
+			if ($list = $this->fetchList($criteria->toSelectQuery()))
+				return $list;
 			else
 				throw new ObjectNotFoundException();
 			
@@ -189,9 +172,7 @@
 		
 		public function getQueryResult(SelectQuery $query)
 		{
-			$db = DBPool::getByDao($this->dao);
-			
-			$list = $db->queryObjectSet($query, $this->dao);
+			$list = $this->fetchList($query);
 			
 			$count = clone $query;
 			

@@ -1,5 +1,20 @@
 # $Id$
 
+2007-01-11	Konstantin V. Arkhipov
+
+	* main/DAOs/BaseDAO.class.php: getListByCriteria() removed.
+
+	* main/Criteria/Criteria.class.php: collection caching fixed.
+
+	* core/OSQL/SelectQuery.class.php: now knows about fetch strategy, if
+	any.
+
+	* main/DAOs/Workers/: internal fetchObject() and fetchList()
+	implemented.
+
+	* core/DB/: dropped queryObjectRow(), queryObjectSet and
+	queryJoinedObjectSet().
+
 2007-01-08	Konstantin V. Arkhipov
 
 	* main/Utils/HeaderUtils.class.php: redirectBack() now return

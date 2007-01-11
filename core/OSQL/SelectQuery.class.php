@@ -34,6 +34,9 @@
 		
 		private $joiner			= null;
 		
+		/// @see FetchStrategy
+		private $strategyId		= null;
+		
 		private $limit			= null;
 		private $offset			= null;
 
@@ -52,6 +55,21 @@
 		public function __clone()
 		{
 			$this->joiner = clone $this->joiner;
+		}
+		
+		public function getFetchStrategyId()
+		{
+			return $this->strategyId;
+		}
+		
+		/**
+		 * @return SelectQuery
+		**/
+		public function setFetchStrategyId($id)
+		{
+			$this->strategyId = $id;
+			
+			return $this;
 		}
 		
 		public function getName()

@@ -95,5 +95,38 @@
 					get($this->className.self::SUFFIX_QUERY.$query->getId());
 		}
 		//@}
+		
+		//@{
+		// fetchers
+		protected function fetchObject(SelectQuery $query)
+		{
+			if ($row = DBPool::getByDao($this->dao)->queryRow($query)) {
+				return
+					$query->getFetchStrategyId() == FetchStrategy::JOIN
+						? $this->dao->makeJoinedObject($row)
+						: $this->dao->makeObject($row);
+			}
+			
+			return null;
+		}
+		
+		protected function fetchList(SelectQuery $query)
+		{
+			if ($rows = DBPool::getByDao($this->dao)->querySet($query)) {
+				$list = array();
+				
+				if ($query->getFetchStrategyId() == FetchStrategy::JOIN)
+					foreach ($rows as $row)
+						$list[] = $this->dao->makeJoinedObject($row);
+				else
+					foreach ($rows as $row)
+						$list[] = $this->dao->makeObject($row);
+				
+				return $list;
+			}
+			
+			return null;
+		}
+		//@}
 	}
 ?>

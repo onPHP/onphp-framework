@@ -48,14 +48,7 @@
 		abstract public function queryRaw($queryString);
 
 		abstract public function queryRow(Query $query);
-		abstract public function queryObjectRow(Query $query, GenericDAO $dao);
-
 		abstract public function querySet(Query $query);
-		abstract public function queryObjectSet(Query $query, GenericDAO $dao);
-		abstract public function queryJoinedObjectSet(
-			Query $query, ComplexBuilderDAO $dao
-		);
-
 		abstract public function queryColumn(Query $query);
 		abstract public function queryCount(Query $query);
 		

@@ -97,17 +97,6 @@
 			return mysql_affected_rows($this->query($query));
 		}
 		
-		public function queryObjectRow(Query $query, GenericDAO $dao)
-		{
-			$res = $this->query($query);
-			
-			if ($this->checkSingle($res))
-				if ($row = mysql_fetch_assoc($res))
-					return $dao->makeObject($row);
-
-			return null;
-		}
-		
 		public function queryRow(Query $query)
 		{
 			$res = $this->query($query);
@@ -116,38 +105,6 @@
 				return mysql_fetch_assoc($res);
 			else
 				return null;
-		}
-		
-		public function queryObjectSet(Query $query, GenericDAO $dao)
-		{
-			$res = $this->query($query);
-			
-			if ($res) {
-				$array = array();
-				
-				while ($row = mysql_fetch_assoc($res))
-					$array[] = $dao->makeObject($row);
-
-				return $array;
-			}
-			
-			return null;
-		}
-		
-		public function queryJoinedObjectSet(Query $query, ComplexBuilderDAO $dao)
-		{
-			$res = $this->query($query);
-			
-			if ($res) {
-				$array = array();
-				
-				while ($row = mysql_fetch_assoc($res))
-					$array[] = $dao->makeJoinedObject($row);
-
-				return $array;
-			}
-			
-			return null;
 		}
 		
 		public function queryColumn(Query $query)

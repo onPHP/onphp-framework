@@ -42,8 +42,6 @@
 				else
 					return $object;
 			} else {
-				$db = DBPool::getByDao($this->dao);
-
 				$query = 
 					$this->dao->makeSelectHead()->
 					where(
@@ -53,7 +51,7 @@
 						)
 					);
 
-				if ($object = $db->queryObjectRow($query, $this->dao)) {
+				if ($object = $this->fetchObject($query)) {
 					return $this->cacheById($object);
 				} else {
 					$this->cacheNullById($id);
@@ -82,11 +80,7 @@
 					return $object;
 				
 			} else {
-				$object = DBPool::getByDao($this->dao)->queryObjectRow(
-					$query, $this->dao
-				);
-				
-				if ($object)
+				if ($object = $this->fetchObject($query))
 					return $this->cacheByQuery($query, $object);
 				else {
 					$this->cacheByQuery($query, Cache::NOT_FOUND);
@@ -178,11 +172,7 @@
 				else
 					return $list;
 			} else {
-				$list = DBPool::getByDao($this->dao)->queryObjectSet(
-					$query, $this->dao
-				);
-				
-				if ($list)
+				if ($list = $this->fetchList($query))
 					return $this->cacheListByQuery($query, $list);
 				else {
 					$this->cacheListByQuery($query, Cache::NOT_FOUND);
@@ -204,12 +194,7 @@
 				else
 					return $list;
 			} else {
-				$list = DBPool::getByDao($this->dao)->
-					{$criteria->getFetchStrategy()->toString()}(
-						$query, $this->dao
-					);
-				
-				if ($list)
+				if ($list = $this->fetchList($query))
 					return $this->cacheListByQuery($query, $list);
 				else {
 					$this->cacheListByQuery($query, Cache::NOT_FOUND);
@@ -318,7 +303,7 @@
 
 			} else {
 				
-				$list = $db->queryObjectSet($query, $this->dao);
+				$list = $this->fetchList($query);
 				
 				$count = clone $query;
 			
