@@ -285,18 +285,28 @@
 				} else {
 					$prefix = $dao->getTable().'_';
 					
-					$query->arrayGet(
-						$dao->getFields(),
-						$prefix
-					);
+					$query->
+						arrayGet(
+							$dao->getFields(),
+							$prefix
+						);
+					
+					if (!$property->isRequired()) {
+						$query->andWhere(
+							Expression::notNull(
+								DBField::create($prefix.$dao->getIdName())
+							)
+						);
+					}
 					
 					try {
+						// otherwise we don't know which object
+						// belongs to which collection
 						$rows = $dao->getCustomList($query);
 						
 						foreach ($rows as $row) {
-							if (!empty($row[$prefix.$id]))
-								$collection[$row[$prefix.$id]][] =
-									$dao->makeObject($row, $prefix);
+							$collection[$row[$prefix.$id]][] =
+								$dao->makeObject($row, $prefix);
 						}
 					} catch (ObjectNotFoundException $e) {/*_*/}
 				}
