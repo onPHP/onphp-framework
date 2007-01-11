@@ -1,5 +1,10 @@
 # $Id$
 
+2007-01-11	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/DB/ImaginaryDialect.class.php: missing toString added to
+	fullTextSearch()/fullTextRank().
+
 2007-01-08	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* 0.2.18 released.
