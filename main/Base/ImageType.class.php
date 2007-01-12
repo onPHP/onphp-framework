@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,7 +18,6 @@
 	final class ImageType extends Enumeration
 	{
 		const GIF		= IMAGETYPE_GIF;
-		const JPG		= IMG_JPG;
 		const JPEG		= IMAGETYPE_JPEG;
 		const PNG		= IMAGETYPE_PNG;
 		const SWF		= IMAGETYPE_SWF;
@@ -38,8 +37,7 @@
 		
 		protected $names = array(
 			IMAGETYPE_GIF		=> 'gif',
-			IMG_JPG				=> 'jpg',
-			IMAGETYPE_JPEG		=> 'jpeg',
+			IMAGETYPE_JPEG		=> array('jpg', 'jpeg'),
 			IMAGETYPE_PNG		=> 'png',
 			IMAGETYPE_SWF		=> 'swf',
 			IMAGETYPE_PSD		=> 'psd',
@@ -57,35 +55,54 @@
 			IMAGETYPE_XBM		=> 'xbm'
 		);
 		
+		protected $extensions = array(
+			'gif'	=> IMAGETYPE_GIF,
+			'jpg'	=> IMAGETYPE_JPEG,
+			'jpeg'	=> IMAGETYPE_JPEG,
+			'png'	=> IMAGETYPE_PNG,
+			'swf'	=> IMAGETYPE_SWF,
+			'psd'	=> IMAGETYPE_PSD,
+			'bmp'	=> IMAGETYPE_BMP,
+			'tif'	=> IMAGETYPE_TIFF_II,
+			'tiff'	=> IMAGETYPE_TIFF_II,
+			'jpc'	=> IMAGETYPE_JPC,
+			'jp2'	=> IMAGETYPE_JP2,
+			'jpx'	=> IMAGETYPE_JPX,
+			'jb2'	=> IMAGETYPE_JB2,
+			'swc'	=> IMAGETYPE_SWC,
+			'iff'	=> IMAGETYPE_IFF,
+			'wbmp'	=> IMAGETYPE_WBMP,
+			'jpc'	=> IMAGETYPE_JPEG2000,
+			'xbm'	=> IMAGETYPE_XBM
+		);
+		
 		protected $mimeType		= null;
 		
 		protected $mimeTypes = array(
 			IMAGETYPE_GIF		=> 'image/gif',
-			IMG_JPG				=> 'image/jpg',
 			IMAGETYPE_JPEG		=> 'image/jpeg',
 			IMAGETYPE_PNG		=> 'image/png',
 			IMAGETYPE_SWF		=> 'application/x-shockwave-flash',
-			IMAGETYPE_PSD		=> 'application/octet-stream',
+			IMAGETYPE_PSD		=> 'image/x-photoshop',
 			IMAGETYPE_BMP		=> 'image/bmp',
 			IMAGETYPE_TIFF_II	=> 'image/tiff',
 			IMAGETYPE_TIFF_MM	=> 'image/tiff',
-			IMAGETYPE_JPC		=> 'application/octet-stream',
+			IMAGETYPE_JPC		=> 'image/jpc',
 			IMAGETYPE_JP2		=> 'image/jp2',
-			IMAGETYPE_JPX		=> 'application/octet-stream',
-			IMAGETYPE_JB2		=> 'application/octet-stream',
+			IMAGETYPE_JPX		=> 'image/jpx',
+			IMAGETYPE_JB2		=> 'image/jb2',
 			IMAGETYPE_SWC		=> 'application/x-shockwave-flash',
 			IMAGETYPE_IFF		=> 'image/iff',
 			IMAGETYPE_WBMP		=> 'image/vnd.wap.wbmp',
-			IMAGETYPE_JPEG2000	=> 'application/octet-stream',
+			IMAGETYPE_JPEG2000	=> 'image/jpeg',
 			IMAGETYPE_XBM		=> 'image/xbm'
 		);
 		
 		public function __construct($id)
 		{
 			parent::__construct($id);
-
+			
 			$this->mimeType = $this->mimeTypes[$id];
-	
 		}
 
 		public function getMimeType()
@@ -96,16 +113,18 @@
 		public static function createByFileName($fileName)
 		{
 			$ext =
-				pathinfo(
-					strtolower($fileName), PATHINFO_EXTENSION
+				strtolower(
+					pathinfo($fileName, PATHINFO_EXTENSION)
 				);
 				
 			$anyImageType = new self(self::getAnyId());
 			
-			if ($id = array_search($ext, $anyImageType->getNameList()))
-				return new self($id);
-			else
-				throw new WrongArgumentException("don't know type for '{$fileName}'");
+			if (isset($this->extensions[$id]))
+				return new self($this->extensions[$id]);
+			
+			throw new WrongArgumentException(
+				"don't know type for '{$ext}' extension"
+			);
 		}
 	}
 ?>
