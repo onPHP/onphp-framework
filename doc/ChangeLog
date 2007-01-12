@@ -1,5 +1,9 @@
 # $Id$
 
+2007-01-12	Nickolay G. Korolyov
+
+	* main/Utils/DaoUtils.class.php: shiny new class introduced.
+
 2007-01-11	Konstantin V. Arkhipov
 
 	* core/DB/ImaginaryDialect.class.php: missing toString added to
