@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class DaoUtils extends StaticFactory
+	final class DaoUtils extends StaticFactory
 	{
 		/* void */ public static function swap(
 			DAOConnected $first,
@@ -19,28 +19,28 @@
 		)
 		{
 			Assert::isTrue(
-				get_class($first) == get_class($second)
+				get_class($first) === get_class($second)
 			);
 			
 			$setMethod = 'set'.ucfirst($property);
+			$getMethod = 'get'.ucfirst($property);
 			
 			Assert::isTrue(
 				method_exists($first, $setMethod)
+				&& method_exists($first, $getMethod)
 			);
 			
 			$dao = $first->dao();
 			$db = DBPool::me()->getByDao($dao);
 
-			$oldPosition = $first->getPosition();
-			$newPosition = $second->getPosition();
-
+			$oldPosition = $first->$getMethod();
+			$newPosition = $second->$getMethod();
 			
 			$db->begin();
 
-			$e= null;
+			$e = null;
 			
 			try {
-			
 				$dao->save(
 					$first->$setMethod(0)
 				);
@@ -54,7 +54,6 @@
 				);
 
 				$db->commit();
-				
 			} catch (DatabaseException $e) {
 				$db->rollback();
 			}
