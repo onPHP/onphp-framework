@@ -76,8 +76,6 @@
 			'xbm'	=> IMAGETYPE_XBM
 		);
 		
-		protected $mimeType		= null;
-		
 		protected $mimeTypes = array(
 			IMAGETYPE_GIF		=> 'image/gif',
 			IMAGETYPE_JPEG		=> 'image/jpeg',
@@ -98,16 +96,9 @@
 			IMAGETYPE_XBM		=> 'image/xbm'
 		);
 		
-		public function __construct($id)
-		{
-			parent::__construct($id);
-			
-			$this->mimeType = $this->mimeTypes[$id];
-		}
-
 		public function getMimeType()
 		{
-			return $this->mimeType;
+			return $this->mimeTypes[$this->id];
 		}
 		
 		public static function createByFileName($fileName)
