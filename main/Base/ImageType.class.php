@@ -37,7 +37,7 @@
 		
 		protected $names = array(
 			IMAGETYPE_GIF		=> 'gif',
-			IMAGETYPE_JPEG		=> array('jpg', 'jpeg'),
+			IMAGETYPE_JPEG		=> 'jpeg',
 			IMAGETYPE_PNG		=> 'png',
 			IMAGETYPE_SWF		=> 'swf',
 			IMAGETYPE_PSD		=> 'psd',
