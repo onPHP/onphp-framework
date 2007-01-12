@@ -1,5 +1,10 @@
 # $Id$
 
+2007-01-12	Konstantin V. Arkhipov
+
+	* core/DB/DBPool.class.php: shutdown() method added, may be used right
+	before template's processing.
+
 2007-01-11	Konstantin V. Arkhipov
 
 	* main/Criteria/Criteria.class.php: get() implemented.

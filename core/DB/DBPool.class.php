@@ -92,5 +92,16 @@
 				"can't find link with '{$name}' name"
 			);
 		}
+		
+		/**
+		 * @return DBPool
+		**/
+		public function shutdown()
+		{
+			$this->default = null;
+			$this->pool = array();
+			
+			return $this;
+		}
 	}
 ?>
