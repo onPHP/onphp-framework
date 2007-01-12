@@ -18,6 +18,7 @@
 	final class ImageType extends Enumeration
 	{
 		const GIF		= IMAGETYPE_GIF;
+		const JPG		= IMG_JPG;
 		const JPEG		= IMAGETYPE_JPEG;
 		const PNG		= IMAGETYPE_PNG;
 		const SWF		= IMAGETYPE_SWF;
@@ -37,7 +38,8 @@
 		
 		protected $names = array(
 			IMAGETYPE_GIF		=> 'gif',
-			IMAGETYPE_JPEG		=> 'jpg',
+			IMG_JPG				=> 'jpg',
+			IMAGETYPE_JPEG		=> 'jpeg',
 			IMAGETYPE_PNG		=> 'png',
 			IMAGETYPE_SWF		=> 'swf',
 			IMAGETYPE_PSD		=> 'psd',
@@ -54,5 +56,56 @@
 			IMAGETYPE_JPEG2000	=> 'jpc',
 			IMAGETYPE_XBM		=> 'xbm'
 		);
+		
+		protected $mimeType		= null;
+		
+		protected $mimeTypes = array(
+			IMAGETYPE_GIF		=> 'image/gif',
+			IMG_JPG				=> 'image/jpg',
+			IMAGETYPE_JPEG		=> 'image/jpeg',
+			IMAGETYPE_PNG		=> 'image/png',
+			IMAGETYPE_SWF		=> 'application/x-shockwave-flash',
+			IMAGETYPE_PSD		=> 'application/octet-stream',
+			IMAGETYPE_BMP		=> 'image/bmp',
+			IMAGETYPE_TIFF_II	=> 'image/tiff',
+			IMAGETYPE_TIFF_MM	=> 'image/tiff',
+			IMAGETYPE_JPC		=> 'application/octet-stream',
+			IMAGETYPE_JP2		=> 'image/jp2',
+			IMAGETYPE_JPX		=> 'application/octet-stream',
+			IMAGETYPE_JB2		=> 'application/octet-stream',
+			IMAGETYPE_SWC		=> 'application/x-shockwave-flash',
+			IMAGETYPE_IFF		=> 'image/iff',
+			IMAGETYPE_WBMP		=> 'image/vnd.wap.wbmp',
+			IMAGETYPE_JPEG2000	=> 'application/octet-stream',
+			IMAGETYPE_XBM		=> 'image/xbm'
+		);
+		
+		public function __construct($id)
+		{
+			parent::__construct($id);
+
+			$this->mimeType = $this->mimeTypes[$id];
+	
+		}
+
+		public function getMimeType()
+		{
+			return $this->mimeType;
+		}
+		
+		public static function createByFileName($fileName)
+		{
+			$ext =
+				pathinfo(
+					strtolower($fileName), PATHINFO_EXTENSION
+				);
+				
+			$anyImageType = new self(self::getAnyId());
+			
+			if ($id = array_search($ext, $anyImageType->getNameList()))
+				return new self($id);
+			else
+				throw new WrongArgumentException("don't know type for '{$fileName}'");
+		}
 	}
 ?>
