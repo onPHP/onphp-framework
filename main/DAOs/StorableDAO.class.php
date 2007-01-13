@@ -64,7 +64,7 @@
 		public function guessAtom($atom, JoinCapableQuery $query)
 		{
 			if ($atom instanceof Property)
-				return $this->mapProperty($atom, $query);
+				return $this->mapProperty($atom);
 			elseif (is_string($atom)) {
 				if (strpos($atom, '.') !== false) {
 					return
@@ -76,7 +76,7 @@
 							$query
 						);
 				} elseif (array_key_exists($atom, $this->mapping))
-					return $this->mapProperty(new Property($atom), $query);
+					return $this->mapProperty(new Property($atom));
 			} elseif ($atom instanceof LogicalObject)
 				return $atom->toMapped($this, $query);
 			elseif (
@@ -223,7 +223,7 @@
 			return $dao->guessAtom(implode('.', $path), $query);
 		}
 		
-		protected function mapProperty(Property $property, JoinCapableQuery $query)
+		protected function mapProperty(Property $property)
 		{
 			$name = $property->getName();
 			

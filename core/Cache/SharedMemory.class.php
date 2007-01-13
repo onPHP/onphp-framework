@@ -51,7 +51,7 @@
 		
 		public function __destruct()
 		{
-			foreach (self::$attached as $key => $segment)
+			foreach (self::$attached as $segment)
 				shm_detach($segment);
 			
 			// sync classes

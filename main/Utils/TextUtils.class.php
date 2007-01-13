@@ -19,21 +19,17 @@
 	**/
 	final class TextUtils extends StaticFactory
 	{
-		public static function friendlyFileSize($size, $order = 0)
+		public static function friendlyFileSize($size)
 		{
-			$units = array('', 'k' , 'M', 'G', 'T', 'P');
+			$units = array(null, 'k' , 'M', 'G', 'T', 'P');
 			
 			if ($size > 0) {
-				$index = min(
-					(int)log($size, 1024), count($units)-1
-				);
+				$index = min((int) log($size, 1024), count($units) - 1);
 				
-				return
-					round($size/pow(1024, $index), 2).$units[$index];
-					
-			} else {
-				return 0;
+				return round($size / pow(1024, $index), 2).$units[$index];
 			}
+			
+			return 0;
 		}
 		
 		public static function getRootFromUrl($url)

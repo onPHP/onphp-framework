@@ -1,5 +1,10 @@
 # $Id$
 
+2007-01-132	Konstantin V. Arkhipov
+
+	* trunk/core/Form/Primitives/PrimitiveDate.class.php: checkRanges()
+	fixed.
+
 2007-01-12	Konstantin V. Arkhipov
 
 	* core/DB/DBPool.class.php: shutdown() method added, may be used right

@@ -48,6 +48,7 @@
 			$self->className = $className;
 			
 			$self->required = $required;
+			$self->generic = $generic;
 			
 			$self->relationId = $relationId;
 			
