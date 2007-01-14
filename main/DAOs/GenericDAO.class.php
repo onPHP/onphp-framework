@@ -240,11 +240,16 @@
 		
 		public function uncacheById($id)
 		{
+			unset($this->identityMap[$id]);
+			
 			return Cache::worker($this)->uncacheById($id);
 		}
 		
 		public function uncacheByIds($ids)
 		{
+			foreach ($ids as $id)
+				unset($this->identityMap[$id]);
+			
 			return Cache::worker($this)->uncacheByIds($ids);
 		}
 		
