@@ -73,6 +73,9 @@
 			if ($this->columnName)
 				return $this->columnName;
 			
+			if ($this->isIdentifier())
+				return $this->dumbName;
+			
 			return $this->dumbName.'_id';
 		}
 		
