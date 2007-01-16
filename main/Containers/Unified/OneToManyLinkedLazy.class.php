@@ -20,19 +20,12 @@
 		**/
 		public function makeFetchQuery()
 		{
-			$uc = $this->container;
+			$query =
+				$this->makeSelectQuery()->
+				dropFields()->
+				get($this->container->getChildIdField());
 			
-			return
-				$this->targetize(
-					$this->oq
-						?
-							$this->oq->toSelectQuery($uc->getDao())->
-							dropFields()->
-							get($uc->getChildIdField())
-						:
-							OSQL::select()->from($uc->getDao()->getTable())->
-							get($uc->getChildIdField())
-				);
+			return $this->targetize($query);
 		}
 		
 		/**

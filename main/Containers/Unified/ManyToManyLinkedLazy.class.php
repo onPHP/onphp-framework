@@ -48,13 +48,8 @@
 		{
 			$uc = $this->container;
 			
-			if ($this->oq)
-				$query = $this->oq->toSelectQuery($uc->getDao())->dropFields();
-			else
-				$query = OSQL::select()->from($uc->getHelperTable());
-			
 			return
-				$query->
+				$this->makeSelectQuery()->
 					get($uc->getChildIdField())->
 					where(
 						Expression::eq(

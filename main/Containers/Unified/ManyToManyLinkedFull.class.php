@@ -64,13 +64,8 @@
 		{
 			$uc = $this->container;
 			
-			if ($this->oq)
-				$query = $this->oq->toSelectQuery($uc->getDao());
-			else
-				$query = $uc->getDao()->makeSelectHead();
-			
 			return
-				$query->
+				$this->makeSelectQuery()->
 					join(
 						$uc->getHelperTable(),
 						Expression::eq(

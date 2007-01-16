@@ -17,6 +17,7 @@
 	**/
 	abstract class UnifiedContainerWorker
 	{
+		protected $criteria		= null;
 		protected $oq			= null;
 		protected $container	= null;
 		
@@ -36,6 +37,29 @@
 			$this->oq = $oq;
 			
 			return $this;
+		}
+		
+		/**
+		 * @return UnifiedContainerWorker
+		**/
+		public function setCriteria(Criteria $criteria)
+		{
+			$this->criteria = $criteria;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return SelectQuery
+		**/
+		protected function makeSelectQuery()
+		{
+			if ($this->criteria)
+				return $this->criteria->toSelectQuery();
+			elseif ($this->oq)
+				return $this->oq->toSelectQuery($this->container->getDao());
+			
+			return $this->container->getDao()->makeSelectHead();
 		}
 	}
 ?>

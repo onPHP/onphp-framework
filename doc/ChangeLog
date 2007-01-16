@@ -1,5 +1,10 @@
 # $Id$
 
+2007-01-17	Konstantin V. Arkhipov
+
+	* main/Containers/Unified/: support for Criteria implemented; note
+	that if Criteria is set, then ObjectQuery will be ignored
+
 2007-01-13	Konstantin V. Arkhipov
 
 	* trunk/core/Form/Primitives/PrimitiveDate.class.php: checkRanges()

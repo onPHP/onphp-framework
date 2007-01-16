@@ -20,14 +20,7 @@
 		**/
 		public function makeFetchQuery()
 		{
-			$uc = $this->container;
-			
-			return
-				$this->targetize(
-					$this->oq
-						? $this->oq->toSelectQuery($uc->getDao())
-						: $uc->getDao()->makeSelectHead()
-				);
+			return $this->targetize($this->makeSelectQuery());
 		}
 		
 		/**

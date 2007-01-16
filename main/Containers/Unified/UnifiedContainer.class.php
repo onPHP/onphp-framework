@@ -24,6 +24,9 @@
 
 		if you want to apply ObjectQuery's "filter":
 			public function setObjectQuery(ObjectQuery $oq)
+		
+		or Criteria (ObjectQuery will be ignored):
+			public function setCriteria(Criteria $criteria)
 
 		first you should fetch whatever you want:
 			public function fetch()
@@ -113,6 +116,30 @@
 		}
 		
 		/**
+		 * @throws WrongArgumentException
+		 * @return UnifiedContainer
+		**/
+		public function setCriteria(Criteria $criteria)
+		{
+			Assert::isTrue(
+				$criteria->getDao() === null
+				|| (
+					$criteria->getDao() === $this->dao
+				),
+				"criteria's dao doesn't match container's one"
+			);
+			
+			if (!$criteria->getDao())
+				$criteria->setDao($this->dao);
+			
+			$this->worker->setCriteria($criteria);
+			
+			return $this;
+		}
+		
+		/**
+		 * @deprecated by Criteria
+		 * 
 		 * @throws WrongArgumentException
 		 * @return UnifiedContainer
 		**/
