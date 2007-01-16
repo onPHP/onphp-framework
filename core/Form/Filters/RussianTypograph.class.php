@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -41,7 +41,7 @@
 				'1/4'	=> '&frac14;',
 				'½'		=> '&frac12;',
 				'1/2'	=> '&frac12;',
-				'¾	'	=> '&frac34;',
+				'¾'		=> '&frac34;',
 				'3/4'	=> '&frac34;',
 				'±'		=> '&plusmn;',
 				'+/-'	=> '&plusmn;'
