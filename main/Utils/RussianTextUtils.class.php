@@ -25,7 +25,7 @@
 			self::NEUTRAL 	=> array('ое', 'ье', null)
 		);
 	
-		private static $orederedDigits = array(
+		private static $orderedDigits = array(
 			'перв',
 			'втор',
 			'трет',
