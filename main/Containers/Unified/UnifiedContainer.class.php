@@ -168,6 +168,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return UnifiedContainer
+		**/
 		public function replaceList(/* array */ $list)
 		{
 			Assert::isArray($list);
@@ -177,6 +180,9 @@
 
 		public function getList()
 		{
+			if (!$this->isFetched())
+				$this->fetch();
+			
 			return $this->list;
 		}
 		

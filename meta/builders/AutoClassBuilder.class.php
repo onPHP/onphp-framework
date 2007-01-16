@@ -91,10 +91,6 @@ public function get{$methodName}(\$lazy = false)
 {
 	if (!\$this->{$name} || (\$this->{$name}->isLazy() != \$lazy)) {
 		\$this->{$name} = new {$containerName}(\$this, \$lazy);
-		
-		if (\$this->id) {
-			\$this->{$name}->fetch();
-		}
 	}
 	
 	return \$this->{$name};
@@ -110,7 +106,7 @@ public function fill{$methodName}(\$collection, \$lazy = false)
 		
 		if (!\$this->id) {
 			throw new WrongStateException(
-				'i do not know which object i belongs to'
+				'i do not know which object i belong to'
 			);
 		}
 		
