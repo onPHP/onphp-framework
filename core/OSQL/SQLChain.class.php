@@ -1,13 +1,13 @@
 <?php
-/***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich*
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/****************************************************************************
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *                                                                          *
+ *   This program is free software; you can redistribute it and/or modify   *
+ *   it under the terms of the GNU General Public License as published by   *
+ *   the Free Software Foundation; either version 2 of the License, or      *
+ *   (at your option) any later version.                                    *
+ *                                                                          *
+ ****************************************************************************/
 /* $Id$ */
 
 	/**
@@ -58,7 +58,7 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			if ($this->chain) {
-				$out = "({$this->chain[0]->toDialectString($dialect)} ";
+				$out = $this->chain[0]->toDialectString($dialect).' ';
 				for ($i = 1, $size = count($this->chain); $i < $size; ++$i) {
 					$out .=
 						$this->logic[$i]
@@ -67,7 +67,12 @@
 						.' ';
 				}
 
-				return rtrim($out).')'; // trailing space, if any
+				$out = rtrim($out); // trailing space, if any
+				
+				if ($size === 1)
+					return $out;
+				
+				return '('.$out.')';
 			}
 			
 			return null;
