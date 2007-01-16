@@ -214,7 +214,7 @@
 			if (!$this->collections)
 				return reset($list);
 			
-			return reset($this->processCollections($list));
+			return reset($this->dao->fetchCollections($this->collections, $list));
 		}
 		
 		public function getList()
@@ -228,7 +228,7 @@
 			if (!$this->collections)
 				return $list;
 			
-			return $this->processCollections($list);
+			return $this->dao->fetchCollections($this->collections, $list);
 		}
 		
 		public function getCustomList()
@@ -373,134 +373,6 @@
 				call_user_func(
 					array($this->dao->getObjectName(), 'proto')
 				);
-		}
-		
-		private function processCollections(/* array */ $list)
-		{
-			$ids = array();
-			
-			foreach ($list as $object) {
-				$ids[] = $object->getId();
-			}
-			
-			$mainId = DBField::create(
-				$this->dao->getIdName(),
-				$this->dao->getTable()
-			);
-			
-			foreach ($this->collections as $path => $lazy) {
-				$query =
-					OSQL::select()->get($mainId)->
-					from($this->dao->getTable());
-				
-				$proto = $this->getProto();
-				
-				$this->getDao()->processPath(
-					$proto, $path, $query
-				);
-				
-				$query->where(
-					Expression::in($mainId, $ids)
-				);
-				
-				// find final destination
-				foreach (explode('.', $path) as $name) {
-					$property = $proto->getPropertyByName($name);
-					$className = $property->getClassName();
-					
-					$proto = call_user_func(
-						array(
-							$className,
-							'proto'
-						)
-					);
-				}
-				
-				$dao = call_user_func(array($className, 'dao'));
-				
-				$containerName = $property->getContainerName(
-					$this->dao->getObjectName()
-				);
-				
-				Assert::isTrue(
-					$property->getRelationId() == MetaRelation::ONE_TO_MANY
-					|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
-				);
-				
-				if (
-					$property->getRelationId() == MetaRelation::ONE_TO_MANY
-				) {
-					$table = $dao->getTable();
-				} else {
-					$table = call_user_func(
-						array($containerName, 'getHelperTable')
-					);
-				}
-				
-				$id = $this->dao->getIdName();
-				$collection = array();
-				
-				if ($lazy) {
-					if ($property->getRelationId() == MetaRelation::MANY_TO_MANY) {
-						$childId = call_user_func(array($containerName, 'getChildIdField'));
-					} else {
-						$childId = $dao->getIdName();
-					}
-					
-					$alias = 'cid'; // childId, collectionId, whatever
-					
-					$query->get(
-						DBField::create($childId, $table), $alias
-					);
-					
-					try {
-						$rows = $dao->getCustomList($query);
-						
-						foreach ($rows as $row)
-							if (!empty($row[$alias]))
-								$collection[$row[$id]][] = $row[$alias];
-						
-					} catch (ObjectNotFoundException $e) {/*_*/}
-				} else {
-					$prefix = $dao->getTable().'_';
-					
-					$query->
-						arrayGet(
-							$dao->getFields(),
-							$prefix
-						);
-					
-					if (!$property->isRequired()) {
-						$query->andWhere(
-							Expression::notNull(
-								DBField::create($prefix.$dao->getIdName())
-							)
-						);
-					}
-					
-					try {
-						// otherwise we don't know which object
-						// belongs to which collection
-						$rows = $dao->getCustomList($query);
-						
-						foreach ($rows as $row) {
-							$collection[$row[$prefix.$id]][] =
-								$dao->makeObject($row, $prefix);
-						}
-					} catch (ObjectNotFoundException $e) {/*_*/}
-				}
-				
-				$method = 'fill'.ucfirst($property->getName());
-				
-				foreach ($list as $object) {
-					if (!empty($collection[$object->getId()]))
-						$object->$method($collection[$object->getId()], $lazy);
-					else
-						$object->$method(array(), $lazy);
-				}
-			}
-			
-			return $list;
 		}
 	}
 ?>
