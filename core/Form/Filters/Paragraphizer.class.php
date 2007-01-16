@@ -26,7 +26,7 @@
 		public function apply($value)
 		{
 			return preg_replace(
-				'~^[^<](.+)\s~Ums',
+				'~^[^<](.+)\s~Uums',
 				'<p>$1</p>'."\n",
 				$value
 			);
