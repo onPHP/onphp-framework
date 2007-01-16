@@ -1,6 +1,6 @@
 # $Id$
 
-2007-01-132	Konstantin V. Arkhipov
+2007-01-13	Konstantin V. Arkhipov
 
 	* trunk/core/Form/Primitives/PrimitiveDate.class.php: checkRanges()
 	fixed.
