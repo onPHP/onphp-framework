@@ -48,8 +48,11 @@
 		{
 			$uc = $this->container;
 			
+			// FIXME: must respect criteria
+			$query = OSQL::select()->from($uc->getHelperTable());
+			
 			return
-				$this->makeSelectQuery()->
+				$query->
 					get($uc->getChildIdField())->
 					where(
 						Expression::eq(
