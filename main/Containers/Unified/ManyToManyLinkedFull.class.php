@@ -62,29 +62,10 @@
 		**/
 		public function makeFetchQuery()
 		{
-			$uc = $this->container;
-			
 			return
-				$this->makeSelectQuery()->
-					join(
-						$uc->getHelperTable(),
-						Expression::eq(
-							new DBField(
-								$uc->getParentTableIdField(),
-								$uc->getDao()->getTable()
-							),
-							new DBField(
-								$uc->getChildIdField(),
-								$uc->getHelperTable()
-							)
-						)
-					)->
-					where(
-						Expression::eq(
-							new DBField($uc->getParentIdField()),
-							new DBValue($uc->getParentObject()->getId())
-						)
-					);
+				$this->joinHelperTable(
+					$this->makeSelectQuery()
+				);
 		}
 	}
 ?>

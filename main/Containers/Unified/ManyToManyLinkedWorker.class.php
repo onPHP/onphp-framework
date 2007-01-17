@@ -55,5 +55,35 @@
 					)
 				);
 		}
+		
+		/**
+		 * @return SelectQuery
+		**/
+		protected function joinHelperTable(SelectQuery $query)
+		{
+			$uc = $this->container;
+			
+			return
+				$query->
+					join(
+						$uc->getHelperTable(),
+						Expression::eq(
+							new DBField(
+								$uc->getParentTableIdField(),
+								$uc->getDao()->getTable()
+							),
+							new DBField(
+								$uc->getChildIdField(),
+								$uc->getHelperTable()
+							)
+						)
+					)->
+					andWhere(
+						Expression::eq(
+							new DBField($uc->getParentIdField()),
+							new DBValue($uc->getParentObject()->getId())
+						)
+					);
+		}
 	}
 ?>

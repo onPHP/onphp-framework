@@ -48,18 +48,17 @@
 		{
 			$uc = $this->container;
 			
-			// FIXME: must respect criteria
-			$query = OSQL::select()->from($uc->getHelperTable());
-			
 			return
-				$query->
-					get($uc->getChildIdField())->
-					where(
-						Expression::eq(
-							new DBField($uc->getParentIdField()),
-							new DBValue($uc->getParentObject()->getId())
+				$this->joinHelperTable(
+					$this->makeSelectQuery()->
+					dropFields()->
+					get(
+						new DBField(
+							$uc->getChildIdField(),
+							$uc->getHelperTable()
 						)
-					);
+					)
+				);
 		}
 	}
 ?>
