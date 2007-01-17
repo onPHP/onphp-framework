@@ -51,6 +51,7 @@
 			'~\-{2,}~',						// --
 			'~([\w\pL]+)\s\-\s~',			// foo - bar
 			'~([\s\pP])([\w\pL]{1,2})\s~U',	// bar a foo
+			'~\"([^\s]*)\"~',				// "quote"
 			'~\"(.*)\"~De',					// "qu"o"te"
 			'~([\w\pL\']+)~e'				// rock'n'roll
 		);
@@ -59,6 +60,7 @@
 			'-',
 			'$1&nbsp;&#151; ',
 			'$1$2&nbsp;',
+			'&laquo;$1&raquo;',
 			'\'&laquo;\'.$this->innerQuotes(\'$1\').\'&raquo;\'',
 			'str_replace("\'", \'&#146;\', \'$1\')'
 		);
@@ -74,14 +76,8 @@
 		public function apply($value)
 		{
 			return preg_replace(
-				array(
-					'~([^<>]+)<>?~e',
-					'~>([^<>]+)~e',
-				),
-				array(
-					'$this->typographize(\'$1\').\'<\'',
-					'\'>\'.$this->typographize(\'$1\')',
-				),
+				'~([>])?([^<>]+)([<])?~e',
+				'\'$1\'.$this->typographize(\'$2\').\'$3\'',
 				strtr($value, self::$symbols)
 			);
 		}
