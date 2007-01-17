@@ -78,14 +78,8 @@
 		public function apply($value)
 		{
 			return preg_replace(
-				array(
-					'~([^<>]+)<>?~e',
-					'~>([^<>]+)~e',
-				),
-				array(
-					'$this->typographize(\'$1\').\'<\'',
-					'\'>\'.$this->typographize(\'$1\')',
-				),
+				'~([^<>]*)(?![^<]*?>)~e',
+				'$this->typographize(\'$1\')',
 				strtr($value, self::$symbols)
 			);
 		}
