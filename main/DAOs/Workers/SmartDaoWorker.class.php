@@ -16,6 +16,7 @@
 	 * @see CommonDaoWorker for manual-caching one.
 	 * @see VoodooDaoWorker for greedy though non-blocking brother.
 	 * @see FileSystemDaoWorker for filesystem based child of VoodooDaoWorker.
+	 * @see DelayedDaoWorker for message-based asynchronous one.
 	 * 
 	 * @ingroup DAOs
 	**/

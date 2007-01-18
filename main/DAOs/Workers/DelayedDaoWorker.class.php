@@ -16,6 +16,7 @@
 	 * @see CommonDaoWorker for manual-caching one.
 	 * @see SmartDaoWorker for less obscure, but locking-based worker.
 	 * @see VoodooDaoWorker for greedy Sys-V shared memory based parent.
+	 * @see FileSystemDaoWorker for Voodoo's filesystem-based child.
 	 * 
 	 * @ingroup DAOs
 	**/

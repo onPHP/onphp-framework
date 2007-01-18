@@ -19,6 +19,7 @@
 	 * @see CommonDaoWorker for manual-caching one.
 	 * @see SmartDaoWorker for less obscure, but locking-based worker.
 	 * @see FileSystemDaoWorker for filesystem based child.
+	 * @see DelayedDaoWorker for message-based asynchronous one.
 	 * 
 	 * @ingroup DAOs
 	**/
