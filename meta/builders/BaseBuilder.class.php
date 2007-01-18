@@ -256,7 +256,6 @@ public static function getSequence()
 {
 	return '{$class->getDumbName()}_id';
 }
-\n
 EOT;
 			} else {
 				$out .= <<<EOT
@@ -279,18 +278,17 @@ public function uncacheLists()
 
 return parent::uncacheLists();
 }
-\n
 EOT;
 			}
 			
 			if ($source = $class->getSourceLink()) {
 				$out .= <<<EOT
+
+
 public function getLinkName()
 {
 	return '{$source}';
 }
-
-
 EOT;
 			}
 			
