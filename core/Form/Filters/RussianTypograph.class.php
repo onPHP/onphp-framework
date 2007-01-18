@@ -86,7 +86,9 @@
 					'~([^<>]*)(?![^<]*?>)~',
 					strtr($value, self::$symbols),
 					null,
-					PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY | PREG_SPLIT_OFFSET_CAPTURE
+					PREG_SPLIT_DELIM_CAPTURE
+						| PREG_SPLIT_NO_EMPTY
+						| PREG_SPLIT_OFFSET_CAPTURE
 				);
 
 			$tags = array();
