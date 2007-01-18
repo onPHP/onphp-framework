@@ -111,7 +111,6 @@ EOT;
 						$targetColumn = $foreignClass->getIdentifier()->getDumbName();
 						
 						$out .= <<<EOT
-
 // {$sourceTable}.{$sourceColumn} -> {$targetTable}.{$targetColumn}
 \$schema->
 	getTableByName('{$sourceTable}')->
