@@ -19,27 +19,48 @@
 			Identifiable $object, Form $form, $ignoreNull = true
 		)
 		{
-			$class = new ReflectionClass($object);
 			$primitives = $form->getPrimitiveList();
 			
-			foreach ($class->getProperties() as $property) {
-				$name = $property->getName();
-				
-				if (
-					isset($primitives[$name])
-					&& !( // in case it's LazyOneToOne
-						$primitives[$name] instanceof PrimitiveIdentifier
-						&& $class->hasProperty($name.'Id')
-					)
-				) {
-					$getter	= 'get'.ucfirst($name);
-					$value	= $object->$getter();
+			if ($object instanceof Prototyped) {
+				foreach ($object->proto()->getPropertyList() as $property) {
+					$name = $property->getName();
 					
 					if (
-						$class->hasMethod($getter)
-						&& (!$ignoreNull || ($value !== null))
+						isset($primitives[$name])
+						&&
+							$property->getRelationId()
+							!= MetaRelation::LAZY_ONE_TO_ONE
 					) {
-						$form->importValue($name, $value);
+						$getter = 'get'.ucfirst($name);
+						$value = $object->$getter();
+						
+						if (!$ignoreNull || ($value !== null)) {
+							$form->importValue($name, $value);
+						}
+					}
+				}
+			} else {
+				$class = new ReflectionClass($object);
+				
+				foreach ($class->getProperties() as $property) {
+					$name = $property->getName();
+					
+					if (
+						isset($primitives[$name])
+						&& !( // in case it's LazyOneToOne
+							$primitives[$name] instanceof PrimitiveIdentifier
+							&& $class->hasProperty($name.'Id')
+						)
+					) {
+						$getter	= 'get'.ucfirst($name);
+						$value	= $object->$getter();
+						
+						if (
+							$class->hasMethod($getter)
+							&& (!$ignoreNull || ($value !== null))
+						) {
+							$form->importValue($name, $value);
+						}
 					}
 				}
 			}
@@ -77,7 +98,7 @@
 							continue;
 						}
 					}
-
+					
 					$object->$setter($value);
 				}
 			}
