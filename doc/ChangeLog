@@ -2,6 +2,9 @@
 
 2007-01-18	Konstantin V. Arkhipov
 
+	* main/DAOs/GenericDAO.class.php: identity's map and inner worker
+	serialization prevented.
+
 	* core/Form/FormUtils.class.php: object2form() now handles Prototyped
 	objects individually.
 

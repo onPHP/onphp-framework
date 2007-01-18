@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -60,8 +60,8 @@
 			$this->handler = new self::$handlerName($this->classKey);
 		}
 		
+		/// cachers
 		//@{
-		// cachers
 		public function cacheByQuery(
 			SelectQuery $query, /* Identifiable */ $object
 		)
@@ -111,16 +111,16 @@
 		}
 		//@}
 
+		/// uncachers
 		//@{
-		// uncachers
 		public function uncacheLists()
 		{
 			return $this->handler->drop();
 		}
 		//@}
 		
+		/// internal helpers
 		//@{
-		// internal helpers
 		protected function gentlyGetByKey($key)
 		{
 			if ($this->handler->ping($this->keyToInt($key, 15)))

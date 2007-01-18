@@ -19,8 +19,8 @@
 	**/
 	final class CommonDaoWorker extends BaseDaoWorker
 	{
+		/// single object getters
 		//@{
-		// single object getters
 		public function get(ObjectQuery $oq, $expires = Cache::DO_NOT_CACHE)
 		{
 			return $this->getByQuery($oq->toSelectQuery($this->dao), $expires);
@@ -147,8 +147,8 @@
 		}
 		//@}
 
+		/// object's list getters
 		//@{
-		// object's list getters
 		public function getList(ObjectQuery $oq, $expires = Cache::DO_NOT_CACHE)
 		{
 			return
@@ -314,8 +314,8 @@
 		}
 		//@}
 		
+		/// custom list getters
 		//@{
-		// custom list getters
 		public function getCustomList(
 			SelectQuery $query, $expres = Cache::DO_NOT_CACHE
 		)
@@ -342,8 +342,8 @@
 		}
 		//@}
 		
+		/// query result getters
 		//@{
-		// query result getters
 		public function getCountedList(
 			ObjectQuery $oq, $expires = Cache::DO_NOT_CACHE
 		)
@@ -378,8 +378,8 @@
 		}
 		//@}
 
+		/// cachers
 		//@{
-		// cachers
 		public function cacheById(
 			Identifiable $object, $expires = Cache::EXPIRES_MEDIUM
 		)
@@ -422,8 +422,8 @@
 		}
 		//@}
 		
+		/// erasers
 		//@{
-		// erasers
 		public function dropById($id)
 		{
 			$result = parent::dropById($id);
@@ -448,8 +448,8 @@
 		}
 		//@}
 
+		/// uncachers
 		//@{
-		// uncachers
 		public function uncacheByIds($ids)
 		{
 			$cache = Cache::me();

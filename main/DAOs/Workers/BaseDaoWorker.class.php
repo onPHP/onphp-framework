@@ -41,8 +41,8 @@
 			return $this;
 		}
 		
+		/// erasers
 		//@{
-		// erasers
 		public function drop(Identifiable $object)
 		{
 			return $this->dropById($object->getId());
@@ -62,8 +62,8 @@
 		}
 		//@}
 
+		/// uncachers
 		//@{
-		// uncachers
 		public function uncacheById($id)
 		{
 			return
@@ -79,8 +79,8 @@
 		}
 		//@}
 		
+		/// cache getters
 		//@{
-		// cache getters
 		public function getCachedById($id)
 		{
 			return
@@ -96,8 +96,8 @@
 		}
 		//@}
 		
+		/// fetchers
 		//@{
-		// fetchers
 		protected function fetchObject(SelectQuery $query)
 		{
 			if ($row = DBPool::getByDao($this->dao)->queryRow($query)) {

@@ -25,8 +25,8 @@
 		
 		abstract protected function gentlyGetByKey($key);
 		
+		/// single object getters
 		//@{
-		// single object getters
 		public function get(ObjectQuery $oq)
 		{
 			return $this->getByQuery($oq->toSelectQuery($this->dao));
@@ -116,8 +116,8 @@
 		}
 		//@}
 		
+		/// object's list getters
 		//@{
-		// object's list getters
 		public function getList(ObjectQuery $oq)
 		{
 			return $this->getListByQuery($oq->toSelectQuery($this->dao));
@@ -220,8 +220,8 @@
 		}
 		//@}
 
+		/// custom list getters
 		//@{
-		// custom list getters
 		public function getCustomList(
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
@@ -279,8 +279,8 @@
 		}
 		//@}
 		
+		/// query result getters
 		//@{
-		// query result getters
 		public function getCountedList(ObjectQuery $oq)
 		{
 			return $this->getQueryResult($oq->toSelectQuery($this->dao));
@@ -333,8 +333,8 @@
 		}
 		//@}
 
+		/// erasers
 		//@{
-		// erasers
 		public function dropByIds(/* array */ $ids)
 		{
 			$cache = Cache::me();
@@ -354,8 +354,8 @@
 		}
 		//@}
 		
+		/// cachers
 		//@{
-		// cachers
 		public function cacheById(Identifiable $object)
 		{
 			Cache::me()->mark($this->className)->
@@ -369,8 +369,8 @@
 		}
 		//@}
 		
+		/// uncachers
 		//@{
-		// uncachers
 		public function uncacheById($id)
 		{
 			$this->uncacheLists();
@@ -391,8 +391,8 @@
 		}
 		//@}
 		
+		/// internal helpers
 		//@{
-		// internal helpers
 		public function getCachedByQuery(SelectQuery $query)
 		{
 			return

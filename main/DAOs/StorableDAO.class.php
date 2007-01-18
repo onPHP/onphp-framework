@@ -89,10 +89,6 @@
 			return new DBValue($atom);
 		}
 		
-		/**
-		 * @param $collections list of collections to fetch
-		 * @param $list list of DAOConnected objects
-		**/
 		public function fetchCollections(
 			/* array */ $collections, /* array */ $list
 		)

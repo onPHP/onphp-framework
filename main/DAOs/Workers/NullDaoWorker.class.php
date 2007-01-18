@@ -20,8 +20,8 @@
 	**/
 	final class NullDaoWorker extends BaseDaoWorker
 	{
+		/// single object getters
 		//@{
-		// single object getters
 		public function get(ObjectQuery $oq)
 		{
 			return $this->getByQuery($oq->toSelectQuery($this->dao));
@@ -82,8 +82,8 @@
 		}
 		//@}
 		
+		/// object's list getters
 		//@{
-		// object's list getters
 		public function getList(ObjectQuery $oq)
 		{
 			return $this->getListByQuery($oq->toSelectQuery($this->dao));
@@ -135,8 +135,8 @@
 		}
 		//@}
 
+		/// custom list getters
 		//@{
-		// custom list getters
 		public function getCustomList(
 			SelectQuery $query, $expres = Cache::DO_NOT_CACHE
 		)
@@ -163,8 +163,8 @@
 		}
 		//@}
 		
+		/// query result getters
 		//@{
-		// query result getters
 		public function getCountedList(ObjectQuery $oq)
 		{
 			return $this->getQueryResult($oq->toSelectQuery($this->dao));
@@ -192,8 +192,8 @@
 		}
 		//@}
 
+		/// erasers
 		//@{
-		// erasers
 		public function dropById($id)
 		{
 			return
@@ -213,8 +213,8 @@
 		}
 		//@}
 		
+		/// cachers
 		//@{
-		// cachers
 		public function cacheById(Identifiable $object)
 		{
 			return $object;
@@ -233,8 +233,8 @@
 		}
 		//@}
 		
+		/// uncachers
 		//@{
-		// uncachers
 		public function uncacheById($id)
 		{
 			return true;
@@ -251,8 +251,8 @@
 		}
 		//@}
 		
+		/// cache getters
 		//@{
-		// cache getters
 		public function getCachedById($id)
 		{
 			return null;

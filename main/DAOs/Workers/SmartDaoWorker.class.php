@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -39,8 +39,8 @@
 				.self::SUFFIX_INDEX;
 		}
 		
+		/// cachers
 		//@{
-		// cachers
 		public function cacheByQuery(
 			SelectQuery $query, /* Identifiable */ $object
 		)
@@ -102,8 +102,8 @@
 		}
 		//@}
 		
+		/// uncachers
 		//@{
-		// uncachers
 		public function uncacheLists()
 		{
 			$intKey	= $this->keyToInt($this->indexKey);
@@ -131,8 +131,8 @@
 		}
 		//@}
 		
+		/// internal helpers
 		//@{
-		// internal helpers
 		protected function gentlyGetByKey($key)
 		{
 			if ($object = Cache::me()->mark($this->className)->get($key)) {
