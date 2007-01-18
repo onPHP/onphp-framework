@@ -86,21 +86,23 @@
 					'~([^<>]*)(?![^<]*?>)~',
 					strtr($value, self::$symbols),
 					null,
-					PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+					PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY | PREG_SPLIT_OFFSET_CAPTURE
 				);
 
 			$tags = array();
 			$text = null;
 			
 			if (count($list) > 1) {
-				foreach ($list as $string) {
+				foreach ($list as $row) {
+					$string = $row[0];
 					if (
 						(strpos($string, '<') === false)
 						&& (strpos($string, '>') === false)
 					) {
-						$text .= $string.self::MAGIC_DELIMITER;
+						$text .= $string;
 					} else {
 						$tags[] = $string;
+						$text .= self::MAGIC_DELIMITER;
 					}
 				}
 			} else {
