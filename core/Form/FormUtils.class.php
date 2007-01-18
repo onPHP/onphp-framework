@@ -25,8 +25,13 @@
 			foreach ($class->getProperties() as $property) {
 				$name = $property->getName();
 				
-				if (isset($primitives[$name])) {
-					
+				if (
+					isset($primitives[$name])
+					&& !( // in case it's LazyOneToOne
+						$primitives[$name] instanceof PrimitiveIdentifier
+						&& $class->hasProperty($name.'Id')
+					)
+				) {
 					$getter	= 'get'.ucfirst($name);
 					$value	= $object->$getter();
 					
