@@ -17,6 +17,8 @@
 	**/
 	final class RussianTypograph extends BaseFilter implements Instantiatable
 	{
+		const MAGIC_DELIMITER = '<>'; // brilliant!
+		
 		private static $symbols =
 			array(
 				' '		=> ' ', // bovm
@@ -46,7 +48,9 @@
 				'¾'		=> '&frac34;',
 				'3/4'	=> '&frac34;',
 				'±'		=> '&plusmn;',
-				'+/-'	=> '&plusmn;'
+				'+/-'	=> '&plusmn;',
+				'!='	=> '&ne;',
+				'<>'	=> '&ne;'
 			);
 		
 		private static $from = array(
@@ -77,11 +81,49 @@
 		
 		public function apply($value)
 		{
-			return preg_replace(
-				'~([^<>]*)(?![^<]*?>)~e',
-				'$this->typographize(\'$1\')',
-				strtr($value, self::$symbols)
-			);
+			$list =
+				preg_split(
+					'~([^<>]*)(?![^<]*?>)~',
+					strtr($value, self::$symbols),
+					null,
+					PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+				);
+
+			$tags = array();
+			$text = null;
+			
+			if (count($list) > 1) {
+				foreach ($list as $string) {
+					if (
+						(strpos($string, '<') === false)
+						&& (strpos($string, '>') === false)
+					) {
+						$text .= $string.self::MAGIC_DELIMITER;
+					} else {
+						$tags[] = $string;
+					}
+				}
+			} else {
+				$text = reset($list);
+			}
+			
+			$text = $this->typographize($text);
+			
+			if ($tags) {
+				$i = 0;
+				$out = null;
+				
+				foreach (explode(self::MAGIC_DELIMITER, $text) as $chunk) {
+					$out .= $chunk;
+					
+					if (isset($tags[$i]))
+						$out .= $tags[$i++];
+				}
+				
+				return $out;
+			}
+			
+			return $text;
 		}
 		
 		private function typographize($text)
@@ -101,7 +143,10 @@
 		{
 			return
 				preg_replace(
-					'~\"(.*)\"~U',
+					array(
+						'~&laquo;(.*)&raquo;~U',
+						'~\"(.*)\"~U',
+					),
 					'&bdquo;$1&ldquo;',
 					stripslashes($text)
 				);
