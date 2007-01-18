@@ -26,8 +26,6 @@
 		
 		public function drop()
 		{
-			var_dump($this->id);
-			
 			return xcache_unset($this->id);
 		}
 		
