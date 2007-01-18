@@ -256,6 +256,7 @@ public static function getSequence()
 {
 	return '{$class->getDumbName()}_id';
 }
+\n
 EOT;
 			} else {
 				$out .= <<<EOT
@@ -278,6 +279,7 @@ public function uncacheLists()
 
 return parent::uncacheLists();
 }
+\n
 EOT;
 			}
 			
