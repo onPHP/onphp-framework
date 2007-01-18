@@ -37,8 +37,8 @@
 				'–'		=> '&mdash;',
 				'«'		=> '&laquo;',
 				'»'		=> '&raquo;',
-				'„'		=> '&bdquo;',
-				'“'		=> '&ldquo;',
+				'„'		=> '&#132;',
+				'“'		=> '&#147;',
 				'•'		=> '&bull;',
 				'®'		=> '&reg;',
 				'¼'		=> '&frac14;',
@@ -57,7 +57,8 @@
 			'~\-{2,}~',						// --
 			'~([\w\pL]+)\s\-\s~',			// foo - bar
 			'~([\s\pP])([\w\pL]{1,2})\s~U',	// bar a foo
-			'~\"([^\.]*)\"~',				// "quote"
+			'~\"([^\s]*)\"~',				// "quote"
+			'~\"([^\s]*)\s+([^\s\.]*)\"~',	// "quote quote"
 			'~\"(.*)\"~e',					// "qu"o"te"
 			'~([\w\pL\']+)~e'				// rock'n'roll
 		);
@@ -67,6 +68,7 @@
 			'$1&nbsp;&#151; ',
 			'$1$2&nbsp;',
 			'&laquo;$1&raquo;',
+			'&laquo;$1 $2&raquo;',
 			'\'&laquo;\'.$this->innerQuotes(\'$1\').\'&raquo;\'',
 			'str_replace("\'", \'&#146;\', \'$1\')'
 		);
@@ -108,7 +110,7 @@
 					}
 				}
 			} else {
-				$text = reset($list);
+				$text = $list[0][0];
 			}
 			
 			$text = $this->typographize($text);
@@ -151,7 +153,7 @@
 						'~&laquo;(.*)&raquo;~U',
 						'~\"(.*)\"~U',
 					),
-					'&bdquo;$1&ldquo;',
+					'&#132;$1&#147;',
 					stripslashes($text)
 				);
 		}
