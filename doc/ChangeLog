@@ -1,5 +1,11 @@
 # $Id$
 
+2007-01-19	Konstantin V. Arkhipov
+
+	* main/DAOs/Handlers/MessageSegmentHandler.class.php,
+	main/DAOs/Workers/DelayedDaoWorker.class.php: sysvmsg-based
+	asynchronous DAO-worker.
+
 2007-01-18	Konstantin V. Arkhipov
 
 	* main/DAOs/GenericDAO.class.php: identity's map and inner worker
