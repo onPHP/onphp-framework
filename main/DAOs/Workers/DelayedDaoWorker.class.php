@@ -22,7 +22,7 @@
 	**/
 	final class DelayedDaoWorker extends VoodooDaoWorker
 	{
-		protected $precision = 9;
+		protected $precision = 8;
 		
 		public function __construct(GenericDAO $dao)
 		{
