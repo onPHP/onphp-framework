@@ -23,7 +23,7 @@
 	{
 		protected $handler = null;
 		
-		protected $precision = 9; // safe default
+		protected $precision = 8; // safe default
 		
 		abstract protected function gentlyGetByKey($key);
 		
