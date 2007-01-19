@@ -26,7 +26,16 @@
 		{
 			$q = msg_get_queue($this->id, 0600);
 			
-			return msg_send($q, $key, 1, false, false);
+			try {
+				return msg_send($q, $key, 1, false, false);
+			} catch (BaseException $e) {
+				// queue is full
+				$msg = $type = null;
+
+				msg_receive($q, -(PHP_INT_MAX), $type, 2, $msg, false);
+
+				return msg_send($q, $key, 1, false, false);
+			}
 		}
 		
 		public function unlink($key)
