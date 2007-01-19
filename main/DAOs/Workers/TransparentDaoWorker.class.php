@@ -23,7 +23,7 @@
 	{
 		protected $handler = null;
 		
-		protected $precision = 8; // safe default
+		protected $precision = 7; // safe default
 		
 		abstract protected function gentlyGetByKey($key);
 		
@@ -419,7 +419,7 @@
 			if (!$precision)
 				$precision = $this->precision;
 			
-			return hexdec(substr(md5($key), 0, $this->precision)) + 1;
+			return hexdec(substr(md5($key), 0, $precision)) + 1;
 		}
 		//@}
 	}
