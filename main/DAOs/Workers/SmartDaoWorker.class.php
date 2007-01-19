@@ -21,6 +21,8 @@
 	**/
 	final class SmartDaoWorker extends TransparentDaoWorker
 	{
+		protected $precision = 8;
+		
 		private $indexKey	= null;
 		private $watermark	= null;
 		

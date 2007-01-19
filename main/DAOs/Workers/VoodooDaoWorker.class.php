@@ -26,6 +26,8 @@
 	{
 		protected $classKey = null;
 		
+		protected $precision = 15;
+		
 		private static $handlerName = null;
 		
 		public function __construct(GenericDAO $dao)
@@ -37,7 +39,7 @@
 			else
 				$watermark = null;
 			
-			$this->classKey = $this->keyToInt($watermark.$this->className);
+			$this->classKey = $this->keyToInt($watermark.$this->className, 8);
 			
 			if (!self::$handlerName) {
 				if (!extension_loaded('sysvshm')) {
@@ -70,7 +72,7 @@
 			
 			$key = $this->className.self::SUFFIX_QUERY.$queryId;
 			
-			if ($this->handler->touch($this->keyToInt($key, 15)))
+			if ($this->handler->touch($this->keyToInt($key)))
 				Cache::me()->mark($this->className)->
 					add($key, $object, Cache::EXPIRES_FOREVER);
 			
@@ -88,7 +90,7 @@
 			
 			$key = $this->className.self::SUFFIX_LIST.$query->getId();
 			
-			if ($this->handler->touch($this->keyToInt($key, 15))) {
+			if ($this->handler->touch($this->keyToInt($key))) {
 				
 				$cache->mark($this->className)->
 					add($key, $array, Cache::EXPIRES_FOREVER);
@@ -98,7 +100,7 @@
 						if (
 							!$this->handler->ping(
 								$this->keyToInt(
-									$this->className.'_'.$object->getId(), 15
+									$this->className.'_'.$object->getId()
 								)
 							)
 						) {
@@ -123,7 +125,7 @@
 		// internal helpers
 		protected function gentlyGetByKey($key)
 		{
-			if ($this->handler->ping($this->keyToInt($key, 15)))
+			if ($this->handler->ping($this->keyToInt($key)))
 				return Cache::me()->mark($this->className)->get($key);
 			else {
 				Cache::me()->mark($this->className)->delete($key);

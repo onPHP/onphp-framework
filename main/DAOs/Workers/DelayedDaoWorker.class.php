@@ -22,6 +22,8 @@
 	**/
 	final class DelayedDaoWorker extends VoodooDaoWorker
 	{
+		protected $precision = 9;
+		
 		public function __construct(GenericDAO $dao)
 		{
 			parent::__construct($dao);
