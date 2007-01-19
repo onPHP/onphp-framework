@@ -24,6 +24,8 @@
 	{
 		protected $handler = null;
 		
+		protected $precision = 9; // safe default
+		
 		abstract protected function gentlyGetByKey($key);
 		
 		/// single object getters
@@ -423,9 +425,12 @@
 					);
 		}
 		
-		protected function keyToInt($key, $precision = 8)
+		protected function keyToInt($key, $precision = null)
 		{
-			return hexdec(substr(md5($key), 0, $precision)) + 1;
+			if (!$precision)
+				$precision = $this->precision;
+			
+			return hexdec(substr(md5($key), 0, $this->precision)) + 1;
 		}
 		//@}
 	}
