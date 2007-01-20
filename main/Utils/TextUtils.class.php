@@ -42,15 +42,7 @@
 			else 
 				$offset = 0;
 				
-			return substr(
-				$url, 
-				0, 
-				strpos(
-					$url, 
-					'/',
-					$offset
-				) + 1
-			);
+			return substr($url, 0, strpos($url, '/', $offset) + 1);
 		}
 		
 		public static function getPathFromUrl($url)
