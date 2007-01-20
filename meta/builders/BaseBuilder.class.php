@@ -116,8 +116,15 @@ EOT;
 		}
 
 EOT;
+			if ($class->getTypeId() == MetaClassType::CLASS_ABSTRACT) {
+				$out .= <<<EOT
 
-			$out .= <<<EOT
+protected function fillSelf({$className} \${$varName}, &\$array, \$prefix = null)
+{
+
+EOT;
+			} else {
+				$out .= <<<EOT
 
 /**
  * @return {$className}
@@ -126,18 +133,30 @@ protected function makeSelf(&\$array, \$prefix = null)
 {
 
 EOT;
-			if ($class->getParent()) {
-				$out .= <<<EOT
+				if ($class->getParent()) {
+					if (
+						$class->getParent()->getTypeId()
+						== MetaClassType::CLASS_ABSTRACT
+					) {
+						$out .= <<<EOT
+\${$varName} = parent::fillSelf(new {$className}(), \$array, \$prefix);
+
+
+EOT;
+					} else {
+						$out .= <<<EOT
 \${$varName} = parent::makeSelf(\$array, \$prefix);
 
 
 EOT;
-			} else {
+					}
+				} else {
 				$out .= <<<EOT
 \${$varName} = new {$className}();
 
 
 EOT;
+				}
 			}
 			
 			if ($chainFillers) {
