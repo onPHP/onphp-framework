@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -51,8 +51,8 @@
 		{
 			return
 				(
-					isset($this->primitives[$name]) ||
-					isset($this->aliases[$name])
+					isset($this->primitives[$name])
+					|| isset($this->aliases[$name])
 				);
 		}
 		
