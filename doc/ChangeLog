@@ -174,9 +174,6 @@
 	* core/DB/, main/DAOs/, main/Criteria/: joined fetching strategy
 	implemented.
 
-	* core/Cache/ReferencePool.class.php: doesn't stores single
-	dao-connected objects.
-
 	* main/DAOs/GenericDAO.class.php: so-called 'identity map' addded.
 
 	* meta/: now generates make-methods for cascading and batch object's

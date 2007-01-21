@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,6 +12,8 @@
 
 	/**
 	 * A wrapper to single cache to prevent cloning of returned cached objects.
+	 * 
+	 * @deprecated by identity map at GenericDAO
 	 * 
 	 * @ingroup Cache
 	**/
@@ -69,8 +71,7 @@
 			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			if (!is_object($value) && (!$value instanceof DAOConnected))
-				$this->pool[$key] = $value;
+			$this->pool[$key] = $value;
 			
 			return $this->peer->$action($key, $value, $expires);
 		}
