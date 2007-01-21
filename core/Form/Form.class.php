@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -52,7 +52,7 @@
 		/**
 		 * primitive marking
 		**/
-		
+		//@{
 		/**
 		 * @return Form
 		**/
@@ -102,7 +102,8 @@
 			
 			return $this;
 		}
-
+		//@}
+		
 		/**
 		 * Returns plain list of error's labels
 		**/
@@ -266,6 +267,7 @@
 		 * @param	$name		string	primitive or rule name
 		 * @param	$errorType	enum	Form::(WRONG|MISSING)
 		 * @param	$label		string	YDFB WTF is this :-) (c) /.
+		 * @throws	MissingElementException
 		 * @return	Form
 		**/
 		private function addErrorLabel($name, $errorType, $label)
