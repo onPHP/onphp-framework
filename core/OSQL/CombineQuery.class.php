@@ -38,7 +38,7 @@
 		**/
 		public static function union($left, $right)
 		{
-			return new QueryCombination($left, $right, CombineQuery::UNION);
+			return new QueryCombination($left, $right, self::UNION);
 		}	
 		
 		/**
@@ -48,7 +48,7 @@
 		{
 			$args = func_get_args();
 			
-			return QueryChain::block($args, CombineQuery::UNION);		
+			return QueryChain::block($args, self::UNION);		
 		}
 		
 		/**
@@ -56,7 +56,7 @@
 		**/
 		public static function unionAll($left, $right)
 		{
-			return new QueryCombination($left, $right, CombineQuery::UNION_ALL);
+			return new QueryCombination($left, $right, self::UNION_ALL);
 		}	
 		
 		/**
@@ -66,7 +66,7 @@
 		{
 			$args = func_get_args();
 			
-			return QueryChain::block($args, CombineQuery::UNION_ALL);
+			return QueryChain::block($args, self::UNION_ALL);
 		}
 		
 		/**
@@ -74,7 +74,7 @@
 		**/
 		public static function intersect($left, $right)
 		{
-			return new QueryCombination($left, $right, CombineQuery::INTERSECT);
+			return new QueryCombination($left, $right, self::INTERSECT);
 		}
 		
 		/**
@@ -84,7 +84,7 @@
 		{
 			$args = func_get_args();
 			
-			return QueryChain::block($args, CombineQuery::INTERSECT);
+			return QueryChain::block($args, self::INTERSECT);
 		}
 		
 		/**
@@ -92,7 +92,7 @@
 		**/
 		public static function intersectAll($left, $right)
 		{
-			return new QueryCombination($left, $right, CombineQuery::INTERSECT_ALL);
+			return new QueryCombination($left, $right, self::INTERSECT_ALL);
 		}	
 		
 		/**
@@ -102,7 +102,7 @@
 		{
 			$args = func_get_args();
 			
-			return QueryChain::block($args, CombineQuery::INTERSECT_ALL);
+			return QueryChain::block($args, self::INTERSECT_ALL);
 		}
 		
 		/**
@@ -110,7 +110,7 @@
 		**/
 		public static function except($left, $right)
 		{
-			return new QueryCombination($left, $right, CombineQuery::EXCEPT);
+			return new QueryCombination($left, $right, self::EXCEPT);
 		}
 		
 		/**
@@ -120,7 +120,7 @@
 		{
 			$args = func_get_args();
 			
-			return QueryChain::block($args, CombineQuery::EXCEPT);
+			return QueryChain::block($args, self::EXCEPT);
 		}
 	
 		/**
@@ -128,7 +128,7 @@
 		**/
 		public static function exceptAll($left, $right)
 		{
-			return new QueryCombination($left, $right, CombineQuery::EXCEPT_ALL);
+			return new QueryCombination($left, $right, self::EXCEPT_ALL);
 		}
 		
 		/**
@@ -138,7 +138,7 @@
 		{
 			$args = func_get_args();
 			
-			return QueryChain::block($args, CombineQuery::EXCEPT_ALL);
+			return QueryChain::block($args, self::EXCEPT_ALL);
 		}
 	}
 ?>
