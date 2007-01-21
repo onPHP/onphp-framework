@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -25,10 +25,10 @@
 		const SERIALIZABLE		= 0x04;
 		
 		protected $names	= array(
-			0 => 'read commited',
-			1 => 'read uncommitted',
-			2 => 'repeatable read',
-			3 => 'serializable'
+			self::READ_COMMITTED	=> 'read commited',
+			self::READ_UNCOMMITTED	=> 'read uncommitted',
+			self::REPEATABLE_READ	=> 'repeatable read',
+			self::SERIALIZABLE		=> 'serializable'
 		);
 	}
 ?>
