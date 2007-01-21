@@ -17,8 +17,8 @@
 	**/
 	final class InExpression implements LogicalObject, MappableObject
 	{
-		const IN		= 'in';
-		const NOT_IN	= 'not in';
+		const IN		= 'IN';
+		const NOT_IN	= 'NOT IN';
 		
 		private $left	= null;
 		private $right	= null;
@@ -30,6 +30,11 @@
 				($right instanceof SelectQuery)
 				|| ($right instanceof Criteria)
 				|| is_array($right)
+			);
+			
+			Assert::isTrue(
+				($logic == self::IN)
+				|| ($logic == self::NOT_IN)
 			);
 			
 			$this->left		= $left;
