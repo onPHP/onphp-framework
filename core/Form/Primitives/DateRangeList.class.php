@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov, Igor V. Gulyaev    *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov, Igor V. Gulyaev    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -31,10 +31,13 @@
 			$array = $scope[$this->name];
 			$list = array();
 
-			foreach ($array as $string)
-				if (array() !== self::stringToDateRangeList($string))
-					foreach (self::stringToDateRangeList($string) as $range)
+			foreach ($array as $string) {
+				$rangeList = self::stringToDateRangeList($string);
+				
+				if ($rangeList)
+					foreach ($rangeList as $range)
 						$list[] = $range;
+			}
 			
 			$this->value = $list;
 
@@ -75,21 +78,6 @@
 			}
 			
 			return $list;
-		}
-		
-		public static function printRange(DateRange $range, $delimiter = '-')
-		{
-			$rangeString = null;
-			
-			if ($range->getStart())
-				$rangeString .= $range->getStart()->toDate($delimiter);
-				
-			$rangeString .= ' - ';
-			
-			if ($range->getEnd())
-				$rangeString .= $range->getEnd()->toDate($delimiter);
-				
-			return $rangeString;
 		}
 		
 		/**

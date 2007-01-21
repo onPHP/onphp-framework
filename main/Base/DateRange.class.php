@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2004-2007 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -149,10 +149,13 @@
 				return null;
 		}
 		
-		public function toString()
+		public function toString($delimiter = '-')
 		{
 			if ($this->start && $this->end)
-				return "{$this->start->toString()} - {$this->end->toString()}";
+				return
+					$this->start->toString()
+					.$delimiter
+					.$this->end->toString();
 			elseif ($this->start)
 				return $this->start->toString();
 			elseif ($this->end)

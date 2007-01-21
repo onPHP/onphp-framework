@@ -2,6 +2,9 @@
 
 2007-01-21	Konstantin V. Arkhipov
 
+	* core/Form/Primitives/DateRangeList.class.php: printRange() removed
+	in favour of DateRange's toString().
+
 	* core/Cache/Cache.class.php: 'forever' is now 7 days (was only 3).
 
 2007-01-19	Konstantin V. Arkhipov
