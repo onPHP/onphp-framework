@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -143,9 +143,8 @@
 		{
 			if (isset($scope[$firstDimension]) && is_array($scope[$firstDimension])) {
 				if (
-					isset($scope[$firstDimension][$secondDimension])
+					!empty($scope[$firstDimension][$secondDimension])
 					&& is_array($scope[$firstDimension])
-					&& !empty($scope[$firstDimension][$secondDimension])
 				) {
 					return $scope[$firstDimension][$secondDimension];
 				}

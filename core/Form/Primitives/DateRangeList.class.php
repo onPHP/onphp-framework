@@ -18,9 +18,8 @@
 		public function import($scope)
 		{
 			if (
-				!isset($scope[$this->name])
+				empty($scope[$this->name])
 				|| !is_array($scope[$this->name])
-				|| empty($scope[$this->name])
 				|| (
 					count($scope[$this->name]) == 1
 					&& !current($scope[$this->name])
