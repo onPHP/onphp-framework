@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,8 +19,10 @@
 		 * @throws WrongArgumentException
 		 * @return PrimitiveIdentifier
 		**/
-		public function of($className)
+		public function of($class)
 		{
+			$className = $this->guessClassName($class);
+			
 			Assert::isTrue(
 				class_exists($className, true),
 				"knows nothing about '{$className}' class"
@@ -38,6 +40,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return GenericDAO
+		**/
 		public function dao()
 		{
 			return call_user_func(array($this->className, 'dao'));

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -30,6 +30,20 @@
 			Assert::isTrue($value instanceof $className);
 			
 			return parent::setValue($value);
+		}
+		
+		protected static function guessClassName($class)
+		{
+			if (is_string($class))
+				return $class;
+			elseif (is_object($class)) {
+				if ($class instanceof Identifiable)
+					return get_class($class);
+				elseif ($class instanceof GenericDAO)
+					return $class->getObjectName();
+			}
+			
+			throw new WrongArgumentException('strange class given - '.$class);
 		}
 	}
 ?>

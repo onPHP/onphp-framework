@@ -2,6 +2,9 @@
 
 2007-01-21	Konstantin V. Arkhipov
 
+	* core/Form/Primitives/PrimitiveIdentifier.class.php: now able to
+	guess class' name from it's object or DAO.
+
 	* core/Form/Primitives/DateRangeList.class.php: printRange() removed
 	in favour of DateRange's toString().
 

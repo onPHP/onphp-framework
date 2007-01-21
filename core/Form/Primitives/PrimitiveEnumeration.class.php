@@ -1,13 +1,13 @@
 <?php
-/***************************************************************************
- *   Copyright (C) 2006 by Ivan Y. Khvostishkov, Konstantin V. Arkhipov    *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*****************************************************************************
+ *   Copyright (C) 2006-2007 by Ivan Y. Khvostishkov, Konstantin V. Arkhipov *
+ *                                                                           *
+ *   This program is free software; you can redistribute it and/or modify    *
+ *   it under the terms of the GNU General Public License as published by    *
+ *   the Free Software Foundation; either version 2 of the License, or       *
+ *   (at your option) any later version.                                     *
+ *                                                                           *
+ *****************************************************************************/
 /* $Id$ */
 
 	/**
@@ -36,8 +36,10 @@
 		 * @throws WrongArgumentException
 		 * @return PrimitiveEnumeration
 		**/
-		public function of($className)
+		public function of($class)
 		{
+			$className = $this->guessClassName($class);
+			
 			Assert::isTrue(
 				class_exists($className, true),
 				"knows nothing about '{$className}' class"
@@ -45,7 +47,7 @@
 			
 			Assert::isTrue(
 				is_subclass_of($className, 'Enumeration'),
-				"non-enumeration child given"
+				'non-enumeration child given'
 			);
 			
 			$this->className = $className;
