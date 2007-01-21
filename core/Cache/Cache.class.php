@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2005-2006 by Anton E. Lebedevich, Konstantin V. Arkhipov *
+ *   Copyright (C) 2005-2007 by Anton E. Lebedevich, Konstantin V. Arkhipov *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -24,7 +24,7 @@
 	{
 		const NOT_FOUND			= 'nil';
 
-		const EXPIRES_FOREVER	= 259200; // 3 days
+		const EXPIRES_FOREVER	= 604800; // 7 days
 		const EXPIRES_MAXIMUM	= 21600; // 6 hrs
 		const EXPIRES_MEDIUM	= 3600; // 1 hr
 		const EXPIRES_MINIMUM	= 300; // 5 mins
