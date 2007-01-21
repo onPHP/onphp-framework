@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup DB
 	 * 
-	 * @see http://www.postgresql.org/docs/8.1/interactive/errcodes-appendix.html
+	 * @see http://www.postgresql.org/docs/current/interactive/errcodes-appendix.html
 	**/
 	final class PostgresError extends Enumeration
 	{

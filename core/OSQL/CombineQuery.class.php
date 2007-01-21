@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Sergey S. Sergeev                          *
+ *   Copyright (C) 2004-2007 by Sergey S. Sergeev                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,7 +18,7 @@
 	 * query1 INTERSECT [ALL] query2 ....
 	 * query1 EXCEPT [ALL] query2 .... 
 	 * 
-	 * @see PostgreSQL Documentation, Chapter Combining Queries 
+	 * @see http://www.postgresql.org/docs/current/interactive/queries-union.html
 	 * 
 	 * @ingroup OSQL
 	**/

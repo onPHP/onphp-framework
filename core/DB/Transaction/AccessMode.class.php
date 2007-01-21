@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,7 +13,7 @@
 	/**
 	 * Transaction access modes.
 	 *
-	 * @see http://www.postgresql.org/docs/8.0/interactive/sql-start-transaction.html
+	 * @see http://www.postgresql.org/docs/current/interactive/sql-start-transaction.html
 	 * 
 	 * @ingroup Transaction
 	**/
