@@ -151,7 +151,7 @@
 		**/
 		public function setAutoincrement($auto = false)
 		{
-			$this->sequenced = true === $auto;
+			$this->sequenced = (true === $auto);
 			
 			return $this;
 		}
@@ -164,7 +164,7 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			$out =
-				"{$dialect->quoteField($this->name)} "
+				$dialect->quoteField($this->name).' '
 				.$this->type->toDialectString($dialect);
 			
 			if (null !== $this->default) {
