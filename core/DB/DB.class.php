@@ -103,7 +103,7 @@
 		 * transaction handling
 		 * @deprecated by Transaction class
 		**/
-		
+		//@{
 		/**
 		 * @return DB
 		**/
@@ -164,12 +164,13 @@
 		{
 			return $this->transaction;
 		}
+		//@}
 		
 		/**
 		 * queue handling
 		 * @deprecated by Queue class
 		**/
-
+		//@{
 		/**
 		 * @return DB
 		**/
@@ -215,11 +216,12 @@
 			
 			return $this->queueDrop();
 		}
+		//@}
 		
 		/**
 		 * base queries
 		**/
-		
+		//@{
 		public function query(Query $query)
 		{
 			return $this->queryRaw($query->toDialectString($this->getDialect()));
@@ -238,6 +240,7 @@
 			} else
 				return $this->query($query);
 		}
+		//@}
 		
 		public function isConnected()
 		{
