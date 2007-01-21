@@ -48,6 +48,7 @@
 		}
 		
 		/**
+		 * @throws WrongArgumentException
 		 * @return DBPool
 		**/
 		public function addLink($name, DB $db)
