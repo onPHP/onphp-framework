@@ -140,7 +140,7 @@
 		{
 			Assert::isTrue(($this->id & self::HAVE_TIMEZONE) > 0);
 			
-			$this->timezone = true === $zoned;
+			$this->timezone = (true === $zoned);
 			
 			return $this;
 		}
@@ -155,7 +155,7 @@
 		**/
 		public function setNull($isNull = false)
 		{
-			$this->null = $isNull === true;
+			$this->null = ($isNull === true);
 			
 			return $this;
 		}
@@ -185,7 +185,7 @@
 				
 				if (!$this->size)
 					throw new WrongStateException(
-						"type '{$this->name}' should have size set"
+						"type '{$this->name}' must have size"
 					);
 				
 				$out .= "({$this->size})";
@@ -224,8 +224,8 @@
 			
 			$out .=
 				$this->null
-					? " NULL"
-					: " NOT NULL";
+					? ' NULL'
+					: ' NOT NULL';
 			
 			return $out;
 		}
