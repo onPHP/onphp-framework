@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,7 +15,8 @@
 	**/
 	final class DBSchema extends QueryIdentification
 	{
-		private $tables = array();
+		private $tables	= array();
+		private $order	= array();
 		
 		public function getTables()
 		{
@@ -24,7 +25,7 @@
 		
 		public function getTableNames()
 		{
-			return array_keys($this->tables);
+			return $this->order;
 		}
 		
 		/**
@@ -41,6 +42,7 @@
 			);
 			
 			$this->tables[$table->getName()] = $table;
+			$this->order[] = $name;
 			
 			return $this;
 		}
@@ -59,13 +61,12 @@
 			return $this->tables[$name];
 		}
 		
-		// TODO: respect dependency order
 		public function toDialectString(Dialect $dialect)
 		{
 			$out = array();
 			
-			foreach ($this->tables as $table) {
-				$out[] = $table->toDialectString($dialect);
+			foreach ($this->order as $name) {
+				$out[] = $this->tables[$name]->toDialectString($dialect);
 			}
 			
 			return implode("\n\n", $out);
