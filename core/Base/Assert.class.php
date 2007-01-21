@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -87,8 +87,8 @@
 				self::fail($message);
 		}
 		
-		/// @{
 		/// exceptionless methods
+		//@{
 		public static function checkInteger($value)
 		{
 			return (
@@ -97,7 +97,7 @@
 				&& (strlen($value) == strlen((int) $value))
 			);
 		}
-		/// @}
+		//@}
 		
 		private static function fail($message = null)
 		{

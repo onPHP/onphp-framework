@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Garmonbozia Research Group, Anton E. Lebedevich *
- *   Konstantin V. Arkhipov                                                *
+ *   Copyright (C) 2006-2007 by Garmonbozia Research Group                 *
+ *   Anton E. Lebedevich, Konstantin V. Arkhipov                           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -137,12 +137,12 @@
 		**/
 		public function spawn($modification = null)
 		{
-			$child = new Timestamp($this->string);
+			$child = new $this($this->string);
 			
 			if ($modification)
 				return $child->modify($modification);
-			else
-				return $child;
+			
+			return $child;
 		}
 		
 		/**
@@ -229,7 +229,7 @@
 			return 'Y-m-d';
 		}
 		
-		protected function import($string)
+		/* void */ protected function import($string)
 		{
 			list($this->year, $this->month, $this->day) =
 				explode('-', $string, 3);

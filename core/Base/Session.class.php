@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Base
 	**/
-	class SessionNotStartedException extends BaseException 
+	final class SessionNotStartedException extends BaseException
 	{
 		function __construct()
 		{
@@ -29,7 +29,7 @@
 	/**
 	 * Simple static wrapper around session_*() functions.
 	 * 
-	 * @ingroup core
+	 * @ingroup Base
 	**/
 	final class Session extends StaticFactory
 	{
@@ -38,19 +38,22 @@
 		public static function start()
 		{
 			session_start();
-			Session::$isStarted = true;
+			self::$isStarted = true;
 		}
 		
+		/**
+		 * @throws SessionNotStartedException
+		**/
 		public static function destroy()
 		{
-			if (Session::$isStarted) {
-				Session::$isStarted = false;
+			if (self::$isStarted) {
+				self::$isStarted = false;
 				try {
 					session_destroy();
 				} catch (BaseException $e) {
 					// stfu
 				}
-				setcookie(session_name(), "", 0, "/");
+				setcookie(session_name(), null, 0, '/');
 			} else
 				throw new SessionNotStartedException();
 		}
@@ -60,17 +63,24 @@
 			return session_unset();
 		}
 		
+		/**
+		 * @throws SessionNotStartedException
+		**/
 		public static function assign($var, $val)
 		{
-			if (Session::isStarted())
+			if (self::isStarted())
 				$_SESSION[$var] = $val;
 			else 
 				throw new SessionNotStartedException();
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @throws SessionNotStartedException
+		**/
 		public static function exist(/* ... */)
 		{
-			if (Session::isStarted())
+			if (self::isStarted())
 				if (func_num_args()) {
 					foreach (func_get_args() as $arg) {
 						if (!isset($_SESSION[$arg]))
@@ -83,9 +93,12 @@
 			throw new SessionNotStartedException();
 		}
 		
+		/**
+		 * @throws SessionNotStartedException
+		**/
 		public static function get($var)
 		{
-			if (Session::isStarted())
+			if (self::isStarted())
 				return isset($_SESSION[$var]) ? $_SESSION[$var] : null;
 			else
 				throw new SessionNotStartedException();
@@ -96,9 +109,13 @@
 			return $_SESSION;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @throws SessionNotStartedException
+		**/
 		public static function drop(/* ... */)
 		{
-			if (Session::isStarted()) {
+			if (self::isStarted()) {
 				if (func_num_args())
 					foreach (func_get_args() as $arg)
 						unset($_SESSION[$arg]);
@@ -108,12 +125,15 @@
 				throw new SessionNotStartedException();
 		}
 		
+		/**
+		 * @throws SessionNotStartedException
+		**/
 		public static function dropAll()
 		{
-			if (Session::isStarted()) {
+			if (self::isStarted()) {
 				if ($_SESSION) {
 					foreach (array_keys($_SESSION) as $key) {
-						Session::drop($key);
+						self::drop($key);
 					}
 				}
 			} else
@@ -122,7 +142,7 @@
 		
 		public static function isStarted()
 		{
-			return Session::$isStarted;
+			return self::$isStarted;
 		}
 		
 		/**

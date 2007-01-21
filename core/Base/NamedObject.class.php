@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,8 +12,6 @@
 
 	/**
 	 * @see Named
-	 * @see NamedObjectDAO
-	 * @see FinalNamedObjectDAO
 	 * 
 	 * @ingroup Base
 	 * @ingroup Module
@@ -48,7 +46,7 @@
 		
 		public function toString()
 		{
-			return "{$this->id}: {$this->name}";
+			return "[{$this->id}] {$this->name}";
 		}
 	}
 ?>

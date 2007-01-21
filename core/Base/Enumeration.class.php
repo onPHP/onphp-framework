@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -27,7 +27,8 @@
 			$this->setId($id);
 		}
 		
-		/// @{ prevent's serialization of names' array
+		/// prevent's serialization of names' array
+		//@{ 
 		public function __sleep()
 		{
 			return array('id');
@@ -47,7 +48,7 @@
 		{
 			$this->setId($serialized);
 		}
-		/// @}
+		//@}
 		
 		public static function getList(Enumeration $enum)
 		{
@@ -99,7 +100,7 @@
 				$this->name = $names[$id];
 			} else
 				throw new MissingElementException(
-					"knows nothing about such id == {$id}"
+					'knows nothing about such id == '.$id
 				);
 			
 			return $this;

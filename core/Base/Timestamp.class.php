@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Garmonbozia Research Group,                *
+ *   Copyright (C) 2004-2007 by Garmonbozia Research Group,                *
  *   Anton E. Lebedevich, Konstantin V. Arkhipov                           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -143,7 +143,7 @@
 			return 'Y-m-d H:i:s';
 		}
 		
-		protected function import($string)
+		/* void */ protected function import($string)
 		{
 			list($date, $time) = explode(' ', $string, 2);
 			

@@ -1,13 +1,13 @@
 <?php
-/***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov, Anton E. Lebedevich     *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/****************************************************************************
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *                                                                          *
+ *   This program is free software; you can redistribute it and/or modify   *
+ *   it under the terms of the GNU General Public License as published by   *
+ *   the Free Software Foundation; either version 2 of the License, or      *
+ *   (at your option) any later version.                                    *
+ *                                                                          *
+ ****************************************************************************/
 /* $Id$ */
 
 	/**
@@ -34,9 +34,9 @@
 		// currently supports '01:23:45', '012345', '1234', '12'
 		public function __construct($input)
 		{
-			$input = (string) $input;
+			Assert::isString($input);
 			
-			$time = split(':', $input);
+			$time = explode(':', $input);
 			
 			$lenght = strlen($input);
 			
@@ -68,7 +68,7 @@
 						else
 							$this->
 								setHour($assumedHour)->
-								setMinute("{$input[2]}0");
+								setMinute($input[2].'0');
 
 						break;
 
@@ -165,6 +165,7 @@
 			return $this;
 		}
 		
+		/// HH:MM
 		public function toString($delimiter = ':')
 		{
 			if ($this->string === null)
@@ -175,7 +176,8 @@
 
 			return $this->string;
 		}
-
+		
+		/// HH:MM:SS
 		public function toFullString($delimiter = ':')
 		{
 			return
