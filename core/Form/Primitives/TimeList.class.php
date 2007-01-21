@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov, Igor V. Gulyaev    *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov, Igor V. Gulyaev    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,18 +18,20 @@
 		public function import($scope)
 		{
 			if (
-				!isset($scope[$this->name])
+				empty($scope[$this->name])
 				|| !is_array($scope[$this->name])
-				|| empty($scope[$this->name])
 			)
 				return null;
 			
 			$array = $scope[$this->name];
 			$list = array();
 
-			foreach ($array as $string)
-				if (array() !== self::stringToTimeList($string))
-					$list[] = self::stringToTimeList($string);
+			foreach ($array as $string) {
+				$timeList = self::stringToTimeList($string);
+				
+				if ($timeList)
+					$list[] = $timeList;
+			}
 			
 			$this->value = $list;
 			
