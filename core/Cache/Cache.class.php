@@ -58,6 +58,8 @@
 		
 		public static function setDefaultWorker($worker)
 		{
+			Assert::isTrue(class_exists($worker, true));
+			
 			self::$worker = $worker;
 		}
 		
@@ -79,7 +81,6 @@
 			$class = get_class($dao);
 			
 			if (!isset($instances[$class])) {
-				
 				if (isset(self::$map[$class])) {
 					$className = self::$map[$class];
 					$instances[$class] = new $className($dao);
