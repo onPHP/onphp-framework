@@ -21,7 +21,7 @@
 		protected $primitives	= array();
 		
 		/**
-		 * @return PlainForm
+		 * @return Form
 		**/
 		public function clean()
 		{
@@ -33,7 +33,7 @@
 		
 		/**
 		 * @throws MissingElementException
-		 * @return PlainForm
+		 * @return Form
 		**/
 		public function addAlias($primitiveName, $alias)
 		{
@@ -58,7 +58,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PlainForm
+		 * @return Form
 		**/
 		public function add(BasePrimitive $prm, $alias = null)
 		{
@@ -79,7 +79,7 @@
 		
 		/**
 		 * @throws MissingElementException
-		 * @return PlainForm
+		 * @return Form
 		**/
 		public function drop($name)
 		{
