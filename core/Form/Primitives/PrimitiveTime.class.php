@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                           *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                      *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -106,13 +106,7 @@
 		public function importMarried($scope)
 		{
 			if (
-				isset(
-					$scope[$this->name][self::HOURS], 
-					$scope[$this->name][self::MINUTES], 
-					$scope[$this->name][self::SECONDS]
-				)
-				&& is_array($scope[$this->name])
-				&& !empty($scope[$this->name][self::HOURS])
+				!empty($scope[$this->name][self::HOURS])
 				&& !empty($scope[$this->name][self::MINUTES])
 				&& !empty($scope[$this->name][self::SECONDS])
 			) {
