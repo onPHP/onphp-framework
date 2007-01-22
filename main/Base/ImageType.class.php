@@ -101,6 +101,11 @@
 			return $this->mimeTypes[$this->id];
 		}
 		
+		public function getExtensionList()
+		{
+			return $this->extensions;
+		}
+		
 		public static function createByFileName($fileName)
 		{
 			$ext =
@@ -109,9 +114,10 @@
 				);
 				
 			$anyImageType = new self(self::getAnyId());
+			$extensionList = $anyImageType->getExtensionList();
 			
-			if (isset($this->extensions[$id]))
-				return new self($this->extensions[$id]);
+			if (isset($extensionList[$ext]))
+				return new self($extensionList[$ext]);
 			
 			throw new WrongArgumentException(
 				"don't know type for '{$ext}' extension"
