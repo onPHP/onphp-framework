@@ -1,5 +1,11 @@
 # $Id$
 
+2007-01-22	Konstantin V. Arkhipov
+
+	* main/DAOs/Handlers/MessageSegmentHandler.class.php,
+	main/DAOs/Handlers/SharedMemorySegmentHandler.class.php:
+	segments/queues are now created with 0660 permission, instead of 0600.
+
 2007-01-21	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/PrimitiveIdentifier.class.php: now able to

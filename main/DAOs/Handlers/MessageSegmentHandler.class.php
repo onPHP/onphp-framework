@@ -24,7 +24,7 @@
 		
 		public function touch($key)
 		{
-			$q = msg_get_queue($this->id, 0600);
+			$q = msg_get_queue($this->id, 0660);
 			
 			try {
 				return msg_send($q, $key, 1, false, false);
@@ -40,7 +40,7 @@
 		
 		public function unlink($key)
 		{
-			$q = msg_get_queue($this->id, 0600);
+			$q = msg_get_queue($this->id, 0660);
 			
 			$type = $msg = null;
 			
@@ -49,7 +49,7 @@
 		
 		public function ping($key)
 		{
-			$q = msg_get_queue($this->id, 0600);
+			$q = msg_get_queue($this->id, 0660);
 			
 			$type = $msg = null;
 			
@@ -64,7 +64,7 @@
 		
 		public function drop()
 		{
-			return msg_remove_queue(msg_get_queue($this->id, 0600));
+			return msg_remove_queue(msg_get_queue($this->id, 0660));
 		}
 	}
 ?>
