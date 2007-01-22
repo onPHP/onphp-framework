@@ -29,7 +29,7 @@
 		public function touch($key)
 		{
 			try {
-				$shm = shm_attach($this->id, self::SEGMENT_SIZE, 0600);
+				$shm = shm_attach($this->id, self::SEGMENT_SIZE, 0660);
 			} catch (BaseException $e) {
 				return false;
 			}
@@ -49,7 +49,7 @@
 		public function unlink($key)
 		{
 			try {
-				$shm = shm_attach($this->id, self::SEGMENT_SIZE, 0600);
+				$shm = shm_attach($this->id, self::SEGMENT_SIZE, 0660);
 			} catch (BaseException $e) {
 				return false;
 			}
@@ -70,7 +70,7 @@
 		public function ping($key)
 		{
 			try {
-				$shm = shm_attach($this->id, self::SEGMENT_SIZE, 0600);
+				$shm = shm_attach($this->id, self::SEGMENT_SIZE, 0660);
 			} catch (BaseException $e) {
 				return false;
 			}
@@ -91,7 +91,7 @@
 		public function drop()
 		{
 			try {
-				$shm = shm_attach($this->id, self::SEGMENT_SIZE, 0600);
+				$shm = shm_attach($this->id, self::SEGMENT_SIZE, 0660);
 			} catch (BaseException $e) {
 				return false;
 			}
