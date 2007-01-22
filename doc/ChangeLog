@@ -1,5 +1,10 @@
 # $Id$
 
+2007-01-22	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/DAOs/VoodooDaoWorker.class.php: segments are now created with
+	0660 permission, instead of 0600.
+
 2007-01-11	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/DB/ImaginaryDialect.class.php: missing toString added to

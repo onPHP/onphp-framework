@@ -89,7 +89,7 @@
 		public function uncacheLists()
 		{
 			try {
-				$shm = shm_attach($this->classKey, self::SEGMENT_SIZE, 0600);
+				$shm = shm_attach($this->classKey, self::SEGMENT_SIZE, 0660);
 			} catch (BaseException $e) {
 				return false;
 			}
@@ -117,7 +117,7 @@
 		protected function touch($key)
 		{
 			try {
-				$shm = shm_attach($this->classKey, self::SEGMENT_SIZE, 0600);
+				$shm = shm_attach($this->classKey, self::SEGMENT_SIZE, 0660);
 			} catch (BaseException $e) {
 				return false;
 			}
@@ -137,7 +137,7 @@
 		protected function unlink($key)
 		{
 			try {
-				$shm = shm_attach($this->classKey, self::SEGMENT_SIZE, 0600);
+				$shm = shm_attach($this->classKey, self::SEGMENT_SIZE, 0660);
 			} catch (BaseException $e) {
 				return false;
 			}
@@ -158,7 +158,7 @@
 		protected function ping($key)
 		{
 			try {
-				$shm = shm_attach($this->classKey, self::SEGMENT_SIZE, 0600);
+				$shm = shm_attach($this->classKey, self::SEGMENT_SIZE, 0660);
 			} catch (BaseException $e) {
 				return false;
 			}
