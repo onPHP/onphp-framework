@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Utils
+	**/
 	final class DaoMoveHelper extends StaticFactory
 	{
 		private static $nullValue	= 0;
@@ -62,10 +65,9 @@
 				
 				DaoUtils::setNullValue(self::$nullValue);
 				DaoUtils::swap($upperObject, $object);
-					
 
 			} catch (ObjectNotFoundException $e) {
-				// not need move up top object
+				// no need to move up top object
 			}					
 		}
 		
@@ -107,7 +109,7 @@
 				DaoUtils::swap($lowerObject, $object);
 
 			} catch (ObjectNotFoundException $e) {
-				// not need move down bottom object
+				// no need to move down bottom object
 			}					
 		}
 	}

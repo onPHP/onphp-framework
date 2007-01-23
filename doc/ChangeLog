@@ -2,10 +2,10 @@
 
 2007-01-23	Dmitry E. Demidov
 
-	* main/Utils/DaoMoveHelper.class.php: added new class 
-	for easy up/down DAOConnected objects
-	* main/Utils/DaoUtils.class.php: added flexible null 
-	value
+	* main/Utils/DaoMoveHelper.class.php: added new class for easy moving
+	up/down DAOConnected objects.
+
+	* main/Utils/DaoUtils.class.php: added customizable null value.
 
 2007-01-22	Konstantin V. Arkhipov
 
