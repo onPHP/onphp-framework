@@ -12,6 +12,8 @@
 
 	final class DaoUtils extends StaticFactory
 	{
+		private static $nullValue	= 0;
+		
 		/* void */ public static function swap(
 			DAOConnected $first,
 			DAOConnected $second,
@@ -42,7 +44,7 @@
 			
 			try {
 				$dao->save(
-					$first->$setMethod(0)
+					$first->$setMethod(self::$nullValue)
 				);
 
 				$dao->save(
@@ -67,6 +69,11 @@
 			
 			if ($e)
 				throw $e;
+		}
+		
+		/* void */ public static function setNullValue($nullValue)
+		{
+			self::$nullValue = $nullValue;
 		}
 	}
 ?>
