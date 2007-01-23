@@ -1,3 +1,4 @@
 # $Id$
 
 * copy main/Utils/DaoUtils.class.php from 0.8;
+* copy main/Utils/DaoMoveHelper.class.php from 0.8;
