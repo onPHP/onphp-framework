@@ -15,6 +15,16 @@ PHP:
 		private $privateVariable	= null;
 		private $yetAnotherVariable	= null;
 
+		final public static anotherOddMethod()
+		{
+			try {
+				self::someOddMethodName(new FooImplementation());
+			} catch (FooException $e) {
+				// do something
+				throw $e; // try to not "eat" exceptions
+			}
+		}
+
 		public function someOddMethodName(FooInterface $someObject)
 		{
 			if (!$someObject) {
@@ -50,15 +60,12 @@ PHP:
 
 			return $this;
 		}
-
-		final public static anotherOddMethod()
+		
+		public function methodWithWayTooLongArguments(
+			Class $object, AnotherClass $anotherObject
+		)
 		{
-			try {
-				self::someOddMethodName(new FooImplementation());
-			} catch (FooException $e) {
-				// do something
-				throw $e; // try to not "eat" exceptions
-			}
+			// body
 		}
 	}
 
