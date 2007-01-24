@@ -12,6 +12,10 @@
 
 	/**
 	 * Message-based version of VoodooDaoWroker.
+	 * You'll probably want to tweak your sysctl:
+	 * 
+	 * kernel.msgmni = (total number of DAOs + 2)
+	 * kernel.msgmnb = 32767
 	 * 
 	 * @see CommonDaoWorker for manual-caching one.
 	 * @see SmartDaoWorker for less obscure, but locking-based worker.
