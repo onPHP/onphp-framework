@@ -201,7 +201,8 @@
 				'text'			=> DataType::TEXT,
 				
 				// unhandled types, not ours anyway
-				'tsvector'		=> null
+				'tsvector'		=> null,
+				'inet'			=> null
 			);
 			
 			try {
