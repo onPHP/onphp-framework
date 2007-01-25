@@ -89,7 +89,7 @@
 		
 		public function __construct($timestamp)
 		{
-			if (is_int($timestamp)) { // unix timestamp
+			if (Assert::checkInteger($timestamp)) { // unix timestamp
 				$this->int = $timestamp;
 				$this->string = date('Y-m-d H:i:s', $timestamp);
 			} elseif (is_string($timestamp)) { 
