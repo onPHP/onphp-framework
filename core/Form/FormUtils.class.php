@@ -16,9 +16,11 @@
 	final class FormUtils extends StaticFactory
 	{
 		/* void */ public static function object2form(
-			Identifiable $object, Form $form, $ignoreNull = true
+			$object, Form $form, $ignoreNull = true
 		)
 		{
+			Assert::isTrue(is_object($object));
+			
 			$primitives = $form->getPrimitiveList();
 			
 			if ($object instanceof Prototyped) {
@@ -67,9 +69,11 @@
 		}
 		
 		/* void */ public static function form2object(
-			Form $form, Identifiable $object, $ignoreNull = true
+			Form $form, $object, $ignoreNull = true
 		)
 		{
+			Assert::isTrue(is_object($object));
+			
 			$class = new ReflectionClass($object);
 			
 			foreach ($form->getPrimitiveList() as $name => $prm) {
