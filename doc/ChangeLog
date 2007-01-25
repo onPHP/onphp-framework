@@ -1,5 +1,10 @@
 # $Id$
 
+2007-01-25	Dmitry E. Demidov
+
+	* main/core/Form/FormUtils.class.php: form2object() and object2form()
+	now can work with ordinary classes
+
 2007-01-23	Dmitry E. Demidov
 
 	* main/Utils/DaoMoveHelper.class.php: added new class for easy moving
