@@ -103,7 +103,7 @@
 				return null;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function delete($key)
@@ -116,7 +116,7 @@
 				return false;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function isAlive()
@@ -177,7 +177,7 @@
 				return false;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 
 		private function getSegment()

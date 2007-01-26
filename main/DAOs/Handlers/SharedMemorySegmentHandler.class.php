@@ -62,7 +62,7 @@
 				return false;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function ping($key)

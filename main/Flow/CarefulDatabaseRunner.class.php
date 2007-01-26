@@ -50,7 +50,7 @@
 				throw $e;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		/**

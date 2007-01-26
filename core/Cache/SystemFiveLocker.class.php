@@ -30,7 +30,7 @@
 				return null;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function free($key)

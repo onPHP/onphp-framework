@@ -102,7 +102,7 @@
 				return $this->alive = false;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		protected function store(
@@ -123,7 +123,7 @@
 				return $this->alive = false;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 	}
 ?>

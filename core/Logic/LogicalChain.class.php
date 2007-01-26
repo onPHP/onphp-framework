@@ -96,7 +96,7 @@
 				return $out;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		private static function calculateBoolean($logic, $left, $right)
@@ -114,7 +114,7 @@
 					);
 			}
 
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 	}
 ?>

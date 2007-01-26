@@ -212,9 +212,6 @@
 
 					return $list;
 				}
-	
-				/* NOTREACHED */
-				
 			} elseif (count($ids)) {
 				return
 					$this->getListByLogic(
@@ -226,6 +223,8 @@
 					);
 			} else
 				return array();
+			
+			Assert::isUnreachable();
 		}
 		
 		public function getListByQuery(

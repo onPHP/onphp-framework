@@ -87,6 +87,11 @@
 				self::fail($message);
 		}
 		
+		public static function isUnreachable()
+		{
+			self::fail('unreachable code reached');
+		}
+		
 		/// exceptionless methods
 		//@{
 		public static function checkInteger($value)

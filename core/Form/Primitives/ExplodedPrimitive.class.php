@@ -43,7 +43,7 @@
 				return false;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 	}
 ?>

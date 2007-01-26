@@ -162,7 +162,7 @@
 				return $list;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function getListByQuery(SelectQuery $query)
@@ -183,7 +183,7 @@
 				}
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function getListByCriteria(Criteria $criteria)
@@ -205,7 +205,7 @@
 				}
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function getListByLogic(LogicalObject $logic)
@@ -247,7 +247,7 @@
 				}
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		// TODO: rename to getCustomColumn
@@ -278,7 +278,7 @@
 				}
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		//@}
 		

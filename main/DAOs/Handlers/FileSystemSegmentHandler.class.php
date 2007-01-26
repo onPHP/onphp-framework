@@ -33,7 +33,7 @@
 				return false;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function unlink($key)
@@ -44,7 +44,7 @@
 				return false;
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function ping($key)

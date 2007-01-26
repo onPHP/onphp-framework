@@ -92,7 +92,7 @@
 				return true;
 			}
 
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 	}
 ?>

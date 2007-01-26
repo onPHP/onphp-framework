@@ -79,7 +79,7 @@
 			} else
 				return $this->showError();
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 	}
 ?>

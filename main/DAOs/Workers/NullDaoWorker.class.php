@@ -43,7 +43,7 @@
 			else
 				throw new ObjectNotFoundException();
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function getByLogic(LogicalObject $logic)
@@ -61,7 +61,7 @@
 			else
 				throw new ObjectNotFoundException();
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function getCustom(SelectQuery $query)
@@ -78,7 +78,7 @@
 			else
 				throw new ObjectNotFoundException();
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		//@}
 		
@@ -111,7 +111,7 @@
 			else
 				throw new ObjectNotFoundException();
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function getListByCriteria(Criteria $criteria)
@@ -121,7 +121,7 @@
 			else
 				throw new ObjectNotFoundException();
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function getListByLogic(LogicalObject $logic)

@@ -256,7 +256,7 @@
 				}
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 	}
 ?>

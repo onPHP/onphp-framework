@@ -91,7 +91,7 @@
 				return implode($append.' ', $tables);
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 	}
 ?>

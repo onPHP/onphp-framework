@@ -168,7 +168,7 @@
 				return $this->restoreData($data);
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		private function makePath($key)
