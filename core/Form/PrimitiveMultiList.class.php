@@ -28,16 +28,17 @@
 						if (isset($this->list[$value]))
 							$values[] = $value;
 
-					if (count($values))
+					if (count($values)) {
 						$this->value = $values;
-					else
-						return false;
-
+						
+						return true;
+					}
 				} else {
-					if (isset($this->list[$scope[$this->name]]))
+					if (isset($this->list[$scope[$this->name]])) {
 						$this->value = $scope[$this->name];
-					else
-						return false;
+						
+						return true;
+					}
 				}
 			} else {
 				$this->value = $scope[$this->name];
@@ -45,7 +46,7 @@
 				return true;
 			}
 
-			/* NOTREACHED */
+			return false;
 		}
 	}
 ?>
