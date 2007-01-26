@@ -34,9 +34,12 @@
 		// currently supports '01:23:45', '012345', '1234', '12'
 		public function __construct($input)
 		{
-			Assert::isString($input);
-			
-			$time = explode(':', $input);
+			if (Assert::checkInteger($input)) {
+				$time = $input;
+			} else {
+				Assert::isString($input);
+				$time = explode(':', $input);
+			}
 			
 			$lenght = strlen($input);
 			
@@ -87,8 +90,6 @@
 						throw new WrongArgumentException('unknown format');
 				}
 			}
-			
-			/* NOTREACHED */
 		}
 		
 		public function getHour()
