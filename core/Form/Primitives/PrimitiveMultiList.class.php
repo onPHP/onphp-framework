@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2004-2007 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -28,16 +28,17 @@
 						if (isset($this->list[$value]))
 							$values[] = $value;
 
-					if (count($values))
+					if (count($values)) {
 						$this->value = $values;
-					else
-						return false;
-
+						
+						return true;
+					}
 				} else {
-					if (isset($this->list[$scope[$this->name]]))
+					if (isset($this->list[$scope[$this->name]])) {
 						$this->value = $scope[$this->name];
-					else
-						return false;
+						
+						return true;
+					}
 				}
 			} else {
 				$this->value = $scope[$this->name];
@@ -45,7 +46,7 @@
 				return true;
 			}
 
-			/* NOTREACHED */
+			return false;
 		}
 	}
 ?>
