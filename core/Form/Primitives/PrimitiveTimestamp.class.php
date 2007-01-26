@@ -22,7 +22,9 @@
 		public function importMarried($scope)
 		{
 			if (
-				!$this->isEmpty($scope)
+				!empty($scope[$this->name])
+				&& is_array($scope[$this->name])
+				&& !$this->isEmpty($scope)
 			) {
 				$hours = $minutes = $seconds = 0;
 				
