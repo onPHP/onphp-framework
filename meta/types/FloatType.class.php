@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Types
 	**/
-	final class FloatType extends IntegerType
+	class FloatType extends IntegerType
 	{
 		public function setDefault($default)
 		{
