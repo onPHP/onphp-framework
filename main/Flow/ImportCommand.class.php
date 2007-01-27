@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,25 +10,22 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class ForbiddenCommand implements EditorCommand
+	/**
+	 * @ingroup Flow
+	**/
+	class ImportCommand extends TakeCommand
 	{
 		/**
-		 * @return ForbiddenCommand
+		 * @return ImportCommand
 		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
-		/**
-		 * @return ModelAndView
-		**/
-		public function run(Prototyped $subject, Form $form, HttpRequest $request)
+		protected function daoMethod()
 		{
-			return
-				ModelAndView::create()->setView(
-					EditorController::COMMAND_FAILED
-				);
+			return 'import';
 		}
 	}
 ?>

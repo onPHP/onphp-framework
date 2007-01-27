@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2006-2007 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,6 +17,7 @@
 	{
 		public function __construct(Prototyped $subject)
 		{
+			$this->commandMap['import'] = new ImportCommand();
 			$this->commandMap['drop'] = new DropCommand();
 			$this->commandMap['save'] = new SaveCommand();
 			$this->commandMap['edit'] = new EditCommand();

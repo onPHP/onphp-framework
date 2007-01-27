@@ -2,6 +2,12 @@
 
 2007-01-27	Konstantin V. Arkhipov
 
+	* main/Flow/: ImportCommand implemented.
+
+	* main/Containers/Unified/UnifiedContainer.class.php: object's
+	comparsion bug introduced by identity map in php-5.2 fixed (was:
+	'Nesting level too deep - recursive dependency?').
+
 	* meta/builders/AutoClassBuilder.class.php: now builds custom
 	__sleep() method to prevent serialization of full objects with
 	LazyOneToOne relation.
