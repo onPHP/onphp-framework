@@ -180,13 +180,8 @@
 							
 							if (
 								(
-									(
-										$property->getRelationId()
-											== MetaRelation::ONE_TO_ONE
-									) || (
-										$property->getRelationId()
-											== MetaRelation::LAZY_ONE_TO_ONE
-									)
+									$property->getRelationId()
+										== MetaRelation::ONE_TO_ONE
 								) && (
 									$property->getType()->getClassName()
 									<> $class->getName()

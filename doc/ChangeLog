@@ -1,5 +1,11 @@
 # $Id$
 
+2007-01-27	Konstantin V. Arkhipov
+
+	* meta/builders/AutoClassBuilder.class.php: now builds custom
+	__sleep() method to prevent serialization of full objects with
+	LazyOneToOne relation.
+
 2007-01-25	Dmitry E. Demidov
 
 	* main/core/Form/FormUtils.class.php: form2object() and object2form()
