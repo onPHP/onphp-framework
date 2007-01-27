@@ -367,7 +367,7 @@
 		/**
 		 * @return AbstractProtoClass
 		**/
-		protected function getProto()
+		private function getProto()
 		{
 			return
 				call_user_func(
