@@ -214,7 +214,9 @@
 			if (!$this->collections)
 				return reset($list);
 			
-			return reset($this->dao->fetchCollections($this->collections, $list));
+			$list = $this->dao->fetchCollections($this->collections, $list);
+			
+			return reset($list);
 		}
 		
 		public function getList()
