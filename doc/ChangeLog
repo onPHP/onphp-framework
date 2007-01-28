@@ -1,5 +1,10 @@
 # $Id$
 
+2007-01-28	Konstantin V. Arkhipov
+
+	* global.inc.php.tpl: new overridable constant introduced -
+	ONPHP_IPC_PERMS.
+
 2007-01-27	Konstantin V. Arkhipov
 
 	* main/Flow/: ImportCommand implemented.

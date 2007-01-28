@@ -36,6 +36,9 @@
 	// also you may consider using /dev/shm/ for cache purposes
 	if (!defined('ONPHP_TEMP_PATH'))
 		define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
+	
+	if (!defined('ONPHP_IPC_PERMS'))
+		define('ONPHP_IPC_PERMS', 0660);
 
 	// paths
 	define('ONPHP_ROOT_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
