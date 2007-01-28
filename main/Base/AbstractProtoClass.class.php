@@ -15,7 +15,18 @@
 	**/
 	abstract class AbstractProtoClass extends Singleton
 	{
-		abstract public function getPropertyList();
+		abstract protected function makePropertyList();
+		
+		public function getPropertyList()
+		{
+			static $list = null;
+			
+			if (!$list) {
+				$list = $this->makePropertyList();
+			}
+			
+			return $list;
+		}
 		
 		/**
 		 * @return LightMetaProperty

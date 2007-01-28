@@ -26,13 +26,10 @@
 
 			$parent = $class->getParent();
 			
-			$classDump = self::dumpMetaClass($class);
-			
 			if ($parent) {
 				$out .= <<<EOT
 {$type}class Proto{$class->getName()} extends Proto{$parent->getName()}
 {
-{$classDump}
 	/**
 	 * @return Form
 	**/
@@ -46,12 +43,11 @@ EOT;
 				$out .= <<<EOT
 {$type}class Proto{$class->getName()} extends AbstractProtoClass
 {
-{$classDump}
+	/**
+	 * @return Form
+	**/
 	public function makeForm()
 	{
-		/**
-		 * @return Form
-		**/
 		return
 			Form::create()->
 			add(
@@ -182,9 +178,13 @@ EOT;
 				$out .= "return \$form;";
 			}
 			
+			$classDump = self::dumpMetaClass($class);
+			
 			$out .= <<<EOT
 
 	}
+
+{$classDump}
 }
 
 EOT;
@@ -198,17 +198,14 @@ EOT;
 			$serialized = str_replace(chr(0), chr(9), serialize($class));
 			
 			$out = <<<EOT
-	/**
-	 * @return MetaClass
-	**/
-	public function getPropertyList()
+	protected function makePropertyList()
 	{
-		static \$list = null;
-		
-		if (!\$list) {
+		return array(
 
 EOT;
 
+			$list = array();
+			
 			foreach ($class->getProperties() as $property) {
 				if (
 					!$property->getType()->isGeneric()
@@ -221,25 +218,23 @@ EOT;
 					$remote = $property->getType()->getClass();
 					
 					foreach ($remote->getProperties() as $remoteProperty) {
-						$out .=
-							"\$list['{$remoteProperty->getName()}'] = "
-							.$remoteProperty->toLightProperty()->toString()
-							."\n";
+						$list[] =
+							"'{$remoteProperty->getName()}' => "
+							.$remoteProperty->toLightProperty()->toString();
 					}
 				} else {
-					$out .=
-						"\$list['{$property->getName()}'] = "
-						.$property->toLightProperty()->toString()
-						."\n";
+					$list[] =
+						"'{$property->getName()}' => "
+						.$property->toLightProperty()->toString();
 				}
 			}
 			
+			$out .= implode(",\n", $list);
+			
 			$out .= <<<EOT
-		}
-		
-		return \$list;
-	}
 
+		);
+	}
 EOT;
 			return $out;
 		}
