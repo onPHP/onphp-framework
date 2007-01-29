@@ -1,5 +1,9 @@
 # $Id$
 
+2007-01-29	Dmitry E. Demidov
+
+	* main/Utils/RussianTextUtils.class.php: added method getDateAsText
+
 2007-01-28	Konstantin V. Arkhipov
 
 	* global.inc.php.tpl: new overridable constant introduced -

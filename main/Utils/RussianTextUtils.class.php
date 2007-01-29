@@ -101,5 +101,34 @@
 			
 			return $weekDays[$day];
 		}
+		
+		public static function getDateAsText(Timestamp $date, $todayWordNeed = true)
+		{
+			$dayStart = Timestamp::create(Timestamp::today());
+			$tomorrowDayStart = $dayStart->spawn('+1 day'); 
+
+			if (
+				(Timestamp::compare($date, $dayStart) == 1)
+				&& (Timestamp::compare($date, $tomorrowDayStart) == -1)
+			)
+				return 
+					(
+						$todayWordNeed === true 
+							? 'сегодня ' 
+							: null 
+					)
+					."в "
+					.date('G:i', $date->toStamp());
+
+			$yesterdayStart = $dayStart->spawn('-1 day');
+
+			if (
+				(Timestamp::compare($date, $yesterdayStart) == 1)
+				&& (Timestamp::compare($date, $dayStart) == -1)
+			)
+				return 'вчера в '.date('G:i', $date->toStamp());
+
+			return date('j.m.Y в G:i', $date->toStamp());
+		}
 	}
 ?>
