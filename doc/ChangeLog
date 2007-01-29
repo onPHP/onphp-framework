@@ -1,5 +1,9 @@
 # $Id$
 
+2007-01-29	Dmitry E. Demidov
+
+	* main/Utils/RussianTextUtils.class.php: added method getDateAsText
+
 2007-01-25	Dmitry E. Demidov
 
 	* main/core/Form/FormUtils.class.php: form2object() and object2form()
