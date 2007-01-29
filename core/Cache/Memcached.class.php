@@ -256,7 +256,7 @@
 				}
 			}
 			
-			Assert::isUnreachable();
+			return true;
 		}
 	}
 ?>
