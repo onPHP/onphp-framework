@@ -100,6 +100,16 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Criteria
+		**/
+		public function dropOrder()
+		{
+			$this->order = array();
+			
+			return $this;
+		}
+		
 		public function getLimit()
 		{
 			return $this->limit;
