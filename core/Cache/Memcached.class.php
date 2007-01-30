@@ -161,7 +161,8 @@
 					? "delete {$index} {$time}\r\n"
 					: "delete {$index}\r\n";
 			
-			$result = $this->sendRequest($command);
+			if (!$this->sendRequest($command))
+				return false;
 
 			try {
 				$response = trim(fread($this->link, $this->buffer));
@@ -204,7 +205,9 @@
 			
 			$command = "{$method} {$index} {$flags} {$expires} {$lenght}\r\n{$packed}\r\n";
 			
-			$result = $this->sendRequest($command);
+			if (!$this->sendRequest($command))
+				return false;
+			
 			$response = trim(fread($this->link, $this->buffer));
 			
 			if ($response === 'STORED')
