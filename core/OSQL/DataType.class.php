@@ -17,13 +17,13 @@
 	**/
 	final class DataType extends Enumeration implements DialectString
 	{
-		const SMALLINT			= 0x000001;
-		const INTEGER			= 0x000002;
-		const BIGINT			= 0x000003;
-		const NUMERIC			= 0x011004;
+		const SMALLINT			= 0x001001;
+		const INTEGER			= 0x001002;
+		const BIGINT			= 0x001003;
+		const NUMERIC			= 0x001604;
 		
-		const REAL				= 0x000005;
-		const DOUBLE			= 0x000006;
+		const REAL				= 0x001005;
+		const DOUBLE			= 0x001006;
 		
 		const BOOLEAN			= 0x000007;
 		
@@ -32,13 +32,14 @@
 		const TEXT				= 0x00000A;
 		
 		const DATE				= 0x00000B;
-		const TIME				= 0x10100C;
-		const TIMESTAMP			= 0x10100D;
+		const TIME				= 0x000A0C;
+		const TIMESTAMP			= 0x000A0D;
 		
 		const HAVE_SIZE			= 0x000100;
-		const HAVE_PRECISION	= 0x001000;
-		const HAVE_SCALE		= 0x010000;
-		const HAVE_TIMEZONE		= 0x100000;
+		const HAVE_PRECISION	= 0x000200;
+		const HAVE_SCALE		= 0x000400;
+		const HAVE_TIMEZONE		= 0x000800;
+		const CAN_BE_UNSIGNED	= 0x001000;
 		
 		private $size		= null;
 		private $precision	= null;
@@ -46,6 +47,7 @@
 		
 		private $null		= true;
 		private $timezone	= false;
+		private $unsigned	= false;
 		
 		protected $names = array(
 			self::SMALLINT		=> 'SMALLINT',
@@ -165,6 +167,24 @@
 			return $this->null;
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return DataType
+		**/
+		public function setUnsigned($unsigned = false)
+		{
+			Assert::isTrue(($this->id && self::CAN_BE_UNSIGNED) > 0);
+			
+			$this->unsigned = ($unsigned === true);
+			
+			return $this;
+		}
+		
+		public function isUnsigned()
+		{
+			return $this->unsigned;
+		}
+		
 		public function typeToString(Dialect $dialect)
 		{
 			if (
@@ -180,6 +200,10 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			$out = $this->typeToString($dialect);
+			
+			if ($this->unsigned) {
+				$out .= ' UNSIGNED';
+			}
 			
 			if ($this->id & self::HAVE_SIZE) {
 				

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,16 +13,14 @@
 	/**
 	 * @ingroup Types
 	**/
-	class BigIntegerType extends IntegerType
+	final class UnsignedBigIntegerType extends BigIntegerType
 	{
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::BIGINT)';
-		}
-		
-		public function toPrimitiveLimits()
-		{
-			return null;
+			return
+				parent::toColumnType()
+				."->\n"
+				.'setUnsigned(true)';
 		}
 	}
 ?>
