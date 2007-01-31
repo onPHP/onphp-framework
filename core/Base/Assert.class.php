@@ -82,7 +82,7 @@
 				$message
 				.(
 					defined('__LOCAL_DEBUG__')
-						? "\n\n".var_export(debug_backtrace(), true)
+						? "\n\n".print_r(debug_backtrace(), true)
 						: null
 				)
 			);
