@@ -19,5 +19,10 @@
 		{
 			return 'DataType::create(DataType::BIGINT)';
 		}
+		
+		public function toPrimitiveLimits()
+		{
+			return null;
+		}
 	}
 ?>
