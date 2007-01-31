@@ -243,6 +243,28 @@
 			return $this->dao->fetchCollections($this->collections, $list);
 		}
 		
+		/**
+		 * @return QueryResult
+		**/
+		public function getResult()
+		{
+			try {
+				$result = $this->dao->getQueryResult($this->toSelectQuery());
+			} catch (ObjectNotFoundException $e) {
+				return null;
+			}
+			
+			if (!$this->collections)
+				return $result;
+			
+			return $result->setList(
+				$this->dao->fetchCollections(
+					$this->collections,
+					$result->getList()
+				)
+			);
+		}
+		
 		public function getCustomList()
 		{
 			try {
