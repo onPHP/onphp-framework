@@ -1,8 +1,12 @@
 # $Id$
 
+2007-01-31	Konstantin V. Arkhipov
+
+	* meta/types/: min/max values for SmallInteger/Integer primitives.
+
 2007-01-29	Dmitry E. Demidov
 
-	* main/Utils/RussianTextUtils.class.php: added method getDateAsText
+	* main/Utils/RussianTextUtils.class.php: added method getDateAsText.
 
 2007-01-25	Dmitry E. Demidov
 

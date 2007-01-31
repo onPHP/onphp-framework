@@ -19,5 +19,10 @@
 		{
 			return 'DataType::create(DataType::SMALLINT)';
 		}
+		
+		public function toPrimitiveLimits()
+		{
+			return 'setMin(-32768)->'."\n".'setMax(32767)';
+		}
 	}
 ?>

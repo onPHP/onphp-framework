@@ -157,16 +157,22 @@
 		{
 			$required = ($this->required ? 'required' : 'optional');
 			
-			$size = null;
+			$size = $limits = null;
 			
 			if ($this->size) {
 				$size = "->\nsetMax({$this->size})";
 			}
 			
+			if ($this->type instanceof IntegerType)
+				$limits = $this->type->toPrimitiveLimits();
+			
+			if ($limits)
+				$limits = $limits."->\n";
+			
 			return <<<EOT
 
 {$this->type->toPrimitive()}('{$this->name}')->
-$required()$size
+{$limits}{$required}(){$size}
 
 EOT;
 		}

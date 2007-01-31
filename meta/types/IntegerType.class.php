@@ -49,5 +49,10 @@
 		{
 			return 'Primitive::integer';
 		}
+		
+		public function toPrimitiveLimits()
+		{
+			return 'setMin(-2147483648)->'."\n".'setMax(2147483647)';
+		}
 	}
 ?>
