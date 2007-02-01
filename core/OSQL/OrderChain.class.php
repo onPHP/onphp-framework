@@ -20,7 +20,7 @@
 		/**
 		 * @return OrderChain
 		**/
-		public function create()
+		public static function create()
 		{
 			return new self;
 		}

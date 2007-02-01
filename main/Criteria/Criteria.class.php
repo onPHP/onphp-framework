@@ -276,7 +276,7 @@
 		public function getCustomList()
 		{
 			try {
-				$this->dao->getCustomList($this->toSelectQuery());
+				return $this->dao->getCustomList($this->toSelectQuery());
 			} catch (ObjectNotFoundException $e) {
 				return array();
 			}
@@ -285,7 +285,7 @@
 		public function getPropertyList()
 		{
 			try {
-				$this->dao->getCustomRowList($this->toSelectQuery());
+				return $this->dao->getCustomRowList($this->toSelectQuery());
 			} catch (ObjectNotFoundException $e) {
 				return array();
 			}
