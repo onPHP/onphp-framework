@@ -2,6 +2,9 @@
 
 2007-02-01	Konstantin V. Arkhipov
 
+	* main/DAOs/ProtoDAO.class.php: proto-related stuff moved here from
+	StorableDAO.
+
 	* core/OSQL/OrderChain.class.php: introduced.
 
 	* main/Criteria/Criteria.class.php: ability to add custom sort for
