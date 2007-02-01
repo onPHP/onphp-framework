@@ -35,9 +35,35 @@
 			return $this;
 		}
 		
+		/**
+		 * @return OrderChain
+		**/
+		public function prepend(OrderBy $order)
+		{
+			if ($this->chain)
+				array_unshift($this->chain, $order);
+			else
+				$this->chain[] = $order;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OrderBy
+		**/
+		public function getLast()
+		{
+			return end($this->chain);
+		}
+		
 		public function getList()
 		{
 			return $this->chain;
+		}
+		
+		public function getCount()
+		{
+			return count($this->chain);
 		}
 		
 		/**

@@ -43,18 +43,20 @@
 		private $fields			= array();
 		
 		private $currentOrder	= null;
-		private $order			= array();
+		private $order			= null;
 		
 		private $group			= array();
 		
 		public function __construct()
 		{
 			$this->joiner = new Joiner();
+			$this->order = new OrderChain();
 		}
 		
 		public function __clone()
 		{
 			$this->joiner = clone $this->joiner;
+			$this->order = clone $this->order;
 		}
 		
 		public function getFetchStrategyId()
@@ -132,16 +134,23 @@
 			$this->joiner->leftJoin(new SQLLeftJoin($table, $logic, $alias));
 			return $this;
 		}
+		
+		/**
+		 * @return SelectQuery
+		**/
+		public function setOrderChain(OrderChain $chain)
+		{
+			$this->order = $chain;
+			
+			return $this;
+		}
 
 		/**
 		 * @return SelectQuery
 		**/
 		public function orderBy($field, $table = null)
 		{
-			$order = $this->makeOrder($field, $table);
-			
-			$this->order[] = $order;
-			$this->currentOrder = &$order;
+			$this->order->add($this->makeOrder($field, $table));
 			
 			return $this;
 		}
@@ -151,14 +160,7 @@
 		**/
 		public function prependOrderBy($field, $table = null)
 		{
-			$order = $this->makeOrder($field, $table);
-			
-			if ($this->order)
-				array_unshift($this->order, $order);
-			else
-				$this->order[] = $order;
-			
-			$this->currentOrder = &$order;
+			$this->order->prepend($this->makeOrder($field, $table));
 
 			return $this;
 		}
@@ -169,10 +171,10 @@
 		**/
 		public function desc()
 		{
-			if (!$this->currentOrder)
-				throw new WrongStateException("no fields to sort");
+			if (!$last = $this->order->getLast())
+				throw new WrongStateException('no fields to sort');
 
-			$this->currentOrder->desc();
+			$last->desc();
 
 			return $this;
 		}
@@ -183,10 +185,10 @@
 		**/
 		public function asc()
 		{
-			if (!$this->currentOrder)
-				throw new WrongStateException("no fields to sort");
+			if (!$last = $this->order->getLast())
+				throw new WrongStateException('no fields to sort');
 
-			$this->currentOrder->asc();
+			$last->asc();
 
 			return $this;
 		}
@@ -383,14 +385,8 @@
 					$query .= " GROUP BY ".implode(', ', $groupList);
 			}
 
-			if ($this->order) {
-				$orderList = array();
-
-				foreach ($this->order as $order)
-					$orderList[] = $order->toDialectString($dialect);
-
-				if ($orderList)
-					$query .= " ORDER BY ".implode(', ', $orderList);
+			if ($this->order->getCount()) {
+				$query .= ' ORDER BY '.$this->order->toDialectString($dialect);
 			}
 	
 			if ($this->limit)
