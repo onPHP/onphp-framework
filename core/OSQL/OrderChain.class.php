@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	final class OrderChain implements DialectString
+	final class OrderChain implements DialectString, MappableObject
 	{
 		private $chain = array();
 		
@@ -33,6 +33,24 @@
 			$this->chain[] = $order;
 			
 			return $this;
+		}
+		
+		public function getList()
+		{
+			return $this->chain;
+		}
+		
+		/**
+		 * @return OrderChain
+		**/
+		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		{
+			$chain = new self;
+			
+			foreach ($this->chain as $order)
+				$chain->add($order->toMapped($dao, $query));
+			
+			return $chain;
 		}
 		
 		public function toDialectString(Dialect $dialect)

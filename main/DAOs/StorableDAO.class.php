@@ -104,10 +104,23 @@
 				$this->getTable()
 			);
 			
-			foreach ($collections as $path => $lazy) {
+			foreach ($collections as $path => $info) {
+				$lazy = $info['lazy'];
+				$order =
+					isset($info['order'])
+						? $info['order']
+						: null;
+				
 				$query =
 					OSQL::select()->get($mainId)->
 					from($this->getTable());
+				
+				if (isset($info['order']))
+					$query->orderBy(
+						$info['order'] instanceof OrderBy
+							? $info['order']
+							: $info['order']->getList() // OrderChain
+					);
 				
 				$proto = reset($list)->proto();
 				

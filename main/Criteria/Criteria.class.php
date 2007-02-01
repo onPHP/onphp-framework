@@ -204,11 +204,19 @@
 		/**
 		 * @return Criteria
 		**/
-		public function fetchCollection($path, $lazy = false)
+		public function fetchCollection($path, $lazy = false, $order = null)
 		{
 			Assert::isBoolean($lazy);
+			Assert::isTrue(
+				($order === null)
+				|| (
+					$order instanceof OrderBy
+					|| $order instanceof OrderChain
+				)
+			);
 			
-			$this->collections[$path] = $lazy;
+			$this->collections[$path]['lazy'] = $lazy;
+			$this->collections[$path]['order'] = $order;
 			
 			return $this;
 		}
