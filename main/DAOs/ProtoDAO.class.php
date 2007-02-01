@@ -139,7 +139,7 @@
 						$rows = $dao->getCustomList($query);
 						
 						foreach ($rows as $row) {
-							$collection[$row[$prefix.$id]][] =
+							$collection[$row[$id]][] =
 								$dao->makeObject($row, $prefix);
 						}
 					} catch (ObjectNotFoundException $e) {/*_*/}
