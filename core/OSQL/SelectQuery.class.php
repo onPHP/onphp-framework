@@ -42,7 +42,6 @@
 
 		private $fields			= array();
 		
-		private $currentOrder	= null;
 		private $order			= null;
 		
 		private $group			= array();
