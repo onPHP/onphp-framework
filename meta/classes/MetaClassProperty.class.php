@@ -204,28 +204,141 @@
 			return $this->type->toMethods($class, $this);
 		}
 		
-		public function toPrimitive()
+		public function toPrimitive(MetaClass $class)
 		{
-			$required = ($this->required ? 'required' : 'optional');
+			if (
+				(
+					$this->getType() instanceof ObjectType
+					&& !$this->getType()->isGeneric()
+				)
+				|| $this->isIdentifier()
+			) {
+				if (
+					!$this->isIdentifier() 
+					&& (
+						$this->getType()->getClass()->getPattern()
+							instanceof EnumerationClassPattern
+					)
+				)
+					$isEnum = true;
+				else
+					$isEnum = false;
+				
+				if ($isEnum) {
+					$className = $this->getType()->getClassName();
+					
+					$primitiveName = $this->getName();
+				} elseif ($this->isIdentifier()) {
+					$className = $class->getName();
+					$primitiveName = 'id';
+				} else {
+					$className = $this->getType()->getClassName();
+					$primitiveName = $this->getName();
+				}
+				
+				if ($isEnum) {
+					$primitive =
+						"\nPrimitive::enumeration('{$primitiveName}')->\n"
+						."of('{$className}')->\n";
+				} else {
+					if (
+						!$this->getRelation()
+						|| (
+							$this->getRelationId()
+								== MetaRelation::ONE_TO_ONE
+							|| $this->getRelationId()
+								== MetaRelation::LAZY_ONE_TO_ONE
+						)
+					) {
+						if (
+							!$this->getType()->isGeneric()
+							&& $this->getType() instanceof ObjectType
+							&& (
+								$this->getType()->getClass()->getPattern()
+									instanceof ValueObjectPattern
+							)
+						) {
+							$primitive = array();
+							$remote = $this->getType()->getClass();
+							
+							foreach ($remote->getProperties() as $remoteProperty) {
+								$primitive[] = $remoteProperty->toPrimitive();
+							}
+						} else {
+							$primitive =
+								"\nPrimitive::identifier('{$primitiveName}')->\n";
+							
+							// should be specified only in childs
+							if (
+								!(
+									$class->getType()
+									&& (
+										$class->getTypeId()
+										== MetaClassType::CLASS_ABSTRACT
+									)
+									&& $this->isIdentifier()
+								)
+							) {
+								$primitive .= "of('{$className}')->\n";
+							}
+							
+							$id = null;
+							
+							// we must check remote identifier's type for limits
+							if ($this->getType() instanceof ObjectType) {
+								$id =
+									$this->getType()->
+										getClass()->
+											getIdentifier();
+								
+							} elseif ($this->isIdentifier()) {
+								$id = $this;
+							}
+							
+							if ($id) {
+								if ($limits = $id->getType()->toPrimitiveLimits())
+									$primitive .= $limits."->\n";
+							}
+						}
+					} else {
+						$primitive = null;
+					}
+				}
+				
+				if ($primitive && !is_array($primitive)) {
+					if ($this->getType()->hasDefault())
+						$primitive .=
+							"setDefault({$this->getType()->getDefault()})->\n";
+					
+					if ($this->isRequired())
+						$primitive .= "required()\n";
+					else
+						$primitive .= "optional()\n";
+				}
+			} else {
+				$required = ($this->required ? 'required' : 'optional');
+				
+				$size = $limits = null;
+				
+				if ($this->size) {
+					$size = "->\nsetMax({$this->size})";
+				}
+				
+				if ($this->type instanceof IntegerType)
+					$limits = $this->type->toPrimitiveLimits();
+				
+				if ($limits)
+					$limits = $limits."->\n";
 			
-			$size = $limits = null;
-			
-			if ($this->size) {
-				$size = "->\nsetMax({$this->size})";
-			}
-			
-			if ($this->type instanceof IntegerType)
-				$limits = $this->type->toPrimitiveLimits();
-			
-			if ($limits)
-				$limits = $limits."->\n";
-			
-			return <<<EOT
+				$primitive = <<<EOT
 
 {$this->type->toPrimitive()}('{$this->name}')->
 {$limits}{$required}(){$size}
 
 EOT;
+			}
+			
+			return $primitive;
 		}
 		
 		public function toDaoSetter($className, $cascade = true)
