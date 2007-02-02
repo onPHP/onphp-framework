@@ -1,5 +1,10 @@
 # $Id$
 
+2007-02-02	Konstantin V. Arkhipov
+
+	* meta/builders/ProtoClassBuilder.class.php: min/max values
+	added to identifier's too.
+
 2007-01-31	Dmitry E. Demidov
 
 	* main/Utils/ClassUtils.class.php: added class for copy 

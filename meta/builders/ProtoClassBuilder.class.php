@@ -120,6 +120,18 @@ EOT;
 								)
 							) {
 								$primitive .= "of('{$className}')->\n";
+								
+								// we must check remote identifier's type for limits
+								if ($property->getType() instanceof ObjectType) {
+									$id =
+										MetaConfiguration::me()->getClassByName(
+											$property->getType()->getClass()
+										)->
+										getIdentifier();
+									
+									if ($limits = $id->getType()->toPrimitiveLimits())
+										$primitive .= $limits."->\n";
+								}
 							}
 						} else {
 							$primitive = null;
