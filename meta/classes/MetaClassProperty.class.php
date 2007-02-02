@@ -262,7 +262,7 @@
 							$remote = $this->getType()->getClass();
 							
 							foreach ($remote->getProperties() as $remoteProperty) {
-								$primitive[] = $remoteProperty->toPrimitive();
+								$primitive[] = $remoteProperty->toPrimitive($remote);
 							}
 						} else {
 							$primitive =
