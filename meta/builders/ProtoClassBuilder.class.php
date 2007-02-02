@@ -136,6 +136,8 @@ EOT;
 									$primitive .= "of('{$className}')->\n";
 								}
 								
+								$id = null;
+								
 								// we must check remote identifier's type for limits
 								if ($property->getType() instanceof ObjectType) {
 									$id =
@@ -143,6 +145,11 @@ EOT;
 											getClass()->
 												getIdentifier();
 									
+								} elseif ($property->isIdentifier()) {
+									$id = $property;
+								}
+								
+								if ($id) {
 									if ($limits = $id->getType()->toPrimitiveLimits())
 										$primitive .= $limits."->\n";
 								}
