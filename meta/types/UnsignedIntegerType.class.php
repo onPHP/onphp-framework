@@ -25,7 +25,7 @@
 		
 		public function toPrimitiveLimits()
 		{
-			return 'setMin(0)->'."\n".'setMax(4294967295)';
+			return 'setMin(0)->'."\n".'setMax(PrimitiveInteger::UNSIGNED_MAX)';
 		}
 	}
 ?>
