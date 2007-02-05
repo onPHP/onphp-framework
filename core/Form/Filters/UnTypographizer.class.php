@@ -17,6 +17,7 @@
 	{
 		private static $symbols =
 			array(
+				'&nbsp;'	=> ' ',
 				' &lt; '	=> ' < ',
 				' &gt; '	=> ' > ',
 				'&#133;'	=> '…',
