@@ -351,7 +351,7 @@
 			foreach ($ids as $id)
 				$cache->mark($this->className)->delete($this->className.'_'.$id);
 			
-			$this->uncacheLists();
+			$this->dao->uncacheLists();
 
 			return $result;
 		}
@@ -376,7 +376,7 @@
 		//@{
 		public function uncacheById($id)
 		{
-			$this->uncacheLists();
+			$this->dao->uncacheLists();
 
 			return parent::uncacheById($id);
 		}
@@ -390,7 +390,7 @@
 					$this->className.'_'.$id
 				);
 			
-			return $this->uncacheLists();
+			return $this->dao->uncacheLists();
 		}
 		//@}
 		

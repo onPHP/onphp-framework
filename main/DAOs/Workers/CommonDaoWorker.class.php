@@ -427,7 +427,7 @@
 		{
 			$result = parent::dropById($id);
 			
-			$this->uncacheLists();
+			$this->dao->uncacheLists();
 			
 			return $result;
 		}
@@ -437,7 +437,7 @@
 			foreach ($ids as $id)
 				$this->uncacheById($id);
 			
-			$this->uncacheLists();
+			$this->dao->uncacheLists();
 
 			return
 				DBPool::getByDao($this->dao)->queryNull(
@@ -458,7 +458,7 @@
 					$this->className.'_'.$id
 				);
 			
-			return $this->uncacheLists();
+			return $this->dao->uncacheLists();
 		}
 		
 		// quite useless here
