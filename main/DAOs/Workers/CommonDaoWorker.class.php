@@ -461,6 +461,7 @@
 			return $this->uncacheLists();
 		}
 		
+		// quite useless here
 		public function uncacheLists()
 		{
 			return $this->uncacheByQuery($this->dao->makeSelectHead());
