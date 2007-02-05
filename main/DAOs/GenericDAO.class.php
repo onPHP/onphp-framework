@@ -15,9 +15,7 @@
 	 * 
 	 * @ingroup DAOs
 	**/
-	abstract class GenericDAO
-		extends Singleton
-		implements BaseDAO, InformedDAO, Serializable
+	abstract class GenericDAO extends Singleton implements BaseDAO, Serializable
 	{
 		// override later
 		protected $mapping = array();

@@ -15,6 +15,8 @@
 	**/
 	abstract class ProtoDAO extends GenericDAO
 	{
+		abstract public function getIdName();
+		
 		public function fetchCollections(
 			/* array */ $collections, /* array */ $list
 		)
@@ -26,7 +28,7 @@
 			}
 			
 			$mainId = DBField::create(
-				$this->getIdName(), // defined later in StorableDAO
+				$this->getIdName(),
 				$this->getTable()
 			);
 			
@@ -73,9 +75,9 @@
 				
 				$dao = call_user_func(array($className, 'dao'));
 				
-				$containerName = $property->getContainerName(
-					$this->getObjectName()
-				);
+				$selfName = $this->getObjectName();
+				$self = new $selfName;
+				$getter = 'get'.ucfirst($property->getName());
 				
 				Assert::isTrue(
 					$property->getRelationId() == MetaRelation::ONE_TO_MANY
@@ -87,9 +89,7 @@
 				) {
 					$table = $dao->getTable();
 				} else {
-					$table = call_user_func(
-						array($containerName, 'getHelperTable')
-					);
+					$table = $self->$getter()->getHelperTable();
 				}
 				
 				$id = $this->getIdName();
@@ -97,7 +97,7 @@
 				
 				if ($lazy) {
 					if ($property->getRelationId() == MetaRelation::MANY_TO_MANY) {
-						$childId = call_user_func(array($containerName, 'getChildIdField'));
+						$childId = $self->$getter()->getChildIdField();
 					} else {
 						$childId = $dao->getIdName();
 					}
@@ -182,15 +182,14 @@
 				$property->getRelationId() == MetaRelation::ONE_TO_MANY
 				|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
 			) {
-				$containerName = $property->getContainerName($this->getObjectName());
-				$objectName = $property->getClassName();
-				$dao = call_user_func(array($objectName, 'dao'));
+				$remoteName = $property->getClassName();
+				$selfName = $this->getObjectName();
+				$self = new $selfName;
+				$getter = 'get'.ucfirst($property->getName());
+				$dao = call_user_func(array($remoteName, 'dao'));
 				
 				if ($property->getRelationId() == MetaRelation::MANY_TO_MANY) {
-					$table =
-						call_user_func(
-							array($containerName, 'getHelperTable')
-						);
+					$table = $self->$getter()->getHelperTable();
 					
 					if (!$query->hasJoinedTable($table)) {
 						$logic =
@@ -201,9 +200,7 @@
 								),
 								
 								DBField::create(
-									call_user_func(
-										array($containerName, 'getParentIdField')
-									),
+									$self->$getter()->getParentIdField(),
 									$table
 								)
 							);
@@ -222,9 +219,7 @@
 							),
 							
 							DBField::create(
-								call_user_func(
-									array($containerName, 'getChildIdField')
-								),
+								$self->$getter()->getChildIdField(),
 								$table
 							)
 						);
@@ -232,9 +227,7 @@
 					$logic =
 						Expression::eq(
 							DBField::create(
-								call_user_func(
-									array($containerName, 'getParentIdField')
-								),
+								$self->$getter()->getParentIdField(),
 								$dao->getTable()
 							),
 							

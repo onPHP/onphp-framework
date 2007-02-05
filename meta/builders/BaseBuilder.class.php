@@ -252,7 +252,7 @@ EOT;
 				
 				if ($class->getIdentifier()->getName() !== 'id') {
 					$out .= <<<EOT
-public static function getIdName()
+public function getIdName()
 {
 	return '{$class->getIdentifier()->getName()}';
 }
@@ -261,17 +261,17 @@ EOT;
 				}
 				
 				$out .= <<<EOT
-public static function getTable()
+public function getTable()
 {
 	return '{$class->getDumbName()}';
 }
 
-public static function getObjectName()
+public function getObjectName()
 {
 	return '{$class->getName()}';
 }
 
-public static function getSequence()
+public function getSequence()
 {
 	return '{$class->getDumbName()}_id';
 }

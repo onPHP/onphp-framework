@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,9 +13,7 @@
 	/**
 	 * @ingroup Containers
 	**/
-	abstract class OneToManyLinked
-		extends UnifiedContainer
-		implements OneToManyLinkedInfo
+	abstract class OneToManyLinked extends UnifiedContainer
 	{
 		public function __construct(
 			Identifiable $parent, GenericDAO $dao, $lazy = true
@@ -31,12 +29,12 @@
 			$this->worker = new $worker($this);
 		}
 		
-		public static function getChildIdField()
+		public function getChildIdField()
 		{
 			return 'id';
 		}
 
-		public static function isUnlinkable()
+		public function isUnlinkable()
 		{
 			return false;
 		}

@@ -15,7 +15,7 @@
 	**/
 	abstract class StorableDAO extends ProtoDAO
 	{
-		public static function getIdName()
+		public function getIdName()
 		{
 			return 'id';
 		}

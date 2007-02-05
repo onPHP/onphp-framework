@@ -61,7 +61,7 @@
 	 * 
 	 * @ingroup Containers
 	**/
-	abstract class UnifiedContainer implements UnifiedContainerInfo
+	abstract class UnifiedContainer
 	{
 		protected $worker	= null;
 		protected $parent	= null;
@@ -73,6 +73,9 @@
 
 		protected $list		= array();
 		protected $clones	= array();
+		
+		abstract public function getParentIdField();
+		abstract public function getChildIdField();
 		
 		public function __construct(
 			Identifiable $parent, GenericDAO $dao, $lazy = true
