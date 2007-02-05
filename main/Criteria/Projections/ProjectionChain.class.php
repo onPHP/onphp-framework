@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -39,7 +39,7 @@
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
 			foreach ($this->list as $projection)
-				$query->get($projection->process($criteria, $query));
+				$projection->process($criteria, $query);
 			
 			return $query;
 		}
