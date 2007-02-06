@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveIdentifier extends IdentifiablePrimitive
+	class PrimitiveIdentifier extends IdentifiablePrimitive
 	{
 		public function of($className)
 		{

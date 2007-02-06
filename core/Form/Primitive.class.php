@@ -36,6 +36,11 @@
 		{
 			return new PrimitiveIdentifier($name);
 		}
+		
+		public static function identifierList($name)
+		{
+			return new PrimitiveIdentifierList($name);
+		}
 
 		public static function enumeration($name)
 		{
