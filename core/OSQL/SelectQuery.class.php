@@ -411,7 +411,7 @@
 		**/
 		public function dropOrder()
 		{
-			$this->order = array();
+			$this->order = new OrderChain();
 			return $this;
 		}
 
