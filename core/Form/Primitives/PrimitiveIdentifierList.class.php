@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Denis M. Gabaidulin                             *
+ *   Copyright (C) 2007 by Denis M. Gabaidulin, by Konstantin V. Arkhipov  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -25,31 +25,25 @@
 			if (!BasePrimitive::import($scope))
 				return null;
 			
-			if (is_array($scope[$this->name])) {
-				$scope[$this->name] =
-					array_unique($scope[$this->name]);
+			if (!is_array($scope[$this->name]))
+				return false;
+			
+			$list = array_unique($scope[$this->name]);
+			
+			$values = array();
+			
+			foreach ($list as $id) {
+				if (!Assert::checkInteger($id))
+					return false;
 				
-				$values = array();
-				
-				foreach ($scope[$this->name] as $value)
-					$values[] = $value;
-				
-				if (count($values)) {
-					$objectList =
-						$this->dao()->getListByIds($values);
-					
-					if (count($objectList) == count($values)) {
-						$this->value = $objectList;
-						return true;
-					} else {
-						$this->value = null;
-						return false;
-					}
-				}
-				
+				$values[] = $id;
+			}
+			
+			$objectList = $this->dao()->getListByIds($values);
+			
+			if (count($objectList) == count($values)) {
+				$this->value = $objectList;
 				return true;
-			} else {
-				return parent::import($scope);
 			}
 			
 			return false;
