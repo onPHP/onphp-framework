@@ -1,5 +1,10 @@
 # $Id$
 
+2007-02-06	Denis M. Gabaidulin
+
+	* core/Form/Primitives/PrimitiveIdentifierList.class.php: list of
+	Identificable objects primitive was added
+
 2007-02-02	Konstantin V. Arkhipov
 
 	* meta/builders/ProtoClassBuilder.class.php: min/max values
