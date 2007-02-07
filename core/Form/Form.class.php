@@ -273,11 +273,8 @@
 		private function addErrorLabel($name, $errorType, $label)
 		{
 			if (
-				!($errorType == Form::WRONG && isset($this->violated[$name])) 
-				&& (
-					!isset($this->rules[$name])
-					&& !$name = $this->get($name)->getName()
-				)
+				!isset($this->rules[$name])
+				&& !$this->get($name)->getName()
 			)
 				throw new MissingElementException(
 					"knows nothing about '{$name}'"
