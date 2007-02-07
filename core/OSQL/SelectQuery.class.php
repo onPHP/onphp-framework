@@ -41,6 +41,8 @@
 		
 		private $group			= array();
 		
+		private $having			= null;
+		
 		public function getName()
 		{
 			return $this->name;
@@ -153,6 +155,14 @@
 				$this->group[] =
 						new DBField($field, $this->getLastTable($table));
 
+			return $this;
+		}
+		
+		// TODO: support n-expressions
+		public function having(LogicalObject $exp)
+		{
+			$this->having = $exp;
+			
 			return $this;
 		}
 
@@ -334,6 +344,11 @@
 					$query .= " GROUP BY ".implode(', ', $groupList);
 			}
 
+			
+			if ($this->having)
+				$query .= ' HAVING '
+					. $this->having->toDialectString($dialect);
+			
 			if ($this->order) {
 				$orderList = array();
 
