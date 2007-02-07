@@ -46,6 +46,8 @@
 		
 		private $group			= array();
 		
+		private $having			= null;
+		
 		public function __construct()
 		{
 			$this->joiner = new Joiner();
@@ -205,7 +207,17 @@
 
 			return $this;
 		}
-
+		
+		/**
+		 * @return SelectQuery
+		**/
+		public function having(LogicalObject $exp)
+		{
+			$this->having = $exp;
+			
+			return $this;
+		}
+		
 		public function getLimit()
 		{
 			return $this->limit;
@@ -383,17 +395,20 @@
 				if ($groupList)
 					$query .= " GROUP BY ".implode(', ', $groupList);
 			}
-
+			
+			if ($this->having)
+				$query .= ' HAVING '.$this->having->toDialectString($dialect);
+			
 			if ($this->order->getCount()) {
 				$query .= ' ORDER BY '.$this->order->toDialectString($dialect);
 			}
-	
+			
 			if ($this->limit)
 				$query .= " LIMIT {$this->limit}";
 			
 			if ($this->offset)
 				$query .= " OFFSET {$this->offset}";
-	
+			
 			return $query;
 		}
 		
