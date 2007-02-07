@@ -158,7 +158,9 @@
 			return $this;
 		}
 		
-		// TODO: support n-expressions
+		/**
+		 * @return SelectQuery
+		**/
 		public function having(LogicalObject $exp)
 		{
 			$this->having = $exp;
@@ -346,8 +348,7 @@
 
 			
 			if ($this->having)
-				$query .= ' HAVING '
-					. $this->having->toDialectString($dialect);
+				$query .= ' HAVING '.$this->having->toDialectString($dialect);
 			
 			if ($this->order) {
 				$orderList = array();
