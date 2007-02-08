@@ -41,8 +41,7 @@ EOT;
 {$pointers}
 
 EOT;
-			if ($class->getPattern() instanceof AbstractClassPattern) {
-				$out .= <<<EOT
+			$out .= <<<EOT
 
 	/**
 	 * @return InsertOrUpdateQuery
@@ -50,16 +49,6 @@ EOT;
 	public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \${$varName})
 
 EOT;
-			} else {
-				$out .= <<<EOT
-
-	/**
-	 * @return InsertOrUpdateQuery
-	**/
-	public function setQueryFields(InsertOrUpdateQuery \$query, {$className} \${$varName})
-
-EOT;
-			}
 			
 			$out .= <<<EOT
 	{
