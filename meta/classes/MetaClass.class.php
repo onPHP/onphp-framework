@@ -90,6 +90,17 @@
 		/**
 		 * @return MetaClass
 		**/
+		public function getFinalParent()
+		{
+			if ($this->parent)
+				return $this->parent->getFinalParent();
+			
+			return $this;
+		}
+		
+		/**
+		 * @return MetaClass
+		**/
 		public function setParent(MetaClass $parent)
 		{
 			$this->parent = $parent;
