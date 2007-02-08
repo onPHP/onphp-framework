@@ -63,12 +63,18 @@ EOT;
 
 				$out .= self::buildPointers($class);
 				
+				if ($class->getParent()) {
+					$typeHint = $class->getFinalParent()->getName();
+				} else {
+					$typeHint = '/* '.$class->getName().' */';
+				}
+				
 				$out .= <<<EOT
 
 /**
  * @return InsertOrUpdateQuery
 **/
-public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \${$varName})
+public function setQueryFields(InsertOrUpdateQuery \$query, {$typeHint} \${$varName})
 {
 	return
 		parent::setQueryFields(\$query, \${$varName})->

@@ -72,6 +72,14 @@
 			return $this;
 		}
 		
+		public function getFinalParent()
+		{
+			if ($this->parent)
+				return $this->parent->getFinalParent();
+			
+			return $this;
+		}
+		
 		public function getParent()
 		{
 			return $this->parent;

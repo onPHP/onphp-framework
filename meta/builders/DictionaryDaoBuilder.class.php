@@ -42,12 +42,18 @@ EOT;
 
 EOT;
 			if ($class->getPattern() instanceof AbstractClassPattern) {
+				if ($class->getParent()) {
+					$typeHint = $class->getFinalParent()->getName();
+				} else {
+					$typeHint = '/* '.$class->getName().' */';
+				}
+				
 				$out .= <<<EOT
 
 	/**
 	 * @return InsertOrUpdateQuery
 	**/
-	public function setQueryFields(InsertOrUpdateQuery \$query, /* {$className} */ \${$varName})
+	public function setQueryFields(InsertOrUpdateQuery \$query, {$typeHint} \${$varName})
 
 EOT;
 			} else {
