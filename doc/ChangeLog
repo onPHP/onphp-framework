@@ -1,5 +1,10 @@
 # $Id$
 
+2007-02-06	Denis M. Gabaidulin
+
+	* core/Form/Primitives/PrimitiveIdentifierList.class.php: list of
+	identificable objects primitive was added.
+
 2007-02-05	Konstantin V. Arkhipov
 
 	* main/DAOs/Workers/: all workers are now calls dao's uncacheLists(),
