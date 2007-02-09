@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2006-2007 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,7 +18,10 @@
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
 			if (!$form->getErrors()) {
-				FormUtils::form2object($form, $subject);
+				// BC, already solved in trunk
+				if (get_class($this) == 'TakeCommand') {
+					FormUtils::form2object($form, $subject);
+				}
 				
 				$subject = $subject->dao()->take($subject);
 				

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2006-2007 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,9 +17,15 @@
 	{
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
-			$form->markGood('id');
+			if (!$form->getErrors()) {
+				$form->markGood('id');
+				
+				FormUtils::form2object($form, $subject);
+				
+				return parent::run($subject, $form, $request);
+			}
 			
-			return parent::run($subject, $form, $request);
+			return new ModelAndView();
 		}
 	}
 ?>

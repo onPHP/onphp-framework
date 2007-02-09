@@ -20,6 +20,8 @@
 			if (!$form->getErrors()) {
 				$subject = $form->getValue('id');
 				
+				FormUtils::form2object($form, $subject, false);
+				
 				return parent::run($subject, $form, $request);
 			}
 			
