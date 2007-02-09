@@ -45,6 +45,9 @@
 			return parent::postHandleRequest($mav, $request);
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function doImport(
 			Prototyped $subject, Form $form, HttpRequest $request
 		)
@@ -52,6 +55,9 @@
 			return ImportCommand::create()->run($subject, $form, $request);
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function doDrop(
 			Prototyped $subject, Form $form, HttpRequest $request
 		)
@@ -59,6 +65,9 @@
 			return DropCommand::create()->run($subject, $form, $request);
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function doSave(
 			Prototyped $subject, Form $form, HttpRequest $request
 		)
@@ -66,6 +75,9 @@
 			return SaveCommand::create()->run($subject, $form, $request);
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function doEdit(
 			Prototyped $subject, Form $form, HttpRequest $request
 		)
@@ -73,6 +85,9 @@
 			return EditCommand::create()->run($subject, $form, $request);
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function doAdd(
 			Prototyped $subject, Form $form, HttpRequest $request
 		)
