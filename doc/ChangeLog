@@ -1,5 +1,10 @@
 # $Id$
 
+2007-02-09	Konstantin V. Arkhipov
+
+	* main/Flow/: MonolithicEditor backported from trunk; also fixed
+	SaveCommand logic.
+
 2007-02-09	Dmitry E. Demidov
 
 	* core/Form/Primitives/PrimitiveImage.class.php: fix return value.

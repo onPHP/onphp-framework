@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2006-2007 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,6 +15,15 @@
 	**/
 	class SaveCommand extends TakeCommand 
 	{
-		// nothing to do
+		public function run(Prototyped $subject, Form $form, HttpRequest $request)
+		{
+			if (!$form->getErrors() {
+				$subject = $form->getValue('id');
+				
+				return parent::run($subject, $form, $request);
+			}
+			
+			return new ModelAndView();
+		}
 	}
 ?>
