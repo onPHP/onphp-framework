@@ -67,8 +67,11 @@ EOT;
 
 				$out .= self::buildPointers($class);
 				
-				if ($class->getParent()) {
-					$typeHint = $class->getFinalParent()->getName();
+				if (
+					$parent = $class->getParent()
+					&& !($parent->getPattern() instanceof AbstractClassPattern)
+				) {
+					$typeHint = $parent->getFinalParent()->getName();
 				} else {
 					$typeHint = '/* '.$class->getName().' */';
 				}
