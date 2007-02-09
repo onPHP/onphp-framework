@@ -18,7 +18,7 @@
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
 			if (!$form->getErrors()) {
-				$subject = $form->getValue('id');
+				ClassUtils::copyProperties($form->getValue('id'), $subject);
 				
 				FormUtils::form2object($form, $subject, false);
 				
