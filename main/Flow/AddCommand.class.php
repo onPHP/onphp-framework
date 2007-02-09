@@ -30,7 +30,18 @@
 		{
 			$form->markGood('id');
 			
-			return parent::run($subject, $form, $request);
+			if (!$form->getErrors()) {
+				FormUtils::form2object($form, $subject);
+				
+				return parent::run($subject, $form, $request);
+			}
+			
+			return new ModelAndView();
+		}
+		
+		protected function daoMethod()
+		{
+			return 'add';
 		}
 	}
 ?>

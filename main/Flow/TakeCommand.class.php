@@ -13,43 +13,28 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class TakeCommand implements EditorCommand
+	abstract class TakeCommand implements EditorCommand
 	{
-		/**
-		 * @return TakeCommand
-		**/
-		public static function create()
-		{
-			return new self;
-		}
+		abstract protected function daoMethod();
 		
 		/**
 		 * @return ModelAndView
 		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
-			if (!$form->getErrors()) {
-				FormUtils::form2object($form, $subject);
-				
-				$subject = $subject->dao()->{$this->daoMethod()}($subject);
-				
-				return
-					ModelAndView::create()->
-					setView(
-						EditorController::COMMAND_SUCCEEDED
-					)->
-					setModel(
-						Model::create()->
-						set('id', $subject->getId())
-					);
-			}
+			$subject = $subject->dao()->{$this->daoMethod()}($subject);
+			
+			return
+				ModelAndView::create()->
+				setView(
+					EditorController::COMMAND_SUCCEEDED
+				)->
+				setModel(
+					Model::create()->
+					set('id', $subject->getId())
+				);
 			
 			return new ModelAndView();
-		}
-		
-		protected function daoMethod()
-		{
-			return 'take';
 		}
 	}
 ?>

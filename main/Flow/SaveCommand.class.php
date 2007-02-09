@@ -22,5 +22,26 @@
 		{
 			return new self;
 		}
+		
+		/**
+		 * @return ModelAndView
+		**/
+		public function run(Prototyped $subject, Form $form, HttpRequest $request)
+		{
+			if (!$form->getErrors()) {
+				$subject = $form->getValue('id');
+				
+				FormUtils::form2object($form, $subject, false);
+				
+				return parent::run($subject, $form, $request);
+			}
+			
+			return new ModelAndView();
+		}
+		
+		protected function daoMethod()
+		{
+			return 'save';
+		}
 	}
 ?>

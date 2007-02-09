@@ -1,5 +1,12 @@
 # $Id$
 
+2007-02-09	Konstantin V. Arkhipov
+
+	* main/Flow/SaveCommand.class.php: fetches object before form's
+	export.
+
+	* main/Flow/TakeCommand.class.php: abstract now.
+
 2007-02-09	Dmitry E. Demidov
 
 	* core/Form/Primitives/PrimitiveImage.class.php: fix return value.
