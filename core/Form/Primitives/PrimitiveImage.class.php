@@ -97,8 +97,7 @@
 		
 		public function import($scope)
 		{
-			$result = parent::import($scope);
-			if (!$result)
+			if (!$result = parent::import($scope))
 				return $result;
 			
 			try {
