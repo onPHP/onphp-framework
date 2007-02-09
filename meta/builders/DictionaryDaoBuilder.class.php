@@ -42,8 +42,11 @@ EOT;
 
 EOT;
 			if ($class->getPattern() instanceof AbstractClassPattern) {
-				if ($class->getParent()) {
-					$typeHint = $class->getFinalParent()->getName();
+				if (
+					$parent = $class->getParent()
+					&& !($parent->getPattern() instanceof AbstractClassPattern)
+				) {
+					$typeHint = $parent->getFinalParent()->getName();
 				} else {
 					$typeHint = '/* '.$class->getName().' */';
 				}
