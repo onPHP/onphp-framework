@@ -73,8 +73,8 @@
 		
 		public function import(&$scope)
 		{
-			if (!parent::import($scope))
-				return null;
+			if (!$result = parent::import($scope))
+				return $result;
 			
 			try {
 				list($width, $height, $type) = getimagesize($this->value);
