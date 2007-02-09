@@ -17,7 +17,7 @@
 	{
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
-			if (!$form->getErrors() {
+			if (!$form->getErrors()) {
 				$subject = $form->getValue('id');
 				
 				return parent::run($subject, $form, $request);
