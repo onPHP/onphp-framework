@@ -15,17 +15,16 @@
 	**/
 	final class ClassUtils extends StaticFactory
 	{
-		public static function copyProperties($source, $destination)
+		/* void */ public static function copyProperties($source, $destination)
 		{
 			Assert::isTrue(get_class($source) == get_class($destination));
 			
 			$class = new ReflectionClass($source);
 			
 			foreach ($class->getProperties() as $property) {
-				
-				$name = $property->getName();
-				$getter = 'get'.ucfirst($name);
-				$setter = 'set'.ucfirst($name);
+				$name = ucfirst($property->getName());
+				$getter = 'get'.$name;
+				$setter = 'set'.$name;
 				
 				if (
 					($class->hasMethod($getter))
@@ -48,21 +47,18 @@
 					}
 				}
 			}
-			
-			return $destination;
 		}
 		
-		public static function copyNotNullProperties($source, $destination)
+		/* void */ public static function copyNotNullProperties($source, $destination)
 		{
 			Assert::isTrue(get_class($source) == get_class($destination));
 			
 			$class = new ReflectionClass($source);
 			
 			foreach ($class->getProperties() as $property) {
-				
-				$name = $property->getName();				
-				$getter = 'get'.ucfirst($name);
-				$setter = 'set'.ucfirst($name);
+				$name = ucfirst($property->getName());
+				$getter = 'get'.$name;
+				$setter = 'set'.$name;
 				
 				if (
 					($class->hasMethod($getter))
@@ -73,27 +69,23 @@
 						$destination->$setter($value);
 				}
 			}
-			
-			return $destination;
 		}
 		
-		public static function fillNullProperties($source, $destination)
+		/* void */ public static function fillNullProperties($source, $destination)
 		{
 			Assert::isTrue(get_class($source) == get_class($destination));
 			
 			$class = new ReflectionClass($source);
 			
 			foreach ($class->getProperties() as $property) {
-				
-				$name = $property->getName();				
-				$getter = 'get'.ucfirst($name);
-				$setter = 'set'.ucfirst($name);
+				$name = ucfirst($property->getName());
+				$getter = 'get'.$name;
+				$setter = 'set'.$name;
 				
 				if (
 					($class->hasMethod($getter))
 					&& ($class->hasMethod($setter))
 				) {
-					
 					$destinationValue = $destination->$getter();
 					$sourceValue = $source->$getter();
 					
@@ -105,8 +97,6 @@
 					}
 				}
 			}
-			
-			return $destination;
 		}
 	}
 ?>
