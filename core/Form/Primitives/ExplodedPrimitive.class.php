@@ -15,7 +15,8 @@
 	**/
 	final class ExplodedPrimitive extends PrimitiveString
 	{
-		protected $separator = ' ';
+		protected $separator 		= ' ';
+		protected $splitByRegexp	= false;
 		
 		/**
 		 * @return ExplodedPrimitive
@@ -32,12 +33,35 @@
 			return $this->separator;
 		}
 		
+		public function setSplitByRegexp($splitByRegexp = false)
+		{
+			$this->splitByRegexp = ($splitByRegexp === true);
+			
+			return $this;
+		}
+		
+		public function isSplitByRegexp()
+		{
+			return $this->splitByRegexp;
+		}
+		
 		public function import($scope)
 		{
 			if (!$temp = parent::import($scope))
 				return $temp;
 	
-			if ($this->value = explode($this->separator, $this->value)) {
+			if (
+				$this->value = 
+					$this->isSplitByRegexp()
+						?
+							preg_split(
+								$this->separator, 
+								$this->value, 
+								-1, 
+								PREG_SPLIT_NO_EMPTY
+							)
+						: explode($this->separator, $this->value)
+			) {
 				return true;
 			} else {
 				return false;
