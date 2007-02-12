@@ -17,9 +17,9 @@
 	{
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
+			$form->markGood('id');
+
 			if (!$form->getErrors()) {
-				$form->markGood('id');
-				
 				FormUtils::form2object($form, $subject);
 				
 				return parent::run($subject, $form, $request);
