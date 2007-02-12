@@ -91,6 +91,9 @@
 			return $this->names;
 		}
 		
+		/**
+		 * @return Enumeration
+		**/
 		public function setId($id)
 		{
 			$names = $this->getNameList();
