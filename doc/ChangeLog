@@ -2,7 +2,7 @@
 
 2007-02-10	Dmitry E. Demidov
 
-	* core/Form/Primitives/ExplodedPrimitive.class.php: added support of 
+	* core/Form/Primitives/ExplodedPrimitive.class.php: added support for
 	regexp separator.
 
 2007-02-09	Konstantin V. Arkhipov
