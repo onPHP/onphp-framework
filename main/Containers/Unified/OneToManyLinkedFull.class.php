@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -32,14 +32,6 @@
 			$uc = $this->container;
 			$dao = $uc->getDao();
 
-			if ($insert)
-				for ($i = 0, $size = count($insert); $i < $size; ++$i)
-					$dao->add($insert[$i]);
-
-			if ($update)
-				for ($i = 0, $size = count($update); $i < $size; ++$i)
-					$dao->save($update[$i]);
-
 			if ($delete) {
 				DBPool::getByDao($dao)->queryNull(
 					OSQL::delete()->from($dao->getTable())->
@@ -60,6 +52,14 @@
 				foreach ($delete as $object)
 					$dao->uncacheById($object->getId());
 			}
+
+			if ($insert)
+				for ($i = 0, $size = count($insert); $i < $size; ++$i)
+					$dao->add($insert[$i]);
+
+			if ($update)
+				for ($i = 0, $size = count($update); $i < $size; ++$i)
+					$dao->save($update[$i]);
 
 			return $this;
 		}
