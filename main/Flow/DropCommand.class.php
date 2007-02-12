@@ -27,7 +27,7 @@
 					
 					return
 						ModelAndView::create()->
-						setView('success');
+						setView(BaseEditor::COMMAND_SUCCEEDED);
 						
 				} catch (ObjectNotFoundException $e) {
 					$form->markMissing('id');
