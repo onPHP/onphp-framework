@@ -42,7 +42,7 @@
 			} else
 				$mav = ModelAndView::create();
 			
-			return parent::postHandleRequest($mav, $request);
+			return $this->postHandleRequest($mav, $request);
 		}
 	}
 ?>
