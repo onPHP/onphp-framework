@@ -17,6 +17,9 @@
 	{
 		private $methodMap = array();
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function handleRequest(HttpRequest $request)
 		{
 			if ($action = $this->chooseAction($request)) {
@@ -34,9 +37,6 @@
 			/* NOTREACHED */
 		}
 		
-		/**
-		 * @return string
-		 */
 		public function chooseAction(HttpRequest $request)
 		{
 			return Form::create()->
@@ -48,6 +48,9 @@
 				getValue('action');
 		}
 		
+		/**
+		 * @return MethodMappedController
+		**/
 		public function setMethodMapping($action, $methodName)
 		{
 			$this->methodMap[$action] = $methodName;
