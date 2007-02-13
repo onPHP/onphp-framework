@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,7 +15,7 @@
 #include "php.h"
 #include "zend_interfaces.h"
 
-#define ONPHP_VERSION "0.8.4.99"
+#define ONPHP_VERSION "0.8.5.99"
 #define ONPHP_MODULE_NAME "onPHP"
 
 #define ZVAL_FREE(z) zval_dtor(z); FREE_ZVAL(z);
