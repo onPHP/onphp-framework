@@ -1,5 +1,8 @@
 # $Id$
 
-* copy main/Utils/DaoUtils.class.php from 0.8;
-* copy main/Utils/DaoMoveHelper.class.php from 0.8;
-* copy core/Form/Primitives/PrimitiveIdentifierList.class.php from 0.8;
+* copy:
+	branches/0.8/main/Utils/DaoUtils.class.php
+	branches/0.8/main/Utils/DaoMoveHelper.class.php
+	branches/0.8/core/Form/Primitives/PrimitiveIdentifierList.class.php
+	branches/0.8/main/Flow/MethodMappedController.class.php
+	branches/0.8/main/Flow/PrototypedEditor.class.php
