@@ -78,7 +78,7 @@
 				);
 			}
 			
-			// notreached
+			/* NOTREACHED */
 		}
 		
 		/**
@@ -107,15 +107,18 @@
 						set('editorResult', self::COMMAND_SUCCEEDED)
 					);
 			} else {
-				$model = Model::create()->
-						set('form', $form)->
-						set('editorResult', self::COMMAND_FAILED);
+				$model =
+					Model::create()->
+					set('form', $form)->
+					set('editorResult', self::COMMAND_FAILED);
+				
 				if ($object = $form->getValue('id'))
 					$model->set('subject', $object);
+				
 				return ModelAndView::create()->setModel($model);
 			}
 			
-			// notreached
+			/* NOTREACHED */
 		}
 		
 		/**
@@ -179,6 +182,8 @@
 						set('editorResult', self::COMMAND_FAILED)
 					);
 			}
+			
+			/* NOTREACHED */
 		}
 	}
 ?>
