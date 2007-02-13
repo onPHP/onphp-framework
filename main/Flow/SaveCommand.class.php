@@ -15,6 +15,14 @@
 	**/
 	class SaveCommand extends TakeCommand 
 	{
+		/**
+		 * @return SaveCommand
+		**/
+		public static function create()
+		{
+			return new self;
+		}
+		
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
 			if (!$form->getErrors()) {
