@@ -259,7 +259,7 @@
 			try {
 				$result = $this->dao->getQueryResult($this->toSelectQuery());
 			} catch (ObjectNotFoundException $e) {
-				return null;
+				return new QueryResult();
 			}
 			
 			if (!$this->collections)

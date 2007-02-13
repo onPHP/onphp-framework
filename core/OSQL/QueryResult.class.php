@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,11 +15,13 @@
 	 * 
 	 * @ingroup OSQL
 	**/
-	class QueryResult implements Identifiable
+	final class QueryResult implements Identifiable
 	{
 		private $list		= array();
-		private $count		= null;
-		private $affected	= null;
+		
+		private $count		= 0;
+		private $affected	= 0;
+		
 		private $query		= null;
 		
 		/**
