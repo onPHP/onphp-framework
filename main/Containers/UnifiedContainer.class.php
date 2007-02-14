@@ -198,7 +198,13 @@
 					
 					if (null === $id) {
 						$insert[] = $object;
-					} elseif (isset($clones[$id]) && $object != $clones[$id]) {
+					} elseif (
+						isset($clones[$id])
+						&& (
+							($object !== $clones[$id])
+							|| ($object != $clones[$id])
+						)
+					) {
 						$update[] = $object;
 					} elseif (!isset($clones[$id])) {
 						$insert[] = $object;
