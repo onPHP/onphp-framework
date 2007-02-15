@@ -61,6 +61,7 @@
 				return $parsed['path'];
 		}
 		
+		// FIXME: csc broken
 		public static function UrlSafeBase64Encode($string)
 		{
 			return
@@ -71,6 +72,7 @@
 				);
 		}
 		
+		// FIXME: csc broken
 		public static function UrlSafeBase64Decode($string)
 		{
 			$data = str_replace(
