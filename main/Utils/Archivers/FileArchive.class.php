@@ -20,13 +20,15 @@
 
 		public function __construct($cmdBinPath = null)
 		{
-			if (!is_executable($cmdBinPath))
-				throw
-					new WrongStateException(
-						"cannot find executable {$cmdBinPath}"
-					);
+			if ($cmdBinPath !== null) {
+				if (!is_executable($cmdBinPath))
+					throw
+						new WrongStateException(
+							"cannot find executable {$cmdBinPath}"
+						);
 
-			$this->cmdBinPath = $cmdBinPath;
+				$this->cmdBinPath = $cmdBinPath;
+			}
 		}
 
 		public function open($sourceFile)
@@ -40,6 +42,31 @@
 			$this->sourceFile = $sourceFile;
 
 			return $this;
+		}
+
+		protected function execStdoutOptions($options)
+		{
+			if (!$this->cmdBinPath)
+				throw
+					new WrongStateException(
+						'nothing to exec'
+					);
+
+			$cmd = escapeshellcmd($this->cmdBinPath.' '.$options);
+
+			ob_start();
+			
+			passthru($cmd.' 2>/dev/null', $exitStatus);
+			
+			$output = ob_get_clean();
+
+			if ($exitStatus != 0)
+				throw
+					new ArchiverException(
+						$this->cmdBinPath." failed with error code = {$exitStatus}"
+					);
+
+			return $output;
 		}
 	}
 ?>

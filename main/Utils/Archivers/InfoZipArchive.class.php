@@ -12,19 +12,45 @@
 /* $Id$ */
 
 	/**
-	 * GNU tar wrapper
+	 * PECL ZipArchive proxy with Info-Zip wrapper
 	**/
-	final class TarArchive extends FileArchive
+	final class InfoZipArchive extends FileArchive
 	{
-		public function __construct($cmdBinPath = '/usr/bin/tar')
+		private $zipArchive	= null;
+
+		public function __construct($cmdBinPath = '/usr/bin/unzip')
 		{
-			if ($cmdBinPath === null)
+			$usingCmd = $cmdBinPath;
+
+			if (class_exists('ZipArchive', false)) {
+
+				$this->zipArchive = new ZipArchive();
+				$usingCmd = null;
+
+			} elseif ($usingCmd === null)
 				throw
 					new UnimplementedFeatureException(
-						'no built-in support for GNU tar'
+						'no built-in support for zip'
 					);
 
-			parent::__construct($cmdBinPath);
+			parent::__construct($usingCmd);
+		}
+
+		public function open($sourceFile)
+		{
+			parent::open($sourceFile);
+
+			if ($this->zipArchive) {
+				$resultCode = $this->zipArchive->open($sourceFile);
+				
+				if ($resultCode !== true)
+					throw
+						new ArchiverException(
+							"ZipArchive::open() returns error code = {$resultCode}"
+						);
+			}
+
+			return $this;
 		}
 
 		public function readFile($fileName)
@@ -35,8 +61,20 @@
 						'dude, open an archive first.'
 					);
 			
-			$options = '--extract --to-stdout'
-				.' --file '.escapeshellarg($this->sourceFile)
+			if ($this->zipArchive) {
+				$result = $this->zipArchive->getFromName($fileName);
+
+				if ($result === false)
+					throw
+						new ArchiverException(
+							"ZipArchive::getFromName() failed"
+						);
+				
+				return $result;
+			}
+
+			$options = '-c -q'
+				.' '.escapeshellarg($this->sourceFile)
 				.' '.escapeshellarg($fileName);
 
 			return
