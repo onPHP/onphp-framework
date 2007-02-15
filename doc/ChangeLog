@@ -1,5 +1,10 @@
 # $Id$
 
+2007-02-15	Ivan Y. Khvostishkov
+
+	* main/Utils/Archivers/: started archiver utilities, added wrapper
+	for GNU tar
+
 2007-02-13	Konstantin V. Arkhipov
 
 	* main/Criteria/Criteria.class.php, core/OSQL/QueryResult.class.php:
