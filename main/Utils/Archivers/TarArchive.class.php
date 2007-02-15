@@ -16,7 +16,7 @@
 	**/
 	final class TarArchive extends FileArchive
 	{
-		public function __construct($cmdBinPath = '/usr/bin/tar')
+		public function __construct($cmdBinPath = '/bin/tar')
 		{
 			if ($cmdBinPath === null)
 				throw
