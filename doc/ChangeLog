@@ -4,8 +4,8 @@
 
 	* core/Form/Primitives/PrimitiveInteger.class.php,
 	meta/types/IntegerType.class.php,
-	meta/types/SmallIntegerType.class.php: backport max/min 
-	constants from trunk
+	meta/types/SmallIntegerType.class.php: backport max/min constants from
+	trunk.
 
 2007-02-13	Konstantin V. Arkhipov
 
