@@ -113,7 +113,7 @@
 			return $this;
 		}
 		
-		public function setAttached($name, $var)
+		public function setAttachedVar($name, $var)
 		{
 			$this->attached[$name] = $var;
 			
