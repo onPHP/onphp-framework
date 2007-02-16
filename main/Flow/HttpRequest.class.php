@@ -120,9 +120,17 @@
 			return $this;
 		}
 		
-		public function getAttached($name)
+		public function getAttachedVar($name)
 		{
 			return $this->attached[$name];
+		}
+
+		/**
+		 * @deprecated by getAttachedVar
+		**/
+		public function getAttached($name)
+		{
+			return $this->getAttachedVar($name);
 		}
 		
 		public function unsetAttached($name)
@@ -132,9 +140,17 @@
 			return $this;
 		}
 		
-		public function hasAttached($name)
+		public function hasAttachedVar($name)
 		{
 			return isset($this->attached[$name]);
+		}
+
+		/**
+		 * @deprecated by hasAttached
+		**/
+		public function hasAttached($name)
+		{
+			return $this->hasAttachedVar($name);
 		}
 		
 		public function &getAttachedList()
