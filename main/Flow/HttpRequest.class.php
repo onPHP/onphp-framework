@@ -205,14 +205,6 @@
 		}
 
 		/**
-		 * @deprecated by setAttachedVar
-		**/
-		public function setAttached($name, $var)
-		{
-			return $this->setAttachedVar($name, $var);
-		}
-		
-		/**
 		 * @deprecated by getAttached
 		**/
 		public function getAttachedList()
