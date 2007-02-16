@@ -187,7 +187,7 @@ protected function makeCascade(/* {$className} */ \${$varName}, &\$array, \$pref
 EOT;
 				if ($class->getParent()) {
 					$out .= <<<EOT
-\${$varName} = parent::makeCascade(\${$varName});
+\${$varName} = parent::makeCascade(\${$varName}, \$array, \$prefix);
 
 EOT;
 				}
