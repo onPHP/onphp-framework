@@ -113,6 +113,14 @@
 			return $this;
 		}
 		
+		/**
+		 * @deprecated by setAttachedVar
+		**/
+		public function setAttached($name, $var)
+		{
+			return $this->setAttachedVar($name, $var);
+		}
+		
 		public function setAttachedVar($name, $var)
 		{
 			$this->attached[$name] = $var;
