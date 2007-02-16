@@ -133,11 +133,19 @@
 			return $this->getAttachedVar($name);
 		}
 		
-		public function unsetAttached($name)
+		public function unsetAttachedVar($name)
 		{
 			unset($this->attached[$name]);
 			
 			return $this;
+		}
+
+		/**
+		 * @deprecated by unsetAttachedVar
+		**/
+		public function unsetAttached($name)
+		{
+			return $this->unsetAttachedVar($name);
 		}
 		
 		public function hasAttachedVar($name)
