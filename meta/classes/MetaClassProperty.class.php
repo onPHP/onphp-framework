@@ -426,17 +426,15 @@ EOT;
 										// avoid infinite recursion
 										if ($this->type->getClassName() == $className) {
 											$out = <<<EOT
-\${$varName}->set{$method}(
+set{$method}(
 	\$this->makeSelf(\$array, \$this->getJoinPrefix('{$this->getDumbName()}'))
-);
-
+)
 EOT;
 										} else
 											$out = <<<EOT
-\${$varName}->set{$method}(
+set{$method}(
 	{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, {$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
-);
-
+)
 EOT;
 									} else {
 										// avoid infinite recursion

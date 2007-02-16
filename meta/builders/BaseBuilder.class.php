@@ -33,7 +33,9 @@
 			$standaloneFillers = array();
 			$chainFillers = array();
 			
-			$joinedFillers = array();
+			$joinedStandaloneFillers = array();
+			$joinedChainFillers = array();
+			
 			$cascadeStandaloneFillers = array();
 			$cascadeChainFillers = array();
 			
@@ -71,7 +73,12 @@
 					}
 					
 					if ($filler = $property->toDaoSetter($className, false)) {
-						$joinedFillers[] = $filler;
+						// TODO: make it sane
+						if (substr($filler, 0, 2) == 'if') {
+							$joinedStandaloneFillers[] = $filler;
+						} else {
+							$joinedChainFillers[] = $filler;
+						}
 						
 						$buildSetter = true;
 					}
@@ -189,6 +196,7 @@ EOT;
 					$out .= <<<EOT
 \${$varName} = parent::makeCascade(\${$varName}, \$array, \$prefix);
 
+
 EOT;
 				}
 				
@@ -209,8 +217,16 @@ return \${$varName};
 EOT;
 			}
 			
-			if ($joinedFillers) {
-				$fillers = implode("\n", $joinedFillers);
+			if ($joinedChainFillers || $joinedStandaloneFillers) {
+				if ($joinedChainFillers)
+					$chain = implode("->\n", $joinedChainFillers).';';
+				else
+					$chain = null;
+				
+				if ($joinedStandaloneFillers)
+					$alone = implode("\n", $joinedStandaloneFillers);
+				else
+					$alone = null;
 				
 				$out .= <<<EOT
 
@@ -225,11 +241,23 @@ EOT;
 					$out .= <<<EOT
 \${$varName} = parent::makeJoiners(\${$varName}, \$array, \$prefix);
 
+
 EOT;
 				}
 				
+				if ($chain) {
+					$out .= <<<EOT
+\${$varName}->
+	{$chain}
+
+
+EOT;
+				}
+				
+				if ($alone)
+					$out .= $alone."\n";
+				
 				$out .= <<<EOT
-{$fillers}
 return \${$varName};
 }
 
@@ -308,6 +336,7 @@ public function getLinkName()
 {
 	return '{$source}';
 }
+
 EOT;
 			}
 			
