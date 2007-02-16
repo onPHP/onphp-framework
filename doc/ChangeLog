@@ -1,5 +1,12 @@
 # $Id$
 
+2007-02-16	Dmitry E. Demidov
+
+	* core/Form/Primitives/PrimitiveInteger.class.php,
+	meta/types/IntegerType.class.php,
+	meta/types/SmallIntegerType.class.php: backport max/min 
+	constants from trunk
+
 2007-02-13	Konstantin V. Arkhipov
 
 	* 0.8.5 released.

@@ -52,7 +52,10 @@
 		
 		public function toPrimitiveLimits()
 		{
-			return 'setMin(-2147483648)->'."\n".'setMax(2147483647)';
+			return
+				'setMin(PrimitiveInteger::SIGNED_MIN)->'
+				."\n"
+				.'setMax(PrimitiveInteger::SIGNED_MAX)';
 		}
 	}
 ?>

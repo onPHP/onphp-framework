@@ -15,6 +15,15 @@
 	**/
 	class PrimitiveInteger extends PrimitiveNumber
 	{
+		const SIGNED_SMALL_MIN = -32768;
+		const SIGNED_SMALL_MAX = +32767;
+		
+		const SIGNED_MIN = -2147483648;
+		const SIGNED_MAX = +2147483647;
+		
+		const UNSIGNED_SMALL_MAX = 65535;
+		const UNSIGNED_MAX = 4294967295;
+		
 		protected function checkNumber($number)
 		{
 			Assert::isInteger($number);
