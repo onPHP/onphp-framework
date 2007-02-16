@@ -169,7 +169,7 @@
 			return $this;
 		}
 		
-		public function getFiles()
+		public function &getFiles()
 		{
 			return $this->files;
 		}
@@ -204,9 +204,9 @@
 			return $this;
 		}
 		
-		public function getAttached($name)
+		public function &getAttached()
 		{
-			return $this->attached[$name];
+			return $this->attached;
 		}
 		
 		public function getAttachedVar($name)
@@ -217,7 +217,7 @@
 		/**
 		 * @return HttpRequest
 		**/
-		public function unsetAttached($name)
+		public function unsetAttachedVar($name)
 		{
 			unset($this->attached[$name]);
 			
@@ -227,11 +227,6 @@
 		public function hasAttachedVar($name)
 		{
 			return isset($this->attached[$name]);
-		}
-		
-		public function &getAttachedList()
-		{
-			return $this->attached;
 		}
 		
 		public function getByType(RequestType $type)
