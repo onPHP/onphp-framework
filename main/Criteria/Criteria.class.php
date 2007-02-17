@@ -351,6 +351,22 @@
 						$property->getRelationId() == MetaRelation::ONE_TO_ONE
 						&& !$property->isGenericType()
 					) {
+						if (
+							is_subclass_of(
+								$property->getClassName(),
+								'Enumeration'
+							)
+						) {
+							$query->get(
+								new DBField(
+									$property->getDumbName(),
+									$this->dao->getTable()
+								)
+							);
+							
+							continue;
+						}
+						
 						$dao = call_user_func(
 							array($property->getClassName(), 'dao')
 						);
@@ -363,7 +379,10 @@
 							$fields[
 								array_search($this->dao->getIdName(), $fields)
 							] = new SelectField(
-								new DBField($property->getDumbIdName(), $dao->getTable()),
+								new DBField(
+									$property->getDumbIdName(),
+									$dao->getTable()
+								),
 								
 								$this->dao->getJoinPrefix($property->getDumbName())
 								.$dao->getIdName()
