@@ -646,7 +646,14 @@ EOT;
 				$remote = $this->getType()->getClass();
 				
 				foreach ($remote->getProperties() as $property) {
-					$columns[] = $property->buildColumn($property->getDumbName());
+					$columns[] = $property->buildColumn(
+						(
+							$property->getType() instanceof ObjectType
+							&& !$property->getType()->isGeneric()
+						)
+							? $property->getDumbIdName()
+							: $property->getDumbName()
+					);
 				}
 				
 				return $columns;
