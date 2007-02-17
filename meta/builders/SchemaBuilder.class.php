@@ -59,8 +59,12 @@ EOT;
 		
 		public static function buildRelations(MetaClass $class)
 		{
-			if ($class->getPattern() instanceof AbstractClassPattern)
+			if (
+				$class->getPattern() instanceof AbstractClassPattern
+				|| $class->getPattern() instanceof ValueObjectPattern
+			) {
 				return null;
+			}
 			
 			$out = null;
 			
@@ -72,7 +76,9 @@ EOT;
 					if (
 						$relation->getId() == MetaRelation::ONE_TO_MANY
 						// nothing to build, it's in the same table
-						|| $foreignClass->getPattern() instanceof ValueObjectPattern
+						|| (
+							$foreignClass->getPattern() instanceof ValueObjectPattern
+						)
 					) {
 						continue;
 					} elseif ($relation->getId() == MetaRelation::MANY_TO_MANY) {
