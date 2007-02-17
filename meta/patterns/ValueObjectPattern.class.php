@@ -15,9 +15,14 @@
 	**/
 	final class ValueObjectPattern extends BasePattern
 	{
+		protected function __construct()
+		{
+			throw new WrongStateException('i am broken, do not use me');
+		}
+		
 		public function daoExists()
 		{
-			return false;
+			return true;
 		}
 		
 		public function build(MetaClass $class)

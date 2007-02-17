@@ -57,6 +57,34 @@
 				}
 			}
 			
+			$valueObjects = array();
+			
+			foreach ($class->getProperties() as $property) {
+				if (
+					$property->getType() instanceof ObjectType
+					&& !$property->getType()->isGeneric()
+					&& $property->getType()->getClass()->getPattern()
+						instanceof ValueObjectPattern
+				) {
+					$valueObjects[$property->getName()] =
+						$property->getType()->getClassName();
+				}
+			}
+			
+			if ($valueObjects) {
+				$out .= <<<EOT
+
+public function __construct()
+{
+
+EOT;
+				foreach ($valueObjects as $propertyName => $className) {
+					$out .= "\$this->{$propertyName} = new {$className}();\n";
+				}
+				
+				$out .= "}\n";
+			}
+			
 			$out .= self::buildSerializers($class);
 			
 			foreach ($class->getProperties() as $property) {
@@ -67,59 +95,7 @@
 				if ($property->getName() == 'id' && !$parent)
 					continue;
 				
-				if (
-					!$property->getRelation()
-					|| (
-						$property->getRelationId() == MetaRelation::ONE_TO_ONE
-						||
-							$property->getRelationId()
-							== MetaRelation::LAZY_ONE_TO_ONE
-					)
-				) {
-					$out .= $property->toMethods($class);
-				} else { // OneToMany || ManyToMany
-					$name = $property->getName();
-					$methodName = ucfirst($name);
-					$remoteName = ucfirst($property->getName());
-					
-					$containerName = $class->getName().$remoteName.'DAO';
-					
-					$out .= <<<EOT
-
-/**
- * @return {$containerName}
-**/
-public function get{$methodName}(\$lazy = false)
-{
-	if (!\$this->{$name} || (\$this->{$name}->isLazy() != \$lazy)) {
-		\$this->{$name} = new {$containerName}(\$this, \$lazy);
-	}
-	
-	return \$this->{$name};
-}
-
-/**
- * @return {$class->getName()}
-**/
-public function fill{$methodName}(\$collection, \$lazy = false)
-{
-	if (!\$this->{$name} || (\$this->{$name}->isLazy() != \$lazy)) {
-		\$this->{$name} = new {$containerName}(\$this, \$lazy);
-		
-		if (!\$this->id) {
-			throw new WrongStateException(
-				'i do not know which object i belong to'
-			);
-		}
-		
-		\$this->{$name}->replaceList(\$collection);
-	}
-	
-	return \$this;
-}
-
-EOT;
-				}
+				$out .= $property->toMethods($class);
 			}
 			
 			$out .= "}\n";

@@ -52,7 +52,7 @@
 						)
 					)
 				) {
-					$filler = $property->toDaoSetter($className);
+					$chainFillers[] = $property->toDaoSetter($className);
 					
 					$valueObjects[ucfirst($property->getName())] =
 						$property->getType()->getClassName();

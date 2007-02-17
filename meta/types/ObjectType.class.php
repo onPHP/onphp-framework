@@ -59,8 +59,12 @@
 		
 		public function toGetter(MetaClass $class, MetaClassProperty $property)
 		{
-			$name = $property->getName();
-			$methodName = 'get'.ucfirst($name);
+			if ($class->getPattern() instanceof ValueObjectPattern)
+				$name = 'get'.$class->getName().'()->get'.ucfirst($property->getName()).'()';
+			else
+				$name = $property->getName();
+			
+			$methodName = 'get'.ucfirst($property->getName());
 			
 			if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
 				$className = $property->getType()->getClassName();
@@ -104,6 +108,51 @@ public function {$methodName}Id()
 }
 
 EOT;
+			} elseif (
+				$property->getRelationId() == MetaRelation::ONE_TO_MANY
+				|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
+			) {
+					$name = $property->getName();
+					$methodName = ucfirst($name);
+					$remoteName = ucfirst($property->getName());
+					
+					$containerName = $class->getName().$remoteName.'DAO';
+					
+					$method = <<<EOT
+
+/**
+ * @return {$containerName}
+**/
+public function get{$methodName}(\$lazy = false)
+{
+	if (!\$this->{$name} || (\$this->{$name}->isLazy() != \$lazy)) {
+		\$this->{$name} = new {$containerName}(\$this, \$lazy);
+	}
+	
+	return \$this->{$name};
+}
+
+/**
+ * @return {$class->getName()}
+**/
+public function fill{$methodName}(\$collection, \$lazy = false)
+{
+	if (!\$this->{$name} || (\$this->{$name}->isLazy() != \$lazy)) {
+		\$this->{$name} = new {$containerName}(\$this, \$lazy);
+		
+		if (!\$this->id) {
+			throw new WrongStateException(
+				'i do not know which object i belong to'
+			);
+		}
+		
+		\$this->{$name}->replaceList(\$collection);
+	}
+	
+	return \$this;
+}
+
+EOT;
 			} else {
 				$method = <<<EOT
 
@@ -123,6 +172,14 @@ EOT;
 		
 		public function toSetter(MetaClass $class, MetaClassProperty $property)
 		{
+			if (
+				$property->getRelationId() == MetaRelation::ONE_TO_MANY
+				|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
+			) {
+				// we don't need setter in such cases
+				return null;
+			}
+			
 			$name = $property->getName();
 			$methodName = 'set'.ucfirst($name);
 			
@@ -173,6 +230,14 @@ EOT;
 		
 		public function toDropper(MetaClass $class, MetaClassProperty $property)
 		{
+			if (
+				$property->getRelationId() == MetaRelation::ONE_TO_MANY
+				|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
+			) {
+				// we don't need dropper in such cases
+				return null;
+			}
+			
 			$name = $property->getName();
 			$methodName = 'drop'.ucfirst($name);
 			
