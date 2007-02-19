@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Sveta Smirnova                             *
+ *   Copyright (C) 2004-2007 by Sveta Smirnova                             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -78,30 +78,33 @@
 			do {
 				--$attempts;
 				$path = $directory.$prefix.mt_rand();
-			} while (!mkdir($path, $mode, true) && $attempts > 0);
+			} while (
+				!mkdir($path, $mode, true)
+				&& $attempts > 0
+				// not to rape fs
+				&& !usleep(100)
+			);
 
 			if ($attempts == 0)
-				throw
-					new WrongArgumentException(
-						"failed to create subdirectory in {$directory}"
-					);
+				throw new WrongArgumentException(
+					'failed to create subdirectory in '.$directory
+				);
 			
 			return $path;
 		}
 
-		public static function removeDirectory($directory, $recursive = false)
+		/* void */ public static function removeDirectory($directory, $recursive = false)
 		{
 			if (!$recursive) {
-
-				if (!unlink($directory))
-					throw new WrongArgumentException(
-						"cannot unlink {$directory}. maybe try recursive version?"
-					);
-
+				try {
+					rmdir($directory);
+				} catch (BaseException $e) {
+					throw new WrongArgumentException($e->getMessage());
+				}
 			} else {
 				if (!$handle = opendir($directory))
 					throw new WrongArgumentException(
-						"cannot read directory {$directory}"
+						'cannot read directory '.$directory
 					);
 
 				while (($item = readdir($handle)) !== false) {
@@ -119,8 +122,10 @@
 				}
 
 				closedir($handle);
-
-				if (!rmdir($directory)) {
+				
+				try {
+					rmdir($directory);
+				} catch (BaseException $e) {
 					throw new WrongStateException(
 						"cannot unlink {$directory}, though it should be empty now"
 					);

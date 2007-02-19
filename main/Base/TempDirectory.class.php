@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Ivan Khvostishkov                               *
+ *   Copyright (C) 2007 by Ivan Khvostishkov                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,23 +10,22 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class TempDirectory
+	final class TempDirectory
 	{
-		private $path		= null;
+		private $path = null;
 
-		protected $prefix	= 'TmpDir';
-
-		public function __construct($directory = 'temp-garbage/')
+		public function __construct(
+			$directory = 'temp-garbage/', $prefix = 'TmpDir'
+		)
 		{
-			$this->path =
-				FileUtils::makeTempDirectory($directory, $this->prefix);
+			$this->path = FileUtils::makeTempDirectory($directory, $prefix);
 		}
 
 		public function __destruct()
 		{
 			try {
 				FileUtils::removeDirectory($this->path, true);
-			} catch (Exception $e) {
+			} catch (BaseException $e) {
 				// boo! deal with garbage yourself.
 			}
 		}
