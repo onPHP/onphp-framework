@@ -251,7 +251,9 @@ EOT;
 				} else {
 					$method = <<<EOT
 
-{$classHint}
+/**
+ * @return {$class->getName()}
+**/
 public function {$methodName}({$this->className} \${$name})
 {
 	\$this->{$name} = \${$name};
