@@ -257,7 +257,10 @@
 				}
 			} else {
 				foreach ($list as $object) {
-					$id = $object->getId();
+					Assert::isTrue(
+						($id = $object->getId()) !== null,
+						'do not want to deal with unsaved objects'
+					);
 					
 					if (null === $id) {
 						$insert[] = $object;
