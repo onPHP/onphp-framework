@@ -1,5 +1,10 @@
 # $Id$
 
+2007-01-19	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* main/Containers/UnifiedContainer.class.php: unsaved objects are not
+	tracked by importList() now.
+
 2007-01-22	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/DAOs/VoodooDaoWorker.class.php: segments are now created with
