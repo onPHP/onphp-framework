@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Ivan Khvostishkov                               *
+ *   Copyright (C) 2007 by Ivan Khvostishkov                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,7 +11,9 @@
 /* $Id$ */
 
 	/**
-	 * GNU tar wrapper
+	 * GNU Tar wrapper.
+	 * 
+	 * @see http://www.gnu.org/software/tar/
 	**/
 	final class TarArchive extends FileArchive
 	{
@@ -20,7 +22,7 @@
 			if ($cmdBinPath === null)
 				throw
 					new UnimplementedFeatureException(
-						'no built-in support for GNU tar'
+						'no built-in support for GNU Tar'
 					);
 
 			parent::__construct($cmdBinPath);
@@ -38,8 +40,7 @@
 				.' --file '.escapeshellarg($this->sourceFile)
 				.' '.escapeshellarg($fileName);
 
-			return
-				$this->execStdoutOptions($options);
+			return $this->execStdoutOptions($options);
 		}
 	}
 ?>

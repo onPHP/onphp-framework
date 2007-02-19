@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Ivan Khvostishkov                               *
+ *   Copyright (C) 2007 by Ivan Khvostishkov                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,7 +11,9 @@
 /* $Id$ */
 
 	/**
-	 * PECL ZipArchive proxy with Info-Zip wrapper
+	 * PECL ZipArchive proxy with Info-Zip wrapper.
+	 * 
+	 * @see http://pecl.php.net/package/zip
 	**/
 	final class InfoZipArchive extends FileArchive
 	{
@@ -28,7 +30,7 @@
 
 			} elseif ($usingCmd === null)
 				throw
-					new UnimplementedFeatureException(
+					new UnsupportedMethodException(
 						'no built-in support for zip'
 					);
 
@@ -43,10 +45,9 @@
 				$resultCode = $this->zipArchive->open($sourceFile);
 				
 				if ($resultCode !== true)
-					throw
-						new ArchiverException(
-							"ZipArchive::open() returns error code = {$resultCode}"
-						);
+					throw new ArchiverException(
+						'ZipArchive::open() returns error code == '.$resultCode
+					);
 			}
 
 			return $this;
@@ -64,10 +65,9 @@
 				$result = $this->zipArchive->getFromName($fileName);
 
 				if ($result === false)
-					throw
-						new ArchiverException(
-							"ZipArchive::getFromName() failed"
-						);
+					throw new ArchiverException(
+						'ZipArchive::getFromName() failed'
+					);
 				
 				return $result;
 			}
@@ -76,8 +76,7 @@
 				.' '.escapeshellarg($this->sourceFile)
 				.' '.escapeshellarg($fileName);
 
-			return
-				$this->execStdoutOptions($options);
+			return $this->execStdoutOptions($options);
 		}
 	}
 ?>

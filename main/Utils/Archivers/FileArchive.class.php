@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Ivan Khvostishkov                               *
+ *   Copyright (C) 2007 by Ivan Khvostishkov                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,10 +21,9 @@
 		{
 			if ($cmdBinPath !== null) {
 				if (!is_executable($cmdBinPath))
-					throw
-						new WrongStateException(
-							"cannot find executable {$cmdBinPath}"
-						);
+					throw new WrongStateException(
+						'cannot find executable '.$cmdBinPath
+					);
 
 				$this->cmdBinPath = $cmdBinPath;
 			}
@@ -33,10 +32,9 @@
 		public function open($sourceFile)
 		{
 			if (!is_readable($sourceFile))
-				throw
-					new WrongStateException(
-						"cannot open file {$sourceFile}"
-					);
+				throw new WrongStateException(
+					'cannot open file '.$sourceFile
+				);
 			
 			$this->sourceFile = $sourceFile;
 
@@ -46,10 +44,9 @@
 		protected function execStdoutOptions($options)
 		{
 			if (!$this->cmdBinPath)
-				throw
-					new WrongStateException(
-						'nothing to exec'
-					);
+				throw new WrongStateException(
+					'nothing to exec'
+				);
 
 			$cmd = escapeshellcmd($this->cmdBinPath.' '.$options);
 
@@ -60,10 +57,9 @@
 			$output = ob_get_clean();
 
 			if ($exitStatus != 0)
-				throw
-					new ArchiverException(
-						$this->cmdBinPath." failed with error code = {$exitStatus}"
-					);
+				throw new ArchiverException(
+					$this->cmdBinPath.' failed with error code = '.$exitStatus
+				);
 
 			return $output;
 		}
