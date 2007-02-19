@@ -255,20 +255,18 @@
 					$remote = $this->getClassByName($refer);
 					if (
 						(
-							($remote->getPattern() instanceof ValueObjectPattern)
-							|| (
-								$remote->getTypeId()
-								== MetaClassType::CLASS_ABSTRACT
-							)
+							$remote->getPattern() instanceof ValueObjectPattern
 						) && (
 							isset($references[$refer])
 						)
 					) {
 						foreach ($references[$refer] as $holder) {
-							$this->classes[$className]->setReferencingClass($holder);
+							$this->classes[$className]->
+								setReferencingClass($holder);
 						}
-					} else
+					} elseif ($remote->getTypeId() != MetaClassType::CLASS_ABSTRACT) {
 						$this->classes[$className]->setReferencingClass($refer);
+					}
 				}
 			}
 			
@@ -343,7 +341,8 @@
 					$out->
 						errorLine(
 							'Can not connect using source link in \''
-							.$class->getName().'\' class, skipping this step.');
+							.$class->getName().'\' class, skipping this step.'
+						);
 					
 					break;
 				}
