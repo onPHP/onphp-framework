@@ -52,8 +52,8 @@
 		
 		public function clean()
 		{
-			// TODO: reimplement on php-level
-			return `rm -rf {$this->directory}*`;
+			// just to return 'true'
+			return !FileUtils::removeDirectory($this->directory, true);
 		}
 
 		public function get($key)
