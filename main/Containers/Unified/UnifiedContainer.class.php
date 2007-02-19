@@ -174,7 +174,7 @@
 		/**
 		 * @return UnifiedContainer
 		**/
-		public function replaceList(/* array */ $list)
+		public function mergeList(/* array */ $list)
 		{
 			Assert::isArray($list);
 			
