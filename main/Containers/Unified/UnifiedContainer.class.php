@@ -264,8 +264,11 @@
 			} else {
 				$this->list = $list;
 				
-				foreach ($list as $object)
-					$this->clones[$object->getId()] = clone $object;
+				foreach ($list as $object) {
+					// don't track unsaved objects
+					if ($id = $object->getId())
+						$this->clones[$id] = clone $object;
+				}
 			}
 			
 			$this->fetched = true;
