@@ -61,5 +61,19 @@
 			
 			return $this->container->getDao()->makeSelectHead();
 		}
+		
+		/**
+		 * @return SelectQuery
+		**/
+		protected function makeCountQuery()
+		{
+			return
+				$this->
+					makeSelectQuery()->
+					dropFields()->
+					get(
+						SQLFunction::create('count', '*')->setAlias('count')
+					);
+		}
 	}
 ?>

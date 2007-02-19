@@ -189,6 +189,17 @@
 			return $this->list;
 		}
 		
+		public function getCount()
+		{
+			if (!$this->isFetched() && $this->parent->getId()) {
+				$row = $this->dao->getCustom($this->worker->makeCountQuery());
+				
+				return $row['count'];
+			}
+			
+			return count($this->list);
+		}
+		
 		/**
 		 * @throws WrongStateException
 		 * @return UnifiedContainer
