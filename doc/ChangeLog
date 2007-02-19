@@ -1,5 +1,10 @@
 # $Id$
 
+2007-02-19	Konstantin V. Arkhipov
+
+	* main/Containers/Unified/UnifiedContainer.class.php: unsaved objects
+	are not tracked by importList() now.
+
 2007-01-22	Konstantin V. Arkhipov
 
 	* main/DAOs/Handlers/SharedMemorySegmentHandler.class.php: segments
