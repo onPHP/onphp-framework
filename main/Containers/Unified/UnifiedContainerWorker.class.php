@@ -52,20 +52,7 @@
 		/**
 		 * @return SelectQuery
 		**/
-		protected function makeSelectQuery()
-		{
-			if ($this->criteria)
-				return $this->criteria->toSelectQuery();
-			elseif ($this->oq)
-				return $this->oq->toSelectQuery($this->container->getDao());
-			
-			return $this->container->getDao()->makeSelectHead();
-		}
-		
-		/**
-		 * @return SelectQuery
-		**/
-		protected function makeCountQuery()
+		public function makeCountQuery()
 		{
 			return
 				$this->
@@ -74,6 +61,19 @@
 					get(
 						SQLFunction::create('count', '*')->setAlias('count')
 					);
+		}
+		
+		/**
+		 * @return SelectQuery
+		**/
+		protected function makeSelectQuery()
+		{
+			if ($this->criteria)
+				return $this->criteria->toSelectQuery();
+			elseif ($this->oq)
+				return $this->oq->toSelectQuery($this->container->getDao());
+			
+			return $this->container->getDao()->makeSelectHead();
 		}
 	}
 ?>
