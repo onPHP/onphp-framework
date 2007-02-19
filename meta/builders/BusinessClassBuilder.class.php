@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -27,7 +27,9 @@
 			$interfaces = ' implements Prototyped';
 			
 			if ($class->getPattern()->daoExists()) {
-				$interfaces .= ', DAOConnected';
+				if (!$class->getPattern() instanceof ValueObjectPattern)
+					$interfaces .= ', DAOConnected';
+				
 				$daoName = $class->getName().'DAO';
 				$dao = <<<EOT
 	/**

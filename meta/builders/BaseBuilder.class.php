@@ -52,7 +52,8 @@
 						)
 					)
 				) {
-					$chainFillers[] = $property->toDaoSetter($className);
+					$cascadeChainFillers[] = $property->toDaoSetter($className, true);
+					$joinedChainFillers[] = $property->toDaoSetter($className, false);
 					
 					$valueObjects[ucfirst($property->getName())] =
 						$property->getType()->getClassName();
@@ -112,6 +113,11 @@
 				$out .= "\n";
 			}
 			
+			if ($class->getPattern() instanceof ValueObjectPattern)
+				$visibility = 'public';
+			else
+				$visibility = 'protected';
+			
 			$out .= <<<EOT
 		return
 			\$query->
@@ -136,7 +142,7 @@ EOT;
 /**
  * @return {$className}
 **/
-protected function makeSelf(&\$array, \$prefix = null)
+{$visibility} function makeSelf(&\$array, \$prefix = null)
 {
 
 EOT;
@@ -188,7 +194,7 @@ EOT;
 /**
  * @return {$className}
 **/
-protected function makeCascade(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
+{$visibility} function makeCascade(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
 {
 
 EOT;
@@ -233,7 +239,7 @@ EOT;
 /**
  * @return {$className}
 **/
-protected function makeJoiners(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
+{$visibility} function makeJoiners(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
 {
 
 EOT;
@@ -312,8 +318,10 @@ EOT;
 			
 			if ($liaisons = $class->getReferencingClasses()) {
 				$uncachers = array();
-				foreach ($liaisons as $className)
+				foreach ($liaisons as $className) {
 					$uncachers[] = $className.'::dao()->uncacheLists();';
+				}
+				
 				$uncachers = implode("\n", $uncachers);
 				
 				$out .= <<<EOT

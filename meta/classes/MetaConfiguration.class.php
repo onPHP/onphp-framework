@@ -103,7 +103,7 @@
 					else
 						$type = (string) $id['type'];
 					
-					$property = $this->buildProperty($name, $type);
+					$property = $this->buildProperty($name, $type, $class);
 					
 					if (isset($id['column'])) {
 						$property->setColumnName(
@@ -120,12 +120,17 @@
 					unset($xmlClass->properties[0]->identifier);
 				}
 				
+				$class->setPattern(
+					$this->guessPattern((string) $xmlClass->pattern['name'])
+				);
+				
 				// populate properties
 				foreach ($xmlClass->properties[0] as $xmlProperty) {
 					
 					$property = $this->buildProperty(
 						(string) $xmlProperty['name'],
-						(string) $xmlProperty['type']
+						(string) $xmlProperty['type'],
+						$class
 					);
 					
 					if (isset($xmlProperty['column'])) {
@@ -202,10 +207,6 @@
 					$class->addProperty($property);
 				}
 				
-				$class->setPattern(
-					$this->guessPattern((string) $xmlClass->pattern['name'])
-				);
-				
 				$this->classes[$class->getName()] = $class;
 			}
 			
@@ -238,8 +239,23 @@
 			}
 			
 			foreach ($references as $className => $list) {
+				if (
+					$this->getClassByName($className)->getPattern()
+						instanceof ValueObjectPatter
+				) {
+					continue;
+				}
+				
 				foreach ($list as $refer) {
-					$this->classes[$className]->setReferencingClass($refer);
+					if (
+						$this->getClassByName($refer)->getPattern()
+							instanceof ValueObjectPattern
+					) {
+						foreach ($references[$refer] as $holder) {
+							$this->classes[$className]->setReferencingClass($holder);
+						}
+					} else
+						$this->classes[$className]->setReferencingClass($refer);
 				}
 			}
 			
@@ -420,14 +436,14 @@
 		/**
 		 * @return MetaClassProperty
 		**/
-		private function buildProperty($name, $type)
+		private function buildProperty($name, $type, MetaClass $class)
 		{
 			if (is_readable(ONPHP_META_TYPES.$type.'Type'.EXT_CLASS))
-				$class = $type.'Type';
+				$typeClass = $type.'Type';
 			else
-				$class = 'ObjectType';
+				$typeClass = 'ObjectType';
 			
-			return new MetaClassProperty($name, new $class($type));
+			return new MetaClassProperty($name, new $typeClass($type), $class);
 		}
 		
 		/**

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -27,11 +27,15 @@
 			return true;
 		}
 		
-		public function toMethods(MetaClass $class, MetaClassProperty $property)
+		public function toMethods(
+			MetaClass $class,
+			MetaClassProperty $property,
+			MetaClassProperty $holder = null
+		)
 		{
 			return
-				$this->toGetter($class, $property)
-				.$this->toSetter($class, $property);
+				$this->toGetter($class, $property, $holder)
+				.$this->toSetter($class, $property, $holder);
 		}
 		
 		public function hasDefault()
@@ -51,12 +55,20 @@
 			);
 		}
 		
-		public function toGetter(MetaClass $class, MetaClassProperty $property)
+		public function toGetter(
+			MetaClass $class,
+			MetaClassProperty $property,
+			MetaClassProperty $holder = null
+		)
 		{
-			$name = $property->getName();
-			$methodName = 'get'.ucfirst($name);
+			if ($holder)
+				$name = $holder->getName().'->get'.ucfirst($property->getName()).'()';
+			else
+				$name = $property->getName();
 			
-			$method = <<<EOT
+			$methodName = 'get'.ucfirst($property->getName());
+			
+			return <<<EOT
 
 public function {$methodName}()
 {
@@ -64,16 +76,33 @@ public function {$methodName}()
 }
 
 EOT;
-
-			return $method;
 		}
 		
-		public function toSetter(MetaClass $class, MetaClassProperty $property)
+		public function toSetter(
+			MetaClass $class,
+			MetaClassProperty $property,
+			MetaClassProperty $holder = null
+		)
 		{
 			$name = $property->getName();
 			$methodName = 'set'.ucfirst($name);
 			
-			$method = <<<EOT
+			if ($holder) {
+				return <<<EOT
+
+/**
+ * @return {$holder->getClass()->getName()}
+**/
+public function {$methodName}(\${$name})
+{
+	\$this->{$holder->getName()}->{$methodName}(\${$name});
+
+	return \$this;
+}
+
+EOT;
+			} else {
+				return <<<EOT
 
 /**
  * @return {$class->getName()}
@@ -86,8 +115,14 @@ public function {$methodName}(\${$name})
 }
 
 EOT;
+			}
 
-			return $method;
+			Assert::isUnreachable();
+		}
+		
+		public function getHint()
+		{
+			return null;
 		}
 	}
 ?>

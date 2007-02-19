@@ -15,6 +15,8 @@
 	**/
 	class MetaClassProperty
 	{
+		private $class		= null;
+		
 		private $name		= null;
 		private $dumbName	= null;
 		private $columnName	= null;
@@ -27,14 +29,28 @@
 		
 		private $relation	= null;
 		
-		public function __construct($name, BasePropertyType $type)
+		public function __construct(
+			$name,
+			BasePropertyType $type,
+			MetaClass $class
+		)
 		{
 			$this->setName($name);
 			
 			$this->type = $type;
 			
+			$this->class = $class;
+			
 			if ($type instanceof PasswordType)
 				$this->size = 40; // strlen(sha1())
+		}
+		
+		/**
+		 * @return MetaClass
+		**/
+		public function getClass()
+		{
+			return $this->class;
 		}
 		
 		public function getName()
@@ -199,9 +215,30 @@
 			return $this;
 		}
 		
-		public function toMethods(MetaClass $class)
+		public function toMethods(
+			MetaClass $class,
+			MetaClassProperty $holder = null
+		)
 		{
-			return $this->type->toMethods($class, $this);
+			if (
+				!$holder
+				&& $this->type instanceof ObjectType
+				&& !$this->type->isGeneric()
+				&& $this->type->getClass()->getPattern()
+					instanceof ValueObjectPattern
+			) {
+				$out = null;
+				
+				$remote = $this->type->getClass();
+				
+				foreach ($remote->getProperties() as $property) {
+					$out .= $property->toMethods($remote, $this);
+				}
+				
+				return $out.$this->type->toMethods($class, $this);
+			}
+			
+			return $this->type->toMethods($class, $this, $holder);
 		}
 		
 		public function toPrimitive(MetaClass $class)
@@ -358,11 +395,23 @@ EOT;
 						$remote = $this->type->getClass();
 						
 						if ($remote->getPattern() instanceof ValueObjectPattern) {
-							$out =
-								"set{$method}("
-								."Singleton::getInstance('{$this->type->getClassName()}')->makeSelf("
-								."\$array, \$prefix"
-								.'))';
+							if ($cascade) {
+								$out =
+									"set{$method}(\n"
+									."Singleton::getInstance('{$this->type->getClassName()}DAO')->\nmakeCascade(\n"
+									."Singleton::getInstance('{$this->type->getClassName()}DAO')->\nmakeSelf("
+									."\$array, \$prefix), "
+									."\$array, \$prefix\n)\n"
+									.')';
+							} else {
+								$out =
+									"set{$method}(\n"
+									."Singleton::getInstance('{$this->type->getClassName()}DAO')->\nmakeJoiners(\n"
+									."Singleton::getInstance('{$this->type->getClassName()}DAO')->\nmakeSelf("
+									."\$array, \$prefix), "
+									."\$array, \$prefix\n)\n"
+									.')';
+							}
 						} elseif ($remote->getPattern() instanceof EnumerationClassPattern) {
 							if ($this->required) {
 								$out =

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -59,15 +59,34 @@
 			return 'Primitive::boolean';
 		}
 
-		public function toGetter(MetaClass $class, MetaClassProperty $property)
+		public function toGetter(
+			MetaClass $class,
+			MetaClassProperty $property,
+			MetaClassProperty $holder = null
+		)
 		{
 			$name = $property->getName();
 			$camelName = ucfirst($name);
 
 			$methodName = "is{$camelName}";
 			$compatName = "get{$camelName}";
+			
+			if ($holder) {
+				return <<<EOT
 
-			$method = <<<EOT
+public function {$compatName}()
+{
+	return \$this->{$holder->getName()}->{$compatName}();
+}
+
+public function {$methodName}()
+{
+	return \$this->{$holder->getName()}->{$methodName}();
+}
+
+EOT;
+			} else {
+				return <<<EOT
 
 public function {$compatName}()
 {
@@ -80,17 +99,37 @@ public function {$methodName}()
 }
 
 EOT;
-
-			return $method;
+			}
+			
+			Assert::isUnreachable();
 		}
 
-		public function toSetter(MetaClass $class, MetaClassProperty $property)
+		public function toSetter(
+			MetaClass $class,
+			MetaClassProperty $property,
+			MetaClassProperty $holder = null
+		)
 		{
 			$name = $property->getName();
 			$methodName = 'set'.ucfirst($name);
 			
-			if ($property->isRequired()) {
-				$method = <<<EOT
+			if ($holder) {
+				return <<<EOT
+
+/**
+ * @return {$holder->getClass()->getName()}
+**/
+public function {$methodName}(\${$name})
+{
+	\$this->{$holder->getName()}->{$methodName}(\${$name});
+
+	return \$this;
+}
+
+EOT;
+			} else {
+				if ($property->isRequired()) {
+					$method = <<<EOT
 
 /**
  * @return {$class->getName()}
@@ -103,23 +142,23 @@ public function {$methodName}(\${$name} = false)
 }
 
 EOT;
-			} else {
-				$method = <<<EOT
+				} else {
+					$method = <<<EOT
 
 /**
  * @return {$class->getName()}
 **/
 public function {$methodName}(\${$name} = null)
 {
-	try {
-		Assert::isTernaryBase(\${$name});
-		\$this->{$name} = \${$name};
-	} catch (WrongArgumentException \$e) {/*_*/}
+	Assert::isTernaryBase(\${$name});
+	
+	\$this->{$name} = \${$name};
 
 	return \$this;
 }
 
 EOT;
+				}
 			}
 			
 			return $method;

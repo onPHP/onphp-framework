@@ -50,28 +50,54 @@
 			return false;
 		}
 		
-		public function toMethods(MetaClass $class, MetaClassProperty $property)
+		public function toMethods(
+			MetaClass $class,
+			MetaClassProperty $property,
+			MetaClassProperty $holder = null
+		)
 		{
 			return
-				parent::toMethods($class, $property)
-				.$this->toDropper($class, $property);
+				parent::toMethods($class, $property, $holder)
+				.$this->toDropper($class, $property, $holder);
 		}
 		
-		public function toGetter(MetaClass $class, MetaClassProperty $property)
+		public function toGetter(
+			MetaClass $class,
+			MetaClassProperty $property,
+			MetaClassProperty $holder = null
+		)
 		{
-			if ($class->getPattern() instanceof ValueObjectPattern)
-				$name = 'get'.$class->getName().'()->get'.ucfirst($property->getName()).'()';
-			else
-				$name = $property->getName();
+			$name = $property->getName();
 			
 			$methodName = 'get'.ucfirst($property->getName());
 			
-			if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
-				$className = $property->getType()->getClassName();
+			$classHint = $property->getType()->getHint();
+			
+			if ($holder) {
+				if ($property->getType() instanceof ObjectType) {
+					$class = $property->getType()->getClassName();
+				} else {
+					$class = null;
+				}
 				
-				if ($property->isRequired()) {
-					$method = <<<EOT
+				return <<<EOT
 
+/**
+ * @return {$class}
+**/
+public function {$methodName}()
+{
+	return \$this->{$holder->getName()}->{$methodName}();
+}
+
+EOT;
+			} else {
+				if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+					$className = $property->getType()->getClassName();
+					
+					if ($property->isRequired()) {
+						$method = <<<EOT
+{$classHint}
 public function {$methodName}()
 {
 	if (!\$this->{$name}) {
@@ -82,12 +108,10 @@ public function {$methodName}()
 }
 
 EOT;
-				} else {
-					$method = <<<EOT
+					} else {
+						$method = <<<EOT
 
-/**
- * @return {$this->class}
-**/
+{$classHint}
 public function {$methodName}()
 {
 	if (!\$this->{$name} && \$this->{$name}Id) {
@@ -98,9 +122,9 @@ public function {$methodName}()
 }
 
 EOT;
-				}
-				
-				$method .= <<<EOT
+					}
+					
+					$method .= <<<EOT
 
 public function {$methodName}Id()
 {
@@ -108,17 +132,17 @@ public function {$methodName}Id()
 }
 
 EOT;
-			} elseif (
-				$property->getRelationId() == MetaRelation::ONE_TO_MANY
-				|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
-			) {
-					$name = $property->getName();
-					$methodName = ucfirst($name);
-					$remoteName = ucfirst($property->getName());
-					
-					$containerName = $class->getName().$remoteName.'DAO';
-					
-					$method = <<<EOT
+				} elseif (
+					$property->getRelationId() == MetaRelation::ONE_TO_MANY
+					|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
+				) {
+						$name = $property->getName();
+						$methodName = ucfirst($name);
+						$remoteName = ucfirst($property->getName());
+						
+						$containerName = $class->getName().$remoteName.'DAO';
+						
+						$method = <<<EOT
 
 /**
  * @return {$containerName}
@@ -153,24 +177,27 @@ public function fill{$methodName}(\$collection, \$lazy = false)
 }
 
 EOT;
-			} else {
-				$method = <<<EOT
+				} else {
+					$method = <<<EOT
 
-/**
- * @return {$this->className}
-**/
+{$classHint}
 public function {$methodName}()
 {
 	return \$this->{$name};
 }
 
 EOT;
+				}
 			}
 			
 			return $method;
 		}
 		
-		public function toSetter(MetaClass $class, MetaClassProperty $property)
+		public function toSetter(
+			MetaClass $class,
+			MetaClassProperty $property,
+			MetaClassProperty $holder = null
+		)
 		{
 			if (
 				$property->getRelationId() == MetaRelation::ONE_TO_MANY
@@ -182,13 +209,27 @@ EOT;
 			
 			$name = $property->getName();
 			$methodName = 'set'.ucfirst($name);
+			$classHint = $this->getHint();
 			
-			if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
-				$method = <<<EOT
+			if ($holder) {
+				return <<<EOT
 
 /**
- * @return {$class->getName()}
+ * @return {$holder->getClass()->getName()}
 **/
+public function {$methodName}({$property->getType()->getClassName()} \${$name})
+{
+	\$this->{$holder->getName()}->{$methodName}(\${$name});
+	
+	return \$this;
+}
+
+EOT;
+			} else {
+				if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+					$method = <<<EOT
+
+{$classHint}
 public function {$methodName}({$this->className} \${$name})
 {
 	\$this->{$name} = \${$name};
@@ -197,9 +238,7 @@ public function {$methodName}({$this->className} \${$name})
 	return \$this;
 }
 
-/**
- * @return {$class->getName()}
-**/
+{$classHint}
 public function {$methodName}Id(\$id)
 {
 	\$this->{$name} = null;
@@ -209,12 +248,10 @@ public function {$methodName}Id(\$id)
 }
 
 EOT;
-			} else {
-				$method = <<<EOT
+				} else {
+					$method = <<<EOT
 
-/**
- * @return {$class->getName()}
-**/
+{$classHint}
 public function {$methodName}({$this->className} \${$name})
 {
 	\$this->{$name} = \${$name};
@@ -223,12 +260,17 @@ public function {$methodName}({$this->className} \${$name})
 }
 
 EOT;
+				}
 			}
 			
 			return $method;
 		}
 		
-		public function toDropper(MetaClass $class, MetaClassProperty $property)
+		public function toDropper(
+			MetaClass $class,
+			MetaClassProperty $property,
+			MetaClassProperty $holder = null
+		)
 		{
 			if (
 				$property->getRelationId() == MetaRelation::ONE_TO_MANY
@@ -241,8 +283,23 @@ EOT;
 			$name = $property->getName();
 			$methodName = 'drop'.ucfirst($name);
 			
-			if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
-				$method = <<<EOT
+			if ($holder) {
+					$method = <<<EOT
+
+/**
+ * @return {$holder->getClass()->getName()}
+**/
+public function {$methodName}()
+{
+	\$this->{$holder->getName()}->{$methodName}();
+
+	return \$this;
+}
+
+EOT;
+			} else {
+				if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+					$method = <<<EOT
 
 /**
  * @return {$class->getName()}
@@ -256,8 +313,8 @@ public function {$methodName}()
 }
 
 EOT;
-			} else {
-				$method = <<<EOT
+				} else {
+					$method = <<<EOT
 
 /**
  * @return {$class->getName()}
@@ -270,6 +327,7 @@ public function {$methodName}()
 }
 
 EOT;
+				}
 			}
 			
 			return $method;
@@ -283,6 +341,15 @@ EOT;
 		public function toColumnType()
 		{
 			return $this->getClass()->getIdentifier()->getType()->toColumnType();
+		}
+		
+		public function getHint()
+		{
+			return <<<EOT
+/**
+ * @return {$this->getClassName()}
+**/
+EOT;
 		}
 	}
 ?>
