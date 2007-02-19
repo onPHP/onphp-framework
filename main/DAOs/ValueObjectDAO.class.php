@@ -21,5 +21,23 @@
 		{
 			return $this->makeSelf($array, $prefix);
 		}
+		
+		public function makeCascade(
+			/* Identifiable */ $object,
+			&$array,
+			$prefix = null
+		)
+		{
+			return $object;
+		}
+		
+		public function makeJoiners(
+			/* Identifiable */ $object,
+			&$array,
+			$prefix = null
+		)
+		{
+			return $object;
+		}
 	}
 ?>
