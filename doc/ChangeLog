@@ -8,7 +8,7 @@
 2007-02-19	Konstantin V. Arkhipov
 
 	* main/Containers/Unified/UnifiedContainer.class.php: getCount()
-	implemented.
+	implemented; unsaved objects are not tracked by importList() now.
 
 2007-02-16	Konstantin V. Arkhipov
 
