@@ -239,17 +239,30 @@
 			}
 			
 			foreach ($references as $className => $list) {
+				$class = $this->getClassByName($className);
+				
 				if (
-					$this->getClassByName($className)->getPattern()
-						instanceof ValueObjectPatter
+					(
+						$class->getPattern() instanceof ValueObjectPattern
+					) || (
+						$class->getTypeId() == MetaClassType::CLASS_ABSTRACT
+					)
 				) {
 					continue;
 				}
 				
 				foreach ($list as $refer) {
+					$remote = $this->getClassByName($refer);
 					if (
-						$this->getClassByName($refer)->getPattern()
-							instanceof ValueObjectPattern
+						(
+							($remote->getPattern() instanceof ValueObjectPattern)
+							|| (
+								$remote->getTypeId()
+								== MetaClassType::CLASS_ABSTRACT
+							)
+						) && (
+							isset($references[$refer])
+						)
 					) {
 						foreach ($references[$refer] as $holder) {
 							$this->classes[$className]->setReferencingClass($holder);
