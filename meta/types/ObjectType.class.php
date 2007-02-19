@@ -170,7 +170,7 @@ public function fill{$methodName}(\$collection, \$lazy = false)
 			);
 		}
 		
-		\$this->{$name}->replaceList(\$collection);
+		\$this->{$name}->mergeList(\$collection);
 	}
 	
 	return \$this;
