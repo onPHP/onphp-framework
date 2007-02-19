@@ -89,13 +89,13 @@
 			return $path;
 		}
 
-		public static function removeDirectory($directory, $recursive = true)
+		public static function removeDirectory($directory, $recursive = false)
 		{
 			if (!$recursive) {
 
 				if (!unlink($directory))
 					throw new WrongArgumentException(
-						"cannot unlink {$directory}. may be not empty?"
+						"cannot unlink {$directory}. maybe try recursive version?"
 					);
 
 			} else {
