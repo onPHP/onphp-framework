@@ -1,5 +1,12 @@
 # $Id$
 
+2007-02-19	Ivan Y. Khvostishkov
+
+	* main/Base/TempFile.class.php, main/Utils/FileUtils.class.php,
+	main/Base/TransparentFile.class.php:
+	implementation of temp file and transparent working with
+	file or memory data
+
 2007-02-20	Dmitry E. Demidov
 
 	* main/Containers/Unified/UnifiedContainer.class.php: sync list with
@@ -7,7 +14,7 @@
 	
 2007-02-19	Ivan Y. Khvostishkov
 
-	* main/Base/TempDirectory.class.php, main/Utils/FileUtils.class:php:
+	* main/Base/TempDirectory.class.php, main/Utils/FileUtils.class.php:
 	temp directory implementation, directories functions added
 
 2007-02-19	Konstantin V. Arkhipov

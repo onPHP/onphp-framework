@@ -64,6 +64,28 @@
 			return $converted;
 		}
 
+		public static function makeTempFile(
+			$where = 'file-utils/', $prefix = '', $mkdirMode = 0700
+		)
+		{
+			$directory = ONPHP_TEMP_PATH.$where;
+
+			if (!is_writable($directory))
+				if (!mkdir($directory, $mkdirMode, true))
+					throw new WrongArgumentException(
+						"can not write to '{$directory}'"
+					);
+
+			$result = tempnam($directory, $prefix);
+
+			if ($result === false)
+				throw new WrongArgumentException(
+					'failed to create temp file in '.$directory
+				);
+			
+			return $result;
+		}
+
 		public static function makeTempDirectory(
 			$where = 'file-utils/', $prefix = '', $mode = 0700
 		)
