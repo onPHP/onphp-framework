@@ -299,7 +299,9 @@
 			} else {
 				$this->worker->sync($insert, $update, $delete);
 			}
-			
+
+			$this->clones = array();
+			$this->syncClones();
 			$this->dao->uncacheLists();
 
 			return $this;
@@ -323,21 +325,35 @@
 		private function importList(/* array */ $list)
 		{
 			if ($this->lazy) {
-				foreach ($list as $id) {
+				foreach ($list as $id)
 					$this->list[$id] = $id;
+			} else {
+				$this->list = $list;
+			}
+
+			$this->syncClones();
+			
+			$this->fetched = true;
+			
+			return $this;
+		}
+	
+		/**
+		 * @return UnifiedContainer
+		**/
+		private function syncClones()
+		{
+			if ($this->lazy) {
+				foreach ($this->list as $id) {
 					$this->clones[$id] = $id;
 				}
 			} else {
-				$this->list = $list;
-				
-				foreach ($list as $object) {
+				foreach ($this->list as $object) {
 					// don't track unsaved objects
 					if ($id = $object->getId())
 						$this->clones[$id] = clone $object;
 				}
 			}
-			
-			$this->fetched = true;
 			
 			return $this;
 		}
