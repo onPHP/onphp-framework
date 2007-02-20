@@ -68,5 +68,15 @@
 
 			return $this->rawData;
 		}
+
+		public function getSize()
+		{
+			if ($this->rawData)
+				return strlen($this->rawData);
+			elseif ($this->path)
+				return filesize($this->path);
+
+			return null;
+		}
 	}
 ?>
