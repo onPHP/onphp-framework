@@ -1,6 +1,10 @@
 # $Id$
 
-2007-02-19	Ivan Y. Khvostishkov
+2007-02-21	Dmitry E. Demidov
+
+	* test/main/ClassUtilsTest.class.php: added tests for ClassUtils.
+
+2007-02-20	Ivan Y. Khvostishkov
 
 	* main/Base/TempFile.class.php, main/Utils/FileUtils.class.php,
 	main/Base/TransparentFile.class.php:
