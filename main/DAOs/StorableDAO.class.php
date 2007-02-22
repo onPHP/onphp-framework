@@ -30,14 +30,16 @@
 		
 		public function getFields()
 		{
-			static $fields = null;
+			static $fields = array();
 			
-			if ($fields === null) {
+			$name = $this->getObjectName();
+			
+			if (!isset($fields[$name])) {
 				if ($this->mapping)
 					foreach ($this->getMapping() as $prop => $field)
-						$fields[] = ($field === null ? $prop : $field);
+						$fields[$name][] = ($field === null ? $prop : $field);
 				elseif ($this->fields)
-					$fields = &$this->fields;
+					$fields[$name] = &$this->fields;
 				else
 					throw new WrongStateException(
 						'there are no fields specified for '
@@ -45,7 +47,7 @@
 					);
 			}
 			
-			return $fields;
+			return $fields[$name];
 		}
 		
 		public function take(Identifiable $object)
