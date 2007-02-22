@@ -25,10 +25,13 @@
 		protected $link			= null;
 		protected $selectHead	= null;
 		
+		abstract public function getTable();
+		abstract public function getObjectName();
+		
 		abstract protected function makeObject(&$array, $prefix = null);
 		
 		/**
-		 * Returns link name which is used to get actual db-link from DBPool,
+		 * Returns link name which is used to get actual DB-link from DBPool,
 		 * returning null by default for single-source projects.
 		 * 
 		 * @see DBPool
@@ -36,6 +39,11 @@
 		public function getLinkName()
 		{
 			return null;
+		}
+		
+		public function getSequence()
+		{
+			return $this->getTable().'_id';
 		}
 		
 		public function getMapping()
@@ -79,14 +87,16 @@
 		
 		public function getFields()
 		{
-			static $fields = null;
+			static $fields = array();
 			
-			if (!$fields) {
+			$name = $this->getObjectName();
+			
+			if (!isset($fields[$name])) {
 				foreach ($this->getMapping() as $property => $field)
-					$fields[] = $field === null ? $property : $field;
+					$fields[$name][] = $field === null ? $property : $field;
 			}
 			
-			return $fields;
+			return $fields[$name];
 		}
 		
 		/// boring delegates
