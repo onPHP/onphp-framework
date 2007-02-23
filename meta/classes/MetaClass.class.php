@@ -16,7 +16,7 @@
 	class MetaClass
 	{
 		private $name		= null;
-		private $dumbName	= null;
+		private $dumbName	= null; // table name actually
 		private $type		= null;
 		private $parent		= null;
 		
