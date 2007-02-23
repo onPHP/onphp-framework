@@ -103,7 +103,7 @@
 					else
 						$type = (string) $id['type'];
 					
-					$property = $this->buildProperty($name, $type, $class);
+					$property = $this->makeProperty($name, $type, $class);
 					
 					if (isset($id['column'])) {
 						$property->setColumnName(
@@ -127,7 +127,7 @@
 				// populate properties
 				foreach ($xmlClass->properties[0] as $xmlProperty) {
 					
-					$property = $this->buildProperty(
+					$property = $this->makeProperty(
 						(string) $xmlProperty['name'],
 						(string) $xmlProperty['type'],
 						$class
@@ -448,7 +448,7 @@
 		/**
 		 * @return MetaClassProperty
 		**/
-		private function buildProperty($name, $type, MetaClass $class)
+		private function makeProperty($name, $type, MetaClass $class)
 		{
 			if (is_readable(ONPHP_META_TYPES.$type.'Type'.EXT_CLASS))
 				$typeClass = $type.'Type';
