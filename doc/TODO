@@ -4,5 +4,3 @@
 	branches/0.8/main/Utils/DaoUtils.class.php
 	branches/0.8/main/Utils/DaoMoveHelper.class.php
 	branches/0.8/core/Form/Primitives/PrimitiveIdentifierList.class.php
-	branches/0.8/main/Flow/MethodMappedController.class.php
-	branches/0.8/main/Flow/PrototypedEditor.class.php
