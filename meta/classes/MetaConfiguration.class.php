@@ -283,6 +283,17 @@
 		**/
 		public function build()
 		{
+			return $this->
+				buildClasses()->
+				buildSchema()->
+				buildSchemaChanges();
+		}
+		
+		/**
+		 * @return MetaConfiguration
+		**/
+		public function buildClasses()
+		{
 			$out = $this->getOutput();
 			
 			$out->
@@ -294,6 +305,16 @@
 				$out->newLine();
 			}
 			
+			return $this;
+		}
+		
+		/**
+		 * @return MetaConfiguration
+		**/
+		public function buildSchema()
+		{
+			$out = $this->getOutput();
+
 			$out->
 				newLine()->
 				infoLine('Building DB schema:');
@@ -314,7 +335,16 @@
 				ONPHP_META_AUTO_DIR.'schema.php',
 				Format::indentize($schema)
 			);
-			
+
+			return $this;
+		}
+		
+		/**
+		 * @return MetaConfiguration
+		**/
+		public function buildSchemaChanges()
+		{
+			$out = $this->getOutput();
 			$out->
 				newLine()->
 				infoLine('Suggested DB-schema changes: ');

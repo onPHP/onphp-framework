@@ -112,7 +112,9 @@ Things not supported by design:
 				MetaConfiguration::me()->
 					load($_SERVER['argv'][2])->
 					setOutput($out)->
-					build();
+					buildClasses()->
+					buildSchema()->
+					buildSchemaChanges();
 			} catch (BaseException $e) {
 				$out->
 					newLine()->
