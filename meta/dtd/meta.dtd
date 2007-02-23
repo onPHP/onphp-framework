@@ -34,7 +34,7 @@
 		column		CDATA #IMPLIED
 		default		CDATA #IMPLIED
 		required	(true|false) "false"
-		relation	CDATA #IMPLIED
+		relation	(OneToOne|LazyOneToOne|OneToMany|ManyToMany) #IMPLIED
 >
 
 <!ELEMENT pattern EMPTY>
