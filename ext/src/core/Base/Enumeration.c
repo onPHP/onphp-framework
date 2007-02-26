@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,6 +20,33 @@
 PHPAPI zend_class_entry *onphp_ce_Enumeration;
 
 ONPHP_METHOD(Enumeration, __construct)
+{
+	zval *id;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
+		WRONG_PARAM_COUNT;
+	}
+	
+	zend_call_method_with_1_params(
+		&getThis(),
+		Z_OBJCE_P(getThis()),
+		NULL,
+		"setid",
+		NULL,
+		id
+	);
+}
+
+ONPHP_METHOD(Enumeration, getId)
+{
+	zval *id;
+	
+	id = ONPHP_READ_PROPERTY(getThis(), "id");
+	
+	RETURN_ZVAL(id, 1, 0);
+}
+
+ONPHP_METHOD(Enumeration, setId)
 {
 	zval *id, *names;
 	zval **found;
@@ -267,5 +294,6 @@ zend_function_entry onphp_funcs_Enumeration[] = {
 	ONPHP_ME(Enumeration, getObjectList,NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, toString,		NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, getNameList,	NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Enumeration, setId,		arginfo_one, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };
