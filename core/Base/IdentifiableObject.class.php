@@ -40,7 +40,7 @@
 				return $this->id;
 		}
 		
-		final public function setId($id)
+		public function setId($id)
 		{
 			$this->id = $id;
 			

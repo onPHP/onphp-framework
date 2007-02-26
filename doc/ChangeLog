@@ -1,5 +1,13 @@
 # $Id$
 
+2007-02-26	Konstantin V. Arkhipov
+
+	* core/Base/Enumeration.class.php: constructor's logic moved to
+	setId() to be forward compatible with trunk.
+
+	* core/Base/IdentifiableObject.class.php: setId() unfinalized to be
+	forward compatible with trunk.
+
 2007-02-22	Konstantin V. Arkhipov
 
 	* main/DAOs/GenericDAO.class.php: field collisions in inherited

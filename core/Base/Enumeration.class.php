@@ -24,8 +24,18 @@
 		
 		public function __construct($id)
 		{
+			$this->setId($id);
+		}
+		
+		public static function getList(Enumeration $enum)
+		{
+			return $enum->getObjectList();
+		}
+		
+		public function setId($id)
+		{
 			$names = $this->getNameList();
-
+			
 			if (isset($names[$id])) {
 				$this->id = $id;
 				$this->name = $names[$id];
@@ -33,11 +43,6 @@
 				throw new MissingElementException(
 					"knows nothing about such id == {$id}"
 				);
-		}
-		
-		public static function getList(Enumeration $enum)
-		{
-			return $enum->getObjectList();
 		}
 		
 		/**
