@@ -108,6 +108,7 @@ EOT;
 		return
 			array_merge(
 				parent::makePropertyList(),
+				array(
 
 EOT;
 			} else {
@@ -143,6 +144,10 @@ EOT;
 			}
 			
 			$out .= implode(",\n", $list);
+			
+			if ($class->getParent()) {
+				$out .= "\n)";
+			}
 			
 			$out .= <<<EOT
 
