@@ -97,9 +97,6 @@ EOT;
 		
 		private static function dumpMetaClass(MetaClass $class)
 		{
-			// it must be an evil bug, if there are any newlines anyway.
-			$serialized = str_replace(chr(0), chr(9), serialize($class));
-			
 			$out = <<<EOT
 	protected function makePropertyList()
 	{
