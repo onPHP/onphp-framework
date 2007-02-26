@@ -166,7 +166,8 @@ EOT;
 				} else {
 					if ($class->hasChilds()) {
 						$out .= <<<EOT
-\${$varName} = new \$this->getObjectName();
+\$className = \$this->getObjectName();
+\${$varName} = new \$className;
 
 
 EOT;
