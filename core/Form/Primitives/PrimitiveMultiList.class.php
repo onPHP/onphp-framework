@@ -20,19 +20,27 @@
 			if (!BasePrimitive::import($scope))
 				return null;
 
-			if ($this->list && is_array($scope[$this->name])) {
-				$values = array();
+			if ($this->list) {
+				if (is_array($scope[$this->name])) {
+					$values = array();
 
-				foreach ($scope[$this->name] as $value)
-					if (isset($this->list[$value]))
-						$values[] = $value;
+					foreach ($scope[$this->name] as $value)
+						if (isset($this->list[$value]))
+							$values[] = $value;
 
-				if (count($values)) {
-					$this->value = $values;
-					
-					return true;
+					if (count($values)) {
+						$this->value = $values;
+						
+						return true;
+					}
+				} else {
+					if (isset($this->list[$scope[$this->name]])) {
+						$this->value = $scope[$this->name];
+						
+						return true;
+					}
 				}
-			} elseif (isset($this->list[$scope[$this->name]])) {
+			} else {
 				$this->value = $scope[$this->name];
 				
 				return true;
