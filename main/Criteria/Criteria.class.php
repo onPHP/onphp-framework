@@ -344,85 +344,94 @@
 				!$this->projection
 				&& $this->strategy->getId() == FetchStrategy::JOIN
 			) {
-				$proto = call_user_func(array($this->dao->getObjectName(), 'proto'));
-				
-				foreach ($proto->getPropertyList() as $property) {
-					if (
-						$property->getRelationId() == MetaRelation::ONE_TO_ONE
-						&& !$property->isGenericType()
-					) {
-						if (
-							is_subclass_of(
-								$property->getClassName(),
-								'Enumeration'
-							)
-						) {
-							$query->get(
-								new DBField(
-									$property->getDumbName(),
-									$this->dao->getTable()
-								)
-							);
-							
-							continue;
-						}
-						
-						$dao = call_user_func(
-							array($property->getClassName(), 'dao')
-						);
-						
-						if ($dao->getTable() == $this->dao->getTable()) {
-							$alias = $property->getDumbName();
-							
-							$fields = $dao->getFields();
-							
-							$fields[
-								array_search($this->dao->getIdName(), $fields)
-							] = new SelectField(
-								new DBField(
-									$property->getDumbIdName(),
-									$dao->getTable()
-								),
-								
-								$this->dao->getJoinPrefix($property->getDumbName())
-								.$dao->getIdName()
-							);
-						} else {
-							$alias = null;
-							$fields = $dao->getFields();
-						}
-						
-						if (!$query->hasJoinedTable($dao->getTable())) {
-							$logic =
-								Expression::eq(
-									DBField::create(
-										$property->getDumbIdName(),
-										$this->dao->getTable()
-									),
-									
-									DBField::create(
-										$dao->getIdName(),
-										$alias
-											? $alias
-											: $dao->getTable()
-									)
-								);
-							
-							if ($property->isRequired())
-								$query->join($dao->getTable(), $logic, $alias);
-							else
-								$query->leftJoin($dao->getTable(), $logic, $alias);
-						}
-						
-						$query->arrayGet(
-							$fields,
-							$dao->getJoinPrefix($property->getDumbName())
-						);
-					}
-				}
+				$this->joinProperties($query, $this->dao);
 			}
 			
 			return $query;
+		}
+		
+		private function joinProperties(
+			SelectQuery $query,
+			ComplexBuilderDAO $parentDao,
+			$prefix = null
+		)
+		{
+			$proto = call_user_func(array($parentDao->getObjectName(), 'proto'));
+			
+			foreach ($proto->getPropertyList() as $property) {
+				if (
+					$property->getRelationId() == MetaRelation::ONE_TO_ONE
+					&& !$property->isGenericType()
+				) {
+					if (
+						is_subclass_of(
+							$property->getClassName(),
+							'Enumeration'
+						)
+					) {
+						$query->get(
+							new DBField(
+								$property->getDumbName(),
+								$parentDao->getTable()
+							)
+						);
+						
+						continue;
+					}
+					
+					$propertyDao = call_user_func(
+						array($property->getClassName(), 'dao')
+					);
+					
+					if ($propertyDao->getTable() == $parentDao->getTable()) {
+						$alias = $property->getDumbName();
+						
+						$fields = $propertyDao->getFields();
+						
+						$fields[
+							array_search($parentDao->getIdName(), $fields)
+						] = new SelectField(
+							new DBField(
+								$property->getDumbIdName(),
+								$propertyDao->getTable()
+							),
+							
+							$parentDao->getJoinPrefix($property->getDumbName())
+							.$propertyDao->getIdName()
+						);
+					} else {
+						$alias = null;
+						$fields = $propertyDao->getFields();
+					}
+					
+					if (!$query->hasJoinedTable($propertyDao->getTable())) {
+						$logic =
+							Expression::eq(
+								DBField::create(
+									$property->getDumbIdName(),
+									$parentDao->getTable()
+								),
+								
+								DBField::create(
+									$propertyDao->getIdName(),
+									$alias
+										? $alias
+										: $propertyDao->getTable()
+								)
+							);
+						
+						if ($property->isRequired())
+							$query->join($propertyDao->getTable(), $logic, $alias);
+						else
+							$query->leftJoin($propertyDao->getTable(), $logic, $alias);
+					}
+					
+					$query->arrayGet(
+						$fields,
+						$propertyDao->getJoinPrefix($property->getDumbName())
+					);
+				}
+			}
 		}
 		
 		/**
