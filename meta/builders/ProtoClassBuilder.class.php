@@ -100,9 +100,22 @@ EOT;
 			$out = <<<EOT
 	protected function makePropertyList()
 	{
+
+EOT;
+
+			if ($class->getParent()) {
+				$out .= <<<EOT
+		return
+			array_merge(
+				parent::makePropertyList(),
+
+EOT;
+			} else {
+				$out .= <<<EOT
 		return array(
 
 EOT;
+			}
 
 			$list = array();
 			
