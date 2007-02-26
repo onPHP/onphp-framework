@@ -78,6 +78,7 @@ EOT;
 
 				$out .= <<<EOT
 
+
 /**
  * @return InsertOrUpdateQuery
 **/

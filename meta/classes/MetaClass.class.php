@@ -257,6 +257,19 @@
 			return array_keys($this->references);
 		}
 		
+		public function hasChilds()
+		{
+			foreach (MetaConfiguration::me()->getClassList() as $name => $class) {
+				if (
+					$class->getParent()
+					&& $class->getParent()->getName() == $this->getName()
+				)
+					return true;
+			}
+			
+			return false;
+		}
+		
 		public function dump()
 		{
 			return $this->pattern->build($this);

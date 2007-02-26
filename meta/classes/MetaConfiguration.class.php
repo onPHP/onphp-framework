@@ -427,6 +427,11 @@
 			);
 		}
 		
+		public function getClassList()
+		{
+			return $this->classes;
+		}
+		
 		/**
 		 * @return MetaConfiguration
 		**/

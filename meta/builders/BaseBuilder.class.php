@@ -164,11 +164,19 @@ EOT;
 EOT;
 					}
 				} else {
-				$out .= <<<EOT
+					if ($class->hasChilds()) {
+						$out .= <<<EOT
+\${$varName} = new \$this->getObjectName();
+
+
+EOT;
+					} else {
+						$out .= <<<EOT
 \${$varName} = new {$className}();
 
 
 EOT;
+					}
 				}
 			}
 			
