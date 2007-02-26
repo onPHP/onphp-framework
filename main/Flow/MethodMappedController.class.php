@@ -41,11 +41,12 @@
 		{
 			return Form::create()->
 				add(
-					Primitive::choice('action')->setList($this->methodMap)
+					Primitive::choice('action')->setList($this->methodMap)->
+					setDefault('edit')
 				)->
 				import($request->getGet())->
 				importMore($request->getPost())->
-				getValue('action');
+				getActualValue('action');
 		}
 		
 		/**

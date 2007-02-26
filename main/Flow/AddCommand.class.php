@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class AddCommand extends TakeCommand 
+	class AddCommand extends MakeCommand 
 	{
 		/**
 		 * @return AddCommand
@@ -21,22 +21,6 @@
 		public static function create()
 		{
 			return new self;
-		}
-		
-		/**
-		 * @return ModelAndView
-		**/
-		public function run(Prototyped $subject, Form $form, HttpRequest $request)
-		{
-			$form->markGood('id');
-			
-			if (!$form->getErrors()) {
-				FormUtils::form2object($form, $subject);
-				
-				return parent::run($subject, $form, $request);
-			}
-			
-			return new ModelAndView();
 		}
 		
 		protected function daoMethod()

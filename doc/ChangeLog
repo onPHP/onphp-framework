@@ -1,5 +1,9 @@
 # $Id$
 
+2007-02-26	Konstantin V. Arkhipov
+
+	* main/Flow/: default action is 'edit' now.
+
 2007-02-22	Konstantin V. Arkhipov
 
 	* main/DAOs/GenericDAO.class.php: field collisions in inherited

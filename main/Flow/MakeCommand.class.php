@@ -13,19 +13,22 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class ImportCommand extends MakeCommand
+	abstract class MakeCommand extends TakeCommand
 	{
 		/**
-		 * @return ImportCommand
+		 * @return ModelAndView
 		**/
-		public static function create()
+		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
-			return new self;
-		}
-		
-		protected function daoMethod()
-		{
-			return 'import';
+			$form->markGood('id');
+			
+			if (!$form->getErrors()) {
+				FormUtils::form2object($form, $subject);
+				
+				return parent::run($subject, $form, $request);
+			}
+			
+			return new ModelAndView();
 		}
 	}
 ?>

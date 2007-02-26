@@ -31,7 +31,8 @@
 			$this->map =
 				MappedForm::create(
 					$this->subject->proto()->makeForm()->add(
-						Primitive::choice('action')->setList($this->commandMap)
+						Primitive::choice('action')->setList($this->commandMap)->
+						setDefault('edit')
 					)
 				)->
 				addSource('id', RequestType::get())->
