@@ -158,8 +158,12 @@
 			return $list;
 		}
 		
-		public function processPath(
-			AbstractProtoClass $proto, $probablyPath, JoinCapableQuery $query
+		private function processPath(
+			AbstractProtoClass $proto, 
+			$probablyPath, 
+			JoinCapableQuery $query,
+			$table,
+			$prefix = null
 		)
 		{
 			$path = explode('.', $probablyPath);
@@ -182,6 +186,7 @@
 				$property->getRelationId() == MetaRelation::ONE_TO_MANY
 				|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
 			) {
+				// FIXME: use prefix and table in this branch of "if"
 				$remoteName = $property->getClassName();
 				$selfName = $this->getObjectName();
 				$self = new $selfName;
@@ -244,8 +249,10 @@
 					else
 						$query->leftJoin($dao->getTable(), $logic);
 				}
+				
+				return $propertyDao->guessAtom(implode('.', $path), $query);
+
 			} else { // OneToOne, LazyOneToOne
-				$className = $property->getClassName();
 				
 				// prevents useless joins
 				if (
@@ -256,40 +263,68 @@
 					return
 						new DBField(
 							$property->getColumnIdName(),
-							$this->getTable()
+							$table
 						);
 
-				$dao = call_user_func(array($className, 'dao'));
+				$propertyDao = call_user_func(
+					array(
+						$property->getClassName(),
+						'dao'
+					)
+				);
+
+				$alias = 
+					$prefix
+					.$propertyDao->getJoinName(
+						$property->getColumnName()
+					);
 				
-				if (!$query->hasJoinedTable($dao->getTable())) {
+				if (!$query->hasJoinedTable($alias)) {
 					$logic =
 						Expression::eq(
 							DBField::create(
 								$this->getFieldFor($property->getName()),
-								$this->getTable()
+								$table
 							),
 							
 							DBField::create(
-								$dao->getIdName(),
-								$dao->getTable()
+								$propertyDao->getIdName(),
+								$alias
 							)
 						);
 					
 					if ($property->isRequired())
-						$query->join($dao->getTable(), $logic);
+						$query->join($propertyDao->getTable(), $logic, $alias);
 					else
-						$query->leftJoin($dao->getTable(), $logic);
+						$query->leftJoin($propertyDao->getTable(), $logic, $alias);
 				}
+				
+				return $propertyDao->guessAtom(
+					implode('.', $path), 
+					$query,
+					$alias, 
+					$prefix.$propertyDao->getJoinPrefix($property->getColumnName())
+				);
 			}
 			
-			return $dao->guessAtom(implode('.', $path), $query);
+			Assert::isUnreachable();
 		}
 		
-		public function guessAtom($atom, JoinCapableQuery $query)
+		public function guessAtom(
+			$atom, 
+			JoinCapableQuery $query,
+			$table = null,
+			$prefix = null
+		)
 		{
-			if ($atom instanceof Property)
-				return $this->mapProperty($atom);
-			elseif (is_string($atom)) {
+			if ($table === null)
+				$table = $this->getTable();
+
+			if ($atom instanceof Property) {
+				
+				return $this->mapProperty($atom, $table);
+				
+			} elseif (is_string($atom)) {
 				if (strpos($atom, '.') !== false) {
 					return
 						$this->processPath(
@@ -297,11 +332,13 @@
 								array($this->getObjectName(), 'proto')
 							),
 							$atom,
-							$query
+							$query,
+							$table,
+							$prefix
 						);
 				} elseif (array_key_exists($atom, $this->mapping))
-					return $this->mapProperty(new Property($atom));
-			} elseif ($atom instanceof LogicalObject)
+					return $this->mapProperty(new Property($atom), $table);
+			} elseif ($atom instanceof MappableObject)
 				return $atom->toMapped($this, $query);
 			elseif (
 				($atom instanceof DBValue)
@@ -313,7 +350,7 @@
 			return new DBValue($atom);
 		}
 		
-		protected function mapProperty(Property $property)
+		private function mapProperty(Property $property, $table)
 		{
 			$name = $property->getName();
 			
@@ -325,9 +362,9 @@
 			);
 			
 			if ($this->mapping[$name] === null)
-				return new DBField($name, $this->getTable());
+				return new DBField($name, $table);
 			
-			return new DBField($this->mapping[$name], $this->getTable());
+			return new DBField($this->mapping[$name], $table);
 		}
 	}
 ?>

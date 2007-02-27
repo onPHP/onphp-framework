@@ -346,7 +346,7 @@
 			) {
 				$this->joinProperties($query, $this->dao, $this->dao->getTable());
 			}
-
+			
 			return $query;
 		}
 		
@@ -384,7 +384,7 @@
 						array($property->getClassName(), 'dao')
 					);
 					
-					$alias = 
+					$tableAlias = 
 						$prefix
 						.$propertyDao->getJoinName(
 							$property->getColumnName()
@@ -392,7 +392,7 @@
 					
 					$fields = $propertyDao->getFields();
 					
-					if (!$query->hasJoinedTable($alias)) {
+					if (!$query->hasJoinedTable($tableAlias)) {
 						$logic =
 							Expression::eq(
 								DBField::create(
@@ -402,25 +402,28 @@
 								
 								DBField::create(
 									$propertyDao->getIdName(),
-									$alias
+									$tableAlias
 								)
 							);
 						
 						if ($property->isRequired())
-							$query->join($propertyDao->getTable(), $logic, $alias);
+							$query->join($propertyDao->getTable(), $logic, $tableAlias);
 						else
-							$query->leftJoin($propertyDao->getTable(), $logic, $alias);
+							$query->leftJoin($propertyDao->getTable(), $logic, $tableAlias);
 					}
 					
-					$query->arrayGet(
-						$fields,
-						$prefix.$propertyDao->getJoinPrefix($property->getColumnName())
-					);
-					
+					foreach ($fields as $field) {
+						$query->get(
+							new DBField($field, $tableAlias),
+							$prefix
+								.$propertyDao->getJoinPrefix($property->getColumnName())
+								.$field
+						);
+					}
 					$this->joinProperties(
 						$query, 
 						$propertyDao, 
-						$alias, 
+						$tableAlias, 
 						$prefix.$propertyDao->getJoinPrefix($property->getColumnName())
 					);
 				}

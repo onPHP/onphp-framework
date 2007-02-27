@@ -322,24 +322,31 @@
 		{
 			$size = count($array);
 			
-			if ($prefix)
-				for ($i = 0; $i < $size; ++$i)
-					$this->get(
-						$array[$i],
-						$array[$i] instanceof DialectString
-							? $array[$i] instanceof DBField
-								? $prefix.$array[$i]->getField()
-								: $array[$i] instanceof SQLFunction
-									?
-										$array[$i]->setAlias(
-											$prefix.$array[$i]->getName()
-										)
-									: $array[$i]
-							: $prefix.$array[$i]
-					);
-			else
-				for ($i = 0; $i < $size; ++$i)
+			if ($prefix) {
+				for ($i = 0; $i < $size; ++$i) {
+					if ($array[$i] instanceof DialectString) {
+						if ($array[$i] instanceof DBField) {
+							$alias = $prefix.$array[$i]->getField();
+						} else {
+							if ($array[$i] instanceof SQLFunction) {
+								$alias = $array[$i]->setAlias(
+									$prefix.$array[$i]->getName()
+								);
+							} else {
+								$alias = $array[$i];
+							}
+						}
+					} else {
+						$alias = $prefix.$array[$i];
+					}
+
+					$this->get($array[$i], $alias);
+				}
+			} else {
+				for ($i = 0; $i < $size; ++$i) {
 					$this->get($array[$i]);
+				}
+			}
 					
 			return $this;
 		}
