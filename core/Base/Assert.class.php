@@ -28,6 +28,12 @@
 			if ($boolean !== false)
 				self::fail($message);
 		}
+		
+		public static function isNull($variable, $message = null)
+		{
+			if ($variable !== null)
+				self::fail($message);
+		}
 
 		public static function isArray(&$variable, $message = null)
 		{
