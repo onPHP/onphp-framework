@@ -99,5 +99,13 @@
 		{
 			return StringReplaceFilter::create($search, $replace);
 		}
+
+		/**
+		 * @return SafeUtf8Filter
+		**/
+		public static function safeUtf8()
+		{
+			return Singleton::getInstance('SafeUtf8Filter');
+		}
 	}
 ?>

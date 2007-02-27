@@ -7,6 +7,10 @@
 	added friendlyFileSize() for russian language and specified this
 	method with useful parameters.
 
+	* core/Form/Filters/SafeUtf8Filter.class.php,
+	core/Form/Filter.class.php:
+	filtrator for non-utf8 symbols
+
 2007-02-27	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/PrimitiveList.class.php,
