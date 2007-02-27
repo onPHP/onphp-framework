@@ -27,7 +27,7 @@
 			$out = <<<EOT
 \$schema->
 	addTable(
-		DBTable::create('{$class->getDumbName()}')->
+		DBTable::create('{$class->getTableName()}')->
 
 EOT;
 
@@ -83,9 +83,9 @@ EOT;
 						continue;
 					} elseif ($relation->getId() == MetaRelation::MANY_TO_MANY) {
 						$tableName =
-							$class->getDumbName()
+							$class->getTableName()
 							.'_'
-							.$foreignClass->getDumbName();
+							.$foreignClass->getTableName();
 						
 						$foreignPropery = clone $foreignClass->getIdentifier();
 						
@@ -95,6 +95,7 @@ EOT;
 						
 						$foreignPropery->
 							setName($name)->
+							setConvertedColumnName($name)->
 							// we don't need primary key here
 							setIdentifier(false);
 						
@@ -104,17 +105,17 @@ EOT;
 		DBTable::create('{$tableName}')->
 		{$property->toColumn()}->
 		{$foreignPropery->toColumn()}->
-		addUniques('{$class->getDumbName()}_id', '{$foreignClass->getDumbName()}_id')
+		addUniques('{$class->getTableName()}_id', '{$foreignClass->getTableName()}_id')
 	);
 
 
 EOT;
 					} else {
-						$sourceTable = $class->getDumbName();
-						$sourceColumn = $property->getDumbIdName();
+						$sourceTable = $class->getTableName();
+						$sourceColumn = $property->getColumnIdName();
 						
-						$targetTable = $foreignClass->getDumbName();
-						$targetColumn = $foreignClass->getIdentifier()->getDumbName();
+						$targetTable = $foreignClass->getTableName();
+						$targetColumn = $foreignClass->getIdentifier()->getColumnName();
 						
 						$out .= <<<EOT
 // {$sourceTable}.{$sourceColumn} -> {$targetTable}.{$targetColumn}

@@ -38,7 +38,7 @@
 			$className = $class->getName();
 			$propertyName = strtolower($className[0]).substr($className, 1);
 			
-			$remoteDumbName = $holder->getType()->getClass()->getDumbName();
+			$remoteColumnName = $holder->getType()->getClass()->getTableName();
 			
 			$out .= <<<EOT
 public function __construct({$className} \${$propertyName}, \$lazy = false)
@@ -65,12 +65,12 @@ EOT;
 
 public function getHelperTable()
 {
-	return '{$class->getDumbName()}_{$remoteDumbName}';
+	return '{$class->getTableName()}_{$remoteColumnName}';
 }
 
 public function getChildIdField()
 {
-	return '{$remoteDumbName}_id';
+	return '{$remoteColumnName}_id';
 }
 
 EOT;
@@ -80,7 +80,7 @@ EOT;
 
 public function getParentIdField()
 {
-	return '{$class->getDumbName()}_id';
+	return '{$class->getTableName()}_id';
 }
 
 EOT;

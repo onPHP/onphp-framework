@@ -255,7 +255,7 @@
 				)
 					return
 						new DBField(
-							$property->getDumbIdName(),
+							$property->getColumnIdName(),
 							$this->getTable()
 						);
 

@@ -306,7 +306,7 @@ EOT;
 				$out .= <<<EOT
 public function getTable()
 {
-	return '{$class->getDumbName()}';
+	return '{$class->getTableName()}';
 }
 
 public function getObjectName()
@@ -316,7 +316,7 @@ public function getObjectName()
 
 public function getSequence()
 {
-	return '{$class->getDumbName()}_id';
+	return '{$class->getTableName()}_id';
 }
 EOT;
 			} else {
@@ -371,21 +371,21 @@ EOT;
 				if ($property->getType()->isGeneric()) {
 					
 					$name = $property->getName();
-					$dumbName = $property->getDumbName();
+					$columnName = $property->getColumnName();
 					
 					if ($property->getType() instanceof RangeType) {
 						
 						$row =
 							array(
-								"'{$name}Min' => '{$dumbName}_min'",
-								"'{$name}Max' => '{$dumbName}_max'"
+								"'{$name}Min' => '{$columnName}_min'",
+								"'{$name}Max' => '{$columnName}_max'"
 							);
 						
 					} else {
-						if ($name == $dumbName)
+						if ($name == $columnName)
 							$map = 'null';
 						else
-							$map = "'{$dumbName}'";
+							$map = "'{$columnName}'";
 						
 						$row .= "'{$name}' => {$map}";
 					}
@@ -404,7 +404,7 @@ EOT;
 						} else {
 							$row .=
 								"'{$property->getName()}"
-								."' => '{$property->getDumbIdName()}'";
+								."' => '{$property->getColumnIdName()}'";
 						}
 					} else
 						$row = null;

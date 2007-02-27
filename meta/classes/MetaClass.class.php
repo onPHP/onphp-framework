@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,8 +16,9 @@
 	class MetaClass
 	{
 		private $name		= null;
-		private $dumbName	= null; // table name actually
+		private $tableName	= null;
 		private $type		= null;
+		
 		private $parent		= null;
 		
 		private $properties	= array();
@@ -38,9 +39,9 @@
 			);
 			
 			if ($dumb[0] == '_')
-				$this->dumbName = substr($dumb, 1);
+				$this->tableName = substr($dumb, 1);
 			else
-				$this->dumbName = $dumb;
+				$this->tableName = $dumb;
 		}
 		
 		public function getName()
@@ -48,9 +49,19 @@
 			return $this->name;
 		}
 		
-		public function getDumbName()
+		public function getTableName()
 		{
-			return $this->dumbName;
+			return $this->tableName;
+		}
+		
+		/**
+		 * @return MetaClass
+		**/
+		public function setTableName($name)
+		{
+			$this->tableName = $name;
+			
+			return $this;
 		}
 		
 		/**

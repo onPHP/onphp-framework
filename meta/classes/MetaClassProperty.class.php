@@ -18,7 +18,6 @@
 		private $class		= null;
 		
 		private $name		= null;
-		private $dumbName	= null;
 		private $columnName	= null;
 		
 		private $type		= null;
@@ -64,38 +63,33 @@
 		public function setName($name)
 		{
 			$this->name = $name;
-			$this->dumbName = strtolower(
-				preg_replace(':([A-Z]):', '_\1', $name)
-			);
+			
+			if (!$this->columnName)
+				return $this->setConvertedColumnName($name);
 			
 			return $this;
 		}
 		
-		public function getDumbName()
+		public function getColumnName()
 		{
-			if ($this->columnName)
-				return $this->columnName;
-			
-			return $this->dumbName;
+			return $this->columnName;
 		}
 		
-		public function getDumbIdName()
+		// foreign keys and identifiers
+		public function getColumnIdName()
 		{
 			Assert::isTrue(
-				$this->hasDumbIdName(),
+				$this->hasColumnIdName(),
 				'hey, i am just a property!'
 			);
 			
-			if ($this->columnName)
+			if ($this->isIdentifier())
 				return $this->columnName;
 			
-			if ($this->isIdentifier())
-				return $this->dumbName;
-			
-			return $this->dumbName.'_id';
+			return $this->columnName.'_id';
 		}
 		
-		public function hasDumbIdName()
+		public function hasColumnIdName()
 		{
 			return ($this->isIdentifier() || $this->relation);
 		}
@@ -106,6 +100,18 @@
 		public function setColumnName($name)
 		{
 			$this->columnName = $name;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return MetaClassProperty
+		**/
+		public function setConvertedColumnName($name)
+		{
+			$this->columnName = strtolower(
+				preg_replace(':([A-Z]):', '_\1', $name)
+			);
 			
 			return $this;
 		}
@@ -417,13 +423,13 @@ EOT;
 								$out =
 									"set{$method}("
 									."new {$this->type->getClassName()}("
-									."\$array[\$prefix.'{$this->getDumbIdName()}']"
+									."\$array[\$prefix.'{$this->getColumnIdName()}']"
 									."))";
 							} else {
 								$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->getDumbIdName()}'])) {
+if (isset(\$array[\$prefix.'{$this->getColumnIdName()}'])) {
 	\${$varName}->set{$method}(
-		new {$this->type->getClassName()}(\$array[\$prefix.'{$this->getDumbIdName()}'])
+		new {$this->type->getClassName()}(\$array[\$prefix.'{$this->getColumnIdName()}'])
 	);
 }
 
@@ -439,12 +445,12 @@ EOT;
 								if ($this->required) {
 									$out =
 										"set{$method}Id("
-										."\$array[\$prefix.'{$this->getDumbIdName()}']"
+										."\$array[\$prefix.'{$this->getColumnIdName()}']"
 										.')';
 								} else {
 									$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])) {
-	\${$varName}->set{$method}Id(\$array[\$prefix.'{$this->getDumbName()}_{$idName}']);
+if (isset(\$array[\$prefix.'{$this->getColumnName()}_{$idName}'])) {
+	\${$varName}->set{$method}Id(\$array[\$prefix.'{$this->getColumnName()}_{$idName}']);
 }
 
 EOT;
@@ -456,15 +462,15 @@ EOT;
 										$out =
 											"set{$method}("
 											."{$this->type->getClassName()}::dao()->getById("
-											."\$array[\$prefix.'{$this->getDumbIdName()}']"
+											."\$array[\$prefix.'{$this->getColumnIdName()}']"
 											.'))';
 										
 									} else {
 										
 										$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])) {
+if (isset(\$array[\$prefix.'{$this->getColumnName()}_{$idName}'])) {
 	\${$varName}->set{$method}(
-		{$this->type->getClassName()}::dao()->getById(\$array[\$prefix.'{$this->getDumbName()}_{$idName}'])
+		{$this->type->getClassName()}::dao()->getById(\$array[\$prefix.'{$this->getColumnName()}_{$idName}'])
 	);
 }
 
@@ -476,31 +482,31 @@ EOT;
 										if ($this->type->getClassName() == $className) {
 											$out = <<<EOT
 set{$method}(
-	\$this->makeSelf(\$array, \$this->getJoinPrefix('{$this->getDumbName()}'))
+	\$this->makeSelf(\$array, \$this->getJoinPrefix('{$this->getColumnName()}'))
 )
 EOT;
 										} else
 											$out = <<<EOT
 set{$method}(
-	{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, \$prefix.{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
+	{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, \$prefix.{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getColumnName()}'))
 )
 EOT;
 									} else {
 										// avoid infinite recursion
 										if ($this->type->getClassName() == $className) {
 											$out = <<<EOT
-if (isset(\$array[{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}').'{$idName}'])) {
+if (isset(\$array[{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getColumnName()}').'{$idName}'])) {
 	\${$varName}->set{$method}(
-		\$this->makeSelf(\$array, \$this->getJoinPrefix('{$this->getDumbName()}'))
+		\$this->makeSelf(\$array, \$this->getJoinPrefix('{$this->getColumnName()}'))
 	);
 }
 
 EOT;
 										} else
 											$out = <<<EOT
-if (isset(\$array[{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}').'{$idName}'])) {
+if (isset(\$array[{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getColumnName()}').'{$idName}'])) {
 	\${$varName}->set{$method}(
-		{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, \$prefix.{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
+		{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, \$prefix.{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getColumnName()}'))
 	);
 }
 
@@ -530,16 +536,16 @@ EOT;
 					if ($this->type instanceof RangeType) {
 						$value =
 							"\n{$value}\n"
-							."ArrayUtils::getArrayVar(\$array, '{$this->getDumbName()}_min'), "
-							."\nArrayUtils::getArrayVar(\$array, '{$this->getDumbName()}_max')\n)\n";
+							."ArrayUtils::getArrayVar(\$array, '{$this->getColumnName()}_min'), "
+							."\nArrayUtils::getArrayVar(\$array, '{$this->getColumnName()}_max')\n)\n";
 					} else {
-						$value .= "\$array[\$prefix.'{$this->getDumbName()}'])";
+						$value .= "\$array[\$prefix.'{$this->getColumnName()}'])";
 					}
 				} elseif ($this->type instanceof BooleanType) {
 					// MySQL returns 0/1, others - t/f
-					$value = "(bool) strtr(\$array[\$prefix.'{$this->getDumbName()}'], array('f' => null))";
+					$value = "(bool) strtr(\$array[\$prefix.'{$this->getColumnName()}'], array('f' => null))";
 				} else
-					$value = "\$array[\$prefix.'{$this->getDumbName()}']";
+					$value = "\$array[\$prefix.'{$this->getColumnName()}']";
 				
 				if (
 					$this->required
@@ -555,9 +561,9 @@ EOT;
 					if ($this->type instanceof ObjectType) {
 						
 						$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->getDumbName()}'])) {
+if (isset(\$array[\$prefix.'{$this->getColumnName()}'])) {
 	\${$varName}->set{$method}(
-		new {$this->type->getClassName()}(\$array[\$prefix.'{$this->getDumbName()}'])
+		new {$this->type->getClassName()}(\$array[\$prefix.'{$this->getColumnName()}'])
 	);
 }
 
@@ -566,7 +572,7 @@ EOT;
 					
 						$out = <<<EOT
 set{$method}(
-	isset(\$array[\$prefix.'{$this->getDumbName()}'])
+	isset(\$array[\$prefix.'{$this->getColumnName()}'])
 		? {$value}
 		: null
 )
@@ -602,20 +608,15 @@ EOT;
 						$idName = $remote->getIdentifier()->getName();
 						$idMethod = ucfirst($idName);
 						
-						if ($this->columnName)
-							$dumbIdName = $this->getDumbIdName();
-						else
-							$dumbIdName = $this->getDumbName().'_'.$idName;
-
 						if ($this->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
 							$out .=
-								"set('{$dumbIdName}', "
+								"set('{$this->getColumnIdName()}', "
 								."\${$varName}->get{$method}Id())";
 						} else {
 							if ($this->required)
-								$out = "set('{$dumbIdName}', ";
+								$out = "set('{$this->getColumnIdName()}', ";
 							else
-								$out = "set(\n'{$dumbIdName}', ";
+								$out = "set(\n'{$this->getColumnIdName()}', ";
 						
 							if ($this->required)
 								$out .=
@@ -655,22 +656,22 @@ EOT;
 				if ($this->type instanceof ObjectType) {
 					if ($this->type instanceof RangeType)
 						$out .=
-							"{$set}('{$this->getDumbName()}', "
+							"{$set}('{$this->getColumnName()}', "
 							."\${$varName}->get{$method}()";
 					elseif ($this->required)
 						$out .=
-							"{$set}('{$this->getDumbName()}', "
+							"{$set}('{$this->getColumnName()}', "
 							."\${$varName}->get{$method}()->toString()";
 					else
 						$out .=
-							"{$set}(\n'{$this->getDumbName()}', "
+							"{$set}(\n'{$this->getColumnName()}', "
 							."\n"
 							."\${$varName}->get{$method}()\n"
 							."? \${$varName}->get{$method}()->toString()\n"
 							.": null\n";
 				} else {
 					$out .=
-						"{$set}('{$this->getDumbName()}', "
+						"{$set}('{$this->getColumnName()}', "
 						."\${$varName}->{$get}{$method}()";
 				}
 				
@@ -700,27 +701,27 @@ EOT;
 							$property->getType() instanceof ObjectType
 							&& !$property->getType()->isGeneric()
 						)
-							? $property->getDumbIdName()
-							: $property->getDumbName()
+							? $property->getColumnIdName()
+							: $property->getColumnName()
 					);
 				}
 				
 				return $columns;
 			} elseif ($this->type instanceof ObjectType && !$this->type->isGeneric())
 				if ($this->relation->getId() == MetaRelation::MANY_TO_MANY)
-					$dumbName = $this->type->getClass()->getDumbName().'_id';
+					$columnName = $this->type->getClass()->getTableName().'_id';
 				else
-					$dumbName = $this->getDumbIdName();
+					$columnName = $this->getColumnIdName();
 			elseif ($this->type instanceof RangeType) {
 				return
 					array(
-						$this->buildColumn("{$this->getDumbName()}_min"),
-						$this->buildColumn("{$this->getDumbName()}_max")
+						$this->buildColumn("{$this->getColumnName()}_min"),
+						$this->buildColumn("{$this->getColumnName()}_max")
 					);
 			} else
-				$dumbName = $this->getDumbName();
+				$columnName = $this->getColumnName();
 			
-			return $this->buildColumn($dumbName);
+			return $this->buildColumn($columnName);
 		}
 		
 		public function toLightProperty()
@@ -728,9 +729,9 @@ EOT;
 			return
 				LightMetaProperty::make(
 					$this->getName(),
-					$this->getDumbName(),
-					$this->hasDumbIdName()
-						? $this->getDumbIdName()
+					$this->getColumnName(),
+					$this->hasColumnIdName()
+						? $this->getColumnIdName()
 						: null,
 					$this->getType() instanceof ObjectType
 						? $this->getType()->getClassName()
@@ -741,7 +742,7 @@ EOT;
 				);
 		}
 		
-		private function buildColumn($dumbName)
+		private function buildColumn($columnName)
 		{
 			$column = <<<EOT
 addColumn(
@@ -765,7 +766,7 @@ EOT;
 			
 			$column .= <<<EOT
 ,
-'{$dumbName}'
+'{$columnName}'
 )
 EOT;
 

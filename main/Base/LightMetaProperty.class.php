@@ -19,8 +19,8 @@
 	final class LightMetaProperty implements Stringable
 	{
 		protected $name			= null;
-		protected $dumbName		= null;
-		protected $dumbIdName	= null;
+		protected $columnName	= null;
+		protected $columnIdName	= null;
 		protected $className	= null;
 		
 		protected $required	= false;
@@ -40,14 +40,15 @@
 		 * @return LightMetaProperty
 		**/
 		public static function make(
-			$name, $dumbName, $dumbIdName, $className, $required, $generic, $relationId
+			$name, $columnName, $columnIdName, $className,
+			$required, $generic, $relationId
 		)
 		{
 			$self = new self;
 			
 			$self->name = $name;
-			$self->dumbName = $dumbName;
-			$self->dumbIdName = $dumbIdName;
+			$self->columnName = $columnName;
+			$self->columnIdName = $columnIdName;
 			$self->className = $className;
 			
 			$self->required = $required;
@@ -73,32 +74,32 @@
 			return $this;
 		}
 		
-		public function getDumbName()
+		public function getColumnName()
 		{
-			return $this->dumbName;
+			return $this->columnName;
 		}
 		
 		/**
 		 * @return LightMetaProperty
 		**/
-		public function setDumbName($name)
+		public function setColumnName($name)
 		{
-			$this->dumbName = $name;
+			$this->columnName = $name;
 			
 			return $this;
 		}
 		
-		public function getDumbIdName()
+		public function getColumnIdName()
 		{
-			return $this->dumbIdName;
+			return $this->columnIdName;
 		}
 		
 		/**
 		 * @return LightMetaProperty
 		**/
-		public function setDumbIdName($name)
+		public function setColumnIdName($name)
 		{
-			$this->dumbIdName = $name;
+			$this->columnIdName = $name;
 			
 			return $this;
 		}
@@ -173,10 +174,10 @@
 			return
 				'LightMetaProperty::make('
 				."'{$this->name}', "
-				."'{$this->dumbName}', "
+				."'{$this->columnName}', "
 				.(
-					$this->dumbIdName
-						? "'{$this->dumbIdName}'"
+					$this->columnIdName
+						? "'{$this->columnIdName}'"
 						: 'null'
 				)
 				.', '

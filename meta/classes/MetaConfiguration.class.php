@@ -74,6 +74,9 @@
 					$class->setSourceLink($this->defaultSource);
 				}
 				
+				if (isset($xmlClass['table']))
+					$class->setTableName((string) $xmlClass['table']);
+				
 				if (isset($xmlClass['type']))
 					$class->setType(
 						new MetaClassType(
@@ -359,7 +362,7 @@
 					continue;
 				
 				try {
-					$target = $schema->getTableByName($class->getDumbName());
+					$target = $schema->getTableByName($class->getTableName());
 				} catch (MissingElementException $e) {
 					// dropped or tableless
 					continue;
@@ -378,7 +381,7 @@
 				}
 				
 				try {
-					$source = $db->getTableInfo($class->getDumbName());
+					$source = $db->getTableInfo($class->getTableName());
 				} catch (UnsupportedMethodException $e) {
 					$out->
 						errorLine(
@@ -391,7 +394,7 @@
 					break;
 				} catch (ObjectNotFoundException $e) {
 					$out->errorLine(
-						"table '{$class->getDumbName()}' not found, skipping."
+						"table '{$class->getTableName()}' not found, skipping."
 					);
 					continue;
 				}

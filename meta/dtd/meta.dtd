@@ -10,6 +10,7 @@
 		type		(final|abstract|spooked) #IMPLIED
 		extends		CDATA #IMPLIED
 		source		CDATA #IMPLIED
+		table		CDATA #IMPLIED
 >
 
 <!ELEMENT implement EMPTY>

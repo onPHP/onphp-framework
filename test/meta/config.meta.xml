@@ -22,7 +22,7 @@
 		<pattern name="SpookedClass" />
 	</class>
 
-	<class name="TestCity" type="final">
+	<class name="TestCity" type="final" table="custom_table">
 		<properties>
 			<identifier />
 			

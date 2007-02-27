@@ -372,7 +372,7 @@
 					) {
 						$query->get(
 							new DBField(
-								$property->getDumbName(),
+								$property->getColumnName(),
 								$parentTable
 							)
 						);
@@ -387,7 +387,7 @@
 					$alias = 
 						$prefix
 						.$propertyDao->getJoinName(
-							$property->getDumbName()
+							$property->getColumnName()
 						);
 					
 					$fields = $propertyDao->getFields();
@@ -396,7 +396,7 @@
 						$logic =
 							Expression::eq(
 								DBField::create(
-									$property->getDumbIdName(),
+									$property->getColumnIdName(),
 									$parentTable
 								),
 								
@@ -414,14 +414,14 @@
 					
 					$query->arrayGet(
 						$fields,
-						$prefix.$propertyDao->getJoinPrefix($property->getDumbName())
+						$prefix.$propertyDao->getJoinPrefix($property->getColumnName())
 					);
 					
 					$this->joinProperties(
 						$query, 
 						$propertyDao, 
 						$alias, 
-						$prefix.$propertyDao->getJoinPrefix($property->getDumbName())
+						$prefix.$propertyDao->getJoinPrefix($property->getColumnName())
 					);
 				}
 			}
