@@ -1,5 +1,12 @@
 # $Id$
 
+2007-02-27	Ivan Y. Khvostishkov
+
+	* main/Utils/TextUtils.class.php,
+	main/Utils/RussianTextUtils.class.php:
+	added friendlyFileSize() for russian language and specified
+	this method with useful parameters
+
 2007-02-27	Konstantin V. Arkhipov
 
 	* meta/: ability to specify table name for classes implemented.
