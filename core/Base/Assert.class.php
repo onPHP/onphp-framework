@@ -35,6 +35,12 @@
 				self::fail($message);
 		}
 
+		public static function isNotNull($variable, $message = null)
+		{
+			if ($variable === null)
+				self::fail($message);
+		}
+
 		public static function isArray(&$variable, $message = null)
 		{
 			if (!is_array($variable))
