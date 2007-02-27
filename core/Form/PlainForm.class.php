@@ -132,49 +132,6 @@
 				return $primitive->getActualValue();		
 		}
 
-		public function getChoiceValue($name)
-		{
-			$prm	= $this->get($name);
-			
-			Assert::isTrue($prm instanceof ListedPrimitive);
-			
-			$list	= $prm->getList();
-			$value	= $prm->getValue();
-			
-			if ($value instanceof Identifiable)
-				$value = $value->getId();
-
-			if ($value !== null)
-				return $list[$value];
-
-			return null;
-		}
-		
-		public function getActualChoiceValue($name)
-		{
-			$prm	= $this->get($name);
-			
-			Assert::isTrue($prm instanceof ListedPrimitive);
-			
-			$list	= $prm->getList();
-			$value	= $prm->getActualValue();
-			$default= $prm->getDefault();
-			
-			if ($value instanceof Identifiable) {
-				$value = $value->getId();
-				
-				if ($default)
-					$default = $default->getId();
-			}
-			
-			if ($value !== null && isset($list[$value]))
-				return $list[$value];
-			elseif (isset($list[$default]))
-				return $list[$default];
-
-			return null;
-		}
-
 		public function getPrimitiveNames()
 		{
 			return array_keys($this->primitives);

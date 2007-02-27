@@ -46,7 +46,7 @@
 				)->
 				import($request->getGet())->
 				importMore($request->getPost())->
-				getActualValue('action');
+				get('action')->getIndex();
 		}
 		
 		/**

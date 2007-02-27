@@ -4,14 +4,33 @@
 
 	* main/Utils/TextUtils.class.php,
 	main/Utils/RussianTextUtils.class.php:
-	added friendlyFileSize() for russian language and specified
-	this method with useful parameters
+	added friendlyFileSize() for russian language and specified this
+	method with useful parameters.
 
 2007-02-27	Konstantin V. Arkhipov
+
+	* core/Form/Primitives/PrimitiveList.class.php,
+	core/Form/Primitives/PrimitiveMultiList.class.php: BC: breakage:
+	getValue() now returns selected element(s); use getIndex() to get
+	selected index(es).
+
+	* core/Form/Primitives/PrimitiveMultiList.class.php: BC breakage:
+	inner list of available choices are now mandatory; use PrimitiveArray
+	aka (Primitive::set for old behaviour.
+
+	* core/Form/Primitives/PrimitiveArray.class.php: setFetchMode()
+	introduced.
 
 	* meta/: ability to specify table name for classes implemented.
 
 2007-02-26	Konstantin V. Arkhipov
+
+	* core/Form/Primitives/PrimitiveList.class.php: BC breakage:
+	getValue/getActualValue return's now selected list value, not it's
+	index; getIndex() introduced.
+
+	* core/Form/PlainForm.class.php: removed methods getChoiceValue() and
+	getActualChoiceValue().
 
 	* main/Flow/: default action is 'edit' now.
 
@@ -29,7 +48,7 @@
 	* main/Base/TempFile.class.php, main/Utils/FileUtils.class.php,
 	main/Base/TransparentFile.class.php:
 	implementation of temp file and transparent working with
-	file or memory data
+	file or memory data.
 
 2007-02-20	Dmitry E. Demidov
 
@@ -39,7 +58,7 @@
 2007-02-19	Ivan Y. Khvostishkov
 
 	* main/Base/TempDirectory.class.php, main/Utils/FileUtils.class.php:
-	temp directory implementation, directories functions added
+	temp directory implementation, directories functions added.
 
 2007-02-19	Konstantin V. Arkhipov
 

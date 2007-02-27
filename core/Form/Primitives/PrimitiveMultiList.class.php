@@ -15,38 +15,59 @@
 	**/
 	final class PrimitiveMultiList extends PrimitiveList
 	{
+		private $selected = array();
+		
+		public function getValue()
+		{
+			if (null !== $this->value)
+				return $this->selected;
+			
+			return null;
+		}
+		
 		public function import($scope)
 		{
 			if (!BasePrimitive::import($scope))
 				return null;
-
-			if ($this->list) {
-				if (is_array($scope[$this->name])) {
-					$values = array();
-
-					foreach ($scope[$this->name] as $value)
-						if (isset($this->list[$value]))
-							$values[] = $value;
-
-					if (count($values)) {
-						$this->value = $values;
-						
-						return true;
-					}
-				} else {
-					if (isset($this->list[$scope[$this->name]])) {
-						$this->value = $scope[$this->name];
-						
-						return true;
+			
+			if (!$this->list)
+				throw new WrongStateException(
+					'list to check is not set; '
+					.'use PrimitiveArray in case it is intentional'
+				);
+			
+			if (is_array($scope[$this->name])) {
+				$values = array();
+				
+				foreach ($scope[$this->name] as $value) {
+					if (isset($this->list[$value])) {
+						$values[] = $value;
+						$this->selected[$value] = $this->list[$value];
 					}
 				}
-			} else {
-				$this->value = $scope[$this->name];
+				
+				if (count($values)) {
+					$this->value = $values;
+					
+					return true;
+				}
+			} elseif (!empty($scope[$this->name])) {
+				$this->value = array($scope[$this->name]);
 				
 				return true;
 			}
-
+			
 			return false;
+		}
+		
+		/**
+		 * @return PrimitiveMultiList
+		**/
+		public function clean()
+		{
+			$this->selected = array();
+			
+			return parent::clean();
 		}
 	}
 ?>

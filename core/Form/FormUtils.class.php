@@ -84,12 +84,11 @@
 					$class->hasMethod($setter)
 					&& (!$ignoreNull || ($value !== null))
 				) {
-					if ($prm instanceof PrimitiveList) {
-						$list = $prm->getList();
-						$value = $list[$value];
-					} elseif ( // magic!
+					if ( // magic!
 						$prm->getName() == 'id'
-						&& $value instanceof Identifiable
+						&& (
+							$value instanceof Identifiable
+						)
 					) {
 						$value = $value->getId();
 					}

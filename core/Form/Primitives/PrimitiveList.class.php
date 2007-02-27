@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,19 +17,42 @@
 	{
 		protected $list = array();
 		
+		public function getIndex()
+		{
+			return $this->value;
+		}
+		
 		public function getList()
 		{
 			return $this->list;
 		}
 		
 		/**
-		 * @return PrimitiveImage
+		 * @return PrimitiveList
 		**/
 		public function setList($list)
 		{
 			$this->list = $list;
 			
 			return $this;
+		}
+		
+		public function getValue()
+		{
+			if (null !== $this->value)
+				return $this->list[$this->value];
+			
+			return null;
+		}
+		
+		public function getActualValue()
+		{
+			if (null !== $this->value)
+				return $this->getValue();
+			elseif (null !== $this->raw)
+				return $this->raw;
+			
+			return $this->default;
 		}
 		
 		public function import($scope)
@@ -43,7 +66,7 @@
 					is_string($scope[$this->name])
 					|| is_integer($scope[$this->name])
 				)
-				&& isset($this->list[$scope[$this->name]])
+				&& array_key_exists($scope[$this->name], $this->list)
 			) {
 				$this->value = $scope[$this->name];
 				
