@@ -19,14 +19,19 @@
 	**/
 	final class TextUtils extends StaticFactory
 	{
-		public static function friendlyFileSize($size)
+		public static function friendlyFileSize(
+			$size, $precision = 2,
+			$units = array(null, 'k' , 'M', 'G', 'T', 'P'),
+			$spacePunctuation = false
+		)
 		{
-			$units = array(null, 'k' , 'M', 'G', 'T', 'P');
-			
 			if ($size > 0) {
 				$index = min((int) log($size, 1024), count($units) - 1);
 				
-				return round($size / pow(1024, $index), 2).$units[$index];
+				return
+					round($size / pow(1024, $index), $precision)
+					.($spacePunctuation ? ' ' : null)
+					.$units[$index];
 			}
 			
 			return 0;
