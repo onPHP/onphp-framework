@@ -17,6 +17,14 @@
 		extends IdentifiablePrimitive
 		implements ListedPrimitive
 	{
+		public function getIndex()
+		{
+			if ($this->value)
+				return $this->value->getId();
+			else
+				return null;
+		}
+		
 		public function getList()
 		{
 			if ($this->value)
@@ -30,6 +38,11 @@
 			}
 			
 			Assert::isUnreachable();
+		}
+
+		public function setList($list)
+		{
+			throw new UnsupportedMethodException;
 		}
 		
 		/**

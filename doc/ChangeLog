@@ -9,7 +9,10 @@
 
 	* core/Form/Filters/SafeUtf8Filter.class.php,
 	core/Form/Filter.class.php:
-	filtrator for non-utf8 symbols
+	filtrator for non-utf8 symbols.
+
+	* core/Form/Primitives/PrimitiveEnumeration.class.php:
+	made it ListedPrimitive compatible.
 
 2007-02-27	Konstantin V. Arkhipov
 
