@@ -54,7 +54,7 @@
 				
 				$proto = reset($list)->proto();
 				
-				$this->processPath($proto, $path, $query);
+				$this->processPath($proto, $path, $query, $this->getTable());
 				
 				$query->where(
 					Expression::in($mainId, $ids)
@@ -84,13 +84,15 @@
 					|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
 				);
 				
-				if (
+				/*if (
 					$property->getRelationId() == MetaRelation::ONE_TO_MANY
 				) {
 					$table = $dao->getTable();
 				} else {
 					$table = $self->$getter()->getHelperTable();
-				}
+				}*/
+				
+				$table = $dao->getJoinName($property->getColumnName());
 				
 				$id = $this->getIdName();
 				$collection = array();
@@ -104,9 +106,12 @@
 					
 					$alias = 'cid'; // childId, collectionId, whatever
 					
-					$query->get(
-						DBField::create($childId, $table), $alias
-					);
+					$field = DBField::create($childId, $table);
+					
+					$query->get($field, $alias);
+					
+					if (!$property->isRequired())
+						$query->andWhere(Expression::notNull($field));
 					
 					try {
 						$rows = $dao->getCustomList($query);
@@ -117,7 +122,7 @@
 						
 					} catch (ObjectNotFoundException $e) {/*_*/}
 				} else {
-					$prefix = $dao->getTable().'_';
+					$prefix = $table.'_';
 					
 					$query->
 						arrayGet(
@@ -128,7 +133,7 @@
 					if (!$property->isRequired()) {
 						$query->andWhere(
 							Expression::notNull(
-								DBField::create($prefix.$dao->getIdName())
+								DBField::create($dao->getIdName(), $table)
 							)
 						);
 					}
@@ -193,39 +198,53 @@
 				$getter = 'get'.ucfirst($property->getName());
 				$dao = call_user_func(array($remoteName, 'dao'));
 				
+				$propertyDao = call_user_func(
+					array(
+						$property->getClassName(),
+						'dao'
+					)
+				);
+
+				$alias = 
+					$prefix
+					.$propertyDao->getJoinName(
+						$property->getColumnName()
+					);
+				
 				if ($property->getRelationId() == MetaRelation::MANY_TO_MANY) {
-					$table = $self->$getter()->getHelperTable();
+					$helperTable = $self->$getter()->getHelperTable();
+					$helperAlias = $helperTable;
 					
-					if (!$query->hasJoinedTable($table)) {
+					if (!$query->hasJoinedTable($helperAlias)) {
 						$logic =
 							Expression::eq(
 								DBField::create(
 									$this->getIdName(),
-									$this->getTable()
+									$table
 								),
 								
 								DBField::create(
 									$self->$getter()->getParentIdField(),
-									$table
+									$helperAlias
 								)
 							);
 						
 						if ($property->isRequired())
-							$query->join($table, $logic);
+							$query->join($helperTable, $logic, $helperAlias);
 						else
-							$query->leftJoin($table, $logic);
+							$query->leftJoin($helperTable, $logic, $helperAlias);
 					}
 					
 					$logic =
 						Expression::eq(
 							DBField::create(
-								$dao->getIdName(),
-								$dao->getTable()
+								$propertyDao->getIdName(),
+								$alias
 							),
 							
 							DBField::create(
 								$self->$getter()->getChildIdField(),
-								$table
+								$helperAlias
 							)
 						);
 				} else {
@@ -233,7 +252,7 @@
 						Expression::eq(
 							DBField::create(
 								$self->$getter()->getParentIdField(),
-								$dao->getTable()
+								$alias
 							),
 							
 							DBField::create(
@@ -243,15 +262,12 @@
 						);
 				}
 				
-				if (!$query->hasJoinedTable($dao->getTable())) {
+				if (!$query->hasJoinedTable($alias)) {
 					if ($property->isRequired())
-						$query->join($dao->getTable(), $logic);
+						$query->join($dao->getTable(), $logic, $alias);
 					else
-						$query->leftJoin($dao->getTable(), $logic);
+						$query->leftJoin($dao->getTable(), $logic, $alias);
 				}
-				
-				return $propertyDao->guessAtom(implode('.', $path), $query);
-
 			} else { // OneToOne, LazyOneToOne
 				
 				// prevents useless joins
@@ -266,19 +282,6 @@
 							$table
 						);
 
-				$propertyDao = call_user_func(
-					array(
-						$property->getClassName(),
-						'dao'
-					)
-				);
-
-				$alias = 
-					$prefix
-					.$propertyDao->getJoinName(
-						$property->getColumnName()
-					);
-				
 				if (!$query->hasJoinedTable($alias)) {
 					$logic =
 						Expression::eq(
@@ -298,16 +301,14 @@
 					else
 						$query->leftJoin($propertyDao->getTable(), $logic, $alias);
 				}
-				
-				return $propertyDao->guessAtom(
-					implode('.', $path), 
-					$query,
-					$alias, 
-					$prefix.$propertyDao->getJoinPrefix($property->getColumnName())
-				);
 			}
 			
-			Assert::isUnreachable();
+			return $propertyDao->guessAtom(
+				implode('.', $path), 
+				$query,
+				$alias, 
+				$prefix.$propertyDao->getJoinPrefix($property->getColumnName())
+			);
 		}
 		
 		public function guessAtom(
