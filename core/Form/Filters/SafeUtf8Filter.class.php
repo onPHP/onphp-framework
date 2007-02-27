@@ -42,7 +42,7 @@
 			if (!isset($matches[0]))
 				return null;
 			else
-				return join('', $matches[0]);
+				return implode(null, $matches[0]);
 		}
 	}
 ?>
