@@ -39,7 +39,7 @@
 		);
 
 		private static $bytePrefixes = array(
-			null, 'к', 'М', 'Г', 'Т', 'П'
+			null, 'К', 'М', 'Г', 'Т', 'П'
 		);
 	
 		/**
