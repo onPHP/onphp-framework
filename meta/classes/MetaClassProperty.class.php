@@ -482,7 +482,7 @@ EOT;
 										} else
 											$out = <<<EOT
 set{$method}(
-	{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, {$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
+	{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, \$prefix.{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
 )
 EOT;
 									} else {
@@ -500,7 +500,7 @@ EOT;
 											$out = <<<EOT
 if (isset(\$array[{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}').'{$idName}'])) {
 	\${$varName}->set{$method}(
-		{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, {$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
+		{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, \$prefix.{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getDumbName()}'))
 	);
 }
 

@@ -19,7 +19,12 @@
 		
 		public function getJoinPrefix($field)
 		{
-			return $this->getTable().'_'.$field.'__';
+			return $this->getJoinName($field).'__';
+		}
+		
+		public function getJoinName($field)
+		{
+			return $field.'_'.$this->getTable();
 		}
 		
 		public function makeObject(&$array, $prefix = null)

@@ -344,15 +344,16 @@
 				!$this->projection
 				&& $this->strategy->getId() == FetchStrategy::JOIN
 			) {
-				$this->joinProperties($query, $this->dao);
+				$this->joinProperties($query, $this->dao, $this->dao->getTable());
 			}
-			
+
 			return $query;
 		}
 		
 		private function joinProperties(
 			SelectQuery $query,
 			ComplexBuilderDAO $parentDao,
+			$parentTable,
 			$prefix = null
 		)
 		{
@@ -372,7 +373,7 @@
 						$query->get(
 							new DBField(
 								$property->getDumbName(),
-								$parentDao->getTable()
+								$parentTable
 							)
 						);
 						
@@ -383,40 +384,25 @@
 						array($property->getClassName(), 'dao')
 					);
 					
-					if ($propertyDao->getTable() == $parentDao->getTable()) {
-						$alias = $property->getDumbName();
-						
-						$fields = $propertyDao->getFields();
-						
-						$fields[
-							array_search($parentDao->getIdName(), $fields)
-						] = new SelectField(
-							new DBField(
-								$property->getDumbIdName(),
-								$propertyDao->getTable()
-							),
-							
-							$parentDao->getJoinPrefix($property->getDumbName())
-							.$propertyDao->getIdName()
+					$alias = 
+						$prefix
+						.$propertyDao->getJoinName(
+							$property->getDumbName()
 						);
-					} else {
-						$alias = null;
-						$fields = $propertyDao->getFields();
-					}
 					
-					if (!$query->hasJoinedTable($propertyDao->getTable())) {
+					$fields = $propertyDao->getFields();
+					
+					if (!$query->hasJoinedTable($alias)) {
 						$logic =
 							Expression::eq(
 								DBField::create(
 									$property->getDumbIdName(),
-									$parentDao->getTable()
+									$parentTable
 								),
 								
 								DBField::create(
 									$propertyDao->getIdName(),
 									$alias
-										? $alias
-										: $propertyDao->getTable()
 								)
 							);
 						
@@ -428,7 +414,14 @@
 					
 					$query->arrayGet(
 						$fields,
-						$propertyDao->getJoinPrefix($property->getDumbName())
+						$prefix.$propertyDao->getJoinPrefix($property->getDumbName())
+					);
+					
+					$this->joinProperties(
+						$query, 
+						$propertyDao, 
+						$alias, 
+						$prefix.$propertyDao->getJoinPrefix($property->getDumbName())
 					);
 				}
 			}
