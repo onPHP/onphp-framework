@@ -187,29 +187,28 @@
 				&& !$property->isGenericType()
 			);
 			
+			$propertyDao = call_user_func(
+				array(
+					$property->getClassName(),
+					'dao'
+				)
+			);
+
+			$alias = 
+				$prefix
+				.$propertyDao->getJoinName(
+					$property->getColumnName()
+				);
+			
 			if (
 				$property->getRelationId() == MetaRelation::ONE_TO_MANY
 				|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
 			) {
-				// FIXME: use prefix and table in this branch of "if"
 				$remoteName = $property->getClassName();
 				$selfName = $this->getObjectName();
 				$self = new $selfName;
 				$getter = 'get'.ucfirst($property->getName());
 				$dao = call_user_func(array($remoteName, 'dao'));
-				
-				$propertyDao = call_user_func(
-					array(
-						$property->getClassName(),
-						'dao'
-					)
-				);
-
-				$alias = 
-					$prefix
-					.$propertyDao->getJoinName(
-						$property->getColumnName()
-					);
 				
 				if ($property->getRelationId() == MetaRelation::MANY_TO_MANY) {
 					$helperTable = $self->$getter()->getHelperTable();
