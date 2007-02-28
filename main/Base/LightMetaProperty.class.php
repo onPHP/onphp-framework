@@ -18,15 +18,19 @@
 	**/
 	final class LightMetaProperty implements Stringable
 	{
-		protected $name			= null;
-		protected $columnName	= null;
-		protected $columnIdName	= null;
-		protected $className	= null;
+		private $name			= null;
+		private $columnName		= null;
+		private $columnIdName	= null;
+		private $className		= null;
 		
-		protected $required	= false;
-		protected $generic	= false;
+		private $required	= false;
+		private $generic	= false;
 		
-		protected $relationId	= null;
+		/// @see MetaRelation
+		private $relationId	= null;
+		
+		/// @see FetchStrategy
+		private $strategyId	= null;
 		
 		/**
 		 * @return LightMetaProperty
@@ -41,7 +45,7 @@
 		**/
 		public static function make(
 			$name, $columnName, $columnIdName, $className,
-			$required, $generic, $relationId
+			$required, $generic, $relationId, $strategyId
 		)
 		{
 			$self = new self;
@@ -55,6 +59,7 @@
 			$self->generic = $generic;
 			
 			$self->relationId = $relationId;
+			$self->strategyId = $strategyId;
 			
 			return $self;
 		}
@@ -164,6 +169,21 @@
 			return $this;
 		}
 		
+		public function getFetchStrategyId()
+		{
+			return $this->strategyId;
+		}
+		
+		/**
+		 * @return LightMetaProperty
+		**/
+		public function setFetchStrategy(FetchStrategy $strategy)
+		{
+			$this->strategyId = $strategy->getId();
+			
+			return $this;
+		}
+		
 		public function getContainerName($holderName)
 		{
 			return $holderName.ucfirst($this->getName()).'DAO';
@@ -202,6 +222,12 @@
 				.(
 					$this->relationId
 						? "'".$this->relationId."'"
+						: 'null'
+				)
+				.', '
+				.(
+					$this->strategyId
+						? $this->strategyId
 						: 'null'
 				)
 				.')';

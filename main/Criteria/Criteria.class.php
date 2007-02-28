@@ -363,6 +363,7 @@
 				if (
 					$property->getRelationId() == MetaRelation::ONE_TO_ONE
 					&& !$property->isGenericType()
+					&& !$property->getFetchStrategyId() == FetchStrategy::CASCADE
 				) {
 					if (
 						is_subclass_of(
@@ -420,6 +421,7 @@
 								.$field
 						);
 					}
+					
 					$this->joinProperties(
 						$query, 
 						$propertyDao, 

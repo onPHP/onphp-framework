@@ -1,5 +1,10 @@
 # $Id$
 
+2007-02-28	Konstantin V. Arkhipov
+
+	* meta/: implemented recursion checking for 1-to-1 relations, forces
+	cascade fetch strategy for single properties, if found.
+
 2007-02-27	Ivan Y. Khvostishkov
 
 	* main/Utils/TextUtils.class.php,

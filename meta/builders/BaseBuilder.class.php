@@ -73,12 +73,25 @@
 						$buildSetter = true;
 					}
 					
-					if ($filler = $property->toDaoSetter($className, false)) {
+					if ($property->getFetchStrategyId() == FetchStrategy::CASCADE) {
+						$nonJoin = true;
+					} else {
+						$nonJoin = false;
+					}
+					
+					if ($filler = $property->toDaoSetter($className, $nonJoin)) {
+						if ($nonJoin)
+							$prefix =
+								'// forcing cascade strategy due to recursion'
+								."\n";
+						else
+							$prefix = null;
+						
 						// TODO: make it sane
 						if (substr($filler, 0, 2) == 'if') {
-							$joinedStandaloneFillers[] = $filler;
+							$joinedStandaloneFillers[] = $prefix.$filler;
 						} else {
-							$joinedChainFillers[] = $filler;
+							$joinedChainFillers[] = $prefix.$filler;
 						}
 						
 						$buildSetter = true;

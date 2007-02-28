@@ -28,6 +28,8 @@
 		
 		private $relation	= null;
 		
+		private $strategy	= null;
+		
 		public function __construct(
 			$name,
 			BasePropertyType $type,
@@ -219,6 +221,32 @@
 			$this->relation = $relation;
 			
 			return $this;
+		}
+		
+		/**
+		 * @return MetaClassProperty
+		**/
+		public function setFetchStrategy(FetchStrategy $strategy)
+		{
+			$this->strategy = $strategy;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return FetchStrategy
+		**/
+		public function getFetchStrategy()
+		{
+			return $this->strategy;
+		}
+		
+		public function getFetchStrategyId()
+		{
+			if ($this->strategy)
+				return $this->strategy->getId();
+			
+			return null;
 		}
 		
 		public function toMethods(
@@ -738,7 +766,8 @@ EOT;
 						: null,
 					$this->isRequired(),
 					$this->getType()->isGeneric(),
-					$this->getRelationId()
+					$this->getRelationId(),
+					$this->getFetchStrategyId()
 				);
 		}
 		

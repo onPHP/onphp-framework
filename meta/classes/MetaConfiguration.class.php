@@ -278,6 +278,15 @@
 				$this->checkSanity($class);
 			}
 			
+			// check for recursion in relations
+			foreach ($this->classes as $name => $class) {
+				foreach ($class->getProperties() as $property) {
+					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
+						$this->checkRecursion($class, $property, $class);
+					}
+				}
+			}
+			
 			return $this;
 		}
 		
@@ -576,6 +585,48 @@
 			}
 			
 			return $this;
+		}
+		
+		private function checkRecursion(
+			MetaClass $class,
+			MetaClassProperty $property,
+			MetaClass $holder,
+			$paths = array()
+		) {
+			Assert::isTrue(
+				$property->getRelationId()
+				== MetaRelation::ONE_TO_ONE
+			);
+			
+			$remote = $property->getType()->getClass();
+			
+			if (isset($paths[$holder->getName()][$remote->getName()]))
+				return true;
+			else {
+				$paths[$holder->getName()][$remote->getName()] = true;
+				
+				foreach ($remote->getProperties() as $remoteProperty) {
+					if (
+						$remoteProperty->getRelationId()
+						== MetaRelation::ONE_TO_ONE
+					) {
+						if (
+							$this->checkRecursion(
+								$remote,
+								$remoteProperty,
+								$holder,
+								$paths
+							)
+						) {
+							$remoteProperty->setFetchStrategy(
+								FetchStrategy::cascade()
+							);
+						}
+					}
+				}
+			}
+			
+			return false;
 		}
 	}
 ?>
