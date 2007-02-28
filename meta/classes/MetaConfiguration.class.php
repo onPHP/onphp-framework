@@ -112,6 +112,13 @@
 						$property->setColumnName(
 							(string) $id['column']
 						);
+					} elseif (
+						$property->getType() instanceof ObjectType
+						&& !$property->getType()->isGeneric()
+					) {
+						$property->setColumnName($property->getConvertedName().'_id');
+					} else {
+						$property->setColumnName($property->getConvertedName());
 					}
 					
 					$property->
@@ -140,6 +147,13 @@
 						$property->setColumnName(
 							(string) $xmlProperty['column']
 						);
+					} elseif (
+						$property->getType() instanceof ObjectType
+						&& !$property->getType()->isGeneric()
+					) {
+						$property->setColumnName($property->getConvertedName().'_id');
+					} else {
+						$property->setColumnName($property->getConvertedName());
 					}
 					
 					if ((string) $xmlProperty['required'] == 'true')
@@ -201,12 +215,13 @@
 						}
 					}
 					
-					if (isset($xmlProperty['default']))
+					if (isset($xmlProperty['default'])) {
 						// will be correctly autocasted further down the code
 						$property->getType()->setDefault(
 							(string) $xmlProperty['default']
 						);
-					
+					}
+
 					$class->addProperty($property);
 				}
 				
@@ -501,7 +516,7 @@
 				$typeClass = $type.'Type';
 			else
 				$typeClass = 'ObjectType';
-			
+
 			return new MetaClassProperty($name, new $typeClass($type), $class);
 		}
 		

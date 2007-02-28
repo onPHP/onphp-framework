@@ -36,12 +36,15 @@
 			MetaClass $class
 		)
 		{
-			$this->setName($name);
+			$this->name = $name;
 			
 			$this->type = $type;
 			
 			$this->class = $class;
 			
+			// TODO: remove this 'convenience' 
+			// because password hash can be longer than 40
+			// seems to be business logic
 			if ($type instanceof PasswordType)
 				$this->size = 40; // strlen(sha1())
 		}
@@ -66,34 +69,12 @@
 		{
 			$this->name = $name;
 			
-			if (!$this->columnName)
-				return $this->setConvertedColumnName($name);
-			
 			return $this;
 		}
 		
 		public function getColumnName()
 		{
 			return $this->columnName;
-		}
-		
-		// foreign keys and identifiers
-		public function getColumnIdName()
-		{
-			Assert::isTrue(
-				$this->hasColumnIdName(),
-				'hey, i am just a property!'
-			);
-			
-			if ($this->isIdentifier())
-				return $this->columnName;
-			
-			return $this->columnName.'_id';
-		}
-		
-		public function hasColumnIdName()
-		{
-			return ($this->isIdentifier() || $this->relation);
 		}
 		
 		/**
@@ -109,13 +90,11 @@
 		/**
 		 * @return MetaClassProperty
 		**/
-		public function setConvertedColumnName($name)
+		public function getConvertedName()
 		{
-			$this->columnName = strtolower(
-				preg_replace(':([A-Z]):', '_\1', $name)
+			return strtolower(
+				preg_replace(':([A-Z]):', '_\1', $this->name)
 			);
-			
-			return $this;
 		}
 		
 		/**
@@ -451,13 +430,13 @@ EOT;
 								$out =
 									"set{$method}("
 									."new {$this->type->getClassName()}("
-									."\$array[\$prefix.'{$this->getColumnIdName()}']"
+									."\$array[\$prefix.'{$this->getColumnName()}']"
 									."))";
 							} else {
 								$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->getColumnIdName()}'])) {
+if (isset(\$array[\$prefix.'{$this->getColumnName()}'])) {
 	\${$varName}->set{$method}(
-		new {$this->type->getClassName()}(\$array[\$prefix.'{$this->getColumnIdName()}'])
+		new {$this->type->getClassName()}(\$array[\$prefix.'{$this->getColumnName()}'])
 	);
 }
 
@@ -473,7 +452,7 @@ EOT;
 								if ($this->required) {
 									$out =
 										"set{$method}Id("
-										."\$array[\$prefix.'{$this->getColumnIdName()}']"
+										."\$array[\$prefix.'{$this->getColumnName()}']"
 										.')';
 								} else {
 									$out = <<<EOT
@@ -490,7 +469,7 @@ EOT;
 										$out =
 											"set{$method}("
 											."{$this->type->getClassName()}::dao()->getById("
-											."\$array[\$prefix.'{$this->getColumnIdName()}']"
+											."\$array[\$prefix.'{$this->getColumnName()}']"
 											.'))';
 										
 									} else {
@@ -638,13 +617,13 @@ EOT;
 						
 						if ($this->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
 							$out .=
-								"set('{$this->getColumnIdName()}', "
+								"set('{$this->getColumnName()}', "
 								."\${$varName}->get{$method}Id())";
 						} else {
 							if ($this->required)
-								$out = "set('{$this->getColumnIdName()}', ";
+								$out = "set('{$this->getColumnName()}', ";
 							else
-								$out = "set(\n'{$this->getColumnIdName()}', ";
+								$out = "set(\n'{$this->getColumnName()}', ";
 						
 							if ($this->required)
 								$out .=
@@ -725,12 +704,7 @@ EOT;
 				
 				foreach ($remote->getProperties() as $property) {
 					$columns[] = $property->buildColumn(
-						(
-							$property->getType() instanceof ObjectType
-							&& !$property->getType()->isGeneric()
-						)
-							? $property->getColumnIdName()
-							: $property->getColumnName()
+						$property->getColumnName()
 					);
 				}
 				
@@ -739,7 +713,7 @@ EOT;
 				if ($this->relation->getId() == MetaRelation::MANY_TO_MANY)
 					$columnName = $this->type->getClass()->getTableName().'_id';
 				else
-					$columnName = $this->getColumnIdName();
+					$columnName = $this->getColumnName();
 			elseif ($this->type instanceof RangeType) {
 				return
 					array(
@@ -758,9 +732,6 @@ EOT;
 				LightMetaProperty::make(
 					$this->getName(),
 					$this->getColumnName(),
-					$this->hasColumnIdName()
-						? $this->getColumnIdName()
-						: null,
 					$this->getType() instanceof ObjectType
 						? $this->getType()->getClassName()
 						: null,

@@ -20,7 +20,6 @@
 	{
 		private $name			= null;
 		private $columnName		= null;
-		private $columnIdName	= null;
 		private $className		= null;
 		
 		private $required	= false;
@@ -44,15 +43,14 @@
 		 * @return LightMetaProperty
 		**/
 		public static function make(
-			$name, $columnName, $columnIdName, $className,
-			$required, $generic, $relationId, $strategyId
+			$name, $columnName, $className, $required, 
+			$generic, $relationId, $strategyId
 		)
 		{
 			$self = new self;
 			
 			$self->name = $name;
 			$self->columnName = $columnName;
-			$self->columnIdName = $columnIdName;
 			$self->className = $className;
 			
 			$self->required = $required;
@@ -90,21 +88,6 @@
 		public function setColumnName($name)
 		{
 			$this->columnName = $name;
-			
-			return $this;
-		}
-		
-		public function getColumnIdName()
-		{
-			return $this->columnIdName;
-		}
-		
-		/**
-		 * @return LightMetaProperty
-		**/
-		public function setColumnIdName($name)
-		{
-			$this->columnIdName = $name;
 			
 			return $this;
 		}
@@ -195,12 +178,6 @@
 				'LightMetaProperty::make('
 				."'{$this->name}', "
 				."'{$this->columnName}', "
-				.(
-					$this->columnIdName
-						? "'{$this->columnIdName}'"
-						: 'null'
-				)
-				.', '
 				.(
 					$this->className
 						? "'{$this->className}'"

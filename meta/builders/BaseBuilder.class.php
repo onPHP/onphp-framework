@@ -417,7 +417,7 @@ EOT;
 						} else {
 							$row .=
 								"'{$property->getName()}"
-								."' => '{$property->getColumnIdName()}'";
+								."' => '{$property->getColumnName()}'";
 						}
 					} else
 						$row = null;

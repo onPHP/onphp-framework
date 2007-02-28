@@ -278,7 +278,7 @@
 				)
 					return
 						new DBField(
-							$property->getColumnIdName(),
+							$property->getColumnName(),
 							$table
 						);
 

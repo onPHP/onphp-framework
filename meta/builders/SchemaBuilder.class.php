@@ -95,7 +95,7 @@ EOT;
 						
 						$foreignPropery->
 							setName($name)->
-							setConvertedColumnName($name)->
+							setColumnName($foreignPropery->getConvertedName())->
 							// we don't need primary key here
 							setIdentifier(false);
 						
@@ -112,7 +112,7 @@ EOT;
 EOT;
 					} else {
 						$sourceTable = $class->getTableName();
-						$sourceColumn = $property->getColumnIdName();
+						$sourceColumn = $property->getColumnName();
 						
 						$targetTable = $foreignClass->getTableName();
 						$targetColumn = $foreignClass->getIdentifier()->getColumnName();

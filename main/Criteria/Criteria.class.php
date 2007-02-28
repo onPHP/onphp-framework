@@ -346,7 +346,7 @@
 			) {
 				$this->joinProperties($query, $this->dao, $this->dao->getTable());
 			}
-			
+
 			return $query;
 		}
 		
@@ -397,7 +397,7 @@
 						$logic =
 							Expression::eq(
 								DBField::create(
-									$property->getColumnIdName(),
+									$property->getColumnName(),
 									$parentTable
 								),
 								
