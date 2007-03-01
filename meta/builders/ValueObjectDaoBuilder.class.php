@@ -25,6 +25,10 @@
 			$out .= <<<EOT
 abstract class Auto{$class->getName()}DAO extends ValueObjectDAO
 {
+EOT;
+			if (sizeof($class->getProperties())) {
+
+				$out .= <<<EOT
 	/**
 	 * @return InsertOrUpdateQuery
 	**/
@@ -33,7 +37,13 @@ abstract class Auto{$class->getName()}DAO extends ValueObjectDAO
 
 EOT;
 			
-			$out .= self::buildFillers($class);
+				$out .= self::buildFillers($class);
+			} else {
+				$out .= <<<EOT
+}
+
+EOT;
+			}
 			
 			return $out.self::getHeel();
 		}
