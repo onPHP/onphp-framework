@@ -475,9 +475,9 @@ EOT;
 									} else {
 										
 										$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->getColumnName()}_{$idName}'])) {
+if (isset(\$array[\$prefix.'{$this->getColumnName()}'])) {
 	\${$varName}->set{$method}(
-		{$this->type->getClassName()}::dao()->getById(\$array[\$prefix.'{$this->getColumnName()}_{$idName}'])
+		{$this->type->getClassName()}::dao()->getById(\$array[\$prefix.'{$this->getColumnName()}'])
 	);
 }
 
