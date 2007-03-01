@@ -91,11 +91,7 @@
 			
 			if (!$form->getErrors()) {
 				
-				$object = $form->getValue('id');
-				
-				FormUtils::form2object($form, $object, false);
-				
-				$object = $object->dao()->save($object);
+				$object = $this->saveObject($request, $form);
 				
 				return
 					ModelAndView::create()->
@@ -119,6 +115,15 @@
 			}
 			
 			/* NOTREACHED */
+		}
+		
+		public function saveObject(HttpRequest $request, Form $form) 
+		{
+			$object = $form->getValue('id');
+			
+			FormUtils::form2object($form, $object, false);
+			
+			return $object->dao()->save($object);
 		}
 		
 		/**
@@ -155,13 +160,9 @@
 			
 			$form->markGood('id');
 			
-			$object = clone $this->subject;
-			
 			if (!$form->getErrors()) {
 				
-				FormUtils::form2object($form, $object);
-				
-				$object = $object->dao()->add($object);
+				$object = $this->addObject($request, $form);
 				
 				return
 					ModelAndView::create()->
@@ -178,12 +179,19 @@
 					setModel(
 						Model::create()->
 						set('form', $form)->
-						set('subject', $object)->
+						set('subject', clone $this->subject)->
 						set('editorResult', self::COMMAND_FAILED)
 					);
 			}
 			
 			/* NOTREACHED */
+		}
+		
+		public function addObject(HttpRequest $request, Form $form)
+		{
+			$object = clone $this->subject;
+			FormUtils::form2object($form, $object);
+			return $object->dao()->add($object);
 		}
 	}
 ?>
