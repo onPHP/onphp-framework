@@ -1,5 +1,13 @@
 # $Id$
 
+2007-03-02	Dmitry E. Demidov
+
+	* core/Cache/WatermarkedPeer.class.php, 
+	main/DAOs/Workers/FileSystemDaoWorker.class.php,
+	main/DAOs/Workers/SmartDaoWorker.class.php,
+	main/DAOs/Workers/VoodooDaoWorker.class.php: added ability to set separate 
+	watermark on classes.
+	
 2007-02-26	Konstantin V. Arkhipov
 
 	* core/Base/Enumeration.class.php: constructor's logic moved to

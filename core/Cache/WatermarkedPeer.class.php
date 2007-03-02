@@ -20,6 +20,17 @@
 		private $peer		= null;
 		private $watermark	= null;
 		
+		/// map class -> watermark
+		private $map		= null;
+		
+		public static function create(
+			CachePeer $peer,
+			$watermark = "Single onPHP's project"
+		)
+		{
+			return new self($peer, $watermark);
+		}
+
 		public function __construct(
 			CachePeer $peer,
 			$watermark = "Single onPHP's project"
@@ -34,20 +45,47 @@
 			return $this->watermark;
 		}
 		
+		public function getActualWatermark()
+		{
+			if (
+				($this->className)
+				&& (isset($this->map[$this->className]))
+			)
+				return md5($this->map[$this->className].'::');
+			
+			return $this->watermark;
+		}
+		
+		/**
+		 * associative array, className -> watermark
+		**/
+		public function setClassMap($map)
+		{
+			$this->map = $map;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return CachePeer
+		**/
 		public function mark($className)
 		{
-			$this->peer->mark($this->watermark.$className);
+			$this->className = $className;
+			
+			$this->peer->mark($this->getActualWatermark().$className);
+			
 			return $this;
 		}
 		
 		public function get($key)
 		{
-			return $this->peer->get($this->watermark.$key);
+			return $this->peer->get($this->getActualWatermark().$key);
 		}
 		
 		public function delete($key)
 		{
-			return $this->peer->delete($this->watermark.$key);
+			return $this->peer->delete($this->getActualWatermark().$key);
 		}
 		
 		public function clean()
@@ -64,7 +102,10 @@
 			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			return $this->peer->$action($this->watermark.$key, $value, $expires);
+			return 
+				$this->peer->$action(
+					$this->getActualWatermark().$key, $value, $expires
+				);
 		}
 	}
 ?>
