@@ -172,7 +172,7 @@
 			if (!$pool->get($semKey))
 				return false;
 			
-			if (!$map = Cache::me()->get($this->indexKey)) {
+			if (!$map = Cache::me()->mark($this->className)->get($this->indexKey)) {
 				$pool->free($semKey);
 				return false;
 			}
