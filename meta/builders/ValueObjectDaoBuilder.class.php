@@ -22,8 +22,14 @@
 			
 			$out = self::getHead();
 			
+			if ($class->getParent()) {
+				$parent = $class->getParent()->getName().'DAO';
+			} else {
+				$parent = 'ValueObjectDAO';
+			}
+			
 			$out .= <<<EOT
-abstract class Auto{$class->getName()}DAO extends ValueObjectDAO
+abstract class Auto{$class->getName()}DAO extends {$parent}
 {
 EOT;
 			if (sizeof($class->getProperties())) {
@@ -40,6 +46,7 @@ EOT;
 				$out .= self::buildFillers($class);
 			} else {
 				$out .= <<<EOT
+				
 }
 
 EOT;
