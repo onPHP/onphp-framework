@@ -51,8 +51,8 @@
 					
 					if ($condition) {
 						$getter = 'get'.ucfirst($name);
-						$value = $object->$getter();
 						if ($class->hasMethod($getter)) {
+							$value = $object->$getter();
 							if (!$ignoreNull || ($value !== null)) {
 								$prm = $form->get($name);
 								if ($prm instanceof PrimitiveIdentifier) {
