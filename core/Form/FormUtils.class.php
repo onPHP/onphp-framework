@@ -37,7 +37,12 @@
 						$value = $object->$getter();
 						
 						if (!$ignoreNull || ($value !== null)) {
-							$form->importValue($name, $value);
+							$prm = $form->get($name);
+							if ($prm instanceof PrimitiveIdentifier) {
+								$prm->importValue($value);
+							} else {
+								$prm->setValue($value);
+							}
 						}
 					}
 				}
@@ -54,14 +59,19 @@
 							&& $class->hasProperty($name.'Id')
 						)
 					) {
-						$getter	= 'get'.ucfirst($name);
-						$value	= $object->$getter();
+						$getter = 'get'.ucfirst($name);
+						$value = $object->$getter();
 						
 						if (
 							$class->hasMethod($getter)
 							&& (!$ignoreNull || ($value !== null))
 						) {
-							$form->importValue($name, $value);
+							$prm = $form->get($name);
+							if ($prm instanceof PrimitiveIdentifier) {
+								$prm->importValue($value);
+							} else {
+								$prm->setValue($value);
+							}
 						}
 					}
 				}
