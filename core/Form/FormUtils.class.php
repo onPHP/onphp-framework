@@ -22,55 +22,44 @@
 			Assert::isTrue(is_object($object));
 			
 			$primitives = $form->getPrimitiveList();
+			$class = new ReflectionClass($object);
 			
-			if ($object instanceof Prototyped) {
-				foreach ($object->proto()->getPropertyList() as $property) {
-					$name = $property->getName();
-					
-					if (
-						isset($primitives[$name])
-						&&
-							$property->getRelationId()
-							!= MetaRelation::LAZY_ONE_TO_ONE
-					) {
-						$getter = 'get'.ucfirst($name);
-						$value = $object->$getter();
-						
-						if (!$ignoreNull || ($value !== null)) {
-							$prm = $form->get($name);
-							if ($prm instanceof PrimitiveIdentifier) {
-								$prm->importValue($value);
-							} else {
-								$prm->setValue($value);
-							}
-						}
-					}
-				}
+			$isPrototyped = ($object instanceof Prototyped);
+			
+			if ($isPrototyped) {
+				$propertyList = $object->proto()->getPropertyList();
 			} else {
-				$class = new ReflectionClass($object);
+				$propertyList = $class->getProperties();
+			}
+			
+			foreach ($propertyList as $property) {
+				$name = $property->getName();
 				
-				foreach ($class->getProperties() as $property) {
-					$name = $property->getName();
+				if (isset($primitives[$name])) {
 					
-					if (
-						isset($primitives[$name])
-						&& !( // in case it's LazyOneToOne
-							$primitives[$name] instanceof PrimitiveIdentifier
-							&& $class->hasProperty($name.'Id')
-						)
-					) {
+					if ($isPrototyped) {
+						$condition = 
+							$property->getRelationId()
+							!= MetaRelation::LAZY_ONE_TO_ONE;
+					} else {
+						$condition = 
+							 !( // in case it's LazyOneToOne
+								$primitives[$name] instanceof PrimitiveIdentifier
+								&& $class->hasProperty($name.'Id')
+							);
+					}
+					
+					if ($condition) {
 						$getter = 'get'.ucfirst($name);
 						$value = $object->$getter();
-						
-						if (
-							$class->hasMethod($getter)
-							&& (!$ignoreNull || ($value !== null))
-						) {
-							$prm = $form->get($name);
-							if ($prm instanceof PrimitiveIdentifier) {
-								$prm->importValue($value);
-							} else {
-								$prm->setValue($value);
+						if ($class->hasMethod($getter)) {
+							if (!$ignoreNull || ($value !== null)) {
+								$prm = $form->get($name);
+								if ($prm instanceof PrimitiveIdentifier) {
+									$prm->importValue($value);
+								} else {
+									$prm->setValue($value);
+								}
 							}
 						}
 					}
