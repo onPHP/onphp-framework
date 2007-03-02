@@ -41,7 +41,7 @@
 						? 'true'
 						: 'false';
 
-			return 'false';
+			return 'null';
 		}
 
 		public function isMeasurable()
