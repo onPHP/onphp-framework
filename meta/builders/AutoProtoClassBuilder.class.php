@@ -13,22 +13,17 @@
 	/**
 	 * @ingroup Builders
 	**/
-	final class ProtoClassBuilder extends BaseBuilder
+	final class AutoProtoClassBuilder extends BaseBuilder
 	{
 		public static function build(MetaClass $class)
 		{
 			$out = self::getHead();
 			
-			if ($type = $class->getType())
-				$type = $type->toString().' ';
-			else
-				$type = null;
-
 			$parent = $class->getParent();
 			
 			if ($parent) {
 				$out .= <<<EOT
-{$type}class Proto{$class->getName()} extends Proto{$parent->getName()}
+abstract class AutoProto{$class->getName()} extends Proto{$parent->getName()}
 {
 	/**
 	 * @return Form
@@ -41,7 +36,7 @@
 EOT;
 			} else {
 				$out .= <<<EOT
-{$type}class Proto{$class->getName()} extends AbstractProtoClass
+{$type}class AutoProto{$class->getName()} extends AbstractProtoClass
 {
 	/**
 	 * @return Form
