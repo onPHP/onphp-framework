@@ -62,10 +62,5 @@
 		{
 			return 'Timestamp';
 		}
-		
-		protected function checkType($object)
-		{
-			return ($object instanceof Timestamp);
-		}
 	}
 ?>

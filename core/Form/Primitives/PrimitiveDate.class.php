@@ -25,7 +25,7 @@
 		**/
 		public function setValue(/* Date */ $object)
 		{
-			Assert::isTrue(get_class($object) == $this->getObjectName());
+			$this->checkType($object);
 
 			$this->value = $object;
 			
@@ -38,7 +38,7 @@
 		**/
 		public function setMin(/* Date */ $object)
 		{
-			Assert::isTrue(get_class($object) == $this->getObjectName());
+			$this->checkType($object);
 
 			$this->min = $object;
 			
@@ -51,7 +51,7 @@
 		**/
 		public function setMax(/* Date */ $object)
 		{
-			Assert::isTrue(get_class($object) == $this->getObjectName());
+			$this->checkType($object);
 			
 			$this->max = $object;
 			
@@ -64,7 +64,7 @@
 		**/
 		public function setDefault(/* Date */ $object)
 		{
-			Assert::isTrue(get_class($object) == $this->getObjectName());
+			$this->checkType($object);
 			
 			$this->default = $object;
 			
@@ -148,7 +148,7 @@
 		public function importValue($value)
 		{
 			if ($value)
-				Assert::isTrue(get_class($value) == $this->getObjectName());
+				$this->checkType($object);
 			else
 				return parent::importValue(null);
 			
@@ -168,6 +168,11 @@
 		protected function getObjectName()
 		{
 			return 'Date';
+		}
+		
+		/* void */ protected function checkType($object)
+		{
+			Assert::isTrue(is_subclass_of($object, $this->getObjectName()));
 		}
 	}
 ?>
