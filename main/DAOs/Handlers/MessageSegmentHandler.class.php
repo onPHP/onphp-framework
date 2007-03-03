@@ -36,6 +36,8 @@
 
 				return msg_send($q, $key, 1, false, false);
 			}
+			
+			Assert::isUnreachable();
 		}
 		
 		public function unlink($key)

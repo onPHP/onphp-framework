@@ -362,7 +362,7 @@
 			$count = clone $query;
 			
 			$count =
-				$db->queryRow(
+				DBPool::getByDao($this->dao)->queryRow(
 					$count->dropFields()->dropOrder()->limit(null, null)->
 					get(SQLFunction::create('COUNT', '*')->setAlias('count'))
 				);
