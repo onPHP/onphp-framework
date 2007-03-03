@@ -313,7 +313,8 @@
 			return $this->
 				buildClasses()->
 				buildSchema()->
-				buildSchemaChanges();
+				buildSchemaChanges()->
+				checkForStaleFiles();
 		}
 		
 		/**
@@ -441,6 +442,21 @@
 		}
 		
 		/**
+		 * @return MetaConfiguration
+		**/
+		public function checkForStaleFiles()
+		{
+			$this->getOutput()->
+				newLine()->
+				infoLine('Stale files: ');
+			
+			return $this->
+				checkDirectory(ONPHP_META_AUTO_BUSINESS_DIR, 'Auto', null)->
+				checkDirectory(ONPHP_META_AUTO_DAO_DIR, 'Auto', 'DAO')->
+				checkDirectory(ONPHP_META_AUTO_PROTO_DIR, 'AutoProto', null);
+		}
+		
+		/**
 		 * @throws MissingElementException
 		 * @return MetaClass
 		**/
@@ -475,6 +491,35 @@
 		public function getOutput()
 		{
 			return $this->out;
+		}
+		
+		/**
+		 * @return MetaConfiguration
+		**/
+		private function checkDirectory($directory, $preStrip, $postStrip)
+		{
+			foreach (
+				glob($directory.'*.class.php', GLOB_NOSORT)
+				as $filename
+			) {
+				$name =
+					substr(
+						basename($filename, $postStrip.EXT_CLASS),
+						strlen($preStrip)
+					);
+				
+				if (!isset($this->classes[$name]))
+					$this->getOutput()->warningLine(
+						"\t"
+						.str_replace(
+							getcwd().DIRECTORY_SEPARATOR,
+							null,
+							$filename
+						)
+					);
+			}
+			
+			return $this;
 		}
 		
 		/**
