@@ -33,17 +33,19 @@
 		{
 			if (!BasePrimitive::import($scope))
 				return null;
+				
+			$this->value = (string) $scope[$this->name];
+			
+			$this->selfFilter();
 
 			if (!empty($scope[$this->name]) && is_string($scope[$this->name])
 				&& !($this->max && mb_strlen($scope[$this->name]) > $this->max)
 				&& !($this->min && mb_strlen($scope[$this->name]) < $this->min)
 				&& (!$this->pattern || preg_match($this->pattern, $scope[$this->name]))
-			) {
-				$this->value = (string) $scope[$this->name];
-				
-				$this->selfFilter();
-
+			) {				
 				return true;
+			} else {
+				$this->value = null;
 			}
 
 			return false;

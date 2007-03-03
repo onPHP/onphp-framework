@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveArray extends RangedPrimitive
+	final class PrimitiveArray extends FiltrablePrimitive 
 	{
 		/**
 		 * Fetching strategy for incoming containers:
@@ -40,15 +40,19 @@
 		{
 			if (!BasePrimitive::import($scope))
 				return null;
+				
+			$this->value = $scope[$this->name];			
 			
+			$this->selfFilter();
+
 			if (
 				is_array($scope[$this->name])
 				&& !($this->min && count($scope[$this->name]) < $this->min)
-				&& !($this->min && count($scope[$this->name]) > $this->max))
-			{
-				$this->value = $scope[$this->name];
-
+				&& !($this->min && count($scope[$this->name]) > $this->max)
+			) {
 				return true;
+			} else {
+				$this->value = null;
 			}
 			
 			return false;

@@ -29,15 +29,17 @@
 				return false;
 			}
 			
+			$this->value = $this->castNumber($scope[$this->name]);
+			
+			$this->selfFilter();
+			
 			if (
 				!(null !== $this->min && $scope[$this->name] < $this->min)
 				&& !(null !== $this->max && $scope[$this->name] > $this->max)
-			) {
-				$this->value = $this->castNumber($scope[$this->name]);
-
-				$this->selfFilter();
-				
+			) {				
 				return true;
+			} else {
+				$this->value = null;
 			}
 			
 			return false;

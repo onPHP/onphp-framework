@@ -50,7 +50,13 @@
 
 		public function getDisplayValue()
 		{
-			return $this->displayFilter->apply($this->getActualValue());
+			if (is_array($array = $this->getActualValue())){
+				foreach ($array as &$val)
+					$this->displayFilter->apply(&$val);
+
+				return $array;
+			} else
+				return $this->displayFilter->apply($this->getActualValue());
 		}
 
 		/**
@@ -93,8 +99,12 @@
 		 * @return FiltrablePrimitive
 		**/
 		protected function selfFilter()
-		{
-			$this->value = $this->importFilter->apply($this->value);
+		{				
+			if (is_array($this->value))
+				foreach ($this->value as &$val)
+					$this->importFilter->apply(&$val);
+			else
+				$this->value = $this->importFilter->apply($this->value);
 
 			return $this;
 		}
