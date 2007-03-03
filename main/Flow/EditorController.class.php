@@ -35,7 +35,7 @@
 			
 			$form = $this->map->getForm();
 			
-			if ($command = $form->get('action')->getIndex()) {
+			if ($command = $form->getActualValue('action')) {
 				$mav = $this->commandMap[$command]->run(
 					$this->subject, $form, $request
 				);

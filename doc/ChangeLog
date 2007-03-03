@@ -1,5 +1,14 @@
 # $Id$
 
+2007-03-03	Konstantin V. Arkhipov
+
+	* core/Form/PlainForm.class.php: getChoiceValue/getActualChoiceValue
+	restored.
+
+	* core/Form/PrimitiveList.class.php,
+	core/Form/PrimitiveMultiList.class.php: behaviour synced to be
+	0.8-like.
+
 2007-03-03	Sergey S. Sergeev
 
 	* core/Form/Primitives/FiltrablePrimitive.class.php,
