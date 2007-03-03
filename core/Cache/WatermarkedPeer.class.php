@@ -23,6 +23,9 @@
 		/// map class -> watermark
 		private $map		= null;
 		
+		/**
+		 * @return WatermarkedPeer
+		**/
 		public static function create(
 			CachePeer $peer,
 			$watermark = "Single onPHP's project"
@@ -48,20 +51,25 @@
 		public function getActualWatermark()
 		{
 			if (
-				($this->className)
-				&& (isset($this->map[$this->className]))
-			)				
-				return md5($this->map[$this->className].'::');
-						
+				$this->className
+				&& isset($this->map[$this->className])
+			)
+				return $this->map[$this->className];
+			
 			return $this->watermark;
 		}
 		
 		/**
 		 * associative array, className -> watermark
+		 * 
+		 * @return WatermarkedPeer
 		**/
 		public function setClassMap($map)
 		{
-			$this->map = $map;
+			$this->map = array();
+			
+			foreach ($map as $className => $watermark)
+				$this->map[$className] = md5($watermark.'::');
 			
 			return $this;
 		}
