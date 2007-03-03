@@ -148,7 +148,7 @@
 		public function importValue($value)
 		{
 			if ($value)
-				$this->checkType($object);
+				$this->checkType($value);
 			else
 				return parent::importValue(null);
 			
