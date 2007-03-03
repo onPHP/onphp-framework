@@ -78,7 +78,7 @@
 				);
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		/**
@@ -114,7 +114,7 @@
 				return ModelAndView::create()->setModel($model);
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function saveObject(HttpRequest $request, Form $form) 
@@ -184,7 +184,7 @@
 					);
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function addObject(HttpRequest $request, Form $form)

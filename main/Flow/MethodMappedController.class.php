@@ -34,7 +34,7 @@
 				return ModelAndView::create();
 			}
 			
-			/* NOTREACHED */
+			Assert::isUnreachable();
 		}
 		
 		public function chooseAction(HttpRequest $request)

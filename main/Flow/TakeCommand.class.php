@@ -33,8 +33,6 @@
 					Model::create()->
 					set('id', $subject->getId())
 				);
-			
-			return new ModelAndView();
 		}
 	}
 ?>
