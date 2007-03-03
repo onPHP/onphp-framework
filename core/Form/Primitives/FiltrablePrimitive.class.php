@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2005-2006 by Anton E. Lebedevich, Konstantin V. Arkhipov *
+ *   Copyright (C) 2005-2007 by Anton E. Lebedevich, Konstantin V. Arkhipov *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -99,10 +99,10 @@
 		 * @return FiltrablePrimitive
 		**/
 		protected function selfFilter()
-		{				
+		{
 			if (is_array($this->value))
-				foreach ($this->value as &$val)
-					$this->importFilter->apply(&$val);
+				foreach ($this->value as $value)
+					$this->importFilter->apply($value);
 			else
 				$this->value = $this->importFilter->apply($this->value);
 

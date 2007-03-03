@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -36,7 +36,7 @@
 			if (
 				!(null !== $this->min && $scope[$this->name] < $this->min)
 				&& !(null !== $this->max && $scope[$this->name] > $this->max)
-			) {				
+			) {
 				return true;
 			} else {
 				$this->value = null;

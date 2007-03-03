@@ -42,7 +42,7 @@
 				&& !($this->max && mb_strlen($scope[$this->name]) > $this->max)
 				&& !($this->min && mb_strlen($scope[$this->name]) < $this->min)
 				&& (!$this->pattern || preg_match($this->pattern, $scope[$this->name]))
-			) {				
+			) {
 				return true;
 			} else {
 				$this->value = null;

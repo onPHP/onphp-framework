@@ -40,8 +40,8 @@
 		{
 			if (!BasePrimitive::import($scope))
 				return null;
-				
-			$this->value = $scope[$this->name];			
+			
+			$this->value = $scope[$this->name];
 			
 			$this->selfFilter();
 

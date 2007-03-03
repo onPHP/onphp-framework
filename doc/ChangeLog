@@ -8,8 +8,8 @@
 
 	* core/Form/Primitives/PrimitiveString.class.php, 
 	core/Form/Primitives/PrimitiveNumber.class.php,
-	core/Form/Primitives/PrimitiveArray.class.php: apply filters
-	before check values.
+	core/Form/Primitives/PrimitiveArray.class.php: apply filters before
+	check values.
 
 2007-03-02	Dmitry E. Demidov
 
