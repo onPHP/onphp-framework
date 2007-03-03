@@ -54,7 +54,6 @@
 						if ($class->hasMethod($getter)) {
 							$value = $object->$getter();
 							if (!$ignoreNull || ($value !== null)) {
-								$prm = $form->get($name);
 								$form->get($name)->importValue($value);
 							}
 						}
