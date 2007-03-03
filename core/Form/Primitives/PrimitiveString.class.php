@@ -33,7 +33,7 @@
 		{
 			if (!BasePrimitive::import($scope))
 				return null;
-				
+			
 			$this->value = (string) $scope[$this->name];
 			
 			$this->selfFilter();
