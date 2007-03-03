@@ -84,14 +84,6 @@
 					|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
 				);
 				
-				/*if (
-					$property->getRelationId() == MetaRelation::ONE_TO_MANY
-				) {
-					$table = $dao->getTable();
-				} else {
-					$table = $self->$getter()->getHelperTable();
-				}*/
-				
 				$table = $dao->getJoinName($property->getColumnName());
 				
 				$id = $this->getIdName();
@@ -193,7 +185,13 @@
 					'dao'
 				)
 			);
-
+			
+			Assert::isNotNull(
+				$propertyDao,
+				'can not find target dao for "'.$property->getName().'" property'
+				.' at "'.get_class($proto).'"'
+			);
+			
 			$alias = 
 				$prefix
 				.$propertyDao->getJoinName(
