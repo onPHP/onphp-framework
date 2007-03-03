@@ -297,7 +297,7 @@
 			foreach ($this->classes as $name => $class) {
 				foreach ($class->getProperties() as $property) {
 					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
-						$this->checkRecursion($class, $property, $class);
+						$this->checkRecursion($property, $class);
 					}
 				}
 			}
@@ -328,7 +328,7 @@
 				infoLine('Building classes:');
 			
 			foreach ($this->classes as $name => $class) {
-				$out->infoLine("\t".$class->getName().':');
+				$out->infoLine("\t".$name.':');
 				$class->dump();
 				$out->newLine();
 			}
@@ -349,11 +349,11 @@
 			
 			$schema = SchemaBuilder::getHead();
 			
-			foreach ($this->classes as $name => $class) {
+			foreach ($this->classes as $class) {
 				$schema .= SchemaBuilder::build($class);
 			}
 			
-			foreach ($this->classes as $name => $class) {
+			foreach ($this->classes as $class) {
 				$schema .= SchemaBuilder::buildRelations($class);
 			}
 			
@@ -379,7 +379,7 @@
 			
 			require ONPHP_META_AUTO_DIR.'schema.php';
 			
-			foreach ($this->classes as $name => $class) {
+			foreach ($this->classes as $class) {
 				if (
 					$class->getTypeId() == MetaClassType::CLASS_ABSTRACT
 					|| $class->getPattern() instanceof EnumerationClassPattern
@@ -648,7 +648,6 @@
 		}
 		
 		private function checkRecursion(
-			MetaClass $class,
 			MetaClassProperty $property,
 			MetaClass $holder,
 			$paths = array()
@@ -672,7 +671,6 @@
 					) {
 						if (
 							$this->checkRecursion(
-								$remote,
 								$remoteProperty,
 								$holder,
 								$paths
