@@ -61,12 +61,22 @@ PHP's extension quick start:
 		make
 		su -c make install
 
-PHP.INI recommended settings:
+php.ini recommended settings:
 
+	; unneeded
 	zend.ze1_compatibility_mode = Off
+
+	; deprecated anyway
 	allow_call_time_pass_reference = Off
+
+	; broken stuff
 	safe_mode = Off
-	error_reporting  =  E_ALL|E_STRICT
-	display_errors = On (for debug mode)
+
+	; guess why?
+	error_reporting  =  E_ALL | E_STRICT
+
+	; evil stuff
 	register_globals = Off
+
+	; broken stuff
 	magic_quotes_gpc = Off
