@@ -121,6 +121,20 @@
 		{
 			return $this->get($name)->getActualValue();
 		}
+		
+		public function getChoiceValue($name)
+		{
+			Assert::isTrue(($prm = $this->get($name)) instanceof ListedPrimitive);
+			
+			return $prm->getChoiceValue();
+		}
+		
+		public function getActualChoiceValue($name)
+		{
+			Assert::isTrue(($prm = $this->get($name)) instanceof ListedPrimitive);
+			
+			return $prm->getActualChoiceValue();
+		}
 
 		public function getDisplayValue($name)
 		{

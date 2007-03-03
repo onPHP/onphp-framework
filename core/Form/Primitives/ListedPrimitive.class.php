@@ -17,9 +17,9 @@
 	{
 		/// @return plain array of possible primitive choices
 		public function getList();
-		
 		public function setList($list);
 		
-		public function getIndex();
+		public function getChoiceValue();
+		public function getActualChoiceValue();
 	}
 ?>

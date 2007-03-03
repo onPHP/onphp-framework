@@ -17,9 +17,38 @@
 	{
 		protected $list = array();
 		
-		public function getIndex()
+		public function getChoiceValue()
 		{
-			return $this->value;
+			if ($this->value)
+				return $this->list[$this->value];
+			
+			return null;
+		}
+		
+		public function getActualChoiceValue()
+		{
+			if ($this->value)
+				return $this->list[$this->value];
+			
+			return $this->list[$this->default];
+		}
+		
+		/**
+		 * @return PrimitiveList
+		**/
+		public function setDefault($default)
+		{
+			Assert::isTrue(
+				$this->list
+				&& array_key_exists(
+					$default,
+					$this->list
+				),
+				
+				'can not find element with such index'
+			);
+			
+			return parent::setDefault($default);
 		}
 		
 		public function getList()
@@ -35,24 +64,6 @@
 			$this->list = $list;
 			
 			return $this;
-		}
-		
-		public function getValue()
-		{
-			if (null !== $this->value)
-				return $this->list[$this->value];
-			
-			return null;
-		}
-		
-		public function getActualValue()
-		{
-			if (null !== $this->value)
-				return $this->getValue();
-			elseif (null !== $this->raw)
-				return $this->raw;
-			
-			return $this->default;
 		}
 		
 		public function import($scope)
@@ -71,10 +82,9 @@
 				$this->value = $scope[$this->name];
 				
 				return true;
-			} else
-				return false;
-
-			Assert::isUnreachable();
+			}
+			
+			return false;
 		}
 	}
 ?>

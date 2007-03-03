@@ -17,12 +17,38 @@
 	{
 		private $selected = array();
 		
-		public function getValue()
+		public function getChoiceValue()
 		{
-			if (null !== $this->value)
+			return $this->selected;
+		}
+		
+		public function getActualChoiceValue()
+		{
+			if ($this->value)
 				return $this->selected;
+			elseif ($this->default) {
+				$out = array();
+				
+				foreach ($this->default as $index)
+					$out[] = $this->list[$index];
+				
+				return $out;
+			}
 			
-			return null;
+			return array();
+		}
+		
+		/**
+		 * @return PrimitiveMultiList
+		**/
+		public function setDefault($default)
+		{
+			Assert::isArray($default);
+			
+			foreach ($default as $index)
+				Assert::isTrue(array_key_exists($index, $this->list));
+			
+			return parent::setDefault($default);
 		}
 		
 		public function import($scope)
