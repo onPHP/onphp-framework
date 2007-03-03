@@ -21,7 +21,7 @@ IRC:
 Lists:
 
 	General discussion in Russian:
-	
+
 		onphp-dev-ru+subscribe@lists.shadanakar.org
 
 	General discussion in English:
@@ -48,15 +48,25 @@ PHP's extension quick start:
 
 		phpize
 		./configure
-	
+
 	with php:
 
 		cd into php's source
 		cp -a /path/to/onphp/ext ext/onphp
 		./buildconf --force
 		./configure --enable-onphp
-	
+
 	and finally:
 
 		make
 		su -c make install
+
+PHP.INI recommended settings:
+
+	zend.ze1_compatibility_mode = Off
+	allow_call_time_pass_reference = Off
+	safe_mode = Off
+	error_reporting  =  E_ALL|E_STRICT
+	display_errors = On (for debug mode)
+	register_globals = Off
+	magic_quotes_gpc = Off
