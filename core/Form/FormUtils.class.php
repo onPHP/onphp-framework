@@ -43,7 +43,7 @@
 							!= MetaRelation::LAZY_ONE_TO_ONE;
 					} else {
 						$condition = 
-							 !( // in case it's LazyOneToOne
+							!( // in case it's LazyOneToOne
 								$primitives[$name] instanceof PrimitiveIdentifier
 								&& $class->hasProperty($name.'Id')
 							);
@@ -55,11 +55,7 @@
 							$value = $object->$getter();
 							if (!$ignoreNull || ($value !== null)) {
 								$prm = $form->get($name);
-								if ($prm instanceof PrimitiveIdentifier) {
-									$prm->importValue($value);
-								} else {
-									$prm->setValue($value);
-								}
+								$form->get($name)->importValue($value);
 							}
 						}
 					}
