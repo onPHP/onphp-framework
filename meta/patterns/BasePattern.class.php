@@ -68,11 +68,6 @@
 			);
 			
 			$this->dumpFile(
-				ONPHP_META_PROTO_DIR.'Proto'.$class->getName().EXT_CLASS,
-				Format::indentize(ProtoClassBuilder::build($class))
-			);
-			
-			$this->dumpFile(
 				ONPHP_META_AUTO_BUSINESS_DIR.'Auto'.$class->getName().EXT_CLASS,
 				Format::indentize(AutoClassBuilder::build($class))
 			);
@@ -81,6 +76,14 @@
 				ONPHP_META_AUTO_DAO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
 				Format::indentize(AutoDaoBuilder::build($class))
 			);
+			
+			$userFile = ONPHP_META_PROTO_DIR.'Proto'.$class->getName().EXT_CLASS;
+			
+			if (!file_exists($userFile))
+				$this->dumpFile(
+					$userFile,
+					Format::indentize(ProtoClassBuilder::build($class))
+				);
 			
 			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
 			
