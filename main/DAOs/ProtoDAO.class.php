@@ -34,19 +34,15 @@
 			
 			foreach ($collections as $path => $info) {
 				$lazy = $info['lazy'];
-				$order =
-					isset($info['order'])
-						? $info['order']
-						: null;
 				
 				$query =
 					OSQL::select()->get($mainId)->
 					from($this->getTable());
 				
-				if (isset($info['order'])) {
-					if ($info['order'] instanceof OrderBy)
-						$query->orderBy($info['order']);
-					elseif ($info['order'] instanceof OrderChain)
+				if ($order = isset($info['order']) ? $info['order'] : null) {
+					if ($order instanceof OrderBy)
+						$query->orderBy($order);
+					elseif ($order instanceof OrderChain)
 						$query->setOrderChain($info['order']);
 					else
 						throw new WrongStateException('strange order arrived');
