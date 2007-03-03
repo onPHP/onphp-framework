@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Dmitry E. Demidov                          *
+ *   Copyright (C) 2004-2007 by Dmitry E. Demidov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Turing
 	**/
-	class ColorArray
+	final class ColorArray
 	{
 		private $colors = array();
 		

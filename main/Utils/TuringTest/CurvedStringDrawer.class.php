@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Turing
 	**/
-	class CurvedStringDrawer extends TextDrawer
+	final class CurvedStringDrawer extends TextDrawer
 	{
 		const MAX_ANGLE_CHANGE 				= 40;
 		const MAX_ANGLE 					= 45;

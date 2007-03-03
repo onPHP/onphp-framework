@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Dmitry E. Demidov                          *
+ *   Copyright (C) 2004-2007 by Dmitry E. Demidov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,7 +20,7 @@
 		private $size = null;
 		
 		abstract public function draw($text);
-		 		
+		
 		public function __construct($size)
 		{
 			$this->size = $size;
@@ -81,7 +81,7 @@
 			
 			return $bounds[2] - $bounds[0];
 		}
-	
+		
 		protected function getStringHeight($string)
 		{
 			$bounds = imagettfbbox($this->size, 0, $this->getFont(), $string);

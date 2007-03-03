@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Dmitry E. Demidov                          *
- *   Dmitry.Demidov@noussoft.com                                           *
+ *   Copyright (C) 2004-2007 by Dmitry E. Demidov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,10 +12,10 @@
 	/**
 	 * @ingroup Turing
 	**/
-	class RandomLinesBackgroundDrawer extends BackgroundDrawer
+	final class RandomLinesBackgroundDrawer extends BackgroundDrawer
 	{
 		private $count = null;
-	
+		
 		public function __construct($count)
 		{
 			$this->count = $count;
@@ -33,7 +32,7 @@
 			$width = $this->getTuringImage()->getWidth();
 			
 			for ($i = 0; $i < $this->count; $i++) {
-				$color = $this->makeColor();	
+				$color = $this->makeColor();
 				$colorId = $this->getTuringImage()->getColorIdentifier($color);
 				
 				$y = mt_rand(1, $height - 1);
@@ -45,7 +44,7 @@
 					$angle = mt_rand(0, 180);
 				
 				$angleRad = deg2rad($angle);
-	
+				
 				$dy = ($width - $x) * tan($angleRad);
 				
 				if ($dy < $y) {
@@ -55,7 +54,7 @@
 					$yEnd = 0;
 					$xEnd = $x + tan($angleRad) / $y;
 				}
-	
+				
 				$dy = $x * tan($angleRad);
 				
 				if ($dy <= ($height - $y)) {

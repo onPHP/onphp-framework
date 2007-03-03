@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Dmitry E. Demidov                          *
+ *   Copyright (C) 2004-2007 by Dmitry E. Demidov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,9 +13,9 @@
 	/**
 	 * @ingroup Turing
 	**/
-	class TuringImage
+	final class TuringImage
 	{
-		const	SESSION_LABEL	= 'turning_number';
+		const SESSION_LABEL = 'turning_number';
 		
 		private $textColors			= null;
 		private $backgroundColors	= null;
@@ -34,7 +34,7 @@
 		
 		public static function getCode()
 		{
-			return Session::get(TuringImage::SESSION_LABEL); 
+			return Session::get(self::SESSION_LABEL); 
 		}
 		
 		public function __construct($width, $height)
@@ -132,7 +132,7 @@
 				
 			return $colorId;
 		}
-	
+		
 		public function getOneCharacterColor()
 		{
 			$textColor=$this->textColors->getRandomTextColor();
@@ -170,7 +170,7 @@
 		**/
 		protected function setCode($code)
 		{
-			Session::assign(TuringImage::SESSION_LABEL, $code);
+			Session::assign(self::SESSION_LABEL, $code);
 			
 			return $this;
 		}

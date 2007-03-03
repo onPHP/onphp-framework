@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Dmitry E. Demidov                          *
+ *   Copyright (C) 2004-2007 by Dmitry E. Demidov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Turing
 	**/
-	class WavesBackgroundDrawer extends BackgroundDrawer
+	final class WavesBackgroundDrawer extends BackgroundDrawer
 	{
 		const MIN_WAVE_DISTANCE	= 8;
 		const MAX_WAVE_DISTANCE	= 20;
@@ -34,7 +34,7 @@
 			
 			return $this;
 		}
-	
+		
 		/* void */ private function drawWave($y)
 		{
 			$radius = 5;
@@ -50,7 +50,7 @@
 				$angle = 2 * M_PI * $angle / $frequency;
 				
 				$dy = $radius * sin($angle);
-				 
+				
 				imagesetpixel(
 					$imageId,
 					$x,

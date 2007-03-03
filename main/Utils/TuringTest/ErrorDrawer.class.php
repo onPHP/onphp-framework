@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Dmitry E. Demidov                          *
+ *   Copyright (C) 2004-2007 by Dmitry E. Demidov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Turing
 	**/
-	class ErrorDrawer
+	final class ErrorDrawer
 	{
 		const FONT_SIZE	= 4;
 		
@@ -21,12 +21,12 @@
 		
 		public static function setDrawError($drawError = false)
 		{
-			ErrorDrawer::$drawError = $drawError;
+			self::$drawError = $drawError;
 		}
 		
 		public static function isDrawError()
 		{
-			return ErrorDrawer::$drawError;
+			return self::$drawError;
 		}
 
 		public function __construct($turingImage)
@@ -41,7 +41,7 @@
 		{
 			if (!ErrorDrawer::isDrawError())
 				return $this;
-				
+			
 			$y = round(
 				$this->turingImage->getHeight() / 2
 				- imagefontheight(ErrorDrawer::FONT_SIZE) / 2
