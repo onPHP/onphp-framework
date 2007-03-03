@@ -34,8 +34,18 @@ Things not supported by design:
 				'ONPHP_META_DAO_DIR',
 				PATH_CLASSES.'DAOs'.DIRECTORY_SEPARATOR
 			);
-			
-		define('ONPHP_META_BUSINESS_DIR', PATH_CLASSES.'Business'.DIRECTORY_SEPARATOR);
+		
+		if (!defined('ONPHP_META_BUSINESS_DIR'))
+			define(
+				'ONPHP_META_BUSINESS_DIR',
+				PATH_CLASSES.'Business'.DIRECTORY_SEPARATOR
+			);
+		
+		if (!defined('ONPHP_META_PROTO_DIR'))
+			define(
+				'ONPHP_META_PROTO_DIR',
+				PATH_CLASSES.'Proto'.DIRECTORY_SEPARATOR
+			);
 
 		define('ONPHP_META_AUTO_DIR', PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR);
 		
@@ -73,6 +83,9 @@ Things not supported by design:
 		
 		if (!is_dir(ONPHP_META_BUSINESS_DIR))
 			mkdir(ONPHP_META_BUSINESS_DIR, 0755, true);
+		
+		if (!is_dir(ONPHP_META_PROTO_DIR))
+			mkdir(ONPHP_META_PROTO_DIR, 0755, true);
 	}
 
 	if (!isset($_SERVER['argv'][1], $_SERVER['argv'][2])) {

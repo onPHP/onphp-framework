@@ -36,7 +36,7 @@ abstract class AutoProto{$class->getName()} extends Proto{$parent->getName()}
 EOT;
 			} else {
 				$out .= <<<EOT
-{$type}class AutoProto{$class->getName()} extends AbstractProtoClass
+abstract class AutoProto{$class->getName()} extends AbstractProtoClass
 {
 	/**
 	 * @return Form
