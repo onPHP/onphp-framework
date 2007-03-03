@@ -28,7 +28,10 @@
 				$this->cmdBinPath = $cmdBinPath;
 			}
 		}
-
+		
+		/**
+		 * @return FileArchive
+		**/
 		public function open($sourceFile)
 		{
 			if (!is_readable($sourceFile))
@@ -51,6 +54,8 @@
 			$cmd = escapeshellcmd($this->cmdBinPath.' '.$options);
 
 			ob_start();
+			
+			$exitStatus = null;
 			
 			passthru($cmd.' 2>/dev/null', $exitStatus);
 			
