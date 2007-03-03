@@ -46,9 +46,9 @@
 			$this->selfFilter();
 
 			if (
-				is_array($scope[$this->name])
-				&& !($this->min && count($scope[$this->name]) < $this->min)
-				&& !($this->min && count($scope[$this->name]) > $this->max)
+				is_array($this->value)
+				&& !($this->min && count($this->value) < $this->min)
+				&& !($this->min && count($this->value) > $this->max)
 			) {
 				return true;
 			} else {

@@ -34,8 +34,8 @@
 			$this->selfFilter();
 			
 			if (
-				!(null !== $this->min && $scope[$this->name] < $this->min)
-				&& !(null !== $this->max && $scope[$this->name] > $this->max)
+				!(null !== $this->min && $this->value < $this->min)
+				&& !(null !== $this->max && $this->value > $this->max)
 			) {
 				return true;
 			} else {
