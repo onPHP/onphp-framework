@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -81,13 +81,15 @@
 			$out = array();
 
 			for ($i = 0, $size = count($array); $i < $size; ++$i)
-				if (!empty($array[$i]))
-					if (
+				if (
+					!empty($array[$i])
+					&& (
 						$element = mb_ereg_replace(
 							'[^а-яА-Яa-zA-Z0-9 \-\./]', null, $array[$i]
 						)
 					)
-						$out[] = $element;
+				)
+					$out[] = $element;
 			
 			return $out;
 		}
