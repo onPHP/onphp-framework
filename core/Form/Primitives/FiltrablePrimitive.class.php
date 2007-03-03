@@ -51,8 +51,8 @@
 		public function getDisplayValue()
 		{
 			if (is_array($array = $this->getActualValue())){
-				foreach ($array as $value)
-					$this->displayFilter->apply($value);
+				foreach ($array as &$value)
+					$value = $this->displayFilter->apply($value);
 
 				return $array;
 			} else
@@ -101,8 +101,8 @@
 		protected function selfFilter()
 		{
 			if (is_array($this->value))
-				foreach ($this->value as $value)
-					$this->importFilter->apply($value);
+				foreach ($this->value as &$value)
+					$value = $this->importFilter->apply($value);
 			else
 				$this->value = $this->importFilter->apply($this->value);
 
