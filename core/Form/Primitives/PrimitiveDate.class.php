@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -172,7 +172,12 @@
 		
 		/* void */ protected function checkType($object)
 		{
-			Assert::isTrue(is_subclass_of($object, $this->getObjectName()));
+			$name = $this->getObjectName();
+			
+			Assert::isTrue(
+				(get_class($object) == $name)
+				|| is_subclass_of($object, $name)
+			);
 		}
 	}
 ?>
