@@ -31,6 +31,7 @@
 			$out .= <<<EOT
 abstract class Auto{$class->getName()}DAO extends {$parent}
 {
+
 EOT;
 			if (sizeof($class->getProperties())) {
 
