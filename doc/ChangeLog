@@ -1,5 +1,11 @@
 # $Id$
 
+2007-03-04	Konstantin V. Arkhipov
+
+	* main/Utils/DaoMoveHelper.class.php, main/Utils/DaoUtils.class.php,
+	core/Form/Primitives/PrimitiveIdentifierList.class.php: copied from
+	0.8.
+
 2007-03-03	Konstantin V. Arkhipov
 
 	* meta/: generation gap for proto-classes implemented, as requested by
