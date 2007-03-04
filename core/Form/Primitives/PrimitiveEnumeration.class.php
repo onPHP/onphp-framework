@@ -13,9 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveEnumeration
-		extends IdentifiablePrimitive
-		implements ListedPrimitive
+	final class PrimitiveEnumeration extends IdentifiablePrimitive
 	{
 		public function getList()
 		{
@@ -32,11 +30,6 @@
 			Assert::isUnreachable();
 		}
 
-		public function setList($list)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
 		/**
 		 * @throws WrongArgumentException
 		 * @return PrimitiveEnumeration
