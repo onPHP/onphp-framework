@@ -41,6 +41,11 @@
 			return null;
 		}
 		
+		public function getIdName()
+		{
+			return 'id';
+		}
+		
 		public function getSequence()
 		{
 			return $this->getTable().'_id';

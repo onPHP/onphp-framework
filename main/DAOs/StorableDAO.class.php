@@ -15,11 +15,6 @@
 	**/
 	abstract class StorableDAO extends ProtoDAO
 	{
-		public function getIdName()
-		{
-			return 'id';
-		}
-		
 		public function take(Identifiable $object)
 		{
 			return

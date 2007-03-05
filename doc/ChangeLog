@@ -1,5 +1,9 @@
 # $Id$
 
+2007-03-05	Konstantin V. Arkhipov
+
+	* main/DAOs/: getIdName() moved from StorableDAO to GenericDAO.
+
 2007-03-04	Konstantin V. Arkhipov
 
 	* main/Utils/DaoMoveHelper.class.php, main/Utils/DaoUtils.class.php,
