@@ -91,7 +91,11 @@
 			
 			if (!$form->getErrors()) {
 				
-				$object = $this->saveObject($request, $form);
+				$object = $this->saveObject(
+					$request, 
+					$form, 
+					$form->getValue('id')
+				);
 				
 				return
 					ModelAndView::create()->
@@ -117,12 +121,9 @@
 			Assert::isUnreachable();
 		}
 		
-		public function saveObject(HttpRequest $request, Form $form) 
+		public function saveObject(HttpRequest $request, Form $form, Identifiable $object)
 		{
-			$object = $form->getValue('id');
-			
 			FormUtils::form2object($form, $object, false);
-			
 			return $object->dao()->save($object);
 		}
 		
@@ -162,7 +163,11 @@
 			
 			if (!$form->getErrors()) {
 				
-				$object = $this->addObject($request, $form);
+				$object = $this->addObject(
+					$request, 
+					$form,
+					clone $this->subject
+				);
 				
 				return
 					ModelAndView::create()->
@@ -187,9 +192,8 @@
 			Assert::isUnreachable();
 		}
 		
-		public function addObject(HttpRequest $request, Form $form)
+		public function addObject(HttpRequest $request, Form $form, Identifiable $object)
 		{
-			$object = clone $this->subject;
 			FormUtils::form2object($form, $object);
 			return $object->dao()->add($object);
 		}
