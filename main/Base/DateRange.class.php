@@ -135,11 +135,12 @@
 			return $this->end;
 		}
 
-		public function toDateString($delimiter = '-')
+		public function toDateString($delimiter = ' - ')
 		{
 			if ($this->start && $this->end)
 				return
-					"{$this->start->toDate($delimiter)} - "
+					"{$this->start->toDate($delimiter)}"
+					.$delimiter
 					."{$this->end->toDate($delimiter)}";
 			elseif ($this->start)
 				return $this->start->toDate($delimiter);
@@ -149,7 +150,7 @@
 				return null;
 		}
 		
-		public function toString($delimiter = '-')
+		public function toString($delimiter = ' - ')
 		{
 			if ($this->start && $this->end)
 				return

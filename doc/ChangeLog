@@ -1,5 +1,9 @@
 # $Id$
 
+2007-03-05	Ivan Y. Khvostishkov
+
+	* main/Base/DateRange.class.php: fixed default delimiters.
+
 2007-03-05	Konstantin V. Arkhipov
 
 	* main/DAOs/: getIdName() moved from StorableDAO to GenericDAO.
