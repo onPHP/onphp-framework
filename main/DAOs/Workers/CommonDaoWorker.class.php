@@ -164,26 +164,13 @@
 				$list = array();
 				$toFetch = array();
 
-				if ($expires === Cache::DO_NOT_CACHE) {
-					foreach ($ids as $id) {
-						try {
-							$list[] = $this->getById($id, $expires);
-						} catch (ObjectNotFoundException $e) {
-							// ignore
-						}
-					}
-					
-					return $list;
-					
-				} else {
-					foreach ($ids as $id) {
-						$cached = $this->getCachedById($id);
+				foreach ($ids as $id) {
+					$cached = $this->getCachedById($id);
 
-						if ($cached)
-							$list[] = $cached;
-						else
-							$toFetch[] = $id;
-					}
+					if ($cached)
+						$list[] = $cached;
+					else
+						$toFetch[] = $id;
 				}
 				
 				if (!$toFetch)
