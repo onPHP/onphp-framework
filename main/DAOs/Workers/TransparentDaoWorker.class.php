@@ -389,9 +389,7 @@
 			$cache = Cache::me();
 			
 			foreach ($ids as $id)
-				$cache->mark($this->className)->delete(
-					$this->className.'_'.$id
-				);
+				parent::uncacheById($id);
 			
 			return $this->dao->uncacheLists();
 		}
