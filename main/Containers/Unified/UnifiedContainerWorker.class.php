@@ -56,7 +56,7 @@
 		{
 			return
 				$this->
-					makeSelectQuery()->
+					makeFetchQuery()->
 					dropFields()->
 					get(
 						SQLFunction::create('count', '*')->setAlias('count')
