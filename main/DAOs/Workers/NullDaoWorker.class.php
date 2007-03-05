@@ -245,6 +245,11 @@
 			return true;
 		}
 		
+		public function uncacheByQuery(SelectQuery $query)
+		{
+			return true;
+		}
+		
 		public function uncacheLists()
 		{
 			return true;
