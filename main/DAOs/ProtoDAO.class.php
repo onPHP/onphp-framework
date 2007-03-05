@@ -15,8 +15,6 @@
 	**/
 	abstract class ProtoDAO extends GenericDAO
 	{
-		abstract public function getIdName();
-		
 		public function fetchCollections(
 			/* array */ $collections, /* array */ $list
 		)
@@ -266,7 +264,7 @@
 				// prevents useless joins
 				if (
 					isset($path[1])
-					&& ($path[1] == 'id')
+					&& ($path[1] == $propertyDao->getIdName())
 					&& (count($path) == 1)
 				)
 					return

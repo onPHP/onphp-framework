@@ -40,7 +40,7 @@
 						makeSelectHead()->
 						where(
 							Expression::eq(
-								DBField::create('id', $this->dao->getTable()),
+								DBField::create($this->dao->getIdName(), $this->dao->getTable()),
 								$id
 							)
 						);
@@ -182,7 +182,10 @@
 							$list,
 							$this->getListByLogic(
 								Expression::in(
-									new DBField('id', $this->dao->getTable()), 
+									new DBField(
+										$this->dao->getIdName(),
+										$this->dao->getTable()
+									),
 									$toFetch
 								), 
 								$expires
@@ -203,7 +206,10 @@
 				return
 					$this->getListByLogic(
 						Expression::in(
-							new DBField('id', $this->dao->getTable()),
+							new DBField(
+								$this->dao->getIdName(),
+								$this->dao->getTable()
+							),
 							$ids
 						),
 						Cache::DO_NOT_CACHE
@@ -429,7 +435,7 @@
 			return
 				DBPool::getByDao($this->dao)->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
-					where(Expression::in('id', $ids))
+					where(Expression::in($this->dao->getIdName(), $ids))
 				);
 		}
 		//@}

@@ -33,7 +33,10 @@
 				$this->dao->makeSelectHead()->
 				where(
 					Expression::eq(
-						DBField::create('id', $this->dao->getTable()),
+						DBField::create(
+							$this->dao->getIdName(),
+							$this->dao->getTable()
+						),
 						$id
 					)
 				);
@@ -91,17 +94,10 @@
 		
 		public function getListByIds($ids)
 		{
-			$list = array();
-			
-			foreach ($ids as $id) {
-				try {
-					$list[] = $this->getById($id);
-				} catch (ObjectNotFoundException $e) {
-					// ignore
-				}
-			}
-
-			return $list;
+			return
+				$this->getListByLogic(
+					Expression::in($this->dao->getIdName(), $ids)
+				);
 		}
 		
 		public function getListByQuery(SelectQuery $query)
@@ -199,7 +195,7 @@
 			return
 				DBPool::getByDao($this->dao)->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
-					where(Expression::eq('id', $id))
+					where(Expression::eq($this->dao->getIdName(), $id))
 				);
 		}
 		
@@ -208,7 +204,7 @@
 			return 
 				DBPool::getByDao($this->dao)->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
-					where(Expression::in('id', $ids))
+					where(Expression::in($this->dao->getIdName(), $ids))
 				);
 		}
 		//@}

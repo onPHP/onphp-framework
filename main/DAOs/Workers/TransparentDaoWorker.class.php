@@ -49,7 +49,10 @@
 					$this->dao->makeSelectHead()->
 					where(
 						Expression::eq(
-							DBField::create('id', $this->dao->getTable()),
+							DBField::create(
+								$this->dao->getIdName(),
+								$this->dao->getTable()
+							),
 							$id
 						)
 					);
@@ -147,7 +150,7 @@
 					array_merge(
 						$list,
 						$this->getListByLogic(
-							Expression::in('id', $toFetch)
+							Expression::in($this->dao->getIdName(), $toFetch)
 						)
 					);
 			} catch (ObjectNotFoundException $e) {
@@ -345,7 +348,7 @@
 			$result =
 				DBPool::getByDao($this->dao)->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
-					where(Expression::in('id', $ids))
+					where(Expression::in($this->dao->getIdName(), $ids))
 				);
 
 			foreach ($ids as $id)

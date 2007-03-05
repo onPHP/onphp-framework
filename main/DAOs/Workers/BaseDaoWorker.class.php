@@ -53,7 +53,7 @@
 			$result =
 				DBPool::getByDao($this->dao)->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
-					where(Expression::eq('id', $id))
+					where(Expression::eq($this->dao->getIdName(), $id))
 				);
 			
 			$this->uncacheById($id);
