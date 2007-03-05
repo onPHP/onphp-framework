@@ -140,7 +140,7 @@
 		//@{
 		// custom list getters
 		public function getCustomList(
-			SelectQuery $query, $expres = Cache::DO_NOT_CACHE
+			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
 			if ($list = DBPool::getByDao($this->dao)->querySet($query))
