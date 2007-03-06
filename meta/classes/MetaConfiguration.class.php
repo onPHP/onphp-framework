@@ -293,11 +293,23 @@
 				$this->checkSanity($class);
 			}
 			
-			// check for recursion in relations
+			// check for recursion in relations and spooked properties
 			foreach ($this->classes as $name => $class) {
 				foreach ($class->getProperties() as $property) {
 					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
-						$this->checkRecursion($property, $class);
+						if (
+							(
+								$property->getClass()->getPattern()
+									instanceof SpookedClassPattern
+							) || (
+								$property->getClass()->getPattern()
+									instanceof SpookedEnumerationPattern
+							)
+						) {
+							$property->setFetchStrategy(FetchStrategy::cascade());
+						} else {
+							$this->checkRecursion($property, $class);
+						}
 					}
 				}
 			}
