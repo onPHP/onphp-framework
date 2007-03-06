@@ -186,11 +186,10 @@
 				.' at "'.get_class($proto).'"'
 			);
 			
-			$alias = 
+			$alias = $propertyDao->getJoinName(
+				$property->getColumnName(),
 				$prefix
-				.$propertyDao->getJoinName(
-					$property->getColumnName()
-				);
+			);
 			
 			if (
 				$property->getRelationId() == MetaRelation::ONE_TO_MANY
@@ -298,7 +297,7 @@
 				implode('.', $path), 
 				$query,
 				$alias, 
-				$prefix.$propertyDao->getJoinPrefix($property->getColumnName())
+				$propertyDao->getJoinPrefix($property->getColumnName(), $prefix)
 			);
 		}
 		

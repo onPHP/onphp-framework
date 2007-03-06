@@ -385,11 +385,10 @@
 						array($property->getClassName(), 'dao')
 					);
 					
-					$tableAlias = 
+					$tableAlias = $propertyDao->getJoinName(
+						$property->getColumnName(),
 						$prefix
-						.$propertyDao->getJoinName(
-							$property->getColumnName()
-						);
+					);
 					
 					$fields = $propertyDao->getFields();
 					
@@ -416,8 +415,7 @@
 					foreach ($fields as $field) {
 						$query->get(
 							new DBField($field, $tableAlias),
-							$prefix
-								.$propertyDao->getJoinPrefix($property->getColumnName())
+							$propertyDao->getJoinPrefix($property->getColumnName(), $prefix)
 								.$field
 						);
 					}
@@ -426,7 +424,7 @@
 						$query, 
 						$propertyDao, 
 						$tableAlias, 
-						$prefix.$propertyDao->getJoinPrefix($property->getColumnName())
+						$propertyDao->getJoinPrefix($property->getColumnName(), $prefix)
 					);
 				}
 			}

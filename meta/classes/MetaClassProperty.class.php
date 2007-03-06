@@ -487,6 +487,7 @@ EOT;
 									if ($this->required) {
 										// avoid infinite recursion
 										if ($this->type->getClassName() == $className) {
+											// FIXME: prefix unused
 											$out = <<<EOT
 set{$method}(
 	\$this->makeSelf(\$array, \$this->getJoinPrefix('{$this->getColumnName()}'))
@@ -495,12 +496,13 @@ EOT;
 										} else
 											$out = <<<EOT
 set{$method}(
-	{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, \$prefix.{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getColumnName()}'))
+	{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, {$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getColumnName()}', \$prefix))
 )
 EOT;
 									} else {
 										// avoid infinite recursion
 										if ($this->type->getClassName() == $className) {
+											// FIXME: prefix unused
 											$out = <<<EOT
 if (isset(\$array[{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getColumnName()}').'{$idName}'])) {
 	\${$varName}->set{$method}(
@@ -511,9 +513,9 @@ if (isset(\$array[{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->g
 EOT;
 										} else
 											$out = <<<EOT
-if (isset(\$array[{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getColumnName()}').'{$idName}'])) {
+if (isset(\$array[{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getColumnName()}', \$prefix).'{$idName}'])) {
 	\${$varName}->set{$method}(
-		{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, \$prefix.{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getColumnName()}'))
+		{$this->type->getClassName()}::dao()->makeJoinedObject(\$array, {$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getColumnName()}', \$prefix))
 	);
 }
 

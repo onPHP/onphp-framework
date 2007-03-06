@@ -17,14 +17,14 @@
 	{
 		abstract protected function makeSelf(&$array, $prefix = null);
 		
-		public function getJoinPrefix($field)
+		public function getJoinPrefix($field, $prefix = null)
 		{
-			return $this->getJoinName($field).'__';
+			return $this->getJoinName($field, $prefix).'__';
 		}
 		
-		public function getJoinName($field)
+		public function getJoinName($field, $prefix = null)
 		{
-			return $field.'_'.$this->getTable();
+			return substr(sha1($prefix.$this->getTable()), 0, 10).'_'.$field;
 		}
 		
 		public function makeObject(&$array, $prefix = null)
