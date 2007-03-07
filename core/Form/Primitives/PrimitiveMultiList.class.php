@@ -24,7 +24,7 @@
 		
 		public function getActualChoiceValue()
 		{
-			if ($this->value)
+			if ($this->value !== null)
 				return $this->selected;
 			elseif ($this->default) {
 				$out = array();
