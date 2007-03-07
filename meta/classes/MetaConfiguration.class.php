@@ -187,20 +187,6 @@
 							);
 							
 							if (
-								$property->getRelationId()
-									== MetaRelation::LAZY_ONE_TO_ONE
-								&& $property->getType()->isGeneric()
-							) {
-								throw new WrongArgumentException(
-									'lazy one-to-one is supported only for '
-									.'non-generic object types '
-									.'('.$property->getName()
-									.' @ '.$class->getName()
-									.')'
-								);
-							}
-							
-							if (
 								(
 									$property->getRelationId()
 										== MetaRelation::ONE_TO_ONE
