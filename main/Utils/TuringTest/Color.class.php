@@ -19,6 +19,14 @@
 		private	$green	= 0;
 		private	$blue	= 0;
 		
+		/**
+		 * @return Color
+		**/
+		public static function create($rgb)
+		{
+			return new self($rgb);
+		}
+		
 		// valid values: #AABBCC, DDEEFF, A15B, etc.
 		public function __construct($rgb)
 		{
@@ -96,10 +104,7 @@
 		
 		public function toString()
 		{
-			return
-				str_pad(dechex($this->red), 2, '0', STR_PAD_LEFT)
-				.str_pad(dechex($this->green), 2, '0', STR_PAD_LEFT)
-				.str_pad(dechex($this->blue), 2, '0', STR_PAD_LEFT);
+			return sprintf('%02X%02X%02X', $this->red, $this->green, $this->blue);
 		}
 	}
 ?>
