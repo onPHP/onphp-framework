@@ -17,7 +17,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	class DateRange implements Stringable
+	final class DateRange implements Stringable
 	{
 		protected $start	= null;
 		protected $end		= null;
@@ -46,7 +46,7 @@
 		 * @throws WrongArgumentException
 		 * @return DateRange
 		**/
-		public function setStart(Timestamp $start)
+		public function setStart(Date $start)
 		{
 			if ($this->end && $this->end->toStamp() < $start->toStamp())
 				throw new WrongArgumentException(
@@ -55,6 +55,7 @@
 
 			$this->start = $start;
 			$this->dayStartStamp = null;
+			
 			return $this;
 		}
 
@@ -62,7 +63,7 @@
 		 * @throws WrongArgumentException
 		 * @return DateRange
 		**/
-		public function setEnd(Timestamp $end)
+		public function setEnd(Date $end)
 		{
 			if ($this->start && $this->start->toStamp() > $end->toStamp())
 				throw new WrongArgumentException(
@@ -79,14 +80,17 @@
 		**/
 		public function lazySet($start = null, $end = null)
 		{
-			if ($start instanceof Timestamp && $end instanceof Timestamp) {
+			if (
+				($start instanceof Date)
+				&& ($end instanceof Date)
+			) {
 				if ($start->toStamp() >= $end->toStamp())
 					$this->setEnd($start)->setStart($end);
 				else
 					$this->setStart($start)->setEnd($end);
-			} elseif ($start instanceof Timestamp)
+			} elseif ($start instanceof Date)
 				$this->setStart($start);
-			elseif ($end instanceof Timestamp)
+			elseif ($end instanceof Date)
 				$this->setEnd($end);
 			
 			return $this;
@@ -120,7 +124,7 @@
 		}
 
 		/**
-		 * @return Timestamp
+		 * @return Date
 		**/
 		public function getStart()
 		{
@@ -128,7 +132,7 @@
 		}
 
 		/**
-		 * @return Timestamp
+		 * @return Date
 		**/
 		public function getEnd()
 		{
@@ -146,8 +150,8 @@
 				return $this->start->toDate($delimiter);
 			elseif ($this->end)
 				return $this->end->toDate($delimiter);
-			else
-				return null;
+			
+			return null;
 		}
 		
 		public function toString($delimiter = ' - ')
@@ -161,8 +165,8 @@
 				return $this->start->toString();
 			elseif ($this->end)
 				return $this->end->toString();
-			else
-				return null;
+			
+			return null;
 		}
 
 		public function overlaps(DateRange $range)
@@ -230,8 +234,8 @@
 				|| ($start <= $probe && $end >= $probe)
 			)
 				return true;
-			else 
-				return false;
+			
+			return false;
 		}
 
 		public function split()
@@ -247,7 +251,7 @@
 			$end = new Timestamp($this->end->getDayEndStamp());
 
 			for (
-				$current = $start; 
+				$current = $start;
 				$current->toStamp() < $end->toStamp();
 				$current->modify('+1 day')
 			) {
@@ -277,7 +281,8 @@
 		
 		public function isNeighbour(DateRange $range)
 		{
-			Assert::isTrue(! $this->isOpen() && ! $range->isOpen());
+			Assert::isTrue(!$this->isOpen() && !$range->isOpen());
+			
 			if (
 				$this->overlaps($range)
 				|| $this->start->spawn('-1 day')->getDayStartStamp() 
@@ -286,8 +291,8 @@
 					== $range->start->getDayStartStamp()
 			)
 				return true;
-			else			
-				return false;
+			
+			return false;
 		}
 		
 		public function isOpen()
@@ -390,30 +395,27 @@
 		public function getStartStamp() // null if start is null
 		{
 			if ($this->start) {
-				
-				if (! $this->dayStartStamp) {
-					$this->dayStartStamp = 
-						$this->start->getDayStartStamp();
+				if (!$this->dayStartStamp) {
+					$this->dayStartStamp =  $this->start->getDayStartStamp();
 				}
 
 				return $this->dayStartStamp;
-				
-			} else
-				return null;
+			}
+			
+			return null;
 		}
 
 		public function getEndStamp() // null if end is null
 		{
 			if ($this->end) {
-				
-				if (! $this->dayEndStamp) {
-					$this->dayEndStamp =
-						$this->end->getDayEndStamp();
+				if (!$this->dayEndStamp) {
+					$this->dayEndStamp = $this->end->getDayEndStamp();
 				}
 				
 				return $this->dayEndStamp;
-			} else 
-				return null;
+			}
+			
+			return null;
 		}
 
 		public static function compare(DateRange $left, DateRange $right)

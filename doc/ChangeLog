@@ -1,5 +1,9 @@
 # $Id$
 
+2007-03-07	Konstantin V. Arkhipov
+
+	* main/Base/DateRange.class.php: now accepts Date object's.
+
 2007-03-07	Ivan Y. Khvostishkov
 
 	* main/Utils/ArrayUtils.class.php: method for getting symmetric array
