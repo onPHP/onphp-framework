@@ -19,7 +19,7 @@
 		
 		public function getChoiceValue()
 		{
-			if ($this->value)
+			if ($this->value !== null)
 				return $this->list[$this->value];
 			
 			return null;
@@ -27,7 +27,7 @@
 		
 		public function getActualChoiceValue()
 		{
-			if ($this->value)
+			if ($this->value !== null)
 				return $this->list[$this->value];
 			
 			return $this->list[$this->default];
