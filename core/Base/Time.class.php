@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Base
 	**/
-	class Time implements Stringable
+	final class Time implements Stringable
 	{
 		protected $hour		= 0;
 		protected $minute	= 0;

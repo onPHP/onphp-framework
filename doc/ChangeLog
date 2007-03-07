@@ -2,6 +2,8 @@
 
 2007-03-07	Konstantin V. Arkhipov
 
+	* core/, main/: all childless classes are final now.
+
 	* main/Base/DateRange.class.php: now accepts Date object's.
 
 2007-03-07	Ivan Y. Khvostishkov

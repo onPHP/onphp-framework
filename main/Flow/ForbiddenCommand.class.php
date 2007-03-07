@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Flow
+	**/
 	final class ForbiddenCommand implements EditorCommand
 	{
 		/**

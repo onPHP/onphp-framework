@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2006-2007 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,7 +15,7 @@
 	 *
 	 * @ingroup Calendar
 	**/
-	class CalendarMonthWeekly
+	final class CalendarMonthWeekly
 	{
 		private $monthRange	= null;
 		private $fullRange	= null;
@@ -93,6 +93,9 @@
 			return $this->days;
 		}
 		
+		/**
+		 * @return DateRange
+		**/
 		public function getFullRange()
 		{
 			return $this->fullRange;
@@ -103,6 +106,9 @@
 			return $this->fullLength;
 		}
 		
+		/**
+		 * @return DateRange
+		**/
 		public function getMonthRange()
 		{
 			return $this->monthRange;
@@ -122,16 +128,25 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Timestamp
+		**/
 		public function getNextMonthBase()
 		{
 			return $this->monthRange->getEnd()->spawn('+1 day');
 		}
-
+		
+		/**
+		 * @return Timestamp
+		**/
 		public function getPrevMonthBase()
 		{
 			return $this->monthRange->getStart()->spawn('-1 day');
 		}
 		
+		/**
+		 * @return Timestamp
+		**/
 		public function getBase()
 		{
 			return $this->monthRange->getStart();

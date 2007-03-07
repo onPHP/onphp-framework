@@ -12,7 +12,7 @@
 	
 	/**
 	 * @ingroup Flow
-	 */
+	**/
 	abstract class PrototypedEditor extends MethodMappedController 
 	{
 		const COMMAND_SUCCEEDED	= 'success';

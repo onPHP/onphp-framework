@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2004-2007 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -23,7 +23,7 @@
 	/**
 	 * @ingroup Mail
 	**/
-	class Mail
+	final class Mail
 	{
 		private $to				= null;
 		private $cc				= null;
