@@ -74,5 +74,25 @@
 			
 			return $result;
 		}
+
+		public static function getMirrorValues($array)
+		{
+			Assert::isArray($array);
+
+			$result = array();
+
+			foreach ($array as $value) {
+
+				Assert::isTrue(
+					is_integer($value)
+					|| is_string($value),
+					'only integer or string values accepted'
+				);
+
+				$result[$value] = $value;
+			}
+
+			return $result;
+		}
 	}
 ?>

@@ -124,6 +124,14 @@
 		}
 		
 		/**
+		 * @return PrimitivePlainList
+		**/
+		public static function plainChoice($name)
+		{
+			return new PrimitivePlainList($name);
+		}
+		
+		/**
 		 * @return PrimitiveBoolean
 		**/
 		public static function boolean($name)

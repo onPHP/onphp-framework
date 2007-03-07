@@ -1,5 +1,14 @@
 # $Id$
 
+2007-03-07	Ivan Y. Khvostishkov
+
+	* main/Utils/ArrayUtils.class.php: method for getting symmetric array
+	from values.
+
+	* core/Form/Primitive.class.php,
+	core/Form/Primitives/PrimitivePlainList.class.php: plainChoice() for
+	simple plain arrays.
+
 2007-03-06	Konstantin V. Arkhipov
 
 	* meta/classes/MetaConfiguration.class.php: cascade fetch strategy
