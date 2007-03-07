@@ -147,27 +147,23 @@
 		{
 			list($date, $time) = explode(' ', $string, 2);
 			
-			list($this->year, $this->month, $this->day) =
-				explode('-', $date, 3);
+			parent::import($date);
 			
 			list($this->hour, $this->minute, $this->second) =
 				explode(':', $time, 3);
 			
-			$this->normalizeSelf();
-		}
-		
-		/* void */ protected function normalizeSelf()
-		{
-			parent::normalizeSelf();
+			$time =
+				sprintf(
+					'%02d:%02d:%02d',
+					$this->hour,
+					$this->minute,
+					$this->second
+				);
 			
-			if (strlen($this->hour) < 2)
-				$this->hour = str_pad($this->hour, 2, '0', STR_PAD_LEFT);
+			list($this->hour, $this->minute, $this->second) =
+				explode(':', $time, 3);
 			
-			if (strlen($this->minute) < 2)
-				$this->minute = str_pad($this->minute, 2, '0', STR_PAD_LEFT);
-			
-			if (strlen($this->second) < 2)
-				$this->second = str_pad($this->second, 2, '0', STR_PAD_LEFT);
+			$this->string .= ' '.$time;
 		}
 	}
 ?>

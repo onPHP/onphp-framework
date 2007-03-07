@@ -234,19 +234,16 @@
 			list($this->year, $this->month, $this->day) =
 				explode('-', $string, 3);
 			
-			$this->normalizeSelf();
-		}
-		
-		/* void */ protected function normalizeSelf()
-		{
-			if (strlen($this->year) < 4)
-				$this->year = str_pad($this->year, 4, '0', STR_PAD_LEFT);
+			$this->string =
+				sprintf(
+					'%04d-%02d-%02d',
+					$this->year,
+					$this->month,
+					$this->day
+				);
 			
-			if (strlen($this->month) < 2)
-				$this->month = str_pad($this->month, 2, '0', STR_PAD_LEFT);
-			
-			if (strlen($this->day) < 2)
-				$this->day = str_pad($this->day, 2, '0', STR_PAD_LEFT);
+			list($this->year, $this->month, $this->day) =
+				explode('-', $this->string, 3);
 		}
 	}
 ?>

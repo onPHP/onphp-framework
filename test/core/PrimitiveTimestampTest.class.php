@@ -36,12 +36,12 @@
 		{
 			$prm = Primitive::timestamp('test')->setSingle();
 			
-			$array = array('test' => '1234-1-2 17:38:59');
+			$array = array('test' => '1234-01-02 17:38:59');
 			
 			$this->assertTrue($prm->import($array));
 			$this->assertTrue($prm->getValue()->getYear() == 1234);
 			
-			$array = array('test' => '1975-1-2 17:38:59');
+			$array = array('test' => '1975-01-02 17:38:59');
 			
 			$this->assertTrue($prm->import($array));
 			
