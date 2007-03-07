@@ -80,11 +80,25 @@
 					}
 					
 					if ($filler = $property->toDaoSetter($className, $nonJoin)) {
-						if ($nonJoin)
-							$prefix =
-								'// forcing cascade strategy due to recursion'
-								."\n";
-						else
+						if ($nonJoin) {
+							if (
+								(
+									$property->getType()->getClass()->getPattern()
+										instanceof SpookedClassPattern
+								) || (
+									$property->getType()->getClass()->getPattern()
+										instanceof SpookedEnumerationPattern
+								)
+							) {
+								$prefix =
+									'// forcing cascade strategy '
+									.'due to spooked property'."\n";
+							} else {
+								$prefix =
+									'// forcing cascade strategy due to recursion'
+									."\n";
+							}
+						} else
 							$prefix = null;
 						
 						// TODO: make it sane

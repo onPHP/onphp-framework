@@ -299,10 +299,10 @@
 					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
 						if (
 							(
-								$property->getClass()->getPattern()
+								$property->getType()->getClass()->getPattern()
 									instanceof SpookedClassPattern
 							) || (
-								$property->getClass()->getPattern()
+								$property->getType()->getClass()->getPattern()
 									instanceof SpookedEnumerationPattern
 							)
 						) {
