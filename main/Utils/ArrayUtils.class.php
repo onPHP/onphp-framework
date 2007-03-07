@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -82,10 +82,8 @@
 			$result = array();
 
 			foreach ($array as $value) {
-
 				Assert::isTrue(
-					is_integer($value)
-					|| is_string($value),
+					is_integer($value) || is_string($value),
 					'only integer or string values accepted'
 				);
 
