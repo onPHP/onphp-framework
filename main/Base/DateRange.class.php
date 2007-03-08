@@ -17,13 +17,13 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	final class DateRange implements Stringable
+	class DateRange implements Stringable
 	{
-		protected $start	= null;
-		protected $end		= null;
+		private $start	= null;
+		private $end	= null;
 		
-		protected $dayStartStamp	= null;
-		protected $dayEndStamp		= null;
+		private $dayStartStamp	= null;
+		private $dayEndStamp	= null;
 		
 		/**
 		 * @return DateRange
