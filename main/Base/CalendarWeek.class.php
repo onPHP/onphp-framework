@@ -17,7 +17,6 @@
 	**/
 	final class CalendarWeek
 	{
-		// TODO: quite empty class, consider replacement or pull up all methods
 		private $days = array();
 		
 		/**
