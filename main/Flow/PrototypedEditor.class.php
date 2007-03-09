@@ -121,7 +121,7 @@
 			Assert::isUnreachable();
 		}
 		
-		public function saveObject(HttpRequest $request, Form $form, Identifiable $object)
+		protected function saveObject(HttpRequest $request, Form $form, Identifiable $object)
 		{
 			FormUtils::form2object($form, $object, false);
 			return $object->dao()->save($object);
@@ -192,7 +192,7 @@
 			Assert::isUnreachable();
 		}
 		
-		public function addObject(HttpRequest $request, Form $form, Identifiable $object)
+		protected function addObject(HttpRequest $request, Form $form, Identifiable $object)
 		{
 			FormUtils::form2object($form, $object);
 			return $object->dao()->add($object);
