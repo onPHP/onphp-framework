@@ -2,6 +2,9 @@
 
 2007-03-09	Konstantin V. Arkhipov
 
+	* core/Form/Filters/RussianTypograph.class.php: now uses internal
+	filter's chain too: Trim + CompressWhitespace.
+
 	* core/OSQL/SQLFunction.class.php: MappableObject implemented.
 
 2007-03-07	Konstantin V. Arkhipov

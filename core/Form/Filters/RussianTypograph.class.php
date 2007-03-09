@@ -73,6 +73,20 @@
 			'str_replace("\'", \'&#146;\', \'$1\')'
 		);
 		
+		private static $chain = null;
+		
+		protected function __construct()
+		{
+			self::$chain =
+				FilterChain::create()->
+				add(
+					Filter::trim()
+				)->
+				add(
+					CompressWhitespaceFilter::me()
+				);
+		}
+		
 		/**
 		 * @return RussianTypograph
 		**/
@@ -129,7 +143,7 @@
 				return $out;
 			}
 			
-			return $text;
+			return self::$chain->apply($text);
 		}
 		
 		private function typographize($text)
