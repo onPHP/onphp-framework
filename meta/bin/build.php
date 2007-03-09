@@ -5,7 +5,9 @@
 	function help()
 	{
 ?>
-Usage: build.php project-configuration-file.inc.php metaconfiguration.xml
+Usage: build.php [-noschema] project-configuration-file.inc.php metaconfiguration.xml
+
+With -noschema flag no DB schema/schema changes will be generated.
 
 Things not supported by design:
 
@@ -92,14 +94,31 @@ Things not supported by design:
 		help();
 	} else {
 		
-		if (is_readable($_SERVER['argv'][1]))
-			include $_SERVER['argv'][1];
+		$buildSchema = true;
+		
+		$metaFile = array_pop($_SERVER['argv']);
+		$configFile = array_pop($_SERVER['argv']);
+            	if ($metaFile[0] == '-' || $configFile[0] == '-')
+                	help();
+                	
+            	for ($i = 1; $i < $_SERVER['argc']-2; $i++) {
+                	switch ($_SERVER['argv'][$i]) {
+                    		case '-noschema':
+                        		$buildSchema = false;
+                        		break;
+                    		default:
+                        		echo "There is no such option: ".$_SERVER['argv'][$i]."\n";
+                	}
+            	}
+		
+		if (is_readable($configFile))
+			include $configFile;
 		else {
 			echo "Project's configuration file not found.\n";
 			help();
 		}
 		
-		if (is_readable($_SERVER['argv'][2])) {
+		if (is_readable($metaFile)) {
 			
 			init();
 			
@@ -122,10 +141,18 @@ Things not supported by design:
 				newLine();
 			
 			try {
-				MetaConfiguration::me()->
-					load($_SERVER['argv'][2])->
-					setOutput($out)->
-					build();
+				$metaConfiguration = 
+					MetaConfiguration::me()->
+						load($metaFile)->
+						setOutput($out)->
+						buildClasses();
+						
+				if ($buildSchema)
+					$metaConfiguration->
+						buildSchema()->
+						buildSchemaChanges();
+						
+				$metaConfiguration->checkForStaleFiles();
 			} catch (BaseException $e) {
 				$out->
 					newLine()->
