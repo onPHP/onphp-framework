@@ -273,6 +273,15 @@
 			);
 		}
 		
+		public function getCustom()
+		{
+			try {
+				return $this->dao->getCustom($this->toSelectQuery());
+			} catch (ObjectNotFoundException $e) {
+				return null;
+			}
+		}
+		
 		public function getCustomList()
 		{
 			try {
