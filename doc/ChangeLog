@@ -1,5 +1,9 @@
 # $Id$
 
+2007-03-09	Konstantin V. Arkhipov
+
+	* core/OSQL/SQLFunction.class.php: MappableObject implemented.
+
 2007-03-07	Konstantin V. Arkhipov
 
 	* core/, main/: all childless classes are final now.

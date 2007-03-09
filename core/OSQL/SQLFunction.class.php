@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2005-2006 by Anton E. Lebedevich, Konstantin V. Arkhipov *
+ *   Copyright (C) 2005-2007 by Anton E. Lebedevich, Konstantin V. Arkhipov *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -15,7 +15,9 @@
 	 * 
 	 * @ingroup OSQL
 	**/
-	final class SQLFunction extends Castable implements DialectString
+	final class SQLFunction
+		extends Castable
+		implements DialectString, MappableObject
 	{
 		private $name	= null;
 		private $alias	= null;
@@ -64,6 +66,25 @@
 			$this->alias = $alias;
 			
 			return $this;
+		}
+		
+		/**
+		 * @return InExpression
+		**/
+		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		{
+			$mapped = array();
+			
+			$mapped[] = $this->name;
+			
+			foreach ($this->args as $arg) {
+				if ($arg instanceof MappableObject)
+					$mapped[] = $arg->toMapped($dao, $query);
+				else
+					$mapped[] = $dao->guessAtom($atom, $query);
+			}
+			
+			return call_user_func_array(array('self', 'create'), $mapped);
 		}
 		
 		public function toDialectString(Dialect $dialect)
