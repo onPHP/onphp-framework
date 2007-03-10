@@ -66,6 +66,14 @@
 		}
 		
 		/**
+		 * @return DistinctCountProjection
+		**/
+		public static function distinctCount($property = null, $alias = null)
+		{
+			return new DistinctCountProjection($property, $alias);
+		}
+		
+		/**
 		 * @return ProjectionChain
 		**/
 		public static function chain()

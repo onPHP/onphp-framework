@@ -19,8 +19,12 @@
 		extends Castable
 		implements DialectString, MappableObject
 	{
-		private $name	= null;
-		private $alias	= null;
+		const AGGREGATE_ALL 		= 1;
+		const AGGREGATE_DISTINCT 	= 2;
+
+		private $name		= null;
+		private $alias		= null;
+		private $aggregate	= null;
 
 		private $args	= array();
 		
@@ -69,7 +73,27 @@
 		}
 		
 		/**
-		 * @return InExpression
+		 * @return SQLFunction
+		**/
+		public function setAggregateAll()
+		{
+			$this->aggregate = self::AGGREGATE_ALL;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return SQLFunction
+		**/
+		public function setAggregateDistinct()
+		{
+			$this->aggregate = self::AGGREGATE_DISTINCT;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return SQLFunction
 		**/
 		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
 		{
@@ -104,9 +128,15 @@
 						$args[] = $dialect->fieldToString($arg);
 			}
 			
-			$out =
-				$this->name.'('
-				.($args == array() ? null : implode(', ', $args))
+			$out = $this->name.'(';
+			
+			if ($this->aggregate == self::AGGREGATE_ALL) {
+				$out .= 'ALL ';
+			} elseif ($this->aggregate == self::AGGREGATE_DISTINCT) {
+				$out .= 'DISTINCT ';
+			}
+			
+			$out .=	($args == array() ? null : implode(', ', $args))
 				.')';
 			
 			$out =
