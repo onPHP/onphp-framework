@@ -353,7 +353,7 @@
 				!$this->projection
 				&& $this->strategy->getId() == FetchStrategy::JOIN
 			) {
-				$this->joinProperties($query, $this->dao, $this->dao->getTable());
+				$this->joinProperties($query, $this->dao, $this->dao->getTable(), true);
 			}
 
 			return $query;
@@ -363,6 +363,7 @@
 			SelectQuery $query,
 			ComplexBuilderDAO $parentDao,
 			$parentTable,
+			$parentRequired,
 			$prefix = null
 		)
 		{
@@ -415,7 +416,7 @@
 								)
 							);
 						
-						if ($property->isRequired())
+						if ($property->isRequired() && $parentRequired)
 							$query->join($propertyDao->getTable(), $logic, $tableAlias);
 						else
 							$query->leftJoin($propertyDao->getTable(), $logic, $tableAlias);
@@ -433,6 +434,7 @@
 						$query, 
 						$propertyDao, 
 						$tableAlias, 
+						$property->isRequired() && $parentRequired,
 						$propertyDao->getJoinPrefix($property->getColumnName(), $prefix)
 					);
 				}
