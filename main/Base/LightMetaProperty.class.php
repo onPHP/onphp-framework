@@ -67,54 +67,14 @@
 			return $this->name;
 		}
 		
-		/**
-		 * @return LightMetaProperty
-		**/
-		public function setName($name)
-		{
-			$this->name = $name;
-			
-			return $this;
-		}
-		
 		public function getColumnName()
 		{
 			return $this->columnName;
 		}
 		
-		/**
-		 * @return LightMetaProperty
-		**/
-		public function setColumnName($name)
-		{
-			$this->columnName = $name;
-			
-			return $this;
-		}
-		
 		public function getClassName()
 		{
 			return $this->className;
-		}
-		
-		/**
-		 * @return LightMetaProperty
-		**/
-		public function setClassName($name)
-		{
-			$this->className = $name;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return LightMetaProperty
-		**/
-		public function setRequired($required = false)
-		{
-			$this->required = $required;
-			
-			return $this;
 		}
 		
 		public function isRequired()
@@ -127,44 +87,14 @@
 			return $this->generic;
 		}
 		
-		/**
-		 * @return LightMetaProperty
-		**/
-		public function setGenericType($generic = true)
-		{
-			$this->generic = $generic;
-			
-			return $this;
-		}
-		
 		public function getRelationId()
 		{
 			return $this->relationId;
 		}
 		
-		/**
-		 * @return LightMetaProperty
-		**/
-		public function setRelation(MetaRelation $relation)
-		{
-			$this->relationId = $relation->getId();
-			
-			return $this;
-		}
-		
 		public function getFetchStrategyId()
 		{
 			return $this->strategyId;
-		}
-		
-		/**
-		 * @return LightMetaProperty
-		**/
-		public function setFetchStrategy(FetchStrategy $strategy)
-		{
-			$this->strategyId = $strategy->getId();
-			
-			return $this;
 		}
 		
 		public function getContainerName($holderName)

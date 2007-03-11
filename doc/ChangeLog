@@ -2,6 +2,9 @@
 
 2007-03-11	Konstantin V. Arkhipov
 
+	* main/Base/LightMetaProperty.class.php: no more setters, since it's
+	an immutable one.
+
 	* meta/: new switched implemented for build script: --only-containers,
 	--no-schema, --no-schema-check, --force; also automagically searches
 	for configuration files now.

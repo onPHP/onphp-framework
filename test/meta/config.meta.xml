@@ -5,7 +5,29 @@
 
 <metaconfiguration><classes>
 
-	<class name="Credentials" type="final">
+		<class name="PerformanceBase">
+			<properties>
+					<identifier />
+						<property name="name" type="String" size="1024" required="true" />
+						</properties>
+						<pattern name="AbstractClass" />
+						</class>
+					
+						<class name="Book" extends="PerformanceBase" type="final" table="performance">
+							<properties>
+									<property name="creationYear" type="SmallInteger" required="false" />
+									</properties>
+									<pattern name="StraightMapping" />
+									</class>
+								
+									<class name="Show" extends="PerformanceBase" type="final" table="performance">
+										<properties>
+												<property name="actors" type="String" size="1024" required="false" />
+												</properties>
+												<pattern name="StraightMapping" />
+												</class>
+											
+				<class name="Credentials" type="final">
 		<properties>
 			<property name="nickname" type="String" size="255" required="true" />
 			<property name="password" type="Password" required="true" />
