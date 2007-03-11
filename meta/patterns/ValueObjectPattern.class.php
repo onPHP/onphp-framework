@@ -22,6 +22,8 @@
 		
 		public function build(MetaClass $class)
 		{
+			$force = MetaConfiguration::me()->isForcedGeneration();
+			
 			$this->dumpFile(
 				ONPHP_META_AUTO_BUSINESS_DIR.'Auto'.$class->getName().EXT_CLASS,
 				Format::indentize(AutoClassBuilder::build($class))
@@ -34,7 +36,7 @@
 			
 			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
 			
-			if (!file_exists($userFile))
+			if ($force || !file_exists($userFile))
 				$this->dumpFile(
 					$userFile,
 					Format::indentize(BusinessClassBuilder::build($class))
@@ -42,7 +44,7 @@
 			
 			$userFile = ONPHP_META_DAO_DIR.$class->getName().'DAO'.EXT_CLASS;
 			
-			if (!file_exists($userFile))
+			if ($force || !file_exists($userFile))
 				$this->dumpFile(
 					$userFile,
 					Format::indentize(DaoBuilder::build($class))

@@ -1,5 +1,11 @@
 # $Id$
 
+2007-03-11	Konstantin V. Arkhipov
+
+	* meta/: new switched implemented for build script: --only-containers,
+	--no-schema, --no-schema-check, --force; also automagically searches
+	for configuration files now.
+
 2007-03-10	Anton E. Lebedevich
 
 	* core/OSQL/SQLFunction.class.php: aggregate modifier support added.

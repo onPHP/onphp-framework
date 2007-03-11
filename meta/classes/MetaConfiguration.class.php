@@ -22,6 +22,8 @@
 		
 		private $defaultSource = null;
 		
+		private $forcedGeneration = false;
+		
 		/**
 		 * @return MetaConfiguration
 		**/
@@ -36,6 +38,21 @@
 		public static function out()
 		{
 			return self::me()->getOutput();
+		}
+		
+		/**
+		 * @return MetaConfiguration
+		**/
+		public function setForcedGeneration($orly)
+		{
+			$this->forcedGeneration = $orly;
+			
+			return $this;
+		}
+		
+		public function isForcedGeneration()
+		{
+			return $this->forcedGeneration;
 		}
 		
 		/**
@@ -434,6 +451,75 @@
 					
 					$out->newLine();
 				}
+			}
+			
+			return $this;
+		}
+		
+		/**
+		 * @return MetaConfiguration
+		**/
+		public function buildContainers()
+		{
+			$force = $this->isForcedGeneration();
+			
+			$out = $this->getOutput();
+			$out->
+				newLine()->
+				infoLine('Containers: ');
+			
+			foreach ($this->classes as $class) {
+				$newLine = false;
+				
+				foreach ($class->getProperties() as $property) {
+					if (
+						$property->getRelation()
+						&& (
+							$property->getRelationId() != MetaRelation::ONE_TO_ONE
+							&& $property->getRelationId() != MetaRelation::LAZY_ONE_TO_ONE
+						)
+					) {
+						$userFile =
+							ONPHP_META_DAO_DIR
+							.$class->getName().ucfirst($property->getName())
+							.'DAO'
+							.EXT_CLASS;
+						
+						if ($force || !file_exists($userFile)) {
+							BasePattern::dumpFile(
+								$userFile,
+								Format::indentize(
+									ContainerClassBuilder::buildContainer(
+										$class,
+										$property
+									)
+								)
+							);
+							
+							$newLine = true;
+						}
+						
+						// check for old-style naming
+						$oldStlye = 
+							ONPHP_META_DAO_DIR
+							.$class->getName()
+							.'To'
+							.$property->getType()->getClassName()
+							.'DAO'
+							.EXT_CLASS;
+						
+						if (is_readable($oldStlye)) {
+							$out->
+								newLine()->
+								error(
+									'remove manually: '.$oldStlye
+								);
+						}
+					}
+				}
+				
+				if ($newLine)
+					$out->newLine();
 			}
 			
 			return $this;

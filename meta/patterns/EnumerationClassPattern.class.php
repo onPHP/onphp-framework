@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -24,7 +24,10 @@
 		{
 			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
 			
-			if (!file_exists($userFile))
+			if (
+				MetaConfiguration::me()->isForcedGeneration()
+				|| !file_exists($userFile)
+			)
 				$this->dumpFile(
 					$userFile,
 					Format::indentize(EnumerationClassBuilder::build($class))

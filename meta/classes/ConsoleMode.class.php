@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup MetaBase
 	**/
-	final class ConsoleMode extends StaticFactory
+	final class ConsoleMode /* extends StaticFactory */
 	{
 		const ATTR_RESET_ALL		= 0;
 		const ATTR_BOLD				= 1;

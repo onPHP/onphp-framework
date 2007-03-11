@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -62,6 +62,8 @@
 		
 		protected function fullBuild(MetaClass $class)
 		{
+			$force = MetaConfiguration::me()->isForcedGeneration();
+			
 			$this->dumpFile(
 				ONPHP_META_AUTO_PROTO_DIR.'AutoProto'.$class->getName().EXT_CLASS,
 				Format::indentize(AutoProtoClassBuilder::build($class))
@@ -79,7 +81,7 @@
 			
 			$userFile = ONPHP_META_PROTO_DIR.'Proto'.$class->getName().EXT_CLASS;
 			
-			if (!file_exists($userFile))
+			if ($force || !file_exists($userFile))
 				$this->dumpFile(
 					$userFile,
 					Format::indentize(ProtoClassBuilder::build($class))
@@ -87,7 +89,7 @@
 			
 			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
 			
-			if (!file_exists($userFile))
+			if ($force || !file_exists($userFile))
 				$this->dumpFile(
 					$userFile,
 					Format::indentize(BusinessClassBuilder::build($class))
@@ -95,57 +97,11 @@
 			
 			$userFile = ONPHP_META_DAO_DIR.$class->getName().'DAO'.EXT_CLASS;
 			
-			if (!file_exists($userFile))
+			if ($force || !file_exists($userFile))
 				$this->dumpFile(
 					$userFile,
 					Format::indentize(DaoBuilder::build($class))
 				);
-			
-			// supplementary classes check
-			foreach ($class->getProperties() as $property) {
-				if (
-					$property->getRelation()
-					&& (
-						$property->getRelationId() != MetaRelation::ONE_TO_ONE
-						&& $property->getRelationId() != MetaRelation::LAZY_ONE_TO_ONE
-					)
-				) {
-					$userFile =
-						ONPHP_META_DAO_DIR
-						.$class->getName().ucfirst($property->getName())
-						.'DAO'
-						.EXT_CLASS;
-					
-					if (!file_exists($userFile)) {
-						$this->dumpFile(
-							$userFile,
-							Format::indentize(
-								ContainerClassBuilder::buildContainer(
-									$class,
-									$property
-								)
-							)
-						);
-					}
-					
-					// check for old-style naming
-					$oldStlye = 
-						ONPHP_META_DAO_DIR
-						.$class->getName()
-						.'To'
-						.$property->getType()->getClassName()
-						.'DAO'
-						.EXT_CLASS;
-					
-					if (is_readable($oldStlye)) {
-						MetaConfiguration::out()->
-							newLine()->
-							error(
-								'remove manually: '.$oldStlye
-							);
-					}
-				}
-			}
 		}
 	}
 ?>
