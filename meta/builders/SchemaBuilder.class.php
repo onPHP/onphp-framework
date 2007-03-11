@@ -15,25 +15,18 @@
 	**/
 	final class SchemaBuilder extends BaseBuilder
 	{
-		public static function build(MetaClass $class)
+		public static function buildTable($tableName, /* array */ $propertyList)
 		{
-			if (
-				!count($class->getProperties())
-				|| ($class->getPattern() instanceof AbstractClassPattern)
-				|| ($class->getPattern() instanceof ValueObjectPattern)
-			)
-				return null;
-			
 			$out = <<<EOT
 \$schema->
 	addTable(
-		DBTable::create('{$class->getTableName()}')->
+		DBTable::create('{$tableName}')->
 
 EOT;
 
 			$columns = array();
 			
-			foreach ($class->getAllProperties() as $property) {
+			foreach ($propertyList as $property) {
 				if (
 					($relation = $property->getRelation())
 					&& (
@@ -59,13 +52,6 @@ EOT;
 		
 		public static function buildRelations(MetaClass $class)
 		{
-			if (
-				$class->getPattern() instanceof AbstractClassPattern
-				|| $class->getPattern() instanceof ValueObjectPattern
-			) {
-				return null;
-			}
-			
 			$out = null;
 			
 			foreach ($class->getAllProperties() as $property) {

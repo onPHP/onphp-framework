@@ -364,11 +364,38 @@
 			
 			$schema = SchemaBuilder::getHead();
 			
-			foreach ($this->classes as $class) {
-				$schema .= SchemaBuilder::build($class);
-			}
+			$tables = array();
 			
 			foreach ($this->classes as $class) {
+				if (
+					!count($class->getProperties())
+					|| ($class->getPattern() instanceof AbstractClassPattern)
+					|| ($class->getPattern() instanceof ValueObjectPattern)
+				) {
+					continue;
+				}
+				
+				foreach ($class->getAllProperties() as $property)
+					$tables[
+						$class->getTableName()
+					][
+						// just to sort out dupes, if any
+						$property->getColumnName()
+					] = $property;
+			}
+			
+			foreach ($tables as $name => $propertyList)
+				if ($propertyList)
+					$schema .= SchemaBuilder::buildTable($name, $propertyList);
+			
+			foreach ($this->classes as $class) {
+				if (
+					$class->getPattern() instanceof AbstractClassPattern
+					|| $class->getPattern() instanceof ValueObjectPattern
+				) {
+					continue;
+				}
+				
 				$schema .= SchemaBuilder::buildRelations($class);
 			}
 			
