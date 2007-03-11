@@ -550,6 +550,8 @@ EOT;
 					} else {
 						$value .= "\$array[\$prefix.'{$this->getColumnName()}'])";
 					}
+				} elseif ($this->type instanceof InetType) {
+					$value = "long2ip(\$array[\$prefix.'{$this->getColumnName()}'])";
 				} elseif ($this->type instanceof BooleanType) {
 					// MySQL returns 0/1, others - t/f
 					$value = "(bool) strtr(\$array[\$prefix.'{$this->getColumnName()}'], array('f' => null))";
@@ -679,9 +681,15 @@ EOT;
 							."? \${$varName}->get{$method}()->toString()\n"
 							.": null\n";
 				} else {
-					$out .=
-						"{$set}('{$this->getColumnName()}', "
-						."\${$varName}->{$get}{$method}()";
+					if ($this->type instanceof InetType) {
+						$out .=
+							"{$set}('{$this->getColumnName()}', "
+							."ip2long(\${$varName}->{$get}{$method}())";
+					} else {
+						$out .=
+							"{$set}('{$this->getColumnName()}', "
+							."\${$varName}->{$get}{$method}()";
+					}
 				}
 				
 				$out .= ')';

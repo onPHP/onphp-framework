@@ -170,5 +170,13 @@
 		{
 			return new ExplodedPrimitive($name);
 		}
+		
+		/**
+		 * @return PrimitiveInet
+		**/
+		public static function inet($name)
+		{
+			return new PrimitiveInet($name);
+		}
 	}
 ?>

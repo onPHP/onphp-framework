@@ -2,6 +2,8 @@
 
 2007-03-11	Konstantin V. Arkhipov
 
+	* meta/types/: Inet type implemented.
+
 	* meta/: mysterious 'table per class hierarchy' implemented.
 
 	* main/Base/LightMetaProperty.class.php: no more setters, since it's
