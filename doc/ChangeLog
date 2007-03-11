@@ -1,10 +1,13 @@
 # $Id$
 
-2007-03-10  Anton E. Lebedevich
+2007-03-10	Anton E. Lebedevich
+
 	* core/OSQL/SQLFunction.class.php: aggregate modifier support added.
+
 	* main/Criteria/Projections/DistinctCountProjection.class.php,
 	main/Criteria/Projection.class.php: 'count(distinct ...)' projection
 	added.
+
 	* core/Form/Filters/CompressWhitespaceFilter.class.php:
 	CompressWhitespaceFilter added.
 
