@@ -2,6 +2,10 @@
 
 2007-03-11	Konstantin V. Arkhipov
 
+	* main/Containers/Unified/: moved to main/UnifiedContainer/.
+
+	* main/Containers/Storable/: bye-bye.
+
 	* meta/types/: Inet type implemented.
 
 	* meta/: mysterious 'table per class hierarchy' implemented.
