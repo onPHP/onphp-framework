@@ -1,5 +1,9 @@
 # $Id$
 
+2007-03-11	Konstantin V. Arkhipov
+
+	* 0.8.6 released.
+
 2007-03-02	Dmitry E. Demidov
 
 	* core/Cache/WatermarkedPeer.class.php, 
