@@ -65,9 +65,13 @@ EOT;
 						|| (
 							$foreignClass->getPattern() instanceof ValueObjectPattern
 						)
+						// no need to process them
+						|| $class->getParent()
 					) {
 						continue;
-					} elseif ($relation->getId() == MetaRelation::MANY_TO_MANY) {
+					} elseif (
+						$relation->getId() == MetaRelation::MANY_TO_MANY
+					) {
 						$tableName =
 							$class->getTableName()
 							.'_'
@@ -91,14 +95,14 @@ EOT;
 		DBTable::create('{$tableName}')->
 		{$property->toColumn()}->
 		{$foreignPropery->toColumn()}->
-		addUniques('{$property->getType()->getClass()->getTableName()}_id', '{$foreignPropery->getColumnName()}')
+		addUniques('{$property->getRelationColumnName()}', '{$foreignPropery->getColumnName()}')
 	);
 
 
 EOT;
 					} else {
 						$sourceTable = $class->getTableName();
-						$sourceColumn = $property->getColumnName();
+						$sourceColumn = $property->getRelationColumnName();
 						
 						$targetTable = $foreignClass->getTableName();
 						$targetColumn = $foreignClass->getIdentifier()->getColumnName();

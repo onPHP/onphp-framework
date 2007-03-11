@@ -690,6 +690,25 @@ EOT;
 			return $out;
 		}
 		
+		public function getRelationColumnName()
+		{
+			if ($this->type instanceof ObjectType && !$this->type->isGeneric())
+				if ($this->relation->getId() == MetaRelation::MANY_TO_MANY)
+					$columnName = $this->type->getClass()->getTableName().'_id';
+				else
+					$columnName = $this->getColumnName();
+			elseif ($this->type instanceof RangeType) {
+				return
+					array(
+						$this->buildColumn("{$this->getColumnName()}_min"),
+						$this->buildColumn("{$this->getColumnName()}_max")
+					);
+			} else
+				$columnName = $this->getColumnName();
+			
+			return $columnName;
+		}
+		
 		public function toColumn()
 		{
 			if (
@@ -706,26 +725,14 @@ EOT;
 				
 				foreach ($remote->getProperties() as $property) {
 					$columns[] = $property->buildColumn(
-						$property->getColumnName()
+						$property->getRelationColumnName()
 					);
 				}
 				
 				return $columns;
-			} elseif ($this->type instanceof ObjectType && !$this->type->isGeneric())
-				if ($this->relation->getId() == MetaRelation::MANY_TO_MANY)
-					$columnName = $this->type->getClass()->getTableName().'_id';
-				else
-					$columnName = $this->getColumnName();
-			elseif ($this->type instanceof RangeType) {
-				return
-					array(
-						$this->buildColumn("{$this->getColumnName()}_min"),
-						$this->buildColumn("{$this->getColumnName()}_max")
-					);
-			} else
-				$columnName = $this->getColumnName();
+			}
 			
-			return $this->buildColumn($columnName);
+			return $this->buildColumn($this->getRelationColumnName());
 		}
 		
 		public function toLightProperty()
