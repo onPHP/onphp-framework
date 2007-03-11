@@ -91,7 +91,7 @@ EOT;
 		DBTable::create('{$tableName}')->
 		{$property->toColumn()}->
 		{$foreignPropery->toColumn()}->
-		addUniques('{$class->getTableName()}_id', '{$foreignClass->getTableName()}_id')
+		addUniques('{$property->getType()->getClass()->getTableName()}_id', '{$foreignPropery->getColumnName()}')
 	);
 
 
