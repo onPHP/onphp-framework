@@ -493,7 +493,7 @@
 			$out = $this->getOutput();
 			$out->
 				newLine()->
-				infoLine('Containers: ');
+				infoLine('Building containers: ');
 			
 			foreach ($this->classes as $class) {
 				$newLine = false;
@@ -559,7 +559,7 @@
 		{
 			$this->getOutput()->
 				newLine()->
-				infoLine('Stale files: ');
+				infoLine('Checking for stale files: ');
 			
 			return $this->
 				checkDirectory(ONPHP_META_AUTO_BUSINESS_DIR, 'Auto', null)->
