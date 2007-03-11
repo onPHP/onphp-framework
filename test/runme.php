@@ -37,7 +37,8 @@
 		
 		$_SERVER['argv'][2] = $metaDir.'config.meta.xml';
 		
-		$_SERVER['argv'][3] = '--force';
+		$_SERVER['argv'][] = '--force';
+		$_SERVER['argv'][] = '--no-schema-check';
 		
 		require $path;
 		
