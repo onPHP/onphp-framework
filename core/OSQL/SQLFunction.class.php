@@ -116,13 +116,20 @@
 			$args = array();
 
 			if ($this->args) {
-				foreach ($this->args as &$arg)
+				foreach ($this->args as $arg)
 					if ($arg instanceof DBValue)
 						$args[] = $arg->toDialectString($dialect);
 					// we're not using * anywhere but COUNT()
-					elseif ($arg === '*')
+					elseif ($arg === '*') {
+						Assert::isTrue(
+							(strtolower($this->name) === 'count')
+							|| defined('__I_HATE_MY_KARMA__'),
+							
+							'do not want to use "*" with '.$this->args[0]
+						);
+						
 						$args[] = $dialect->quoteValue($arg);
-					elseif ($arg instanceof SelectQuery)
+					} elseif ($arg instanceof SelectQuery)
 						$args[] = '('.$dialect->fieldToString($arg).')';
 					else
 						$args[] = $dialect->fieldToString($arg);
@@ -136,8 +143,7 @@
 				$out .= 'DISTINCT ';
 			}
 			
-			$out .=	($args == array() ? null : implode(', ', $args))
-				.')';
+			$out .=	($args == array() ? null : implode(', ', $args)).')';
 			
 			$out =
 				$this->cast
@@ -146,7 +152,7 @@
 			
 			return 
 				$this->alias
-					? "{$out} AS {$dialect->quoteTable($this->alias)}"
+					? $out.' AS '.$dialect->quoteTable($this->alias)
 					: $out;
 		}
 	}
