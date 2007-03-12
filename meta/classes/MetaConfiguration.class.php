@@ -323,18 +323,6 @@
 		/**
 		 * @return MetaConfiguration
 		**/
-		public function build()
-		{
-			return $this->
-				buildClasses()->
-				buildSchema()->
-				buildSchemaChanges()->
-				checkForStaleFiles();
-		}
-		
-		/**
-		 * @return MetaConfiguration
-		**/
 		public function buildClasses()
 		{
 			$out = $this->getOutput();
