@@ -1,5 +1,9 @@
 # $Id$
 
+2007-03-12	Konstantin V. Arkhipov
+
+	* meta/: syntax checking for generated classes implemented.
+
 2007-03-11	Konstantin V. Arkhipov
 
 	* main/Containers/Unified/: moved to main/UnifiedContainer/.

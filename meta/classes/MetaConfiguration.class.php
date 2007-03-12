@@ -543,6 +543,64 @@
 		/**
 		 * @return MetaConfiguration
 		**/
+		public function checkSyntax()
+		{
+			Assert::isTrue(
+				!empty($_SERVER['_']) && is_executable($_SERVER['_']),
+				'can not find php binary'
+			);
+			
+			$out = $this->getOutput();
+			
+			$out->
+				newLine()->
+				infoLine('Checking syntax of generated files: ')->
+				newLine();
+			
+			$currentLength = $previousLength = 0;
+			
+			foreach (
+				glob(ONPHP_META_AUTO_DIR.'**/*.class.php', GLOB_NOSORT) as $file
+			) {
+				$output = $error = null;
+				
+				$previousLength = $currentLength;
+				
+				$file = str_replace(getcwd().DIRECTORY_SEPARATOR, null, $file);
+				
+				$currentLength = strlen($file) + 1; // for leading tab
+				
+				$out->log("\t".$file);
+				
+				if ($currentLength < $previousLength)
+					$out->log(str_repeat(' ', $previousLength - $currentLength));
+				
+				$out->log(chr(0x0d));
+				
+				exec('php -l '.$file, $output, $error);
+				
+				if ($error) {
+					$out->
+						errorLine(
+							"\t"
+							.str_replace(
+								getcwd().DIRECTORY_SEPARATOR,
+								null,
+								$output[1]
+							),
+							true
+						);
+				}
+			}
+			
+			$out->log("\t".str_repeat(' ', $currentLength));
+			
+			return $this;
+		}
+		
+		/**
+		 * @return MetaConfiguration
+		**/
 		public function checkForStaleFiles()
 		{
 			$this->getOutput()->

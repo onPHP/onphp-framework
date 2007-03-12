@@ -18,13 +18,11 @@ Possible options:
 	--no-schema-check:
 		do not try to diff DB schemas.
 	
+	--no-syntax-check:
+		do not check generated files with `php -l`.
+	
 	--force:
 		regenerate all files.
-
-Things not supported by design:
-
-* composite identifiers;
-* obscurantism.
 
 <?php
 		exit(1);
@@ -104,11 +102,21 @@ Things not supported by design:
 			mkdir(ONPHP_META_PROTO_DIR, 0755, true);
 	}
 	
+	function stop($message = null)
+	{
+		echo $message."\n\n";
+		
+		help();
+		
+		die();
+	}
+	
 	// paths
 	$pathConfig = $pathMeta = null;
 	
 	// switches
-	$metaForce = $metaOnlyContainers = $metaNoSchema = $metaNoSchemaCheck = false;
+	$metaForce = $metaOnlyContainers = $metaNoSchema =
+	$metaNoSchemaCheck = $metaNoSyntaxCheck = false;
 	
 	$args = $_SERVER['argv'];
 	array_shift($args);
@@ -129,12 +137,16 @@ Things not supported by design:
 						$metaNoSchemaCheck = true;
 						break;
 					
+					case '--no-syntax-check':
+						$metaNoSyntaxCheck = true;
+						break;
+					
 					case '--force':
 						$metaForce = true;
 						break;
 					
 					default:
-						die('Unknown switch: '.$arg);
+						stop('Unknown switch: '.$arg);
 				}
 			} else {
 				if (file_exists($arg)) {
@@ -146,10 +158,10 @@ Things not supported by design:
 					} elseif (!$pathMeta) {
 						$pathMeta = $arg;
 					} else {
-						die('Unknown path: '.$arg);
+						stop('Unknown path: '.$arg);
 					}
 				} else {
-					die('Unknown option: '.$arg);
+					stop('Unknown option: '.$arg);
 				}
 			}
 		}
@@ -261,6 +273,9 @@ Things not supported by design:
 			}
 			
 			$meta->checkForStaleFiles();
+			
+			if (!$metaNoSyntaxCheck)
+				$meta->checkSyntax();
 		} catch (BaseException $e) {
 			$out->
 				newLine()->
@@ -270,6 +285,10 @@ Things not supported by design:
 					$e->getTraceAsString()
 				);
 		}
+	} else {
+		$out->getOutput()->resetAll()->newLine();
+		
+		stop('Can not continue.');
 	}
 		
 	$out->getOutput()->resetAll();
