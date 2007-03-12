@@ -554,7 +554,7 @@
 			
 			$out->
 				newLine()->
-				infoLine('Checking syntax of generated files: ')->
+				infoLine('Checking syntax in generated files: ')->
 				newLine();
 			
 			$currentLength = $previousLength = 0;
