@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2005-2006 by Anton E. Lebedevich, Konstantin V. Arkhipov *
+ *   Copyright (C) 2005-2007 by Anton E. Lebedevich, Konstantin V. Arkhipov *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -108,58 +108,7 @@
 			else
 				$this->checkAlive();
 			
-			return null;			
-		}
-		
-		public function add($key, &$value, $expires = Cache::EXPIRES_MINIMUM)
-		{
-			$label = $this->guessLabel($key);
-			
-			if ($this->peers[$label]['object']->isAlive())
-				return 
-					$this->peers[$label]['object']->add(
-						$key, 
-						$value, 
-						$expires
-					);
-			else
-				$this->checkAlive();
-			
-			return false;			
-		}
-
-		public function replace($key, &$value, $expires = Cache::EXPIRES_MINIMUM)
-		{
-			$label = $this->guessLabel($key);
-			
-			if ($this->peers[$label]['object']->isAlive())
-				return 
-					$this->peers[$label]['object']->replace(
-						$key, 
-						$value, 
-						$expires
-					); 
-			else
-				$this->checkAlive();
-			
-			return false;			
-		}
-
-		public function set($key, &$value, $expires = Cache::EXPIRES_MINIMUM)
-		{
-			$label = $this->guessLabel($key);
-			
-			if ($this->peers[$label]['object']->isAlive())
-				return 
-					$this->peers[$label]['object']->set(
-						$key, 
-						$value, 
-						$expires
-					); 
-			else
-				$this->checkAlive();
-			
-			return false;			
+			return null;
 		}
 		
 		public function delete($key)
@@ -171,9 +120,7 @@
 				return false;
 			}
 
-			return
-				$this->peers[$label]['object']->
-					delete($key);
+			return $this->peers[$label]['object']->delete($key);
 		}
 
 		/**
@@ -203,7 +150,19 @@
 			$action, $key, &$value, $expires = Cache::EXPIRES_MINIMUM
 		)
 		{
-			throw new UnsupportedMethodException();
+			$label = $this->guessLabel($key);
+			
+			if ($this->peers[$label]['object']->isAlive())
+				return 
+					$this->peers[$label]['object']->$action(
+						$key,
+						$value,
+						$expires
+					); 
+			else
+				$this->checkAlive();
+			
+			return false;
 		}
 
 		/**
