@@ -36,13 +36,8 @@ EOT;
 				$out .= <<<EOT
 	protected function __construct()
 	{
-
-EOT;
-				if ($parent->getPattern() instanceof StraightMappingPattern) {
-					$out .= "parent::__construct();\n\n";
-				}
-				
-				$out .= <<<EOT
+		parent::__construct();
+		
 		\$this->mapping = array_merge(
 			\$this->mapping,
 			array(
