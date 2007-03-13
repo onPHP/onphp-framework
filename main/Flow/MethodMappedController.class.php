@@ -39,15 +39,19 @@
 		
 		public function chooseAction(HttpRequest $request)
 		{
-			return Form::create()->
+			$action = Form::create()->
 				add(
 					Primitive::choice('action')->setList($this->methodMap)->
 					setDefault('edit')
 				)->
 				import($request->getGet())->
 				importMore($request->getPost())->
-				get('action')->
-					getActualValue();
+				get('action');
+			
+			if (!$command = $action->getValue())
+				return $action->getDefault();
+			
+			return $command;
 		}
 		
 		/**
