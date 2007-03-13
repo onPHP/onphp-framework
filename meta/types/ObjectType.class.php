@@ -97,6 +97,7 @@ EOT;
 					
 					if ($property->isRequired()) {
 						$method = <<<EOT
+
 {$classHint}
 public function {$methodName}()
 {
