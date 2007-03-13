@@ -22,6 +22,7 @@
 			
 			$indent	= 0;
 			$chain	= 1;
+			$first	= true;
 			
 			foreach (explode("\n", $data) as $string) {
 				$string = preg_replace('~^[\t]+~', null, rtrim($string))."\n";
@@ -40,10 +41,12 @@
 				elseif ($string[0] == '?')
 					$indent++;
 				
-				if ($indent > 0)
-					$out .= str_pad(null, $indent, "\t", STR_PAD_LEFT).$string;
-				else
-					$out .= $string;
+				if ($string <> "\n") {
+					if ($indent > 0)
+						$out .= str_pad(null, $indent, "\t", STR_PAD_LEFT).$string;
+					else
+						$out .= $string;
+				}
 
 				if (substr($string, -2 ,2) == "{\n")
 					$indent++;
@@ -68,6 +71,15 @@
 					$chain = 1;
 				} elseif ($string[0] == ':') {
 					$indent--;
+				}
+				
+				if ($string == "\n") {
+					if (!$first && ($indent > 0)) {
+						$out .= str_pad(null, $indent, "\t", STR_PAD_LEFT).$string;
+					} else {
+						$out .= $string;
+						$first = false;
+					}
 				}
 			}
 			
