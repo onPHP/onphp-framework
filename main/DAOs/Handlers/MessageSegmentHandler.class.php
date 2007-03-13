@@ -81,7 +81,12 @@
 		
 		public function drop()
 		{
-			return msg_remove_queue(msg_get_queue($this->id, ONPHP_IPC_PERMS));
+			try {
+				return msg_remove_queue(msg_get_queue($this->id, ONPHP_IPC_PERMS));
+			} catch (BaseException $e) {
+				// removed in race
+				return true;
+			}
 		}
 	}
 ?>
