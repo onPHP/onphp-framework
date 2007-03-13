@@ -24,7 +24,12 @@
 		
 		public function touch($key)
 		{
-			$q = msg_get_queue($this->id, 0660);
+			try {
+				$q = msg_get_queue($this->id, 0660);
+			} catch (BaseException $e) {
+				// race
+				return false;
+			}
 			
 			try {
 				return msg_send($q, $key, 1, false, false);
@@ -40,7 +45,12 @@
 		
 		public function unlink($key)
 		{
-			$q = msg_get_queue($this->id, 0660);
+			try {
+				$q = msg_get_queue($this->id, 0660);
+			} catch (BaseException $e) {
+				// race
+				return false;
+			}
 			
 			$type = $msg = null;
 			
@@ -49,7 +59,12 @@
 		
 		public function ping($key)
 		{
-			$q = msg_get_queue($this->id, 0660);
+			try {
+				$q = msg_get_queue($this->id, 0660);
+			} catch (BaseException $e) {
+				// race
+				return false;
+			}
 			
 			$type = $msg = null;
 			
