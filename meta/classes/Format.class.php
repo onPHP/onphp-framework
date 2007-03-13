@@ -22,7 +22,7 @@
 			
 			$indent	= 0;
 			$chain	= 1;
-			$first	= true;
+			$first	= true; // for schema.php-like files
 			
 			foreach (explode("\n", $data) as $string) {
 				$string = preg_replace('~^[\t]+~', null, rtrim($string))."\n";
