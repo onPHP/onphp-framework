@@ -192,14 +192,7 @@
 							)
 						);
 				} catch (ObjectNotFoundException $e) {
-					foreach ($toFetch as $id) {
-						try {
-							$list[] = $this->getById($id, $expires);
-						} catch (ObjectNotFoundException $e) {
-							// ignore
-						}
-					}
-
+					// nothing to fetch
 					return $list;
 				}
 			} elseif (count($ids)) {
