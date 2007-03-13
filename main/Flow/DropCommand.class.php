@@ -29,18 +29,17 @@
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
 			if ($object = $form->getValue('id')) {
-				try {
-					if (!$object instanceof Identifiable)
-						// already deleted
-						throw new ObjectNotFoundException();
+
+				if ($object instanceof Identifiable) {
 					
 					$object->dao()->dropById($object->getId());
 					
 					return
 						ModelAndView::create()->
 						setView(BaseEditor::COMMAND_SUCCEEDED);
-						
-				} catch (ObjectNotFoundException $e) {
+
+				} else {
+					// already deleted
 					$form->markMissing('id');
 				}
 			}
