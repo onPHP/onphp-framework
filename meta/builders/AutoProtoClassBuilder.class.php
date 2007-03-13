@@ -30,9 +30,7 @@ abstract class AutoProto{$class->getName()} extends Proto{$parent->getName()}
 	**/
 	public function makeForm()
 	{
-		\$form =
-			parent::makeForm()->
-			add(
+		\$form = parent::makeForm();
 EOT;
 			} else {
 				$out .= <<<EOT
@@ -43,9 +41,7 @@ abstract class AutoProto{$class->getName()} extends AbstractProtoClass
 	**/
 	public function makeForm()
 	{
-		return
-			Form::create()->
-			add(
+		\$form = Form::create();
 EOT;
 			}
 			
@@ -61,20 +57,19 @@ EOT;
 				}
 			}
 			
-			$out .= implode(")->\nadd(", $prms).");";
+			if (count($prms) > 0) {
+				$out .= "\n\$form->add(".implode(")->\nadd(", $prms).");";
+			}
 			
 			// parent's identificator should be concretized in childs
-			if ($parent) {
-				
-				if ($parent->getIdentifier()) {
-					$out .=
-						"\n\n"
-						."\$form->\nget('{$parent->getIdentifier()->getName()}')->"
-						."of('{$class->getName()}');\n\n";
-				}
-				
-				$out .= "return \$form;";
+			if ($parent && $parent->getIdentifier()) {
+				$out .=
+					"\n\n"
+					."\$form->\nget('{$parent->getIdentifier()->getName()}')->"
+					."of('{$class->getName()}');\n\n";
 			}
+			
+			$out .= "\n"."return \$form;";
 			
 			$classDump = self::dumpMetaClass($class);
 			
