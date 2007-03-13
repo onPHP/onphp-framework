@@ -217,7 +217,7 @@
 			elseif ($response === 'ERROR')
 				return false;
 			
-			Assert::isUnreachable();
+			Assert::isUnreachable($response);
 		}
 
 		private function sendRequest($command)
