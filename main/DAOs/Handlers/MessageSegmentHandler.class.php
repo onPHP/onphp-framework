@@ -79,7 +79,12 @@
 		
 		public function drop()
 		{
-			return msg_remove_queue(msg_get_queue($this->id, 0660));
+			try {
+				return msg_remove_queue(msg_get_queue($this->id, 0660));
+			} catch (BaseException $e) {
+				// removed in race
+				return true;
+			}
 		}
 	}
 ?>
