@@ -154,14 +154,7 @@
 						)
 					);
 			} catch (ObjectNotFoundException $e) {
-				foreach ($toFetch as $id) {
-					try {
-						$list[] = $this->getById($id);
-					} catch (ObjectNotFoundException $e) {
-						// ignore
-					}
-				}
-
+				// nothing to fetch
 				return $list;
 			}
 			
