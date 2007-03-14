@@ -76,7 +76,7 @@
 			if (is_int($date)) { // unix timestamp
 				$this->int = $date;
 				$this->string = date($this->getFormat(), $date);
-			} elseif (is_string($date)) { 
+			} elseif ($date && is_string($date)) { 
 				$this->int = strtotime($date);
 				
 				if (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $date))

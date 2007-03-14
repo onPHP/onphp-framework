@@ -66,7 +66,7 @@
 			if (Assert::checkInteger($timestamp)) { // unix timestamp
 				$this->int = $timestamp;
 				$this->string = date($this->getFormat(), $timestamp);
-			} elseif (is_string($timestamp)) { 
+			} elseif ($timestamp && is_string($timestamp)) { 
 				$this->int = strtotime($timestamp);
 				
 				if (
