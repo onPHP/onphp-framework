@@ -72,7 +72,10 @@
 			
 			// YANETUT
 			if (msg_receive($q, $key, $type, 2, $msg, false, MSG_IPC_NOWAIT)) {
-				msg_send($q, $key, 1, false, false);
+				try {
+					msg_send($q, $key, 1, false, false);
+				} catch (BaseException $e) {/* lost key due to race */}
+				
 				return true;
 			}
 			
