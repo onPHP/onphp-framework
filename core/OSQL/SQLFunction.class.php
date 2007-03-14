@@ -105,7 +105,7 @@
 				if ($arg instanceof MappableObject)
 					$mapped[] = $arg->toMapped($dao, $query);
 				else
-					$mapped[] = $dao->guessAtom($atom, $query);
+					$mapped[] = $dao->guessAtom($arg, $query);
 			}
 			
 			return call_user_func_array(array('self', 'create'), $mapped);
