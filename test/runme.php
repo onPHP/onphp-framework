@@ -39,6 +39,7 @@
 		
 		$_SERVER['argv'][] = '--force';
 		$_SERVER['argv'][] = '--no-schema-check';
+		$_SERVER['argv'][] = '--drop-stale-files';
 		
 		require $path;
 		

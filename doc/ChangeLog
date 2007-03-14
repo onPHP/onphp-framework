@@ -1,5 +1,9 @@
 # $Id$
 
+2007-03-14	Konstantin V. Arkhipov
+
+	* meta/: stale files removing implemented.
+
 2007-03-12	Konstantin V. Arkhipov
 
 	* meta/: syntax checking for generated classes implemented.

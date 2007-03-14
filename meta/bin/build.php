@@ -21,6 +21,9 @@ Possible options:
 	--no-syntax-check:
 		do not check generated files with `php -l`.
 	
+	--drop-stale-files:
+		remove found stale files.
+	
 	--force:
 		regenerate all files.
 
@@ -116,7 +119,7 @@ Possible options:
 	
 	// switches
 	$metaForce = $metaOnlyContainers = $metaNoSchema =
-	$metaNoSchemaCheck = $metaNoSyntaxCheck = false;
+	$metaNoSchemaCheck = $metaNoSyntaxCheck = $metaDropStaleFiles = false;
 	
 	$args = $_SERVER['argv'];
 	array_shift($args);
@@ -139,6 +142,10 @@ Possible options:
 					
 					case '--no-syntax-check':
 						$metaNoSyntaxCheck = true;
+						break;
+					
+					case '--drop-stale-files':
+						$metaDropStaleFiles = true;
 						break;
 					
 					case '--force':
@@ -272,7 +279,7 @@ Possible options:
 					$meta->buildSchemaChanges();
 			}
 			
-			$meta->checkForStaleFiles();
+			$meta->checkForStaleFiles($metaDropStaleFiles);
 			
 			if (!$metaNoSyntaxCheck)
 				$meta->checkSyntax();

@@ -601,16 +601,16 @@
 		/**
 		 * @return MetaConfiguration
 		**/
-		public function checkForStaleFiles()
+		public function checkForStaleFiles($drop = false)
 		{
 			$this->getOutput()->
 				newLine()->
 				infoLine('Checking for stale files: ');
 			
 			return $this->
-				checkDirectory(ONPHP_META_AUTO_BUSINESS_DIR, 'Auto', null)->
-				checkDirectory(ONPHP_META_AUTO_DAO_DIR, 'Auto', 'DAO')->
-				checkDirectory(ONPHP_META_AUTO_PROTO_DIR, 'AutoProto', null);
+				checkDirectory(ONPHP_META_AUTO_BUSINESS_DIR, 'Auto', null, $drop)->
+				checkDirectory(ONPHP_META_AUTO_DAO_DIR, 'Auto', 'DAO', $drop)->
+				checkDirectory(ONPHP_META_AUTO_PROTO_DIR, 'AutoProto', null, $drop);
 		}
 		
 		/**
@@ -653,8 +653,12 @@
 		/**
 		 * @return MetaConfiguration
 		**/
-		private function checkDirectory($directory, $preStrip, $postStrip)
+		private function checkDirectory(
+			$directory, $preStrip, $postStrip, $drop = false
+		)
 		{
+			$out = $this->getOutput();
+			
 			foreach (
 				glob($directory.'*.class.php', GLOB_NOSORT)
 				as $filename
@@ -665,8 +669,8 @@
 						strlen($preStrip)
 					);
 				
-				if (!isset($this->classes[$name]))
-					$this->getOutput()->warningLine(
+				if (!isset($this->classes[$name])) {
+					$out->warning(
 						"\t"
 						.str_replace(
 							getcwd().DIRECTORY_SEPARATOR,
@@ -674,6 +678,18 @@
 							$filename
 						)
 					);
+					
+					if ($drop) {
+						try {
+							unlink($filename);
+							$out->infoLine(' removed.');
+						} catch (BaseException $e) {
+							$out->errorLine(' failed to remove.');
+						}
+					} else {
+						$out->newLine();
+					}
+				}
 			}
 			
 			return $this;
