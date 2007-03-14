@@ -39,9 +39,9 @@
 				
 				if ($order = isset($info['order']) ? $info['order'] : null) {
 					if ($order instanceof OrderBy)
-						$query->orderBy($order);
+						$query->orderBy($order->toMapped($this, $query));
 					elseif ($order instanceof OrderChain)
-						$query->setOrderChain($info['order']);
+						$query->setOrderChain($order->toMapped($this, $query));
 					else
 						throw new WrongStateException('strange order arrived');
 				}
