@@ -73,12 +73,21 @@
 		
 		public function __construct($date)
 		{
-			if (is_int($date)) // unix timestamp
-				$this->intImport($date);
-			elseif ($date && is_string($date))
-				$this->stringImport($date);
-			
-			if ($this->int === null || $this->int === false) {
+			if (is_int($date)) { // unix timestamp
+				$this->int = $date;
+				$this->string = date($this->getFormat(), $date);
+			} elseif ($date && is_string($date)) { 
+				$this->int = strtotime($date);
+				
+				if (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $date))
+					$this->string = $date;
+				elseif ($this->int !== false) 
+					$this->string = date($this->getFormat(), $this->int);
+				else
+					throw new WrongArgumentException(
+						"strange date given - '{$date}'"
+					);
+			} else {
 				throw new WrongArgumentException(
 					"strange date given - '{$date}'"
 				);
@@ -239,22 +248,6 @@
 			
 			list($this->year, $this->month, $this->day) =
 				explode('-', $this->string, 3);
-		}
-		
-		protected function intImport($integer)
-		{
-			$this->int = $integer;
-			$this->string = date($this->getFormat(), $integer);
-		}
-		
-		protected function stringImport($string)
-		{
-			$this->int = strtotime($string);
-			
-			if (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
-				$this->string = $string;
-			elseif ($this->int !== false) 
-				$this->string = date($this->getFormat(), $this->int);
 		}
 	}
 ?>
