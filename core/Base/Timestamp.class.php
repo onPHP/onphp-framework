@@ -78,8 +78,12 @@
 					$this->string = $timestamp;
 				} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $timestamp))
 					$this->string = $timestamp . ' 00:00:00';
-				else
+				elseif ($this->int !== false) 
 					$this->string = date($this->getFormat(), $this->int);
+				else
+					throw new WrongArgumentException(
+						"strange timestamp given - '{$timestamp}'"
+					);
 			} else {
 				throw new WrongArgumentException(
 					"strange timestamp given - '{$timestamp}'"
