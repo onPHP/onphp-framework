@@ -247,7 +247,7 @@
 							
 							DBField::create(
 								$this->getIdName(),
-								$this->getTable()
+								$table
 							)
 						);
 				}
