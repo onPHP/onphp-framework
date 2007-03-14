@@ -81,8 +81,12 @@
 				
 				if (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $date))
 					$this->string = $date;
-				else
+				elseif ($this->int !== false) 
 					$this->string = date($this->getFormat(), $this->int);
+				else
+					throw new WrongArgumentException(
+						"strange date given - '{$date}'"
+					);
 			} else {
 				throw new WrongArgumentException(
 					"strange date given - '{$date}'"
