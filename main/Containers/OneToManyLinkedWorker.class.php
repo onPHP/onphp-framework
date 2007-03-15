@@ -18,7 +18,7 @@
 		protected function targetize(SelectQuery $query)
 		{
 			return
-				$query->where(
+				$query->andWhere(
 					Expression::eqId(
 						new DBField($this->container->getParentIdField()),
 						$this->container->getParentObject()
