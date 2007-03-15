@@ -33,17 +33,12 @@
 			foreach ($collections as $path => $info) {
 				$lazy = $info['lazy'];
 				
-				$query =
-					OSQL::select()->get($mainId)->
-					from($this->getTable());
-				
-				if ($order = isset($info['order']) ? $info['order'] : null) {
-					if ($order instanceof OrderBy)
-						$query->orderBy($order->toMapped($this, $query));
-					elseif ($order instanceof OrderChain)
-						$query->setOrderChain($order->toMapped($this, $query));
-					else
-						throw new WrongStateException('strange order arrived');
+				if ($info['criteria']) {
+					$query = $info['criteria']->toSelectQuery();
+				} else {
+					$query =
+						OSQL::select()->get($mainId)->
+						from($this->getTable());
 				}
 				
 				$proto = reset($list)->proto();

@@ -1,5 +1,10 @@
 # $Id$
 
+2007-03-15	Konstantin V. Arkhipov
+
+	* main/Criteria/Criteria.class.php: now accepts Criteria instance for
+	filtering/ordering instead of OrderBy.
+
 2007-03-14	Konstantin V. Arkhipov
 
 	* meta/: stale files removing implemented.
