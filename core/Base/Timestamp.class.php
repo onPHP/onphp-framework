@@ -61,38 +61,6 @@
 			return new self(self::today());
 		}
 		
-		public function __construct($timestamp)
-		{
-			if (Assert::checkInteger($timestamp)) { // unix timestamp
-				$this->int = $timestamp;
-				$this->string = date($this->getFormat(), $timestamp);
-			} elseif ($timestamp && is_string($timestamp)) { 
-				$this->int = strtotime($timestamp);
-				
-				if (
-					preg_match(
-						'/^\d{1,4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}$/',
-						$timestamp
-					)
-				) {
-					$this->string = $timestamp;
-				} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $timestamp))
-					$this->string = $timestamp . ' 00:00:00';
-				elseif ($this->int !== false) 
-					$this->string = date($this->getFormat(), $this->int);
-				else
-					throw new WrongArgumentException(
-						"strange timestamp given - '{$timestamp}'"
-					);
-			} else {
-				throw new WrongArgumentException(
-					"strange timestamp given - '{$timestamp}'"
-				);
-			}
-			
-			$this->import($this->string);
-		}
-		
 		public function toTime($timeDelimiter = ':', $secondDelimiter = '.')
 		{
 			return
@@ -168,6 +136,23 @@
 				explode(':', $time, 3);
 			
 			$this->string .= ' '.$time;
+		}
+		
+		protected function stringImport($string)
+		{
+			$this->int = strtotime($string);
+			
+			if (
+				preg_match(
+					'/^\d{1,4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}$/',
+					$string
+				)
+			) {
+				$this->string = $string;
+			} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
+				$this->string = $string . ' 00:00:00';
+			elseif ($this->int !== false) 
+				$this->string = date($this->getFormat(), $this->int);
 		}
 	}
 ?>
