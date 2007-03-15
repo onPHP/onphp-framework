@@ -318,6 +318,8 @@
 		**/
 		public function toSelectQuery()
 		{
+			Assert::isNotNull($this->dao, 'DAO not set');
+			
 			if ($this->projection) {
 				$query =
 					$this->getProjection()->process(
