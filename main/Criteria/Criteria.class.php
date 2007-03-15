@@ -19,12 +19,11 @@
 	{
 		private $dao		= null;
 		private $logic		= null;
+		private $order		= null;
 		private $strategy	= null;
 		private $projection	= null;
 		
 		private $distinct	= false;
-		
-		private $order	= array();
 		
 		private $limit	= null;
 		private $offset	= null;
@@ -46,6 +45,7 @@
 			
 			$this->dao = $dao;
 			$this->logic = Expression::andBlock();
+			$this->order = new OrderChain();
 			
 			if ($dao instanceof ComplexBuilderDAO)
 				$this->strategy = FetchStrategy::join();
@@ -78,6 +78,14 @@
 		}
 		
 		/**
+		 * @return LogicalChain
+		**/
+		public function getLogic()
+		{
+			return $this->logic;
+		}
+		
+		/**
 		 * @return Criteria
 		**/
 		public function add(LogicalObject $logic)
@@ -88,6 +96,14 @@
 		}
 		
 		/**
+		 * @return OrderChain
+		**/
+		public function getOrder()
+		{
+			return $this->order;
+		}
+		
+		/**
 		 * @return Criteria
 		**/
 		public function addOrder(/* MapableObject */ $order)
@@ -95,7 +111,7 @@
 			if (!$order instanceof MappableObject)
 				$order = new OrderBy($order);
 			
-			$this->order[] = $order;
+			$this->order->add($order);
 			
 			return $this;
 		}
@@ -105,7 +121,7 @@
 		**/
 		public function dropOrder()
 		{
-			$this->order = array();
+			$this->order = new OrderChain();
 			
 			return $this;
 		}
@@ -344,12 +360,7 @@
 			}
 			
 			if ($this->order) {
-				for ($size = count($this->order), $i = 0; $i < $size; ++$i) {
-					$query->
-						orderBy(
-							$this->order[$i]->toMapped($this->dao, $query)
-						);
-				}
+				$query->setOrderChain($this->order->toMapped($this->dao, $query));
 			}
 			
 			if (

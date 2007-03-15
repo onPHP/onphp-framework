@@ -33,19 +33,21 @@
 			foreach ($collections as $path => $info) {
 				$lazy = $info['lazy'];
 				
-				if ($info['criteria']) {
-					$query = $info['criteria']->toSelectQuery();
-				} else {
-					$query =
-						OSQL::select()->get($mainId)->
-						from($this->getTable());
+				$query =
+					OSQL::select()->get($mainId)->
+					from($this->getTable());
+				
+				if ($criteria = $info['criteria']) {
+					$query->
+						andWhere($criteria->getLogic())->
+						setOrderChain($criteria->getOrder());
 				}
 				
 				$proto = reset($list)->proto();
 				
 				$this->processPath($proto, $path, $query, $this->getTable());
 				
-				$query->where(
+				$query->andWhere(
 					Expression::in($mainId, $ids)
 				);
 				
