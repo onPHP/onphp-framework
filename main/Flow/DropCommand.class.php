@@ -32,7 +32,7 @@
 
 				if ($object instanceof Identifiable) {
 					
-					$object->dao()->dropById($object->getId());
+					$object->dao()->drop($object);
 					
 					return
 						ModelAndView::create()->
