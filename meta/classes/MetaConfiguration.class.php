@@ -231,6 +231,21 @@
 				$this->classes[$class->getName()] = $class;
 			}
 			
+			// process includes
+			if (isset($xml->include['file'])) {
+				foreach ($xml->include as $include) {
+					$file = (string) $include['file'];
+					$path = dirname($metafile).'/'.$file;
+					
+					Assert::isTrue(
+						is_readable($path),
+						'can not include '.$file
+					);
+					
+					$this->load($path);
+				}
+			}
+			
 			foreach ($liaisons as $class => $parent) {
 				if (isset($this->classes[$parent])) {
 					

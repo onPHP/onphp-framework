@@ -1,5 +1,9 @@
 # $Id$
 
+2007-03-16	Konstantin V. Arkhipov
+
+	* meta/: includes implemented.
+
 2007-03-15	Konstantin V. Arkhipov
 
 	* main/Criteria/Criteria.class.php: now accepts Criteria instance for

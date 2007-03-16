@@ -1,6 +1,6 @@
 <!-- $Id$ -->
 
-<!ELEMENT metaconfiguration (classes+, sources*)>
+<!ELEMENT metaconfiguration (include*, classes+, sources*)>
 
 <!ELEMENT classes (class+)>
 
@@ -57,4 +57,10 @@
 <!ATTLIST source
 		name	CDATA #REQUIRED
 		default	(true|false) "false"
+>
+
+<!-- file path is relative to current meta's directory -->
+<!ELEMENT include EMPTY>
+<!ATTLIST include
+		file		CDATA #REQUIRED
 >
