@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,22 +11,10 @@
 /* $Id$ */
 
 	/**
-	 * @ingroup Projections
+	 * @ingroup Base
 	**/
-	abstract class BaseProjection implements ObjectProjection, Aliased
+	interface Aliased
 	{
-		protected $property	= null;
-		protected $alias	= null;
-		
-		public function __construct($propertyName = null, $alias = null)
-		{
-			$this->property = $propertyName;
-			$this->alias = $alias;
-		}
-		
-		public function getAlias()
-		{
-			return $this->alias;
-		}
+		public function getAlias();
 	}
 ?>

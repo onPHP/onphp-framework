@@ -26,7 +26,7 @@
 	**/
 	final class SelectQuery
 		extends QuerySkeleton
-		implements Named, JoinCapableQuery
+		implements Named, JoinCapableQuery, Aliased
 	{
 		private $distinct		= false;
 
@@ -47,6 +47,8 @@
 		private $group			= array();
 		
 		private $having			= null;
+		
+		private $aliases		= array();
 		
 		public function __construct()
 		{
@@ -75,6 +77,16 @@
 			return $this;
 		}
 		
+		public function hasAliasInside($alias)
+		{
+			return isset($this->aliases[$alias]);
+		}
+		
+		public function getAlias()
+		{
+			return $this->name;
+		}
+		
 		public function getName()
 		{
 			return $this->name;
@@ -86,6 +98,7 @@
 		public function setName($name)
 		{
 			$this->name = $name;
+			$this->aliases[$name] = true;
 			
 			return $this;
 		}
@@ -124,6 +137,8 @@
 		public function join($table, LogicalObject $logic, $alias = null)
 		{
 			$this->joiner->join(new SQLJoin($table, $logic, $alias));
+			$this->aliases[$alias] = true;
+			
 			return $this;
 		}
 		
@@ -133,6 +148,8 @@
 		public function leftJoin($table, LogicalObject $logic, $alias = null)
 		{
 			$this->joiner->leftJoin(new SQLLeftJoin($table, $logic, $alias));
+			$this->aliases[$alias] = true;
+			
 			return $this;
 		}
 		
@@ -252,6 +269,8 @@
 		public function from($table, $alias = null)
 		{
 			$this->joiner->from(new FromTable($table, $alias));
+			
+			$this->aliases[$alias] = true;
 
 			return $this;
 		}
@@ -274,10 +293,15 @@
 						);
 					else
 						$this->fields[] = new SelectField($field, $alias);
-
+					
+					$this->aliases[$alias] = true;
+					
 					return $this;
 				} elseif ($field instanceof DialectString) {
 					$this->fields[] = $field;
+					
+					if ($field instanceof Aliased)
+						$this->aliases[$field->getAlias()] = true;
 					
 					return $this;
 				} else
@@ -297,6 +321,8 @@
 			$this->fields[] = new SelectField(
 				new DBField($fieldName, $this->getLastTable($table)), $alias
 			);
+			
+			$this->aliases[$alias] = true;
 
 			return $this;
 		}
@@ -329,9 +355,11 @@
 							$alias = $prefix.$array[$i]->getField();
 						} else {
 							if ($array[$i] instanceof SQLFunction) {
-								$alias = $array[$i]->setAlias(
-									$prefix.$array[$i]->getName()
-								);
+								$alias =
+									$array[$i]->setAlias(
+										$prefix.$array[$i]->getName()
+									)->
+									getAlias();
 							} else {
 								$alias = $array[$i];
 							}
@@ -341,6 +369,7 @@
 					}
 
 					$this->get($array[$i], $alias);
+					$this->aliases[$alias] = true;
 				}
 			} else {
 				for ($i = 0; $i < $size; ++$i) {
@@ -360,7 +389,7 @@
 		{
 			$nameList = array();
 			
-			foreach ($this->fields as &$field)
+			foreach ($this->fields as $field)
 				$nameList[] = $field->getName();
 			
 			return $nameList;

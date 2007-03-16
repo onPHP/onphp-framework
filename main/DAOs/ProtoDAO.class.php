@@ -326,6 +326,12 @@
 						);
 				} elseif (array_key_exists($atom, $this->mapping))
 					return $this->mapProperty(new Property($atom), $table);
+				elseif (
+					($query instanceof SelectQuery)
+					&& $query->hasAliasInside($atom)
+				) {
+					return new DBField($atom);
+				}
 			} elseif ($atom instanceof MappableObject)
 				return $atom->toMapped($this, $query);
 			elseif (

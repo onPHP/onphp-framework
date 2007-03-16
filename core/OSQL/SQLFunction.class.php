@@ -17,7 +17,7 @@
 	**/
 	final class SQLFunction
 		extends Castable
-		implements DialectString, MappableObject
+		implements DialectString, MappableObject, Aliased
 	{
 		const AGGREGATE_ALL 		= 1;
 		const AGGREGATE_DISTINCT 	= 2;
@@ -55,6 +55,11 @@
 					$this->args = $args;
 				}
 			}
+		}
+		
+		public function getAlias()
+		{
+			return $this->alias;
 		}
 		
 		public function getName()

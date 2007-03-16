@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2006 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2005-2007 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	abstract class SQLBaseJoin implements SQLTableName
+	abstract class SQLBaseJoin implements SQLTableName, Aliased
 	{
 		protected $subject	= null;
 		protected $alias	= null;
@@ -24,6 +24,11 @@
 			$this->subject	= $subject;
 			$this->alias	= $alias;
 			$this->logic	= $logic;
+		}
+		
+		public function getAlias()
+		{
+			return $this->alias;
 		}
 
 		public function getTable()

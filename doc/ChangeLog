@@ -2,6 +2,8 @@
 
 2007-03-16	Konstantin V. Arkhipov
 
+	* core/OSQL/SelectQuery.class.php: aliases tracking implemented.
+
 	* meta/: includes implemented.
 
 2007-03-15	Konstantin V. Arkhipov

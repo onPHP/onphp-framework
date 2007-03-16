@@ -15,12 +15,12 @@
 	 * 
 	 * @ingroup OSQL
 	**/
-	final class FromTable implements SQLTableName // also abused in DBColumn
+	final class FromTable implements Aliased, SQLTableName // also abused in DBColumn
 	{
 		private $table	= null;
 		private $alias	= null;
 		private $schema	= null;
-
+		
 		public function __construct($table, $alias = null)
 		{
 			if (
@@ -43,6 +43,11 @@
 				$this->table = $table;
 			
 			$this->alias = $alias;
+		}
+		
+		public function getAlias()
+		{
+			return $this->alias;
 		}
 
 		public function toDialectString(Dialect $dialect)

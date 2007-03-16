@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup OSQL
 	**/
-	final class SelectField extends FieldTable
+	final class SelectField extends FieldTable implements Aliased
 	{
 		private $alias = null;
 		
@@ -31,6 +31,11 @@
 		{
 			parent::__construct($field);
 			$this->alias = $alias;
+		}
+		
+		public function getAlias()
+		{
+			return $this->alias;
 		}
 		
 		public function getName()
