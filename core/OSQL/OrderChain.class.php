@@ -28,7 +28,7 @@
 		/**
 		 * @return OrderChain
 		**/
-		public function add(OrderBy $order)
+		public function add(MappableObject $order)
 		{
 			$this->chain[] = $order;
 			
@@ -38,7 +38,7 @@
 		/**
 		 * @return OrderChain
 		**/
-		public function prepend(OrderBy $order)
+		public function prepend(MappableObject $order)
 		{
 			if ($this->chain)
 				array_unshift($this->chain, $order);
