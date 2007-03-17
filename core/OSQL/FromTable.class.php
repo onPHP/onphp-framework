@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup OSQL
 	**/
-	final class FromTable implements Aliased, SQLTableName // also abused in DBColumn
+	final class FromTable implements Aliased, SQLTableName
 	{
 		private $table	= null;
 		private $alias	= null;
