@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	final class DBColumn implements SQLTableName // also abused in FromTable
+	final class DBColumn implements SQLTableName
 	{
 		private $type		= null;
 		private $name		= null;
