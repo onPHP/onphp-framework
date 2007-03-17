@@ -261,8 +261,8 @@ Possible options:
 		try {
 			$meta =
 				MetaConfiguration::me()->
-				load($pathMeta)->
 				setOutput($out)->
+				load($pathMeta)->
 				setForcedGeneration($metaForce);
 			
 			if ($metaOnlyContainers) {

@@ -242,6 +242,10 @@
 						'can not include '.$file
 					);
 					
+					$this->getOutput()->
+						infoLine('Including "'.$path.'".')->
+						newLine();
+					
 					$this->load($path);
 				}
 			}
