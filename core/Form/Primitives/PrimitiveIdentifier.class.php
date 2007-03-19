@@ -15,6 +15,8 @@
 	**/
 	final class PrimitiveIdentifier extends IdentifiablePrimitive
 	{
+		private $info = null;
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return PrimitiveIdentifier
@@ -28,11 +30,11 @@
 				"knows nothing about '{$className}' class"
 			);
 			
-			$class = new ReflectionClass($className);
+			$this->info = new ReflectionClass($className);
 			
 			Assert::isTrue(
-				$class->implementsInterface('DAOConnected'),
-				"class '{$class->getName()}' must implement DAOConnected interface"
+				$this->info->implementsInterface('DAOConnected'),
+				"class '{$className}' must implement DAOConnected interface"
 			);
 			
 			$this->className = $className;
@@ -51,7 +53,7 @@
 		public function importValue($value)
 		{
 			if ($value instanceof Identifiable) {
-				Assert::isTrue($value instanceof $this->className);
+				Assert::isTrue($this->info && $this->info->isInstance($value));
 				
 				return
 					$this->import(
@@ -74,7 +76,7 @@
 				);
 			
 			$result = parent::import($scope);
-				
+			
 			if ($result === true) {
 				try {
 					$this->value = $this->dao()->getById($this->value);
