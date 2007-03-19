@@ -1,5 +1,10 @@
 # $Id$
 
+2007-03-19	Ivan Y. Khvostishkov
+
+	* core/Form/Primitives/PrimitiveEnumeration.class.php: bugfix,  value
+	must be null on failed import.
+
 2007-03-19	Konstantin V. Arkhipov
 
 	* meta/: integrity checks implemented.
