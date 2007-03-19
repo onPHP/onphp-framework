@@ -169,6 +169,9 @@
 		
 		public function query(Query $query)
 		{
+			if (defined("FREE_ONPHP_LOG_QUERY") && !($query instanceof SelectQuery))
+				file_put_contents('/tmp/onphp_queries.log', $query->toDialectString($this->getDialect()).";\r\n", FILE_APPEND);
+
 			return $this->queryRaw($query->toDialectString($this->getDialect()));
 		}
 

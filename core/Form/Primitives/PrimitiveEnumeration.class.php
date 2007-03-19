@@ -72,10 +72,9 @@
 				try {
 					$this->value = new $this->className($this->value);
 				} catch (MissingElementException $e) {
-					return false;
+					$this->value = null;
+					$result = false;
 				}
-				
-				return true;
 			}
 			
 			return $result;
