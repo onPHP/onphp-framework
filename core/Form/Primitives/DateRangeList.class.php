@@ -83,6 +83,7 @@
 		 * @throws WrongArgumentException
 		 * @return DateRange
 		**/
+		// TODO: move to PrimitiveDateRange
 		public static function makeRange($string)
 		{
 			if (
@@ -125,8 +126,9 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return Timestamp
+		 * @return Date
 		**/
+		// TODO: move to PrimitiveDateRange
 		private static function toDate($date)
 		{
 			if (strpos($date, '.') !== false) {
@@ -165,18 +167,16 @@
 			
 			$lenght = strlen($date);
 			
-			try {
-				if ($lenght > 4)
-					return new Timestamp(strtotime($date));
-				elseif ($lenght === 4) {
-					$date = substr($date, 2).'-'.substr($date, 0, 2);
-					
-					return new Timestamp(strtotime(date('Y-').$date));
-				} elseif (($lenght == 2) || ($lenght == 1)) {
-					return new Timestamp(strtotime(date('Y-m-').$date));
-				}
-			} catch (WrongArgumentException $e) {
-				// seems to be unparseable
+			if ($lenght > 4) {
+				return new Date(strtotime($date));
+			} elseif ($lenght === 4) {
+				return new Date(
+					strtotime(
+						date('Y-').substr($date, 2).'-'.substr($date, 0, 2)
+					)
+				);
+			} elseif (($lenght == 2) || ($lenght == 1)) {
+				return new Date(strtotime(date('Y-m-').$date));
 			}
 			
 			return null;
