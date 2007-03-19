@@ -133,12 +133,12 @@
 		{
 			if (strpos($date, '.') !== false) {
 				
-				$dots = substr_count($date, '.');
+				$fieldCount = substr_count($date, '.') + 1;
 				
 				$year = null;
 				
-				if ($dots == 2) {
-					list($day, $month, $year) = explode('.', $date, ($dots + 1));
+				if ($fieldCount == 3) {
+					list($day, $month, $year) = explode('.', $date, $fieldCount);
 					
 					if (strlen($day) > 2) {
 						$tmp = $year;
@@ -146,7 +146,7 @@
 						$day = $tmp;
 					}
 				} else
-					list($day, $month) = explode('.', $date, ($dots + 1));
+					list($day, $month) = explode('.', $date, $fieldCount);
 				
 				if (strlen($day) == 1)
 					$day = "0{$day}";
@@ -156,11 +156,11 @@
 				elseif (strlen($month) == 1)
 					$month = "0{$month}";
 				
+				$currentYear = date('Y');
 				if ($year === null)
-					$year = date('Y');
-				// we're all dead in 2100+ anyway
+					$year = $currentYear;
 				elseif (strlen($year) === 2)
-					$year = "20{$year}";
+					$year = substr_replace($currentYear, $year, -2, 2);
 				
 				$date = $year.$month.$day;
 			}
