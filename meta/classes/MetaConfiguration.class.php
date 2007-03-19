@@ -654,6 +654,11 @@
 					// special handling for Enumeration instances
 					if ($class->getPattern() instanceof EnumerationClassPattern) {
 						$object = new $name(call_user_func(array($name, 'getAnyId')));
+						
+						Assert::isTrue(
+							unserialize(serialize($object)) == $object
+						);
+						
 						continue;
 					}
 					
