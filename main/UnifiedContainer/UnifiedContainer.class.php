@@ -183,7 +183,7 @@
 
 		public function getList()
 		{
-			if (!$this->isFetched())
+			if (!$this->list && !$this->isFetched())
 				$this->fetch();
 			
 			return $this->list;
