@@ -51,7 +51,7 @@
 		public function importValue($value)
 		{
 			if ($value instanceof Identifiable) {
-				Assert::isTrue($this->className == get_class($value));
+				Assert::isTrue($value instanceof $this->className);
 				
 				return
 					$this->import(
