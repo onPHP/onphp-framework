@@ -23,6 +23,12 @@
 #include "core/OSQL/DBValue.h"
 #include "core/OSQL/DialectString.h"
 
+#if (PHP_MAJOR_VERSION == 5) && (PHP_MINOR_VERSION < 2)
+#define onphp_implode(glue, words, copy) php_implode(glue, words, copy)
+#else
+#define onphp_implode(glue, words, copy) php_implode(glue, words, copy TSRMLS_CC)
+#endif
+
 PHPAPI zend_class_entry *onphp_ce_ImaginaryDialect;
 
 ONPHP_METHOD(ImaginaryDialect, me)
@@ -197,7 +203,7 @@ ONPHP_METHOD(ImaginaryDialect, fullTextSearch)
 		ZVAL_STRING(glue, " | ", 1);
 	} 
 	
-	php_implode(glue, words, copy);
+	onphp_implode(glue, words, copy);
 	
 	smart_str_appends(&out, "(\"");
 	
@@ -268,7 +274,7 @@ ONPHP_METHOD(ImaginaryDialect, fullTextRank)
 		ZVAL_STRING(glue, " | ", 1);
 	} 
 	
-	php_implode(glue, words, copy);
+	onphp_implode(glue, words, copy);
 	
 	smart_str_appends(&out, "(RANK BY \"");
 	

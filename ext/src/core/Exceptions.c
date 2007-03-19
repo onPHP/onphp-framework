@@ -28,7 +28,11 @@ PHPAPI zend_class_entry *onphp_ce_UnsupportedMethodException;
 PHPAPI zend_class_entry *onphp_ce_WrongArgumentException;
 PHPAPI zend_class_entry *onphp_ce_WrongStateException;
 
+#if (PHP_MAJOR_VERSION == 5) && (PHP_MINOR_VERSION < 2)
+#define onphp_ce_Exception zend_exception_get_default()
+#else
 #define onphp_ce_Exception zend_exception_get_default(TSRMLS_C)
+#endif
 
 PHP_MINIT_FUNCTION(Exceptions)
 {
