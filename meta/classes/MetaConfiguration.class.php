@@ -564,11 +564,6 @@
 		**/
 		public function checkSyntax()
 		{
-			Assert::isTrue(
-				!empty($_SERVER['_']) && is_executable($_SERVER['_']),
-				'can not find php binary'
-			);
-			
 			$out = $this->getOutput();
 			
 			$out->
