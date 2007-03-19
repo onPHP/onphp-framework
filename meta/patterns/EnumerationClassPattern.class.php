@@ -20,6 +20,9 @@
 			return false;
 		}
 		
+		/**
+		 * @return EnumerationClassPattern
+		**/
 		public function build(MetaClass $class)
 		{
 			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
@@ -32,6 +35,8 @@
 					$userFile,
 					Format::indentize(EnumerationClassBuilder::build($class))
 				);
+			
+			return $this;
 		}
 	}
 ?>

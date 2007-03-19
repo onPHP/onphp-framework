@@ -319,8 +319,9 @@ EOT;
 			$out = null;
 			
 			if (!$class->getPattern() instanceof AbstractClassPattern) {
-				
-				if ($class->getIdentifier()->getName() !== 'id') {
+				if (
+					$class->getIdentifier()->getName() !== 'id'
+				) {
 					$out .= <<<EOT
 public function getIdName()
 {

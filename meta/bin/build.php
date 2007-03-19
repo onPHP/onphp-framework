@@ -15,6 +15,9 @@ Possible options:
 	--no-schema:
 		do not generate DB schema.
 	
+	--no-integrity-check:
+		do not try to test classes integrity.
+	
 	--no-schema-check:
 		do not try to diff DB schemas.
 	
@@ -119,7 +122,8 @@ Possible options:
 	
 	// switches
 	$metaForce = $metaOnlyContainers = $metaNoSchema =
-	$metaNoSchemaCheck = $metaNoSyntaxCheck = $metaDropStaleFiles = false;
+	$metaNoSchemaCheck = $metaNoSyntaxCheck = $metaDropStaleFiles =
+	$metaNoIntegrityCheck = false;
 	
 	$args = $_SERVER['argv'];
 	array_shift($args);
@@ -134,6 +138,10 @@ Possible options:
 					
 					case '--no-schema':
 						$metaNoSchema = true;
+						break;
+					
+					case '--no-integrity-check':
+						$metaNoIntegrityCheck = true;
 						break;
 					
 					case '--no-schema-check':
@@ -279,10 +287,13 @@ Possible options:
 					$meta->buildSchemaChanges();
 			}
 			
-			$meta->checkForStaleFiles($metaDropStaleFiles);
-			
 			if (!$metaNoSyntaxCheck)
 				$meta->checkSyntax();
+			
+			if (!$metaNoIntegrityCheck)
+				$meta->checkIntegrity();
+			
+			$meta->checkForStaleFiles($metaDropStaleFiles);
 		} catch (BaseException $e) {
 			$out->
 				newLine()->

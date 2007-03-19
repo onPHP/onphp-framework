@@ -1,5 +1,9 @@
 # $Id$
 
+2007-03-19	Konstantin V. Arkhipov
+
+	* meta/: integrity checks implemented.
+
 2007-03-16	Konstantin V. Arkhipov
 
 	* core/OSQL/SelectQuery.class.php: aliases tracking implemented.

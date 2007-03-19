@@ -60,48 +60,92 @@
 			}
 		}
 		
+		public function build(MetaClass $class)
+		{
+			return $this->fullBuild($class);
+		}
+		
+		/**
+		 * @return BasePattern
+		**/
 		protected function fullBuild(MetaClass $class)
 		{
-			$force = MetaConfiguration::me()->isForcedGeneration();
-			
+			return $this->
+				buildProto($class)->
+				buildBusiness($class)->
+				buildDao($class);
+		}
+		
+		/**
+		 * @return BasePattern
+		**/
+		protected function buildProto(MetaClass $class)
+		{
 			$this->dumpFile(
 				ONPHP_META_AUTO_PROTO_DIR.'AutoProto'.$class->getName().EXT_CLASS,
 				Format::indentize(AutoProtoClassBuilder::build($class))
 			);
 			
-			$this->dumpFile(
-				ONPHP_META_AUTO_BUSINESS_DIR.'Auto'.$class->getName().EXT_CLASS,
-				Format::indentize(AutoClassBuilder::build($class))
-			);
-			
-			$this->dumpFile(
-				ONPHP_META_AUTO_DAO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
-				Format::indentize(AutoDaoBuilder::build($class))
-			);
-			
 			$userFile = ONPHP_META_PROTO_DIR.'Proto'.$class->getName().EXT_CLASS;
 			
-			if ($force || !file_exists($userFile))
+			if (
+				MetaConfiguration::me()->isForcedGeneration()
+				|| !file_exists($userFile)
+			)
 				$this->dumpFile(
 					$userFile,
 					Format::indentize(ProtoClassBuilder::build($class))
 				);
 			
+			return $this;
+		}
+		
+		/**
+		 * @return BasePattern
+		**/
+		protected function buildBusiness(MetaClass $class)
+		{
+			$this->dumpFile(
+				ONPHP_META_AUTO_BUSINESS_DIR.'Auto'.$class->getName().EXT_CLASS,
+				Format::indentize(AutoClassBuilder::build($class))
+			);
+			
 			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
 			
-			if ($force || !file_exists($userFile))
+			if (
+				MetaConfiguration::me()->isForcedGeneration()
+				|| !file_exists($userFile)
+			)
 				$this->dumpFile(
 					$userFile,
 					Format::indentize(BusinessClassBuilder::build($class))
 				);
 			
+			return $this;
+		}
+		
+		/**
+		 * @return BasePattern
+		**/
+		protected function buildDao(MetaClass $class)
+		{
+			$this->dumpFile(
+				ONPHP_META_AUTO_DAO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
+				Format::indentize(AutoDaoBuilder::build($class))
+			);
+			
 			$userFile = ONPHP_META_DAO_DIR.$class->getName().'DAO'.EXT_CLASS;
 			
-			if ($force || !file_exists($userFile))
+			if (
+				MetaConfiguration::me()->isForcedGeneration()
+				|| !file_exists($userFile)
+			)
 				$this->dumpFile(
 					$userFile,
 					Format::indentize(DaoBuilder::build($class))
 				);
+			
+			return $this;
 		}
 	}
 ?>

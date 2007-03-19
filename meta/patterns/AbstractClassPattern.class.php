@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Patterns
 	**/
-	class AbstractClassPattern extends BasePattern
+	final class AbstractClassPattern extends BasePattern
 	{
 		public function build(MetaClass $class)
 		{
@@ -23,7 +23,7 @@
 				)
 			);
 			
-			parent::fullBuild($class);
+			return parent::fullBuild($class);
 		}
 	}
 ?>

@@ -620,6 +620,92 @@
 		/**
 		 * @return MetaConfiguration
 		**/
+		public function checkIntegrity()
+		{
+			$out = $this->getOutput()->
+				newLine()->
+				infoLine('Checking sanity of generated files: ')->
+				newLine();
+			
+			set_include_path(
+				get_include_path().PATH_SEPARATOR
+				.ONPHP_META_BUSINESS_DIR.PATH_SEPARATOR
+				.ONPHP_META_DAO_DIR.PATH_SEPARATOR
+				.ONPHP_META_PROTO_DIR.PATH_SEPARATOR
+				.ONPHP_META_AUTO_BUSINESS_DIR.PATH_SEPARATOR
+				.ONPHP_META_AUTO_DAO_DIR.PATH_SEPARATOR
+				.ONPHP_META_AUTO_PROTO_DIR.PATH_SEPARATOR
+			);
+			
+			$out->info("\t");
+			
+			foreach ($this->classes as $name => $class) {
+				if (
+					!(
+						$class->getPattern() instanceof SpookedClassPattern
+						|| $class->getPattern() instanceof SpookedEnumerationPattern
+						|| $class->getPattern() instanceof AbstractClassPattern
+					) && (
+						class_exists($class->getName(), true)
+					)
+				) {
+					$out->info($name.', ', true);
+					
+					// special handling for Enumeration instances
+					if ($class->getPattern() instanceof EnumerationClassPattern) {
+						$object = new $name(call_user_func(array($name, 'getAnyId')));
+						continue;
+					}
+					
+					$object = new $name;
+					$proto = $object->proto();
+					
+					foreach ($class->getProperties() as $name => $property) {
+						if (
+							!$property->getType()->isGeneric()
+							&& ($property->getType() instanceof ObjectType)
+							&& (
+								$property->getType()->getClass()->getPattern()
+									instanceof ValueObjectPattern
+							)
+						) {
+							continue;
+						}
+						
+						Assert::isTrue(
+							$property->toLightProperty()
+							== $proto->getPropertyByName($name)
+						);
+					}
+					
+					$dao = $object->dao();
+					
+					if ($dao instanceof ValueObjectDAO)
+						continue;
+					
+					try {
+						DBPool::getByDao($dao);
+					} catch (MissingElementException $e) {
+						// skipping
+						continue;
+					}
+					
+					Criteria::create($dao)->
+					setLimit(1)->
+					add(Expression::notNull($class->getIdentifier()->getName()))->
+					addOrder($class->getIdentifier()->getName())->
+					get();
+				}
+			}
+			
+			$out->infoLine('done.');
+			
+			return $this;
+		}
+		
+		/**
+		 * @return MetaConfiguration
+		**/
 		public function checkForStaleFiles($drop = false)
 		{
 			$this->getOutput()->

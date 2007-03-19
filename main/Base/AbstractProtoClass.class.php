@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,15 +17,17 @@
 	{
 		abstract protected function makePropertyList();
 		
-		public function getPropertyList()
+		final public function getPropertyList()
 		{
-			static $list = null;
+			static $lists = array();
 			
-			if (!$list) {
-				$list = $this->makePropertyList();
+			$className = get_class($this);
+			
+			if (!isset($lists[$className])) {
+				$lists[$className] = $this->makePropertyList();
 			}
 			
-			return $list;
+			return $lists[$className];
 		}
 		
 		/**
