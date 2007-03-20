@@ -53,7 +53,10 @@
 		public function importValue($value)
 		{
 			if ($value instanceof Identifiable) {
-				Assert::isTrue($this->info && $this->info->isInstance($value));
+				Assert::isTrue(
+					($this->info && $this->info->isInstance($value)) || 
+					is_subclass_of($value, $this->className)
+				);
 				
 				return
 					$this->import(
