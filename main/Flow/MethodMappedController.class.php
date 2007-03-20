@@ -63,6 +63,16 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MethodMappedController
+		**/
+		public function dropMethodMapping($action)
+		{
+			unset($this->methodMap[$action]);
+			
+			return $this;
+		}
+		
 		public function getMethodMapping()
 		{
 			return $this->methodMap;
