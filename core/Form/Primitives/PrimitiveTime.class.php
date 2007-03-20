@@ -15,9 +15,9 @@
 	**/
 	final class PrimitiveTime extends ComplexPrimitive
 	{
-		const HOURS		= PrimitiveDate::HOURS;
-		const MINUTES	= PrimitiveDate::MINUTES;
-		const SECONDS	= PrimitiveDate::SECONDS;
+		const HOURS		= PrimitiveTimestamp::HOURS;
+		const MINUTES	= PrimitiveTimestamp::MINUTES;
+		const SECONDS	= PrimitiveTimestamp::SECONDS;
 		
 		/**
 		 * @throws WrongArgumentException
