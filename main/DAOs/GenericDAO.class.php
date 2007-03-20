@@ -240,11 +240,13 @@
 		{
 			$this->checkObjectType($object);
 			
-			return Cache::worker($this)->dropById($object->getId());
+			return $this->dropById($object);
 		}
 		
 		public function dropById($id)
 		{
+			unset($this->identityMap[$id]);
+			
 			return Cache::worker($this)->dropById($id);
 		}
 		
