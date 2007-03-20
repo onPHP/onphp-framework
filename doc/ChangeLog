@@ -1,12 +1,14 @@
 # $Id$
 
+2007-03-20	Konstantin V. Arkhipov
+
+	* core/OSQL/QueryCombination.class.php: now implements MappableObject.
+
 2007-03-20	Dmitry E. Demidov
 
 	* main/Flow/PrototypedEditor.class.php: added method dropObject,
 	added form state checking after calling addObject/saveObject to 
 	doSave/doAdd methods.
-
-2007-03-20	Dmitry E. Demidov
 
 	* main/Flow/MethodMappedController.class.php: added method
 	dropMethodMapping.

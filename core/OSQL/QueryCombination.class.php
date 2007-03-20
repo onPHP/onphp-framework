@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	final class QueryCombination implements DialectString
+	final class QueryCombination implements DialectString, MappableObject
 	{
 		private $left	= null;
 		private $right	= null;
@@ -28,6 +28,15 @@
 			$this->left		= $left;
 			$this->right	= $right;
 			$this->logic	= $logic;
+		}
+		
+		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		{
+			return new self(
+				$dao->guessAtom($this->left, $query),
+				$dao->guessAtom($this->right, $query),
+				$this->logic
+			);
 		}
 		
 		public function toDialectString(Dialect $dialect)
