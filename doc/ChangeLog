@@ -1,9 +1,5 @@
 # $Id$
 
-2007-03-20	Konstantin V. Arkhipov
-
-	* core/OSQL/QueryCombination.class.php: now implements MappableObject.
-
 2007-03-20	Dmitry E. Demidov
 
 	* main/Flow/PrototypedEditor.class.php: added method dropObject,
@@ -14,6 +10,11 @@
 	dropMethodMapping.
 
 2007-03-20	Konstantin V. Arkhipov
+
+	* main/UnifiedContainer/UnifiedContainer.class.php: fetched
+	collection now excluded from serialization.
+
+	* core/OSQL/QueryCombination.class.php: now implements MappableObject.
 
 	* main/DAOs/Workers/: removed all childs of Voodoo-worker, so now
 	handler's select configurable via
