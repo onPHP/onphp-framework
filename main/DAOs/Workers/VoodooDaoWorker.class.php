@@ -30,6 +30,7 @@
 	final class VoodooDaoWorker extends TransparentDaoWorker
 	{
 		protected $classKey = null;
+		protected $handler = null;
 		
 		// will trigger auto-detect
 		private static $defaultHandler = null;
@@ -50,7 +51,8 @@
 			else
 				$watermark = null;
 			
-			$this->classKey = $this->keyToInt($watermark.$this->className);
+			// calling parent just to skip premature getPrecision() calling
+			$this->classKey = parent::keyToInt($watermark.$this->className);
 			
 			$this->handler = $this->spawnHandler($this->classKey);
 		}
@@ -152,6 +154,11 @@
 				self::$defaultHandler = $handlerName;
 			
 			return new self::$defaultHandler($classKey);
+		}
+		
+		protected function keyToInt($key)
+		{
+			return hexdec(substr(md5($key), 0, $this->handler->getPrecision())) + 1;
 		}
 		//@}
 	}

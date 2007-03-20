@@ -24,6 +24,11 @@
 			$this->id = $segmentId;
 		}
 		
+		public function precision()
+		{
+			return 15;
+		}
+		
 		public function touch($key)
 		{
 			try {

@@ -20,8 +20,6 @@
 	**/
 	abstract class TransparentDaoWorker extends BaseDaoWorker
 	{
-		protected $handler = null;
-		
 		abstract protected function gentlyGetByKey($key);
 		abstract protected function spawnHandler($classKey);
 		
@@ -418,7 +416,7 @@
 		
 		protected function keyToInt($key)
 		{
-			return hexdec(substr(md5($key), 0, 15)) + 1;
+			return hexdec(substr(md5($key), 0, 7)) + 1;
 		}
 		//@}
 	}

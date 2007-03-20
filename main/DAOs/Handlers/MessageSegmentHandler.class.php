@@ -19,7 +19,12 @@
 		
 		public function __construct($segmentId)
 		{
-			$this->id = substr($segmentId, 0, 5);
+			$this->id = substr($segmentId, 0, $this->getPrecision());
+		}
+		
+		public function getPrecision()
+		{
+			return 5;
 		}
 		
 		public function touch($key)
