@@ -240,7 +240,7 @@
 		{
 			$this->checkObjectType($object);
 			
-			return $this->dropById($object);
+			return $this->dropById($object->getId());
 		}
 		
 		public function dropById($id)
