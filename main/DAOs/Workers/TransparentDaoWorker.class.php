@@ -15,16 +15,12 @@
 	 * 
 	 * @see VoodooDaoWorker for obscure and greedy worker.
 	 * @see SmartDaoWorker for less obscure locking-based worker.
-	 * @see FileSystemDaoWorker for Voodoo's filesystem-based child.
-	 * @see DelayedDaoWorker for message-based asynchronous one.
 	 * 
 	 * @ingroup DAOs
 	**/
 	abstract class TransparentDaoWorker extends BaseDaoWorker
 	{
 		protected $handler = null;
-		
-		protected $precision = 7; // safe default
 		
 		abstract protected function gentlyGetByKey($key);
 		abstract protected function spawnHandler($classKey);
@@ -420,12 +416,9 @@
 					);
 		}
 		
-		protected function keyToInt($key, $precision = null)
+		protected function keyToInt($key)
 		{
-			if (!$precision)
-				$precision = $this->precision;
-			
-			return hexdec(substr(md5($key), 0, $precision)) + 1;
+			return hexdec(substr(md5($key), 0, 15)) + 1;
 		}
 		//@}
 	}

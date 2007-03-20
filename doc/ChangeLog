@@ -2,6 +2,10 @@
 
 2007-03-20	Konstantin V. Arkhipov
 
+	* main/DAOs/Workers/: removed all childs of Voodoo-worker, so now
+	handler's select configurable via
+	VoodooDaoWorker::setDefaultHandler().
+
 	* main/DAOs/Workers/: added FileSystemSegmentHandler as final
 	fallback.
 

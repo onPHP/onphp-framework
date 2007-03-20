@@ -19,7 +19,7 @@
 		
 		public function __construct($segmentId)
 		{
-			$this->id = $segmentId;
+			$this->id = substr($segmentId, 0, 6);
 		}
 		
 		public function touch($key)

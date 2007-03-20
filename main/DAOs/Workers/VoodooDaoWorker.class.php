@@ -16,18 +16,30 @@
 	 * @warning Do not ever think about using it on production systems, unless
 	 * you're fully understand every line of code here.
 	 * 
+	 * @magic you'll probably want to tweak your
+	 * sysctl when using MessageSegmentHandler:
+	 * 
+	 * kernel.msgmni = (total number of DAOs + 2)
+	 * kernel.msgmnb = 32767
+	 * 
 	 * @see CommonDaoWorker for manual-caching one.
 	 * @see SmartDaoWorker for less obscure, but locking-based worker.
-	 * @see FileSystemDaoWorker for filesystem based child.
-	 * @see DelayedDaoWorker for message-based asynchronous one.
 	 * 
 	 * @ingroup DAOs
 	**/
-	class VoodooDaoWorker extends TransparentDaoWorker
+	final class VoodooDaoWorker extends TransparentDaoWorker
 	{
 		protected $classKey = null;
 		
-		protected $precision = 15;
+		// will trigger auto-detect
+		private static $defaultHandler = null;
+		
+		public static function setDefaultHandler($handler)
+		{
+			Assert::isTrue(class_exists($handler, true));
+			
+			self::$defaultHandler = $handler;
+		}
 		
 		public function __construct(GenericDAO $dao)
 		{
@@ -38,7 +50,7 @@
 			else
 				$watermark = null;
 			
-			$this->classKey = $this->keyToInt($watermark.$this->className, 8);
+			$this->classKey = $this->keyToInt($watermark.$this->className);
 			
 			$this->handler = $this->spawnHandler($this->classKey);
 		}
@@ -116,21 +128,30 @@
 		
 		protected function spawnHandler($classKey)
 		{
-			if (!extension_loaded('sysvshm')) {
-				if (extension_loaded('eaccelerator')) {
-					$handlerName = 'eAcceleratorSegmentHandler';
-				} elseif (extension_loaded('apc')) {
-					$handlerName = 'ApcSegmentHandler';
-				} elseif (extension_loaded('xcache')) {
-					$handlerName = 'XCacheSegmentHandler';
+			if (!self::$defaultHandler) {
+				if (extension_loaded('sysvshm')) {
+					$handlerName = 'SharedMemorySegmentHandler';
+				} elseif (extension_loaded('sysvmsg')) {
+					$handlerName = 'MessageSegmentHandler';
 				} else {
-					$handlerName = 'FileSystemSegmentHandler';
+					if (extension_loaded('eaccelerator')) {
+						$handlerName = 'eAcceleratorSegmentHandler';
+					} elseif (extension_loaded('apc')) {
+						$handlerName = 'ApcSegmentHandler';
+					} elseif (extension_loaded('xcache')) {
+						$handlerName = 'XCacheSegmentHandler';
+					} else {
+						$handlerName = 'FileSystemSegmentHandler';
+					}
 				}
 			} else {
-				$handlerName = 'SharedMemorySegmentHandler';
+				$handlerName = self::$defaultHandler;
 			}
 			
-			return new $handlerName($classKey);
+			if (!self::$defaultHandler)
+				self::$defaultHandler = $handlerName;
+			
+			return new self::$defaultHandler($classKey);
 		}
 		//@}
 	}
