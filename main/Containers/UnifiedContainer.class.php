@@ -92,6 +92,11 @@
 			);
 		}
 		
+		public function __sleep()
+		{
+			return array('worker', 'parent', 'dao', 'lazy');
+		}
+		
 		public function getParentObject()
 		{
 			return $this->parent;
