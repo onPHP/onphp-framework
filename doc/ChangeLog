@@ -1,5 +1,10 @@
 # $Id$
 
+2007-03-20	Konstantin V. Arkhipov
+
+	* main/Containers/Unified/UnifiedContainer.class.php: fetched
+	collection now excluded from serialization.
+
 2007-03-19	Ivan Y. Khvostishkov
 
 	* core/Form/Primitives/PrimitiveEnumeration.class.php: bugfix, value
