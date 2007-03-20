@@ -48,20 +48,22 @@
 			$form = $this->map->getForm();
 			
 			if ($object = $form->getValue('id')) {
-				try {
-					if (!$object instanceof Identifiable)
-						// already deleted
-						throw new ObjectNotFoundException();
+				if ($object instanceof Identifiable) {
 					
-					$object->dao()->dropById($object->getId());
-					
+					$this->dropObject(
+						$request, 
+						$form, 
+						$object
+					);
+
 					return ModelAndView::create()->setModel(
 						Model::create()->
 						set('editorResult', self::COMMAND_SUCCEEDED)
 					);
 
-				} catch (ObjectNotFoundException $e) {
+				} else {
 					
+					// already deleted
 					$form->markMissing('id');
 					
 					return ModelAndView::create()->setModel(
@@ -81,6 +83,11 @@
 			Assert::isUnreachable();
 		}
 		
+		protected function dropObject(HttpRequest $request, Form $form, Identifiable $object)
+		{
+			$object->dao()->drop($object);
+		}
+		
 		/**
 		 * @return ModelAndView
 		**/
@@ -97,6 +104,11 @@
 					$form->getValue('id')
 				);
 				
+				if (!$form->getErrors())
+					$editorResult = self::COMMAND_SUCCEEDED;
+				else
+					$editorResult = self::COMMAND_FAILED;
+					
 				return
 					ModelAndView::create()->
 					setModel(
@@ -104,7 +116,7 @@
 						set('id', $object->getId())->
 						set('subject', $object)->
 						set('form', $form)->
-						set('editorResult', self::COMMAND_SUCCEEDED)
+						set('editorResult', $editorResult)
 					);
 			} else {
 				$model =
@@ -169,6 +181,11 @@
 					clone $this->subject
 				);
 				
+				if (!$form->getErrors())
+					$editorResult = self::COMMAND_SUCCEEDED;
+				else
+					$editorResult = self::COMMAND_FAILED;
+
 				return
 					ModelAndView::create()->
 					setModel(
@@ -176,7 +193,7 @@
 						set('id', $object->getId())->
 						set('subject', $object)->
 						set('form', $form)->
-						set('editorResult', self::COMMAND_SUCCEEDED)
+						set('editorResult', $editorResult)
 					);
 			} else {
 				return
