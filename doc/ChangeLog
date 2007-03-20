@@ -1,5 +1,10 @@
 # $Id$
 
+2007-03-20	Konstantin V. Arkhipov
+
+	* main/DAOs/Workers/: added FileSystemSegmentHandler as final
+	fallback.
+
 2007-03-19	Ivan Y. Khvostishkov
 
 	* core/Form/Primitives/PrimitiveEnumeration.class.php: bugfix, value

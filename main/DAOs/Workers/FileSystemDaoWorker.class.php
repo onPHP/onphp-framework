@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,26 +22,9 @@
 	**/
 	final class FileSystemDaoWorker extends VoodooDaoWorker
 	{
-		public function __construct(GenericDAO $dao)
+		protected function spawnHandler($classKey)
 		{
-			parent::__construct($dao);
-			
-			if (($cache = Cache::me()) instanceof WatermarkedPeer)
-				$watermark = 
-					$cache->mark($this->className)->
-						getActualWatermark()
-					.DIRECTORY_SEPARATOR;
-			else
-				$watermark = null;
-			
-			$path =
-				ONPHP_TEMP_PATH
-				.'fsdw'.DIRECTORY_SEPARATOR
-				.$watermark
-				.$this->classKey
-				.DIRECTORY_SEPARATOR;
-
-			$this->handler = new FileSystemSegmentHandler($path);
+			return new FileSystemSegmentHandler($classKey);
 		}
 	}
 ?>

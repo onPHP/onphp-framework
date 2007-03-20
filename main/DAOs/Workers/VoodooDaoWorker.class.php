@@ -29,39 +29,18 @@
 		
 		protected $precision = 15;
 		
-		private static $handlerName = null;
-		
 		public function __construct(GenericDAO $dao)
 		{
 			parent::__construct($dao);
 
 			if (($cache = Cache::me()) instanceof WatermarkedPeer)
-				$watermark = 
-					$cache->mark($this->className)->getActualWatermark();
+				$watermark = $cache->mark($this->className)->getActualWatermark();
 			else
 				$watermark = null;
 			
 			$this->classKey = $this->keyToInt($watermark.$this->className, 8);
 			
-			if (!self::$handlerName) {
-				if (!extension_loaded('sysvshm')) {
-					if (extension_loaded('eaccelerator')) {
-						self::$handlerName = 'eAcceleratorSegmentHandler';
-					} elseif (extension_loaded('apc')) {
-						self::$handlerName = 'ApcSegmentHandler';
-					} elseif (extension_loaded('xcache')) {
-						self::$handlerName = 'XCacheSegmentHandler';
-					} else {
-						throw new UnsupportedMethodException(
-							'can not find suitable segment handler'
-						);
-					}
-				} else {
-					self::$handlerName = 'SharedMemorySegmentHandler';
-				}
-			}
-			
-			$this->handler = new self::$handlerName($this->classKey);
+			$this->handler = $this->spawnHandler($this->classKey);
 		}
 		
 		/// cachers
@@ -133,6 +112,25 @@
 				Cache::me()->mark($this->className)->delete($key);
 				return null;
 			}
+		}
+		
+		protected function spawnHandler($classKey)
+		{
+			if (!extension_loaded('sysvshm')) {
+				if (extension_loaded('eaccelerator')) {
+					$handlerName = 'eAcceleratorSegmentHandler';
+				} elseif (extension_loaded('apc')) {
+					$handlerName = 'ApcSegmentHandler';
+				} elseif (extension_loaded('xcache')) {
+					$handlerName = 'XCacheSegmentHandler';
+				} else {
+					$handlerName = 'FileSystemSegmentHandler';
+				}
+			} else {
+				$handlerName = 'SharedMemorySegmentHandler';
+			}
+			
+			return new $handlerName($classKey);
 		}
 		//@}
 	}

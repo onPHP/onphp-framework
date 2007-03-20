@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,10 +19,16 @@
 		
 		public function __construct($segmentId)
 		{
-			if (!is_writable($segmentId))
-				mkdir($segmentId, 0700, true);
+			$path =
+				ONPHP_TEMP_PATH
+				.'fsdw'.DIRECTORY_SEPARATOR
+				.$segmentId
+				.DIRECTORY_SEPARATOR;
 			
-			$this->path = $segmentId;
+			if (!is_writable($path))
+				mkdir($path, 0700, true);
+			
+			$this->path = $path;
 		}
 		
 		public function touch($key)

@@ -28,11 +28,9 @@
 	{
 		protected $precision = 6;
 		
-		public function __construct(GenericDAO $dao)
+		protected function spawnHandler($classKey)
 		{
-			parent::__construct($dao);
-			
-			$this->handler = new MessageSegmentHandler($this->classKey);
+			return new MessageSegmentHandler($classKey);
 		}
 	}
 ?>

@@ -27,6 +27,7 @@
 		protected $precision = 7; // safe default
 		
 		abstract protected function gentlyGetByKey($key);
+		abstract protected function spawnHandler($classKey);
 		
 		/// single object getters
 		//@{
