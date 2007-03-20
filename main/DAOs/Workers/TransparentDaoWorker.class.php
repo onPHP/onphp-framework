@@ -21,7 +21,6 @@
 	abstract class TransparentDaoWorker extends BaseDaoWorker
 	{
 		abstract protected function gentlyGetByKey($key);
-		abstract protected function spawnHandler($classKey);
 		
 		/// single object getters
 		//@{

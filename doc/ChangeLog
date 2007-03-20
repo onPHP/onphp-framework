@@ -2,7 +2,7 @@
 
 2007-03-20	Dmitry E. Demidov
 
-	* main/Flow/MethodMappedController.class.php: added  method
+	* main/Flow/MethodMappedController.class.php: added method
 	dropMethodMapping.
 
 2007-03-20	Konstantin V. Arkhipov
