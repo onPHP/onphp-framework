@@ -54,6 +54,21 @@
 		abstract public function asyncQuery(Query $query);
 		abstract public function isBusy();
 
+		/**
+		 * Shortcut, to be forward compatible.
+		 * 
+		 * @return DB
+		**/
+		public static function spawn(
+			$connector, $user, $pass, $host,
+			$base = null, $persistent = false, $encoding = null
+		)
+		{
+			$db = new $connector;
+			
+			return $db->connect($user, $pass, $host, $base, $persistent);
+		}
+		
 		public function __destruct()
 		{
 			if ($this->isConnected()) {
