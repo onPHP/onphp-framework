@@ -40,16 +40,14 @@
 	 *    - TransparentDaoWorker:
 	 *     - SmartDaoWorker;
 	 *     - VoodooDaoWorker;
-	 *     - FileSystemDaoWorker;
-	 *     - DelayedDaoWorker;
 	 *   - SegmentHandler%s:
+	 *    - MessageSegmentHandler;
 	 *    - SharedMemorySegmentHandler;
 	 *    - FileSystemSegmentHandler;
 	 *    - ApcSegmentHandler;
 	 *    - eAcceleratorSegmentHandler;
 	 *    - XCacheSegmentHandler;
 	 * - IdentifiableObject collections:
-	 *  - StorableContainer;
 	 *  - UnifiedContainer;
 	 * - Cache subsystem:
 	 *  - peers:
