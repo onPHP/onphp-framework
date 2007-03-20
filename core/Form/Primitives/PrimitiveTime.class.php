@@ -92,24 +92,18 @@
 			
 			return false;
 		}
-
+		
 		public function isEmpty($scope)
 		{
-			if ($this->getState()->isFalse()) {
-				return empty($scope[$this->name][self::HOURS])
-					|| empty($scope[$this->name][self::MINUTES])
-					|| empty($scope[$this->name][self::SECONDS]);
-			} else 
-				return empty($scope[$this->name]);
+			if ($this->getState()->isFalse())
+				return $this->isMarriedEmpty($scope);
+			
+			return empty($scope[$this->name]);
 		}
 		
 		public function importMarried($scope)
 		{
-			if (
-				!empty($scope[$this->name][self::HOURS])
-				&& !empty($scope[$this->name][self::MINUTES])
-				&& !empty($scope[$this->name][self::SECONDS])
-			) {
+			if (!$this->isMarriedEmpty($scope)) {
 				$hours = $minutes = $seconds = 0;
 				
 				if (isset($scope[$this->name][self::HOURS]))
@@ -133,6 +127,8 @@
 						
 						return true;
 					} catch (WrongArgumentException $e) {
+						$this->value = null;
+						
 						return false;
 					}
 				}
@@ -165,6 +161,13 @@
 				);
 		}
 		
+		private function isMarriedEmpty($scope)
+		{
+			return empty($scope[$this->name][self::HOURS])
+				|| empty($scope[$this->name][self::MINUTES])
+				|| empty($scope[$this->name][self::SECONDS]);
+		}
+
 		private function checkLimits(Time $time)
 		{
 			return 
