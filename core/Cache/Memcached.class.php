@@ -210,7 +210,9 @@
 			
 			$response = trim(fread($this->link, $this->buffer));
 			
-			if ($response === 'STORED')
+			if (!$response)
+				return false;
+			elseif ($response === 'STORED')
 				return true;
 			elseif ($response === 'NOT_STORED')
 				return false;
