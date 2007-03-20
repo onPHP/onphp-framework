@@ -27,8 +27,7 @@
 		public function __construct($left, $right, $logic)
 		{
 			Assert::isTrue(
-				($right instanceof SelectQuery)
-				|| ($right instanceof Criteria)
+				($right instanceof DialectString)
 				|| is_array($right)
 			);
 			
@@ -52,7 +51,9 @@
 				foreach ($this->right as $atom) {
 					$right[] = $dao->guessAtom($atom, $query);
 				}
-			} else
+			} elseif ($this->right instanceof MappableObject)
+				$right = $right->toMapped($dao, $query);
+			else
 				$right = $this->right; // untransformable
 			
 			return new self(
@@ -72,10 +73,7 @@
 			
 			$right = $this->right;
 			
-			if (
-				($right instanceof SelectQuery)
-				|| ($right instanceof Criteria)
-			) {
+			if ($right instanceof DialectString) {
 			
 				$string .= '('.$right->toDialectString($dialect).')';
 				
