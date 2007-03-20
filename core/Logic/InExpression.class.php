@@ -27,7 +27,8 @@
 		public function __construct($left, $right, $logic)
 		{
 			Assert::isTrue(
-				($right instanceof DialectString)
+				($right instanceof Query)
+				|| ($right instanceof Criteria)
 				|| is_array($right)
 			);
 			

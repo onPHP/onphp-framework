@@ -52,9 +52,13 @@
 
 		public function toDialectString(Dialect $dialect)
 		{
-			if ($this->table instanceof DialectString)
+			if ($this->table instanceof Query)
 				return
 					"({$this->table->toDialectString($dialect)}) AS "
+					.$dialect->quoteTable($this->alias);
+			elseif ($this->table instanceof DialectString)
+				return
+					$this->table->toDialectString($dialect).' AS '
 					.$dialect->quoteTable($this->alias);
 			else
 				return

@@ -13,15 +13,17 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	final class QueryCombination implements DialectString, MappableObject
+	final class QueryCombination
+		extends QueryIdentification
+		implements MappableObject
 	{
 		private $left	= null;
 		private $right	= null;
 		private $logic	= null;
 		
 		public function __construct(
-			SelectQuery $left, 
-			SelectQuery $right, 
+			Query $left, 
+			Query $right, 
 			$logic
 		)
 		{
