@@ -24,7 +24,7 @@
 			$this->id = $segmentId;
 		}
 		
-		public function precision()
+		public function getPrecision()
 		{
 			return 15;
 		}
