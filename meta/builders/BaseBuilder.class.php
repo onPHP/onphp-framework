@@ -432,7 +432,6 @@ EOT;
 						} else {
 							$row .=
 								"'{$property->getName()}"
-								.ucfirst($remoteClass->getIdentifier()->getName())
 								."' => '{$property->getColumnName()}'";
 						}
 					} else
