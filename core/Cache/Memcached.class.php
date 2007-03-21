@@ -210,16 +210,10 @@
 			
 			$response = trim(fread($this->link, $this->buffer));
 			
-			if (!$response)
-				return false;
-			elseif ($response === 'STORED')
+			if ($response === 'STORED')
 				return true;
-			elseif ($response === 'NOT_STORED')
-				return false;
-			elseif ($response === 'ERROR')
-				return false;
 			
-			Assert::isUnreachable($response);
+			return false;
 		}
 
 		private function sendRequest($command)
