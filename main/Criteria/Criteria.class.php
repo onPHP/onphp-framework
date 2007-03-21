@@ -18,6 +18,7 @@
 	final class Criteria implements Stringable, DialectString
 	{
 		private $dao		= null;
+		private $daoClass	= null;
 		private $logic		= null;
 		private $order		= null;
 		private $strategy	= null;
@@ -51,6 +52,20 @@
 				$this->strategy = FetchStrategy::join();
 			else
 				$this->strategy = FetchStrategy::cascade();
+		}
+		
+		public function __sleep()
+		{
+			$this->daoClass = get_class($this->dao);
+			
+			$vars = get_object_vars($this);
+			unset($vars['dao']);
+			return array_keys($vars);
+		}
+		
+		public function __wakeup()
+		{
+			$this->dao = Singleton::getInstance($this->daoClass);
 		}
 		
 		/**
