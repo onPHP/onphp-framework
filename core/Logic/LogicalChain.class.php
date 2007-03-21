@@ -74,13 +74,15 @@
 				);
 			elseif ($size == 1)
 				return $chain[0]->toBoolean($form);
-			else {
+			else { // size > 1
+				$out = $chain[0]->toBoolean($form);
+				
 				for ($i = 0; $i < $size; ++$i) {
 					if (isset($chain[$i + 1])) {
 						$out =
 							self::calculateBoolean(
 								$this->logic[$i + 1],
-								$chain[$i]->toBoolean($form),
+								$out,
 								$chain[$i + 1]->toBoolean($form)
 							);
 					} else {
