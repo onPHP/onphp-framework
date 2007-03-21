@@ -77,22 +77,13 @@
 			else { // size > 1
 				$out = $chain[0]->toBoolean($form);
 				
-				for ($i = 0; $i < $size; ++$i) {
-					if (isset($chain[$i + 1])) {
-						$out =
-							self::calculateBoolean(
-								$this->logic[$i + 1],
-								$out,
-								$chain[$i + 1]->toBoolean($form)
-							);
-					} else {
-						$out =
-							self::calculateBoolean(
-								$this->logic[$i],
-								$out, 
-								$chain[$i]->toBoolean($form)
-							);
-					}
+				for ($i = 1; $i < $size; ++$i) {
+					$out =
+						self::calculateBoolean(
+							$this->logic[$i],
+							$out, 
+							$chain[$i]->toBoolean($form)
+						);
 				}
 				
 				return $out;
