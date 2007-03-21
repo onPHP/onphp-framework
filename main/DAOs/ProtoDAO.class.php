@@ -273,7 +273,7 @@
 					$logic =
 						Expression::eq(
 							DBField::create(
-								$this->getFieldFor($property->getName()),
+								$property->getColumnName(),
 								$table
 							),
 							
