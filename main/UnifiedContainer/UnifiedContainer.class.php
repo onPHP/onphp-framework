@@ -67,6 +67,7 @@
 		protected $parent	= null;
 
 		protected $dao		= null;
+		protected $daoClass	= null; // sleep state
 		
 		protected $lazy		= true;
 		protected $fetched	= false;
@@ -97,7 +98,13 @@
 		
 		public function __sleep()
 		{
-			return array('worker', 'parent', 'dao', 'lazy');
+			$this->daoClass = get_class($this->dao);
+			return array('worker', 'parent', 'lazy', 'daoClass');
+		}
+		
+		public function __wakeup()
+		{
+			$this->dao = Singleton::getInstance($this->daoClass);
 		}
 		
 		public function getParentObject()

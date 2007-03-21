@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup DAOs
 	**/
-	abstract class GenericDAO extends Singleton implements BaseDAO, Serializable
+	abstract class GenericDAO extends Singleton implements BaseDAO
 	{
 		// override later
 		protected $mapping = array();
@@ -279,21 +279,6 @@
 		{
 			return Cache::worker($this)->uncacheLists();
 		}
-		//@}
-		
-		/// prevents serialization of inner worker and identity map
-		//@{
-		public function __sleep()
-		{
-			return array();
-		}
-		
-		public function serialize()
-		{
-			return "";
-		}
-		
-		public function unserialize($stuff) {/*_*/}
 		//@}
 		
 		/* void */ protected function checkObjectType(Identifiable $object)
