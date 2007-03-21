@@ -139,17 +139,17 @@
 			return $this->end;
 		}
 
-		public function toDateString($delimiter = ' - ')
+		public function toDateString($internalDelimiter = '-', $dateDelimiter = ' - ')
 		{
 			if ($this->start && $this->end)
 				return
-					"{$this->start->toDate($delimiter)}"
-					.$delimiter
-					."{$this->end->toDate($delimiter)}";
+					"{$this->start->toDate($internalDelimiter)}"
+					.$dateDelimiter
+					."{$this->end->toDate($internalDelimiter)}";
 			elseif ($this->start)
-				return $this->start->toDate($delimiter);
+				return $this->start->toDate($internalDelimiter);
 			elseif ($this->end)
-				return $this->end->toDate($delimiter);
+				return $this->end->toDate($internalDelimiter);
 			
 			return null;
 		}
