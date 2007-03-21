@@ -136,6 +136,21 @@
 			return $this->getProperties();
 		}
 		
+		/// only parents
+		public function getParentsProperties()
+		{
+			$out = array();
+			
+			$class = $this;
+			
+			while ($parent = $class->getParent()) {
+				$out = array_merge($out, $parent->getProperties());
+				$class = $parent;
+			}
+			
+			return $out;
+		}
+		
 		/**
 		 * @return MetaClass
 		**/

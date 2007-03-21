@@ -33,6 +33,19 @@ abstract class AutoProto{$class->getName()} extends Proto{$parent->getName()}
 		\$form =
 			parent::makeForm()
 EOT;
+				$redefined = array();
+				
+				// checking for redefined properties
+				foreach ($class->getParentsProperties() as $property) {
+					if ($class->hasProperty($property->getName())) {
+						$redefined[] =
+							"/* {$property->getClass()->getName()} */ "
+							."drop('{$property->getName()}')";
+					}
+				}
+				
+				if ($redefined)
+					$out .= "->\n".implode("->\n", $redefined);
 			} else {
 				$out .= <<<EOT
 abstract class AutoProto{$class->getName()} extends AbstractProtoClass
