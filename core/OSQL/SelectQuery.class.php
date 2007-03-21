@@ -479,10 +479,10 @@
 		**/
 		private function makeOrder($field, $table = null)
 		{
-			if ($field instanceof DialectString)
-				return new OrderBy($field);
-			elseif ($field instanceof OrderBy)
+			if ($field instanceof OrderBy)
 				return $field;
+			elseif ($field instanceof DialectString)
+				return new OrderBy($field);
 			
 			return
 				new OrderBy(
