@@ -31,7 +31,6 @@
 				addSource('id', RequestType::get())->
 				setDefaultType(RequestType::post());
 				
-			$this->form = $subject->proto()->makeForm();
 			$this->
 				setMethodMapping('drop', 'doDrop')->
 				setMethodMapping('save', 'doSave')->
@@ -69,7 +68,7 @@
 					return ModelAndView::create()->setModel(
 						Model::create()->
 						set('editorResult', self::COMMAND_FAILED)->
-						set('form', $this->form)
+						set('form', $form)
 					);
 				}
 			} else {
