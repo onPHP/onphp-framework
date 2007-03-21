@@ -153,6 +153,14 @@
 		}
 		
 		/**
+		 * @return Criteria
+		**/
+		public function getCriteria()
+		{
+			return $this->worker->getCriteria();
+		}
+		
+		/**
 		 * @deprecated by Criteria
 		 * 
 		 * @throws WrongArgumentException

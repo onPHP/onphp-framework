@@ -50,6 +50,14 @@
 		}
 		
 		/**
+		 * @return Criteria
+		**/
+		public function getCriteria()
+		{
+			return $this->criteria;
+		}
+		
+		/**
 		 * @return SelectQuery
 		**/
 		public function makeCountQuery()
