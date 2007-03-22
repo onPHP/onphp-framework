@@ -1,5 +1,9 @@
 # $Id$
 
+2007-03-22	Dmitry E. Demidov
+
+	* main/Flow/PrototypedEditor.class.php: added method doTake.
+
 2007-03-20	Dmitry E. Demidov
 
 	* main/Flow/PrototypedEditor.class.php: added method dropObject,

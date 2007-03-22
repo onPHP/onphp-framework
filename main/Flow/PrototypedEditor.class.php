@@ -33,6 +33,7 @@
 				
 			$this->
 				setMethodMapping('drop', 'doDrop')->
+				setMethodMapping('take', 'doTake')->
 				setMethodMapping('save', 'doSave')->
 				setMethodMapping('edit', 'doEdit')->
 				setMethodMapping('add', 'doAdd');
@@ -90,17 +91,83 @@
 		/**
 		 * @return ModelAndView
 		**/
+		public function doTake(HttpRequest $request)
+		{
+			$this->map->import($request);
+			$form = $this->map->getForm();
+			
+			if (!$form->getRawValue('id')) {
+				
+				$isAdd = true;
+				$form->markGood('id');
+				$object = clone $this->subject;
+				
+			} else {
+				
+				$object = $form->getValue('id');
+				$isAdd = false;
+			}
+			
+			if (!$form->getErrors()) {
+
+				if ($isAdd)
+					$object = $this->addObject(
+						$request, 
+						$form, 
+						$object
+					);
+				else
+					$object = $this->saveObject(
+						$request, 
+						$form, 
+						$object
+					);
+				
+				if (!$form->getErrors())
+					$editorResult = self::COMMAND_SUCCEEDED;
+				else
+					$editorResult = self::COMMAND_FAILED;
+					
+				return
+					ModelAndView::create()->
+					setModel(
+						Model::create()->
+						set('id', $object->getId())->
+						set('subject', $object)->
+						set('form', $form)->
+						set('editorResult', $editorResult)
+					);
+			} else {
+				$model =
+					Model::create()->
+					set('form', $form)->
+					set('editorResult', self::COMMAND_FAILED);
+				
+				if ($object)
+					$model->set('subject', $object);
+				
+				return ModelAndView::create()->setModel($model);
+			}
+			
+			Assert::isUnreachable();
+		}
+		
+		/**
+		 * @return ModelAndView
+		**/
 		public function doSave(HttpRequest $request)
 		{
 			$this->map->import($request);
 			$form = $this->map->getForm();
+			
+			$object = $form->getValue('id');
 			
 			if (!$form->getErrors()) {
 				
 				$object = $this->saveObject(
 					$request, 
 					$form, 
-					$form->getValue('id')
+					$object
 				);
 				
 				if (!$form->getErrors())
@@ -123,7 +190,7 @@
 					set('form', $form)->
 					set('editorResult', self::COMMAND_FAILED);
 				
-				if ($object = $form->getValue('id'))
+				if ($object)
 					$model->set('subject', $object);
 				
 				return ModelAndView::create()->setModel($model);
@@ -171,13 +238,14 @@
 			$form = $this->map->getForm();
 			
 			$form->markGood('id');
+			$object = clone $this->subject;
 			
 			if (!$form->getErrors()) {
 				
 				$object = $this->addObject(
 					$request, 
 					$form,
-					clone $this->subject
+					$object
 				);
 				
 				if (!$form->getErrors())
@@ -200,7 +268,7 @@
 					setModel(
 						Model::create()->
 						set('form', $form)->
-						set('subject', clone $this->subject)->
+						set('subject', $object)->
 						set('editorResult', self::COMMAND_FAILED)
 					);
 			}
