@@ -38,6 +38,10 @@
 			'десят',
 		);
 	
+		private static $bytePrefixes = array(
+			null, 'К', 'М', 'Г', 'Т', 'П'
+		);
+
 		/**
 		 * Returns text representation of digit
 		**/
@@ -137,6 +141,19 @@
 				return 'вчера в '.date('G:i', $date->toStamp());
 
 			return date('j.m.Y в G:i', $date->toStamp());
+		}
+
+		public static function friendlyFileSize($size, $precision = 2)
+		{
+			if ($size < 1024)
+				return
+					$size.' '.self::selectCaseForNumber(
+						$size, array('байт', 'байта', 'байт')
+					);
+			else
+				return TextUtils::friendlyFileSize(
+					$size, $precision, self::$bytePrefixes, ' '
+				).'Б';
 		}
 	}
 ?>

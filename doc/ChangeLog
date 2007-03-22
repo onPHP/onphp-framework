@@ -1,5 +1,10 @@
 # $Id$
 
+2007-03-22	Ivan Y. Khvostishkov
+
+	* main/Utils/RussianTextUtils.class.php: friendlyFileSize() backported
+	from trunk.
+
 2007-03-20	Konstantin V. Arkhipov
 
 	* main/Containers/Unified/UnifiedContainer.class.php: fetched
