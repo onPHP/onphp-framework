@@ -78,13 +78,13 @@
 		/**
 		 * @return Model
 		**/
-		public function join(Model $model, $priority = false)
+		public function join(Model $model, $overwrite = false)
 		{
 			if (!$model->isEmpty()) {
 			
 				$vars = $model->getList();
 				foreach ($vars as $name => $value) {
-					if (!$priority && $this->has($name))
+					if (!$overwrite && $this->has($name))
 						continue;
 					$this->set($name, $value);
 				}
