@@ -152,7 +152,7 @@
 					);
 			else
 				return TextUtils::friendlyFileSize(
-					$size, $precision, self::$bytePrefixes, ' '
+					$size, $precision, self::$bytePrefixes, true
 				).'Б';
 		}
 	}

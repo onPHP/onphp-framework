@@ -19,18 +19,24 @@
 	**/
 	final class TextUtils extends StaticFactory
 	{
-		public static function friendlyFileSize($size, $order = 0)
+		public static function friendlyFileSize(
+			$size, $precision = 2,
+			$units = array(null, 'k' , 'M', 'G', 'T', 'P'),
+			$spacePunctuation = false
+		)
 		{
-			static $units = array('', 'k' , 'M', 'G', 'T', 'P');
-			
-			if ($size >= 1024 && $order < 5)
-				return self::friendlyFileSize($size / 1024, $order + 1);
-			elseif (isset($units[$order]))
-				return round($size, 2).$units[$order];
+			if ($size > 0) {
+				$index = min((int) log($size, 1024), count($units) - 1);
 				
-			return $size;
+				return
+					round($size / pow(1024, $index), $precision)
+					.($spacePunctuation ? ' ' : null)
+					.$units[$index];
+			}
+			
+			return 0;
 		}
-		
+
 		public static function getRootFromUrl($url)
 		{
 			if (
