@@ -243,6 +243,18 @@
 		}
 		
 		/**
+		 * @return UnifiedContainer
+		**/
+		public function clean()
+		{
+			$this->list = $this->clones = array();
+			
+			$this->fetched = false;
+			
+			return $this;
+		}
+		
+		/**
 		 * @throws WrongArgumentException
 		 * @return UnifiedContainer
 		**/
