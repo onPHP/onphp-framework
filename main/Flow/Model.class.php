@@ -78,7 +78,7 @@
 		/**
 		 * @return Model
 		**/
-		public function join(Model $model, $overwrite = false)
+		public function merge(Model $model, $overwrite = false)
 		{
 			if (!$model->isEmpty()) {
 			
