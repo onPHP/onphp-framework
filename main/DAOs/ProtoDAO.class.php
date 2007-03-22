@@ -89,7 +89,7 @@
 					
 					$alias = 'cid'; // childId, collectionId, whatever
 					
-					$field = DBField::create($childId, $table);
+					$field = DBField::create($childId);
 					
 					$query->get($field, $alias);
 					
@@ -134,6 +134,11 @@
 				}
 				
 				$method = 'fill'.ucfirst($property->getName());
+				
+				Assert::isTrue(
+					method_exists(reset($list), $method),
+					'can not find filler method'
+				);
 				
 				foreach ($list as $object) {
 					if (!empty($collection[$object->getId()]))
