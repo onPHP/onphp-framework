@@ -74,5 +74,24 @@
 			
 			return $this;
 		}
+		
+		/**
+		 * @return Model
+		**/
+		public function join(Model $model, $priority = false)
+		{
+			if (!$model->isEmpty()) {
+			
+				$vars = $model->getList();
+				foreach ($vars as $name => $value) {
+					if (!$priority && $this->has($name))
+						continue;
+					$this->set($name, $value);
+				}
+				
+			}
+			
+			return $this;
+		}
 	}
 ?>
