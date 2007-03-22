@@ -35,7 +35,7 @@
 			
 			$form = $this->map->getForm();
 			
-			if (!$command = $form->getActualValue('action'))
+			if (!$command = $form->getValue('action'))
 				$command = $form->get('action')->getDefault();
 			
 			if ($command) {
