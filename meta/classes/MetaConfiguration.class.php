@@ -635,7 +635,6 @@
 			$out->info("\t");
 			
 			foreach ($this->classes as $name => $class) {
-				var_dump($class->getPattern() instanceof AbstractClassPattern);
 				if (
 					!(
 						$class->getPattern() instanceof SpookedClassPattern
