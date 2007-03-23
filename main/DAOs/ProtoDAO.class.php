@@ -329,7 +329,7 @@
 							$table,
 							$prefix
 						);
-				} elseif (in_array($atom, $this->getMapping()))
+				} elseif (array_key_exists($atom, $this->getMapping()))
 					return $this->mapProperty(new Property($atom), $table);
 				elseif (
 					($query instanceof SelectQuery)
