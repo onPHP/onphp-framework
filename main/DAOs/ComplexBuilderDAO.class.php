@@ -17,6 +17,13 @@
 	{
 		abstract protected function makeSelf(&$array, $prefix = null);
 		
+		public function getMapping()
+		{
+			$proto = call_user_func(array($this->getObjectName(), 'proto'));
+			
+			return $proto->getMapping();
+		}
+		
 		public function getJoinPrefix($field, $prefix = null)
 		{
 			return $this->getJoinName($field, $prefix).'__';

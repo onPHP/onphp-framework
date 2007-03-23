@@ -17,6 +17,9 @@
 	**/
 	abstract class GenericDAO extends Singleton implements BaseDAO
 	{
+		// override later, BC, <0.9
+		protected $mapping = array();
+
 		protected $identityMap	= array();
 		
 		protected $link			= null;
@@ -69,13 +72,10 @@
 		
 		public function getMapping()
 		{
-			if ($this instanceof ComplexBuilderDAO) {
-				$proto = call_user_func(array($this->getObjectName(), 'proto'));
+			if (!$this->mapping)
+				throw new WrongStateException('empty mapping');
 			
-				return $proto->getMapping();
-			} else { // BC, <0.9
-				return $this->mapping;
-			}
+			return $this->mapping;
 		}
 		
 		public function getFields()
