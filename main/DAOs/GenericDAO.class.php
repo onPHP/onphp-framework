@@ -69,9 +69,13 @@
 		
 		public function getMapping()
 		{
-			$proto = call_user_func(array($this->getObjectName(), 'proto'));
+			if ($this instanceof ComplexBuilderDAO) {
+				$proto = call_user_func(array($this->getObjectName(), 'proto'));
 			
-			return $proto->getMapping();
+				return $proto->getMapping();
+			} else { // BC, <0.9
+				return $this->mapping;
+			}
 		}
 		
 		public function getFields()
