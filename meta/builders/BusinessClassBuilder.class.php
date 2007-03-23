@@ -26,7 +26,10 @@
 			
 			$interfaces = ' implements Prototyped';
 			
-			if ($class->getPattern()->daoExists()) {
+			if (
+				$class->getPattern()->daoExists()
+				&& (!$class->getPattern() instanceof AbstractClassPattern)
+			) {
 				if (!$class->getPattern() instanceof ValueObjectPattern)
 					$interfaces .= ', DAOConnected';
 				
@@ -62,11 +65,9 @@ EOT;
 		
 {$dao}
 EOT;
-			}
+				$protoName = 'Proto'.$class->getName();
 			
-			$protoName = 'Proto'.$class->getName();
-			
-			$out .= <<<EOT
+				$out .= <<<EOT
 
 	/**
 	 * @return {$protoName}
@@ -78,12 +79,13 @@ EOT;
 
 EOT;
 
-			$out .= <<<EOT
+				$out .= <<<EOT
 
 	// your brilliant stuff goes here
 }
 
 EOT;
+			}
 			
 			return $out.self::getHeel();
 		}
