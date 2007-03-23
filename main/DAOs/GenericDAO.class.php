@@ -70,6 +70,7 @@
 			return clone $this->selectHead;
 		}
 		
+		/// @deprecated by ComplexBuilderDAO::getMapping()
 		public function getMapping()
 		{
 			if (!$this->mapping)
@@ -78,9 +79,19 @@
 			return $this->mapping;
 		}
 		
+		/// @deprecated by ComplexBuilderDAO::getFields()
 		public function getFields()
 		{
-			return array_values($this->getMapping());
+			static $fields = array();
+			
+			$name = $this->getObjectName();
+			
+			if (!isset($fields[$name])) {
+					foreach ($this->getMapping() as $property => $field)
+							$fields[$name][] = $field === null ? $property : $field;
+			}
+			
+			return $fields[$name];
 		}
 		
 		/// boring delegates

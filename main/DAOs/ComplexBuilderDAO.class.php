@@ -24,6 +24,11 @@
 			return $proto->getMapping();
 		}
 		
+		public function getFields()
+		{
+			return array_values($this->getMapping());
+		}
+		
 		public function getJoinPrefix($field, $prefix = null)
 		{
 			return $this->getJoinName($field, $prefix).'__';
