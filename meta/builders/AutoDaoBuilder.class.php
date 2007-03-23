@@ -33,33 +33,6 @@ abstract class Auto{$class->getName()}DAO extends {$parentName}
 EOT;
 
 			if (sizeof($class->getProperties())) {
-				$out .= <<<EOT
-	protected function __construct()
-	{
-		parent::__construct();
-		
-		\$this->mapping = array_merge(
-			\$this->mapping,
-			array(
-
-EOT;
-			
-				$mapping = self::buildMapping($class);
-			
-				$out .= implode(",\n", $mapping)."\n";
-
-				$out .= <<<EOT
-				)
-			);
-
-EOT;
-
-				$out .= <<<EOT
-	}
-
-
-EOT;
-
 				$out .= self::buildPointers($class);
 				
 				if (

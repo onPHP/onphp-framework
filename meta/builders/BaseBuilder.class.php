@@ -388,68 +388,6 @@ EOT;
 			return $out;
 		}
 		
-		protected static function buildMapping(MetaClass $class)
-		{
-			$mapping = array();
-			
-			foreach ($class->getProperties() as $property) {
-				
-				$row = null;
-				
-				if ($property->getType()->isGeneric()) {
-					
-					$name = $property->getName();
-					$columnName = $property->getColumnName();
-					
-					if ($property->getType() instanceof RangeType) {
-						
-						$row =
-							array(
-								"'{$name}Min' => '{$columnName}_min'",
-								"'{$name}Max' => '{$columnName}_max'"
-							);
-						
-					} else {
-						if ($name == $columnName)
-							$map = 'null';
-						else
-							$map = "'{$columnName}'";
-						
-						$row .= "'{$name}' => {$map}";
-					}
-				} else {
-					
-					$relation = $property->getRelation();
-					
-					if (
-						$relation->getId() == MetaRelation::ONE_TO_ONE
-						|| $relation->getId() == MetaRelation::LAZY_ONE_TO_ONE
-					) {
-						$remoteClass = $property->getType()->getClass();
-						
-						if ($remoteClass->getPattern() instanceof ValueObjectPattern) {
-							$row = self::buildMapping($remoteClass);
-						} else {
-							$row .=
-								"'{$property->getName()}"
-								.ucfirst($remoteClass->getIdentifier()->getName())
-								."' => '{$property->getColumnName()}'";
-						}
-					} else
-						$row = null;
-				}
-				
-				if ($row) {
-					if (is_array($row))
-						$mapping = array_merge($mapping, $row);
-					else // string
-						$mapping[] = $row;
-				}
-			}
-			
-			return $mapping;
-		}
-		
 		protected static function getHead()
 		{
 			$head = self::startCap();

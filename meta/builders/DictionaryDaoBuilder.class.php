@@ -22,22 +22,15 @@
 			$out .= <<<EOT
 abstract class Auto{$class->getName()}DAO extends ComplexBuilderDAO
 {
-	protected \$mapping = array(
 
 EOT;
 
-			$mapping = self::buildMapping($class);
 			$pointers = self::buildPointers($class);
-			
-			$out .= implode(",\n", $mapping);
 			
 			$className = $class->getName();
 			$varName = strtolower($className[0]).substr($className, 1);
 			
 			$out .= <<<EOT
-
-	);
-
 {$pointers}
 
 EOT;

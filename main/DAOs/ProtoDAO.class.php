@@ -329,7 +329,7 @@
 							$table,
 							$prefix
 						);
-				} elseif (array_key_exists($atom, $this->mapping))
+				} elseif (in_array($atom, $this->getMapping()))
 					return $this->mapProperty(new Property($atom), $table);
 				elseif (
 					($query instanceof SelectQuery)
@@ -352,18 +352,13 @@
 		private function mapProperty(Property $property, $table)
 		{
 			$name = $property->getName();
+			$mapping = $this->getMapping();
 			
 			Assert::isTrue(
-				array_key_exists(
-					$name,
-					$this->mapping
-				)
+				array_key_exists($name, $mapping)
 			);
 			
-			if ($this->mapping[$name] === null)
-				return new DBField($name, $table);
-			
-			return new DBField($this->mapping[$name], $table);
+			return new DBField($mapping[$name], $table);
 		}
 	}
 ?>

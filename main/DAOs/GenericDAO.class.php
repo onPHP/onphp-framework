@@ -17,9 +17,6 @@
 	**/
 	abstract class GenericDAO extends Singleton implements BaseDAO
 	{
-		// override later
-		protected $mapping = array();
-		
 		protected $identityMap	= array();
 		
 		protected $link			= null;
@@ -51,32 +48,12 @@
 			return $this->getTable().'_id';
 		}
 		
-		public function getMapping()
-		{
-			return $this->mapping;
-		}
-		
-		public function getFieldFor($property)
-		{
-			if (array_key_exists($property, $this->mapping)) {
-				return
-					$this->mapping[$property] === null
-						? $property
-						: $this->mapping[$property];
-			}
-			
-			throw new MissingElementException('unknown property '.$property);
-		}
-		
 		/**
 		 * @return SelectQuery
 		**/
 		public function makeSelectHead()
 		{
 			if (null === $this->selectHead) {
-				if (!$this->mapping)
-					throw new WrongStateException('empty mapping');
-				
 				$table = $this->getTable();
 
 				$this->selectHead = 
@@ -90,18 +67,16 @@
 			return clone $this->selectHead;
 		}
 		
+		public function getMapping()
+		{
+			$proto = call_user_func(array($this->getObjectName(), 'proto'));
+			
+			return $proto->getMapping();
+		}
+		
 		public function getFields()
 		{
-			static $fields = array();
-			
-			$name = $this->getObjectName();
-			
-			if (!isset($fields[$name])) {
-				foreach ($this->getMapping() as $property => $field)
-					$fields[$name][] = $field === null ? $property : $field;
-			}
-			
-			return $fields[$name];
+			return array_values($this->getMapping());
 		}
 		
 		/// boring delegates

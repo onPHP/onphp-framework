@@ -45,5 +45,31 @@
 				'unknown property requested by name '."'{$name}'"
 			);
 		}
+		
+		public function getMapping()
+		{
+			static $mappings = array();
+			
+			$className = get_class($this);
+			
+			if (!isset($mappings[$className])) {
+				foreach ($this->getPropertyList() as $name => $property) {
+					if (
+						!$property->getRelationId()
+						|| (
+							$property->getRelationId()
+							== MetaRelation::ONE_TO_ONE
+						) || (
+							$property->getRelationId()
+							== MetaRelation::LAZY_ONE_TO_ONE
+						)
+					) {
+						$mappings[$className][$name] = $property->getColumnName();
+					}
+				}
+			}
+			
+			return $mappings[$className];
+		}
 	}
 ?>

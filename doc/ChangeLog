@@ -1,5 +1,9 @@
 # $Id$
 
+2007-03-23	Konstantin V. Arkhipov
+
+	* main/DAOs/, meta/: mapping is now proto-based.
+
 2007-03-22	Dmitry E. Demidov
 
 	* main/Flow/PrototypedEditor.class.php: added method doTake.
