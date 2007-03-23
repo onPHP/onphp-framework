@@ -358,6 +358,10 @@
 				array_key_exists($name, $mapping)
 			);
 			
+			// BC, <0.9
+			if (!$mapping[$name])
+				return new DBField($name, $table);
+			
 			return new DBField($mapping[$name], $table);
 		}
 	}
