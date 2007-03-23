@@ -58,7 +58,8 @@ public function setQueryFields(InsertOrUpdateQuery \$query, {$typeHint} \${$varN
 EOT;
 				$out .= self::buildFillers($class);
 			} else {
-				$out .= self::buildPointers($class)."\n}\n";
+				$out .= self::buildPointers($class);
+				$out .= self::buildFillers($class);
 			}
 			
 			return $out.self::getHeel();

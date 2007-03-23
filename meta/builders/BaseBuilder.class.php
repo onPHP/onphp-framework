@@ -145,17 +145,19 @@
 			else
 				$visibility = 'protected';
 			
-			$out .= <<<EOT
+			if ($setters) {
+				$out .= <<<EOT
 		return
 			\$query->
 
 EOT;
-			$out .= implode("->\n", $setters).";\n";
-
-			$out .= <<<EOT
+				$out .= implode("->\n", $setters).";\n";
+				$out .= <<<EOT
 		}
 
 EOT;
+			}
+			
 			if ($class->getTypeId() == MetaClassType::CLASS_ABSTRACT) {
 				$out .= <<<EOT
 
