@@ -287,13 +287,13 @@ Possible options:
 					$meta->buildSchemaChanges();
 			}
 			
+			$meta->checkForStaleFiles($metaDropStaleFiles);
+			
 			if (!$metaNoSyntaxCheck)
 				$meta->checkSyntax();
 			
 			if (!$metaNoIntegrityCheck)
 				$meta->checkIntegrity();
-			
-			$meta->checkForStaleFiles($metaDropStaleFiles);
 		} catch (BaseException $e) {
 			$out->
 				newLine()->
