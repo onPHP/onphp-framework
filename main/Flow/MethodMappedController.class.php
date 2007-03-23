@@ -16,6 +16,7 @@
 	abstract class MethodMappedController implements Controller
 	{
 		private $methodMap = array();
+		private $defaultAction = 'edit';
 		
 		/**
 		 * @return ModelAndView
@@ -30,11 +31,8 @@
 				
 				return $mav;
 				
-			} else {
+			} else
 				return ModelAndView::create();
-			}
-			
-			Assert::isUnreachable();
 		}
 		
 		public function chooseAction(HttpRequest $request)
@@ -42,7 +40,7 @@
 			$action = Form::create()->
 				add(
 					Primitive::choice('action')->setList($this->methodMap)->
-					setDefault('edit')
+					setDefault($this->defaultAction)
 				)->
 				import($request->getGet())->
 				importMore($request->getPost())->
@@ -76,6 +74,21 @@
 		public function getMethodMapping()
 		{
 			return $this->methodMap;
+		}
+		
+		/**
+		 * @return MethodMappedController
+		**/
+		public function setDefaultAction($action)
+		{
+			$this->defaultAction = $action;
+			
+			return $this;
+		}
+		
+		public function getDefaultAction()
+		{
+			return $this->defaultAction;
 		}
 	}
 ?>
