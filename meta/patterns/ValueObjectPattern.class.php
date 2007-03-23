@@ -23,11 +23,25 @@
 		/**
 		 * @return ValueObjectPattern
 		**/
-		public function build(MetaClass $class)
+		protected function buildDao(MetaClass $class)
 		{
-			return $this->
-				buildProto($class)->
-				buildBusiness($class);
+			$this->dumpFile(
+				ONPHP_META_AUTO_DAO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
+				Format::indentize(ValueObjectDaoBuilder::build($class))
+			);
+			
+			$userFile = ONPHP_META_DAO_DIR.$class->getName().'DAO'.EXT_CLASS;
+			
+			if (
+				MetaConfiguration::me()->isForcedGeneration()
+				|| !file_exists($userFile)
+			)
+				$this->dumpFile(
+					$userFile,
+					Format::indentize(DaoBuilder::build($class))
+				);
+			
+			return $this;
 		}
 	}
 ?>
