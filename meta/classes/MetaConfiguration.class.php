@@ -375,7 +375,7 @@
 			
 			foreach ($this->classes as $class) {
 				if (
-					!count($class->getProperties())
+					(!$class->getParent() && !count($class->getProperties()))
 					|| ($class->getPattern() instanceof AbstractClassPattern)
 					|| ($class->getPattern() instanceof ValueObjectPattern)
 				) {
