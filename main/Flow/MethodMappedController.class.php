@@ -33,6 +33,8 @@
 				
 			} else
 				return ModelAndView::create();
+				
+			Assert::isUnreachable();
 		}
 		
 		public function chooseAction(HttpRequest $request)
