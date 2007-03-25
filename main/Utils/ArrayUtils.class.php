@@ -22,7 +22,7 @@
 			if (!$list)
 				return $out;
 				
-			foreach ($list as &$obj)
+			foreach ($list as $obj)
 				$out[$obj->getId()] = $obj;
 
 			return $out;
@@ -37,7 +37,7 @@
 			
 			$out = array();
 			
-			foreach ($objectsList as &$object)
+			foreach ($objectsList as $object)
 				$out[] = $object->getId();
 
 			return $out;
@@ -47,7 +47,7 @@
 		{
 			$out = array();
 			
-			foreach ($list as &$obj)
+			foreach ($list as $obj)
 				$out[] = $obj[$key];
 
 			return $out;
