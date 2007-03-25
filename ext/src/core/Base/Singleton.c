@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -25,6 +25,7 @@ static zval *instances = NULL;
 
 /* protected */		ONPHP_METHOD(Singleton, __construct)	{/*_*/}
 /* final private */	ONPHP_METHOD(Singleton, __clone)		{/*_*/}
+/* final private */	ONPHP_METHOD(Singleton, __sleep)		{/*_*/}
 
 ONPHP_METHOD(Singleton, getInstance)
 {
@@ -193,5 +194,6 @@ zend_function_entry onphp_funcs_Singleton[] = {
 	ONPHP_ME(Singleton, __construct,	NULL, ZEND_ACC_PROTECTED)
 	ONPHP_ME(Singleton, getInstance,	arginfo_one, ZEND_ACC_FINAL | ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Singleton, __clone,		NULL, ZEND_ACC_FINAL | ZEND_ACC_PRIVATE)
+	ONPHP_ME(Singleton, __sleep,		NULL, ZEND_ACC_FINAL | ZEND_ACC_PRIVATE)
 	{NULL, NULL, NULL}
 };
