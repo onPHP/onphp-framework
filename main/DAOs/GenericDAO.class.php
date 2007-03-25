@@ -87,8 +87,8 @@
 			$name = $this->getObjectName();
 			
 			if (!isset($fields[$name])) {
-					foreach ($this->getMapping() as $property => $field)
-							$fields[$name][] = $field === null ? $property : $field;
+				foreach ($this->getMapping() as $property => $field)
+					$fields[$name][] = $field === null ? $property : $field;
 			}
 			
 			return $fields[$name];

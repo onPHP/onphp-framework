@@ -26,7 +26,24 @@
 		
 		public function getFields()
 		{
-			return array_values($this->getMapping());
+			static $fields = array();
+			
+			$className = $this->getObjectName();
+			
+			if (!isset($fields[$className])) {
+				foreach (array_values($this->getMapping()) as $field) {
+					if (is_array($field))
+						$fields[$className] =
+							array_merge(
+								$fields[$className],
+								$field
+							);
+					else
+						$fields[$className][] = $field;
+				}
+			}
+			
+			return $fields[$className];
 		}
 		
 		public function getJoinPrefix($field, $prefix = null)

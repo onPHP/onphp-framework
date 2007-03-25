@@ -708,8 +708,8 @@ EOT;
 			elseif ($this->type instanceof RangeType) {
 				return
 					array(
-						$this->buildColumn("{$this->getColumnName()}_min"),
-						$this->buildColumn("{$this->getColumnName()}_max")
+						"{$this->getColumnName()}_min",
+						"{$this->getColumnName()}_max"
 					);
 			} else
 				$columnName = $this->getColumnName();
@@ -748,7 +748,7 @@ EOT;
 			return
 				LightMetaProperty::make(
 					$this->getName(),
-					$this->getColumnName(),
+					$this->getRelationColumnName(),
 					$this->getType() instanceof ObjectType
 						? $this->getType()->getClassName()
 						: null,
@@ -761,6 +761,16 @@ EOT;
 		
 		private function buildColumn($columnName)
 		{
+			if (is_array($columnName)) {
+				$out = array();
+				
+				foreach ($columnName as $name) {
+					$out[] = $this->buildColumn($name);
+				}
+				
+				return $out;
+			}
+			
 			$column = <<<EOT
 addColumn(
 	DBColumn::create(
