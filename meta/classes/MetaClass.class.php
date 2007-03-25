@@ -129,7 +129,7 @@
 		{
 			if ($this->parent)
 				return array_merge(
-					$this->parent->getProperties(),
+					$this->parent->getAllProperties(),
 					$this->properties
 				);
 			
