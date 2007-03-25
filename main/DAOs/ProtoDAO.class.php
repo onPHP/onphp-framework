@@ -19,11 +19,7 @@
 			/* array */ $collections, /* array */ $list
 		)
 		{
-			$ids = array();
-			
-			foreach ($list as $object) {
-				$ids[] = $object->getId();
-			}
+			$ids = ArrayUtils::getIdsArray($list);
 			
 			$mainId = DBField::create(
 				$this->getIdName(),
