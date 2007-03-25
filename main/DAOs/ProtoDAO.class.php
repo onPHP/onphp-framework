@@ -51,20 +51,11 @@
 					Expression::in($mainId, $ids)
 				);
 				
-				// find final destination
-				foreach (explode('.', $path) as $name) {
-					$property = $proto->getPropertyByName($name);
-					$className = $property->getClassName();
-					
-					$proto = call_user_func(
-						array(
-							$className,
-							'proto'
-						)
-					);
-				}
+				$propertyPath = $info['propertyPath'];
 				
-				$dao = call_user_func(array($className, 'dao'));
+				$property	= $propertyPath->getFinalProperty();
+				$proto		= $propertyPath->getFinalProto();
+				$dao		= $propertyPath->getFinalDao();
 				
 				$selfName = $this->getObjectName();
 				$self = new $selfName;
@@ -265,8 +256,8 @@
 				// prevents useless joins
 				if (
 					isset($path[1])
-					&& ($path[1] == $propertyDao->getIdName())
 					&& (count($path) == 1)
+					&& ($path[1] == $propertyDao->getIdName())
 				)
 					return
 						new DBField(
@@ -313,11 +304,7 @@
 			if ($table === null)
 				$table = $this->getTable();
 
-			if ($atom instanceof Property) {
-				
-				return $this->mapProperty($atom, $table);
-				
-			} elseif (is_string($atom)) {
+			if (is_string($atom)) {
 				if (strpos($atom, '.') !== false) {
 					return
 						$this->processPath(
@@ -329,9 +316,18 @@
 							$table,
 							$prefix
 						);
-				} elseif (array_key_exists($atom, $this->getMapping()))
-					return $this->mapProperty(new Property($atom), $table);
-				elseif (
+				} elseif (
+					array_key_exists(
+						$atom,
+						$mapping = $this->getMapping()
+					)
+				) {
+					// BC, <0.9
+					if (!$mapping[$atom])
+						return new DBField($atom, $table);
+					
+					return new DBField($mapping[$atom], $table);
+				} elseif (
 					($query instanceof SelectQuery)
 					&& $query->hasAliasInside($atom)
 				) {
@@ -347,22 +343,6 @@
 			}
 			
 			return new DBValue($atom);
-		}
-		
-		private function mapProperty(Property $property, $table)
-		{
-			$name = $property->getName();
-			$mapping = $this->getMapping();
-			
-			Assert::isTrue(
-				array_key_exists($name, $mapping)
-			);
-			
-			// BC, <0.9
-			if (!$mapping[$name])
-				return new DBField($name, $table);
-			
-			return new DBField($mapping[$name], $table);
 		}
 	}
 ?>

@@ -1,5 +1,12 @@
 # $Id$
 
+2007-03-25	Konstantin V. Arkhipov
+
+	* main/Criteria/PropertyPath.class.php: useful utilities for path
+	processing.
+
+	* main/Criteria/Property.class.php: unused anyway, removed.
+
 2007-03-23	Konstantin V. Arkhipov
 
 	* main/DAOs/, meta/: mapping is now proto-based.

@@ -249,6 +249,8 @@
 			
 			$this->collections[$path]['lazy'] = $lazy;
 			$this->collections[$path]['criteria'] = $criteria;
+			$this->collections[$path]['propertyPath']
+				= new PropertyPath($this->dao->getObjectName(), $path);
 			
 			return $this;
 		}
