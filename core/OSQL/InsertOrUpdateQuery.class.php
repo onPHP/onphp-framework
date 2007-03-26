@@ -66,6 +66,10 @@
 				$this->
 					set($field.'_min', $object->getMin())->
 					set($field.'_max', $object->getMax());
+			elseif ($object instanceof DateRange)
+				$this->
+					set($field.'_start', $object->getMin())->
+					set($field.'_end', $object->getMax());
 			elseif ($object === null)
 				$this->set($field, null);
 			else

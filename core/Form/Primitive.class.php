@@ -100,6 +100,19 @@
 		}
 		
 		/**
+		 * @return PrimitiveDateRange
+		**/
+		public static function dateRange($name)
+		{
+			return new PrimitiveDateRange($name);
+		}
+		
+		public static function timestampRange($name)
+		{
+			throw new UnimplementedFeatureException();
+		}
+		
+		/**
 		 * @return PrimitiveList
 		**/
 		public static function choice($name)

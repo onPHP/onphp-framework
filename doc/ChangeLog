@@ -2,6 +2,8 @@
 
 2007-03-26	Konstantin V. Arkhipov
 
+	* meta/types/: Date and Timestamp ranges added.
+
 	* main/Base/DateRange.class.php: split() ported to Date's usage.
 
 	* test/core/DateRangeTest.class.php: more tests.

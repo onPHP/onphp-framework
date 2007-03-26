@@ -545,8 +545,8 @@ EOT;
 					if ($this->type instanceof RangeType) {
 						$value =
 							"\n{$value}\n"
-							."ArrayUtils::getArrayVar(\$array, '{$this->getColumnName()}_min'), "
-							."\nArrayUtils::getArrayVar(\$array, '{$this->getColumnName()}_max')\n)\n";
+							."ArrayUtils::getArrayVar(\$array, '{$this->getColumnName()}_{$this->type->getFirstSuffix()}'), "
+							."\nArrayUtils::getArrayVar(\$array, '{$this->getColumnName()}_{$this->type->getSecondSuffix()}')\n)\n";
 					} else {
 						$value .= "\$array[\$prefix.'{$this->getColumnName()}'])";
 					}
@@ -708,8 +708,8 @@ EOT;
 			elseif ($this->type instanceof RangeType) {
 				return
 					array(
-						"{$this->getColumnName()}_min",
-						"{$this->getColumnName()}_max"
+						"{$this->getColumnName()}_{$this->type->getFirstSuffix()}",
+						"{$this->getColumnName()}_{$this->type->getSecondSuffix()}"
 					);
 			} else
 				$columnName = $this->getColumnName();

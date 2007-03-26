@@ -13,7 +13,8 @@
 	/**
 	 * Date's interval implementation and accompanying utility methods.
 	 *
-	 * @see Timestamp
+	 * @see Date
+	 * @see TimestampRange
 	 * 
 	 * @ingroup Helpers
 	**/
@@ -28,9 +29,18 @@
 		/**
 		 * @return DateRange
 		**/
-		public static function create()
+		public static function create($start = null, $end = null)
 		{
-			return new self;
+			return new self($start, $end);
+		}
+		
+		public function __construct($start = null, $end = null)
+		{
+			if ($start)
+				$this->setStart($start);
+			
+			if ($end)
+				$this->setEnd($end);
 		}
 
 		public function __clone()
@@ -46,8 +56,10 @@
 		 * @throws WrongArgumentException
 		 * @return DateRange
 		**/
-		public function setStart(Date $start)
+		public function setStart(/* Date */ $start)
 		{
+			$this->checkType($start);
+			
 			if ($this->end && $this->end->toStamp() < $start->toStamp())
 				throw new WrongArgumentException(
 					'start must be lower than end'
@@ -63,8 +75,10 @@
 		 * @throws WrongArgumentException
 		 * @return DateRange
 		**/
-		public function setEnd(Date $end)
+		public function setEnd(/* Date */ $end)
 		{
+			$this->checkType($end);
+			
 			if ($this->start && $this->start->toStamp() > $end->toStamp())
 				throw new WrongArgumentException(
 					'end must be higher than start'
@@ -80,17 +94,20 @@
 		**/
 		public function lazySet($start = null, $end = null)
 		{
-			if (
-				($start instanceof Date)
-				&& ($end instanceof Date)
-			) {
+			if ($start)
+				$this->checkType($start);
+			
+			if ($end)
+				$this->checkType($end);
+			
+			if ($start && $end) {
 				if ($start->toStamp() >= $end->toStamp())
 					$this->setEnd($start)->setStart($end);
 				else
 					$this->setStart($start)->setEnd($end);
-			} elseif ($start instanceof Date)
+			} elseif ($start)
 				$this->setStart($start);
-			elseif ($end instanceof Date)
+			elseif ($end)
 				$this->setEnd($end);
 			
 			return $this;
@@ -226,8 +243,10 @@
 			);
 		}
 
-		public function contains(Timestamp $date)
+		public function contains(/* Timestamp */ $date)
 		{
+			$this->checkType($date);
+			
 			$start = $this->getStartStamp();
 			$end = $this->getEndStamp();
 			$probe = $date->toStamp();
@@ -249,8 +268,9 @@
 				$this->isOpen(),
 				"open range can't be splitted"
 			);
+			
 			$dates = array();
-
+			
 			$start = new Date($this->start->getDayStartStamp());
 
 			$endStamp = $this->end->getDayEndStamp();
@@ -477,6 +497,18 @@
 		{
 			return (!$this->isOpen())
 				&& ($this->start->toDate() == $this->end->toDate());
+		}
+		
+		protected function checkType($value)
+		{
+			Assert::isTrue(
+				ClassUtils::isInstanceOf($value, $this->getObjectName())
+			);
+		}
+		
+		protected function getObjectName()
+		{
+			return 'Date';
 		}
 	}
 ?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,34 +11,16 @@
 /* $Id$ */
 
 	/**
-	 * @ingroup Types
+	 * @see Timestamp
+	 * @see DateRange
+	 * 
+	 * @ingroup Helpers
 	**/
-	class RangeType extends ObjectType
+	class TimestampRange extends DateRange
 	{
-		public function isGeneric()
+		protected function getObjectName()
 		{
-			return true;
-		}
-		
-		public function toColumnType()
-		{
-			// will be called twice with suffixes _min and _max
-			return 'DataType::create(DataType::INTEGER)';
-		}
-		
-		public function toPrimitive()
-		{
-			return 'Primitive::range';
-		}
-		
-		public function getFirstSuffix()
-		{
-			return 'min';
-		}
-		
-		public function getSecondSuffix()
-		{
-			return 'max';
+			return 'Date';
 		}
 	}
 ?>

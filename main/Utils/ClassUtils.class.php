@@ -111,6 +111,8 @@
 			
 			if (is_string($object))
 				$object = new $object;
+			elseif (!is_object($object))
+				throw new WrongArgumentException('strange object given');
 			
 			Assert::isTrue(class_exists($className, true));
 			
