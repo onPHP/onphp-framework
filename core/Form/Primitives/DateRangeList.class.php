@@ -83,7 +83,6 @@
 		 * @throws WrongArgumentException
 		 * @return DateRange
 		**/
-		// TODO: move to PrimitiveDateRange
 		public static function makeRange($string)
 		{
 			if (
@@ -127,7 +126,6 @@
 		 * @throws WrongArgumentException
 		 * @return Date
 		**/
-		// TODO: move to PrimitiveDateRange
 		private static function toDate($date)
 		{
 			if (strpos($date, '.') !== false) {
