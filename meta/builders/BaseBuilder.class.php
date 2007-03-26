@@ -161,7 +161,7 @@ EOT;
 			if ($class->getTypeId() == MetaClassType::CLASS_ABSTRACT) {
 				$out .= <<<EOT
 
-protected function fillSelf({$className} \${$varName}, &\$array, \$prefix = null)
+protected function fillSelf({$class->getFinalParent()->getName()} \${$varName}, &\$array, \$prefix = null)
 {
 
 EOT;
