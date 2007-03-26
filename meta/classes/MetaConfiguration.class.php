@@ -383,9 +383,7 @@
 			foreach ($this->classes as $class) {
 				if (
 					(!$class->getParent() && !count($class->getProperties()))
-					|| ($class->getPattern() instanceof AbstractClassPattern)
-					|| ($class->getPattern() instanceof ValueObjectPattern)
-					|| ($class->getPattern() instanceof InternalClassPattern)
+					|| $class->getPattern()->tableExists()
 				) {
 					continue;
 				}
@@ -404,10 +402,7 @@
 					$schema .= SchemaBuilder::buildTable($name, $propertyList);
 			
 			foreach ($this->classes as $class) {
-				if (
-					$class->getPattern() instanceof AbstractClassPattern
-					|| $class->getPattern() instanceof ValueObjectPattern
-				) {
+				if (!$class->getPattern()->tableExists()) {
 					continue;
 				}
 				
