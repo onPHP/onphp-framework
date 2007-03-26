@@ -20,7 +20,7 @@
 	{
 		protected function getObjectName()
 		{
-			return 'Date';
+			return 'Timestamp';
 		}
 	}
 ?>
