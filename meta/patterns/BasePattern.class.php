@@ -15,6 +15,11 @@
 	**/
 	abstract class BasePattern extends Singleton implements GenerationPattern
 	{
+		public function tableExists()
+		{
+			return true;
+		}
+		
 		public function daoExists()
 		{
 			return false;

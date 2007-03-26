@@ -15,6 +15,11 @@
 	**/
 	final class AbstractClassPattern extends BasePattern
 	{
+		public function tableExists()
+		{
+			return false;
+		}
+		
 		public function build(MetaClass $class)
 		{
 			$class->setType(

@@ -151,6 +151,13 @@
 					$this->guessPattern((string) $xmlClass->pattern['name'])
 				);
 				
+				if ($class->getPattern() instanceof InternalClassPattern) {
+					Assert::isTrue(
+						$metafile === ONPHP_META_PATH.'internal.xml',
+						'internal classes can be defined only in onPHP, sorry'
+					);
+				}
+				
 				// populate properties
 				foreach ($xmlClass->properties[0] as $xmlProperty) {
 					
@@ -378,6 +385,7 @@
 					(!$class->getParent() && !count($class->getProperties()))
 					|| ($class->getPattern() instanceof AbstractClassPattern)
 					|| ($class->getPattern() instanceof ValueObjectPattern)
+					|| ($class->getPattern() instanceof InternalClassPattern)
 				) {
 					continue;
 				}
@@ -640,6 +648,7 @@
 						$class->getPattern() instanceof SpookedClassPattern
 						|| $class->getPattern() instanceof SpookedEnumerationPattern
 						|| $class->getPattern() instanceof AbstractClassPattern
+						|| $class->getPattern() instanceof InternalClassPattern
 					) && (
 						class_exists($class->getName(), true)
 					)
@@ -865,13 +874,17 @@
 		private function checkSanity(MetaClass $class)
 		{
 			if (!$class->getParent()) {
-				if (!$class->getPattern() instanceof ValueObjectPattern)
+				if (
+					!$class->getPattern() instanceof ValueObjectPattern
+					&& !$class->getPattern() instanceof InternalClassPattern
+				) {
 					Assert::isTrue(
 						$class->getIdentifier() !== null,
 						
 						'only value objects can live without identifiers. '
 						.'do not use them anyway'
 					);
+				}
 			} else {
 				$parent = $class->getParent();
 				

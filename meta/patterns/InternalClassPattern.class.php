@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,8 +13,15 @@
 	/**
 	 * @ingroup Patterns
 	**/
-	final class ValueObjectPattern extends BasePattern
+	final class InternalClassPattern
+		extends BasePattern
+		implements GenerationPattern
 	{
+		public function build(MetaClass $class)
+		{
+			return $this;
+		}
+		
 		public function tableExists()
 		{
 			return false;
@@ -23,30 +30,6 @@
 		public function daoExists()
 		{
 			return true;
-		}
-		
-		/**
-		 * @return ValueObjectPattern
-		**/
-		protected function buildDao(MetaClass $class)
-		{
-			$this->dumpFile(
-				ONPHP_META_AUTO_DAO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
-				Format::indentize(ValueObjectDaoBuilder::build($class))
-			);
-			
-			$userFile = ONPHP_META_DAO_DIR.$class->getName().'DAO'.EXT_CLASS;
-			
-			if (
-				MetaConfiguration::me()->isForcedGeneration()
-				|| !file_exists($userFile)
-			)
-				$this->dumpFile(
-					$userFile,
-					Format::indentize(DaoBuilder::build($class))
-				);
-			
-			return $this;
 		}
 	}
 ?>

@@ -270,6 +270,7 @@ Possible options:
 			$meta =
 				MetaConfiguration::me()->
 				setOutput($out)->
+				load(ONPHP_META_PATH.'internal.xml')->
 				load($pathMeta)->
 				setForcedGeneration($metaForce);
 			
