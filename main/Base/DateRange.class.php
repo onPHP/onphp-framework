@@ -139,7 +139,10 @@
 			return $this->end;
 		}
 
-		public function toDateString($internalDelimiter = '-', $dateDelimiter = ' - ')
+		public function toDateString(
+			$internalDelimiter = '-',
+			$dateDelimiter = ' - '
+		)
 		{
 			if ($this->start && $this->end)
 				return
@@ -266,14 +269,16 @@
 		public static function merge($array /* of DateRanges */)
 		{
 			$out = array();
+			
 			foreach ($array as $range) {
 				$accepted = false;
+				
 				foreach ($out as $outRange)
 					if ($outRange->isNeighbour($range)) {
 						$outRange->enlarge($range);
 						$accepted = true;
 					}
-					
+				
 				if (!$accepted)
 					$out[] = clone $range;
 			}
@@ -287,10 +292,13 @@
 			
 			if (
 				$this->overlaps($range)
-				|| $this->start->spawn('-1 day')->getDayStartStamp() 
+				|| (
+					$this->start->spawn('-1 day')->getDayStartStamp() 
 					== $range->end->getDayStartStamp()
-				|| $this->end->spawn('+1 day')->getDayStartStamp()
+				) || (
+					$this->end->spawn('+1 day')->getDayStartStamp()
 					== $range->start->getDayStartStamp()
+				)
 			)
 				return true;
 			
@@ -337,22 +345,23 @@
 		{
 			Assert::isTrue($this->overlaps($range));
 
-			if ($range->start 
+			if (
+				$range->start
 				&& (
-					$this->start 
+					$this->start
 					&& $range->start->toStamp() > $this->start->toStamp()
 					|| !$this->start
 				)
 			)
 				$this->start = clone $range->start;
-
-			if ($range->end 
+			
+			if (
+				$range->end
 				&& (
-					$this->end 
+					$this->end
 					&& $range->end->toStamp() < $this->end->toStamp()
 					|| !$this->end
 				)
-
 			)
 				$this->end = clone $range->end;
 
@@ -367,10 +376,11 @@
 		public function lightCopyOnClip(DateRange $range)
 		{
 			$copy = DateRange::create();
-
-			if ($range->start 
+			
+			if (
+				$range->start
 				&& (
-					$this->start 
+					$this->start
 					&& $range->start->toStamp() > $this->start->toStamp()
 					|| !$this->start
 				)
@@ -378,19 +388,19 @@
 				$copy->start = $range->start;
 			else
 				$copy->start = $this->start;
-
-			if ($range->end 
+			
+			if (
+				$range->end
 				&& (
-					$this->end 
+					$this->end
 					&& $range->end->toStamp() < $this->end->toStamp()
 					|| !$this->end
 				)
-
 			)
 				$copy->end = $range->end;
 			else
 				$copy->end = $this->end;
-
+			
 			return $copy;
 		}
 
@@ -398,9 +408,9 @@
 		{
 			if ($this->start) {
 				if (!$this->dayStartStamp) {
-					$this->dayStartStamp =  $this->start->getDayStartStamp();
+					$this->dayStartStamp = $this->start->getDayStartStamp();
 				}
-
+				
 				return $this->dayStartStamp;
 			}
 			
@@ -439,7 +449,6 @@
 				!$leftStart && !$rightStart 
 				|| $leftStart && $rightStart && ($leftStart == $rightStart)
 			) {
-
 				if (
 					!$leftEnd && !$rightEnd
 					|| $leftEnd && $rightEnd && ($leftEnd == $rightEnd)
@@ -467,7 +476,7 @@
 		public function isOneDay()
 		{
 			return (!$this->isOpen())
-				&& ($this->start->toDate() == $this->end->toDate()); 
+				&& ($this->start->toDate() == $this->end->toDate());
 		}
 	}
 ?>
