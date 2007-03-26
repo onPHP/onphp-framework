@@ -37,6 +37,8 @@
 				setMethodMapping('save', 'doSave')->
 				setMethodMapping('edit', 'doEdit')->
 				setMethodMapping('add', 'doAdd');
+				
+			$this->setDefaultAction('edit');
 		}
 		
 		/**
