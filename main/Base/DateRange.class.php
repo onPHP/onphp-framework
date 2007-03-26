@@ -180,46 +180,48 @@
 			$max = $range->getEndStamp();
 
 			return (
-				($min && $max 
+				(
+					$min
+					&& $max
 					&& (
-						( 
-							$left 
+						(
+							$left
 							&& $right
 							&& (
-								$left <= $min && $min <= $right
-								|| $min <= $left && $left <= $max
+								(($left <= $min) && ($min <= $right))
+								|| (($min <= $left) && ($left <= $max))
 							)
-						)
-						|| ( 
+						) || (
 							!$left
-							&& $min <= $right
-						)
-						|| ( 
-							!$right 
-							&& $left <= $max
+							&& ($min <= $right)
+						) || (
+							!$right
+							&& ($left <= $max)
 						)
 					)
-				)
-				|| ($min && !$max
+				) || (
+					$min
+					&& !$max
 					&& (
-						( 
+						!$right
+						|| (
 							$right
-							&& $min <= $right
+							&& ($min <= $right)
 						)
-						|| !$right
 					)
-				)
-				|| (!$min && $max
+				) || (
+					!$min
+					&& $max
 					&& (
-						( 
-							$left 
-							&& $left <= $max
+						!$left
+						|| (
+							$left
+							&& ($left <= $max)
 						)
-						|| !$left
 					)
 				)
 			);
-		} 
+		}
 
 		public function contains(Timestamp $date)
 		{
