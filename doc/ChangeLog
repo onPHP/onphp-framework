@@ -1,5 +1,11 @@
 # $Id$
 
+2007-03-26	Konstantin V. Arkhipov
+
+	* main/Base/DateRange.class.php: split() ported to Date's usage.
+
+	* test/core/DateRangeTest.class.php: more tests.
+
 2007-03-25	Konstantin V. Arkhipov
 
 	* main/Criteria/PropertyPath.class.php: useful utilities for path
