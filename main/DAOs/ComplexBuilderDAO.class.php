@@ -38,7 +38,7 @@
 								$fields[$className],
 								$field
 							);
-					else
+					elseif ($field)
 						$fields[$className][] = $field;
 				}
 			}
