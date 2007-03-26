@@ -98,5 +98,28 @@
 				}
 			}
 		}
+		
+		public static function isInstanceOf($object, $class)
+		{
+			if (is_object($class)) {
+				$className = get_class($class);
+			} elseif (is_string($class)) {
+				$className = $class;
+			} else {
+				throw new WrongArgumentException('strange class given');
+			}
+			
+			if (is_string($object))
+				$object = new $object;
+			
+			Assert::isTrue(class_exists($className, true));
+			
+			$info = new ReflectionClass($className);
+			
+			return (
+				is_subclass_of($object, $className)
+				|| $info->isInstance($object)
+			);
+		}
 	}
 ?>
