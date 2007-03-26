@@ -54,11 +54,7 @@
 		{
 			if ($value instanceof Identifiable) {
 				Assert::isTrue(
-					is_subclass_of($value, $this->className)
-					|| (
-						$this->info
-						&& $this->info->isInstance($value)
-					)
+					ClassUtils::isInstanceOf($value, $this->className)
 				);
 				
 				return

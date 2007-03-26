@@ -172,11 +172,8 @@
 		
 		/* void */ protected function checkType($object)
 		{
-			$name = $this->getObjectName();
-			
 			Assert::isTrue(
-				(get_class($object) == $name)
-				|| is_subclass_of($object, $name)
+				ClassUtils::isInstanceOf($object, $this->getObjectName())
 			);
 		}
 	}
