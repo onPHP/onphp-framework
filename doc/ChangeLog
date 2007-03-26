@@ -2,7 +2,7 @@
 
 2007-03-26	Konstantin V. Arkhipov
 
-	* meta/types/: Date and Timestamp ranges added.
+	* meta/types/: ranges support dropped.
 
 	* main/Base/DateRange.class.php: split() ported to Date's usage.
 

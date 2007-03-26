@@ -539,17 +539,9 @@ EOT;
 			} else {
 				
 				if ($this->type instanceof ObjectType) {
-					
-					$value = "new {$this->type->getClassName()}(";
-					
-					if ($this->type instanceof RangeType) {
-						$value =
-							"\n{$value}\n"
-							."ArrayUtils::getArrayVar(\$array, '{$this->getColumnName()}_{$this->type->getFirstSuffix()}'), "
-							."\nArrayUtils::getArrayVar(\$array, '{$this->getColumnName()}_{$this->type->getSecondSuffix()}')\n)\n";
-					} else {
-						$value .= "\$array[\$prefix.'{$this->getColumnName()}'])";
-					}
+					$value =
+						"new {$this->type->getClassName()}("
+						."\$array[\$prefix.'{$this->getColumnName()}'])";
 				} elseif ($this->type instanceof InetType) {
 					$value = "long2ip(\$array[\$prefix.'{$this->getColumnName()}'])";
 				} elseif ($this->type instanceof BooleanType) {
@@ -558,16 +550,11 @@ EOT;
 				} else
 					$value = "\$array[\$prefix.'{$this->getColumnName()}']";
 				
-				if (
-					$this->required
-					|| $this->type instanceof RangeType
-				) {
-					
+				if ($this->required) {
 					$out =
 						"set{$method}("
 						.$value
 						.")";
-					
 				} else {
 					if ($this->type instanceof ObjectType) {
 						
@@ -656,20 +643,13 @@ EOT;
 				if ($this->type instanceof BooleanType) {
 					$set = 'setBoolean';
 					$get = 'is';
-				} elseif ($this->type instanceof RangeType) {
-					$set = 'lazySet';
-					$get = 'get';
 				} else {
 					$set = 'set';
 					$get = 'get';
 				}
 				
 				if ($this->type instanceof ObjectType) {
-					if ($this->type instanceof RangeType)
-						$out .=
-							"{$set}('{$this->getColumnName()}', "
-							."\${$varName}->get{$method}()";
-					elseif ($this->required)
+					if ($this->required)
 						$out .=
 							"{$set}('{$this->getColumnName()}', "
 							."\${$varName}->get{$method}()->toString()";
@@ -700,17 +680,11 @@ EOT;
 		
 		public function getRelationColumnName()
 		{
-			if ($this->type instanceof ObjectType && !$this->type->isGeneric())
+			if ($this->type instanceof ObjectType && !$this->type->isGeneric()) {
 				if ($this->relation->getId() == MetaRelation::MANY_TO_MANY)
 					$columnName = $this->type->getClass()->getTableName().'_id';
 				else
 					$columnName = $this->getColumnName();
-			elseif ($this->type instanceof RangeType) {
-				return
-					array(
-						"{$this->getColumnName()}_{$this->type->getFirstSuffix()}",
-						"{$this->getColumnName()}_{$this->type->getSecondSuffix()}"
-					);
 			} else
 				$columnName = $this->getColumnName();
 			

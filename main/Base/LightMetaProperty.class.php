@@ -107,11 +107,7 @@
 			return
 				'LightMetaProperty::make('
 				."'{$this->name}', "
-				.(
-					is_array($this->columnName)
-						? "array('".implode("', '", $this->columnName)."')"
-						: "'".$this->columnName."'"
-				).', '
+				."'{$this->columnName}', "
 				.(
 					$this->className
 						? "'{$this->className}'"

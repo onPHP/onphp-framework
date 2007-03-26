@@ -449,7 +449,6 @@ EOT;
 					|| $property->getType() instanceof ObjectType
 				)
 				&& !$property->isRequired()
-				&& !$property->getType() instanceof RangeType
 				&& !(
 					$property->getType() instanceof ObjectType
 					&& !$property->getType()->isGeneric()

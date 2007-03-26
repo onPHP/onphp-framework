@@ -79,14 +79,14 @@ EOT;
 
 EOT;
 
-				$out .= <<<EOT
+			}
+			
+			$out .= <<<EOT
 
 	// your brilliant stuff goes here
 }
 
 EOT;
-			}
-			
 			return $out.self::getHeel();
 		}
 	}
