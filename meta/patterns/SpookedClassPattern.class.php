@@ -24,5 +24,10 @@
 		{
 			return false;
 		}
+		
+		public function tableExists()
+		{
+			return false;
+		}
 	}
 ?>

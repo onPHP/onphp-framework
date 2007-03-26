@@ -62,9 +62,8 @@ EOT;
 					if (
 						$relation->getId() == MetaRelation::ONE_TO_MANY
 						// nothing to build, it's in the same table
-						|| (
-							$foreignClass->getPattern() instanceof ValueObjectPattern
-						)
+						// or table does not exist at all
+						|| !$foreignClass->getPattern()->tableExists()
 						// no need to process them
 						|| $class->getParent()
 					) {
