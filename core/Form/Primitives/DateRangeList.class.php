@@ -110,9 +110,8 @@
 					
 					return $range;
 					
-				} elseif ($string == ' - ')
+				} elseif (trim($string) == '-')
 					return DateRange::create();
-				
 			} elseif ($single = self::toDate(trim($string)))
 				return
 					DateRange::create()->
