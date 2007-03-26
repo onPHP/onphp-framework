@@ -383,7 +383,7 @@
 			foreach ($this->classes as $class) {
 				if (
 					(!$class->getParent() && !count($class->getProperties()))
-					|| $class->getPattern()->tableExists()
+					|| !$class->getPattern()->tableExists()
 				) {
 					continue;
 				}
