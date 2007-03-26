@@ -1,7 +1,6 @@
 <?php
 	/* $Id$ */
 	
-	// FIXME: move to library/tests
 	final class PrimitiveDateRangeTest extends UnitTestCase
 	{
 		public function testImport()
