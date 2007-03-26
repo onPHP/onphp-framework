@@ -246,21 +246,21 @@
 				$this->isOpen(),
 				"open range can't be splitted"
 			);
-			$timestamps = array();
+			$dates = array();
 
-			$start = new Timestamp($this->start->getDayStartStamp());
+			$start = new Date($this->start->getDayStartStamp());
 
-			$end = new Timestamp($this->end->getDayEndStamp());
+			$endStamp = $this->end->getDayEndStamp();
 
 			for (
 				$current = $start;
-				$current->toStamp() < $end->toStamp();
+				$current->toStamp() < $endStamp;
 				$current->modify('+1 day')
 			) {
-				$timestamps[] = new Timestamp($current->getDayStartStamp());
+				$dates[] = new Date($current->getDayStartStamp());
 			}
 
-			return $timestamps;
+			return $dates;
 		}
 		
 		public static function merge($array /* of DateRanges */)
