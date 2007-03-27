@@ -868,11 +868,11 @@
 		**/
 		private function checkSanity(MetaClass $class)
 		{
-			if (!$class->getParent()) {
-				if (
-					!$class->getPattern() instanceof ValueObjectPattern
-					&& !$class->getPattern() instanceof InternalClassPattern
-				) {
+			if (
+				!$class->getParent()
+				&& !$class->getPattern() instanceof ValueObjectPattern
+			) {
+				if (!$class->getPattern() instanceof InternalClassPattern) {
 					Assert::isTrue(
 						$class->getIdentifier() !== null,
 						
@@ -886,11 +886,15 @@
 				while ($parent->getParent())
 					$parent = $parent->getParent();
 				
-				Assert::isTrue(
-					$parent->getIdentifier() !== null,
-					
-					'can not find parent with identifier'
-				);
+				if (
+					!$parent->getPattern() instanceof InternalClassPattern
+				) {
+					Assert::isTrue(
+						$parent->getIdentifier() !== null,
+						
+						'can not find parent with identifier'
+					);
+				}
 			}
 			
 			if (
