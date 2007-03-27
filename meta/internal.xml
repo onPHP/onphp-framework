@@ -23,7 +23,7 @@
 		<pattern name="InternalClass" />
 	</class>
 	
-	<class name="DateRange">
+	<class name="TimestampRange">
 		<properties>
 			<property name="start" type="Timestamp" required="false" />
 			<property name="end" type="Timestamp" required="false" />
