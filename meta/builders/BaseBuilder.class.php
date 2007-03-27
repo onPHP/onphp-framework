@@ -165,6 +165,18 @@ protected function fillSelf({$class->getFinalParent()->getName()} \${$varName}, 
 {
 
 EOT;
+				if ($class->getParent()) {
+					if (
+						$class->getParent()->getTypeId()
+						== MetaClassType::CLASS_ABSTRACT
+					) {
+						$out .= <<<EOT
+parent::fillSelf(\${$varName}, \$array, \$prefix);
+
+
+EOT;
+					}
+				}
 			} else {
 				$out .= <<<EOT
 
