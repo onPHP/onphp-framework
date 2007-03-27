@@ -242,6 +242,9 @@
 		
 		public function dropByIds(/* array */ $ids)
 		{
+			foreach ($ids as $id)
+				unset($this->identityMap[$id]);
+				
 			return Cache::worker($this)->dropByIds($ids);
 		}
 		
