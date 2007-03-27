@@ -48,7 +48,7 @@
 				
 				$db->queryNull($this->makeDeleteQuery($ids));
 				
-				$dao->uncacheById($ids);
+				$dao->uncacheByIds($ids);
 			}
 
 			return $this;
