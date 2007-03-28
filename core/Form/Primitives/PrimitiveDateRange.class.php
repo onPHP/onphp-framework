@@ -121,9 +121,14 @@
 		
 		/* void */ private function checkType($object)
 		{
-			Assert::isTrue(
-				ClassUtils::isInstanceOf($objectList, $this->className)
-			);
+			if ($this->className)
+				Assert::isTrue(
+					ClassUtils::isInstanceOf($object, $this->className)
+				);
+			else 
+				Assert::isTrue(
+					ClassUtils::isInstanceOf($object, $this->getObjectName())
+				);
 		}
 	}
 ?>
