@@ -32,7 +32,7 @@
 		public function of($class)
 		{
 			Assert::isTrue(
-				ClassUtils::isInstanceOf($this->getObjectName(), $class)
+				ClassUtils::isInstanceOf($class, $this->getObjectName())
 			);
 			
 			$this->className = $class;
