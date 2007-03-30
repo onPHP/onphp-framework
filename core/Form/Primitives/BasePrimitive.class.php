@@ -80,6 +80,14 @@
 			return $this->default;
 		}
 		
+		public function getSafeValue()
+		{
+			if (null !== $this->value)
+				return $this->value;
+			
+			return $this->default;
+		}
+		
 		/**
 		 * @return BasePrimitive
 		**/

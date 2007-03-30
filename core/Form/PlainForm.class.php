@@ -122,6 +122,11 @@
 			return $this->get($name)->getActualValue();
 		}
 		
+		public function getSafeValue($name)
+		{
+			return $this->get($name)->getSafeValue();
+		}
+		
 		public function getChoiceValue($name)
 		{
 			Assert::isTrue(($prm = $this->get($name)) instanceof ListedPrimitive);
