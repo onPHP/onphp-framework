@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -89,7 +89,7 @@
 				if (!$this->importMarried($scope))
 					return $this->importSingle($scope);
 
-				return true;
+				return $this->imported = true;
 			}
 
 			Assert::isUnreachable();

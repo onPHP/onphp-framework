@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -22,7 +22,7 @@
 			else
 				$this->value = false;
 
-			return true;
+			return $this->imported = true;
 		}
 		
 		public function importValue($value)
@@ -35,7 +35,7 @@
 			else
 				$this->value = true;
 			
-			return true;
+			return $this->imported = true;
 		}
 	}
 ?>

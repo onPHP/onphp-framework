@@ -51,7 +51,7 @@
 				
 				if ($this->checkRanges($stamp)) {
 					$this->value = $stamp;
-					return true;
+					return $this->imported = true;
 				}
 			}
 			

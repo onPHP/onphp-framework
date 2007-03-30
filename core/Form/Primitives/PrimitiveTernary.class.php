@@ -53,7 +53,7 @@
 				return null;
 			}
 
-			return true;
+			return $this->imported = true;
 		}
 		
 		public function importValue($value)
@@ -62,7 +62,7 @@
 		 	
 		 	$this->value = $value;
 		 	
-		 	return true;
+		 	return $this->imported = true;
 		}
 	}
 ?>

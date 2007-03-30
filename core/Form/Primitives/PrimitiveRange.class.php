@@ -86,7 +86,7 @@
 				) {
 					$this->value = $range;
 
-					return true;
+					return $this->imported = true;
 				}
 			}
 
@@ -115,7 +115,7 @@
 			) {
 				$this->value = $range;
 
-				return true;
+				return $this->imported = true;
 			}
 
 			return false;

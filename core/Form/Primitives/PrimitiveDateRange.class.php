@@ -61,7 +61,7 @@
 					
 					if ($this->checkRanges($value)) {
 						$this->value = $value;
-						return true;
+						return $this->imported = true;
 					} else {
 						return false;
 					}
@@ -83,6 +83,8 @@
 				}
 				
 				if ($this->checkRanges($range)) {
+					$this->imported = true;
+					
 					if (
 						$this->className
 						&& ($this->className != $this->getObjectName())

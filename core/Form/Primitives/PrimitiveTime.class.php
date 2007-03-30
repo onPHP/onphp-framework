@@ -86,7 +86,7 @@
 				if ($this->checkLimits($time)) {
 					$this->value = $time;
 					
-					return true;
+					return $this->imported = true;
 				}
 			}
 			
@@ -125,7 +125,7 @@
 					try {
 						$this->value = $time;
 						
-						return true;
+						return $this->imported = true;
 					} catch (WrongArgumentException $e) {
 						$this->value = null;
 						

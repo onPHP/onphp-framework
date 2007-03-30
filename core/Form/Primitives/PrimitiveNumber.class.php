@@ -37,7 +37,7 @@
 				!(null !== $this->min && $this->value < $this->min)
 				&& !(null !== $this->max && $this->value > $this->max)
 			) {
-				return true;
+				return $this->imported = true;
 			} else {
 				$this->value = null;
 			}

@@ -75,12 +75,12 @@
 				if (count($values)) {
 					$this->value = $values;
 					
-					return true;
+					return $this->imported = true;
 				}
 			} elseif (!empty($scope[$this->name])) {
 				$this->value = array($scope[$this->name]);
 				
-				return true;
+				return $this->imported = true;
 			}
 			
 			return false;

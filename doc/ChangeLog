@@ -2,6 +2,8 @@
 
 2007-03-30	Konstantin V. Arkhipov
 
+	* core/Form/Primitives/BasePrimitive.class.php: isImported added.
+
 	* core/Form/PlainForm.class.php,
 	core/Form/Primitives/BasePrimitive.class.php: getSafeValue added.
 

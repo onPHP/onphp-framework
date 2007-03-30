@@ -87,7 +87,7 @@
 					return false;
 				}
 				
-				return true;
+				return $this->imported = true;
 			}
 			
 			return $result;

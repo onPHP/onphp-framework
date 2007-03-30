@@ -50,7 +50,7 @@
 				&& !($this->min && count($this->value) < $this->min)
 				&& !($this->min && count($this->value) > $this->max)
 			) {
-				return true;
+				return $this->imported = true;
 			} else {
 				$this->value = null;
 			}

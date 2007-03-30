@@ -43,7 +43,7 @@
 				&& !($this->min && mb_strlen($this->value) < $this->min)
 				&& (!$this->pattern || preg_match($this->pattern, $this->value))
 			) {
-				return true;
+				return $this->imported = true;
 			} else {
 				$this->value = null;
 			}

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,6 +22,7 @@
 		protected $value	= null;
 
 		protected $required	= false;
+		protected $imported	= false;
 
 		protected $raw		= null;
 
@@ -74,7 +75,7 @@
 		{
 			if (null !== $this->value)
 				return $this->value;
-			elseif (null !== $this->raw)
+			elseif (!$this->imported)
 				return $this->raw;
 
 			return $this->default;
@@ -82,7 +83,7 @@
 		
 		public function getSafeValue()
 		{
-			if (null !== $this->value)
+			if ($this->imported)
 				return $this->value;
 			
 			return $this->default;
@@ -143,6 +144,11 @@
 			return $this;
 		}
 		
+		public function isImported()
+		{
+			return $this->imported;
+		}
+		
 		/**
 		 * @return BasePrimitive
 		**/
@@ -150,6 +156,7 @@
 		{
 			$this->raw = null;
 			$this->value = null;
+			$this->imported = false;
 			
 			return $this;
 		}
@@ -170,7 +177,7 @@
 			) {
 				$this->raw = $scope[$this->name];
 				
-				return true;
+				return $this->imported = true;
 			}
 			
 			$this->clean();

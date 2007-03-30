@@ -62,7 +62,7 @@
 							)
 						: explode($this->separator, $this->value)
 			) {
-				return true;
+				return $this->imported = true;
 			} else {
 				return false;
 			}
