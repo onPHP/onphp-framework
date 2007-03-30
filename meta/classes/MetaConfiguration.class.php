@@ -871,7 +871,10 @@
 			if (
 				!$class->getParent()
 				&& (!$class->getPattern() instanceof ValueObjectPattern)
-				&& (!$class->getPattern() instanceof InternalClassPattern)
+				&& (
+					!$class->getFinalParent()->getPattern()
+						instanceof InternalClassPattern
+				)
 			) {
 				Assert::isTrue(
 					$class->getIdentifier() !== null,
@@ -879,19 +882,6 @@
 					'only value objects can live without identifiers. '
 					.'do not use them anyway'
 				);
-			} elseif ($parent = $class->getParent()) {
-				while ($parent->getParent())
-					$parent = $parent->getParent();
-				
-				if (
-					!$parent->getPattern() instanceof InternalClassPattern
-				) {
-					Assert::isTrue(
-						$parent->getIdentifier() !== null,
-						
-						'can not find parent with identifier'
-					);
-				}
 			}
 			
 			if (
