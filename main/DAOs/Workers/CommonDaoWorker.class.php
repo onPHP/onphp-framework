@@ -79,7 +79,7 @@
 		}
 
 		public function getByQuery(
-			SelectQuery $query, $expires = Cache::EXPIRES_MEDIUM
+			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
 			if (
