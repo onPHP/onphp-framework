@@ -190,7 +190,9 @@ EOT;
 				if ($class->getParent()) {
 					if (
 						$class->getParent()->getTypeId()
-						== MetaClassType::CLASS_ABSTRACT
+							== MetaClassType::CLASS_ABSTRACT
+						|| $class->getParent()->getTypeId()
+							== MetaClassType::CLASS_SPOOKED 
 					) {
 						$out .= <<<EOT
 \${$varName} = parent::fillSelf(new {$className}(), \$array, \$prefix);
