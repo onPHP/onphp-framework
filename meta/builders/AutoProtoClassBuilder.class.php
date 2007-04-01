@@ -118,7 +118,6 @@ EOT;
 			array_merge(
 				parent::makePropertyList(),
 				array(
-
 EOT;
 			} else {
 				$out .= <<<EOT
