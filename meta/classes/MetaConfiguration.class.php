@@ -357,7 +357,16 @@
 				infoLine('Building classes:');
 			
 			foreach ($this->classes as $name => $class) {
-				$out->infoLine("\t".$name.':');
+				if ($class->getPattern() instanceof InternalClassPattern) {
+					$out->
+						info("\t".$name.':')->
+						infoLine(' internal.', true)->
+						newLine();
+					continue;
+				} else {
+					$out->infoLine("\t".$name.':');
+				}
+				
 				$class->dump();
 				$out->newLine();
 			}
