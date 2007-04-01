@@ -285,6 +285,7 @@
 					);
 			}
 			
+			// search for referencing classes
 			foreach ($references as $className => $list) {
 				$class = $this->getClassByName($className);
 				
