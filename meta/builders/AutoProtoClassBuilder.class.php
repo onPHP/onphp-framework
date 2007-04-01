@@ -119,6 +119,8 @@ EOT;
 				parent::makePropertyList(),
 				array(
 EOT;
+				if ($class->getProperties())
+					$out .= "\n";
 			} else {
 				$out .= <<<EOT
 		return array(
