@@ -1,5 +1,12 @@
 # $Id$
 
+2007-04-01	Konstantin V. Arkhipov
+
+	* meta/: internal classes implementation finished.
+
+	* meta/classes/MetaConfiguration.class.php: spooked class type is
+	obsoleted now, do not specify it manually anymore.
+
 2007-03-30	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/BasePrimitive.class.php: isImported added.

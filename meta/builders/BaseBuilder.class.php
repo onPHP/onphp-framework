@@ -39,7 +39,7 @@
 			$cascadeStandaloneFillers = array();
 			$cascadeChainFillers = array();
 			
-			foreach ($class->getProperties() as $property) {
+			foreach ($class->getWithInternalProperties() as $property) {
 				
 				if (
 					$property->getRelationId() == MetaRelation::ONE_TO_ONE
@@ -165,7 +165,7 @@ protected function fillSelf({$class->getFinalParent()->getName()} \${$varName}, 
 {
 
 EOT;
-				if ($class->getParent()) {
+				if ($class->hasBuildableParent()) {
 					if (
 						$class->getParent()->getTypeId()
 						== MetaClassType::CLASS_ABSTRACT
@@ -187,12 +187,15 @@ EOT;
 {
 
 EOT;
-				if ($class->getParent()) {
+				if ($class->hasBuildableParent()) {
 					if (
-						$class->getParent()->getTypeId()
-							== MetaClassType::CLASS_ABSTRACT
-						|| $class->getParent()->getTypeId()
-							== MetaClassType::CLASS_SPOOKED 
+						(
+							$class->getParent()->getTypeId()
+								== MetaClassType::CLASS_ABSTRACT
+						) || (
+							$class->getParent()->getTypeId()
+								== MetaClassType::CLASS_SPOOKED
+						)
 					) {
 						$out .= <<<EOT
 \${$varName} = parent::fillSelf(new {$className}(), \$array, \$prefix);

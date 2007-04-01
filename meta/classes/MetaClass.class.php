@@ -119,6 +119,17 @@
 			return $this;
 		}
 		
+		public function hasBuildableParent()
+		{
+			return (
+				$this->parent
+				&& (
+					!$this->getFinalParent()->getPattern()
+						instanceof InternalClassPattern
+				)
+			);
+		}
+		
 		public function getProperties()
 		{
 			return $this->properties;
@@ -132,6 +143,25 @@
 					$this->parent->getAllProperties(),
 					$this->properties
 				);
+			
+			return $this->getProperties();
+		}
+		
+		/// with internal class' properties, if any
+		public function getWithInternalProperties()
+		{
+			if (
+				$this->parent
+				&& (
+					$this->getFinalParent()->getPattern()
+						instanceof InternalClassPattern
+				)
+			) {
+				return array_merge(
+					$this->getFinalParent()->getProperties(),
+					$this->properties
+				);
+			}
 			
 			return $this->getProperties();
 		}

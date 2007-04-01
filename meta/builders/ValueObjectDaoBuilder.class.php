@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,7 +22,7 @@
 			
 			$out = self::getHead();
 			
-			if ($class->getParent()) {
+			if ($class->hasBuildableParent()) {
 				$parent = $class->getParent()->getName().'DAO';
 			} else {
 				$parent = 'ValueObjectDAO';

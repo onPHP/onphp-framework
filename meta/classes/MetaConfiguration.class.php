@@ -94,12 +94,22 @@
 				if (isset($xmlClass['table']))
 					$class->setTableName((string) $xmlClass['table']);
 				
-				if (isset($xmlClass['type']))
+				if (isset($xmlClass['type'])) {
+					$type = (string) $xmlClass['type'];
+					
+					if ($type == 'spooked') {
+						$this->getOutput()->
+							warning($class->getName(), true)->
+							warningLine(': uses obsoleted "spooked" type.')->
+							newLine();
+					}
+					
 					$class->setType(
 						new MetaClassType(
 							(string) $xmlClass['type']
 						)
 					);
+				}
 				
 				// lazy existence checking
 				if (isset($xmlClass['extends']))
@@ -155,6 +165,18 @@
 					Assert::isTrue(
 						$metafile === ONPHP_META_PATH.'internal.xml',
 						'internal classes can be defined only in onPHP, sorry'
+					);
+				} elseif (
+					(
+						$class->getPattern() instanceof SpookedClassPattern
+					) || (
+						$class->getPattern() instanceof SpookedEnumerationPattern
+					)
+				) {
+					$class->setType(
+						new MetaClassType(
+							MetaClassType::CLASS_SPOOKED
+						)
 					);
 				}
 				
@@ -879,12 +901,15 @@
 		private function checkSanity(MetaClass $class)
 		{
 			if (
-				!$class->getParent()
-				&& (!$class->getPattern() instanceof ValueObjectPattern)
-				&& (
-					!$class->getFinalParent()->getPattern()
-						instanceof InternalClassPattern
+				(
+					!$class->getParent()
+					|| (
+						$class->getFinalParent()->getPattern()
+							instanceof InternalClassPattern
+					)
 				)
+				&& (!$class->getPattern() instanceof ValueObjectPattern)
+				&& (!$class->getPattern() instanceof InternalClassPattern)
 			) {
 				Assert::isTrue(
 					$class->getIdentifier() !== null,

@@ -40,11 +40,7 @@
 			$out .= "\n{\n";
 			
 			foreach ($class->getProperties() as $property) {
-				
-				if ($isNamed && $property->getName() == 'name')
-					continue;
-				
-				if ($property->getName() == 'id' && !$parent)
+				if (!self::doPropertyBuild($property, $isNamed))
 					continue;
 				
 				$out .=
@@ -88,11 +84,7 @@ EOT;
 			$out .= self::buildSerializers($class);
 			
 			foreach ($class->getProperties() as $property) {
-				
-				if ($isNamed && $property->getName() == 'name')
-					continue;
-				
-				if ($property->getName() == 'id' && !$parent)
+				if (!self::doPropertyBuild($property, $isNamed))
 					continue;
 				
 				$out .= $property->toMethods($class);
@@ -143,6 +135,33 @@ EOT;
 
 EOT;
 			return $out;
+		}
+		
+		private static function doPropertyBuild(
+			MetaClassProperty $property,
+			$isNamed
+		)
+		{
+			if ($isNamed && $property->getName() == 'name')
+				return false;
+			
+			if (
+				($property->getName() == 'id')
+				&& !$property->getClass()->getParent()
+			)
+				return false;
+			
+			// do not redefine parent's properties
+			if (
+				$property->getClass()->getParent()
+				&& array_key_exists(
+					$property->getName(),
+					$property->getClass()->getParentsProperties()
+				)
+			)
+				return false;
+			
+			return true;
 		}
 	}
 ?>

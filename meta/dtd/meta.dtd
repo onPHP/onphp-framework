@@ -7,7 +7,7 @@
 <!ELEMENT class (implement*, properties*, pattern)>
 <!ATTLIST class
 		name		ID #REQUIRED
-		type		(final|abstract|spooked) #IMPLIED
+		type		(final|abstract) #IMPLIED
 		extends		CDATA #IMPLIED
 		source		CDATA #IMPLIED
 		table		CDATA #IMPLIED

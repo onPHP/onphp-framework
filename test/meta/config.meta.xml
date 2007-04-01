@@ -21,6 +21,18 @@
 		
 		<pattern name="SpookedClass" />
 	</class>
+	
+	<class name="TestRange" extends="DateRange">
+		<properties>
+			<identifier />
+			
+			<property name="start" type="Date" required="true" />
+			
+			<property name="description" type="String" required="false" />
+		</properties>
+		
+		<pattern name="StraightMapping" />
+	</class>
 
 	<class name="TestCity" type="final" table="custom_table">
 		<properties>

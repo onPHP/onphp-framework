@@ -21,7 +21,7 @@
 			
 			$parent = $class->getParent();
 			
-			if ($parent) {
+			if ($class->hasBuildableParent()) {
 				$out .= <<<EOT
 abstract class AutoProto{$class->getName()} extends Proto{$parent->getName()}
 {
@@ -63,7 +63,7 @@ EOT;
 			// sort out for wise and common defaults
 			$prms = array();
 			
-			foreach ($class->getProperties() as $property) {
+			foreach ($class->getWithInternalProperties() as $property) {
 				if ($primitive = $property->toPrimitive($class)) {
 					if (is_array($primitive))
 						$prms = array_merge($prms, $primitive);
@@ -85,6 +85,8 @@ EOT;
 						"\n\n"
 						."\$form->\nget('{$parent->getIdentifier()->getName()}')->"
 						."of('{$class->getName()}');\n\n";
+				} else {
+					$out .= "\n\n";
 				}
 				
 				$out .= "return \$form;";
@@ -112,14 +114,14 @@ EOT;
 
 EOT;
 
-			if ($class->getParent()) {
+			if ($class->hasBuildableParent()) {
 				$out .= <<<EOT
 		return
 			array_merge(
 				parent::makePropertyList(),
 				array(
 EOT;
-				if ($class->getProperties())
+				if ($class->getWithInternalProperties())
 					$out .= "\n";
 			} else {
 				$out .= <<<EOT
@@ -130,7 +132,7 @@ EOT;
 
 			$list = array();
 			
-			foreach ($class->getProperties() as $property) {
+			foreach ($class->getWithInternalProperties() as $property) {
 				if (
 					!$property->getType()->isGeneric()
 					&& $property->getType() instanceof ObjectType
@@ -155,7 +157,7 @@ EOT;
 			
 			$out .= implode(",\n", $list);
 			
-			if ($class->getParent()) {
+			if ($class->hasBuildableParent()) {
 				$out .= "\n)";
 			}
 			

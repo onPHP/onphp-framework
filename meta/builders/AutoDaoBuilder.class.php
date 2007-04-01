@@ -17,10 +17,24 @@
 	{
 		public static function build(MetaClass $class)
 		{
-			if (!$parent = $class->getParent())
+			if (
+				(!$parent = $class->getParent())
+				|| (
+					$class->getFinalParent()->getPattern()
+						instanceof InternalClassPattern
+				)
+			)
 				return DictionaryDaoBuilder::build($class);
 			
-			$parentName = $parent->getName().'DAO';
+			if (
+				$class->getFinalParent()->getPattern()
+					instanceof InternalClassPattern
+			) {
+				$parentName = 'ComplexBuilderDAO';
+			} else {
+				$parentName = $parent->getName().'DAO';
+			}
+			
 			$className = $class->getName();
 			$varName = strtolower($className[0]).substr($className, 1);
 
@@ -32,7 +46,7 @@ abstract class Auto{$class->getName()}DAO extends {$parentName}
 
 EOT;
 
-			if (sizeof($class->getProperties())) {
+			if (sizeof($class->getWithInternalProperties())) {
 				$out .= self::buildPointers($class);
 				
 				if (

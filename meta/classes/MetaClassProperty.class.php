@@ -49,6 +49,19 @@
 				$this->size = 40; // strlen(sha1())
 		}
 		
+		public function equals(MetaClassProperty $property)
+		{
+			return (
+				($property->getName() == $this->getName())
+				&& ($property->getColumnName() == $this->getColumnName())
+				&& ($property->getType() == $this->getType())
+				&& ($property->getSize() == $this->getSize())
+				&& ($property->getRelation() == $this->getRelation())
+				&& ($property->isRequired() == $this->isRequired())
+				&& ($property->isIdentifier() == $this->isIdentifier())
+			);
+		}
+		
 		/**
 		 * @return MetaClass
 		**/
