@@ -75,7 +75,7 @@
 		{
 			if (null !== $this->value)
 				return $this->value;
-			elseif (!$this->imported)
+			elseif ($this->imported)
 				return $this->raw;
 
 			return $this->default;
