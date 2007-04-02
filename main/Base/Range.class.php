@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	final class Range implements Stringable
+	class Range implements Stringable
 	{
 		private $min = null;
 		private $max = null;
