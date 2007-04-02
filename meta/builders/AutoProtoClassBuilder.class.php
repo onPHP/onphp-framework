@@ -21,9 +21,14 @@
 			
 			$parent = $class->getParent();
 			
-			if ($class->hasBuildableParent()) {
+			if ($class->hasBuildableParent())
+				$parentName = 'Proto'.$parent->getName();
+			else
+				$parentName = 'AbstractProtoClass';
+			
+			if ($class->hasBuildableParent() || $parent) {
 				$out .= <<<EOT
-abstract class AutoProto{$class->getName()} extends Proto{$parent->getName()}
+abstract class AutoProto{$class->getName()} extends {$parentName}
 {
 	/**
 	 * @return Form
@@ -48,7 +53,7 @@ EOT;
 					$out .= "->\n".implode("->\n", $redefined);
 			} else {
 				$out .= <<<EOT
-abstract class AutoProto{$class->getName()} extends AbstractProtoClass
+abstract class AutoProto{$class->getName()} extends {$parentName}
 {
 	/**
 	 * @return Form

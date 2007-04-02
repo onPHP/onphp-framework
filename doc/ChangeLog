@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-02	Konstantin V. Arkhipov
+
+	* meta/internal.xml: new internal classes added - IdentifiableObject,
+	NamedObject, IndetifiableTree, NamedTree.
+
 2007-04-01	Konstantin V. Arkhipov
 
 	* meta/: internal classes implementation finished.

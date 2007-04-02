@@ -157,10 +157,19 @@
 						instanceof InternalClassPattern
 				)
 			) {
-				return array_merge(
-					$this->getFinalParent()->getProperties(),
-					$this->properties
-				);
+				$out = $this->properties;
+				
+				$class = $this;
+				
+				while ($parent = $class->getParent()) {
+					if ($parent->getPattern() instanceof InternalClassPattern) {
+						$out = array_merge($parent->getProperties(), $out);
+					}
+					
+					$class = $parent;
+				}
+				
+				return $out;
 			}
 			
 			return $this->getProperties();

@@ -381,10 +381,6 @@
 			
 			foreach ($this->classes as $name => $class) {
 				if ($class->getPattern() instanceof InternalClassPattern) {
-					$out->
-						info("\t".$name.':')->
-						infoLine(' internal.', true)->
-						newLine();
 					continue;
 				} else {
 					$out->infoLine("\t".$name.':');
@@ -871,6 +867,11 @@
 		**/
 		private function makeProperty($name, $type, MetaClass $class)
 		{
+			if (!$name || !$type)
+				throw new WrongArgumentException(
+					'strange name or type given: "'.$name.'" - "'.$type.'"'
+				);
+			
 			if (is_readable(ONPHP_META_TYPES.$type.'Type'.EXT_CLASS))
 				$typeClass = $type.'Type';
 			else

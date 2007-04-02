@@ -270,7 +270,15 @@ Possible options:
 			$meta =
 				MetaConfiguration::me()->
 				setOutput($out)->
-				load(ONPHP_META_PATH.'internal.xml')->
+				load(ONPHP_META_PATH.'internal.xml');
+			
+			$out->info('Known internal classes: ');
+			foreach ($meta->getClassList() as $class) {
+				$out->info($class->getName().', ', true);
+			}
+			$out->infoLine("that's all.")->newLine();
+			
+			$meta->
 				load($pathMeta)->
 				setForcedGeneration($metaForce);
 			

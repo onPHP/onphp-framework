@@ -22,6 +22,11 @@
 		<pattern name="SpookedClass" />
 	</class>
 	
+	<class name="TestTree" extends="NamedTree">
+		<properties />
+		<pattern name="StraightMapping" />
+	</class>
+	
 	<class name="TestRange" extends="DateRange">
 		<properties>
 			<identifier />
