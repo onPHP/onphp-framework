@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	abstract class NamedTree extends NamedObject implements Stringable
+	abstract class NamedTree extends NamedObject
 	{
 		private $parent	= null;
 		
