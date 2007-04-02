@@ -5,7 +5,8 @@
 	* meta/: internal classes implementation finished.
 
 	* meta/classes/MetaConfiguration.class.php: spooked class type is
-	obsoleted now, do not specify it manually anymore.
+	obsoleted now, do not specify it manually anymore, it will be set for
+	spooked patterns automagically.
 
 2007-03-30	Konstantin V. Arkhipov
 
