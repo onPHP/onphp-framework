@@ -315,6 +315,8 @@
 					(
 						$class->getPattern() instanceof ValueObjectPattern
 					) || (
+						$class->getPattern() instanceof InternalClassPattern
+					) || (
 						$class->getTypeId() == MetaClassType::CLASS_ABSTRACT
 					)
 				) {
@@ -334,7 +336,10 @@
 							$this->classes[$className]->
 								setReferencingClass($holder);
 						}
-					} elseif ($remote->getTypeId() != MetaClassType::CLASS_ABSTRACT) {
+					} elseif (
+						($remote->getTypeId() != MetaClassType::CLASS_ABSTRACT)
+						&& (!$remote->getPattern() instanceof InternalClassPattern)
+					) {
 						$this->classes[$className]->setReferencingClass($refer);
 					}
 				}
