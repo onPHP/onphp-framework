@@ -36,13 +36,26 @@ abstract class AutoProto{$class->getName()} extends {$parentName}
 	public function makeForm()
 	{
 		\$form =
-			parent::makeForm()
+
 EOT;
+
+				if ($parent->getPattern() instanceof InternalClassPattern) {
+					$out .= 'Form::create()';
+				} else {
+					$out .= 'parent::makeForm()';
+				}
+				
 				$redefined = array();
 				
 				// checking for redefined properties
 				foreach ($class->getParentsProperties() as $property) {
-					if ($class->hasProperty($property->getName())) {
+					if (
+						$class->hasProperty($property->getName())
+						&& (
+							!$property->getClass()->getPattern()
+								instanceof InternalClassPattern
+						)
+					) {
 						$redefined[] =
 							"/* {$property->getClass()->getName()} */ "
 							."drop('{$property->getName()}')";
