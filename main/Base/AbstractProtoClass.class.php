@@ -16,6 +16,7 @@
 	abstract class AbstractProtoClass extends Singleton
 	{
 		abstract protected function makePropertyList();
+		abstract protected function makeForm();
 		
 		final public function getPropertyList()
 		{
