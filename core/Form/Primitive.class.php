@@ -50,6 +50,14 @@
 		{
 			return new PrimitiveIdentifier($name);
 		}
+		
+		/**
+		 * @return PrimitiveIdentifierList
+		**/
+		public static function identifierlist($name)
+		{
+			return new PrimitiveIdentifierList($name);
+		}
 
 		/**
 		 * @return PrimitiveEnumeration
