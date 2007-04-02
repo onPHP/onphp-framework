@@ -910,6 +910,7 @@
 				)
 				&& (!$class->getPattern() instanceof ValueObjectPattern)
 				&& (!$class->getPattern() instanceof InternalClassPattern)
+				&& (!$class->getPattern() instanceof SpookedClassPattern)
 			) {
 				Assert::isTrue(
 					$class->getIdentifier() !== null,
