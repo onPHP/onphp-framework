@@ -14,7 +14,7 @@
 		<pattern name="ValueObject" />
 	</class>
 
-	<class name="Spook" type="spooked">
+	<class name="Spook">
 		<properties>
 			<identifier type="Integer" />
 		</properties>
