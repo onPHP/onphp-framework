@@ -11,11 +11,13 @@
 /* $Id$ */
 
 	/**
-	 * @see IdentifiableTree
+	 * @see NamedTree
 	 * 
 	 * @ingroup Helpers
 	**/
-	abstract class NamedTree extends NamedObject implements Stringable
+	abstract class IdentifiableTree
+		extends IdentifiableObject
+		implements Stringable
 	{
 		private $parent	= null;
 		
@@ -24,7 +26,7 @@
 			return $this->parent;
 		}
 		
-		public function setParent(NamedTree $parent)
+		public function setParent(IdentifiableTree $parent)
 		{
 			Assert::brothers($this, $parent);
 			
@@ -53,18 +55,18 @@
 			return $current;
 		}
 		
-		public function toString($delimiter = ' :: ')
+		public function toString($delimiter = ', ')
 		{
-			$name = array($this->getName());
+			$ids = array($this->getId());
 			
 			$parent = $this;
 			
 			while ($parent = $parent->getParent())
-				$name[] = $parent->getName();
+				$ids[] = $parent->getId();
 			
-			$name = array_reverse($name);
+			$ids = array_reverse($ids);
 			
-			return implode($delimiter, $name);
+			return implode($delimiter, $ids);
 		}
 	}
 ?>
