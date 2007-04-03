@@ -97,7 +97,7 @@
 									.'due to spooked property'."\n";
 							} else {
 								$prefix =
-									'// forcing cascade strategy due to recursion'
+									'// forcing cascade strategy'
 									."\n";
 							}
 						} else
