@@ -41,12 +41,6 @@
 			$this->type = $type;
 			
 			$this->class = $class;
-			
-			// TODO: remove this 'convenience' 
-			// because password hash can be longer than 40
-			// seems to be business logic
-			if ($type instanceof PasswordType)
-				$this->size = 40; // strlen(sha1())
 		}
 		
 		public function equals(MetaClassProperty $property)
