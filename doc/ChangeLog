@@ -1,5 +1,9 @@
 # $Id$
 
+2007-04-03	Konstantin V. Arkhipov
+
+	* meta/: --dry-run mode added.
+
 2007-04-02	Konstantin V. Arkhipov
 
 	* meta/internal.xml: new internal classes added - IdentifiableObject,
@@ -107,7 +111,7 @@
 	* main/Base/LightMetaProperty.class.php: no more setters, since it's
 	an immutable one.
 
-	* meta/: new switched implemented for build script: --only-containers,
+	* meta/: new switches implemented for build script: --only-containers,
 	--no-schema, --no-schema-check, --force; also automagically searches
 	for configuration files now.
 

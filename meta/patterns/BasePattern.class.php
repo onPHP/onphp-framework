@@ -49,9 +49,11 @@
 				$out->
 					warning("\t\t".$className.' ');
 				
-				$fp = fopen($path, 'wb');
-				fwrite($fp, $content);
-				fclose($fp);
+				if (!MetaConfiguration::me()->isDryRun()) {
+					$fp = fopen($path, 'wb');
+					fwrite($fp, $content);
+					fclose($fp);
+				}
 				
 				$out->
 					log('(')->

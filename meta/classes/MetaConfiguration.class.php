@@ -22,7 +22,8 @@
 		
 		private $defaultSource = null;
 		
-		private $forcedGeneration = false;
+		private $forcedGeneration	= false;
+		private $dryRun				= false;
 		
 		/**
 		 * @return MetaConfiguration
@@ -53,6 +54,21 @@
 		public function isForcedGeneration()
 		{
 			return $this->forcedGeneration;
+		}
+		
+		/**
+		 * @return MetaConfiguration
+		**/
+		public function setDryRun($dry)
+		{
+			$this->dryRun = $dry;
+			
+			return $this;
+		}
+		
+		public function isDryRun()
+		{
+			return $this->dryRun;
 		}
 		
 		/**

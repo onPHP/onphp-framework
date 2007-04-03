@@ -29,6 +29,9 @@ Possible options:
 	
 	--force:
 		regenerate all files.
+	
+	--dry-run:
+		print the results of building without actually changing any files
 
 <?php
 		exit(1);
@@ -123,7 +126,7 @@ Possible options:
 	// switches
 	$metaForce = $metaOnlyContainers = $metaNoSchema =
 	$metaNoSchemaCheck = $metaNoSyntaxCheck = $metaDropStaleFiles =
-	$metaNoIntegrityCheck = false;
+	$metaNoIntegrityCheck = $metaDryRun = false;
 	
 	$args = $_SERVER['argv'];
 	array_shift($args);
@@ -158,6 +161,10 @@ Possible options:
 					
 					case '--force':
 						$metaForce = true;
+						break;
+					
+					case '--dry-run':
+						$metaDryRun = true;
 						break;
 					
 					default:
@@ -279,6 +286,7 @@ Possible options:
 			$out->infoLine("that's all.")->newLine();
 			
 			$meta->
+				setDryRun($metaDryRun)->
 				load($pathMeta)->
 				setForcedGeneration($metaForce);
 			
