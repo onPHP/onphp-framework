@@ -697,7 +697,7 @@
 						class_exists($class->getName(), true)
 					)
 				) {
-					$out->info($name.', ', true);
+					$out->info($name, true);
 					
 					// special handling for Enumeration instances
 					if ($class->getPattern() instanceof EnumerationClassPattern) {
@@ -707,6 +707,7 @@
 							unserialize(serialize($object)) == $object
 						);
 						
+						$out->info(', ');
 						continue;
 					}
 					
@@ -733,21 +734,38 @@
 					
 					$dao = $object->dao();
 					
-					if ($dao instanceof ValueObjectDAO)
+					if ($dao instanceof ValueObjectDAO) {
+						$out->info(', ');
 						continue;
+					}
 					
 					try {
 						DBPool::getByDao($dao);
 					} catch (MissingElementException $e) {
 						// skipping
+						$out->info(', ');
 						continue;
 					}
 					
-					Criteria::create($dao)->
-					setLimit(1)->
-					add(Expression::notNull($class->getIdentifier()->getName()))->
-					addOrder($class->getIdentifier()->getName())->
-					get();
+					$query =
+						Criteria::create($dao)->
+						setLimit(1)->
+						add(Expression::notNull($class->getIdentifier()->getName()))->
+						addOrder($class->getIdentifier()->getName())->
+						toSelectQuery();
+					
+					$out->warning(
+						' ('
+						.$query->getFieldsCount()
+						.'/'
+						.$query->getTablesCount()
+						.')'
+					)->
+					info(', ');
+					
+					try {
+						$dao->getByQuery($query);
+					} catch (ObjectNotFoundException $e) {/* we don't care */}
 				}
 			}
 			

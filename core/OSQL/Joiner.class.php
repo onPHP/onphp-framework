@@ -33,6 +33,11 @@
 			return isset($this->tables[$table]);
 		}
 		
+		public function getTablesCount()
+		{
+			return count($this->from);
+		}
+		
 		/**
 		 * @return Joiner
 		**/

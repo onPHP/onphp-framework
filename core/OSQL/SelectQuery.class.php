@@ -385,6 +385,11 @@
 			return count($this->fields);
 		}
 		
+		public function getTablesCount()
+		{
+			return $this->joiner->getTablesCount();
+		}
+		
 		public function getFieldNames()
 		{
 			$nameList = array();
