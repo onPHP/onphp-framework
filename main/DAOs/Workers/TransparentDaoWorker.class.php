@@ -240,7 +240,6 @@
 			Assert::isUnreachable();
 		}
 		
-		// TODO: rename to getCustomColumn
 		public function getCustomRowList(
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
