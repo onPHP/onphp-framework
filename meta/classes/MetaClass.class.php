@@ -30,6 +30,8 @@
 		
 		private $source		= null;
 		
+		private $build		= true;
+		
 		public function __construct($name)
 		{
 			$this->name = $name;
@@ -337,7 +339,25 @@
 		
 		public function dump()
 		{
-			return $this->pattern->build($this);
+			if ($this->doBuild())
+				return $this->pattern->build($this);
+			
+			return $this->pattern;
+		}
+		
+		public function doBuild()
+		{
+			return $this->build;
+		}
+		
+		/**
+		 * @return MetaClass
+		**/
+		public function setBuild($do)
+		{
+			$this->build = $do;
+			
+			return $this;
 		}
 	}
 ?>

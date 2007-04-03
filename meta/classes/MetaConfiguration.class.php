@@ -74,7 +74,7 @@
 		/**
 		 * @return MetaConfiguration
 		**/
-		public function load($metafile)
+		public function load($metafile, $generate = true)
 		{
 			$xml = simplexml_load_file($metafile);
 			
@@ -291,7 +291,7 @@
 						infoLine('Including "'.$path.'".')->
 						newLine();
 					
-					$this->load($path);
+					$this->load($path, !((string) $include['build'] == 'false'));
 				}
 			}
 			

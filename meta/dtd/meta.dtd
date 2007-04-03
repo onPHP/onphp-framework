@@ -63,5 +63,5 @@
 <!ELEMENT include EMPTY>
 <!ATTLIST include
 		file		CDATA #REQUIRED
-		generate	(true|false) "true"
+		build		(true|false) "true"
 >
