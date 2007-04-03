@@ -42,7 +42,8 @@
 			foreach ($class->getWithInternalProperties() as $property) {
 				
 				if (
-					$property->getRelationId() == MetaRelation::ONE_TO_ONE
+					($property->getRelationId() == MetaRelation::ONE_TO_ONE)
+					&& ($property->getFetchStrategyId() != FetchStrategy::LAZY)
 					&& (
 						!$property->getType()->isGeneric()
 						&& $property->getType() instanceof ObjectType
@@ -58,7 +59,8 @@
 					$valueObjects[ucfirst($property->getName())] =
 						$property->getType()->getClassName();
 				} elseif (
-					$property->getRelationId() == MetaRelation::ONE_TO_ONE
+					($property->getRelationId() == MetaRelation::ONE_TO_ONE)
+					&& ($property->getFetchStrategyId() != FetchStrategy::LAZY)
 				) {
 					$buildSetter = false;
 					

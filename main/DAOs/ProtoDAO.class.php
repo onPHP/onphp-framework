@@ -247,7 +247,7 @@
 					else
 						$query->leftJoin($dao->getTable(), $logic, $alias);
 				}
-			} else { // OneToOne, LazyOneToOne
+			} else { // OneToOne, lazy OneToOne
 				
 				// prevents useless joins
 				if (

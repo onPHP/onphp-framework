@@ -28,11 +28,8 @@ EOT;
 			
 			foreach ($propertyList as $property) {
 				if (
-					($relation = $property->getRelation())
-					&& (
-						$relation->getId() != MetaRelation::ONE_TO_ONE
-						&& $relation->getId() != MetaRelation::LAZY_ONE_TO_ONE
-					)
+					$property->getRelation()
+					&& ($property->getRelationId() != MetaRelation::ONE_TO_ONE)
 				) {
 					continue;
 				}

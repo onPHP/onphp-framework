@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,10 +17,12 @@
 	{
 		const JOIN		= 1;
 		const CASCADE	= 2;
+		const LAZY		= 3;
 		
 		protected $names = array(
 			self::JOIN		=> 'queryJoinedObjectSet',
-			self::CASCADE	=> 'queryObjectSet'
+			self::CASCADE	=> 'queryObjectSet',
+			self::LAZY		=> 'queryObjectSet'
 		);
 		
 		/**
@@ -37,6 +39,14 @@
 		public static function cascade()
 		{
 			return new self(self::CASCADE);
+		}
+		
+		/**
+		 * @return FetchStrategy
+		**/
+		public static function lazy()
+		{
+			return new self(self::LAZY);
 		}
 	}
 ?>

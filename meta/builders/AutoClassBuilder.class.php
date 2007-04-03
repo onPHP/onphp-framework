@@ -47,7 +47,7 @@
 					"protected \${$property->getName()} = "
 					."{$property->getType()->getDeclaration()};\n";
 				
-				if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$out .= 
 						"protected \${$property->getName()}Id = null;\n";
 				}
@@ -101,7 +101,7 @@ EOT;
 			$slackers = array();
 			
 			foreach ($class->getProperties() as $property) {
-				if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$slackers[] = $property;
 				}
 			}

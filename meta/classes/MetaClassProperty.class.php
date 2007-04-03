@@ -306,12 +306,7 @@
 				} else {
 					if (
 						!$this->getRelation()
-						|| (
-							$this->getRelationId()
-								== MetaRelation::ONE_TO_ONE
-							|| $this->getRelationId()
-								== MetaRelation::LAZY_ONE_TO_ONE
-						)
+						|| ($this->getRelationId() == MetaRelation::ONE_TO_ONE)
 					) {
 						if (
 							!$this->getType()->isGeneric()
@@ -413,10 +408,9 @@ EOT;
 			
 			if (!$this->type->isGeneric()) {
 				
-				switch ($this->relation->getId()) {
+				switch ($this->getRelationId()) {
 					
 					case MetaRelation::ONE_TO_ONE:
-					case MetaRelation::LAZY_ONE_TO_ONE:
 						
 						$remote = $this->type->getClass();
 						
@@ -461,7 +455,7 @@ EOT;
 									$remote->getIdentifier()->getName()
 								);
 							
-							if ($this->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+							if ($this->getFetchStrategyId() == FetchStrategy::LAZY) {
 								if ($this->required) {
 									$out =
 										"set{$method}Id("
@@ -604,10 +598,9 @@ EOT;
 			
 			if (!$this->type->isGeneric()) {
 				
-				switch ($this->relation->getId()) {
+				switch ($this->getRelationId()) {
 					
 					case MetaRelation::ONE_TO_ONE:
-					case MetaRelation::LAZY_ONE_TO_ONE:
 						
 						$remote = $this->type->getClass();
 						
@@ -619,7 +612,7 @@ EOT;
 						$idName = $remote->getIdentifier()->getName();
 						$idMethod = ucfirst($idName);
 						
-						if ($this->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+						if ($this->getFetchStrategyId() == FetchStrategy::LAZY) {
 							$out .=
 								"set('{$this->getColumnName()}', "
 								."\${$varName}->get{$method}Id())";

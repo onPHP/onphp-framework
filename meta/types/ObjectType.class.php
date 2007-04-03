@@ -92,7 +92,7 @@ public function {$methodName}()
 
 EOT;
 			} else {
-				if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$className = $property->getType()->getClassName();
 					
 					if ($property->isRequired()) {
@@ -227,7 +227,7 @@ public function {$methodName}({$property->getType()->getClassName()} \${$name})
 
 EOT;
 			} else {
-				if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$method = <<<EOT
 
 {$classHint}
@@ -301,7 +301,7 @@ public function {$methodName}()
 
 EOT;
 			} else {
-				if ($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE) {
+				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$method = <<<EOT
 
 /**

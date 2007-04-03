@@ -36,20 +36,7 @@
 				$name = $property->getName();
 				
 				if (isset($primitives[$name])) {
-					
-					if ($isPrototyped) {
-						$condition = 
-							$property->getRelationId()
-							!= MetaRelation::LAZY_ONE_TO_ONE;
-					} else {
-						$condition = 
-							!( // in case it's LazyOneToOne
-								$primitives[$name] instanceof PrimitiveIdentifier
-								&& $class->hasProperty($name.'Id')
-							);
-					}
-					
-					if ($condition) {
+					if ($property->getFetchStrategyId() != FetchStrategy::LAZY) {
 						$getter = 'get'.ucfirst($name);
 						if ($class->hasMethod($getter)) {
 							$value = $object->$getter();

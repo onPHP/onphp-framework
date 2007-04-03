@@ -61,8 +61,8 @@
 							$property->getRelationId()
 							== MetaRelation::ONE_TO_ONE
 						) || (
-							$property->getRelationId()
-							== MetaRelation::LAZY_ONE_TO_ONE
+							$property->getFetchStrategyId()
+							== FetchStrategy::LAZY
 						)
 					) {
 						$mappings[$className][$name] = $property->getColumnName();

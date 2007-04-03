@@ -248,10 +248,38 @@
 								)
 							);
 							
+							if ($fetch = (string) $xmlProperty['fetch']) {
+								Assert::isTrue(
+									$property->getRelationId()
+									== MetaRelation::ONE_TO_ONE,
+									
+									'fetch mode can be specified
+									only for OneToOne relations'
+								);
+								
+								if ($fetch == 'lazy')
+									$property->setFetchStrategy(
+										FetchStrategy::lazy()
+									);
+								elseif ($fetch == 'cascade')
+									$property->setFetchStrategy(
+										FetchStrategy::cascade()
+									);
+								else
+									throw new WrongArgumentException(
+										'strange fetch mode found - '.$fetch
+									);
+							}
+							
 							if (
 								(
-									$property->getRelationId()
-										== MetaRelation::ONE_TO_ONE
+									(
+										$property->getRelationId()
+											== MetaRelation::ONE_TO_ONE
+									) && (
+										$property->getFetchStrategyId()
+										!= FetchStrategy::LAZY
+									)
 								) && (
 									$property->getType()->getClassName()
 									<> $class->getName()
@@ -269,7 +297,7 @@
 							(string) $xmlProperty['default']
 						);
 					}
-
+					
 					$class->addProperty($property);
 				}
 				
@@ -560,10 +588,7 @@
 				foreach ($class->getProperties() as $property) {
 					if (
 						$property->getRelation()
-						&& (
-							$property->getRelationId() != MetaRelation::ONE_TO_ONE
-							&& $property->getRelationId() != MetaRelation::LAZY_ONE_TO_ONE
-						)
+						&& ($property->getRelationId() != MetaRelation::ONE_TO_ONE)
 					) {
 						$userFile =
 							ONPHP_META_DAO_DIR
@@ -994,7 +1019,7 @@
 						'value objects must have OneToOne relation'
 					);
 				} elseif (
-					($property->getRelationId() == MetaRelation::LAZY_ONE_TO_ONE)
+					($property->getFetchStrategyId() == FetchStrategy::LAZY)
 					&& $property->getType()->isGeneric()
 				) {
 					throw new WrongArgumentException(
