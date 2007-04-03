@@ -99,9 +99,9 @@
 				self::fail($message);
 		}
 		
-		public static function isUnreachable()
+		public static function isUnreachable($message = 'unreachable code reached')
 		{
-			self::fail('unreachable code reached');
+			self::fail($message);
 		}
 		
 		/// exceptionless methods

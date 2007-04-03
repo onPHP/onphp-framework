@@ -494,6 +494,7 @@ EOT;
 									if ($this->required) {
 										// avoid infinite recursion
 										if ($this->type->getClassName() == $className) {
+											Assert::isUnreachable('notify voxus, please');
 											// FIXME: prefix unused
 											$out = <<<EOT
 set{$method}(
@@ -509,6 +510,7 @@ EOT;
 									} else {
 										// avoid infinite recursion
 										if ($this->type->getClassName() == $className) {
+											Assert::isUnreachable('notify voxus, please');
 											// FIXME: prefix unused
 											$out = <<<EOT
 if (isset(\$array[{$this->type->getClassName()}::dao()->getJoinPrefix('{$this->getColumnName()}').'{$idName}'])) {
