@@ -26,10 +26,6 @@
 	if (isset($dbs) && $dbs) {
 		Singleton::getInstance('DBTestPool', $dbs)->connect();
 		
-		$pool = DBTestPool::me()->getPool();
-		
-		DBPool::me()->setDefault(reset($pool));
-		
 		// build stuff from meta
 		
 		$metaDir = ONPHP_TEST_PATH.'meta'.DIRECTORY_SEPARATOR;
