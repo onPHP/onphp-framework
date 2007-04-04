@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-04	Konstantin V. Arkhipov
+
+	* meta/: syntax checking now off by default, use --syntax-check to
+	enable it.
+
 2007-04-03	Konstantin V. Arkhipov
 
 	* meta/types/PasswordType.class.php: bye.

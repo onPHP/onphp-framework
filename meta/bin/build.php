@@ -21,8 +21,8 @@ Possible options:
 	--no-schema-check:
 		do not try to diff DB schemas.
 	
-	--no-syntax-check:
-		do not check generated files with `php -l`.
+	--syntax-check:
+		check generated files with `php -l`.
 	
 	--drop-stale-files:
 		remove found stale files.
@@ -31,7 +31,7 @@ Possible options:
 		regenerate all files.
 	
 	--dry-run:
-		print the results of building without actually changing any files
+		print the results of building without actually changing any files.
 
 <?php
 		exit(1);
@@ -125,7 +125,7 @@ Possible options:
 	
 	// switches
 	$metaForce = $metaOnlyContainers = $metaNoSchema =
-	$metaNoSchemaCheck = $metaNoSyntaxCheck = $metaDropStaleFiles =
+	$metaNoSchemaCheck = $metaSyntaxCheck = $metaDropStaleFiles =
 	$metaNoIntegrityCheck = $metaDryRun = false;
 	
 	$args = $_SERVER['argv'];
@@ -151,8 +151,8 @@ Possible options:
 						$metaNoSchemaCheck = true;
 						break;
 					
-					case '--no-syntax-check':
-						$metaNoSyntaxCheck = true;
+					case '--syntax-check':
+						$metaSyntaxCheck = true;
 						break;
 					
 					case '--drop-stale-files':
@@ -306,7 +306,7 @@ Possible options:
 			
 			$meta->checkForStaleFiles($metaDropStaleFiles);
 			
-			if (!$metaNoSyntaxCheck)
+			if ($metaSyntaxCheck)
 				$meta->checkSyntax();
 			
 			if (!$metaNoIntegrityCheck)

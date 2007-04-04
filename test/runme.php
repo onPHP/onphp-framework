@@ -38,6 +38,7 @@
 		$_SERVER['argv'][2] = $metaDir.'config.meta.xml';
 		
 		$_SERVER['argv'][] = '--force';
+		$_SERVER['argv'][] = '--syntax-check';
 		$_SERVER['argv'][] = '--no-schema-check';
 		$_SERVER['argv'][] = '--drop-stale-files';
 		
