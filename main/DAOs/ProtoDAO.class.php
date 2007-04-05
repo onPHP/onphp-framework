@@ -34,9 +34,16 @@
 					from($this->getTable());
 				
 				if ($criteria = $info['criteria']) {
-					$query->
-						andWhere($criteria->getLogic())->
-						setOrderChain($criteria->getOrder());
+					
+					if ($criteria->getLogic()->getSize())
+						$query->andWhere(
+							$criteria->getLogic()->toMapped($this, $query)
+						);
+						
+					if ($criteria->getOrder()->getCount())
+						$query->setOrderChain(
+							$criteria->getOrder()->toMapped($this, $query)
+						);
 				}
 				
 				$proto = reset($list)->proto();
