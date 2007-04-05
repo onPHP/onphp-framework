@@ -20,7 +20,7 @@
 		 * @return LogicalChain
 		**/
 		public static function getOpenRange(
-			DBField $left, DBField $right, $min = null, $max = null
+			$left, $right, $min = null, $max = null
 		)
 		{
 			Assert::isFalse(
