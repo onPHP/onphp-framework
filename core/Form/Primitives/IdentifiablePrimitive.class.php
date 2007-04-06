@@ -41,10 +41,10 @@
 				&& $scope[$this->name] instanceof $className
 			) {
 				$this->setValue($scope[$this->name]);
-				$this->imported = true;
-			} else {
-				parent::import($scope);
+				return $this->imported = true;
 			}
+
+			return parent::import($scope);
 		}
 
 		protected static function guessClassName($class)
