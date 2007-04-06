@@ -20,15 +20,13 @@
 		const FILES		= 3;
 		const COOKIE	= 4;
 		const SESSION	= 5;
-		const ATTACHED	= 6;
 		
 		protected $names = array(
 			self::GET		=> 'get',
 			self::POST		=> 'post',
 			self::FILES		=> 'files',
 			self::COOKIE	=> 'cookie',
-			self::SESSION	=> 'session',
-			self::ATTACHED	=> 'attached'
+			self::SESSION	=> 'session'
 		);
 		
 		/**
@@ -69,14 +67,6 @@
 		public static function session()
 		{
 			return new self(self::SESSION);
-		}
-
-		/**
-		 * @return RequestType
-		**/
-		public static function attached()
-		{
-			return new self(self::ATTACHED);
 		}
 	}
 ?>
