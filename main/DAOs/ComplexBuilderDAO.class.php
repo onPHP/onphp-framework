@@ -58,18 +58,26 @@
 		
 		public function makeObject(&$array, $prefix = null)
 		{
-			$object = $this->selfSpawn($array, $prefix);
-			
-			return $this->makeCascade($object, $array, $prefix);
+			return
+				$this->makeCascade(
+					$this->selfSpawn($array, $prefix),
+					$array,
+					$prefix
+				);
 		}
 		
 		public function makeJoinedObject(&$array, $prefix = null)
 		{
-			$object = $this->selfSpawn($array, $prefix);
-			
-			return $this->makeJoiners($object, $array, $prefix);
+			return
+				$this->makeJoiners(
+					$this->selfSpawn($array, $prefix),
+					$array,
+					$prefix
+				);
 		}
 		
+		/// do not override this methods, unless you're MetaConfiguration builder
+		//@{
 		protected function makeJoiners(
 			/* Identifiable */ $object, &$array, $prefix = null
 		)
@@ -83,6 +91,7 @@
 		{
 			return $object;
 		}
+		//@}
 		
 		private function selfSpawn(&$array, $prefix = null)
 		{
