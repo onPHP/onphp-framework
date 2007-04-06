@@ -77,6 +77,20 @@
 					"no class defined for PrimitiveIdentifier '{$this->name}'"
 				);
 			
+			$className = $this->className;
+
+			if (
+				isset($scope[$this->name])
+				&& $scope[$this->name] instanceof $className
+			) {
+				$value = $scope[$this->name];
+
+				$this->raw = $value->getId();
+				$this->setValue($value);
+
+				return $this->imported = true;
+			}
+
 			$result = parent::import($scope);
 			
 			if ($result === true) {
