@@ -32,6 +32,21 @@
 			return parent::setValue($value);
 		}
 		
+		public function import($scope)
+		{
+			$className = $this->className;
+
+			if (
+				isset($scope[$this->name])
+				&& $scope[$this->name] instanceof $className
+			) {
+				$this->setValue($scope[$this->name]);
+				$this->imported = true;
+			} else {
+				parent::import($scope);
+			}
+		}
+
 		protected static function guessClassName($class)
 		{
 			if (is_string($class))
