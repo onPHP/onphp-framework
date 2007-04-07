@@ -72,6 +72,16 @@
 			return $this->columnName;
 		}
 		
+		/**
+		 * @return LightMetaProperty
+		**/
+		public function setColumnName($name)
+		{
+			$this->columnName = $name;
+			
+			return $this;
+		}
+		
 		public function getClassName()
 		{
 			return $this->className;
@@ -80,6 +90,13 @@
 		public function isRequired()
 		{
 			return $this->required;
+		}
+		
+		public function setRequired($yrly)
+		{
+			$this->required = $yrly;
+			
+			return $this;
 		}
 		
 		public function isGenericType()
@@ -95,6 +112,16 @@
 		public function getFetchStrategyId()
 		{
 			return $this->strategyId;
+		}
+		
+		/**
+		 * @return LightMetaProperty
+		**/
+		public function setFetchStrategy(FetchStrategy $strategy)
+		{
+			$this->strategyId = $strategy;
+			
+			return $this;
 		}
 		
 		public function getContainerName($holderName)
