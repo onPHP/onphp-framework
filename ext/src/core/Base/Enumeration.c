@@ -198,6 +198,8 @@ ONPHP_METHOD(Enumeration, setId)
 			return;
 	}
 	
+	ZVAL_FREE(names);
+
 	if (result == SUCCESS) {
 		ONPHP_UPDATE_PROPERTY(getThis(), "id", id);
 		ONPHP_UPDATE_PROPERTY(getThis(), "name", *found);
@@ -213,9 +215,10 @@ ONPHP_METHOD(Enumeration, setId)
 			"knows nothing about such id == {%s}",
 			Z_STRVAL_P(id)
 		);
+		return;
 	}
 	
-	ZVAL_FREE(names);
+	RETURN_ZVAL(getThis(), 1, 0);
 }
 
 ONPHP_METHOD(Enumeration, getList)
