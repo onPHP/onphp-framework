@@ -213,6 +213,21 @@
 						$property->getType() instanceof ObjectType
 						&& !$property->getType()->isGeneric()
 					) {
+						if (
+							isset(
+								$this->classes[
+									$property->getType()->getClassName()
+								]
+							) && (
+								$property->getType()->getClass()->getPattern()
+									instanceof InternalClassPattern
+							)
+						) {
+							throw new UnimplementedFeatureException(
+								'you can not use internal classes directly atm'
+							);
+						}
+						
 						$property->setColumnName($property->getConvertedName().'_id');
 					} else {
 						$property->setColumnName($property->getConvertedName());
