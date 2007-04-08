@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!DOCTYPE metaconfiguration SYSTEM "meta.dtd">
+
+<!-- $Id$ -->
+
+<metaconfiguration><classes>
+
+	<class name="Credentials" type="final">
+		<properties>
+			<property name="nickname" type="String" size="255" required="true" />
+			<property name="password" type="String" size="40" required="true" />
+		</properties>
+		
+		<pattern name="ValueObject" />
+	</class>
+
+	<class name="Spook">
+		<properties>
+			<identifier type="Integer" />
+		</properties>
+		
+		<pattern name="SpookedClass" />
+	</class>
+	
+	<class name="TestTree" extends="NamedTree">
+		<properties />
+		<pattern name="StraightMapping" />
+	</class>
+	
+	<class name="TestRange" extends="DateRange">
+		<properties>
+			<identifier />
+			
+			<property name="start" type="Date" required="true" />
+			
+			<property name="description" type="String" required="false" />
+		</properties>
+		
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="TestCity" type="final" table="custom_table">
+		<properties>
+			<identifier />
+			
+			<property name="name" type="String" size="50" required="true" />
+		</properties>
+		
+		<pattern name="DictionaryClass" />
+	</class>
+	
+	<class name="TestPart">
+		<properties>
+			<identifier />
+			<property name="name" type="String" size="50" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="TestIncapsulant">
+		<properties>
+			<identifier />
+			<property name="name" type="String" size="50" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="TestUser" type="final">
+		<properties>
+			<identifier />
+			
+			<property name="credentials" type="Credentials" required="true" relation="OneToOne" />
+			
+			<property name="lastLogin" type="Timestamp" required="true" column="very_custom_field_name" />
+			<property name="registered" type="Timestamp" required="true" />
+			<property name="strangeTime" type="Time" required="false" />
+			
+			<property name="city" type="TestCity" relation="OneToOne" required="true" />
+			
+			<property name="spook" type="Spook" relation="OneToOne" required="false" />
+			
+			<property name="firstOptional" type="TestCity" relation="OneToOne" required="false" />
+			<property name="secondOptional" type="TestCity" relation="OneToOne" required="false" />
+			<property name="parts" type="TestPart" relation="OneToMany" />
+			<property name="incapsulants" type="TestIncapsulant" relation="ManyToMany" />
+			
+		</properties>
+		
+		<pattern name="StraightMapping" />
+	</class>
+	
+</classes></metaconfiguration>
