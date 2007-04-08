@@ -37,8 +37,6 @@
 				
 				$this->processPath($proto, $path, $query, $this->getTable());
 				
-				// FIXME: order/where will fail, since guessAtom doesn't
-				// know about table' aliases used in joins
 				if ($criteria = $info['criteria']) {
 					if ($criteria->getLogic()->getSize())
 						$query->andWhere(
