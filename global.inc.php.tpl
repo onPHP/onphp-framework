@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -30,7 +30,7 @@
 	error_reporting(E_ALL | E_STRICT);
 	set_error_handler('error2Exception', E_ALL | E_STRICT);
 	ignore_user_abort(true);
-	define('ONPHP_VERSION', '0.9.300');
+	define('ONPHP_VERSION', '0.11.1.11');
 
 	// overridable constant, don't forget for trailing slash
 	// also you may consider using /dev/shm/ for cache purposes
