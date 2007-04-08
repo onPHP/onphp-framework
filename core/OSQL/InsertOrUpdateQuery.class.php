@@ -62,6 +62,14 @@
 				$this->set($field, $object->getId());
 			elseif ($object instanceof Stringable)
 				$this->set($field, $object->toString());
+			elseif ($object instanceof Range)
+				$this->
+					set($field.'_min', $object->getMin())->
+					set($field.'_max', $object->getMax());
+			elseif ($object instanceof DateRange)
+				$this->
+					set($field.'_start', $object->getStart())->
+					set($field.'_end', $object->getEnd());
 			elseif ($object === null)
 				$this->set($field, null);
 			else

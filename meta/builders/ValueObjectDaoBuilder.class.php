@@ -18,6 +18,16 @@
 		public static function build(MetaClass $class)
 		{
 			$className = $class->getName();
+			
+			if (
+				($parent = $class->getParent())
+				&& !($parent->getPattern() instanceof AbstractClassPattern)
+			) {
+				$typeHint = $parent->getFinalParent()->getName();
+			} else {
+				$typeHint = '/* '.$className.' */';
+			}
+			
 			$varName = strtolower($className[0]).substr($className, 1);
 			
 			$out = self::getHead();
@@ -39,7 +49,7 @@ EOT;
 	/**
 	 * @return InsertOrUpdateQuery
 	**/
-	public function setQueryFields(InsertOrUpdateQuery \$query, {$className} \${$varName})
+	public function setQueryFields(InsertOrUpdateQuery \$query, {$typeHint} \${$varName})
 	{
 
 EOT;

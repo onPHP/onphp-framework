@@ -542,9 +542,18 @@ EOT;
 			} else {
 				
 				if ($this->type instanceof ObjectType) {
-					$value =
-						"new {$this->type->getClassName()}("
-						."\$array[\$prefix.'{$this->getColumnName()}'])";
+					$value = "new {$this->type->getClassName()}(";
+					
+					if ($this->type instanceof InternalType) {
+						$value = "\n{$value}\n";
+						
+						foreach ($this->getType()->getSuffixList() as $suffix)
+							$value .= "ArrayUtils::getArrayVar(\$array, '{$this->getColumnName()}_{$suffix}'),\n";
+						
+						$value = rtrim($value, ",\n")."\n)\n";
+					} else {
+						$value .= "\$array[\$prefix.'{$this->getColumnName()}'])";
+					}
 				} elseif ($this->type instanceof InetType) {
 					$value = "long2ip(\$array[\$prefix.'{$this->getColumnName()}'])";
 				} elseif ($this->type instanceof BooleanType) {
@@ -645,6 +654,9 @@ EOT;
 				if ($this->type instanceof BooleanType) {
 					$set = 'setBoolean';
 					$get = 'is';
+				} elseif ($this->type instanceof InternalType) {
+					$set = 'lazySet';
+					$get = 'get';
 				} else {
 					$set = 'set';
 					$get = 'get';
@@ -687,6 +699,12 @@ EOT;
 					$columnName = $this->type->getClass()->getTableName().'_id';
 				else
 					$columnName = $this->getColumnName();
+			} elseif ($this->type instanceof InternalType) {
+				$out = array();
+				foreach ($this->type->getSuffixList() as $suffix) {
+					$out[] = $this->getColumnName().'_'.$suffix;
+				}
+				return $out;
 			} else
 				$columnName = $this->getColumnName();
 			
@@ -697,19 +715,29 @@ EOT;
 		{
 			if (
 				$this->getType() instanceof ObjectType
-				&& !$this->getType()->isGeneric()
 				&& (
-					$this->getType()->getClass()->getPattern()
-						instanceof ValueObjectPattern
+					($this->getType() instanceof InternalType)
+					|| (
+						!$this->getType()->isGeneric()
+						&& (
+							$this->getType()->getClass()->getPattern()
+								instanceof ValueObjectPattern
+						)
+					)
 				)
 			) {
 				$columns = array();
+				
+				$prefix =
+					$this->getType() instanceof InternalType
+						? $this->getColumnName().'_'
+						: null;
 				
 				$remote = $this->getType()->getClass();
 				
 				foreach ($remote->getProperties() as $property) {
 					$columns[] = $property->buildColumn(
-						$property->getRelationColumnName()
+						$prefix.$property->getRelationColumnName()
 					);
 				}
 				
