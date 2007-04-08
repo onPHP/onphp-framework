@@ -39,7 +39,7 @@ EOT;
 	/**
 	 * @return InsertOrUpdateQuery
 	**/
-	public function setQueryFields(InsertOrUpdateQuery \$query, {$className} \${$varName})
+	public function setQueryFields(InsertOrUpdateQuery \$query, {$className} \${$varName}, \$prefix = null)
 	{
 
 EOT;
