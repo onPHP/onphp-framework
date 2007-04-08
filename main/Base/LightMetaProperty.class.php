@@ -18,9 +18,32 @@
 	**/
 	final class LightMetaProperty implements Stringable
 	{
+		private static $limits = array(
+			'SmallInteger' => array(
+				PrimitiveInteger::SIGNED_SMALL_MIN,
+				PrimitiveInteger::SIGNED_SMALL_MAX
+			),
+			'UnsignedSmallInteger' => array(
+				0,
+				PrimitiveInteger::UNSIGNED_SMALL_MAX
+			),
+			'Integer' => array(
+				PrimitiveInteger::SIGNED_MIN,
+				PrimitiveInteger::SIGNED_MAX
+			),
+			'UnsignedInteger' => array(
+				0,
+				PrimitiveInteger::UNSIGNED_MAX
+			)
+		);
+		
 		private $name			= null;
 		private $columnName		= null;
+		
+		private $type			= null;
 		private $className		= null;
+		
+		private $size			= null;
 		
 		private $required	= false;
 		private $generic	= false;
@@ -43,15 +66,19 @@
 		 * @return LightMetaProperty
 		**/
 		public static function make(
-			$name, $columnName, $className, $required, 
-			$generic, $relationId, $strategyId
+			$name, $columnName, $type, $className, $size,
+			$required, $generic, $relationId, $strategyId
 		)
 		{
 			$self = new self;
 			
 			$self->name = $name;
 			$self->columnName = $columnName;
+			
+			$self->type = $type;
 			$self->className = $className;
+			
+			$self->size = $size;
 			
 			$self->required = $required;
 			$self->generic = $generic;
@@ -69,7 +96,10 @@
 		
 		public function getColumnName()
 		{
-			return $this->columnName;
+			if ($this->columnName)
+				return $this->columnName;
+			
+			return $this->name;
 		}
 		
 		/**
@@ -85,6 +115,29 @@
 		public function getClassName()
 		{
 			return $this->className;
+		}
+		
+		public function getSize()
+		{
+			return $this->size;
+		}
+		
+		public function getMin()
+		{
+			return $this->getLimit(0);
+		}
+		
+		public function getMax()
+		{
+			if ($this->size)
+				return $this->size;
+			
+			return $this->getLimit(1);
+		}
+		
+		public function getType()
+		{
+			return $this->type;
 		}
 		
 		public function isRequired()
@@ -135,14 +188,21 @@
 				'LightMetaProperty::make('
 				."'{$this->name}', "
 				.(
-					is_array($this->columnName)
-						? "array('".implode("', '", $this->columnName)."')"
-						: "'".$this->columnName."'"
+					$this->columnName
+						? "'{$this->columnName}'"
+						: 'null'
 				)
 				.', '
+				."'{$this->type}', "
 				.(
 					$this->className
 						? "'{$this->className}'"
+						: 'null'
+				)
+				.', '
+				.(
+					$this->size
+						? $this->size
 						: 'null'
 				)
 				.', '
@@ -170,6 +230,14 @@
 						: 'null'
 				)
 				.')';
+		}
+		
+		private function getLimit($whichOne)
+		{
+			return
+				isset(self::$limits[$this->type])
+					? self::$limits[$this->type][$whichOne]
+					: null;
 		}
 	}
 ?>

@@ -13,16 +13,11 @@
 	/**
 	 * @ingroup Types
 	**/
-	class DateRangeType extends InternalType
+	class DateRangeType extends RangeType
 	{
-		public function toPrimitive()
+		public function getPrimitiveName()
 		{
-			return 'Primitive::dateRange';
-		}
-		
-		public function getSuffixList()
-		{
-			return array('start', 'end');
+			return 'dateRange';
 		}
 	}
 ?>

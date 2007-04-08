@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,6 +15,11 @@
 	**/
 	class IntegerType extends BasePropertyType
 	{
+		public function getPrimitiveName()
+		{
+			return 'integer';
+		}
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return IntegerType
@@ -47,19 +52,6 @@
 		public function toColumnType()
 		{
 			return 'DataType::create(DataType::INTEGER)';
-		}
-		
-		public function toPrimitive()
-		{
-			return 'Primitive::integer';
-		}
-		
-		public function toPrimitiveLimits()
-		{
-			return
-				'setMin(PrimitiveInteger::SIGNED_MIN)->'
-				."\n"
-				.'setMax(PrimitiveInteger::SIGNED_MAX)';
 		}
 	}
 ?>

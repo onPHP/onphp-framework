@@ -1,5 +1,16 @@
 # $Id$
 
+2007-04-08	Konstantin V. Arkhipov
+
+	* main/Base/AbstractProtoClass.class.php: now able to generate Form
+	from internal properties list.
+
+	* meta/builders/AutoProtoClassBuilder.class.php: dropped generation of
+	makeForm().
+
+	* main/Base/LightMetaProperty.class.php: size and type properties
+	added.
+
 2007-04-08	Dmitry E. Demidov
 
 	* main/Flow/RedirectView.class.php,

@@ -17,6 +17,11 @@
 	{
 		private $className = null;
 		
+		public function getPrimitiveName()
+		{
+			return 'identifier';
+		}
+		
 		public function __construct($className)
 		{
 			$this->className = $className;
@@ -334,11 +339,6 @@ EOT;
 			}
 			
 			return $method;
-		}
-		
-		public function toPrimitive()
-		{
-			throw new UnsupportedMethodException();
 		}
 		
 		public function toColumnType()

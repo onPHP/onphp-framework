@@ -15,19 +15,14 @@
 	**/
 	class RangeType extends InternalType
 	{
-		public function toPrimitive()
+		public function getPrimitiveName()
 		{
-			return 'Primitive::range';
+			return 'range';
 		}
 		
 		public function toColumnType()
 		{
 			return null;
-		}
-		
-		public function getSuffixList()
-		{
-			return array('min', 'max');
 		}
 	}
 ?>

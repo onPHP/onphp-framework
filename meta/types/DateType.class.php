@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,6 +15,11 @@
 	**/
 	class DateType extends ObjectType
 	{
+		public function getPrimitiveName()
+		{
+			return 'date';
+		}
+		
 		public function isGeneric()
 		{
 			return true;
@@ -23,11 +28,6 @@
 		public function toColumnType()
 		{
 			return 'DataType::create(DataType::DATE)';
-		}
-		
-		public function toPrimitive()
-		{
-			return 'Primitive::date';
 		}
 	}
 ?>

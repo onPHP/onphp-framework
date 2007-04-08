@@ -261,138 +261,6 @@
 			return $this->type->toMethods($class, $this, $holder);
 		}
 		
-		public function toPrimitive(MetaClass $class)
-		{
-			if (
-				(
-					$this->getType() instanceof ObjectType
-					&& !$this->getType()->isGeneric()
-				)
-				|| $this->isIdentifier()
-			) {
-				if (
-					!$this->isIdentifier() 
-					&& (
-						$this->getType()->getClass()->getPattern()
-							instanceof EnumerationClassPattern
-					)
-				)
-					$isEnum = true;
-				else
-					$isEnum = false;
-				
-				if ($isEnum) {
-					$className = $this->getType()->getClassName();
-					
-					$primitiveName = $this->getName();
-				} elseif ($this->isIdentifier()) {
-					$className = $class->getName();
-					$primitiveName = 'id';
-				} else {
-					$className = $this->getType()->getClassName();
-					$primitiveName = $this->getName();
-				}
-				
-				if ($isEnum) {
-					$primitive =
-						"\nPrimitive::enumeration('{$primitiveName}')->\n"
-						."of('{$className}')->\n";
-				} else {
-					if (
-						!$this->getRelation()
-						|| ($this->getRelationId() == MetaRelation::ONE_TO_ONE)
-					) {
-						if (
-							!$this->getType()->isGeneric()
-							&& $this->getType() instanceof ObjectType
-							&& (
-								$this->getType()->getClass()->getPattern()
-									instanceof ValueObjectPattern
-							)
-						) {
-							$primitive = array();
-							$remote = $this->getType()->getClass();
-							
-							foreach ($remote->getProperties() as $remoteProperty) {
-								$primitive[] = $remoteProperty->toPrimitive($remote);
-							}
-						} else {
-							$primitive =
-								"\nPrimitive::identifier('{$primitiveName}')->\n";
-							
-							// should be specified only in childs
-							if (
-								!(
-									$class->getType()
-									&& (
-										$class->getTypeId()
-										== MetaClassType::CLASS_ABSTRACT
-									)
-									&& $this->isIdentifier()
-								)
-							) {
-								$primitive .= "of('{$className}')->\n";
-							}
-							
-							$id = null;
-							
-							// we must check remote identifier's type for limits
-							if ($this->getType() instanceof ObjectType) {
-								$id =
-									$this->getType()->
-										getClass()->
-											getIdentifier();
-								
-							} elseif ($this->isIdentifier()) {
-								$id = $this;
-							}
-							
-							if ($id) {
-								if ($limits = $id->getType()->toPrimitiveLimits())
-									$primitive .= $limits."->\n";
-							}
-						}
-					} else {
-						$primitive = null;
-					}
-				}
-				
-				if ($primitive && !is_array($primitive)) {
-					if ($this->getType()->hasDefault())
-						$primitive .=
-							"setDefault({$this->getType()->getDefault()})->\n";
-					
-					if ($this->isRequired())
-						$primitive .= "required()\n";
-					else
-						$primitive .= "optional()\n";
-				}
-			} else {
-				$required = ($this->required ? 'required' : 'optional');
-				
-				$size = $limits = null;
-				
-				if ($this->size) {
-					$size = "->\nsetMax({$this->size})";
-				}
-				
-				if ($this->type instanceof IntegerType)
-					$limits = $this->type->toPrimitiveLimits();
-				
-				if ($limits)
-					$limits = $limits."->\n";
-			
-				$primitive = <<<EOT
-
-{$this->type->toPrimitive()}('{$this->name}')->
-{$limits}{$required}(){$size}
-
-EOT;
-			}
-			
-			return $primitive;
-		}
-		
 		public function toDaoSetter($className, $cascade = true)
 		{
 			$varName = $this->toVarName($className);
@@ -747,14 +615,34 @@ EOT;
 			return $this->buildColumn($this->getRelationColumnName());
 		}
 		
-		public function toLightProperty()
+		public function toLightProperty(MetaClass $holder)
 		{
+			$className = null;
+			
+			if ($this->getType() instanceof ObjectType) {
+				if (
+					!$this->getType()->isGeneric()
+					&& (
+						$this->getType()->getClass()->getPattern()
+							instanceof InternalClassPattern
+					)
+				) {
+					$className = $holder->getName();
+				} else {
+					$className = $this->getType()->getClassName();
+				}
+			}
+			
 			return
 				LightMetaProperty::make(
 					$this->getName(),
-					$this->getRelationColumnName(),
-					$this->getType() instanceof ObjectType
-						? $this->getType()->getClassName()
+					$this->getName() <> $this->getRelationColumnName()
+						? $this->getRelationColumnName()
+						: null,
+					$this->getType()->getPrimitiveName(),
+					$className,
+					$this->getType()->isMeasurable()
+						? $this->size
 						: null,
 					$this->isRequired(),
 					$this->getType()->isGeneric(),

@@ -15,6 +15,11 @@
 	**/
 	final class InetType extends IntegerType
 	{
+		public function getPrimitiveName()
+		{
+			return 'inet';
+		}
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return InetType
@@ -27,16 +32,6 @@
 			);
 			
 			return parent::setDefault($default);
-		}
-		
-		public function toPrimitive()
-		{
-			return 'Primitive::inet';
-		}
-		
-		public function toPrimitiveLimits()
-		{
-			return null;
 		}
 	}
 ?>

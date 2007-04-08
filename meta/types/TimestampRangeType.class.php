@@ -19,10 +19,5 @@
 		{
 			return 'Primitive::timestampRange';
 		}
-		
-		public function getSuffixList()
-		{
-			return array('start', 'end');
-		}
 	}
 ?>

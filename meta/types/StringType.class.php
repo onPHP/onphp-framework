@@ -15,6 +15,11 @@
 	**/
 	final class StringType extends BasePropertyType
 	{
+		public function getPrimitiveName()
+		{
+			return 'string';
+		}
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return StringType
@@ -50,11 +55,6 @@
 				$length
 					? 'DataType::create(DataType::VARCHAR)'
 					: 'DataType::create(DataType::TEXT)';
-		}
-		
-		public function toPrimitive()
-		{
-			return 'Primitive::string';
 		}
 	}
 ?>

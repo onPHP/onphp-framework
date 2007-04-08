@@ -22,10 +22,5 @@
 				."->\n"
 				.'setUnsigned(true)';
 		}
-		
-		public function toPrimitiveLimits()
-		{
-			return 'setMin(0)->'."\n".'setMax(PrimitiveInteger::UNSIGNED_SMALL_MAX)';
-		}
 	}
 ?>

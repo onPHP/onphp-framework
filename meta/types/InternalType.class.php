@@ -15,8 +15,6 @@
 	**/
 	abstract class InternalType extends ObjectType
 	{
-		abstract public function getSuffixList();
-		
 		public function isGeneric()
 		{
 			return true;

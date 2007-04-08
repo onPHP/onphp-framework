@@ -15,6 +15,11 @@
 	**/
 	class BooleanType extends BasePropertyType
 	{
+		public function getPrimitiveName()
+		{
+			return 'boolean';
+		}
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return BooleanType
@@ -52,11 +57,6 @@
 		public function toColumnType()
 		{
 			return 'DataType::create(DataType::BOOLEAN)';
-		}
-
-		public function toPrimitive()
-		{
-			return 'Primitive::boolean';
 		}
 
 		public function toGetter(

@@ -16,7 +16,6 @@
 	abstract class AbstractProtoClass extends Singleton
 	{
 		abstract protected function makePropertyList();
-		abstract protected function makeForm();
 		
 		final public function getPropertyList()
 		{
@@ -45,6 +44,33 @@
 			throw new MissingElementException(
 				'unknown property requested by name '."'{$name}'"
 			);
+		}
+		
+		public function makeForm()
+		{
+			$form = Form::create();
+			
+			foreach ($this->getPropertyList() as $property) {
+				$prm =
+					call_user_func(
+						array('Primitive', $property->getType()),
+						$property->getName()
+					);
+				
+				if ($min = $property->getMin())
+					$prm->setMin($min);
+				
+				if ($max = $property->getMax())
+					$prm->setMax($max);
+				
+				if ($prm instanceof IdentifiablePrimitive)
+					$prm->of($property->getClassName());
+				
+				if ($property->isRequired())
+					$prm->required();
+			}
+			
+			return $form;
 		}
 		
 		public function getMapping()

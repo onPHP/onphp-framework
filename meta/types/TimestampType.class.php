@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,14 +15,14 @@
 	**/
 	final class TimestampType extends DateType
 	{
+		public function getPrimitiveName()
+		{
+			return 'timestamp';
+		}
+		
 		public function toColumnType()
 		{
 			return 'DataType::create(DataType::TIMESTAMP)';
-		}
-		
-		public function toPrimitive()
-		{
-			return 'Primitive::timestamp';
 		}
 	}
 ?>

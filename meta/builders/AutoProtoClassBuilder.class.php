@@ -26,95 +26,13 @@
 			else
 				$parentName = 'AbstractProtoClass';
 			
-			if ($class->hasBuildableParent() || $parent) {
-				$out .= <<<EOT
+			$out .= <<<EOT
 abstract class AutoProto{$class->getName()} extends {$parentName}
 {
-	/**
-	 * @return Form
-	**/
-	public function makeForm()
-	{
-		\$form =
-
 EOT;
-
-				if ($parent->getPattern() instanceof InternalClassPattern) {
-					$out .= 'Form::create()';
-				} else {
-					$out .= 'parent::makeForm()';
-				}
-				
-				$redefined = array();
-				
-				// checking for redefined properties
-				foreach ($class->getParentsProperties() as $property) {
-					if (
-						$class->hasProperty($property->getName())
-						&& (
-							!$property->getClass()->getPattern()
-								instanceof InternalClassPattern
-						)
-					) {
-						$redefined[] =
-							"/* {$property->getClass()->getName()} */ "
-							."drop('{$property->getName()}')";
-					}
-				}
-				
-				if ($redefined)
-					$out .= "->\n".implode("->\n", $redefined);
-			} else {
-				$out .= <<<EOT
-abstract class AutoProto{$class->getName()} extends {$parentName}
-{
-	/**
-	 * @return Form
-	**/
-	public function makeForm()
-	{
-		return
-			Form::create()
-EOT;
-			}
-			
-			// sort out for wise and common defaults
-			$prms = array();
-			
-			foreach ($class->getWithInternalProperties() as $property) {
-				if ($primitive = $property->toPrimitive($class)) {
-					if (is_array($primitive))
-						$prms = array_merge($prms, $primitive);
-					else
-						$prms[] = $primitive;
-				}
-			}
-			
-			if (count($prms)) {
-				$out .= "->\nadd(".implode(")->\nadd(", $prms).");";
-			} else {
-				$out .= ";";
-			}
-			
-			// parent's identificator should be concretized in childs
-			if ($parent) {
-				if ($parent->getIdentifier()) {
-					$out .=
-						"\n\n"
-						."\$form->\nget('{$parent->getIdentifier()->getName()}')->"
-						."of('{$class->getName()}');\n\n";
-				} else {
-					$out .= "\n\n";
-				}
-				
-				$out .= "return \$form;";
-			}
-			
 			$classDump = self::dumpMetaClass($class);
 			
 			$out .= <<<EOT
-
-	}
 
 {$classDump}
 }
@@ -164,12 +82,12 @@ EOT;
 					foreach ($remote->getProperties() as $remoteProperty) {
 						$list[] =
 							"'{$remoteProperty->getName()}' => "
-							.$remoteProperty->toLightProperty()->toString();
+							.$remoteProperty->toLightProperty($remote)->toString();
 					}
 				} else {
 					$list[] =
 						"'{$property->getName()}' => "
-						.$property->toLightProperty()->toString();
+						.$property->toLightProperty($class)->toString();
 				}
 			}
 			

@@ -753,6 +753,7 @@
 					
 					$object = new $name;
 					$proto = $object->proto();
+					$proto->makeForm();
 					
 					foreach ($class->getProperties() as $name => $property) {
 						if (
@@ -767,7 +768,7 @@
 						}
 						
 						Assert::isTrue(
-							$property->toLightProperty()
+							$property->toLightProperty($class)
 							== $proto->getPropertyByName($name)
 						);
 					}
@@ -955,7 +956,7 @@
 				$typeClass = $type.'Type';
 			else
 				$typeClass = 'ObjectType';
-
+			
 			return new MetaClassProperty($name, new $typeClass($type), $class);
 		}
 		

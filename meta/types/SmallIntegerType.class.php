@@ -19,13 +19,5 @@
 		{
 			return 'DataType::create(DataType::SMALLINT)';
 		}
-		
-		public function toPrimitiveLimits()
-		{
-			return
-				'setMin(PrimitiveInteger::SIGNED_SMALL_MIN)->'
-				."\n"
-				.'setMax(PrimitiveInteger::SIGNED_SMALL_MAX)';
-		}
 	}
 ?>
