@@ -43,7 +43,8 @@ abstract class Auto{$class->getName()}DAO extends {$parent}
 {
 
 EOT;
-			if (sizeof($class->getWithInternalProperties())) {
+			// TODO: drop this one, whole class and pattern too
+			if (0 && sizeof($class->getWithInternalProperties())) {
 
 				$out .= <<<EOT
 	/**

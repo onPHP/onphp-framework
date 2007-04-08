@@ -32,40 +32,9 @@ EOT;
 			
 			$out .= <<<EOT
 {$pointers}
+}
 
 EOT;
-			if ($class->getPattern() instanceof AbstractClassPattern) {
-				if (
-					($parent = $class->getParent())
-					&& !($parent->getPattern() instanceof AbstractClassPattern)
-				) {
-					$typeHint = $parent->getFinalParent()->getName();
-				} else {
-					$typeHint = '/* '.$class->getName().' */';
-				}
-				
-				$out .= <<<EOT
-
-	/**
-	 * @return InsertOrUpdateQuery
-	**/
-	public function setQueryFields(InsertOrUpdateQuery \$query, {$typeHint} \${$varName})
-	{
-
-EOT;
-			} else {
-				$out .= <<<EOT
-
-	/**
-	 * @return InsertOrUpdateQuery
-	**/
-	public function setQueryFields(InsertOrUpdateQuery \$query, {$className} \${$varName})
-	{
-
-EOT;
-			}
-			
-			$out .= self::buildFillers($class);
 			
 			return $out.self::getHeel();
 		}

@@ -234,6 +234,12 @@
 				}
 			}
 			
+			// veeeeery "special" handling, by tradition.
+			// MySQL returns 0/1, others - t/f
+			if ($this->type == 'boolean') {
+				return (bool) strtr($raw, array('f' => null));
+			}
+			
 			return $raw;
 		}
 		
