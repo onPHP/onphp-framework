@@ -601,7 +601,7 @@ EOT;
 						$remote = $this->type->getClass();
 						
 						if ($remote->getPattern() instanceof ValueObjectPattern) {
-							// sould be handled by builder
+							// must be handled by builder
 							Assert::isUnreachable();
 						}
 						
