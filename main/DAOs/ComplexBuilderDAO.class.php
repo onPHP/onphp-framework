@@ -17,35 +17,6 @@
 	{
 		abstract protected function makeSelf(&$array, $prefix = null);
 		
-		public function getMapping()
-		{
-			$proto = call_user_func(array($this->getObjectName(), 'proto'));
-			
-			return $proto->getMapping();
-		}
-		
-		public function getFields()
-		{
-			static $fields = array();
-			
-			$className = $this->getObjectName();
-			
-			if (!isset($fields[$className])) {
-				foreach (array_values($this->getMapping()) as $field) {
-					if (is_array($field))
-						$fields[$className] =
-							array_merge(
-								$fields[$className],
-								$field
-							);
-					elseif ($field)
-						$fields[$className][] = $field;
-				}
-			}
-			
-			return $fields[$className];
-		}
-		
 		public function getJoinPrefix($field, $prefix = null)
 		{
 			return $this->getJoinName($field, $prefix).'__';

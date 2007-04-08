@@ -33,8 +33,13 @@
 					OSQL::select()->get($mainId)->
 					from($this->getTable());
 				
+				$proto = reset($list)->proto();
+				
+				$this->processPath($proto, $path, $query, $this->getTable());
+				
+				// FIXME: order/where will fail, since guessAtom doesn't
+				// know about table' aliases used in joins
 				if ($criteria = $info['criteria']) {
-					
 					if ($criteria->getLogic()->getSize())
 						$query->andWhere(
 							$criteria->getLogic()->toMapped($this, $query)
@@ -45,10 +50,6 @@
 							$criteria->getOrder()->toMapped($this, $query)
 						);
 				}
-				
-				$proto = reset($list)->proto();
-				
-				$this->processPath($proto, $path, $query, $this->getTable());
 				
 				$query->andWhere(
 					Expression::in($mainId, $ids)
@@ -289,12 +290,16 @@
 				}
 			}
 			
-			return $propertyDao->guessAtom(
-				implode('.', $path), 
-				$query,
-				$alias, 
-				$propertyDao->getJoinPrefix($property->getColumnName(), $prefix)
-			);
+			if ($path) {
+				return $propertyDao->guessAtom(
+					implode('.', $path), 
+					$query,
+					$alias,
+					$propertyDao->getJoinPrefix($property->getColumnName(), $prefix)
+				);
+			}
+			
+			// ok, we're done
 		}
 		
 		public function guessAtom(
@@ -325,10 +330,6 @@
 						$mapping = $this->getMapping()
 					)
 				) {
-					// BC, <0.9
-					if (!$mapping[$atom])
-						return new DBField($atom, $table);
-					
 					return new DBField($mapping[$atom], $table);
 				} elseif (
 					($query instanceof SelectQuery)

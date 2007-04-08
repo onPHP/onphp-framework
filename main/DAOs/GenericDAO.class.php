@@ -51,6 +51,35 @@
 			return $this->getTable().'_id';
 		}
 		
+		public function getMapping()
+		{
+			$proto = call_user_func(array($this->getObjectName(), 'proto'));
+			
+			return $proto->getMapping();
+		}
+		
+		public function getFields()
+		{
+			static $fields = array();
+			
+			$className = $this->getObjectName();
+			
+			if (!isset($fields[$className])) {
+				foreach (array_values($this->getMapping()) as $field) {
+					if (is_array($field))
+						$fields[$className] =
+							array_merge(
+								$fields[$className],
+								$field
+							);
+					elseif ($field)
+						$fields[$className][] = $field;
+				}
+			}
+			
+			return $fields[$className];
+		}
+		
 		/**
 		 * @return SelectQuery
 		**/
@@ -68,30 +97,6 @@
 			}
 			
 			return clone $this->selectHead;
-		}
-		
-		/// @deprecated by ComplexBuilderDAO::getMapping()
-		public function getMapping()
-		{
-			if (!$this->mapping)
-				throw new WrongStateException('empty mapping');
-			
-			return $this->mapping;
-		}
-		
-		/// @deprecated by ComplexBuilderDAO::getFields()
-		public function getFields()
-		{
-			static $fields = array();
-			
-			$name = $this->getObjectName();
-			
-			if (!isset($fields[$name])) {
-				foreach ($this->getMapping() as $property => $field)
-					$fields[$name][] = $field === null ? $property : $field;
-			}
-			
-			return $fields[$name];
 		}
 		
 		/// boring delegates
