@@ -160,7 +160,7 @@
 				.', '
 				.(
 					$this->relationId
-						? "'".$this->relationId."'"
+						? $this->relationId
 						: 'null'
 				)
 				.', '
