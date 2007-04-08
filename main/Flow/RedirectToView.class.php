@@ -72,7 +72,7 @@
 			return $this;
 		}
 		
-		protected function getUrl()
+		public function getUrl()
 		{
 			return $this->prefix.$this->url.$this->suffix;
 		}

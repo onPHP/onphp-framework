@@ -2,7 +2,8 @@
 
 2007-04-08	Dmitry E. Demidov
 
-	* main/Flow/RedirectView.class.php: change visibility of getUrl 
+	* main/Flow/RedirectView.class.php,
+	main/Flow/RedirectToView.class.php: change visibility of getUrl 
 	to public.
 	
 2007-04-06	Ivan Y. Khvostishkov
