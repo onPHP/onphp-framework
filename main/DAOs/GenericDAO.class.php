@@ -51,11 +51,17 @@
 			return $this->getTable().'_id';
 		}
 		
+		/**
+		 * @return AbstractProtoClass
+		**/
+		public function getProtoClass()
+		{
+			return call_user_func(array($this->getObjectName(), 'proto'));
+		}
+		
 		public function getMapping()
 		{
-			$proto = call_user_func(array($this->getObjectName(), 'proto'));
-			
-			return $proto->getMapping();
+			return $this->getProtoClass()->getMapping();
 		}
 		
 		public function getFields()

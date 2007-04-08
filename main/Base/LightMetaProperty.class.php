@@ -102,6 +102,16 @@
 			return $this->name;
 		}
 		
+		public function getGetter()
+		{
+			return 'get'.ucfirst($this->name);
+		}
+		
+		public function getSetter()
+		{
+			return 'set'.ucfirst($this->name);
+		}
+		
 		/**
 		 * @return LightMetaProperty
 		**/

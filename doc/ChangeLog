@@ -2,6 +2,8 @@
 
 2007-04-08	Konstantin V. Arkhipov
 
+	* main/DAOs/ProtoDAO.class.php: unified makeSelf() implemented.
+
 	* main/Base/AbstractProtoClass.class.php: now able to generate Form
 	from internal properties list.
 

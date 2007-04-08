@@ -15,8 +15,6 @@
 	**/
 	abstract class ComplexBuilderDAO extends StorableDAO
 	{
-		abstract protected function makeSelf(&$array, $prefix = null);
-		
 		public function getJoinPrefix($field, $prefix = null)
 		{
 			return $this->getJoinName($field, $prefix).'__';
