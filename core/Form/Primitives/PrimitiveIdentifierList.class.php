@@ -15,6 +15,25 @@
 	**/
 	final class PrimitiveIdentifierList extends PrimitiveIdentifier
 	{
+		public function importValue($value)
+		{
+			if ($value instanceof UnifiedContainer) {
+				if ($value->isLazy())
+					return $this->import(
+						array($this->name => $value->getList())
+					);
+				elseif ($list = $value->getList()) {
+					return $this->import(
+						array($this->name => ArrayUtils::getIdsArray($list))
+					);
+				} else {
+					return parent::importValue(null);
+				}
+			}
+			
+			return parent::importValue($value);
+		}
+		
 		public function import($scope)
 		{
 			if (!$this->className)

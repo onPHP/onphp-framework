@@ -68,6 +68,8 @@
 				
 				if ($property->isRequired())
 					$prm->required();
+				
+				$form->add($prm);
 			}
 			
 			return $form;

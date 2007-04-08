@@ -28,8 +28,6 @@
 		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
-			FormUtils::object2form($subject, $form);
-			
 			if ($object = $form->getValue('id'))
 				FormUtils::object2form($object, $form);
 			

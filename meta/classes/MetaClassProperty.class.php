@@ -619,6 +619,18 @@ EOT;
 		{
 			$className = null;
 			
+			if (
+				($this->getRelationId() == MetaRelation::ONE_TO_MANY)
+				|| ($this->getRelationId() == MetaRelation::MANY_TO_MANY)
+			) {
+				// collections
+				$primitiveName = 'identifierList';
+			} elseif ($this->isIdentifier()) {
+				$primitiveName = 'identifier';
+				$className = $holder->getName();
+			} else
+				$primitiveName = $this->getType()->getPrimitiveName();
+			
 			if ($this->getType() instanceof ObjectType) {
 				if (
 					!$this->getType()->isGeneric()
@@ -639,7 +651,7 @@ EOT;
 					$this->getName() <> $this->getRelationColumnName()
 						? $this->getRelationColumnName()
 						: null,
-					$this->getType()->getPrimitiveName(),
+					$primitiveName,
 					$className,
 					$this->getType()->isMeasurable()
 						? $this->size
