@@ -46,7 +46,7 @@
 			HeaderUtils::redirectRaw($this->getUrl().$postfix);
 		}
 		
-		protected function getUrl()
+		public function getUrl()
 		{
 			return $this->url;
 		}

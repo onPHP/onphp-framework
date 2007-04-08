@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-08	Dmitry E. Demidov
+
+	* main/Flow/RedirectView.class.php: change visibility of getUrl 
+	to public.
+	
 2007-04-06	Ivan Y. Khvostishkov
 
 	* main/Base/RequestType.class.php: added ability to import data from
