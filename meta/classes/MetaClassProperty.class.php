@@ -602,7 +602,7 @@ EOT;
 						
 						if ($remote->getPattern() instanceof ValueObjectPattern) {
 							// sould be handled by builder
-							Assert::isTrue(false, 'unreacheble place reached');
+							Assert::isUnreachable();
 						}
 						
 						$idName = $remote->getIdentifier()->getName();
