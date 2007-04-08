@@ -22,18 +22,9 @@
 			
 			foreach ($this->getProtoClass()->getPropertyList() as $property) {
 				$column = $prefix.$property->getColumnName();
-				$setter = $property->getSetter();
 				$exists = isset($array[$column]);
 				
-				if ($property->isRequired()) {
-					Assert::isTrue(
-						$exists,
-						'required property not found for object '
-						.$className.' - '.$property->getName()
-					);
-				}
-				
-				$identifier = ($property->getName() == $this->getIdName());
+				$setter = $property->getSetter();
 				
 				if (
 					$property->getRelationId()
@@ -46,30 +37,17 @@
 					)
 						continue;
 					
-					if ($exists) {
-						$remoteClass = $property->getClassName();
-						if (
-							!$identifier
-							&& $property->isGenericType()
-							&& $remoteClass
-						) {
-							$object->$setter(
-								call_user_func(
-									array($remoteClass, 'create'),
-									$array[$column]
-								)
-							);
-						} elseif (!$identifier && $remoteClass) {
-							$dao = 
-								call_user_func(
-									array($remoteClass, 'dao')
-								);
-							
-							$object->$setter($dao->getById($array[$column]));
-						} else {
-							$object->$setter($array[$column]);
-						}
+					if ($property->isRequired()) {
+						Assert::isTrue(
+							$exists,
+							'required property not found for object '
+							.$className.' - '.$property->getName()
+						);
+					} elseif (!$exists) {
+						continue;
 					}
+					
+					$object->$setter($property->toValue($array));
 				}
 			}
 			

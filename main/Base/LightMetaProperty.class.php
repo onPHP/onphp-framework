@@ -192,6 +192,31 @@
 			return $holderName.ucfirst($this->getName()).'DAO';
 		}
 		
+		public function toValue($scope)
+		{
+			$identifier = (
+				$this->generic && $this->required && (
+					$this->type == 'identifier'
+				)
+			);
+			
+			$raw = $scope[$this->getColumnName()];
+			
+			if (
+				!$identifier
+				&& $this->generic
+				&& $this->className
+			) {
+				return call_user_func(array($this->className, 'create'), $raw);
+			} elseif (!$identifier && $this->className) {
+				return
+					call_user_func(array($this->className, 'dao'))->
+						getById($raw);
+			}
+			
+			return $raw;
+		}
+		
 		public function toString()
 		{
 			return
