@@ -192,6 +192,19 @@
 			return $holderName.ucfirst($this->getName()).'DAO';
 		}
 		
+		public function processQuery(
+			InsertOrUpdateQuery $query,
+			Identifiable $object
+		)
+		{
+			$getter = $this->getGetter();
+			
+			return $query->lazySet(
+				$this->getColumnName(),
+				$object->$getter()
+			);
+		}
+		
 		public function toValue($scope)
 		{
 			$identifier = (
@@ -209,9 +222,16 @@
 			) {
 				return call_user_func(array($this->className, 'create'), $raw);
 			} elseif (!$identifier && $this->className) {
-				return
-					call_user_func(array($this->className, 'dao'))->
-						getById($raw);
+				$dao = call_user_func(array($this->className, 'dao'));
+				
+				if ($this->strategyId == FetchStrategy::JOIN) {
+					return $dao->makeJoinedObject(
+						$array,
+						$dao->getJoinPrefix($this->getColumnName(), $prefix)
+					);
+				} else {
+					return $dao->getById($raw);
+				}
 			}
 			
 			return $raw;

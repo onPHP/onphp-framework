@@ -15,6 +15,31 @@
 	**/
 	abstract class ProtoDAO extends GenericDAO
 	{
+		protected function setQueryFields(InsertOrUpdateQuery $query, $object)
+		{
+			$this->checkObjectType($object);
+			
+			foreach ($this->getProtoClass()->getPropertyList() as $property) {
+				if (
+					$property->getRelationId()
+					|| $property->isGenericType()
+				) {
+					// skip collections
+					if (
+						($property->getRelationId() <> MetaRelation::ONE_TO_ONE)
+						&& !$property->isGenericType()
+					)
+						continue;
+					
+					$property->processQuery($query, $object);
+				}
+			}
+			
+			echo  $query->toString().'<hr>';
+			
+			return $query;
+		}
+		
 		protected function makeSelf(&$array, $prefix = null)
 		{
 			$className = $this->getObjectName();
