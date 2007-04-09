@@ -1,5 +1,9 @@
 # $Id$
 
+2007-04-09 Anton E. Lebedevich
+	
+	* meta/types/ObjectType.class.php: unconditionally fill collection.
+
 2007-04-09	Ivan Y. Khvostishkov
 
 	* core/Base/Timestamp.class.php: toISOString() convertes it according to

@@ -167,17 +167,15 @@ public function get{$methodName}(\$lazy = false)
 **/
 public function fill{$methodName}(\$collection, \$lazy = false)
 {
-	if (!\$this->{$name} || (\$this->{$name}->isLazy() != \$lazy)) {
-		\$this->{$name} = new {$containerName}(\$this, \$lazy);
-		
-		if (!\$this->id) {
-			throw new WrongStateException(
-				'i do not know which object i belong to'
-			);
-		}
-		
-		\$this->{$name}->mergeList(\$collection);
+	\$this->{$name} = new {$containerName}(\$this, \$lazy);
+	
+	if (!\$this->id) {
+		throw new WrongStateException(
+			'i do not know which object i belong to'
+		);
 	}
+	
+	\$this->{$name}->mergeList(\$collection);
 	
 	return \$this;
 }
