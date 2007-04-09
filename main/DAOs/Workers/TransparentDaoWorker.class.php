@@ -41,7 +41,7 @@
 			} else {
 				$query = 
 					$this->dao->makeSelectHead()->
-					where(
+					andWhere(
 						Expression::eq(
 							DBField::create(
 								$this->dao->getIdName(),
