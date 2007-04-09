@@ -35,8 +35,6 @@
 				}
 			}
 			
-			echo  $query->toString().'<hr>';
-			
 			return $query;
 		}
 		

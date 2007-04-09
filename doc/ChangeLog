@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-09	Konstantin V. Arkhipov
+
+	* meta/builders/ValueObjectDaoBuilder.class.php,
+	main/DAOs/ValueObjectDAO.class.php: dropped.
+
 2007-04-08	Konstantin V. Arkhipov
 
 	* main/DAOs/ProtoDAO.class.php: unified makeSelf() implemented.
