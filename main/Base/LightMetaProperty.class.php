@@ -262,10 +262,26 @@
 					$value = $value->getId();
 				}
 				
-				if (($value === null) && !$this->isGenericType()) {
+				if (
+					($value === null) && !$this->isGenericType() && (
+						!$this->getRelationId()
+						|| ($this->getRelationId() == MetaRelation::ONE_TO_ONE)
+					)
+				) {
 					$dropper = $this->getDropper();
 					
 					$object->$dropper();
+					
+					return $form;
+				} elseif (
+					($this->getRelationId() == MetaRelation::ONE_TO_MANY)
+					|| ($this->getRelationId() == MetaRelation::MANY_TO_MANY)
+				) {
+					if ($value === null)
+						$value = array();
+					
+					$getter = $this->getGetter();
+					$object->$getter()->setList($value);
 					
 					return $form;
 				}
