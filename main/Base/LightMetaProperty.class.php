@@ -281,7 +281,7 @@
 					($this->getRelationId() <> MetaRelation::ONE_TO_ONE)
 					&& !$this->isGenericType()
 				)
-					continue;
+					return $query;
 				
 				$query->lazySet($this->getColumnName(), $object->$getter());
 			}
