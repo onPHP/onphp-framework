@@ -70,7 +70,7 @@
 						continue;
 					}
 					
-					$object->$setter($property->toValue($array));
+					$object->$setter($property->toValue($this, $array, $prefix));
 				}
 			}
 			

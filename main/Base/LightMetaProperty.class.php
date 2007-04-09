@@ -205,7 +205,7 @@
 			);
 		}
 		
-		public function toValue($scope)
+		public function toValue(ProtoDAO $dao, $array, $prefix = null)
 		{
 			$identifier = (
 				$this->generic && $this->required && (
@@ -213,7 +213,10 @@
 				)
 			);
 			
-			$raw = $scope[$this->getColumnName()];
+			if ($this->strategyId == FetchStrategy::JOIN)
+				$raw = $dao->getJoinPrefix($this->getColumnName(), $prefix);
+			else
+				$raw = $array[$prefix.$this->getColumnName()];
 			
 			if (
 				!$identifier
@@ -222,15 +225,15 @@
 			) {
 				return call_user_func(array($this->className, 'create'), $raw);
 			} elseif (!$identifier && $this->className) {
-				$dao = call_user_func(array($this->className, 'dao'));
+				$remoteDao = call_user_func(array($this->className, 'dao'));
 				
 				if ($this->strategyId == FetchStrategy::JOIN) {
-					return $dao->makeJoinedObject(
+					return $remoteDao->makeJoinedObject(
 						$array,
-						$dao->getJoinPrefix($this->getColumnName(), $prefix)
+						$remoteDao->getJoinPrefix($this->getColumnName(), $prefix)
 					);
 				} else {
-					return $dao->getById($raw);
+					return $remoteDao->getById($raw);
 				}
 			}
 			

@@ -100,6 +100,7 @@
 		
 		public function queryRaw($queryString)
 		{
+//			echo $queryString.'<Hr>';
 			try {
 				return pg_query($this->link, $queryString);
 			} catch (BaseException $e) {
