@@ -79,11 +79,16 @@ EOT;
 				) {
 					$remote = $property->getType()->getClass();
 					
+					$composite = array();
+					
 					foreach ($remote->getProperties() as $remoteProperty) {
-						$list[] =
-							"'{$remoteProperty->getName()}' => "
-							.$remoteProperty->toLightProperty($remote)->toString();
+						$composite[] = "add(\n".$remoteProperty->toLightProperty($remote)->toString()."\n)";
 					}
+					
+					$list[] =
+						"'{$property->getName()}' =>\n"
+						."CompositeLightMetaProperty::create('{$remote->getName()}', '{$property->getName()}')->\n"
+						.implode("->\n", $composite);
 				} else {
 					$list[] =
 						"'{$property->getName()}' => "

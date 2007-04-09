@@ -402,7 +402,8 @@
 			
 			foreach ($proto->getPropertyList() as $property) {
 				if (
-					$property->getRelationId() == MetaRelation::ONE_TO_ONE
+					($property instanceof LightMetaProperty)
+					&& $property->getRelationId() == MetaRelation::ONE_TO_ONE
 					&& !$property->isGenericType()
 					&& !$property->getFetchStrategyId() == FetchStrategy::CASCADE
 				) {

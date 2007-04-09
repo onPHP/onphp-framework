@@ -33,6 +33,7 @@
 			}
 			
 			foreach ($propertyList as $property) {
+				// FIXME: will explode on CompositeLightMetaProperty
 				$name = $property->getName();
 				
 				if (isset($primitives[$name])) {

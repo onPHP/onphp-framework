@@ -17,6 +17,28 @@
 	{
 		abstract protected function makePropertyList();
 		
+		public static function makeObject($className, $array, $prefix = null)
+		{
+			$object = new $className;
+			
+			if ($object instanceof DAOConnected)
+				$dao = $object->dao();
+			else
+				$dao = null;
+			
+			foreach ($object->proto()->getPropertyList() as $property) {
+				if (
+					($property instanceof CompositeLightMetaProperty)
+					|| $property->isBuildable($array, $prefix)
+				) {
+					$setter = $property->getSetter();
+					$object->$setter($property->toValue($dao, $array, $prefix));
+				}
+			}
+			
+			return $object;
+		}
+		
 		final public function getPropertyList()
 		{
 			static $lists = array();
@@ -51,25 +73,7 @@
 			$form = Form::create();
 			
 			foreach ($this->getPropertyList() as $property) {
-				$prm =
-					call_user_func(
-						array('Primitive', $property->getType()),
-						$property->getName()
-					);
-				
-				if ($min = $property->getMin())
-					$prm->setMin($min);
-				
-				if ($max = $property->getMax())
-					$prm->setMax($max);
-				
-				if ($prm instanceof IdentifiablePrimitive)
-					$prm->of($property->getClassName());
-				
-				if ($property->isRequired())
-					$prm->required();
-				
-				$form->add($prm);
+				$property->processForm($form);
 			}
 			
 			return $form;
@@ -82,20 +86,11 @@
 			$className = get_class($this);
 			
 			if (!isset($mappings[$className])) {
+				$mapping = array();
 				foreach ($this->getPropertyList() as $name => $property) {
-					if (
-						!$property->getRelationId()
-						|| (
-							$property->getRelationId()
-							== MetaRelation::ONE_TO_ONE
-						) || (
-							$property->getFetchStrategyId()
-							== FetchStrategy::LAZY
-						)
-					) {
-						$mappings[$className][$name] = $property->getColumnName();
-					}
+					$mapping = $property->processMapping($mapping);
 				}
+				$mappings[$className] = $mapping;
 			}
 			
 			return $mappings[$className];

@@ -13,6 +13,9 @@
 
 2007-04-09	Konstantin V. Arkhipov
 
+	* main/Base/CompositeLightMetaProperty.class.php: new light property type
+	implemented.
+
 	* meta/builders/ValueObjectDaoBuilder.class.php,
 	main/DAOs/ValueObjectDAO.class.php: dropped.
 

@@ -773,12 +773,12 @@
 						);
 					}
 					
-					$dao = $object->dao();
-					
-					if ($dao instanceof ValueObjectDAO) {
+					if (!$object instanceof DAOConnected) {
 						$out->info(', ');
 						continue;
 					}
+					
+					$dao = $object->dao();
 					
 					try {
 						DBPool::getByDao($dao);

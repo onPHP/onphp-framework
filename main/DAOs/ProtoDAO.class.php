@@ -20,19 +20,7 @@
 			$this->checkObjectType($object);
 			
 			foreach ($this->getProtoClass()->getPropertyList() as $property) {
-				if (
-					$property->getRelationId()
-					|| $property->isGenericType()
-				) {
-					// skip collections
-					if (
-						($property->getRelationId() <> MetaRelation::ONE_TO_ONE)
-						&& !$property->isGenericType()
-					)
-						continue;
-					
-					$property->processQuery($query, $object);
-				}
+				$property->processQuery($query, $object);
 			}
 			
 			return $query;
@@ -40,41 +28,9 @@
 		
 		protected function makeSelf(&$array, $prefix = null)
 		{
-			$className = $this->getObjectName();
-			$object = new $className;
-			
-			foreach ($this->getProtoClass()->getPropertyList() as $property) {
-				$column = $prefix.$property->getColumnName();
-				$exists = isset($array[$column]);
-				
-				$setter = $property->getSetter();
-				
-				if (
-					$property->getRelationId()
-					|| $property->isGenericType()
-				) {
-					// skip collections
-					if (
-						($property->getRelationId() <> MetaRelation::ONE_TO_ONE)
-						&& !$property->isGenericType()
-					)
-						continue;
-					
-					if ($property->isRequired()) {
-						Assert::isTrue(
-							$exists,
-							'required property not found for object '
-							.$className.' - '.$property->getName()
-						);
-					} elseif (!$exists) {
-						continue;
-					}
-					
-					$object->$setter($property->toValue($this, $array, $prefix));
-				}
-			}
-			
-			return $object;
+			return $this->getProtoClass()->makeObject(
+				$this->getObjectName(), $array, $prefix
+			);
 		}
 		
 		public function fetchCollections(

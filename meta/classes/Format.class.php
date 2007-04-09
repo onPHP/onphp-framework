@@ -36,6 +36,8 @@
 					$indent--;
 				elseif ($string == ");\n")
 					$indent--;
+				elseif ($string == "),\n")
+					$indent--;
 				elseif ($string == "?>\n")
 					$indent = 0;
 				elseif ($string[0] == '?')
@@ -51,6 +53,12 @@
 				if (substr($string, -2 ,2) == "{\n")
 					$indent++;
 				elseif (
+					substr_count($string, "'") == 2
+					&& substr($string, -3, 3) == "=>\n"
+				) {
+					$indent++;
+					$chain++;
+				} elseif (
 					$string[0] == '$'
 					&& (
 						substr($string, -2, 2) == "=\n"
@@ -71,7 +79,8 @@
 					$chain = 1;
 				} elseif ($string[0] == ':') {
 					$indent--;
-				}
+				} elseif ($string == "),\n")
+					$indent--;
 				
 				if ($string == "\n") {
 					if (!$first && ($indent > 0)) {

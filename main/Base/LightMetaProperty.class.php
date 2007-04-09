@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	final class LightMetaProperty implements Stringable
+	final class LightMetaProperty implements LightPropertyHelper, Stringable
 	{
 		private static $limits = array(
 			'SmallInteger' => array(
@@ -192,6 +192,79 @@
 			return $holderName.ucfirst($this->getName()).'DAO';
 		}
 		
+		public function isBuildable($array, $prefix = null)
+		{
+			$column = $prefix.$this->getColumnName();
+			$exists = isset($array[$column]);
+			
+			if (
+				$this->getRelationId()
+				|| $this->isGenericType()
+			) {
+				// skip collections
+				if (
+					($this->getRelationId() <> MetaRelation::ONE_TO_ONE)
+					&& !$this->isGenericType()
+				)
+					return false;
+				
+				if ($this->isRequired()) {
+					Assert::isTrue(
+						$exists,
+						'required property not found: '.$this->getName()
+					);
+				} elseif (!$exists) {
+					return false;
+				}
+			}
+			
+			return true;
+		}
+		
+		public function processMapping(array $mapping)
+		{
+			if (
+				!$this->getRelationId()
+				|| (
+					$this->getRelationId()
+					== MetaRelation::ONE_TO_ONE
+				) || (
+					$this->getFetchStrategyId()
+					== FetchStrategy::LAZY
+				)
+			) {
+				$mapping[$this->getName()] = $this->getColumnName();
+			}
+			
+			return $mapping;
+		}
+		
+		/**
+		 * @return Form
+		**/
+		public function processForm(Form $form)
+		{
+			$prm =
+				call_user_func(
+					array('Primitive', $this->getType()),
+					$this->getName()
+				);
+			
+			if ($min = $this->getMin())
+				$prm->setMin($min);
+			
+			if ($max = $this->getMax())
+				$prm->setMax($max);
+			
+			if ($prm instanceof IdentifiablePrimitive)
+				$prm->of($this->getClassName());
+			
+			if ($this->isRequired())
+				$prm->required();
+			
+			return $form->add($prm);
+		}
+		
 		public function processQuery(
 			InsertOrUpdateQuery $query,
 			Identifiable $object
@@ -199,13 +272,24 @@
 		{
 			$getter = $this->getGetter();
 			
-			return $query->lazySet(
-				$this->getColumnName(),
-				$object->$getter()
-			);
+			if (
+				$this->getRelationId()
+				|| $this->isGenericType()
+			) {
+				// skip collections
+				if (
+					($this->getRelationId() <> MetaRelation::ONE_TO_ONE)
+					&& !$this->isGenericType()
+				)
+					continue;
+				
+				$query->lazySet($this->getColumnName(), $object->$getter());
+			}
+			
+			return $query;
 		}
 		
-		public function toValue(ProtoDAO $dao, $array, $prefix = null)
+		public function toValue(ProtoDAO $dao = null, $array, $prefix = null)
 		{
 			$identifier = (
 				$this->generic && $this->required && (
@@ -213,8 +297,8 @@
 				)
 			);
 			
-			if ($this->strategyId == FetchStrategy::JOIN)
-				$raw = $dao->getJoinPrefix($this->getColumnName(), $prefix);
+			if ($dao && ($this->strategyId == FetchStrategy::JOIN))
+				$raw = $array[$dao->getJoinPrefix($this->getColumnName(), $prefix)];
 			else
 				$raw = $array[$prefix.$this->getColumnName()];
 			
