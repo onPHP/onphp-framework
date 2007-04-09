@@ -31,6 +31,8 @@
 				&& (!$class->getPattern() instanceof AbstractClassPattern)
 				&& (!$class->getPattern() instanceof ValueObjectPattern)
 			) {
+				$interfaces .= ', DAOConnected';
+				
 				$daoName = $class->getName().'DAO';
 				$dao = <<<EOT
 	/**
