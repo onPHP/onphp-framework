@@ -1,9 +1,15 @@
 # $Id$
 
-2007-04-08	Ivan Y. Khvostishkov
+2007-04-09	Ivan Y. Khvostishkov
+
+	* core/Base/Timestamp.class.php: toISOString() convertes it according to
+	ISO 8601 standard.
 
 	* core/Form/MappedForm.class.php: fixed ability to add more than one
 	source for primitive.
+
+	* core/Form/FormUtils.class.php: fixed object2form() for non-prototyped
+	objects.
 
 2007-04-08	Dmitry E. Demidov
 
