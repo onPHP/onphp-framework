@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-08	Ivan Y. Khvostishkov
+
+	* core/Form/MappedForm.class.php: fixed ability to add more than one
+	source for primitive.
+
 2007-04-08	Dmitry E. Demidov
 
 	* main/Flow/RedirectView.class.php,

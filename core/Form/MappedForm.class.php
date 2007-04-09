@@ -58,7 +58,7 @@
 		{
 			$this->checkExistence($primitiveName);
 			
-			$this->map[$primitiveName] = $type;
+			$this->map[$primitiveName][] = $type;
 			
 			return $this;
 		}
@@ -66,19 +66,18 @@
 		/* void */ public function importOne($name, HttpRequest $request)
 		{
 			$this->checkExistence($name);
+
+			$scopes = array();
 			
 			if (isset($this->map[$name])) {
-				if (is_array($this->map[$name])) {
-					foreach ($this->map[$name] as $type) {
-						$scope = $request->getByType($type);
-						$this->form->importOne($name, $scope);
-					}
-				} else {
-					$scope = $request->getByType($this->map[$name]);
-					$this->form->importOne($name, $scope);
+				foreach ($this->map[$name] as $type) {
+					$scopes[] = $request->getByType($type);
 				}
 			} elseif ($this->type) {
-				$scope = $request->getByType($this->type);
+				$scopes[] = $request->getByType($this->type);
+			}
+
+			foreach ($scopes as $scope) {
 				$this->form->importOne($name, $scope);
 			}
 		}
