@@ -24,23 +24,15 @@
 			$primitives = $form->getPrimitiveList();
 			$class = new ReflectionClass($object);
 			
-			$isPrototyped = ($object instanceof Prototyped);
-			
-			if ($isPrototyped) {
-				$propertyList = $object->proto()->getPropertyList();
+			if ($object instanceof Prototyped) {
+				foreach ($object->proto()->getPropertyList() as $property) {
+					$property->processFormImport($object, $form, $ignoreNull);
+				}
 			} else {
-				$propertyList = $class->getProperties();
-			}
-			
-			foreach ($propertyList as $property) {
-				// FIXME: will explode on CompositeLightMetaProperty
-				$name = $property->getName();
-				
-				if (isset($primitives[$name])) {
-					if (
-						!$isPrototyped
-						|| $property->getFetchStrategyId() != FetchStrategy::LAZY
-					) {
+				foreach ($class->getProperties() as $property) {
+					$name = $property->getName();
+					
+					if (isset($primitives[$name])) {
 						$getter = 'get'.ucfirst($name);
 						if ($class->hasMethod($getter)) {
 							$value = $object->$getter();
@@ -59,35 +51,41 @@
 		{
 			Assert::isTrue(is_object($object));
 			
-			$class = new ReflectionClass($object);
-			
-			foreach ($form->getPrimitiveList() as $name => $prm) {
-				$setter = 'set'.ucfirst($name);
-				$value = $prm->getValue();
+			if ($object instanceof Prototyped) {
+				foreach ($object->proto()->getPropertyList() as $property) {
+					$property->processFormExport($form, $object, $ignoreNull);
+				}
+			} else {
+				$class = new ReflectionClass($object);
 				
-				if (
-					$class->hasMethod($setter)
-					&& (!$ignoreNull || ($value !== null))
-				) {
-					if ( // magic!
-						$prm->getName() == 'id'
-						&& (
-							$value instanceof Identifiable
-						)
+				foreach ($form->getPrimitiveList() as $name => $prm) {
+					$setter = 'set'.ucfirst($name);
+					$value = $prm->getValue();
+					
+					if (
+						$class->hasMethod($setter)
+						&& (!$ignoreNull || ($value !== null))
 					) {
-						$value = $value->getId();
-					}
-					
-					if ($value === null) {
-						$dropper = 'drop'.ucfirst($name);
-						
-						if ($class->hasMethod($dropper)) {
-							$object->$dropper();
-							continue;
+						if ( // magic!
+							$prm->getName() == 'id'
+							&& (
+								$value instanceof Identifiable
+							)
+						) {
+							$value = $value->getId();
 						}
+						
+						if ($value === null) {
+							$dropper = 'drop'.ucfirst($name);
+							
+							if ($class->hasMethod($dropper)) {
+								$object->$dropper();
+								continue;
+							}
+						}
+						
+						$object->$setter($value);
 					}
-					
-					$object->$setter($value);
 				}
 			}
 		}

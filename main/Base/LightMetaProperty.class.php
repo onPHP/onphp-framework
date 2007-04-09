@@ -112,6 +112,11 @@
 			return 'set'.ucfirst($this->name);
 		}
 		
+		public function getDropper()
+		{
+			return 'drop'.ucfirst($this->name);
+		}
+		
 		/**
 		 * @return LightMetaProperty
 		**/
@@ -242,6 +247,60 @@
 		/**
 		 * @return Form
 		**/
+		public function processFormExport(Form $form, $object, $ignoreNull = true)
+		{
+			if (!$form->primitiveExists($this->getName()))
+				return $form;
+			
+			$setter = $this->getSetter();
+			$value = $form->getValue($this->getName());
+			
+			if (
+				!$ignoreNull || ($value !== null)
+			) {
+				if ($this->isIdentifier()) {
+					$value = $value->getId();
+				}
+				
+				if (($value === null) && !$this->isGenericType()) {
+					$dropper = $this->getDropper();
+					
+					$object->$dropper();
+					
+					return $form;
+				}
+				
+				$object->$setter($value);
+			}
+			
+			return $form;
+		}
+		
+		/**
+		 * @return Form
+		**/
+		public function processFormImport($object, Form $form, $ignoreNull = true)
+		{
+			if (
+				($this->getFetchStrategyId() == FetchStrategy::LAZY)
+				|| !$form->primitiveExists($this->getName())
+			)
+				return $form;
+			
+			$getter = $this->getGetter();
+			
+			$value = $object->$getter();
+			
+			if (!$ignoreNull || ($value !== null)) {
+				$form->importValue($this->getName(), $value);
+			}
+			
+			return $form;
+		}
+		
+		/**
+		 * @return Form
+		**/
 		public function processForm(Form $form)
 		{
 			$prm =
@@ -291,24 +350,18 @@
 		
 		public function toValue(ProtoDAO $dao = null, $array, $prefix = null)
 		{
-			$identifier = (
-				$this->generic && $this->required && (
-					$this->type == 'identifier'
-				)
-			);
-			
 			if ($dao && ($this->strategyId == FetchStrategy::JOIN))
 				$raw = $array[$dao->getJoinPrefix($this->getColumnName(), $prefix)];
 			else
 				$raw = $array[$prefix.$this->getColumnName()];
 			
 			if (
-				!$identifier
+				!$this->isIdentifier()
 				&& $this->generic
 				&& $this->className
 			) {
 				return call_user_func(array($this->className, 'create'), $raw);
-			} elseif (!$identifier && $this->className) {
+			} elseif (!$this->isIdentifier() && $this->className) {
 				$remoteDao = call_user_func(array($this->className, 'dao'));
 				
 				if ($this->strategyId == FetchStrategy::JOIN) {
@@ -378,6 +431,15 @@
 						: 'null'
 				)
 				.')';
+		}
+		
+		private function isIdentifier()
+		{
+			return (
+				$this->generic && $this->required && (
+					$this->type == 'identifier'
+				)
+			);
 		}
 		
 		private function getLimit($whichOne)

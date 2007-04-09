@@ -17,6 +17,8 @@
 
 2007-04-09	Konstantin V. Arkhipov
 
+	* core/Form/FormUtils.class.php: ported to new proto's.
+
 	* main/Base/CompositeLightMetaProperty.class.php: new light property type
 	implemented.
 

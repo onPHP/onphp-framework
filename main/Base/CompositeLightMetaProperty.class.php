@@ -99,6 +99,34 @@
 		}
 		
 		/**
+		 * @return Form
+		**/
+		public function processFormExport(Form $form, $object, $ignoreNull = true)
+		{
+			$getter = $this->getGetter();
+			$inner = $object->$getter();
+			
+			foreach ($this->list as $property)
+				$property->processFormExport($form, $inner, $ignoreNull);
+			
+			return $form;
+		}
+		
+		/**
+		 * @return Form
+		**/
+		public function processFormImport($object, Form $form, $ignoreNull = true)
+		{
+			$getter = $this->getGetter();
+			$inner = $object->$getter();
+			
+			foreach ($this->list as $property)
+				$property->processFormImport($inner, $form, $ignoreNull);
+			
+			return $form;
+		}
+		
+		/**
 		 * @return InsertOrUpdateQuery
 		**/
 		public function processQuery(

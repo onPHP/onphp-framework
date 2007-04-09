@@ -18,11 +18,16 @@
 	**/
 	interface LightPropertyHelper
 	{
+		public function getGetter();
+		public function getSetter();
+		
 		public function toValue(ProtoDAO $dao, $array, $prefix = null);
 		
 		public function processMapping(array $mapping);
 		
 		public function processForm(Form $form);
+		public function processFormImport($object, Form $form, $ignoreNull = true);
+		public function processFormExport(Form $form, $object, $ignoreNull = true);
 		
 		/**
 		 * @return InsertOrUpdateQuery
