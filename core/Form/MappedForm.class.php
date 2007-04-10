@@ -79,9 +79,6 @@
 
 			foreach ($scopes as $scope) {
 				$result = $this->form->importOne($name, $scope);
-
-				if ($result !== null)
-					break;
 			}
 		}
 		
