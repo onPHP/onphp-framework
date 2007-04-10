@@ -27,5 +27,10 @@
 				."\n"
 				.'setMax(PrimitiveInteger::SIGNED_SMALL_MAX)';
 		}
+		
+		public function toXsdType()
+		{
+			return 'xsd:short';
+		}
 	}
 ?>

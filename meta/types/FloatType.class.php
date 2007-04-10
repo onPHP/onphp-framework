@@ -40,5 +40,10 @@
 		{
 			return 'Primitive::float';
 		}
+		
+		public function toXsdType()
+		{
+			return 'xsd:float';
+		}
 	}
 ?>

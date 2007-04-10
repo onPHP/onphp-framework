@@ -22,5 +22,10 @@
 				."->\n"
 				.'setUnsigned(true)';
 		}
+		
+		public function toXsdType()
+		{
+			return 'xsd:unsignedLong';
+		}
 	}
 ?>

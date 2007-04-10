@@ -24,5 +24,11 @@
 		{
 			return array('start', 'end');
 		}
+		
+		// FIXME: implement me
+		public function toXsdType()
+		{
+			return null;
+		}
 	}
 ?>

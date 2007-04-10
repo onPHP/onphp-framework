@@ -38,5 +38,11 @@
 		{
 			return null;
 		}
+		
+		// FIXME: implement me
+		public function toXsdType()
+		{
+			return null;
+		}
 	}
 ?>

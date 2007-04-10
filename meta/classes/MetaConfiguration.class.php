@@ -866,6 +866,13 @@
 			return $this->out;
 		}
 		
+		public function toXsd()
+		{
+			foreach ($this->classes as $metaClass) {
+				echo $metaClass->toComplexType();
+			}
+		}
+		
 		/**
 		 * @return MetaConfiguration
 		**/

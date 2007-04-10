@@ -21,5 +21,11 @@
 		{
 			return true;
 		}
+		
+		// FIXME: implement me
+		public function toXsdType(/*MetaClassProperty*/ $property = null)
+		{
+			return null;
+		}
 	}
 ?>

@@ -56,5 +56,10 @@
 		{
 			return 'Primitive::string';
 		}
+		
+		public function toXsdType()
+		{
+			return 'xsd:string';
+		}
 	}
 ?>

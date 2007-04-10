@@ -359,5 +359,33 @@
 			
 			return $this;
 		}
+		
+		public function toComplexType()
+		{
+			$element =
+				"<complexType name=\"" . $this->getName() . "\">\r\n"
+				. "	<sequence>\r\n";
+			
+			foreach ($this->properties as $property) {
+			
+				$element .=
+					"<element name=\"" 
+					. $property->getName() 
+					. "\" type=\"";
+				
+					if ($property->getType() instanceof ObjectType) {
+						$element .= $property->getType()->toXsdType($property);
+					} else
+						$element .= $property->getType()->toXsdType();
+					
+				$element .=   "\" />\r\n";
+			}
+			
+			$element .=
+				"	</sequence>\r\n"
+				."</complexType>\r\n";
+			
+			echo $element;
+		}
 	}
 ?>

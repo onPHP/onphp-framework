@@ -61,5 +61,10 @@
 				."\n"
 				.'setMax(PrimitiveInteger::SIGNED_MAX)';
 		}
+		
+		public function toXsdType()
+		{
+			return 'xsd:int';
+		}
 	}
 ?>

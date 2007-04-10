@@ -27,5 +27,10 @@
 		{
 			return 'setMin(0)->'."\n".'setMax(PrimitiveInteger::UNSIGNED_MAX)';
 		}
+		
+		public function toXsdType()
+		{
+			return 'xsd:unsignedInt';
+		}
 	}
 ?>

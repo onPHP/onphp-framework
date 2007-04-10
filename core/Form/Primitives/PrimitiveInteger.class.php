@@ -33,5 +33,10 @@
 		{
 			return (int) $number;
 		}
+		
+		public function toXsdType()
+		{
+			return 'xsd:unsignedShort';
+		}
 	}
 ?>

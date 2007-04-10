@@ -24,5 +24,10 @@
 		{
 			return null;
 		}
+		
+		public function toXsdType()
+		{
+			return 'xsd:long';
+		}
 	}
 ?>

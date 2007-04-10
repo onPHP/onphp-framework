@@ -19,5 +19,10 @@
 		{
 			return 'DataType::create(DataType::DOUBLE)';
 		}
+		
+		public function toXsdType()
+		{
+			return 'xsd:double';
+		}
 	}
 ?>

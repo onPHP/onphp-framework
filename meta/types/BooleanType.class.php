@@ -58,6 +58,11 @@
 		{
 			return 'Primitive::boolean';
 		}
+		
+		public function toXsdType()
+		{
+			return 'xsd::boolean';
+		}
 
 		public function toGetter(
 			MetaClass $class,
