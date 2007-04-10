@@ -78,7 +78,7 @@
 			}
 
 			foreach ($scopes as $scope) {
-				$result = $this->form->importOne($name, $scope);
+				$this->form->importOne($name, $scope);
 			}
 		}
 		
