@@ -77,15 +77,21 @@
 				$scopes[] = $request->getByType($this->type);
 			}
 
+			$first = true;
 			foreach ($scopes as $scope) {
-				$this->form->importOne($name, $scope);
+				if ($first) {
+					$this->form->importOne($name, $scope);
+					$first = false;
+				} else 
+					$this->form->importOneMore($name, $scope);
 			}
 		}
 		
 		/* void */ public function import(HttpRequest $request)
 		{
-			foreach ($this->form->getPrimitiveList() as $prm)
+			foreach ($this->form->getPrimitiveList() as $prm) {
 				$this->importOne($prm->getName(), $request);
+			}
 		}
 		
 		private function checkExistence($name)
