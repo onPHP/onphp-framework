@@ -875,7 +875,7 @@
 			}
 			
 			foreach ($containers as $container) {
-				echo (MetaClass::buildXsdContainers($container)) . "\r\n";
+				echo (MetaClass::buildXsdContainer($container)) . "\r\n";
 			}
 		}
 		

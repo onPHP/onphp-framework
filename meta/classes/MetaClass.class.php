@@ -428,7 +428,7 @@
 			return $element;
 		}
 		
-		public static function buildXsdContainers(ObjectType $object)
+		public static function buildXsdContainer(ObjectType $object)
 		{
 			return
 				"<complexType
