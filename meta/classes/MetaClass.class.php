@@ -360,10 +360,8 @@
 			return $this;
 		}
 		
-		public function toComplexType()
+		public function toComplexType(&$containers)
 		{
-			$containers = array();
-			 
 			$element =
 				"<complexType name=\"" . $this->getName() . "\""
 				 . (
@@ -395,13 +393,14 @@
 								$property->getRelation()->getId()
 								== MetaRelation::ONE_TO_MANY
 						) {
-							$containers[] = $property->getType();
-							
-							$xsdType =
-								"tns:"
-								. $this->makeXsdContainerName(
+							$containerName =
+								self::makeXsdContainerName(
 									$property->getType()
 								);
+							
+							$containers[$containerName] = $property->getType();
+							
+							$xsdType = "tns:" . $containerName;
 						} else
 							$xsdType = $property->getType()->toXsdType();
 					} else
@@ -426,23 +425,14 @@
 			$element .=
 				"</complexType>\r\n";
 			
-			foreach ($containers as $container) {
-				$element .= ($this->buildXsdContainers($container)) . "\r\n";
-			}
-			
-			echo $element;
+			return $element;
 		}
 		
-		private function makeXsdContainerName(ObjectType $object)
-		{
-			return $object->getClass()->getName() . 'List';
-		}
-		
-		private function buildXsdContainers(ObjectType $object)
+		public static function buildXsdContainers(ObjectType $object)
 		{
 			return
 				"<complexType
-					name=\"". $this->makeXsdContainerName($object)."\"
+					name=\"". self::makeXsdContainerName($object)."\"
 				>
 				<complexContent>
 					<restriction base=\"soapenc:Array\">
@@ -453,6 +443,11 @@
 					</restriction>
 				</complexContent>
 			</complexType>";
+		}
+		
+		private static function makeXsdContainerName(ObjectType $object)
+		{
+			return $object->getClass()->getName() . 'List';
 		}
 	}
 ?>

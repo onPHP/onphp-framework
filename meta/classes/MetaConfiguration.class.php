@@ -868,8 +868,14 @@
 		
 		public function toXsd()
 		{
+			$containers = array();
+			
 			foreach ($this->classes as $metaClass) {
-				echo $metaClass->toComplexType();
+				echo $metaClass->toComplexType($containers);
+			}
+			
+			foreach ($containers as $container) {
+				echo (MetaClass::buildXsdContainers($container)) . "\r\n";
 			}
 		}
 		
