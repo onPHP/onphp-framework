@@ -98,11 +98,6 @@
 		
 		/// boring delegates
 		//@{
-		public function get(ObjectQuery $oq, $expires = Cache::DO_NOT_CACHE)
-		{
-			return Cache::worker($this)->get($oq, $expires);
-		}
-
 		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			if (isset($this->identityMap[$id]))
@@ -130,11 +125,6 @@
 		)
 		{
 			return Cache::worker($this)->getCustom($query, $expires);
-		}
-		
-		public function getList(ObjectQuery $oq, $expires = Cache::DO_NOT_CACHE)
-		{
-			return Cache::worker($this)->getList($oq, $expires);
 		}
 		
 		public function getListByIds(
@@ -181,13 +171,6 @@
 		)
 		{
 			return Cache::worker($this)->getCustomRowList($query, $expires);
-		}
-		
-		public function getCountedList(
-			ObjectQuery $oq, $expires = Cache::DO_NOT_CACHE
-		)
-		{
-			return Cache::worker($this)->getCountedList($oq, $expires);
 		}
 		
 		public function getQueryResult(

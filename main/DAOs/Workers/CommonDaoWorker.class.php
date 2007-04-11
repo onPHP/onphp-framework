@@ -21,11 +21,6 @@
 	{
 		/// single object getters
 		//@{
-		public function get(ObjectQuery $oq, $expires = Cache::DO_NOT_CACHE)
-		{
-			return $this->getByQuery($oq->toSelectQuery($this->dao), $expires);
-		}
-
 		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			if (
@@ -149,14 +144,6 @@
 
 		/// object's list getters
 		//@{
-		public function getList(ObjectQuery $oq, $expires = Cache::DO_NOT_CACHE)
-		{
-			return
-				$this->getListByQuery(
-					$oq->toSelectQuery($this->dao), $expires
-				);
-		}
-		
 		public function getListByIds($ids, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			if ($expires !== Cache::DO_NOT_CACHE) {
@@ -329,16 +316,6 @@
 		
 		/// query result getters
 		//@{
-		public function getCountedList(
-			ObjectQuery $oq, $expires = Cache::DO_NOT_CACHE
-		)
-		{
-			return
-				$this->getQueryResult(
-					$oq->toSelectQuery($this->dao), $expires
-				);
-		}
-		
 		public function getQueryResult(
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)

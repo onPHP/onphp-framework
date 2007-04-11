@@ -17,7 +17,6 @@
 	{
 		/// single object getters
 		//@{
-		public function get(ObjectQuery $oq);
 		public function getById($id);
 		public function getByLogic(LogicalObject $logic);
 		public function getByQuery(SelectQuery $query);
@@ -26,7 +25,6 @@
 		
 		/// object's list getters
 		//@{
-		public function getList(ObjectQuery $oq);
 		public function getListByIds($ids);
 		public function getListByQuery(SelectQuery $query);
 		public function getListByLogic(LogicalObject $logic);
@@ -39,9 +37,8 @@
 		public function getCustomRowList(SelectQuery $query);
 		//@}
 
-		/// query result getters
+		/// query result getter
 		//@{
-		public function getCountedList(ObjectQuery $oq);
 		public function getQueryResult(SelectQuery $query);
 		//@}
 		

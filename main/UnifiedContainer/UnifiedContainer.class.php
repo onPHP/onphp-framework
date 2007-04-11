@@ -22,10 +22,7 @@
 				Identifiable $parent, UnifiedContainer $dao, $lazy = true
 			)
 
-		if you want to apply ObjectQuery's "filter":
-			public function setObjectQuery(ObjectQuery $oq)
-		
-		or Criteria (ObjectQuery will be ignored):
+		if you want to apply Criteria's "filter":
 			public function setCriteria(Criteria $criteria)
 
 		first you should fetch whatever you want:
@@ -158,24 +155,6 @@
 		public function getCriteria()
 		{
 			return $this->worker->getCriteria();
-		}
-		
-		/**
-		 * @deprecated by Criteria
-		 * 
-		 * @throws WrongArgumentException
-		 * @return UnifiedContainer
-		**/
-		public function setObjectQuery(ObjectQuery $oq)
-		{
-			Assert::isTrue(
-				$this->dao instanceof StorableDAO,
-				'you must extends from StorableDAO to be able to use ObjectQueries'
-			);
-			
-			$this->worker->setObjectQuery($oq);
-
-			return $this;
 		}
 		
 		/**

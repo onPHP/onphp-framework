@@ -18,7 +18,6 @@
 	abstract class UnifiedContainerWorker
 	{
 		protected $criteria		= null;
-		protected $oq			= null;
 		protected $container	= null;
 		
 		abstract public function makeFetchQuery();
@@ -27,16 +26,6 @@
 		public function __construct(UnifiedContainer $uc)
 		{
 			$this->container = $uc;
-		}
-		
-		/**
-		 * @return UnifiedContainerWorker
-		**/
-		public function setObjectQuery(ObjectQuery $oq)
-		{
-			$this->oq = $oq;
-			
-			return $this;
 		}
 		
 		/**
@@ -78,8 +67,6 @@
 		{
 			if ($this->criteria)
 				return $this->criteria->toSelectQuery();
-			elseif ($this->oq)
-				return $this->oq->toSelectQuery($this->container->getDao());
 			
 			return $this->container->getDao()->makeSelectHead();
 		}

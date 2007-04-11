@@ -134,6 +134,19 @@
 		/**
 		 * @return Criteria
 		**/
+		public function prependOrder(/* MapableObject */ $order)
+		{
+			if (!$order instanceof MappableObject)
+				$order = new OrderBy($order);
+			
+			$this->order->prepend($order);
+			
+			return $this;
+		}
+		
+		/**
+		 * @return Criteria
+		**/
 		public function dropOrder()
 		{
 			$this->order = new OrderChain();

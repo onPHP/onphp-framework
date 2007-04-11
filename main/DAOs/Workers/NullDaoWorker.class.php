@@ -22,11 +22,6 @@
 	{
 		/// single object getters
 		//@{
-		public function get(ObjectQuery $oq)
-		{
-			return $this->getByQuery($oq->toSelectQuery($this->dao));
-		}
-		
 		public function getById($id)
 		{
 			$query = 
@@ -87,11 +82,6 @@
 		
 		/// object's list getters
 		//@{
-		public function getList(ObjectQuery $oq)
-		{
-			return $this->getListByQuery($oq->toSelectQuery($this->dao));
-		}
-		
 		public function getListByIds($ids)
 		{
 			return
@@ -161,11 +151,6 @@
 		
 		/// query result getters
 		//@{
-		public function getCountedList(ObjectQuery $oq)
-		{
-			return $this->getQueryResult($oq->toSelectQuery($this->dao));
-		}
-		
 		public function getQueryResult(SelectQuery $query)
 		{
 			$list = $this->fetchList($query);

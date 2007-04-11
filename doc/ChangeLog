@@ -1,6 +1,13 @@
 # $Id$
 
-2007-04-09 Anton E. Lebedevich
+2007-04-11	Konstantin V. Arkhipov
+
+	* main/DAOs/BaseDAO.class.php: get, getList and getCounterList
+	removed.
+
+	* main/DAOs/ObjectQuery.class.php: dropped finally.
+
+2007-04-09	Anton E. Lebedevich
 	
 	* meta/types/ObjectType.class.php: unconditionally fill collection.
 
