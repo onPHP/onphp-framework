@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-11	Denis M. Gabaidulin
+
+	* meta/classes/MetaConfiguration.class.php: toXsd() convertes it
+	to xsd-schema. Warining: Experimental feature !
+
 2007-04-09	Ivan Y. Khvostishkov
 
 	* core/Base/Timestamp.class.php: toISOString() convertes it according to
