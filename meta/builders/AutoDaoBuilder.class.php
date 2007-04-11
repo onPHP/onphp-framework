@@ -46,36 +46,6 @@ abstract class Auto{$class->getName()}DAO extends {$parentName}
 
 EOT;
 
-			if (sizeof($class->getWithInternalProperties())) {
-				$out .= self::buildPointers($class);
-				
-				if (
-					($parent = $class->getParent())
-					&& !($parent->getPattern() instanceof AbstractClassPattern)
-				) {
-					$typeHint = $parent->getFinalParent()->getName();
-				} else {
-					$typeHint = '/* '.$class->getName().' */';
-				}
-
-				$out .= <<<EOT
-
-
-/**
- * @return InsertOrUpdateQuery
-**/
-public function setQueryFields(InsertOrUpdateQuery \$query, {$typeHint} \${$varName})
-{
-	parent::setQueryFields(\$query, \${$varName});
-
-
-EOT;
-				$out .= self::buildFillers($class);
-			} else {
-				$out .= self::buildPointers($class);
-				$out .= self::buildFillers($class);
-			}
-			
 			return $out.self::getHeel();
 		}
 	}
