@@ -30,7 +30,7 @@
 			return 'Primitive::time';
 		}
 		
-		public function toXsdType(/*MetaClassProperty*/ $property = null)
+		public function toXsdType()
 		{
 			return 'xsd:time';
 		}

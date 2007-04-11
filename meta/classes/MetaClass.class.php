@@ -362,6 +362,8 @@
 		
 		public function toComplexType()
 		{
+			$containers = array();
+			 
 			$element =
 				"<complexType name=\"" . $this->getName() . "\""
 				 . (
@@ -387,9 +389,17 @@
 					. "\" type=\"";
 				
 					if ($property->getType() instanceof ObjectType) {
-						$element .= $property->getType()->toXsdType($property);
-					} else
-						$element .= $property->getType()->toXsdType();
+						if (
+							$property->getRelation()
+							&&
+								$property->getRelation()->getId()
+								== MetaRelation::ONE_TO_MANY
+						)
+							$containers[] = $property;
+					}
+				
+				$element .= $property->getType()->toXsdType();	
+					
 				
 				$element .=   "\" ";
 				

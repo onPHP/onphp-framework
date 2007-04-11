@@ -339,17 +339,9 @@ EOT;
 			throw new UnsupportedMethodException();
 		}
 		
-		public function toXsdType(/*MetaClassProperty*/ $property = null)
+		public function toXsdType()
 		{
-			if (
-				$property->getRelation()
-				&&
-					$property->getRelation()->getId()
-					== MetaRelation::ONE_TO_ONE
-			)
-				return "tns:" . $this->className;
-			else
-				return null;
+			return "tns:" . $this->className;
 		}
 		
 		public function toColumnType()
