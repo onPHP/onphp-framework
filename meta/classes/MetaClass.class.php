@@ -390,8 +390,13 @@
 						$element .= $property->getType()->toXsdType($property);
 					} else
 						$element .= $property->getType()->toXsdType();
-					
-				$element .=   "\" />\r\n";
+				
+				$element .=   "\" ";
+				
+				if ($property->getSize())
+					$element .= " maxLength=\"" . $property->getSize() . "\" ";
+				
+				$element .=  "/>\r\n";
 			}
 			
 			$element .=
