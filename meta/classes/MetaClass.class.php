@@ -363,7 +363,13 @@
 		public function toComplexType()
 		{
 			$element =
-				"<complexType name=\"" . $this->getName() . "\">\r\n"
+				"<complexType name=\"" . $this->getName() . "\""
+				 . (
+				 	($this->pattern instanceof AbstractClassPattern)
+				 		? " abtract=\"true\" "
+				 		: null
+				 )
+				.">\r\n"
 				. "	<sequence>\r\n";
 			
 			foreach ($this->properties as $property) {
