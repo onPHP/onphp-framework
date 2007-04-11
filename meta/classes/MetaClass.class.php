@@ -394,14 +394,20 @@
 							&&
 								$property->getRelation()->getId()
 								== MetaRelation::ONE_TO_MANY
-						)
-							$containers[] = $property;
-					}
+						) {
+							$containers[] = $property->getType();
+							
+							$xsdType =
+								"tns:"
+								. $this->makeXsdContainerName(
+									$property->getType()
+								);
+						} else
+							$xsdType = $property->getType()->toXsdType();
+					} else
+						$xsdType = $property->getType()->toXsdType(); 
 				
-				$element .= $property->getType()->toXsdType();	
-					
-				
-				$element .=   "\" ";
+				$element .= $xsdType . "\" ";
 				
 				if ($property->getSize())
 					$element .= " maxLength=\"" . $property->getSize() . "\" ";
@@ -420,7 +426,33 @@
 			$element .=
 				"</complexType>\r\n";
 			
+			foreach ($containers as $container) {
+				$element .= ($this->buildXsdContainers($container)) . "\r\n";
+			}
+			
 			echo $element;
+		}
+		
+		private function makeXsdContainerName(ObjectType $object)
+		{
+			return $object->getClass()->getName() . 'List';
+		}
+		
+		private function buildXsdContainers(ObjectType $object)
+		{
+			return
+				"<complexType
+					name=\"". $this->makeXsdContainerName($object)."\"
+				>
+				<complexContent>
+					<restriction base=\"soapenc:Array\">
+						<attribute
+							ref=\"soapenc:arrayType\"
+							wsdl:arrayType=\"tns:" . $object->getClass()->getName() . "[]\"
+						/>
+					</restriction>
+				</complexContent>
+			</complexType>";
 		}
 	}
 ?>
