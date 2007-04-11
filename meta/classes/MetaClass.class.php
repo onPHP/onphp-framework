@@ -369,8 +369,15 @@
 				 		? " abstract=\"true\" "
 				 		: null
 				 )
-				.">\r\n"
-				. "	<sequence>\r\n";
+				.">\r\n";
+			
+			if ($this->getParent())
+				$element .=
+					"<complexContent>\r\n"
+					. "	<extension base=\"tns:" . $this->getParent()->getName() . "\">\r\n";
+				
+			$element .=
+				"	<sequence>\r\n";
 			
 			foreach ($this->properties as $property) {
 			
@@ -388,8 +395,15 @@
 			}
 			
 			$element .=
-				"	</sequence>\r\n"
-				."</complexType>\r\n";
+				"	</sequence>\r\n";
+			
+			if ($this->getParent())
+				$element .=
+					"	</extension>\r\n"
+					."</complexContent>\r\n";
+				
+			$element .=
+				"</complexType>\r\n";
 			
 			echo $element;
 		}
