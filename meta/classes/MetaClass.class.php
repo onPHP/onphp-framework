@@ -366,7 +366,7 @@
 				"<complexType name=\"" . $this->getName() . "\""
 				 . (
 				 	($this->pattern instanceof AbstractClassPattern)
-				 		? " abtract=\"true\" "
+				 		? " abstract=\"true\" "
 				 		: null
 				 )
 				.">\r\n"
