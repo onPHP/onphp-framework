@@ -89,9 +89,20 @@ Possible options:
 				.'DAOs'.DIRECTORY_SEPARATOR
 			);
 		
+		if (!defined('ONPHP_META_AUTO_DTO_DIR'))
+			define(
+				'ONPHP_META_AUTO_DTO_DIR',
+				ONPHP_META_AUTO_DIR
+				.'DTOs'.DIRECTORY_SEPARATOR
+			);
+		
+		
 		if (!is_dir(ONPHP_META_DAO_DIR))
 			mkdir(ONPHP_META_DAO_DIR, 0755, true);
 		
+		if (!is_dir(ONPHP_META_AUTO_DTO_DIR))
+			mkdir(ONPHP_META_AUTO_DTO_DIR, 0755, true);
+			
 		if (!is_dir(ONPHP_META_AUTO_DIR))
 			mkdir(ONPHP_META_AUTO_DIR, 0755, true);
 		
