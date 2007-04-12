@@ -147,5 +147,29 @@
 					$size, $precision, self::$bytePrefixes, true
 				).'Б';
 		}
+		
+		public static function getHumanDay(Timestamp $date)
+		{
+			$today 		= Timestamp::create(Timestamp::today());
+			$tomorrow 	= $today->spawn('+1 day'); 
+			
+			if (
+				$date->toDate()
+				== $today->toDate()
+			)
+				return 'сегодня';
+	 		elseif (
+	 			$date->toDate()
+	 			== $tomorrow->toDate()
+	 		)
+	 			return 'завтра';
+	 		else
+	 			return
+	 				$date->getDay()
+	 				. ' '
+	 				. RussianTextUtils::getMonthInGenitiveCase(
+	 					$date->getMonth()
+	 				);
+		}
 	}
 ?>
