@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-12	Denis M. Gabaidulin
+
+	* meta/patterns/DtoClassPattern.class.php,
+	meta/builders/DtoClassBuilder.class.php: dto classes pattern started.
+
 2007-04-11	Denis M. Gabaidulin
 
 	* meta/classes/MetaConfiguration.class.php: toXsd() convertes it
