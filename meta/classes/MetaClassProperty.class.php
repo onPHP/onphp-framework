@@ -663,16 +663,22 @@ EOT;
 				}
 				
 				if ($this->type instanceof ObjectType) {
+					
+					if ($this->type instanceof InternalType)
+						$toString = null;
+					else
+						$toString = '->toString()';
+					
 					if ($this->required)
 						$out .=
 							"{$set}('{$this->getColumnName()}', "
-							."\${$varName}->get{$method}()->toString()";
+							."\${$varName}->get{$method}(){$toString}";
 					else
 						$out .=
 							"{$set}(\n'{$this->getColumnName()}', "
 							."\n"
 							."\${$varName}->get{$method}()\n"
-							."? \${$varName}->get{$method}()->toString()\n"
+							."? \${$varName}->get{$method}(){$toString}\n"
 							.": null\n";
 				} else {
 					if ($this->type instanceof InetType) {

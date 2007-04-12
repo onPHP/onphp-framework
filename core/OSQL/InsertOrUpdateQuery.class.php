@@ -60,8 +60,6 @@
 		{
 			if ($object instanceof Identifiable)
 				$this->set($field, $object->getId());
-			elseif ($object instanceof Stringable)
-				$this->set($field, $object->toString());
 			elseif ($object instanceof Range)
 				$this->
 					set($field.'_min', $object->getMin())->
@@ -70,6 +68,8 @@
 				$this->
 					set($field.'_start', $object->getStart())->
 					set($field.'_end', $object->getEnd());
+			elseif ($object instanceof Stringable)
+				$this->set($field, $object->toString());
 			elseif ($object === null)
 				$this->set($field, null);
 			else
