@@ -42,7 +42,17 @@
 				
 				$out .=
 					"protected \${$property->getName()} = "
-					."{$property->getType()->getDeclaration()};\n";
+					.
+					(
+						(
+							$property->getRelation()
+							&&
+								$property->getRelation()->getId()
+								== MetaRelation::ONE_TO_MANY
+						)
+							? "array();\n"
+							: "{$property->getType()->getDeclaration()};\n"
+					);
 				
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$out .= 
