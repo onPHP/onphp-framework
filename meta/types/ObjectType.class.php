@@ -72,6 +72,14 @@
 			MetaClassProperty $holder = null
 		)
 		{
+			if ($class->getPattern() instanceof DTOClassPattern)
+				return
+					parent::toGetter(
+						$class,
+						$property,
+						$holder
+					);
+			
 			$name = $property->getName();
 			
 			$methodName = 'get'.ucfirst($property->getName());
@@ -203,6 +211,14 @@ EOT;
 			MetaClassProperty $holder = null
 		)
 		{
+			if ($class->getPattern() instanceof DTOClassPattern)
+				return
+					parent::toSetter(
+						$class,
+						$property,
+						$holder
+					);
+			
 			if (
 				$property->getRelationId() == MetaRelation::ONE_TO_MANY
 				|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
