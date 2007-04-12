@@ -93,5 +93,12 @@
 			
 			return $firstOne.mb_substr($string, 1);
 		}
+		
+		public static function downFirst($string)
+		{
+			$firstOne = mb_strtolower(mb_substr($string, 0, 1));
+			
+			return $firstOne.mb_substr($string, 1);
+		}
 	}
 ?>

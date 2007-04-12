@@ -85,5 +85,48 @@
 			
 			return $chain;
 		}
+		
+		
+		/**
+		 * @throws WrongArgumentException
+		 * @return LogicalChain
+		**/
+		public static function getOpenPoint(
+			$left, $right, $point
+		)
+		{
+			Assert::isFalse(
+				($point === null),
+				'how can i build logic from emptyness?'
+			);
+			
+			$point = new DBValue($point);
+			
+			$chain = new LogicalChain();
+			
+			$chain->expOr(
+				Expression::orBlock(
+					Expression::andBlock(
+						Expression::notNull($left),
+						Expression::notNull($right),
+						Expression::between($point, $left, $right)
+					),
+					Expression::andBlock(
+						Expression::isNull($left),
+						Expression::ltEq($point, $right)
+					),
+					Expression::andBlock(
+						Expression::isNull($right),
+						Expression::ltEq($left, $point)
+					),
+					Expression::andBlock(
+						Expression::isNull($left),
+						Expression::isNull($right)
+					)
+				)
+			);
+			
+			return $chain;
+		}
 	}
 ?>
