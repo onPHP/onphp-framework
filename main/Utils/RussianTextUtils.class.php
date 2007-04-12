@@ -121,7 +121,7 @@
 							? 'сегодня ' 
 							: null 
 					)
-					."в "
+					.'в '
 					.date('G:i', $date->toStamp());
 
 			$yesterdayStart = $dayStart->spawn('-1 day');
@@ -148,9 +148,9 @@
 				).'Б';
 		}
 		
-		public static function getHumanDay(Timestamp $date)
+		public static function getHumanDay(Date $date)
 		{
-			$today 		= Timestamp::create(Timestamp::today());
+			$today 		= Date::makeToday();
 			$tomorrow 	= $today->spawn('+1 day'); 
 			
 			if ($date->toDate() == $today->toDate())
