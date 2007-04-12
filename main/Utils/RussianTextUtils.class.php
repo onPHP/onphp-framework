@@ -155,15 +155,15 @@
 			
 			if ($date->toDate() == $today->toDate())
 				return 'сегодня';
-	 		elseif ($date->toDate() == $tomorrow->toDate())
-	 			return 'завтра';
-	 		else
-	 			return
-	 				(int) $date->getDay()
-	 				. ' '
-	 				. RussianTextUtils::getMonthInGenitiveCase(
-	 					$date->getMonth()
-	 				);
+			elseif ($date->toDate() == $tomorrow->toDate())
+				return 'завтра';
+			else
+				return
+					(int) $date->getDay()
+					. ' '
+					. RussianTextUtils::getMonthInGenitiveCase(
+						$date->getMonth()
+					);
 		}
 	}
 ?>
