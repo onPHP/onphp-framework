@@ -153,19 +153,13 @@
 			$today 		= Timestamp::create(Timestamp::today());
 			$tomorrow 	= $today->spawn('+1 day'); 
 			
-			if (
-				$date->toDate()
-				== $today->toDate()
-			)
+			if ($date->toDate() == $today->toDate())
 				return 'сегодня';
-	 		elseif (
-	 			$date->toDate()
-	 			== $tomorrow->toDate()
-	 		)
+	 		elseif ($date->toDate() == $tomorrow->toDate())
 	 			return 'завтра';
 	 		else
 	 			return
-	 				$date->getDay()
+	 				(int) $date->getDay()
 	 				. ' '
 	 				. RussianTextUtils::getMonthInGenitiveCase(
 	 					$date->getMonth()
