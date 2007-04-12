@@ -108,7 +108,7 @@
 		
 		public static function getDateAsText(Timestamp $date, $todayWordNeed = true)
 		{
-			$dayStart = Timestamp::create(Timestamp::today());
+			$dayStart = Timestamp::makeToday();
 			$tomorrowDayStart = $dayStart->spawn('+1 day'); 
 
 			if (
