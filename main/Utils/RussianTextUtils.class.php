@@ -110,7 +110,7 @@
 		{
 			$dayStart = Timestamp::create(Timestamp::today());
 			$tomorrowDayStart = $dayStart->spawn('+1 day'); 
-
+			
 			if (
 				(Timestamp::compare($date, $dayStart) == 1)
 				&& (Timestamp::compare($date, $tomorrowDayStart) == -1)
@@ -123,18 +123,36 @@
 					)
 					."в "
 					.date('G:i', $date->toStamp());
-
+			
 			$yesterdayStart = $dayStart->spawn('-1 day');
-
+			
 			if (
 				(Timestamp::compare($date, $yesterdayStart) == 1)
 				&& (Timestamp::compare($date, $dayStart) == -1)
 			)
 				return 'вчера в '.date('G:i', $date->toStamp());
-
+			
 			return date('j.m.Y в G:i', $date->toStamp());
 		}
-
+		
+		public static function getHumanDay(Date $date)
+		{
+			$today 		= Date::makeToday();
+			$tomorrow 	= $today->spawn('+1 day'); 
+			
+			if ($date->toDate() == $today->toDate())
+				return 'сегодня';
+			elseif ($date->toDate() == $tomorrow->toDate())
+				return 'завтра';
+			else
+				return
+					(int) $date->getDay()
+					. ' '
+					. RussianTextUtils::getMonthInGenitiveCase(
+						$date->getMonth()
+					);
+		}
+		
 		public static function friendlyFileSize($size, $precision = 2)
 		{
 			if ($size < 1024)
