@@ -337,7 +337,9 @@
 		public function toString()
 		{
 			return $this->toDialectString(
-				DBPool::getByDao($this->dao)->getDialect()
+				$this->dao
+					? DBPool::getByDao($this->dao)->getDialect()
+					: ImaginaryDialect::me()
 			);
 		}
 		
