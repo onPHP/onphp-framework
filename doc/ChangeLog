@@ -1,7 +1,16 @@
 # $Id$
 
+2007-04-13	Denis M. Gabaidulin
+
+	* main/Criteria/Criteria.class.php: dropProjection() added.
+
+2007-04-13	Denis M. Gabaidulin
+
+	* meta/classes/MetaConfiguration.class.php: toXsd()
+	make correct xml-document now.
+
 2007-04-12	Anton E. Lebedevich
-	
+
 	* main/Utils/TextUtils.class.php: downFirst() added.
 
 	* main/Utils/LogicUtils.class.php: getOpenPoint() added.
