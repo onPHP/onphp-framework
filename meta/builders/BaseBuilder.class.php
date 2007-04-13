@@ -190,23 +190,15 @@ EOT;
 
 EOT;
 				if ($class->hasBuildableParent()) {
-					if (
-						(
-							$class->getParent()->getTypeId()
-								== MetaClassType::CLASS_ABSTRACT
-						) || (
-							$class->getParent()->getTypeId()
-								== MetaClassType::CLASS_SPOOKED
-						)
-					) {
+					if ($class->getTypeId() == MetaClassType::CLASS_ABSTRACT) {
 						$out .= <<<EOT
-\${$varName} = parent::fillSelf(new {$className}(), \$array, \$prefix);
+\${$varName} = parent::makeSelf(\$array, \$prefix);
 
 
 EOT;
 					} else {
 						$out .= <<<EOT
-\${$varName} = parent::makeSelf(\$array, \$prefix);
+\${$varName} = parent::fillSelf(new {$className}(), \$array, \$prefix);
 
 
 EOT;
