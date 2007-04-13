@@ -869,14 +869,40 @@
 		public function toXsd()
 		{
 			$containers = array();
-			
+		
+			$out = <<<XML
+<?xml version="1.0"?>
+<schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+						
+	targetNamespace="urn:targetNS" 
+	xmlns:tns="urn:targetNS"
+>
+XML;
+
 			foreach ($this->classes as $metaClass) {
-				echo $metaClass->toComplexType($containers);
+				$out .= $metaClass->toComplexType($containers);
 			}
 			
 			foreach ($containers as $container) {
-				echo (MetaClass::buildXsdContainer($container)) . "\r\n";
+				$out .= (MetaClass::buildXsdContainer($container)) . "\r\n";
 			}
+			
+			$out .= <<<XML
+</schema>
+XML;
+
+			$domDocument = new DOMDocument('1.0', 'UTF-8');
+			$domDocument->formatOutput = true;
+			$domDocument->loadXML(trim($out));
+			
+			$this->getOutput()->info($domDocument->saveXML());
+			
+			return $this;
 		}
 		
 		/**

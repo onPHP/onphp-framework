@@ -129,27 +129,15 @@
 		
 		init();
 		
-		$out->
-			newLine()->
-			infoLine('onPHP-'.ONPHP_VERSION.': MetaConfiguration builder.', true)->
-			newLine();
-		
 		try {
-			/*$meta =
-				MetaConfiguration::me()->
-				setOutput($out)->
-				load(ONPHP_META_PATH.'internal.xml', false);*/
-			
 			$meta =
 				MetaConfiguration::me()->
 				setOutput($out)->
 				setDryRun($metaDryRun)->
 				load($pathMeta)->
-				setForcedGeneration($metaForce);
-			
-			$meta->toXsd();
-			
-			
+				setForcedGeneration($metaForce)->
+				toXsd();
+
 		} catch (BaseException $e) {
 			$out->
 				newLine()->
@@ -164,7 +152,6 @@
 		
 		stop('Can not continue.');
 	}
-		
+	
 	$out->getOutput()->resetAll();
-	$out->newLine();
 ?>
