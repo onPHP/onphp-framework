@@ -4,8 +4,6 @@
 
 	* main/Criteria/Criteria.class.php: dropProjection() added.
 
-2007-04-13	Denis M. Gabaidulin
-
 	* meta/classes/MetaConfiguration.class.php: toXsd()
 	make correct xml-document now.
 
