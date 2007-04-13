@@ -220,6 +220,16 @@
 		/**
 		 * @return Criteria
 		**/
+		public function dropProjection()
+		{
+			$this->projection = null;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return Criteria
+		**/
 		public function setDistinct($orly = true)
 		{
 			$this->distinct = ($orly === true);
