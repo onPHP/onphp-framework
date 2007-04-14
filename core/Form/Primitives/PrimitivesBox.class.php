@@ -43,6 +43,17 @@
 		}
 		
 		/**
+		 * @return BasePrimitive
+		**/
+		public function get($name)
+		{
+			if (!isset($this->list[$name]))
+				throw new MissingElementException('no "'.$name.'" in a box');
+			
+			return $this->list[$name];
+		}
+		
+		/**
 		 * @return PrimitivesBox
 		**/
 		public function add(BasePrimitive $prm)
