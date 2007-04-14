@@ -199,5 +199,13 @@
 		{
 			return new PrimitiveInet($name);
 		}
+		
+		/**
+		 * @return PrimitivesBox
+		**/
+		public static function box($name)
+		{
+			return new PrimitivesBox($name);
+		}
 	}
 ?>
