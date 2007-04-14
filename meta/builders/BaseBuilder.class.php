@@ -190,7 +190,13 @@ EOT;
 
 EOT;
 				if ($class->hasBuildableParent()) {
-					if ($class->getTypeId() == MetaClassType::CLASS_ABSTRACT) {
+					if (
+						($class->getTypeId() == MetaClassType::CLASS_ABSTRACT)
+						|| (
+							$class->getParent()->getTypeId()
+							!= MetaClassType::CLASS_ABSTRACT
+						)
+					) {
 						$out .= <<<EOT
 \${$varName} = parent::makeSelf(\$array, \$prefix);
 
@@ -198,7 +204,7 @@ EOT;
 EOT;
 					} else {
 						$out .= <<<EOT
-\${$varName} = parent::fillSelf(new {$className}(), \$array, \$prefix);
+\${$varName} = parent::fillSelf(\$this->createObject(), \$array, \$prefix);
 
 
 EOT;
@@ -206,8 +212,7 @@ EOT;
 				} else {
 					if ($class->hasChilds()) {
 						$out .= <<<EOT
-\$className = \$this->getObjectName();
-\${$varName} = new \$className;
+\${$varName} = \$this->createObject();
 
 
 EOT;

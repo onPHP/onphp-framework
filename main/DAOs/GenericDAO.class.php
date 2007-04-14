@@ -30,6 +30,13 @@
 		
 		abstract protected function makeObject(&$array, $prefix = null);
 		
+		public function createObject()
+		{
+			$className = $this->getObjectName();
+			
+			return new $className;
+		}
+		
 		/**
 		 * Returns link name which is used to get actual DB-link from DBPool,
 		 * returning null by default for single-source projects.
