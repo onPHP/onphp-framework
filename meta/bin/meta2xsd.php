@@ -8,6 +8,16 @@
 		define('ONPHP_META_PATTERNS', ONPHP_META_PATH.'patterns'.DIRECTORY_SEPARATOR);
 		define('ONPHP_META_TYPES', ONPHP_META_PATH.'types'.DIRECTORY_SEPARATOR);
 		
+		if (!defined('ONPHP_META_AUTO_DTO_DIR'))
+			define(
+				'ONPHP_META_AUTO_DTO_DIR',
+				ONPHP_META_AUTO_DIR
+				.'DTOs'.DIRECTORY_SEPARATOR
+			);
+		
+		if (!is_dir(ONPHP_META_AUTO_DTO_DIR))
+			mkdir(ONPHP_META_AUTO_DTO_DIR, 0755, true);
+			
 		set_include_path(
 			get_include_path().PATH_SEPARATOR
 			.ONPHP_META_BUILDERS.PATH_SEPARATOR
