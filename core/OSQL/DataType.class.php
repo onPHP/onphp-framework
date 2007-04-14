@@ -89,11 +89,16 @@
 		public function setSize($size)
 		{
 			Assert::isInteger($size);
-			Assert::isTrue(($this->id & self::HAVE_SIZE) > 0);
+			Assert::isTrue($this->hasSize());
 			
 			$this->size = $size;
 			
 			return $this;
+		}
+		
+		public function hasSize()
+		{
+			return (bool) ($this->id & self::HAVE_SIZE);
 		}
 		
 		public function getPrecision()
@@ -205,7 +210,7 @@
 				$out .= ' UNSIGNED';
 			}
 			
-			if ($this->id & self::HAVE_SIZE) {
+			if ($this->hasSize()) {
 				
 				if (!$this->size)
 					throw new WrongStateException(
