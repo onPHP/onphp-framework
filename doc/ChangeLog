@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-141	Konstantin V. Arkhipov
+
+	* main/Base/CompositeLightMetaProperty.class.php: replaced by
+	InnerMetaProperty because of former unnecessary complexity.
+
 2007-04-14	Anton E. Lebedevich
 	
 	* main/Flow/MultiPrefixPhpViewResolver.class.php: added resolver for

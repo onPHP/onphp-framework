@@ -19,11 +19,7 @@
 		{
 			$this->checkObjectType($object);
 			
-			foreach ($this->getProtoClass()->getPropertyList() as $property) {
-				$property->processQuery($query, $object);
-			}
-			
-			return $query;
+			return $this->getProtoClass()->processQuery($query, $object);
 		}
 		
 		protected function makeSelf(&$array, $prefix = null)

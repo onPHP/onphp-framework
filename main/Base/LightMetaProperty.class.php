@@ -16,7 +16,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	final class LightMetaProperty implements LightPropertyHelper, Stringable
+	class LightMetaProperty implements Stringable
 	{
 		private static $limits = array(
 			'SmallInteger' => array(
@@ -47,6 +47,7 @@
 		
 		private $required	= false;
 		private $generic	= false;
+		private $inner		= false;
 		
 		/// @see MetaRelation
 		private $relationId	= null;
@@ -63,30 +64,31 @@
 		}
 		
 		/**
+		 * must by in sync with InnerMetaProperty::make()
+		 * 
 		 * @return LightMetaProperty
 		**/
-		public static function make(
-			$name, $columnName, $type, $className, $size,
-			$required, $generic, $relationId, $strategyId
+		public static function fill(
+			$property, $name, $columnName, $type, $className, $size,
+			$required, $generic, $inner, $relationId, $strategyId
 		)
 		{
-			$self = new self;
+			$property->name = $name;
+			$property->columnName = $columnName;
 			
-			$self->name = $name;
-			$self->columnName = $columnName;
+			$property->type = $type;
+			$property->className = $className;
 			
-			$self->type = $type;
-			$self->className = $className;
+			$property->size = $size;
 			
-			$self->size = $size;
+			$property->required = $required;
+			$property->generic = $generic;
+			$property->inner = $inner;
 			
-			$self->required = $required;
-			$self->generic = $generic;
+			$property->relationId = $relationId;
+			$property->strategyId = $strategyId;
 			
-			$self->relationId = $relationId;
-			$self->strategyId = $strategyId;
-			
-			return $self;
+			return $property;
 		}
 		
 		public function getName()
@@ -104,17 +106,17 @@
 		
 		public function getGetter()
 		{
-			return 'get'.ucfirst($this->name);
+			return 'get'.ucfirst($this->getName());
 		}
 		
 		public function getSetter()
 		{
-			return 'set'.ucfirst($this->name);
+			return 'set'.ucfirst($this->getName());
 		}
 		
 		public function getDropper()
 		{
-			return 'drop'.ucfirst($this->name);
+			return 'drop'.ucfirst($this->getName());
 		}
 		
 		/**
@@ -144,8 +146,8 @@
 		
 		public function getMax()
 		{
-			if ($this->size)
-				return $this->size;
+			if ($size = $this->getSize())
+				return $size;
 			
 			return $this->getLimit(1);
 		}
@@ -170,6 +172,11 @@
 		public function isGenericType()
 		{
 			return $this->generic;
+		}
+		
+		public function isInner()
+		{
+			return $this->inner;
 		}
 		
 		public function getRelationId()
@@ -342,7 +349,7 @@
 		
 		public function processQuery(
 			InsertOrUpdateQuery $query,
-			Identifiable $object
+			Prototyped $object
 		)
 		{
 			$getter = $this->getGetter();
@@ -366,21 +373,21 @@
 		
 		public function toValue(ProtoDAO $dao = null, $array, $prefix = null)
 		{
-			if ($dao && ($this->strategyId == FetchStrategy::JOIN))
+			if ($dao && ($this->getFetchStrategyId() == FetchStrategy::JOIN))
 				$raw = $array[$dao->getJoinPrefix($this->getColumnName(), $prefix)];
 			else
 				$raw = $array[$prefix.$this->getColumnName()];
 			
 			if (
 				!$this->isIdentifier()
-				&& $this->generic
-				&& $this->className
+				&& $this->isGenericType()
+				&& $this->getClassName()
 			) {
-				return call_user_func(array($this->className, 'create'), $raw);
-			} elseif (!$this->isIdentifier() && $this->className) {
-				$remoteDao = call_user_func(array($this->className, 'dao'));
+				return call_user_func(array($this->getClassName(), 'create'), $raw);
+			} elseif (!$this->isIdentifier() && $this->getClassName()) {
+				$remoteDao = call_user_func(array($this->getClassName(), 'dao'));
 				
-				if ($this->strategyId == FetchStrategy::JOIN) {
+				if ($this->getFetchStrategyId() == FetchStrategy::JOIN) {
 					return $remoteDao->makeJoinedObject(
 						$array,
 						$remoteDao->getJoinPrefix($this->getColumnName(), $prefix)
@@ -392,17 +399,18 @@
 			
 			// veeeeery "special" handling, by tradition.
 			// MySQL returns 0/1, others - t/f
-			if ($this->type == 'boolean') {
+			if ($this->getType() == 'boolean') {
 				return (bool) strtr($raw, array('f' => null));
 			}
 			
 			return $raw;
 		}
 		
-		public function toString()
+		final public function toString()
 		{
 			return
-				'LightMetaProperty::make('
+				get_class($this).'::fill('
+				.'new '.get_class($this).'(), '
 				."'{$this->name}', "
 				.(
 					$this->columnName
@@ -431,6 +439,12 @@
 				.', '
 				.(
 					$this->generic
+						? 'true'
+						: 'false'
+				)
+				.', '
+				.(
+					$this->inner
 						? 'true'
 						: 'false'
 				)

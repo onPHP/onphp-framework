@@ -27,10 +27,7 @@
 				$dao = null;
 			
 			foreach ($object->proto()->getPropertyList() as $property) {
-				if (
-					($property instanceof CompositeLightMetaProperty)
-					|| $property->isBuildable($array, $prefix)
-				) {
+				if ($property->isBuildable($array, $prefix)) {
 					$setter = $property->getSetter();
 					$object->$setter($property->toValue($dao, $array, $prefix));
 				}
@@ -77,6 +74,16 @@
 			}
 			
 			return $form;
+		}
+		
+		public function processQuery(
+			InsertOrUpdateQuery $query, Prototyped $object
+		) {
+			foreach ($this->getPropertyList() as $property) {
+				$property->processQuery($query, $object);
+			}
+			
+			return $query;
 		}
 		
 		public function getMapping()

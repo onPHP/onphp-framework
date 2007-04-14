@@ -332,35 +332,57 @@
 			} else
 				$primitiveName = $this->getType()->getPrimitiveName();
 			
+			$inner = false;
+			
 			if ($this->getType() instanceof ObjectType) {
-				if (
-					!$this->getType()->isGeneric()
-					&& (
-						$this->getType()->getClass()->getPattern()
-							instanceof InternalClassPattern
-					)
-				) {
-					$className = $holder->getName();
-				} else {
-					$className = $this->getType()->getClassName();
+				$className = $this->getType()->getClassName();
+				
+				if (!$this->getType()->isGeneric()) {
+					$class = $this->getType()->getClass();
+					$pattern = $class->getPattern();
+					
+					if ($pattern instanceof InternalClassPattern)
+						$className = $holder->getName();
+					
+					if (
+						(
+							($pattern instanceof InternalClassPattern)
+							|| ($pattern instanceof ValueObjectPattern)
+						) && (
+							$className <> $holder->getName()
+						)
+					) {
+						$inner = true;
+					}
 				}
 			}
 			
+			$propertyClassName = (
+				$inner
+					? 'InnerMetaProperty'
+					: 'LightMetaProperty'
+			);
+			
 			return
-				LightMetaProperty::make(
-					$this->getName(),
-					$this->getName() <> $this->getRelationColumnName()
-						? $this->getRelationColumnName()
-						: null,
-					$primitiveName,
-					$className,
-					$this->getType()->isMeasurable()
-						? $this->size
-						: null,
-					$this->isRequired(),
-					$this->getType()->isGeneric(),
-					$this->getRelationId(),
-					$this->getFetchStrategyId()
+				call_user_func_array(
+					array($propertyClassName, 'fill'),
+					array(
+						new $propertyClassName,
+						$this->getName(),
+						$this->getName() <> $this->getRelationColumnName()
+							? $this->getRelationColumnName()
+							: null,
+						$primitiveName,
+						$className,
+						$this->getType()->isMeasurable()
+							? $this->size
+							: null,
+						$this->isRequired(),
+						$this->getType()->isGeneric(),
+						$inner,
+						$this->getRelationId(),
+						$this->getFetchStrategyId()
+					)
 				);
 		}
 		

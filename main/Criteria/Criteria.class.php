@@ -446,6 +446,19 @@
 						);
 						
 						continue;
+					} elseif ($property->isInner()) {
+						$proto = call_user_func(
+							array($property->getClassName(), 'proto')
+						);
+						
+						foreach ($proto->getPropertyList() as $innerProperty)
+							$query->get(
+								new DBField(
+									$innerProperty->getColumnName(),
+									$parentTable)
+							);
+						
+						continue;
 					}
 					
 					$propertyDao = call_user_func(

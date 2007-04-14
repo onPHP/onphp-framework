@@ -31,7 +31,8 @@
 		protected function fullBuild(MetaClass $class)
 		{
 			return $this->
-				buildBusiness($class);
+				buildBusiness($class)->
+				buildProto($class);
 		}
 	}
 ?>

@@ -69,31 +69,9 @@ EOT;
 			$list = array();
 			
 			foreach ($class->getWithInternalProperties() as $property) {
-				if (
-					!$property->getType()->isGeneric()
-					&& $property->getType() instanceof ObjectType
-					&& (
-						$property->getType()->getClass()->getPattern()
-							instanceof ValueObjectPattern
-					)
-				) {
-					$remote = $property->getType()->getClass();
-					
-					$composite = array();
-					
-					foreach ($remote->getProperties() as $remoteProperty) {
-						$composite[] = "add(\n".$remoteProperty->toLightProperty($remote)->toString()."\n)";
-					}
-					
-					$list[] =
-						"'{$property->getName()}' =>\n"
-						."CompositeLightMetaProperty::create('{$remote->getName()}', '{$property->getName()}')->\n"
-						.implode("->\n", $composite);
-				} else {
-					$list[] =
-						"'{$property->getName()}' => "
-						.$property->toLightProperty($class)->toString();
-				}
+				$list[] =
+					"'{$property->getName()}' => "
+					.$property->toLightProperty($class)->toString();
 			}
 			
 			$out .= implode(",\n", $list);
