@@ -151,10 +151,17 @@
 						$column->getType()->getId()
 						!= $targetColumns[$name]->getType()->getId()
 					) {
+						$targetColumn = $targetColumns[$name];
+						
 						$out[] =
 							$head
 							.' ALTER COLUMN '.$dialect->quoteField($name)
-							.' TYPE '.$targetColumns[$name]->getType()->toString()
+							.' TYPE '.$targetColumn->getType()->toString()
+							.(
+								$targetColumn->getType()->hasSize()
+									? '('.$targetColumn->getType()->getSize().')'
+									: null
+							)
 							.';';
 					}
 					
