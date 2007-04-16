@@ -53,7 +53,7 @@
 		
 		public function getJoinName($field, $prefix = null)
 		{
-			return substr(sha1($prefix.$this->getTable()), 0, 10).'_'.$field;
+			return dechex(crc32($prefix.$this->getTable())).'_'.$field;
 		}
 		
 		public function makeObject(&$array, $prefix = null)
