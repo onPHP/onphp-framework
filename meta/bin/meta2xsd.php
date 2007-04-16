@@ -10,7 +10,7 @@ Usage: meta2xsd.php [options] [project-configuration-file.inc.php] [metaconfigur
 Possible options:
 
 	--without-soap:
-		generate schema without sopa ns, types, etc
+		generate schema without soap ns, types, etc
 
 <?php
 		exit(1);
