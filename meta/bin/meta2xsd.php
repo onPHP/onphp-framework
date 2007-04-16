@@ -2,6 +2,20 @@
 <?php
 	/* $Id$ */
 	
+	function help()
+	{
+?>
+Usage: meta2xsd.php [options] [project-configuration-file.inc.php] [metaconfiguration.xml]
+
+Possible options:
+
+	--without-soap:
+		generate schema without sopa ns, types, etc
+
+<?php
+		exit(1);
+	}
+	
 	function init()
 	{
 		define('ONPHP_META_BUILDERS', ONPHP_META_PATH.'builders'.DIRECTORY_SEPARATOR);
@@ -20,9 +34,7 @@
 	$pathConfig = $pathMeta = null;
 	
 	// switches
-	$metaForce = $metaOnlyContainers = $metaNoSchema =
-	$metaNoSchemaCheck = $metaSyntaxCheck = $metaDropStaleFiles =
-	$metaNoIntegrityCheck = $metaDryRun = false;
+	$withoutSoap = false;
 	
 	$args = $_SERVER['argv'];
 	array_shift($args);
@@ -30,7 +42,14 @@
 	if ($args) {
 		foreach ($args as $arg) {
 			if ($arg[0] == '-') {
-				// boo
+				switch ($arg) {
+					case '--without-soap':
+						$withoutSoap = true;
+						break;
+					
+					default:
+						stop('Unknown switch: '.$arg);
+				}
 			} else {
 				if (file_exists($arg)) {
 					$extension = pathinfo($arg, PATHINFO_EXTENSION);
@@ -133,10 +152,10 @@
 			$meta =
 				MetaConfiguration::me()->
 				setOutput($out)->
-				setDryRun($metaDryRun)->
+				setDryRun(false)->
 				load($pathMeta)->
-				setForcedGeneration($metaForce)->
-				toXsd();
+				setForcedGeneration(false)->
+				toXsd($withoutSoap);
 
 		} catch (BaseException $e) {
 			$out->

@@ -866,7 +866,7 @@
 			return $this->out;
 		}
 		
-		public function toXsd()
+		public function toXsd($withoutSoap = false)
 		{
 			$containers = array();
 		
@@ -874,22 +874,40 @@
 <?xml version="1.0"?>
 <schema
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+XML;
+			if (!$withoutSoap) {
+				$out .= <<<XML
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
 	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-	xmlns="http://schemas.xmlsoap.org/wsdl/"
-						
+	xmlns="http://schemas.xmlsoap.org/wsdl/"						
 	targetNamespace="urn:targetNS" 
 	xmlns:tns="urn:targetNS"
+XML;
+			}
+			
+			$out .= <<<XML
 >
 XML;
 
 			foreach ($this->classes as $metaClass) {
-				$out .= $metaClass->toComplexType($containers);
+				$out .=
+					$metaClass->toComplexType(
+						$containers,
+						$withoutSoap
+					);
 			}
 			
 			foreach ($containers as $container) {
-				$out .= (MetaClass::buildXsdContainer($container)) . "\r\n";
+				$out
+					.=
+						(
+							MetaClass::buildXsdContainer(
+								$container,
+								$withoutSoap
+							)
+						)
+					. "\r\n";
 			}
 			
 			$out .= <<<XML

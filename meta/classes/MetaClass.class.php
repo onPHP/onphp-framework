@@ -360,31 +360,46 @@
 			return $this;
 		}
 		
-		public function toComplexType(&$containers)
+		public function toComplexType(&$containers, $withoutSoap)
 		{
+			$abstractType = 
+				($this->pattern instanceof AbstractClassPattern)
+					? " abstract=\"true\" "
+				 	: null;
+				 
 			$element =
-				"<complexType name=\"" . $this->getName() . "\""
-				 . (
-				 	($this->pattern instanceof AbstractClassPattern)
-				 		? " abstract=\"true\" "
-				 		: null
-				 )
-				.">\r\n";
+<<<XML
+
+	<complexType name="{$this->getName()}"
+					{$abstractType}
+	>
+
+XML;
 			
-			if ($this->getParent())
+			if ($this->getParent()) {
 				$element .=
-					"<complexContent>\r\n"
-					. "	<extension base=\"tns:" . $this->getParent()->getName() . "\">\r\n";
+<<<XML
+
+		<complexContent>
+			<extension base="tns:{$this->getParent()->getName()}">
+
+XML;
+			}
 				
 			$element .=
-				"	<sequence>\r\n";
+<<<XML
+		<sequence>
+XML;
 			
 			foreach ($this->properties as $property) {
 			
 				$element .=
-					"<element name=\"" 
-					. $property->getName() 
-					. "\" type=\"";
+<<<XML
+
+			<element
+				name="{$property->getName()}"
+				type="
+XML;
 				
 					if ($property->getType() instanceof ObjectType) {
 						if (
@@ -408,41 +423,78 @@
 				
 				$element .= $xsdType . "\" ";
 				
-				if ($property->getSize())
-					$element .= " maxLength=\"" . $property->getSize() . "\" ";
+				if ($property->getSize()) {
+					if (!$withoutSoap)
+						$element .= " maxLength=\"" . $property->getSize() . "\" ";
+				}
 				
-				$element .=  "/>\r\n";
+				$element .= <<<XML
+							/>
+XML;
 			}
 			
 			$element .=
-				"	</sequence>\r\n";
+<<<XML
+
+		</sequence>
+
+XML;
 			
-			if ($this->getParent())
+			if ($this->getParent()) {
 				$element .=
-					"	</extension>\r\n"
-					."</complexContent>\r\n";
-				
+<<<XML
+			</extension>
+		</complexContent>
+XML;
+			}
+			
 			$element .=
-				"</complexType>\r\n";
+<<<XML
+	</complexType>
+
+XML;
 			
 			return $element;
 		}
 		
-		public static function buildXsdContainer(ObjectType $object)
+		public static function buildXsdContainer(
+			ObjectType $object, $withoutSoap = false
+		)
 		{
-			return
-				"<complexType
-					name=\"". self::makeXsdContainerName($object)."\"
-				>
-				<complexContent>
-					<restriction base=\"soapenc:Array\">
-						<attribute
-							ref=\"soapenc:arrayType\"
-							wsdl:arrayType=\"tns:" . $object->getClass()->getName() . "[]\"
-						/>
-					</restriction>
-				</complexContent>
-			</complexType>";
+			if (!$withoutSoap) {
+				$containerXml =
+<<<XML
+
+	<complexType name="{self::makeXsdContainerName($object)}">
+		<complexContent>
+			<restriction base="soapenc:Array">
+				<attribute
+					ref="soapenc:arrayType"
+					wsdl:arrayType="tns:{$object->getClass()->getName()}[]"
+				/>
+			</restriction>
+		</complexContent>
+	</complexType>"
+XML;
+			} else {
+				$className = mb_strtolower($object->getClass()->getName());
+				
+				$containerXml =
+<<<XML
+
+	<complexType name="MovieTrailerList">
+		<sequence>
+			<element
+				name="{$className}"
+				maxOccurs="unbounded"
+				type="tns:{$object->getClass()->getName()}"
+			/>
+		</sequence>
+	</complexType>
+XML;
+				}
+				
+				return $containerXml;
 		}
 		
 		private static function makeXsdContainerName(ObjectType $object)
