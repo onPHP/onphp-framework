@@ -177,6 +177,11 @@
 										);
 								
 									$root->appendChild($element);
+								} else {
+									throw new WrongArgumentException(
+										'I dont know how to convert object of '
+										. get_class($value) . ' class to xml.'
+									);
 								}
 							} else {
 								$element = new DomElement($name, $value);
