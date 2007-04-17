@@ -1,5 +1,25 @@
 # $Id$
 
+2007-04-17	Denis M. Gabaidulin
+
+	* meta/classes/MetaClass.class.php: toComplexType() now support
+	xsd maxLength attribute (simple size restriction for base types).
+
+2007-04-16	Denis M. Gabaidulin
+
+	* meta/bin/meta2xsd.php: --withoutSoap parameter added
+	to generate standalone xml-schema document.
+
+2007-04-17	Denis M. Gabaidulin
+
+	* meta/classes/MetaClass.class.php: toComplexType() now support
+	xsd maxLength attribute (simple size restriction for base types).
+
+2007-04-16	Denis M. Gabaidulin
+
+	* meta/bin/meta2xsd.php: --withoutSoap parameter added
+	to generate standalone xml-schema document.
+
 2007-04-14	Konstantin V. Arkhipov
 
 	* core/OSQL/DBTable.class.php: now respect's column size during diff,

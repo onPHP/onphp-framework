@@ -392,6 +392,7 @@ XML;
 XML;
 			
 			foreach ($this->properties as $property) {
+				$generateRestriction = false;
 			
 				$element .=
 <<<XML
@@ -400,7 +401,8 @@ XML;
 				name="{$property->getName()}"
 				type="
 XML;
-				
+					$xsdType = null;
+					
 					if ($property->getType() instanceof ObjectType) {
 						if (
 							$property->getRelation()
@@ -426,11 +428,32 @@ XML;
 				if ($property->getSize()) {
 					if (!$withoutSoap)
 						$element .= " maxLength=\"" . $property->getSize() . "\" ";
+					else
+						$generateRestriction = true;
 				}
 				
-				$element .= <<<XML
+				if ($generateRestriction) {
+					$element .= <<<XML
+							>
+					<simpleType>
+						<xsd:restriction base="{$xsdType}"> 
+			            	<xsd:maxLength value="{$property->getSize()}"/> 
+			        	</xsd:restriction>
+			        </simpleType>
+XML;
+				}
+
+				
+				if ($generateRestriction) {
+					$element .= <<<XML
+					
+			</element>
+XML;
+				} else {
+					$element .= <<<XML
 							/>
 XML;
+				}
 			}
 			
 			$element .=
