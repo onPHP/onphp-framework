@@ -484,11 +484,13 @@ XML;
 			ObjectType $object, $withoutSoap = false
 		)
 		{
+			$typeName = self::makeXsdContainerName($object);
+			
 			if (!$withoutSoap) {
 				$containerXml =
 <<<XML
 
-	<complexType name="{self::makeXsdContainerName($object)}">
+	<complexType name="{$typeName}">
 		<complexContent>
 			<restriction base="soapenc:Array">
 				<attribute
@@ -505,7 +507,7 @@ XML;
 				$containerXml =
 <<<XML
 
-	<complexType name="MovieTrailerList">
+	<complexType name="{$typeName}">
 		<sequence>
 			<element
 				name="{$className}"
