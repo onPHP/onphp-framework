@@ -270,10 +270,12 @@
 				}
 				
 				if (
-					($value === null) && !$this->isGenericType() && (
-						!$this->getRelationId()
-						|| ($this->getRelationId() == MetaRelation::ONE_TO_ONE)
-					)
+					($value === null)
+						&& method_exists($object, $dropper = $this->getDropper())
+						&& (
+							!$this->getRelationId()
+							|| ($this->getRelationId() == MetaRelation::ONE_TO_ONE)
+						)
 				) {
 					$dropper = $this->getDropper();
 					
