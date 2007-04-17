@@ -433,11 +433,11 @@ XML;
 				if ($generateRestriction) {
 					$element .= <<<XML
 							>
-					<simpleType>
-						<xsd:restriction base="{$xsdType}"> 
-			            	<xsd:maxLength value="{$property->getSize()}"/> 
-			        	</xsd:restriction>
-			        </simpleType>
+				<simpleType>
+					<xsd:restriction base="{$xsdType}"> 
+			           	<xsd:maxLength value="{$property->getSize()}"/> 
+			       	</xsd:restriction>
+			    </simpleType>
 XML;
 				} else {
 					$element .=
@@ -463,12 +463,12 @@ XML;
 <<<XML
 
 		</sequence>
-
 XML;
 			
 			if ($this->getParent()) {
 				$element .=
 <<<XML
+
 			</extension>
 		</complexContent>
 XML;
@@ -476,6 +476,7 @@ XML;
 			
 			$element .=
 <<<XML
+
 	</complexType>
 
 XML;
@@ -492,7 +493,6 @@ XML;
 			if (!$withoutSoap) {
 				$containerXml =
 <<<XML
-
 	<complexType name="{$typeName}">
 		<complexContent>
 			<restriction base="soapenc:Array">
@@ -502,14 +502,14 @@ XML;
 				/>
 			</restriction>
 		</complexContent>
-	</complexType>"
+	</complexType>
+
 XML;
 			} else {
 				$className = mb_strtolower($object->getClass()->getName());
 				
 				$containerXml =
 <<<XML
-
 	<complexType name="{$typeName}">
 		<sequence>
 			<element
@@ -519,6 +519,7 @@ XML;
 			/>
 		</sequence>
 	</complexType>
+
 XML;
 				}
 				
