@@ -54,6 +54,12 @@
 				$this->strategy = FetchStrategy::cascade();
 		}
 		
+		public function __clone()
+		{
+			$this->logic = clone $this->logic;
+			$this->order = clone $this->order;
+		}
+		
 		public function __sleep()
 		{
 			$this->daoClass = get_class($this->dao);
