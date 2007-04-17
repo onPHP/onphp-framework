@@ -123,5 +123,69 @@
 				|| $info->isInstance($object)
 			);
 		}
+		
+		/* void */ public static function dtoObject2xml(
+			$object,
+			$classMap,
+			/* DomElement */ $xmlDoc = null,
+			$ignoreNull = false
+		)
+		{
+			Assert::isTrue(is_object($object));
+			
+			$class = new ReflectionClass($object);
+			
+			if (array_key_exists($class->getName(), $classMap))
+				$className = $classMap[$class->getName()];
+			else
+				$className = $class->getName();
+			
+			$root = new DomElement($className);
+			
+			if ($xmlDoc)
+				$xmlDoc->appendChild($root);
+			
+			$propertyList = $class->getProperties();
+			
+			foreach ($propertyList as $property) {
+				
+				$name = $property->getName();
+				
+				$getter = 'get'.ucfirst($name);
+				
+				if ($class->hasMethod($getter)) {
+					$value = $object->$getter();
+						if (!$ignoreNull) {
+							if (is_array($value)) {
+								$element = new DomElement($name);
+								
+								$root->appendChild($element);
+								
+								foreach ($value as $innerObject) {
+									ClassUtils::dtoObject2xml(
+										$innerObject,
+										$classMap,
+										$element
+									);
+								}
+							} elseif (is_object($value)) {
+								if ($value instanceof Timestamp) {
+									$element =
+										new DomElement(
+											$name,
+											$value->toISOString()
+										);
+								
+									$root->appendChild($element);
+								}
+							} else {
+								$element = new DomElement($name, $value);
+								
+								$root->appendChild($element);
+							}
+						}
+				}
+			}
+		}
 	}
 ?>
