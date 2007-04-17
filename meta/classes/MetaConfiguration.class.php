@@ -1047,6 +1047,7 @@ XML;
 				)
 				&& (!$class->getPattern() instanceof ValueObjectPattern)
 				&& (!$class->getPattern() instanceof InternalClassPattern)
+				&& (!$class->getPattern() instanceof DTOClassPattern)
 			) {
 				Assert::isTrue(
 					$class->getIdentifier() !== null,
