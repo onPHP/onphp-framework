@@ -514,6 +514,7 @@ XML;
 		<sequence>
 			<element
 				name="{$className}"
+				minOccurs="0"
 				maxOccurs="unbounded"
 				type="tns:{$object->getClass()->getName()}"
 			/>
