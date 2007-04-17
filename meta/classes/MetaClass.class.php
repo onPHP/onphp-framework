@@ -399,7 +399,7 @@ XML;
 
 			<element
 				name="{$property->getName()}"
-				type="
+				
 XML;
 					$xsdType = null;
 					
@@ -423,8 +423,6 @@ XML;
 					} else
 						$xsdType = $property->getType()->toXsdType(); 
 				
-				$element .= $xsdType . "\" ";
-				
 				if ($property->getSize()) {
 					if (!$withoutSoap)
 						$element .= " maxLength=\"" . $property->getSize() . "\" ";
@@ -440,6 +438,11 @@ XML;
 			            	<xsd:maxLength value="{$property->getSize()}"/> 
 			        	</xsd:restriction>
 			        </simpleType>
+XML;
+				} else {
+					$element .=
+<<<XML
+				type="{$xsdType}"
 XML;
 				}
 
