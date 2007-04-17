@@ -192,5 +192,55 @@
 				}
 			}
 		}
+		
+		/* void */ public static function xml2dtoObject(
+			&$object,
+			$classMap,
+			$simpleXml,
+			$ignoreNull = false
+		)
+		{
+			$className = $simpleXml->getName();
+			
+			if (array_key_exists($className, $classMap))
+				$className = $classMap[$className];
+			
+			if (!$object)
+				$object = new $className;
+			
+			$class = new ReflectionClass($object);
+			
+			$propertyList = $class->getProperties();
+			
+			foreach ($propertyList as $property) {
+				
+				$name = $property->getName();
+				
+				$setter = 'set'.ucfirst($name);
+				
+				if ($class->hasMethod($setter)) {
+					if (!$ignoreNull) {
+						if ($children = $simpleXml->$name->children()) {
+							$innerObjects = array();
+							
+							foreach ($children as $child) {
+								ClassUtils::xml2dtoObject(
+									$innerObject,
+									$classMap,
+									$child
+								);
+								
+								$innerObjects[] = $innerObject;
+								unset($innerObject);
+							}
+							
+							$object->$setter($innerObjects);
+						} else {
+							$object->$setter((string) $simpleXml->$name);
+						}
+					}
+				}
+			}
+		}
 	}
 ?>
