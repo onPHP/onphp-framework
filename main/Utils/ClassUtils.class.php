@@ -205,6 +205,12 @@
 			if (array_key_exists($className, $classMap))
 				$className = $classMap[$className];
 			
+			if (!class_exists($className, false)) {
+				throw new WrongStateException(
+					'Class ' . $className . ' not found.'
+				);
+			}
+			
 			if (!$object)
 				$object = new $className;
 			
@@ -212,7 +218,7 @@
 			
 			$propertyList = $class->getProperties();
 			
-			foreach ($propertyList as $property) {
+			foreach ($propertyList as $property) {	
 				
 				$name = $property->getName();
 				
