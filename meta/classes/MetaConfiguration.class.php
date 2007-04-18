@@ -316,6 +316,8 @@
 					$class->addProperty($property);
 				}
 				
+				$class->setBuild($generate);
+				
 				$this->classes[$class->getName()] = $class;
 			}
 			
@@ -334,7 +336,7 @@
 						infoLine('Including "'.$path.'".')->
 						newLine();
 					
-					$this->load($path, !((string) $include['build'] == 'false'));
+					$this->load($path, !((string) $include['generate'] == 'false'));
 				}
 			}
 			
@@ -444,7 +446,10 @@
 				infoLine('Building classes:');
 			
 			foreach ($this->classes as $name => $class) {
-				if ($class->getPattern() instanceof InternalClassPattern) {
+				if (
+					!$class->doBuild()
+					|| ($class->getPattern() instanceof InternalClassPattern)
+				) {
 					continue;
 				} else {
 					$out->infoLine("\t".$name.':');
