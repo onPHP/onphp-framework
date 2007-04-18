@@ -34,9 +34,6 @@
 		
 		private $joiner			= null;
 		
-		/// @see FetchStrategy
-		private $strategyId		= null;
-		
 		private $limit			= null;
 		private $offset			= null;
 
@@ -60,21 +57,6 @@
 		{
 			$this->joiner = clone $this->joiner;
 			$this->order = clone $this->order;
-		}
-		
-		public function getFetchStrategyId()
-		{
-			return $this->strategyId;
-		}
-		
-		/**
-		 * @return SelectQuery
-		**/
-		public function setFetchStrategyId($id)
-		{
-			$this->strategyId = $id;
-			
-			return $this;
 		}
 		
 		public function hasAliasInside($alias)

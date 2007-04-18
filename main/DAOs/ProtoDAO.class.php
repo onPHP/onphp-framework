@@ -15,18 +15,20 @@
 	**/
 	abstract class ProtoDAO extends GenericDAO
 	{
-		protected function setQueryFields(InsertOrUpdateQuery $query, $object)
+		public function makeObject(&$array, $prefix = null)
 		{
-			$this->checkObjectType($object);
+			if (isset($this->identityMap[$array[$prefix.'id']]))
+				$object = $this->identityMap[$array[$prefix.'id']];
+			else {
+				$object =
+					$this->getProtoClass()->makeObject(
+						$this->getObjectName(), $array, $prefix
+					);
+				
+				$this->identityMap[$object->getId()] = $object;
+			}
 			
-			return $this->getProtoClass()->processQuery($query, $object);
-		}
-		
-		protected function makeSelf(&$array, $prefix = null)
-		{
-			return $this->getProtoClass()->makeObject(
-				$this->getObjectName(), $array, $prefix
-			);
+			return $object;
 		}
 		
 		public function fetchCollections(
@@ -156,6 +158,13 @@
 			}
 			
 			return $list;
+		}
+		
+		protected function setQueryFields(InsertOrUpdateQuery $query, $object)
+		{
+			$this->checkObjectType($object);
+			
+			return $this->getProtoClass()->processQuery($query, $object);
 		}
 		
 		private function processPath(

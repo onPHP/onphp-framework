@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-18	Konstantin V. Arkhipov
+
+	* main/Criteria/Criteria.class.php, core/OSQL/SelectQuery.class.php:
+	ability to specify per-query fetch strategy removed.
+
 2007-04-14	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/PrimitivesBox.class.php: first step in

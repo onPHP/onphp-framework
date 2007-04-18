@@ -24,54 +24,5 @@
 		{
 			return dechex(crc32($prefix.$this->getTable())).'_'.$field;
 		}
-		
-		public function makeObject(&$array, $prefix = null)
-		{
-			return
-				$this->makeCascade(
-					$this->selfSpawn($array, $prefix),
-					$array,
-					$prefix
-				);
-		}
-		
-		public function makeJoinedObject(&$array, $prefix = null)
-		{
-			return
-				$this->makeJoiners(
-					$this->selfSpawn($array, $prefix),
-					$array,
-					$prefix
-				);
-		}
-		
-		/// do not override this methods, unless you're MetaConfiguration builder
-		//@{
-		protected function makeJoiners(
-			/* Identifiable */ $object, &$array, $prefix = null
-		)
-		{
-			return $object;
-		}
-		
-		protected function makeCascade(
-			/* Identifiable */ $object, &$array, $prefix = null
-		)
-		{
-			return $object;
-		}
-		//@}
-		
-		private function selfSpawn(&$array, $prefix = null)
-		{
-			if (isset($this->identityMap[$array[$prefix.'id']]))
-				$object = $this->identityMap[$array[$prefix.'id']];
-			else {
-				$object = $this->makeSelf($array, $prefix);
-				$this->identityMap[$object->getId()] = $object;
-			}
-			
-			return $object;
-		}
 	}
 ?>
