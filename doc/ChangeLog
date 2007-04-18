@@ -2,6 +2,8 @@
 
 2007-04-18	Konstantin V. Arkhipov
 
+	* main/DAOs/ComplexBuilderDAO.class.php: removed.
+
 	* main/Criteria/Criteria.class.php, core/OSQL/SelectQuery.class.php:
 	ability to specify per-query fetch strategy removed.
 

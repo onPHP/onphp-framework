@@ -15,6 +15,16 @@
 	**/
 	abstract class ProtoDAO extends GenericDAO
 	{
+		public function getJoinPrefix($field, $prefix = null)
+		{
+			return $this->getJoinName($field, $prefix).'__';
+		}
+		
+		public function getJoinName($field, $prefix = null)
+		{
+			return dechex(crc32($prefix.$this->getTable())).'_'.$field;
+		}
+		
 		public function makeObject(&$array, $prefix = null)
 		{
 			if (isset($this->identityMap[$array[$prefix.'id']]))

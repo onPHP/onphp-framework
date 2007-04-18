@@ -81,7 +81,7 @@
 		}
 		
 		/**
-		 * @return ComplexBuilderDAO
+		 * @return StorableDAO
 		**/
 		public function getFinalDao()
 		{
@@ -106,7 +106,7 @@
 			
 			Assert::isTrue(
 				(self::$protos[$className] instanceof AbstractProtoClass)
-				&& (self::$daos[$className] instanceof ComplexBuilderDAO)
+				&& (self::$daos[$className] instanceof ProtoDAO)
 			);
 		}
 	}

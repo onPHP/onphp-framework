@@ -30,7 +30,7 @@
 				$class->getFinalParent()->getPattern()
 					instanceof InternalClassPattern
 			) {
-				$parentName = 'ComplexBuilderDAO';
+				$parentName = 'StorableDAO';
 			} else {
 				$parentName = $parent->getName().'DAO';
 			}

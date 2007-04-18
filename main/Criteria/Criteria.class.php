@@ -373,7 +373,7 @@
 		
 		private function joinProperties(
 			SelectQuery $query,
-			ComplexBuilderDAO $parentDao,
+			ProtoDAO $parentDao,
 			$parentTable,
 			$parentRequired,
 			$prefix = null
