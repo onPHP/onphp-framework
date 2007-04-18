@@ -205,12 +205,6 @@
 			if (array_key_exists($className, $classMap))
 				$className = $classMap[$className];
 			
-			if (!class_exists($className, false)) {
-				throw new WrongStateException(
-					'Class ' . $className . ' not found.'
-				);
-			}
-			
 			if (!$object)
 				$object = new $className;
 			
