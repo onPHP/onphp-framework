@@ -62,8 +62,9 @@
 			
 			foreach ($form->getPrimitiveList() as $name => $prm) {
 				$setter = 'set'.ucfirst($name);
+				
 				if ($prm instanceof ListedPrimitive)
-					 $value = $prm->getActualChoiceValue();
+					$value = $prm->getChoiceValue();
 				else
 					$value = $prm->getValue();
 				
