@@ -12,7 +12,7 @@
 
 	/**
 	 * Basis of all DAO's.
-	 * 
+	 *
 	 * @ingroup DAOs
 	**/
 	abstract class GenericDAO extends Singleton implements BaseDAO
@@ -28,7 +28,7 @@
 
 		/**
 		 * Builds complete object.
-		 * 
+		 *
 		 * @see http://onphp.org/examples.DAOs.en.html
 		 *
 		 * @param $array	associative array('fieldName' => 'value')
@@ -52,7 +52,7 @@
 		/**
 		 * Returns link name which is used to get actual db-link from DBPool,
 		 * returning null by default for backwards compatibility.
-		 * 
+		 *
 		 * @see DBPool
 		**/
 		public function getLinkName()
@@ -65,7 +65,7 @@
 			if (null === $this->selectHead) {
 				$table = $this->getTable();
 
-				$this->selectHead = 
+				$this->selectHead =
 					OSQL::select()->
 					from($table);
 				

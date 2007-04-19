@@ -12,7 +12,7 @@
 
 	/**
 	 * Common Primitive-handling.
-	 * 
+	 *
 	 * @ingroup Form
 	**/
 	abstract class PlainForm
@@ -107,10 +107,10 @@
 		{
 			$primitive = $this->get($name);
 			
-			if ($primitive instanceof FiltrablePrimitive) 
+			if ($primitive instanceof FiltrablePrimitive)
 				return $primitive->getDisplayValue();
 			else
-				return $primitive->getActualValue();		
+				return $primitive->getActualValue();
 		}
 
 		public function getChoiceValue($name)

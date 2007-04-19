@@ -12,11 +12,11 @@
 
 	/**
 	 * Basis for transparent DAO workers.
-	 * 
+	 *
 	 * @see VoodooDaoWorker for obscure and greedy worker.
 	 * @see SmartDaoWorker for less obscure locking-based worker.
 	 * @see FileSystemDaoWorker for Voodoo's filesystem-based child.
-	 * 
+	 *
 	 * @ingroup DAOs
 	**/
 	abstract class TransparentDaoWorker extends BaseDaoWorker
@@ -46,7 +46,7 @@
 			} else {
 				$db = DBPool::getByDao($this->dao);
 
-				$query = 
+				$query =
 					$this->dao->makeSelectHead()->
 					andWhere(
 						Expression::eq(
@@ -405,7 +405,7 @@
 		{
 			static $null = Cache::NOT_FOUND;
 			
-			return 
+			return
 				Cache::me()->mark($this->className)->
 					add(
 						$this->className.'_'.$id,
