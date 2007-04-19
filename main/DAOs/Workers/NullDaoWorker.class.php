@@ -12,10 +12,10 @@
 
 	/**
 	 * Cacheless DAO worker.
-	 *
+	 * 
 	 * @see CommonDaoWorker for manual-caching one.
 	 * @see SmartDaoWorker for transparent one.
-	 *
+	 * 
 	 * @ingroup DAOs
 	**/
 	final class NullDaoWorker extends BaseDaoWorker
@@ -33,7 +33,7 @@
 			
 			$db = DBPool::getByDao($this->dao);
 
-			$query =
+			$query = 
 				$this->dao->makeSelectHead()->
 				where(
 					Expression::eq(
@@ -209,7 +209,7 @@
 		
 		public function dropByIds(/* array */ $ids)
 		{
-			return
+			return 
 				DBPool::getByDao($this->dao)->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::in('id', $ids))

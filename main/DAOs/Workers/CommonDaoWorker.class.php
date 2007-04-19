@@ -12,9 +12,9 @@
 
 	/**
 	 * Tunable (aka manual) caching DAO worker.
-	 *
+	 * 
 	 * @see SmartDaoWorker for auto-caching one.
-	 *
+	 * 
 	 * @ingroup DAOs
 	**/
 	final class CommonDaoWorker extends BaseDaoWorker
@@ -37,7 +37,7 @@
 			else {
 				$db = DBPool::getByDao($this->dao);
 
-				$query =
+				$query = 
 					$this->dao->
 						makeSelectHead()->
 						where(
@@ -52,7 +52,7 @@
 						$expires === Cache::DO_NOT_CACHE
 							? $object
 							: $this->cacheById($object, $expires);
-				} else {
+				} else { 
 					throw new ObjectNotFoundException(
 						"there is no such object for '".get_class($this->dao)
 						."' with query == {$query->toDialectString($db->getDialect())}"
@@ -158,9 +158,9 @@
 							$list,
 							$this->getListByLogic(
 								Expression::in(
-									new DBField('id', $this->dao->getTable()),
+									new DBField('id', $this->dao->getTable()), 
 									$toFetch
-								),
+								), 
 								$expires
 							)
 						);
@@ -198,7 +198,7 @@
 			$db = DBPool::getByDao($this->dao);
 			
 			if (
-				($expires !== Cache::DO_NOT_CACHE) &&
+				($expires !== Cache::DO_NOT_CACHE) && 
 				($list = $this->getCachedByQuery($query))
 			)
 				return $list;
