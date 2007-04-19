@@ -49,6 +49,36 @@
 			return $lists[$className];
 		}
 		
+		final public function getExpandedPropertyList($prefix = null)
+		{
+			static $lists = array();
+			
+			$className = get_class($this);
+			
+			if (!isset($lists[$className])) {
+				foreach ($this->makePropertyList() as $property) {
+					if ($property instanceof InnerMetaProperty) {
+						$lists[$className] =
+							array_merge(
+								$lists[$className],
+								$property->getProto()->getExpandedPropertyList(
+									$property->getName().':'
+								)
+							);
+					} else {
+						$lists[
+							$className
+						][
+							$prefix.$property->getName()
+						]
+							= $property;
+					}
+				}
+			}
+			
+			return $lists[$className];
+		}
+		
 		/**
 		 * @return LightMetaProperty
 		 * @throws MissingElementException
@@ -107,6 +137,117 @@
 			}
 			
 			return $mappings[$className];
+		}
+		
+		public function importPrimitive(
+			$path,
+			Form $form,
+			BasePrimitive $prm,
+			/* Prototyped */ $object,
+			$ignoreNull = true
+		)
+		{
+			if (strpos($path, ':') !== false) {
+				list($propertyName, $path) = explode(':', $path, 2);
+				
+				$property = $this->getPropertyByName($propertyName);
+				
+				Assert::isTrue($property instanceof InnerMetaProperty);
+				
+				$getter = $property->getGetter();
+				
+				return $property->getProto()->importPrimitive(
+					$path, $form, $prm, $object->$getter(), $ignoreNull
+				);
+			} else {
+				$property = $this->getPropertyByName($path);
+				
+				if (
+					($property->getFetchStrategyId() == FetchStrategy::LAZY)
+				)
+					return $object;
+				
+				$getter = $property->getGetter();
+				
+				$value = $object->$getter();
+				
+				if (!$ignoreNull || ($value !== null)) {
+					$form->importValue($prm->getName(), $value);
+				}
+			}
+			
+			return $object;
+		}
+		
+		public function exportPrimitive(
+			$path,
+			BasePrimitive $prm,
+			/* Prototyped */ $object,
+			$ignoreNull = true
+		) {
+			if (strpos($path, ':') !== false) {
+				list($propertyName, $path) = explode(':', $path, 2);
+				
+				$property = $this->getPropertyByName($propertyName);
+				
+				Assert::isTrue($property instanceof InnerMetaProperty);
+				
+				$getter = $property->getGetter();
+				
+				return $property->getProto()->exportPrimitive(
+					$path, $prm, $object->$getter(), $ignoreNull
+				);
+			} else {
+				$property = $this->getPropertyByName($path);
+				$setter = $property->getSetter();
+				$value = $prm->getValue();
+				
+				if (
+					!$ignoreNull || ($value !== null)
+				) {
+					if ($property->isIdentifier()) {
+						$value = $value->getId();
+					}
+					
+					$dropper = $property->getDropper();
+					
+					if (
+						($value === null)
+							&& method_exists($object, $dropper)
+							&& (
+								!$property->getRelationId()
+								|| (
+									$property->getRelationId()
+									== MetaRelation::ONE_TO_ONE
+								)
+							)
+					) {
+						$object->$dropper();
+						
+						return $object;
+					} elseif (
+						(
+							$property->getRelationId()
+							== MetaRelation::ONE_TO_MANY
+						) || (
+							$property->getRelationId()
+							== MetaRelation::MANY_TO_MANY
+						)
+					) {
+						if ($value === null)
+							$value = array();
+						
+						$getter = $property->getGetter();
+						$object->$getter()->setList($value);
+						
+						return $object;
+					}
+					
+					$object->$setter($value);
+				}
+			}
+			
+			return $object;
 		}
 	}
 ?>

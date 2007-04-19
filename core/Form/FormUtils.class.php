@@ -25,8 +25,19 @@
 			$class = new ReflectionClass($object);
 			
 			if ($object instanceof Prototyped) {
-				foreach ($object->proto()->getPropertyList() as $property) {
-					$property->processFormImport($object, $form, $ignoreNull);
+				$proto = $object->proto();
+				$list = $proto->getExpandedPropertyList();
+				
+				foreach (array_keys($proto->getExpandedPropertyList()) as $name) {
+					if ($form->primitiveExists($name)) {
+						$proto->importPrimitive(
+							$name,
+							$form,
+							$form->get($name),
+							$object,
+							$ignoreNull
+						);
+					}
 				}
 			} else {
 				foreach ($class->getProperties() as $property) {
@@ -52,8 +63,13 @@
 			Assert::isTrue(is_object($object));
 			
 			if ($object instanceof Prototyped) {
-				foreach ($object->proto()->getPropertyList() as $property) {
-					$property->processFormExport($form, $object, $ignoreNull);
+				$proto = $object->proto();
+				$list = $proto->getExpandedPropertyList();
+				
+				foreach ($form->getPrimitiveList() as $name => $prm) {
+					if (isset($list[$name])) {
+						$proto->exportPrimitive($name, $prm, $object, $ignoreNull);
+					}
 				}
 			} else {
 				$class = new ReflectionClass($object);

@@ -304,7 +304,9 @@
 		/**
 		 * @return Form
 		**/
-		public function processFormImport($object, Form $form, $ignoreNull = true)
+		public function processFormImport(
+			$object, Form $form, $ignoreNull = true, $prefix = null
+		)
 		{
 			if (
 				($this->getFetchStrategyId() == FetchStrategy::LAZY)
@@ -465,7 +467,7 @@
 				.')';
 		}
 		
-		private function isIdentifier()
+		public function isIdentifier()
 		{
 			return (
 				$this->generic && $this->required && (

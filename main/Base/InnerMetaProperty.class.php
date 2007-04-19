@@ -50,7 +50,9 @@
 		/**
 		 * @return Form
 		**/
-		public function processFormImport($object, Form $form, $ignoreNull = true)
+		public function processFormImport(
+			$object, Form $form, $ignoreNull = true, $prefix = null
+		)
 		{
 			throw new UnimplementedFeatureException();
 		}
@@ -61,7 +63,7 @@
 		public function processForm(Form $form, $prefix = null)
 		{
 			foreach ($this->getProto()->getPropertyList() as $property) {
-				$property->processForm($form, $this->getName().'.');
+				$property->processForm($form, $this->getName().':');
 			}
 			
 			return $form;
@@ -72,7 +74,8 @@
 			Prototyped $object
 		)
 		{
-			return $this->getProto()->processQuery($query, $object);
+			$getter = $this->getGetter();
+			return $this->getProto()->processQuery($query, $object->$getter());
 		}
 		
 		public function toValue(ProtoDAO $dao = null, $array, $prefix = null)
@@ -85,7 +88,7 @@
 		/**
 		 * @return AbstractProtoClass
 		**/
-		protected function getProto()
+		public function getProto()
 		{
 			return call_user_func(array($this->getClassName(), 'proto'));
 		}
