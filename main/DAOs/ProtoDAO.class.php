@@ -201,18 +201,29 @@
 				&& !$property->isGenericType()
 			);
 			
-			$propertyDao = call_user_func(
-				array(
-					$property->getClassName(),
-					'dao'
-				)
-			);
+			// checking whether we're playing with value object
+			if (!method_exists($property->getClassName(), 'dao')) {
+				return
+					$this->guessAtom(
+						implode('.', $path),
+						$query,
+						$table,
+						$prefix
+					);
+			} else {
+				$propertyDao = call_user_func(
+					array(
+						$property->getClassName(),
+						'dao'
+					)
+				);
 			
-			Assert::isNotNull(
-				$propertyDao,
-				'can not find target dao for "'.$property->getName().'" property'
-				.' at "'.get_class($proto).'"'
-			);
+				Assert::isNotNull(
+					$propertyDao,
+					'can not find target dao for "'.$property->getName().'" property'
+					.' at "'.get_class($proto).'"'
+				);
+			}
 			
 			$alias = $propertyDao->getJoinName(
 				$property->getColumnName(),

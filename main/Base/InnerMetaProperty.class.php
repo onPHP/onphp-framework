@@ -58,12 +58,13 @@
 		/**
 		 * @return Form
 		**/
-		public function processForm(Form $form)
+		public function processForm(Form $form, $prefix = null)
 		{
-			// FIXME: go away from plain Form
-			foreach ($this->getProto()->makeForm() as $prm) {
-				$form->add($prm);
+			foreach ($this->getProto()->getPropertyList() as $property) {
+				$property->processForm($form, $this->getName().'.');
 			}
+			
+			return $form;
 		}
 		
 		public function processQuery(
@@ -84,7 +85,7 @@
 		/**
 		 * @return AbstractProtoClass
 		**/
-		private function getProto()
+		protected function getProto()
 		{
 			return call_user_func(array($this->getClassName(), 'proto'));
 		}

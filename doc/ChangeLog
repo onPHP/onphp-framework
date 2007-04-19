@@ -1,5 +1,11 @@
 # $Id$
 
+2007-04-19	Konstantin V. Arkhipov
+
+	* main/Base/, core/Form/: quasi non-plain Form implemented.
+
+	* core/Form/Primitives/PrimitivesBox.class.php: removed.
+
 2007-04-18	Konstantin V. Arkhipov
 
 	* main/DAOs/ComplexBuilderDAO.class.php: removed.

@@ -65,17 +65,23 @@
 			);
 		}
 		
-		public function makeForm()
+		/**
+		 * @return Form
+		**/
+		public function makeForm($prefix = null)
 		{
 			$form = Form::create();
 			
 			foreach ($this->getPropertyList() as $property) {
-				$property->processForm($form);
+				$property->processForm($form, $prefix);
 			}
 			
 			return $form;
 		}
 		
+		/**
+		 * @return InsertOrUpdateQuery
+		**/
 		public function processQuery(
 			InsertOrUpdateQuery $query, Prototyped $object
 		) {

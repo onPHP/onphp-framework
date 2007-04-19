@@ -326,12 +326,12 @@
 		/**
 		 * @return Form
 		**/
-		public function processForm(Form $form)
+		public function processForm(Form $form, $prefix = null)
 		{
 			$prm =
 				call_user_func(
 					array('Primitive', $this->getType()),
-					$this->getName()
+					$prefix.$this->getName()
 				);
 			
 			if ($min = $this->getMin())

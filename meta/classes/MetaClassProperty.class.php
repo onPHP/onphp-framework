@@ -240,24 +240,6 @@
 			MetaClassProperty $holder = null
 		)
 		{
-			if (
-				!$holder
-				&& $this->type instanceof ObjectType
-				&& !$this->type->isGeneric()
-				&& $this->type->getClass()->getPattern()
-					instanceof ValueObjectPattern
-			) {
-				$out = null;
-				
-				$remote = $this->type->getClass();
-				
-				foreach ($remote->getProperties() as $property) {
-					$out .= $property->toMethods($remote, $this);
-				}
-				
-				return $out.$this->type->toMethods($class, $this);
-			}
-			
 			return $this->type->toMethods($class, $this, $holder);
 		}
 		
