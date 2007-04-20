@@ -103,7 +103,7 @@
 			$form = Form::create();
 			
 			foreach ($this->getPropertyList() as $property) {
-				$property->processForm($form, $prefix);
+				$property->fillForm($form, $prefix);
 			}
 			
 			return $form;
@@ -112,11 +112,11 @@
 		/**
 		 * @return InsertOrUpdateQuery
 		**/
-		public function processQuery(
+		public function fillQuery(
 			InsertOrUpdateQuery $query, Prototyped $object
 		) {
 			foreach ($this->getPropertyList() as $property) {
-				$property->processQuery($query, $object);
+				$property->fillQuery($query, $object);
 			}
 			
 			return $query;
@@ -131,7 +131,7 @@
 			if (!isset($mappings[$className])) {
 				$mapping = array();
 				foreach ($this->getPropertyList() as $name => $property) {
-					$mapping = $property->processMapping($mapping);
+					$mapping = $property->fillMapping($mapping);
 				}
 				$mappings[$className] = $mapping;
 			}
@@ -148,16 +148,8 @@
 		)
 		{
 			if (strpos($path, ':') !== false) {
-				list($propertyName, $path) = explode(':', $path, 2);
-				
-				$property = $this->getPropertyByName($propertyName);
-				
-				Assert::isTrue($property instanceof InnerMetaProperty);
-				
-				$getter = $property->getGetter();
-				
-				return $property->getProto()->importPrimitive(
-					$path, $form, $prm, $object->$getter(), $ignoreNull
+				return $this->forwardPrimitive(
+					$path, $form, $prm, $object, $ignoreNull
 				);
 			} else {
 				$property = $this->getPropertyByName($path);
@@ -186,16 +178,8 @@
 			$ignoreNull = true
 		) {
 			if (strpos($path, ':') !== false) {
-				list($propertyName, $path) = explode(':', $path, 2);
-				
-				$property = $this->getPropertyByName($propertyName);
-				
-				Assert::isTrue($property instanceof InnerMetaProperty);
-				
-				$getter = $property->getGetter();
-				
-				return $property->getProto()->exportPrimitive(
-					$path, $prm, $object->$getter(), $ignoreNull
+				return $this->forwardPrimitive(
+					$path, null, $prm, $object, $ignoreNull
 				);
 			} else {
 				$property = $this->getPropertyByName($path);
@@ -248,6 +232,31 @@
 			}
 			
 			return $object;
+		}
+		
+		private function forwardPrimitive(
+			$path,
+			Form $form = null,
+			BasePrimitive $prm,
+			/* Prototyped */ $object,
+			$ignoreNull = true
+		) {
+			list($propertyName, $path) = explode(':', $path, 2);
+			
+			$property = $this->getPropertyByName($propertyName);
+			
+			Assert::isTrue($property instanceof InnerMetaProperty);
+			
+			$getter = $property->getGetter();
+			
+			if ($form)
+				return $property->getProto()->importPrimitive(
+					$path, $form, $prm, $object->$getter(), $ignoreNull
+				);
+			else
+				return $property->getProto()->exportPrimitive(
+					$path, $prm, $object->$getter(), $ignoreNull
+				);
 		}
 	}
 ?>

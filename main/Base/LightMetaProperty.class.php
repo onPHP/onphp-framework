@@ -233,7 +233,7 @@
 			return true;
 		}
 		
-		public function processMapping(array $mapping)
+		public function fillMapping(array $mapping)
 		{
 			if (
 				!$this->getRelationId()
@@ -254,81 +254,7 @@
 		/**
 		 * @return Form
 		**/
-		public function processFormExport(Form $form, $object, $ignoreNull = true)
-		{
-			if (!$form->primitiveExists($this->getName()))
-				return $form;
-			
-			$setter = $this->getSetter();
-			$value = $form->getValue($this->getName());
-			
-			if (
-				!$ignoreNull || ($value !== null)
-			) {
-				if ($this->isIdentifier()) {
-					$value = $value->getId();
-				}
-				
-				if (
-					($value === null)
-						&& method_exists($object, $dropper = $this->getDropper())
-						&& (
-							!$this->getRelationId()
-							|| ($this->getRelationId() == MetaRelation::ONE_TO_ONE)
-						)
-				) {
-					$dropper = $this->getDropper();
-					
-					$object->$dropper();
-					
-					return $form;
-				} elseif (
-					($this->getRelationId() == MetaRelation::ONE_TO_MANY)
-					|| ($this->getRelationId() == MetaRelation::MANY_TO_MANY)
-				) {
-					if ($value === null)
-						$value = array();
-					
-					$getter = $this->getGetter();
-					$object->$getter()->setList($value);
-					
-					return $form;
-				}
-				
-				$object->$setter($value);
-			}
-			
-			return $form;
-		}
-		
-		/**
-		 * @return Form
-		**/
-		public function processFormImport(
-			$object, Form $form, $ignoreNull = true, $prefix = null
-		)
-		{
-			if (
-				($this->getFetchStrategyId() == FetchStrategy::LAZY)
-				|| !$form->primitiveExists($this->getName())
-			)
-				return $form;
-			
-			$getter = $this->getGetter();
-			
-			$value = $object->$getter();
-			
-			if (!$ignoreNull || ($value !== null)) {
-				$form->importValue($this->getName(), $value);
-			}
-			
-			return $form;
-		}
-		
-		/**
-		 * @return Form
-		**/
-		public function processForm(Form $form, $prefix = null)
+		public function fillForm(Form $form, $prefix = null)
 		{
 			$prm =
 				call_user_func(
@@ -351,7 +277,7 @@
 			return $form->add($prm);
 		}
 		
-		public function processQuery(
+		public function fillQuery(
 			InsertOrUpdateQuery $query,
 			Prototyped $object
 		)

@@ -30,7 +30,7 @@
 			return true;
 		}
 		
-		public function processMapping(array $mapping)
+		public function fillMapping(array $mapping)
 		{
 			return
 				array_merge(
@@ -42,40 +42,22 @@
 		/**
 		 * @return Form
 		**/
-		public function processFormExport(Form $form, $object, $ignoreNull = true)
-		{
-			throw new UnimplementedFeatureException();
-		}
-		
-		/**
-		 * @return Form
-		**/
-		public function processFormImport(
-			$object, Form $form, $ignoreNull = true, $prefix = null
-		)
-		{
-			throw new UnimplementedFeatureException();
-		}
-		
-		/**
-		 * @return Form
-		**/
-		public function processForm(Form $form, $prefix = null)
+		public function fillForm(Form $form, $prefix = null)
 		{
 			foreach ($this->getProto()->getPropertyList() as $property) {
-				$property->processForm($form, $this->getName().':');
+				$property->fillForm($form, $this->getName().':');
 			}
 			
 			return $form;
 		}
 		
-		public function processQuery(
+		public function fillQuery(
 			InsertOrUpdateQuery $query,
 			Prototyped $object
 		)
 		{
 			$getter = $this->getGetter();
-			return $this->getProto()->processQuery($query, $object->$getter());
+			return $this->getProto()->fillQuery($query, $object->$getter());
 		}
 		
 		public function toValue(ProtoDAO $dao = null, $array, $prefix = null)

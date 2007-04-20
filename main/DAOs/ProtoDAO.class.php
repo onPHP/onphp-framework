@@ -174,7 +174,7 @@
 		{
 			$this->checkObjectType($object);
 			
-			return $this->getProtoClass()->processQuery($query, $object);
+			return $this->getProtoClass()->fillQuery($query, $object);
 		}
 		
 		private function processPath(
