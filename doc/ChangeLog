@@ -2,6 +2,12 @@
 
 2007-04-21	Konstantin V. Arkhipov
 
+	* meta/builders/AutoClassBuilder.class.php: __sleep()'s generation
+	dropped.
+
+	* main/DAOs/: partial caching implemented for objects fetched by
+	cascade strategy; useless getListByCriteria() dropped.
+
 	* main/DAOs/GenericDAO.class.php: getById() now stores cached objects
 	in identity map.
 

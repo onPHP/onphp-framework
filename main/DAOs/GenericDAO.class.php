@@ -28,7 +28,19 @@
 		abstract public function getTable();
 		abstract public function getObjectName();
 		
-		abstract protected function makeObject(&$array, $prefix = null);
+		abstract public function makeOnlyObject(&$array, $prefix = null);
+		abstract public function completeObject(
+			Identifiable $object, &$array, $prefix = null
+		);
+		
+		public function makeObject(&$array, $prefix = null)
+		{
+			return $this->completeObject(
+				$this->makeOnlyObject($array, $prefix),
+				$array,
+				$prefix
+			);
+		}
 		
 		/**
 		 * Returns link name which is used to get actual DB-link from DBPool,
@@ -141,12 +153,6 @@
 		)
 		{
 			return Cache::worker($this)->getListByQuery($query, $expires);
-		}
-		
-		public function getListByCriteria(
-			Criteria $criteria, $expires = Cache::DO_NOT_CACHE)
-		{
-			return Cache::worker($this)->getListByCriteria($criteria, $expires);
 		}
 		
 		public function getListByLogic(

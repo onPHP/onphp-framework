@@ -17,23 +17,16 @@
 	{
 		abstract protected function makePropertyList();
 		
-		public static function makeObject($className, $array, $prefix = null)
+		public static function makeOnlyObject($className, $array, $prefix = null)
 		{
-			$object = new $className;
-			
-			if ($object instanceof DAOConnected)
-				$dao = $object->dao();
-			else
-				$dao = null;
-			
-			foreach ($object->proto()->getPropertyList() as $property) {
-				if ($property->isBuildable($array, $prefix)) {
-					$setter = $property->getSetter();
-					$object->$setter($property->toValue($dao, $array, $prefix));
-				}
-			}
-			
-			return $object;
+			return self::assemblyObject(new $className, false, $array, $prefix);
+		}
+		
+		public static function completeObject(
+			Prototyped $object, $array, $prefix = null
+		)
+		{
+			return self::assemblyObject($object, true, $array, $prefix);
 		}
 		
 		final public function getPropertyList()
@@ -228,6 +221,32 @@
 					}
 					
 					$object->$setter($value);
+				}
+			}
+			
+			return $object;
+		}
+		
+		private static function assemblyObject(
+			Prototyped $object, $encapsulants, $array, $prefix = null
+		)
+		{
+			if ($object instanceof DAOConnected)
+				$dao = $object->dao();
+			else
+				$dao = null;
+			
+			foreach ($object->proto()->getPropertyList() as $property) {
+				if (
+					(
+						$encapsulants xor (
+							$property->getRelationId()
+							!= MetaRelation::ONE_TO_ONE
+						)
+					) && $property->isBuildable($array, $prefix)
+				) {
+					$setter = $property->getSetter();
+					$object->$setter($property->toValue($dao, $array, $prefix));
 				}
 			}
 			

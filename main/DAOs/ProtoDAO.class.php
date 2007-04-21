@@ -30,15 +30,27 @@
 			if (isset($this->identityMap[$array[$prefix.$this->getIdName()]]))
 				$object = $this->identityMap[$array[$prefix.$this->getIdName()]];
 			else {
-				$object =
-					$this->getProtoClass()->makeObject(
-						$this->getObjectName(), $array, $prefix
-					);
-				
+				$object = parent::makeObject($array, $prefix);
 				$this->identityMap[$object->getId()] = $object;
 			}
 			
 			return $object;
+		}
+		
+		public function makeOnlyObject(&$array, $prefix = null)
+		{
+			return $this->getProtoClass()->makeOnlyObject(
+				$this->getObjectName(), $array, $prefix
+			);
+		}
+		
+		public function completeObject(
+			Identifiable $object, &$array, $prefix = null
+		)
+		{
+			return $this->getProtoClass()->completeObject(
+				$object, $array, $prefix
+			);
 		}
 		
 		public function fetchCollections(

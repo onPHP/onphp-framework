@@ -46,8 +46,8 @@
 						)
 					);
 
-				if ($object = $this->fetchObject($query)) {
-					return $this->cacheById($object);
+				if ($object = $this->cachedFetchObject($query)) {
+					return $object;
 				} else {
 					$this->cacheNullById($id);
 					throw new ObjectNotFoundException();
@@ -75,8 +75,8 @@
 					return $object;
 				
 			} else {
-				if ($object = $this->fetchObject($query))
-					return $this->cacheByQuery($query, $object);
+				if ($object = $this->cachedFetchObject($query))
+					return $object;
 				else {
 					$this->cacheByQuery($query, Cache::NOT_FOUND);
 					throw new ObjectNotFoundException();
@@ -147,28 +147,6 @@
 		
 		public function getListByQuery(SelectQuery $query)
 		{
-			$list = $this->getCachedList($query);
-			
-			if ($list) {
-				if ($list === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
-				else
-					return $list;
-			} else {
-				if ($list = $this->fetchList($query))
-					return $this->cacheListByQuery($query, $list);
-				else {
-					$this->cacheListByQuery($query, Cache::NOT_FOUND);
-					throw new ObjectNotFoundException();
-				}
-			}
-			
-			Assert::isUnreachable();
-		}
-		
-		public function getListByCriteria(Criteria $criteria)
-		{
-			$query = $criteria->toSelectQuery();
 			$list = $this->getCachedList($query);
 			
 			if ($list) {

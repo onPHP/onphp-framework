@@ -81,8 +81,6 @@ EOT;
 				$out .= "}\n";
 			}
 			
-			$out .= self::buildSerializers($class);
-			
 			foreach ($class->getProperties() as $property) {
 				if (!self::doPropertyBuild($property, $isNamed))
 					continue;
@@ -93,47 +91,6 @@ EOT;
 			$out .= "}\n";
 			$out .= self::getHeel();
 			
-			return $out;
-		}
-		
-		private static function buildSerializers(MetaClass $class)
-		{
-			$slackers = array();
-			
-			foreach ($class->getProperties() as $property) {
-				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
-					$slackers[] = $property;
-				}
-			}
-			
-			if (!$slackers)
-				return null;
-			
-			$out = <<<EOT
-
-public function __sleep()
-{
-	\$properties = get_object_vars(\$this);
-	
-	unset(
-
-EOT;
-			$unsetters = array();
-			
-			foreach ($slackers as $property) {
-				$unsetters[] = "\$properties['{$property->getName()}']";
-			}
-			
-			$out .= implode(",\n", $unsetters);
-			
-			$out .= <<<EOT
-
-	);
-	
-	return array_keys(\$properties);
-}
-
-EOT;
 			return $out;
 		}
 		

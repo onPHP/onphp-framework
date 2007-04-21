@@ -107,6 +107,16 @@
 			return null;
 		}
 		
+		protected function cachedFetchObject(SelectQuery $query)
+		{
+			if ($row = DBPool::getByDao($this->dao)->queryRow($query)) {
+				$object = $this->cacheById($this->dao->makeOnlyObject($row));
+				return $this->dao->completeObject($object, $row);
+			}
+			
+			return null;
+		}
+		
 		protected function fetchList(SelectQuery $query)
 		{
 			if ($rows = DBPool::getByDao($this->dao)->querySet($query)) {
