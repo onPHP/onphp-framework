@@ -6,25 +6,21 @@
 	// set up default cache peer
 
 	Cache::setPeer(
-		new ReferencePool(
-			Memcached::create()
-		)
+		Memcached::create()
 	);
 
 	// or even several aggregated peers
 	
 	Cache::setPeer(
-		new ReferencePool(
-			AggregateCache::create()->
-			addPeer(
-				'memcached daemon at localhost',
-				Memcached::create()
-			)->
-			addPeer(
-				'local low-priority file system',
-				RubberFileSystem::create('/tmp/onphp-cache'),
-				AggregateCache::LEVEL_VERYLOW
-			)
+		AggregateCache::create()->
+		addPeer(
+			'memcached daemon at localhost',
+			Memcached::create()
+		)->
+		addPeer(
+			'local low-priority file system',
+			RubberFileSystem::create('/tmp/onphp-cache'),
+			AggregateCache::LEVEL_VERYLOW
 		)
 	);
 

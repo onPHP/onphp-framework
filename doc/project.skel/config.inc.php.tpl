@@ -61,9 +61,7 @@
 	define('BUGLOVERS', 'some.box@host.domain');
 
 	Cache::setPeer(
-		new ReferencePool(
-			Memcached::create('localhost')
-		)
+		Memcached::create('localhost')
 	);
 	
 	Cache::setDefaultWorker('SmartDaoWorker');

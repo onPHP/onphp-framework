@@ -61,7 +61,6 @@
 	 *   - DirectoryLocker;
 	 *  - utils:
 	 *   - AggregateCache;
-	 *   - ReferencePool;
 	 *   - WatermarkedPeer;
 	 * - web flow:
 	 *  - Model:
