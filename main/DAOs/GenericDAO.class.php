@@ -113,7 +113,9 @@
 			if (isset($this->identityMap[$id]))
 				return $this->identityMap[$id];
 			
-			return Cache::worker($this)->getById($id, $expires);
+			$object = Cache::worker($this)->getById($id, $expires);
+			
+			return $this->identityMap[$object->getId()] = $object;
 		}
 
 		public function getByLogic(

@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-21	Konstantin V. Arkhipov
+
+	* main/DAOs/GenericDAO.class.php: getById() now stores cached objects
+	in identity map.
+
 2007-04-17	Denis M. Gabaidulin
 
 	* main/Utils/ClassUtils.class.php: dtoObject2xml() added.
