@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-21	Konstantin V. Arkhipov
+
+	* main/DAOs/GenericDAO.class.php: getById() now stores cached objects
+	in identity map.
+
 2007-04-19	Konstantin V. Arkhipov
 
 	* main/Base/, core/Form/: quasi non-plain Form implemented.
