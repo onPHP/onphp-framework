@@ -599,12 +599,9 @@
 			
 			$out = $this->getOutput();
 			$out->
-				newLine()->
 				infoLine('Building containers: ');
 			
 			foreach ($this->classes as $class) {
-				$newLine = false;
-				
 				foreach ($class->getProperties() as $property) {
 					if (
 						$property->getRelation()
@@ -626,8 +623,6 @@
 									)
 								)
 							);
-							
-							$newLine = true;
 						}
 						
 						// check for old-style naming
@@ -648,9 +643,6 @@
 						}
 					}
 				}
-				
-				if ($newLine)
-					$out->newLine();
 			}
 			
 			return $this;
@@ -665,14 +657,14 @@
 			
 			$out->
 				newLine()->
-				infoLine('Checking syntax in generated files: ')->
-				newLine();
+				infoLine('Checking syntax in generated files: ');
 			
 			$currentLength = $previousLength = 0;
 			
-			foreach (
-				glob(ONPHP_META_AUTO_DIR.'**/*.class.php', GLOB_NOSORT) as $file
-			) {
+			$fileList = glob(ONPHP_META_AUTO_DIR.'**/*.class.php', GLOB_NOSORT);
+			$fileCount = count($fileList);
+			
+			foreach ($fileList as $file) {
 				$output = $error = null;
 				
 				$previousLength = $currentLength;
@@ -681,7 +673,9 @@
 				
 				$currentLength = strlen($file) + 1; // for leading tab
 				
-				$out->log("\t".$file);
+				$out->log(
+					str_pad(--$fileCount, 8, ' ', STR_PAD_LEFT)."\t".$file
+				);
 				
 				if ($currentLength < $previousLength)
 					$out->log(str_repeat(' ', $previousLength - $currentLength));
@@ -704,7 +698,7 @@
 				}
 			}
 			
-			$out->log("\t".str_repeat(' ', $currentLength));
+			$out->log(str_repeat(' ', $currentLength + 16));
 			
 			return $this;
 		}
