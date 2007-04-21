@@ -33,10 +33,9 @@
 				&& ($object = $this->getCachedById($id))
 			) {
 				return $object;
-			}
-			else {
+			} else {
 				$db = DBPool::getByDao($this->dao);
-
+				
 				$query = 
 					$this->dao->
 						makeSelectHead()->
@@ -46,7 +45,7 @@
 								$id
 							)
 						);
-
+				
 				if ($object = $db->queryObjectRow($query, $this->dao)) {
 					return
 						$expires === Cache::DO_NOT_CACHE
