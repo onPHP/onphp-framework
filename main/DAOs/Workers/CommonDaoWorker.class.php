@@ -28,8 +28,7 @@
 				&& ($object = $this->getCachedById($id))
 			) {
 				return $object;
-			}
-			else {
+			} else {
 				$query = 
 					$this->dao->
 						makeSelectHead()->
@@ -39,7 +38,7 @@
 								$id
 							)
 						);
-
+				
 				if ($object = $this->fetchObject($query)) {
 					return
 						$expires === Cache::DO_NOT_CACHE
