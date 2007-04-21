@@ -62,8 +62,14 @@
 		
 		public function toValue(ProtoDAO $dao = null, $array, $prefix = null)
 		{
-			return $this->getProto()->makeObject(
-				$this->getClassName(), $array, $prefix
+			$proto = $this->getProto();
+			
+			return $proto->completeObject(
+				$proto->makeOnlyObject(
+					$this->getClassName(), $array, $prefix
+				),
+				$array,
+				$prefix
 			);
 		}
 		
