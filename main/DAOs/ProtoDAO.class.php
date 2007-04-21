@@ -27,8 +27,8 @@
 		
 		public function makeObject(&$array, $prefix = null)
 		{
-			if (isset($this->identityMap[$array[$prefix.'id']]))
-				$object = $this->identityMap[$array[$prefix.'id']];
+			if (isset($this->identityMap[$array[$prefix.$this->getIdName()]]))
+				$object = $this->identityMap[$array[$prefix.$this->getIdName()]];
 			else {
 				$object =
 					$this->getProtoClass()->makeObject(
