@@ -158,12 +158,6 @@
 			return Cache::worker($this)->getListByQuery($query, $expires);
 		}
 		
-		public function getListByCriteria(
-			Criteria $criteria, $expires = Cache::DO_NOT_CACHE)
-		{
-			return Cache::worker($this)->getListByCriteria($criteria, $expires);
-		}
-		
 		public function getListByLogic(
 			LogicalObject $logic, $expires = Cache::DO_NOT_CACHE
 		)

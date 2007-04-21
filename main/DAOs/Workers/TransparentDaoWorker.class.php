@@ -176,28 +176,6 @@
 			Assert::isUnreachable();
 		}
 		
-		public function getListByCriteria(Criteria $criteria)
-		{
-			$query = $criteria->toSelectQuery();
-			$list = $this->getCachedList($query);
-			
-			if ($list) {
-				if ($list === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
-				else
-					return $list;
-			} else {
-				if ($list = $this->fetchList($query))
-					return $this->cacheListByQuery($query, $list);
-				else {
-					$this->cacheListByQuery($query, Cache::NOT_FOUND);
-					throw new ObjectNotFoundException();
-				}
-			}
-			
-			Assert::isUnreachable();
-		}
-		
 		public function getListByLogic(LogicalObject $logic)
 		{
 			return $this->getListByQuery(

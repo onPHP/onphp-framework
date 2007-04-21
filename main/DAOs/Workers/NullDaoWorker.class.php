@@ -110,16 +110,6 @@
 			Assert::isUnreachable();
 		}
 		
-		public function getListByCriteria(Criteria $criteria)
-		{
-			if ($list = $this->fetchList($criteria->toSelectQuery()))
-				return $list;
-			else
-				throw new ObjectNotFoundException();
-			
-			Assert::isUnreachable();
-		}
-		
 		public function getListByLogic(LogicalObject $logic)
 		{
 			return $this->getListByQuery($this->dao->makeSelectHead()->where($logic));

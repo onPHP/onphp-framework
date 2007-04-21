@@ -244,42 +244,6 @@
 			}
 		}
 		
-		public function getListByCriteria(
-			Criteria $criteria, $expires = Cache::DO_NOT_CACHE
-		)
-		{
-			$query = $criteria->toSelectQuery();
-			
-			if (
-				($expires !== Cache::DO_NOT_CACHE) && 
-				($list = $this->getCachedByQuery($query))
-			)
-				return $list;
-			elseif (
-				$list = $this->fetchList($query)
-			) {
-				if (Cache::DO_NOT_CACHE === $expires) {
-					return $list;
-				} else {
-					return $this->cacheByQuery($query, $list, $expires);
-				}
-			} else {
-				throw new ObjectNotFoundException(
-					"empty list"
-					.(
-						defined('__LOCAL_DEBUG__')
-							?
-								" for such query - "
-								.$query->toDialectString(
-									DBPool::me()->getByDao($this->dao)->
-										getDialect()
-								)
-							: null
-					)
-				);
-			}
-		}
-		
 		public function getListByLogic(
 			LogicalObject $logic, $expires = Cache::DO_NOT_CACHE
 		)

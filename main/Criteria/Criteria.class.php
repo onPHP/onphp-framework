@@ -31,6 +31,9 @@
 		
 		private $collections = array();
 		
+		// dao-like behaviour: will throw ObjectNotFoundException when 'false'
+		private $silent = true;
+		
 		/**
 		 * @return Criteria
 		**/
@@ -248,6 +251,23 @@
 			return $this->distinct;
 		}
 		
+		public function isSilent()
+		{
+			return $this->silent;
+		}
+		
+		/**
+		 * @return Criteria
+		**/
+		public function setSilent($silent)
+		{
+			Assert::isBoolean($silent);
+			
+			$this->silent = $silent;
+			
+			return $this;
+		}
+		
 		/**
 		 * @return Criteria
 		**/
@@ -276,6 +296,9 @@
 			try {
 				$list = array($this->dao->getByQuery($this->toSelectQuery()));
 			} catch (ObjectNotFoundException $e) {
+				if (!$this->isSilent())
+					throw $e;
+				
 				return null;
 			}
 			
@@ -292,6 +315,9 @@
 			try {
 				$list = $this->dao->getListByQuery($this->toSelectQuery());
 			} catch (ObjectNotFoundException $e) {
+				if (!$this->isSilent())
+					throw $e;
+				
 				return array();
 			}
 			
@@ -309,6 +335,9 @@
 			try {
 				$result = $this->dao->getQueryResult($this->toSelectQuery());
 			} catch (ObjectNotFoundException $e) {
+				if (!$this->isSilent())
+					throw $e;
+				
 				return new QueryResult();
 			}
 			
@@ -328,6 +357,9 @@
 			try {
 				return $this->dao->getCustom($this->toSelectQuery());
 			} catch (ObjectNotFoundException $e) {
+				if (!$this->isSilent())
+					throw $e;
+				
 				return null;
 			}
 		}
@@ -337,6 +369,9 @@
 			try {
 				return $this->dao->getCustomList($this->toSelectQuery());
 			} catch (ObjectNotFoundException $e) {
+				if (!$this->isSilent())
+					throw $e;
+				
 				return array();
 			}
 		}
@@ -346,6 +381,9 @@
 			try {
 				return $this->dao->getCustomRowList($this->toSelectQuery());
 			} catch (ObjectNotFoundException $e) {
+				if (!$this->isSilent())
+					throw $e;
+				
 				return array();
 			}
 		}
