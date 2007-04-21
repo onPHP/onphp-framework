@@ -2,6 +2,8 @@
 
 2007-04-21	Konstantin V. Arkhipov
 
+	* core/Cache/ReferencePool.class.php: removed.
+
 	* main/Criteria/Criteria.class.php: added dao-like behaviour on
 	throwing ONF-exception controlled by setSilent() method; silent by
 	default.
