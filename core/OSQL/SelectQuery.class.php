@@ -285,8 +285,15 @@
 		{
 			$nameList = array();
 			
-			foreach ($this->fields as &$field)
-				$nameList[] = $field->getName();
+			foreach ($this->fields as $field) {
+				if ($field instanceof SelectField)
+					if ($alias = $field->getAlias()) {
+						$nameList[] = $alias;
+						continue;
+					}
+				
+  				$nameList[] = $field->getName();
+			}
 			
 			return $nameList;
 		}
