@@ -139,14 +139,14 @@
 				$width = count($names);
 				$assoc = array();
 
-				$row = sqlite_fetch_array($res, SQLITE_NUM);
+				if (!$row = sqlite_fetch_array($res, SQLITE_NUM))
+					return null;
 				
 				for ($i = 0; $i < $width; ++$i)
 					$assoc[$names[$i]] = $row[$i];
 				
 				return $assoc;
-			}
-			else
+			} else
 				return null;
 		}
 		
@@ -181,10 +181,10 @@
 			
 			if ($res) {
 				$array = array();
-
+				
 				while ($row = sqlite_fetch_single($res))
 					$array[] = $row;
-
+				
 				return $array;
 			} else
 				return null;
