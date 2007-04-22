@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-22	Konstantin V. Arkhipov
+
+	* trunk/core/OSQL/SelectQuery.class.php: getFieldNames() now respects
+	aliases.
+
 2007-04-21	Konstantin V. Arkhipov
 
 	* main/Criteria/Criteria.class.php: added dao-like behaviour on

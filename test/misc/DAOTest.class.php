@@ -5,8 +5,7 @@
 	{
 		public function testSchema()
 		{
-			$this->create();
-			$this->drop();
+			return $this->create()->drop();
 		}
 		
 		public function testData()
@@ -25,7 +24,7 @@
 			$this->drop();
 		}
 		
-		protected function fill()
+		public function fill($assertions = true)
 		{
 			$moscow =
 				TestCity::create()->
@@ -63,24 +62,30 @@
 			$piter = TestCity::dao()->add($piter);
 			$moscow = TestCity::dao()->add($moscow);
 			
-			$this->assertEqual($piter->getId(), 1);
-			$this->assertEqual($moscow->getId(), 2);
+			if ($assertions) {
+				$this->assertEqual($piter->getId(), 1);
+				$this->assertEqual($moscow->getId(), 2);
+			}
 			
 			$postgreser = TestUser::dao()->add($postgreser);
 			$mysqler = TestUser::dao()->add($mysqler);
 			
-			$this->assertEqual($postgreser->getId(), 1);
-			$this->assertEqual($mysqler->getId(), 2);
+			if ($assertions) {
+				$this->assertEqual($postgreser->getId(), 1);
+				$this->assertEqual($mysqler->getId(), 2);
+			}
 			
-			Cache::me()->clean();
-			
-			$this->assertTrue(
-				($postgreser == TestUser::dao()->getById(1))
-			);
-			
-			$this->assertTrue(
-				($mysqler == TestUser::dao()->getById(2))
-			);
+			if ($assertions) {
+				Cache::me()->clean();
+				
+				$this->assertTrue(
+					($postgreser == TestUser::dao()->getById(1))
+				);
+				
+				$this->assertTrue(
+					($mysqler == TestUser::dao()->getById(2))
+				);
+			}
 		}
 		
 		protected function getSome()

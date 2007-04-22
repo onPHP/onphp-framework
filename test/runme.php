@@ -59,7 +59,28 @@
 		// provide fake spooked class
 		class Spook extends IdentifiableObject {/*_*/}
 		
-		$test->addTestClass(new DAOTest());
+		$daoTest = new DAOTest();
+		
+		$test->addTestClass($daoTest);
+		
+		foreach (DBTestPool::me()->getPool() as $connector => $db) {
+			DBPool::me()->setDefault($db);
+			
+			MetaConfiguration::me()->getOutput()->
+				info('Using ')->info(get_class($db), true)->infoLine(' connector.');
+			
+			try {
+				$daoTest->drop();
+			} catch (DatabaseException $e) {
+				// previous shutdown was clean
+			}
+			
+			$daoTest->create()->fill(false);
+			MetaConfiguration::me()->checkIntegrity()->getOutput()->newLine();
+			$daoTest->drop();
+		}
+		
+		DBPool::me()->dropDefault();
 	}
 	
 	$test->run($reporter);

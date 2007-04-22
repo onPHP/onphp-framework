@@ -53,6 +53,8 @@
 					$db->queryRaw($table->toDialectString($db->getDialect()));
 				}
 			}
+			
+			return $this;
 		}
 		
 		protected function drop()
@@ -78,6 +80,8 @@
 					}
 				}
 			}
+			
+			return $this;
 		}
 	}
 ?>
