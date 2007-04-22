@@ -1,5 +1,10 @@
 # $Id$
 
+2007-04-22	Konstantin V. Arkhipov
+
+	* trunk/core/OSQL/SelectQuery.class.php: getFieldNames() now respects
+	aliases.
+
 2007-03-22	Ivan Y. Khvostishkov
 
 	* main/Utils/RussianTextUtils.class.php: friendlyFileSize() backported
