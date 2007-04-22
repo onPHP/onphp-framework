@@ -44,7 +44,7 @@
 			}
 		}
 		
-		protected function create()
+		public function create()
 		{
 			$pool = DBTestPool::me()->getPool();
 			
@@ -55,7 +55,7 @@
 			}
 		}
 		
-		protected function drop()
+		public function drop()
 		{
 			$pool = DBTestPool::me()->getPool();
 			
