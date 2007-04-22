@@ -29,14 +29,11 @@
 				setLimit(28)->
 				setOffset(42)->
 				sort('city.id')->desc();
-				
-				// we can't use spook's fields due to real absence of it's classes
-				// sort('spook.id')->asc();
-
+			
 			$this->assertEqual(
 				'SELECT test_user.id, test_user.nickname, test_user.password, '
 				.'test_user.very_custom_field_name, test_user.registered, '
-				.'test_user.strange_time, test_user.city_id, test_user.spook_id, '
+				.'test_user.strange_time, test_user.city_id, '
 				.'test_user.first_optional_id, test_user.second_optional_id FROM '
 				.'test_user WHERE (1 = 1) AND (2 != 3) AND (test_user.id > bar) AND '
 				.'(nick >= baz) AND (test_user.password < fi) AND '

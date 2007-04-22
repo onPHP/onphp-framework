@@ -69,8 +69,6 @@
 			
 			<property name="city" type="TestCity" relation="OneToOne" required="true" />
 			
-			<property name="spook" type="Spook" relation="OneToOne" required="false" />
-			
 			<property name="firstOptional" type="TestCity" relation="OneToOne" required="false" />
 			<property name="secondOptional" type="TestCity" relation="OneToOne" required="false" />
 			<property name="parts" type="TestPart" relation="OneToMany" />
