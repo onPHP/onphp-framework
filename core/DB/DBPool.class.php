@@ -48,6 +48,16 @@
 		}
 		
 		/**
+		 * @return DBPool
+		**/
+		public function dropDefault()
+		{
+			$this->default = null;
+			
+			return $this;
+		}
+		
+		/**
 		 * @throws WrongArgumentException
 		 * @return DBPool
 		**/
