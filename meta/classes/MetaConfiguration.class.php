@@ -799,13 +799,23 @@
 						.$query->getFieldsCount()
 						.'/'
 						.$query->getTablesCount()
-						.')'
-					)->
-					info(', ');
+						.'/'
+					);
 					
 					try {
-						$dao->getByQuery($query);
-					} catch (ObjectNotFoundException $e) {/* we don't care */}
+						$object = $dao->getByQuery($query);
+						$form = $object->proto()->makeForm();
+						FormUtils::object2form($object, $form);
+						
+						if ($form->getErrors())
+							$out->error('-', true);
+						else
+							$out->info('+', true);
+					} catch (ObjectNotFoundException $e) {
+						$out->warning('-');
+					}
+					
+					$out->warning(')')->info(', ');
 				}
 			}
 			
