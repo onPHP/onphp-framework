@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -133,6 +133,9 @@
 				)->
 				write($text);
 			
+			if ($this->out instanceof ColoredTextOutput)
+				$this->out->resetAll();
+			
 			return $this;
 		}
 		
@@ -148,6 +151,9 @@
 					ConsoleMode::BG_BLACK
 				)->
 				writeLine($text);
+			
+			if ($this->out instanceof ColoredTextOutput)
+				$this->out->resetAll();
 			
 			return $this;
 		}
