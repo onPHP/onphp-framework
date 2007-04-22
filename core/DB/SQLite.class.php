@@ -12,6 +12,8 @@
 
 	/**
 	 * SQLite DB connector.
+	 * 
+	 * you may wish to ini_set('sqlite.assoc_case', 0);
 	 *
 	 * @see http://www.sqlite.org/
 	 * 
