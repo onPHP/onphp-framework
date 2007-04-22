@@ -69,7 +69,13 @@
 			MetaConfiguration::me()->getOutput()->
 				info('Using ')->info(get_class($db), true)->infoLine(' connector.');
 			
-			$daoTest->create();
+			try {
+				$daoTest->drop();
+			} catch (DatabaseException $e) {
+				// previous shutdown was clean
+			}
+			
+			$daoTest->create()->fill(false);
 			MetaConfiguration::me()->checkIntegrity()->getOutput()->newLine();
 			$daoTest->drop();
 		}

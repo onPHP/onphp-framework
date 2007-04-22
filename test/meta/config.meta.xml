@@ -49,14 +49,6 @@
 		<pattern name="DictionaryClass" />
 	</class>
 	
-	<class name="TestPart">
-		<properties>
-			<identifier />
-			<property name="name" type="String" size="50" required="true" />
-		</properties>
-		<pattern name="DictionaryClass" />
-	</class>
-
 	<class name="TestIncapsulant">
 		<properties>
 			<identifier />
@@ -87,4 +79,12 @@
 		<pattern name="StraightMapping" />
 	</class>
 	
+	<class name="TestPart">
+		<properties>
+			<identifier />
+			<property name="testUser" type="TestUser" relation="OneToOne" required="false" />
+			<property name="name" type="String" size="50" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
 </classes></metaconfiguration>

@@ -725,6 +725,8 @@
 			
 			$out->info("\t");
 			
+			$formErrors = array();
+			
 			foreach ($this->classes as $name => $class) {
 				if (
 					!(
@@ -807,9 +809,11 @@
 						$form = $object->proto()->makeForm();
 						FormUtils::object2form($object, $form);
 						
-						if ($form->getErrors())
+						if ($errors = $form->getErrors()) {
+							$formErrors[$class->getName()] = $errors;
+							
 							$out->error('-', true);
-						else
+						} else
 							$out->info('+', true);
 					} catch (ObjectNotFoundException $e) {
 						$out->warning('-');
@@ -820,6 +824,27 @@
 			}
 			
 			$out->infoLine('done.');
+			
+			if ($formErrors) {
+				$out->newLine()->errorLine('Errors found:')->newLine();
+				
+				foreach ($formErrors as $class => $errors) {
+					$out->errorLine("\t".$class.':', true);
+					
+					foreach ($errors as $name => $error) {
+						$out->errorLine(
+							"\t\t".$name.' - '
+							.(
+								$error == Form::WRONG
+									? ' wrong'
+									: ' missing'
+							)
+						);
+					}
+					
+					$out->newLine();
+				}
+			}
 			
 			return $this;
 		}
