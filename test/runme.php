@@ -63,11 +63,15 @@
 		
 		$test->addTestClass($daoTest);
 		
+		$out = MetaConfiguration::me()->getOutput();
+		
 		foreach (DBTestPool::me()->getPool() as $connector => $db) {
 			DBPool::me()->setDefault($db);
 			
-			MetaConfiguration::me()->getOutput()->
-				info('Using ')->info(get_class($db), true)->infoLine(' connector.');
+			$out->
+				info('Using ')->
+				info(get_class($db), true)->
+				infoLine(' connector.');
 			
 			try {
 				$daoTest->drop();
@@ -76,7 +80,10 @@
 			}
 			
 			$daoTest->create()->fill(false);
-			MetaConfiguration::me()->checkIntegrity()->getOutput()->newLine();
+			
+			MetaConfiguration::me()->checkIntegrity();
+			$out->newLine();
+			
 			$daoTest->drop();
 		}
 		
