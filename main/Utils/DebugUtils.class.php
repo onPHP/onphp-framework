@@ -15,6 +15,9 @@
 	**/
 	final class DebugUtils extends StaticFactory
 	{
+		private static $memoryAccumulator = 0;
+		private static $currentMemory = null;
+		
 		public static function el($vr, $prefix = null)
 		{
 			if ($prefix === null) {
@@ -66,6 +69,21 @@
 		{
 			list($usec, $sec) = explode(' ', microtime(), 2);
 			return ((float) $usec + (float) $sec);		
+		}
+		
+		public static function setMemoryCounter()
+		{
+			self::$currentMemory = memory_get_usage();
+		}
+		
+		public static function addMemoryCounter()
+		{
+			self::$memoryAccumulator += memory_get_usage() - self::$currentMemory;
+		}
+		
+		public static function getMemoryCounter()
+		{
+			return self::$memoryAccumulator;
 		}
 	}
 ?>
