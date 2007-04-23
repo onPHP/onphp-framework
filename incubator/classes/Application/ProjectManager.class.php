@@ -47,9 +47,6 @@
 		**/
 		public function import($qualifiedName)
 		{
-			// ex: ru.oemdesign.oemlib, ru.oemdesign.oemlib.wapstart,
-			// ru.oemdesign.gdi, ru.oemdesign.myClient,
-			// ru.oemdesign.gdi.Business.PhoneProperties
 			$parts = split('.', $qualifiedName);
 
 			$package = $classParts = null;
