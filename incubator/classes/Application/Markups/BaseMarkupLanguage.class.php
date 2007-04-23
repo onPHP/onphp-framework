@@ -30,10 +30,10 @@
 		**/
 		public function setVersion($version)
 		{
-			if (!isset($versions[$versions]))
+			if (!isset($this->versions[$version]))
 				throw
 					new WrongArgumentException(
-						"dont know nothing about version == {{$version}}"
+						"dont know nothing about version == '{$version}'"
 					);
 
 			$this->version = $version;

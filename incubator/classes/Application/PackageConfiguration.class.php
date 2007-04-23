@@ -125,6 +125,7 @@
 		{
 			Assert::isTrue(isset($this->basePath));
 
+			// FIXME: unused variable - $templatePath		
 			foreach ($this->templatePaths as $templatePath) {
 				$resolver->addPrefix(
 					$this->basePath.self::PATH_TEMPLATES.DIRECTORY_SEPARATOR

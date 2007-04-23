@@ -231,6 +231,7 @@
 						)
 				) {
 					$controllerName = $getVars[self::AREA_HOLDER];
+					// FIXME: nothing to break here
 					break;
 				}
 			}
