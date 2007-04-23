@@ -1,4 +1,4 @@
-<?
+<?php
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,6 +8,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+/* $Id$ */
 
 	class PackageManager extends Singleton implements Instantiatable
 	{

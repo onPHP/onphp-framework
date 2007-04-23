@@ -1,4 +1,4 @@
-<?
+<?php
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,6 +8,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+/* $Id$ */
 
 	class PackageConfiguration
 	{
@@ -21,23 +22,32 @@
 		private $classPaths			= array();
 		private $controllerPaths	= array();
 		private $templatePaths		= array();
-
+		
+		/**
+		 * @return PackageConfiguration
+		**/
 		public static function create()
 		{
 			return new self;
 		}
-
+		
+		/**
+		 * @return PackageConfiguration
+		**/
 		public static function createDefaultClassPath()
 		{
 			return self::create()->
 				addClassPath('Business')->
 				addClassPath('DAOs')->
 				addClassPath('Proto')->
-				addClassPath('Auto/Business')->
-				addClassPath('Auto/DAOs')->
-				addClassPath('Auto/Proto');
+				addClassPath('Auto'.DIRECTORY_SEPARATOR.'Business')->
+				addClassPath('Auto'.DIRECTORY_SEPARATOR.'DAOs')->
+				addClassPath('Auto'.DIRECTORY_SEPARATOR.'Proto');
 		}
-
+		
+		/**
+		 * @return PackageConfiguration
+		**/
 		public function setBaseDirectory($baseDirectory)
 		{
 			$this->baseDirectory = $baseDirectory;
@@ -49,7 +59,10 @@
 		{
 			return $this->baseDirectory;
 		}
-
+		
+		/**
+		 * @return PackageConfiguration
+		**/
 		public function addClassPath($path)
 		{
 			$this->classPaths[] = $this->normalizePath($path);
@@ -61,7 +74,10 @@
 		{
 			return $this->classPaths;
 		}
-
+		
+		/**
+		 * @return PackageConfiguration
+		**/
 		public function addControllerPath($path)
 		{
 			$this->controllerPaths[] = $this->normalizePath($path);
@@ -71,14 +87,17 @@
 
 		public function getControllerPaths()
 		{
-			Assert::isTrue(
-				isset($this->controllerPaths),
-				'package does not have a business logic'
-			);
-
+			if (!isset($this->controllerPaths))
+				throw new WrongStateException(
+					'package does not have a business logic'
+				);
+			
 			return $this->controllerPaths;
 		}
-
+		
+		/**
+		 * @return PackageConfiguration
+		**/
 		public function addTemplatePath($path)
 		{
 			Assert::isTrue(
@@ -95,7 +114,10 @@
 		{
 			return $this->templatePaths;
 		}
-
+		
+		/**
+		 * @return PackageConfiguration
+		**/
 		public function setupViewResolver(
 			PhpChainedViewResolver $resolver, BaseMarkupLanguage $language,
 			$area = null
@@ -117,7 +139,10 @@
 
 			return $this;
 		}
-
+		
+		/**
+		 * @return PackageConfiguration
+		**/
 		// TODO: move to Application?
 		public function setAutoIncludeControllerPaths($locationArea)
 		{
@@ -136,7 +161,10 @@
 
 			return $this;
 		}
-
+		
+		/**
+		 * @return PackageConfiguration
+		**/
 		// TODO: move to Application?
 		public function setAutoincludeClassPaths()
 		{
@@ -173,7 +201,10 @@
 
 			return false;
 		}
-
+		
+		/**
+		 * @return PackageConfiguration
+		**/
 		public function importOneClass($qualifiedName)
 		{
 			Assert::isTrue(isset($this->basePath));
