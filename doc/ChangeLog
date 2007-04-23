@@ -2,7 +2,7 @@
 
 2007-04-23	Anton E. Lebedevich
 
-	* main/Utils/DebugUtils.class.php: memory counting functions added
+	* main/Utils/DebugUtils.class.php: memory counting functions added.
 
 2007-04-22	Konstantin V. Arkhipov
 
