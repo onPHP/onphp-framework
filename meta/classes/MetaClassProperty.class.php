@@ -132,7 +132,9 @@
 				$this->size = $size;
 			else
 				throw new WrongArgumentException(
-					"size not allowed for '{$this->type->getClassName()}' type" 
+					"size not allowed for '"
+					.$this->getName().'::'.get_class($this->type)
+					."' type" 
 				);
 			
 			return $this;
