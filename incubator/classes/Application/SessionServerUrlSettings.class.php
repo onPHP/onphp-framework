@@ -1,4 +1,4 @@
-<?
+<?php
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -23,12 +23,18 @@
 			self::LOGIN			=> null,
 			self::LOGOUT		=> null
 		);
-
+		
+		/**
+		 * @return SessionServerUrlSettings
+		**/
 		public static function create()
 		{
 			return new self;
 		}
-
+		
+		/**
+		 * @return SessionServerUrlSettings
+		**/
 		public function setRegistrationPage($registrationPage)
 		{
 			return $this->setPage(self::REGISTRATION, $registrationPage);
@@ -38,7 +44,10 @@
 		{
 			return $this->getPage(self::REGISTRATION);
 		}
-
+		
+		/**
+		 * @return SessionServerUrlSettings
+		**/
 		public function setProfilePage($profilePage)
 		{
 			return $this->setPage(self::PROFILE, $profilePage);
@@ -48,7 +57,10 @@
 		{
 			return $this->getPage(self::PROFILE);
 		}
-
+		
+		/**
+		 * @return SessionServerUrlSettings
+		**/
 		public function setLoginPage($loginPage)
 		{
 			return $this->setPage(self::LOGIN, $loginPage);
@@ -58,7 +70,10 @@
 		{
 			return $this->getPage(self::LOGIN);
 		}
-
+		
+		/**
+		 * @return SessionServerUrlSettings
+		**/
 		public function setLogoutPage($logoutPage)
 		{
 			return $this->setPage(self::LOGOUT, $logoutPage);
@@ -68,7 +83,10 @@
 		{
 			return $this->getPage(self::LOGOUT);
 		}
-
+		
+		/**
+		 * @return SessionServerUrlSettings
+		**/
 		protected function setPage($action, $page)
 		{
 			$this->pages[$action] = $page;

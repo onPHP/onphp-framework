@@ -1,4 +1,4 @@
-<?
+<?php
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -17,26 +17,38 @@
 		private $path			= '/';
 
 		private $queryString	= null;
-
+		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public static function create()
 		{
 			return new self;
 		}
-
+		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function http()
 		{
 			$this->scheme = 'http';
 
 			return $this;
 		}
-
+		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function https()
 		{
 			$this->scheme = 'https';
 
 			return $this;
 		}
-
+		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function setScheme($scheme)
 		{
 			$this->scheme = $scheme;
@@ -48,7 +60,10 @@
 		{
 			return $this->scheme;
 		}
-
+		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function setDomain($domain)
 		{
 			$this->domain = $domain;
@@ -66,9 +81,12 @@
 			while (count($domainParts) > $level)
 				$domainParts = array_shift($domainParts);
 
-			return join('.', $domainParts);
+			return implode('.', $domainParts);
 		}
-
+		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function setQueryString($queryString)
 		{
 			$this->queryString = $queryString;
@@ -80,7 +98,10 @@
 		{
 			return $this->queryString;
 		}
-
+		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function setPath($path)
 		{
 			if (substr($path, 1, 1) !== '/')
@@ -98,7 +119,10 @@
 		{
 			return $this->path;
 		}
-
+		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function setUrl($url)
 		{
 			Assert::isString($url);

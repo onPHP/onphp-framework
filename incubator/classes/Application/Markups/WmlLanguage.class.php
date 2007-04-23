@@ -1,4 +1,4 @@
-<?
+<?php
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -30,7 +30,10 @@
 		);
 
 		private $imgExtension	= 'gif';
-
+		
+		/**
+		 * @return WmlLanguage
+		**/
 		public function create()
 		{
 			return new self;
@@ -46,16 +49,13 @@
 		}
 
 		/**
-		 * @returns WmlMarkupDocument
+		 * @return WmlMarkupDocument
 		**/
 		public function parse($data)
 		{
 			return new UnimplementedFeatureException();
 		}
 
-		/**
-		 * @returns string
-		**/
 		public function render(WmlMarkupDocument $data)
 		{
 			return new UnimplementedFeatureException();

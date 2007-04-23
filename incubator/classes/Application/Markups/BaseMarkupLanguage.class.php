@@ -1,4 +1,4 @@
-<?
+<?php
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -17,23 +17,17 @@
 		protected $versions		= array();
 		protected $version		= null;
 		
-		abstract public function create();
-
-		/**
-		 * @returns MarkupDocument
-		**/
 		abstract public function parse($data);
-
-		/**
-		 * @returns string
-		**/
 		abstract public function render(MarkupDocument $data);
 
 		public function getCommonName()
 		{
 			return $this->getCommonName();
 		}
-
+		
+		/**
+		 * @return BaseMarkupLanguage
+		**/
 		public function setVersion($version)
 		{
 			if (!isset($versions[$versions]))

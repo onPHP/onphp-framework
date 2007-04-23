@@ -17,11 +17,17 @@
 
 		private $actionPages = array();
 		
+		/**
+		 * @return SessionServer
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
 		}
-
+		
+		/**
+		 * @return SessionServer
+		**/
 		public function setLocations(LocationSettings $locations)
 		{
 			$this->locations = $locations;
@@ -33,7 +39,10 @@
 		{
 			return $this->locations;
 		}
-
+		
+		/**
+		 * @return SessionServer
+		**/
 		public function setTimeout($timeout)
 		{
 			$this->timeout = $timeout;
@@ -70,17 +79,26 @@
 		{
 			return $this->getPageUrl(SessionServerUrlSettings::LOGOUT);
 		}
-
+		
+		/**
+		 * @return SessionServer
+		**/
 		public function setWapActionPages(SessionServerUrlSettings $pages)
 		{
 			return $this->setActionPages(LocationSettings::WAP, $pages);
 		}
-
+		
+		/**
+		 * @return SessionServer
+		**/
 		public function setWebActionPages(SessionServerUrlSettings $pages)
 		{
 			return $this->setActionPages(LocationSettings::WEB, $pages);
 		}
-
+		
+		/**
+		 * @return SessionServer
+		**/
 		protected function setActionPages($area, SessionServerUrlSettings $pages)
 		{
 			$this->actionPages[$area] = $pages;

@@ -1,4 +1,4 @@
-<?
+<?php
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -35,12 +35,18 @@
 		{
 			$this->locations = LocationSettings::create();
 		}
-
+		
+		/**
+		 * @return Application
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
 		}
-
+		
+		/**
+		 * @return Application
+		**/
 		public function setName($name)
 		{
 			$this->name = $name;
@@ -52,76 +58,114 @@
 		{
 			return $this->name;
 		}
-
+		
+		/**
+		 * @return Application
+		**/
 		public function setLocations(LocationSettings $locations)
 		{
 			$this->locations = $locations;
 
 			return $this;
 		}
-
+		
+		/**
+		 * @return LocationSettings
+		**/
 		public function getLocationSettings()
 		{
 			return $this->locations;
 		}
-
+		
+		/**
+		 * @return Application
+		**/
 		public function resideInWeb()
 		{
 			return $this->reside(LocationSettings::WEB);
 		}
-
+		
+		/**
+		 * @return Application
+		**/
 		public function resideInWap()
 		{
 			return $this->reside(LocationSettings::WAP);
 		}
-
+		
+		/**
+		 * @return Application
+		**/
 		public function resideInAdmin()
 		{
 			return $this->reside(LocationSettings::ADMIN);
 		}
-
+		
+		/**
+		 * @return Application
+		**/
 		public function resideInSoap()
 		{
 			return $this->reside(LocationSettings::SOAP);
 		}
-
+		
+		/**
+		 * @return Application
+		**/
 		public function reside($locationArea)
 		{
 			if ($this->locationArea)
-				throw new WrongArgumentException("application already resides at {{$this->area}}");
+				throw new WrongArgumentException(
+					"application already resides at {{$this->area}}"
+				);
 
 			$this->location = $this->locations->get($locationArea);
 			$this->locationArea = $locationArea;
+			
+			return $this;
 		}
-
+		
 		public function getLocationArea()
 		{
 			if (!$this->locationArea)
-				throw new WrongArgumentException('application does not reside anywhere');
+				throw new WrongArgumentException(
+					'application does not reside anywhere'
+				);
 
 			return $this->locationArea;
 		}
-
+		
 		public function getLocation()
 		{
 			if (!$this->location)
-				throw new WrongArgumentException('application does not reside anywhere');
+				throw new WrongArgumentException(
+					'application does not reside anywhere'
+				);
 
 			return $this->location;
 		}
-
+		
+		/**
+		 * @return Application
+		**/
 		public function setMarkup(BaseMarkupLanguage $markup)
 		{
 			$this->markup = $markup;
 
 			return $this;
 		}
-
+		
+		/**
+		 * @return BaseMarkupLanguage
+		**/
 		public function getMarkup()
 		{
 			return $this->markup;
 		}
-
+		
+		/**
+		 * @return Application
+		**/
 		public function setArea($area)
 		{
 			$this->area = $area;
@@ -133,7 +177,10 @@
 		{
 			return $this->area;
 		}
-
+		
+		/**
+		 * @return Application
+		**/
 		public function setQueryString($queryString)
 		{
 			$this->queryString = $queryString;
@@ -193,10 +240,15 @@
 
 			return $result;
 		}
-
+		
+		/**
+		 * @return Application
+		**/
 		public function setActualDomain($actualDomain)
 		{
 			$this->actualDomain = $actualDomain;
+			
+			return $this;
 		}
 
 		public function getActualDomain()

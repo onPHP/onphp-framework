@@ -1,4 +1,4 @@
-<?
+<?php
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -12,19 +12,30 @@
 
 	final class MarkupLanguage extends StaticFactory
 	{
+		/**
+		 * @return WmlLanguage
+		**/
 		public static function wml($version = null)
 		{
-			$result = new WmlLanguage;
+			$wml = new WmlLanguage();
 
 			if ($version)
-				$result->setVersion($version);
+				$wml->setVersion($version);
+			
+			return $wml;
 		}
-
+		
+		/**
+		 * @return XhtmlMpLanguage
+		**/
 		public static function xhtmlMp()
 		{
-			return new XhtmlMpLanguage;
+			return new XhtmlMpLanguage();
 		}
-
+		
+		/**
+		 * @return BaseMarkupLanguage
+		**/
 		public static function byCommonName($name, $version = null)
 		{
 			switch ($name) {
@@ -36,11 +47,12 @@
 					return self::xhtmlMp($version);
 
 				default:
-					throw
-						new WrongArgumentException(
-							'unsupported markup language'
-						);
+					throw new WrongArgumentException(
+						'unsupported markup language'
+					);
 			}
+			
+			Assert::isUnreachable();
 		}
 	}
 ?>

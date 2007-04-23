@@ -1,4 +1,4 @@
-<?
+<?php
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -13,23 +13,23 @@
 	final class XhtmlMpLanguage extends BaseMarkupLanguage
 	{
 		protected $commonName	= 'xhtmlmp';
-
+		
+		/**
+		 * @return XhtmlMpLanguage
+		**/
 		public function create()
 		{
 			return new self;
 		}
-
+		
 		/**
-		 * @returns XhtmlMpMarkupDocument
+		 * @return XhtmlMpMarkupDocument
 		**/
 		public function parse($data)
 		{
 			return new UnimplementedFeatureException();
 		}
-
-		/**
-		 * @returns string
-		**/
+		
 		public function render(XhtmlMpMarkupDocument $data)
 		{
 			return new UnimplementedFeatureException();
