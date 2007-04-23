@@ -1,5 +1,9 @@
 # $Id$
 
+2007-04-22	Konstantin V. Arkhipov
+
+	* meta/bin/build.php: --no-color switch implemented.
+
 2007-04-23	Anton E. Lebedevich
 
 	* main/Utils/DebugUtils.class.php: memory counting functions added.
