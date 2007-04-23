@@ -32,6 +32,9 @@ Possible options:
 	
 	--dry-run:
 		print the results of building without actually changing any files.
+	
+	--no-color:
+		do not use colored output.
 
 <?php
 		exit(1);
@@ -137,7 +140,7 @@ Possible options:
 	// switches
 	$metaForce = $metaOnlyContainers = $metaNoSchema =
 	$metaNoSchemaCheck = $metaSyntaxCheck = $metaDropStaleFiles =
-	$metaNoIntegrityCheck = $metaDryRun = false;
+	$metaNoIntegrityCheck = $metaDryRun = $metaNoColor = false;
 	
 	$args = $_SERVER['argv'];
 	array_shift($args);
@@ -176,6 +179,10 @@ Possible options:
 					
 					case '--dry-run':
 						$metaDryRun = true;
+						break;
+					
+					case '--no-color':
+						$metaNoColor = true;
 						break;
 					
 					default:
@@ -218,6 +225,7 @@ Possible options:
 			$_SERVER['TERM'] == 'xterm'
 			|| $_SERVER['TERM'] == 'linux'
 		)
+		&& !$metaNoColor
 	) {
 		$out = new ColoredTextOutput();
 	} else {

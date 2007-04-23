@@ -811,7 +811,7 @@
 						if ($errors = $form->getErrors()) {
 							$formErrors[$class->getName()] = $errors;
 							
-							$out->error('-', true);
+							$out->error('!', true);
 						} else
 							$out->info('+', true);
 					} catch (ObjectNotFoundException $e) {

@@ -2,6 +2,10 @@
 
 2007-04-22	Konstantin V. Arkhipov
 
+	* meta/bin/build.php: --no-color switch implemented.
+
+2007-04-22	Konstantin V. Arkhipov
+
 	* trunk/core/OSQL/SelectQuery.class.php: getFieldNames() now respects
 	aliases.
 
