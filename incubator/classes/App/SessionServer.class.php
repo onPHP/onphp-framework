@@ -100,11 +100,11 @@
 		{
 			return
 				$this->locations->
-					get(App::me()->getLocationArea())->
+					get(Application::me()->getLocationArea())->
 						getBaseUrl()
 				.(
 					$this->
-						getActionPages(App::me()->getLocationArea())->
+						getActionPages(Application::me()->getLocationArea())->
 							getPage($action)
 				);
 		}

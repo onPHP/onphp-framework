@@ -90,7 +90,7 @@
 			if ($this->locationArea)
 				throw new WrongArgumentException("application already resides at {{$this->area}}");
 
-			$this->location = $this->locations->get($area);
+			$this->location = $this->locations->get($locationArea);
 			$this->locationArea = $locationArea;
 		}
 
