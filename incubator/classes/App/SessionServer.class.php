@@ -1,7 +1,12 @@
 <?
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Khvostishkov                               *
- *   dedmajor@oemdesign.ru                                                 *
+ *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
  ***************************************************************************/
 /* $Id$ */
 
@@ -17,7 +22,7 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 
-		public function setLocations(AppLocationSettings $locations)
+		public function setLocations(LocationSettings $locations)
 		{
 			$this->locations = $locations;
 
@@ -68,12 +73,12 @@
 
 		public function setWapActionPages(SessionServerUrlSettings $pages)
 		{
-			return $this->setActionPages(AppLocationSettings::WAP, $pages);
+			return $this->setActionPages(LocationSettings::WAP, $pages);
 		}
 
 		public function setWebActionPages(SessionServerUrlSettings $pages)
 		{
-			return $this->setActionPages(AppLocationSettings::WEB, $pages);
+			return $this->setActionPages(LocationSettings::WEB, $pages);
 		}
 
 		protected function setActionPages($area, SessionServerUrlSettings $pages)

@@ -1,11 +1,16 @@
 <?
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Khvostishkov                               *
- *   dedmajor@oemdesign.ru                                                 *
+ *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
  ***************************************************************************/
 /* $Id$ */
 
-	class App extends Singleton implements Instantiatable
+	class Application extends Singleton implements Instantiatable
 	{
 		const CSS_PATH			= 'css';
 		const IMG_PATH			= 'img';
@@ -26,6 +31,11 @@
 		private $area			= null;
 		private $queryString	= null;
 
+		protected function __construct()
+		{
+			$this->locations = LocationSettings::create();
+		}
+
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
@@ -43,7 +53,7 @@
 			return $this->name;
 		}
 
-		public function setLocations(AppLocationSettings $locations)
+		public function setLocations(LocationSettings $locations)
 		{
 			$this->locations = $locations;
 
@@ -57,22 +67,22 @@
 
 		public function resideInWeb()
 		{
-			return $this->reside(AppLocationSettings::WEB);
+			return $this->reside(LocationSettings::WEB);
 		}
 
 		public function resideInWap()
 		{
-			return $this->reside(AppLocationSettings::WAP);
+			return $this->reside(LocationSettings::WAP);
 		}
 
 		public function resideInAdmin()
 		{
-			return $this->reside(AppLocationSettings::ADMIN);
+			return $this->reside(LocationSettings::ADMIN);
 		}
 
 		public function resideInSoap()
 		{
-			return $this->reside(AppLocationSettings::SOAP);
+			return $this->reside(LocationSettings::SOAP);
 		}
 
 		public function reside($locationArea)

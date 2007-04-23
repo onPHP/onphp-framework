@@ -1,11 +1,16 @@
 <?
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Khvostishkov                               *
- *   dedmajor@oemdesign.ru                                                 *
+ *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
  ***************************************************************************/
 /* $Id$ */
 
-	class AppLocationSettings
+	class LocationSettings
 	{
 		const WEB	= 'web';
 		const WAP	= 'wap';
@@ -24,7 +29,7 @@
 			return new self;
 		}
 
-		public function setWeb(AppUrl $webLocation)
+		public function setWeb(ApplicationUrl $webLocation)
 		{
 			return $this->set(self::WEB, $webLocation);
 		}
@@ -36,7 +41,7 @@
 
 		public function setWebUrl($url)
 		{
-			return $this->setWebUrl(AppUrl::create()->setUrl($url));
+			return $this->setWeb(ApplicationUrl::create()->setUrl($url));
 		}
 
 		public function getWebUrl()
@@ -44,7 +49,7 @@
 			return $this->getWeb()->getUrl();
 		}
 
-		public function setWap(AppUrl $wapLocation)
+		public function setWap(ApplicationUrl $wapLocation)
 		{
 			return $this->set(self::WAP, $wapLocation);
 		}
@@ -56,7 +61,7 @@
 
 		public function setWapUrl($url)
 		{
-			return $this->setWapUrl(AppUrl::create()->setUrl($url));
+			return $this->setWap(ApplicationUrl::create()->setUrl($url));
 		}
 
 		public function getWapUrl()
@@ -64,7 +69,7 @@
 			return $this->getWap()->getUrl();
 		}
 
-		public function setAdmin(AppUrl $adminLocation)
+		public function setAdmin(ApplicationUrl $adminLocation)
 		{
 			return $this->set(self::ADMIN, $adminLocation);
 		}
@@ -76,7 +81,7 @@
 
 		public function setAdminUrl($url)
 		{
-			return $this->setAdminUrl(AppUrl::create()->setUrl($url));
+			return $this->setAdmin(ApplicationUrl::create()->setUrl($url));
 		}
 
 		public function getAdminUrl()
@@ -84,7 +89,7 @@
 			return $this->getAdmin()->getUrl();
 		}
 
-		public function setSoap(AppUrl $soapLocation)
+		public function setSoap(ApplicationUrl $soapLocation)
 		{
 			return $this->set(self::SOAP, $soapLocation);
 		}
@@ -96,7 +101,7 @@
 
 		public function setSoapUrl($url)
 		{
-			return $this->setSoapUrl(AppUrl::create()->setUrl($url));
+			return $this->setSoap(ApplicationUrl::create()->setUrl($url));
 		}
 
 		public function getSoapUrl()
@@ -104,7 +109,7 @@
 			return $this->getSoap()->getUrl();
 		}
 
-		public function set($area, AppUrl $location)
+		public function set($area, ApplicationUrl $location)
 		{
 			$this->locations[$area] = $location;
 
@@ -114,7 +119,10 @@
 		public function get($area)
 		{
 			if (!isset($this->locations[$area]))
-				throw new WrongArgumentException("location {{$area}} does not defined");
+				throw
+					new WrongArgumentException(
+						"location {{$area}} does not defined"
+					);
 
 			return $this->locations[$area];
 		}
