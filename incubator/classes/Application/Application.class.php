@@ -24,6 +24,8 @@
 		private $location		= null;
 		private $locationArea	= null;
 
+		private $directoriesConfiguration	= null;
+
 		private $actualDomain	= null;
 
 		private $markup			= null;
@@ -80,6 +82,26 @@
 		/**
 		 * @return Application
 		**/
+		public function setDirectoriesConfiguration(
+			PackageConfiguration $configuration
+		)
+		{
+			$this->directoriesConfiguration = $configuration;
+
+			return $this;
+		}
+		
+		/**
+		 * @return PackageConfiguration
+		**/
+		public function getDirectoriesConfiguration()
+		{
+			return $this->directoriesConfiguration;
+		}
+		
+		/**
+		 * @return Application
+		**/
 		public function resideInWeb()
 		{
 			return $this->reside(LocationSettings::WEB);
@@ -121,6 +143,8 @@
 
 			$this->location = $this->locations->get($locationArea);
 			$this->locationArea = $locationArea;
+
+			$this->directoriesConfiguration->setAutoIncludeControllerPaths();
 			
 			return $this;
 		}
@@ -162,22 +186,67 @@
 		{
 			return $this->markup;
 		}
+
+		/**
+		 * @return Application
+		**/
+		public function setupViewResolver($viewResolver)
+		{
+			if (!isset($this->locationArea) || !isset($this->markup))
+				throw
+					new WrongStateException(
+						'first, reside me in someplace and set the markup'
+					);
+
+			// TODO: use packages' templates too
+			$this->directoriesConfiguration->
+				setupViewResolver(
+					$viewResolver, $this->markup, $this->locationArea
+				);
+
+			return $this;
+		}
 		
 		/**
 		 * @return Application
 		**/
-		public function setArea($area)
+		public function setupController(HttpRequest $request, $defaultName)
 		{
-			$this->area = $area;
+			if (!isset($this->locationArea))
+				throw
+					new WrongStateException(
+						'first, reside me in someplace'
+					);
 
-			return $this;
+			$controllerName = $defaultName;
+
+			$getVars = $request->getGet();
+		
+			if (isset($getVars[self::AREA_HOLDER])) {
+				// TODO: use packages' controllers too
+				if (
+					$this->directoriesConfiguration->
+						isControllerAvailable(
+							$this->locationArea, $getVars[self::AREA_HOLDER]
+						)
+				) {
+					$controllerName = $getVars[self::AREA_HOLDER];
+					break;
+				}
+			}
+
+			$result = new $controllerName;
+
+			$this->area = $controllerName;
+
+			return $result;
 		}
-
+		
 		public function getArea()
 		{
 			return $this->area;
 		}
-		
+
 		/**
 		 * @return Application
 		**/
