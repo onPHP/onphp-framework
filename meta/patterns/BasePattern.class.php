@@ -31,8 +31,9 @@
 						'@[\r\n]@sU'
 					);
 				
-				$old = preg_replace($pattern, null, file_get_contents($path));
-				$new = preg_replace($pattern, null, $content);
+				// strip only header and svn's Id-keyword, don't skip type hints
+				$old = preg_replace($pattern, null, file_get_contents($path), 2);
+				$new = preg_replace($pattern, null, $content, 2);
 			} else {
 				$old = 1; $new = 2;
 			}
