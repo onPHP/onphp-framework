@@ -110,8 +110,8 @@
 		protected function cachedFetchObject(SelectQuery $query)
 		{
 			if ($row = DBPool::getByDao($this->dao)->queryRow($query)) {
-				$object = $this->cacheById($this->dao->makeOnlyObject($row));
-				return $this->dao->completeObject($object, $row);
+				$object = $this->dao->makeOnlyObject($row);
+				return $this->cacheById($this->dao->completeObject($object, $row));
 			}
 			
 			return null;
