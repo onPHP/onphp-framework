@@ -78,14 +78,14 @@
 		
 		/// do not override this methods, unless you're MetaConfiguration builder
 		//@{
-		public function makeJoiners(
+		protected function makeJoiners(
 			/* Identifiable */ $object, &$array, $prefix = null
 		)
 		{
 			return $object;
 		}
 		
-		public function makeCascade(
+		protected function makeCascade(
 			/* Identifiable */ $object, &$array, $prefix = null
 		)
 		{

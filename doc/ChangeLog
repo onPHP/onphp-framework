@@ -1,10 +1,5 @@
 # $Id$
 
-2007-04-24	Konstantin V. Arkhipov
-
-	* main/DAOs/, meta/builders/BaseBuilder.class.php: partial caching
-	backported from trunk. 
-
 2007-04-22	Konstantin V. Arkhipov
 
 	* meta/bin/build.php: --no-color switch implemented.
