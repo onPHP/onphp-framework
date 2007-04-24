@@ -44,11 +44,14 @@
 							)
 						);
 				
-				if ($object = $this->fetchObject($query)) {
-					return
-						$expires === Cache::DO_NOT_CACHE
-							? $object
-							: $this->cacheById($object, $expires);
+				if ($expires === Cache::DO_NOT_CACHE) {
+					$object = $this->fetchObject($query);
+				} else {
+					$object = $this->cachedFetchObject($query);
+				}
+				
+				if ($object) {
+					return $object;
 				} else { 
 					throw new ObjectNotFoundException(
 						"there is no such object for '".$this->dao->getObjectName()
@@ -86,25 +89,29 @@
 				($object = $this->getCachedByQuery($query))
 			)
 				return $object;
-			elseif ($object = $this->fetchObject($query)) {
+			else {
 				if ($expires === Cache::DO_NOT_CACHE)
+					$object = $this->fetchObject($query);
+				else
+					$object = $this->cachedFetchObject($query);
+				
+				if ($object)
 					return $object;
 				else
-					return $this->cacheByQuery($query, $object, $expires);
-			} else
-				throw new ObjectNotFoundException(
-					"there is no such object for '".$this->dao->getObjectName()
-						.(
-							defined('__LOCAL_DEBUG__')
-								?
-									"' with query == "
-									.$query->toDialectString(
-										DBPool::me()->getByDao($this->dao)->
-											getDialect()
-									)
-								: null
-						)
-				);
+					throw new ObjectNotFoundException(
+						"there is no such object for '".$this->dao->getObjectName()
+							.(
+								defined('__LOCAL_DEBUG__')
+									?
+										"' with query == "
+										.$query->toDialectString(
+											DBPool::me()->getByDao($this->dao)->
+												getDialect()
+										)
+									: null
+							)
+					);
+			}
 		}
 		
 		public function getCustom(

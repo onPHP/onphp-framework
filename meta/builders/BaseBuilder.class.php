@@ -142,11 +142,6 @@
 				$out .= "\n";
 			}
 			
-			if ($class->getPattern() instanceof ValueObjectPattern)
-				$visibility = 'public';
-			else
-				$visibility = 'protected';
-			
 			if ($setters) {
 				$out .= <<<EOT
 		return
@@ -185,7 +180,7 @@ EOT;
 /**
  * @return {$className}
 **/
-{$visibility} function makeSelf(&\$array, \$prefix = null)
+public function makeSelf(&\$array, \$prefix = null)
 {
 
 EOT;
@@ -248,7 +243,7 @@ EOT;
 /**
  * @return {$className}
 **/
-{$visibility} function makeCascade(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
+public function makeCascade(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
 {
 
 EOT;
@@ -293,7 +288,7 @@ EOT;
 /**
  * @return {$className}
 **/
-{$visibility} function makeJoiners(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
+public function makeJoiners(/* {$className} */ \${$varName}, &\$array, \$prefix = null)
 {
 
 EOT;

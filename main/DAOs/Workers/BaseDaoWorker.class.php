@@ -110,6 +110,20 @@
 			return null;
 		}
 		
+		protected function cachedFetchObject(SelectQuery $query)
+		{
+			if ($row = DBPool::getByDao($this->dao)->queryRow($query)) {
+				$object = $this->cacheById($this->dao->makeSelf($row));
+				
+				return
+					$query->getFetchStrategyId() == FetchStrategy::JOIN
+						? $this->dao->makeJoiners($object, $row)
+						: $this->dao->makeCascade($object, $row);
+			}
+			
+			return null;
+		}
+		
 		protected function fetchList(SelectQuery $query)
 		{
 			if ($rows = DBPool::getByDao($this->dao)->querySet($query)) {

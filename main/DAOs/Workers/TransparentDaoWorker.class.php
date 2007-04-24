@@ -51,8 +51,8 @@
 						)
 					);
 
-				if ($object = $this->fetchObject($query)) {
-					return $this->cacheById($object);
+				if ($object = $this->cachedFetchObject($query)) {
+					return $object;
 				} else {
 					$this->cacheNullById($id);
 					throw new ObjectNotFoundException();
@@ -80,8 +80,8 @@
 					return $object;
 				
 			} else {
-				if ($object = $this->fetchObject($query))
-					return $this->cacheByQuery($query, $object);
+				if ($object = $this->cachedFetchObject($query))
+					return $object;
 				else {
 					$this->cacheByQuery($query, Cache::NOT_FOUND);
 					throw new ObjectNotFoundException();
