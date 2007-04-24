@@ -459,8 +459,8 @@ EOT;
 										.')';
 								} else {
 									$out = <<<EOT
-if (isset(\$array[\$prefix.'{$this->getColumnName()}_{$idName}'])) {
-	\${$varName}->set{$method}Id(\$array[\$prefix.'{$this->getColumnName()}_{$idName}']);
+if (isset(\$array[\$prefix.'{$this->getColumnName()}'])) {
+	\${$varName}->set{$method}Id(\$array[\$prefix.'{$this->getColumnName()}']);
 }
 
 EOT;

@@ -244,7 +244,9 @@ EOT;
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$method = <<<EOT
 
-{$classHint}
+/**
+ * @return {$class->getName()}
+**/
 public function {$methodName}({$this->className} \${$name})
 {
 	\$this->{$name} = \${$name};
@@ -253,7 +255,9 @@ public function {$methodName}({$this->className} \${$name})
 	return \$this;
 }
 
-{$classHint}
+/**
+ * @return {$class->getName()}
+**/
 public function {$methodName}Id(\$id)
 {
 	\$this->{$name} = null;
