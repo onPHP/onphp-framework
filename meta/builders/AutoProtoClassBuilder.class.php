@@ -96,12 +96,12 @@ EOT;
 				$out .= ";";
 			}
 			
-			// parent's identificator should be concretized in childs
+			// parent's identificator should be concretized in final childs
 			if ($parent) {
-				if ($parent->getIdentifier()) {
+				if (!$class->hasChilds() && ($id = $class->getIdentifier())) {
 					$out .=
 						"\n\n"
-						."\$form->\nget('{$parent->getIdentifier()->getName()}')->"
+						."\$form->\nget('{$id->getName()}')->"
 						."of('{$class->getName()}');\n\n";
 				} else {
 					$out .= "\n\n";
