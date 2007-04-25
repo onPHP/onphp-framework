@@ -29,7 +29,10 @@
 		/**
 		 * @return PackageManager
 		**/
-		public function addPackage($qualifiedName, $basePath)
+		public function addPackage(
+			$qualifiedName, $basePath,
+			/* PackageConfiguration */ $configuration = null
+		)
 		{
 			if (isset($this->packages[$qualifiedName]))
 				throw
@@ -39,17 +42,23 @@
 
 			$basePath = PathResolver::normalizeDirectory($basePath);
 
-			$configuration =
-				$this->getConfiguration($basePath.self::CONFIGURATION_SCRIPT);
+			if (!$configuration)
+				$configuration =
+					$this->getConfiguration(
+						$basePath.self::CONFIGURATION_SCRIPT
+					);
 
 			$this->packageResolvers[$qualifiedName] =
 				new PathResolver($basePath, $configuration);
 
 			if ($configuration->isContainer()) {
-				foreach ($configuration->getPackages() as $name => $package) {
+				foreach (
+					$configuration->getPackages() as $name => $configuration
+				) {
 					$this->addPackage(
 						$qualifiedName.'.'.$name,
-						$basePath.$name
+						$basePath.$name,
+						$configuration
 					);
 				}
 			}

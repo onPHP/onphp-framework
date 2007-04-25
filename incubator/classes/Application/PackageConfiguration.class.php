@@ -128,8 +128,13 @@
 		/**
 		 * @return PackageConfiguration
 		**/
-		public function addPackage($name, PackageConfiguration $configuration)
+		public function addPackage(
+			$name, /* PackageConfiguration */ $configuration
+		)
 		{
+			if ($configuration)
+				Assert::isTrue($configuration instanceof PackageConfiguration);
+
 			Assert::isTrue(
 				$this->container,
 				'only container can have subpackages'
