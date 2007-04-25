@@ -64,7 +64,7 @@
 		{
 			$baseClassPath = $this->baseDirectory;
 
-			if (!$this->container)
+			if (!$this->configuration->isContainer())
 				$baseClassPath .= self::PATH_CLASSES.DIRECTORY_SEPARATOR;
 
 			$includePaths = array();;

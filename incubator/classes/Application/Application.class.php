@@ -242,7 +242,7 @@
 
 			foreach ($pathResolvers as $pathResolver) {
 				if (
-					isset($getVars[self::AREA_HOLDER])) {
+					isset($getVars[self::AREA_HOLDER])
 					&& $pathResolver->isControllerExists(
 						$this->locationArea, $getVars[self::AREA_HOLDER]
 					)
