@@ -129,7 +129,7 @@
 		 * @return PackageConfiguration
 		**/
 		public function addPackage(
-			$name, /* PackageConfiguration */ $configuration
+			$name, /* PackageConfiguration */ $configuration = null
 		)
 		{
 			if ($configuration)
