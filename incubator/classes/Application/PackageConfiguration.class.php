@@ -53,7 +53,8 @@
 				addClassPath('Proto')->
 				addClassPath('Auto'.DIRECTORY_SEPARATOR.'Business')->
 				addClassPath('Auto'.DIRECTORY_SEPARATOR.'DAOs')->
-				addClassPath('Auto'.DIRECTORY_SEPARATOR.'Proto');
+				addClassPath('Auto'.DIRECTORY_SEPARATOR.'Proto')->
+				addClassPath('Auto'.DIRECTORY_SEPARATOR.'DTOs');
 
 			$result->container = false;
 
