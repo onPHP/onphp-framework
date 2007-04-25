@@ -76,13 +76,13 @@
 				"already imported package '{$qualifiedName}'"
 			);
 
-			$parts = split('.', $qualifiedName);
+			$parts = explode('.', $qualifiedName);
 
 			$packageResolver = null;
 
 			$classParts = array();
 
-			while (!$parts) {
+			while ($parts) {
 				$searchName = join('.', $parts);
 
 				if (isset($this->packageResolvers[$searchName])) {
