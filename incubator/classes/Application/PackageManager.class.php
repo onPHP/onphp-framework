@@ -49,7 +49,7 @@
 				foreach ($configuration->getPackages() as $name => $package) {
 					$this->addPackage(
 						$qualifiedName.'.'.$name,
-						$basePath.$package
+						$basePath.$name
 					);
 				}
 			}

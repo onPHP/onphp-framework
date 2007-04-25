@@ -43,7 +43,7 @@
 			if (substr($result, 1, 1) === DIRECTORY_SEPARATOR)
 				$result = substr($result, 1);
 
-			$result = $this->normalizeDirectory($result);
+			$result = self::normalizeDirectory($result);
 			
 			return $result;
 		}

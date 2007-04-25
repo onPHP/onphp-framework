@@ -92,6 +92,16 @@
 		/**
 		 * @return Application
 		**/
+		public function setupIncludePaths()
+		{
+			$this->configuration->includeClassPaths();
+
+			return $this;
+		}
+
+		/**
+		 * @return Application
+		**/
 		public function resideInWeb()
 		{
 			return $this->reside(LocationSettings::WEB);

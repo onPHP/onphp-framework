@@ -60,6 +60,11 @@
 
 			return $result;
 		}
+
+		public function isContainer()
+		{
+			return $this->container;
+		}
 		
 		/**
 		 * @return PackageConfiguration
