@@ -24,7 +24,7 @@
 		private $location		= null;
 		private $locationArea	= null;
 
-		private $directoriesConfiguration	= null;
+		private $pathResolver	= null;
 
 		private $actualDomain	= null;
 
@@ -82,23 +82,13 @@
 		/**
 		 * @return Application
 		**/
-		public function setDirectoriesConfiguration(
-			PackageConfiguration $configuration
-		)
+		public function setPathResolver($pathResolver)
 		{
-			$this->directoriesConfiguration = $configuration;
+			$this->pathResolver = $pathResolver;
 
 			return $this;
 		}
-		
-		/**
-		 * @return PackageConfiguration
-		**/
-		public function getDirectoriesConfiguration()
-		{
-			return $this->directoriesConfiguration;
-		}
-		
+
 		/**
 		 * @return Application
 		**/
@@ -144,7 +134,17 @@
 			$this->location = $this->locations->get($locationArea);
 			$this->locationArea = $locationArea;
 
-			$this->directoriesConfiguration->setAutoIncludeControllerPaths();
+			$pathResolvers = PackageManager::me()->getImportedList();
+
+			array_unshift($pathResolvers, $this->pathResolver);
+
+			$includePaths = array();
+
+			foreach ($pathResolvers as $pathResolver) {
+				$includePaths[] = $pathResolver->getControllersPath();
+			}
+
+			$this->addIncludePaths($includePaths);
 			
 			return $this;
 		}
@@ -190,7 +190,7 @@
 		/**
 		 * @return Application
 		**/
-		public function setupViewResolver($viewResolver)
+		public function setupViewResolver(PhpChainedViewResolver $viewResolver)
 		{
 			if (!isset($this->locationArea) || !isset($this->markup))
 				throw
@@ -198,11 +198,15 @@
 						'first, reside me in someplace and set the markup'
 					);
 
-			// TODO: use packages' templates too
-			$this->directoriesConfiguration->
-				setupViewResolver(
-					$viewResolver, $this->markup, $this->locationArea
+			$pathResolvers = PackageManager::me()->getImportedList();
+
+			array_unshift($pathResolvers, $this->pathResolver);
+
+			foreach ($pathResolvers as $pathResolver) {
+				$resolver->addPrefix(
+					$pathResolver->getTemplatesPath($this->markup)
 				);
+			}
 
 			return $this;
 		}
@@ -222,16 +226,18 @@
 
 			$getVars = $request->getGet();
 		
-			if (isset($getVars[self::AREA_HOLDER])) {
-				// TODO: use packages' controllers too
+			$pathResolvers = PackageManager::me()->getImportedList();
+
+			array_unshift($pathResolvers, $this->pathResolver);
+
+			foreach ($pathResolvers as $pathResolver) {
 				if (
-					$this->directoriesConfiguration->
-						isControllerAvailable(
-							$this->locationArea, $getVars[self::AREA_HOLDER]
-						)
+					isset($getVars[self::AREA_HOLDER])) {
+					&& $pathResolver->isControllerExists(
+						$this->locationArea, $getVars[self::AREA_HOLDER]
+					)
 				) {
 					$controllerName = $getVars[self::AREA_HOLDER];
-					// FIXME: nothing to break here
 					break;
 				}
 			}
@@ -246,6 +252,20 @@
 		public function getArea()
 		{
 			return $this->area;
+		}
+
+		/**
+		 * @return Application
+		**/
+		public function addIncludePaths($paths)
+		{
+			Assert::isArray($paths);
+			
+			set_include_path(
+				get_include_path().PATH_SEPARATOR.join(PATH_SEPARATOR, $paths)
+			);
+
+			return $this;
 		}
 
 		/**

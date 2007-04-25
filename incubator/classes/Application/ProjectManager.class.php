@@ -12,10 +12,11 @@
 
 	class PackageManager extends Singleton implements Instantiatable
 	{
-		const PACKAGE_CONFIG	= 'packageConfig.inc.php';
+		const CONFIGURATION_SCRIPT	= 'packageConfig.inc.php';
 
-		private $packages	= array();
-		private $imported	= array();
+		private $packageResolvers	= array();
+
+		private $imported			= array();
 
 		/**
 		 * @return PackageManager
@@ -28,17 +29,30 @@
 		/**
 		 * @return PackageManager
 		**/
-		public function addPackage(
-			$qualifiedName, PackageConfiguration $configuration
-		)
+		public function addPackage($qualifiedName, $basePath)
 		{
 			if (isset($this->packages[$qualifiedName]))
 				throw
 					new WrongArgumentException(
-						"package with name == {{$qualifiedName}} already exists"
+						"package with name '{$qualifiedName}' already exists"
 					);
 
-			$this->packages[$qualifiedName] = $configuration;
+			$basePath = PathResolver::normalizeDirectory($basePath);
+
+			$configuration =
+				$this->getConfiguration($basePath.self::CONFIGURATION_SCRIPT);
+
+			$this->packageResolvers[$qualifiedName] =
+				new PathResolver($basePath, $configuration);
+
+			if ($configuration->isContainer()) {
+				foreach ($configuration->getPackages() as $name => $package) {
+					$this->addPackage(
+						$qualifiedName.'.'.$name,
+						$basePath.$package
+					);
+				}
+			}
 
 			return $this;
 		}
@@ -48,43 +62,60 @@
 		**/
 		public function import($qualifiedName)
 		{
+			Assert::isFalse(
+				isset($this->imported[$qualifiedName]),
+				"already imported package '{$qualifiedName}'"
+			);
+
 			$parts = split('.', $qualifiedName);
 
-			$package = $classParts = null;
+			$packageResolver = null;
 
-			$searchName = null;
+			$classParts = array();
 
-			while (!empty($parts)) {
-				$searchName .= array_shift($parts);
+			while (!$parts) {
+				$searchName = join('.', $parts);
 
-				if (isset($this->packages[$searchName])) {
-					$package = $this->packages[$searchName];
-
-					if (!isset($this->imported[$searchName])) {
-						require
-							$package->getBaseDirectory()
-							.self::PACKAGE_CONFIG;
-
-						$package->setAutoincludeClassPaths();
-
-						$this->imported[$searchName] = true;
-					}
-
-					$classParts = $parts;
+				if (isset($this->packageResolvers[$searchName])) {
+					$packageResolver = $this->packageResolvers[$searchName];
+					break;
 				}
 
-				$searchName .= '.';
+				$classParts[] = array_pop($parts);
 			}
 
-			if (!isset($package))
+			if (!$packageResolver)
 				throw new WrongArgumentException(
-					"package {{$package}} not found"
+					"package for '{$qualifiedName}' not found"
 				);
 
-			if (!empty($classParts))
-				$package->importOneClass(join('.', $classParts));
+			if (!$classParts) {
+				$packageResolver->includeClassPaths();
 
+				$this->imported[$qualifiedName] = $packageResolver;
+			} else
+				$packageResolver->importOneClass(join('.', $classParts));
+				
 			return $this;
+		}
+
+		public function getImportedList()
+		{
+			return $this->imported;
+		}
+
+		private function getConfiguration($configurationScript)
+		{
+			$result = include($configurationScript);
+
+			if (!($result instanceof PackageConfiguration))
+				throw
+					new WrongArgumentException(
+						"config '{$configurationScript}'"
+						." must return valid configuration"
+					);
+
+			return $result;
 		}
 	}
 ?>

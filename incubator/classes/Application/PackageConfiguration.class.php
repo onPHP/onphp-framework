@@ -12,16 +12,14 @@
 
 	class PackageConfiguration
 	{
-		const PATH_CLASSES		= 'classes';
-		const PATH_TEMPLATES	= 'templates';
-		const PATH_CONTROLLERS	= 'controllers';
-
-		private $baseDirectory	= null;
-		
-		// must be relative to baseDirectory
 		private $classPaths			= array();
-		private $controllerPaths	= array();
-		private $templatePaths		= array();
+		
+		private $container			= false;
+
+		private $controllers		= false;
+		private $templates			= false;
+
+		private $packages			= array();
 		
 		/**
 		 * @return PackageConfiguration
@@ -34,30 +32,32 @@
 		/**
 		 * @return PackageConfiguration
 		**/
-		public static function createDefaultClassPath()
+		public static function createContainer()
 		{
-			return self::create()->
+			$result = self::create();
+
+			$result->container = true;
+
+			return $result;
+		}
+
+		/**
+		 * @return PackageConfiguration
+		**/
+		public static function createMetaClassPaths()
+		{
+			$result = 
+				self::create()->
 				addClassPath('Business')->
 				addClassPath('DAOs')->
 				addClassPath('Proto')->
 				addClassPath('Auto'.DIRECTORY_SEPARATOR.'Business')->
 				addClassPath('Auto'.DIRECTORY_SEPARATOR.'DAOs')->
 				addClassPath('Auto'.DIRECTORY_SEPARATOR.'Proto');
-		}
-		
-		/**
-		 * @return PackageConfiguration
-		**/
-		public function setBaseDirectory($baseDirectory)
-		{
-			$this->baseDirectory = $baseDirectory;
 
-			return $this;
-		}
+			$result->container = false;
 
-		public function getBaseDirectory()
-		{
-			return $this->baseDirectory;
+			return $result;
 		}
 		
 		/**
@@ -65,7 +65,7 @@
 		**/
 		public function addClassPath($path)
 		{
-			$this->classPaths[] = $this->normalizePath($path);
+			$this->classPaths[] = PathResolver::normalizePath($path);
 
 			return $this;
 		}
@@ -78,178 +78,71 @@
 		/**
 		 * @return PackageConfiguration
 		**/
-		public function addControllerPath($path)
+		public function setControllers($controllers)
 		{
-			$this->controllerPaths[] = $this->normalizePath($path);
+			Assert::isBoolean($controllers);
 
-			return $this;
-		}
-
-		public function getControllerPaths()
-		{
-			if (!isset($this->controllerPaths))
-				throw new WrongStateException(
-					'package does not have a business logic'
-				);
-			
-			return $this->controllerPaths;
-		}
-		
-		/**
-		 * @return PackageConfiguration
-		**/
-		public function addTemplatePath($path)
-		{
-			Assert::isTrue(
-				isset($this->controllerPaths),
-				'package does not have a presentation logic'
+			Assert::isFalse(
+				$this->container,
+				'container cannot have controllers'
 			);
 
-			$this->templatePaths[] = $this->normalizePath($path);
+			$this->controllers = $controllers;
 
 			return $this;
 		}
 
-		public function getTemplatePaths()
+		public function hasControllers()
 		{
-			return $this->templatePaths;
+			return $this->controllers;
 		}
 		
 		/**
 		 * @return PackageConfiguration
 		**/
-		public function setupViewResolver(
-			PhpChainedViewResolver $resolver, BaseMarkupLanguage $language,
-			$area = null
-		)
+		public function setTemplates($templates)
 		{
-			Assert::isTrue(isset($this->basePath));
+			Assert::isBoolean($templates);
 
-			// FIXME: unused variable - $templatePath		
-			foreach ($this->templatePaths as $templatePath) {
-				$resolver->addPrefix(
-					$this->basePath.self::PATH_TEMPLATES.DIRECTORY_SEPARATOR
-					.$language->getName().DIRECTORY_SEPARATOR
-					.(
-						$area
-						? $area.DIRECTORY_SEPARATOR
-						: null
-					)
-				);
-			}
+			Assert::isFalse(
+				$this->container,
+				'container cannot have templates'
+			);
+
+			$this->templates = $templates;
 
 			return $this;
 		}
-		
+
+		public function hasTemplates()
+		{
+			return $this->templates;
+		}
+
 		/**
 		 * @return PackageConfiguration
 		**/
-		// TODO: move to Application?
-		public function setAutoIncludeControllerPaths($locationArea)
+		public function addPackage($name, PackageConfiguration $configuration)
 		{
-			Assert::isTrue(isset($this->basePath));
+			Assert::isTrue(
+				$this->container,
+				'only container can have subpackages'
+			);
 
-			$includePath = get_include_path().PATH_SEPARATOR;
+			if (isset($this->packages[$name]))
+				throw
+					new WrongArgumentException(
+						"package with name '{$name}' already exists"
+					);
 
-			foreach ($this->controllerPaths as $controllerPath) {
-				$includePath .=
-					$this->basePath.self::PATH_CONTROLLERS.DIRECTORY_SEPARATOR
-					.$locationArea.DIRECTORY_SEPARATOR
-					.$controllerPath.PATH_SEPARATOR;
-			}
-
-			set_include_path($includePath);
-
-			return $this;
-		}
-		
-		/**
-		 * @return PackageConfiguration
-		**/
-		// TODO: move to Application?
-		public function setAutoincludeClassPaths()
-		{
-			Assert::isTrue(isset($this->basePath));
-
-			$includePath = get_include_path().PATH_SEPARATOR;
-
-			foreach ($this->classPaths as $classPath) {
-				$includePath .=
-					$this->basePath.self::PATH_CLASSES.DIRECTORY_SEPARATOR
-					.$classPath.PATH_SEPARATOR;
-			}
-
-			set_include_path($includePath);
+			$this->packages[$name] = $configuration;
 
 			return $this;
 		}
 
-		// TODO: check if we have imported paths or not?
-		public function isControllerAvailable($locationArea, $controllerName)
+		public function getPackages()
 		{
-			Assert::isTrue(isset($this->basePath));
-
-			foreach ($this->controllerPaths as $controllerPath) {
-				if (
-					is_readable(
-						$this->basePath.self::PATH_CONTROLLERS.DIRECTORY_SEPARATOR
-						.$locationArea.DIRECTORY_SEPARATOR
-						.$controllerPath.$controllerName.EXT_CLASS
-					)
-				)
-					return true;
-			}
-
-			return false;
-		}
-		
-		/**
-		 * @return PackageConfiguration
-		**/
-		public function importOneClass($qualifiedName)
-		{
-			Assert::isTrue(isset($this->basePath));
-
-			$parts = split('.', $qualifiedName);
-
-			$className = array_pop($parts);
-			$classPath = join(DIRECTORY_SEPARATOR, $parts).DIRECTORY_SEPARATOR;
-
-			if (!in_array($classPath, $this->classPaths))
-				throw new WrongArgumentException(
-					"class path {{$classPath}} does not defined"
-				);
-
-			$classFile = $this->basePath.$classPath.$className.EXT_CLASS;
-
-			if (!is_readable($classFile))
-				throw new WrongArgumentException(
-					"class file {{$classPath}} not found"
-				);
-
-			require $classFile;
-
-			return $this;
-		}
-
-		private function normalizePath($path)
-		{
-			$result = $this->normalizeDirectory($path);
-
-			if (substr($result, 1, 1) === DIRECTORY_SEPARATOR)
-				$result = substr($result, 1);
-			
-			return $result;
-		}
-
-		private function normalizeDirectory($directory)
-		{
-			$result = preg_replace('~/~', DIRECTORY_SEPARATOR, $directory);
-
-			if (substr($result, -1, 1) !== DIRECTORY_SEPARATOR)
-				$result .= DIRECTORY_SEPARATOR;
-
-			return $result;
+			return $this->packages;
 		}
 	}
 ?>
