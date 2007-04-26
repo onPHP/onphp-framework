@@ -57,6 +57,15 @@
 			if (!($variable === true || $variable === false))
 				self::fail($message);
 		}
+		
+		public static function isPositiveInteger($variable, $message = null)
+		{
+			if (
+				!self::checkInteger($variable)
+				|| $variable < 0
+			)
+				self::fail($message);
+		}
 
 		public static function isTernaryBase(&$variable, $message = null)
 		{
