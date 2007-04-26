@@ -85,6 +85,18 @@
 				self::fail($message);
 		}
 		
+		/// exceptionless methods
+		//@{
+		public static function checkInteger($value)
+		{
+			return (
+				is_numeric($value)
+				&& ($value == (int) $value)
+				&& (strlen($value) == strlen((int) $value))
+			);
+		}
+		//@}
+		
 		private static function fail($message = null)
 		{
 			throw new WrongArgumentException(
