@@ -90,7 +90,7 @@
 					break;
 				}
 
-				$classParts[] = array_pop($parts);
+				array_unshift($classParts, array_pop($parts));
 			}
 
 			if (!$packageResolver)
