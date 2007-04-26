@@ -104,10 +104,10 @@
 		**/
 		public function setPath($path)
 		{
-			if (substr($path, 1, 1) !== '/')
-				$path = '/'.$path;
+			if (substr($path, 1, 1) !== DIRECTORY_SEPARATOR)
+				$path = DIRECTORY_SEPARATOR.$path;
 
-			if (substr($path, -1, 1) !== '/')
+			if (substr($path, -1, 1) !== DIRECTORY_SEPARATOR)
 				throw new WrongArgumentException('path must end in / (slash)');
 
 			$this->path = $path;

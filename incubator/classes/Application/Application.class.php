@@ -33,17 +33,17 @@
 		private $area			= null;
 		private $queryString	= null;
 
-		protected function __construct()
-		{
-			$this->locations = LocationSettings::create();
-		}
-		
 		/**
 		 * @return Application
 		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
+		}
+		
+		protected function __construct()
+		{
+			$this->locations = LocationSettings::create();
 		}
 		
 		/**
@@ -207,10 +207,9 @@
 		public function setupViewResolver(PhpChainedViewResolver $viewResolver)
 		{
 			if (!isset($this->locationArea) || !isset($this->markup))
-				throw
-					new WrongStateException(
-						'first, reside me in someplace and set the markup'
-					);
+				throw new WrongStateException(
+					'first, reside me in someplace and set the markup'
+				);
 
 			$pathResolvers = PackageManager::me()->getImportedList();
 
@@ -234,10 +233,9 @@
 		public function getController(HttpRequest $request, $defaultName)
 		{
 			if (!isset($this->locationArea))
-				throw
-					new WrongStateException(
-						'first, reside me in someplace'
-					);
+				throw new WrongStateException(
+					'first, reside me in someplace'
+				);
 
 			$controllerName = $defaultName;
 

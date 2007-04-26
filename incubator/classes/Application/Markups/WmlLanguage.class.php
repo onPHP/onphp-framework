@@ -38,7 +38,10 @@
 		{
 			return new self;
 		}
-
+		
+		/**
+		 * @return WmlLanguage
+		**/
 		public function setVersion($version)
 		{
 			parent::setVersion($version);

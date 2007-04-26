@@ -118,11 +118,10 @@
 			$result = include($configurationScript);
 
 			if (!($result instanceof PackageConfiguration))
-				throw
-					new WrongArgumentException(
-						"config '{$configurationScript}'"
-						." must return valid configuration"
-					);
+				throw new WrongArgumentException(
+					"config '{$configurationScript}'"
+					." must return valid configuration"
+				);
 
 			return $result;
 		}

@@ -16,7 +16,7 @@
 		const PRODUCTION		= 'production';
 		const LOCAL				= 'localhost';
 
-		protected $configExtension		= '.inc.php';
+		protected $configExtension		= EXT_MOD;
 
 		protected $projectPath			= 'cfg';
 		protected $hostCommonPath		= 'common';
@@ -33,7 +33,10 @@
 		{
 			return Singleton::getInstance(__CLASS__);
 		}
-
+		
+		/**
+		 * @return HostConfiguration
+		**/
 		public function setup(
 			$projectBaseDirectory, $hostBaseDirectory, $version, $host
 		)
@@ -42,6 +45,8 @@
 			$this->hostBaseDirectory = $hostBaseDirectory;
 			$this->version = $version;
 			$this->host = $host;
+			
+			return $this;
 		}
 
 		public function includeConfig($name)

@@ -57,6 +57,7 @@
 
 			return $result;
 		}
+		
 		/**
 		 * @return PathResolver
 		**/
