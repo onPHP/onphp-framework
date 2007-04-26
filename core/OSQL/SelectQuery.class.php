@@ -233,8 +233,8 @@
 		**/
 		public function limit($limit = null, $offset = null)
 		{
-			if ($limit !== null) 
-				Assert::isInteger($limit, 'invalid limit specified');
+			if ($limit !== null)
+				Assert::isPositiveInteger($limit, 'invalid limit specified');
 				
 			if ($offset !== null)
 				Assert::isInteger($offset, 'invalid offset specified');
