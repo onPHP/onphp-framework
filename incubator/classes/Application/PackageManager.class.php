@@ -83,7 +83,7 @@
 			$classParts = array();
 
 			while ($parts) {
-				$searchName = join('.', $parts);
+				$searchName = implode('.', $parts);
 
 				if (isset($this->packageResolvers[$searchName])) {
 					$packageResolver = $this->packageResolvers[$searchName];
@@ -103,7 +103,7 @@
 
 				$this->imported[$qualifiedName] = $packageResolver;
 			} else
-				$packageResolver->importOneClass(join('.', $classParts));
+				$packageResolver->importOneClass(implode('.', $classParts));
 				
 			return $this;
 		}

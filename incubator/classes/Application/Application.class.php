@@ -272,7 +272,7 @@
 			Assert::isArray($paths);
 			
 			set_include_path(
-				get_include_path().PATH_SEPARATOR.join(PATH_SEPARATOR, $paths)
+				get_include_path().PATH_SEPARATOR.implode(PATH_SEPARATOR, $paths)
 			);
 
 			return $this;

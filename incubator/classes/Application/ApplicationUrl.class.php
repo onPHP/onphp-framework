@@ -76,7 +76,7 @@
 			if (!$level)
 				return $this->domain;
 
-			$domainParts = split('.', $this->domain);
+			$domainParts = explode('.', $this->domain);
 
 			while (count($domainParts) > $level)
 				$domainParts = array_shift($domainParts);

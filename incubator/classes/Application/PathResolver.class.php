@@ -88,10 +88,10 @@
 			if (!$this->configuration->isContainer())
 				$baseClassPath .= self::PATH_CLASSES.DIRECTORY_SEPARATOR;
 
-			$parts = split('.', $qualifiedName);
+			$parts = explode('.', $qualifiedName);
 
 			$className = array_pop($parts);
-			$classPath = join(DIRECTORY_SEPARATOR, $parts).DIRECTORY_SEPARATOR;
+			$classPath = implode(DIRECTORY_SEPARATOR, $parts).DIRECTORY_SEPARATOR;
 
 			if (!in_array($classPath, $this->configuration->getClassPaths()))
 				throw new WrongArgumentException(
