@@ -34,7 +34,7 @@
 		/**
 		 * @return WmlLanguage
 		**/
-		public function create()
+		public static function create()
 		{
 			return new self;
 		}
@@ -56,7 +56,7 @@
 			return new UnimplementedFeatureException();
 		}
 
-		public function render(WmlMarkupDocument $data)
+		public function render(MarkupDocument $data)
 		{
 			return new UnimplementedFeatureException();
 		}

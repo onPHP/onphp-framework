@@ -95,14 +95,14 @@
 
 			if (!in_array($classPath, $this->configuration->getClassPaths()))
 				throw new WrongArgumentException(
-					"class path '{$classPath}' does not defined"
+					"class {$qualifiedName} not found at classpath '{$classPath}'"
 				);
 
-			$classFile = $baseDirectory.$classPath.$className.EXT_CLASS;
+			$classFile = $this->baseDirectory.$classPath.$className.EXT_CLASS;
 
 			if (!is_readable($classFile))
 				throw new WrongArgumentException(
-					"class file '{$classPath}' not found"
+					"file '{$classFile}' for class '{$qualifiedName}' not found"
 				);
 
 			$this->requireClass($classFile);
@@ -110,7 +110,7 @@
 			return $this;
 		}
 
-		public function getTemplatesPath(BaseMarkupLanguage $language)
+		public function getTemplatesPath($locationArea, BaseMarkupLanguage $language)
 		{
 			Assert::isFalse(
 				$this->configuration->isContainer(),
@@ -118,8 +118,9 @@
 			);
 
 			return
-				$this->basePath.self::PATH_TEMPLATES.DIRECTORY_SEPARATOR
-				.$language->getName().DIRECTORY_SEPARATOR;
+				$this->baseDirectory.$locationArea.DIRECTORY_SEPARATOR
+				.self::PATH_TEMPLATES.DIRECTORY_SEPARATOR
+				.$language->getCommonName().DIRECTORY_SEPARATOR;
 		}
 
 		public function getControllersPath($locationArea)
@@ -128,23 +129,21 @@
 				$this->configuration->isContainer(),
 				'containers do not have controllers'
 			);
+
+			return
+				$this->baseDirectory.$locationArea.DIRECTORY_SEPARATOR
+				.self::PATH_CONTROLLERS.DIRECTORY_SEPARATOR;
 		}
 
-		// TODO: check if we have imported paths or not?
 		public function isControllerExists($locationArea, $controllerName)
 		{
-			Assert::isTrue(isset($this->basePath));
-
-			foreach ($this->controllerPaths as $controllerPath) {
-				if (
-					is_readable(
-						$this->basePath.self::PATH_CONTROLLERS.DIRECTORY_SEPARATOR
-						.$locationArea.DIRECTORY_SEPARATOR
-						.$controllerPath.$controllerName.EXT_CLASS
-					)
+			if (
+				is_readable(
+					$this->getControllersPath($locationArea)
+					.$controllerName.EXT_CLASS
 				)
-					return true;
-			}
+			)
+				return true;
 
 			return false;
 		}

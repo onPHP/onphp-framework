@@ -46,7 +46,7 @@
 		**/
 		public static function createMetaClassPaths()
 		{
-			$result = 
+			$result =
 				self::create()->
 				addClassPath('Business')->
 				addClassPath('DAOs')->
@@ -59,6 +59,17 @@
 			$result->container = false;
 
 			return $result;
+		}
+
+		/**
+		 * @return PackageConfiguration
+		**/
+		public static function createApplicationPaths()
+		{
+			return
+				self::createMetaClassPaths()->
+				setControllers(true)->
+				setTemplates(true);
 		}
 
 		public function isContainer()

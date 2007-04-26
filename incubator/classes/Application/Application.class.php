@@ -94,7 +94,7 @@
 		**/
 		public function setupIncludePaths()
 		{
-			$this->configuration->includeClassPaths();
+			$this->pathResolver->includeClassPaths();
 
 			return $this;
 		}
@@ -151,7 +151,11 @@
 			$includePaths = array();
 
 			foreach ($pathResolvers as $pathResolver) {
-				$includePaths[] = $pathResolver->getControllersPath();
+				if ($pathResolver->getConfiguration()->hasControllers())
+					$includePaths[] =
+						$pathResolver->getControllersPath(
+							$this->locationArea
+						);
 			}
 
 			$this->addIncludePaths($includePaths);
@@ -213,9 +217,12 @@
 			array_unshift($pathResolvers, $this->pathResolver);
 
 			foreach ($pathResolvers as $pathResolver) {
-				$resolver->addPrefix(
-					$pathResolver->getTemplatesPath($this->markup)
-				);
+				if ($pathResolver->getConfiguration()->hasTemplates())
+					$viewResolver->addPrefix(
+						$pathResolver->getTemplatesPath(
+							$this->locationArea, $this->markup
+						)
+					);
 			}
 
 			return $this;
@@ -224,7 +231,7 @@
 		/**
 		 * @return Application
 		**/
-		public function setupController(HttpRequest $request, $defaultName)
+		public function getController(HttpRequest $request, $defaultName)
 		{
 			if (!isset($this->locationArea))
 				throw

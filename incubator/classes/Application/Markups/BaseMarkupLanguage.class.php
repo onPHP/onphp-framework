@@ -22,7 +22,7 @@
 
 		public function getCommonName()
 		{
-			return $this->getCommonName();
+			return $this->commonName;
 		}
 		
 		/**
