@@ -9,23 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-
+	
 	class HostConfiguration extends Singleton implements Instantiatable
 	{
 		const TEST				= 'test';
 		const PRODUCTION		= 'production';
 		const LOCAL				= 'localhost';
-
+		
 		protected $configExtension		= EXT_MOD;
-
+		
 		protected $projectPath			= 'cfg';
 		protected $hostCommonPath		= 'common';
-
+		
 		private $projectBaseDirectory	= null;
 		private $hostBaseDirectory		= null;
 		private $version				= null;
 		private $host					= null;
-
+		
 		/**
 		 * @return Configurator
 		**/
@@ -48,58 +48,58 @@
 			
 			return $this;
 		}
-
+		
 		public function includeConfig($name)
 		{
 			require $this->path().$name.$this->configExtension;
 		}
-
+		
 		public function includeCommonConfig($name)
 		{
 			require $this->commonPath().$name.$this->configExtension;
 		}
-
+		
 		public function includeProjectConfig($name)
 		{
 			require $this->projectPath().$name.$this->configExtension;
 		}
-
+		
 		public function includeProjectCommonConfig($name)
 		{
 			require $this->projectCommonPath().$name.$this->configExtension;
 		}
-
+		
 		protected function path()
 		{
 			return $this->hostBaseDirectory.$this->hostPath();
 		}
-
+		
 		protected function commonPath()
 		{
 			return $this->hostBaseDirectory.$this->hostCommonPath();
 		}
-
+		
 		protected function projectPath()
 		{
 			return
 				$this->projectBaseDirectory
 				.$this->projectPath.DIRECTORY_SEPARATOR.$this->hostPath();
 		}
-
+		
 		protected function projectCommonPath()
 		{
 			return
 				$this->projectBaseDirectory
 				.$this->projectPath.DIRECTORY_SEPARATOR.$this->hostCommonPath();
 		}
-
+		
 		protected function hostPath()
 		{
 			return
 				$this->version.DIRECTORY_SEPARATOR
 				.$this->host.DIRECTORY_SEPARATOR;
 		}
-
+		
 		protected function hostCommonPath()
 		{
 			return

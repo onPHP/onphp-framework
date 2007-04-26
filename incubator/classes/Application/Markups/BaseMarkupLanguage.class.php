@@ -9,7 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-
+	
 	abstract class BaseMarkupLanguage
 	{
 		// redefine me
@@ -19,7 +19,7 @@
 		
 		abstract public function parse($data);
 		abstract public function render(MarkupDocument $data);
-
+		
 		public function getCommonName()
 		{
 			return $this->commonName;
@@ -35,12 +35,12 @@
 					new WrongArgumentException(
 						"dont know nothing about version == '{$version}'"
 					);
-
+			
 			$this->version = $version;
-
+			
 			return $this;
 		}
-
+		
 		public function getVersion()
 		{
 			return $this->version;

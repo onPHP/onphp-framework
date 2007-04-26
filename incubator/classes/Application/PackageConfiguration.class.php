@@ -9,16 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-
+	
 	class PackageConfiguration
 	{
 		private $classPaths			= array();
 		
 		private $container			= false;
-
 		private $controllers		= false;
 		private $templates			= false;
-
+		
 		private $packages			= array();
 		
 		/**
@@ -35,12 +34,12 @@
 		public static function createContainer()
 		{
 			$result = self::create();
-
+			
 			$result->container = true;
-
+			
 			return $result;
 		}
-
+		
 		/**
 		 * @return PackageConfiguration
 		**/
@@ -55,12 +54,12 @@
 				addClassPath('Auto'.DIRECTORY_SEPARATOR.'DAOs')->
 				addClassPath('Auto'.DIRECTORY_SEPARATOR.'Proto')->
 				addClassPath('Auto'.DIRECTORY_SEPARATOR.'DTOs');
-
+			
 			$result->container = false;
-
+			
 			return $result;
 		}
-
+		
 		/**
 		 * @return PackageConfiguration
 		**/
@@ -71,7 +70,7 @@
 				setControllers(true)->
 				setTemplates(true);
 		}
-
+		
 		public function isContainer()
 		{
 			return $this->container;
@@ -83,10 +82,10 @@
 		public function addClassPath($path)
 		{
 			$this->classPaths[] = PathResolver::normalizePath($path);
-
+			
 			return $this;
 		}
-
+		
 		public function getClassPaths()
 		{
 			return $this->classPaths;
@@ -98,17 +97,17 @@
 		public function setControllers($controllers)
 		{
 			Assert::isBoolean($controllers);
-
+			
 			Assert::isFalse(
 				$this->container,
 				'container cannot have controllers'
 			);
-
+			
 			$this->controllers = $controllers;
-
+			
 			return $this;
 		}
-
+		
 		public function hasControllers()
 		{
 			return $this->controllers;
@@ -120,22 +119,22 @@
 		public function setTemplates($templates)
 		{
 			Assert::isBoolean($templates);
-
+			
 			Assert::isFalse(
 				$this->container,
 				'container cannot have templates'
 			);
-
+			
 			$this->templates = $templates;
-
+			
 			return $this;
 		}
-
+		
 		public function hasTemplates()
 		{
 			return $this->templates;
 		}
-
+		
 		/**
 		 * @return PackageConfiguration
 		**/
@@ -145,23 +144,23 @@
 		{
 			if ($configuration)
 				Assert::isTrue($configuration instanceof PackageConfiguration);
-
+			
 			Assert::isTrue(
 				$this->container,
 				'only container can have subpackages'
 			);
-
+			
 			if (isset($this->packages[$name]))
 				throw
 					new WrongArgumentException(
 						"package with name '{$name}' already exists"
 					);
-
+			
 			$this->packages[$name] = $configuration;
-
+			
 			return $this;
 		}
-
+		
 		public function getPackages()
 		{
 			return $this->packages;

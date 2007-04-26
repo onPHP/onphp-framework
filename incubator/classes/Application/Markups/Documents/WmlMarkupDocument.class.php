@@ -9,7 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-
+	
 	class WmlMarkupDocument extends MarkupDocument
 	{
 		// implement me

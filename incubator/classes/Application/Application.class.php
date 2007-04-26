@@ -9,30 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-
+	
 	class Application extends Singleton implements Instantiatable
 	{
 		const CSS_PATH			= 'css';
 		const IMG_PATH			= 'img';
-
+		
 		const AREA_HOLDER		= 'area';
-
+		
 		private $name			= 'stdApp';
-
+		
 		private $locations		= null;
-
+		
 		private $location		= null;
 		private $locationArea	= null;
-
+		
 		private $pathResolver	= null;
-
+		
 		private $actualDomain	= null;
-
+		
 		private $markup			= null;
-
+		
 		private $area			= null;
 		private $queryString	= null;
-
+		
 		/**
 		 * @return Application
 		**/
@@ -55,7 +55,7 @@
 			
 			return $this;
 		}
-
+		
 		public function getName()
 		{
 			return $this->name;
@@ -67,7 +67,7 @@
 		public function setLocations(LocationSettings $locations)
 		{
 			$this->locations = $locations;
-
+			
 			return $this;
 		}
 		
@@ -85,20 +85,20 @@
 		public function setPathResolver($pathResolver)
 		{
 			$this->pathResolver = $pathResolver;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return Application
 		**/
 		public function setupIncludePaths()
 		{
 			$this->pathResolver->includeClassPaths();
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return Application
 		**/
@@ -140,16 +140,16 @@
 				throw new WrongArgumentException(
 					"application already resides at {{$this->area}}"
 				);
-
+			
 			$this->location = $this->locations->get($locationArea);
 			$this->locationArea = $locationArea;
-
+			
 			$pathResolvers = PackageManager::me()->getImportedList();
-
+			
 			array_unshift($pathResolvers, $this->pathResolver);
-
+			
 			$includePaths = array();
-
+			
 			foreach ($pathResolvers as $pathResolver) {
 				if ($pathResolver->getConfiguration()->hasControllers())
 					$includePaths[] =
@@ -157,7 +157,7 @@
 							$this->locationArea
 						);
 			}
-
+			
 			$this->addIncludePaths($includePaths);
 			
 			return $this;
@@ -169,7 +169,7 @@
 				throw new WrongArgumentException(
 					'application does not reside anywhere'
 				);
-
+			
 			return $this->locationArea;
 		}
 		
@@ -179,7 +179,7 @@
 				throw new WrongArgumentException(
 					'application does not reside anywhere'
 				);
-
+			
 			return $this->location;
 		}
 		
@@ -189,7 +189,7 @@
 		public function setMarkup(BaseMarkupLanguage $markup)
 		{
 			$this->markup = $markup;
-
+			
 			return $this;
 		}
 		
@@ -200,7 +200,7 @@
 		{
 			return $this->markup;
 		}
-
+		
 		/**
 		 * @return Application
 		**/
@@ -210,11 +210,11 @@
 				throw new WrongStateException(
 					'first, reside me in someplace and set the markup'
 				);
-
+			
 			$pathResolvers = PackageManager::me()->getImportedList();
-
+			
 			array_unshift($pathResolvers, $this->pathResolver);
-
+			
 			foreach ($pathResolvers as $pathResolver) {
 				if ($pathResolver->getConfiguration()->hasTemplates())
 					$viewResolver->addPrefix(
@@ -223,7 +223,7 @@
 						)
 					);
 			}
-
+			
 			return $this;
 		}
 		
@@ -236,15 +236,15 @@
 				throw new WrongStateException(
 					'first, reside me in someplace'
 				);
-
+			
 			$controllerName = $defaultName;
-
+			
 			$getVars = $request->getGet();
 		
 			$pathResolvers = PackageManager::me()->getImportedList();
-
+			
 			array_unshift($pathResolvers, $this->pathResolver);
-
+			
 			foreach ($pathResolvers as $pathResolver) {
 				if (
 					isset($getVars[self::AREA_HOLDER])
@@ -256,11 +256,11 @@
 					break;
 				}
 			}
-
+			
 			$result = new $controllerName;
-
+			
 			$this->area = $controllerName;
-
+			
 			return $result;
 		}
 		
@@ -268,7 +268,7 @@
 		{
 			return $this->area;
 		}
-
+		
 		/**
 		 * @return Application
 		**/
@@ -279,10 +279,10 @@
 			set_include_path(
 				get_include_path().PATH_SEPARATOR.implode(PATH_SEPARATOR, $paths)
 			);
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return Application
 		**/
@@ -290,59 +290,59 @@
 		{
 			$this->queryString = $queryString;
 		}
-
+		
 		public function getQueryString()
 		{
 			return $this->queryString;
 		}
-
+		
 		public function url()
 		{
 			if ($this->queryString)
 				return $this->baseUrl().'?'.$this->queryString;
-
+			
 			return $this->getLocation()->getUrl();
 		}
-
+		
 		public function baseUrl()
 		{
 			return $this->getLocation()->getBaseUrl();
 		}
-
+		
 		public function basePath()
 		{
 			return $this->getLocation()->getPath();
 		}
-
+		
 		public function areaUrl($area = null)
 		{
 			if (!$area)
 				$actualArea = $this->area;
 			else
 				$actualArea = $area;
-
+			
 			return
 				$this->getLocation()->getPath()
 				.'?'.self::AREA_HOLDER.'='.$actualArea;
 		}
-
+		
 		public function imgPath()
 		{
 			$result = $this->baseUrl().self::IMG.'/';
-
+			
 			if ($this->markup)
 				$result .= $this->markup->getCommonName().'/';
-
+			
 			return $result;
 		}
-
+		
 		public function cssPath()
 		{
 			$result = $this->baseUrl().self::CSS.'/';
-
+			
 			if ($this->markup)
 				$result .= $this->markup->getCommonName().'/';
-
+			
 			return $result;
 		}
 		
@@ -355,47 +355,47 @@
 			
 			return $this;
 		}
-
+		
 		public function getActualDomain()
 		{
 			return $this->actualDomain;
 		}
-
+		
 		public function getWebLocation()
 		{
 			return $this->locations->getWeb();
 		}
-
+		
 		public function getWebUrl()
 		{
 			return $this->getWebLocation()->getUrl();
 		}
-
+		
 		public function getWapLocation()
 		{
 			return $this->locations->getWap();
 		}
-
+		
 		public function getWapUrl()
 		{
 			return $this->getWapLocation()->getUrl();
 		}
-
+		
 		public function getAdminLocation()
 		{
 			return $this->locations->getAdmin();
 		}
-
+		
 		public function getAdminUrl()
 		{
 			return $this->getAdminLocation()->getUrl();
 		}
-
+		
 		public function getSoapLocation()
 		{
 			return $this->locations->getSoap();
 		}
-
+		
 		public function getSoapUrl()
 		{
 			return $this->getSoapLocation()->getUrl();

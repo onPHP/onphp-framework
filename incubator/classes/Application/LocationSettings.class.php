@@ -9,14 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-
+	
 	class LocationSettings
 	{
 		const WEB	= 'web';
 		const WAP	= 'wap';
 		const ADMIN	= 'admin';
 		const SOAP	= 'soap';
-
+		
 		private $locations = array(
 			self::WEB	=> null,
 			self::WAP	=> null,
@@ -52,7 +52,7 @@
 		{
 			return $this->setWeb(ApplicationUrl::create()->setUrl($url));
 		}
-
+		
 		public function getWebUrl()
 		{
 			return $this->getWeb()->getUrl();
@@ -65,7 +65,7 @@
 		{
 			return $this->set(self::WAP, $wapLocation);
 		}
-
+		
 		public function getWap()
 		{
 			return $this->get(self::WAP);
@@ -78,7 +78,7 @@
 		{
 			return $this->setWap(ApplicationUrl::create()->setUrl($url));
 		}
-
+		
 		public function getWapUrl()
 		{
 			return $this->getWap()->getUrl();
@@ -91,7 +91,7 @@
 		{
 			return $this->set(self::ADMIN, $adminLocation);
 		}
-
+		
 		public function getAdmin()
 		{
 			return $this->get(self::ADMIN);
@@ -104,7 +104,7 @@
 		{
 			return $this->setAdmin(ApplicationUrl::create()->setUrl($url));
 		}
-
+		
 		public function getAdminUrl()
 		{
 			return $this->getAdmin()->getUrl();
@@ -117,7 +117,7 @@
 		{
 			return $this->set(self::SOAP, $soapLocation);
 		}
-
+		
 		public function getSoap()
 		{
 			return $this->get(self::SOAP);
@@ -130,7 +130,7 @@
 		{
 			return $this->setSoap(ApplicationUrl::create()->setUrl($url));
 		}
-
+		
 		public function getSoapUrl()
 		{
 			return $this->getSoap()->getUrl();
@@ -142,10 +142,10 @@
 		public function set($area, ApplicationUrl $location)
 		{
 			$this->locations[$area] = $location;
-
+			
 			return $this;
 		}
-
+		
 		public function get($area)
 		{
 			if (!isset($this->locations[$area]))

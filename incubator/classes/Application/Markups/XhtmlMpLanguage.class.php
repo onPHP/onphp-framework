@@ -9,7 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-
+	
 	final class XhtmlMpLanguage extends BaseMarkupLanguage
 	{
 		protected $commonName	= 'xhtmlmp';

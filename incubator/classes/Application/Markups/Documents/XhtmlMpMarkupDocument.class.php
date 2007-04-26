@@ -9,7 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-
+	
 	class XhtmlMpMarkupDocument extends MarkupDocument
 	{
 		// implement me

@@ -9,15 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-
+	
 	class PackageManager extends Singleton implements Instantiatable
 	{
 		const CONFIGURATION_SCRIPT	= 'packageConfig.inc.php';
-
+		
 		private $packageResolvers	= array();
-
+		
 		private $imported			= array();
-
+		
 		/**
 		 * @return PackageManager
 		**/
@@ -25,7 +25,7 @@
 		{
 			return Singleton::getInstance(__CLASS__);
 		}
-
+		
 		/**
 		 * @return PackageManager
 		**/
@@ -39,18 +39,18 @@
 					new WrongArgumentException(
 						"package with name '{$qualifiedName}' already exists"
 					);
-
+			
 			$basePath = PathResolver::normalizeDirectory($basePath);
-
+			
 			if (!$configuration)
 				$configuration =
 					$this->getConfiguration(
 						$basePath.self::CONFIGURATION_SCRIPT
 					);
-
+			
 			$this->packageResolvers[$qualifiedName] =
 				new PathResolver($basePath, $configuration);
-
+			
 			if ($configuration->isContainer()) {
 				foreach (
 					$configuration->getPackages() as $name => $configuration
@@ -62,10 +62,10 @@
 					);
 				}
 			}
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return PackageManager
 		**/
@@ -75,54 +75,54 @@
 				isset($this->imported[$qualifiedName]),
 				"already imported package '{$qualifiedName}'"
 			);
-
+			
 			$parts = explode('.', $qualifiedName);
-
+			
 			$packageResolver = null;
-
+			
 			$classParts = array();
-
+			
 			while ($parts) {
 				$searchName = implode('.', $parts);
-
+				
 				if (isset($this->packageResolvers[$searchName])) {
 					$packageResolver = $this->packageResolvers[$searchName];
 					break;
 				}
-
+				
 				array_unshift($classParts, array_pop($parts));
 			}
-
+			
 			if (!$packageResolver)
 				throw new WrongArgumentException(
 					"package for '{$qualifiedName}' not found"
 				);
-
+			
 			if (!$classParts) {
 				$packageResolver->includeClassPaths();
-
+				
 				$this->imported[$qualifiedName] = $packageResolver;
 			} else
 				$packageResolver->importOneClass(implode('.', $classParts));
 				
 			return $this;
 		}
-
+		
 		public function getImportedList()
 		{
 			return $this->imported;
 		}
-
+		
 		private function getConfiguration($configurationScript)
 		{
 			$result = include($configurationScript);
-
+			
 			if (!($result instanceof PackageConfiguration))
 				throw new WrongArgumentException(
 					"config '{$configurationScript}'"
 					." must return valid configuration"
 				);
-
+			
 			return $result;
 		}
 	}
