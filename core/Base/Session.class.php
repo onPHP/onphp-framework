@@ -46,16 +46,16 @@
 		**/
 		public static function destroy()
 		{
-			if (self::$isStarted) {
-				self::$isStarted = false;
-				try {
-					session_destroy();
-				} catch (BaseException $e) {
-					// stfu
-				}
-				setcookie(session_name(), null, 0, '/');
-			} else
+			if (!self::$isStarted)
 				throw new SessionNotStartedException();
+				
+			self::$isStarted = false;
+			try {
+				session_destroy();
+			} catch (BaseException $e) {
+				// stfu
+			}
+			setcookie(session_name(), null, 0, '/');
 		}
 		
 		public static function flush()
@@ -68,10 +68,10 @@
 		**/
 		public static function assign($var, $val)
 		{
-			if (self::isStarted())
-				$_SESSION[$var] = $val;
-			else 
+			if (!self::isStarted())
 				throw new SessionNotStartedException();
+				
+			$_SESSION[$var] = $val;
 		}
 		
 		/**
@@ -80,17 +80,17 @@
 		**/
 		public static function exist(/* ... */)
 		{
-			if (self::isStarted())
-				if (func_num_args()) {
-					foreach (func_get_args() as $arg) {
-						if (!isset($_SESSION[$arg]))
-							return false;
-					}
-					return true;
-				} else
-					throw new WrongArgumentException('missing argument(s)');
-
-			throw new SessionNotStartedException();
+			if (!self::isStarted())
+				throw new SessionNotStartedException();
+				
+			if (!func_num_args())
+				throw new WrongArgumentException('missing argument(s)');
+				
+			foreach (func_get_args() as $arg) {
+				if (!isset($_SESSION[$arg]))
+					return false;
+			}
+			return true;
 		}
 		
 		/**
@@ -98,10 +98,10 @@
 		**/
 		public static function get($var)
 		{
-			if (self::isStarted())
-				return isset($_SESSION[$var]) ? $_SESSION[$var] : null;
-			else
+			if (!self::isStarted())
 				throw new SessionNotStartedException();
+				
+			return isset($_SESSION[$var]) ? $_SESSION[$var] : null;
 		}
 		
 		public static function &getAll()
@@ -115,14 +115,14 @@
 		**/
 		public static function drop(/* ... */)
 		{
-			if (self::isStarted()) {
-				if (func_num_args())
-					foreach (func_get_args() as $arg)
-						unset($_SESSION[$arg]);
-				else
-					throw new WrongArgumentException('missing argument(s)');
-			} else
+			if (!self::isStarted())
 				throw new SessionNotStartedException();
+			
+			if (!func_num_args())
+				throw new WrongArgumentException('missing argument(s)');
+			
+			foreach (func_get_args() as $arg)
+				unset($_SESSION[$arg]);
 		}
 		
 		/**
@@ -130,14 +130,14 @@
 		**/
 		public static function dropAll()
 		{
-			if (self::isStarted()) {
-				if ($_SESSION) {
-					foreach (array_keys($_SESSION) as $key) {
-						self::drop($key);
-					}
-				}
-			} else
+			if (!self::isStarted())
 				throw new SessionNotStartedException();
+				
+			if ($_SESSION) {
+				foreach (array_keys($_SESSION) as $key) {
+					self::drop($key);
+				}
+			}
 		}
 		
 		public static function isStarted()
@@ -157,6 +157,28 @@
 					$_SESSION[$var] = $scope[$var];
 				}
 			}
+		}
+		
+		/**
+		 * @throws SessionNotStartedException
+		**/
+		public static function getName()
+		{
+			if (!self::isStarted())
+				throw new SessionNotStartedException();
+				
+			return session_name();			
+		}
+		
+		/**
+		 * @throws SessionNotStartedException
+		**/
+		public static function getId()
+		{
+			if (!self::isStarted())
+				throw new SessionNotStartedException();
+				
+			return session_id();
 		}
 	}
 ?>
