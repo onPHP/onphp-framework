@@ -2,8 +2,9 @@
 
 2007-04-27	Dmitry Pismenny
 
-	* core/base/Session.class.php: minor styling 
-	* core/base/Session.class.php: add getName() and getId() methods
+	* core/base/Session.class.php: minor styling.
+
+	* core/base/Session.class.php: add getName() and getId() methods.
 
 2007-04-22	Konstantin V. Arkhipov
 
@@ -2160,4 +2161,3 @@
 2005-09-03	Konstantin V. Arkhipov
 
 	* Initial release - 0.2.0.
-	
