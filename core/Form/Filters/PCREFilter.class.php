@@ -17,6 +17,7 @@
 	{
 		private $search 	= null;
 		private $replace	= null;
+		private $limit		= -1;
 		
 		/**
 		 * @return PCREFilter
@@ -39,7 +40,20 @@
 		
 		public function apply($value)
 		{
-			return preg_replace($this->search, $this->replace, $value);
+			return 
+				preg_replace(
+					$this->search, 
+					$this->replace, 
+					$value, 
+					$this->limit
+				);
+		}
+		
+		public function setLimit($limit)
+		{
+			$this->limit = $limit;
+			
+			return $this;
 		}
 	}
 ?>
