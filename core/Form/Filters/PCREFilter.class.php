@@ -49,6 +49,9 @@
 				);
 		}
 		
+		/**
+		 * @return PCREFilter
+		**/
 		public function setLimit($limit)
 		{
 			$this->limit = $limit;
