@@ -150,6 +150,7 @@
 			$probablyPath, 
 			JoinCapableQuery $query,
 			$table,
+			$parentRequired = true,
 			$prefix = null
 		)
 		{
@@ -249,7 +250,7 @@
 				}
 				
 				if (!$query->hasJoinedTable($alias)) {
-					if ($property->isRequired())
+					if ($property->isRequired() && $parentRequired)
 						$query->join($dao->getTable(), $logic, $alias);
 					else
 						$query->leftJoin($dao->getTable(), $logic, $alias);
@@ -282,7 +283,7 @@
 							)
 						);
 					
-					if ($property->isRequired())
+					if ($property->isRequired() && $parentRequired)
 						$query->join($propertyDao->getTable(), $logic, $alias);
 					else
 						$query->leftJoin($propertyDao->getTable(), $logic, $alias);
@@ -293,6 +294,7 @@
 				implode('.', $path), 
 				$query,
 				$alias, 
+				$property->isRequired() && $parentRequired ,
 				$propertyDao->getJoinPrefix($property->getColumnName(), $prefix)
 			);
 		}
@@ -301,6 +303,7 @@
 			$atom, 
 			JoinCapableQuery $query,
 			$table = null,
+			$parentRequired = true,
 			$prefix = null
 		)
 		{
@@ -317,6 +320,7 @@
 							$atom,
 							$query,
 							$table,
+							$parentRequired,
 							$prefix
 						);
 				} elseif (
