@@ -294,7 +294,7 @@
 				implode('.', $path), 
 				$query,
 				$alias, 
-				$property->isRequired() && $parentRequired ,
+				$property->isRequired() && $parentRequired,
 				$propertyDao->getJoinPrefix($property->getColumnName(), $prefix)
 			);
 		}
