@@ -32,18 +32,19 @@
 		**/
 		public function setExpression($search, $replace)
 		{
-			$this->search = $search;
-			$this->replace = $replace;
+			$this->search 	= $search;
+			$this->replace 	= $replace;
 			
 			return $this;
 		}
 		
 		public function apply($value)
 		{
-			return preg_replace(
-					$this->search, 
-					$this->replace, 
-					$value, 
+			return
+				preg_replace(
+					$this->search,
+					$this->replace,
+					$value,
 					$this->limit
 				);
 		}
