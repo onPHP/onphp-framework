@@ -27,7 +27,7 @@
 				($expires !== Cache::DO_NOT_CACHE)
 				&& ($object = $this->getCachedById($id))
 			) {
-				return $object;
+				return $this->dao->fetchEncapsulants($object);
 			} else {
 				$query = 
 					$this->dao->
@@ -83,7 +83,7 @@
 				($expires !== Cache::DO_NOT_CACHE) &&
 				($object = $this->getCachedByQuery($query))
 			)
-				return $object;
+				return $this->dao->fetchEncapsulants($object);
 			else {
 				if ($expires === Cache::DO_NOT_CACHE)
 					$object = $this->fetchObject($query);
@@ -124,7 +124,7 @@
 				($expires !== Cache::DO_NOT_CACHE) &&
 				($object = $this->getCachedByQuery($query))
 			)
-				return $object;
+				return $this->dao->fetchEncapsulants($object);
 			elseif ($object = $db->queryRow($query)) {
 				if ($expires === Cache::DO_NOT_CACHE)
 					return $object;
@@ -161,7 +161,7 @@
 					$cached = $this->getCachedById($id);
 
 					if ($cached)
-						$list[] = $cached;
+						$list[] = $this->dao->fetchEncapsulants($cached);
 					else
 						$toFetch[] = $id;
 				}

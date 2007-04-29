@@ -29,6 +29,22 @@
 			return self::assemblyObject($object, true, $array, $prefix);
 		}
 		
+		public static function fetchEncapsulants(Prototyped $object)
+		{
+			foreach ($object->proto()->getPropertyList() as $property) {
+				if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
+					$getter = $property->getGetter();
+					
+					if (($inner = $object->$getter()) instanceof DAOConnected) {
+						$setter = $property->getSetter();
+						$object->$setter($inner->dao()->getById($inner->getId()));
+					}
+				}
+			}
+			
+			return $object;
+		}
+		
 		final public function getPropertyList()
 		{
 			static $lists = array();
@@ -238,14 +254,39 @@
 			
 			foreach ($object->proto()->getPropertyList() as $property) {
 				if (
-					(
-						$encapsulants xor (
-							$property->getRelationId()
-							!= MetaRelation::ONE_TO_ONE
-						)
-					) && $property->isBuildable($array, $prefix)
+					$property->isBuildable($array, $prefix)
+					&& (!$property instanceof InnerMetaProperty)
 				) {
 					$setter = $property->getSetter();
+					
+					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
+						if ($encapsulants) {
+							$getter = $property->getGetter();
+							
+							$object->$setter(
+								$property->toValue(
+									$dao,
+									array(
+										$prefix.$property->getColumnName() =>
+											$object->$getter()->getId()
+									),
+									$prefix
+								)
+							);
+						} else {
+							$className = $property->getClassName();
+							$inner = new $className();
+							
+							$object->$setter(
+								$inner->setId(
+									$array[$prefix.$property->getColumnName()]
+								)
+							);
+						}
+						
+						continue;
+					}
+					
 					$object->$setter($property->toValue($dao, $array, $prefix));
 				}
 			}

@@ -53,6 +53,11 @@
 			);
 		}
 		
+		public function fetchEncapsulants(Prototyped $object)
+		{
+			return $this->getProtoClass()->fetchEncapsulants($object);
+		}
+		
 		public function fetchCollections(
 			/* array */ $collections, /* array */ $list
 		)
