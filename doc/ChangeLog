@@ -1,5 +1,9 @@
 # $Id$
 
+2007-04-30	Konstantin V. Arkhipov
+
+	* 0.10.0 released.
+
 2007-04-28	Dmitry Pismenny
 
 	* core/Form/Filters/PCREFilter.class.php: limit added.
