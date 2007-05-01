@@ -158,6 +158,12 @@ EOT;
 		}
 
 EOT;
+			} else {
+				$out .= <<<EOT
+		return \$query;
+	}
+
+EOT;
 			}
 			
 			if ($class->getTypeId() == MetaClassType::CLASS_ABSTRACT) {
