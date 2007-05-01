@@ -2,8 +2,8 @@
 
 2007-05-01	Sergey S. Sergeev
 
-	* meta/builders/BaseBuilder.class.php: return query if setters is
-	 empty.
+	* meta/builders/BaseBuilder.class.php: return query if setters are
+	empty.
 
 2007-04-30	Konstantin V. Arkhipov
 
