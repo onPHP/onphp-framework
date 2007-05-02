@@ -51,6 +51,11 @@
 			return $this;
 		}
 		
+		public function getImgExtension()
+		{
+			return $this->imgExtensions;
+		}
+		
 		/**
 		 * @return WmlMarkupDocument
 		**/

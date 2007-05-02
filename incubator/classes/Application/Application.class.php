@@ -336,6 +336,14 @@
 			return $result;
 		}
 		
+		public function imgExt()
+		{
+			if ($this->markup instanceof WmlLanguage)
+				$result .= $this->markup->getCommonName().'/';
+			
+			return $result;
+		}
+		
 		public function cssPath()
 		{
 			$result = $this->baseUrl().self::CSS.'/';
