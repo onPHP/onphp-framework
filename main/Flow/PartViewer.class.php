@@ -44,5 +44,13 @@
 		{
 			return $this->viewResolver->viewExists($partName);
 		}
+		
+		/**
+		 * @return Model
+		**/
+		public function getModel()
+		{
+			return $this->model;
+		}
 	}
 ?>

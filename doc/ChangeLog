@@ -1,5 +1,9 @@
 # $Id$
 
+2007-05-02	Anton E. Lebedevich
+
+	* main/Flow/PartViewer.class.php: getModel() added.
+
 2007-05-01	Sergey S. Sergeev
 
 	* meta/builders/BaseBuilder.class.php: return query if setters are
