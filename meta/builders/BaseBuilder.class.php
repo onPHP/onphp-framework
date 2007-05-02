@@ -106,7 +106,7 @@ parent::fillObject(\${$varName}, \$array, \$prefix);
 
 
 EOT;
-			} else {
+			} elseif ($class->getWithInternalProperties()) {
 				$out .= <<<EOT
 		return \$query;
 	}
