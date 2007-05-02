@@ -26,6 +26,9 @@
 			$this->dimension = $dimension;
 		}
 		
+		/**
+		 * @return Hierarchy
+		**/
 		public static function createByType($type, Dimension $dimension)
 		{
 			switch ($type) {

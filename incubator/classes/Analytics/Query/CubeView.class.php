@@ -15,11 +15,17 @@
 		private $ordinateEdges	= array();
 		private $pageEdges		= array();
 		
+		/**
+		 * @return CubeView
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return EdgeView
+		**/
 		public function createOrdinateEdge()
 		{
 			$result = new EdgeView($this);
@@ -29,6 +35,9 @@
 			return $result;
 		}
 		
+		/**
+		 * @return EdgeView
+		**/
 		public function createPageEdge()
 		{
 			$result = new EdgeView($this);

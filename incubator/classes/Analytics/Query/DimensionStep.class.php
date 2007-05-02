@@ -21,14 +21,20 @@
 			$this->manager = $manager;
 		}
 		
+		/**
+		 * @return DimensionStepManager
+		**/
 		public function getManager()
 		{
 			return $this->manager;
 		}
 		
+		/**
+		 * @return DimensionStep
+		**/
 		public static function createByType(DimensionStepManager $manager, $type)
 		{
-			// implement me
+			throw new UnimplementedFeatureException('implement me');
 		}
 	}
 ?>

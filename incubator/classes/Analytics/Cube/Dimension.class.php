@@ -21,8 +21,8 @@
 		private $projection	= null;	// use memberSelections for measure?
 		
 		// unimplemented:
-		private $levels			= array();	// TODO: just levels, memberSelections too?
-		private $cubeDimentionAssotiations	= array(); // what cubes include this dimension
+		private $levels						= array(); // TODO: just levels, memberSelections too?
+		private $cubeDimentionAssociations	= array(); // what cubes include this dimension
 		
 		private $hierarchies	= array();
 		private $displayDefault	= null;
@@ -32,11 +32,17 @@
 			$this->id = $id;
 		}
 		
+		/**
+		 * @return Dimension
+		**/
 		public static function create($id)
 		{
 			return new self($id);
 		}
 		
+		/**
+		 * @return Dimension
+		**/
 		public function setTime($isTime)
 		{
 			Assert::isBoolean($isTime);
@@ -53,6 +59,9 @@
 			return $this->time;
 		}
 		
+		/**
+		 * @return Dimension
+		**/
 		public function setMeasure($isMeasure)
 		{
 			Assert::isBoolean($isMeasure);
@@ -74,7 +83,7 @@
 		**/
 		public function createHierarchy($type, $default = null)
 		{
-			// measure cannot have hierarchy??
+			// measure cannot have hierarchy?
 			Assert::isFalse($this->measure);
 			
 			if ($default === null) {
@@ -103,6 +112,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return ObjectProjection
+		**/
 		public function getProjection()
 		{
 			return $this->projection;

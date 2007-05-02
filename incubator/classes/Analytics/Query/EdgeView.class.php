@@ -25,6 +25,9 @@
 			$this->cubeView = $cubeView;
 		}
 		
+		/**
+		 * @return EdgeView
+		**/
 		public function addDimensionView(DimensionView $dimensionView)
 		{
 			$this->dimensionViews[] = $dimensionView;

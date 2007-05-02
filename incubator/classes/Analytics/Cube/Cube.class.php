@@ -14,11 +14,17 @@
 	{
 		private $dimensions = array();
 		
+		/**
+		 * @return Cube
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return Cube
+		**/
 		public function addDimension(Dimension $dimension)
 		{
 			$this->dimensions[] = $dimension;
@@ -28,8 +34,7 @@
 		
 		public function getCursor(QueryObject $view)
 		{
-			// implement me
-			return null;
+			throw new UnimplementedFeatureException('implement me');
 		}
 	}
 ?>

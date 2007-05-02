@@ -12,8 +12,11 @@
 	
 	class LevelFilter extends DimensionFilter
 	{
-		private $level		= null;
+		private $level = null;
 		
+		/**
+		 * @return LevelFilter
+		**/
 		public function setLevel(Level $level)
 		{
 			Assert::isTrue($this->manager->getDimension() === $level->getDimension());
@@ -23,6 +26,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Level
+		**/
 		public function getLevel()
 		{
 			return $this->level;

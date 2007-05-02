@@ -14,6 +14,6 @@
 	{
 		// implement me.
 		
-		//abstract public function createCursor();
+		// abstract public function createCursor();
 	}
 ?>

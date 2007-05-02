@@ -21,16 +21,25 @@
 			$this->dimensionStepManager = new DimensionStepManager($this);
 		}
 		
+		/**
+		 * @return DimensionView
+		**/
 		public static function create(Dimension $dimension)
 		{
 			return new self($dimension);
 		}
 		
+		/**
+		 * @return Dimension
+		**/
 		public function getDimension()
 		{
 			return $this->dimension;
 		}
 		
+		/**
+		 * @return DimensionStepManager
+		**/
 		// TODO: may be createDimensionStepManager()?
 		public function getDimensionStepManager()
 		{

@@ -12,8 +12,11 @@
 	
 	class SingleMemberFilter extends DimensionFilter
 	{
-		private $member		= null;
+		private $member = null;
 		
+		/**
+		 * @return SingleMemberFilter
+		**/
 		public function setMember($member)
 		{
 			$this->member = $member;

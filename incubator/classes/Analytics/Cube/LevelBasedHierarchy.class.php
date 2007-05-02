@@ -14,7 +14,10 @@
 	{
 		private $levels		= array();
 		
-		// implement it correctly
+		/**
+		 * @return LevelBasedHierarchy
+		**/
+		// TODO: implement it correctly
 		public function addLevel($level)
 		{
 			if (is_string($level)) {

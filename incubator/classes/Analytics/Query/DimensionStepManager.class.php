@@ -21,16 +21,29 @@
 			$this->dimensionView = $dimensionView;
 		}
 		
+		/**
+		 * @return DimensionView
+		**/
 		public function getDimensionView()
 		{
 			return $this->dimensionView;
 		}
 		
+		/**
+		 * @return DimensionStepManager
+		**/
 		public function addStep(DimensionStep $step)
 		{
 			Assert::isTrue($step->getManager() === $this);
+			
+			$this->steps[] = $step;
+			
+			return $this;
 		}
 		
+		/**
+		 * @return DimensionStep
+		**/
 		public function createStep($type)
 		{
 			$result = DimensionStep::createByType($this, $type);
