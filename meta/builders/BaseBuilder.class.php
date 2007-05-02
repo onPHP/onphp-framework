@@ -53,7 +53,7 @@ public function getSequence()
 	return '{$class->getTableName()}_id';
 }
 EOT;
-			} else {
+			} elseif ($class->getWithInternalProperties()) {
 				$out .= <<<EOT
 // no get{Table,ObjectName,Sequence} for abstract class
 EOT;
