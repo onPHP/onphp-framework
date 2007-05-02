@@ -1,4 +1,7 @@
 # $Id$
+2007-05-02	Anton E. Lebedevich
+
+	* main/Flow/PartViewer.class.php: getModel() added.
 
 2007-04-28	Dmitry Pismenny
 
