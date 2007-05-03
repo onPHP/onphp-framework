@@ -138,9 +138,7 @@
 			foreach ($pathResolvers as $pathResolver) {
 				if ($pathResolver->getConfiguration()->hasControllers())
 					$includePaths[] =
-						$pathResolver->getControllersPath(
-							$this->locationArea
-						);
+						$pathResolver->getControllersPath();
 			}
 			
 			Application::addIncludePaths($includePaths);
@@ -193,9 +191,7 @@
 			foreach ($pathResolvers as $pathResolver) {
 				if ($pathResolver->getConfiguration()->hasTemplates())
 					$viewResolver->addPrefix(
-						$pathResolver->getTemplatesPath(
-							$this->locationArea, $this->markup
-						)
+						$pathResolver->getTemplatesPath()
 					);
 			}
 			
@@ -224,7 +220,7 @@
 				if (
 					isset($getVars[$this->areaHolder])
 					&& $pathResolver->isControllerExists(
-						$this->locationArea, $getVars[$this->areaHolder]
+						$getVars[$this->areaHolder]
 					)
 				) {
 					$controllerName = $getVars[$this->areaHolder];

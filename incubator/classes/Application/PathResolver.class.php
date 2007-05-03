@@ -111,7 +111,7 @@
 			return $this;
 		}
 		
-		public function getTemplatesPath($locationArea, BaseMarkupLanguage $language)
+		public function getTemplatesPath()
 		{
 			Assert::isFalse(
 				$this->configuration->isContainer(),
@@ -119,12 +119,13 @@
 			);
 			
 			return
-				$this->baseDirectory.$locationArea.DIRECTORY_SEPARATOR
+				$this->baseDirectory
+				.Application::me()->getLocationArea().DIRECTORY_SEPARATOR
 				.self::PATH_TEMPLATES.DIRECTORY_SEPARATOR
-				.$language->getCommonName().DIRECTORY_SEPARATOR;
+				.Application::me()->getMarkup()->getCommonName().DIRECTORY_SEPARATOR;
 		}
 		
-		public function getControllersPath($locationArea)
+		public function getControllersPath()
 		{
 			Assert::isFalse(
 				$this->configuration->isContainer(),
@@ -132,15 +133,16 @@
 			);
 			
 			return
-				$this->baseDirectory.$locationArea.DIRECTORY_SEPARATOR
+				$this->baseDirectory
+				.Application::me()->getLocationArea().DIRECTORY_SEPARATOR
 				.self::PATH_CONTROLLERS.DIRECTORY_SEPARATOR;
 		}
 		
-		public function isControllerExists($locationArea, $controllerName)
+		public function isControllerExists($controllerName)
 		{
 			if (
 				is_readable(
-					$this->getControllersPath($locationArea)
+					$this->getControllersPath(Application::me()->getLocationArea())
 					.$controllerName.EXT_CLASS
 				)
 			)
