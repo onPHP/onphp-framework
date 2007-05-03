@@ -87,6 +87,7 @@
 		/**
 		 * @return ApplicationUrl
 		**/
+		// FIXME: don't use queryString here
 		public function setQueryString($queryString)
 		{
 			$this->queryString = $queryString;
