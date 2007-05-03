@@ -16,7 +16,7 @@
 		const IMG_PATH			= 'img';
 		
 		/**
-		 * @return BaseApplication
+		 * @return CommonApplication
 		**/
 		public static function create()
 		{
@@ -24,7 +24,17 @@
 		}
 		
 		/**
-		 * @return BaseApplication
+		 * @return CommonApplication
+		**/
+		public function setLocations(LocationSettings $locations)
+		{
+			Assert::isTrue($locations instanceof CommonLocationSettings);
+			
+			return parent::setLocations($locations);
+		}
+		
+		/**
+		 * @return CommonApplication
 		**/
 		public function resideInWeb()
 		{
@@ -32,7 +42,7 @@
 		}
 		
 		/**
-		 * @return BaseApplication
+		 * @return CommonApplication
 		**/
 		public function resideInWap()
 		{
@@ -40,7 +50,7 @@
 		}
 		
 		/**
-		 * @return BaseApplication
+		 * @return CommonApplication
 		**/
 		public function resideInAdmin()
 		{
@@ -48,7 +58,7 @@
 		}
 		
 		/**
-		 * @return BaseApplication
+		 * @return CommonApplication
 		**/
 		public function resideInSoap()
 		{

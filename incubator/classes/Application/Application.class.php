@@ -15,7 +15,7 @@
 		private static $application = null;
 		
 		/**
-		 * @return Application
+		 * @return BaseApplication
 		**/
 		public static function me()
 		{
