@@ -30,5 +30,14 @@
 			
 			self::$application = $application;
 		}
+		
+		public static function addIncludePaths($paths)
+		{
+			Assert::isArray($paths);
+			
+			set_include_path(
+				get_include_path().PATH_SEPARATOR.implode(PATH_SEPARATOR, $paths)
+			);
+		}
 	}
 ?>

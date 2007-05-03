@@ -74,7 +74,7 @@
 				$includePath[] = $baseClassPath.$classPath;
 			}
 			
-			Application::me()->addIncludePaths($includePath);
+			Application::addIncludePaths($includePath);
 			
 			return $this;
 		}

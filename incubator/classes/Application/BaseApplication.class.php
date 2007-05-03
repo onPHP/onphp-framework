@@ -143,7 +143,7 @@
 						);
 			}
 			
-			$this->addIncludePaths($includePaths);
+			Application::addIncludePaths($includePaths);
 			
 			return $this;
 		}
@@ -254,20 +254,6 @@
 			return
 				$this->getLocation()->getPath()
 				.'?'.$this->areaHolder.'='.$actualArea;
-		}
-		
-		/**
-		 * @return BaseApplication
-		**/
-		public function addIncludePaths($paths)
-		{
-			Assert::isArray($paths);
-			
-			set_include_path(
-				get_include_path().PATH_SEPARATOR.implode(PATH_SEPARATOR, $paths)
-			);
-			
-			return $this;
 		}
 		
 		/**
