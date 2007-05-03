@@ -67,15 +67,18 @@
 		
 		public function url()
 		{
-			if ($this->queryString)
-				return $this->baseUrl().'?'.$this->queryString;
-			
-			return $this->getLocation()->getUrl();
+			return
+				$this->baseUrl()
+				.(
+					$this->queryString
+					? '?'.$this->queryString
+					: null
+				);
 		}
 		
 		public function baseUrl()
 		{
-			return $this->getLocation()->getBaseUrl();
+			return $this->getLocation()->getUrl();
 		}
 		
 		public function basePath()

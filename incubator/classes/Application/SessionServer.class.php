@@ -12,6 +12,8 @@
 	
 	class SessionServer extends Singleton implements Instantiatable
 	{
+		private $url		= null;
+		
 		private $locations	= null;
 		private $timeout	= null;
 		
@@ -55,9 +57,19 @@
 			return $this->timeout;
 		}
 		
+		public function setUrl($url)
+		{
+			$this->url = $url;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return SessionServer
+		**/
 		public function getUrl()
 		{
-			return $this->locations->getSoap()->getUrl();
+			return $this->url;
 		}
 		
 		public function getRegistrationUrl()
@@ -119,7 +131,7 @@
 			return
 				$this->locations->
 					get(Application::me()->getLocationArea())->
-						getBaseUrl()
+						getUrl()
 				.(
 					$this->
 						getActionPages(Application::me()->getLocationArea())->

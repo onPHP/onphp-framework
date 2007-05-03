@@ -16,8 +16,6 @@
 		private $domain			= null;
 		private $path			= '/';
 		
-		private $queryString	= null;
-		
 		/**
 		 * @return ApplicationUrl
 		**/
@@ -87,22 +85,6 @@
 		/**
 		 * @return ApplicationUrl
 		**/
-		// FIXME: don't use queryString here
-		public function setQueryString($queryString)
-		{
-			$this->queryString = $queryString;
-			
-			return $this;
-		}
-		
-		public function getQueryString()
-		{
-			return $this->queryString;
-		}
-		
-		/**
-		 * @return ApplicationUrl
-		**/
 		public function setPath($path)
 		{
 			if (substr($path, 1, 1) !== '/')
@@ -137,7 +119,7 @@
 				throw new WrongArgumentException('domain must be specified');
 			
 			$notAllowedParts =
-				array('port', 'user', 'pass', 'fragment');
+				array('query', 'port', 'user', 'pass', 'fragment');
 			
 			foreach ($notAllowedParts as $notAllowedPart) {
 				if (isset($info[$notAllowedPart]))
@@ -155,25 +137,12 @@
 			if (isset($info['path']))
 				$this->setPath($info['path']);
 			
-			if (isset($info['query']))
-				$this->setQueryString($info['query']);
-			
 			return $this;
-		}
-		
-		public function getBaseUrl()
-		{
-			return $this->scheme.'://'.$this->domain.$this->path;
 		}
 		
 		public function getUrl()
 		{
-			$result = $this->getBaseUrl();
-			
-			if ($this->queryString)
-				$result .= '?'.$this->queryString;
-			
-			return $result;
+			return $this->scheme.'://'.$this->domain.$this->path;
 		}
 	}
 ?>
