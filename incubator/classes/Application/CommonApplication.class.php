@@ -86,18 +86,6 @@
 			return $this->getLocation()->getPath();
 		}
 		
-		public function areaUrl($area = null)
-		{
-			if (!$area)
-				$actualArea = $this->area;
-			else
-				$actualArea = $area;
-			
-			return
-				$this->getLocation()->getPath()
-				.'?'.self::AREA_HOLDER.'='.$actualArea;
-		}
-		
 		public function imgPath()
 		{
 			$result = $this->baseUrl().self::IMG.'/';

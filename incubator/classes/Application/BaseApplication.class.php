@@ -38,6 +38,27 @@
 			return new self;
 		}
 		
+		public function url()
+		{
+			return
+				$this->baseUrl()
+				.(
+					$this->queryString
+					? '?'.$this->queryString
+					: null
+				);
+		}
+		
+		public function baseUrl()
+		{
+			return $this->getLocation()->getUrl();
+		}
+		
+		public function basePath()
+		{
+			return $this->getLocation()->getPath();
+		}
+		
 		/**
 		 * @return BaseApplication
 		**/
@@ -221,6 +242,18 @@
 		public function getArea()
 		{
 			return $this->area;
+		}
+		
+		public function getAreaUrl($area = null)
+		{
+			if (!$area)
+				$actualArea = $this->area;
+			else
+				$actualArea = $area;
+			
+			return
+				$this->getLocation()->getPath()
+				.'?'.$this->areaHolder.'='.$actualArea;
 		}
 		
 		/**
