@@ -1,0 +1,268 @@
+<?php
+/***************************************************************************
+ *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+/* $Id$ */
+	
+	class BaseApplication
+	{
+		protected $name			= 'stdApp';
+		
+		protected $areaHolder	= 'area';
+		
+		protected $locations	= null;
+		
+		protected $location		= null;
+		protected $locationArea	= null;
+		
+		protected $pathResolver	= null;
+		
+		protected $actualDomain	= null;
+		
+		protected $markup		= null;
+		
+		protected $area			= null;
+		protected $queryString	= null;
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public static function create()
+		{
+			return new self;
+		}
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public function setName($name)
+		{
+			$this->name = $name;
+			
+			return $this;
+		}
+		
+		public function getName()
+		{
+			return $this->name;
+		}
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public function setLocations(LocationSettings $locations)
+		{
+			Assert::isNull($this->locations);
+			
+			$this->locations = $locations;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return LocationSettings
+		**/
+		public function getLocationSettings()
+		{
+			return $this->locations;
+		}
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public function setPathResolver($pathResolver)
+		{
+			$this->pathResolver = $pathResolver;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public function setupIncludePaths()
+		{
+			$this->pathResolver->includeClassPaths();
+			
+			return $this;
+		}
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public function reside($locationArea)
+		{
+			Assert::isNotNull($this->locations);
+			
+			if ($this->locationArea)
+				throw new WrongArgumentException(
+					"application already resides at {{$this->area}}"
+				);
+			
+			$this->location = $this->locations->get($locationArea);
+			$this->locationArea = $locationArea;
+			
+			$pathResolvers = PackageManager::me()->getImportedList();
+			
+			array_unshift($pathResolvers, $this->pathResolver);
+			
+			$includePaths = array();
+			
+			foreach ($pathResolvers as $pathResolver) {
+				if ($pathResolver->getConfiguration()->hasControllers())
+					$includePaths[] =
+						$pathResolver->getControllersPath(
+							$this->locationArea
+						);
+			}
+			
+			$this->addIncludePaths($includePaths);
+			
+			return $this;
+		}
+		
+		public function getLocationArea()
+		{
+			return $this->locationArea;
+		}
+		
+		public function getLocation()
+		{
+			return $this->location;
+		}
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public function setMarkup(BaseMarkupLanguage $markup)
+		{
+			$this->markup = $markup;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return BaseMarkupLanguage
+		**/
+		public function getMarkup()
+		{
+			return $this->markup;
+		}
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public function setupViewResolver(PhpChainedViewResolver $viewResolver)
+		{
+			if (!isset($this->locationArea) || !isset($this->markup))
+				throw new WrongStateException(
+					'first, reside me in someplace and set the markup'
+				);
+			
+			$pathResolvers = PackageManager::me()->getImportedList();
+			
+			array_unshift($pathResolvers, $this->pathResolver);
+			
+			foreach ($pathResolvers as $pathResolver) {
+				if ($pathResolver->getConfiguration()->hasTemplates())
+					$viewResolver->addPrefix(
+						$pathResolver->getTemplatesPath(
+							$this->locationArea, $this->markup
+						)
+					);
+			}
+			
+			return $this;
+		}
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public function getController(HttpRequest $request, $defaultName)
+		{
+			if (!isset($this->locationArea))
+				throw new WrongStateException(
+					'first, reside me in someplace'
+				);
+			
+			$controllerName = $defaultName;
+			
+			$getVars = $request->getGet();
+		
+			$pathResolvers = PackageManager::me()->getImportedList();
+			
+			array_unshift($pathResolvers, $this->pathResolver);
+			
+			foreach ($pathResolvers as $pathResolver) {
+				if (
+					isset($getVars[$this->areaHolder])
+					&& $pathResolver->isControllerExists(
+						$this->locationArea, $getVars[$this->areaHolder]
+					)
+				) {
+					$controllerName = $getVars[$this->areaHolder];
+					break;
+				}
+			}
+			
+			$result = new $controllerName;
+			
+			$this->area = $controllerName;
+			
+			return $result;
+		}
+		
+		public function getArea()
+		{
+			return $this->area;
+		}
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public function addIncludePaths($paths)
+		{
+			Assert::isArray($paths);
+			
+			set_include_path(
+				get_include_path().PATH_SEPARATOR.implode(PATH_SEPARATOR, $paths)
+			);
+			
+			return $this;
+		}
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public function setQueryString($queryString)
+		{
+			$this->queryString = $queryString;
+		}
+		
+		public function getQueryString()
+		{
+			return $this->queryString;
+		}
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public function setActualDomain($actualDomain)
+		{
+			$this->actualDomain = $actualDomain;
+			
+			return $this;
+		}
+		
+		public function getActualDomain()
+		{
+			return $this->actualDomain;
+		}
+	}
+?>

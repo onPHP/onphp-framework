@@ -1,4 +1,4 @@
-<?
+<?php
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -28,7 +28,7 @@
 		/**
 		 * @return SessionServer
 		**/
-		public function setLocations(LocationSettings $locations)
+		public function setLocations(CommonLocationSettings $locations)
 		{
 			$this->locations = $locations;
 			
@@ -85,7 +85,7 @@
 		**/
 		public function setWapActionPages(SessionServerUrlSettings $pages)
 		{
-			return $this->setActionPages(LocationSettings::WAP, $pages);
+			return $this->setActionPages(CommonLocationSettings::WAP, $pages);
 		}
 		
 		/**
@@ -93,7 +93,7 @@
 		**/
 		public function setWebActionPages(SessionServerUrlSettings $pages)
 		{
-			return $this->setActionPages(LocationSettings::WEB, $pages);
+			return $this->setActionPages(CommonLocationSettings::WEB, $pages);
 		}
 		
 		/**
