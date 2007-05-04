@@ -164,14 +164,18 @@ EOT;
 			
 			$out .= implode(")->\nadd(", $prms).");";
 			
-			// parent's identificator should be concretized in childs
+			// parent's identificator should be concretized in final childs
 			if ($parent) {
-				
-				if ($parent->getIdentifier()) {
+				if (
+					(!$class->getTypeId() == MetaClassType::CLASS_ABSTRACT)
+					&& ($id = $class->getIdentifier())
+				) {
 					$out .=
 						"\n\n"
-						."\$form->\nget('{$parent->getIdentifier()->getName()}')->"
+						."\$form->\nget('{$id->getName()}')->"
 						."of('{$class->getName()}');\n\n";
+				} else {
+					$out .= "\n\n";
 				}
 				
 				$out .= "return \$form;";
