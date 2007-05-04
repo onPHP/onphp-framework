@@ -98,7 +98,10 @@ EOT;
 			
 			// parent's identificator should be concretized in final childs
 			if ($parent) {
-				if (!$class->hasChilds() && ($id = $class->getIdentifier())) {
+				if (
+					(!$class->getTypeId() == MetaClassType::CLASS_ABSTRACT)
+					&& ($id = $class->getIdentifier())
+				) {
 					$out .=
 						"\n\n"
 						."\$form->\nget('{$id->getName()}')->"
