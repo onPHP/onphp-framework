@@ -167,7 +167,7 @@ EOT;
 			// parent's identificator should be concretized in final childs
 			if ($parent) {
 				if (
-					(!$class->getTypeId() == MetaClassType::CLASS_ABSTRACT)
+					($class->getTypeId() != MetaClassType::CLASS_ABSTRACT)
 					&& ($id = $class->getIdentifier())
 				) {
 					$out .=
