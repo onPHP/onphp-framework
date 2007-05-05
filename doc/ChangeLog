@@ -2,7 +2,7 @@
 
 2007-05-05	Dmitry E. Demidov
 
-	* main/Flow/MultiPrefixPhpViewResolver.class.php: added ability set 
+	* main/Flow/MultiPrefixPhpViewResolver.class.php: added ability to set
 	View class.
 
 2007-05-02	Anton E. Lebedevich
