@@ -22,6 +22,7 @@
 	{
 		private $prefixes	= array();
 		private $postfix	= null;
+		private $viewClassName	= 'SimplePhpView';
 		
 		/**
 		 * @return MultiPrefixPhpView
@@ -81,7 +82,7 @@
 			foreach ($this->prefixes as $prefix) {
 				if (is_readable($prefix.$viewName.$this->postfix)) {
 					return
-						new SimplePhpView(
+						new $this->viewClassName(
 							$prefix.$viewName.$this->postfix,
 							$this
 						);
@@ -89,6 +90,21 @@
 			}
 
 			throw new ObjectNotFoundException('can\'t resolve view:'.$viewName);
+		}
+
+		/**
+		 * @return MultiPrefixPhpView
+		 */
+		public function setViewClassName($viewClassName)
+		{
+			$this->viewClassName = $viewClassName;
+			
+			return $this;
+		}
+
+		public function getViewClassName()
+		{
+			return $this->viewClassName;
 		}
 	}
 ?>
