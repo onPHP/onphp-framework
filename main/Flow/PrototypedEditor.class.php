@@ -52,11 +52,7 @@
 			if ($object = $form->getValue('id')) {
 				if ($object instanceof Identifiable) {
 					
-					$this->dropObject(
-						$request, 
-						$form, 
-						$object
-					);
+					$this->dropObject($request, $form, $object);
 
 					return ModelAndView::create()->setModel(
 						Model::create()->
@@ -112,23 +108,13 @@
 			
 			if (!$form->getErrors()) {
 
-				if ($isAdd)
-					$object = $this->addObject(
-						$request, 
-						$form, 
-						$object
-					);
-				else
-					$object = $this->saveObject(
-						$request, 
-						$form, 
-						$object
-					);
+				$object = $isAdd 
+					? $this->addObject($request, $form, $object)
+					: $this->saveObject($request, $form, $object);
 				
-				if (!$form->getErrors())
-					$editorResult = self::COMMAND_SUCCEEDED;
-				else
-					$editorResult = self::COMMAND_FAILED;
+				$editorResult = $form->getErrors()
+					? self::COMMAND_FAILED
+					: self::COMMAND_SUCCEEDED;
 					
 				return
 					ModelAndView::create()->
@@ -166,16 +152,11 @@
 			
 			if (!$form->getErrors()) {
 				
-				$object = $this->saveObject(
-					$request, 
-					$form, 
-					$object
-				);
+				$object = $this->saveObject($request, $form, $object);
 				
-				if (!$form->getErrors())
-					$editorResult = self::COMMAND_SUCCEEDED;
-				else
-					$editorResult = self::COMMAND_FAILED;
+				$editorResult = $form->getErrors()
+					? self::COMMAND_FAILED
+					: self::COMMAND_SUCCEEDED;
 					
 				return
 					ModelAndView::create()->
@@ -244,16 +225,11 @@
 			
 			if (!$form->getErrors()) {
 				
-				$object = $this->addObject(
-					$request, 
-					$form,
-					$object
-				);
+				$object = $this->addObject($request, $form, $object);
 				
-				if (!$form->getErrors())
-					$editorResult = self::COMMAND_SUCCEEDED;
-				else
-					$editorResult = self::COMMAND_FAILED;
+				$editorResult = $form->getErrors()
+					? self::COMMAND_FAILED
+					: self::COMMAND_SUCCEEDED;
 
 				return
 					ModelAndView::create()->
