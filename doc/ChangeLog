@@ -2,7 +2,7 @@
 
 2007-05-08	Ivan Y. Khvostishkov
 
-	* main/Flow/MultiPrefixPhpViewResolver.class.php: removed postfix.
+	* main/Flow/MultiPrefixPhpViewResolver.class.php: default postfix.
 
 2007-05-08	Konstantin V. Arkhipov
 
