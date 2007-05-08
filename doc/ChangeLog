@@ -1,5 +1,12 @@
 # $Id$
 
+2007-05-08	Konstantin V. Arkhipov
+
+	* core/Exceptions/ClassNotFoundException.class.php,
+	global.inc.php.tpl: classes paths cache backported from trunk; now
+	throws ClassNotFoundException instead of fatal error when unable to
+	find requested class; cache is off by default.
+
 2007-05-08	Anton E. Lebedevich
 
 	* core/Form/Filters/RemoveNewlineFilter.class.php: RemoveNewlineFilter

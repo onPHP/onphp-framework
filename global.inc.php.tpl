@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,12 +18,72 @@
 	}
 	
 	// classes autoload magic
-	function __autoload($classname)
+	/* void */ function __autoload($classname)
 	{
-		// and yes, there is no error handling, 'cause we're
-		// writing very custom business solution, which will
-		// contain everything (classes/modules) everytime...
-		require $classname . EXT_CLASS;
+		static $cache = array();
+		
+		if (
+			!$cache
+			&& defined('ONPHP_CLASS_CACHE')
+			&& ONPHP_CLASS_CACHE
+		) {
+			if (is_readable(ONPHP_CLASS_CACHE))
+				$cache = unserialize(file_get_contents(ONPHP_CLASS_CACHE, false));
+		} else {
+			// cache is disabled
+			require $classname.EXT_CLASS;
+			return /* void */;
+		}
+		
+		if (
+			!isset($cache[ONPHP_CLASS_CACHE_CHECKSUM])
+			|| ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> strlen(get_include_path()))
+		) {
+			$classes = array();
+			
+			foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
+				foreach (
+					glob(
+						($directory = realpath($directory).DIRECTORY_SEPARATOR)
+						.'*'
+						.EXT_CLASS
+					)
+					as $class
+				) {
+					$class = basename($class, EXT_CLASS);
+					
+					// emulating include_path searching behaviour
+					if (!isset($classes[$class]))
+						$classes[$class] = $directory;
+				}
+			}
+			
+			$classes[ONPHP_CLASS_CACHE_CHECKSUM] = strlen(get_include_path());
+			
+			if (
+				is_writable(dirname(ONPHP_CLASS_CACHE))
+				&& (
+					!file_exists(ONPHP_CLASS_CACHE)
+					|| is_writable(ONPHP_CLASS_CACHE)
+				)
+			)
+				file_put_contents(ONPHP_CLASS_CACHE, serialize($classes));
+			
+			$cache = $classes;
+		}
+		
+		if (isset($cache[$classname])) {
+			require $cache[$classname].$classname.EXT_CLASS;
+		} else {
+			eval(
+				'class '.$classname.'{/*_*/}'
+				.'if (!class_exists("BaseException", false)) { '
+				.'class BaseException extends Exception {/*_*/} } '
+				.'if (!class_exists("ClassNotFoundException", false)) { '
+				.'class ClassNotFoundException extends BaseException {/*_*/} }'
+				.'throw new ClassNotFoundException("'.$classname.'");'
+			);
+		}
 	}
 	
 	// system settings
@@ -119,6 +179,13 @@
 		//
 		// .ONPHP_CORE_PATH.'SPL'.DIRECTORY_SEPARATOR.'bundled'.PATH_SEPARATOR
 	);
+	
+	/*
+		if (!defined('ONPHP_CLASS_CACHE') && defined('PATH_BASE'))
+			define('ONPHP_CLASS_CACHE', PATH_BASE.'class.cache');
+	*/
+	
+	define('ONPHP_CLASS_CACHE_CHECKSUM', '__occc');
 	
 	// file extensions
 	define('EXT_CLASS', '.class.php');
