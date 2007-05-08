@@ -1,6 +1,7 @@
 # $Id$
 
 2007-05-08	Anton E. Lebedevich
+
 	* core/Form/Filters/RemoveNewlineFilter.class.php: RemoveNewlineFilter
 	added.
 
