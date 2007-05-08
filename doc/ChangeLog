@@ -1,5 +1,9 @@
 # $Id$
 
+2007-05-08	Ivan Y. Khvostishkov Khvostishkov
+
+	* main/Flow/MultiPrefixPhpViewResolver.class.php: removed postfix.
+
 2007-05-08	Konstantin V. Arkhipov
 
 	* core/Exceptions/ClassNotFoundException.class.php,

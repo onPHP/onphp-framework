@@ -21,7 +21,6 @@
 	class MultiPrefixPhpViewResolver implements ViewResolver
 	{
 		private $prefixes	= array();
-		private $postfix	= null;
 		private $viewClassName	= 'SimplePhpView';
 		
 		/**
@@ -55,20 +54,6 @@
 			return $this;
 		}
 		
-		public function getPostfix()
-		{
-			return $this->postfix;
-		}
-		
-		/**
-		 * @return MultiPrefixPhpView
-		 */
-		public function setPostfix($postfix)
-		{
-			$this->postfix = $postfix;
-			return $this;
-		}
-		
 		/**
 		 * @return SimplePhpView
 		**/
@@ -80,18 +65,18 @@
 			);
 			
 			foreach ($this->prefixes as $prefix) {
-				if (is_readable($prefix.$viewName.$this->postfix)) {
+				if (is_readable($prefix.$viewName.EXT_TPL)) {
 					return
 						new $this->viewClassName(
-							$prefix.$viewName.$this->postfix,
+							$prefix.$viewName.EXT_TPL,
 							$this
 						);
 				}
 			}
-
+			
 			throw new ObjectNotFoundException('can\'t resolve view:'.$viewName);
 		}
-
+		
 		/**
 		 * @return MultiPrefixPhpView
 		 */
@@ -101,7 +86,7 @@
 			
 			return $this;
 		}
-
+		
 		public function getViewClassName()
 		{
 			return $this->viewClassName;
