@@ -2,7 +2,7 @@
 	/* $Id$ */
 	
 	// copy this file to 'config.inc.php' for local customization
-
+	
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
 	setlocale(LC_CTYPE, "ru_RU.UTF8");
@@ -11,7 +11,7 @@
 	if (!defined('PATH_SOURCE_DIR'))
 		// defaults to user mode
 		define('PATH_SOURCE_DIR', 'user'.DIRECTORY_SEPARATOR);
-
+	
 	// paths
 	define('PATH_BASE', dirname(__FILE__).DIRECTORY_SEPARATOR);
 	define('PATH_SOURCE', PATH_BASE.'src'.DIRECTORY_SEPARATOR.PATH_SOURCE_DIR);
@@ -27,7 +27,7 @@
 	);
 	define('PATH_CONTROLLERS', PATH_SOURCE.'controllers'.DIRECTORY_SEPARATOR);
 	define('PATH_TEMPLATES', PATH_SOURCE.'templates'.DIRECTORY_SEPARATOR);
-
+	
 	// onPHP init
 	require '/path/to/onPHP/global.inc.php.tpl';
 	
@@ -59,11 +59,9 @@
 	
 	define('__LOCAL_DEBUG__', true);
 	define('BUGLOVERS', 'some.box@host.domain');
-
+	
 	Cache::setPeer(
-		new ReferencePool(
-			Memcached::create('localhost')
-		)
+		Memcached::create('localhost')
 	);
 	
 	Cache::setDefaultWorker('SmartDaoWorker');
