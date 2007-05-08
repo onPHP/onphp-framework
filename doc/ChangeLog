@@ -1,6 +1,6 @@
 # $Id$
 
-2007-05-08	Ivan Y. Khvostishkov Khvostishkov
+2007-05-08	Ivan Y. Khvostishkov
 
 	* main/Flow/MultiPrefixPhpViewResolver.class.php: removed postfix.
 
