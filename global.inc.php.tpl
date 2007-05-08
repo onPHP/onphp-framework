@@ -38,6 +38,7 @@
 			!isset($cache[ONPHP_CLASS_CACHE_CHECKSUM])
 			|| ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $length)
 		) {
+			$cache = array();
 			$dirCount = 0;
 			
 			foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
@@ -69,7 +70,7 @@
 				file_put_contents(ONPHP_CLASS_CACHE, serialize($cache));
 		}
 		
-		if (isset($cache[$classname])) {
+		if (isset($cache[$cache[$classname]])) {
 			require $cache[$cache[$classname]].$classname.EXT_CLASS;
 		} else {
 			// ok, last chance to find class in non-cached include_path
