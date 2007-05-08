@@ -20,14 +20,11 @@
 	// classes autoload magic
 	/* void */ function __autoload($classname)
 	{
+		// numeric indexes for directories, literal indexes for classes
 		static $cache = array();
 		
-		if (
-			!$cache
-			&& defined('ONPHP_CLASS_CACHE')
-			&& ONPHP_CLASS_CACHE
-		) {
-			if (is_readable(ONPHP_CLASS_CACHE))
+		if (defined('ONPHP_CLASS_CACHE') && ONPHP_CLASS_CACHE) {
+			if (!$cache && is_readable(ONPHP_CLASS_CACHE))
 				$cache = unserialize(file_get_contents(ONPHP_CLASS_CACHE, false));
 		} else {
 			// cache is disabled
@@ -35,30 +32,32 @@
 			return /* void */;
 		}
 		
+		$length = strlen(get_include_path());
+		
 		if (
 			!isset($cache[ONPHP_CLASS_CACHE_CHECKSUM])
-			|| ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> strlen(get_include_path()))
+			|| ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $length)
 		) {
-			$classes = array();
+			$dirCount = 0;
 			
 			foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
+				$cache[$dirCount] = realpath($directory).DIRECTORY_SEPARATOR;
+				
 				foreach (
-					glob(
-						($directory = realpath($directory).DIRECTORY_SEPARATOR)
-						.'*'
-						.EXT_CLASS
-					)
+					glob($cache[$dirCount].'*'.EXT_CLASS, GLOB_NOSORT)
 					as $class
 				) {
 					$class = basename($class, EXT_CLASS);
 					
 					// emulating include_path searching behaviour
-					if (!isset($classes[$class]))
-						$classes[$class] = $directory;
+					if (!isset($cache[$class]))
+						$cache[$class] = $dirCount;
 				}
+				
+				++$dirCount;
 			}
 			
-			$classes[ONPHP_CLASS_CACHE_CHECKSUM] = strlen(get_include_path());
+			$cache[ONPHP_CLASS_CACHE_CHECKSUM] = $length;
 			
 			if (
 				is_writable(dirname(ONPHP_CLASS_CACHE))
@@ -67,22 +66,25 @@
 					|| is_writable(ONPHP_CLASS_CACHE)
 				)
 			)
-				file_put_contents(ONPHP_CLASS_CACHE, serialize($classes));
-			
-			$cache = $classes;
+				file_put_contents(ONPHP_CLASS_CACHE, serialize($cache));
 		}
 		
 		if (isset($cache[$classname])) {
-			require $cache[$classname].$classname.EXT_CLASS;
+			require $cache[$cache[$classname]].$classname.EXT_CLASS;
 		} else {
-			eval(
-				'class '.$classname.'{/*_*/}'
-				.'if (!class_exists("BaseException", false)) { '
-				.'class BaseException extends Exception {/*_*/} } '
-				.'if (!class_exists("ClassNotFoundException", false)) { '
-				.'class ClassNotFoundException extends BaseException {/*_*/} }'
-				.'throw new ClassNotFoundException("'.$classname.'");'
-			);
+			// ok, last chance to find class in non-cached include_path
+			try {
+				include $classname.EXT_CLASS;
+				$cache[ONPHP_CLASS_CACHE_CHECKSUM] = null;
+				return /* void */;
+			} catch (BaseException $e) {
+				eval(
+					'class '.$classname.'{/*_*/}'
+					.'if (!class_exists("ClassNotFoundException", false)) { '
+					.'class ClassNotFoundException extends BaseException {/*_*/} }'
+					.'throw new ClassNotFoundException("'.$classname.'");'
+				);
+			}
 		}
 	}
 	
