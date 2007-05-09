@@ -23,24 +23,36 @@
 		// numeric indexes for directories, literal indexes for classes
 		static $cache = array();
 		
-		if (defined('ONPHP_CLASS_CACHE') && ONPHP_CLASS_CACHE) {
-			if (!$cache && is_readable(ONPHP_CLASS_CACHE))
-				$cache = unserialize(file_get_contents(ONPHP_CLASS_CACHE, false));
-		} else {
+		if (!(defined('ONPHP_CLASS_CACHE') && ONPHP_CLASS_CACHE)) {
 			// cache is disabled
 			require $classname.EXT_CLASS;
 			return /* void */;
 		}
 		
-		$length = strlen(get_include_path());
+		if (isset($cache[$classname])) {
+			require $cache[$cache[$classname]].$classname.EXT_CLASS;
+			return /* void */;
+		}
+		
+		$checksum = crc32(get_include_path());
+		$cacheFile = ONPHP_CLASS_CACHE.$checksum.'.occ';
 		
 		if (
-			!isset($cache[ONPHP_CLASS_CACHE_CHECKSUM])
-			|| (
-				isset($cache[ONPHP_CLASS_CACHE_CHECKSUM])
-				&& ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $length)
+			is_readable($cacheFile)
+			&& (
+				!$cache
+				|| ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $checksum)
 			)
 		) {
+			$cache = unserialize(file_get_contents($cacheFile, false));
+			
+			if (isset($cache[$classname])) {
+				require $cache[$cache[$classname]].$classname.EXT_CLASS;
+				return /* void */;
+			}
+		}
+		
+		if (!$cache) {
 			$cache = array();
 			$dirCount = 0;
 			
@@ -61,16 +73,16 @@
 				++$dirCount;
 			}
 			
-			$cache[ONPHP_CLASS_CACHE_CHECKSUM] = $length;
+			$cache[ONPHP_CLASS_CACHE_CHECKSUM] = $checksum;
 			
 			if (
-				is_writable(dirname(ONPHP_CLASS_CACHE))
+				is_writable(dirname($cacheFile))
 				&& (
-					!file_exists(ONPHP_CLASS_CACHE)
-					|| is_writable(ONPHP_CLASS_CACHE)
+					!file_exists($cacheFile)
+					|| is_writable($cacheFile)
 				)
 			)
-				file_put_contents(ONPHP_CLASS_CACHE, serialize($cache));
+				file_put_contents($cacheFile, serialize($cache));
 		}
 		
 		if (isset($cache[$classname])) {
@@ -187,8 +199,8 @@
 	);
 	
 	/*
-		if (!defined('ONPHP_CLASS_CACHE') && defined('PATH_BASE'))
-			define('ONPHP_CLASS_CACHE', PATH_BASE.'class.cache');
+		if (!defined('ONPHP_CLASS_CACHE'))
+			define('ONPHP_CLASS_CACHE', '/dev/shm/');
 	*/
 	
 	define('ONPHP_CLASS_CACHE_CHECKSUM', '__occc');
