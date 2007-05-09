@@ -36,7 +36,10 @@
 		
 		if (
 			!isset($cache[ONPHP_CLASS_CACHE_CHECKSUM])
-			|| ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $length)
+			|| (
+				isset($cache[ONPHP_CLASS_CACHE_CHECKSUM])
+				&& ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $length)
+			)
 		) {
 			$cache = array();
 			$dirCount = 0;
