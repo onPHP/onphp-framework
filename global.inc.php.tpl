@@ -70,7 +70,7 @@
 				file_put_contents(ONPHP_CLASS_CACHE, serialize($cache));
 		}
 		
-		if (isset($cache[$cache[$classname]])) {
+		if (isset($cache[$classname])) {
 			require $cache[$cache[$classname]].$classname.EXT_CLASS;
 		} else {
 			// ok, last chance to find class in non-cached include_path
