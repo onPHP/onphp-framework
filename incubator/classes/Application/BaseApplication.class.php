@@ -177,7 +177,7 @@
 		/**
 		 * @return BaseApplication
 		**/
-		public function setupViewResolver(PhpChainedViewResolver $viewResolver)
+		public function setupViewResolver(MultiPrefixPhpViewResolver $viewResolver)
 		{
 			if (!isset($this->locationArea) || !isset($this->markup))
 				throw new WrongStateException(
