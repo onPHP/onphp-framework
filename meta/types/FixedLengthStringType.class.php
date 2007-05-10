@@ -29,7 +29,6 @@ Assert::isTrue(
 	(\${$name} === null)
 	|| (mb_strlen(\${$name}) == {$property->getSize()})
 );
-
 EOT;
 			
 			if ($holder) {
