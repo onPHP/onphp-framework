@@ -30,12 +30,15 @@
 		
 		public static function getIdsArray($objectsList)
 		{
+			$out = array();
+			
+			if (!$objectsList)
+				return $out;
+			
 			Assert::isTrue(
 				current($objectsList) instanceof Identifiable,
 				'only identifiable lists accepted'
 			);
-			
-			$out = array();
 			
 			foreach ($objectsList as $object)
 				$out[] = $object->getId();

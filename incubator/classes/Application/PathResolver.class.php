@@ -80,7 +80,7 @@
 		}
 		
 		/**
-		 * @return PackageConfiguration
+		 * @return PathResolver
 		**/
 		public function importOneClass($qualifiedName)
 		{
