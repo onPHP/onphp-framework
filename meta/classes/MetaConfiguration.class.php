@@ -246,6 +246,14 @@
 					
 					if (isset($xmlProperty['size']))
 						$property->setSize((int) $xmlProperty['size']);
+					else {
+						Assert::isTrue(
+							!$property->getType()
+								instanceof FixedLengthStringType,
+							
+							'fixed strings must have size'
+						);
+					}
 					
 					if (!$property->getType()->isGeneric()) {
 						

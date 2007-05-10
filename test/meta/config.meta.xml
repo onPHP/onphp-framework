@@ -8,7 +8,7 @@
 	<class name="Credentials" type="final">
 		<properties>
 			<property name="nickname" type="String" size="255" required="true" />
-			<property name="password" type="String" size="40" required="true" />
+			<property name="password" type="FixedLengthString" size="40" required="true" />
 		</properties>
 		
 		<pattern name="ValueObject" />
