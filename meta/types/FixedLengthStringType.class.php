@@ -15,6 +15,60 @@
 	**/
 	final class FixedLengthStringType extends StringType
 	{
+		public function toSetter(
+			MetaClass $class,
+			MetaClassProperty $property,
+			MetaClassProperty $holder = null
+		)
+		{
+			$name = $property->getName();
+			$methodName = 'set'.ucfirst($name);
+			
+			$assert = <<<EOT
+Assert::isTrue(
+	(\${$name} === null)
+	|| (mb_strlen(\${$name}) == {$property->getSize()})
+);
+
+EOT;
+			
+			if ($holder) {
+				return <<<EOT
+
+/**
+ * @return {$holder->getClass()->getName()}
+**/
+public function {$methodName}(\${$name})
+{
+	{$assert}
+	
+	\$this->{$holder->getName()}->{$methodName}(\${$name});
+
+	return \$this;
+}
+
+EOT;
+			} else {
+				return <<<EOT
+
+/**
+ * @return {$class->getName()}
+**/
+public function {$methodName}(\${$name})
+{
+	{$assert}
+	
+	\$this->{$name} = \${$name};
+
+	return \$this;
+}
+
+EOT;
+			}
+			
+			Assert::isUnreachable();
+		}
+		
 		public function toColumnType($length = null)
 		{
 			return 'DataType::create(DataType::CHAR)';
