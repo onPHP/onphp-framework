@@ -2,6 +2,9 @@
 
 2007-05-10	Konstantin V. Arkhipov
 
+	* meta/classes/MetaConfiguration.class.php: shiny new meta type;
+	suggested and implemented by sherman.
+
 	* global.inc.php.tpl: __autoload() now throws ClassNotFoundException
 	even if classes paths cache is disabled.
 

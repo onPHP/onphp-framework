@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Types
 	**/
-	final class StringType extends BasePropertyType
+	class StringType extends BasePropertyType
 	{
 		/**
 		 * @throws WrongArgumentException

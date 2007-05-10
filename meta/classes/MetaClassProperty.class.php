@@ -375,7 +375,12 @@
 				$size = $limits = null;
 				
 				if ($this->size) {
-					$size = "->\nsetMax({$this->size})";
+					if ($this->type instanceof FixedLengthStringType)
+						$limits =
+							"setMin({$this->size})->\n"
+							."setMax({$this->size})";
+					else
+						$size = "->\nsetMax({$this->size})";
 				}
 				
 				if ($this->type instanceof IntegerType)
