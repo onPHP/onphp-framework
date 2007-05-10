@@ -424,9 +424,12 @@ XML;
 						$xsdType = $property->getType()->toXsdType(); 
 				
 				if ($property->getSize()) {
-					if (!$withoutSoap)
+					if (!$withoutSoap) {
+						if ($property->getType() instanceof FixedLengthStringType)
+							$element .= " minLength=\"" . $property->getSize() . "\" ";
+						
 						$element .= " maxLength=\"" . $property->getSize() . "\" ";
-					else
+					} else
 						$generateRestriction = true;
 				}
 				
