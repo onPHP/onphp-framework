@@ -1,5 +1,10 @@
 # $Id$
 
+2007-05-10	Konstantin V. Arkhipov
+
+	* global.inc.php.tpl: __autoload() now throws ClassNotFoundException
+	even if classes paths cache is disabled.
+
 2007-05-10	Ivan Y. Khvostishkov
 
 	* main/Utils/ArrayUtils.class.php: getIdsArray() accepts empty lists

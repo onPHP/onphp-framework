@@ -17,6 +17,16 @@
 		throw new BaseException($string, $code);
 	}
 	
+	/* void */ function __autoload_failed($classname)
+	{
+		eval(
+			'class '.$classname.'{/*_*/}'
+			.'if (!class_exists("ClassNotFoundException", false)) { '
+			.'class ClassNotFoundException extends BaseException {/*_*/} }'
+			.'throw new ClassNotFoundException("'.$classname.'");'
+		);
+	}
+	
 	// classes autoload magic
 	/* void */ function __autoload($classname)
 	{
@@ -25,8 +35,12 @@
 		
 		if (!(defined('ONPHP_CLASS_CACHE') && ONPHP_CLASS_CACHE)) {
 			// cache is disabled
-			require $classname.EXT_CLASS;
-			return /* void */;
+			try {
+				include $classname.EXT_CLASS;
+				return /* void */;
+			} catch (BaseException $e) {
+				return __autoload_failed($classname);
+			}
 		}
 		
 		if (isset($cache[$classname])) {
@@ -47,8 +61,12 @@
 			$cache = unserialize(file_get_contents($cacheFile, false));
 			
 			if (isset($cache[$classname])) {
-				require $cache[$cache[$classname]].$classname.EXT_CLASS;
-				return /* void */;
+				try {
+					include $cache[$cache[$classname]].$classname.EXT_CLASS;
+					return /* void */;
+				} catch (BaseException $e) {
+					return __autoload_failed($classname);
+				}
 			}
 		}
 		
@@ -94,12 +112,7 @@
 				$cache[ONPHP_CLASS_CACHE_CHECKSUM] = null;
 				return /* void */;
 			} catch (BaseException $e) {
-				eval(
-					'class '.$classname.'{/*_*/}'
-					.'if (!class_exists("ClassNotFoundException", false)) { '
-					.'class ClassNotFoundException extends BaseException {/*_*/} }'
-					.'throw new ClassNotFoundException("'.$classname.'");'
-				);
+				__autoload_failed($classname);
 			}
 		}
 	}
