@@ -1,5 +1,10 @@
 # $Id$
 
+2007-05-10	Ivan Y. Khvostishkov
+
+	* main/Utils/ArrayUtils.class.php: getIdsArray() accepts empty lists
+	now.
+
 2007-05-08	Ivan Y. Khvostishkov
 
 	* main/Flow/MultiPrefixPhpViewResolver.class.php: default postfix.
