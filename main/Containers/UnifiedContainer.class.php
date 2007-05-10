@@ -258,6 +258,8 @@
 		private function importList(/* array */ $list)
 		{
 			if ($this->lazy) {
+				$this->list = $this->clones = array();
+				
 				foreach ($list as $id) {
 					$this->list[$id] = $id;
 					$this->clones[$id] = $id;
