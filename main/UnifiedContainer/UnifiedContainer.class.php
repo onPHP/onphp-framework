@@ -357,6 +357,7 @@
 		private function importList(/* array */ $list)
 		{
 			if ($this->lazy) {
+				$this->list = array();
 				foreach ($list as $id)
 					$this->list[$id] = $id;
 			} else {
