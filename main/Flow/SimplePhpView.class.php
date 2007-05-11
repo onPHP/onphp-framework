@@ -33,7 +33,7 @@
 			
 			$partViewer = new PartViewer($this->partViewResolver, $model);
 			
-			require $this->templatePath;
+			include $this->templatePath;
 		}
 		
 		public function toString($model = null) 
