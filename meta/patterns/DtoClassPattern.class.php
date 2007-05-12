@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Patterns
 	**/
-	final class DTOClassPattern extends BasePattern
+	final class DtoClassPattern extends BasePattern
 	{
 		public function tableExists()
 		{
@@ -33,21 +33,33 @@
 			return $this;
 		}
 		
+		/**
+		 * @return DTOClassPattern
+		**/
 		protected function buildBusiness(MetaClass $class)
 		{
 			return $this;
 		}
 		
+		/**
+		 * @return DTOClassPattern
+		**/
 		protected function buildDao(MetaClass $class)
 		{
 			return $this;
 		}
 		
+		/**
+		 * @return DtoClassPattern
+		**/
 		protected function fullBuild(MetaClass $class)
 		{
 			return $this->buildDto($class);
 		}
 		
+		/**
+		 * @return DtoClassPattern
+		**/
 		protected function buildDto(MetaClass $class)
 		{
 			$this->dumpFile(

@@ -19,16 +19,5 @@
 		{
 			return false;
 		}
-		
-		public function build(MetaClass $class)
-		{
-			$class->setType(
-				new MetaClassType(
-					MetaClassType::CLASS_ABSTRACT
-				)
-			);
-			
-			return parent::fullBuild($class);
-		}
 	}
 ?>
