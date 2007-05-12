@@ -113,7 +113,7 @@ EOT;
 				$property->getClass()->getParent()
 				&& array_key_exists(
 					$property->getName(),
-					$property->getClass()->getParentsProperties()
+					$property->getClass()->getAllParentsProperties()
 				)
 			)
 				return false;

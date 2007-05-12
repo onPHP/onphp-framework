@@ -121,17 +121,6 @@
 			return $this;
 		}
 		
-		public function hasBuildableParent()
-		{
-			return (
-				$this->parent
-				&& (
-					!$this->getFinalParent()->getPattern()
-						instanceof InternalClassPattern
-				)
-			);
-		}
-		
 		public function getProperties()
 		{
 			return $this->properties;
@@ -178,7 +167,7 @@
 		}
 		
 		/// only parents
-		public function getParentsProperties()
+		public function getAllParentsProperties()
 		{
 			$out = array();
 			
