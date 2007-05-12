@@ -29,7 +29,6 @@
 			if (
 				$class->getPattern()->daoExists()
 				&& (!$class->getPattern() instanceof AbstractClassPattern)
-				&& (!$class->getPattern() instanceof ValueObjectPattern)
 			) {
 				$interfaces .= ', DAOConnected';
 				

@@ -17,6 +17,9 @@
 		extends BasePattern
 		implements GenerationPattern
 	{
+		/**
+		 * @return InternalClassPattern
+		**/
 		public function build(MetaClass $class)
 		{
 			return $this;

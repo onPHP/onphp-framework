@@ -15,6 +15,9 @@
 	**/
 	final class SpookedEnumerationPattern extends EnumerationClassPattern
 	{
+		/**
+		 * @return SpookedEnumerationPattern
+		**/
 		public function build(MetaClass $class)
 		{
 			return $this;

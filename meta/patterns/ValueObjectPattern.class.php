@@ -20,11 +20,6 @@
 			return false;
 		}
 		
-		public function daoExists()
-		{
-			return true;
-		}
-		
 		/**
 		 * @return ValueObjectPattern
 		**/
