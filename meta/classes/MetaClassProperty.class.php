@@ -123,14 +123,22 @@
 		**/
 		public function setSize($size)
 		{
+			if ($this->type instanceof NumericType) {
+				if (strpos($size, ',') !== false) {
+					list($size, $precision) = explode(',', $size, 2);
+				
+					$this->type->setPrecision($precision);
+				}
+			}
+			
 			Assert::isInteger(
 				$size,
 				'only integers allowed in size parameter'
 			);
 			
-			if ($this->type->isMeasurable())
+			if ($this->type->isMeasurable()) {
 				$this->size = $size;
-			else
+			} else
 				throw new WrongArgumentException(
 					"size not allowed for '"
 					.$this->getName().'::'.get_class($this->type)
@@ -399,6 +407,13 @@ EOT;
 				$column .= <<<EOT
 ->
 setSize({$this->size})
+EOT;
+			}
+			
+			if ($this->type instanceof NumericType) {
+				$column .= <<<EOT
+->
+setPrecision({$this->type->getPrecision()})
 EOT;
 			}
 			

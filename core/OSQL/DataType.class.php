@@ -20,7 +20,7 @@
 		const SMALLINT			= 0x001001;
 		const INTEGER			= 0x001002;
 		const BIGINT			= 0x001003;
-		const NUMERIC			= 0x001604;
+		const NUMERIC			= 0x001704;
 		
 		const REAL				= 0x001005;
 		const DOUBLE			= 0x001006;
@@ -118,6 +118,11 @@
 			$this->precision = $precision;
 			
 			return $this;
+		}
+		
+		public function hasPrecision()
+		{
+			return (bool) ($this->id & self::HAVE_PRECISION);
 		}
 		
 		public function getScale()

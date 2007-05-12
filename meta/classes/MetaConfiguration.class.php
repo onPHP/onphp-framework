@@ -245,13 +245,19 @@
 					}
 					
 					if (isset($xmlProperty['size']))
-						$property->setSize((int) $xmlProperty['size']);
+						// not casting to int because of Numeric possible size
+						$property->setSize((string) $xmlProperty['size']);
 					else {
 						Assert::isTrue(
-							!$property->getType()
-								instanceof FixedLengthStringType,
+							(
+								!$property->getType()
+									instanceof FixedLengthStringType
+							) && (
+								!$property->getType()
+									instanceof NumericType
+							),
 							
-							'fixed strings must have size'
+							'size is required for "'.$property->getName().'"'
 						);
 					}
 					
