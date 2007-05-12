@@ -765,17 +765,6 @@
 					$proto->makeForm();
 					
 					foreach ($class->getProperties() as $name => $property) {
-						if (
-							!$property->getType()->isGeneric()
-							&& ($property->getType() instanceof ObjectType)
-							&& (
-								$property->getType()->getClass()->getPattern()
-									instanceof ValueObjectPattern
-							)
-						) {
-							continue;
-						}
-						
 						Assert::isTrue(
 							$property->toLightProperty($class)
 							== $proto->getPropertyByName($name)
