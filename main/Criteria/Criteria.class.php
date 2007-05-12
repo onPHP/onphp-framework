@@ -391,6 +391,14 @@
 			} else
 				$query = $this->dao->makeSelectHead();
 			
+			return $this->fillSelectQuery($query);
+		}
+		
+		/**
+		 * @return SelectQuery
+		**/
+		public function fillSelectQuery(SelectQuery $query)
+		{
 			$query->
 				limit($this->limit, $this->offset);
 			
@@ -411,7 +419,7 @@
 			if (!$this->projection) {
 				$this->joinProperties($query, $this->dao, $this->dao->getTable(), true);
 			}
-
+			
 			return $query;
 		}
 		

@@ -81,15 +81,7 @@
 				$this->processPath($proto, $path, $query, $this->getTable());
 				
 				if ($criteria = $info['criteria']) {
-					if ($criteria->getLogic()->getSize())
-						$query->andWhere(
-							$criteria->getLogic()->toMapped($this, $query)
-						);
-						
-					if ($criteria->getOrder()->getCount())
-						$query->setOrderChain(
-							$criteria->getOrder()->toMapped($this, $query)
-						);
+					$query = $criteria->fillSelectQuery($query);
 				}
 				
 				$query->andWhere(

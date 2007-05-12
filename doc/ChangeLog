@@ -1,5 +1,10 @@
 # $Id$
 
+2007-05-13	Konstantin V. Arkhipov
+
+	* main/Criteria/Criteria.class.php: fetchCollection now supports
+	distinct and limitizing clauses from given Criteria.
+
 2007-05-10	Konstantin V. Arkhipov
 
 	* meta/classes/MetaConfiguration.class.php: shiny new meta type;
