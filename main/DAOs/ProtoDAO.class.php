@@ -247,7 +247,7 @@
 				$remoteName = $property->getClassName();
 				$selfName = $this->getObjectName();
 				$self = new $selfName;
-				$getter = 'get'.ucfirst($property->getName());
+				$getter = $property->getGetter();
 				$dao = call_user_func(array($remoteName, 'dao'));
 				
 				if ($property->getRelationId() == MetaRelation::MANY_TO_MANY) {
