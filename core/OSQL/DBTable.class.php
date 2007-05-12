@@ -159,7 +159,15 @@
 							.' TYPE '.$targetColumn->getType()->toString()
 							.(
 								$targetColumn->getType()->hasSize()
-									? '('.$targetColumn->getType()->getSize().')'
+									?
+										'('
+										.$targetColumn->getType()->getSize()
+										.(
+											$targetColumn->getType()->hasPrecision()
+												? ', '.$targetColumn->getType()->getPrecision()
+												: null
+										)
+										.')'
 									: null
 							)
 							.';';
