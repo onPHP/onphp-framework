@@ -81,7 +81,7 @@
 				$this->processPath($proto, $path, $query, $this->getTable());
 				
 				if ($criteria = $info['criteria']) {
-					$query = $criteria->fillSelectQuery($query);
+					$query = $criteria->setDao($this)->fillSelectQuery($query);
 				}
 				
 				$query->andWhere(
