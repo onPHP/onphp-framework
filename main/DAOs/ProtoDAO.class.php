@@ -34,7 +34,7 @@
 					from($this->getTable());
 				
 				if ($criteria = $info['criteria']) {
-					$query = $criteria->fillSelectQuery($query);
+					$query = $criteria->setDao($this)->fillSelectQuery($query);
 				}
 				
 				$proto = reset($list)->proto();
