@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,8 +12,6 @@
 #include "onphp_core.h"
 
 #include "core/Base/Instantiatable.h"
-
-PHPAPI zend_class_entry *onphp_ce_Instantiatable;
 
 zend_function_entry onphp_funcs_Instantiatable[] = {
 	ONPHP_ABSTRACT_ME(Instantiatable, me, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)

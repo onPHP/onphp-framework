@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,8 +17,6 @@
 
 #include "core/DB/Dialect.h"
 #include "core/OSQL/FieldTable.h"
-
-PHPAPI zend_class_entry *onphp_ce_FieldTable;
 
 ONPHP_METHOD(FieldTable, __construct)
 {

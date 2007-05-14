@@ -24,8 +24,6 @@
 #include "core/OSQL/Query.h"
 #include "core/Exceptions.h"
 
-PHPAPI zend_class_entry *onphp_ce_Dialect;
-
 ONPHP_METHOD(Dialect, quoteValue)
 {
 	zval *value;

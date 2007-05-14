@@ -18,8 +18,6 @@
 #include "core/Base/Singleton.h"
 #include "core/Exceptions.h"
 
-PHPAPI zend_class_entry *onphp_ce_Singleton;
-
 // request's scope
 static zval *instances = NULL;
 
