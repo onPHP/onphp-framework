@@ -14,6 +14,8 @@
 	{
 		const CSS_PATH			= 'css';
 		const IMG_PATH			= 'img';
+		const SHARED_CSS_PATH	= 'sharedCss';
+		const SHARED_IMG_PATH	= 'sharedImg';
 		
 		/**
 		 * @return CommonApplication
@@ -65,55 +67,9 @@
 			return $this->reside(CommonLocationSettings::SOAP);
 		}
 		
-		public function url()
-		{
-			return
-				$this->baseUrl()
-				.(
-					$this->queryString
-					? '?'.$this->queryString
-					: null
-				);
-		}
-		
-		public function baseUrl()
-		{
-			return $this->getLocation()->getUrl();
-		}
-		
-		public function basePath()
-		{
-			return $this->getLocation()->getPath();
-		}
-		
-		public function imgPath()
-		{
-			$result = $this->baseUrl().self::IMG.'/';
-			
-			if ($this->markup)
-				$result .= $this->markup->getCommonName().'/';
-			
-			return $result;
-		}
-		
-		public function imgExt()
-		{
-			if ($this->markup instanceof WmlLanguage)
-				$result .= $this->markup->getCommonName().'/';
-			
-			return $result;
-		}
-		
-		public function cssPath()
-		{
-			$result = $this->baseUrl().self::CSS_PATH.'/';
-			
-			if ($this->markup)
-				$result .= $this->markup->getCommonName().'/';
-			
-			return $result;
-		}
-		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function getWebLocation()
 		{
 			return $this->locations->getWeb();
@@ -124,6 +80,9 @@
 			return $this->getWebLocation()->getUrl();
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function getWapLocation()
 		{
 			return $this->locations->getWap();
@@ -134,6 +93,9 @@
 			return $this->getWapLocation()->getUrl();
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function getAdminLocation()
 		{
 			return $this->locations->getAdmin();
@@ -144,6 +106,9 @@
 			return $this->getAdminLocation()->getUrl();
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function getSoapLocation()
 		{
 			return $this->locations->getSoap();
@@ -152,6 +117,100 @@
 		public function getSoapUrl()
 		{
 			return $this->getSoapLocation()->getUrl();
+		}
+
+		/**
+		 * @return CommonApplication
+		**/
+		public function setImgStorage(CommonStaticStorage $storage)
+		{
+			return $this->setStaticStorage(self::IMG_PATH, $storage);
+		}
+		
+		/**
+		 * @return CommonApplication
+		**/
+		public function setImgStoragePath($path)
+		{
+			return $this->setImgStorage(
+				CommonStaticStorage::create(
+					ApplicationUrl::create()->
+					setUrl($this->url().$path)
+				)->
+				setStrict(false)
+			);
+		}
+		
+		public function getImgStorage()
+		{
+			return $this->getStaticStorage(self::IMG_PATH);
+		}
+		
+		/**
+		 * @return CommonApplication
+		**/
+		public function setCssStorage(CommonStaticStorage $storage)
+		{
+			return $this->setStaticStorage(self::CSS_PATH, $storage);
+		}
+		
+		/**
+		 * @return CommonApplication
+		**/
+		public function setCssStoragePath($path)
+		{
+			return $this->setCssStorage(
+				CommonStaticStorage::create(
+					ApplicationUrl::create()->
+					setUrl($this->url().$path)
+				)->
+				setExtensionsList(array('.css'))
+			);
+		}
+		
+		public function getCssStorage()
+		{
+			return $this->getStaticStorage(self::CSS_PATH);
+		}
+		
+		/**
+		 * @return CommonApplication
+		**/
+		public function setCommonImgStorage(CommonStaticStorage $storage)
+		{
+			return $this->setStaticStorage(self::SHARED_IMG_PATH, $storage);
+		}
+		
+		/**
+		 * @return CommonApplication
+		**/
+		public function setCommonCssStorage(CommonStaticStorage $storage)
+		{
+			return $this->setStaticStorage(self::SHARED_CSS_PATH, $storage);
+		}
+		
+		public function img($name)
+		{
+			return $this->getStaticStorage(self::IMG_PATH)->getUrl($name);
+		}
+		
+		public function css($name)
+		{
+			return $this->getStaticStorage(self::CSS_PATH)->getUrl($name);
+		}
+		
+		public function sharedImg($name)
+		{
+			return
+				$this->getStaticStorage(self::SHARED_IMG_PATH)->
+					getUrl($name);
+		}
+		
+		public function sharedCss($name)
+		{
+			return
+				$this->getStaticStorage(self::SHARED_CSS_PATH)->
+					getUrl($name);
 		}
 	}
 ?>

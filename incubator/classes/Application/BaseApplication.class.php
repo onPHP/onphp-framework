@@ -30,6 +30,10 @@
 		protected $area			= null;
 		protected $queryString	= null;
 		
+		protected $staticStorages	= array();
+		
+		protected $neighbors	= array();
+		
 		/**
 		 * @return BaseApplication
 		**/
@@ -94,6 +98,29 @@
 			return $this->locations;
 		}
 		
+		/**
+		 * @return BaseApplication
+		**/
+		public function addNeighbor($name, LocationSettings $neighbor)
+		{
+			$this->neighbors[$name] = $neighbor;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return StaticStorage
+		**/
+		public function getNeighbor($neighbor)
+		{
+			if (!isset($this->neighbor[$name]))
+				throw new WrongArgumentException(
+					"knows nothing about neighbor application '{$name}'"
+				);
+				
+			return $this->neighbors[$name];
+		}
+
 		/**
 		 * @return BaseApplication
 		**/
@@ -258,6 +285,8 @@
 		public function setQueryString($queryString)
 		{
 			$this->queryString = $queryString;
+			
+			return $this;
 		}
 		
 		public function getQueryString()
@@ -278,6 +307,29 @@
 		public function getActualDomain()
 		{
 			return $this->actualDomain;
+		}
+		
+		/**
+		 * @return BaseApplication
+		**/
+		public function setStaticStorage($name, StaticStorage $storage)
+		{
+			$this->staticStorages[$name] = $storage;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return StaticStorage
+		**/
+		public function getStaticStorage($name)
+		{
+			if (!isset($this->staticStorages[$name]))
+				throw new WrongArgumentException(
+					"knows nothing about storage '{$name}'"
+				);
+				
+			return $this->staticStorages[$name];
 		}
 	}
 ?>
