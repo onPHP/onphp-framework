@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,8 +12,6 @@
 #include "onphp_main.h"
 
 #include "main/DAOs/Handlers/SegmentHandler.h"
-
-PHPAPI zend_class_entry *onphp_ce_SegmentHandler;
 
 static ONPHP_ARGINFO_ONE;
 

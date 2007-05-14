@@ -29,8 +29,6 @@
 #define onphp_implode(glue, words, copy) php_implode(glue, words, copy TSRMLS_CC)
 #endif
 
-PHPAPI zend_class_entry *onphp_ce_ImaginaryDialect;
-
 ONPHP_METHOD(ImaginaryDialect, me)
 {
 	zval *instance, *class;
