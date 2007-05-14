@@ -118,7 +118,25 @@
 		{
 			return $this->getSoapLocation()->getUrl();
 		}
-
+		
+		// TODO: make dispatcher?
+		public function navigate($requestUri)
+		{
+			Assert::isNotNull($this->location);
+			Assert::isNotNull($this->location->getNavigationSchema());
+			
+			if (strpos($requestUri, $this->location->getPath() === false))
+				throw new WrongArgumentException(
+					"location settings is broken?"
+				);
+				
+			$this->setNavigationArea(
+				$this->location->getNavigationSchema()->getArea(
+					substr($requestUri, strlen($this->location->getPath()))
+				)
+			);
+		}
+		
 		/**
 		 * @return CommonApplication
 		**/
@@ -135,7 +153,7 @@
 			return $this->setImgStorage(
 				CommonStaticStorage::create(
 					ApplicationUrl::create()->
-					setUrl($this->url().$path)
+					setUrl($this->baseUrl().$path)
 				)->
 				setStrict(false)
 			);
@@ -162,7 +180,7 @@
 			return $this->setCssStorage(
 				CommonStaticStorage::create(
 					ApplicationUrl::create()->
-					setUrl($this->url().$path)
+					setUrl($this->baseUrl().$path)
 				)->
 				setExtensionsList(array('.css'))
 			);

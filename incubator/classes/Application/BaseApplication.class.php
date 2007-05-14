@@ -14,8 +14,6 @@
 	{
 		protected $name			= 'stdApp';
 		
-		protected $areaHolder	= 'area';
-		
 		protected $locations	= null;
 		
 		protected $location		= null;
@@ -27,8 +25,7 @@
 		
 		protected $markup		= null;
 		
-		protected $area			= null;
-		protected $queryString	= null;
+		protected $navigationArea	= null;
 		
 		protected $staticStorages	= array();
 		
@@ -40,27 +37,6 @@
 		public static function create()
 		{
 			return new self;
-		}
-		
-		public function url()
-		{
-			return
-				$this->baseUrl()
-				.(
-					$this->queryString
-					? '?'.$this->queryString
-					: null
-				);
-		}
-		
-		public function baseUrl()
-		{
-			return $this->getLocation()->getUrl();
-		}
-		
-		public function basePath()
-		{
-			return $this->getLocation()->getPath();
 		}
 		
 		/**
@@ -124,7 +100,7 @@
 		/**
 		 * @return BaseApplication
 		**/
-		public function setPathResolver($pathResolver)
+		public function setPathResolver(PathResolver $pathResolver)
 		{
 			$this->pathResolver = $pathResolver;
 			
@@ -150,7 +126,7 @@
 			
 			if ($this->locationArea)
 				throw new WrongArgumentException(
-					"application already resides at {{$this->area}}"
+					"application already resides at {{$this->locationArea}}"
 				);
 			
 			$this->location = $this->locations->get($locationArea);
@@ -178,6 +154,9 @@
 			return $this->locationArea;
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function getLocation()
 		{
 			return $this->location;
@@ -226,72 +205,89 @@
 		}
 		
 		/**
-		 * @return BaseApplication
+		 * @return Controller
 		**/
-		public function getController(HttpRequest $request, $defaultName)
+		public function getController($defaultName)
 		{
-			if (!isset($this->locationArea))
+			if (!$this->locationArea)
 				throw new WrongStateException(
 					'first, reside me in someplace'
 				);
 			
-			$controllerName = $defaultName;
-			
-			$getVars = $request->getGet();
-		
+			if (!$this->navigationArea)
+				throw new WrongStateException(
+					'first, navigate me somewhere'
+				);
+				
 			$pathResolvers = PackageManager::me()->getImportedList();
 			
 			array_unshift($pathResolvers, $this->pathResolver);
 			
-			foreach ($pathResolvers as $pathResolver) {
-				if (
-					isset($getVars[$this->areaHolder])
-					&& $pathResolver->isControllerExists(
-						$getVars[$this->areaHolder]
-					)
-				) {
-					$controllerName = $getVars[$this->areaHolder];
-					break;
+			$controllerName = null;
+			
+			$areaName = $this->navigationArea->getName();
+			
+			if ($areaName) {
+				foreach ($pathResolvers as $pathResolver) {
+					if (
+						$pathResolver->getConfiguration()->hasControllers()
+						&& $pathResolver->isControllerExists($areaName)
+					) {
+						$controllerName = $areaName;
+						break;
+					}
 				}
+			}
+			
+			if (!$controllerName) {
+				$controllerName = $defaultName;
+				
+				$this->navigationArea = new NavigationArea($controllerName);
 			}
 			
 			$result = new $controllerName;
 			
-			$this->area = $controllerName;
+			Assert::isTrue($result instanceof Controller);
 			
 			return $result;
 		}
 		
-		public function getArea()
+		public function setNavigationArea(NavigationArea $navigationArea)
 		{
-			return $this->area;
+			$this->navigationArea = $navigationArea;
 		}
 		
-		public function getAreaUrl($area = null)
+		public function getNavigationArea()
 		{
-			if (!$area)
-				$actualArea = $this->area;
-			else
-				$actualArea = $area;
-			
-			return
-				$this->getLocation()->getPath()
-				.'?'.$this->areaHolder.'='.$actualArea;
+			return $this->navigationArea;
 		}
 		
-		/**
-		 * @return BaseApplication
-		**/
-		public function setQueryString($queryString)
+		public function url()
 		{
-			$this->queryString = $queryString;
-			
-			return $this;
+			return $this->location->
+				getNavigationUrl($this->navigationArea);
 		}
 		
-		public function getQueryString()
+		public function baseUrl()
 		{
-			return $this->queryString;
+			return $this->getLocation()->getUrl();
+		}
+		
+		public function basePath()
+		{
+			return $this->getLocation()->getPath();
+		}
+
+		public function areaUrl($name, $action = null, $model = null)
+		{
+			return $this->getNavigationUrl(
+				new NavigationArea($name, $action, $model)
+			);
+		}
+		
+		public function getNavigationUrl(NavigationArea $navigationArea)
+		{
+			return $this->location->getNavigationUrl($navigationArea);
 		}
 		
 		/**

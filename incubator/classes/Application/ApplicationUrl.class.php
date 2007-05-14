@@ -16,6 +16,8 @@
 		private $domain			= null;
 		private $path			= '/';
 		
+		protected $navigationSchema	= null;
+		
 		/**
 		 * @return ApplicationUrl
 		**/
@@ -87,7 +89,7 @@
 		**/
 		public function setPath($path)
 		{
-			if (substr($path, 1, 1) !== '/')
+			if (substr($path, 0, 1) !== '/')
 				$path = '/'.$path;
 			
 			if (substr($path, -1, 1) !== '/')
@@ -143,6 +145,34 @@
 		public function getUrl()
 		{
 			return $this->scheme.'://'.$this->domain.$this->path;
+		}
+		
+		public function setNavigationSchema(NavigationSchema $schema)
+		{
+			$this->navigationSchema = $schema;
+			
+			return $this;
+		}
+		
+		public function getNavigationSchema()
+		{
+			return $this->navigationSchema;
+		}
+		
+		public function getNavigationPath(NavigationArea $area)
+		{
+			// TODO: implement some kind of default?
+			if (!$this->navigationSchema)
+				throw new WrongStateException(
+					"should i use the default schema?"
+				);
+			
+			return $this->navigationSchema->getNavigationUrl($area);
+		}
+		
+		public function getNavigationUrl(NavigationArea $area)
+		{
+			return $this->path.$this->getNavigationPath($area);
 		}
 	}
 ?>
