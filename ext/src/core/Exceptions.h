@@ -17,6 +17,7 @@
 
 PHPAPI zend_class_entry *onphp_ce_BaseException;
 PHPAPI zend_class_entry *onphp_ce_BusinessLogicException;
+PHPAPI zend_class_entry *onphp_ce_ClassNotFoundException;
 PHPAPI zend_class_entry *onphp_ce_DatabaseException;
 PHPAPI zend_class_entry *onphp_ce_DuplicateObjectException;
 PHPAPI zend_class_entry *onphp_ce_MissingElementException;

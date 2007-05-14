@@ -1,5 +1,9 @@
 # $Id$
 
+2007-05-14	Konstantin V. Arkhipov
+
+	* ext/src/core/Exceptions.c: ClassNotFoundException added.
+
 2007-05-13	Konstantin V. Arkhipov
 
 	* meta/types/NumericType.class.php: one more type introduced.
