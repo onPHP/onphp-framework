@@ -15,11 +15,11 @@
 	**/
 	class PrimitiveString extends FiltrablePrimitive
 	{
+		const MAIL_PATTERN = '/^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/';
+		
 		private $pattern = null;
 		
 		/**
-		 * mail hint: /^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/
-		 * 
 		 * @return PrimitiveString
 		**/
 		public function setAllowedPattern($pattern)
