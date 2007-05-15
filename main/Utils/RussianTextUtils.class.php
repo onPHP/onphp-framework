@@ -190,21 +190,18 @@
 					);
 		}
 		
-		/* void */ public static function toTranslit($sourceString)
+		public static function toTranslit($sourceString)
 		{
-			if ($sourceString)
-				return strtr($sourceString, self::$lettersMapping);
+			return strtr($sourceString, self::$lettersMapping);
 		}
 		
-		/* void */ public static function toRussian($sourceString)
+		public static function toRussian($sourceString)
 		{
-			if ($sourceString) {
-				if (!self::$flippedLettersMapping)
-			 		self::$flippedLettersMapping =
-			 			array_flip(self::$lettersMapping);
-				
-				return strtr($sourceString, self::$flippedLettersMapping);
-			}
+			if (!self::$flippedLettersMapping)
+			 	self::$flippedLettersMapping =
+			 		array_flip(self::$lettersMapping);
+			
+			return strtr($sourceString, self::$flippedLettersMapping);
 		}
 	}
 ?>
