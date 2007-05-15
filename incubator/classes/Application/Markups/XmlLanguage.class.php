@@ -19,7 +19,7 @@
 		**/
 		public function parse($data)
 		{
-			
+			throw new UnimplementedFeatureException();
 		}
 		
 		public function render(MarkupDocument $data)
