@@ -26,6 +26,14 @@
 		}
 		
 		/**
+		 * @return HtmlLanguage
+		**/
+		public static function html()
+		{
+			return new HtmlLanguage();
+		}
+		
+		/**
 		 * @return XhtmlMpLanguage
 		**/
 		public static function xhtmlMp()
@@ -40,6 +48,9 @@
 		{
 			switch ($name) {
 				
+				case 'html':
+					return self::html($version);
+					
 				case 'wml':
 					return self::wml($version);
 				

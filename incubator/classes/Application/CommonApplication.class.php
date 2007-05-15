@@ -12,10 +12,10 @@
 	
 	class CommonApplication extends BaseApplication
 	{
-		const CSS_PATH			= 'css';
-		const IMG_PATH			= 'img';
-		const SHARED_CSS_PATH	= 'sharedCss';
-		const SHARED_IMG_PATH	= 'sharedImg';
+		const CSS_STORAGE			= 1;
+		const IMG_STORAGE			= 2;
+		const SHARED_CSS_STORAGE	= 3;
+		const SHARED_IMG_STORAGE	= 4;
 		
 		/**
 		 * @return CommonApplication
@@ -142,7 +142,7 @@
 		**/
 		public function setImgStorage(CommonStaticStorage $storage)
 		{
-			return $this->setStaticStorage(self::IMG_PATH, $storage);
+			return $this->setStaticStorage(self::IMG_STORAGE, $storage);
 		}
 		
 		/**
@@ -161,7 +161,7 @@
 		
 		public function getImgStorage()
 		{
-			return $this->getStaticStorage(self::IMG_PATH);
+			return $this->getStaticStorage(self::IMG_STORAGE);
 		}
 		
 		/**
@@ -169,7 +169,7 @@
 		**/
 		public function setCssStorage(CommonStaticStorage $storage)
 		{
-			return $this->setStaticStorage(self::CSS_PATH, $storage);
+			return $this->setStaticStorage(self::CSS_STORAGE, $storage);
 		}
 		
 		/**
@@ -188,7 +188,7 @@
 		
 		public function getCssStorage()
 		{
-			return $this->getStaticStorage(self::CSS_PATH);
+			return $this->getStaticStorage(self::CSS_STORAGE);
 		}
 		
 		/**
@@ -196,7 +196,7 @@
 		**/
 		public function setCommonImgStorage(CommonStaticStorage $storage)
 		{
-			return $this->setStaticStorage(self::SHARED_IMG_PATH, $storage);
+			return $this->setStaticStorage(self::SHARED_IMG_STORAGE, $storage);
 		}
 		
 		/**
@@ -204,30 +204,30 @@
 		**/
 		public function setCommonCssStorage(CommonStaticStorage $storage)
 		{
-			return $this->setStaticStorage(self::SHARED_CSS_PATH, $storage);
+			return $this->setStaticStorage(self::SHARED_CSS_STORAGE, $storage);
 		}
 		
 		public function img($name)
 		{
-			return $this->getStaticStorage(self::IMG_PATH)->getUrl($name);
+			return $this->getStaticStorage(self::IMG_STORAGE)->getUrl($name);
 		}
 		
 		public function css($name)
 		{
-			return $this->getStaticStorage(self::CSS_PATH)->getUrl($name);
+			return $this->getStaticStorage(self::CSS_STORAGE)->getUrl($name);
 		}
 		
 		public function sharedImg($name)
 		{
 			return
-				$this->getStaticStorage(self::SHARED_IMG_PATH)->
+				$this->getStaticStorage(self::SHARED_IMG_STORAGE)->
 					getUrl($name);
 		}
 		
 		public function sharedCss($name)
 		{
 			return
-				$this->getStaticStorage(self::SHARED_CSS_PATH)->
+				$this->getStaticStorage(self::SHARED_CSS_STORAGE)->
 					getUrl($name);
 		}
 	}

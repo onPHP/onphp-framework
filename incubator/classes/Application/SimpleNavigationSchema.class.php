@@ -92,7 +92,7 @@
 					$model->set($key, $value);
 			}
 			
-			return new NavigationArea($action, $area, $model);
+			return new NavigationArea($area, $action, $model);
 		}
 	}
 ?>

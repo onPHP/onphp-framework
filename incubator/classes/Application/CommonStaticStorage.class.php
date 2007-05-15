@@ -40,7 +40,6 @@
 		{
 			return
 				$this->baseUrl->getUrl()
-				.Application::me()->getLocationArea().'/'
 				.Application::me()->getMarkup()->getCommonName().'/'
 				.$this->guessName($name);
 		}
