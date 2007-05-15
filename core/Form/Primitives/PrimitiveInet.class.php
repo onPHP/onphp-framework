@@ -22,7 +22,8 @@
 			
 			if (
 				is_string($scope[$this->name])
-				&& (substr_count($scope[$this->name], '.', null, 15) == 3)
+				&& (($length = strlen($scope[$this->name])) < 16)
+				&& (substr_count($scope[$this->name], '.', null, $length) == 3)
 				&& long2ip(ip2long($scope[$this->name]))
 			) {
 				$this->value = $scope[$this->name];
