@@ -8,14 +8,14 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-/* $Id:$ */
+/* $Id$ */
 
 	/**
 	 * Integer's set.
 	 * 
 	 * @ingroup Helpers
 	**/
-	class IntegerSet extends Range
+	final class IntegerSet extends Range
 	{
 		public static function create($min = null, $max = null)
 		{
