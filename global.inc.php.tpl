@@ -46,7 +46,7 @@
 		$checksum = crc32(get_include_path());
 		$cacheFile = ONPHP_CLASS_CACHE.$checksum.'.occ';
 		
-		if ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $checksum)
+		if ($cache && ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $checksum))
 			$cache = array();
 		
 		if (
