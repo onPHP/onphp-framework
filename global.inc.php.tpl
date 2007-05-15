@@ -46,12 +46,12 @@
 		$checksum = crc32(get_include_path());
 		$cacheFile = ONPHP_CLASS_CACHE.$checksum.'.occ';
 		
+		if ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $checksum)
+			$cache = array();
+		
 		if (
 			is_readable($cacheFile)
-			&& (
-				!$cache
-				|| ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $checksum)
-			)
+			&& !$cache
 		) {
 			$cache = unserialize(file_get_contents($cacheFile, false));
 			
