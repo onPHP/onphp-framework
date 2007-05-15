@@ -1,6 +1,6 @@
 # $Id$
 
-2007-04-17	Denis M. Gabaidulin
+2007-05-15	Denis M. Gabaidulin
 
 	* main/Base/IntegerSet.class.php: simple integer's set introduced.
 
