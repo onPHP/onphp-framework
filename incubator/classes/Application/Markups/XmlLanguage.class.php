@@ -10,26 +10,21 @@
  ***************************************************************************/
 /* $Id$ */
 	
-	final class WmlLanguage extends XmlLanguage
+	class XmlLanguage extends BaseMarkupLanguage
 	{
-		const VER_1_1	= 11;
-		const VER_1_3	= 13;
-		
-		protected $commonName	= 'wml';
-		
-		protected $versions		= array(
-			self::VER_1_1	=> true,
-			self::VER_1_3	=> true
-		);
-		
-		protected $version		= self::VER_1_3;
+		protected $commonName	= 'xml';
 		
 		/**
-		 * @return WmlLanguage
+		 * @return XmlDocument
 		**/
-		public static function create()
+		public function parse($data)
 		{
-			return new self;
+			throw new UnimplementedFeatureException();
+		}
+		
+		public function render(MarkupDocument $data)
+		{
+			throw new UnimplementedFeatureException();
 		}
 	}
 ?>

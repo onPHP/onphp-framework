@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 	
-	final class HtmlLanguage extends BaseMarkupLanguage
+	final class HtmlLanguage extends XmlLanguage
 	{
 		protected $commonName	= 'html';
 		
@@ -20,19 +20,6 @@
 		public static function create()
 		{
 			return new self;
-		}
-		
-		/**
-		 * @return HtmlMarkupDocument
-		**/
-		public function parse($data)
-		{
-			return new UnimplementedFeatureException();
-		}
-		
-		public function render(MarkupDocument $data)
-		{
-			return new UnimplementedFeatureException();
 		}
 	}
 ?>

@@ -10,26 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 	
-	final class WmlLanguage extends XmlLanguage
+	class XmlDocument extends MarkupDocument
 	{
-		const VER_1_1	= 11;
-		const VER_1_3	= 13;
-		
-		protected $commonName	= 'wml';
-		
-		protected $versions		= array(
-			self::VER_1_1	=> true,
-			self::VER_1_3	=> true
-		);
-		
-		protected $version		= self::VER_1_3;
-		
-		/**
-		 * @return WmlLanguage
-		**/
-		public static function create()
-		{
-			return new self;
-		}
+		// implement me
 	}
 ?>

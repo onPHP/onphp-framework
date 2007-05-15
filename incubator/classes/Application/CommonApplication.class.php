@@ -159,6 +159,9 @@
 			);
 		}
 		
+		/**
+		 * @return CommonStaticStorage
+		**/
 		public function getImgStorage()
 		{
 			return $this->getStaticStorage(self::IMG_STORAGE);
@@ -186,6 +189,9 @@
 			);
 		}
 		
+		/**
+		 * @return CommonStaticStorage
+		**/
 		public function getCssStorage()
 		{
 			return $this->getStaticStorage(self::CSS_STORAGE);
@@ -194,17 +200,33 @@
 		/**
 		 * @return CommonApplication
 		**/
-		public function setCommonImgStorage(CommonStaticStorage $storage)
+		public function setSharedImgStorage(CommonStaticStorage $storage)
 		{
 			return $this->setStaticStorage(self::SHARED_IMG_STORAGE, $storage);
 		}
 		
 		/**
+		 * @return CommonStaticStorage
+		**/
+		public function getSharedImgStorage()
+		{
+			return $this->getStaticStorage(self::SHARED_IMG_STORAGE);
+		}
+		
+		/**
 		 * @return CommonApplication
 		**/
-		public function setCommonCssStorage(CommonStaticStorage $storage)
+		public function setSharedCssStorage(CommonStaticStorage $storage)
 		{
 			return $this->setStaticStorage(self::SHARED_CSS_STORAGE, $storage);
+		}
+		
+		/**
+		 * @return CommonStaticStorage
+		**/
+		public function getSharedCssStorage()
+		{
+			return $this->getStaticStorage(self::SHARED_CSS_STORAGE);
 		}
 		
 		public function img($name)

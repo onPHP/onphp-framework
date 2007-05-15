@@ -14,6 +14,7 @@
 	{
 		private $strict				= true;
 		private $extensionsList		= null;
+		private $shared				= false;
 		
 		public static function create(ApplicationUrl $baseUrl)
 		{
@@ -36,10 +37,24 @@
 			return $this;
 		}
 		
+		public function setShared($isShared)
+		{
+			Assert::isBoolean($isShared);
+			
+			$this->shared = $isShared;
+			
+			return $this;
+		}
+		
 		public function getUrl($name)
 		{
 			return
 				$this->baseUrl->getUrl()
+				.(
+					$this->shared
+					? Application::me()->getLocationArea().'/'
+					: null
+				)
 				.Application::me()->getMarkup()->getCommonName().'/'
 				.$this->guessName($name);
 		}

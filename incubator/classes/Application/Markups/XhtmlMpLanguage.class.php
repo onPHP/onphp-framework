@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 	
-	final class XhtmlMpLanguage extends BaseMarkupLanguage
+	final class XhtmlMpLanguage extends XmlLanguage
 	{
 		protected $commonName	= 'xhtmlmp';
 		
@@ -20,19 +20,6 @@
 		public static function create()
 		{
 			return new self;
-		}
-		
-		/**
-		 * @return XhtmlMpMarkupDocument
-		**/
-		public function parse($data)
-		{
-			return new UnimplementedFeatureException();
-		}
-		
-		public function render(MarkupDocument $data)
-		{
-			return new UnimplementedFeatureException();
 		}
 	}
 ?>

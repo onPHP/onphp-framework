@@ -9,7 +9,6 @@
  *                                                                         *
  ***************************************************************************/
 
-
 	class SimpleNavigationSchema implements NavigationSchema
 	{
 		const FRONT_CONTROLLER	= 'index.php';

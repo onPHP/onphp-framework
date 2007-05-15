@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 	
-	class WmlMarkupDocument extends MarkupDocument
+	class WmlMarkupDocument extends XmlDocument
 	{
 		// implement me
 	}
