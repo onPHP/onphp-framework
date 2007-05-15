@@ -2,6 +2,10 @@
 
 2007-05-15	Denis M. Gabaidulin
 
+	* core/Exceptions/FileNotFoundException.class.php,
+	ext/src/core/Exceptions.c: FileNotFoundException backported from
+	trunk.
+
 	* main/Base/IntegerSet.class.php: simple integer's set introduced.
 
 2007-05-14	Konstantin V. Arkhipov
