@@ -24,36 +24,12 @@
 		
 		protected $version		= self::VER_1_3;
 		
-		private $imgExtensions	= array(
-			self::VER_1_1	=> 'wbmp',
-			self::VER_1_3	=> 'gif'
-		);
-		
-		private $imgExtension	= 'gif';
-		
 		/**
 		 * @return WmlLanguage
 		**/
 		public static function create()
 		{
 			return new self;
-		}
-		
-		/**
-		 * @return WmlLanguage
-		**/
-		public function setVersion($version)
-		{
-			parent::setVersion($version);
-			
-			$this->imgExtension = $this->imgExtensions[$version];
-			
-			return $this;
-		}
-		
-		public function getImgExtension()
-		{
-			return $this->imgExtensions;
 		}
 		
 		/**
