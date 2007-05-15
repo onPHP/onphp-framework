@@ -43,14 +43,6 @@
 			}
 		}
 		
-		if (isset($cache[$classname])) {
-			try {
-				include $cache[$cache[$classname]].$classname.EXT_CLASS;
-			} catch (BaseException $e) {
-				// either include_path is changed or it's a real failure
-			}
-		}
-		
 		$checksum = crc32(get_include_path());
 		$cacheFile = ONPHP_CLASS_CACHE.$checksum.'.occ';
 		
