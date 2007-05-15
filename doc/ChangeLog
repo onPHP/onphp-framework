@@ -2,6 +2,9 @@
 
 2007-05-15	Denis M. Gabaidulin
 
+	* main/Utils/RussianTextUtils.class.php: toTranslit(), toRussian()
+	convrters was added.
+
 	* core/Exceptions/FileNotFoundException.class.php,
 	ext/src/core/Exceptions.c: FileNotFoundException backported from
 	trunk.

@@ -41,6 +41,30 @@
 		private static $bytePrefixes = array(
 			null, 'К', 'М', 'Г', 'Т', 'П'
 		);
+		
+		private static $lettersMapping = array(
+			'а' => 'a',		'б' => 'b',		'в' => 'v',		'г' => 'g',
+			'д' => 'd',		'е' => 'e',		'ё' => 'jo',	'ж' => 'zh',
+			'з' => 'z',		'и' => 'i',		'й' => 'jj',	'к' => 'k',
+			'л' => 'l',		'м' => 'm',		'н' => 'n',		'о' => 'o',
+			'п' => 'p',		'р' => 'r',		'с' => 's',		'т' => 't',
+			'у' => 'u',		'ф' => 'f',		'х' => 'kh',	'ц' => 'c',
+			'ч' => 'ch',	'ш' => 'sh',	'щ' => 'shh',	'ъ' => '\'',
+			'ы' => 'y',		'ь' => '\'',	'э' => 'eh',	'ю' => 'ju',
+			'я' => 'ja',
+			
+			'А' => 'A',		'Б' => 'B',		'В' => 'V',		'Г' => 'G',
+			'Д' => 'D', 	'Е' => 'E',		'Ё' => 'JO',	'Ж' => 'ZH',
+			'З' => 'Z',		'И' => 'I',		'Й' => 'JJ',	'К' => 'K',
+			'Л' => 'L',		'М' => 'M',		'Н' => 'N',		'О' => 'O',
+			'П' => 'P',		'Р' => 'R',		'С' => 'S',		'Т' => 'T',
+			'У' => 'U',		'Ф' => 'F',		'Х' => 'KH',	'Ц' => 'C',
+			'Ч' => 'CH',	'Ш' => 'SH',	'Щ' => 'SHH',	'Ъ' => '\'',
+			'Ы' => 'Y',		'Ь' => '\'',	'Э' => 'EH',	'Ю' => 'JU',
+			'Я' => 'JA'
+		);
+		
+		private	static $flippedLettersMapping = array();
 	
 		/**
 		 * Selects russian case for number.
@@ -164,6 +188,23 @@
 					. RussianTextUtils::getMonthInGenitiveCase(
 						$date->getMonth()
 					);
+		}
+		
+		/* void */ public static function toTranslit($sourceString)
+		{
+			if ($sourceString)
+				return strtr($sourceString, self::$lettersMapping);
+		}
+		
+		/* void */ public static function toRussian($sourceString)
+		{
+			if ($sourceString) {
+				if (!self::$flippedLettersMapping)
+			 		self::$flippedLettersMapping =
+			 			array_flip(self::$lettersMapping);
+				
+				return strtr($sourceString, self::$flippedLettersMapping);
+			}
 		}
 	}
 ?>
