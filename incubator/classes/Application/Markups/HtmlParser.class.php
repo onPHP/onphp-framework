@@ -31,13 +31,14 @@
 		{
 			for (
 				$this->pos = 0;
-				$this->pos <= strlen($this->content);
+				$this->pos <= mb_strlen($this->content);
 				$this->pos++
 			) {
-				if ($this->pos == strlen($this->content)) {
+				if ($this->pos == mb_strlen($this->content)) {
 					$this->char = null; // eof
 				} else {
-					$this->char = $this->content[$this->pos];
+					// TODO: find faster way
+					$this->char = mb_substr($this->content, $this->pos, 1);
 				}
 					
 				if (!$this->insideTag)
