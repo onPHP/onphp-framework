@@ -1,5 +1,9 @@
 # $Id$
 
+2007-05-15	Denis M. Gabaidulin
+
+	* main/Base/IntegerSet.class.php: simple integer's set introduced.
+
 2007-05-14	Konstantin V. Arkhipov
 
 	* ext/src/core/Exceptions.c: ClassNotFoundException added.
