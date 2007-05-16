@@ -66,7 +66,7 @@
 		{
 			return
 				$this->getByQuery(
-					$this->dao->makeSelectHead()->where($logic)
+					$this->dao->makeSelectHead()->andWhere($logic)
 				);
 		}
 		
@@ -196,7 +196,7 @@
 		public function getListByLogic(LogicalObject $logic)
 		{
 			return $this->getListByQuery(
-				$this->dao->makeSelectHead()->where($logic)
+				$this->dao->makeSelectHead()->andWhere($logic)
 			);
 		}
 		
