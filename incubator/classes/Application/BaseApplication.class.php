@@ -87,7 +87,7 @@
 		/**
 		 * @return StaticStorage
 		**/
-		public function getNeighbor($neighbor)
+		public function getNeighbor($name)
 		{
 			if (!isset($this->neighbor[$name]))
 				throw new WrongArgumentException(
