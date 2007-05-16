@@ -32,9 +32,12 @@
 				$query = 
 					$this->dao->
 						makeSelectHead()->
-						where(
+						andWhere(
 							Expression::eq(
-								DBField::create($this->dao->getIdName(), $this->dao->getTable()),
+								DBField::create(
+									$this->dao->getIdName(),
+									$this->dao->getTable()
+								),
 								$id
 							)
 						);
