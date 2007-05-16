@@ -114,17 +114,7 @@
 			
 			return $path;
 		}
-		
-		public static function makeUniqueName($fileName)
-		{
-			$extensionPosition = strrpos($fileName, '.');
-			
-			return
-				substr($fileName, 0, $extensionPosition)
-				.'_'.uniqid()
-				.substr($fileName, $extensionPosition);
-		}
-		
+
 		/* void */ public static function removeDirectory($directory, $recursive = false)
 		{
 			if (!$recursive) {
