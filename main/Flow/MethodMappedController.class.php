@@ -27,6 +27,10 @@
 				
 				$method = $this->methodMap[$action];
 				$mav = $this->{$method}($request);
+				
+				if ($mav->viewIsRedirect())
+					return $mav;
+					
 				$mav->getModel()->set('action', $action);
 				
 				return $mav;
