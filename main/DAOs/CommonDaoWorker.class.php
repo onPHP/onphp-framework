@@ -39,7 +39,7 @@
 				$query = 
 					$this->dao->
 						makeSelectHead()->
-						where(
+						andWhere(
 							Expression::eq(
 								DBField::create('id', $this->dao->getTable()),
 								$id
@@ -66,7 +66,7 @@
 		{
 			return
 				$this->getByQuery(
-					$this->dao->makeSelectHead()->where($logic), $expires
+					$this->dao->makeSelectHead()->andWhere($logic), $expires
 				);
 		}
 
@@ -221,7 +221,7 @@
 		{
 			return
 				$this->getListByQuery(
-					$this->dao->makeSelectHead()->where($logic), $expires
+					$this->dao->makeSelectHead()->andWhere($logic), $expires
 				);
 		}
 		
