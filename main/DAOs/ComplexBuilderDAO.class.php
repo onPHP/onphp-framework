@@ -95,8 +95,16 @@
 		
 		private function selfSpawn(&$array, $prefix = null)
 		{
-			if (isset($this->identityMap[$array[$prefix.'id']]))
-				$object = $this->identityMap[$array[$prefix.'id']];
+			if (!isset($array[$prefix.'id'])) {
+				$fieldsMap = $this->getMapping();
+				
+				$identifierField = $fieldsMap[$prefix.'id'];
+			} else {
+				$identifierField = $array[$prefix.'id'];
+			}
+			
+			if (isset($this->identityMap[$identifierField]))
+				$object = $this->identityMap[$identifierField];
 			else {
 				$object = $this->makeSelf($array, $prefix);
 				$this->identityMap[$object->getId()] = $object;
