@@ -12,7 +12,7 @@
 
 	class SocketInputStream extends InputStream
 	{
-		const READ_ATTEMPTS	= 42; // it's should be enough
+		const READ_ATTEMPTS	= 42; // should be enough for everyone (C)
 		
 		private $socket = null;
 		
@@ -36,16 +36,15 @@
 				
 				while (
 					!$result && $this->socket->isTimedOut()
-					&& $i < self::READ_ATTEMPTS
+					&& ($i < self::READ_ATTEMPTS)
 				) {
 					// 0.01s sleep insurance if socket timeouts is broken
 					usleep(10000);
-				
+					
 					$result .= $this->socket->read($length);
-				
+					
 					++$i;
 				}
-				
 			} catch (NetworkException $e) {
 				throw new IOException($e->getMessage());
 			}
@@ -57,7 +56,7 @@
 			
 			if (!$result) {
 				$this->eof = true;
-					
+				
 				return false;
 			}
 			

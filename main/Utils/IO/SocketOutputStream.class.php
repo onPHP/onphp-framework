@@ -12,7 +12,7 @@
 
 	class SocketOutputStream extends OutputStream
 	{
-		const WRITE_ATTEMPTS	= 42; // it's should be enough
+		const WRITE_ATTEMPTS = 42; // should be enough for everyone (C)
 		
 		private $socket = null;
 		
@@ -21,11 +21,14 @@
 			$this->socket = $socket;
 		}
 		
-		public /* void */ function write($buffer)
+		/**
+		 * @return SocketOutputStream
+		**/
+		public function write($buffer)
 		{
-			if (!$buffer)
-				return;
-				
+			if ($buffer === null)
+				return $this;
+			
 			$totalBytes = strlen($buffer);
 			
 			try {
@@ -35,7 +38,7 @@
 				
 				while (
 					$writtenBytes < $totalBytes
-					&& $i < self::WRITE_ATTEMPTS
+					&& ($i < self::WRITE_ATTEMPTS)
 				) {
 					// 0.01s sleep insurance if socket timeouts is broken
 					usleep(10000);
@@ -45,7 +48,6 @@
 					
 					++$i;
 				}
-				
 			} catch (NetworkException $e) {
 				throw new IOException($e->getMessage());
 			}
@@ -54,6 +56,8 @@
 				throw new IOException(
 					'timeout while trying to write into socket'
 				);
+			
+			return $this;
 		}
 	}
 ?>

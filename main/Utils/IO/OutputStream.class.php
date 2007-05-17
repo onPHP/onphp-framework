@@ -14,14 +14,24 @@
 	{
 		abstract public function write($buffer);
 		
+		/**
+		 * @return OutputStream
+		**/
 		public function flush()
 		{
 			/* nop */
+			
+			return $this;
 		}
 		
+		/**
+		 * @return OutputStream
+		**/
 		public function close()
 		{
 			/* nop */
+			
+			return $this;
 		}
 	}
 ?>

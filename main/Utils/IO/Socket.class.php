@@ -40,7 +40,7 @@
 			
 			if ($this->socket === false)
 				throw new NetworkException(
-					"socket creating failed: "
+					'socket creating failed: '
 					.socket_strerror(socket_last_error())
 				);
 			
@@ -155,8 +155,8 @@
 			switch (
 				socket_select(
 					$r, $w, $e,
-					(int)($connectTimeout / 1000),
-					(int)($connectTimeout % 1000 * 1000)
+					(int) ($connectTimeout / 1000),
+					(int) ($connectTimeout % 1000 * 1000)
 				)
 			) {
 				case 0:
@@ -164,7 +164,7 @@
 						"unable to connect to '{$this->host}:{$this->port}': "
 						."connection timed out"
 					);
-				
+					
 				case 1:
 					$this->connected = true;
 					break;
@@ -173,7 +173,7 @@
 					// yanetut
 					throw new NetworkException(
 						"unable to connect to '{$this->host}:{$this->port}': "
-						."connection refused"
+						.'connection refused'
 					);
 			}
 			
@@ -186,8 +186,8 @@
 		public function setTimeout($timeout)
 		{
 			$timeVal = array(
-				'sec' => (int)($timeout / 1000),
-				'usec' => (int)($timeout % 1000 * 1000)
+				'sec' => (int) ($timeout / 1000),
+				'usec' => (int) ($timeout % 1000 * 1000)
 			);
 			
 			socket_set_option($this->socket, SOL_SOCKET, SO_SNDTIMEO, $timeVal);
@@ -216,7 +216,7 @@
 			
 			if ($result === false)
 				throw new NetworkException(
-					"socket reading failed: "
+					'socket reading failed: '
 					.socket_strerror(socket_last_error())
 				);
 			
@@ -233,10 +233,10 @@
 				$result = socket_write($this->socket, $buffer);
 			else
 				$result = socket_write($this->socket, $buffer, $length);
-				
+			
 			if ($result === false)
 				throw new NetworkException(
-					"socket writing failed: "
+					'socket writing failed: '
 					.socket_strerror(socket_last_error())
 				);
 			
@@ -251,20 +251,33 @@
 				return false;
 		}
 		
+		/**
+		 * @return Socket
+		**/
 		public function shutdownInput()
 		{
 			socket_shutdown($this->socket, 0);
 			
 			$this->inputShutdown = true;
+			
+			return $this;
 		}
 		
+		/**
+		 * @return Socket
+		**/
 		public function shutdownOutput()
 		{
 			socket_shutdown($this->socket, 1);
 			
 			$this->outputShutdown = true;
+			
+			return $this;
 		}
 		
+		/**
+		 * @return Socket
+		**/
 		public function close()
 		{
 			if (!$this->inputShutdown)
@@ -276,9 +289,11 @@
 			socket_close($this->socket);
 			
 			$this->closed = true;
+			
+			return $this;
 		}
 		
-		private function checkRead()
+		/* void */ private function checkRead()
 		{
 			if ($this->closed || !$this->connected || $this->inputShutdown)
 				throw new NetworkException(
@@ -287,7 +302,7 @@
 				);
 		}
 		
-		private function checkWrite()
+		/* void */ private function checkWrite()
 		{
 			if ($this->closed || !$this->connected || $this->inputShutdown)
 				throw new NetworkException(

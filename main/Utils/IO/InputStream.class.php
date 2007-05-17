@@ -31,9 +31,14 @@
 			return 0;
 		}
 		
+		/**
+		 * @return InputStream
+		**/
 		public function close()
 		{
 			/* nop */
+			
+			return $this;
 		}
 	}
 ?>
