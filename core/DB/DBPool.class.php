@@ -109,8 +109,24 @@
 		**/
 		public function shutdown()
 		{
+			$this->disconnect();
+			
 			$this->default = null;
 			$this->pool = array();
+			
+			return $this;
+		}
+		
+		/**
+		 * @return DBPool
+		**/
+		public function disconnect()
+		{
+			if ($this->default)
+				$this->default->disconnect();
+			
+			foreach ($this->pool as $db)
+				$db->disconnect();
 			
 			return $this;
 		}
