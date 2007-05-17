@@ -40,7 +40,7 @@
 					$writtenBytes < $totalBytes
 					&& ($i < self::WRITE_ATTEMPTS)
 				) {
-					// 0.01s sleep insurance if socket timeouts is broken
+					// 0.01s sleep insurance if socket timeouts are broken
 					usleep(10000);
 					
 					$buffer = substr($buffer, $writtenBytes);
