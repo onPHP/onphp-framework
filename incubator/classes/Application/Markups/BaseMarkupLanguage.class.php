@@ -14,6 +14,7 @@
 	{
 		// redefine me
 		protected $commonName	= null;
+		
 		protected $versions		= array();
 		protected $version		= null;
 		
@@ -31,10 +32,9 @@
 		public function setVersion($version)
 		{
 			if (!isset($this->versions[$version]))
-				throw
-					new WrongArgumentException(
-						"dont know nothing about version == '{$version}'"
-					);
+				throw new WrongArgumentException(
+					"dont know nothing about version == '{$version}'"
+				);
 			
 			$this->version = $version;
 			

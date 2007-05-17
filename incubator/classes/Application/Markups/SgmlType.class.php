@@ -11,3 +11,4 @@
 /* $Id$ */
 
 	abstract class SgmlType { /* nop */ }
+?>

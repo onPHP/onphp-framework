@@ -14,11 +14,17 @@
 	{
 		private $data = null;
 		
+		/**
+		 * @return Cdata
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return Cdata
+		**/
 		public function setData($data)
 		{
 			$this->data = $data;

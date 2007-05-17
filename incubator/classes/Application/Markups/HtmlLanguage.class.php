@@ -12,7 +12,7 @@
 	
 	final class HtmlLanguage extends XmlLanguage
 	{
-		protected $commonName	= 'html';
+		protected $commonName = 'html';
 		
 		/**
 		 * @return HtmlLanguage

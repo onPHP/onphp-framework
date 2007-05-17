@@ -12,8 +12,12 @@
 
 	final class SgmlEndTag extends SgmlTag
 	{
+		/**
+		 * @return SgmlEndTag
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 	}
+?>

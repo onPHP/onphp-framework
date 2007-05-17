@@ -51,6 +51,9 @@
 			$this->length = mb_strlen($this->content);
 		}
 		
+		/**
+		 * @return HtmlParser
+		**/
 		public function parse()
 		{
 			$this->getNextChar();
@@ -318,7 +321,7 @@
 		// INSIDE_TAG_STATE
 		private function insideTagState()
 		{
-			die('inside tag');
+			throw new UnimplementedFeatureException('inside tag');
 		}
 		
 		private function getTextualPosition()
@@ -332,20 +335,31 @@
 				);
 		}
 		
+		/**
+		 * @return HtmlParser
+		**/
 		private function warning($message)
 		{
 			$this->errors[] =
 				"warning at {$this->getTextualPosition()}: $message";
+			
+			return $this;
 		}
 		
+		/**
+		 * @return HtmlParser
+		**/
 		private function error($message)
 		{
 			$this->errors[] =
 				"error at {$this->getTextualPosition()}: $message";
+			
+			return $this;
 		}
 		
 		private static function charHexCode($char)
 		{
+			// FIXME: sprintf!
 			return '0x'.dechex(ord($char));
 		}
 	}

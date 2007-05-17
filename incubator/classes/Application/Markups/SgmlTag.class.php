@@ -12,8 +12,11 @@
 
 	abstract class SgmlTag extends SgmlType
 	{
-		private $id		= null;
+		private $id = null;
 		
+		/**
+		 * @return SgmlTag
+		**/
 		public function setId($id)
 		{
 			$this->id = $id;
@@ -26,3 +29,4 @@
 			return $this->id;
 		}
 	}
+?>
