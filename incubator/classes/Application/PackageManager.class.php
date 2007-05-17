@@ -53,12 +53,12 @@
 			
 			if ($configuration->isContainer()) {
 				foreach (
-					$configuration->getPackages() as $name => $configuration
+					$configuration->getPackages() as $name => $subConfiguration
 				) {
 					$this->addPackage(
 						$qualifiedName.'.'.$name,
 						$basePath.$name,
-						$configuration
+						$subConfiguration
 					);
 				}
 			}
