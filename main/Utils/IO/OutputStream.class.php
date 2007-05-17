@@ -12,6 +12,10 @@
 
 	abstract class OutputStream
 	{
+		/**
+		 * MUST send whole buffer
+		 * or throw an IOException
+		**/
 		abstract public function write($buffer);
 		
 		/**

@@ -38,7 +38,7 @@
 					!$result && $this->socket->isTimedOut()
 					&& ($i < self::READ_ATTEMPTS)
 				) {
-					// 0.01s sleep insurance if socket timeouts is broken
+					// 0.01s sleep insurance if socket timeouts are broken
 					usleep(10000);
 					
 					$result .= $this->socket->read($length);
