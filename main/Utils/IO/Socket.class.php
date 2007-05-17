@@ -191,6 +191,7 @@
 			);
 			
 			socket_set_option($this->socket, SOL_SOCKET, SO_SNDTIMEO, $timeVal);
+			socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, $timeVal);
 			
 			$this->timeout = $timeout;
 			
@@ -200,7 +201,7 @@
 		public function getTimeout()
 		{
 			// NOTE: return value may slightly differ from $this->timeout
-			$timeVal = socket_get_option($this->socket, SOL_SOCKET, SO_SNDTIMEO);
+			$timeVal = socket_get_option($this->socket, SOL_SOCKET, SO_RCVTIMEO);
 			
 			return $timeVal['sec'] * 1000 + (int)($timeVal['usec'] / 1000);
 		}
