@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 Denis M. Gabaidulin                           *
+ *   Copyright (C) 2007 by Ivan Khvostishkov                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,9 +10,18 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	class FileNotFoundException extends IOException {/*_*/}
+	abstract class OutputStream
+	{
+		abstract public function write($buffer);
+		
+		public function flush()
+		{
+			/* nop */
+		}
+		
+		public function close()
+		{
+			/* nop */
+		}
+	}
 ?>
