@@ -142,7 +142,7 @@
 		{
 			if (
 				is_readable(
-					$this->getControllersPath(Application::me()->getLocationArea())
+					$this->getControllersPath()
 					.$controllerName.EXT_CLASS
 				)
 			)
