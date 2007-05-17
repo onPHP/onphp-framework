@@ -1,5 +1,9 @@
 # $Id$
 
+2007-05-17	Ivan Y. Khvostishkov
+
+	* main/Utils/IO/: client socket implementation from branches/0.10.
+
 2007-05-16	Denis M. Gabaidulin
 
 	* main/Utils/FileUtils.class.php: makeUniqueName() added.
