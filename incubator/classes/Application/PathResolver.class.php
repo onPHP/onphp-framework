@@ -8,7 +8,8 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-	
+/* $Id$ */
+
 	class PathResolver
 	{
 		const PATH_CLASSES			= 'classes';
