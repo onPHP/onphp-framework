@@ -15,9 +15,19 @@
 		protected $eof	= false;
 		
 		/**
-		 * returns false on eof
-		 * if length > 0, MUST return at least one byte
-		 * or throw an IOException
+		 * reads a maximum of $length bytes
+		 * 
+		 * returns null on eof or if length == 0.
+		 * Otherwise MUST return at least one byte
+		 * or throw IOException
+		 * 
+		 * NOTE: if length is too large to read all data at once and eof has
+		 * not been reached, it MUST BLOCK until all data is read or eof is
+		 * reached or throw IOException.
+		 * 
+		 * It is abnormal state. Maybe you should use some kind of
+		 * non-blocking channels instead?
+		 * 
 		**/
 		abstract public function read($length);
 		
@@ -26,9 +36,33 @@
 			return $this->eof;
 		}
 		
+		public function skip()
+		{
+			return 0;
+		}
+		
 		public function available()
 		{
 			return 0;
+		}
+		
+		public function mark()
+		{
+			/* nop */
+			
+			return $this;
+		}
+		
+		public function markSupported()
+		{
+			return false;
+		}
+		
+		public function reset()
+		{
+			throw new IOException(
+				'mark has been invalidated'
+			);
 		}
 		
 		/**

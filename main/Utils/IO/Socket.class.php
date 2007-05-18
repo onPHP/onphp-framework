@@ -12,7 +12,7 @@
 
 	class Socket
 	{
-		const DEFAULT_TIMEOUT	= 1000; // milliseconds, 10^3
+		const DEFAULT_TIMEOUT	= 1000; // milliseconds
 		
 		const EAGAIN			= 11;	// timeout, try again
 		
@@ -29,10 +29,9 @@
 		private $inputShutdown	= false;
 		private $outputShutdown	= false;
 		
-		/**
-		 * timeout for read/write operations
-		**/
-		private $timeout	= null;
+		// milliseconds
+		private $readTimeout	= null;
+		private $writeTimeout	= null;
 		
 		public function __construct()
 		{
@@ -127,6 +126,9 @@
 			return $this->outputStream;
 		}
 		
+		/**
+		 * @return Socket
+		**/
 		public function connect($connectTimeout = self::DEFAULT_TIMEOUT)
 		{
 			Assert::isTrue(
@@ -155,8 +157,8 @@
 			switch (
 				socket_select(
 					$r, $w, $e,
-					(int) ($connectTimeout / 1000),
-					(int) ($connectTimeout % 1000 * 1000)
+					self::getSeconds($connectTimeout),
+					self::getMicroseconds($connectTimeout)
 				)
 			) {
 				case 0:
@@ -177,35 +179,79 @@
 					);
 			}
 			
-			if (!$this->timeout)
-				$this->setTimeout(self::DEFAULT_TIMEOUT);
+			if (!$this->readTimeout)
+				$this->setReadTimeout(self::DEFAULT_TIMEOUT);
+				
+			if (!$this->writeTimeout)
+				$this->setWriteTimeout(self::DEFAULT_TIMEOUT);
 			
 			return $this;
 		}
 		
-		public function setTimeout($timeout)
+		/**
+		 * @return Socket
+		**/
+		public function setReadTimeout($timeout)
 		{
 			$timeVal = array(
-				'sec' => (int) ($timeout / 1000),
-				'usec' => (int) ($timeout % 1000 * 1000)
+				'sec' => self::getSeconds($timeout),
+				'usec' => self::getMicroseconds($timeout)
+			);
+			
+			socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, $timeVal);
+			
+			$this->readTimeout = $timeout;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return Socket
+		**/
+		public function setWriteTimeout($timeout)
+		{
+			$timeVal = array(
+				'sec' => self::getSeconds($timeout),
+				'usec' => self::getMicroseconds($timeout)
 			);
 			
 			socket_set_option($this->socket, SOL_SOCKET, SO_SNDTIMEO, $timeVal);
-			socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, $timeVal);
 			
-			$this->timeout = $timeout;
+			$this->readTimeout = $timeout;
 			
 			return $this;
 		}
 		
-		public function getTimeout()
+		/**
+		 * @return Socket
+		**/
+		public function setTimeout($timeout)
 		{
-			// NOTE: return value may slightly differ from $this->timeout
+			$this->setReadTimeout($timeout);
+			$this->setWriteTimeout($timeout);
+			
+			return $this;
+		}
+		
+		// NOTE: return value may slightly differ from $this->readTimeout
+		public function getReadTimeout()
+		{
 			$timeVal = socket_get_option($this->socket, SOL_SOCKET, SO_RCVTIMEO);
 			
 			return $timeVal['sec'] * 1000 + (int)($timeVal['usec'] / 1000);
 		}
 		
+		// NOTE: return value may slightly differ from $this->writeTimeout
+		public function getWriteTimeout()
+		{
+			$timeVal = socket_get_option($this->socket, SOL_SOCKET, SO_RCVTIMEO);
+			
+			return $timeVal['sec'] * 1000 + (int)($timeVal['usec'] / 1000);
+		}
+		
+		/**
+		 * returns 8-bit string or false on timeout or null on eof
+		**/
 		public function read($length)
 		{
 			$this->checkRead();
@@ -214,15 +260,21 @@
 			
 			$result = socket_read($this->socket, $length);
 			
-			if ($result === false)
+			if ($result === false && !$this->isTimedOut())
 				throw new NetworkException(
 					'socket reading failed: '
 					.socket_strerror(socket_last_error())
 				);
+				
+			elseif ($result === '')
+				return null; // eof
 			
 			return $result;
 		}
 		
+		/**
+		 * returns number of written bytes or false on timeout
+		**/
 		public function write($buffer, $length = null)
 		{
 			$this->checkWrite();
@@ -234,7 +286,7 @@
 			else
 				$result = socket_write($this->socket, $buffer, $length);
 			
-			if ($result === false)
+			if ($result === false && !$this->isTimedOut())
 				throw new NetworkException(
 					'socket writing failed: '
 					.socket_strerror(socket_last_error())
@@ -291,6 +343,16 @@
 			$this->closed = true;
 			
 			return $this;
+		}
+		
+		private static function getSeconds($timeout)
+		{
+			return (int) ($timeout / 1000);
+		}
+		
+		private static function getMicroseconds($timeout)
+		{
+			return (int) ($timeout % 1000 * 1000);
 		}
 		
 		/* void */ private function checkRead()
