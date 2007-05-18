@@ -31,7 +31,7 @@
 					$out .= <<<EOT
 public function getIdName()
 {
-	return '{$class->getIdentifier()->getName()}';
+	return '{$class->getIdentifier()->getColumnName()}';
 }
 
 EOT;
