@@ -54,7 +54,11 @@
 					
 					$remainingLength = $length - strlen($result);
 					
-					// NOTE: ignoring timeouts here
+					if ($remainingLength === false)
+						throw new IOTimedOutException(
+							'read timeout, connection is too slow?'
+						);
+					
 					$result += $this->socket->read($remainingLength);
 				
 					++$i;
