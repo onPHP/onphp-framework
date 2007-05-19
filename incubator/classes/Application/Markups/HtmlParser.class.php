@@ -118,7 +118,7 @@
 					return $this->insideTagState();
 					
 				default:
-					throw WrongStateException('state machine is broken');
+					throw new WrongStateException('state machine is broken');
 			}
 			
 			Assert::isUnreachable();
