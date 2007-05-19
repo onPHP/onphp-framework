@@ -12,11 +12,9 @@
 
 	abstract class Reader 
 	{
-		protected $eof	= false;
-		
 		abstract public function close();
-		
 		abstract public function read($count);
+		abstract public function isEof();
 		
 		public function mark()
 		{
@@ -40,11 +38,5 @@
 			
 			return mb_strlen($this->read($count));
 		} 
-		
-		// TODO: may be useless method. Think about it.		
-		public function isEof()
-		{
-			return $this->eof;
-		}
 	}
 ?>
