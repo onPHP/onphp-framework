@@ -18,6 +18,11 @@
 		protected $next		= 0;
 		protected $mark		= 0;
 		
+		public static function create($string)
+		{
+			return new self($string);
+		}
+
 		public function __construct($string)
 		{
 			$this->string = $string;
