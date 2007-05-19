@@ -42,6 +42,7 @@ PHP_MINIT_FUNCTION(Exceptions)
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(TooManyRowsException,			DatabaseException,	NULL, NULL);
 	
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(NetworkException,				IOException,		NULL, NULL);
+	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(IOTimedOutException,				IOException,		NULL, NULL);
 	
 	return SUCCESS;
 }

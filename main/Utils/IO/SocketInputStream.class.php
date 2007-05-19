@@ -12,7 +12,16 @@
 
 	class SocketInputStream extends InputStream
 	{
-		const READ_ATTEMPTS	= 42; // should be enough for everyone (C)
+		/**
+		 * NOTE: if socket timeout is 1 second, we can block here
+		 * over abt 15 seconds. See conventions of InputStream.
+		 * 
+		 * You must set reliable timeout for socket operations if you want to
+		 * avoid fatal error on max_execution_time and you must make sure the
+		 * length is not too large to read it at once from your physical
+		 * channel.
+		**/
+		const READ_ATTEMPTS = 15; // should be enough for everyone (C)
 		
 		private $socket = null;
 		
@@ -23,42 +32,46 @@
 		
 		public function read($length)
 		{
-			if ($length == 0)
+			if ($length == 0 || $this->eof)
 				return null;
-			
-			if ($this->eof)
-				return false;
 			
 			try {
 				$result = $this->socket->read($length);
 				
+				if ($result === false)
+					throw new IOTimedOutException(
+						'reading from socket timed out'
+					);
+				
 				$i = 0;
 				
 				while (
-					!$result && $this->socket->isTimedOut()
+					strlen($result) < $length
 					&& ($i < self::READ_ATTEMPTS)
 				) {
-					// 0.01s sleep insurance if socket timeouts are broken
-					usleep(10000);
+					// 0.1s sleep insurance if something wrong with socket
+					usleep(100000);
 					
-					$result .= $this->socket->read($length);
+					$remainingLength = $length - strlen($result);
 					
+					if ($remainingLength === false)
+						throw new IOTimedOutException(
+							'read timeout, connection is too slow?'
+						);
+					
+					$result += $this->socket->read($remainingLength);
+				
 					++$i;
 				}
+				
 			} catch (NetworkException $e) {
 				throw new IOException($e->getMessage());
 			}
 			
-			if ($i == self::READ_ATTEMPTS)
+			if (strlen($result) < $length)
 				throw new IOException(
-					'timeout while trying to read socket'
+					'connection is too slow or length is too large?'
 				);
-			
-			if (!$result) {
-				$this->eof = true;
-				
-				return false;
-			}
 			
 			return $result;
 		}

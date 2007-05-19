@@ -14,5 +14,5 @@
 	 * @ingroup Exceptions
 	 * @ingroup Module
 	**/
-	class NetworkException extends BaseException {/*_*/}
+	class NetworkException extends IOException {/*_*/}
 ?>
