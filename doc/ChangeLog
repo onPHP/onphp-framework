@@ -1,5 +1,10 @@
 # $Id$
 
+2007-05-21	Dmitry A. Lomash
+
+	* main/Utils/IO/Reader.class.php,
+	main/Utils/IO/StringReader.class.php: getWhole() added.
+
 2007-05-19	Dmitry A. Lomash
 
 	* main/Utils/IO/: Reader and StringReader added.
