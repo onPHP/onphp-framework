@@ -12,6 +12,8 @@
 
 	abstract class Reader 
 	{
+		const BLOCK_SIZE = 8192;
+		
 		abstract public function close();
 		abstract public function read($count);
 		abstract public function isEof();
@@ -37,6 +39,14 @@
 				throw new WrongArgumentException('skip value is negative');
 			
 			return mb_strlen($this->read($count));
-		} 
+		}
+		
+		public function getWhole()
+		{
+			while(!$this->isEof())
+				$result .= $this->read(self::BLOCK_SIZE);	
+			
+			return $result;
+		}
 	}
 ?>

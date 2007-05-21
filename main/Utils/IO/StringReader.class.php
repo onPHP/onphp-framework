@@ -105,6 +105,14 @@
 			return ($this->next >= $this->length);
  		}
  		
+ 		public function getWhole()
+ 		{
+ 			$next = $this->next;
+ 			$this->next = $this->length;
+ 			
+ 			return mb_substr($this->string, next);
+ 		}
+ 		
 		/* void */ private function ensureOpen()
 		{
 			if ($this->string === null)
