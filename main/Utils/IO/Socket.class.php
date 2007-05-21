@@ -181,7 +181,7 @@
 			
 			if (!$this->readTimeout)
 				$this->setReadTimeout(self::DEFAULT_TIMEOUT);
-				
+			
 			if (!$this->writeTimeout)
 				$this->setWriteTimeout(self::DEFAULT_TIMEOUT);
 			
@@ -238,7 +238,7 @@
 		{
 			$timeVal = socket_get_option($this->socket, SOL_SOCKET, SO_RCVTIMEO);
 			
-			return $timeVal['sec'] * 1000 + (int)($timeVal['usec'] / 1000);
+			return $timeVal['sec'] * 1000 + (int) ($timeVal['usec'] / 1000);
 		}
 		
 		// NOTE: return value may slightly differ from $this->writeTimeout
@@ -246,7 +246,7 @@
 		{
 			$timeVal = socket_get_option($this->socket, SOL_SOCKET, SO_RCVTIMEO);
 			
-			return $timeVal['sec'] * 1000 + (int)($timeVal['usec'] / 1000);
+			return $timeVal['sec'] * 1000 + (int) ($timeVal['usec'] / 1000);
 		}
 		
 		/**
@@ -265,7 +265,6 @@
 					'socket reading failed: '
 					.socket_strerror(socket_last_error())
 				);
-				
 			elseif ($result === '')
 				return null; // eof
 			
@@ -297,10 +296,7 @@
 		
 		public function isTimedOut()
 		{
-			if (socket_last_error($this->socket) === self::EAGAIN)
-				return true;
-			else
-				return false;
+			return (socket_last_error($this->socket) === self::EAGAIN);
 		}
 		
 		/**
@@ -334,10 +330,10 @@
 		{
 			if (!$this->inputShutdown)
 				$this->shutdownInput();
-				
+			
 			if (!$this->outputShutdown)
 				$this->shutdownOutput();
-				
+			
 			socket_close($this->socket);
 			
 			$this->closed = true;

@@ -60,10 +60,9 @@
 						);
 					
 					$result += $this->socket->read($remainingLength);
-				
+					
 					++$i;
 				}
-				
 			} catch (NetworkException $e) {
 				throw new IOException($e->getMessage());
 			}

@@ -22,13 +22,16 @@
 		{
 			return new self($string);
 		}
-
+		
 		public function __construct($string)
 		{
 			$this->string = $string;
 			$this->length = mb_strlen($this->string);
 		}
 		
+		/**
+		 * @return StringReader
+		**/
 		public function close()
 		{
 			$this->string = null;
@@ -49,7 +52,10 @@
 			
 			return $result;
 		}
-
+		
+		/**
+		 * @return StringReader
+		**/
 		public function mark()
 		{
 			$this->ensureOpen();
@@ -58,12 +64,15 @@
 			
 			return $this; 
 		}
-
+		
 		public function markSupported()
 		{
 			return true;
 		}
 		
+		/**
+		 * @return StringReader
+		**/
 		public function reset()
 		{
 			$this->ensureOpen();
@@ -96,7 +105,7 @@
 			return ($this->next >= $this->length);
  		}
  		
-		private function ensureOpen()
+		/* void */ private function ensureOpen()
 		{
 			if ($this->string === null)
 				throw new IOException('Stream closed');	
