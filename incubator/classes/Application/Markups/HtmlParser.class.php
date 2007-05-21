@@ -17,6 +17,9 @@
 		const END_TAG_STATE		= 2;
 		const END_TAG_ID_STATE	= 3;
 		const INSIDE_TAG_STATE	= 4;
+		const ATTR_NAME_STATE	= 5;
+		const WAITING_EQUAL_SIGN_STATE	= 6;
+		const ATTR_VALUE_STATE	= 7;
 		const FINAL_STATE		= 42;
 		
 		const SPACER_MASK			= '[ \r\n\t]';
@@ -41,9 +44,14 @@
 		
 		private $buffer		= null;
 		
-		private $tagId			= null;
-		private $invalidTagId	= false;
-		private $tag			= null;
+		private $tagId		= null;
+		private $invalidId	= false;
+		
+		private $tag		= null;
+		
+		private $attrName	= null;
+		private $attrValue	= null;
+		private $insideQuote	= null;
 		
 		public function __construct($content)
 		{
@@ -92,8 +100,11 @@
 			) {
 				++$this->line;
 				$this->linePosition = 1;
-			}
 				
+			} else {
+				++$this->linePosition;
+			}
+			
 			$this->previousChar = $this->char;
 			
 			return $this->char;
@@ -117,6 +128,15 @@
 				case self::INSIDE_TAG_STATE:
 					return $this->insideTagState();
 					
+				case self::ATTR_NAME_STATE:
+					return $this->attrNameState();
+					
+				case self::WAITING_EQUAL_SIGN_STATE:
+					return $this->waitingEqualSignState();
+					
+				case self::ATTR_VALUE_STATE:
+					return $this->attrValueState();
+					
 				default:
 					throw new WrongStateException('state machine is broken');
 			}
@@ -127,6 +147,15 @@
 		// INITIAL_STATE
 		private function outsideTagState()
 		{
+			Assert::isNull($this->tag);
+			Assert::isNull($this->tagId);
+			Assert::isFalse($this->invalidId);
+			
+			Assert::isNull($this->attrName);
+			Assert::isNull($this->attrValue);
+			
+			Assert::isNull($this->insideQuote);
+			
 			if ($this->char === null) {
 				// [end-of-file]
 				
@@ -141,7 +170,9 @@
 			
 				$this->getNextChar();
 				
-				if (preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $this->char)) {
+				if (
+					preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $this->char)
+				) {
 					
 					if ($this->buffer) {
 						$this->tags[] = Cdata::create()->setData($this->buffer);
@@ -149,7 +180,7 @@
 					}
 					
 					$this->tagId = $this->char;
-					$this->invalidTagId = false;
+					$this->invalidId = false;
 					
 					$this->getNextChar();
 					
@@ -168,7 +199,7 @@
 					return self::END_TAG_STATE;
 					
 				} else {
-					// <2, <ф, <[space], <>
+					// <2, <ф, <[space], <>, <[eof]
 					
 					$this->warning(
 						"incorrect start-tag, treating it as cdata"
@@ -197,10 +228,23 @@
 		// START_TAG_STATE
 		private function startTagState()
 		{
+			Assert::isNull($this->tag);
+			Assert::isNotNull($this->tagId);
+			
+			Assert::isNull($this->attrName);
+			Assert::isNull($this->attrValue);
+			
+			Assert::isNull($this->insideQuote);
+			
 			if ($this->char === null) {
 				// ... <tag[end-of-file]
 				
-				$this->error("unexpected end of file");
+				$this->error("unexpected end of file, tag id is incomplete");
+				
+				if ($this->tagId)
+					$this->tags[] =
+						SgmlEndTag::create()->
+						setId($this->tagId);
 				
 				return self::FINAL_STATE;
 				
@@ -211,7 +255,7 @@
 					setId($this->tagId);
 				
 				$this->tagId = null;
-				$this->invalidTagId = false;
+				$this->invalidId = false;
 				
 				$this->getNextChar();
 				
@@ -225,6 +269,9 @@
 				
 				$this->tags[] = $this->tag;
 				
+				$this->tagId = null;
+				$this->invalidId = false;
+				
 				$this->getNextChar();
 				
 				return self::INSIDE_TAG_STATE;
@@ -232,21 +279,40 @@
 			} else {
 				// <div, <q#, <dж
 				
-				if (!preg_match('/'.self::ID_CHAR_MASK.'/', $this->char)) {
+				$char = $this->char;
+				
+				$this->getNextChar();
+				
+				if ($char == '/' && $this->char == '>') {
+					// <br/>
+					
+					$this->tags[] = SgmlOpenTag::create()->
+						setId($this->tagId)->
+						setEmpty(true);
+						
+					$this->tagId = null;
+					$this->invalidId = false;
+					
+					$this->getNextChar();
+					
+					return self::INITIAL_STATE;
+					
+				} elseif (
+					!preg_match('/'.self::ID_CHAR_MASK.'/', $char)
+					&& !$this->invalidId	// ignoring duplicate errors
+				) {
 					// most browsers seems like parsing invalid tags
 					
 					$this->error(
 						"tag id contains invalid char with code "
-						.self::charHexCode($this->char)
+						.self::charHexCode($char)
 						.", parsing with invalid id"
 					);
 					
-					$this->invalidTagId = true;
+					$this->invalidId = true;
 				}
 				
-				$this->tagId .= $this->char;
-					
-				$this->getNextChar();
+				$this->tagId .= $char;
 				
 				return self::START_TAG_STATE;
 			}
@@ -257,37 +323,45 @@
 		// END_TAG_STATE
 		private function endTagState()
 		{
+			Assert::isNull($this->tag);
+			
+			Assert::isNull($this->attrName);
+			Assert::isNull($this->attrValue);
+			
+			Assert::isNull($this->insideQuote);
+			
 			if ($this->char === null) {
-				// ... </[end-of-file]
+				// ... </[end-of-file], </sometag[eof]
 				
-				$this->error("unexpected end of file");
+				$this->error("unexpected end of file, end-tag is incomplete");
 				
+				if ($this->tagId)
+					$this->tags[] =
+						SgmlEndTag::create()->
+						setId($this->tagId);
+				 
 				return self::FINAL_STATE;
 				
 			} elseif ($this->char == '>') {
 				
 				if (!$this->tagId) {
 					// </>
-					$this->warning('ignoring empty/invalid end-tag');
-					
-				} else {
-					// storing
-					
-					$this->tags[] =
-						SgmlEndTag::create()->
-						setId($this->tagId);
-					
-					$this->tagId = null;
+					$this->warning('empty end-tag, storing with empty id');
 				}
-				
-				$this->invalidTagId = false;
+					
+				$this->tags[] =
+					SgmlEndTag::create()->
+					setId($this->tagId);
+					
+				$this->tagId = null;
+				$this->invalidId = false;
 				
 				$this->getNextChar();
 				
 				return self::INITIAL_STATE;
 					
 			} else {
-				// most browsers parsing end-tag until next '>' char
+				// most browsers parse end-tag until next '>' char
 				
 				$validChar =
 					(
@@ -300,19 +374,21 @@
 						&& preg_match('/'.self::ID_CHAR_MASK.'/', $this->char)
 					);
 				
-				if (!$validChar)
+				if (!$validChar && !$this->invalidId) {
 					$this->error(
-						"id contains invalid char with code "
+						"end-tag id contains invalid char with code "
 						.self::charHexCode($this->char)
-						.", storing end-tag with invalid id"
+						.", parsing with invalid id"
 					);
+					
+					$this->invalidId = true;
+				}
 					
 				$this->tagId .= $this->char;
 				
 				$this->getNextChar();
 				
 				return self::END_TAG_STATE;
-				
 			}
 			
 			Assert::isUnreachable();
@@ -321,7 +397,346 @@
 		// INSIDE_TAG_STATE
 		private function insideTagState()
 		{
-			throw new UnimplementedFeatureException('inside tag');
+			Assert::isNull($this->tagId);
+			Assert::isFalse($this->invalidId);
+			
+			Assert::isNull($this->attrName);
+			Assert::isNull($this->attrValue);
+			
+			Assert::isNotNull($this->tag);
+			Assert::isTrue($this->tag instanceof SgmlOpenTag);
+			
+			Assert::isNull($this->insideQuote);
+			
+			if ($this->char === null) {
+				// ... <tag [eof], <tag id=val [eof]
+				
+				$this->error("unexpected end of file, incomplete tag stored");
+				
+				return self::FINAL_STATE;
+				
+			} elseif (preg_match('/'.self::SPACER_MASK.'/', $this->char)) {
+				
+				$this->getNextChar();
+				
+				return self::INSIDE_TAG_STATE;
+				
+			} elseif ($this->char == '>') {
+				// <tag ... >
+				
+				$this->tag = null;
+				
+				$this->getNextChar();
+				
+				return self::INITIAL_STATE;
+				
+			} elseif ($this->char == '=') {
+				
+				// most browsers' behaviour
+				$this->error('unexpected equal sign, attr name considered empty');
+				
+				$this->getNextChar();
+				
+				return self::ATTR_VALUE_STATE;
+				
+			} else {
+				
+				$char = $this->char;
+				
+				$this->getNextChar();
+				
+				if ($char == '/' && $this->char == '>') {
+					// <tag />, <tag id=value />
+					
+					$this->tag->setEmpty(true);
+					
+					$this->tag = null;
+					
+					$this->getNextChar();
+					
+					return self::INITIAL_STATE;
+					
+				} elseif (
+					!preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $char)
+				) {
+					$this->error(
+						"attr name contains invalid char with code "
+						.self::charHexCode($char)
+						.", parsing with invalid name"
+					);
+					
+					$this->invalidId = true;
+				}
+				
+				$this->attrName = $char;
+				
+				return self::ATTR_NAME_STATE;
+			}
+			
+			Assert::isUnreachable();
+		}
+		
+		// ATTR_NAME_STATE
+		private function attrNameState()
+		{
+			Assert::isNotNull($this->tag);
+			Assert::isTrue($this->tag instanceof SgmlOpenTag);
+			Assert::isNotNull($this->attrName);
+			
+			Assert::isNull($this->insideQuote);
+			
+			if ($this->char === null) {
+				// <tag i[eof]
+				
+				$this->warning("empty value for attr == '{$this->attrName}'");
+				
+				$this->error("unexpected end of file, incomplete tag stored");
+				
+				$this->tag->addAttribute($this->attrName, null);
+				
+				return self::FINAL_STATE;
+				
+			} elseif (preg_match('/'.self::SPACER_MASK.'/', $this->char)) {
+				// <tag attr[space]
+				
+				$this->invalidId = false;
+				
+				$this->getNextChar();
+				
+				return self::WAITING_EQUAL_SIGN_STATE;
+				
+			} elseif ($this->char == '>') {
+				// <tag attr>
+				
+				$this->warning("empty value for attr == '{$this->attrName}'");
+				
+				$this->tag->addAttribute($this->attrName, null);
+				
+				$this->tag = null;
+				$this->invalidId = false;
+				
+				$this->attrName = null;
+				
+				$this->getNextChar();
+				
+				return self::INITIAL_STATE;
+				
+			} elseif ($this->char == '=') {
+				// <tag id=
+				
+				$this->invalidId = false;
+				
+				$this->getNextChar();
+				
+				return self::ATTR_VALUE_STATE;
+				
+			} else {
+				
+				$char = $this->char;
+				
+				$this->getNextChar();
+				
+				if ($char == '/' && $this->char == '>') {
+					// <option attr=value checked/>
+					
+					$this->tag->setEmpty(true);
+					
+					$this->warning("empty value for attr == '{$this->attrName}'");
+					
+					$this->tag->addAttribute($this->attrName, null);
+					
+					$this->tag = null;
+					$this->invalidId = false;
+					
+					$this->attrName = null;
+					
+					$this->getNextChar();
+					
+					return self::INITIAL_STATE;
+					
+				} elseif (
+					!preg_match('/'.self::ID_CHAR_MASK.'/', $char)
+					&& !$this->invalidId
+				) {
+					$this->error(
+						"attr name contains invalid char with code "
+						.self::charHexCode($char)
+						.", parsing with invalid name"
+					);
+					
+					$this->invalidId = true;
+				}
+				
+				$this->attrName .= $char;
+				
+				return self::ATTR_NAME_STATE;
+			}
+			
+			Assert::isUnreachable();
+		}
+		
+		// WAITING_EQUAL_SIGN_STATE
+		private function waitingEqualSignState()
+		{
+			Assert::isNotNull($this->tag);
+			Assert::isTrue($this->tag instanceof SgmlOpenTag);
+			Assert::isNull($this->tagId);
+			Assert::isNotNull($this->attrName);
+			Assert::isFalse($this->invalidId);
+			
+			Assert::isNull($this->insideQuote);
+			
+			if ($this->char === null) {
+				// <tag id[space*][eof]
+				
+				$this->warning("empty value for attr == '{$this->attrName}'");
+				
+				$this->error("unexpected end of file, incomplete tag stored");
+				
+				$this->tag->addAttribute($this->attrName, null);
+				
+				return self::FINAL_STATE;
+				
+			} elseif (preg_match('/'.self::SPACER_MASK.'/', $this->char)) {
+				// <tag attr[space*]
+				
+				$this->getNextChar();
+				
+				return self::WAITING_EQUAL_SIGN_STATE;
+				
+			} elseif($this->char == '=') {
+				
+				$this->getNextChar();
+				
+				return self::ATTR_VALUE_STATE;
+				
+			} else {
+				// <tag attr x, <tag attr >
+				
+				$this->warning("empty value for attr == '{$this->attrName}'");
+				
+				$this->tag->addAttribute($this->attrName, null);
+				
+				$this->attrName = null;
+				
+				return self::INSIDE_TAG_STATE;
+			}
+			
+			Assert::isUnreachable();
+		}
+		
+		// ATTR_VALUE_STATE
+		private function attrValueState()
+		{
+			Assert::isNull($this->tagId);
+			Assert::isFalse($this->invalidId);
+			
+			Assert::isNotNull($this->tag);
+			Assert::isTrue($this->tag instanceof SgmlOpenTag);
+			
+			if ($this->char === null) {
+				// <tag id=[space*][eof], <tag id=val[eof]
+				
+				if (!$this->attrValue)
+					$this->warning("empty value for attr == '{$this->attrName}'");
+					
+				if ($this->insideQuote) {
+					$this->warning(
+						"unclosed quoted value for attr == '{$this->attrName}'"
+					);
+					
+					// NOTE: firefox rolls back to the first > after quote.
+					// Opera consideres incomplete tag as cdata.
+					// we store whole data as value though ff seems to be more
+					// intelligent.
+				}
+					
+				$this->error("unexpected end of file, incomplete tag stored");
+				
+				$this->tag->addAttribute($this->attrName, $this->attrValue);
+				
+				return self::FINAL_STATE;
+				
+			} elseif (
+				!$this->insideQuote
+				&& preg_match('/'.self::SPACER_MASK.'/', $this->char)
+			) {
+				
+				$this->getNextChar();
+				
+				if ($this->attrValue) {
+					// <tag id=value[space]
+					
+					$this->tag->addAttribute($this->attrName, $this->attrValue);
+					
+					$this->attrName = null;
+					$this->attrValue = null;
+					
+					return self::INSIDE_TAG_STATE;
+					
+				} else {
+					// <tag id=[space*]
+					
+					return self::ATTR_VALUE_STATE;
+				}
+				
+				Assert::isUnreachable();
+			
+			} elseif (!$this->insideQuote && $this->char == '>') {
+				// <tag id=value>, <a href=catalog/>
+				
+				$this->tag->addAttribute($this->attrName, $this->attrValue);
+				
+				$this->attrName = null;
+				$this->attrValue = null;
+				$this->tag = null;
+				
+				$this->getNextChar();
+				
+				return self::INITIAL_STATE;
+				
+			} else {
+				
+				if ($this->char == '"' || $this->char == "'") {
+					
+					if (!$this->insideQuote) {
+						
+						$this->insideQuote = $this->char;
+						
+						$this->getNextChar();
+						
+						return self::ATTR_VALUE_STATE;
+				
+					} elseif ($this->char == $this->insideQuote) {
+						// attr = "value", attr='value'
+						
+						$this->tag->addAttribute(
+							$this->attrName, $this->attrValue
+						);
+				
+						$this->attrName = null;
+						$this->attrValue = null;
+						
+						$this->insideQuote = null;
+					
+						$this->getNextChar();
+				
+						return self::INSIDE_TAG_STATE;
+					}
+				}
+				
+				$this->attrValue .= $this->char;
+				
+				// TODO: check it! attr="\"value\""
+				if ($this->insideQuote && $this->char == '\\')
+					$this->attrValue .= $this->getNextChar();
+				
+				$this->getNextChar();
+				
+				return self::ATTR_VALUE_STATE;
+			}
+			
+			Assert::isUnreachable();
 		}
 		
 		private function getTextualPosition()

@@ -45,8 +45,11 @@
 		**/
 		public function addAttribute($name, $value)
 		{
-			Assert::isString($name);
-			Assert::isString($value);
+			if ($name)
+				Assert::isString($name);
+			
+			if ($value)
+				Assert::isString($value);
 			
 			$this->attributes[$name] = $value;
 			
