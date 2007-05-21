@@ -12,6 +12,8 @@
 
 	abstract class Reader 
 	{
+		const BLOCK_SIZE = 8192;
+		
 		abstract public function close();
 		abstract public function read($count);
 		abstract public function isEof();
@@ -42,7 +44,7 @@
 		public function getWhole()
 		{
 			while(!$this->isEof())
-				$result .= $this->read(1);	
+				$result .= $this->read(self::BLOCK_SIZE);	
 			
 			return $result;
 		}
