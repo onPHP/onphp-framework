@@ -107,10 +107,7 @@
  		
  		public function getWhole()
  		{
- 			$next = $this->next;
- 			$this->next = $this->length;
- 			
- 			return mb_substr($this->string, next);
+ 			return $this->read($this->length);
  		}
  		
 		/* void */ private function ensureOpen()
