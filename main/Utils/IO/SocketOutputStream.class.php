@@ -61,10 +61,9 @@
 					
 					// NOTE: ignoring timeouts here
 					$writtenBytes += $this->socket->write($remainingBuffer);
-				
+					
 					++$i;
 				}
-				
 			} catch (NetworkException $e) {
 				throw new IOException($e->getMessage());
 			}
