@@ -37,6 +37,14 @@
 				throw new WrongArgumentException('skip value is negative');
 			
 			return mb_strlen($this->read($count));
-		} 
+		}
+		
+		public function getWhole()
+		{
+			while(!$this->isEof())
+				$result .= $this->read(1);	
+			
+			return $result;
+		}
 	}
 ?>
