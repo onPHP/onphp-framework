@@ -314,7 +314,11 @@
 				&& $this->getClassName()
 			) {
 				return call_user_func(array($this->getClassName(), 'create'), $raw);
-			} elseif (!$this->isIdentifier() && $this->getClassName()) {
+			} elseif (
+				!$this->isIdentifier()
+				&& $this->getClassName()
+				&& !is_subclass_of($this->getClassName(), 'Enumeration')
+			) {
 				$remoteDao = call_user_func(array($this->getClassName(), 'dao'));
 				
 				if ($this->getFetchStrategyId() == FetchStrategy::JOIN) {

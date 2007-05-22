@@ -44,6 +44,8 @@ EOT;
 		
 		private static function dumpMetaClass(MetaClass $class)
 		{
+			$propertyList = $class->getWithInternalProperties();
+			
 			$out = <<<EOT
 	protected function makePropertyList()
 	{
@@ -56,9 +58,10 @@ EOT;
 			array_merge(
 				parent::makePropertyList(),
 				array(
+
 EOT;
-				if ($class->getWithInternalProperties())
-					$out .= "\n";
+				$propertyList[$class->getIdentifier()->getName()] =
+					$class->getIdentifier();
 			} else {
 				$out .= <<<EOT
 		return array(
@@ -68,7 +71,7 @@ EOT;
 
 			$list = array();
 			
-			foreach ($class->getWithInternalProperties() as $property) {
+			foreach ($propertyList as $property) {
 				$list[] =
 					"'{$property->getName()}' => "
 					.$property->toLightProperty($class)->toString();

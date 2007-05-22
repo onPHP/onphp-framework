@@ -321,6 +321,18 @@
 			} elseif ($this->isIdentifier()) {
 				$primitiveName = 'identifier';
 				$className = $holder->getName();
+			} elseif (
+				!$this->isIdentifier()
+				&& (
+					!$this->getType()->isGeneric()
+					&& ($this->getType() instanceof ObjectType)
+					&& (
+						$this->getType()->getClass()->getPattern()
+							instanceof EnumerationClassPattern
+					)
+				)
+			) {
+				$primitiveName = 'enumeration';
 			} else
 				$primitiveName = $this->getType()->getPrimitiveName();
 			

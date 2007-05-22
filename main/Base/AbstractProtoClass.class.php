@@ -260,10 +260,11 @@
 					$setter = $property->getSetter();
 					
 					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
+						// FIXME: remove dupe enum-related code
 						if ($encapsulants) {
 							$getter = $property->getGetter();
 							
-							$object->$setter(
+							$value =
 								$property->toValue(
 									$dao,
 									array(
@@ -271,17 +272,34 @@
 											$object->$getter()->getId()
 									),
 									$prefix
-								)
-							);
+								);
+							
+							// FIXME: php 5.2 only
+							if (
+								($className = $property->getClassName())
+								&& is_subclass_of($className, 'Enumeration')
+							) {
+								$value = new $className($value);
+							}
+							
+							$object->$setter($value);
 						} else {
 							$className = $property->getClassName();
-							$inner = new $className();
 							
-							$object->$setter(
+							// FIXME: php 5.2 only
+							if (is_subclass_of($className, 'Enumeration')) {
+								$inner = new $className(
+									$array[$prefix.$property->getColumnName()]
+								);
+							} else {
+								$inner = new $className();
+								
 								$inner->setId(
 									$array[$prefix.$property->getColumnName()]
-								)
-							);
+								);
+							}
+							
+							$object->$setter($inner);
 						}
 						
 						continue;
