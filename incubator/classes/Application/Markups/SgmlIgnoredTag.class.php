@@ -22,6 +22,9 @@
 			return new self;
 		}
 		
+		/**
+		 * @return SgmlIgnoredTag
+		**/
 		public static function comment()
 		{
 			return self::create()->setId('!--');
