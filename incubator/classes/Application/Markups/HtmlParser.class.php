@@ -56,6 +56,8 @@
 		private $linePosition	= 1;
 		private $previousChar	= null;
 		
+		private $mark		= null;
+		
 		private $state		= self::INITIAL_STATE;
 		
 		private $tags		= array();
@@ -75,6 +77,9 @@
 		private $insideQuote	= null;
 		
 		private $inlineTag	= null;
+		private $returnedFromCommentState = false;
+		
+		private $endTagFound	= null;
 		
 		public function __construct($content)
 		{
@@ -131,6 +136,24 @@
 			$this->previousChar = $this->char;
 			
 			return $this->char;
+		}
+		
+		private function mark()
+		{
+			$this->mark = array(
+				$this->char, $this->pos,
+				$this->line, $this->linePosition, $this->previousChar
+			);
+		}
+		
+		private function reset()
+		{
+			Assert::isNotNull($this->mark);
+			
+			list(
+				$this->char, $this->pos,
+				$this->line, $this->linePosition, $this->previousChar
+			) = $this->mark;
 		}
 		
 		private function handleState()
@@ -205,7 +228,7 @@
 				return self::FINAL_STATE;
 					
 			} elseif ($this->char == '<') {
-			
+				
 				$this->getNextChar();
 				
 				if (
@@ -232,6 +255,7 @@
 						$this->char == '!'
 						&& mb_substr($this->content, $this->pos, 2) == '--'
 					) {
+						// <!--, <!---
 						
 						$this->pos += 2;
 						
@@ -315,7 +339,9 @@
 					setId($this->tagId);
 				
 				$isInline = in_array($this->tagId, $this->inlineTags);
-				$this->inlineTag = $this->tagId;
+				
+				if ($isInline)
+					$this->inlineTag = $this->tagId;
 				
 				$this->tagId = null;
 				$this->invalidId = false;
@@ -375,7 +401,9 @@
 						setEmpty(true);
 						
 					$isInline = in_array($this->tagId, $this->inlineTags);
-					$this->inlineTag = $this->tagId;
+					
+					if ($isInline)
+						$this->inlineTag = $this->tagId;
 						
 					$this->tagId = null;
 					$this->invalidId = false;
@@ -532,14 +560,16 @@
 				// <tag ... >
 				
 				$isInline = in_array($this->tag->getId(), $this->inlineTags); 
-				$this->inlineTag = $this->tag->getId();
+				
+				if ($isInline)
+					$this->inlineTag = $this->tag->getId();
 				
 				$this->tag = null;
 				
 				$this->getNextChar();
 				
 				if ($isInline)
-					return self::INSIDE_TAG_STATE;
+					return self::INLINE_TAG_STATE;
 				else
 					return self::INITIAL_STATE;
 				
@@ -564,7 +594,9 @@
 					$this->tag->setEmpty(true);
 					
 					$isInline = in_array($this->tag->getId(), $this->inlineTags);
-					$this->inlineTag = $this->tag->getId();
+					
+					if ($isInline)
+						$this->inlineTag = $this->tag->getId();
 					
 					$this->tag = null;
 					
@@ -632,7 +664,9 @@
 				$this->tag->addAttribute($this->attrName, null);
 				
 				$isInline = in_array($this->tag->getId(), $this->inlineTags);
-				$this->inlineTag = $this->tag->getId();
+				
+				if ($isInline)
+					$this->inlineTag = $this->tag->getId();
 				
 				$this->tag = null;
 				$this->invalidId = false;
@@ -671,7 +705,9 @@
 					$this->tag->addAttribute($this->attrName, null);
 					
 					$isInline = in_array($this->tag->getId(), $this->inlineTags);
-					$this->inlineTag = $this->tag->getId();
+					
+					if ($isInline)
+						$this->inlineTag = $this->tag->getId();
 					
 					$this->tag = null;
 					$this->invalidId = false;
@@ -819,7 +855,9 @@
 				$this->tag->addAttribute($this->attrName, $this->attrValue);
 				
 				$isInline = in_array($this->tag->getId(), $this->inlineTags);
-				$this->inlineTag = $this->tag->getId();
+				
+				if ($isInline)
+					$this->inlineTag = $this->tag->getId();
 				
 				$this->attrName = null;
 				$this->attrValue = null;
@@ -876,96 +914,6 @@
 			Assert::isUnreachable();
 		}
 		
-		// CDATA_STATE
-		private function cdataState()
-		{
-			// FIXME: use getNextChar(), line counters broken
-
-			$endPos = mb_strpos($this->content, ']]>', $this->pos);
-			
-			if ($endPos === false) {
-				
-				$this->error('unexpected end-of-file inside cdata');
-				
-				// NOTE: opera treats cdata-tag as cdata itself.
-				// we do not.
-				$content = mb_substr($this->content, $this->pos - 1);
-				
-				$this->pos = mb_strlen($this->content);
-				
-			} else {
-				
-				$content = mb_substr(
-					$this->content, $this->pos - 1, $endPos - $this->pos + 1
-				);
-				
-				$this->pos = $endPos + 3;
-			}
-			
-			// TODO: separate clean cdata and plain text, and make tag at
-			// previous state.
-			$this->tags[] = Cdata::create()->setData(htmlspecialchars($content));
-			
-			$this->getNextChar();
-			
-			if ($endPos == false)
-				return self::FINAL_STATE;
-			else
-				return self::INITIAL_STATE;
-			
-			Assert::isUnreachable();
-		}
-		
-		// COMMENT_STATE
-		public function commentState()
-		{
-			// FIXME: duplicating code, refactoring needed
-			// FIXME: use getNextChar(), line counters broken
-			
-			$endPos = mb_strpos($this->content, '-->', $this->pos);
-			$endTagLength = 3;
-			
-			if ($endPos === false) {
-				// NOTE: firefox and opera rolls back and strip comment at the
-				// first >.
-				$endPos = mb_strpos($this->content, '>', $this->pos);
-				$endTagLength = 1;
-			}
-			
-			if ($endPos === false) {
-				
-				$this->error('unexpected end-of-file inside comment');
-				
-				$content = mb_substr($this->content, $this->pos - 1);
-				
-				$this->pos = mb_strlen($this->content);
-				
-			} else {
-				
-				$content = mb_substr(
-					$this->content, $this->pos - 1, $endPos - $this->pos + 1
-				);
-				
-				$this->pos = $endPos + $endTagLength;
-			}
-			
-			// TODO: make tag at previous state?
-			$this->tags[] =
-				SgmlIgnoredTag::comment()->
-				setCdata(
-					Cdata::create()->setData($content)
-				);
-			
-			$this->getNextChar();
-			
-			if ($endPos == false)
-				return self::FINAL_STATE;
-			else
-				return self::INITIAL_STATE;
-			
-			Assert::isUnreachable();
-		}
-		
 		// INLINE_TAG_STATE:
 		public function inlineTagState()
 		{
@@ -974,49 +922,149 @@
 			Assert::isNull($this->tag);
 			Assert::isNull($this->tagId);
 			Assert::isFalse($this->invalidId);
-			Assert::isFalse($this->eatingGarbage);
 			Assert::isNotNull($this->inlineTag);
 			
-			$waitingTag = "</{$this->inlineTag}";
-			$endTagLength = strlen($waitingTag);
+			if ($this->char === null) {
+				$this->error('unexpected eof inside inline tag');
+				
+				return self::FINAL_STATE;
+			}
 			
-			// FIXME: </scriptмусор matches too.
-			$endPos = mb_strpos($this->content, $waitingTag, $this->pos);
+			// NOTE: most browsers tries to parse comment first, if any.
 			
-			if ($endPos === false) {
+			if ($this->returnedFromCommentState) {
 				
-				$this->error('unexpected end-of-file inside inline tag');
+				$this->returnedFromCommentState = false;
 				
-				$content = mb_substr($this->content, $this->pos - 1);
-				
-				$this->pos = mb_strlen($this->content);
+				$content = null;
+				$partialMatch = null;
 				
 			} else {
+			
+				if (preg_match('/'.self::SPACER_MASK.'/', $this->char)) {
+					
+					$this->getNextChar();
+					
+					return self::INLINE_TAG_STATE;
+				}
 				
-				$content = mb_substr(
-					$this->content, $this->pos - 1, $endPos - $this->pos + 1
-				);
+				$needle = '<!--';
 				
-				$this->pos = $endPos + $endTagLength;
+				$partialMatch = $this->getPartialMatch($needle);
+				
+				if ($partialMatch == $needle)
+					return self::COMMENT_STATE;
+					
+				$content = $partialMatch[0];
+				
+				if (strlen($partialMatch) == 1)
+					$partialMatch = null;
+				else
+					$partialMatch = substr($partialMatch, 1);
 			}
+			
+			while ($this->char !== null) {
+			
+				$needle = "</{$this->inlineTag}";
+				
+				$partialMatch = $this->getPartialMatch($needle, $partialMatch);
+				
+				if (!$partialMatch) {
+					
+					$content .= $this->char;
+					
+					$this->getNextChar();
+					
+				} elseif (
+					$partialMatch == $needle
+					&& (
+						$this->char === null
+						|| $this->char === '>'
+						|| preg_match('/'.self::SPACER_MASK.'/', $this->char)
+					)
+				) {
+					$this->tags[] = Cdata::create()->setData($content);
+					
+					$this->tagId = $this->inlineTag;
+					$this->inlineTag = null;
+					
+					return self::END_TAG_STATE;
+					
+				} else {
+					$content .= $partialMatch[0];
+					
+					if (strlen($partialMatch) == 1)
+						$partialMatch = null;
+					else
+						$partialMatch = substr($partialMatch, 1);
+				}
+			}
+			
+			if ($partialMatch)
+				$content .= $partialMatch;
 			
 			$this->tags[] = Cdata::create()->setData($content);
 			
-			$this->tagId = $this->inlineTag;
-			$this->inlineTag = null;
+			$this->error(
+				"end-tag for inline tag == '{$this->inlineTag}' not found"
+			);
 			
-			// FIXME: eating garbage only if space after waitingTag
-			$this->eatingGarbage = true;
+			return self::FINAL_STATE;
+		}
+		
+		// CDATA_STATE
+		private function cdataState()
+		{
+			Assert::isNull($this->tag);
+			Assert::isNull($this->tagId);
 			
-			$this->getNextChar();
+			$content = $this->getContentUpToTagEnd(']]>', false);
 			
-			if ($endPos == false)
-				return self::FINAL_STATE;
-			else {
-				return self::END_TAG_STATE;
+			// TODO: separate clean cdata and plain text, and make tag at
+			// previous state.
+			$this->tags[] = Cdata::create()->setData(htmlspecialchars($content));
+			
+			// FIXME: found tag or not?
+			if (!$this->endTagFound) {
+				// NOTE: here opera treats cdata-tag as cdata itself.
+				// we do not.
+				
+				$this->error('unexpected end-of-file inside cdata');
 			}
 			
-			Assert::isUnreachable();
+			$this->endTagFound = false;
+			
+			return self::INITIAL_STATE;
+		}
+		
+		// COMMENT_STATE
+		public function commentState()
+		{
+			Assert::isNull($this->tag);
+			Assert::isNull($this->tagId);
+			
+			$content = $this->getContentUpToTagEnd('-->', true);
+			
+			$this->tags[] =
+				SgmlIgnoredTag::comment()->
+				setCdata(
+					Cdata::create()->setData($content)
+				);
+			
+			if (!$this->endTagFound) {
+				
+				$this->error('unexpected end-of-file inside comment tag');
+				
+				$this->endTagFound = false;
+				
+			} elseif ($this->inlineTag) {
+				
+				$this->returnedFromCommentState = true;
+				
+				return self::INLINE_TAG_STATE;
+			}
+			
+			return self::INITIAL_STATE;
 		}
 		
 		// EXTERNAL_TAG_STATE:
@@ -1024,48 +1072,18 @@
 		{
 			Assert::isTrue($this->tag instanceof SgmlIgnoredTag);
 			
-			// FIXME: use getNextChar(), line counters broken
-			
-			$endPos = mb_strpos($this->content, '?>', $this->pos);
-			$endTagLength = 2;
-			
-			if ($endPos === false) {
-				// NOTE: firefox and opera cuts data up to next '>'. we try
-				// '? >' first, it seems to be more intelligent.
-				
-				$endPos = mb_strpos($this->content, '>', $this->pos);
-				$endTagLength = 1;
-			}
-			
-			if ($endPos === false) {
-				
-				$this->error('unexpected end-of-file inside external tag');
-				
-				$content = mb_substr($this->content, $this->pos - 1);
-				
-				$this->pos = mb_strlen($this->content);
-				
-			} else {
-				
-				$content = mb_substr(
-					$this->content, $this->pos - 1, $endPos - $this->pos + 1
-				);
-				
-				$this->pos = $endPos + $endTagLength;
-			}
+			$content = $this->getContentUpToTagEnd('?>', true);
 			
 			$this->tag->setCdata(Cdata::create()->setData($content));
 			
 			$this->tag = null;
 			
-			$this->getNextChar();
+			if (!$this->endTagFound)
+				$this->error('unexpected end-of-file inside external tag');
 			
-			if ($endPos == false)
-				return self::FINAL_STATE;
-			else
-				return self::INITIAL_STATE;
+			$this->endTagFound = false;
 			
-			Assert::isUnreachable();
+			return self::INITIAL_STATE;
 		}
 		
 		// DOCTYPE_TAG_STATE:
@@ -1075,38 +1093,133 @@
 			// Firefox does not.
 			Assert::isTrue($this->tag instanceof SgmlIgnoredTag);
 			
-			$endPos = mb_strpos($this->content, '>', $this->pos);
-			$endTagLength = 1;
-			
-			if ($endPos === false) {
-				
-				$this->error('unexpected end-of-file inside doctype tag');
-				
-				$content = mb_substr($this->content, $this->pos - 1);
-				
-				$this->pos = mb_strlen($this->content);
-				
-			} else {
-				
-				$content = mb_substr(
-					$this->content, $this->pos - 1, $endPos - $this->pos + 1
-				);
-				
-				$this->pos = $endPos + $endTagLength;
-			}
+			$content = $this->getContentUpToTagEnd(null, true);
 			
 			$this->tag->setCdata(Cdata::create()->setData($content));
 			
 			$this->tag = null;
 			
-			$this->getNextChar();
+			if (!$this->endTagFound)
+				$this->error('unexpected end-of-file inside external tag');
 			
-			if ($endPos == false)
-				return self::FINAL_STATE;
-			else
-				return self::INITIAL_STATE;
+			$this->endTagFound = false;
+				
+			return self::INITIAL_STATE;
+		}
+		
+		private function getContentUpToTagEnd($endTag, $singleBracketOnEof = false)
+		{
+			// get data up to next '>' if endTag not found and eof reached?
+			if ($singleBracketOnEof)
+				$this->mark();
+				
+			$result = null;
 			
-			Assert::isUnreachable();
+			$this->endTagFound = false;
+			
+			if ($endTag) {
+				
+				$partialMatch = null;
+				
+				while ($this->char !== null) {
+
+					$partialMatch = $this->getPartialMatch($endTag, $partialMatch);
+					
+					if (!$partialMatch) {
+						
+						$result .= $this->char;
+						
+						$this->getNextChar();
+						
+					} elseif ($partialMatch === $endTag) {
+						
+						$this->endTagFound = true;
+						
+						break;
+						
+					} else {
+						$result .= $partialMatch[0];
+						
+						if (strlen($partialMatch) == 1)
+							$partialMatch = null;
+						else
+							$partialMatch = substr($partialMatch, 1);
+					}
+				}
+			}
+			
+			if ($this->endTagFound)
+				return $result;
+			
+			if (!$singleBracketOnEof) {
+				
+				$result .= $partialMatch;
+				
+			} else {
+				
+				$this->reset();
+				
+				$result = null;
+				
+				while ($this->char != '>' && $this->char !== null) {
+					$result .= $this->char;
+					
+					$this->getNextChar();
+				}
+				
+				if ($this->char == '>') {
+					$this->endTagFound = true;
+					
+					if ($endTag)
+						$this->error(
+							"end delimiter '{$endTag}' not found, "
+							."skipping up to nearest '>'"
+						);
+					
+					$this->getNextChar();
+				}
+			}
+			
+			return $result;
+		}
+		
+		private function getPartialMatch($needle, $oldResult = null)
+		{
+			//echo "[$needle] [$oldResult]<br/>\n";
+			Assert::isNotNull($this->char);
+			
+			$needleLength = strlen($needle);
+			$oldLength = strlen($oldResult);
+			
+			$result = null;
+			$matchCount = 0;
+			
+			if ($oldResult) 
+				$char = $oldResult[0];
+			else 
+				$char = $this->char;
+			
+			while (
+				$char !== null
+				&& $matchCount < $needleLength
+				&& $needle[$matchCount] == $char
+			) {
+				$result .= $char;
+				
+				++$matchCount;
+				
+				if ($matchCount < $oldLength)
+					$char = $oldResult[$matchCount];
+				else {
+					
+					if ($matchCount > $oldLength)
+						$this->getNextChar();
+					
+					$char = $this->char;
+				}
+			}
+			
+			return $result;
 		}
 		
 		private function getTextualPosition()
