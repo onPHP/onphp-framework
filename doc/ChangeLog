@@ -1,5 +1,9 @@
 # $Id$
 
+2007-05-23	Anton E. Lebedevich
+
+	* main/Flow/HttpErrorView.class.php: HttpErrorView added.
+
 2007-05-21	Dmitry A. Lomash
 
 	* main/Utils/IO/Reader.class.php,
