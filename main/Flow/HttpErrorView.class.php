@@ -15,22 +15,23 @@
 	**/
 	class HttpErrorView implements View
 	{
+		protected $status	= null;
+		
 		protected $prefix	= null;
-		protected $code		= null;
 		protected $postfix	= null;
 		
-		public function __construct($prefix, $code, $postfix)
+		public function __construct(HttpStatus $status, $prefix, $postfix)
 		{
+			$this->status = $status;
+			
 			$this->prefix = $prefix;
-			$this->code = $code;
 			$this->postfix = $postfix;
 		}
 		
-		public function render($model = null)
+		/* void */ public function render($model = null)
 		{
-			$status = new HttpStatus($this->code);
-			header($status->toString());
-			include $this->prefix.$this->code.$this->postfix;
+			header($this->status->toString());
+			include $this->prefix.$this->status->getId().$this->postfix;
 		}
 	}
 ?>
