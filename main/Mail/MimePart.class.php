@@ -195,7 +195,7 @@
 					
 					preg_match_all('/.{1,73}([^=]{0,3})?/', $string, $matches);
 					
-					$body = implode("=\r\n", $matches[0]);
+					$body = implode("=\n", $matches[0]);
 				
 					break;
 					
@@ -206,7 +206,7 @@
 							chunk_split(
 								base64_encode($this->body),
 								76,
-								"\r\n"
+								"\n"
 							)
 						);
 					
@@ -231,7 +231,7 @@
 					$header .= " charset=\"{$this->charset}\"";
 				
 				if ($this->boundary)
-					$header .= "\r\n\tboundary=\"{$this->boundary}\"";
+					$header .= "\n\tboundary=\"{$this->boundary}\"";
 				
 				$headers[] = $header;
 			}
@@ -246,12 +246,12 @@
 					"Content-Disposition: attachment; "
 					."filename=\"{$this->filename}\"";
 			elseif ($this->inline)
-				$headers = 'Content-Disposition: inline';
+				$headers[] = 'Content-Disposition: inline';
 			
 			if ($this->description)
 				$headers[] = "Content-Description: {$this->description}";
 			
-			return implode("\r\n", $headers);
+			return implode("\n", $headers);
 		}
 	}
 ?>
