@@ -36,16 +36,11 @@
 				$name = $property->getName();
 				
 				if (isset($primitives[$name])) {
-					if (
-						!$isPrototyped
-						|| $property->getFetchStrategyId() != FetchStrategy::LAZY
-					) {
-						$getter = 'get'.ucfirst($name);
-						if ($class->hasMethod($getter)) {
-							$value = $object->$getter();
-							if (!$ignoreNull || ($value !== null)) {
-								$form->importValue($name, $value);
-							}
+					$getter = 'get'.ucfirst($name);
+					if ($class->hasMethod($getter)) {
+						$value = $object->$getter();
+						if (!$ignoreNull || ($value !== null)) {
+							$form->importValue($name, $value);
 						}
 					}
 				}
