@@ -51,12 +51,12 @@
 
 			foreach ($this->parts as $part)
 				$this->body .=
-					'--'.$boundary."\r\n"
+					'--'.$boundary."\n"
 					.$part->getHeaders()
-					."\r\n\r\n"
-					.$part->getEncodedBody()."\r\n";
+					."\n\n"
+					.$part->getEncodedBody()."\n";
 			
-			$this->body .= '--'.$boundary."--"."\r\n\r\n";
+			$this->body .= '--'.$boundary."--"."\n\n";
 		}
 		
 		public function getEncodedBody()
