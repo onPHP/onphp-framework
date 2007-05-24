@@ -38,15 +38,14 @@
 			try {
 				$result = $this->socket->read($length);
 				
-				if ($result === false)
-					throw new IOTimedOutException(
-						'reading from socket timed out'
-					);
+				if ($result === null)
+					$this->eof = true;
 				
 				$i = 0;
 				
 				while (
-					strlen($result) < $length
+					!$this->eof
+					&& strlen($result) < $length
 					&& ($i < self::READ_ATTEMPTS)
 				) {
 					// 0.1s sleep insurance if something wrong with socket
@@ -54,12 +53,13 @@
 					
 					$remainingLength = $length - strlen($result);
 					
-					if ($remainingLength === false)
-						throw new IOTimedOutException(
-							'read timeout, connection is too slow?'
-						);
+					// NOTE: ignoring timeouts here
+					$nextPart = $this->socket->read($remainingLength);
 					
-					$result += $this->socket->read($remainingLength);
+					if ($nextPart !== null)
+						$result += $nextPart;
+					else
+						$this->eof = true;
 					
 					++$i;
 				}
@@ -67,7 +67,7 @@
 				throw new IOException($e->getMessage());
 			}
 			
-			if (strlen($result) < $length)
+			if (!$this->eof && strlen($result) < $length)
 				throw new IOException(
 					'connection is too slow or length is too large?'
 				);
