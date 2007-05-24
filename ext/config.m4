@@ -46,7 +46,7 @@ if test "$PHP_ONPHP" != "no"; then
 		-I@ext_srcdir@/src/main/DAOs \
 		-I@ext_srcdir@/src/main/DAOs/Handlers \
 	"
-	ONPHP_SANITY="-Wall -fno-strict-aliasing"
+	ONPHP_SANITY="-Wall -Werror -fno-strict-aliasing"
 
 	PHP_SUBST(ONPHP_INCLUDES)
 
