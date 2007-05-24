@@ -267,6 +267,16 @@
 		}
 		//@}
 		
+		/**
+		 * @return GenericDAO
+		**/
+		public function dropIdentityMap()
+		{
+			$this->identityMap = array();
+			
+			return $this;
+		}
+		
 		/* void */ protected function checkObjectType(Identifiable $object)
 		{
 			Assert::isTrue(
