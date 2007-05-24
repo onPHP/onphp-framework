@@ -11,9 +11,6 @@
 /* $Id$ */
 
 	/**
-	 * TODO: use Reader/Stream with appropriate encoding. now parsed only
-	 * utf-8.
-	 *
 	 * TODO: implement Lexer itself.
 	 *
 	 * TODO: refactoring.
@@ -45,11 +42,9 @@
 		
 		private $inlineTags			= array('style', 'script');
 		
-		private $content	= null;
-		private $length		= null;
+		private $reader		= null;
 		
 		private $char		= null;
-		private $pos		= 0;
 		
 		// for logging
 		private $line			= 1;
@@ -81,14 +76,13 @@
 		
 		private $endTagFound	= null;
 		
-		public function __construct($content)
+		public function __construct(StringReader $reader)
 		{
-			$this->content = $content;
-			$this->length = mb_strlen($this->content);
+			$this->reader = $reader;
 		}
 		
 		/**
-		 * @return HtmlParser
+		 * @return HtmlLexer
 		**/
 		public function parse()
 		{
@@ -115,12 +109,10 @@
 		
 		private function getNextChar()
 		{
-			if ($this->pos == $this->length)
+			if ($this->reader->isEof())
 				$this->char = null; // eof
-			else {
-				$this->char = mb_substr($this->content, $this->pos, 1);
-				++$this->pos;
-			}
+			else
+				$this->char = $this->reader->read(1);
 			
 			if (
 				$this->char == "\n" && $this->previousChar != "\r"
@@ -138,22 +130,47 @@
 			return $this->char;
 		}
 		
+		/**
+		 * @return HtmlLexer
+		**/
 		private function mark()
 		{
 			$this->mark = array(
-				$this->char, $this->pos,
-				$this->line, $this->linePosition, $this->previousChar
+				$this->char, $this->previousChar,
+				$this->line, $this->linePosition, 
 			);
+			
+			$this->reader->mark();
+			
+			return $this;
 		}
 		
+		/**
+		 * @return HtmlLexer
+		**/
 		private function reset()
 		{
 			Assert::isNotNull($this->mark);
 			
 			list(
-				$this->char, $this->pos,
-				$this->line, $this->linePosition, $this->previousChar
+				$this->char, $this->previousChar,
+				$this->line, $this->linePosition, 
 			) = $this->mark;
+			
+			$this->reader->reset();
+			
+			return $this;
+		}
+		
+		/**
+		 * @return HtmlLexer
+		**/
+		private function skip($count)
+		{
+			for ($i = 0; $i < $count; ++$i)
+				$this->getNextChar();
+			
+			return $this;
 		}
 		
 		private function handleState()
@@ -241,11 +258,15 @@
 						$this->buffer = null;
 					}
 					
+					$this->reader->mark();
+					
 					if (
 						$this->char == '!'
-						&& mb_substr($this->content, $this->pos, 7) == '[CDATA['
+						&& $this->reader->reset()
+						&& $this->reader->read(7) == '[CDATA['
+						&& $this->reader->reset()
 					) {
-						$this->pos += 7;
+						$this->skip(7);
 						
 						$this->getNextChar();
 						
@@ -253,16 +274,20 @@
 						
 					} elseif (
 						$this->char == '!'
-						&& mb_substr($this->content, $this->pos, 2) == '--'
+						&& $this->reader->reset()
+						&& $this->reader->read(2) == '--'
+						&& $this->reader->reset()
 					) {
 						// <!--, <!---
 						
-						$this->pos += 2;
+						$this->skip(2);
 						
 						$this->getNextChar();
 						
 						return self::COMMENT_STATE;
 					}
+					
+					$this->reader->reset();
 					
 					$this->tagId = $this->char;
 					
@@ -1275,7 +1300,7 @@
 		}
 		
 		/**
-		 * @return HtmlParser
+		 * @return HtmlLexer
 		**/
 		private function warning($message)
 		{
@@ -1286,7 +1311,7 @@
 		}
 		
 		/**
-		 * @return HtmlParser
+		 * @return HtmlLexer
 		**/
 		private function error($message)
 		{
