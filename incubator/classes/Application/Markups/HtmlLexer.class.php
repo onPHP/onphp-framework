@@ -20,7 +20,7 @@
 	 *
 	 * TODO: test suite.
 	**/
-	class HtmlParser
+	class HtmlLexer
 	{
 		const INITIAL_STATE			= 0;
 		const START_TAG_STATE		= 1;
