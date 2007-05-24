@@ -253,12 +253,13 @@
 				$dao = null;
 			
 			foreach ($object->proto()->getPropertyList() as $property) {
-				if (
-					$property->isBuildable($array, $prefix)
-					&& (!$property instanceof InnerMetaProperty)
-				) {
-					$setter = $property->getSetter();
-					
+				$setter = $property->getSetter();
+				
+				if ($property instanceof InnerMetaProperty) {
+					$object->$setter(
+						$property->toValue($dao, $array, $prefix)
+					);
+				} elseif ($property->isBuildable($array, $prefix)) {
 					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
 						// FIXME: remove dupe enum-related code
 						if ($encapsulants) {
