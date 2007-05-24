@@ -363,7 +363,7 @@
 				$doctypeTag = (mb_strtoupper($this->tagId) == '!DOCTYPE');
 				
 				if ($externalTag)
-					$this->tag = SgmlIgnoredTag::create();
+					$this->tag = SgmlIgnoredTag::create()->setEndMark('?');
 				elseif ($doctypeTag)
 					// TODO: use DoctypeTag
 					$this->tag = SgmlIgnoredTag::create();
@@ -377,14 +377,16 @@
 				$this->tagId = null;
 				$this->invalidId = false;
 				
-				$this->getNextChar();
-				
 				if ($externalTag)
 					return self::EXTERNAL_TAG_STATE;
 				elseif ($doctypeTag)
 					return self::DOCTYPE_TAG_STATE;
-				else
+				else {
+					// don't eating spacer for external and doctype tags
+					$this->getNextChar();
+					
 					return self::INSIDE_TAG_STATE;
+				}
 				
 			} else {
 				// <div, <q#, <dж
@@ -687,6 +689,9 @@
 				
 				$this->getNextChar();
 				
+				// empty string, not null, to be sure that value needed
+				$this->attrValue = '';
+				
 				return self::ATTR_VALUE_STATE;
 				
 			} else {
@@ -749,6 +754,7 @@
 			Assert::isTrue($this->tag instanceof SgmlOpenTag);
 			Assert::isNull($this->tagId);
 			Assert::isNotNull($this->attrName);
+			Assert::isNull($this->attrValue);
 			Assert::isFalse($this->invalidId);
 			
 			Assert::isNull($this->insideQuote);
@@ -774,6 +780,9 @@
 			} elseif($this->char == '=') {
 				
 				$this->getNextChar();
+				
+				// empty string, not null, to be sure that value needed
+				$this->attrValue = '';
 				
 				return self::ATTR_VALUE_STATE;
 				
@@ -887,6 +896,7 @@
 						
 						$this->insideQuote = $this->char;
 						
+						
 						$this->getNextChar();
 						
 						// a place to rollback if second quote will not be
@@ -968,42 +978,43 @@
 				
 				$this->returnedFromCommentState = false;
 				
-				$content = null;
-				$partialMatch = null;
-				
 			} else {
 			
-				if (preg_match('/'.self::SPACER_MASK.'/', $this->char)) {
-					
+				$this->mark();
+			
+				while (
+					$this->char !== null
+					&& preg_match('/'.self::SPACER_MASK.'/', $this->char)
+				) {
 					$this->getNextChar();
-					
-					return self::INLINE_TAG_STATE;
 				}
 				
-				$needle = '<!--';
+				if ($this->char !== null) {
+					$needle = '<!--';
 				
-				$partialMatch = $this->getPartialMatch($needle);
+					$partialMatch = $this->getPartialMatch($needle);
 				
-				if ($partialMatch == $needle)
-					return self::COMMENT_STATE;
+					if ($partialMatch == $needle)
+						return self::COMMENT_STATE;
+				}
 					
-				$content = $partialMatch[0];
-				
-				if (strlen($partialMatch) == 1)
-					$partialMatch = null;
-				else
-					$partialMatch = substr($partialMatch, 1);
+				$this->reset();
 			}
+			
+			$partialMatch = $oldPartialMatch = null;
+			$content = null;
 			
 			while ($this->char !== null) {
 			
 				$needle = "</{$this->inlineTag}";
 				
-				$partialMatch = $this->getPartialMatch($needle, $partialMatch);
+				// FIXME: use getContentUpToTagEnd()
+				$partialMatch = $this->getPartialMatch($needle, $oldPartialMatch);
 				
 				if (!$partialMatch) {
 					
-					$content .= $this->char;
+					$content .= $oldPartialMatch.$this->char;
+					$oldPartialMatch = null;
 					
 					$this->getNextChar();
 					
@@ -1026,14 +1037,14 @@
 					$content .= $partialMatch[0];
 					
 					if (strlen($partialMatch) == 1)
-						$partialMatch = null;
+						$oldPartialMatch = null;
 					else
-						$partialMatch = substr($partialMatch, 1);
+						$oldPartialMatch = substr($partialMatch, 1);
 				}
 			}
 			
 			if ($partialMatch)
-				$content .= $partialMatch;
+				$content .= $oldPartialMatch;
 			
 			$this->tags[] = Cdata::create()->setData($content);
 			
@@ -1056,15 +1067,14 @@
 			// previous state.
 			$this->tags[] = Cdata::create()->setData(htmlspecialchars($content));
 			
-			// FIXME: found tag or not?
 			if (!$this->endTagFound) {
 				// NOTE: here opera treats cdata-tag as cdata itself.
 				// we do not.
 				
 				$this->error('unexpected end-of-file inside cdata');
-			}
-			
-			$this->endTagFound = false;
+				
+			} else
+				$this->endTagFound = false;
 			
 			return self::INITIAL_STATE;
 		}
@@ -1151,11 +1161,11 @@
 			
 			if ($endTag) {
 				
-				$partialMatch = null;
+				$oldPartialMatch = null;
 				
 				while ($this->char !== null) {
-
-					$partialMatch = $this->getPartialMatch($endTag, $partialMatch);
+					
+					$partialMatch = $this->getPartialMatch($endTag, $oldPartialMatch);
 					
 					if (!$partialMatch) {
 						
@@ -1173,9 +1183,9 @@
 						$result .= $partialMatch[0];
 						
 						if (strlen($partialMatch) == 1)
-							$partialMatch = null;
+							$oldPartialMatch = null;
 						else
-							$partialMatch = substr($partialMatch, 1);
+							$oldPartialMatch = substr($partialMatch, 1);
 					}
 				}
 			}
@@ -1185,7 +1195,7 @@
 			
 			if (!$singleBracketOnEof) {
 				
-				$result .= $partialMatch;
+				$result .= $oldPartialMatch;
 				
 			} else {
 				
@@ -1217,7 +1227,6 @@
 		
 		private function getPartialMatch($needle, $oldResult = null)
 		{
-			//echo "[$needle] [$oldResult]<br/>\n";
 			Assert::isNotNull($this->char);
 			
 			$needleLength = strlen($needle);
@@ -1289,8 +1298,7 @@
 		
 		private static function charHexCode($char)
 		{
-			// FIXME: sprintf!
-			return '0x'.dechex(ord($char));
+			return sprintf('0x%x', ord($char));
 		}
 	}
 ?>

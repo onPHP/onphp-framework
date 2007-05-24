@@ -12,7 +12,8 @@
 
 	final class SgmlIgnoredTag extends SgmlTag
 	{
-		private $cdata = null;
+		private $cdata		= null;
+		private $endMark	= null;
 		
 		/**
 		 * @return SgmlIgnoredTag
@@ -27,7 +28,7 @@
 		**/
 		public static function comment()
 		{
-			return self::create()->setId('!--');
+			return self::create()->setId('!--')->setEndMark('--');
 		}
 		
 		/**
@@ -43,6 +44,21 @@
 		public function getCdata()
 		{
 			return $this->cdata;
+		}
+		
+		/**
+		 * @return SgmlIgnoredTag
+		**/
+		public function setEndMark($endMark)
+		{
+			$this->endMark = $endMark;
+			
+			return $this;
+		}
+		
+		public function getEndMark()
+		{
+			return $this->endMark;
 		}
 	}
 ?>
