@@ -22,7 +22,7 @@
 		{
 			return new self($string);
 		}
-		
+
 		public function __construct($string)
 		{
 			$this->string = $string;
@@ -64,7 +64,7 @@
 			
 			return $this; 
 		}
-		
+
 		public function markSupported()
 		{
 			return true;
