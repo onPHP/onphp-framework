@@ -57,7 +57,7 @@
 					$nextPart = $this->socket->read($remainingLength);
 					
 					if ($nextPart !== null)
-						$result += $nextPart;
+						$result .= $nextPart;
 					else
 						$this->eof = true;
 					
