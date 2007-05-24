@@ -802,20 +802,27 @@
 			Assert::isTrue($this->tag instanceof SgmlOpenTag);
 			
 			if ($this->char === null) {
-				// <tag id=[space*][eof], <tag id=val[eof]
+				// <tag id=[space*][eof], <tag id=val[eof], <tag id="...[eof]
 				
 				if (!$this->attrValue)
 					$this->warning("empty value for attr == '{$this->attrName}'");
 					
 				if ($this->insideQuote) {
-					$this->warning(
-						"unclosed quoted value for attr == '{$this->attrName}'"
-					);
-					
 					// NOTE: firefox rolls back to the first > after quote.
 					// Opera consideres incomplete tag as cdata.
-					// we store whole data as value though ff seems to be more
-					// intelligent.
+					// we act as ff does.
+					
+					$this->warning(
+						"unclosed quoted value for attr == '{$this->attrName}',"
+						." rolling  back and searching '>'"
+					);
+					
+					$this->attrValue = null;
+					$this->insideQuote = '>';
+					
+					$this->reset();
+					
+					return self::ATTR_VALUE_STATE;
 				}
 					
 				$this->error("unexpected end of file, incomplete tag stored");
@@ -872,31 +879,56 @@
 				
 			} else {
 				
-				if ($this->char == '"' || $this->char == "'") {
-					
+				if (
+					$this->char == '"' || $this->char == "'"
+					|| $this->char == $this->insideQuote // may be '>'
+				) {
 					if (!$this->insideQuote) {
 						
 						$this->insideQuote = $this->char;
 						
 						$this->getNextChar();
 						
+						// a place to rollback if second quote will not be
+						// found.
+						$this->mark();
+						
 						return self::ATTR_VALUE_STATE;
-				
+						
 					} elseif ($this->char == $this->insideQuote) {
-						// attr = "value", attr='value'
+						// attr = "value", attr='value', attr='value>([^']*)
 						
 						$this->tag->addAttribute(
 							$this->attrName, $this->attrValue
 						);
-				
+						
 						$this->attrName = null;
 						$this->attrValue = null;
 						
-						$this->insideQuote = null;
-					
 						$this->getNextChar();
-				
-						return self::INSIDE_TAG_STATE;
+						
+						$isInline = in_array(
+							$this->tag->getId(), $this->inlineTags
+						);
+						
+						if ($isInline)
+							$this->inlineTag = $this->tag->getId();
+						
+						
+						if ($this->insideQuote == '>') {
+							$this->insideQuote = null;
+							$this->tag = null;
+							
+							if ($isInline)
+								return self::INLINE_TAG_STATE;
+							else
+								return self::INITIAL_STATE;
+								
+						} else {
+							$this->insideQuote = null;
+							
+							return self::INSIDE_TAG_STATE;
+						}
 					}
 				}
 				
