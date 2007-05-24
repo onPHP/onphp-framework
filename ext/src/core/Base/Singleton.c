@@ -171,6 +171,11 @@ ONPHP_METHOD(Singleton, getInstance)
 	RETURN_ZVAL(object, 1, 0);
 }
 
+ONPHP_METHOD(Singleton, getAllInstances)
+{
+	RETURN_ZVAL(instances, 1, 0);
+}
+
 PHP_RINIT_FUNCTION(Singleton)
 {
 	ALLOC_INIT_ZVAL(instances);
@@ -189,9 +194,10 @@ PHP_RSHUTDOWN_FUNCTION(Singleton)
 static ONPHP_ARGINFO_ONE;
 
 zend_function_entry onphp_funcs_Singleton[] = {
-	ONPHP_ME(Singleton, __construct,	NULL, ZEND_ACC_PROTECTED)
-	ONPHP_ME(Singleton, getInstance,	arginfo_one, ZEND_ACC_FINAL | ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-	ONPHP_ME(Singleton, __clone,		NULL, ZEND_ACC_FINAL | ZEND_ACC_PRIVATE)
-	ONPHP_ME(Singleton, __sleep,		NULL, ZEND_ACC_FINAL | ZEND_ACC_PRIVATE)
+	ONPHP_ME(Singleton, __construct,		NULL, ZEND_ACC_PROTECTED)
+	ONPHP_ME(Singleton, getInstance,		arginfo_one, ZEND_ACC_FINAL | ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Singleton, getAllInstances,	NULL, ZEND_ACC_FINAL | ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Singleton, __clone,			NULL, ZEND_ACC_FINAL | ZEND_ACC_PRIVATE)
+	ONPHP_ME(Singleton, __sleep,			NULL, ZEND_ACC_FINAL | ZEND_ACC_PRIVATE)
 	{NULL, NULL, NULL}
 };

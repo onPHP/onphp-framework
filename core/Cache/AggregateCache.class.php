@@ -133,7 +133,7 @@
 
 			$this->checkAlive();
 
-			return $this;
+			return parent::clean();
 		}
 
 		public function getStats()

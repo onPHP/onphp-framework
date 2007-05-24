@@ -1,5 +1,15 @@
 # $Id$
 
+2007-05-24	Konstantin V. Arkhipov
+
+	* core/Base/Singleton.class.php, ext/src/core/Base/Singleton.c:
+	getAllInstances() added.
+
+	* main/DAOs/GenericDAO.class.php: dropIdentityMap() added.
+
+	* core/Cache/: now drops all identity maps from available DAOs during
+	clean().
+
 2007-05-23	Anton E. Lebedevich
 
 	* main/Flow/HttpErrorView.class.php: HttpErrorView added.

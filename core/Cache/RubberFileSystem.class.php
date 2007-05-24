@@ -53,7 +53,9 @@
 		public function clean()
 		{
 			// just to return 'true'
-			return !FileUtils::removeDirectory($this->directory, true);
+			FileUtils::removeDirectory($this->directory, true);
+			
+			return parent::clean();
 		}
 
 		public function get($key)

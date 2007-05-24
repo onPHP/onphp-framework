@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Sveta Smirnova                             *
+ *   Copyright (C) 2004-2007 by Sveta Smirnova                             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,6 +18,8 @@
 	**/
 	abstract class Singleton
 	{
+		private static $instances = array();
+		
 		protected function __construct() {/* you can't create me */}
 		
 		/// @example singleton.php
@@ -25,15 +27,13 @@
 			$class, $args = null /* , ... */
 		)
 		{
-			static $instances = array();
-			
 			// for Singleton::getInstance('class_name', $arg1, ...) calling
 			if (2 < func_num_args()) {
 				$args = func_get_args();
 				array_shift($args);
 			}
 			
-			if (!isset($instances[$class])) {
+			if (!isset(self::$instances[$class])) {
 				$object =
 					$args
 						? new $class($args)
@@ -44,9 +44,14 @@
 					"Class '{$class}' is something not a Singleton's child"
 				);
 
-				return $instances[$class] = $object;
+				return self::$instances[$class] = $object;
 			} else
-				return $instances[$class];
+				return self::$instances[$class];
+		}
+		
+		final public static function getAllInstances()
+		{
+			return self::$instances;
 		}
 		
 		final private function __clone() {/* do not clone me */}

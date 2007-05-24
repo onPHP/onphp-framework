@@ -106,7 +106,18 @@
 
 		abstract public function get($key);
 		abstract public function delete($key);
-		abstract public function clean();
+		
+		/**
+		 * @return CachePeer
+		**/
+		public function clean()
+		{
+			foreach (Singleton::getAllInstances() as $object)
+				if ($object instanceof GenericDAO)
+					$object->dropIdentityMap();
+			
+			return $this;
+		}
 		
 		abstract protected function store(
 			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
