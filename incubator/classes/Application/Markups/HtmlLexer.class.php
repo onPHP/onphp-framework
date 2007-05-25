@@ -130,6 +130,34 @@
 			return $this->char;
 		}
 		
+		private function getRemainingChars()
+		{
+			$result = null;
+			
+			while ($this->char !== null) {
+				$result .= $this->char;
+				
+				$this->getNextChar();
+			}
+			
+			return $result;
+		}
+		
+		private function getChars($count)
+		{
+			$result = null;
+			
+			while ($this->char !== null && $count > 0) {
+				$result .= $this->char;
+				
+				$this->getNextChar();
+				
+				--$count;
+			}
+			
+			return $result;
+		}
+		
 		/**
 		 * @return HtmlLexer
 		**/
@@ -999,85 +1027,80 @@
 			
 			// NOTE: most browsers tries to parse comment first, if any.
 			
+			$content = null;
+			
 			if ($this->returnedFromCommentState) {
 				
 				$this->returnedFromCommentState = false;
 				
 			} else {
-			
-				$this->mark();
-			
+				
 				while (
 					$this->char !== null
 					&& preg_match('/'.self::SPACER_MASK.'/', $this->char)
 				) {
+					$content .= $this->char;
+					
 					$this->getNextChar();
 				}
 				
 				if ($this->char !== null) {
 					$needle = '<!--';
-				
-					$partialMatch = $this->getPartialMatch($needle);
-				
-					if ($partialMatch == $needle)
-						return self::COMMENT_STATE;
-				}
 					
-				$this->reset();
+					$this->mark();
+					
+					$buffer = $this->getChars(strlen($needle));
+					
+					if ($buffer == $needle)
+						return self::COMMENT_STATE;
+					
+					$this->reset();
+				}
 			}
 			
-			$partialMatch = $oldPartialMatch = null;
-			$content = null;
+			$endTag = "</{$this->inlineTag}";
 			
 			while ($this->char !== null) {
 			
-				$needle = "</{$this->inlineTag}";
+				$distance = $this->getDistanceToEndTag($endTag);
 				
-				// FIXME: use getContentUpToTagEnd()
-				$partialMatch = $this->getPartialMatch($needle, $oldPartialMatch);
-				
-				if (!$partialMatch) {
+				if ($distance === false) {
+					$content .= $this->getRemainingChars();
 					
-					$content .= $oldPartialMatch.$this->char;
-					$oldPartialMatch = null;
+					break;
 					
-					$this->getNextChar();
+				} else {
+					$content .= $this->getChars($distance);
 					
-				} elseif (
-					$partialMatch == $needle
-					&& (
+					$this->skip(strlen($endTag));
+					
+					if (
 						$this->char === null
 						|| $this->char === '>'
 						|| preg_match('/'.self::SPACER_MASK.'/', $this->char)
 					)
-				) {
-					$this->tags[] = Cdata::create()->setData($content);
+						break;
 					
-					$this->tagId = $this->inlineTag;
-					$this->inlineTag = null;
+					$result .= $endTag.$this->char;
 					
-					return self::END_TAG_STATE;
-					
-				} else {
-					$content .= $partialMatch[0];
-					
-					if (strlen($partialMatch) == 1)
-						$oldPartialMatch = null;
-					else
-						$oldPartialMatch = substr($partialMatch, 1);
+					$this->getNextChar();
 				}
 			}
 			
-			if ($partialMatch)
-				$content .= $oldPartialMatch;
-			
 			$this->tags[] = Cdata::create()->setData($content);
+					
+			if ($this->char === null) {
+				$this->error(
+					"end-tag for inline tag == '{$this->inlineTag}' not found"
+				);
+				
+				return self::FINAL_STATE;
+			}
 			
-			$this->error(
-				"end-tag for inline tag == '{$this->inlineTag}' not found"
-			);
+			$this->tagId = $this->inlineTag;
+			$this->inlineTag = null;
 			
-			return self::FINAL_STATE;
+			return self::END_TAG_STATE;
 		}
 		
 		// CDATA_STATE
@@ -1086,20 +1109,24 @@
 			Assert::isNull($this->tag);
 			Assert::isNull($this->tagId);
 			
-			$content = $this->getContentUpToTagEnd(']]>', false);
+			$endTag = ']]>';
+			
+			$distance = $this->getDistanceToEndTag($endTag);
+			
+			if ($distance === false) {
+				$this->error('unexpected end-of-file inside cdata tag');
+				
+				$content = $this->getRemainingChars();
+				
+			} else {
+				$content = $this->getChars($distance);
+				
+				$this->skip(strlen($endTag));
+			}
 			
 			// TODO: separate clean cdata and plain text, and make tag at
 			// previous state.
 			$this->tags[] = Cdata::create()->setData(htmlspecialchars($content));
-			
-			if (!$this->endTagFound) {
-				// NOTE: here opera treats cdata-tag as cdata itself.
-				// we do not.
-				
-				$this->error('unexpected end-of-file inside cdata');
-				
-			} else
-				$this->endTagFound = false;
 			
 			return self::INITIAL_STATE;
 		}
@@ -1110,7 +1137,32 @@
 			Assert::isNull($this->tag);
 			Assert::isNull($this->tagId);
 			
-			$content = $this->getContentUpToTagEnd('-->', true);
+			$endTag = '-->';
+			
+			$distance = $this->getDistanceToEndTag($endTag);
+			
+			if ($distance === false) {
+				$this->error(
+					"unexpected end-of-file inside comment tag,"
+					." trying to find '>'");
+				
+				$endTag = '>';
+				
+				$distance = $this->getDistanceToEndTag($endTag);
+			}
+			
+			if ($distance === false) {
+				$this->error(
+					"end-tag '{$endTag}' not found,"
+					." treating all remaining content as cdata");
+				
+				$content = $this->getRemainingChars();
+				
+			} else {
+				$content = $this->getChars($distance);
+				
+				$this->skip(strlen($endTag));
+			}
 			
 			$this->tags[] =
 				SgmlIgnoredTag::comment()->
@@ -1118,14 +1170,7 @@
 					Cdata::create()->setData($content)
 				);
 			
-			if (!$this->endTagFound) {
-				
-				$this->error('unexpected end-of-file inside comment tag');
-				
-				$this->endTagFound = false;
-				
-			} elseif ($this->inlineTag) {
-				
+			if ($this->inlineTag) {
 				$this->returnedFromCommentState = true;
 				
 				return self::INLINE_TAG_STATE;
@@ -1139,16 +1184,36 @@
 		{
 			Assert::isTrue($this->tag instanceof SgmlIgnoredTag);
 			
-			$content = $this->getContentUpToTagEnd('?>', true);
+			$endTag = '?>';
+			
+			$distance = $this->getDistanceToEndTag($endTag);
+			
+			if ($distance === false) {
+				$this->error(
+					"unexpected end-of-file inside external tag,"
+					." trying to find '>'");
+				
+				$endTag = '>';
+				
+				$distance = $this->getDistanceToEndTag($endTag);
+			}
+			
+			if ($distance === false) {
+				$this->error(
+					"end-tag '{$endTag}' not found,"
+					." treating all remaining content as cdata");
+				
+				$content = $this->getRemainingChars();
+				
+			} else {
+				$content = $this->getChars($distance);
+				
+				$this->skip(strlen($endTag));
+			}
 			
 			$this->tag->setCdata(Cdata::create()->setData($content));
 			
 			$this->tag = null;
-			
-			if (!$this->endTagFound)
-				$this->error('unexpected end-of-file inside external tag');
-			
-			$this->endTagFound = false;
 			
 			return self::INITIAL_STATE;
 		}
@@ -1160,130 +1225,61 @@
 			// Firefox does not.
 			Assert::isTrue($this->tag instanceof SgmlIgnoredTag);
 			
-			$content = $this->getContentUpToTagEnd(null, true);
+			$endTag = '>';
+			
+			$distance = $this->getDistanceToEndTag($endTag);
+			
+			if ($distance === false) {
+				$this->error('unexpected end-of-file inside doctype tag');
+				
+				$content = $this->getRemainingChars();
+				
+			} else {
+				$content = $this->getChars($distance);
+				
+				$this->skip(strlen($endTag));
+			}
 			
 			$this->tag->setCdata(Cdata::create()->setData($content));
 			
 			$this->tag = null;
 			
-			if (!$this->endTagFound)
-				$this->error('unexpected end-of-file inside external tag');
-			
-			$this->endTagFound = false;
-				
 			return self::INITIAL_STATE;
 		}
 		
-		private function getContentUpToTagEnd($endTag, $singleBracketOnEof = false)
+		private function getDistanceToEndTag($endTag)
 		{
-			// get data up to next '>' if endTag not found and eof reached?
-			if ($singleBracketOnEof)
-				$this->mark();
-				
-			$result = null;
+			$this->mark();
 			
-			$this->endTagFound = false;
+			$result = false;
 			
-			if ($endTag) {
+			$tagLength = mb_strlen($endTag);
 				
-				$oldPartialMatch = null;
+			$bufferedReader = BufferedReader::create($this->reader);
 				
-				while ($this->char !== null) {
+			$distance = 0;
+				
+			$char = $this->char;
+				
+			while ($char !== null) {
+				
+				$bufferedReader->mark();
+				
+				if ($char.$bufferedReader->read($tagLength - 1) == $endTag) {
 					
-					$partialMatch = $this->getPartialMatch($endTag, $oldPartialMatch);
+					$result = $distance;
 					
-					if (!$partialMatch) {
-						
-						$result .= $this->char;
-						
-						$this->getNextChar();
-						
-					} elseif ($partialMatch === $endTag) {
-						
-						$this->endTagFound = true;
-						
-						break;
-						
-					} else {
-						$result .= $partialMatch[0];
-						
-						if (strlen($partialMatch) == 1)
-							$oldPartialMatch = null;
-						else
-							$oldPartialMatch = substr($partialMatch, 1);
-					}
+					break;
 				}
+				
+				$bufferedReader->reset();
+				
+				$char = $bufferedReader->read(1);
+				
+				++$distance;
 			}
 			
-			if ($this->endTagFound)
-				return $result;
-			
-			if (!$singleBracketOnEof) {
-				
-				$result .= $oldPartialMatch;
-				
-			} else {
-				
-				$this->reset();
-				
-				$result = null;
-				
-				while ($this->char != '>' && $this->char !== null) {
-					$result .= $this->char;
-					
-					$this->getNextChar();
-				}
-				
-				if ($this->char == '>') {
-					$this->endTagFound = true;
-					
-					if ($endTag)
-						$this->error(
-							"end delimiter '{$endTag}' not found, "
-							."skipping up to nearest '>'"
-						);
-					
-					$this->getNextChar();
-				}
-			}
-			
-			return $result;
-		}
-		
-		private function getPartialMatch($needle, $oldResult = null)
-		{
-			Assert::isNotNull($this->char);
-			
-			$needleLength = strlen($needle);
-			$oldLength = strlen($oldResult);
-			
-			$result = null;
-			$matchCount = 0;
-			
-			if ($oldResult) 
-				$char = $oldResult[0];
-			else 
-				$char = $this->char;
-			
-			while (
-				$char !== null
-				&& $matchCount < $needleLength
-				&& $needle[$matchCount] == $char
-			) {
-				$result .= $char;
-				
-				++$matchCount;
-				
-				if ($matchCount < $oldLength)
-					$char = $oldResult[$matchCount];
-				else {
-					
-					if ($matchCount > $oldLength)
-						$this->getNextChar();
-					
-					$char = $this->char;
-				}
-			}
+			$this->reset();
 			
 			return $result;
 		}
