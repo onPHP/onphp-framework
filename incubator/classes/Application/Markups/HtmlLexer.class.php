@@ -40,7 +40,7 @@
 		const ID_FIRST_CHAR_MASK	= '[A-Za-z]';
 		const ID_CHAR_MASK			= '[-_:.A-Za-z0-9]';
 		
-		private $inlineTags			= array('style', 'script');
+		private $inlineTags			= array('style', 'script', 'textarea');
 		
 		private $reader		= null;
 		
