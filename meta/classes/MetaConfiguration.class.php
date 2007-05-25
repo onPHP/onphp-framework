@@ -20,6 +20,9 @@
 		private $classes = array();
 		private $sources = array();
 		
+		private $liaisons = array();
+		private $references = array();
+		
 		private $defaultSource = null;
 		
 		private $forcedGeneration	= false;
@@ -78,9 +81,6 @@
 		{
 			$xml = simplexml_load_file($metafile);
 			
-			$liaisons = array();
-			$references = array();
-			
 			// populate sources (if any)
 			if (isset($xml->sources[0])) {
 				foreach ($xml->sources[0] as $source) {
@@ -129,7 +129,7 @@
 				
 				// lazy existence checking
 				if (isset($xmlClass['extends']))
-					$liaisons[$class->getName()] = (string) $xmlClass['extends'];
+					$this->liaisons[$class->getName()] = (string) $xmlClass['extends'];
 				
 				// populate implemented interfaces
 				foreach ($xmlClass->implement as $xmlImplement)
@@ -314,7 +314,7 @@
 									<> $class->getName()
 								)
 							) {
-								$references[$property->getType()->getClassName()][]
+								$this->references[$property->getType()->getClassName()][]
 									= $class->getName();
 							}
 						}
@@ -354,7 +354,7 @@
 				}
 			}
 			
-			foreach ($liaisons as $class => $parent) {
+			foreach ($this->liaisons as $class => $parent) {
 				if (isset($this->classes[$parent])) {
 					
 					Assert::isFalse(
@@ -383,7 +383,7 @@
 			}
 			
 			// search for referencing classes
-			foreach ($references as $className => $list) {
+			foreach ($this->references as $className => $list) {
 				$class = $this->getClassByName($className);
 				
 				if (
@@ -404,10 +404,10 @@
 						(
 							$remote->getPattern() instanceof ValueObjectPattern
 						) && (
-							isset($references[$refer])
+							isset($this->references[$refer])
 						)
 					) {
-						foreach ($references[$refer] as $holder) {
+						foreach ($this->references[$refer] as $holder) {
 							$this->classes[$className]->
 								setReferencingClass($holder);
 						}
