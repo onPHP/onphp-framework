@@ -41,11 +41,6 @@
 			return mb_strlen($this->read($count));
 		}
 		
-		public function available()
-		{
-			return 0;
-		}
-		
 		public function getWhole()
 		{
 			while(!$this->isEof())
