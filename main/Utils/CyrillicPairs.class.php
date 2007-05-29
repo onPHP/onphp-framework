@@ -14,7 +14,7 @@
 	 * based on CPAN's Lingua::DetectCharset.
 	 * Thanks to John Neystadt, http://www.neystadt.org/john/
 	**/
-	class CyrillicPairs extends StaticFactory
+	final class CyrillicPairs extends StaticFactory
 	{
 		private static $table = array(
 			'ст' => 21815, 'ен' => 19276, 'на' => 16528, 'ов' => 15172,
