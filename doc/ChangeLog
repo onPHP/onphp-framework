@@ -1,5 +1,9 @@
 # $Id$
 
+2007-05-29	Ivan Y. Khvostishkov
+
+	* main/Utils/RussianTextUtils.class.php: added charset detection.
+
 2007-05-24	Konstantin V. Arkhipov
 
 	* core/Base/Singleton.class.php, ext/src/core/Base/Singleton.c:

@@ -64,8 +64,10 @@
 			'Я' => 'JA'
 		);
 		
-		private	static $flippedLettersMapping = array();
-	
+		private static $flippedLettersMapping = array();
+		
+		private static $ambiguousDetection = false;
+		
 		/**
 		 * Selects russian case for number.
 		 * for example:
@@ -202,6 +204,86 @@
 			 		array_flip(self::$lettersMapping);
 			
 			return strtr($sourceString, self::$flippedLettersMapping);
+		}
+		
+		/**
+		 * based on CPAN's Lingua::DetectCharset.
+		 * Thanks to John Neystadt, http://www.neystadt.org/john/
+		**/
+		public static function detectEncoding($data)
+		{
+			$table = CyrillicPairs::getTable();
+			
+			$score = array('UTF-8' => 0, 'KOI8-R' => 0, 'WINDOWS-1251' => 0);
+			
+			foreach (
+				preg_split('~[\.\,\-\s\:\;\?\!\'\"\(\)\d<>]~', $data) as $word
+			) {
+				for ($i = 0; $i < strlen($word) - 2; ++$i) {
+					foreach (array_keys($score) as $encoding) {
+						if ($encoding == 'UTF-8')
+							$pairLengthBytes = 4;
+						else
+							$pairLengthBytes = 2;
+						
+						if ($i + $pairLengthBytes >= strlen($word))
+							continue;
+						
+						$pair = substr($word, $i, $pairLengthBytes);
+					
+						if ($encoding !== 'UTF-8')
+							$utf8Pair = mb_convert_encoding(
+								$pair, 'UTF-8', $encoding
+							);
+						else
+							$utf8Pair = $pair;
+						
+						if (isset($table[$utf8Pair]))
+							$score[$encoding] += $table[$utf8Pair];
+					}
+					
+				}
+			}
+			
+			$koi8Ratio =
+				$score['KOI8-R']
+				/ ($score['WINDOWS-1251'] + $score['UTF-8'] + 1);
+			
+			$winRatio =
+				$score['WINDOWS-1251']
+				/ ($score['KOI8-R'] + $score['UTF-8'] + 1);
+			
+			$utf8Ratio =
+				$score['UTF-8']
+				/ ($score['KOI8-R'] + $score['WINDOWS-1251'] + 1);
+				
+			$minRatio = 1.5;
+			$doubtRatio = 1;
+			
+			if (
+				($koi8Ratio < $minRatio && $koi8Ratio > $doubtRatio)
+				|| ($winRatio < $minRatio && $winRatio > $doubtRatio)
+				|| ($utf8Ratio < $minRatio && $utf8Ratio > $doubtRatio)
+			) {
+				self::$ambiguousDetection = true;
+			} else
+				self::$ambiguousDetection = false;
+			
+			if ($koi8Ratio > $winRatio && $koi8Ratio > $utf8Ratio)
+				return 'KOI8-R';
+			
+			if ($winRatio > $utf8Ratio)
+				return 'WINDOWS-1251';
+			
+			if ($winRatio + $koi8Ratio + $utf8Ratio > 0)
+				return 'UTF-8';
+			
+			return 'ASCII';
+		}
+		
+		public static function isAmbiguousDetection()
+		{
+			return self::$ambiguousDetection;
 		}
 	}
 ?>
