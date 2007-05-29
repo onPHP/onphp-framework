@@ -43,13 +43,15 @@
 		/**
 		 * @return SgmlOpenTag
 		**/
-		public function addAttribute($name, $value)
+		public function setAttribute($name, $value)
 		{
 			if ($name)
 				Assert::isString($name);
 			
 			if ($value)
 				Assert::isString($value);
+			
+			$name = strtolower($name);
 			
 			$this->attributes[$name] = $value;
 			
@@ -58,17 +60,21 @@
 		
 		public function hasAttribute($name)
 		{
+			$name = strtolower($name);
+			
 			return isset($this->attributes[$name]);
 		}
 		
 		public function getAttribute($name)
 		{
+			$name = strtolower($name);
+			
 			if (!isset($this->attributes[$name]))
 				throw new WrongArgumentException(
 					"attribute '{$name}' does not exist"
 				);
 				
-			return $this->attribute[$name];
+			return $this->attributes[$name];
 		}
 		
 		/**
@@ -76,12 +82,14 @@
 		**/
 		public function dropAttribute($name)
 		{
+			$name = strtolower($name);
+			
 			if (!isset($this->attributes[$name]))
 				throw new WrongArgumentException(
 					"attribute '{$name}' does not exist"
 				);
 			
-			unset($this->attribute[$name]);
+			unset($this->attributes[$name]);
 			
 			return $this;
 		}

@@ -21,46 +21,51 @@
 			$this->tags = $tags;
 		}
 		
+		public static function makeTag(SgmlType $tag)
+		{
+			if ($tag instanceof Cdata)
+				$result = $tag->getData();
+				
+			elseif ($tag instanceof SgmlIgnoredTag) {
+				Assert::isNotNull($tag->getId());
+				
+				$result = '<'.$tag->getId()
+					.$tag->getCdata()->getData()
+					.$tag->getEndMark().'>';
+			
+			} elseif ($tag instanceof SgmlOpenTag) {
+				Assert::isNotNull($tag->getId());
+				
+				$attributes = self::getAttributes($tag);
+				
+				$result = '<'.$tag->getId()
+					.($attributes ? ' '.$attributes : null)
+					.($tag->isEmpty() ? '/' : null).'>';
+					
+			} elseif ($tag instanceof SgmlEndTag) {
+				$result = '</'.$tag->getId().'>';
+				
+			} else
+				throw new WrongArgumentException(
+					"don't know how to assemble tag class '"
+					.get_class($tag)."'"
+				);
+				
+			return $result;
+		}
+		
 		public function getHtml()
 		{
 			$result = null;
 			
 			foreach ($this->tags as $tag) {
-				
-				if ($tag instanceof Cdata)
-					$result .= $tag->getData();
-					
-				elseif ($tag instanceof SgmlIgnoredTag) {
-					Assert::isNotNull($tag->getId());
-					
-					$result .=
-						'<'.$tag->getId()
-						.$tag->getCdata()->getData()
-						.$tag->getEndMark().'>';
-				
-				} elseif ($tag instanceof SgmlOpenTag) {
-					Assert::isNotNull($tag->getId());
-					
-					$attributes = $this->getAttributes($tag);
-					
-					$result .= '<'.$tag->getId()
-						.($attributes ? ' '.$attributes : null)
-						.($tag->isEmpty() ? '/' : null).'>';
-						
-				} elseif ($tag instanceof SgmlEndTag) {
-					$result .= '</'.$tag->getId().'>';
-					
-				} else
-					throw new WrongArgumentException(
-						"don't know how to assemble tag class '"
-						.get_class($tag)."'"
-					);
+				$result .= self::makeTag($tag);
 			}
 			
 			return $result;
 		}
 		
-		private function getAttributes(SgmlOpenTag $tag)
+		private static function getAttributes(SgmlOpenTag $tag)
 		{
 			$result = null;
 			

@@ -14,8 +14,6 @@
 	 * TODO: implement Lexer itself.
 	 *
 	 * TODO: refactoring.
-	 *
-	 * TODO: test suite.
 	**/
 	class HtmlLexer
 	{
@@ -698,7 +696,7 @@
 				
 				$this->error("unexpected end of file, incomplete tag stored");
 				
-				$this->tag->addAttribute($this->attrName, null);
+				$this->tag->setAttribute($this->attrName, null);
 				
 				return self::FINAL_STATE;
 				
@@ -716,7 +714,7 @@
 				
 				$this->warning("empty value for attr == '{$this->attrName}'");
 				
-				$this->tag->addAttribute($this->attrName, null);
+				$this->tag->setAttribute($this->attrName, null);
 				
 				$isInline = in_array($this->tag->getId(), $this->inlineTags);
 				
@@ -760,7 +758,7 @@
 					
 					$this->warning("empty value for attr == '{$this->attrName}'");
 					
-					$this->tag->addAttribute($this->attrName, null);
+					$this->tag->setAttribute($this->attrName, null);
 					
 					$isInline = in_array($this->tag->getId(), $this->inlineTags);
 					
@@ -819,7 +817,7 @@
 				
 				$this->error("unexpected end of file, incomplete tag stored");
 				
-				$this->tag->addAttribute($this->attrName, null);
+				$this->tag->setAttribute($this->attrName, null);
 				
 				return self::FINAL_STATE;
 				
@@ -844,7 +842,7 @@
 				
 				$this->warning("empty value for attr == '{$this->attrName}'");
 				
-				$this->tag->addAttribute($this->attrName, null);
+				$this->tag->setAttribute($this->attrName, null);
 				
 				$this->attrName = null;
 				
@@ -889,7 +887,7 @@
 					
 				$this->error("unexpected end of file, incomplete tag stored");
 				
-				$this->tag->addAttribute($this->attrName, $this->attrValue);
+				$this->tag->setAttribute($this->attrName, $this->attrValue);
 				
 				return self::FINAL_STATE;
 				
@@ -903,7 +901,7 @@
 				if ($this->attrValue) {
 					// <tag id=value[space]
 					
-					$this->tag->addAttribute($this->attrName, $this->attrValue);
+					$this->tag->setAttribute($this->attrName, $this->attrValue);
 					
 					$this->attrName = null;
 					$this->attrValue = null;
@@ -921,7 +919,7 @@
 			} elseif (!$this->insideQuote && $this->char == '>') {
 				// <tag id=value>, <a href=catalog/>
 				
-				$this->tag->addAttribute($this->attrName, $this->attrValue);
+				$this->tag->setAttribute($this->attrName, $this->attrValue);
 				
 				$isInline = in_array($this->tag->getId(), $this->inlineTags);
 				
@@ -961,7 +959,7 @@
 					} elseif ($this->char == $this->insideQuote) {
 						// attr = "value", attr='value', attr='value>([^']*)
 						
-						$this->tag->addAttribute(
+						$this->tag->setAttribute(
 							$this->attrName, $this->attrValue
 						);
 						
