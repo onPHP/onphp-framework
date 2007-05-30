@@ -1,5 +1,10 @@
 # $Id$
 
+2007-05-30	Konstantin V. Arkhipov
+
+	* main/Criteria/Projections/ClassProjection.class.php: new projection
+	type introduced.
+
 2007-05-29	Ivan Y. Khvostishkov
 
 	* main/Utils/RussianTextUtils.class.php: added charset detection.

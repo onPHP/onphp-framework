@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,33 +13,39 @@
 	/**
 	 * @ingroup Projections
 	**/
-	final class ProjectionChain implements ObjectProjection
+	final class ClassProjection implements ObjectProjection
 	{
-		private $list = array();
+		private $className	= null;
 		
 		/**
-		 * @return ProjectionChain
+		 * @return ClassProjection
 		**/
-		public function add(ObjectProjection $projection, $name = null)
+		public static function create($class)
 		{
-			if ($name) {
-				Assert::isFalse(isset($this->list[$name]));
-				
-				$this->list[$name] = $projection;
-			} else {
-				$this->list[] = $projection;
-			}
+			return new self($class);
+		}
+		
+		public function __construct($class)
+		{
+			Assert::isTrue(
+				ClassUtils::isInstanceOf($class, 'Prototyped')
+			);
 			
-			return $this;
+			if (is_object($class))
+				$this->className = get_class($class);
+			else
+				$this->className = $class;
 		}
 		
 		/**
-		 * @return JoinCapableQuery
+		 * @return SelectQuery
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
-			foreach ($this->list as $projection)
-				$projection->process($criteria, $query);
+			$dao = call_user_func(array($this->className, 'dao'));
+			
+			foreach ($dao->getFields() as $field)
+				$query->get($field);
 			
 			return $query;
 		}
