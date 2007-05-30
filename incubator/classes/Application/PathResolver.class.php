@@ -100,7 +100,7 @@
 					"class {$qualifiedName} not found at classpath '{$classPath}'"
 				);
 			
-			$classFile = $this->baseDirectory.$classPath.$className.EXT_CLASS;
+			$classFile = $baseClassPath.$classPath.$className.EXT_CLASS;
 			
 			if (!is_readable($classFile))
 				throw new WrongArgumentException(

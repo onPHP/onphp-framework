@@ -108,6 +108,14 @@
 		}
 		
 		/**
+		 * @return PathResolver
+		**/
+		public function getPathResolver()
+		{
+			return $this->pathResolver;
+		}
+		
+		/**
 		 * @return BaseApplication
 		**/
 		public function setupIncludePaths()
