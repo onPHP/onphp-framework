@@ -20,7 +20,7 @@
 		/**
 		 * @return ProjectionChain
 		**/
-		public function add(BaseProjection $projection, $name = null)
+		public function add(ObjectProjection $projection, $name = null)
 		{
 			if ($name) {
 				Assert::isFalse(isset($this->list[$name]));

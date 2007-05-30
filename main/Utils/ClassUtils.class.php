@@ -114,14 +114,15 @@
 			elseif (!is_object($object))
 				throw new WrongArgumentException('strange object given');
 			
-			Assert::isTrue(class_exists($className, true));
+			if (is_subclass_of($object, $className))
+				return true;
+			// works well in >=5.2, and harmless for previous versions
+			elseif ($object instanceof $className)
+				return true;
 			
 			$info = new ReflectionClass($className);
 			
-			return (
-				is_subclass_of($object, $className)
-				|| $info->isInstance($object)
-			);
+			return $info->isInstance($object);
 		}
 	}
 ?>
