@@ -22,7 +22,7 @@
 		{
 			return new self($string);
 		}
-
+		
 		public function __construct($string)
 		{
 			$this->string = $string;
@@ -107,6 +107,7 @@
  		
  		public function getWhole()
  		{
+			// FIXME: (length - pos) ?
  			return $this->read($this->length);
  		}
  		
