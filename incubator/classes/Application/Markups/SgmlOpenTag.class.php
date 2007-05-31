@@ -45,13 +45,14 @@
 		**/
 		public function setAttribute($name, $value)
 		{
-			if ($name)
+			if ($name) {
 				Assert::isString($name);
+				
+				$name = strtolower($name);
+			}
 			
 			if ($value)
 				Assert::isString($value);
-			
-			$name = strtolower($name);
 			
 			$this->attributes[$name] = $value;
 			

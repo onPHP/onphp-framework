@@ -19,7 +19,7 @@
 		**/
 		public function setId($id)
 		{
-			$this->id = strtolower($id);
+			$this->id = $id;
 			
 			return $this;
 		}

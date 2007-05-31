@@ -864,7 +864,7 @@
 			if ($this->char === null) {
 				// <tag id=[space*][eof], <tag id=val[eof], <tag id="...[eof]
 				
-				if (!$this->attrValue)
+				if ($this->attrValue === null)
 					$this->warning("empty value for attr == '{$this->attrName}'");
 					
 				if ($this->insideQuote) {
@@ -898,7 +898,8 @@
 				
 				$this->getNextChar();
 				
-				if ($this->attrValue) {
+				if ($this->attrValue !== null && $this->attrValue !== '') {
+					// NOTE: "0" is accepted value
 					// <tag id=value[space]
 					
 					$this->tag->setAttribute($this->attrName, $this->attrValue);
@@ -1060,7 +1061,7 @@
 			
 			while ($this->char !== null) {
 			
-				$distance = $this->getDistanceToEndTag($endTag);
+				$distance = $this->getDistanceToEndTag($endTag, true);
 				
 				if ($distance === false) {
 					$content .= $this->getRemainingChars();
@@ -1245,11 +1246,14 @@
 			return self::INITIAL_STATE;
 		}
 		
-		private function getDistanceToEndTag($endTag)
+		private function getDistanceToEndTag($endTag, $lowercase = false)
 		{
 			$this->mark();
 			
 			$result = false;
+			
+			if ($lowercase)
+				$endTag = mb_strtolower($endTag);
 			
 			$tagLength = mb_strlen($endTag);
 				
@@ -1263,7 +1267,12 @@
 				
 				$bufferedReader->mark();
 				
-				if ($char.$bufferedReader->read($tagLength - 1) == $endTag) {
+				$read = $char.$bufferedReader->read($tagLength - 1);
+				
+				if ($lowercase)
+					$read = mb_strtolower($read);
+				
+				if ($read == $endTag) {
 					
 					$result = $distance;
 					
