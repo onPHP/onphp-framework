@@ -212,6 +212,10 @@
 		**/
 		public static function detectEncoding($data)
 		{
+			static $tables = array(
+				'KOI8-R' => array(), 'WINDOWS-1251' => array()
+			);
+			
 			$table = CyrillicPairs::getTable();
 			
 			$score = array('UTF-8' => 0, 'KOI8-R' => 0, 'WINDOWS-1251' => 0);
@@ -230,16 +234,34 @@
 							continue;
 						
 						$pair = substr($word, $i, $pairLengthBytes);
-					
-						if ($encoding !== 'UTF-8')
+						
+						$value = 0;
+						
+						if ($encoding === 'UTF-8') {
+							
+							if (isset($table[$pair]))
+								$value = $table[$pair];
+								
+						} elseif (
+							isset($tables[$encoding][$pair])
+						) {
+							$value = $tables[$encoding][$pair];
+						
+						} else {
+							
 							$utf8Pair = mb_convert_encoding(
 								$pair, 'UTF-8', $encoding
 							);
-						else
-							$utf8Pair = $pair;
+							
+							if (isset($table[$utf8Pair])) {
+								$value = $table[$utf8Pair];
+								$tables[$encoding][$pair] = $table[$utf8Pair];
+							} else {
+								$tables[$encoding][$pair] = false;
+							}
+						}
 						
-						if (isset($table[$utf8Pair]))
-							$score[$encoding] += $table[$utf8Pair];
+						$score[$encoding] += $value;
 					}
 					
 				}
