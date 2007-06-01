@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-01	Konstantin V. Arkhipov
+
+	* 0.10.1 released.
+
 2007-05-30	Konstantin V. Arkhipov
 
 	* main/Criteria/Projections/ClassProjection.class.php: new projection
