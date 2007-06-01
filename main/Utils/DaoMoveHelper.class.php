@@ -38,33 +38,37 @@
 			Assert::isTrue(
 				method_exists($object, $getMethod)
 			);
-			
+
 			$oldPosition = $object->$getMethod();
 			
 			$dao = $object->dao();
+
+			$query =
+				ObjectQuery::create()->
+				sort(self::$property)->						
+				desc()->
+				setLimit(1);
 			
-			$criteria =
-				Criteria::create($dao)->
-				add(
+			if ($exp)
+				$query->addLogic($exp);
+			
+			$query->addLogic(
 				Expression::lt(
 					self::$property,
 					$oldPosition
 				)
-				)->
-				addOrder(OrderBy::create(self::$property)->desc())->
-				setLimit(1);
+			);
 			
-			if ($exp)
-				$criteria->add($exp);
-			
-			if (!$upperObject = $criteria->get())
-				return;
-			
-			$upperObject = $dao->get($query);
-			$newPosition = $upperObject->$getMethod();
-			
-			DaoUtils::setNullValue(self::$nullValue);
-			DaoUtils::swap($upperObject, $object);
+			try {
+				$upperObject = $dao->get($query);
+				$newPosition = $upperObject->$getMethod();
+				
+				DaoUtils::setNullValue(self::$nullValue);
+				DaoUtils::swap($upperObject, $object);
+
+			} catch (ObjectNotFoundException $e) {
+				// no need to move up top object
+			}					
 		}
 		
 		/* void */ public static function down(
@@ -77,30 +81,36 @@
 			Assert::isTrue(
 				method_exists($object, $getMethod)
 			);
-			
+
 			$oldPosition = $object->$getMethod();
 			
-			$criteria =
-				Criteria::create($object->dao())->
-				add(
+			$dao = $object->dao();
+
+			$query =
+				ObjectQuery::create()->
+				addLogic(
 					Expression::gt(
 						self::$property,
 						$oldPosition
 					)
 				)->
-				addOrder(OrderBy(self::$property)->asc())->
+				sort(self::$property)->						
+				asc()->
 				setLimit(1);
-			
+
 			if ($exp)
-				$criteria->add($exp);
+				$query->addLogic($exp);			
 			
-			if (!$lowerObject = $criteria->get())
-				return;
-			
-			$newPosition = $lowerObject->$getMethod();
-			
-			DaoUtils::setNullValue(self::$nullValue);
-			DaoUtils::swap($lowerObject, $object);
+			try {
+				$lowerObject = $dao->get($query);
+				$newPosition = $lowerObject->$getMethod();
+				
+				DaoUtils::setNullValue(self::$nullValue);
+				DaoUtils::swap($lowerObject, $object);
+
+			} catch (ObjectNotFoundException $e) {
+				// no need to move down bottom object
+			}					
 		}
 	}
 ?>

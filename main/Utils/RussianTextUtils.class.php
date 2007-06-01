@@ -41,7 +41,7 @@
 		private static $bytePrefixes = array(
 			null, 'К', 'М', 'Г', 'Т', 'П'
 		);
-	
+		
 		private static $lettersMapping = array(
 			'а' => 'a',		'б' => 'b',		'в' => 'v',		'г' => 'g',
 			'д' => 'd',		'е' => 'e',		'ё' => 'jo',	'ж' => 'zh',
@@ -136,7 +136,7 @@
 		{
 			$dayStart = Timestamp::makeToday();
 			$tomorrowDayStart = $dayStart->spawn('+1 day'); 
-			
+
 			if (
 				(Timestamp::compare($date, $dayStart) == 1)
 				&& (Timestamp::compare($date, $tomorrowDayStart) == -1)
@@ -147,18 +147,31 @@
 							? 'сегодня ' 
 							: null 
 					)
-					."в "
+					.'в '
 					.date('G:i', $date->toStamp());
-			
+
 			$yesterdayStart = $dayStart->spawn('-1 day');
-			
+
 			if (
 				(Timestamp::compare($date, $yesterdayStart) == 1)
 				&& (Timestamp::compare($date, $dayStart) == -1)
 			)
 				return 'вчера в '.date('G:i', $date->toStamp());
-			
+
 			return date('j.m.Y в G:i', $date->toStamp());
+		}
+
+		public static function friendlyFileSize($size, $precision = 2)
+		{
+			if ($size < 1024)
+				return
+					$size.' '.self::selectCaseForNumber(
+						$size, array('байт', 'байта', 'байт')
+					);
+			else
+				return TextUtils::friendlyFileSize(
+					$size, $precision, self::$bytePrefixes, true
+				).'Б';
 		}
 		
 		public static function getHumanDay(Date $date)
@@ -177,19 +190,6 @@
 					. RussianTextUtils::getMonthInGenitiveCase(
 						$date->getMonth()
 					);
-		}
-		
-		public static function friendlyFileSize($size, $precision = 2)
-		{
-			if ($size < 1024)
-				return
-					$size.' '.self::selectCaseForNumber(
-						$size, array('байт', 'байта', 'байт')
-					);
-			else
-				return TextUtils::friendlyFileSize(
-					$size, $precision, self::$bytePrefixes, true
-				).'Б';
 		}
 		
 		public static function toTranslit($sourceString)
@@ -212,6 +212,10 @@
 		**/
 		public static function detectEncoding($data)
 		{
+			static $tables = array(
+				'KOI8-R' => array(), 'WINDOWS-1251' => array()
+			);
+			
 			$table = CyrillicPairs::getTable();
 			
 			$score = array('UTF-8' => 0, 'KOI8-R' => 0, 'WINDOWS-1251' => 0);
@@ -230,16 +234,34 @@
 							continue;
 						
 						$pair = substr($word, $i, $pairLengthBytes);
-					
-						if ($encoding !== 'UTF-8')
+						
+						$value = 0;
+						
+						if ($encoding === 'UTF-8') {
+							
+							if (isset($table[$pair]))
+								$value = $table[$pair];
+								
+						} elseif (
+							isset($tables[$encoding][$pair])
+						) {
+							$value = $tables[$encoding][$pair];
+						
+						} else {
+							
 							$utf8Pair = mb_convert_encoding(
 								$pair, 'UTF-8', $encoding
 							);
-						else
-							$utf8Pair = $pair;
+							
+							if (isset($table[$utf8Pair])) {
+								$value = $table[$utf8Pair];
+								$tables[$encoding][$pair] = $table[$utf8Pair];
+							} else {
+								$tables[$encoding][$pair] = false;
+							}
+						}
 						
-						if (isset($table[$utf8Pair]))
-							$score[$encoding] += $table[$utf8Pair];
+						$score[$encoding] += $value;
 					}
 					
 				}

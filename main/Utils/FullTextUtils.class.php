@@ -17,23 +17,21 @@
 	**/
 	final class FullTextUtils extends StaticFactory
 	{
-		public static function lookup(
-			FullTextDAO $dao, Criteria $criteria, $string
-		)
+		public static function lookup(FullTextDAO $dao, ObjectQuery $oq, $string)
 		{
 			return
 				$dao->getByQuery(
-					self::makeFullTextQuery($dao, $criteria, $string)->limit(1)
+					self::makeFullTextQuery($dao, $oq, $string)->limit(1)
 				);
 		}
 		
 		public static function lookupList(
-			FullTextDAO $dao, Criteria $criteria, $string
+			FullTextDAO $dao, ObjectQuery $oq, $string
 		)
 		{
 			return
 				$dao->getListByQuery(
-					self::makeFullTextQuery($dao, $criteria, $string)
+					self::makeFullTextQuery($dao, $oq, $string)
 				);
 		}
 		
@@ -42,16 +40,16 @@
 		 * @return SelectQuery
 		**/
 		public static function makeFullTextQuery(
-			FullTextDAO $dao, Criteria $criteria, $string
+			FullTextDAO $dao, ObjectQuery $oq, $string
 		)
 		{
 			Assert::isString(
 				$string,
 				'only strings accepted today'
 			);
-			
+
 			$array = self::prepareSearchString($string);
-			
+
 			if (!$array)
 				throw new ObjectNotFoundException();
 			
@@ -62,16 +60,13 @@
 				);
 			
 			return
-				$criteria->setDao($dao)->
-				add(
+				$oq->toSelectQuery($dao)->
+				andWhere(
 					Expression::fullTextOr($field, $array)
 				)->
-				prependOrder(
-					OrderBy::create(
-						Expression::fullTextRankAnd($field, $array)
-					)->
-					desc()
-				);
+				prependOrderBy(
+					Expression::fullTextRankAnd($field, $array)
+				)->desc();
 		}
 		
 		public static function prepareSearchString($string)
@@ -84,7 +79,7 @@
 				);
 			
 			$out = array();
-			
+
 			for ($i = 0, $size = count($array); $i < $size; ++$i)
 				if (
 					!empty($array[$i])
