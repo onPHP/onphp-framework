@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-02	Konstantin V. Arkhipov
+
+	* 0.8.7 released.
+
 2007-05-01	Sergey S. Sergeev
 
 	* meta/builders/BaseBuilder.class.php: return query if setters are
