@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-02	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* 0.2.19 released.
+
 2007-04-22	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* trunk/core/OSQL/SelectQuery.class.php: getFieldNames() now respects
