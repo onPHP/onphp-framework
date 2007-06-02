@@ -1,0 +1,1502 @@
+# $Id$
+
+2007-06-02	Konstantin V. Arkhipov
+
+	* 0.8.7 released.
+
+2007-05-01	Sergey S. Sergeev
+
+	* meta/builders/BaseBuilder.class.php: return query if setters are
+	empty.
+
+2007-04-22	Konstantin V. Arkhipov
+
+	* trunk/core/OSQL/SelectQuery.class.php: getFieldNames() now respects
+	aliases.
+
+2007-03-22	Ivan Y. Khvostishkov
+
+	* main/Utils/RussianTextUtils.class.php: friendlyFileSize() backported
+	from trunk.
+
+2007-03-20	Konstantin V. Arkhipov
+
+	* main/Containers/Unified/UnifiedContainer.class.php: fetched
+	collection now excluded from serialization.
+
+2007-03-19	Ivan Y. Khvostishkov
+
+	* core/Form/Primitives/PrimitiveEnumeration.class.php: bugfix, value
+	must be null on failed import.
+
+2007-03-11	Konstantin V. Arkhipov
+
+	* 0.8.6 released.
+
+2007-03-02	Dmitry E. Demidov
+
+	* core/Cache/WatermarkedPeer.class.php, 
+	main/DAOs/Workers/FileSystemDaoWorker.class.php,
+	main/DAOs/Workers/SmartDaoWorker.class.php,
+	main/DAOs/Workers/VoodooDaoWorker.class.php: added ability to set separate 
+	watermark on classes.
+	
+2007-02-26	Konstantin V. Arkhipov
+
+	* core/Base/Enumeration.class.php: constructor's logic moved to
+	setId() to be forward compatible with trunk.
+
+	* core/Base/IdentifiableObject.class.php: setId() unfinalized to be
+	forward compatible with trunk.
+
+2007-02-22	Konstantin V. Arkhipov
+
+	* main/DAOs/GenericDAO.class.php: field collisions in inherited
+	classes fixed.
+
+2007-02-20	Dmitry E. Demidov
+
+	* main/Containers/Unified/UnifiedContainer.class.php: sync list with
+	clones after container save.
+
+2007-02-19	Konstantin V. Arkhipov
+
+	* main/Containers/Unified/UnifiedContainer.class.php: unsaved objects
+	are not tracked by importList() now.
+
+2007-02-16	Dmitry E. Demidov
+
+	* core/Form/Primitives/PrimitiveInteger.class.php,
+	meta/types/IntegerType.class.php,
+	meta/types/SmallIntegerType.class.php: backport max/min constants from
+	trunk.
+
+2007-02-13	Konstantin V. Arkhipov
+
+	* 0.8.5 released.
+
+2007-02-13	Anton E. Lebedevich
+
+	* main/Flow/PrototypedEditor.class.php,
+	main/Flow/MethodMappedController.class.php: one more editor.
+
+2007-02-10	Dmitry E. Demidov
+
+	* core/Form/Primitives/ExplodedPrimitive.class.php: added support for
+	regexp separator.
+
+2007-02-09	Konstantin V. Arkhipov
+
+	* main/Utils/ClassUtils.class.php: return value are omitted now for
+	all methods.
+
+	* main/Flow/: MonolithicEditor backported from trunk; also fixed
+	SaveCommand logic.
+
+2007-02-09	Dmitry E. Demidov
+
+	* core/Form/Primitives/PrimitiveImage.class.php: fix return value.
+
+2007-02-07	Denis M. Gabaidulin
+
+	* core/OSQL/SelectQuery.class.php: having clause support was added.
+
+2007-02-06	Denis M. Gabaidulin
+
+	* core/Form/Primitives/PrimitiveIdentifierList.class.php: list of
+	identificable objects primitive was added.
+
+2007-02-02	Konstantin V. Arkhipov
+
+	* meta/builders/ProtoClassBuilder.class.php: min/max values
+	added to identifier's too.
+
+2007-01-31	Dmitry E. Demidov
+
+	* main/Utils/ClassUtils.class.php: added class for copy 
+	object properties.
+
+2007-01-31	Konstantin V. Arkhipov
+
+	* meta/types/: min/max values for SmallInteger/Integer primitives.
+
+2007-01-29	Dmitry E. Demidov
+
+	* main/Utils/RussianTextUtils.class.php: added method getDateAsText.
+
+2007-01-25	Dmitry E. Demidov
+
+	* main/core/Form/FormUtils.class.php: form2object() and object2form()
+	now accepts any objects.
+
+2007-01-23	Dmitry E. Demidov
+
+	* main/Utils/DaoMoveHelper.class.php: added new class for easy moving
+	up/down DAOConnected objects.
+
+	* main/Utils/DaoUtils.class.php: added customizable null value.
+
+2007-01-22	Konstantin V. Arkhipov
+
+	* main/DAOs/Handlers/MessageSegmentHandler.class.php,
+	main/DAOs/Handlers/SharedMemorySegmentHandler.class.php:
+	segments/queues are now created with 0660 permission, instead of 0600.
+
+2007-01-19	Konstantin V. Arkhipov
+
+	* main/DAOs/Handlers/MessageSegmentHandler.class.php,
+	main/DAOs/Workers/DelayedDaoWorker.class.php: sysvmsg-based
+	asynchronous DAO-worker, arrived from trunk.
+
+2007-01-12	Nickolay G. Korolyov
+
+	* main/Utils/DaoUtils.class.php: shiny new class introduced.
+
+2007-01-11	Konstantin V. Arkhipov
+
+	* core/DB/ImaginaryDialect.class.php: missing toString added to
+	fullTextSearch()/fullTextRank().
+
+2007-01-08	Konstantin V. Arkhipov
+
+	* 0.8.4 released.
+
+2007-01-06	Konstantin V. Arkhipov
+
+	* ext/src/core/DB/ImaginaryDialect.c: segfault's fix backported from
+	trunk.
+
+2007-01-03	Konstantin V. Arkhipov
+
+	* ext/src/core/DB/Dialect.c: rare memory corruption fixed, backported
+	from trunk.
+
+2006-12-29	Konstantin V. Arkhipov
+
+	* core/Cache/WatermarkedPeer.class.php: fix for possible cache
+	corruption backported from trunk.
+
+2006-12-27	Konstantin V. Arkhipov
+
+	* core/Form/PlainForm.class.php, core/Form/Primitives/: clean()
+	backported from trunk.
+
+2006-12-26	Konstantin V. Arkhipov
+
+	* meta/patterns/SpookedEnumerationPattern.class.php: arrived from
+	trunk.
+
+2006-12-20	Konstantin V. Arkhipov
+
+	* main/Flow/RedirectView.class.php: now skips arrays and objects in
+	query string generation.
+
+2006-12-17	Konstantin V. Arkhipov
+
+	* 0.8.3 released.
+
+2006-12-02	Konstantin V. Arkhipov
+
+	* meta/types/SmallIntegerType.class.php: arrived from trunk.
+
+2006-11-25	Igor V. Gulyaev
+
+	* meta/builders/BaseBuilder.class.php: do not generate getTable,
+	getObjectName, getSequence for abstract DAO's.
+
+2006-11-12	Konstantin V. Arkhipov
+
+	* 0.8.2 released.
+
+2006-11-11	Konstantin V. Arkhipov
+
+	* doc/project.skel/: synced with current onPHP's state.
+
+2006-11-10	Konstantin V. Arkhipov
+
+	* meta/: return type-hints are now generated for every class.
+
+2006-11-09	Konstantin V. Arkhipov
+
+	* meta/types/: float type corrected, double type added.
+
+2006-11-06	Konstantin V. Arkhipov
+
+	* main/Mail/MimePart.class.php: strange typo in quoted encoding fixed.
+
+	* main/Mail/Mail.class.php: fixed from-address encoding's handling.
+
+	* meta/builders/BaseBuilder.class.php: backported fix for non-required
+	Ranges generation.
+
+2006-11-05	Konstantin V. Arkhipov
+
+	* 0.8.1 released.
+
+2006-11-02	Konstantin V. Arkhipov
+
+	* main/Containers/Unified/UnifiedContainer.class.php: do not interrupt
+	so-called 'global transaction', if any; arrived from trunk.
+
+	* core/Form/Primitives/, meta/: backported float-related stuff from
+	trunk.
+
+2006-10-31	Nickolay Korolyov
+
+	* core/Form/Primitives/PrimitiveFloat.class.php,
+	meta/types/FloatType.class.php: float support in Form and meta;
+	arrived from trunk.
+
+2006-10-31	Dmitry E. Demidov
+
+	* main/Utils/TuringTest/TuringImage.class.php: added ability to
+	generate IMG_WBMP; backported from trunk.
+
+2006-10-25	Anton E. Lebedevich
+
+	* test/core/LogicTest.class.php: added tests for LogicalExpression.
+
+	* core/Logic/LogicalExpression.class.php,
+	core/Logic/Expression.class.php: eqLower fixed for Forms.
+
+2006-10-25	Konstantin V. Arkhipov
+
+	* core/DB/MySQL.class.php: always force new link creation for
+	non-persistent connections.
+
+2006-10-21	Konstantin V. Arkhipov
+
+	* 0.8.0 released.
+
+2006-10-19	Konstantin V. Arkhipov
+
+	* meta/types/TimeType.class.php,
+	core/Form/Primitives/PrimitiveTime.class.php: Time-primitive
+	introduced, Time-type is now supported by meta.
+
+2006-10-18	Konstantin V. Arkhipov
+
+	* core/DB/SQLite.class.php, core/DB/MySQL.class.php: duplicated
+	inserts are now detected too.
+
+	* core/DB/PostgresError.class.php, core/DB/PgSQL.class.php: queryRaw()
+	now throws DuplicateObjectException upon PG's UNIQUE_VIOLATION.
+
+	* core/OSQL/SQLQueryJoin.class.php: dropped.
+
+	* core/OSQL/SelectQuery.class.php: joinQuery() is now deprecated in
+	favour of join; leftJoinQuery is dropped.
+
+2006-10-18	Dmitry E. Demidov
+
+	* core/OSQL/SelectQuery.class.php: added method leftJoinQuery.
+
+	* core/OSQL/SQLQueryJoin.class.php: added property left for ability 
+	generate left outer join with query.
+
+2006-10-18	Konstantin V. Arkhipov
+
+	* meta/: column support for identifiers.
+
+	* core/Form/Primitives/PrimitiveImage.class.php: big images' handling
+	fixed.
+
+2006-10-07	Konstantin V. Arkhipov
+
+	* meta/: dropped support of <property identifier="true" ... />; use
+	<identifier ... /> now.
+
+2006-10-06	Anton E. Lebedevich
+
+	* main/Base/ObjectsTree.class.php: removed.
+
+2006-10-06	Konstantin V. Arkhipov
+
+	* meta/classes/MetaConfiguration.class.php: added ability to override
+	column names for properties.
+
+2006-10-05	Anton E. Lebedevich
+
+	* main/Flow/FilterController.class.php: removed.
+
+2006-10-05	Konstantin V. Arkhipov
+
+	* meta/builders/AutoDaoBuilder.class.php: public constructor's
+	generation fixed.
+
+2006-10-04	Konstantin V. Arkhipov
+
+	* core/Base/Assert.class.php: simplified isInteger-checking, succeeds
+	on integer's with leading zeros now.
+
+2006-10-02	Konstantin V. Arkhipov
+
+	* meta/builders/SchemaBuilder.class.php: do not generate unsupported
+	relations in schema.
+
+2006-09-29	Konstantin V. Arkhipov
+
+	* main/DAOs/GenericDAO.class.php, main/DAOs/StorableDAO.class.php:
+	backwards compatibility introduced for 0.2-style pseudo-mappings.
+
+2006-09-28	Konstantin V. Arkhipov
+
+	* main/Base/ObjectsTree.class.php: ressurected.
+
+2006-09-27	Konstantin V. Arkhipov
+
+	* meta/: 'source link' support in DAO's implemented.
+
+	* core/DB/DBPool.class.php: new way for handling multi-DB's projects.
+
+2006-09-26	Konstantin V. Arkhipov
+
+	* meta/builders/SchemaBuilder.class.php: handling of property-less
+	classes fixed too.
+
+	* meta/builders/AutoDaoBuilder.class.php: fixed bug with inherited
+	property-less DAO's.
+
+2006-09-25	Konstantin V. Arkhipov
+
+	* meta/builders/ProtoClassBuilder.class.php: corrected handling of
+	parent's identifiers (if any).
+
+	* meta/builders/ProtoClassBuilder.class.php: inheritance support
+	implemented, useless constructor and private property dropped.
+
+	* core/OSQL/TruncateQuery.class.php,
+	test/core/TruncateQueryTest.class.php: single table handling fixed,
+	test updated.
+
+	* meta/classes/MetaClass.class.php: try to resolve parent's identifier
+	in cases where child doesn't own one.
+
+2006-09-24	Konstantin V. Arkhipov
+
+	* main/DAOs/FullTextDAO.class.php: is now interface-helper for
+	introduced FullTextUtils.
+
+	* main/DAOs/MappedDAO.class.php,
+	main/DAOs/MappedStorableDAO.class.php: dropped, since all Storable's
+	childs are now Mapped too.
+
+	* main/Base/Credentials.class.php: dropped.
+
+	* FinalNamedObjectDAO.class.php, NamedObjectDAO.class.php: useless
+	classes dropped.
+
+	* main/DAOs/FinalObjectsTreeDAO.class.php,
+	main/DAOs/ObjectsTreeDAO.class.php, main/Base/ObjectsTree.class.php:
+	deprecated classes dropped.
+
+2006-09-22	Konstantin V. Arkhipov
+
+	* ext/src/main/DAOs/Handlers/SharedMemorySegmentHandler.c: dropped.
+
+	* main/DAOs/FullTextDAO.class.php: deprecated.
+
+	* core/Cache/ReferencePool.class.php,
+	core/Cache/WatermarkedPeer.class.php: simplified a bit.
+
+2006-09-21	Konstantin V. Arkhipov
+
+	* main/DAOs/Handlers/XCacheSegmentHandler.class.php: one more
+	segment handler added.
+
+2006-09-20	Denis M. Gabaidulin
+
+	* core/Base/Session.class.php: dropAll() method was added.
+
+2006-09-19	Konstantin V. Arkhipov
+
+	* main/Base/ObjectsTree.class.php, main/DAOs/ObjectsTreeDAO.class.php,
+	main/DAOs/FinalObjectsTreeDAO.class.php: are now deprecated, pending
+	removal during upcoming 0.7-session.
+
+	* meta/builders/DictionaryDaoBuilder.class.php: now detects whether
+	FinalNamedObjectDAO can be used.
+
+2006-09-18	Konstantin V. Arkhipov
+
+	* meta/classes/MetaConfiguration.class.php: name in identifier's
+	shortcut is now optional, the default is 'id'; identifier's type can
+	be specified now, the default is 'BigInteger'.
+
+2006-09-17	Konstantin V. Arkhipov
+
+	* 0.6.2 released.
+
+2006-09-14	Konstantin V. Arkhipov
+
+	* core/OSQL/SelectQuery.class.php: arrayGet() now detects two
+	DialectString childs in should-be-prefixed cases, as requested by
+	Sherman.
+
+2006-09-10	Konstantin V. Arkhipov
+
+	* main/Flow/RedirectToView.class.php: {get,set}Suffix added.
+
+2006-09-08	Dmitry E. Demidov
+
+	* main/Utils/TuringTest/CodeGenerator.class.php: added restriction
+	generation of similar symbols ability.
+
+2006-09-07	Dmitry E. Demidov
+
+	* core/Form/Form.class.php: addCustomLabel() added.
+
+2006-08-23	Konstantin V. Arkhipov
+
+	* core/Cache/PeclMemcached.class.php: corrected behaviour in cases
+	when memcached's gone.
+
+2006-08-22	Dmitry E. Demidov
+
+	* main/Utils/HttpStatus.class.php: added enumeration of http status
+	codes.
+
+	* main/Utils/HeaderUtils.class.php: changed method sendHttpStatus to
+	use introduced enumeration..
+
+2006-08-21	Dmitry E. Demidov
+
+	* main/Utils/HeaderUtils.class.php: added method sendHttpStatus.
+
+2006-08-18	Konstantin V. Arkhipov
+
+	* main/Containers/Storable/StorableContainer.class.php: fixed issue
+	with lost keys in getIdsList(). Spotted by serge, approved by antony.
+
+2006-08-15	Dmitry E. Demidov
+
+	* core/Form/Primitives/PrimitiveTernary.class.php: ternary primitive 
+	can be required
+
+2006-08-11	Konstantin V. Arkhipov
+
+	* core/Cache/SemaphorePool.class.php: now trying to detect and use
+	eAccelerator's locking when sysvsem extension is missing.
+
+	* main/DAOs/Handlers/ApcSegmentHandler.class.php: integration with APC
+	too.
+
+	* main/DAOs/Handlers/eAcceleratorSegmentHandler.class.php,
+	core/Cache/eAcceleratorLocker.class.php: integration with
+	eAccelerator.
+
+2006-08-10	Konstantin V. Arkhipov
+
+	* core/Form/FormUtils.class.php: checkPrototyped() added.
+
+	* 0.6.1 released.
+
+2006-08-08	Konstantin V. Arkhipov
+
+	* core/DB/, ext/: 'abstract static' methods are now just 'abstract' to
+	be compatible with upcoming php-5.2, wrt to php's bug #38219.
+
+2006-08-08	Dmitry E. Demidov
+
+	* main/Utils/TuringTest/ErrorDrawer.class.php: added ability 
+	enable/disable error drawer.
+
+2006-08-04	Dmitry E. Demidov
+
+	* core/OSQL/OrderBy.class.php: added ability group by SelectQuery.
+
+2006-08-03	Dmitry E. Demidov
+
+	* main/Utils/TuringTest/: added classes for Turing test.
+
+2006-08-02	Anton E. Lebedevich
+
+	* main/Mail/Mail.class.php: contentType added.
+
+	* core/Base/Timestamp.class.php: dayDifference() function added.
+
+2006-08-01	Konstantin V. Arkhipov
+
+	* main/Mail/: unfinished mime-mail added.
+
+	* main/Utils/Mail.class.php: moved to new main/Mail category.
+
+2006-07-21	Konstantin V. Arkhipov
+
+	* 0.6.0 released.
+
+2006-07-17	Konstantin V. Arkhipov
+
+	* meta/: DTD updated, forgotten shortcut to identifier implemented.
+
+2006-07-16	Dmitry E. Demidov
+
+	* core/Form/Primitives/PrimitiveTernary.class.php: added.
+
+	* core/Form/Primitive.class.php: ternary() added.
+
+2006-07-15	Konstantin V. Arkhipov
+
+	* core/Form/: pass-by-reference removed from all methods.
+
+	* core/OSQL/, ext/: support for TRUNCATE-query implemented, as
+	requested by unnamed hero.
+
+2006-07-14	Konstantin V. Arkhipov
+
+	* core/DB/PostgresDialect.class.php, core/DB/Dialect.class.php,
+	core/DB/ImaginaryDialect.class.php, core/DB/MyDialect.class.php,
+	core/DB/LiteDialect.class.php: pass-by-reference removed from all
+	methods.
+
+	* ext/: synced with dialects and sanitized.
+
+2006-07-13	Konstantin V. Arkhipov
+
+	* main/Flow/CarefulDatabaseRunner.class.php: careful container for
+	DB-related commands.
+
+	* main/Flow/CarefulCommand.class.php,
+	main/Flow/CommandChain.class.php: support for something like a
+	transactions in EditorController implemented, as requested by
+	dedmajor.
+
+2006-07-12	Konstantin V. Arkhipov
+	
+	* core/Form/Form.class.php: markCustom() added, as requested by
+	dedmajor.
+
+	* core/Form/Form.class.php: API breakage: getTexturalErrors() ->
+	getTextualErrors(); typo spotted by dedmajor.
+
+2006-07-11	Konstantin V. Arkhipov
+
+	* ext/: StaticFactory, Enumeration, Prototyped, FieldTable, Query,
+	QueryIdentification and ImaginaryDialect are implemented.
+
+2006-07-08	Konstantin V. Arkhipov
+
+	* ext/src/main/DAOs/Handlers/SharedMemorySegmentHandler.c: implemented
+	finally.
+
+2006-07-07	Konstantin V. Arkhipov
+
+	* core/Form/FormUtils.class.php: null's handling are now optional, as
+	requested by nk.
+
+2006-07-01	Konstantin V. Arkhipov
+
+	* ext/: SegmentHandler interface implemented.
+
+2006-06-30	Konstantin V. Arkhipov
+
+	* core/OSQL/SelectField.class.php: now supports any instance of
+	DialectString as field.
+
+2006-06-29	Konstantin V. Arkhipov
+
+	* meta/builders/ContainerClassBuilder.class.php: naming of
+	container's classes changed to avoid collisions with two or more
+	self-collected ones.
+
+2006-06-28	Konstantin V. Arkhipov
+
+	* main/DAOs/ObjectQuery.class.php: final class now.
+
+	* meta/builders/ProtoClassBuilder.class.php: deprecated getForm()
+	dropped.
+
+	* main/Utils/RussianTextUtils.class.php: deprecated getSuffix()
+	dropped.
+
+	* main/DAOs/Handlers/: segment's handling logic separated from
+	DAO-workers.
+
+	* src/core/DB/Dialect.c: declarations of timeZone() and
+	dropTableMode() corrected.
+
+	* main/DAOs/: sub-directories for Workers and upcoming Handlers
+	introduced.
+
+2006-06-27	Konstantin V. Arkhipov
+
+	* ext/: php's extension moved from incubator.
+
+2006-06-27	Anton E. Lebedevich
+
+	* core/OSQL/SelectQuery.class.php: GroupBy class dropped.
+
+2006-06-25	Konstantin V. Arkhipov
+
+	* main/Containers/: sub-directories for Storable and Unified
+	containers introduced.
+
+	* core/Base/Timestamp.class.php: extended support of malformed dates,
+	normalization introduced for such cases.
+
+	* core/Form/Primitives/PrimitiveDate.class.php: introduced support of
+	dates from Jesus' birthday to 9999-12-31.
+
+	* core/Form/Filters/RemoveSymbolsFilter.class.php: removed in favour
+	of StringReplaceFilter.
+
+	* core/Form/PlainForm.class.php: Range-related methods moved to
+	PrimitiveRange.
+
+	* core/Form/FormUtils.class.php: backward compatibility with php-5.0
+	dropped.
+
+	* core/Form/: sub-directories for Filters and Primitives introduced.
+
+	* core/Form/PlainForm.class.php: backward compatibility with 0.2
+	removed.
+
+	* core/Base/Timestamp.class.php: makeNow() and makeToday() added.
+
+	* core/Base/Creatable.class.php,
+	core/Base/SingletonInstance.class.php: removed.
+
+2006-06-25	Anton E. Lebedevich
+
+	* main/Utils/TextUtils.class.php: getHostFromUrl() renamed to 
+	getRootFromUrl().
+
+2006-06-25	Konstantin V. Arkhipov
+
+	* 0.4.7 released.
+
+2006-06-24	Anton E. Lebedevich
+	
+	* main/Utils/TextUtils.class.php: getHostFromUrl(), getPathFromUrl(), 
+	UrlSafeBase64Encode(), UrlSafeBase64Decode() added.
+
+2006-06-22	Konstantin V. Arkhipov
+
+	* main/DAOs/ObjectQuery.class.php: SQLArray support implemented.
+
+2006-06-17	Konstantin V. Arkhipov
+
+	* main/Flow/EditorController.class.php: uses makeForm() now.
+
+	* meta/builders/ProtoClassBuilder.class.php: getForm() (single global
+	Form object) deprecated in
+	favor of makeForm() (Form's object factory) as suggested by sloory.
+
+2006-06-11	Konstantin V. Arkhipov
+
+	* main/DAOs/FileSystemDaoWorker.class.php,
+	main/DAOs/SmartDaoWorker.class.php,
+	main/DAOs/VoodooDaoWorker.class.php: transparent DAO-workers are now
+	WatermarkedPeer-friendly.
+
+2006-06-11	Konstantin V. Arkhipov
+
+	* 0.4.6 released.
+
+2006-06-08	Konstantin V. Arkhipov
+
+	* meta/: two minor typo-caused bugs.
+
+2006-05-29	Konstantin V. Arkhipov
+
+	* meta/: spooked classes implemented, which is never generated and
+	used only for referencing inside one meta-config.
+
+2006-05-27	Konstantin V. Arkhipov
+
+	* 0.4.5 released.
+
+2006-05-25	Konstantin V. Arkhipov
+
+	* meta/, core/DB/: default values for generic non-object types
+	implemented.
+
+	* meta/types/StringType.class.php,
+	meta/classes/MetaClassProperty.class.php: correct column type guessing
+	for meta's StringType.
+
+	* meta/classes/MetaClassProperty.class.php,
+	meta/builders/BaseBuilder.class.php: formatting issues with
+	non-required generic types fixed, also fixed bug with illegal handling
+	non-required generic object types in DAO' setters.
+
+2006-05-24	Konstantin V. Arkhipov
+
+	* meta/builders/DaoBuilder.class.php: handling of final classes
+	implemented.
+
+2006-05-22	Konstantin V. Arkhipov
+
+	* core/Logic/LogicalChain.class.php: evil regression fixed.
+
+	* core/Form/PlainForm.class.php: a bit of backward's compatibility
+	added.
+
+	* main/Flow/PartViewer.class.php, main/Flow/PhpViewResolver.class.php:
+	ability to check existence added.
+
+	* main/DAOs/FileSystemDaoWorker.class.php: file system incarnation of
+	VoodooDaoWorker, quite simple, but transparent and lockless too.
+
+2006-05-20	Konstantin V. Arkhipov
+
+	* 0.4.4 released.
+
+2006-05-18	Anton E. Lebedevich
+
+	* main/Utils/RussianTextUtils.class.php: selectCaseForNumber added
+	to replace getSuffix.
+
+2006-05-15	Konstantin V. Arkhipov
+
+	* core/Form/ListedPrimitive.class.php: list and enumeration's
+	primitives grouped a bit.
+
+	* core/Base/Enumeration.class.php: quite hacky method added, which
+	can help to instantiate arbitrary Enumeration.
+
+2006-05-11	Konstantin V. Arkhipov
+
+	* main/Flow/RedirectToView.class.php: helper to avoid constant
+	string's abuse.
+
+2006-05-08	Anton E. Lebedevich
+
+	* main/Utils/Mail.class.php: encoding interface simplified.
+
+	* main/Flow/SimplePhpView.class.php: toString function added.
+	
+	* core/Form/Form.class.php: getTextualErrorFor function added.
+
+2006-05-05	Sergey S. Sergeev
+
+	* main/Containers/StorableContainer.class.php: bugfixed call to undefined
+	function WrongStateException().
+
+2006-05-04	Anton E. Lebedevich
+
+	* main/Utils/Mail.class.php: added.
+
+2006-05-03	Konstantin V. Arkhipov
+
+	* meta/builders/ProtoClassBuilder.class.php: PrimitiveEnumeration
+	support in proto classes.
+
+2006-05-02	Konstantin V. Arkhipov
+
+	* trunk/core/Base/IdentifiableObject.class.php: removed create()
+	method, since it's conflicting with Enumeration's one.
+
+2006-05-02	Sergey S. Sergeev
+
+	* core/Form/Primitive.class.php: deleted deprecated methods.
+
+	* core/Base/IdentifiableObject.class.php: added create() forgotten
+	method.
+
+	* core/Form/Filter.class.php: added replaceSymbols(), removeSymbols()
+	filters.
+
+2006-04-30	Konstantin V. Arkhipov
+
+	* 0.4.3 released.
+
+2006-04-29	Konstantin V. Arkhipov
+
+	* core/Form/IdentifiablePrimitive.class.php: basis for enumeration and
+	identifier primitives.
+
+2006-04-29	Ivan Y. Khvostishkov
+
+	* core/Form/Primitive.class.php: added support for enumeration
+	primitive.
+	* core/Form/PrimitiveEnumeration.class.php: added.
+
+2006-04-26	Konstantin V. Arkhipov
+
+	* meta/classes/MetaClassProperty.class.php: hacky support for
+	unsupported boolean type at MySQL.
+
+	* core/OSQL/InsertOrUpdateQuery.class.php,
+	core/OSQL/UpdateQuery.class.php: do not quote boolean values.
+
+2006-04-25	Anton E. Lebedevich
+
+	* main/Utils/TextUtils.class.php: added friendlyFileSize() method.
+
+2006-04-21	Anton E. Lebedevich
+
+	* main/Utils/DebugUtils.class.php: fixed html output, functions ec
+	and microtime added.
+
+	* main/Utils/XmlRpcClient.class.php: simple wrapper for XML-RPC.
+
+2006-04-20	Konstantin V. Arkhipov
+
+	* main/Flow/EditorController.class.php: do not override child's
+	command map, if any.
+
+	* main/Flow/RedirectView.class.php: query string generation fixed.
+
+2006-04-16	Konstantin V. Arkhipov
+
+	* 0.4.2 released.
+
+	* core/Form/UrlEncodeFilter.class.php,
+	core/Form/UrlDecodeFilter.class.php,
+	core/Form/StringReplaceFilter.class.php: more wrappers.
+
+2006-04-14	Konstantin V. Arkhipov
+
+	* meta/builders/ProtoClassBuilder.class.php: tricky relations handling
+	implemented in proto classes, fixme closed.
+
+2006-04-12	Konstantin V. Arkhipov
+
+	* meta/builders/ContainerClassBuilder.class.php: removed unneeded
+	method for OneToMany-based containers.
+
+	* core/Form/PrimitiveDate.class.php: complexity detection fixed.
+
+	* core/Form/FormUtils.class.php: forced usage of single import for
+	complex primitives.
+
+2006-04-11	Anton E. Lebedevich
+
+	* main/Containers/UnifiedContainer.class.php: one more evil typo
+	fixed, propagated from 0.2.
+
+2006-04-11	Konstantin V. Arkhipov
+
+	* core/DB/DBFactory.class.php: introduced ability to specify
+	conntector's type for custom connections.
+	
+	* core/Base/Creatable.class.php: deprecated.
+	
+	* meta/: removed support for Creatable interface.
+
+2006-04-09	Konstantin V. Arkhipov
+
+	* 0.4.1 released.
+
+2006-04-06	Konstantin V. Arkhipov
+
+	* core/Base/Instantiatable.class.php: new grouping interface
+	introduced.
+
+	* core/DB/: dialects are now singletones.
+
+	* core/OSQL/QueryIdentification.class.php: Stringable dependency moved
+	to Query interface in the sake of debug pleasure.
+
+2006-04-05	Konstantin V. Arkhipov
+
+	* meta/: integer's Range support implemented.
+
+	* core/OSQL/InsertOrUpdateQuery.class.php: added Range support in
+	lazySet.
+
+2006-04-05	Anton E. Lebedevich
+
+	* main/Containers/UnifiedContainer.class.php: 1489 propagated to
+	trunk.
+	* main/Utils/DebugUtils.class.php: added.
+	* core/OSQL/InsertOrUpdateQuery.class.php: added Timestamp support in
+	lazySet.
+
+2006-04-03	Konstantin V. Arkhipov
+
+	* 0.4.0 released.
+
+2006-04-02	Konstantin V. Arkhipov
+
+	* meta/: correct boolean-type handling implemented and minor typos
+	fixed.
+
+	* core/Base/Enumeration.class.php: getObjectList() introduced as
+	alternative to static getList().
+
+2006-04-01	Konstantin V. Arkhipov
+
+	* doc/www/: site updated to new design and layout.
+
+	* main/Base/Range.class.php: implementation simplified a bit wrt
+	swapAllowed-logic removal.
+
+	* main/Containers/UnifiedContainer.class.php: API changed a bit -
+	setListWithClones() -> replaceList(); once again refixed save logic.
+
+	* meta/: support for OneToMany and ManyToMany relations implemented.
+
+2006-03-30	Konstantin V. Arkhipov
+
+	* main/Flow/ForbiddenCommand.class.php: bibb added.
+
+2006-03-30	Anton E. Lebedevich
+
+	* main/Containers/UnifiedContainer.class.php: wrong index in list and
+	clones fixed.
+
+2006-03-27	Konstantin V. Arkhipov
+
+	* core/Base/Creatable.class.php: new obvious interface introduced.
+
+2006-03-26	Konstantin V. Arkhipov
+
+	* doc/THANKS: for various suggestions, critics, patches, etc.
+
+	* doc/AUTHORS: all email addresses moved to single file.
+
+	* core/Exceptions/MissingElementException.class.php: closing
+	exception's TODO item by removing abuse of ObjectNotFoundException
+	mostly.
+
+	* global.inc.php.tpl: throw exceptions on E_STRICT violations too.
+
+	* main/Flow/Model.class.php: deprecated 'Var'-suffixed methods.
+
+	* core/OSQL/QueryIdentification.class.php: now implements Stringable
+	for debugging purposes.
+
+	* core/Base/Singletone.class.php: dropped in the sake of sanity.
+
+	* main/DAOs/SmartDaoWorker.class.php,
+	main/DAOs/VoodooDaoWorker.class.php,
+	core/Cache/WatermarkedPeer.class.php: implemented ability to avoid
+	project's namespace in-cache collisions by watermarking all cache'
+	activity.
+
+2006-03-13	Konstantin V. Arkhipov
+
+	* meta/classes/: fixed indentation issues, now 100% compatible with
+	our coding style standarts.
+
+	* core/OSQL/DialectString.class.php: toString() renamed to
+	toDialectString(), to avoid collision with Stringable interface.
+
+2006-03-12	Konstantin V. Arkhipov
+
+	* meta/: proto classes implementation finished.
+
+	* core/Form/FormUtils.class.php: import/export utilities, extracted
+	from Form.
+
+	* core/Form/Form.class.php: ability to scope's cleanup dropped;
+	method primitiveExist renamed to primitiveExists;
+
+2006-03-09	Anton E. Lebedevich
+
+	* main/Flow/: initial import.
+
+2006-03-09	Konstantin V. Arkhipov
+
+	* meta/: creation of prototyped classes implemented.
+
+	* core/Form/PrimitiveIdentifier.class.php: for resolving incapsulated
+	objects.
+
+	* core/Form/: two last primitives separated from factory file.
+
+	* meta/: all formatting stuff moved to separate class.
+
+	* 0.2.9 released.
+
+2006-03-08	Konstantin V. Arkhipov
+
+	* core/OSQL/DBValue.class.php: don't quote integer values.
+
+2006-03-03	Konstantin V. Arkhipov
+
+	* main/DAOs/VoodooDaoWorker.class.php,
+	main/DAOs/SmartDaoWorker.class.php,
+	main/DAOs/TransparentDaoWorker.class.php: fourth dao worker
+	implemented: lockingless, transparent, greedy and damn fast.
+
+2006-03-01	Konstantin V. Arkhipov
+
+	* main/DAOs/NamedObjectDAO.class.php: typo spotted.
+
+	* core/Base/NamedObject.class.php: now IdentifiableObject's child.
+
+2006-02-22	Sergey S. Sergeev
+
+	* main/Utils/HeaderUtils.class.php: bugfixed access to undeclared
+	static property.
+
+	* main/DAOs/CommonDaoWorker.class.php,
+	main/DAOs/BaseDaoWorker.class.php: uncacheByQuery() moved to
+	BaseDaoWorker.
+
+	* main/DAOs/GenericDAO.class.php, main/DAOs/BaseDAO.class.php:
+	uncacheByQuery() implemented.
+
+2006-02-20	Konstantin V. Arkhipov
+
+	* core/DB/MyDialect.class.php: is now compatible with MySQL-4.
+
+	* core/DB/ImaginaryDialect.class.php: removed unnecessary quoting
+	stuff, since we're using it only for internal purposes.
+
+2006-02-16	Konstantin V. Arkhipov
+
+	* core/Form/Form.class.php: import/export object is now compatible
+	with php-5.0.
+
+2006-02-16	Denis Gabaidulin
+
+	* core/Form/StripTagsFilter.class.php: support for tags exclusion.
+
+2006-02-15	Konstantin V. Arkhipov
+
+	* core/DB/: correct handling for MySQL's forcing of single queries.
+
+	* main/Containers/UnifiedContainer.class.php: wrong list/clones
+	default fixed.
+
+2006-02-08	Konstantin V. Arkhipov
+
+	* main/Base/ImageType.class.php, core/Form/PrimitiveImage.class.php:
+	image uploading helpers.
+
+	* 0.2.8 released.
+
+2006-02-04	Konstantin V. Arkhipov
+
+	* core/Form/Form.class.php: reflection-based object exporter.
+
+2006-02-02	Konstantin V. Arkhipov
+
+	* main/Module/EditorModule.class.php: allow selfRedirect() tweaking.
+
+	* core/Form/Form.class.php: simple reflection-based object importer
+	implemented.
+
+2006-01-31	Anton E. Lebedevich
+
+	* core/Base/Timestamp.class.php,
+	main/Base/CalendarMonthWeekly.class.php: week start and end day moved
+	to Timestamp from CalendarMonthWeekly.
+
+	* main/Containers/StorableContainer.class.php: don't be so strict in
+	getList().
+
+	* core/OSQL/InsertOrUpdateQuery.class.php: lazySet now even lazier.
+
+2006-01-30	Konstantin V. Arkhipov
+
+	* core/DB/InterbaseDialect.class.php,
+	incubator/classes/DB/IBase.class.php: moved to incubator, since i
+	don't want to support it anymore.
+
+2006-01-29	Konstantin V. Arkhipov
+
+	* core/OSQL/DropTableQuery.class.php: drop table implementation.
+
+2006-01-28	Konstantin V. Arkhipov
+
+	* meta/: first and dirty schema generation implementation.
+
+2006-01-27	Konstantin V. Arkhipov
+
+	* core/Base/Singletone.class.php: renamed to Singleton.class.php.
+
+	* core/OSQL/: implemented auto-increment columns generation for PgSQL,
+	MySQL, IBase and SQLite.
+
+2006-01-26	Konstantin V. Arkhipov
+
+	* core/OSQL/InsertOrUpdateQuery.class.php: setId() renamed to
+	lazySet() to avoid collision with Query interface.
+
+	* core/OSQL/: support for table creation added.
+
+2006-01-25	Sveta Smirnova
+
+	* core/OSQL/: schema's support introduced in several common cases.
+
+2006-01-25	Igor V. Gulyaev
+
+	* core/Form/PrimitiveDate.class.php: seconds support fixed for complex
+	imports.
+
+2006-01-25	Konstantin V. Arkhipov
+
+	* test/: first SimpleTest-based tests. Baden. Baden.
+
+2006-01-23	Anton E. Lebedevich
+
+	* core/OSQL/FromTable.class.php: SQLFunction support added.
+
+2006-01-22	Anton E. Lebedevich
+
+	* main/Base/Calendar*: calendar helper classes added. 
+
+2006-01-22	Konstantin V. Arkhipov
+
+	* core/Base/ObjectsTree.class.php, core/Base/Range.class.php,
+	core/Base/DateRange.class.php: moved to main/Base/.
+
+	* global.inc.php.tpl: new ONPHP_TEMP_PATH constant defines storing
+	place for temporary stuff like locking files/directories, cache files,
+	etc.
+
+	* core/cache/: SemaphorePool ported to worker-based approach,
+	available workers - System-V semaphores, local file (flock()) and
+	directories (mkdir()).
+
+	* core/Cache/RubberFileSystem.class.php: explicit file locking
+	removed.
+
+	* main/DAOs/: minor speed up's.
+
+	* main/DAOs/SmartDaoWorker.class.php: fixed giv's lovely 'index
+	page'-bug (racy uncacheLists()).
+
+2006-01-21	Konstantin V. Arkhipov
+
+	* core/Base/Singletone.class.php: reworked and simplified,
+	SingletoneException dropped.
+
+2006-01-19	Konstantin V. Arkhipov
+
+	* main/DAOs/: removed unneeded wrapper in DAO-workers.
+
+	* core/Cache/PeclMemcached.class.php: connector for PECL's memcache
+	extension.
+
+	* core/, main/: removed sizeof() abusing in for() loops.
+
+	* core/DB/Dialect.class.php, core/OSQL/FromTable.class.php: table's
+	schema "support" moved away from Dialect to reduce the number of
+	strpos() calls at least by a factor; spotted by Antony.
+
+2006-01-16	Konstantin V. Arkhipov
+
+	* doc/www/: DAO example updated, added Meta example.
+
+2006-01-10	Konstantin V. Arkhipov
+
+	* meta/: implemented {Abstract,Dictionary}Class and StraightMapping
+	patterns.
+
+2006-01-07	Konstantin V. Arkhipov
+
+	* meta/: root for metaconfiguration' stuff.
+
+2005-12-31	Konstantin V. Arkhipov
+
+	* 0.2.7 released.
+
+2005-12-05	Konstantin V. Arkhipov
+
+	* core/DB/: SQLite support implemented.
+
+2005-11-30	Konstantin V. Arkhipov
+
+	* main/DAOs/: all DAOs moved to workers-based single hierarchy.
+
+2005-11-28	Igor V. Gulyaev
+
+	* core/DB/: single-check added for single row queries.
+
+2005-11-26	Konstantin V. Arkhipov
+
+	* core/DB/: Interbase connector implemented.
+
+2005-11-24	Konstantin V. Arkhipov
+
+	* 0.2.6 released.
+
+2005-11-23	Konstantin V. Arkhipov
+
+	* main/DAOs/SmartDAO.class.php: yet another race prevention.
+
+2005-11-22	Konstantin V. Arkhipov
+
+	* main/Containers/: wrongly defined worker's interface fixed.
+
+2005-11-20	Konstantin V. Arkhipov
+
+	* core/DB/ImaginaryDialect.class.php: query's self-identification helper.
+
+	* core/Cache/RubberFileSystem.class.php: ported to SemaphorePool.
+
+2005-11-18	Konstantin V. Arkhipov
+
+	* core/Cache/: proof-of-concept global SemaphorePool implemented.
+
+2005-11-17	Sergey N. Lasunov
+
+	* doc/www/: new banners.
+
+2005-11-16	Konstantin V. Arkhipov
+
+	* 0.2.5 released.
+
+2005-11-14	Konstantin V. Arkhipov
+
+	* main/Containers/: major refactoring at UnifiedContainer & Co. to simplify
+	internal API and separate lazy/full handling logic.
+
+	* core/Form/DateRangeList.class.php, core/Form/TimeList.class.php:
+	time/date-handling primitives; moved from closed-source project.
+
+	* core/Base/StaticFactory.class.php: introduced to group all static
+	factories.
+
+2005-11-13	Konstantin V. Arkhipov
+
+	* main/Containers/: Storable, Unified and their's company moved to separate
+	directory.
+
+2005-11-12	Konstantin V. Arkhipov
+
+	* core/Cache/: marking bug fixed in ReferencePool; SharedMemory cache
+	introduced for memcachedless systems.
+
+2005-11-11	Konstantin V. Arkhipov
+
+	* main/Utils/RussianTextUtils.class.php::getAsInOrder(),
+	core/Logic/LogicalEqLower.class.php, core/Logic/LogicalIn.class.php,
+	core/OSQL/PreQuery.class.php: dropped, since their removal-release was the
+	upcoming 0.2.5.
+
+2005-11-10	Sveta Smirnova
+
+	* core/DB/MySQL.class.php: added error number as error code in throwing
+	DatabaseException.
+
+	* core/Form/: PCRE and hash filter are not singletones now; PCRE moved from
+	incubator.
+
+2005-11-07	Sergey S. Sergeev
+
+	* core/OSQL/: combining queries ({union,intersect,except}{,All})
+	implemented.
+
+2005-11-03	Anton E. Lebedevich
+
+	* main/DAOs/SmartDAO.class.php: fixed semaphore obscure locking problems. 
+
+2005-11-02	Konstantin V. Arkhipov
+
+	* doc/sample/: updated to reflect current situation.
+
+	* core/DB/MySQL.class.php: implemented convention-based transparent
+	sequences handling.
+
+2005-10-31	Konstantin V. Arkhipov
+
+	* main/DAOs/SmartDAO.class.php: checks for semaphore's acquiring problem.
+
+	* core/Cache/Cache.class.php: ReferencePool usage is now default behaviour.
+
+2005-10-30	Konstantin V. Arkhipov
+
+	* Released 0.2.4.
+
+2005-10-29	Anton E. Lebedevich
+
+	* main/DAOs/SmartDAO.class.php: per object lists map removed, it's useless
+	bacause dropLists() incorporated into uncacheById() and friends.
+
+	* main/DAOs/OneToManyLinked.class.php: cache cleanup fixed.
+
+2005-10-28	Konstantin V. Arkhipov
+
+	* main/DAOs/UnifiedContainer.class.php: is now cache-aware.
+
+	* main/DAOs/SmartDAO.class.php: negative (aka pessimistic) cache model
+	implemented.
+
+2005-10-25	Konstantin V. Arkhipov
+
+	* core/Form/Form.class.php: clean violated rules too upon dropAllErrors().
+
+2005-10-24	Konstantin V. Arkhipov
+
+	* main/DAOs/FullTextDAO.class.php: ObjectQuery is now mandatory for looking
+	up object or list.
+
+	* 0.2.3 released.
+
+2005-10-23	Konstantin V. Arkhipov
+
+	* main/DAOs/FullTextDAO.class.php: added ability to override full text
+	queries.
+
+2005-10-23	Sveta Smirnova
+
+	* core/DB/: MySQL support is back from incubator.
+
+2005-10-21	Konstantin V. Arkhipov
+
+	* main/DAOs/FullTextDAO.class.php: silently moved to MappedStorableDAO.
+
+	* core/OSQL/: LogicalIn implemented through LogicalExpression, so it's
+	deprecated now just like LogicalEqLower.
+
+2005-10-20	Garmonbozia Research Group
+
+	* doc/www/: major site update - css, examples, propaganda, etc.
+
+2005-10-18	Konstantin V. Arkhipov
+
+	* main/DAOs/NamedObjectDAO.class.php: accept Named implementations too.
+
+	* main/DAOs/MappedStorableDAO.class.php: hybrid child of SmartDAO.
+
+	* core/OSQL/: LogicalEqLower implemented through LogicalExpression, so it's
+	deprecated now.
+
+2005-10-17	Konstantin V. Arkhipov
+
+	* main/DAOs/: transparent cache handling introduced by SmartDAO.
+
+	* main/DAOs/, core/DB/: GenericDAO introduced for SmartDAO's compatibility
+	with DB.
+
+2005-10-16	Konstantin V. Arkhipov
+
+	* main/DAOs/ObjectQuery.class.php: null-valued mappings handling logic
+	fixed.
+
+	* core/DB/DB.class.php: drop as much as we can at objectQuery().
+
+2005-10-12	Konstantin V. Arkhipov
+
+	* core/Cache/ReferencePool.class.php: new CachePeer wrapper, obsoletes
+	IdentityMap-in-DAOs idea.
+
+2005-10-11	Anton E. Lebedevich
+
+	* core/DB/DBTransaction.class.php: "neverending" transactions fixed.
+
+2005-10-10	Konstantin V. Arkhipov
+
+	* core/OSQL/: SelectQueries as select fields implemented as requested by
+	Sergeev S. Sergey. Minor internal API changes.
+
+2005-10-06	Anton E. Lebedevich
+
+	* core/Base/Timestamp.class.php: getDayStartStamp, getDayEndStamp methods
+	added.
+
+	* core/Base/DateRange.class.php: enlarge, clip, compare methods added.
+
+2005-10-06	Konstantin V. Arkhipov
+
+	* core/OSQL/SelectQuerySkeleton.class.php: merged back to SelectQuery as
+	suggested by Antony.
+
+	* core/Base/StorableContainer.class.php, core/Base/DAOConnected.class.php:
+	moved to main/DAOs/.
+
+2005-09-30	Anton E. Lebedevich
+
+	* core/Base/Timestamp.class.php: useful compare method added.
+
+	* core/Base/DateRange.class.php: useless compare method removed.
+
+2005-09-28	Anton E. Lebedevich
+
+	* core/Base/DateRange.class.php: contains, split methods added.
+
+2005-09-27	Konstantin V. Arkhipov
+
+	* main/DAOs/UnifiedContainer.class.php: correct fetch() behaviour.
+
+2005-09-27	Anton E. Lebedevich
+
+	* main/Utils/LogicUtils.class.php: corrected conditions.
+
+	* core/Base/DateRange.class.php: compare, overlaps methods added.
+
+2005-09-24	Konstantin V. Arkhipov
+
+	* main/DAOs/UnifiedContainer.class.php: do not throw ObjectNotFoundException
+	on empty lists.
+
+2005-09-23	Konstantin V. Arkhipov
+
+	* 0.2.2 released.
+
+	* main/Utils/LogicUtils.class.php: new place for common used logic patterns.
+
+2005-09-20	Konstantin V. Arkhipov
+
+	* core/Base/: added delimiters for date'n'time-related stringoization
+	methods, Time.class.php introduced.
+
+	* core/DB/DBTransaction.class.php: extremly evil typo fixed, so now
+	transaction doesn't start every time you're adding new Query to it.
+
+	* core/OSQL/PreQuery.class.php: obsoleted, will be removed at 0.2.5.
+
+	* main/DAOs/: UnifiedContainer and friends ported to ObjectQuery from
+	obsoleted PreQuery.
+
+2005-09-20	Anton E. Lebedevich
+
+	* core/Base/NamedObject.class.php: added static compareNames() for using in
+	usort().
+
+2005-09-17	Konstantin V. Arkhipov
+
+	* doc/sample: synced with Form's related changes.
+
+	* core/Form/FiltrablePrimitive.class.php: setFilter() removed.
+
+2005-09-16	Anton E. Lebedevich
+
+	* core/Form/FiltrablePrimitive.class.php: introduced display and import
+	filters chain.
+
+	* core/Form/HTMLFilter.class.php, core/Form/TextFilter.class.php: removed in
+	favour of filter' chains.
+
+	* core/Form: added more basic filters.
+
+	* doc/: "Coding Style Convention" added to documentation.
+
+2005-09-16	Konstantin Scheglov
+
+	* main/DAOs/CommonDAO.class.php: getById should throw
+	ObjectNotFoundException instead of null returning.
+
+2005-09-16	Konstantin V. Arkhipov
+
+	* main/DAOs/ObjectQuery.class.php: treat mapping keys with null values as
+	field names.
+
+2005-09-10	Konstantin V. Arkhipov
+
+	* 0.2.1 released.
+
+	* main/DAOs/FinalObjectsTreeDAO.class.php: getListByParentId added.
+
+2005-09-09	Igor V. Gulyaev
+
+	* main/DAOs/ObjectQuery.class.php: sticky property name fixed.
+
+2005-09-09	Konstantin V. Arkhipov
+
+	* main/DAOs/CommonDAO.class.php: cleanups and minor optimizations.
+
+	* main/DAOs/ObjectQuery.class.php: added support for values in query's
+	logic.
+
+	* core/DB/DB.class.php: setPersistent() dropped - we can't change connection
+	type on the fly; getPersistent() renamed to isPersistent().
+
+	* core/DB/PostgresDialect.class.php: quoteValue() moved to generic
+	pg_quote_string().
+
+	* core/DB/AccessLevel.class.php, core/DB/IsolationLevel.class.php: avoid
+	zero-valued constants.
+
+	* core/OSQL/PreQuery.class.php: deprecated in favour of ObjectQuery.
+
+2005-09-03	Konstantin V. Arkhipov
+
+	* Initial release - 0.2.0.
