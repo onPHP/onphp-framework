@@ -119,7 +119,17 @@
 		**/
 		public function setFetchStrategy(FetchStrategy $strategy)
 		{
-			$this->strategyId = $strategy;
+			$this->strategyId = $strategy->getId();
+			
+			return $this;
+		}
+		
+		/**
+		 * @return LightMetaProperty
+		**/
+		public function dropFetchStrategy()
+		{
+			$this->strategyId = null;
 			
 			return $this;
 		}

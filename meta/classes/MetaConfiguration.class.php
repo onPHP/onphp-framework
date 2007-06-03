@@ -835,6 +835,21 @@
 						$out->warning('-');
 					}
 					
+					$out->warning('/');
+					
+					if (
+						Criteria::create($dao)->
+						setFetchStrategy(FetchStrategy::cascade())->
+						toSelectQuery()
+						== $dao->makeSelectHead()->setFetchStrategyId(
+							FetchStrategy::CASCADE
+						)
+					) {
+						$out->info('+', true);
+					} else {
+						$out->error('!', true);
+					}
+					
 					$out->warning(')')->info(', ');
 				}
 			}
