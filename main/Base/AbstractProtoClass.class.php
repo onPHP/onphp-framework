@@ -261,7 +261,17 @@
 					);
 				} elseif ($property->isBuildable($array, $prefix)) {
 					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
-						// FIXME: remove dupe enum-related code
+						$className = $property->getClassName();
+						
+						$isEnum = (
+							$className
+							&&
+								ClassUtils::isInstanceOf(
+									$className,
+									'Enumeration'
+								)
+						);
+						
 						if ($encapsulants) {
 							$getter = $property->getGetter();
 							
@@ -274,34 +284,23 @@
 									),
 									$prefix
 								);
-							
-							// FIXME: php 5.2 only
-							if (
-								($className = $property->getClassName())
-								&& is_subclass_of($className, 'Enumeration')
-							) {
-								$value = new $className($value);
-							}
-							
-							$object->$setter($value);
 						} else {
-							$className = $property->getClassName();
+							$value = $array[$prefix.$property->getColumnName()];
 							
-							// FIXME: php 5.2 only
-							if (is_subclass_of($className, 'Enumeration')) {
-								$inner = new $className(
-									$array[$prefix.$property->getColumnName()]
-								);
-							} else {
-								$inner = new $className();
+							if (!$isEnum) {
+								$value = new $className();
 								
-								$inner->setId(
+								$value->setId(
 									$array[$prefix.$property->getColumnName()]
 								);
 							}
-							
-							$object->$setter($inner);
 						}
+						
+						if ($isEnum) {
+							$value = new $className($value);
+						}
+						
+						$object->$setter($value);
 						
 						continue;
 					}
