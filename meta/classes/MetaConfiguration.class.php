@@ -810,6 +810,13 @@
 						.'/'
 					);
 					
+					Assert::isTrue(
+						Criteria::create($dao)->
+						setFetchStrategy(FetchStrategy::cascade())->
+						toSelectQuery()
+						== $dao->makeSelectHead()
+					);
+					
 					try {
 						$object = $dao->getByQuery($query);
 						$form = $object->proto()->makeForm();

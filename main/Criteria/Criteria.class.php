@@ -21,6 +21,7 @@
 		private $daoClass	= null;
 		private $logic		= null;
 		private $order		= null;
+		private $strategy	= null;
 		private $projection	= null;
 		
 		private $distinct	= false;
@@ -49,12 +50,14 @@
 			$this->dao = $dao;
 			$this->logic = Expression::andBlock();
 			$this->order = new OrderChain();
+			$this->strategy = FetchStrategy::join();
 		}
 		
 		public function __clone()
 		{
 			$this->logic = clone $this->logic;
 			$this->order = clone $this->order;
+			$this->strategy = clone $this->strategy;
 		}
 		
 		public function __sleep()
@@ -177,6 +180,24 @@
 		public function setOffset($offset)
 		{
 			$this->offset = $offset;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return FetchStrategy
+		**/
+		public function getFetchStrategy()
+		{
+			return $this->strategy;
+		}
+		
+		/**
+		 * @return Criteria
+		**/
+		public function setFetchStrategy(FetchStrategy $strategy)
+		{
+			$this->strategy = $strategy;
 			
 			return $this;
 		}
@@ -416,7 +437,12 @@
 				$query->setOrderChain($this->order->toMapped($this->dao, $query));
 			}
 			
-			if (!$this->projection) {
+			if (
+				!$this->projection
+				&& (
+					$this->strategy->getId() <> FetchStrategy::CASCADE
+				)
+			) {
 				$this->joinProperties($query, $this->dao, $this->dao->getTable(), true);
 			}
 			
@@ -438,7 +464,7 @@
 					($property instanceof LightMetaProperty)
 					&& $property->getRelationId() == MetaRelation::ONE_TO_ONE
 					&& !$property->isGenericType()
-					&& !$property->getFetchStrategyId() == FetchStrategy::CASCADE
+					&& $property->getFetchStrategyId() <> FetchStrategy::CASCADE
 				) {
 					if (
 						is_subclass_of(
