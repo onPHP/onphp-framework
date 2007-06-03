@@ -100,7 +100,7 @@
 				return $list[$name];
 			
 			throw new MissingElementException(
-				'unknown property requested by name '."'{$name}'"
+				"unknown property requested by name '{$name}'"
 			);
 		}
 		
