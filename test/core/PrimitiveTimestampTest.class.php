@@ -11,12 +11,17 @@
 				'test' => array(
 					PrimitiveDate::DAY		=> '1',
 					PrimitiveDate::MONTH	=> '2',
-					PrimitiveDate::YEAR		=> '3456',
+					PrimitiveDate::YEAR		=> null,
 					PrimitiveTimestamp::HOURS	=> '17',
 					PrimitiveTimestamp::MINUTES	=> '38',
 					PrimitiveTimestamp::SECONDS	=> '59'
 				)
 			);
+			
+			$this->assertFalse($prm->import($array));
+			$this->assertTrue($prm->getRawValue());
+			
+			$array['test'][PrimitiveDate::YEAR] = '3456';
 			
 			$this->assertTrue($prm->import($array));
 			$this->assertTrue($prm->getValue()->getYear() == 3456);
