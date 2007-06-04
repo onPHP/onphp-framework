@@ -810,13 +810,6 @@
 						.'/'
 					);
 					
-					Assert::isTrue(
-						Criteria::create($dao)->
-						setFetchStrategy(FetchStrategy::cascade())->
-						toSelectQuery()
-						== $dao->makeSelectHead()
-					);
-					
 					try {
 						$object = $dao->getByQuery($query);
 						$form = $object->proto()->makeForm();
@@ -830,6 +823,19 @@
 							$out->info('+', true);
 					} catch (ObjectNotFoundException $e) {
 						$out->warning('-');
+					}
+					
+					$out->warning('/');
+					
+					if (
+						Criteria::create($dao)->
+						setFetchStrategy(FetchStrategy::cascade())->
+						toSelectQuery()
+						== $dao->makeSelectHead()
+					) {
+						$out->info('+', true);
+					} else {
+						$out->error('!', true);
 					}
 					
 					$out->warning(')')->info(', ');
