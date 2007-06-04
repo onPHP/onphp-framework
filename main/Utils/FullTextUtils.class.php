@@ -67,15 +67,10 @@
 		
 		public static function prepareSearchString($string)
 		{
-			$array =
-				explode(
-					' ',
-					$string,
-					substr_count($string, ' ') + 1
-				);
+			$array = explode(' ', $string);
 			
 			$out = array();
-
+			
 			for ($i = 0, $size = count($array); $i < $size; ++$i)
 				if (!empty($array[$i]))
 					if (
