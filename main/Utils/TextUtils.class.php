@@ -100,5 +100,14 @@
 			
 			return $firstOne.mb_substr($string, 1);
 		}
+		
+		public static function cutOnSpace($string, $length, $append = null)
+		{
+			if (mb_strlen($string) < $length)
+				return $string;
+			else {
+				return mb_substr($string, 0, mb_strpos($string, ' ', $length)).$append;
+			}
+		}
 	}
 ?>
