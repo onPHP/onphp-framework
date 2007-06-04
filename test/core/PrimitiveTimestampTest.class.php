@@ -19,7 +19,7 @@
 			);
 			
 			$this->assertFalse($prm->import($array));
-			$this->assertTrue($prm->getRawValue());
+			$this->assertEqual($prm->getRawValue(), null);
 			
 			$array['test'][PrimitiveDate::YEAR] = '3456';
 			
