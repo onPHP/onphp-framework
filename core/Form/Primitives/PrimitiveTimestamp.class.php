@@ -29,8 +29,10 @@
 					$scope[$this->name][self::YEAR]
 				)
 				&& is_array($scope[$this->name])
-				&& !$this->isEmpty($scope)
 			) {
+				if ($this->isEmpty($scope))
+					return !$this->isRequired();
+				
 				$hours = $minutes = $seconds = 0;
 				
 				if (isset($scope[$this->name][self::HOURS]))

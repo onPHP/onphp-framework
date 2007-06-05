@@ -11,7 +11,7 @@
 				'test' => array(
 					PrimitiveDate::DAY		=> '1',
 					PrimitiveDate::MONTH	=> '2',
-					PrimitiveDate::YEAR		=> null,
+					PrimitiveDate::YEAR		=> '',
 					PrimitiveTimestamp::HOURS	=> '17',
 					PrimitiveTimestamp::MINUTES	=> '38',
 					PrimitiveTimestamp::SECONDS	=> '59'
@@ -35,6 +35,27 @@
 			);
 			
 			$this->assertFalse($prm->importSingle($array)); // not single
+		}
+		
+		public function testMarriedOptional()
+		{
+			$prm = 
+				Primitive::timestamp('test')->
+				setComplex()->
+				optional();
+			
+			$array = array(
+				'test' => array(
+					PrimitiveDate::DAY		=> '',
+					PrimitiveDate::MONTH	=> '',
+					PrimitiveDate::YEAR		=> '',
+					PrimitiveTimestamp::HOURS	=> '',
+					PrimitiveTimestamp::MINUTES	=> '',
+					PrimitiveTimestamp::SECONDS	=> ''
+				)
+			);
+			
+			$this->assertTrue($prm->import($array));
 		}
 		
 		public function testSingle()

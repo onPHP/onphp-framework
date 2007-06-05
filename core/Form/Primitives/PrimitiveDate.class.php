@@ -113,8 +113,10 @@
 					$scope[$this->name][self::YEAR]
 				)
 				&& is_array($scope[$this->name])
-				&& !$this->isEmpty($scope)
 			) {
+				if ($this->isEmpty($scope))
+					return !$this->isRequired();
+
 				$year = (int) $scope[$this->name][self::YEAR];
 				$month = (int) $scope[$this->name][self::MONTH];
 				$day = (int) $scope[$this->name][self::DAY];
