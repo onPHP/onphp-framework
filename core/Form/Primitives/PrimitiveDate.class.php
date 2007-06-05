@@ -124,7 +124,7 @@
 				
 				try {
 					$date = new Date(
-						$year.'-'.$month.'-'.$day.' '
+						$year.'-'.$month.'-'.$day
 					);
 				} catch (WrongArgumentException $e) {
 					// fsck wrong dates
@@ -147,10 +147,27 @@
 			else
 				return parent::importValue(null);
 			
-			return
-				$this->importSingle(
-					array($this->getName() => $value->toString())
+			$singleScope = array($this->getName() => $value->toString());
+			$marriedScope = 
+				array(
+					$this->getName() 
+					=> array (
+						self::DAY => $value->getDay(),
+						self::MONTH => $value->getMonth(),
+						self::YEAR => $value->getYear(),
+					)
 				);
+			 
+			if ($this->getState()->isTrue())
+				return $this->importSingle($singleScope);
+			elseif ($this->getState()->isFalse())
+				return $this->importMarried($marriedScope);
+			else {
+				if (!$this->importMarried($singleScope))
+					return $this->importSingle($marriedScope);
+				
+				return $this->imported = true;
+			}
 		}
 		
 		protected function checkRanges(Date $date)
