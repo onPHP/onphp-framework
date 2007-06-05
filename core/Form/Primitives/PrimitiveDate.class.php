@@ -165,8 +165,8 @@
 			elseif ($this->getState()->isFalse())
 				return $this->importMarried($marriedScope);
 			else {
-				if (!$this->importMarried($singleScope))
-					return $this->importSingle($marriedScope);
+				if (!$this->importMarried($marriedScope))
+					return $this->importSingle($singleScope);
 				
 				return $this->imported = true;
 			}
