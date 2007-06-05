@@ -74,7 +74,7 @@
 		public function importSingle($scope)
 		{
 			if (
-				isset($scope[$this->name])
+				BasePrimitive::import($scope)
 				&& is_string($scope[$this->name])
 			) {
 				try {
@@ -97,8 +97,8 @@
 		{
 			if ($this->getState()->isFalse()) {
 				return empty($scope[$this->name][self::DAY])
-					|| empty($scope[$this->name][self::MONTH])
-					|| empty($scope[$this->name][self::YEAR]);
+					&& empty($scope[$this->name][self::MONTH])
+					&& empty($scope[$this->name][self::YEAR]);
 			} else 
 				return empty($scope[$this->name]);
 		}
@@ -106,7 +106,8 @@
 		public function importMarried($scope)
 		{
 			if (
-				isset(
+				BasePrimitive::import($scope)
+				&& isset(
 					$scope[$this->name][self::DAY], 
 					$scope[$this->name][self::MONTH], 
 					$scope[$this->name][self::YEAR]
@@ -114,11 +115,16 @@
 				&& is_array($scope[$this->name])
 				&& !$this->isEmpty($scope)
 			) {
+				$year = (int) $scope[$this->name][self::YEAR];
+				$month = (int) $scope[$this->name][self::MONTH];
+				$day = (int) $scope[$this->name][self::DAY];
+				
+				if (!checkdate($month, $day, $year))
+					return false;
+				
 				try {
 					$date = new Date(
-						(int) $scope[$this->name][self::YEAR].'-'
-						.(int) $scope[$this->name][self::MONTH].'-'
-						.(int) $scope[$this->name][self::DAY].' '
+						$year.'-'.$month.'-'.$day.' '
 					);
 				} catch (WrongArgumentException $e) {
 					// fsck wrong dates
@@ -132,17 +138,6 @@
 			}
 
 			return false;
-		}
-		
-		public function import($scope)
-		{
-			if ($this->isEmpty($scope)) {
-				$this->value = null;
-				$this->raw = null;
-				return null;
-			}
-
-			return parent::import($scope);
 		}
 		
 		public function importValue($value)

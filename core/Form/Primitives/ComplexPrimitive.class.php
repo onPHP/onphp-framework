@@ -79,8 +79,9 @@
 
 		public function import($scope)
 		{
-			parent::import($scope);
-			
+			if (!$result = parent::import($scope))
+				return $result;
+
 			if ($this->single->isTrue())
 				return $this->importSingle($scope);
 			elseif ($this->single->isFalse())

@@ -22,7 +22,12 @@
 		public function importMarried($scope)
 		{
 			if (
-				!empty($scope[$this->name])
+				BasePrimitive::import($scope)
+				&& isset(
+					$scope[$this->name][self::DAY], 
+					$scope[$this->name][self::MONTH], 
+					$scope[$this->name][self::YEAR]
+				)
 				&& is_array($scope[$this->name])
 				&& !$this->isEmpty($scope)
 			) {
@@ -37,11 +42,16 @@
 				if (isset($scope[$this->name][self::SECONDS]))
 					$seconds = (int) $scope[$this->name][self::SECONDS];
 				
+				$year = (int) $scope[$this->name][self::YEAR];
+				$month = (int) $scope[$this->name][self::MONTH];
+				$day = (int) $scope[$this->name][self::DAY];
+				
+				if (!checkdate($month, $day, $year))
+					return false;
+				
 				try {
 					$stamp = new Timestamp(
-						(int) $scope[$this->name][self::YEAR].'-'
-						.(int) $scope[$this->name][self::MONTH].'-'
-						.(int) $scope[$this->name][self::DAY].' '
+						$year.'-'.$month.'-'.$day.' '
 						.$hours.':'.$minutes.':'.$seconds
 					);
 				} catch (WrongArgumentException $e) {
