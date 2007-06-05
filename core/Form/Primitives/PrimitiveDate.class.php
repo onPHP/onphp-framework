@@ -150,16 +150,21 @@
 				return parent::importValue(null);
 			
 			$singleScope = array($this->getName() => $value->toString());
-			$marriedScope = 
-				array(
-					$this->getName() 
-					=> array (
-						self::DAY => $value->getDay(),
-						self::MONTH => $value->getMonth(),
-						self::YEAR => $value->getYear(),
-					)
+			$marriedRaw = 
+				array (
+					self::DAY => $value->getDay(),
+					self::MONTH => $value->getMonth(),
+					self::YEAR => $value->getYear(),
 				);
-			 
+			
+			if ($value instanceof Timestamp) {
+				$marriedRaw[PrimitiveTimestamp::HOURS] = $value->getHour();
+				$marriedRaw[PrimitiveTimestamp::MINUTES] = $value->getMinute();
+				$marriedRaw[PrimitiveTimestamp::SECONDS] = $value->getSecond();
+			}
+			
+			$marriedScope = array($this->getName() => $marriedRaw);
+			
 			if ($this->getState()->isTrue())
 				return $this->importSingle($singleScope);
 			elseif ($this->getState()->isFalse())
