@@ -56,8 +56,11 @@
 			Prototyped $object
 		)
 		{
-			$getter = $this->getGetter();
-			return $this->getProto()->fillQuery($query, $object->$getter());
+			return
+				$this->getProto()->fillQuery(
+					$query,
+					$object->{$this->getGetter()}()
+				);
 		}
 		
 		public function toValue(ProtoDAO $dao = null, $array, $prefix = null)
