@@ -35,6 +35,9 @@ Possible options:
 	
 	--no-color:
 		do not use colored output.
+	
+	--dto-mode:
+		do not generate DB schema & not build containers
 
 <?php
 		exit(1);
@@ -140,7 +143,7 @@ Possible options:
 	// switches
 	$metaForce = $metaOnlyContainers = $metaNoSchema =
 	$metaNoSchemaCheck = $metaSyntaxCheck = $metaDropStaleFiles =
-	$metaNoIntegrityCheck = $metaDryRun = $metaNoColor = false;
+	$metaNoIntegrityCheck = $metaDryRun = $metaNoColor = $metaNoContainers = false;
 	
 	$args = $_SERVER['argv'];
 	array_shift($args);
@@ -183,6 +186,11 @@ Possible options:
 					
 					case '--no-color':
 						$metaNoColor = true;
+						break;
+					
+					case '--dto-mode':
+						$metaNoSchema 		= true;
+						$metaNoContainers 	= true;
 						break;
 					
 					default:
@@ -309,12 +317,16 @@ Possible options:
 				load($pathMeta)->
 				setForcedGeneration($metaForce);
 			
-			if ($metaOnlyContainers) {
+			if (
+				$metaOnlyContainers
+				&& !$metaNoContainers
+			) {
 				$meta->buildContainers();
 			} else {
-				$meta->
-					buildClasses()->
-					buildContainers();
+				$meta->buildClasses();
+				
+				if (!$metaNoContainers)
+					$meta->buildContainers();
 				
 				if (!$metaNoSchema)
 					$meta->buildSchema();
