@@ -22,8 +22,9 @@
 		const WRONG 		= 0x0001;
 		const MISSING 		= 0x0002;
 		
-		private $errors		= array();
-		private $labels		= array();
+		private $errors			= array();
+		private $labels			= array();
+		private $describedLabels 	= array();
 		
 		/**
 		 * @return Form
@@ -137,6 +138,45 @@
 				return $this->labels[$name][$this->errors[$name]];
 			else
 				return null;
+		}
+		
+		public function getErrorDescriptionFor($name)
+		{
+			if (
+				isset(
+					$this->violated[$name],
+					$this->describedLabels[$name][$this->violated[$name]]
+				)
+			)
+				return $this->describedLabels[$name][$this->violated[$name]];
+			elseif (
+				isset(
+					$this->errors[$name],
+					$this->describedLabels[$name][$this->errors[$name]]
+				)
+			)
+				return $this->describedLabels[$name][$this->errors[$name]];
+			else
+				return null;
+		}
+		
+		/**
+		 * @return Form
+		**/
+		public function addErrorDescription($name, $errorType, $description)
+		{
+			
+			if (
+				!isset($this->rules[$name])
+				&& !$this->get($name)->getName()
+			)
+				throw new MissingElementException(
+					"knows nothing about '{$name}'"
+				);
+				
+			$this->describedLabels[$name][$errorType] = $description;
+
+			return $this;
 		}
 		
 		/**
