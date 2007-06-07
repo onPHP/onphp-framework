@@ -163,6 +163,25 @@
 		/**
 		 * @return Form
 		**/
+		public function addErrorDescription($name, $errorType, $description)
+		{
+			
+			if (
+				!isset($this->rules[$name])
+				&& !$this->get($name)->getName()
+			)
+				throw new MissingElementException(
+					"knows nothing about '{$name}'"
+				);
+				
+			$this->describedLabels[$name][$errorType] = $description;
+
+			return $this;
+		}
+		
+		/**
+		 * @return Form
+		**/
 		public function addWrongLabel($primitiveName, $label)
 		{
 			return $this->addErrorLabel($primitiveName, Form::WRONG, $label);
@@ -303,25 +322,6 @@
 
 			$this->labels[$name][$errorType] = $label;
 			
-			return $this;
-		}
-		
-		/**
-		 * @return Form
-		**/
-		public function addErrorDescription($name, $errorType, $description)
-		{
-			
-			if (
-				!isset($this->rules[$name])
-				&& !$this->get($name)->getName()
-			)
-				throw new MissingElementException(
-					"knows nothing about '{$name}'"
-				);
-				
-			$this->describedLabels[$name][$errorType] = $description;
-
 			return $this;
 		}
 	}
