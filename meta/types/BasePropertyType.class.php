@@ -102,10 +102,15 @@ public function {$methodName}(\${$name})
 
 EOT;
 			} else {
+				if ($class->getPattern() instanceof DTOClassPattern)
+					$classNamePrefix = 'AutoDto';
+				else
+					$classNamePrefix = null;
+
 				return <<<EOT
 
 /**
- * @return {$class->getName()}
+ * @return {$classNamePrefix}{$class->getName()}
 **/
 public function {$methodName}(\${$name})
 {
