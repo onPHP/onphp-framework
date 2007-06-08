@@ -26,7 +26,7 @@
 		}
 		
 		/**
-		 * @return DTOPattern
+		 * @return DtoClassPattern
 		**/
 		protected function buildProto(MetaClass $class)
 		{
@@ -34,7 +34,7 @@
 		}
 		
 		/**
-		 * @return DTOClassPattern
+		 * @return DtoClassPattern
 		**/
 		protected function buildBusiness(MetaClass $class)
 		{
@@ -42,7 +42,7 @@
 		}
 		
 		/**
-		 * @return DTOClassPattern
+		 * @return DtoClassPattern
 		**/
 		protected function buildDao(MetaClass $class)
 		{

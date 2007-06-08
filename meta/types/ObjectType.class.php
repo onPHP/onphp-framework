@@ -67,7 +67,7 @@
 			MetaClassProperty $holder = null
 		)
 		{
-			if ($class->getPattern() instanceof DTOClassPattern)
+			if ($class->getPattern() instanceof DtoClassPattern)
 				return
 					parent::toGetter(
 						$class,
@@ -206,7 +206,7 @@ EOT;
 			MetaClassProperty $holder = null
 		)
 		{
-			if ($class->getPattern() instanceof DTOClassPattern)
+			if ($class->getPattern() instanceof DtoClassPattern)
 				return
 					parent::toSetter(
 						$class,
@@ -335,7 +335,7 @@ public function {$methodName}()
 
 EOT;
 				} else {
-					if ($class->getPattern() instanceof DTOClassPattern)
+					if ($class->getPattern() instanceof DtoClassPattern)
 						$classNamePrefix = 'Dto';
 					else
 						$classNamePrefix = null;

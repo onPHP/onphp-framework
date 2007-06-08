@@ -102,7 +102,7 @@ public function {$methodName}(\${$name})
 
 EOT;
 			} else {
-				if ($class->getPattern() instanceof DTOClassPattern)
+				if ($class->getPattern() instanceof DtoClassPattern)
 					$classNamePrefix = 'Dto';
 				else
 					$classNamePrefix = null;
