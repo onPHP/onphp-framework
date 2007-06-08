@@ -336,7 +336,7 @@ public function {$methodName}()
 EOT;
 				} else {
 					if ($class->getPattern() instanceof DTOClassPattern)
-						$classNamePrefix = 'AutoDto';
+						$classNamePrefix = 'Dto';
 					else
 						$classNamePrefix = null;
 
