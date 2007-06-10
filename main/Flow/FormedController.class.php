@@ -12,6 +12,7 @@
 
 	/**
 	 * @ingroup Flow
+	 * @obsoleted because of it's uselessness
 	**/
 	abstract class FormedController implements Controller
 	{

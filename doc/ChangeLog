@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-10	Konstantin V. Arkhipov
+
+	* main/Flow/FormedController.class.php: obsoleted.
+
 2007-06-04	Anton E. Lebedevich
 
 	* main/Utils/TextUtils.class.php: cutOnSpace() added.
