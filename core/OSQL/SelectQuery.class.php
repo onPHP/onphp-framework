@@ -288,7 +288,7 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			$fieldList = array();
-			foreach ($this->fields as &$field) {
+			foreach ($this->fields as $field) {
 				
 				if ($field instanceof SelectQuery) {
 					
