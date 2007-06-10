@@ -13,12 +13,12 @@
 			
 			for ($i = 0; $i < 6; $i++) {
 				$this->assertEqual(
-					TextUtils::friendlyFileSize(2*pow(1024, $i)), '2'.$units[$i]
+					TextUtils::friendlyFileSize(2 * pow(1024, $i)), '2'.$units[$i]
 				);
 			}
 			
 			$this->assertEqual(
-				TextUtils::friendlyFileSize(2*pow(1024, 6)), '2048'.$units[5]
+				TextUtils::friendlyFileSize(2 * pow(1024, 6)), '2048'.$units[5]
 			);
 		}
 	}
