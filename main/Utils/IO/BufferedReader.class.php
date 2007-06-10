@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Utils
+	**/
 	class BufferedReader extends Reader
 	{
 		private $in				= null;
@@ -26,14 +29,22 @@
 			$this->in = $in;
 		}
 		
+		/**
+		 * @return BufferedReader
+		**/
 		public static function create(Reader $in)
 		{
 			return new self($in);
 		}
 		
+		/**
+		 * @return BufferedReader
+		**/
 		public function close()
 		{
 			$this->closed = true;
+			
+			return $this;
 		}
 		
 		public function isEof()
@@ -46,21 +57,31 @@
 			return true;
 		}
 		
+		/**
+		 * @return BufferedReader
+		**/
 		public function mark()
 		{
 			$this->markPosition = $this->position;
+			
+			return $this;
 		}
 		
+		/**
+		 * @return BufferedReader
+		**/
 		public function reset()
 		{
 			$this->position = $this->markPosition;
+			
+			return $this;
 		}
 		
 		public function available()
 		{
 			$this->ensureOpen();
 			
-			return $this->bufferLength - $this->position;
+			return ($this->bufferLength - $this->position);
 		}
 		
 		public function read($count)

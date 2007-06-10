@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Utils
+	**/
 	class Socket
 	{
 		const DEFAULT_TIMEOUT	= 1000; // milliseconds
@@ -241,7 +244,7 @@
 			return $timeVal['sec'] * 1000 + (int) ($timeVal['usec'] / 1000);
 		}
 		
-		// NOTE: return value may slightly differ from $this->writeTimeout
+		//  return value may slightly differ from $this->writeTimeout
 		public function getWriteTimeout()
 		{
 			$timeVal = socket_get_option($this->socket, SOL_SOCKET, SO_RCVTIMEO);
