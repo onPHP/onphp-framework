@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Utils
+	**/
 	class SocketOutputStream extends OutputStream
 	{
 		/**
