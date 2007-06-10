@@ -18,6 +18,9 @@
 		protected $next		= 0;
 		protected $mark		= 0;
 		
+		/**
+		 * @return StringReader
+		**/
 		public static function create($string)
 		{
 			return new self($string);
