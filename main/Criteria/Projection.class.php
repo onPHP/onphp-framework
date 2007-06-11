@@ -88,5 +88,13 @@
 		{
 			return new GroupByPropertyProjection($property);
 		}
+		
+		/**
+		 * @return ClassProjection
+		**/
+		public static function clazz($className)
+		{
+			return new ClassProjection($className);
+		}
 	}
 ?>

@@ -754,6 +754,29 @@
 				) {
 					$out->info($name, true);
 					
+					$info = new ReflectionClass($name);
+					
+					switch ($class->getTypeId()) {
+						case null:
+							break;
+						
+						case MetaClassType::CLASS_ABSTRACT:
+							Assert::isTrue($info->isAbstract());
+							break;
+						
+						case MetaClassType::CLASS_FINAL:
+							Assert::isTrue($info->isFinal());
+							break;
+						
+						case MetaClassType::CLASS_SPOOKED:
+						default:
+							Assert::isUnreachable();
+							break;
+					}
+					
+					foreach ($class->getInterfaces() as $interface)
+						Assert::isTrue($info->implementsInterface($interface));
+					
 					// special handling for Enumeration instances
 					if ($class->getPattern() instanceof EnumerationClassPattern) {
 						$object = new $name(call_user_func(array($name, 'getAnyId')));
