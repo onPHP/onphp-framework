@@ -41,6 +41,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Cdata
+		**/
 		public function getCdata()
 		{
 			return $this->cdata;

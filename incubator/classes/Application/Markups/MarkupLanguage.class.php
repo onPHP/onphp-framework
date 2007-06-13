@@ -50,7 +50,7 @@
 				
 				case 'html':
 					return self::html($version);
-					
+				
 				case 'wml':
 					return self::wml($version);
 				
