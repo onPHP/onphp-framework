@@ -93,6 +93,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MethodMappedController
+		**/
+		public function transformArrayToMethodMap($array)
+		{
+			foreach ($array as $action => $methodName)
+				$this->setMethodMapping($action, $methodName);
+			
+			return $this;
+		}
+		
 		public function getDefaultAction()
 		{
 			return $this->defaultAction;
