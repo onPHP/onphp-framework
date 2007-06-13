@@ -125,10 +125,9 @@
 			
 			foreach ($notAllowedParts as $notAllowedPart) {
 				if (isset($info[$notAllowedPart]))
-					throw
-						new WrongArgumentException(
-							"not allowed url part: $notAllowedPart"
-						);
+					throw new WrongArgumentException(
+						"not allowed url part: $notAllowedPart"
+					);
 			}
 			
 			if (isset($info['scheme']))
@@ -147,6 +146,9 @@
 			return $this->scheme.'://'.$this->domain.$this->path;
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function setNavigationSchema(NavigationSchema $schema)
 		{
 			$this->navigationSchema = $schema;
