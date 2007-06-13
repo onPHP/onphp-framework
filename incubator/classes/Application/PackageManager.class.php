@@ -12,7 +12,7 @@
 	
 	class PackageManager extends Singleton implements Instantiatable
 	{
-		const CONFIGURATION_SCRIPT	= 'packageConfig.inc.php';
+		const CONFIGURATION_SCRIPT	= 'package.inc.php';
 		
 		private $packageResolvers	= array();
 		
