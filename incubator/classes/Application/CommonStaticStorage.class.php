@@ -16,11 +16,17 @@
 		private $extensionsList		= null;
 		private $shared				= false;
 		
+		/**
+		 * @return CommonStaticStorage
+		**/
 		public static function create(ApplicationUrl $baseUrl)
 		{
 			return new self($baseUrl);
 		}
-
+		
+		/**
+		 * @return CommonStaticStorage
+		**/
 		public function setExtensionsList($extensionsList)
 		{
 			$this->extensionsList	= $extensionsList;
@@ -28,6 +34,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return CommonStaticStorage
+		**/
 		public function setStrict($isStrict)
 		{
 			Assert::isBoolean($isStrict);
@@ -37,6 +46,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return CommonStaticStorage
+		**/
 		public function setShared($isShared)
 		{
 			Assert::isBoolean($isShared);
