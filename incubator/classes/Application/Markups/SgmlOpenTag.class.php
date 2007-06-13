@@ -29,7 +29,7 @@
 		public function setEmpty($isEmpty)
 		{
 			Assert::isBoolean($isEmpty);
-		
+			
 			$this->empty = $isEmpty;
 			
 			return $this;
