@@ -97,7 +97,9 @@
 		protected function getPage($action)
 		{
 			if (!isset($this->pages[$action]))
-				throw new WrongArgumentException("page for {{$action}} does not defined");
+				throw new WrongArgumentException(
+					"page for {{$action}} does not defined"
+				);
 			
 			return $this->pages[$action];
 		}
