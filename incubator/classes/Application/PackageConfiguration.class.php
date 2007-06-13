@@ -151,10 +151,9 @@
 			);
 			
 			if (isset($this->packages[$name]))
-				throw
-					new WrongArgumentException(
-						"package with name '{$name}' already exists"
-					);
+				throw new WrongArgumentException(
+					"package with name '{$name}' already exists"
+				);
 			
 			$this->packages[$name] = $configuration;
 			
