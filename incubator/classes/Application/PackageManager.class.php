@@ -35,10 +35,9 @@
 		)
 		{
 			if (isset($this->packages[$qualifiedName]))
-				throw
-					new WrongArgumentException(
-						"package with name '{$qualifiedName}' already exists"
-					);
+				throw new WrongArgumentException(
+					"package with name '{$qualifiedName}' already exists"
+				);
 			
 			$basePath = PathResolver::normalizeDirectory($basePath);
 			
@@ -104,7 +103,7 @@
 				$this->imported[$qualifiedName] = $packageResolver;
 			} else
 				$packageResolver->importOneClass(implode('.', $classParts));
-				
+			
 			return $this;
 		}
 		
