@@ -102,7 +102,7 @@
 						)
 					)
 					.') AGAINST ('
-					.self::$prepareFullText($words, $logic)
+					.self::prepareFullText($words, $logic)
 				.')';
 		}
 		
