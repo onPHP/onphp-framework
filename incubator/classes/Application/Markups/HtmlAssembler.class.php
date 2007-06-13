@@ -25,7 +25,6 @@
 		{
 			if ($tag instanceof Cdata)
 				$result = $tag->getData();
-				
 			elseif ($tag instanceof SgmlIgnoredTag) {
 				Assert::isNotNull($tag->getId());
 				
@@ -41,7 +40,7 @@
 				$result = '<'.$tag->getId()
 					.($attributes ? ' '.$attributes : null)
 					.($tag->isEmpty() ? '/' : null).'>';
-					
+				
 			} elseif ($tag instanceof SgmlEndTag) {
 				$result = '</'.$tag->getId().'>';
 				
@@ -50,7 +49,7 @@
 					"don't know how to assemble tag class '"
 					.get_class($tag)."'"
 				);
-				
+			
 			return $result;
 		}
 		

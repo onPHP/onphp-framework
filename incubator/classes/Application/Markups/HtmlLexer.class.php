@@ -90,7 +90,7 @@
 				$this->state = $this->handleState();
 			
 			if ($this->char !== null)
-				$this->error("extra characters");
+				$this->error('extra characters');
 			
 			return $this;
 		}
@@ -118,7 +118,6 @@
 			) {
 				++$this->line;
 				$this->linePosition = 1;
-				
 			} else {
 				++$this->linePosition;
 			}
@@ -163,7 +162,7 @@
 		{
 			$this->mark = array(
 				$this->char, $this->previousChar,
-				$this->line, $this->linePosition, 
+				$this->line, $this->linePosition
 			);
 			
 			$this->reader->mark();
@@ -178,9 +177,9 @@
 		{
 			Assert::isNotNull($this->mark);
 			
-			list(
+			list (
 				$this->char, $this->previousChar,
-				$this->line, $this->linePosition, 
+				$this->line, $this->linePosition
 			) = $this->mark;
 			
 			$this->reader->reset();
@@ -269,7 +268,7 @@
 				}
 				
 				return self::FINAL_STATE;
-					
+				
 			} elseif ($this->char == '<') {
 				
 				$this->getNextChar();
@@ -278,7 +277,6 @@
 					preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $this->char)
 					|| $this->char == '?' || $this->char == '!'
 				) {
-					
 					if ($this->buffer) {
 						$this->tags[] = Cdata::create()->setData($this->buffer);
 						$this->buffer = null;
@@ -337,7 +335,7 @@
 					// <2, <ф, <[space], <>, <[eof]
 					
 					$this->warning(
-						"incorrect start-tag, treating it as cdata"
+						'incorrect start-tag, treating it as cdata'
 					);
 					
 					$this->buffer .= '<'.$this->char;
@@ -348,12 +346,12 @@
 				}
 				
 				Assert::isUnreachable();
-					
+				
 			} else {
 				
 				$this->buffer .= $this->char;
 				$this->getNextChar();
-					
+				
 				return self::INITIAL_STATE;
 			}
 			
@@ -374,7 +372,7 @@
 			if ($this->char === null) {
 				// ... <tag[end-of-file]
 				
-				$this->error("unexpected end of file, tag id is incomplete");
+				$this->error('unexpected end of file, tag id is incomplete');
 				
 				if ($this->tagId)
 					$this->tags[] =
@@ -410,7 +408,7 @@
 				$externalTag =
 					($this->tagId[0] == '?')
 					&& ($this->tagId != '?xml');
-					
+				
 				$doctypeTag = (mb_strtoupper($this->tagId) == '!DOCTYPE');
 				
 				if ($externalTag)
@@ -438,7 +436,6 @@
 					
 					return self::INSIDE_TAG_STATE;
 				}
-				
 			} else {
 				// <div, <q#, <dж
 				
@@ -449,15 +446,16 @@
 				if ($char == '/' && $this->char == '>') {
 					// <br/>
 					
-					$this->tags[] = SgmlOpenTag::create()->
+					$this->tags[] =
+						SgmlOpenTag::create()->
 						setId($this->tagId)->
 						setEmpty(true);
-						
+					
 					$isInline = in_array($this->tagId, $this->inlineTags);
 					
 					if ($isInline)
 						$this->inlineTag = $this->tagId;
-						
+					
 					$this->tagId = null;
 					$this->invalidId = false;
 					
@@ -475,9 +473,9 @@
 					// most browsers seems like parsing invalid tags
 					
 					$this->error(
-						"tag id contains invalid char with code "
+						'tag id contains invalid char with code '
 						.self::charHexCode($char)
-						.", parsing with invalid id"
+						.', parsing with invalid id'
 					);
 					
 					$this->invalidId = true;
@@ -520,11 +518,11 @@
 					// </>
 					$this->warning('empty end-tag, storing with empty id');
 				}
-					
+				
 				$this->tags[] =
 					SgmlEndTag::create()->
 					setId($this->tagId);
-					
+				
 				$this->tagId = null;
 				$this->invalidId = false;
 				
@@ -533,7 +531,7 @@
 				$this->getNextChar();
 				
 				return self::INITIAL_STATE;
-					
+				
 			} elseif ($this->eatingGarbage) {
 				// most browsers parse end-tag until next '>' char
 				
@@ -550,28 +548,25 @@
 				return self::END_TAG_STATE;
 				
 			} else {
-				
 				$validChar =
 					(
 						!$this->tagId
 						&& preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $this->char)
-					)
-					||
-					(
+					) || (
 						$this->tagId
 						&& preg_match('/'.self::ID_CHAR_MASK.'/', $this->char)
 					);
 				
 				if (!$validChar && !$this->invalidId) {
 					$this->error(
-						"end-tag id contains invalid char with code "
+						'end-tag id contains invalid char with code '
 						.self::charHexCode($this->char)
-						.", parsing with invalid id"
+						.', parsing with invalid id'
 					);
 					
 					$this->invalidId = true;
 				}
-					
+				
 				$this->tagId .= $this->char;
 				
 				$this->getNextChar();
@@ -612,7 +607,7 @@
 			} elseif ($this->char == '>') {
 				// <tag ... >
 				
-				$isInline = in_array($this->tag->getId(), $this->inlineTags); 
+				$isInline = in_array($this->tag->getId(), $this->inlineTags);
 				
 				if ($isInline)
 					$this->inlineTag = $this->tag->getId();
@@ -636,7 +631,6 @@
 				return self::ATTR_VALUE_STATE;
 				
 			} else {
-				
 				$char = $this->char;
 				
 				$this->getNextChar();
@@ -664,9 +658,9 @@
 					!preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $char)
 				) {
 					$this->error(
-						"attr name contains invalid char with code "
+						'attr name contains invalid char with code '
 						.self::charHexCode($char)
-						.", parsing with invalid name"
+						.', parsing with invalid name'
 					);
 					
 					$this->invalidId = true;
@@ -746,7 +740,6 @@
 				return self::ATTR_VALUE_STATE;
 				
 			} else {
-				
 				$char = $this->char;
 				
 				$this->getNextChar();
@@ -782,9 +775,9 @@
 					&& !$this->invalidId
 				) {
 					$this->error(
-						"attr name contains invalid char with code "
+						'attr name contains invalid char with code '
 						.self::charHexCode($char)
-						.", parsing with invalid name"
+						.', parsing with invalid name'
 					);
 					
 					$this->invalidId = true;
@@ -815,7 +808,7 @@
 				
 				$this->warning("empty value for attr == '{$this->attrName}'");
 				
-				$this->error("unexpected end of file, incomplete tag stored");
+				$this->error('unexpected end of file, incomplete tag stored');
 				
 				$this->tag->setAttribute($this->attrName, null);
 				
@@ -828,7 +821,7 @@
 				
 				return self::WAITING_EQUAL_SIGN_STATE;
 				
-			} elseif($this->char == '=') {
+			} elseif ($this->char == '=') {
 				
 				$this->getNextChar();
 				
@@ -866,7 +859,7 @@
 				
 				if ($this->attrValue === null)
 					$this->warning("empty value for attr == '{$this->attrName}'");
-					
+				
 				if ($this->insideQuote) {
 					// NOTE: firefox rolls back to the first > after quote.
 					// Opera consideres incomplete tag as cdata.
@@ -874,7 +867,7 @@
 					
 					$this->warning(
 						"unclosed quoted value for attr == '{$this->attrName}',"
-						." rolling  back and searching '>'"
+						." rolling back and searching '>'"
 					);
 					
 					$this->attrValue = null;
@@ -884,8 +877,8 @@
 					
 					return self::ATTR_VALUE_STATE;
 				}
-					
-				$this->error("unexpected end of file, incomplete tag stored");
+				
+				$this->error('unexpected end of file, incomplete tag stored');
 				
 				$this->tag->setAttribute($this->attrName, $this->attrValue);
 				
@@ -895,7 +888,6 @@
 				!$this->insideQuote
 				&& preg_match('/'.self::SPACER_MASK.'/', $this->char)
 			) {
-				
 				$this->getNextChar();
 				
 				if ($this->attrValue !== null && $this->attrValue !== '') {
@@ -916,7 +908,7 @@
 				}
 				
 				Assert::isUnreachable();
-			
+				
 			} elseif (!$this->insideQuote && $this->char == '>') {
 				// <tag id=value>, <a href=catalog/>
 				
@@ -939,7 +931,6 @@
 					return self::INITIAL_STATE;
 				
 			} else {
-				
 				if (
 					$this->char == '"' || $this->char == "'"
 					|| $this->char == $this->insideQuote // may be '>'
@@ -947,7 +938,6 @@
 					if (!$this->insideQuote) {
 						
 						$this->insideQuote = $this->char;
-						
 						
 						$this->getNextChar();
 						
@@ -976,7 +966,6 @@
 						if ($isInline)
 							$this->inlineTag = $this->tag->getId();
 						
-						
 						if ($this->insideQuote == '>') {
 							$this->insideQuote = null;
 							$this->tag = null;
@@ -985,7 +974,6 @@
 								return self::INLINE_TAG_STATE;
 							else
 								return self::INITIAL_STATE;
-								
 						} else {
 							$this->insideQuote = null;
 							
@@ -1033,7 +1021,6 @@
 				$this->returnedFromCommentState = false;
 				
 			} else {
-				
 				while (
 					$this->char !== null
 					&& preg_match('/'.self::SPACER_MASK.'/', $this->char)
@@ -1060,14 +1047,13 @@
 			$endTag = "</{$this->inlineTag}";
 			
 			while ($this->char !== null) {
-			
+				
 				$distance = $this->getDistanceToEndTag($endTag, true);
 				
 				if ($distance === false) {
 					$content .= $this->getRemainingChars();
 					
 					break;
-					
 				} else {
 					$content .= $this->getChars($distance);
 					
@@ -1087,7 +1073,7 @@
 			}
 			
 			$this->tags[] = Cdata::create()->setData($content);
-					
+			
 			if ($this->char === null) {
 				$this->error(
 					"end-tag for inline tag == '{$this->inlineTag}' not found"
@@ -1116,7 +1102,6 @@
 				$this->error('unexpected end-of-file inside cdata tag');
 				
 				$content = $this->getRemainingChars();
-				
 			} else {
 				$content = $this->getChars($distance);
 				
@@ -1142,7 +1127,7 @@
 			
 			if ($distance === false) {
 				$this->error(
-					"unexpected end-of-file inside comment tag,"
+					'unexpected end-of-file inside comment tag,'
 					." trying to find '>'");
 				
 				$endTag = '>';
@@ -1153,10 +1138,10 @@
 			if ($distance === false) {
 				$this->error(
 					"end-tag '{$endTag}' not found,"
-					." treating all remaining content as cdata");
+					.' treating all remaining content as cdata'
+				);
 				
 				$content = $this->getRemainingChars();
-				
 			} else {
 				$content = $this->getChars($distance);
 				
@@ -1189,8 +1174,9 @@
 			
 			if ($distance === false) {
 				$this->error(
-					"unexpected end-of-file inside external tag,"
-					." trying to find '>'");
+					'unexpected end-of-file inside external tag,'
+					." trying to find '>'"
+				);
 				
 				$endTag = '>';
 				
@@ -1200,13 +1186,14 @@
 			if ($distance === false) {
 				$this->error(
 					"end-tag '{$endTag}' not found,"
-					." treating all remaining content as cdata");
+					.' treating all remaining content as cdata'
+				);
 				
 				$content = $this->getRemainingChars();
-				
 			} else {
 				$content = $this->getChars($distance);
 				
+				// FIXME: mb_strlen?
 				$this->skip(strlen($endTag));
 			}
 			
@@ -1232,10 +1219,10 @@
 				$this->error('unexpected end-of-file inside doctype tag');
 				
 				$content = $this->getRemainingChars();
-				
 			} else {
 				$content = $this->getChars($distance);
 				
+				// FIXME: mb_strlen?
 				$this->skip(strlen($endTag));
 			}
 			
@@ -1256,13 +1243,13 @@
 				$endTag = mb_strtolower($endTag);
 			
 			$tagLength = mb_strlen($endTag);
-				
+			
 			$bufferedReader = BufferedReader::create($this->reader);
-				
+			
 			$distance = 0;
-				
+			
 			$char = $this->char;
-				
+			
 			while ($char !== null) {
 				
 				$bufferedReader->mark();
@@ -1297,8 +1284,8 @@
 				"line {$this->line}, position {$this->linePosition}"
 				.(
 					$this->tag && $this->tag->getId()
-					? ", in tag '{$this->tag->getId()}'"
-					: null
+						? ", in tag '{$this->tag->getId()}'"
+						: null
 				);
 		}
 		
