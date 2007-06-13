@@ -346,10 +346,19 @@
 			);
 		}
 		
-		public function getCustom()
+		public function getCustom($index = null)
 		{
 			try {
-				return $this->dao->getCustom($this->toSelectQuery());
+				$result = $this->dao->getCustom($this->toSelectQuery());
+				
+				if ($index) {
+					if (isset($result[$index]))
+						return $result[$index];
+					
+					throw new MissingElementException();
+				}
+				
+				return $result;
 			} catch (ObjectNotFoundException $e) {
 				if (!$this->isSilent())
 					throw $e;

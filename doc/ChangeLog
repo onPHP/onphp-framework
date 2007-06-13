@@ -1,5 +1,10 @@
 # $Id$
 
+2007-06-13	Konstantin V. Arkhipov
+
+	* main/Criteria/Criteria.class.php: getCustom() now able to return
+	final value if index is specified.
+
 2007-06-10	Konstantin V. Arkhipov
 
 	* main/Flow/FormedController.class.php: removed.
