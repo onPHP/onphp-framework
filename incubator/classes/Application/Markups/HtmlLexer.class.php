@@ -1066,6 +1066,7 @@
 					)
 						break;
 					
+					// FIXME: never used stuff
 					$result .= $endTag.$this->char;
 					
 					$this->getNextChar();
