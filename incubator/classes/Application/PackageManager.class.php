@@ -114,7 +114,7 @@
 		
 		private function getConfiguration($configurationScript)
 		{
-			$result = include($configurationScript);
+			$result = include $configurationScript;
 			
 			if (!($result instanceof PackageConfiguration))
 				throw new WrongArgumentException(
