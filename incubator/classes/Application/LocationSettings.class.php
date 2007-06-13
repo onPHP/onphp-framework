@@ -28,10 +28,9 @@
 		public function get($area)
 		{
 			if (!isset($this->locations[$area]))
-				throw
-					new WrongArgumentException(
-						"location {{$area}} does not defined"
-					);
+				throw new WrongArgumentException(
+					"location {{$area}} does not defined"
+				);
 			
 			return $this->locations[$area];
 		}

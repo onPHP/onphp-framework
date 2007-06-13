@@ -20,14 +20,19 @@
 		{
 			if ($model)
 				Assert::isTrue($model instanceof Model);
-				
+			
 			$this->name = $name;
 			$this->action = $action;
 			$this->model = $model;
 		}
 		
+		/**
+		 * @return NavigationArea
+		**/
 		public static function create($name, $action = null, $model = null)
 		{
+			Assert::isTrue(!$model || ($model instanceof Model));
+			
 			return new self($name, $action, $model);
 		}
 		
@@ -41,6 +46,9 @@
 			return $this->action;
 		}
 		
+		/**
+		 * @return Model
+		**/
 		public function getModel()
 		{
 			return $this->model;
