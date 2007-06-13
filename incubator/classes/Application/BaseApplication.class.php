@@ -93,10 +93,10 @@
 				throw new WrongArgumentException(
 					"knows nothing about neighbor application '{$name}'"
 				);
-				
+			
 			return $this->neighbors[$name];
 		}
-
+		
 		/**
 		 * @return BaseApplication
 		**/
@@ -148,8 +148,7 @@
 			
 			foreach ($pathResolvers as $pathResolver) {
 				if ($pathResolver->getConfiguration()->hasControllers())
-					$includePaths[] =
-						$pathResolver->getControllersPath();
+					$includePaths[] = $pathResolver->getControllersPath();
 			}
 			
 			Application::addIncludePaths($includePaths);
@@ -226,7 +225,7 @@
 				throw new WrongStateException(
 					'first, navigate me somewhere'
 				);
-				
+			
 			$pathResolvers = PackageManager::me()->getImportedList();
 			
 			array_unshift($pathResolvers, $this->pathResolver);
@@ -260,11 +259,19 @@
 			return $result;
 		}
 		
+		/**
+		 * @return BaseApplication
+		**/
 		public function setNavigationArea(NavigationArea $navigationArea)
 		{
 			$this->navigationArea = $navigationArea;
+			
+			return $this;
 		}
 		
+		/**
+		 * @return NavigationArea
+		**/
 		public function getNavigationArea()
 		{
 			return $this->navigationArea;
@@ -272,8 +279,7 @@
 		
 		public function url()
 		{
-			return $this->location->
-				getNavigationUrl($this->navigationArea);
+			return $this->location->getNavigationUrl($this->navigationArea);
 		}
 		
 		public function baseUrl()
@@ -285,7 +291,7 @@
 		{
 			return $this->getLocation()->getPath();
 		}
-
+		
 		public function areaUrl($name, $action = null, $model = null)
 		{
 			return $this->getNavigationUrl(
@@ -332,7 +338,7 @@
 				throw new WrongArgumentException(
 					"knows nothing about storage '{$name}'"
 				);
-				
+			
 			return $this->staticStorages[$name];
 		}
 	}
