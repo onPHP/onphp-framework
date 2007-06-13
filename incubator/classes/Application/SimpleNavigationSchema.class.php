@@ -24,14 +24,14 @@
 		{
 			return new self;
 		}
-
+		
 		public function getNavigationUrl(NavigationArea $area)
 		{
 			$query = array();
 			
 			if ($area->getName())
 				$query[self::AREA_HOLDER] = $area->getName();
-				
+			
 			if ($area->getAction())
 				$query[self::ACTION_HOLDER] = $area->getAction();
 			

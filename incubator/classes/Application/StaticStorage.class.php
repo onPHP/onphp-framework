@@ -14,11 +14,11 @@
 	{
 		protected $baseUrl = null;
 		
+		abstract public function getUrl($name);
+		
 		public function __construct(ApplicationUrl $baseUrl)
 		{
 			$this->baseUrl = $baseUrl;
 		}
-		
-		abstract public function getUrl($name);
 	}
 ?>
