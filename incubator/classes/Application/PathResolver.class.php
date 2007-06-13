@@ -154,7 +154,7 @@
 		
 		/* void */ private function requireClass($classFile)
 		{
-			require $classFile;
+			include $classFile;
 		}
 	}
 ?>

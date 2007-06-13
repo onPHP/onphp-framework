@@ -51,22 +51,22 @@
 		
 		public function includeConfig($name)
 		{
-			require $this->path().$name.$this->configExtension;
+			include $this->path().$name.$this->configExtension;
 		}
 		
 		public function includeCommonConfig($name)
 		{
-			require $this->commonPath().$name.$this->configExtension;
+			include $this->commonPath().$name.$this->configExtension;
 		}
 		
 		public function includeProjectConfig($name)
 		{
-			require $this->projectPath().$name.$this->configExtension;
+			include $this->projectPath().$name.$this->configExtension;
 		}
 		
 		public function includeProjectCommonConfig($name)
 		{
-			require $this->projectCommonPath().$name.$this->configExtension;
+			include $this->projectCommonPath().$name.$this->configExtension;
 		}
 		
 		protected function path()
