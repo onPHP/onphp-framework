@@ -66,8 +66,6 @@
 		
 		private static function getAttributes(SgmlOpenTag $tag)
 		{
-			$result = null;
-			
 			$attributes = array();
 			
 			foreach ($tag->getAttributesList() as $name => $value) {
