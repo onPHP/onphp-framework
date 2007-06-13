@@ -37,6 +37,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return CommonLocationSettings
+		**/
 		public function getLocationSettings()
 		{
 			return $this->locations;
@@ -57,6 +60,9 @@
 			return $this->timeout;
 		}
 		
+		/**
+		 * @return SessionServer
+		**/
 		public function setUrl($url)
 		{
 			$this->url = $url;
@@ -121,7 +127,9 @@
 		protected function getActionPages($area)
 		{
 			if (!isset($this->actionPages[$area]))
-				throw new WrongArgumentException("actionPages for {{$area}} does not defined");
+				throw new WrongArgumentException(
+					"actionPages for {{$area}} does not defined"
+				);
 			
 			return $this->actionPages[$area];
 		}
