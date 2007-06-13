@@ -24,14 +24,14 @@
 			return self::$application;
 		}
 		
-		public static function init(BaseApplication $application)
+		/* void */ public static function init(BaseApplication $application)
 		{
 			Assert::isNull(self::$application);
 			
 			self::$application = $application;
 		}
 		
-		public static function addIncludePaths($paths)
+		/* void */ public static function addIncludePaths($paths)
 		{
 			Assert::isArray($paths);
 			
