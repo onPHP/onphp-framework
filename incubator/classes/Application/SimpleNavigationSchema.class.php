@@ -17,9 +17,12 @@
 		const AREA_HOLDER		= 'area';
 		const ACTION_HOLDER		= 'action';
 		
+		/**
+		 * @return SimpleNavigationSchema
+		**/
 		public static function create()
 		{
-			return new self();
+			return new self;
 		}
 
 		public function getNavigationUrl(NavigationArea $area)
@@ -42,7 +45,7 @@
 					
 					$query[$key] = $value;
 				}
-				
+			
 			$result = self::FRONT_CONTROLLER;
 			
 			if ($query)
@@ -62,7 +65,7 @@
 				$frontController = $parts[0];
 			else
 				$frontController = self::FRONT_CONTROLLER;
-				
+			
 			if ($frontController !== self::FRONT_CONTROLLER)
 				throw new WrongArgumentException(
 					'location settings or rewrites is broken?'
@@ -72,7 +75,7 @@
 			
 			if (isset($parts[1]))
 				parse_str($parts[1], $query);
-				
+			
 			$area = $action = $model = null;
 			
 			if (isset($query[self::AREA_HOLDER])) {
@@ -85,9 +88,9 @@
 				unset($query[self::ACTION_HOLDER]);
 			}
 			
+			$model = Model::create();
+			
 			if ($query) {
-				$model = Model::create();
-				
 				foreach ($query as $key => $value)
 					$model->set($key, $value);
 			}
