@@ -96,7 +96,7 @@
 		/**
 		 * @return MethodMappedController
 		**/
-		public function transformArrayToMethodMap($array)
+		public function setMethodMappingList($array)
 		{
 			foreach ($array as $action => $methodName)
 				$this->setMethodMapping($action, $methodName);
