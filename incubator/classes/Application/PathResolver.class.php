@@ -72,10 +72,10 @@
 			$includePaths = array();
 			
 			foreach ($this->configuration->getClassPaths() as $classPath) {
-				$includePath[] = $baseClassPath.$classPath;
+				$includePaths[] = $baseClassPath.$classPath;
 			}
 			
-			Application::addIncludePaths($includePath);
+			Application::addIncludePaths($includePaths);
 			
 			return $this;
 		}
