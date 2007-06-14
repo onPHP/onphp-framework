@@ -1,5 +1,10 @@
 # $Id$
 
+2007-06-14	Konstantin V. Arkhipov
+
+	* global.inc.php.tpl: __autoload() now able to handle classes with
+	broken declarations.
+
 2007-06-13	Konstantin V. Arkhipov
 
 	* main/Criteria/Criteria.class.php: getCustom() now able to return
