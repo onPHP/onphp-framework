@@ -59,6 +59,8 @@
 				try {
 					include $cache[$cache[$classname]].$classname.EXT_CLASS;
 					return /* void */;
+				} catch (ClassNotFoundException $e) {
+					throw $e;
 				} catch (BaseException $e) {
 					return __autoload_failed($classname);
 				}
