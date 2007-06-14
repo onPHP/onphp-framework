@@ -38,6 +38,8 @@
 			try {
 				include $classname.EXT_CLASS;
 				return /* void */;
+			} catch (ClassNotFoundException $e) {
+				throw $e;
 			} catch (BaseException $e) {
 				return __autoload_failed($classname);
 			}
