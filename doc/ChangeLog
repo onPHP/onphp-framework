@@ -1,5 +1,10 @@
 # $Id$
 
+2007-06-14	Sergey M. Skachkov
+
+	* main/Utils/TidyValidator.class.php: simple HTML validator and
+	repairer introduced.
+
 2007-06-14	Konstantin V. Arkhipov
 
 	* global.inc.php.tpl: __autoload() now able to handle classes with
