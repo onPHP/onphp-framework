@@ -71,6 +71,14 @@
 				);
 		}
 		
+		public static function compare(Date $left, Date $right)
+		{
+			if ($left->int == $right->int)
+				return 0;
+			else
+				return ($left->int > $right->int ? 1 : -1);
+		}
+		
 		public function __construct($date)
 		{
 			if (is_int($date)) {// unix timestamp

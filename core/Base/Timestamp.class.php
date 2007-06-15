@@ -32,14 +32,6 @@
 			return new self($timestamp);
 		}
 		
-		public static function compare(Date $left, Date $right)
-		{
-			if ($left->int == $right->int)
-				return 0;
-			else
-				return ($left->int > $right->int ? 1 : -1);
-		}
-		
 		public static function now()
 		{
 			return date(self::getFormat());
