@@ -27,7 +27,7 @@
 		private $host					= null;
 		
 		/**
-		 * @return Configurator
+		 * @return HostConfiguration
 		**/
 		public static function me()
 		{

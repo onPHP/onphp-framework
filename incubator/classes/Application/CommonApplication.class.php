@@ -128,7 +128,7 @@
 			Assert::isNotNull($this->location);
 			Assert::isNotNull($this->location->getNavigationSchema());
 			
-			if (strpos($requestUri, $this->location->getPath() === false))
+			if (strpos($requestUri, $this->location->getPath()) === false)
 				throw new WrongArgumentException(
 					'location settings is broken?'
 				);
