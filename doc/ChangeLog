@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-15	Dmitry A. Lomash
+
+	* core/Base/: compare() moved from Timestamp to Date.
+
 2007-06-14	Sergey M. Skachkov
 
 	* main/Utils/TidyValidator.class.php: simple HTML validator and
