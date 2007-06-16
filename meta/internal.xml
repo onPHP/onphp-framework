@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!DOCTYPE metaconfiguration SYSTEM "meta.dtd">
+
+<!-- $Id$ -->
+
+<metaconfiguration><classes>
+	<class name="Range">
+		<properties>
+			<property name="min" type="Integer" required="false" />
+			<property name="max" type="Integer" required="false" />
+		</properties>
+		
+		<pattern name="InternalClass" />
+	</class>
+	
+	<class name="DateRange">
+		<properties>
+			<property name="start" type="Date" required="false" />
+			<property name="end" type="Date" required="false" />
+		</properties>
+		
+		<pattern name="InternalClass" />
+	</class>
+	
+	<class name="TimestampRange">
+		<properties>
+			<property name="start" type="Timestamp" required="false" />
+			<property name="end" type="Timestamp" required="false" />
+		</properties>
+		
+		<pattern name="InternalClass" />
+	</class>
+	
+	<class name="IdentifiableObject">
+		<implement interface="Identifiable" />
+		
+		<properties>
+			<identifier type="Integer" />
+		</properties>
+		
+		<pattern name="InternalClass" />
+	</class>
+	
+	<class name="IdentifiableTree" extends="IdentifiableObject">
+		<implement interface="Stringable" />
+		
+		<properties>
+			<property
+				name="parent"
+				type="IdentifiableTree"
+				relation="OneToOne"
+				required="false"
+			/>
+		</properties>
+		
+		<pattern name="InternalClass" />
+	</class>
+	
+	<class name="NamedObject" extends="IdentifiableObject">
+		<implement interface="Named" />
+		<implement interface="Stringable" />
+		
+		<properties>
+			<property name="name" type="String" required="false" />
+		</properties>
+		
+		<pattern name="InternalClass" />
+	</class>
+	
+	<class name="NamedTree" extends="NamedObject">
+		<properties>
+			<property
+				name="parent"
+				type="NamedTree"
+				relation="OneToOne"
+				required="false"
+			/>
+		</properties>
+		
+		<pattern name="InternalClass" />
+	</class>
+</classes></metaconfiguration>
