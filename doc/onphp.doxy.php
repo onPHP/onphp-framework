@@ -8,7 +8,7 @@
 	/**
 	 * @mainpage onPHP
 	 * 
-	 * For support consider using our <a href="http://onphp.org/forum/">forum</a> or <a href="http://onphp.org/contacts.en.html">maling lists</a>.
+	 * For support consider using our <a href="http://onphp.org/contacts.en.html">maling lists</a>.
 	 *
 	 * <hr>
 	 *
