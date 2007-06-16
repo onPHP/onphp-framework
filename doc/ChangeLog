@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-16	Konstantin V. Arkhipov
+
+	* 0.10.2 released.
+
 2007-06-15	Dmitry A. Lomash
 
 	* core/Base/: compare() moved from Timestamp to Date.
