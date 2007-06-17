@@ -92,6 +92,8 @@
 			foreach ($this->form->getPrimitiveList() as $prm) {
 				$this->importOne($prm->getName(), $request);
 			}
+			
+			$this->form->checkRules();
 		}
 		
 		private function checkExistence($name)

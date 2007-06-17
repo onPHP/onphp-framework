@@ -1,5 +1,10 @@
 # $Id$
 
+2007-06-18	Konstantin V. Arkhipov
+
+	* core/Form/MappedForm.class.php: now checks Form's rules upon
+	import().
+
 2007-06-15	Dmitry A. Lomash
 
 	* core/Base/: compare() moved from Timestamp to Date.
