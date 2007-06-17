@@ -69,6 +69,8 @@
 				$scope = $request->getByType($this->type);
 				$this->form->importOne($name, $scope);
 			}
+			
+			$this->form->checkRules();
 		}
 		
 		/* void */ public function import(HttpRequest $request)
