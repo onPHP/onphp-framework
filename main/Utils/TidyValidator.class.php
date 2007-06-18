@@ -25,7 +25,7 @@
 			'doctype'			=> 'strict',
 			'wrap'				=> 0,
 			'quote-marks'		=> true,
-			'drop-empty-paras'	=> false
+			'drop-empty-paras'	=> true
 		);
 		
 		private $header			= '
@@ -178,6 +178,7 @@
 			$pattern = array('/</','/>/');
 			$replace = array('&lt;','&gt;');
 			$errors = tidy_get_error_buffer($tidy);
+			$out = null;
 			
 			if (!empty($errors)) {
 				$errorStrings =
@@ -186,7 +187,6 @@
 						preg_replace($pattern, $replace, $errors)
 					);
 				
-				$out = null;
 				foreach ($errorStrings as $string) {
 					list ($line, $num, $col, $rest) = explode(' ', $string, 4);
 					
@@ -201,17 +201,54 @@
 						.($num - ($this->headerLines))
 						.' column '.$rest;
 				}
+			}	
+
+			$tidy->cleanRepair();
+			
+			preg_match_all('/<body>(.*)<\/body>/s', $tidy, $outContent);
+			
+			$crcBefore = crc32(preg_replace('/[\t\n\r\0 ]/','', $this->getContent()));
+			$crcAfter = crc32(preg_replace('/[\t\n\r\0 ]/','', $outContent[1][0]));
 				
-				$tidy->cleanRepair();
-				
-				preg_match_all('/<body>(.*)<\/body>/s', $tidy, $outContent);
-				
-				$this->
-					setContent($outContent[1][0])->
-					setValidationErrors($out);
+			if ($crcBefore != $crcAfter) {
+				if (
+					(
+						$this->countTags('<[\t ]*p[\t ]*>', $this->getContent())
+						!= $this->countTags('<[\t ]*p[\t ]*>', $outContent[1][0])
+					)
+					||
+					(
+						$this->countTags('<[\t ]*\/[\t ]*p[\t ]*>', $this->getContent())
+						!= $this->countTags('<[\t ]*\/[\t ]*p[\t ]*>', $outContent[1][0])
+					)
+				) {
+					$out = 
+						(
+							$out == null
+								? null
+								: "$out\n\n"
+						)
+						.'Paragraphs have been changed, please review content';
+				} 
+				else
+				if (!$out) {
+					$out = 'Content has been changed, please review';
+				}
 			}
 			
+			$this->
+				setContent($outContent[1][0])->
+				setValidationErrors($out);
+			
 			return $this;
+		}
+		
+		private function countTags($tag, $text) 
+		{
+			if (preg_match_all("/$tag/i", $text, $matches))
+				return count($matches[0]);
+
+			return 0;
 		}
 	}
 ?>
