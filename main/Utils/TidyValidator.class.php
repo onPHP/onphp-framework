@@ -163,6 +163,25 @@
 		**/
 		public function validateContent($content = null)
 		{
+			$symbols = array(
+				'/…/'		=> '&#133;',
+				'/™/'		=> '&trade;',
+				'/©/'		=> '&copy;',
+				'/№/'		=> '&#8470;',
+				'/—/'		=> '&mdash;',
+				'/–/'		=> '&mdash;',
+				'/«/'		=> '&laquo;',
+				'/»/'		=> '&raquo;',
+				'/„/'		=> '&#132;',
+				'/“/'		=> '&#147;',
+				'/•/'		=> '&bull;',
+				'/®/'		=> '&reg;',
+				'/¼/'		=> '&frac14;',
+				'/½/'		=> '&frac12;',
+				'/¾/'		=> '&frac34;',
+				'/±/'		=> '&plusmn;'
+			);
+						
 			if ($content) {
 				$this->setContent($content);
 			} elseif (!$this->getContent()) {
@@ -206,6 +225,8 @@
 			$tidy->cleanRepair();
 			
 			preg_match_all('/<body>(.*)<\/body>/s', $tidy, $outContent);
+			
+			$outContent[1][0] = preg_replace(array_keys($symbols), array_values($symbols), $outContent[1][0]);
 			
 			$crcBefore = crc32(preg_replace('/[\t\n\r\0 ]/','', $this->getContent()));
 			$crcAfter = crc32(preg_replace('/[\t\n\r\0 ]/','', $outContent[1][0]));
