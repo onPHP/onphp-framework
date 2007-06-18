@@ -261,7 +261,12 @@
 			
 			socket_clear_error($this->socket);
 			
-			$result = socket_read($this->socket, $length);
+			try {
+				$result = socket_read($this->socket, $length);
+			} catch (BaseException $e) {
+				// probably connection reset by peer
+				$result = false;
+			}
 			
 			if ($result === false && !$this->isTimedOut())
 				throw new NetworkException(
@@ -283,10 +288,16 @@
 			
 			socket_clear_error($this->socket);
 			
-			if ($length === null)
-				$result = socket_write($this->socket, $buffer);
-			else
-				$result = socket_write($this->socket, $buffer, $length);
+			try {
+				if ($length === null)
+					$result = socket_write($this->socket, $buffer);
+				else
+					$result = socket_write($this->socket, $buffer, $length);
+				
+			} catch (BaseException $e) {
+				// probably connection reset by peer
+				$result = false;
+			}
 			
 			if ($result === false && !$this->isTimedOut())
 				throw new NetworkException(
