@@ -163,7 +163,7 @@
 		**/
 		public function validateContent($content = null)
 		{
-			$symbols = array(
+			static $symbols = array(
 				'/…/'		=> '&#133;',
 				'/™/'		=> '&trade;',
 				'/©/'		=> '&copy;',
@@ -181,7 +181,7 @@
 				'/¾/'		=> '&frac34;',
 				'/±/'		=> '&plusmn;'
 			);
-						
+			
 			if ($content) {
 				$this->setContent($content);
 			} elseif (!$this->getContent()) {
@@ -203,7 +203,7 @@
 				$errorStrings =
 					explode(
 						"\n",
-						preg_replace($pattern, $replace, $errors)
+						str_replace($pattern, $replace, $errors)
 					);
 				
 				foreach ($errorStrings as $string) {
@@ -220,41 +220,50 @@
 						.($num - ($this->headerLines))
 						.' column '.$rest;
 				}
-			}	
-
+			}
+			
 			$tidy->cleanRepair();
 			
 			preg_match_all('/<body>(.*)<\/body>/s', $tidy, $outContent);
 			
-			$outContent[1][0] = preg_replace(array_keys($symbols), array_values($symbols), $outContent[1][0]);
+			Assert::isTrue(isset($outContent[1][0]));
 			
-			$crcBefore = crc32(preg_replace('/[\t\n\r\0 ]/','', $this->getContent()));
-			$crcAfter = crc32(preg_replace('/[\t\n\r\0 ]/','', $outContent[1][0]));
-				
+			$outContent[1][0] = strtr($outContent, $symbols);
+			
+			$crcBefore = crc32(
+				preg_replace('/[\t\n\r\0 ]/', null, $this->getContent())
+			);
+			$crcAfter = crc32(
+				preg_replace('/[\t\n\r\0 ]/', null, $outContent[1][0])
+			);
+			
 			if ($crcBefore != $crcAfter) {
 				if (
 					(
 						$this->countTags('<[\t ]*p[\t ]*>', $this->getContent())
 						!= $this->countTags('<[\t ]*p[\t ]*>', $outContent[1][0])
-					)
-					||
-					(
-						$this->countTags('<[\t ]*\/[\t ]*p[\t ]*>', $this->getContent())
-						!= $this->countTags('<[\t ]*\/[\t ]*p[\t ]*>', $outContent[1][0])
+					) || (
+						$this->countTags(
+							'<[\t ]*\/[\t ]*p[\t ]*>',
+							$this->getContent()
+						)
+						!= $this->countTags(
+							'<[\t ]*\/[\t ]*p[\t ]*>',
+							$outContent[1][0]
+						)
 					)
 				) {
-					$out = 
+					$out =
 						(
 							$out == null
 								? null
-								: "$out\n\n"
+								: $out."\n\n"
 						)
 						.'Paragraphs have been changed, please review content';
-				} 
-				else
-				if (!$out) {
-					$out = 'Content has been changed, please review';
-				}
+				} else
+					if (!$out) {
+						$out = 'Content has been changed, please review';
+					}
 			}
 			
 			$this->
@@ -268,7 +277,7 @@
 		{
 			if (preg_match_all("/$tag/i", $text, $matches))
 				return count($matches[0]);
-
+			
 			return 0;
 		}
 	}
