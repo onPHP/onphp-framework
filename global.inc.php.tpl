@@ -84,10 +84,6 @@
 		.ONPHP_MAIN_PATH.'Mail'			.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Utils'		.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'TuringTest'.PATH_SEPARATOR
-		
-		// uncomment this one, if your php compiled without spl extension:
-		//
-		// .ONPHP_CORE_PATH.'SPL'.DIRECTORY_SEPARATOR.'bundled'.PATH_SEPARATOR
 	);
 	
 	// file extensions
