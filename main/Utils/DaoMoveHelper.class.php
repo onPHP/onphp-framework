@@ -38,14 +38,14 @@
 			Assert::isTrue(
 				method_exists($object, $getMethod)
 			);
-
+			
 			$oldPosition = $object->$getMethod();
 			
 			$dao = $object->dao();
-
+			
 			$query =
 				ObjectQuery::create()->
-				sort(self::$property)->						
+				sort(self::$property)->
 				desc()->
 				setLimit(1);
 			
@@ -61,11 +61,10 @@
 			
 			try {
 				$upperObject = $dao->get($query);
-				$newPosition = $upperObject->$getMethod();
 				
 				DaoUtils::setNullValue(self::$nullValue);
 				DaoUtils::swap($upperObject, $object);
-
+				
 			} catch (ObjectNotFoundException $e) {
 				// no need to move up top object
 			}					
@@ -81,11 +80,11 @@
 			Assert::isTrue(
 				method_exists($object, $getMethod)
 			);
-
+			
 			$oldPosition = $object->$getMethod();
 			
 			$dao = $object->dao();
-
+			
 			$query =
 				ObjectQuery::create()->
 				addLogic(
@@ -94,23 +93,22 @@
 						$oldPosition
 					)
 				)->
-				sort(self::$property)->						
+				sort(self::$property)->
 				asc()->
 				setLimit(1);
-
+			
 			if ($exp)
-				$query->addLogic($exp);			
+				$query->addLogic($exp);
 			
 			try {
 				$lowerObject = $dao->get($query);
-				$newPosition = $lowerObject->$getMethod();
 				
 				DaoUtils::setNullValue(self::$nullValue);
 				DaoUtils::swap($lowerObject, $object);
-
+				
 			} catch (ObjectNotFoundException $e) {
 				// no need to move down bottom object
-			}					
+			}
 		}
 	}
 ?>
