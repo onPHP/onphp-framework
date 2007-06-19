@@ -17,9 +17,6 @@
 	**/
 	abstract class GenericDAO extends Singleton implements BaseDAO
 	{
-		// override later, BC, <0.9
-		protected $mapping = array();
-
 		protected $identityMap	= array();
 		
 		protected $link			= null;
