@@ -90,5 +90,13 @@
 		DBPool::me()->dropDefault();
 	}
 	
-	$test->run($reporter);
+	if ($daoWorkers)
+		foreach ($daoWorkers as $worker) {
+			echo "Processing with {$worker}\n";
+			Cache::setDefaultWorker($worker);
+			$test->run($reporter);
+			echo "\n";
+		}
+	else
+		$test->run($reporter);
 ?>
