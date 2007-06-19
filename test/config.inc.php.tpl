@@ -26,6 +26,10 @@
 */
 	);
 	
+	$daoWorkers = array(
+		'NullDaoWorker', 'CommonDaoWorker', 'SmartDaoWorker', 'VoodooDaoWorker'
+	);
+	
 	define('SIMPLETEST_PATH', '/usr/share/php/simpletest/');
 	
 	define('__LOCAL_DEBUG__', true);
