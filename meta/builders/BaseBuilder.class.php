@@ -158,7 +158,7 @@ EOT;
 		}
 
 EOT;
-			} elseif ($class->getWithInternalProperties()) {
+			} else {
 				$out .= <<<EOT
 		return \$query;
 	}
