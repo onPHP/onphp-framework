@@ -29,7 +29,12 @@
 		{
 			return $this->field->getField();
 		}
-
+		
+		public function getAlias()
+		{
+			return $this->alias;
+		}
+		
 		public function toString(Dialect $dialect)
 		{
 			return
