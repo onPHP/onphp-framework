@@ -206,9 +206,6 @@
 		.'Markups'.DIRECTORY_SEPARATOR
 		.'Documents'.DIRECTORY_SEPARATOR.PATH_SEPARATOR
 	*/
-		// uncomment this one, if your php compiled without spl extension:
-		//
-		// .ONPHP_CORE_PATH.'SPL'.DIRECTORY_SEPARATOR.'bundled'.PATH_SEPARATOR
 	);
 	
 	/*

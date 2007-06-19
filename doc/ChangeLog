@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-19	Konstantin V. Arkhipov
+
+	* main/SPL/bundled/: removed, it was a bad idea.
+
 2007-06-18	Denis M. Gabaidulin
 
 	* main/core/Form/Primitives/PrimitiveString.class.php: simple url
