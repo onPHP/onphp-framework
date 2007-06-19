@@ -194,7 +194,7 @@
 				$this->getEncoding()
 			);
 			
-			$pattern = array('/</','/>/');
+			$pattern = array('<','>');
 			$replace = array('&lt;','&gt;');
 			$errors = tidy_get_error_buffer($tidy);
 			$out = null;
