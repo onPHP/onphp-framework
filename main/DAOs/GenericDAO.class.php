@@ -93,7 +93,7 @@
 		{
 			if (null === $this->selectHead) {
 				$table = $this->getTable();
-
+				
 				$this->selectHead = 
 					OSQL::select()->
 					from($table);
@@ -112,23 +112,27 @@
 			if (isset($this->identityMap[$id]))
 				return $this->identityMap[$id];
 			
-			$object = Cache::worker($this)->getById($id, $expires);
-			
-			return $this->identityMap[$object->getId()] = $object;
+			return $this->addObjectToMap(
+				Cache::worker($this)->getById($id, $expires)
+			);
 		}
-
+		
 		public function getByLogic(
 			LogicalObject $logic, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			return Cache::worker($this)->getByLogic($logic, $expires);
+			return $this->addObjectToMap(
+				Cache::worker($this)->getByLogic($logic, $expires)
+			);
 		}
-
+		
 		public function getByQuery(
 			SelectQuery $query, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			return Cache::worker($this)->getByQuery($query, $expires);
+			return $this->addObjectToMap(
+				Cache::worker($this)->getByQuery($query, $expires)
+			);
 		}
 		
 		public function getCustom(
@@ -142,26 +146,42 @@
 			/* array */ $ids, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			return Cache::worker($this)->getListByIds($ids, $expires);
+			$mapped = array();
+			
+			foreach ($ids as $id)
+				if (isset($this->identityMap[$id]))
+					$mapped[] = $this->identityMap[$id];
+			
+			$list = $this->addObjectListToMap(
+				Cache::worker($this)->getListByIds($ids, $expires)
+			);
+			
+			return array_merge($mapped, $list);
 		}
 		
 		public function getListByQuery(
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			return Cache::worker($this)->getListByQuery($query, $expires);
+			return $this->addObjectListToMap(
+				Cache::worker($this)->getListByQuery($query, $expires)
+			);
 		}
 		
 		public function getListByLogic(
 			LogicalObject $logic, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			return Cache::worker($this)->getListByLogic($logic, $expires);
+			return $this->addObjectListToMap(
+				Cache::worker($this)->getListByLogic($logic, $expires)
+			);
 		}
 		
 		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
 		{
-			return Cache::worker($this)->getPlainList($expires);
+			return $this->addObjectListToMap(
+				Cache::worker($this)->getPlainList($expires)
+			);
 		}
 		
 		public function getCustomList(
@@ -234,7 +254,7 @@
 		{
 			foreach ($ids as $id)
 				unset($this->identityMap[$id]);
-				
+			
 			return Cache::worker($this)->dropByIds($ids);
 		}
 		
@@ -280,6 +300,19 @@
 				get_class($object) === $this->getObjectName(),
 				'strange object given, i can not inject it'
 			);
+		}
+		
+		private function addObjectToMap($object)
+		{
+			return $this->identityMap[$object->getId()] = $object;
+		}
+		
+		private function addObjectListToMap($list)
+		{
+			foreach ($list as $object)
+				$this->identityMap[$object->getId()] = $object;
+			
+			return $list;
 		}
 	}
 ?>
