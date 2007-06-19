@@ -106,12 +106,6 @@ parent::fillObject(\${$varName}, \$array, \$prefix);
 
 
 EOT;
-			} else {
-				$out .= <<<EOT
-		return \$query;
-	}
-
-EOT;
 			}
 			
 			if ($chainFillers) {
