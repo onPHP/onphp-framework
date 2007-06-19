@@ -13,14 +13,14 @@
 	final class TempFile
 	{
 		private $path = null;
-
+		
 		public function __construct(
 			$directory = 'temp-garbage/', $prefix = 'TmpFile'
 		)
 		{
 			$this->path = FileUtils::makeTempFile($directory, $prefix);
 		}
-
+		
 		public function __destruct()
 		{
 			try {
@@ -29,7 +29,7 @@
 				// boo! deal with garbage yourself.
 			}
 		}
-
+		
 		public function getPath()
 		{
 			return $this->path;
