@@ -88,7 +88,9 @@
 		{
 			Assert::isTrue(
 				(($table = $column->getTable()) !== null)
-				&& ($column->getDefault() === null)
+				// strict checking commented out due to a bug,
+				// fixed only in >0.5
+				// && ($column->getDefault() === null)
 			);
 			
 			$sequenceName = $table->getName().'_id';
