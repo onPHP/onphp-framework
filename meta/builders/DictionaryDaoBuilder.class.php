@@ -28,7 +28,6 @@ EOT;
 			$pointers = self::buildPointers($class);
 			
 			$className = $class->getName();
-			$varName = strtolower($className[0]).substr($className, 1);
 			
 			$out .= <<<EOT
 {$pointers}

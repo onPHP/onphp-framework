@@ -36,7 +36,6 @@
 			}
 			
 			$className = $class->getName();
-			$varName = strtolower($className[0]).substr($className, 1);
 
 			$out = self::getHead();
 			
