@@ -224,10 +224,12 @@
 			
 			$tidy->cleanRepair();
 			
+			$outContent = array();
+			
 			preg_match_all('/<body>(.*)<\/body>/s', $tidy, $outContent);
 			
 			Assert::isTrue(isset($outContent[1][0]));
-
+			
 			$outContent[1][0] = strtr($outContent[1][0], $symbols);
 			
 			$crcBefore = crc32(
@@ -275,6 +277,8 @@
 		
 		private function countTags($tag, $text) 
 		{
+			$matches = array();
+			
 			if (preg_match_all("/$tag/i", $text, $matches))
 				return count($matches[0]);
 			
