@@ -162,6 +162,9 @@
 			return $this->required;
 		}
 		
+		/**
+		 * @return LightMetaProperty
+		**/
 		public function setRequired($yrly)
 		{
 			$this->required = $yrly;
@@ -287,6 +290,9 @@
 			return $form->add($prm);
 		}
 		
+		/**
+		 * @return InsertOrUpdateQuery
+		**/
 		public function fillQuery(
 			InsertOrUpdateQuery $query,
 			Prototyped $object
