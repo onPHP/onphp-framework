@@ -92,6 +92,9 @@
 			return $this->required;
 		}
 		
+		/**
+		 * @return LightMetaProperty
+		**/
 		public function setRequired($yrly)
 		{
 			$this->required = $yrly;
