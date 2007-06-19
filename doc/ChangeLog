@@ -2,6 +2,10 @@
 
 2007-06-20	Konstantin V. Arkhipov
 
+	* main/DAOs/: low-level cache stuff isolated from mere mortals:
+	getCachedById, getCachedByQuery, cacheById, cacheByQuery,
+	cacheListByQuery, uncacheByQuery.
+
 	* main/DAOs/GenericDAO.class.php: now all methods returning single
 	object or object list are using identity map.
 

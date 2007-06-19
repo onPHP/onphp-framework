@@ -188,19 +188,22 @@
 		
 		/// cachers
 		//@{
-		public function cacheById(Identifiable $object)
+		protected function cacheById(Identifiable $object)
 		{
 			return $object;
 		}
 		
-		public function cacheByQuery(
+		protected function cacheByQuery(
 			SelectQuery $query, /* Identifiable */ $object
 		)
 		{
 			return $object;
 		}
 		
-		public function cacheListByQuery(SelectQuery $query, /* array */ $array)
+		protected function cacheListByQuery(
+			SelectQuery $query,
+			/* array */ $array
+		)
 		{
 			return $array;
 		}
@@ -218,7 +221,7 @@
 			return true;
 		}
 		
-		public function uncacheByQuery(SelectQuery $query)
+		protected function uncacheByQuery(SelectQuery $query)
 		{
 			return true;
 		}
@@ -231,12 +234,12 @@
 		
 		/// cache getters
 		//@{
-		public function getCachedById($id)
+		protected function getCachedById($id)
 		{
 			return null;
 		}
 		
-		public function getCachedByQuery(SelectQuery $query)
+		protected function getCachedByQuery(SelectQuery $query)
 		{
 			return null;
 		}

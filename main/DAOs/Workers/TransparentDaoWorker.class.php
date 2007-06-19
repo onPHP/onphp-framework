@@ -311,7 +311,7 @@
 		
 		/// cachers
 		//@{
-		public function cacheById(Identifiable $object)
+		protected function cacheById(Identifiable $object)
 		{
 			Cache::me()->mark($this->className)->
 				add(
@@ -346,7 +346,7 @@
 		
 		/// internal helpers
 		//@{
-		public function getCachedByQuery(SelectQuery $query)
+		protected function getCachedByQuery(SelectQuery $query)
 		{
 			return
 				$this->gentlyGetByKey(

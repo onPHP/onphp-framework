@@ -42,12 +42,6 @@
 		public function getQueryResult(SelectQuery $query);
 		//@}
 		
-		/// cache getters
-		//@{
-		public function getCachedById($id);
-		public function getCachedByQuery(SelectQuery $query);
-		//@}
-		
 		/// erasers
 		//@{
 		public function drop(Identifiable $object);
@@ -55,20 +49,10 @@
 		public function dropByIds(/* array */ $ids);
 		//@}
 		
-		/// cachers
-		//@{
-		public function cacheById(Identifiable $object);
-		public function cacheByQuery(
-			SelectQuery $query, /* Identifiable */ $object
-		);
-		public function cacheListByQuery(SelectQuery $query, /* array */ $array);
-		//@}
-		
 		/// uncachers
 		//@{
 		public function uncacheById($id);
 		public function uncacheByIds($ids);
-		public function uncacheByQuery(SelectQuery $query);
 		public function uncacheLists();
 		//@}
 	}

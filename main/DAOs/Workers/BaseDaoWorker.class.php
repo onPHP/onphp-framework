@@ -71,7 +71,7 @@
 					delete($this->className.'_'.$id);
 		}
 		
-		public function uncacheByQuery(SelectQuery $query)
+		protected function uncacheByQuery(SelectQuery $query)
 		{
 			return
 				Cache::me()->mark($this->className)->
@@ -81,14 +81,14 @@
 		
 		/// cache getters
 		//@{
-		public function getCachedById($id)
+		protected function getCachedById($id)
 		{
 			return
 				Cache::me()->mark($this->className)->
 					get($this->className.'_'.$id);
 		}
 		
-		public function getCachedByQuery(SelectQuery $query)
+		protected function getCachedByQuery(SelectQuery $query)
 		{
 			return
 				Cache::me()->mark($this->className)->

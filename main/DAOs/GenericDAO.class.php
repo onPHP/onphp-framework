@@ -205,37 +205,6 @@
 			return Cache::worker($this)->getQueryResult($query, $expires);
 		}
 		
-		public function cacheById(
-			Identifiable $object, $expires = Cache::EXPIRES_MEDIUM
-		)
-		{
-			return Cache::worker($this)->cacheById($object, $expires);
-		}
-		
-		public function cacheByQuery(
-			SelectQuery $query,
-			/* Identifiable */ $object,
-			$expires = Cache::DO_NOT_CACHE
-		)
-		{
-			return Cache::worker($this)->cacheByQuery($query, $object, $expires);
-		}
-		
-		public function cacheListByQuery(SelectQuery $query, /* array */ $array)
-		{
-			return Cache::worker($this)->cacheListByQuery($query, $array);
-		}
-		
-		public function getCachedById($id)
-		{
-			return Cache::worker($this)->getCachedById($id);
-		}
-		
-		public function getCachedByQuery(SelectQuery $query)
-		{
-			return Cache::worker($this)->getCachedByQuery($query);
-		}
-		
 		public function drop(Identifiable $object)
 		{
 			$this->checkObjectType($object);
@@ -271,11 +240,6 @@
 				unset($this->identityMap[$id]);
 			
 			return Cache::worker($this)->uncacheByIds($ids);
-		}
-		
-		public function uncacheByQuery(SelectQuery $query)
-		{
-			return Cache::worker($this)->uncacheByQuery($query);
 		}
 		
 		public function uncacheLists()

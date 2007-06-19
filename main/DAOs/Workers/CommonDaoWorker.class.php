@@ -315,7 +315,7 @@
 
 		/// cachers
 		//@{
-		public function cacheById(
+		protected function cacheById(
 			Identifiable $object, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
@@ -332,7 +332,7 @@
 			return $object;
 		}
 		
-		public function cacheByQuery(
+		protected function cacheByQuery(
 			SelectQuery $query,
 			/* Identifiable */ $object,
 			$expires = Cache::DO_NOT_CACHE
@@ -351,7 +351,7 @@
 			return $object;
 		}
 		
-		public function cacheListByQuery(SelectQuery $query, /* array */ $array)
+		protected function cacheListByQuery(SelectQuery $query, /* array */ $array)
 		{
 			throw new UnimplementedFeatureException();
 		}
