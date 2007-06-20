@@ -63,7 +63,7 @@
 				$upperObject = $dao->get($query);
 				
 				DaoUtils::setNullValue(self::$nullValue);
-				DaoUtils::swap($upperObject, $object);
+				DaoUtils::swap($upperObject, $object, self::$property);
 				
 			} catch (ObjectNotFoundException $e) {
 				// no need to move up top object
@@ -104,7 +104,7 @@
 				$lowerObject = $dao->get($query);
 				
 				DaoUtils::setNullValue(self::$nullValue);
-				DaoUtils::swap($lowerObject, $object);
+				DaoUtils::swap($lowerObject, $object, self::$property);
 				
 			} catch (ObjectNotFoundException $e) {
 				// no need to move down bottom object
