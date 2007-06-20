@@ -194,8 +194,6 @@
 				$this->getEncoding()
 			);
 			
-			$pattern = array('<', '>', '&');
-			$replace = array('&lt;', '&gt;', '&amp;');
 			$errors = tidy_get_error_buffer($tidy);
 			$out = null;
 			
@@ -203,7 +201,7 @@
 				$errorStrings =
 					explode(
 						"\n",
-						str_replace($pattern, $replace, $errors)
+						htmlspecialchars($errors)
 					);
 				
 				foreach ($errorStrings as $string) {
