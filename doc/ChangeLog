@@ -1,10 +1,5 @@
 # $Id$
 
-2007-06-20	Dmitry E. Pismenny
-
-	* main/Utils/DaoMoveHelper.class.php: fixed call DaoUtils::swap(), added
-	property parameter.
-
 2007-06-20	Konstantin V. Arkhipov
 
 	* main/DAOs/: low-level cache stuff isolated from mere mortals:
