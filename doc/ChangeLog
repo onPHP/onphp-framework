@@ -2,6 +2,10 @@
 
 2007-06-21	Dmitry A. Lomash
 
+	* test/main/FeedReaderTest.class.php: added tests for FeedReader.
+
+2007-06-21	Dmitry A. Lomash
+
 	* main/Utils/Feed/: added feed manipulation classes.
 
 2007-06-20	Konstantin V. Arkhipov
