@@ -6,7 +6,7 @@
 		public function testFeedReaderRss()
 		{
 			$feedReader = new FeedReader();
-			$feedReader->loadFile('data/news.xml');
+			$feedReader->loadFile('main/data/news.xml');
 
 			$feedChannel = $feedReader->parse();
 			
@@ -28,19 +28,21 @@
 		public function testFeedReaderAtom()
 		{
 			$feedReader = new FeedReader();
-			$feedReader->load('http://www.kvirc.ru/wiki/Служебная:News/atom');
+			$feedReader->load(
+			    'http://groups.google.com.ua/group/hr.rec.kladjenje/feed/atom_v1_0_msgs.xml'
+			);
 
 			$feedChannel = $feedReader->parse();
 			$feedItems = $feedChannel->getFeedItems();
 			
 			$this->assertTrue($feedChannel instanceof FeedChannel);
 			
-			$this->assertEqual(count($feedItems), 10);
+			$this->assertEqual(count($feedItems), 15);
 			
-			$this->assertEqual($feedChannel->getTitle(), 'Новости KVIrc');
+			$this->assertEqual($feedChannel->getTitle(), 'hr.rec.kladjenje Google Group');
 			
 			$feedItem = $feedItems[1];
-			$this->assertEqual($feedItem->getTitle(), 'Статья о KVIrc в «Open Source»');
+			$this->assertEqual($feedItem->getTitle(), 'Re: Dojave');
 				
 		}
 	}
