@@ -43,8 +43,6 @@
 			
 			$feedItem = $feedItems[1];
 			$this->assertEqual($feedItem->getTitle(), 'Re: Dojave');
-				
 		}
 	}
-	
 ?>
