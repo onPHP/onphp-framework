@@ -152,21 +152,19 @@
 			/* array */ $ids, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			$mapped = $remove = array();
+			$mapped = $remain = array();
 			
 			foreach ($ids as $id) {
-				if (isset($this->identityMap[$id])) {
-					$mapped[] = $this->identityMap[$id];
-					$remove[] = $id;
+				if (isset($this->identityMap[$ids[$i]])) {
+					$mapped[] = $this->identityMap[$ids[$i]];
+				} else {
+					$remain[] = $id;
 				}
 			}
 			
-			foreach ($remove as $id)
-				unset($ids[$id]);
-			
-			if ($ids) {
+			if ($remain) {
 				$list = $this->addObjectListToMap(
-					Cache::worker($this)->getListByIds($ids, $expires)
+					Cache::worker($this)->getListByIds($remain, $expires)
 				);
 				
 				return array_merge($mapped, $list);
