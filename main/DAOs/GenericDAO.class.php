@@ -155,8 +155,8 @@
 			$mapped = $remain = array();
 			
 			foreach ($ids as $id) {
-				if (isset($this->identityMap[$ids[$i]])) {
-					$mapped[] = $this->identityMap[$ids[$i]];
+				if (isset($this->identityMap[$ids[$id]])) {
+					$mapped[] = $this->identityMap[$ids[$id]];
 				} else {
 					$remain[] = $id;
 				}
