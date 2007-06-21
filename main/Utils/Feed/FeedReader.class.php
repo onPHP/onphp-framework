@@ -15,57 +15,57 @@
 		private $xml			= null;
 		private $formats		= array();
 		
+		/**
+		 * @return FeedReader
+		**/
+		public static function create()
+		{
+			return new self;
+		}
+		
 		public function __construct()
 		{
 			$this->formats[] = AtomFeedFormat::me();
 			$this->formats[] = RssFeedFormat::me();
 		}
 		
-		public function isLoaded()
-		{
-			return ($this->xml) ? true : false;
-		}
-		
 		/**
-		 * @return FeedReader
+		 * @return SimpleXMLElement
 		**/
-		public function load($url)
+		public function getXml()
 		{
-			$content = file_get_contents($url);
-
-			return $this->loadXml(new SimpleXMLElement($content));
-		}
-		
-		/**
-		 * @return FeedReader
-		**/
-		public function loadFile($file)
-		{
-			return $this->loadXml(simplexml_load_file($file));
-		}
-		
-		/**
-		 * @return FeedReader
-		**/
-		public function loadXml(SimpleXMLElement $xml)
-		{
-			if ($this->isLoaded())
-				throw new WrongStateException('Already loaded!');
-			
-			$this->xml = $xml;
-			
-			return $this;
+			return $this->xml;
 		}
 		
 		/**
 		 * @return FeedChannel
 		**/
-		public function parse()
+		public function parseFile($file)
+		{
+			$this->xml = simplexml_load_file($file);
+			
+			return $this->parse();
+		}
+		
+		/**
+		 * @return FeedReader
+		**/
+		public function parseXml($xml)
+		{
+			$this->xml = new SimpleXMLElement($xml);
+			
+			return $this->parse();
+		}
+		
+		/**
+		 * @return FeedChannel
+		**/
+		private function parse()
 		{
 			foreach ($this->formats as $format)
 				if ($format->isAcceptable($this->xml))
 					return $format->parse($this->xml);
-					
+			
 			return null;
 		}
 	}
