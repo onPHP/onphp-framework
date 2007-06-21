@@ -31,14 +31,9 @@
 		**/
 		public function load($url)
 		{
-			echo $url. "\n\n";
-			try {
-				$remoteResponse = SimpleCURL::getRemoteFile($url);
-			} catch (SimpleCurlException $e) {
-				throw new WrongStateException('Cant load Xml from channel url!');
-			}
+			$content = file_get_contents($url);
 
-			return $this->loadXml(new SimpleXMLElement($remoteResponse));
+			return $this->loadXml(new SimpleXMLElement($content));
 		}
 		
 		/**
