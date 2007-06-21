@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-21	Dmitry A. Lomash
+
+	* main/Utils/Feed/: added feed manipulation classes.
+
 2007-06-20	Konstantin V. Arkhipov
 
 	* main/DAOs/: low-level cache stuff isolated from mere mortals:
