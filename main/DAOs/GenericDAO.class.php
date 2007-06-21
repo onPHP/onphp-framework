@@ -146,17 +146,27 @@
 			/* array */ $ids, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			$mapped = array();
+			$mapped = $remove = array();
 			
-			foreach ($ids as $id)
-				if (isset($this->identityMap[$id]))
+			foreach ($ids as $id) {
+				if (isset($this->identityMap[$id])) {
 					$mapped[] = $this->identityMap[$id];
+					$remove[] = $id;
+				}
+			}
 			
-			$list = $this->addObjectListToMap(
-				Cache::worker($this)->getListByIds($ids, $expires)
-			);
+			foreach ($remove as $id)
+				unset($ids[$id]);
 			
-			return array_merge($mapped, $list);
+			if ($ids) {
+				$list = $this->addObjectListToMap(
+					Cache::worker($this)->getListByIds($ids, $expires)
+				);
+				
+				return array_merge($mapped, $list);
+			}
+			
+			return $mapped;
 		}
 		
 		public function getListByQuery(
