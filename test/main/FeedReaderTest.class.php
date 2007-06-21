@@ -5,11 +5,10 @@
 	{
 		public function testFeedReaderRss()
 		{
-			$feedReader = new FeedReader();
-			$feedReader->loadFile('main/data/news.xml');
+			$feedChannel =
+				FeedReader::create()->
+				parseFile('main/data/news.xml');
 
-			$feedChannel = $feedReader->parse();
-			
 			$this->assertTrue($feedChannel);
 			$this->assertTrue($feedChannel instanceof FeedChannel);
 			
@@ -27,12 +26,12 @@
 		
 		public function testFeedReaderAtom()
 		{
-			$feedReader = new FeedReader();
-			$feedReader->load(
-			    'http://groups.google.com.ua/group/hr.rec.kladjenje/feed/atom_v1_0_msgs.xml'
-			);
+			$feedChannel =
+				FeedReader::create()->
+				parseFile(
+					'http://groups.google.com.ua/group/hr.rec.kladjenje/feed/atom_v1_0_msgs.xml'
+				);
 
-			$feedChannel = $feedReader->parse();
 			$feedItems = $feedChannel->getFeedItems();
 			
 			$this->assertTrue($feedChannel instanceof FeedChannel);
