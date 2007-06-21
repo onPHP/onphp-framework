@@ -88,11 +88,24 @@
 		public function drop()
 		{
 			try {
-				return msg_remove_queue(msg_get_queue($this->id, 0660));
+				$q = msg_get_queue($this->id, 0660);
 			} catch (BaseException $e) {
 				// removed in race
 				return true;
 			}
+			
+			try {
+				return msg_remove_queue($q);
+			} catch (BaseException $e) {
+				// trying to flush manually
+				$type = $msg = null;
+				
+				while (msg_receive($q, 0, $type, 2, $msg, false, MSG_IPC_NOWAIT)) {
+					// do nothing
+				}
+			}
+			
+			return true;
 		}
 	}
 ?>
