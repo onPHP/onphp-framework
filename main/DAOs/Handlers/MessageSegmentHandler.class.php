@@ -101,9 +101,7 @@
 				return true;
 			}
 			
-			try {
-				return msg_remove_queue($q);
-			} catch (BaseException $e) {
+			if (!msg_remove_queue($q)) {
 				// trying to flush manually
 				$type = $msg = null;
 				
