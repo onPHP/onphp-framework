@@ -761,11 +761,11 @@
 							break;
 						
 						case MetaClassType::CLASS_ABSTRACT:
-							Assert::isTrue($info->isAbstract());
+							Assert::isTrue($info->isAbstract(), 'class '.$name.' should be abstract');
 							break;
 						
 						case MetaClassType::CLASS_FINAL:
-							Assert::isTrue($info->isFinal());
+							Assert::isTrue($info->isFinal(), 'class '.$name.' should be final');
 							break;
 						
 						case MetaClassType::CLASS_SPOOKED:
