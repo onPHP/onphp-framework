@@ -7,8 +7,8 @@
 		{
 			$feedChannel =
 				FeedReader::create()->
-				parseFile('main/data/news.xml');
-
+				parseFile(dirname(__FILE__).'/data/news.xml');
+			
 			$this->assertTrue($feedChannel);
 			$this->assertTrue($feedChannel instanceof FeedChannel);
 			
@@ -28,8 +28,8 @@
 		{
 			$feedChannel =
 				FeedReader::create()->
-				parseFile('main/data/atom_v1_0.xml');
-
+				parseFile(dirname(__FILE__).'/data/atom_v1_0.xml');
+			
 			$feedItems = $feedChannel->getFeedItems();
 			
 			$this->assertTrue($feedChannel instanceof FeedChannel);
