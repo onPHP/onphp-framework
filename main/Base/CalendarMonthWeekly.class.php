@@ -25,14 +25,14 @@
 		private $days		= array();
 		
 		public function __construct(
-			Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY
+			Date $base, $weekStart = Timestamp::WEEKDAY_MONDAY
 		)
 		{
-			$firstDayOfMonth = Timestamp::create(
+			$firstDayOfMonth = Date::create(
 				$base->getYear().'-'.$base->getMonth().'-01'
 			);
 			
-			$lastDayOfMonth	= Timestamp::create(
+			$lastDayOfMonth	= Date::create(
 				$base->getYear().'-'.$base->getMonth().'-'
 				.date('t', $base->toStamp()));
 			
@@ -77,7 +77,7 @@
 		 * @return CalendarMonthWeekly
 		**/
 		public static function create(
-			Timestamp $base, $weekStart = Timestamp::WEEKDAY_MONDAY
+			Date $base, $weekStart = Timestamp::WEEKDAY_MONDAY
 		)
 		{
 			return new self($base, $weekStart);
@@ -118,7 +118,7 @@
 		 * @throws WrongArgumentException
 		 * @return CalendarMonthWeekly
 		**/
-		public function setSelected(Timestamp $day)
+		public function setSelected(Date $day)
 		{
 			if (!isset($this->days[$day->toDate()]))
 				throw new WrongArgumentException($day->toDate().' not in calendar');
@@ -129,7 +129,7 @@
 		}
 		
 		/**
-		 * @return Timestamp
+		 * @return Date
 		**/
 		public function getNextMonthBase()
 		{
@@ -137,7 +137,7 @@
 		}
 		
 		/**
-		 * @return Timestamp
+		 * @return Date
 		**/
 		public function getPrevMonthBase()
 		{
@@ -145,7 +145,7 @@
 		}
 		
 		/**
-		 * @return Timestamp
+		 * @return Date
 		**/
 		public function getBase()
 		{

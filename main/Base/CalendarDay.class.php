@@ -15,7 +15,7 @@
 	 *
 	 * @ingroup Calendar
 	**/
-	final class CalendarDay extends Timestamp 
+	final class CalendarDay extends Date
 	{
 		private $selected	= null;
 		private $outside	= null;
