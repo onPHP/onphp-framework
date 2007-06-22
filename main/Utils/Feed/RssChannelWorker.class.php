@@ -45,8 +45,7 @@
 		public function toXml(FeedChannel $channel, $itemsXml)
 		{
 			return
-				'<rss version="'.RssFeedFormat::VERSION
-					.'" xmlns:dc="http://purl.org/dc/elements/1.1/">'
+				'<rss version="'.RssFeedFormat::VERSION.'">'
 					.'<channel>'
 						.'<title>'.$channel->getTitle().'</title>'
 						.(
