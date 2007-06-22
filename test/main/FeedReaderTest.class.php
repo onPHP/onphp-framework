@@ -28,20 +28,18 @@
 		{
 			$feedChannel =
 				FeedReader::create()->
-				parseFile(
-					'http://groups.google.com.ua/group/hr.rec.kladjenje/feed/atom_v1_0_msgs.xml'
-				);
+				parseFile('main/data/atom_v1_0.xml');
 
 			$feedItems = $feedChannel->getFeedItems();
 			
 			$this->assertTrue($feedChannel instanceof FeedChannel);
 			
-			$this->assertEqual(count($feedItems), 15);
+			$this->assertEqual(count($feedItems), 12);
 			
 			$this->assertEqual($feedChannel->getTitle(), 'hr.rec.kladjenje Google Group');
 			
 			$feedItem = $feedItems[1];
-			$this->assertEqual($feedItem->getTitle(), 'Re: Dojave');
+			$this->assertEqual($feedItem->getTitle(), 'HASO');
 		}
 	}
 ?>
