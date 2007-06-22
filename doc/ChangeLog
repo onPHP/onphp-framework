@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-22	Anton E. Lebedevich
+
+	* main/Base/Calendar*: calendar moved to Date.
+
 2007-06-21	Dmitry A. Lomash
 
 	* test/main/FeedReaderTest.class.php: added tests for FeedReader.
