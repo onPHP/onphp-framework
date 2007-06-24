@@ -46,7 +46,7 @@
 						)
 					);
 
-				if ($object = $this->cachedFetchObject($query)) {
+				if ($object = $this->cachedFetchObject($query, true)) {
 					return $object;
 				} else {
 					$this->cacheNullById($id);
@@ -75,7 +75,7 @@
 					return $this->dao->fetchEncapsulants($object);
 				
 			} else {
-				if ($object = $this->cachedFetchObject($query))
+				if ($object = $this->cachedFetchObject($query, false))
 					return $object;
 				else {
 					$this->cacheByQuery($query, Cache::NOT_FOUND);

@@ -1,5 +1,10 @@
 # $Id$
 
+2007-06-25	Konstantin V. Arkhipov
+
+	 * main/DAOs/Workers/BaseDaoWorker.class.php: fixed incomplete objects
+	 by-query caching.
+
 2007-06-22	Anton E. Lebedevich
 
 	* main/Base/Calendar*: calendar moved to Date.

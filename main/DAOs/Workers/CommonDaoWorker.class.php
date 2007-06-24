@@ -45,7 +45,7 @@
 				if ($expires === Cache::DO_NOT_CACHE) {
 					$object = $this->fetchObject($query);
 				} else {
-					$object = $this->cachedFetchObject($query);
+					$object = $this->cachedFetchObject($query, true);
 				}
 				
 				if ($object) {
@@ -91,7 +91,7 @@
 				if ($expires === Cache::DO_NOT_CACHE)
 					$object = $this->fetchObject($query);
 				else
-					$object = $this->cachedFetchObject($query);
+					$object = $this->cachedFetchObject($query, false);
 				
 				if ($object)
 					return $object;
