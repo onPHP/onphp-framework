@@ -15,7 +15,7 @@
 		const TEXT		= 1;
 		const HTML		= 2;
 		const XHTML		= 3;
-
+		
 		protected $names = array(
 			self::TEXT		=> 'text',
 			self::HTML		=> 'html',

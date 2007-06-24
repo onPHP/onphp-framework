@@ -75,7 +75,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return Timestamp
 		**/
@@ -108,6 +108,5 @@
 			
 			return $this;
 		}
-	
 	}
 ?>

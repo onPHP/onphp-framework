@@ -19,7 +19,7 @@
 		{
 			return Singleton::getInstance(__CLASS__);
 		}
-
+		
 		/**
 		 * @return FeedChannel
 		**/
