@@ -12,8 +12,8 @@
 
 	class FeedItemContent
 	{
-		private $type;
-		private $body;
+		private $type = null;
+		private $body = null;
 		
 		/**
 		 * @return FeedItemContent
@@ -23,6 +23,9 @@
 			return new self;
 		}
 		
+		/**
+		 * @return FeedItemContentType
+		**/
 		public function getType()
 		{
 			return $this->type;
@@ -37,7 +40,7 @@
 			
 			return $this;
 		}
-
+		
 		public function getBody()
 		{
 			return $this->body;
@@ -54,4 +57,3 @@
 		}
 	}
 ?>
-		

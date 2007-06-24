@@ -53,7 +53,7 @@
 				throw new WrongStateException(
 					'Setup itemWorker must be assigned'
 				);
-		
+			
 			return $this;
 		}
 	}

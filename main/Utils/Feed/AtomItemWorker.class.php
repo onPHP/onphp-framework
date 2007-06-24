@@ -19,7 +19,7 @@
 		{
 			return Singleton::getInstance(__CLASS__);
 		}
-
+		
 		public function makeItems(SimpleXMLElement $xmlFeed)
 		{
 			$result = array();

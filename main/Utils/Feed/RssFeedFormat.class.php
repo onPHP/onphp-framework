@@ -14,16 +14,25 @@
 	{
 		const VERSION = '2.0';
 		
+		/**
+		 * @return RssFeedFormat
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
 		}
 		
+		/**
+		 * @return RssChannelWorker
+		**/
 		public function getChannelWorker()
 		{
 			return RssChannelWorker::me();
 		}
 		
+		/**
+		 * @return RssItemWorker
+		**/
 		public function getItemWorker()
 		{
 			return RssItemWorker::me();
