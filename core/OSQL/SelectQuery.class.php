@@ -407,11 +407,6 @@
 			return $nameList;
 		}
 		
-		public function getFields()
-		{
-			return $this->fields;
-		}
-		
 		public function toDialectString(Dialect $dialect)
 		{
 			$fieldList = array();
@@ -471,16 +466,6 @@
 		public function dropFields()
 		{
 			$this->fields = array();
-			return $this;
-		}
-		
-		/**
-		 * @return SelectQuery
-		**/
-		public function dropField(SelectField $field)
-		{
-			if ($key = array_search($field, $this->fields))
-				unset($this->fields[$key]);
 			return $this;
 		}
 		

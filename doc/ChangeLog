@@ -1,9 +1,5 @@
 # $Id$
 
-2007-06-25	Dmitry E. Pismenny
-
-	* core/OSQL/SelectQuery.class.php: dropField() and getFields() added.
-
 2007-06-22	Anton E. Lebedevich
 
 	* main/Base/Calendar*: calendar moved to Date.
