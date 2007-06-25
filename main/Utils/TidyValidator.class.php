@@ -164,7 +164,7 @@
 		public function validateContent($content = null)
 		{
 			static $symbols = array(
-				'…'		=> '&#133;',
+				'…'		=> '&hellip;',
 				'™'		=> '&trade;',
 				'©'		=> '&copy;',
 				'№'		=> '&#8470;',
@@ -172,8 +172,8 @@
 				'–'		=> '&mdash;',
 				'«'		=> '&laquo;',
 				'»'		=> '&raquo;',
-				'„'		=> '&#132;',
-				'“'		=> '&#147;',
+				'„'		=> '&bdquo;',
+				'“'		=> '&ldquo;',
 				'•'		=> '&bull;',
 				'®'		=> '&reg;',
 				'¼'		=> '&frac14;',
