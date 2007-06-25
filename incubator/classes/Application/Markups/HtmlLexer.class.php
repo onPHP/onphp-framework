@@ -1085,9 +1085,10 @@
 			
 			$content = $this->getContentToSubstring(']]>');
 			
-			// TODO: separate clean cdata and plain text, and make tag at
-			// previous state.
-			$this->tags[] = Cdata::create()->setData(htmlspecialchars($content));
+			$this->tags[] =
+				Cdata::create()->
+				setData($content)->
+				setStrict(true);
 			
 			if (!$this->substringFound) {
 				

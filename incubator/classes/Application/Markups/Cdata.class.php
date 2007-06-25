@@ -12,7 +12,9 @@
 
 	class Cdata extends SgmlType
 	{
-		private $data = null;
+		private $data	= null;
+		
+		private $strict	= false;
 		
 		/**
 		 * @return Cdata
@@ -34,6 +36,23 @@
 		
 		public function getData()
 		{
-			return $this->data;
+			if ($this->strict)
+				return '<![CDATA['.$this->data.']]>';
+			else
+				return $this->data;
+		}
+		
+		public function setStrict($isStrict)
+		{
+			Assert::isBoolean($isStrict);
+			
+			$this->strict = $isStrict;
+			
+			return $this;
+		}
+		
+		public function isStrict()
+		{
+			return $this->strict;
 		}
 	}
