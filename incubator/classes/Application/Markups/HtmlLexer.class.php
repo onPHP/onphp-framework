@@ -72,7 +72,7 @@
 		private $inlineTag	= null;
 		private $returnedFromCommentState = false;
 		
-		private $endTagFound	= null;
+		private $substringFound	= false;
 		
 		public function __construct(StringReader $reader)
 		{
@@ -107,9 +107,9 @@
 		
 		private function getNextChar()
 		{
-			if ($this->reader->isEof())
-				$this->char = null; // eof
-			else
+			if ($this->reader->isEof()) {
+				return $this->char = null; // eof
+			} else
 				$this->char = $this->reader->read(1);
 			
 			if (
@@ -1013,64 +1013,52 @@
 			}
 			
 			// NOTE: most browsers tries to parse comment first, if any.
-			
-			$content = null;
+			// TODO: some browsers expect cdata and parses it as well.
 			
 			if ($this->returnedFromCommentState) {
 				
 				$this->returnedFromCommentState = false;
 				
 			} else {
+				
+				$this->mark();
+				
 				while (
 					$this->char !== null
 					&& preg_match('/'.self::SPACER_MASK.'/', $this->char)
-				) {
-					$content .= $this->char;
-					
+				)
 					$this->getNextChar();
-				}
 				
 				if ($this->char !== null) {
 					$needle = '<!--';
-					
-					$this->mark();
 					
 					$buffer = $this->getChars(strlen($needle));
 					
 					if ($buffer == $needle)
 						return self::COMMENT_STATE;
 					
-					$this->reset();
 				}
+				
+				$this->reset();
 			}
 			
 			$endTag = "</{$this->inlineTag}";
 			
+			$content = null;
+			
 			while ($this->char !== null) {
+				$content .= $this->getContentToSubstring($endTag);
 				
-				$distance = $this->getDistanceToEndTag($endTag, true);
-				
-				if ($distance === false) {
-					$content .= $this->getRemainingChars();
-					
+				if (
+					$this->char === null
+					|| $this->char === '>'
+					|| preg_match('/'.self::SPACER_MASK.'/', $this->char)
+				)
 					break;
-				} else {
-					$content .= $this->getChars($distance);
-					
-					$this->skip(strlen($endTag));
-					
-					if (
-						$this->char === null
-						|| $this->char === '>'
-						|| preg_match('/'.self::SPACER_MASK.'/', $this->char)
-					)
-						break;
-					
-					// FIXME: never used stuff
-					$result .= $endTag.$this->char;
-					
-					$this->getNextChar();
-				}
+				
+				$content .= $this->char;
+				
+				$this->getNextChar();
 			}
 			
 			$this->tags[] = Cdata::create()->setData($content);
@@ -1095,23 +1083,18 @@
 			Assert::isNull($this->tag);
 			Assert::isNull($this->tagId);
 			
-			$endTag = ']]>';
-			
-			$distance = $this->getDistanceToEndTag($endTag);
-			
-			if ($distance === false) {
-				$this->error('unexpected end-of-file inside cdata tag');
-				
-				$content = $this->getRemainingChars();
-			} else {
-				$content = $this->getChars($distance);
-				
-				$this->skip(strlen($endTag));
-			}
+			$content = $this->getContentToSubstring(']]>');
 			
 			// TODO: separate clean cdata and plain text, and make tag at
 			// previous state.
 			$this->tags[] = Cdata::create()->setData(htmlspecialchars($content));
+			
+			if (!$this->substringFound) {
+				
+				$this->error('unexpected end-of-file inside cdata tag');
+				
+				return self::FINAL_STATE;
+			}
 			
 			return self::INITIAL_STATE;
 		}
@@ -1122,31 +1105,25 @@
 			Assert::isNull($this->tag);
 			Assert::isNull($this->tagId);
 			
-			$endTag = '-->';
+			$this->mark();
 			
-			$distance = $this->getDistanceToEndTag($endTag);
+			$content = $this->getContentToSubstring('-->');
 			
-			if ($distance === false) {
+			if (!$this->substringFound) {
+				$this->reset();
+				
 				$this->error(
 					'unexpected end-of-file inside comment tag,'
-					." trying to find '>'");
-				
-				$endTag = '>';
-				
-				$distance = $this->getDistanceToEndTag($endTag);
-			}
-			
-			if ($distance === false) {
-				$this->error(
-					"end-tag '{$endTag}' not found,"
-					.' treating all remaining content as cdata'
+					." trying to find '>'"
 				);
 				
-				$content = $this->getRemainingChars();
-			} else {
-				$content = $this->getChars($distance);
+				$content = $this->getContentToSubstring('>');
 				
-				$this->skip(strlen($endTag));
+				if (!$this->substringFound)
+					$this->error(
+						"end-tag '>' not found,"
+						.' treating all remaining content as cdata'
+					);
 			}
 			
 			$this->tags[] =
@@ -1169,33 +1146,25 @@
 		{
 			Assert::isTrue($this->tag instanceof SgmlIgnoredTag);
 			
-			$endTag = '?>';
+			$this->mark();
 			
-			$distance = $this->getDistanceToEndTag($endTag);
+			$content = $this->getContentToSubstring('?>');
 			
-			if ($distance === false) {
+			if (!$this->substringFound) {
+				$this->reset();
+				
 				$this->error(
 					'unexpected end-of-file inside external tag,'
 					." trying to find '>'"
 				);
 				
-				$endTag = '>';
+				$content = $this->getContentToSubstring('>');
 				
-				$distance = $this->getDistanceToEndTag($endTag);
-			}
-			
-			if ($distance === false) {
-				$this->error(
-					"end-tag '{$endTag}' not found,"
-					.' treating all remaining content as cdata'
-				);
-				
-				$content = $this->getRemainingChars();
-			} else {
-				$content = $this->getChars($distance);
-				
-				// FIXME: mb_strlen?
-				$this->skip(strlen($endTag));
+				if (!$this->substringFound)
+					$this->error(
+						"end-tag '>' not found,"
+						.' treating all remaining content as cdata'
+					);
 			}
 			
 			$this->tag->setCdata(Cdata::create()->setData($content));
@@ -1212,20 +1181,10 @@
 			// Firefox does not.
 			Assert::isTrue($this->tag instanceof SgmlIgnoredTag);
 			
-			$endTag = '>';
+			$content = $this->getContentToSubstring('>');
 			
-			$distance = $this->getDistanceToEndTag($endTag);
-			
-			if ($distance === false) {
+			if (!$this->substringFound)
 				$this->error('unexpected end-of-file inside doctype tag');
-				
-				$content = $this->getRemainingChars();
-			} else {
-				$content = $this->getChars($distance);
-				
-				// FIXME: mb_strlen?
-				$this->skip(strlen($endTag));
-			}
 			
 			$this->tag->setCdata(Cdata::create()->setData($content));
 			
@@ -1234,49 +1193,66 @@
 			return self::INITIAL_STATE;
 		}
 		
-		private function getDistanceToEndTag($endTag, $lowercase = false)
+		/**
+		 * using Knuth-Morris-Pratt algorithm.
+		 * 
+		 * If $substring not found, returns whole remaining content
+		**/
+		private function getContentToSubstring($substring)
 		{
-			$this->mark();
+			$this->substringFound = false;
 			
-			$result = false;
+			$substringLength = mb_strlen($substring);
 			
-			if ($lowercase)
-				$endTag = mb_strtolower($endTag);
+			$prefixTable = array(1 => 0);
+			$buffer = $substring."\x00";
+			$i = 0;
 			
-			$tagLength = mb_strlen($endTag);
-			
-			$bufferedReader = BufferedReader::create($this->reader);
-			
-			$distance = 0;
-			
-			$char = $this->char;
-			
-			while ($char !== null) {
+			while ($this->char !== null) {
 				
-				$bufferedReader->mark();
+				if ($i < $substringLength)
+					$char = $buffer[$i + 1];
+				else {
+					$char = $this->char;
+					$buffer .= $char;
+					$this->getNextChar();
+				}
 				
-				$read = $char.$bufferedReader->read($tagLength - 1);
+				$maxLength = $prefixTable[$i + 1];
 				
-				if ($lowercase)
-					$read = mb_strtolower($read);
+				while ($buffer[$maxLength] !== $char && $maxLength > 0) {
+					$maxLength = $prefixTable[$maxLength];
+				}
 				
-				if ($read == $endTag) {
+				$i++;
+				
+				$prefixTable[$i + 1] =
+					($buffer[$maxLength] === $char) ? $maxLength + 1 : 0;
 					
-					$result = $distance;
+				if (
+					$i > $substringLength + 1
+					&& $prefixTable[$i + 1] == $substringLength
+				) {
+					$this->substringFound = true;
 					
 					break;
 				}
-				
-				$bufferedReader->reset();
-				
-				$char = $bufferedReader->read(1);
-				
-				++$distance;
 			}
 			
-			$this->reset();
+			$length = $i - 2 * $substringLength;
 			
-			return $result;
+			if (!$this->substringFound)
+				return mb_substr(
+					$buffer, $substringLength + 1
+				);
+				
+			elseif ($length > 0)
+				return mb_substr(
+					$buffer, $substringLength + 1, $length
+				);
+			
+			else
+				return null;
 		}
 		
 		private function getTextualPosition()
