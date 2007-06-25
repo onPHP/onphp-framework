@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-25	Dmitry E. Pismenny
+
+	* core/OSQL/SelectQuery.class.php: dropField() and getFields() added.
+
 2007-06-25	Konstantin V. Arkhipov
 
 	 * main/DAOs/Workers/BaseDaoWorker.class.php: fixed incomplete objects
