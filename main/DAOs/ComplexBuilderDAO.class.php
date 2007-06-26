@@ -25,7 +25,8 @@
 			
 			if (!isset($protoMappings[$className]))
 				$protoMappings[$className] =
-					call_user_func(array($className, 'proto'));
+					call_user_func(array($className, 'proto'))->
+					getMapping();
 			
 			return $protoMappings[$className];
 		}
