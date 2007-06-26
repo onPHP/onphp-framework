@@ -59,18 +59,12 @@
 		
 		private $tagId		= null;
 		
-		// FIXME: remove
-		private $invalidId	= false;
-		
 		private $tag			= null;
 		private $completeTag	= null;
 		
 		private $attrName		= null;
 		private $attrValue		= null;
 		private $insideQuote	= null;
-		
-		private $inlineTag		= null;
-		private $returnedFromCommentState = false;
 		
 		private $substringFound	= false;
 		
@@ -262,8 +256,6 @@
 			
 			$this->tags[] = $this->completeTag = $this->tag;
 			
-			$this->invalidId = false;
-			
 			$this->tagId = $this->tag = null;
 			
 			return $this;
@@ -273,7 +265,14 @@
 		{
 			switch ($this->state) {
 				case self::INITIAL_STATE:
-					return $this->outsideTagState();
+					
+					if (
+						$this->completeTag instanceof SgmlOpenTag
+						&& $this->isInlineTag($this->completeTag->getId())
+					) 
+						return $this->inlineTagState();
+					else
+						return $this->outsideTagState();
 					
 				case self::START_TAG_STATE:
 					return $this->startTagState();
@@ -298,9 +297,6 @@
 					
 				case self::COMMENT_STATE:
 					return $this->commentState();
-					
-				case self::INLINE_TAG_STATE:
-					return $this->inlineTagState();
 					
 				case self::EXTERNAL_TAG_STATE:
 					return $this->externalTagState();
@@ -355,7 +351,6 @@
 		{
 			Assert::isNull($this->tag);
 			Assert::isNull($this->tagId);
-			Assert::isFalse($this->invalidId);
 			
 			Assert::isNull($this->attrName);
 			Assert::isNull($this->attrValue);
@@ -460,23 +455,13 @@
 				if ($this->char == '>') {
 					// <b>, <divмусор>
 					
-					$isInline = false;
-					
-					if ($this->isInlineTag($this->tagId)) {
-						$isInline = true;
-						$this->inlineTag = $this->tagId;
-					}
-					
 					$this->createOpenTag();
 					
 					$this->makeTag();
 				
 					$this->getNextChar();
-				
-					if ($isInline)
-						return self::INLINE_TAG_STATE;
-					else
-						return self::INITIAL_STATE;
+					
+					return self::INITIAL_STATE;
 					
 				} elseif (self::isSpacerChar($this->char)) {
 					// <p[space], <divмусор[space], <?php[space],
@@ -525,23 +510,13 @@
 					if ($char == '/' && $this->char == '>') {
 						// <br/>
 						
-						$isInline = false;
-					
-						if ($this->isInlineTag($this->tagId)) {
-							$isInline = true;
-							$this->inlineTag = $this->tagId;
-						}
-						
 						$this->createOpenTag()->setEmpty(true);
 					
 						$this->makeTag();
 						
 						$this->getNextChar();
 						
-						if ($isInline)
-							return self::INLINE_TAG_STATE;
-						else
-							return self::INITIAL_STATE;
+						return self::INITIAL_STATE;
 					}
 					
 					$this->tagId .= $char;
@@ -643,7 +618,6 @@
 		private function insideTagState()
 		{
 			Assert::isNull($this->tagId);
-			Assert::isFalse($this->invalidId);
 			
 			Assert::isNull($this->attrName);
 			Assert::isNull($this->attrValue);
@@ -661,21 +635,11 @@
 				} elseif ($this->char == '>') {
 					// <tag ... >
 					
-					$isInline = false;
-					
-					if ($this->isInlineTag($this->tag->getId())) {
-						$isInline = true;
-						$this->inlineTag = $this->tag->getId();
-					}
-					
 					$this->makeTag();
 					
 					$this->getNextChar();
 					
-					if ($isInline)
-						return self::INLINE_TAG_STATE;
-					else
-						return self::INITIAL_STATE;
+					return self::INITIAL_STATE;
 					
 				} elseif ($this->char == '=') {
 				
@@ -700,22 +664,11 @@
 						
 						$this->tag->setEmpty(true);
 						
-						$isInline = false;
-						
-						if ($this->isInlineTag($this->tag->getId())) {
-							$isInline = true;
-							$this->inlineTag = $this->tag->getId();
-						}
-						
 						$this->makeTag();
 						
 						$this->getNextChar();
 						
-						if ($isInline)
-							return self::INLINE_TAG_STATE;
-						else
-							return self::INITIAL_STATE;
-						
+						return self::INITIAL_STATE;
 					}
 					
 					$this->attrName = $char;
@@ -782,21 +735,11 @@
 					
 					$this->dumpAttribute();
 					
-					$isInline = false;
-					
-					if ($this->isInlineTag($this->tag->getId())) {
-						$isInline = true;
-						$this->inlineTag = $this->tag->getId();
-					}
-					
 					$this->makeTag();
 					
 					$this->getNextChar();
 					
-					if ($isInline)
-						return self::INLINE_TAG_STATE;
-					else
-						return self::INITIAL_STATE;
+					return self::INITIAL_STATE;
 					
 				} elseif ($this->char == '=') {
 					// <tag id=
@@ -822,21 +765,11 @@
 						
 						$this->dumpAttribute();
 						
-						$isInline = false;
-						
-						if ($this->isInlineTag($this->tag->getId())) {
-							$isInline = true;
-							$this->inlineTag = $this->tag->getId();
-						}
-						
 						$this->makeTag();
 						
 						$this->getNextChar();
 						
-						if ($isInline)
-							return self::INLINE_TAG_STATE;
-						else
-							return self::INITIAL_STATE;
+						return self::INITIAL_STATE;
 					}
 					
 					$this->attrName .= $char;
@@ -863,7 +796,6 @@
 			Assert::isNull($this->tagId);
 			Assert::isNotNull($this->attrName);
 			Assert::isNull($this->attrValue);
-			Assert::isFalse($this->invalidId);
 			
 			Assert::isNull($this->insideQuote);
 			
@@ -908,7 +840,6 @@
 		private function attrValueState()
 		{
 			Assert::isNull($this->tagId);
-			Assert::isFalse($this->invalidId);
 			
 			Assert::isNotNull($this->tag);
 			Assert::isTrue($this->tag instanceof SgmlOpenTag);
@@ -936,21 +867,11 @@
 					
 					$this->dumpAttribute();
 					
-					$isInline = false;
-						
-					if ($this->isInlineTag($this->tag->getId())) {
-						$isInline = true;
-						$this->inlineTag = $this->tag->getId();
-					}
-					
 					$this->makeTag();
 					
 					$this->getNextChar();
 					
-					if ($isInline)
-						return self::INLINE_TAG_STATE;
-					else
-						return self::INITIAL_STATE;
+					return self::INITIAL_STATE;
 					
 				} else {
 					if (
@@ -976,22 +897,12 @@
 							
 							$this->getNextChar();
 							
-							$isInline = false;
-								
-							if ($this->isInlineTag($this->tag->getId())) {
-								$isInline = true;
-								$this->inlineTag = $this->tag->getId();
-							}
-							
 							if ($this->insideQuote == '>') {
 								$this->insideQuote = null;
 								
 								$this->makeTag();
 								
-								if ($isInline)
-									return self::INLINE_TAG_STATE;
-								else
-									return self::INITIAL_STATE;
+								return self::INITIAL_STATE;
 								
 							} else {
 								$this->insideQuote = null;
@@ -1052,8 +963,8 @@
 			
 			Assert::isNull($this->tag);
 			Assert::isNull($this->tagId);
-			Assert::isFalse($this->invalidId);
-			Assert::isNotNull($this->inlineTag);
+			
+			$startTag = $this->completeTag->getId();
 			
 			if ($this->char === null) {
 				$this->error('unexpected eof inside inline tag');
@@ -1067,7 +978,7 @@
 			if ($this->skipString('<!--', true))
 				$this->commentState();
 			
-			$endTag = "</{$this->inlineTag}";
+			$endTag = '</'.$startTag;
 			
 			$this->buffer = null;
 			
@@ -1086,8 +997,7 @@
 					
 					$this->dumpBuffer();
 					
-					$this->tagId = $this->inlineTag;
-					$this->inlineTag = null;
+					$this->tagId = $startTag;
 			
 					return $this->endTagState();
 				}
@@ -1102,7 +1012,7 @@
 			$this->dumpBuffer();
 			
 			$this->error(
-				"end-tag for inline tag == '{$this->inlineTag}' not found"
+				"end-tag for inline tag == '{$startTag}' not found"
 			);
 		
 			return self::FINAL_STATE;
