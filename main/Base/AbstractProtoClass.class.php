@@ -49,28 +49,24 @@
 		
 		public function getMapping()
 		{
-			static $mappings = array();
+			$mapping = array();
 			
-			$className = get_class($this);
-			
-			if (!isset($mappings[$className])) {
-				foreach ($this->getPropertyList() as $name => $property) {
-					if (
-						!$property->getRelationId()
-						|| (
-							$property->getRelationId()
-							== MetaRelation::ONE_TO_ONE
-						) || (
-							$property->getFetchStrategyId()
-							== FetchStrategy::LAZY
-						)
-					) {
-						$mappings[$className][$name] = $property->getColumnName();
-					}
+			foreach ($this->getPropertyList() as $name => $property) {
+				if (
+					!$property->getRelationId()
+					|| (
+						$property->getRelationId()
+						== MetaRelation::ONE_TO_ONE
+					) || (
+						$property->getFetchStrategyId()
+						== FetchStrategy::LAZY
+					)
+				) {
+					$mapping[$className][$name] = $property->getColumnName();
 				}
 			}
 			
-			return $mappings[$className];
+			return $mapping;
 		}
 	}
 ?>
