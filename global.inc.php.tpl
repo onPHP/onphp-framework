@@ -51,11 +51,12 @@
 		if ($cache && ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $checksum))
 			$cache = array();
 		
-		if (
-			is_readable($cacheFile)
-			&& !$cache
-		) {
-			$cache = unserialize(file_get_contents($cacheFile, false));
+		if (!$cache) {
+			try {
+				$cache = unserialize(file_get_contents($cacheFile, false));
+			} catch (BaseException $e) {
+				/* ignore */
+			}
 			
 			if (isset($cache[$classname])) {
 				try {
