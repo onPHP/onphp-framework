@@ -130,6 +130,11 @@
 			return (preg_match('/'.self::SPACER_MASK.'/', $char) > 0);
 		}
 		
+		public function isInlineTag($id)
+		{
+			return in_array($this->tagId, $this->inlineTags);
+		}
+		
 		private function getNextChar()
 		{
 			if ($this->reader->isEof()) {
@@ -374,6 +379,7 @@
 					) {
 						$this->dumpBuffer();
 						
+						// FIXME: handle at start tag state
 						$specialTagState = $this->checkSpecialTagState();
 						
 						if ($specialTagState !== null) {
@@ -419,137 +425,141 @@
 			return self::FINAL_STATE;
 		}
 		
+		/**
+		 * @return SgmlOpenTag
+		**/
+		private function createOpenTag()
+		{
+			Assert::isNotNull($this->tagId);
+			Assert::isNull($this->tag);
+			
+			if (!self::isValidId($this->tagId))
+				$this->error("tag id '{$this->tagId}' is invalid");
+			
+			$this->tag = SgmlOpenTag::create()->
+				setId($this->tagId);
+			
+			$this->tagId = null;
+			
+			return $this->tag;
+		}
+		
 		// START_TAG_STATE
 		private function startTagState()
 		{
 			Assert::isNull($this->tag);
-			Assert::isNotNull($this->tagId);
+			Assert::isNotNull($this->tagId); // strlen(tagId) == 1
 			
 			Assert::isNull($this->attrName);
 			Assert::isNull($this->attrValue);
 			
 			Assert::isNull($this->insideQuote);
 			
-			if ($this->char === null) {
-				// ... <tag[end-of-file]
+			while ($this->char !== null) {
 				
-				$this->error('unexpected end of file, tag id is incomplete');
-				
-				if ($this->tagId) {
+				if ($this->char == '>') {
+					// <b>, <divмусор>
 					
-					$this->tag = SgmlOpenTag::create()->
-						setId($this->tagId);
+					$isInline = false;
 					
-					$this->makeTag();
-				}
-				
-				return self::FINAL_STATE;
-				
-			} elseif ($this->char == '>') {
-				// <b>, <bмусор>
-				
-				$isInline = in_array($this->tagId, $this->inlineTags);
-				
-				if ($isInline)
-					$this->inlineTag = $this->tagId;
-				
-				$this->tag = SgmlOpenTag::create()->
-					setId($this->tagId);
-				
-				$this->makeTag();
-				
-				$this->getNextChar();
-				
-				if ($isInline)
-					return self::INLINE_TAG_STATE;
-				else
-					return self::INITIAL_STATE;
-				
-			} elseif (preg_match('/'.self::SPACER_MASK.'/', $this->char)) {
-				// <p[space], <divмусор[space], <?php, <?xml, <!DOCTYPE
-				
-				$externalTag =
-					($this->tagId[0] == '?')
-					&& ($this->tagId != '?xml');
-				
-				$doctypeTag = (mb_strtoupper($this->tagId) == '!DOCTYPE');
-				
-				if ($externalTag)
-					$this->tag = SgmlIgnoredTag::create()->setEndMark('?');
-				elseif ($doctypeTag)
-					// TODO: use DoctypeTag
-					$this->tag = SgmlIgnoredTag::create();
-				else
-					$this->tag = SgmlOpenTag::create();
-				
-				$this->tag->setId($this->tagId);
-				
-				// FIXME: add tag only if it is complete
-				$this->tags[] = $this->tag;
-				
-				$this->tagId = null;
-				$this->invalidId = false;
-				
-				if ($externalTag)
-					return self::EXTERNAL_TAG_STATE;
-				elseif ($doctypeTag)
-					return self::DOCTYPE_TAG_STATE;
-				else {
-					// don't eating spacer for external and doctype tags
-					$this->getNextChar();
-					
-					return self::INSIDE_TAG_STATE;
-				}
-			} else {
-				// <div, <q#, <dж
-				
-				$char = $this->char;
-				
-				$this->getNextChar();
-				
-				if ($char == '/' && $this->char == '>') {
-					// <br/>
-					
-					$isInline = in_array($this->tagId, $this->inlineTags);
-					
-					if ($isInline)
+					if ($this->isInlineTag($this->tagId)) {
+						$isInline = true;
 						$this->inlineTag = $this->tagId;
+					}
 					
-					$this->tag =
-						SgmlOpenTag::create()->
-						setId($this->tagId)->
-						setEmpty(true);
+					$this->createOpenTag();
 					
 					$this->makeTag();
-					
+				
 					$this->getNextChar();
-					
+				
 					if ($isInline)
 						return self::INLINE_TAG_STATE;
 					else
 						return self::INITIAL_STATE;
 					
-				} elseif (
-					!preg_match('/'.self::ID_CHAR_MASK.'/', $char)
-					&& !$this->invalidId	// ignoring duplicate errors
-				) {
-					// most browsers seems like parsing invalid tags
+				} elseif (self::isSpacerChar($this->char)) {
+					// <p[space], <divмусор[space], <?php[space],
+					// <?xml[space], <!DOCTYPE[space]
 					
-					$this->error(
-						'tag id contains invalid char with code '
-						.self::charHexCode($char)
-						.', parsing with invalid id'
-					);
+					$externalTag =
+						($this->tagId[0] == '?')
+						&& ($this->tagId != '?xml');
 					
-					$this->invalidId = true;
+					$doctypeTag = (mb_strtoupper($this->tagId) == '!DOCTYPE');
+					
+					if ($externalTag) {
+						$this->tag = SgmlIgnoredTag::create()->
+							setEndMark('?')->
+							setId($this->tagId);
+						
+						$this->tagId = null;
+						
+					} elseif ($doctypeTag) {
+						// TODO: use DoctypeTag
+						$this->tag = SgmlIgnoredTag::create()->
+							setId($this->tagId);
+						
+						$this->tagId = null;
+						
+					} else
+						$this->createOpenTag();
+					
+					// FIXME: add tag only if it is complete
+					$this->tags[] = $this->tag;
+					
+					if ($externalTag)
+						return self::EXTERNAL_TAG_STATE;
+					elseif ($doctypeTag)
+						return self::DOCTYPE_TAG_STATE;
+					else {
+						// don't eating spacer for external and doctype tags
+						$this->getNextChar();
+						
+						return self::INSIDE_TAG_STATE;
+					}
+					
+				} else {
+					
+					$char = $this->char;
+					
+					$this->getNextChar();
+					
+					if ($char == '/' && $this->char == '>') {
+						// <br/>
+						
+						$isInline = false;
+					
+						if ($this->isInlineTag($this->tagId)) {
+							$isInline = true;
+							$this->inlineTag = $this->tagId;
+						}
+						
+						$this->createOpenTag()->setEmpty(true);
+					
+						$this->makeTag();
+						
+						$this->getNextChar();
+						
+						if ($isInline)
+							return self::INLINE_TAG_STATE;
+						else
+							return self::INITIAL_STATE;
+					}
+					
+					$this->tagId .= $char;
 				}
-				
-				$this->tagId .= $char;
-				
-				return self::START_TAG_STATE;
 			}
 			
-			Assert::isUnreachable();
+			// ... <tag[end-of-file]
+			
+			$this->error('unexpected end of file, tag id is incomplete');
+			
+			$this->createOpenTag();
+			
+			$this->makeTag();
+			
+			return self::FINAL_STATE;
 		}
 		
 		/**
@@ -1097,10 +1107,7 @@
 					$this->tagId = $this->inlineTag;
 					$this->inlineTag = null;
 			
-					// call?
-					return self::END_TAG_STATE;
-					
-					//return $this->endTagState();
+					return $this->endTagState();
 				}
 				
 				// </script[any-other-char]
