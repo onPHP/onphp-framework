@@ -19,9 +19,15 @@
 		
 		public function getMapping()
 		{
-			$proto = call_user_func(array($this->getObjectName(), 'proto'));
+			static $protoMappings = array();
 			
-			return $proto->getMapping();
+			$className = $this->getObjectName();
+			
+			if (!isset($protoMappings[$className]))
+				$protoMappings[$className] =
+					call_user_func(array($className, 'proto'));
+			
+			return $protoMappings[$className];
 		}
 		
 		public function getFields()
