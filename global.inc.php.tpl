@@ -53,7 +53,7 @@
 		
 		if (!$cache) {
 			try {
-				$cache = unserialize(file_get_contents($cacheFile, false));
+				$cache = unserialize(@file_get_contents($cacheFile, false));
 			} catch (BaseException $e) {
 				/* ignore */
 			}
