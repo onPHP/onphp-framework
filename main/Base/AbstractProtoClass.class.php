@@ -62,7 +62,7 @@
 						== FetchStrategy::LAZY
 					)
 				) {
-					$mapping[$className][$name] = $property->getColumnName();
+					$mapping[$name] = $property->getColumnName();
 				}
 			}
 			
