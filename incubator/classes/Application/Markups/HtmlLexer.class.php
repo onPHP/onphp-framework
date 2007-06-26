@@ -132,7 +132,7 @@
 		
 		public function isInlineTag($id)
 		{
-			return in_array($this->tagId, $this->inlineTags);
+			return in_array($id, $this->inlineTags);
 		}
 		
 		private function getNextChar()
@@ -505,9 +505,6 @@
 					} else
 						$this->createOpenTag();
 					
-					// FIXME: add tag only if it is complete
-					$this->tags[] = $this->tag;
-					
 					if ($externalTag)
 						return self::EXTERNAL_TAG_STATE;
 					elseif ($doctypeTag)
@@ -656,61 +653,22 @@
 			
 			Assert::isNull($this->insideQuote);
 			
-			if ($this->char === null) {
-				// ... <tag [eof], <tag id=val [eof]
+			while ($this->char !== null) {
 				
-				$this->error("unexpected end of file, incomplete tag stored");
-				
-				return self::FINAL_STATE;
-				
-			} elseif (preg_match('/'.self::SPACER_MASK.'/', $this->char)) {
-				
-				$this->getNextChar();
-				
-				return self::INSIDE_TAG_STATE;
-				
-			} elseif ($this->char == '>') {
-				// <tag ... >
-				
-				$isInline = in_array($this->tag->getId(), $this->inlineTags);
-				
-				if ($isInline)
-					$this->inlineTag = $this->tag->getId();
-				
-				$this->tag = null;
-				
-				$this->getNextChar();
-				
-				if ($isInline)
-					return self::INLINE_TAG_STATE;
-				else
-					return self::INITIAL_STATE;
-				
-			} elseif ($this->char == '=') {
-				
-				// most browsers' behaviour
-				$this->error('unexpected equal sign, attr name considered empty');
-				
-				$this->getNextChar();
-				
-				return self::ATTR_VALUE_STATE;
-				
-			} else {
-				$char = $this->char;
-				
-				$this->getNextChar();
-				
-				if ($char == '/' && $this->char == '>') {
-					// <tag />, <tag id=value />
+				if (self::isSpacerChar($this->char)) {
+					$this->getNextChar();
 					
-					$this->tag->setEmpty(true);
+				} elseif ($this->char == '>') {
+					// <tag ... >
 					
-					$isInline = in_array($this->tag->getId(), $this->inlineTags);
+					$isInline = false;
 					
-					if ($isInline)
+					if ($this->isInlineTag($this->tag->getId())) {
+						$isInline = true;
 						$this->inlineTag = $this->tag->getId();
+					}
 					
-					$this->tag = null;
+					$this->makeTag();
 					
 					$this->getNextChar();
 					
@@ -719,24 +677,83 @@
 					else
 						return self::INITIAL_STATE;
 					
-				} elseif (
-					!preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $char)
-				) {
+				} elseif ($this->char == '=') {
+				
+					// most browsers' behaviour
 					$this->error(
-						'attr name contains invalid char with code '
-						.self::charHexCode($char)
-						.', parsing with invalid name'
+						'unexpected equal sign, attr name considered empty'
 					);
+				
+					$this->getNextChar();
 					
-					$this->invalidId = true;
+					// call?
+					return self::ATTR_VALUE_STATE;
+					
+				} else {
+					
+					$char = $this->char;
+					
+					$this->getNextChar();
+					
+					if ($char == '/' && $this->char == '>') {
+						// <tag />, <tag id=value />
+						
+						$this->tag->setEmpty(true);
+						
+						$isInline = false;
+						
+						if ($this->isInlineTag($this->tag->getId())) {
+							$isInline = true;
+							$this->inlineTag = $this->tag->getId();
+						}
+						
+						$this->makeTag();
+						
+						$this->getNextChar();
+						
+						if ($isInline)
+							return self::INLINE_TAG_STATE;
+						else
+							return self::INITIAL_STATE;
+						
+					}
+					
+					$this->attrName = $char;
+					
+					// call?
+					return self::ATTR_NAME_STATE;
 				}
-				
-				$this->attrName = $char;
-				
-				return self::ATTR_NAME_STATE;
 			}
 			
-			Assert::isUnreachable();
+			// <tag [eof], <tag id=val [eof]
+				
+			$this->error("unexpected end of file, incomplete tag stored");
+			
+			$this->makeTag();
+				
+			return self::FINAL_STATE;
+		}
+		
+		/**
+		 * @return SgmlOpenTag
+		**/
+		private function dumpAttribute()
+		{
+			if ($this->attrName) {
+				
+				if (!self::isValidId($this->attrName))
+					$this->error("attribute name '{$this->attrName}' is invalid");
+				
+			}
+			
+			if ($this->attrValue === null || $this->attrValue === '')
+				$this->warning("empty value for attr == '{$this->attrName}'");
+			
+			$this->tag->setAttribute($this->attrName, $this->attrValue);
+			
+			$this->attrName = $this->attrValue = null;
+			
+			return $this;
 		}
 		
 		// ATTR_NAME_STATE
@@ -744,91 +761,35 @@
 		{
 			Assert::isNotNull($this->tag);
 			Assert::isTrue($this->tag instanceof SgmlOpenTag);
-			Assert::isNotNull($this->attrName);
+			
+			Assert::isNotNull($this->attrName); // length == 1
+			Assert::isNull($this->attrValue);
 			
 			Assert::isNull($this->insideQuote);
 			
-			if ($this->char === null) {
-				// <tag i[eof]
+			while ($this->char !== null) {
 				
-				$this->warning("empty value for attr == '{$this->attrName}'");
-				
-				// NOTE: opera treats it as cdata, firefox does not
-				
-				$this->error("unexpected end of file, incomplete tag stored");
-				
-				$this->tag->setAttribute($this->attrName, null);
-				
-				return self::FINAL_STATE;
-				
-			} elseif (preg_match('/'.self::SPACER_MASK.'/', $this->char)) {
-				// <tag attr[space]
-				
-				$this->invalidId = false;
-				
-				$this->getNextChar();
-				
-				return self::WAITING_EQUAL_SIGN_STATE;
-				
-			} elseif ($this->char == '>') {
-				// <tag attr>
-				
-				$this->warning("empty value for attr == '{$this->attrName}'");
-				
-				$this->tag->setAttribute($this->attrName, null);
-				
-				$isInline = in_array($this->tag->getId(), $this->inlineTags);
-				
-				if ($isInline)
-					$this->inlineTag = $this->tag->getId();
-				
-				$this->tag = null;
-				$this->invalidId = false;
-				
-				$this->attrName = null;
-				
-				$this->getNextChar();
-				
-				if ($isInline)
-					return self::INLINE_TAG_STATE;
-				else
-					return self::INITIAL_STATE;
-				
-			} elseif ($this->char == '=') {
-				// <tag id=
-				
-				$this->invalidId = false;
-				
-				$this->getNextChar();
-				
-				// empty string, not null, to be sure that value needed
-				$this->attrValue = '';
-				
-				return self::ATTR_VALUE_STATE;
-				
-			} else {
-				$char = $this->char;
-				
-				$this->getNextChar();
-				
-				if ($char == '/' && $this->char == '>') {
-					// <option attr=value checked/>
+				if (self::isSpacerChar($this->char)) {
+					// <tag attr[space]
 					
-					$this->tag->setEmpty(true);
+					$this->getNextChar();
 					
-					$this->warning("empty value for attr == '{$this->attrName}'");
+					// call?
+					return self::WAITING_EQUAL_SIGN_STATE;
 					
-					$this->tag->setAttribute($this->attrName, null);
+				} elseif ($this->char == '>') {
+					// <tag attr>
 					
-					$isInline = in_array($this->tag->getId(), $this->inlineTags);
+					$this->dumpAttribute();
 					
-					if ($isInline)
+					$isInline = false;
+					
+					if ($this->isInlineTag($this->tag->getId())) {
+						$isInline = true;
 						$this->inlineTag = $this->tag->getId();
+					}
 					
-					$this->tag = null;
-					$this->invalidId = false;
-					
-					$this->attrName = null;
+					$this->makeTag();
 					
 					$this->getNextChar();
 					
@@ -837,25 +798,61 @@
 					else
 						return self::INITIAL_STATE;
 					
-				} elseif (
-					!preg_match('/'.self::ID_CHAR_MASK.'/', $char)
-					&& !$this->invalidId
-				) {
-					$this->error(
-						'attr name contains invalid char with code '
-						.self::charHexCode($char)
-						.', parsing with invalid name'
-					);
+				} elseif ($this->char == '=') {
+					// <tag id=
 					
-					$this->invalidId = true;
+					$this->getNextChar();
+					
+					// empty string, not null, to be sure that value needed
+					$this->attrValue = '';
+					
+					// call?
+					return self::ATTR_VALUE_STATE;
+					
+				} else {
+					
+					$char = $this->char;
+					
+					$this->getNextChar();
+					
+					if ($char == '/' && $this->char == '>') {
+						// <option attr=value checked/>
+						
+						$this->tag->setEmpty(true);
+						
+						$this->dumpAttribute();
+						
+						$isInline = false;
+						
+						if ($this->isInlineTag($this->tag->getId())) {
+							$isInline = true;
+							$this->inlineTag = $this->tag->getId();
+						}
+						
+						$this->makeTag();
+						
+						$this->getNextChar();
+						
+						if ($isInline)
+							return self::INLINE_TAG_STATE;
+						else
+							return self::INITIAL_STATE;
+					}
+					
+					$this->attrName .= $char;
 				}
-				
-				$this->attrName .= $char;
-				
-				return self::ATTR_NAME_STATE;
 			}
 			
-			Assert::isUnreachable();
+			// <tag i[eof]
+			
+			// NOTE: opera treats it as cdata, firefox does not
+			$this->dumpAttribute();
+			
+			$this->error("unexpected end of file, incomplete tag stored");
+			
+			$this->makeTag();
+			
+			return self::FINAL_STATE;
 		}
 		
 		// WAITING_EQUAL_SIGN_STATE
@@ -870,46 +867,41 @@
 			
 			Assert::isNull($this->insideQuote);
 			
-			if ($this->char === null) {
-				// <tag id[space*][eof]
+			while ($this->char !== null) {
 				
-				$this->warning("empty value for attr == '{$this->attrName}'");
-				
-				$this->error('unexpected end of file, incomplete tag stored');
-				
-				$this->tag->setAttribute($this->attrName, null);
-				
-				return self::FINAL_STATE;
-				
-			} elseif (preg_match('/'.self::SPACER_MASK.'/', $this->char)) {
-				// <tag attr[space*]
-				
-				$this->getNextChar();
-				
-				return self::WAITING_EQUAL_SIGN_STATE;
-				
-			} elseif ($this->char == '=') {
-				
-				$this->getNextChar();
-				
-				// empty string, not null, to be sure that value needed
-				$this->attrValue = '';
-				
-				return self::ATTR_VALUE_STATE;
-				
-			} else {
-				// <tag attr x, <tag attr >
-				
-				$this->warning("empty value for attr == '{$this->attrName}'");
-				
-				$this->tag->setAttribute($this->attrName, null);
-				
-				$this->attrName = null;
-				
-				return self::INSIDE_TAG_STATE;
+				if (self::isSpacerChar($this->char)) {
+					// <tag attr[space*]
+					
+					$this->getNextChar();
+					
+				} elseif ($this->char == '=') {
+					
+					$this->getNextChar();
+					
+					// empty string, not null, to be sure that value needed
+					$this->attrValue = '';
+					
+					// call?
+					return self::ATTR_VALUE_STATE;
+					
+				} else {
+					// <tag attr x, <tag attr >
+					
+					$this->dumpAttribute();
+					
+					return self::INSIDE_TAG_STATE;
+				}
 			}
 			
-			Assert::isUnreachable();
+			// <tag id[space*][eof]
+			
+			$this->dumpAttribute();
+			
+			$this->error('unexpected end of file, incomplete tag stored');
+			
+			$this->makeTag();
+				
+			return self::FINAL_STATE;
 		}
 		
 		// ATTR_VALUE_STATE
@@ -921,145 +913,134 @@
 			Assert::isNotNull($this->tag);
 			Assert::isTrue($this->tag instanceof SgmlOpenTag);
 			
-			if ($this->char === null) {
-				// <tag id=[space*][eof], <tag id=val[eof], <tag id="...[eof]
+			while ($this->char !== null) {
 				
-				if ($this->attrValue === null)
-					$this->warning("empty value for attr == '{$this->attrName}'");
-				
-				if ($this->insideQuote) {
-					// NOTE: firefox rolls back to the first > after quote.
-					// Opera consideres incomplete tag as cdata.
-					// we act as ff does.
+				if (!$this->insideQuote && self::isSpacerChar($this->char)) {
+					$this->getNextChar();
 					
-					$this->reset();
+					if ($this->attrValue !== null && $this->attrValue !== '') {
+						// NOTE: "0" is accepted value
+						// <tag id=unquottedValue[space]
+						
+						$this->dumpAttribute();
+						
+						return self::INSIDE_TAG_STATE;
+						
+					}
 					
-					$this->warning(
-						"unclosed quoted value for attr == '{$this->attrName}',"
-						." rolling back and searching '>'"
-					);
+					// <tag id=[space*]
+					continue;
 					
-					$this->attrValue = null;
-					$this->insideQuote = '>';
+				} elseif (!$this->insideQuote && $this->char == '>') {
+					// <tag id=value>, <a href=catalog/>
 					
-					return self::ATTR_VALUE_STATE;
-				}
-				
-				$this->error('unexpected end of file, incomplete tag stored');
-				
-				$this->tag->setAttribute($this->attrName, $this->attrValue);
-				
-				return self::FINAL_STATE;
-				
-			} elseif (
-				!$this->insideQuote
-				&& preg_match('/'.self::SPACER_MASK.'/', $this->char)
-			) {
-				$this->getNextChar();
-				
-				if ($this->attrValue !== null && $this->attrValue !== '') {
-					// NOTE: "0" is accepted value
-					// <tag id=value[space]
+					$this->dumpAttribute();
 					
-					$this->tag->setAttribute($this->attrName, $this->attrValue);
+					$isInline = false;
+						
+					if ($this->isInlineTag($this->tag->getId())) {
+						$isInline = true;
+						$this->inlineTag = $this->tag->getId();
+					}
 					
-					$this->attrName = null;
-					$this->attrValue = null;
+					$this->makeTag();
 					
-					return self::INSIDE_TAG_STATE;
+					$this->getNextChar();
+					
+					if ($isInline)
+						return self::INLINE_TAG_STATE;
+					else
+						return self::INITIAL_STATE;
 					
 				} else {
-					// <tag id=[space*]
-					
-					return self::ATTR_VALUE_STATE;
-				}
-				
-				Assert::isUnreachable();
-				
-			} elseif (!$this->insideQuote && $this->char == '>') {
-				// <tag id=value>, <a href=catalog/>
-				
-				$this->tag->setAttribute($this->attrName, $this->attrValue);
-				
-				$isInline = in_array($this->tag->getId(), $this->inlineTags);
-				
-				if ($isInline)
-					$this->inlineTag = $this->tag->getId();
-				
-				$this->attrName = null;
-				$this->attrValue = null;
-				$this->tag = null;
-				
-				$this->getNextChar();
-				
-				if ($isInline)
-					return self::INLINE_TAG_STATE;
-				else
-					return self::INITIAL_STATE;
-				
-			} else {
-				if (
-					$this->char == '"' || $this->char == "'"
-					|| $this->char == $this->insideQuote // may be '>'
-				) {
-					if (!$this->insideQuote) {
-						
-						$this->insideQuote = $this->char;
-						
-						$this->getNextChar();
-						
-						// a place to rollback if second quote will not be
-						// found.
-						$this->mark();
-						
-						return self::ATTR_VALUE_STATE;
-						
-					} elseif ($this->char == $this->insideQuote) {
-						// attr = "value", attr='value', attr='value>([^']*)
-						
-						$this->tag->setAttribute(
-							$this->attrName, $this->attrValue
-						);
-						
-						$this->attrName = null;
-						$this->attrValue = null;
-						
-						$this->getNextChar();
-						
-						$isInline = in_array(
-							$this->tag->getId(), $this->inlineTags
-						);
-						
-						if ($isInline)
-							$this->inlineTag = $this->tag->getId();
-						
-						if ($this->insideQuote == '>') {
-							$this->insideQuote = null;
-							$this->tag = null;
+					if (
+						$this->char == '"' || $this->char == "'"
+						|| $this->char == $this->insideQuote // may be '>'
+					) {
+						if (!$this->insideQuote) {
 							
-							if ($isInline)
-								return self::INLINE_TAG_STATE;
-							else
-								return self::INITIAL_STATE;
-						} else {
-							$this->insideQuote = null;
+							$this->insideQuote = $this->char;
 							
-							return self::INSIDE_TAG_STATE;
+							$this->getNextChar();
+							
+							// a place to rollback if second quote will not be
+							// found.
+							$this->mark();
+							
+							continue;
+							
+						} elseif ($this->char == $this->insideQuote) {
+							// attr = "value", attr='value', attr='value>([^']*)
+							
+							$this->dumpAttribute();
+							
+							$this->getNextChar();
+							
+							$isInline = false;
+								
+							if ($this->isInlineTag($this->tag->getId())) {
+								$isInline = true;
+								$this->inlineTag = $this->tag->getId();
+							}
+							
+							if ($this->insideQuote == '>') {
+								$this->insideQuote = null;
+								
+								$this->makeTag();
+								
+								if ($isInline)
+									return self::INLINE_TAG_STATE;
+								else
+									return self::INITIAL_STATE;
+								
+							} else {
+								$this->insideQuote = null;
+								
+								return self::INSIDE_TAG_STATE;
+							}
 						}
 					}
+					
+					$this->attrValue .= $this->char;
+					
+					if ($this->insideQuote && $this->char == '\\')
+						$this->attrValue .= $this->getNextChar();
+					
+					$this->getNextChar();
 				}
+			}
+			
+			if ($this->insideQuote) {
+				// <tag id="...[eof]
+				//
+				// NOTE: firefox rolls back to the first > after quote.
+				// Opera consideres incomplete tag as cdata.
+				// we act as ff does.
 				
-				$this->attrValue .= $this->char;
+				$this->reset();
 				
-				if ($this->insideQuote && $this->char == '\\')
-					$this->attrValue .= $this->getNextChar();
+				$this->warning(
+					"unclosed quoted value for attr == '{$this->attrName}',"
+					." rolling back and searching '>'"
+				);
 				
-				$this->getNextChar();
+				$this->attrValue = null;
+				$this->insideQuote = '>';
 				
+				// call?
+				// TODO: possible infinite loop?
 				return self::ATTR_VALUE_STATE;
 			}
 			
-			Assert::isUnreachable();
+			// <tag id=[space*][eof], <tag id=val[eof]
+			
+			$this->dumpAttribute();
+			
+			$this->error('unexpected end of file, incomplete tag stored');
+			
+			$this->makeTag();
+			
+			return self::FINAL_STATE;
 		}
 		
 		// INLINE_TAG_STATE:
@@ -1102,6 +1083,7 @@
 					$this->char === '>' || self::isSpacerChar($this->char)
 				) {
 					// </script>, </script[space]
+					
 					$this->dumpBuffer();
 					
 					$this->tagId = $this->inlineTag;
@@ -1217,7 +1199,7 @@
 			
 			$this->tag->setCdata(Cdata::create()->setData($content));
 			
-			$this->tag = null;
+			$this->makeTag();
 			
 			return self::INITIAL_STATE;
 		}
@@ -1236,7 +1218,7 @@
 			
 			$this->tag->setCdata(Cdata::create()->setData($content));
 			
-			$this->tag = null;
+			$this->makeTag();
 			
 			return self::INITIAL_STATE;
 		}
