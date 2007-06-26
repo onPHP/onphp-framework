@@ -58,9 +58,9 @@
 		private $buffer		= null;
 		
 		private $tagId		= null;
-		private $invalidId	= false;
 		
-		private $eatingGarbage	= false;
+		// FIXME: remove
+		private $invalidId	= false;
 		
 		private $tag			= null;
 		private $completeTag	= null;
@@ -108,6 +108,21 @@
 		public static function isIdFirstChar($char)
 		{
 			return (preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $char) > 0);
+		}
+		
+		public static function isIdChar($char)
+		{
+			return (preg_match('/'.self::ID_CHAR_MASK.'/', $char) > 0);
+		}
+		
+		public static function isValidId($id)
+		{
+			$matches = preg_match(
+				'/^'.self::ID_FIRST_CHAR_MASK.self::ID_CHAR_MASK.'*$/',
+				$id
+			);
+			
+			return ($matches > 0);
 		}
 		
 		public static function isSpacerChar($char)
@@ -295,6 +310,9 @@
 			Assert::isUnreachable();
 		}
 		
+		/**
+		 * @return HtmlLexer
+		**/
 		private function dumpBuffer()
 		{
 			if ($this->buffer) {
@@ -534,92 +552,84 @@
 			Assert::isUnreachable();
 		}
 		
+		/**
+		 * @return HtmlLexer
+		**/
+		private function dumpEndTag()
+		{
+			if (!$this->tagId) {
+				// </>
+				$this->warning('empty end-tag, storing with empty id');
+				
+			} elseif (!self::isValidId($this->tagId)) {
+				
+				$this->error("end-tag id '{$this->tagId}' is invalid");
+			}
+			
+			$this->tag = SgmlEndTag::create()->
+				setId($this->tagId);
+			
+			$this->makeTag();
+			
+			return $this;
+		}
+		
 		// END_TAG_STATE
 		private function endTagState()
 		{
 			Assert::isNull($this->tag);
+			
+			Assert::isTrue(
+				$this->tagId === null
+				|| $this->char == '>' || self::isSpacerChar($this->char)
+			);
 			
 			Assert::isNull($this->attrName);
 			Assert::isNull($this->attrValue);
 			
 			Assert::isNull($this->insideQuote);
 			
-			if ($this->char === null) {
-				// ... </[end-of-file], </sometag[eof]
+			$eatingGarbage = false;
+			
+			while ($this->char !== null) {
 				
-				// NOTE: opera treats </[eof] as cdata, firefox as tag
-				$this->error("unexpected end of file, end-tag is incomplete");
-				
-				if ($this->tagId) {
-					$this->tag = SgmlEndTag::create()->
-						setId($this->tagId);
-						
-					$this->makeTag();
-				}
-				
-				return self::FINAL_STATE;
-				
-			} elseif ($this->char == '>') {
-				
-				if (!$this->tagId) {
-					// </>
-					$this->warning('empty end-tag, storing with empty id');
-				}
-				
-				$this->tag = SgmlEndTag::create()->
-					setId($this->tagId);
-				
-				$this->makeTag();
-				
-				$this->eatingGarbage = false;
-				
-				$this->getNextChar();
-				
-				return self::INITIAL_STATE;
-				
-			} elseif ($this->eatingGarbage) {
-				// most browsers parse end-tag until next '>' char
-				
-				$this->getNextChar();
-				
-				return self::END_TAG_STATE;
-				
-			} elseif (self::isSpacerChar($this->char)) {
-				
-				$this->eatingGarbage = true;
-				
-				$this->getNextChar();
-				
-				return self::END_TAG_STATE;
-				
-			} else {
-				$validChar =
-					(
-						!$this->tagId
-						&& preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $this->char)
-					) || (
-						$this->tagId
-						&& preg_match('/'.self::ID_CHAR_MASK.'/', $this->char)
-					);
-				
-				if (!$validChar && !$this->invalidId) {
-					$this->error(
-						'end-tag id contains invalid char with code '
-						.self::charHexCode($this->char)
-						.', parsing with invalid id'
-					);
+				if ($this->char == '>') {
 					
-					$this->invalidId = true;
+					$this->dumpEndTag();
+					
+					$this->getNextChar();
+					
+					return self::INITIAL_STATE;
+					
+				} elseif ($eatingGarbage) {
+					
+					$this->getNextChar();
+					
+					continue;
+				
+				} elseif (self::isSpacerChar($this->char)) {
+					// most browsers parse end-tag until next '>' char
+					
+					$eatingGarbage = true;
+					
+					$this->getNextChar();
+					
+					continue;
 				}
 				
 				$this->tagId .= $this->char;
 				
 				$this->getNextChar();
-				
-				return self::END_TAG_STATE;
 			}
 			
-			Assert::isUnreachable();
+			// ... </[end-of-file], </sometag[eof]
+			
+			// NOTE: opera treats </[eof] as cdata, firefox as tag
+			$this->error("unexpected end of file, end-tag is incomplete");
+			
+			$this->dumpEndTag();
+			
+			return self::FINAL_STATE;
 		}
 		
 		// INSIDE_TAG_STATE
@@ -1117,10 +1127,12 @@
 			
 			$content = $this->getContentToSubstring(']]>');
 			
-			$this->tags[] =
+			$this->tag =
 				Cdata::create()->
 				setData($content)->
 				setStrict(true);
+			
+			$this->makeTag();
 			
 			if (!$this->substringFound) {
 				
