@@ -1312,10 +1312,5 @@
 			
 			return $this;
 		}
-		
-		private static function charHexCode($char)
-		{
-			return sprintf('0x%x', ord($char));
-		}
 	}
 ?>
