@@ -60,15 +60,16 @@
 		private $tagId		= null;
 		private $invalidId	= false;
 		
-		private $eatingGarbage = false;
+		private $eatingGarbage	= false;
 		
-		private $tag		= null;
+		private $tag			= null;
+		private $completeTag	= null;
 		
-		private $attrName	= null;
-		private $attrValue	= null;
+		private $attrName		= null;
+		private $attrValue		= null;
 		private $insideQuote	= null;
 		
-		private $inlineTag	= null;
+		private $inlineTag		= null;
 		private $returnedFromCommentState = false;
 		
 		private $substringFound	= false;
@@ -102,6 +103,16 @@
 		public function getErrors()
 		{
 			return $this->errors;
+		}
+		
+		public static function isIdFirstChar($char)
+		{
+			return (preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $char) > 0);
+		}
+		
+		public static function isSpacerChar($char)
+		{
+			return (preg_match('/'.self::SPACER_MASK.'/', $char) > 0);
 		}
 		
 		private function getNextChar()
@@ -184,6 +195,60 @@
 			return $this;
 		}
 		
+		private function lookAhead($count)
+		{
+			$this->reader->mark();
+			
+			$result = $this->reader->read($count);
+			
+			$this->reader->reset();
+			
+			return $result;
+		}
+		
+		private function skipString($string, $skipSpaces = false)
+		{
+			$this->mark();
+			
+			if ($skipSpaces) {
+				while (
+					$this->char !== null
+					&& self::isSpacerChar($this->char)
+				)
+					$this->getNextChar();
+			}
+			
+			$length = mb_strlen($string);
+			
+			if ($this->getChars($length) === $string)
+				return true;
+			
+			$this->reset();
+			
+			return false;
+		}
+		
+		/**
+		 * @return HtmlLexer
+		**/
+		private function makeTag()
+		{
+			Assert::isNotNull($this->tag);
+			
+			Assert::isNull($this->attrName);
+			Assert::isNull($this->attrValue);
+			
+			Assert::isNull($this->insideQuote);
+			
+			$this->tags[] = $this->completeTag = $this->tag;
+			
+			$this->invalidId = false;
+			
+			$this->tagId = $this->tag = null;
+			
+			return $this;
+		}
+		
 		private function handleState()
 		{
 			switch ($this->state) {
@@ -230,6 +295,38 @@
 			Assert::isUnreachable();
 		}
 		
+		private function dumpBuffer()
+		{
+			if ($this->buffer) {
+				$this->tag = Cdata::create()->setData($this->buffer);
+				
+				$this->buffer = null;
+				
+				$this->makeTag();
+			}
+			
+			return $this;
+		}
+		
+		private function checkSpecialTagState()
+		{
+			if ($this->char != '!')
+				return null;
+			
+			$specialStartTags = array(
+				'![CDATA['	=> self::CDATA_STATE,
+				'!--'		=> self::COMMENT_STATE
+			);
+			
+			foreach ($specialStartTags as $tag => $state) {
+				
+				if ($this->skipString($tag))
+					return $state;
+			}
+			
+			return null;
+		}
+		
 		// INITIAL_STATE
 		private function outsideTagState()
 		{
@@ -242,103 +339,66 @@
 			
 			Assert::isNull($this->insideQuote);
 			
-			if ($this->char === null) {
-				// [end-of-file]
+			while ($this->char !== null) {
 				
-				if ($this->buffer) {
-					$this->tags[] = Cdata::create()->setData($this->buffer);
-					$this->buffer = null;
-				}
-				
-				return self::FINAL_STATE;
-				
-			} elseif ($this->char == '<') {
-				
-				$this->getNextChar();
-				
-				if (
-					preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $this->char)
-					|| $this->char == '?' || $this->char == '!'
-				) {
-					if ($this->buffer) {
-						$this->tags[] = Cdata::create()->setData($this->buffer);
-						$this->buffer = null;
-					}
+				if ($this->char != '<') {
 					
-					$this->reader->mark();
-					
-					if (
-						$this->char == '!'
-						&& $this->reader->reset()
-						&& $this->reader->read(7) == '[CDATA['
-						&& $this->reader->reset()
-					) {
-						$this->skip(7);
-						
-						$this->getNextChar();
-						
-						return self::CDATA_STATE;
-						
-					} elseif (
-						$this->char == '!'
-						&& $this->reader->reset()
-						&& $this->reader->read(2) == '--'
-						&& $this->reader->reset()
-					) {
-						// <!--, <!---
-						
-						$this->skip(2);
-						
-						$this->getNextChar();
-						
-						return self::COMMENT_STATE;
-					}
-					
-					$this->reader->reset();
-					
-					$this->tagId = $this->char;
-					
+					$this->buffer .= $this->char;
 					$this->getNextChar();
-					
-					return self::START_TAG_STATE;
-					
-				} elseif ($this->char == '/') {
-					// </
-					
-					if ($this->buffer) {
-						$this->tags[] = Cdata::create()->setData($this->buffer);
-						$this->buffer = null;
-					}
-					
-					$this->getNextChar();
-					
-					return self::END_TAG_STATE;
 					
 				} else {
-					// <2, <ф, <[space], <>, <[eof]
-					
-					$this->warning(
-						'incorrect start-tag, treating it as cdata'
-					);
-					
-					$this->buffer .= '<'.$this->char;
 					
 					$this->getNextChar();
 					
-					return self::INITIAL_STATE;
+					if (
+						self::isIdFirstChar($this->char)
+						|| $this->char == '?' || $this->char == '!'
+					) {
+						$this->dumpBuffer();
+						
+						$specialTagState = $this->checkSpecialTagState();
+						
+						if ($specialTagState !== null) {
+							// comment, cdata
+							return $specialTagState;
+						}
+						
+						$this->tagId = $this->char;
+						
+						$this->getNextChar();
+						
+						return self::START_TAG_STATE;
+						
+					} elseif ($this->char == '/') {
+						// </
+						
+						$this->dumpBuffer();
+						
+						$this->getNextChar();
+						
+						return self::END_TAG_STATE;
+						
+					} else {
+						// <2, <ф, <[space], <>, <[eof]
+						
+						$this->warning(
+							'incorrect start-tag, treating it as cdata'
+						);
+						
+						$this->buffer .= '<'.$this->char;
+						
+						$this->getNextChar();
+						
+						continue;
+					}
+					
+					Assert::isUnreachable();
 				}
-				
-				Assert::isUnreachable();
-				
-			} else {
-				
-				$this->buffer .= $this->char;
-				$this->getNextChar();
-				
-				return self::INITIAL_STATE;
 			}
 			
-			Assert::isUnreachable();
+			$this->dumpBuffer();
+			
+			return self::FINAL_STATE;
 		}
 		
 		// START_TAG_STATE
@@ -357,26 +417,28 @@
 				
 				$this->error('unexpected end of file, tag id is incomplete');
 				
-				if ($this->tagId)
-					$this->tags[] =
-						SgmlOpenTag::create()->
+				if ($this->tagId) {
+					
+					$this->tag = SgmlOpenTag::create()->
 						setId($this->tagId);
+					
+					$this->makeTag();
+				}
 				
 				return self::FINAL_STATE;
 				
 			} elseif ($this->char == '>') {
 				// <b>, <bмусор>
 				
-				$this->tags[] = SgmlOpenTag::create()->
-					setId($this->tagId);
-				
 				$isInline = in_array($this->tagId, $this->inlineTags);
 				
 				if ($isInline)
 					$this->inlineTag = $this->tagId;
 				
-				$this->tagId = null;
-				$this->invalidId = false;
+				$this->tag = SgmlOpenTag::create()->
+					setId($this->tagId);
+				
+				$this->makeTag();
 				
 				$this->getNextChar();
 				
@@ -404,6 +466,7 @@
 				
 				$this->tag->setId($this->tagId);
 				
+				// FIXME: add tag only if it is complete
 				$this->tags[] = $this->tag;
 				
 				$this->tagId = null;
@@ -429,18 +492,17 @@
 				if ($char == '/' && $this->char == '>') {
 					// <br/>
 					
-					$this->tags[] =
-						SgmlOpenTag::create()->
-						setId($this->tagId)->
-						setEmpty(true);
-					
 					$isInline = in_array($this->tagId, $this->inlineTags);
 					
 					if ($isInline)
 						$this->inlineTag = $this->tagId;
 					
-					$this->tagId = null;
-					$this->invalidId = false;
+					$this->tag =
+						SgmlOpenTag::create()->
+						setId($this->tagId)->
+						setEmpty(true);
+					
+					$this->makeTag();
 					
 					$this->getNextChar();
 					
@@ -999,32 +1061,8 @@
 			// NOTE: most browsers tries to parse comment first, if any.
 			// TODO: some browsers expect cdata and parses it as well.
 			
-			if ($this->returnedFromCommentState) {
-				
-				$this->returnedFromCommentState = false;
-				
-			} else {
-				
-				$this->mark();
-				
-				while (
-					$this->char !== null
-					&& preg_match('/'.self::SPACER_MASK.'/', $this->char)
-				)
-					$this->getNextChar();
-				
-				if ($this->char !== null) {
-					$needle = '<!--';
-					
-					$buffer = $this->getChars(strlen($needle));
-					
-					if ($buffer == $needle)
-						return self::COMMENT_STATE;
-					
-				}
-				
-				$this->reset();
-			}
+			if ($this->skipString('<!--', true))
+				$this->commentState();
 			
 			$endTag = "</{$this->inlineTag}";
 			
@@ -1036,10 +1074,10 @@
 				if (
 					$this->char === null
 					|| $this->char === '>'
-					|| preg_match('/'.self::SPACER_MASK.'/', $this->char)
+					|| self::isSpacerChar($this->char)
 				)
-					// NOTE: most browsers seems to consider </script[space]
-					// as closing tag
+					// NOTE: most browsers consider </script[space]
+					// as closing tag and skip garbage up to >
 					break;
 				
 				$content .= $endTag.$this->char;
@@ -1047,7 +1085,9 @@
 				$this->getNextChar();
 			}
 			
-			$this->tags[] = Cdata::create()->setData($content);
+			$this->tag = Cdata::create()->setData($content);
+			
+			$this->makeTag();
 			
 			if ($this->char === null) {
 				$this->error(
@@ -1060,6 +1100,7 @@
 			$this->tagId = $this->inlineTag;
 			$this->inlineTag = null;
 			
+			// call?
 			return self::END_TAG_STATE;
 		}
 		
@@ -1113,17 +1154,13 @@
 					);
 			}
 			
-			$this->tags[] =
+			$this->tag =
 				SgmlIgnoredTag::comment()->
 				setCdata(
 					Cdata::create()->setData($content)
 				);
 			
-			if ($this->inlineTag) {
-				$this->returnedFromCommentState = true;
-				
-				return self::INLINE_TAG_STATE;
-			}
+			$this->makeTag();
 			
 			return self::INITIAL_STATE;
 		}
