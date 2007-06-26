@@ -30,8 +30,8 @@
 			
 			$mimeMail->build();
 			
-//			file_put_contents($this->dataFolder.'headers.txt', $mimeMail->getHeaders());
-//			file_put_contents($this->dataFolder.'encodedBody.txt', $mimeMail->getEncodedBody());
+//			file_put_contents(dirname(__FILE__).'/data/mimeMail/headers.txt', $mimeMail->getHeaders());
+//			file_put_contents(dirname(__FILE__).'/data/mimeMail/encodedBody.txt', $mimeMail->getEncodedBody());
 			
 			$this->assertEqual(
 				$mimeMail->getHeaders(),

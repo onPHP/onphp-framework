@@ -23,6 +23,8 @@
 		private $body		= null;
 		private $headers	= null;
 		
+		private $boundary	= null;
+		
 		/**
 		 * @return MimeMail
 		**/
@@ -38,12 +40,13 @@
 			if (!$this->parts)
 				throw new UnimplementedFeatureException();
 			
-			$boundary = '=_'.md5(microtime(true));
+			if (!$this->boundary)
+				$this->boundary = '=_'.md5(microtime(true));
 			
 			$mail =
 				MimePart::create()->
 				setContentType('multipart/mixed')->
-				setBoundary($boundary);
+				setBoundary($this->boundary);
 			
 			$this->headers =
 				"MIME-Version: 1.0\r\n"
@@ -51,12 +54,12 @@
 
 			foreach ($this->parts as $part)
 				$this->body .=
-					'--'.$boundary."\n"
+					'--'.$this->boundary."\n"
 					.$part->getHeaders()
 					."\n\n"
 					.$part->getEncodedBody()."\n";
 			
-			$this->body .= '--'.$boundary."--"."\n\n";
+			$this->body .= '--'.$this->boundary."--"."\n\n";
 		}
 		
 		public function getEncodedBody()
@@ -75,6 +78,21 @@
 			);
 			
 			return $this->headers;
+		}
+		
+		/**
+		 * @return MimeMail
+		**/
+		public function setBoundary($boundary)
+		{
+			$this->boundary = $boundary;
+			
+			return $this;
+		}
+		
+		public function getBoundary($boundary)
+		{
+			return $this->boundary;
 		}
 	}
 ?>
