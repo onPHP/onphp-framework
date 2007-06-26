@@ -20,7 +20,6 @@
 		const INITIAL_STATE			= 0;
 		const START_TAG_STATE		= 1;
 		const END_TAG_STATE			= 2;
-		const END_TAG_ID_STATE		= 3;
 		const INSIDE_TAG_STATE		= 4;
 		const ATTR_NAME_STATE		= 5;
 		const WAITING_EQUAL_SIGN_STATE	= 6;
@@ -127,19 +126,6 @@
 			return $this->char;
 		}
 		
-		private function getRemainingChars()
-		{
-			$result = null;
-			
-			while ($this->char !== null) {
-				$result .= $this->char;
-				
-				$this->getNextChar();
-			}
-			
-			return $result;
-		}
-		
 		private function getChars($count)
 		{
 			$result = null;
@@ -209,9 +195,6 @@
 					
 				case self::END_TAG_STATE:
 					return $this->endTagState();
-					
-				case self::END_TAG_ID_STATE:
-					return $this->endTagIdState();
 					
 				case self::INSIDE_TAG_STATE:
 					return $this->insideTagState();
@@ -376,7 +359,7 @@
 				
 				if ($this->tagId)
 					$this->tags[] =
-						SgmlEndTag::create()->
+						SgmlOpenTag::create()->
 						setId($this->tagId);
 				
 				return self::FINAL_STATE;
@@ -509,7 +492,7 @@
 					$this->tags[] =
 						SgmlEndTag::create()->
 						setId($this->tagId);
-				 
+				
 				return self::FINAL_STATE;
 				
 			} elseif ($this->char == '>') {
@@ -688,6 +671,8 @@
 				
 				$this->warning("empty value for attr == '{$this->attrName}'");
 				
+				// NOTE: opera treats it as cdata, firefox does not
+				
 				$this->error("unexpected end of file, incomplete tag stored");
 				
 				$this->tag->setAttribute($this->attrName, null);
@@ -865,6 +850,8 @@
 					// Opera consideres incomplete tag as cdata.
 					// we act as ff does.
 					
+					$this->reset();
+					
 					$this->warning(
 						"unclosed quoted value for attr == '{$this->attrName}',"
 						." rolling back and searching '>'"
@@ -872,8 +859,6 @@
 					
 					$this->attrValue = null;
 					$this->insideQuote = '>';
-					
-					$this->reset();
 					
 					return self::ATTR_VALUE_STATE;
 				}
@@ -984,7 +969,6 @@
 				
 				$this->attrValue .= $this->char;
 				
-				// TODO: check it! attr="\"value\""
 				if ($this->insideQuote && $this->char == '\\')
 					$this->attrValue .= $this->getNextChar();
 				
@@ -997,7 +981,7 @@
 		}
 		
 		// INLINE_TAG_STATE:
-		public function inlineTagState()
+		private function inlineTagState()
 		{
 			// <script ...>X<-- we are here
 			
@@ -1054,9 +1038,11 @@
 					|| $this->char === '>'
 					|| preg_match('/'.self::SPACER_MASK.'/', $this->char)
 				)
+					// NOTE: most browsers seems to consider </script[space]
+					// as closing tag
 					break;
 				
-				$content .= $this->char;
+				$content .= $endTag.$this->char;
 				
 				$this->getNextChar();
 			}
@@ -1101,7 +1087,7 @@
 		}
 		
 		// COMMENT_STATE
-		public function commentState()
+		private function commentState()
 		{
 			Assert::isNull($this->tag);
 			Assert::isNull($this->tagId);
@@ -1143,7 +1129,7 @@
 		}
 		
 		// EXTERNAL_TAG_STATE:
-		public function externalTagState()
+		private function externalTagState()
 		{
 			Assert::isTrue($this->tag instanceof SgmlIgnoredTag);
 			
@@ -1176,7 +1162,7 @@
 		}
 		
 		// DOCTYPE_TAG_STATE:
-		public function doctypeTagState()
+		private function doctypeTagState()
 		{
 			// TODO: use DoctypeTag and parse it correctly as Opera does and
 			// Firefox does not.
@@ -1240,20 +1226,15 @@
 				}
 			}
 			
-			$length = $i - 2 * $substringLength;
-			
 			if (!$this->substringFound)
 				return mb_substr(
 					$buffer, $substringLength + 1
 				);
 				
-			elseif ($length > 0)
-				return mb_substr(
-					$buffer, $substringLength + 1, $length
-				);
-			
 			else
-				return null;
+				return mb_substr(
+					$buffer, $substringLength + 1, $i - 2 * $substringLength
+				);
 		}
 		
 		private function getTextualPosition()
