@@ -550,10 +550,12 @@
 				// NOTE: opera treats </[eof] as cdata, firefox as tag
 				$this->error("unexpected end of file, end-tag is incomplete");
 				
-				if ($this->tagId)
-					$this->tags[] =
-						SgmlEndTag::create()->
+				if ($this->tagId) {
+					$this->tag = SgmlEndTag::create()->
 						setId($this->tagId);
+						
+					$this->makeTag();
+				}
 				
 				return self::FINAL_STATE;
 				
@@ -564,12 +566,10 @@
 					$this->warning('empty end-tag, storing with empty id');
 				}
 				
-				$this->tags[] =
-					SgmlEndTag::create()->
+				$this->tag = SgmlEndTag::create()->
 					setId($this->tagId);
 				
-				$this->tagId = null;
-				$this->invalidId = false;
+				$this->makeTag();
 				
 				$this->eatingGarbage = false;
 				
@@ -584,7 +584,7 @@
 				
 				return self::END_TAG_STATE;
 				
-			} elseif (preg_match('/'.self::SPACER_MASK.'/', $this->char)) {
+			} elseif (self::isSpacerChar($this->char)) {
 				
 				$this->eatingGarbage = true;
 				
@@ -1047,6 +1047,8 @@
 		{
 			// <script ...>X<-- we are here
 			
+			Assert::isNull($this->buffer);
+			
 			Assert::isNull($this->tag);
 			Assert::isNull($this->tagId);
 			Assert::isFalse($this->invalidId);
@@ -1066,42 +1068,45 @@
 			
 			$endTag = "</{$this->inlineTag}";
 			
-			$content = null;
+			$this->buffer = null;
 			
 			while ($this->char !== null) {
-				$content .= $this->getContentToSubstring($endTag);
+				$this->buffer .= $this->getContentToSubstring($endTag);
 				
-				if (
-					$this->char === null
-					|| $this->char === '>'
-					|| self::isSpacerChar($this->char)
-				)
-					// NOTE: most browsers consider </script[space]
-					// as closing tag and skip garbage up to >
+				if ($this->char === null) {
+					// </script not found, or found </script[eof]
+					
 					break;
+					
+				} elseif (
+					$this->char === '>' || self::isSpacerChar($this->char)
+				) {
+					// </script>, </script[space]
+					$this->dumpBuffer();
+					
+					$this->tagId = $this->inlineTag;
+					$this->inlineTag = null;
+			
+					// call?
+					return self::END_TAG_STATE;
+					
+					//return $this->endTagState();
+				}
 				
-				$content .= $endTag.$this->char;
+				// </script[any-other-char]
+				
+				$this->buffer .= $endTag.$this->char;
 				
 				$this->getNextChar();
 			}
 			
-			$this->tag = Cdata::create()->setData($content);
+			$this->dumpBuffer();
 			
-			$this->makeTag();
-			
-			if ($this->char === null) {
-				$this->error(
-					"end-tag for inline tag == '{$this->inlineTag}' not found"
-				);
-				
-				return self::FINAL_STATE;
-			}
-			
-			$this->tagId = $this->inlineTag;
-			$this->inlineTag = null;
-			
-			// call?
-			return self::END_TAG_STATE;
+			$this->error(
+				"end-tag for inline tag == '{$this->inlineTag}' not found"
+			);
+		
+			return self::FINAL_STATE;
 		}
 		
 		// CDATA_STATE
