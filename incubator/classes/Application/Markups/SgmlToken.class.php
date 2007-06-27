@@ -10,5 +10,23 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class SgmlToken { /* nop */ }
+	class SgmlToken
+	{
+		private $value	= null;
+		
+		/**
+		 * @return SgmlToken
+		**/
+		public function setValue($value)
+		{
+			$this->value = $value;
+			
+			return $this;
+		}
+		
+		public function getValue()
+		{
+			return $this->value;
+		}
+	}
 ?>

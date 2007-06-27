@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class HtmlLexer
+	class HtmlTokenizer
 	{
 		const INITIAL_STATE			= 0;
 		const START_TAG_STATE		= 1;
@@ -56,7 +56,7 @@
 		
 		private $tag			= null;
 		private $completeTag	= null;
-		
+
 		private $attrName		= null;
 		private $attrValue		= null;
 		private $insideQuote	= null;
@@ -418,7 +418,7 @@
 					) {
 						$this->dumpBuffer();
 						
-						// FIXME: handle at start tag state
+						// TODO: handle at start tag state
 						$specialTagState = $this->checkSpecialTagState();
 						
 						if ($specialTagState !== null) {
