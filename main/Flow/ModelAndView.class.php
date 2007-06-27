@@ -86,7 +86,7 @@
 		public function viewIsNormal()
 		{
 			return (
-				!self::isRedirect($this->view)
+				!$this->viewIsRedirect()
 				&& $this->view !== self::ERROR_VIEW
 			);
 		}
