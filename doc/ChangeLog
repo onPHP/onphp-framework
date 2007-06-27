@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-27	Denis M. Gabaidulin
+
+	* main/Flow/ModelAndView.class.php: viewIsNormal method added.
+
 2007-06-25	Konstantin V. Arkhipov
 
 	 * main/DAOs/Workers/BaseDaoWorker.class.php: fixed incomplete objects
