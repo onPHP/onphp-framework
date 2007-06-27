@@ -363,7 +363,7 @@
 		**/
 		private function dumpBuffer()
 		{
-			if ($this->buffer) {
+			if ($this->buffer !== null) {
 				$this->tag = Cdata::create()->setData($this->buffer);
 				
 				$this->buffer = null;
