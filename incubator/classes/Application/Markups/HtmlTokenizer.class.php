@@ -56,7 +56,8 @@
 		
 		private $tag			= null;
 		private $completeTag	= null;
-
+		private $previousTag	= null;
+		
 		private $attrName		= null;
 		private $attrValue		= null;
 		private $insideQuote	= null;
@@ -105,6 +106,8 @@
 			
 			if ($this->state == self::FINAL_STATE && $this->char !== null)
 				throw new WrongStateException('state machine is broken');
+			
+			$this->previousTag = $this->completeTag;
 			
 			return $this->completeTag;
 		}
@@ -311,8 +314,8 @@
 				case self::INITIAL_STATE:
 					
 					if (
-						$this->completeTag instanceof SgmlOpenTag
-						&& $this->isInlineTag($this->completeTag->getId())
+						$this->previousTag instanceof SgmlOpenTag
+						&& $this->isInlineTag($this->previousTag->getId())
 					)
 						return $this->inlineTagState();
 					else
@@ -1008,7 +1011,7 @@
 			Assert::isNull($this->tag);
 			Assert::isNull($this->tagId);
 			
-			$startTag = $this->completeTag->getId();
+			$startTag = $this->previousTag->getId();
 			
 			if ($this->char === null) {
 				$this->error('unexpected eof inside inline tag');
@@ -1025,9 +1028,8 @@
 				 * figure it out
 				 */
 			
-				if ($this->skipString('<!--', true)) {
+				if ($this->skipString('<!--', true))
 					$this->buffer = '<!--'.$this->getComment().'-->';
-				}
 			}
 			
 			$endTag = '</'.$startTag;
@@ -1049,7 +1051,7 @@
 					
 					$this->tagId = $startTag;
 			
-					return $this->endTagState();
+					return self::END_TAG_STATE;
 				}
 				
 				// </script[any-other-char]
