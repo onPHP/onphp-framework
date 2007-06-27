@@ -65,6 +65,7 @@
 		private $substringFound	= false;
 		
 		private $suppressWhitespaces = false;
+		private $lowercaseAttributes = false;
 		
 		public function __construct(InputStream $stream)
 		{
@@ -86,7 +87,21 @@
 		**/
 		public function suppressWhitespaces($isSuppressWhitespaces)
 		{
+			Assert::isBoolean($isSuppressWhitespaces);
+			
 			$this->suppressWhitespaces = $isSuppressWhitespaces;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return HtmlLexer
+		**/
+		public function lowercaseAttributes($isLowercaseAttributes)
+		{
+			Assert::isBoolean($isLowercaseAttributes);
+			
+			$this->lowercaseAttributes = $isLowercaseAttributes;
 			
 			return $this;
 		}
@@ -743,6 +758,8 @@
 				
 				if (!self::isValidId($this->attrName))
 					$this->error("attribute name '{$this->attrName}' is invalid");
+				else
+					$this->attrName = strtolower($this->attrName);
 				
 			}
 			
