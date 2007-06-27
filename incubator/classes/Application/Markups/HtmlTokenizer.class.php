@@ -173,10 +173,10 @@
 		
 		private function getNextChar()
 		{
-			if ($this->stream->isEof()) {
-				return $this->char = null; // eof
-			} else
-				$this->char = $this->stream->read(1);
+			$this->char = $this->stream->read(1);
+			
+			if ($this->char === null)
+				return null;
 			
 			if (
 				$this->char == "\n" && $this->previousChar != "\r"
@@ -184,7 +184,7 @@
 			) {
 				++$this->line;
 				$this->linePosition = 1;
-			} elseif ($this->char !== null) {
+			} else {
 				++$this->linePosition;
 			}
 			

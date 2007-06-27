@@ -15,8 +15,6 @@
 	**/
 	abstract class InputStream
 	{
-		protected $eof	= false;
-		
 		/**
 		 * reads a maximum of $length bytes
 		 * 
@@ -36,17 +34,7 @@
 		
 		public function isEof()
 		{
-			return $this->eof;
-		}
-		
-		public function skip()
-		{
-			return 0;
-		}
-		
-		public function available()
-		{
-			return 0;
+			return false;
 		}
 		
 		/**
@@ -69,6 +57,16 @@
 			throw new IOException(
 				'mark has been invalidated'
 			);
+		}
+		
+		public function skip()
+		{
+			return strlen($this->read($count));
+		}
+		
+		public function available()
+		{
+			return 0;
 		}
 		
 		/**
