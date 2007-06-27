@@ -163,13 +163,13 @@
 			
 			$string = preg_replace(
 				'/^'.self::SPACER_MASK.'+/',
-				null,
+				' ',
 				$string
 			);
 			
 			$string = preg_replace(
 				'/'.self::SPACER_MASK.'+$/',
-				null,
+				' ',
 				$string
 			);
 			
