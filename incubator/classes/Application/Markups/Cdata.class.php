@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class Cdata extends SgmlType
+	class Cdata extends SgmlToken
 	{
 		private $data	= null;
 		

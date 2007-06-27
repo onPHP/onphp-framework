@@ -10,5 +10,5 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class SgmlType { /* nop */ }
+	abstract class SgmlToken { /* nop */ }
 ?>

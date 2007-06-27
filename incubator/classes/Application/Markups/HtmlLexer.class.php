@@ -10,11 +10,6 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * TODO: implement Lexer itself.
-	 *
-	 * TODO: refactoring.
-	**/
 	class HtmlLexer
 	{
 		const INITIAL_STATE			= 0;
@@ -39,7 +34,7 @@
 		
 		private $inlineTags			= array('style', 'script', 'textarea');
 		
-		private $reader		= null;
+		private $stream		= null;
 		
 		private $char		= null;
 		
@@ -68,30 +63,50 @@
 		
 		private $substringFound	= false;
 		
-		public function __construct(StringReader $reader)
+		private $suppressWhitespaces = false;
+		
+		public function __construct(InputStream $stream)
 		{
-			$this->reader = $reader;
+			$this->stream = $stream;
+			
+			$this->getNextChar();
 		}
 		
 		/**
 		 * @return HtmlLexer
 		**/
-		public function parse()
+		public static function create(InputStream $stream)
 		{
-			$this->getNextChar();
-			
-			while ($this->state != self::FINAL_STATE)
-				$this->state = $this->handleState();
-			
-			if ($this->char !== null)
-				$this->error('extra characters');
+			return new self($stream);
+		}
+		
+		/**
+		 * @return HtmlLexer
+		**/
+		public function suppressWhitespaces($isSuppressWhitespaces)
+		{
+			$this->suppressWhitespaces = $isSuppressWhitespaces;
 			
 			return $this;
 		}
 		
-		public function getTags()
+		/**
+		 * @return SgmlToken
+		**/
+		public function nextToken()
 		{
-			return $this->tags;
+			if ($this->state == self::FINAL_STATE)
+				return null;
+			
+			$this->completeTag = null;
+			
+			while ($this->state != self::FINAL_STATE && !$this->completeTag)
+				$this->state = $this->handleState();
+			
+			if ($this->state == self::FINAL_STATE && $this->char !== null)
+				throw new WrongStateException('state machine is broken');
+			
+			return $this->completeTag;
 		}
 		
 		public function getErrors()
@@ -124,6 +139,30 @@
 			return (preg_match('/'.self::SPACER_MASK.'/', $char) > 0);
 		}
 		
+		public static function removeWhitespaces(Cdata $cdata)
+		{
+			$string = $cdata->getData();
+			
+			$string = preg_replace(
+				'/^'.self::SPACER_MASK.'+/',
+				null,
+				$string
+			);
+			
+			$string = preg_replace(
+				'/'.self::SPACER_MASK.'+$/',
+				null,
+				$string
+			);
+			
+			if ($string === '' || $string === null)
+				return null;
+			
+			$cdata->setData($string);
+			
+			return $cdata;
+		}
+		
 		public function isInlineTag($id)
 		{
 			return in_array($id, $this->inlineTags);
@@ -131,10 +170,10 @@
 		
 		private function getNextChar()
 		{
-			if ($this->reader->isEof()) {
+			if ($this->stream->isEof()) {
 				return $this->char = null; // eof
 			} else
-				$this->char = $this->reader->read(1);
+				$this->char = $this->stream->read(1);
 			
 			if (
 				$this->char == "\n" && $this->previousChar != "\r"
@@ -142,7 +181,7 @@
 			) {
 				++$this->line;
 				$this->linePosition = 1;
-			} else {
+			} elseif ($this->char !== null) {
 				++$this->linePosition;
 			}
 			
@@ -176,7 +215,7 @@
 				$this->line, $this->linePosition
 			);
 			
-			$this->reader->mark();
+			$this->stream->mark();
 			
 			return $this;
 		}
@@ -193,7 +232,7 @@
 				$this->line, $this->linePosition
 			) = $this->mark;
 			
-			$this->reader->reset();
+			$this->stream->reset();
 			
 			return $this;
 		}
@@ -211,11 +250,11 @@
 		
 		private function lookAhead($count)
 		{
-			$this->reader->mark();
+			$this->stream->mark();
 			
-			$result = $this->reader->read($count);
+			$result = $this->stream->read($count);
 			
-			$this->reader->reset();
+			$this->stream->reset();
 			
 			return $result;
 		}
@@ -232,7 +271,7 @@
 					$this->getNextChar();
 			}
 			
-			$length = mb_strlen($string);
+			$length = strlen($string);
 			
 			if ($this->getChars($length) === $string)
 				return true;
@@ -254,7 +293,12 @@
 			
 			Assert::isNull($this->insideQuote);
 			
-			$this->tags[] = $this->completeTag = $this->tag;
+			if (
+				!$this->suppressWhitespaces
+				|| !$this->tag instanceof Cdata
+				|| (self::removeWhitespaces($this->tag) !== null)
+			)
+				$this->tags[] = $this->completeTag = $this->tag;
 			
 			$this->tagId = $this->tag = null;
 			
@@ -269,7 +313,7 @@
 					if (
 						$this->completeTag instanceof SgmlOpenTag
 						&& $this->isInlineTag($this->completeTag->getId())
-					) 
+					)
 						return $this->inlineTagState();
 					else
 						return $this->outsideTagState();
@@ -471,7 +515,7 @@
 						($this->tagId[0] == '?')
 						&& ($this->tagId != '?xml');
 					
-					$doctypeTag = (mb_strtoupper($this->tagId) == '!DOCTYPE');
+					$doctypeTag = (strtoupper($this->tagId) == '!DOCTYPE');
 					
 					if ($externalTag) {
 						$this->tag = SgmlIgnoredTag::create()->
@@ -972,15 +1016,21 @@
 				return self::FINAL_STATE;
 			}
 			
-			// NOTE: most browsers tries to parse comment first, if any.
-			// TODO: some browsers expect cdata and parses it as well.
+			$this->buffer = null;
 			
-			if ($this->skipString('<!--', true))
-				$this->commentState();
+			if ($startTag == 'style' || $startTag == 'script') {
+				/*
+				 * TODO: some browsers expect cdata and parses it as well.
+				 * TODO: browsers handles comments in more complex way,
+				 * figure it out
+				 */
+			
+				if ($this->skipString('<!--', true)) {
+					$this->buffer = '<!--'.$this->getComment().'-->';
+				}
+			}
 			
 			$endTag = '</'.$startTag;
-			
-			$this->buffer = null;
 			
 			while ($this->char !== null) {
 				$this->buffer .= $this->getContentToSubstring($endTag);
@@ -1043,15 +1093,11 @@
 			return self::INITIAL_STATE;
 		}
 		
-		// COMMENT_STATE
-		private function commentState()
+		private function getComment()
 		{
-			Assert::isNull($this->tag);
-			Assert::isNull($this->tagId);
-			
 			$this->mark();
 			
-			$content = $this->getContentToSubstring('-->');
+			$result = $this->getContentToSubstring('-->');
 			
 			if (!$this->substringFound) {
 				$this->reset();
@@ -1061,7 +1107,7 @@
 					." trying to find '>'"
 				);
 				
-				$content = $this->getContentToSubstring('>');
+				$result = $this->getContentToSubstring('>');
 				
 				if (!$this->substringFound)
 					$this->error(
@@ -1069,6 +1115,17 @@
 						.' treating all remaining content as cdata'
 					);
 			}
+			
+			return $result;
+		}
+		
+		// COMMENT_STATE
+		private function commentState()
+		{
+			Assert::isNull($this->tag);
+			Assert::isNull($this->tagId);
+			
+			$content = $this->getComment();
 			
 			$this->tag =
 				SgmlIgnoredTag::comment()->
@@ -1142,7 +1199,7 @@
 		{
 			$this->substringFound = false;
 			
-			$substringLength = mb_strlen($substring);
+			$substringLength = strlen($substring);
 			
 			$prefixTable = array(1 => 0);
 			$buffer = $substring."\x00";
@@ -1180,12 +1237,12 @@
 			}
 			
 			if (!$this->substringFound)
-				return mb_substr(
+				return substr(
 					$buffer, $substringLength + 1
 				);
 				
 			else
-				return mb_substr(
+				return substr(
 					$buffer, $substringLength + 1, $i - 2 * $substringLength
 				);
 		}

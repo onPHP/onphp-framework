@@ -16,12 +16,12 @@
 		
 		public function __construct($tags)
 		{
-			Assert::isTrue(reset($tags) instanceof SgmlType);
+			Assert::isTrue(reset($tags) instanceof SgmlToken);
 			
 			$this->tags = $tags;
 		}
 		
-		public static function makeTag(SgmlType $tag)
+		public static function makeTag(SgmlToken $tag)
 		{
 			if ($tag instanceof Cdata)
 				$result = $tag->getData();

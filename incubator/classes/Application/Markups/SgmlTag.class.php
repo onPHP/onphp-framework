@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class SgmlTag extends SgmlType
+	abstract class SgmlTag extends SgmlToken
 	{
 		private $id = null;
 		
