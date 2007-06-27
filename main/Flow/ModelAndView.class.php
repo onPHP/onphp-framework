@@ -15,8 +15,6 @@
 	**/
 	class ModelAndView
 	{
-		const ERROR_VIEW = 'error';
-		
 		private $model 	= null;
 		
 		private $view	= null;
@@ -87,7 +85,7 @@
 		{
 			return (
 				!$this->viewIsRedirect()
-				&& $this->view !== self::ERROR_VIEW
+				&& $this->view !== BaseEditor::COMMAND_FAILED
 			);
 		}
 	}
