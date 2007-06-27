@@ -19,7 +19,11 @@
 		
 		abstract public function close();
 		abstract public function read($count);
-		abstract public function isEof();
+		
+		public function isEof()
+		{
+			return false;
+		}
 		
 		public function mark()
 		{
@@ -38,9 +42,6 @@
 		
 		public function skip($count)
 		{
-			if ($count < 0)
-				throw new WrongArgumentException('skip value is negative');
-			
 			return mb_strlen($this->read($count));
 		}
 		

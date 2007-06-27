@@ -1,5 +1,10 @@
 # $Id$
 
+2007-06-27	Ivan Y. Khvostishkov
+
+	* main/Utils/IO/: BufferedInputStream and FileInputStream implemented,
+	changed default behaviour for parent classes.
+
 2007-06-27	Denis M. Gabaidulin
 
 	* main/Flow/ModelAndView.class.php: viewIsNormal method added.
