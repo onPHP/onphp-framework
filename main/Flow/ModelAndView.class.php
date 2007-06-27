@@ -15,6 +15,8 @@
 	**/
 	class ModelAndView
 	{
+		const ERROR_VIEW = 'error';
+		
 		private $model 	= null;
 		
 		private $view	= null;
@@ -79,6 +81,14 @@
 					is_string($this->view)
 					&& strpos($this->view, 'redirect') === 0
 				);
+		}
+		
+		public function viewIsNormal()
+		{
+			return (
+				!self::isRedirect($this->view)
+				&& $this->view !== self::ERROR_VIEW
+			);
 		}
 	}
 ?>

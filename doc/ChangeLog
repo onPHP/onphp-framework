@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-27	Denis M. Gabaidulin
+
+	* main/Flow/ModelAndView.class.php: viewIsNormal method added.
+
 2007-06-22	Anton E. Lebedevich
 
 	* main/Base/Calendar*: calendar moved to Date.
