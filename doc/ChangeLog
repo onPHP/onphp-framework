@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-28	Ivan Y. Khvostishkov
+
+	* main/Utils/HttpContentType.class.php: introduced.
+
 2007-06-28	Denis M. Gabaidulin
 
 	* core/Form/Form.class.php: importPrimitive method patched for correction
