@@ -42,6 +42,9 @@
 				return $this->data;
 		}
 		
+		/**
+		 * @return Cdata
+		**/
 		public function setStrict($isStrict)
 		{
 			Assert::isBoolean($isStrict);
@@ -56,3 +59,4 @@
 			return $this->strict;
 		}
 	}
+?>
