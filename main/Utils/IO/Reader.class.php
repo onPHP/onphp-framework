@@ -15,7 +15,7 @@
 	**/
 	abstract class Reader 
 	{
-		const BLOCK_SIZE = 8192;
+		const BLOCK_SIZE = 16384;
 		
 		abstract public function close();
 		abstract public function read($count);

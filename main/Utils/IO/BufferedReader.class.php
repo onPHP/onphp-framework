@@ -90,7 +90,7 @@
 			
 			$remainingCount = $count;
 			$availableCount = $this->available();
-				
+			
 			if ($remainingCount <= $availableCount)
 				$readFromBuffer = $count;
 			else
@@ -99,19 +99,25 @@
 			$result = null;
 			
 			if ($readFromBuffer > 0) {
-				$result = mb_substr($this->buffer, $this->position, $readFromBuffer);
-			
+				$result = mb_substr(
+					$this->buffer,
+					$this->position,
+					$readFromBuffer
+				);
+				
 				$this->position += $readFromBuffer;
 				$remainingCount -= $readFromBuffer;
 			}
 			
 			if ($remainingCount > 0) {
 				$remaining = $this->in->read($remainingCount);
-			
+				
 				if ($this->markPosition !== null) {
 					$this->buffer .= $remaining;
-					$this->bufferLength += mb_strlen($remaining);
-					$this->position += mb_strlen($remaining);
+					$remainingLength = mb_strlen($remaining);
+					
+					$this->bufferLength += $remainingLength;
+					$this->position += $remainingLength;
 				}
 				
 				if ($remaining !== null)

@@ -70,7 +70,7 @@
 			
 			return $this; 
 		}
-
+		
 		public function markSupported()
 		{
 			return true;
@@ -120,7 +120,7 @@
 		/* void */ private function ensureOpen()
 		{
 			if ($this->string === null)
-				throw new IOException('Stream closed');	
+				throw new IOException('Stream closed');
 		}
 	}
 ?>

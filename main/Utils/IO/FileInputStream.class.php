@@ -26,7 +26,7 @@
 				throw new FileNotFoundException($name);
 			
 			try {
-				$this->fd = fopen($name, 'r');
+				$this->fd = fopen($name, 'rb');
 			} catch (BaseException $e) {
 				throw new IOException($e->getMessage());
 			}
@@ -43,6 +43,9 @@
 			}
 		}
 		
+		/**
+		 * @return FileInputStream
+		**/
 		public static function create($name)
 		{
 			return new self($name);
@@ -68,16 +71,21 @@
 			return true;
 		}
 		
+		/**
+		 * @return FileInputStream
+		**/
 		public function reset()
 		{
 			if (fseek($this->fd, $this->mark) < 0)
 				throw new IOException(
 					'mark has been invalidated'
 				);
+			
+			return $this;
 		}
 		
 		/**
-		 * @return InputStream
+		 * @return FileInputStream
 		**/
 		public function close()
 		{
