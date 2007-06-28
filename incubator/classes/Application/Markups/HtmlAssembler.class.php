@@ -16,7 +16,7 @@
 		
 		public function __construct($tags)
 		{
-			Assert::isTrue(reset($tags) instanceof SgmlToken);
+			Assert::isTrue(current($tags) instanceof SgmlToken);
 			
 			$this->tags = $tags;
 		}
@@ -31,7 +31,7 @@
 				$result = '<'.$tag->getId()
 					.$tag->getCdata()->getData()
 					.$tag->getEndMark().'>';
-			
+				
 			} elseif ($tag instanceof SgmlOpenTag) {
 				Assert::isNotNull($tag->getId());
 				
