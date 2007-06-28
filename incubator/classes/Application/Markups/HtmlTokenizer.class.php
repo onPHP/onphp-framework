@@ -66,6 +66,7 @@
 		
 		private $suppressWhitespaces = false;
 		private $lowercaseAttributes = false;
+		private $lowercaseTags = false;
 		
 		public function __construct(InputStream $stream)
 		{
@@ -75,7 +76,7 @@
 		}
 		
 		/**
-		 * @return HtmlLexer
+		 * @return HtmlTokenizer
 		**/
 		public static function create(InputStream $stream)
 		{
@@ -83,7 +84,7 @@
 		}
 		
 		/**
-		 * @return HtmlLexer
+		 * @return HtmlTokenizer
 		**/
 		public function suppressWhitespaces($isSuppressWhitespaces)
 		{
@@ -95,13 +96,25 @@
 		}
 		
 		/**
-		 * @return HtmlLexer
+		 * @return HtmlTokenizer
 		**/
 		public function lowercaseAttributes($isLowercaseAttributes)
 		{
 			Assert::isBoolean($isLowercaseAttributes);
 			
 			$this->lowercaseAttributes = $isLowercaseAttributes;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return HtmlTokenizer
+		**/
+		public function lowercaseTags($isLowercaseTags)
+		{
+			Assert::isBoolean($isLowercaseTags);
+			
+			$this->lowercaseTags = $isLowercaseTags;
 			
 			return $this;
 		}
@@ -224,7 +237,7 @@
 		}
 		
 		/**
-		 * @return HtmlLexer
+		 * @return HtmlTokenizer
 		**/
 		private function mark()
 		{
@@ -239,7 +252,7 @@
 		}
 		
 		/**
-		 * @return HtmlLexer
+		 * @return HtmlTokenizer
 		**/
 		private function reset()
 		{
@@ -256,7 +269,7 @@
 		}
 		
 		/**
-		 * @return HtmlLexer
+		 * @return HtmlTokenizer
 		**/
 		private function skip($count)
 		{
@@ -300,7 +313,7 @@
 		}
 		
 		/**
-		 * @return HtmlLexer
+		 * @return HtmlTokenizer
 		**/
 		private function makeTag()
 		{
@@ -321,6 +334,21 @@
 			$this->tagId = $this->tag = null;
 			
 			return $this;
+		}
+		
+		/**
+		 * @return SgmlTag
+		**/
+		private function setupTag(SgmlTag $tag)
+		{
+			Assert::isNull($this->tag);
+			Assert::isNotNull($this->tagId);
+			
+			$this->tag = $tag->setId($this->tagId);
+			
+			$this->tagId = null;
+			
+			return $this->tag;
 		}
 		
 		private function handleState()
@@ -374,7 +402,7 @@
 		}
 		
 		/**
-		 * @return HtmlLexer
+		 * @return HtmlTokenizer
 		**/
 		private function dumpBuffer()
 		{
@@ -487,18 +515,13 @@
 		**/
 		private function createOpenTag()
 		{
-			Assert::isNotNull($this->tagId);
-			Assert::isNull($this->tag);
-			
 			if (!self::isValidId($this->tagId))
 				$this->error("tag id '{$this->tagId}' is invalid");
+				
+			elseif ($this->lowercaseTags)
+				$this->tagId = strtolower($this->tagId);
 			
-			$this->tag = SgmlOpenTag::create()->
-				setId($this->tagId);
-			
-			$this->tagId = null;
-			
-			return $this->tag;
+			return $this->setupTag(SgmlOpenTag::create());
 		}
 		
 		// START_TAG_STATE
@@ -536,19 +559,12 @@
 					$doctypeTag = (strtoupper($this->tagId) == '!DOCTYPE');
 					
 					if ($externalTag) {
-						$this->tag = SgmlIgnoredTag::create()->
-							setEndMark('?')->
-							setId($this->tagId);
-						
-						$this->tagId = null;
-						
+						$this->setupTag(
+							SgmlIgnoredTag::create()->
+							setEndMark('?')
+						);
 					} elseif ($doctypeTag) {
-						// TODO: use DoctypeTag
-						$this->tag = SgmlIgnoredTag::create()->
-							setId($this->tagId);
-						
-						$this->tagId = null;
-						
+						$this->setupTag(SgmlIgnoredTag::create());
 					} else
 						$this->createOpenTag();
 					
@@ -597,7 +613,7 @@
 		}
 		
 		/**
-		 * @return HtmlLexer
+		 * @return HtmlTokenizer
 		**/
 		private function dumpEndTag()
 		{
@@ -1278,7 +1294,7 @@
 		}
 		
 		/**
-		 * @return HtmlLexer
+		 * @return HtmlTokenizer
 		**/
 		private function warning($message)
 		{
@@ -1289,7 +1305,7 @@
 		}
 		
 		/**
-		 * @return HtmlLexer
+		 * @return HtmlTokenizer
 		**/
 		private function error($message)
 		{
