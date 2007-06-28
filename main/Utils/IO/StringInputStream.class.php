@@ -22,7 +22,6 @@
 		
 		protected $mark		= 0;
 		
-		
 		public function __construct($string)
 		{
 			Assert::isString($string);
