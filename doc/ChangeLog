@@ -1,5 +1,10 @@
 # $Id$
 
+2007-06-28	Denis M. Gabaidulin
+
+	* core/Form/Form.class.php: importPrimitive method patched for correction
+	work with primitive aliases when Form import data from raw http.
+
 2007-06-27	Ivan Y. Khvostishkov
 
 	* main/Utils/IO/: BufferedInputStream, FileInputStream and

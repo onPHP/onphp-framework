@@ -279,6 +279,19 @@
 		**/
 		private function importPrimitive($scope, BasePrimitive $prm)
 		{
+			if (in_array($prm->getName(), $this->aliases)) {
+				foreach ($this->aliases as $alias => $name) {
+					if (
+						$name == $prm->getName()
+						&& isset($scope[$alias])
+					) {
+						return $this->importValue($name, $scope[$alias]);
+					}
+				}
+				
+				return $this->checkImportResult($prm, null);
+			}
+			
 			return $this->checkImportResult($prm, $prm->import($scope));
 		}
 		
