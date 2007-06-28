@@ -152,5 +152,18 @@
 			
 			return $this;
 		}
+		
+		public function getFpi()
+		{
+			if (!$this->organization)
+				return null;
+			
+			return
+				'-//'.$this->organization.'//'.$this->type
+				.($this->subtype ? ' '.$this->subtype : null)
+				.($this->version ? ' '.$this->version : null)
+				.($this->variant ? ' '.$this->variant : null)
+				.'//'.$this->language;
+		}
 	}
 ?>
