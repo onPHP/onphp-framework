@@ -11,15 +11,15 @@
 /* $Id$ */
 
 	/**
-	 * inline dtd:
+	 * Inline DTD:
 	 * <!DOCTYPE greeting [
 	 *  <!ELEMENT greeting (#PCDATA)>
 	 * ]>
 	 *
-	 * system dtd:
+	 * System DTD:
 	 * <!DOCTYPE greeting SYSTEM "hello.dtd">
 	 *
-	 * public dtd:
+	 * Public DTD:
 	 * <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
 	 *  "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 	 * or
@@ -31,13 +31,14 @@
 		const ID_FIRST_CHAR_MASK	= '[A-Za-z]';
 		const ID_CHAR_MASK			= '[-_:.A-Za-z0-9]';
 		
+		protected $fpi			= null;
+		
 		private $rootElement	= null;
 		
 		private $inline			= false;
 		private $declarations	= null;	// unparsed
 		
 		private $public			= false;
-		private $fpi			= null;
 		
 		private $uri			= null;
 		
@@ -181,7 +182,7 @@
 				$this->inline = false;
 				$this->declarations = null;
 				
-				$this->fpi = $matches[1];
+				$this->setFpi($matches[1]);
 				
 				if (isset($matches[3]))
 					$this->uri = $matches[3];
@@ -192,13 +193,12 @@
 					$remainigString, $matches
 				)
 			) {
-				$this->false = true;
+				$this->public = false;
 				
 				$this->inline = false;
 				$this->declarations = null;
 				
-				$this->fpi = null;
-				
+				$this->setFpi(null);
 				$this->uri = $matches[1];
 				
 			} else {
@@ -207,7 +207,8 @@
 				$this->inline = true;
 				$this->declarations = $remainigString;
 				
-				$this->fpi = $this->uri = null;
+				$this->setFpi(null);
+				$this->uri = null;
 			}
 			
 			return $this;
@@ -220,7 +221,7 @@
 				
 			elseif ($this->public)
 				return
-					$this->rootElement.' PUBLIC "'.$this->fpi.'"'
+					$this->rootElement.' PUBLIC "'.$this->getFpi().'"'
 					.(
 						$this->uri
 						? ' "'.$this->uri.'"'
@@ -228,7 +229,7 @@
 					);
 			else
 				return
-					$this->rootElement.' SYSTEM "'.$this->uri.'"';
+					$this->rootElement.' SYSTEM "'.$this->getFpi().'"';
 		}
 	}
 ?>
