@@ -2,7 +2,8 @@
 
 2007-06-28	Ivan Y. Khvostishkov
 
-	* main/Utils/HttpContentType.class.php: introduced.
+	* main/Utils/: HttpContentType.class.php,
+	DoctypeDeclaration.class.php: introduced.
 
 2007-06-28	Denis M. Gabaidulin
 

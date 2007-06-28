@@ -95,7 +95,11 @@
 		**/
 		public function setCharset($charset)
 		{
-			$this->charset = $charset;
+			if (!$this->charset) {
+				$this->parameters['charset'] = $charset;
+				$this->charset = &$this->parameters['charset'];
+			} else
+				$this->charset = $charset;
 			
 			return $this;
 		}
