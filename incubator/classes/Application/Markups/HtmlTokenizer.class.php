@@ -12,13 +12,13 @@
 
 	class HtmlTokenizer
 	{
-		const INITIAL_STATE			= 0;
-		const START_TAG_STATE		= 1;
-		const END_TAG_STATE			= 2;
-		const INSIDE_TAG_STATE		= 4;
-		const ATTR_NAME_STATE		= 5;
+		const INITIAL_STATE				= 1;
+		const START_TAG_STATE			= 2;
+		const END_TAG_STATE				= 3;
+		const INSIDE_TAG_STATE			= 4;
+		const ATTR_NAME_STATE			= 5;
 		const WAITING_EQUAL_SIGN_STATE	= 6;
-		const ATTR_VALUE_STATE		= 7;
+		const ATTR_VALUE_STATE			= 7;
 		
 		const CDATA_STATE			= 8; // <![CDATA[ ... ]]>
 		const COMMENT_STATE			= 9; // <!-- ... -->
@@ -64,9 +64,9 @@
 		
 		private $substringFound	= false;
 		
-		private $suppressWhitespaces = false;
-		private $lowercaseAttributes = false;
-		private $lowercaseTags = false;
+		private $suppressWhitespaces	= false;
+		private $lowercaseAttributes	= false;
+		private $lowercaseTags			= false;
 		
 		public function __construct(InputStream $stream)
 		{
@@ -393,12 +393,9 @@
 				
 				case self::DOCTYPE_TAG_STATE:
 					return $this->doctypeTagState();
-					
-				default:
-					throw new WrongStateException('state machine is broken');
 			}
 			
-			Assert::isUnreachable();
+			throw new WrongStateException('state machine is broken');
 		}
 		
 		/**
@@ -517,7 +514,6 @@
 		{
 			if (!self::isValidId($this->tagId))
 				$this->error("tag id '{$this->tagId}' is invalid");
-				
 			elseif ($this->lowercaseTags)
 				$this->tagId = strtolower($this->tagId);
 			
@@ -543,7 +539,7 @@
 					$this->createOpenTag();
 					
 					$this->makeTag();
-				
+					
 					$this->getNextChar();
 					
 					return self::INITIAL_STATE;
@@ -578,9 +574,7 @@
 						
 						return self::INSIDE_TAG_STATE;
 					}
-					
 				} else {
-					
 					$char = $this->char;
 					
 					$this->getNextChar();
@@ -589,7 +583,7 @@
 						// <br/>
 						
 						$this->createOpenTag()->setEmpty(true);
-					
+						
 						$this->makeTag();
 						
 						$this->getNextChar();
@@ -641,7 +635,8 @@
 			
 			Assert::isTrue(
 				$this->tagId === null
-				|| $this->char == '>' || self::isSpacerChar($this->char)
+				|| $this->char == '>'
+				|| self::isSpacerChar($this->char)
 			);
 			
 			Assert::isNull($this->attrName);
@@ -666,7 +661,7 @@
 					$this->getNextChar();
 					
 					continue;
-				
+					
 				} elseif (self::isSpacerChar($this->char)) {
 					// most browsers parse end-tag until next '>' char
 					
@@ -720,12 +715,12 @@
 					return self::INITIAL_STATE;
 					
 				} elseif ($this->char == '=') {
-				
+					
 					// most browsers' behaviour
 					$this->error(
 						'unexpected equal sign, attr name considered empty'
 					);
-				
+					
 					$this->getNextChar();
 					
 					// call?
@@ -757,8 +752,8 @@
 			}
 			
 			// <tag [eof], <tag id=val [eof]
-				
-			$this->error("unexpected end of file, incomplete tag stored");
+			
+			$this->error('unexpected end of file, incomplete tag stored');
 			
 			$this->makeTag();
 				
@@ -861,7 +856,7 @@
 			// NOTE: opera treats it as cdata, firefox does not
 			$this->dumpAttribute();
 			
-			$this->error("unexpected end of file, incomplete tag stored");
+			$this->error('unexpected end of file, incomplete tag stored');
 			
 			$this->makeTag();
 			
@@ -912,7 +907,7 @@
 			$this->error('unexpected end of file, incomplete tag stored');
 			
 			$this->makeTag();
-				
+			
 			return self::FINAL_STATE;
 		}
 		
@@ -936,7 +931,6 @@
 						$this->dumpAttribute();
 						
 						return self::INSIDE_TAG_STATE;
-						
 					}
 					
 					// <tag id=[space*]
@@ -1055,12 +1049,12 @@
 			$this->buffer = null;
 			
 			if ($startTag == 'style' || $startTag == 'script') {
-				/*
+				/**
 				 * TODO: some browsers expect cdata and parses it as well.
 				 * TODO: browsers handles comments in more complex way,
 				 * figure it out
-				 */
-			
+				**/
+				
 				if ($this->skipString('<!--', true))
 					$this->buffer = '<!--'.$this->getComment().'-->';
 			}
@@ -1083,7 +1077,7 @@
 					$this->dumpBuffer();
 					
 					$this->tagId = $startTag;
-			
+					
 					return self::END_TAG_STATE;
 				}
 				
@@ -1099,7 +1093,7 @@
 			$this->error(
 				"end-tag for inline tag == '{$startTag}' not found"
 			);
-		
+			
 			return self::FINAL_STATE;
 		}
 		
@@ -1256,11 +1250,13 @@
 					$maxLength = $prefixTable[$maxLength];
 				}
 				
-				$i++;
+				++$i;
 				
 				$prefixTable[$i + 1] =
-					($buffer[$maxLength] === $char) ? $maxLength + 1 : 0;
-					
+					$buffer[$maxLength] === $char
+						? $maxLength + 1
+						: 0;
+				
 				if (
 					$i > $substringLength + 1
 					&& $prefixTable[$i + 1] == $substringLength
@@ -1275,7 +1271,6 @@
 				return substr(
 					$buffer, $substringLength + 1
 				);
-				
 			else
 				return substr(
 					$buffer, $substringLength + 1, $i - 2 * $substringLength
