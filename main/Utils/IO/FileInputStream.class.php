@@ -26,7 +26,7 @@
 				throw new FileNotFoundException($name);
 			
 			try {
-				$this->fd = fopen($name, 'r');
+				$this->fd = fopen($name, 'rb');
 			} catch (BaseException $e) {
 				throw new IOException($e->getMessage());
 			}
