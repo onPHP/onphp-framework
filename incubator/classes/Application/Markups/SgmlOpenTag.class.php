@@ -65,7 +65,7 @@
 				throw new WrongArgumentException(
 					"attribute '{$name}' does not exist"
 				);
-				
+			
 			return $this->attributes[$name];
 		}
 		

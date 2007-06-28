@@ -104,7 +104,7 @@
 			
 			$remainingCount = $count;
 			$availableCount = $this->available();
-				
+			
 			if ($remainingCount <= $availableCount)
 				$readFromBuffer = $count;
 			else
@@ -116,7 +116,7 @@
 				$result = substr(
 					$this->buffer, $this->position, $readFromBuffer
 				);
-			
+				
 				$this->position += $readFromBuffer;
 				$remainingCount -= $readFromBuffer;
 			}
@@ -133,7 +133,7 @@
 				if ($readBytesLength > 0) {
 					$this->buffer .= $readBytes;
 					$this->bufferLength += $readBytesLength;
-				
+					
 					if ($readBytesLength <= $remainingCount) {
 						$this->position += $readBytesLength;
 						$result .= $readBytes;
