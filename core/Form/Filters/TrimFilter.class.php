@@ -13,11 +13,31 @@
 	/**
 	 * @ingroup Filters
 	**/
-	final class TrimFilter extends BaseFilter
+	final class TrimFilter implements Filtrator
 	{
+		private $charlist	= null;
+		
+		/**
+		 * @return TrimFilter
+		**/
+		public static function create()
+		{
+			return new self;
+		}
+		
 		public function apply($value)
 		{
-			return trim($value);
+			return ($this->charlist ? trim($value, $this->charlist) : trim($value));
+		}
+		
+		/**
+		 * @return TrimFilter
+		**/
+		public function setCharlist($charlist)
+		{
+			$this->charlist = $charlist;
+			
+			return $this;
 		}
 	}
 ?>

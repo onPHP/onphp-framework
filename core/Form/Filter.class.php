@@ -57,7 +57,7 @@
 		**/
 		public static function trim()
 		{
-			return Singleton::getInstance('TrimFilter');
+			return TrimFilter::create();
 		}
 
 		/**

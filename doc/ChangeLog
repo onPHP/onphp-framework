@@ -1,5 +1,13 @@
 # $Id$
 
+2007-06-30	Sergey M. Skachkov
+
+	* core/Form/Filter.class.php: trim() now return
+	new TrimFilter instance.
+	
+	* core/Form/Filters/TrimFilter.class.php:
+	charlist support added.
+
 2007-06-29	Anton E. Lebedevich
 
 	*  main/Utils/TextUtils.class.php: normalizeUri added.
