@@ -78,6 +78,9 @@
 			return $result;
 		}
 
+		/**
+		 * @deprecated by array_combine($array, $array)
+		**/
 		public static function getMirrorValues($array)
 		{
 			Assert::isArray($array);
