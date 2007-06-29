@@ -282,11 +282,11 @@
 						$this->aliases[$field->getAlias()] = true;
 					elseif ($alias)
 						$this->aliases[$alias] = true;
-					
-					return $this;
 				} else
 					throw new WrongArgumentException('unknown field type');
-
+				
+				return $this;
+				
 			} elseif (false !== strpos($field, '*'))
 				throw new WrongArgumentException(
 					'do not fsck with us: specify fields explicitly'
