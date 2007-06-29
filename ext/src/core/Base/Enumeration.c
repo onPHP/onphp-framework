@@ -62,7 +62,7 @@ ONPHP_METHOD(Enumeration, __construct)
 				);
 			
 			break;
-		
+			
 		case IS_STRING:
 			
 			result =
@@ -76,7 +76,7 @@ ONPHP_METHOD(Enumeration, __construct)
 			break;
 			
 		case IS_NULL:
-		
+			
 			result =
 				zend_hash_find(
 					Z_ARRVAL_P(names),
