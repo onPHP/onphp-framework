@@ -6,8 +6,6 @@
 
 	* main/Utils/HeaderUtils.class.php: redirect() deprecated.
 
-2007-06-29	Anton E. Lebedevich
-
 	*  main/Utils/TextUtils.class.php: normalizeUri added.
 
 2007-06-28	Ivan Y. Khvostishkov
