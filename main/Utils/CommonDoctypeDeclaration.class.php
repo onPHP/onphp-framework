@@ -159,7 +159,7 @@
 				return null;
 			
 			return
-				'-//'.$this->organization.'//'.$this->type
+				'-//'.$this->organization.'//DTD '.$this->type
 				.($this->subtype ? ' '.$this->subtype : null)
 				.($this->version ? ' '.$this->version : null)
 				.($this->variant ? ' '.$this->variant : null)
