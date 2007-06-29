@@ -17,6 +17,7 @@
 #include "onphp_core.h"
 #include "onphp_util.h"
 
+#include "core/Base/Aliased.h"
 #include "core/Base/Enumeration.h"
 #include "core/Base/Identifier.h"
 #include "core/Base/Identifiable.h"
@@ -54,6 +55,7 @@ PHP_RSHUTDOWN_FUNCTION(onphp_core)
 
 PHP_MINIT_FUNCTION(onphp_core)
 {
+	REGISTER_ONPHP_INTERFACE(Aliased);
 	REGISTER_ONPHP_INTERFACE(Stringable);
 	REGISTER_ONPHP_INTERFACE(Identifiable);
 	REGISTER_ONPHP_INTERFACE(Instantiatable);

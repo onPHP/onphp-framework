@@ -1,4 +1,3 @@
-<?php
 /***************************************************************************
  *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
@@ -10,12 +9,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup Base
-	 * @ingroup Module
-	**/
-	interface Aliased
-	{
-		public function getAlias();
-	}
-?>
+#ifndef ONPHP_CORE_ALIASED_H
+#define ONPHP_CORE_ALIASED_H
+
+PHPAPI zend_class_entry *onphp_ce_Aliased;
+
+extern zend_function_entry onphp_funcs_Aliased[];
+
+#endif /* ONPHP_CORE_ALIASED_H */

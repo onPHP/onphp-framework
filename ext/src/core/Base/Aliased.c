@@ -1,4 +1,3 @@
-<?php
 /***************************************************************************
  *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
@@ -10,12 +9,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup Base
-	 * @ingroup Module
-	**/
-	interface Aliased
-	{
-		public function getAlias();
-	}
-?>
+#include "onphp_core.h"
+
+#include "core/Base/Aliased.h"
+
+zend_function_entry onphp_funcs_Aliased[] = {
+	ONPHP_ABSTRACT_ME(Aliased, getAlias, NULL, ZEND_ACC_PUBLIC)
+	{NULL, NULL, NULL}
+};

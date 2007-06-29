@@ -8,7 +8,7 @@ if (PHP_ONPHP != "no") {
 	
 	ADD_SOURCES("ext/onphp/src/core", "Exceptions.c", "onphp");
 	
-	ADD_SOURCES("ext/onphp/src/core/Base", "Enumeration.c \
+	ADD_SOURCES("ext/onphp/src/core/Base", "Aliased.c Enumeration.c \
 		Identifiable.c Identifier.c IdentifiableObject.c \
 		Stringable.c Named.c NamedObject.c Prototyped.c \
 		Singleton.c StaticFactory.c Instantiatable.c", "onphp");
