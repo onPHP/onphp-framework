@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class HttpContentType
+	class ContentTypeHeader
 	{
 		private $mediaType	= null;
 		private $parameters	= array();

@@ -12,7 +12,7 @@
 
 2007-06-28	Ivan Y. Khvostishkov
 
-	* main/Utils/: HttpContentType.class.php,
+	* main/Utils/: ContentTypeHeader.class.php,
 	DoctypeDeclaration.class.php, CommonDoctypeDeclaration.class.php:
 	introduced.
 
