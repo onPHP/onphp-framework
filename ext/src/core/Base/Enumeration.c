@@ -160,7 +160,7 @@ ONPHP_METHOD(Enumeration, setId)
 				);
 			
 			break;
-		
+			
 		case IS_STRING:
 			
 			result =
@@ -174,7 +174,7 @@ ONPHP_METHOD(Enumeration, setId)
 			break;
 			
 		case IS_NULL:
-		
+			
 			result =
 				zend_hash_find(
 					Z_ARRVAL_P(names),
@@ -197,7 +197,7 @@ ONPHP_METHOD(Enumeration, setId)
 	}
 	
 	ZVAL_FREE(names);
-
+	
 	if (result == SUCCESS) {
 		ONPHP_UPDATE_PROPERTY(getThis(), "id", id);
 		ONPHP_UPDATE_PROPERTY(getThis(), "name", *found);
