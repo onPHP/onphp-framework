@@ -107,31 +107,43 @@
 		/**
 		 * @return HttpContentType
 		 *
-		 * sample argument: text/html; charset=utf-8
+		 * sample argument: text/html; charset="utf-8"
 		**/
 		public function import($string)
 		{
 			$this->charset = null;
 			$this->parameters = array();
 			
-			$parts = explode(';', $string);
-			$this->mediaType = trim(array_shift($parts));
-			
-			foreach ($parts as $parameter) {
-				$parameterParts = explode('=', $parameter);
+			if (
+				preg_match(
+					'~^[\s\t]*([^/\s\t;]+/[^\s\t;]+)[\s\t]*(.*)$~',
+					$string, $matches
+				)
+			) {
+				$this->mediaType = $matches[1];
+				$remainingString = $matches[2];
 				
-				$attribute = strtolower(trim($parameterParts[0]));
-				
-				if (isset($parameterParts[1]))
-					$value = trim($parameterParts[1]);
-				else
-					$value = null;
-				
-				$this->parameters[$attribute] = $value;
-				
-				if ($attribute == 'charset')
-					// NOTE: reference
-					$this->charset = &$this->parameters[$attribute];
+				preg_match_all(
+					'~;[\s\t]*([^\s\t\=]+)[\s\t]*\=[\s\t]*'	// 1: attribute
+					.'(?:([^"\s\t;]+)|(?:"(.*?(?<!\\\))"))'	// 2 or 3: value
+					.'[\s\t]*~',
+					$remainingString, $matches
+				);
+					
+				foreach ($matches[1] as $i => $attribute) {
+					$attribute = strtolower($attribute);
+					
+					$value =
+						empty($matches[2][$i])
+						? $matches[3][$i]
+						: $matches[2][$i];
+					
+					$this->parameters[$attribute] = $value;
+					
+					if ($attribute == 'charset')
+						// NOTE: reference
+						$this->charset = &$this->parameters[$attribute];
+				}
 			}
 			
 			return $this;
@@ -142,7 +154,7 @@
 			$parts = array($this->mediaType);
 			
 			foreach ($this->parameters as $attribute => $value) {
-				$parts[] = $attribute.'='.$value;
+				$parts[] = $attribute.'="'.$value.'"';
 			}
 			return implode('; ', $parts);
 		}
