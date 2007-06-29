@@ -34,5 +34,4 @@
 	set_error_handler('error2Exception', E_ALL);
 	
 	require SIMPLETEST_PATH.'unit_tester.php';
-	require SIMPLETEST_PATH.'reporter.php';
 ?>
