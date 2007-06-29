@@ -285,23 +285,21 @@
 		{
 			$table = null;
 			if (is_object($field)) {
-				if ($field instanceof DBField) {
-					if ($field->getTable() === null)
-						$this->fields[] = new SelectField(
-							$field->setTable($this->getLastTable()),
-							$alias
-						);
-					else
-						$this->fields[] = new SelectField($field, $alias);
-					
-					$this->aliases[$alias] = true;
-					
-					return $this;
+				if (
+					($field instanceof DBField)
+					&& ($field->getTable() === null)
+				) {
+					$this->fields[] = new SelectField(
+						$field->setTable($this->getLastTable()),
+						$alias
+					);
 				} elseif ($field instanceof DialectString) {
-					$this->fields[] = $field;
+					$this->fields[] = new SelectField($field, $alias);
 					
 					if ($field instanceof Aliased)
 						$this->aliases[$field->getAlias()] = true;
+					elseif ($alias)
+						$this->aliases[$alias] = true;
 					
 					return $this;
 				} else

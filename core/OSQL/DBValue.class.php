@@ -16,33 +16,26 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
-	final class DBValue extends Castable implements DialectString, Aliased
+	final class DBValue extends Castable implements DialectString
 	{
 		private $value = null;
-		private $alias = null;
 		
 		/**
 		 * @return DBValue
 		**/
-		public static function create($value, $alias = null)
+		public static function create($value)
 		{
-			return new self($value, $alias);
+			return new self($value);
 		}
-
-		public function __construct($value, $alias = null)
+		
+		public function __construct($value)
 		{
 			$this->value = $value;
-			$this->alias = $alias;
 		}
-
+		
 		public function getValue()
 		{
 			return $this->value;
-		}
-		
-		public function getAlias()
-		{
-			return $this->alias;
 		}
 		
 		public function toDialectString(Dialect $dialect)
@@ -52,12 +45,7 @@
 			return
 				$this->cast
 					? $dialect->toCasted($out, $this->cast)
-					: $out
-				.(
-					$this->alias
-						? ' AS '.$dialect->quoteField($this->alias)
-						: null
-				);
+					: $out;
 		}
 	}
 ?>
