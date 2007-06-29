@@ -40,5 +40,4 @@
 	ini_set('sqlite.assoc_case', 0);
 	
 	require SIMPLETEST_PATH.'unit_tester.php';
-	require SIMPLETEST_PATH.'reporter.php';
 ?>
