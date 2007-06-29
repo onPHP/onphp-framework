@@ -109,5 +109,132 @@
 				return mb_substr($string, 0, mb_strpos($string, ' ', $length)).$append;
 			}
 		}
+		
+		/**
+		 * @see http://tools.ietf.org/html/rfc3986#page-38
+		 * @author thanks to JanRain, Inc. <openid@janrain.com>
+		 * @author http://www.openidenabled.com/openid/libraries/php/
+		**/
+		public static function normalizeUri($uri)
+		{
+			$uriMatches = array();
+			preg_match(
+				'&^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?&',
+				$uri, 
+				$uriMatches
+			);
+			
+			if (!isset($uriMatches[2]) || $uriMatches[2] === '')
+				throw new WrongArgumentException('no scheme');
+				
+			$scheme = strtolower($uriMatches[2]);
+			
+			if (!isset($uriMatches[4]) || $uriMatches[4] === '')
+				throw new WrongArgumentException('not an absolute uri');
+			
+			$authorityMatches = array();
+			if (
+				!preg_match(
+					'/^([^@]*@)?([^:]*)(:.*)?/',
+					$uriMatches[4],
+					$authorityMatches
+				)
+			)
+				throw new WrongArgumentException('invalid authority');			
+				
+			if (isset($authorityMatches[1]))
+				$userInfo = $authorityMatches[1];
+			else
+				$userInfo = '';
+				
+			$host = strtolower(rawurldecode($authorityMatches[2]));
+			
+			if (isset($authorityMatches[3])) {
+				$port = $authorityMatches[3];
+		        if (
+		        	($port == ':') 
+		        	|| ($scheme == 'http' && $port == ':80') 
+		        	|| ($scheme == 'https' && $port == ':443')
+		        ) {
+		            $port = '';
+		        }
+			} else 
+				$port = '';
+
+		    $authority = $userInfo . $host . $port;
+		    
+		    if (isset($uriMatches[5])) {
+		    	$path = $uriMatches[5];
+		    	$path = preg_replace_callback(
+		    		'/%([0-9A-Fa-f]{2})/',
+		    		create_function(
+		    			'$matched',
+		    			'return rawurlencode(rawurldecode($matched[0]));'
+		    		),
+		    		$path
+		    	);
+		    	
+		    	$path = self::removeDotSegments($path);
+		    	
+		    	if ($path === '')
+		    		$path = '/';
+		    } else 
+		    	$path = '/';
+		    
+		    if (isset($uriMatches[6])) {
+		    	$query = $uriMatches[6];
+		    } else 
+		        $query = '';
+		
+		    if (isset($uriMatches[8])) {
+			    $fragment = $uriMatches[8];
+		    } else 
+		        $fragment = '';
+		    
+		    return $scheme . '://' . $authority . $path . $query . $fragment;
+		}
+		
+		private static function removeDotSegments($path)
+		{
+			$segments = array();
+
+			while ($path) {
+				if (strpos($path, '../') === 0) {
+					$path = substr($path, 3);
+				} else if (strpos($path, './') === 0) {
+					$path = substr($path, 2);
+				} else if (strpos($path, '/./') === 0) {
+					$path = substr($path, 2);
+				} else if ($path == '/.') {
+					$path = '/';
+				} else if (strpos($path, '/../') === 0) {
+					$path = substr($path, 3);
+					if ($segments) {
+						array_pop($segments);
+					}
+				} else if ($path == '/..') {
+					$path = '/';
+					if ($segments) {
+						array_pop($segments);
+					}
+				} else if (($path == '..') ||
+				($path == '.')) {
+					$path = '';
+				} else {
+					$i = 0;
+					if ($path[0] == '/') {
+						$i = 1;
+					}
+					$i = strpos($path, '/', $i);
+					if ($i === false) {
+						$i = strlen($path);
+					}
+					$segments[] = substr($path, 0, $i);
+					$path = substr($path, $i);
+				}
+			}
+
+			return implode('', $segments);
+		}
 	}
 ?>
