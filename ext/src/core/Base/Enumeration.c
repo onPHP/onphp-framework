@@ -65,27 +65,26 @@ ONPHP_METHOD(Enumeration, __wakeup)
 ONPHP_METHOD(Enumeration, serialize)
 {
 	zval *id;
-			char *out = NULL;
-			unsigned int length = 0;
+	char *out = NULL;
+	unsigned int length = 0;
 	
 	id = ONPHP_READ_PROPERTY(getThis(), "id");
 	
 	switch (Z_TYPE_P(id)) {
 		case IS_LONG:
 			
-			
 			out = emalloc(MAX_LENGTH_OF_LONG + 1 + 1);
 			length = sprintf(out, "%ld", Z_LVAL_P(id));
 			
-			RETURN_STRINGL(out, length, 1);
-		
+			RETURN_STRINGL(out, length, 0);
+			
 		case IS_STRING:
 			
 			RETURN_ZVAL(id, 1, 0);
 			
 		case IS_NULL:
 		default:
-		
+			
 			RETURN_STRING("", 1);
 	}
 }
@@ -196,11 +195,11 @@ ONPHP_METHOD(Enumeration, setId)
 			return;
 	}
 	
-	ZVAL_FREE(names);
-	
 	if (result == SUCCESS) {
 		ONPHP_UPDATE_PROPERTY(getThis(), "id", id);
 		ONPHP_UPDATE_PROPERTY(getThis(), "name", *found);
+		
+		ZVAL_FREE(names);
 	} else {
 		if (Z_TYPE_P(id) != IS_STRING) {
 			SEPARATE_ARG_IF_REF(id);
@@ -213,6 +212,7 @@ ONPHP_METHOD(Enumeration, setId)
 			"knows nothing about such id == {%s}",
 			Z_STRVAL_P(id)
 		);
+		ZVAL_FREE(names);
 		return;
 	}
 	
