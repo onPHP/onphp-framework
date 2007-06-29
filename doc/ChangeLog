@@ -2,7 +2,9 @@
 
 2007-06-29	Anton E. Lebedevich
 
-	* main/Utils/ArrayUtils.class.php: getMirrorValues deprecated.
+	* main/Utils/ArrayUtils.class.php: getMirrorValues() deprecated.
+
+	* main/Utils/HeaderUtils.class.php: redirect() deprecated.
 
 2007-06-29	Dmitry E. Demidov
 

@@ -28,7 +28,10 @@
 			self::$headerSent = true;
 			self::$redirectSent = true;
 		}
-
+		
+		/**
+		 * @deprecated by Flow
+		 */
 		public static function redirect(BaseModule $mod)
 		{
 			$qs = null;
