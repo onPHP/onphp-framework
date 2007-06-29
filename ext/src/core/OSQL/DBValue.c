@@ -80,25 +80,19 @@ ONPHP_METHOD(DBValue, toDialectString)
 	cast = ONPHP_READ_PROPERTY(getThis(), "cast");
 	
 	if (Z_STRLEN_P(cast)) {
-		zval *casted;
-		
 		zend_call_method_with_2_params(
 			&dialect,
 			Z_OBJCE_P(dialect),
 			NULL,
 			"tocasted",
-			&casted,
+			&out,
 			out,
 			cast
 		);
 		
-		ZVAL_FREE(out);
-		
 		if (EG(exception)) {
 			return;
 		}
-		
-		RETURN_ZVAL(casted, 1, 1);
 	} else {
 		// nothing
 	}
