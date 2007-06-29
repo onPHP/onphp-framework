@@ -1,5 +1,9 @@
 # $Id$
 
+2007-06-29	Dmitry E. Demidov
+
+	* core/OSQL/DBValue.class.php: DBValue now Aliased.
+
 2007-06-28	Ivan Y. Khvostishkov
 
 	* main/Utils/: HttpContentType.class.php,
