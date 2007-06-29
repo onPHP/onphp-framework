@@ -29,5 +29,4 @@
 	define('SIMPLETEST_PATH', '/usr/share/php/simpletest/');
 	
 	require SIMPLETEST_PATH.'unit_tester.php';
-	require SIMPLETEST_PATH.'reporter.php';
 ?>
