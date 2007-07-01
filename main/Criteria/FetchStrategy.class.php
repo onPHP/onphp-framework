@@ -20,9 +20,9 @@
 		const LAZY		= 3;
 		
 		protected $names = array(
-			self::JOIN		=> 'queryJoinedObjectSet',
-			self::CASCADE	=> 'queryObjectSet',
-			self::LAZY		=> 'queryObjectSet'
+			self::JOIN		=> 'join',
+			self::CASCADE	=> 'cascade',
+			self::LAZY		=> 'lazy'
 		);
 		
 		/**
