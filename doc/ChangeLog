@@ -32,7 +32,7 @@
 
 	* main/Utils/HeaderUtils.class.php: redirect() deprecated.
 
-	*  main/Utils/TextUtils.class.php: normalizeUri added.
+	* main/Utils/TextUtils.class.php: normalizeUri added.
 
 2007-06-28	Ivan Y. Khvostishkov
 
