@@ -15,7 +15,12 @@
 	**/
 	final class TrimFilter implements Filtrator
 	{
+		const LEFT	= 'l';
+		const RIGHT	= 'r';
+		const BOTH	= null;
+		
 		private $charlist	= null;
+		private $direction	= self::BOTH;
 		
 		/**
 		 * @return TrimFilter
@@ -25,9 +30,45 @@
 			return new self;
 		}
 		
+		/**
+		 * @return TrimFilter
+		**/
+		public function setLeft()
+		{
+			$this->direction = self::LEFT;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return TrimFilter
+		**/
+		public function setRight()
+		{
+			$this->direction = self::RIGHT;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return TrimFilter
+		**/
+		public function setBoth()
+		{
+			$this->direction = self::BOTH;
+			
+			return $this;
+		}
+		
 		public function apply($value)
 		{
-			return ($this->charlist ? trim($value, $this->charlist) : trim($value));
+			$function = $this->direction.'trim';
+			
+			return (
+				$this->charlist
+					? $function($value, $this->charlist)
+					: $function($value)
+				);
 		}
 		
 		/**
