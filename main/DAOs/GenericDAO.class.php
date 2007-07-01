@@ -32,18 +32,15 @@
 		public function makeObject(&$array, $prefix = null)
 		{
 			if (isset($this->identityMap[$array[$prefix.$this->getIdName()]]))
-				$object = $this->identityMap[$array[$prefix.$this->getIdName()]];
-			else {
-				return $this->addObjectToMap(
-					$this->completeObject(
-						$this->makeOnlyObject($array, $prefix),
-						$array,
-						$prefix
-					)
-				);
-			}
+				return $this->identityMap[$array[$prefix.$this->getIdName()]];
 			
-			return $object;
+			return $this->addObjectToMap(
+				$this->completeObject(
+					$this->makeOnlyObject($array, $prefix),
+					$array,
+					$prefix
+				)
+			);
 		}
 		
 		/**
