@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -43,7 +43,7 @@
 		{
 			return HashFilter::create($binary);
 		}
-
+		
 		/**
 		 * @return PCREFilter
 		**/
@@ -51,7 +51,7 @@
 		{
 			return PCREFilter::create();
 		}
-
+		
 		/**
 		 * @return TrimFilter
 		**/
@@ -59,7 +59,7 @@
 		{
 			return TrimFilter::create();
 		}
-
+		
 		/**
 		 * @return StripTagsFilter
 		**/
@@ -67,13 +67,21 @@
 		{
 			return StripTagsFilter::create();
 		}
-
+		
 		/**
 		 * @return HtmlSpecialCharsFilter
 		**/
 		public static function htmlSpecialChars()
 		{
 			return Singleton::getInstance('HtmlSpecialCharsFilter');
+		}
+		
+		/**
+		 * @return NewLinesToBreaks
+		**/
+		public static function nl2br()
+		{
+			return Singleton::getInstance('NewLinesToBreaks');
 		}
 		
 		/**
@@ -93,13 +101,29 @@
 		}
 		
 		/**
+		 * @return UnixToUnixDecode
+		**/
+		public static function uudecode()
+		{
+			return Singleton::getInstance('UnixToUnixDecode');
+		}
+		
+		/**
+		 * @return UnixToUnixEncode
+		**/
+		public static function uuencode()
+		{
+			return Singleton::getInstance('UnixToUnixEncode');
+		}
+		
+		/**
 		 * @return StringReplaceFilter
 		**/
 		public static function replaceSymbols($search = null, $replace = null)
 		{
 			return StringReplaceFilter::create($search, $replace);
 		}
-
+		
 		/**
 		 * @return SafeUtf8Filter
 		**/

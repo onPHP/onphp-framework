@@ -7,6 +7,10 @@
 
 2007-07-01	Konstantin V. Arkhipov
 
+	* core/Form/Filters/NewLinesToBreaks.class.php,
+	core/Form/Filters/UnixToUnixDecode.class.php,
+	core/Form/Filters/UnixToUnixEncode.class.php: introduced.
+
 	* core/Form/Filters/TrimFilter.class.php: direction support added.
 
 	* main/Utils/ClassUtils.class.php: callStaticMethod, checkStaticMethod
