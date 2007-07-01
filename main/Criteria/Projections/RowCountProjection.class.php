@@ -13,23 +13,5 @@
 	/**
 	 * @ingroup Projections
 	**/
-	final class RowCountProjection extends BaseProjection
-	{
-		/**
-		 * @return JoinCapableQuery
-		**/
-		public function process(Criteria $criteria, JoinCapableQuery $query)
-		{
-			return
-				$query->get(
-					SQLFunction::create(
-						'count',
-						$this->property
-							? $criteria->getDao()->guessAtom($this->property, $query)
-							: '*'
-					)->
-					setAlias($this->alias)
-				);
-		}
-	}
+	final class RowCountProjection extends CountProjection {/*_*/}
 ?>
