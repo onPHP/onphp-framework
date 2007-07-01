@@ -58,7 +58,9 @@
 		**/
 		public function lazySet($field, /* Identifiable */ $object = null)
 		{
-			if ($object instanceof Identifiable)
+			if ($object === null)
+				$this->set($field, null);
+			elseif ($object instanceof Identifiable)
 				$this->set($field, $object->getId());
 			elseif ($object instanceof Stringable)
 				$this->set($field, $object->toString());
@@ -70,11 +72,9 @@
 				$this->
 					set($field.'_start', $object->getStart())->
 					set($field.'_end', $object->getEnd());
-			elseif ($object === null)
-				$this->set($field, null);
 			else
 				$this->set($field, $object);
-
+			
 			return $this;
 		}
 
