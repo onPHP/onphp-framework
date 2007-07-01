@@ -129,7 +129,7 @@
 		{
 			if (strpos($methodSignature, '::') === false)
 				throw new WrongArgumentException('incorrect method signature');
-				
+			
 			list($className, $methodName) = split('::', $methodSignature);
 			
 			Assert::isTrue(
