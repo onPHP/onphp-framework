@@ -20,7 +20,7 @@
 		**/
 		public function setList($list)
 		{
-			$this->list = ArrayUtils::getMirrorValues($list);
+			$this->list = array_combine($list, $list);
 			
 			return $this;
 		}
