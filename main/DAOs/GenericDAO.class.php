@@ -22,7 +22,6 @@
 
 		protected $identityMap	= array();
 		
-		protected $link			= null;
 		protected $selectHead	= null;
 		
 		abstract public function getTable();
