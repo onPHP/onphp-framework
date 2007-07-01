@@ -17,6 +17,9 @@
 	{
 		abstract public function getFunctionName();
 		
+		/**
+		 * @return JoinCapableQuery
+		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
 			Assert::isFalse(!$this->property);

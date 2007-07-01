@@ -15,6 +15,9 @@
 	**/
 	final class PropertyProjection extends BaseProjection
 	{
+		/**
+		 * @return JoinCapableQuery
+		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
 			return $query->get(

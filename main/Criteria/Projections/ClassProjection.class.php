@@ -38,7 +38,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return JoinCapableQuery
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
