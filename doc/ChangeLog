@@ -1,5 +1,10 @@
 # $Id$
 
+2007-07-01	Dmitry E. Demidov
+
+	* core/Form/Primitives/PrimitiveIdentifier.class.php: added ability get
+	object not only by getById method.
+
 2007-06-30	Sergey M. Skachkov
 
 	* core/Form/Filter.class.php: trim() now return new TrimFilter

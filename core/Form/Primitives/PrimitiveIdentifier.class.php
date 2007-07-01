@@ -16,6 +16,7 @@
 	class PrimitiveIdentifier extends IdentifiablePrimitive
 	{
 		private $info = null;
+		private $methodName	= null;
 		
 		/**
 		 * @throws WrongArgumentException
@@ -48,6 +49,22 @@
 		public function dao()
 		{
 			return call_user_func(array($this->className, 'dao'));
+		}
+		
+		/**
+		 * @return PrimitiveIdentifier
+		**/
+		public function setMethodName($methodName)
+		{
+			Assert::isTrue(
+				method_exists($this->dao(), $methodName),
+				"knows nothing about '".get_class($this->dao())
+				."::{$methodName}' method"
+			);
+			
+			$this->methodName = $methodName;
+			
+			return $this;
 		}
 		
 		public function importValue($value)
@@ -95,7 +112,14 @@
 			
 			if ($result === true) {
 				try {
-					$this->value = $this->dao()->getById($this->value);
+					$this->value =
+						($this->methodName)
+							? $this->dao()->{$this->methodName}($this->value)
+							: $this->dao()->getById($this->value);
+					
+					if (!$this->value)
+						return false;
+					
 				} catch (ObjectNotFoundException $e) {
 					$this->value = null;
 					return false;
