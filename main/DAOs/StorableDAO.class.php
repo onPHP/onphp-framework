@@ -55,26 +55,5 @@
 					$object
 				);
 		}
-		
-		protected function inject(
-			InsertOrUpdateQuery $query, Identifiable $object
-		)
-		{
-			$this->checkObjectType($object);
-			
-			DBPool::getByDao($this)->queryNull(
-				$this->setQueryFields(
-					$query->setTable($this->getTable()), $object
-				)
-			);
-			
-			$this->uncacheById($object->getId());
-			
-			// clean out Identifier, if any
-			// and overwrite previous instances, if any
-			return
-				$this->identityMap[$object->getId()]
-					= $object->setId($object->getId());
-		}
 	}
 ?>

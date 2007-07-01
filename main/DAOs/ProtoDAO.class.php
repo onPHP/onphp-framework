@@ -25,18 +25,6 @@
 			return dechex(crc32($prefix.$this->getTable())).'_'.$field;
 		}
 		
-		public function makeObject(&$array, $prefix = null)
-		{
-			if (isset($this->identityMap[$array[$prefix.$this->getIdName()]]))
-				$object = $this->identityMap[$array[$prefix.$this->getIdName()]];
-			else {
-				$object = parent::makeObject($array, $prefix);
-				$this->identityMap[$object->getId()] = $object;
-			}
-			
-			return $object;
-		}
-		
 		public function makeOnlyObject(&$array, $prefix = null)
 		{
 			return $this->getProtoClass()->makeOnlyObject(

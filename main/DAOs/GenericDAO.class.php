@@ -17,10 +17,10 @@
 	**/
 	abstract class GenericDAO extends Singleton implements BaseDAO
 	{
-		protected $identityMap	= array();
-		
 		protected $link			= null;
 		protected $selectHead	= null;
+		
+		private $identityMap	= array();
 		
 		abstract public function getTable();
 		abstract public function getObjectName();
@@ -32,11 +32,19 @@
 		
 		public function makeObject(&$array, $prefix = null)
 		{
-			return $this->completeObject(
-				$this->makeOnlyObject($array, $prefix),
-				$array,
-				$prefix
-			);
+			if (isset($this->identityMap[$array[$prefix.$this->getIdName()]]))
+				$object = $this->identityMap[$array[$prefix.$this->getIdName()]];
+			else {
+				return $this->addObjectToMap(
+					$this->completeObject(
+						$this->makeOnlyObject($array, $prefix),
+						$array,
+						$prefix
+					)
+				);
+			}
+			
+			return $object;
 		}
 		
 		/**
@@ -264,6 +272,26 @@
 			$this->identityMap = array();
 			
 			return $this;
+		}
+		
+		protected function inject(
+			InsertOrUpdateQuery $query,
+			Identifiable $object
+		)
+		{
+			$this->checkObjectType($object);
+			
+			DBPool::getByDao($this)->queryNull(
+				$this->setQueryFields(
+					$query->setTable($this->getTable()), $object
+				)
+			);
+			
+			$this->uncacheById($object->getId());
+			
+			// clean out Identifier, if any
+			// and overwrite previous instances, if any
+			return $this->addObjectToMap($object->setId($object->getId()));
 		}
 		
 		/* void */ protected function checkObjectType(Identifiable $object)

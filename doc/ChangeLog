@@ -10,6 +10,9 @@
 
 2007-07-01	Konstantin V. Arkhipov
 
+	* main/DAOs/GenericDAO.class.php: identity map isolated from mere
+	mortals.
+
 	* core/Logic/EqualsLowerExpression.class.php: now optimizes out
 	lower() call for given strings.
 
