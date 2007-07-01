@@ -73,7 +73,7 @@
 
 2007-06-18	Denis M. Gabaidulin
 
-	* main/core/Form/Primitives/PrimitiveString.class.php: simple url
+	* core/Form/Primitives/PrimitiveString.class.php: simple url
 	pattern added.
 
 2007-06-18	Konstantin V. Arkhipov
@@ -740,7 +740,7 @@
 
 2007-01-25	Dmitry E. Demidov
 
-	* main/core/Form/FormUtils.class.php: form2object() and object2form()
+	* core/Form/FormUtils.class.php: form2object() and object2form()
 	now accepts any objects.
 	
 2007-01-22	Konstantin V. Arkhipov
