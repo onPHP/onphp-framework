@@ -125,6 +125,39 @@
 			return $info->isInstance($object);
 		}
 		
+		public static function callStaticMethod($methodSignature/* ... */)
+		{
+			list($className, $methodName) = split('::', $methodSignature);
+			
+			Assert::isTrue(
+				class_exists($className, true),
+				"knows nothing about '{$className}' class"
+			);
+			
+			$class = new ReflectionClass($className);
+			
+			Assert::isTrue(
+				$class->hasMethod($methodName),
+				"knows nothing about '$className::{$methodName}' method"
+			);
+			
+			$method = $class->getMethod($methodName);
+			
+			Assert::isTrue(
+				$method->isStatic(),
+				"method is not static '$className::{$methodName}'"
+			);
+			
+			$agruments = func_get_args();
+			array_shift($agruments);
+			
+			return
+				call_user_func_array(
+					array($className, $methodName),
+					$agruments
+				);
+		}
+		
 		/* void */ public static function dtoObject2xml(
 			$object,
 			$classMap,
