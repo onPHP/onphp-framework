@@ -5,6 +5,8 @@
 	* core/Form/Primitives/PrimitiveIdentifier.class.php: added ability get
 	object not only by getById method.
 
+	* main/Utils/ClassUtils.class.php: callStaticMethod method added.
+
 2007-06-30	Sergey M. Skachkov
 
 	* core/Form/Filter.class.php: trim() now return new TrimFilter
