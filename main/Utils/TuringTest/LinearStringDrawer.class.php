@@ -31,7 +31,7 @@
 			$x = round(($this->getTuringImage()->getWidth() - $textWidth) / 2);
 			$angle = 0;
 			
-			for ($i = 0; $i < strlen($string); $i++) {
+			for ($i = 0, $length = strlen($string); $i < $length; ++$i) {
 				$character = $string[$i];
 				$this->drawCraracter($angle, $x, $y, $character);
 				$x += $this->getStringWidth($character) + $this->getSpace();

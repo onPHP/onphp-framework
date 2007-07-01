@@ -31,15 +31,17 @@
 					$indent -= $chain;
 					$chain = 1;
 				} elseif ($string == ")->\n")
-					$indent--;
+					--$indent;
 				elseif ($string == ")\n")
-					$indent--;
+					--$indent;
 				elseif ($string == ");\n")
-					$indent--;
+					--$indent;
+				elseif ($string == "),\n")
+					--$indent;
 				elseif ($string == "?>\n")
 					$indent = 0;
 				elseif ($string[0] == '?')
-					$indent++;
+					++$indent;
 				
 				if ($string <> "\n") {
 					if ($indent > 0)
@@ -49,29 +51,36 @@
 				}
 
 				if (substr($string, -2 ,2) == "{\n")
-					$indent++;
+					++$indent;
 				elseif (
+					substr_count($string, "'") == 2
+					&& substr($string, -3, 3) == "=>\n"
+				) {
+					++$indent;
+					++$chain;
+				} elseif (
 					$string[0] == '$'
 					&& (
 						substr($string, -2, 2) == "=\n"
 						|| substr($string, -3, 3) == "->\n"
 					)
 				) {
-					$indent++;
-					$chain++;
+					++$indent;
+					++$chain;
 				} elseif (substr($string, -2, 2) == "(\n")
-					$indent++;
+					++$indent;
 				elseif ($string == "\n" && $indent == 0) {
-					$indent++;
+					++$indent;
 				} elseif ($string == "return\n") {
-					$indent++;
-					$chain++;
+					++$indent;
+					++$chain;
 				} elseif ($string == "\n" && $chain > 1) {
 					$indent -= $chain - 1;
 					$chain = 1;
 				} elseif ($string[0] == ':') {
-					$indent--;
-				}
+					--$indent;
+				} elseif ($string == "),\n")
+					--$indent;
 				
 				if ($string == "\n") {
 					if (!$first && ($indent > 0)) {

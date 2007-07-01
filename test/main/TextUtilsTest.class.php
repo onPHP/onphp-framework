@@ -11,7 +11,7 @@
 			$this->assertEqual(TextUtils::friendlyFileSize(1024), '1k');
 			$this->assertEqual(TextUtils::friendlyFileSize(812), '812');
 			
-			for ($i = 0; $i < 6; $i++) {
+			for ($i = 0; $i < 6; ++$i) {
 				$this->assertEqual(
 					TextUtils::friendlyFileSize(2 * pow(1024, $i)), '2'.$units[$i]
 				);

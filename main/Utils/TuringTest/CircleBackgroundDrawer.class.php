@@ -36,7 +36,7 @@
 		**/
 		public function draw()
 		{
-			for ($i = 0; $i < $this->count; $i++) {
+			for ($i = 0; $i < $this->count; ++$i) {
 				$y = mt_rand(0, $this->getTuringImage()->getHeight());
 				$x = mt_rand(0, $this->getTuringImage()->getWidth());
 				
@@ -55,7 +55,7 @@
 			$angleStep = 360 / CircleBackgroundDrawer::VERTEX_COUNT;
 			$angle = 0;
 			
-			for ($i = 0; $i < CircleBackgroundDrawer::VERTEX_COUNT; $i++) {
+			for ($i = 0; $i < CircleBackgroundDrawer::VERTEX_COUNT; ++$i) {
 				$color = $this->makeColor();
 				$colorId = $this->getTuringImage()->getColorIdentifier($color);
 				
