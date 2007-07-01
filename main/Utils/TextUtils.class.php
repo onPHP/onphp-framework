@@ -44,9 +44,9 @@
 				&& (strpos($url, '//') + 2) < strlen($url)
 			)
 				$offset = strpos($url, '//') + 2;
-			else 
+			else
 				$offset = 0;
-				
+			
 			return substr($url, 0, strpos($url, '/', $offset) + 1);
 		}
 		
@@ -56,7 +56,7 @@
 			
 			if ($parsed === false or !isset($parsed['path']))
 				return '/';
-			else 
+			else
 				return $parsed['path'];
 		}
 		
@@ -106,7 +106,9 @@
 			if (mb_strlen($string) < $length)
 				return $string;
 			else {
-				return mb_substr($string, 0, mb_strpos($string, ' ', $length)).$append;
+				return
+					mb_substr($string, 0, mb_strpos($string, ' ', $length))
+					.$append;
 			}
 		}
 		
@@ -126,7 +128,7 @@
 			
 			if (!isset($uriMatches[2]) || $uriMatches[2] === '')
 				throw new WrongArgumentException('no scheme');
-				
+			
 			$scheme = strtolower($uriMatches[2]);
 			
 			if (!isset($uriMatches[4]) || $uriMatches[4] === '')
@@ -140,13 +142,13 @@
 					$authorityMatches
 				)
 			)
-				throw new WrongArgumentException('invalid authority');			
-				
+				throw new WrongArgumentException('invalid authority');
+			
 			if (isset($authorityMatches[1]))
 				$userInfo = $authorityMatches[1];
 			else
 				$userInfo = '';
-				
+			
 			$host = strtolower(rawurldecode($authorityMatches[2]));
 			
 			if (isset($authorityMatches[3])) {
@@ -158,9 +160,9 @@
 		        ) {
 		            $port = '';
 		        }
-			} else 
+			} else
 				$port = '';
-
+			
 		    $authority = $userInfo . $host . $port;
 		    
 		    if (isset($uriMatches[5])) {
@@ -178,17 +180,17 @@
 		    	
 		    	if ($path === '')
 		    		$path = '/';
-		    } else 
+		    } else
 		    	$path = '/';
 		    
 		    if (isset($uriMatches[6])) {
 		    	$query = $uriMatches[6];
-		    } else 
+		    } else
 		        $query = '';
-		
+			
 		    if (isset($uriMatches[8])) {
 			    $fragment = $uriMatches[8];
-		    } else 
+		    } else
 		        $fragment = '';
 		    
 		    return $scheme . '://' . $authority . $path . $query . $fragment;
@@ -197,7 +199,7 @@
 		private static function removeDotSegments($path)
 		{
 			$segments = array();
-
+			
 			while ($path) {
 				if (strpos($path, '../') === 0) {
 					$path = substr($path, 3);
@@ -233,7 +235,7 @@
 					$path = substr($path, $i);
 				}
 			}
-
+			
 			return implode('', $segments);
 		}
 	}
