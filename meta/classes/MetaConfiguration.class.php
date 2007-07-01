@@ -857,11 +857,11 @@
 						if ($errors = $form->getErrors()) {
 							$formErrors[$class->getName()] = $errors;
 							
-							$out->error('!', true);
+							$out->error('F', true);
 						} else
-							$out->info('+', true);
+							$out->info('F', true);
 					} catch (ObjectNotFoundException $e) {
-						$out->warning('-');
+						$out->warning('F');
 					}
 					
 					$out->warning('/');
@@ -872,10 +872,19 @@
 						toSelectQuery()
 						== $dao->makeSelectHead()
 					) {
-						$out->info('+', true);
+						$out->info('H', true);
 					} else {
-						$out->error('!', true);
+						$out->error('H', true);
 					}
+					
+					$clone = clone $object;
+					
+					$out->warning('/');
+					
+					if ($clone == $object)
+						$out->info('C', true);
+					else
+						$out->error('C', true);
 					
 					$out->warning(')')->info(', ');
 				}
