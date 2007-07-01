@@ -5,6 +5,9 @@
 	* core/Form/Primitives/PrimitiveIdentifier.class.php: added ability
 	get object not only by getById method.
 
+	* main/Utils/ClassUtils.class.php: callStaticMethod, checkStaticMethod
+	methods added.
+
 2007-07-01	Konstantin V. Arkhipov
 
 	* core/Logic/EqualsLowerExpression.class.php: now optimizes out
@@ -15,9 +18,6 @@
 	core/Form/Filters/UnixToUnixEncode.class.php: introduced.
 
 	* core/Form/Filters/TrimFilter.class.php: direction support added.
-
-	* main/Utils/ClassUtils.class.php: callStaticMethod, checkStaticMethod
-	methods added.
 
 2007-06-30	Sergey M. Skachkov
 
