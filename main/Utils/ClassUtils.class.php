@@ -167,6 +167,11 @@
 				$method->isStatic(),
 				"method is not static '$className::{$methodName}'"
 			);
+			
+			Assert::isTrue(
+				$method->isPublic(),
+				"method is not public '$className::{$methodName}'"
+			);
 		}
 		
 		/* void */ public static function dtoObject2xml(
