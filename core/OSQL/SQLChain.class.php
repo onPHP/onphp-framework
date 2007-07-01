@@ -66,8 +66,9 @@
 						.$this->chain[$i]->toDialectString($dialect)
 						.' ';
 				}
-
-				$out = rtrim($out); // trailing space, if any
+				
+				if ($size > 1)
+					$out = rtrim($out); // trailing space
 				
 				if ($size === 1)
 					return $out;
