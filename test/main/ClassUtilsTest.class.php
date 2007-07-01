@@ -36,6 +36,13 @@
 			} catch (ClassNotFoundException $e) {
 				$this->pass();
 			}
+			
+			try {
+				ClassUtils::callStaticMethod('complete nonsense');
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				$this->pass();
+			}
 		}
 		
 		public function testSet()
