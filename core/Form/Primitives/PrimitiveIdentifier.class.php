@@ -57,13 +57,16 @@
 		**/
 		public function setMethodName($methodName)
 		{
-			$dao = $this->dao();
-			
-			Assert::isTrue(
-				method_exists($dao, $methodName),
-				"knows nothing about '".get_class($dao)
-				."::{$methodName}' method"
-			);
+			if (strpos($methodName, '::') === false) {
+				$dao = $this->dao();
+				
+				Assert::isTrue(
+					method_exists($dao, $methodName),
+					"knows nothing about '".get_class($dao)
+					."::{$methodName}' method"
+				);
+			} else
+				ClassUtils::checkStaticMethod($methodName);
 			
 			$this->methodName = $methodName;
 			
@@ -115,7 +118,12 @@
 			
 			if ($result === true) {
 				try {
-					$result = $this->dao()->{$this->methodName}($this->value);
+					$result =
+						(strpos($this->methodName, '::') === false)
+							? $this->dao()->{$this->methodName}($this->value)
+							: ClassUtils::callStaticMethod(
+								$this->methodName, $this->value
+							);
 					
 					if (!$result || !($result instanceof $className)) {
 						$this->value = null;
