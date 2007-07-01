@@ -2,8 +2,12 @@
 
 2007-07-01	Dmitry E. Demidov
 
-	* core/Form/Primitives/PrimitiveIdentifier.class.php: added ability get
-	object not only by getById method.
+	* core/Form/Primitives/PrimitiveIdentifier.class.php: added ability
+	get object not only by getById method.
+
+2007-07-01	Konstantin V. Arkhipov
+
+	* core/Form/Filters/TrimFilter.class.php: direction support added.
 
 	* main/Utils/ClassUtils.class.php: callStaticMethod, checkStaticMethod
 	methods added.
