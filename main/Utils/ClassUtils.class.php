@@ -127,10 +127,27 @@
 		
 		public static function callStaticMethod($methodSignature/* ... */)
 		{
-			if (strpos($methodSignature, '::') === false)
+			self::checkStaticMethod($methodSignature);
+			
+			$agruments = func_get_args();
+			array_shift($agruments);
+			
+			return
+				call_user_func_array(
+					split('::', $methodSignature),
+					$agruments
+				);
+		}
+		
+		/* void */ public static function checkStaticMethod($methodSignature)
+		{
+			$nameParts = explode('::', $methodSignature);
+			
+			if (count($nameParts) != 2)
 				throw new WrongArgumentException('incorrect method signature');
 			
-			list($className, $methodName) = split('::', $methodSignature);
+			$className = $nameParts[0];
+			$methodName = $nameParts[1];
 			
 			Assert::isTrue(
 				class_exists($className, true),
@@ -150,15 +167,6 @@
 				$method->isStatic(),
 				"method is not static '$className::{$methodName}'"
 			);
-			
-			$agruments = func_get_args();
-			array_shift($agruments);
-			
-			return
-				call_user_func_array(
-					array($className, $methodName),
-					$agruments
-				);
 		}
 	}
 ?>
