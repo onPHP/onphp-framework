@@ -117,8 +117,10 @@
 				try {
 					$result = $this->dao()->{$this->methodName}($this->value);
 					
-					if (!$result || !($result instanceof $className))
+					if (!$result || !($result instanceof $className)) {
+						$this->value = null;
 						return false;
+					}
 					
 					$this->value = $result;
 					
