@@ -893,7 +893,7 @@
 					
 					$out->warning('/');
 					
-					if ($clone == $object)
+					if (serialize($clone) == serialize($object))
 						$out->info('C', true);
 					else
 						$out->error('C', true);
