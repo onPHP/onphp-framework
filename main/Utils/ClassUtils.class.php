@@ -156,19 +156,19 @@
 			
 			Assert::isTrue(
 				$class->hasMethod($methodName),
-				"knows nothing about '$className::{$methodName}' method"
+				"knows nothing about '{$className}::{$methodName}' method"
 			);
 			
 			$method = $class->getMethod($methodName);
 			
 			Assert::isTrue(
 				$method->isStatic(),
-				"method is not static '$className::{$methodName}'"
+				"method is not static '{$className}::{$methodName}'"
 			);
 			
 			Assert::isTrue(
 				$method->isPublic(),
-				"method is not public '$className::{$methodName}'"
+				"method is not public '{$className}::{$methodName}'"
 			);
 		}
 	}
