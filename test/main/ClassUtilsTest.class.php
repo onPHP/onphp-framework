@@ -3,6 +3,41 @@
 
 	final class ClassUtilsTest extends UnitTestCase
 	{
+		public function testStaticMethodCalling()
+		{
+			$this->assertEqual(
+				ClassUtils::callStaticMethod(
+					'Singleton::getInstance',
+					'UrlEncodeFilter'
+				),
+				
+				Singleton::getInstance('UrlEncodeFilter')
+			);
+			
+			$this->assertEqual(
+				ClassUtils::callStaticMethod('ImaginaryDialect::me'),
+				ImaginaryDialect::me()
+			);
+			
+			try {
+				// in real life it will be only one exception
+				$this->expectError(
+					'include(InexistantClass.class.php): failed to open stream:'
+					.' No such file or directory'
+				);
+				
+				$this->expectError(
+					"include(): Failed opening 'InexistantClass.class.php' for "
+					."inclusion (include_path='".get_include_path()."')"
+				);
+				
+				ClassUtils::callStaticMethod('InexistantClass::InSaNeMeThOd');
+				$this->fail();
+			} catch (ClassNotFoundException $e) {
+				$this->pass();
+			}
+		}
+		
 		public function testSet()
 		{
 			$source = 
