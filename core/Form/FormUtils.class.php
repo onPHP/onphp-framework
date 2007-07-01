@@ -26,7 +26,6 @@
 			
 			if ($object instanceof Prototyped) {
 				$proto = $object->proto();
-				$list = $proto->getExpandedPropertyList();
 				
 				foreach (array_keys($proto->getExpandedPropertyList()) as $name) {
 					if ($form->primitiveExists($name)) {
