@@ -250,7 +250,7 @@
 				explode('-', $this->string, 3);
 		}
 		
-		protected function stringImport($string)
+		/* void */ protected function stringImport($string)
 		{
 			$this->int = strtotime($string);
 			
