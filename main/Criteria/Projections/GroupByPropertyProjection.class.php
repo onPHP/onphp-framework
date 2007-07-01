@@ -15,6 +15,9 @@
 	**/
 	final class GroupByPropertyProjection extends BaseProjection
 	{
+		/**
+		 * @return JoinCapableQuery
+		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
 			return
