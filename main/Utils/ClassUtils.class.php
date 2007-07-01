@@ -149,12 +149,11 @@
 			$className = $nameParts[0];
 			$methodName = $nameParts[1];
 			
-			Assert::isTrue(
-				class_exists($className, true),
-				"knows nothing about '{$className}' class"
-			);
-			
-			$class = new ReflectionClass($className);
+			try {
+				$class = new ReflectionClass($className);
+			} catch (ReflectionException $e) {
+				throw new ClassNotFoundException($className);
+			}
 			
 			Assert::isTrue(
 				$class->hasMethod($methodName),
