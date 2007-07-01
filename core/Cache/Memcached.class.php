@@ -61,11 +61,10 @@
 		public function clean()
 		{
 			$this->sendRequest("flush_all\r\n");
-
-			while (fread($this->link, $this->buffer)) {
-				// do nothing, just flush
-			}
-
+			
+			// flushing obligatory response - "OK\r\n"
+			fread($this->link, 4);
+			
 			return $this;
 		}
 		
