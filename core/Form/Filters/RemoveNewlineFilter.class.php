@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Filters
 	**/
-	class RemoveNewlineFilter extends BaseFilter
+	class RemoveNewlineFilter extends BaseFilter implements Instantiatable
 	{
 		/**
 		 * @return RemoveNewLineFilter

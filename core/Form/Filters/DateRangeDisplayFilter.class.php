@@ -11,7 +11,7 @@
 /* $Id$ */
 
 
-	class DateRangeDisplayFilter extends BaseFilter
+	class DateRangeDisplayFilter extends BaseFilter implements Instantiatable
 	{
 		public static function me()
 		{
