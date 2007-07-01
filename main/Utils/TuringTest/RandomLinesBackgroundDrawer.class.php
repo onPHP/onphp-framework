@@ -32,7 +32,7 @@
 			$height = $this->getTuringImage()->getHeight();
 			$width = $this->getTuringImage()->getWidth();
 			
-			for ($i = 0; $i < $this->count; $i++) {
+			for ($i = 0; $i < $this->count; ++$i) {
 				$color = $this->makeColor();
 				$colorId = $this->getTuringImage()->getColorIdentifier($color);
 				

@@ -42,7 +42,11 @@
 			
 			$imageId = $this->getTuringImage()->getImageId();
 			
-			for ($x = 0; $x < $this->getTuringImage()->getWidth(); $x++) {
+			for (
+				$x = 0, $width = $this->getTuringImage()->getWidth();
+				$x < $width;
+				++$x
+			) {
 				$color = $this->makeColor();
 				$colorId = $this->getTuringImage()->getColorIdentifier($color);
 				

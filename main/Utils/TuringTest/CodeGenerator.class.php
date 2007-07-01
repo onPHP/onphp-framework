@@ -30,7 +30,7 @@
 
 			$code = null;
 			
-			for ($i = 0; $i < $this->length; $i++)
+			for ($i = 0; $i < $this->length; ++$i)
 	        	$code .= $this->generateOneSymbol();
 	        	
 			return $code;
