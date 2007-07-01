@@ -761,11 +761,17 @@
 							break;
 						
 						case MetaClassType::CLASS_ABSTRACT:
-							Assert::isTrue($info->isAbstract(), 'class '.$name.' should be abstract');
+							Assert::isTrue(
+								$info->isAbstract(),
+								'class '.$name.' expected to be abstract'
+							);
 							break;
 						
 						case MetaClassType::CLASS_FINAL:
-							Assert::isTrue($info->isFinal(), 'class '.$name.' should be final');
+							Assert::isTrue(
+								$info->isFinal(),
+								'class '.$name.' expected to be final'
+							);
 							break;
 						
 						case MetaClassType::CLASS_SPOOKED:
@@ -775,7 +781,12 @@
 					}
 					
 					foreach ($class->getInterfaces() as $interface)
-						Assert::isTrue($info->implementsInterface($interface));
+						Assert::isTrue(
+							$info->implementsInterface($interface),
+							
+							'class '.$class->getName()
+							.' expected to implement interface '.$interface
+						);
 					
 					// special handling for Enumeration instances
 					if ($class->getPattern() instanceof EnumerationClassPattern) {
