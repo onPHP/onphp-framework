@@ -859,6 +859,16 @@
 						.'/'
 					);
 					
+					$clone = clone $object;
+					
+					if (serialize($clone) == serialize($object))
+						$out->info('C', true);
+					else {
+						$out->error('C', true);
+					}
+					
+					$out->warning('/');
+					
 					try {
 						$object = $dao->getByQuery($query);
 						$form = $object->proto()->makeForm();
@@ -888,15 +898,6 @@
 					} else {
 						$out->error('H', true);
 					}
-					
-					$clone = clone $object;
-					
-					$out->warning('/');
-					
-					if (serialize($clone) == serialize($object))
-						$out->info('C', true);
-					else
-						$out->error('C', true);
 					
 					$out->warning(')')->info(', ');
 				}
