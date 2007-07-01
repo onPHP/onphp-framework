@@ -43,6 +43,13 @@
 			} catch (WrongArgumentException $e) {
 				$this->pass();
 			}
+			
+			try {
+				ClassUtils::callStaticMethod('Identifier::comp::lete::non::sense');
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				$this->pass();
+			}
 		}
 		
 		public function testSet()
