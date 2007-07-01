@@ -125,28 +125,26 @@
 			return $info->isInstance($object);
 		}
 		
-		public static function callStaticMethod($methodSignature/* ... */)
+		public static function callStaticMethod($methodSignature /* , ... */)
 		{
-			self::checkStaticMethod($methodSignature);
-			
 			$agruments = func_get_args();
 			array_shift($agruments);
 			
 			return
 				call_user_func_array(
-					split('::', $methodSignature),
+					self::checkStaticMethod($methodSignature),
 					$agruments
 				);
 		}
 		
-		/* void */ public static function checkStaticMethod($methodSignature)
+		public static function checkStaticMethod($methodSignature)
 		{
-			$nameParts = explode('::', $methodSignature);
+			$nameParts = explode('::', $methodSignature, 2);
 			
 			if (count($nameParts) != 2)
 				throw new WrongArgumentException('incorrect method signature');
 			
-			list($className, $methodName) = explode('::', $methodSignature, 2);
+			list($className, $methodName) = $nameParts;
 			
 			try {
 				$class = new ReflectionClass($className);
@@ -170,6 +168,8 @@
 				$method->isPublic(),
 				"method is not public '{$className}::{$methodName}'"
 			);
+			
+			return $nameParts;
 		}
 	}
 ?>
