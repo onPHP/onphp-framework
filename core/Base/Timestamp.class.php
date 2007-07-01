@@ -141,7 +141,7 @@
 			$this->string .= ' '.$time;
 		}
 		
-		protected function stringImport($string)
+		/* void */ protected function stringImport($string)
 		{
 			$this->int = strtotime($string);
 			
