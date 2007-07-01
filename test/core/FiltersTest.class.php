@@ -28,5 +28,23 @@
 				'qq'
 			);
 		}
+		
+		public function testUu()
+		{
+			$text = 'foo und bar';
+			
+			$this->assertEqual(
+				Filter::uudecode()->apply(Filter::uuencode()->apply($text)),
+				$text
+			);
+		}
+		
+		public function testNewLines()
+		{
+			$this->assertEqual(
+				Filter::nl2br()->apply("strange\nthings\nhappens"),
+				"strange<br />\nthings<br />\nhappens"
+			);
+		}
 	}
 ?>
