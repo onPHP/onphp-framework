@@ -821,6 +821,11 @@
 					
 					$dao = $object->dao();
 					
+					Assert::isTrue(
+						$dao->getIdName() == $class->getIdentifier()->getName(),
+						'identifier name mismatch in '.$class->getName().' class'
+					);
+					
 					try {
 						DBPool::getByDao($dao);
 					} catch (MissingElementException $e) {
