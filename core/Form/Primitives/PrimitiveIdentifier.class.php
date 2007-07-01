@@ -16,7 +16,8 @@
 	class PrimitiveIdentifier extends IdentifiablePrimitive
 	{
 		private $info = null;
-		private $methodName	= null;
+		
+		private $methodName	= 'getById';
 		
 		/**
 		 * @throws WrongArgumentException
@@ -56,9 +57,11 @@
 		**/
 		public function setMethodName($methodName)
 		{
+			$dao = $this->dao();
+			
 			Assert::isTrue(
-				method_exists($this->dao(), $methodName),
-				"knows nothing about '".get_class($this->dao())
+				method_exists($dao, $methodName),
+				"knows nothing about '".get_class($dao)
 				."::{$methodName}' method"
 			);
 			
@@ -95,30 +98,29 @@
 				);
 			
 			$className = $this->className;
-
+			
 			if (
 				isset($scope[$this->name])
 				&& $scope[$this->name] instanceof $className
 			) {
 				$value = $scope[$this->name];
-
+				
 				$this->raw = $value->getId();
 				$this->setValue($value);
-
+				
 				return $this->imported = true;
 			}
-
+			
 			$result = parent::import($scope);
 			
 			if ($result === true) {
 				try {
-					$this->value =
-						($this->methodName)
-							? $this->dao()->{$this->methodName}($this->value)
-							: $this->dao()->getById($this->value);
+					$result = $this->dao()->{$this->methodName}($this->value);
 					
 					if (!$this->value)
 						return false;
+					
+					$this->value = $result;
 					
 				} catch (ObjectNotFoundException $e) {
 					$this->value = null;
