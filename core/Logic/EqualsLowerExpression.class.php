@@ -29,11 +29,14 @@
 			return 
 				'('
 				.$dialect->toFieldString(
-					SQLFunction::create('lower', $this->left)
-				)
-				.' = '
+					is_string($this->left)
+						? mb_strtolower($this->left)
+						: SQLFunction::create('lower', $this->left)
+				).' = '
 				.$dialect->toValueString(
-					SQLFunction::create('lower', $this->right)
+					is_string($this->right)
+						? mb_strtolower($this->right)
+						: SQLFunction::create('lower', $this->right)
 				)
 				.')';
 		}

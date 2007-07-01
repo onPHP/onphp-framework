@@ -7,6 +7,9 @@
 
 2007-07-01	Konstantin V. Arkhipov
 
+	* core/Logic/EqualsLowerExpression.class.php: now optimizes out
+	lower() call for given strings.
+
 	* core/Form/Filters/NewLinesToBreaks.class.php,
 	core/Form/Filters/UnixToUnixDecode.class.php,
 	core/Form/Filters/UnixToUnixEncode.class.php: introduced.

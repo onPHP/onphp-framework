@@ -103,9 +103,16 @@
 				Expression::notSimilar('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
-				'/^\(lower\(a\) += +lower\(b\)\)$/',
+			$this->assertEqual(
+				'(a = b)',
 				Expression::eqLower('a', 'b')->toDialectString($dialect)
+			);
+			
+			$this->assertEqual(
+				'(lower(a) = lower(b))',
+				
+				Expression::eqLower(new DBValue('a'), new DBValue('b'))->
+				toDialectString($dialect)
 			);
 			
 			$this->assertWantedPattern(
@@ -194,7 +201,7 @@
 								)
 							),
 							Expression::isTrue(
-								Expression::eqLower('a', 'b')
+								Expression::eqLower(new DBField('a'), new DBField('b'))
 							),
 							Expression::eq(new DBField('g'), new DBValue(12))
 							,
