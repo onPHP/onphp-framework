@@ -146,8 +146,7 @@
 			if (count($nameParts) != 2)
 				throw new WrongArgumentException('incorrect method signature');
 			
-			$className = $nameParts[0];
-			$methodName = $nameParts[1];
+			list($className, $methodName) = explode('::', $methodSignature, 2);
 			
 			try {
 				$class = new ReflectionClass($className);
