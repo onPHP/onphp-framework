@@ -32,7 +32,6 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			// TODO: incorrect for prefix operators like '-' and 'NOT'
 			return 
 				'('
 				.$dialect->toFieldString($this->subject)

@@ -167,6 +167,11 @@
 				'/^\(a (between|BETWEEN) b (and|AND) c\)$/',
 				Expression::between('a', 'b', 'c')->toDialectString($dialect)
 			);
+			
+			$this->assertEqual(
+				'(-1 IS NULL)',
+				Expression::isNull(-1)->toDialectString($dialect)
+			);
 		}
 		
 		public function testPgGeneration()
