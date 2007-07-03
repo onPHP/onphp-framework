@@ -11,6 +11,7 @@
 		private $singleExceptAll	= null;
 		private $blockUnion			= null;
 		private $blockUnionAll		= null;
+		private $limitedOrderedUnion = null;
 		
 		public function setUp()
 		{
@@ -51,6 +52,10 @@
 				$middle, 
 				$right
 			);
+			
+			$this->limitedOrderedUnion = CombineQuery::union($left, $right)->
+				orderBy('a')->
+				limit(2, 3);
 		}
 			
 		public function testPostgresql()
@@ -91,6 +96,11 @@
 			$this->assertEqual(
 				$this->blockUnionAll->toDialectString($dialect),
 				'(SELECT "leftTable"."a", "leftTable"."b" AS "c" FROM "leftTable" UNION ALL SELECT "middleTable"."a", "middleTable"."c" FROM "middleTable" UNION ALL SELECT "rightTable"."d" AS "a", "rightTable"."c" FROM "rightTable")'
+			);
+			
+			$this->assertEqual(
+				$this->limitedOrderedUnion->toDialectString($dialect),
+				'SELECT "leftTable"."a", "leftTable"."b" AS "c" FROM "leftTable" UNION SELECT "rightTable"."d" AS "a", "rightTable"."c" FROM "rightTable" ORDER BY "a" LIMIT 2 OFFSET 3'
 			);
 		}
 	}

@@ -28,9 +28,9 @@
 		/**
 		 * @return OrderChain
 		**/
-		public function add(MappableObject $order)
+		public function add($order)
 		{
-			$this->chain[] = $order;
+			$this->chain[] = $this->makeOrder($order);
 			
 			return $this;
 		}
@@ -38,12 +38,12 @@
 		/**
 		 * @return OrderChain
 		**/
-		public function prepend(MappableObject $order)
+		public function prepend($order)
 		{
 			if ($this->chain)
-				array_unshift($this->chain, $order);
+				array_unshift($this->chain, $this->makeOrder($order));
 			else
-				$this->chain[] = $order;
+				$this->chain[] = $this->makeOrder($order);
 			
 			return $this;
 		}
@@ -90,6 +90,19 @@
 				$out .= $order->toDialectString($dialect).', ';
 			
 			return rtrim($out, ', ');
+		}
+		
+		private function makeOrder($object)
+		{
+			if ($object instanceof OrderBy)
+				return $object;
+			elseif ($object instanceof DialectString)
+				return new OrderBy($object);
+				
+			return
+				new OrderBy(
+					new DBField($object)
+				);
 		}
 	}
 ?>

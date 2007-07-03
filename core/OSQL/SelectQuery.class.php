@@ -489,15 +489,16 @@
 		**/
 		private function makeOrder($field, $table = null)
 		{
-			if ($field instanceof OrderBy)
+			if (
+				$field instanceof OrderBy
+				|| $field instanceof DialectString
+			)
 				return $field;
-			elseif ($field instanceof DialectString)
-				return new OrderBy($field);
-			
-			return
-				new OrderBy(
-					new DBField($field, $this->getLastTable($table))
-				);
+			else 
+				return
+					new OrderBy(
+						new DBField($field, $this->getLastTable($table))
+					);
 		}
 	}
 ?>

@@ -1,5 +1,12 @@
 # $Id$
 
+2007-07-03	Anton E. Lebedevich
+
+	* core/OSQL/QueryCombination.class.php: added orderBy, limit, offset.
+
+	* core/OSQL/SelectQuery.class.php, core/OSQL/OrderChain.class.php: type
+	determination logic moved from SelectQuery to OrderChain.
+
 2007-07-01	Dmitry E. Demidov
 
 	* core/Form/Primitives/PrimitiveIdentifier.class.php: added ability
