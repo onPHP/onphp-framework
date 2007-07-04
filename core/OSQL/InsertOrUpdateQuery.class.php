@@ -62,7 +62,10 @@
 				$this->set($field, null);
 			elseif ($object instanceof Identifiable)
 				$this->set($field, $object->getId());
-			elseif ($object instanceof Stringable)
+			elseif (
+				$object instanceof Stringable
+				&& !$object instanceof Range
+			)
 				$this->set($field, $object->toString());
 			elseif ($object instanceof Range)
 				$this->
