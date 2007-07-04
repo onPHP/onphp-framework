@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Logic
 	**/
-	final class PostfixUnaryExpression implements LogicalObject, MappableObject
+	final class PostfixUnaryExpression extends UnaryExpression
 	{
 		const IS_NULL			= 'IS NULL';
 		const IS_NOT_NULL		= 'IS NOT NULL';
@@ -21,15 +21,6 @@
 		const IS_TRUE			= 'IS TRUE';
 		const IS_FALSE			= 'IS FALSE';
 
-		private $subject	= null;
-		private $logic		= null;
-		
-		public function __construct($subject, $logic)
-		{
-			$this->subject	= $subject;
-			$this->logic	= $logic;
-		}
-		
 		public function toDialectString(Dialect $dialect)
 		{
 			return 
@@ -38,7 +29,7 @@
 				.' '.$this->logic
 				.')'; 
 		}
-		
+
 		/**
 		 * @return PostfixUnaryExpression
 		**/
