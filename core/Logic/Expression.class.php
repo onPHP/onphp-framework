@@ -342,7 +342,23 @@
 		{
 			return new LogicalChain();
 		}
+		
+		/**
+		 * @return PrefixUnaryExpression
+		**/
+		public static function not($field)
+		{
+			return new PrefixUnaryExpression(PrefixUnaryExpression::NOT, $field);
+		}
 
+		/**
+		 * @return PrefixUnaryExpression
+		**/
+		public static function minus($field)
+		{
+			return new PrefixUnaryExpression(PrefixUnaryExpression::MINUS, $field);
+		}
+		
 		/**
 		 * @return LogicalChain
 		**/

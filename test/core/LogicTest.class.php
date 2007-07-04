@@ -172,6 +172,16 @@
 				'(-1 IS NULL)',
 				Expression::isNull(-1)->toDialectString($dialect)
 			);
+			
+			$this->assertEqual(
+				'(NOT a)',
+				Expression::not('a')->toDialectString($dialect)
+			);
+			
+			$this->assertEqual(
+				'(- a)',
+				Expression::minus('a')->toDialectString($dialect)
+			);
 		}
 		
 		public function testPgGeneration()
@@ -286,6 +296,14 @@
 			
 			$this->assertFalse(
 				Expression::between(new FormField('c'), new FormField('d'), new FormField('e'))->toBoolean($form)
+			);
+			
+			$this->assertFalse(
+				Expression::not(new FormField('b'))->toBoolean($form)
+			);
+			
+			$this->assertTrue(
+				Expression::not(new FormField('f'))->toBoolean($form)
 			);
 			
 		}
