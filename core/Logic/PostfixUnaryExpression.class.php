@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Logic
 	**/
-	final class UnaryExpression implements LogicalObject, MappableObject
+	final class PostfixUnaryExpression implements LogicalObject, MappableObject
 	{
 		const IS_NULL			= 'IS NULL';
 		const IS_NOT_NULL		= 'IS NOT NULL';
@@ -40,7 +40,7 @@
 		}
 		
 		/**
-		 * @return UnaryExpression
+		 * @return PostfixUnaryExpression
 		**/
 		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
 		{
