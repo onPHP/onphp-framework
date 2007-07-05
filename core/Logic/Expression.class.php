@@ -112,35 +112,35 @@
 		}
 		
 		/**
-		 * @return UnaryExpression
+		 * @return PostfixUnaryExpression
 		**/
 		public static function notNull($field)
 		{
-			return new UnaryExpression($field, UnaryExpression::IS_NOT_NULL);
+			return new PostfixUnaryExpression($field, PostfixUnaryExpression::IS_NOT_NULL);
 		}
 		
 		/**
-		 * @return UnaryExpression
+		 * @return PostfixUnaryExpression
 		**/
 		public static function isNull($field)
 		{
-			return new UnaryExpression($field, UnaryExpression::IS_NULL);
+			return new PostfixUnaryExpression($field, PostfixUnaryExpression::IS_NULL);
 		}
 		
 		/**
-		 * @return UnaryExpression
+		 * @return PostfixUnaryExpression
 		**/
 		public static function isTrue($field)
 		{
-			return new UnaryExpression($field, UnaryExpression::IS_TRUE);
+			return new PostfixUnaryExpression($field, PostfixUnaryExpression::IS_TRUE);
 		}
 		
 		/**
-		 * @return UnaryExpression
+		 * @return PostfixUnaryExpression
 		**/
 		public static function isFalse($field)
 		{
-			return new UnaryExpression($field, UnaryExpression::IS_FALSE);
+			return new PostfixUnaryExpression($field, PostfixUnaryExpression::IS_FALSE);
 		}
 		
 		/**
@@ -342,7 +342,23 @@
 		{
 			return new LogicalChain();
 		}
+		
+		/**
+		 * @return PrefixUnaryExpression
+		**/
+		public static function not($field)
+		{
+			return new PrefixUnaryExpression(PrefixUnaryExpression::NOT, $field);
+		}
 
+		/**
+		 * @return PrefixUnaryExpression
+		**/
+		public static function minus($field)
+		{
+			return new PrefixUnaryExpression(PrefixUnaryExpression::MINUS, $field);
+		}
+		
 		/**
 		 * @return LogicalChain
 		**/

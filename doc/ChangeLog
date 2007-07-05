@@ -1,5 +1,18 @@
 # $Id$
 
+2007-07-05	Anton E. Lebedevich
+
+	* main/Utils/TidyValidator.class.php: validationErrors renamed to
+	messages, added getErrorCount() and getWarningCount().
+
+2007-07-04	Anton E. Lebedevich
+
+	* core/Logic/PostfixUnaryExpression.class.php: renamed from
+	UnaryExpression.
+
+	* core/Logic/PrefixUnaryExpression.class.php: implemented unary '-' and
+	unary logical 'not'.
+
 2007-07-03	Anton E. Lebedevich
 
 	* core/OSQL/QueryCombination.class.php: added orderBy, limit, offset.
