@@ -17,8 +17,8 @@
 	**/
 	final class TidyValidator
 	{
-		private $content			= null;
-		private $validationErrors	= null;
+		private $content	= null;
+		private $messages	= null;
 		
 		private $config				= array(
 			'output-xhtml'		=> true,
@@ -68,19 +68,9 @@
 			return $this->content;
 		}
 		
-		/**
-		 * @return TidyValidator
-		**/
-		public function setValidationErrors($errors)
+		public function getMessages()
 		{
-			$this->validationErrors = $errors;
-			
-			return $this;
-		}
-		
-		public function getValidationErrors()
-		{
-			return $this->validationErrors;
+			return $this->messages;
 		}
 		
 		/**
@@ -266,9 +256,8 @@
 					}
 			}
 			
-			$this->
-				setContent($outContent[1][0])->
-				setValidationErrors($out);
+			$this->messages = $out;
+			$this->content = $outContent[1][0];
 			
 			return $this;
 		}
