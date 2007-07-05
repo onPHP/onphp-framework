@@ -17,8 +17,10 @@
 	**/
 	final class TidyValidator
 	{
-		private $content	= null;
-		private $messages	= null;
+		private $content		= null;
+		private $messages		= null;
+		private $errorCount		= null;
+		private $warningCount	= null;
 		
 		private $config				= array(
 			'output-xhtml'		=> true,
@@ -132,6 +134,16 @@
 			return $this->encoding;
 		}
 		
+		public function getErrorCount()
+		{
+			return $this->errorCount;
+		}
+		
+		public function getWarningCount()
+		{
+			return $this->warningCount;
+		}
+		
 		/**
 		 * Do the content validation and repair it.
 		 * 
@@ -184,22 +196,24 @@
 				$this->getEncoding()
 			);
 			
-			$errors = tidy_get_error_buffer($tidy);
+			$this->errorCount = tidy_error_count($tidy);
+			$this->warningCount = tidy_warning_count($tidy);
+			
+			$rawMessages = tidy_get_error_buffer($tidy);
 			$out = null;
 			
-			if (!empty($errors)) {
+			if (!empty($rawMessages)) {
 				$errorStrings =
 					explode(
 						"\n",
-						htmlspecialchars($errors)
+						htmlspecialchars($rawMessages)
 					);
 				
 				foreach ($errorStrings as $string) {
 					list ($line, $num, $col, $rest) = explode(' ', $string, 4);
 					
-					$out =
-						$out
-						.(
+					$out .=
+						(
 							$out == null
 								? null
 								: "\n"

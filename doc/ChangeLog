@@ -3,7 +3,7 @@
 2007-07-05	Anton E. Lebedevich
 
 	* main/Utils/TidyValidator.class.php: validationErrors renamed to
-	messages.
+	messages, added getErrorCount() and getWarningCount().
 
 2007-07-04	Anton E. Lebedevich
 
