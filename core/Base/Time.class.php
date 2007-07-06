@@ -59,9 +59,9 @@
 						
 						$this->setHour(substr($input, 0, 2));
 						break;
-					
+						
 					case 3:
-
+						
 						$assumedHour = substr($input, 0, 2);
 						
 						if ($assumedHour > 12)
@@ -72,20 +72,20 @@
 							$this->
 								setHour($assumedHour)->
 								setMinute($input[2].'0');
-
+						
 						break;
-
+					
 					case 4:
 					case 5:
 					case 6:
-
+						
 						$this->
 							setHour(substr($input, 0, 2))->
 							setMinute(substr($input, 2, 4))->
 							setSecond(substr($input, 4, 6));
 						
 						break;
-					
+						
 					default:
 						throw new WrongArgumentException('unknown format');
 				}
@@ -107,12 +107,12 @@
 			Assert::isTrue(
 				$hour >= 0 &&
 				$hour <= 24,
-				"wrong hour specified"
+				'wrong hour specified'
 			);
 			
 			$this->hour = $hour;
 			$this->string = null;
-
+			
 			return $this;
 		}
 		
@@ -174,7 +174,7 @@
 					$this->doublize($this->hour)
 					.$delimiter
 					.$this->doublize($this->minute);
-
+			
 			return $this->string;
 		}
 		
@@ -182,11 +182,11 @@
 		public function toFullString($delimiter = ':')
 		{
 			return
-				$this->toString($delimiter).
-				(
+				$this->toString($delimiter)
+				.$delimiter.(
 					$this->second
-						? $delimiter.$this->doublize($this->second)
-						: $delimiter.'00'
+						? $this->doublize($this->second)
+						: '00'
 				);
 		}
 		
@@ -205,13 +205,10 @@
 				+ ($this->minute * 60)
 				+ $this->second;
 		}
-
+		
 		private function doublize($int)
 		{
-			return
-				$int <= 9
-					? '0'.$int
-					: $int;
+			return sprintf('%02d', $int);
 		}
 	}
 ?>
