@@ -39,8 +39,7 @@
 			while ($mseconds < 10000) {
 				try {
 					mkdir($this->directory.$key, 0700, false);
-					$this->pool[$key] = true;
-					break;
+					return $this->pool[$key] = true;
 				} catch (BaseException $e) {
 					// still exist
 					$mseconds += 200;
@@ -48,7 +47,7 @@
 				}
 			}
 			
-			return isset($this->pool[$key]);
+			return false;
 		}
 		
 		public function free($key)
