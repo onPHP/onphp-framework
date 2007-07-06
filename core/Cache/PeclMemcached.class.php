@@ -24,7 +24,7 @@
 		const DEFAULT_HOST		= '127.0.0.1';
 		
 		private $instance = null;
-
+		
 		/**
 		 * @return PeclMemcached
 		**/
@@ -77,21 +77,21 @@
 			} catch (BaseException $e) {
 				$this->alive = false;
 			}
-
+			
 			return parent::clean();
 		}
 		
 		public function get($index)
 		{
 			try {
-				$result = $this->instance->get($index);
+				return $this->instance->get($index);
 			} catch (BaseException $e) {
 				$this->alive = false;
 				
 				return null;
 			}
 			
-			return $result;
+			Assert::isUnreachable();
 		}
 		
 		public function delete($index)
