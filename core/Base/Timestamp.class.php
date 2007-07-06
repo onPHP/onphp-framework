@@ -23,7 +23,7 @@
 		private $hour		= null;
 		private $minute		= null;
 		private $second		= null;
-
+		
 		/**
 		 * @return Timestamp
 		**/
@@ -73,7 +73,7 @@
 				$this->toDate($dateDelimiter).' '
 				.$this->toTime($timeDelimiter, $secondDelimiter);
 		}
-
+		
 		public function getHour()
 		{
 			return $this->hour;
@@ -101,13 +101,13 @@
 			else
 				return parent::getDayStartStamp();
 		}
-
+		
 		/**
 		 * ISO 8601 time string
 		**/
-		public function toISOString($convertToUTC = true)
+		public function toIsoString($convertToUtc = true)
 		{
-			if ($convertToUTC)
+			if ($convertToUtc)
 				return date('Y-m-d\TH:i:s\Z', $this->int - date('Z', $this->int));
 			else
 				return date('Y-m-d\TH:i:sO', $this->int);
@@ -154,7 +154,7 @@
 				$this->string = $string;
 			} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
 				$this->string = $string . ' 00:00:00';
-			elseif ($this->int !== false) 
+			elseif ($this->int !== false)
 				$this->string = date($this->getFormat(), $this->int);
 		}
 	}

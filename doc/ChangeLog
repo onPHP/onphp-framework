@@ -13,6 +13,10 @@
 	* core/Logic/PrefixUnaryExpression.class.php: implemented unary '-' and
 	unary logical 'not'.
 
+2007-07-03	Konstantin V. Arkhipov
+
+	* core/Base/Timestamp.class.php: toISOString() renamed toIsoString().
+
 2007-07-03	Anton E. Lebedevich
 
 	* core/OSQL/QueryCombination.class.php: added orderBy, limit, offset.
