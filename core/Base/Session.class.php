@@ -17,7 +17,7 @@
 	**/
 	final class SessionNotStartedException extends BaseException
 	{
-		function __construct()
+		public function __construct()
 		{
 			return
 				parent::__construct(
@@ -25,7 +25,7 @@
 				);
 		}
 	}
-
+	
 	/**
 	 * Simple static wrapper around session_*() functions.
 	 * 
@@ -44,17 +44,19 @@
 		/**
 		 * @throws SessionNotStartedException
 		**/
-		public static function destroy()
+		/* void */ public static function destroy()
 		{
 			if (!self::$isStarted)
 				throw new SessionNotStartedException();
-				
+			
 			self::$isStarted = false;
+			
 			try {
 				session_destroy();
 			} catch (BaseException $e) {
 				// stfu
 			}
+			
 			setcookie(session_name(), null, 0, '/');
 		}
 		
@@ -66,11 +68,11 @@
 		/**
 		 * @throws SessionNotStartedException
 		**/
-		public static function assign($var, $val)
+		/* void */ public static function assign($var, $val)
 		{
 			if (!self::isStarted())
 				throw new SessionNotStartedException();
-				
+			
 			$_SESSION[$var] = $val;
 		}
 		
@@ -82,14 +84,15 @@
 		{
 			if (!self::isStarted())
 				throw new SessionNotStartedException();
-				
+			
 			if (!func_num_args())
 				throw new WrongArgumentException('missing argument(s)');
-				
+			
 			foreach (func_get_args() as $arg) {
 				if (!isset($_SESSION[$arg]))
 					return false;
 			}
+			
 			return true;
 		}
 		
@@ -100,7 +103,7 @@
 		{
 			if (!self::isStarted())
 				throw new SessionNotStartedException();
-				
+			
 			return isset($_SESSION[$var]) ? $_SESSION[$var] : null;
 		}
 		
@@ -113,7 +116,7 @@
 		 * @throws WrongArgumentException
 		 * @throws SessionNotStartedException
 		**/
-		public static function drop(/* ... */)
+		/* void */ public static function drop(/* ... */)
 		{
 			if (!self::isStarted())
 				throw new SessionNotStartedException();
@@ -128,11 +131,11 @@
 		/**
 		 * @throws SessionNotStartedException
 		**/
-		public static function dropAll()
+		/* void */ public static function dropAll()
 		{
 			if (!self::isStarted())
 				throw new SessionNotStartedException();
-				
+			
 			if ($_SESSION) {
 				foreach (array_keys($_SESSION) as $key) {
 					self::drop($key);
@@ -148,11 +151,11 @@
 		/**
 		 * assigns to $_SESSION scope variables defined in given array
 		**/
-		public static function arrayAssign(&$scope, $array)
+		/* void */ public static function arrayAssign(&$scope, $array)
 		{
 			Assert::isArray($array);
 			
-			foreach ($array as &$var) {
+			foreach ($array as $var) {
 				if (isset($scope[$var])) {
 					$_SESSION[$var] = $scope[$var];
 				}
@@ -166,8 +169,8 @@
 		{
 			if (!self::isStarted())
 				throw new SessionNotStartedException();
-				
-			return session_name();			
+			
+			return session_name();
 		}
 		
 		/**
@@ -177,7 +180,7 @@
 		{
 			if (!self::isStarted())
 				throw new SessionNotStartedException();
-				
+			
 			return session_id();
 		}
 	}
