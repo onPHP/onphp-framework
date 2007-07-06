@@ -30,7 +30,11 @@
 				$qs = array();
 				
 				foreach ($model->getList() as $key => $val) {
-					if (!is_object($val) && !is_array($val))
+					if (
+						!is_object($val) 
+						&& !is_array($val)
+						&& ($val !== false)
+					)
 						$qs[] = $key.'='.$val;
 				}
 			

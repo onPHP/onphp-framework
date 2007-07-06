@@ -1,5 +1,10 @@
 # $Id$
 
+2007-07-06	Dmitry E. Pismenny
+
+	* main/Flow/RedirectView.class.php: fixed converting boolean value from 
+	model into query
+
 2007-07-05	Anton E. Lebedevich
 
 	* main/Utils/TidyValidator.class.php: validationErrors renamed to
