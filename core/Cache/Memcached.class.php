@@ -24,10 +24,10 @@
 	{
 		const DEFAULT_PORT		= 11211;
 		const DEFAULT_HOST		= '127.0.0.1';
-		const DEFAULT_BUFFER	= 8192;
+		const DEFAULT_BUFFER	= 16384;
 		
 		private $link		= null;
-
+		
 		private $buffer		= Memcached::DEFAULT_BUFFER;
 		
 		public static function create(
@@ -72,12 +72,12 @@
 		{
 			if (!$this->link)
 				return null;
-
+			
 			$command = "get {$index}\r\n";
 			
 			if (!$this->sendRequest($command))
 				return null;
-
+			
 			$buffer = null;
 			$lenght = 0;
 			$bytesRead = 0;
@@ -85,20 +85,20 @@
 			while ($line = fread($this->link, $this->buffer)) {
 				if ($line === false)
 					return null;
-
+				
 				if ($lenght === 0) {
 					$header = substr($line, 0, strpos($line, "\r\n"));
 					
 					if ($header === 'ERROR')
 						return null;
-
+					
 					if ($header !== 'END') {
 						$array = explode(' ', $header, 4);
-
+						
 						if (count($array) <> 4)
 							continue;
 						else
-							list (
+							list(
 								$crap, $key, $flags, $bytes
 							) = explode(' ', $header);
 						
@@ -115,7 +115,7 @@
 								);
 						} else
 							return null;
-	
+						
 						$lenght = $bytes;
 					} else
 						return null;
@@ -134,10 +134,10 @@
 						
 						if ($flags & 2)
 							$result = gzuncompress($result);
-
+						
 						if ($flags & 1)
 							$result = unserialize($result);
-
+						
 						return $result;
 					} else
 						return null;
@@ -155,7 +155,7 @@
 					: "delete {$index}\r\n";
 			
 			$result = $this->sendRequest($command);
-
+			
 			try {
 				$response = trim(fread($this->link, $this->buffer));
 			} catch (BaseException $e) {
@@ -167,20 +167,20 @@
 			else
 				return false;
 		}
-
+		
 		protected function store(
 			$method, $index, &$value, $expires = Cache::EXPIRES_MINIMUM
 		)
 		{
 			if ($expires === Cache::DO_NOT_CACHE)
 				return false;
-
+			
 			$flags = 0;
 			
 			if (!is_scalar($value) || $value === Cache::NOT_FOUND) {
 				$packed = serialize($value);
 				$flags |= 1;
-
+				
 				if ($this->compress) {
 					$compressed = gzcompress($packed);
 					
@@ -207,7 +207,7 @@
 			elseif ($response === 'ERROR')
 				return false;
 		}
-
+		
 		private function sendRequest($command)
 		{
 			$commandLenght = strlen($command);
