@@ -1,8 +1,13 @@
 # $Id$
 
-2007-07-05	Vladimir A. Altuchov
+2007-07-06	Dmitry E. Pismenny
 
-	* main/Base/TimestampRange.class.php: overloaded getStartStamp() и
+	* main/Flow/RedirectView.class.php: fixed converting boolean value from 
+	model into query
+
+2007-07-06	Vladimir A. Altuchov
+
+	* main/Base/TimestampRange.class.php: overloaded getStartStamp() and
 	getEndStamp() for correct compare Timestamp object.
 
 2007-07-05	Anton E. Lebedevich
