@@ -28,7 +28,7 @@
 		{
 			return LiteDialect::me();
 		}
-
+		
 		/**
 		 * @return SQLite
 		**/
@@ -38,13 +38,13 @@
 				$this->link = sqlite_popen($this->basename);
 			else 
 				$this->link = sqlite_open($this->basename);
-
+			
 			if (!$this->link)
 				throw new DatabaseException(
 					'can not open SQLite base: '
 					.sqlite_error_string(sqlite_last_error($this->link))
 				);
-
+			
 			return $this;
 		}
 		
@@ -55,7 +55,7 @@
 		{
 			if ($this->isConnected())
 				sqlite_close($this->link);
-
+			
 			return $this;
 		}
 		
@@ -88,14 +88,14 @@
 					$e = 'DuplicateObjectException';
 				else
 					$e = 'DatabaseException';
-					
+				
 				throw new $e(
 					sqlite_error_string($code).' - '.$queryString,
 					$code
 				);
 			}
 		}
-
+		
 		/**
 		 * Same as query, but returns number of affected rows
 		 * Returns number of affected rows in insert/update queries
@@ -110,12 +110,12 @@
 			$res = $this->query($query);
 			
 			if ($this->checkSingle($res)) {
+				if (!$row = sqlite_fetch_array($res, SQLITE_NUM))
+					return null;
+				
 				$names = $query->getFieldNames();
 				$width = count($names);
 				$assoc = array();
-
-				if (!$row = sqlite_fetch_array($res, SQLITE_NUM))
-					return null;
 				
 				for ($i = 0; $i < $width; ++$i)
 					$assoc[$names[$i]] = $row[$i];
@@ -157,7 +157,7 @@
 					
 					$array[] = $assoc;
 				}
-
+				
 				return $array;
 			} else
 				return null;
