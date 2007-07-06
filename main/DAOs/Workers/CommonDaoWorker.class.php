@@ -169,7 +169,7 @@
 				foreach ($ids as $id) {
 					$cached = $this->getCachedById($id);
 
-					if ($cached)
+					if ($cached && ($cached !== Cache::NOT_FOUND))
 						$list[] = $cached;
 					else
 						$toFetch[] = $id;
