@@ -137,7 +137,10 @@
 			$toFetch = array();
 			
 			foreach ($ids as $id) {
-				if (!$cached = $this->getCachedById($id)) {
+				if (
+					!($cached = $this->getCachedById($id))
+					|| ($cached === Cache::NOT_FOUND)
+				) {
 					$toFetch[] = $id;
 				} else {
 					$list[] = $cached;
