@@ -73,10 +73,10 @@
 			
 			if ($this->isoLevel)
 				$begin .= ' '.$this->isoLevel->toString();
-
+			
 			if ($this->mode)
 				$begin .= ' '.$this->mode->toString();
-
+			
 			return $begin.";\n";
 		}
 	}
