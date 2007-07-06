@@ -23,7 +23,7 @@
 	final class Cache extends StaticFactory implements Instantiatable
 	{
 		const NOT_FOUND			= 'nil';
-
+		
 		const EXPIRES_FOREVER	= 604800; // 7 days
 		const EXPIRES_MAXIMUM	= 21600; // 6 hrs
 		const EXPIRES_MEDIUM	= 3600; // 1 hr
@@ -50,13 +50,13 @@
 			
 			return self::$peer;
 		}
-
-		public static function setPeer(CachePeer $peer)
+		
+		/* void */ public static function setPeer(CachePeer $peer)
 		{
 			self::$peer = $peer;
 		}
 		
-		public static function setDefaultWorker($worker)
+		/* void */ public static function setDefaultWorker($worker)
 		{
 			Assert::isTrue(class_exists($worker, true));
 			
