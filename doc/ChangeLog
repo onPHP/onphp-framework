@@ -15,7 +15,8 @@
 
 2007-07-03	Konstantin V. Arkhipov
 
-	* core/Base/Timestamp.class.php: toISOString() renamed toIsoString().
+	* core/Base/Timestamp.class.php: toISOString() renamed to
+	toIsoString().
 
 2007-07-03	Anton E. Lebedevich
 
