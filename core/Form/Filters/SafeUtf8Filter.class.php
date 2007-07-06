@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Filters
 	**/
-	final class SafeUtf8Filter extends BaseFilter implements Instantiatable
+	final class SafeUtf8Filter extends BaseFilter
 	{
 		/**
 		 * @return SafeUtf8Filter

@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Filters
 	**/
-	final class Paragraphizer extends BaseFilter implements Instantiatable
+	final class Paragraphizer extends BaseFilter
 	{
 		/**
 		 * @return Paragraphizer

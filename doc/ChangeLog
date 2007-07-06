@@ -5,6 +5,11 @@
 	* main/Utils/TidyValidator.class.php: validationErrors renamed to
 	messages, added getErrorCount() and getWarningCount().
 
+2007-07-04	Konstantin V. Arkhipov
+
+	* core/Form/Filters/BaseFilter.class.php: now implements
+	Instantiatable too.
+
 2007-07-04	Anton E. Lebedevich
 
 	* core/Logic/PostfixUnaryExpression.class.php: renamed from

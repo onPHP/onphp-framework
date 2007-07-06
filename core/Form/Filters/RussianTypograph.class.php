@@ -15,7 +15,7 @@
 	 * 
 	 * @see http://www.artlebedev.ru/tools/typograf/
 	**/
-	final class RussianTypograph extends BaseFilter implements Instantiatable
+	final class RussianTypograph extends BaseFilter
 	{
 		const MAGIC_DELIMITER = '<>'; // brilliant!
 		

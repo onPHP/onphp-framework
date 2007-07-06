@@ -11,8 +11,11 @@
 /* $Id$ */
 
 
-	class DateRangeDisplayFilter extends BaseFilter implements Instantiatable
+	class DateRangeDisplayFilter extends BaseFilter
 	{
+		/**
+		 * @return DateRangeDisplayFilter
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance('DateRangeDisplayFilter');
