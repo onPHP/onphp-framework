@@ -42,7 +42,7 @@
 		{
 			throw new UnsupportedMethodException();
 		}
-
+		
 		public function connect(
 			$user, $pass, $host,
 			$base = null, $persistent = false
@@ -52,15 +52,15 @@
 				$this->link = sqlite_popen($base);
 			else 
 				$this->link = sqlite_open($base);
-
+			
 			$this->persistent = $persistent;
-
+			
 			if (!$this->link)
 				throw new DatabaseException(
 					'can not open SQLite base: '
 					.sqlite_error_string(sqlite_last_error($this->link))
 				);
-
+			
 			return $this;
 		}
 		
@@ -68,7 +68,7 @@
 		{
 			if ($this->isConnected())
 				sqlite_close($this->link);
-
+			
 			return $this;
 		}
 		
@@ -104,7 +104,7 @@
 				);
 			}
 		}
-
+		
 		/**
 		 * Same as query, but returns number of affected rows
 		 * Returns number of affected rows in insert/update queries
@@ -140,12 +140,12 @@
 			$res = $this->query($query);
 			
 			if ($this->checkSingle($res)) {
+				if (!$row = sqlite_fetch_array($res, SQLITE_NUM))
+					return null;
+				
 				$names = $query->getFieldNames();
 				$width = count($names);
 				$assoc = array();
-
-				if (!$row = sqlite_fetch_array($res, SQLITE_NUM))
-					return null;
 				
 				for ($i = 0; $i < $width; ++$i)
 					$assoc[$names[$i]] = $row[$i];
@@ -212,7 +212,7 @@
 					
 					$array[] = $assoc;
 				}
-
+				
 				return $array;
 			} else
 				return null;
