@@ -18,6 +18,32 @@
 	**/
 	class TimestampRange extends DateRange
 	{
+		/**
+		 * @return TimestampRange
+		**/
+		public static function create($start = null, $end = null)
+		{
+			return new self($start, $end);
+		}
+		
+		public function getStartStamp() // null if start is null
+		{
+			if ($start = $this->getStart()) {
+				return $start->toStamp();
+			}
+			
+			return null;
+		}
+
+		public function getEndStamp() // null if end is null
+		{
+			if ($end = $this->getEnd()) {
+				return $end->toStamp();
+			}
+			
+			return null;
+		}
+		
 		protected function getObjectName()
 		{
 			return 'Timestamp';

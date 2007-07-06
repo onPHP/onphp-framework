@@ -1,5 +1,10 @@
 # $Id$
 
+2007-07-05	Vladimir A. Altuchov
+
+	* main/Base/TimestampRange.class.php: overloaded getStartStamp() и
+	getEndStamp() for correct compare Timestamp object.
+
 2007-07-05	Anton E. Lebedevich
 
 	* main/Utils/TidyValidator.class.php: validationErrors renamed to
