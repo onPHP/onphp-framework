@@ -56,7 +56,7 @@
 			
 			// sync classes
 			$segment = shm_attach(
-				self::INDEX_SEGMENT, self::DEFAULT_SEGMENT_SIZE, 0600
+				self::INDEX_SEGMENT, self::DEFAULT_SEGMENT_SIZE, ONPHP_IPC_PERMS
 			);
 			
 			try {
@@ -95,7 +95,7 @@
 					$this->delete($key);
 					return null;
 				}
-
+				
 				return $this->restoreData($stored['value']);
 				
 			} catch (BaseException $e) {
@@ -159,7 +159,7 @@
 			
 			if ($expires < parent::TIME_SWITCH)
 				$expires += time();
-
+			
 			try {
 				shm_put_var(
 					$segment,
@@ -179,7 +179,7 @@
 			
 			Assert::isUnreachable();
 		}
-
+		
 		private function getSegment()
 		{
 			$class = $this->getClassName();
@@ -190,9 +190,9 @@
 					isset($this->customSized[$class])
 						? $this->customSized[$class]
 						: $this->defaultSize,
-					0600
+					ONPHP_IPC_PERMS
 				);
-
+			
 			return self::$attached[$class];
 		}
 		
