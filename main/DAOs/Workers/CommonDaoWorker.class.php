@@ -159,11 +159,11 @@
 				
 				$list = array();
 				$toFetch = array();
-
+				
 				foreach ($ids as $id) {
 					$cached = $this->getCachedById($id);
-
-					if ($cached)
+					
+					if ($cached && ($cached !== Cache::NOT_FOUND))
 						$list[] = $this->dao->fetchEncapsulants($cached);
 					else
 						$toFetch[] = $id;
