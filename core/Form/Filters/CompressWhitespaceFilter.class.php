@@ -17,16 +17,14 @@
 	 * 
 	 * @ingroup Filters
 	**/
-	final class CompressWhitespaceFilter
-		extends BaseFilter
-		implements Instantiatable
+	final class CompressWhitespaceFilter extends BaseFilter
 	{
 		/**
 		 * @return CompressWhitespaceFilter
 		**/
 		public static function me()
 		{
-			return Singleton::getInstance('CompressWhitespaceFilter');
+			return Singleton::getInstance(__CLASS__);
 		}
 		
 		public function apply($value)

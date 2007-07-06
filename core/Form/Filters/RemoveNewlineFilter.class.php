@@ -15,14 +15,14 @@
 	 * 
 	 * @ingroup Filters
 	**/
-	class RemoveNewlineFilter extends BaseFilter implements Instantiatable
+	class RemoveNewlineFilter extends BaseFilter
 	{
 		/**
 		 * @return RemoveNewLineFilter
 		 */
 		public static function me()
 		{
-			return Singleton::getInstance('RemoveNewlineFilter');
+			return Singleton::getInstance(__CLASS__);
 		}
 		
 		public function apply($value)

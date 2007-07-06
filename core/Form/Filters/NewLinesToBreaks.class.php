@@ -17,6 +17,14 @@
 	**/
 	final class NewLinesToBreaks extends BaseFilter
 	{
+		/**
+		 * @return NewLinesToBreaks
+		**/
+		public static function me()
+		{
+			return Singleton::getInstance(__CLASS__);
+		}
+		
 		public function apply($value)
 		{
 			return nl2br($value);

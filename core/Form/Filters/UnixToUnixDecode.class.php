@@ -17,6 +17,14 @@
 	**/
 	final class UnixToUnixDecode extends BaseFilter
 	{
+		/**
+		 * @return UnixToUnixDecode
+		**/
+		public static function me()
+		{
+			return Singleton::getInstance(__CLASS__);
+		}
+		
 		public function apply($value)
 		{
 			return convert_uudecode($value);

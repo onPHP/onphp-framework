@@ -15,8 +15,16 @@
 	 * 
 	 * @ingroup Filters
 	**/
-	final class HtmlSpecialCharsFilter extends BaseFilter
+	final class HtmlSpecialCharsFilter
 	{
+		/**
+		 * @return HtmlSpecialCharsFilter
+		**/
+		public static function me()
+		{
+			return Singleton::getInstance(__CLASS__);
+		}
+		
 		public function apply($value)
 		{
 			return htmlspecialchars($value);
