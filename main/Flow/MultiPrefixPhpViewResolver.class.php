@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup Flow
 	**/
-	class MultiPrefixPhpViewResolver implements ViewResolver
+	final class MultiPrefixPhpViewResolver implements ViewResolver
 	{
 		private $prefixes	= array();
 		private $postfix	= EXT_TPL;
@@ -88,10 +88,12 @@
 						);
 				}
 			}
-
-			throw new ObjectNotFoundException('can\'t resolve view:'.$viewName);
+			
+			throw new WrongArgumentException(
+				'can not resolve view: '.$viewName
+			);
 		}
-
+		
 		/**
 		 * @return MultiPrefixPhpView
 		 */
@@ -101,7 +103,7 @@
 			
 			return $this;
 		}
-
+		
 		public function getViewClassName()
 		{
 			return $this->viewClassName;
