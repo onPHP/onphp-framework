@@ -22,7 +22,10 @@
 					return $this->import(
 						array($this->name => $value->getList())
 					);
-				elseif ($list = $value->getList()) {
+				elseif (
+					$value->getParentObject()->getId()
+					&& ($list = $value->getList())
+				) {
 					return $this->import(
 						array($this->name => ArrayUtils::getIdsArray($list))
 					);
