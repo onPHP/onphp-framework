@@ -7,8 +7,8 @@
 
 2007-07-06	Dmitry E. Pismenny
 
-	* main/Flow/RedirectView.class.php: fixed converting boolean value from 
-	model into query
+	* main/Flow/RedirectView.class.php: special handling for boolean
+	values.
 
 2007-07-06	Vladimir A. Altuchov
 
