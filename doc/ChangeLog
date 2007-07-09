@@ -1,5 +1,9 @@
 # $Id$
 
+2007-07-09	Konstantin V. Arkhipov
+
+	* main/Flow/RedirectView.class.php: now ignores null values.
+
 2007-07-07	Konstantin V. Arkhipov
 
 	* main/Flow/MultiPrefixPhpViewResolver.class.php: resolveViewName now
