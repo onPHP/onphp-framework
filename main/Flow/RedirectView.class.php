@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,6 +17,8 @@
 	{
 		protected $url = null;
 		
+		private $falseAsUnset = false;
+		
 		public function __construct($url)
 		{
 			$this->url = $url;
@@ -30,14 +32,18 @@
 				$qs = array();
 				
 				foreach ($model->getList() as $key => $val) {
-					if (
-						!is_object($val) 
-						&& !is_array($val)
-						&& ($val !== false)
-					)
-						$qs[] = $key.'='.$val;
+					if (is_bool($val)) {
+						if ($this->isFalseAsUnset() && (false === $val))
+							continue;
+						
+						$val = (int) $val;
+					} elseif (is_object($val) || is_array($val)) {
+						continue;
+					}
+					
+					$qs[] = $key.'='.$val;
 				}
-			
+				
 				if (strpos($this->getUrl(), '?') === false)
 					$first = '?';
 				else
@@ -53,6 +59,23 @@
 		public function getUrl()
 		{
 			return $this->url;
+		}
+		
+		public function isFalseAsUnset()
+		{
+			return $this->falseAsUnset;
+		}
+		
+		/**
+		 * @return RedirectView
+		**/
+		public function setFalseAsUnset($really)
+		{
+			Assert::isBoolean($really);
+			
+			$this->falseAsUnset = $really;
+			
+			return $this;
 		}
 	}
 ?>
