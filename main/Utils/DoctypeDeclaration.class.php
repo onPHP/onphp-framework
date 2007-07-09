@@ -161,11 +161,12 @@
 			if (
 				!preg_match(
 					'~^('.self::ID_FIRST_CHAR_MASK.self::ID_CHAR_MASK.'*)'
-					.self::SPACER_MASK.'+(.*)$~',
+					.self::SPACER_MASK.'+(.*)$~s',
 					$string, $matches
 				)
-			)
+			) {
 				return null;
+			}
 			
 			$this->rootElement = $matches[1];
 			$remainigString = $matches[2];
@@ -173,7 +174,7 @@
 			if (
 				preg_match(
 					'~^PUBLIC'.self::SPACER_MASK.'+"(.+?)"'
-					.'('.self::SPACER_MASK.'+"(.+)")?$~i',
+					.'('.self::SPACER_MASK.'+"(.+)")?$~is',
 					$remainigString, $matches
 				)
 			) {
@@ -189,7 +190,7 @@
 					
 			} elseif (
 				preg_match(
-					'~^SYSTEM'.self::SPACER_MASK.'+"(.+?)"$~i',
+					'~^SYSTEM'.self::SPACER_MASK.'+"(.+?)"$~is',
 					$remainigString, $matches
 				)
 			) {
