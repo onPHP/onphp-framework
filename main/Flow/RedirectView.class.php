@@ -32,13 +32,17 @@
 				$qs = array();
 				
 				foreach ($model->getList() as $key => $val) {
-					if (is_bool($val)) {
+					if (
+						(null === $val)
+						|| is_object($val)
+						|| is_array($val)
+					) {
+						continue;
+					} elseif (is_bool($val)) {
 						if ($this->isFalseAsUnset() && (false === $val))
 							continue;
 						
 						$val = (int) $val;
-					} elseif (is_object($val) || is_array($val)) {
-						continue;
 					}
 					
 					$qs[] = $key.'='.$val;
