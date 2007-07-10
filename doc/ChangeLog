@@ -1,5 +1,11 @@
 # $Id$
 
+2007-07-10	Ivan Y. Khvostishkov
+
+	* main/Utils/IO/FileOutputStream.class.php: implemented.
+
+	* main/Utils/Logging/: simple but useful classes for logging.
+
 2007-07-10	Dmitry E. Pismenny
 
 	* main/Utils/TextUtils.class.php: special handling for boolean
