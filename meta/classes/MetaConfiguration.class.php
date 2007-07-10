@@ -79,280 +79,7 @@
 		**/
 		public function load($metafile, $generate = true)
 		{
-			$xml = simplexml_load_file($metafile);
-			
-			// populate sources (if any)
-			if (isset($xml->sources[0])) {
-				foreach ($xml->sources[0] as $source) {
-					$this->addSource($source);
-				}
-			}
-			
-			foreach ($xml->classes[0] as $xmlClass) {
-				
-				$class = new MetaClass((string) $xmlClass['name']);
-				
-				if (isset($xmlClass['source'])) {
-					
-					$source = (string) $xmlClass['source'];
-					
-					Assert::isTrue(
-						isset($this->sources[$source]),
-						"unknown source '{$source}' specified "
-						."for class '{$class->getName()}'"
-					);
-					
-					$class->setSourceLink($source);
-				} elseif ($this->defaultSource) {
-					$class->setSourceLink($this->defaultSource);
-				}
-				
-				if (isset($xmlClass['table']))
-					$class->setTableName((string) $xmlClass['table']);
-				
-				if (isset($xmlClass['type'])) {
-					$type = (string) $xmlClass['type'];
-					
-					if ($type == 'spooked') {
-						$this->getOutput()->
-							warning($class->getName(), true)->
-							warningLine(': uses obsoleted "spooked" type.')->
-							newLine();
-					}
-					
-					$class->setType(
-						new MetaClassType(
-							(string) $xmlClass['type']
-						)
-					);
-				}
-				
-				// lazy existence checking
-				if (isset($xmlClass['extends']))
-					$this->liaisons[$class->getName()] = (string) $xmlClass['extends'];
-				
-				// populate implemented interfaces
-				foreach ($xmlClass->implement as $xmlImplement)
-					$class->addInterface((string) $xmlImplement['interface']);
-
-				if (isset($xmlClass->properties[0]->identifier)) {
-					
-					$id = $xmlClass->properties[0]->identifier;
-					
-					if (!isset($id['name']))
-						$name = 'id';
-					else
-						$name = (string) $id['name'];
-					
-					if (!isset($id['type']))
-						$type = 'BigInteger';
-					else
-						$type = (string) $id['type'];
-					
-					$property = $this->makeProperty($name, $type, $class);
-					
-					if (isset($id['column'])) {
-						$property->setColumnName(
-							(string) $id['column']
-						);
-					} elseif (
-						$property->getType() instanceof ObjectType
-						&& !$property->getType()->isGeneric()
-					) {
-						$property->setColumnName($property->getConvertedName().'_id');
-					} else {
-						$property->setColumnName($property->getConvertedName());
-					}
-					
-					$property->
-						setIdentifier(true)->
-						required();
-					
-					$class->addProperty($property);
-					
-					unset($xmlClass->properties[0]->identifier);
-				}
-				
-				$class->setPattern(
-					$this->guessPattern((string) $xmlClass->pattern['name'])
-				);
-				
-				if ($class->getPattern() instanceof InternalClassPattern) {
-					Assert::isTrue(
-						$metafile === ONPHP_META_PATH.'internal.xml',
-						'internal classes can be defined only in onPHP, sorry'
-					);
-				} elseif (
-					(
-						$class->getPattern() instanceof SpookedClassPattern
-					) || (
-						$class->getPattern() instanceof SpookedEnumerationPattern
-					)
-				) {
-					$class->setType(
-						new MetaClassType(
-							MetaClassType::CLASS_SPOOKED
-						)
-					);
-				}
-				
-				// populate properties
-				foreach ($xmlClass->properties[0] as $xmlProperty) {
-					
-					$property = $this->makeProperty(
-						(string) $xmlProperty['name'],
-						(string) $xmlProperty['type'],
-						$class
-					);
-					
-					if (isset($xmlProperty['column'])) {
-						$property->setColumnName(
-							(string) $xmlProperty['column']
-						);
-					} elseif (
-						$property->getType() instanceof ObjectType
-						&& !$property->getType()->isGeneric()
-					) {
-						if (
-							isset(
-								$this->classes[
-									$property->getType()->getClassName()
-								]
-							) && (
-								$property->getType()->getClass()->getPattern()
-									instanceof InternalClassPattern
-							)
-						) {
-							throw new UnimplementedFeatureException(
-								'you can not use internal classes directly atm'
-							);
-						}
-						
-						$property->setColumnName($property->getConvertedName().'_id');
-					} else {
-						$property->setColumnName($property->getConvertedName());
-					}
-					
-					if ((string) $xmlProperty['required'] == 'true')
-						$property->required();
-					
-					if (isset($xmlProperty['identifier'])) {
-						throw new WrongArgumentException(
-							'obsoleted identifier description found in '
-							."{$class->getName()} class;\n"
-							.'you must use <identifier /> instead.'
-						);
-					}
-					
-					if (isset($xmlProperty['size']))
-						// not casting to int because of Numeric possible size
-						$property->setSize((string) $xmlProperty['size']);
-					else {
-						Assert::isTrue(
-							(
-								!$property->getType()
-									instanceof FixedLengthStringType
-							) && (
-								!$property->getType()
-									instanceof NumericType
-							),
-							
-							'size is required for "'.$property->getName().'"'
-						);
-					}
-					
-					if (!$property->getType()->isGeneric()) {
-						
-						if (!isset($xmlProperty['relation']))
-							throw new MissingElementException(
-								'relation should be set for non-generic '
-								."property '{$property->getName()}' type '"
-								.get_class($property->getType())."'"
-								." of '{$class->getName()}' class"
-							);
-						else {
-							$property->setRelation(
-								new MetaRelation(
-									(string) $xmlProperty['relation']
-								)
-							);
-							
-							if ($fetch = (string) $xmlProperty['fetch']) {
-								Assert::isTrue(
-									$property->getRelationId()
-									== MetaRelation::ONE_TO_ONE,
-									
-									'fetch mode can be specified
-									only for OneToOne relations'
-								);
-								
-								if ($fetch == 'lazy')
-									$property->setFetchStrategy(
-										FetchStrategy::lazy()
-									);
-								elseif ($fetch == 'cascade')
-									$property->setFetchStrategy(
-										FetchStrategy::cascade()
-									);
-								else
-									throw new WrongArgumentException(
-										'strange fetch mode found - '.$fetch
-									);
-							}
-							
-							if (
-								(
-									(
-										$property->getRelationId()
-											== MetaRelation::ONE_TO_ONE
-									) && (
-										$property->getFetchStrategyId()
-										!= FetchStrategy::LAZY
-									)
-								) && (
-									$property->getType()->getClassName()
-									<> $class->getName()
-								)
-							) {
-								$this->references[$property->getType()->getClassName()][]
-									= $class->getName();
-							}
-						}
-					}
-					
-					if (isset($xmlProperty['default'])) {
-						// will be correctly autocasted further down the code
-						$property->getType()->setDefault(
-							(string) $xmlProperty['default']
-						);
-					}
-					
-					$class->addProperty($property);
-				}
-				
-				$class->setBuild($generate);
-				
-				$this->classes[$class->getName()] = $class;
-			}
-			
-			// process includes
-			if (isset($xml->include['file'])) {
-				foreach ($xml->include as $include) {
-					$file = (string) $include['file'];
-					$path = dirname($metafile).'/'.$file;
-					
-					Assert::isTrue(
-						is_readable($path),
-						'can not include '.$file
-					);
-					
-					$this->getOutput()->
-						infoLine('Including "'.$path.'".')->
-						newLine();
-					
-					$this->load($path, !((string) $include['generate'] == 'false'));
-				}
-			}
+			$this->loadXml($metafile, $generate);
 			
 			foreach ($this->liaisons as $class => $parent) {
 				if (isset($this->classes[$parent])) {
@@ -1261,6 +988,286 @@ XML;
 			}
 			
 			return false;
+		}
+		
+		private function loadXml($metafile, $generate)
+		{
+			$xml = simplexml_load_file($metafile);
+			
+			// populate sources (if any)
+			if (isset($xml->sources[0])) {
+				foreach ($xml->sources[0] as $source) {
+					$this->addSource($source);
+				}
+			}
+			
+			foreach ($xml->classes[0] as $xmlClass) {
+				
+				$class = new MetaClass((string) $xmlClass['name']);
+				
+				if (isset($xmlClass['source'])) {
+					
+					$source = (string) $xmlClass['source'];
+					
+					Assert::isTrue(
+						isset($this->sources[$source]),
+						"unknown source '{$source}' specified "
+						."for class '{$class->getName()}'"
+					);
+					
+					$class->setSourceLink($source);
+				} elseif ($this->defaultSource) {
+					$class->setSourceLink($this->defaultSource);
+				}
+				
+				if (isset($xmlClass['table']))
+					$class->setTableName((string) $xmlClass['table']);
+				
+				if (isset($xmlClass['type'])) {
+					$type = (string) $xmlClass['type'];
+					
+					if ($type == 'spooked') {
+						$this->getOutput()->
+							warning($class->getName(), true)->
+							warningLine(': uses obsoleted "spooked" type.')->
+							newLine();
+					}
+					
+					$class->setType(
+						new MetaClassType(
+							(string) $xmlClass['type']
+						)
+					);
+				}
+				
+				// lazy existence checking
+				if (isset($xmlClass['extends']))
+					$this->liaisons[$class->getName()] = (string) $xmlClass['extends'];
+				
+				// populate implemented interfaces
+				foreach ($xmlClass->implement as $xmlImplement)
+					$class->addInterface((string) $xmlImplement['interface']);
+
+				if (isset($xmlClass->properties[0]->identifier)) {
+					
+					$id = $xmlClass->properties[0]->identifier;
+					
+					if (!isset($id['name']))
+						$name = 'id';
+					else
+						$name = (string) $id['name'];
+					
+					if (!isset($id['type']))
+						$type = 'BigInteger';
+					else
+						$type = (string) $id['type'];
+					
+					$property = $this->makeProperty($name, $type, $class);
+					
+					if (isset($id['column'])) {
+						$property->setColumnName(
+							(string) $id['column']
+						);
+					} elseif (
+						$property->getType() instanceof ObjectType
+						&& !$property->getType()->isGeneric()
+					) {
+						$property->setColumnName($property->getConvertedName().'_id');
+					} else {
+						$property->setColumnName($property->getConvertedName());
+					}
+					
+					$property->
+						setIdentifier(true)->
+						required();
+					
+					$class->addProperty($property);
+					
+					unset($xmlClass->properties[0]->identifier);
+				}
+				
+				$class->setPattern(
+					$this->guessPattern((string) $xmlClass->pattern['name'])
+				);
+				
+				if ($class->getPattern() instanceof InternalClassPattern) {
+					Assert::isTrue(
+						$metafile === ONPHP_META_PATH.'internal.xml',
+						'internal classes can be defined only in onPHP, sorry'
+					);
+				} elseif (
+					(
+						$class->getPattern() instanceof SpookedClassPattern
+					) || (
+						$class->getPattern() instanceof SpookedEnumerationPattern
+					)
+				) {
+					$class->setType(
+						new MetaClassType(
+							MetaClassType::CLASS_SPOOKED
+						)
+					);
+				}
+				
+				// populate properties
+				foreach ($xmlClass->properties[0] as $xmlProperty) {
+					
+					$property = $this->makeProperty(
+						(string) $xmlProperty['name'],
+						(string) $xmlProperty['type'],
+						$class
+					);
+					
+					if (isset($xmlProperty['column'])) {
+						$property->setColumnName(
+							(string) $xmlProperty['column']
+						);
+					} elseif (
+						$property->getType() instanceof ObjectType
+						&& !$property->getType()->isGeneric()
+					) {
+						if (
+							isset(
+								$this->classes[
+									$property->getType()->getClassName()
+								]
+							) && (
+								$property->getType()->getClass()->getPattern()
+									instanceof InternalClassPattern
+							)
+						) {
+							throw new UnimplementedFeatureException(
+								'you can not use internal classes directly atm'
+							);
+						}
+						
+						$property->setColumnName($property->getConvertedName().'_id');
+					} else {
+						$property->setColumnName($property->getConvertedName());
+					}
+					
+					if ((string) $xmlProperty['required'] == 'true')
+						$property->required();
+					
+					if (isset($xmlProperty['identifier'])) {
+						throw new WrongArgumentException(
+							'obsoleted identifier description found in '
+							."{$class->getName()} class;\n"
+							.'you must use <identifier /> instead.'
+						);
+					}
+					
+					if (isset($xmlProperty['size']))
+						// not casting to int because of Numeric possible size
+						$property->setSize((string) $xmlProperty['size']);
+					else {
+						Assert::isTrue(
+							(
+								!$property->getType()
+									instanceof FixedLengthStringType
+							) && (
+								!$property->getType()
+									instanceof NumericType
+							),
+							
+							'size is required for "'.$property->getName().'"'
+						);
+					}
+					
+					if (!$property->getType()->isGeneric()) {
+						
+						if (!isset($xmlProperty['relation']))
+							throw new MissingElementException(
+								'relation should be set for non-generic '
+								."property '{$property->getName()}' type '"
+								.get_class($property->getType())."'"
+								." of '{$class->getName()}' class"
+							);
+						else {
+							$property->setRelation(
+								new MetaRelation(
+									(string) $xmlProperty['relation']
+								)
+							);
+							
+							if ($fetch = (string) $xmlProperty['fetch']) {
+								Assert::isTrue(
+									$property->getRelationId()
+									== MetaRelation::ONE_TO_ONE,
+									
+									'fetch mode can be specified
+									only for OneToOne relations'
+								);
+								
+								if ($fetch == 'lazy')
+									$property->setFetchStrategy(
+										FetchStrategy::lazy()
+									);
+								elseif ($fetch == 'cascade')
+									$property->setFetchStrategy(
+										FetchStrategy::cascade()
+									);
+								else
+									throw new WrongArgumentException(
+										'strange fetch mode found - '.$fetch
+									);
+							}
+							
+							if (
+								(
+									(
+										$property->getRelationId()
+											== MetaRelation::ONE_TO_ONE
+									) && (
+										$property->getFetchStrategyId()
+										!= FetchStrategy::LAZY
+									)
+								) && (
+									$property->getType()->getClassName()
+									<> $class->getName()
+								)
+							) {
+								$this->references[$property->getType()->getClassName()][]
+									= $class->getName();
+							}
+						}
+					}
+					
+					if (isset($xmlProperty['default'])) {
+						// will be correctly autocasted further down the code
+						$property->getType()->setDefault(
+							(string) $xmlProperty['default']
+						);
+					}
+					
+					$class->addProperty($property);
+				}
+				
+				$class->setBuild($generate);
+				
+				$this->classes[$class->getName()] = $class;
+			}
+			
+			// process includes
+			if (isset($xml->include['file'])) {
+				foreach ($xml->include as $include) {
+					$file = (string) $include['file'];
+					$path = dirname($metafile).'/'.$file;
+					
+					Assert::isTrue(
+						is_readable($path),
+						'can not include '.$file
+					);
+					
+					$this->getOutput()->
+						infoLine('Including "'.$path.'".')->
+						newLine();
+					
+					$this->loadXml($path, !((string) $include['generate'] == 'false'));
+				}
+			}
+			
+			return $this;
 		}
 	}
 ?>
