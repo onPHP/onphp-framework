@@ -106,9 +106,10 @@
 			if (mb_strlen($string) < $length)
 				return $string;
 			else {
-				return
-					mb_substr($string, 0, mb_strpos($string, ' ', $length))
-					.$append;
+				if (!$pos = mb_strpos($string, ' ', $length))
+					$pos = $length;
+				
+				return mb_substr($string, 0, $pos).$append;
 			}
 		}
 		
