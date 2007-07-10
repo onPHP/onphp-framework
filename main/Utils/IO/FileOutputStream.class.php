@@ -43,6 +43,9 @@
 			return new self($name, $append);
 		}
 		
+		/**
+		 * @return FileOutputStream
+		**/
 		public function write($buffer)
 		{
 			if (!$this->fd || $buffer === null)
@@ -60,11 +63,16 @@
 			return $this;
 		}
 		
+		/**
+		 * @return FileOutputStream
+		**/
 		public function close()
 		{
 			fclose($this->fd);
 			
 			$this->fd = null;
+			
+			return $this;
 		}
 	}
 ?>
