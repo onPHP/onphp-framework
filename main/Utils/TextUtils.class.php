@@ -107,7 +107,7 @@
 				return $string;
 			else {
 				if (!$pos = mb_strpos($string, ' ', $length))
-					$pos = $length;
+					return $string.$append;
 				
 				return mb_substr($string, 0, $pos).$append;
 			}
