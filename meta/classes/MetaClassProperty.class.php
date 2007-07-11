@@ -838,14 +838,15 @@ EOT;
 			}
 			
 			if ($this->type->hasDefault()) {
-				
 				$default = $this->type->getDefault();
 				
-				if (is_bool($default)) {
+				if ($this->type instanceof BooleanType) {
 					if ($default)
 						$default = 'true';
 					else
 						$default = 'false';
+				} elseif ($this->type instanceof StringType) {
+					$default = "'{$default}'";
 				}
 				
 				$column .= <<<EOT
