@@ -1115,7 +1115,7 @@
 							);
 						else {
 							$property->setRelation(
-								new MetaRelation(
+								MetaRelation::makeFromName(
 									(string) $xmlProperty['relation']
 								)
 							);
