@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Utils
 	**/
-	abstract class Logger
+	abstract class BaseLogger
 	{
 		private $level	= null;
 		
