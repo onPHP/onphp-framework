@@ -96,11 +96,8 @@
 		**/
 		public function setId($id)
 		{
-			if ($this->id !== null)
-				throw new WrongStateException('ouch, i must be immutable!');
-			
 			$names = $this->getNameList();
-			
+
 			if (isset($names[$id])) {
 				$this->id = $id;
 				$this->name = $names[$id];
