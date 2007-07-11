@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Utils
 	**/
-	class StreamLogger extends Logger
+	class StreamLogger extends BaseLogger
 	{
 		private $stream = null;
 		
