@@ -36,6 +36,16 @@
 		/**
 		 * @return LogLevel
 		**/
+		public function setId($id)
+		{
+			Assert::isNull($this->id, 'i am immutable one!');
+			
+			return parent::setId($id);
+		}
+		
+		/**
+		 * @return LogLevel
+		**/
 		public static function severe()
 		{
 			return self::getInstance(self::SEVERE);
