@@ -96,10 +96,7 @@
 		{
 			static $instances = array();
 			
-			if (
-				!isset($instances[$id])
-				|| $instances[$id]->getId() !== $id	// wtf? id changed
-			)
+			if (!isset($instances[$id]))
 				$instances[$id] = new self($id);
 			
 			return $instances[$id];
