@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Utils
 	**/
-	class LogLevel extends Enumeration
+	final class LogLevel extends Enumeration
 	{
 		const SEVERE	= 1; // highest value
 		const WARNING	= 2;
