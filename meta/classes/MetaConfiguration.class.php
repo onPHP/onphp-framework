@@ -483,29 +483,15 @@
 					
 					$info = new ReflectionClass($name);
 					
-					switch ($class->getTypeId()) {
-						case null:
-							break;
-						
-						case MetaClassType::CLASS_ABSTRACT:
-							Assert::isTrue(
-								$info->isAbstract(),
-								'class '.$name.' expected to be abstract'
-							);
-							break;
-						
-						case MetaClassType::CLASS_FINAL:
-							Assert::isTrue(
-								$info->isFinal(),
-								'class '.$name.' expected to be final'
-							);
-							break;
-						
-						case MetaClassType::CLASS_SPOOKED:
-						default:
-							Assert::isUnreachable();
-							break;
-					}
+					$this->
+						checkClassType($class, $info)->
+						checkClassType($class, new ReflectionClass($name.'DAO'));
+					
+					if ($info->implementsInterface('Prototyped'))
+						$this->checkClassType(
+							$class,
+							new ReflectionClass('Proto'.$name)
+						);
 					
 					foreach ($class->getInterfaces() as $interface)
 						Assert::isTrue(
@@ -1195,6 +1181,38 @@
 					
 					$this->loadXml($path, !((string) $include['generate'] == 'false'));
 				}
+			}
+			
+			return $this;
+		}
+		
+		/**
+		 * @return MetaConfiguration
+		**/
+		private function checkClassType(MetaClass $class, ReflectionClass $info)
+		{
+			switch ($class->getTypeId()) {
+				case null:
+					break;
+				
+				case MetaClassType::CLASS_ABSTRACT:
+					Assert::isTrue(
+						$info->isAbstract(),
+						'class '.$class->getName().' expected to be abstract'
+					);
+					break;
+				
+				case MetaClassType::CLASS_FINAL:
+					Assert::isTrue(
+						$info->isFinal(),
+						'class '.$class->getName().' expected to be final'
+					);
+					break;
+				
+				case MetaClassType::CLASS_SPOOKED:
+				default:
+					Assert::isUnreachable();
+					break;
 			}
 			
 			return $this;
