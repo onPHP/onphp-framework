@@ -34,7 +34,7 @@
 		public function getDeclaration()
 		{
 			if ($this->hasDefault())
-				return $this->default;
+				return "'{$this->default}'";
 			
 			return 'null';
 		}
