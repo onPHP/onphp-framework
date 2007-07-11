@@ -66,7 +66,9 @@
 				if ($format->isAcceptable($this->xml))
 					return $format->parse($this->xml);
 			
-			return null;
+			throw new WrongStateException(
+				'you\'re use unsupported format of feed'
+			);
 		}
 	}
 ?>
