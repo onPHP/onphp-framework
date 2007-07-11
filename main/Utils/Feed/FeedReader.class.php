@@ -67,7 +67,7 @@
 					return $format->parse($this->xml);
 			
 			throw new WrongStateException(
-				'you\'re use unsupported format of feed'
+				'you\'re using unsupported format of feed'
 			);
 		}
 	}
