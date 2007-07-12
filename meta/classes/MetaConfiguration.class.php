@@ -484,13 +484,18 @@
 					$info = new ReflectionClass($name);
 					
 					$this->
-						checkClassType($class, $info)->
-						checkClassType($class, new ReflectionClass($name.'DAO'));
+						checkClassType($class, $info);
 					
 					if ($info->implementsInterface('Prototyped'))
 						$this->checkClassType(
 							$class,
 							new ReflectionClass('Proto'.$name)
+						);
+					
+					if ($info->implementsInterface('DAOConnected'))
+						$this->checkClassType(
+							$class,
+							new ReflectionClass($name.'DAO')
 						);
 					
 					foreach ($class->getInterfaces() as $interface)
