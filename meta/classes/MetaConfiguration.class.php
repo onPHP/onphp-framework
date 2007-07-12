@@ -1273,14 +1273,14 @@ XML;
 				case MetaClassType::CLASS_ABSTRACT:
 					Assert::isTrue(
 						$info->isAbstract(),
-						'class '.$class->getName().' expected to be abstract'
+						'class '.$info->getName().' expected to be abstract'
 					);
 					break;
 				
 				case MetaClassType::CLASS_FINAL:
 					Assert::isTrue(
 						$info->isFinal(),
-						'class '.$class->getName().' expected to be final'
+						'class '.$info->getName().' expected to be final'
 					);
 					break;
 				
