@@ -32,7 +32,7 @@
 		{
 			return
 				"[$this->message] in: \n".
-				$this->getTrace();
+				$this->getTraceAsString();
 		}
 	}
 ?>
