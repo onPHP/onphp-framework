@@ -141,6 +141,7 @@
 					} elseif (
 						(!$remote->getPattern() instanceof AbstractClassPattern)
 						&& (!$remote->getPattern() instanceof InternalClassPattern)
+						&& ($remote->getTypeId() <> MetaClassType::CLASS_ABSTRACT)
 					) {
 						$this->classes[$className]->setReferencingClass($refer);
 					}
