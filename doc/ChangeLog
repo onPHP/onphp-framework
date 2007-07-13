@@ -1,5 +1,10 @@
 # $Id$
 
+2007-07-13	Konstantin V. Arkhipov
+
+	* core/OSQL/DatePart.class.php, core/OSQL/ExtractPart.class.php: ANSI
+	SQL's EXTRACT() implemented.
+
 2007-07-10	Ivan Y. Khvostishkov
 
 	* main/Utils/IO/FileOutputStream.class.php: implemented.
