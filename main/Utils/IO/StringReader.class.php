@@ -107,16 +107,16 @@
 		} 
 		
 		public function isEof()
- 		{
+		{
 			return ($this->next >= $this->length);
- 		}
- 		
- 		public function getWhole()
- 		{
+		}
+		
+		public function getWhole()
+		{
 			// FIXME: (length - pos) ?
- 			return $this->read($this->length);
- 		}
- 		
+			return $this->read($this->length);
+		}
+		
 		/* void */ private function ensureOpen()
 		{
 			if ($this->string === null)
