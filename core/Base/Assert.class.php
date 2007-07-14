@@ -41,7 +41,7 @@
 				self::fail($message);
 		}
 
-		public static function isArray(&$variable, $message = null)
+		public static function isArray($variable, $message = null)
 		{
 			if (!is_array($variable))
 				self::fail($message);
@@ -102,7 +102,7 @@
 				self::fail($message);
 		}
 
-		public static function brothers(&$first, &$second, $message = null)
+		public static function brothers($first, $second, $message = null)
 		{
 			if (get_class($first) !== get_class($second))
 				self::fail($message);
