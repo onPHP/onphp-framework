@@ -60,7 +60,7 @@
 			return parent::clean();
 		}
 
-		protected function store($action, $key, &$value, $expires = 0)
+		protected function store($action, $key, $value, $expires = 0)
 		{
 			if ($action == 'add' && isset($this->cache[$key]))
 				return true;

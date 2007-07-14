@@ -128,7 +128,7 @@
 		**/
 		public function clean()
 		{
-			foreach ($this->peers as &$peer)
+			foreach ($this->peers as $peer)
 				$peer['object']->clean();
 
 			$this->checkAlive();
@@ -140,14 +140,14 @@
 		{
 			$stats = array();
 
-			foreach ($this->peers as $level => &$peer)
+			foreach ($this->peers as $level => $peer)
 				$stats[$level] = $peer['stat'];
 
 			return $stats;
 		}
 
 		protected function store(
-			$action, $key, &$value, $expires = Cache::EXPIRES_MINIMUM
+			$action, $key, $value, $expires = Cache::EXPIRES_MINIMUM
 		)
 		{
 			$label = $this->guessLabel($key);
