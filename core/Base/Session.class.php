@@ -151,7 +151,7 @@
 		/**
 		 * assigns to $_SESSION scope variables defined in given array
 		**/
-		/* void */ public static function arrayAssign(&$scope, $array)
+		/* void */ public static function arrayAssign($scope, $array)
 		{
 			Assert::isArray($array);
 			
