@@ -32,7 +32,7 @@
 		 * @throws WrongArgumentException 
 		 * @return OneToManyLinkedLazy
 		**/
-		public function sync(&$insert, &$update = array(), &$delete)
+		public function sync($insert, $update = array(), $delete)
 		{
 			Assert::isTrue($update === array());
 			
@@ -70,7 +70,7 @@
 		/**
 		 * @return UpdateQuery
 		**/
-		private function makeMassUpdateQuery(&$ids)
+		private function makeMassUpdateQuery($ids)
 		{
 			$uc = $this->container;
 			

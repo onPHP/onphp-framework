@@ -49,7 +49,7 @@
 			
 			for ($i = 0; $i < $size; ++$i) {
 				$command = &$this->chain[$i];
-			
+				
 				try {
 					$mav = $command->run($subject, $form, $request);
 					

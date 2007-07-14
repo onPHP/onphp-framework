@@ -25,7 +25,7 @@
 			return dechex(crc32($prefix.$this->getTable())).'_'.$field;
 		}
 		
-		public function makeOnlyObject(&$array, $prefix = null)
+		public function makeOnlyObject($array, $prefix = null)
 		{
 			return $this->getProtoClass()->makeOnlyObject(
 				$this->getObjectName(), $array, $prefix
@@ -33,7 +33,7 @@
 		}
 		
 		public function completeObject(
-			Identifiable $object, &$array, $prefix = null
+			Identifiable $object, $array, $prefix = null
 		)
 		{
 			return $this->getProtoClass()->completeObject(

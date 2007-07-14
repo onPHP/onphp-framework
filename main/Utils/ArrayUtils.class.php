@@ -46,7 +46,7 @@
 			return $out;
 		}
 		
-		public static function &convertToPlainList(&$list, $key)
+		public static function &convertToPlainList($list, $key)
 		{
 			$out = array();
 			

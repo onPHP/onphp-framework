@@ -18,7 +18,7 @@
 		/**
 		 * @return ManyToManyLinkedFull
 		**/
-		public function sync(&$insert, &$update = array(), &$delete)
+		public function sync($insert, $update = array(), $delete)
 		{
 			$dao = $this->container->getDao();
 

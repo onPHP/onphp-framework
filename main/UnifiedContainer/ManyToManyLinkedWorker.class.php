@@ -36,7 +36,7 @@
 		 * 
 		 * @return DeleteQuery
 		**/
-		protected function makeDeleteQuery(&$delete)
+		protected function makeDeleteQuery($delete)
 		{
 			$uc = $this->container;
 			

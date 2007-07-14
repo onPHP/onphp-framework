@@ -24,12 +24,12 @@
 		abstract public function getTable();
 		abstract public function getObjectName();
 		
-		abstract public function makeOnlyObject(&$array, $prefix = null);
+		abstract public function makeOnlyObject($array, $prefix = null);
 		abstract public function completeObject(
-			Identifiable $object, &$array, $prefix = null
+			Identifiable $object, $array, $prefix = null
 		);
 		
-		public function makeObject(&$array, $prefix = null)
+		public function makeObject($array, $prefix = null)
 		{
 			if (isset($this->identityMap[$array[$prefix.$this->getIdName()]]))
 				return $this->identityMap[$array[$prefix.$this->getIdName()]];

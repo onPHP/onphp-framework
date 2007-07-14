@@ -19,7 +19,7 @@
 		 * @throws WrongArgumentException
 		 * @return ManyToManyLinkedLazy
 		**/
-		public function sync(&$insert, &$update = array(), &$delete)
+		public function sync($insert, $update = array(), $delete)
 		{
 			Assert::isTrue($update === array());
 			
