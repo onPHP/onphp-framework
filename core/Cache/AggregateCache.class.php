@@ -86,7 +86,7 @@
 		{
 			$this->alive = false;
 			
-			foreach ($this->peers as $label => &$peer)
+			foreach ($this->peers as $label => $peer)
 				if ($peer['object']->isAlive())
 					$this->alive = true; 
 				else
