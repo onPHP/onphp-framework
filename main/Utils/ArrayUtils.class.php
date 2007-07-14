@@ -66,7 +66,7 @@
 			return null;
 		}
 		
-		public static function columnFromSet($column, &$array)
+		public static function columnFromSet($column, $array)
 		{
 			Assert::isArray($array);
 			$result = array();
