@@ -47,7 +47,7 @@
 
 		public function apply($value)
 		{
-			foreach ($this->chain as &$filter)
+			foreach ($this->chain as $filter)
 				$value = $filter->apply($value);
 
 			return $value;
