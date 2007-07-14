@@ -9,7 +9,6 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp.h"
 #include "onphp_core.h"
 
 #include "zend_interfaces.h"
