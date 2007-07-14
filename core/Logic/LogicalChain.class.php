@@ -31,7 +31,7 @@
 			
 			$logicalChain = new self;
 			
-			foreach ($args as &$arg) {
+			foreach ($args as $arg) {
 				if (
 					!$arg instanceof LogicalObject
 					&& !$arg instanceof SelectQuery 
@@ -39,7 +39,7 @@
 					throw new WrongArgumentException(
 						'unsupported object type: '.get_class($arg)
 					);
-					
+				
 				$logicalChain->exp($arg, $logic);
 			}
 			
