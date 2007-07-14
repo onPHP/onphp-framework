@@ -16,7 +16,7 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
-	final class DBValue extends Castable implements DialectString
+	final class DBValue extends Castable
 	{
 		private $value = null;
 		

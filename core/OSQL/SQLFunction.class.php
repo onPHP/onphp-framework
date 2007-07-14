@@ -15,9 +15,7 @@
 	 * 
 	 * @ingroup OSQL
 	**/
-	final class SQLFunction
-		extends Castable
-		implements DialectString, MappableObject, Aliased
+	final class SQLFunction extends Castable implements MappableObject, Aliased
 	{
 		const AGGREGATE_ALL 		= 1;
 		const AGGREGATE_DISTINCT 	= 2;

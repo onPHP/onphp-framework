@@ -1,5 +1,9 @@
 # $Id$
 
+2007-07-15	Konstantin V. Arkhipov
+
+	* core/OSQL/Castable.class.php: DialectString is a must now.
+
 2007-07-13	Konstantin V. Arkhipov
 
 	* core/OSQL/DatePart.class.php, core/OSQL/ExtractPart.class.php: ANSI
