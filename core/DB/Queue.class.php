@@ -107,7 +107,7 @@
 		{
 			$out = array();
 
-			foreach ($this->queue as &$query)
+			foreach ($this->queue as $query)
 				$out[] = $query->toDialectString($dialect);
 			
 			return implode(";\n", $out);
