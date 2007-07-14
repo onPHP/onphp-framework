@@ -108,7 +108,7 @@
 		
 		public function setSession(/* array */ &$session)
 		{
-			$this->session = $session;
+			$this->session = &$session;
 			
 			return $this;
 		}
