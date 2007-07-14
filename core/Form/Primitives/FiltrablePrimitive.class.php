@@ -50,13 +50,14 @@
 
 		public function getDisplayValue()
 		{
-			if (is_array($array = $this->getActualValue())){
+			if (is_array($array = $this->getActualValue())) {
 				foreach ($array as &$value)
 					$value = $this->displayFilter->apply($value);
-
+				
 				return $array;
-			} else
-				return $this->displayFilter->apply($this->getActualValue());
+			}
+			
+			return $this->displayFilter->apply($this->getActualValue());
 		}
 
 		/**
