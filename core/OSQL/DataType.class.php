@@ -22,8 +22,8 @@
 		const BIGINT			= 0x001003;
 		const NUMERIC			= 0x001704;
 		
-		const REAL				= 0x001005;
-		const DOUBLE			= 0x001006;
+		const REAL				= 0x001105;
+		const DOUBLE			= 0x001106;
 		
 		const BOOLEAN			= 0x000007;
 		
@@ -55,7 +55,7 @@
 			self::BIGINT		=> 'BIGINT',
 			self::NUMERIC		=> 'NUMERIC',
 			
-			self::REAL			=> 'REAL',
+			self::REAL			=> 'FLOAT',
 			self::DOUBLE		=> 'DOUBLE PRECISION',
 			
 			self::BOOLEAN		=> 'BOOLEAN',

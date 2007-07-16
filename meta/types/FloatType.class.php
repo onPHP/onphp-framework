@@ -36,6 +36,26 @@
 			return $this;
 		}
 
+		/**
+		 * @return NumericType
+		**/
+		public function setPrecision($precision)
+		{
+			$this->precision = $precision;
+			
+			return $this;
+		}
+		
+		public function getPrecision()
+		{
+			return $this->precision;
+		}
+		
+		public function isMeasurable()
+		{
+			return true;
+		}
+		
 		public function toColumnType()
 		{
 			return 'DataType::create(DataType::REAL)';
