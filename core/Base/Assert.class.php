@@ -20,31 +20,31 @@
 		public static function isTrue($boolean, $message = null)
 		{
 			if ($boolean !== true)
-				self::fail($message);
+				throw new WrongArgumentException($message);
 		}
 
 		public static function isFalse($boolean, $message = null)
 		{
 			if ($boolean !== false)
-				self::fail($message);
+				throw new WrongArgumentException($message);
 		}
 		
 		public static function isNull($variable, $message = null)
 		{
 			if ($variable !== null)
-				self::fail($message);
+				throw new WrongArgumentException($message);
 		}
 
 		public static function isNotNull($variable, $message = null)
 		{
 			if ($variable === null)
-				self::fail($message);
+				throw new WrongArgumentException($message);
 		}
 
 		public static function isArray($variable, $message = null)
 		{
 			if (!is_array($variable))
-				self::fail($message);
+				throw new WrongArgumentException($message);
 		}
 
 		public static function isInteger($variable, $message = null)
@@ -55,7 +55,7 @@
 					&& $variable == (int) $variable
 				)
 			)
-				self::fail($message);
+				throw new WrongArgumentException($message);
 		}
 		
 		public static function isPositiveInteger($variable, $message = null)
@@ -64,7 +64,7 @@
 				!self::checkInteger($variable)
 				|| $variable < 0
 			)
-				self::fail($message);
+				throw new WrongArgumentException($message);
 		}
 
 		public static function isFloat($variable, $message = null)
@@ -75,19 +75,19 @@
 					&& is_numeric($variable)
 				)
 			)
-				self::fail($message);
+				throw new WrongArgumentException($message);
 		}
 
 		public static function isString($variable, $message = null)
 		{
 			if (!is_string($variable))
-				self::fail($message);
+				throw new WrongArgumentException($message);
 		}
 		
 		public static function isBoolean($variable, $message = null)
 		{
 			if (!($variable === true || $variable === false))
-				self::fail($message);
+				throw new WrongArgumentException($message);
 		}
 
 		public static function isTernaryBase($variable, $message = null)
@@ -99,18 +99,18 @@
 					|| ($variable === null)
 				)
 			)
-				self::fail($message);
+				throw new WrongArgumentException($message);
 		}
 
 		public static function brothers($first, $second, $message = null)
 		{
 			if (get_class($first) !== get_class($second))
-				self::fail($message);
+				throw new WrongArgumentException($message);
 		}
 		
 		public static function isUnreachable($message = 'unreachable code reached')
 		{
-			self::fail($message);
+			throw new WrongArgumentException($message);
 		}
 		
 		/// exceptionless methods
@@ -124,10 +124,5 @@
 			);
 		}
 		//@}
-		
-		private static function fail($message = null)
-		{
-			throw new WrongArgumentException($message);
-		}
 	}
 ?>
