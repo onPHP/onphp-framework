@@ -92,13 +92,16 @@
 			return rtrim($out, ', ');
 		}
 		
+		/**
+		 * @return OrderBy
+		**/
 		private function makeOrder($object)
 		{
 			if ($object instanceof OrderBy)
 				return $object;
 			elseif ($object instanceof DialectString)
 				return new OrderBy($object);
-				
+			
 			return
 				new OrderBy(
 					new DBField($object)
