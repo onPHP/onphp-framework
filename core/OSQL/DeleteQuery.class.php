@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,7 +21,7 @@
 		{
 			throw new UnsupportedMethodException();
 		}
-
+		
 		/**
 		 * @return DeleteQuery
 		**/
@@ -39,7 +39,7 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			if (count($this->where) > 0)
+			if ($this->where)
 				return
 					"DELETE FROM {$dialect->quoteTable($this->table)} "
 					.parent::toDialectString($dialect);
