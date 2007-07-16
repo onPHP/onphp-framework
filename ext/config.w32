@@ -17,7 +17,7 @@ if (PHP_ONPHP != "no") {
 		ImaginaryDialect.c", "onphp");
 	
 	ADD_SOURCES("ext/onphp/src/core/OSQL", "Castable.c \
-		DBValue.c DialectString.c FieldTable.c SQLTableName.c \
+		DBField.c DBValue.c DialectString.c FieldTable.c SQLTableName.c \
 		Query.c QueryIdentification.c", "onphp");
 	
 	ADD_SOURCES("ext/onphp/src/main/DAOs", "DAOConnected.c \
