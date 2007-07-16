@@ -107,6 +107,11 @@
 			ClassUtils::copyNotNullProperties($source, $destination);
 			$this->assertTrue($destination->getObject() === $innerObject);
 		}
+		
+		public function testInstanceOf()
+		{
+			$this->assertFalse(ClassUtils::isInstanceOf('2007-07-14&genre', 'Date'));
+		}
 	}
 	
 	class ClassUtilsTestClass
