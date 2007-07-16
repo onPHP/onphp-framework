@@ -43,6 +43,9 @@
 			$this->name = $name;
 		}
 		
+		/**
+		 * @return DataType
+		**/
 		public function getType()
 		{
 			return $this->type;
