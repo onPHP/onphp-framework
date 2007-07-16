@@ -109,9 +109,12 @@
 				throw new WrongArgumentException('strange class given');
 			}
 			
-			if (is_string($object))
+			if (is_string($object)) {
+				if (!class_exists($object, true))
+					return false;
+				
 				$object = new $object;
-			elseif (!is_object($object))
+			} elseif (!is_object($object))
 				throw new WrongArgumentException('strange object given');
 			
 			if (is_subclass_of($object, $className))

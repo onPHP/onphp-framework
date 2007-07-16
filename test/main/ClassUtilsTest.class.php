@@ -110,7 +110,25 @@
 		
 		public function testInstanceOf()
 		{
-			$this->assertFalse(ClassUtils::isInstanceOf('2007-07-14&genre', 'Date'));
+			$garbage = '2007-07-14&genre';
+			$className = $garbage.EXT_CLASS;
+			
+			try {
+				// in real life it will be only one exception
+				$this->expectError(
+					'include('.$className.'): failed to open stream:'
+					.' No such file or directory'
+				);
+				
+				$this->expectError(
+					"include(): Failed opening '{$className}' for "
+					."inclusion (include_path='".get_include_path()."')"
+				);
+				
+				$this->assertFalse(ClassUtils::isInstanceOf($garbage, 'Date'));
+			} catch (ClassNotFoundException $e) {
+				$this->pass();
+			}
 		}
 	}
 	
