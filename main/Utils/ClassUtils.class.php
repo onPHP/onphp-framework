@@ -109,7 +109,10 @@
 				throw new WrongArgumentException('strange class given');
 			}
 			
-			if (is_string($object)) {
+			if (
+				is_string($object) 
+				&& preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $object)
+			) {
 				if (!class_exists($object, true))
 					return false;
 				
