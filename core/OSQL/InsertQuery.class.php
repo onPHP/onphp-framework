@@ -37,7 +37,7 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			$query = "INSERT INTO ".$dialect->quoteTable($this->table)." ";
+			$query = 'INSERT INTO '.$dialect->quoteTable($this->table).' ';
 			
 			$fields = array();
 			$values = array();
@@ -65,7 +65,7 @@
 			
 			return $query;
 		}
-
+		
 		public function where(LogicalObject $exp, $logic = null)
 		{
 			throw new UnsupportedMethodException();
