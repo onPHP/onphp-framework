@@ -333,7 +333,7 @@ Possible options:
 		
 		stop('Can not continue.');
 	}
-		
+	
 	$out->getOutput()->resetAll();
 	$out->newLine();
 ?>

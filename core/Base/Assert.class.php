@@ -127,14 +127,7 @@
 		
 		private static function fail($message = null)
 		{
-			throw new WrongArgumentException(
-				$message
-				.(
-					defined('__LOCAL_DEBUG__')
-						? "\n\n".print_r(debug_backtrace(), true)
-						: null
-				)
-			);
+			throw new WrongArgumentException($message);
 		}
 	}
 ?>
