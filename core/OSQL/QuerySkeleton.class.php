@@ -73,7 +73,7 @@
 					
 				}
 
-				return $clause;
+				return rtrim($clause, ' ');
 			}
 			
 			return null;
