@@ -8,18 +8,7 @@
  *   (at your option) any later version.                                    *
  *                                                                          *
  ****************************************************************************/
-
-/*
-	$Id$
-	
-	06 Oct 2005: Skeleton merged back.
-	
-	07 Jun 2005: Separation of {get,set}ters.
-	
-	28 Mar 2005: Fourth rewrite by Anton.
-	
-	04 Jan 2005: Third rewrite. Main goal now - simplicity.
-*/
+/* $Id$ */
 
 	/**
 	 * @ingroup OSQL
@@ -29,14 +18,14 @@
 		implements Named, JoinCapableQuery, Aliased
 	{
 		private $distinct		= false;
-
+		
 		private $name			= null;
 		
 		private $joiner			= null;
 		
 		private $limit			= null;
 		private $offset			= null;
-
+		
 		private $fields			= array();
 		
 		private $order			= null;
@@ -84,7 +73,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return SelectQuery
 		**/
@@ -93,12 +82,12 @@
 			$this->distinct = true;
 			return $this;
 		}
-
+		
 		public function isDistinct()
 		{
 			return $this->distinct;
 		}
-
+		
 		/**
 		 * @return SelectQuery
 		**/
@@ -112,7 +101,7 @@
 		{
 			return $this->joiner->hasJoinedTable($table);
 		}
-
+		
 		/**
 		 * @return SelectQuery
 		**/
@@ -144,7 +133,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return SelectQuery
 		**/
@@ -161,10 +150,10 @@
 		public function prependOrderBy($field, $table = null)
 		{
 			$this->order->prepend($this->makeOrder($field, $table));
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @throws WrongStateException
 		 * @return SelectQuery
@@ -173,9 +162,9 @@
 		{
 			if (!$last = $this->order->getLast())
 				throw new WrongStateException('no fields to sort');
-
+			
 			$last->desc();
-
+			
 			return $this;
 		}
 		
@@ -187,12 +176,12 @@
 		{
 			if (!$last = $this->order->getLast())
 				throw new WrongStateException('no fields to sort');
-
+			
 			$last->asc();
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return SelectQuery
 		**/
@@ -200,10 +189,10 @@
 		{
 			if ($field instanceof DialectString)
 				$this->group[] = $field;
-			else 
+			else
 				$this->group[] =
 					new DBField($field, $this->getLastTable($table));
-
+			
 			return $this;
 		}
 		
@@ -226,7 +215,7 @@
 		{
 			return $this->offset;
 		}
-
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return SelectQuery
@@ -244,7 +233,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return SelectQuery
 		**/
@@ -253,7 +242,7 @@
 			$this->joiner->from(new FromTable($table, $alias));
 			
 			$this->aliases[$alias] = true;
-
+			
 			return $this;
 		}
 		
@@ -303,7 +292,7 @@
 			);
 			
 			$this->aliases[$alias] = true;
-
+			
 			return $this;
 		}
 		
@@ -347,7 +336,7 @@
 					} else {
 						$alias = $prefix.$array[$i];
 					}
-
+					
 					$this->get($array[$i], $alias);
 					$this->aliases[$alias] = true;
 				}
@@ -356,10 +345,10 @@
 					$this->get($array[$i]);
 				}
 			}
-					
+			
 			return $this;
 		}
-
+		
 		public function getFieldsCount()
 		{
 			return count($this->fields);
@@ -405,15 +394,15 @@
 				} else
 					$fieldList[] = $field->toDialectString($dialect);
 			}
-
-			$query = 
+			
+			$query =
 				'SELECT '.($this->distinct ? 'DISTINCT ' : null)
 				.implode(', ', $fieldList)
 				.$this->joiner->toDialectString($dialect);
 				
 			// WHERE
 			$query .= parent::toDialectString($dialect);
-
+			
 			if ($this->group) {
 				$groupList = array();
 				
@@ -421,7 +410,7 @@
 					$groupList[] = $group->toDialectString($dialect);
 				
 				if ($groupList)
-					$query .= " GROUP BY ".implode(', ', $groupList);
+					$query .= ' GROUP BY '.implode(', ', $groupList);
 			}
 			
 			if ($this->having)
@@ -432,10 +421,10 @@
 			}
 			
 			if ($this->limit)
-				$query .= " LIMIT {$this->limit}";
+				$query .= ' LIMIT '.$this->limit;
 			
 			if ($this->offset)
-				$query .= " OFFSET {$this->offset}";
+				$query .= ' OFFSET '.$this->offset;
 			
 			return $query;
 		}
@@ -457,7 +446,7 @@
 			$this->order = new OrderChain();
 			return $this;
 		}
-
+		
 		private function getLastTable($table = null)
 		{
 			if (!$table && ($last = $this->joiner->getLastTable()))
@@ -476,7 +465,7 @@
 				|| $field instanceof DialectString
 			)
 				return $field;
-			else 
+			else
 				return
 					new OrderBy(
 						new DBField($field, $this->getLastTable($table))
