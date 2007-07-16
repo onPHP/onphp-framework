@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup Flow
 	**/
-	final class MultiPrefixPhpViewResolver implements ViewResolver
+	class MultiPrefixPhpViewResolver implements ViewResolver
 	{
 		private $prefixes	= array();
 		private $postfix	= EXT_TPL;

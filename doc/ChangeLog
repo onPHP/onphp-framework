@@ -27,7 +27,7 @@
 2007-07-07	Konstantin V. Arkhipov
 
 	* main/Flow/MultiPrefixPhpViewResolver.class.php: resolveViewName now
-	throws WrongArgumentException; class is now final.
+	throws WrongArgumentException.
 
 2007-07-06	Dmitry E. Pismenny
 
