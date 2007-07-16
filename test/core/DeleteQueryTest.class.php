@@ -22,6 +22,13 @@
 				$query->toDialectString($dialect),
 				'DELETE FROM pity_table WHERE (1 = 2)'
 			);
+			
+			$query->andWhere(Expression::notEq('a', 'b'));
+			
+			$this->assertEqual(
+				$query->toDialectString($dialect),
+				'DELETE FROM pity_table WHERE (1 = 2) AND (a != b)'
+			);
 		}
 	}
 ?>
