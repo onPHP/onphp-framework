@@ -28,9 +28,19 @@
 		/**
 		 * @return FetchStrategy
 		**/
+		public function setId($id)
+		{
+			Assert::isNull($this->id, 'i am immutable one!');
+			
+			return parent::setId($id);
+		}
+		
+		/**
+		 * @return FetchStrategy
+		**/
 		public static function join()
 		{
-			return new self(self::JOIN);
+			return self::getInstance(self::JOIN);
 		}
 		
 		/**
@@ -38,7 +48,7 @@
 		**/
 		public static function cascade()
 		{
-			return new self(self::CASCADE);
+			return self::getInstance(self::CASCADE);
 		}
 		
 		/**
@@ -46,7 +56,20 @@
 		**/
 		public static function lazy()
 		{
-			return new self(self::LAZY);
+			return self::getInstance(self::LAZY);
+		}
+		
+		/**
+		 * @return FetchStrategy
+		**/
+		private static function getInstance($id)
+		{
+			static $instances = array();
+			
+			if (!isset($instances[$id]))
+				$instances[$id] = new self($id);
+			
+			return $instances[$id];
 		}
 	}
 ?>
