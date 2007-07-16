@@ -1,6 +1,5 @@
-<?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,17 +9,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup Primitives
-	 * @ingroup Module
-	**/
-	interface ListedPrimitive
-	{
-		/// @return plain array of possible primitive choices
-		public function getList();
-		public function setList($list);
-		
-		public function getChoiceValue();
-		public function getActualChoiceValue();
-	}
-?>
+#ifndef ONPHP_CORE_LISTED_PRIMITIVE_H
+#define ONPHP_CORE_LISTED_PRIMITIVE_H
+
+ONPHP_STANDART_CLASS(ListedPrimitive);
+
+#endif /* ONPHP_CORE_LISTED_PRIMITIVE_H */

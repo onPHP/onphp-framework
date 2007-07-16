@@ -33,6 +33,8 @@
 #include "core/DB/Dialect.h"
 #include "core/DB/ImaginaryDialect.h"
 
+#include "core/Form/Primitives/ListedPrimitive.h"
+
 #include "core/OSQL/Castable.h"
 #include "core/OSQL/DBField.h"
 #include "core/OSQL/DBValue.h"
@@ -74,6 +76,8 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(Query, DialectString);
 	REGISTER_ONPHP_IMPLEMENTS(Query, Identifiable);
 	REGISTER_ONPHP_IMPLEMENTS(Query, Stringable);
+	
+	REGISTER_ONPHP_INTERFACE(ListedPrimitive);
 	
 	REGISTER_ONPHP_STD_CLASS_EX(Identifier);
 	REGISTER_ONPHP_PROPERTY(Identifier, "id", ZEND_ACC_PRIVATE);

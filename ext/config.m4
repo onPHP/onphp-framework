@@ -25,6 +25,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/Base/Instantiatable.c \
 		src/core/DB/Dialect.c \
 		src/core/DB/ImaginaryDialect.c \
+		src/core/Form/Primitives/ListedPrimitive.c \
 		src/core/OSQL/Castable.c \
 		src/core/OSQL/DBField.c \
 		src/core/OSQL/DBValue.c \
