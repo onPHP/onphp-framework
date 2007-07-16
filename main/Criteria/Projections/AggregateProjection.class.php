@@ -22,7 +22,7 @@
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
-			Assert::isFalse(!$this->property);
+			Assert::isNotNull($this->property);
 			
 			return
 				$query->

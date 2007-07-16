@@ -31,6 +31,8 @@
 			JoinCapableQuery $query
 		)
 		{
+			Assert::isNotNull($this->property);
+			
 			return
 				SQLFunction::create(
 					'count',

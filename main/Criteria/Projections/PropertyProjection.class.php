@@ -20,6 +20,8 @@
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
+			Assert::isNotNull($this->property);
+			
 			return $query->get(
 				SelectField::create(
 					$criteria->getDao()->guessAtom($this->property, $query),
