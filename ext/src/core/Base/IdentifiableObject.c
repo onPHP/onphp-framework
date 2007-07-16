@@ -52,18 +52,7 @@ ONPHP_METHOD(IdentifiableObject, getId)
 	RETURN_ZVAL(id, 1, 0);
 }
 
-ONPHP_METHOD(IdentifiableObject, setId)
-{
-	zval *id;
-	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
-
-	ONPHP_UPDATE_PROPERTY(getThis(), "id", id);
-
-	RETURN_ZVAL(getThis(), 1, 0);
-}
+ONPHP_SETTER(IdentifiableObject, setId, id);
 
 static ONPHP_ARGINFO_ONE;
 

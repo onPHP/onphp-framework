@@ -68,6 +68,27 @@
 #define ONPHP_METHOD(class_name, function_name) \
 	PHP_METHOD(onphp_ ## class_name, function_name)
 
+#define ONPHP_GETTER(class_name, method_name, property_name) \
+	ONPHP_METHOD(class_name, method_name) \
+	{ \
+		zval *property_name = ONPHP_READ_PROPERTY(getThis(), # property_name); \
+		RETURN_ZVAL(property_name, 1, 0); \
+	}
+
+#define ONPHP_SETTER(class_name, method_name, property_name) \
+	ONPHP_METHOD(class_name, method_name) \
+	{ \
+		zval *property_name; \
+		\
+		if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &property_name) == FAILURE) { \
+			WRONG_PARAM_COUNT; \
+		} \
+		\
+		ONPHP_UPDATE_PROPERTY(getThis(), # property_name, property_name); \
+		\
+		RETURN_ZVAL(getThis(), 1, 0); \
+	}
+
 #define ONPHP_ARGINFO_ONE \
 	ZEND_BEGIN_ARG_INFO(arginfo_one, 0) \
 		ZEND_ARG_INFO(0, first) \

@@ -107,14 +107,7 @@ ONPHP_METHOD(Enumeration, unserialize)
 	);
 }
 
-ONPHP_METHOD(Enumeration, getId)
-{
-	zval *id;
-	
-	id = ONPHP_READ_PROPERTY(getThis(), "id");
-	
-	RETURN_ZVAL(id, 1, 0);
-}
+ONPHP_GETTER(Enumeration, getId, id);
 
 ONPHP_METHOD(Enumeration, setId)
 {
@@ -340,19 +333,8 @@ ONPHP_METHOD(Enumeration, getObjectList)
 	RETURN_ZVAL(list, 1, 1);
 }
 
-ONPHP_METHOD(Enumeration, toString)
-{
-	zval *name = ONPHP_READ_PROPERTY(getThis(), "name");
-	
-	RETURN_ZVAL(name, 1, 0);
-}
-
-ONPHP_METHOD(Enumeration, getNameList)
-{
-	zval *names = ONPHP_READ_PROPERTY(getThis(), "names");
-
-	RETURN_ZVAL(names, 1, 0);
-}
+ONPHP_GETTER(Enumeration, toString, name);
+ONPHP_GETTER(Enumeration, getNameList, names);
 
 static ONPHP_ARGINFO_ONE;
 

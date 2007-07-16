@@ -14,23 +14,8 @@
 
 #include "core/Base/NamedObject.h"
 
-ONPHP_METHOD(NamedObject, getName)
-{
-	zval *name = ONPHP_READ_PROPERTY(getThis(), "name");
-
-	RETURN_ZVAL(name, 1, 0);
-}
-
-ONPHP_METHOD(NamedObject, setName)
-{
-	zval *name;
-	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &name) == SUCCESS) {
-		ONPHP_UPDATE_PROPERTY(getThis(), "name", name);
-	}
-
-	RETURN_ZVAL(getThis(), 1, 0);
-}
+ONPHP_GETTER(NamedObject, getName, name);
+ONPHP_SETTER(NamedObject, setName, name);
 
 ONPHP_METHOD(NamedObject, toString)
 {

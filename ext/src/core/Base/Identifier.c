@@ -43,27 +43,8 @@ ONPHP_METHOD(Identifier, wrap)
 	RETURN_ZVAL(object, 1, 1);
 }
 
-ONPHP_METHOD(Identifier, getId)
-{
-	zval *id;
-
-	id = ONPHP_READ_PROPERTY(getThis(), "id");
-
-	RETURN_ZVAL(id, 1, 0);
-}
-
-ONPHP_METHOD(Identifier, setId)
-{
-	zval *id;
-	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
-
-	ONPHP_UPDATE_PROPERTY(getThis(), "id", id);
-
-	RETURN_ZVAL(getThis(), 1, 0);
-}
+ONPHP_GETTER(Identifier, getId, id);
+ONPHP_SETTER(Identifier, setId, id);
 
 ONPHP_METHOD(Identifier, finalize)
 {

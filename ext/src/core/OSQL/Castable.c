@@ -13,18 +13,7 @@
 
 #include "core/OSQL/Castable.h"
 
-ONPHP_METHOD(Castable, castTo)
-{
-	zval *cast;
-	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &cast) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
-
-	ONPHP_UPDATE_PROPERTY(getThis(), "cast", cast);
-
-	RETURN_ZVAL(getThis(), 1, 0);
-}
+ONPHP_SETTER(Castable, castTo, cast);
 
 static ONPHP_ARGINFO_ONE;
 

@@ -46,12 +46,7 @@ ONPHP_METHOD(DBValue, __construct)
 	ONPHP_UPDATE_PROPERTY(getThis(), "value", value);
 }
 
-ONPHP_METHOD(DBValue, getValue)
-{
-	zval *value = ONPHP_READ_PROPERTY(getThis(), "value");
-
-	RETURN_ZVAL(value, 1, 0);
-}
+ONPHP_GETTER(DBValue, getValue, value);
 
 ONPHP_METHOD(DBValue, toDialectString)
 {
