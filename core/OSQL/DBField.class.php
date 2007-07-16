@@ -14,6 +14,7 @@
 	 * Reference for actual DB-table column.
 	 * 
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	final class DBField extends Castable implements SQLTableName 
 	{
