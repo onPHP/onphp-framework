@@ -1,5 +1,10 @@
 # $Id$
 
+2007-07-16	Konstantin V. Arkhipov
+
+	* main/Base/RequestType.class.php,
+	main/Criteria/FetchStrategy.class.php: immutable now.
+
 2007-07-15	Konstantin V. Arkhipov
 
 	* core/OSQL/Castable.class.php: DialectString is a must now.
