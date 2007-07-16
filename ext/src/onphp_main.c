@@ -14,11 +14,21 @@
 #include "onphp_main.h"
 #include "onphp_util.h"
 
+#include "core/Base/Identifiable.h"
+
+#include "main/DAOs/DAOConnected.h"
+#include "main/DAOs/FullTextDAO.h"
 #include "main/DAOs/Handlers/SegmentHandler.h"
+#include "main/Flow/ViewResolver.h"
 
 PHP_MINIT_FUNCTION(onphp_main)
 {
 	REGISTER_ONPHP_INTERFACE(SegmentHandler);
+	REGISTER_ONPHP_INTERFACE(ViewResolver);
+	REGISTER_ONPHP_INTERFACE(FullTextDAO);
+	
+	REGISTER_ONPHP_INTERFACE(DAOConnected);
+	REGISTER_ONPHP_IMPLEMENTS(DAOConnected, Identifiable);
 	
 	return SUCCESS;
 }

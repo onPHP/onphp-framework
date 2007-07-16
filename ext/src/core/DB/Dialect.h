@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,8 +22,6 @@
 		ZEND_ARG_OBJ_INFO(0, column, DBColumn, 0) \
 	ZEND_END_ARG_INFO();
 
-PHPAPI zend_class_entry *onphp_ce_Dialect;
-
-extern zend_function_entry onphp_funcs_Dialect[];
+ONPHP_STANDART_CLASS(Dialect);
 
 #endif /* ONPHP_CORE_DIALECT_H */

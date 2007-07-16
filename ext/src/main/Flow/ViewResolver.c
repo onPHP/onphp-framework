@@ -17,4 +17,5 @@ static ONPHP_ARGINFO_ONE;
 
 zend_function_entry onphp_funcs_ViewResolver[] = {
 	ONPHP_ABSTRACT_ME(ViewResolver, resolveViewName, arginfo_one, ZEND_ACC_PUBLIC)
+	{NULL, NULL, NULL}
 };

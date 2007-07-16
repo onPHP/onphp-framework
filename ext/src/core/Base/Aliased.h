@@ -12,8 +12,6 @@
 #ifndef ONPHP_CORE_ALIASED_H
 #define ONPHP_CORE_ALIASED_H
 
-PHPAPI zend_class_entry *onphp_ce_Aliased;
-
-extern zend_function_entry onphp_funcs_Aliased[];
+ONPHP_STANDART_CLASS(Aliased);
 
 #endif /* ONPHP_CORE_ALIASED_H */

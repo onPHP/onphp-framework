@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,9 +12,7 @@
 #ifndef ONPHP_CORE_SINGLETON_H
 #define ONPHP_CORE_SINGLETON_H
 
-PHPAPI zend_class_entry *onphp_ce_Singleton;
-
-extern zend_function_entry onphp_funcs_Singleton[];
+ONPHP_STANDART_CLASS(Singleton);
 
 PHP_RINIT_FUNCTION(Singleton);
 PHP_RSHUTDOWN_FUNCTION(Singleton);

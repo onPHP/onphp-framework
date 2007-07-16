@@ -15,4 +15,5 @@
 
 zend_function_entry onphp_funcs_FullTextDAO[] = {
 	ONPHP_ABSTRACT_ME(FullTextDAO, getIndexField, NULL, ZEND_ACC_PUBLIC)
+	{NULL, NULL, NULL}
 };

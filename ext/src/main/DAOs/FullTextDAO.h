@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -9,11 +9,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-#ifndef ONPHP_CORE_QUERY_H
-#define ONPHP_CORE_QUERY_H
+#ifndef ONPHP_CORE_FULL_TEXT_H
+#define ONPHP_CORE_FULL_TEXT_H
 
-PHPAPI zend_class_entry *onphp_ce_Query;
+ONPHP_STANDART_CLASS(FullTextDAO);
 
-extern zend_function_entry onphp_funcs_Query[];
-
-#endif /* ONPHP_CORE_QUERY_H */
+#endif /* ONPHP_CORE_FULL_TEXT_H */

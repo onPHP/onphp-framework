@@ -89,6 +89,10 @@
 		RETURN_ZVAL(getThis(), 1, 0); \
 	}
 
+#define ONPHP_STANDART_CLASS(class_name) \
+	PHPAPI zend_class_entry *onphp_ce_ ## class_name; \
+	extern zend_function_entry onphp_funcs_ ## class_name[];
+
 #define ONPHP_ARGINFO_ONE \
 	ZEND_BEGIN_ARG_INFO(arginfo_one, 0) \
 		ZEND_ARG_INFO(0, first) \
