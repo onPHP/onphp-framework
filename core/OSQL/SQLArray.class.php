@@ -40,13 +40,13 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			$array = $this->array;
-
+			
 			if (is_array($array)) {
 				$quoted = array();
 				
 				foreach ($array as $item)
 					$quoted[] = $dialect->valueToString($item);
-
+				
 				$value = implode(', ', $quoted);
 			} else
 				$value = $dialect->quoteValue($array);
