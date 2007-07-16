@@ -74,13 +74,13 @@
 		**/
 		public function resolveViewName($viewName)
 		{
-			Assert::isTrue(
-				count($this->prefixes) >= 1, 
+			Assert::isFalst(
+				($this->prefixes === array()),
 				'specify at least one prefix'
 			);
 			
 			foreach ($this->prefixes as $prefix) {
-				if (is_readable($prefix.$viewName.$this->postfix)) {
+				if (file_exists($prefix.$viewName.$this->postfix)) {
 					return
 						new $this->viewClassName(
 							$prefix.$viewName.$this->postfix,
