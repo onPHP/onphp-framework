@@ -56,7 +56,10 @@
 		{
 			return $this->field;
 		}
-
+		
+		/**
+		 * @return DialectString
+		**/
 		public function getTable()
 		{
 			return $this->table;
