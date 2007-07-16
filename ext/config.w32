@@ -17,8 +17,8 @@ if (PHP_ONPHP != "no") {
 		ImaginaryDialect.c", "onphp");
 	
 	ADD_SOURCES("ext/onphp/src/core/OSQL", "Castable.c \
-		DBField.c DBValue.c DialectString.c FieldTable.c SQLTableName.c \
-		Query.c QueryIdentification.c", "onphp");
+		DBField.c DBValue.c DialectString.c FieldTable.c SelectField.c \
+		SQLTableName.c Query.c QueryIdentification.c", "onphp");
 	
 	ADD_SOURCES("ext/onphp/src/main/DAOs", "DAOConnected.c \
 		FullTextDAO.c", "onphp");
@@ -26,7 +26,7 @@ if (PHP_ONPHP != "no") {
 	ADD_SOURCES("ext/onphp/src/main/DAOs/Handlers", "SegmentHandler.c", "onphp");
 	
 	ADD_SOURCES("ext/onphp/src/main/Flow", "ViewResolver.c", "onphp");
-
+	
 	EXTENSION("onphp", "src/onphp.c", null, "-Iext/onphp/src -Iext/onphp/src/core \
 	-Iext/onphp/src/core/Base -Iext/onphp/src/core/DB -Iext/onphp/src/core/OSQL \
 	-Iext/onphp/src/main/DAOs -Iext/onphp/src/main/DAOs/Handlers -Iext/onphp/src/main");

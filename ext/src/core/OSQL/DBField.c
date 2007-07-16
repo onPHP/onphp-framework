@@ -95,19 +95,8 @@ ONPHP_METHOD(DBField, __construct)
 	}
 }
 
-ONPHP_METHOD(DBField, getField)
-{
-	zval *field = ONPHP_READ_PROPERTY(getThis(), "field");
-	
-	RETURN_ZVAL(field, 1, 0);
-}
-
-ONPHP_METHOD(DBField, getTable)
-{
-	zval *table = ONPHP_READ_PROPERTY(getThis(), "table");
-	
-	RETURN_ZVAL(table, 1, 0);
-}
+ONPHP_GETTER(DBField, getField, field);
+ONPHP_GETTER(DBField, getTable, table);
 
 ONPHP_METHOD(DBField, toDialectString)
 {
@@ -126,7 +115,7 @@ ONPHP_METHOD(DBField, toDialectString)
 	cast = ONPHP_READ_PROPERTY(getThis(), "cast");
 	
 	// either null or instance of DialectString
-	if (Z_TYPE_P(table) != IS_NULL) {
+	if (Z_TYPE_P(table) == IS_OBJECT) {
 		zval *tmp;
 		
 		zend_call_method_with_1_params(

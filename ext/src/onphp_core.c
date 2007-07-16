@@ -38,6 +38,7 @@
 #include "core/OSQL/DBValue.h"
 #include "core/OSQL/DialectString.h"
 #include "core/OSQL/FieldTable.h"
+#include "core/OSQL/SelectField.h"
 #include "core/OSQL/SQLTableName.h"
 #include "core/OSQL/Query.h"
 #include "core/OSQL/QueryIdentification.h"
@@ -84,19 +85,19 @@ PHP_MINIT_FUNCTION(onphp_core)
 	
 	REGISTER_ONPHP_IMPLEMENTS(Identifier, Identifiable);
 	REGISTER_ONPHP_IMPLEMENTS(IdentifiableObject, Identifiable);
-
+	
 	REGISTER_ONPHP_SUB_CLASS_EX(NamedObject, IdentifiableObject);
 	REGISTER_ONPHP_PROPERTY(NamedObject, "name", ZEND_ACC_PROTECTED);
 	REGISTER_ONPHP_IMPLEMENTS(NamedObject, Named);
 	onphp_ce_NamedObject->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
-
+	
 	REGISTER_ONPHP_SUB_CLASS_EX(Enumeration, NamedObject);
 	REGISTER_ONPHP_PROPERTY(Enumeration, "names", ZEND_ACC_PROTECTED);
 	onphp_ce_Enumeration->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
 	// skipping REGISTER_ONPHP_IMPLEMENTS
 	zend_class_implements(onphp_ce_Enumeration TSRMLS_CC, 1, zend_ce_serializable);
-
+	
 	REGISTER_ONPHP_STD_CLASS_EX(Singleton);
 	onphp_ce_Singleton->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
@@ -127,9 +128,14 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_PROPERTY(DBField, "table", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_IMPLEMENTS(DBField, SQLTableName);
 	
+	REGISTER_ONPHP_SUB_CLASS_EX(SelectField, FieldTable);
+	REGISTER_ONPHP_PROPERTY(SelectField, "alias", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_IMPLEMENTS(SelectField, Aliased);
+	onphp_ce_SelectField->ce_flags |= ZEND_ACC_FINAL_CLASS;
+	
 	REGISTER_ONPHP_STD_CLASS_EX(QueryIdentification);
 	REGISTER_ONPHP_IMPLEMENTS(QueryIdentification, Query);
 	onphp_ce_QueryIdentification->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
-
+	
 	return PHP_MINIT(Exceptions)(INIT_FUNC_ARGS_PASSTHRU);
 }
