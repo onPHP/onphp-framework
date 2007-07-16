@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -48,10 +48,10 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			Assert::isTrue(
-				count($this->targets) > 0,
+				($this->targets !== array()),
 				'do not know who should i truncate'
 			);
-
+			
 			if ($dialect->hasTruncate()) {
 				$head = 'TRUNCATE TABLE ';
 			} else {

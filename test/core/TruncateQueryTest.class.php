@@ -7,6 +7,13 @@
 		{
 			$query = OSQL::truncate('single_table');
 			
+			try {
+				OSQL::truncate()->toDialectString(ImaginaryDialect::me());
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				$this->pass();
+			}
+			
 			$this->assertEqual(
 				$query->toDialectString(ImaginaryDialect::me()),
 				'DELETE FROM single_table;'
