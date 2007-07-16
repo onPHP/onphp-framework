@@ -63,7 +63,7 @@
 		{
 			if ($limit !== null)
 				Assert::isPositiveInteger($limit, 'invalid limit specified');
-				
+			
 			if ($offset !== null)
 				Assert::isInteger($offset, 'invalid offset specified');
 			
@@ -79,6 +79,7 @@
 		public function dropOrder()
 		{
 			$this->order = new OrderChain();
+			
 			return $this;
 		}
 		
@@ -101,10 +102,10 @@
 			
 			return $this;
 		}
-
+		
 		public function toDialectString(Dialect $dialect)
 		{
-			$query = 
+			$query =
 				$this->left->toDialectString($dialect)
 				." {$this->logic} "
 				.$this->right->toDialectString($dialect);
@@ -114,11 +115,11 @@
 			}
 			
 			if ($this->limit)
-				$query .= " LIMIT {$this->limit}";
+				$query .= ' LIMIT '.$this->limit;
 			
 			if ($this->offset)
-				$query .= " OFFSET {$this->offset}";
-				
+				$query .= ' OFFSET '.$this->offset;
+			
 			return $query;
 		}
 	}
