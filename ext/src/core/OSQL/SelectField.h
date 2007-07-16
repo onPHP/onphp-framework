@@ -12,8 +12,6 @@
 #ifndef ONPHP_CORE_SELECT_FIELD_H
 #define ONPHP_CORE_SELECT_FIELD_H
 
-#include "onphp_core.h"
-
 PHPAPI zend_class_entry *onphp_ce_SelectField;
 
 extern zend_function_entry onphp_funcs_SelectField[];

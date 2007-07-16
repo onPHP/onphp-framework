@@ -12,8 +12,6 @@
 #ifndef ONPHP_CORE_DIALECT_H
 #define ONPHP_CORE_DIALECT_H
 
-#include "onphp_core.h"
-
 #define ONPHP_ARGINFO_DIALECT \
 	ZEND_BEGIN_ARG_INFO(arginfo_dialect, 0) \
 		ZEND_ARG_OBJ_INFO(0, dialect, Dialect, 0) \
