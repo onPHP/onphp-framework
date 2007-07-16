@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -59,6 +59,7 @@ PHP_MINIT_FUNCTION(onphp_core)
 	
 	REGISTER_ONPHP_INTERFACE(DialectString);
 	REGISTER_ONPHP_INTERFACE(SQLTableName);
+	REGISTER_ONPHP_IMPLEMENTS(SQLTableName, DialectString);
 	
 	REGISTER_ONPHP_INTERFACE(Query);
 	REGISTER_ONPHP_IMPLEMENTS(Query, DialectString);
