@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -29,6 +29,9 @@
 			);
 		}
 		
+		/**
+		 * @return AbstractList
+		**/
 		public function offsetUnset($offset)
 		{
 			unset($this->list[$offset]);
@@ -43,9 +46,14 @@
 		
 		// SAA goes here
 		
+		/**
+		 * @return AbstractList
+		**/
 		public function clean()
 		{
 			$this->list = array();
+			
+			return $this;
 		}
 		
 		public function isEmpty()
