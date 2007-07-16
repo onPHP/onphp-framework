@@ -14,6 +14,7 @@
 	 * Connected to concrete table DBField.
 	 * 
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	final class SelectField extends FieldTable implements Aliased
 	{
