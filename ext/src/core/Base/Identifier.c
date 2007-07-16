@@ -16,12 +16,9 @@
 ONPHP_METHOD(Identifier, create)
 {
 	zval *object;
-
-	MAKE_STD_ZVAL(object);
-
-	object->value.obj = onphp_empty_object_new(onphp_ce_Identifier TSRMLS_CC);
-	Z_TYPE_P(object) = IS_OBJECT;
-
+	
+	ONPHP_MAKE_OBJECT(Identifier, object);
+	
 	RETURN_ZVAL(object, 1, 1);
 }
 

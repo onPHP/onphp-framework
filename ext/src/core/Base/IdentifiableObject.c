@@ -17,15 +17,12 @@
 ONPHP_METHOD(IdentifiableObject, wrap)
 {
 	zval *object, *id;
-
+	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
-
-	MAKE_STD_ZVAL(object);
-
-	object->value.obj = onphp_empty_object_new(onphp_ce_IdentifiableObject TSRMLS_CC);
-	Z_TYPE_P(object) = IS_OBJECT;
+	
+	ONPHP_MAKE_OBJECT(IdentifiableObject, object);
 	
 	ONPHP_UPDATE_PROPERTY(object, "id", id);
 	

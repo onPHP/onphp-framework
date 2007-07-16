@@ -7,8 +7,8 @@
 
 2007-07-15	Konstantin V. Arkhipov
 
-	* core/OSQL/DBField.class.php, core/OSQL/SelectField.class.php:
-	implemented in module.
+	* core/OSQL/DBField.class.php, core/OSQL/SelectField.class.php,
+	core/Form/Primitives/ListedPrimitive.class.php: implemented in module.
 
 	* core/OSQL/Castable.class.php: DialectString is a must now.
 

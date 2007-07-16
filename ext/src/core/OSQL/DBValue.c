@@ -20,18 +20,15 @@
 ONPHP_METHOD(DBValue, create)
 {
 	zval *object, *value;
-
+	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
 		WRONG_PARAM_COUNT;
 	}
-
-	MAKE_STD_ZVAL(object);
-
-	object->value.obj = onphp_empty_object_new(onphp_ce_DBValue TSRMLS_CC);
-	Z_TYPE_P(object) = IS_OBJECT;
+	
+	ONPHP_MAKE_OBJECT(DBValue, object);
 	
 	ONPHP_UPDATE_PROPERTY(object, "value", value);
-
+	
 	RETURN_ZVAL(object, 1, 1);
 }
 

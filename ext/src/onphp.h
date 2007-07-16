@@ -89,6 +89,11 @@
 		RETURN_ZVAL(getThis(), 1, 0); \
 	}
 
+#define ONPHP_MAKE_OBJECT(class_name, zval) \
+	MAKE_STD_ZVAL(zval); \
+	zval->value.obj = onphp_empty_object_new(onphp_ce_ ## class_name TSRMLS_CC); \
+	Z_TYPE_P(zval) = IS_OBJECT;
+
 #define ONPHP_STANDART_CLASS(class_name) \
 	PHPAPI zend_class_entry *onphp_ce_ ## class_name; \
 	extern zend_function_entry onphp_funcs_ ## class_name[];

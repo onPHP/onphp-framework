@@ -36,10 +36,7 @@ ONPHP_METHOD(DBField, create)
 		WRONG_PARAM_COUNT;
 	}
 	
-	MAKE_STD_ZVAL(object);
-	
-	object->value.obj = onphp_empty_object_new(onphp_ce_DBField TSRMLS_CC);
-	Z_TYPE_P(object) = IS_OBJECT;
+	ONPHP_MAKE_OBJECT(DBField, object);
 	
 	ONPHP_UPDATE_PROPERTY(object, "field", field);
 	
