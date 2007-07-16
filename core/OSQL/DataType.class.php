@@ -215,18 +215,7 @@
 				$out .= ' UNSIGNED';
 			}
 			
-			if ($this->hasSize()) {
-				
-				if (!$this->size)
-					throw new WrongStateException(
-						"type '{$this->name}' must have size"
-					);
-				
-				$out .= "({$this->size})";
-			}
-			
 			if ($this->id & self::HAVE_PRECISION) {
-				
 				if ($this->precision) {
 					
 					switch ($this->id) {
@@ -240,17 +229,23 @@
 						case self::NUMERIC:
 							
 							$out .=
-								$this->scale
-									? "({$this->precision}, {$this->scale})"
-									: "({$this->precision})";
+								$this->precision
+									? "({$this->size}, {$this->precision})"
+									: "({$this->size})";
 							break;
 						
 						default:
 							
 							throw new WrongStateException();
 					}
-					
 				}
+			} elseif ($this->hasSize()) {
+				if (!$this->size)
+					throw new WrongStateException(
+						"type '{$this->name}' must have size"
+					);
+				
+				$out .= "({$this->size})";
 			}
 			
 			if ($this->id & self::HAVE_TIMEZONE)
