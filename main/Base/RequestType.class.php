@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -34,9 +34,19 @@
 		/**
 		 * @return RequestType
 		**/
+		public function setId($id)
+		{
+			Assert::isNull($this->id, 'i am immutable one!');
+			
+			return parent::setId($id);
+		}
+		
+		/**
+		 * @return RequestType
+		**/
 		public static function get()
 		{
-			return new self(self::GET);
+			return self::getInstance(self::GET);
 		}
 		
 		/**
@@ -44,7 +54,7 @@
 		**/
 		public static function post()
 		{
-			return new self(self::POST);
+			return self::getInstance(self::POST);
 		}
 		
 		/**
@@ -52,7 +62,7 @@
 		**/
 		public static function files()
 		{
-			return new self(self::FILES);
+			return self::getInstance(self::FILES);
 		}
 		
 		/**
@@ -60,7 +70,7 @@
 		**/
 		public static function cookie()
 		{
-			return new self(self::COOKIE);
+			return self::getInstance(self::COOKIE);
 		}
 		
 		/**
@@ -68,7 +78,7 @@
 		**/
 		public static function session()
 		{
-			return new self(self::SESSION);
+			return self::getInstance(self::SESSION);
 		}
 
 		/**
@@ -76,7 +86,20 @@
 		**/
 		public static function attached()
 		{
-			return new self(self::ATTACHED);
+			return self::getInstance(self::ATTACHED);
+		}
+		
+		/**
+		 * @return RequestType
+		**/
+		private static function getInstance($id)
+		{
+			static $instances = array();
+			
+			if (!isset($instances[$id]))
+				$instances[$id] = self::getInstance($id);
+			
+			return $instances[$id];
 		}
 	}
 ?>
