@@ -97,7 +97,7 @@
 			static $instances = array();
 			
 			if (!isset($instances[$id]))
-				$instances[$id] = self::getInstance($id);
+				$instances[$id] = new self($id);
 			
 			return $instances[$id];
 		}
