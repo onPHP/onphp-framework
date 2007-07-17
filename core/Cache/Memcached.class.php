@@ -7,8 +7,8 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
- *   Based on version by Ryan Gilfether <hotrodder@rocketmail.com>         *
- *   Copyright (c) 2003 under GPL || Artistic license                      *
+ *   Inspired by the work of Ryan Gilfether <hotrodder@rocketmail.com>     *
+ *   Copyright (c) 2003, under the GNU GPL license                         *
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
