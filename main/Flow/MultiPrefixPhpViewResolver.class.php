@@ -74,7 +74,7 @@
 		**/
 		public function resolveViewName($viewName)
 		{
-			Assert::isFalst(
+			Assert::isFalse(
 				($this->prefixes === array()),
 				'specify at least one prefix'
 			);
