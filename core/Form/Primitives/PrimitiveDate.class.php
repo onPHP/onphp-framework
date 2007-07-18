@@ -75,7 +75,10 @@
 		{
 			if (
 				BasePrimitive::import($scope)
-				&& is_string($scope[$this->name])
+				&& (
+					is_string($scope[$this->name])
+					|| is_numeric($scope[$this->name])
+				)
 			) {
 				try {
 					$class = $this->getObjectName();
