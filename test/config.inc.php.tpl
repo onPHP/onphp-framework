@@ -38,6 +38,7 @@
 	set_error_handler('error2Exception', E_ALL);
 	
 	ini_set('sqlite.assoc_case', 0);
+	ini_set('html_errors', false);
 	
 	require SIMPLETEST_PATH.'unit_tester.php';
 ?>
