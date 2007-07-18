@@ -113,8 +113,7 @@
 		
 		public function getWhole()
 		{
-			// FIXME: (length - pos) ?
-			return $this->read($this->length);
+			return $this->read($this->length - $this->next);
 		}
 		
 		/* void */ private function ensureOpen()
