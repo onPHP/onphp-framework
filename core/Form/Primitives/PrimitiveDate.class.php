@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -64,7 +64,10 @@
 		{
 			if (
 				isset($scope[$this->name])
-				&& is_string($scope[$this->name])
+				&& (
+					is_string($scope[$this->name])
+					|| is_numeric($scope[$this->name])
+				)
 			) {
 				try {
 					$ts = new Timestamp($scope[$this->name]);
