@@ -81,7 +81,7 @@
 		
 		public function __construct($date)
 		{
-			if (is_int($date)) {// unix timestamp
+			if (is_int($date) || is_numeric($date)) { // unix timestamp
 				$this->int = $date;
 				$this->string = date($this->getFormat(), $date);
 			} elseif ($date && is_string($date))
