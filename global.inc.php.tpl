@@ -41,6 +41,7 @@
 			} catch (ClassNotFoundException $e) {
 				throw $e;
 			} catch (BaseException $e) {
+				echo $e->getMessage();
 				return __autoload_failed($classname);
 			}
 		}
@@ -199,7 +200,7 @@
 		
 		.ONPHP_META_CLASSES.PATH_SEPARATOR
 		
-	/*
+	
 		.ONPHP_INCUBATOR_PATH.'Application'.DIRECTORY_SEPARATOR.PATH_SEPARATOR
 			
 		.ONPHP_INCUBATOR_PATH.'Application'.DIRECTORY_SEPARATOR
@@ -208,7 +209,7 @@
 		.ONPHP_INCUBATOR_PATH.'Application'.DIRECTORY_SEPARATOR
 		.'Markups'.DIRECTORY_SEPARATOR
 		.'Documents'.DIRECTORY_SEPARATOR.PATH_SEPARATOR
-	*/
+	
 	);
 	
 	/*
