@@ -73,11 +73,12 @@ Possible options:
 
 		define('ONPHP_META_AUTO_DIR', PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR);
 		
-		define(
-			'ONPHP_META_AUTO_BUSINESS_DIR',
-			ONPHP_META_AUTO_DIR
-			.'Business'.DIRECTORY_SEPARATOR
-		);
+		if (!defined('ONPHP_META_AUTO_BUSINESS_DIR'))
+			define(
+				'ONPHP_META_AUTO_BUSINESS_DIR',
+				ONPHP_META_AUTO_DIR
+				.'Business'.DIRECTORY_SEPARATOR
+			);
 		
 		define(
 			'ONPHP_META_AUTO_PROTO_DIR',
