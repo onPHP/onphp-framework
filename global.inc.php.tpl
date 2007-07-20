@@ -41,7 +41,7 @@
 			} catch (ClassNotFoundException $e) {
 				throw $e;
 			} catch (BaseException $e) {
-				return __autoload_failed($classname);
+				return __autoload_failed($classname.': '.$e->getMessage());
 			}
 		}
 		
@@ -65,7 +65,7 @@
 				} catch (ClassNotFoundException $e) {
 					throw $e;
 				} catch (BaseException $e) {
-					return __autoload_failed($classname);
+					return __autoload_failed($classname.': '.$e->getMessage());
 				}
 			}
 		}
@@ -112,7 +112,7 @@
 				$cache[ONPHP_CLASS_CACHE_CHECKSUM] = null;
 				return /* void */;
 			} catch (BaseException $e) {
-				__autoload_failed($classname);
+				__autoload_failed($classname.': '.$e->getMessage());
 			}
 		}
 	}
