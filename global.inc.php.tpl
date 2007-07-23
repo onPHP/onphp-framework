@@ -20,6 +20,15 @@
 	// classes autoload magic
 	function __autoload($classname)
 	{
+		if (
+			!preg_match(
+				'~^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]+$~', $classname
+			)
+		) {
+			/* are you sane? */
+			return;
+		}
+		
 		// and yes, there is no error handling, 'cause we're
 		// writing very custom business solution, which will
 		// contain everything (classes/modules) everytime...
