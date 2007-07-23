@@ -1,5 +1,10 @@
 # $Id$
 
+2007-07-23	Ivan Y. Khvostishkov
+
+	* global.inc.php.tpl: possible security hole fixed on autoload's
+	level.
+
 2007-07-12	Konstantin V. Arkhipov
 
 	* 0.10.3 released.
