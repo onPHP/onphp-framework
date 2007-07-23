@@ -1,5 +1,10 @@
 # $Id$
 
+2007-07-23	Ivan Y. Khvostishkov
+
+	* global.inc.php.tpl: possible security hole fixed on autoload's
+	level.
+
 2007-06-18	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* core/Form/MappedForm.class.php: now checks Form's rules upon
