@@ -41,7 +41,7 @@
 			} catch (ClassNotFoundException $e) {
 				throw $e;
 			} catch (BaseException $e) {
-				return __autoload_failed($classname.': '.$e->getMessage());
+				return __autoload_failed($classname);
 			}
 		}
 		
