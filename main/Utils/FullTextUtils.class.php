@@ -80,7 +80,7 @@
 					!empty($array[$i])
 					&& (
 						$element = mb_ereg_replace(
-							'[^а-яА-Яa-zA-Z0-9 \-\./]', null, $array[$i]
+							'[^\x7F-\xFFa-zA-Z0-9 \-\./]', null, $array[$i]
 						)
 					)
 				)
