@@ -102,6 +102,17 @@
 				return parent::getDayStartStamp();
 		}
 		
+		/**
+		 * ISO 8601 time string
+		**/
+		public function toISOString($convertToUtc = true)
+		{
+			if ($convertToUtc)
+				return date('Y-m-d\TH:i:s\Z', $this->int - date('Z', $this->int));
+			else
+				return date('Y-m-d\TH:i:sO', $this->int);
+		}
+		
 		protected static function getFormat()
 		{
 			return 'Y-m-d H:i:s';
