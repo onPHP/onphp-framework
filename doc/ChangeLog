@@ -1,5 +1,10 @@
 # $Id$
 
+2007-07-24	Dmitry A. Lomash
+
+	* main/Base/Timestamp.class.php, main/Base/Date.class.php:
+	moved up toIsoString() method.
+
 2007-07-23	Ivan Y. Khvostishkov
 
 	* global.inc.php.tpl: possible security hole fixed on autoload's
