@@ -228,17 +228,6 @@
 			return $dialect->quoteValue($this->toString());
 		}
 		
-		/**
-		 * ISO 8601 date string
-		**/
-		public function toISOString($convertToUtc = true)
-		{
-			if ($convertToUtc)
-				return date('Y-m-d\Z', $this->int - date('Z', $this->int));
-			else
-				return date('Y-m-d', $this->int);
-		}
-
 		protected static function getFormat()
 		{
 			return 'Y-m-d';
