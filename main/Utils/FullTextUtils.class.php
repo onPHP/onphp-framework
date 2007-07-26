@@ -80,7 +80,7 @@
 					!empty($array[$i])
 					&& (
 						$element = preg_replace(
-							'/[^\pL\d\-\+\./]/u', null, $array[$i]
+							'/[^\pL\d\-\+\.\/]/u', null, $array[$i]
 						)
 					)
 				)
