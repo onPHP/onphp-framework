@@ -71,7 +71,7 @@
 		
 		public static function prepareSearchString($string)
 		{
-			$array = explode(' ', $string);
+			$array = preg_split('/[\s\pP]+/u', $string);
 			
 			$out = array();
 			
@@ -79,8 +79,8 @@
 				if (
 					!empty($array[$i])
 					&& (
-						$element = mb_ereg_replace(
-							'[^\x7F-\xFFa-zA-Z0-9 \-\./]', null, $array[$i]
+						$element = preg_replace(
+							'/[^\pL\d\-\+\./]/u', null, $array[$i]
 						)
 					)
 				)
