@@ -17,13 +17,13 @@
 		throw new BaseException($string, $code);
 	}
 	
-	/* void */ function __autoload_failed($classname)
+	/* void */ function __autoload_failed($classname, $message)
 	{
 		eval(
 			'class '.$classname.'{/*_*/}'
 			.'if (!class_exists("ClassNotFoundException", false)) { '
 			.'class ClassNotFoundException extends BaseException {/*_*/} }'
-			.'throw new ClassNotFoundException("'.$classname.'");'
+			.'throw new ClassNotFoundException("'.$classname.': '.$message.'");'
 		);
 	}
 	
@@ -49,7 +49,7 @@
 			} catch (ClassNotFoundException $e) {
 				throw $e;
 			} catch (BaseException $e) {
-				return __autoload_failed($classname);
+				return __autoload_failed($classname, $e->getMessage());
 			}
 		}
 		
@@ -73,7 +73,7 @@
 				} catch (ClassNotFoundException $e) {
 					throw $e;
 				} catch (BaseException $e) {
-					return __autoload_failed($classname);
+					return __autoload_failed($classname, $e->getMessage());
 				}
 			}
 		}
@@ -120,7 +120,7 @@
 				$cache[ONPHP_CLASS_CACHE_CHECKSUM] = null;
 				return /* void */;
 			} catch (BaseException $e) {
-				__autoload_failed($classname);
+				__autoload_failed($classname, $e->getMessage());
 			}
 		}
 	}
