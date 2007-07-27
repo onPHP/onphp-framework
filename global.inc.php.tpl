@@ -33,12 +33,11 @@
 		// numeric indexes for directories, literal indexes for classes
 		static $cache = array();
 		
-		if (
-			!preg_match(
-				'~^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]+$~', $classname
-			)
-		) {
-			throw new ClassNotFoundException('are you sane?');
+		if (strpos($classname, "\0") !== false) {
+			return __autoload_failed(
+				str_replace("\0", null, $classname),
+				'class name contains zero character'
+			);
 		}
 		
 		if (!(defined('ONPHP_CLASS_CACHE') && ONPHP_CLASS_CACHE)) {
