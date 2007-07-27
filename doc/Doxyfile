@@ -87,7 +87,6 @@ FILE_PATTERNS          = *.php *.c *.h
 RECURSIVE              = YES
 EXCLUDE                = ../test/ \
 			 ../incubator/ \
-			 ../core/SPL/bundled/ \
 			 project.skel/ \
 			 examples/ \
 			 spl/
