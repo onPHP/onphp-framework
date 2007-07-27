@@ -116,10 +116,32 @@
 				$this->pass();
 			}
 			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestClassChild', 'ClassUtilsTestClass'));
+			$this->assertFalse(ClassUtils::isInstanceOf('ClassUtilsTestClass', 'ClassUtilsTestClassChild'));
+			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestClassChild', 'ClassUtilsTestInterface'));
+			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestClass', 'ClassUtilsTestInterface'));
+			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestAbstract', 'ClassUtilsTestInterface'));
+			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestAbstract', 'ClassUtilsTestClass'));
+			$this->assertFalse(ClassUtils::isInstanceOf('ClassUtilsTestAbstract', 'ClassUtilsTestClassChild'));
+			
+			$base = new ClassUtilsTestClass;
+			$this->assertTrue(ClassUtils::isInstanceOf($base, $base));
+			
+			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestAbstract', $base));
+			$this->assertFalse(ClassUtils::isInstanceOf($base, 'ClassUtilsTestAbstract'));
+			
+			$child = new ClassUtilsTestClassChild();
+			
+			$this->assertFalse(ClassUtils::isInstanceOf($base, $child));
+			$this->assertTrue(ClassUtils::isInstanceOf($child, $base));
+			
+			$this->assertFalse(ClassUtils::isInstanceOf($base, 'ClassUtilsTestClassChild'));
+			$this->assertTrue(ClassUtils::isInstanceOf($child, 'ClassUtilsTestClass'));
 		}
 	}
 	
-	class ClassUtilsTestClass
+	interface ClassUtilsTestInterface {}
+	
+	class ClassUtilsTestClass implements ClassUtilsTestInterface 
 	{
 		private $object	= null;
 		private $text 	= null;
@@ -162,4 +184,6 @@
 	}
 	
 	class ClassUtilsTestClassChild extends ClassUtilsTestClass { };
+	
+	abstract class ClassUtilsTestAbstract extends ClassUtilsTestClass { };
 ?>
