@@ -70,17 +70,20 @@
 		
 		public static function prepareSearchString($string)
 		{
-			$array = explode(' ', $string);
+			$array = preg_split('/[\s\pP]+/u', $string);
 			
 			$out = array();
 			
 			for ($i = 0, $size = count($array); $i < $size; ++$i)
-				if (!empty($array[$i]))
-					if ($element = mb_ereg_replace(
-						'[^а-яА-Яa-zA-Z0-9 \-\./]', null, $array[$i]
+				if (
+					!empty($array[$i])
+					&& (
+						$element = preg_replace(
+							'/[^\pL\d\-\+\.\/]/u', null, $array[$i]
 						)
 					)
-						$out[] = $element;
+				)
+					$out[] = $element;
 			
 			return $out;
 		}
