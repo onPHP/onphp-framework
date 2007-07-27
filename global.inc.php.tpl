@@ -20,11 +20,7 @@
 	// classes autoload magic
 	function __autoload($classname)
 	{
-		if (
-			!preg_match(
-				'~^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]+$~', $classname
-			)
-		) {
+		if (strpos($classname, "\0") !== false) {
 			/* are you sane? */
 			return;
 		}
