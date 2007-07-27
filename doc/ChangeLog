@@ -858,7 +858,7 @@
 
 	* core/OSQL/: support for table creation added.
 
-2006-01-25	Sveta Smirnova
+2006-01-25	Sveta A. Smirnova
 
 	* core/OSQL/: schema's support introduced in several common cases.
 
@@ -1009,7 +1009,7 @@
 	core/OSQL/PreQuery.class.php: dropped, since their removal-release was the
 	upcoming 0.2.5.
 
-2005-11-10	Sveta Smirnova
+2005-11-10	Sveta A. Smirnova
 
 	* core/DB/MySQL.class.php: added error number as error code in throwing
 	DatabaseException.
@@ -1073,7 +1073,7 @@
 	* main/DAOs/FullTextDAO.class.php: added ability to override full text
 	queries.
 
-2005-10-23	Sveta Smirnova
+2005-10-23	Sveta A. Smirnova
 
 	* core/DB/: MySQL support is back from incubator.
 
