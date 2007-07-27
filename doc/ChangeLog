@@ -388,7 +388,7 @@
 
 	* core/OSQL/: support for table creation added.
 
-2006-01-25	Sveta Smirnova		<sveta@microbecal.com>
+2006-01-25	Sveta A. Smirnova	<sveta@microbecal.com>
 
 	* core/OSQL/: schema's support introduced in several common cases.
 
