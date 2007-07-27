@@ -34,10 +34,7 @@
 		static $cache = array();
 		
 		if (strpos($classname, "\0") !== false) {
-			return __autoload_failed(
-				str_replace("\0", null, $classname),
-				'class name contains zero character'
-			);
+			return __autoload_failed($classname, 'contains zero character');
 		}
 		
 		if (!(defined('ONPHP_CLASS_CACHE') && ONPHP_CLASS_CACHE)) {
