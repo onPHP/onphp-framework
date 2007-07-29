@@ -111,24 +111,27 @@
 			
 			if (
 				is_string($object) 
-				&& preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $object)
+				&&  preg_match(
+					'/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', 
+					$object
+				)
 			) {
-				if (!class_exists($object, true))
-					return false;
+				if ($object == $className)
+					return true;
+				elseif (is_subclass_of($object, $className))
+					return true;
+				else
+					return in_array(
+						$class, 
+						class_implements($object, true)
+					);
+					
+			} elseif (is_object($object)) {
+				return $object instanceof $className;
 				
-				$object = new $object;
-			} elseif (!is_object($object))
+			} else {
 				throw new WrongArgumentException('strange object given');
-			
-			if (is_subclass_of($object, $className))
-				return true;
-			// works well in >=5.2, and harmless for previous versions
-			elseif ($object instanceof $className)
-				return true;
-			
-			$info = new ReflectionClass($className);
-			
-			return $info->isInstance($object);
+			}
 		}
 		
 		public static function callStaticMethod($methodSignature /* , ... */)

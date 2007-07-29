@@ -1,5 +1,10 @@
 # $Id$
 
+2007-07-27	Anton E. Lebedevich
+
+	* main/Utils/ClassUtils.class.php: abstract class support added
+	to isInstanceOf.
+
 2007-07-23	Ivan Y. Khvostishkov
 
 	* global.inc.php.tpl: possible security hole fixed on autoload's
