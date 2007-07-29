@@ -27,6 +27,13 @@
 			$time = ' 00:00.00';
 			$this->assertEqual($future.$time, $after->toDateTime());
 			$this->assertEqual($past.$time, $before->toDateTime());
+			
+			try {
+				new Timestamp('2007-0-0');
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				$this->pass();
+			}
 		}
 	}
 ?>

@@ -238,6 +238,11 @@
 			list($this->year, $this->month, $this->day) =
 				explode('-', $string, 3);
 			
+			if (!$this->month || !$this->day)
+				throw new WrongArgumentException(
+					'month and day must not be zero'
+				);
+			
 			$this->string =
 				sprintf(
 					'%04d-%02d-%02d',
