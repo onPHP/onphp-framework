@@ -36,6 +36,14 @@
 		// all other sh1t
 		private $attached	= array();
 		
+		private $headers	= array();
+		
+		private $method		= null;
+		
+		private $protocol	= null;
+		private $host		= null;
+		private $port		= null;
+		
 		/**
 		 * @return HttpRequest
 		**/
@@ -240,6 +248,107 @@
 		public function getByType(RequestType $type)
 		{
 			return $this->{$type->getName()};
+		}
+		
+		public function getHeaderList()
+		{
+			return $this->headers;
+		}
+		
+		public function hasHeaderVar($name)
+		{
+			return isset($this->headers[$name]);
+		}
+		
+		public function getHeaderVar($name)
+		{
+			return $this->headers[$name];
+		}
+		
+		/**
+		 * @return HttpRequest
+		**/
+		public function unsetHeaderVar($name)
+		{
+			unset($this->headers[$name]);
+			return $this;
+		}
+		
+		/**
+		 * @return HttpRequest
+		**/
+		public function setHeaderVar($name, $var)
+		{
+			$this->headers[$name] = $var;
+			return $this;
+		}
+		
+		/**
+		 * @return HttpRequest
+		**/
+		public function setHeaders(/* array */ $headers)
+		{
+			$this->headers = $headers;
+			return $this;
+		}
+		
+		/**
+		 * @return HttpRequest
+		**/
+		public function setMethod(HttpMethod $method)
+		{
+			$this->method = $method;
+			return $this;
+		}
+		
+		/**
+		 * @return HttpMethod
+		**/
+		public function getMethod()
+		{
+			return $this->method;
+		}
+		
+		/**
+		 * @return HttpRequest
+		**/
+		public function setProtocol($protocol)
+		{
+			$this->protocol = $protocol;
+			return $this;
+		}
+		
+		public function getProtocol()
+		{
+			return $this->protocol;
+		}
+		
+		/**
+		 * @return HttpRequest
+		**/
+		public function setHost($host)
+		{
+			$this->host = $host;
+			return $this;
+		}
+		
+		public function getHost()
+		{
+			return $this->host;
+		}
+		
+		/**
+		 * @return HttpRequest
+		**/
+		public function setPort($port)
+		{
+			$this->port = $port;
+			return $this;
+		}
+		
+		public function getPort()
+		{
+			return $this->port;
 		}
 	}
 ?>
