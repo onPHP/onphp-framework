@@ -224,6 +224,11 @@
 			list($this->year, $this->month, $this->day) =
 				explode('-', $date, 3);
 			
+			if (!$this->month || !$this->day)
+				throw new WrongArgumentException(
+					'month and day must not be zero'
+				);
+			
 			list($this->hour, $this->minute, $this->second) =
 				explode(':', $time, 3);
 		}
