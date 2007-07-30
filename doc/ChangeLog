@@ -4,6 +4,8 @@
 
 	* main/Utils/Html: HtmlTokenizer arrived from trunk.
 
+	* main/Utils/GenericUri.class.php: rfc3986 uri implementation.
+
 2007-07-27	Anton E. Lebedevich
 
 	* main/Utils/ClassUtils.class.php: abstract class support added
