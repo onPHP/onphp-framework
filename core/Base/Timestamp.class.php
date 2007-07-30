@@ -277,6 +277,11 @@
 		
 		private function normalizeSelf()
 		{
+			if (!$this->month || !$this->day)
+				throw new WrongArgumentException(
+					'month and day must not be zero'
+				);
+			
 			if (strlen($this->year) < 4)
 				$this->year = str_pad($this->year, 4, '0', STR_PAD_LEFT);
 			
