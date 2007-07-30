@@ -102,7 +102,7 @@
 		/**
 		 * @return LogLevel
 		**/
-		private function getInstance($id)
+		private static function getInstance($id)
 		{
 			static $instances = array();
 			

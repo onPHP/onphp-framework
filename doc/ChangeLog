@@ -1,5 +1,9 @@
 # $Id$
 
+2007-07-30	Ivan Y. Khvostishkov
+
+	* main/Utils/Html: HtmlTokenizer arrived from incubator.
+
 2007-07-27	Anton E. Lebedevich
 
 	* main/Utils/ClassUtils.class.php: abstract class support added
