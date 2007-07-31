@@ -10,21 +10,29 @@
  ***************************************************************************/
 /* $Id$ */
 
-	interface HttpResponse
+	final class HttpUtilsTest extends UnitTestCase
 	{
-		/**
-		 * @return HttpStatus
-		**/
-		public function getStatus();
-		public function getReasonPhrase();
-		
-		/**
-		 * @return array of headers
-		**/
-		public function getHeaders();
-		public function hasHeader($name);
-		public function getHeader($name);
-		
-		public function getBody();
+		public function testCurlGet()
+		{
+			$request = HttpRequest::create()->
+				setUri(
+					GenericUri::parse('http://onphp.org/')
+				)->
+				setMethod(HttpMethod::get());
+			
+			$response = CurlHttpClient::create()->
+				setTimeout(3)->
+				send($request);
+				
+			$this->assertEqual(
+				$response->getStatus()->getId(), 
+				HttpStatus::CODE_200
+			);
+			
+			$this->assertPattern(
+				'/quite official site/',
+				$response->getBody()
+			);
+		}
 	}
 ?>

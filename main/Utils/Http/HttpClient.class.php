@@ -14,25 +14,25 @@
 	{
 		/**
 		 * @param $timeout in seconds
-		 */
+		**/
 		public function setTimeout($timeout);
 		public function getTimeout();
 		
 		/**
 		 * whether to follow header Location or not
-		 */
+		**/
 		public function setFollowLocation(/* boolean */ $really);
 		public function isFollowLocation();
 		
 		/**
 		 * maximum number of header Location followed
-		 */
+		**/
 		public function setMaxRedirects($maxRedirects);
 		public function getMaxRedirects();
 		
 		/**
 		 * @return HttpResponse
-		 */
+		**/
 		public function send(HttpRequest $request);
 	}
 ?>
