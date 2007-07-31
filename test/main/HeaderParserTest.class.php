@@ -15,6 +15,7 @@
 		public function testSimple()
 		{
 			$raw = <<<EOT
+HTTP/1.1 200 OK
 Date: Tue, 31 Jul 2007 14:30:10 GMT
 Server: Apache/1.3.27 (Unix) PHP/3.0.18 rus/PL30.16
 X-Powered-By: PHP/3.0.18
@@ -33,6 +34,7 @@ EOT;
 		public function testMultiline()
 		{
 			$raw = <<<EOT
+HTTP/1.1 200 OK
 Date: Tue, Jul 31 18:23:39 MSD 2007
 Server: Nginx
 Content-Length: 123
