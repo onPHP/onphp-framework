@@ -32,7 +32,7 @@
 				$this->doLine($line);
 			}
 			
-			return $this->headers;
+			return $this;
 		}
 		
 		public function doLine($line)
@@ -76,6 +76,16 @@
 		public function getHeaders()
 		{
 			return $this->headers;
+		}
+		
+		public function hasHeader($name)
+		{
+			return isset($this->headers[strtolower($name)]);
+		}
+		
+		public function getHeader($name)
+		{
+			return $this->headers[strtolower($name)];
 		}
 	}
 ?>

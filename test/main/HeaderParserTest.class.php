@@ -25,9 +25,9 @@ Content-Type: text/html; charset=koi8-r
 Content-Language: ru
 Vary: accept-charset, user-agent
 EOT;
-			$headers = HeaderParser::create()->parse($raw);
-			$this->assertEqual(9, count($headers));
-			$this->assertEqual('close', $headers['connection']);
+			$parser = HeaderParser::create()->parse($raw);
+			$this->assertEqual(9, count($parser->getHeaders()));
+			$this->assertEqual('close', $parser->getHeader('connection'));
 		}
 		
 		public function testMultiline()
@@ -42,10 +42,10 @@ Connection: Keep-Alive
 Content-Type: text/html; 
   charset=utf-8
 EOT;
-			$headers = HeaderParser::create()->parse($raw);
-			$this->assertEqual(6, count($headers));
-			$this->assertEqual($headers['keep-alive'], 'timeout=20, max=200');
-			$this->assertEqual($headers['content-length'], '123');
+			$parser = HeaderParser::create()->parse($raw);
+			$this->assertEqual(6, count($parser->getHeaders()));
+			$this->assertEqual($parser->getHeader('keep-alive'), 'timeout=20, max=200');
+			$this->assertEqual($parser->getHeader('content-length'), '123');
 		}
 	}
 ?>
