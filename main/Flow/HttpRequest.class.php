@@ -40,9 +40,7 @@
 		
 		private $method		= null;
 		
-		private $protocol	= null;
-		private $host		= null;
-		private $port		= null;
+		private $uri		= null;
 		
 		/**
 		 * @return HttpRequest
@@ -312,43 +310,15 @@
 		/**
 		 * @return HttpRequest
 		**/
-		public function setProtocol($protocol)
+		public function setUri(GenericUri $uri)
 		{
-			$this->protocol = $protocol;
+			$this->uri = $uri;
 			return $this;
 		}
 		
-		public function getProtocol()
+		public function getUri()
 		{
-			return $this->protocol;
-		}
-		
-		/**
-		 * @return HttpRequest
-		**/
-		public function setHost($host)
-		{
-			$this->host = $host;
-			return $this;
-		}
-		
-		public function getHost()
-		{
-			return $this->host;
-		}
-		
-		/**
-		 * @return HttpRequest
-		**/
-		public function setPort($port)
-		{
-			$this->port = $port;
-			return $this;
-		}
-		
-		public function getPort()
-		{
-			return $this->port;
+			return $this->uri;
 		}
 	}
 ?>
