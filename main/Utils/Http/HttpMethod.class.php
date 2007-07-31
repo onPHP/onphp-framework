@@ -31,5 +31,15 @@
 			self::TRACE 	=> 'TRACE',
 			self::CONNECT 	=> 'CONNECT'
 		);
+		
+		public static function get()
+		{
+			return new self(self::GET);
+		}
+		
+		public static function post()
+		{
+			return new self(self::POST);
+		}
 	}
 ?>

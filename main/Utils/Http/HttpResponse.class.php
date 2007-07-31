@@ -23,6 +23,7 @@
 		 * @return array
 		**/
 		public function getHeaders();
+		public function hasHeader($name);
 		public function getHeader($name);
 		
 		public function getBody();
