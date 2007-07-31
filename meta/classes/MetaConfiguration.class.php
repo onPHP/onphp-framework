@@ -81,6 +81,20 @@
 		{
 			$this->loadXml($metafile, $generate);
 			
+			// check sources
+			foreach ($this->classes as $name => $class) {
+				$sourceLink = $class->getSourceLink();
+				if (isset($sourceLink)) {
+					Assert::isTrue(
+						isset($this->sources[$sourceLink]),
+						"unknown source '{$sourceLink}' specified "
+						."for class '{$name}'"
+					);
+				} elseif ($this->defaultSource) {
+					$class->setSourceLink($this->defaultSource);
+				}
+			}
+			
 			foreach ($this->liaisons as $class => $parent) {
 				if (isset($this->classes[$parent])) {
 					
@@ -927,20 +941,8 @@
 				
 				$class = new MetaClass((string) $xmlClass['name']);
 				
-				if (isset($xmlClass['source'])) {
-					
-					$source = (string) $xmlClass['source'];
-					
-					Assert::isTrue(
-						isset($this->sources[$source]),
-						"unknown source '{$source}' specified "
-						."for class '{$class->getName()}'"
-					);
-					
-					$class->setSourceLink($source);
-				} elseif ($this->defaultSource) {
-					$class->setSourceLink($this->defaultSource);
-				}
+				if (isset($xmlClass['source']))
+					$class->setSourceLink((string) $xmlClass['source']);
 				
 				if (isset($xmlClass['table']))
 					$class->setTableName((string) $xmlClass['table']);
