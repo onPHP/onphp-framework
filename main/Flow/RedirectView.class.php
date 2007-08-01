@@ -45,7 +45,7 @@
 						$val = (int) $val;
 					}
 					
-					$qs[] = $key.'='.$val;
+					$qs[] = $key.'='.urlencode($val);
 				}
 				
 				if (strpos($this->getUrl(), '?') === false)
