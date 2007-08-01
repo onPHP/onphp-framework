@@ -112,7 +112,7 @@
 		**/
 		public function setUserInfo($userInfo)
 		{
-			$this->userinfo = $userInfo;
+			$this->userInfo = $userInfo;
 			
 			return $this;
 		}
@@ -387,7 +387,7 @@
 		protected function applyPatternMatches($matches)
 		{
 			if ($matches[1]) {
-				$authorityPattern = '~^(([^@]+)@)?((\[.+\])|([^:]*))(:(.*))?$~';
+				$authorityPattern = '~^(([^@]*)@)?((\[.+\])|([^:]*))(:(.*))?$~';
 				
 				if (
 					!preg_match(

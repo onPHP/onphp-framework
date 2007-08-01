@@ -15,6 +15,7 @@
 		protected $schemeSpecificPart	= null;
 		
 		protected $knownSubSchemes	= array(
+			'urn'		=> 'Urn',
 			'mailto'	=> 'Urn',
 			'news'		=> 'Urn',
 			'isbn'		=> 'Urn',
