@@ -1,0 +1,18 @@
+url: mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
+class: Urn
+toString(): mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
+getSchemeSpecificPart(): %22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
+getScheme(): mailto
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1

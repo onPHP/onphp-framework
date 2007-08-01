@@ -1,0 +1,18 @@
+url: http://a/b/c/d;p?q
+class: HttpUrl
+toString(): http://a/b/c/d;p?q
+getSchemeSpecificPart(): //a/b/c/d;p?q
+getScheme(): http
+getUserInfo(): 
+getHost(): a
+getPort(): 
+getPath(): /b/c/d;p
+getQuery(): q
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1

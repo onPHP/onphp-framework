@@ -1,0 +1,18 @@
+url: http://[192.168.0.1]
+class: HttpUrl
+toString(): http://[192.168.0.1]
+getSchemeSpecificPart(): //[192.168.0.1]
+getScheme(): http
+getUserInfo(): 
+getHost(): [192.168.0.1]
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1

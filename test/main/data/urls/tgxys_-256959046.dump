@@ -1,0 +1,18 @@
+url: g;x?y#s
+class: GenericUri
+toString(): g;x?y#s
+getSchemeSpecificPart(): g;x?y#s
+getScheme(): 
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): g;x
+getQuery(): y
+getFragment(): s
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1

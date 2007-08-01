@@ -1,0 +1,18 @@
+url: ldap://[2001:db8::7]/c=GB?objectClass?one]
+class: GenericUri
+toString(): ldap://[2001:db8::7]/c=GB?objectClass?one]
+getSchemeSpecificPart(): //[2001:db8::7]/c=GB?objectClass?one]
+getScheme(): ldap
+getUserInfo(): 
+getHost(): [2001:db8::7]
+getPort(): 
+getPath(): /c=GB
+getQuery(): objectClass?one]
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 
+isValidFragment(): 1

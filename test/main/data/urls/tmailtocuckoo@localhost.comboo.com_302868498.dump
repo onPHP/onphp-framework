@@ -1,0 +1,18 @@
+url: mailto://cuckoo@localhost.com:boo.com
+class: Urn
+toString(): mailto://cuckoo@localhost.com:boo.com
+getSchemeSpecificPart(): //cuckoo@localhost.com:boo.com
+getScheme(): mailto
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1

@@ -1,0 +1,18 @@
+url: file:///etc/
+class: Url
+toString(): file:///etc/
+getSchemeSpecificPart(): ///etc/
+getScheme(): file
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): /etc/
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
