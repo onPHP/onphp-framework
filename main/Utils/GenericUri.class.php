@@ -3,9 +3,9 @@
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
+ *   it under the terms of the GNU Lesser General Public License as        *
+ *   published by the Free Software Foundation; either version 3 of the    *
+ *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
@@ -18,15 +18,15 @@
 	**/
 	class GenericUri
 	{
-		private $scheme		= null;
+		protected $scheme		= null;
 		
-		private $userInfo	= null;
-		private $host		= null;
-		private $port		= null;
+		protected $userInfo	= null;
+		protected $host		= null;
+		protected $port		= null;
 		
-		private $path		= null;
-		private $query		= null;
-		private $fragment	= null;
+		protected $path		= null;
+		protected $query		= null;
+		protected $fragment	= null;
 		
 		private $unreserved	= 'a-z0-9-._~';
 		private $pctEncoded	= '%[0-9a-f][0-9a-f]';
@@ -34,67 +34,62 @@
 		
 		/**
 		 * @return GenericUri
-		 *
-		 * NOTE: html compatible mode treats _http_ relative urls in browsers' manner.
-		 * 
-		 * Check this out (all URIs are syntaxically valid):
-		 * //localhost.com
-		 * //localhost.com:8080
-		 * http:/uri
-		 * http:uri
-		 * mailto://spam@localhost.com
-		 * (last is not a http url, try using getSchemeSpecificPart() for it)
 		**/
-		public static function parse($uri, $htmlCompatible = false)
+		public static function create()
 		{
-			$result = new self;
+			return new self;
+		}
+		
+		/**
+		 * @return GenericUri
+		**/
+		final public function parse($uri)
+		{
+			$knownSubSchemes = $this->getKnownSubSchemes();
 			
 			$schemePattern = '([^:/?#]+):';
-			$hierPattern = '(//([^/?#]*))';
 			
-			if (!$htmlCompatible)
-				$schemeHierPattern = "($schemePattern)?$hierPattern?";
-			else
-				$schemeHierPattern = "({$schemePattern}$hierPattern)?";
+			if (
+				$knownSubSchemes
+				&& preg_match("~^{$schemePattern}~", $uri, $matches)
+				&& isset($knownSubSchemes[$matches[1]])
+			)
+				$class = $knownSubSchemes[$matches[1]];
+				
+			else 
+				$class = get_class($this);
 			
-			$pattern = "~^$schemeHierPattern([^?#]*)(\?([^#]*))?(#(.*))?~";
+			$result = new $class;
+			
+			$schemeHierPattern = $result->getSchemeHierPattern(
+				$schemePattern, $result->getHierPattern()
+			);
+			
+			$queryFragmentPattern = $result->getQueryFragmentPattern();
+			
+			$pattern = "~^$schemeHierPattern$queryFragmentPattern$~";
 			
 			if (!preg_match($pattern, $uri, $matches))
 				throw new WrongArgumentException('not well-formed URI');
 			
 			if ($matches[1])
-				$result->scheme = $matches[2];
+				$result->setScheme($matches[2]);
 			
-			if ($matches[3]) {
-				$authorityPattern = '~^(([^@]+)@)?((\[.+\])|([^:]+))(:(.*))?$~';
-				
-				if (
-					!preg_match(
-						$authorityPattern, $matches[4], $authorityMatches
-					)
-				)
-					throw new WrongArgumentException(
-						'not well-formed authority part'
-					);
-				
-				if ($authorityMatches[1])
-					$result->userInfo = $authorityMatches[2];
-				
-				$result->host = $authorityMatches[3];
-				
-				if (!empty($authorityMatches[6]))
-					$result->port = $authorityMatches[7];
-			}
+			// yanetut.
+			array_shift($matches);
+			array_shift($matches);
+			array_shift($matches);
+			array_unshift($matches, null);
 			
-			$result->path = $matches[5];
-			
-			if (!empty($matches[6]))
-				$result->query = $matches[7];
-			
-			if (!empty($matches[8]))
-				$result->fragment = $matches[9];
-			
-			return $result;
+			return $result->applyPatternMatches($matches);
+		}
+		
+		public function getKnownSubSchemes()
+		{
+			return array_merge(
+				Urn::create()->getKnownSubSchemes(),
+				Url::create()->getKnownSubSchemes()
+			);
 		}
 		
 		/**
@@ -218,6 +213,11 @@
 			return $result;
 		}
 		
+		public function setSchemeSpecificPart($schemeSpecificPart)
+		{
+			throw new UnsupportedMethodException('use parse() instead');
+		}
+		
 		public function getSchemeSpecificPart()
 		{
 			$result = null;
@@ -321,20 +321,7 @@
 				return true;
 			}
 			
-			$charPattern = $this->charPattern(null);
-			
-			// NOTE: no back compatibility with rfc 3986!
-			// using top label from rfc 2396, in order to detect bad ip
-			// address ranges like 666.666.666.666
-			
-			$topLabelPattern = '(([a-z])|([a-z]([a-z0-9-])*[a-z0-9]))\.?';
-			
-			return (
-				preg_match(
-					"/^($charPattern*\.)?{$topLabelPattern}$/i",
-					$this->host
-				) == 1
-			);
+			return $this->isValidHostName();
 		}
 		
 		public function isValidPort()
@@ -365,18 +352,84 @@
 			return $this->isValidFragmentOrQuery($this->fragment);
 		}
 		
+		protected function isValidHostName()
+		{
+			$charPattern = $this->charPattern(null);
+			
+			return (
+				preg_match(
+					"/^$charPattern*$/i",
+					$this->host
+				) == 1
+			);
+		}
+		
+		protected function getSchemeHierPattern($schemePattern, $hierPattern)
+		{
+			return "($schemePattern)?$hierPattern?";
+		}
+		
+		protected function getHierPattern()
+		{
+			return '(//([^/?#]*))';
+			#       ^1 ^2
+		}
+		
+		protected function getQueryFragmentPattern()
+		{
+			return '([^?#]*)(\?([^#]*))?(#(.*))?';
+			#       ^3      ^4 ^5       ^6^7
+		}
+		
+		/**
+		 * @return GenericUri
+		**/
+		protected function applyPatternMatches($matches)
+		{
+			if ($matches[1]) {
+				$authorityPattern = '~^(([^@]+)@)?((\[.+\])|([^:]*))(:(.*))?$~';
+				
+				if (
+					!preg_match(
+						$authorityPattern, $matches[2], $authorityMatches
+					)
+				)
+					throw new WrongArgumentException(
+						'not well-formed authority part'
+					);
+				
+				if ($authorityMatches[1])
+					$this->setUserInfo($authorityMatches[2]);
+				
+				$this->setHost($authorityMatches[3]);
+				
+				if (!empty($authorityMatches[6]))
+					$this->setPort($authorityMatches[7]);
+			}
+			
+			$this->setPath($matches[3]);
+			
+			if (!empty($matches[4]))
+				$this->setQuery($matches[5]);
+			
+			if (!empty($matches[6]))
+				$this->setFragment($matches[7]);
+			
+			return $this;
+		}
+		
+		protected function charPattern($extraChars = null)
+		{
+			return
+				"(([{$this->unreserved}{$this->subDelims}$extraChars])"
+				."|({$this->pctEncoded}))";
+		}
+		
 		private function isValidFragmentOrQuery($string)
 		{
 			$charPattern = $this->charPattern(':@\/?');
 			
 			return (preg_match("/^$charPattern*$/i", $string) == 1);
-		}
-		
-		private function charPattern($extraChars = null)
-		{
-			return
-				"(([{$this->unreserved}{$this->subDelims}$extraChars])"
-				."|({$this->pctEncoded}))";
 		}
 	}
 ?>
