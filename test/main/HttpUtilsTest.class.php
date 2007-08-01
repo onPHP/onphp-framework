@@ -10,36 +10,29 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class HttpMethod extends Enumeration 
+	final class HttpUtilsTest extends UnitTestCase
 	{
-		const OPTIONS	= 1;
-		const GET		= 2;
-		const HEAD 		= 3;
-		const POST		= 4;
-		const PUT		= 5;
-		const DELETE	= 6;
-		const TRACE		= 7;
-		const CONNECT	= 8;
-		
-		protected $names = array(
-			self::OPTIONS 	=> 'OPTIONS',
-			self::GET		=> 'GET',
-			self::HEAD		=> 'HEAD',
-			self::POST		=> 'POST',
-			self::PUT		=> 'PUT',
-			self::DELETE	=> 'DELETE',
-			self::TRACE 	=> 'TRACE',
-			self::CONNECT 	=> 'CONNECT'
-		);
-		
-		public static function get()
+		public function testCurlGet()
 		{
-			return new self(self::GET);
-		}
-		
-		public static function post()
-		{
-			return new self(self::POST);
+			$request = HttpRequest::create()->
+				setUri(
+					GenericUri::parse('http://onphp.org/')
+				)->
+				setMethod(HttpMethod::get());
+			
+			$response = CurlHttpClient::create()->
+				setTimeout(3)->
+				send($request);
+				
+			$this->assertEqual(
+				$response->getStatus()->getId(), 
+				HttpStatus::CODE_200
+			);
+			
+			$this->assertPattern(
+				'/quite official site/',
+				$response->getBody()
+			);
 		}
 	}
 ?>

@@ -10,36 +10,29 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class HttpMethod extends Enumeration 
+	interface HttpClient
 	{
-		const OPTIONS	= 1;
-		const GET		= 2;
-		const HEAD 		= 3;
-		const POST		= 4;
-		const PUT		= 5;
-		const DELETE	= 6;
-		const TRACE		= 7;
-		const CONNECT	= 8;
+		/**
+		 * @param $timeout in seconds
+		**/
+		public function setTimeout($timeout);
+		public function getTimeout();
 		
-		protected $names = array(
-			self::OPTIONS 	=> 'OPTIONS',
-			self::GET		=> 'GET',
-			self::HEAD		=> 'HEAD',
-			self::POST		=> 'POST',
-			self::PUT		=> 'PUT',
-			self::DELETE	=> 'DELETE',
-			self::TRACE 	=> 'TRACE',
-			self::CONNECT 	=> 'CONNECT'
-		);
+		/**
+		 * whether to follow header Location or not
+		**/
+		public function setFollowLocation(/* boolean */ $really);
+		public function isFollowLocation();
 		
-		public static function get()
-		{
-			return new self(self::GET);
-		}
+		/**
+		 * maximum number of header Location followed
+		**/
+		public function setMaxRedirects($maxRedirects);
+		public function getMaxRedirects();
 		
-		public static function post()
-		{
-			return new self(self::POST);
-		}
+		/**
+		 * @return HttpResponse
+		**/
+		public function send(HttpRequest $request);
 	}
 ?>

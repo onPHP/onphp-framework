@@ -10,36 +10,21 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class HttpMethod extends Enumeration 
+	interface HttpResponse
 	{
-		const OPTIONS	= 1;
-		const GET		= 2;
-		const HEAD 		= 3;
-		const POST		= 4;
-		const PUT		= 5;
-		const DELETE	= 6;
-		const TRACE		= 7;
-		const CONNECT	= 8;
+		/**
+		 * @return HttpStatus
+		**/
+		public function getStatus();
+		public function getReasonPhrase();
 		
-		protected $names = array(
-			self::OPTIONS 	=> 'OPTIONS',
-			self::GET		=> 'GET',
-			self::HEAD		=> 'HEAD',
-			self::POST		=> 'POST',
-			self::PUT		=> 'PUT',
-			self::DELETE	=> 'DELETE',
-			self::TRACE 	=> 'TRACE',
-			self::CONNECT 	=> 'CONNECT'
-		);
+		/**
+		 * @return array of headers
+		**/
+		public function getHeaders();
+		public function hasHeader($name);
+		public function getHeader($name);
 		
-		public static function get()
-		{
-			return new self(self::GET);
-		}
-		
-		public static function post()
-		{
-			return new self(self::POST);
-		}
+		public function getBody();
 	}
 ?>
