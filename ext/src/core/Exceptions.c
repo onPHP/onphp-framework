@@ -25,6 +25,7 @@ PHP_MINIT_FUNCTION(Exceptions)
 {
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(BusinessLogicException,			Exception,			NULL, NULL);
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(UnimplementedFeatureException,	Exception,			NULL, NULL);
+	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(SecurityException,				Exception,			NULL, NULL);
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(BaseException,					Exception,			NULL, NULL);
 	
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(ClassNotFoundException,			BaseException,		NULL, NULL);

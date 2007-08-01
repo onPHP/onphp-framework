@@ -26,6 +26,7 @@ PHPAPI zend_class_entry *onphp_ce_IOTimedOutException;
 PHPAPI zend_class_entry *onphp_ce_MissingElementException;
 PHPAPI zend_class_entry *onphp_ce_NetworkException;
 PHPAPI zend_class_entry *onphp_ce_ObjectNotFoundException;
+PHPAPI zend_class_entry *onphp_ce_SecurityException;
 PHPAPI zend_class_entry *onphp_ce_TooManyRowsException;
 PHPAPI zend_class_entry *onphp_ce_UnimplementedFeatureException;
 PHPAPI zend_class_entry *onphp_ce_UnsupportedMethodException;
