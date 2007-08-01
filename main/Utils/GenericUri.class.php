@@ -16,7 +16,7 @@
 	 * TODO: base url and referense url resolving, normalization and
 	 * urls comparsion
 	**/
-	final class GenericUri
+	class GenericUri
 	{
 		private $scheme		= null;
 		
