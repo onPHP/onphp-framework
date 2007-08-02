@@ -52,29 +52,12 @@
 			return $this->schemeSpecificPart;
 		}
 		
-		public function setUserInfo($userInfo)
+		public function isValid()
 		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function setHost($host)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function setPort($port)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function setPath($path)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function setQuery($query)
-		{
-			throw new UnsupportedMethodException();
+			if ($this->getAuthority() !== null)
+				return false;
+			
+			return parent::isValid();
 		}
 		
 		final protected function getSchemeHierPattern(

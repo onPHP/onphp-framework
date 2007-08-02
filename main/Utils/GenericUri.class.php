@@ -11,13 +11,16 @@
 /* $Id$ */
 
 	/**
-	 * see RFC 3986, 2396
+	 * see RFC 3986
 	 *
-	 * TODO: base url and referense url resolving, normalization and
-	 * urls comparsion
+	 * TODO: normalization and comparsion
 	**/
 	class GenericUri
 	{
+		const CHARS_UNRESERVED		= 'a-z0-9-._~';
+		const CHARS_SUBDELIMS		= '!$&\'()*+,;=';
+		const PATTERN_PCTENCODED	= '%[0-9a-f][0-9a-f]';
+		
 		protected $scheme		= null;
 		
 		protected $userInfo	= null;
@@ -27,10 +30,6 @@
 		protected $path		= null;
 		protected $query		= null;
 		protected $fragment	= null;
-		
-		private $unreserved	= 'a-z0-9-._~';
-		private $pctEncoded	= '%[0-9a-f][0-9a-f]';
-		private $subDelims	= '!$&\'()*+,;=';
 		
 		/**
 		 * @return GenericUri
@@ -43,18 +42,17 @@
 		/**
 		 * @return GenericUri
 		**/
-		final public function parse($uri)
+		final public function parse($uri, $guessClass = false)
 		{
-			$knownSubSchemes = $this->getKnownSubSchemes();
-			
 			$schemePattern = '([^:/?#]+):';
 			
 			if (
-				$knownSubSchemes
+				$guessClass
+				&& ($knownSubSchemes = $this->getKnownSubSchemes())
 				&& preg_match("~^{$schemePattern}~", $uri, $matches)
-				&& isset($knownSubSchemes[$matches[1]])
+				&& isset($knownSubSchemes[strtolower($matches[1])])
 			)
-				$class = $knownSubSchemes[$matches[1]];
+				$class = $knownSubSchemes[strtolower($matches[1])];
 				
 			else 
 				$class = get_class($this);
@@ -82,6 +80,80 @@
 			array_unshift($matches, null);
 			
 			return $result->applyPatternMatches($matches);
+		}
+		
+		final public function transform(GenericUri $reference, $strict = true)
+		{
+			if ($this->getScheme() === null)
+				throw new WrongStateException(
+					'URI without scheme cannot be a base URI'
+				);
+			
+			if (
+				$reference->getScheme() !== ($strict ? null : $this->getScheme())
+			) {
+				$class = get_class($reference);
+				$result = new $class;
+				
+				$result->
+					setScheme($reference->getScheme())->
+					setUserInfo($reference->getUserInfo())->
+					setHost($reference->getHost())->
+					setPort($reference->getPort())->
+					setPath(self::removeDotSegments($reference->getPath()))->
+					setQuery($reference->getQuery());
+				
+			} else {
+				$class = get_class($this);
+				$result = new $class;
+				
+				$result->setScheme($this->getScheme());
+				
+				if ($reference->getAuthority() !== null) {
+					$result->
+						setUserInfo($reference->getUserInfo())->
+						setHost($reference->getHost())->
+						setPort($reference->getPort())->
+						setPath(self::removeDotSegments($reference->getPath()))->
+						setQuery($reference->getQuery());
+					
+				} else {
+					$result->
+						setUserInfo($this->getUserInfo())->
+						setHost($this->getHost())->
+						setPort($this->getPort());
+					
+					$path = $reference->getPath();
+					
+					if (!$path) {
+						
+						$result->
+							setPath($this->getPath())->
+							setQuery(
+								$reference->getQuery() !== null
+								? $reference->getQuery()
+								: $this->getQuery()
+							);
+						
+					} else {
+						
+						$result->setQuery($reference->getQuery());
+						
+						if ($path[0] == '/')
+							$result->setPath($path);
+						else
+							$result->setPath(
+								self::removeDotSegments(
+									self::mergePath($reference->getPath())
+								)
+							);
+					}
+				}
+			}
+			
+			$result->setFragment($reference->getFragment());
+			
+			return $result;
 		}
 		
 		public function getKnownSubSchemes()
@@ -142,6 +214,14 @@
 		**/
 		public function setPort($port)
 		{
+			if (
+				$port
+				&& ($port < 1 || $port > 65535)
+			)
+				throw new WrongArgumentException(
+					'port must be an integer from 1 to 65535'
+				);
+			
 			$this->port = $port;
 			
 			return $this;
@@ -177,6 +257,21 @@
 			return $this;
 		}
 		
+		/**
+		 * @return GenericUri
+		**/
+		public function appendQuery($string, $separator = '&')
+		{
+			$query = $this->query;
+			
+			if ($query)
+				$query .= $separator;
+			
+			$query .= $string;
+			
+			$this->setQuery($query);
+		}
+		
 		public function getQuery()
 		{
 			return $this->query;
@@ -196,7 +291,34 @@
 		{
 			return $this->fragment;
 		}
-
+		
+		/**
+		 * @return GenericUri
+		**/
+		public function setAuthority($authority)
+		{
+			$authorityPattern = '~^(([^@]*)@)?((\[.+\])|([^:]*))(:(.*))?$~';
+			
+			if (
+				!preg_match(
+					$authorityPattern, $authority, $authorityMatches
+				)
+			)
+				throw new WrongArgumentException(
+					'not well-formed authority part'
+				);
+			
+			if ($authorityMatches[1])
+				$this->setUserInfo($authorityMatches[2]);
+			
+			$this->setHost($authorityMatches[3]);
+			
+			if (!empty($authorityMatches[6]))
+				$this->setPort($authorityMatches[7]);
+			
+			return $this;
+		}
+		
 		public function getAuthority()
 		{
 			$result = null;
@@ -306,8 +428,11 @@
 				."|( (($h16:){0,5} $h16)? ::           $h16 )"
 				."|( (($h16:){0,6} $h16)? ::                )";
 			
+			$unreserved = self::CHARS_UNRESERVED;
+			$subDelims = self::CHARS_SUBDELIMS;
+			
 			$ipVFutureAddress =
-				"v$hexdig+\.[{$this->unreserved}{$this->subDelims}:]+";
+				"v$hexdig+\.[{$unreserved}{$subDelims}:]+";
 			
 			if (
 				preg_match(
@@ -352,6 +477,16 @@
 			return $this->isValidFragmentOrQuery($this->fragment);
 		}
 		
+		public function isAbsolute()
+		{
+			return ($this->scheme != null);
+		}
+		
+		public function isRelative()
+		{
+			return (!$this->isAbsolute());
+		}
+		
 		protected function isValidHostName()
 		{
 			$charPattern = $this->charPattern(null);
@@ -386,26 +521,8 @@
 		**/
 		protected function applyPatternMatches($matches)
 		{
-			if ($matches[1]) {
-				$authorityPattern = '~^(([^@]*)@)?((\[.+\])|([^:]*))(:(.*))?$~';
-				
-				if (
-					!preg_match(
-						$authorityPattern, $matches[2], $authorityMatches
-					)
-				)
-					throw new WrongArgumentException(
-						'not well-formed authority part'
-					);
-				
-				if ($authorityMatches[1])
-					$this->setUserInfo($authorityMatches[2]);
-				
-				$this->setHost($authorityMatches[3]);
-				
-				if (!empty($authorityMatches[6]))
-					$this->setPort($authorityMatches[7]);
-			}
+			if ($matches[1])
+				$this->setAuthority($matches[2]);
 			
 			$this->setPath($matches[3]);
 			
@@ -420,9 +537,13 @@
 		
 		protected function charPattern($extraChars = null)
 		{
+			$unreserved = self::CHARS_UNRESERVED;
+			$subDelims = self::CHARS_SUBDELIMS;
+			$pctEncoded = self::PATTERN_PCTENCODED;
+
 			return
-				"(([{$this->unreserved}{$this->subDelims}$extraChars])"
-				."|({$this->pctEncoded}))";
+				"(([{$unreserved}{$subDelims}$extraChars])"
+				."|({$pctEncoded}))";
 		}
 		
 		private function isValidFragmentOrQuery($string)
@@ -430,6 +551,71 @@
 			$charPattern = $this->charPattern(':@\/?');
 			
 			return (preg_match("/^$charPattern*$/i", $string) == 1);
+		}
+		private static function removeDotSegments($path)
+		{
+			$segments = array();
+			
+			while ($path) {
+				if (strpos($path, '../') === 0) {
+					$path = substr($path, 3);
+				
+				} elseif (strpos($path, './') === 0) {
+					$path = substr($path, 2);
+					
+				} elseif (strpos($path, '/./') === 0) {
+					$path = substr($path, 2);
+				
+				} elseif ($path == '/.') {
+					$path = '/';
+				
+				} elseif (strpos($path, '/../') === 0) {
+					$path = substr($path, 3);
+					
+					if ($segments) {
+						array_pop($segments);
+					}
+					
+				} elseif ($path == '/..') {
+					$path = '/';
+					
+					if ($segments) {
+						array_pop($segments);
+					}
+				
+				} elseif (($path == '..') || ($path == '.')) {
+					$path = null;
+				
+				} else {
+					$i = 0;
+					
+					if ($path[0] == '/')
+						$i = 1;
+					
+					$i = strpos($path, '/', $i);
+					
+					if ($i === false)
+						$i = strlen($path);
+					
+					$segments[] = substr($path, 0, $i);
+					
+					$path = substr($path, $i);
+				}
+			}
+			
+			return implode('', $segments);
+		}
+		
+		private function mergePath($path)
+		{
+			if ($this->getAuthority() !== null && !$this->getPath())
+				return '/'.$path;
+			
+			$segments = explode('/', $this->path);
+			
+			array_pop($segments);
+			
+			return implode('/', $segments).'/'.$path;
 		}
 	}
 ?>

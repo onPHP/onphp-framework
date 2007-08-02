@@ -22,29 +22,42 @@
 			return new self;
 		}
 		
-		/**
-		 * @return HttpUrl
-		**/
-		public function setScheme($scheme)
+		public function ensureAbsolute()
 		{
-			if (!in_array($scheme, array('http', 'https')))
-				throw new WrongArgumentException('not allowed URL scheme');
+			$this->fixMistakenPath();
 			
-			parent::setScheme($scheme);
+			if (!$this->scheme && !$this->getAuthority()) {
+				$this->scheme = 'http';
+				
+				$segments = explode('/', $this->path);
+				
+				if (!empty($segments[0])) {
+					// localhost/anything becomes http://localhost/anything
+					
+					$this->setAuthority(array_shift($segments));
+					
+					$this->setPath('/'.implode('/', $segments));
+				}
+			}
+			
+			$this->fixAuthorityFromPath();
+			
+			return $this;
 		}
 		
-		/**
-		 * @return HttpUrl
-		**/
-		public function setPort($port)
+		public function isValid()
 		{
-			if (
-				!in_array($port, array(80, 443))
-				&& $port < 1024
-			)
-				throw new SecurityException('not allowed port');
+			if (!in_array($this->scheme, array('http', 'https')))
+				return false;
 			
-			parent::setPort($port);
+			if (
+				$this->port
+				&& !in_array($this->port, array(80, 443))
+				&& $this->port < 1024
+			)
+				return false;
+			
+			return parent::isValid();
 		}
 		
 		protected function isValidHostName()

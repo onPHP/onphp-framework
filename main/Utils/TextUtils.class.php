@@ -197,6 +197,9 @@
 		    return $scheme . '://' . $authority . $path . $query . $fragment;
 		}
 		
+		/**
+		 * @deprecated by GenericUri
+		**/
 		private static function removeDotSegments($path)
 		{
 			$segments = array();
