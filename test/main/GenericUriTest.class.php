@@ -11,14 +11,13 @@
 			'http://ya.ru'	=> null,
 			'/etc/passwd'	=> null,
 			'file:///etc/'	=> null,
-			'//ya.ru'	=> null,
-			'//ya.ru:80'	=> null,
 			'http:/uri'	=> null,
 			'http:uri'	=> null,
 			'mailto://localhost.com'	=> null,
 			'mailto://spam@localhost'	=> null,
 			'mailto://cuckoo@localhost.com:boo.com'	=> null,
 			'mailto://cuckoo:localhost.com@boo.com'	=> null,
+			'//samba/de/janeiro' => null,
 			
 			'ftp://cnn.example.com&story=breaking_news@10.0.0.1/top_story.htm'	=> null,
 			
@@ -50,6 +49,17 @@
 			'mailto:"George, Ted" <Shared@Group.Arpanet>'	=> null,
 			// valid too
 			'mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E'	=> null,
+			'mailto:astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node' => null,
+			
+			'//ya0.ru'	=> null,
+			'//yandex.ru'	=> 'Url',
+			'//yandex.ru:80'	=> 'Url',
+			'ya1.ru'	=> null,
+			'ya2.ru'	=> 'Url',
+			'ya3.ru'	=> 'HttpUrl',
+			'http:ya4.ru'	=> 'HttpUrl',
+			'http:/ya5.ru'	=> 'HttpUrl',
+			'http:///ya6.ru'	=> 'HttpUrl',
 		);
 		
 		public function testParser()
@@ -81,16 +91,22 @@
 				$parser = new $parserClass;
 				
 				try {
-					$url = $parser->parse($testUrl);
+					$url = $parser->parse($testUrl, true);
 				} catch (WrongArgumentException $e) {
 					$exception = $e;
 				}
+				
+				$fix = $parserClass == 'HttpUrl';
+				
+				if ($fix)
+					$url->ensureAbsolute();
 				
 				if ($exception) {
 					$dump .= "wrong argument exception: {$e->getMessage()}\n";
 				} else {
 					
-					$this->assertEqual($testUrl, $url->toString());
+					if (!$fix)
+						$this->assertEqual($testUrl, $url->toString());
 					
 					$dump .=
 						"class: ".get_class($url)."\n"

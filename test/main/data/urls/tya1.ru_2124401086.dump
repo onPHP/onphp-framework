@@ -1,12 +1,12 @@
-url: //ya.ru:80
+url: ya1.ru
 class: GenericUri
-toString(): //ya.ru:80
-getSchemeSpecificPart(): //ya.ru:80
+toString(): ya1.ru
+getSchemeSpecificPart(): ya1.ru
 getScheme(): 
 getUserInfo(): 
-getHost(): ya.ru
-getPort(): 80
-getPath(): 
+getHost(): 
+getPort(): 
+getPath(): ya1.ru
 getQuery(): 
 getFragment(): 
 isValidScheme(): 1

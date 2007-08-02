@@ -1,0 +1,18 @@
+url: http:/ya5.ru
+class: HttpUrl
+toString(): http://ya5.ru/
+getSchemeSpecificPart(): //ya5.ru/
+getScheme(): http
+getUserInfo(): 
+getHost(): ya5.ru
+getPort(): 
+getPath(): /
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1

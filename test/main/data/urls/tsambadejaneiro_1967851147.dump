@@ -1,12 +1,12 @@
-url: //ya.ru
+url: //samba/de/janeiro
 class: GenericUri
-toString(): //ya.ru
-getSchemeSpecificPart(): //ya.ru
+toString(): //samba/de/janeiro
+getSchemeSpecificPart(): //samba/de/janeiro
 getScheme(): 
 getUserInfo(): 
-getHost(): ya.ru
+getHost(): samba
 getPort(): 
-getPath(): 
+getPath(): /de/janeiro
 getQuery(): 
 getFragment(): 
 isValidScheme(): 1
