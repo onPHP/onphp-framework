@@ -16,7 +16,7 @@
 		{
 			$request = HttpRequest::create()->
 				setUri(
-					GenericUri::parse('http://onphp.org/')
+					GenericUri::create()->parse('http://onphp.org/')
 				)->
 				setMethod(HttpMethod::get());
 			
