@@ -35,6 +35,9 @@
 			$this->logic = $logic;
 		}
 		
+		/**
+		 * @return FullText
+		**/
 		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
 		{
 			return new $this(
