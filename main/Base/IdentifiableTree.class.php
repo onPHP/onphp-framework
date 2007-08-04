@@ -21,11 +21,17 @@
 	{
 		private $parent	= null;
 		
+		/**
+		 * @return IdentifiableTree
+		**/
 		public function getParent()
 		{
 			return $this->parent;
 		}
 		
+		/**
+		 * @return IdentifiableTree
+		**/
 		public function setParent(IdentifiableTree $parent)
 		{
 			Assert::brothers($this, $parent);
@@ -35,6 +41,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return IdentifiableTree
+		**/
 		public function dropParent()
 		{
 			$this->parent = null;
@@ -42,6 +51,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return IdentifiableTree
+		**/
 		public function getRoot()
 		{
 			$current = $this;
