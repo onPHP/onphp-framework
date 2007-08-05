@@ -1,5 +1,9 @@
 # $Id$
 
+2007-08-05	Denis M. Gabaidulin
+
+	* main/Base/ImageType.class.php: getExtension() helper method was added.
+
 2007-07-30	Ivan Y. Khvostishkov
 
 	* main/Utils/Html: HtmlTokenizer arrived from incubator.

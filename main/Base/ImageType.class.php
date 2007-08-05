@@ -101,6 +101,13 @@
 			return $this->mimeTypes[$this->id];
 		}
 		
+		public function getExtension()
+		{
+			$flippedExensions = array_flip($this->extensions);
+			
+			return $flippedExensions[$this->id];
+		}
+		
 		public function getExtensionList()
 		{
 			return $this->extensions;
