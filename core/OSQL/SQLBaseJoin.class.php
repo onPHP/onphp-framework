@@ -37,7 +37,7 @@
 				$logic.'JOIN '
 					.($this->subject instanceof DialectString
 						?
-							$this->subject instanceof SelectQuery
+							$this->subject instanceof Query
 								? '('.$this->subject->toDialectString($dialect).')'
 								: $this->subject->toDialectString($dialect)
 						: $dialect->quoteTable($this->subject)
