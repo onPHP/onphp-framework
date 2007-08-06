@@ -1,5 +1,10 @@
 # $Id$
 
+2007-08-06	Ivan Y. Khvostishkov
+
+	* main/Utils/IO/: File Streams accept both string names and resource
+	descriptors in constructor.
+
 2007-08-06	Konstantin V. Arkhipov
 
 	* meta/: per-class fetch strategy implemented.

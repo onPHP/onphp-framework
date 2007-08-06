@@ -12,18 +12,24 @@
 
 	class FileOutputStream extends OutputStream
 	{
-		private $name	= null;
 		private $fd		= null;
 		
-		public function __construct($name, $append = false)
+		public function __construct($nameOrFd, $append = false)
 		{
-			try {
-				$this->fd = fopen($name, ($append ? 'a' : 'w').'b');
-			} catch (BaseException $e) {
-				throw new IOException($e->getMessage());
+			if (is_resource($nameOrFd)) {
+				if (get_resource_type($nameOrFd) !== 'stream')
+					throw new IOException('not a file resource');
+				
+				$this->fd = $nameOrFd;
+				
+			} else {
+				try {
+					$this->fd = fopen($nameOrFd, ($append ? 'a' : 'w').'b');
+				} catch (BaseException $e) {
+					throw new IOException($e->getMessage());
+				}
+				
 			}
-			
-			$this->name = $name;
 		}
 		
 		public function __destruct()
@@ -38,9 +44,9 @@
 		/**
 		 * @return FileOutputStream
 		**/
-		public static function create($name, $append = false)
+		public static function create($nameOrFd, $append = false)
 		{
-			return new self($name, $append);
+			return new self($nameOrFd, $append);
 		}
 		
 		/**
