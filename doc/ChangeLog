@@ -1,5 +1,9 @@
 # $Id$
 
+2007-08-06	Konstantin V. Arkhipov
+
+	* meta/: per-class fetch strategy implemented.
+
 2007-08-05	Denis M. Gabaidulin
 
 	* main/Base/ImageType.class.php: getExtension() helper method was added.

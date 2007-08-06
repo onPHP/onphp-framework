@@ -75,7 +75,10 @@
 						$buildSetter = true;
 					}
 					
-					if ($property->getFetchStrategyId() == FetchStrategy::CASCADE) {
+					if (
+						($property->getFetchStrategyId() == FetchStrategy::CASCADE)
+						|| ($class->getFetchStrategyId() == FetchStrategy::CASCADE)
+					) {
 						$nonJoin = true;
 					} else {
 						$nonJoin = false;

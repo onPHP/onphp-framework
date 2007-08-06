@@ -50,6 +50,7 @@
 			|SpookedEnumeration
 			|ValueObject
 		) #REQUIRED
+		fetch		(lazy|cascade) #IMPLIED
 >
 
 <!ELEMENT sources (source+)>

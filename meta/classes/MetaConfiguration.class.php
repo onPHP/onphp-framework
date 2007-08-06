@@ -1084,6 +1084,9 @@ XML;
 					$this->guessPattern((string) $xmlClass->pattern['name'])
 				);
 				
+				if ((string) $xmlClass->pattern['fetch'] == 'cascade')
+					$class->setFetchStrategy(FetchStrategy::cascade());
+				
 				if ($class->getPattern() instanceof InternalClassPattern) {
 					Assert::isTrue(
 						$metafile === ONPHP_META_PATH.'internal.xml',
