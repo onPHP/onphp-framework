@@ -385,7 +385,9 @@
 						$this->getType()->isGeneric(),
 						$inner,
 						$this->getRelationId(),
-						$this->getFetchStrategyId()
+						$this->getClass()->getFetchStrategyId()
+							? $this->getClass()->getFetchStrategyId()
+							: $this->getFetchStrategyId()
 					)
 				);
 		}

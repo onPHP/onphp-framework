@@ -46,7 +46,7 @@
 			<property name="name" type="String" size="50" required="true" />
 		</properties>
 		
-		<pattern name="DictionaryClass" />
+		<pattern name="DictionaryClass" fetch="cascade" />
 	</class>
 	
 	<class name="TestIncapsulant">

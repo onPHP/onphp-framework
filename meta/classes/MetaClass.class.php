@@ -30,6 +30,8 @@
 		
 		private $source		= null;
 		
+		private $strategy	= null;
+		
 		private $build		= true;
 		
 		public function __construct($name)
@@ -322,6 +324,32 @@
 		public function getReferencingClasses()
 		{
 			return array_keys($this->references);
+		}
+		
+		/**
+		 * @return MetaClass
+		**/
+		public function setFetchStrategy(FetchStrategy $strategy)
+		{
+			$this->strategy = $strategy;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return FetchStrategy
+		**/
+		public function getFetchStrategy()
+		{
+			return $this->strategy;
+		}
+		
+		public function getFetchStrategyId()
+		{
+			if ($this->strategy)
+				return $this->strategy->getId();
+			
+			return null;
 		}
 		
 		public function hasChilds()
