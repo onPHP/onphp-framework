@@ -15,23 +15,25 @@
 	**/
 	class FileInputStream extends InputStream
 	{
-		private $name	= null;
 		private $fd		= null;
 		
 		private $mark	= null;
 		
-		public function __construct($name)
+		public function __construct($nameOrFd)
 		{
-			if (!is_file($name) || !is_readable($name))
-				throw new FileNotFoundException($name);
-			
-			try {
-				$this->fd = fopen($name, 'rb');
-			} catch (BaseException $e) {
-				throw new IOException($e->getMessage());
+			if (is_resource($nameOrFd)) {
+				if (get_resource_type($nameOrFd) !== 'stream')
+					throw new IOException('not a file resource');
+				
+				$this->fd = $nameOrFd;
+				
+			} else {
+				try {
+					$this->fd = fopen($nameOrFd, 'rb');
+				} catch (BaseException $e) {
+					throw new IOException($e->getMessage());
+				}
 			}
-			
-			$this->name = $name;
 		}
 		
 		public function __destruct()
@@ -46,9 +48,9 @@
 		/**
 		 * @return FileInputStream
 		**/
-		public static function create($name)
+		public static function create($nameOrFd)
 		{
-			return new self($name);
+			return new self($nameOrFd);
 		}
 		
 		public function isEof()
