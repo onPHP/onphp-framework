@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Http
 	**/
-	class HeaderParser
+	final class HeaderParser
 	{
 		private $headers		= array();
 		private $currentHeader	= null;

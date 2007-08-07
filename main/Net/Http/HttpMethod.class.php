@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Http
 	**/
-	class HttpMethod extends Enumeration 
+	final class HttpMethod extends Enumeration
 	{
 		const OPTIONS	= 1;
 		const GET		= 2;
