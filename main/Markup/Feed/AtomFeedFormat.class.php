@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class AtomFeedFormat extends FeedFormat
+	final class AtomFeedFormat extends FeedFormat
 	{
 		/**
 		 * @return AtomFeedFormat

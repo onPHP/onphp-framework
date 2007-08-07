@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class AtomItemWorker  extends Singleton implements FeedItemWorker
+	final class AtomItemWorker extends Singleton implements FeedItemWorker
 	{
 		/**
 		 * @return AtomItemWorker

@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class RssItemWorker extends Singleton implements FeedItemWorker
+	final class RssItemWorker extends Singleton implements FeedItemWorker
 	{
 		/**
 		 * @return RssItemWorker

@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class FeedItem
+	final class FeedItem
 	{
 		private $title		= null;
 		private $content	= null;

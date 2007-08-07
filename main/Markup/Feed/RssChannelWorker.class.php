@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class RssChannelWorker extends Singleton implements FeedChannelWorker
+	final class RssChannelWorker extends Singleton implements FeedChannelWorker
 	{
 		/**
 		 * @return RssChannelWorker

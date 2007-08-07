@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class RssFeedFormat extends FeedFormat
+	final class RssFeedFormat extends FeedFormat
 	{
 		const VERSION = '2.0';
 		

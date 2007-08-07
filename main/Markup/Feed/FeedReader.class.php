@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class FeedReader
+	final class FeedReader
 	{
 		private $xml			= null;
 		private $formats		= array();

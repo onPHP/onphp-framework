@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class FeedItemContentType extends Enumeration
+	final class FeedItemContentType extends Enumeration
 	{
 		const TEXT		= 1;
 		const HTML		= 2;
