@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Net
+	**/
 	class Url extends GenericUri
 	{
 		protected $knownSubSchemes	= array(

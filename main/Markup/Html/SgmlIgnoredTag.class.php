@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Html
+	**/
 	final class SgmlIgnoredTag extends SgmlTag
 	{
 		private $cdata		= null;

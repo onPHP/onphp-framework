@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Html
+	**/
 	class Cdata extends SgmlToken
 	{
 		private $data	= null;

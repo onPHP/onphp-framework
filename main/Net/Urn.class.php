@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Net
+	**/
 	class Urn extends GenericUri
 	{
 		protected $schemeSpecificPart	= null;

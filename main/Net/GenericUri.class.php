@@ -14,6 +14,8 @@
 	 * see RFC 3986
 	 *
 	 * TODO: normalization and comparsion
+	 * 
+	 * @ingroup Net
 	**/
 	class GenericUri
 	{

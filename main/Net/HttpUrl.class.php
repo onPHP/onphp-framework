@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Net
+	**/
 	class HttpUrl extends Url
 	{
 		protected $knownSubSchemes	= array();

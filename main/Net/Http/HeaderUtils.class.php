@@ -13,7 +13,7 @@
 	/**
 	 * Collection of static header functions.
 	 * 
-	 * @ingroup Utils
+	 * @ingroup Http
 	**/
 	final class HeaderUtils extends StaticFactory
 	{

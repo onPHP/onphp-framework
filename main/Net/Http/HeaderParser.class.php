@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Http
+	**/
 	class HeaderParser
 	{
 		private $headers		= array();

@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Feed
+	**/
 	final class RssFeedFormat extends FeedFormat
 	{
 		const VERSION = '2.0';
