@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Html
 	**/
-	class HtmlAssembler
+	final class HtmlAssembler
 	{
 		private $tags	= null;
 		
