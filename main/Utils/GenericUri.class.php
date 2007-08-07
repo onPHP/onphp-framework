@@ -53,8 +53,7 @@
 				&& isset($knownSubSchemes[strtolower($matches[1])])
 			)
 				$class = $knownSubSchemes[strtolower($matches[1])];
-				
-			else 
+			else
 				$class = get_class($this);
 			
 			$result = new $class;
@@ -102,7 +101,6 @@
 					setPort($reference->getPort())->
 					setPath(self::removeDotSegments($reference->getPath()))->
 					setQuery($reference->getQuery());
-				
 			} else {
 				$class = get_class($this);
 				$result = new $class;
@@ -116,7 +114,6 @@
 						setPort($reference->getPort())->
 						setPath(self::removeDotSegments($reference->getPath()))->
 						setQuery($reference->getQuery());
-					
 				} else {
 					$result->
 						setUserInfo($this->getUserInfo())->
@@ -126,7 +123,6 @@
 					$path = $reference->getPath();
 					
 					if (!$path) {
-						
 						$result->
 							setPath($this->getPath())->
 							setQuery(
@@ -134,9 +130,7 @@
 								? $reference->getQuery()
 								: $this->getQuery()
 							);
-						
 					} else {
-						
 						$result->setQuery($reference->getQuery());
 						
 						if ($path[0] == '/')
@@ -270,6 +264,8 @@
 			$query .= $string;
 			
 			$this->setQuery($query);
+			
+			return $this;
 		}
 		
 		public function getQuery()
@@ -328,7 +324,7 @@
 			
 			if ($this->host !== null)
 				$result .= $this->host;
-				
+			
 			if ($this->port !== null)
 				$result .= ':'.$this->port;
 			
@@ -540,7 +536,7 @@
 			$unreserved = self::CHARS_UNRESERVED;
 			$subDelims = self::CHARS_SUBDELIMS;
 			$pctEncoded = self::PATTERN_PCTENCODED;
-
+			
 			return
 				"(([{$unreserved}{$subDelims}$extraChars])"
 				."|({$pctEncoded}))";
@@ -560,16 +556,16 @@
 			while ($path) {
 				if (strpos($path, '../') === 0) {
 					$path = substr($path, 3);
-				
+					
 				} elseif (strpos($path, './') === 0) {
 					$path = substr($path, 2);
 					
 				} elseif (strpos($path, '/./') === 0) {
 					$path = substr($path, 2);
-				
+					
 				} elseif ($path == '/.') {
 					$path = '/';
-				
+					
 				} elseif (strpos($path, '/../') === 0) {
 					$path = substr($path, 3);
 					
@@ -583,10 +579,10 @@
 					if ($segments) {
 						array_pop($segments);
 					}
-				
+					
 				} elseif (($path == '..') || ($path == '.')) {
 					$path = null;
-				
+					
 				} else {
 					$i = 0;
 					

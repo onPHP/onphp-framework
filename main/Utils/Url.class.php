@@ -21,7 +21,7 @@
 			'gopher'	=> 'Url',
 			'wais'		=> 'Url',
 			'file'		=> 'Url',
-			'prospero'	=> 'Url',
+			'prospero'	=> 'Url'
 		);
 		
 		/**
@@ -95,7 +95,7 @@
 			
 			// but http:anything:80/... and http:/anything:80/.. becomes
 			// http://anything:80/...
-				
+			
 			$this->setScheme($matches[1]);
 			$this->setPath($matches[2]);
 			
@@ -140,6 +140,5 @@
 		{
 			return parent::getQueryFragmentPattern();
 		}
-		
 	}
 ?>
