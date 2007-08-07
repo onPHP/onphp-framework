@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Net
 	**/
-	class Urn extends GenericUri
+	final class Urn extends GenericUri
 	{
 		protected $schemeSpecificPart	= null;
 		
