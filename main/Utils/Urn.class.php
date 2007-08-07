@@ -21,7 +21,7 @@
 			'isbn'		=> 'Urn',
 			'tel'		=> 'Urn',
 			'fax'		=> 'Urn',
-			'wtai'		=> 'Urn',
+			'wtai'		=> 'Urn'
 		);
 		
 		/**
@@ -86,7 +86,7 @@
 		{
 			if (!empty($matches[1]))
 				$this->setSchemeSpecificPart($matches[1]);
-				
+			
 			if (!empty($matches[2]))
 				$this->setFragment($matches[3]);
 			
