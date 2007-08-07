@@ -75,13 +75,16 @@
 			xdebug_start_code_coverage();
 			*/
 			
+			$dumpFile = dirname(__FILE__).'/data/urls/parser.dump';
+			
+			$newStamps = array();
+			
+			if (is_readable($dumpFile)) {
+				$stamps = unserialize(file_get_contents($dumpFile));
+			}
+			
 			foreach ($this->urls as $testUrl => $parserClass) {
 				$dump = "url: {$testUrl}\n";
-				
-				$fileName = preg_replace('/[^a-z0-9._@-]/', '', $testUrl);
-				
-				$dumpFile = dirname(__FILE__).'/data/urls/t'.$fileName
-					.'_'.crc32($testUrl).'.dump';
 				
 				$exception = null;
 				
@@ -128,12 +131,14 @@
 						."isValidFragment(): ".$url->isValidFragment()."\n";
 				}
 				
-				if (!file_exists($dumpFile)) {
-					file_put_contents($dumpFile, $dump);
-				} else {
-					$this->assertEqual(file_get_contents($dumpFile), $dump);
+				if (isset($stamps[$testUrl])) {
+					$this->assertEqual($stamps[$testUrl], $dump);
 				}
+				
+				$newStamps[$testUrl] = $dump;
 			}
+			
+			file_put_contents($dumpFile.'.new', serialize($newStamps));
 			
 			/*
 			$coverage = xdebug_get_code_coverage();

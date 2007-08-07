@@ -1,0 +1,775 @@
+a:43:{s:12:"http://ya.ru";s:325:"url: http://ya.ru
+class: HttpUrl
+toString(): http://ya.ru
+getSchemeSpecificPart(): //ya.ru
+getScheme(): http
+getUserInfo(): 
+getHost(): ya.ru
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:11:"/etc/passwd";s:332:"url: /etc/passwd
+class: GenericUri
+toString(): /etc/passwd
+getSchemeSpecificPart(): /etc/passwd
+getScheme(): 
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): /etc/passwd
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:12:"file:///etc/";s:321:"url: file:///etc/
+class: Url
+toString(): file:///etc/
+getSchemeSpecificPart(): ///etc/
+getScheme(): file
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): /etc/
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:9:"http:/uri";s:321:"url: http:/uri
+class: HttpUrl
+toString(): http:/uri
+getSchemeSpecificPart(): http:/uri
+getScheme(): 
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): http:/uri
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:8:"http:uri";s:317:"url: http:uri
+class: HttpUrl
+toString(): http:uri
+getSchemeSpecificPart(): http:uri
+getScheme(): 
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): http:uri
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:22:"mailto://localhost.com";s:346:"url: mailto://localhost.com
+class: Urn
+toString(): mailto://localhost.com
+getSchemeSpecificPart(): //localhost.com
+getScheme(): mailto
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:23:"mailto://spam@localhost";s:349:"url: mailto://spam@localhost
+class: Urn
+toString(): mailto://spam@localhost
+getSchemeSpecificPart(): //spam@localhost
+getScheme(): mailto
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:37:"mailto://cuckoo@localhost.com:boo.com";s:391:"url: mailto://cuckoo@localhost.com:boo.com
+class: Urn
+toString(): mailto://cuckoo@localhost.com:boo.com
+getSchemeSpecificPart(): //cuckoo@localhost.com:boo.com
+getScheme(): mailto
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:37:"mailto://cuckoo:localhost.com@boo.com";s:391:"url: mailto://cuckoo:localhost.com@boo.com
+class: Urn
+toString(): mailto://cuckoo:localhost.com@boo.com
+getSchemeSpecificPart(): //cuckoo:localhost.com@boo.com
+getScheme(): mailto
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:18:"//samba/de/janeiro";s:358:"url: //samba/de/janeiro
+class: GenericUri
+toString(): //samba/de/janeiro
+getSchemeSpecificPart(): //samba/de/janeiro
+getScheme(): 
+getUserInfo(): 
+getHost(): samba
+getPort(): 
+getPath(): /de/janeiro
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:64:"ftp://cnn.example.com&story=breaking_news@10.0.0.1/top_story.htm";s:529:"url: ftp://cnn.example.com&story=breaking_news@10.0.0.1/top_story.htm
+class: Url
+toString(): ftp://cnn.example.com&story=breaking_news@10.0.0.1/top_story.htm
+getSchemeSpecificPart(): //cnn.example.com&story=breaking_news@10.0.0.1/top_story.htm
+getScheme(): ftp
+getUserInfo(): cnn.example.com&story=breaking_news
+getHost(): 10.0.0.1
+getPort(): 
+getPath(): /top_story.htm
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:18:"http://a/b/c/d;p?q";s:348:"url: http://a/b/c/d;p?q
+class: HttpUrl
+toString(): http://a/b/c/d;p?q
+getSchemeSpecificPart(): //a/b/c/d;p?q
+getScheme(): http
+getUserInfo(): 
+getHost(): a
+getPort(): 
+getPath(): /b/c/d;p
+getQuery(): q
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:7:"g;x?y#s";s:314:"url: g;x?y#s
+class: GenericUri
+toString(): g;x?y#s
+getSchemeSpecificPart(): g;x?y#s
+getScheme(): 
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): g;x
+getQuery(): y
+getFragment(): s
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:0:"";s:288:"url: 
+class: GenericUri
+toString(): 
+getSchemeSpecificPart(): 
+getScheme(): 
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:13:"../../../../g";s:340:"url: ../../../../g
+class: GenericUri
+toString(): ../../../../g
+getSchemeSpecificPart(): ../../../../g
+getScheme(): 
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): ../../../../g
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:19:"tel:+1-816-555-1212";s:337:"url: tel:+1-816-555-1212
+class: Urn
+toString(): tel:+1-816-555-1212
+getSchemeSpecificPart(): +1-816-555-1212
+getScheme(): tel
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:23:"telnet://192.0.2.16:80/";s:362:"url: telnet://192.0.2.16:80/
+class: Url
+toString(): telnet://192.0.2.16:80/
+getSchemeSpecificPart(): //192.0.2.16:80/
+getScheme(): telnet
+getUserInfo(): 
+getHost(): 192.0.2.16
+getPort(): 80
+getPath(): /
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:51:"urn:oasis:names:specification:docbook:dtd:xml:4.1.2";s:433:"url: urn:oasis:names:specification:docbook:dtd:xml:4.1.2
+class: Urn
+toString(): urn:oasis:names:specification:docbook:dtd:xml:4.1.2
+getSchemeSpecificPart(): oasis:names:specification:docbook:dtd:xml:4.1.2
+getScheme(): urn
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:42:"ldap://[2001:db8::7]/c=GB?objectClass?one]";s:446:"url: ldap://[2001:db8::7]/c=GB?objectClass?one]
+class: GenericUri
+toString(): ldap://[2001:db8::7]/c=GB?objectClass?one]
+getSchemeSpecificPart(): //[2001:db8::7]/c=GB?objectClass?one]
+getScheme(): ldap
+getUserInfo(): 
+getHost(): [2001:db8::7]
+getPort(): 
+getPath(): /c=GB
+getQuery(): objectClass?one]
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 
+isValidFragment(): 1
+";s:27:"mailto:John.Doe@example.com";s:361:"url: mailto:John.Doe@example.com
+class: Urn
+toString(): mailto:John.Doe@example.com
+getSchemeSpecificPart(): John.Doe@example.com
+getScheme(): mailto
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:36:"http://[1080:0:0:0:8:800:200C:417A]/";s:421:"url: http://[1080:0:0:0:8:800:200C:417A]/
+class: HttpUrl
+toString(): http://[1080:0:0:0:8:800:200C:417A]/
+getSchemeSpecificPart(): //[1080:0:0:0:8:800:200C:417A]/
+getScheme(): http
+getUserInfo(): 
+getHost(): [1080:0:0:0:8:800:200C:417A]
+getPort(): 
+getPath(): /
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:31:"http://[1080::8:800:200C:417A]/";s:401:"url: http://[1080::8:800:200C:417A]/
+class: HttpUrl
+toString(): http://[1080::8:800:200C:417A]/
+getSchemeSpecificPart(): //[1080::8:800:200C:417A]/
+getScheme(): http
+getUserInfo(): 
+getHost(): [1080::8:800:200C:417A]
+getPort(): 
+getPath(): /
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:29:"http://[::FFFF:129.144.52.38]";s:393:"url: http://[::FFFF:129.144.52.38]
+class: HttpUrl
+toString(): http://[::FFFF:129.144.52.38]
+getSchemeSpecificPart(): //[::FFFF:129.144.52.38]
+getScheme(): http
+getUserInfo(): 
+getHost(): [::FFFF:129.144.52.38]
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:24:"http://[::129.144.52.38]";s:373:"url: http://[::129.144.52.38]
+class: HttpUrl
+toString(): http://[::129.144.52.38]
+getSchemeSpecificPart(): //[::129.144.52.38]
+getScheme(): http
+getUserInfo(): 
+getHost(): [::129.144.52.38]
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:21:"http://[::FFFF:1.1.1]";s:360:"url: http://[::FFFF:1.1.1]
+class: HttpUrl
+toString(): http://[::FFFF:1.1.1]
+getSchemeSpecificPart(): //[::FFFF:1.1.1]
+getScheme(): http
+getUserInfo(): 
+getHost(): [::FFFF:1.1.1]
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:19:"http://[::FFFF:1.1]";s:352:"url: http://[::FFFF:1.1]
+class: HttpUrl
+toString(): http://[::FFFF:1.1]
+getSchemeSpecificPart(): //[::FFFF:1.1]
+getScheme(): http
+getUserInfo(): 
+getHost(): [::FFFF:1.1]
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:19:"http://[::66.66.66]";s:352:"url: http://[::66.66.66]
+class: HttpUrl
+toString(): http://[::66.66.66]
+getSchemeSpecificPart(): //[::66.66.66]
+getScheme(): http
+getUserInfo(): 
+getHost(): [::66.66.66]
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:14:"http://[::5.5]";s:332:"url: http://[::5.5]
+class: HttpUrl
+toString(): http://[::5.5]
+getSchemeSpecificPart(): //[::5.5]
+getScheme(): http
+getUserInfo(): 
+getHost(): [::5.5]
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:18:"http://[::FFFF:10]";s:349:"url: http://[::FFFF:10]
+class: HttpUrl
+toString(): http://[::FFFF:10]
+getSchemeSpecificPart(): //[::FFFF:10]
+getScheme(): http
+getUserInfo(): 
+getHost(): [::FFFF:10]
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:20:"http://[192.168.0.1]";s:356:"url: http://[192.168.0.1]
+class: HttpUrl
+toString(): http://[192.168.0.1]
+getSchemeSpecificPart(): //[192.168.0.1]
+getScheme(): http
+getUserInfo(): 
+getHost(): [192.168.0.1]
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:19:"http://266.66.66.66";s:352:"url: http://266.66.66.66
+class: HttpUrl
+toString(): http://266.66.66.66
+getSchemeSpecificPart(): //266.66.66.66
+getScheme(): http
+getUserInfo(): 
+getHost(): 266.66.66.66
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:43:"mailto:"George, Ted" <Shared@Group.Arpanet>";s:409:"url: mailto:"George, Ted" <Shared@Group.Arpanet>
+class: Urn
+toString(): mailto:"George, Ted" <Shared@Group.Arpanet>
+getSchemeSpecificPart(): "George, Ted" <Shared@Group.Arpanet>
+getScheme(): mailto
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:55:"mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E";s:445:"url: mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
+class: Urn
+toString(): mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
+getSchemeSpecificPart(): %22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
+getScheme(): mailto
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:102:"mailto:astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node";s:586:"url: mailto:astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node
+class: Urn
+toString(): mailto:astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node
+getSchemeSpecificPart(): astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node
+getScheme(): mailto
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:8:"//ya0.ru";s:318:"url: //ya0.ru
+class: GenericUri
+toString(): //ya0.ru
+getSchemeSpecificPart(): //ya0.ru
+getScheme(): 
+getUserInfo(): 
+getHost(): ya0.ru
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:11:"//yandex.ru";s:325:"url: //yandex.ru
+class: Url
+toString(): //yandex.ru
+getSchemeSpecificPart(): //yandex.ru
+getScheme(): 
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): //yandex.ru
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:14:"//yandex.ru:80";s:337:"url: //yandex.ru:80
+class: Url
+toString(): //yandex.ru:80
+getSchemeSpecificPart(): //yandex.ru:80
+getScheme(): 
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): //yandex.ru:80
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:6:"ya1.ru";s:312:"url: ya1.ru
+class: GenericUri
+toString(): ya1.ru
+getSchemeSpecificPart(): ya1.ru
+getScheme(): 
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): ya1.ru
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:6:"ya2.ru";s:305:"url: ya2.ru
+class: Url
+toString(): ya2.ru
+getSchemeSpecificPart(): ya2.ru
+getScheme(): 
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): ya2.ru
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:6:"ya3.ru";s:325:"url: ya3.ru
+class: HttpUrl
+toString(): http://ya3.ru/
+getSchemeSpecificPart(): //ya3.ru/
+getScheme(): http
+getUserInfo(): 
+getHost(): ya3.ru
+getPort(): 
+getPath(): /
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:11:"http:ya4.ru";s:330:"url: http:ya4.ru
+class: HttpUrl
+toString(): http://ya4.ru/
+getSchemeSpecificPart(): //ya4.ru/
+getScheme(): http
+getUserInfo(): 
+getHost(): ya4.ru
+getPort(): 
+getPath(): /
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:12:"http:/ya5.ru";s:331:"url: http:/ya5.ru
+class: HttpUrl
+toString(): http://ya5.ru/
+getSchemeSpecificPart(): //ya5.ru/
+getScheme(): http
+getUserInfo(): 
+getHost(): ya5.ru
+getPort(): 
+getPath(): /
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";s:14:"http:///ya6.ru";s:333:"url: http:///ya6.ru
+class: HttpUrl
+toString(): http://ya6.ru/
+getSchemeSpecificPart(): //ya6.ru/
+getScheme(): http
+getUserInfo(): 
+getHost(): ya6.ru
+getPort(): 
+getPath(): /
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
+";}
