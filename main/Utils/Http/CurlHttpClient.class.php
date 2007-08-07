@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class CurlHttpClient implements HttpClient
+	final class CurlHttpClient implements HttpClient
 	{
 		private $handle			= null;
 		private $timeout		= null;

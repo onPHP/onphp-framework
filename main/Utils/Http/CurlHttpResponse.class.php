@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class CurlHttpResponse implements HttpResponse 
+	final class CurlHttpResponse implements HttpResponse
 	{
 		private $headerParser	= null;
 		private $body			= null;
