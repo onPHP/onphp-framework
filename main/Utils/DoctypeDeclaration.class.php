@@ -174,7 +174,7 @@
 			if (
 				preg_match(
 					'~^PUBLIC'.self::SPACER_MASK.'+"(.+?)"'
-					.'('.self::SPACER_MASK.'+"(.+)")?$~is',
+					.'('.self::SPACER_MASK.'*"(.+)")?$~is',
 					$remainigString, $matches
 				)
 			) {
