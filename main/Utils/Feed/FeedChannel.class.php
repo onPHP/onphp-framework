@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class FeedChannel
+	final class FeedChannel
 	{
 		private $title			= null;
 		private $link			= null;

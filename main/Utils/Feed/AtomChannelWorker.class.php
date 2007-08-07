@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class AtomChannelWorker extends Singleton implements FeedChannelWorker
+	final class AtomChannelWorker extends Singleton implements FeedChannelWorker
 	{
 		/**
 		 * @return AtomChannelWorker
