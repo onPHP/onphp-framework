@@ -1,0 +1,18 @@
+url: //yandex.ru:80
+class: Url
+toString(): //yandex.ru:80
+getSchemeSpecificPart(): //yandex.ru:80
+getScheme(): 
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): //yandex.ru:80
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1

@@ -1,0 +1,18 @@
+url: urn:oasis:names:specification:docbook:dtd:xml:4.1.2
+class: Urn
+toString(): urn:oasis:names:specification:docbook:dtd:xml:4.1.2
+getSchemeSpecificPart(): oasis:names:specification:docbook:dtd:xml:4.1.2
+getScheme(): urn
+getUserInfo(): 
+getHost(): 
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1

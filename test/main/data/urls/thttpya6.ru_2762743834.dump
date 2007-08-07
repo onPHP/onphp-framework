@@ -1,0 +1,18 @@
+url: http:///ya6.ru
+class: HttpUrl
+toString(): http://ya6.ru/
+getSchemeSpecificPart(): //ya6.ru/
+getScheme(): http
+getUserInfo(): 
+getHost(): ya6.ru
+getPort(): 
+getPath(): /
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
