@@ -114,6 +114,7 @@
 		}
 		
 		/**
+		 * @todo move logic to GenericUri
 		 * @see http://tools.ietf.org/html/rfc3986#page-38
 		 * @author thanks to JanRain, Inc. <openid@janrain.com>
 		 * @author http://www.openidenabled.com/openid/libraries/php/

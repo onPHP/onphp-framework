@@ -28,7 +28,7 @@
 		protected $port		= null;
 		
 		protected $path		= null;
-		protected $query		= null;
+		protected $query	= null;
 		protected $fragment	= null;
 		
 		/**
@@ -552,6 +552,7 @@
 			
 			return (preg_match("/^$charPattern*$/i", $string) == 1);
 		}
+		
 		private static function removeDotSegments($path)
 		{
 			$segments = array();
