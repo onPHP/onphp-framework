@@ -367,7 +367,6 @@
 					}
 
 					$this->get($array[$i], $alias);
-					$this->aliases[$alias] = true;
 				}
 			} else {
 				for ($i = 0; $i < $size; ++$i) {

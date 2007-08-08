@@ -92,11 +92,14 @@
 				} else {
 					$prefix = $table.'_';
 					
-					$query->
-						arrayGet(
-							$dao->getFields(),
-							$prefix
+					foreach ($dao->getFields() as $field) {
+						$query->get(
+							DBField::create(
+								$field, $table
+							),
+							$prefix.$field
 						);
+					}
 					
 					if (!$property->isRequired()) {
 						$query->andWhere(
