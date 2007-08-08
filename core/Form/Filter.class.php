@@ -69,6 +69,14 @@
 		}
 		
 		/**
+		 * @return LowerCaseFilter
+		**/
+		public static function lowerCase()
+		{
+			return Singleton::getInstance('LowerCaseFilter');
+		}
+		
+		/**
 		 * @return HtmlSpecialCharsFilter
 		**/
 		public static function htmlSpecialChars()
