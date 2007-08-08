@@ -10,9 +10,6 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup Html
-	**/
 	final class HtmlTokenizer
 	{
 		const INITIAL_STATE				= 1;
