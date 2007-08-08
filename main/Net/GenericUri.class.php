@@ -210,14 +210,6 @@
 		**/
 		public function setPort($port)
 		{
-			if (
-				$port
-				&& ($port < 1 || $port > 65535)
-			)
-				throw new WrongArgumentException(
-					'port must be an integer from 1 to 65535'
-				);
-			
 			$this->port = $port;
 			
 			return $this;
@@ -376,6 +368,7 @@
 				$this->isValidScheme()
 				&& $this->isValidUserInfo()
 				&& $this->isValidHost()
+				&& $this->isValidPort()
 				&& $this->isValidPath()
 				&& $this->isValidQuery()
 				&& $this->isValidFragment();
@@ -391,9 +384,14 @@
 		
 		public function isValidUserInfo()
 		{
+			$authority = $this->getAuthority();
+			
+			if (!$authority)
+				return true;
+			
 			$charPattern = $this->charPattern(':');
 			
-			return (preg_match("/^$charPattern*$/i", $this->scheme) == 1);
+			return (preg_match("/^$charPattern*$/i", $authority) == 1);
 		}
 		
 		public function isValidHost()
@@ -449,7 +447,13 @@
 		
 		public function isValidPort()
 		{
-			return (preg_match('~^\d*$~', $this->port) == 1);
+			if (!$this->port)
+				return true;
+			
+			if (!preg_match('~^\d*$~', $this->port))
+				return false;
+			
+			return ($this->port > 0 && $this->port <= 65535);
 		}
 		
 		public function isValidPath()

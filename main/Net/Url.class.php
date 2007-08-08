@@ -107,7 +107,7 @@
 			return $this;
 		}
 		
-		public function toSmartString()
+		public function toSmallString()
 		{
 			$result = null;
 			
