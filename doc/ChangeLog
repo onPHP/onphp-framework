@@ -1,5 +1,9 @@
 # $Id$
 
+2007-08-08	Vladimir A. Altuchov
+
+	* core/Form/Filters/: + lower case filter
+
 2007-08-06	Ivan Y. Khvostishkov
 
 	* main/Utils/IO/: File Streams accept both string names and resource
