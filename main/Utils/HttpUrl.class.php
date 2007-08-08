@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Net
+	**/
 	final class HttpUrl extends Url
 	{
 		protected $knownSubSchemes	= array();
@@ -45,11 +48,16 @@
 			return $this;
 		}
 		
-		public function isValid()
+		public function isValidScheme()
 		{
 			if (!in_array($this->scheme, array('http', 'https')))
 				return false;
 			
+			return parent::isValidScheme();
+		}
+		
+		public function isValidPort()
+		{
 			if (
 				$this->port
 				&& !in_array($this->port, array(80, 443))
@@ -57,7 +65,7 @@
 			)
 				return false;
 			
-			return parent::isValid();
+			return parent::isValidPort();
 		}
 		
 		protected function isValidHostName()

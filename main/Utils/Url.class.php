@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Net
+	**/
 	class Url extends GenericUri
 	{
 		protected $knownSubSchemes	= array(
@@ -104,7 +107,7 @@
 			return $this;
 		}
 		
-		public function toSmartString()
+		public function toSmallString()
 		{
 			$result = null;
 			

@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Html
+	**/
 	final class HtmlTokenizer
 	{
 		const INITIAL_STATE				= 1;
@@ -197,6 +200,14 @@
 		public function isInlineTag($id)
 		{
 			return in_array($id, $this->inlineTags);
+		}
+		
+		private static function optionalLowercase($string, $ignoreCase)
+		{
+			if (!$ignoreCase)
+				return $string;
+			else
+				return strtolower($string);
 		}
 		
 		private function getNextChar()
@@ -621,7 +632,9 @@
 			}
 			
 			$this->tag = SgmlEndTag::create()->
-				setId($this->tagId);
+				setId(
+					self::optionalLowercase($this->tagId, $this->lowercaseTags)
+				);
 			
 			$this->makeTag();
 			
@@ -1062,7 +1075,7 @@
 			$endTag = '</'.$startTag;
 			
 			while ($this->char !== null) {
-				$this->buffer .= $this->getContentToSubstring($endTag);
+				$this->buffer .= $this->getContentToSubstring($endTag, true);
 				
 				if ($this->char === null) {
 					// </script not found, or found </script[eof]
@@ -1224,7 +1237,7 @@
 		 * 
 		 * If $substring not found, returns whole remaining content
 		**/
-		private function getContentToSubstring($substring)
+		private function getContentToSubstring($substring, $ignoreCase = false)
 		{
 			$this->substringFound = false;
 			
@@ -1246,16 +1259,23 @@
 				
 				$maxLength = $prefixTable[$i + 1];
 				
-				while ($buffer[$maxLength] !== $char && $maxLength > 0) {
+				while (
+					self::optionalLowercase($buffer[$maxLength], $ignoreCase)
+						!== self::optionalLowercase($char, $ignoreCase)
+					&& $maxLength > 0
+				) {
 					$maxLength = $prefixTable[$maxLength];
 				}
 				
 				++$i;
 				
 				$prefixTable[$i + 1] =
-					$buffer[$maxLength] === $char
-						? $maxLength + 1
-						: 0;
+					(
+						self::optionalLowercase($buffer[$maxLength], $ignoreCase)
+							=== self::optionalLowercase($char, $ignoreCase)
+					)
+					? $maxLength + 1
+					: 0;
 				
 				if (
 					$i > $substringLength + 1
