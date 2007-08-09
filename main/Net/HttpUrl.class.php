@@ -50,14 +50,23 @@
 		
 		public function isValidScheme()
 		{
-			if (!in_array($this->scheme, array('http', 'https')))
+			if (!parent::isValidScheme())
 				return false;
 			
-			return parent::isValidScheme();
+			if (
+				$this->scheme
+				&& !in_array($this->scheme, array('http', 'https'))
+			)
+				return false;
+			
+			return true;
 		}
 		
 		public function isValidPort()
 		{
+			if (!parent::isValidPort())
+				return false;
+			
 			if (
 				$this->port
 				&& !in_array($this->port, array(80, 443))
@@ -65,7 +74,7 @@
 			)
 				return false;
 			
-			return parent::isValidPort();
+			return true;
 		}
 		
 		protected function isValidHostName()

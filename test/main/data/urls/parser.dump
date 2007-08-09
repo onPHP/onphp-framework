@@ -88,7 +88,7 @@ isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
 isValidFragment(): 1
-";s:22:"mailto://localhost.com";s:346:"url: mailto://localhost.com
+";s:22:"mailto://localhost.com";s:360:"url: mailto://localhost.com
 class: Urn
 toString(): mailto://localhost.com
 getSchemeSpecificPart(): //localhost.com
@@ -96,17 +96,17 @@ getScheme(): mailto
 getUserInfo(): 
 getHost(): 
 getPort(): 
-getPath(): 
+getPath(): //localhost.com
 getQuery(): 
 getFragment(): 
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 1
+isValidPath(): 
 isValidQuery(): 1
 isValidFragment(): 1
-";s:23:"mailto://spam@localhost";s:349:"url: mailto://spam@localhost
+";s:23:"mailto://spam@localhost";s:364:"url: mailto://spam@localhost
 class: Urn
 toString(): mailto://spam@localhost
 getSchemeSpecificPart(): //spam@localhost
@@ -114,17 +114,17 @@ getScheme(): mailto
 getUserInfo(): 
 getHost(): 
 getPort(): 
-getPath(): 
+getPath(): //spam@localhost
 getQuery(): 
 getFragment(): 
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 1
+isValidPath(): 
 isValidQuery(): 1
 isValidFragment(): 1
-";s:37:"mailto://cuckoo@localhost.com:boo.com";s:391:"url: mailto://cuckoo@localhost.com:boo.com
+";s:37:"mailto://cuckoo@localhost.com:boo.com";s:420:"url: mailto://cuckoo@localhost.com:boo.com
 class: Urn
 toString(): mailto://cuckoo@localhost.com:boo.com
 getSchemeSpecificPart(): //cuckoo@localhost.com:boo.com
@@ -132,17 +132,17 @@ getScheme(): mailto
 getUserInfo(): 
 getHost(): 
 getPort(): 
-getPath(): 
+getPath(): //cuckoo@localhost.com:boo.com
 getQuery(): 
 getFragment(): 
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 1
+isValidPath(): 
 isValidQuery(): 1
 isValidFragment(): 1
-";s:37:"mailto://cuckoo:localhost.com@boo.com";s:391:"url: mailto://cuckoo:localhost.com@boo.com
+";s:37:"mailto://cuckoo:localhost.com@boo.com";s:420:"url: mailto://cuckoo:localhost.com@boo.com
 class: Urn
 toString(): mailto://cuckoo:localhost.com@boo.com
 getSchemeSpecificPart(): //cuckoo:localhost.com@boo.com
@@ -150,14 +150,14 @@ getScheme(): mailto
 getUserInfo(): 
 getHost(): 
 getPort(): 
-getPath(): 
+getPath(): //cuckoo:localhost.com@boo.com
 getQuery(): 
 getFragment(): 
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 1
+isValidPath(): 
 isValidQuery(): 1
 isValidFragment(): 1
 ";s:18:"//samba/de/janeiro";s:358:"url: //samba/de/janeiro
@@ -268,7 +268,7 @@ isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
 isValidFragment(): 1
-";s:19:"tel:+1-816-555-1212";s:337:"url: tel:+1-816-555-1212
+";s:19:"tel:+1-816-555-1212";s:352:"url: tel:+1-816-555-1212
 class: Urn
 toString(): tel:+1-816-555-1212
 getSchemeSpecificPart(): +1-816-555-1212
@@ -276,7 +276,7 @@ getScheme(): tel
 getUserInfo(): 
 getHost(): 
 getPort(): 
-getPath(): 
+getPath(): +1-816-555-1212
 getQuery(): 
 getFragment(): 
 isValidScheme(): 1
@@ -304,7 +304,7 @@ isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
 isValidFragment(): 1
-";s:51:"urn:oasis:names:specification:docbook:dtd:xml:4.1.2";s:433:"url: urn:oasis:names:specification:docbook:dtd:xml:4.1.2
+";s:51:"urn:oasis:names:specification:docbook:dtd:xml:4.1.2";s:480:"url: urn:oasis:names:specification:docbook:dtd:xml:4.1.2
 class: Urn
 toString(): urn:oasis:names:specification:docbook:dtd:xml:4.1.2
 getSchemeSpecificPart(): oasis:names:specification:docbook:dtd:xml:4.1.2
@@ -312,7 +312,7 @@ getScheme(): urn
 getUserInfo(): 
 getHost(): 
 getPort(): 
-getPath(): 
+getPath(): oasis:names:specification:docbook:dtd:xml:4.1.2
 getQuery(): 
 getFragment(): 
 isValidScheme(): 1
@@ -340,7 +340,7 @@ isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 
 isValidFragment(): 1
-";s:27:"mailto:John.Doe@example.com";s:361:"url: mailto:John.Doe@example.com
+";s:27:"mailto:John.Doe@example.com";s:381:"url: mailto:John.Doe@example.com
 class: Urn
 toString(): mailto:John.Doe@example.com
 getSchemeSpecificPart(): John.Doe@example.com
@@ -348,7 +348,7 @@ getScheme(): mailto
 getUserInfo(): 
 getHost(): 
 getPort(): 
-getPath(): 
+getPath(): John.Doe@example.com
 getQuery(): 
 getFragment(): 
 isValidScheme(): 1
@@ -556,7 +556,7 @@ isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
 isValidFragment(): 1
-";s:43:"mailto:"George, Ted" <Shared@Group.Arpanet>";s:409:"url: mailto:"George, Ted" <Shared@Group.Arpanet>
+";s:43:"mailto:"George, Ted" <Shared@Group.Arpanet>";s:444:"url: mailto:"George, Ted" <Shared@Group.Arpanet>
 class: Urn
 toString(): mailto:"George, Ted" <Shared@Group.Arpanet>
 getSchemeSpecificPart(): "George, Ted" <Shared@Group.Arpanet>
@@ -564,17 +564,17 @@ getScheme(): mailto
 getUserInfo(): 
 getHost(): 
 getPort(): 
-getPath(): 
+getPath(): "George, Ted" <Shared@Group.Arpanet>
 getQuery(): 
 getFragment(): 
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 1
+isValidPath(): 
 isValidQuery(): 1
 isValidFragment(): 1
-";s:55:"mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E";s:445:"url: mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
+";s:55:"mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E";s:493:"url: mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
 class: Urn
 toString(): mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
 getSchemeSpecificPart(): %22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
@@ -582,7 +582,7 @@ getScheme(): mailto
 getUserInfo(): 
 getHost(): 
 getPort(): 
-getPath(): 
+getPath(): %22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
 getQuery(): 
 getFragment(): 
 isValidScheme(): 1
@@ -592,7 +592,7 @@ isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
 isValidFragment(): 1
-";s:102:"mailto:astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node";s:586:"url: mailto:astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node
+";s:102:"mailto:astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node";s:679:"url: mailto:astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node
 class: Urn
 toString(): mailto:astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node
 getSchemeSpecificPart(): astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node
@@ -600,15 +600,15 @@ getScheme(): mailto
 getUserInfo(): 
 getHost(): 
 getPort(): 
-getPath(): 
-getQuery(): 
+getPath(): astark1@unl.edu,ASTARK1@UNL.EDU
+getQuery(): subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node
 getFragment(): 
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
 isValidPath(): 1
-isValidQuery(): 1
+isValidQuery(): 
 isValidFragment(): 1
 ";s:8:"//ya0.ru";s:318:"url: //ya0.ru
 class: GenericUri
@@ -628,7 +628,7 @@ isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
 isValidFragment(): 1
-";s:11:"//yandex.ru";s:325:"url: //yandex.ru
+";s:11:"//yandex.ru";s:324:"url: //yandex.ru
 class: Url
 toString(): //yandex.ru
 getSchemeSpecificPart(): //yandex.ru
@@ -643,10 +643,10 @@ isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 1
+isValidPath(): 
 isValidQuery(): 1
 isValidFragment(): 1
-";s:14:"//yandex.ru:80";s:337:"url: //yandex.ru:80
+";s:14:"//yandex.ru:80";s:336:"url: //yandex.ru:80
 class: Url
 toString(): //yandex.ru:80
 getSchemeSpecificPart(): //yandex.ru:80
@@ -661,7 +661,7 @@ isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 1
+isValidPath(): 
 isValidQuery(): 1
 isValidFragment(): 1
 ";s:6:"ya1.ru";s:312:"url: ya1.ru

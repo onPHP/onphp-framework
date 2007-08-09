@@ -47,6 +47,8 @@
 		final public function parse($uri, $guessClass = false)
 		{
 			$schemePattern = '([^:/?#]+):';
+			$authorityPattern = '(//([^/?#]*))';
+			$restPattern = '([^?#]*)(\?([^#]*))?(#(.*))?';
 			
 			if (
 				$guessClass
@@ -60,27 +62,43 @@
 			
 			$result = new $class;
 			
-			$schemeHierPattern = $result->getSchemeHierPattern(
-				$schemePattern, $result->getHierPattern()
-			);
+			if ($result instanceof Url)
+				$pattern = "({$schemePattern}{$authorityPattern})?";
+			elseif ($result instanceof Urn)
+				$pattern = "({$schemePattern})?";
+			else
+				$pattern = "({$schemePattern})?{$authorityPattern}?";
 			
-			$queryFragmentPattern = $result->getQueryFragmentPattern();
-			
-			$pattern = "~^$schemeHierPattern$queryFragmentPattern$~";
+			$pattern = "~^{$pattern}{$restPattern}$~";
 			
 			if (!preg_match($pattern, $uri, $matches))
 				throw new WrongArgumentException('not well-formed URI');
 			
-			if ($matches[1])
-				$result->setScheme($matches[2]);
+			array_shift($matches);
 			
-			// yanetut.
-			array_shift($matches);
-			array_shift($matches);
-			array_shift($matches);
-			array_unshift($matches, null);
+			if ($matches[0])
+				$result->setScheme($matches[1]);
 			
-			return $result->applyPatternMatches($matches);
+			array_shift($matches);
+			array_shift($matches);
+			
+			if (!($result instanceof Urn)) {
+				if ($matches[0])
+					$result->setAuthority($matches[1]);
+				
+				array_shift($matches);
+				array_shift($matches);
+			}
+			
+			$result->setPath($matches[0]);
+			
+			if (!empty($matches[1]))
+				$result->setQuery($matches[2]);
+			
+			if (!empty($matches[3]))
+				$result->setFragment($matches[4]);
+			
+			return $result;
 		}
 		
 		final public function transform(GenericUri $reference, $strict = true)
@@ -376,6 +394,7 @@
 		
 		public function isValidScheme()
 		{
+			// empty string is NOT valid
 			return (
 				$this->scheme === null
 				|| preg_match('~^[a-z][-+.a-z0-9]*$~i', $this->scheme) == 1
@@ -384,18 +403,18 @@
 		
 		public function isValidUserInfo()
 		{
-			$authority = $this->getAuthority();
-			
-			if (!$authority)
+			// empty string IS valid
+			if (!$this->userInfo)
 				return true;
 			
 			$charPattern = $this->charPattern(':');
 			
-			return (preg_match("/^$charPattern*$/i", $authority) == 1);
+			return (preg_match("/^$charPattern*$/i", $this->userInfo) == 1);
 		}
 		
 		public function isValidHost()
 		{
+			// empty string IS valid
 			if (empty($this->host))
 				return true;
 			
@@ -447,6 +466,7 @@
 		
 		public function isValidPort()
 		{
+			// empty string IS valid
 			if (!$this->port)
 				return true;
 			
@@ -460,33 +480,63 @@
 		{
 			$charPattern = $this->charPattern(':@');
 			
-			return (
-				preg_match(
+			if (
+				!preg_match(
 					"/^($charPattern+)?"
 					."(\/$charPattern*)*$/i",
 					$this->path
-				) == 1
-			);
+				)
+			)
+				return false;
+			
+			if ($this->getAuthority() !== null) {
+				// abempty
+				if (empty($this->path) || $this->path[0] == '/')
+					return true;
+				
+			} elseif ($this->path && $this->path[0] == '/') {
+				// absolute
+				if ($this->path == '/' || $this->path[1] != '/')
+					return true;
+				
+			} elseif ($this->scheme === null && $this->path) {
+				// noscheme
+				if ($this->path[0] != ':')
+					return true;
+				
+			} elseif ($this->path) {
+				// rootless
+				if ($this->path[0] != '/')
+					return true;
+				
+			} elseif (!$this->path) {
+				// empty
+				return true;
+			}
+			
+			return false;
 		}
 		
 		public function isValidQuery()
 		{
+			// empty string IS valid
 			return $this->isValidFragmentOrQuery($this->query);
 		}
 		
 		public function isValidFragment()
 		{
+			// empty string IS valid
 			return $this->isValidFragmentOrQuery($this->fragment);
 		}
 		
 		public function isAbsolute()
 		{
-			return ($this->scheme != null);
+			return ($this->scheme !== null);
 		}
 		
 		public function isRelative()
 		{
-			return (!$this->isAbsolute());
+			return ($this->scheme === null);
 		}
 		
 		protected function isValidHostName()
@@ -499,42 +549,6 @@
 					$this->host
 				) == 1
 			);
-		}
-		
-		protected function getSchemeHierPattern($schemePattern, $hierPattern)
-		{
-			return "($schemePattern)?$hierPattern?";
-		}
-		
-		protected function getHierPattern()
-		{
-			return '(//([^/?#]*))';
-			#       ^1 ^2
-		}
-		
-		protected function getQueryFragmentPattern()
-		{
-			return '([^?#]*)(\?([^#]*))?(#(.*))?';
-			#       ^3      ^4 ^5       ^6^7
-		}
-		
-		/**
-		 * @return GenericUri
-		**/
-		protected function applyPatternMatches($matches)
-		{
-			if ($matches[1])
-				$this->setAuthority($matches[2]);
-			
-			$this->setPath($matches[3]);
-			
-			if (!empty($matches[4]))
-				$this->setQuery($matches[5]);
-			
-			if (!empty($matches[6]))
-				$this->setFragment($matches[7]);
-			
-			return $this;
 		}
 		
 		protected function charPattern($extraChars = null)

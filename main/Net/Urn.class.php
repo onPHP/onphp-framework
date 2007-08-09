@@ -11,6 +11,8 @@
 /* $Id$ */
 
 	/**
+	 * URN is an absolute URI without authority part.
+	 * 
 	 * @ingroup Net
 	**/
 	final class Urn extends GenericUri
@@ -24,7 +26,6 @@
 			'isbn'		=> 'Urn',
 			'tel'		=> 'Urn',
 			'fax'		=> 'Urn',
-			'wtai'		=> 'Urn'
 		);
 		
 		/**
@@ -40,60 +41,15 @@
 			return $this->knownSubSchemes;
 		}
 		
-		/**
-		 * @return Urn
-		**/
-		public function setSchemeSpecificPart($schemeSpecificPart)
-		{
-			$this->schemeSpecificPart = $schemeSpecificPart;
-			
-			return $this;
-		}
-		
-		public function getSchemeSpecificPart()
-		{
-			return $this->schemeSpecificPart;
-		}
-		
 		public function isValid()
 		{
-			if ($this->getAuthority() !== null)
+			if (
+				$this->scheme === null
+				|| $this->getAuthority() !== null
+			)
 				return false;
 			
 			return parent::isValid();
-		}
-		
-		final protected function getSchemeHierPattern(
-			$schemePattern, $hierPattern
-		)
-		{
-			return parent::getSchemeHierPattern($schemePattern, $hierPattern);
-		}
-		
-		final protected function getHierPattern()
-		{
-			return '([^#]+)';
-			#       ^1
-		}
-		
-		final protected function getQueryFragmentPattern()
-		{
-			return '(#(.*))?';
-			#       ^2^3
-		}
-		
-		/**
-		 * @return Urn
-		**/
-		final protected function applyPatternMatches($matches)
-		{
-			if (!empty($matches[1]))
-				$this->setSchemeSpecificPart($matches[1]);
-			
-			if (!empty($matches[2]))
-				$this->setFragment($matches[3]);
-			
-			return $this;
 		}
 	}
 ?>
