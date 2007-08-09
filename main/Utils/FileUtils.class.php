@@ -164,5 +164,44 @@
 				}
 			}
 		}
+		
+		public static function upload($source, $target)
+		{
+			if (
+				is_readable($source)
+				&& is_writable(pathinfo($target, PATHINFO_DIRNAME))
+			)
+				return move_uploaded_file($source, $target);
+			
+			throw new WrongArgumentException(
+				"can not move {$source} to {$target}"
+			);
+		}
+		
+		public static function move($source, $target)
+		{
+			if (
+				is_readable($source)
+				&& is_writable(pathinfo($target, PATHINFO_DIRNAME))
+			)
+				return rename($source, $target);
+			
+			throw new WrongArgumentException(
+				"can not move {$source} to {$target}"
+			);
+		}
+		
+		public static function unlink($filePath)
+		{
+			if (
+				file_exists($filePath)
+				&& is_writable(pathinfo($filePath, PATHINFO_DIRNAME))
+			)
+				return unlink($filePath);
+			
+			throw new WrongArgumentException(
+				"can not unlink {$filePath}"
+			);
+		}
 	}
 ?>
