@@ -15,8 +15,8 @@
 		public function testCurlGet()
 		{
 			$request = HttpRequest::create()->
-				setUri(
-					GenericUri::create()->parse('http://onphp.org/')
+				setUrl(
+					HttpUrl::create()->parse('http://onphp.org/')
 				)->
 				setMethod(HttpMethod::get());
 			

@@ -83,6 +83,7 @@
 		 */
 		public function send(HttpRequest $request)
 		{
+			// TODO: support more methods
 			Assert::isTrue($request->getMethod()->getId() == HttpMethod::GET);
 			
 			$response = CurlHttpResponse::create();
@@ -90,7 +91,7 @@
 			$options = array(
 				CURLOPT_WRITEFUNCTION => array($response, 'writeBody'),
 				CURLOPT_HEADERFUNCTION => array($response, 'writeHeader'),
-				CURLOPT_URL => $request->getUri()->toString()
+				CURLOPT_URL => $request->getUrl()->toString()
 			);
 			
 			if ($this->timeout !== null)

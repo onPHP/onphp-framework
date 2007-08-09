@@ -40,7 +40,7 @@
 		
 		private $method		= null;
 		
-		private $uri		= null;
+		private $url		= null;
 		
 		/**
 		 * @return HttpRequest
@@ -310,15 +310,15 @@
 		/**
 		 * @return HttpRequest
 		**/
-		public function setUri(GenericUri $uri)
+		public function setUrl(HttpUrl $url)
 		{
-			$this->uri = $uri;
+			$this->url = $url;
 			return $this;
 		}
 		
-		public function getUri()
+		public function getUrl()
 		{
-			return $this->uri;
+			return $this->url;
 		}
 	}
 ?>
