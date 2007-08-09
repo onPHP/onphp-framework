@@ -86,6 +86,17 @@
 			return $this;
 		}		
 		
+		/**
+		 * @return CodeGenerator
+		**/
+		public function setCharactersAllowed($charactersAllowed = true)
+		{
+			$this->setLowerAllowed($charactersAllowed);
+			$this->setUpperAllowed($charactersAllowed);
+			
+			return $this;
+		}
+		
 	    private function generateOneSymbol()
 	    {
 			$variants = array();
