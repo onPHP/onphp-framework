@@ -26,12 +26,17 @@
 			
 			return $this;
 		}
-	
+		
+		/**
+		 * @return ColorArray
+		**/
 		public function clear()
 		{
 			unset($this->colors);
+			
+			return $this;
 		}
-	
+		
 		/**
 		 * @throws MissingElementException
 		 * @return Color
