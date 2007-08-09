@@ -10,6 +10,12 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * URL is either absolute URI with authority part or relative one without
+	 * authority part.
+	 *
+	 * @ingroup Net
+	**/
 	class Url extends GenericUri
 	{
 		protected $knownSubSchemes	= array(
@@ -39,18 +45,12 @@
 		
 		public function isValid()
 		{
-			if (
-				$this->isAbsolute()
-				|| (!$this->scheme && !$this->getAuthority())
-			)
-				return parent::isValid();
+			if (!parent::isValid())
+				return false;
 			
-			return false;
-		}
-		
-		public function isAbsolute()
-		{
-			return ($this->scheme && $this->host);
+			return
+				($this->isAbsolute() && $this->getAuthority() !== null)
+				|| ($this->isRelative() && $this->getAuthority() === null);
 		}
 		
 		/**
@@ -122,23 +122,6 @@
 				$result .= '#'.$this->fragment;
 			
 			return $result;
-		}
-		
-		final protected function getSchemeHierPattern(
-			$schemePattern, $hierPattern
-		)
-		{
-			return "($schemePattern?$hierPattern)?";
-		}
-		
-		final protected function getHierPattern()
-		{
-			return parent::getHierPattern();
-		}
-		
-		final protected function getQueryFragmentPattern()
-		{
-			return parent::getQueryFragmentPattern();
 		}
 	}
 ?>
