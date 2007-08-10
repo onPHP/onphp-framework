@@ -2,3 +2,4 @@
 
 * sync xsd/dto generation stuff with 0.10 (sherman)
 + ClassUtils::dtoObject2xml, ClassUtils::xml2dtoObject from 0.10 (sherman)
+* copy main/Utils/Math/ && test/main/MathTest.class.php from 0.10
