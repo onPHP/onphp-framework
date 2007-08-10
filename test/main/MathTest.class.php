@@ -44,8 +44,14 @@
 			);
 		}
 		
-		public function testGmp()
+		/* void */ public function testGmp()
 		{
+			if (!extension_loaded('gmp')) {
+				if (!@dl('gmp.so')) {
+					return;
+				}
+			}
+			
 			$this->runMathTest(GmpBigIntegerFactory::me());
 		}
 	}
