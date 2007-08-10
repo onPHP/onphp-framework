@@ -97,7 +97,7 @@
 		
 		public function apply($value)
 		{
-			if ($value === '')
+			if (!$value)
 				return $value;
 			
 			$list =

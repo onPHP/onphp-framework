@@ -46,5 +46,15 @@
 				"strange<br />\nthings<br />\nhappens"
 			);
 		}
+		
+		public function testRussianTypograf()
+		{
+			$filter = RussianTypograph::me();
+			$values = array(null, '', false, 0);
+			foreach ($values as $value) {
+				$this->assertEqual($value, $filter->apply($value));
+			}
+		}
+		
 	}
 ?>
