@@ -97,6 +97,9 @@
 		
 		public function apply($value)
 		{
+			if ($value === '')
+				return $value;
+			
 			$list =
 				preg_split(
 					'~([^<>]*)(?![^<]*?>)~',
