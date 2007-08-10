@@ -50,8 +50,8 @@
 		public function testRussianTypograf()
 		{
 			$filter = RussianTypograph::me();
-			$values = array(null, '', false, 0);
-			foreach ($values as $value) {
+			$emptyValues = array(null, '', false, 0, '  ', "\n");
+			foreach ($emptyValues as $value) {
 				$this->assertEqual($value, $filter->apply($value));
 			}
 		}
