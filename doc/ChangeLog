@@ -1,5 +1,10 @@
 # $Id$
 
+2007-08-10	Dmitry A. Lomash
+
+	* core/Base/Date.class.php: toIsoString() convertes it according to
+	ISO 8601 standard.
+
 2007-08-10	Anton E. Lebedevich
 
 	* main/Utils/Math/: big integer calculations with gmp library added.
