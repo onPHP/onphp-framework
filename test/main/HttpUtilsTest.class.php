@@ -23,7 +23,7 @@
 			$response = CurlHttpClient::create()->
 				setTimeout(3)->
 				send($request);
-				
+			
 			$this->assertEqual(
 				$response->getStatus()->getId(), 
 				HttpStatus::CODE_200
@@ -33,6 +33,25 @@
 				'/quite official site/',
 				$response->getBody()
 			);
+		}
+		
+		public function testCurlException()
+		{
+			$request = HttpRequest::create()->
+				setUrl(
+					HttpUrl::create()->parse('http://nonexistentdomain.xxx')
+				)->
+				setMethod(HttpMethod::get());
+			
+			try {
+				$response = CurlHttpClient::create()->
+					setTimeout(3)->
+					send($request);
+				
+				$this->fail();
+			} catch (NetworkException $e) {
+				$this->assertPattern('/curl error/', $e->getMessage());
+			}
 		}
 	}
 ?>

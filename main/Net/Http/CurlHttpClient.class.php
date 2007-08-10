@@ -107,7 +107,16 @@
 				$options[CURLOPT_MAXREDIRS] = $this->maxRedirects;
 			
 			curl_setopt_array($this->handle, $options);
-			curl_exec($this->handle);
+			
+			if (curl_exec($this->handle) === false) {
+				throw new NetworkException(
+					'curl error, code: '
+					.curl_errno($this->handle)
+					.' description: '
+					.curl_error($this->handle)
+				);
+			}
+			
 			$response->setStatus(
 				new HttpStatus(
 					curl_getinfo(
