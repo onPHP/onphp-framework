@@ -51,10 +51,10 @@
 		{
 			$filter = RussianTypograph::me();
 			$emptyValues = array(null, '', false, 0, '  ', "\n");
+			
 			foreach ($emptyValues as $value) {
-				$this->assertEqual($value, $filter->apply($value));
+				$this->assertEqual(null, $filter->apply($value));
 			}
 		}
-		
 	}
 ?>
