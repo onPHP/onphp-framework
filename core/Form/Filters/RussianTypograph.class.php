@@ -97,8 +97,8 @@
 		
 		public function apply($value)
 		{
-			if ($value === '')
-				return $value;
+			if (!trim($value))
+				return null;
 			
 			$list =
 				preg_split(
