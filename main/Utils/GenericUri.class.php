@@ -501,8 +501,11 @@
 					return true;
 				
 			} elseif ($this->scheme === null && $this->path) {
-				// noscheme
-				if ($this->path[0] != ':')
+				// noscheme - first segment must be w/o colon
+				
+				$segments = explode('/', $this->path);
+				
+				if (strpos($segments[0], ':') === false)
 					return true;
 				
 			} elseif ($this->path) {
