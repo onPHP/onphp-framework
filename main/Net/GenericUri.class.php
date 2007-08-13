@@ -644,20 +644,23 @@
 		**/
 		public function normalize()
 		{
-			Assert::isTrue($this->isValid());
-			
 			$this->setScheme(strtolower($this->getScheme()));
 			
-			$this->setHost(strtolower(rawurldecode($this->getHost())));
+			$this->setHost(
+				strtolower(
+					preg_replace_callback(
+						'/'.self::PATTERN_PCTENCODED.'/i',
+						array($this, 'reencodeHost'),
+						$this->getHost()
+					)
+				)
+			);
 			
 			$this->setPath(
 		    	$path = self::removeDotSegments(
 		    		preg_replace_callback(
-			    		'/%([0-9A-Fa-f]{2})/',
-			    		create_function(
-			    			'$matched',
-			    			'return rawurlencode(rawurldecode($matched[0]));'
-			    		),
+			    		'/'.self::PATTERN_PCTENCODED.'/i',
+			    		array($this, 'reencodePath'),
 			    		$this->getPath()
 			    	)
 		    	)
@@ -667,6 +670,41 @@
 		    	$this->setPort(null);
 		    	
 		    return $this;
+		}
+		
+		private function reencodeHost($matched)
+		{
+			$char = rawurldecode($matched[0]);
+			if (
+				preg_match(
+					'/['
+					.self::CHARS_UNRESERVED
+					.self::CHARS_SUBDELIMS
+					.']/i', 
+					$char
+				)
+			)
+				return $char;
+			else 
+				return rawurlencode($char);
+		}
+		
+		private function reencodePath($matched)
+		{
+			$char = rawurldecode($matched[0]);
+			if (
+				preg_match(
+					'/['
+					.self::CHARS_UNRESERVED
+					.self::CHARS_SUBDELIMS.
+					':@'
+					.']/i', 
+					$char
+				)
+			)
+				return $char;
+			else 
+				return rawurlencode($char);
 		}
 	}
 ?>

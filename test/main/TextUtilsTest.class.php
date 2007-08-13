@@ -55,13 +55,13 @@
 			);
 
 			$this->assertEqual(
-				TextUtils::normalizeUri('http://example.com/foo%2cbar'),
-				'http://example.com/foo%2Cbar'
+				TextUtils::normalizeUri('http://example.com/foo%7bbar'),
+				'http://example.com/foo%7Bbar'
 			);
 
 			$this->assertEqual(
-				TextUtils::normalizeUri('http://example.com/foo%2Dbar%2dbaz'),
-				'http://example.com/foo-bar-baz'
+				TextUtils::normalizeUri('http://example.com/foo%2Dbar%2dbaz%2Cqaz'),
+				'http://example.com/foo-bar-baz,qaz'
 			);
 
 			$this->assertEqual(
@@ -113,13 +113,6 @@
 				TextUtils::normalizeUri('hTTPS://a/./b/../b/%63/%7bfoo%7d'),
 				'https://a/b/c/%7Bfoo%7D'
 			);
-			
-			try {
-				TextUtils::normalizeUri('http:/foo');
-				$this->fail();
-			} catch (WrongArgumentException $e) {
-				$this->pass();
-			}
 		}
 	}
 ?>
