@@ -55,7 +55,7 @@
 			
 			if (
 				$this->scheme
-				&& !in_array($this->scheme, array('http', 'https'))
+				&& !in_array(strtolower($this->scheme), array('http', 'https'))
 			)
 				return false;
 			
