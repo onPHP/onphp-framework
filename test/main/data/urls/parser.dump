@@ -1,4 +1,4 @@
-a:43:{s:12:"http://ya.ru";s:325:"url: http://ya.ru
+a:44:{s:12:"http://ya.ru";s:325:"url: http://ya.ru
 class: HttpUrl
 toString(): http://ya.ru
 getSchemeSpecificPart(): //ya.ru
@@ -52,7 +52,7 @@ isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
 isValidFragment(): 1
-";s:9:"http:/uri";s:321:"url: http:/uri
+";s:9:"http:/uri";s:320:"url: http:/uri
 class: HttpUrl
 toString(): http:/uri
 getSchemeSpecificPart(): http:/uri
@@ -67,10 +67,10 @@ isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 1
+isValidPath(): 
 isValidQuery(): 1
 isValidFragment(): 1
-";s:8:"http:uri";s:317:"url: http:uri
+";s:8:"http:uri";s:316:"url: http:uri
 class: HttpUrl
 toString(): http:uri
 getSchemeSpecificPart(): http:uri
@@ -85,7 +85,7 @@ isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 1
+isValidPath(): 
 isValidQuery(): 1
 isValidFragment(): 1
 ";s:22:"mailto://localhost.com";s:360:"url: mailto://localhost.com
