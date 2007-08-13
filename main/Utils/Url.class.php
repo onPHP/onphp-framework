@@ -123,5 +123,15 @@
 			
 			return $result;
 		}
+		
+		public function normalize()
+		{
+			parent::normalize();
+			
+		    if ($this->getPort() === '')
+		    	$this->setPort(null);
+	        	
+			return $this;
+		}
 	}
 ?>

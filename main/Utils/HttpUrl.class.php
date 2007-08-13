@@ -110,9 +110,6 @@
 	        )
 	        	$this->setPort(null);
 	        	
-		    if ($this->getPort() === '')
-		    	$this->setPort(null);
-		    	
 	        if ($this->getPath() === null || $this->getPath() === '')
 	        	$this->setPath('/');
 	        	
