@@ -76,7 +76,12 @@
 			if (!$result = parent::import($scope))
 				return $result;
 			
-			list($width, $height, $type) = getimagesize($this->value);
+			try {
+				list($width, $height, $type) = getimagesize($this->value);
+			} catch (BaseException $e) {
+				// bad luck
+				return false;
+			}
 			
 			if (!$width || !$height || !$type) {
 				$this->value = null;
