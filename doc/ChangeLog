@@ -1,5 +1,10 @@
 # $Id$
 
+2007-08-13	Dmitry E. Demidov
+
+	* main/Utils/RussianTextUtils.class.php: getDayOfWeek now can return full
+	day of week name.
+
 2007-08-10	Dmitry A. Lomash
 
 	* core/Base/Date.class.php: toISOString() convertes it according to
