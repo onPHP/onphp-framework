@@ -1,5 +1,12 @@
 # $Id$
 
+2007-08-13	Anton E. Lebedevich
+	
+	* main/Utils/GenericUri.class.php, 
+	main/Utils/HttpUrl.class.php,
+	main/Utils/TextUtils.class.php: url normalization moved from TextUtils to
+	GenericUri and HttpUrl.
+
 2007-08-13	Dmitry E. Demidov
 
 	* main/Utils/RussianTextUtils.class.php: getDayOfWeek now can return full
