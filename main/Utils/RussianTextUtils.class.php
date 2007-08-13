@@ -122,14 +122,22 @@
 			return $months[$month - 1];
 		}
 		
-		public static function getDayOfWeek($day)
+		public static function getDayOfWeek($day, $full = false)
 		{
 			static $weekDays = array(
 				'вс', 'пн', 'вт', 'ср',
 				'чт', 'пт', 'сб', 'вс'
 			);
 			
-			return $weekDays[$day];
+			static $weekDaysFull = array(
+				'Воскресенье', 'Понедельник', 'Вторник', 'Среда',
+				'Четверг', 'Пятница', 'Суббота', 'Воскресенье'
+			);
+			
+			if ($full)
+				return $weekDaysFull[$day];
+			else
+				return $weekDays[$day];
 		}
 		
 		public static function getDateAsText(Timestamp $date, $todayWordNeed = true)
