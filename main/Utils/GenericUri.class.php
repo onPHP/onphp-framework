@@ -11,11 +11,9 @@
 /* $Id$ */
 
 	/**
-	 * see RFC 3986
-	 *
-	 * TODO: normalization and comparsion
-	 * 
 	 * @ingroup Net
+	 * @see http://tools.ietf.org/html/rfc3986
+	 * @todo normalization and comparsion
 	**/
 	class GenericUri
 	{
@@ -101,6 +99,9 @@
 			return $result;
 		}
 		
+		/**
+		 * @see http://tools.ietf.org/html/rfc3986#section-5.2.2
+		**/
 		final public function transform(GenericUri $reference, $strict = true)
 		{
 			if ($this->getScheme() === null)
