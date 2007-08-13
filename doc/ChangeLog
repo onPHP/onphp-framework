@@ -2,6 +2,10 @@
 
 2007-08-13	Vladimir A. Altuchov
 
+	* core/Form/Primitives/PrimitiveTime.class.php: correct import condition
+
+2007-08-13	Vladimir A. Altuchov
+
 	* test/core/PrimitiveTimeTest.class.php: test case for primitive time
 	
 
