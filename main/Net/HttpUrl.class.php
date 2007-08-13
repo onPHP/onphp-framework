@@ -96,5 +96,19 @@
 				) == 1
 			);
 		}
+		
+		public function normalize()
+		{
+			parent::normalize();
+			
+			$port = $this->getPort();
+			if (
+	        	($scheme == 'http' && $port == ':80') 
+	        	|| ($scheme == 'https' && $port == ':443')
+	        )
+	        	$this->setPort(null);
+			
+			return $this;
+		}
 	}
 ?>
