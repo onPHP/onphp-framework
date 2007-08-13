@@ -1,5 +1,10 @@
 # $Id$
 
+2007-08-13	Vladimir A. Altuchov
+
+	* test/core/PrimitiveTimeTest.class.php: test case for primitive time
+	
+
 2007-08-13	Anton E. Lebedevich
 	
 	* main/Net/GenericUri.class.php, 
