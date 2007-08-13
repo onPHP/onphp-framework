@@ -772,4 +772,22 @@ isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
 isValidFragment(): 1
+";s:16:"hTTP://onphp.org";s:341:"url: hTTP://onphp.org
+class: HttpUrl
+toString(): hTTP://onphp.org
+getSchemeSpecificPart(): //onphp.org
+getScheme(): hTTP
+getUserInfo(): 
+getHost(): onphp.org
+getPort(): 
+getPath(): 
+getQuery(): 
+getFragment(): 
+isValidScheme(): 1
+isValidUserInfo(): 1
+isValidHost(): 1
+isValidPort(): 1
+isValidPath(): 1
+isValidQuery(): 1
+isValidFragment(): 1
 ";}

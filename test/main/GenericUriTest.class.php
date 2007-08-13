@@ -60,6 +60,8 @@
 			'http:ya4.ru'	=> 'HttpUrl',
 			'http:/ya5.ru'	=> 'HttpUrl',
 			'http:///ya6.ru'	=> 'HttpUrl',
+			
+			'hTTP://onphp.org'	=> 'HttpUrl',
 		);
 		
 		public function testParser()
