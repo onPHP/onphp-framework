@@ -171,8 +171,8 @@
 		private function checkLimits(Time $time)
 		{
 			return 
-				!($this->min && $this->min->toSeconds() < $time->toSeconds())
-				&& !($this->max && $this->max->toSeconds() > $time->toSeconds());
+				!($this->min && $this->min->toSeconds() > $time->toSeconds())
+				&& !($this->max && $this->max->toSeconds() < $time->toSeconds());
 		}
 	}
 ?>
