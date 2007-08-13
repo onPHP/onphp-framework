@@ -689,7 +689,9 @@
 		private function reencodePath($matched)
 		{
 			$char = rawurldecode($matched[0]);
-			if (
+			if ($char == '/')
+				return strtoupper($matched[0]);
+			elseif (
 				preg_match(
 					'/['
 					.self::CHARS_UNRESERVED
