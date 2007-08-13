@@ -665,9 +665,6 @@
 			    	)
 		    	)
 		    );
-		    
-		    if ($this->getPort() === '')
-		    	$this->setPort(null);
 		    	
 		    return $this;
 		}
