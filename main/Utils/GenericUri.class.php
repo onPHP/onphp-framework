@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Net
 	 * @see http://tools.ietf.org/html/rfc3986
-	 * @todo normalization and comparsion
+	 * @todo comparsion
 	**/
 	class GenericUri
 	{
@@ -408,7 +408,7 @@
 			if (!$this->userInfo)
 				return true;
 			
-			$charPattern = $this->charPattern(':');
+			$charPattern = $this->userInfoCharPattern();
 			
 			return (preg_match("/^$charPattern*$/i", $this->userInfo) == 1);
 		}
@@ -479,7 +479,7 @@
 		
 		public function isValidPath()
 		{
-			$charPattern = $this->charPattern(':@');
+			$charPattern = $this->segmentCharPattern();
 			
 			if (
 				!preg_match(
@@ -545,7 +545,7 @@
 		
 		protected function isValidHostName()
 		{
-			$charPattern = $this->charPattern(null);
+			$charPattern = $this->hostNameCharPattern();
 			
 			return (
 				preg_match(
@@ -555,20 +555,45 @@
 			);
 		}
 		
-		protected function charPattern($extraChars = null)
+		protected function charPattern(
+			$extraChars = null, $pctEncodedPattern = true
+		)
 		{
 			$unreserved = self::CHARS_UNRESERVED;
 			$subDelims = self::CHARS_SUBDELIMS;
 			$pctEncoded = self::PATTERN_PCTENCODED;
 			
-			return
-				"(([{$unreserved}{$subDelims}$extraChars])"
-				."|({$pctEncoded}))";
+			$result = "{$unreserved}{$subDelims}$extraChars";
+			
+			if ($pctEncodedPattern)
+				$result = "(([{$result}])|({$pctEncoded}))";
+			
+			return $result;
+		}
+		
+		protected function userInfoCharPattern($pctEncoded = true)
+		{
+			return $this->charPattern(':', $pctEncoded);
+		}
+		
+		protected function hostNameCharPattern($pctEncoded = true)
+		{
+			return $this->charPattern(null, $pctEncoded);
+		}
+		
+		protected function segmentCharPattern($pctEncoded = true)
+		{
+			return $this->charPattern(':@', $pctEncoded);
+		}
+		
+		protected function fragmentOrQueryCharPattern($pctEncoded = true)
+		{
+			return $this->charPattern(':@\/?', $pctEncoded);
 		}
 		
 		private function isValidFragmentOrQuery($string)
 		{
-			$charPattern = $this->charPattern(':@\/?');
+			$charPattern = $this->fragmentOrQueryCharPattern();
 			
 			return (preg_match("/^$charPattern*$/i", $string) == 1);
 		}
@@ -644,53 +669,81 @@
 		**/
 		public function normalize()
 		{
-			$this->setScheme(strtolower($this->getScheme()));
+			// 1. case
+			if ($this->getScheme() !== null)
+				$this->setScheme(mb_strtolower($this->getScheme()));
 			
-			if ($this->getUserInfo() !== null) {
-				$this->setUserInfo(
-					preg_replace_callback(
-						'/'.self::PATTERN_PCTENCODED.'/i',
-						array($this, 'reencodePct'),
-						$this->getUserInfo()
+			if ($this->getHost() !== null)
+				$this->setHost(mb_strtolower($this->getHost()));
+			
+			// 2. percent-encoded
+			$this->
+				setHost(
+					$this->normalizePercentEncoded(
+						$this->getHost(), $this->hostNameCharPattern(false)
+					)
+				)->
+				setUserInfo(
+					$this->normalizePercentEncoded(
+						$this->getUserInfo(), $this->userInfoCharPattern(false)
+					)
+				)->
+				setPath(
+					self::removeDotSegments(
+						$this->normalizePercentEncoded(
+							$this->getPath(),
+							'\/'.$this->segmentCharPattern(false)
+						)
+					)
+				)->
+				setQuery(
+					$this->normalizePercentEncoded(
+						$this->getQuery(),
+						$this->fragmentOrQueryCharPattern(false)
+					)
+				)->
+				setFragment(
+					$this->normalizePercentEncoded(
+						$this->getFragment(),
+						$this->fragmentOrQueryCharPattern(false)
 					)
 				);
-			}
 			
-			$this->setHost(
-				strtolower(
-					preg_replace_callback(
-						'/'.self::PATTERN_PCTENCODED.'/i',
-						array($this, 'reencodePct'),
-						$this->getHost()
-					)
-				)
-			);
-			
-			$this->setPath(
-				$path = self::removeDotSegments(
-					preg_replace_callback(
-						'/'.self::PATTERN_PCTENCODED.'/i',
-						array($this, 'reencodePct'),
-						$this->getPath()
-					)
-				)
-			);
-
-		    return $this;
+			return $this;
 		}
 		
-		private function reencodePct($matched)
+		private function normalizePercentEncoded(
+			$string, $unreservedPartChars
+		)
 		{
-			$char = rawurldecode($matched[0]);
-			if (
-				preg_match(
-					'/['.self::CHARS_UNRESERVED.']/i', 
-					$char
-				)
-			)
-				return $char;
-			else 
-				return rawurlencode($char);
+			if ($string === null)
+				return null;
+			
+			$pctEncoded = self::PATTERN_PCTENCODED;
+			
+			$callback = '$char = $matched[0];'
+				.' if (mb_strlen($char) == 1) {'
+					.' if (!preg_match("/^['.$unreservedPartChars
+							.']$/", $char)'
+					.' )'
+						.' $char = rawurlencode($char);'
+				.' } else {'
+					.' if (preg_match("/^['.self::CHARS_UNRESERVED
+							.']$/", rawurldecode($char))'
+					.' )'
+						.' $char = rawurldecode($char);'
+					.' else'
+						.' $char = strtoupper($char);'
+				.' }'
+				.' return $char;';
+			
+			$result = preg_replace_callback(
+				"/(($pctEncoded)|(.))/sui",
+				create_function('$matched', $callback),
+				$string
+			);
+			
+			return $result;
 		}
 	}
 ?>
