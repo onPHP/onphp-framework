@@ -646,6 +646,16 @@
 		{
 			$this->setScheme(strtolower($this->getScheme()));
 			
+			if ($this->getUserInfo() !== null) {
+				$this->setUserInfo(
+					preg_replace_callback(
+						'/'.self::PATTERN_PCTENCODED.'/i',
+						array($this, 'reencodePct'),
+						$this->getUserInfo()
+					)
+				);
+			}
+			
 			$this->setHost(
 				strtolower(
 					preg_replace_callback(
@@ -657,15 +667,15 @@
 			);
 			
 			$this->setPath(
-		    	$path = self::removeDotSegments(
-		    		preg_replace_callback(
-			    		'/'.self::PATTERN_PCTENCODED.'/i',
-			    		array($this, 'reencodePct'),
-			    		$this->getPath()
-			    	)
-		    	)
-		    );
-		    	
+				$path = self::removeDotSegments(
+					preg_replace_callback(
+						'/'.self::PATTERN_PCTENCODED.'/i',
+						array($this, 'reencodePct'),
+						$this->getPath()
+					)
+				)
+			);
+
 		    return $this;
 		}
 		
