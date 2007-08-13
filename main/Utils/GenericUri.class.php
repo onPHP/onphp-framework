@@ -635,5 +635,32 @@
 			
 			return implode('/', $segments).'/'.$path;
 		}
+		
+		/**
+		 * @see http://tools.ietf.org/html/rfc3986#section-6
+		**/
+		public function normalize()
+		{
+			Assert::isTrue($this->isValid());
+			
+			$this->setScheme(strtolower($this->getScheme()));
+			
+			$this->setHost(strtolower(rawurldecode($this->getHost())));
+			
+			$this->setPath(
+		    	$path = self::removeDotSegments(
+		    		preg_replace_callback(
+			    		'/%([0-9A-Fa-f]{2})/',
+			    		create_function(
+			    			'$matched',
+			    			'return rawurlencode(rawurldecode($matched[0]));'
+			    		),
+			    		$this->getPath()
+			    	)
+		    	)
+		    );
+		    
+		    return $this;
+		}
 	}
 ?>
