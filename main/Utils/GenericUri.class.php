@@ -650,7 +650,7 @@
 				strtolower(
 					preg_replace_callback(
 						'/'.self::PATTERN_PCTENCODED.'/i',
-						array($this, 'reencodeHost'),
+						array($this, 'reencodePct'),
 						$this->getHost()
 					)
 				)
@@ -660,7 +660,7 @@
 		    	$path = self::removeDotSegments(
 		    		preg_replace_callback(
 			    		'/'.self::PATTERN_PCTENCODED.'/i',
-			    		array($this, 'reencodePath'),
+			    		array($this, 'reencodePct'),
 			    		$this->getPath()
 			    	)
 		    	)
@@ -669,35 +669,12 @@
 		    return $this;
 		}
 		
-		private function reencodeHost($matched)
+		private function reencodePct($matched)
 		{
 			$char = rawurldecode($matched[0]);
 			if (
 				preg_match(
-					'/['
-					.self::CHARS_UNRESERVED
-					.self::CHARS_SUBDELIMS
-					.']/i', 
-					$char
-				)
-			)
-				return $char;
-			else 
-				return rawurlencode($char);
-		}
-		
-		private function reencodePath($matched)
-		{
-			$char = rawurldecode($matched[0]);
-			if ($char == '/')
-				return strtoupper($matched[0]);
-			elseif (
-				preg_match(
-					'/['
-					.self::CHARS_UNRESERVED
-					.self::CHARS_SUBDELIMS.
-					':@'
-					.']/i', 
+					'/['.self::CHARS_UNRESERVED.']/i', 
 					$char
 				)
 			)
