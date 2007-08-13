@@ -60,8 +60,8 @@
 			);
 
 			$this->assertEqual(
-				TextUtils::normalizeUri('http://example.com/foo%2Dbar%2dbaz%2Cqaz'),
-				'http://example.com/foo-bar-baz,qaz'
+				TextUtils::normalizeUri('http://example.com/foo%2Dbar%2dbaz%2cqaz'),
+				'http://example.com/foo-bar-baz%2Cqaz'
 			);
 
 			$this->assertEqual(
