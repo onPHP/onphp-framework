@@ -122,18 +122,12 @@
 				}
 				
 				if ($this->checkLimits($time)) {
-					try {
-						$this->value = $time;
-						
-						return $this->imported = true;
-					} catch (WrongArgumentException $e) {
-						$this->value = null;
-						
-						return false;
-					}
+					$this->value = $time;
+					
+					return $this->imported = true;
 				}
 			}
-
+			
 			return false;
 		}
 		
