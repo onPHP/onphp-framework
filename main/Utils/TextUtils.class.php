@@ -119,7 +119,7 @@
 		public static function normalizeUri($uri)
 		{
 			return GenericUri::create()->
-				parse($uri)->
+				parse($uri, true)->
 				normalize()->
 				toString();
 		}

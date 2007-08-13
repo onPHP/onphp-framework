@@ -102,12 +102,17 @@
 			parent::normalize();
 			
 			$port = $this->getPort();
+			$scheme = $this->getScheme();
+			
 			if (
-	        	($scheme == 'http' && $port == ':80') 
-	        	|| ($scheme == 'https' && $port == ':443')
+	        	($scheme == 'http' && $port == '80') 
+	        	|| ($scheme == 'https' && $port == '443')
 	        )
 	        	$this->setPort(null);
-			
+	        	
+	        if ($this->getPath() === null || $this->getPath() === '')
+	        	$this->setPath('/');
+	        	
 			return $this;
 		}
 	}
