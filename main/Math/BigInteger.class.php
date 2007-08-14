@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Math
+	**/
 	interface BigInteger
 	{
 		public function add(BigInteger $x);

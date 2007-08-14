@@ -164,6 +164,9 @@
 	 * @defgroup Http HTTP related utilities
 	 * @ingroup Net
 	 *
+	 * @defgroup Math Mathematical utilities
+	 * @ingroup Main
+	 *
 	 * @defgroup Markup Various markups implementations
 	 * @ingroup Main
 	 *

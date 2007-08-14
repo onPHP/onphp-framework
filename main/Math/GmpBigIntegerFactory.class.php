@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Math
+	**/
 	class GmpBigIntegerFactory extends BigNumberFactory 
 	{
 		public static function me()

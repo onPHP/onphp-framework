@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Math
+	**/
 	class GmpBigInteger implements BigInteger 
 	{
 		private $resource = null;
