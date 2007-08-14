@@ -144,6 +144,9 @@
 	 * @defgroup onSPL Things based on Standard PHP Library
 	 * @ingroup Main
 	 *
+	 * @defgroup Net Internet standarts implementations
+	 * @ingroup Main
+	 *
 	 * @defgroup Utils Various accompanying utilities
 	 * @ingroup Main
 	 *
