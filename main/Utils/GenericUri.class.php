@@ -673,9 +673,6 @@
 			if ($this->getScheme() !== null)
 				$this->setScheme(mb_strtolower($this->getScheme()));
 			
-			if ($this->getHost() !== null)
-				$this->setHost(mb_strtolower($this->getHost()));
-			
 			// 2. percent-encoded
 			$this->
 				setHost(
@@ -708,6 +705,10 @@
 						$this->fragmentOrQueryCharPattern(false)
 					)
 				);
+				
+			// 3. and case again
+			if ($this->getHost() !== null)
+				$this->setHost(mb_strtolower($this->getHost()));
 			
 			return $this;
 		}
