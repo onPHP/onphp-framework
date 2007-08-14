@@ -1,5 +1,9 @@
 # $Id$
 
+2007-08-14	Anton E. Lebedevich
+
+	* main/Math/: to/from binary conversion, random number generation added.
+
 2007-08-13	Vladimir A. Altuchov
 
 	* core/Form/Primitives/PrimitiveTime.class.php: correct import
