@@ -15,7 +15,7 @@
 	 * @see http://tools.ietf.org/html/rfc3986
 	 * @todo comparsion
 	**/
-	class GenericUri
+	class GenericUri implements Stringable
 	{
 		const CHARS_UNRESERVED		= 'a-z0-9-._~';
 		const CHARS_SUBDELIMS		= '!$&\'()*+,;=';
@@ -101,6 +101,7 @@
 		
 		/**
 		 * @see http://tools.ietf.org/html/rfc3986#section-5.2.2
+		 * @return GenericUri
 		**/
 		final public function transform(GenericUri $reference, $strict = true)
 		{
@@ -123,8 +124,7 @@
 					setPath(self::removeDotSegments($reference->getPath()))->
 					setQuery($reference->getQuery());
 			} else {
-				$class = get_class($this);
-				$result = new $class;
+				$result = new $this;
 				
 				$result->setScheme($this->getScheme());
 				
@@ -705,7 +705,7 @@
 						$this->fragmentOrQueryCharPattern(false)
 					)
 				);
-				
+			
 			// 3. and case again
 			if ($this->getHost() !== null)
 				$this->setHost(mb_strtolower($this->getHost()));
@@ -731,47 +731,6 @@
 			);
 			
 			return $result;
-		}
-	}
-	
-	class PercentEncodingNormalizator
-	{
-		private $unreservedPartChars = null;
-		
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function setUnreservedPartChars($unreservedPartChars)
-		{
-			$this->unreservedPartChars = $unreservedPartChars;
-			return $this;
-		}
-		
-		public function normalize($matched)
-		{
-			$char = $matched[0];
-			if (mb_strlen($char) == 1) {
-				if (
-					!preg_match(
-						'/^['.$this->unreservedPartChars.']$/',
-						$char
-					)
-				)
-					$char = rawurlencode($char);
-			} else {
-				if (
-					preg_match(
-						'/^['.GenericUri::CHARS_UNRESERVED.']$/', 
-						rawurldecode($char)
-					)
-				)
-					$char = rawurldecode($char);
-				else
-					$char = strtoupper($char);
-			}
-			return $char;
 		}
 	}
 ?>
