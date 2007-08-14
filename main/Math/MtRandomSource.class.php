@@ -11,25 +11,24 @@
 /* $Id$ */
 
 	/**
-	 * @ingroup Math
+	 * based on pseudorandom generator functioin mt_rand
 	**/
-	interface BigInteger extends Stringable
+	class MtRandomSource extends Singleton implements RandomSource
 	{
-		public function add(BigInteger $x);
-		public function compareTo(BigInteger $x);
-		public function mod(BigInteger $mod);
-		public function pow(/* integer */ $exp);
-		public function modPow(/* integer */ $exp, BigInteger $mod);
-		public function subtract(BigInteger $x);
-		public function mul(BigInteger $x);
-		public function div(BigInteger $x);
+		public static function me()
+		{
+			return Singleton::getInstance(__CLASS__);
+		}
 		
-		/**
-		 * convert to big-endian signed two's complement notation
-		**/
-		public function toBinary();
-		
-		public function intValue();
-		public function floatValue();
+		public function getBytes($numberOfBytes)
+		{
+			Assert::isPositiveInteger($numberOfBytes);
+			
+			$bytes = null;
+			for ($i = 0; $i < $numberOfBytes; $i += 4) {
+				$bytes .= pack('L', mt_rand());
+			}
+			return substr($bytes, 0, $numberOfBytes);
+		}
 	}
 ?>

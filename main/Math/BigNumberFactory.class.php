@@ -21,5 +21,10 @@
 		 * make number from big-endian signed two's complement binary notation
 		**/
 		abstract public function makeFromBinary($binary);
+		
+		/**
+		 * @param $stop maximum random number
+		**/
+		abstract public function makeRandom($stop, RandomSource $source);
 	}
 ?>

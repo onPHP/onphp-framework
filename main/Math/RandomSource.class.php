@@ -10,26 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup Math
-	**/
-	interface BigInteger extends Stringable
+	interface RandomSource
 	{
-		public function add(BigInteger $x);
-		public function compareTo(BigInteger $x);
-		public function mod(BigInteger $mod);
-		public function pow(/* integer */ $exp);
-		public function modPow(/* integer */ $exp, BigInteger $mod);
-		public function subtract(BigInteger $x);
-		public function mul(BigInteger $x);
-		public function div(BigInteger $x);
-		
-		/**
-		 * convert to big-endian signed two's complement notation
-		**/
-		public function toBinary();
-		
-		public function intValue();
-		public function floatValue();
+		public function getBytes($numberOfBytes);
 	}
 ?>
