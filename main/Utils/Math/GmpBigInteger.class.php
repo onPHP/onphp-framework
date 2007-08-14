@@ -24,6 +24,26 @@
 			return new self($number, $base);
 		}
 		
+		public static function makeFromBinary($binary)
+		{
+			if ($binary === null || $binary === '')
+				throw new WrongArgumentException('can\'t make number from emptyness');
+				
+			if (ord($binary) > 127)
+				throw new WrongArgumentException('only positive numbers allowed');
+			
+			$number = self::create(0);
+
+			$length = strlen($binary);
+			for ($i = 0; $i < $length; $i++) {
+				$number = $number->
+					mul(self::create(256))->
+					add(self::create(ord($binary)));
+				$binary = substr($binary, 1);
+			}
+			return $number;
+		}
+		
 		public function add(BigInteger $x)
 		{
 			$this->resource = gmp_add($this->resource, $x->resource);
