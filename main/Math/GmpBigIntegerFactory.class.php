@@ -13,18 +13,27 @@
 	/**
 	 * @ingroup Math
 	**/
-	class GmpBigIntegerFactory extends BigNumberFactory 
+	final class GmpBigIntegerFactory extends BigNumberFactory
 	{
+		/**
+		 * @return GmpBigIntegerFactory
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
 		}
 		
+		/**
+		 * @return GmpBigInteger
+		**/
 		public function makeNumber($number, $base = 10)
 		{
 			return GmpBigInteger::create($number, $base);
 		}
 		
+		/**
+		 * @return GmpBigInteger
+		**/
 		public function makeFromBinary($binary)
 		{
 			return GmpBigInteger::makeFromBinary($binary);

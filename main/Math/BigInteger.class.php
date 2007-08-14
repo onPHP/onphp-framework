@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Math
 	**/
-	interface BigInteger
+	interface BigInteger extends Stringable
 	{
 		public function add(BigInteger $x);
 		public function compareTo(BigInteger $x);
@@ -23,6 +23,10 @@
 		public function subtract(BigInteger $x);
 		public function mul(BigInteger $x);
 		public function div(BigInteger $x);
-		public function toString();
+		
+		/**
+		 * convert to big-endian signed two's complement notation
+		**/
+		public function toBinary();
 	}
 ?>
