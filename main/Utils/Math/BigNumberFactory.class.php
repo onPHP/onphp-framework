@@ -13,5 +13,10 @@
 	abstract class BigNumberFactory extends Singleton
 	{
 		abstract public function makeNumber($number, $base = 10);
+		
+		/**
+		 * make number from big-endian signed two's complement binary notation
+		**/
+		abstract public function makeFromBinary($binary);
 	}
 ?>

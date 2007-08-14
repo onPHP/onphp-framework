@@ -42,6 +42,41 @@
 					)->
 					toString()
 			);
+			
+			$this->assertEqual(
+				$factory->makeFromBinary("\x00")->toString(), 
+				0
+			);
+			
+			$this->assertEqual(
+				$factory->makeFromBinary("\x01")->toString(), 
+				1
+			);
+			
+			$this->assertEqual(
+				$factory->makeFromBinary("\x7F")->toString(), 
+				127
+			);
+			
+			$this->assertEqual(
+				$factory->makeFromBinary("\x00\x80")->toString(), 
+				128
+			);
+			
+			$this->assertEqual(
+				$factory->makeFromBinary("\x00\x81")->toString(),
+				129
+			);
+			
+			$this->assertEqual(
+				$factory->makeFromBinary("\x00\xFF")->toString(), 
+				255
+			);
+			
+			$this->assertEqual(
+				$factory->makeFromBinary("\x00\x80\x00")->toString(), 
+				32768
+			);
 		}
 		
 		/* void */ public function testGmp()

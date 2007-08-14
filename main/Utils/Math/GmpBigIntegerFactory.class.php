@@ -21,5 +21,10 @@
 		{
 			return GmpBigInteger::create($number, $base);
 		}
+		
+		public function makeFromBinary($binary)
+		{
+			return GmpBigInteger::makeFromBinary($binary);
+		}
 	}
 ?>
