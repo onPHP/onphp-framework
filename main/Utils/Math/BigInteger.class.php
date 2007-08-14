@@ -21,5 +21,10 @@
 		public function mul(BigInteger $x);
 		public function div(BigInteger $x);
 		public function toString();
+		
+		/**
+		 * convert to big-endian signed two's complement notation
+		**/
+		public function toBinary();
 	}
 ?>

@@ -107,5 +107,34 @@
 		{
 			return gmp_strval($this->resource);
 		}
+		
+		public function toBinary()
+		{
+			$withZero = gmp_cmp($this->resource, 0);
+			
+			if ($withZero < 0)
+				throw new WrongArgumentException('only positive integers allowed');
+			elseif ($withZero === 0)
+				return "\x00";
+			
+			$bytes = array();
+			
+			$dividend = $this->resource;
+			while (gmp_cmp($dividend, 0) > 0) {
+				list ($dividend, $reminder) = gmp_div_qr($dividend, 256);
+				array_unshift($bytes, gmp_intval($reminder));
+			}
+
+			if ($bytes[0] > 127) {
+				array_unshift($bytes, 0);
+			}
+
+			$binary = null;
+			foreach ($bytes as $byte) {
+				$binary .= pack('C', $byte);
+			}
+			
+			return $binary;
+		}
 	}
 ?>
