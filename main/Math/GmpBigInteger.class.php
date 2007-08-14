@@ -164,5 +164,20 @@
 			
 			return $binary;
 		}
+		
+		public function intValue()
+		{
+			$intValue = gmp_intval($this->resource);
+			
+			if ((string)$intValue !== gmp_strval($this->resource))
+				throw new WrongArgumentException('can\'t represent itself by integer');
+				
+			return $intValue;
+		}
+		
+		public function floatValue()
+		{
+			return floatval(gmp_strval($this->resource));
+		}
 	}
 ?>

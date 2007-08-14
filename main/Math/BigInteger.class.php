@@ -25,5 +25,8 @@
 		 * convert to big-endian signed two's complement notation
 		**/
 		public function toBinary();
+		
+		public function intValue();
+		public function floatValue();
 	}
 ?>

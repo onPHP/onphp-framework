@@ -10,18 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class BigNumberFactory extends Singleton
+	interface RandomSource
 	{
-		abstract public function makeNumber($number, $base = 10);
-		
-		/**
-		 * make number from big-endian signed two's complement binary notation
-		**/
-		abstract public function makeFromBinary($binary);
-		
-		/**
-		 * @param $stop maximum random number
-		**/
-		abstract public function makeRandom($stop, RandomSource $source);
+		public function getBytes($numberOfBytes);
 	}
 ?>

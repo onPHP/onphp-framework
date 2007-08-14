@@ -65,6 +65,28 @@
 			}
 		}
 		
+		public function runRandomTest(BigNumberFactory $factory, RandomSource $source)
+		{
+			$this->assertNotEqual(
+				$factory->
+					makeRandom(100, $source)->
+					cmp($factory->makeRandom(100, $source)),
+				0
+			);
+			
+			$this->assertNotEqual(
+				$factory->
+					makeRandom('123456789012345678901234567890', $source)->
+					cmp(
+						$factory->makeRandom(
+							'123456789012345678901234567890', 
+							$source
+						)
+					),
+				0
+			);
+		}
+		
 		/* void */ public function testGmp()
 		{
 			if (!extension_loaded('gmp')) {
@@ -74,6 +96,19 @@
 			}
 			
 			$this->runMathTest(GmpBigIntegerFactory::me());
+		}
+		
+		public function runRandomSourceTest(RandomSource $source)
+		{
+			$this->assertNotEqual($source->getBytes(1), $source->getBytes(1));
+			$this->assertNotEqual($source->getBytes(2), $source->getBytes(2));
+			$this->assertNotEqual($source->getBytes(10), $source->getBytes(10));
+			$this->assertNotEqual($source->getBytes(256), $source->getBytes(256));
+		}
+		
+		public function testRandomSource()
+		{
+			$this->runRandomSourceTest(MtRandomSource::me());
 		}
 	}
 ?>

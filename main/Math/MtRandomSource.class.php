@@ -10,18 +10,25 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class BigNumberFactory extends Singleton
+	/**
+	 * based on pseudorandom generator functioin mt_rand
+	**/
+	class MtRandomSource extends Singleton implements RandomSource
 	{
-		abstract public function makeNumber($number, $base = 10);
+		public static function me()
+		{
+			return Singleton::getInstance(__CLASS__);
+		}
 		
-		/**
-		 * make number from big-endian signed two's complement binary notation
-		**/
-		abstract public function makeFromBinary($binary);
-		
-		/**
-		 * @param $stop maximum random number
-		**/
-		abstract public function makeRandom($stop, RandomSource $source);
+		public function getBytes($numberOfBytes)
+		{
+			Assert::isPositiveInteger($numberOfBytes);
+			
+			$bytes = null;
+			for ($i = 0; $i < $numberOfBytes; $i += 4) {
+				$bytes .= pack('L', mt_rand());
+			}
+			return substr($bytes, 0, $numberOfBytes);
+		}
 	}
 ?>

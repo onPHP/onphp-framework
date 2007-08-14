@@ -35,5 +35,24 @@
 		{
 			return GmpBigInteger::makeFromBinary($binary);
 		}
+		
+		public function makeRandom($stop, RandomSource $source)
+		{
+			if (is_string($stop)) {
+				$stop = $this->makeNumber($stop);
+			} elseif (
+				$stop instanceof BigInteger 
+				&& ! $stop instanceof GmpBigInteger 
+			) {
+				$stop = $this->makeNumber($stop->toString());
+			}
+			
+			Assert::isTrue($stop instanceof GmpBigInteger);
+			
+			$numBytes = ceil(log($stop->floatValue(), 2) / 8);
+			
+			return $this->makeFromBinary($source->getBytes($numBytes))->
+				mod($stop);
+		}
 	}
 ?>
