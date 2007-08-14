@@ -719,31 +719,58 @@
 			if ($string === null)
 				return null;
 			
-			$pctEncoded = self::PATTERN_PCTENCODED;
-			
-			$callback = '$char = $matched[0];'
-				.' if (mb_strlen($char) == 1) {'
-					.' if (!preg_match("/^['.$unreservedPartChars
-							.']$/", $char)'
-					.' )'
-						.' $char = rawurlencode($char);'
-				.' } else {'
-					.' if (preg_match("/^['.self::CHARS_UNRESERVED
-							.']$/", rawurldecode($char))'
-					.' )'
-						.' $char = rawurldecode($char);'
-					.' else'
-						.' $char = strtoupper($char);'
-				.' }'
-				.' return $char;';
-			
 			$result = preg_replace_callback(
-				"/(($pctEncoded)|(.))/sui",
-				create_function('$matched', $callback),
+				'/(('.self::PATTERN_PCTENCODED.')|(.))/sui',
+				array(
+					PercentEncodingNormalizator::create()->
+						setUnreservedPartChars($unreservedPartChars),
+					'normalize'
+				),
 				$string
 			);
 			
 			return $result;
+		}
+	}
+	
+	class PercentEncodingNormalizator
+	{
+		private $unreservedPartChars = null;
+		
+		public static function create()
+		{
+			return new self;
+		}
+		
+		public function setUnreservedPartChars($unreservedPartChars)
+		{
+			$this->unreservedPartChars = $unreservedPartChars;
+			return $this;
+		}
+		
+		public function normalize($matched)
+		{
+			$char = $matched[0];
+			if (mb_strlen($char) == 1) {
+				if (
+					!preg_match(
+						'/^['.$this->unreservedPartChars.']$/',
+						$char
+					)
+				)
+					$char = rawurlencode($char);
+			} else {
+				if (
+					preg_match(
+						'/^['.GenericUri::CHARS_UNRESERVED.']$/', 
+						rawurldecode($char)
+					)
+				)
+					$char = rawurldecode($char);
+				else
+					$char = strtoupper($char);
+			}
+			return $char;
 		}
 	}
 ?>
