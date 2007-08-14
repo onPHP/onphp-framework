@@ -43,40 +43,26 @@
 					toString()
 			);
 			
-			$this->assertEqual(
-				$factory->makeFromBinary("\x00")->toString(), 
-				0
+			$binaryConversions = array(
+				"\x00"			=> '0',
+				"\x01"			=> '1',
+				"\x7F"			=> '127',
+				"\x00\x80"		=> '128',
+				"\x00\x81"		=> '129',
+				"\x00\xFF"		=> '255',
+				"\x00\x80\x00"	=> '32768'
 			);
 			
-			$this->assertEqual(
-				$factory->makeFromBinary("\x01")->toString(), 
-				1
-			);
-			
-			$this->assertEqual(
-				$factory->makeFromBinary("\x7F")->toString(), 
-				127
-			);
-			
-			$this->assertEqual(
-				$factory->makeFromBinary("\x00\x80")->toString(), 
-				128
-			);
-			
-			$this->assertEqual(
-				$factory->makeFromBinary("\x00\x81")->toString(),
-				129
-			);
-			
-			$this->assertEqual(
-				$factory->makeFromBinary("\x00\xFF")->toString(), 
-				255
-			);
-			
-			$this->assertEqual(
-				$factory->makeFromBinary("\x00\x80\x00")->toString(), 
-				32768
-			);
+			foreach ($binaryConversions as $binary => $string) {
+				$this->assertEqual(
+					$factory->makeFromBinary($binary)->toString(),
+					$string
+				);
+				$this->assertEqual(
+					$factory->makeNumber($string)->toBinary(),
+					$binary
+				);
+			}
 		}
 		
 		/* void */ public function testGmp()
