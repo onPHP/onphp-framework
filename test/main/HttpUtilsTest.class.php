@@ -33,6 +33,16 @@
 				'/quite official site/',
 				$response->getBody()
 			);
+			
+			try {
+				$badResponse = CurlHttpClient::create()->
+					setTimeout(3)->
+					setMaxFileSize(100)-> // onPHP page is bigger than 100 bytes
+					send($request);
+				$this->fail();
+			} catch (NetworkException $e) {
+				$this->pass();
+			}
 		}
 		
 		public function testCurlException()
