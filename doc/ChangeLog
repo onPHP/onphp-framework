@@ -1,5 +1,11 @@
 # $Id$
 
+2007-08-15	Anton E. Lebedevich
+
+	*  main/Utils/Http/CurlHttpClient.class.php,
+	main/Utils/Http/CurlHttpResponse.class.php: setMaxFileSize() added to
+	limit download size.
+
 2007-08-14	Anton E. Lebedevich
 
 	* main/Math/: to/from binary conversion, random number generation added.

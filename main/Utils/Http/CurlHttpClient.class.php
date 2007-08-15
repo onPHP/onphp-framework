@@ -16,6 +16,7 @@
 		private $timeout		= null;
 		private $followLocation	= null;
 		private $maxRedirects	= null;
+		private $maxFileSize	= null;
 		
 		public function __construct()
 		{
@@ -79,6 +80,20 @@
 		}
 		
 		/**
+		 * @return CurlHttpClient
+		 */
+		public function setMaxFileSize($maxFileSize)
+		{
+			$this->maxFileSize = $maxFileSize;
+			return $this;
+		}
+		
+		public function getMaxFileSize($maxFileSize)
+		{
+			return $this->maxFileSize;
+		}
+		
+		/**
 		 * @return HttpResponse
 		 */
 		public function send(HttpRequest $request)
@@ -86,7 +101,8 @@
 			// TODO: support more methods
 			Assert::isTrue($request->getMethod()->getId() == HttpMethod::GET);
 			
-			$response = CurlHttpResponse::create();
+			$response = CurlHttpResponse::create()->
+				setMaxFileSize($this->maxFileSize);
 			
 			$options = array(
 				CURLOPT_WRITEFUNCTION => array($response, 'writeBody'),

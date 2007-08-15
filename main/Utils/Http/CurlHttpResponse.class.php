@@ -12,39 +12,70 @@
 
 	final class CurlHttpResponse implements HttpResponse
 	{
-		private $headerParser	= null;
-		private $body			= null;
-		private $status			= null;
+		private $headerParser		= null;
+		private $body				= null;
+		private $status				= null;
+		private $maxFileSize		= null;
+		private $currentFileSize	= null;
 		
 		public function __construct()
 		{
 			$this->headerParser = HeaderParser::create();
+			$this->currentFileSize = 0;
 		}
 		
 		/**
 		 * @return CurlHttpResponse
-		**/
+		 */
 		public static function create()
 		{
 			return new self;
 		}
 		
 		/**
-		 * internal use only, callback for curl
-		**/
+		 * internal use only, callback for curl client
+		 */
 		public function writeHeader($resource, $line)
 		{
 			$this->headerParser->doLine($line);
-			return strlen($line);
+			if (
+				$this->maxFileSize !== null
+				&& $this->headerParser->hasHeader('Content-Length')
+				&& $this->headerParser->getHeader('Content-Length') 
+					> $this->maxFileSize
+			)
+				return -1; // see http://curl.haxx.se/libcurl/c/curl_easy_setopt.html CURLOPT_HEADERFUNCTION
+			else 
+				return strlen($line);
 		}
 		
 		/**
-		 * internal use only, callback for curl
-		**/
+		 * internal use only, callback for curl client
+		 */
 		public function writeBody($resource, $body)
 		{
 			$this->body .= $body;
-			return strlen($body);
+			$obtained = strlen($body);
+			
+			if (
+				$this->maxFileSize !== null
+				&& $this->currentFileSize + $obtained > $this->maxFileSize
+			) {
+				return -1;
+			} else {
+				$this->currentFileSize += $obtained;
+				return $obtained;
+			}
+		}
+		
+		/**
+		 * internal use only for curl client
+		 * @return CurlHttpResponse
+		 */
+		public function setMaxFileSize($maxFileSize)
+		{
+			$this->maxFileSize = $maxFileSize;
+			return $this;
 		}
 		
 		public function setStatus(HttpStatus $status)
