@@ -99,6 +99,15 @@
 			}
 		}
 		
+		public static function isClassName($className)
+		{
+			return
+				preg_match(
+					'/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', 
+					$className
+				);
+		}
+		
 		public static function isInstanceOf($object, $class)
 		{
 			if (is_object($class)) {
@@ -111,10 +120,7 @@
 			
 			if (
 				is_string($object) 
-				&&  preg_match(
-					'/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', 
-					$object
-				)
+				&& self::isClassName($object)
 			) {
 				if ($object == $className)
 					return true;
