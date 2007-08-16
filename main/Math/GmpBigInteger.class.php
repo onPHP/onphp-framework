@@ -90,24 +90,22 @@
 		/**
 		 * @return GmpBigInteger
 		**/
-		public function pow(/* integer */ $exp)
+		public function pow(BigInteger $exp)
 		{
-			Assert::isInteger($exp);
 			$result = new self();
-			$result->resource = gmp_pow($this->resource, $exp);
+			$result->resource = gmp_pow($this->resource, $exp->intValue());
 			return $result;
 		}
 		
 		/**
 		 * @return GmpBigInteger
 		**/
-		public function modPow(/* integer */ $exp, BigInteger $mod)
+		public function modPow(BigInteger $exp, BigInteger $mod)
 		{
-			Assert::isInteger($exp);
 			$result = new self();
 			$result->resource = gmp_powm(
 				$this->resource, 
-				$exp, 
+				$exp->resource, 
 				$mod->resource
 			);
 			return $result;
