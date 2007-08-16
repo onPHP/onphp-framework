@@ -51,7 +51,8 @@
 			
 			$numBytes = ceil(log($stop->floatValue(), 2) / 8);
 			
-			return $this->makeFromBinary($source->getBytes($numBytes))->
+			return $this->
+				makeFromBinary("\x00".$source->getBytes($numBytes))->
 				mod($stop);
 		}
 	}
