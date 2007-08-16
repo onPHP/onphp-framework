@@ -14,17 +14,19 @@
 	{
 		private $resource = null;
 		
-		public function __construct($number, $base = 10)
-		{
-			$this->resource = gmp_init($number, $base);
-		}
-		
 		/**
 		 * @return GmpBigInteger
 		**/
-		public static function create($number, $base = 10)
+		public static function make($number, $base = 10)
 		{
-			return new self($number, $base);
+			$result = new self;
+			$result->resource = gmp_init($number, $base);
+			return $result;
+		}
+		
+		public static function getFactory()
+		{
+			return GmpBigIntegerFactory::me();
 		}
 		
 		/**
@@ -38,13 +40,13 @@
 			if (ord($binary) > 127)
 				throw new WrongArgumentException('only positive numbers allowed');
 			
-			$number = self::create(0);
+			$number = self::make(0);
 			
 			$length = strlen($binary);
 			for ($i = 0; $i < $length; ++$i) {
 				$number = $number->
-					mul(self::create(256))->
-					add(self::create(ord($binary)));
+					mul(self::make(256))->
+					add(self::make(ord($binary)));
 				$binary = substr($binary, 1);
 			}
 			
@@ -56,8 +58,9 @@
 		**/
 		public function add(BigInteger $x)
 		{
-			$this->resource = gmp_add($this->resource, $x->resource);
-			return $this;
+			$result = new self();
+			$result->resource = gmp_add($this->resource, $x->resource);
+			return $result;
 		}
 		
 		public function compareTo(BigInteger $x)
@@ -76,8 +79,9 @@
 		**/
 		public function mod(BigInteger $mod)
 		{
-			$this->resource = gmp_mod($this->resource, $mod->resource);
-			return $this;
+			$result = new self();
+			$result->resource = gmp_mod($this->resource, $mod->resource);
+			return $result;
 		}
 		
 		/**
@@ -86,8 +90,9 @@
 		public function pow(/* integer */ $exp)
 		{
 			Assert::isInteger($exp);
-			$this->resource = gmp_pow($this->resource, $exp);
-			return $this;
+			$result = new self();
+			$result->resource = gmp_pow($this->resource, $exp);
+			return $result;
 		}
 		
 		/**
@@ -96,12 +101,13 @@
 		public function modPow(/* integer */ $exp, BigInteger $mod)
 		{
 			Assert::isInteger($exp);
-			$this->resource = gmp_powm(
+			$result = new self();
+			$result->resource = gmp_powm(
 				$this->resource, 
 				$exp, 
 				$mod->resource
 			);
-			return $this;
+			return $result;
 		}
 		
 		/**
@@ -109,8 +115,9 @@
 		**/
 		public function subtract(BigInteger $x)
 		{
-			$this->resource = gmp_sub($this->resource, $x->resource);
-			return $this;
+			$result = new self();
+			$result->resource = gmp_sub($this->resource, $x->resource);
+			return $result;
 		}
 		
 		/**
@@ -118,8 +125,9 @@
 		**/
 		public function mul(BigInteger $x)
 		{
-			$this->resource = gmp_mul($this->resource, $x->resource);
-			return $this;
+			$result = new self();
+			$result->resource = gmp_mul($this->resource, $x->resource);
+			return $result;
 		}
 		
 		/**
@@ -127,8 +135,9 @@
 		**/
 		public function div(BigInteger $x)
 		{
-			$this->resource = gmp_div($this->resource, $x->resource);
-			return $this;
+			$result = new self();
+			$result->resource = gmp_div($this->resource, $x->resource);
+			return $result;
 		}
 		
 		public function toString()
@@ -177,6 +186,7 @@
 		
 		public function floatValue()
 		{
+			// TODO: throw WrongArgumetException like intValue
 			return floatval(gmp_strval($this->resource));
 		}
 	}

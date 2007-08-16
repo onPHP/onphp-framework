@@ -25,7 +25,7 @@
 		**/
 		public function makeNumber($number, $base = 10)
 		{
-			return GmpBigInteger::create($number, $base);
+			return GmpBigInteger::make($number, $base);
 		}
 		
 		/**
