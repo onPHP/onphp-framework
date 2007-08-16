@@ -34,11 +34,11 @@
 				'281470681743360',
 				$factory->
 					makeNumber(2)->
-					pow(48)->
+					pow($factory->makeNumber(48))->
 					subtract(
 						$factory->
 							makeNumber(2)->
-							pow(32)
+							pow($factory->makeNumber(32))
 					)->
 					toString()
 			);
