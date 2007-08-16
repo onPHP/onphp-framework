@@ -15,6 +15,8 @@
 	**/
 	interface BigInteger extends Stringable
 	{
+		public static function getFactory();
+		
 		public function add(BigInteger $x);
 		public function compareTo(BigInteger $x);
 		public function mod(BigInteger $mod);

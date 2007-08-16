@@ -15,15 +15,20 @@
 	**/
 	abstract class BigNumberFactory extends Singleton
 	{
+		/**
+		 * @return BigInteger
+		 */
 		abstract public function makeNumber($number, $base = 10);
 		
 		/**
 		 * make number from big-endian signed two's complement binary notation
+		 * @return BigInteger
 		**/
 		abstract public function makeFromBinary($binary);
 		
 		/**
 		 * @param $stop maximum random number
+		 * @return BigInteger
 		**/
 		abstract public function makeRandom($stop, RandomSource $source);
 	}
