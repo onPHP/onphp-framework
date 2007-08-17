@@ -109,6 +109,9 @@
 		public function testRandomSource()
 		{
 			$this->runRandomSourceTest(MtRandomSource::me());
+			
+			if (file_exists('/dev/urandom') && is_readable('/dev/urandom'))
+				$this->runRandomSourceTest(new FileRandomSource('/dev/urandom'));
 		}
 	}
 ?>

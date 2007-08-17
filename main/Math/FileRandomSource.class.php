@@ -10,25 +10,27 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * based on pseudorandom generator mt_rand
-	**/
-	class MtRandomSource extends Singleton implements RandomSource
+	class FileRandomSource implements RandomSource
 	{
-		public static function me()
+		private $handle = null;
+		
+		public function __construct($filename)
 		{
-			return Singleton::getInstance(__CLASS__);
+			Assert::isTrue(file_exists($filename) && is_readable($filename));
+			
+			$this->handle = fopen($filename, 'r');
+		}
+		
+		public function __destruct()
+		{
+			fclose($this->handle);
 		}
 		
 		public function getBytes($numberOfBytes)
 		{
 			Assert::isPositiveInteger($numberOfBytes);
 			
-			$bytes = null;
-			for ($i = 0; $i < $numberOfBytes; $i += 4) {
-				$bytes .= pack('L', mt_rand());
-			}
-			return substr($bytes, 0, $numberOfBytes);
+			return fread($this->handle, $numberOfBytes);
 		}
 	}
 ?>
