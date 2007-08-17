@@ -1,5 +1,11 @@
 # $Id$
 
+2007-08-17 Anton E. Lebedevich
+
+	* main/Crypto: Diffie-Hellman key exchange, HMAC-SHA1.
+
+	* main/Utils/TextUtils.class.php: hex2Binary() added.
+
 2007-08-15	Denis M. Gabaidulin
 
 	* core/Form/Filters/NormalizeUrlFilter.class.php: url normalizator filter

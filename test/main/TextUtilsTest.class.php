@@ -114,5 +114,13 @@
 				'https://a/b/c/%7Bfoo%7D'
 			);
 		}
+		
+		public function testHex2Binary()
+		{
+			$this->assertEqual(
+				'     ',
+				TextUtils::hex2Binary('2020202020')
+			);
+		}
 	}
 ?>
