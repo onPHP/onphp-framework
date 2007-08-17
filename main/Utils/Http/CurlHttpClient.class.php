@@ -98,8 +98,12 @@
 		 */
 		public function send(HttpRequest $request)
 		{
-			// TODO: support more methods
-			Assert::isTrue($request->getMethod()->getId() == HttpMethod::GET);
+			Assert::isTrue(
+				in_array(
+					$request->getMethod()->getId(),
+					array(HttpMethod::GET, HttpMethod::POST)
+				)
+			);
 			
 			$response = CurlHttpResponse::create()->
 				setMaxFileSize($this->maxFileSize);
@@ -118,6 +122,14 @@
 				
 			if ($this->maxRedirects !== null)
 				$options[CURLOPT_MAXREDIRS] = $this->maxRedirects;
+				
+			if ($request->getMethod()->getId() == HttpMethod::GET) {
+				// TODO: append $request->getGet() to url
+				$options[CURLOPT_HTTPGET] = true;
+			} else {
+				$options[CURLOPT_POST] = true;
+				$options[CURLOPT_POSTFIELDS] = $request->getPost();
+			}
 			
 			curl_setopt_array($this->handle, $options);
 			
