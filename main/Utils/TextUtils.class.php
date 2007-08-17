@@ -123,5 +123,19 @@
 				normalize()->
 				toString();
 		}
+		
+		public static function hex2Binary($hex)
+		{
+			$length = strlen($hex);
+			
+			Assert::isTrue( $length % 2 == 0);
+			
+			$out = null;
+			for ($i = 0; $i < $length; $i += 2) {
+				$out .= pack('C', hexdec(substr($hex, $i, 2)));
+			}
+			
+			return $out;
+		}
 	}
 ?>
