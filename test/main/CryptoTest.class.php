@@ -12,7 +12,10 @@
 
 	final class CryptoTest extends UnitTestCase
 	{
-		public function runDiffieHellmanExchange(BigNumberFactory $factory)
+		public function runDiffieHellmanExchange(
+			BigNumberFactory $factory,
+			RandomSource $source
+		)
 		{
 			$parameters = DiffieHellmanParameters::create(
 				$factory->makeNumber(2),
@@ -27,15 +30,8 @@
 				)
 			);
 			
-			$sideA = DiffieHellmanKeyPair::generate(
-				$parameters, 
-				MtRandomSource::me()
-			);
-			
-			$sideB = DiffieHellmanKeyPair::generate(
-				$parameters, 
-				MtRandomSource::me()
-			);
+			$sideA = DiffieHellmanKeyPair::generate($parameters, $source);
+			$sideB = DiffieHellmanKeyPair::generate($parameters, $source);
 			
 			$this->assertEqual(
 				$sideA->makeSharedKey($sideB->getPublic())->toString(),
@@ -51,7 +47,16 @@
 				}
 			}
 			
-			$this->runDiffieHellmanExchange(GmpBigIntegerFactory::me());
+			$this->runDiffieHellmanExchange(
+				GmpBigIntegerFactory::me(), 
+				MtRandomSource::me()
+			);
+			
+			if (file_exists('/dev/urandom') && is_readable('/dev/urandom'))
+				$this->runDiffieHellmanExchange(
+					GmpBigIntegerFactory::me(), 
+					new FileRandomSource('/dev/urandom')
+				);
 		}
 		
 		/**
