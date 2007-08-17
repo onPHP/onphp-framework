@@ -75,6 +75,16 @@
 			return $this;
 		}
 		
+		/**
+		 * @return HttpRequest
+		**/
+		public function setGetVar($name, $value)
+		{
+			$this->get[$name] = $value;
+			return $this;
+		}
+		
+		
 		public function &getPost()
 		{
 			return $this->post;
@@ -97,6 +107,15 @@
 		{
 			$this->post = $post;
 			
+			return $this;
+		}
+		
+		/**
+		 * @return HttpRequest
+		**/
+		public function setPostVar($name, $value)
+		{
+			$this->post[$name] = $value;
 			return $this;
 		}
 		

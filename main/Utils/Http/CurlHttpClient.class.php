@@ -58,6 +58,7 @@
 		{
 			Assert::isBoolean($really);
 			$this->followLocation = $really;
+			return $this;
 		}
 		
 		public function isFollowLocation()
