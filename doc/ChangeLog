@@ -1,6 +1,6 @@
 # $Id$
 
-2007-08-17 Anton E. Lebedevich
+2007-08-17	Anton E. Lebedevich
 
 	* main/Crypto: Diffie-Hellman key exchange, HMAC-SHA1.
 
