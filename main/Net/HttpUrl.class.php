@@ -115,5 +115,10 @@
 	        	
 			return $this;
 		}
+		
+		public function makeComparable()
+		{
+			return $this->ensureAbsolute()->normalize()->setFragment(null);
+		}
 	}
 ?>
