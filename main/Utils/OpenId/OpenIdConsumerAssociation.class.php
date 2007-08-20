@@ -16,41 +16,41 @@
 		
 		/**
 		 * @return OpenIdConsumerAssociation
-		 */
+		**/
 		public function setType($type);
 		
 		public function getHandle();
 		
 		/**
 		 * @return OpenIdConsumerAssociation
-		 */
+		**/
 		public function setHandle($handle);
 		
 		public function getSecret();
 		
 		/**
 		 * @return OpenIdConsumerAssociation
-		 */
+		**/
 		public function setSecret($secret);
 		
 		/**
 		 * @return OpenIdConsumerAssociation
-		 */
+		**/
 		public function setExpires(Timestamp $expires);
 		
 		/**
 		 * @return Timestamp
-		 */
+		**/
 		public function getExpires();
 		
 		/**
 		 * @return HttpUrl
-		 */
+		**/
 		public function getServer();
 		
 		/**
 		 * @return OpenIdConsumerAssociation
-		 */
+		**/
 		public function setServer(HttpUrl $server);
 	}
 ?>

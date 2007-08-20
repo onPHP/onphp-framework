@@ -31,7 +31,7 @@
 		
 		/**
 		 * @return OpenIdConsumer
-		 */
+		**/
 		public static function create(
 			RandomSource $randomSource,
 			BigNumberFactory $numberFactory,
@@ -45,7 +45,7 @@
 		 * @param $server to make association with (usually obtained from OpenIdCredentials)
 		 * @param $association - empty object to store obtained data
 		 * @return OpenIdConsumerAssociation
-		 */
+		**/
 		public function associate(HttpUrl $server, OpenIdConsumerAssociation $association)
 		{
 			Assert::isTrue($server->isValid());
@@ -66,7 +66,7 @@
 				setPostVar('openid.assoc_type', 'HMAC-SHA1')->
 				setPostVar('openid.session_type', 'DH-SHA1')->
 				setPostVar(
-					'openid.dh_modulus', 
+					'openid.dh_modulus',
 					base64_encode($dhParameters->getModulus()->toBinary())
 				)->
 				setPostVar(
@@ -77,14 +77,14 @@
 					'openid.dh_consumer_public',
 					base64_encode($keyPair->getPublic()->toBinary())
 				);
-				
+			
 			$response = $this->httpClient->send($request);
 			if ($response->getStatus()->getId() != HttpStatus::CODE_200)
 				throw new OpenIdException('bad response code from server');
 			
 			$result = $this->parseKeyValueFormat($response->getBody());
 			
-			//TODO: check response validity
+			// TODO: check response validity
 			
 			$secret = 
 				sha1(

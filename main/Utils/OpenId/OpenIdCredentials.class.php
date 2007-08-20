@@ -18,7 +18,7 @@
 		private $httpClient	= null;
 		
 		public function __construct(
-			HttpUrl $claimedId, 
+			HttpUrl $claimedId,
 			HttpClient $httpClient
 		) {
 			if (!$claimedId->isValid())
@@ -53,10 +53,11 @@
 						continue;
 					}
 				}
+				
 				if ($insideHead) {
 					if ($token instanceof SgmlEndTag && $token->getId() == 'head')
 						break;
-						
+					
 					if (
 						$token instanceof SgmlOpenTag 
 						&& $token->getId() == 'link'
@@ -67,6 +68,7 @@
 							$this->server = HttpUrl::create()->parse(
 								$token->getAttribute('href')
 							);
+						
 						if ($token->getAttribute('rel') == 'openid.delegate')
 							$this->realId = HttpUrl::create()->parse(
 								$token->getAttribute('href')
@@ -77,20 +79,20 @@
 			
 			if (!$this->server || !$this->server->isValid())
 				throw new OpenIdException('bad server');
-				
+			
 			if (!$this->realId)
 				$this->realId = $claimedId;
 			elseif (!$this->realId->isValid())
 				throw new OpenIdException('bad delegate');
-			else 
+			else
 				$this->realId->normalize();
 		}
 		
 		/**
 		 * @return OpenIdCredentials
-		 */
+		**/
 		public static function create(
-			HttpUrl $claimedId, 
+			HttpUrl $claimedId,
 			HttpClient $httpClient
 		) {
 			return new self($claimedId, $httpClient);
@@ -98,7 +100,7 @@
 		
 		/**
 		 * @return HttpUrl
-		 */
+		**/
 		public function getRealId()
 		{
 			return $this->realId;
@@ -106,7 +108,7 @@
 		
 		/**
 		 * @return HttpUrl
-		 */
+		**/
 		public function getServer()
 		{
 			return $this->server;
