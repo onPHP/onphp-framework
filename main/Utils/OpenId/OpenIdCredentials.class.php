@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class OpenIdCredentials
+	final class OpenIdCredentials
 	{
 		private $claimedId	= null;
 		private $realId		= null;
