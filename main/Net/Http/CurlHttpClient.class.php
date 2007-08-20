@@ -26,6 +26,9 @@
 			$this->handle = curl_init();
 		}
 		
+		/**
+		 * @return CurlHttpClient
+		 */
 		public static function create()
 		{
 			return new self;
