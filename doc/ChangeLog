@@ -1,5 +1,9 @@
 # $Id$
 
+2007-08-17	Vladimir A. Altuchov
+
+	* core/DB/DBPool.class.php: dropLink() added.
+
 2007-08-17	Anton E. Lebedevich
 
 	* main/Utils/TextUtils.class.php: hex2Binary() added.
