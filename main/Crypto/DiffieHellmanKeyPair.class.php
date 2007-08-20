@@ -13,7 +13,7 @@
 	/**
 	 * @see http://tools.ietf.org/html/rfc2631
 	 */
-	class DiffieHellmanKeyPair implements KeyPair 
+	final class DiffieHellmanKeyPair implements KeyPair 
 	{
 		private $private = null;
 		private $public = null;
@@ -26,7 +26,7 @@
 		
 		/**
 		 * @return DiffieHellmanKeyPair
-		 */
+		**/
 		public static function create(DiffieHellmanParameters $parameters)
 		{
 			return new self($parameters);
@@ -34,9 +34,9 @@
 		
 		/**
 		 * @return DiffieHellmanKeyPair
-		 */
+		**/
 		public static function generate(
-			DiffieHellmanParameters $parameters, 
+			DiffieHellmanParameters $parameters,
 			RandomSource $randomSource
 		) {
 			$result = new self($parameters);
@@ -44,11 +44,12 @@
 			$factory = $parameters->getModulus()->getFactory();
 			
 			$result->private = $factory->makeRandom(
-				$parameters->getModulus(), 
+				$parameters->getModulus(),
 				$randomSource
 			);
+			
 			$result->public = $parameters->getGen()->modPow(
-				$result->private, 
+				$result->private,
 				$parameters->getModulus()
 			);
 			
@@ -57,7 +58,7 @@
 		
 		/**
 		 * @return DiffieHellmanKeyPair
-		 */
+		**/
 		public function setPrivate(BigInteger $private)
 		{
 			$this->private = $private;
@@ -66,7 +67,7 @@
 		
 		/**
 		 * @return BigInteger
-		 */
+		**/
 		public function getPrivate()
 		{
 			return $this->private;
@@ -74,7 +75,7 @@
 		
 		/**
 		 * @return DiffieHellmanKeyPair
-		 */
+		**/
 		public function setPublic(BigInteger $public)
 		{
 			$this->public = $public;
@@ -83,7 +84,7 @@
 		
 		/**
 		 * @return BigInteger
-		 */
+		**/
 		public function getPublic()
 		{
 			return $this->public;
@@ -91,12 +92,13 @@
 		
 		/**
 		 * @return BigInteger
-		 */
+		**/
 		public function makeSharedKey(BigInteger $otherSitePublic)
 		{
 			Assert::brothers($this->private, $otherSitePublic);
+			
 			return $otherSitePublic->modPow(
-				$this->private, 
+				$this->private,
 				$this->parameters->getModulus()
 			);
 		}

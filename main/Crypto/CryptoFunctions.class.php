@@ -10,13 +10,13 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class CryptoFunctions extends StaticFactory 
+	final class CryptoFunctions extends StaticFactory
 	{
 		const SHA1_BLOCK_SIZE = 64;
 		
 		/**
 		 * @see http://tools.ietf.org/html/rfc2104
-		 */
+		**/
 		public static function hmacsha1($key, $message)
 		{
 			if (strlen($key) > self::SHA1_BLOCK_SIZE)

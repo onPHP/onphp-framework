@@ -14,12 +14,12 @@
 	{
 		/**
 		 * @return BigInteger
-		 */
+		**/
 		public function getPublic();
 		
 		/**
 		 * @return BigInteger
-		 */
+		**/
 		public function getPrivate();
 	}
 ?>
