@@ -21,22 +21,12 @@
 		private $maxRedirects	= null;
 		private $maxFileSize	= null;
 		
-		public function __construct()
-		{
-			$this->handle = curl_init();
-		}
-		
 		/**
 		 * @return CurlHttpClient
 		 */
 		public static function create()
 		{
 			return new self;
-		}
-		
-		public function __destruct()
-		{
-			curl_close($this->handle);
 		}
 		
 		/**
@@ -112,6 +102,8 @@
 				)
 			);
 			
+			$handle = curl_init();
+			
 			$response = CurlHttpResponse::create()->
 				setMaxFileSize($this->maxFileSize);
 			
@@ -138,25 +130,27 @@
 				$options[CURLOPT_POSTFIELDS] = $request->getPost();
 			}
 			
-			curl_setopt_array($this->handle, $options);
-			
-			if (curl_exec($this->handle) === false) {
+			curl_setopt_array($handle, $options);
+
+			if (curl_exec($handle) === false) {
 				throw new NetworkException(
 					'curl error, code: '
-					.curl_errno($this->handle)
+					.curl_errno($handle)
 					.' description: '
-					.curl_error($this->handle)
+					.curl_error($handle)
 				);
 			}
 			
 			$response->setStatus(
 				new HttpStatus(
 					curl_getinfo(
-						$this->handle, 
+						$handle, 
 						CURLINFO_HTTP_CODE
 					)
 				)
 			);
+			
+			curl_close($handle);
 			
 			return $response;
 		}
