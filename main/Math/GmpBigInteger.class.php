@@ -162,11 +162,11 @@
 				list ($dividend, $reminder) = gmp_div_qr($dividend, 256);
 				array_unshift($bytes, gmp_intval($reminder));
 			}
-
+			
 			if ($bytes[0] > 127) {
 				array_unshift($bytes, 0);
 			}
-
+			
 			$binary = null;
 			foreach ($bytes as $byte) {
 				$binary .= pack('C', $byte);
@@ -179,7 +179,7 @@
 		{
 			$intValue = gmp_intval($this->resource);
 			
-			if ((string)$intValue !== gmp_strval($this->resource))
+			if ((string) $intValue !== gmp_strval($this->resource))
 				throw new WrongArgumentException('can\'t represent itself by integer');
 				
 			return $intValue;
