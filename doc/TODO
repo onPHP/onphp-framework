@@ -1,6 +1,7 @@
 # $Id$
 
 * sync xsd/dto generation stuff with 0.10 (sherman)
-+ ClassUtils::dtoObject2xml, ClassUtils::xml2dtoObject from 0.10 (sherman)
-copy main/Utils/OpenId and tests from 0.10
-copy main/Crypto and tests from 0.10
+
+* ClassUtils::dtoObject2xml, ClassUtils::xml2dtoObject from 0.10 (sherman)
+
+* copy OpenId, Math, Crypto from 0.10 incubator (ael)
