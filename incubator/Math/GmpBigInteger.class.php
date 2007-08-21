@@ -184,8 +184,36 @@
 		
 		public function floatValue()
 		{
-			// TODO: throw WrongArgumetException like intValue
-			return floatval(gmp_strval($this->resource));
+			$stringValue = gmp_strval($this->resource);
+			$floatValue = floatval($stringValue);
+			
+			if (
+				is_int($floatValue) 
+				&& (string)$floatValue !== $stringValue
+				|| ! is_float($floatValue)
+			) {
+				throw new WrongArgumentException('can\'t convert to float');
+				
+			} else { // is_float($floatValue)
+				
+				$absValue = abs($floatValue);
+				$exponent = floor($absValue == 0 ? 0 : log10($absValue));
+				$mantiss = (int)floor($floatValue * pow(10, -$exponent));
+				if (
+					gmp_cmp(
+						gmp_abs($this->resource),
+						gmp_abs(
+							gmp_sub(
+								gmp_abs($this->resource),
+								gmp_mul($mantiss, gmp_pow(10, $exponent))
+							)
+						)
+					) < 0
+				)
+					throw new WrongArgumentException('can\'t convert to float');
+			}
+				
+			return $floatValue;
 		}
 	}
 ?>

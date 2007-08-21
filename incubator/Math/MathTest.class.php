@@ -63,6 +63,28 @@
 					$binary
 				);
 			}
+			
+			$this->assertTrue(
+				is_float($factory->makeNumber('1')->floatValue())
+			);
+			$this->assertTrue(
+				is_float($factory->makeNumber('12')->floatValue())
+			);
+			$this->assertTrue(
+				is_float($factory->makeNumber('123')->floatValue())
+			);
+			$this->assertTrue(
+				is_float($factory->makeNumber('1234')->floatValue())
+			);
+			$this->assertTrue(
+				is_float($factory->makeNumber('12345')->floatValue())
+			);
+			$this->assertTrue(
+				is_float($factory->makeNumber('123456')->floatValue())
+			);
+			$this->assertTrue(
+				is_float($factory->makeNumber('1234567')->floatValue())
+			);
 		}
 		
 		public function runRandomTest(BigNumberFactory $factory, RandomSource $source)
