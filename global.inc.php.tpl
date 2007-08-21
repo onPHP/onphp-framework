@@ -152,11 +152,7 @@
 	
 	define(
 		'ONPHP_INCUBATOR_PATH',
-		ONPHP_ROOT_PATH
-			.'incubator'
-			.DIRECTORY_SEPARATOR
-			.'classes'
-			.DIRECTORY_SEPARATOR
+		ONPHP_ROOT_PATH.'incubator'.DIRECTORY_SEPARATOR
 	);
 	
 	set_include_path(

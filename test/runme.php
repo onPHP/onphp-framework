@@ -19,8 +19,9 @@
 	
 	$test = new GroupTest('onPHP-'.ONPHP_VERSION);
 	
-	foreach (glob(ONPHP_TEST_PATH.'{core,main}/*.class.php', GLOB_BRACE) as $file)
-		$test->addTestFile($file);
+	foreach ($testPathes as $testPath)
+		foreach (glob($testPath.'*Test.class.php', GLOB_BRACE) as $file)
+			$test->addTestFile($file);
 	
 	// meta, DB and DAOs ordered tests portion
 	if (isset($dbs) && $dbs) {

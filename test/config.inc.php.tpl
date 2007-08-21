@@ -8,11 +8,13 @@
 	error_reporting(E_ALL); // & ~E_STRICT due to simpletest limitations
 	
 	set_include_path(
-		// current path
 		get_include_path().PATH_SEPARATOR
-		.ONPHP_TEST_PATH.'core'.PATH_SEPARATOR
-		.ONPHP_TEST_PATH.'base'.PATH_SEPARATOR
 		.ONPHP_TEST_PATH.'misc'.PATH_SEPARATOR
+	);
+	
+	$testPathes = array(
+		ONPHP_TEST_PATH.'core'.DIRECTORY_SEPARATOR,
+		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR
 	);
 	
 	$dbs = array(
