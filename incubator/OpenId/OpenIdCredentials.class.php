@@ -79,13 +79,15 @@
 			
 			if (!$this->server || !$this->server->isValid())
 				throw new OpenIdException('bad server');
+			else 
+				$this->server->makeComparable();
 			
 			if (!$this->realId)
 				$this->realId = $claimedId;
 			elseif (!$this->realId->isValid())
 				throw new OpenIdException('bad delegate');
 			else
-				$this->realId->normalize();
+				$this->realId->makeComparable();
 		}
 		
 		/**
