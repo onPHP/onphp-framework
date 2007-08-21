@@ -84,20 +84,43 @@
 			
 			$result = $this->parseKeyValueFormat($response->getBody());
 			
-			// TODO: check response validity
+			if (empty($result['assoc_handle']))
+				throw new OpenIdException('can\t live without handle');
 			
-			$secret = 
-				sha1(
-					$keyPair->
-						makeSharedKey(
-							$this->numberFactory->makeNumber(
-								base64_decode($result['dh_server_public'])
-							)
-						)->
-						toBinary(),
-					true
+			if (!isset($result['assoc_type']) || $result['assoc_type'] !== 'HMAC-SHA1')
+				throw new OpenIdException('bad association type');
+			
+			if (!is_numeric($result['expires_in']))
+				throw new OpenIdException('bad expires');
+				
+			if (
+				isset($result['session_type']) 
+				&& $result['session_type'] == 'DH-SHA1'
+				&& isset($result['dh_server_public'])
+			) {
+				$secret = 
+					sha1(
+						$keyPair->
+							makeSharedKey(
+								$this->numberFactory->makeNumber(
+									base64_decode($result['dh_server_public'])
+								)
+							)->
+							toBinary(),
+						true
+					)
+					^ base64_decode($result['enc_mac_key']);
+			} elseif (
+				(
+					!isset($result['session_type']) 
+					|| empty($result['session_type'])
 				)
-				^ base64_decode($result['enc_mac_key']);
+				&& isset($result['mac_key'])
+			) {
+				$secret = base64_decode($result['mac_key']);
+			} else {
+				throw new OpenIdException('no secret in answer');
+			}
 			
 			return $association->
 				setServer($server)->
