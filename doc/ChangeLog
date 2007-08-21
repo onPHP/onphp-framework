@@ -2,11 +2,7 @@
 
 2007-08-17	Anton E. Lebedevich
 
-	* main/Crypto: Diffie-Hellman key exchange, HMAC-SHA1.
-
 	* main/Utils/TextUtils.class.php: hex2Binary() added.
-
-	* main/Math/FileRandomSource.class.php: added.
 
 	* main/Flow/HttpRequest.class.php: setGetVar() and setPostVar() added.
 
@@ -20,10 +16,6 @@
 	*  main/Utils/Http/CurlHttpClient.class.php,
 	main/Utils/Http/CurlHttpResponse.class.php: setMaxFileSize() added to
 	limit download size.
-
-2007-08-14	Anton E. Lebedevich
-
-	* main/Math/: to/from binary conversion, random number generation added.
 
 2007-08-13	Vladimir A. Altuchov
 
@@ -45,10 +37,6 @@
 
 	* core/Base/Date.class.php: toISOString() convertes it according to
 	ISO 8601 standard.
-
-2007-08-10	Anton E. Lebedevich
-
-	* main/Utils/Math/: big integer calculations with gmp library added.
 
 2007-08-09	Anton E. Lebedevich
 
