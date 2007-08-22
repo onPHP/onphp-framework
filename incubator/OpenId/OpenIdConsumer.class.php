@@ -147,16 +147,7 @@
 			);
 		}
 		
-		/**
-		 * "checkid_immediate" mode request
-		 * 
-		 * @param $credentials - id and server urls
-		 * @param $returnTo - URL where the provider should return the User-Agent back to
-		 * @param $trustRoot - URL the Provider shall ask the End User to trust
-		 * @param $association - result of associate call in smart mode
-		 * @return ModelAndView
-		**/
-		public function checkIdImmediate(
+		private function makeCheckIdRequest(
 			OpenIdCredentials $credentials,
 			HttpUrl $returnTo, 
 			$trustRoot = null,
@@ -170,7 +161,6 @@
 			);
 			
 			$model = Model::create()->
-				set('openid.mode', 'checkid_immediate')->
 				set(
 					'openid.identity',
 					$credentials->getRealId()->toString()
@@ -206,6 +196,34 @@
 			}
 			
 			return ModelAndView::create()->setModel($model)->setView($view);
+		}
+		
+		/**
+		 * "checkid_immediate" mode request
+		 * 
+		 * @param $credentials - id and server urls
+		 * @param $returnTo - URL where the provider should return the User-Agent back to
+		 * @param $trustRoot - URL the Provider shall ask the End User to trust
+		 * @param $association - result of associate call in smart mode
+		 * @return ModelAndView
+		**/
+		public function checkIdImmediate(
+			OpenIdCredentials $credentials,
+			HttpUrl $returnTo, 
+			$trustRoot = null,
+			$association = null
+		)
+		{
+			$mav = $this->makeCheckIdRequest(
+				$credentials, 
+				$returnTo, 
+				$trustRoot, 
+				$association
+			);
+			$mav->getModel()->
+				set('openid.mode', 'checkid_immediate');
+			
+			return $mav;
 		}
 		
 		/**
