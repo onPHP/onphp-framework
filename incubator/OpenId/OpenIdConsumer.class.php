@@ -250,7 +250,7 @@
 			);
 			$mav->getModel()->
 				set('openid.mode', 'checkid_setup');
-			DebugUtils::el($mav);
+			
 			return $mav;
 		}
 		
