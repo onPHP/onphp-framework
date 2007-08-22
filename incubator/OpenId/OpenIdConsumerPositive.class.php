@@ -10,32 +10,26 @@
  ***************************************************************************/
 /* $Id$ */
 
-	interface OpenIdConsumerAssociationManager
+	class OpenIdConsumerPositive implements OpenIdConsumerResult
 	{
-		/**
-		 * @return OpenIdConsumerAssociation
-		**/
-		public function findByHandle($handle, $type);
+		private $identity = null;
+		
+		public function __construct(HttpUrl $identity)
+		{
+			$this->identity = $identity;
+		}
 		
 		/**
-		 * @return OpenIdConsumerAssociation
-		**/
-		public function findByServer(HttpUrl $server);
+		 * @return HttpUrl
+		 */
+		public function getIdentity()
+		{
+			return $this->identity;
+		}
 		
-		/**
-		 * @return OpenIdConsumerAssociation
-		**/
-		public function makeAndSave(
-			$handle, 
-			$type, 
-			$secred, 
-			Timestamp $expires,
-			HttpUrl $server
-		);
-		
-		/**
-		 * @return OpenIdConsumerAssociationManager
-		**/
-		public function purgeExpired();
+		public function isOk()
+		{
+			return false;
+		}
 	}
 ?>

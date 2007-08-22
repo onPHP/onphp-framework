@@ -19,6 +19,7 @@
 	{
 		const DIFFIE_HELLMAN_P = '155172898181473697471232257763715539915724801966915404479707795314057629378541917580651227423698188993727816152646631438561595825688188889951272158842675419950341258706556549803580104870537681476726513255747040765857479291291572334510643245094715007229621094194349783925984760375594985848253359305585439638443';
 		const DIFFIE_HELLMAN_G = 2;
+		const ASSOCIATION_TYPE = 'HMAC-SHA1';
 		
 		private $randomSource = null;
 		private $numberFactory = null;
@@ -78,7 +79,7 @@
 				setMethod(HttpMethod::post())->
 				setUrl($server)->
 				setPostVar('openid.mode', 'associate')->
-				setPostVar('openid.assoc_type', 'HMAC-SHA1')->
+				setPostVar('openid.assoc_type', self::ASSOCIATION_TYPE)->
 				setPostVar('openid.session_type', 'DH-SHA1')->
 				setPostVar(
 					'openid.dh_modulus',
@@ -102,7 +103,7 @@
 			if (empty($result['assoc_handle']))
 				throw new OpenIdException('can\t live without handle');
 			
-			if (!isset($result['assoc_type']) || $result['assoc_type'] !== 'HMAC-SHA1')
+			if (!isset($result['assoc_type']) || $result['assoc_type'] !== self::ASSOCIATION_TYPE)
 				throw new OpenIdException('bad association type');
 			
 			if (!is_numeric($result['expires_in']))
@@ -282,8 +283,51 @@
 			} elseif ($parameters['openid.mode'] = 'cancel') {
 				return new OpenIdConsumerCancel();
 			}
+
+			if (
+				$manager 
+				&& isset($parameters['openid.assoc_handle'])
+				&& (
+					$association = $manager->findByHandle(
+						$parameters['openid.assoc_handle'],
+						self::ASSOCIATION_TYPE
+					)
+				)
+				&& isset($parameters['openid.signed'])
+				&& isset($parameters['openid.sig'])
+			) {
+				$signedFields = explode(',', $parameters['openid.signed']);
+				if (!in_array('identity', $signedFields))
+					throw new WrongArgumentException('identity must be signed');
+				$tokenContents = null;
+				foreach ($signedFields as $signedField) {
+					$tokenContents .= 
+						'openid.'.$signedField
+						.':'
+						.$parameters['openid.'.$signedField]
+						."\n";
+				}
+				if (
+					CryptoFunctions::hmacsha1(
+						$association->getSecret(), 
+						$tokenContents
+					) 
+					!=
+					base64_decode($parameters['openid.sig'])
+				)
+					throw new WrongArgumentException('signature mismatch');
+				
+				$identity = HttpUrl::create()->
+						parse($parameters['openid.identity']);
+						
+				Assert::isTrue($identity->isValid(), 'invalid identity');
+				
+				return new OpenIdConsumerPositive(
+					$identity->makeComparable()
+				);
+			}
 			
-			throw new UnimplementedFeatureException('handle positive result');
+			throw new UnimplementedFeatureException('handle dumb mode');
 		}
 		
 		private function parseKeyValueFormat($raw)
