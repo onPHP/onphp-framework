@@ -1,5 +1,9 @@
 # $Id$
 
+2007-08-22	Anton E. Lebedevich
+
+	* main/Flow/RedirectView.class.php: static create() added.
+
 2007-08-17	Anton E. Lebedevich
 
 	* main/Utils/TextUtils.class.php: hex2Binary() added.

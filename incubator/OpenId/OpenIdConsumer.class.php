@@ -135,6 +135,67 @@
 			);
 		}
 		
+		/**
+		 * @see http://openid.net/specs/openid-authentication-1_1.html "checkid_immediate" mode
+		 * @param $credentials - id and server urls
+		 * @param $returnTo - URL where the provider should return the User-Agent back to
+		 * @param $trustRoot - URL the Provider shall ask the End User to trust
+		 * @param $association - result of associate call in smart mode
+		 * @return ModelAndView
+		**/
+		public function checkIdImmediate(
+			OpenIdCredentials $credentials,
+			HttpUrl $returnTo, 
+			$trustRoot = null,
+			$association = null
+		) {
+			Assert::isTrue($returnTo->isValid());
+			
+			$view = RedirectView::create(
+				$credentials->getServer()->toString()
+			);
+			$model = Model::create()->
+				set('openid.mode', 'checkid_immediate')->
+				set(
+					'openid.identity',
+					$credentials->getRealId()->toString()
+				)->
+				set(
+					'openid.return_to',
+					$returnTo->toString()
+				);
+			
+			if ($association) {
+				Assert::isTrue(
+					$association instanceof OpenIdConsumerAssociation
+					&& $association->getServer()->toString() 
+						== $credentials->getServer()->toString()
+				);
+				$model->set(
+					'openid.assoc_handle',
+					$association->getHandle()
+				);
+			}
+			
+			if ($trustRoot) {
+				Assert::isTrue(
+					$trustRoot instanceof HttpUrl 
+					&& $trustRoot->isValid()
+				);
+				$model->set(
+					'openid.trust_root', 
+					$trustRoot->toString()
+				);
+			}
+			
+			return ModelAndView::create()->setModel($model)->setView($view);
+		}
+		
+		public function doContinue(HttpRequest $request, $manager = null)
+		{
+			throw new UnimplementedFeatureException('fill me in');
+		}
+		
 		private function parseKeyValueFormat($raw)
 		{
 			$result = array();
