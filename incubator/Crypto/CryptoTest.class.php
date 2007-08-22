@@ -39,6 +39,47 @@
 			);
 		}
 		
+		public function runDiffieHellmanGeneration(BigNumberFactory $factory)
+		{
+			$parameters = DiffieHellmanParameters::create(
+				$factory->makeNumber(2),
+				$factory->makeNumber(126)
+			);
+			
+			$sourceA = new RandomSourceStub("\x02");
+			$pairA = DiffieHellmanKeyPair::generate($parameters, $sourceA);
+			$this->assertEqual(
+				$pairA->getPublic()->toString(),
+				'4'
+			);
+			$this->assertEqual(
+				$pairA->getPrivate()->toString(),
+				'2'
+			);
+			
+			
+			$sourceB = new RandomSourceStub("\x03");
+			$pairB = DiffieHellmanKeyPair::generate($parameters, $sourceB);
+			$this->assertEqual(
+				$pairB->getPublic()->toString(),
+				'8'
+			);
+			$this->assertEqual(
+				$pairB->getPrivate()->toString(),
+				'3'
+			);
+			
+			$this->assertEqual(
+				$pairA->makeSharedKey($pairB->getPublic())->toString(),
+				'64'
+			);
+			
+			$this->assertEqual(
+				$pairB->makeSharedKey($pairA->getPublic())->toString(),
+				'64'
+			);
+		}
+		
 		/* void */ public function testGmp()
 		{
 			if (!extension_loaded('gmp')) {
@@ -46,6 +87,8 @@
 					return;
 				}
 			}
+			
+			$this->runDiffieHellmanGeneration(GmpBigIntegerFactory::me());
 			
 			$this->runDiffieHellmanExchange(
 				GmpBigIntegerFactory::me(), 
@@ -119,6 +162,21 @@
 				),
 				TextUtils::hex2Binary('e8e99d0f45237d786d6bbaa7965c7808bbff1a91')
 			);
+		}
+	}
+	
+	class RandomSourceStub implements RandomSource 
+	{
+		private $data = null;
+		
+		public function __construct($data)
+		{
+			$this->data = $data;
+		}
+		
+		public function getBytes($numOfBytes)
+		{
+			return $this->data;
 		}
 	}
 ?>
