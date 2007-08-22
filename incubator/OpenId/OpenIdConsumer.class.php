@@ -28,7 +28,8 @@
 			RandomSource $randomSource,
 			BigNumberFactory $numberFactory,
 			HttpClient $httpClient
-		) {
+		)
+		{
 			$this->randomSource = $randomSource;
 			$this->numberFactory = $numberFactory;
 			$this->httpClient = $httpClient;
@@ -41,7 +42,8 @@
 			RandomSource $randomSource,
 			BigNumberFactory $numberFactory,
 			HttpClient $httpClient
-		) {
+		)
+		{
 			return new self($randomSource, $numberFactory, $httpClient);
 		}
 		
@@ -52,7 +54,10 @@
 		 * @param $manager - dao-like association manager
 		 * @return OpenIdConsumerAssociation
 		**/
-		public function associate(HttpUrl $server, OpenIdConsumerAssociationManager $manager)
+		public function associate(
+			HttpUrl $server,
+			OpenIdConsumerAssociationManager $manager
+		)
 		{
 			Assert::isTrue($server->isValid());
 			
@@ -63,6 +68,7 @@
 				$this->numberFactory->makeNumber(self::DIFFIE_HELLMAN_G),
 				$this->numberFactory->makeNumber(self::DIFFIE_HELLMAN_P)
 			);
+			
 			$keyPair = DiffieHellmanKeyPair::generate(
 				$dhParameters,
 				$this->randomSource
@@ -101,7 +107,7 @@
 			
 			if (!is_numeric($result['expires_in']))
 				throw new OpenIdException('bad expires');
-				
+			
 			if (
 				isset($result['session_type']) 
 				&& $result['session_type'] == 'DH-SHA1'
@@ -155,12 +161,14 @@
 			HttpUrl $returnTo, 
 			$trustRoot = null,
 			$association = null
-		) {
+		)
+		{
 			Assert::isTrue($returnTo->isValid());
 			
 			$view = RedirectView::create(
 				$credentials->getServer()->toString()
 			);
+			
 			$model = Model::create()->
 				set('openid.mode', 'checkid_immediate')->
 				set(
@@ -178,6 +186,7 @@
 					&& $association->getServer()->toString() 
 						== $credentials->getServer()->toString()
 				);
+				
 				$model->set(
 					'openid.assoc_handle',
 					$association->getHandle()
@@ -189,6 +198,7 @@
 					$trustRoot instanceof HttpUrl 
 					&& $trustRoot->isValid()
 				);
+				
 				$model->set(
 					'openid.trust_root', 
 					$trustRoot->toString()
@@ -208,7 +218,7 @@
 		{
 			if ($manager)
 				Assert::isTrue($manager instanceof OpenIdConsumerAssociationManager);
-				
+			
 			$parameters = $this->parseGetParameters($request->getGet());
 			if (!isset($parameters['openid.mode']))
 				throw new WrongArgumentException('not an openid request');
@@ -218,7 +228,9 @@
 					$setupUrl = HttpUrl::create()->parse(
 						$parameters['openid.user_setup_url']
 					);
+					
 					Assert::isTrue($setupUrl->isValid());
+					
 					return new OpenIdConsumerSetupRequired($setupUrl);
 				}
 			} elseif ($parameters['openid.mode'] = 'cancel') {

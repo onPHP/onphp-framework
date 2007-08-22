@@ -12,7 +12,7 @@
 
 	class OpenIdConsumerSetupRequired implements OpenIdConsumerResult
 	{
-		private $url;
+		private $url = null;
 		
 		public function __construct(HttpUrl $url)
 		{
