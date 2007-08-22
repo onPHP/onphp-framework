@@ -12,31 +12,11 @@
 
 	interface OpenIdConsumerAssociation
 	{
-		public function getType();
-		
-		/**
-		 * @return OpenIdConsumerAssociation
-		**/
-		public function setType($type);
-		
 		public function getHandle();
 		
-		/**
-		 * @return OpenIdConsumerAssociation
-		**/
-		public function setHandle($handle);
+		public function getType();
 		
 		public function getSecret();
-		
-		/**
-		 * @return OpenIdConsumerAssociation
-		**/
-		public function setSecret($secret);
-		
-		/**
-		 * @return OpenIdConsumerAssociation
-		**/
-		public function setExpires(Timestamp $expires);
 		
 		/**
 		 * @return Timestamp
@@ -47,10 +27,5 @@
 		 * @return HttpUrl
 		**/
 		public function getServer();
-		
-		/**
-		 * @return OpenIdConsumerAssociation
-		**/
-		public function setServer(HttpUrl $server);
 	}
 ?>

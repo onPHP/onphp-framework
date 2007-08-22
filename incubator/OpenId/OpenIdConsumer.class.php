@@ -43,12 +43,15 @@
 		/**
 		 * @see http://openid.net/specs/openid-authentication-1_1.html "associate" mode
 		 * @param $server to make association with (usually obtained from OpenIdCredentials)
-		 * @param $association - empty object to store obtained data
+		 * @param $manager - dao-like association manager
 		 * @return OpenIdConsumerAssociation
 		**/
-		public function associate(HttpUrl $server, OpenIdConsumerAssociation $association)
+		public function associate(HttpUrl $server, OpenIdConsumerAssociationManager $manager)
 		{
 			Assert::isTrue($server->isValid());
+			
+			if ($association = $manager->findByServer($server))
+				return $association;
 			
 			$dhParameters = new DiffieHellmanParameters(
 				$this->numberFactory->makeNumber(self::DIFFIE_HELLMAN_G),
@@ -122,15 +125,14 @@
 				throw new OpenIdException('no secret in answer');
 			}
 			
-			return $association->
-				setServer($server)->
-				setHandle($result['assoc_handle'])->
-				setType($result['assoc_type'])->
-				setSecret($secret)->
-				setExpires(
-					Timestamp::makeNow()->
-					modify('+ '.$result['expires_in'].' seconds')
-				);
+			return $manager->makeAndSave(
+				$result['assoc_handle'],
+				$result['assoc_type'],
+				$secret,
+				Timestamp::makeNow()->
+					modify('+ '.$result['expires_in'].' seconds'),
+				$server
+			);
 		}
 		
 		private function parseKeyValueFormat($raw)

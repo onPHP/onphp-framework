@@ -25,7 +25,13 @@
 		/**
 		 * @return OpenIdConsumerAssociation
 		**/
-		public function store(OpenIdConsumerAssociation $association);
+		public function makeAndSave(
+			$handle, 
+			$type, 
+			$secred, 
+			Timestamp $expires,
+			HttpUrl $server
+		);
 		
 		/**
 		 * @return OpenIdConsumerAssociationManager
