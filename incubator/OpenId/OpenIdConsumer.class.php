@@ -79,7 +79,7 @@
 				setMethod(HttpMethod::post())->
 				setUrl($server)->
 				setPostVar('openid.mode', 'associate')->
-				setPostVar('openid.assoc_type', self::ASSOCIATION_TYPE)/*->
+				setPostVar('openid.assoc_type', self::ASSOCIATION_TYPE)->
 				setPostVar('openid.session_type', 'DH-SHA1')->
 				setPostVar(
 					'openid.dh_modulus',
@@ -92,7 +92,7 @@
 				setPostVar(
 					'openid.dh_consumer_public',
 					base64_encode($keyPair->getPublic()->toBinary())
-				)*/;
+				);
 			
 			$response = $this->httpClient->send($request);
 			if ($response->getStatus()->getId() != HttpStatus::CODE_200)
@@ -118,7 +118,7 @@
 					sha1(
 						$keyPair->
 							makeSharedKey(
-								$this->numberFactory->makeNumber(
+								$this->numberFactory->makeFromBinary(
 									base64_decode($result['dh_server_public'])
 								)
 							)->
