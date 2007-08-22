@@ -79,7 +79,7 @@
 				setMethod(HttpMethod::post())->
 				setUrl($server)->
 				setPostVar('openid.mode', 'associate')->
-				setPostVar('openid.assoc_type', self::ASSOCIATION_TYPE)->
+				setPostVar('openid.assoc_type', self::ASSOCIATION_TYPE)/*->
 				setPostVar('openid.session_type', 'DH-SHA1')->
 				setPostVar(
 					'openid.dh_modulus',
@@ -92,7 +92,7 @@
 				setPostVar(
 					'openid.dh_consumer_public',
 					base64_encode($keyPair->getPublic()->toBinary())
-				);
+				)*/;
 			
 			$response = $this->httpClient->send($request);
 			if ($response->getStatus()->getId() != HttpStatus::CODE_200)
@@ -267,6 +267,7 @@
 				Assert::isTrue($manager instanceof OpenIdConsumerAssociationManager);
 			
 			$parameters = $this->parseGetParameters($request->getGet());
+			
 			if (!isset($parameters['openid.mode']))
 				throw new WrongArgumentException('not an openid request');
 			
@@ -302,18 +303,20 @@
 				$tokenContents = null;
 				foreach ($signedFields as $signedField) {
 					$tokenContents .= 
-						'openid.'.$signedField
+						$signedField
 						.':'
 						.$parameters['openid.'.$signedField]
 						."\n";
 				}
 				if (
-					CryptoFunctions::hmacsha1(
-						$association->getSecret(), 
-						$tokenContents
-					) 
+					base64_encode(
+						CryptoFunctions::hmacsha1(
+							$association->getSecret(), 
+							$tokenContents
+						)
+					)
 					!=
-					base64_decode($parameters['openid.sig'])
+					$parameters['openid.sig']
 				)
 					throw new WrongArgumentException('signature mismatch');
 				
