@@ -124,7 +124,11 @@
 				$options[CURLOPT_HTTPGET] = true;
 			} else {
 				$options[CURLOPT_POST] = true;
-				$options[CURLOPT_POSTFIELDS] = $request->getPost();
+				$pairs = array();
+				foreach ($request->getPost() as $key=> $value) {
+					$pairs[] = $key.'='.urlencode($value);
+				}
+				$options[CURLOPT_POSTFIELDS] = implode('&', $pairs);
 			}
 			
 			curl_setopt_array($handle, $options);
