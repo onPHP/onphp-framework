@@ -24,6 +24,14 @@
 			$this->url = $url;
 		}
 		
+		/**
+		 * @return RedirectView
+		**/
+		public static function create($url)
+		{
+			return new self($url);
+		}
+		
 		public function render($model = null)
 		{
 			$postfix = null;
