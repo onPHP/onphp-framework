@@ -10,6 +10,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * openId consumer library entry point
+	 * 
+	 * @see http://openid.net/specs/openid-authentication-1_1.html
+	**/
 	final class OpenIdConsumer
 	{
 		const DIFFIE_HELLMAN_P = '155172898181473697471232257763715539915724801966915404479707795314057629378541917580651227423698188993727816152646631438561595825688188889951272158842675419950341258706556549803580104870537681476726513255747040765857479291291572334510643245094715007229621094194349783925984760375594985848253359305585439638443';
@@ -41,7 +46,8 @@
 		}
 		
 		/**
-		 * @see http://openid.net/specs/openid-authentication-1_1.html "associate" mode
+		 * "associate" mode request
+		 * 
 		 * @param $server to make association with (usually obtained from OpenIdCredentials)
 		 * @param $manager - dao-like association manager
 		 * @return OpenIdConsumerAssociation
@@ -136,7 +142,8 @@
 		}
 		
 		/**
-		 * @see http://openid.net/specs/openid-authentication-1_1.html "checkid_immediate" mode
+		 * "checkid_immediate" mode request
+		 * 
 		 * @param $credentials - id and server urls
 		 * @param $returnTo - URL where the provider should return the User-Agent back to
 		 * @param $trustRoot - URL the Provider shall ask the End User to trust
@@ -191,9 +198,34 @@
 			return ModelAndView::create()->setModel($model)->setView($view);
 		}
 		
+		/**
+		 * proceed results of checkid_immediate and checkid_setup
+		 * 
+		 * @param $request incoming request
+		 * @param 
+		**/
 		public function doContinue(HttpRequest $request, $manager = null)
 		{
-			throw new UnimplementedFeatureException('fill me in');
+			if ($manager)
+				Assert::isTrue($manager instanceof OpenIdConsumerAssociationManager);
+				
+			$parameters = $this->parseGetParameters($request->getGet());
+			if (!isset($parameters['openid.mode']))
+				throw new WrongArgumentException('not an openid request');
+			
+			if ($parameters['openid.mode'] == 'id_res') {
+				if (isset($parameters['openid.user_setup_url'])) {
+					$setupUrl = HttpUrl::create()->parse(
+						$parameters['openid.user_setup_url']
+					);
+					Assert::isTrue($setupUrl->isValid());
+					return new OpenIdConsumerSetupRequired($setupUrl);
+				}
+			} elseif ($parameters['openid.mode'] = 'cancel') {
+				return new OpenIdConsumerCancel();
+			}
+			
+			throw new UnimplementedFeatureException('handle positive result');
 		}
 		
 		private function parseKeyValueFormat($raw)
@@ -204,6 +236,18 @@
 				if (!empty($line) && strpos($line, ':') !== false) {
 					list($key, $value) = explode(':', $line, 2);
 					$result[trim($key)] = trim($value);
+				}
+			}
+			return $result;
+		}
+		
+		private function parseGetParameters(/* array */ $get)
+		{
+			$result = array();
+			foreach ($get as $key => $value) {
+				if (strpos($key, 'openid') === 0) {
+					$key = preg_replace('/^openid_/', 'openid.', $key);
+					$result[$key] = $value;
 				}
 			}
 			return $result;
