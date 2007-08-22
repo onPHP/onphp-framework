@@ -227,6 +227,34 @@
 		}
 		
 		/**
+		 * "checkid_setup" mode request
+		 * 
+		 * @param $credentials - id and server urls
+		 * @param $returnTo - URL where the provider should return the User-Agent back to
+		 * @param $trustRoot - URL the Provider shall ask the End User to trust
+		 * @param $association - result of associate call in smart mode
+		 * @return ModelAndView
+		**/
+		public function checkIdSetup(
+			OpenIdCredentials $credentials,
+			HttpUrl $returnTo, 
+			$trustRoot = null,
+			$association = null
+		)
+		{
+			$mav = $this->makeCheckIdRequest(
+				$credentials, 
+				$returnTo, 
+				$trustRoot, 
+				$association
+			);
+			$mav->getModel()->
+				set('openid.mode', 'checkid_setup');
+			DebugUtils::el($mav);
+			return $mav;
+		}
+		
+		/**
 		 * proceed results of checkid_immediate and checkid_setup
 		 * 
 		 * @param $request incoming request

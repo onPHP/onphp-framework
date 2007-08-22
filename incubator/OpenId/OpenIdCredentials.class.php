@@ -21,10 +21,11 @@
 			HttpUrl $claimedId,
 			HttpClient $httpClient
 		) {
+			$this->claimedId = $claimedId->makeComparable();
+			
 			if (!$claimedId->isValid())
 				throw new OpenIdException('invalid claimed id');
-			
-			$this->claimedId = $claimedId->normalize();
+				
 			$this->httpClient = $httpClient;
 			
 			$response = $httpClient->send(
