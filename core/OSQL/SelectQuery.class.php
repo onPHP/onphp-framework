@@ -265,8 +265,11 @@
 						$alias
 					);
 				} elseif ($field instanceof DialectString) {
-					$this->fields[] = new SelectField($field, $alias);
-					
+					if ($field instanceof SelectQuery)
+						$this->fields[] = $field;
+					else
+						$this->fields[] = new SelectField($field, $alias);
+
 					if ($field instanceof Aliased)
 						$this->aliases[$field->getAlias()] = true;
 					elseif ($alias)
