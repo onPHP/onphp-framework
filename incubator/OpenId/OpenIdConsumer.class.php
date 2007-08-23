@@ -284,22 +284,39 @@
 			} elseif ($parameters['openid.mode'] = 'cancel') {
 				return new OpenIdConsumerCancel();
 			}
+			
+			if (!isset($parameters['openid.assoc_handle']))
+				throw new WrongArgumentException('no association handle');
+			
+			if (!isset($parameters['openid.identity']))
+				throw new WrongArgumentException('no identity');
+				
+			$identity = HttpUrl::create()->
+					parse($parameters['openid.identity']);
+			Assert::isTrue($identity->isValid(), 'invalid identity');
+			$identity->makeComparable();
+				
+			$signedFields = array();
+			if (
+				isset($parameters['openid.signed'])
+				&& isset($parameters['openid.sig'])
+			) {
+				$signedFields = explode(',', $parameters['openid.signed']);
+				if (!in_array('identity', $signedFields))
+					throw new WrongArgumentException('identity must be signed');
+			} else
+				throw new WrongArgumentException('no signature in response');
 
 			if (
 				$manager 
-				&& isset($parameters['openid.assoc_handle'])
 				&& (
 					$association = $manager->findByHandle(
 						$parameters['openid.assoc_handle'],
 						self::ASSOCIATION_TYPE
 					)
 				)
-				&& isset($parameters['openid.signed'])
-				&& isset($parameters['openid.sig'])
-			) {
-				$signedFields = explode(',', $parameters['openid.signed']);
-				if (!in_array('identity', $signedFields))
-					throw new WrongArgumentException('identity must be signed');
+				&& !isset($parameters['openid.invalidate_handle'])
+			) { // smart mode
 				$tokenContents = null;
 				foreach ($signedFields as $signedField) {
 					$tokenContents .= 
@@ -320,17 +337,84 @@
 				)
 					throw new WrongArgumentException('signature mismatch');
 				
-				$identity = HttpUrl::create()->
-						parse($parameters['openid.identity']);
-						
-				Assert::isTrue($identity->isValid(), 'invalid identity');
+				return new OpenIdConsumerPositive($identity);
 				
-				return new OpenIdConsumerPositive(
-					$identity->makeComparable()
-				);
+			} elseif (
+				!$manager 
+				|| isset($parameters['openid.invalidate_handle'])
+			) { // dumb or handle invalidation mode
+				if ($this->checkAuthentication($parameters, $manager))
+					return new OpenIdConsumerPositive($identity);
+				else
+					return new OpenIdConsumerFail();
 			}
 			
-			throw new UnimplementedFeatureException('handle dumb mode');
+			Assert::isUnreachable();
+		}
+		
+		/**
+		 * check_authentication mode request
+		**/
+		private function checkAuthentication(
+			/* array */ $parameters,
+			$manager = null
+		)
+		{
+			$credentials = new OpenIdCredentials(
+				$parameters['openid.identity'], 
+				$this->httpClient
+			);
+			
+			$request = HttpRequest::create()->
+				setMethod(HttpMethod::post())->
+				setUrl($credentials->getServer())->
+				setPostVar('openid.mode', 'check_authentication')->
+				setPostVar(
+					'openid.assoc_handle', 
+					$parameters['openid.assoc_handle']
+				)->
+				setPostVar(
+					'openid.sig',
+					$parameters['openid.sig']
+				)->
+				setPostVar(
+					'openid.signed',
+					$parameters['openid.signed']
+				);
+				
+			if (isset($parameters['openid.invalidate_handle']) && $manager)
+				$request->setPostVar(
+					'openid.invalidate_handle', 
+					$parameters['openid.invalidate_handle']
+				);
+				
+			foreach (explode(',', $parameters['openid.signed']) as $key) {
+				$key = 'openid.'.$key;
+				$request->setPostVar($key, $parameters[$key]);
+			}
+			
+			$response = $this->httpClient->send($request);
+			if ($response->getStatus()->getId() != HttpStatus::CODE_200)
+				throw new OpenIdException('bad response code from server');
+			
+			$result = $this->parseKeyValueFormat($response->getBody());
+			
+			if (
+				!isset($result['openid.mode']) 
+				|| !isset($result['is_valid'])
+				|| $result['openid.mode'] != 'id_res'
+			)
+				throw new OpenIdException('strange response given');
+				
+			if ($result['is_valid'] === 'true') {
+				if (isset($result['invalidate_handle']) && $manager) {
+					$manager->purgeByHandle($result['invalidate_handle']);
+				}
+				return true;
+			} elseif ($result['is_valid'] === 'false')
+				return false;
+				
+			Assert::isUnreachable();
 		}
 		
 		private function parseKeyValueFormat($raw)

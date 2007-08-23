@@ -29,7 +29,7 @@
 		
 		public function isOk()
 		{
-			return false;
+			return true;
 		}
 	}
 ?>
