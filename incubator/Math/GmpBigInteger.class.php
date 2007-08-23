@@ -19,6 +19,7 @@
 		**/
 		public static function make($number, $base = 10)
 		{
+			Assert::isTrue(is_numeric($number));
 			$result = new self;
 			$result->resource = gmp_init($number, $base);
 			return $result;
