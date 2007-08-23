@@ -361,13 +361,26 @@
 		)
 		{
 			$credentials = new OpenIdCredentials(
-				$parameters['openid.identity'], 
+				HttpUrl::create()->parse($parameters['openid.identity']), 
 				$this->httpClient
 			);
 			
 			$request = HttpRequest::create()->
 				setMethod(HttpMethod::post())->
-				setUrl($credentials->getServer())->
+				setUrl($credentials->getServer());
+				
+			if (isset($parameters['openid.invalidate_handle']) && $manager)
+				$request->setPostVar(
+					'openid.invalidate_handle', 
+					$parameters['openid.invalidate_handle']
+				);
+				
+			foreach (explode(',', $parameters['openid.signed']) as $key) {
+				$key = 'openid.'.$key;
+				$request->setPostVar($key, $parameters[$key]);
+			}
+			
+			$request->
 				setPostVar('openid.mode', 'check_authentication')->
 				setPostVar(
 					'openid.assoc_handle', 
@@ -381,17 +394,6 @@
 					'openid.signed',
 					$parameters['openid.signed']
 				);
-				
-			if (isset($parameters['openid.invalidate_handle']) && $manager)
-				$request->setPostVar(
-					'openid.invalidate_handle', 
-					$parameters['openid.invalidate_handle']
-				);
-				
-			foreach (explode(',', $parameters['openid.signed']) as $key) {
-				$key = 'openid.'.$key;
-				$request->setPostVar($key, $parameters[$key]);
-			}
 			
 			$response = $this->httpClient->send($request);
 			if ($response->getStatus()->getId() != HttpStatus::CODE_200)
@@ -400,9 +402,12 @@
 			$result = $this->parseKeyValueFormat($response->getBody());
 			
 			if (
-				!isset($result['openid.mode']) 
-				|| !isset($result['is_valid'])
-				|| $result['openid.mode'] != 'id_res'
+				!isset($result['is_valid'])
+				|| (
+					$result['is_valid'] !== 'true'
+					&&
+					$result['is_valid'] !== 'false'
+				)
 			)
 				throw new OpenIdException('strange response given');
 				
