@@ -22,9 +22,9 @@
 		const DIFFIE_HELLMAN_G = 2;
 		const ASSOCIATION_TYPE = 'HMAC-SHA1';
 		
-		private $randomSource = null;
-		private $numberFactory = null;
-		private $httpClient = null;
+		private $randomSource	= null;
+		private $numberFactory	= null;
+		private $httpClient		= null;
 		
 		public function __construct(
 			RandomSource $randomSource,
@@ -104,7 +104,10 @@
 			if (empty($result['assoc_handle']))
 				throw new OpenIdException('can\t live without handle');
 			
-			if (!isset($result['assoc_type']) || $result['assoc_type'] !== self::ASSOCIATION_TYPE)
+			if (
+				!isset($result['assoc_type'])
+				|| $result['assoc_type'] !== self::ASSOCIATION_TYPE
+			)
 				throw new OpenIdException('bad association type');
 			
 			if (!is_numeric($result['expires_in']))
@@ -128,10 +131,7 @@
 					)
 					^ base64_decode($result['enc_mac_key']);
 			} elseif (
-				(
-					!isset($result['session_type']) 
-					|| empty($result['session_type'])
-				)
+				empty($result['session_type'])
 				&& isset($result['mac_key'])
 			) {
 				$secret = base64_decode($result['mac_key']);
@@ -222,6 +222,7 @@
 				$trustRoot, 
 				$association
 			);
+			
 			$mav->getModel()->
 				set('openid.mode', 'checkid_immediate');
 			
@@ -250,6 +251,7 @@
 				$trustRoot, 
 				$association
 			);
+			
 			$mav->getModel()->
 				set('openid.mode', 'checkid_setup');
 			
@@ -291,25 +293,25 @@
 			
 			if (!isset($parameters['openid.identity']))
 				throw new WrongArgumentException('no identity');
-				
-			$identity = HttpUrl::create()->
-					parse($parameters['openid.identity']);
+			
+			$identity =
+				HttpUrl::create()->
+				parse($parameters['openid.identity']);
+			
 			Assert::isTrue($identity->isValid(), 'invalid identity');
 			$identity->makeComparable();
-				
+			
 			$signedFields = array();
-			if (
-				isset($parameters['openid.signed'])
-				&& isset($parameters['openid.sig'])
-			) {
+			if (isset($parameters['openid.signed'], $parameters['openid.sig'])) {
 				$signedFields = explode(',', $parameters['openid.signed']);
+				
 				if (!in_array('identity', $signedFields))
 					throw new WrongArgumentException('identity must be signed');
 			} else
 				throw new WrongArgumentException('no signature in response');
-
+			
 			if (
-				$manager 
+				$manager
 				&& (
 					$association = $manager->findByHandle(
 						$parameters['openid.assoc_handle'],
@@ -326,6 +328,7 @@
 						.$parameters['openid.'.$signedField]
 						."\n";
 				}
+				
 				if (
 					base64_encode(
 						CryptoFunctions::hmacsha1(
@@ -333,15 +336,14 @@
 							$tokenContents
 						)
 					)
-					!=
-					$parameters['openid.sig']
+					!= $parameters['openid.sig']
 				)
 					throw new WrongArgumentException('signature mismatch');
 				
 				return new OpenIdConsumerPositive($identity);
 				
 			} elseif (
-				!$manager 
+				!$manager
 				|| isset($parameters['openid.invalidate_handle'])
 			) { // dumb or handle invalidation mode
 				if ($this->checkAuthentication($parameters, $manager))
@@ -362,20 +364,20 @@
 		)
 		{
 			$credentials = new OpenIdCredentials(
-				HttpUrl::create()->parse($parameters['openid.identity']), 
+				HttpUrl::create()->parse($parameters['openid.identity']),
 				$this->httpClient
 			);
 			
 			$request = HttpRequest::create()->
 				setMethod(HttpMethod::post())->
 				setUrl($credentials->getServer());
-				
+			
 			if (isset($parameters['openid.invalidate_handle']) && $manager)
 				$request->setPostVar(
 					'openid.invalidate_handle', 
 					$parameters['openid.invalidate_handle']
 				);
-				
+			
 			foreach (explode(',', $parameters['openid.signed']) as $key) {
 				$key = 'openid.'.$key;
 				$request->setPostVar($key, $parameters[$key]);
@@ -411,15 +413,16 @@
 				)
 			)
 				throw new OpenIdException('strange response given');
-				
+			
 			if ($result['is_valid'] === 'true') {
 				if (isset($result['invalidate_handle']) && $manager) {
 					$manager->purgeByHandle($result['invalidate_handle']);
 				}
+				
 				return true;
 			} elseif ($result['is_valid'] === 'false')
 				return false;
-				
+			
 			Assert::isUnreachable();
 		}
 		
@@ -427,12 +430,14 @@
 		{
 			$result = array();
 			$lines = explode("\n", $raw);
+			
 			foreach ($lines as $line) {
 				if (!empty($line) && strpos($line, ':') !== false) {
 					list($key, $value) = explode(':', $line, 2);
 					$result[trim($key)] = trim($value);
 				}
 			}
+			
 			return $result;
 		}
 		
@@ -445,6 +450,7 @@
 					$result[$key] = $value;
 				}
 			}
+			
 			return $result;
 		}
 	}

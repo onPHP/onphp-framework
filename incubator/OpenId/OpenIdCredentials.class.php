@@ -20,12 +20,13 @@
 		public function __construct(
 			HttpUrl $claimedId,
 			HttpClient $httpClient
-		) {
+		)
+		{
 			$this->claimedId = $claimedId->makeComparable();
 			
 			if (!$claimedId->isValid())
 				throw new OpenIdException('invalid claimed id');
-				
+			
 			$this->httpClient = $httpClient;
 			
 			$response = $httpClient->send(
@@ -80,7 +81,7 @@
 			
 			if (!$this->server || !$this->server->isValid())
 				throw new OpenIdException('bad server');
-			else 
+			else
 				$this->server->makeComparable();
 			
 			if (!$this->realId)
@@ -97,7 +98,8 @@
 		public static function create(
 			HttpUrl $claimedId,
 			HttpClient $httpClient
-		) {
+		)
+		{
 			return new self($claimedId, $httpClient);
 		}
 		

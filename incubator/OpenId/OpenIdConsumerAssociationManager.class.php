@@ -26,9 +26,9 @@
 		 * @return OpenIdConsumerAssociation
 		**/
 		public function makeAndSave(
-			$handle, 
-			$type, 
-			$secred, 
+			$handle,
+			$type,
+			$secred,
 			Timestamp $expires,
 			HttpUrl $server
 		);

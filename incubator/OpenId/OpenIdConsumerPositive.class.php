@@ -21,7 +21,7 @@
 		
 		/**
 		 * @return HttpUrl
-		 */
+		**/
 		public function getIdentity()
 		{
 			return $this->identity;
