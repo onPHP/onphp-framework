@@ -36,6 +36,9 @@
 			return GmpBigInteger::makeFromBinary($binary);
 		}
 		
+		/**
+		 * @return GmpBigInteger
+		**/
 		public function makeRandom($stop, RandomSource $source)
 		{
 			if (is_string($stop)) {

@@ -18,7 +18,7 @@
 		{
 			Assert::isTrue(file_exists($filename) && is_readable($filename));
 			
-			$this->handle = fopen($filename, 'r');
+			$this->handle = fopen($filename, 'rb');
 		}
 		
 		public function __destruct()

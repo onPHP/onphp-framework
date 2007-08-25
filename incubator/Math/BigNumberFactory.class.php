@@ -14,7 +14,7 @@
 	{
 		/**
 		 * @return BigInteger
-		 */
+		**/
 		abstract public function makeNumber($number, $base = 10);
 		
 		/**

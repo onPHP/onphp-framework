@@ -15,6 +15,9 @@
 	**/
 	class MtRandomSource extends Singleton implements RandomSource
 	{
+		/**
+		 * @return MtRandomSource
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
@@ -28,6 +31,7 @@
 			for ($i = 0; $i < $numberOfBytes; $i += 4) {
 				$bytes .= pack('L', mt_rand());
 			}
+			
 			return substr($bytes, 0, $numberOfBytes);
 		}
 	}
