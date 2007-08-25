@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class OpenIdConsumerSetupRequired implements OpenIdConsumerResult
+	final class OpenIdConsumerSetupRequired implements OpenIdConsumerResult
 	{
 		private $url = null;
 		

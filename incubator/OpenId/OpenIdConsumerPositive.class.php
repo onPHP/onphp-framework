@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class OpenIdConsumerPositive implements OpenIdConsumerResult
+	final class OpenIdConsumerPositive implements OpenIdConsumerResult
 	{
 		private $identity = null;
 		

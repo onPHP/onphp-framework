@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class OpenIdTest extends UnitTestCase
+	final class OpenIdTest extends UnitTestCase
 	{
 		public function testCredentials()
 		{

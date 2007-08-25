@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class OpenIdConsumerFail implements OpenIdConsumerResult
+	final class OpenIdConsumerFail implements OpenIdConsumerResult
 	{
 		public function isOk()
 		{
