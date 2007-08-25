@@ -15,8 +15,8 @@
 	**/
 	final class DiffieHellmanParameters
 	{
-		private $gen = null;
-		private $modulus = null;
+		private $gen		= null;
+		private $modulus	= null;
 		
 		public function __construct(BigInteger $gen, BigInteger $modulus)
 		{

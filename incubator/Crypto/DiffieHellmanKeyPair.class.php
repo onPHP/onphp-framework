@@ -12,12 +12,12 @@
 
 	/**
 	 * @see http://tools.ietf.org/html/rfc2631
-	 */
+	**/
 	final class DiffieHellmanKeyPair implements KeyPair 
 	{
-		private $private = null;
-		private $public = null;
-		private $parameters = null;
+		private $private	= null;
+		private $public		= null;
+		private $parameters	= null;
 		
 		public function __construct(DiffieHellmanParameters $parameters)
 		{
@@ -38,7 +38,8 @@
 		public static function generate(
 			DiffieHellmanParameters $parameters,
 			RandomSource $randomSource
-		) {
+		)
+		{
 			$result = new self($parameters);
 			
 			$factory = $parameters->getModulus()->getFactory();

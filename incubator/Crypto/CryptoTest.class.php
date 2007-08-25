@@ -140,7 +140,7 @@
 		
 		/**
 		 * @see http://csrc.nist.gov/ipsec/papers/rfc2202-testcases.txt
-		 */
+		**/
 		public function testHmacsha1()
 		{
 			$this->assertEqual(

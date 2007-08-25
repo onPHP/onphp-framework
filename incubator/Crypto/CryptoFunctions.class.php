@@ -22,7 +22,7 @@
 			if (strlen($key) > self::SHA1_BLOCK_SIZE)
 				$key = sha1($key, true);
 			
-			$key = str_pad($key, self::SHA1_BLOCK_SIZE, "\x00");
+			$key = str_pad($key, self::SHA1_BLOCK_SIZE, "\x00", STR_PAD_RIGHT);
 			
 			$ipad = null;
 			$opad = null;
