@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class FileRandomSource implements RandomSource
+	final class FileRandomSource implements RandomSource
 	{
 		private $handle = null;
 		

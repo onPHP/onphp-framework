@@ -13,7 +13,7 @@
 	/**
 	 * based on pseudorandom generator mt_rand
 	**/
-	class MtRandomSource extends Singleton implements RandomSource
+	final class MtRandomSource extends Singleton implements RandomSource
 	{
 		/**
 		 * @return MtRandomSource
