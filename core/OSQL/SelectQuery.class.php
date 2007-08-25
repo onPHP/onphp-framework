@@ -293,12 +293,12 @@
 						$field->setTable($this->getLastTable()),
 						$alias
 					);
+				} elseif ($field instanceof SelectQuery) {
+					$this->fields[] = $field;
+					$this->aliases[$field->getAlias()] = true;
 				} elseif ($field instanceof DialectString) {
-					if ($field instanceof SelectQuery)
-						$this->fields[] = $field;
-					else
-						$this->fields[] = new SelectField($field, $alias);
-
+					$this->fields[] = new SelectField($field, $alias);
+					
 					if ($field instanceof Aliased)
 						$this->aliases[$field->getAlias()] = true;
 					elseif ($alias)
@@ -318,7 +318,7 @@
 				);
 			else
 				$fieldName = $field;
-				
+			
 			$this->fields[] = new SelectField(
 				new DBField($fieldName, $this->getLastTable($table)), $alias
 			);
