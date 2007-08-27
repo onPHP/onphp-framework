@@ -21,7 +21,7 @@
 			
 			echo "<div style='margin:2px;padding:2px;border:1px solid #f00;'>";
 			if (isset($trace[1]))
-				echo $trace[1]['file'] . "(" . $trace[1]['line'] . ":";
+				echo $trace[1]['file'] . " (" . $trace[1]['line'] . ") : ";
 			
 			echo $this->templatePath;
 			
