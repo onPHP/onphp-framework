@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class DebugPhpView extends SimplePhpView
+	final class DebugPhpView extends SimplePhpView
 	{
 		public function preRender()
 		{
