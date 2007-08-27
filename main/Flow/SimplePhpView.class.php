@@ -33,7 +33,11 @@
 			
 			$partViewer = new PartViewer($this->partViewResolver, $model);
 			
+			$this->preRender();
+			
 			include $this->templatePath;
+			
+			$this->postRender();
 		}
 		
 		public function toString($model = null) 
@@ -41,6 +45,16 @@
 			ob_start();
 			$this->render($model);
 			return ob_get_clean();
+		}
+		
+		protected function preRender()
+		{
+			return $this;
+		}
+		
+		protected function postRender()
+		{
+			return $this;
 		}
 	}
 ?>

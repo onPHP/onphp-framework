@@ -1,5 +1,9 @@
 # $Id$
 
+2007-08-27	Denis M. Gabaidulin
+
+	* main/Flow/DebugPhpView.class.php: simple, but useful debug view.
+
 2007-08-22	Anton E. Lebedevich
 
 	* main/Flow/RedirectView.class.php: static create() added.
