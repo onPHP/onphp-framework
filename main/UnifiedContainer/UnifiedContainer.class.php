@@ -230,6 +230,10 @@
 			
 			$this->fetched = false;
 			
+			$workerClass = get_class($this->worker);
+			
+			$this->worker = new $workerClass($this);
+			
 			return $this;
 		}
 		
