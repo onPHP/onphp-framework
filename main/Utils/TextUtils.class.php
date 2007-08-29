@@ -137,5 +137,25 @@
 			
 			return $out;
 		}
+		
+		/**
+		 * @see http://www.w3.org/TR/REC-html40/charset.html#entities
+		 * @see http://www.w3.org/TR/REC-html40/sgml/entities.html
+		 * @see http://php.net/htmlentities
+		 *
+		 * htmlentities() do not support hexadecimal numeric character
+		 * references yet.
+		**/
+		public static function safeAmp($text)
+		{
+			$result = preg_replace(
+				'/&(?!(#(([0-9]+)|(x[0-9A-F]+))'
+				.'|([a-z][a-z0-9]*));)/i',
+				'&amp;',
+				$text
+			);
+			
+			return $result;
+		}
 	}
 ?>

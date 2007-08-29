@@ -1,5 +1,10 @@
 # $Id$
 
+2007-08-29	Ivan Y. Khvostishkov
+
+	* main/Utils/TextUtils.class.php: safeAmp() helps to avoid double
+	encoding of html entities.
+
 2007-08-27	Denis M. Gabaidulin
 
 	* main/Flow/DebugPhpView.class.php: simple, but useful debug view.
