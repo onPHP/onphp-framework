@@ -251,6 +251,8 @@
 			
 			$this->fetched = false;
 			
+			$this->worker->clean();
+			
 			$workerClass = get_class($this->worker);
 			
 			$this->worker = new $workerClass($this);
