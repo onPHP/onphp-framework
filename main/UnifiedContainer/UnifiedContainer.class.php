@@ -251,9 +251,11 @@
 			
 			$this->fetched = false;
 			
-			$this->worker->clean();
+			$worker = $this->worker->clean();
 			
-			$workerClass = get_class($this->worker);
+			$workerClass = get_class($worker);
+			
+			unset($worker);
 			
 			$this->worker = new $workerClass($this);
 			
