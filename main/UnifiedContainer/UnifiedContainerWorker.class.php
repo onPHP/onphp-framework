@@ -58,24 +58,6 @@
 		}
 		
 		/**
-		 * @return UnifiedContainer
-		**/
-		public function getContainer()
-		{
-			return $this->container;
-		}
-		
-		/**
-		 * @return UnifiedContainerWorker
-		**/
-		public function setContainer(UnifiedContainer $uc)
-		{
-			$this->container = $uc;
-			
-			return $this;
-		}
-		
-		/**
 		 * @return SelectQuery
 		**/
 		public function makeCountQuery()
@@ -95,7 +77,7 @@
 		**/
 		public function clean()
 		{
-			$this->criteria = $this->container = null;
+			$this->criteria = null;
 			
 			return $this;
 		}

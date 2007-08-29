@@ -243,26 +243,6 @@
 		}
 		
 		/**
-		 * @return UnifiedContainer
-		**/
-		public function clean()
-		{
-			$this->list = $this->clones = array();
-			
-			$this->fetched = false;
-			
-			$worker = $this->worker->clean();
-			
-			$workerClass = get_class($worker);
-			
-			unset($worker);
-			
-			$this->worker = new $workerClass($this);
-			
-			return $this;
-		}
-		
-		/**
 		 * @throws WrongArgumentException
 		 * @return UnifiedContainer
 		**/
@@ -347,6 +327,25 @@
 			return $this;
 		}
 
+		/**
+		 * @return UnifiedContainer
+		**/
+		public function clean()
+		{
+			$this->list = $this->clones = array();
+			
+			$this->fetched = false;
+			
+			$this->worker->clean();
+			
+			return $this;
+		}
+		
+		/* void */ public static function destroy(UnifiedContainer $container)
+		{
+			unset($container->worker, $container);
+		}
+		
 		protected function fetchList()
 		{
 			$query = $this->worker->makeFetchQuery();
