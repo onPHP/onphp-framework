@@ -73,16 +73,6 @@
 		}
 		
 		/**
-		 * @return UnifiedContainerWorker
-		**/
-		public function clean()
-		{
-			$this->criteria = null;
-			
-			return $this;
-		}
-		
-		/**
 		 * @return SelectQuery
 		**/
 		protected function makeSelectQuery()

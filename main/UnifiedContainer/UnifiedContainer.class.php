@@ -336,8 +336,6 @@
 			
 			$this->fetched = false;
 			
-			$this->worker->clean();
-			
 			return $this;
 		}
 		
