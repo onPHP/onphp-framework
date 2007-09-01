@@ -1,5 +1,9 @@
 # $Id$
 
+2007-09-01	Konstantin V. Arkhipov
+
+	* 0.10.4 released.
+
 2007-08-29	Ivan Y. Khvostishkov
 
 	* main/Utils/TextUtils.class.php: safeAmp() helps to avoid double
