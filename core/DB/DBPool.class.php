@@ -74,13 +74,13 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws MissingElementException
 		 * @return DBPool
 		**/
 		public function dropLink($name)
 		{
 			if (!isset($this->pool[$name]))
-				throw new WrongArgumentException(
+				throw new MissingElementException(
 					"link '{$name}' not found"
 				);
 			

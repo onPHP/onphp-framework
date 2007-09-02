@@ -1,5 +1,10 @@
 # $Id$
 
+2007-09-02	Konstantin V. Arkhipov
+
+	* core/DB/DBPool.class.php: dropLink() now throws MissingElement
+	instead of WrongArgument exception.
+
 2007-09-01	Konstantin V. Arkhipov
 
 	* 0.10.4 released.
