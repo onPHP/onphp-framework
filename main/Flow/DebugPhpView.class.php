@@ -15,13 +15,17 @@
 	**/
 	final class DebugPhpView extends SimplePhpView
 	{
+		/**
+		 * @return DebugPhpView
+		**/
 		public function preRender()
 		{
 			$trace = debug_backtrace();
 			
 			echo "<div style='margin:2px;padding:2px;border:1px solid #f00;'>";
+			
 			if (isset($trace[2])) {
-				echo $trace[2]['file'] . " (" . $trace[2]['line'] . "): ";
+				echo $trace[2]['file'] . ' (' . $trace[2]['line'] . '): ';
 			}
 			
 			echo $this->templatePath;
@@ -29,6 +33,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return DebugPhpView
+		**/
 		protected function postRender()
 		{
 			echo "</div>";
