@@ -122,5 +122,27 @@
 			
 			return implode(' ', $attributes);
 		}
+		
+		private static function getDomAttributes(DOMNode $node)
+		{
+			$result = null;
+			
+			$attributes = array();
+			
+			if ($node->attributes) {
+				$i = 0;
+				
+				while ($item = $node->attributes->item($i)) {
+					$attributes[] = $item->name.'="'.$item->value.'"';
+					
+					++$i;
+				}
+			}
+			
+			if ($attributes)
+				$result = implode(' ', $attributes);
+			
+			return $result;
+		}
 	}
 ?>
