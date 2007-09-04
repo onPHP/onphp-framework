@@ -66,5 +66,15 @@
 		{
 			return $this->endMark;
 		}
+		
+		public function isComment()
+		{
+				return $this->id == '!--';
+		}
+		
+		public function isExternal()
+		{
+				return ($this->id && $this->id[0] == '?');
+		}
 	}
 ?>

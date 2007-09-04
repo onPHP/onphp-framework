@@ -1,5 +1,11 @@
 # $Id$
 
+2007-09-04	Ivan Y. Khvostishkov
+
+	* main/Utils/ArrayUtils.class.php: arrayMergeUnique() added.
+
+	* main/Markup/Html/: minor stuff for coming parser.
+
 2007-09-02	Konstantin V. Arkhipov
 
 	* core/DB/DBPool.class.php: dropLink() now throws MissingElement
