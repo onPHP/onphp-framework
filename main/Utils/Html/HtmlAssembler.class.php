@@ -53,6 +53,48 @@
 			return $result;
 		}
 		
+		public static function makeDomNode(DOMNode $node)
+		{
+				$result = null;
+				
+				if ($node instanceof DOMElement) {
+						
+						$result = '<'.$node->nodeName;
+						
+						$attributes = self::getDomAttributes($node);
+						
+						if ($attributes)
+								$result .= ' '.$attributes;
+						
+						if (!$node->firstChild) {
+								$result .= ' />';
+						} else {
+								$result .= '>';
+						}
+						
+						$childNode = $node->firstChild;
+						
+						while ($childNode) {
+								$result .= self::makeDomNode($childNode);
+								$childNode = $childNode->nextSibling;
+						}
+						
+						if ($node->firstChild)
+								$result .= '</'.$node->nodeName.'>';
+						
+				} elseif ($node instanceof DOMCharacterData) {
+						
+						$result = $node->data;
+						
+				} else {
+						throw new UnimplementedFeatureException(
+								'assembling of '.get_class($node).' is not implemented yet'
+						);
+				}
+				
+				return $result;
+		}
+		
 		public function getHtml()
 		{
 			$result = null;

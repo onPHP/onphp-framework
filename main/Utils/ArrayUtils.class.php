@@ -77,6 +77,14 @@
 			
 			return $result;
 		}
+		
+		public static function arrayMergeUnique($firstArray, $secondArray)
+		{
+			Assert::isArray($firstArray);
+			Assert::isArray($secondArray);
+			
+			return array_unique(array_merge($firstArray, $secondArray));
+		}
 
 		/**
 		 * @deprecated by array_combine($array, $array)

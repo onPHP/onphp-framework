@@ -42,6 +42,11 @@
 				return $this->data;
 		}
 		
+		public function getRawData()
+		{
+			return $this->data;
+		}
+		
 		/**
 		 * @return Cdata
 		**/
