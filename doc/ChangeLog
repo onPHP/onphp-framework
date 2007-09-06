@@ -1,5 +1,10 @@
 # $Id$
 
+2007-09-06	Ivan Y. Khvostishkov
+
+	* main/Utils/ArrayUtils.class.php: arrayMergeUnique() renamed to
+	mergeUnqie() + variable argument lists are acepted now.
+
 2007-09-04	Ivan Y. Khvostishkov
 
 	* main/Utils/ArrayUtils.class.php: arrayMergeUnique() added.

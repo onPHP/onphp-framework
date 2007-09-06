@@ -78,14 +78,20 @@
 			return $result;
 		}
 		
-		public static function arrayMergeUnique($firstArray, $secondArray)
+		public static function mergeUnique(/* ... */)
 		{
-			Assert::isArray($firstArray);
-			Assert::isArray($secondArray);
+			$arguments = func_get_args();
 			
-			return array_unique(array_merge($firstArray, $secondArray));
+			Assert::isArray(reset($arguments));
+			
+			return array_unique(
+				call_user_func_array(
+					'array_merge',
+					$arguments
+				)
+			);
 		}
-
+		
 		/**
 		 * @deprecated by array_combine($array, $array)
 		**/
