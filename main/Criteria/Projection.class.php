@@ -34,6 +34,14 @@
 		}
 		
 		/**
+		 * @return MappableObjectProjection
+		**/
+		public static function mappable(MappableObject $object)
+		{
+			return new MappableObjectProjection($object);
+		}
+		
+		/**
 		 * @return MinimalNumberProjection
 		**/
 		public static function min($property, $alias = null)
