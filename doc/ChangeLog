@@ -1,5 +1,10 @@
 # $Id$
 
+2007-09-07	Konstantin V. Arkhipov
+
+	* main/Criteria/Projections/MappableObjectProjection.class.php:
+	new projection for arbitrary mappable objects.
+
 2007-09-06	Ivan Y. Khvostishkov
 
 	* main/Utils/ArrayUtils.class.php: arrayMergeUnique() renamed to
