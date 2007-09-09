@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Utils
 	**/
-	class Socket
+	final class Socket
 	{
 		const DEFAULT_TIMEOUT	= 1000; // milliseconds
 		

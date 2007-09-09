@@ -10,7 +10,10 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class FileOutputStream extends OutputStream
+	/**
+	 * @ingroup Utils
+	**/
+	final class FileOutputStream extends OutputStream
 	{
 		private $fd		= null;
 		

@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Utils
 	**/
-	class StringReader extends Reader 
+	final class StringReader extends Reader
 	{
 		protected $string	= null;
 		protected $length	= null;

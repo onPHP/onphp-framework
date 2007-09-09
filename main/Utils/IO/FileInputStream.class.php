@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Utils
 	**/
-	class FileInputStream extends InputStream
+	final class FileInputStream extends InputStream
 	{
 		private $fd		= null;
 		
