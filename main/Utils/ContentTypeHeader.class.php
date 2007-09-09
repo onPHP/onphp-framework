@@ -10,7 +10,10 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class ContentTypeHeader
+	/**
+	 * @ingroup Utils
+	**/
+	final class ContentTypeHeader
 	{
 		private $mediaType	= null;
 		private $parameters	= array();
