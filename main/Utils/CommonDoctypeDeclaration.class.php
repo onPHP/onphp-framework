@@ -21,7 +21,7 @@
 	 * 
 	 * @ingroup Utils
 	**/
-	class CommonDoctypeDeclaration extends DoctypeDeclaration
+	final class CommonDoctypeDeclaration extends DoctypeDeclaration
 	{
 		private $organization	= null;
 		
