@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Feed
+	**/
 	final class FeedChannel
 	{
 		private $title			= null;

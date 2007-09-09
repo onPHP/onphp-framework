@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Feed
+	**/
 	final class FeedItemContent
 	{
 		private $type = null;

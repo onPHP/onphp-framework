@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Feed
+	**/
 	final class FeedItemContentType extends Enumeration
 	{
 		const TEXT		= 1;

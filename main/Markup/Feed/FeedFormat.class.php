@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Feed
+	**/
 	abstract class FeedFormat extends Singleton
 	{
 		abstract public function getChannelWorker();

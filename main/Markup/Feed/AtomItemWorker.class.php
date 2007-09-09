@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Feed
+	**/
 	final class AtomItemWorker extends Singleton implements FeedItemWorker
 	{
 		/**

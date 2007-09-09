@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Feed
+	**/
 	interface FeedChannelWorker
 	{
 		public function makeChannel(SimpleXMLElement $xmlFeed);

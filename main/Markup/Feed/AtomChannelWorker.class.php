@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Feed
+	**/
 	final class AtomChannelWorker extends Singleton implements FeedChannelWorker
 	{
 		/**

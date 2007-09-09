@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Feed
+	**/
 	interface FeedItemWorker extends Instantiatable
 	{
 		public function makeItems(SimpleXMLElement $xmlFeed);
