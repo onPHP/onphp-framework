@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Utils
 	**/
-	class XmlRpcClient
+	final class XmlRpcClient
 	{
 		private $url 		= null;
 		private $timeout	= null;
