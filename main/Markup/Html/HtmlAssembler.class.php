@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Html
+	**/
 	final class HtmlAssembler
 	{
 		private $tags	= null;

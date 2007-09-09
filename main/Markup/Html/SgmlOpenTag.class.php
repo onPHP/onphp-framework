@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Html
+	**/
 	final class SgmlOpenTag extends SgmlTag
 	{
 		private $attributes = array();

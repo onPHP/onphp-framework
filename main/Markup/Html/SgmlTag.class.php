@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Html
+	**/
 	abstract class SgmlTag extends SgmlToken
 	{
 		private $id = null;
