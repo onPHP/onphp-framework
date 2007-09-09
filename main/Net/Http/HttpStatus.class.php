@@ -13,7 +13,7 @@
 	/**
 	 * Enumeration of http status codes
 	 * 
-	 * @ingroup Utils
+	 * @ingroup Http
 	**/	
 	final class HttpStatus extends Enumeration 
 	{

@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Http
+	**/
 	final class HttpMethod extends Enumeration
 	{
 		const OPTIONS	= 1;

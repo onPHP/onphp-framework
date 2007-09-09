@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Http
+	**/
 	final class CurlHttpClient implements HttpClient
 	{
 		private $handle			= null;

@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Http
+	**/
 	final class CurlHttpResponse implements HttpResponse
 	{
 		private $headerParser		= null;
