@@ -18,6 +18,8 @@
 	 * -//W3C//DTD HTML//EN
 	 * -//W3C//DTD XHTML Basic 1.0//EN
 	 * -//W3C//DTD HTML 4.01 Transitional//EN
+	 * 
+	 * @ingroup Utils
 	**/
 	class CommonDoctypeDeclaration extends DoctypeDeclaration
 	{

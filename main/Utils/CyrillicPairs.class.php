@@ -11,8 +11,10 @@
 /* $Id$ */
 
 	/**
-	 * based on CPAN's Lingua::DetectCharset.
+	 * Based on CPAN's Lingua::DetectCharset.
 	 * Thanks to John Neystadt, http://www.neystadt.org/john/
+	 * 
+	 * @ingroup Utils
 	**/
 	final class CyrillicPairs extends StaticFactory
 	{
