@@ -144,9 +144,6 @@
 	 * @defgroup onSPL Things based on Standard PHP Library
 	 * @ingroup Main
 	 *
-	 * @defgroup Net Internet standarts implementations
-	 * @ingroup Main
-	 *
 	 * @defgroup Utils Various accompanying utilities
 	 * @ingroup Main
 	 *
@@ -156,11 +153,29 @@
 	 * @defgroup Calendar Calendar representation's helpers
 	 * @ingroup Main
 	 *
-	 * @defgroup Mail Mail utilities
+	 * @defgroup Turing CAPTCHA's implementation
+	 * @ingroup Utils
+	 *
+	 * @defgroup Net Internet standarts implementations
 	 * @ingroup Main
 	 *
-	 * @defgroup Turing CAPTCHA's implementation
+	 * @defgroup Mail Mail utilities
+	 * @ingroup Net
+	 *
+	 * @defgroup Http HTTP related utilities
+	 * @ingroup Net
+	 *
+	 * @defgroup Math Mathematical utilities
 	 * @ingroup Main
+	 *
+	 * @defgroup Markup Various markups implementations
+	 * @ingroup Main
+	 *
+	 * @defgroup Feed Feed's parsers
+	 * @ingroup Markup
+	 *
+	 * @defgroup Html HTML parser
+	 * @ingroup Markup
 	 *
 	 * @defgroup Meta MetaConfiguration
 	 *
