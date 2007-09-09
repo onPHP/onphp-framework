@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Utils
+	**/
 	final class ContentTypeHeader
 	{
 		private $mediaType	= null;

@@ -24,6 +24,8 @@
 	 *  "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 	 * or
 	 * <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+	 * 
+	 * @ingroup Utils
 	**/
 	class DoctypeDeclaration
 	{
