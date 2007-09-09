@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Utils
 	**/
-	class BufferedReader extends Reader
+	final class BufferedReader extends Reader
 	{
 		private $in				= null;
 		private $closed			= false;

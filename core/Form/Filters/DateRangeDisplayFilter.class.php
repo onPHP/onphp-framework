@@ -10,8 +10,10 @@
  ***************************************************************************/
 /* $Id$ */
 
-
-	class DateRangeDisplayFilter extends BaseFilter
+	/**
+	 * @ingroup Filters
+	**/
+	final class DateRangeDisplayFilter extends BaseFilter
 	{
 		/**
 		 * @return DateRangeDisplayFilter
@@ -28,7 +30,7 @@
 			if ($value instanceof DateRange) {
 				if ($value->getStart())
 					$result = $value->getStart()->toDate('.');
-					
+				
 				$result .= ' - ';
 				
 				if ($value->getEnd())

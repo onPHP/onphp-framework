@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Utils
 	**/
-	class StringInputStream extends InputStream
+	final class StringInputStream extends InputStream
 	{
 		protected $string	= null;
 		protected $length	= null;

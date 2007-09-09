@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Utils
 	**/
-	class LogRecord
+	final class LogRecord
 	{
 		private $message 	= null;
 		private $level		= LogLevel::INFO;
