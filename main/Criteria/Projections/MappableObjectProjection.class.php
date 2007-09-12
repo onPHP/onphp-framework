@@ -15,11 +15,13 @@
 	**/
 	final class MappableObjectProjection implements ObjectProjection
 	{
-		private $mappable = null;
+		private $mappable	= null;
+		private $alias		= null;
 		
-		public function __construct(MappableObject $mappable)
+		public function __construct(MappableObject $mappable, $alias = null)
 		{
 			$this->mappable = $mappable;
+			$this->alias = $alias;
 		}
 		
 		/**
@@ -28,7 +30,8 @@
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
 			return $query->get(
-				$this->mappable->toMapped($criteria->getDao(), $query)
+				$this->mappable->toMapped($criteria->getDao(), $query),
+				$this->alias
 			);
 		}
 	}
