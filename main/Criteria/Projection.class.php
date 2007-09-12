@@ -36,9 +36,9 @@
 		/**
 		 * @return MappableObjectProjection
 		**/
-		public static function mappable(MappableObject $object)
+		public static function mappable(MappableObject $object, $alias = null)
 		{
-			return new MappableObjectProjection($object);
+			return new MappableObjectProjection($object, $alias);
 		}
 		
 		/**
