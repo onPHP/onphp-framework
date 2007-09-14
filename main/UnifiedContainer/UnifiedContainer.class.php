@@ -331,7 +331,9 @@
 				$list = $this->dao->getCustomRowList($query);
 			else
 				$list = $this->dao->getListByQuery($query);
-
+			
+			$this->list = array();
+			
 			return $this->importList($list);
 		}
 		
@@ -341,11 +343,10 @@
 		private function importList(/* array */ $list)
 		{
 			if ($this->lazy) {
-				$this->list = array();
 				foreach ($list as $id)
 					$this->list[$id] = $id;
 			} else {
-				$this->list = $list;
+				$this->list = array_merge($this->list, $list);
 			}
 
 			$this->syncClones();
