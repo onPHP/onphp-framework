@@ -1,5 +1,9 @@
 # $Id$
 
+2007-09-14	Dmitry E. Pismenny
+
+	* main/Base/Range.class.php: intersects() added.	
+
 2007-09-07	Konstantin V. Arkhipov
 
 	* main/Criteria/Projections/MappableObjectProjection.class.php:
@@ -131,8 +135,8 @@
 
 2007-07-10	Dmitry E. Pismenny
 
-	* main/Utils/TextUtils.class.php: special handling for boolean
-	values.
+	* main/Utils/TextUtils.class.php: cutOnSpace now return string, which 
+	cutted to needfull length, if there is no space after length.
 
 2007-07-09	Konstantin V. Arkhipov
 
