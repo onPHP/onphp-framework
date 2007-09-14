@@ -151,6 +151,12 @@
 					$this->max === $range->getMax());
 		}
 		
+		public function intersects(Range $range)
+		{
+			return ($this->max >= $range->getMin() &&
+					$this->min <= $range->getMax());
+		}
+		
 		public function isEmpty()
 		{
 			return
