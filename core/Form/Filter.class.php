@@ -77,6 +77,14 @@
 		}
 		
 		/**
+		 * @return UpperCaseFilter
+		**/
+		public static function upperCase()
+		{
+			return Singleton::getInstance('UpperCaseFilter');
+		}
+		
+		/**
 		 * @return HtmlSpecialCharsFilter
 		**/
 		public static function htmlSpecialChars()
