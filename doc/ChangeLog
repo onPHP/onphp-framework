@@ -1,5 +1,9 @@
 # $Id$
 
+2007-09-17	Konstantin V. Arkhipov
+
+	* 0.10.5 released.
+
 2007-09-17	Sergey M. Skachkov
 
 	* core/Form/Filter.class.php: upperCase() added.
