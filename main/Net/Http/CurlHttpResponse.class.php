@@ -29,7 +29,7 @@
 		
 		/**
 		 * @return CurlHttpResponse
-		 */
+		**/
 		public static function create()
 		{
 			return new self;
@@ -37,24 +37,25 @@
 		
 		/**
 		 * internal use only, callback for curl client
-		 */
+		**/
 		public function writeHeader($resource, $line)
 		{
 			$this->headerParser->doLine($line);
+			
 			if (
 				$this->maxFileSize !== null
 				&& $this->headerParser->hasHeader('Content-Length')
-				&& $this->headerParser->getHeader('Content-Length') 
+				&& $this->headerParser->getHeader('Content-Length')
 					> $this->maxFileSize
 			)
 				return -1; // see http://curl.haxx.se/libcurl/c/curl_easy_setopt.html CURLOPT_HEADERFUNCTION
-			else 
+			else
 				return strlen($line);
 		}
 		
 		/**
 		 * internal use only, callback for curl client
-		 */
+		**/
 		public function writeBody($resource, $body)
 		{
 			$this->body .= $body;
@@ -74,19 +75,25 @@
 		/**
 		 * internal use only for curl client
 		 * @return CurlHttpResponse
-		 */
+		**/
 		public function setMaxFileSize($maxFileSize)
 		{
 			$this->maxFileSize = $maxFileSize;
 			return $this;
 		}
 		
+		/**
+		 * @return CurlHttpResponse
+		**/
 		public function setStatus(HttpStatus $status)
 		{
 			$this->status = $status;
 			return $this;
 		}
 		
+		/**
+		 * @return HttpStatus
+		**/
 		public function getStatus()
 		{
 			return $this->status;
