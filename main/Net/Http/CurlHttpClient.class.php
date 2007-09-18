@@ -123,15 +123,13 @@
 				$options[CURLOPT_MAXREDIRS] = $this->maxRedirects;
 				
 			if ($request->getMethod()->getId() == HttpMethod::GET) {
-				// TODO: append $request->getGet() to url
 				$options[CURLOPT_HTTPGET] = true;
+				$options[CURLOPT_URL] .=
+					'?'.$this->varsToString($request->getGet());
 			} else {
 				$options[CURLOPT_POST] = true;
-				$pairs = array();
-				foreach ($request->getPost() as $key=> $value) {
-					$pairs[] = $key.'='.urlencode($value);
-				}
-				$options[CURLOPT_POSTFIELDS] = implode('&', $pairs);
+				$options[CURLOPT_POSTFIELDS] =
+					$this->varsToString($request->getPost());
 			}
 			
 			curl_setopt_array($handle, $options);
@@ -147,16 +145,25 @@
 			
 			$response->setStatus(
 				new HttpStatus(
-					curl_getinfo(
-						$handle, 
-						CURLINFO_HTTP_CODE
-					)
+					curl_getinfo($handle, CURLINFO_HTTP_CODE)
 				)
 			);
 			
 			curl_close($handle);
 			
 			return $response;
+		}
+		
+		private function varsToString(&$array)
+		{
+			Assert::isArray($array);
+			$result = array();
+			
+			foreach ($array as $key => $value) {
+				$result[] = $key.'='.urlencode($value);
+			}
+			
+			return implode('&', $result);
 		}
 	}
 ?>
