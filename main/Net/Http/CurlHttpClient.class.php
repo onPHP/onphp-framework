@@ -23,7 +23,7 @@
 		
 		/**
 		 * @return CurlHttpClient
-		 */
+		**/
 		public static function create()
 		{
 			return new self;
@@ -32,7 +32,7 @@
 		/**
 		 * @return CurlHttpClient
 		 * @param $timeout in seconds
-		 */
+		**/
 		public function setTimeout($timeout)
 		{
 			$this->timeout = $timeout;
@@ -41,7 +41,7 @@
 		
 		public function getTimeout()
 		{
-			return $this;
+			return $this->timeout;
 		}
 		
 		/**
@@ -49,7 +49,7 @@
 		 * 
 		 * @param $really boolean
 		 * @return CurlHttpClient
-		 */
+		**/
 		public function setFollowLocation($really)
 		{
 			Assert::isBoolean($really);
@@ -64,7 +64,7 @@
 		
 		/**
 		 * @return CurlHttpClient
-		 */
+		**/
 		public function setMaxRedirects($maxRedirects)
 		{
 			$this->maxRedirects = $maxRedirects;
@@ -78,7 +78,7 @@
 		
 		/**
 		 * @return CurlHttpClient
-		 */
+		**/
 		public function setMaxFileSize($maxFileSize)
 		{
 			$this->maxFileSize = $maxFileSize;
@@ -92,7 +92,7 @@
 		
 		/**
 		 * @return HttpResponse
-		 */
+		**/
 		public function send(HttpRequest $request)
 		{
 			Assert::isTrue(
@@ -115,25 +115,25 @@
 			
 			if ($this->timeout !== null)
 				$options[CURLOPT_TIMEOUT] = $this->timeout;
-				
+			
 			if ($this->followLocation !== null)
 				$options[CURLOPT_FOLLOWLOCATION] = $this->followLocation;
-				
+			
 			if ($this->maxRedirects !== null)
 				$options[CURLOPT_MAXREDIRS] = $this->maxRedirects;
-				
+			
 			if ($request->getMethod()->getId() == HttpMethod::GET) {
 				$options[CURLOPT_HTTPGET] = true;
 				$options[CURLOPT_URL] .=
-					'?'.$this->varsToString($request->getGet());
+					'?'.$this->argumentsToString($request->getGet());
 			} else {
 				$options[CURLOPT_POST] = true;
 				$options[CURLOPT_POSTFIELDS] =
-					$this->varsToString($request->getPost());
+					$this->argumentsToString($request->getPost());
 			}
 			
 			curl_setopt_array($handle, $options);
-
+			
 			if (curl_exec($handle) === false) {
 				throw new NetworkException(
 					'curl error, code: '
@@ -154,7 +154,7 @@
 			return $response;
 		}
 		
-		private function varsToString(&$array)
+		private function argumentsToString($array)
 		{
 			Assert::isArray($array);
 			$result = array();
