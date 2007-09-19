@@ -36,9 +36,7 @@
 			
 			if (is_array($value)) {
 				try {
-					Assert::isInteger(current($value),
-						'only identifiable lists accepted'
-					);
+					Assert::isInteger(current($value));
 					
 					return $this->import(
 						array($this->name => $value)
