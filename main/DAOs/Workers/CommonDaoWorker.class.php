@@ -383,20 +383,6 @@
 			
 			return $result;
 		}
-		
-		public function dropByIds(/* array */ $ids)
-		{
-			foreach ($ids as $id)
-				$this->uncacheById($id);
-			
-			$this->dao->uncacheLists();
-
-			return
-				DBPool::getByDao($this->dao)->queryNull(
-					OSQL::delete()->from($this->dao->getTable())->
-					where(Expression::in($this->dao->getIdName(), $ids))
-				);
-		}
 		//@}
 
 		/// uncachers

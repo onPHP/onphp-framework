@@ -306,27 +306,6 @@
 		}
 		//@}
 
-		/// erasers
-		//@{
-		public function dropByIds(/* array */ $ids)
-		{
-			$cache = Cache::me();
-			
-			$result =
-				DBPool::getByDao($this->dao)->queryNull(
-					OSQL::delete()->from($this->dao->getTable())->
-					where(Expression::in($this->dao->getIdName(), $ids))
-				);
-
-			foreach ($ids as $id)
-				$cache->mark($this->className)->delete($this->className.'_'.$id);
-			
-			$this->dao->uncacheLists();
-
-			return $result;
-		}
-		//@}
-		
 		/// cachers
 		//@{
 		public function cacheById(Identifiable $object)
