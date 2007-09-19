@@ -15,6 +15,44 @@
 	**/
 	final class PrimitiveIdentifierList extends PrimitiveIdentifier
 	{
+		public function importValue($value)
+		{
+			if ($value instanceof UnifiedContainer) {
+				if ($value->isLazy())
+					return $this->import(
+						array($this->name => $value->getList())
+					);
+				elseif (
+					$value->getParentObject()->getId()
+					&& ($list = $value->getList())
+				) {
+					return $this->import(
+						array($this->name => ArrayUtils::getIdsArray($list))
+					);
+				} else {
+					return parent::importValue(null);
+				}
+			}
+			
+			if (is_array($value)) {
+				try {
+					Assert::isInteger(current($value),
+						'only identifiable lists accepted'
+					);
+					
+					return $this->import(
+						array($this->name => $value)
+					);
+				} catch (WrongArgumentException $e) {
+					return $this->import(
+						array($this->name => ArrayUtils::getIdsArray($value))
+					);
+				}
+			}
+			
+			return parent::importValue($value);
+		}
+		
 		public function import($scope)
 		{
 			if (!$this->className)
