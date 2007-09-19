@@ -34,6 +34,20 @@
 				}
 			}
 			
+			if (is_array($value)) {
+				try {
+					Assert::isInteger(current($value));
+					
+					return $this->import(
+						array($this->name => $value)
+					);
+				} catch (WrongArgumentException $e) {
+					return $this->import(
+						array($this->name => ArrayUtils::getIdsArray($value))
+					);
+				}
+			}
+			
 			return parent::importValue($value);
 		}
 		

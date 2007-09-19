@@ -9,6 +9,9 @@
 	* core/Form/Primitives/PrimitiveIdentifierList.class.php:
 	always return array after import.
 
+	* core/Form/Primitives/PrimitiveIdentifierList.class.php: importValue()
+	now can import data from array of ids or array of Identificable objects.
+
 2007-09-19	Vladimir A. Altuchov
 
 	* main/Net/Http/CurlHttpClient.class.php: no body response available.
