@@ -353,22 +353,8 @@
 			
 			return $result;
 		}
-		
-		public function dropByIds(/* array */ $ids)
-		{
-			foreach ($ids as $id)
-				$this->uncacheById($id);
-			
-			$this->uncacheLists();
-
-			return
-				DBFactory::getDefaultInstance()->queryNull(
-					OSQL::delete()->from($this->dao->getTable())->
-					where(Expression::in('id', $ids))
-				);
-		}
 		//@}
-
+		
 		//@{
 		// uncachers
 		public function uncacheByIds($ids)
