@@ -2,6 +2,8 @@
 
 2007-09-19	Konstantin V. Arkhipov
 
+	* main/DAOs/Workers/: uncaching fixed in dropByIds().
+
 	* main/Net/Http/CurlHttpClient.class.php: isNoBody() -> hasNoBody().
 
 2007-09-19	Denis M. Gabaidulin
