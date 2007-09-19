@@ -5,11 +5,12 @@
 	* main/Net/Http/CurlHttpClient.class.php: isNoBody() -> hasNoBody().
 
 2007-09-19	Denis M. Gabaidulin
-	* core/Form/Primitives/PrimitiveIdentifierList.class.php:
-	importValue method implemented.
 
-	* core/Form/Primitives/PrimitiveIdentifierList.class.php:
-	always return array after import.
+	* core/Form/Primitives/PrimitiveIdentifierList.class.php: importValue
+	method implemented.
+
+	* core/Form/Primitives/PrimitiveIdentifierList.class.php: always
+	return array after import.
 
 2007-09-19	Vladimir A. Altuchov
 
