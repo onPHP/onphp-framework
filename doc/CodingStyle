@@ -42,6 +42,11 @@ PHP:
 				// do something useful
 			}
 
+			$var =
+				$firstLongParameter
+					? $secondLongParameter
+					: $thirdLongParameter;
+			
 			if (
 				$condition
 				|| $incindent
