@@ -1,5 +1,10 @@
 # $Id$
 
+2007-09-19	Denis M. Gabaidulin
+
+	* core/Form/Primitives/PrimitiveIdentifierList.class.php:
+	always return array after import.
+
 2007-09-19	Vladimir A. Altuchov
 	
 	* main/Net/Http/CurlHttpClient.class.php: no body response 
