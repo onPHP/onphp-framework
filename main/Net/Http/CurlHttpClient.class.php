@@ -20,6 +20,7 @@
 		private $followLocation	= null;
 		private $maxRedirects	= null;
 		private $maxFileSize	= null;
+		private $noBody			= null;
 		
 		/**
 		 * @return CurlHttpClient
@@ -60,6 +61,22 @@
 		public function isFollowLocation()
 		{
 			return $this->followLocation;
+		}
+		
+		/**
+		 * @param $really boolean
+		 * @return CurlHttpClient
+		 */
+		public function setNoBody($really)
+		{
+			Assert::isBoolean($really);
+			$this->noBody = $really;
+			return $this;
+		}
+		
+		public function isNoBody()
+		{
+			return $this->noBody;
 		}
 		
 		/**
@@ -112,6 +129,9 @@
 				CURLOPT_HEADERFUNCTION => array($response, 'writeHeader'),
 				CURLOPT_URL => $request->getUrl()->toString()
 			);
+			
+			if ($this->noBody !== null)
+				$options[CURLOPT_NOBODY] = $this->noBody;
 			
 			if ($this->timeout !== null)
 				$options[CURLOPT_TIMEOUT] = $this->timeout;
