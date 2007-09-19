@@ -61,6 +61,8 @@
 				$values[] = $id;
 			}
 			
+			$this->value = array();
+			
 			$objectList = $this->dao()->getListByIds($values);
 			
 			if (count($objectList) == count($values)) {
