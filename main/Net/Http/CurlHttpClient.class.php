@@ -66,7 +66,7 @@
 		/**
 		 * @param $really boolean
 		 * @return CurlHttpClient
-		 */
+		**/
 		public function setNoBody($really)
 		{
 			Assert::isBoolean($really);
@@ -74,7 +74,7 @@
 			return $this;
 		}
 		
-		public function isNoBody()
+		public function hasNoBody()
 		{
 			return $this->noBody;
 		}
