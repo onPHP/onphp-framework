@@ -1,5 +1,10 @@
 # $Id$
 
+2007-09-19	Vladimir A. Altuchov
+	
+	* main/Net/Http/CurlHttpClient.class.php: no body response 
+	available
+
 2007-09-17	Konstantin V. Arkhipov
 
 	* 0.10.5 released.
