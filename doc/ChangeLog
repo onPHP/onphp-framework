@@ -6,9 +6,8 @@
 	always return array after import.
 
 2007-09-19	Vladimir A. Altuchov
-	
-	* main/Net/Http/CurlHttpClient.class.php: no body response 
-	available.
+
+	* main/Net/Http/CurlHttpClient.class.php: no body response available.
 
 2007-09-17	Konstantin V. Arkhipov
 
@@ -17,10 +16,10 @@
 2007-09-17	Sergey M. Skachkov
 
 	* core/Form/Filter.class.php: upperCase() added.
-	
+
 2007-09-14	Dmitry E. Pismenny
 
-	* main/Base/Range.class.php: intersects() added.	
+	* main/Base/Range.class.php: intersects() added.
 
 2007-09-07	Konstantin V. Arkhipov
 
