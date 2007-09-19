@@ -3,7 +3,7 @@
 2007-09-19	Vladimir A. Altuchov
 	
 	* main/Net/Http/CurlHttpClient.class.php: no body response 
-	available
+	available.
 
 2007-09-17	Konstantin V. Arkhipov
 
