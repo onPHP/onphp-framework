@@ -130,9 +130,6 @@
 				CURLOPT_URL => $request->getUrl()->toString()
 			);
 			
-			if ($this->noBody !== null)
-				$options[CURLOPT_NOBODY] = $this->noBody;
-			
 			if ($this->timeout !== null)
 				$options[CURLOPT_TIMEOUT] = $this->timeout;
 			
@@ -151,6 +148,9 @@
 				$options[CURLOPT_POSTFIELDS] =
 					$this->argumentsToString($request->getPost());
 			}
+			
+			if ($this->noBody !== null)
+				$options[CURLOPT_NOBODY] = $this->noBody;
 			
 			curl_setopt_array($handle, $options);
 			
