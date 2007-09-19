@@ -1,5 +1,9 @@
 # $Id$
 
+2007-09-19	Konstantin V. Arkhipov
+
+	* main/Net/Http/CurlHttpClient.class.php: isNoBody() -> hasNoBody().
+
 2007-09-19	Denis M. Gabaidulin
 
 	* core/Form/Primitives/PrimitiveIdentifierList.class.php:
