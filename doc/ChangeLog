@@ -1,5 +1,9 @@
 # $Id$
 
+2007-09-19	Konstantin V. Arkhipov
+
+	* main/DAOs/Workers/: uncaching fixed in dropByIds().
+
 2007-08-13	Vladimir A. Altuchov
 
 	* core/Form/Primitives/PrimitiveTime.class.php: correct import
