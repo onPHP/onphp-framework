@@ -15,6 +15,8 @@
 	**/
 	final class PrimitiveIdentifierList extends PrimitiveIdentifier
 	{
+		protected $value = array();
+		
 		public function importValue($value)
 		{
 			if ($value instanceof UnifiedContainer) {
@@ -74,8 +76,6 @@
 				
 				$values[] = $id;
 			}
-			
-			$this->value = array();
 			
 			$objectList = $this->dao()->getListByIds($values);
 			
