@@ -103,11 +103,13 @@
 		
 		public static function cutOnSpace($string, $length, $append = null)
 		{
-			if (mb_strlen($string) < $length)
+			$stringLength = mb_strlen($string);
+			
+			if ($stringLength < $length)
 				return $string;
 			else {
 				if (!$pos = mb_strpos($string, ' ', $length))
-					$pos = $length;
+					$pos = $stringLength;
 				
 				return mb_substr($string, 0, $pos).$append;
 			}
