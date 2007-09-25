@@ -14,7 +14,11 @@
 	
 	$testPathes = array(
 		ONPHP_TEST_PATH.'core'.DIRECTORY_SEPARATOR,
+		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR,
+		
 		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR
+		.'Ip'.DIRECTORY_SEPARATOR
+
 	);
 	
 	$dbs = array(
