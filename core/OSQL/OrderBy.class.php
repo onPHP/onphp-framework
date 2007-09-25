@@ -31,7 +31,7 @@
 			
 			$this->direction = new Ternary(null);
 		}
-
+		
 		/**
 		 * @return OrderBy
 		**/
@@ -40,7 +40,7 @@
 			$this->direction->setFalse();
 			return $this;
 		}
-
+		
 		/**
 		 * @return OrderBy
 		**/
@@ -48,6 +48,11 @@
 		{
 			$this->direction->setTrue();
 			return $this;
+		}
+		
+		public function isAsc()
+		{
+			return $this->direction->decide(true, false, true);
 		}
 		
 		/**
@@ -59,7 +64,7 @@
 			
 			if ($this->direction->isNull())
 				return $order;
-				
+			
 			return $order->{$this->direction->decide('asc', 'desc')}();
 		}
 		

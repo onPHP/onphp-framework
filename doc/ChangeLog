@@ -1,5 +1,11 @@
 # $Id$
 
+2007-09-25	Dmitry E. Demidov
+
+	* core/OSQL/FieldTable.class.php: getField() added.
+
+	* core/OSQL/OrderBy.class.php: isAsc() added.
+
 2007-09-19	Konstantin V. Arkhipov
 
 	* main/DAOs/Workers/: uncaching fixed in dropByIds().

@@ -17,12 +17,17 @@
 	abstract class FieldTable extends Castable implements DialectString
 	{
 		protected $field = null;
-
+		
 		public function __construct($field)
 		{
 			$this->field = $field;
 		}
-
+		
+		public function getField()
+		{
+			return $this->field;
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			$out = $dialect->fieldToString($this->field);
