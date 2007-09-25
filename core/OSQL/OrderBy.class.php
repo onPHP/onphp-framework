@@ -50,6 +50,11 @@
 			return $this;
 		}
 		
+		public function isAsc()
+		{
+			return $this->direction->decide(true, false, true);
+		}
+		
 		/**
 		 * @return OrderBy
 		**/

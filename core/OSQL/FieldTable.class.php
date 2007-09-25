@@ -22,7 +22,12 @@
 		{
 			$this->field = $field;
 		}
-
+		
+		public function getField()
+		{
+			return $this->field;
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			$out = $dialect->fieldToString($this->field);

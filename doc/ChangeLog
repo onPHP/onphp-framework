@@ -1,5 +1,11 @@
 # $Id$
 
+2007-09-25	Dmitry E. Demidov
+
+	* core/OSQL/FieldTable.class.php: getField() added.
+
+	* core/OSQL/OrderBy.class.php: isAsc() added.
+
 2007-09-24	Vladimir A. Altuchov
 
 	* main/Net/Ip/: Ip classes added.
