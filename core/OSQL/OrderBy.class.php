@@ -31,7 +31,11 @@
 			
 			$this->direction = new Ternary(null);
 		}
-
+		
+		public function __clone() {
+			$this->direction = clone $this->direction;
+		}
+		
 		/**
 		 * @return OrderBy
 		**/
@@ -40,7 +44,7 @@
 			$this->direction->setFalse();
 			return $this;
 		}
-
+		
 		/**
 		 * @return OrderBy
 		**/
@@ -53,6 +57,17 @@
 		public function isAsc()
 		{
 			return $this->direction->decide(true, false, true);
+		}
+		
+		/**
+		 * @return OrderBy
+		**/
+		public function invert()
+		{
+			return
+				$this->isAsc()
+					? $this->desc()
+					: $this->asc();
 		}
 		
 		/**

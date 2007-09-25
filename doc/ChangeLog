@@ -4,7 +4,7 @@
 
 	* core/OSQL/FieldTable.class.php: getField() added.
 
-	* core/OSQL/OrderBy.class.php: isAsc() added.
+	* core/OSQL/OrderBy.class.php: isAsc(), invert(), __clone() added.
 
 2007-09-24	Vladimir A. Altuchov
 
