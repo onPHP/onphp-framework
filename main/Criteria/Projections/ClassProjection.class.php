@@ -13,9 +13,9 @@
 	/**
 	 * @ingroup Projections
 	**/
-	final class ClassProjection implements ObjectProjection
+	class ClassProjection implements ObjectProjection
 	{
-		private $className	= null;
+		protected $className	= null;
 		
 		/**
 		 * @return ClassProjection

@@ -13,28 +13,14 @@
 	/**
 	 * @ingroup Projections
 	**/
-	final class GroupByClassProjection implements ObjectProjection
+	final class GroupByClassProjection extends ClassProjection
 	{
-		private $className	= null;
-		
 		/**
-		 * @return ClassProjection
+		 * @return GroupByClassProjection
 		**/
 		public static function create($class)
 		{
 			return new self($class);
-		}
-		
-		public function __construct($class)
-		{
-			Assert::isTrue(
-				ClassUtils::isInstanceOf($class, 'Prototyped')
-			);
-			
-			if (is_object($class))
-				$this->className = get_class($class);
-			else
-				$this->className = $class;
 		}
 		
 		/**
