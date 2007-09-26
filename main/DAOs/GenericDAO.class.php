@@ -286,7 +286,6 @@
 			$this->uncacheById($object->getId());
 			
 			// clean out Identifier, if any
-			// and overwrite previous instances, if any
 			return $this->addObjectToMap($object->setId($object->getId()));
 		}
 		
