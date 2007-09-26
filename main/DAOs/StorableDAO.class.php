@@ -71,7 +71,6 @@
 			$this->uncacheById($object->getId());
 			
 			// clean out Identifier, if any
-			// and overwrite previous instances, if any
 			return
 				$this->identityMap[$object->getId()]
 					= $object->setId($object->getId());
