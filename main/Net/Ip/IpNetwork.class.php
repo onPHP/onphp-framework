@@ -37,11 +37,11 @@
 			if ($mask == 0 || self::MASK_MAX_SIZE < $mask)
 				throw new WrongArgumentException('wrong mask given'); 
 			
-			$this->longMask = 
+			$this->longMask =
 				(int) (pow(2, (32 - $mask)) * (pow(2, $mask) - 1));
 			
 			if (($ip->getLongIp() & $this->longMask) != $ip->getLongIp())
-				throw new WrongArgumentException('wrong ip network given'); 
+				throw new WrongArgumentException('wrong ip network given');
 			
 			$this->ip = $ip;
 			$this->mask = $mask;
@@ -66,13 +66,13 @@
 		public function getEnd()
 		{
 			if (!$this->end) {
-				$this->end = 
+				$this->end =
 					IpAddress::create(
 						long2ip($this->ip->getLongIp() | ~$this->longMask)
 					);
 			}
 			
-			return $this->end; 
+			return $this->end;
 		}
 		
 		public function contains(/*IpAddress*/ $probe)
