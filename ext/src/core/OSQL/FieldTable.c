@@ -29,6 +29,8 @@ ONPHP_METHOD(FieldTable, __construct)
 	ONPHP_UPDATE_PROPERTY(getThis(), "field", field);
 }
 
+ONPHP_GETTER(FieldTable, getField, field);
+
 ONPHP_METHOD(FieldTable, toDialectString)
 {
 	zval *dialect, *cast, *field, *out;
@@ -80,6 +82,7 @@ static ONPHP_ARGINFO_DIALECT;
 
 zend_function_entry onphp_funcs_FieldTable[] = {
 	ONPHP_ME(FieldTable, __construct, arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(FieldTable, getField, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(FieldTable, toDialectString, arginfo_dialect, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };
