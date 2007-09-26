@@ -1,16 +1,20 @@
 # $Id$
 
-2007-09-25	Vladimir A. Altuchov
+2007-09-26	Konstantin V. Arkhipov
 
-	* main/Net/Ip/: Ip classes added.
-
-	* main/Base/SingleRange.class.php: range interface added.
+	* main/Base/DateRange.class.php: now implements SingleRange.
 
 2007-09-25	Dmitry E. Demidov
 
 	* core/OSQL/FieldTable.class.php: getField() added.
 
 	* core/OSQL/OrderBy.class.php: isAsc(), invert(), __clone() added.
+
+2007-09-25	Vladimir A. Altuchov
+
+	* main/Net/Ip/: Ip classes added.
+
+	* main/Base/SingleRange.class.php: range interface added.
 
 2007-09-19	Konstantin V. Arkhipov
 
