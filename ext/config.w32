@@ -43,6 +43,12 @@ if (PHP_ONPHP != "no") {
 	);
 	
 	ADD_SOURCES(
+		"ext/onphp/src/core/Logic",
+		"LogicalObject.c",
+		"onphp"
+	);
+	
+	ADD_SOURCES(
 		"ext/onphp/src/main/DAOs",
 		"DAOConnected.c FullTextDAO.c",
 		"onphp"

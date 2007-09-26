@@ -44,6 +44,7 @@
 #include "core/OSQL/SQLTableName.h"
 #include "core/OSQL/Query.h"
 #include "core/OSQL/QueryIdentification.h"
+#include "core/Logic/LogicalObject.h"
 
 #include "core/Exceptions.h"
 
@@ -78,6 +79,9 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(Query, Stringable);
 	
 	REGISTER_ONPHP_INTERFACE(ListedPrimitive);
+	
+	REGISTER_ONPHP_INTERFACE(LogicalObject);
+	REGISTER_ONPHP_IMPLEMENTS(LogicalObject, DialectString);
 	
 	REGISTER_ONPHP_STD_CLASS_EX(Identifier);
 	REGISTER_ONPHP_PROPERTY(Identifier, "id", ZEND_ACC_PRIVATE);

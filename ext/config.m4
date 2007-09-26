@@ -35,6 +35,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/SQLTableName.c \
 		src/core/OSQL/Query.c \
 		src/core/OSQL/QueryIdentification.c \
+		src/core/Logic/LogicalObject.c \
 		src/main/DAOs/DAOConnected.c \
 		src/main/DAOs/FullTextDAO.c \
 		src/main/DAOs/Handlers/SegmentHandler.c \
@@ -46,6 +47,7 @@ if test "$PHP_ONPHP" != "no"; then
 		-I@ext_srcdir@/src/core/Base \
 		-I@ext_srcdir@/src/core/DB \
 		-I@ext_srcdir@/src/core/OSQL \
+		-I@ext_srcdir@/src/core/Logic \
 		-I@ext_srcdir@/src/main \
 		-I@ext_srcdir@/src/main/DAOs \
 		-I@ext_srcdir@/src/main/DAOs/Handlers \
