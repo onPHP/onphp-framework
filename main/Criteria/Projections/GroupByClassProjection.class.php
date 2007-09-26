@@ -23,17 +23,9 @@
 			return new self($class);
 		}
 		
-		/**
-		 * @return JoinCapableQuery
-		**/
-		public function process(Criteria $criteria, JoinCapableQuery $query)
+		/* void */ protected function subProcess(JoinCapableQuery $query, $field)
 		{
-			$dao = call_user_func(array($this->className, 'dao'));
-			
-			foreach ($dao->getFields() as $field)
-				$query->groupBy($field);
-			
-			return $query;
+			$query->groupBy($field);
 		}
 	}
 ?>

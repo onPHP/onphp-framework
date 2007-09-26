@@ -45,9 +45,14 @@
 			$dao = call_user_func(array($this->className, 'dao'));
 			
 			foreach ($dao->getFields() as $field)
-				$query->get($field);
+				$this->subProcess($query, $field);
 			
 			return $query;
+		}
+		
+		/* void */ protected function subProcess(JoinCapableQuery $query, $field)
+		{
+			$query->get($field);
 		}
 	}
 ?>
