@@ -17,7 +17,7 @@
 	abstract class FieldTable extends Castable
 	{
 		protected $field = null;
-
+		
 		public function __construct($field)
 		{
 			$this->field = $field;
