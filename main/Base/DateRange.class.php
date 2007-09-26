@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	class DateRange implements Stringable
+	class DateRange implements Stringable, SingleRange
 	{
 		private $start	= null;
 		private $end	= null;

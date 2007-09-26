@@ -1,5 +1,9 @@
 # $Id$
 
+2007-09-26	Konstantin V. Arkhipov
+
+	* main/Base/DateRange.class.php: now implements SingleRange.
+
 2007-09-25	Dmitry E. Demidov
 
 	* core/OSQL/FieldTable.class.php: getField() added.
