@@ -1,5 +1,9 @@
 # $Id$
 
+2007-09-26	Dmitry A. Lomash
+
+	* main/Criteria/Projections/GroupByClassProjection.class.php: added.
+
 2007-09-26	Konstantin V. Arkhipov
 
 	* main/Base/DateRange.class.php: now implements SingleRange.
