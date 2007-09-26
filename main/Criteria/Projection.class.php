@@ -98,6 +98,14 @@
 		}
 		
 		/**
+		 * @return GroupByClassProjection
+		**/
+		public static function groupByClass($class)
+		{
+			return new GroupByClassProjection($class);
+		}
+		
+		/**
 		 * @return ClassProjection
 		**/
 		public static function clazz($className)
