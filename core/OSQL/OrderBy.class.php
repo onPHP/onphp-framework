@@ -32,7 +32,8 @@
 			$this->direction = new Ternary(null);
 		}
 		
-		public function __clone() {
+		public function __clone()
+		{
 			$this->direction = clone $this->direction;
 		}
 		
@@ -79,7 +80,7 @@
 			
 			if ($this->direction->isNull())
 				return $order;
-				
+			
 			return $order->{$this->direction->decide('asc', 'desc')}();
 		}
 		
@@ -89,7 +90,7 @@
 				$this->field instanceof SelectQuery
 				|| $this->field instanceof LogicalObject
 			)
-				return 
+				return
 					'('.$dialect->fieldToString($this->field).')'
 					.$this->direction->decide(' ASC', ' DESC');
 			else
