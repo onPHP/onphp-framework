@@ -44,7 +44,8 @@ Query, \
 SegmentHandler, \
 Stringable, \
 SQLTableName, \
-ViewResolver."
+ViewResolver, \
+LogicalObject."
 
 #define ONPHP_CLASSES_LIST "\
 Castable, \
