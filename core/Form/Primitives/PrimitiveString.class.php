@@ -29,7 +29,7 @@
 			
 			return $this;
 		}
-
+		
 		public function import($scope)
 		{
 			if (!BasePrimitive::import($scope))
@@ -38,17 +38,17 @@
 			$this->value = (string) $scope[$this->name];
 			
 			$this->selfFilter();
-
+			
 			if (!empty($this->value) && is_string($this->value)
 				&& !($this->max && mb_strlen($this->value) > $this->max)
 				&& !($this->min && mb_strlen($this->value) < $this->min)
 				&& (!$this->pattern || preg_match($this->pattern, $this->value))
 			) {
-				return $this->imported = true;
+				return true;
 			} else {
 				$this->value = null;
 			}
-
+			
 			return false;
 		}
 	}
