@@ -37,10 +37,10 @@
 				
 				if (isset($scope[$this->name][self::HOURS]))
 					$hours = (int) $scope[$this->name][self::HOURS];
-
+				
 				if (isset($scope[$this->name][self::MINUTES]))
 					$minutes = (int) $scope[$this->name][self::MINUTES];
-
+				
 				if (isset($scope[$this->name][self::SECONDS]))
 					$seconds = (int) $scope[$this->name][self::SECONDS];
 				
@@ -63,7 +63,7 @@
 				
 				if ($this->checkRanges($stamp)) {
 					$this->value = $stamp;
-					return $this->imported = true;
+					return true;
 				}
 			}
 			
