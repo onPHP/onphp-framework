@@ -122,7 +122,7 @@
 				$this->width = $width;
 				$this->height = $height;
 				
-				return $this->imported = true;
+				return true;
 			}
 			
 			return false;

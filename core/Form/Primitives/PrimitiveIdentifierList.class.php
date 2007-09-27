@@ -81,7 +81,7 @@
 			
 			if (count($objectList) == count($values)) {
 				$this->value = $objectList;
-				return $this->imported = true;
+				return true;
 			}
 			
 			return false;

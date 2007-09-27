@@ -47,9 +47,9 @@
 		
 		public function import($scope)
 		{
-			if (!$temp = parent::import($scope))
-				return $temp;
-	
+			if (!$result = parent::import($scope))
+				return $result;
+			
 			if (
 				$this->value = 
 					$this->isSplitByRegexp()
@@ -62,7 +62,7 @@
 							)
 						: explode($this->separator, $this->value)
 			) {
-				return $this->imported = true;
+				return true;
 			} else {
 				return false;
 			}

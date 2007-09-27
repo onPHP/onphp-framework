@@ -37,7 +37,7 @@
 			
 			return $this;
 		}
-
+		
 		public function import($scope)
 		{
 			if (isset($scope[$this->name])) {
@@ -52,7 +52,9 @@
 				
 				return null;
 			}
-
+			
+			$this->raw = $scope[$this->name];
+			
 			return $this->imported = true;
 		}
 		

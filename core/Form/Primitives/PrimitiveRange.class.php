@@ -70,54 +70,53 @@
 		{
 			if (!BasePrimitive::import($scope) || is_array($scope[$this->name]))
 				return null;
-
+			
 			if (isset($scope[$this->name]) && is_string($scope[$this->name])) {
-				$arr = explode('-', $scope[$this->name], 2);
-
+				$array = explode('-', $scope[$this->name], 2);
+				
 				$range =
 					Range::lazyCreate(
-						ArrayUtils::getArrayVar($arr, 0),
-						ArrayUtils::getArrayVar($arr, 1)
+						ArrayUtils::getArrayVar($array, 0),
+						ArrayUtils::getArrayVar($array, 1)
 					);
-
+				
 				if (
 					$range
 					&& $this->checkLimits($range)
 				) {
 					$this->value = $range;
-
-					return $this->imported = true;
+					
+					return true;
 				}
 			}
-
+			
 			return false;
 		}
 
 		public function importMarried($scope) // ;-)
 		{
-			$name = &$this->name;
-
 			if (
-				($this->safeGet($scope, $name, self::MIN) === null)
-				&& ($this->safeGet($scope, $name, self::MAX) === null)
+				($this->safeGet($scope, $this->name, self::MIN) === null)
+				&& ($this->safeGet($scope, $this->name, self::MAX) === null)
 			)
 				return null;
-
+			
 			$range =
 				Range::lazyCreate(
-					$this->safeGet($scope, $name, self::MIN),
-					$this->safeGet($scope, $name, self::MAX)
+					$this->safeGet($scope, $this->name, self::MIN),
+					$this->safeGet($scope, $this->name, self::MAX)
 				);
-
+			
 			if (
 				$range
 				&& $this->checkLimits($range)
 			) {
 				$this->value = $range;
-
+				$this->raw = $scope[$this->name];
+				
 				return $this->imported = true;
 			}
-
+			
 			return false;
 		}
 		

@@ -71,7 +71,7 @@
 				);
 				
 			$result = parent::import($scope);
-				
+			
 			if ($result === true) {
 				try {
 					$this->value = new $this->className($this->value);
@@ -79,7 +79,7 @@
 					return false;
 				}
 				
-				return $this->imported = true;
+				return true;
 			}
 			
 			return $result;

@@ -81,7 +81,7 @@
 			) {
 				$this->value = $scope[$this->name];
 				
-				return $this->imported = true;
+				return true;
 			}
 			
 			return false;

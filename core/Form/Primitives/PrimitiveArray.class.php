@@ -44,13 +44,13 @@
 			$this->value = $scope[$this->name];
 			
 			$this->selfFilter();
-
+			
 			if (
 				is_array($this->value)
 				&& !($this->min && count($this->value) < $this->min)
 				&& !($this->min && count($this->value) > $this->max)
 			) {
-				return $this->imported = true;
+				return true;
 			} else {
 				$this->value = null;
 			}

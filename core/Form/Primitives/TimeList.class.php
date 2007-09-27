@@ -23,9 +23,12 @@
 			)
 				return null;
 			
+			$this->raw = $scope[$this->name];
+			$this->imported = true;
+			
 			$array = $scope[$this->name];
 			$list = array();
-
+			
 			foreach ($array as $string) {
 				$timeList = self::stringToTimeList($string);
 				
@@ -37,7 +40,7 @@
 			
 			return ($this->value !== array());
 		}
-
+		
 		public function getActualValue()
 		{
 			if (is_array($this->value) && $this->value[0])
@@ -47,11 +50,11 @@
 			
 			return array($this->default);
 		}
-
+		
 		public static function stringToTimeList($string)
 		{
 			$list = array();
-
+			
 			$times = split("([,; \n]+)", $string);
 			
 			for ($i = 0, $size = count($times); $i < $size; ++$i) {
