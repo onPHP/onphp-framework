@@ -79,9 +79,9 @@
 
 		public function import($scope)
 		{
-			if (!$result = parent::import($scope))
-				return $result;
-
+			if (!BasePrimitive::import($scope))
+				return null;
+			
 			if ($this->single->isTrue())
 				return $this->importSingle($scope);
 			elseif ($this->single->isFalse())
@@ -90,7 +90,7 @@
 				if (!$this->importMarried($scope))
 					return $this->importSingle($scope);
 
-				return $this->imported = true;
+				return true;
 			}
 
 			Assert::isUnreachable();
