@@ -60,10 +60,10 @@
 				array('date' => 'omgEvilInput')
 			);
 			
-			$this->assertFalse($prm->isImported());
+			$this->assertTrue($prm->isImported());
 			
 			$this->assertTrue(
-				$prm->getSafeValue() == $date
+				$prm->getSafeValue() === null
 			);
 		}
 	}
