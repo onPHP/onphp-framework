@@ -182,14 +182,14 @@
 				).'Б';
 		}
 		
-		public static function getHumanDay(Date $date)
+		public static function getHumanDay(Date $date, $wordDayNeed = true)
 		{
 			$today 		= Date::makeToday();
 			$tomorrow 	= $today->spawn('+1 day'); 
 			
-			if ($date->toDate() == $today->toDate())
+			if ($date->toDate() == $today->toDate() && $wordDayNeed == true)
 				return 'сегодня';
-			elseif ($date->toDate() == $tomorrow->toDate())
+			elseif ($date->toDate() == $tomorrow->toDate() && $wordDayNeed == true)
 				return 'завтра';
 			else
 				return
