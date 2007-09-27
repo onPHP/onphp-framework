@@ -26,11 +26,12 @@
 				)
 			)
 				return null;
-				
-			$array = $scope[$this->name];
+			
+			$this->raw = $scope[$this->name];
+			$this->imported = true;
 			$list = array();
-
-			foreach ($array as $string) {
+			
+			foreach ($this->raw as $string) {
 				$rangeList = self::stringToDateRangeList($string);
 				
 				if ($rangeList)
@@ -39,7 +40,7 @@
 			}
 			
 			$this->value = $list;
-
+			
 			return ($this->value !== array());
 		}
 		
