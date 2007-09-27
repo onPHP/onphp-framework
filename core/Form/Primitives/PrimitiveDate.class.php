@@ -89,7 +89,7 @@
 				
 				if ($this->checkRanges($ts)) {
 					$this->value = $ts;
-					return $this->imported = true;
+					return true;
 				}
 			}
 			
@@ -138,7 +138,7 @@
 				
 				if ($this->checkRanges($date)) {
 					$this->value = $date;
-					return $this->imported = true;
+					return true;
 				}
 			}
 
