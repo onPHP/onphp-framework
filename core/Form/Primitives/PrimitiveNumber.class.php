@@ -22,7 +22,7 @@
 		{
 			if (!BasePrimitive::import($scope))
 				return null;
-
+			
 			try {
 				$this->checkNumber($scope[$this->name]);
 			} catch (WrongArgumentException $e) {
@@ -37,7 +37,7 @@
 				!(null !== $this->min && $this->value < $this->min)
 				&& !(null !== $this->max && $this->value > $this->max)
 			) {
-				return $this->imported = true;
+				return true;
 			} else {
 				$this->value = null;
 			}
