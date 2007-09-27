@@ -142,7 +142,7 @@
 					return false;
 				}
 				
-				return $this->imported = true;
+				return true;
 			}
 			
 			return $result;
