@@ -108,7 +108,7 @@
 				)
 			)
 				return null;
-
+			
 			if (isset($scope[$this->name]['tmp_name']))
 				$file = $scope[$this->name]['tmp_name'];
 			else
@@ -118,9 +118,9 @@
 				$size = filesize($file);
 			else
 				return false;
-
+			
 			$this->mimeType = $scope[$this->name]['type']; 
-
+			
 			if (!$this->isAllowedMimeType())
 				return false;
 			
@@ -131,10 +131,10 @@
 			) {
 				$this->value = $scope[$this->name]['tmp_name'];
 				$this->originalName = $scope[$this->name]['name'];
-
-				return $this->imported = true;
+				
+				return true;
 			}
-
+			
 			return false;
 		}
 	}
