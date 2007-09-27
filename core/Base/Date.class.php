@@ -267,9 +267,13 @@
 		{
 			$this->int = strtotime($string);
 			
-			if (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
-				$this->string = $string;
-			elseif ($this->int !== false) 
+			if (
+				preg_match('/^(\d{1,4})-(\d{1,2})-(\d{1,2})$/', $string, $matches)
+			) {
+				if (checkdate($matches[2], $matches[3], $matches[1]))
+					$this->string = $string;
+			
+			} elseif ($this->int !== false)
 				$this->string = date($this->getFormat(), $this->int);
 		}
 	}
