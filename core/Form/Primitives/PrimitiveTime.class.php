@@ -73,21 +73,19 @@
 		
 		public function importSingle($scope)
 		{
-			if (
-				isset($scope[$this->name])
-				&& is_string($scope[$this->name])
-			) {
-				try {
-					$time = new Time($scope[$this->name]);
-				} catch (WrongArgumentException $e) {
-					return false;
-				}
+			if (!BasePrimitive::import($scope))
+				return null;
+			
+			try {
+				$time = new Time($scope[$this->name]);
+			} catch (WrongArgumentException $e) {
+				return false;
+			}
 				
-				if ($this->checkLimits($time)) {
-					$this->value = $time;
-					
-					return $this->imported = true;
-				}
+			if ($this->checkLimits($time)) {
+				$this->value = $time;
+				
+				return true;
 			}
 			
 			return false;
@@ -104,6 +102,9 @@
 		public function importMarried($scope)
 		{
 			if (!$this->isMarriedEmpty($scope)) {
+				$this->raw = $scope[$this->name];
+				$this->imported = true;
+				
 				$hours = $minutes = $seconds = 0;
 				
 				if (isset($scope[$this->name][self::HOURS]))
@@ -124,7 +125,7 @@
 				if ($this->checkLimits($time)) {
 					$this->value = $time;
 					
-					return $this->imported = true;
+					return true;
 				}
 			}
 			
