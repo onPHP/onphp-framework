@@ -9,7 +9,6 @@
  ***************************************************************************/
 /* $Id$ */
 
-
 #include "onphp_core.h"
 #include "onphp_util.h"
 
@@ -20,11 +19,10 @@
 #include "core/OSQL/QuerySkeleton.h"
 #include "core/Logic/LogicalObject.h"
 
-
 ONPHP_METHOD(QuerySkeleton, __construct)
 {
 	zval *where, *whereLogic;
-
+	
 	/* init */
 	where = ONPHP_READ_PROPERTY(getThis(), "where");
 	array_init(where);
@@ -37,13 +35,27 @@ ONPHP_METHOD(QuerySkeleton, __destruct)
 {
 	zval **data;
 	
-	if (SUCCESS == zend_hash_find(HASH_OF(this_ptr), "where",
-					sizeof("where"), (void**)&data)) {
+	if (
+		SUCCESS
+		== zend_hash_find(
+			HASH_OF(this_ptr),
+			"where",
+			sizeof("where"),
+			(void**) &data
+		)
+	) {
 		zval_ptr_dtor(data);
 	}
 	
-	if (SUCCESS == zend_hash_find(HASH_OF(this_ptr), "whereLogic",
-					sizeof("whereLogic"), (void**)&data)) {
+	if (
+		SUCCESS
+		== zend_hash_find(
+			HASH_OF(this_ptr),
+			"whereLogic",
+			sizeof("whereLogic"),
+			(void**) &data
+		)
+	) {
 		zval_ptr_dtor(data);
 	}
 }
@@ -96,9 +108,9 @@ ONPHP_METHOD(QuerySkeleton, where)
 ONPHP_METHOD(QuerySkeleton, andWhere)
 {
 	zval *exp, *logic, *retval;
-
-    MAKE_STD_ZVAL(logic);
-    ZVAL_STRING(logic, "AND", 1);
+	
+	MAKE_STD_ZVAL(logic);
+	ZVAL_STRING(logic, "AND", 1);
 	
 	if (
 		zend_parse_parameters(
@@ -124,16 +136,16 @@ ONPHP_METHOD(QuerySkeleton, andWhere)
 	if (EG(exception)) {
 		return;
 	}
-   
-   	RETURN_ZVAL(retval, 1, 0);
+	
+	RETURN_ZVAL(retval, 1, 0);
 }
 
 ONPHP_METHOD(QuerySkeleton, orWhere)
 {
 	zval *exp, *logic, *retval;
-
-    MAKE_STD_ZVAL(logic);
-    ZVAL_STRING(logic, "OR", 1);
+	
+	MAKE_STD_ZVAL(logic);
+	ZVAL_STRING(logic, "OR", 1);
 	
 	if (
 		zend_parse_parameters(
@@ -159,8 +171,8 @@ ONPHP_METHOD(QuerySkeleton, orWhere)
 	if (EG(exception)) {
 		return;
 	}
-   
-   	RETURN_ZVAL(retval, 1, 0);
+	
+	RETURN_ZVAL(retval, 1, 0);
 }
 
 static ONPHP_ARGINFO_LOGICAL_OBJECT;
