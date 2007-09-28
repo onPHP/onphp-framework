@@ -357,7 +357,7 @@
 								$id = $this;
 							}
 							
-							if ($id) {
+							if ($id && $id->getType() instanceof IntegerType) {
 								if ($limits = $id->getType()->toPrimitiveLimits())
 									$primitive .= $limits."->\n";
 							}
