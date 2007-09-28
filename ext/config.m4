@@ -35,7 +35,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/SQLTableName.c \
 		src/core/OSQL/Query.c \
 		src/core/OSQL/QueryIdentification.c \
-		//src/core/OSQL/QuerySkeleton.c \
+		src/core/OSQL/QuerySkeleton.c \
 		src/core/Logic/LogicalObject.c \
 		src/main/DAOs/DAOConnected.c \
 		src/main/DAOs/FullTextDAO.c \
