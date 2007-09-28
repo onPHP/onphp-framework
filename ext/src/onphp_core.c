@@ -146,10 +146,10 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(QueryIdentification, Query);
 	onphp_ce_QueryIdentification->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
-	REGISTER_ONPHP_SUB_CLASS_EX(QuerySkeleton, QueryIdentification);
+	/*REGISTER_ONPHP_SUB_CLASS_EX(QuerySkeleton, QueryIdentification);
 	REGISTER_ONPHP_PROPERTY(QuerySkeleton, "where", ZEND_ACC_PROTECTED);
 	REGISTER_ONPHP_PROPERTY(QuerySkeleton, "whereLogic", ZEND_ACC_PROTECTED);
-	onphp_ce_QuerySkeleton->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+	onphp_ce_QuerySkeleton->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;*/
 	
 	return PHP_MINIT(Exceptions)(INIT_FUNC_ARGS_PASSTHRU);
 }
