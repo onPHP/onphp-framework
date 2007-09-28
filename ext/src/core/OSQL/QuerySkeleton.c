@@ -90,6 +90,7 @@ ONPHP_METHOD(QuerySkeleton, where)
 		zend_hash_num_elements(Z_ARRVAL_P(where)) != 0
 		&& Z_TYPE_P(logic) == IS_NULL
 	) {
+		RETURN_STRINGL("eee", 3, 1);
 		zend_throw_exception_ex(
 			onphp_ce_WrongArgumentException,
 			0 TSRMLS_CC,
