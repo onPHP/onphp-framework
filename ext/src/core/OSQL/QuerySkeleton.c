@@ -240,7 +240,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 						onphp_append_zval_to_smart_string(&clause, (zval*)data);
 						smart_str_appendl(&clause, " ", 1);
 						onphp_append_zval_to_smart_string(&clause, exp);
-						smart_str_appendl(&clause, ".", 1);
+						smart_str_appendl(&clause, " ", 1);
 						
 						ZVAL_TRUE(outputLogic);
 					}
