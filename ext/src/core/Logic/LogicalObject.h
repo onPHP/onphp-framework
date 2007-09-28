@@ -19,4 +19,15 @@ ONPHP_STANDART_CLASS(LogicalObject);
 		ZEND_ARG_OBJ_INFO(0, form, Form, 0) \
 	ZEND_END_ARG_INFO()
 
+#define ONPHP_ARGINFO_LOGICAL_OBJECT\
+	ZEND_BEGIN_ARG_INFO(arginfo_logical_object, 0) \
+		ZEND_ARG_OBJ_INFO(0, exp, LogicalObject, 0) \
+	ZEND_END_ARG_INFO()
+
+#define ONPHP_ARGINFO_LOGICAL_OBJECT_AND_ONE \
+	ZEND_BEGIN_ARG_INFO(arginfo_logical_object_and_one, 0) \
+		ZEND_ARG_OBJ_INFO(0, exp, LogicalObject, 0) \
+		ZEND_ARG_INFO(0, logic) \
+	ZEND_END_ARG_INFO()
+
 #endif /* ONPHP_CORE__LOGICAL_OBJECT_H */
