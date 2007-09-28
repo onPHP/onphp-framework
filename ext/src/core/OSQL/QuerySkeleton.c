@@ -80,8 +80,9 @@ ONPHP_METHOD(QuerySkeleton, where)
 	if (
 		Z_TYPE_P(logic) == IS_NULL
 		|| (ZEND_NUM_ARGS() == 1)
-	)
+	) {
 		ZVAL_NULL(logic);
+	}
 	
 	where = ONPHP_READ_PROPERTY(getThis(), "where");
 	
@@ -102,7 +103,7 @@ ONPHP_METHOD(QuerySkeleton, where)
 		) {
 			ZVAL_NULL(logic);
 		}
-	
+		
 		whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 		
 		add_next_index_zval(whereLogic, logic);
@@ -198,14 +199,13 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 	}
 	
 	where = ONPHP_READ_PROPERTY(getThis(), "where");
-	whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 	
 	if (Z_TYPE_P(where) != IS_NULL) {
 		zval *outputLogic, *exp;
 		zval **data;
 		int i, array_count, retval_len;
 		char *retval;
-
+		
 		MAKE_STD_ZVAL(outputLogic);
 		ZVAL_FALSE(outputLogic);
 		
@@ -234,6 +234,8 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 				if (EG(exception)) {
 					return;
 				}
+
+				whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 				
 				if (exp) {
 					if (
