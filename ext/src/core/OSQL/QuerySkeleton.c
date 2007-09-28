@@ -106,7 +106,11 @@ ONPHP_METHOD(QuerySkeleton, where)
 		
 		whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 		
-		add_next_index_zval(whereLogic, logic);
+		if (Z_TYPE_P(logic) != IS_NULL)
+			add_next_index_zval(whereLogic, logic);
+		else
+			add_next_index_null(whereLogic);
+		
 		add_next_index_zval(where, exp);
 	}
 	
