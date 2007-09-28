@@ -110,7 +110,10 @@
 			)
 				throw new OpenIdException('bad association type');
 			
-			if (!is_numeric($result['expires_in']))
+			if (
+				!isset($result['expires_in'])
+				|| !is_numeric($result['expires_in'])
+			)
 				throw new OpenIdException('bad expires');
 			
 			if (
