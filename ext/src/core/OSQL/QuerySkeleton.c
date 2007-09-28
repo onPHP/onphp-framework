@@ -77,11 +77,17 @@ ONPHP_METHOD(QuerySkeleton, where)
 		WRONG_PARAM_COUNT;
 	}
 	
+	if (
+		Z_TYPE_P(logic) == IS_NULL
+		|| (ZEND_NUM_ARGS() == 1)
+	)
+		ZVAL_NULL(logic);
+	
 	where = ONPHP_READ_PROPERTY(getThis(), "where");
 	
 	if (
-		Z_ARRVAL_P(where) != IS_NULL
-		&& Z_LVAL_P(logic) == IS_NULL
+		zend_hash_num_elements(Z_ARRVAL_P(where)) != 0
+		&& Z_TYPE_P(logic) == IS_NULL
 	) {
 		zend_throw_exception_ex(
 			onphp_ce_WrongArgumentException,
@@ -91,14 +97,13 @@ ONPHP_METHOD(QuerySkeleton, where)
 		return;
 	} else {
 		if (
-			Z_ARRVAL_P(where) == IS_NULL
-			&& Z_LVAL_P(logic) != IS_NULL
+			zend_hash_num_elements(Z_ARRVAL_P(where)) == 0
+			&& Z_TYPE_P(logic) != IS_NULL
 		) {
-			ZVAL_NULL(logic); 
+			ZVAL_NULL(logic);
 		}
 	
 		whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
-		
 		
 		add_next_index_zval(whereLogic, logic);
 		add_next_index_zval(where, exp);
