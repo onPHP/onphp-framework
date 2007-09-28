@@ -9,9 +9,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-#ifndef ONPHP_CORE_QuerySkeleton_H
-#define ONPHP_CORE_QuerySkeleton_H
+#ifndef ONPHP_CORE_QUERY_SKELETON_H
+#define ONPHP_CORE_QUERY_SKELETON_H
 
 ONPHP_STANDART_CLASS(QuerySkeleton);
 
-#endif /* ONPHP_CORE_QuerySkeleton_H */
+#endif /* ONPHP_CORE_QUERY_SKELETON_H */
