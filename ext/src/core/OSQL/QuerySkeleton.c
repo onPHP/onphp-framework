@@ -200,7 +200,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 	
 	where = ONPHP_READ_PROPERTY(getThis(), "where");
 	
-	if (Z_TYPE_P(where) != IS_NULL) {
+	if (zend_hash_num_elements(Z_ARRVAL_P(where)) != 0) {
 		zval *outputLogic, *exp;
 		zval **data;
 		int i, array_count, retval_len;
