@@ -95,6 +95,7 @@ ONPHP_METHOD(QuerySkeleton, where)
 			0 TSRMLS_CC,
 			"you have to specify expression logic"
 		);
+		ZVAL_FREE(exp);
 		return;
 	} else {
 		if (
