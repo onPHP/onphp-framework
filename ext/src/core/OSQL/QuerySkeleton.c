@@ -80,8 +80,8 @@ ONPHP_METHOD(QuerySkeleton, where)
 	where = ONPHP_READ_PROPERTY(getThis(), "where");
 	
 	if (
-		Z_TYPE_P(where) != IS_NULL
-		&& Z_TYPE_P(logic) == IS_NULL
+		Z_ARRVAL_P(where) != IS_NULL
+		&& Z_LVAL_P(logic) == IS_NULL
 	) {
 		zend_throw_exception_ex(
 			onphp_ce_WrongArgumentException,
@@ -91,13 +91,14 @@ ONPHP_METHOD(QuerySkeleton, where)
 		return;
 	} else {
 		if (
-			Z_TYPE_P(where) == IS_NULL
-			&& Z_TYPE_P(logic) != IS_NULL
+			Z_ARRVAL_P(where) == IS_NULL
+			&& Z_LVAL_P(logic) != IS_NULL
 		) {
-			logic = NULL;
+			ZVAL_NULL(logic); 
 		}
 	
 		whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
+		
 		
 		add_next_index_zval(whereLogic, logic);
 		add_next_index_zval(where, exp);
@@ -195,10 +196,10 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 	whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 	
 	if (Z_TYPE_P(where) != IS_NULL) {
-		zval *outputLogic, *exp = NULL;
+		zval *outputLogic, *exp;
 		zval **data;
 		int i, array_count, retval_len;
-		char *retval = NULL;
+		char *retval;
 
 		MAKE_STD_ZVAL(outputLogic);
 		ZVAL_FALSE(outputLogic);
@@ -237,7 +238,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 							(void **)&data
 						) == SUCCESS
 					) {
-						onphp_append_zval_to_smart_string(&clause, (zval*)data);
+						onphp_append_zval_to_smart_string(&clause, *data);
 						smart_str_appendl(&clause, " ", 1);
 						onphp_append_zval_to_smart_string(&clause, exp);
 						smart_str_appendl(&clause, " ", 1);
@@ -258,7 +259,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 						) == SUCCESS
 					)
 				) {
-					data = NULL;
+					add_index_null(whereLogic, i + 1);
 				}
 		   	}
 		}
@@ -269,7 +270,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 		RETURN_STRINGL(retval, retval_len, 0);
 	}
 	
-	return;
+	 RETURN_NULL();
 }
 
 static ONPHP_ARGINFO_LOGICAL_OBJECT;
