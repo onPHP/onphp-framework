@@ -14,6 +14,7 @@
 
 #include "zend_exceptions.h"
 #include "ext/standard/php_string.h"
+#include "ext/standard/php_var.h"
 
 #include "core/Exceptions.h"
 #include "core/OSQL/QuerySkeleton.h"
@@ -65,6 +66,9 @@ ONPHP_METHOD(QuerySkeleton, where)
 {
 	zval *where, *whereLogic, *exp, *logic;
 	
+	zval *copy;
+    MAKE_STD_ZVAL(copy);
+	
 	if (
 		zend_parse_parameters(
 			ZEND_NUM_ARGS() TSRMLS_CC,
@@ -76,6 +80,9 @@ ONPHP_METHOD(QuerySkeleton, where)
 	) {
 		WRONG_PARAM_COUNT;
 	}
+	
+	*copy = *exp;
+	zval_copy_ctor(copy);
 	
 	if (
 		Z_TYPE_P(logic) == IS_NULL
@@ -111,7 +118,7 @@ ONPHP_METHOD(QuerySkeleton, where)
 		else
 			add_next_index_null(whereLogic);
 		
-		add_next_index_zval(where, exp);
+		add_next_index_zval(where, copy);
 	}
 	
 	RETURN_ZVAL(getThis(), 1, 0);
