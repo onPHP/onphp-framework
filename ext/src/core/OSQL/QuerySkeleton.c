@@ -211,7 +211,10 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 	
 	where = ONPHP_READ_PROPERTY(getThis(), "where");
 	
-	if (zend_hash_num_elements(Z_ARRVAL_P(where)) != 0) {
+	if (
+		Z_TYPE_P(where) != IS_NULL
+		&& zend_hash_num_elements(Z_ARRVAL_P(where)) != 0
+	) {
 		zval *outputLogic, *exp;
 		zval **data;
 		int i, array_count, retval_len;
@@ -288,7 +291,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 		RETURN_STRINGL(retval, retval_len, 0);
 	}
 	
-	 RETURN_NULL();
+	RETURN_NULL();
 }
 
 static ONPHP_ARGINFO_LOGICAL_OBJECT;
