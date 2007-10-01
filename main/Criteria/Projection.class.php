@@ -104,7 +104,7 @@
 		{
 			return new GroupByClassProjection($class);
 		}
-
+		
 		/**
 		 * @return HavingProjection
 		**/
