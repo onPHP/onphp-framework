@@ -15,6 +15,8 @@
 	**/
 	interface View
 	{
+		const ERROR_VIEW = 'error';
+		
 		/**
 		 * @param $model null or Model
 		**/
