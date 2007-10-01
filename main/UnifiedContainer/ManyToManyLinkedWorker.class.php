@@ -82,7 +82,7 @@
 						Expression::eq(
 							new DBField(
 								$uc->getParentIdField(),
-								$uc->getDao()->getTable()
+								$uc->getHelperTable()
 							),
 							new DBValue($uc->getParentObject()->getId())
 						)
