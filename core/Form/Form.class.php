@@ -220,10 +220,7 @@
 		public function importMore($scope)
 		{
 			foreach ($this->primitives as $prm) {
-				if (
-					$prm->getValue() === null ||
-					($prm instanceof PrimitiveBoolean && !$prm->getValue())
-				)
+				if (!$prm->isImported())
 					$this->importPrimitive($scope, $prm);
 			}
 
@@ -255,10 +252,7 @@
 		{
 			$prm = $this->get($primitiveName);
 			
-			if (
-				$prm->getValue() === null
-				|| ($prm instanceof PrimitiveBoolean && !$prm->getValue())
-			)
+			if (!$prm->isImported())
 				return $this->importPrimitive($scope, $prm);
 
 			return $this;
