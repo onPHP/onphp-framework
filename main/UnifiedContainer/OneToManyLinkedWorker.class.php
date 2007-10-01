@@ -23,7 +23,10 @@
 			return
 				$query->andWhere(
 					Expression::eqId(
-						new DBField($this->container->getParentIdField()),
+						new DBField(
+							$this->container->getParentIdField(),
+							$this->container->getHelperTable()
+						),
 						$this->container->getParentObject()
 					)
 				);
