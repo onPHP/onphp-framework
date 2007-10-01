@@ -1,5 +1,10 @@
 # $Id$
 
+2007-10-01	Dmitry E. Pismenny
+
+	* main/Core/Form/Form.class.php: added isImported check in importMore()
+	functions.
+
 2007-09-26	Dmitry A. Lomash
 
 	* main/Criteria/Projections/GroupByClassProjection.class.php: added.
