@@ -104,6 +104,14 @@
 		{
 			return new GroupByClassProjection($class);
 		}
+
+		/**
+		 * @return HavingProjection
+		**/
+		public static function having(LogicalObject $logic)
+		{
+			return new HavingProjection($logic);
+		}
 		
 		/**
 		 * @return ClassProjection
