@@ -31,8 +31,6 @@ ONPHP_METHOD(QuerySkeleton, __construct)
 	
 	whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 	array_init(whereLogic);
-	
-	//php_var_dump(&where, 1 TSRMLS_CC);
 }
 
 ONPHP_METHOD(QuerySkeleton, __destruct)
@@ -69,7 +67,7 @@ ONPHP_METHOD(QuerySkeleton, where)
 	zval *where, *whereLogic, *exp, *logic;
 	
 	zval *copy;
-    MAKE_STD_ZVAL(copy);
+	MAKE_STD_ZVAL(copy);
 	
 	if (
 		zend_parse_parameters(
@@ -302,8 +300,8 @@ static ONPHP_ARGINFO_LOGICAL_OBJECT_AND_ONE;
 static ONPHP_ARGINFO_DIALECT;
 
 zend_function_entry onphp_funcs_QuerySkeleton[] = {
-	ONPHP_ME(QuerySkeleton, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
-	ONPHP_ME(QuerySkeleton, __destruct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_DTOR)
+	ONPHP_ME(QuerySkeleton, __construct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
+	ONPHP_ME(QuerySkeleton, __destruct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_DTOR)
 	ONPHP_ME(QuerySkeleton, where, arginfo_logical_object_and_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(QuerySkeleton, andWhere, arginfo_logical_object, ZEND_ACC_PUBLIC)
 	ONPHP_ME(QuerySkeleton, orWhere, arginfo_logical_object, ZEND_ACC_PUBLIC)
