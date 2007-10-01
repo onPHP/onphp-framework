@@ -2,10 +2,10 @@
 
 2007-10-01	Dmitry E. Pismenny
 
-	* core/Form/Form.class.php: added isImported check in importMore()
+	* core/Form/Form.class.php: added isImported check in importMore
 	functions.
 	
-	*main/Flow/View.class.php: added ERROR_VIEW const.
+	* main/Flow/View.class.php: added ERROR_VIEW const.
 
 2007-09-26	Dmitry A. Lomash
 
