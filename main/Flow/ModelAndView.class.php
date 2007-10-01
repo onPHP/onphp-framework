@@ -85,7 +85,7 @@
 		{
 			return (
 				!$this->viewIsRedirect()
-				&& $this->view !== BaseEditor::COMMAND_FAILED
+				&& $this->view !== View::ERROR_VIEW
 			);
 		}
 	}
