@@ -80,7 +80,10 @@
 					)->
 					andWhere(
 						Expression::eq(
-							new DBField($uc->getParentIdField()),
+							new DBField(
+								$uc->getParentIdField(),
+								$uc->getDao()->getTable()
+							),
 							new DBValue($uc->getParentObject()->getId())
 						)
 					);
