@@ -37,5 +37,10 @@
 			
 			return $this->imported = true;
 		}
+		
+		public function isImported()
+		{
+			return ($this->imported && $this->value);
+		}
 	}
 ?>
