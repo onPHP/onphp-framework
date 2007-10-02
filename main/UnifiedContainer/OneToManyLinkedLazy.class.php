@@ -60,8 +60,7 @@
 							)
 						);
 				
-				foreach ($delete as $id)
-					$dao->uncacheById($id);
+				$dao->uncacheByIds($delete);
 			}
 
 			return $this;

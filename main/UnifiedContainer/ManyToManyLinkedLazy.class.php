@@ -34,8 +34,7 @@
 			if ($delete) {
 				$db->queryNull($this->makeDeleteQuery($delete));
 				
-				foreach ($delete as $id)
-					$dao->uncacheById($id);
+				$dao->uncacheByIds($delete);
 			}
 
 			return $this;
