@@ -30,7 +30,7 @@
 		{
 			$uc = $this->container;
 			$dao = $uc->getDao();
-
+			
 			if ($delete) {
 				DBPool::getByDao($dao)->queryNull(
 					OSQL::delete()->from($dao->getTable())->
@@ -48,18 +48,17 @@
 					)
 				);
 				
-				foreach ($delete as $object)
-					$dao->uncacheById($object->getId());
+				$dao->uncacheByIds(ArrayUtils::getIdsArray($delete));
 			}
-
+			
 			if ($insert)
 				for ($i = 0, $size = count($insert); $i < $size; ++$i)
 					$dao->add($insert[$i]);
-
+			
 			if ($update)
 				for ($i = 0, $size = count($update); $i < $size; ++$i)
 					$dao->save($update[$i]);
-
+			
 			return $this;
 		}
 	}
