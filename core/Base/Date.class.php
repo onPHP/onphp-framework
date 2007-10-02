@@ -87,7 +87,7 @@
 			} elseif ($date && is_string($date))
 				$this->stringImport($date);
 			
-			if (!$this->int && $this->string === null) {
+			if ($this->string === null) {
 				throw new WrongArgumentException(
 					"strange input given - '{$date}'"
 				);

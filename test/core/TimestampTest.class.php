@@ -35,5 +35,16 @@
 				$this->pass();
 			}
 		}
+		
+		public function testCornerCases()
+		{
+			try {
+				Date::create('2007-10-0');
+				
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				$this->pass();
+			}
+		}
 	}
 ?>
