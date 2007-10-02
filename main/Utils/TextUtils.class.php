@@ -159,5 +159,25 @@
 			
 			return $result;
 		}
+		
+		public static function friendlyNumber($integer, $delimiter = ' ')
+		{
+			Assert::isInteger($integer);
+			
+			if (strlen($integer) > 4) {
+				$orders = array();
+				
+				while ($integer > 0) {
+					$orders[] = $integer % 1000;
+					$integer = (int)($integer / 1000);
+				}
+				
+				$result = implode($delimiter, array_reverse($orders));
+				
+			} else
+				$result = (string)$integer;
+			
+			return $result;
+		}
 	}
 ?>

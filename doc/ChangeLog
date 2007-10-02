@@ -1,5 +1,10 @@
 # $Id$
 
+2007-10-02	Ivan Y. Khvostishkov
+
+	* main/Utils/TextUtils.class.php: added friendlyNumber() for
+	typographing integer numbers.
+
 2007-10-01	Dmitry E. Demidov
 
 	* main/Criteria/Projections/HavingProjection.class.php,
