@@ -199,5 +199,13 @@
 		{
 			return new PrimitiveInet($name);
 		}
+		
+		/**
+		 * @return PrimitiveForm
+		**/
+		public static function form($name)
+		{
+			return new PrimitiveForm($name);
+		}
 	}
 ?>
