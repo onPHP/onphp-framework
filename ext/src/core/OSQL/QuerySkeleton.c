@@ -26,11 +26,15 @@ ONPHP_METHOD(QuerySkeleton, __construct)
 	zval *where, *whereLogic;
 	
 	/* init */
-	where = ONPHP_READ_PROPERTY(getThis(), "where");
+	MAKE_STD_ZVAL(where);
 	array_init(where);
+	ONPHP_UPDATE_PROPERTY(getThis(), "where", where);
+	zval_ptr_dtor(&where);
 	
-	whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
+	MAKE_STD_ZVAL(whereLogic);
 	array_init(whereLogic);
+	ONPHP_UPDATE_PROPERTY(getThis(), "whereLogic", whereLogic);
+	zval_ptr_dtor(&whereLogic);
 }
 
 ONPHP_METHOD(QuerySkeleton, __destruct)
@@ -287,7 +291,9 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 		
 		retval = (char*) php_trim(clause.c, clause.len, " ", 1, NULL, 2);
 		smart_str_0(&clause);
+		smart_str_free(&clause);
 		retval_len = strlen(retval);
+		zval_ptr_dtor(&outputLogic);
 		RETURN_STRINGL(retval, retval_len, 0);
 	}
 	
