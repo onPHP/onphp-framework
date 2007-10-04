@@ -113,14 +113,6 @@
 			throw new WrongArgumentException($message);
 		}
 		
-		public static function isInstanceOf(
-			$object, $className, $message = null
-		)
-		{
-			if (!$object instanceof $className)
-				throw new WrongArgumentException($message);
-		}
-		
 		/// exceptionless methods
 		//@{
 		public static function checkInteger($value)

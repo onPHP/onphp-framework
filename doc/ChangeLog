@@ -1,9 +1,5 @@
 # $Id$
 
-2007-10-04	Dmitry E. Pismenny
-
-	* core/Base/Assert.class.php: isInstanceOf() added.
-
 2007-10-02	Ivan Y. Khvostishkov
 
 	* main/Utils/TextUtils.class.php: added friendlyNumber() for
