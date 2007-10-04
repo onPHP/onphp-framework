@@ -207,5 +207,13 @@
 		{
 			return new PrimitiveForm($name);
 		}
+		
+		/**
+		 * @return PrimitiveFormsList
+		**/
+		public static function formsList($name)
+		{
+			return new PrimitiveFormsList($name);
+		}
 	}
 ?>

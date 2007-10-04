@@ -2,8 +2,9 @@
 
 2007-10-04	Ivan Y. Khvostishkov
 
-	* core/Form/Primitives/PrimitiveForm.class.php: primitive for creating
-	structured forms with the help of DTO classess (coming soon).
+	* core/Form/Primitives/PrimitiveForm.class.php,
+	PrimitiveFormsList.class.php: primitives for creating structured forms
+	with the help of DTO classess (coming soon).
 
 2007-10-02	Ivan Y. Khvostishkov
 
