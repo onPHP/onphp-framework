@@ -49,7 +49,7 @@
 				setBoundary($this->boundary);
 			
 			$this->headers =
-				"MIME-Version: 1.0\r\n"
+				"MIME-Version: 1.0\n"
 				.$mail->getHeaders();
 
 			foreach ($this->parts as $part)
