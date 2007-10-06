@@ -89,6 +89,17 @@ EOT;
 						$property = clone $property;
 						$property->required();
 						
+						// prevent name collisions
+						if (
+							$property->getRelationColumnName()
+							== $foreignPropery->getColumnName()
+						) {
+							$foreignPropery->setColumnName(
+								$class->getTableName().'_'
+								.$property->getConvertedName().'_id'
+							);
+						}
+						
 						$out .= <<<EOT
 \$schema->
 	addTable(
