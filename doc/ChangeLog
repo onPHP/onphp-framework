@@ -1,5 +1,10 @@
 # $Id$
 
+2007-10-06	Konstantin V. Arkhipov
+
+	* main/Net/Http/CurlHttpClient.class.php: user-agent added; parasitic
+	question mark removed.
+
 2007-10-04	Ivan Y. Khvostishkov
 
 	* core/Form/Primitives/PrimitiveForm.class.php,
@@ -20,7 +25,7 @@
 
 	* core/Form/Form.class.php: added isImported check in importMore
 	functions.
-	
+
 	* main/Flow/View.class.php: added ERROR_VIEW const.
 
 2007-09-26	Dmitry A. Lomash
