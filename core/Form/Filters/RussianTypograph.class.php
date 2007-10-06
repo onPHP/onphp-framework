@@ -42,15 +42,20 @@
 				'•'		=> '&bull;',
 				'®'		=> '&reg;',
 				'¼'		=> '&frac14;',
-				'1/4'	=> '&frac14;',
 				'½'		=> '&frac12;',
-				'1/2'	=> '&frac12;',
 				'¾'		=> '&frac34;',
-				'3/4'	=> '&frac34;',
 				'±'		=> '&plusmn;',
 				'+/-'	=> '&plusmn;',
 				'!='	=> '&ne;',
-				'<>'	=> '&ne;'
+				'<>'	=> '&ne;',
+				
+				// just to avoid regexp's
+				' 1/4'	=> ' &frac14;',
+				' 1/2'	=> ' &frac12;',
+				' 3/4'	=> ' &frac34;',
+				'1/4 '	=> '&frac14; ',
+				'1/2 '	=> '&frac12; ',
+				'3/4 '	=> '&frac34; '
 			);
 		
 		private static $from = array(
@@ -73,20 +78,6 @@
 			'str_replace("\'", \'&#146;\', \'$1\')'
 		);
 		
-		private static $chain = null;
-		
-		protected function __construct()
-		{
-			self::$chain =
-				FilterChain::create()->
-				add(
-					Filter::trim()
-				)->
-				add(
-					CompressWhitespaceFilter::me()
-				);
-		}
-		
 		/**
 		 * @return RussianTypograph
 		**/
@@ -97,19 +88,19 @@
 		
 		public function apply($value)
 		{
-			if (!trim($value))
+			if (!$value = trim(strtr($value, self::$symbols)))
 				return null;
 			
 			$list =
 				preg_split(
 					'~([^<>]*)(?![^<]*?>)~',
-					strtr($value, self::$symbols),
+					$value,
 					null,
 					PREG_SPLIT_DELIM_CAPTURE
 						| PREG_SPLIT_NO_EMPTY
 						| PREG_SPLIT_OFFSET_CAPTURE
 				);
-
+			
 			$tags = array();
 			$text = null;
 			
@@ -146,7 +137,7 @@
 				return $out;
 			}
 			
-			return self::$chain->apply($text);
+			return CompressWhitespaceFilter::me()->apply($text);
 		}
 		
 		private function typographize($text)
