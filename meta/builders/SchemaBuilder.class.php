@@ -85,6 +85,10 @@ EOT;
 							// we don't need primary key here
 							setIdentifier(false);
 						
+						// we don't want any garbage in such tables
+						$property = clone $property;
+						$property->required();
+						
 						$out .= <<<EOT
 \$schema->
 	addTable(
