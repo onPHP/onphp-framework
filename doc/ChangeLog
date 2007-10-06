@@ -1,5 +1,10 @@
 # $Id$
 
+2007-10-06	Konstantin V. Arkhipov
+
+	* main/Net/Http/CurlHttpClient.class.php: user-agent added; parasitic
+	question mark removed.
+
 2007-10-02	Ivan Y. Khvostishkov
 
 	* main/Utils/TextUtils.class.php: added friendlyNumber() for

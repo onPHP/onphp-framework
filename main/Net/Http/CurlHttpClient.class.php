@@ -127,7 +127,8 @@
 			$options = array(
 				CURLOPT_WRITEFUNCTION => array($response, 'writeBody'),
 				CURLOPT_HEADERFUNCTION => array($response, 'writeHeader'),
-				CURLOPT_URL => $request->getUrl()->toString()
+				CURLOPT_URL => $request->getUrl()->toString(),
+				CURLOPT_USERAGENT => 'onPHP::'.__CLASS__
 			);
 			
 			if ($this->timeout !== null)
@@ -141,8 +142,11 @@
 			
 			if ($request->getMethod()->getId() == HttpMethod::GET) {
 				$options[CURLOPT_HTTPGET] = true;
-				$options[CURLOPT_URL] .=
-					'?'.$this->argumentsToString($request->getGet());
+				
+				if ($request->getGet()) {
+					$options[CURLOPT_URL] .=
+						'?'.$this->argumentsToString($request->getGet());
+				}
 			} else {
 				$options[CURLOPT_POST] = true;
 				$options[CURLOPT_POSTFIELDS] =
