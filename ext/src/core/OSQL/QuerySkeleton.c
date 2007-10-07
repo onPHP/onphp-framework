@@ -204,7 +204,7 @@ ONPHP_METHOD(QuerySkeleton, orWhere)
 ONPHP_METHOD(QuerySkeleton, toDialectString)
 {
 	zval *where, *whereLogic, *dialect;
-		
+	
 	if (
 		zend_parse_parameters(
 			ZEND_NUM_ARGS() TSRMLS_CC,
@@ -255,7 +255,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 				if (EG(exception)) {
 					return;
 				}
-
+				
 				whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 				
 				if (exp) {
@@ -289,7 +289,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 				) {
 					add_index_null(whereLogic, i + 1);
 				}
-		   	}
+			}
 		}
 		
 		retval = (char*) php_trim(clause.c, clause.len, " ", 1, NULL, 2);
