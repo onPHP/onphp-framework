@@ -68,9 +68,9 @@ ONPHP_METHOD(QuerySkeleton, __destruct)
 
 ONPHP_METHOD(QuerySkeleton, where)
 {
-	zval *where, *whereLogic, *exp, *logic;
+	zval *where, *whereLogic, *exp, *logic = NULL;
 	
-	zval *copy;
+	zval *copy, *copy2;
 	MAKE_STD_ZVAL(copy);
 	
 	if (
@@ -88,13 +88,6 @@ ONPHP_METHOD(QuerySkeleton, where)
 	*copy = *exp;
 	zval_copy_ctor(copy);
 	
-	if (
-		Z_TYPE_P(logic) == IS_NULL
-		|| (ZEND_NUM_ARGS() == 1)
-	) {
-		ZVAL_NULL(logic);
-	}
-	
 	where = ONPHP_READ_PROPERTY(getThis(), "where");
 	
 	if (
@@ -110,6 +103,7 @@ ONPHP_METHOD(QuerySkeleton, where)
 	} else {
 		if (
 			zend_hash_num_elements(Z_ARRVAL_P(where)) == 0
+			&& logic
 			&& Z_TYPE_P(logic) != IS_NULL
 		) {
 			ZVAL_NULL(logic);
@@ -117,9 +111,16 @@ ONPHP_METHOD(QuerySkeleton, where)
 		
 		whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 		
-		if (Z_TYPE_P(logic) != IS_NULL)
-			add_next_index_zval(whereLogic, logic);
-		else
+		if (
+			logic &&
+			Z_TYPE_P(logic) != IS_NULL
+		) {
+			MAKE_STD_ZVAL(copy2);
+			*copy2 = *logic;
+			zval_copy_ctor(copy2);
+			
+			add_next_index_zval(whereLogic, copy2);
+		} else
 			add_next_index_null(whereLogic);
 		
 		add_next_index_zval(where, copy);
@@ -160,6 +161,7 @@ ONPHP_METHOD(QuerySkeleton, andWhere)
 		return;
 	}
 	
+	ZVAL_FREE(logic);
 	RETURN_ZVAL(retval, 1, 0);
 }
 
@@ -195,13 +197,14 @@ ONPHP_METHOD(QuerySkeleton, orWhere)
 		return;
 	}
 	
+	ZVAL_FREE(logic);
 	RETURN_ZVAL(retval, 1, 0);
 }
 
 ONPHP_METHOD(QuerySkeleton, toDialectString)
 {
 	zval *where, *whereLogic, *dialect;
-	
+		
 	if (
 		zend_parse_parameters(
 			ZEND_NUM_ARGS() TSRMLS_CC,
@@ -294,6 +297,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 		smart_str_free(&clause);
 		retval_len = strlen(retval);
 		zval_ptr_dtor(&outputLogic);
+		
 		RETURN_STRINGL(retval, retval_len, 0);
 	}
 	
