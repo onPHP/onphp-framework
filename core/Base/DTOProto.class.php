@@ -24,7 +24,7 @@
 			return new $className;
 		}
 		
-		final public function toForm($object)
+		final public function toForm(DTOClass $object)
 		{
 			return
 				$this->
@@ -101,7 +101,7 @@
 			return array();
 		}
 		
-		protected function buildScope($object)
+		protected function buildScope(DTOClass $object)
 		{
 			return array();
 		}
