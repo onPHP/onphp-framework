@@ -260,9 +260,8 @@
 		
 		final private function attachPrimitives(Form $form)
 		{
-			foreach ($this->getFormMapping() as $primitive) {
+			foreach ($this->getFormMapping() as $primitive)
 				$form->add($primitive);
-			}
 			
 			return $form;
 		}
