@@ -154,7 +154,7 @@
 			
 			foreach ($this->getFormMapping() as $field => $primitive) {
 				$getter = 'get'.ucfirst($field);
-				$value = $object->$methodName;
+				$value = $object->$getter();
 				
 				$setter = 'set'.ucfirst($primitive->getName());
 				
@@ -191,10 +191,10 @@
 					
 				}
 				
-				$result->$setter($value);
+				$dto->$setter($value);
 			}
 			
-			return $result;
+			return $dto;
 		}
 		
 		final protected function buildScope(DTOClass $dto)
@@ -204,7 +204,7 @@
 			foreach ($this->getFormMapping() as $primitive) {
 				
 				$methodName = 'get'.ucfirst($primitive->getName());
-				$value = $dto->$methodName;
+				$value = $dto->$methodName();
 				
 				if ($primitive instanceof PrimitiveForm) {
 					
@@ -244,7 +244,7 @@
 					}
 				}
 				
-				$object->methodName($value);
+				$object->$methodName($value);
 			}
 			
 			return $object;
@@ -257,7 +257,7 @@
 		
 		final private function attachPrimitives(Form $form)
 		{
-			foreach ($this->getPrimitives() as $primitive) {
+			foreach ($this->getFormMapping() as $primitive) {
 				$form->add($primitive);
 			}
 			
