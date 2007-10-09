@@ -79,6 +79,13 @@
 		
 		final public function makeForm()
 		{
+			$form = parent::makeForm();
+			
+			foreach ($this->getFormMapping() as $primitive)
+				$form->add($primitive);
+				
+			return $form;
+			
 			return
 				$this->
 					attachPrimitives(
