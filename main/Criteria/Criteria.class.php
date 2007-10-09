@@ -51,10 +51,7 @@
 			$this->logic = Expression::andBlock();
 			$this->order = new OrderChain();
 			
-			if ($dao instanceof ComplexBuilderDAO)
-				$this->strategy = FetchStrategy::join();
-			else
-				$this->strategy = FetchStrategy::cascade();
+			$this->setDao($dao);
 		}
 		
 		public function __clone()
@@ -90,13 +87,15 @@
 		**/
 		public function setDao(StorableDAO $dao)
 		{
-			if ($this->strategy->getId() == FetchStrategy::JOIN)
-				Assert::isTrue(
-					$dao instanceof ComplexBuilderDAO,
-					'your DAO does not support join fetch strategy'
-				);
-			
 			$this->dao = $dao;
+			
+			if ($dao instanceof ComplexBuilderDAO) {
+				$this->setFetchStrategy(
+					new FetchStrategy($dao->getDefaultStrategyId())
+				);
+			} else {
+				$this->strategy = FetchStrategy::cascade();
+			}
 			
 			return $this;
 		}

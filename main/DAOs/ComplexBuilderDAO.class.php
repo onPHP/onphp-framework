@@ -17,6 +17,14 @@
 	{
 		abstract protected function makeSelf(&$array, $prefix = null);
 		
+		/**
+		 * @deprecated since 0.11
+		**/
+		public function getDefaultStrategyId()
+		{
+			return FetchStrategy::JOIN;
+		}
+		
 		public function getMapping()
 		{
 			static $protoMappings = array();

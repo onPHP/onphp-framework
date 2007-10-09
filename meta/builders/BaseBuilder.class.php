@@ -380,6 +380,16 @@ EOT;
 EOT;
 			}
 			
+			if ($class->getFetchStrategyId() == FetchStrategy::CASCADE) {
+				$out .= <<<EOT
+
+public function getDefaultStrategyId()
+{
+	return FetchStrategy::CASCADE;
+}
+EOT;
+			}
+			
 			if ($liaisons = $class->getReferencingClasses()) {
 				$uncachers = array();
 				foreach ($liaisons as $className) {
