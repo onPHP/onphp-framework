@@ -17,6 +17,11 @@
 			return null;
 		}
 		
+		public function dtoClassName()
+		{
+			return null;
+		}
+		
 		final public function createObject()
 		{
 			$className = $this->className();
@@ -34,9 +39,7 @@
 							: Form::create()
 					)->
 					importMore(
-						$this->mapScope(
-							$this->buildScope($object)
-						)
+						$this->buildScope($object)
 					);
 		}
 		
@@ -96,41 +99,76 @@
 			return $result;
 		}
 		
+		final protected function buildScope(DTOClass $dto)
+		{
+			$dtoClass = $this->dtoClassName();
+			Assert::isTrue($object instanceof $dtoClass);
+			
+			$result = array();
+			
+			foreach ($this->getFormMapping() as $primitive) {
+				
+				$methodName = 'get'.ucfirst($primitive->getName());
+				$value = $dto->$methodName;
+				
+				if ($primitive instanceof PrimitiveForm) {
+					
+					$proto = Singleton::getInstance(
+						'Proto'.$primitive->getClassName()
+					);
+					
+					if ($primitive instanceof PrimitiveFormsList) {
+						$value = $proto->toFormsList($value);
+					} else {
+						$value = $proto->toForm($value);
+					}
+				}
+				
+				$result[$primitive->getName()] = $value;
+			}
+			
+			return $result;
+		}
+		
+		final protected function fillObject(Form $form, $object)
+		{
+			$class = $this->className();
+			Assert::isTrue($object instanceof $class);
+			
+			foreach ($this->getFormMapping() as $field => $primitive) {
+				$methodName = 'set'.ucfirst($field);
+				$value = $form->getValue($primitive->getName());
+				
+				if ($primitive instanceof PrimitiveForm) {
+					$proto = Singleton::getInstance(
+						'Proto'.$primitive->getClassName()
+					);
+					
+					if ($primitive instanceof PrimitiveFormsList) {
+						$value = $proto->makeObjectsList($value);
+					} else {
+						$value = $proto->makeObject($value);
+					}
+				}
+				
+				$object->methodName($value);
+			}
+			
+			return $object;
+		}
+		
 		protected function getFormMapping()
 		{
 			return array();
 		}
 		
-		protected function buildScope(DTOClass $object)
+		final private function attachPrimitives(Form $form)
 		{
-			return array();
-		}
-		
-		protected function fillObject(Form $form, $object)
-		{
-			return $object;
-		}
-		
-		private function attachPrimitives(Form $form)
-		{
-			foreach ($this->getFormMapping() as $field => $primitive) {
+			foreach ($this->getPrimitives() as $primitive) {
 				$form->add($primitive);
 			}
 			
 			return $form;
-		}
-		
-		private function mapScope($scope)
-		{
-			$result = array();
-			
-			$formMapping = $this->getFormMapping();
-			
-			foreach ($scope as $id => $value) {
-				$result[$formMapping[$id]->getName()] = $value;
-			}
-			
-			return $result;
 		}
 	}
 ?>
