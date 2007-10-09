@@ -228,6 +228,7 @@
 		final protected function fillObject(Form $form, $object)
 		{
 			foreach ($this->getFormMapping() as $field => $primitive) {
+				// TODO: if null - drop
 				$methodName = 'set'.ucfirst($field);
 				$value = $form->getValue($primitive->getName());
 				
