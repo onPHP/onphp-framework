@@ -43,6 +43,9 @@
 		
 		final public function toForm(DTOClass $dto)
 		{
+			//var_dump(get_class($this));
+			//var_dump($dto);
+			
 			$dtoClass = $this->dtoClassName();
 			Assert::isTrue($dto instanceof $dtoClass);
 			
