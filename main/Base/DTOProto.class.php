@@ -49,7 +49,7 @@
 		final public function toForm(DTOClass $dto)
 		{
 			$dtoClass = $this->dtoClassName();
-			Assert::isTrue($dto instanceof $dtoClass);
+			Assert::isInstance($dto, $dtoClass);
 			
 			return
 				$this->
@@ -98,7 +98,7 @@
 		final public function toObject(Form $form, $object)
 		{
 			$class = $this->className();
-			Assert::isTrue($object instanceof $class);
+			Assert::isInstance($object, $class);
 			
 			if ($this->baseProto())
 				$this->baseProto()->toObject($form, $object);
@@ -125,7 +125,7 @@
 		final public function makeDto($object)
 		{
 			$class = $this->className();
-			Assert::isTrue($object instanceof $class);
+			Assert::isInstance($object, $class);
 			
 			return $this->toDto($object, $this->createDto());
 		}
@@ -149,10 +149,10 @@
 		final public function toDto($object, $dto)
 		{
 			$class = $this->className();
-			Assert::isTrue($object instanceof $class);
+			Assert::isInstance($object, $class);
 			
 			$dtoClass = $this->dtoClassName();
-			Assert::isTrue($dto instanceof $dtoClass);
+			Assert::isInstance($dto, $dtoClass);
 			
 			if ($this->baseProto())
 				$this->baseProto()->toDto($object, $dto);
