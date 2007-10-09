@@ -22,6 +22,11 @@
 			return null;
 		}
 		
+		public function checkConstraints($object)
+		{
+			return true;
+		}
+		
 		final public function createObject()
 		{
 			$className = $this->className();
@@ -29,31 +34,41 @@
 			return new $className;
 		}
 		
-		final public function toForm(DTOClass $object)
+		final public function createDto()
 		{
+			$dtoClassName = $this->dtoClassName();
+			
+			return new $dtoClassName;
+		}
+		
+		final public function toForm(DTOClass $dto)
+		{
+			$dtoClass = $this->dtoClassName();
+			Assert::isTrue($dto instanceof $dtoClass);
+			
 			return
 				$this->
 					attachPrimitives(
 						$this->baseProto()
-							? $this->baseProto()->toForm($object)
+							? $this->baseProto()->toForm($dto)
 							: Form::create()
 					)->
 					importMore(
-						$this->buildScope($object)
+						$this->buildScope($dto)
 					);
 		}
 		
-		final public function toFormsList($objectsList)
+		final public function toFormsList($dtosList)
 		{
-			if (!$objectsList)
+			if (!$dtosList)
 				return null;
 			
-			Assert::isArray($objectsList);
+			Assert::isArray($dtosList);
 			
 			$result = array();
 			
-			foreach ($objectsList as $object) {
-				$result[] = $this->toForm($object);
+			foreach ($dtosList as $dto) {
+				$result[] = $this->toForm($dto);
 			}
 			
 			return $result;
@@ -77,6 +92,9 @@
 		
 		final public function toObject(Form $form, $object)
 		{
+			$class = $this->className();
+			Assert::isTrue($object instanceof $class);
+			
 			if ($this->baseProto())
 				$this->baseProto()->toObject($form, $object);
 			
@@ -93,7 +111,87 @@
 			$result = array();
 			
 			foreach ($forms as $form) {
-				$result[] = $this->toObject($form, $this->createObject());
+				$result[] = $this->makeObject($form);
+			}
+			
+			return $result;
+		}
+		
+		final public function makeDto($object)
+		{
+			$class = $this->className();
+			Assert::isTrue($object instanceof $class);
+			
+			return $this->toDto($object, $this->createDto());
+		}
+		
+		final public function makeDtosList($objects)
+		{
+			if (!$objects)
+				return null;
+			
+			Assert::isArray($objects);
+			
+			$result = array();
+			
+			foreach ($objects as $object) {
+				$result[] = $this->makeDto($object);
+			}
+			
+			return $result;
+		}
+		
+		final public function toDto($object, $dto)
+		{
+			$class = $this->className();
+			Assert::isTrue($object instanceof $class);
+			
+			$dtoClass = $this->dtoClassName();
+			Assert::isTrue($dto instanceof $dtoClass);
+			
+			if ($this->baseProto())
+				$this->baseProto()->toDto($object, $dto);
+			
+			foreach ($this->getFormMapping() as $field => $primitive) {
+				$getter = 'get'.ucfirst($field);
+				$value = $object->$methodName;
+				
+				$setter = 'set'.ucfirst($primitive->getName());
+				
+				if ($primitive instanceof PrimitiveForm) {
+					
+					$proto = Singleton::getInstance(
+						'Proto'.$primitive->getClassName()
+					);
+					
+					if ($primitive instanceof PrimitiveFormsList) {
+						$value = $proto->makeDtosList($value);
+					} else {
+						$value = $proto->makeDto($value);
+					}
+					
+				} elseif (is_object($value)) {
+					if (
+						$value instanceof Identifiable
+						&& $primitive instanceof PrimitiveIdentifier
+					) {
+						$value = $value->getId();
+						
+					} elseif (
+						$value instanceof Stringable
+						// TODO: make StringablePrimitive interface?
+					) {
+						$value = $value->toString();
+						
+					} else
+						throw new WrongArgumentException(
+							'don\'t know how to convert '.get_class($value)
+							.' to dto value of primitive '.get_class($primitive)
+						);
+					
+				}
+				
+				$result->$setter($value);
 			}
 			
 			return $result;
@@ -101,9 +199,6 @@
 		
 		final protected function buildScope(DTOClass $dto)
 		{
-			$dtoClass = $this->dtoClassName();
-			Assert::isTrue($object instanceof $dtoClass);
-			
 			$result = array();
 			
 			foreach ($this->getFormMapping() as $primitive) {
@@ -132,9 +227,6 @@
 		
 		final protected function fillObject(Form $form, $object)
 		{
-			$class = $this->className();
-			Assert::isTrue($object instanceof $class);
-			
 			foreach ($this->getFormMapping() as $field => $primitive) {
 				$methodName = 'set'.ucfirst($field);
 				$value = $form->getValue($primitive->getName());
