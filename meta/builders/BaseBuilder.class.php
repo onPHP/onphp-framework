@@ -345,6 +345,17 @@ EOT;
 		{
 			$out = null;
 			
+			if ($class->getFetchStrategyId() == FetchStrategy::CASCADE) {
+				$out .= <<<EOT
+public function getDefaultStrategyId()
+{
+	return FetchStrategy::CASCADE;
+}
+
+
+EOT;
+			}
+			
 			if (!$class->getPattern() instanceof AbstractClassPattern) {
 				if (
 					$class->getIdentifier()->getColumnName() !== 'id'
@@ -377,16 +388,6 @@ EOT;
 			} else {
 				$out .= <<<EOT
 // no get{Table,ObjectName,Sequence} for abstract class
-EOT;
-			}
-			
-			if ($class->getFetchStrategyId() == FetchStrategy::CASCADE) {
-				$out .= <<<EOT
-
-public function getDefaultStrategyId()
-{
-	return FetchStrategy::CASCADE;
-}
 EOT;
 			}
 			
