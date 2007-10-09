@@ -7,6 +7,23 @@
 
 	class DTOProto extends Singleton
 	{
+		public function baseProto()
+		{
+			return null;
+		}
+		
+		public function className()
+		{
+			return null;
+		}
+		
+		final public function createObject()
+		{
+			$className = $this->className();
+			
+			return new $className;
+		}
+		
 		final public function toForm($object)
 		{
 			return
@@ -50,9 +67,33 @@
 					);
 		}
 		
-		public function baseProto()
+		final public function makeObject(Form $form)
 		{
-			return null;
+			return $this->toObject($form, $this->createObject());
+		}
+		
+		final public function toObject(Form $form, $object)
+		{
+			if ($this->baseProto())
+				$this->baseProto()->toObject($form, $object);
+			
+			return $this->fillObject($form, $object);
+		}
+		
+		final public function makeObjectsList($forms)
+		{
+			if (!$forms)
+				return null;
+			
+			Assert::isArray($forms);
+			
+			$result = array();
+			
+			foreach ($forms as $form) {
+				$result[] = $this->toObject($form, $this->createObject());
+			}
+			
+			return $result;
 		}
 		
 		protected function getFormMapping()
@@ -63,6 +104,11 @@
 		protected function buildScope($object)
 		{
 			return array();
+		}
+		
+		protected function fillObject(Form $form, $object)
+		{
+			return $object;
 		}
 		
 		private function attachPrimitives(Form $form)
