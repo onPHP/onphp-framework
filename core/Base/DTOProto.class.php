@@ -182,7 +182,6 @@
 						
 					} elseif (
 						$value instanceof Stringable
-						// TODO: make StringablePrimitive interface?
 					) {
 						$value = $value->toString();
 						
@@ -209,20 +208,23 @@
 				$methodName = 'get'.ucfirst($primitive->getName());
 				$value = $dto->$methodName();
 				
-				if ($primitive instanceof PrimitiveForm) {
+				if ($primitive->isRequired() || $value !== null) {
 					
-					$proto = Singleton::getInstance(
-						'Proto'.$primitive->getClassName()
-					);
-					
-					if ($primitive instanceof PrimitiveFormsList) {
-						$value = $proto->toFormsList($value);
-					} else {
-						$value = $proto->toForm($value);
+					if ($primitive instanceof PrimitiveForm) {
+						
+						$proto = Singleton::getInstance(
+							'Proto'.$primitive->getClassName()
+						);
+						
+						if ($primitive instanceof PrimitiveFormsList) {
+							$value = $proto->toFormsList($value);
+						} else {
+							$value = $proto->toForm($value);
+						}
 					}
+					
+					$result[$primitive->getName()] = $value;
 				}
-				
-				$result[$primitive->getName()] = $value;
 			}
 			
 			return $result;
@@ -231,23 +233,32 @@
 		final protected function fillObject(Form $form, $object)
 		{
 			foreach ($this->getFormMapping() as $field => $primitive) {
-				// TODO: if null - drop
 				$methodName = 'set'.ucfirst($field);
 				$value = $form->getValue($primitive->getName());
 				
-				if ($primitive instanceof PrimitiveForm) {
-					$proto = Singleton::getInstance(
-						'Proto'.$primitive->getClassName()
-					);
-					
-					if ($primitive instanceof PrimitiveFormsList) {
-						$value = $proto->makeObjectsList($value);
+				if (!$primitive->isRequired() && $value === null) {
+					if ($primitive instanceof PrimitiveForm) {
+						$methodName = 'drop'.ucfirst($field);
+						$object->$methodName();
 					} else {
-						$value = $proto->makeObject($value);
+						$object->$methodName(null);
 					}
-				}
+				} else {
 				
-				$object->$methodName($value);
+					if ($primitive instanceof PrimitiveForm) {
+						$proto = Singleton::getInstance(
+							'Proto'.$primitive->getClassName()
+						);
+						
+						if ($primitive instanceof PrimitiveFormsList) {
+							$value = $proto->makeObjectsList($value);
+						} else {
+							$value = $proto->makeObject($value);
+						}
+					}
+					
+					$object->$methodName($value);
+				}
 			}
 			
 			return $object;
