@@ -11,24 +11,27 @@
 		
 		final public function toForm($object)
 		{
-			if ($this->baseProto())
-				$result = $this->baseProto()->toForm($object);
-			else
-				$result = Form::create();
-			
 			return
-				$this->attachPrimitives($result)->
-					importMore($this->buildScope($object));
+				$this->
+					attachPrimitives(
+						$this->baseProto()
+							? $this->baseProto()->toForm($object)
+							: Form::create()
+					)->
+					importMore(
+						$this->buildScope($object)
+					);
 		}
 		
 		final public function makeForm()
 		{
-			if ($this->baseProto())
-				$result = $this->baseProto()->makeForm();
-			else
-				$result = Form::create();
-			
-			return $this->attachPrimitives($result);
+			return
+				$this->
+					attachPrimitives(
+						$this->baseProto()
+							? $this->baseProto()->makeForm()
+							: Form::create()
+					);
 		}
 		
 		public function baseProto()
