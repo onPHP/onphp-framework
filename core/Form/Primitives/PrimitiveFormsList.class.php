@@ -13,10 +13,17 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveFormsList extends BasePrimitive
+	final class PrimitiveFormsList extends PrimitiveForm
 	{
+		protected $value = array();
+		
 		public function import($scope)
 		{
+			if (!$this->className)
+				throw new WrongStateException(
+					"no class defined for PrimitiveFormsList '{$this->name}'"
+				);
+			
 			if (!BasePrimitive::import($scope))
 				return null;
 			
@@ -33,6 +40,15 @@
 			$this->value = $forms;
 			
 			return true;
+		}
+		
+		public function importValue($value)
+		{
+			Assert::isTrue(current($value) instanceof Form);
+					
+			return $this->import(
+				array($this->name => $value)
+			);
 		}
 	}
 ?>

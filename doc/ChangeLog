@@ -1,5 +1,9 @@
 # $Id$
 
+2007-10-09	Ivan Y. Khvostishkov
+
+	* core/Base/Assert.class.php: arguments are visible now, yeah!
+
 2007-10-06	Konstantin V. Arkhipov
 
 	* main/Net/Http/CurlHttpClient.class.php: user-agent added; parasitic

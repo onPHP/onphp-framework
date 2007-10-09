@@ -20,19 +20,25 @@
 		public static function isTrue($boolean, $message = null)
 		{
 			if ($boolean !== true)
-				throw new WrongArgumentException($message);
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($boolean)
+				);
 		}
-
+		
 		public static function isFalse($boolean, $message = null)
 		{
 			if ($boolean !== false)
-				throw new WrongArgumentException($message);
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($boolean)
+				);
 		}
 		
 		public static function isNull($variable, $message = null)
 		{
 			if ($variable !== null)
-				throw new WrongArgumentException($message);
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
 		}
 
 		public static function isNotNull($variable, $message = null)
@@ -44,7 +50,9 @@
 		public static function isArray($variable, $message = null)
 		{
 			if (!is_array($variable))
-				throw new WrongArgumentException($message);
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
 		}
 
 		public static function isInteger($variable, $message = null)
@@ -55,7 +63,9 @@
 					&& $variable == (int) $variable
 				)
 			)
-				throw new WrongArgumentException($message);
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
 		}
 		
 		public static function isPositiveInteger($variable, $message = null)
@@ -64,7 +74,9 @@
 				!self::checkInteger($variable)
 				|| $variable < 0
 			)
-				throw new WrongArgumentException($message);
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
 		}
 
 		public static function isFloat($variable, $message = null)
@@ -75,19 +87,25 @@
 					&& is_numeric($variable)
 				)
 			)
-				throw new WrongArgumentException($message);
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
 		}
 
 		public static function isString($variable, $message = null)
 		{
 			if (!is_string($variable))
-				throw new WrongArgumentException($message);
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
 		}
 		
 		public static function isBoolean($variable, $message = null)
 		{
 			if (!($variable === true || $variable === false))
-				throw new WrongArgumentException($message);
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
 		}
 
 		public static function isTernaryBase($variable, $message = null)
@@ -99,13 +117,33 @@
 					|| ($variable === null)
 				)
 			)
-				throw new WrongArgumentException($message);
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
 		}
 
 		public static function brothers($first, $second, $message = null)
 		{
 			if (get_class($first) !== get_class($second))
-				throw new WrongArgumentException($message);
+				throw new WrongArgumentException(
+					$message.', '.self::dumpOppositeArguments($first, $second)
+				);
+		}
+		
+		public static function isEqual($first, $second, $message = null)
+		{
+			if ($first !== $second)
+				throw new WrongArgumentException(
+					$message.', '.self::dumpOppositeArguments($first, $second)
+				);
+		}
+		
+		public static function isInstance($first, $second, $message = null)
+		{
+			if (!($first instanceof $second))
+				throw new WrongArgumentException(
+					$message.', '.self::dumpOppositeArguments($first, $second)
+				);
 		}
 		
 		public static function isUnreachable($message = 'unreachable code reached')
@@ -122,6 +160,18 @@
 				&& ($value == (int) $value)
 				&& (strlen($value) == strlen((int) $value))
 			);
+		}
+		
+		public static function dumpArgument($argument)
+		{
+			return 'argument: ['.var_export($argument, true).']';
+		}
+		
+		public static function dumpOppositeArguments($first, $second)
+		{
+			return
+				'arguments: ['.var_export($first, true).'] '
+				.'vs. ['.var_export($second, true).'] ';
 		}
 		//@}
 	}

@@ -13,10 +13,58 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveForm extends BasePrimitive
+	class PrimitiveForm extends BasePrimitive
 	{
+		protected $className = null;
+		
+		private $info = null;
+		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveForm
+		**/
+		public function of($className)
+		{
+			Assert::isTrue(
+				class_exists($className, true),
+				"knows nothing about '{$className}' class"
+			);
+			
+			$this->info = new ReflectionClass($className);
+			
+			$this->className = $className;
+			
+			return $this;
+		}
+		
+		public function getClassName()
+		{
+			return $this->className;
+		}
+		
+		public function getReflection()
+		{
+			return $this->info;
+		}
+		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveForm
+		**/
+		public function setValue($value)
+		{
+			Assert::isTrue($value instanceof Form);
+			
+			return parent::setValue($value);
+		}
+		
 		public function import($scope)
 		{
+			if (!$this->className)
+				throw new WrongStateException(
+					"no class defined for PrimitiveForm '{$this->name}'"
+				);
+			
 			if (!BasePrimitive::import($scope))
 				return null;
 			
