@@ -7,8 +7,6 @@
 
 	class DTOProto extends Singleton
 	{
-		private $formMapping	= array();
-		
 		final public function toForm($object)
 		{
 			return
@@ -19,8 +17,26 @@
 							: Form::create()
 					)->
 					importMore(
-						$this->buildScope($object)
+						$this->mapScope(
+							$this->buildScope($object)
+						)
 					);
+		}
+		
+		final public function toFormsList($objectsList)
+		{
+			if (!$objectsList)
+				return null;
+			
+			Assert::isArray($objectsList);
+			
+			$result = array();
+			
+			foreach ($objectsList as $object) {
+				$result[] = $this->toForm($object);
+			}
+			
+			return $result;
 		}
 		
 		final public function makeForm()
@@ -39,19 +55,36 @@
 			return null;
 		}
 		
-		public function getFormMapping()
+		protected function getFormMapping()
 		{
-			return $this->formMapping;
-		}
-		
-		protected function attachPrimitives(Form $form)
-		{
-			return $form;
+			return array();
 		}
 		
 		protected function buildScope($object)
 		{
 			return array();
+		}
+		
+		private function attachPrimitives(Form $form)
+		{
+			foreach ($this->getFormMapping() as $field => $primitive) {
+				$form->add($primitive);
+			}
+			
+			return $form;
+		}
+		
+		private function mapScope($scope)
+		{
+			$result = array();
+			
+			$formMapping = $this->getFormMapping();
+			
+			foreach ($scope as $id => $value) {
+				$result[$formMapping[$id]->getName()] = $value;
+			}
+			
+			return $result;
 		}
 	}
 ?>
