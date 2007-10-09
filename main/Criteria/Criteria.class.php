@@ -51,7 +51,8 @@
 			$this->logic = Expression::andBlock();
 			$this->order = new OrderChain();
 			
-			$this->setDao($dao);
+			if ($dao)
+				$this->setDao($dao);
 		}
 		
 		public function __clone()
