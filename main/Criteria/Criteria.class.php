@@ -498,7 +498,8 @@
 							$query->get(
 								new DBField(
 									$innerProperty->getColumnName(),
-									$parentTable)
+									$parentTable
+								)
 							);
 						
 						continue;
