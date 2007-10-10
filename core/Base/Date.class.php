@@ -59,16 +59,20 @@
 		/**
 		 * @return Date
 		**/
-		public static function makeFromWeek($weekNumber)
+		public static function makeFromWeek($weekNumber, $year = null)
 		{
-			Assert::isPositiveInteger($weekNumber, 'Current week always > 0');
+			if (!$year)
+				$year = date('Y');
+			
+			Assert::isPositiveInteger($weekNumber);
+			Assert::isPositiveInteger($year);
 			
 			$date =
 				new self(
 					date(
 						'Y-m-d',
 						mktime(
-							0, 0, 0, 1, 1, date('Y')
+							0, 0, 0, 1, 1, $year
 						)
 					)
 				);
