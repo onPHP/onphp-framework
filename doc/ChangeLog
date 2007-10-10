@@ -2,6 +2,8 @@
 
 2007-10-10	Denis M. Gabaidulin
 
+	* core/Date.class.php: makeFromWeek() constructor was added.
+
 	* core/OSQL/DatePart.class.php, ExtractPart.class.php: copied from
 	trunk.
 

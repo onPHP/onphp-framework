@@ -56,6 +56,28 @@
 			return new self(self::today());
 		}
 		
+		/**
+		 * @return Date
+		**/
+		public static function makeFromWeek($weekNumber)
+		{
+			Assert::isPositiveInteger($weekNumber, 'Current week always > 0');
+			
+			$date =
+				new self(
+					date(
+						'Y-m-d',
+						mktime(
+							0, 0, 0, 1, 1, date('Y')
+						)
+					)
+				);
+			
+			$days = ($weekNumber * 7) - 1;
+			
+			return $date->modify("+{$days} day");
+		}
+		
 		public static function dayDifference(Date $left, Date $right)
 		{
 			return 
