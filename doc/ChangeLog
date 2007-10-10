@@ -1,5 +1,9 @@
 # $Id$
 
+2007-10-10	Denis M. Gabaidulin
+
+	* core/OSQL/DatePart.class.php, ExtractPart.class.php: added.
+
 2007-10-09	Ivan Y. Khvostishkov
 
 	* core/Base/Assert.class.php: arguments are visible now, yeah!
