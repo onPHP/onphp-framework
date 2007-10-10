@@ -136,7 +136,7 @@
 		
 		public static function isInstance($first, $second, $message = null)
 		{
-			if (!($first instanceof $second))
+			if (!ClassUtils::isInstanceOf($first, $second))
 				self::fail(
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
