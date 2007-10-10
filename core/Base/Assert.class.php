@@ -140,7 +140,7 @@
 		
 		public static function isInstance($first, $second, $message = null)
 		{
-			if (!($first instanceof $second))
+			if (!ClassUtils::isInstanceOf($first, $second))
 				throw new WrongArgumentException(
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
