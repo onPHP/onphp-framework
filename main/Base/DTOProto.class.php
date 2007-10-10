@@ -234,16 +234,22 @@
 		
 		final protected function fillObject(Form $form, $object)
 		{
+			$reflection = new ReflectionClass($object);
+			
 			foreach ($this->getFormMapping() as $field => $primitive) {
-				$methodName = 'set'.ucfirst($field);
+				$setter = 'set'.ucfirst($field);
+				$dropper = 'drop'.ucfirst($field);
+				
 				$value = $form->getValue($primitive->getName());
 				
 				if (!$primitive->isRequired() && $value === null) {
-					if ($primitive instanceof PrimitiveForm) {
-						$methodName = 'drop'.ucfirst($field);
-						$object->$methodName();
+					if (
+						$primitive instanceof PrimitiveForm
+						|| $reflection->hasMethod($dropper)
+					) {
+						$object->$dropper();
 					} else {
-						$object->$methodName(null);
+						$object->$setter(null);
 					}
 				} else {
 				
@@ -259,7 +265,7 @@
 						}
 					}
 					
-					$object->$methodName($value);
+					$object->$setter($value);
 				}
 			}
 			
