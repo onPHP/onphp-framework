@@ -2,7 +2,8 @@
 
 2007-10-10	Denis M. Gabaidulin
 
-	* core/OSQL/DatePart.class.php, ExtractPart.class.php: added.
+	* core/OSQL/DatePart.class.php, ExtractPart.class.php: copied from
+	trunk.
 
 2007-10-09	Ivan Y. Khvostishkov
 
