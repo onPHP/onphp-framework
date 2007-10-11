@@ -1,5 +1,9 @@
 # $Id$
 
+2007-10-10	Denis M. Gabaidulin
+
+	* core/Date.class.php: makeFromWeek() constructor was added.
+
 2007-10-09	Ivan Y. Khvostishkov
 
 	* core/Base/Assert.class.php: arguments are visible now, yeah!
