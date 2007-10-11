@@ -381,6 +381,19 @@
 			return $result;
 		}
 		
+		public function toStringFromRoot()
+		{
+			$result = $this->path;
+			
+			if ($this->query !== null)
+				$result .= '?'.$this->query;
+			
+			if ($this->fragment !== null)
+				$result .= '#'.$this->fragment;
+			
+			return $result;
+		}
+		
 		public function isValid()
 		{
 			return
