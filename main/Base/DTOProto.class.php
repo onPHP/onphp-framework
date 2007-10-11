@@ -90,6 +90,14 @@
 					);
 		}
 		
+		final public function attachPrimitives(Form $form)
+		{
+			foreach ($this->getFormMapping() as $primitive)
+				$form->add($primitive);
+			
+			return $form;
+		}
+		
 		final public function makeObject(Form $form)
 		{
 			return $this->toObject($form, $this->createObject());
@@ -192,13 +200,56 @@
 							'don\'t know how to convert '.get_class($value)
 							.' to dto value of primitive '.get_class($primitive)
 						);
-					
 				}
 				
 				$dto->$setter($value);
 			}
 			
 			return $dto;
+		}
+		
+		final public function fillObject(Form $form, $object)
+		{
+			$reflection = new ReflectionClass($object);
+			
+			foreach ($this->getFormMapping() as $field => $primitive) {
+				try {
+					$value = $form->getValue($primitive->getName());
+				} catch (MissingElementException $e) {
+					continue;
+				}
+				
+				$setter = 'set'.ucfirst($field);
+				$dropper = 'drop'.ucfirst($field);
+				
+				if (!$primitive->isRequired() && $value === null) {
+					if (
+						$primitive instanceof PrimitiveForm
+						|| $reflection->hasMethod($dropper)
+					) {
+						$object->$dropper();
+					} else {
+						$object->$setter(null);
+					}
+				} else {
+				
+					if ($primitive instanceof PrimitiveForm) {
+						$proto = Singleton::getInstance(
+							'Proto'.$primitive->getClassName()
+						);
+						
+						if ($primitive instanceof PrimitiveFormsList) {
+							$value = $proto->makeObjectsList($value);
+						} else {
+							$value = $proto->makeObject($value);
+						}
+					}
+					
+					$object->$setter($value);
+				}
+			}
+			
+			return $object;
 		}
 		
 		final protected function buildScope(DTOClass $dto)
@@ -232,57 +283,9 @@
 			return $result;
 		}
 		
-		final protected function fillObject(Form $form, $object)
-		{
-			$reflection = new ReflectionClass($object);
-			
-			foreach ($this->getFormMapping() as $field => $primitive) {
-				$setter = 'set'.ucfirst($field);
-				$dropper = 'drop'.ucfirst($field);
-				
-				$value = $form->getValue($primitive->getName());
-				
-				if (!$primitive->isRequired() && $value === null) {
-					if (
-						$primitive instanceof PrimitiveForm
-						|| $reflection->hasMethod($dropper)
-					) {
-						$object->$dropper();
-					} else {
-						$object->$setter(null);
-					}
-				} else {
-				
-					if ($primitive instanceof PrimitiveForm) {
-						$proto = Singleton::getInstance(
-							'Proto'.$primitive->getClassName()
-						);
-						
-						if ($primitive instanceof PrimitiveFormsList) {
-							$value = $proto->makeObjectsList($value);
-						} else {
-							$value = $proto->makeObject($value);
-						}
-					}
-					
-					$object->$setter($value);
-				}
-			}
-			
-			return $object;
-		}
-		
 		protected function getFormMapping()
 		{
 			return array();
-		}
-		
-		final private function attachPrimitives(Form $form)
-		{
-			foreach ($this->getFormMapping() as $primitive)
-				$form->add($primitive);
-			
-			return $form;
 		}
 	}
 ?>
