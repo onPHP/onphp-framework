@@ -64,13 +64,15 @@
 			if (!$year)
 				$year = date('Y');
 			
-			Assert::isPositiveInteger($weekNumber);
-			Assert::isPositiveInteger($year);
+			Assert::isTrue(
+				($weekNumber > 0)
+				&& ($weekNumber < 53)
+			);
 			
 			$date =
 				new self(
 					date(
-						'Y-m-d',
+						self::getFormat(),
 						mktime(
 							0, 0, 0, 1, 1, $year
 						)
