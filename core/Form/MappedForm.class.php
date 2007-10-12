@@ -108,7 +108,10 @@
 						isset($this->map[$prm->getName()])
 						&& in_array($type, $this->map[$prm->getName()])
 					)
-					|| $default
+					|| (
+						!isset($this->map[$prm->getName()])
+						&& $default
+					)
 				) {
 					if ($prm->getValue())
 						$result[$prm->getName()] = $prm->exportValue();
