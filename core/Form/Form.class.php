@@ -263,6 +263,18 @@
 			return $this->get($name)->exportValue();
 		}
 		
+		public function export()
+		{
+			$result = array();
+			
+			foreach ($this->form->getPrimitiveList() as $prm) {
+				if ($prm->getValue())
+					$result[$prm->getName()] = $prm->exportValue();
+			}
+			
+			return $result;
+		}
+		
 		public function toFormValue($value)
 		{
 			if ($value instanceof FormField)
