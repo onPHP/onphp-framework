@@ -166,6 +166,11 @@
 			return $this->import(array($this->getName() => $value));
 		}
 		
+		public function exportValue()
+		{
+			return $this->value;
+		}
+		
 		protected function import($scope)
 		{
 			if (

@@ -179,5 +179,11 @@
 			
 			return null;
 		}
+		
+		public function exportValue()
+		{
+			// cannot use toString() because of different delimiters
+			throw new UnimplementedFeatureException();
+		}
 	}
 ?>

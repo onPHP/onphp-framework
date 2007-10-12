@@ -67,5 +67,10 @@
 			
 			return $list;
 		}
+		
+		public function exportValue()
+		{
+			throw new UnimplementedFeatureException();
+		}
 	}
 ?>

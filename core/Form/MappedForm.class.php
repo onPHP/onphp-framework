@@ -96,6 +96,28 @@
 			$this->form->checkRules();
 		}
 		
+		public function export(RequestType $type)
+		{
+			$result = array();
+			
+			$default = ($this->type == $type);
+			
+			foreach ($this->form->getPrimitiveList() as $prm) {
+				if (
+					(
+						isset($this->map[$prm->getName()])
+						&& in_array($type, $this->map[$prm->getName()])
+					)
+					|| $default
+				) {
+					if ($prm->getValue())
+						$result[$prm->getName()] = $prm->exportValue();
+				}
+			}
+			
+			return $result;
+		}
+		
 		private function checkExistence($name)
 		{
 			if (!$this->form->primitiveExists($name))

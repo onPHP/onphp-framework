@@ -258,6 +258,11 @@
 			return $this;
 		}
 		
+		public function exportValue($primitiveName)
+		{
+			return $this->get($name)->exportValue();
+		}
+		
 		public function toFormValue($value)
 		{
 			if ($value instanceof FormField)

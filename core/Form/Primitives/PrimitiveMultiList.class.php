@@ -95,5 +95,10 @@
 			
 			return parent::clean();
 		}
+		
+		public function exportValue()
+		{
+			throw new UnimplementedFeatureException();
+		}
 	}
 ?>

@@ -86,5 +86,13 @@
 			
 			return false;
 		}
+		
+		public function exportValue()
+		{
+			if (!$this->value)
+				return null;
+			
+			return ArrayUtils::getIdsArray($this->value);
+		}
 	}
 ?>

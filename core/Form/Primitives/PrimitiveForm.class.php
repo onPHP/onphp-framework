@@ -77,5 +77,10 @@
 			
 			return true;
 		}
+		
+		public function exportValue()
+		{
+			throw new UnimplementedFeatureException();
+		}
 	}
 ?>

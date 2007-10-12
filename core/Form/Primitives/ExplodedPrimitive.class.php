@@ -69,5 +69,10 @@
 			
 			Assert::isUnreachable();
 		}
+		
+		public function exportValue()
+		{
+			throw new UnimplementedFeatureException();
+		}
 	}
 ?>

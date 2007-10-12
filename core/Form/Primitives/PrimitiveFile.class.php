@@ -137,5 +137,10 @@
 			
 			return false;
 		}
+		
+		public function exportValue()
+		{
+			throw new UnimplementedFeatureException();
+		}
 	}
 ?>

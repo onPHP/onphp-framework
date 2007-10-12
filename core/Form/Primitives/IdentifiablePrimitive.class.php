@@ -45,5 +45,13 @@
 			
 			throw new WrongArgumentException('strange class given - '.$class);
 		}
+		
+		public function exportValue()
+		{
+			if (!$this->value)
+				return null;
+			
+			return $this->value->getId();
+		}
 	}
 ?>
