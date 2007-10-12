@@ -267,7 +267,7 @@
 		{
 			$result = array();
 			
-			foreach ($this->form->getPrimitiveList() as $prm) {
+			foreach ($this->primitives as $prm) {
 				if ($prm->getValue())
 					$result[$prm->getName()] = $prm->exportValue();
 			}
