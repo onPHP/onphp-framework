@@ -2,14 +2,8 @@
 
 2007-10-11	Ivan Y. Khvostishkov
 
-	* main/Application/ApplicationUrl.class.php: first step for
-	Application: base class for working with urls.
-
 	* main/Net/GenericUri.class.php: toStringFromRoot() - url without
 	scheme and authority part.
-
-	* main/Utils/DateUtils.class.php: utilities for playing with dates and
-	time. First function - getAgeByBirthDate().
 
 2007-10-10	Denis M. Gabaidulin
 
