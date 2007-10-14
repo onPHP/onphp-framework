@@ -1,5 +1,9 @@
 # $Id$
 
+2007-10-14	Konstantin V. Arkhipov
+
+	* 0.10.6 released.
+
 2007-10-11	Ivan Y. Khvostishkov
 
 	* main/Net/GenericUri.class.php: toStringFromRoot() - url without

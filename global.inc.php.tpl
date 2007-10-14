@@ -126,8 +126,8 @@
 	error_reporting(E_ALL | E_STRICT);
 	set_error_handler('error2Exception', E_ALL | E_STRICT);
 	ignore_user_abort(true);
-	define('ONPHP_VERSION', '0.10.5.99');
-
+	define('ONPHP_VERSION', '0.10.6.99');
+	
 	// overridable constant, don't forget for trailing slash
 	// also you may consider using /dev/shm/ for cache purposes
 	if (!defined('ONPHP_TEMP_PATH'))
@@ -135,7 +135,7 @@
 	
 	if (!defined('ONPHP_IPC_PERMS'))
 		define('ONPHP_IPC_PERMS', 0660);
-
+	
 	// paths
 	define('ONPHP_ROOT_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
 	define('ONPHP_CORE_PATH', ONPHP_ROOT_PATH.'core'.DIRECTORY_SEPARATOR);
@@ -154,7 +154,7 @@
 		'ONPHP_INCUBATOR_PATH',
 		ONPHP_ROOT_PATH.'incubator'.DIRECTORY_SEPARATOR
 	);
-
+	
 	set_include_path(
 		// current path
 		get_include_path().PATH_SEPARATOR
@@ -196,7 +196,7 @@
 		.ONPHP_MAIN_PATH.'Markup'			.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Markup'.DIRECTORY_SEPARATOR.'Feed'.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Markup'.DIRECTORY_SEPARATOR.'Html'.PATH_SEPARATOR
-
+		
 		.ONPHP_MAIN_PATH.'UnifiedContainer'.PATH_SEPARATOR
 		
 		.ONPHP_MAIN_PATH.'Utils'		.PATH_SEPARATOR
