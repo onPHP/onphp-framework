@@ -67,6 +67,7 @@
 			$toRemove =
 				realpath($this->path)
 				.'.'.microtime(true)
+				.getmypid().'.'
 				.'.removing';
 			
 			try {
@@ -75,11 +76,8 @@
 				// already removed during race
 				return true;
 			}
-
-			foreach (glob($toRemove.'/*', GLOB_NOSORT) as $file)
-				unlink($file);
 			
-			rmdir($toRemove);
+			FileUtils::removeDirectory($toRemove, true);
 			
 			return true;
 		}

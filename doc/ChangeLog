@@ -2,6 +2,9 @@
 
 2007-10-16	Konstantin V. Arkhipov
 
+	* main/DAOs/Handlers/FileSystemSegmentHandler.class.php: drop() now
+	uses FileUtils' removeDirectory.
+
 	* main/DAOs/Workers/TransparentDaoWorker.class.php,
 	main/DAOs/Handlers/: no more hardcoded precision, platform-dependent
 	computation implemented.
