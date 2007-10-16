@@ -23,14 +23,9 @@
 		
 		public function __construct($segmentId)
 		{
-			$this->id = substr($segmentId, 0, $this->getPrecision());
+			$this->id = $segmentId;
 		}
 		
-		public function getPrecision()
-		{
-			return 5;
-		}
-
 		public function touch($key)
 		{
 			$map = $this->getMap();

@@ -1,5 +1,11 @@
 # $Id$
 
+2007-10-16	Konstantin V. Arkhipov
+
+	* main/DAOs/Workers/TransparentDaoWorker.class.php,
+	main/DAOs/Handlers/: no more hardcoded precision, platform-dependent
+	computation implemented.
+
 2007-10-14	Konstantin V. Arkhipov
 
 	* 0.10.6 released.
