@@ -1,9 +1,15 @@
 # $Id$
 
+2007-10-16	Konstantin V. Arkhipov
+
+	* main/DAOs/Workers/TransparentDaoWorker.class.php,
+	main/DAOs/Handlers/: no more hardcoded precision, platform-dependent
+	computation implemented.
+
 2007-10-16	Dmitry E. Pismenny
 
-	* incubator/classes/main/Application/ApplicationUrl.class.php: renamed into
-	incubator/classes/main/Application/AppUrl.class.php.
+	* incubator/classes/main/Application/ApplicationUrl.class.php: renamed
+	into AppUrl.class.php.
 
 2007-10-11	Ivan Y. Khvostishkov
 

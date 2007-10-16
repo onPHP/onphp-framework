@@ -29,8 +29,5 @@
 		
 		/// destroys segment
 		public function drop();
-		
-		/// (precision - 1) for used keys
-		public function getPrecision();
 	}
 ?>

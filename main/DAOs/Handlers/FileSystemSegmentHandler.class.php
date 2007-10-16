@@ -31,11 +31,6 @@
 			$this->path = $path;
 		}
 		
-		public function getPrecision()
-		{
-			return 15;
-		}
-		
 		public function touch($key)
 		{
 			try {
