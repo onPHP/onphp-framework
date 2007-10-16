@@ -59,7 +59,7 @@
 			);
 		}
 		
-		public function skip()
+		public function skip($count)
 		{
 			return strlen($this->read($count));
 		}
