@@ -10,7 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 	
-	class ApplicationUrl
+	//deprecated
+	class AppUrl
 	{
 		private $scheme			= 'http';
 		private $domain			= null;

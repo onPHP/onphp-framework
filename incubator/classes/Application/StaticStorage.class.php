@@ -16,7 +16,8 @@
 		
 		abstract public function getUrl($name);
 		
-		public function __construct(ApplicationUrl $baseUrl)
+		//TODO: Use main/Application/ApplicationUrl
+		public function __construct(AppUrl $baseUrl)
 		{
 			$this->baseUrl = $baseUrl;
 		}

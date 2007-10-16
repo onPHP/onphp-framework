@@ -157,7 +157,8 @@
 		{
 			return $this->setImgStorage(
 				CommonStaticStorage::create(
-					ApplicationUrl::create()->
+					//TODO: Use main/Application/ApplicationUrl
+					AppUrl::create()->
 					setUrl($this->baseUrl().$path)
 				)->
 				setStrict(false)
@@ -187,7 +188,8 @@
 		{
 			return $this->setCssStorage(
 				CommonStaticStorage::create(
-					ApplicationUrl::create()->
+					//TODO: Use main/Application/ApplicationUrl
+					AppUrl::create()->
 					setUrl($this->baseUrl().$path)
 				)->
 				setExtensionsList(array('.css'))

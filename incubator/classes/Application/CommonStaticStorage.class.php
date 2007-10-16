@@ -19,7 +19,8 @@
 		/**
 		 * @return CommonStaticStorage
 		**/
-		public static function create(ApplicationUrl $baseUrl)
+		//TODO: Use main/Application/ApplicationUrl
+		public static function create(AppUrl $baseUrl)
 		{
 			return new self($baseUrl);
 		}

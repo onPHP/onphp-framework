@@ -18,7 +18,8 @@
 		/**
 		 * @return LocationSettings
 		**/
-		public function set($area, ApplicationUrl $location)
+		//TODO: Use main/Application/ApplicationUrl
+		public function set($area, AppUrl $location)
 		{
 			$this->locations[$area] = $location;
 			

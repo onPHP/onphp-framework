@@ -48,12 +48,14 @@
 	Application::me()->setLocations(
 		CommonLocationSettings::create()->
 		setWeb(
-			ApplicationUrl::create()->
+			//TODO: Use main/Application/ApplicationUrl
+			AppUrl::create()->
 			setUrl('http://www.myproject.com/')->
 			setNavigationSchema(SimpleNavigationSchema::create())
 		)->
 		setAdmin(
-			ApplicationUrl::create()->
+			//TODO: Use main/Application/ApplicationUrl
+			AppUrl::create()->
 			setUrl('https://myproject.com/')->
 			setNavigationSchema(SimpleNavigationSchema::create())
 		)

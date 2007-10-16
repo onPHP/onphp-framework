@@ -35,7 +35,8 @@
 		/**
 		 * @return CommonLocationSettings
 		**/
-		public function setWeb(ApplicationUrl $webLocation)
+		//TODO: Use main/Application/ApplicationUrl
+		public function setWeb(AppUrl $webLocation)
 		{
 			return $this->set(self::WEB, $webLocation);
 		}
@@ -50,7 +51,8 @@
 		**/
 		public function setWebUrl($url)
 		{
-			return $this->setWeb(ApplicationUrl::create()->setUrl($url));
+			//TODO: Use main/Application/ApplicationUrl
+			return $this->setWeb(AppUrl::create()->setUrl($url));
 		}
 		
 		public function getWebUrl()
@@ -61,7 +63,8 @@
 		/**
 		 * @return CommonLocationSettings
 		**/
-		public function setWap(ApplicationUrl $wapLocation)
+		//TODO: Use main/Application/ApplicationUrl
+		public function setWap(AppUrl $wapLocation)
 		{
 			return $this->set(self::WAP, $wapLocation);
 		}
@@ -76,7 +79,8 @@
 		**/
 		public function setWapUrl($url)
 		{
-			return $this->setWap(ApplicationUrl::create()->setUrl($url));
+			//TODO: Use main/Application/ApplicationUrl
+			return $this->setWap(AppUrl::create()->setUrl($url));
 		}
 		
 		public function getWapUrl()
@@ -87,7 +91,8 @@
 		/**
 		 * @return CommonLocationSettings
 		**/
-		public function setAdmin(ApplicationUrl $adminLocation)
+		//TODO: Use main/Application/ApplicationUrl
+		public function setAdmin(AppUrl $adminLocation)
 		{
 			return $this->set(self::ADMIN, $adminLocation);
 		}
@@ -100,9 +105,10 @@
 		/**
 		 * @return CommonLocationSettings
 		**/
+		//TODO: Use main/Application/ApplicationUrl
 		public function setAdminUrl($url)
 		{
-			return $this->setAdmin(ApplicationUrl::create()->setUrl($url));
+			return $this->setAdmin(AppUrl::create()->setUrl($url));
 		}
 		
 		public function getAdminUrl()
@@ -113,7 +119,8 @@
 		/**
 		 * @return CommonLocationSettings
 		**/
-		public function setSoap(ApplicationUrl $soapLocation)
+		//TODO: Use main/Application/ApplicationUrl
+		public function setSoap(AppUrl $soapLocation)
 		{
 			return $this->set(self::SOAP, $soapLocation);
 		}
@@ -126,9 +133,10 @@
 		/**
 		 * @return CommonLocationSettings
 		**/
+		//TODO: Use main/Application/ApplicationUrl
 		public function setSoapUrl($url)
 		{
-			return $this->setSoap(ApplicationUrl::create()->setUrl($url));
+			return $this->setSoap(AppUrl::create()->setUrl($url));
 		}
 		
 		public function getSoapUrl()

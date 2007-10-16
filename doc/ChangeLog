@@ -1,5 +1,10 @@
 # $Id$
 
+2007-10-16	Dmitry E. Pismenny
+
+	* incubator/classes/main/Application/ApplicationUrl.class.php: renamed into
+	incubator/classes/main/Application/AppUrl.class.php.
+
 2007-10-11	Ivan Y. Khvostishkov
 
 	* main/Application/ApplicationUrl.class.php: first step for
