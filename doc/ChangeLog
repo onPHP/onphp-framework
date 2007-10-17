@@ -5,6 +5,8 @@
 	* main/Base/DTOProto.class.php, core/Form/Form.class.php: forms now
 	possess prototype and can be abstract.
 
+	* core/Form/Primitives/PrimitiveEnumerationList.class.php: implemented.
+
 2007-10-16	Konstantin V. Arkhipov
 
 	* main/DAOs/Handlers/FileSystemSegmentHandler.class.php: drop() now

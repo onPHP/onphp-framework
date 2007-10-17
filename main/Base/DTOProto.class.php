@@ -212,22 +212,23 @@
 					}
 					
 				} elseif (is_object($value)) {
-					if (
-						$value instanceof Identifiable
-						&& $primitive instanceof PrimitiveIdentifier
-					) {
-						$value = $value->getId();
-						
-					} elseif (
-						$value instanceof Stringable
-					) {
-						$value = $value->toString();
-						
-					} else
-						throw new WrongArgumentException(
-							'don\'t know how to convert '.get_class($value)
-							.' to dto value of primitive '.get_class($primitive)
+					
+					$value = $this->dtoValue($value);
+					
+				} elseif (is_array($value) && is_object(current($value))) {
+					
+					$dtoValue = array();
+					
+					foreach ($value as $oneValue) {
+						Assert::isTrue(
+							is_object($oneValue),
+							'array must contain only objects'
 						);
+						
+						$dtoValue[] = $this->dtoValue($oneValue);
+					}
+					
+					$value = $dtoValue;
 				}
 				
 				$dto->$setter($value);
@@ -336,6 +337,27 @@
 		protected function getFormMapping()
 		{
 			return array();
+		}
+		
+		private function dtoValue($value)
+		{
+			$result = null;
+			
+			if ($value instanceof Identifiable) {
+				$result = $value->getId();
+				
+			} elseif (
+				$value instanceof Stringable
+			) {
+				$result = $value->toString();
+				
+			} else
+				throw new WrongArgumentException(
+					'don\'t know how to convert '.get_class($value)
+					.' to dto value of primitive '.get_class($primitive)
+				);
+			
+			return $result;
 		}
 	}
 ?>

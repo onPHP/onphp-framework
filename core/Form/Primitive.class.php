@@ -68,6 +68,14 @@
 		}
 		
 		/**
+		 * @return PrimitiveEnumerationList
+		**/
+		public static function enumerationList($name)
+		{
+			return new PrimitiveEnumerationList($name);
+		}
+		
+		/**
 		 * @return PrimitiveDate
 		**/
 		public static function date($name)

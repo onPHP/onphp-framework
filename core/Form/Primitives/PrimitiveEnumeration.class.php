@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveEnumeration extends IdentifiablePrimitive
+	class PrimitiveEnumeration extends IdentifiablePrimitive
 	{
 		public function getList()
 		{
