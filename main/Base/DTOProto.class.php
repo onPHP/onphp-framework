@@ -32,6 +32,11 @@
 			return true;
 		}
 		
+		public function isAbstract()
+		{
+			return false;
+		}
+		
 		final public function createObject()
 		{
 			$className = $this->className();
@@ -100,6 +105,29 @@
 		
 		final public function makeObject(Form $form)
 		{
+			$className = $this->className();
+			
+			if ($form->getProto()) {
+				$formClassName = $form->getProto()->className();
+				
+				if (!ClassUtils::isInstanceOf($formClassName, $className))
+					throw new WrongArgumentException(
+						"proto of class $className cannot work "
+						."with form for class $formClassName"
+					);
+			} else
+				$formClassName = null;
+			
+			if ($formClassName && $this->isAbstract()) {
+				if ($formClassName == $className)
+					throw new WrongArgumentException(
+						'cannot build abstract object of class '
+						.getClass($formClassName)
+					);
+					
+				return $form->getProto()->makeObject($form);
+			}
+			
 			return $this->toObject($form, $this->createObject());
 		}
 		
@@ -269,10 +297,32 @@
 							'Proto'.$primitive->getClassName()
 						);
 						
+						
 						if ($primitive instanceof PrimitiveFormsList) {
 							$value = $proto->toFormsList($value);
+							
 						} else {
+							
+							$protoDtoClass = $proto->dtoClassName();
+							
+							if (
+								$proto->isAbstract()
+								&& ClassUtils::isInstanceOf($value, $protoDtoClass)
+							) {
+								if (get_class($value) == $protoDtoClass)
+									throw new WrongArgumentException(
+										'cannot build scope from abstract DTO class '
+										.get_class($value)
+									);
+									
+								$proto = $value->proto();
+								
+								$formClassName = $proto->className();
+							}
+							
 							$value = $proto->toForm($value);
+							
+							$value->setProto($proto);
 						}
 					}
 					

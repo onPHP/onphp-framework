@@ -26,6 +26,8 @@
 		private $labels			= array();
 		private $describedLabels 	= array();
 		
+		protected $proto	= null;
+		
 		/**
 		 * @return Form
 		**/
@@ -283,6 +285,24 @@
 				return $value->toBoolean($this);
 			else
 				return $value;
+		}
+		
+		/**
+		 * @return Form
+		**/
+		public function setProto(DTOProto $proto)
+		{
+			$this->proto = $proto;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return DTOProto
+		**/
+		public function getProto()
+		{
+			return $this->proto;
 		}
 		
 		/**
