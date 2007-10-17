@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * TODO: hierarchical scopes
+	**/
 	final class ApplicationUrl
 	{
 		private $base		= null;
@@ -92,11 +95,16 @@
 			return $this->href(null, $absolute);
 		}
 		
-		public function href($url, $absolute = false)
+		public function poorReference($url)
 		{
 			$parsedUrl = HttpUrl::create()->parse($url);
 			
-			$result = $this->base->transform($parsedUrl);
+			return $this->base->transform($parsedUrl);
+		}
+		
+		public function href($url, $absolute = false)
+		{
+			$result = $this->poorReference($url);
 			
 			if ($this->applicationScope)
 				$result->appendQuery(
