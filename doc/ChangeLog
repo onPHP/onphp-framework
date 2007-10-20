@@ -1,5 +1,9 @@
 # $Id$
 
+2007-10-20	Konstantin V. Arkhipov
+
+	* 0.10.7 released.
+
 2007-10-16	Konstantin V. Arkhipov
 
 	* main/DAOs/Handlers/FileSystemSegmentHandler.class.php: drop() now
