@@ -29,7 +29,12 @@ ONPHP_METHOD(FieldTable, __construct)
 	ONPHP_UPDATE_PROPERTY(getThis(), "field", field);
 }
 
-ONPHP_GETTER(FieldTable, getField, field);
+ONPHP_METHOD(FieldTable, getField)
+{
+	zval *field = ONPHP_READ_PROPERTY(getThis(), "field");
+
+	RETURN_ZVAL(field, 1, 0);
+}
 
 ONPHP_METHOD(FieldTable, toDialectString)
 {
