@@ -485,13 +485,7 @@
 							'Enumeration'
 						)
 					) {
-						$query->get(
-							new DBField(
-								$property->getColumnName(),
-								$parentTable
-							)
-						);
-						
+						// field already added by makeSelectHead
 						continue;
 					}
 					
