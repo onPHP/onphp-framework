@@ -5,6 +5,9 @@
 	* core/Form/Form.class.php: markGood() and markWrong() now supports
 	rules marking.
 
+	* main/Criteria/Criteria.class.php: field duplication eliminated for
+	enumeration's childs.
+
 2007-10-20	Konstantin V. Arkhipov
 
 	* 0.10.7 released.
