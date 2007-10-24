@@ -86,13 +86,13 @@
 		**/
 		public function markGood($primitiveName)
 		{
-			if (isset($this->primitives[$name]))
-				unset($this->errors[$name]);
-			elseif (isset($this->rules[$name]))
-				unset($this->violated[$name]);
+			if (isset($this->primitives[$primitiveName]))
+				unset($this->errors[$primitiveName]);
+			elseif (isset($this->rules[$primitiveName]))
+				unset($this->violated[$primitiveName]);
 			else
 				throw new MissingElementException(
-					$name.' does not match known primitives or rules'
+					$primitiveName.' does not match known primitives or rules'
 				);
 			
 			return $this;
