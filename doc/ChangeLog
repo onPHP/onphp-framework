@@ -5,7 +5,7 @@
 	* core/Form/Form.class.php: markGood() and markWrong() now supports
 	rules marking.
 
-e007-10-20	Konstantin V. Arkhipov
+2007-10-20	Konstantin V. Arkhipov
 
 	* 0.10.7 released.
 
