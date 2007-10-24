@@ -84,8 +84,9 @@
 		public function markGood($primitiveName)
 		{
 			$prm = $this->get($primitiveName);
-
+			
 			unset($this->errors[$prm->getName()]);
+			unset($this->violated[$prm->getName()]);
 			
 			return $this;
 		}
