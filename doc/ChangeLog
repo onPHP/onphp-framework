@@ -1,5 +1,10 @@
 # $Id$
 
+2007-10-24	Konstantin V. Arkhipov
+
+	* core/Form/Form.class.php: markGood() and markWrong() now supports
+	rules marking.
+
 2007-10-17	Ivan Y. Khvostishkov
 
 	* main/Base/DTOProto.class.php, core/Form/Form.class.php: forms now
