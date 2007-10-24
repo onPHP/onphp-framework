@@ -69,28 +69,35 @@
 		**/
 		public function markWrong($name)
 		{
-			if (
-				isset($this->rules[$name])
-				|| ($name == $this->get($name)->getName())
-			)
-				$this->errors[$name] = Form::WRONG;
+			if (isset($this->primitives[$name]))
+				$this->errors[$name] = self::WRONG;
+			elseif (isset($this->rules[$name]))
+				$this->violated[$name] = self::WRONG;
+			else
+				throw new MissingElementException(
+					$name.' does not match known primitives or rules'
+				);
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return Form
 		**/
 		public function markGood($primitiveName)
 		{
-			$prm = $this->get($primitiveName);
-			
-			unset($this->errors[$prm->getName()]);
-			unset($this->violated[$prm->getName()]);
+			if (isset($this->primitives[$name]))
+				unset($this->errors[$name]);
+			elseif (isset($this->rules[$name]))
+				unset($this->violated[$name]);
+			else
+				throw new MissingElementException(
+					$name.' does not match known primitives or rules'
+				);
 			
 			return $this;
 		}
-
+		
 		/**
 		 * Set's custom error mark for primitive.
 		 * 
