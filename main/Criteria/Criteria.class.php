@@ -481,13 +481,7 @@
 							'Enumeration'
 						)
 					) {
-						$query->get(
-							new DBField(
-								$property->getColumnName(),
-								$parentTable
-							)
-						);
-						
+						// field already added by makeSelectHead
 						continue;
 					} elseif ($property->isInner()) {
 						$proto = call_user_func(
