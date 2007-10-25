@@ -18,6 +18,14 @@
 		private $prefix = null;
 		private $suffix = null;
 		
+		/**
+		 * @return RedirectToView
+		**/
+		public static function create($controllerName)
+		{
+			return new RedirectToView($controllerName);
+		}
+		
 		public function __construct($controllerName)
 		{
 			Assert::isTrue(

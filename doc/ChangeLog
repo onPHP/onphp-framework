@@ -1,5 +1,9 @@
 # $Id$
 
+2007-10-25	Denis M. Gabaidulin
+
+	* main/Flow/RedirectToView.class.php: constructor fixed.
+
 2007-10-24	Konstantin V. Arkhipov
 
 	* core/Form/Form.class.php: markGood() and markWrong() now supports
