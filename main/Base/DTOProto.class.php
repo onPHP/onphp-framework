@@ -314,7 +314,6 @@
 						|| ($primitive instanceof PrimitiveEnumerationList)
 						|| ($primitive instanceof PrimitiveIdentifierList)
 						|| ($primitive instanceof PrimitiveArray)
-						|| ($primitive instanceof ListedPrimitive)
 					) {
 						if (!is_array($value))
 							$value = array($value);
