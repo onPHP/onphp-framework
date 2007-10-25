@@ -205,9 +205,25 @@
 						'Proto'.$primitive->getClassName()
 					);
 					
+					$protoClassName = $proto->className();
+					
 					if ($primitive instanceof PrimitiveFormsList) {
 						$value = $proto->makeDtosList($value);
+						
 					} else {
+						if (
+							$proto->isAbstract()
+							&& ClassUtils::isInstanceOf($value, $protoClassName)
+						) {
+							if (get_class($value) == $protoClassName)
+								throw new WrongArgumentException(
+									'cannot build scope from abstract DTO class '
+									.get_class($value)
+								);
+								
+							$proto = $value->proto();
+						}
+						
 						$value = $proto->makeDto($value);
 					}
 					
@@ -292,12 +308,23 @@
 				
 				if ($primitive->isRequired() || $value !== null) {
 					
+					// TODO: primitives refactoring
+					if (
+						($primitive instanceof PrimitiveFormsList)
+						|| ($primitive instanceof PrimitiveEnumerationList)
+						|| ($primitive instanceof PrimitiveIdentifierList)
+						|| ($primitive instanceof PrimitiveArray)
+						|| ($primitive instanceof ListedPrimitive)
+					) {
+						if (!is_array($value))
+							$value = array($value);
+					}
+						
 					if ($primitive instanceof PrimitiveForm) {
 						
 						$proto = Singleton::getInstance(
 							'Proto'.$primitive->getClassName()
 						);
-						
 						
 						if ($primitive instanceof PrimitiveFormsList) {
 							$value = $proto->toFormsList($value);
