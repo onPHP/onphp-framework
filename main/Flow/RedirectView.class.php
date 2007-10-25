@@ -29,7 +29,7 @@
 		**/
 		public static function create($url)
 		{
-			return new RedirectView($url);
+			return new self($url);
 		}
 		
 		public function render($model = null)
