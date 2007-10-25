@@ -15,7 +15,7 @@
 	**/
 	final class ClassUtils extends StaticFactory
 	{
-		const CLASS_NAME_PATTERN = '/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/';
+		const CLASS_NAME_PATTERN = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*';
 		
 		/* void */ public static function copyProperties($source, $destination)
 		{
@@ -103,7 +103,7 @@
 		
 		public static function isClassName($className)
 		{
-			return preg_match(self::CLASS_NAME_PATTERN, $className);
+			return preg_match('/^'.self::CLASS_NAME_PATTERN.'$/', $className);
 		}
 		
 		public static function isInstanceOf($object, $class)
