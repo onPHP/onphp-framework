@@ -76,6 +76,8 @@
 				try {
 					$this->value = new $this->className($this->value);
 				} catch (MissingElementException $e) {
+					$this->value = null;
+					
 					return false;
 				}
 				
