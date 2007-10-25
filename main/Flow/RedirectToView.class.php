@@ -23,7 +23,7 @@
 		**/
 		public static function create($controllerName)
 		{
-			return new RedirectToView($controllerName);
+			return new self($controllerName);
 		}
 		
 		public function __construct($controllerName)
