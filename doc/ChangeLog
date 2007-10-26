@@ -1,5 +1,9 @@
 # $Id$
 
+2007-10-26	Vladimir A. Altuchov
+
+	* core/Cache/WatermarkedPeer.class.php: + setter for watermark label.
+
 2007-10-25	Denis M. Gabaidulin
 
 	* main/Flow/RedirectToView.class.php: constructor fixed.
