@@ -40,7 +40,14 @@
 		)
 		{
 			$this->peer = $peer;
+			$this->setWatermark($watermark);
+		}
+		
+		public function setWatermark($watermark)
+		{
 			$this->watermark = md5($watermark.'::');
+			
+			return $this;
 		}
 		
 		public function getWatermark()
