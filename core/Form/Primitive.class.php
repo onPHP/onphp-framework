@@ -223,5 +223,13 @@
 		{
 			return new PrimitiveFormsList($name);
 		}
+		
+		/**
+		 * @return PrimitiveHttpUrl
+		**/
+		public static function httpUrl($name)
+		{
+			return new PrimitiveHttpUrl($name);
+		}
 	}
 ?>

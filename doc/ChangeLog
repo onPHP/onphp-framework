@@ -1,5 +1,10 @@
 # $Id$
 
+2007-10-27	Ivan Y. Khvostishkov
+
+	* core/Form/Primitives/PrimitiveHttpUrl.class.php:
+	Primitive::httpUrl().
+
 2007-10-26	Vladimir A. Altuchov
 
 	* core/Cache/WatermarkedPeer.class.php: + setter for watermark label.
