@@ -48,7 +48,7 @@
 				$value = $matches[2];
 				$this->currentHeader = $name;
 
-				if (isset($headers[$name])) {
+				if (isset($this->headers[$name])) {
 					if (!is_array($this->headers[$name])) {
 						$this->headers[$name] = array($this->headers[$name]);
 					}
