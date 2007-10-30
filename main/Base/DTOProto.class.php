@@ -24,7 +24,7 @@
 		
 		public function dtoClassName()
 		{
-			return null;
+			return $this->className().'DTO';
 		}
 		
 		public function checkConstraints($object)
@@ -367,6 +367,7 @@
 			return array();
 		}
 		
+		//TODO: move to Primitive?
 		private function dtoValue($value)
 		{
 			$result = null;
@@ -381,8 +382,8 @@
 				
 			} else
 				throw new WrongArgumentException(
-					'don\'t know how to convert '.get_class($value)
-					.' to dto value of primitive '.get_class($primitive)
+					'don\'t know how to convert to DTO value of class '
+					.get_class($value)
 				);
 			
 			return $result;
