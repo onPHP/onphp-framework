@@ -231,7 +231,8 @@
 					
 				} elseif (is_object($value)) {
 					
-					$value = $this->dtoValue($value);
+					if (!($primitive instanceof PrimitiveAnyType))
+						$value = $this->dtoValue($value);
 					
 				} elseif (is_array($value) && is_object(current($value))) {
 					
@@ -367,7 +368,7 @@
 			return array();
 		}
 		
-		//TODO: move to Primitive?
+		//TODO: move to Primitive
 		private function dtoValue($value)
 		{
 			$result = null;
