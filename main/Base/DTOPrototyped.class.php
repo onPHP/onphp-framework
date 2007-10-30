@@ -10,11 +10,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class DTOMessage implements DTOPrototyped
+	/**
+	 * @ingroup Main
+	**/
+	interface DTOPrototyped
 	{
-		final public function makeDto()
-		{
-			return $this->dtoProto()->makeDto($this);
-		}
+		public static function dtoProto();
 	}
 ?>

@@ -223,7 +223,7 @@
 									.get_class($value)
 								);
 								
-							$proto = $value->proto();
+							$proto = $value->dtoProto();
 						}
 						
 						$value = $proto->makeDto($value);
@@ -344,7 +344,7 @@
 										.get_class($value)
 									);
 									
-								$proto = $value->proto();
+								$proto = $value->dtoProto();
 								
 								$formClassName = $proto->className();
 							}

@@ -10,18 +10,16 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class DTOClass
+	abstract class DTOClass implements DTOPrototyped
 	{
-		abstract public function proto();
-		
 		final public function makeObject(Form $form)
 		{
-			return $this->proto()->makeObject($form);
+			return $this->dtoProto()->makeObject($form);
 		}
 		
 		final public function toForm()
 		{
-			return $this->proto()->toForm($this);
+			return $this->dtoProto()->toForm($this);
 		}
 	}
 ?>
