@@ -231,7 +231,12 @@
 					
 				} elseif (is_object($value)) {
 					
-					if (!($primitive instanceof PrimitiveAnyType))
+					if (
+						($primitive instanceof PrimitiveAnyType)
+						&& ($value instanceof DTOPrototyped)
+					)
+						$value = $value->dtoProto()->makeDto($value);
+					else
 						$value = $this->dtoValue($value);
 					
 				} elseif (is_array($value) && is_object(current($value))) {
