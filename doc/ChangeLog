@@ -1,5 +1,10 @@
 # $Id$
 
+2007-10-30	Ivan Y. Khvostishkov
+
+	* core/Form/Primitives/PrimitiveAnyType.class.php: anyType() -
+	universal primitive ;)
+
 2007-10-27	Ivan Y. Khvostishkov
 
 	* core/Form/Primitives/PrimitiveHttpUrl.class.php:

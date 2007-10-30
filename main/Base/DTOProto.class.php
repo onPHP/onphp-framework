@@ -29,6 +29,8 @@
 		
 		public function checkConstraints($object)
 		{
+			Assert::isInstance($object, $this->className());
+			
 			return true;
 		}
 		

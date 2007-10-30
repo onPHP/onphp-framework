@@ -28,6 +28,14 @@
 		}
 		
 		/**
+		 * @return PrimitiveAnyType
+		**/
+		public static function anyType($name)
+		{
+			return new PrimitiveAnyType($name);
+		}
+		
+		/**
 		 * @return PrimitiveInteger
 		**/
 		public static function integer($name)

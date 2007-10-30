@@ -35,8 +35,8 @@
 			if (!$objectsList)
 				return $out;
 			
-			Assert::isTrue(
-				current($objectsList) instanceof Identifiable,
+			Assert::isInstance(
+				current($objectsList), 'Identifiable',
 				'only identifiable lists accepted'
 			);
 			
