@@ -270,7 +270,7 @@
 		
 		public function exportValue($primitiveName)
 		{
-			return $this->get($name)->exportValue();
+			return $this->get($primitiveName)->exportValue();
 		}
 		
 		public function export()
