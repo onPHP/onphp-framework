@@ -2,7 +2,7 @@
 
 2007-10-26	Vladimir A. Altuchov
 
-	* core/Cache/WatermarkedPeer.class.php: + setter for watermark label.
+	* core/Cache/WatermarkedPeer.class.php: add setter for watermark label.
 
 2007-10-25	Denis M. Gabaidulin
 
