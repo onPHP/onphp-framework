@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Ip
 	**/
-	final class IpRange implements SingleRange
+	class IpRange implements SingleRange
 	{
 		private $startIp 	= null;
 		private $endIp		= null;
@@ -48,7 +48,25 @@
 		/**
 		 * @return IpAddress
 		**/
+		public function setStart(IpAddress $startIp)
+		{
+			$this->startIp = $startIp;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return IpAddress
+		**/
 		public function getEnd()
+		{
+			return $this->endIp;
+		}
+		
+		/**
+		 * @return IpAddress
+		**/
+		public function setEnd()
 		{
 			return $this->endIp;
 		}
