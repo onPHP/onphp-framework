@@ -46,7 +46,7 @@
 		}
 		
 		/**
-		 * @return IpAddress
+		 * @return IpRange
 		**/
 		public function setStart(IpAddress $startIp)
 		{
@@ -64,7 +64,7 @@
 		}
 		
 		/**
-		 * @return IpAddress
+		 * @return IpRange
 		**/
 		public function setEnd(IpAddress $endIp)
 		{
