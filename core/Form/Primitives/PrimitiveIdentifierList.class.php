@@ -17,6 +17,18 @@
 	{
 		protected $value = array();
 		
+		public function setValue($value)
+		{
+			if ($value) {
+				Assert::isArray($value);
+				Assert::isInstance(current($value), $this->className);
+			}
+			
+			$this->value = $value;
+			
+			return $this;
+		}
+		
 		public function importValue($value)
 		{
 			if ($value instanceof UnifiedContainer) {
