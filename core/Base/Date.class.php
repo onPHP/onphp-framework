@@ -295,6 +295,8 @@
 		{
 			$this->int = strtotime($string);
 			
+			$matches = array();
+			
 			if (
 				preg_match('/^(\d{1,4})-(\d{1,2})-(\d{1,2})$/', $string, $matches)
 			) {
