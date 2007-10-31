@@ -1,5 +1,9 @@
 # $Id$
 
+2007-10-31	Dmitry A. Lomash
+
+	* main/Net/IpRange.class.php: added setters, dropped final declaration.
+
 2007-10-30	Ivan Y. Khvostishkov
 
 	* core/Form/Primitives/PrimitiveAnyType.class.php: anyType() -
