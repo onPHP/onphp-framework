@@ -183,8 +183,8 @@
 		protected function checkRanges(Date $date)
 		{
 			return
-				!($this->min && $this->min->toStamp() < $date->toStamp())
-				&& !($this->max && $this->max->toStamp() > $date->toStamp());
+				(!$this->min || ($this->min->toStamp() <= $date->toStamp()))
+				&& (!$this->max || ($this->max->toStamp() >= $date->toStamp()));
 		}
 		
 		protected function getObjectName()

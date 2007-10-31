@@ -1,5 +1,10 @@
 # $Id$
 
+2007-10-31	Dmitry E. Pismenny
+
+	* core/Form/Primitives/PrimitiveDate.class.php: PrimitiveDate::checkRanges()
+	fixed.
+	
 2007-10-31	Dmitry A. Lomash
 
 	* main/Net/IpRange.class.php: added setters, dropped final declaration.
