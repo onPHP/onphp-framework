@@ -285,7 +285,6 @@
 						$object->$setter(null);
 					}
 				} else {
-				
 					if ($primitive instanceof PrimitiveForm) {
 						$proto = Singleton::getInstance(
 							'Proto'.$primitive->getClassName()
@@ -326,7 +325,7 @@
 						if (!is_array($value))
 							$value = array($value);
 					}
-						
+					
 					if ($primitive instanceof PrimitiveForm) {
 						
 						$proto = Singleton::getInstance(
@@ -373,7 +372,7 @@
 			return array();
 		}
 		
-		//TODO: move to Primitive
+		// TODO: move to Primitive
 		private function dtoValue($value)
 		{
 			$result = null;
