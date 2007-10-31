@@ -66,9 +66,11 @@
 		/**
 		 * @return IpAddress
 		**/
-		public function setEnd()
+		public function setEnd(IpAddress $endIp)
 		{
-			return $this->endIp;
+			$this->endIp = $endIp;
+			
+			return $this;
 		}
 		
 		public function contains(/*IpAddress*/ $probe)
