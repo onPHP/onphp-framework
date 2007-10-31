@@ -58,18 +58,18 @@
 		/**
 		 * @return IpAddress
 		**/
-		public function getEnd(IpAddress $endIp)
+		public function getEnd()
 		{
-			$this->endIp = $endIp;
-			
-			return $this;
+			return $this->endIp;
 		}
 		
 		/**
 		 * @return IpAddress
 		**/
-		public function setEnd()
+		public function setEnd(IpAddress $endIp)
 		{
+			$this->endIp = $endIp;
+			
 			return $this->endIp;
 		}
 		
