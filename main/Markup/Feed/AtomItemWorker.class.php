@@ -44,6 +44,11 @@
 						)
 					);
 				
+				if (isset($entry->id))
+					$feedItem->setId(
+						$entry->id
+					);
+				
 				$result[] =
 					$feedItem->setPublished(
 						Timestamp::create(

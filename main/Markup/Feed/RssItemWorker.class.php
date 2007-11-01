@@ -29,7 +29,7 @@
 			
 			if (isset($xmlFeed->channel->item)) {
 				foreach ($xmlFeed->channel->item as $item) {
-					$result[] =
+					$feedItem =
 						FeedItem::create((string) $item->title)->
 						setContent(
 							FeedItemContent::create()->
@@ -41,6 +41,13 @@
 							)
 						)->
 						setLink((string) $item->link);
+					
+					if (isset($item->guid)) 
+						$feedItem->setId(
+							$item->guid
+						);					
+					
+					$result[] = $feedItem;
 				}
 			}
 			
@@ -57,6 +64,14 @@
 								'<pubDate>'
 									.date('r', $item->getPublished()->toStamp())
 								.'</pubDate>'
+							: null
+					)
+					.(
+						$item->getId()
+							?
+								'<guid>'
+									.$item->getId()
+								.'</guid>'
 							: null
 					)
 					.'<title>'.$item->getTitle().'</title>'
