@@ -1,5 +1,11 @@
 # $Id$
 
+2007-11-01	Vladimir A. Altuchov
+
+	* main/Markup/Feed/AtomItemWorker.class.php,
+	main/Markup/Feed/RssItemWorker.class.php,
+	main/Markup/Feed/FeedItem.class.php: id field added.
+
 2007-10-31	Dmitry E. Pismenny
 
 	* core/Form/Primitives/PrimitiveDate.class.php: PrimitiveDate::checkRanges()
