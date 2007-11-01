@@ -69,7 +69,7 @@
 					.(
 						$item->getId()
 							?
-								'<guid>'
+								'<guid isPermaLink="false">'
 									.$item->getId()
 								.'</guid>'
 							: null
