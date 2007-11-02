@@ -1,5 +1,9 @@
 # $Id$
 
+2007-11-02	Vladimir A. Altuchov
+
+	* main/Utils/IO/FileReader.class.php: new reader added. 
+
 2007-11-01	Vladimir A. Altuchov
 
 	* main/Markup/Feed/AtomItemWorker.class.php,
