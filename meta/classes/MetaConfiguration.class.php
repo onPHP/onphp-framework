@@ -554,8 +554,9 @@
 					
 					$dao = $object->dao();
 					
-					Assert::isTrue(
-						$dao->getIdName() == $class->getIdentifier()->getName(),
+					Assert::isEqual(
+						$dao->getIdName(),
+						$class->getIdentifier()->getName(),
 						'identifier name mismatch in '.$class->getName().' class'
 					);
 					
