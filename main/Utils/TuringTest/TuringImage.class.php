@@ -15,8 +15,6 @@
 	**/
 	final class TuringImage
 	{
-		const SESSION_LABEL = 'turning_number';
-		
 		private $textColors			= null;
 		private $backgroundColors	= null;
 	
@@ -32,10 +30,7 @@
 		private	$drawer				= null;
 		private $backgroundDrawer	= null;
 		
-		public static function getCode()
-		{
-			return Session::get(self::SESSION_LABEL); 
-		}
+		private $code		= null;
 		
 		public function __construct($width, $height)
 		{
@@ -45,6 +40,24 @@
 			$this->generator = new CodeGenerator();
 			$this->textColors = new ColorArray();
 			$this->backgroundColors = new ColorArray();
+		}
+		
+		/**
+		 * @return TuringImage
+		**/
+		public function setGeneratedCode($code)
+		{
+			$this->code = $code;
+			
+			return $this;
+		}
+		
+		public function getGeneratedCode()
+		{
+			if (!$this->code)
+				$this->code = $this->generator->generate();
+				
+			return $this->code;
 		}
 		
 		public function getTextColors()
@@ -150,13 +163,9 @@
 
 			$this->init();
 
-			$code = $this->generator->generate();
+			$this->drawBackGround();
 
-			$this->
-				setCode($code)->
-				drawBackGround();
-
-			$this->drawer->draw($code);
+			$this->drawer->draw($this->getGeneratedCode());
 
 			$this->outputImage($imageType);
 			
@@ -165,16 +174,6 @@
 			return $this;
 		}
 		
-		/**
-		 * @return TuringImage
-		**/
-		protected function setCode($code)
-		{
-			Session::assign(self::SESSION_LABEL, $code);
-			
-			return $this;
-		}
-
 		/**
 		 * @return TuringImage
 		**/
