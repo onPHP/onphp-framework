@@ -24,31 +24,57 @@
 					"no class defined for PrimitiveFormsList '{$this->name}'"
 				);
 			
-			if (!BasePrimitive::import($scope))
+			if (!isset($scope[$this->name]))
 				return null;
 			
-			$forms = $scope[$this->name];
+			$this->rawValue = $scope[$this->name];
 			
-			if (!is_array($forms))
+			$this->imported = true;
+				
+			if (!is_array($scope[$this->name]))
 				return false;
 			
-			foreach ($forms as $form) {
-				if (!($form instanceof Form) || $form->getErrors())
-					return false;
+			$error = false;
+			
+			$this->value = array();
+			
+			foreach ($scope[$this->name] as $id => $value) {
+				$this->value[$id] =
+					$this->proto->makeForm()->
+						import($value);
+				
+				if ($this->value[$id]->getErrors())
+					$error = true;
 			}
 			
-			$this->value = $forms;
+			if ($error)
+				return false;
 			
 			return true;
 		}
 		
 		public function importValue($value)
 		{
-			Assert::isTrue(current($value) instanceof Form);
+			if ($value)
+				Assert::isArray($value);
 					
 			return $this->import(
 				array($this->name => $value)
 			);
+		}
+		
+		public function exportValue()
+		{
+			if (!$this->value)
+				return null;
+			
+			$result = array();
+			
+			foreach ($this->value as $id => $form) {
+				$result[$id] = $form->export();
+			}
+			
+			return $result;
 		}
 	}
 ?>

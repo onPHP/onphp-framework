@@ -12,6 +12,8 @@
 
 	class DTOProto extends Singleton
 	{
+		const PROTO_CLASS_PREFIX		= 'Proto';
+		
 		public function baseProto()
 		{
 			return null;
@@ -204,7 +206,7 @@
 				if ($primitive instanceof PrimitiveForm) {
 					
 					$proto = Singleton::getInstance(
-						'Proto'.$primitive->getClassName()
+						self::PROTO_CLASS_PREFIX.$primitive->getClassName()
 					);
 					
 					$protoClassName = $proto->className();
@@ -213,17 +215,17 @@
 						$value = $proto->makeDtosList($value);
 						
 					} else {
-						if (
-							$proto->isAbstract()
-							&& ClassUtils::isInstanceOf($value, $protoClassName)
-						) {
-							if (get_class($value) == $protoClassName)
+						if ($value) {
+							Assert::isInstance($value, $protoClassName);
+							
+							$proto = $value->dtoProto();
+							
+							if ($proto->isAbstract())
 								throw new WrongArgumentException(
-									'cannot build scope from abstract DTO class '
+									'cannot build DTO from '
+									.'abstract proto for class '
 									.get_class($value)
 								);
-								
-							$proto = $value->dtoProto();
 						}
 						
 						$value = $proto->makeDto($value);
@@ -275,7 +277,7 @@
 				$setter = 'set'.ucfirst($field);
 				$dropper = 'drop'.ucfirst($field);
 				
-				if (!$primitive->isRequired() && $value === null) {
+				if ($value === null) {
 					if (
 						$primitive instanceof PrimitiveForm
 						|| $reflection->hasMethod($dropper)
@@ -287,7 +289,7 @@
 				} else {
 					if ($primitive instanceof PrimitiveForm) {
 						$proto = Singleton::getInstance(
-							'Proto'.$primitive->getClassName()
+							self::PROTO_CLASS_PREFIX.$primitive->getClassName()
 						);
 						
 						if ($primitive instanceof PrimitiveFormsList) {
@@ -304,9 +306,12 @@
 			return $object;
 		}
 		
-		final protected function buildScope(DTOClass $dto)
+		final public function buildScope(DTOClass $dto)
 		{
-			$result = array();
+			if ($this->baseProto())
+				$result = $this->baseProto()->buildScope($dto);
+			else
+				$result = array();
 			
 			foreach ($this->getFormMapping() as $primitive) {
 				
@@ -329,39 +334,52 @@
 					if ($primitive instanceof PrimitiveForm) {
 						
 						$proto = Singleton::getInstance(
-							'Proto'.$primitive->getClassName()
+							self::PROTO_CLASS_PREFIX.$primitive->getClassName()
 						);
 						
 						if ($primitive instanceof PrimitiveFormsList) {
-							$value = $proto->toFormsList($value);
+							$value = $proto->buildArrayScope($value);
 							
 						} else {
 							
 							$protoDtoClass = $proto->dtoClassName();
 							
-							if (
-								$proto->isAbstract()
-								&& ClassUtils::isInstanceOf($value, $protoDtoClass)
-							) {
-								if (get_class($value) == $protoDtoClass)
-									throw new WrongArgumentException(
-										'cannot build scope from abstract DTO class '
-										.get_class($value)
-									);
+							if ($value) {
+								Assert::isInstance($value, $protoDtoClass);
 									
 								$proto = $value->dtoProto();
 								
-								$formClassName = $proto->className();
+								if ($proto->isAbstract())
+									throw new WrongArgumentException(
+										'cannot build scope from '
+										.'abstract proto for class '
+										.get_class($value)
+									);
+									
 							}
 							
-							$value = $proto->toForm($value);
-							
-							$value->setProto($proto);
+							$value = $proto->buildScope($value);
 						}
 					}
 					
 					$result[$primitive->getName()] = $value;
 				}
+			}
+			
+			return $result;
+		}
+		
+		final public function buildArrayScope($dtos)
+		{
+			if (!$dtos)
+				return null;
+			
+			Assert::isArray($dtos);
+			
+			$result = array();
+			
+			foreach ($dtos as $dto) {
+				$result[] = $this->buildScope($dto);
 			}
 			
 			return $result;

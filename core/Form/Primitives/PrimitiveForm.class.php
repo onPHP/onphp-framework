@@ -16,8 +16,7 @@
 	class PrimitiveForm extends BasePrimitive
 	{
 		protected $className = null;
-		
-		private $info = null;
+		protected $proto = null;
 		
 		/**
 		 * @throws WrongArgumentException
@@ -30,7 +29,16 @@
 				"knows nothing about '{$className}' class"
 			);
 			
-			$this->info = new ReflectionClass($className);
+			$protoClass = 'Proto'.$className;
+			
+			Assert::isTrue(
+				class_exists($protoClass, true),
+				"knows nothing about '{$protoClass}' class"
+			);
+			
+			$this->proto = Singleton::getInstance($protoClass);
+			
+			Assert::isInstance($this->proto, 'DTOProto');
 			
 			$this->className = $className;
 			
@@ -65,22 +73,29 @@
 					"no class defined for PrimitiveForm '{$this->name}'"
 				);
 			
-			if (!BasePrimitive::import($scope))
+			if (!isset($scope[$this->name]))
 				return null;
 			
-			$form = $scope[$this->name];
-				
-			if (!($form instanceof Form) || $form->getErrors())
-				return false;
+			$this->rawValue = $scope[$this->name];
 			
-			$this->value = $form;
+			$this->value =
+				$this->proto->makeForm()->
+				import($this->rawValue);
+			
+			$this->imported = true;
+				
+			if ($this->value->getErrors())
+				return false;
 			
 			return true;
 		}
 		
 		public function exportValue()
 		{
-			throw new UnimplementedFeatureException();
+			if (!$this->value)
+				return null;
+			
+			return $this->value->export();
 		}
 	}
 ?>
