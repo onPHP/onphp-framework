@@ -17,7 +17,7 @@
 	**/
 	final class FilterChain implements Filtrator
 	{
-		protected $chain = array();
+		private $chain = array();
 
 		/**
 		 * @return FilterChain
