@@ -74,6 +74,16 @@
 					: ' RESTRICT';
 		}
 		
+		public function quoteBinary($data)
+		{
+			return $this->quoteValue($data);
+		}
+		
+		public function unquoteBinary($data)
+		{
+			return $data;
+		}
+		
 		public function typeToString(DataType $type)
 		{
 			return $type->getName();

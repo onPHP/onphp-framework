@@ -19,6 +19,8 @@
 				$this->getSome(); // 41!
 				Cache::me()->clean();
 				$this->getSome();
+				
+				$this->binaryTest();
 			}
 			
 			$this->drop();
@@ -102,6 +104,27 @@
 			$this->assertEqual(
 				count(TestUser::dao()->getPlainList()),
 				count(TestCity::dao()->getPlainList())
+			);
+		}
+		
+		private function binaryTest()
+		{
+			$data = null;
+			
+			for ($i = 0; $i < 256; ++$i)
+				$data .= chr($i);
+			
+			$stuff =
+				TestBinaryStuff::create()->
+				setData($data);
+			
+			$stuff = $stuff->dao()->add($stuff);
+			
+			Cache::me()->clean();
+			
+			$this->assertEqual(
+				TestBinaryStuff::dao()->getById(1)->getData(),
+				$data
 			);
 		}
 	}

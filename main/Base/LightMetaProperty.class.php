@@ -311,7 +311,13 @@
 				)
 					return $query;
 				
-				$query->lazySet($this->getColumnName(), $object->$getter());
+				$value = $object->$getter();
+				
+				if ($this->type == 'binary') {
+					$query->set($this->getColumnName(), new DBBinary($value));
+				} else {
+					$query->lazySet($this->getColumnName(), $value);
+				}
 			}
 			
 			return $query;
@@ -323,6 +329,10 @@
 				$raw = $array[$dao->getJoinPrefix($this->getColumnName(), $prefix)];
 			else
 				$raw = $array[$prefix.$this->getColumnName()];
+			
+			if ($this->type == 'binary') {
+				return DBPool::getByDao($dao)->getDialect()->unquoteBinary($raw);
+			}
 			
 			if (
 				!$this->isIdentifier()

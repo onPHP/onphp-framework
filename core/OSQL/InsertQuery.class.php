@@ -51,6 +51,8 @@
 					$values[] = 'TRUE';
 				elseif (false === $val)
 					$values[] = 'FALSE';
+				elseif ($val instanceof DialectString)
+					$values[] = $val->toDialectString($dialect);
 				else
 					$values[] = $dialect->quoteValue($val);
 			}

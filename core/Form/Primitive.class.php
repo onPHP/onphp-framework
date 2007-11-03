@@ -116,6 +116,14 @@
 		}
 		
 		/**
+		 * @return PrimitiveBinary
+		**/
+		public static function binary($name)
+		{
+			return new PrimitiveBinary($name);
+		}
+		
+		/**
 		 * @return PrimitiveRange
 		**/
 		public static function range($name)

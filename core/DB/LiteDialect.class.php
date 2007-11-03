@@ -45,10 +45,27 @@
 			return null;
 		}
 		
+		public function quoteBinary($data)
+		{
+			return sqlite_udf_encode_binary($data);
+		}
+		
+		public function unquoteBinary($data)
+		{
+			return sqlite_udf_decode_binary($data);
+		}
+		
 		public function typeToString(DataType $type)
 		{
-			if ($type->getId() == DataType::BIGINT)
-				return 'INTEGER';
+			switch ($type->getId()) {
+				case DataType::BIGINT:
+					
+					return 'INTEGER';
+				
+				case DataType::BINARY:
+					
+					return 'BLOB';
+			}
 			
 			return parent::typeToString($type);
 		}

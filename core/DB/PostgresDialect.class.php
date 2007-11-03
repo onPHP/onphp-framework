@@ -28,12 +28,12 @@
 		{
 			return Singleton::getInstance(__CLASS__);
 		}
-
+		
 		public static function getTsConfiguration()
 		{
 			return self::$tsConfiguration;
 		}
-
+		
 		public static function setTsConfiguration($configuration)
 		{
 			self::$tsConfiguration = $configuration;
@@ -46,18 +46,18 @@
 			
 			return "'".pg_escape_string($value)."'";
 		}
-
+		
 		public static function toCasted($field, $type)
 		{
 			return "{$field}::{$type}";
 		}
-
+		
 		public static function prepareFullText($words, $logic)
 		{
 			Assert::isArray($words);
 			
 			$glue = ($logic == DB::FULL_TEXT_AND) ? ' & ' : ' | ';
-
+			
 			return
 				strtolower(
 					implode(
@@ -68,6 +68,24 @@
 						)
 					)
 				);
+		}
+		
+		public function quoteBinary($data)
+		{
+			return pg_escape_bytea($data);
+		}
+		
+		public function unquoteBinary($data)
+		{
+			return pg_unescape_bytea($data);
+		}
+		
+		public function typeToString(DataType $type)
+		{
+			if ($type->getId() == DataType::BINARY)
+				return 'BYTEA';
+			
+			return parent::typeToString($type);
 		}
 		
 		public function hasTruncate()
@@ -84,7 +102,7 @@
 		{
 			$searchString = self::prepareFullText($words, $logic);
 			$field = $this->fieldToString($field);
-
+			
 			return 
 				"({$field} @@ to_tsquery('".self::$tsConfiguration."', ".
 				self::quoteValue($searchString)."))";

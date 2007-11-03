@@ -49,7 +49,7 @@
 				throw new WrongArgumentException();
 			elseif (strpos($field, '::') !== false)
 				throw new WrongArgumentException();
-
+			
 			return "`{$field}`";
 		}
 		
@@ -66,6 +66,24 @@
 		public static function timeZone($exist = false)
 		{
 			return null;
+		}
+		
+		public function quoteBinary($data)
+		{
+			return mysql_real_escape_string($data);
+		}
+		
+		public function unquoteBinary($data)
+		{
+			return $data;
+		}
+		
+		public function typeToString(DataType $type)
+		{
+			if ($type->getId() == DataType::BINARY)
+				return 'BLOB';
+			
+			return parent::typeToString($type);
 		}
 		
 		public function hasTruncate()
