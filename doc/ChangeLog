@@ -1,5 +1,9 @@
 # $Id$
 
+2007-11-03	Konstantin V. Arkhipov
+
+	* core/OSQL/DataType.class.php: typeToString moved to Dialect.
+
 2007-11-02	Vladimir A. Altuchov
 
 	* main/Utils/IO/FileReader.class.php: new reader added. 

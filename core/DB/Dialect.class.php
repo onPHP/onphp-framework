@@ -74,6 +74,11 @@
 					: ' RESTRICT';
 		}
 		
+		public function typeToString(DataType $type)
+		{
+			return $type->getName();
+		}
+		
 		public function toFieldString($expression)
 		{
 			return $this->toNeededString($expression, 'quoteField');

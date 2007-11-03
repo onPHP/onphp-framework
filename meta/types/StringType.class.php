@@ -30,7 +30,7 @@
 				$default,
 				"strange default value given - '{$default}'"
 			);
-
+			
 			$this->default = $default;
 			
 			return $this;

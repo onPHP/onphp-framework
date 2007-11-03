@@ -35,6 +35,8 @@
 		const TIME				= 0x000A0C;
 		const TIMESTAMP			= 0x000A0D;
 		
+		const BINARY			= 0x00000E;
+		
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x000200;
 		const HAVE_SCALE		= 0x000400;
@@ -66,7 +68,9 @@
 			
 			self::DATE			=> 'DATE',
 			self::TIME			=> 'TIME',
-			self::TIMESTAMP		=> 'TIMESTAMP'
+			self::TIMESTAMP		=> 'TIMESTAMP',
+			
+			self::BINARY		=> 'BINARY'
 		);
 		
 		/**
@@ -195,21 +199,9 @@
 			return $this->unsigned;
 		}
 		
-		public function typeToString(Dialect $dialect)
-		{
-			if (
-				$this->id == self::BIGINT
-				&& $dialect instanceof LiteDialect
-			) {
-				return $this->names[self::INTEGER];
-			}
-			
-			return $this->name;
-		}
-		
 		public function toDialectString(Dialect $dialect)
 		{
-			$out = $this->typeToString($dialect);
+			$out = $dialect->typeToString($this);
 			
 			if ($this->unsigned) {
 				$out .= ' UNSIGNED';

@@ -45,6 +45,14 @@
 			return null;
 		}
 		
+		public function typeToString(DataType $type)
+		{
+			if ($type->getId() == DataType::BIGINT)
+				return 'INTEGER';
+			
+			return parent::typeToString($type);
+		}
+		
 		public function preAutoincrement(DBColumn $column)
 		{
 			self::checkColumn($column);
