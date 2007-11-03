@@ -278,7 +278,7 @@
 			$result = array();
 			
 			foreach ($this->primitives as $prm) {
-				if ($prm->getValue())
+				if ($prm->isImported())
 					$result[$prm->getName()] = $prm->exportValue();
 			}
 			
