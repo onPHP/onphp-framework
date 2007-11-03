@@ -73,11 +73,6 @@
 			return mysql_real_escape_string($data);
 		}
 		
-		public function unquoteBinary($data)
-		{
-			return $data;
-		}
-		
 		public function typeToString(DataType $type)
 		{
 			if ($type->getId() == DataType::BINARY)
