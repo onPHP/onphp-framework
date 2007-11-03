@@ -200,6 +200,8 @@
 				'bpchar'		=> DataType::CHAR,
 				'text'			=> DataType::TEXT,
 				
+				'bytea'			=> DataType::BINARY,
+				
 				// unhandled types, not ours anyway
 				'tsvector'		=> null,
 				'inet'			=> null
