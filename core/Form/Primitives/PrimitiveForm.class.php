@@ -66,7 +66,25 @@
 			return parent::setValue($value);
 		}
 		
+		public function exportValue()
+		{
+			if (!$this->value)
+				return null;
+			
+			return $this->value->export();
+		}
+		
 		public function import($scope)
+		{
+			return $this->actualImport($scope, true);
+		}
+		
+		public function unfilteredImport($scope)
+		{
+			return $this->actualImport($scope, false);
+		}
+		
+		private function actualImport($scope, $importFiltering)
 		{
 			if (!$this->className)
 				throw new WrongStateException(
@@ -78,9 +96,16 @@
 			
 			$this->rawValue = $scope[$this->name];
 			
-			$this->value =
-				$this->proto->makeForm()->
-				import($this->rawValue);
+			$this->value = $this->proto->makeForm();
+			
+			if (!$importFiltering) {
+				$this->value->
+					disableImportFiltering()->
+					import($this->rawValue)->
+					enableImportFiltering();
+			} else {
+				$this->value->import($this->rawValue);
+			}
 			
 			$this->imported = true;
 				
@@ -88,14 +113,6 @@
 				return false;
 			
 			return true;
-		}
-		
-		public function exportValue()
-		{
-			if (!$this->value)
-				return null;
-			
-			return $this->value->export();
 		}
 	}
 ?>

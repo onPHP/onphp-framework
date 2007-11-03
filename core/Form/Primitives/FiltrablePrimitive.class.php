@@ -31,6 +31,16 @@
 		/**
 		 * @return FiltrablePrimitive
 		**/
+		public function setDisplayFilter(FilterChain $chain)
+		{
+			$this->displayFilter = $chain;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return FiltrablePrimitive
+		**/
 		public function addDisplayFilter(Filtrator $filter)
 		{
 			$this->displayFilter->add($filter);
@@ -43,7 +53,7 @@
 		**/
 		public function dropDisplayFilters()
 		{
-			$this->displayFilter->dropAll();
+			$this->displayFilter = new FilterChain();
 			
 			return $this;
 		}
@@ -59,7 +69,17 @@
 			
 			return $this->displayFilter->apply($this->getActualValue());
 		}
-
+		
+		/**
+		 * @return FiltrablePrimitive
+		**/
+		public function setImportFilter(FilterChain $chain)
+		{
+			$this->importFilter = $chain;
+			
+			return $this;
+		}
+		
 		/**
 		 * @return FiltrablePrimitive
 		**/
@@ -75,7 +95,7 @@
 		**/
 		public function dropImportFilters()
 		{
-			$this->importFilter->dropAll();
+			$this->importFilter = new FilterChain();
 			
 			return $this;
 		}

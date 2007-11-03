@@ -22,11 +22,13 @@
 		const WRONG 		= 0x0001;
 		const MISSING 		= 0x0002;
 		
-		private $errors			= array();
-		private $labels			= array();
-		private $describedLabels 	= array();
+		private $errors				= array();
+		private $labels				= array();
+		private $describedLabels	= array();
 		
-		protected $proto	= null;
+		private $proto				= null;
+		
+		private $importFiltering	= true;
 		
 		/**
 		 * @return Form
@@ -51,7 +53,27 @@
 			
 			return $this;
 		}
-
+		
+		/**
+		 * @return Form
+		**/
+		public function enableImportFiltering()
+		{
+			$this->importFiltering = true;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return Form
+		**/
+		public function disableImportFiltering()
+		{
+			$this->importFiltering = false;
+			
+			return $this;
+		}
+		
 		/**
 		 * primitive marking
 		**/
@@ -328,7 +350,28 @@
 				return $this->checkImportResult($prm, null);
 			}
 			
-			return $this->checkImportResult($prm, $prm->import($scope));
+			if (!$this->importFiltering) {
+				if ($prm instanceof FiltrablePrimitive) {
+					
+					$chain = $prm->getImportFilter();
+					
+					$this->checkImportResult($prm, $prm->import($scope));
+					
+					$prm->setImportFilter($chain);
+					
+				} elseif ($prm instanceof PrimitiveForm) {
+					$this->checkImportResult(
+						$prm,
+						$prm->unfilteredImport($scope)
+					);
+				} else {
+					$this->checkImportResult($prm, $prm->import($scope));
+				}
+			} else {
+				$this->checkImportResult($prm, $prm->import($scope));
+			}
+			
+			return $this;
 		}
 		
 		/**
