@@ -20,6 +20,26 @@
 
 #define ZVAL_FREE(z) zval_dtor(z); FREE_ZVAL(z);
 
+#define ONPHP_CHECK_EMPTY(value) !((						\
+		Z_TYPE_P(value) == IS_NULL							\
+	) || (													\
+		(Z_TYPE_P(value) == IS_LONG)						\
+		&& (Z_LVAL_P(value) == 0)							\
+	) || (													\
+		(Z_TYPE_P(value) == IS_BOOL)						\
+		&& (!zval_is_true(value))							\
+	) || (													\
+		(Z_TYPE_P(value) == IS_STRING)						\
+		&& (												\
+			(Z_STRLEN_P(value) < 1)							\
+			|| (strcmp(Z_STRVAL_P(value), "0") == 0)		\
+		)													\
+	) || (													\
+		(Z_TYPE_P(value) == IS_ARRAY)						\
+		&& (zend_hash_num_elements(Z_ARRVAL_P(value)) < 1)	\
+	))
+
+
 #define ONPHP_CONSTRUCT_ARRAY(name) { \
 	zval *name; \
 	MAKE_STD_ZVAL(name); \

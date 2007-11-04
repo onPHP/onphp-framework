@@ -139,24 +139,8 @@ ONPHP_METHOD(BasePrimitive, import)
 				(void **) &raw
 			)
 			== SUCCESS
-		) && !(
-			Z_TYPE_PP(raw) == IS_NULL
-		) && !(
-			(Z_TYPE_PP(raw) == IS_LONG)
-			&& (Z_LVAL_PP(raw) == 0)
-		) && !(
-			(Z_TYPE_PP(raw) == IS_BOOL)
-			&& !(zval_is_true(*raw))
-		) && !(
-			(Z_TYPE_PP(raw) == IS_STRING)
-			&& (
-				(Z_STRLEN_PP(raw) < 1)
-				|| (strcmp(Z_STRVAL_PP(raw), "0") == 0)
-			)
-		) && !(
-			(Z_TYPE_PP(raw) == IS_ARRAY)
-			&& (zend_hash_num_elements(Z_ARRVAL_PP(raw)) < 1)
 		)
+		&& ONPHP_CHECK_EMPTY(*raw)
 	) {
 		ONPHP_UPDATE_PROPERTY(getThis(), "raw", *raw);
 		

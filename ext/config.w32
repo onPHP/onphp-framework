@@ -23,7 +23,7 @@ if (PHP_ONPHP != "no") {
 	
 	ADD_SOURCES(
 		"ext/onphp/src/core/Form/Primitives",
-		"BasePrimitive.c", "RangedPrimitive.c", "ListedPrimitive.c",
+		"BasePrimitive.c", "RangedPrimitive.c", "ComplexPrimitive.c", "ListedPrimitive.c",
 		"onphp"
 	);
 	

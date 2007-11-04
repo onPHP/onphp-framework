@@ -14,6 +14,7 @@
 	 * Basis for primitives which can be scattered across import scope.
 	 * 
 	 * @ingroup Primitives
+	 * @ingroup Module
 	**/
 	abstract class ComplexPrimitive extends RangedPrimitive
 	{

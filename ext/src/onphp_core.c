@@ -35,6 +35,7 @@
 
 #include "core/Form/Primitives/BasePrimitive.h"
 #include "core/Form/Primitives/RangedPrimitive.h"
+#include "core/Form/Primitives/ComplexPrimitive.h"
 #include "core/Form/Primitives/ListedPrimitive.h"
 
 #include "core/OSQL/Castable.h"
@@ -95,6 +96,10 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_PROPERTY(RangedPrimitive, "min", ZEND_ACC_PROTECTED);
 	REGISTER_ONPHP_PROPERTY(RangedPrimitive, "max", ZEND_ACC_PROTECTED);
 	onphp_ce_RangedPrimitive->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+	
+	REGISTER_ONPHP_SUB_CLASS_EX(ComplexPrimitive, RangedPrimitive);
+	REGISTER_ONPHP_PROPERTY(ComplexPrimitive, "single", ZEND_ACC_PRIVATE);
+	onphp_ce_ComplexPrimitive->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
 	REGISTER_ONPHP_INTERFACE(ListedPrimitive);
 	
