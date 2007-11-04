@@ -48,7 +48,7 @@
 					."{$property->getType()->getDeclaration()};\n";
 				
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
-					$out .= 
+					$out .=
 						"protected \${$property->getName()}Id = null;\n";
 				}
 			}

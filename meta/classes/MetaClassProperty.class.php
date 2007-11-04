@@ -142,7 +142,7 @@
 				throw new WrongArgumentException(
 					"size not allowed for '"
 					.$this->getName().'::'.get_class($this->type)
-					."' type" 
+					."' type"
 				);
 			
 			return $this;

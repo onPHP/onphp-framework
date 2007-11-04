@@ -109,7 +109,7 @@
 		
 		/**
 		 * @return HttpContentType
-		 *
+		 * 
 		 * sample argument: text/html; charset="utf-8"
 		**/
 		public function import($string)

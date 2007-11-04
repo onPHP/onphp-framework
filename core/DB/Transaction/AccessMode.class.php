@@ -12,7 +12,7 @@
 
 	/**
 	 * Transaction access modes.
-	 *
+	 * 
 	 * @see http://www.postgresql.org/docs/current/interactive/sql-start-transaction.html
 	 * 
 	 * @ingroup Transaction

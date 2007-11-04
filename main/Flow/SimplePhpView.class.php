@@ -40,7 +40,7 @@
 			$this->postRender();
 		}
 		
-		public function toString($model = null) 
+		public function toString($model = null)
 		{
 			ob_start();
 			$this->render($model);

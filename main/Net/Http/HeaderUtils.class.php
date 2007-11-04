@@ -79,7 +79,7 @@
 					if (is_array($val)) {
 						foreach ($val as $k => $v)
 							$uri .= "&{$key}[{$k}]={$v}";
-					} else 
+					} else
 						$uri .= "&{$key}={$val}";
 				}
 

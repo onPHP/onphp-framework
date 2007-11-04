@@ -539,9 +539,9 @@
 					}
 					
 					$this->joinProperties(
-						$query, 
-						$propertyDao, 
-						$tableAlias, 
+						$query,
+						$propertyDao,
+						$tableAlias,
 						$property->isRequired() && $parentRequired,
 						$propertyDao->getJoinPrefix($property->getColumnName(), $prefix)
 					);

@@ -32,7 +32,7 @@
 		public function drawCraracter($angle, $x, $y, $character)
 		{
 			$color = $this->getTuringImage()->getOneCharacterColor();
-
+			
 			imagettftext(
 				$this->getTuringImage()->getImageId(),
 				$this->size,
@@ -62,7 +62,7 @@
 			
 			return $this;
 		}
-
+		
 		protected function getTextWidth($string)
 		{
 			$textWidth = 0;

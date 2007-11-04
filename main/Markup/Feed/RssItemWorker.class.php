@@ -42,7 +42,7 @@
 						)->
 						setLink((string) $item->link);
 					
-					if (isset($item->guid)) 
+					if (isset($item->guid))
 						$feedItem->setId(
 							$item->guid
 						);					
@@ -77,7 +77,7 @@
 					.'<title>'.$item->getTitle().'</title>'
 					.(
 						$item->getLink()
-							? 
+							?
 								'<link>'
 								.str_replace("&", "&amp;", $item->getLink())
 								.'</link>'

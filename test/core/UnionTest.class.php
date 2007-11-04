@@ -35,7 +35,7 @@
 			
 			$this->singleIntersect = CombineQuery::intersect($left, $right);
 			$this->singleIntersectAll = CombineQuery::intersectAll(
-				$left, 
+				$left,
 				$right
 			);
 			
@@ -43,13 +43,13 @@
 			$this->singleExceptAll = CombineQuery::exceptAll($left, $right);
 			
 			$this->blockUnion = CombineQuery::unionBlock(
-				$left, 
-				$middle, 
+				$left,
+				$middle,
 				$right
 			);
 			$this->blockUnionAll = CombineQuery::unionAllBlock(
-				$left, 
-				$middle, 
+				$left,
+				$middle,
 				$right
 			);
 			

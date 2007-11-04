@@ -24,7 +24,7 @@
 		{
 			$color = $this->getTuringImage()->getTextColors()->getRandomTextColor();
 			
-			$invertColor = clone $color; 
+			$invertColor = clone $color;
 			$invertColor->invertColor();
 			
 			return $invertColor;

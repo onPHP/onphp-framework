@@ -382,7 +382,7 @@
 						}
 						
 						// check for old-style naming
-						$oldStlye = 
+						$oldStlye =
 							ONPHP_META_DAO_DIR
 							.$class->getName()
 							.'To'
@@ -837,8 +837,8 @@
 			}
 			
 			if (
-				$class->getType() 
-				&& $class->getTypeId() 
+				$class->getType()
+				&& $class->getTypeId()
 					== MetaClassType::CLASS_SPOOKED
 			) {
 				Assert::isFalse(

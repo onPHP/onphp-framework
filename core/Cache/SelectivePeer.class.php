@@ -32,7 +32,7 @@
 		{
 			if (!$this->className)
 				$class = self::MARGINAL_VALUE;
-			else 
+			else
 				$class = $this->className;
 				
 			$this->className = null; // eat it after use

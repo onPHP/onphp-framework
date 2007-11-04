@@ -13,7 +13,7 @@
 
 	/**
 	 * Date's container and utilities.
-	 *
+	 * 
 	 * @see DateRange
 	 * 
 	 * @ingroup Base
@@ -86,15 +86,15 @@
 		
 		public static function dayDifference(Date $left, Date $right)
 		{
-			return 
+			return
 				gregoriantojd(
 					$right->getMonth(),
 					$right->getDay(),
 					$right->getYear()
 				)
 				- gregoriantojd(
-					$left->getMonth(), 
-					$left->getDay(), 
+					$left->getMonth(),
+					$left->getDay(),
 					$left->getYear()
 				);
 		}

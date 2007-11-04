@@ -28,7 +28,7 @@
 			parent::__construct($dao);
 			
 			if (($cache = Cache::me()) instanceof WatermarkedPeer)
-				$this->watermark = 
+				$this->watermark =
 					$cache->mark($this->className)->getActualWatermark();
 			else
 				$this->watermark = null;

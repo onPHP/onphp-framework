@@ -35,7 +35,7 @@
 		**/
 		public function setIp($ip)
 		{
-			if (ip2long($ip) === -1) 
+			if (ip2long($ip) === -1)
 				throw new WrongArgumentException('wrong ip given');
 			
 			$this->longIp = ip2long($ip);

@@ -16,7 +16,7 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
-	final class DBField extends Castable implements SQLTableName 
+	final class DBField extends Castable implements SQLTableName
 	{
 		private $field	= null;
 		private $table	= null;

@@ -12,7 +12,7 @@
 
 	/**
 	 * OSQL's queries queue.
-	 *
+	 * 
 	 * @see OSQL
 	 * 
 	 * @ingroup DB

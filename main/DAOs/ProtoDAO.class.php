@@ -178,8 +178,8 @@
 		}
 		
 		private function processPath(
-			AbstractProtoClass $proto, 
-			$probablyPath, 
+			AbstractProtoClass $proto,
+			$probablyPath,
 			JoinCapableQuery $query,
 			$table,
 			$parentRequired = true,
@@ -335,7 +335,7 @@
 			
 			if ($path) {
 				return $propertyDao->guessAtom(
-					implode('.', $path), 
+					implode('.', $path),
 					$query,
 					$alias,
 					$property->isRequired() && $parentRequired,
@@ -347,7 +347,7 @@
 		}
 		
 		public function guessAtom(
-			$atom, 
+			$atom,
 			JoinCapableQuery $query,
 			$table = null,
 			$parentRequired = true,

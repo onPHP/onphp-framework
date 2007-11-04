@@ -68,7 +68,7 @@
    				"Content-length: ".strlen($request)
    			);
    			
-			$curl = curl_init(); 
+			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_URL, $this->url);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);

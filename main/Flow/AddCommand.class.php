@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class AddCommand extends MakeCommand 
+	class AddCommand extends MakeCommand
 	{
 		/**
 		 * @return AddCommand

@@ -18,13 +18,13 @@
 		const MALE		= 0;
 		const FEMALE	= 1;
 		const NEUTRAL	= 2;
-	
+		
 		private static $orderedSuffixes = array(
-			self::MALE 		=> array('ый', 'ой', 'ий'),
-			self::FEMALE 	=> array('ая', 'ья', null),
-			self::NEUTRAL 	=> array('ое', 'ье', null)
+			self::MALE		=> array('ый', 'ой', 'ий'),
+			self::FEMALE	=> array('ая', 'ья', null),
+			self::NEUTRAL	=> array('ое', 'ье', null)
 		);
-	
+		
 		private static $orderedDigits = array(
 			'перв',
 			'втор',
@@ -35,9 +35,9 @@
 			'седьм',
 			'восьм',
 			'девят',
-			'десят',
+			'десят'
 		);
-
+		
 		private static $bytePrefixes = array(
 			null, 'К', 'М', 'Г', 'Т', 'П'
 		);
@@ -95,7 +95,7 @@
 				return $cases[2];
 			}
 		}
-
+		
 		/**
 		 * doesn't duplicate strftime('%B', ...)
 		 * only when 'russian' locale set in windoze
@@ -107,10 +107,10 @@
 				'мая', 'июня', 'июля', 'августа', 'сентября',
 				'октября', 'ноября', 'декабря'
 			);
-
+			
 			return $months[$month - 1];
 		}
-
+		
 		public static function getMonthInSubjectiveCase($month)
 		{
 			static $months = array(
@@ -118,7 +118,7 @@
 				'май', 'июнь', 'июль', 'август', 'сентябрь',
 				'октябрь', 'ноябрь', 'декабрь'
 			);
-
+			
 			return $months[$month - 1];
 		}
 		
@@ -143,32 +143,32 @@
 		public static function getDateAsText(Timestamp $date, $todayWordNeed = true)
 		{
 			$dayStart = Timestamp::makeToday();
-			$tomorrowDayStart = $dayStart->spawn('+1 day'); 
-
+			$tomorrowDayStart = $dayStart->spawn('+1 day');
+			
 			if (
 				(Timestamp::compare($date, $dayStart) == 1)
 				&& (Timestamp::compare($date, $tomorrowDayStart) == -1)
 			)
-				return 
+				return
 					(
-						$todayWordNeed === true 
-							? 'сегодня ' 
-							: null 
+						$todayWordNeed === true
+							? 'сегодня '
+							: null
 					)
 					.'в '
 					.date('G:i', $date->toStamp());
-
+			
 			$yesterdayStart = $dayStart->spawn('-1 day');
-
+			
 			if (
 				(Timestamp::compare($date, $yesterdayStart) == 1)
 				&& (Timestamp::compare($date, $dayStart) == -1)
 			)
 				return 'вчера в '.date('G:i', $date->toStamp());
-
+			
 			return date('j.m.Y в G:i', $date->toStamp());
 		}
-
+		
 		public static function friendlyFileSize($size, $precision = 2)
 		{
 			if ($size < 1024)
@@ -184,8 +184,8 @@
 		
 		public static function getHumanDay(Date $date, $wordDayNeed = true)
 		{
-			$today 		= Date::makeToday();
-			$tomorrow 	= $today->spawn('+1 day'); 
+			$today		= Date::makeToday();
+			$tomorrow	= $today->spawn('+1 day');
 			
 			if ($date->toDate() == $today->toDate() && $wordDayNeed == true)
 				return 'сегодня';
@@ -208,8 +208,8 @@
 		public static function toRussian($sourceString)
 		{
 			if (!self::$flippedLettersMapping)
-			 	self::$flippedLettersMapping =
-			 		array_flip(self::$lettersMapping);
+				self::$flippedLettersMapping =
+					array_flip(self::$lettersMapping);
 			
 			return strtr($sourceString, self::$flippedLettersMapping);
 		}
@@ -249,7 +249,7 @@
 							
 							if (isset($table[$pair]))
 								$value = $table[$pair];
-								
+							
 						} elseif (
 							isset($tables[$encoding][$pair])
 						) {
@@ -286,7 +286,7 @@
 			$utf8Ratio =
 				$score['UTF-8']
 				/ ($score['KOI8-R'] + $score['WINDOWS-1251'] + 1);
-				
+			
 			$minRatio = 1.5;
 			$doubtRatio = 1;
 			

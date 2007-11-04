@@ -15,10 +15,10 @@
 	 * <!DOCTYPE greeting [
 	 *  <!ELEMENT greeting (#PCDATA)>
 	 * ]>
-	 *
+	 * 
 	 * System DTD:
 	 * <!DOCTYPE greeting SYSTEM "hello.dtd">
-	 *
+	 * 
 	 * Public DTD:
 	 * <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
 	 *  "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">

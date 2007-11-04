@@ -5,7 +5,7 @@
 	{
 		public function testContains()
 		{
-			$IpNetwork = 
+			$IpNetwork =
 				IpNetwork::create(
 					IpAddress::create('83.149.5.0'),
 					24
@@ -49,7 +49,7 @@
 			
 			$IpNetwork =
 				IpNetwork::create(
-					IpAddress::create('83.149.24.64'), 
+					IpAddress::create('83.149.24.64'),
 					26
 				);
 				

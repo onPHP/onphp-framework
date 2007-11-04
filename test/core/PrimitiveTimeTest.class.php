@@ -5,7 +5,7 @@
 	{
 		public function testImport()
 		{
-			$prm = 
+			$prm =
 				Primitive::time('test')->
 					setSingle(true)->
 					setMax(Time::create('00:12:00'))->

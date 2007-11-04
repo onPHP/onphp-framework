@@ -54,7 +54,7 @@
 		
 		public function testSet()
 		{
-			$source = 
+			$source =
 				ClassUtilsTestClass::create()->
 				setText('new Text');
 			
@@ -86,11 +86,11 @@
 
 		public function testObject()
 		{
-			$innerObject = 
+			$innerObject =
 				ClassUtilsTestClass::create()->
 				setText('inner Object');
 			
-			$source = 
+			$source =
 				ClassUtilsTestClass::create()->
 				setObject($innerObject);
 				
@@ -141,7 +141,7 @@
 	
 	interface ClassUtilsTestInterface {}
 	
-	class ClassUtilsTestClass implements ClassUtilsTestInterface 
+	class ClassUtilsTestClass implements ClassUtilsTestInterface
 	{
 		private $object	= null;
 		private $text 	= null;

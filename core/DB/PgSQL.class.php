@@ -12,7 +12,7 @@
 
 	/**
 	 * PostgreSQL DB connector.
-	 *
+	 * 
 	 * @see http://www.postgresql.org/
 	 * 
 	 * @ingroup DB
@@ -40,7 +40,7 @@
 
 			if ($this->persistent)
 				$this->link = pg_pconnect($conn);
-			else 
+			else
 				$this->link = pg_connect($conn);
 
 			if (!$this->link)

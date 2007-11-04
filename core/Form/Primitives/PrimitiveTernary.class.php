@@ -60,11 +60,11 @@
 		
 		public function importValue($value)
 		{
-		 	Assert::isTernaryBase($value, 'only ternary based accepted');
-		 	
-		 	$this->value = $value;
-		 	
-		 	return $this->imported = true;
+			Assert::isTernaryBase($value, 'only ternary based accepted');
+			
+			$this->value = $value;
+			
+			return $this->imported = true;
 		}
 	}
 ?>

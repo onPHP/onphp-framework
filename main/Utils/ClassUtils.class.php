@@ -93,7 +93,7 @@
 					
 					if (
 						($destinationValue === null)
-						&& ($sourceValue !== null) 
+						&& ($sourceValue !== null)
 					) {
 						$destination->$setter($sourceValue);
 					}
@@ -117,7 +117,7 @@
 			}
 			
 			if (
-				is_string($object) 
+				is_string($object)
 				&& self::isClassName($object)
 			) {
 				if ($object == $className)
@@ -126,7 +126,7 @@
 					return true;
 				else
 					return in_array(
-						$class, 
+						$class,
 						class_implements($object, true)
 					);
 					

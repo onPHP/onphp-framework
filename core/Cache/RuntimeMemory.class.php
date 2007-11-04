@@ -12,7 +12,7 @@
 
 	/**
 	 * Default process RAM cache.
-	 *
+	 * 
 	 * @ingroup Cache
 	**/
 	final class RuntimeMemory extends CachePeer

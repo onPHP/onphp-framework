@@ -24,8 +24,8 @@
 			if (
 				BasePrimitive::import($scope)
 				&& isset(
-					$scope[$this->name][self::DAY], 
-					$scope[$this->name][self::MONTH], 
+					$scope[$this->name][self::DAY],
+					$scope[$this->name][self::MONTH],
 					$scope[$this->name][self::YEAR]
 				)
 				&& is_array($scope[$this->name])

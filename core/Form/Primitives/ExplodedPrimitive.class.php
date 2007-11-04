@@ -51,13 +51,13 @@
 				return $result;
 			
 			if (
-				$this->value = 
+				$this->value =
 					$this->isSplitByRegexp()
 						?
 							preg_split(
-								$this->separator, 
-								$this->value, 
-								-1, 
+								$this->separator,
+								$this->value,
+								-1,
 								PREG_SPLIT_NO_EMPTY
 							)
 						: explode($this->separator, $this->value)

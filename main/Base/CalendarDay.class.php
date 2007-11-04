@@ -12,7 +12,7 @@
 
 	/**
 	 * Calendar day representation.
-	 *
+	 * 
 	 * @ingroup Calendar
 	**/
 	final class CalendarDay extends Date

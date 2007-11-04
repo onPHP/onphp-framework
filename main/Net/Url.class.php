@@ -13,7 +13,7 @@
 	/**
 	 * URL is either absolute URI with authority part or relative one without
 	 * authority part.
-	 *
+	 * 
 	 * @ingroup Net
 	**/
 	class Url extends GenericUri
@@ -128,9 +128,9 @@
 		{
 			parent::normalize();
 			
-		    if ($this->getPort() === '')
-		    	$this->setPort(null);
-	        	
+			if ($this->getPort() === '')
+				$this->setPort(null);
+			
 			return $this;
 		}
 	}

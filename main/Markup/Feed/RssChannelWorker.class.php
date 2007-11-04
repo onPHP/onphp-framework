@@ -58,7 +58,7 @@
 						)
 						.(
 							$channel->getDescription()
-								? 
+								?
 									'<description>'
 									.$channel->getDescription()
 									.'</description>'
