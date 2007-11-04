@@ -47,7 +47,7 @@ ONPHP_METHOD(QuerySkeleton, __destruct)
 			HASH_OF(this_ptr),
 			"where",
 			sizeof("where"),
-			(void**) &data
+			(void **) &data
 		)
 	) {
 		zval_ptr_dtor(data);
@@ -59,7 +59,7 @@ ONPHP_METHOD(QuerySkeleton, __destruct)
 			HASH_OF(this_ptr),
 			"whereLogic",
 			sizeof("whereLogic"),
-			(void**) &data
+			(void **) &data
 		)
 	) {
 		zval_ptr_dtor(data);
@@ -229,7 +229,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 						zend_hash_index_find(
 							Z_ARRVAL_P(whereLogic),
 							i,
-							(void **)&data
+							(void **) &data
 						) == SUCCESS
 					) {
 						onphp_append_zval_to_smart_string(&clause, *data);
@@ -249,7 +249,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 						zend_hash_index_find(
 							Z_ARRVAL_P(whereLogic),
 							i + 1,
-							(void **)&data
+							(void **) &data
 						) == SUCCESS
 					)
 				) {
@@ -258,7 +258,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 			}
 		}
 		
-		retval = (char*) php_trim(clause.c, clause.len, " ", 1, NULL, 2);
+		retval = (char *) php_trim(clause.c, clause.len, " ", 1, NULL, 2);
 		smart_str_0(&clause);
 		smart_str_free(&clause);
 		retval_len = strlen(retval);
