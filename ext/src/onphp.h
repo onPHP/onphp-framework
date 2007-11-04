@@ -151,6 +151,16 @@
 	zval->value.obj = onphp_empty_object_new(onphp_ce_ ## class_name TSRMLS_CC); \
 	Z_TYPE_P(zval) = IS_OBJECT;
 
+#define ONPHP_CREATOR(class_name)				\
+	ONPHP_METHOD(class_name, create)			\
+	{											\
+		zval *object;							\
+												\
+		ONPHP_MAKE_OBJECT(class_name, object);	\
+												\
+		RETURN_ZVAL(object, 1, 1);				\
+	}
+
 #define ONPHP_STANDART_CLASS(class_name) \
 	PHPAPI zend_class_entry *onphp_ce_ ## class_name; \
 	extern zend_function_entry onphp_funcs_ ## class_name[];

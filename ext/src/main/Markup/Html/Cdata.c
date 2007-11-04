@@ -14,14 +14,7 @@
 
 #include "main/Markup/Html/Cdata.h"
 
-ONPHP_METHOD(Cdata, create)
-{
-	zval *object;
-	
-	ONPHP_MAKE_OBJECT(Cdata, object);
-	
-	RETURN_ZVAL(object, 1, 0);
-}
+ONPHP_CREATOR(Cdata);
 
 ONPHP_SETTER(Cdata, setData, data);
 

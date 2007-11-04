@@ -9,18 +9,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp.h"
+#include "onphp_core.h"
 
 #include "core/Base/Identifier.h"
 
-ONPHP_METHOD(Identifier, create)
-{
-	zval *object;
-	
-	ONPHP_MAKE_OBJECT(Identifier, object);
-	
-	RETURN_ZVAL(object, 1, 1);
-}
+ONPHP_CREATOR(Identifier);
 
 ONPHP_METHOD(Identifier, wrap)
 {
