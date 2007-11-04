@@ -62,7 +62,7 @@
 		
 		public function apply($value)
 		{
-			if(
+			if (
 				$this->search === $this->replace
 				|| (
 					$this->search === null
