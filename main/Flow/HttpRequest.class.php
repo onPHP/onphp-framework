@@ -32,7 +32,7 @@
 		
 		// uploads
 		private $files		= array();
-
+		
 		// all other sh1t
 		private $attached	= array();
 		
@@ -132,7 +132,7 @@
 		{
 			return $this->attached[$name];
 		}
-
+		
 		/**
 		 * @deprecated by getAttachedVar
 		**/
@@ -147,7 +147,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @deprecated by unsetAttachedVar
 		**/
@@ -160,7 +160,7 @@
 		{
 			return isset($this->attached[$name]);
 		}
-
+		
 		/**
 		 * @deprecated by hasAttached
 		**/
