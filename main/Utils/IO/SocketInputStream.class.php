@@ -27,7 +27,7 @@
 		const READ_ATTEMPTS = 15; // should be enough for everyone (C)
 		
 		private $socket	= null;
-		protected $eof	= false;
+		private $eof	= false;
 		
 		public function __construct(Socket $socket)
 		{

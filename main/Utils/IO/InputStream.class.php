@@ -31,11 +31,7 @@
 		 * 
 		**/
 		abstract public function read($length);
-		
-		public function isEof()
-		{
-			return false;
-		}
+		abstract public function isEof();
 		
 		/**
 		 * @return InputStream
