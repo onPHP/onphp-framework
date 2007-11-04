@@ -1,5 +1,10 @@
 # $Id$
 
+2007-10-30	Konstantin V. Arkhipov
+
+	* meta/classes/MetaConfiguration.class.php: class name collision
+	detection added.
+
 2007-09-19	Konstantin V. Arkhipov
 
 	* main/DAOs/Workers/: uncaching fixed in dropByIds().
