@@ -14,6 +14,6 @@
 #include "core/Base/Stringable.h"
 
 zend_function_entry onphp_funcs_Stringable[] = {
-	ONPHP_ABSTRACT_ME(Identifiable, toString, NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ABSTRACT_ME(Stringable, toString, NULL, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };

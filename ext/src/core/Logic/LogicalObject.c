@@ -16,6 +16,6 @@
 static ONPHP_ARGINFO_FORM;
 
 zend_function_entry onphp_funcs_LogicalObject[] = {
-	ONPHP_ABSTRACT_ME(Identifiable, toBoolean, arginfo_form, ZEND_ACC_PUBLIC)
+	ONPHP_ABSTRACT_ME(LogicalObject, toBoolean, arginfo_form, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };
