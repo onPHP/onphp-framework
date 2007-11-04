@@ -43,8 +43,6 @@ ONPHP_METHOD(ComplexPrimitive, __construct)
 		nil
 	);
 	
-	// ZVAL_FREE(nil);
-	
 	if (EG(exception)) {
 		ZVAL_FREE(ternary);
 		return;
@@ -54,9 +52,8 @@ ONPHP_METHOD(ComplexPrimitive, __construct)
 	
 	zend_call_method_with_1_params(
 		&getThis(),
-		// RangedPrimitive -> BasePrimitive
-		Z_OBJCE_P(getThis())->parent->parent->parent,
-		&Z_OBJCE_P(getThis())->parent->parent->parent->constructor,
+		onphp_ce_BasePrimitive,
+		&onphp_ce_BasePrimitive->constructor,
 		"__construct",
 		NULL,
 		name

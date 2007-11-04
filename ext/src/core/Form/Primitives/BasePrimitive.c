@@ -61,8 +61,6 @@ ONPHP_METHOD(BasePrimitive, clean)
 	ONPHP_UPDATE_PROPERTY(getThis(), "raw", nil);
 	ONPHP_UPDATE_PROPERTY(getThis(), "value", nil);
 	
-	// ZVAL_FREE(nil);
-	
 	ONPHP_UPDATE_PROPERTY_BOOL(getThis(), "imported", 0);
 	
 	RETURN_ZVAL(getThis(), 1, 0);
