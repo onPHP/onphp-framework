@@ -21,11 +21,16 @@
 #define ONPHP_EXCEPTIONS_LIST "\
 BaseException, \
 BusinessLogicException, \
+ClassNotFoundException, \
 DatabaseException, \
 DuplicateObjectException, \
+FileNotFoundException, \
+IOException, \
+IOTimedOutException, \
 MissingElementException, \
 NetworkException, \
 ObjectNotFoundException, \
+SecurityException, \
 TooManyRowsException, \
 UnimplementedFeatureException, \
 UnsupportedMethodException, \
@@ -33,11 +38,14 @@ WrongArgumentException, \
 WrongStateException."
 
 #define ONPHP_INTERFACES_LIST "\
+Aliased, \
 DAOConnected, \
 DialectString, \
 FullTextDAO, \
 Identifiable, \
 Instantiatable, \
+ListedPrimitive, \
+LogicalObject, \
 Named, \
 Prototyped, \
 Query, \
@@ -48,8 +56,11 @@ ViewResolver, \
 LogicalObject."
 
 #define ONPHP_CLASSES_LIST "\
+BasePrimitive, \
 Castable, \
+ComplexPrimitive, \
 Dialect, \
+DBField, \
 DBValue, \
 Enumeration, \
 FieldTable, \
@@ -57,7 +68,11 @@ IdentifiableObject, \
 Identifier, \
 ImaginaryDialect, \
 NamedObject, \
+Query, \
 QueryIdentification, \
+QuerySkeleton, \
+RangedPrimitive, \
+SelectField, \
 Singleton, \
 StaticFactory."
 
