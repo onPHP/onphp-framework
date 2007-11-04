@@ -26,7 +26,7 @@
 		/**
 		 * @param raw header data
 		 * @return associative array of headers (name => value)
-		 */
+		**/
 		public function parse($data)
 		{
 			$lines = explode("\n", $data);
@@ -75,7 +75,7 @@
 		
 		/**
 		 * @return associative array of headers (name => value)
-		 */
+		**/
 		public function getHeaders()
 		{
 			return $this->headers;

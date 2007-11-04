@@ -31,7 +31,7 @@
 		
 		/**
 		 * @deprecated by Flow
-		 */
+		**/
 		public static function redirect(BaseModule $mod)
 		{
 			$qs = null;

@@ -100,7 +100,7 @@
 		 * 
 		 * @param $header header string
 		 * @return TidyValidator
-		 */
+		**/
 		public function setHeader($header)
 		{
 			$this->header = $header;
