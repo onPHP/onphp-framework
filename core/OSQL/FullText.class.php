@@ -14,6 +14,7 @@
 	 * Base for all full-text stuff.
 	 * 
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	abstract class FullText
 		implements DialectString, MappableObject, LogicalObject

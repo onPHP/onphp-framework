@@ -67,6 +67,7 @@ DropTableQuery, \
 Enumeration, \
 ExtractPart, \
 FieldTable, \
+FullText, \
 IdentifiableObject, \
 Identifier, \
 ImaginaryDialect, \

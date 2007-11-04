@@ -38,7 +38,7 @@ if (PHP_ONPHP != "no") {
 		
 		"Castable.c DBBinary.c DBField.c DBValue.c DialectString.c FieldTable.c \
 		DropTableQuery.c SelectField.c SQLTableName.c Query.c QueryIdentification.c \
-		ExtractPart.c"
+		ExtractPart.c FullText.c"
 		
 		"onphp"
 	);

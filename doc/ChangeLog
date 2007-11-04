@@ -8,7 +8,8 @@
 
 	* ext/src/core/Logic/: MappableObject implemented.
 
-	* ext/src/core/OSQL/: DBBinary, DropTableQuery, ExtractPart implemented.
+	* ext/src/core/OSQL/: DBBinary, DropTableQuery, ExtractPart, FullText
+	implemented.
 
 	* ext/src/onphp.h: new macros: ONPHP_CHECK_EMPTY, ONPHP_INSTANCEOF,
 	ONPHP_GET_ARGS and ONPHP_CALL_METHOD_*.

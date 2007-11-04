@@ -46,6 +46,7 @@
 #include "core/OSQL/DialectString.h"
 #include "core/OSQL/ExtractPart.h"
 #include "core/OSQL/FieldTable.h"
+#include "core/OSQL/FullText.h"
 #include "core/OSQL/SelectField.h"
 #include "core/OSQL/SQLTableName.h"
 #include "core/OSQL/Query.h"
@@ -187,6 +188,15 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_PROPERTY(SelectField, "alias", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_IMPLEMENTS(SelectField, Aliased);
 	onphp_ce_SelectField->ce_flags |= ZEND_ACC_FINAL_CLASS;
+	
+	REGISTER_ONPHP_STD_CLASS_EX(FullText);
+	REGISTER_ONPHP_PROPERTY(FullText, "logic", ZEND_ACC_PROTECTED);
+	REGISTER_ONPHP_PROPERTY(FullText, "field", ZEND_ACC_PROTECTED);
+	REGISTER_ONPHP_PROPERTY(FullText, "words", ZEND_ACC_PROTECTED);
+	REGISTER_ONPHP_IMPLEMENTS(FullText, DialectString);
+	REGISTER_ONPHP_IMPLEMENTS(FullText, MappableObject);
+	REGISTER_ONPHP_IMPLEMENTS(FullText, LogicalObject);
+	onphp_ce_FullText->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
 	REGISTER_ONPHP_STD_CLASS_EX(QueryIdentification);
 	REGISTER_ONPHP_IMPLEMENTS(QueryIdentification, Query);
