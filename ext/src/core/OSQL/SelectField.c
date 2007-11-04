@@ -102,13 +102,7 @@ ONPHP_METHOD(SelectField, getName)
 	) {
 		zval *tmp;
 		
-		zend_call_method_with_0_params(
-			&field,
-			Z_OBJCE_P(field),
-			NULL,
-			"getfield",
-			&tmp
-		);
+		ONPHP_CALL_METHOD_0(field, "getfield", tmp);
 		
 		RETURN_ZVAL(tmp, 1, 1);
 	} else {
@@ -138,6 +132,10 @@ ONPHP_METHOD(SelectField, toDialectString)
 		dialect
 	);
 	
+	if (EG(exception)) {
+		return;
+	}
+	
 	alias = ONPHP_READ_PROPERTY(getThis(), "alias");
 	
 	if (
@@ -149,18 +147,7 @@ ONPHP_METHOD(SelectField, toDialectString)
 		onphp_append_zval_to_smart_string(&string, out);
 		smart_str_appends(&string, " AS ");
 		
-		zend_call_method_with_1_params(
-			&dialect,
-			Z_OBJCE_P(dialect),
-			NULL,
-			"quotefield",
-			&alias,
-			alias
-		);
-		
-		if (EG(exception)) {
-			return;
-		}
+		ONPHP_CALL_METHOD_1(dialect, "quotefield", alias, alias);
 		
 		onphp_append_zval_to_smart_string(&string, alias);
 		
