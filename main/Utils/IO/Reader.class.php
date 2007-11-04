@@ -52,7 +52,7 @@
 		
 		public function getWhole()
 		{
-			while(!$this->isEof())
+			while (!$this->isEof())
 				$result .= $this->read(self::BLOCK_SIZE);	
 			
 			return $result;
