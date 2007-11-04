@@ -49,6 +49,8 @@ if test "$PHP_ONPHP" != "no"; then
 		src/main/DAOs/FullTextDAO.c \
 		src/main/DAOs/Handlers/SegmentHandler.c \
 		src/main/Flow/ViewResolver.c \
+		src/main/Markup/Html/Cdata.c \
+		src/main/Markup/Html/SgmlToken.c \
 	"
 	ONPHP_INCLUDES="\
 		-I@ext_srcdir@/src \
@@ -60,6 +62,7 @@ if test "$PHP_ONPHP" != "no"; then
 		-I@ext_srcdir@/src/main \
 		-I@ext_srcdir@/src/main/DAOs \
 		-I@ext_srcdir@/src/main/DAOs/Handlers \
+		-I@ext_srcdir@/src/main/Markup/Html \
 	"
 	ONPHP_SANITY="-Wall -Werror -fno-strict-aliasing"
 

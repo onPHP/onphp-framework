@@ -1,6 +1,5 @@
-<?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,27 +9,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup Html
-	 * @ingroup Module
-	**/
-	class SgmlToken
-	{
-		private $value	= null;
-		
-		/**
-		 * @return SgmlToken
-		**/
-		public function setValue($value)
-		{
-			$this->value = $value;
-			
-			return $this;
-		}
-		
-		public function getValue()
-		{
-			return $this->value;
-		}
-	}
-?>
+#ifndef ONPHP_MAIN_CDATA_H
+#define ONPHP_MAIN_CDATA_H
+
+ONPHP_STANDART_CLASS(Cdata);
+
+#endif /* ONPHP_MAIN_CDATA_H */

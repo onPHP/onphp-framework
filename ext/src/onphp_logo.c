@@ -58,6 +58,7 @@ LogicalObject."
 #define ONPHP_CLASSES_LIST "\
 BasePrimitive, \
 Castable, \
+Cdata, \
 ComplexPrimitive, \
 Dialect, \
 DBBinary, \

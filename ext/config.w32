@@ -55,13 +55,20 @@ if (PHP_ONPHP != "no") {
 		"onphp"
 	);
 	
+	ADD_SOURCES(
+		"ext/onphp/src/main/Markup/Html",
+		"SgmlToken.c Cdata.c",
+		"onphp"
+	);
+	
 	ADD_SOURCES("ext/onphp/src/main/DAOs/Handlers", "SegmentHandler.c", "onphp");
 	
 	ADD_SOURCES("ext/onphp/src/main/Flow", "ViewResolver.c", "onphp");
 	
 	EXTENSION("onphp", "src/onphp.c", null, "-Iext/onphp/src -Iext/onphp/src/core \
 	-Iext/onphp/src/core/Base -Iext/onphp/src/core/DB -Iext/onphp/src/core/OSQL \
-	-Iext/onphp/src/main/DAOs -Iext/onphp/src/main/DAOs/Handlers -Iext/onphp/src/main");
+	-Iext/onphp/src/main/DAOs -Iext/onphp/src/main/DAOs/Handlers -Iext/onphp/src/main \
+	-Iext/onphp/src/main/Markup/Html");
 	
 	AC_DEFINE("HAVE_ONPHP", 1);
 }

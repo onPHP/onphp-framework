@@ -19,7 +19,11 @@
 #include "main/DAOs/DAOConnected.h"
 #include "main/DAOs/FullTextDAO.h"
 #include "main/DAOs/Handlers/SegmentHandler.h"
+
 #include "main/Flow/ViewResolver.h"
+
+#include "main/Markup/Html/SgmlToken.h"
+#include "main/Markup/Html/Cdata.h"
 
 PHP_MINIT_FUNCTION(onphp_main)
 {
@@ -29,6 +33,14 @@ PHP_MINIT_FUNCTION(onphp_main)
 	
 	REGISTER_ONPHP_INTERFACE(DAOConnected);
 	REGISTER_ONPHP_IMPLEMENTS(DAOConnected, Identifiable);
+	
+	REGISTER_ONPHP_STD_CLASS_EX(SgmlToken);
+	REGISTER_ONPHP_PROPERTY(SgmlToken, "value", ZEND_ACC_PRIVATE);
+	
+	REGISTER_ONPHP_SUB_CLASS_EX(Cdata, SgmlToken);
+	REGISTER_ONPHP_PROPERTY(Cdata, "data", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_PROPERTY_BOOL(Cdata, "string", 0, ZEND_ACC_PRIVATE);
+	ONPHP_CLASS_IS_FINAL(Cdata);
 	
 	return SUCCESS;
 }

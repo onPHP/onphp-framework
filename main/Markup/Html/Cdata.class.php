@@ -12,6 +12,7 @@
 
 	/**
 	 * @ingroup Html
+	 * @ingroup Module
 	**/
 	final class Cdata extends SgmlToken
 	{

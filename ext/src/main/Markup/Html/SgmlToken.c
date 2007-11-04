@@ -1,6 +1,5 @@
-<?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,27 +9,17 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup Html
-	 * @ingroup Module
-	**/
-	class SgmlToken
-	{
-		private $value	= null;
-		
-		/**
-		 * @return SgmlToken
-		**/
-		public function setValue($value)
-		{
-			$this->value = $value;
-			
-			return $this;
-		}
-		
-		public function getValue()
-		{
-			return $this->value;
-		}
-	}
-?>
+#include "onphp_main.h"
+
+#include "main/Markup/Html/SgmlToken.h"
+
+ONPHP_SETTER(SgmlToken, setValue, value);
+ONPHP_GETTER(SgmlToken, getValue, value);
+
+static ONPHP_ARGINFO_ONE;
+
+zend_function_entry onphp_funcs_SgmlToken[] = {
+	ONPHP_ME(SgmlToken, setValue, arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(SgmlToken, getValue, NULL, ZEND_ACC_PUBLIC)
+	{NULL, NULL, NULL}
+};

@@ -6,6 +6,8 @@
 	changed columns; take() now uses cache-only merge() instead of plain
 	save().
 
+	* ext/src/main/Markup/Html/: SgmlToken, Cdata implemented.
+
 	* ext/src/core/Logic/: MappableObject implemented.
 
 	* ext/src/core/OSQL/: DBBinary, DropTableQuery, ExtractPart, FullText
