@@ -138,7 +138,7 @@ ZEND_END_ARG_INFO()
 
 zend_function_entry onphp_funcs_SelectField[] = {
 	ONPHP_ME(SelectField, create, arginfo_dialect_string_and_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-	ONPHP_ME(SelectField, __construct, arginfo_dialect_string_and_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(SelectField, __construct, arginfo_dialect_string_and_one, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
 	ONPHP_ME(SelectField, getAlias, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(SelectField, getName, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(SelectField, toDialectString, arginfo_dialect, ZEND_ACC_PUBLIC)

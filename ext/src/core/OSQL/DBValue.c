@@ -67,7 +67,7 @@ static ONPHP_ARGINFO_DIALECT;
 
 zend_function_entry onphp_funcs_DBValue[] = {
 	ONPHP_ME(DBValue, create, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-	ONPHP_ME(DBValue, __construct, arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(DBValue, __construct, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
 	ONPHP_ME(DBValue, getValue, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(DBValue, toDialectString, arginfo_dialect, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}

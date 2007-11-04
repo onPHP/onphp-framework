@@ -167,7 +167,7 @@ static ONPHP_ARGINFO_DIALECT;
 
 zend_function_entry onphp_funcs_DBField[] = {
 	ONPHP_ME(DBField, create, arginfo_two, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-	ONPHP_ME(DBField, __construct, arginfo_two, ZEND_ACC_PUBLIC)
+	ONPHP_ME(DBField, __construct, arginfo_two, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
 	ONPHP_ME(DBField, getField, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(DBField, getTable, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(DBField, setTable, arginfo_one, ZEND_ACC_PUBLIC)
