@@ -14,6 +14,7 @@
 	 * Parent of every Primitive.
 	 * 
 	 * @ingroup Primitives
+	 * @ingroup Module
 	**/
 	abstract class BasePrimitive
 	{

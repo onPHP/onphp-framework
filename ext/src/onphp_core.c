@@ -33,6 +33,7 @@
 #include "core/DB/Dialect.h"
 #include "core/DB/ImaginaryDialect.h"
 
+#include "core/Form/Primitives/BasePrimitive.h"
 #include "core/Form/Primitives/ListedPrimitive.h"
 
 #include "core/OSQL/Castable.h"
@@ -79,6 +80,15 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(Query, DialectString);
 	REGISTER_ONPHP_IMPLEMENTS(Query, Identifiable);
 	REGISTER_ONPHP_IMPLEMENTS(Query, Stringable);
+	
+	REGISTER_ONPHP_STD_CLASS_EX(BasePrimitive);
+	REGISTER_ONPHP_PROPERTY(BasePrimitive, "name", ZEND_ACC_PROTECTED);
+	REGISTER_ONPHP_PROPERTY(BasePrimitive, "default", ZEND_ACC_PROTECTED);
+	REGISTER_ONPHP_PROPERTY(BasePrimitive, "value", ZEND_ACC_PROTECTED);
+	REGISTER_ONPHP_PROPERTY_BOOL(BasePrimitive, "required", 0, ZEND_ACC_PROTECTED);
+	REGISTER_ONPHP_PROPERTY_BOOL(BasePrimitive, "imported", 0, ZEND_ACC_PROTECTED);
+	REGISTER_ONPHP_PROPERTY(BasePrimitive, "raw", ZEND_ACC_PROTECTED);
+	onphp_ce_BasePrimitive->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
 	
 	REGISTER_ONPHP_INTERFACE(ListedPrimitive);
 	
