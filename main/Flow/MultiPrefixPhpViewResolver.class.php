@@ -26,7 +26,7 @@
 		
 		/**
 		 * @return MultiPrefixPhpView
-		 */
+		**/
 		public static function create()
 		{
 			return new self;
@@ -34,7 +34,7 @@
 		
 		/**
 		 * @return MultiPrefixPhpView
-		 */
+		**/
 		public function addPrefix($prefix)
 		{
 			$this->prefixes[] = $prefix;
@@ -48,7 +48,7 @@
 		
 		/**
 		 * @return MultiPrefixPhpView
-		 */
+		**/
 		public function dropPrefixes()
 		{
 			$this->prefixes = array();
@@ -62,7 +62,7 @@
 		
 		/**
 		 * @return MultiPrefixPhpView
-		 */
+		**/
 		public function setPostfix($postfix)
 		{
 			$this->postfix = $postfix;
@@ -96,7 +96,7 @@
 		
 		/**
 		 * @return MultiPrefixPhpView
-		 */
+		**/
 		public function setViewClassName($viewClassName)
 		{
 			$this->viewClassName = $viewClassName;
