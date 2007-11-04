@@ -24,17 +24,7 @@ ONPHP_METHOD(DBField, create)
 {
 	zval *field, *table, *object;
 	
-	if (
-		zend_parse_parameters(
-			ZEND_NUM_ARGS() TSRMLS_CC,
-			"z|z",
-			&field,
-			&table
-		)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z|z", &field, &table);
 	
 	ONPHP_MAKE_OBJECT(DBField, object);
 	
@@ -62,17 +52,7 @@ ONPHP_METHOD(DBField, __construct)
 {
 	zval *field, *table;
 	
-	if (
-		zend_parse_parameters(
-			ZEND_NUM_ARGS() TSRMLS_CC,
-			"z|z",
-			&field,
-			&table
-		)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z|z", &field, &table);
 	
 	ONPHP_UPDATE_PROPERTY(getThis(), "field", field);
 	
@@ -100,12 +80,7 @@ ONPHP_METHOD(DBField, toDialectString)
 	smart_str string = {0};
 	zval *table, *field, *dialect, *cast;
 	
-	if (
-		zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &dialect)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &dialect);
 	
 	table = ONPHP_READ_PROPERTY(getThis(), "table");
 	field = ONPHP_READ_PROPERTY(getThis(), "field");
@@ -173,12 +148,7 @@ ONPHP_METHOD(DBField, setTable)
 		return;
 	}
 	
-	if (
-		zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &table)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &table);
 	
 	if (
 		(Z_TYPE_P(table) != IS_OBJECT)

@@ -73,18 +73,8 @@ ONPHP_METHOD(QuerySkeleton, where)
 	zval *copy, *copy2;
 	MAKE_STD_ZVAL(copy);
 	
-	if (
-		zend_parse_parameters(
-			ZEND_NUM_ARGS() TSRMLS_CC,
-			"z|z",
-			&exp,
-			&logic
-		)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
-	
+	ONPHP_GET_ARGS("z|z", &exp, &logic);
+		
 	*copy = *exp;
 	zval_copy_ctor(copy);
 	
@@ -136,16 +126,7 @@ ONPHP_METHOD(QuerySkeleton, andWhere)
 	MAKE_STD_ZVAL(logic);
 	ZVAL_STRING(logic, "AND", 1);
 	
-	if (
-		zend_parse_parameters(
-			ZEND_NUM_ARGS() TSRMLS_CC,
-			"z",
-			&exp
-		)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &exp);
 	
 	zend_call_method_with_2_params(
 		&getThis(),
@@ -173,16 +154,7 @@ ONPHP_METHOD(QuerySkeleton, orWhere)
 	MAKE_STD_ZVAL(logic);
 	ZVAL_STRING(logic, "OR", 1);
 	
-	if (
-		zend_parse_parameters(
-			ZEND_NUM_ARGS() TSRMLS_CC,
-			"z",
-			&exp
-		)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &exp);
 	
 	zend_call_method_with_2_params(
 		&getThis(),
@@ -207,16 +179,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 {
 	zval *where, *whereLogic, *dialect;
 	
-	if (
-		zend_parse_parameters(
-			ZEND_NUM_ARGS() TSRMLS_CC,
-			"z",
-			&dialect
-		)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &dialect);
 	
 	where = ONPHP_READ_PROPERTY(getThis(), "where");
 	

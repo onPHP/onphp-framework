@@ -21,9 +21,7 @@ ONPHP_METHOD(DBValue, create)
 {
 	zval *object, *value;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &value);
 	
 	ONPHP_MAKE_OBJECT(DBValue, object);
 	
@@ -35,11 +33,9 @@ ONPHP_METHOD(DBValue, create)
 ONPHP_METHOD(DBValue, __construct)
 {
 	zval *value;
-
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
-
+	
+	ONPHP_GET_ARGS("z", &value);
+	
 	ONPHP_UPDATE_PROPERTY(getThis(), "value", value);
 }
 
@@ -49,9 +45,7 @@ ONPHP_METHOD(DBValue, toDialectString)
 {
 	zval *dialect, *cast, *value, *out;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &dialect) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &dialect);
 	
 	value = ONPHP_READ_PROPERTY(getThis(), "value");
 	

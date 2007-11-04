@@ -18,9 +18,7 @@ ONPHP_METHOD(IdentifiableObject, wrap)
 {
 	zval *object, *id;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &id);
 	
 	ONPHP_MAKE_OBJECT(IdentifiableObject, object);
 	

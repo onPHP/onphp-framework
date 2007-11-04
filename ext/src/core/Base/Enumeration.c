@@ -21,9 +21,7 @@ ONPHP_METHOD(Enumeration, __construct)
 {
 	zval *id;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &id);
 	
 	zend_call_method_with_1_params(
 		&getThis(),
@@ -93,9 +91,7 @@ ONPHP_METHOD(Enumeration, unserialize)
 {
 	zval *id;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &id);
 	
 	zend_call_method_with_1_params(
 		&getThis(),
@@ -115,9 +111,7 @@ ONPHP_METHOD(Enumeration, setId)
 	zval **found;
 	int result;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &id);
 	
 	ONPHP_CALL_METHOD_0(getThis(), "getnamelist", names);
 	
@@ -206,9 +200,7 @@ ONPHP_METHOD(Enumeration, getList)
 {
 	zval *enm, *out;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &enm) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &enm);
 	
 	ONPHP_CALL_METHOD_0(enm, "getobjectlist", out);
 	

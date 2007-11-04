@@ -78,9 +78,7 @@ ONPHP_METHOD(ImaginaryDialect, quoteValue)
 {
 	zval *value;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &value);
 	
 	RETURN_ZVAL(value, 1, 0);
 }
@@ -89,9 +87,7 @@ ONPHP_METHOD(ImaginaryDialect, quoteField)
 {
 	zval *field;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &field);
 	
 	RETURN_ZVAL(field, 1, 0);
 }
@@ -100,9 +96,7 @@ ONPHP_METHOD(ImaginaryDialect, quoteTable)
 {
 	zval *table;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &table) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &table);
 	
 	RETURN_ZVAL(table, 1, 0);
 }
@@ -111,9 +105,7 @@ ONPHP_METHOD(ImaginaryDialect, fieldToString)
 {
 	zval *field, *out;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &field);
 	
 	if (
 		Z_TYPE_P(field) == IS_OBJECT
@@ -131,9 +123,7 @@ ONPHP_METHOD(ImaginaryDialect, valueToString)
 {
 	zval *value;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &value);
 	
 	if (
 		Z_TYPE_P(value) == IS_OBJECT
@@ -155,18 +145,7 @@ ONPHP_METHOD(ImaginaryDialect, fullTextSearch)
 	zval *field, *words, *copy, *glue;
 	long logic;
 	
-	if (
-		zend_parse_parameters(
-			ZEND_NUM_ARGS() TSRMLS_CC,
-			"zzl",
-			&field,
-			&words,
-			&logic
-		)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("zzl", &field, &words, &logic);
 	
 	MAKE_STD_ZVAL(glue);
 	MAKE_STD_ZVAL(copy);
@@ -226,18 +205,7 @@ ONPHP_METHOD(ImaginaryDialect, fullTextRank)
 	zval *field, *words, *copy, *glue;
 	long logic;
 	
-	if (
-		zend_parse_parameters(
-			ZEND_NUM_ARGS() TSRMLS_CC,
-			"zzl",
-			&field,
-			&words,
-			&logic
-		)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("zzl", &field, &words, &logic);
 	
 	MAKE_STD_ZVAL(glue);
 	MAKE_STD_ZVAL(copy);

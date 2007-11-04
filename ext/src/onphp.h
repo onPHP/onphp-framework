@@ -20,6 +20,13 @@
 
 #define ZVAL_FREE(z) zval_dtor(z); FREE_ZVAL(z);
 
+#define ONPHP_GET_ARGS(type_spec, ...) \
+	if ( \
+		zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, type_spec, __VA_ARGS__) == FAILURE \
+	) { \
+		WRONG_PARAM_COUNT; \
+	}
+
 #define ONPHP_CALL_METHOD_0(object, method_name, out) \
 	zend_call_method_with_0_params(&object, Z_OBJCE_P(object), NULL, method_name, &out); \
 	if (EG(exception)) return
@@ -92,9 +99,7 @@
 	{ \
 		zval *property_name; \
 		\
-		if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &property_name) == FAILURE) { \
-			WRONG_PARAM_COUNT; \
-		} \
+		ONPHP_GET_ARGS("z", &property_name) \
 		\
 		ONPHP_UPDATE_PROPERTY(getThis(), # property_name, property_name); \
 		\

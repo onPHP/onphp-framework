@@ -25,18 +25,16 @@ ONPHP_METHOD(Identifier, create)
 ONPHP_METHOD(Identifier, wrap)
 {
 	zval *object, *id;
-
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &id) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
-
+	
+	ONPHP_GET_ARGS("z", &id);
+	
 	MAKE_STD_ZVAL(object);
-
+	
 	object->value.obj = onphp_empty_object_new(onphp_ce_Identifier TSRMLS_CC);
 	Z_TYPE_P(object) = IS_OBJECT;
 	
 	ONPHP_UPDATE_PROPERTY(object, "id", id);
-
+	
 	RETURN_ZVAL(object, 1, 1);
 }
 

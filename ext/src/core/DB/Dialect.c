@@ -28,9 +28,7 @@ ONPHP_METHOD(Dialect, quoteValue)
 {
 	zval *value;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &value);
 
 	// don't know, how to replicate original voodoo
 	if (Z_TYPE_P(value) == IS_LONG) {
@@ -78,10 +76,8 @@ ONPHP_METHOD(Dialect, quoteField)
 {
 	zval *field;
 	smart_str string = {0};
-
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	
+	ONPHP_GET_ARGS("z", &field);
 	
 	smart_str_appends(&string, "\"");
 	onphp_append_zval_to_smart_string(&string, field);
@@ -95,10 +91,8 @@ ONPHP_METHOD(Dialect, quoteTable)
 {
 	zval *table;
 	smart_str string = {0};
-
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &table) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	
+	ONPHP_GET_ARGS("z", &table);
 	
 	smart_str_appends(&string, "\"");
 	onphp_append_zval_to_smart_string(&string, table);
@@ -113,9 +107,7 @@ ONPHP_METHOD(Dialect, toCasted)
 	zval *field, *type;
 	smart_str string = {0};
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "zz", &field, &type) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("zz", &field, &type);
 	
 	smart_str_appends(&string, "CAST (");
 	onphp_append_zval_to_smart_string(&string, field);
@@ -135,7 +127,7 @@ ONPHP_METHOD(Dialect, timeZone)
 		zend_bool exist = 0;
 		
 		zend_parse_parameters(argc TSRMLS_CC, "b", &exist);
-	
+		
 		if (exist) {
 			RETURN_STRING(" WITH TIME ZONE", 1);
 		}
@@ -152,7 +144,7 @@ ONPHP_METHOD(Dialect, dropTableMode)
 		zend_bool cascade = 0;
 		
 		zend_parse_parameters(argc TSRMLS_CC, "b", &cascade);
-	
+		
 		if (cascade) {
 			RETURN_STRING(" CASCADE", 1);
 		}
@@ -165,9 +157,7 @@ ONPHP_METHOD(Dialect, quoteBinary)
 {
 	zval *data, *out;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &data) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &data);
 	
 	ONPHP_CALL_METHOD_1(getThis(), "quotevalue", out, data);
 	
@@ -178,9 +168,7 @@ ONPHP_METHOD(Dialect, unquoteBinary)
 {
 	zval *data;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &data) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &data);
 	
 	RETURN_ZVAL(data, 1, 1);
 }
@@ -189,9 +177,7 @@ ONPHP_METHOD(Dialect, typeToString)
 {
 	zval *type, *out;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &type) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &type);
 	
 	ONPHP_CALL_METHOD_0(type, "getname", out);
 	
@@ -202,9 +188,7 @@ ONPHP_METHOD(Dialect, fieldToString)
 {
 	zval *field, *out;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &field);
 	
 	if (
 		Z_TYPE_P(field) == IS_OBJECT
@@ -222,9 +206,7 @@ ONPHP_METHOD(Dialect, valueToString)
 {
 	zval *value, *out;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &value) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &value);
 	
 	if (
 		Z_TYPE_P(value) == IS_OBJECT
@@ -306,9 +288,7 @@ ONPHP_METHOD(Dialect, toFieldString)
 {
 	zval *expression;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &expression) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &expression);
 	
 	if (Z_TYPE_P(expression) == IS_NULL) {
 		RETURN_NULL();
@@ -328,9 +308,7 @@ ONPHP_METHOD(Dialect, toValueString)
 {
 	zval *expression;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &expression) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &expression);
 	
 	if (Z_TYPE_P(expression) == IS_NULL) {
 		RETURN_NULL();

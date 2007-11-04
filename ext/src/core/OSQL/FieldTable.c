@@ -21,11 +21,9 @@
 ONPHP_METHOD(FieldTable, __construct)
 {
 	zval *field;
-
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &field) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
-
+	
+	ONPHP_GET_ARGS("z", &field);
+	
 	ONPHP_UPDATE_PROPERTY(getThis(), "field", field);
 }
 
@@ -35,9 +33,7 @@ ONPHP_METHOD(FieldTable, toDialectString)
 {
 	zval *dialect, *cast, *field, *out;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &dialect) == FAILURE) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &dialect);
 	
 	field = ONPHP_READ_PROPERTY(getThis(), "field");
 	

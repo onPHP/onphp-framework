@@ -35,13 +35,8 @@ ONPHP_METHOD(NamedObject, compareNames)
 	zval *first, *second;
 	zval *left, *right;
 	int result;
-
-	if (
-		(ZEND_NUM_ARGS() != 2)
-		|| zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "zz", &first, &second) == FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	
+	ONPHP_GET_ARGS("zz", &first, &second);
 	
 	ONPHP_CALL_METHOD_0(first, "getname", left);
 	

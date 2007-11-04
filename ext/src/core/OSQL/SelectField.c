@@ -23,17 +23,7 @@ ONPHP_METHOD(SelectField, create)
 {
 	zval *field, *alias, *object;
 	
-	if (
-		zend_parse_parameters(
-			ZEND_NUM_ARGS() TSRMLS_CC,
-			"zz",
-			&field,
-			&alias
-		)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("zz", &field, &alias);
 	
 	ONPHP_MAKE_OBJECT(SelectField, object);
 	
@@ -59,17 +49,7 @@ ONPHP_METHOD(SelectField, __construct)
 {
 	zval *field, *alias;
 	
-	if (
-		zend_parse_parameters(
-			ZEND_NUM_ARGS() TSRMLS_CC,
-			"zz",
-			&field,
-			&alias
-		)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("zz", &field, &alias);
 	
 	ONPHP_UPDATE_PROPERTY(getThis(), "alias", alias);
 	
@@ -116,12 +96,7 @@ ONPHP_METHOD(SelectField, toDialectString)
 {
 	zval *dialect, *out, *alias;
 	
-	if (
-		zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &dialect)
-		== FAILURE
-	) {
-		WRONG_PARAM_COUNT;
-	}
+	ONPHP_GET_ARGS("z", &dialect);
 	
 	zend_call_method_with_1_params(
 		&getThis(),
