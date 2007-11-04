@@ -228,14 +228,6 @@
 			return $this;
 		}
 		
-		/**
-		 * @deprecated by getAttached
-		**/
-		public function getAttachedList()
-		{
-			return $this->getAttached();
-		}
-		
 		public function &getAttached()
 		{
 			return $this->attached;
