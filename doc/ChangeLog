@@ -6,6 +6,8 @@
 	changed columns; take() now uses cache-only merge() instead of plain
 	save().
 
+	* ext/src/core/OSQL/: DBBinary implemented.
+
 	* ext/src/onphp.h: new macros: ONPHP_CHECK_EMPTY, ONPHP_INSTANCEOF,
 	ONPHP_GET_ARGS and ONPHP_CALL_METHOD_*.
 

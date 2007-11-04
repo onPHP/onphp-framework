@@ -60,6 +60,7 @@ BasePrimitive, \
 Castable, \
 ComplexPrimitive, \
 Dialect, \
+DBBinary, \
 DBField, \
 DBValue, \
 Enumeration, \

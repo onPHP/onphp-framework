@@ -39,6 +39,7 @@
 #include "core/Form/Primitives/ListedPrimitive.h"
 
 #include "core/OSQL/Castable.h"
+#include "core/OSQL/DBBinary.h"
 #include "core/OSQL/DBField.h"
 #include "core/OSQL/DBValue.h"
 #include "core/OSQL/DialectString.h"
@@ -153,7 +154,9 @@ PHP_MINIT_FUNCTION(onphp_core)
 	
 	REGISTER_ONPHP_SUB_CLASS_EX(DBValue, Castable);
 	REGISTER_ONPHP_PROPERTY(DBValue, "value", ZEND_ACC_PRIVATE);
-	onphp_ce_DBValue->ce_flags |= ZEND_ACC_FINAL_CLASS;
+	
+	REGISTER_ONPHP_SUB_CLASS_EX(DBBinary, DBValue);
+	onphp_ce_DBBinary->ce_flags |= ZEND_ACC_FINAL_CLASS;
 	
 	REGISTER_ONPHP_SUB_CLASS_EX(DBField, Castable);
 	REGISTER_ONPHP_PROPERTY(DBField, "field", ZEND_ACC_PRIVATE);

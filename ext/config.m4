@@ -30,6 +30,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/Form/Primitives/ComplexPrimitive.c \
 		src/core/Form/Primitives/ListedPrimitive.c \
 		src/core/OSQL/Castable.c \
+		src/core/OSQL/DBBinary.c \
 		src/core/OSQL/DBField.c \
 		src/core/OSQL/DBValue.c \
 		src/core/OSQL/DialectString.c \

@@ -1,6 +1,5 @@
-<?php
 /***************************************************************************
- *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,24 +9,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * Container for passing binary values into OSQL queries.
-	 * 
-	 * @ingroup OSQL
-	**/
-	final class DBBinary extends DBValue
-	{
-		/**
-		 * @return DBBinary
-		**/
-		public static function create($value)
-		{
-			return new self($value);
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			return "'".$dialect->quoteBinary($this->getValue())."'";
-		}
-	}
-?>
+#ifndef ONPHP_CORE_DB_BINARY_H
+#define ONPHP_CORE_DB_BINARY_H
+
+ONPHP_STANDART_CLASS(DBBinary);
+
+#endif /* ONPHP_CORE_DB_BINARY_H */
