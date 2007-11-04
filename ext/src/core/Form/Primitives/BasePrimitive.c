@@ -10,7 +10,6 @@
 /* $Id$ */
 
 #include "onphp_core.h"
-#include "onphp_util.h"
 
 ONPHP_METHOD(BasePrimitive, __construct)
 {

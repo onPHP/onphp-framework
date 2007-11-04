@@ -2,7 +2,7 @@
 
 2007-11-04	Konstantin V. Arkhipov
 
-	* ext/src/core/Form/: BasePrimitive implemented.
+	* ext/src/core/Form/: BasePrimitive, RangedPrimitive implemented.
 
 2007-11-03	Konstantin V. Arkhipov
 

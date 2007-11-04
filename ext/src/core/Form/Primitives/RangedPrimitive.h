@@ -1,6 +1,5 @@
-<?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,43 +9,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup Primitives
-	 * @ingroup Module
-	**/
-	abstract class RangedPrimitive extends BasePrimitive
-	{
-		protected $min = null;
-		protected $max = null;
-		
-		public function getMin()
-		{
-			return $this->min;
-		}
-		
-		/**
-		 * @return RangedPrimitive
-		**/
-		public function setMin($min)
-		{
-			$this->min = $min;
-			
-			return $this;
-		}
-		
-		public function getMax()
-		{
-			return $this->max;
-		}
-		
-		/**
-		 * @return RangedPrimitive
-		**/
-		public function setMax($max)
-		{
-			$this->max = $max;
-			
-			return $this;
-		}
-	}
-?>
+#ifndef ONPHP_CORE_RANGED_PRIMITIVE_H
+#define ONPHP_CORE_RANGED_PRIMITIVE_H
+
+ONPHP_STANDART_CLASS(RangedPrimitive);
+
+#endif /* ONPHP_CORE_RANGED_PRIMITIVE_H */
