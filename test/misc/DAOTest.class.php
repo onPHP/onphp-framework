@@ -19,6 +19,8 @@
 				$this->getSome(); // 41!
 				Cache::me()->clean();
 				$this->getSome();
+				
+				$this->racySave();
 			}
 			
 			$this->drop();
@@ -103,6 +105,22 @@
 				count(TestUser::dao()->getPlainList()),
 				count(TestCity::dao()->getPlainList())
 			);
+		}
+		
+		private function racySave()
+		{
+			$lost =
+				TestCity::create()->
+				setId(424242)->
+				setName('inexistant city');
+			
+			try {
+				TestCity::dao()->save($lost);
+				
+				$this->fail();
+			} catch (ObjectNotFoundException $e) {
+				$this->pass();
+			}
 		}
 	}
 ?>
