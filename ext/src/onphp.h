@@ -20,6 +20,14 @@
 
 #define ZVAL_FREE(z) zval_dtor(z); FREE_ZVAL(z);
 
+#define ONPHP_CONSTRUCT_ARRAY(name) { \
+	zval *name; \
+	MAKE_STD_ZVAL(name); \
+	array_init(name); \
+	ONPHP_UPDATE_PROPERTY(getThis(), # name, name); \
+	zval_ptr_dtor(&name); \
+}
+
 #define ONPHP_INSTANCEOF(object, class_name) \
 	( \
 		(Z_TYPE_P(object) == IS_OBJECT) \

@@ -23,18 +23,8 @@
 
 ONPHP_METHOD(QuerySkeleton, __construct)
 {
-	zval *where, *whereLogic;
-	
-	/* init */
-	MAKE_STD_ZVAL(where);
-	array_init(where);
-	ONPHP_UPDATE_PROPERTY(getThis(), "where", where);
-	zval_ptr_dtor(&where);
-	
-	MAKE_STD_ZVAL(whereLogic);
-	array_init(whereLogic);
-	ONPHP_UPDATE_PROPERTY(getThis(), "whereLogic", whereLogic);
-	zval_ptr_dtor(&whereLogic);
+	ONPHP_CONSTRUCT_ARRAY(where);
+	ONPHP_CONSTRUCT_ARRAY(whereLogic);
 }
 
 ONPHP_METHOD(QuerySkeleton, __destruct)
