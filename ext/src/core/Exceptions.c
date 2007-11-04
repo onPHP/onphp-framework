@@ -29,7 +29,7 @@ PHP_MINIT_FUNCTION(Exceptions)
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(BaseException,					Exception,			NULL, NULL);
 	
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(ClassNotFoundException,			BaseException,		NULL, NULL);
-	onphp_ce_ClassNotFoundException->ce_flags |= ZEND_ACC_FINAL_CLASS;
+	ONPHP_CLASS_IS_FINAL(ClassNotFoundException);
 	
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(FileNotFoundException,			BaseException,		NULL, NULL);
 	REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(IOException,						BaseException,		NULL, NULL);

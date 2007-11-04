@@ -106,6 +106,12 @@
 #define REGISTER_ONPHP_CLASS_CONST_LONG(class_name, const_name, value) \
 	zend_declare_class_constant_long(onphp_ce_ ## class_name, const_name, strlen(const_name), (long) value TSRMLS_CC);
 
+#define ONPHP_CLASS_IS_FINAL(class_name) \
+	onphp_ce_ ## class_name->ce_flags |= ZEND_ACC_FINAL_CLASS;
+
+#define ONPHP_CLASS_IS_ABSTRACT(class_name) \
+	onphp_ce_ ## class_name->ce_flags |= ZEND_ACC_EXPLICIT_ABSTRACT_CLASS;
+
 #define ONPHP_READ_PROPERTY(class, property) \
 	zend_read_property(Z_OBJCE_P(class), class, property, strlen(property), 1 TSRMLS_CC)
 
