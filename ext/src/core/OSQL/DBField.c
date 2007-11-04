@@ -115,18 +115,7 @@ ONPHP_METHOD(DBField, toDialectString)
 	if (Z_TYPE_P(table) == IS_OBJECT) {
 		zval *tmp;
 		
-		zend_call_method_with_1_params(
-			&table,
-			Z_OBJCE_P(table),
-			NULL,
-			"todialectstring",
-			&tmp,
-			dialect
-		);
-		
-		if (EG(exception)) {
-			return;
-		}
+		ONPHP_CALL_METHOD_1(table, "todialectstring", tmp, dialect);
 		
 		onphp_append_zval_to_smart_string(&string, tmp);
 		smart_str_appends(&string, ".");
@@ -134,18 +123,7 @@ ONPHP_METHOD(DBField, toDialectString)
 		ZVAL_FREE(tmp);
 	}
 	
-	zend_call_method_with_1_params(
-		&dialect,
-		Z_OBJCE_P(dialect),
-		NULL,
-		"quotefield",
-		&field,
-		field
-	);
-	
-	if (EG(exception)) {
-		return;
-	}
+	ONPHP_CALL_METHOD_1(dialect, "quotefield", field, field);
 	
 	onphp_append_zval_to_smart_string(&string, field);
 	
