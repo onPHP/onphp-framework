@@ -17,8 +17,7 @@
 	**/
 	abstract class PlainForm
 	{
-		protected $aliases		= array();
-		protected $primitives	= array();
+		protected $primitives = array();
 		
 		/**
 		 * @return Form
@@ -31,36 +30,16 @@
 			return $this;
 		}
 		
-		/**
-		 * @throws MissingElementException
-		 * @return Form
-		**/
-		public function addAlias($primitiveName, $alias)
-		{
-			if (!isset($this->primitives[$primitiveName]))
-				throw new MissingElementException(
-					"{$primitiveName} does not exist"
-				);
-
-			$this->aliases[$alias] = $primitiveName;
-			
-			return $this;
-		}
-		
 		public function primitiveExists($name)
 		{
-			return
-				(
-					isset($this->primitives[$name])
-					|| isset($this->aliases[$name])
-				);
+			return isset($this->primitives[$name]);
 		}
 		
 		/**
 		 * @throws WrongArgumentException
 		 * @return Form
 		**/
-		public function add(BasePrimitive $prm, $alias = null)
+		public function add(BasePrimitive $prm)
 		{
 			$name = $prm->getName();
 			
@@ -68,11 +47,8 @@
 				isset($this->primitives[$name]),
 				'i am already exists!'
 			);
-
-			$this->primitives[$name] = $prm;
 			
-			if ($alias)
-				$this->addAlias($name, $alias);
+			$this->primitives[$name] = $prm;
 			
 			return $this;
 		}
@@ -92,18 +68,16 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @throws MissingElementException
 		 * @return BasePrimitive
 		**/
-		public function &get($name)
+		public function get($name)
 		{
-			if (isset($this->aliases[$name], $this->primitives[$this->aliases[$name]]))
-				return $this->primitives[$this->aliases[$name]];
-			elseif (isset($this->primitives[$name]))
+			if (isset($this->primitives[$name]))
 				return $this->primitives[$name];
-
+			
 			throw new MissingElementException("knows nothing about '{$name}'");
 		}
 		

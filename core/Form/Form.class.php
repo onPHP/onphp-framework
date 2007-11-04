@@ -340,16 +340,6 @@
 		**/
 		private function importPrimitive($scope, BasePrimitive $prm)
 		{
-			if (
-				($key = array_search($prm->getName(), $this->aliases))
-				!== false
-			) {
-				if (isset($scope[$key]))
-					return $this->importValue($prm->getName(), $scope[$key]);
-				
-				return $this->checkImportResult($prm, null);
-			}
-			
 			if (!$this->importFiltering) {
 				if ($prm instanceof FiltrablePrimitive) {
 					
@@ -359,19 +349,17 @@
 					
 					$prm->setImportFilter($chain);
 					
+					return $this;
+					
 				} elseif ($prm instanceof PrimitiveForm) {
-					$this->checkImportResult(
+					return $this->checkImportResult(
 						$prm,
 						$prm->unfilteredImport($scope)
 					);
-				} else {
-					$this->checkImportResult($prm, $prm->import($scope));
 				}
-			} else {
-				$this->checkImportResult($prm, $prm->import($scope));
 			}
 			
-			return $this;
+			return $this->checkImportResult($prm, $prm->import($scope));
 		}
 		
 		/**

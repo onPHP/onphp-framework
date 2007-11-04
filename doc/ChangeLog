@@ -2,6 +2,8 @@
 
 2007-11-03	Konstantin V. Arkhipov
 
+	* core/Form/: alias support removed.
+
 	* core/Form/: ability to make an unfiltered import implemented.
 
 	* meta/, core/DB/, core/Form/: support for binary data type
