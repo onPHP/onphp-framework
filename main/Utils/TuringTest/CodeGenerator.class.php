@@ -23,16 +23,16 @@
 		private $similarAllowed		= true;
 		
 		static private $similarSymbols	= array('0', 'o', '1', 'l');
-	
-		function generate()
+		
+		public function generate()
 		{
 			mt_srand(microtime(true) * 1000000);
-
+			
 			$code = null;
 			
 			for ($i = 0; $i < $this->length; ++$i)
-	        	$code .= $this->generateOneSymbol();
-	        	
+				$code .= $this->generateOneSymbol();
+			
 			return $code;
 		}
 		
@@ -55,7 +55,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return CodeGenerator
 		**/
@@ -65,7 +65,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return CodeGenerator
 		**/
@@ -84,7 +84,7 @@
 			$this->numbersAllowed = $numbersAllowed;
 			
 			return $this;
-		}		
+		}
 		
 		/**
 		 * @return CodeGenerator
@@ -97,8 +97,8 @@
 			return $this;
 		}
 		
-	    private function generateOneSymbol()
-	    {
+		private function generateOneSymbol()
+		{
 			$variants = array();
 			
 			Assert::isTrue(
@@ -112,12 +112,12 @@
 			do {
 				if ($this->lowerAllowed)
 					$variants[] = $this->randomChar();
-					
+				
 				if ($this->upperAllowed)
-					$variants[]= strtoupper($this->randomChar());
-					
+					$variants[] = strtoupper($this->randomChar());
+				
 				if ($this->numbersAllowed)
-					$variants[]= $this->randomNumber();
+					$variants[] = $this->randomNumber();
 				
 				shuffle($variants);
 				
@@ -129,16 +129,16 @@
 			);
 			
 			return $symbol;
-	    }
-	
-	    private function randomNumber()
-	    {
-	        return mt_rand(0,9);
-	    }
-	
-	    private function randomChar()
-	    {
-	        return chr(mt_rand(ord('a'), ord('z')));
-	    }
+		}
+		
+		private function randomNumber()
+		{
+			return mt_rand(0,9);
+		}
+		
+		private function randomChar()
+		{
+			return chr(mt_rand(ord('a'), ord('z')));
+		}
 	}
 ?>

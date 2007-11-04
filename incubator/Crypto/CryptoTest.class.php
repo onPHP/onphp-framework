@@ -127,13 +127,13 @@
 			$this->runDiffieHellmanGeneration(GmpBigIntegerFactory::me());
 			
 			$this->runDiffieHellmanExchange(
-				GmpBigIntegerFactory::me(), 
+				GmpBigIntegerFactory::me(),
 				MtRandomSource::me()
 			);
 			
 			if (file_exists('/dev/urandom') && is_readable('/dev/urandom'))
 				$this->runDiffieHellmanExchange(
-					GmpBigIntegerFactory::me(), 
+					GmpBigIntegerFactory::me(),
 					new FileRandomSource('/dev/urandom')
 				);
 		}
@@ -146,14 +146,14 @@
 			$this->assertEqual(
 				TextUtils::hex2Binary('b617318655057264e28bc0b6fb378c8ef146be00'),
 				CryptoFunctions::hmacsha1(
-					TextUtils::hex2Binary('0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b'), 
+					TextUtils::hex2Binary('0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b'),
 					"Hi There"
 				)
 			);
 			
 			$this->assertEqual(
 				CryptoFunctions::hmacsha1(
-					"Jefe", 
+					"Jefe",
 					"what do ya want for nothing?"
 				),
 				TextUtils::hex2Binary('effcdf6ae5eb2fa2d27416d5f184df9c259a7c79')
@@ -161,7 +161,7 @@
 			
 			$this->assertEqual(
 				CryptoFunctions::hmacsha1(
-					TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'), 
+					TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
 					TextUtils::hex2Binary('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
 				),
 				TextUtils::hex2Binary('125d7342b9ac11cd91a39af48aa17b4f63f175d3')
@@ -169,7 +169,7 @@
 			
 			$this->assertEqual(
 				CryptoFunctions::hmacsha1(
-					TextUtils::hex2Binary('0102030405060708090a0b0c0d0e0f10111213141516171819'), 
+					TextUtils::hex2Binary('0102030405060708090a0b0c0d0e0f10111213141516171819'),
 					TextUtils::hex2Binary('cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd')
 				),
 				TextUtils::hex2Binary('4c9007f4026250c6bc8414f9bf50c86c2d7235da')
@@ -177,7 +177,7 @@
 			
 			$this->assertEqual(
 				CryptoFunctions::hmacsha1(
-					TextUtils::hex2Binary('0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c'), 
+					TextUtils::hex2Binary('0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c'),
 					"Test With Truncation"
 				),
 				TextUtils::hex2Binary('4c1a03424b55e07fe7f27be1d58bb9324a9a5a04')
@@ -185,7 +185,7 @@
 			
 			$this->assertEqual(
 				CryptoFunctions::hmacsha1(
-					TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'), 
+					TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
 					"Test Using Larger Than Block-Size Key - Hash Key First"
 				),
 				TextUtils::hex2Binary('aa4ae5e15272d00e95705637ce8a3b55ed402112')
@@ -193,7 +193,7 @@
 			
 			$this->assertEqual(
 				CryptoFunctions::hmacsha1(
-					TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'), 
+					TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
 					"Test Using Larger Than Block-Size Key and Larger Than One Block-Size Data"
 				),
 				TextUtils::hex2Binary('e8e99d0f45237d786d6bbaa7965c7808bbff1a91')
@@ -201,7 +201,7 @@
 		}
 	}
 	
-	class RandomSourceStub implements RandomSource 
+	class RandomSourceStub implements RandomSource
 	{
 		private $data = null;
 		

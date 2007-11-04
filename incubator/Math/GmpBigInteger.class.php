@@ -111,8 +111,8 @@
 		{
 			$result = new self;
 			$result->resource = gmp_powm(
-				$this->resource, 
-				$exp->resource, 
+				$this->resource,
+				$exp->resource,
 				$mod->resource
 			);
 			return $result;
@@ -200,7 +200,7 @@
 			$floatValue = floatval($stringValue);
 			
 			if (
-				is_int($floatValue) 
+				is_int($floatValue)
 				&& (string)$floatValue !== $stringValue
 				|| ! is_float($floatValue)
 			) {

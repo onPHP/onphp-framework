@@ -15,7 +15,7 @@
 	**/
 	final class QueryCombination
 		extends QueryIdentification
-		implements DialectString 
+		implements DialectString
 	{
 		private $left	= null;
 		private $right	= null;
@@ -27,8 +27,8 @@
 		private $order	= null;
 		
 		public function __construct(
-			Query $left, 
-			Query $right, 
+			Query $left,
+			Query $right,
 			$logic
 		)
 		{
@@ -104,7 +104,7 @@
 
 		public function toDialectString(Dialect $dialect)
 		{
-			$query = 
+			$query =
 				$this->left->toDialectString($dialect)
 				." {$this->logic} "
 				.$this->right->toDialectString($dialect);

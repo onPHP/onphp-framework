@@ -26,7 +26,7 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			return 
+			return
 				'('
 				.$dialect->toFieldString(
 					SQLFunction::create('lower', $this->left)
@@ -54,7 +54,7 @@
 			$left	= $form->toFormValue($this->left);
 			$right	= $form->toFormValue($this->right);
 			
-			$both = 
+			$both =
 				(null !== $left)
 				&& (null !== $right);
 				

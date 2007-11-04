@@ -21,7 +21,7 @@
 			
 			if (
 				$class->getType()
-				&& 
+				&&
 					$class->getType()->getId()
 					== MetaClassType::CLASS_ABSTRACT
 			)
@@ -55,7 +55,7 @@
 					);
 				
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
-					$out .= 
+					$out .=
 						"protected \${$property->getName()}Id = null;\n";
 				}
 			}

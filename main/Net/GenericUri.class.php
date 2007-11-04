@@ -432,7 +432,7 @@
 			if (empty($this->host))
 				return true;
 			
-			$decOctet = 
+			$decOctet =
 				'(\d)|'			// 0-9
 				.'([1-9]\d)|'	// 10-99
 				.'(1\d\d)|'		// 100-199
@@ -785,7 +785,7 @@
 			} else {
 				if (
 					preg_match(
-						'/^['.GenericUri::CHARS_UNRESERVED.']$/', 
+						'/^['.GenericUri::CHARS_UNRESERVED.']$/',
 						rawurldecode($char)
 					)
 				)

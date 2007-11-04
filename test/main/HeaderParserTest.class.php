@@ -41,7 +41,7 @@ Content-Length: 123
 Keep-Alive: timeout=20, 
 	max=200
 Connection: Keep-Alive
-Content-Type: text/html; 
+Content-Type: text/html;
   charset=utf-8
 EOT;
 			$parser = HeaderParser::create()->parse($raw);

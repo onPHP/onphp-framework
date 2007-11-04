@@ -68,7 +68,7 @@
 			
 			$this->mark = $this->next;
 			
-			return $this; 
+			return $this;
 		}
 		
 		public function markSupported()
@@ -85,7 +85,7 @@
 			
 			$this->next = $this->mark;
 			
-			return $this; 
+			return $this;
 		}
 		
 		public function skip($count)
@@ -95,7 +95,7 @@
 			if ($this->isEof())
 				return 0;
 			
-			$actualSkip = 
+			$actualSkip =
 				max(
 					-$this->next,
 					min($this->length - $this->next, $count)
@@ -104,7 +104,7 @@
 			$this->next += $actualSkip;
 			
 			return $actualSkip;
-		} 
+		}
 		
 		public function isEof()
 		{

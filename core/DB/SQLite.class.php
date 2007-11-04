@@ -14,7 +14,7 @@
 	 * SQLite DB connector.
 	 * 
 	 * you may wish to ini_set('sqlite.assoc_case', 0);
-	 *
+	 * 
 	 * @see http://www.sqlite.org/
 	 * 
 	 * @ingroup DB
@@ -36,7 +36,7 @@
 		{
 			if ($this->persistent)
 				$this->link = sqlite_popen($this->basename);
-			else 
+			else
 				$this->link = sqlite_open($this->basename);
 			
 			if (!$this->link)

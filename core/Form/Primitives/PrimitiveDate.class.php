@@ -102,7 +102,7 @@
 				return empty($scope[$this->name][self::DAY])
 					&& empty($scope[$this->name][self::MONTH])
 					&& empty($scope[$this->name][self::YEAR]);
-			} else 
+			} else
 				return empty($scope[$this->name]);
 		}
 		
@@ -111,8 +111,8 @@
 			if (
 				BasePrimitive::import($scope)
 				&& isset(
-					$scope[$this->name][self::DAY], 
-					$scope[$this->name][self::MONTH], 
+					$scope[$this->name][self::DAY],
+					$scope[$this->name][self::MONTH],
 					$scope[$this->name][self::YEAR]
 				)
 				&& is_array($scope[$this->name])
@@ -153,7 +153,7 @@
 				return parent::importValue(null);
 			
 			$singleScope = array($this->getName() => $value->toString());
-			$marriedRaw = 
+			$marriedRaw =
 				array (
 					self::DAY => $value->getDay(),
 					self::MONTH => $value->getMonth(),

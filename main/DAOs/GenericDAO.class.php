@@ -65,7 +65,7 @@
 			if (null === $this->selectHead) {
 				$table = $this->getTable();
 				
-				$this->selectHead = 
+				$this->selectHead =
 					OSQL::select()->
 					from($table);
 				

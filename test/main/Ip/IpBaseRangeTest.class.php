@@ -5,7 +5,7 @@
 	{
 		public function testContains()
 		{
-			$ipRange = 
+			$ipRange =
 				IpRange::create(
 					IpAddress::create('127.0.0.1'),
 					IpAddress::create('127.0.0.10')

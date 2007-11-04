@@ -117,11 +117,11 @@
 				throw new OpenIdException('bad expires');
 			
 			if (
-				isset($result['session_type']) 
+				isset($result['session_type'])
 				&& $result['session_type'] == 'DH-SHA1'
 				&& isset($result['dh_server_public'])
 			) {
-				$secret = 
+				$secret =
 					sha1(
 						$keyPair->
 							makeSharedKey(
@@ -154,7 +154,7 @@
 		
 		private function makeCheckIdRequest(
 			OpenIdCredentials $credentials,
-			HttpUrl $returnTo, 
+			HttpUrl $returnTo,
 			$trustRoot = null,
 			$association = null
 		)
@@ -178,7 +178,7 @@
 			if ($association) {
 				Assert::isTrue(
 					$association instanceof OpenIdConsumerAssociation
-					&& $association->getServer()->toString() 
+					&& $association->getServer()->toString()
 						== $credentials->getServer()->toString()
 				);
 				
@@ -190,12 +190,12 @@
 			
 			if ($trustRoot) {
 				Assert::isTrue(
-					$trustRoot instanceof HttpUrl 
+					$trustRoot instanceof HttpUrl
 					&& $trustRoot->isValid()
 				);
 				
 				$model->set(
-					'openid.trust_root', 
+					'openid.trust_root',
 					$trustRoot->toString()
 				);
 			}
@@ -214,15 +214,15 @@
 		**/
 		public function checkIdImmediate(
 			OpenIdCredentials $credentials,
-			HttpUrl $returnTo, 
+			HttpUrl $returnTo,
 			$trustRoot = null,
 			$association = null
 		)
 		{
 			$mav = $this->makeCheckIdRequest(
-				$credentials, 
-				$returnTo, 
-				$trustRoot, 
+				$credentials,
+				$returnTo,
+				$trustRoot,
 				$association
 			);
 			
@@ -243,15 +243,15 @@
 		**/
 		public function checkIdSetup(
 			OpenIdCredentials $credentials,
-			HttpUrl $returnTo, 
+			HttpUrl $returnTo,
 			$trustRoot = null,
 			$association = null
 		)
 		{
 			$mav = $this->makeCheckIdRequest(
-				$credentials, 
-				$returnTo, 
-				$trustRoot, 
+				$credentials,
+				$returnTo,
+				$trustRoot,
 				$association
 			);
 			
@@ -265,7 +265,7 @@
 		 * proceed results of checkid_immediate and checkid_setup
 		 * 
 		 * @param $request incoming request
-		 * @param 
+		 * @param
 		**/
 		public function doContinue(HttpRequest $request, $manager = null)
 		{
@@ -325,7 +325,7 @@
 			) { // smart mode
 				$tokenContents = null;
 				foreach ($signedFields as $signedField) {
-					$tokenContents .= 
+					$tokenContents .=
 						$signedField
 						.':'
 						.$parameters['openid.'.$signedField]
@@ -335,7 +335,7 @@
 				if (
 					base64_encode(
 						CryptoFunctions::hmacsha1(
-							$association->getSecret(), 
+							$association->getSecret(),
 							$tokenContents
 						)
 					)
@@ -377,7 +377,7 @@
 			
 			if (isset($parameters['openid.invalidate_handle']) && $manager)
 				$request->setPostVar(
-					'openid.invalidate_handle', 
+					'openid.invalidate_handle',
 					$parameters['openid.invalidate_handle']
 				);
 			
@@ -389,7 +389,7 @@
 			$request->
 				setPostVar('openid.mode', 'check_authentication')->
 				setPostVar(
-					'openid.assoc_handle', 
+					'openid.assoc_handle',
 					$parameters['openid.assoc_handle']
 				)->
 				setPostVar(

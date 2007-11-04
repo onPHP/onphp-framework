@@ -48,7 +48,7 @@
 			$insideHead = false;
 			while ($token = $tokenizer->nextToken()) {
 				if (!$insideHead) {
-					if ($token instanceof SgmlOpenTag 
+					if ($token instanceof SgmlOpenTag
 						&& $token->getId() == 'head'
 					) {
 						$insideHead = true;
@@ -61,7 +61,7 @@
 						break;
 					
 					if (
-						$token instanceof SgmlOpenTag 
+						$token instanceof SgmlOpenTag
 						&& $token->getId() == 'link'
 						&& $token->hasAttribute('rel')
 						&& $token->hasAttribute('href')

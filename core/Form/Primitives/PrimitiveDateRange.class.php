@@ -125,7 +125,7 @@
 				Assert::isTrue(
 					ClassUtils::isInstanceOf($object, $this->className)
 				);
-			else 
+			else
 				Assert::isTrue(
 					ClassUtils::isInstanceOf($object, $this->getObjectName())
 				);

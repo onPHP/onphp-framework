@@ -382,7 +382,7 @@
 						}
 						
 						// check for old-style naming
-						$oldStlye = 
+						$oldStlye =
 							ONPHP_META_DAO_DIR
 							.$class->getName()
 							.'To'
@@ -725,11 +725,11 @@
 XML;
 			if (!$withoutSoap) {
 				$out .= <<<XML
-	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
-	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
 	xmlns="http://schemas.xmlsoap.org/wsdl/"						
-	targetNamespace="urn:targetNS" 
+	targetNamespace="urn:targetNS"
 	xmlns:tns="urn:targetNS"
 XML;
 			}
@@ -906,8 +906,8 @@ XML;
 			}
 			
 			if (
-				$class->getType() 
-				&& $class->getTypeId() 
+				$class->getType()
+				&& $class->getTypeId()
 					== MetaClassType::CLASS_SPOOKED
 			) {
 				Assert::isFalse(

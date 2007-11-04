@@ -44,8 +44,8 @@
 			if (is_string($stop)) {
 				$stop = $this->makeNumber($stop);
 			} elseif (
-				$stop instanceof BigInteger 
-				&& ! $stop instanceof GmpBigInteger 
+				$stop instanceof BigInteger
+				&& !$stop instanceof GmpBigInteger
 			) {
 				$stop = $this->makeNumber($stop->toString());
 			}

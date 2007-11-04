@@ -34,7 +34,7 @@
 			) {
 				return $object;
 			} else {
-				$query = 
+				$query =
 					$this->dao->
 						makeSelectHead()->
 						andWhere(
@@ -52,7 +52,7 @@
 						$expires === Cache::DO_NOT_CACHE
 							? $object
 							: $this->cacheById($object, $expires);
-				} else { 
+				} else {
 					throw new ObjectNotFoundException(
 						"there is no such object for '".$this->dao->getObjectName()
 						.(
@@ -189,7 +189,7 @@
 										$this->dao->getTable()
 									),
 									$toFetch
-								), 
+								),
 								$expires
 							)
 						);
@@ -220,7 +220,7 @@
 		)
 		{
 			if (
-				($expires !== Cache::DO_NOT_CACHE) && 
+				($expires !== Cache::DO_NOT_CACHE) &&
 				($list = $this->getCachedByQuery($query))
 			)
 				return $list;

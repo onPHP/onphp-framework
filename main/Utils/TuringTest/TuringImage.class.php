@@ -19,22 +19,22 @@
 		
 		private $textColors			= null;
 		private $backgroundColors	= null;
-	
+		
 		private $font		= null;
-	
+		
 		private $imageId	= null;
 		
 		private $width		= null;
 		private $height		= null;
-	
-		private	$generator	= null;
-
-		private	$drawer				= null;
+		
+		private $generator	= null;
+		
+		private $drawer				= null;
 		private $backgroundDrawer	= null;
 		
 		public static function getCode()
 		{
-			return Session::get(self::SESSION_LABEL); 
+			return Session::get(self::SESSION_LABEL);
 		}
 		
 		public function __construct($width, $height)
@@ -56,12 +56,12 @@
 		{
 			return $this->backgroundColors;
 		}
-	
+		
 		public function getWidth()
 		{
 			return $this->width;
 		}
-	
+		
 		public function getHeight()
 		{
 			return $this->height;
@@ -76,7 +76,7 @@
 		{
 			return $this->font;
 		}
-
+		
 		public function setFont($font)
 		{
 			$this->font = $font;
@@ -110,26 +110,26 @@
 		{
 			return $this->generator;
 		}
-		 
+		
 		public function getColorIdentifier(Color $color)
 		{
-			$colorId = 
+			$colorId =
 				imagecolorexact(
 					$this->imageId,
 					$color->getRed(),
 					$color->getGreen(),
 					$color->getBlue()
 				);
-				
+			
 			if ($colorId === -1)
-				$colorId = 
+				$colorId =
 					imagecolorallocate(
 						$this->imageId,
 						$color->getRed(),
 						$color->getGreen(),
 						$color->getBlue()
 					);
-				
+			
 			return $colorId;
 		}
 		
@@ -139,7 +139,7 @@
 			
 			return $this->getColorIdentifier($textColor);
 		}
-
+		
 		/**
 		 * @return TuringImage
 		**/
@@ -147,17 +147,17 @@
 		{
 			if ($this->drawer === null)
 				throw new WrongStateException('drawer must present');
-
+			
 			$this->init();
-
+			
 			$code = $this->generator->generate();
-
+			
 			$this->
 				setCode($code)->
 				drawBackGround();
-
+			
 			$this->drawer->draw($code);
-
+			
 			$this->outputImage($imageType);
 			
 			imagedestroy($this->getImageId());
@@ -174,7 +174,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return TuringImage
 		**/
@@ -194,11 +194,11 @@
 		private function drawBackGround()
 		{
 			if (!$this->backgroundColors->isEmpty()) {
-			  	$backgroundColor = $this->backgroundColors->getRandomTextColor();
-			  	
-			  	if ($backgroundColor !== null) {
+				$backgroundColor = $this->backgroundColors->getRandomTextColor();
+				
+				if ($backgroundColor !== null) {
 					$backgroundColorId = $this->getColorIdentifier($backgroundColor);
-		  			
+					
 					imagefilledrectangle(
 						$this->imageId,
 						0,
@@ -207,10 +207,10 @@
 						$this->getHeight(),
 						$backgroundColorId
 					);
-			  	}
+				}
 			}
 			
-			if ($this->backgroundDrawer !== null)		  
+			if ($this->backgroundDrawer !== null)
 				$this->backgroundDrawer->draw();
 			
 			return $this;
@@ -222,11 +222,11 @@
 		private function outputImage(ImageType $imageType)
 		{
 			$gdImageTypes = imagetypes();
-
+			
 			switch ($imageType->getId()) {
 				
 				case ImageType::WBMP:
-
+					
 					if ($gdImageTypes & IMG_WBMP) {
 						header("Content-type: image/vnd.wap.wbmp");
 						imagewbmp($this->imageId);

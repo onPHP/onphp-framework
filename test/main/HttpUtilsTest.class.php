@@ -25,7 +25,7 @@
 				send($request);
 			
 			$this->assertEqual(
-				$response->getStatus()->getId(), 
+				$response->getStatus()->getId(),
 				HttpStatus::CODE_200
 			);
 			

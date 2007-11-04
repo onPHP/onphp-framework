@@ -28,7 +28,7 @@
 		}
 		
 		/// prevent's serialization of names' array
-		//@{ 
+		//@{
 		public function __sleep()
 		{
 			return array('id');

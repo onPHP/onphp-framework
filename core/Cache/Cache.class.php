@@ -12,7 +12,7 @@
 	
 	/**
 	 * System-wide access to selected CachePeer and DaoWorker.
-	 *
+	 * 
 	 * @see CachePeer
 	 * @see http://onphp.org/examples.Cache.en.html
 	 * 

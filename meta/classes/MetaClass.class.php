@@ -390,11 +390,11 @@
 		
 		public function toComplexType(&$containers, $withoutSoap)
 		{
-			$abstractType = 
+			$abstractType =
 				($this->pattern instanceof AbstractClassPattern)
 					? " abstract=\"true\" "
-				 	: null;
-				 
+					: null;
+			
 			$element =
 <<<XML
 
@@ -413,7 +413,7 @@ XML;
 
 XML;
 			}
-				
+			
 			$element .=
 <<<XML
 		<sequence>
@@ -449,7 +449,7 @@ XML;
 						} else
 							$xsdType = $property->getType()->toXsdType();
 					} else
-						$xsdType = $property->getType()->toXsdType(); 
+						$xsdType = $property->getType()->toXsdType();
 				
 				if ($property->getSize()) {
 					if (!$withoutSoap) {
@@ -465,10 +465,10 @@ XML;
 					$element .= <<<XML
 							>
 				<simpleType>
-					<xsd:restriction base="{$xsdType}"> 
-			           	<xsd:maxLength value="{$property->getSize()}"/> 
-			       	</xsd:restriction>
-			    </simpleType>
+					<xsd:restriction base="{$xsdType}">
+						<xsd:maxLength value="{$property->getSize()}"/>
+					</xsd:restriction>
+				</simpleType>
 XML;
 				} else {
 					$element .=

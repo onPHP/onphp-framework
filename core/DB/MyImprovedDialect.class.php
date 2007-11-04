@@ -12,7 +12,7 @@
 
 	/**
 	 * MySQL dialect.
-	 *
+	 * 
 	 * @see http://www.mysql.com/
 	 * @see http://www.php.net/mysqli
 	 * 

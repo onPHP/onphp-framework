@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Utils
 	**/
-	abstract class Reader 
+	abstract class Reader
 	{
 		const BLOCK_SIZE = 16384;
 		

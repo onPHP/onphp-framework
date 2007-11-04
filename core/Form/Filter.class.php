@@ -22,7 +22,7 @@
 		**/
 		public static function textImport()
 		{
-			return 
+			return
 				FilterChain::create()->
 					add(Filter::trim())->
 					add(Filter::stripTags());

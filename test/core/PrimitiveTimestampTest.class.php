@@ -39,7 +39,7 @@
 		
 		public function testMarriedOptional()
 		{
-			$prm = 
+			$prm =
 				Primitive::timestamp('test')->
 				setComplex()->
 				optional();

@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Ip
 	**/
-	final class IpNetwork implements SingleRange 
+	final class IpNetwork implements SingleRange
 	{
 		const MASK_MAX_SIZE = 31;
 		
@@ -35,7 +35,7 @@
 			Assert::isInteger($mask);
 			
 			if ($mask == 0 || self::MASK_MAX_SIZE < $mask)
-				throw new WrongArgumentException('wrong mask given'); 
+				throw new WrongArgumentException('wrong mask given');
 			
 			$this->longMask =
 				(int) (pow(2, (32 - $mask)) * (pow(2, $mask) - 1));

@@ -12,7 +12,7 @@
 
 	/**
 	 * Connector for PECL's Memcache extension by Antony Dovgal.
-	 *
+	 * 
 	 * @see http://tony2001.phpclub.net/
 	 * @see http://pecl.php.net/package/memcache
 	 * 

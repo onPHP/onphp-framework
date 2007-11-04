@@ -148,14 +148,14 @@
 		 * Do the content validation and repair it.
 		 * 
 		 * For example:
-		 * 	$repairedContent = 
+		 * 	$repairedContent =
 		 * 		TidyValidator::create()->
 		 * 		setContent('<b>blablabla')->
 		 * 		validateContent()->
 		 * 		getContent();
 		 * 
 		 * Or just:
-		 * 	$repairedContent = 
+		 * 	$repairedContent =
 		 * 		TidyValidator::create()->
 		 * 		validateContent('<b>blablabla')->
 		 * 		getContent();
@@ -276,7 +276,7 @@
 			return $this;
 		}
 		
-		private function countTags($tag, $text) 
+		private function countTags($tag, $text)
 		{
 			$matches = array();
 			

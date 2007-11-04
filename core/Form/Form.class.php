@@ -315,7 +315,7 @@
 		/**
 		 * Assigns specific label for given primitive and error type.
 		 * One more example of horrible documentation style.
-		 *
+		 * 
 		 * @param	$name		string	primitive or rule name
 		 * @param	$errorType	enum	Form::(WRONG|MISSING)
 		 * @param	$label		string	YDFB WTF is this :-) (c) /.

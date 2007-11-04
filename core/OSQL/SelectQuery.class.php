@@ -218,7 +218,7 @@
 		{
 			if ($field instanceof DialectString)
 				$this->group[] = $field;
-			else 
+			else
 				$this->group[] =
 					new DBField($field, $this->getLastTable($table));
 
@@ -426,7 +426,7 @@
 					$fieldList[] = $field->toDialectString($dialect);
 			}
 
-			$query = 
+			$query =
 				'SELECT '.($this->distinct ? 'DISTINCT ' : null)
 				.implode(', ', $fieldList)
 				.$this->joiner->toDialectString($dialect);
@@ -496,7 +496,7 @@
 				|| $field instanceof DialectString
 			)
 				return $field;
-			else 
+			else
 				return
 					new OrderBy(
 						new DBField($field, $this->getLastTable($table))

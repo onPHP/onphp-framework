@@ -13,7 +13,7 @@
 	/**
 	 * @see http://tools.ietf.org/html/rfc2631
 	**/
-	final class DiffieHellmanKeyPair implements KeyPair 
+	final class DiffieHellmanKeyPair implements KeyPair
 	{
 		private $private	= null;
 		private $public		= null;

@@ -53,7 +53,7 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			return 
+			return
 				'('
 				.$dialect->toFieldString($this->left)
 				." {$this->logic} "

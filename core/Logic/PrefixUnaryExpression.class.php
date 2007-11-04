@@ -29,11 +29,11 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			return 
+			return
 				'('
 				.$this->logic
 				.' '.$dialect->toFieldString($this->subject)
-				.')'; 
+				.')';
 		}
 		
 		/**

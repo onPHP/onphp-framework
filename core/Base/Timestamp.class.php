@@ -13,7 +13,7 @@
 
 	/**
 	 * Date and time container and utilities.
-	 *
+	 * 
 	 * @see Date
 	 * 
 	 * @ingroup Base

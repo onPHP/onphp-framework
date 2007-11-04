@@ -142,7 +142,7 @@
 				throw new WrongArgumentException(
 					"size not allowed for '"
 					.$this->getName().'::'.get_class($this->type)
-					."' type" 
+					."' type"
 				);
 			
 			return $this;
@@ -281,7 +281,7 @@
 				|| $this->isIdentifier()
 			) {
 				if (
-					!$this->isIdentifier() 
+					!$this->isIdentifier()
 					&& (
 						$this->getType()->getClass()->getPattern()
 							instanceof EnumerationClassPattern

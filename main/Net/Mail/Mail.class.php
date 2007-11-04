@@ -40,7 +40,7 @@
 		{
 			return new self;
 		}
-
+		
 		/**
 		 * @return Mail
 		**/
@@ -48,21 +48,20 @@
 		{
 			if ($this->to == null)
 				throw new WrongArgumentException("mail to: is not specified");
-				
+			
 			$siteEncoding = mb_get_info('internal_encoding');
 			
-			if (!$this->encoding 
+			if (!$this->encoding
 				|| $this->encoding == $siteEncoding
 			) {
 				$encoding = $siteEncoding;
 				$to = $this->to;
 				$from = $this->from;
 				$subject =
-					 "=?".$encoding."?B?"
-					 .base64_encode($this->subject)
-					 ."?=";
+					"=?".$encoding."?B?"
+					.base64_encode($this->subject)
+					."?=";
 				$body = $this->text;
-				
 			} else {
 				$encoding = $this->encoding;
 				$to = mb_convert_encoding($this->to, $encoding);
@@ -71,24 +70,24 @@
 					$from = mb_convert_encoding($this->from, $encoding);
 				else
 					$from = null;
-	
+				
 				$subject =
-					 "=?".$encoding."?B?"
-					 .base64_encode(
-					 	iconv(
-					 		$siteEncoding,
-					 		$encoding.'//TRANSLIT',
-					 		$this->subject
-					 	)
-					 )."?=";
-					 
+					"=?".$encoding."?B?"
+					.base64_encode(
+						iconv(
+							$siteEncoding,
+							$encoding.'//TRANSLIT',
+							$this->subject
+						)
+					)."?=";
+				
 				$body = iconv(
 					$siteEncoding,
-					$encoding.'//TRANSLIT', 
+					$encoding.'//TRANSLIT',
 					$this->text
 				);
 			}
-
+			
 			$headers = null;
 			
 			if ($from != null) {
@@ -101,15 +100,17 @@
 			
 			if ($this->contentType === null)
 				$this->contentType = 'text/plain';
-
-			$headers .= "Content-type: ".$this->contentType
+			
+			$headers
+				.= "Content-type: ".$this->contentType
 				."; charset=".$encoding."\n";
+			
 			$headers .= "Content-Transfer-Encoding: 8bit\n";
 			$headers .= "Date: ".date('r')."\n";
-
+			
 			if (!mail($to, $subject, $body, $headers))
 				throw new MailNotSentException();
-				
+			
 			return $this;
 		}
 		
@@ -129,8 +130,8 @@
 		{
 			$this->cc = $cc;
 			return $this;
-		}		
-
+		}
+		
 		/**
 		 * @return Mail
 		**/

@@ -82,7 +82,7 @@
 				if ($first) {
 					$this->form->importOne($name, $scope);
 					$first = false;
-				} else 
+				} else
 					$this->form->importOneMore($name, $scope);
 			}
 		}

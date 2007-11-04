@@ -58,12 +58,12 @@
 				}
 				
 			} elseif (
-				preg_match("/^\s+(.+)$/", $line, $matches) 
+				preg_match("/^\s+(.+)$/", $line, $matches)
 				&& $this->currentHeader !== null
 			) {
 				if (is_array($this->headers[$this->currentHeader])) {
 					$lastKey = count($this->headers[$this->currentHeader]) - 1;
-					$this->headers[$this->currentHeader][$lastKey] 
+					$this->headers[$this->currentHeader][$lastKey]
 						.= $matches[1];
 				} else {
 					$this->headers[$this->currentHeader] .= $matches[1];

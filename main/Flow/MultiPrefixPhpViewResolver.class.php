@@ -13,7 +13,7 @@
 	/**
 	 * View resolver for php templates with multiple prefix support
 	 * 
-	 * Will resolve view to first readable template from 
+	 * Will resolve view to first readable template from
 	 * supplied prefixes list
 	 * 
 	 * @ingroup Flow

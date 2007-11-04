@@ -43,7 +43,7 @@
 		 * @return LightMetaProperty
 		**/
 		public static function make(
-			$name, $columnName, $className, $required, 
+			$name, $columnName, $className, $required,
 			$generic, $relationId, $strategyId
 		)
 		{

@@ -243,7 +243,7 @@
 
 		/**
 		 * +
-		 *
+		 * 
 		 * @return BinaryExpression
 		**/
 		public static function add($field, $value)
@@ -253,7 +253,7 @@
 		
 		/**
 		 * -
-		 *
+		 * 
 		 * @return BinaryExpression
 		**/
 		public static function sub($field, $value)
@@ -263,7 +263,7 @@
 		
 		/**
 		 * *
-		 *
+		 * 
 		 * @return BinaryExpression
 		**/
 		public static function mul($field, $value)
@@ -273,7 +273,7 @@
 		
 		/**
 		 * /
-		 *
+		 * 
 		 * @return BinaryExpression
 		**/
 		public static function div($field, $value)
@@ -319,7 +319,7 @@
 		public static function orBlock(/* ... */)
 		{
 			return self::block(
-				func_get_args(), 
+				func_get_args(),
 				BinaryExpression::EXPRESSION_OR
 			);
 		}
@@ -330,7 +330,7 @@
 		public static function andBlock(/* ... */)
 		{
 			return self::block(
-				func_get_args(), 
+				func_get_args(),
 				BinaryExpression::EXPRESSION_AND
 			);
 		}

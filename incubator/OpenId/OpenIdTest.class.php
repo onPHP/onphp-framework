@@ -173,7 +173,7 @@ EOT
 		}
 	}
 	
-	class HttpResponseStub implements HttpResponse 
+	class HttpResponseStub implements HttpResponse
 	{
 		private $status = null;
 		private $body = null;
@@ -226,7 +226,7 @@ EOT
 		}
 	}
 	
-	class HttpClientStub implements HttpClient 
+	class HttpClientStub implements HttpClient
 	{
 		private $response = null;
 		

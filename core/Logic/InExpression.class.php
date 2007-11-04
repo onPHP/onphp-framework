@@ -66,7 +66,7 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			$string = 
+			$string =
 				'('
 				.$dialect->toFieldString($this->left)
 				.' '.$this->logic
@@ -98,7 +98,7 @@
 			$left	= $form->toFormValue($this->left);
 			$right	= $this->right;
 			
-			$both = 
+			$both =
 				(null !== $left)
 				&& (null !== $right);
 

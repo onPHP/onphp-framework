@@ -29,7 +29,7 @@
 		
 		public function getById($id)
 		{
-			$query = 
+			$query =
 				$this->dao->makeSelectHead()->
 				where(
 					Expression::eq(
@@ -191,7 +191,7 @@
 		
 		public function dropByIds(/* array */ $ids)
 		{
-			return 
+			return
 				DBPool::getByDao($this->dao)->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::in($this->dao->getIdName(), $ids))

@@ -13,7 +13,7 @@
 	/**
 	 * Parses common doctype FPI (Formal Public Identifier) in form:
 	 * "-//<Org>//DTD <Type> [<Subtype>] [<Version>] [<Variant>]//<Language>"
-	 *
+	 * 
 	 * Examples:
 	 * -//W3C//DTD HTML//EN
 	 * -//W3C//DTD XHTML Basic 1.0//EN

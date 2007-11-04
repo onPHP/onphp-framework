@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup OSQL
 	**/
-	final class DBField extends Castable implements DialectString, SQLTableName 
+	final class DBField extends Castable implements DialectString, SQLTableName
 	{
 		private $field	= null;
 		private $table	= null;

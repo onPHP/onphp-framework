@@ -12,7 +12,7 @@
 
 	/**
 	 * Date's interval implementation and accompanying utility methods.
-	 *
+	 * 
 	 * @see Date
 	 * @see TimestampRange
 	 * 
@@ -313,7 +313,7 @@
 			if (
 				$this->overlaps($range)
 				|| (
-					$this->start->spawn('-1 day')->getDayStartStamp() 
+					$this->start->spawn('-1 day')->getDayStartStamp()
 					== $range->end->getDayStartStamp()
 				) || (
 					$this->end->spawn('+1 day')->getDayStartStamp()
@@ -340,7 +340,7 @@
 			if (!$range->start)
 				$this->start = null;
 			elseif (
-				$this->start 
+				$this->start
 				&& $this->start->toStamp() > $range->start->toStamp()
 			)
 				$this->start = clone $range->start;
@@ -466,7 +466,7 @@
 			$rightEnd = $right->getEndStamp();
 
 			if (
-				!$leftStart && !$rightStart 
+				!$leftStart && !$rightStart
 				|| $leftStart && $rightStart && ($leftStart == $rightStart)
 			) {
 				if (
@@ -483,9 +483,9 @@
 				else
 					return 1;
 
-			} elseif (!$leftStart && $rightStart) 
+			} elseif (!$leftStart && $rightStart)
 				return -1;
-			elseif ($leftStart && !$rightStart) 
+			elseif ($leftStart && !$rightStart)
 				return 1;
 			elseif ($leftStart < $rightStart)
 				return -1;

@@ -169,7 +169,7 @@
 		protected function import($scope)
 		{
 			if (
-				!empty($scope[$this->name]) 
+				!empty($scope[$this->name])
 				|| (
 					isset($scope[$this->name])
 					&& $scope[$this->name] !== ''
