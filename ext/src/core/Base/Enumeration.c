@@ -119,17 +119,7 @@ ONPHP_METHOD(Enumeration, setId)
 		WRONG_PARAM_COUNT;
 	}
 	
-	zend_call_method_with_0_params(
-		&getThis(),
-		Z_OBJCE_P(getThis()),
-		NULL,
-		"getnamelist",
-		&names
-	);
-	
-	if (EG(exception)) {
-		return;
-	}
+	ONPHP_CALL_METHOD_0(getThis(), "getnamelist", names);
 	
 	if (Z_TYPE_P(names) != IS_ARRAY) {
 		zend_throw_exception_ex(
@@ -220,19 +210,9 @@ ONPHP_METHOD(Enumeration, getList)
 		WRONG_PARAM_COUNT;
 	}
 	
-	zend_call_method_with_0_params(
-		&enm,
-		Z_OBJCE_P(enm),
-		NULL,
-		"getobjectlist",
-		&out
-	);
+	ONPHP_CALL_METHOD_0(enm, "getobjectlist", out);
 	
-	if (EG(exception)) {
-		return;
-	} else {
-		RETURN_ZVAL(out, 1, 1);
-	}
+	RETURN_ZVAL(out, 1, 1);
 }
 
 ONPHP_METHOD(Enumeration, getAnyId)
@@ -250,20 +230,12 @@ ONPHP_METHOD(Enumeration, getObjectList)
 	ALLOC_INIT_ZVAL(list);
 	array_init(list);
 	
-	zend_call_method_with_0_params(
-		&getThis(),
-		Z_OBJCE_P(getThis()),
-		NULL,
-		"getnamelist",
-		&names
-	);
+	ONPHP_CALL_METHOD_0(getThis(), "getnamelist", names);
 	
 	if (
 		Z_TYPE_P(names) != IS_ARRAY
 	) {
 		RETURN_ZVAL(list, 1, 1);
-	} else if (EG(exception)) {
-		return;
 	}
 	
 	table = Z_ARRVAL_P(names);
