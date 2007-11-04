@@ -69,12 +69,12 @@
 		
 		public function isComment()
 		{
-				return $this->id == '!--';
+			return $this->id == '!--';
 		}
 		
 		public function isExternal()
 		{
-				return ($this->id && $this->id[0] == '?');
+			return ($this->id && $this->id[0] == '?');
 		}
 	}
 ?>

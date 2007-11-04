@@ -15,7 +15,7 @@
 	**/
 	final class SgmlOpenTag extends SgmlTag
 	{
-		private $attributes = array();
+		private $attributes	= array();
 		private $empty		= false;
 		
 		/**
