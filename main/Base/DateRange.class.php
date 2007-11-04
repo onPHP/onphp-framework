@@ -42,12 +42,12 @@
 			if ($end)
 				$this->setEnd($end);
 		}
-
+		
 		public function __clone()
 		{
 			if ($this->start)
 				$this->start = clone $this->start;
-
+			
 			if ($this->end)
 				$this->end = clone $this->end;
 		}
@@ -64,13 +64,13 @@
 				throw new WrongArgumentException(
 					'start must be lower than end'
 				);
-
+			
 			$this->start = $start;
 			$this->dayStartStamp = null;
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return DateRange
@@ -83,7 +83,7 @@
 				throw new WrongArgumentException(
 					'end must be higher than start'
 				);
-
+			
 			$this->end = $end;
 			$this->dayEndStamp = null;
 			return $this;
@@ -112,7 +112,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return DateRange
 		**/
@@ -122,7 +122,7 @@
 			$this->dayStartStamp = null;
 			return $this;
 		}
-
+		
 		/**
 		 * @return DateRange
 		**/
@@ -139,7 +139,7 @@
 				($this->start === null)
 				&& ($this->end === null);
 		}
-
+		
 		/**
 		 * @return Date
 		**/
@@ -147,7 +147,7 @@
 		{
 			return $this->start;
 		}
-
+		
 		/**
 		 * @return Date
 		**/
@@ -155,7 +155,7 @@
 		{
 			return $this->end;
 		}
-
+		
 		public function toDateString(
 			$internalDelimiter = '-',
 			$dateDelimiter = ' - '
@@ -188,17 +188,17 @@
 			
 			return null;
 		}
-
+		
 		public function overlaps(DateRange $range)
 		{
 			if ($this->isEmpty() || $range->isEmpty())
 				return true;
-
+			
 			$left = $this->getStartStamp();
 			$right = $this->getEndStamp();
 			$min = $range->getStartStamp();
 			$max = $range->getEndStamp();
-
+			
 			return (
 				(
 					$min
@@ -242,7 +242,7 @@
 				)
 			);
 		}
-
+		
 		public function contains(/* Timestamp */ $date)
 		{
 			$this->checkType($date);
@@ -250,7 +250,7 @@
 			$start = $this->getStartStamp();
 			$end = $this->getEndStamp();
 			$probe = $date->toStamp();
-
+			
 			if (
 				(!$start && !$end)
 				|| (!$start && $end >= $probe)
@@ -272,9 +272,9 @@
 			$dates = array();
 			
 			$start = new Date($this->start->getDayStartStamp());
-
+			
 			$endStamp = $this->end->getDayEndStamp();
-
+			
 			for (
 				$current = $start;
 				$current->toStamp() < $endStamp;
@@ -282,7 +282,7 @@
 			) {
 				$dates[] = new Date($current->getDayStartStamp());
 			}
-
+			
 			return $dates;
 		}
 		
@@ -329,7 +329,7 @@
 		{
 			return !$this->start || !$this->end;
 		}
-
+		
 		/**
 		 * enlarges $this by given $range, if last one is wider
 		 * 
@@ -344,7 +344,7 @@
 				&& $this->start->toStamp() > $range->start->toStamp()
 			)
 				$this->start = clone $range->start;
-
+			
 			if (!$range->end)
 				$this->end = null;
 			elseif (
@@ -352,10 +352,10 @@
 				&& $this->end->toStamp() < $range->end->toStamp()
 			)
 				$this->end = clone $range->end;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * intersection of $this and given $range
 		 * 
@@ -436,7 +436,7 @@
 			
 			return null;
 		}
-
+		
 		public function getEndStamp() // null if end is null
 		{
 			if ($this->end) {
@@ -449,7 +449,7 @@
 			
 			return null;
 		}
-
+		
 		public static function compare(DateRange $left, DateRange $right)
 		{
 			if ($left->isEmpty() && $right->isEmpty())
@@ -458,13 +458,13 @@
 				return 1;
 			elseif ($right->isEmpty())
 				return -1;
-
+			
 			$leftStart = $left->getStartStamp();
 			$leftEnd = $left->getEndStamp();
-
+			
 			$rightStart = $right->getStartStamp();
 			$rightEnd = $right->getEndStamp();
-
+			
 			if (
 				!$leftStart && !$rightStart
 				|| $leftStart && $rightStart && ($leftStart == $rightStart)
@@ -476,13 +476,12 @@
 					return 0;
 				elseif (!$leftEnd && $rightEnd)
 					return 1;
-				elseif($leftEnd && !$rightEnd)
+				elseif ($leftEnd && !$rightEnd)
 					return -1;
 				elseif ($leftEnd < $rightEnd)
 					return -1;
 				else
 					return 1;
-
 			} elseif (!$leftStart && $rightStart)
 				return -1;
 			elseif ($leftStart && !$rightStart)
