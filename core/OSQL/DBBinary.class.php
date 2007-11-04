@@ -20,7 +20,7 @@
 		private $value = null;
 		
 		/**
-		 * @return DBValue
+		 * @return DBBinary
 		**/
 		public static function create($value)
 		{
