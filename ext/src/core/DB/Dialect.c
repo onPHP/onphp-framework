@@ -169,18 +169,7 @@ ONPHP_METHOD(Dialect, quoteBinary)
 		WRONG_PARAM_COUNT;
 	}
 	
-	zend_call_method_with_1_params(
-		&getThis(),
-		onphp_ce_Dialect,
-		NULL,
-		"quotevalue",
-		&out,
-		data
-	);
-	
-	if (EG(exception)) {
-		return;
-	}
+	ONPHP_CALL_METHOD_1(getThis(), "quotevalue", out, data);
 	
 	RETURN_ZVAL(out, 1, 1);
 }
@@ -204,17 +193,7 @@ ONPHP_METHOD(Dialect, typeToString)
 		WRONG_PARAM_COUNT;
 	}
 	
-	zend_call_method_with_0_params(
-		&type,
-		Z_OBJCE_P(type),
-		NULL,
-		"getname",
-		&out
-	);
-	
-	if (EG(exception)) {
-		return;
-	}
+	ONPHP_CALL_METHOD_0(type, "getname", out);
 	
 	RETURN_ZVAL(out, 1, 1);
 }
@@ -231,27 +210,9 @@ ONPHP_METHOD(Dialect, fieldToString)
 		Z_TYPE_P(field) == IS_OBJECT
 		&& instanceof_function(Z_OBJCE_P(field), onphp_ce_DialectString TSRMLS_CC)
 	) {
-		zend_call_method_with_1_params(
-			&field,
-			Z_OBJCE_P(field),
-			NULL,
-			"todialectstring",
-			&out,
-			getThis()
-		);
+		ONPHP_CALL_METHOD_1(field, "todialectstring", out, getThis());
 	} else {
-		zend_call_method_with_1_params(
-			&getThis(),
-			Z_OBJCE_P(getThis()),
-			NULL,
-			"quotefield",
-			&out,
-			field
-		);
-	}
-	
-	if (EG(exception)) {
-		return;
+		ONPHP_CALL_METHOD_1(getThis(), "quotefield", out, field);
 	}
 	
 	RETURN_ZVAL(out, 1, 1);
@@ -269,27 +230,9 @@ ONPHP_METHOD(Dialect, valueToString)
 		Z_TYPE_P(value) == IS_OBJECT
 		&& instanceof_function(Z_OBJCE_P(value), onphp_ce_DBValue TSRMLS_CC)
 	) {
-		zend_call_method_with_1_params(
-			&value,
-			Z_OBJCE_P(value),
-			NULL,
-			"todialectstring",
-			&out,
-			getThis()
-		);
+		ONPHP_CALL_METHOD_1(value, "todialectstring", out, getThis());
 	} else {
-		zend_call_method_with_1_params(
-			&getThis(),
-			Z_OBJCE_P(getThis()),
-			NULL,
-			"quotevalue",
-			&out,
-			value
-		);
-	}
-	
-	if (EG(exception)) {
-		return;
+		ONPHP_CALL_METHOD_1(getThis(), "quotevalue", out, value);
 	}
 	
 	RETURN_ZVAL(out, 1, 1);
@@ -310,6 +253,7 @@ smart_str onphp_dialect_to_needed_string(
 				onphp_ce_DialectString TSRMLS_CC
 			)
 	) {
+		// ONPHP_CALL_METHOD_1 can't be used here due to non-void function
 		zend_call_method_with_1_params(
 			&expression,
 			Z_OBJCE_P(expression),
