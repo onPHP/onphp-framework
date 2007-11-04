@@ -161,6 +161,64 @@ ONPHP_METHOD(Dialect, dropTableMode)
 	RETURN_STRING(" RESTRICT", 1);
 }
 
+ONPHP_METHOD(Dialect, quoteBinary)
+{
+	zval *data, *out;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &data) == FAILURE) {
+		WRONG_PARAM_COUNT;
+	}
+	
+	zend_call_method_with_1_params(
+		&getThis(),
+		onphp_ce_Dialect,
+		NULL,
+		"quotevalue",
+		&out,
+		data
+	);
+	
+	if (EG(exception)) {
+		return;
+	}
+	
+	RETURN_ZVAL(out, 1, 1);
+}
+
+ONPHP_METHOD(Dialect, unquoteBinary)
+{
+	zval *data;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &data) == FAILURE) {
+		WRONG_PARAM_COUNT;
+	}
+	
+	RETURN_ZVAL(data, 1, 1);
+}
+
+ONPHP_METHOD(Dialect, typeToString)
+{
+	zval *type, *out;
+	
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &type) == FAILURE) {
+		WRONG_PARAM_COUNT;
+	}
+	
+	zend_call_method_with_0_params(
+		&type,
+		Z_OBJCE_P(type),
+		NULL,
+		"getname",
+		&out
+	);
+	
+	if (EG(exception)) {
+		return;
+	}
+	
+	RETURN_ZVAL(out, 1, 1);
+}
+
 ONPHP_METHOD(Dialect, fieldToString)
 {
 	zval *field, *out;
@@ -366,6 +424,7 @@ static ONPHP_ARGINFO_ONE;
 static ONPHP_ARGINFO_TWO;
 static ONPHP_ARGINFO_THREE;
 static ONPHP_ARGINFO_DBCOLUMN;
+static ONPHP_ARGINFO_DATATYPE;
 
 zend_function_entry onphp_funcs_Dialect[] = {
 	ONPHP_ABSTRACT_ME(Dialect, preAutoincrement, arginfo_dbcolumn, ZEND_ACC_PUBLIC)
@@ -378,6 +437,9 @@ zend_function_entry onphp_funcs_Dialect[] = {
 	ONPHP_ME(Dialect, toCasted, arginfo_two, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, timeZone, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, dropTableMode, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	ONPHP_ME(Dialect, quoteBinary, arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Dialect, unquoteBinary, arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Dialect, typeToString, arginfo_datatype, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Dialect, toFieldString, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Dialect, toValueString, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Dialect, fieldToString, arginfo_one, ZEND_ACC_PUBLIC)

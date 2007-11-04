@@ -22,6 +22,11 @@
 		ZEND_ARG_OBJ_INFO(0, column, DBColumn, 0) \
 	ZEND_END_ARG_INFO();
 
+#define ONPHP_ARGINFO_DATATYPE \
+	ZEND_BEGIN_ARG_INFO(arginfo_datatype, 0) \
+		ZEND_ARG_OBJ_INFO(0, type, DataType, 0) \
+	ZEND_END_ARG_INFO();
+
 ONPHP_STANDART_CLASS(Dialect);
 
 #endif /* ONPHP_CORE_DIALECT_H */
