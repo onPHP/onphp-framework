@@ -66,7 +66,7 @@
 		/* void */ public function importOne($name, HttpRequest $request)
 		{
 			$this->checkExistence($name);
-
+			
 			$scopes = array();
 			
 			if (isset($this->map[$name])) {
@@ -76,7 +76,7 @@
 			} elseif ($this->type) {
 				$scopes[] = $request->getByType($this->type);
 			}
-
+			
 			$first = true;
 			foreach ($scopes as $scope) {
 				if ($first) {
@@ -121,7 +121,7 @@
 			return $result;
 		}
 		
-		private function checkExistence($name)
+		/* void */ private function checkExistence($name)
 		{
 			if (!$this->form->primitiveExists($name))
 				throw new MissingElementException(
