@@ -15,12 +15,11 @@
 	**/
 	final class StringInputStream extends InputStream
 	{
-		protected $string	= null;
-		protected $length	= null;
+		private $string		= null;
+		private $length		= null;
 		
-		protected $position	= 0;
-		
-		protected $mark		= 0;
+		private $position	= 0;
+		private $mark		= 0;
 		
 		public function __construct($string)
 		{
