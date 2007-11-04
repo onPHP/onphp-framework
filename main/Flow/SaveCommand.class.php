@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class SaveCommand extends TakeCommand 
+	class SaveCommand extends TakeCommand
 	{
 		// nothing to do
 	}

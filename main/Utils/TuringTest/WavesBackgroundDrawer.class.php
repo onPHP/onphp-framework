@@ -47,7 +47,7 @@
 				$angle = 2 * M_PI * $angle / $frequency;
 				
 				$dy = $radius * sin($angle);
-				 
+				
 				imagesetpixel(
 					$imageId,
 					$x,

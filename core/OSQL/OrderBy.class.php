@@ -39,7 +39,7 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			if ($this->field instanceof SelectQuery)
-				return 
+				return
 					'('.$this->field->toDialectString($dialect).')'
 					.$this->direction->decide(' ASC', ' DESC');
 			else

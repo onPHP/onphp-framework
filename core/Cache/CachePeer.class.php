@@ -120,12 +120,12 @@
 		public function set($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->store('set', $key, $value, $expires);
-		} 
+		}
 		
 		public function add($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->store('add', $key, $value, $expires);
-		} 
+		}
 		
 		public function replace($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{

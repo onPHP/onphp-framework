@@ -44,7 +44,7 @@
 			} else {
 				$db = DBFactory::getDefaultInstance();
 
-				$query = 
+				$query =
 					$this->dao->makeSelectHead()->
 					andWhere(
 						Expression::eq(
@@ -385,7 +385,7 @@
 		{
 			static $null = Cache::NOT_FOUND;
 			
-			return 
+			return
 				Cache::me()->mark($this->className)->
 					add(
 						$this->className.'_'.$id,

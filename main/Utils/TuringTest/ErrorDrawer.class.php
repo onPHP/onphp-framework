@@ -32,7 +32,7 @@
 		public function __construct($turingImage)
 		{
 			$this->turingImage = $turingImage;
-		}	
+		}
 		
 		public function draw($string = 'ERROR!')
 		{

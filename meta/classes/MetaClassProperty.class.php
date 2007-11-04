@@ -69,7 +69,7 @@
 				$this->size = $size;
 			else
 				throw new WrongArgumentException(
-					"size not allowed for '{$this->type->getClass()}' type" 
+					"size not allowed for '{$this->type->getClass()}' type"
 				);
 			
 			return $this;

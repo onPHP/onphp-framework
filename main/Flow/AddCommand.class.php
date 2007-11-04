@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class AddCommand extends TakeCommand 
+	class AddCommand extends TakeCommand
 	{
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{

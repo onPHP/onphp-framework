@@ -18,13 +18,13 @@
 		const MALE		= 0;
 		const FEMALE	= 1;
 		const NEUTRAL	= 2;
-	
+		
 		private static $orderedSuffixes = array(
-			self::MALE 		=> array('ый', 'ой', 'ий'),
-			self::FEMALE 	=> array('ая', 'ья', null),
-			self::NEUTRAL 	=> array('ое', 'ье', null)
+			self::MALE		=> array('ый', 'ой', 'ий'),
+			self::FEMALE	=> array('ая', 'ья', null),
+			self::NEUTRAL	=> array('ое', 'ье', null)
 		);
-	
+		
 		private static $orderedDigits = array(
 			'перв',
 			'втор',
@@ -35,9 +35,9 @@
 			'седьм',
 			'восьм',
 			'девят',
-			'десят',
+			'десят'
 		);
-	
+		
 		/**
 		 * Returns text representation of digit
 		**/
@@ -45,7 +45,7 @@
 		{
 			throw new UnsupportedMethodException();
 		}
-	
+		
 		/**
 		 * Selects russian case for number.
 		 * for example:
@@ -73,7 +73,7 @@
 				return $cases[2];
 			}
 		}
-
+		
 		/**
 		 * doesn't duplicate strftime('%B', ...)
 		 * only when 'russian' locale set in windoze
@@ -85,10 +85,10 @@
 				'мая', 'июня', 'июля', 'августа', 'сентября',
 				'октября', 'ноября', 'декабря'
 			);
-
+			
 			return $months[$month - 1];
 		}
-
+		
 		public static function getMonthInSubjectiveCase($month)
 		{
 			static $months = array(
@@ -96,7 +96,7 @@
 				'май', 'июнь', 'июль', 'август', 'сентябрь',
 				'октябрь', 'ноябрь', 'декабрь'
 			);
-
+			
 			return $months[$month - 1];
 		}
 		

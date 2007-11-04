@@ -94,7 +94,7 @@
 				return empty($scope[$this->name][self::DAY])
 					|| empty($scope[$this->name][self::MONTH])
 					|| empty($scope[$this->name][self::YEAR]);
-			} else 
+			} else
 				return empty($scope[$this->name]);
 		}
 		
@@ -102,8 +102,8 @@
 		{
 			if (
 				isset(
-					$scope[$this->name][self::DAY], 
-					$scope[$this->name][self::MONTH], 
+					$scope[$this->name][self::DAY],
+					$scope[$this->name][self::MONTH],
 					$scope[$this->name][self::YEAR]
 				)
 				&& is_array($scope[$this->name])

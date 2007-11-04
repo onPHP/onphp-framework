@@ -148,7 +148,7 @@
 		{
 			if ($field instanceof DialectString)
 				$this->group[] = $field;
-			else 
+			else
 				$this->group[] =
 						new DBField($field, $this->getLastTable($table));
 
@@ -304,7 +304,7 @@
 					$fieldList[] = $field->toDialectString($dialect);
 			}
 
-			$query = 
+			$query =
 				'SELECT '.($this->distinct ? 'DISTINCT ' : null).
 				implode(', ', $fieldList);
 				
@@ -375,7 +375,7 @@
 		{
 			if (!$table && $this->from)
 				return $this->from[count($this->from) - 1]->getTable();
-			else 
+			else
 				return $table;
 		}
 	}

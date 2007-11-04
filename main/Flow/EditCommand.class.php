@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class EditCommand implements EditorCommand 
+	class EditCommand implements EditorCommand
 	{
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{

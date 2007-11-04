@@ -30,9 +30,9 @@
 			
 			if ($turingImage->getWidth() > $textWidth) {
 
-				$angle = 
+				$angle =
 					mt_rand(
-						-CurvedStringDrawer::MAX_ANGLE_CHANGE / 2, 
+						-CurvedStringDrawer::MAX_ANGLE_CHANGE / 2,
 						CurvedStringDrawer::MAX_ANGLE_CHANGE / 2
 					);
 				
@@ -43,7 +43,7 @@
 				
 				for ($i = 0; $i < strlen($string); $i++) {
 					
-					$angle += 
+					$angle +=
 						mt_rand(
 							-CurvedStringDrawer::MAX_ANGLE_CHANGE / 2,
 							CurvedStringDrawer::MAX_ANGLE_CHANGE / 2
@@ -54,7 +54,7 @@
 					elseif ($angle < -CurvedStringDrawer::MAX_ANGLE)
 						$angle = -CurvedStringDrawer::MAX_ANGLE;
 
-					$y += 
+					$y +=
 						mt_rand(
 							-$turingImage->getHeight() / 2,
 							$turingImage->getHeight() / 2

@@ -107,7 +107,7 @@
 					}
 					
 					// check for old-style naming
-					$oldStlye = 
+					$oldStlye =
 						ONPHP_META_DAO_DIR
 						.$class->getName()
 						.'To'

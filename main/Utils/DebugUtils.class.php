@@ -19,7 +19,7 @@
 		{
 			if ($prefix === null) {
 				$trace = debug_backtrace();
-				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
+				$prefix = basename($trace[0]['file']).':'.$trace[0]['line'];
 			}
 			
 			error_log($prefix.": ".var_export($vr, true));
@@ -29,7 +29,7 @@
 		{
 			if ($prefix === null) {
 				$trace = debug_backtrace();
-				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
+				$prefix = basename($trace[0]['file']).':'.$trace[0]['line'];
 			}
 			
 			echo '<pre>'.$prefix.": ".htmlspecialchars(var_export($vr, true)).'</pre>';
@@ -39,7 +39,7 @@
 		{
 			if ($prefix === null) {
 				$trace = debug_backtrace();
-				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
+				$prefix = basename($trace[0]['file']).':'.$trace[0]['line'];
 			}
 			
 			echo "\n".$prefix.": ".var_export($vr, true)."\n";
@@ -49,7 +49,7 @@
 		{
 			if ($prefix === null) {
 				$trace = debug_backtrace();
-				$prefix = basename($trace[0]['file']).':'.$trace[0]['line']; 
+				$prefix = basename($trace[0]['file']).':'.$trace[0]['line'];
 			}
 			
 			error_log(

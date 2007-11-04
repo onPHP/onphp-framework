@@ -20,16 +20,16 @@
 		private $size = null;
 		
 		abstract public function draw($text);
-		 		
+		
 		public function __construct($size)
 		{
 			$this->size = $size;
 		}
-
+		
 		public function drawCraracter($angle, $x, $y, $character)
 		{
 			$color = $this->getTuringImage()->getOneCharacterColor();
-
+			
 			imagettftext(
 				$this->getTuringImage()->getImageId(),
 				$this->size,
@@ -56,7 +56,7 @@
 			
 			return $this;
 		}
-
+		
 		protected function getTextWidth($string)
 		{
 			$textWidth = 0;
@@ -75,7 +75,7 @@
 			
 			return $bounds[2] - $bounds[0];
 		}
-	
+		
 		protected function getStringHeight($string)
 		{
 			$bounds = imagettfbbox($this->size, 0, $this->getFont(), $string);

@@ -17,7 +17,7 @@
 	 * 
 	 * 1) objects should be childs of IdentifiableObject;
 	 * 2) sequence name should equal table name + '_id'.
-	 *
+	 * 
 	 * @see IdentifiableOjbect
 	 * 
 	 * @see MySQL

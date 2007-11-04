@@ -12,10 +12,10 @@
 
 	/**
 	 * Calendar day representation.
-	 *
+	 * 
 	 * @ingroup Calendar
 	**/
-	class CalendarDay extends Timestamp 
+	class CalendarDay extends Timestamp
 	{
 		private $selected	= null;
 		private $outside	= null;
