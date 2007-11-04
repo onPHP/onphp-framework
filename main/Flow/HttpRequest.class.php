@@ -32,7 +32,7 @@
 		
 		// uploads
 		private $files		= array();
-
+		
 		// all other sh1t
 		private $attached	= array();
 		
@@ -83,7 +83,6 @@
 			$this->get[$name] = $value;
 			return $this;
 		}
-		
 		
 		public function &getPost()
 		{
@@ -228,7 +227,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @deprecated by getAttached
 		**/
