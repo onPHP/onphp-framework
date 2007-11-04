@@ -41,35 +41,12 @@ ONPHP_METHOD(FieldTable, toDialectString)
 	
 	field = ONPHP_READ_PROPERTY(getThis(), "field");
 	
-	zend_call_method_with_1_params(
-		&dialect,
-		Z_OBJCE_P(dialect),
-		NULL,
-		"fieldtostring",
-		&out,
-		field
-	);
-	
-	if (EG(exception)) {
-		return;
-	}
+	ONPHP_CALL_METHOD_1(dialect, "fieldtostring", out, field);
 	
 	cast = ONPHP_READ_PROPERTY(getThis(), "cast");
 	
 	if (Z_STRLEN_P(cast)) {
-		zend_call_method_with_2_params(
-			&dialect,
-			Z_OBJCE_P(dialect),
-			NULL,
-			"tocasted",
-			&out,
-			out,
-			cast
-		);
-		
-		if (EG(exception)) {
-			return;
-		}
+		ONPHP_CALL_METHOD_2(dialect, "tocasted", out, out, cast);
 	} else {
 		// nothing
 	}
