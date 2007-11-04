@@ -119,18 +119,7 @@ ONPHP_METHOD(ImaginaryDialect, fieldToString)
 		Z_TYPE_P(field) == IS_OBJECT
 		&& instanceof_function(Z_OBJCE_P(field), onphp_ce_DialectString TSRMLS_CC)
 	) {
-		zend_call_method_with_1_params(
-			&field,
-			Z_OBJCE_P(field),
-			NULL,
-			"todialectstring",
-			&out,
-			getThis()
-		);
-		
-		if (EG(exception)) {
-			return;
-		}
+		ONPHP_CALL_METHOD_1(field, "todialectstring", out, getThis());
 		
 		RETURN_ZVAL(out, 1, 1);
 	} else {
@@ -152,18 +141,7 @@ ONPHP_METHOD(ImaginaryDialect, valueToString)
 	) {
 		zval *out;
 		
-		zend_call_method_with_1_params(
-			&value,
-			Z_OBJCE_P(value),
-			NULL,
-			"todialectstring",
-			&out,
-			value
-		);
-		
-		if (EG(exception)) {
-			return;
-		}
+		ONPHP_CALL_METHOD_1(value, "todialectstring", out, value);
 		
 		RETURN_ZVAL(out, 1, 1);
 	}
