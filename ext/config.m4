@@ -35,6 +35,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/DBValue.c \
 		src/core/OSQL/DropTableQuery.c \
 		src/core/OSQL/DialectString.c \
+		src/core/OSQL/ExtractPart.c \
 		src/core/OSQL/FieldTable.c \
 		src/core/OSQL/SelectField.c \
 		src/core/OSQL/SQLTableName.c \
@@ -42,6 +43,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/QueryIdentification.c \
 		src/core/OSQL/QuerySkeleton.c
 		src/core/Logic/LogicalObject.c \
+		src/core/Logic/MappableObject.c \
 		src/main/DAOs/DAOConnected.c \
 		src/main/DAOs/FullTextDAO.c \
 		src/main/DAOs/Handlers/SegmentHandler.c \

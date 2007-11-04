@@ -44,6 +44,7 @@
 #include "core/OSQL/DBValue.h"
 #include "core/OSQL/DropTableQuery.h"
 #include "core/OSQL/DialectString.h"
+#include "core/OSQL/ExtractPart.h"
 #include "core/OSQL/FieldTable.h"
 #include "core/OSQL/SelectField.h"
 #include "core/OSQL/SQLTableName.h"
@@ -51,7 +52,9 @@
 #include "core/OSQL/QueryIdentification.h"
 // b0rked atm
 // #include "core/OSQL/QuerySkeleton.h"
+
 #include "core/Logic/LogicalObject.h"
+#include "core/Logic/MappableObject.h"
 
 #include "core/Exceptions.h"
 
@@ -107,6 +110,9 @@ PHP_MINIT_FUNCTION(onphp_core)
 	
 	REGISTER_ONPHP_INTERFACE(LogicalObject);
 	REGISTER_ONPHP_IMPLEMENTS(LogicalObject, DialectString);
+	
+	REGISTER_ONPHP_INTERFACE(MappableObject);
+	REGISTER_ONPHP_IMPLEMENTS(MappableObject, DialectString);
 	
 	REGISTER_ONPHP_STD_CLASS_EX(Identifier);
 	REGISTER_ONPHP_PROPERTY(Identifier, "id", ZEND_ACC_PRIVATE);
@@ -169,6 +175,13 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_PROPERTY(DropTableQuery, "name", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_PROPERTY_BOOL(DropTableQuery, "cascade", 0, ZEND_ACC_PRIVATE);
 	onphp_ce_DropTableQuery->ce_flags |= ZEND_ACC_FINAL_CLASS;
+	
+	REGISTER_ONPHP_STD_CLASS_EX(ExtractPart);
+	REGISTER_ONPHP_PROPERTY(ExtractPart, "what", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_PROPERTY(ExtractPart, "from", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_IMPLEMENTS(ExtractPart, DialectString);
+	REGISTER_ONPHP_IMPLEMENTS(ExtractPart, MappableObject);
+	onphp_ce_ExtractPart->ce_flags |= ZEND_ACC_FINAL_CLASS;
 	
 	REGISTER_ONPHP_SUB_CLASS_EX(SelectField, FieldTable);
 	REGISTER_ONPHP_PROPERTY(SelectField, "alias", ZEND_ACC_PRIVATE);

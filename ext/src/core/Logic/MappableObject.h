@@ -9,9 +9,15 @@
  ***************************************************************************/
 /* $Id$ */
 
-#ifndef ONPHP_CORE_DROP_TABLE_QUERY_H
-#define ONPHP_CORE_DROP_TABLE_QUERY_H
+#ifndef ONPHP_CORE_MAPPABLE_OBJECT_H
+#define ONPHP_CORE_MAPPABLE_OBJECT_H
 
-ONPHP_STANDART_CLASS(DropTableQuery);
+ONPHP_STANDART_CLASS(MappableObject);
 
-#endif /* ONPHP_CORE_DROP_TABLE_QUERY_H */
+#define ONPHP_ARGINFO_TO_MAPPED \
+	ZEND_BEGIN_ARG_INFO(arginfo_to_mapped, 0) \
+		ZEND_ARG_OBJ_INFO(0, dao, StorableDAO, 0) \
+		ZEND_ARG_OBJ_INFO(0, query, JoinCapableQuery, 0) \
+	ZEND_END_ARG_INFO()
+
+#endif /* ONPHP_CORE_MAPPABLE_OBJECT_H */

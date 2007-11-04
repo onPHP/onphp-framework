@@ -9,9 +9,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-#ifndef ONPHP_CORE_DROP_TABLE_QUERY_H
-#define ONPHP_CORE_DROP_TABLE_QUERY_H
+#ifndef ONPHP_CORE_EXTRACT_PART_H
+#define ONPHP_CORE_EXTRACT_PART_H
 
-ONPHP_STANDART_CLASS(DropTableQuery);
+ONPHP_STANDART_CLASS(ExtractPart);
 
-#endif /* ONPHP_CORE_DROP_TABLE_QUERY_H */
+#endif /* ONPHP_CORE_EXTRACT_PART_H */

@@ -12,6 +12,7 @@
 
 	/**
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	final class ExtractPart implements DialectString, MappableObject
 	{

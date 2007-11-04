@@ -9,9 +9,13 @@
  ***************************************************************************/
 /* $Id$ */
 
-#ifndef ONPHP_CORE_DROP_TABLE_QUERY_H
-#define ONPHP_CORE_DROP_TABLE_QUERY_H
+#include "onphp_core.h"
 
-ONPHP_STANDART_CLASS(DropTableQuery);
+#include "core/Logic/MappableObject.h"
 
-#endif /* ONPHP_CORE_DROP_TABLE_QUERY_H */
+static ONPHP_ARGINFO_TO_MAPPED;
+
+zend_function_entry onphp_funcs_MappableObject[] = {
+	ONPHP_ABSTRACT_ME(MappableObject, toMapped, arginfo_to_mapped, ZEND_ACC_PUBLIC)
+	{NULL, NULL, NULL}
+};

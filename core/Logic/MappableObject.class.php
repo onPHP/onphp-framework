@@ -12,6 +12,7 @@
 
 	/**
 	 * @ingroup Logic
+	 * @ingroup Module
 	**/
 	interface MappableObject extends DialectString
 	{

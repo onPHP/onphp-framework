@@ -65,6 +65,7 @@ DBField, \
 DBValue, \
 DropTableQuery, \
 Enumeration, \
+ExtractPart, \
 FieldTable, \
 IdentifiableObject, \
 Identifier, \
