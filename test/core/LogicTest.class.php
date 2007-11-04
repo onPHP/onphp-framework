@@ -18,38 +18,38 @@
 			);
 			
 			$this->assertEqual(
-				Expression::eq('a', 'b')->toDialectString($dialect), 
+				Expression::eq('a', 'b')->toDialectString($dialect),
 				'(a = b)'
 			);
 			
 			$some = IdentifiableObject::wrap(123);
 			$this->assertEqual(
-				Expression::eqId('a', $some)->toDialectString($dialect), 
+				Expression::eqId('a', $some)->toDialectString($dialect),
 				'(a = 123)'
 			);
 			
 			$this->assertEqual(
-				Expression::notEq('a', 'b')->toDialectString($dialect), 
+				Expression::notEq('a', 'b')->toDialectString($dialect),
 				'(a != b)'
 			);
 			
 			$this->assertEqual(
-				Expression::gt('a', 'b')->toDialectString($dialect), 
+				Expression::gt('a', 'b')->toDialectString($dialect),
 				'(a > b)'
 			);
 			
 			$this->assertEqual(
-				Expression::gtEq('a', 'b')->toDialectString($dialect), 
+				Expression::gtEq('a', 'b')->toDialectString($dialect),
 				'(a >= b)'
 			);
 			
 			$this->assertEqual(
-				Expression::lt('a', 'b')->toDialectString($dialect), 
+				Expression::lt('a', 'b')->toDialectString($dialect),
 				'(a < b)'
 			);
 			
 			$this->assertEqual(
-				Expression::ltEq('a', 'b')->toDialectString($dialect), 
+				Expression::ltEq('a', 'b')->toDialectString($dialect),
 				'(a <= b)'
 			);
 			

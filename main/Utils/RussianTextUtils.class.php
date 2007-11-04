@@ -18,13 +18,13 @@
 		const MALE		= 0;
 		const FEMALE	= 1;
 		const NEUTRAL	= 2;
-	
+		
 		private static $orderedSuffixes = array(
-			self::MALE 		=> array('ый', 'ой', 'ий'),
-			self::FEMALE 	=> array('ая', 'ья', null),
-			self::NEUTRAL 	=> array('ое', 'ье', null)
+			self::MALE		=> array('ый', 'ой', 'ий'),
+			self::FEMALE	=> array('ая', 'ья', null),
+			self::NEUTRAL	=> array('ое', 'ье', null)
 		);
-	
+		
 		private static $orderedDigits = array(
 			'перв',
 			'втор',
@@ -35,13 +35,13 @@
 			'седьм',
 			'восьм',
 			'девят',
-			'десят',
+			'десят'
 		);
-	
+		
 		private static $bytePrefixes = array(
 			null, 'К', 'М', 'Г', 'Т', 'П'
 		);
-
+		
 		/**
 		 * Returns text representation of digit
 		**/
@@ -49,7 +49,7 @@
 		{
 			throw new UnsupportedMethodException();
 		}
-	
+		
 		/**
 		 * Selects russian case for number.
 		 * for example:
@@ -77,7 +77,7 @@
 				return $cases[2];
 			}
 		}
-
+		
 		/**
 		 * doesn't duplicate strftime('%B', ...)
 		 * only when 'russian' locale set in windoze
@@ -89,10 +89,10 @@
 				'мая', 'июня', 'июля', 'августа', 'сентября',
 				'октября', 'ноября', 'декабря'
 			);
-
+			
 			return $months[$month - 1];
 		}
-
+		
 		public static function getMonthInSubjectiveCase($month)
 		{
 			static $months = array(
@@ -100,7 +100,7 @@
 				'май', 'июнь', 'июль', 'август', 'сентябрь',
 				'октябрь', 'ноябрь', 'декабрь'
 			);
-
+			
 			return $months[$month - 1];
 		}
 		
@@ -117,32 +117,32 @@
 		public static function getDateAsText(Timestamp $date, $todayWordNeed = true)
 		{
 			$dayStart = Timestamp::create(Timestamp::today());
-			$tomorrowDayStart = $dayStart->spawn('+1 day'); 
-
+			$tomorrowDayStart = $dayStart->spawn('+1 day');
+			
 			if (
 				(Timestamp::compare($date, $dayStart) == 1)
 				&& (Timestamp::compare($date, $tomorrowDayStart) == -1)
 			)
-				return 
+				return
 					(
-						$todayWordNeed === true 
-							? 'сегодня ' 
-							: null 
+						$todayWordNeed === true
+							? 'сегодня '
+							: null
 					)
 					."в "
 					.date('G:i', $date->toStamp());
-
+			
 			$yesterdayStart = $dayStart->spawn('-1 day');
-
+			
 			if (
 				(Timestamp::compare($date, $yesterdayStart) == 1)
 				&& (Timestamp::compare($date, $dayStart) == -1)
 			)
 				return 'вчера в '.date('G:i', $date->toStamp());
-
+			
 			return date('j.m.Y в G:i', $date->toStamp());
 		}
-
+		
 		public static function friendlyFileSize($size, $precision = 2)
 		{
 			if ($size < 1024)

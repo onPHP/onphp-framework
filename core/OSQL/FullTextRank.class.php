@@ -21,8 +21,8 @@
 		{
 			return
 				$dialect->fullTextRank(
-					$this->field, 
-					$this->words, 
+					$this->field,
+					$this->words,
 					$this->logic
 				);
 		}

@@ -83,7 +83,7 @@
 				return empty($scope[$this->name][self::HOURS])
 					|| empty($scope[$this->name][self::MINUTES])
 					|| empty($scope[$this->name][self::SECONDS]);
-			} else 
+			} else
 				return empty($scope[$this->name]);
 		}
 		
@@ -91,8 +91,8 @@
 		{
 			if (
 				isset(
-					$scope[$this->name][self::HOURS], 
-					$scope[$this->name][self::MINUTES], 
+					$scope[$this->name][self::HOURS],
+					$scope[$this->name][self::MINUTES],
 					$scope[$this->name][self::SECONDS]
 				)
 				&& is_array($scope[$this->name])

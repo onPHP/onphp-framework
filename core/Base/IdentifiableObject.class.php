@@ -12,7 +12,7 @@
 
 	/**
 	 * Ideal Identifiable interface implementation. ;-)
-	 *
+	 * 
 	 * @see Identifiable
 	 * 
 	 * @ingroup Base

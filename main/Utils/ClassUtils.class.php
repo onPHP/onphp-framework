@@ -91,7 +91,7 @@
 					
 					if (
 						($destinationValue === null)
-						&& ($sourceValue !== null) 
+						&& ($sourceValue !== null)
 					) {
 						$destination->$setter($sourceValue);
 					}
@@ -103,7 +103,7 @@
 		{
 			return
 				preg_match(
-					'/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', 
+					'/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/',
 					$className
 				);
 		}

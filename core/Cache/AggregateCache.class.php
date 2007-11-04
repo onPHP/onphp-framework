@@ -76,7 +76,7 @@
 			
 			foreach ($this->peers as $label => &$peer)
 				if ($peer['object']->isAlive())
-					$this->alive = true; 
+					$this->alive = true;
 				else
 					unset($this->peers[$label]);
 
@@ -84,7 +84,7 @@
 		}
 
 		/**
-		 * low-level cache access 
+		 * low-level cache access
 		**/
 
 		public function get($key)
@@ -104,10 +104,10 @@
 			$label = $this->guessLabel($key);
 			
 			if ($this->peers[$label]['object']->isAlive())
-				return 
+				return
 					$this->peers[$label]['object']->add(
-						$key, 
-						$value, 
+						$key,
+						$value,
 						$expires
 					);
 			else
@@ -121,12 +121,12 @@
 			$label = $this->guessLabel($key);
 			
 			if ($this->peers[$label]['object']->isAlive())
-				return 
+				return
 					$this->peers[$label]['object']->replace(
-						$key, 
-						$value, 
+						$key,
+						$value,
 						$expires
-					); 
+					);
 			else
 				$this->checkAlive();
 			
@@ -138,12 +138,12 @@
 			$label = $this->guessLabel($key);
 			
 			if ($this->peers[$label]['object']->isAlive())
-				return 
+				return
 					$this->peers[$label]['object']->set(
-						$key, 
-						$value, 
+						$key,
+						$value,
 						$expires
-					); 
+					);
 			else
 				$this->checkAlive();
 			
@@ -192,7 +192,7 @@
 		}
 
 		/**
-		 * brain 
+		 * brain
 		**/
 		private function guessLabel($key)
 		{
@@ -219,7 +219,7 @@
 			
 			if (count($zeroDistances)) {
 
-				$selectedLabel = 
+				$selectedLabel =
 					$zeroDistances[mt_rand(0, count($zeroDistances) - 1)];
 
 			} else {

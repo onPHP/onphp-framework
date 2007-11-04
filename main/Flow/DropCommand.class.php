@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class DropCommand implements EditorCommand 
+	class DropCommand implements EditorCommand
 	{
 		/**
 		 * @return DropCommand

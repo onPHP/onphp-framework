@@ -15,7 +15,7 @@
 
 	/**
 	 * Memcached-based cache.
-	 *
+	 * 
 	 * @see http://www.danga.com/memcached/
 	 * 
 	 * @ingroup Cache
@@ -245,7 +245,7 @@
 							: true
 					);
 				} catch (BaseException $e) {
-					return $this->alive = false; 
+					return $this->alive = false;
 				}
 			}
 		}

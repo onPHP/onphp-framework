@@ -33,7 +33,7 @@
 			
 			$db = DBPool::getByDao($this->dao);
 
-			$query = 
+			$query =
 				$this->dao->makeSelectHead()->
 				andWhere(
 					Expression::eq(
@@ -211,7 +211,7 @@
 		
 		public function dropByIds(/* array */ $ids)
 		{
-			return 
+			return
 				DBPool::getByDao($this->dao)->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::in('id', $ids))

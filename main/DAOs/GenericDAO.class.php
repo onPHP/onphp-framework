@@ -30,7 +30,7 @@
 		 * Builds complete object.
 		 * 
 		 * @see http://onphp.org/examples.DAOs.en.html
-		 *
+		 * 
 		 * @param $array	associative array('fieldName' => 'value')
 		 * @param $prefix	prefix (if any) of all fieldNames
 		**/
@@ -65,7 +65,7 @@
 			if (null === $this->selectHead) {
 				$table = $this->getTable();
 
-				$this->selectHead = 
+				$this->selectHead =
 					OSQL::select()->
 					from($table);
 				

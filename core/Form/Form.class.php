@@ -204,7 +204,7 @@
 		/**
 		 * Assigns specific label for given primitive and error type.
 		 * One more example of horrible documentation style.
-		 *
+		 * 
 		 * @param	$name		string	primitive or rule name
 		 * @param	$errorType	enum	Form::(WRONG|MISSING)
 		 * @param	$label		string	YDFB WTF is this :-) (c) /.
@@ -213,7 +213,7 @@
 		private function addErrorLabel($name, $errorType, $label)
 		{
 			if (
-				!($errorType == Form::WRONG && isset($this->violated[$name])) 
+				!($errorType == Form::WRONG && isset($this->violated[$name]))
 				&& (
 					!isset($this->rules[$name])
 					&& !$name = $this->get($name)->getName()

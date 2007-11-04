@@ -114,7 +114,7 @@
 		public function getChildIdsList(
 			$parentId, $expires = Cache::DO_NOT_CACHE
 		)
-		{ 
+		{
 			return
 				$this->getCustomRowList(
 					OSQL::select()->from($this->getTable())->

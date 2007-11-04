@@ -12,7 +12,7 @@
 
 	/**
 	 * Transaction isolation levels.
-	 *
+	 * 
 	 * @see http://www.postgresql.org/docs/8.0/interactive/sql-start-transaction.html
 	 * 
 	 * @ingroup DB

@@ -19,8 +19,8 @@
 		{
 			return
 				$dialect->fullTextSearch(
-					$this->field, 
-					$this->words, 
+					$this->field,
+					$this->words,
 					$this->logic
 				);
 		}

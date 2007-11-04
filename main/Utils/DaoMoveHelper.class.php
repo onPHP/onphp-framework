@@ -67,7 +67,7 @@
 				
 			} catch (ObjectNotFoundException $e) {
 				// no need to move up top object
-			}					
+			}
 		}
 		
 		/* void */ public static function down(

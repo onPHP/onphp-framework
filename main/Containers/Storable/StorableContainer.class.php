@@ -94,7 +94,7 @@
 			if (!is_object($this->saved[$id]))
 				$this->saved[$id] = $this->partDAO->getById($id, $this->expires);
 
-			return $this->saved[$id]; 
+			return $this->saved[$id];
 		}
 
 		public function dropById($id)

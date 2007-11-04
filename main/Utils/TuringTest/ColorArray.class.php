@@ -32,7 +32,7 @@
 		public function getRandomTextColor()
 		{
 			if ($this->isEmpty())
-				throw new MissingElementException(); 
+				throw new MissingElementException();
 				
 			return $this->colors[array_rand($this->colors)];
 		}

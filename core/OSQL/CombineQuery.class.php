@@ -11,23 +11,23 @@
 /* $Id$ */
 	
 	/**
-	 * The results of queries can be combined using the set 
+	 * The results of queries can be combined using the set
 	 * operations union, intersection, and difference.
 	 * 
 	 * query1 UNION [ALL] query2 ....
 	 * query1 INTERSECT [ALL] query2 ....
-	 * query1 EXCEPT [ALL] query2 .... 
+	 * query1 EXCEPT [ALL] query2 ....
 	 * 
-	 * @see PostgreSQL Documentation, Chapter Combining Queries 
+	 * @see PostgreSQL Documentation, Chapter Combining Queries
 	 * 
 	 * @ingroup OSQL
 	**/
 	final class CombineQuery extends StaticFactory
-	{		
+	{
 		public static function union($left, $right)
 		{
 			return self::create($left, $right, LogicalExpression::UNION);
-		}	
+		}
 		
 		public static function unionBlock()
 		{
@@ -39,7 +39,7 @@
 		public static function unionAll($left, $right)
 		{
 			return self::create($left, $right, LogicalExpression::UNION_ALL);
-		}	
+		}
 		
 		public static function unionAllBlock()
 		{
@@ -63,7 +63,7 @@
 		public static function intersectAll($left, $right)
 		{
 			return self::create($left, $right, LogicalExpression::INTERSECT_ALL);
-		}	
+		}
 		
 		public static function intersectAllBlock()
 		{
@@ -105,6 +105,6 @@
 		private static function create($left, $right, $logic)
 		{
 			return new LogicalExpression($left, $right, $logic);
-		}	
+		}
 	}
 ?>

@@ -26,7 +26,7 @@
 			parent::__construct($dao);
 			
 			if (($cache = Cache::me()) instanceof WatermarkedPeer)
-				$watermark = 
+				$watermark =
 					$cache->mark($this->className)->
 						getActualWatermark()
 					.DIRECTORY_SEPARATOR;

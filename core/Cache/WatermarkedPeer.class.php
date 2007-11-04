@@ -102,7 +102,7 @@
 			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			return 
+			return
 				$this->peer->$action(
 					$this->getActualWatermark().$key, $value, $expires
 				);

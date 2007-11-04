@@ -65,9 +65,9 @@
 
 		public function isAllowedMimeType()
 		{
-			if (count($this->allowedMimeTypes) > 0) { 
+			if (count($this->allowedMimeTypes) > 0) {
 				return in_array($this->mimeType, $this->allowedMimeTypes);
-			} else 
+			} else
 				return true;
 		}
 
@@ -103,7 +103,7 @@
 			else
 				return false;
 
-			$this->mimeType = $scope[$this->name]['type']; 
+			$this->mimeType = $scope[$this->name]['type'];
 
 			if (!$this->isAllowedMimeType())
 				return false;

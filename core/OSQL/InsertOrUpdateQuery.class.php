@@ -12,7 +12,7 @@
 
 	/**
 	 * Single roof for InsertQuery and UpdateQuery.
-	 *
+	 * 
 	 * @ingroup OSQL
 	**/
 	abstract class InsertOrUpdateQuery

@@ -12,7 +12,7 @@
 
 	/**
 	 * Default process RAM cache.
-	 *
+	 * 
 	 * @see ReferencePool
 	 * 
 	 * @ingroup Cache

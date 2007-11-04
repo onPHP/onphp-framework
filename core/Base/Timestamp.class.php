@@ -13,7 +13,7 @@
 
 	/**
 	 * Date's container and utilities.
-	 *
+	 * 
 	 * @see DateRange
 	 * 
 	 * @ingroup Base
@@ -74,15 +74,15 @@
 		
 		public static function dayDifference(Timestamp $left, Timestamp $right)
 		{
-			return 
+			return
 				gregoriantojd(
 					$right->getMonth(),
 					$right->getDay(),
 					$right->getYear()
 				)
 				- gregoriantojd(
-					$left->getMonth(), 
-					$left->getDay(), 
+					$left->getMonth(),
+					$left->getDay(),
 					$left->getYear()
 				);
 		}
@@ -92,7 +92,7 @@
 			if (Assert::checkInteger($timestamp)) { // unix timestamp
 				$this->int = $timestamp;
 				$this->string = date('Y-m-d H:i:s', $timestamp);
-			} elseif (is_string($timestamp)) { 
+			} elseif (is_string($timestamp)) {
 				$this->int = strtotime($timestamp);
 				
 				if (

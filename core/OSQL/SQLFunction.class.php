@@ -87,7 +87,7 @@
 					? $dialect->toCasted($out, $this->cast)
 					: $out;
 			
-			return 
+			return
 				$this->alias
 					? "{$out} AS {$dialect->quoteTable($this->alias)}"
 					: $out;

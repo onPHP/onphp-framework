@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	abstract class PrototypedEditor extends MethodMappedController 
+	abstract class PrototypedEditor extends MethodMappedController
 	{
 		const COMMAND_SUCCEEDED	= 'success';
 		const COMMAND_FAILED	= 'error';
@@ -131,7 +131,7 @@
 			
 			if ($form->getValue('id'))
 				$object = $form->getValue('id');
-			else 
+			else
 				$object = clone $this->subject;
 			
 			FormUtils::object2form($object, $form);
