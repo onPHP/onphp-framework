@@ -14,6 +14,7 @@
 	 * Container for passing binary values into OSQL queries.
 	 * 
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	final class DBBinary extends DBValue
 	{
