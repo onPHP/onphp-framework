@@ -15,11 +15,11 @@
 	**/
 	final class StringReader extends Reader
 	{
-		protected $string	= null;
-		protected $length	= null;
+		private $string		= null;
+		private $length		= null;
 		
-		protected $next		= 0;
-		protected $mark		= 0;
+		private $next		= 0;
+		private $mark		= 0;
 		
 		/**
 		 * @return StringReader
