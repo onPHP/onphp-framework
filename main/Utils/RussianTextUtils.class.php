@@ -91,7 +91,7 @@
 		 * 	5 результатов
 		 * @param $number integer
 		 * @param $cases words to select from array('результат', 'результата', 'результатов')
-		 */
+		**/
 		public static function selectCaseForNumber($number, $cases)
 		{
 			if (($number % 10) == 1 && ($number % 100) != 11) {
