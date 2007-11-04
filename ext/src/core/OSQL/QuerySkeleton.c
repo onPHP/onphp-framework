@@ -148,20 +148,21 @@ ONPHP_METHOD(QuerySkeleton, andWhere)
 	}
 	
 	zend_call_method_with_2_params(
-			&getThis(),
-			onphp_ce_QuerySkeleton,
-			NULL,
-			"where",
-			&retval,
-			exp,
-			logic
-		);
+		&getThis(),
+		onphp_ce_QuerySkeleton,
+		NULL,
+		"where",
+		&retval,
+		exp,
+		logic
+	);
+	
+	ZVAL_FREE(logic);
 	
 	if (EG(exception)) {
 		return;
 	}
 	
-	ZVAL_FREE(logic);
 	RETURN_ZVAL(retval, 1, 0);
 }
 
@@ -184,20 +185,21 @@ ONPHP_METHOD(QuerySkeleton, orWhere)
 	}
 	
 	zend_call_method_with_2_params(
-			&getThis(),
-			onphp_ce_QuerySkeleton,
-			NULL,
-			"where",
-			&retval,
-			exp,
-			logic
-		);
+		&getThis(),
+		onphp_ce_QuerySkeleton,
+		NULL,
+		"where",
+		&retval,
+		exp,
+		logic
+	);
+	
+	ZVAL_FREE(logic);
 	
 	if (EG(exception)) {
 		return;
 	}
 	
-	ZVAL_FREE(logic);
 	RETURN_ZVAL(retval, 1, 0);
 }
 
@@ -240,10 +242,10 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 				zend_hash_index_find(
 					Z_ARRVAL_P(where),
 					i,
-					(void **)&data
+					(void **) &data
 				) == SUCCESS
 			) {
-		    	zend_call_method_with_1_params(
+				zend_call_method_with_1_params(
 					data,
 					Z_OBJCE_PP(data),
 					NULL,
@@ -253,6 +255,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 				);
 				
 				if (EG(exception)) {
+					ZVAL_FREE(outputLogic);
 					return;
 				}
 				
