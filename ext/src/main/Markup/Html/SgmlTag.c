@@ -1,6 +1,5 @@
-<?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,27 +9,17 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup Html
-	 * @ingroup Module
-	**/
-	abstract class SgmlTag extends SgmlToken
-	{
-		private $id = null;
-		
-		/**
-		 * @return SgmlTag
-		**/
-		public function setId($id)
-		{
-			$this->id = $id;
-			
-			return $this;
-		}
-		
-		public function getId()
-		{
-			return $this->id;
-		}
-	}
-?>
+#include "onphp_main.h"
+
+#include "main/Markup/Html/SgmlTag.h"
+
+ONPHP_GETTER(SgmlTag, getId, id);
+ONPHP_GETTER(SgmlTag, setId, id);
+
+static ONPHP_ARGINFO_ONE;
+
+zend_function_entry onphp_funcs_SgmlTag[] = {
+	ONPHP_ME(SgmlTag, getId, NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(SgmlTag, setId, arginfo_one, ZEND_ACC_PUBLIC)
+	{NULL, NULL, NULL}
+};

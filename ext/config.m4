@@ -50,7 +50,9 @@ if test "$PHP_ONPHP" != "no"; then
 		src/main/DAOs/Handlers/SegmentHandler.c \
 		src/main/Flow/ViewResolver.c \
 		src/main/Markup/Html/Cdata.c \
+		src/main/Markup/Html/SgmlTag.c \
 		src/main/Markup/Html/SgmlToken.c \
+		src/main/Markup/Html/SgmlEndTag.c \
 	"
 	ONPHP_INCLUDES="\
 		-I@ext_srcdir@/src \

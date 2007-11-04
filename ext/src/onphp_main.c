@@ -22,6 +22,8 @@
 
 #include "main/Flow/ViewResolver.h"
 
+#include "main/Markup/Html/SgmlEndTag.h"
+#include "main/Markup/Html/SgmlTag.h"
 #include "main/Markup/Html/SgmlToken.h"
 #include "main/Markup/Html/Cdata.h"
 
@@ -41,6 +43,13 @@ PHP_MINIT_FUNCTION(onphp_main)
 	REGISTER_ONPHP_PROPERTY(Cdata, "data", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_PROPERTY_BOOL(Cdata, "string", 0, ZEND_ACC_PRIVATE);
 	ONPHP_CLASS_IS_FINAL(Cdata);
+	
+	REGISTER_ONPHP_SUB_CLASS_EX(SgmlTag, SgmlToken);
+	REGISTER_ONPHP_PROPERTY(SgmlTag, "id", ZEND_ACC_PRIVATE);
+	ONPHP_CLASS_IS_ABSTRACT(SgmlTag);
+	
+	REGISTER_ONPHP_SUB_CLASS_EX(SgmlEndTag, SgmlTag);
+	ONPHP_CLASS_IS_FINAL(SgmlEndTag);
 	
 	return SUCCESS;
 }

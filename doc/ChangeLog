@@ -6,7 +6,8 @@
 	changed columns; take() now uses cache-only merge() instead of plain
 	save().
 
-	* ext/src/main/Markup/Html/: SgmlToken, Cdata implemented.
+	* ext/src/main/Markup/Html/: SgmlEndTag, SgmlTag, SgmlToken, Cdata
+	implemented.
 
 	* ext/src/core/Logic/: MappableObject implemented.
 

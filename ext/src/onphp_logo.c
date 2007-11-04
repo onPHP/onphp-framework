@@ -78,6 +78,9 @@ QueryIdentification, \
 QuerySkeleton, \
 RangedPrimitive, \
 SelectField, \
+SgmlEndTag, \
+SgmlTag, \
+SgmlToken, \
 Singleton, \
 StaticFactory."
 

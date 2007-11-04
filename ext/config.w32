@@ -57,7 +57,7 @@ if (PHP_ONPHP != "no") {
 	
 	ADD_SOURCES(
 		"ext/onphp/src/main/Markup/Html",
-		"SgmlToken.c Cdata.c",
+		"SgmlEndTag.c SgmlTag.c SgmlToken.c Cdata.c",
 		"onphp"
 	);
 	
