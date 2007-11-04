@@ -119,7 +119,7 @@
 				TestCity::dao()->save($lost);
 				
 				$this->fail();
-			} catch (ObjectNotFoundException $e) {
+			} catch (WrongStateException $e) {
 				$this->pass();
 			}
 		}

@@ -277,13 +277,18 @@
 		{
 			$this->checkObjectType($object);
 			
-			DBPool::getByDao($this)->queryNull(
+			$count = DBPool::getByDao($this)->queryCount(
 				$this->setQueryFields(
 					$query->setTable($this->getTable()), $object
 				)
 			);
 			
 			$this->uncacheById($object->getId());
+			
+			if ($count !== 1)
+				throw new WrongStateException(
+					'racy or insane inject happened'
+				);
 			
 			// clean out Identifier, if any
 			return $this->addObjectToMap($object->setId($object->getId()));
