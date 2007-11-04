@@ -72,7 +72,7 @@
 					if (!$form->getErrors() && $id = $form->getValue('id')) {
 						$this->subject = $dao->getById($id);
 						$this->importForm();
-						 
+						
 						$this->subject = $dao->save($this->subject);
 						
 						return $this->selfRedirect();

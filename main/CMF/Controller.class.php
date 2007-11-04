@@ -503,15 +503,15 @@
 			
 			if (
 				is_dir(
-					$this->moduleDir . DIRECTORY_SEPARATOR 
+					$this->moduleDir . DIRECTORY_SEPARATOR
 					. $path . DIRECTORY_SEPARATOR . $module
 				)
 			) {
 				return $this->loadDefaultModule($path . DIRECTORY_SEPARATOR . $module);
 			} else {
 				require_once
-					$this->moduleDir . DIRECTORY_SEPARATOR 
-					. $path . DIRECTORY_SEPARATOR 
+					$this->moduleDir . DIRECTORY_SEPARATOR
+					. $path . DIRECTORY_SEPARATOR
 					. $module . $this->moduleExt;
 				
 				$this->module = new $module;
@@ -531,7 +531,7 @@
 		{
 			if (
 				!is_file(
-					$this->templateDir . DIRECTORY_SEPARATOR 
+					$this->templateDir . DIRECTORY_SEPARATOR
 					. $path . DIRECTORY_SEPARATOR . $this->default
 				)
 				&& '' !== $path
@@ -545,7 +545,7 @@
 			$this->template =
 				trim(
 					file_get_contents(
-						$this->templateDir . DIRECTORY_SEPARATOR 
+						$this->templateDir . DIRECTORY_SEPARATOR
 						. $path . DIRECTORY_SEPARATOR . $this->default
 					)
 				);

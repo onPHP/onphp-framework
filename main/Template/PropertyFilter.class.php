@@ -72,7 +72,7 @@
 	
 		/**
 		 * Set extension for templates
-		 *
+		 * 
 		 * @return	void
 		**/
 		public function setExtension($extension)
@@ -84,7 +84,7 @@
 	
 		/**
 		 * Returns templates extension
-		 *
+		 * 
 		 * @return	string	templates extension
 		**/
 		public function getExtension()
@@ -94,7 +94,7 @@
 	
 		/**
 		 * Sets templates directory
-		 *
+		 * 
 		 * @return	void
 		**/
 		public function setTemplateDir($dir)
@@ -106,7 +106,7 @@
 	
 		/**
 		 * Returns templates directory
-		 *
+		 * 
 		 * @return	string	templates directory
 		**/
 		public function getTemplateDir()
@@ -128,7 +128,7 @@
 	
 		/**
 		 * Sets templates array
-		 *
+		 * 
 		 * @param	$templates	array contains templates files names
          * 						without extensions
 		 * @return	void
@@ -142,7 +142,7 @@
 	
 		/**
 		 * Returns array of templates names
-		 *
+		 * 
 		 * @return	array
 		**/
 		public function getTemplates()
@@ -152,7 +152,7 @@
 	
 		/**
 		 * Displays all templates into stdout
-		 *
+		 * 
 		 * @param	$template	template name
 		 * @return	void
 		**/

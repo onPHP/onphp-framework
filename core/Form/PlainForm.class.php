@@ -102,7 +102,7 @@
 		{
 			$primitive = $this->get($name);
 			
-			if ($primitive instanceof FiltrablePrimitive) 
+			if ($primitive instanceof FiltrablePrimitive)
 				return $primitive->getDisplayValue();
 			else
 				return $primitive->getActualValue();		

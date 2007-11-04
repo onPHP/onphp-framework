@@ -11,21 +11,21 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-	
-	class UrlException extends BaseException {}
 
+	class UrlException extends BaseException {}
+	
 	class Url
-	{	
-		private $url 	  		= null;
-		private $protocol 		= "http";
+	{
+		private $url			= null;
+		private $protocol		= "http";
 		
 		private $credentials	= null;
 		
-		private $path 	  		= null;
+		private $path			= null;
 		private $anchor			= null;
-
-		private $queryString 	= array();
-		private $useBrackets 	= true;
+		
+		private $queryString	= array();
+		private $useBrackets	= true;
 		
 		public static function create()
 		{
@@ -50,41 +50,41 @@
 			
 			return $this;
 		}
-
+		
 		public function setUrl($url)
 		{
 			$this->url = $url;
-
+			
 			return $this;
 		}
-
+		
 		public function setAll()
 		{
 			if (!empty($this->url)) {
 				$urlinfo = parse_url($this->url);
-
+				
 				$this->queryString = array();
-	
+				
 				$credentials = new Credentials();
-
+				
 				foreach ($urlinfo as $key => $value) {
 					switch ($key) {
 						case 'user':
 							$credentials->setUsername($value);
 							break;
-
+						
 						case 'pass':
 							$credentials->setPassword($value);
 							break;
-
+						
 						case 'host':
 							$credentials->setHost($value);
 							break;
-
+						
 						case 'port':
 							$credentials->setPort($value);
 							break;
-
+						
 						case 'path':
 							if ($value{0} == '/') {
 								$this->path = $value;
@@ -93,99 +93,99 @@
 									dirname($this->path) == DIRECTORY_SEPARATOR
 										? ''
 										: dirname($this->path);
-
+								
 								$this->path = sprintf('%s/%s', $path, $value);
 							}
-
+							
 							break;
-
+						
 						case 'query':
 							$this->queryString = $this->parseRawQueryString($value);
 							break;
-
+						
 						case 'fragment':
 							$this->anchor = $value;
 							break;
 					}
 				}
-
+				
 				$this->setCredentials($credentials);
 			}
-
+			
 			return $this;
 		}
-
+		
 		public function getUrl()
 		{
 			return $this->url;
 		}
-
+		
 		public function setProtocol($protocol)
 		{
 			$this->protocol = $protocol;
-
+			
 			return $this;
 		}
-
+		
 		public function getProtocol()
 		{
 			return $this->protocol;
 		}
-
+		
 		public function setPath($path)
 		{
 			$this->path = $path;
-
+			
 			return $this;
 		}
-
+		
 		public function getPath()
 		{
 			return $this->path;
 		}
-
+		
 		public function setAnchor($anchor)
 		{
 			$this->anchor = $anchor;
-
+			
 			return $this;
 		}
-
+		
 		public function getAnchor()
 		{
 			return $this->anchor;
 		}
-
+		
 		public function setUseBrackets($useBrackets = true)
 		{
 			$this->useBrackets = ($useBrackets === true ? true : false);	
 		}
-
+		
 		public function isUserBrackets()
 		{
 			return $this->useBrackets;
 		}
-
+		
 		public function setQueryString($string)
 		{
-			if(!empty($string)) {
+			if (!empty($string)) {
 				$this->queryString = parseRawQueryString($string);
-			} else 
+			} else
 				$this->queryString = null;
-
+			
 			return $this;
 		}
-
+		
 		public function isQueryString()
 		{
 			return ($this->queryString === null ? false : true);
 		}
-
+		
 		public function getQueryString()
 		{
 			return $this->queryString;
 		}
-
+		
 		public function getFlatQueryString()
 		{
 			if ($this->queryString) {
@@ -197,40 +197,40 @@
 								: ($name . '=' . $val);
 					} elseif (!is_null($value)) {
 						$queryString[] = $name . '=' . $value;
-					} else 
+					} else
 						$queryString[] = $name;
 				}
-
+				
 				$queryString = implode(
 					ini_get('arg_separator.output'), $queryString
 				);
-			} else 
+			} else
 				$queryString = null;
-
+			
 			return $queryString;
 		}
-
+		
 		public function addQueryString($name, $value, $preEncoded = false)
 		{
 			if ($preEncoded)
 				$this->queryString[$name] = $value;
-			else 
+			else
 				$this->queryString[$name] =
 					is_array($value)
 						? array_map('rawurlencode', $value)
 						: rawurlencode($value);
-
+			
 			return $this;
 		}
-
+		
 		public function removeQueryString($name)
 		{
-			if (isset($this->queryString[$name])) 
+			if (isset($this->queryString[$name]))
 				unset($this->queryString[$name]);
-
+			
 			return $this;
 		}
-
+		
 		public function getStandardPort($scheme)
 		{
 			switch (strtolower($scheme)) {
@@ -245,7 +245,7 @@
 				default:		return null;
 		   }
 		}
-
+		
 		private function parseRawQueryString($queryString)
 		{
 			$parts =
@@ -253,13 +253,13 @@
 					'/['
 						.preg_quote(ini_get('arg_separator.input'), '/')
 						. ']/',
-					$queryString, 
-					-1, 
+					$queryString,
+					-1,
 					PREG_SPLIT_NO_EMPTY
 				);
-
+			
 			$return = array();
-
+			
 			foreach ($parts as $part) {
 				if (strpos($part, '=') !== false) {
 					$value = substr($part, strpos($part, '=') + 1);
@@ -268,20 +268,21 @@
 					$value = null;
 					$key   = $part;
 				}
+				
 				if (substr($key, -2) == '[]') {
 					$key = substr($key, 0, -2);
 					if (!is_array($return[$key])) {
 						$return[$key]   = array();
 						$return[$key][] = $value;
-					} else 
+					} else
 						$return[$key][] = $value;
 				} elseif (!$this->useBrackets AND !empty($return[$key])) {
 					$return[$key]   = (array)$return[$key];
 					$return[$key][] = $value;
-				} else 
+				} else
 					$return[$key] = $value;
 			}
-
+			
 			return $return;
 		}
 	}

@@ -38,14 +38,14 @@
 				&& (strpos($url, '//') + 2) < strlen($url)
 			)
 				$offset = strpos($url, '//') + 2;
-			else 
+			else
 				$offset = 0;
 				
 			return substr(
-				$url, 
-				0, 
+				$url,
+				0,
 				strpos(
-					$url, 
+					$url,
 					'/',
 					$offset
 				) + 1
@@ -57,7 +57,7 @@
 			$parsed = parse_url($url);
 			if ($parsed === false or !isset($parsed['path']))
 				return '/';
-			else 
+			else
 				return $parsed['path'];
 		}
 		

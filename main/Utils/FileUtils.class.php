@@ -8,7 +8,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-/* $Id$*/
+/* $Id$ */
 
 	/**
 	 * Utilities for file handling.

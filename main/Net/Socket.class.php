@@ -15,7 +15,7 @@
 	
 	class SocketException extends BaseException {/*_*/}
 
-	class Socket 
+	class Socket
 	{
 		const BLOCK_SIZE				= 1024;
 
@@ -129,7 +129,7 @@
 						$this->timeout,
 						$context
 					);
-			} else 
+			} else
 				$socketFilePointer =
 					$openFunction(
 						$this->host,
@@ -193,7 +193,7 @@
 				throw new SocketException(
 					"Get a specified line of data failure"
 				);
-			}	
+			}
 
 			return $line;
 		}
@@ -238,10 +238,10 @@
 				$string = fread($this->socketFilePointer, 1);
 			} catch (BaseException $e) {
 				throw new SocketException("Read Byte failure");
-			}			
+			}
 
 			return ord($string);
-		}		
+		}
 
 		public function readWord()
 		{
@@ -314,7 +314,7 @@
 				) {
 					$line .= fgets($this->socketFilePointer, $this->lineLength);
 
-					if (substr($line, -1) == "\n") 
+					if (substr($line, -1) == "\n")
 						return rtrim($line, "\r\n");
 				}
 			} catch (BaseException $e) {
@@ -328,7 +328,7 @@
 		{
 			try {
 				$data = '';
-				while (!feof($this->socketFilePointer)) 
+				while (!feof($this->socketFilePointer))
 					$data .= fread($this->socketFilePointer, $this->lineLength);
 			} catch (BaseException $e) {
 				throw new SocketException("Read all failure");
@@ -346,16 +346,16 @@
 			$except = null;
 
 			try {
-				if ($state & self::NET_SOCKET_READ) 
+				if ($state & self::NET_SOCKET_READ)
 					$read[] = $this->socketFilePointer;
 				
-				if ($state & self::NET_SOCKET_WRITE) 
+				if ($state & self::NET_SOCKET_WRITE)
 					$write[] = $this->socketFilePointer;
 				
-				if ($state & self::NET_SOCKET_ERROR) 
+				if ($state & self::NET_SOCKET_ERROR)
 					$except[] = $this->socketFilePointer;
 				
-				if (false === 
+				if (false ===
 					($sr =
 						stream_select(
 							$read,
@@ -371,13 +371,13 @@
 
 				$result = 0;
 
-				if (count($read)) 
+				if (count($read))
 					$result |= self::NET_SOCKET_READ;
 				
-				if (count($write)) 
+				if (count($write))
 					$result |= self::NET_SOCKET_WRITE;
 				
-				if (count($except)) 
+				if (count($except))
 					$result |= self::NET_SOCKET_ERROR;
 				
 			} catch (BaseException $e) {

@@ -12,7 +12,7 @@
 
 	/**
 	 * Transaction-wrapped queries queue.
-	 *
+	 * 
 	 * @see Queue
 	 * 
 	 * @ingroup DB

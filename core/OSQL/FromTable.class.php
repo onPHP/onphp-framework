@@ -29,7 +29,7 @@
 					(
 						$table instanceof SelectQuery
 						|| $table instanceof LogicalObject
-						|| $table instanceof SQLFunction 
+						|| $table instanceof SQLFunction
 					)
 			)
 				throw new WrongArgumentException(

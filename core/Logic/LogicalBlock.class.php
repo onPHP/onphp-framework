@@ -25,7 +25,7 @@
 			foreach ($args as &$arg) {
 				if (
 					!$arg instanceof LogicalObject &&
-					!$arg instanceof SelectQuery 
+					!$arg instanceof SelectQuery
 				)
 					throw new WrongArgumentException(
 						'unsupported object type: '.get_class($arg)

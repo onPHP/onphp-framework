@@ -63,12 +63,12 @@
 		public function set($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->peer->set($this->watermark.$key, $value, $expires);
-		} 
+		}
 		
 		public function add($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->peer->add($this->watermark.$key, $value, $expires);
-		} 
+		}
 
 		public function replace($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{

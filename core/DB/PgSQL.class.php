@@ -12,7 +12,7 @@
 
 	/**
 	 * PostgreSQL DB connector.
-	 *
+	 * 
 	 * @see http://www.postgresql.org/
 	 * 
 	 * @ingroup DB
@@ -61,7 +61,7 @@
 
 			if ($persistent === true)
 				$this->link = pg_pconnect($conn);
-			else 
+			else
 				$this->link = pg_connect($conn);
 
 			$this->persistent = $persistent;
@@ -138,7 +138,7 @@
 				if ($row = pg_fetch_assoc($res)) {
 					pg_free_result($res);
 					return $dao->makeObject($row);
-				} else 
+				} else
 					pg_free_result($res);
 			}
 

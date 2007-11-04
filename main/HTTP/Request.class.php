@@ -11,48 +11,48 @@
  *   Richard Heyes <richard@phpguru.org>                                   *
  ***************************************************************************/
 /* $Id$ */
-	
-	class RequestException extends BaseException {}
 
-	class Request 
+	class RequestException extends BaseException {}
+	
+	class Request
 	{
-		private $url 			= null;
-		private $method 		= "GET";
-		private $httpVersion	= "1.1";
-		private $requestHeaders = array();
-		private $user 			= null;
-		private $password 		= null;
-		private $socket 		= null;
+		private $url			= null;
+		private $method			= 'GET';
+		private $httpVersion	= '1.1';
+		private $requestHeaders	= array();
+		private $user			= null;
+		private $password		= null;
+		private $socket			= null;
 		
 		private $proxyMandat	= null;
 		
-		private $postData 		= null;
-		private $postFiles 		= array();
-		private $timeout 		= 0;
-		private $response 		= null;
-		private $allowRedirects = false;
-		private $maxRedirects 	= null;
-		private $redirects 		= null;
-		private $useBrackets 	= true;
-		private $saveBody 		= true;
-		private $readTimeout 	= array(); //array(seconds, microseconds)
-		private $socketOptions 	= array();
-
+		private $postData		= null;
+		private $postFiles		= array();
+		private $timeout		= 0;
+		private $response		= null;
+		private $allowRedirects	= false;
+		private $maxRedirects	= null;
+		private $redirects		= null;
+		private $useBrackets	= true;
+		private $saveBody		= true;
+		private $readTimeout	= array(); // array(seconds, microseconds)
+		private $socketOptions	= array();
+		
 		public function __construct($url = null)
 		{
 			$this->url = Url::create()->setUrl($url)->setAll();
 			$this->socket = Socket::create()->setTimeout(30);
 			$this->response = new Response($this->socket);
-
+			
 			$this->setRequestHeader('Connection', 'close');
 			$this->setRequestHeader('User-Agent', 'OnPHP Request class');
 		}
-
+		
 		public static function create($url)
 		{
 			return new Request($url);
 		}
-
+		
 		public function setCredentials(Credentials $credentials)
 		{
 			$this->proxyMandat = $credentials;
@@ -71,130 +71,134 @@
 			
 			return $this;
 		}
-
+		
 		public function getUrl()
 		{
 			return $this->url;
-		} 
-
+		}
+		
 		public function setMethod($method)
 		{
 			$this->method = $method;
-
+			
 			return $this;
 		}
-
+		
 		public function getMethod()
 		{
 			return $this->method;
 		}
-
+		
 		public function setHttpVersion($httpVersion)
 		{
 			$this->httpVersion = $httpVersion;
-
+			
 			return $this;
 		}
-
+		
 		public function getHttpVersion()
 		{
 			return $this->httpVersion;
 		}
-
+		
 		public function setRequestHeader($name, $value)
 		{
 			$this->requestHeaders[$name] = $value;
-
+			
 			return $this;
 		}
-
+		
 		public function getResponseHeader($name)
 		{
-			$header = $this->response->getHeader($name);			
-
+			$header = $this->response->getHeader($name);
+			
 			return !empty($header) ? $header : null;
 		}
 
 		public function removeRequestHeader($name)
 		{
-			if (isset($this->requestHeaders[$name])) 
+			if (isset($this->requestHeaders[$name]))
 				unset($this->requestHeaders[$name]);
-
+			
 			return $this;
 		}
-
+		
 		public function getRequestHeaders()
 		{
 			return $this->requestHeaders;
 		}
-
+		
 		public function getQuantityRequestHeaders()
 		{
 			return count($this->requestHeaders);
 		}
-
+		
 		public function setUser($user)
 		{
 			$this->user = $user;
-
+			
 			return $this;
 		}
-
+		
 		public function getUser()
 		{
 			return $this->user;
 		}
-
+		
 		public function setPassword($password)
 		{
 			$this->password = $password;
 			
 			return $this;
 		}
-
+		
 		public function getPassword()
 		{
 			return $this->password;
 		}
-
+		
 		public function getSocket()
 		{
 			return $this->socket;
 		}
-
+		
 		public function setPostData($name, $value, $preEncoded = false)
 		{
-				$this->postData[$name] = 
-					$preEncoded
-						? $value  
-				 		: $this->arrayMapRecursive('urlencode', $value);
-
+			$this->postData[$name] =
+				$preEncoded
+					? $value
+					: $this->arrayMapRecursive('urlencode', $value);
+			
 			return $this;
 		}
-
+		
 		public function getPostData()
 		{
 			return $this->postData;
 		}
-
-		public function setPostFile($inputName, $fileName, $contentType = 'application/octet-stream')
+		
+		public function setPostFile(
+			$inputName,
+			$fileName,
+			$contentType = 'application/octet-stream'
+		)
 		{
 			if (!is_array($fileName) && !is_readable($fileName)) {
 				throw new RequestException("file '{$fileName}' is not readable");
 			} elseif (is_array($fileName)) {
 				foreach ($fileName as $name) {
-					if (!is_readable($name)) 
+					if (!is_readable($name))
 						throw new RequestException("file '{$name}' is not readable");
 				}
 			}
-
+			
 			$this->setRequestHeader('Content-Type', 'multipart/form-data');
-
+			
 			$this->postFiles[$inputName] = array(
 				'name' => $fileName,
 				'type' => $contentType
 			);
-
+			
 			return $this;
 		}
 		
@@ -202,167 +206,178 @@
 		{
 			return $this->postFiles;
 		}
-
+		
 		public function setTimeout($timeout)
 		{
 			$this->timeout = $timeout;
-
+			
 			return $this;
 		}
-
+		
 		public function getTimeout()
 		{
 			return $this->timeout;
 		}
-
+		
 		public function getResponse()
 		{
 			return $this->response;
 		}
-
+		
 		public function setAllowRedirects($allow = false)
 		{
 			$this->allowRedirects = ($allow === true ? true : false);
-
+			
 			return $this;
 		}
-
+		
 		public function isAllowRedirects()
 		{
 			return $this->allowRedirects;
 		}
-
+		
 		public function setMaxRedirects($maxRedirects)
 		{
 			$this->maxRedirects = $maxRedirects;
-
+			
 			return $this;
 		}
-
+		
 		public function getMaxRedirects()
 		{
 			return $this->maxRedirects;
 		}
-
+		
 		public function setRedirects($redirects)
 		{
 			$this->redirects = $redirects;
-
+			
 			return $this;
 		}
-
+		
 		public function getRedirects()
 		{
 			return $this->redirects;
 		}
-
+		
 		public function setUseBrackets($useBrackets = false)
 		{
 			$this->useBrackets = ($useBrackets === true ? true : false);
-
+			
 			return $this;
 		}
-
+		
 		public function isUseBrackets()
 		{
 			return $this->useBrackets;
 		}
-
+		
 		public function setSaveBody($saveBody = true)
 		{
 			$this->saveBody = ($saveBody === true ? true : false);
-
+			
 			return $this;
 		}
-
+		
 		public function isSaveBody()
 		{
 			return $this->saveBody;
 		}
-
+		
 		public function setReadTimeout($seconds, $microseconds)
 		{
 			$this->readTimeout = array($seconds, $microseconds);
-
+			
 			return $this;
 		}
-
+		
 		public function getReadTimeout()
 		{
 			return $this->readTimeout;
 		}
-
+		
 		public function setSocketOptions($socketOptions)
 		{
 			$this->socketOptions = $socketOptions;
-
+			
 			return $this;
 		}
-
+		
 		public function getSocketOptions()
 		{
 			return $this->socketOptions;
 		}
-
+		
 		public function addCookie($name, $value)
 		{
-			$cookies = isset($this->requestHeaders['Cookie']) ? $this->requestHeaders['Cookie']. '; ' : '';
-			$this->setRequestHeader('Cookie', $cookies . urlencode($name) . '=' . urlencode($value));
-
+			$cookies =
+				isset($this->requestHeaders['Cookie'])
+					? $this->requestHeaders['Cookie']. '; '
+					: '';
+			
+			$this->setRequestHeader(
+				'Cookie',
+				$cookies . urlencode($name) . '=' . urlencode($value)
+			);
+			
 			return $this;
 		}
-
+		
 		public function getResponseCode()
 		{
 			$code = $this->response->getCode();
 			return isset($code) ? $code : false;
 		}
-
+		
 		public function sendRequest($saveBody = true)
 		{
 			$host = $this->url->getCredentials()->getHost();
 			$port = $this->url->getCredentials()->getPort();
-
+			
 			$this->socket->
 				setHost($host)->
 				setPort($port)->
 				setTimeout($this->timeout)->
 				setOptions($this->getSocketOptions())->
 				connect();
-
+			
 			$this->socket->write($this->buildRequest());
-
-			if (!empty($this->readTimeout)) 
-				$this->socket->setTimeout($this->readTimeout[0], $this->readTimeout[1]);
+			
+			if (!empty($this->readTimeout))
+				$this->socket->setTimeout(
+					$this->readTimeout[0],
+					$this->readTimeout[1]
+				);
 			
 			$this->response->process($this->isSaveBody() && $saveBody);
-
+			
 			$responseLocation = $this->response->getHeaders('location');
 			if ($this->isAllowRedirects()
 				&& $this->redirects <= $this->maxRedirects
 				&& $this->responseCode() > 300
 				&& $this->responseCode() < 399
-				&& !empty($responseLocation)) 
-			{
-
+				&& !empty($responseLocation)
+			) {
 				$redirect = $this->response->getHeader('location');
-
+				
 				if (preg_match('/^https?:\/\//i', $redirect)) {
-					$this->url = Url::create()->setCredentials(Credentials::create()->setUrl($redirect));
+					$this->url = Url::create()->setCredentials(
+						Credentials::create()->setUrl($redirect)
+					);
 					$this->setRequestHeader('Host', $this->generateHostHeader());
 				} elseif ($redirect{0} == '/') {
 					$this->url->setPath($redirect);
-				} elseif (substr($redirect, 0, 3) == '../' OR substr($redirect, 0, 2) == './') {
+				} elseif (substr($redirect, 0, 3) == '../' || substr($redirect, 0, 2) == './') {
 					if (substr($this->url->getPath(), -1) == '/') {
 						$redirect = $this->url->getPath() . $redirect;
-					} else 
+					} else
 						$redirect = dirname($this->url->getPath()) . '/' . $redirect;
 
 					$this->url->setPath($redirect);
 				} else {
 					if (substr($this->url->getPath(), -1) == '/') {
 						$redirect = $this->url->getPath() . $redirect;
-					} else 
+					} else
 						$redirect = dirname($this->url->getPath()) . '/' . $redirect;
 
 					$this->url->setPath($redirect);
@@ -372,13 +387,13 @@
 
 				return $this->sendRequest($saveBody);
 
-			} elseif ($this->isAllowRedirects() && $this->getRedirects() > $this->maxRedirects) 
+			} elseif ($this->isAllowRedirects() && $this->getRedirects() > $this->maxRedirects)
 				throw new RequestException("Too many redirects");
 
 			$this->socket->disconnect();
 
 			return true;
-		}	
+		}
 
 		public function getResponseCookies()
 		{
@@ -400,7 +415,7 @@
 				$host = $this->url->getHost() . ':' . $this->url->getPort();
 			} elseif (($this->url->getPort() == 443) && (strcasecmp($this->url->getProtocol(), 'https') == 0) && (strpos($this->url->getUrl(), ':443') !== false)) {
 				$host = $this->url->getHost() . ':' . $this->url->getPort();
-			} else 
+			} else
 				$host = $this->url->getHost();
 
 			return $host;
@@ -441,17 +456,17 @@
 					$request .= $name . ': ' . $value . "\r\n";
 			}
 
-			if (('POST' != $this->method 
-					&& 'PUT' != $this->method) 
+			if (('POST' != $this->method
+					&& 'PUT' != $this->method)
 				||
-				(empty($this->postData) 
-					&& empty($this->postFiles))) 
+				(empty($this->postData)
+					&& empty($this->postFiles)))
 			{
 
 				$request .= "\r\n";
 			} elseif ((!empty($this->postData) && is_array($this->postData)) || !empty($this->postFiles)) {
 				if (!isset($boundary)) {
-					$postData = implode('&', 
+					$postData = implode('&',
 									array_map(
 										create_function('$a', 'return $a[0] . \'=\' . $a[1];'),
 										$this->flattenArray('', $this->getPostData())
@@ -484,8 +499,8 @@
 							fclose($fp);
 
 							$basename = basename($fileName);
-							$type = is_array($value['type']) 
-										? $value['type'][$key] 
+							$type = is_array($value['type'])
+										? $value['type'][$key]
 										: $value['type'];
 
 							$postData .=
@@ -528,7 +543,7 @@
 						$newName = $k;
 					} elseif ($this->isUseBrackets()) {
 						$newName = $name . '[' . $k . ']';
-					} else 
+					} else
 						$newName = $name;
 
 					$ret = array_merge($ret, $this->flattenArray($newName, $v));
@@ -544,7 +559,7 @@
 				return call_user_func($callback, $value);
 			} else {
 				$map = array();
-				foreach ($value as $k => $v) 
+				foreach ($value as $k => $v)
 					$map[$k] = $this->arrayMapRecursive($callback, $v);
 				
 				return $map;

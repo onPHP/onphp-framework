@@ -14,7 +14,7 @@
 	 * Just container of members and methods
 	 * for next their using in output shablons
 	**/
-	class DummyTemplate 
+	class DummyTemplate
 	{
 		const FUNCTION_EXISTS		=
 			'Function with same name already exists: use another one';

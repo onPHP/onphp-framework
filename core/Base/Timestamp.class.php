@@ -13,7 +13,7 @@
 
 	/**
 	 * Date's container and utilities.
-	 *
+	 * 
 	 * @see DateRange
 	 * 
 	 * @ingroup Base
@@ -44,7 +44,7 @@
 			if (is_int($timestamp)) { // unix timestamp
 				$this->int = $timestamp;
 				$this->string = date('Y-m-d H:i:s', $timestamp);
-			} elseif (is_string($timestamp)) { 
+			} elseif (is_string($timestamp)) {
 				$this->int = strtotime($timestamp);
 
 				if (

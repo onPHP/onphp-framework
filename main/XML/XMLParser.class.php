@@ -73,7 +73,7 @@
 		{
 			$content = '';
 
-			while ($data = fread($this->filePointer, self::BUFFER_SIZE)) 
+			while ($data = fread($this->filePointer, self::BUFFER_SIZE))
 				$content .= $data;
 			
 			xml_parse($this->parser, $content);

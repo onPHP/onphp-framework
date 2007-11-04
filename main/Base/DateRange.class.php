@@ -12,7 +12,7 @@
 
 	/**
 	 * Date's interval implementation and accompanying utility methods.
-	 *
+	 * 
 	 * @see Timestamp
 	 * 
 	 * @ingroup Helpers
@@ -146,29 +146,29 @@
 			$max = $range->getEndStamp();
 
 			return (
-				($min && $max 
+				($min && $max
 					&& (
-						( 
-							$left 
+						(
+							$left
 							&& $right
 							&& (
 								$left <= $min && $min <= $right
 								|| $min <= $left && $left <= $max
 							)
 						)
-						|| ( 
+						|| (
 							!$left
 							&& $min <= $right
 						)
-						|| ( 
-							!$right 
+						|| (
+							!$right
 							&& $left <= $max
 						)
 					)
 				)
 				|| ($min && !$max
 					&& (
-						( 
+						(
 							$right
 							&& $min <= $right
 						)
@@ -177,15 +177,15 @@
 				)
 				|| (!$min && $max
 					&& (
-						( 
-							$left 
+						(
+							$left
 							&& $left <= $max
 						)
 						|| !$left
 					)
 				)
 			);
-		} 
+		}
 
 		public function contains(Timestamp $date)
 		{
@@ -200,7 +200,7 @@
 				|| ($start <= $probe && $end >= $probe)
 			)
 				return true;
-			else 
+			else
 				return false;
 		}
 
@@ -217,7 +217,7 @@
 			$end = new Timestamp($this->end->getDayEndStamp());
 
 			for (
-				$current = $start; 
+				$current = $start;
 				$current->toStamp() < $end->toStamp();
 				$current->modify('+1 day')
 			) {
@@ -250,7 +250,7 @@
 			Assert::isTrue(! $this->isOpen() && ! $range->isOpen());
 			if (
 				$this->overlaps($range)
-				|| $this->start->spawn('-1 day')->getDayStartStamp() 
+				|| $this->start->spawn('-1 day')->getDayStartStamp()
 					== $range->end->getDayStartStamp()
 				|| $this->end->spawn('+1 day')->getDayStartStamp()
 					== $range->start->getDayStartStamp()
@@ -273,7 +273,7 @@
 			if (!$range->start)
 				$this->start = null;
 			elseif (
-				$this->start 
+				$this->start
 				&& $this->start->toStamp() > $range->start->toStamp()
 			)
 				$this->start = clone $range->start;
@@ -296,18 +296,18 @@
 		{
 			Assert::isTrue($this->overlaps($range));
 
-			if ($range->start 
+			if ($range->start
 				&& (
-					$this->start 
+					$this->start
 					&& $range->start->toStamp() > $this->start->toStamp()
 					|| !$this->start
 				)
 			)
 				$this->start = clone $range->start;
 
-			if ($range->end 
+			if ($range->end
 				&& (
-					$this->end 
+					$this->end
 					&& $range->end->toStamp() < $this->end->toStamp()
 					|| !$this->end
 				)
@@ -323,9 +323,9 @@
 		{
 			$copy = DateRange::create();
 
-			if ($range->start 
+			if ($range->start
 				&& (
-					$this->start 
+					$this->start
 					&& $range->start->toStamp() > $this->start->toStamp()
 					|| !$this->start
 				)
@@ -334,9 +334,9 @@
 			else
 				$copy->start = $this->start;
 
-			if ($range->end 
+			if ($range->end
 				&& (
-					$this->end 
+					$this->end
 					&& $range->end->toStamp() < $this->end->toStamp()
 					|| !$this->end
 				)
@@ -354,7 +354,7 @@
 			if ($this->start) {
 				
 				if (! $this->dayStartStamp) {
-					$this->dayStartStamp = 
+					$this->dayStartStamp =
 						$this->start->getDayStartStamp();
 				}
 
@@ -374,7 +374,7 @@
 				}
 				
 				return $this->dayEndStamp;
-			} else 
+			} else
 				return null;
 		}
 
@@ -394,7 +394,7 @@
 			$rightEnd = $right->getEndStamp();
 
 			if (
-				!$leftStart && !$rightStart 
+				!$leftStart && !$rightStart
 				|| $leftStart && $rightStart && ($leftStart == $rightStart)
 			) {
 
@@ -412,9 +412,9 @@
 				else
 					return 1;
 
-			} elseif (!$leftStart && $rightStart) 
+			} elseif (!$leftStart && $rightStart)
 				return -1;
-			elseif ($leftStart && !$rightStart) 
+			elseif ($leftStart && !$rightStart)
 				return 1;
 			elseif ($leftStart < $rightStart)
 				return -1;
@@ -425,7 +425,7 @@
 		public function isOneDay()
 		{
 			return (!$this->isOpen())
-				&& ($this->start->toDate() == $this->end->toDate()); 
+				&& ($this->start->toDate() == $this->end->toDate());
 		}
 	}
 ?>

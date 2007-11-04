@@ -14,7 +14,7 @@
 	 * Features are not in Dummy:
 	 * 1. Keeps output info about templates
 	 * 2. Outputs templates
-	 *
+	 * 
 	 * Attention: it is serve's class for PropertyFilter only
 	**/
 	class DummyTemplateWrapper extends DummyTemplate

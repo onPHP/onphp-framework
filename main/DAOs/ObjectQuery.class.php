@@ -247,7 +247,7 @@
 						foreach ($map[$right] as $rightField)
 							$query->andWhere(
 								new LogicalExpression(
-									$leftField, $rightField, $logic 
+									$leftField, $rightField, $logic
 								)
 							);
 				elseif (is_array($map[$left]))

@@ -14,7 +14,7 @@
 	
 	class ResponseException extends BaseException {}
 
-	class Response 
+	class Response
 	{
 		const READ_BYTES = 4096;
 
@@ -97,7 +97,7 @@
 		}
 
 		public function setBody($body)
-		{	
+		{
 			$this->body = $body;
 
 			return $this;
@@ -124,12 +124,12 @@
 		{
 			do {
 				$line = $this->socket->readLine();
-				list($httpVersion, $returnCode) = sscanf($line, 'HTTP/%s %s'); 
+				list($httpVersion, $returnCode) = sscanf($line, 'HTTP/%s %s');
 
 				$this->setProtocol('HTTP/' . $httpVersion);
 				$this->setCode(intval($returnCode));
 				
-				while ('' !== ($header = $this->socket->readLine())) 
+				while ('' !== ($header = $this->socket->readLine()))
 					$this->processHeader($header);
 				
 			} while (100 == $this->code);
@@ -147,19 +147,19 @@
 			while (!$this->socket->isEOF()) {
 				if ($chunked) {
 					$data = $this->readChunked();
-				} else 
+				} else
 					$data = $this->socket->read(self::READ_BYTES);
 				
 				if (!empty($data)) {
 					$hasBody = true;
 
-					if ($saveBody || $gzipped) 
+					if ($saveBody || $gzipped)
 						$this->body .= $data;
 				}
 			}
 
 			if ($hasBody) {
-				if ($gzipped) 
+				if ($gzipped)
 					$this->body = gzinflate(substr($this->body, 10));
 			}
 
@@ -172,7 +172,7 @@
 			$array = explode(': ', $header);
 
 			$headerName = array_shift($array);
-			$headerValue = implode(":", $array); 
+			$headerValue = implode(":", $array);
 
 			$headerNameTmp	= strtolower($headerName);
 			$headerValue	= ltrim($headerValue);
@@ -180,7 +180,7 @@
 			if ('set-cookie' != $headerNameTmp) {
 				$this->setHeader($headerName, $headerValue);
 				$this->setHeader($headerNameTmp, $headerValue);
-			} else 
+			} else
 				$this->parseCookie($headerValue);
 
 			return $this;			
@@ -210,7 +210,7 @@
 					if (false === strpos($elements[$i], '=')) {
 						$elName  = trim($elements[$i]);
 						$elValue = null;
-					} else 
+					} else
 						list ($elName, $elValue) = array_map('trim', explode('=', $elements[$i]));
 					
 					$elName = strtolower($elName);
@@ -221,7 +221,7 @@
 						$cookie['expires'] = str_replace('"', '', $elValue);
 					} elseif ('path' == $elName || 'domain' == $elName) {
 						$cookie[$elName] = urldecode($elValue);
-					} else 
+					} else
 						$cookie[$elName] = $elValue;
 				}
 			}
@@ -242,19 +242,19 @@
 					$this->setChunkLength(hexdec($matches[1]));
 
 					if (0 == $this->chunkLength) {
-						$this->socket->readAll(); 
+						$this->socket->readAll();
 
 						return null;
 					}
-				} elseif ($this->socket->isEOF()) 
+				} elseif ($this->socket->isEOF())
 					return null;
 			}
 
 			$data = $this->socket->read($this->chunkLength);
 			$this->setChunkLength($this->chunkLength -  strlen($data));
 
-			if (0 == $this->chunkLength) 
-				$this->socket->readLine(); 
+			if (0 == $this->chunkLength)
+				$this->socket->readLine();
 
 			return $data;
 		}

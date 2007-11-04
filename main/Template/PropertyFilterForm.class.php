@@ -9,7 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
- 
+
 	/**
 	 * PropertyFilter contains Form as main property
 	**/
@@ -69,7 +69,7 @@
 					return null;
 				}
 			}
-
+			
 			return null;
 		}
 		
@@ -81,13 +81,13 @@
 		public function getValue($primitiveName)
 		{
 			try {
-			if ($value = $this->getRawValue($primitiveName))
-				try {
-					$method = $this->getDefaultHandler();
-					return $this->$method($this->getRawValue($primitiveName));
-				} catch (BaseException $e) {
-					return $this->getDefault();
-				}
+				if ($value = $this->getRawValue($primitiveName))
+					try {
+						$method = $this->getDefaultHandler();
+						return $this->$method($this->getRawValue($primitiveName));
+					} catch (BaseException $e) {
+						return $this->getDefault();
+					}
 			} catch (BaseException $e) {
 				return $this->getDefault();
 			}
@@ -100,9 +100,9 @@
 		**/
 		public function setUrl($url)
 		{
-			   $this->_url	= $url;
-			   
-			   return $this;
+			$this->_url	= $url;
+			
+			return $this;
 		}
 		
 		/**
@@ -112,10 +112,10 @@
 		**/
 		public function setArea($url, $area)
 		{
-			   $this->_url	= $url;
-			   $this->_area	= $area;
-			   
-			   return $this;
+			$this->_url	= $url;
+			$this->_area	= $area;
+			
+			return $this;
 		}
 		
 		/**
