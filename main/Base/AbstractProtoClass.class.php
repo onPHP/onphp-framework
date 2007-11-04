@@ -123,7 +123,8 @@
 		**/
 		public function fillQuery(
 			InsertOrUpdateQuery $query, Prototyped $object
-		) {
+		)
+		{
 			foreach ($this->getPropertyList() as $property) {
 				$property->fillQuery($query, $object);
 			}
@@ -185,7 +186,8 @@
 			BasePrimitive $prm,
 			/* Prototyped */ $object,
 			$ignoreNull = true
-		) {
+		)
+		{
 			if (strpos($path, ':') !== false) {
 				return $this->forwardPrimitive(
 					$path, null, $prm, $object, $ignoreNull
@@ -318,7 +320,8 @@
 			BasePrimitive $prm,
 			/* Prototyped */ $object,
 			$ignoreNull = true
-		) {
+		)
+		{
 			list($propertyName, $path) = explode(':', $path, 2);
 			
 			$property = $this->getPropertyByName($propertyName);
