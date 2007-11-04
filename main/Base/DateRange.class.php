@@ -29,12 +29,12 @@
 		{
 			return new self;
 		}
-
+		
 		public function __clone()
 		{
 			if ($this->start)
 				$this->start = clone $this->start;
-
+			
 			if ($this->end)
 				$this->end = clone $this->end;
 		}
@@ -45,19 +45,19 @@
 				throw new WrongArgumentException(
 					'start must be lower than end'
 				);
-
+			
 			$this->start = $start;
 			$this->dayStartStamp = null;
 			return $this;
 		}
-
+		
 		public function setEnd(Timestamp $end)
 		{
 			if ($this->start && $this->start->toStamp() > $end->toStamp())
 				throw new WrongArgumentException(
 					'end must be higher than start'
 				);
-
+			
 			$this->end = $end;
 			$this->dayEndStamp = null;
 			return $this;
@@ -77,14 +77,14 @@
 			
 			return $this;
 		}
-
+		
 		public function dropStart()
 		{
 			$this->start = null;
 			$this->dayStartStamp = null;
 			return $this;
 		}
-
+		
 		public function dropEnd()
 		{
 			$this->end = null;
@@ -98,17 +98,17 @@
 				($this->start === null)
 				&& ($this->end === null);
 		}
-
+		
 		public function getStart()
 		{
 			return $this->start;
 		}
-
+		
 		public function getEnd()
 		{
 			return $this->end;
 		}
-
+		
 		public function toDateString($delimiter = '-')
 		{
 			if ($this->start && $this->end)
@@ -134,17 +134,17 @@
 			else
 				return null;
 		}
-
+		
 		public function overlaps(DateRange $range)
 		{
 			if ($this->isEmpty() || $range->isEmpty())
 				return true;
-
+			
 			$left = $this->getStartStamp();
 			$right = $this->getEndStamp();
 			$min = $range->getStartStamp();
 			$max = $range->getEndStamp();
-
+			
 			return (
 				($min && $max
 					&& (
@@ -186,13 +186,13 @@
 				)
 			);
 		}
-
+		
 		public function contains(Timestamp $date)
 		{
 			$start = $this->getStartStamp();
 			$end = $this->getEndStamp();
 			$probe = $date->toStamp();
-
+			
 			if (
 				(!$start && !$end)
 				|| (!$start && $end >= $probe)
@@ -203,7 +203,7 @@
 			else
 				return false;
 		}
-
+		
 		public function split()
 		{
 			Assert::isFalse(
@@ -211,11 +211,11 @@
 				"open range can't be splitted"
 			);
 			$timestamps = array();
-
+			
 			$start = new Timestamp($this->start->getDayStartStamp());
-
+			
 			$end = new Timestamp($this->end->getDayEndStamp());
-
+			
 			for (
 				$current = $start;
 				$current->toStamp() < $end->toStamp();
@@ -223,7 +223,7 @@
 			) {
 				$timestamps[] = new Timestamp($current->getDayStartStamp());
 			}
-
+			
 			return $timestamps;
 		}
 		
@@ -247,7 +247,7 @@
 		
 		public function isNeighbour(DateRange $range)
 		{
-			Assert::isTrue(! $this->isOpen() && ! $range->isOpen());
+			Assert::isTrue(!$this->isOpen() && !$range->isOpen());
 			if (
 				$this->overlaps($range)
 				|| $this->start->spawn('-1 day')->getDayStartStamp()
@@ -256,7 +256,7 @@
 					== $range->start->getDayStartStamp()
 			)
 				return true;
-			else			
+			else
 				return false;
 		}
 		
@@ -264,7 +264,7 @@
 		{
 			return !$this->start || !$this->end;
 		}
-
+		
 		/**
 		 * enlarges $this by given $range, if last one is wider
 		**/
@@ -277,7 +277,7 @@
 				&& $this->start->toStamp() > $range->start->toStamp()
 			)
 				$this->start = clone $range->start;
-
+			
 			if (!$range->end)
 				$this->end = null;
 			elseif (
@@ -285,17 +285,17 @@
 				&& $this->end->toStamp() < $range->end->toStamp()
 			)
 				$this->end = clone $range->end;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * intersection of $this and given $range
 		**/
 		public function clip(DateRange $range)
 		{
 			Assert::isTrue($this->overlaps($range));
-
+			
 			if ($range->start
 				&& (
 					$this->start
@@ -304,25 +304,24 @@
 				)
 			)
 				$this->start = clone $range->start;
-
+			
 			if ($range->end
 				&& (
 					$this->end
 					&& $range->end->toStamp() < $this->end->toStamp()
 					|| !$this->end
 				)
-
 			)
 				$this->end = clone $range->end;
-
+			
 			return $this;
 		}
-
+		
 		// result is read-only, no error checking
 		public function lightCopyOnClip(DateRange $range)
 		{
 			$copy = DateRange::create();
-
+			
 			if ($range->start
 				&& (
 					$this->start
@@ -333,42 +332,41 @@
 				$copy->start = $range->start;
 			else
 				$copy->start = $this->start;
-
+			
 			if ($range->end
 				&& (
 					$this->end
 					&& $range->end->toStamp() < $this->end->toStamp()
 					|| !$this->end
 				)
-
 			)
 				$copy->end = $range->end;
 			else
 				$copy->end = $this->end;
-
+			
 			return $copy;
 		}
-
+		
 		public function getStartStamp() // null if start is null
 		{
 			if ($this->start) {
 				
-				if (! $this->dayStartStamp) {
+				if (!$this->dayStartStamp) {
 					$this->dayStartStamp =
 						$this->start->getDayStartStamp();
 				}
-
+				
 				return $this->dayStartStamp;
 				
 			} else
 				return null;
 		}
-
+		
 		public function getEndStamp() // null if end is null
 		{
 			if ($this->end) {
 				
-				if (! $this->dayEndStamp) {
+				if (!$this->dayEndStamp) {
 					$this->dayEndStamp =
 						$this->end->getDayEndStamp();
 				}
@@ -377,7 +375,7 @@
 			} else
 				return null;
 		}
-
+		
 		public static function compare(DateRange $left, DateRange $right)
 		{
 			if ($left->isEmpty() && $right->isEmpty())
@@ -386,18 +384,17 @@
 				return 1;
 			elseif ($right->isEmpty())
 				return -1;
-
+			
 			$leftStart = $left->getStartStamp();
 			$leftEnd = $left->getEndStamp();
-
+			
 			$rightStart = $right->getStartStamp();
 			$rightEnd = $right->getEndStamp();
-
+			
 			if (
 				!$leftStart && !$rightStart
 				|| $leftStart && $rightStart && ($leftStart == $rightStart)
 			) {
-
 				if (
 					!$leftEnd && !$rightEnd
 					|| $leftEnd && $rightEnd && ($leftEnd == $rightEnd)
@@ -405,13 +402,12 @@
 					return 0;
 				elseif (!$leftEnd && $rightEnd)
 					return 1;
-				elseif($leftEnd && !$rightEnd)
+				elseif ($leftEnd && !$rightEnd)
 					return -1;
 				elseif ($leftEnd < $rightEnd)
 					return -1;
 				else
 					return 1;
-
 			} elseif (!$leftStart && $rightStart)
 				return -1;
 			elseif ($leftStart && !$rightStart)

@@ -523,7 +523,7 @@
 				$request .= 'Content-Length: ' . strlen($postData) . "\r\n\r\n";
 				$request .= $postData;
 
-			} elseif(!empty($this->postData)) {
+			} elseif (!empty($this->postData)) {
 				$request .= 'Content-Length: ' . strlen($this->postData) . "\r\n\r\n";
 				$request .= $this->postData;
 			}
