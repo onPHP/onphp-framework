@@ -62,7 +62,7 @@
 		private static function connect()
 		{
 			if (!self::$defaultDB)
-				self::$defaultDB = 
+				self::$defaultDB =
 					DBFactory::getCustomInstance(
 						DB_USER,
 						DB_PASS,

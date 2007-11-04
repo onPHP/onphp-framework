@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Base
 	**/
-	class SessionNotStartedException extends BaseException 
+	class SessionNotStartedException extends BaseException
 	{
 		function __construct()
 		{
@@ -64,7 +64,7 @@
 		{
 			if (Session::isStarted())
 				$_SESSION[$var] = $val;
-			else 
+			else
 				throw new SessionNotStartedException();
 		}
 		
@@ -104,7 +104,7 @@
 						unset($_SESSION[$arg]);
 				else
 					throw new WrongArgumentException('missing argument(s)');
-			} else 
+			} else
 				throw new SessionNotStartedException();
 		}
 		

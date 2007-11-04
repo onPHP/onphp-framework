@@ -128,7 +128,7 @@
 				$this->right = $this->right->toBoolean($form);
 			}
 			
-			$both = 
+			$both =
 				(null !== $this->left) &&
 				(null !== $this->right);
 

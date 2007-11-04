@@ -63,14 +63,14 @@
 			$this->pool[$key] = $value;
 			
 			return $this->peer->set($key, $value, $expires);
-		} 
+		}
 		
 		public function add($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			$this->pool[$key] = $value;
 			
 			return $this->peer->add($key, $value, $expires);
-		} 
+		}
 
 		public function replace($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{

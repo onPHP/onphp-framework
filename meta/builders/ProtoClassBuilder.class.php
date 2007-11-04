@@ -62,7 +62,7 @@ EOT;
 				) {
 					
 					if (
-						!$property->isIdentifier() 
+						!$property->isIdentifier()
 						&&
 							MetaConfiguration::me()->getClassByName(
 								$property->getType()->getClass()

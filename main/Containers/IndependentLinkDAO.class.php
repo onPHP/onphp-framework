@@ -118,11 +118,11 @@
 				$this->getChildDAO()->
 					makeSelectHead()->
 					join(
-						$this->getTable(), 
+						$this->getTable(),
 						Expression::expAnd(
 							Expression::eq(
 								new DBField(
-									$this->getChildIdField(), 
+									$this->getChildIdField(),
 									$this->getTable()
 								),
 								new DBField(
@@ -132,7 +132,7 @@
 							),
 							Expression::eq(
 								new DBField(
-									$this->getParentIdField(), 
+									$this->getParentIdField(),
 									$this->getTable()
 								),
 								new DBValue($parentId)

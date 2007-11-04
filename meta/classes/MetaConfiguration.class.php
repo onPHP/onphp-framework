@@ -258,8 +258,8 @@
 			}
 			
 			if (
-				$class->getType() 
-				&& $class->getType()->getId() 
+				$class->getType()
+				&& $class->getType()->getId()
 					== MetaClassType::CLASS_SPOOKED
 			) {
 				Assert::isFalse(

@@ -28,48 +28,47 @@
 		{
 			return new self();
 		}
-
+		
 		public function send()
 		{
 			if (empty($this->to))
 				throw new WrongArgumentException("mail to: is not specified");
-				
+			
 			$siteEncoding = mb_get_info('internal_encoding');
 			
-			if (!$this->encoding 
+			if (!$this->encoding
 				|| $this->encoding == $siteEncoding
 			) {
 				$encoding = $siteEncoding;
 				$to = $this->to;
 				$from = $this->from;
 				$subject =
-					 "=?".$encoding."?B?"
-					 .base64_encode($this->subject)
-					 ."?=";
+					"=?".$encoding."?B?"
+					.base64_encode($this->subject)
+					."?=";
 				$body = $this->text;
-				
 			} else {
 				$encoding = $this->encoding;
 				$to = mb_convert_encoding($this->to, $encoding);
 				$from = mb_convert_encoding($this->from, $encoding);
-	
+					
 				$subject =
-					 "=?".$encoding."?B?"
-					 .base64_encode(
-					 	iconv(
-					 		$siteEncoding,
-					 		$encoding.'//TRANSLIT',
-					 		$this->subject
-					 	)
-					 )."?=";
-					 
+					"=?".$encoding."?B?"
+					.base64_encode(
+						iconv(
+							$siteEncoding,
+							$encoding.'//TRANSLIT',
+							$this->subject
+						)
+					)."?=";
+				
 				$body = iconv(
 					$siteEncoding,
-					$encoding.'//TRANSLIT', 
+					$encoding.'//TRANSLIT',
 					$this->text
 				);
 			}
-
+			
 			$headers = null;
 			if (!empty($this->from)) {
 				$headers .= "From: ".$this->from."\n";
@@ -79,7 +78,7 @@
 			$headers .= "Content-type: text/html; charset=".$encoding."\n";
 			$headers .= "Content-Transfer-Encoding: 8bit\n";
 			$headers .= "Date: ".date('r')."\n";
-
+			
 			if (!mail($to, $subject, $body, $headers))
 				throw new MailNotSentException();
 		}
@@ -89,7 +88,7 @@
 			$this->to = $to;
 			return $this;
 		}
-
+		
 		public function setSubject($subject)
 		{
 			$this->subject = $subject;

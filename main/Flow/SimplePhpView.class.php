@@ -36,7 +36,7 @@
 			include $this->templatePath;
 		}
 		
-		public function toString($model = null) 
+		public function toString($model = null)
 		{
 			ob_start();
 			$this->render($model);

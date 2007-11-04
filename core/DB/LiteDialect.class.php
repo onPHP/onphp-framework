@@ -12,7 +12,7 @@
 
 	/**
 	 * SQLite dialect.
-	 *
+	 * 
 	 * @see http://www.sqlite.org/
 	 * 
 	 * @ingroup DB

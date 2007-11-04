@@ -12,7 +12,7 @@
 
 	/**
 	 * PostgreSQL dialect.
-	 *
+	 * 
 	 * @see http://www.postgresql.org/
 	 * 
 	 * @ingroup DB
@@ -55,9 +55,9 @@
 			return
 				strtolower(
 					implode(
-						$glue, 
+						$glue,
 						array_map(
-							array('PostgresDialect', 'quoteValue'), 
+							array('PostgresDialect', 'quoteValue'),
 							$words
 						)
 					)
@@ -69,7 +69,7 @@
 			$searchString = self::prepareFullText($words, $logic);
 			$field = $this->fieldToString($field);
 
-			return 
+			return
 				"({$field} @@ to_tsquery('".self::$tsConfiguration."', ".
 				self::quoteValue($searchString)."))";
 		}
@@ -79,7 +79,7 @@
 			$searchString = self::prepareFullText($words, $logic);
 			$field = $this->fieldToString($field);
 			
-			return 
+			return
 				"rank({$field}, to_tsquery('".self::$tsConfiguration."', ".
 				self::quoteValue($searchString)."))";
 		}

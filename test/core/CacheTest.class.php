@@ -30,7 +30,7 @@
 					$twoHit++;
 			}
 			
-			$this->assertTrue(	
+			$this->assertTrue(
 				($oneHit == $twoHit)
 				&& $twoHit == 10000
 			);

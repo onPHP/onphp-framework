@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	abstract class EditorController implements Controller 
+	abstract class EditorController implements Controller
 	{
 		const COMMAND_SUCCEEDED	= 'success';
 		const COMMAND_FAILED	= 'error';

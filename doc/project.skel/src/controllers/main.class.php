@@ -5,7 +5,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class main implements Controller 
+	class main implements Controller
 	{
 		public function handleRequest(HttpRequest $request)
 		{

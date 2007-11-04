@@ -67,7 +67,7 @@
 		
 		public static function dropTableMode($cascade = false)
 		{
-			return 
+			return
 				$cascade
 					? ' CASCADE'
 					: ' RESTRICT';

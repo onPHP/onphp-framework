@@ -12,7 +12,7 @@
 
 	/**
 	 * Straight and inefficient implementation of object's tree.
-	 *
+	 * 
 	 * @see ObjectsTreeDAO
 	 * @see FinalObjectsTreeDAO
 	 * 

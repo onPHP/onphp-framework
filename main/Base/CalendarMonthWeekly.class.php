@@ -12,7 +12,7 @@
 
 	/**
 	 * Calendar month representation splitted by weeks.
-	 *
+	 * 
 	 * @ingroup Calendar
 	**/
 	class CalendarMonthWeekly
@@ -56,7 +56,7 @@
 				
 				if ($this->monthRange->contains($day))
 					$day->setOutside(false);
-				else 
+				else
 					$day->setOutside(true);
 					
 				$this->days[$day->toDate()] = $day;

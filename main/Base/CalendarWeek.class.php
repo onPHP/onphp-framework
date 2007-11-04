@@ -12,7 +12,7 @@
 
 	/**
 	 * Calendar week representation.
-	 *
+	 * 
 	 * @ingroup Calendar
 	**/
 	class CalendarWeek

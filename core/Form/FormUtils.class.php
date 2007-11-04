@@ -43,7 +43,7 @@
 							elseif ($value instanceof Stringable)
 								$fake = array($name => $value->toString());
 							// PrimitiveBoolean
-							elseif (is_bool($value) && $value === false) 
+							elseif (is_bool($value) && $value === false)
 								$fake = array();
 							// everything else
 							else
