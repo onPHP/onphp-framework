@@ -2,7 +2,12 @@
 
 2007-11-02	Vladimir A. Altuchov
 
-	* main/Utils/IO/FileReader.class.php: new reader added. 
+	* main/Utils/IO/FileReader.class.php: new reader added.
+
+2007-11-02	Konstantin V. Arkhipov
+
+	* main/DAOs/StorableDAO.class.php: inject() now checks affected rows
+	count for sanity.
 
 2007-11-01	Vladimir A. Altuchov
 
