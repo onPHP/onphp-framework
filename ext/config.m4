@@ -33,6 +33,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/DBBinary.c \
 		src/core/OSQL/DBField.c \
 		src/core/OSQL/DBValue.c \
+		src/core/OSQL/DropTableQuery.c \
 		src/core/OSQL/DialectString.c \
 		src/core/OSQL/FieldTable.c \
 		src/core/OSQL/SelectField.c \

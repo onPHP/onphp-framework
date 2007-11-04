@@ -63,6 +63,7 @@ Dialect, \
 DBBinary, \
 DBField, \
 DBValue, \
+DropTableQuery, \
 Enumeration, \
 FieldTable, \
 IdentifiableObject, \

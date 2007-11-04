@@ -42,6 +42,7 @@
 #include "core/OSQL/DBBinary.h"
 #include "core/OSQL/DBField.h"
 #include "core/OSQL/DBValue.h"
+#include "core/OSQL/DropTableQuery.h"
 #include "core/OSQL/DialectString.h"
 #include "core/OSQL/FieldTable.h"
 #include "core/OSQL/SelectField.h"
@@ -163,6 +164,11 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_PROPERTY(DBField, "table", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_IMPLEMENTS(DBField, SQLTableName);
 	onphp_ce_DBValue->ce_flags |= ZEND_ACC_FINAL_CLASS;
+	
+	REGISTER_ONPHP_SUB_CLASS_EX(DropTableQuery, QueryIdentification);
+	REGISTER_ONPHP_PROPERTY(DropTableQuery, "name", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_PROPERTY_BOOL(DropTableQuery, "cascade", 0, ZEND_ACC_PRIVATE);
+	onphp_ce_DropTableQuery->ce_flags |= ZEND_ACC_FINAL_CLASS;
 	
 	REGISTER_ONPHP_SUB_CLASS_EX(SelectField, FieldTable);
 	REGISTER_ONPHP_PROPERTY(SelectField, "alias", ZEND_ACC_PRIVATE);

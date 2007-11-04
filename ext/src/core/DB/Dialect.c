@@ -121,16 +121,12 @@ ONPHP_METHOD(Dialect, toCasted)
 
 ONPHP_METHOD(Dialect, timeZone)
 {
-	unsigned char argc = ZEND_NUM_ARGS();
-
-	if (argc) {
-		zend_bool exist = 0;
-		
-		zend_parse_parameters(argc TSRMLS_CC, "b", &exist);
-		
-		if (exist) {
-			RETURN_STRING(" WITH TIME ZONE", 1);
-		}
+	zend_bool exist = 0;
+	
+	ONPHP_GET_ARGS("|b", &exist);
+	
+	if (exist) {
+		RETURN_STRING(" WITH TIME ZONE", 1);
 	}
 	
 	RETURN_STRING(" WITHOUT TIME ZONE", 1);
@@ -138,16 +134,12 @@ ONPHP_METHOD(Dialect, timeZone)
 
 ONPHP_METHOD(Dialect, dropTableMode)
 {
-	unsigned char argc = ZEND_NUM_ARGS();
+	zend_bool cascade = 0;
 	
-	if (argc) {
-		zend_bool cascade = 0;
-		
-		zend_parse_parameters(argc TSRMLS_CC, "b", &cascade);
-		
-		if (cascade) {
-			RETURN_STRING(" CASCADE", 1);
-		}
+	ONPHP_GET_ARGS("|b", &cascade);
+	
+	if (cascade) {
+		RETURN_STRING(" CASCADE", 1);
 	}
 	
 	RETURN_STRING(" RESTRICT", 1);
