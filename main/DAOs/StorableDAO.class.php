@@ -19,7 +19,7 @@
 		{
 			return
 				$object->getId()
-					? $this->save($object)
+					? $this->merge($object, true)
 					: $this->add($object);
 		}
 		
@@ -40,9 +40,7 @@
 		{
 			return
 				$this->inject(
-					OSQL::update()->where(
-						Expression::eqId($this->getIdName(), $object)
-					),
+					$this->targetizeUpdateQuery(OSQL::update(), $object),
 					$object
 				);
 		}
@@ -54,6 +52,49 @@
 					OSQL::insert(),
 					$object
 				);
+		}
+		
+		public function merge(Identifiable $object, $cacheOnly = true)
+		{
+			Assert::isPositiveInteger($object->getId());
+			$this->checkObjectType($object);
+			
+			$old = Cache::worker($this)->getCachedById($object->getId());
+			
+			if (!$old) { // unlikely
+				if ($cacheOnly)
+					return $this->save($object);
+				else
+					$old = Cache::worker($this)->getById($object->getId());
+			}
+			
+			$query = OSQL::update($this->getTable());
+			
+			foreach ($this->getProtoClass()->getPropertyList() as $property) {
+				$getter = $property->getGetter();
+				
+				if ($old->$getter() !== $object->$getter()) {
+					$property->fillQuery($query, $object);
+				}
+			}
+			
+			if (!$query->getFieldsCount())
+				return $object;
+			
+			$this->targetizeUpdateQuery($query, $object);
+			
+			return $this->doInject($query, $object);
+		}
+		
+		/**
+		 * @return UpdateQuery
+		**/
+		private function targetizeUpdateQuery(
+			UpdateQuery $query,
+			Identifiable $object
+		)
+		{
+			return $query->where(Expression::eqId($this->getIdName(), $object));
 		}
 	}
 ?>

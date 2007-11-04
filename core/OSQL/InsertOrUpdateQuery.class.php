@@ -29,6 +29,11 @@
 			return $this->table;
 		}
 		
+		public function getFieldsCount()
+		{
+			return count($this->fields);
+		}
+		
 		/**
 		 * @return InsertOrUpdateQuery
 		**/

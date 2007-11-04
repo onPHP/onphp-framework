@@ -2,6 +2,10 @@
 
 2007-11-04	Konstantin V. Arkhipov
 
+	* main/DAOs/StorableDAO.class.php: added merge() which updates only
+	changed columns; take() now uses cache-only merge() instead of plain
+	save().
+
 	* ext/src/core/Form/: BasePrimitive, RangedPrimitive, ComplexPrimitive
 	implemented.
 

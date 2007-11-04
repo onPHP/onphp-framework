@@ -234,7 +234,7 @@
 		
 		/// cache getters
 		//@{
-		protected function getCachedById($id)
+		public function getCachedById($id)
 		{
 			return null;
 		}

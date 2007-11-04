@@ -99,7 +99,7 @@
 		
 		/// cache getters
 		//@{
-		protected function getCachedById($id)
+		public function getCachedById($id)
 		{
 			return
 				Cache::me()->mark($this->className)->

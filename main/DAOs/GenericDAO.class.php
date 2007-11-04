@@ -277,11 +277,20 @@
 		{
 			$this->checkObjectType($object);
 			
-			$count = DBPool::getByDao($this)->queryCount(
+			return $this->doInject(
 				$this->setQueryFields(
 					$query->setTable($this->getTable()), $object
-				)
+				),
+				$object
 			);
+		}
+		
+		protected function doInject(
+			InsertOrUpdateQuery $query,
+			Identifiable $object
+		)
+		{
+			$count = DBPool::getByDao($this)->queryCount($query);
 			
 			$this->uncacheById($object->getId());
 			
