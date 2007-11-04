@@ -17,11 +17,11 @@
 	**/
 	final class Time implements Stringable
 	{
-		protected $hour		= 0;
-		protected $minute	= 0;
-		protected $second	= 0;
+		private $hour	= 0;
+		private $minute	= 0;
+		private $second	= 0;
 		
-		private $string		= null;
+		private $string	= null;
 		
 		/**
 		 * @return Time
