@@ -190,10 +190,7 @@ ONPHP_METHOD(Dialect, fieldToString)
 	
 	ONPHP_GET_ARGS("z", &field);
 	
-	if (
-		Z_TYPE_P(field) == IS_OBJECT
-		&& instanceof_function(Z_OBJCE_P(field), onphp_ce_DialectString TSRMLS_CC)
-	) {
+	if (ONPHP_INSTANCEOF(field, DialectString)) {
 		ONPHP_CALL_METHOD_1(field, "todialectstring", out, getThis());
 	} else {
 		ONPHP_CALL_METHOD_1(getThis(), "quotefield", out, field);
@@ -208,10 +205,7 @@ ONPHP_METHOD(Dialect, valueToString)
 	
 	ONPHP_GET_ARGS("z", &value);
 	
-	if (
-		Z_TYPE_P(value) == IS_OBJECT
-		&& instanceof_function(Z_OBJCE_P(value), onphp_ce_DBValue TSRMLS_CC)
-	) {
+	if (ONPHP_INSTANCEOF(value, DBValue)) {
 		ONPHP_CALL_METHOD_1(value, "todialectstring", out, getThis());
 	} else {
 		ONPHP_CALL_METHOD_1(getThis(), "quotevalue", out, value);
@@ -227,14 +221,7 @@ smart_str onphp_dialect_to_needed_string(
 	smart_str string = {0};
 	zval *out;
 	
-	if (
-		Z_TYPE_P(expression) == IS_OBJECT
-		&&
-			instanceof_function(
-				Z_OBJCE_P(expression),
-				onphp_ce_DialectString TSRMLS_CC
-			)
-	) {
+	if (ONPHP_INSTANCEOF(expression, DialectString)) {
 		// ONPHP_CALL_METHOD_1 can't be used here due to non-void function
 		zend_call_method_with_1_params(
 			&expression,
@@ -249,7 +236,7 @@ smart_str onphp_dialect_to_needed_string(
 			return string;
 		}
 		
-		if (instanceof_function(Z_OBJCE_P(expression), onphp_ce_Query TSRMLS_CC)) {
+		if (ONPHP_INSTANCEOF(expression, Query)) {
 			smart_str_appends(&string, "(");
 			onphp_append_zval_to_smart_string(&string, out);
 			smart_str_appends(&string, ")");

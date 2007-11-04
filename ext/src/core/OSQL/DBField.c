@@ -150,15 +150,7 @@ ONPHP_METHOD(DBField, setTable)
 	
 	ONPHP_GET_ARGS("z", &table);
 	
-	if (
-		(Z_TYPE_P(table) != IS_OBJECT)
-		|| (
-			!instanceof_function(
-				Z_OBJCE_P(table),
-				onphp_ce_DialectString TSRMLS_CC
-			)
-		)
-	) {
+	if (!ONPHP_INSTANCEOF(table, DialectString)) {
 		zend_class_entry **cep;
 		zval *from_table;
 		

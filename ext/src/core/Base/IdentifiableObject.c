@@ -30,20 +30,17 @@ ONPHP_METHOD(IdentifiableObject, wrap)
 ONPHP_METHOD(IdentifiableObject, getId)
 {
 	zval *id;
-
+	
 	id = ONPHP_READ_PROPERTY(getThis(), "id");
-
-	if (
-		Z_TYPE_P(id) == IS_OBJECT
-		&& instanceof_function(Z_OBJCE_P(id), onphp_ce_Identifier TSRMLS_CC)
-	) {
+	
+	if (ONPHP_INSTANCEOF(id, Identifier)) {
 		if (
 			zval_is_true(ONPHP_READ_PROPERTY(id, "final"))
 		) {
 			id = ONPHP_READ_PROPERTY(id, "id");
 		}
 	}
-
+	
 	RETURN_ZVAL(id, 1, 0);
 }
 

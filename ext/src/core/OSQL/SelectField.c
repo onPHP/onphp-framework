@@ -73,13 +73,7 @@ ONPHP_METHOD(SelectField, getName)
 {
 	zval *field = ONPHP_READ_PROPERTY(getThis(), "field");
 	
-	if (
-		(Z_TYPE_P(field) == IS_OBJECT)
-		&& instanceof_function(
-			Z_OBJCE_P(field),
-			onphp_ce_DBField TSRMLS_CC
-		)
-	) {
+	if (ONPHP_INSTANCEOF(field, DBField)) {
 		zval *tmp;
 		
 		ONPHP_CALL_METHOD_0(field, "getfield", tmp);

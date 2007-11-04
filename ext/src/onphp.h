@@ -20,6 +20,12 @@
 
 #define ZVAL_FREE(z) zval_dtor(z); FREE_ZVAL(z);
 
+#define ONPHP_INSTANCEOF(object, class_name) \
+	( \
+		(Z_TYPE_P(object) == IS_OBJECT) \
+		&& instanceof_function(Z_OBJCE_P(object), onphp_ce_ ## class_name TSRMLS_CC) \
+	)
+
 #define ONPHP_GET_ARGS(type_spec, ...) \
 	if ( \
 		zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, type_spec, __VA_ARGS__) == FAILURE \

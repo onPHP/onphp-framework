@@ -107,10 +107,7 @@ ONPHP_METHOD(ImaginaryDialect, fieldToString)
 	
 	ONPHP_GET_ARGS("z", &field);
 	
-	if (
-		Z_TYPE_P(field) == IS_OBJECT
-		&& instanceof_function(Z_OBJCE_P(field), onphp_ce_DialectString TSRMLS_CC)
-	) {
+	if (ONPHP_INSTANCEOF(field, DialectString)) {
 		ONPHP_CALL_METHOD_1(field, "todialectstring", out, getThis());
 		
 		RETURN_ZVAL(out, 1, 1);
@@ -125,10 +122,7 @@ ONPHP_METHOD(ImaginaryDialect, valueToString)
 	
 	ONPHP_GET_ARGS("z", &value);
 	
-	if (
-		Z_TYPE_P(value) == IS_OBJECT
-		&& instanceof_function(Z_OBJCE_P(value), onphp_ce_DBValue TSRMLS_CC)
-	) {
+	if (ONPHP_INSTANCEOF(value, DBValue)) {
 		zval *out;
 		
 		ONPHP_CALL_METHOD_1(value, "todialectstring", out, value);
@@ -162,10 +156,7 @@ ONPHP_METHOD(ImaginaryDialect, fullTextSearch)
 	
 	smart_str_appends(&out, "(\"");
 	
-	if (
-		Z_TYPE_P(field) == IS_OBJECT
-		&& instanceof_function(Z_OBJCE_P(field), onphp_ce_DialectString TSRMLS_CC)
-	) {
+	if (ONPHP_INSTANCEOF(field, DialectString)) {
 		zval *string;
 		
 		zend_call_method_with_1_params(
@@ -222,10 +213,7 @@ ONPHP_METHOD(ImaginaryDialect, fullTextRank)
 	
 	smart_str_appends(&out, "(RANK BY \"");
 	
-	if (
-		Z_TYPE_P(field) == IS_OBJECT
-		&& instanceof_function(Z_OBJCE_P(field), onphp_ce_DialectString TSRMLS_CC)
-	) {
+	if (ONPHP_INSTANCEOF(field, DialectString)) {
 		zval *string;
 		
 		zend_call_method_with_1_params(
