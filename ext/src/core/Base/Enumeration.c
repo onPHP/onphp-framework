@@ -362,7 +362,7 @@ ZEND_BEGIN_ARG_INFO(arginfo_enum, 0) \
 ZEND_END_ARG_INFO();
 
 zend_function_entry onphp_funcs_Enumeration[] = {
-	ONPHP_ME(Enumeration, __construct,	arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_FINAL)
+	ONPHP_ME(Enumeration, __construct,	arginfo_one, ZEND_ACC_PUBLIC |  ZEND_ACC_FINAL | ZEND_ACC_CTOR)
 	ONPHP_ME(Enumeration, getList,		arginfo_enum, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Enumeration, getAnyId,		NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Enumeration, getObjectList,NULL, ZEND_ACC_PUBLIC)

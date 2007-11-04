@@ -19,6 +19,6 @@ ONPHP_METHOD(StaticFactory, __construct)
 }
 
 zend_function_entry onphp_funcs_StaticFactory[] = {
-	ONPHP_ME(StaticFactory, __construct, NULL, ZEND_ACC_FINAL | ZEND_ACC_PRIVATE)
+	ONPHP_ME(StaticFactory, __construct, NULL, ZEND_ACC_FINAL | ZEND_ACC_PRIVATE | ZEND_ACC_CTOR)
 	{NULL, NULL, NULL}
 };

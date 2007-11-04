@@ -194,7 +194,7 @@ PHP_RSHUTDOWN_FUNCTION(Singleton)
 static ONPHP_ARGINFO_ONE;
 
 zend_function_entry onphp_funcs_Singleton[] = {
-	ONPHP_ME(Singleton, __construct,		NULL, ZEND_ACC_PROTECTED)
+	ONPHP_ME(Singleton, __construct,		NULL, ZEND_ACC_PROTECTED | ZEND_ACC_CTOR)
 	ONPHP_ME(Singleton, getInstance,		arginfo_one, ZEND_ACC_FINAL | ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Singleton, getAllInstances,	NULL, ZEND_ACC_FINAL | ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Singleton, __clone,			NULL, ZEND_ACC_FINAL | ZEND_ACC_PRIVATE)

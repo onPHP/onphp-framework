@@ -119,6 +119,7 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_SUB_CLASS_EX(DBValue, Castable);
 	REGISTER_ONPHP_PROPERTY(DBValue, "value", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_IMPLEMENTS(DBValue, DialectString);
+	onphp_ce_DBValue->ce_flags |= ZEND_ACC_FINAL_CLASS;
 	
 	REGISTER_ONPHP_STD_CLASS_EX(QueryIdentification);
 	REGISTER_ONPHP_IMPLEMENTS(QueryIdentification, Query);

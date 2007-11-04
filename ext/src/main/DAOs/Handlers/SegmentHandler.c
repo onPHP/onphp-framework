@@ -16,7 +16,7 @@
 static ONPHP_ARGINFO_ONE;
 
 zend_function_entry onphp_funcs_SegmentHandler[] = {
-	ONPHP_ABSTRACT_ME(SegmentHandler, __construct, arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ABSTRACT_ME(SegmentHandler, __construct, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
 	ONPHP_ABSTRACT_ME(SegmentHandler, ping, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ABSTRACT_ME(SegmentHandler, touch, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ABSTRACT_ME(SegmentHandler, unlink, arginfo_one, ZEND_ACC_PUBLIC)
