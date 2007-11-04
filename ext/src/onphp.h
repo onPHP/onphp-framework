@@ -34,15 +34,15 @@
 	}
 
 #define ONPHP_CALL_METHOD_0(object, method_name, out) \
-	zend_call_method_with_0_params(&object, Z_OBJCE_P(object), NULL, method_name, &out); \
+	zend_call_method_with_0_params(&object, Z_OBJCE_P(object), NULL, method_name, out); \
 	if (EG(exception)) return
 
 #define ONPHP_CALL_METHOD_1(object, method_name, out, first_argument) \
-	zend_call_method_with_1_params(&object, Z_OBJCE_P(object), NULL, method_name, &out, first_argument); \
+	zend_call_method_with_1_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument); \
 	if (EG(exception)) return
 
 #define ONPHP_CALL_METHOD_2(object, method_name, out, first_argument, second_argument) \
-	zend_call_method_with_2_params(&object, Z_OBJCE_P(object), NULL, method_name, &out, first_argument, second_argument); \
+	zend_call_method_with_2_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument, second_argument); \
 	if (EG(exception)) return
 
 #define ONPHP_ME(class_name, function_name, arg_info, flags) \

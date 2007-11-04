@@ -23,14 +23,7 @@ ONPHP_METHOD(Enumeration, __construct)
 	
 	ONPHP_GET_ARGS("z", &id);
 	
-	zend_call_method_with_1_params(
-		&getThis(),
-		Z_OBJCE_P(getThis()),
-		NULL,
-		"setid",
-		NULL,
-		id
-	);
+	ONPHP_CALL_METHOD_1(getThis(), "setid", NULL, id);
 }
 
 ONPHP_METHOD(Enumeration, __sleep)
@@ -50,10 +43,8 @@ ONPHP_METHOD(Enumeration, __sleep)
 
 ONPHP_METHOD(Enumeration, __wakeup)
 {
-	zend_call_method_with_1_params(
-		&getThis(),
-		Z_OBJCE_P(getThis()),
-		NULL,
+	ONPHP_CALL_METHOD_1(
+		getThis(),
 		"setid",
 		NULL,
 		ONPHP_READ_PROPERTY(getThis(), "id")
@@ -93,14 +84,7 @@ ONPHP_METHOD(Enumeration, unserialize)
 	
 	ONPHP_GET_ARGS("z", &id);
 	
-	zend_call_method_with_1_params(
-		&getThis(),
-		Z_OBJCE_P(getThis()),
-		NULL,
-		"setid",
-		NULL,
-		id
-	);
+	ONPHP_CALL_METHOD_1(getThis(), "setid", NULL, id);
 }
 
 ONPHP_GETTER(Enumeration, getId, id);
@@ -113,7 +97,7 @@ ONPHP_METHOD(Enumeration, setId)
 	
 	ONPHP_GET_ARGS("z", &id);
 	
-	ONPHP_CALL_METHOD_0(getThis(), "getnamelist", names);
+	ONPHP_CALL_METHOD_0(getThis(), "getnamelist", &names);
 	
 	if (Z_TYPE_P(names) != IS_ARRAY) {
 		zend_throw_exception_ex(
@@ -202,7 +186,7 @@ ONPHP_METHOD(Enumeration, getList)
 	
 	ONPHP_GET_ARGS("z", &enm);
 	
-	ONPHP_CALL_METHOD_0(enm, "getobjectlist", out);
+	ONPHP_CALL_METHOD_0(enm, "getobjectlist", &out);
 	
 	RETURN_ZVAL(out, 1, 1);
 }
@@ -222,7 +206,7 @@ ONPHP_METHOD(Enumeration, getObjectList)
 	ALLOC_INIT_ZVAL(list);
 	array_init(list);
 	
-	ONPHP_CALL_METHOD_0(getThis(), "getnamelist", names);
+	ONPHP_CALL_METHOD_0(getThis(), "getnamelist", &names);
 	
 	if (
 		Z_TYPE_P(names) != IS_ARRAY

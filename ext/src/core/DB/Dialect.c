@@ -159,7 +159,7 @@ ONPHP_METHOD(Dialect, quoteBinary)
 	
 	ONPHP_GET_ARGS("z", &data);
 	
-	ONPHP_CALL_METHOD_1(getThis(), "quotevalue", out, data);
+	ONPHP_CALL_METHOD_1(getThis(), "quotevalue", &out, data);
 	
 	RETURN_ZVAL(out, 1, 1);
 }
@@ -179,7 +179,7 @@ ONPHP_METHOD(Dialect, typeToString)
 	
 	ONPHP_GET_ARGS("z", &type);
 	
-	ONPHP_CALL_METHOD_0(type, "getname", out);
+	ONPHP_CALL_METHOD_0(type, "getname", &out);
 	
 	RETURN_ZVAL(out, 1, 1);
 }
@@ -191,9 +191,9 @@ ONPHP_METHOD(Dialect, fieldToString)
 	ONPHP_GET_ARGS("z", &field);
 	
 	if (ONPHP_INSTANCEOF(field, DialectString)) {
-		ONPHP_CALL_METHOD_1(field, "todialectstring", out, getThis());
+		ONPHP_CALL_METHOD_1(field, "todialectstring", &out, getThis());
 	} else {
-		ONPHP_CALL_METHOD_1(getThis(), "quotefield", out, field);
+		ONPHP_CALL_METHOD_1(getThis(), "quotefield", &out, field);
 	}
 	
 	RETURN_ZVAL(out, 1, 1);
@@ -206,9 +206,9 @@ ONPHP_METHOD(Dialect, valueToString)
 	ONPHP_GET_ARGS("z", &value);
 	
 	if (ONPHP_INSTANCEOF(value, DBValue)) {
-		ONPHP_CALL_METHOD_1(value, "todialectstring", out, getThis());
+		ONPHP_CALL_METHOD_1(value, "todialectstring", &out, getThis());
 	} else {
-		ONPHP_CALL_METHOD_1(getThis(), "quotevalue", out, value);
+		ONPHP_CALL_METHOD_1(getThis(), "quotevalue", &out, value);
 	}
 	
 	RETURN_ZVAL(out, 1, 1);

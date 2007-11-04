@@ -108,7 +108,7 @@ ONPHP_METHOD(ImaginaryDialect, fieldToString)
 	ONPHP_GET_ARGS("z", &field);
 	
 	if (ONPHP_INSTANCEOF(field, DialectString)) {
-		ONPHP_CALL_METHOD_1(field, "todialectstring", out, getThis());
+		ONPHP_CALL_METHOD_1(field, "todialectstring", &out, getThis());
 		
 		RETURN_ZVAL(out, 1, 1);
 	} else {
@@ -125,7 +125,7 @@ ONPHP_METHOD(ImaginaryDialect, valueToString)
 	if (ONPHP_INSTANCEOF(value, DBValue)) {
 		zval *out;
 		
-		ONPHP_CALL_METHOD_1(value, "todialectstring", out, value);
+		ONPHP_CALL_METHOD_1(value, "todialectstring", &out, value);
 		
 		RETURN_ZVAL(out, 1, 1);
 	}

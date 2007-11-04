@@ -76,7 +76,7 @@ ONPHP_METHOD(SelectField, getName)
 	if (ONPHP_INSTANCEOF(field, DBField)) {
 		zval *tmp;
 		
-		ONPHP_CALL_METHOD_0(field, "getfield", tmp);
+		ONPHP_CALL_METHOD_0(field, "getfield", &tmp);
 		
 		RETURN_ZVAL(tmp, 1, 1);
 	} else {
@@ -116,7 +116,7 @@ ONPHP_METHOD(SelectField, toDialectString)
 		onphp_append_zval_to_smart_string(&string, out);
 		smart_str_appends(&string, " AS ");
 		
-		ONPHP_CALL_METHOD_1(dialect, "quotefield", alias, alias);
+		ONPHP_CALL_METHOD_1(dialect, "quotefield", &alias, alias);
 		
 		onphp_append_zval_to_smart_string(&string, alias);
 		

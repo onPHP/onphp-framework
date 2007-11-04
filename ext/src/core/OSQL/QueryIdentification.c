@@ -23,7 +23,7 @@ ONPHP_METHOD(QueryIdentification, getId)
 {
 	zval *out, *hashed;
 	
-	ONPHP_CALL_METHOD_0(getThis(), "tostring", out);
+	ONPHP_CALL_METHOD_0(getThis(), "tostring", &out);
 	
 	zend_call_method_with_1_params(
 		NULL,

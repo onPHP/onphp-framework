@@ -37,12 +37,12 @@ ONPHP_METHOD(FieldTable, toDialectString)
 	
 	field = ONPHP_READ_PROPERTY(getThis(), "field");
 	
-	ONPHP_CALL_METHOD_1(dialect, "fieldtostring", out, field);
+	ONPHP_CALL_METHOD_1(dialect, "fieldtostring", &out, field);
 	
 	cast = ONPHP_READ_PROPERTY(getThis(), "cast");
 	
 	if (Z_STRLEN_P(cast)) {
-		ONPHP_CALL_METHOD_2(dialect, "tocasted", out, out, cast);
+		ONPHP_CALL_METHOD_2(dialect, "tocasted", &out, out, cast);
 	} else {
 		// nothing
 	}

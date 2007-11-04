@@ -31,18 +31,7 @@ ONPHP_METHOD(DBField, create)
 	ONPHP_UPDATE_PROPERTY(object, "field", field);
 	
 	if (ZEND_NUM_ARGS() == 2) {
-		zend_call_method_with_1_params(
-			&object,
-			onphp_ce_DBField,
-			NULL,
-			"settable",
-			NULL,
-			table
-		);
-		
-		if (EG(exception)) {
-			return;
-		}
+		ONPHP_CALL_METHOD_1(object, "settable", NULL, table);
 	}
 	
 	RETURN_ZVAL(object, 1, 1);
@@ -57,18 +46,7 @@ ONPHP_METHOD(DBField, __construct)
 	ONPHP_UPDATE_PROPERTY(getThis(), "field", field);
 	
 	if (ZEND_NUM_ARGS() == 2) {
-		zend_call_method_with_1_params(
-			&getThis(),
-			onphp_ce_DBField,
-			NULL,
-			"settable",
-			NULL,
-			table
-		);
-		
-		if (EG(exception)) {
-			return;
-		}
+		ONPHP_CALL_METHOD_1(getThis(), "settable", NULL, table);
 	}
 }
 
@@ -90,7 +68,7 @@ ONPHP_METHOD(DBField, toDialectString)
 	if (Z_TYPE_P(table) == IS_OBJECT) {
 		zval *tmp;
 		
-		ONPHP_CALL_METHOD_1(table, "todialectstring", tmp, dialect);
+		ONPHP_CALL_METHOD_1(table, "todialectstring", &tmp, dialect);
 		
 		onphp_append_zval_to_smart_string(&string, tmp);
 		smart_str_appends(&string, ".");
@@ -98,7 +76,7 @@ ONPHP_METHOD(DBField, toDialectString)
 		ZVAL_FREE(tmp);
 	}
 	
-	ONPHP_CALL_METHOD_1(dialect, "quotefield", field, field);
+	ONPHP_CALL_METHOD_1(dialect, "quotefield", &field, field);
 	
 	onphp_append_zval_to_smart_string(&string, field);
 	

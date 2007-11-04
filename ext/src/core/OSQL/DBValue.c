@@ -49,12 +49,12 @@ ONPHP_METHOD(DBValue, toDialectString)
 	
 	value = ONPHP_READ_PROPERTY(getThis(), "value");
 	
-	ONPHP_CALL_METHOD_1(dialect, "quotevalue", out, value);
+	ONPHP_CALL_METHOD_1(dialect, "quotevalue", &out, value);
 	
 	cast = ONPHP_READ_PROPERTY(getThis(), "cast");
 	
 	if (Z_STRLEN_P(cast)) {
-		ONPHP_CALL_METHOD_2(dialect, "tocasted", out, out, cast);
+		ONPHP_CALL_METHOD_2(dialect, "tocasted", &out, out, cast);
 	} else {
 		// nothing
 	}

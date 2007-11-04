@@ -38,9 +38,9 @@ ONPHP_METHOD(NamedObject, compareNames)
 	
 	ONPHP_GET_ARGS("zz", &first, &second);
 	
-	ONPHP_CALL_METHOD_0(first, "getname", left);
+	ONPHP_CALL_METHOD_0(first, "getname", &left);
 	
-	ONPHP_CALL_METHOD_0(second, "getname", right);
+	ONPHP_CALL_METHOD_0(second, "getname", &right);
 	
 	result = strcasecmp(Z_STRVAL_P(left), Z_STRVAL_P(right));
 	
