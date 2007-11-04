@@ -79,7 +79,7 @@
 				$this->importOne($prm->getName(), $request);
 		}
 		
-		private function checkExistence($name)
+		/* void */ private function checkExistence($name)
 		{
 			if (!$this->form->primitiveExists($name))
 				throw new MissingElementException(
