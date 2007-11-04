@@ -19,6 +19,11 @@
 
 	* main/Net/IpRange.class.php: added setters, dropped final declaration.
 
+2007-10-30	Konstantin V. Arkhipov
+
+	* meta/classes/MetaConfiguration.class.php: class name collision
+	detection added.
+
 2007-10-26	Vladimir A. Altuchov
 
 	* core/Cache/WatermarkedPeer.class.php: add setter for watermark label.

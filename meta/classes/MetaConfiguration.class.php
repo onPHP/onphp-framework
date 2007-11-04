@@ -1008,8 +1008,14 @@ XML;
 			}
 			
 			foreach ($xml->classes[0] as $xmlClass) {
+				$name = (string) $xmlClass['name'];
 				
-				$class = new MetaClass((string) $xmlClass['name']);
+				Assert::isFalse(
+					isset($this->classes[$name]),
+					'class name collision found for '.$name
+				);
+				
+				$class = new MetaClass($name);
 				
 				if (isset($xmlClass['source']))
 					$class->setSourceLink((string) $xmlClass['source']);
