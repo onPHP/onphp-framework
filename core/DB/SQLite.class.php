@@ -111,7 +111,9 @@
 		**/
 		public function queryCount(Query $query)
 		{
-			return sqlite_changes($this->query($query));
+			$this->query($query);
+			
+			return sqlite_changes($this->link);
 		}
 		
 		public function queryObjectRow(Query $query, GenericDAO $dao)
