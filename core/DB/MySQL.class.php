@@ -94,7 +94,9 @@
 		**/
 		public function queryCount(Query $query)
 		{
-			return mysql_affected_rows($this->query($query));
+			$this->query($query);
+			
+			return mysql_affected_rows($this->link);
 		}
 		
 		public function queryRow(Query $query)
