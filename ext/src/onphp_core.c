@@ -44,6 +44,7 @@
 #include "core/Form/Primitives/ComplexPrimitive.h"
 #include "core/Form/Primitives/ListedPrimitive.h"
 #include "core/Form/Primitives/FiltrablePrimitive.h"
+#include "core/Form/Primitives/PrimitiveNumber.h"
 
 #include "core/OSQL/Castable.h"
 #include "core/OSQL/DBBinary.h"
@@ -139,6 +140,9 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_PROPERTY(FiltrablePrimitive, "importFilter", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_PROPERTY(FiltrablePrimitive, "displayFilter", ZEND_ACC_PRIVATE);
 	ONPHP_CLASS_IS_ABSTRACT(FiltrablePrimitive);
+	
+	REGISTER_ONPHP_SUB_CLASS(PrimitiveNumber, FiltrablePrimitive);
+	ONPHP_CLASS_IS_ABSTRACT(PrimitiveNumber);
 	
 	REGISTER_ONPHP_INTERFACE(LogicalObject);
 	REGISTER_ONPHP_IMPLEMENTS(LogicalObject, DialectString);

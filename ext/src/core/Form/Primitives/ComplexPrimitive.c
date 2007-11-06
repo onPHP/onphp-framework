@@ -108,6 +108,10 @@ ONPHP_METHOD(ComplexPrimitive, import)
 		return;
 	}
 	
+	if (!ONPHP_CHECK_EMPTY(result)) {
+		RETURN_NULL();
+	}
+	
 	single = ONPHP_READ_PROPERTY(getThis(), "single");
 	
 	ONPHP_CALL_METHOD_0(single, "getvalue", &result);

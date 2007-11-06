@@ -34,6 +34,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/Form/Primitives/ComplexPrimitive.c \
 		src/core/Form/Primitives/ListedPrimitive.c \
 		src/core/Form/Primitives/FiltrablePrimitive.c \
+		src/core/Form/Primitives/PrimitiveNumber.c \
 		src/core/OSQL/Castable.c \
 		src/core/OSQL/DBBinary.c \
 		src/core/OSQL/DBField.c \

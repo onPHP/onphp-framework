@@ -100,19 +100,9 @@ ONPHP_METHOD(PlainForm, get)
 	ONPHP_GET_ARGS("z", &name);
 	
 	if (ONPHP_ASSOC_ISSET(primitives, name)) {
-		zval **stored;
 		zval *prm;
 		
-		zend_hash_find(
-			Z_ARRVAL_P(primitives),
-			Z_STRVAL_P(name),
-			Z_STRLEN_P(name) + 1,
-			(void **) &stored
-		);
-		
-		prm = *stored;
-		
-		zval_copy_ctor(prm);
+		ONPHP_ASSOC_GET(primitives, name, prm);
 		
 		RETURN_ZVAL(prm, 1, 0);
 	}

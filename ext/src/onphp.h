@@ -216,6 +216,21 @@
 	);											\
 }
 
+#define ONPHP_ASSOC_GET(array, key, value)	{	\
+	zval **stored;								\
+												\
+	zend_hash_find(								\
+		Z_ARRVAL_P(array),						\
+		Z_STRVAL_P(key),						\
+		Z_STRLEN_P(key) + 1,					\
+		(void **) &stored						\
+	);											\
+												\
+	value = *stored;							\
+												\
+	zval_copy_ctor(value);						\
+}
+
 #define ONPHP_PROPERTY_DESTRUCT(property_name) {	\
 	zval **data;									\
 													\

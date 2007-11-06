@@ -12,6 +12,7 @@
 
 	/**
 	 * @ingroup Primitives
+	 * @ingroup Module
 	**/
 	abstract class PrimitiveNumber extends FiltrablePrimitive
 	{

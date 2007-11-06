@@ -82,6 +82,7 @@ QueryIdentification, \
 QuerySkeleton, \
 RegulatedForm, \
 RangedPrimitive, \
+PrimitiveNumber, \
 SelectField, \
 SgmlEndTag, \
 SgmlTag, \

@@ -6,11 +6,12 @@
 
 	* ext/src/core/Form/: PlainForm, RegulatedForm implemented.
 
-	* ext/src/core/Primitives/: FiltrablePrimitive implemented.
+	* ext/src/core/Primitives/: FiltrablePrimitive, PrimitiveNumber
+	implemented.
 
 	* etx/src/onphp.h: new macroses: ONPHP_MAKE_FOREIGN_OBJECT,
 	ONPHP_FOREACH, ONPHP_ASSOC_ISSET, ONPHP_ASSOC_UNSET, ONPHP_ASSOC_SET,
-	ONPHP_PROPERTY_DESTRUCT and RETURN_THIS.
+	ONPHP_ASSOC_GET, ONPHP_PROPERTY_DESTRUCT and RETURN_THIS.
 
 2007-11-04	Konstantin V. Arkhipov
 
