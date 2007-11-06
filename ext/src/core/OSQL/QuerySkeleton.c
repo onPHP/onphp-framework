@@ -165,7 +165,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 		
 		array_count = zend_hash_num_elements(Z_ARRVAL_P(where));
 		
-		for (i = 0; i < array_count; i++) {
+		for (i = 0; i < array_count; ++i) {
 			if (
 				zend_hash_index_find(
 					Z_ARRVAL_P(where),
