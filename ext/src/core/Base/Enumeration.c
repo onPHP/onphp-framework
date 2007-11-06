@@ -194,10 +194,7 @@ ONPHP_METHOD(Enumeration, getAnyId)
 
 ONPHP_METHOD(Enumeration, getObjectList)
 {
-	zval *names, *list;
-	zval **element;
-	HashTable *table;
-	HashPosition pointer;
+	zval *names, *list, *element;
 	
 	ALLOC_INIT_ZVAL(list);
 	array_init(list);
@@ -210,26 +207,18 @@ ONPHP_METHOD(Enumeration, getObjectList)
 		RETURN_ZVAL(list, 1, 1);
 	}
 	
-	table = Z_ARRVAL_P(names);
-	
-	for (
-		zend_hash_internal_pointer_reset_ex(table, &pointer);
-		zend_hash_get_current_data_ex(table, (void **) &element, &pointer) == SUCCESS; zend_hash_move_forward_ex(table, &pointer)
-	) {
-		char *key;
-		unsigned long index;
-		unsigned int length;
-		int result;
+	ONPHP_FOREACH(names, element) {
 		zval *object, *arg, *out;
+		char *key;
+		ulong length;
+		unsigned int result;
 		
 		result =
-			zend_hash_get_current_key_ex(
-				table,
+			zend_hash_get_current_key(
+				Z_ARRVAL_P(names),
 				&key,
 				&length,
-				&index,
-				0,
-				&pointer
+				0
 			);
 		
 		MAKE_STD_ZVAL(arg);
@@ -237,7 +226,7 @@ ONPHP_METHOD(Enumeration, getObjectList)
 		if (result == HASH_KEY_IS_STRING) {
 			ZVAL_STRINGL(arg, key, length, 1);
 		} else if (result == HASH_KEY_IS_LONG) {
-			ZVAL_LONG(arg, index);
+			ZVAL_LONG(arg, length);
 		} else {
 			zend_throw_exception_ex(
 				onphp_ce_WrongStateException,
