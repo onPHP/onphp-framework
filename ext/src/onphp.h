@@ -84,13 +84,10 @@
 #define REGISTER_ONPHP_IMPLEMENTS(class_name, interface_name) \
 	zend_class_implements(onphp_ce_ ## class_name TSRMLS_CC, 1, onphp_ce_ ## interface_name);
 
-#define REGISTER_ONPHP_STD_CLASS(class_name, obj_ctor) \
-	spl_register_std_class(&onphp_ce_ ## class_name, # class_name, obj_ctor, NULL TSRMLS_CC);
-
-#define REGISTER_ONPHP_STD_CLASS_EX(class_name) \
+#define REGISTER_ONPHP_STD_CLASS(class_name) \
 	spl_register_std_class(&onphp_ce_ ## class_name, # class_name, onphp_empty_object_new, onphp_funcs_ ## class_name TSRMLS_CC);
 
-#define REGISTER_ONPHP_SUB_CLASS_EX(class_name, parent_class_name) \
+#define REGISTER_ONPHP_SUB_CLASS(class_name, parent_class_name) \
 	spl_register_sub_class(&onphp_ce_ ## class_name, onphp_ce_ ## parent_class_name, # class_name, onphp_empty_object_new, onphp_funcs_ ## class_name TSRMLS_CC);
 
 #define REGISTER_ONPHP_CUSTOM_SUB_CLASS_EX(class_name, parent_class_name, obj_ctor, funcs) \
