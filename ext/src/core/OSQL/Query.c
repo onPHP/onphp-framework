@@ -9,9 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
-
-#include "core/OSQL/Query.h"
+#include "onphp.h"
 
 zend_function_entry onphp_funcs_Query[] = {
 	{NULL, NULL, NULL}

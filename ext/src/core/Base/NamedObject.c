@@ -12,21 +12,19 @@
 #include "onphp.h"
 #include "onphp_util.h"
 
-#include "core/Base/NamedObject.h"
-
 ONPHP_GETTER(NamedObject, getName, name);
 ONPHP_SETTER(NamedObject, setName, name);
 
 ONPHP_METHOD(NamedObject, toString)
 {
 	smart_str string = {0};
-
+	
 	smart_str_appends(&string, "[");
 	onphp_append_zval_to_smart_string(&string, ONPHP_READ_PROPERTY(getThis(), "id"));
 	smart_str_appends(&string, "] ");
 	onphp_append_zval_to_smart_string(&string, ONPHP_READ_PROPERTY(getThis(), "name"));
 	smart_str_0(&string);
-
+	
 	RETURN_STRINGL(string.c, string.len, 0);
 }
 
@@ -39,12 +37,12 @@ ONPHP_METHOD(NamedObject, compareNames)
 	ONPHP_GET_ARGS("zz", &first, &second);
 	
 	ONPHP_CALL_METHOD_0(first, "getname", &left);
-	
 	ONPHP_CALL_METHOD_0(second, "getname", &right);
 	
 	result = strcasecmp(Z_STRVAL_P(left), Z_STRVAL_P(right));
 	
-	ZVAL_FREE(left); ZVAL_FREE(right);
+	ZVAL_FREE(left);
+	ZVAL_FREE(right);
 	
 	RETURN_LONG(result);
 }

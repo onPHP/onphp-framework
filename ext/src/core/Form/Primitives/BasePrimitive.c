@@ -9,7 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
+#include "onphp.h"
 
 ONPHP_METHOD(BasePrimitive, __construct)
 {

@@ -10,13 +10,8 @@
 /* $Id$ */
 
 #include "onphp.h"
-#include "onphp_core.h"
-
-#include "zend_globals.h"
-#include "zend_interfaces.h"
 
 #include "core/DB/Dialect.h"
-#include "core/OSQL/FieldTable.h"
 
 ONPHP_METHOD(FieldTable, __construct)
 {

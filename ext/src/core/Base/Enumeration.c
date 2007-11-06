@@ -11,10 +11,6 @@
 
 #include "onphp.h"
 
-#include "zend_globals.h"
-#include "zend_exceptions.h"
-
-#include "core/Base/Enumeration.h"
 #include "core/Exceptions.h"
 
 ONPHP_METHOD(Enumeration, __construct)

@@ -9,10 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
-
-#include "zend_interfaces.h"
-#include "zend_globals.h"
+#include "onphp.h"
 
 #include "core/DB/Dialect.h"
 #include "core/OSQL/DBValue.h"

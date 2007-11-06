@@ -11,8 +11,6 @@
 
 #include "onphp_core.h"
 
-#include "core/OSQL/SQLTableName.h"
-
 zend_function_entry onphp_funcs_SQLTableName[] = {
 	ONPHP_ABSTRACT_ME(SQLTableName, getTable, NULL, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}

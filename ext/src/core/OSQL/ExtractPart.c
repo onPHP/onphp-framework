@@ -9,10 +9,8 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
+#include "onphp.h"
 #include "onphp_util.h"
-
-#include "zend_exceptions.h"
 
 #include "core/Exceptions.h"
 

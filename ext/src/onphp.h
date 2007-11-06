@@ -39,7 +39,6 @@
 		&& (zend_hash_num_elements(Z_ARRVAL_P(value)) < 1)	\
 	))
 
-
 #define ONPHP_CONSTRUCT_ARRAY(name) { \
 	zval *name; \
 	MAKE_STD_ZVAL(name); \

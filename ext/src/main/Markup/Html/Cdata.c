@@ -9,7 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_main.h"
+#include "onphp.h"
 #include "onphp_util.h"
 
 #include "main/Markup/Html/Cdata.h"

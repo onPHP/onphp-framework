@@ -9,7 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
+#include "onphp.h"
 #include "onphp_util.h"
 
 #include "core/DB/Dialect.h"

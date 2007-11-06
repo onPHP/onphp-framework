@@ -11,8 +11,6 @@
 
 #include "onphp.h"
 
-#include "core/Base/StaticFactory.h"
-
 ONPHP_METHOD(StaticFactory, __construct)
 {
 	// doh

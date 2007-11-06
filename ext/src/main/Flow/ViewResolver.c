@@ -11,8 +11,6 @@
 
 #include "onphp.h"
 
-#include "main/Flow/ViewResolver.h"
-
 static ONPHP_ARGINFO_ONE;
 
 zend_function_entry onphp_funcs_ViewResolver[] = {

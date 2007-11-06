@@ -13,9 +13,6 @@
 #include "onphp_util.h"
 
 #include "ext/standard/php_string.h"
-#include "zend_globals.h"
-#include "zend_exceptions.h"
-#include "zend_interfaces.h"
 
 #include "core/Base/Singleton.h"
 #include "core/DB/Dialect.h"
@@ -150,7 +147,7 @@ ONPHP_METHOD(ImaginaryDialect, fullTextSearch)
 		ZVAL_STRING(glue, " & ", 1);
 	} else {
 		ZVAL_STRING(glue, " | ", 1);
-	} 
+	}
 	
 	onphp_implode(glue, words, copy);
 	
@@ -207,7 +204,7 @@ ONPHP_METHOD(ImaginaryDialect, fullTextRank)
 		ZVAL_STRING(glue, " & ", 1);
 	} else {
 		ZVAL_STRING(glue, " | ", 1);
-	} 
+	}
 	
 	onphp_implode(glue, words, copy);
 	

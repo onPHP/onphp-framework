@@ -10,9 +10,6 @@
 /* $Id$ */
 
 #include "onphp.h"
-#include "onphp_core.h"
-
-#include "zend_exceptions.h"
 
 #include "core/Exceptions.h"
 
@@ -20,7 +17,6 @@
 #include "core/Logic/LogicalObject.h"
 
 #include "core/OSQL/DBField.h"
-#include "core/OSQL/FullText.h"
 
 void onphp_full_text_sanity_check(zval *field, zval *words)
 {

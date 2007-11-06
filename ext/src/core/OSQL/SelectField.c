@@ -9,15 +9,12 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
+#include "onphp.h"
 #include "onphp_util.h"
-
-#include "ext/standard/php_string.h"
 
 #include "core/DB/Dialect.h"
 #include "core/OSQL/DBField.h"
 #include "core/OSQL/SelectField.h"
-#include "core/OSQL/DialectString.h"
 
 ONPHP_METHOD(SelectField, create)
 {

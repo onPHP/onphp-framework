@@ -9,9 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
-
-#include "core/OSQL/Castable.h"
+#include "onphp.h"
 
 ONPHP_SETTER(Castable, castTo, cast);
 

@@ -10,13 +10,9 @@
 /* $Id$ */
 
 #include "onphp.h"
-#include "onphp_core.h"
 #include "onphp_util.h"
 
 #include "ext/standard/php_string.h"
-#include "zend_globals.h"
-#include "zend_exceptions.h"
-#include "zend_interfaces.h"
 
 #include "core/DB/Dialect.h"
 #include "core/OSQL/DBValue.h"
@@ -29,7 +25,7 @@ ONPHP_METHOD(Dialect, quoteValue)
 	zval *value;
 	
 	ONPHP_GET_ARGS("z", &value);
-
+	
 	// don't know, how to replicate original voodoo
 	if (Z_TYPE_P(value) == IS_LONG) {
 		RETURN_LONG(Z_LVAL_P(value));
@@ -115,7 +111,7 @@ ONPHP_METHOD(Dialect, toCasted)
 	onphp_append_zval_to_smart_string(&string, type);
 	smart_str_appends(&string, ")");
 	smart_str_0(&string);
-
+	
 	RETURN_STRINGL(string.c, string.len, 0);
 }
 

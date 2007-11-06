@@ -9,10 +9,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
+#include "onphp.h"
 
 #include "core/DB/Dialect.h"
-#include "core/OSQL/DialectString.h"
 
 static ONPHP_ARGINFO_DIALECT;
 

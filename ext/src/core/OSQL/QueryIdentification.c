@@ -10,10 +10,6 @@
 /* $Id$ */
 
 #include "onphp.h"
-#include "onphp_core.h"
-
-#include "zend_globals.h"
-#include "zend_exceptions.h"
 
 #include "core/Exceptions.h"
 #include "core/DB/ImaginaryDialect.h"

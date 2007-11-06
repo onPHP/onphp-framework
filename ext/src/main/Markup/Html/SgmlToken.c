@@ -9,9 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_main.h"
-
-#include "main/Markup/Html/SgmlToken.h"
+#include "onphp.h"
 
 ONPHP_SETTER(SgmlToken, setValue, value);
 ONPHP_GETTER(SgmlToken, getValue, value);

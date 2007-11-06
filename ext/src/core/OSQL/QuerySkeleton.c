@@ -9,12 +9,10 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
+#include "onphp.h"
 #include "onphp_util.h"
 
-#include "zend_exceptions.h"
 #include "ext/standard/php_string.h"
-#include "ext/standard/php_var.h"
 
 #include "core/Exceptions.h"
 #include "core/OSQL/QuerySkeleton.h"
@@ -59,12 +57,12 @@ ONPHP_METHOD(QuerySkeleton, __destruct)
 ONPHP_METHOD(QuerySkeleton, where)
 {
 	zval *where, *whereLogic, *exp, *logic = NULL;
-	
 	zval *copy, *copy2;
+	
 	MAKE_STD_ZVAL(copy);
 	
 	ONPHP_GET_ARGS("z|z", &exp, &logic);
-		
+	
 	*copy = *exp;
 	zval_copy_ctor(copy);
 	
@@ -92,8 +90,8 @@ ONPHP_METHOD(QuerySkeleton, where)
 		whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 		
 		if (
-			logic &&
-			Z_TYPE_P(logic) != IS_NULL
+			logic
+			&& (Z_TYPE_P(logic) != IS_NULL)
 		) {
 			MAKE_STD_ZVAL(copy2);
 			*copy2 = *logic;
@@ -259,7 +257,6 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 	
 	RETURN_NULL();
 }
-
 
 static ONPHP_ARGINFO_LOGICAL_OBJECT;
 static ONPHP_ARGINFO_LOGICAL_OBJECT_AND_ONE;

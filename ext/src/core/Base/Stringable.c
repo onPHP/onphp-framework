@@ -9,9 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
-
-#include "core/Base/Stringable.h"
+#include "onphp.h"
 
 zend_function_entry onphp_funcs_Stringable[] = {
 	ONPHP_ABSTRACT_ME(Stringable, toString, NULL, ZEND_ACC_PUBLIC)

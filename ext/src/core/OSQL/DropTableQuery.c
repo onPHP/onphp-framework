@@ -9,15 +9,12 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
+#include "onphp.h"
 #include "onphp_util.h"
-
-#include "zend_exceptions.h"
 
 #include "core/Exceptions.h"
 
 #include "core/DB/Dialect.h"
-#include "core/OSQL/DropTableQuery.h"
 
 ONPHP_METHOD(DropTableQuery, __construct)
 {

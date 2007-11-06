@@ -9,9 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_main.h"
-
-#include "main/Markup/Html/SgmlTag.h"
+#include "onphp.h"
 
 ONPHP_GETTER(SgmlTag, getId, id);
 ONPHP_GETTER(SgmlTag, setId, id);

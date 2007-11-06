@@ -9,7 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_main.h"
+#include "onphp.h"
 
 #include "main/Markup/Html/SgmlEndTag.h"
 

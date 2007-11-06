@@ -9,9 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_main.h"
-
-#include "main/DAOs/Handlers/SegmentHandler.h"
+#include "onphp.h"
 
 static ONPHP_ARGINFO_ONE;
 

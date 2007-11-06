@@ -9,7 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
+#include "onphp.h"
 
 #include "core/Base/Identifier.h"
 
@@ -21,10 +21,7 @@ ONPHP_METHOD(Identifier, wrap)
 	
 	ONPHP_GET_ARGS("z", &id);
 	
-	MAKE_STD_ZVAL(object);
-	
-	object->value.obj = onphp_empty_object_new(onphp_ce_Identifier TSRMLS_CC);
-	Z_TYPE_P(object) = IS_OBJECT;
+	ONPHP_MAKE_OBJECT(Identifier, object);
 	
 	ONPHP_UPDATE_PROPERTY(object, "id", id);
 	
@@ -37,7 +34,7 @@ ONPHP_SETTER(Identifier, setId, id);
 ONPHP_METHOD(Identifier, finalize)
 {
 	ONPHP_UPDATE_PROPERTY_BOOL(getThis(), "final", 1);
-
+	
 	RETURN_ZVAL(getThis(), 1, 0);
 }
 

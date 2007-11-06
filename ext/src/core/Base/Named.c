@@ -9,9 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
-
-#include "core/Base/Named.h"
+#include "onphp.h"
 
 static ONPHP_ARGINFO_ONE;
 

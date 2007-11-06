@@ -9,9 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
-
-#include "core/Base/Instantiatable.h"
+#include "onphp.h"
 
 zend_function_entry onphp_funcs_Instantiatable[] = {
 	ONPHP_ABSTRACT_ME(Instantiatable, me, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)

@@ -11,8 +11,6 @@
 
 #include "onphp.h"
 
-#include "main/DAOs/DAOConnected.h"
-
 zend_function_entry onphp_funcs_DAOConnected[] = {
 	ONPHP_ABSTRACT_ME(DAOConnected, dao, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	{NULL, NULL, NULL}

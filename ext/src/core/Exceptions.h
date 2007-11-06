@@ -14,6 +14,7 @@
 
 #include "php.h"
 #include "ext/spl/spl_functions.h"
+#include "zend_exceptions.h"
 
 PHPAPI zend_class_entry *onphp_ce_BaseException;
 PHPAPI zend_class_entry *onphp_ce_BusinessLogicException;

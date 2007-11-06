@@ -9,9 +9,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp_core.h"
-
-#include "core/Base/Aliased.h"
+#include "onphp.h"
 
 zend_function_entry onphp_funcs_Aliased[] = {
 	ONPHP_ABSTRACT_ME(Aliased, getAlias, NULL, ZEND_ACC_PUBLIC)
