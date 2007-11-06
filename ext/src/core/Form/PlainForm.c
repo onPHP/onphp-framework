@@ -26,7 +26,7 @@ ONPHP_METHOD(PlainForm, __construct)
 
 ONPHP_METHOD(PlainForm, __destruct)
 {
-	ONPHP_PROPERTY_DESTRUCT("primitives");
+	ONPHP_PROPERTY_DESTRUCT(primitives);
 }
 
 ONPHP_METHOD(PlainForm, clean)

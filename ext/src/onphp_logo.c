@@ -79,6 +79,7 @@ PlainForm, \
 Query, \
 QueryIdentification, \
 QuerySkeleton, \
+RegulatedForm, \
 RangedPrimitive, \
 SelectField, \
 SgmlEndTag, \

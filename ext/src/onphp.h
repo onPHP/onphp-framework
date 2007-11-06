@@ -226,8 +226,8 @@
 		SUCCESS										\
 		== zend_hash_find(							\
 			HASH_OF(this_ptr),						\
-			property_name,							\
-			sizeof(property_name),					\
+			# property_name,						\
+			sizeof(# property_name),				\
 			(void **) &data							\
 		)											\
 	) {												\

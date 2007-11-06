@@ -4,7 +4,7 @@
 
 	* ext/src/core/Form/Filters/: Filtrator implemented.
 
-	* ext/src/core/Form/: PlainForm implemented.
+	* ext/src/core/Form/: PlainForm, RegulatedForm implemented.
 
 	* ext/src/core/Primitives/: FiltrablePrimitive implemented.
 

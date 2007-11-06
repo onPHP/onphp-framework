@@ -14,6 +14,7 @@
 	 * Rules support for final Form.
 	 * 
 	 * @ingroup Form
+	 * @ingroup Module
 	**/
 	abstract class RegulatedForm extends PlainForm
 	{

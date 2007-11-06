@@ -34,6 +34,7 @@
 #include "core/DB/ImaginaryDialect.h"
 
 #include "core/Form/PlainForm.h"
+#include "core/Form/RegulatedForm.h"
 
 #include "core/Form/Filters/Filtrator.h"
 
@@ -97,6 +98,11 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_STD_CLASS_EX(PlainForm);
 	REGISTER_ONPHP_PROPERTY(PlainForm, "primitives", ZEND_ACC_PROTECTED);
 	ONPHP_CLASS_IS_ABSTRACT(PlainForm);
+	
+	REGISTER_ONPHP_SUB_CLASS_EX(RegulatedForm, PlainForm);
+	REGISTER_ONPHP_PROPERTY(RegulatedForm, "rules", ZEND_ACC_PROTECTED);
+	REGISTER_ONPHP_PROPERTY(RegulatedForm, "violated", ZEND_ACC_PROTECTED);
+	ONPHP_CLASS_IS_ABSTRACT(RegulatedForm);
 	
 	REGISTER_ONPHP_INTERFACE(Filtrator);
 	

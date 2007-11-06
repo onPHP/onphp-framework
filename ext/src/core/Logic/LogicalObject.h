@@ -30,4 +30,10 @@ ONPHP_STANDART_CLASS(LogicalObject);
 		ZEND_ARG_INFO(0, logic) \
 	ZEND_END_ARG_INFO()
 
+#define ONPHP_ARGINFO_ONE_AND_LOGICAL_OBJECT \
+	ZEND_BEGIN_ARG_INFO(arginfo_one_and_logical_object, 0) \
+		ZEND_ARG_INFO(0, name) \
+		ZEND_ARG_OBJ_INFO(0, rule, LogicalObject, 0) \
+	ZEND_END_ARG_INFO()
+
 #endif /* ONPHP_CORE_LOGICAL_OBJECT_H */

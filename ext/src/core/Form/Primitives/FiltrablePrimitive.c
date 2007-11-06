@@ -40,16 +40,12 @@ ONPHP_METHOD(FiltrablePrimitive, __construct)
 		NULL,
 		name
 	);
-	
-	if (EG(exception)) {
-		return;
-	}
 }
 
 ONPHP_METHOD(FiltrablePrimitive, __destruct)
 {
-	ONPHP_PROPERTY_DESTRUCT("importFilter");
-	ONPHP_PROPERTY_DESTRUCT("displayFilter");
+	ONPHP_PROPERTY_DESTRUCT(importFilter);
+	ONPHP_PROPERTY_DESTRUCT(displayFilter);
 }
 
 ONPHP_GETTER(FiltrablePrimitive, getDisplayFilter, displayFilter);

@@ -222,7 +222,7 @@ ONPHP_METHOD(Enumeration, getObjectList)
 		int result;
 		zval *object, *arg, *out;
 		
-		result = 
+		result =
 			zend_hash_get_current_key_ex(
 				table,
 				&key,

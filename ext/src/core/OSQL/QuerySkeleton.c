@@ -27,8 +27,8 @@ ONPHP_METHOD(QuerySkeleton, __construct)
 
 ONPHP_METHOD(QuerySkeleton, __destruct)
 {
-	ONPHP_PROPERTY_DESTRUCT("where");
-	ONPHP_PROPERTY_DESTRUCT("whereLogic");	
+	ONPHP_PROPERTY_DESTRUCT(where);
+	ONPHP_PROPERTY_DESTRUCT(whereLogic);
 }
 
 ONPHP_METHOD(QuerySkeleton, where)
