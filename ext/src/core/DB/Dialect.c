@@ -158,7 +158,7 @@ ONPHP_METHOD(Dialect, unquoteBinary)
 	
 	ONPHP_GET_ARGS("z", &data);
 	
-	RETURN_ZVAL(data, 1, 1);
+	RETURN_ZVAL(data, 1, 0);
 }
 
 ONPHP_METHOD(Dialect, typeToString)

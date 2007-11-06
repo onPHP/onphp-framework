@@ -14,6 +14,7 @@
 	 * Common Primitive-handling.
 	 * 
 	 * @ingroup Form
+	 * @ingroup Module
 	**/
 	abstract class PlainForm
 	{

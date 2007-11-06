@@ -9,14 +9,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-#ifndef ONPHP_CORE_BASE_PRIMITIVE_H
-#define ONPHP_CORE_BASE_PRIMITIVE_H
+#ifndef ONPHP_CORE_PLAIN_FORM_H
+#define ONPHP_CORE_PLAIN_FORM_H
 
-ONPHP_STANDART_CLASS(BasePrimitive);
+ONPHP_STANDART_CLASS(PlainForm);
 
-#define ONPHP_ARGINFO_BASE_PRIMITIVE \
-	ZEND_BEGIN_ARG_INFO(arginfo_base_primitive, 0) \
-		ZEND_ARG_OBJ_INFO(0, prm, BasePrimitive, 0) \
-	ZEND_END_ARG_INFO()
-
-#endif /* ONPHP_CORE_BASE_PRIMITIVE_H */
+#endif /* ONPHP_CORE_PLAIN_FORM_H */

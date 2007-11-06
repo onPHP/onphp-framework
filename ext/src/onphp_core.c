@@ -33,10 +33,15 @@
 #include "core/DB/Dialect.h"
 #include "core/DB/ImaginaryDialect.h"
 
+#include "core/Form/PlainForm.h"
+
+#include "core/Form/Filters/Filtrator.h"
+
 #include "core/Form/Primitives/BasePrimitive.h"
 #include "core/Form/Primitives/RangedPrimitive.h"
 #include "core/Form/Primitives/ComplexPrimitive.h"
 #include "core/Form/Primitives/ListedPrimitive.h"
+#include "core/Form/Primitives/FiltrablePrimitive.h"
 
 #include "core/OSQL/Castable.h"
 #include "core/OSQL/DBBinary.h"
@@ -89,6 +94,12 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(Query, Identifiable);
 	REGISTER_ONPHP_IMPLEMENTS(Query, Stringable);
 	
+	REGISTER_ONPHP_STD_CLASS_EX(PlainForm);
+	REGISTER_ONPHP_PROPERTY(PlainForm, "primitives", ZEND_ACC_PROTECTED);
+	ONPHP_CLASS_IS_ABSTRACT(PlainForm);
+	
+	REGISTER_ONPHP_INTERFACE(Filtrator);
+	
 	REGISTER_ONPHP_STD_CLASS_EX(BasePrimitive);
 	REGISTER_ONPHP_PROPERTY(BasePrimitive, "name", ZEND_ACC_PROTECTED);
 	REGISTER_ONPHP_PROPERTY(BasePrimitive, "default", ZEND_ACC_PROTECTED);
@@ -108,6 +119,11 @@ PHP_MINIT_FUNCTION(onphp_core)
 	ONPHP_CLASS_IS_ABSTRACT(ComplexPrimitive);
 	
 	REGISTER_ONPHP_INTERFACE(ListedPrimitive);
+	
+	REGISTER_ONPHP_SUB_CLASS_EX(FiltrablePrimitive, RangedPrimitive);
+	REGISTER_ONPHP_PROPERTY(FiltrablePrimitive, "importFilter", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_PROPERTY(FiltrablePrimitive, "displayFilter", ZEND_ACC_PRIVATE);
+	ONPHP_CLASS_IS_ABSTRACT(FiltrablePrimitive);
 	
 	REGISTER_ONPHP_INTERFACE(LogicalObject);
 	REGISTER_ONPHP_IMPLEMENTS(LogicalObject, DialectString);

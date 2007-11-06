@@ -14,6 +14,7 @@
 	 * Basis for Primitives which can be filtered.
 	 * 
 	 * @ingroup Primitives
+	 * @ingroup Module
 	**/
 	abstract class FiltrablePrimitive extends RangedPrimitive
 	{

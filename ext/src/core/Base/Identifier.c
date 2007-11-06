@@ -35,7 +35,7 @@ ONPHP_METHOD(Identifier, finalize)
 {
 	ONPHP_UPDATE_PROPERTY_BOOL(getThis(), "final", 1);
 	
-	RETURN_ZVAL(getThis(), 1, 0);
+	RETURN_THIS;
 }
 
 ONPHP_METHOD(Identifier, isFinalized)

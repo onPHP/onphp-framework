@@ -173,7 +173,7 @@ ONPHP_METHOD(Enumeration, setId)
 		return;
 	}
 	
-	RETURN_ZVAL(getThis(), 1, 0);
+	RETURN_THIS;
 }
 
 ONPHP_METHOD(Enumeration, getList)

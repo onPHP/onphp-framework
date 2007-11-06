@@ -86,8 +86,17 @@ ONPHP_METHOD(ExtractPart, __construct)
 	
 	ONPHP_UPDATE_PROPERTY(getThis(), "from", fromField);
 	
-	// will always succeed
-	zend_lookup_class("DatePart", strlen("DatePart"), &cep TSRMLS_CC);
+	if (
+		zend_lookup_class("DatePart", strlen("DatePart"), &cep TSRMLS_CC)
+		== FAILURE
+	) {
+		zend_throw_exception_ex(
+			onphp_ce_ClassNotFoundException,
+			0 TSRMLS_CC,
+			"DatePart"
+		);
+		return;
+	}
 	
 	if (
 		!(

@@ -9,14 +9,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-#ifndef ONPHP_CORE_BASE_PRIMITIVE_H
-#define ONPHP_CORE_BASE_PRIMITIVE_H
+#include "onphp.h"
 
-ONPHP_STANDART_CLASS(BasePrimitive);
+static ONPHP_ARGINFO_ONE;
 
-#define ONPHP_ARGINFO_BASE_PRIMITIVE \
-	ZEND_BEGIN_ARG_INFO(arginfo_base_primitive, 0) \
-		ZEND_ARG_OBJ_INFO(0, prm, BasePrimitive, 0) \
-	ZEND_END_ARG_INFO()
-
-#endif /* ONPHP_CORE_BASE_PRIMITIVE_H */
+zend_function_entry onphp_funcs_Filtrator[] = {
+	ONPHP_ABSTRACT_ME(Filtrator, apply, arginfo_one, ZEND_ACC_PUBLIC)
+	{NULL, NULL, NULL}
+};

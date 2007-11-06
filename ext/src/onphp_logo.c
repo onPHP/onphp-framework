@@ -68,11 +68,14 @@ DropTableQuery, \
 Enumeration, \
 ExtractPart, \
 FieldTable, \
+FiltrablePrimitive, \
+Filtrator, \
 FullText, \
 IdentifiableObject, \
 Identifier, \
 ImaginaryDialect, \
 NamedObject, \
+PlainForm, \
 Query, \
 QueryIdentification, \
 QuerySkeleton, \

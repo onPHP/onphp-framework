@@ -39,14 +39,14 @@ ONPHP_METHOD(BasePrimitive, required)
 {
 	ONPHP_UPDATE_PROPERTY_BOOL(getThis(), "required", 1);
 	
-	RETURN_ZVAL(getThis(), 1, 0);
+	RETURN_THIS;
 }
 
 ONPHP_METHOD(BasePrimitive, optional)
 {
 	ONPHP_UPDATE_PROPERTY_BOOL(getThis(), "required", 0);
 	
-	RETURN_ZVAL(getThis(), 1, 0);
+	RETURN_THIS;
 }
 
 ONPHP_GETTER(BasePrimitive, isImported, imported);
@@ -63,7 +63,7 @@ ONPHP_METHOD(BasePrimitive, clean)
 	
 	ONPHP_UPDATE_PROPERTY_BOOL(getThis(), "imported", 0);
 	
-	RETURN_ZVAL(getThis(), 1, 0);
+	RETURN_THIS;
 }
 
 ONPHP_METHOD(BasePrimitive, getActualValue)

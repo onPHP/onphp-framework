@@ -25,10 +25,13 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/Base/Instantiatable.c \
 		src/core/DB/Dialect.c \
 		src/core/DB/ImaginaryDialect.c \
+		src/core/Form/PlainForm.c \
+		src/core/Form/Filters/Filtrator.c \
 		src/core/Form/Primitives/BasePrimitive.c \
 		src/core/Form/Primitives/RangedPrimitive.c \
 		src/core/Form/Primitives/ComplexPrimitive.c \
 		src/core/Form/Primitives/ListedPrimitive.c \
+		src/core/Form/Primitives/FiltrablePrimitive.c \
 		src/core/OSQL/Castable.c \
 		src/core/OSQL/DBBinary.c \
 		src/core/OSQL/DBField.c \
@@ -58,6 +61,9 @@ if test "$PHP_ONPHP" != "no"; then
 		-I@ext_srcdir@/src \
 		-I@ext_srcdir@/src/core \
 		-I@ext_srcdir@/src/core/Base \
+		-I@ext_srcdir@/src/core/Form \
+		-I@ext_srcdir@/src/core/Form/Filters \
+		-I@ext_srcdir@/src/core/Form/Primitives \
 		-I@ext_srcdir@/src/core/DB \
 		-I@ext_srcdir@/src/core/OSQL \
 		-I@ext_srcdir@/src/core/Logic \

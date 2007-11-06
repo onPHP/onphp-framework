@@ -16,6 +16,7 @@
 	 * @see FiltrablePrimitive::getDisplayValue()
 	 * 
 	 * @ingroup Filters
+	 * @ingroup Module
 	**/
 	interface Filtrator
 	{

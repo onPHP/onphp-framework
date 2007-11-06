@@ -126,6 +126,8 @@
 #define ONPHP_METHOD(class_name, function_name) \
 	PHP_METHOD(onphp_ ## class_name, function_name)
 
+#define RETURN_THIS RETURN_ZVAL(getThis(), 1, 0)
+
 #define ONPHP_GETTER(class_name, method_name, property_name) \
 	ONPHP_METHOD(class_name, method_name) \
 	{ \
@@ -142,13 +144,38 @@
 		\
 		ONPHP_UPDATE_PROPERTY(getThis(), # property_name, property_name); \
 		\
-		RETURN_ZVAL(getThis(), 1, 0); \
+		RETURN_THIS; \
 	}
 
 #define ONPHP_MAKE_OBJECT(class_name, zval) \
 	MAKE_STD_ZVAL(zval); \
 	zval->value.obj = onphp_empty_object_new(onphp_ce_ ## class_name TSRMLS_CC); \
 	Z_TYPE_P(zval) = IS_OBJECT;
+
+#define ONPHP_MAKE_FOREIGN_OBJECT(class_name, zval) {				\
+	zend_class_entry **cep;											\
+																	\
+	if (															\
+		zend_lookup_class(											\
+			class_name,												\
+			strlen(class_name),										\
+			&cep TSRMLS_CC											\
+		)															\
+		== FAILURE													\
+	) {																\
+		zend_throw_exception_ex(									\
+			onphp_ce_ClassNotFoundException,						\
+			0 TSRMLS_CC,											\
+			"%s",													\
+			class_name												\
+		);															\
+		return;														\
+	}																\
+																	\
+	ALLOC_INIT_ZVAL(zval);											\
+	object_init_ex(zval, *cep);										\
+	Z_TYPE_P(zval) = IS_OBJECT;										\
+}
 
 #define ONPHP_CREATOR(class_name)				\
 	ONPHP_METHOD(class_name, create)			\
@@ -163,6 +190,50 @@
 #define ONPHP_STANDART_CLASS(class_name) \
 	PHPAPI zend_class_entry *onphp_ce_ ## class_name; \
 	extern zend_function_entry onphp_funcs_ ## class_name[];
+
+#define ONPHP_FOREACH(array, value)											\
+	for (																	\
+		zend_hash_internal_pointer_reset(Z_ARRVAL_P(array));				\
+		zend_hash_get_current_data(											\
+			Z_ARRVAL_P(array), (void **) &value								\
+		) == SUCCESS;														\
+		zend_hash_move_forward(Z_ARRVAL_P(array))							\
+	)
+
+#define ONPHP_ASSOC_ISSET(array, key) \
+	zend_hash_exists(Z_ARRVAL_P(array), Z_STRVAL_P(key), Z_STRLEN_P(key) + 1)
+
+#define ONPHP_ASSOC_UNSET(array, key) \
+	zend_hash_del(Z_ARRVAL_P(array), Z_STRVAL_P(key), Z_STRLEN_P(key) + 1)
+
+#define ONPHP_ASSOC_SET(array, key, value) {	\
+	zval *copy;									\
+	MAKE_STD_ZVAL(copy);						\
+	*copy = *value;								\
+	zval_copy_ctor(copy);						\
+	add_assoc_zval_ex(							\
+		array,									\
+		Z_STRVAL_P(key),						\
+		Z_STRLEN_P(key) + 1,					\
+		copy									\
+	);											\
+}
+
+#define ONPHP_PROPERTY_DESTRUCT(property_name) {	\
+	zval **data;									\
+													\
+	if (											\
+		SUCCESS										\
+		== zend_hash_find(							\
+			HASH_OF(this_ptr),						\
+			property_name,							\
+			sizeof(property_name),					\
+			(void **) &data							\
+		)											\
+	) {												\
+		zval_ptr_dtor(data);						\
+	}												\
+}
 
 #define ONPHP_ARGINFO_ONE \
 	ZEND_BEGIN_ARG_INFO(arginfo_one, 0) \

@@ -18,19 +18,13 @@
 ONPHP_METHOD(ComplexPrimitive, __construct)
 {
 	zval *name, *ternary, *nil;
-	zend_class_entry **cep;
 	
 	ONPHP_GET_ARGS("z", &name);
 	
 	MAKE_STD_ZVAL(nil);
 	ZVAL_NULL(nil);
 	
-	// will always succeed
-	zend_lookup_class("Ternary", strlen("Ternary"), &cep TSRMLS_CC);
-	
-	ALLOC_INIT_ZVAL(ternary);
-	object_init_ex(ternary, *cep);
-	Z_TYPE_P(ternary) = IS_OBJECT;
+	ONPHP_MAKE_FOREIGN_OBJECT("Ternary", ternary);
 	
 	zend_call_method_with_1_params(
 		&ternary,
@@ -76,7 +70,7 @@ ONPHP_METHOD(ComplexPrimitive, setState)
 	
 	ONPHP_CALL_METHOD_1(single, "setvalue", NULL, value);
 	
-	RETURN_ZVAL(getThis(), 1, 0);
+	RETURN_THIS;
 }
 
 #define COMPLEX_PRIMITIVE_SET_TERNARY_STATE(method, state)			\
@@ -86,7 +80,7 @@ ONPHP_METHOD(ComplexPrimitive, setState)
 																	\
 		ONPHP_CALL_METHOD_0(single, state, NULL);					\
 																	\
-		RETURN_ZVAL(getThis(), 1, 0);								\
+		RETURN_THIS;								\
 	}
 
 COMPLEX_PRIMITIVE_SET_TERNARY_STATE(setSingle, "settrue");

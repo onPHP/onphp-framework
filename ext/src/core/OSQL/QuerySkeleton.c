@@ -27,31 +27,8 @@ ONPHP_METHOD(QuerySkeleton, __construct)
 
 ONPHP_METHOD(QuerySkeleton, __destruct)
 {
-	zval **data;
-	
-	if (
-		SUCCESS
-		== zend_hash_find(
-			HASH_OF(this_ptr),
-			"where",
-			sizeof("where"),
-			(void **) &data
-		)
-	) {
-		zval_ptr_dtor(data);
-	}
-	
-	if (
-		SUCCESS
-		== zend_hash_find(
-			HASH_OF(this_ptr),
-			"whereLogic",
-			sizeof("whereLogic"),
-			(void **) &data
-		)
-	) {
-		zval_ptr_dtor(data);
-	}
+	ONPHP_PROPERTY_DESTRUCT("where");
+	ONPHP_PROPERTY_DESTRUCT("whereLogic");	
 }
 
 ONPHP_METHOD(QuerySkeleton, where)
@@ -104,7 +81,7 @@ ONPHP_METHOD(QuerySkeleton, where)
 		add_next_index_zval(where, copy);
 	}
 	
-	RETURN_ZVAL(getThis(), 1, 0);
+	RETURN_THIS;
 }
 
 ONPHP_METHOD(QuerySkeleton, andWhere)

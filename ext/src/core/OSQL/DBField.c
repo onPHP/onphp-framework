@@ -126,15 +126,9 @@ ONPHP_METHOD(DBField, setTable)
 	ONPHP_GET_ARGS("z", &table);
 	
 	if (!ONPHP_INSTANCEOF(table, DialectString)) {
-		zend_class_entry **cep;
 		zval *from_table;
 		
-		// will always succeed
-		zend_lookup_class("FromTable", strlen("FromTable"), &cep TSRMLS_CC);
-		
-		ALLOC_INIT_ZVAL(from_table);
-		object_init_ex(from_table, *cep);
-		Z_TYPE_P(from_table) = IS_OBJECT;
+		ONPHP_MAKE_FOREIGN_OBJECT("FromTable", from_table);
 		
 		zend_call_method_with_1_params(
 			&from_table,
@@ -155,7 +149,7 @@ ONPHP_METHOD(DBField, setTable)
 		ONPHP_UPDATE_PROPERTY(getThis(), "table", table);
 	}
 	
-	RETURN_ZVAL(getThis(), 1, 0);
+	RETURN_THIS;
 }
 
 static ONPHP_ARGINFO_ONE;

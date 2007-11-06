@@ -1,5 +1,17 @@
 # $Id$
 
+2007-11-06	Konstantin V. Arkhipov
+
+	* ext/src/core/Form/Filters/: Filtrator implemented.
+
+	* ext/src/core/Form/: PlainForm implemented.
+
+	* ext/src/core/Primitives/: FiltrablePrimitive implemented.
+
+	* etx/src/onphp.h: new macroses: ONPHP_MAKE_FOREIGN_OBJECT,
+	ONPHP_FOREACH, ONPHP_ASSOC_ISSET, ONPHP_ASSOC_UNSET, ONPHP_ASSOC_SET,
+	ONPHP_PROPERTY_DESTRUCT and RETURN_THIS.
+
 2007-11-04	Konstantin V. Arkhipov
 
 	* main/DAOs/StorableDAO.class.php: added merge() which updates only
@@ -14,7 +26,7 @@
 	* ext/src/core/OSQL/: DBBinary, DropTableQuery, ExtractPart, FullText
 	implemented.
 
-	* ext/src/onphp.h: new macros: ONPHP_CHECK_EMPTY, ONPHP_INSTANCEOF,
+	* ext/src/onphp.h: new macroses: ONPHP_CHECK_EMPTY, ONPHP_INSTANCEOF,
 	ONPHP_GET_ARGS and ONPHP_CALL_METHOD_*.
 
 	* ext/src/core/Form/: BasePrimitive, RangedPrimitive, ComplexPrimitive
