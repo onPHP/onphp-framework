@@ -27,6 +27,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/DB/ImaginaryDialect.c \
 		src/core/Form/PlainForm.c \
 		src/core/Form/RegulatedForm.c \
+		src/core/Form/Filters/BaseFilter.c \
 		src/core/Form/Filters/Filtrator.c \
 		src/core/Form/Primitives/BasePrimitive.c \
 		src/core/Form/Primitives/RangedPrimitive.c \

@@ -1,6 +1,5 @@
-<?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,13 +9,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * Filter's template.
-	 * 
-	 * @ingroup Filters
-	 * @ingroup Module
-	**/
-	abstract class BaseFilter
-		extends Singleton
-		implements Filtrator, Instantiatable {/*_*/}
-?>
+#ifndef ONPHP_CORE_BASE_FILTE_H
+#define ONPHP_CORE_BASE_FILTE_H
+
+ONPHP_STANDART_CLASS(BaseFilter);
+
+#endif /* ONPHP_CORE_BASE_FILTE_H */

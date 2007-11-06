@@ -2,7 +2,7 @@
 
 2007-11-06	Konstantin V. Arkhipov
 
-	* ext/src/core/Form/Filters/: Filtrator implemented.
+	* ext/src/core/Form/Filters/: Filtrator, BaseFilter implemented.
 
 	* ext/src/core/Form/: PlainForm, RegulatedForm implemented.
 

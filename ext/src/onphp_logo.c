@@ -56,6 +56,7 @@ ViewResolver, \
 LogicalObject."
 
 #define ONPHP_CLASSES_LIST "\
+BaseFilter, \
 BasePrimitive, \
 Castable, \
 Cdata, \

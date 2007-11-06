@@ -36,6 +36,7 @@
 #include "core/Form/PlainForm.h"
 #include "core/Form/RegulatedForm.h"
 
+#include "core/Form/Filters/BaseFilter.h"
 #include "core/Form/Filters/Filtrator.h"
 
 #include "core/Form/Primitives/BasePrimitive.h"
@@ -95,6 +96,9 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(Query, Identifiable);
 	REGISTER_ONPHP_IMPLEMENTS(Query, Stringable);
 	
+	REGISTER_ONPHP_STD_CLASS(Singleton);
+	ONPHP_CLASS_IS_ABSTRACT(Singleton);
+	
 	REGISTER_ONPHP_STD_CLASS(PlainForm);
 	REGISTER_ONPHP_PROPERTY(PlainForm, "primitives", ZEND_ACC_PROTECTED);
 	ONPHP_CLASS_IS_ABSTRACT(PlainForm);
@@ -105,6 +109,11 @@ PHP_MINIT_FUNCTION(onphp_core)
 	ONPHP_CLASS_IS_ABSTRACT(RegulatedForm);
 	
 	REGISTER_ONPHP_INTERFACE(Filtrator);
+	
+	REGISTER_ONPHP_SUB_CLASS(BaseFilter, Singleton);
+	REGISTER_ONPHP_IMPLEMENTS(BaseFilter, Filtrator);
+	REGISTER_ONPHP_IMPLEMENTS(BaseFilter, Instantiatable);
+	ONPHP_CLASS_IS_ABSTRACT(BaseFilter);
 	
 	REGISTER_ONPHP_STD_CLASS(BasePrimitive);
 	REGISTER_ONPHP_PROPERTY(BasePrimitive, "name", ZEND_ACC_PROTECTED);
@@ -159,9 +168,6 @@ PHP_MINIT_FUNCTION(onphp_core)
 	
 	// skipping REGISTER_ONPHP_IMPLEMENTS
 	zend_class_implements(onphp_ce_Enumeration TSRMLS_CC, 1, zend_ce_serializable);
-	
-	REGISTER_ONPHP_STD_CLASS(Singleton);
-	ONPHP_CLASS_IS_ABSTRACT(Singleton);
 	
 	REGISTER_ONPHP_STD_CLASS(StaticFactory);
 	ONPHP_CLASS_IS_ABSTRACT(StaticFactory);

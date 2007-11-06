@@ -29,7 +29,7 @@ if (PHP_ONPHP != "no") {
 	
 	ADD_SOURCES(
 		"ext/onphp/src/core/Form/Filters",
-		"Filtrator.c",
+		"BaseFilter.c Filtrator.c",
 		"onphp"
 	);
 	
