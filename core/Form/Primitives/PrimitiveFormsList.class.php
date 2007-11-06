@@ -55,7 +55,7 @@
 		
 		public function importValue($value)
 		{
-			if ($value)
+			if ($value !== null)
 				Assert::isArray($value);
 					
 			return $this->import(
@@ -65,7 +65,7 @@
 		
 		public function exportValue()
 		{
-			if (!$this->value)
+			if (!$this->isImported())
 				return null;
 			
 			$result = array();

@@ -74,7 +74,7 @@
 		
 		final public function toFormsList($dtosList)
 		{
-			if (!$dtosList)
+			if ($dtosList === null)
 				return null;
 			
 			Assert::isArray($dtosList);
@@ -148,7 +148,7 @@
 		
 		final public function makeObjectsList($forms)
 		{
-			if (!$forms)
+			if ($forms === null)
 				return null;
 			
 			Assert::isArray($forms);
@@ -172,7 +172,7 @@
 		
 		final public function makeDtosList($objects)
 		{
-			if (!$objects)
+			if ($objects === null)
 				return null;
 			
 			Assert::isArray($objects);
@@ -312,7 +312,7 @@
 				$result = $this->baseProto()->buildScope($dto);
 			else
 				$result = array();
-			
+				
 			foreach ($this->getFormMapping() as $primitive) {
 				
 				$methodName = 'get'.ucfirst($primitive->getName());
@@ -371,7 +371,7 @@
 		
 		final public function buildArrayScope($dtos)
 		{
-			if (!$dtos)
+			if ($dtos === null)
 				return null;
 			
 			Assert::isArray($dtos);
