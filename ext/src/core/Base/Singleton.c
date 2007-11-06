@@ -52,7 +52,7 @@ ONPHP_METHOD(Singleton, getInstance)
 		ALLOC_INIT_ZVAL(args);
 		array_init(args);
 		
-		for (i = 1; i < argc; i++) {
+		for (i = 1; i < argc; ++i) {
 			add_next_index_zval(args, *params[i]);
 		}
 		
