@@ -5,8 +5,6 @@
 	* main/Utils/TextUtils.class.php: friendlyNumber(): bug with small
 	orders fixed.
 
-
-
 2007-11-02	Vladimir A. Altuchov
 
 	* main/Utils/IO/FileReader.class.php: new reader added.
