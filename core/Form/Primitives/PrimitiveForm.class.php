@@ -66,6 +66,22 @@
 			return parent::setValue($value);
 		}
 		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveForm
+		**/
+		public function importValue($value)
+		{
+			if ($value !== null)
+				Assert::isTrue($value instanceof Form);
+			else
+				return $this->value = null;
+			
+			$this->value = $value;
+			
+			return ($value->getErrors() ? false : true);
+		}
+		
 		public function exportValue()
 		{
 			if (!$this->value)

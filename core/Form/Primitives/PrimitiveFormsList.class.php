@@ -57,10 +57,25 @@
 		{
 			if ($value !== null)
 				Assert::isArray($value);
-					
-			return $this->import(
-				array($this->name => $value)
-			);
+			else
+				return null;
+			
+			$result = true;
+			
+			$resultValue = array();
+			
+			foreach ($value as $id => $form) {
+				Assert::isInstance($form, 'Form');
+				
+				$resultValue[$id] = $form;
+				
+				if ($form->getErrors())
+					$result = false;
+			}
+			
+			$this->value = $resultValue;
+			
+			return $result;
 		}
 		
 		public function exportValue()

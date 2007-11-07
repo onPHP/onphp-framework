@@ -29,6 +29,11 @@
 			return $this->className().'DTO';
 		}
 		
+		public function getFormMapping()
+		{
+			return array();
+		}
+		
 		public function checkConstraints($object)
 		{
 			Assert::isInstance($object, $this->className());
@@ -55,39 +60,6 @@
 			return new $dtoClassName;
 		}
 		
-		final public function toForm(DTOClass $dto)
-		{
-			$dtoClass = $this->dtoClassName();
-			Assert::isInstance($dto, $dtoClass);
-			
-			return
-				$this->
-					attachPrimitives(
-						$this->baseProto()
-							? $this->baseProto()->toForm($dto)
-							: Form::create()
-					)->
-					importMore(
-						$this->buildScope($dto)
-					);
-		}
-		
-		final public function toFormsList($dtosList)
-		{
-			if ($dtosList === null)
-				return null;
-			
-			Assert::isArray($dtosList);
-			
-			$result = array();
-			
-			foreach ($dtosList as $dto) {
-				$result[] = $this->toForm($dto);
-			}
-			
-			return $result;
-		}
-		
 		final public function makeForm()
 		{
 			return
@@ -107,32 +79,43 @@
 			return $form;
 		}
 		
+		final public function toForm(DTOClass $dto)
+		{
+			$converter = new DTOToFormImporter($this);
+			
+			$converter->setSoapDto(true);
+			
+			return $converter->convertDto($dto);
+		}
+		
 		final public function makeObject(Form $form)
 		{
-			$className = $this->className();
+			$proto = $this;
 			
 			if ($form->getProto()) {
 				$formClassName = $form->getProto()->className();
-				
+				$className = $this->className();
+			
 				if (!ClassUtils::isInstanceOf($formClassName, $className))
 					throw new WrongArgumentException(
 						"proto of class $className cannot work "
 						."with form for class $formClassName"
 					);
-			} else
-				$formClassName = null;
-			
-			if ($formClassName && $this->isAbstract()) {
-				if ($formClassName == $className)
-					throw new WrongArgumentException(
-						'cannot build abstract object of class '
-						.getClass($formClassName)
-					);
-					
-				return $form->getProto()->makeObject($form);
+				
+				$proto = $form->getProto();
 			}
 			
-			return $this->toObject($form, $this->createObject());
+			if ($proto->isAbstract()) {
+				throw new WrongArgumentException(
+					'cannot build abstract object of class '
+					.$proto->className()
+				);
+			}
+			
+			if ($proto !== $this)
+				return $form->getProto()->makeObject($form);
+			else
+				return $this->toObject($form, $this->createObject());
 		}
 		
 		final public function toObject(Form $form, $object)
@@ -319,17 +302,7 @@
 				$value = $dto->$methodName();
 				
 				if ($primitive->isRequired() || $value !== null) {
-					
-					// TODO: primitives refactoring
-					if (
-						($primitive instanceof PrimitiveFormsList)
-						|| ($primitive instanceof PrimitiveEnumerationList)
-						|| ($primitive instanceof PrimitiveIdentifierList)
-						|| ($primitive instanceof PrimitiveArray)
-					) {
-						if (!is_array($value))
-							$value = array($value);
-					}
+					$value = $this->soapSingleItemToArray($primitive, $value);
 					
 					if ($primitive instanceof PrimitiveForm) {
 						
@@ -358,6 +331,7 @@
 									
 							}
 							
+							// NOTE: type loss right here:
 							$value = $proto->buildScope($value);
 						}
 					}
@@ -383,11 +357,6 @@
 			}
 			
 			return $result;
-		}
-		
-		protected function getFormMapping()
-		{
-			return array();
 		}
 		
 		// TODO: move to Primitive
