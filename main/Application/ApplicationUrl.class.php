@@ -97,6 +97,8 @@
 		
 		public function poorReference($url)
 		{
+			Assert::isNotNull($this->base, 'set base url first');
+			
 			$parsedUrl = HttpUrl::create()->parse($url);
 			
 			return $this->base->transform($parsedUrl);
