@@ -168,8 +168,13 @@
 				$orders = array();
 				
 				while ($integer > 0) {
-					$orders[] = $integer % 1000;
+					$order = $integer % 1000;
 					$integer = (int) ($integer / 1000);
+					
+					if ($integer > 0)
+						$orders[] = sprintf('%03d', $order);
+					else
+						$orders[] = (string)$order;
 				}
 				
 				$result = implode($delimiter, array_reverse($orders));
