@@ -291,72 +291,12 @@
 		
 		final public function buildScope(DTOClass $dto)
 		{
-			if ($this->baseProto())
-				$result = $this->baseProto()->buildScope($dto);
-			else
-				$result = array();
-				
-			foreach ($this->getFormMapping() as $primitive) {
-				
-				$methodName = 'get'.ucfirst($primitive->getName());
-				$value = $dto->$methodName();
-				
-				if ($primitive->isRequired() || $value !== null) {
-					$value = $this->soapSingleItemToArray($primitive, $value);
-					
-					if ($primitive instanceof PrimitiveForm) {
-						
-						$proto = Singleton::getInstance(
-							self::PROTO_CLASS_PREFIX.$primitive->getClassName()
-						);
-						
-						if ($primitive instanceof PrimitiveFormsList) {
-							$value = $proto->buildArrayScope($value);
-							
-						} else {
-							
-							$protoDtoClass = $proto->dtoClassName();
-							
-							if ($value) {
-								Assert::isInstance($value, $protoDtoClass);
-									
-								$proto = $value->dtoProto();
-								
-								if ($proto->isAbstract())
-									throw new WrongArgumentException(
-										'cannot build scope from '
-										.'abstract proto for class '
-										.get_class($value)
-									);
-									
-							}
-							
-							// NOTE: type loss right here:
-							$value = $proto->buildScope($value);
-						}
-					}
-					
-					$result[$primitive->getName()] = $value;
-				}
-			}
+			$converter = new DTOToScopeConverter($this);
 			
-			return $result;
-		}
-		
-		final public function buildArrayScope($dtos)
-		{
-			if ($dtos === null)
-				return null;
+			$converter->setSoapDto(true);
 			
-			Assert::isArray($dtos);
-			
-			$result = array();
-			
-			foreach ($dtos as $dto) {
-				$result[] = $this->buildScope($dto);
-			}
-			
-			return $result;
+			// NOTE: type loss here
+			return $converter->convertDto($dto);
 		}
 		
 		// TODO: move to Primitive

@@ -17,8 +17,17 @@
 			return $this->proto->makeForm();
 		}
 		
+		public function alterResult($result)
+		{
+			Assert::isInstance($result, 'Form');
+			
+			$this->proto->attachPrimitives($result);
+			
+			return $result;
+		}
+		
 		public function saveToResult(
-			$value, BasePrimitive $primitive, $result
+			$value, BasePrimitive $primitive, &$result
 		)
 		{
 			Assert::isInstance($result, 'Form');

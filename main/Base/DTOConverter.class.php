@@ -15,9 +15,11 @@
 		private $soapDto = false;
 		
 		abstract public function createResult();
+		abstract public function alterResult($result);
+		
 		abstract public function preserveTypeLoss($value, DTOProto $childProto);
 		abstract public function saveToResult(
-			$value, BasePrimitive $primitive, $result
+			$value, BasePrimitive $primitive, &$result
 		);
 		
 		public function __construct(DTOProto $proto)
@@ -58,7 +60,7 @@
 					)->
 					convertDto($dto);
 				
-				$this->proto->attachPrimitives($result);
+				$result = $this->alterResult($result);
 				
 			} else
 				$result = $this->createResult();
