@@ -174,7 +174,7 @@
 					if ($integer > 0)
 						$orders[] = sprintf('%03d', $order);
 					else
-						$orders[] = (string)$order;
+						$orders[] = (string) $order;
 				}
 				
 				$result = implode($delimiter, array_reverse($orders));
