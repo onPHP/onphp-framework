@@ -12,7 +12,7 @@
 
 	class DTOProto extends Singleton
 	{
-		const PROTO_CLASS_PREFIX		= 'Proto';
+		const PROTO_CLASS_PREFIX		= 'DtoProto';
 		
 		public function baseProto()
 		{

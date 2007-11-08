@@ -29,7 +29,7 @@
 				"knows nothing about '{$className}' class"
 			);
 			
-			$protoClass = 'Proto'.$className;
+			$protoClass = DTOProto::PROTO_CLASS_PREFIX.$className;
 			
 			Assert::isTrue(
 				class_exists($protoClass, true),
