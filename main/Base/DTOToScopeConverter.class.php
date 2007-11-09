@@ -12,23 +12,23 @@
 
 	final class DTOToScopeConverter extends DTOConverter
 	{
-		public function createResult()
+		protected function createResult()
 		{
 			return array();
 		}
 		
-		public function alterResult($result)
+		protected function alterResult($result)
 		{
 			return $result;
 		}
 		
-		public function preserveTypeLoss($value, DTOProto $childProto)
+		protected function preserveTypeLoss($value, DTOProto $childProto)
 		{
 			// NOTE: type loss here
 			return $this;
 		}
 		
-		public function saveToResult(
+		protected function saveToResult(
 			$value, BasePrimitive $primitive, &$result
 		)
 		{

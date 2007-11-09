@@ -12,12 +12,12 @@
 
 	final class DTOToFormImporter extends DTOToFormConverter
 	{
-		public function createResult()
+		protected function createResult()
 		{
 			return $this->proto->makeForm();
 		}
 		
-		public function alterResult($result)
+		protected function alterResult($result)
 		{
 			Assert::isInstance($result, 'Form');
 			
@@ -26,7 +26,7 @@
 			return $result;
 		}
 		
-		public function saveToResult(
+		protected function saveToResult(
 			$value, BasePrimitive $primitive, &$result
 		)
 		{

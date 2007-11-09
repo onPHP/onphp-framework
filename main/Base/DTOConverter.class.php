@@ -12,15 +12,19 @@
 
 	abstract class DTOConverter
 	{
-		private $soapDto = false;
+		protected $proto	= null;
 		
-		abstract public function createResult();
-		abstract public function alterResult($result);
+		private $soapDto	= false;
 		
-		abstract public function preserveTypeLoss($value, DTOProto $childProto);
-		abstract public function saveToResult(
+		abstract protected function createResult();
+		abstract protected function alterResult($result);
+		
+		abstract protected function preserveTypeLoss($value, DTOProto $childProto);
+		abstract protected function saveToResult(
 			$value, BasePrimitive $primitive, &$result
 		);
+		
+		abstract protected function preserveResultTypeLoss($result);
 		
 		public function __construct(DTOProto $proto)
 		{
@@ -119,6 +123,8 @@
 					$this->saveToResult($value, $primitive, $result);
 				}
 			}
+			
+			$this->preserveResultTypeLoss($result);
 			
 			return $result;
 		}
