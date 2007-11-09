@@ -12,15 +12,6 @@
 
 	abstract class DTOToFormConverter extends DTOConverter
 	{
-		protected function preserveTypeLoss($value, DTOProto $childProto)
-		{
-			Assert::isInstance($value, 'Form');
-			
-			$value->setProto($childProto);
-			
-			return $this;
-		}
-		
 		protected function preserveResultTypeLoss($result)
 		{
 			Assert::isInstance($result, 'Form');

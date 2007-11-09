@@ -22,7 +22,7 @@
 			return $result;
 		}
 		
-		protected function preserveTypeLoss($value, DTOProto $childProto)
+		protected function preserveResultTypeLoss($result)
 		{
 			// NOTE: type loss here
 			return $this;

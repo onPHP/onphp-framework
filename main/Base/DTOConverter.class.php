@@ -19,7 +19,6 @@
 		abstract protected function createResult();
 		abstract protected function alterResult($result);
 		
-		abstract protected function preserveTypeLoss($value, DTOProto $childProto);
 		abstract protected function saveToResult(
 			$value, BasePrimitive $primitive, &$result
 		);
@@ -52,17 +51,38 @@
 			return $result;
 		}
 		
-		final public function convertDto(DTOClass $dto)
+		final public function convertDto(DTOClass $dto, $polymorph = true)
 		{
-			$dtoClass = $this->proto->dtoClassName();
-			Assert::isInstance($dto, $dtoClass);
+			$protoDtoClass = $this->proto->dtoClassName();
+		
+			Assert::isInstance($dto, $protoDtoClass);
+			
+			if ($polymorph) {
+				$proto = $this->proto;
+				
+				if (get_class($dto) !== $protoDtoClass)
+					$proto = $dto->dtoProto();
+				
+				if ($proto->isAbstract())
+					throw new WrongArgumentException(
+						'cannot convert from '
+						.'abstract proto for class '
+						.get_class($value)
+					);
+				
+				if ($proto !== $this->proto) {
+					return $this->cloneConverter($proto)->
+						convertDto($dto, false);
+				}
+			}
+			
 			
 			if ($this->proto->baseProto()) {
 				$result =
 					$this->cloneConverter(
 						$this->proto->baseProto()
 					)->
-					convertDto($dto);
+					convertDto($dto, false);
 				
 				$result = $this->alterResult($result);
 				
@@ -89,34 +109,11 @@
 						
 						if ($primitive instanceof PrimitiveFormsList) {
 							$value = $this->cloneConverter($proto)->
-								convertDtosList($value);
+								convertDtosList($value, true);
 							
 						} else {
-							
-							$childType = false;
-							
-							if ($value) {
-								$protoDtoClass = $proto->dtoClassName();
-							
-								Assert::isInstance($value, $protoDtoClass);
-								
-								if (get_class($value)!== $protoDtoClass) {
-									$proto = $value->dtoProto();
-									$childType = true;
-								}
-							}
-							
-							if ($proto->isAbstract())
-								throw new WrongArgumentException(
-									'cannot convert from '
-									.'abstract proto for class '
-									.get_class($value)
-								);
-							
 							$value = $this->cloneConverter($proto)->
-								convertDto($value);
-							
-							$this->preserveTypeLoss($value, $proto);
+								convertDto($value, true);
 						}
 					}
 					
@@ -139,7 +136,7 @@
 			$result = array();
 			
 			foreach ($dtosList as $dto) {
-				$result[] = $this->convertDto($dto);
+				$result[] = $this->convertDto($dto, true);
 			}
 			
 			return $result;
