@@ -10,32 +10,21 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class DTOToScopeConverter extends PrototypedBuilder
+	final class ObjectToFormConverter extends FormBuilder
 	{
-		protected function createResult()
+		public static function create(DTOProto $proto)
 		{
-			return array();
-		}
-		
-		protected function alterResult($result)
-		{
-			return $result;
-		}
-		
-		protected function preserveResultTypeLoss($result)
-		{
-			// NOTE: type loss here
-			return $this;
+			return new self($proto);
 		}
 		
 		protected function getGetter($object)
 		{
-			return new DTOGetter($this->proto, $object);
+			return new ObjectGetter($this->proto, $object);
 		}
 		
 		protected function getSetter(&$object)
 		{
-			return new ScopeSetter($this->proto, $object);
+			return new FormSetter($this->proto, $object);
 		}
 	}
 ?>

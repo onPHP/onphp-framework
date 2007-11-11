@@ -10,32 +10,13 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class DTOToScopeConverter extends PrototypedBuilder
+	final class ObjectGetter extends PrototypedGetter
 	{
-		protected function createResult()
+		public function get($name)
 		{
-			return array();
-		}
-		
-		protected function alterResult($result)
-		{
-			return $result;
-		}
-		
-		protected function preserveResultTypeLoss($result)
-		{
-			// NOTE: type loss here
-			return $this;
-		}
-		
-		protected function getGetter($object)
-		{
-			return new DTOGetter($this->proto, $object);
-		}
-		
-		protected function getSetter(&$object)
-		{
-			return new ScopeSetter($this->proto, $object);
+			$method = 'get'.ucfirst($name);
+			
+			return $this->object->$method();
 		}
 	}
 ?>

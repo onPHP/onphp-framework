@@ -10,32 +10,21 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class DTOToScopeConverter extends PrototypedBuilder
+	abstract class PrototypedGetter
 	{
-		protected function createResult()
+		protected $proto = null;
+		protected $object = null;
+		
+		protected $mapping = array();
+		
+		public function __construct(DTOProto $proto, $object)
 		{
-			return array();
+			$this->proto = $proto;
+			$this->object = $object;
+			
+			$this->mapping = $proto->getFormMapping();
 		}
 		
-		protected function alterResult($result)
-		{
-			return $result;
-		}
-		
-		protected function preserveResultTypeLoss($result)
-		{
-			// NOTE: type loss here
-			return $this;
-		}
-		
-		protected function getGetter($object)
-		{
-			return new DTOGetter($this->proto, $object);
-		}
-		
-		protected function getSetter(&$object)
-		{
-			return new ScopeSetter($this->proto, $object);
-		}
+		abstract public function get($name);
 	}
 ?>

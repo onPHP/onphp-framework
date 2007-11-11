@@ -10,39 +10,21 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class DTOToFormImporter extends DTOToFormConverter
+	final class DTOToFormImporter extends FormBuilder
 	{
-		protected function createResult()
+		public static function create(DTOProto $proto)
 		{
-			return $this->proto->makeForm();
+			return new self($proto);
 		}
 		
-		protected function alterResult($result)
+		protected function getGetter($object)
 		{
-			Assert::isInstance($result, 'Form');
-			
-			$this->proto->attachPrimitives($result);
-			
-			return $result;
+			return new DTOGetter($this->proto, $object);
 		}
 		
-		protected function saveToResult(
-			$value, BasePrimitive $primitive, &$result
-		)
+		protected function getSetter(&$object)
 		{
-			Assert::isInstance($result, 'Form');
-			
-			if ($primitive instanceof PrimitiveForm)
-				// inner form has been already imported
-				$result->importValue($primitive->getName(), $value);
-				
-			else
-				$result->importOne(
-					$primitive->getName(),
-					array($primitive->getName() => $value)
-				);
-			
-			return $this;
+			return new FormImporter($this->proto, $object);
 		}
 	}
 ?>

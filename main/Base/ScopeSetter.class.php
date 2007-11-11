@@ -10,32 +10,29 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class DTOToScopeConverter extends PrototypedBuilder
+	final class ScopeSetter extends PrototypedSetter
 	{
-		protected function createResult()
+		public function __construct(DTOProto $proto, &$object)
 		{
-			return array();
+			Assert::isArray($object);
+			
+			return parent::__construct($proto, $object);
 		}
 		
-		protected function alterResult($result)
+		public function set($name, $value)
 		{
-			return $result;
-		}
-		
-		protected function preserveResultTypeLoss($result)
-		{
-			// NOTE: type loss here
+			if (!isset($this->mapping[$name]))
+				throw new WrongArgumentException(
+					"knows nothing about property '{$name}'"
+				);
+			
+			Assert::isTrue(!is_object($value), 'cannot put objects into scope');
+			
+			$primitive = $this->mapping[$name];
+			
+			$this->result[$primitive->getName()] =  $value;
+			
 			return $this;
-		}
-		
-		protected function getGetter($object)
-		{
-			return new DTOGetter($this->proto, $object);
-		}
-		
-		protected function getSetter(&$object)
-		{
-			return new ScopeSetter($this->proto, $object);
 		}
 	}
 ?>

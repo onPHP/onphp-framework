@@ -83,9 +83,7 @@
 		{
 			$converter = new DTOToFormImporter($this);
 			
-			$converter->setSoapDto(true);
-			
-			return $converter->convertDto($dto);
+			return $converter->make($dto);
 		}
 		
 		final public function makeObject(Form $form)
@@ -293,10 +291,8 @@
 		{
 			$converter = new DTOToScopeConverter($this);
 			
-			$converter->setSoapDto(true);
-			
 			// NOTE: type loss here
-			return $converter->convertDto($dto);
+			return $converter->make($dto);
 		}
 		
 		// TODO: move to Primitive

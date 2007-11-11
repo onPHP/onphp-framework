@@ -10,32 +10,29 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class DTOToScopeConverter extends PrototypedBuilder
+	abstract class FormBuilder extends PrototypedBuilder
 	{
 		protected function createResult()
 		{
-			return array();
+			return $this->proto->makeForm();
 		}
 		
 		protected function alterResult($result)
 		{
+			Assert::isInstance($result, 'Form');
+			
+			$this->proto->attachPrimitives($result);
+			
 			return $result;
 		}
 		
 		protected function preserveResultTypeLoss($result)
 		{
-			// NOTE: type loss here
+			Assert::isInstance($result, 'Form');
+			
+			$result->setProto($this->proto);
+			
 			return $this;
-		}
-		
-		protected function getGetter($object)
-		{
-			return new DTOGetter($this->proto, $object);
-		}
-		
-		protected function getSetter(&$object)
-		{
-			return new ScopeSetter($this->proto, $object);
 		}
 	}
 ?>

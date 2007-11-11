@@ -10,13 +10,33 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class DTOToFormConverter extends DTOConverter
+	final class FormImporter extends PrototypedSetter
 	{
-		protected function preserveResultTypeLoss($result)
+		public function __construct(DTOProto $proto, &$object)
 		{
-			Assert::isInstance($result, 'Form');
+			Assert::isInstance($object, 'Form');
 			
-			$result->setProto($this->proto);
+			return parent::__construct($proto, $object);
+		}
+		
+		public function set($name, $value)
+		{
+			if (!isset($this->mapping[$name]))
+				throw new WrongArgumentException(
+					"knows nothing about property '{$name}'"
+				);
+			
+			$primitive = $this->mapping[$name];
+			
+			if ($primitive instanceof PrimitiveForm)
+				// inner form(s) has been already imported
+				$this->object->importValue($primitive->getName(), $value);
+				
+			else
+				$this->object->importOne(
+					$primitive->getName(),
+					array($primitive->getName() => $value)
+				);
 			
 			return $this;
 		}
