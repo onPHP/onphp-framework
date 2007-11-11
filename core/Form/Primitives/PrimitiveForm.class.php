@@ -50,9 +50,9 @@
 			return $this->className;
 		}
 		
-		public function getReflection()
+		public function getProto()
 		{
-			return $this->info;
+			return $this->proto;
 		}
 		
 		/**

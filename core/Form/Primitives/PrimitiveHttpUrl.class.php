@@ -38,6 +38,19 @@
 			return true;
 		}
 		
+		public function importValue($value)
+		{
+			if ($value instanceof HttpUrl) {
+				
+				return
+					$this->import(
+						array($this->getName() => $value->toString())
+					);
+			}
+			
+			return parent::importValue(null);
+		}
+		
 		public function exportValue()
 		{
 			if (!$this->value)
