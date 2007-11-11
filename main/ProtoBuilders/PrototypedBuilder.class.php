@@ -41,7 +41,7 @@
 			return $result;
 		}
 		
-		public function make($object)
+		public function make($object, $recursive = true)
 		{
 			if (($object instanceof DTOPrototyped)) {
 				$proto = $this->proto;
@@ -67,7 +67,10 @@
 					.get_class($this->proto)
 				);
 			
-			$result = $this->upperMake($object);
+			if ($recursive)
+				$result = $this->upperMake($object);
+			else
+				$result = $this->makeOwn($object);
 			
 			return $result;
 		}
@@ -85,7 +88,16 @@
 			
 			$result = $this->prepareOwn($result);
 			
-			$result = $this->makeOwn($object, $result);
+			$result = $this->fillOwn($object, $result);
+			
+			return $result;
+		}
+		
+		public function makeOwn($object)
+		{
+			$result = $this->createEmpty();
+			$result = $this->prepareOwn($result);
+			$result = $this->fillOwn($object, $result);
 			
 			return $result;
 		}
@@ -106,7 +118,7 @@
 			return $result;
 		}
 		
-		public function makeOwn($object, $result)
+		public function fillOwn($object, $result)
 		{
 			$getter = $this->getGetter($object);
 			$setter = $this->getSetter($result);
