@@ -44,18 +44,12 @@
 		final public function make($object, $polymorph = true)
 		{
 			if ($polymorph) {
-				if ($this->proto->isAbstract())
-					throw new WrongArgumentException(
-						'cannot make from abstract proto '
-						.get_class($proto)
-					);
-				
 				if (($object instanceof DTOPrototyped)) {
 					$proto = $this->proto;
 					$objectProto = $object->dtoProto();
 					
 					if ($proto !== $objectProto) {
-						if (!$objectProto->instanceOf($proto))
+						if (!$objectProto->isInstanceOf($proto))
 							throw new WrongArgumentException(
 								'target proto '.get_class($objectProto)
 								.' is not a child of '.get_class($proto)
@@ -67,6 +61,13 @@
 							make($object, false);
 					}
 				}
+				
+				if ($this->proto->isAbstract())
+					throw new WrongArgumentException(
+						'cannot make from abstract proto '
+						.get_class($this->proto)
+					);
+				
 			}
 			
 			if ($this->proto->baseProto()) {

@@ -46,6 +46,13 @@
 			return false;
 		}
 		
+		public function isInstanceOf(DTOProto $proto)
+		{
+			return ClassUtils::isInstanceOf(
+				$this->dtoClassName(), $proto->dtoClassName()
+			);
+		}
+		
 		final public function createObject()
 		{
 			$className = $this->className();
