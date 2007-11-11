@@ -75,16 +75,12 @@
 					.get_class($this->proto)
 				);
 			
+			$result = $this->createEmpty();
 			
-			if ($recursive) {
-				$result = $this->createEmpty();
-				
-				$result = $this->upperMake(
-					$object, $result
-				);
-				
-			} else
-				$result = $this->makeOwn($object);
+			if ($recursive)
+				$result = $this->upperMake($object, $result);
+			else
+				$result = $this->makeOwn($object, $result);
 			
 			return $result;
 		}
@@ -99,16 +95,11 @@
 					upperMake($object, $result);
 			}
 			
-			$result = $this->prepareOwn($result);
-			
-			$result = $this->fillOwn($object, $result);
-			
-			return $result;
+			return $this->makeOwn($object, $result);
 		}
 		
-		public function makeOwn($object)
+		public function makeOwn($object, &$result)
 		{
-			$result = $this->createEmpty();
 			$result = $this->prepareOwn($result);
 			$result = $this->fillOwn($object, $result);
 			
