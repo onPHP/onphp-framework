@@ -12,17 +12,17 @@
 
 	final class DTOToScopeConverter extends PrototypedBuilder
 	{
-		protected function createResult()
+		protected function createEmpty()
 		{
 			return array();
 		}
 		
-		protected function alterResult($result)
+		protected function prepareOwn($result)
 		{
 			return $result;
 		}
 		
-		protected function preserveResultTypeLoss($result)
+		protected function preserveTypeLoss($result)
 		{
 			// NOTE: type loss here
 			return $this;

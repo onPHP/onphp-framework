@@ -12,12 +12,12 @@
 
 	abstract class FormBuilder extends PrototypedBuilder
 	{
-		protected function createResult()
+		protected function createEmpty()
 		{
-			return $this->proto->makeForm();
+			return Form::create();
 		}
 		
-		protected function alterResult($result)
+		protected function prepareOwn($result)
 		{
 			Assert::isInstance($result, 'Form');
 			
@@ -26,7 +26,7 @@
 			return $result;
 		}
 		
-		protected function preserveResultTypeLoss($result)
+		protected function preserveTypeLoss($result)
 		{
 			Assert::isInstance($result, 'Form');
 			

@@ -14,8 +14,8 @@
 	{
 		protected $proto	= null;
 		
-		abstract protected function createResult();
-		abstract protected function alterResult($result);
+		abstract protected function createEmpty();
+		abstract protected function prepareOwn($result);
 		
 		/**
 		 * @return PrototypedGetter
@@ -27,7 +27,7 @@
 		**/
 		abstract protected function getSetter(&$object);
 		
-		abstract protected function preserveResultTypeLoss($result);
+		abstract protected function preserveTypeLoss($result);
 		
 		public function __construct(DTOProto $proto)
 		{
@@ -41,47 +41,73 @@
 			return $result;
 		}
 		
-		final public function make($object, $polymorph = true)
+		public function make($object)
 		{
-			if ($polymorph) {
-				if (($object instanceof DTOPrototyped)) {
-					$proto = $this->proto;
-					$objectProto = $object->dtoProto();
+			if (($object instanceof DTOPrototyped)) {
+				$proto = $this->proto;
+				$objectProto = $object->dtoProto();
+				
+				if ($proto !== $objectProto) {
+					if (!$objectProto->isInstanceOf($proto))
+						throw new WrongArgumentException(
+							'target proto '.get_class($objectProto)
+							.' is not a child of '.get_class($proto)
+						);
 					
-					if ($proto !== $objectProto) {
-						if (!$objectProto->isInstanceOf($proto))
-							throw new WrongArgumentException(
-								'target proto '.get_class($objectProto)
-								.' is not a child of '.get_class($proto)
-							);
-						
-						$proto = $objectProto;
-						
-						return $this->cloneBuilder($proto)->
-							make($object, false);
-					}
+					$proto = $objectProto;
+					
+					return $this->cloneBuilder($proto)->
+						make($object);
 				}
-				
-				if ($this->proto->isAbstract())
-					throw new WrongArgumentException(
-						'cannot make from abstract proto '
-						.get_class($this->proto)
-					);
-				
 			}
 			
+			if ($this->proto->isAbstract())
+				throw new WrongArgumentException(
+					'cannot make from abstract proto '
+					.get_class($this->proto)
+				);
+			
+			$result = $this->upperMake($object);
+			
+			return $result;
+		}
+		
+		public function upperMake($object)
+		{
 			if ($this->proto->baseProto()) {
 				$result =
 					$this->cloneBuilder(
 						$this->proto->baseProto()
 					)->
-					make($object, false);
-				
-				$result = $this->alterResult($result);
-				
+					upperMake($object);
 			} else
-				$result = $this->createResult();
+				$result = $this->createEmpty();
 			
+			$result = $this->prepareOwn($result);
+			
+			$result = $this->makeOwn($object, $result);
+			
+			return $result;
+		}
+		
+		public function makeList($objectsList)
+		{
+			if ($objectsList === null)
+				return null;
+			
+			Assert::isArray($objectsList);
+			
+			$result = array();
+			
+			foreach ($objectsList as $object) {
+				$result[] = $this->make($object);
+			}
+			
+			return $result;
+		}
+		
+		public function makeOwn($object, $result)
+		{
 			$getter = $this->getGetter($object);
 			$setter = $this->getSetter($result);
 			
@@ -97,11 +123,11 @@
 						
 						if ($primitive instanceof PrimitiveFormsList) {
 							$value = $this->cloneBuilder($proto)->
-								makeList($value, true);
+								makeList($value);
 							
 						} else {
 							$value = $this->cloneBuilder($proto)->
-								make($value, true);
+								make($value);
 						}
 					}
 					
@@ -109,23 +135,7 @@
 				}
 			}
 			
-			$this->preserveResultTypeLoss($result);
-			
-			return $result;
-		}
-		
-		final public function makeList($objectsList)
-		{
-			if ($objectsList === null)
-				return null;
-			
-			Assert::isArray($objectsList);
-			
-			$result = array();
-			
-			foreach ($objectsList as $object) {
-				$result[] = $this->make($object, true);
-			}
+			$this->preserveTypeLoss($result);
 			
 			return $result;
 		}
