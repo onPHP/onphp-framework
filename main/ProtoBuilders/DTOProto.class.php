@@ -88,240 +88,32 @@
 		
 		final public function toForm(DTOClass $dto)
 		{
-			$converter = new DTOToFormImporter($this);
-			
-			return $converter->make($dto);
+			return DTOToFormImporter::create($this)->
+				make($dto);
 		}
 		
 		final public function makeObject(Form $form)
 		{
-			$proto = $this;
-			
-			if ($form->getProto()) {
-				$formClassName = $form->getProto()->className();
-				$className = $this->className();
-			
-				if (!ClassUtils::isInstanceOf($formClassName, $className))
-					throw new WrongArgumentException(
-						"proto of class $className cannot work "
-						."with form for class $formClassName"
-					);
-				
-				$proto = $form->getProto();
-			}
-			
-			if ($proto->isAbstract()) {
-				throw new WrongArgumentException(
-					'cannot build abstract object of class '
-					.$proto->className()
-				);
-			}
-			
-			if ($proto !== $this)
-				return $form->getProto()->makeObject($form);
-			else
-				return $this->toObject($form, $this->createObject());
-		}
-		
-		final public function toObject(Form $form, $object)
-		{
-			$class = $this->className();
-			Assert::isInstance($object, $class);
-			
-			if ($this->baseProto())
-				$this->baseProto()->toObject($form, $object);
-			
-			return $this->fillObject($form, $object);
-		}
-		
-		final public function makeObjectsList($forms)
-		{
-			if ($forms === null)
-				return null;
-			
-			Assert::isArray($forms);
-			
-			$result = array();
-			
-			foreach ($forms as $form) {
-				$result[] = $this->makeObject($form);
-			}
-			
-			return $result;
+			return FormToObjectConverter::create($this)->
+				make($form);
 		}
 		
 		final public function makeDto($object)
 		{
-			$class = $this->className();
-			Assert::isInstance($object, $class);
-			
-			return $this->toDto($object, $this->createDto());
-		}
-		
-		final public function makeDtosList($objects)
-		{
-			if ($objects === null)
-				return null;
-			
-			Assert::isArray($objects);
-			
-			$result = array();
-			
-			foreach ($objects as $object) {
-				$result[] = $this->makeDto($object);
-			}
-			
-			return $result;
-		}
-		
-		final public function toDto($object, $dto)
-		{
-			$class = $this->className();
-			Assert::isInstance($object, $class);
-			
-			$dtoClass = $this->dtoClassName();
-			Assert::isInstance($dto, $dtoClass);
-			
-			if ($this->baseProto())
-				$this->baseProto()->toDto($object, $dto);
-			
-			foreach ($this->getFormMapping() as $field => $primitive) {
-				$getter = 'get'.ucfirst($field);
-				$value = $object->$getter();
-				
-				$setter = 'set'.ucfirst($primitive->getName());
-				
-				if ($primitive instanceof PrimitiveForm) {
-					
-					$proto = Singleton::getInstance(
-						self::PROTO_CLASS_PREFIX.$primitive->getClassName()
-					);
-					
-					$protoClassName = $proto->className();
-					
-					if ($primitive instanceof PrimitiveFormsList) {
-						$value = $proto->makeDtosList($value);
-						
-					} else {
-						if ($value) {
-							Assert::isInstance($value, $protoClassName);
-							
-							$proto = $value->dtoProto();
-							
-							if ($proto->isAbstract())
-								throw new WrongArgumentException(
-									'cannot build DTO from '
-									.'abstract proto for class '
-									.get_class($value)
-								);
-						}
-						
-						$value = $proto->makeDto($value);
-					}
-					
-				} elseif (is_object($value)) {
-					
-					if (
-						($primitive instanceof PrimitiveAnyType)
-						&& ($value instanceof DTOPrototyped)
-					)
-						$value = $value->dtoProto()->makeDto($value);
-					else
-						$value = $this->dtoValue($value);
-					
-				} elseif (is_array($value) && is_object(current($value))) {
-					
-					$dtoValue = array();
-					
-					foreach ($value as $oneValue) {
-						Assert::isTrue(
-							is_object($oneValue),
-							'array must contain only objects'
-						);
-						
-						$dtoValue[] = $this->dtoValue($oneValue);
-					}
-					
-					$value = $dtoValue;
-				}
-				
-				$dto->$setter($value);
-			}
-			
-			return $dto;
+			return ObjectToDTOConverter::create($this)->
+				make($object);
 		}
 		
 		final public function fillObject(Form $form, $object)
 		{
-			$reflection = new ReflectionClass($object);
-			
-			foreach ($this->getFormMapping() as $field => $primitive) {
-				try {
-					$value = $form->getValue($primitive->getName());
-				} catch (MissingElementException $e) {
-					continue;
-				}
-				
-				$setter = 'set'.ucfirst($field);
-				$dropper = 'drop'.ucfirst($field);
-				
-				if ($value === null) {
-					if (
-						$primitive instanceof PrimitiveForm
-						|| $reflection->hasMethod($dropper)
-					) {
-						$object->$dropper();
-					} else {
-						$object->$setter(null);
-					}
-				} else {
-					if ($primitive instanceof PrimitiveForm) {
-						$proto = Singleton::getInstance(
-							self::PROTO_CLASS_PREFIX.$primitive->getClassName()
-						);
-						
-						if ($primitive instanceof PrimitiveFormsList) {
-							$value = $proto->makeObjectsList($value);
-						} else {
-							$value = $proto->makeObject($value);
-						}
-					}
-					
-					$object->$setter($value);
-				}
-			}
-			
-			return $object;
+			return FormToObjectConverter::create($this)->
+				fillOwn($form, $object);
 		}
 		
 		final public function buildScope(DTOClass $dto)
 		{
-			$converter = new DTOToScopeConverter($this);
-			
-			// NOTE: type loss here
-			return $converter->make($dto);
-		}
-		
-		// TODO: move to Primitive
-		private function dtoValue($value)
-		{
-			$result = null;
-			
-			if ($value instanceof Identifiable) {
-				$result = $value->getId();
-				
-			} elseif (
-				$value instanceof Stringable
-			) {
-				$result = $value->toString();
-				
-			} else
-				throw new WrongArgumentException(
-					'don\'t know how to convert to DTO value of class '
-					.get_class($value)
-				);
-			
-			return $result;
+			return DTOToScopeConverter::create($this)->
+				make($dto);
 		}
 	}
 ?>

@@ -43,9 +43,17 @@
 		
 		public function make($object, $recursive = true)
 		{
-			if (($object instanceof DTOPrototyped)) {
+			// FIXME: make dtoProto() non-static, problem with forms here
+			if (
+				($object instanceof DTOPrototyped)
+				|| ($object instanceof Form)
+			) {
 				$proto = $this->proto;
-				$objectProto = $object->dtoProto();
+				
+				if ($object instanceof Form) {
+					$objectProto = $object->getProto();
+				} else
+					$objectProto = $object->dtoProto();
 				
 				if ($proto !== $objectProto) {
 					if (!$objectProto->isInstanceOf($proto))
@@ -67,24 +75,29 @@
 					.get_class($this->proto)
 				);
 			
-			if ($recursive)
-				$result = $this->upperMake($object);
-			else
+			
+			if ($recursive) {
+				$result = $this->createEmpty();
+				
+				$result = $this->upperMake(
+					$object, $result
+				);
+				
+			} else
 				$result = $this->makeOwn($object);
 			
 			return $result;
 		}
 		
-		public function upperMake($object)
+		public function upperMake($object, &$result)
 		{
 			if ($this->proto->baseProto()) {
 				$result =
 					$this->cloneBuilder(
 						$this->proto->baseProto()
 					)->
-					upperMake($object);
-			} else
-				$result = $this->createEmpty();
+					upperMake($object, $result);
+			}
 			
 			$result = $this->prepareOwn($result);
 			
