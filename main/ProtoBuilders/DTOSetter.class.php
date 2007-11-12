@@ -32,6 +32,7 @@
 				);
 			
 			if (is_object($value)) {
+				
 				if (
 					($primitive instanceof PrimitiveAnyType)
 					&& ($value instanceof DTOPrototyped)
@@ -63,7 +64,12 @@
 		{
 			$result = null;
 			
-			if ($value instanceof Identifiable) {
+			if ($value instanceof DTOClass) {
+				
+				$result = $value; // have been already built
+				
+			} elseif ($value instanceof Identifiable) {
+				
 				$result = $value->getId();
 				
 			} elseif (
