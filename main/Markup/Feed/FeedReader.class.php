@@ -45,7 +45,14 @@
 		**/
 		public function parseFile($file)
 		{
-			$this->xml = simplexml_load_file($file);
+			try {
+				$this->xml = simplexml_load_file($file);
+			} catch (Exception $e) {
+				throw new WrongStateException('Invalid link or content.');
+			}
+			
+			if (!$this->xml)
+				throw new WrongStateException('simplexml_load_file failed.');
 			
 			return $this->parse();
 		}
