@@ -345,11 +345,16 @@
 					
 					$chain = $prm->getImportFilter();
 					
-					$this->checkImportResult($prm, $prm->import($scope));
+					$prm->dropImportFilters();
+					
+					$result = $this->checkImportResult(
+						$prm,
+						$prm->import($scope)
+					);
 					
 					$prm->setImportFilter($chain);
 					
-					return $this;
+					return $result;
 					
 				} elseif ($prm instanceof PrimitiveForm) {
 					return $this->checkImportResult(
