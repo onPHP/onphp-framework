@@ -162,6 +162,8 @@
 		
 		public function scopeHref($scope, $absolute = false)
 		{
+			Assert::isArray($scope);
+			
 			$path = null;
 			
 			// href scope may override navigation scope
