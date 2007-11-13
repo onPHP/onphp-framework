@@ -34,10 +34,10 @@
 			return array();
 		}
 		
-		public function checkConstraints($object)
+		public function checkConstraints(
+			$object, Form $form, $previousObject = null
+		)
 		{
-			Assert::isInstance($object, $this->className());
-			
 			return true;
 		}
 		
@@ -51,6 +51,26 @@
 			return ClassUtils::isInstanceOf(
 				$this->dtoClassName(), $proto->dtoClassName()
 			);
+		}
+		
+		final public function validate(
+			$object, Form $form, $previousObject = null
+		)
+		{
+			Assert::isInstance($object, $this->className());
+			
+			if ($previousObject)
+				Assert::isInstance($previousObject, $this->className());
+			
+			if ($this->baseProto())
+				$this->baseProto()->
+					validate($object, $form, $previousObject);
+			
+			$this->checkConstraints($object, $form, $previousObject);
+			
+			$errors = $form->getErrors();
+			
+			return empty($errors);
 		}
 		
 		final public function createObject()
