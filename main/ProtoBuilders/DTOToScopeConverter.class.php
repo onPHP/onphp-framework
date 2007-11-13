@@ -12,6 +12,11 @@
 
 	final class DTOToScopeConverter extends PrototypedBuilder
 	{
+		public static function create(DTOProto $proto)
+		{
+			return new self($proto);
+		}
+		
 		protected function createEmpty()
 		{
 			return array();
