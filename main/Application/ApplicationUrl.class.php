@@ -162,6 +162,9 @@
 		
 		public function scopeHref($scope, $absolute = false)
 		{
+			if (!$scope)
+				$scope = array();
+			
 			$path = null;
 			
 			// href scope may override navigation scope
