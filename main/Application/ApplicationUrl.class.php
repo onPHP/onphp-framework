@@ -19,8 +19,11 @@
 		
 		private $applicationScope	= array();
 		private $userScope			= array();
+		private $navigationScope	= array();
 		
 		private $argSeparator	= null;
+		
+		private $navigationSchema	= null;
 		
 		public static function create()
 		{
@@ -37,6 +40,18 @@
 		public function getBase()
 		{
 			return $this->base;
+		}
+		
+		public function setNavigationSchema(ScopeNavigationSchema $schema)
+		{
+			$this->navigationSchema = $schema;
+			
+			return $this;
+		}
+		
+		public function getNavigationSchema()
+		{
+			return $this->navigationSchema;
 		}
 		
 		public function addApplicationScope($scope)
@@ -57,6 +72,66 @@
 			$this->userScope = array_merge($this->userScope, $userScope);
 			
 			return $this;
+		}
+		
+		public function setPath($path)
+		{
+			if (!$this->navigationSchema)
+				throw new WrongStateException(
+					'charly says always set navigation schema'
+					.' before you go off somewhere'
+				);
+			
+			$scope = $this->navigationSchema->getScope($path);
+			
+			if ($scope === null)
+				throw new WrongArgumentException(
+					'404: not found'
+				);
+			
+			$this->navigationScope = $scope;
+			
+			return $this;
+		}
+		
+		public function setPathByRequestUri($requestUri, $normalize = true)
+		{
+			if (!$this->base)
+				throw new WrongStateException(
+					'base url must be set first'
+				);
+			
+			$currentUrl = GenericUri::create()->
+				parse($requestUri);
+			
+			if (!$currentUrl->isValid())
+				throw new WrongArgumentException(
+					'wtf? request uri is invalid'
+				);
+			
+			if ($normalize)
+				$currentUrl->normalize();
+			
+			$path = $currentUrl->getPath();
+			
+			// paranoia
+			if (!$path && $path[0] !== '/')
+				$path = '/'.$path;
+			
+			if (strpos($path, $this->base->getPath()) !== 0)
+				throw new WrongArgumentException(
+					'left parts of path and base url does not match: '
+					."$path vs. ".$this->base->getPath()
+				);
+			
+			$actualPath = substr($path, strlen($this->base->getPath()));
+			
+			return $this->setPath($actualPath);
+		}
+		
+		public function getNavigationScope()
+		{
+			return $this->navigationScope;
 		}
 		
 		public function getArgSeparator()
@@ -87,7 +162,16 @@
 		
 		public function scopeHref($scope, $absolute = false)
 		{
-			return $this->href('?'.$this->buildQuery($scope), $absolute);
+			$path = null;
+			
+			// href scope may override navigation scope
+			$actualScope = array_merge($this->navigationScope, $scope);
+			
+			if ($this->navigationSchema) {
+				$path = $this->navigationSchema->extractPath($actualScope);
+			}
+			
+			return $this->href($path.'?'.$this->buildQuery($actualScope), $absolute);
 		}
 		
 		public function baseHref($absolute = false)
