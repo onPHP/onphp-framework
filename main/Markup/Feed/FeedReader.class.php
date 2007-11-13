@@ -48,7 +48,7 @@
 			try {
 				$this->xml = simplexml_load_file($file);
 			} catch (Exception $e) {
-				throw new WrongStateException('Invalid link or content.');
+				throw new WrongArgumentException('Invalid link or content.');
 			}
 			
 			if (!$this->xml)
