@@ -1,5 +1,10 @@
 # $Id$
 
+2007-11-14	Ivan Y. Khvostishkov
+
+	* main/Utils/ArrayUtils.class.php: countNonemptyValues(): try to guess
+	what it does.
+
 2007-11-12	Dmitry E. Pismenny
 
 	* main/Markup/Feed/FeedReader.class.php: errors from simplexml_load_file()

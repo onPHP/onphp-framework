@@ -92,6 +92,18 @@
 			);
 		}
 		
+		public static function countNonemptyValues($array)
+		{
+			Assert::isArray($array);
+			$result = 0;
+			
+			foreach ($array as $value)
+				if (!empty($value))
+					++$result;
+			
+			return $result;
+		}
+		
 		/**
 		 * @deprecated by array_combine($array, $array)
 		**/
