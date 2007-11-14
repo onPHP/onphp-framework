@@ -14,20 +14,16 @@
 	{
 		public function set($name, $value)
 		{
-			$reflection = new ReflectionClass($this->object);
-			
 			$setter = 'set'.ucfirst($name);
 			$dropper = 'drop'.ucfirst($name);
 			
 			if (
 				$value === null
-				&& $reflection->hasMethod($dropper)
+				&& method_exists($this->object, $dropper)
 			)
 				$method = $dropper;
-				
-			elseif ($reflection->hasMethod($setter))
+			elseif (method_exists($this->object, $setter))
 				$method = $setter;
-				
 			else
 				throw new WrongArgumentException(
 					"cannot find mutator for '$name' in class "
