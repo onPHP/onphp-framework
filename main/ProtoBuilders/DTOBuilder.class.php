@@ -22,6 +22,9 @@
 			return $result;
 		}
 		
+		/**
+		 * @return DTOBuilder
+		**/
 		protected function preserveTypeLoss($result)
 		{
 			// data transfer object have a type itself

@@ -17,6 +17,9 @@
 			return $this->dtoProto()->makeObject($form);
 		}
 		
+		/**
+		 * @return Form
+		**/
 		final public function toForm()
 		{
 			return $this->dtoProto()->toForm($this);

@@ -21,6 +21,9 @@
 			return parent::__construct($proto, $object);
 		}
 		
+		/**
+		 * @return DTOGetter
+		**/
 		public function setSoapDto($soapDto)
 		{
 			$this->soapDto = ($soapDto === true);
@@ -28,6 +31,7 @@
 			return $this;
 		}
 		
+		// FIXME: isSoapDto()
 		public function getSoapDto()
 		{
 			return $this->soapDto;

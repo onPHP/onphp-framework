@@ -12,11 +12,17 @@
 
 	abstract class FormBuilder extends PrototypedBuilder
 	{
+		/**
+		 * @return Form
+		**/
 		protected function createEmpty()
 		{
 			return Form::create();
 		}
 		
+		/**
+		 * @return Form
+		**/
 		protected function prepareOwn($result)
 		{
 			Assert::isInstance($result, 'Form');
@@ -26,6 +32,9 @@
 			return $result;
 		}
 		
+		/**
+		 * @return FormBuilder
+		**/
 		protected function preserveTypeLoss($result)
 		{
 			Assert::isInstance($result, 'Form');

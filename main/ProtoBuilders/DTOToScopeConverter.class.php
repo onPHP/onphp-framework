@@ -12,6 +12,9 @@
 
 	final class DTOToScopeConverter extends PrototypedBuilder
 	{
+		/**
+		 * @return DTOToScopeConverter
+		**/
 		public static function create(DTOProto $proto)
 		{
 			return new self($proto);
@@ -27,17 +30,26 @@
 			return $result;
 		}
 		
+		/**
+		 * @return DTOToScopeConverter
+		**/
 		protected function preserveTypeLoss($result)
 		{
 			// NOTE: type loss here
 			return $this;
 		}
 		
+		/**
+		 * @return DTOGetter
+		**/
 		protected function getGetter($object)
 		{
 			return new DTOGetter($this->proto, $object);
 		}
 		
+		/**
+		 * @return ScopeSetter
+		**/
 		protected function getSetter(&$object)
 		{
 			return new ScopeSetter($this->proto, $object);

@@ -12,7 +12,7 @@
 
 	class DTOProto extends Singleton
 	{
-		const PROTO_CLASS_PREFIX		= 'DtoProto';
+		const PROTO_CLASS_PREFIX = 'DtoProto';
 		
 		public function baseProto()
 		{
@@ -87,6 +87,9 @@
 			return new $dtoClassName;
 		}
 		
+		/**
+		 * @return Form
+		**/
 		final public function makeForm()
 		{
 			return
@@ -98,6 +101,9 @@
 					);
 		}
 		
+		/**
+		 * @return Form
+		**/
 		final public function attachPrimitives(Form $form)
 		{
 			foreach ($this->getFormMapping() as $primitive)

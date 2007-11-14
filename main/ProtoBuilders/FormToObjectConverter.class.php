@@ -12,16 +12,25 @@
 
 	final class FormToObjectConverter extends ObjectBuilder
 	{
+		/**
+		 * @return FormToObjectConverter
+		**/
 		public static function create(DTOProto $proto)
 		{
 			return new self($proto);
 		}
 		
+		/**
+		 * @return FormGetter
+		**/
 		protected function getGetter($object)
 		{
 			return new FormGetter($this->proto, $object);
 		}
 		
+		/**
+		 * @return ObjectSetter
+		**/
 		protected function getSetter(&$object)
 		{
 			return new ObjectSetter($this->proto, $object);

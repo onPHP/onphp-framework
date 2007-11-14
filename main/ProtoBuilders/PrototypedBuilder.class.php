@@ -27,6 +27,9 @@
 		**/
 		abstract protected function getSetter(&$object);
 		
+		/**
+		 * @return PrototypedBuilder
+		**/
 		abstract protected function preserveTypeLoss($result);
 		
 		public function __construct(DTOProto $proto)
@@ -34,11 +37,12 @@
 			$this->proto = $proto;
 		}
 		
+		/**
+		 * @return PrototypedBuilder
+		**/
 		public function cloneBuilder(DTOProto $proto)
 		{
-			$result = new $this($proto);
-			
-			return $result;
+			return new $this($proto);
 		}
 		
 		public function make($object, $recursive = true)

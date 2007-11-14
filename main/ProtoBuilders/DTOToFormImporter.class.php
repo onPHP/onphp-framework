@@ -12,16 +12,25 @@
 
 	final class DTOToFormImporter extends FormBuilder
 	{
+		/**
+		 * @return DTOToFormImporter
+		**/
 		public static function create(DTOProto $proto)
 		{
 			return new self($proto);
 		}
 		
+		/**
+		 * @return FormImporter
+		**/
 		protected function getGetter($object)
 		{
 			return new DTOGetter($this->proto, $object);
 		}
 		
+		/**
+		 * @return FormImporter
+		**/
 		protected function getSetter(&$object)
 		{
 			return new FormImporter($this->proto, $object);
