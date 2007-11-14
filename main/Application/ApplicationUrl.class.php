@@ -21,15 +21,21 @@
 		private $userScope			= array();
 		private $navigationScope	= array();
 		
-		private $argSeparator	= null;
+		private $argSeparator		= null;
 		
 		private $navigationSchema	= null;
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public static function create()
 		{
-			return new self();
+			return new self;
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function setBase(HttpUrl $base)
 		{
 			$this->base = $base;
@@ -37,11 +43,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return HttpUrl
+		**/
 		public function getBase()
 		{
 			return $this->base;
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function setNavigationSchema(ScopeNavigationSchema $schema)
 		{
 			$this->navigationSchema = $schema;
@@ -49,11 +61,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return ScopeNavigationSchema
+		**/
 		public function getNavigationSchema()
 		{
 			return $this->navigationSchema;
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function addApplicationScope($scope)
 		{
 			Assert::isArray($scope);
@@ -65,6 +83,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function addUserScope($userScope)
 		{
 			Assert::isArray($userScope);
@@ -74,6 +95,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function setPath($path)
 		{
 			if (!$this->navigationSchema)
@@ -94,6 +118,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function setPathByRequestUri($requestUri, $normalize = true)
 		{
 			if (!$this->base)
@@ -142,6 +169,9 @@
 				return $this->argSeparator;
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function setArgSeparator($argSeparator)
 		{
 			$this->argSeparator = $argSeparator;
