@@ -44,7 +44,7 @@
 		/**
 		 * @return EqualsLowerExpression
 		**/
-		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
 			return new self(
 				$dao->guessAtom($this->left, $query),

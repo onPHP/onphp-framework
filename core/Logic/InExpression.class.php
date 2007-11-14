@@ -45,7 +45,7 @@
 		/**
 		 * @return InExpression
 		**/
-		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
 			if (is_array($this->right)) {
 				$right = array();

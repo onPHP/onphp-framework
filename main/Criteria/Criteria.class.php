@@ -37,15 +37,15 @@
 		/**
 		 * @return Criteria
 		**/
-		public static function create(/* StorableDAO */ $dao = null)
+		public static function create(/* ProtoDAO */ $dao = null)
 		{
 			return new self($dao);
 		}
 		
-		public function __construct(/* StorableDAO */ $dao = null)
+		public function __construct(/* ProtoDAO */ $dao = null)
 		{
 			if ($dao)
-				Assert::isTrue($dao instanceof StorableDAO);
+				Assert::isTrue($dao instanceof ProtoDAO);
 			
 			$this->dao = $dao;
 			$this->logic = Expression::andBlock();
@@ -75,7 +75,7 @@
 		}
 		
 		/**
-		 * @return StorableDAO
+		 * @return ProtoDAO
 		**/
 		public function getDao()
 		{
@@ -85,7 +85,7 @@
 		/**
 		 * @return Criteria
 		**/
-		public function setDao(StorableDAO $dao)
+		public function setDao(ProtoDAO $dao)
 		{
 			$this->dao = $dao;
 			

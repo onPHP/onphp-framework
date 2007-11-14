@@ -37,7 +37,7 @@
 		/**
 		 * @return SQLChain
 		**/
-		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
 			$size = count($this->chain);
 			

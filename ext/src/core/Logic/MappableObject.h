@@ -16,7 +16,7 @@ ONPHP_STANDART_CLASS(MappableObject);
 
 #define ONPHP_ARGINFO_TO_MAPPED \
 	ZEND_BEGIN_ARG_INFO(arginfo_to_mapped, 0) \
-		ZEND_ARG_OBJ_INFO(0, dao, StorableDAO, 0) \
+		ZEND_ARG_OBJ_INFO(0, dao, ProtoDAO, 0) \
 		ZEND_ARG_OBJ_INFO(0, query, JoinCapableQuery, 0) \
 	ZEND_END_ARG_INFO()
 

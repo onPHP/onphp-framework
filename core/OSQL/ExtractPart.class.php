@@ -50,7 +50,7 @@
 		/**
 		 * @return ExtractPart
 		**/
-		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
 			return self::create(
 				$this->what,

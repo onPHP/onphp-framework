@@ -39,7 +39,7 @@
 		/**
 		 * @return FullText
 		**/
-		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
 			return new $this(
 				$dao->guessAtom($this->field, $query),

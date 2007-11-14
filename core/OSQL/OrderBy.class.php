@@ -74,7 +74,7 @@
 		/**
 		 * @return OrderBy
 		**/
-		public function toMapped(StorableDAO $dao, JoinCapableQuery $query)
+		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
 			$order = self::create($dao->guessAtom($this->field, $query));
 			

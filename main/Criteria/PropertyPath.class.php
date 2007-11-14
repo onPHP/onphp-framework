@@ -81,7 +81,7 @@
 		}
 		
 		/**
-		 * @return StorableDAO
+		 * @return ProtoDAO
 		**/
 		public function getFinalDao()
 		{
