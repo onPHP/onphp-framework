@@ -142,7 +142,7 @@
 			$path = $currentUrl->getPath();
 			
 			// paranoia
-			if (!$path && $path[0] !== '/')
+			if (!$path || ($path[0] !== '/'))
 				$path = '/'.$path;
 			
 			if (strpos($path, $this->base->getPath()) !== 0)
