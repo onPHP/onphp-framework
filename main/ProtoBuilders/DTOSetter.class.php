@@ -23,9 +23,7 @@
 			
 			$setter = 'set'.ucfirst($primitive->getName());
 			
-			$reflection = new ReflectionClass($this->object);
-			
-			if (!$reflection->hasMethod($setter))
+			if (!method_exists($this->object, $setter))
 				throw new WrongArgumentException(
 					"cannot find mutator for '$name' in class "
 					.get_class($this->object)
