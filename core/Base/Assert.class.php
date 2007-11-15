@@ -160,14 +160,14 @@
 		
 		public static function dumpArgument($argument)
 		{
-			return 'argument: ['.var_export($argument, true).']';
+			return 'argument: ['.print_r($argument, true).']';
 		}
 		
 		public static function dumpOppositeArguments($first, $second)
 		{
 			return
-				'arguments: ['.var_export($first, true).'] '
-				.'vs. ['.var_export($second, true).'] ';
+				'arguments: ['.print_r($first, true).'] '
+				.'vs. ['.print_r($second, true).'] ';
 		}
 		//@}
 		
