@@ -60,20 +60,22 @@
 			InsertOrUpdateQuery $query, Identifiable $object
 		)
 		{
-			$this->checkObjectType($object);
+			$db = DBPool::getByDao($this);
 			
-			$count = DBPool::getByDao($this)->queryCount(
-				$this->setQueryFields(
-					$query->setTable($this->getTable()), $object
-				)
-			);
-			
-			$this->uncacheById($object->getId());
-			
-			if ($count !== 1)
-				throw new WrongStateException(
-					'racy or insane inject happened'
-				);
+			if (!$db->isQueueActive()) {
+				$count = $db->queryCount($query);
+				
+				$this->uncacheById($object->getId());
+				
+				if ($count !== 1)
+					throw new WrongStateException(
+						'racy or insane inject happened'
+					);
+			} else {
+				$db->queryNull($query);
+				
+				$this->uncacheById($object->getId());
+			}
 			
 			// clean out Identifier, if any
 			return
