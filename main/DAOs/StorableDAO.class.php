@@ -60,7 +60,15 @@
 			InsertOrUpdateQuery $query, Identifiable $object
 		)
 		{
+			$this->checkObjectType($object);
+			
 			$db = DBPool::getByDao($this);
+			
+			$query =
+				$this->setQueryFields(
+					$query->setTable($this->getTable()),
+					$object
+				);
 			
 			if (!$db->isQueueActive()) {
 				$count = $db->queryCount($query);
