@@ -2,8 +2,8 @@
 
 2007-11-15	Ivan Y. Khvostishkov
 
-	* core/Base/Assert.class.php: recursive objects cause a fatal error in
-	var_export(), so dumping via print_r() now.
+	* core/Base/Assert.class.php: circular linked objects cause a fatal
+	error in var_export(), so dumping via print_r() now.
 
 2007-11-14	Ivan Y. Khvostishkov
 
