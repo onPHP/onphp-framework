@@ -216,6 +216,11 @@
 			
 			return $this->queueDrop();
 		}
+		
+		public function isQueueActive()
+		{
+			return $this->toQueue;
+		}
 		//@}
 		
 		/**

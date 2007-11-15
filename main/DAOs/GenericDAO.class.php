@@ -290,14 +290,22 @@
 			Identifiable $object
 		)
 		{
-			$count = DBPool::getByDao($this)->queryCount($query);
+			$db = DBPool::getByDao($this);
 			
-			$this->uncacheById($object->getId());
-			
-			if ($count !== 1)
-				throw new WrongStateException(
-					'racy or insane inject happened'
-				);
+			if (!$db->isQueueActive()) {
+				$count = $db->queryCount($query);
+				
+				$this->uncacheById($object->getId());
+				
+				if ($count !== 1)
+					throw new WrongStateException(
+						'racy or insane inject happened'
+					);
+			} else {
+				$db->queryNull($query);
+				
+				$this->uncacheById($object->getId());
+			}
 			
 			// clean out Identifier, if any
 			return $this->addObjectToMap($object->setId($object->getId()));
