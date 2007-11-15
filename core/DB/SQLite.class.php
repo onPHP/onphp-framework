@@ -102,7 +102,7 @@
 		**/
 		public function queryCount(Query $query)
 		{
-			$this->query($query);
+			$this->queryNull($query);
 			
 			return sqlite_changes($this->link);
 		}

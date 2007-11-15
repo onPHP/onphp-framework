@@ -94,7 +94,7 @@
 		**/
 		public function queryCount(Query $query)
 		{
-			$this->query($query);
+			$this->queryNull($query);
 			
 			return mysql_affected_rows($this->link);
 		}

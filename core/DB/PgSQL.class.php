@@ -123,7 +123,7 @@
 		**/
 		public function queryCount(Query $query)
 		{
-			return pg_affected_rows($this->query($query));
+			return pg_affected_rows($this->queryNull($query));
 		}
 		
 		public function queryRow(Query $query)
