@@ -67,7 +67,11 @@
 			elseif ($action == 'replace' && !isset($this->cache[$key]))
 				return false;
 			
-			$this->cache[$key] = $value;
+			if (is_object($value))
+				$this->cache[$key] = clone $value;
+			else
+				$this->cache[$key] = $value;
+			
 			return true;
 		}
 	}
