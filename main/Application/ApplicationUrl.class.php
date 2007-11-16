@@ -63,11 +63,6 @@
 			return $this;
 		}
 		
-		public function getAbsolute()
-		{
-			return $this->absolute;
-		}
-		
 		public function isAbsolute()
 		{
 			return $this->absolute;
