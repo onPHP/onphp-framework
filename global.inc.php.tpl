@@ -31,7 +31,7 @@
 	/* void */ function __autoload($classname)
 	{
 		// numeric indexes for directories, literal indexes for classes
-		static $cache = array();
+		static $cache = null;
 		
 		if (strpos($classname, "\0") !== false) {
 			// we can not avoid fatal error in this case
@@ -70,7 +70,7 @@
 				} catch (ClassNotFoundException $e) {
 					throw $e;
 				} catch (BaseException $e) {
-					return __autoload_failed($classname, $e->getMessage());
+					$cache = null;
 				}
 			}
 		}
@@ -98,13 +98,7 @@
 			
 			$cache[ONPHP_CLASS_CACHE_CHECKSUM] = $checksum;
 			
-			if (
-				is_writable(dirname($cacheFile))
-				&& (
-					!file_exists($cacheFile)
-					|| is_writable($cacheFile)
-				)
-			)
+			if (is_writable($cacheFile))
 				file_put_contents($cacheFile, serialize($cache));
 		}
 		
