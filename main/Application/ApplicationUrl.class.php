@@ -15,7 +15,7 @@
 	**/
 	final class ApplicationUrl
 	{
-		private $base		= null;
+		private $base				= null;
 		
 		private $applicationScope	= array();
 		private $userScope			= array();
@@ -24,6 +24,8 @@
 		private $argSeparator		= null;
 		
 		private $navigationSchema	= null;
+		
+		private $absolute			= false;
 		
 		/**
 		 * @return ApplicationUrl
@@ -49,6 +51,26 @@
 		public function getBase()
 		{
 			return $this->base;
+		}
+		
+		/**
+		 * @return ApplicationUrl
+		**/
+		public function setAbsolute($absolute)
+		{
+			$this->absolute = $absolute;
+			
+			return $this;
+		}
+		
+		public function getAbsolute()
+		{
+			return $this->absolute;
+		}
+		
+		public function isAbsolute()
+		{
+			return $this->absolute;
 		}
 		
 		/**
@@ -181,7 +203,7 @@
 		
 		public function currentHref(
 			$additionalScope = array(),
-			$absolute = false
+			$absolute = null
 		)
 		{
 			return $this->scopeHref(
@@ -190,7 +212,7 @@
 			);
 		}
 		
-		public function scopeHref($scope, $absolute = false)
+		public function scopeHref($scope, $absolute = null)
 		{
 			Assert::isArray($scope);
 			
@@ -206,7 +228,7 @@
 			return $this->href($path.'?'.$this->buildQuery($actualScope), $absolute);
 		}
 		
-		public function baseHref($absolute = false)
+		public function baseHref($absolute = null)
 		{
 			return $this->href(null, $absolute);
 		}
@@ -220,8 +242,11 @@
 			return $this->base->transform($parsedUrl);
 		}
 		
-		public function href($url, $absolute = false)
+		public function href($url, $absolute = null)
 		{
+			if ($absolute === null)
+				$absolute = $this->absolute;
+			
 			$result = $this->poorReference($url);
 			
 			if ($this->applicationScope)
