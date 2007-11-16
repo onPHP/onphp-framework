@@ -77,7 +77,7 @@
 				
 				if ($count !== 1)
 					throw new WrongStateException(
-						'racy or insane inject happened'
+						$count.' rows affected: racy or insane inject happened'
 					);
 			} else {
 				$db->queryNull($query);
