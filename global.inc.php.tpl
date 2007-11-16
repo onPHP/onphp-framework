@@ -54,7 +54,7 @@
 		$cacheFile = ONPHP_CLASS_CACHE.$checksum.'.occ';
 		
 		if ($cache && ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $checksum))
-			$cache = array();
+			$cache = null;
 		
 		if (!$cache) {
 			try {
@@ -98,7 +98,13 @@
 			
 			$cache[ONPHP_CLASS_CACHE_CHECKSUM] = $checksum;
 			
-			if (is_writable($cacheFile))
+			if (
+				is_writable(dirname($cacheFile))
+				&& (
+					!file_exists($cacheFile)
+					|| is_writable($cacheFile)
+				)
+			)
 				file_put_contents($cacheFile, serialize($cache));
 		}
 		
