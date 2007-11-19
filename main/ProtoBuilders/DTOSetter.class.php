@@ -37,7 +37,7 @@
 				)
 					$value = $value->dtoProto()->makeDto($value);
 				else
-					$value = $this->dtoValue($value);
+					$value = $this->dtoValue($value, $primitive);
 				
 			} elseif (is_array($value) && is_object(current($value))) {
 				
@@ -58,13 +58,17 @@
 			return $this->object->$setter($value);
 		}
 		
-		private function dtoValue($value)
+		private function dtoValue($value, BasePrimitive $primitive)
 		{
 			$result = null;
 			
 			if ($value instanceof DTOClass) {
 				
 				$result = $value; // have been already built
+				
+			} elseif ($primitive instanceof PrimitiveBoolean) {
+				
+				$value = (boolean)$value;
 				
 			} elseif ($value instanceof Identifiable) {
 				
