@@ -49,7 +49,7 @@
 						'array must contain only objects'
 					);
 					
-					$dtoValue[] = $this->dtoValue($oneValue);
+					$dtoValue[] = $this->dtoValue($oneValue, $primitive);
 				}
 				
 				$value = $dtoValue;
