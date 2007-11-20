@@ -112,6 +112,11 @@
 			return $this;
 		}
 		
+		public function getUserScope()
+		{
+			return $this->userScope;
+		}
+		
 		/**
 		 * @return ApplicationUrl
 		**/
