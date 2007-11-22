@@ -14,8 +14,7 @@
 	
 	function error2Exception($code, $string, $file, $line, $context)
 	{
-		if (error_reporting() !== 0)
-			throw new BaseException($string, $code);
+		throw new BaseException($string, $code);
 	}
 	
 	/* void */ function __autoload_failed($classname, $message)
