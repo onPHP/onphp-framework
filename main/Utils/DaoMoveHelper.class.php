@@ -39,34 +39,29 @@
 				method_exists($object, $getMethod)
 			);
 			
-			$oldPosition = $object->$getMethod();
-			
-			$dao = $object->dao();
-			
-			$query =
-				ObjectQuery::create()->
-				sort(self::$property)->
-				desc()->
+			$criteria =
+				Criteria::create($object->dao())->
+				addOrder(
+					OrderBy::create(self::$property)->
+					desc()
+				)->
 				setLimit(1);
 			
 			if ($exp)
-				$query->addLogic($exp);
+				$criteria->add($exp);
 			
-			$query->addLogic(
+			$oldPosition = $object->$getMethod();
+			
+			$criteria->add(
 				Expression::lt(
 					self::$property,
 					$oldPosition
 				)
 			);
 			
-			try {
-				$upperObject = $dao->get($query);
-				
+			if ($upperObject = $criteria->get()) {
 				DaoUtils::setNullValue(self::$nullValue);
 				DaoUtils::swap($upperObject, $object, self::$property);
-				
-			} catch (ObjectNotFoundException $e) {
-				// no need to move up top object
 			}
 		}
 		
@@ -83,31 +78,25 @@
 			
 			$oldPosition = $object->$getMethod();
 			
-			$dao = $object->dao();
-			
-			$query =
-				ObjectQuery::create()->
-				addLogic(
+			$criteria =
+				Criteria::create($object->dao())->
+				add(
 					Expression::gt(
 						self::$property,
 						$oldPosition
 					)
 				)->
-				sort(self::$property)->
-				asc()->
+				addOrder(
+					OrderBy::create(self::$property)->asc()
+				)->
 				setLimit(1);
 			
 			if ($exp)
-				$query->addLogic($exp);
+				$criteria->add($exp);
 			
-			try {
-				$lowerObject = $dao->get($query);
-				
+			if ($lowerObject = $criteria->get()) {
 				DaoUtils::setNullValue(self::$nullValue);
 				DaoUtils::swap($lowerObject, $object, self::$property);
-				
-			} catch (ObjectNotFoundException $e) {
-				// no need to move down bottom object
 			}
 		}
 	}

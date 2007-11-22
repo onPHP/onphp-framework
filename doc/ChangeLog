@@ -1,5 +1,9 @@
 # $Id$
 
+2007-11-22	Dmitry E. Pismenny
+
+	* main/Utils/DaoMoveHelper.class.php: ObjectQuery replaced by Criteria.
+
 2007-11-15	Ivan Y. Khvostishkov
 
 	* core/Base/Assert.class.php: circular linked objects cause a fatal
