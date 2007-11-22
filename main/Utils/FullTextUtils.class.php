@@ -17,21 +17,25 @@
 	**/
 	final class FullTextUtils extends StaticFactory
 	{
-		public static function lookup(FullTextDAO $dao, ObjectQuery $oq, $string)
+		public static function lookup(
+			FullTextDAO $dao,
+			Criteria $criteria,
+			$string
+		)
 		{
 			return
 				$dao->getByQuery(
-					self::makeFullTextQuery($dao, $oq, $string)->limit(1)
+					self::makeFullTextQuery($dao, $criteria, $string)->limit(1)
 				);
 		}
 		
 		public static function lookupList(
-			FullTextDAO $dao, ObjectQuery $oq, $string
+			FullTextDAO $dao, Criteria $criteria, $string
 		)
 		{
 			return
 				$dao->getListByQuery(
-					self::makeFullTextQuery($dao, $oq, $string)
+					self::makeFullTextQuery($dao, $criteria, $string)
 				);
 		}
 		
@@ -40,16 +44,16 @@
 		 * @return SelectQuery
 		**/
 		public static function makeFullTextQuery(
-			FullTextDAO $dao, ObjectQuery $oq, $string
+			FullTextDAO $dao, Criteria $criteria, $string
 		)
 		{
 			Assert::isString(
 				$string,
 				'only strings accepted today'
 			);
-
+			
 			$array = self::prepareSearchString($string);
-
+			
 			if (!$array)
 				throw new ObjectNotFoundException();
 			
@@ -60,7 +64,7 @@
 				);
 			
 			return
-				$oq->toSelectQuery($dao)->
+				$criteria->toSelectQuery()->
 				andWhere(
 					Expression::fullTextOr($field, $array)
 				)->
