@@ -113,7 +113,11 @@
 					$mapped[] = $dao->guessAtom($arg, $query);
 			}
 			
-			return call_user_func_array(array('self', 'create'), $mapped);
+			$sqlFunction = call_user_func_array(array('self', 'create'), $mapped);
+			
+			$sqlFunction->aggregate = $this->aggregate;
+			
+			return $sqlFunction;
 		}
 		
 		public function toDialectString(Dialect $dialect)
