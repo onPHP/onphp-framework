@@ -48,7 +48,7 @@
 		**/
 		public function setParameter($attribute, $value)
 		{
-			$this->parameter[$attribute] = $value;
+			$this->parameters[$attribute] = $value;
 			
 			return $this;
 		}
@@ -58,7 +58,10 @@
 		**/
 		public function dropParameter($attribute)
 		{
-			unset($this->parameter);
+			if (!isset($this->parameters[$attribute]))
+				throw new MissingElementException();
+			
+			unset($this->parameters[$attribute]);
 			
 			return $this;
 		}
@@ -70,6 +73,9 @@
 		
 		public function getParameter($attribute)
 		{
+			if (!isset($this->parameters[$attribute]))
+				throw new MissingElementException();
+			
 			return $this->parameters[$attribute];
 		}
 		
@@ -78,6 +84,8 @@
 		**/
 		public function setParametersList($parameters)
 		{
+			Assert::isArray($parameters);
+			
 			$this->parameters = $parameters;
 			
 			return $this;
@@ -116,6 +124,7 @@
 		{
 			$this->charset = null;
 			$this->parameters = array();
+			$matches = array();
 			
 			if (
 				preg_match(
@@ -159,6 +168,7 @@
 			foreach ($this->parameters as $attribute => $value) {
 				$parts[] = $attribute.'="'.$value.'"';
 			}
+			
 			return implode('; ', $parts);
 		}
 	}

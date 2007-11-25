@@ -160,6 +160,8 @@
 		**/
 		public function parse($string)
 		{
+			$matches = array();
+			
 			if (
 				!preg_match(
 					'~^('.self::ID_FIRST_CHAR_MASK.self::ID_CHAR_MASK.'*)'
