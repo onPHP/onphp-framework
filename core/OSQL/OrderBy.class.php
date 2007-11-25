@@ -12,6 +12,7 @@
 
 	/**
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	final class OrderBy extends FieldTable implements MappableObject
 	{
