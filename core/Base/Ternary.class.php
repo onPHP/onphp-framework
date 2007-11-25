@@ -14,7 +14,7 @@
 	 * Atom for ternary-based logic.
 	 * 
 	 * @ingroup Base
-	 * @ingroup Ternary
+	 * @ingroup Module
 	**/
 	final class Ternary implements Stringable
 	{
