@@ -181,7 +181,7 @@ PHP_MINIT_FUNCTION(onphp)
 			sizeof(onphp_logo)
 		);
 	}
-
+	
 	return
 		PHP_MINIT(onphp_core)(INIT_FUNC_ARGS_PASSTHRU)
 		& PHP_MINIT(onphp_main)(INIT_FUNC_ARGS_PASSTHRU);
