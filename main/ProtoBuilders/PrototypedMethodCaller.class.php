@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,8 +10,19 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class PrototypedSetter extends PrototypedMethodCaller
+	abstract class PrototypedMethodCaller
 	{
-		abstract public function set($name, $value);
+		protected $proto = null;
+		protected $object = null;
+		
+		protected $mapping = array();
+		
+		public function __construct(DTOProto $proto, $object)
+		{
+			$this->proto = $proto;
+			$this->object = $object;
+			
+			$this->mapping = $proto->getFormMapping();
+		}
 	}
 ?>

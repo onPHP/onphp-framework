@@ -10,21 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class PrototypedGetter
+	abstract class PrototypedGetter extends PrototypedMethodCaller
 	{
-		protected $proto = null;
-		protected $object = null;
-		
-		protected $mapping = array();
-		
-		public function __construct(DTOProto $proto, $object)
-		{
-			$this->proto = $proto;
-			$this->object = $object;
-			
-			$this->mapping = $proto->getFormMapping();
-		}
-		
 		abstract public function get($name);
 	}
 ?>
