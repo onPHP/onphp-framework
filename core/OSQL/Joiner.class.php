@@ -12,6 +12,7 @@
 
 	/**
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	final class Joiner implements DialectString
 	{
@@ -82,12 +83,12 @@
 					$separator = ', ';
 				else
 					$separator = ' ';
-
+				
 				$fromString .=
 					$separator
 					.$this->from[$i]->toDialectString($dialect);
 			}
-
+			
 			if ($fromString)
 				return ' FROM '.$fromString;
 			

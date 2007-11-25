@@ -31,12 +31,6 @@ ONPHP_METHOD(RegulatedForm, __construct)
 	);
 }
 
-ONPHP_METHOD(RegulatedForm, __destruct)
-{
-	ONPHP_PROPERTY_DESTRUCT(rules);
-	ONPHP_PROPERTY_DESTRUCT(violated);
-}
-
 ONPHP_METHOD(RegulatedForm, addRule)
 {
 	char *name;
@@ -46,6 +40,8 @@ ONPHP_METHOD(RegulatedForm, addRule)
 		*rules = ONPHP_READ_PROPERTY(getThis(), "rules");
 	
 	ONPHP_GET_ARGS("sO", &name, &length, &rule, onphp_ce_LogicalObject);
+	
+	ZVAL_ADDREF(rule);
 	
 	ONPHP_ASSOC_SET(rules, name, rule);
 	
@@ -119,7 +115,6 @@ static ONPHP_ARGINFO_ONE_AND_LOGICAL_OBJECT;
 
 zend_function_entry onphp_funcs_RegulatedForm[] = {
 	ONPHP_ME(RegulatedForm, __construct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
-	ONPHP_ME(RegulatedForm, __destruct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_DTOR)
 	ONPHP_ME(RegulatedForm, addRule, arginfo_one_and_logical_object, ZEND_ACC_PUBLIC)
 	ONPHP_ME(RegulatedForm, dropRuleByName, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(RegulatedForm, checkRules, NULL, ZEND_ACC_PUBLIC)

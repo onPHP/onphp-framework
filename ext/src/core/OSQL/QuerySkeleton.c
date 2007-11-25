@@ -13,6 +13,7 @@
 #include "onphp_util.h"
 
 #include "ext/standard/php_string.h"
+#include "ext/standard/php_var.h"
 
 #include "core/Exceptions.h"
 #include "core/OSQL/QuerySkeleton.h"
@@ -23,12 +24,6 @@ ONPHP_METHOD(QuerySkeleton, __construct)
 {
 	ONPHP_CONSTRUCT_ARRAY(where);
 	ONPHP_CONSTRUCT_ARRAY(whereLogic);
-}
-
-ONPHP_METHOD(QuerySkeleton, __destruct)
-{
-	ONPHP_PROPERTY_DESTRUCT(where);
-	ONPHP_PROPERTY_DESTRUCT(whereLogic);
 }
 
 ONPHP_METHOD(QuerySkeleton, where)
@@ -60,6 +55,10 @@ ONPHP_METHOD(QuerySkeleton, where)
 	} else {
 		zval *whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 		
+		if (Z_TYPE_P(whereLogic) != IS_ARRAY) {
+			ONPHP_THROW(WrongStateException, NULL);
+		}
+		
 		if (ZEND_NUM_ARGS() == 1) {
 			ALLOC_INIT_ZVAL(logic);
 		}
@@ -68,12 +67,15 @@ ONPHP_METHOD(QuerySkeleton, where)
 			ZVAL_NULL(logic);
 		}
 		
-		if (Z_TYPE_P(whereLogic) != IS_ARRAY) {
-			ONPHP_THROW(WrongStateException, NULL);
-		}
-		
+		ZVAL_ADDREF(logic);
 		ONPHP_ARRAY_ADD(whereLogic, logic);
+		
+		ZVAL_ADDREF(exp);
 		ONPHP_ARRAY_ADD(where, exp);
+		
+		if (ZEND_NUM_ARGS() == 1) {
+			ZVAL_FREE(logic);
+		}
 	}
 	
 	RETURN_THIS;
@@ -139,7 +141,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 				ONPHP_ARRAY_GET(whereLogic, i, logic);
 				
 				if (EG(exception)) {
-					ZVAL_FREE(out);
+					zval_ptr_dtor(&out);
 					return;
 				}
 				
@@ -163,7 +165,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 				add_index_null(whereLogic, i + 1);
 			}
 			
-			ZVAL_FREE(out);
+			zval_ptr_dtor(&out);
 		}
 		
 		retval = (char *) php_trim(clause.c, clause.len, " ", 1, NULL, 2 TSRMLS_CC);
@@ -183,7 +185,6 @@ static ONPHP_ARGINFO_DIALECT;
 
 zend_function_entry onphp_funcs_QuerySkeleton[] = {
 	ONPHP_ME(QuerySkeleton, __construct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
-	ONPHP_ME(QuerySkeleton, __destruct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_DTOR)
 	ONPHP_ME(QuerySkeleton, where, arginfo_logical_object_and_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(QuerySkeleton, andWhere, arginfo_logical_object, ZEND_ACC_PUBLIC)
 	ONPHP_ME(QuerySkeleton, orWhere, arginfo_logical_object, ZEND_ACC_PUBLIC)

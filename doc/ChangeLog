@@ -12,7 +12,7 @@
 
 2007-11-17	Konstantin V. Arkhipov
 
-	* ext/src/core/OSQL/: GroupBy implemented.
+	* ext/src/core/OSQL/: GroupBy and Joiner implemented.
 
 	* ext/src/onphp.h: new macroses - ONPHP_CALL_PARENT_*,
 	ONPHP_CALL_STATIC_*.

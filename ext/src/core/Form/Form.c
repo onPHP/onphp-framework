@@ -31,13 +31,6 @@ ONPHP_METHOD(Form, __construct)
 	ONPHP_CALL_PARENT_0(getThis(), "__construct", NULL);
 }
 
-ONPHP_METHOD(Form, __destruct)
-{
-	ONPHP_PROPERTY_DESTRUCT(errors);
-	ONPHP_PROPERTY_DESTRUCT(labels);
-	ONPHP_PROPERTY_DESTRUCT(describedLabels);
-}
-
 ONPHP_METHOD(Form, create)
 {
 	zval *object;
@@ -111,7 +104,7 @@ ONPHP_METHOD(Form, markMissing)
 	
 	ONPHP_CALL_METHOD_2_NORET(getThis(), "markcustom", NULL, name, mark);
 	
-	ZVAL_FREE(mark);
+	zval_ptr_dtor(&mark);
 	
 	if (EG(exception)) {
 		return;
@@ -201,8 +194,7 @@ ONPHP_METHOD(Form, getTextualErrors)
 		*label,
 		*labels = ONPHP_READ_PROPERTY(getThis(), "labels");
 	
-	ALLOC_INIT_ZVAL(list);
-	array_init(list);
+	ONPHP_MAKE_ARRAY(list);
 	
 	ONPHP_FOREACH(labels, name) {
 		char *key;
@@ -243,7 +235,11 @@ ONPHP_METHOD(Form, getTextualErrors)
 			return;
 		}
 		
+		ZVAL_ADDREF(label);
+		
 		ONPHP_ARRAY_ADD(list, label);
+		
+		zval_ptr_dtor(&label);
 	}
 	
 	RETURN_ZVAL(list, 1, 1);
@@ -282,7 +278,7 @@ ONPHP_METHOD(Form, method_name)										\
 			if (ONPHP_ASSOC_ISSET(subList, Z_STRVAL_P(item))) {		\
 				ONPHP_ASSOC_GET(subList, Z_STRVAL_P(item), out);	\
 																	\
-				RETURN_ZVAL(out, 1, 0);							\
+				RETURN_ZVAL(out, 1, 0);								\
 			}														\
 		}															\
 	}																\
@@ -326,8 +322,7 @@ ONPHP_METHOD(Form, addErrorDescription)
 	}
 	
 	if (!ONPHP_ASSOC_ISSET(describedLabels, name)) {
-		ALLOC_INIT_ZVAL(subList);
-		array_init(subList);
+		ONPHP_MAKE_ARRAY(subList);
 		ONPHP_ASSOC_SET(describedLabels, name, subList);
 		zval_ptr_dtor(&subList);
 		subList = NULL;
@@ -438,7 +433,7 @@ ONPHP_METHOD(Form, importMore)
 			);
 		}
 		
-		ZVAL_FREE(imported);
+		zval_ptr_dtor(&imported);
 		
 		if (EG(exception)) {
 			return;
@@ -539,8 +534,6 @@ ONPHP_METHOD(Form, importOneMore)
 		(Z_TYPE_P(imported) != IS_BOOL)
 		|| !zval_is_true(imported)
 	) {
-		ZVAL_FREE(imported);
-		
 		ONPHP_CALL_METHOD_2_NORET(
 			getThis(),
 			"importprimitive",
@@ -557,7 +550,7 @@ ONPHP_METHOD(Form, importOneMore)
 	}
 	
 	zval_ptr_dtor(&primitive);
-	ZVAL_FREE(imported);
+	zval_ptr_dtor(&imported);
 }
 
 ONPHP_METHOD(Form, exportValue)
@@ -586,8 +579,7 @@ ONPHP_METHOD(Form, export)
 		*list,
 		*primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
 	
-	ALLOC_INIT_ZVAL(list);
-	array_init(list);
+	ONPHP_MAKE_ARRAY(list);
 	
 	ONPHP_FOREACH(primitives, prm) {
 		zval *imported;
@@ -609,7 +601,7 @@ ONPHP_METHOD(Form, export)
 			
 			if (EG(exception)) {
 				ZVAL_FREE(list);
-				ZVAL_FREE(imported);
+				zval_ptr_dtor(&imported);
 				return;
 			}
 			
@@ -617,18 +609,19 @@ ONPHP_METHOD(Form, export)
 			
 			if (EG(exception)) {
 				ZVAL_FREE(list);
-				ZVAL_FREE(imported);
+				zval_ptr_dtor(&imported);
 				zval_ptr_dtor(&value);
 				return;
 			}
 			
+			ZVAL_ADDREF(value);
+			
 			ONPHP_ASSOC_SET(list, Z_STRVAL_P(name), value);
 			
-			zval_ptr_dtor(&value);
-			ZVAL_FREE(name);
+			zval_ptr_dtor(&name);
 		}
 		
-		ZVAL_FREE(imported);
+		zval_ptr_dtor(&imported);
 	}
 	
 	RETURN_ZVAL(list, 1, 1);
@@ -647,7 +640,7 @@ ONPHP_METHOD(Form, toFormValue)
 		
 		ONPHP_CALL_METHOD_1_NORET(getThis(), "getvalue", &out, name);
 		
-		ZVAL_FREE(name);
+		zval_ptr_dtor(&name);
 		
 		if (EG(exception)) {
 			return;
@@ -663,19 +656,7 @@ ONPHP_METHOD(Form, toFormValue)
 	}
 }
 
-ONPHP_METHOD(Form, setProto)
-{
-	zval *proto;
-	
-	ONPHP_GET_ARGS("o", &proto);
-	
-	ONPHP_UPDATE_PROPERTY(getThis(), "proto", proto);
-	
-	zval_ptr_dtor(&proto);
-	
-	RETURN_THIS;
-}
-
+ONPHP_SETTER(Form, setProto, proto);
 ONPHP_GETTER(Form, getProto, proto);
 
 ONPHP_METHOD(Form, importPrimitive)
@@ -715,7 +696,7 @@ ONPHP_METHOD(Form, importPrimitive)
 				result
 			);
 			
-			ZVAL_FREE(result);
+			zval_ptr_dtor(&result);
 			
 			if (EG(exception)) {
 				zval_ptr_dtor(&chain);
@@ -802,7 +783,7 @@ ONPHP_METHOD(Form, checkImportResult)
 		ONPHP_CALL_METHOD_0_NORET(prm, "isrequired", &required);
 		
 		if (EG(exception)) {
-			ZVAL_FREE(name);
+			zval_ptr_dtor(&name);
 			return;
 		}
 		
@@ -813,7 +794,7 @@ ONPHP_METHOD(Form, checkImportResult)
 			ONPHP_ASSOC_SET_LONG(errors, Z_STRVAL_P(name), 2); // self::MISSING
 		}
 		
-		ZVAL_FREE(required);
+		zval_ptr_dtor(&required);
 	} else if (Z_TYPE_P(result) == IS_BOOL) {
 		if (zval_is_true(result)) {
 			ONPHP_ASSOC_UNSET(errors, Z_STRVAL_P(name));
@@ -822,7 +803,7 @@ ONPHP_METHOD(Form, checkImportResult)
 		}
 	}
 	
-	ZVAL_FREE(name);
+	zval_ptr_dtor(&name);
 	
 	RETURN_THIS;
 }
@@ -852,8 +833,7 @@ ONPHP_METHOD(Form, addErrorLabel)
 	labels = ONPHP_READ_PROPERTY(getThis(), "labels");
 	
 	if (!ONPHP_ASSOC_ISSET(labels, name)) {
-		ALLOC_INIT_ZVAL(subList);
-		array_init(subList);
+		ONPHP_MAKE_ARRAY(subList);
 		ONPHP_ASSOC_SET(labels, name, subList);
 		zval_ptr_dtor(&subList);
 		subList = NULL;
@@ -882,7 +862,6 @@ static
 
 zend_function_entry onphp_funcs_Form[] = {
 	ONPHP_ME(Form, __construct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
-	ONPHP_ME(Form, __destruct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_DTOR)
 	ONPHP_ME(Form, create, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Form, getErrors, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Form, dropAllErrors, NULL, ZEND_ACC_PUBLIC)

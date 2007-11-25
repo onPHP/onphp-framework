@@ -104,16 +104,17 @@ ONPHP_METHOD(BasePrimitive, importValue)
 	
 	ONPHP_GET_ARGS("z", &value);
 	
-	ALLOC_INIT_ZVAL(scope);
-	array_init(scope);
+	ONPHP_MAKE_ARRAY(scope);
 	
 	name = ONPHP_READ_PROPERTY(getThis(), "name");
+	
+	ZVAL_ADDREF(value);
 	
 	ONPHP_ASSOC_SET(scope, Z_STRVAL_P(name), value);
 	
 	ONPHP_CALL_METHOD_1(getThis(), "import", &result, scope);
 	
-	ZVAL_FREE(scope);
+	zval_ptr_dtor(&scope);
 	
 	RETURN_ZVAL(result, 1, 1);
 }

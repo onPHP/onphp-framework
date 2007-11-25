@@ -45,12 +45,6 @@ ONPHP_METHOD(FiltrablePrimitive, __construct)
 	zval_ptr_dtor(&displayFilter);
 }
 
-ONPHP_METHOD(FiltrablePrimitive, __destruct)
-{
-	ONPHP_PROPERTY_DESTRUCT(importFilter);
-	ONPHP_PROPERTY_DESTRUCT(displayFilter);
-}
-
 ONPHP_GETTER(FiltrablePrimitive, getDisplayFilter, displayFilter);
 ONPHP_GETTER(FiltrablePrimitive, getImportFilter, importFilter);
 
@@ -157,7 +151,6 @@ static ONPHP_ARGINFO_FILTER_CHAIN;
 
 zend_function_entry onphp_funcs_FiltrablePrimitive[] = {
 	ONPHP_ME(FiltrablePrimitive, __construct, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
-	ONPHP_ME(FiltrablePrimitive, __destruct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_DTOR)
 	ONPHP_ME(FiltrablePrimitive, setDisplayFilter, arginfo_filter_chain, ZEND_ACC_PUBLIC)
 	ONPHP_ME(FiltrablePrimitive, addDisplayFilter, arginfo_filtrator, ZEND_ACC_PUBLIC)
 	ONPHP_ME(FiltrablePrimitive, dropDisplayFilters, NULL, ZEND_ACC_PUBLIC)

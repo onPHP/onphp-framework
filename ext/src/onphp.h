@@ -42,10 +42,14 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 		&& (zend_hash_num_elements(Z_ARRVAL_P(value)) < 1)	\
 	))
 
+#define ONPHP_MAKE_ARRAY(array)	\
+	ALLOC_ZVAL(array);			\
+	array_init(array);			\
+	INIT_PZVAL(array);			\
+
 #define ONPHP_CONSTRUCT_ARRAY(name) {				\
 	zval *name;										\
-	ALLOC_INIT_ZVAL(name);							\
-	array_init(name);								\
+	ONPHP_MAKE_ARRAY(name);							\
 	ONPHP_UPDATE_PROPERTY(getThis(), # name, name);	\
 	zval_ptr_dtor(&name);							\
 }
@@ -94,13 +98,13 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 	ONPHP_CALL_AND_RETURN(ONPHP_CALL_METHOD_0_NORET, object, method_name, out)
 
 #define ONPHP_CALL_METHOD_1_NORET(object, method_name, out, first_argument) \
-	zend_call_method_with_1_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument) \
+	zend_call_method_with_1_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument)
 
 #define ONPHP_CALL_METHOD_1(object, method_name, out, first_argument) \
 	ONPHP_CALL_AND_RETURN(ONPHP_CALL_METHOD_1_NORET, object, method_name, out, first_argument)
 
 #define ONPHP_CALL_METHOD_2_NORET(object, method_name, out, first_argument, second_argument) \
-	zend_call_method_with_2_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument, second_argument) \
+	zend_call_method_with_2_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument, second_argument)
 
 #define ONPHP_CALL_METHOD_2(object, method_name, out, first_argument, second_argument) \
 	ONPHP_CALL_AND_RETURN(ONPHP_CALL_METHOD_2_NORET, object, method_name, out, first_argument, second_argument)
@@ -338,18 +342,19 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 	zend_hash_del(Z_ARRVAL_P(array), key, strlen(key) + 1)
 
 #define ONPHP_ASSOC_SET(array, key, value) {	\
-	ZVAL_ADDREF(value);							\
 	add_assoc_zval(array, key, value);			\
 }
 
 #define ONPHP_ASSOC_SET_LONG(array, key, value) \
 	add_assoc_long(array, key, value);
 
+#define ONPHP_ASSOC_SET_BOOL(array, key, value) \
+	add_assoc_bool(array, key, value);
+
 #define ONPHP_ARRAY_SET(array, index, value) {	\
 	if (Z_TYPE_P(value) == IS_NULL) {			\
 		add_index_null(array);					\
 	} else {									\
-		ZVAL_ADDREF(value);						\
 		add_index_zval(array, index, value);	\
 	}											\
 }
@@ -358,7 +363,6 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 	if (Z_TYPE_P(value) == IS_NULL) {		\
 		add_next_index_null(array);			\
 	} else {								\
-		ZVAL_ADDREF(value);					\
 		add_next_index_zval(array, value);	\
 	}										\
 }
@@ -402,13 +406,6 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 	}											\
 												\
 	value = *stored;							\
-}
-
-#define ONPHP_PROPERTY_DESTRUCT(property) {							\
-	zval *property = ONPHP_READ_PROPERTY(getThis(), # property);	\
-	if (property && (Z_TYPE_P(property) != IS_NULL)) {				\
-		zval_ptr_dtor(&property);									\
-	}																\
 }
 
 #define ONPHP_ARGINFO_ONE \

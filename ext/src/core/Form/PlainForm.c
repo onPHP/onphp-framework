@@ -24,11 +24,6 @@ ONPHP_METHOD(PlainForm, __construct)
 	ONPHP_CONSTRUCT_ARRAY(primitives);
 }
 
-ONPHP_METHOD(PlainForm, __destruct)
-{
-	ONPHP_PROPERTY_DESTRUCT(primitives);
-}
-
 ONPHP_METHOD(PlainForm, clean)
 {
 	zval **prm, *primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
@@ -65,13 +60,15 @@ ONPHP_METHOD(PlainForm, add)
 	ONPHP_CALL_METHOD_0(prm, "getname", &name);
 	
 	if (ONPHP_ASSOC_ISSET(primitives, Z_STRVAL_P(name))) {
-		ZVAL_FREE(name);
+		zval_ptr_dtor(&name);
 		ONPHP_THROW(WrongArgumentException, "i am already exists!");
 	}
 	
+	ZVAL_ADDREF(prm);
+	
 	ONPHP_ASSOC_SET(primitives, Z_STRVAL_P(name), prm);
 	
-	ZVAL_FREE(name);
+	zval_ptr_dtor(&name);
 	
 	RETURN_THIS;
 }
@@ -182,7 +179,6 @@ ONPHP_METHOD(PlainForm, getPrimitiveNames)
 	);
 	
 	if (EG(exception)) {
-		ZVAL_FREE(out);
 		return;
 	}
 	
@@ -201,7 +197,6 @@ static ONPHP_ARGINFO_BASE_PRIMITIVE;
 
 zend_function_entry onphp_funcs_PlainForm[] = {
 	ONPHP_ME(PlainForm, __construct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
-	ONPHP_ME(PlainForm, __destruct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_DTOR)
 	ONPHP_ME(PlainForm, clean, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, primitiveExists, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, add, arginfo_base_primitive, ZEND_ACC_PUBLIC)

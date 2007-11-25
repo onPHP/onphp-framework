@@ -9,14 +9,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-#ifndef ONPHP_CORE_FROM_TABLE_H
-#define ONPHP_CORE_FROM_TABLE_H
+#ifndef ONPHP_CORE_JOINER_H
+#define ONPHP_CORE_JOINER_H
 
-ONPHP_STANDART_CLASS(FromTable);
+ONPHP_STANDART_CLASS(Joiner);
 
-#define ONPHP_ARGINFO_FROM_TABLE \
-	ZEND_BEGIN_ARG_INFO(arginfo_from_table, 0) \
-		ZEND_ARG_OBJ_INFO(0, from_table, FromTable, 0) \
-	ZEND_END_ARG_INFO()
-
-#endif /* ONPHP_CORE_FROM_TABLE_H */
+#endif /* ONPHP_CORE_JOINER_H */

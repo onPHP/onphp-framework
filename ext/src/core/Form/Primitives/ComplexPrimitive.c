@@ -65,9 +65,13 @@ ONPHP_METHOD(ComplexPrimitive, setState)
 	
 	single = ONPHP_READ_PROPERTY(getThis(), "single");
 	
-	ONPHP_CALL_METHOD_1(single, "setvalue", NULL, value);
+	ONPHP_CALL_METHOD_1_NORET(single, "setvalue", NULL, value);
 	
-	ZVAL_FREE(value);
+	zval_ptr_dtor(&value);
+	
+	if (EG(exception)) {
+		return;
+	}
 	
 	RETURN_THIS;
 }
