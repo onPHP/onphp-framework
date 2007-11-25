@@ -23,16 +23,10 @@ ONPHP_METHOD(DBBinary, create)
 	
 	ONPHP_MAKE_OBJECT(DBBinary, object);
 	
-	zend_call_method_with_1_params(
-		&object,
-		Z_OBJCE_P(object)->parent,
-		&Z_OBJCE_P(object)->parent->constructor,
-		"__construct",
-		NULL,
-		value
-	);
+	ONPHP_CALL_PARENT_1_NORET(object, "__construct", NULL, value);
 	
 	if (EG(exception)) {
+		ZVAL_FREE(object);
 		return;
 	}
 	

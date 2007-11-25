@@ -26,14 +26,7 @@ ONPHP_METHOD(ComplexPrimitive, __construct)
 	
 	ONPHP_MAKE_FOREIGN_OBJECT("Ternary", ternary);
 	
-	zend_call_method_with_1_params(
-		&ternary,
-		Z_OBJCE_P(ternary),
-		&Z_OBJCE_P(ternary)->constructor,
-		"__construct",
-		NULL,
-		nil
-	);
+	ONPHP_CALL_METHOD_1_NORET(ternary, "__construct", NULL, nil);
 	
 	if (EG(exception)) {
 		zval_ptr_dtor(&ternary);

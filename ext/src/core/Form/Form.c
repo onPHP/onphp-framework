@@ -27,14 +27,8 @@ ONPHP_METHOD(Form, __construct)
 	ONPHP_CONSTRUCT_ARRAY(errors);
 	ONPHP_CONSTRUCT_ARRAY(labels);
 	ONPHP_CONSTRUCT_ARRAY(describedLabels);
-
-	zend_call_method_with_0_params(
-		&getThis(),
-		onphp_ce_RegulatedForm,
-		&onphp_ce_RegulatedForm->constructor,
-		"__construct",
-		NULL
-	);
+	
+	ONPHP_CALL_PARENT_0(getThis(), "__construct", NULL);
 }
 
 ONPHP_METHOD(Form, __destruct)

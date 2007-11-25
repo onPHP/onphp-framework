@@ -33,14 +33,7 @@ ONPHP_METHOD(ImaginaryDialect, me)
 	ALLOC_INIT_ZVAL(class);
 	ZVAL_STRING(class, onphp_ce_ImaginaryDialect->name, 1);
 	
-	zend_call_method_with_1_params(
-		NULL,
-		onphp_ce_Singleton,
-		NULL,
-		"getinstance",
-		&instance,
-		class
-	);
+	ONPHP_CALL_STATIC_1_NORET(Singleton, "getinstance", &instance, class);
 	
 	ZVAL_FREE(class);
 	
@@ -156,14 +149,7 @@ ONPHP_METHOD(ImaginaryDialect, fullTextSearch)
 	if (ONPHP_INSTANCEOF(field, DialectString)) {
 		zval *string;
 		
-		zend_call_method_with_1_params(
-			&getThis(),
-			Z_OBJCE_P(getThis()),
-			NULL,
-			"fieldtostring",
-			&string,
-			field
-		);
+		ONPHP_CALL_METHOD_1_NORET(getThis(), "fieldtostring", &string, field);
 		
 		if (EG(exception)) {
 			goto out;
@@ -213,14 +199,7 @@ ONPHP_METHOD(ImaginaryDialect, fullTextRank)
 	if (ONPHP_INSTANCEOF(field, DialectString)) {
 		zval *string;
 		
-		zend_call_method_with_1_params(
-			&getThis(),
-			Z_OBJCE_P(getThis()),
-			NULL,
-			"fieldtostring",
-			&string,
-			field
-		);
+		ONPHP_CALL_METHOD_1_NORET(getThis(), "fieldtostring", &string, field);
 		
 		if (EG(exception)) {
 			goto out;

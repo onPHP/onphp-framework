@@ -31,15 +31,12 @@ ONPHP_METHOD(ExtractPart, create)
 	
 	ONPHP_MAKE_OBJECT(ExtractPart, object);
 	
-	zend_call_method_with_2_params(
-		&object,
-		Z_OBJCE_P(object),
-		&Z_OBJCE_P(object)->constructor,
-		"__construct",
-		NULL,
-		what,
-		from
-	);
+	ONPHP_CALL_METHOD_2_NORET(object, "__construct", NULL, what, from);
+	
+	if (EG(exception)) {
+		ZVAL_FREE(object);
+		return;
+	}
 	
 	RETURN_ZVAL(object, 1, 1);
 }
@@ -64,14 +61,7 @@ ONPHP_METHOD(ExtractPart, __construct)
 	
 	ONPHP_MAKE_OBJECT(DBField, fromField);
 	
-	zend_call_method_with_1_params(
-		&fromField,
-		Z_OBJCE_P(fromField),
-		&Z_OBJCE_P(fromField)->constructor,
-		"__construct",
-		NULL,
-		from
-	);
+	ONPHP_CALL_METHOD_1_NORET(fromField, "__construct", NULL, from);
 	
 	if (EG(exception)) {
 		ZVAL_FREE(fromField);
@@ -96,14 +86,7 @@ ONPHP_METHOD(ExtractPart, __construct)
 		object_init_ex(whatPart, *cep);
 		Z_TYPE_P(whatPart) = IS_OBJECT;
 		
-		zend_call_method_with_1_params(
-			&whatPart,
-			Z_OBJCE_P(whatPart),
-			&Z_OBJCE_P(whatPart)->constructor,
-			"__construct",
-			NULL,
-			what
-		);
+		ONPHP_CALL_METHOD_1_NORET(whatPart, "__construct", NULL, what);
 		
 		if (EG(exception)) {
 			ZVAL_FREE(whatPart);
@@ -131,17 +114,13 @@ ONPHP_METHOD(ExtractPart, toMapped)
 	
 	ONPHP_CALL_METHOD_2(dao, "guessatom", &atom, from, query);
 	
-	zend_call_method_with_2_params(
-		NULL,
-		Z_OBJCE_P(getThis()),
-		NULL,
-		"create",
-		&query,
-		what,
-		atom
-	);
+	ONPHP_CALL_STATIC_2_NORET(ExtractPart, "create", &query, what, atom);
 	
 	zval_ptr_dtor(&atom);
+	
+	if (EG(exception)) {
+		return;
+	}
 	
 	RETURN_ZVAL(query, 1, 1);
 }

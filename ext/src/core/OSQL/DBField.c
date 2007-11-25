@@ -120,14 +120,7 @@ ONPHP_METHOD(DBField, setTable)
 		
 		ONPHP_MAKE_FOREIGN_OBJECT("FromTable", from_table);
 		
-		zend_call_method_with_1_params(
-			&from_table,
-			Z_OBJCE_P(from_table),
-			&Z_OBJCE_P(from_table)->constructor,
-			"__construct",
-			NULL,
-			table
-		);
+		ONPHP_CALL_METHOD_1_NORET(from_table, "__construct", NULL, table);
 		
 		if (EG(exception)) {
 			ZVAL_FREE(from_table);

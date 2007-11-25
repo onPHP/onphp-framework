@@ -58,6 +58,10 @@ ONPHP_METHOD(Singleton, getInstance)
 		argc = 2;
 	}
 	
+	if (Z_TYPE_PP(params[0]) != IS_STRING) {
+		ONPHP_THROW(WrongArgumentException, "strange class name given");
+	}
+	
 	name = estrdup(Z_STRVAL_PP(params[0]));
 	
 	length = strlen(name);

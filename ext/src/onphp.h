@@ -83,47 +83,76 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 		WRONG_PARAM_COUNT;				\
 	}
 
+#define ONPHP_CALL_AND_RETURN(call, ...)	\
+	call(__VA_ARGS__);						\
+	if (EG(exception)) return
+
 #define ONPHP_CALL_METHOD_0_NORET(object, method_name, out) \
 	zend_call_method_with_0_params(&object, Z_OBJCE_P(object), NULL, method_name, out)
 
 #define ONPHP_CALL_METHOD_0(object, method_name, out) \
-	ONPHP_CALL_METHOD_0_NORET(object, method_name, out); \
-	if (EG(exception)) return
+	ONPHP_CALL_AND_RETURN(ONPHP_CALL_METHOD_0_NORET, object, method_name, out)
 
 #define ONPHP_CALL_METHOD_1_NORET(object, method_name, out, first_argument) \
 	zend_call_method_with_1_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument) \
 
 #define ONPHP_CALL_METHOD_1(object, method_name, out, first_argument) \
-	ONPHP_CALL_METHOD_1_NORET(object, method_name, out, first_argument); \
-	if (EG(exception)) return
+	ONPHP_CALL_AND_RETURN(ONPHP_CALL_METHOD_1_NORET, object, method_name, out, first_argument)
 
 #define ONPHP_CALL_METHOD_2_NORET(object, method_name, out, first_argument, second_argument) \
 	zend_call_method_with_2_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument, second_argument) \
 
 #define ONPHP_CALL_METHOD_2(object, method_name, out, first_argument, second_argument) \
-	ONPHP_CALL_METHOD_2_NORET(object, method_name, out, first_argument, second_argument); \
-	if (EG(exception)) return
+	ONPHP_CALL_AND_RETURN(ONPHP_CALL_METHOD_2_NORET, object, method_name, out, first_argument, second_argument)
 
 #define ONPHP_CALL_METHOD_3_NORET(object, method_name, out, first_argument, second_argument, third_argument) \
 	onphp_call_method(&object, Z_OBJCE_P(object), NULL, method_name, sizeof(method_name) - 1, out, 3, first_argument, second_argument, third_argument TSRMLS_CC)
 
 #define ONPHP_CALL_METHOD_3(object, method_name, out, first_argument, second_argument, third_argument) \
-	ONPHP_CALL_METHOD_3_NORET(object, method_name, out, first_argument, second_argument, third_argument); \
-	if (EG(exception)) return
+	ONPHP_CALL_AND_RETURN(ONPHP_CALL_METHOD_3_NORET, object, method_name, out, first_argument, second_argument, third_argument)
+
+#define ONPHP_CALL_PARENT_0_NORET(object, method_name, out)					\
+	zend_call_method_with_0_params(											\
+		&object,															\
+		Z_OBJCE_P(object)->parent,											\
+		NULL,																\
+		method_name,														\
+		out																	\
+	);
+
+#define ONPHP_CALL_PARENT_0(object, method_name, out) \
+	ONPHP_CALL_AND_RETURN(ONPHP_CALL_PARENT_0_NORET, object, method_name, out)
 
 #define ONPHP_CALL_PARENT_1_NORET(object, method_name, out, first_argument)	\
 	zend_call_method_with_1_params(											\
 		&object,															\
 		Z_OBJCE_P(object)->parent,											\
-		&Z_OBJCE_P(object)->parent->constructor,							\
-		# method_name,														\
+		NULL,																\
+		method_name,														\
 		out,																\
 		first_argument														\
 	);
 
-#define ONPHP_CALL_PARENT_1(object, method_name, out, first_argument)	\
-	ONPHP_CALL_PARENT_1_NORET(object, method_name, out, first_argument)	\
-	if (EG(exception)) return
+#define ONPHP_CALL_PARENT_1(object, method_name, out, first_argument) \
+	ONPHP_CALL_AND_RETURN(ONPHP_CALL_PARENT_1_NORET, object, method_name, out, first_argument)
+
+#define ONPHP_CALL_STATIC_0_NORET(class, method_name, out) \
+	zend_call_method_with_0_params(NULL, onphp_ce_ ## class, NULL, method_name, out)
+
+#define ONPHP_CALL_STATIC_0(class, method_name, out) \
+	ONPHP_CALL_AND_RETURN(ONPHP_CALL_STATIC_0_NORET, class, method_name, out)
+
+#define ONPHP_CALL_STATIC_1_NORET(class, method_name, out, first_argument) \
+	zend_call_method_with_1_params(NULL, onphp_ce_ ## class, NULL, method_name, out, first_argument)
+
+#define ONPHP_CALL_STATIC_1(class, method_name, out, first_argument) \
+	ONPHP_CALL_AND_RETURN(ONPHP_CALL_STATIC_1_NORET, class, method_name, out, first_argument)
+
+#define ONPHP_CALL_STATIC_2_NORET(class, method_name, out, first_argument, second_argument) \
+	zend_call_method_with_2_params(NULL, onphp_ce_ ## class, NULL, method_name, out, first_argument, second_argument)
+
+#define ONPHP_CALL_STATIC_2(class, method_name, out, first_argument) \
+	ONPHP_CALL_AND_RETURN(ONPHP_CALL_STATIC_2_NORET, class, method_name, out, first_argument, second_argument)
 
 #define ONPHP_ME(class_name, function_name, arg_info, flags) \
 	PHP_ME(onphp_ ## class_name, function_name, arg_info, flags)

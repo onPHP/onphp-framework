@@ -25,7 +25,7 @@ ONPHP_METHOD(RegulatedForm, __construct)
 	zend_call_method_with_0_params(
 		&getThis(),
 		onphp_ce_PlainForm,
-		&onphp_ce_PlainForm->constructor,
+		NULL,
 		"__construct",
 		NULL
 	);

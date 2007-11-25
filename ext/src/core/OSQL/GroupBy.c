@@ -46,14 +46,7 @@ ONPHP_METHOD(GroupBy, toMapped)
 	
 	ONPHP_CALL_METHOD_2(dao, "guessatom", &atom, field, query);
 	
-	zend_call_method_with_1_params(
-		NULL,
-		onphp_ce_GroupBy,
-		NULL,
-		"create",
-		&object,
-		atom
-	);
+	ONPHP_CALL_STATIC_1_NORET(GroupBy, "create", &object, atom);
 	
 	ZVAL_FREE(atom);
 	

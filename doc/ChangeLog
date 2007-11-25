@@ -14,7 +14,8 @@
 
 	* ext/src/core/OSQL/: GroupBy implemented.
 
-	* ext/src/onphp.h: new macroses - ONPHP_CALL_PARENT_*.
+	* ext/src/onphp.h: new macroses - ONPHP_CALL_PARENT_*,
+	ONPHP_CALL_STATIC_*.
 
 2007-11-15	Ivan Y. Khvostishkov
 

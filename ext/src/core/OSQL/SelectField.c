@@ -24,16 +24,7 @@ ONPHP_METHOD(SelectField, create)
 	
 	ONPHP_MAKE_OBJECT(SelectField, object);
 	
-	ONPHP_UPDATE_PROPERTY(object, "alias", alias);
-	
-	zend_call_method_with_1_params(
-		&object,
-		Z_OBJCE_P(object)->parent,
-		&Z_OBJCE_P(object)->parent->constructor,
-		"__construct",
-		NULL,
-		field
-	);
+	ONPHP_CALL_METHOD_1_NORET(object, "__construct", NULL, alias);
 	
 	if (EG(exception)) {
 		ZVAL_FREE(object);
@@ -51,18 +42,7 @@ ONPHP_METHOD(SelectField, __construct)
 	
 	ONPHP_UPDATE_PROPERTY(getThis(), "alias", alias);
 	
-	zend_call_method_with_1_params(
-		&getThis(),
-		Z_OBJCE_P(getThis())->parent,
-		&Z_OBJCE_P(getThis())->parent->constructor,
-		"__construct",
-		NULL,
-		field
-	);
-	
-	if (EG(exception)) {
-		return;
-	}
+	ONPHP_CALL_PARENT_1(getThis(), "__construct", NULL, field);
 }
 
 ONPHP_GETTER(SelectField, getAlias, alias);
@@ -90,19 +70,7 @@ ONPHP_METHOD(SelectField, toDialectString)
 	
 	ONPHP_GET_ARGS("z", &dialect);
 	
-	zend_call_method_with_1_params(
-		&getThis(),
-		Z_OBJCE_P(getThis())->parent,
-		NULL,
-		"todialectstring",
-		&out,
-		dialect
-	);
-	
-	if (EG(exception)) {
-		zval_ptr_dtor(&out);
-		return;
-	}
+	ONPHP_CALL_PARENT_1(getThis(), "todialectstring", &out, dialect);
 	
 	alias = ONPHP_READ_PROPERTY(getThis(), "alias");
 	

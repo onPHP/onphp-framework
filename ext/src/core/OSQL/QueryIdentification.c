@@ -43,29 +43,11 @@ ONPHP_METHOD(QueryIdentification, toString)
 {
 	zval *out, *imdi;
 	
-	zend_call_method_with_0_params(
-		NULL,
-		onphp_ce_ImaginaryDialect,
-		NULL,
-		"me",
-		&imdi
-	);
+	ONPHP_CALL_STATIC_0(ImaginaryDialect, "me", &imdi);
 	
-	if (EG(exception)) {
-		ZVAL_FREE(imdi);
-		return;
-	}
+	ONPHP_CALL_METHOD_1_NORET(getThis(), "todialectstring", &out, imdi);
 	
-	zend_call_method_with_1_params(
-		&getThis(),
-		Z_OBJCE_P(getThis()),
-		NULL,
-		"todialectstring",
-		&out,
-		imdi
-	);
-	
-	ZVAL_FREE(imdi);
+	zval_ptr_dtor(&imdi);
 	
 	if (EG(exception)) {
 		return;
