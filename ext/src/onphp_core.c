@@ -35,6 +35,8 @@
 
 #include "core/Form/PlainForm.h"
 #include "core/Form/RegulatedForm.h"
+#include "core/Form/Form.h"
+#include "core/Form/FormField.h"
 
 #include "core/Form/Filters/BaseFilter.h"
 #include "core/Form/Filters/Filtrator.h"
@@ -109,6 +111,20 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_PROPERTY(RegulatedForm, "rules", ZEND_ACC_PROTECTED);
 	REGISTER_ONPHP_PROPERTY(RegulatedForm, "violated", ZEND_ACC_PROTECTED);
 	ONPHP_CLASS_IS_ABSTRACT(RegulatedForm);
+	
+	REGISTER_ONPHP_SUB_CLASS(Form, RegulatedForm);
+	REGISTER_ONPHP_CLASS_CONST_LONG(Form, "WRONG", 0x0001);
+	REGISTER_ONPHP_CLASS_CONST_LONG(Form, "MISSING", 0x0002);
+	REGISTER_ONPHP_PROPERTY(Form, "proto", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_PROPERTY(Form, "errors", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_PROPERTY(Form, "labels", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_PROPERTY(Form, "describedLabels", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_PROPERTY_BOOL(Form, "importFiltering", 1, ZEND_ACC_PRIVATE);
+	ONPHP_CLASS_IS_FINAL(Form);
+	
+	REGISTER_ONPHP_STD_CLASS(FormField);
+	REGISTER_ONPHP_PROPERTY(FormField, "primitiveName", ZEND_ACC_PRIVATE);
+	ONPHP_CLASS_IS_FINAL(FormField);
 	
 	REGISTER_ONPHP_INTERFACE(Filtrator);
 	

@@ -19,4 +19,10 @@ ONPHP_STANDART_CLASS(BasePrimitive);
 		ZEND_ARG_OBJ_INFO(0, prm, BasePrimitive, 0) \
 	ZEND_END_ARG_INFO()
 
+#define ONPHP_ARGINFO_ONE_AND_BASE_PRIMITIVE \
+	ZEND_BEGIN_ARG_INFO(arginfo_one_and_base_primitive, 0) \
+		ZEND_ARG_INFO(0, first) \
+		ZEND_ARG_OBJ_INFO(0, prm, BasePrimitive, 0) \
+	ZEND_END_ARG_INFO()
+
 #endif /* ONPHP_CORE_BASE_PRIMITIVE_H */

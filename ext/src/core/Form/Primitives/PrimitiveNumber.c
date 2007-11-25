@@ -46,24 +46,18 @@ ONPHP_METHOD(PrimitiveNumber, import)
 	
 	ONPHP_ASSOC_GET(scope, Z_STRVAL_P(name), value);
 	
-	ONPHP_CLONE_ZVAL(value, out);
-	
-	value = NULL;
-	
 	zend_try {
-		ONPHP_CALL_METHOD_1_NORET(getThis(), "checknumber", NULL, out);
+		ONPHP_CALL_METHOD_1_NORET(getThis(), "checknumber", NULL, value);
 	} zend_catch {
 		RETURN_FALSE;
 	} zend_end_try();
 	
-	ONPHP_CALL_METHOD_1(getThis(), "castnumber", &value, out);
-	
-	ZVAL_FREE(out);
+	ONPHP_CALL_METHOD_1(getThis(), "castnumber", &out, value);
 	
 	ONPHP_CALL_METHOD_0(getThis(), "selffilter", NULL);
 	
 	if (
-		(Z_TYPE_P(value) == IS_LONG)
+		(Z_TYPE_P(out) == IS_LONG)
 		&& (min = ONPHP_READ_PROPERTY(getThis(), "min"))
 		&& (max = ONPHP_READ_PROPERTY(getThis(), "max"))
 		&& !(
@@ -74,14 +68,14 @@ ONPHP_METHOD(PrimitiveNumber, import)
 			&& (Z_LVAL_P(out) > Z_LVAL_P(max))
 		)
 	) {
-		ONPHP_UPDATE_PROPERTY_LONG(getThis(), "value", Z_LVAL_P(value));
+		ONPHP_UPDATE_PROPERTY_LONG(getThis(), "value", Z_LVAL_P(out));
 		
 		RETVAL_TRUE;
 	} else {
 		RETVAL_FALSE;
 	}
 	
-	zval_ptr_dtor(&value);
+	zval_ptr_dtor(&out);
 }
 
 static ONPHP_ARGINFO_ONE;

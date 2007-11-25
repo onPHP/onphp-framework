@@ -105,16 +105,18 @@ ONPHP_METHOD(PlainForm, get)
 	ONPHP_GET_ARGS("s", &name, &length);
 	
 	if (ONPHP_ASSOC_ISSET(primitives, name)) {
-		zval *prm, *copy;
+		zval *prm;
 		
 		ONPHP_ASSOC_GET(primitives, name, prm);
 		
-		ONPHP_CLONE_ZVAL(prm, copy);
-		
-		RETURN_ZVAL(copy, 1, 1);
+		RETURN_ZVAL(prm, 1, 0);
 	}
 	
-	ONPHP_THROW(MissingElementException, NULL);
+	ONPHP_THROW(
+		MissingElementException,
+		"'%s' not found",
+		name
+	);
 }
 
 #define ONPHP_PLAIN_FORM_STRAIGHT_GETTER(method_name, function_name)	\
@@ -132,7 +134,7 @@ ONPHP_METHOD(PlainForm, method_name)									\
 
 #define ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER(function_name)			\
 	ONPHP_CALL_METHOD_0(prm, function_name, &out);						\
-	ZVAL_FREE(prm);														\
+	zval_ptr_dtor(&prm);												\
 	RETURN_ZVAL(out, 1, 1);												\
 }
 
@@ -143,21 +145,21 @@ ONPHP_PLAIN_FORM_STRAIGHT_GETTER(getSafeValue, "getsafevalue");
 
 ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getChoiceValue) {
 	if (!ONPHP_INSTANCEOF(prm, ListedPrimitive)) {
-		ZVAL_FREE(prm);
+		zval_ptr_dtor(&prm);
 		ONPHP_THROW(WrongArgumentException, NULL);
 	}
 } ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getchoicevalue");
 
 ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getActualChoiceValue) {
 	if (!ONPHP_INSTANCEOF(prm, ListedPrimitive)) {
-		ZVAL_FREE(prm);
+		zval_ptr_dtor(&prm);
 		ONPHP_THROW(WrongArgumentException, NULL);
 	}
 } ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getactualchoicevalue");
 
 ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getDisplayValue) {
 	if (ONPHP_INSTANCEOF(prm, FiltrablePrimitive)) {
-		ZVAL_FREE(prm);
+		zval_ptr_dtor(&prm);
 		ONPHP_THROW(WrongArgumentException, NULL);
 	}
 } ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getactualchoicevalue");

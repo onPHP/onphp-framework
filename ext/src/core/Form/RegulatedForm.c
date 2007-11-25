@@ -105,7 +105,7 @@ ONPHP_METHOD(RegulatedForm, checkRules)
 			}
 			
 			// Form::WRONG == 1
-			add_assoc_long(violated, key, 1);
+			ONPHP_ASSOC_SET_LONG(violated, key, 1);
 		} else {
 			zval_ptr_dtor(&result);
 		}

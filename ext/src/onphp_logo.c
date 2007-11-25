@@ -71,6 +71,8 @@ ExtractPart, \
 FieldTable, \
 FiltrablePrimitive, \
 Filtrator, \
+Form, \
+FormField, \
 FromTable, \
 FullText, \
 IdentifiableObject, \

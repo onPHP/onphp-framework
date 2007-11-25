@@ -29,6 +29,8 @@
 
 	* core/DB/Dialect.class.php: useless quoteValue() removed.
 
+	* ext/src/core/Form/: Form and FormField implemented.
+
 2007-11-07	Ivan Y. Khvostishkov
 
 	* main/Utils/TextUtils.class.php: friendlyNumber(): bug with small

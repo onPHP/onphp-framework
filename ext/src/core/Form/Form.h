@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Denis M. Gabaidulin                             *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -9,13 +9,14 @@
  ***************************************************************************/
 /* $Id$ */
 
-#include "onphp.h"
+#ifndef ONPHP_CORE_FORM_H
+#define ONPHP_CORE_FORM_H
 
-#include "core/Form/Form.h"
+ONPHP_STANDART_CLASS(Form);
 
-static ONPHP_ARGINFO_FORM;
+#define ONPHP_ARGINFO_FORM \
+	ZEND_BEGIN_ARG_INFO(arginfo_form, 0) \
+		ZEND_ARG_OBJ_INFO(0, form, Form, 0) \
+	ZEND_END_ARG_INFO()
 
-zend_function_entry onphp_funcs_LogicalObject[] = {
-	ONPHP_ABSTRACT_ME(LogicalObject, toBoolean, arginfo_form, ZEND_ACC_PUBLIC)
-	{NULL, NULL, NULL}
-};
+#endif /* ONPHP_CORE_FORM_H */

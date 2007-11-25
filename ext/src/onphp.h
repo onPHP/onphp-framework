@@ -18,6 +18,9 @@
 #define ONPHP_VERSION "0.11.1.111"
 #define ONPHP_MODULE_NAME "onPHP"
 
+/// dumb copy of zend_call_method
+ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zend_function **fn_proxy, char *function_name, int function_name_len, zval **retval_ptr_ptr, int param_count, zval* arg1, zval* arg2, zval* arg3 TSRMLS_DC);
+
 #define ZVAL_FREE(z) zval_dtor(z); FREE_ZVAL(z);
 
 #define ONPHP_CHECK_EMPTY(value) !((						\
@@ -81,24 +84,31 @@
 	}
 
 #define ONPHP_CALL_METHOD_0_NORET(object, method_name, out) \
-	zend_call_method_with_0_params(&object, Z_OBJCE_P(object), NULL, method_name, out);
+	zend_call_method_with_0_params(&object, Z_OBJCE_P(object), NULL, method_name, out)
 
 #define ONPHP_CALL_METHOD_0(object, method_name, out) \
-	ONPHP_CALL_METHOD_0_NORET(object, method_name, out) \
+	ONPHP_CALL_METHOD_0_NORET(object, method_name, out); \
 	if (EG(exception)) return
 
 #define ONPHP_CALL_METHOD_1_NORET(object, method_name, out, first_argument) \
-	zend_call_method_with_1_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument); \
+	zend_call_method_with_1_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument) \
 
 #define ONPHP_CALL_METHOD_1(object, method_name, out, first_argument) \
-	ONPHP_CALL_METHOD_1_NORET(object, method_name, out, first_argument) \
+	ONPHP_CALL_METHOD_1_NORET(object, method_name, out, first_argument); \
 	if (EG(exception)) return
 
 #define ONPHP_CALL_METHOD_2_NORET(object, method_name, out, first_argument, second_argument) \
-	zend_call_method_with_2_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument, second_argument); \
+	zend_call_method_with_2_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument, second_argument) \
 
 #define ONPHP_CALL_METHOD_2(object, method_name, out, first_argument, second_argument) \
-	ONPHP_CALL_METHOD_2_NORET(object, method_name, out, first_argument, second_argument) \
+	ONPHP_CALL_METHOD_2_NORET(object, method_name, out, first_argument, second_argument); \
+	if (EG(exception)) return
+
+#define ONPHP_CALL_METHOD_3_NORET(object, method_name, out, first_argument, second_argument, third_argument) \
+	onphp_call_method(&object, Z_OBJCE_P(object), NULL, method_name, sizeof(method_name) - 1, out, 3, first_argument, second_argument, third_argument TSRMLS_CC)
+
+#define ONPHP_CALL_METHOD_3(object, method_name, out, first_argument, second_argument, third_argument) \
+	ONPHP_CALL_METHOD_3_NORET(object, method_name, out, first_argument, second_argument, third_argument); \
 	if (EG(exception)) return
 
 #define ONPHP_ME(class_name, function_name, arg_info, flags) \
@@ -146,6 +156,9 @@
 #define ONPHP_UPDATE_PROPERTY_STRING(class, property, value) \
 	zend_update_property_string(Z_OBJCE_P(class), class, property, strlen(property), value TSRMLS_CC)
 
+#define ONPHP_UPDATE_PROPERTY_STRINGL(class, property, value, length) \
+	zend_update_property_stringl(Z_OBJCE_P(class), class, property, strlen(property), value, length TSRMLS_CC)
+
 #define ONPHP_UPDATE_PROPERTY_BOOL(class, property, value) \
 	zend_update_property_bool(Z_OBJCE_P(class), class, property, strlen(property), value TSRMLS_CC)
 
@@ -177,6 +190,7 @@
 	)
 
 #define RETURN_THIS RETURN_ZVAL(getThis(), 1, 0)
+#define RETVAL_THIS RETVAL_ZVAL(getThis(), 1, 0)
 
 #define ONPHP_COPY_ZVAL(value, copy)	\
 	ALLOC_INIT_ZVAL(copy);				\
@@ -280,13 +294,13 @@
 #define ONPHP_ASSOC_UNSET(array, key) \
 	zend_hash_del(Z_ARRVAL_P(array), key, strlen(key) + 1)
 
-#define ONPHP_ASSOC_SET(array, key, value) {		\
-	zval *copy;										\
-													\
-	ONPHP_CLONE_ZVAL(value, copy);					\
-													\
-	add_assoc_zval(array, key, copy);				\
+#define ONPHP_ASSOC_SET(array, key, value) { \
+	add_assoc_zval(array, key, value); \
+	ZVAL_ADDREF(value); \
 }
+
+#define ONPHP_ASSOC_SET_LONG(array, key, value) \
+	add_assoc_long(array, key, value);
 
 #define ONPHP_ARRAY_SET(array, index, value) {	\
 	add_index_zval(array, index, value);		\

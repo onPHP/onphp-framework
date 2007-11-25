@@ -13,6 +13,8 @@
 
 #include "core/Exceptions.h"
 
+#include "core/Form/Form.h"
+
 #include "core/Logic/MappableObject.h"
 #include "core/Logic/LogicalObject.h"
 

@@ -23,7 +23,7 @@ if (PHP_ONPHP != "no") {
 	
 	ADD_SOURCES(
 		"ext/onphp/src/core/Form",
-		"PlainForm.c RegulatedForm.c",
+		"PlainForm.c RegulatedForm.c Form.c FormField.c",
 		"onphp"
 	);
 	
