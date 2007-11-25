@@ -24,5 +24,10 @@
 			self::CLASS_ABSTRACT	=> self::CLASS_ABSTRACT,
 			self::CLASS_SPOOKED		=> self::CLASS_SPOOKED
 		);
+		
+		public static function getAnyId()
+		{
+			return self::CLASS_SPOOKED;
+		}
 	}
 ?>

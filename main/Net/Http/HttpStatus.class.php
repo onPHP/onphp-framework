@@ -59,11 +59,6 @@
 		const CODE_507	= 507;
 		const CODE_510	= 510;
 		
-		public static function getAnyId()
-		{
-			return 200;
-		}
-					
 		protected $names = array(
 			self::CODE_100 => 'Continue',
 			self::CODE_101 => 'Switching Protocols',
@@ -107,6 +102,11 @@
 			self::CODE_507 => 'Insufficient Storage',
 			self::CODE_510 => 'Not Extended'
 		);
+		
+		public static function getAnyId()
+		{
+			return 200;
+		}
 		
 		public function toString()
 		{
