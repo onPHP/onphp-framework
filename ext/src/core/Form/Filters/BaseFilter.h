@@ -9,9 +9,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-#ifndef ONPHP_CORE_BASE_FILTE_H
-#define ONPHP_CORE_BASE_FILTE_H
+#ifndef ONPHP_CORE_BASE_FILTER_H
+#define ONPHP_CORE_BASE_FILTER_H
 
 ONPHP_STANDART_CLASS(BaseFilter);
 
-#endif /* ONPHP_CORE_BASE_FILTE_H */
+#endif /* ONPHP_CORE_BASE_FILTER_H */
