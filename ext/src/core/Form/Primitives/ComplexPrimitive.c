@@ -74,6 +74,8 @@ ONPHP_METHOD(ComplexPrimitive, setState)
 	
 	ONPHP_CALL_METHOD_1(single, "setvalue", NULL, value);
 	
+	zval_ptr_dtor(&value);
+	
 	RETURN_THIS;
 }
 
