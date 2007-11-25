@@ -75,6 +75,11 @@
 			return new DataType($id);
 		}
 		
+		public static function getAnyId()
+		{
+			return self::BOOLEAN;
+		}
+		
 		public function getSize()
 		{
 			return $this->size;
