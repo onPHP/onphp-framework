@@ -6,8 +6,4 @@ define SimpleType and ComplexType interfaces (to use setter or dropper in b/o)
 anonymous primitives (split fields and types)
 make uniform lists: PrimitiveList()->of(AnonymousPrimitive)
 
-* sync xsd/dto generation stuff with 0.10 (sherman)
-
-* ClassUtils::dtoObject2xml, ClassUtils::xml2dtoObject from 0.10 (sherman)
-
 * copy OpenId, Math, Crypto from 0.10 incubator (ael)
