@@ -19,8 +19,8 @@
 	**/
 	final class Form extends RegulatedForm
 	{
-		const WRONG 		= 0x0001;
-		const MISSING 		= 0x0002;
+		const WRONG			= 0x0001;
+		const MISSING		= 0x0002;
 		
 		private $errors		= array();
 		private $labels		= array();
@@ -42,7 +42,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * primitive marking
 		**/
@@ -63,16 +63,16 @@
 			
 			return $this;
 		}
-
+		
 		public function markGood($primitiveName)
 		{
 			$prm = $this->get($primitiveName);
-
+			
 			unset($this->errors[$prm->getName()]);
 			
 			return $this;
 		}
-
+		
 		/**
 		 * Set's custom error mark for primitive.
 		**/
@@ -84,7 +84,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * Returns plain list of error's labels
 		**/
@@ -96,7 +96,7 @@
 				if ($label = $this->getTextualErrorFor($name))
 					$list[] = $label;
 			}
-					
+			
 			return $list;
 		}
 		
@@ -129,7 +129,7 @@
 		{
 			return $this->addErrorLabel($primitiveName, Form::MISSING, $label);
 		}
-
+		
 		public function addCustomLabel($primitiveName, $customMark, $label)
 		{
 			return $this->addErrorLabel($primitiveName, $customMark, $label);
@@ -139,7 +139,7 @@
 		{
 			foreach ($this->primitives as $name => $prm)
 				$this->importPrimitive($scope, $prm);
-					
+			
 			return $this;
 		}
 		
@@ -152,7 +152,7 @@
 				)
 					$this->importPrimitive($scope, $prm);
 			}
-
+			
 			return $this;
 		}
 		
@@ -177,7 +177,7 @@
 				|| ($prm instanceof PrimitiveBoolean && !$prm->getValue())
 			)
 				return $this->importPrimitive($scope, $prm);
-
+			
 			return $this;
 		}
 		
@@ -222,9 +222,9 @@
 				throw new MissingElementException(
 					"knows nothing about '{$name}'"
 				);
-
+			
 			$this->labels[$name][$errorType] = $label;
-
+			
 			return $this;
 		}
 	}
