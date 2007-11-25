@@ -19,8 +19,8 @@
 	**/
 	final class Form extends RegulatedForm
 	{
-		const WRONG 		= 0x0001;
-		const MISSING 		= 0x0002;
+		const WRONG			= 0x0001;
+		const MISSING		= 0x0002;
 		
 		private $errors				= array();
 		private $labels				= array();
@@ -104,7 +104,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return Form
 		**/
@@ -121,7 +121,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * Set's custom error mark for primitive.
 		 * 
@@ -148,7 +148,7 @@
 				if ($label = $this->getTextualErrorFor($name))
 					$list[] = $label;
 			}
-					
+			
 			return $list;
 		}
 		
@@ -205,9 +205,9 @@
 				throw new MissingElementException(
 					"knows nothing about '{$name}'"
 				);
-				
+			
 			$this->describedLabels[$name][$errorType] = $description;
-
+			
 			return $this;
 		}
 		
@@ -226,7 +226,7 @@
 		{
 			return $this->addErrorLabel($primitiveName, Form::MISSING, $label);
 		}
-
+		
 		/**
 		 * @return Form
 		**/
@@ -242,7 +242,7 @@
 		{
 			foreach ($this->primitives as $prm)
 				$this->importPrimitive($scope, $prm);
-					
+			
 			return $this;
 		}
 		
@@ -255,7 +255,7 @@
 				if (!$prm->isImported())
 					$this->importPrimitive($scope, $prm);
 			}
-
+			
 			return $this;
 		}
 		
@@ -286,7 +286,7 @@
 			
 			if (!$prm->isImported())
 				return $this->importPrimitive($scope, $prm);
-
+			
 			return $this;
 		}
 		
@@ -404,9 +404,9 @@
 				throw new MissingElementException(
 					"knows nothing about '{$name}'"
 				);
-
+			
 			$this->labels[$name][$errorType] = $label;
-
+			
 			return $this;
 		}
 	}
