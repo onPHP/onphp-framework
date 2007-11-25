@@ -24,5 +24,10 @@
 			self::ONE_TO_MANY		=> 'OneToMany',
 			self::MANY_TO_MANY		=> 'ManyToMany'
 		);
+		
+		public static function getAnyId()
+		{
+			return self::ONE_TO_ONE;
+		}
 	}
 ?>
