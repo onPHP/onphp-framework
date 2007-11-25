@@ -54,6 +54,7 @@
 #include "core/OSQL/DialectString.h"
 #include "core/OSQL/ExtractPart.h"
 #include "core/OSQL/FieldTable.h"
+#include "core/OSQL/FromTable.h"
 #include "core/OSQL/FullText.h"
 #include "core/OSQL/SelectField.h"
 #include "core/OSQL/SQLTableName.h"
@@ -191,6 +192,14 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_SUB_CLASS(FieldTable, Castable);
 	REGISTER_ONPHP_PROPERTY(FieldTable, "field", ZEND_ACC_PROTECTED);
 	ONPHP_CLASS_IS_ABSTRACT(FieldTable);
+	
+	REGISTER_ONPHP_STD_CLASS(FromTable);
+	REGISTER_ONPHP_PROPERTY(FromTable, "table", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_PROPERTY(FromTable, "alias", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_PROPERTY(FromTable, "schema", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_IMPLEMENTS(FromTable, Aliased);
+	REGISTER_ONPHP_IMPLEMENTS(FromTable, SQLTableName);
+	ONPHP_CLASS_IS_FINAL(FromTable);
 	
 	REGISTER_ONPHP_SUB_CLASS(DBValue, Castable);
 	REGISTER_ONPHP_PROPERTY(DBValue, "value", ZEND_ACC_PRIVATE);

@@ -14,6 +14,7 @@
 	 * SQL's "FROM"-member implementation.
 	 * 
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	final class FromTable implements Aliased, SQLTableName
 	{
@@ -36,7 +37,7 @@
 					'you should specify alias, when using '.
 					'SelectQuery or LogicalObject as table'
 				);
-
+			
 			if (is_string($table) && strpos($table, '.') !== false)
 				list($this->schema, $this->table) = explode('.', $table, 2);
 			else
@@ -49,7 +50,7 @@
 		{
 			return $this->alias;
 		}
-
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			if ($this->table instanceof Query)
@@ -74,7 +75,7 @@
 							: null
 					);
 		}
-
+		
 		public function getTable()
 		{
 			return $this->alias ? $this->alias : $this->table;

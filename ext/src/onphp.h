@@ -53,6 +53,11 @@
 		&& instanceof_function(Z_OBJCE_P(object), onphp_ce_ ## class_name TSRMLS_CC) \
 	)
 
+#define ONPHP_FIND_FOREIGN_CLASS(class_name, cep) \
+	if (zend_lookup_class(class_name, strlen(class_name), &cep TSRMLS_CC) == FAILURE) { \
+		ONPHP_THROW(ClassNotFoundException, class_name); \
+	}
+
 #define ONPHP_GET_ARGS(type_spec, ...) \
 	if ( \
 		zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, type_spec, __VA_ARGS__) == FAILURE \
@@ -123,13 +128,16 @@
 #define ONPHP_METHOD(class_name, function_name) \
 	PHP_METHOD(onphp_ ## class_name, function_name)
 
-#define ONPHP_THROW(exception, ...)		\
-	zend_throw_exception_ex(			\
-		onphp_ce_ ## exception,			\
-		0 TSRMLS_CC,					\
-		##__VA_ARGS__					\
-	);									\
+#define ONPHP_THROW(exception, ...)				\
+	ONPHP_THROW_NORET(exception, ##__VA_ARGS__)	\
 	return;
+
+#define ONPHP_THROW_NORET(exception, ...)	\
+	zend_throw_exception_ex(				\
+		onphp_ce_ ## exception,				\
+		0 TSRMLS_CC,						\
+		##__VA_ARGS__						\
+	);
 
 #define RETURN_THIS RETURN_ZVAL(getThis(), 1, 0)
 
@@ -221,16 +229,46 @@
 #define ONPHP_ASSOC_GET(array, key, value)	{	\
 	zval **stored;								\
 												\
-	zend_hash_find(								\
-		Z_ARRVAL_P(array),						\
-		Z_STRVAL_P(key),						\
-		Z_STRLEN_P(key) + 1,					\
-		(void **) &stored						\
-	);											\
+	if (										\
+		zend_hash_find(							\
+			Z_ARRVAL_P(array),					\
+			Z_STRVAL_P(key),					\
+			Z_STRLEN_P(key) + 1,				\
+			(void **) &stored					\
+		)										\
+	) {											\
+		ONPHP_THROW_NORET(						\
+			MissingElementException,			\
+			"%s[%s]", # array, Z_STRVAL_P(key)	\
+		);										\
+	}											\
 												\
 	value = *stored;							\
 												\
 	zval_copy_ctor(value);						\
+}
+
+#define ONPHP_ARRAY_GET(array, index, value) {	\
+	zval **stored;								\
+												\
+	if (										\
+		zend_hash_index_find(					\
+			Z_ARRVAL_P(array),					\
+			index,								\
+			(void **) &stored					\
+		)										\
+		== FAILURE								\
+	) {											\
+		ONPHP_THROW_NORET(						\
+			MissingElementException,			\
+			"%s[%l]", # array, index			\
+		);										\
+	} else {									\
+												\
+	value = *stored;							\
+												\
+	zval_copy_ctor(value);						\
+	}											\
 }
 
 #define ONPHP_PROPERTY_DESTRUCT(property_name) {	\

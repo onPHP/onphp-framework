@@ -11,6 +11,8 @@
 
 #include "onphp.h"
 
+#include "core/Exceptions.h"
+
 #include "core/Form/Primitives/BasePrimitive.h"
 
 ONPHP_METHOD(PrimitiveNumber, import)

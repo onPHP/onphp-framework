@@ -43,6 +43,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/DialectString.c \
 		src/core/OSQL/ExtractPart.c \
 		src/core/OSQL/FieldTable.c \
+		src/core/OSQL/FromTable.c \
 		src/core/OSQL/FullText.c \
 		src/core/OSQL/SelectField.c \
 		src/core/OSQL/SQLTableName.c \

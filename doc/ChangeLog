@@ -30,6 +30,13 @@
 	* main/Utils/TextUtils.class.php: friendlyNumber(): bug with small
 	orders fixed.
 
+2007-11-07	Konstantin V. Arkhipov
+
+	* ext/src/core/OSQL/: FromTable implemented.
+
+	* ext/src/onphp.h: new macroses - ONPHP_FIND_FOREIGN_CLASS and
+	ONPHP_ARRAY_GET.
+
 2007-11-06	Konstantin V. Arkhipov
 
 	* ext/src/core/Form/Filters/: Filtrator, BaseFilter implemented.
