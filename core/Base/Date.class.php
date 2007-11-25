@@ -259,7 +259,7 @@
 		/**
 		 * ISO 8601 date string
 		**/
-		public function toISOString($convertToUtc = true)
+		public function toISOString()
 		{
 			return $this->toString();
 		}
