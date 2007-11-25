@@ -13,7 +13,6 @@
 
 #include "core/Exceptions.h"
 #include "core/DB/ImaginaryDialect.h"
-#include "core/OSQL/QueryIdentification.h"
 
 ONPHP_METHOD(QueryIdentification, getId)
 {
