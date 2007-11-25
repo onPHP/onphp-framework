@@ -90,7 +90,7 @@ ONPHP_METHOD(QuerySkeleton, method_name)								\
 																		\
 	ONPHP_CALL_METHOD_2_NORET(getThis(), "where", NULL, exp, logic);	\
 																		\
-	zval_ptr_dtor(&logic);												\
+	ZVAL_FREE(logic);													\
 																		\
 	if (EG(exception)) {												\
 		return;															\

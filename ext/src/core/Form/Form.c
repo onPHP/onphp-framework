@@ -69,12 +69,8 @@ ONPHP_METHOD(Form, getErrors)
 
 ONPHP_METHOD(Form, dropAllErrors)
 {
-	zval
-		*errors = ONPHP_READ_PROPERTY(getThis(), "errors"),
-		*violated = ONPHP_READ_PROPERTY(getThis(), "violated");
-	
-	zend_hash_clean(Z_ARRVAL_P(errors));
-	zend_hash_clean(Z_ARRVAL_P(violated));
+	zend_hash_clean(Z_ARRVAL_P(ONPHP_READ_PROPERTY(getThis(), "errors")));
+	zend_hash_clean(Z_ARRVAL_P(ONPHP_READ_PROPERTY(getThis(), "violated")));
 	
 	RETURN_THIS;
 }
