@@ -90,7 +90,7 @@
 			return $this;
 		}
 		
-		public function getBoundary($boundary)
+		public function getBoundary()
 		{
 			return $this->boundary;
 		}
