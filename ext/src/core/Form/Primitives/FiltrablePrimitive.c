@@ -40,6 +40,9 @@ ONPHP_METHOD(FiltrablePrimitive, __construct)
 		NULL,
 		name
 	);
+	
+	zval_ptr_dtor(&importFilter);
+	zval_ptr_dtor(&displayFilter);
 }
 
 ONPHP_METHOD(FiltrablePrimitive, __destruct)
@@ -64,7 +67,7 @@ ONPHP_METHOD(FiltrablePrimitive, method_name)								\
 	ONPHP_GET_ARGS("z", &filter);											\
 																			\
 	ONPHP_CALL_METHOD_1(chain, "add", NULL, filter);						\
-																			\
+	zval_ptr_dtor(&filter);													\
 	RETURN_THIS;															\
 }
 
@@ -123,6 +126,8 @@ ONPHP_METHOD(FiltrablePrimitive, selfFilter)
 		*chain = ONPHP_READ_PROPERTY(getThis(), "importFilter");
 	
 	ONPHP_FILTRABLE_PRIMITIVE_APPLY_FILTERS;
+	
+	zval_ptr_dtor(&value);
 	
 	RETURN_THIS;
 }

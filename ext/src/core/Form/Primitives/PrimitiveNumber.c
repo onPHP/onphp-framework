@@ -43,9 +43,7 @@ ONPHP_METHOD(PrimitiveNumber, import)
 	ONPHP_ASSOC_GET(scope, name, value);
 	
 	zend_try {
-		zend_call_method_with_1_params(
-			&getThis(), Z_OBJCE_P(getThis()), NULL, "checknumber", NULL, value
-		);
+		ONPHP_CALL_METHOD_1_NORET(getThis(), "checknumber", NULL, value);
 	} zend_catch {
 		ZVAL_FREE(value);
 		RETURN_FALSE;
@@ -69,10 +67,12 @@ ONPHP_METHOD(PrimitiveNumber, import)
 	) {
 		ONPHP_UPDATE_PROPERTY(getThis(), "value", value);
 		
-		RETURN_TRUE;
+		RETVAL_TRUE;
 	} else {
-		RETURN_FALSE;
+		RETVAL_FALSE;
 	}
+	
+	zval_ptr_dtor(&value);
 }
 
 static ONPHP_ARGINFO_ONE;

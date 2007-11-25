@@ -65,6 +65,8 @@ ONPHP_METHOD(PlainForm, add)
 	
 	ONPHP_ASSOC_SET(primitives, name, prm);
 	
+	zval_ptr_dtor(&name);
+	
 	RETURN_THIS;
 }
 
@@ -118,7 +120,7 @@ ONPHP_METHOD(PlainForm, method_name)									\
 
 #define ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER(function_name)			\
 	ONPHP_CALL_METHOD_0(prm, function_name, &out);						\
-																		\
+	zval_ptr_dtor(&prm);												\
 	RETURN_ZVAL(out, 1, 0);												\
 }
 

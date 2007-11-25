@@ -65,16 +65,25 @@
 		WRONG_PARAM_COUNT; \
 	}
 
+#define ONPHP_CALL_METHOD_0_NORET(object, method_name, out) \
+	zend_call_method_with_0_params(&object, Z_OBJCE_P(object), NULL, method_name, out);
+
 #define ONPHP_CALL_METHOD_0(object, method_name, out) \
-	zend_call_method_with_0_params(&object, Z_OBJCE_P(object), NULL, method_name, out); \
+	ONPHP_CALL_METHOD_0_NORET(object, method_name, out) \
 	if (EG(exception)) return
+
+#define ONPHP_CALL_METHOD_1_NORET(object, method_name, out, first_argument) \
+	zend_call_method_with_1_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument); \
 
 #define ONPHP_CALL_METHOD_1(object, method_name, out, first_argument) \
-	zend_call_method_with_1_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument); \
+	ONPHP_CALL_METHOD_1_NORET(object, method_name, out, first_argument) \
 	if (EG(exception)) return
 
-#define ONPHP_CALL_METHOD_2(object, method_name, out, first_argument, second_argument) \
+#define ONPHP_CALL_METHOD_2_NORET(object, method_name, out, first_argument, second_argument) \
 	zend_call_method_with_2_params(&object, Z_OBJCE_P(object), NULL, method_name, out, first_argument, second_argument); \
+
+#define ONPHP_CALL_METHOD_2(object, method_name, out, first_argument, second_argument) \
+	ONPHP_CALL_METHOD_2_NORET(object, method_name, out, first_argument, second_argument) \
 	if (EG(exception)) return
 
 #define ONPHP_ME(class_name, function_name, arg_info, flags) \
@@ -213,20 +222,38 @@
 #define ONPHP_ASSOC_ISSET(array, key) \
 	zend_hash_exists(Z_ARRVAL_P(array), Z_STRVAL_P(key), Z_STRLEN_P(key) + 1)
 
+#define ONPHP_ARRAY_ISSET(array, index) \
+	zend_hash_index_exists(Z_ARRVAL_P(array), index)
+
 #define ONPHP_ASSOC_UNSET(array, key) \
 	zend_hash_del(Z_ARRVAL_P(array), Z_STRVAL_P(key), Z_STRLEN_P(key) + 1)
 
-#define ONPHP_ASSOC_SET(array, key, value) {	\
-	zval *copy;									\
+#define ONPHP_CLONE_ZVAL(value, copy)			\
 	ALLOC_INIT_ZVAL(copy);						\
 	*copy = *value;								\
-	zval_copy_ctor(copy);						\
+	zval_copy_ctor(copy);
+
+#define ONPHP_ASSOC_SET(array, key, value) {	\
+	zval *copy;									\
+	ONPHP_CLONE_ZVAL(value, copy);				\
 	add_assoc_zval_ex(							\
 		array,									\
 		Z_STRVAL_P(key),						\
 		Z_STRLEN_P(key) + 1,					\
 		copy									\
 	);											\
+}
+
+#define ONPHP_ARRAY_SET(array, index, value) {	\
+	zval *copy;									\
+	ONPHP_CLONE_ZVAL(value, copy);				\
+	add_index_zval(array, index, copy);			\
+}
+
+#define ONPHP_ARRAY_ADD(array, value) {			\
+	zval *copy;									\
+	ONPHP_CLONE_ZVAL(value, copy);				\
+	add_next_index_zval(array, copy);			\
 }
 
 #define ONPHP_ASSOC_GET(array, key, value)	{	\
@@ -266,28 +293,17 @@
 			MissingElementException,			\
 			"%s[%l]", # array, index			\
 		);										\
-	} else {									\
+	}											\
 												\
 	value = *stored;							\
 												\
 	zval_copy_ctor(value);						\
-	}											\
+												\
 }
 
-#define ONPHP_PROPERTY_DESTRUCT(property_name) {	\
-	zval **data;									\
-													\
-	if (											\
-		SUCCESS										\
-		== zend_hash_find(							\
-			HASH_OF(this_ptr),						\
-			# property_name,						\
-			sizeof(# property_name),				\
-			(void **) &data							\
-		)											\
-	) {												\
-		zval_ptr_dtor(data);						\
-	}												\
+#define ONPHP_PROPERTY_DESTRUCT(property) {							\
+	zval *property = ONPHP_READ_PROPERTY(getThis(), # property);	\
+	zval_ptr_dtor(&property);										\
 }
 
 #define ONPHP_ARGINFO_ONE \

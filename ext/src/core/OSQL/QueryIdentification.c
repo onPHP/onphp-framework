@@ -12,6 +12,7 @@
 #include "onphp.h"
 
 #include "core/Exceptions.h"
+
 #include "core/DB/ImaginaryDialect.h"
 
 ONPHP_METHOD(QueryIdentification, getId)
@@ -32,6 +33,7 @@ ONPHP_METHOD(QueryIdentification, getId)
 	ZVAL_FREE(out);
 	
 	if (EG(exception)) {
+		ZVAL_FREE(out);
 		return;
 	}
 	

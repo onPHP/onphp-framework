@@ -13,6 +13,7 @@
 #include "onphp_util.h"
 
 #include "ext/standard/php_string.h"
+#include "ext/standard/php_var.h"
 
 #include "core/Exceptions.h"
 #include "core/OSQL/QuerySkeleton.h"
@@ -33,191 +34,130 @@ ONPHP_METHOD(QuerySkeleton, __destruct)
 
 ONPHP_METHOD(QuerySkeleton, where)
 {
-	zval *where, *whereLogic, *exp, *logic = NULL;
-	zval *copy, *copy2;
+	zval
+		*exp,
+		*logic,
+		*where = ONPHP_READ_PROPERTY(getThis(), "where");
 	
-	ALLOC_INIT_ZVAL(copy);
+	zend_bool where_not_empty = (
+		(Z_TYPE_P(where) == IS_ARRAY)
+		&& (zend_hash_num_elements(Z_ARRVAL_P(where)) > 0)
+	);
 	
 	ONPHP_GET_ARGS("z|z", &exp, &logic);
 	
-	*copy = *exp;
-	zval_copy_ctor(copy);
-	
-	where = ONPHP_READ_PROPERTY(getThis(), "where");
-	
 	if (
-		zend_hash_num_elements(Z_ARRVAL_P(where)) != 0
-		&& Z_TYPE_P(logic) == IS_NULL
+		(ZEND_NUM_ARGS() == 1)
+		&& where_not_empty
 	) {
 		ONPHP_THROW(
 			WrongArgumentException,
 			"you have to specify expression logic"
 		);
 	} else {
-		if (
-			zend_hash_num_elements(Z_ARRVAL_P(where)) == 0
-			&& logic
-			&& Z_TYPE_P(logic) != IS_NULL
-		) {
+		zval *whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
+		
+		if (ZEND_NUM_ARGS() == 1) {
+			ALLOC_INIT_ZVAL(logic);
+		}
+		
+		if (!where_not_empty) {
 			ZVAL_NULL(logic);
 		}
 		
-		whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
+		ONPHP_ARRAY_ADD(whereLogic, logic);
+		ONPHP_ARRAY_ADD(where, exp);
 		
-		if (
-			logic
-			&& (Z_TYPE_P(logic) != IS_NULL)
-		) {
-			ALLOC_INIT_ZVAL(copy2);
-			*copy2 = *logic;
-			zval_copy_ctor(copy2);
-			
-			add_next_index_zval(whereLogic, copy2);
-		} else
-			add_next_index_null(whereLogic);
+		zval_ptr_dtor(&exp);
 		
-		add_next_index_zval(where, copy);
+		if (ZEND_NUM_ARGS() == 1) {
+			ZVAL_FREE(logic);
+		}
 	}
 	
 	RETURN_THIS;
 }
 
-ONPHP_METHOD(QuerySkeleton, andWhere)
-{
-	zval *exp, *logic, *retval;
-	
-	ALLOC_INIT_ZVAL(logic);
-	ZVAL_STRING(logic, "AND", 1);
-	
-	ONPHP_GET_ARGS("z", &exp);
-	
-	zend_call_method_with_2_params(
-		&getThis(),
-		onphp_ce_QuerySkeleton,
-		NULL,
-		"where",
-		&retval,
-		exp,
-		logic
-	);
-	
-	ZVAL_FREE(logic);
-	
-	if (EG(exception)) {
-		return;
-	}
-	
-	RETURN_ZVAL(retval, 1, 0);
+#define ONPHP_QUERY_SKELETON_ADD_WHERE(method_name, word)				\
+ONPHP_METHOD(QuerySkeleton, method_name)								\
+{																		\
+	zval *exp, *logic;													\
+																		\
+	ONPHP_GET_ARGS("z", &exp);											\
+																		\
+	ALLOC_INIT_ZVAL(logic);												\
+	ZVAL_STRINGL(logic, word, strlen(word) + 1, 1);						\
+																		\
+	ONPHP_CALL_METHOD_2_NORET(getThis(), "where", NULL, exp, logic);	\
+																		\
+	if (EG(exception)) {												\
+		return;															\
+	}																	\
+																		\
+	RETURN_THIS;														\
 }
 
-ONPHP_METHOD(QuerySkeleton, orWhere)
-{
-	zval *exp, *logic, *retval;
-	
-	ALLOC_INIT_ZVAL(logic);
-	ZVAL_STRING(logic, "OR", 1);
-	
-	ONPHP_GET_ARGS("z", &exp);
-	
-	zend_call_method_with_2_params(
-		&getThis(),
-		onphp_ce_QuerySkeleton,
-		NULL,
-		"where",
-		&retval,
-		exp,
-		logic
-	);
-	
-	ZVAL_FREE(logic);
-	
-	if (EG(exception)) {
-		return;
-	}
-	
-	RETURN_ZVAL(retval, 1, 0);
-}
+ONPHP_QUERY_SKELETON_ADD_WHERE(andWhere, "AND");
+ONPHP_QUERY_SKELETON_ADD_WHERE(orWhere, "OR");
+
+#undef ONPHP_QUERY_SKELETON_ADD_WHERE
 
 ONPHP_METHOD(QuerySkeleton, toDialectString)
 {
 	zval *where, *whereLogic, *dialect;
-	
-	ONPHP_GET_ARGS("z", &dialect);
+	unsigned int array_count = 0;
 	
 	where = ONPHP_READ_PROPERTY(getThis(), "where");
 	
 	if (
-		Z_TYPE_P(where) != IS_NULL
-		&& zend_hash_num_elements(Z_ARRVAL_P(where)) != 0
+		(Z_TYPE_P(where) == IS_ARRAY)
+		&& (array_count = zend_hash_num_elements(Z_ARRVAL_P(where)))
+		&& (array_count > 0)
 	) {
-		zval *outputLogic, *exp;
-		zval **data;
-		int i, array_count, retval_len;
+		zval *exp, *out, *logic;
+		unsigned int i, retval_len;
 		char *retval;
-		
-		ALLOC_INIT_ZVAL(outputLogic);
-		ZVAL_FALSE(outputLogic);
-		
+		char output_logic = 0;
 		smart_str clause = {0};
+		
+		ONPHP_GET_ARGS("z", &dialect);
+		
+		whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
+		
 		smart_str_appendl(&clause, " WHERE", 6);
 		
-		array_count = zend_hash_num_elements(Z_ARRVAL_P(where));
-		
 		for (i = 0; i < array_count; ++i) {
-			if (
-				zend_hash_index_find(
-					Z_ARRVAL_P(where),
-					i,
-					(void **) &data
-				) == SUCCESS
-			) {
-				zend_call_method_with_1_params(
-					data,
-					Z_OBJCE_PP(data),
-					NULL,
-					"todialectstring",
-					&exp,
-					dialect
-				);
+			ONPHP_ARRAY_GET(where, i, exp);
+			
+			ONPHP_CALL_METHOD_1(exp, "todialectstring", &out, dialect);
+			
+			if (Z_STRLEN_P(out) > 1) {
+				
+				ONPHP_ARRAY_GET(whereLogic, i, logic);
 				
 				if (EG(exception)) {
-					ZVAL_FREE(outputLogic);
+					ZVAL_FREE(logic);
 					return;
 				}
 				
-				whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
-				
-				if (exp) {
-					if (
-						zend_hash_index_find(
-							Z_ARRVAL_P(whereLogic),
-							i,
-							(void **) &data
-						) == SUCCESS
-					) {
-						onphp_append_zval_to_smart_string(&clause, *data);
-						smart_str_appendc(&clause, ' ');
-						onphp_append_zval_to_smart_string(&clause, exp);
-						smart_str_appendc(&clause, ' ');
-						
-						ZVAL_TRUE(outputLogic);
-					}
-					
-					ZVAL_FREE(exp);
+				// can be null
+				if (Z_TYPE_P(logic) == IS_STRING) {
+					onphp_append_zval_to_smart_string(&clause, logic);
 				}
 				
-				if (
-					!Z_BVAL_P(outputLogic)
-					&& (
-						zend_hash_index_find(
-							Z_ARRVAL_P(whereLogic),
-							i + 1,
-							(void **) &data
-						) == SUCCESS
-					)
-				) {
-					add_index_null(whereLogic, i + 1);
-				}
+				smart_str_appendl(&clause, " ", 1);
+				
+				onphp_append_zval_to_smart_string(&clause, out);
+				
+				smart_str_appendl(&clause, " ", 1);
+				
+				output_logic = 1;
+			} else if (
+				(output_logic == 0)
+				&& ((i + 1) <= array_count)
+				&& ONPHP_ARRAY_ISSET(whereLogic, i + 1)
+			) {
+				add_index_null(whereLogic, i + 1);
 			}
 		}
 		
@@ -225,7 +165,6 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 		smart_str_0(&clause);
 		smart_str_free(&clause);
 		retval_len = strlen(retval);
-		zval_ptr_dtor(&outputLogic);
 		
 		RETURN_STRINGL(retval, retval_len, 0);
 	}
