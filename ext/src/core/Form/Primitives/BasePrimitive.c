@@ -112,7 +112,7 @@ ONPHP_METHOD(BasePrimitive, importValue)
 	
 	zval_ptr_dtor(&scope);
 	
-	RETURN_ZVAL(result, 1, 0);
+	RETURN_ZVAL(result, 1, 1);
 }
 
 ONPHP_METHOD(BasePrimitive, import)
