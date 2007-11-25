@@ -25,6 +25,12 @@ ONPHP_METHOD(QuerySkeleton, __construct)
 	ONPHP_CONSTRUCT_ARRAY(whereLogic);
 }
 
+ONPHP_METHOD(QuerySkeleton, __clone)
+{
+	ONPHP_CONSTRUCT_ARRAY(where);
+	ONPHP_CONSTRUCT_ARRAY(whereLogic);
+}
+
 ONPHP_METHOD(QuerySkeleton, where)
 {
 	zval
@@ -58,20 +64,13 @@ ONPHP_METHOD(QuerySkeleton, where)
 			ONPHP_THROW(WrongStateException, NULL);
 		}
 		
-		if (ZEND_NUM_ARGS() == 1) {
-			ALLOC_INIT_ZVAL(logic);
-		}
-		
 		if (!where_not_empty || (ZEND_NUM_ARGS() == 1)) {
-			ZVAL_NULL(logic);
+			add_next_index_null(whereLogic);
+		} else {
+			ONPHP_ARRAY_ADD(whereLogic, logic);
 		}
 		
-		ONPHP_ARRAY_ADD(whereLogic, logic);
 		ONPHP_ARRAY_ADD(where, exp);
-		
-		if (ZEND_NUM_ARGS() == 1) {
-			ZVAL_FREE(logic);
-		}
 	}
 	
 	RETURN_THIS;
@@ -181,6 +180,7 @@ static ONPHP_ARGINFO_DIALECT;
 
 zend_function_entry onphp_funcs_QuerySkeleton[] = {
 	ONPHP_ME(QuerySkeleton, __construct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
+	ONPHP_ME(QuerySkeleton, __clone, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CLONE)
 	ONPHP_ME(QuerySkeleton, where, arginfo_logical_object_and_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(QuerySkeleton, andWhere, arginfo_logical_object, ZEND_ACC_PUBLIC)
 	ONPHP_ME(QuerySkeleton, orWhere, arginfo_logical_object, ZEND_ACC_PUBLIC)

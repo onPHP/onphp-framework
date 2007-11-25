@@ -64,7 +64,7 @@
 #include "core/OSQL/SQLTableName.h"
 #include "core/OSQL/Query.h"
 #include "core/OSQL/QueryIdentification.h"
-// b0rked atm
+// commented out while SelectQuery is unimplemented here
 // #include "core/OSQL/QuerySkeleton.h"
 
 #include "core/Logic/LogicalObject.h"
@@ -269,7 +269,7 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(QueryIdentification, Query);
 	ONPHP_CLASS_IS_ABSTRACT(QueryIdentification);
 	
-	// b0rked atm
+	// commented out while SelectQuery is unimplemented here
 	// REGISTER_ONPHP_SUB_CLASS(QuerySkeleton, QueryIdentification);
 	// REGISTER_ONPHP_PROPERTY(QuerySkeleton, "where", ZEND_ACC_PROTECTED);
 	// REGISTER_ONPHP_PROPERTY(QuerySkeleton, "whereLogic", ZEND_ACC_PROTECTED);
