@@ -13,7 +13,6 @@
 #include "onphp_util.h"
 
 #include "ext/standard/php_string.h"
-#include "ext/standard/php_var.h"
 
 #include "core/Exceptions.h"
 #include "core/OSQL/QuerySkeleton.h"
