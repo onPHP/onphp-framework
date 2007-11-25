@@ -105,7 +105,7 @@
 							continue;
 						else
 							list(
-								$crap, $key, $flags, $bytes
+								, $key, $flags, $bytes
 							) = explode(' ', $header);
 						
 						if (
