@@ -499,16 +499,16 @@
 					$info = new ReflectionClass($name);
 					
 					$this->
-						checkClassType($class, $info);
+						checkClassSanity($class, $info);
 					
 					if ($info->implementsInterface('Prototyped'))
-						$this->checkClassType(
+						$this->checkClassSanity(
 							$class,
 							new ReflectionClass('Proto'.$name)
 						);
 					
 					if ($info->implementsInterface('DAOConnected'))
-						$this->checkClassType(
+						$this->checkClassSanity(
 							$class,
 							new ReflectionClass($name.'DAO')
 						);
@@ -1207,7 +1207,10 @@
 		/**
 		 * @return MetaConfiguration
 		**/
-		private function checkClassType(MetaClass $class, ReflectionClass $info)
+		private function checkClassSanity(
+			MetaClass $class,
+			ReflectionClass $info
+		)
 		{
 			switch ($class->getTypeId()) {
 				case null:
@@ -1231,6 +1234,15 @@
 				default:
 					Assert::isUnreachable();
 					break;
+			}
+			
+			if ($public = $info->getProperties(ReflectionProperty::IS_PUBLIC)) {
+				Assert::isUnreachable(
+					$class->getName()
+					.' contains properties with evil visibility:'
+					."\n"
+					.print_r($public, true)
+				);
 			}
 			
 			return $this;
