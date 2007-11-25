@@ -4,6 +4,8 @@
 
 	* ext/src/core/Base/: Ternary implemented.
 
+	* ext/src/core/OSQL/: OrderBy implemented.
+
 2007-11-21	Konstantin V. Arkhipov
 
 	* main/Utils/FullTextUtils.class.php: ObjectQuery replaced by
