@@ -108,8 +108,6 @@ ONPHP_METHOD(BasePrimitive, importValue)
 	
 	name = ONPHP_READ_PROPERTY(getThis(), "name");
 	
-	ZVAL_ADDREF(value);
-	
 	ONPHP_ASSOC_SET(scope, Z_STRVAL_P(name), value);
 	
 	ONPHP_CALL_METHOD_1(getThis(), "import", &result, scope);

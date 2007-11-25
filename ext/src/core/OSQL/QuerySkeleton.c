@@ -67,10 +67,7 @@ ONPHP_METHOD(QuerySkeleton, where)
 			ZVAL_NULL(logic);
 		}
 		
-		ZVAL_ADDREF(logic);
 		ONPHP_ARRAY_ADD(whereLogic, logic);
-		
-		ZVAL_ADDREF(exp);
 		ONPHP_ARRAY_ADD(where, exp);
 		
 		if (ZEND_NUM_ARGS() == 1) {

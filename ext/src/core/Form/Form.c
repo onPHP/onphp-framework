@@ -235,8 +235,6 @@ ONPHP_METHOD(Form, getTextualErrors)
 			return;
 		}
 		
-		ZVAL_ADDREF(label);
-		
 		ONPHP_ARRAY_ADD(list, label);
 		
 		zval_ptr_dtor(&label);
@@ -613,8 +611,6 @@ ONPHP_METHOD(Form, export)
 				zval_ptr_dtor(&value);
 				return;
 			}
-			
-			ZVAL_ADDREF(value);
 			
 			ONPHP_ASSOC_SET(list, Z_STRVAL_P(name), value);
 			

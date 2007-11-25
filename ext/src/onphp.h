@@ -341,8 +341,19 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 #define ONPHP_ASSOC_UNSET(array, key) \
 	zend_hash_del(Z_ARRVAL_P(array), key, strlen(key) + 1)
 
-#define ONPHP_ASSOC_SET(array, key, value) {	\
-	add_assoc_zval(array, key, value);			\
+#define ONPHP_ASSOC_SET(array, index, value) {									\
+	if (Z_TYPE_P(value) == IS_NULL) {											\
+		add_assoc_null(array, index);											\
+	} else if (Z_TYPE_P(value) == IS_STRING) {									\
+		add_assoc_string(array, index, Z_STRVAL_P(value), 1);					\
+	} else if (Z_TYPE_P(value) == IS_LONG) {									\
+		add_assoc_long(array, index, Z_LVAL_P(value));							\
+	} else if (Z_TYPE_P(value) == IS_BOOL) {									\
+		add_assoc_bool(array, index, zval_is_true(value));						\
+	} else {																	\
+		ZVAL_ADDREF(value);														\
+		add_assoc_zval(array, index, value);									\
+	}																			\
 }
 
 #define ONPHP_ASSOC_SET_LONG(array, key, value) \
@@ -351,20 +362,19 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 #define ONPHP_ASSOC_SET_BOOL(array, key, value) \
 	add_assoc_bool(array, key, value);
 
-#define ONPHP_ARRAY_SET(array, index, value) {	\
-	if (Z_TYPE_P(value) == IS_NULL) {			\
-		add_index_null(array);					\
-	} else {									\
-		add_index_zval(array, index, value);	\
-	}											\
-}
-
-#define ONPHP_ARRAY_ADD(array, value) {		\
-	if (Z_TYPE_P(value) == IS_NULL) {		\
-		add_next_index_null(array);			\
-	} else {								\
-		add_next_index_zval(array, value);	\
-	}										\
+#define ONPHP_ARRAY_ADD(array, value) {											\
+	if (Z_TYPE_P(value) == IS_NULL) {											\
+		add_next_index_null(array);												\
+	} else if (Z_TYPE_P(value) == IS_STRING) {									\
+		add_next_index_stringl(array, Z_STRVAL_P(value), Z_STRLEN_P(value), 1);	\
+	} else if (Z_TYPE_P(value) == IS_LONG) {									\
+		add_next_index_long(array, Z_LVAL_P(value));							\
+	} else if (Z_TYPE_P(value) == IS_BOOL) {									\
+		add_next_index_bool(array, zval_is_true(value));						\
+	} else {																	\
+		ZVAL_ADDREF(value);														\
+		add_next_index_zval(array, value);										\
+	}																			\
 }
 
 #define ONPHP_ASSOC_GET(array, key, value)	{	\

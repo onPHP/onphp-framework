@@ -32,8 +32,6 @@ ONPHP_METHOD(Joiner, from)
 	
 	fromList = ONPHP_READ_PROPERTY(getThis(), "from");
 	
-	ZVAL_ADDREF(from);
-	
 	ONPHP_ARRAY_ADD(fromList, from);
 	
 	RETURN_THIS;
@@ -69,8 +67,6 @@ ONPHP_METHOD(Joiner, method_name)							\
 		*tables = ONPHP_READ_PROPERTY(getThis(), "tables");	\
 															\
 	ONPHP_GET_ARGS("o", &join);								\
-															\
-	ZVAL_ADDREF(join);										\
 															\
 	ONPHP_ARRAY_ADD(from, join);							\
 															\

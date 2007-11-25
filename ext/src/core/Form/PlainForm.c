@@ -64,8 +64,6 @@ ONPHP_METHOD(PlainForm, add)
 		ONPHP_THROW(WrongArgumentException, "i am already exists!");
 	}
 	
-	ZVAL_ADDREF(prm);
-	
 	ONPHP_ASSOC_SET(primitives, Z_STRVAL_P(name), prm);
 	
 	zval_ptr_dtor(&name);

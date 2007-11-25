@@ -41,8 +41,6 @@ ONPHP_METHOD(RegulatedForm, addRule)
 	
 	ONPHP_GET_ARGS("sO", &name, &length, &rule, onphp_ce_LogicalObject);
 	
-	ZVAL_ADDREF(rule);
-	
 	ONPHP_ASSOC_SET(rules, name, rule);
 	
 	RETURN_THIS;
