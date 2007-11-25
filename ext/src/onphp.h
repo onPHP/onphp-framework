@@ -306,9 +306,13 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 	add_index_zval(array, index, value);		\
 }
 
-#define ONPHP_ARRAY_ADD(array, value) {			\
-	add_next_index_zval(array, value);			\
-	ZVAL_ADDREF(value);							\
+#define ONPHP_ARRAY_ADD(array, value) {		\
+	if (Z_TYPE_P(value) == IS_NULL) {		\
+		add_next_index_null(array);			\
+	} else {								\
+		add_next_index_zval(array, value);	\
+		ZVAL_ADDREF(value);					\
+	}										\
 }
 
 #define ONPHP_ASSOC_GET(array, key, value)	{	\
@@ -354,7 +358,9 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 
 #define ONPHP_PROPERTY_DESTRUCT(property) {							\
 	zval *property = ONPHP_READ_PROPERTY(getThis(), # property);	\
-	zval_ptr_dtor(&property);										\
+	if (property && (Z_TYPE_P(property) != IS_NULL)) {				\
+		zval_ptr_dtor(&property);									\
+	}																\
 }
 
 #define ONPHP_ARGINFO_ONE \

@@ -38,6 +38,10 @@ ONPHP_METHOD(QuerySkeleton, where)
 		*logic,
 		*where = ONPHP_READ_PROPERTY(getThis(), "where");
 	
+	if (Z_TYPE_P(where) != IS_ARRAY) {
+		ONPHP_THROW(WrongStateException, NULL);
+	}
+	
 	zend_bool where_not_empty = (
 		(Z_TYPE_P(where) == IS_ARRAY)
 		&& (zend_hash_num_elements(Z_ARRVAL_P(where)) > 0)
@@ -64,12 +68,12 @@ ONPHP_METHOD(QuerySkeleton, where)
 			ZVAL_NULL(logic);
 		}
 		
+		if (Z_TYPE_P(whereLogic) != IS_ARRAY) {
+			ONPHP_THROW(WrongStateException, NULL);
+		}
+		
 		ONPHP_ARRAY_ADD(whereLogic, logic);
 		ONPHP_ARRAY_ADD(where, exp);
-		
-		if (ZEND_NUM_ARGS() == 1) {
-			zval_ptr_dtor(&logic);
-		}
 	}
 	
 	RETURN_THIS;
@@ -83,7 +87,7 @@ ONPHP_METHOD(QuerySkeleton, method_name)								\
 	ONPHP_GET_ARGS("z", &exp);											\
 																		\
 	ALLOC_INIT_ZVAL(logic);												\
-	ZVAL_STRINGL(logic, word, strlen(word) + 1, 1);						\
+	ZVAL_STRINGL(logic, word, strlen(word), 1);							\
 																		\
 	ONPHP_CALL_METHOD_2_NORET(getThis(), "where", NULL, exp, logic);	\
 																		\
