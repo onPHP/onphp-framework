@@ -14,13 +14,14 @@
 
 #include "core/DB/Dialect.h"
 #include "core/OSQL/DBField.h"
+#include "core/OSQL/DialectString.h"
 #include "core/OSQL/SelectField.h"
 
 ONPHP_METHOD(SelectField, create)
 {
 	zval *field, *alias, *object;
 	
-	ONPHP_GET_ARGS("zz", &field, &alias);
+	ONPHP_GET_ARGS("Oz", &field, onphp_ce_DialectString, &alias);
 	
 	ONPHP_MAKE_OBJECT(SelectField, object);
 	
@@ -38,7 +39,7 @@ ONPHP_METHOD(SelectField, __construct)
 {
 	zval *field, *alias;
 	
-	ONPHP_GET_ARGS("zz", &field, &alias);
+	ONPHP_GET_ARGS("Oz", &field, onphp_ce_DialectString, &alias);
 	
 	ONPHP_UPDATE_PROPERTY(getThis(), "alias", alias);
 	
@@ -68,7 +69,7 @@ ONPHP_METHOD(SelectField, toDialectString)
 {
 	zval *dialect, *out, *alias;
 	
-	ONPHP_GET_ARGS("z", &dialect);
+	ONPHP_GET_ARGS("O", &dialect, onphp_ce_Dialect);
 	
 	ONPHP_CALL_PARENT_1(getThis(), "todialectstring", &out, dialect);
 	

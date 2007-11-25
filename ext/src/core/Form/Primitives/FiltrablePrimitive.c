@@ -64,7 +64,7 @@ ONPHP_METHOD(FiltrablePrimitive, method_name)								\
 		*filter,															\
 		*chain = ONPHP_READ_PROPERTY(getThis(), # property_name);			\
 																			\
-	ONPHP_GET_ARGS("z", &filter);											\
+	ONPHP_GET_ARGS("O", &filter, onphp_ce_Filtrator);						\
 																			\
 	ONPHP_CALL_METHOD_1(chain, "add", NULL, filter);						\
 																			\

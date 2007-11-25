@@ -24,7 +24,7 @@ ONPHP_METHOD(DropTableQuery, __construct)
 	
 	ONPHP_GET_ARGS("s|b", &name, &length, &cascade);
 	
-	ONPHP_UPDATE_PROPERTY_STRING(getThis(), "name", name);
+	ONPHP_UPDATE_PROPERTY_STRINGL(getThis(), "name", name, length);
 	
 	if (
 		(ZEND_NUM_ARGS() == 2)
@@ -44,7 +44,7 @@ ONPHP_METHOD(DropTableQuery, toDialectString)
 	zval *dialect, *name, *cascade, *out;
 	smart_str string = {0};
 	
-	ONPHP_GET_ARGS("z", &dialect);
+	ONPHP_GET_ARGS("O", &dialect, onphp_ce_Dialect);
 	
 	name = ONPHP_READ_PROPERTY(getThis(), "name");
 	cascade = ONPHP_READ_PROPERTY(getThis(), "cascade");

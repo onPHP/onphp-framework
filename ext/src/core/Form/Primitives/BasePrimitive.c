@@ -122,7 +122,7 @@ ONPHP_METHOD(BasePrimitive, import)
 {
 	zval *scope, *name, **raw;
 	
-	ONPHP_GET_ARGS("z", &scope);
+	ONPHP_GET_ARGS("a", &scope);
 	
 	if (
 		(Z_TYPE_P(scope) == IS_ARRAY)

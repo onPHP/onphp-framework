@@ -47,7 +47,7 @@ ONPHP_METHOD(QuerySkeleton, where)
 		&& (zend_hash_num_elements(Z_ARRVAL_P(where)) > 0)
 	);
 	
-	ONPHP_GET_ARGS("z|z", &exp, &logic);
+	ONPHP_GET_ARGS("O|z", &exp, onphp_ce_LogicalObject, &logic);
 	
 	if (
 		(ZEND_NUM_ARGS() == 1)
@@ -84,7 +84,7 @@ ONPHP_METHOD(QuerySkeleton, method_name)								\
 {																		\
 	zval *exp, *logic;													\
 																		\
-	ONPHP_GET_ARGS("z", &exp);											\
+	ONPHP_GET_ARGS("O", &exp, onphp_ce_LogicalObject);					\
 																		\
 	ALLOC_INIT_ZVAL(logic);												\
 	ZVAL_STRINGL(logic, word, strlen(word), 1);							\
@@ -123,7 +123,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 		char output_logic = 0;
 		smart_str clause = {0};
 		
-		ONPHP_GET_ARGS("z", &dialect);
+		ONPHP_GET_ARGS("O", &dialect, onphp_ce_Dialect);
 		
 		whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 		

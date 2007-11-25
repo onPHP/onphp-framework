@@ -40,7 +40,7 @@ ONPHP_METHOD(GroupBy, toMapped)
 {
 	zval *object, *dao, *query, *atom, *field;
 	
-	ONPHP_GET_ARGS("zz", &dao, &query);
+	ONPHP_GET_ARGS("oo", &dao, &query);
 	
 	field = ONPHP_READ_PROPERTY(getThis(), "field");
 	
@@ -65,7 +65,7 @@ ONPHP_METHOD(GroupBy, toDialectString)
 		*field = ONPHP_READ_PROPERTY(getThis(), "field");
 	zend_class_entry **cep;
 	
-	ONPHP_GET_ARGS("z", &dialect);
+	ONPHP_GET_ARGS("O", &dialect, onphp_ce_Dialect);
 	
 	ONPHP_FIND_FOREIGN_CLASS("SelectQuery", cep);
 	

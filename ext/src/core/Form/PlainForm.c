@@ -60,7 +60,7 @@ ONPHP_METHOD(PlainForm, add)
 		*prm,
 		*primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
 	
-	ONPHP_GET_ARGS("z", &prm);
+	ONPHP_GET_ARGS("O", &prm, onphp_ce_BasePrimitive);
 	
 	ONPHP_CALL_METHOD_0(prm, "getname", &name);
 	

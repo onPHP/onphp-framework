@@ -48,7 +48,7 @@ ONPHP_METHOD(FormField, toValue)
 {
 	zval *form, *name, *out;
 	
-	ONPHP_GET_ARGS("o", &form);
+	ONPHP_GET_ARGS("O", &form, onphp_ce_Form);
 	
 	name = ONPHP_READ_PROPERTY(getThis(), "primitiveName");
 	

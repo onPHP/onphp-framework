@@ -12,6 +12,8 @@
 #include "onphp.h"
 #include "onphp_util.h"
 
+#include "core/Base/NamedObject.h"
+
 ONPHP_GETTER(NamedObject, getName, name);
 ONPHP_SETTER(NamedObject, setName, name);
 
@@ -40,7 +42,11 @@ ONPHP_METHOD(NamedObject, compareNames)
 	zval *left, *right;
 	int result;
 	
-	ONPHP_GET_ARGS("zz", &first, &second);
+	ONPHP_GET_ARGS(
+		"OO",
+		&first, onphp_ce_NamedObject,
+		&second, onphp_ce_NamedObject
+	);
 	
 	ONPHP_CALL_METHOD_0(first, "getname", &left);
 	ONPHP_CALL_METHOD_0(second, "getname", &right);

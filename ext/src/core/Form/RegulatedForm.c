@@ -45,7 +45,7 @@ ONPHP_METHOD(RegulatedForm, addRule)
 		*rule,
 		*rules = ONPHP_READ_PROPERTY(getThis(), "rules");
 	
-	ONPHP_GET_ARGS("sz", &name, &length, &rule);
+	ONPHP_GET_ARGS("sO", &name, &length, &rule, onphp_ce_LogicalObject);
 	
 	ONPHP_ASSOC_SET(rules, name, rule);
 	

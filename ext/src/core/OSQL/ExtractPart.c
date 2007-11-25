@@ -107,8 +107,8 @@ ONPHP_METHOD(ExtractPart, toMapped)
 {
 	zval *dao, *query, *what, *from, *atom;
 	
-	ONPHP_GET_ARGS("zz", &dao, &query);
-	
+	ONPHP_GET_ARGS("oo", &dao, &query);
+		
 	what = ONPHP_READ_PROPERTY(getThis(), "what");
 	from = ONPHP_READ_PROPERTY(getThis(), "from");
 	
@@ -130,7 +130,7 @@ ONPHP_METHOD(ExtractPart, toDialectString)
 	zval *dialect, *what, *from, *whatString, *fromString;
 	smart_str string = {0};
 	
-	ONPHP_GET_ARGS("z", &dialect);
+	ONPHP_GET_ARGS("O", &dialect, onphp_ce_Dialect);
 	
 	what = ONPHP_READ_PROPERTY(getThis(), "what");
 	from = ONPHP_READ_PROPERTY(getThis(), "from");

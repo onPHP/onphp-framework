@@ -19,7 +19,7 @@ ONPHP_METHOD(PrimitiveNumber, import)
 {
 	zval *scope, *result, *name, *value, *min, *max, *out;
 	
-	ONPHP_GET_ARGS("z", &scope);
+	ONPHP_GET_ARGS("a", &scope);
 	
 	zend_call_method_with_1_params(
 		&getThis(),

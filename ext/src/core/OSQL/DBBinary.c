@@ -38,7 +38,7 @@ ONPHP_METHOD(DBBinary, toDialectString)
 	zval *dialect, *value, *quoted;
 	smart_str string = {0};
 	
-	ONPHP_GET_ARGS("z", &dialect);
+	ONPHP_GET_ARGS("O", &dialect, onphp_ce_Dialect);
 	
 	ONPHP_CALL_METHOD_0(getThis(), "getvalue", &value);
 	

@@ -43,7 +43,7 @@ ONPHP_METHOD(FullText, __construct)
 {
 	zval *field, *words, *logic;
 	
-	ONPHP_GET_ARGS("zzz", &field, &words, &logic);
+	ONPHP_GET_ARGS("zaz", &field, &words, &logic);
 	
 	onphp_full_text_sanity_check(field, words TSRMLS_CC);
 	
@@ -58,7 +58,7 @@ ONPHP_METHOD(FullText, toMapped)
 {
 	zval *self, *field, *words, *logic, *atom, *dao, *query;
 	
-	ONPHP_GET_ARGS("zz", &dao, &query);
+	ONPHP_GET_ARGS("oo", &dao, &query);
 	
 	ALLOC_INIT_ZVAL(self);
 	self->value.obj = onphp_empty_object_new(Z_OBJCE_P(getThis()) TSRMLS_CC);

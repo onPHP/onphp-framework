@@ -11,6 +11,8 @@
 
 #include "onphp.h"
 
+#include "core/Base/Enumeration.h"
+
 #include "core/Exceptions.h"
 
 ONPHP_METHOD(Enumeration, __construct)
@@ -175,7 +177,7 @@ ONPHP_METHOD(Enumeration, getList)
 {
 	zval *enm, *out;
 	
-	ONPHP_GET_ARGS("z", &enm);
+	ONPHP_GET_ARGS("O", &enm, onphp_ce_Enumeration);
 	
 	ONPHP_CALL_METHOD_0(enm, "getobjectlist", &out);
 	

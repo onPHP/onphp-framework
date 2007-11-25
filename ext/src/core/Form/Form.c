@@ -398,7 +398,7 @@ ONPHP_METHOD(Form, import)
 		*scope,
 		*primitives;
 	
-	ONPHP_GET_ARGS("z", &scope);
+	ONPHP_GET_ARGS("a", &scope);
 	
 	primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
 	
@@ -416,7 +416,7 @@ ONPHP_METHOD(Form, importMore)
 		*scope,
 		*primitives;
 	
-	ONPHP_GET_ARGS("z", &scope);
+	ONPHP_GET_ARGS("a", &scope);
 	
 	primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
 	
@@ -456,7 +456,7 @@ ONPHP_METHOD(Form, importOne)
 		*scope,
 		*primitive;
 	
-	ONPHP_GET_ARGS("zz", &name, &scope);
+	ONPHP_GET_ARGS("za", &name, &scope);
 	
 	ONPHP_CALL_METHOD_1(getThis(), "get", &primitive, name);
 	
@@ -524,7 +524,7 @@ ONPHP_METHOD(Form, importOneMore)
 		*imported,
 		*primitive;
 	
-	ONPHP_GET_ARGS("zz", &name, &scope);
+	ONPHP_GET_ARGS("za", &name, &scope);
 	
 	ONPHP_CALL_METHOD_1(getThis(), "get", &primitive, name);
 	
@@ -685,7 +685,7 @@ ONPHP_METHOD(Form, importPrimitive)
 		*scope,
 		*importFiltering = ONPHP_READ_PROPERTY(getThis(), "importFiltering");
 	
-	ONPHP_GET_ARGS("zz", &scope, &prm);
+	ONPHP_GET_ARGS("aO", &scope, &prm, onphp_ce_BasePrimitive);
 	
 	if (!zval_is_true(importFiltering)) {
 		if (ONPHP_INSTANCEOF(prm, FiltrablePrimitive)) {
@@ -790,7 +790,7 @@ ONPHP_METHOD(Form, checkImportResult)
 		*errors,
 		*result;
 	
-	ONPHP_GET_ARGS("zz", &prm, &result);
+	ONPHP_GET_ARGS("Oz", &prm, onphp_ce_BasePrimitive, &result);
 	
 	ONPHP_CALL_METHOD_0(prm, "getname", &name);
 	

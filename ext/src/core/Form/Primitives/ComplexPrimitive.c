@@ -59,7 +59,7 @@ ONPHP_METHOD(ComplexPrimitive, setState)
 {
 	zval *ternary, *single, *value;
 	
-	ONPHP_GET_ARGS("z", &ternary);
+	ONPHP_GET_ARGS("o", &ternary);
 	
 	ONPHP_CALL_METHOD_0(ternary, "getvalue", &value);
 	
@@ -92,7 +92,7 @@ ONPHP_METHOD(ComplexPrimitive, import)
 {
 	zval *scope, *result, *single;
 	
-	ONPHP_GET_ARGS("z", &scope);
+	ONPHP_GET_ARGS("a", &scope);
 	
 	zend_call_method_with_1_params(
 		&getThis(),

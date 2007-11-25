@@ -111,7 +111,7 @@ ONPHP_METHOD(FromTable, toDialectString)
 	
 	smart_str string = {0};
 	
-	ONPHP_GET_ARGS("z", &dialect);
+	ONPHP_GET_ARGS("O", &dialect, onphp_ce_Dialect);
 	
 	if (ONPHP_INSTANCEOF(table, DialectString)) {
 		if (is_query) {

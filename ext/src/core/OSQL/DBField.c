@@ -55,7 +55,7 @@ ONPHP_METHOD(DBField, toDialectString)
 	smart_str string = {0};
 	zval *table, *field, *dialect, *cast, *quoted;
 	
-	ONPHP_GET_ARGS("z", &dialect);
+	ONPHP_GET_ARGS("O", &dialect, onphp_ce_Dialect);
 	
 	table = ONPHP_READ_PROPERTY(getThis(), "table");
 	field = ONPHP_READ_PROPERTY(getThis(), "field");

@@ -42,7 +42,7 @@ ONPHP_METHOD(DBValue, toDialectString)
 {
 	zval *dialect, *cast, *value, *out, *result;
 	
-	ONPHP_GET_ARGS("z", &dialect);
+	ONPHP_GET_ARGS("O", &dialect, onphp_ce_Dialect);
 	
 	value = ONPHP_READ_PROPERTY(getThis(), "value");
 	
