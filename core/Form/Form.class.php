@@ -19,8 +19,8 @@
 	**/
 	final class Form extends RegulatedForm
 	{
-		const WRONG 		= 0x0001;
-		const MISSING 		= 0x0002;
+		const WRONG			= 0x0001;
+		const MISSING		= 0x0002;
 		
 		private $errors		= array();
 		private $labels		= array();
@@ -42,15 +42,15 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * primitive marking
 		**/
-
+		
 		public function markMissing($primitiveName)
 		{
 			$prm = $this->get($primitiveName);
-
+			
 			$this->errors[$prm->getName()] = Form::MISSING;
 			
 			return $this;
@@ -67,16 +67,16 @@
 			
 			return $this;
 		}
-
+		
 		public function markGood($primitiveName)
 		{
 			$prm = $this->get($primitiveName);
-
+			
 			unset($this->errors[$prm->getName()]);
 			
 			return $this;
 		}
-
+		
 		/**
 		 * Bogus spelling of method's name below.
 		 * 
@@ -99,7 +99,7 @@
 					$list[] = $error[$this->violated[$name]];
 				elseif (isset($this->errors[$name], $error[$this->errors[$name]]))
 					$list[] = $error[$this->errors[$name]];
-					
+			
 			return $list;
 		}
 		
@@ -127,7 +127,7 @@
 		{
 			foreach ($this->primitives as $name => $prm)
 				$this->importPrimitive($scope, $prm);
-					
+			
 			return $this;
 		}
 		
@@ -139,7 +139,7 @@
 					($prm instanceof PrimitiveBoolean && !$prm->getValue())
 				)
 					$this->importPrimitive($scope, $prm);
-
+			
 			return $this;
 		}
 		
@@ -159,7 +159,7 @@
 				|| ($prm instanceof PrimitiveBoolean && !$prm->getValue())
 			)
 				$this->importPrimitive($scope, $prm);
-
+			
 			return $this;
 		}
 		
@@ -200,9 +200,9 @@
 				throw new ObjectNotFoundException(
 					"knows nothing about '{$name}'"
 				);
-
+			
 			$this->labels[$name][$errorType] = $label;
-
+			
 			return $this;
 		}
 	}
