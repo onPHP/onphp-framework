@@ -47,6 +47,7 @@
 			$schemePattern = '([^:/?#]+):';
 			$authorityPattern = '(//([^/?#]*))';
 			$restPattern = '([^?#]*)(\?([^#]*))?(#(.*))?';
+			$matches = array();
 			
 			if (
 				$guessClass
@@ -307,6 +308,7 @@
 		public function setAuthority($authority)
 		{
 			$authorityPattern = '~^(([^@]*)@)?((\[.+\])|([^:]*))(:(.*))?$~';
+			$authorityMatches = array();
 			
 			if (
 				!preg_match(
