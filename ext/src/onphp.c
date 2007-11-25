@@ -9,6 +9,10 @@
  ***************************************************************************/
 /* $Id$ */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "php.h"
 #include "SAPI.h"
 #include "zend_ini.h" // zend_ini_long
@@ -148,10 +152,12 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 
 #include "onphp_logo.c"
 
+static unsigned char onphp_enable_logo = 0;
+
 PHP_MINFO_FUNCTION(onphp)
 {
 	php_info_print_table_start();
-	if (ONPHP_PR) {
+	if (onphp_enable_logo) {
 		PUTS("<tr><td rowspan=\"6\" width=\"202\" style=\"vertical-align: middle;\">");
 		PUTS("<a href=\"http://onphp.org/\"><img border=\"0\" src=\"");
 		if (SG(request_info).request_uri) {
@@ -173,7 +179,13 @@ PHP_MINFO_FUNCTION(onphp)
 
 PHP_MINIT_FUNCTION(onphp)
 {
-	if (ONPHP_PR) {
+	onphp_enable_logo = (
+		!sapi_module.phpinfo_as_text
+		&& zend_ini_long("expose_php", sizeof("expose_php"), 0)
+		&& !EG(in_execution)
+	);
+	
+	if (onphp_enable_logo) {
 		php_register_info_logo(
 			ONPHP_LOGO_GUID,
 			"image/png",
@@ -185,6 +197,13 @@ PHP_MINIT_FUNCTION(onphp)
 	return
 		PHP_MINIT(onphp_core)(INIT_FUNC_ARGS_PASSTHRU)
 		& PHP_MINIT(onphp_main)(INIT_FUNC_ARGS_PASSTHRU);
+}
+
+PHP_MSHUTDOWN_FUNCTION(onphp)
+{
+	php_unregister_info_logo(ONPHP_LOGO_GUID);
+	
+	return SUCCESS;
 }
 
 PHP_RINIT_FUNCTION(onphp)
@@ -209,7 +228,7 @@ zend_module_entry onphp_module_entry = {
 	ONPHP_MODULE_NAME,
 	NULL,
 	PHP_MINIT(onphp),
-	NULL,
+	PHP_MSHUTDOWN(onphp),
 	PHP_RINIT(onphp),
 	PHP_RSHUTDOWN(onphp),
 	PHP_MINFO(onphp),
@@ -217,4 +236,6 @@ zend_module_entry onphp_module_entry = {
 	STANDARD_MODULE_PROPERTIES
 };
 
+#ifdef COMPILE_DL_ONPHP
 ZEND_GET_MODULE(onphp);
+#endif

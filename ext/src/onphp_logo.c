@@ -13,11 +13,6 @@
 
 #define ONPHP_LOGO_GUID "PHPE1C85E90-600D-C0DE-DADA-B622A1EF5492"
 
-#define ONPHP_PR ( \
-	!sapi_module.phpinfo_as_text \
-	&& zend_ini_long("expose_php", sizeof("expose_php"), 0) \
-)
-
 #define ONPHP_EXCEPTIONS_LIST "\
 BaseException, \
 BusinessLogicException, \
