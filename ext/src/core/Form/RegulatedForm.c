@@ -47,12 +47,7 @@ ONPHP_METHOD(RegulatedForm, addRule)
 	ONPHP_GET_ARGS("zz", &name, &rule);
 	
 	if (Z_TYPE_P(name) != IS_STRING) {
-		zend_throw_exception_ex(
-			onphp_ce_WrongArgumentException,
-			0 TSRMLS_CC,
-			NULL
-		);
-		return;
+		ONPHP_THROW(WrongArgumentException, NULL);
 	}
 	
 	ONPHP_ASSOC_SET(rules, name, rule);
@@ -67,12 +62,7 @@ ONPHP_METHOD(RegulatedForm, dropRuleByName)
 	ONPHP_GET_ARGS("z", &name);
 	
 	if (!ONPHP_ASSOC_ISSET(rules, name)) {
-		zend_throw_exception_ex(
-			onphp_ce_MissingElementException,
-			0 TSRMLS_CC,
-			NULL
-		);
-		return;
+		ONPHP_THROW(MissingElementException, NULL);
 	}
 	
 	ONPHP_ASSOC_UNSET(rules, name);
@@ -106,12 +96,7 @@ ONPHP_METHOD(RegulatedForm, checkRules)
 				);
 			
 			if (type != HASH_KEY_IS_STRING) {
-				zend_throw_exception_ex(
-					onphp_ce_WrongStateException,
-					0 TSRMLS_CC,
-					"weird key found"
-				);
-				return;
+				ONPHP_THROW(WrongStateException, "weird key found");
 			}
 			
 			// Form::WRONG == 1

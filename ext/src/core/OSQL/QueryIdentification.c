@@ -75,11 +75,7 @@ ONPHP_METHOD(QueryIdentification, toString)
 
 ONPHP_METHOD(QueryIdentification, setId)
 {
-	zend_throw_exception_ex(
-		onphp_ce_UnsupportedMethodException,
-		0 TSRMLS_CC,
-		NULL
-	);
+	ONPHP_THROW(UnsupportedMethodException, NULL);
 }
 
 static ONPHP_ARGINFO_ONE;

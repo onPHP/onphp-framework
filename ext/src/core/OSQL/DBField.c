@@ -115,12 +115,10 @@ ONPHP_METHOD(DBField, setTable)
 	table = ONPHP_READ_PROPERTY(getThis(), "table");
 	
 	if (Z_TYPE_P(table) != IS_NULL) {
-		zend_throw_exception_ex(
-			onphp_ce_WrongStateException,
-			0 TSRMLS_CC,
+		ONPHP_THROW(
+			WrongStateException,
 			"you should not override setted table"
 		);
-		return;
 	}
 	
 	ONPHP_GET_ARGS("z", &table);

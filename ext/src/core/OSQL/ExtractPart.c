@@ -58,13 +58,7 @@ ONPHP_METHOD(ExtractPart, __construct)
 				|| ONPHP_INSTANCEOF(from, DBField)
 			)
 		) {
-			zend_throw_exception_ex(
-				onphp_ce_WrongArgumentException,
-				0 TSRMLS_CC,
-				NULL
-			);
-			
-			return;
+			ONPHP_THROW(WrongArgumentException, NULL);
 		}
 	}
 	
@@ -90,12 +84,7 @@ ONPHP_METHOD(ExtractPart, __construct)
 		zend_lookup_class("DatePart", strlen("DatePart"), &cep TSRMLS_CC)
 		== FAILURE
 	) {
-		zend_throw_exception_ex(
-			onphp_ce_ClassNotFoundException,
-			0 TSRMLS_CC,
-			"DatePart"
-		);
-		return;
+		ONPHP_THROW(ClassNotFoundException, "DatePart");
 	}
 	
 	if (

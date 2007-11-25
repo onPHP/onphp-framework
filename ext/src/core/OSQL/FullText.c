@@ -28,12 +28,7 @@ void onphp_full_text_sanity_check(zval *field, zval *words)
 			!(Z_TYPE_P(words) == IS_ARRAY)
 		)
 	) {
-		zend_throw_exception_ex(
-			onphp_ce_WrongArgumentException,
-			0 TSRMLS_CC,
-			NULL
-		);
-		return;
+		ONPHP_THROW(WrongArgumentException, NULL);
 	}
 }
 
@@ -87,11 +82,7 @@ ONPHP_METHOD(FullText, toMapped)
 
 ONPHP_METHOD(FullText, toBoolean)
 {
-	zend_throw_exception_ex(
-		onphp_ce_UnsupportedMethodException,
-		0 TSRMLS_CC,
-		NULL
-	);
+	ONPHP_THROW(UnsupportedMethodException, NULL);
 }
 
 static ONPHP_ARGINFO_THREE;

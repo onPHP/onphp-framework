@@ -123,6 +123,14 @@
 #define ONPHP_METHOD(class_name, function_name) \
 	PHP_METHOD(onphp_ ## class_name, function_name)
 
+#define ONPHP_THROW(exception, ...)		\
+	zend_throw_exception_ex(			\
+		onphp_ce_ ## exception,			\
+		0 TSRMLS_CC,					\
+		##__VA_ARGS__					\
+	);									\
+	return;
+
 #define RETURN_THIS RETURN_ZVAL(getThis(), 1, 0)
 
 #define ONPHP_GETTER(class_name, method_name, property_name) \
@@ -160,13 +168,7 @@
 		)															\
 		== FAILURE													\
 	) {																\
-		zend_throw_exception_ex(									\
-			onphp_ce_ClassNotFoundException,						\
-			0 TSRMLS_CC,											\
-			"%s",													\
-			class_name												\
-		);															\
-		return;														\
+		ONPHP_THROW(ClassNotFoundException, NULL);					\
 	}																\
 																	\
 	ALLOC_INIT_ZVAL(zval);											\

@@ -49,12 +49,10 @@ ONPHP_METHOD(QuerySkeleton, where)
 		zend_hash_num_elements(Z_ARRVAL_P(where)) != 0
 		&& Z_TYPE_P(logic) == IS_NULL
 	) {
-		zend_throw_exception_ex(
-			onphp_ce_WrongArgumentException,
-			0 TSRMLS_CC,
+		ONPHP_THROW(
+			WrongArgumentException,
 			"you have to specify expression logic"
 		);
-		return;
 	} else {
 		if (
 			zend_hash_num_elements(Z_ARRVAL_P(where)) == 0

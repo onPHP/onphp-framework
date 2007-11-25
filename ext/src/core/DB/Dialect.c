@@ -301,20 +301,12 @@ ONPHP_METHOD(Dialect, toValueString)
 
 ONPHP_METHOD(Dialect, fullTextSearch)
 {
-	zend_throw_exception_ex(
-		onphp_ce_UnimplementedFeatureException,
-		0 TSRMLS_CC,
-		"Implement me first"
-	);
+	ONPHP_THROW(UnimplementedFeatureException, "implement me first");
 }
 
 ONPHP_METHOD(Dialect, fullTextRank)
 {
-	zend_throw_exception_ex(
-		onphp_ce_UnimplementedFeatureException,
-		0 TSRMLS_CC,
-		"Implement me first"
-	);
+	ONPHP_THROW(UnimplementedFeatureException, "implement me first");
 }
 
 static ONPHP_ARGINFO_ONE;

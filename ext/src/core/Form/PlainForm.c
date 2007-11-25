@@ -60,12 +60,7 @@ ONPHP_METHOD(PlainForm, add)
 	ONPHP_CALL_METHOD_0(prm, "getname", &name);
 	
 	if (ONPHP_ASSOC_ISSET(primitives, name)) {
-		zend_throw_exception_ex(
-			onphp_ce_WrongArgumentException,
-			0 TSRMLS_CC,
-			"i am already exists!"
-		);
-		return;
+		ONPHP_THROW(WrongArgumentException, "i am already exists!");
 	}
 	
 	ONPHP_ASSOC_SET(primitives, name, prm);
@@ -80,12 +75,10 @@ ONPHP_METHOD(PlainForm, drop)
 	ONPHP_GET_ARGS("z", &name);
 	
 	if (!ONPHP_ASSOC_ISSET(primitives, name)) {
-		zend_throw_exception_ex(
-			onphp_ce_MissingElementException,
-			0 TSRMLS_CC,
+		ONPHP_THROW(
+			MissingElementException,
 			"can not drop inexistent primitive"
 		);
-		return;
 	}
 	
 	ONPHP_ASSOC_UNSET(primitives, name);
@@ -107,12 +100,7 @@ ONPHP_METHOD(PlainForm, get)
 		RETURN_ZVAL(prm, 1, 0);
 	}
 	
-	zend_throw_exception_ex(
-		onphp_ce_MissingElementException,
-		0 TSRMLS_CC,
-		NULL
-	);
-	return;
+	ONPHP_THROW(MissingElementException, NULL);
 }
 
 #define ONPHP_PLAIN_FORM_STRAIGHT_GETTER(method_name, function_name)	\
@@ -141,34 +129,19 @@ ONPHP_PLAIN_FORM_STRAIGHT_GETTER(getSafeValue, "getsafevalue");
 
 ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getChoiceValue) {
 	if (!ONPHP_INSTANCEOF(prm, ListedPrimitive)) {
-		zend_throw_exception_ex(
-			onphp_ce_WrongArgumentException,
-			0 TSRMLS_CC,
-			NULL
-		);
-		return;
+		ONPHP_THROW(WrongArgumentException, NULL);
 	}
 } ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getchoicevalue");
 
 ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getActualChoiceValue) {
 	if (!ONPHP_INSTANCEOF(prm, ListedPrimitive)) {
-		zend_throw_exception_ex(
-			onphp_ce_WrongArgumentException,
-			0 TSRMLS_CC,
-			NULL
-		);
-		return;
+		ONPHP_THROW(WrongArgumentException, NULL);
 	}
 } ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getactualchoicevalue");
 
 ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getDisplayValue) {
 	if (ONPHP_INSTANCEOF(prm, FiltrablePrimitive)) {
-		zend_throw_exception_ex(
-			onphp_ce_WrongArgumentException,
-			0 TSRMLS_CC,
-			NULL
-		);
-		return;
+		ONPHP_THROW(WrongArgumentException, NULL);
 	}
 } ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getactualchoicevalue");
 

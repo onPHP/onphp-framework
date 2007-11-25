@@ -35,11 +35,7 @@ ONPHP_METHOD(DropTableQuery, __construct)
 
 ONPHP_METHOD(DropTableQuery, getId)
 {
-	zend_throw_exception_ex(
-		onphp_ce_UnsupportedMethodException,
-		0 TSRMLS_CC,
-		NULL
-	);
+	ONPHP_THROW(UnsupportedMethodException, NULL);
 }
 
 ONPHP_METHOD(DropTableQuery, toDialectString)

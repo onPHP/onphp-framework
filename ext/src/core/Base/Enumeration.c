@@ -96,13 +96,9 @@ ONPHP_METHOD(Enumeration, setId)
 	ONPHP_CALL_METHOD_0(getThis(), "getnamelist", &names);
 	
 	if (Z_TYPE_P(names) != IS_ARRAY) {
-		zend_throw_exception_ex(
-			onphp_ce_WrongStateException,
-			0 TSRMLS_CC,
-			"names array is not an array"
-		);
 		ZVAL_FREE(names);
-		return;
+		
+		ONPHP_THROW(WrongStateException, "names array is not an array");
 	}
 	
 	switch (Z_TYPE_P(id)) {
@@ -143,13 +139,9 @@ ONPHP_METHOD(Enumeration, setId)
 			
 		default:
 			
-			zend_throw_exception_ex(
-				onphp_ce_WrongArgumentException,
-				0 TSRMLS_CC,
-				"string or an integer expected"
-			);
 			ZVAL_FREE(names);
-			return;
+			
+			ONPHP_THROW(WrongArgumentException, "string or an integer expected");
 	}
 	
 	if (result == SUCCESS) {
@@ -163,14 +155,13 @@ ONPHP_METHOD(Enumeration, setId)
 			convert_to_string(id);
 		}
 		
-		zend_throw_exception_ex(
-			onphp_ce_MissingElementException,
-			0 TSRMLS_CC,
+		ZVAL_FREE(names);
+		
+		ONPHP_THROW(
+			MissingElementException,
 			"knows nothing about such id == {%s}",
 			Z_STRVAL_P(id)
 		);
-		ZVAL_FREE(names);
-		return;
 	}
 	
 	RETURN_THIS;
@@ -228,14 +219,10 @@ ONPHP_METHOD(Enumeration, getObjectList)
 		} else if (result == HASH_KEY_IS_LONG) {
 			ZVAL_LONG(arg, length);
 		} else {
-			zend_throw_exception_ex(
-				onphp_ce_WrongStateException,
-				0 TSRMLS_CC,
-				"weird key found"
-			);
 			ZVAL_FREE(arg);
 			ZVAL_FREE(list);
-			return;
+			
+			ONPHP_THROW(WrongStateException, "weird key found");
 		}
 		
 		MAKE_STD_ZVAL(object);

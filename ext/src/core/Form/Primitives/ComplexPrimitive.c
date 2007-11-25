@@ -136,20 +136,12 @@ ONPHP_METHOD(ComplexPrimitive, import)
 		RETURN_ZVAL(result, 1, 0);
 	}
 	
-	zend_throw_exception_ex(
-		onphp_ce_WrongArgumentException,
-		0 TSRMLS_CC,
-		"unreachable code reached"
-	);
+	ONPHP_THROW(WrongArgumentException, "unreachable code reached");
 }
 
 ONPHP_METHOD(ComplexPrimitive, exportValue)
 {
-	zend_throw_exception_ex(
-		onphp_ce_UnimplementedFeatureException,
-		0 TSRMLS_CC,
-		NULL
-	);
+	ONPHP_THROW(UnimplementedFeatureException, NULL);
 }
 
 static ONPHP_ARGINFO_ONE;

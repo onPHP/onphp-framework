@@ -33,17 +33,15 @@ ONPHP_METHOD(Singleton, getInstance)
 	if (argc < 1) {
 		WRONG_PARAM_COUNT;
 	}
-
+	
 	params = safe_emalloc(sizeof(zval **), argc, 0);
 	
 	if (zend_get_parameters_array_ex(argc, params) == FAILURE) {
-		zend_throw_exception_ex(
-			onphp_ce_BaseException,
-			0 TSRMLS_CC,
+		efree(params);
+		ONPHP_THROW(
+			BaseException,
 			"Failed to get calling arguments for object creation"
 		);
-		efree(params);
-		RETURN_NULL();
 	}
 	
 	// replica of historical Singleton's behaviour
@@ -91,37 +89,31 @@ ONPHP_METHOD(Singleton, getInstance)
 			efree(name);
 			
 			if (!instanceof_function(ce, onphp_ce_Singleton TSRMLS_CC)) {
-				zend_throw_exception_ex(
-					onphp_ce_WrongArgumentException,
-					0 TSRMLS_CC,
+				efree(params);
+				ONPHP_THROW(
+					WrongArgumentException,
 					"Class '%s' is something not a Singleton's child",
 					ce->name
 				);
-				efree(params);
-				return;
 			}
 			
 			// we can call protected consturctors,
 			// since all classes are childs of Singleton
 			if (ce->constructor->common.fn_flags & ZEND_ACC_PRIVATE) {
-				zend_throw_exception_ex(
-					onphp_ce_BaseException,
-					0 TSRMLS_CC,
+				efree(params);
+				ONPHP_THROW(
+					BaseException,
 					"Can not call private constructor for '%s' creation",
 					ce->name
 				);
-				efree(params);
-				return;
 			} else if (ce->constructor->common.fn_flags & ZEND_ACC_PUBLIC) {
-				zend_throw_exception_ex(
-					onphp_ce_BaseException,
-					0 TSRMLS_CC,
+				efree(params);
+				ONPHP_THROW(
+					BaseException,
 					"Don't want to deal with '%s' class "
 						"due to public constructor there",
 					ce->name
 				);
-				efree(params);
-				return;
 			}
 			
 			MAKE_STD_ZVAL(object);
