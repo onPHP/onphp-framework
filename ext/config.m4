@@ -22,6 +22,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/Base/Prototyped.c \
 		src/core/Base/Singleton.c \
 		src/core/Base/StaticFactory.c \
+		src/core/Base/Ternary.c \
 		src/core/Base/Instantiatable.c \
 		src/core/DB/Dialect.c \
 		src/core/DB/ImaginaryDialect.c \
@@ -49,6 +50,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/FullText.c \
 		src/core/OSQL/GroupBy.c \
 		src/core/OSQL/Joiner.c \
+		src/core/OSQL/OrderBy.c \
 		src/core/OSQL/SelectField.c \
 		src/core/OSQL/SQLTableName.c \
 		src/core/OSQL/Query.c \

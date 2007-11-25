@@ -16,7 +16,7 @@ if (PHP_ONPHP != "no") {
 		
 		"Aliased.c Enumeration.c Identifiable.c Identifier.c \
 		IdentifiableObject.c Stringable.c Named.c NamedObject.c Prototyped.c \
-		Singleton.c StaticFactory.c Instantiatable.c",
+		Singleton.c StaticFactory.c Instantiatable.c Ternary.c",
 		
 		"onphp"
 	);
@@ -51,7 +51,7 @@ if (PHP_ONPHP != "no") {
 		
 		"Castable.c DBBinary.c DBField.c DBValue.c DialectString.c FieldTable.c \
 		DropTableQuery.c SelectField.c SQLTableName.c Query.c QueryIdentification.c \
-		ExtractPart.c FullText.c FromTable.c GroupBy.c Joiner.c"
+		ExtractPart.c FullText.c FromTable.c GroupBy.c Joiner.c OrderBy.c"
 		
 		"onphp"
 	);

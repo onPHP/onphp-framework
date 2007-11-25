@@ -14,6 +14,7 @@
 	 * Atom for ternary-based logic.
 	 * 
 	 * @ingroup Base
+	 * @ingroup Ternary
 	**/
 	final class Ternary implements Stringable
 	{
@@ -31,7 +32,7 @@
 		{
 			return new self($boolean);
 		}
-
+		
 		/**
 		 * @return Ternary
 		**/
@@ -94,7 +95,7 @@
 			
 			return $this;
 		}
-
+		
 		public function getValue()
 		{
 			return $this->trinity;
@@ -106,9 +107,9 @@
 		public function setValue($boolean = null)
 		{
 			Assert::isTernaryBase($boolean);
-
+			
 			$this->trinity = $boolean;
-
+			
 			return $this;
 		}
 		
@@ -120,7 +121,7 @@
 				return $false;
 			elseif ($this->trinity === null)
 				return $null;
-
+			
 			throw new WrongStateException(
 				'mama, weer all crazee now!' // (c) Slade
 			);

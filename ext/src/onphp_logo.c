@@ -76,19 +76,21 @@ IdentifiableObject, \
 Identifier, \
 ImaginaryDialect, \
 NamedObject, \
+OrderBy, \
 PlainForm, \
+PrimitiveNumber, \
 Query, \
 QueryIdentification, \
 QuerySkeleton, \
 RegulatedForm, \
 RangedPrimitive, \
-PrimitiveNumber, \
 SelectField, \
 SgmlEndTag, \
 SgmlTag, \
 SgmlToken, \
 Singleton, \
-StaticFactory."
+StaticFactory, \
+Ternary."
 
 static const unsigned char onphp_logo[] = {
  137,   80,   78,   71,   13,   10,   26,   10,    0,    0,    0,   13,   73,

@@ -13,6 +13,8 @@
 
 #include "core/Exceptions.h"
 
+#include "core/Base/Ternary.h"
+
 #include "core/Form/Primitives/BasePrimitive.h"
 
 ONPHP_METHOD(ComplexPrimitive, __construct)
@@ -24,16 +26,16 @@ ONPHP_METHOD(ComplexPrimitive, __construct)
 	ALLOC_INIT_ZVAL(nil);
 	ZVAL_NULL(nil);
 	
-	ONPHP_MAKE_FOREIGN_OBJECT("Ternary", ternary);
+	ONPHP_MAKE_OBJECT(Ternary, ternary);
 	
 	ONPHP_CALL_METHOD_1_NORET(ternary, "__construct", NULL, nil);
+	
+	ZVAL_FREE(nil);
 	
 	if (EG(exception)) {
 		zval_ptr_dtor(&ternary);
 		return;
 	}
-	
-	zval_ptr_dtor(&nil);
 	
 	ONPHP_UPDATE_PROPERTY(getThis(), "single", ternary);
 	
@@ -83,7 +85,7 @@ ONPHP_METHOD(ComplexPrimitive, setState)
 																	\
 		ONPHP_CALL_METHOD_0(single, state, NULL);					\
 																	\
-		RETURN_THIS;								\
+		RETURN_THIS;												\
 	}
 
 COMPLEX_PRIMITIVE_SET_TERNARY_STATE(setSingle, "settrue");
@@ -108,7 +110,6 @@ ONPHP_METHOD(ComplexPrimitive, import)
 	);
 	
 	if (EG(exception)) {
-		zval_ptr_dtor(&result);
 		return;
 	}
 	
@@ -139,11 +140,11 @@ ONPHP_METHOD(ComplexPrimitive, import)
 			RETURN_TRUE;
 		}
 	} else if (Z_TYPE_P(result) == IS_BOOL) {
-		zval_ptr_dtor(&result);
-		
 		if (zval_is_true(result)) {
+			zval_ptr_dtor(&result);
 			ONPHP_CALL_METHOD_1(getThis(), "importsingle", &result, scope);
 		} else {
+			zval_ptr_dtor(&result);
 			ONPHP_CALL_METHOD_1(getThis(), "importmarried", &result, scope);
 		}
 		
@@ -159,11 +160,7 @@ ONPHP_METHOD(ComplexPrimitive, exportValue)
 }
 
 static ONPHP_ARGINFO_ONE;
-
-static
-	ZEND_BEGIN_ARG_INFO(arginfo_ternary, 0)
-		ZEND_ARG_OBJ_INFO(0, ternary, Ternary, 0)
-	ZEND_END_ARG_INFO();
+static ONPHP_ARGINFO_TERNARY;
 
 zend_function_entry onphp_funcs_ComplexPrimitive[] = {
 	ONPHP_ME(ComplexPrimitive, __construct, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)

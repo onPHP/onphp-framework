@@ -29,6 +29,7 @@
 #include "core/Base/NamedObject.h"
 #include "core/Base/Prototyped.h"
 #include "core/Base/Instantiatable.h"
+#include "core/Base/Ternary.h"
 
 #include "core/DB/Dialect.h"
 #include "core/DB/ImaginaryDialect.h"
@@ -104,6 +105,11 @@ PHP_MINIT_FUNCTION(onphp_core)
 	
 	REGISTER_ONPHP_STD_CLASS(Singleton);
 	ONPHP_CLASS_IS_ABSTRACT(Singleton);
+	
+	REGISTER_ONPHP_STD_CLASS(Ternary);
+	REGISTER_ONPHP_PROPERTY(Ternary, "trinity", ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_IMPLEMENTS(Ternary, Stringable);
+	ONPHP_CLASS_IS_FINAL(Ternary);
 	
 	REGISTER_ONPHP_STD_CLASS(PlainForm);
 	REGISTER_ONPHP_PROPERTY(PlainForm, "primitives", ZEND_ACC_PROTECTED);
