@@ -102,7 +102,7 @@
 			return $this;
 		}
 		
-		public function getMaxFileSize($maxFileSize)
+		public function getMaxFileSize()
 		{
 			return $this->maxFileSize;
 		}

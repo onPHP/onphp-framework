@@ -85,6 +85,8 @@
 			
 			$urlSubSchemes = Url::create()->getKnownSubSchemes();
 			
+			$matches = array();
+			
 			if (
 				!preg_match('/^([a-z][a-z0-9.+-]*):(.*)/i', $this->path, $matches)
 				|| !isset($urlSubSchemes[strtolower($matches[1])])
