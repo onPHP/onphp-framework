@@ -96,6 +96,11 @@
 			IMAGETYPE_XBM		=> 'image/xbm'
 		);
 		
+		public static function getAnyId()
+		{
+			return self::GIF;
+		}
+		
 		public function getMimeType()
 		{
 			return $this->mimeTypes[$this->id];
