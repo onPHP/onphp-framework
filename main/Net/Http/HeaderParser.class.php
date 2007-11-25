@@ -41,6 +41,7 @@
 		public function doLine($line)
 		{
 			$line = trim($line, "\r\n");
+			$matches = array();
 
 			if (preg_match("/^([\w-]+):\s+(.+)/", $line, $matches)) {
 				
