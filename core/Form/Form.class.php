@@ -36,9 +36,9 @@
 		
 		public function getErrors()
 		{
-			return $this->errors + $this->violated;
+			return array_merge($this->errors, $this->violated);
 		}
-
+		
 		/**
 		 * @return Form
 		**/
