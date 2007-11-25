@@ -136,6 +136,8 @@
 		{
 			parent::setFpi($fpi);
 			
+			$matches = array();
+			
 			preg_match(
 				'~^-//([a-z0-9]+)//DTD ([a-z]+)'
 				.' ?([a-z]+)? ?(\d+\.\d+)?'.
