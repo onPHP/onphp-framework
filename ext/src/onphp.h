@@ -308,6 +308,7 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 
 #define ONPHP_ARRAY_ADD(array, value) {			\
 	add_next_index_zval(array, value);			\
+	ZVAL_ADDREF(value);							\
 }
 
 #define ONPHP_ASSOC_GET(array, key, value)	{	\
@@ -320,6 +321,7 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 			strlen(key) + 1,					\
 			(void **) &stored					\
 		)										\
+		== FAILURE								\
 	) {											\
 		ONPHP_THROW_NORET(						\
 			MissingElementException,			\

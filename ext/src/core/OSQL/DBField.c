@@ -78,34 +78,26 @@ ONPHP_METHOD(DBField, toDialectString)
 	
 	zval_ptr_dtor(&quoted);
 	
+	smart_str_0(&string);
+	
 	if (Z_STRLEN_P(cast)) {
-		zval *tmp;
+		zval *tmp, *out;
 		
 		ALLOC_INIT_ZVAL(tmp);
 		
 		ZVAL_STRINGL(tmp, string.c, string.len, 1);
 		
-		zend_call_method_with_2_params(
-			&dialect,
-			onphp_ce_Dialect,
-			NULL,
-			"tocasted",
-			&cast,
-			tmp,
-			cast
-		);
+		ONPHP_CALL_METHOD_2_NORET(dialect, "tocasted", &out, tmp, cast);
 		
 		ZVAL_FREE(tmp);
+		smart_str_free(&string);
 		
 		if (EG(exception)) {
-			zval_ptr_dtor(&cast);
 			return;
 		}
 		
-		RETURN_ZVAL(cast, 1, 1);
+		RETURN_ZVAL(out, 1, 1);
 	}
-	
-	smart_str_0(&string);
 	
 	RETURN_STRINGL(string.c, string.len, 0);
 }
@@ -114,9 +106,7 @@ ONPHP_METHOD(DBField, setTable)
 {
 	zval *table;
 	
-	table = ONPHP_READ_PROPERTY(getThis(), "table");
-	
-	if (Z_TYPE_P(table) != IS_NULL) {
+	if (Z_TYPE_P(ONPHP_READ_PROPERTY(getThis(), "table")) != IS_NULL) {
 		ONPHP_THROW(
 			WrongStateException,
 			"you should not override setted table"

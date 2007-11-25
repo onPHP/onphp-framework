@@ -54,27 +54,22 @@ ONPHP_METHOD(QuerySkeleton, where)
 			"you have to specify expression logic"
 		);
 	} else {
-		zval
-			//*expCopy,
-			*logicCopy,
-			*whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
+		zval *whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 		
 		if (ZEND_NUM_ARGS() == 1) {
-			ALLOC_INIT_ZVAL(logicCopy);
-		} else {
-			ONPHP_CLONE_ZVAL(logic, logicCopy);
+			ALLOC_INIT_ZVAL(logic);
 		}
 		
-		if (!where_not_empty) {
-			ZVAL_NULL(logicCopy);
+		if (!where_not_empty || (ZEND_NUM_ARGS() == 1)) {
+			ZVAL_NULL(logic);
 		}
 		
-		//ONPHP_COPY_ZVAL(exp, expCopy);
-		
-		ONPHP_ARRAY_ADD(whereLogic, logicCopy);
+		ONPHP_ARRAY_ADD(whereLogic, logic);
 		ONPHP_ARRAY_ADD(where, exp);
 		
-		ZVAL_ADDREF(exp);
+		if (ZEND_NUM_ARGS() == 1) {
+			zval_ptr_dtor(&logic);
+		}
 	}
 	
 	RETURN_THIS;
@@ -91,8 +86,8 @@ ONPHP_METHOD(QuerySkeleton, method_name)								\
 	ZVAL_STRINGL(logic, word, strlen(word) + 1, 1);						\
 																		\
 	ONPHP_CALL_METHOD_2_NORET(getThis(), "where", NULL, exp, logic);	\
-	\
-	ZVAL_FREE(logic); \
+																		\
+	zval_ptr_dtor(&logic);												\
 																		\
 	if (EG(exception)) {												\
 		return;															\
@@ -108,7 +103,7 @@ ONPHP_QUERY_SKELETON_ADD_WHERE(orWhere, "OR");
 
 ONPHP_METHOD(QuerySkeleton, toDialectString)
 {
-	zval *where, *whereLogic, *dialect;
+	zval *where;
 	unsigned int array_count = 0;
 	
 	where = ONPHP_READ_PROPERTY(getThis(), "where");
@@ -118,7 +113,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 		&& (array_count = zend_hash_num_elements(Z_ARRVAL_P(where)))
 		&& (array_count > 0)
 	) {
-		zval *exp, *out, *logic;
+		zval *exp, *out, *logic, *whereLogic, *dialect;
 		unsigned int i, retval_len;
 		char *retval;
 		char output_logic = 0;

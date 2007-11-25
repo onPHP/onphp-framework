@@ -54,7 +54,7 @@ ONPHP_METHOD(FromTable, __construct)
 	}
 	
 	if (length) {
-		ONPHP_UPDATE_PROPERTY_STRING(getThis(), "alias", alias);
+		ONPHP_UPDATE_PROPERTY_STRINGL(getThis(), "alias", alias, length);
 	}
 	
 	if (
