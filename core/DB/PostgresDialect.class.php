@@ -19,7 +19,7 @@
 	**/
 	final class PostgresDialect extends Dialect
 	{
-		public static $tsConfiguration = 'utf8_russian';
+		private static $tsConfiguration = 'utf8_russian';
 		
 		/**
 		 * @return PostgresDialect
