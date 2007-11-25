@@ -140,7 +140,7 @@
 			
 			if (!isset($mappings[$className])) {
 				$mapping = array();
-				foreach ($this->getPropertyList() as $name => $property) {
+				foreach ($this->getPropertyList() as $property) {
 					$mapping = $property->fillMapping($mapping);
 				}
 				$mappings[$className] = $mapping;
