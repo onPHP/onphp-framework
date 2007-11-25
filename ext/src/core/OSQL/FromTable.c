@@ -59,16 +59,16 @@ ONPHP_METHOD(FromTable, __construct)
 	) {
 		zval *dot, *array, *schema, *newTable;
 		
-		MAKE_STD_ZVAL(dot);
+		ALLOC_INIT_ZVAL(dot);
 		ZVAL_STRING(dot, ".", 1);
 		
-		MAKE_STD_ZVAL(array);
+		ALLOC_INIT_ZVAL(array);
 		array_init(array);
 		
 		php_explode(dot, table, array, 2);
 		
-		MAKE_STD_ZVAL(schema);
-		MAKE_STD_ZVAL(newTable);
+		ALLOC_INIT_ZVAL(schema);
+		ALLOC_INIT_ZVAL(newTable);
 		
 		// not checking for exceptions, since it can not fail
 		ONPHP_ARRAY_GET(array, 0, schema);

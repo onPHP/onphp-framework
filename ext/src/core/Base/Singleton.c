@@ -116,7 +116,7 @@ ONPHP_METHOD(Singleton, getInstance)
 				);
 			}
 			
-			MAKE_STD_ZVAL(object);
+			ALLOC_INIT_ZVAL(object);
 			object_init_ex(object, ce);
 			
 			fci.size = sizeof(fci);

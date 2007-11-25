@@ -30,7 +30,7 @@ ONPHP_METHOD(ImaginaryDialect, me)
 {
 	zval *instance, *class;
 	
-	MAKE_STD_ZVAL(class);
+	ALLOC_INIT_ZVAL(class);
 	ZVAL_STRING(class, onphp_ce_ImaginaryDialect->name, 1);
 	
 	zend_call_method_with_1_params(
@@ -138,8 +138,8 @@ ONPHP_METHOD(ImaginaryDialect, fullTextSearch)
 	
 	ONPHP_GET_ARGS("zzl", &field, &words, &logic);
 	
-	MAKE_STD_ZVAL(glue);
-	MAKE_STD_ZVAL(copy);
+	ALLOC_INIT_ZVAL(glue);
+	ALLOC_INIT_ZVAL(copy);
 	
 	ZVAL_ZVAL(copy, words, 1, 0);
 	
@@ -195,8 +195,8 @@ ONPHP_METHOD(ImaginaryDialect, fullTextRank)
 	
 	ONPHP_GET_ARGS("zzl", &field, &words, &logic);
 	
-	MAKE_STD_ZVAL(glue);
-	MAKE_STD_ZVAL(copy);
+	ALLOC_INIT_ZVAL(glue);
+	ALLOC_INIT_ZVAL(copy);
 	
 	ZVAL_ZVAL(copy, words, 1, 0);
 	

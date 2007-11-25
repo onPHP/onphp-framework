@@ -39,7 +39,7 @@ ONPHP_METHOD(Dialect, quoteValue)
 		} else {
 			zval *copy;
 			
-			MAKE_STD_ZVAL(copy);
+			ALLOC_INIT_ZVAL(copy);
 			ZVAL_ZVAL(copy, value, 1, 0);
 			
 			convert_to_string(copy);

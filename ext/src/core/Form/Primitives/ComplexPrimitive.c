@@ -21,7 +21,7 @@ ONPHP_METHOD(ComplexPrimitive, __construct)
 	
 	ONPHP_GET_ARGS("z", &name);
 	
-	MAKE_STD_ZVAL(nil);
+	ALLOC_INIT_ZVAL(nil);
 	ZVAL_NULL(nil);
 	
 	ONPHP_MAKE_FOREIGN_OBJECT("Ternary", ternary);

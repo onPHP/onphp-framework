@@ -212,7 +212,7 @@ ONPHP_METHOD(Enumeration, getObjectList)
 				0
 			);
 		
-		MAKE_STD_ZVAL(arg);
+		ALLOC_INIT_ZVAL(arg);
 		
 		if (result == HASH_KEY_IS_STRING) {
 			ZVAL_STRINGL(arg, key, length, 1);
@@ -225,7 +225,7 @@ ONPHP_METHOD(Enumeration, getObjectList)
 			ONPHP_THROW(WrongStateException, "weird key found");
 		}
 		
-		MAKE_STD_ZVAL(object);
+		ALLOC_INIT_ZVAL(object);
 		object->value.obj = onphp_empty_object_new(Z_OBJCE_P(getThis()) TSRMLS_CC);
 		Z_TYPE_P(object) = IS_OBJECT;
 		

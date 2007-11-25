@@ -41,7 +41,7 @@
 
 #define ONPHP_CONSTRUCT_ARRAY(name) { \
 	zval *name; \
-	MAKE_STD_ZVAL(name); \
+	ALLOC_INIT_ZVAL(name); \
 	array_init(name); \
 	ONPHP_UPDATE_PROPERTY(getThis(), # name, name); \
 	zval_ptr_dtor(&name); \
@@ -164,7 +164,7 @@
 	}
 
 #define ONPHP_MAKE_OBJECT(class_name, zval) \
-	MAKE_STD_ZVAL(zval); \
+	ALLOC_INIT_ZVAL(zval); \
 	zval->value.obj = onphp_empty_object_new(onphp_ce_ ## class_name TSRMLS_CC); \
 	Z_TYPE_P(zval) = IS_OBJECT;
 
@@ -218,7 +218,7 @@
 
 #define ONPHP_ASSOC_SET(array, key, value) {	\
 	zval *copy;									\
-	MAKE_STD_ZVAL(copy);						\
+	ALLOC_INIT_ZVAL(copy);						\
 	*copy = *value;								\
 	zval_copy_ctor(copy);						\
 	add_assoc_zval_ex(							\

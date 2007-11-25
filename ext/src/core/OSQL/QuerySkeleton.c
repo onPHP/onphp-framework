@@ -36,7 +36,7 @@ ONPHP_METHOD(QuerySkeleton, where)
 	zval *where, *whereLogic, *exp, *logic = NULL;
 	zval *copy, *copy2;
 	
-	MAKE_STD_ZVAL(copy);
+	ALLOC_INIT_ZVAL(copy);
 	
 	ONPHP_GET_ARGS("z|z", &exp, &logic);
 	
@@ -68,7 +68,7 @@ ONPHP_METHOD(QuerySkeleton, where)
 			logic
 			&& (Z_TYPE_P(logic) != IS_NULL)
 		) {
-			MAKE_STD_ZVAL(copy2);
+			ALLOC_INIT_ZVAL(copy2);
 			*copy2 = *logic;
 			zval_copy_ctor(copy2);
 			
@@ -86,7 +86,7 @@ ONPHP_METHOD(QuerySkeleton, andWhere)
 {
 	zval *exp, *logic, *retval;
 	
-	MAKE_STD_ZVAL(logic);
+	ALLOC_INIT_ZVAL(logic);
 	ZVAL_STRING(logic, "AND", 1);
 	
 	ONPHP_GET_ARGS("z", &exp);
@@ -114,7 +114,7 @@ ONPHP_METHOD(QuerySkeleton, orWhere)
 {
 	zval *exp, *logic, *retval;
 	
-	MAKE_STD_ZVAL(logic);
+	ALLOC_INIT_ZVAL(logic);
 	ZVAL_STRING(logic, "OR", 1);
 	
 	ONPHP_GET_ARGS("z", &exp);
@@ -155,7 +155,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 		int i, array_count, retval_len;
 		char *retval;
 		
-		MAKE_STD_ZVAL(outputLogic);
+		ALLOC_INIT_ZVAL(outputLogic);
 		ZVAL_FALSE(outputLogic);
 		
 		smart_str clause = {0};

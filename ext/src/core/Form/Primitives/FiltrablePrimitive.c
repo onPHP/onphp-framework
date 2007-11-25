@@ -26,7 +26,7 @@ ONPHP_METHOD(FiltrablePrimitive, __construct)
 	
 	ONPHP_MAKE_FOREIGN_OBJECT("FilterChain", importFilter);
 	
-	MAKE_STD_ZVAL(displayFilter);
+	ALLOC_INIT_ZVAL(displayFilter);
 	ZVAL_ZVAL(displayFilter, importFilter, 1, 0);
 	
 	ONPHP_UPDATE_PROPERTY(getThis(), "importFilter", importFilter);

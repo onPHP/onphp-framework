@@ -58,7 +58,7 @@ ONPHP_METHOD(FullText, toMapped)
 	
 	ONPHP_GET_ARGS("zz", &dao, &query);
 	
-	MAKE_STD_ZVAL(self);
+	ALLOC_INIT_ZVAL(self);
 	self->value.obj = onphp_empty_object_new(Z_OBJCE_P(getThis()) TSRMLS_CC);
 	Z_TYPE_P(self) = IS_OBJECT;
 	
