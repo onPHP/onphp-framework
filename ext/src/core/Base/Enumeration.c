@@ -26,6 +26,7 @@ ONPHP_METHOD(Enumeration, __sleep)
 {
 	zval *out;
 	
+	ALLOC_INIT_ZVAL(out);
 	array_init(out);
 	
 	add_next_index_string(
@@ -199,7 +200,7 @@ ONPHP_METHOD(Enumeration, getObjectList)
 	}
 	
 	ONPHP_FOREACH(names, element) {
-		zval *object, *arg, *out;
+		zval *object, *arg;
 		char *key;
 		ulong length;
 		unsigned int result;
@@ -229,14 +230,9 @@ ONPHP_METHOD(Enumeration, getObjectList)
 		object->value.obj = onphp_empty_object_new(Z_OBJCE_P(getThis()) TSRMLS_CC);
 		Z_TYPE_P(object) = IS_OBJECT;
 		
-		zend_call_method_with_1_params(
-			&object,
-			Z_OBJCE_P(object),
-			NULL,
-			"__construct",
-			&out,
-			arg
-		);
+		ONPHP_CALL_METHOD_1_NORET(object, "__construct", NULL, arg);
+		
+		zval_ptr_dtor(&arg);
 		
 		if (EG(exception)) {
 			ZVAL_FREE(object);
@@ -244,8 +240,6 @@ ONPHP_METHOD(Enumeration, getObjectList)
 			ZVAL_FREE(arg);
 			return;
 		} else {
-			zval_dtor(arg);
-			
 			add_next_index_zval(list, object);
 		}
 	}

@@ -43,7 +43,7 @@ ONPHP_METHOD(ImaginaryDialect, me)
 	);
 	
 	ZVAL_FREE(class);
-
+	
 	if (EG(exception)) {
 		return;
 	}
@@ -144,14 +144,14 @@ ONPHP_METHOD(ImaginaryDialect, fullTextSearch)
 	ZVAL_ZVAL(copy, words, 1, 0);
 	
 	if (logic == 1) {
-		ZVAL_STRING(glue, " & ", 1);
+		ZVAL_STRINGL(glue, " & ", 3, 1);
 	} else {
-		ZVAL_STRING(glue, " | ", 1);
+		ZVAL_STRINGL(glue, " | ", 3, 1);
 	}
 	
 	onphp_implode(glue, words, copy);
 	
-	smart_str_appends(&out, "(\"");
+	smart_str_appendl(&out, "(\"", 2);
 	
 	if (ONPHP_INSTANCEOF(field, DialectString)) {
 		zval *string;
@@ -208,7 +208,7 @@ ONPHP_METHOD(ImaginaryDialect, fullTextRank)
 	
 	onphp_implode(glue, words, copy);
 	
-	smart_str_appends(&out, "(RANK BY \"");
+	smart_str_appendl(&out, "(RANK BY \"", 10);
 	
 	if (ONPHP_INSTANCEOF(field, DialectString)) {
 		zval *string;
