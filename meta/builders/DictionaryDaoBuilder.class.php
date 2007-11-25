@@ -27,8 +27,6 @@ EOT;
 
 			$pointers = self::buildPointers($class);
 			
-			$className = $class->getName();
-			
 			$out .= <<<EOT
 {$pointers}
 }

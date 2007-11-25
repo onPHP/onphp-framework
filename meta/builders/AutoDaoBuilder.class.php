@@ -35,8 +35,6 @@
 				$parentName = $parent->getName().'DAO';
 			}
 			
-			$className = $class->getName();
-
 			$out = self::getHead();
 			
 			$out .= <<<EOT
@@ -46,7 +44,7 @@ abstract class Auto{$class->getName()}DAO extends {$parentName}
 EOT;
 
 			$out .= self::buildPointers($class)."\n}\n";
-
+			
 			return $out.self::getHeel();
 		}
 	}
