@@ -28,7 +28,7 @@ void onphp_full_text_sanity_check(zval *field, zval *words TSRMLS_DC)
 			!(Z_TYPE_P(words) == IS_ARRAY)
 		)
 	) {
-		ONPHP_THROW(WrongArgumentException, NULL);
+		ONPHP_THROW_NORET(WrongArgumentException, NULL);
 	}
 }
 
@@ -72,10 +72,15 @@ ONPHP_METHOD(FullText, toMapped)
 	onphp_full_text_sanity_check(atom, words TSRMLS_CC);
 	
 	if (EG(exception)) {
+		ZVAL_FREE(atom);
 		return;
 	}
 	
 	ONPHP_FULL_TEXT_MASS_UPDATE(atom, words, logic);
+	
+	ZVAL_FREE(atom);
+	
+	RETURN_ZVAL(self, 1, 1);
 }
 
 #undef ONPHP_FULL_TEXT_MASS_UPDATE

@@ -36,6 +36,7 @@ ONPHP_METHOD(SelectField, create)
 	);
 	
 	if (EG(exception)) {
+		ZVAL_FREE(object);
 		return;
 	}
 	
@@ -78,9 +79,9 @@ ONPHP_METHOD(SelectField, getName)
 		RETURN_ZVAL(tmp, 1, 1);
 	} else {
 		field = ONPHP_READ_PROPERTY(getThis(), "name");
+		
+		RETURN_ZVAL(field, 1, 0);
 	}
-	
-	RETURN_ZVAL(field, 1, 0);
 }
 
 ONPHP_METHOD(SelectField, toDialectString)
@@ -99,18 +100,21 @@ ONPHP_METHOD(SelectField, toDialectString)
 	);
 	
 	if (EG(exception)) {
+		zval_ptr_dtor(&out);
 		return;
 	}
 	
 	alias = ONPHP_READ_PROPERTY(getThis(), "alias");
 	
 	if (
-		Z_TYPE_P(alias) != IS_NULL
+		(Z_TYPE_P(alias) != IS_NULL)
 		&& Z_STRLEN_P(alias)
 	) {
 		smart_str string = {0};
 		
 		onphp_append_zval_to_smart_string(&string, out);
+		
+		zval_ptr_dtor(&out);
 		
 		smart_str_appendl(&string, " AS ", 4);
 		
@@ -124,7 +128,7 @@ ONPHP_METHOD(SelectField, toDialectString)
 		
 		RETURN_STRINGL(string.c, string.len, 0);
 	} else {
-		RETURN_ZVAL(out, 1, 0);
+		RETURN_ZVAL(out, 1, 1);
 	}
 }
 

@@ -12,10 +12,10 @@
 #include "onphp.h"
 
 ONPHP_GETTER(RangedPrimitive, getMin, min);
-ONPHP_SETTER(RangedPrimitive, setMin, min);
+ONPHP_SETTER_LONG(RangedPrimitive, setMin, min);
 
 ONPHP_GETTER(RangedPrimitive, getMax, max);
-ONPHP_SETTER(RangedPrimitive, setMax, max);
+ONPHP_SETTER_LONG(RangedPrimitive, setMax, max);
 
 static ONPHP_ARGINFO_ONE;
 

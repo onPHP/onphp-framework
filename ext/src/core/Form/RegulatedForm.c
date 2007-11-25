@@ -39,16 +39,13 @@ ONPHP_METHOD(RegulatedForm, __destruct)
 
 ONPHP_METHOD(RegulatedForm, addRule)
 {
+	char *name;
+	unsigned int length;
 	zval
-		*name,
 		*rule,
 		*rules = ONPHP_READ_PROPERTY(getThis(), "rules");
 	
-	ONPHP_GET_ARGS("zz", &name, &rule);
-	
-	if (Z_TYPE_P(name) != IS_STRING) {
-		ONPHP_THROW(WrongArgumentException, NULL);
-	}
+	ONPHP_GET_ARGS("sz", &name, &length, &rule);
 	
 	ONPHP_ASSOC_SET(rules, name, rule);
 	
@@ -57,12 +54,18 @@ ONPHP_METHOD(RegulatedForm, addRule)
 
 ONPHP_METHOD(RegulatedForm, dropRuleByName)
 {
-	zval *name, *rules = ONPHP_READ_PROPERTY(getThis(), "rules");
+	char *name;
+	unsigned int length;
+	zval *rules = ONPHP_READ_PROPERTY(getThis(), "rules");
 	
-	ONPHP_GET_ARGS("z", &name);
+	ONPHP_GET_ARGS("s", &name, &length);
 	
 	if (!ONPHP_ASSOC_ISSET(rules, name)) {
-		ONPHP_THROW(MissingElementException, NULL);
+		ONPHP_THROW(
+			MissingElementException,
+			"no such rule with '%s' name",
+			name
+		);
 	}
 	
 	ONPHP_ASSOC_UNSET(rules, name);
@@ -87,6 +90,8 @@ ONPHP_METHOD(RegulatedForm, checkRules)
 			ulong length;
 			unsigned int type;
 			
+			zval_ptr_dtor(&result);
+			
 			type =
 				zend_hash_get_current_key(
 					Z_ARRVAL_P(rules),
@@ -101,6 +106,8 @@ ONPHP_METHOD(RegulatedForm, checkRules)
 			
 			// Form::WRONG == 1
 			add_assoc_long(violated, key, 1);
+		} else {
+			zval_ptr_dtor(&result);
 		}
 	}
 	

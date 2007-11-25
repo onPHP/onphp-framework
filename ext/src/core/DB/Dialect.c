@@ -20,54 +20,6 @@
 #include "core/OSQL/Query.h"
 #include "core/Exceptions.h"
 
-ONPHP_METHOD(Dialect, quoteValue)
-{
-	zval *value;
-	
-	ONPHP_GET_ARGS("z", &value);
-	
-	// don't know, how to replicate original voodoo
-	if (Z_TYPE_P(value) == IS_LONG) {
-		RETURN_LONG(Z_LVAL_P(value));
-	} else {
-		smart_str string = {0};
-		char *slashed;
-		int length = 0;
-		
-		if (Z_TYPE_P(value) == IS_STRING) {
-			slashed = estrndup(Z_STRVAL_P(value), Z_STRLEN_P(value));
-		} else {
-			zval *copy;
-			
-			ALLOC_INIT_ZVAL(copy);
-			ZVAL_ZVAL(copy, value, 1, 0);
-			
-			convert_to_string(copy);
-			
-			slashed = estrndup(Z_STRVAL_P(copy), Z_STRLEN_P(copy));
-		}
-		
-		length = strlen(slashed);
-		
-		slashed =
-			php_addslashes(
-				slashed,
-				length,
-				&length,
-				0 TSRMLS_CC
-			);
-		
-		smart_str_appendc(&string, '\'');
-		smart_str_appends(&string, slashed);
-		smart_str_appendc(&string, '\'');
-		smart_str_0(&string);
-		
-		efree(slashed);
-		
-		RETURN_STRINGL(string.c, string.len, 0);
-	}
-}
-
 ONPHP_METHOD(Dialect, quoteField)
 {
 	zval *field;
@@ -202,102 +154,50 @@ ONPHP_METHOD(Dialect, valueToString)
 	RETURN_ZVAL(out, 1, 1);
 }
 
-smart_str onphp_dialect_to_needed_string(
-	zval *this, zval *expression, char *method TSRMLS_DC
-)
-{
-	smart_str string = {0};
-	zval *out;
-	
-	if (ONPHP_INSTANCEOF(expression, DialectString)) {
-		// ONPHP_CALL_METHOD_1 can't be used here due to non-void function
-		zend_call_method_with_1_params(
-			&expression,
-			Z_OBJCE_P(expression),
-			NULL,
-			"todialectstring",
-			&out,
-			this
-		);
-		
-		if (EG(exception)) {
-			return string;
-		}
-		
-		if (ONPHP_INSTANCEOF(expression, Query)) {
-			smart_str_appendc(&string, '(');
-			onphp_append_zval_to_smart_string(&string, out);
-			smart_str_appendc(&string, ')');
-		} else {
-			onphp_append_zval_to_smart_string(&string, out);
-		}
-	} else {
-		// unwrapped zend_call_method_with_1_params()
-		// since sizeof(method) != strlen(method)
-		zend_call_method(
-			&this,
-			Z_OBJCE_P(this),
-			NULL,
-			method,
-			strlen(method),
-			&out,
-			1,
-			expression,
-			NULL TSRMLS_CC
-		);
-		
-		if (EG(exception)) {
-			return string;
-		}
-		
-		onphp_append_zval_to_smart_string(&string, out);
-	}
-	
-	smart_str_0(&string);
-	zval_dtor(out);
-	
-	return string;
-}
+#define ONPHP_DIALECT_TO_NEEDED_STRING(method_name)							\
+	smart_str string = {0};													\
+	zval *exp, *out;														\
+																			\
+	ONPHP_GET_ARGS("z", &exp);												\
+																			\
+	if (Z_TYPE_P(exp) == IS_NULL) {											\
+		RETURN_NULL();														\
+	}																		\
+																			\
+	if (ONPHP_INSTANCEOF(exp, DialectString)) {								\
+		ONPHP_CALL_METHOD_1(exp, "todialectstring", &out, getThis());		\
+																			\
+		if (ONPHP_INSTANCEOF(exp, Query)) {									\
+			smart_str_appendc(&string, '(');								\
+			onphp_append_zval_to_smart_string(&string, out);				\
+			smart_str_appendc(&string, ')');								\
+		} else {															\
+			onphp_append_zval_to_smart_string(&string, out);				\
+		}																	\
+																			\
+	} else {																\
+		ONPHP_CALL_METHOD_1(getThis(), method_name, &out, exp);				\
+																			\
+		onphp_append_zval_to_smart_string(&string, out);					\
+	}																		\
+																			\
+	zval_ptr_dtor(&out);													\
+																			\
+	smart_str_0(&string);													\
+																			\
+	RETURN_STRINGL(string.c, string.len, 0);
 
 ONPHP_METHOD(Dialect, toFieldString)
 {
-	zval *expression;
-	
-	ONPHP_GET_ARGS("z", &expression);
-	
-	if (Z_TYPE_P(expression) == IS_NULL) {
-		RETURN_NULL();
-	}
-	
-	RETURN_STRING(
-		onphp_dialect_to_needed_string(
-			getThis(),
-			expression,
-			"quotefield" TSRMLS_CC
-		).c,
-		0
-	);
+	ONPHP_DIALECT_TO_NEEDED_STRING("quotefield");
 }
 
 ONPHP_METHOD(Dialect, toValueString)
 {
-	zval *expression;
-	
-	ONPHP_GET_ARGS("z", &expression);
-	
-	if (Z_TYPE_P(expression) == IS_NULL) {
-		RETURN_NULL();
-	}
-	
-	RETURN_STRING(
-		onphp_dialect_to_needed_string(
-			getThis(),
-			expression,
-			"quotevalue" TSRMLS_CC
-		).c,
-		0
-	);
+	ONPHP_DIALECT_TO_NEEDED_STRING("quotevalue");
 }
+
+#undef ONPHP_DIALECT_TO_NEEDED_STRING
 
 ONPHP_METHOD(Dialect, fullTextSearch)
 {
@@ -320,7 +220,6 @@ zend_function_entry onphp_funcs_Dialect[] = {
 	ONPHP_ABSTRACT_ME(Dialect, postAutoincrement, arginfo_dbcolumn, ZEND_ACC_PUBLIC)
 	ONPHP_ABSTRACT_ME(Dialect, hasTruncate, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ABSTRACT_ME(Dialect, hasMultipleTruncate, NULL, ZEND_ACC_PUBLIC)
-	ONPHP_ME(Dialect, quoteValue, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, quoteField, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, quoteTable, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Dialect, toCasted, arginfo_two, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)

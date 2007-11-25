@@ -13,7 +13,6 @@
 #include "onphp_util.h"
 
 #include "ext/standard/php_string.h"
-#include "ext/standard/php_var.h"
 
 #include "core/Exceptions.h"
 #include "core/OSQL/QuerySkeleton.h"
@@ -55,24 +54,27 @@ ONPHP_METHOD(QuerySkeleton, where)
 			"you have to specify expression logic"
 		);
 	} else {
-		zval *whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
+		zval
+			//*expCopy,
+			*logicCopy,
+			*whereLogic = ONPHP_READ_PROPERTY(getThis(), "whereLogic");
 		
 		if (ZEND_NUM_ARGS() == 1) {
-			ALLOC_INIT_ZVAL(logic);
+			ALLOC_INIT_ZVAL(logicCopy);
+		} else {
+			ONPHP_CLONE_ZVAL(logic, logicCopy);
 		}
 		
 		if (!where_not_empty) {
-			ZVAL_NULL(logic);
+			ZVAL_NULL(logicCopy);
 		}
 		
-		ONPHP_ARRAY_ADD(whereLogic, logic);
+		//ONPHP_COPY_ZVAL(exp, expCopy);
+		
+		ONPHP_ARRAY_ADD(whereLogic, logicCopy);
 		ONPHP_ARRAY_ADD(where, exp);
 		
-		zval_ptr_dtor(&exp);
-		
-		if (ZEND_NUM_ARGS() == 1) {
-			ZVAL_FREE(logic);
-		}
+		ZVAL_ADDREF(exp);
 	}
 	
 	RETURN_THIS;
@@ -89,6 +91,8 @@ ONPHP_METHOD(QuerySkeleton, method_name)								\
 	ZVAL_STRINGL(logic, word, strlen(word) + 1, 1);						\
 																		\
 	ONPHP_CALL_METHOD_2_NORET(getThis(), "where", NULL, exp, logic);	\
+	\
+	ZVAL_FREE(logic); \
 																		\
 	if (EG(exception)) {												\
 		return;															\
@@ -131,12 +135,12 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 			
 			ONPHP_CALL_METHOD_1(exp, "todialectstring", &out, dialect);
 			
-			if (Z_STRLEN_P(out) > 1) {
+			if (Z_STRLEN_P(out)) {
 				
 				ONPHP_ARRAY_GET(whereLogic, i, logic);
 				
 				if (EG(exception)) {
-					ZVAL_FREE(logic);
+					ZVAL_FREE(out);
 					return;
 				}
 				
@@ -145,11 +149,11 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 					onphp_append_zval_to_smart_string(&clause, logic);
 				}
 				
-				smart_str_appendl(&clause, " ", 1);
+				smart_str_appendc(&clause, ' ');
 				
 				onphp_append_zval_to_smart_string(&clause, out);
 				
-				smart_str_appendl(&clause, " ", 1);
+				smart_str_appendc(&clause, ' ');
 				
 				output_logic = 1;
 			} else if (
@@ -159,6 +163,8 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 			) {
 				add_index_null(whereLogic, i + 1);
 			}
+			
+			ZVAL_FREE(out);
 		}
 		
 		retval = (char *) php_trim(clause.c, clause.len, " ", 1, NULL, 2 TSRMLS_CC);

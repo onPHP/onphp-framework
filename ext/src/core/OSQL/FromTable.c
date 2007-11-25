@@ -25,9 +25,11 @@
 
 ONPHP_METHOD(FromTable, __construct)
 {
-	zval *table, *alias;
+	char *alias;
+	unsigned int length = 0;
+	zval *table;
 	
-	ONPHP_GET_ARGS("z|z", &table, &alias);
+	ONPHP_GET_ARGS("z|s", &table, &alias, &length);
 	
 	if (
 		(ZEND_NUM_ARGS() == 2)
@@ -49,8 +51,10 @@ ONPHP_METHOD(FromTable, __construct)
 				SelectQuery or LogicalObject as table"
 			);
 		}
-		
-		ONPHP_UPDATE_PROPERTY(getThis(), "alias", alias);
+	}
+	
+	if (length) {
+		ONPHP_UPDATE_PROPERTY_STRING(getThis(), "alias", alias);
 	}
 	
 	if (
@@ -66,9 +70,6 @@ ONPHP_METHOD(FromTable, __construct)
 		array_init(array);
 		
 		php_explode(dot, table, array, 2);
-		
-		ALLOC_INIT_ZVAL(schema);
-		ALLOC_INIT_ZVAL(newTable);
 		
 		// not checking for exceptions, since it can not fail
 		ONPHP_ARRAY_GET(array, 0, schema);
@@ -114,12 +115,14 @@ ONPHP_METHOD(FromTable, toDialectString)
 	
 	if (ONPHP_INSTANCEOF(table, DialectString)) {
 		if (is_query) {
-			smart_str_appends(&string, "(");
+			smart_str_appendc(&string, '(');
 		}
 		
 		ONPHP_CALL_METHOD_1(table, "todialectstring", &result, dialect);
 		
 		onphp_append_zval_to_smart_string(&string, result);
+		
+		zval_ptr_dtor(&result);
 		
 		if (is_query) {
 			smart_str_appendc(&string, ')');
@@ -134,7 +137,6 @@ ONPHP_METHOD(FromTable, toDialectString)
 		zval_ptr_dtor(&result);
 	} else {
 		zval *schema = ONPHP_READ_PROPERTY(getThis(), "schema");
-		
 		
 		if (Z_TYPE_P(schema) != IS_NULL) {
 			ONPHP_CALL_METHOD_1(dialect, "quotetable", &result, schema);

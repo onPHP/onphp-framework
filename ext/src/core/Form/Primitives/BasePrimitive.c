@@ -11,6 +11,8 @@
 
 #include "onphp.h"
 
+#include "core/Exceptions.h"
+
 ONPHP_METHOD(BasePrimitive, __construct)
 {
 	zval *name;
@@ -21,7 +23,12 @@ ONPHP_METHOD(BasePrimitive, __construct)
 }
 
 ONPHP_GETTER(BasePrimitive, getName, name);
-ONPHP_SETTER(BasePrimitive, setName, name);
+
+ONPHP_SETTER_START(BasePrimitive, setName, name);
+	if (Z_TYPE_P(name) != IS_STRING) {
+		ONPHP_THROW(WrongArgumentException, NULL);
+	}
+ONPHP_SETTER_END(name);
 
 ONPHP_GETTER(BasePrimitive, getDefault, name);
 ONPHP_SETTER(BasePrimitive, setDefault, name);
@@ -102,15 +109,11 @@ ONPHP_METHOD(BasePrimitive, importValue)
 	
 	name = ONPHP_READ_PROPERTY(getThis(), "name");
 	
-	add_assoc_zval(
-		scope,
-		Z_STRVAL_P(name),
-		value
-	);
+	ONPHP_ASSOC_SET(scope, Z_STRVAL_P(name), value);
 	
 	ONPHP_CALL_METHOD_1(getThis(), "import", &result, scope);
 	
-	zval_ptr_dtor(&scope);
+	ZVAL_FREE(scope);
 	
 	RETURN_ZVAL(result, 1, 1);
 }

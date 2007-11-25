@@ -39,30 +39,45 @@
 		&& (zend_hash_num_elements(Z_ARRVAL_P(value)) < 1)	\
 	))
 
-#define ONPHP_CONSTRUCT_ARRAY(name) { \
-	zval *name; \
-	ALLOC_INIT_ZVAL(name); \
-	array_init(name); \
-	ONPHP_UPDATE_PROPERTY(getThis(), # name, name); \
-	zval_ptr_dtor(&name); \
+#define ONPHP_CONSTRUCT_ARRAY(name) {				\
+	zval *name;										\
+	ALLOC_INIT_ZVAL(name);							\
+	array_init(name);								\
+	ONPHP_UPDATE_PROPERTY(getThis(), # name, name);	\
+	zval_ptr_dtor(&name);							\
 }
 
-#define ONPHP_INSTANCEOF(object, class_name) \
-	( \
-		(Z_TYPE_P(object) == IS_OBJECT) \
-		&& instanceof_function(Z_OBJCE_P(object), onphp_ce_ ## class_name TSRMLS_CC) \
+#define ONPHP_INSTANCEOF(object, class_name)		\
+	(												\
+		(Z_TYPE_P(object) == IS_OBJECT)				\
+		&& instanceof_function(						\
+			Z_OBJCE_P(object),						\
+			onphp_ce_ ## class_name TSRMLS_CC		\
+		)											\
 	)
 
-#define ONPHP_FIND_FOREIGN_CLASS(class_name, cep) \
-	if (zend_lookup_class(class_name, strlen(class_name), &cep TSRMLS_CC) == FAILURE) { \
-		ONPHP_THROW(ClassNotFoundException, class_name); \
+#define ONPHP_FIND_FOREIGN_CLASS(class_name, cep)			\
+	if (													\
+		zend_lookup_class(									\
+			class_name,										\
+			strlen(class_name),								\
+			&cep TSRMLS_CC									\
+		)													\
+		== FAILURE											\
+	) {														\
+		ONPHP_THROW(ClassNotFoundException, class_name);	\
 	}
 
-#define ONPHP_GET_ARGS(type_spec, ...) \
-	if ( \
-		zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, type_spec, __VA_ARGS__) == FAILURE \
-	) { \
-		WRONG_PARAM_COUNT; \
+#define ONPHP_GET_ARGS(type_spec, ...)	\
+	if (								\
+		zend_parse_parameters(			\
+			ZEND_NUM_ARGS() TSRMLS_CC,	\
+			type_spec,					\
+			__VA_ARGS__					\
+		)								\
+		== FAILURE						\
+	) {									\
+		WRONG_PARAM_COUNT;				\
 	}
 
 #define ONPHP_CALL_METHOD_0_NORET(object, method_name, out) \
@@ -128,6 +143,9 @@
 #define ONPHP_UPDATE_PROPERTY(class, property, value) \
 	zend_update_property(Z_OBJCE_P(class), class, property, strlen(property), value TSRMLS_CC)
 
+#define ONPHP_UPDATE_PROPERTY_STRING(class, property, value) \
+	zend_update_property_string(Z_OBJCE_P(class), class, property, strlen(property), value TSRMLS_CC)
+
 #define ONPHP_UPDATE_PROPERTY_BOOL(class, property, value) \
 	zend_update_property_bool(Z_OBJCE_P(class), class, property, strlen(property), value TSRMLS_CC)
 
@@ -140,36 +158,69 @@
 #define ONPHP_METHOD(class_name, function_name) \
 	PHP_METHOD(onphp_ ## class_name, function_name)
 
-#define ONPHP_THROW(exception, ...)				\
-	ONPHP_THROW_NORET(exception, ##__VA_ARGS__)	\
+#define ONPHP_THROW(exception, ...)					\
+	ONPHP_THROW_NORET(exception, ##__VA_ARGS__);	\
 	return;
 
 #define ONPHP_THROW_NORET(exception, ...)	\
-	zend_throw_exception_ex(				\
-		onphp_ce_ ## exception,				\
-		0 TSRMLS_CC,						\
-		##__VA_ARGS__						\
-	);
+	ONPHP_THROW_NORET_EX(exception, 0 TSRMLS_CC, ##__VA_ARGS__)
+
+#define ONPHP_STRINGIZE(s) ONPHP_STRINGIZE_(s)
+#define ONPHP_STRINGIZE_(s) # s
+
+#define ONPHP_THROW_NORET_EX(exception, code, message, ...)	\
+	zend_throw_exception_ex(								\
+		onphp_ce_ ## exception,								\
+		code,												\
+		ONPHP_STRINGIZE(__FILE__:__LINE__ '  ' message),	\
+		##__VA_ARGS__										\
+	)
 
 #define RETURN_THIS RETURN_ZVAL(getThis(), 1, 0)
 
-#define ONPHP_GETTER(class_name, method_name, property_name) \
-	ONPHP_METHOD(class_name, method_name) \
-	{ \
-		zval *property_name = ONPHP_READ_PROPERTY(getThis(), # property_name); \
-		RETURN_ZVAL(property_name, 1, 0); \
+#define ONPHP_COPY_ZVAL(value, copy)	\
+	ALLOC_INIT_ZVAL(copy);				\
+	*copy = *value;						\
+	zval_copy_ctor(copy);
+
+#define ONPHP_CLONE_ZVAL(value, copy)	\
+	ALLOC_INIT_ZVAL(copy);				\
+	ZVAL_ZVAL(copy, value, 1, 0);
+
+#define ONPHP_GETTER(class_name, method_name, prop_name)				\
+	ONPHP_METHOD(class_name, method_name)								\
+	{																	\
+		zval *prop_name = ONPHP_READ_PROPERTY(getThis(), # prop_name);	\
+		RETURN_ZVAL(prop_name, 1, 0);									\
 	}
 
-#define ONPHP_SETTER(class_name, method_name, property_name) \
-	ONPHP_METHOD(class_name, method_name) \
-	{ \
-		zval *property_name; \
-		\
-		ONPHP_GET_ARGS("z", &property_name) \
-		\
-		ONPHP_UPDATE_PROPERTY(getThis(), # property_name, property_name); \
-		\
-		RETURN_THIS; \
+#define ONPHP_SETTER_START(class_name, method_name, prop_name)			\
+	ONPHP_METHOD(class_name, method_name)								\
+	{																	\
+		zval *prop_name;												\
+																		\
+		ONPHP_GET_ARGS("z", &prop_name)
+
+#define ONPHP_SETTER_END(prop_name)										\
+		ONPHP_UPDATE_PROPERTY(getThis(), # prop_name, prop_name);		\
+																		\
+		RETURN_THIS;													\
+	}
+
+#define ONPHP_SETTER(class_name, method_name, prop_name)	\
+	ONPHP_SETTER_START(class_name, method_name, prop_name)	\
+	ONPHP_SETTER_END(prop_name)
+
+#define ONPHP_SETTER_LONG(class_name, method_name, prop_name)			\
+	ONPHP_METHOD(class_name, method_name)								\
+	{																	\
+		int prop_name;													\
+																		\
+		ONPHP_GET_ARGS("l", &prop_name);								\
+																		\
+		ONPHP_UPDATE_PROPERTY_LONG(getThis(), # prop_name, prop_name);	\
+																		\
+		RETURN_THIS;													\
 	}
 
 #define ONPHP_MAKE_OBJECT(class_name, zval) \
@@ -206,54 +257,43 @@
 		RETURN_ZVAL(object, 1, 1);				\
 	}
 
-#define ONPHP_STANDART_CLASS(class_name) \
-	PHPAPI zend_class_entry *onphp_ce_ ## class_name; \
+#define ONPHP_STANDART_CLASS(class_name)					\
+	PHPAPI zend_class_entry *onphp_ce_ ## class_name;		\
 	extern zend_function_entry onphp_funcs_ ## class_name[];
 
-#define ONPHP_FOREACH(array, value)											\
-	for (																	\
-		zend_hash_internal_pointer_reset(Z_ARRVAL_P(array));				\
-		zend_hash_get_current_data(											\
-			Z_ARRVAL_P(array), (void **) &value								\
-		) == SUCCESS;														\
-		zend_hash_move_forward(Z_ARRVAL_P(array))							\
-	)
+#define ONPHP_FOREACH(array, value)									\
+	if (zend_hash_num_elements(Z_ARRVAL_P(array)) > 0)				\
+		for (														\
+			zend_hash_internal_pointer_reset(Z_ARRVAL_P(array));	\
+			zend_hash_get_current_data(								\
+				Z_ARRVAL_P(array), (void **) &value					\
+			) == SUCCESS;											\
+			zend_hash_move_forward(Z_ARRVAL_P(array))				\
+		)
 
 #define ONPHP_ASSOC_ISSET(array, key) \
-	zend_hash_exists(Z_ARRVAL_P(array), Z_STRVAL_P(key), Z_STRLEN_P(key) + 1)
+	zend_hash_exists(Z_ARRVAL_P(array), key, strlen(key) + 1)
 
 #define ONPHP_ARRAY_ISSET(array, index) \
 	zend_hash_index_exists(Z_ARRVAL_P(array), index)
 
 #define ONPHP_ASSOC_UNSET(array, key) \
-	zend_hash_del(Z_ARRVAL_P(array), Z_STRVAL_P(key), Z_STRLEN_P(key) + 1)
+	zend_hash_del(Z_ARRVAL_P(array), key, strlen(key) + 1)
 
-#define ONPHP_CLONE_ZVAL(value, copy)			\
-	ALLOC_INIT_ZVAL(copy);						\
-	*copy = *value;								\
-	zval_copy_ctor(copy);
-
-#define ONPHP_ASSOC_SET(array, key, value) {	\
-	zval *copy;									\
-	ONPHP_CLONE_ZVAL(value, copy);				\
-	add_assoc_zval_ex(							\
-		array,									\
-		Z_STRVAL_P(key),						\
-		Z_STRLEN_P(key) + 1,					\
-		copy									\
-	);											\
+#define ONPHP_ASSOC_SET(array, key, value) {		\
+	zval *copy;										\
+													\
+	ONPHP_CLONE_ZVAL(value, copy);					\
+													\
+	add_assoc_zval(array, key, copy);				\
 }
 
 #define ONPHP_ARRAY_SET(array, index, value) {	\
-	zval *copy;									\
-	ONPHP_CLONE_ZVAL(value, copy);				\
-	add_index_zval(array, index, copy);			\
+	add_index_zval(array, index, value);		\
 }
 
 #define ONPHP_ARRAY_ADD(array, value) {			\
-	zval *copy;									\
-	ONPHP_CLONE_ZVAL(value, copy);				\
-	add_next_index_zval(array, copy);			\
+	add_next_index_zval(array, value);			\
 }
 
 #define ONPHP_ASSOC_GET(array, key, value)	{	\
@@ -262,20 +302,18 @@
 	if (										\
 		zend_hash_find(							\
 			Z_ARRVAL_P(array),					\
-			Z_STRVAL_P(key),					\
-			Z_STRLEN_P(key) + 1,				\
+			key,								\
+			strlen(key) + 1,					\
 			(void **) &stored					\
 		)										\
 	) {											\
 		ONPHP_THROW_NORET(						\
 			MissingElementException,			\
-			"%s[%s]", # array, Z_STRVAL_P(key)	\
+			"%s[%s]", # array, key				\
 		);										\
 	}											\
 												\
 	value = *stored;							\
-												\
-	zval_copy_ctor(value);						\
 }
 
 #define ONPHP_ARRAY_GET(array, index, value) {	\
@@ -296,9 +334,6 @@
 	}											\
 												\
 	value = *stored;							\
-												\
-	zval_copy_ctor(value);						\
-												\
 }
 
 #define ONPHP_PROPERTY_DESTRUCT(property) {							\

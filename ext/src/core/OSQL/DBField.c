@@ -53,7 +53,7 @@ ONPHP_GETTER(DBField, getTable, table);
 ONPHP_METHOD(DBField, toDialectString)
 {
 	smart_str string = {0};
-	zval *table, *field, *dialect, *cast;
+	zval *table, *field, *dialect, *cast, *quoted;
 	
 	ONPHP_GET_ARGS("z", &dialect);
 	
@@ -68,16 +68,15 @@ ONPHP_METHOD(DBField, toDialectString)
 		ONPHP_CALL_METHOD_1(table, "todialectstring", &tmp, dialect);
 		
 		onphp_append_zval_to_smart_string(&string, tmp);
+		zval_ptr_dtor(&tmp);
 		smart_str_appendc(&string, '.');
-		
-		ZVAL_FREE(tmp);
 	}
 	
-	ONPHP_CALL_METHOD_1(dialect, "quotefield", &field, field);
+	ONPHP_CALL_METHOD_1(dialect, "quotefield", &quoted, field);
 	
-	onphp_append_zval_to_smart_string(&string, field);
+	onphp_append_zval_to_smart_string(&string, quoted);
 	
-	zval_ptr_dtor(&field);
+	zval_ptr_dtor(&quoted);
 	
 	if (Z_STRLEN_P(cast)) {
 		zval *tmp;
@@ -99,10 +98,11 @@ ONPHP_METHOD(DBField, toDialectString)
 		ZVAL_FREE(tmp);
 		
 		if (EG(exception)) {
+			zval_ptr_dtor(&cast);
 			return;
 		}
 		
-		RETURN_ZVAL(cast, 1, 0);
+		RETURN_ZVAL(cast, 1, 1);
 	}
 	
 	smart_str_0(&string);
@@ -140,7 +140,7 @@ ONPHP_METHOD(DBField, setTable)
 		);
 		
 		if (EG(exception)) {
-			zval_ptr_dtor(&from_table);
+			ZVAL_FREE(from_table);
 			return;
 		}
 		

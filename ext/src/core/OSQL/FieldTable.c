@@ -26,7 +26,7 @@ ONPHP_GETTER(FieldTable, getField, field);
 
 ONPHP_METHOD(FieldTable, toDialectString)
 {
-	zval *dialect, *cast, *field, *out;
+	zval *dialect, *cast, *field, *out, *result;
 	
 	ONPHP_GET_ARGS("z", &dialect);
 	
@@ -37,12 +37,14 @@ ONPHP_METHOD(FieldTable, toDialectString)
 	cast = ONPHP_READ_PROPERTY(getThis(), "cast");
 	
 	if (Z_STRLEN_P(cast)) {
-		ONPHP_CALL_METHOD_2(dialect, "tocasted", &out, out, cast);
+		ONPHP_CALL_METHOD_2(dialect, "tocasted", &result, out, cast);
+		
+		zval_ptr_dtor(&out);
+		
+		RETURN_ZVAL(result, 1, 1);
 	} else {
-		// nothing
+		RETURN_ZVAL(out, 1, 1);
 	}
-	
-	RETURN_ZVAL(out, 1, 1);
 }
 
 static ONPHP_ARGINFO_ONE;

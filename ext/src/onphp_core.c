@@ -154,12 +154,11 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_STD_CLASS(Identifier);
 	REGISTER_ONPHP_PROPERTY(Identifier, "id", ZEND_ACC_PRIVATE);
 	REGISTER_ONPHP_PROPERTY_BOOL(Identifier, "final", 0, ZEND_ACC_PRIVATE);
+	REGISTER_ONPHP_IMPLEMENTS(Identifier, Identifiable);
 	ONPHP_CLASS_IS_FINAL(Identifier);
 	
 	REGISTER_ONPHP_STD_CLASS(IdentifiableObject);
 	REGISTER_ONPHP_PROPERTY(IdentifiableObject, "id", ZEND_ACC_PROTECTED);
-	
-	REGISTER_ONPHP_IMPLEMENTS(Identifier, Identifiable);
 	REGISTER_ONPHP_IMPLEMENTS(IdentifiableObject, Identifiable);
 	
 	REGISTER_ONPHP_SUB_CLASS(NamedObject, IdentifiableObject);

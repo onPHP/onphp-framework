@@ -18,12 +18,13 @@
 
 ONPHP_METHOD(DropTableQuery, __construct)
 {
-	zval *name;
+	char *name;
+	unsigned int length;
 	zend_bool cascade = 0;
 	
-	ONPHP_GET_ARGS("z|b", &name, &cascade);
+	ONPHP_GET_ARGS("s|b", &name, &length, &cascade);
 	
-	ONPHP_UPDATE_PROPERTY(getThis(), "name", name);
+	ONPHP_UPDATE_PROPERTY_STRING(getThis(), "name", name);
 	
 	if (
 		(ZEND_NUM_ARGS() == 2)
@@ -40,7 +41,7 @@ ONPHP_METHOD(DropTableQuery, getId)
 
 ONPHP_METHOD(DropTableQuery, toDialectString)
 {
-	zval *dialect, *name, *cascade;
+	zval *dialect, *name, *cascade, *out;
 	smart_str string = {0};
 	
 	ONPHP_GET_ARGS("z", &dialect);
@@ -48,17 +49,22 @@ ONPHP_METHOD(DropTableQuery, toDialectString)
 	name = ONPHP_READ_PROPERTY(getThis(), "name");
 	cascade = ONPHP_READ_PROPERTY(getThis(), "cascade");
 	
-	ONPHP_CALL_METHOD_1(dialect, "quotetable", &name, name);
-	ONPHP_CALL_METHOD_1(dialect, "droptablemode", &cascade, cascade);
-	
 	smart_str_appendl(&string, "DROP TABLE ", 11);
-	onphp_append_zval_to_smart_string(&string, name);
-	onphp_append_zval_to_smart_string(&string, cascade);
+	
+	ONPHP_CALL_METHOD_1(dialect, "quotetable", &out, name);
+	
+	onphp_append_zval_to_smart_string(&string, out);
+	
+	zval_ptr_dtor(&out);
+	
+	ONPHP_CALL_METHOD_1(dialect, "droptablemode", &out, cascade);
+	
+	onphp_append_zval_to_smart_string(&string, out);
+	
+	zval_ptr_dtor(&out);
+	
 	smart_str_appendc(&string, ';');
 	smart_str_0(&string);
-	
-	zval_ptr_dtor(&name);
-	zval_ptr_dtor(&cascade);
 	
 	RETURN_STRINGL(string.c, string.len, 0);
 }

@@ -41,21 +41,22 @@ ONPHP_METHOD(DBBinary, create)
 
 ONPHP_METHOD(DBBinary, toDialectString)
 {
-	zval *dialect, *value;
+	zval *dialect, *value, *quoted;
 	smart_str string = {0};
 	
 	ONPHP_GET_ARGS("z", &dialect);
 	
 	ONPHP_CALL_METHOD_0(getThis(), "getvalue", &value);
 	
-	ONPHP_CALL_METHOD_1(dialect, "quotebinary", &value, value);
-	
-	smart_str_appendc(&string, '\'');
-	onphp_append_zval_to_smart_string(&string, value);
-	smart_str_appendc(&string, '\'');
-	smart_str_0(&string);
+	ONPHP_CALL_METHOD_1(dialect, "quotebinary", &quoted, value);
 	
 	zval_ptr_dtor(&value);
+	
+	smart_str_appendc(&string, '\'');
+	onphp_append_zval_to_smart_string(&string, quoted);
+	zval_ptr_dtor(&quoted);
+	smart_str_appendc(&string, '\'');
+	smart_str_0(&string);
 	
 	RETURN_STRINGL(string.c, string.len, 0);
 }

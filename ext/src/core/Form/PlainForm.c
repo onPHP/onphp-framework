@@ -31,10 +31,10 @@ ONPHP_METHOD(PlainForm, __destruct)
 
 ONPHP_METHOD(PlainForm, clean)
 {
-	zval *prm, *primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
+	zval **prm, *primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
 	
 	ONPHP_FOREACH(primitives, prm) {
-		ONPHP_CALL_METHOD_0(prm, "clean", NULL);
+		ONPHP_CALL_METHOD_0(*prm, "clean", NULL);
 	}
 	
 	RETURN_THIS;
@@ -42,9 +42,11 @@ ONPHP_METHOD(PlainForm, clean)
 
 ONPHP_METHOD(PlainForm, primitiveExists)
 {
-	zval *name, *primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
+	char *name;
+	unsigned int length;
+	zval *primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
 	
-	ONPHP_GET_ARGS("z", &name);
+	ONPHP_GET_ARGS("s", &name, &length);
 	
 	RETURN_BOOL(
 		ONPHP_ASSOC_ISSET(primitives, name)
@@ -53,28 +55,34 @@ ONPHP_METHOD(PlainForm, primitiveExists)
 
 ONPHP_METHOD(PlainForm, add)
 {
-	zval *name, *prm, *primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
+	zval
+		*name,
+		*prm,
+		*primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
 	
 	ONPHP_GET_ARGS("z", &prm);
 	
 	ONPHP_CALL_METHOD_0(prm, "getname", &name);
 	
-	if (ONPHP_ASSOC_ISSET(primitives, name)) {
+	if (ONPHP_ASSOC_ISSET(primitives, Z_STRVAL_P(name))) {
+		ZVAL_FREE(name);
 		ONPHP_THROW(WrongArgumentException, "i am already exists!");
 	}
 	
-	ONPHP_ASSOC_SET(primitives, name, prm);
+	ONPHP_ASSOC_SET(primitives, Z_STRVAL_P(name), prm);
 	
-	zval_ptr_dtor(&name);
+	ZVAL_FREE(name);
 	
 	RETURN_THIS;
 }
 
 ONPHP_METHOD(PlainForm, drop)
 {
-	zval *name, *primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
+	char *name;
+	unsigned int length;
+	zval *primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
 	
-	ONPHP_GET_ARGS("z", &name);
+	ONPHP_GET_ARGS("s", &name, &length);
 	
 	if (!ONPHP_ASSOC_ISSET(primitives, name)) {
 		ONPHP_THROW(
@@ -90,16 +98,20 @@ ONPHP_METHOD(PlainForm, drop)
 
 ONPHP_METHOD(PlainForm, get)
 {
-	zval *name, *primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
+	char *name;
+	unsigned int length;
+	zval *primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
 	
-	ONPHP_GET_ARGS("z", &name);
+	ONPHP_GET_ARGS("s", &name, &length);
 	
 	if (ONPHP_ASSOC_ISSET(primitives, name)) {
-		zval *prm;
+		zval *prm, *copy;
 		
 		ONPHP_ASSOC_GET(primitives, name, prm);
 		
-		RETURN_ZVAL(prm, 1, 0);
+		ONPHP_CLONE_ZVAL(prm, copy);
+		
+		RETURN_ZVAL(copy, 1, 1);
 	}
 	
 	ONPHP_THROW(MissingElementException, NULL);
@@ -120,8 +132,8 @@ ONPHP_METHOD(PlainForm, method_name)									\
 
 #define ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER(function_name)			\
 	ONPHP_CALL_METHOD_0(prm, function_name, &out);						\
-	zval_ptr_dtor(&prm);												\
-	RETURN_ZVAL(out, 1, 0);												\
+	ZVAL_FREE(prm);														\
+	RETURN_ZVAL(out, 1, 1);												\
 }
 
 ONPHP_PLAIN_FORM_STRAIGHT_GETTER(getValue, "getvalue");
@@ -131,18 +143,21 @@ ONPHP_PLAIN_FORM_STRAIGHT_GETTER(getSafeValue, "getsafevalue");
 
 ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getChoiceValue) {
 	if (!ONPHP_INSTANCEOF(prm, ListedPrimitive)) {
+		ZVAL_FREE(prm);
 		ONPHP_THROW(WrongArgumentException, NULL);
 	}
 } ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getchoicevalue");
 
 ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getActualChoiceValue) {
 	if (!ONPHP_INSTANCEOF(prm, ListedPrimitive)) {
+		ZVAL_FREE(prm);
 		ONPHP_THROW(WrongArgumentException, NULL);
 	}
 } ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getactualchoicevalue");
 
 ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getDisplayValue) {
 	if (ONPHP_INSTANCEOF(prm, FiltrablePrimitive)) {
+		ZVAL_FREE(prm);
 		ONPHP_THROW(WrongArgumentException, NULL);
 	}
 } ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getactualchoicevalue");
@@ -165,6 +180,7 @@ ONPHP_METHOD(PlainForm, getPrimitiveNames)
 	);
 	
 	if (EG(exception)) {
+		ZVAL_FREE(out);
 		return;
 	}
 	

@@ -74,6 +74,8 @@ ONPHP_METHOD(ComplexPrimitive, setState)
 	
 	ONPHP_CALL_METHOD_1(single, "setvalue", NULL, value);
 	
+	ZVAL_FREE(value);
+	
 	RETURN_THIS;
 }
 
@@ -130,16 +132,15 @@ ONPHP_METHOD(ComplexPrimitive, import)
 		ONPHP_CALL_METHOD_1(getThis(), "importmarried", &result, scope);
 		
 		if (!ONPHP_CHECK_EMPTY(result)) {
+			zval_ptr_dtor(&result);
+			
 			ONPHP_CALL_METHOD_1(getThis(), "importsingle", &result, scope);
 			
-			RETVAL_ZVAL(result, 1, 1);
+			RETURN_ZVAL(result, 1, 1);
 		} else {
-			RETVAL_TRUE;
+			zval_ptr_dtor(&result);
+			RETURN_TRUE;
 		}
-		
-		zval_ptr_dtor(&result);
-		
-		return;
 	} else if (Z_TYPE_P(result) == IS_BOOL) {
 		zval_ptr_dtor(&result);
 		

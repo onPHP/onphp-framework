@@ -122,7 +122,7 @@ ONPHP_METHOD(ImaginaryDialect, valueToString)
 	if (ONPHP_INSTANCEOF(value, DBValue)) {
 		zval *out;
 		
-		ONPHP_CALL_METHOD_1(value, "todialectstring", &out, value);
+		ONPHP_CALL_METHOD_1(value, "todialectstring", &out, getThis());
 		
 		RETURN_ZVAL(out, 1, 1);
 	}

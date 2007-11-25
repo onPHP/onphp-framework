@@ -33,7 +33,6 @@ ONPHP_METHOD(QueryIdentification, getId)
 	ZVAL_FREE(out);
 	
 	if (EG(exception)) {
-		ZVAL_FREE(out);
 		return;
 	}
 	
@@ -53,6 +52,7 @@ ONPHP_METHOD(QueryIdentification, toString)
 	);
 	
 	if (EG(exception)) {
+		ZVAL_FREE(imdi);
 		return;
 	}
 	

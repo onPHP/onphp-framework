@@ -15,6 +15,8 @@ void onphp_append_zval_to_smart_string(smart_str *string, zval *value)
 {
 	if (Z_TYPE_P(value) == IS_STRING) {
 		smart_str_appendl(string, Z_STRVAL_P(value), Z_STRLEN_P(value));
+	} else if (Z_TYPE_P(value) == IS_LONG) {
+		smart_str_append_long(string, Z_LVAL_P(value));
 	} else {
 		zval copy;
 		int use_copy;

@@ -80,6 +80,8 @@ ONPHP_METHOD(ExtractPart, __construct)
 	
 	ONPHP_UPDATE_PROPERTY(getThis(), "from", fromField);
 	
+	zval_ptr_dtor(&fromField);
+	
 	ONPHP_FIND_FOREIGN_CLASS("DatePart", cep);
 	
 	if (
@@ -109,8 +111,12 @@ ONPHP_METHOD(ExtractPart, __construct)
 		}
 		
 		ONPHP_UPDATE_PROPERTY(getThis(), "what", whatPart);
+		
+		zval_ptr_dtor(&whatPart);
 	} else {
 		ONPHP_UPDATE_PROPERTY(getThis(), "what", what);
+		
+		zval_ptr_dtor(&what);
 	}
 }
 
@@ -135,7 +141,9 @@ ONPHP_METHOD(ExtractPart, toMapped)
 		atom
 	);
 	
-	RETURN_ZVAL(query, 1, 0);
+	zval_ptr_dtor(&atom);
+	
+	RETURN_ZVAL(query, 1, 1);
 }
 
 ONPHP_METHOD(ExtractPart, toDialectString)
@@ -150,7 +158,12 @@ ONPHP_METHOD(ExtractPart, toDialectString)
 	
 	ONPHP_CALL_METHOD_0(what, "tostring", &whatString);
 	
-	ONPHP_CALL_METHOD_1(from, "todialectstring", &fromString, dialect);
+	ONPHP_CALL_METHOD_1_NORET(from, "todialectstring", &fromString, dialect);
+	
+	if (EG(exception)) {
+		ZVAL_FREE(whatString);
+		return;
+	}
 	
 	smart_str_appendl(&string, "EXTRACT(", 8);
 	onphp_append_zval_to_smart_string(&string, whatString);

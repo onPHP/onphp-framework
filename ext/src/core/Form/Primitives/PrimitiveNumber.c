@@ -17,7 +17,7 @@
 
 ONPHP_METHOD(PrimitiveNumber, import)
 {
-	zval *scope, *result, *name, *value, *min, *max;
+	zval *scope, *result, *name, *value, *min, *max, *out;
 	
 	ONPHP_GET_ARGS("z", &scope);
 	
@@ -31,41 +31,50 @@ ONPHP_METHOD(PrimitiveNumber, import)
 	);
 	
 	if (EG(exception)) {
+		zval_ptr_dtor(&result);
 		return;
 	}
 	
 	if (!ONPHP_CHECK_EMPTY(result)) {
+		zval_ptr_dtor(&result);
 		RETURN_NULL();
 	}
 	
+	zval_ptr_dtor(&result);
+	
 	name = ONPHP_READ_PROPERTY(getThis(), "name");
 	
-	ONPHP_ASSOC_GET(scope, name, value);
+	ONPHP_ASSOC_GET(scope, Z_STRVAL_P(name), value);
+	
+	ONPHP_CLONE_ZVAL(value, out);
+	
+	value = NULL;
 	
 	zend_try {
-		ONPHP_CALL_METHOD_1_NORET(getThis(), "checknumber", NULL, value);
+		ONPHP_CALL_METHOD_1_NORET(getThis(), "checknumber", NULL, out);
 	} zend_catch {
-		ZVAL_FREE(value);
 		RETURN_FALSE;
 	} zend_end_try();
 	
-	ONPHP_CALL_METHOD_1(getThis(), "castnumber", &value, value);
+	ONPHP_CALL_METHOD_1(getThis(), "castnumber", &value, out);
+	
+	ZVAL_FREE(out);
 	
 	ONPHP_CALL_METHOD_0(getThis(), "selffilter", NULL);
 	
-	min = ONPHP_READ_PROPERTY(getThis(), "min");
-	max = ONPHP_READ_PROPERTY(getThis(), "max");
-	
 	if (
-		!(
+		(Z_TYPE_P(value) == IS_LONG)
+		&& (min = ONPHP_READ_PROPERTY(getThis(), "min"))
+		&& (max = ONPHP_READ_PROPERTY(getThis(), "max"))
+		&& !(
 			(IS_NULL != Z_TYPE_P(min))
-			&& (Z_LVAL_P(value) < Z_LVAL_P(min))
+			&& (Z_LVAL_P(out) < Z_LVAL_P(min))
 		) && !(
 			(IS_NULL != Z_TYPE_P(max))
-			&& (Z_LVAL_P(value) > Z_LVAL_P(max))
+			&& (Z_LVAL_P(out) > Z_LVAL_P(max))
 		)
 	) {
-		ONPHP_UPDATE_PROPERTY(getThis(), "value", value);
+		ONPHP_UPDATE_PROPERTY_LONG(getThis(), "value", Z_LVAL_P(value));
 		
 		RETVAL_TRUE;
 	} else {

@@ -67,7 +67,7 @@ ONPHP_METHOD(FiltrablePrimitive, method_name)								\
 	ONPHP_GET_ARGS("z", &filter);											\
 																			\
 	ONPHP_CALL_METHOD_1(chain, "add", NULL, filter);						\
-	zval_ptr_dtor(&filter);													\
+																			\
 	RETURN_THIS;															\
 }
 
@@ -97,37 +97,54 @@ ONPHP_FILTRABLE_PRIMITIVE_CHAIN_DROP(dropImportFilters, importFilter);
 
 #define ONPHP_FILTRABLE_PRIMITIVE_APPLY_FILTERS								\
 	if (Z_TYPE_P(value) == IS_ARRAY) {										\
-		zval *element;														\
+		zval **element;														\
 																			\
 		ONPHP_FOREACH(value, element) {										\
-			ONPHP_CALL_METHOD_1(chain, "apply", &element, element);			\
+			ONPHP_CALL_METHOD_1(chain, "apply", &filtered, *element);		\
+			zval_ptr_dtor(element);											\
+			*element = filtered;											\
 		}																	\
+		filtered = value;													\
 	} else {																\
-		ONPHP_CALL_METHOD_1(chain, "apply", &value, value);					\
+		ONPHP_CALL_METHOD_1(chain, "apply", &filtered, value);				\
 	}
 
 ONPHP_METHOD(FiltrablePrimitive, getDisplayValue)
 {
 	zval
 		*value,
+		*filtered,
 		*chain = ONPHP_READ_PROPERTY(getThis(), "displayFilter");
+	
+	unsigned char is_array = (Z_TYPE_P(value) == IS_ARRAY);
 	
 	ONPHP_CALL_METHOD_0(getThis(), "getactualvalue", &value);
 	
 	ONPHP_FILTRABLE_PRIMITIVE_APPLY_FILTERS;
 	
-	RETURN_ZVAL(value, 1, 0);
+	if (!is_array) {
+		zval_ptr_dtor(&value);
+	}
+	
+	RETURN_ZVAL(filtered, 1, 1);
 }
 
 ONPHP_METHOD(FiltrablePrimitive, selfFilter)
 {
 	zval
 		*value = ONPHP_READ_PROPERTY(getThis(), "value"),
-		*chain = ONPHP_READ_PROPERTY(getThis(), "importFilter");
+		*chain = ONPHP_READ_PROPERTY(getThis(), "importFilter"),
+		*filtered;
+	
+	unsigned char is_array = (Z_TYPE_P(value) == IS_ARRAY);
 	
 	ONPHP_FILTRABLE_PRIMITIVE_APPLY_FILTERS;
 	
-	zval_ptr_dtor(&value);
+	ONPHP_UPDATE_PROPERTY(getThis(), "value", filtered);
+	
+	if (!is_array) {
+		zval_ptr_dtor(&filtered);
+	}
 	
 	RETURN_THIS;
 }

@@ -158,11 +158,14 @@ ONPHP_METHOD(Enumeration, setId)
 		
 		ZVAL_FREE(names);
 		
-		ONPHP_THROW(
+		ONPHP_THROW_NORET(
 			MissingElementException,
 			"knows nothing about such id == {%s}",
 			Z_STRVAL_P(id)
 		);
+		
+		ZVAL_FREE(id);
+		return;
 	}
 	
 	RETURN_THIS;
@@ -186,7 +189,7 @@ ONPHP_METHOD(Enumeration, getAnyId)
 
 ONPHP_METHOD(Enumeration, getObjectList)
 {
-	zval *names, *list, *element;
+	zval *names, *list, **element;
 	
 	ALLOC_INIT_ZVAL(list);
 	array_init(list);
@@ -196,6 +199,7 @@ ONPHP_METHOD(Enumeration, getObjectList)
 	if (
 		Z_TYPE_P(names) != IS_ARRAY
 	) {
+		ZVAL_FREE(names);
 		RETURN_ZVAL(list, 1, 1);
 	}
 	
@@ -204,6 +208,10 @@ ONPHP_METHOD(Enumeration, getObjectList)
 		char *key;
 		ulong length;
 		unsigned int result;
+		
+		ALLOC_INIT_ZVAL(object);
+		object->value.obj = onphp_empty_object_new(Z_OBJCE_P(getThis()) TSRMLS_CC);
+		Z_TYPE_P(object) = IS_OBJECT;
 		
 		result =
 			zend_hash_get_current_key(
@@ -222,13 +230,9 @@ ONPHP_METHOD(Enumeration, getObjectList)
 		} else {
 			ZVAL_FREE(arg);
 			ZVAL_FREE(list);
-			
+			ZVAL_FREE(object);
 			ONPHP_THROW(WrongStateException, "weird key found");
 		}
-		
-		ALLOC_INIT_ZVAL(object);
-		object->value.obj = onphp_empty_object_new(Z_OBJCE_P(getThis()) TSRMLS_CC);
-		Z_TYPE_P(object) = IS_OBJECT;
 		
 		ONPHP_CALL_METHOD_1_NORET(object, "__construct", NULL, arg);
 		
@@ -237,12 +241,13 @@ ONPHP_METHOD(Enumeration, getObjectList)
 		if (EG(exception)) {
 			ZVAL_FREE(object);
 			ZVAL_FREE(list);
-			ZVAL_FREE(arg);
 			return;
 		} else {
 			add_next_index_zval(list, object);
 		}
 	}
+	
+	ZVAL_FREE(names);
 	
 	RETURN_ZVAL(list, 1, 1);
 }
