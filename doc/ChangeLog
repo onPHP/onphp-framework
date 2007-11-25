@@ -25,6 +25,10 @@
 	* main/Markup/Feed/FeedReader.class.php: errors from simplexml_load_file()
 	translated into WrongStateExceptions.
 
+2007-11-11	Konstantin V. Arkhipov
+
+	* core/DB/Dialect.class.php: useless quoteValue() removed.
+
 2007-11-07	Ivan Y. Khvostishkov
 
 	* main/Utils/TextUtils.class.php: friendlyNumber(): bug with small

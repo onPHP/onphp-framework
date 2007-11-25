@@ -26,22 +26,11 @@
 		abstract public function hasTruncate();
 		abstract public function hasMultipleTruncate();
 		
-		public static function quoteValue($value)
-		{
-			return
-				(
-					(
-						is_numeric($value)
-						// to avoid values like '108E102'
-						// (is_numeric()'ll return true)
-						&& $value == (int) $value
-						&& strlen($value) == strlen((int) $value)
-					) ||
-					(is_string($value) && strtolower($value) == 'null')
-				)
-					? $value
-					: "'".addslashes($value)."'";
-		}
+		/**
+			must be implemented too:
+			
+			public static function quoteValue($value);
+		**/
 		
 		public static function quoteField($field)
 		{
