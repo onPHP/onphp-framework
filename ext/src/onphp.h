@@ -111,6 +111,20 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 	ONPHP_CALL_METHOD_3_NORET(object, method_name, out, first_argument, second_argument, third_argument); \
 	if (EG(exception)) return
 
+#define ONPHP_CALL_PARENT_1_NORET(object, method_name, out, first_argument)	\
+	zend_call_method_with_1_params(											\
+		&object,															\
+		Z_OBJCE_P(object)->parent,											\
+		&Z_OBJCE_P(object)->parent->constructor,							\
+		# method_name,														\
+		out,																\
+		first_argument														\
+	);
+
+#define ONPHP_CALL_PARENT_1(object, method_name, out, first_argument)	\
+	ONPHP_CALL_PARENT_1_NORET(object, method_name, out, first_argument)	\
+	if (EG(exception)) return
+
 #define ONPHP_ME(class_name, function_name, arg_info, flags) \
 	PHP_ME(onphp_ ## class_name, function_name, arg_info, flags)
 
@@ -294,24 +308,29 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 #define ONPHP_ASSOC_UNSET(array, key) \
 	zend_hash_del(Z_ARRVAL_P(array), key, strlen(key) + 1)
 
-#define ONPHP_ASSOC_SET(array, key, value) { \
-	add_assoc_zval(array, key, value); \
-	ZVAL_ADDREF(value); \
+#define ONPHP_ASSOC_SET(array, key, value) {	\
+	ZVAL_ADDREF(value);							\
+	add_assoc_zval(array, key, value);			\
 }
 
 #define ONPHP_ASSOC_SET_LONG(array, key, value) \
 	add_assoc_long(array, key, value);
 
 #define ONPHP_ARRAY_SET(array, index, value) {	\
-	add_index_zval(array, index, value);		\
+	if (Z_TYPE_P(value) == IS_NULL) {			\
+		add_index_null(array);					\
+	} else {									\
+		ZVAL_ADDREF(value);						\
+		add_index_zval(array, index, value);	\
+	}											\
 }
 
 #define ONPHP_ARRAY_ADD(array, value) {		\
 	if (Z_TYPE_P(value) == IS_NULL) {		\
 		add_next_index_null(array);			\
 	} else {								\
-		add_next_index_zval(array, value);	\
 		ZVAL_ADDREF(value);					\
+		add_next_index_zval(array, value);	\
 	}										\
 }
 

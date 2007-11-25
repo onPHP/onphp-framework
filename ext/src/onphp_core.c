@@ -58,6 +58,7 @@
 #include "core/OSQL/FieldTable.h"
 #include "core/OSQL/FromTable.h"
 #include "core/OSQL/FullText.h"
+#include "core/OSQL/GroupBy.h"
 #include "core/OSQL/SelectField.h"
 #include "core/OSQL/SQLTableName.h"
 #include "core/OSQL/Query.h"
@@ -252,6 +253,10 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(FullText, MappableObject);
 	REGISTER_ONPHP_IMPLEMENTS(FullText, LogicalObject);
 	ONPHP_CLASS_IS_ABSTRACT(FullText);
+	
+	REGISTER_ONPHP_SUB_CLASS(GroupBy, FieldTable);
+	REGISTER_ONPHP_IMPLEMENTS(GroupBy, MappableObject);
+	ONPHP_CLASS_IS_FINAL(GroupBy);
 	
 	REGISTER_ONPHP_STD_CLASS(QueryIdentification);
 	REGISTER_ONPHP_IMPLEMENTS(QueryIdentification, Query);

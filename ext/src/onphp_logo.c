@@ -70,6 +70,7 @@ Form, \
 FormField, \
 FromTable, \
 FullText, \
+GroupBy, \
 IdentifiableObject, \
 Identifier, \
 ImaginaryDialect, \

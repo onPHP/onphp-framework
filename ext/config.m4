@@ -47,6 +47,7 @@ if test "$PHP_ONPHP" != "no"; then
 		src/core/OSQL/FieldTable.c \
 		src/core/OSQL/FromTable.c \
 		src/core/OSQL/FullText.c \
+		src/core/OSQL/GroupBy.c \
 		src/core/OSQL/SelectField.c \
 		src/core/OSQL/SQLTableName.c \
 		src/core/OSQL/Query.c \

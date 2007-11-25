@@ -10,6 +10,12 @@
 	* main/Utils/DaoMoveHelper.class.php: ObjectQuery replaced by
 	Criteria.
 
+2007-11-17	Konstantin V. Arkhipov
+
+	* ext/src/core/OSQL/: GroupBy implemented.
+
+	* ext/src/onphp.h: new macroses - ONPHP_CALL_PARENT_*.
+
 2007-11-15	Ivan Y. Khvostishkov
 
 	* core/Base/Assert.class.php: circular linked objects cause a fatal

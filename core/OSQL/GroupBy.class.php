@@ -12,6 +12,7 @@
 
 	/**
 	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	final class GroupBy extends FieldTable implements MappableObject
 	{
@@ -22,7 +23,7 @@
 		{
 			return new self($field);
 		}
-
+		
 		/**
 		 * @return GroupBy
 		**/
