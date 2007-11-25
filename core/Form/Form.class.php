@@ -19,11 +19,11 @@
 	**/
 	final class Form extends RegulatedForm
 	{
-		const WRONG 		= 0x0001;
-		const MISSING 		= 0x0002;
+		const WRONG			= 0x0001;
+		const MISSING		= 0x0002;
 		
-		private $errors			= array();
-		private $labels			= array();
+		private $errors				= array();
+		private $labels				= array();
 		private $describedLabels 	= array();
 		
 		/**
@@ -49,7 +49,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * primitive marking
 		**/
@@ -124,7 +124,7 @@
 				if ($label = $this->getTextualErrorFor($name))
 					$list[] = $label;
 			}
-					
+			
 			return $list;
 		}
 		
@@ -183,7 +183,7 @@
 				);
 				
 			$this->describedLabels[$name][$errorType] = $description;
-
+		
 			return $this;
 		}
 		
@@ -202,7 +202,7 @@
 		{
 			return $this->addErrorLabel($primitiveName, Form::MISSING, $label);
 		}
-
+		
 		/**
 		 * @return Form
 		**/
@@ -218,7 +218,7 @@
 		{
 			foreach ($this->primitives as $prm)
 				$this->importPrimitive($scope, $prm);
-					
+			
 			return $this;
 		}
 		
@@ -231,7 +231,7 @@
 				if (!$prm->isImported())
 					$this->importPrimitive($scope, $prm);
 			}
-
+			
 			return $this;
 		}
 		
@@ -262,7 +262,7 @@
 			
 			if (!$prm->isImported())
 				return $this->importPrimitive($scope, $prm);
-
+			
 			return $this;
 		}
 		
@@ -287,7 +287,7 @@
 			) {
 				if (isset($scope[$key]))
 					return $this->importValue($prm->getName(), $scope[$key]);
-				
+			
 				return $this->checkImportResult($prm, null);
 			}
 			
@@ -331,7 +331,7 @@
 				throw new MissingElementException(
 					"knows nothing about '{$name}'"
 				);
-
+			
 			$this->labels[$name][$errorType] = $label;
 			
 			return $this;
