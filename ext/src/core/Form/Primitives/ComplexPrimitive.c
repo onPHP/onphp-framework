@@ -74,8 +74,6 @@ ONPHP_METHOD(ComplexPrimitive, setState)
 	
 	ONPHP_CALL_METHOD_1(single, "setvalue", NULL, value);
 	
-	zval_ptr_dtor(&value);
-	
 	RETURN_THIS;
 }
 
@@ -111,12 +109,16 @@ ONPHP_METHOD(ComplexPrimitive, import)
 	);
 	
 	if (EG(exception)) {
+		zval_ptr_dtor(&result);
 		return;
 	}
 	
 	if (!ONPHP_CHECK_EMPTY(result)) {
+		zval_ptr_dtor(&result);
 		RETURN_NULL();
 	}
+	
+	zval_ptr_dtor(&result);
 	
 	single = ONPHP_READ_PROPERTY(getThis(), "single");
 	
@@ -130,12 +132,14 @@ ONPHP_METHOD(ComplexPrimitive, import)
 		if (!ONPHP_CHECK_EMPTY(result)) {
 			ONPHP_CALL_METHOD_1(getThis(), "importsingle", &result, scope);
 			
-			RETURN_ZVAL(result, 1, 0);
+			RETVAL_ZVAL(result, 1, 1);
 		} else {
-			zval_ptr_dtor(&result);
-			
-			RETURN_TRUE;
+			RETVAL_TRUE;
 		}
+		
+		zval_ptr_dtor(&result);
+		
+		return;
 	} else if (Z_TYPE_P(result) == IS_BOOL) {
 		zval_ptr_dtor(&result);
 		
@@ -145,7 +149,7 @@ ONPHP_METHOD(ComplexPrimitive, import)
 			ONPHP_CALL_METHOD_1(getThis(), "importmarried", &result, scope);
 		}
 		
-		RETURN_ZVAL(result, 1, 0);
+		RETURN_ZVAL(result, 1, 1);
 	}
 	
 	ONPHP_THROW(WrongArgumentException, "unreachable code reached");
