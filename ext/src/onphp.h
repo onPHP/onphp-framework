@@ -125,6 +125,9 @@
 #define ONPHP_UPDATE_PROPERTY_LONG(class, property, value) \
 	zend_update_property_long(Z_OBJCE_P(class), class, property, strlen(property), value TSRMLS_CC)
 
+#define ONPHP_UPDATE_PROPERTY_NULL(class, property) \
+	zend_update_property_null(Z_OBJCE_P(class), class, property, strlen(property) TSRMLS_CC)
+
 #define ONPHP_METHOD(class_name, function_name) \
 	PHP_METHOD(onphp_ ## class_name, function_name)
 

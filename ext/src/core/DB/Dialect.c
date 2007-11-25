@@ -57,9 +57,9 @@ ONPHP_METHOD(Dialect, quoteValue)
 				0 TSRMLS_CC
 			);
 		
-		smart_str_appends(&string, "'");
+		smart_str_appendc(&string, '\'');
 		smart_str_appends(&string, slashed);
-		smart_str_appends(&string, "'");
+		smart_str_appendc(&string, '\'');
 		smart_str_0(&string);
 		
 		efree(slashed);
@@ -75,9 +75,9 @@ ONPHP_METHOD(Dialect, quoteField)
 	
 	ONPHP_GET_ARGS("z", &field);
 	
-	smart_str_appends(&string, "\"");
+	smart_str_appendc(&string, '"');
 	onphp_append_zval_to_smart_string(&string, field);
-	smart_str_appends(&string, "\"");
+	smart_str_appendc(&string, '"');
 	smart_str_0(&string);
 	
 	RETURN_STRINGL(string.c, string.len, 0);
@@ -90,9 +90,9 @@ ONPHP_METHOD(Dialect, quoteTable)
 	
 	ONPHP_GET_ARGS("z", &table);
 	
-	smart_str_appends(&string, "\"");
+	smart_str_appendc(&string, '"');
 	onphp_append_zval_to_smart_string(&string, table);
-	smart_str_appends(&string, "\"");
+	smart_str_appendc(&string, '"');
 	smart_str_0(&string);
 	
 	RETURN_STRINGL(string.c, string.len, 0);
@@ -105,11 +105,11 @@ ONPHP_METHOD(Dialect, toCasted)
 	
 	ONPHP_GET_ARGS("zz", &field, &type);
 	
-	smart_str_appends(&string, "CAST (");
+	smart_str_appendl(&string, "CAST (", 6);
 	onphp_append_zval_to_smart_string(&string, field);
-	smart_str_appends(&string, " AS ");
+	smart_str_appendl(&string, " AS ", 4);
 	onphp_append_zval_to_smart_string(&string, type);
-	smart_str_appends(&string, ")");
+	smart_str_appendc(&string, ')');
 	smart_str_0(&string);
 	
 	RETURN_STRINGL(string.c, string.len, 0);
@@ -225,9 +225,9 @@ smart_str onphp_dialect_to_needed_string(
 		}
 		
 		if (ONPHP_INSTANCEOF(expression, Query)) {
-			smart_str_appends(&string, "(");
+			smart_str_appendc(&string, '(');
 			onphp_append_zval_to_smart_string(&string, out);
-			smart_str_appends(&string, ")");
+			smart_str_appendc(&string, ')');
 		} else {
 			onphp_append_zval_to_smart_string(&string, out);
 		}

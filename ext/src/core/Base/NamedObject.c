@@ -19,10 +19,16 @@ ONPHP_METHOD(NamedObject, toString)
 {
 	smart_str string = {0};
 	
-	smart_str_appends(&string, "[");
-	onphp_append_zval_to_smart_string(&string, ONPHP_READ_PROPERTY(getThis(), "id"));
-	smart_str_appends(&string, "] ");
-	onphp_append_zval_to_smart_string(&string, ONPHP_READ_PROPERTY(getThis(), "name"));
+	smart_str_appendc(&string, '[');
+	onphp_append_zval_to_smart_string(
+		&string,
+		ONPHP_READ_PROPERTY(getThis(), "id")
+	);
+	smart_str_appendl(&string, "] ", 2);
+	onphp_append_zval_to_smart_string(
+		&string,
+		ONPHP_READ_PROPERTY(getThis(), "name")
+	);
 	smart_str_0(&string);
 	
 	RETURN_STRINGL(string.c, string.len, 0);

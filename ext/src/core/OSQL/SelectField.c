@@ -111,11 +111,14 @@ ONPHP_METHOD(SelectField, toDialectString)
 		smart_str string = {0};
 		
 		onphp_append_zval_to_smart_string(&string, out);
-		smart_str_appends(&string, " AS ");
+		
+		smart_str_appendl(&string, " AS ", 4);
 		
 		ONPHP_CALL_METHOD_1(dialect, "quotefield", &alias, alias);
 		
 		onphp_append_zval_to_smart_string(&string, alias);
+		
+		zval_ptr_dtor(&alias);
 		
 		smart_str_0(&string);
 		

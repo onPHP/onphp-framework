@@ -68,7 +68,7 @@ ONPHP_METHOD(DBField, toDialectString)
 		ONPHP_CALL_METHOD_1(table, "todialectstring", &tmp, dialect);
 		
 		onphp_append_zval_to_smart_string(&string, tmp);
-		smart_str_appends(&string, ".");
+		smart_str_appendc(&string, '.');
 		
 		ZVAL_FREE(tmp);
 	}
@@ -76,6 +76,8 @@ ONPHP_METHOD(DBField, toDialectString)
 	ONPHP_CALL_METHOD_1(dialect, "quotefield", &field, field);
 	
 	onphp_append_zval_to_smart_string(&string, field);
+	
+	zval_ptr_dtor(&field);
 	
 	if (Z_STRLEN_P(cast)) {
 		zval *tmp;
@@ -138,11 +140,13 @@ ONPHP_METHOD(DBField, setTable)
 		);
 		
 		if (EG(exception)) {
-			ZVAL_FREE(from_table);
+			zval_ptr_dtor(&from_table);
 			return;
 		}
 		
 		ONPHP_UPDATE_PROPERTY(getThis(), "table", from_table);
+		
+		zval_ptr_dtor(&from_table);
 	} else {
 		ONPHP_UPDATE_PROPERTY(getThis(), "table", table);
 	}

@@ -36,11 +36,15 @@ ONPHP_METHOD(ComplexPrimitive, __construct)
 	);
 	
 	if (EG(exception)) {
-		ZVAL_FREE(ternary);
+		zval_ptr_dtor(&ternary);
 		return;
 	}
 	
+	zval_ptr_dtor(&nil);
+	
 	ONPHP_UPDATE_PROPERTY(getThis(), "single", ternary);
+	
+	zval_ptr_dtor(&ternary);
 	
 	zend_call_method_with_1_params(
 		&getThis(),
@@ -117,6 +121,8 @@ ONPHP_METHOD(ComplexPrimitive, import)
 	ONPHP_CALL_METHOD_0(single, "getvalue", &result);
 	
 	if (Z_TYPE_P(result) == IS_NULL) {
+		zval_ptr_dtor(&result);
+		
 		ONPHP_CALL_METHOD_1(getThis(), "importmarried", &result, scope);
 		
 		if (!ONPHP_CHECK_EMPTY(result)) {
@@ -124,9 +130,13 @@ ONPHP_METHOD(ComplexPrimitive, import)
 			
 			RETURN_ZVAL(result, 1, 0);
 		} else {
+			zval_ptr_dtor(&result);
+			
 			RETURN_TRUE;
 		}
 	} else if (Z_TYPE_P(result) == IS_BOOL) {
+		zval_ptr_dtor(&result);
+		
 		if (zval_is_true(result)) {
 			ONPHP_CALL_METHOD_1(getThis(), "importsingle", &result, scope);
 		} else {

@@ -196,9 +196,9 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 						) == SUCCESS
 					) {
 						onphp_append_zval_to_smart_string(&clause, *data);
-						smart_str_appendl(&clause, " ", 1);
+						smart_str_appendc(&clause, ' ');
 						onphp_append_zval_to_smart_string(&clause, exp);
-						smart_str_appendl(&clause, " ", 1);
+						smart_str_appendc(&clause, ' ');
 						
 						ZVAL_TRUE(outputLogic);
 					}
@@ -221,7 +221,7 @@ ONPHP_METHOD(QuerySkeleton, toDialectString)
 			}
 		}
 		
-		retval = (char *) php_trim(clause.c, clause.len, " ", 1, NULL, 2);
+		retval = (char *) php_trim(clause.c, clause.len, " ", 1, NULL, 2 TSRMLS_CC);
 		smart_str_0(&clause);
 		smart_str_free(&clause);
 		retval_len = strlen(retval);

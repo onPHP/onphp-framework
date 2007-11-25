@@ -152,12 +152,15 @@ ONPHP_METHOD(ExtractPart, toDialectString)
 	
 	ONPHP_CALL_METHOD_1(from, "todialectstring", &fromString, dialect);
 	
-	smart_str_appends(&string, "EXTRACT(");
+	smart_str_appendl(&string, "EXTRACT(", 8);
 	onphp_append_zval_to_smart_string(&string, whatString);
-	smart_str_appends(&string, " FROM ");
+	smart_str_appendl(&string, " FROM ", 6);
 	onphp_append_zval_to_smart_string(&string, fromString);
-	smart_str_appends(&string, ")");
+	smart_str_appendc(&string, ')');
 	smart_str_0(&string);
+	
+	zval_ptr_dtor(&whatString);
+	zval_ptr_dtor(&fromString);
 	
 	RETURN_STRINGL(string.c, string.len, 0);
 }

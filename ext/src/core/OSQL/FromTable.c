@@ -122,14 +122,16 @@ ONPHP_METHOD(FromTable, toDialectString)
 		onphp_append_zval_to_smart_string(&string, result);
 		
 		if (is_query) {
-			smart_str_appends(&string, ")");
+			smart_str_appendc(&string, ')');
 		}
 		
-		smart_str_appends(&string, " AS ");
+		smart_str_appendl(&string, " AS ", 4);
 		
 		ONPHP_CALL_METHOD_1(dialect, "quotetable", &result, alias);
 		
 		onphp_append_zval_to_smart_string(&string, result);
+		
+		zval_ptr_dtor(&result);
 	} else {
 		zval *schema = ONPHP_READ_PROPERTY(getThis(), "schema");
 		
@@ -139,19 +141,25 @@ ONPHP_METHOD(FromTable, toDialectString)
 			
 			onphp_append_zval_to_smart_string(&string, result);
 			
-			smart_str_appends(&string, ".");
+			zval_ptr_dtor(&result);
+			
+			smart_str_appendc(&string, '.');
 		}
 		
 		ONPHP_CALL_METHOD_1(dialect, "quotetable", &result, table);
 		
 		onphp_append_zval_to_smart_string(&string, result);
 		
+		zval_ptr_dtor(&result);
+		
 		if (Z_TYPE_P(alias) != IS_NULL) {
-			smart_str_appends(&string, " AS ");
+			smart_str_appendl(&string, " AS ", 4);
 			
 			ONPHP_CALL_METHOD_1(dialect, "quotetable", &result, alias);
 			
 			onphp_append_zval_to_smart_string(&string, result);
+			
+			zval_ptr_dtor(&result);
 		}
 	}
 	

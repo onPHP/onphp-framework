@@ -175,9 +175,9 @@ ONPHP_METHOD(ImaginaryDialect, fullTextSearch)
 		onphp_append_zval_to_smart_string(&out, field);
 	}
 	
-	smart_str_appends(&out, "\" CONTAINS \"");
-	smart_str_appends(&out, Z_STRVAL_P(copy));
-	smart_str_appends(&out, "\")");
+	smart_str_appendl(&out, "\" CONTAINS \"", 12);
+	smart_str_appendl(&out, Z_STRVAL_P(copy), Z_STRLEN_P(copy));
+	smart_str_appendl(&out, "\")", 2);
 	smart_str_0(&out);
 	
 	RETVAL_STRINGL(out.c, out.len, 0);
@@ -232,9 +232,9 @@ ONPHP_METHOD(ImaginaryDialect, fullTextRank)
 		onphp_append_zval_to_smart_string(&out, field);
 	}
 	
-	smart_str_appends(&out, "\" WHICH CONTAINS \"");
-	smart_str_appends(&out, Z_STRVAL_P(copy));
-	smart_str_appends(&out, "\")");
+	smart_str_appendl(&out, "\" WHICH CONTAINS \"", 18);
+	smart_str_appendl(&out, Z_STRVAL_P(copy), Z_STRLEN_P(copy));
+	smart_str_appendl(&out, "\")", 2);
 	smart_str_0(&out);
 	
 	RETVAL_STRINGL(out.c, out.len, 0);

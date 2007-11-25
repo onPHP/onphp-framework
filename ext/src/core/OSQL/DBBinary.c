@@ -50,10 +50,12 @@ ONPHP_METHOD(DBBinary, toDialectString)
 	
 	ONPHP_CALL_METHOD_1(dialect, "quotebinary", &value, value);
 	
-	smart_str_appends(&string, "'");
+	smart_str_appendc(&string, '\'');
 	onphp_append_zval_to_smart_string(&string, value);
-	smart_str_appends(&string, "'");
+	smart_str_appendc(&string, '\'');
 	smart_str_0(&string);
+	
+	zval_ptr_dtor(&value);
 	
 	RETURN_STRINGL(string.c, string.len, 0);
 }

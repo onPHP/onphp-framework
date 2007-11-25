@@ -26,9 +26,9 @@ ONPHP_METHOD(Cdata, getData)
 	if (zval_is_true(strict)) {
 		smart_str string = {0};
 		
-		smart_str_appends(&string, "<![CDATA[");
+		smart_str_appendl(&string, "<![CDATA[", 8);
 		onphp_append_zval_to_smart_string(&string, data);
-		smart_str_appends(&string, "]]>");
+		smart_str_appendl(&string, "]]>", 3);
 		smart_str_0(&string);
 		
 		RETURN_STRINGL(string.c, string.len, 0);

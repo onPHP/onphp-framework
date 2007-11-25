@@ -13,18 +13,16 @@
 
 void onphp_append_zval_to_smart_string(smart_str *string, zval *value)
 {
-	zval copy;
-
 	if (Z_TYPE_P(value) == IS_STRING) {
-		smart_str_appends(string, Z_STRVAL_P(value));
+		smart_str_appendl(string, Z_STRVAL_P(value), Z_STRLEN_P(value));
 	} else {
+		zval copy;
 		int use_copy;
 		
 		zend_make_printable_zval(value, &copy, &use_copy);
-		smart_str_appends(string, Z_STRVAL(copy));
+		smart_str_appendl(string, Z_STRVAL(copy), Z_STRLEN(copy));
 		
-		if (use_copy) {
-			zval_dtor(&copy);
-		}
+		zval_dtor(&copy);
+		zval_ptr_dtor(&value);
 	}
 }

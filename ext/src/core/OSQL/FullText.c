@@ -18,7 +18,7 @@
 
 #include "core/OSQL/DBField.h"
 
-void onphp_full_text_sanity_check(zval *field, zval *words)
+void onphp_full_text_sanity_check(zval *field, zval *words TSRMLS_DC)
 {
 	if (
 		!(
@@ -43,7 +43,7 @@ ONPHP_METHOD(FullText, __construct)
 	
 	ONPHP_GET_ARGS("zzz", &field, &words, &logic);
 	
-	onphp_full_text_sanity_check(field, words);
+	onphp_full_text_sanity_check(field, words TSRMLS_CC);
 	
 	if (EG(exception)) {
 		return;
@@ -69,7 +69,7 @@ ONPHP_METHOD(FullText, toMapped)
 	ONPHP_CALL_METHOD_2(dao, "guessatom", &atom, field, query);
 	
 	// emulating constructor
-	onphp_full_text_sanity_check(atom, words);
+	onphp_full_text_sanity_check(atom, words TSRMLS_CC);
 	
 	if (EG(exception)) {
 		return;

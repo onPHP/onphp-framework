@@ -51,11 +51,14 @@ ONPHP_METHOD(DropTableQuery, toDialectString)
 	ONPHP_CALL_METHOD_1(dialect, "quotetable", &name, name);
 	ONPHP_CALL_METHOD_1(dialect, "droptablemode", &cascade, cascade);
 	
-	smart_str_appends(&string, "DROP TABLE ");
+	smart_str_appendl(&string, "DROP TABLE ", 11);
 	onphp_append_zval_to_smart_string(&string, name);
 	onphp_append_zval_to_smart_string(&string, cascade);
-	smart_str_appends(&string, ";");
+	smart_str_appendc(&string, ';');
 	smart_str_0(&string);
+	
+	zval_ptr_dtor(&name);
+	zval_ptr_dtor(&cascade);
 	
 	RETURN_STRINGL(string.c, string.len, 0);
 }

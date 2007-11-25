@@ -53,13 +53,8 @@ ONPHP_GETTER(BasePrimitive, isImported, imported);
 
 ONPHP_METHOD(BasePrimitive, clean)
 {
-	zval *nil;
-	
-	MAKE_STD_ZVAL(nil);
-	ZVAL_NULL(nil);
-	
-	ONPHP_UPDATE_PROPERTY(getThis(), "raw", nil);
-	ONPHP_UPDATE_PROPERTY(getThis(), "value", nil);
+	ONPHP_UPDATE_PROPERTY_NULL(getThis(), "raw");
+	ONPHP_UPDATE_PROPERTY_NULL(getThis(), "value");
 	
 	ONPHP_UPDATE_PROPERTY_BOOL(getThis(), "imported", 0);
 	
@@ -114,6 +109,8 @@ ONPHP_METHOD(BasePrimitive, importValue)
 	);
 	
 	ONPHP_CALL_METHOD_1(getThis(), "import", &result, scope);
+	
+	zval_ptr_dtor(&scope);
 	
 	RETURN_ZVAL(result, 1, 0);
 }
