@@ -17,8 +17,6 @@
 	**/
 	abstract class GenericDAO extends Singleton implements BaseDAO
 	{
-		protected $selectHead	= null;
-		
 		private $identityMap	= array();
 		
 		abstract public function getTable();
@@ -95,18 +93,20 @@
 		**/
 		public function makeSelectHead()
 		{
-			if (null === $this->selectHead) {
+			static $selectHead = null;
+			
+			if (!$selectHead) {
 				$table = $this->getTable();
 				
-				$this->selectHead =
+				$selectHead =
 					OSQL::select()->
 					from($table);
 				
 				foreach ($this->getFields() as $field)
-					$this->selectHead->get(new DBField($field, $table));
+					$selectHead->get(new DBField($field, $table));
 			}
 			
-			return clone $this->selectHead;
+			return clone $selectHead;
 		}
 		
 		/// boring delegates
