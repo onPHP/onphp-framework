@@ -32,9 +32,9 @@
 		
 		public function getErrors()
 		{
-			return $this->errors + $this->violated;
+			return array_merge($this->errors, $this->violated);
 		}
-
+		
 		public function dropAllErrors()
 		{
 			$this->errors	= array();
