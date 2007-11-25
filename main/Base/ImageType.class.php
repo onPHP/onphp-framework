@@ -54,5 +54,10 @@
 			IMAGETYPE_JPEG2000	=> 'jpc',
 			IMAGETYPE_XBM		=> 'xbm'
 		);
+		
+		public static function getAnyId()
+		{
+			return self::GIF;
+		}
 	}
 ?>
