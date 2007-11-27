@@ -25,14 +25,19 @@
 		
 		public function add(Identifiable $object)
 		{
+			$object->setId(
+				DBPool::getByDao($this)->obtainSequence(
+					$this->getSequence()
+				)
+			);
+			
 			return
 				$this->inject(
-					OSQL::insert(),
-					$object->setId(
-						DBPool::getByDao($this)->obtainSequence(
-							$this->getSequence()
-						)
-					)
+					$this->setQueryFields(
+						OSQL::insert()->setTable($this->getTable()),
+						$object
+					),
+					$object
 				);
 		}
 		
@@ -40,9 +45,14 @@
 		{
 			return
 				$this->inject(
-					OSQL::update()->where(
-						Expression::eqId($this->getIdName(), $object)
-					),
+					$this->setQueryFields(
+						OSQL::update()->setTable($this->getTable())->where(
+							Expression::eqId($this->getIdName(), $object)
+						),
+						$object
+					)->
+					// can't be changed anyway
+					drop($this->getIdName()),
 					$object
 				);
 		}
@@ -51,7 +61,10 @@
 		{
 			return
 				$this->inject(
-					OSQL::insert(),
+					$this->setQueryFields(
+						OSQL::insert()->setTable($this->getTable()),
+						$object
+					),
 					$object
 				);
 		}
@@ -63,12 +76,6 @@
 			$this->checkObjectType($object);
 			
 			$db = DBPool::getByDao($this);
-			
-			$query =
-				$this->setQueryFields(
-					$query->setTable($this->getTable()),
-					$object
-				);
 			
 			if (!$db->isQueueActive()) {
 				$count = $db->queryCount($query);
