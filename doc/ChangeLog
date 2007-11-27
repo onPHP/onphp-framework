@@ -1,5 +1,10 @@
 # $Id$
 
+2007-11-27	Denis M. Gabaidulin
+
+	* core/Form/Filters/CropFilter.class.php: crop string import filter
+	was added.
+
 2007-11-15	Ivan Y. Khvostishkov
 
 	* core/Base/Assert.class.php: circular linked objects cause a fatal
