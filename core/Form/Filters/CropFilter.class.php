@@ -17,8 +17,8 @@
 	**/
 	final class CropFilter implements Filtrator
 	{
-		private $start = 0;
-		private $length = null;
+		private $start	= 0;
+		private $length	= 0;
 		
 		/**
 		 * @return CropFilter
@@ -40,6 +40,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return CropFilter
+		**/
 		public function setLength($length)
 		{
 			Assert::isPositiveInteger($length);
@@ -51,7 +54,10 @@
 		
 		public function apply($value)
 		{
-			return mb_strcut($value, $this->start, $this->length);
+			return
+				$this->length
+					? mb_strcut($value, $this->start, $this->length)
+					: mb_strcut($value, $this->start);
 		}
 	}
 ?>

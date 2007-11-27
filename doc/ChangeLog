@@ -3,7 +3,7 @@
 2007-11-27	Denis M. Gabaidulin
 
 	* core/Form/Filters/CropFilter.class.php: crop string import filter
-	was added.
+	were added.
 
 2007-11-15	Ivan Y. Khvostishkov
 
