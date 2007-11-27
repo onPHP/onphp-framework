@@ -61,6 +61,14 @@
 		}
 		
 		/**
+		 * @return CropFilter
+		**/
+		public static function crop()
+		{
+			return CropFilter::create();
+		}
+		
+		/**
 		 * @return StripTagsFilter
 		**/
 		public static function stripTags()

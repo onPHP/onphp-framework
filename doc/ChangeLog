@@ -1,5 +1,10 @@
 # $Id$
 
+2007-11-27	Denis M. Gabaidulin
+
+	* core/Form/Filters/CropFilter.class.php: crop string import filter
+	were added.
+
 2007-11-22	Konstantin V. Arkhipov
 
 	* ext/src/core/Base/: Ternary implemented.
