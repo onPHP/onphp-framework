@@ -31,6 +31,7 @@
 			if (
 				($expires !== Cache::DO_NOT_CACHE)
 				&& ($object = $this->getCachedById($id))
+				&& ($object !== Cache::NOT_FOUND)
 			) {
 				return $object;
 			} else {
@@ -79,6 +80,7 @@
 			if (
 				($expires !== Cache::DO_NOT_CACHE) &&
 				($object = $this->getCachedByQuery($query))
+				&& ($object !== Cache::NOT_FOUND)
 			)
 				return $object;
 			elseif ($object = $db->queryObjectRow($query, $this->dao)) {
@@ -107,6 +109,7 @@
 			if (
 				($expires !== Cache::DO_NOT_CACHE) &&
 				($object = $this->getCachedByQuery($query))
+				&& ($object !== Cache::NOT_FOUND)
 			)
 				return $object;
 			elseif ($object = $db->queryRow($query)) {
@@ -199,6 +202,7 @@
 			if (
 				($expires !== Cache::DO_NOT_CACHE) &&
 				($list = $this->getCachedByQuery($query))
+				&& ($list !== Cache::NOT_FOUND)
 			)
 				return $list;
 			elseif ($list = $db->queryObjectSet($query, $this->dao)) {
