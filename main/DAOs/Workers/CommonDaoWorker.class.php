@@ -26,8 +26,10 @@
 			if (
 				($expires !== Cache::DO_NOT_CACHE)
 				&& ($object = $this->getCachedById($id))
-				&& ($object !== Cache::NOT_FOUND)
 			) {
+				if ($object === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				
 				return $this->dao->fetchEncapsulants($object);
 			} else {
 				$query =
@@ -86,10 +88,12 @@
 			if (
 				($expires !== Cache::DO_NOT_CACHE) &&
 				($object = $this->getCachedByQuery($query))
-				&& ($object !== Cache::NOT_FOUND)
-			)
+			) {
+				if ($object === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				
 				return $this->dao->fetchEncapsulants($object);
-			else {
+			} else {
 				if ($expires === Cache::DO_NOT_CACHE)
 					$object = $this->fetchObject($query);
 				else
@@ -128,10 +132,12 @@
 			if (
 				($expires !== Cache::DO_NOT_CACHE) &&
 				($object = $this->getCachedByQuery($query))
-				&& ($object !== Cache::NOT_FOUND)
-			)
+			) {
+				if ($object === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				
 				return $this->dao->fetchEncapsulants($object);
-			elseif ($object = $db->queryRow($query)) {
+			} elseif ($object = $db->queryRow($query)) {
 				if ($expires === Cache::DO_NOT_CACHE)
 					return $object;
 				else
@@ -166,10 +172,12 @@
 				foreach ($ids as $id) {
 					$cached = $this->getCachedById($id);
 					
-					if ($cached && ($cached !== Cache::NOT_FOUND))
-						$list[] = $this->dao->fetchEncapsulants($cached);
-					else
-						$toFetch[] = $id;
+					if ($cached !== Cache::NOT_FOUND) {
+						if ($cached)
+							$list[] = $this->dao->fetchEncapsulants($cached);
+						else
+							$toFetch[] = $id;
+					}
 				}
 				
 				if (!$toFetch)
@@ -219,10 +227,12 @@
 			if (
 				($expires !== Cache::DO_NOT_CACHE) &&
 				($list = $this->getCachedByQuery($query))
-				&& ($list !== Cache::NOT_FOUND)
-			)
+			) {
+				if ($list === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				
 				return $list;
-			elseif ($list = $this->fetchList($query)) {
+			} elseif ($list = $this->fetchList($query)) {
 				if (Cache::DO_NOT_CACHE === $expires) {
 					return $list;
 				} else {
