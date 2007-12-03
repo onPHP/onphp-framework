@@ -96,7 +96,7 @@
 		}
 
 		public function getByQuery(
-			SelectQuery $query, $expires = Cache::EXPIRES_MEDIUM
+			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
 			return Cache::worker($this)->getByQuery($query, $expires);
