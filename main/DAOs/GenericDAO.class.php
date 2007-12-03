@@ -256,6 +256,8 @@
 		
 		public function uncacheLists()
 		{
+			$this->identityMap = array();
+			
 			return Cache::worker($this)->uncacheLists();
 		}
 		//@}
