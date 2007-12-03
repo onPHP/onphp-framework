@@ -130,9 +130,9 @@
 		
 		protected function fetchList(SelectQuery $query)
 		{
+			$list = array();
+			
 			if ($rows = DBPool::getByDao($this->dao)->querySet($query)) {
-				$list = array();
-				
 				if ($query->getFetchStrategyId() == FetchStrategy::JOIN)
 					foreach ($rows as $row)
 						$list[] = $this->dao->makeJoinedObject($row);
@@ -143,7 +143,7 @@
 				return $list;
 			}
 			
-			return null;
+			return $list;
 		}
 		//@}
 	}

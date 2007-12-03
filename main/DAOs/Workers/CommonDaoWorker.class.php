@@ -285,10 +285,35 @@
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			if ($list = DBPool::getByDao($this->dao)->querySet($query))
+			if (
+				($expires !== Cache::DO_NOT_CACHE)
+				&& ($list = $this->getCachedByQuery($query))
+			) {
+				if ($list === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				
 				return $list;
-			else
-				throw new ObjectNotFoundException();
+			} elseif ($list = DBPool::getByDao($this->dao)->querySet($query)) {
+				if (Cache::DO_NOT_CACHE === $expires) {
+					return $list;
+				} else {
+					return $this->cacheByQuery($query, $list, $expires);
+				}
+			} else {
+				throw new ObjectNotFoundException(
+					"empty list"
+					.(
+						defined('__LOCAL_DEBUG__')
+							?
+								" for such query - "
+								.$query->toDialectString(
+									DBPool::me()->getByDao($this->dao)->
+										getDialect()
+								)
+							: null
+					)
+				);
+			}
 		}
 		
 		public function getCustomRowList(
@@ -300,10 +325,35 @@
 					'you should select only one row when using this method'
 				);
 			
-			if ($list = DBPool::getByDao($this->dao)->queryColumn($query))
+			if (
+				($expires !== Cache::DO_NOT_CACHE)
+				&& ($list = $this->getCachedByQuery($query))
+			) {
+				if ($list === Cache::NOT_FOUND)
+					throw new ObjectNotFoundException();
+				
 				return $list;
-			else
-				throw new ObjectNotFoundException();
+			} elseif ($list = DBPool::getByDao($this->dao)->queryColumn($query)) {
+				if (Cache::DO_NOT_CACHE === $expires) {
+					return $list;
+				} else {
+					return $this->cacheByQuery($query, $list, $expires);
+				}
+			} else {
+				throw new ObjectNotFoundException(
+					"empty list"
+					.(
+						defined('__LOCAL_DEBUG__')
+							?
+								" for such query - "
+								.$query->toDialectString(
+									DBPool::me()->getByDao($this->dao)->
+										getDialect()
+								)
+							: null
+					)
+				);
+			}
 		}
 		//@}
 		
@@ -323,23 +373,34 @@
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			$list = $this->fetchList($query);
-			
-			$count = clone $query;
-			
-			$count =
-				DBPool::getByDao($this->dao)->queryRow(
-					$count->dropFields()->dropOrder()->limit(null, null)->
-					get(SQLFunction::create('COUNT', '*')->setAlias('count'))
-				);
-
-			$res = new QueryResult();
-
-			return
-				$res->
-					setList($list)->
-					setCount($count['count'])->
-					setQuery($query);
+			if (
+				($expires !== Cache::DO_NOT_CACHE)
+				&& ($list = $this->getCachedByQuery($query))
+			) {
+				return $list;
+			} else {
+				$list = $this->fetchList($query);
+				
+				$count = clone $query;
+				
+				$count =
+					DBPool::getByDao($this->dao)->queryRow(
+						$count->dropFields()->dropOrder()->limit(null, null)->
+						get(SQLFunction::create('COUNT', '*')->setAlias('count'))
+					);
+				
+				return
+					$this->cacheByQuery(
+						$query,
+						
+						QueryResult::create()->
+						setList($list)->
+						setCount($count['count'])->
+						setQuery($query),
+						
+						$expires
+					);
+			}
 		}
 		//@}
 

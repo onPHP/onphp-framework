@@ -268,40 +268,27 @@
 			$result = $this->getCachedByQuery($query);
 			
 			if ($result) {
-				
-				if ($result === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
-				else
-					return $result;
-
+				return $result;
 			} else {
-				
 				$list = $this->fetchList($query);
 				
 				$count = clone $query;
-			
+				
 				$count =
 					$db->queryRow(
 						$count->dropFields()->dropOrder()->limit(null, null)->
 						get(SQLFunction::create('COUNT', '*')->setAlias('count'))
 					);
-
-				if (!$list) {
-					$list = Cache::NOT_FOUND;
-					
-					$this->cacheByQuery($query, $list);
-					
-					throw new ObjectNotFoundException();
-				} else {
-					return
-						$this->cacheByQuery(
-							$query,
-							$res->
-								setList($list)->
-								setCount($count['count'])->
-								setQuery($query)
-						);
-				}
+				
+				return
+					$this->cacheByQuery(
+						$query,
+						
+						QueryResult::create()->
+						setList($list)->
+						setCount($count['count'])->
+						setQuery($query)
+					);
 			}
 		}
 		//@}
