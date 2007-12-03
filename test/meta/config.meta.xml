@@ -7,7 +7,7 @@
 
 	<class name="Spook" type="spooked">
 		<properties>
-			<property name="id" type="Integer" required="true" identifier="true" />
+			<identifier type="Integer" />
 		</properties>
 		
 		<pattern name="SpookedClass" />
@@ -15,10 +15,9 @@
 
 	<class name="TestCity" type="final">
 		<properties>
+			<identifier type="BigInteger" />
 			
-			<property name="id" type="BigInteger" required="true" identifier="true" />
 			<property name="name" type="String" size="50" required="true" />
-			
 		</properties>
 		
 		<pattern name="DictionaryClass" />
@@ -26,8 +25,7 @@
 	
 	<class name="TestUser" type="final">
 		<properties>
-			
-			<property name="id" type="BigInteger" required="true" identifier="true" />
+			<identifier type="BigInteger" />
 			
 			<property name="nickname" type="String" size="255" required="true" />
 			<property name="password" type="Password" required="true" />
@@ -41,7 +39,6 @@
 			
 			<property name="firstOptional" type="TestCity" relation="OneToOne" required="false" />
 			<property name="secondOptional" type="TestCity" relation="OneToOne" required="false" />
-			
 		</properties>
 		
 		<pattern name="StraightMapping" />
