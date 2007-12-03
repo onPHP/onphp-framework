@@ -48,7 +48,7 @@
 					where(Expression::eq('id', $id))
 				);
 			
-			$this->uncacheById($id);
+			$this->dao->uncacheById($id);
 			
 			return $result;
 		}
