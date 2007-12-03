@@ -78,8 +78,8 @@
 			$db = DBFactory::getDefaultInstance();
 			
 			if (
-				($expires !== Cache::DO_NOT_CACHE) &&
-				($object = $this->getCachedByQuery($query))
+				($expires !== Cache::DO_NOT_CACHE)
+				&& ($object = $this->getCachedByQuery($query))
 				&& ($object !== Cache::NOT_FOUND)
 			)
 				return $object;
@@ -107,8 +107,8 @@
 				);
 		
 			if (
-				($expires !== Cache::DO_NOT_CACHE) &&
-				($object = $this->getCachedByQuery($query))
+				($expires !== Cache::DO_NOT_CACHE)
+				&& ($object = $this->getCachedByQuery($query))
 				&& ($object !== Cache::NOT_FOUND)
 			)
 				return $object;
@@ -200,8 +200,8 @@
 			$db = DBFactory::getDefaultInstance();
 			
 			if (
-				($expires !== Cache::DO_NOT_CACHE) &&
-				($list = $this->getCachedByQuery($query))
+				($expires !== Cache::DO_NOT_CACHE)
+				&& ($list = $this->getCachedByQuery($query))
 				&& ($list !== Cache::NOT_FOUND)
 			)
 				return $list;
