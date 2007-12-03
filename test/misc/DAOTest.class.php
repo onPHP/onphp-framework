@@ -88,6 +88,24 @@
 					($mysqler == TestUser::dao()->getById(2))
 				);
 			}
+			
+			$firstClone = clone $postgreser;
+			$secondClone = clone $mysqler;
+			
+			TestUser::dao()->dropById($postgreser->getId());
+			TestUser::dao()->dropByIds(array($mysqler->getId()));
+			
+			if ($assertions) {
+				try {
+					TestUser::dao()->getById(1);
+					$this->fail();
+				} catch (ObjectNotFoundException $e) {
+					$this->pass();
+				}
+			}
+			
+			TestUser::dao()->import($firstClone);
+			TestUser::dao()->import($secondClone);
 		}
 		
 		protected function getSome()
