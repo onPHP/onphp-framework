@@ -86,8 +86,8 @@
 		)
 		{
 			if (
-				($expires !== Cache::DO_NOT_CACHE) &&
-				($object = $this->getCachedByQuery($query))
+				($expires !== Cache::DO_NOT_CACHE)
+				&& ($object = $this->getCachedByQuery($query))
 			) {
 				if ($object === Cache::NOT_FOUND)
 					throw new ObjectNotFoundException();
@@ -130,8 +130,8 @@
 				);
 		
 			if (
-				($expires !== Cache::DO_NOT_CACHE) &&
-				($object = $this->getCachedByQuery($query))
+				($expires !== Cache::DO_NOT_CACHE)
+				&& ($object = $this->getCachedByQuery($query))
 			) {
 				if ($object === Cache::NOT_FOUND)
 					throw new ObjectNotFoundException();
@@ -225,8 +225,8 @@
 		)
 		{
 			if (
-				($expires !== Cache::DO_NOT_CACHE) &&
-				($list = $this->getCachedByQuery($query))
+				($expires !== Cache::DO_NOT_CACHE)
+				&& ($list = $this->getCachedByQuery($query))
 			) {
 				if ($list === Cache::NOT_FOUND)
 					throw new ObjectNotFoundException();
