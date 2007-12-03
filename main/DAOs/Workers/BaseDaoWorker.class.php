@@ -143,16 +143,16 @@
 		
 		protected function fetchList(SelectQuery $query)
 		{
+			$list = array();
+			
 			if ($rows = DBPool::getByDao($this->dao)->querySet($query)) {
-				$list = array();
-				
 				foreach ($rows as $row)
 					$list[] = $this->dao->makeObject($row);
 				
 				return $list;
 			}
 			
-			return null;
+			return $list;
 		}
 		//@}
 	}
