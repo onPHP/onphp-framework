@@ -263,8 +263,6 @@
 		{
 			$db = DBPool::getByDao($this->dao);
 
-			$res = new QueryResult();
-			
 			$result = $this->getCachedByQuery($query);
 			
 			if ($result) {
@@ -319,8 +317,6 @@
 		
 		public function uncacheByIds($ids)
 		{
-			$cache = Cache::me();
-			
 			foreach ($ids as $id)
 				parent::uncacheById($id);
 			
