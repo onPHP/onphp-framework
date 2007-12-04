@@ -371,12 +371,8 @@
 		// uncachers
 		public function uncacheByIds($ids)
 		{
-			$cache = Cache::me();
-			
 			foreach ($ids as $id)
-				$cache->mark($this->className)->delete(
-					$this->className.'_'.$id
-				);
+				$this->uncacheById($id);
 			
 			return $this->uncacheLists();
 		}
