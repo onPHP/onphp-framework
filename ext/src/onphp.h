@@ -216,7 +216,7 @@ ZEND_API zval* onphp_call_method(zval **object_pp, zend_class_entry *obj_ce, zen
 	zend_update_property_null(Z_OBJCE_P(class), class, property, strlen(property) TSRMLS_CC)
 
 #define ONPHP_METHOD(class_name, function_name) \
-	PHP_METHOD(onphp_ ## class_name, function_name)
+	static PHP_METHOD(onphp_ ## class_name, function_name)
 
 #define ONPHP_THROW(exception, ...)					\
 	ONPHP_THROW_NORET(exception, ##__VA_ARGS__);	\

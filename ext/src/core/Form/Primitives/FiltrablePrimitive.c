@@ -154,6 +154,7 @@ zend_function_entry onphp_funcs_FiltrablePrimitive[] = {
 	ONPHP_ME(FiltrablePrimitive, setDisplayFilter, arginfo_filter_chain, ZEND_ACC_PUBLIC)
 	ONPHP_ME(FiltrablePrimitive, addDisplayFilter, arginfo_filtrator, ZEND_ACC_PUBLIC)
 	ONPHP_ME(FiltrablePrimitive, dropDisplayFilters, NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(FiltrablePrimitive, dropImportFilters, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(FiltrablePrimitive, getDisplayValue, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(FiltrablePrimitive, setImportFilter, arginfo_filter_chain, ZEND_ACC_PUBLIC)
 	ONPHP_ME(FiltrablePrimitive, addImportFilter, arginfo_filtrator, ZEND_ACC_PUBLIC)
