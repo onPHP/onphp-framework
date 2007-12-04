@@ -488,7 +488,6 @@
 					!(
 						$class->getPattern() instanceof SpookedClassPattern
 						|| $class->getPattern() instanceof SpookedEnumerationPattern
-						|| $class->getPattern() instanceof AbstractClassPattern
 						|| $class->getPattern() instanceof InternalClassPattern
 					) && (
 						class_exists($class->getName(), true)
@@ -529,6 +528,11 @@
 							unserialize(serialize($object)) == $object
 						);
 						
+						$out->info(', ');
+						continue;
+					}
+					
+					if ($class->getPattern() instanceof AbstractClassPattern) {
 						$out->info(', ');
 						continue;
 					}
@@ -1220,6 +1224,10 @@
 					Assert::isTrue(
 						$info->isAbstract(),
 						'class '.$info->getName().' expected to be abstract'
+					);
+					Assert::isTrue(
+						$class->getPattern() instanceof AbstractClassPattern,
+						'class '.$info->getName().' must use AbstractClassPattern'
 					);
 					break;
 				
