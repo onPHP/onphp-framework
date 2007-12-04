@@ -85,5 +85,31 @@
 		{
 			return self::$memoryAccumulator;
 		}
+		
+		public static function errorMav($message = null)
+		{
+			$uri =
+				(
+					isset($_SERVER['HTTP_HOST'])
+					? $_SERVER['HTTP_HOST']
+					: null
+				)
+				.(
+					isset($_SERVER['REQUEST_URI'])
+					? $_SERVER['REQUEST_URI']
+					: null
+				);
+			
+			return
+				ModelAndView::create()->
+				setView('error')->
+				setModel(
+					Model::create()->
+					set(
+						'errorMessage',
+						($message ? $message.': ' : null).$uri
+					)
+				);
+		}
 	}
 ?>

@@ -1,5 +1,10 @@
 # $Id$
 
+2007-12-04	Ivan Y. Khvostishkov
+
+	* main/Utils/DebugUtils.class.php: errorMav() added for debugging error
+	views.
+
 2007-11-27	Denis M. Gabaidulin
 
 	* core/Form/Filters/CropFilter.class.php: crop string import filter
