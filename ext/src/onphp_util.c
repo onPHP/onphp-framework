@@ -11,7 +11,10 @@
 
 #include "onphp_util.h"
 
-void onphp_append_zval_to_smart_string(smart_str *string, zval *value)
+void onphp_append_zval_to_smart_string(
+	smart_str * const string,
+	zval * const value
+)
 {
 	if (Z_TYPE_P(value) == IS_STRING) {
 		smart_str_appendl(string, Z_STRVAL_P(value), Z_STRLEN_P(value));

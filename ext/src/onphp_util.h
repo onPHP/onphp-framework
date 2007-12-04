@@ -15,6 +15,9 @@
 #include "php.h"
 #include "ext/standard/php_smart_str.h"
 
-extern void onphp_append_zval_to_smart_string(smart_str *string, zval *value);
+extern void onphp_append_zval_to_smart_string(
+	smart_str * const string,
+	zval * const value
+);
 
 #endif /* ONPHP_UTIL_H */
