@@ -294,6 +294,7 @@ zend_function_entry onphp_funcs_Enumeration[] = {
 	ONPHP_ME(Enumeration, getObjectList,NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, toString,		NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, getNameList,	NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Enumeration, getId,		NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, setId,		arginfo_one, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };
