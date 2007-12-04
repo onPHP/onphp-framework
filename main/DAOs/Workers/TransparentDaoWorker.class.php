@@ -285,8 +285,6 @@
 
 			$cache = Cache::me();
 			
-			$res = new QueryResult();
-			
 			$result = $this->getCachedByQuery($query);
 			
 			if ($result) {
@@ -301,7 +299,7 @@
 				$list = $db->queryObjectSet($query, $this->dao);
 				
 				$count = clone $query;
-			
+				
 				$count =
 					$db->queryRow(
 						$count->dropFields()->dropOrder()->limit(null, null)->
@@ -318,10 +316,11 @@
 					return
 						$this->cacheByQuery(
 							$query,
-							$res->
-								setList($list)->
-								setCount($count['count'])->
-								setQuery($query)
+							
+							QueryResult::create()->
+							setList($list)->
+							setCount($count['count'])->
+							setQuery($query)
 						);
 				}
 			}
@@ -354,8 +353,6 @@
 		
 		public function uncacheByIds($ids)
 		{
-			$cache = Cache::me();
-			
 			foreach ($ids as $id)
 				$cache->mark($this->className)->delete(
 					$this->className.'_'.$id
