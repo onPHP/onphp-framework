@@ -11,5 +11,3 @@ Such primitives cannot be required or optional - it's field property
 (case: we want to set field type but do not know, it is required or optional)
 
 make uniform lists: PrimitiveList()->of(AnonymousPrimitive)
-
-* copy OpenId, Math, Crypto from 0.10 incubator (ael)
