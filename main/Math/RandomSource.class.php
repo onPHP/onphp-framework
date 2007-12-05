@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Math
+	**/
 	interface RandomSource
 	{
 		public function getBytes($numberOfBytes);

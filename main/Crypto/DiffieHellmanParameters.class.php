@@ -12,6 +12,8 @@
 
 	/**
 	 * @see http://tools.ietf.org/html/rfc2631
+	 * 
+	 * @ingroup Crypto
 	**/
 	final class DiffieHellmanParameters
 	{

@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Math
+	**/
 	abstract class BigNumberFactory extends Singleton
 	{
 		/**

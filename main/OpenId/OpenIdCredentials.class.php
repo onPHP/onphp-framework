@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup OpenId
+	**/
 	final class OpenIdCredentials
 	{
 		private $claimedId	= null;

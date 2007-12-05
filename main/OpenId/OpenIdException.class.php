@@ -10,5 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup OpenId
+	**/
 	class OpenIdException extends BaseException {}
 ?>
