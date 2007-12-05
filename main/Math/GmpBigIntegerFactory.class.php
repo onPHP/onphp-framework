@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Math
+	**/
 	final class GmpBigIntegerFactory extends BigNumberFactory
 	{
 		/**

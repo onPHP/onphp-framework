@@ -12,6 +12,8 @@
 
 	/**
 	 * based on pseudorandom generator mt_rand
+	 * 
+	 * @ingroup Math
 	**/
 	final class MtRandomSource extends Singleton implements RandomSource
 	{

@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup OpenId
+	**/
 	final class OpenIdConsumerFail implements OpenIdConsumerResult
 	{
 		public function isOk()

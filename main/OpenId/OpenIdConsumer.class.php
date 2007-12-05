@@ -15,6 +15,8 @@
 	 * 
 	 * @see http://openid.net/specs/openid-authentication-1_1.html
 	 * @todo use nonce to limit time frame of replay attacks
+	 * 
+	 * @ingroup OpenId
 	**/
 	final class OpenIdConsumer
 	{
