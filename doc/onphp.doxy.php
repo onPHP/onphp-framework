@@ -149,6 +149,12 @@
 	 * @defgroup Flow Spring-like webflow tools
 	 * @ingroup Main
 	 *
+	 * @defgroup Crypto Diffie-Hellman Key Agreement Method (RFC-2631) implementation
+	 * @ingroup Main
+	 *
+	 * @defgroup OpenId OpenId implementation
+	 * @ingroup Main
+	 *
 	 * @defgroup Calendar Calendar representation's helpers
 	 * @ingroup Main
 	 *
@@ -192,7 +198,7 @@
 	 *
 	 * @defgroup Types Supported meta-types
 	 * @ingroup Meta
-	 * 
+	 *
 	 * @defgroup Module Classes implemented in PHP's extension.
 	**/
 ?>
