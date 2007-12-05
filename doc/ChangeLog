@@ -1,5 +1,10 @@
 # $Id$
 
+2007-12-05	Anton E. Lebedevich
+
+	* main/Crypto/, main/Math/, main/OpenId/: OpenId implementation moved
+	from incubator to main tree.
+
 2007-11-27	Denis M. Gabaidulin
 
 	* core/Form/Filters/CropFilter.class.php: crop string import filter
