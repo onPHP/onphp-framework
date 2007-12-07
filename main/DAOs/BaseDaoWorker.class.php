@@ -56,7 +56,7 @@
 		public function dropByIds(/* array */ $ids)
 		{
 			$result =
-				DBPool::getByDao($this->dao)->queryNull(
+				DBFactory::getDefaultInstance()->queryNull(
 					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::in($this->dao->getIdName(), $ids))
 				);

@@ -46,7 +46,7 @@
 			
 			if (
 				($query instanceof InsertQuery)
-				&& isset($this->sequencePool[$name = $query->getTable().'_id'])
+				&& !empty($this->sequencePool[$name = $query->getTable().'_id'])
 			) {
 				$id = current($this->sequencePool[$name]);
 				
