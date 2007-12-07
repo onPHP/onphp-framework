@@ -47,8 +47,9 @@
 		protected function create()
 		{
 			$pool = DBTestPool::me()->getPool();
-			
+
 			foreach ($pool as $name => $db) {
+				DBFactory::setDefaultInstance($db);
 				foreach ($this->schema->getTables() as $name => $table) {
 					$db->queryRaw($table->toDialectString($db->getDialect()));
 				}
@@ -60,6 +61,7 @@
 			$pool = DBTestPool::me()->getPool();
 			
 			foreach ($pool as $name => $db) {
+				DBFactory::setDefaultInstance($db);
 				foreach ($this->schema->getTableNames() as $name) {
 					$db->queryRaw(
 						OSQL::dropTable($name, true)->toDialectString(

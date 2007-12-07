@@ -51,6 +51,8 @@
 				&& $column->isPrimaryKey()
 			);
 			
+			$column->setDefault(null);
+			
 			return null; // or even 'AUTOINCREMENT'?
 		}
 	}

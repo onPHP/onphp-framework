@@ -33,7 +33,7 @@
 			
 			return self::$defaultDB;
 		}
-
+		
 		public static function getCustomInstance(
 			$userName, $passWord, $host, $base = null, $connector = null
 		)
@@ -70,7 +70,7 @@
 						DB_BASE
 					);
 			
-			return DBFactory::$defaultDB;
+			return self::$defaultDB;
 		}
 	}
 ?>
