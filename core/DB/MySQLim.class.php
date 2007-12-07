@@ -48,8 +48,6 @@
 			
 			$this->link = mysqli_init();
 			
-			mysqli_options($this->link, MYSQLI_CLIENT_FOUND_ROWS, 1);
-			
 			try {
 				mysqli_real_connect(
 					$this->link,
@@ -57,7 +55,9 @@
 					$this->username,
 					$this->password,
 					$this->basename,
-					$this->port
+					$this->port,
+					null,
+					MYSQLI_CLIENT_FOUND_ROWS
 				);
 			} catch (BaseException $e) {
 				throw new DatabaseException(
