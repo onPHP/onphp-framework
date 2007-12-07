@@ -48,9 +48,10 @@
 		{
 			$this->link =
 				($persistent)
-					? mysql_pconnect($host, $user, $pass)
-					: mysql_connect($host, $user, $pass, true);
-							
+					// 2 == CLIENT_FOUND_ROWS
+					? mysql_pconnect($host, $user, $pass, 2)
+					: mysql_connect($host, $user, $pass, true, 2);
+			
 			if (!$this->link || ($base && !mysql_select_db($base, $this->link)))
 				throw new DatabaseException(
 					'can not connect to MySQL server: '.mysql_error($this->link),
