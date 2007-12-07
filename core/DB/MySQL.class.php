@@ -49,14 +49,18 @@
 						mysql_pconnect(
 							$this->hostname,
 							$this->username,
-							$this->password
+							$this->password,
+							// 2 == CLIENT_FOUND_ROWS
+							2
 						)
 					:
 						mysql_connect(
 							$this->hostname,
 							$this->username,
 							$this->password,
-							true
+							true,
+							// 2 == CLIENT_FOUND_ROWS
+							2
 						);
 							
 			if (

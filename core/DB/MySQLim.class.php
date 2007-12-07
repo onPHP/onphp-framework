@@ -46,15 +46,19 @@
 			if ($this->persistent)
 				throw new UnsupportedMethodException();
 			
+			$this->link = mysqli_init();
+			
+			mysqli_options($this->link, MYSQLI_CLIENT_FOUND_ROWS, 1);
+			
 			try {
-				$this->link =
-					mysqli_connect(
-						$this->hostname,
-						$this->username,
-						$this->password,
-						$this->basename,
-						$this->port
-					);
+				mysqli_real_connect(
+					$this->link,
+					$this->hostname,
+					$this->username,
+					$this->password,
+					$this->basename,
+					$this->port
+				);
 			} catch (BaseException $e) {
 				throw new DatabaseException(
 					'can not connect to MySQL server: '.$e->getMessage()
