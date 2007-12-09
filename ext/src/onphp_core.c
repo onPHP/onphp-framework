@@ -60,7 +60,8 @@
 #include "core/OSQL/FromTable.h"
 #include "core/OSQL/FullText.h"
 #include "core/OSQL/GroupBy.h"
-#include "core/OSQL/Joiner.h"
+// b0rked atm
+// #include "core/OSQL/Joiner.h"
 #include "core/OSQL/OrderBy.h"
 #include "core/OSQL/SelectField.h"
 #include "core/OSQL/SQLTableName.h"
@@ -266,11 +267,12 @@ PHP_MINIT_FUNCTION(onphp_core)
 	REGISTER_ONPHP_IMPLEMENTS(GroupBy, MappableObject);
 	ONPHP_CLASS_IS_FINAL(GroupBy);
 	
-	REGISTER_ONPHP_STD_CLASS(Joiner);
-	REGISTER_ONPHP_PROPERTY(Joiner, "from", ZEND_ACC_PRIVATE);
-	REGISTER_ONPHP_PROPERTY(Joiner, "tables", ZEND_ACC_PRIVATE);
-	REGISTER_ONPHP_IMPLEMENTS(Joiner, DialectString);
-	ONPHP_CLASS_IS_FINAL(Joiner);
+	// b0rked atm
+	// REGISTER_ONPHP_STD_CLASS(Joiner);
+	// REGISTER_ONPHP_PROPERTY(Joiner, "from", ZEND_ACC_PRIVATE);
+	// REGISTER_ONPHP_PROPERTY(Joiner, "tables", ZEND_ACC_PRIVATE);
+	// REGISTER_ONPHP_IMPLEMENTS(Joiner, DialectString);
+	// ONPHP_CLASS_IS_FINAL(Joiner);
 	
 	REGISTER_ONPHP_SUB_CLASS(OrderBy, FieldTable);
 	REGISTER_ONPHP_PROPERTY(OrderBy, "direction", ZEND_ACC_PRIVATE);
