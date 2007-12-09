@@ -1,5 +1,9 @@
 # $Id$
 
+2007-12-09	Konstantin V. Arkhipov
+
+	* 0.10.8 released.
+
 2007-12-05	Anton E. Lebedevich
 
 	* main/Crypto/, main/Math/, main/OpenId/: OpenId implementation moved
