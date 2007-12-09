@@ -12,7 +12,7 @@
 #include "onphp.h"
 
 ONPHP_GETTER(SgmlTag, getId, id);
-ONPHP_GETTER(SgmlTag, setId, id);
+ONPHP_SETTER(SgmlTag, setId, id);
 
 static ONPHP_ARGINFO_ONE;
 
