@@ -73,7 +73,7 @@
 			return $this;
 		}
 		
-		public function contains(/*IpAddress*/ $probe)
+		public function contains(/* IpAddress */ $probe)
 		{
 			Assert::isInstance($probe, 'IpAddress');
 			
