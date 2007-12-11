@@ -1,5 +1,10 @@
 # $Id$
 
+2007-12-11	Dmitry E. Demidov
+
+	* core/Form/Primitives/PrimitiveString.class.php: change
+	mail pattern of local-part wrt RFC2822.
+
 2007-12-11	Dmitry E. Pismenny
 
 	* main/Base/RequestType.class.php: added server type.
