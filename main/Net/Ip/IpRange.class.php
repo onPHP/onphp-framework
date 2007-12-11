@@ -75,6 +75,8 @@
 		
 		public function contains(/*IpAddress*/ $probe)
 		{
+			Assert::isInstance($probe, 'IpAddress');
+			
 			return (
 				($this->startIp->getLongIp() <= $probe->getLongIp())
 				&& ($this->endIp->getLongIp() >= $probe->getLongIp())
