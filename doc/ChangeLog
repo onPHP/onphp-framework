@@ -1,5 +1,9 @@
 # $Id$
 
+2007-12-11	Dmitry E. Pismenny
+
+	* main/Base/RequestType.class.php: added server type.
+
 2007-12-05	Anton E. Lebedevich
 
 	* main/Crypto/, main/Math/, main/OpenId/: OpenId implementation

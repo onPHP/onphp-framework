@@ -85,6 +85,8 @@
 				} else
 					$this->form->importOneMore($name, $scope);
 			}
+			
+			return $this;
 		}
 		
 		/* void */ public function import(HttpRequest $request)
@@ -94,6 +96,8 @@
 			}
 			
 			$this->form->checkRules();
+			
+			return $this;
 		}
 		
 		public function export(RequestType $type)
@@ -127,6 +131,8 @@
 				throw new MissingElementException(
 					"there is no '{$name}' primitive"
 				);
+			
+			return $this;
 		}
 	}
 ?>
