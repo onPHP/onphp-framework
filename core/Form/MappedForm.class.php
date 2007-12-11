@@ -63,6 +63,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MappedForm
+		**/
 		public function importOne($name, HttpRequest $request)
 		{
 			$this->checkExistence($name);
@@ -89,6 +92,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MappedForm
+		**/
 		public function import(HttpRequest $request)
 		{
 			foreach ($this->form->getPrimitiveList() as $prm) {
@@ -100,6 +106,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MappedForm
+		**/
 		public function export(RequestType $type)
 		{
 			$result = array();
@@ -125,6 +134,9 @@
 			return $result;
 		}
 		
+		/**
+		 * @return MappedForm
+		**/
 		private function checkExistence($name)
 		{
 			if (!$this->form->primitiveExists($name))
