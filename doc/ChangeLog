@@ -1,5 +1,9 @@
 # $Id$
 
+2007-12-11	Dmitry E. Pismenny
+
+	* main/Base/RequestType.class.php: added server type.
+
 2007-12-09	Konstantin V. Arkhipov
 
 	* 0.10.8 released.
