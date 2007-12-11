@@ -63,7 +63,7 @@
 			return $this;
 		}
 		
-		/* void */ public function importOne($name, HttpRequest $request)
+		public function importOne($name, HttpRequest $request)
 		{
 			$this->checkExistence($name);
 			
@@ -89,7 +89,7 @@
 			return $this;
 		}
 		
-		/* void */ public function import(HttpRequest $request)
+		public function import(HttpRequest $request)
 		{
 			foreach ($this->form->getPrimitiveList() as $prm) {
 				$this->importOne($prm->getName(), $request);
@@ -125,7 +125,7 @@
 			return $result;
 		}
 		
-		/* void */ private function checkExistence($name)
+		private function checkExistence($name)
 		{
 			if (!$this->form->primitiveExists($name))
 				throw new MissingElementException(
