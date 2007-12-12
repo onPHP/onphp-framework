@@ -27,13 +27,16 @@
 			if ($insert)
 				for ($i = 0, $size = count($insert); $i < $size; ++$i) {
 					// check existence of new object
-					try {
-						$dao->getById($insert[$i]->getId());
-					} catch (ObjectNotFoundException $e) {
-						// ok, saving it then
+					if ($insert[$i]->getId())
+						try {
+							$dao->getById($insert[$i]->getId());
+						} catch (ObjectNotFoundException $e) {
+							// ok, saving it then
+							$dao->add($insert[$i]);
+						}
+					else
 						$dao->add($insert[$i]);
-					}
-
+					
 					$db->queryNull(
 						$this->makeInsertQuery($insert[$i]->getId())
 					);
