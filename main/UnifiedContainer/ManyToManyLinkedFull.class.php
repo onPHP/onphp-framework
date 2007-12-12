@@ -28,7 +28,7 @@
 				for ($i = 0, $size = count($insert); $i < $size; ++$i) {
 					$db->queryNull(
 						$this->makeInsertQuery(
-							$dao->add($insert[$i])->getId()
+							$dao->take($insert[$i])->getId()
 						)
 					);
 				}
