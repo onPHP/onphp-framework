@@ -69,7 +69,8 @@
 		 * @return LightMetaProperty
 		**/
 		public static function fill(
-			$property, $name, $columnName, $type, $className, $size,
+			LightMetaProperty $property,
+			$name, $columnName, $type, $className, $size,
 			$required, $generic, $inner, $relationId, $strategyId
 		)
 		{
