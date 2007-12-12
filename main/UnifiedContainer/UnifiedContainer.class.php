@@ -241,7 +241,7 @@
 			$clones	= $this->clones;
 			
 			$ids = $insert = $delete = $update = array();
-
+			
 			if ($this->lazy) {
 				foreach ($list as $id) {
 					if (!isset($clones[$id]))
@@ -292,7 +292,7 @@
 					
 					$db->commit()->queueFlush();
 				} catch (DatabaseException $e) {
-					$db->queueDrop()->rollback();
+					$db->queueDrop()->queueStop()->rollback();
 					throw $e;
 				}
 			} else {
