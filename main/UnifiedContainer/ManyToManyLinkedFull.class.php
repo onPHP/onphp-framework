@@ -21,31 +21,22 @@
 		public function sync($insert, $update = array(), $delete)
 		{
 			$dao = $this->container->getDao();
-
+			
 			$db = DBPool::getByDao($dao);
-
+			
 			if ($insert)
 				for ($i = 0, $size = count($insert); $i < $size; ++$i) {
-					// check existence of new object
-					if ($insert[$i]->getId())
-						try {
-							$dao->getById($insert[$i]->getId());
-						} catch (ObjectNotFoundException $e) {
-							// ok, saving it then
-							$dao->add($insert[$i]);
-						}
-					else
-						$dao->add($insert[$i]);
-					
 					$db->queryNull(
-						$this->makeInsertQuery($insert[$i]->getId())
+						$this->makeInsertQuery(
+							$dao->add($insert[$i])->getId()
+						)
 					);
 				}
-
+			
 			if ($update)
 				for ($i = 0, $size = count($update); $i < $size; ++$i)
 					$dao->save($update[$i]);
-
+			
 			if ($delete) {
 				$ids = array();
 				
@@ -56,10 +47,10 @@
 				
 				$dao->uncacheByIds($ids);
 			}
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return SelectQuery
 		**/
