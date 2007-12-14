@@ -285,20 +285,32 @@
 			$db = DBPool::getByDao($this->getDao());
 			
 			if (!$db->inTransaction()) {
-				$db->queueStart()->begin();
-
+				$outerQueue = $db->isQueueActive();
+				
+				if (!$outerQueue)
+					$db->queueStart();
+				
+				$db->begin();
+				
 				try {
 					$this->worker->sync($insert, $update, $delete);
 					
-					$db->commit()->queueFlush();
+					$db->commit();
+					
+					if (!$outerQueue)
+						$db->queueFlush();
 				} catch (DatabaseException $e) {
-					$db->queueDrop()->queueStop()->rollback();
+					if (!$outerQueue)
+						$db->queueDrop()->queueStop();
+					
+					$db->rollback();
+					
 					throw $e;
 				}
 			} else {
 				$this->worker->sync($insert, $update, $delete);
 			}
-
+			
 			$this->clones = array();
 			$this->syncClones();
 			$this->dao->uncacheLists();
