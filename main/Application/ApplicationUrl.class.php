@@ -11,7 +11,9 @@
 /* $Id$ */
 
 	/**
-	 * TODO: hierarchical scopes
+	 * TODO: hierarchical scopes,
+	 * not only path/query - subdomains may be involved to,
+	 * ex: username.example.com
 	**/
 	final class ApplicationUrl
 	{
