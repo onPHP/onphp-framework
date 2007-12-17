@@ -12,7 +12,7 @@
 
 	/**
 	 * TODO: hierarchical scopes,
-	 * not only path/query - subdomains may be involved to,
+	 * not only path/query - subdomains may be involved too,
 	 * ex: username.example.com
 	**/
 	final class ApplicationUrl
