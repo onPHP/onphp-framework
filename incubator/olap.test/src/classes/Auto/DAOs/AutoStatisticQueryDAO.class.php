@@ -6,6 +6,7 @@
  *****************************************************************************/
 /* $Id$ */
 
+	//FIXME: ComplexBuilderDAO is not present in trunk!!!
 	abstract class AutoStatisticQueryDAO extends ComplexBuilderDAO
 	{
 		public function getTable()
