@@ -35,6 +35,16 @@
 		/**
 		 * @return MultiPrefixPhpView
 		**/
+		public function addFirstPrefix($prefix)
+		{
+			array_unshift($this->prefixes, $prefix);
+			
+			return $this;
+		}
+		
+		/**
+		 * @return MultiPrefixPhpView
+		**/
 		public function addPrefix($prefix)
 		{
 			$this->prefixes[] = $prefix;
