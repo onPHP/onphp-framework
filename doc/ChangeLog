@@ -1,5 +1,10 @@
 # $Id$
 
+2007-12-20	Dmitry E. Demidov
+
+	* main/Flow/MultiPrefixPhpViewResolver.class.php: added
+	method viewExists.
+
 2007-12-18	Dmitry E. Demidov
 
 	* main/Flow/MultiPrefixPhpViewResolver.class.php: added

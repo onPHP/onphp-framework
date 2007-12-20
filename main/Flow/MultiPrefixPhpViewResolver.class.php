@@ -89,19 +89,21 @@
 				'specify at least one prefix'
 			);
 			
-			foreach ($this->prefixes as $prefix) {
-				if (file_exists($prefix.$viewName.$this->postfix)) {
-					return
-						new $this->viewClassName(
-							$prefix.$viewName.$this->postfix,
-							$this
-						);
-				}
-			}
+			if ($prefix = $this->findPrefix($viewName))
+				return
+					new $this->viewClassName(
+						$prefix.$viewName.$this->postfix,
+						$this
+					);
 			
 			throw new WrongArgumentException(
 				'can not resolve view: '.$viewName
 			);
+		}
+		
+		public function viewExists($viewName)
+		{
+			return ($this->findPrefix($viewName) !== null);
 		}
 		
 		/**
@@ -117,6 +119,15 @@
 		public function getViewClassName()
 		{
 			return $this->viewClassName;
+		}
+		
+		protected function findPrefix($viewName)
+		{
+			foreach ($this->prefixes as $prefix)
+				if (file_exists($prefix.$viewName.$this->postfix))
+					return $prefix;
+			
+			return null;
 		}
 	}
 ?>
