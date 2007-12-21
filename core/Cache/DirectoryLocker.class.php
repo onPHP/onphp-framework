@@ -42,6 +42,7 @@
 					return $this->pool[$key] = true;
 				} catch (BaseException $e) {
 					// still exist
+					unset($e);
 					$mseconds += 200;
 					usleep(200);
 				}
