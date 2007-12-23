@@ -122,7 +122,6 @@
 		
 		public function runRandomSourceTest(RandomSource $source)
 		{
-			$this->assertNotEqual($source->getBytes(1), $source->getBytes(1));
 			$this->assertNotEqual($source->getBytes(2), $source->getBytes(2));
 			$this->assertNotEqual($source->getBytes(10), $source->getBytes(10));
 			$this->assertNotEqual($source->getBytes(256), $source->getBytes(256));
