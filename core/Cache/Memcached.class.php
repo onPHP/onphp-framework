@@ -182,7 +182,7 @@
 			$length = strlen($packed);
 			
 			// flags and exptime are ignored
-			$command = "append {$key} 0 0 {$length}\r\n";
+			$command = "append {$key} 0 0 {$length}\r\n{$packed}\r\n";
 			
 			if (!$this->sendRequest($command))
 				return false;
