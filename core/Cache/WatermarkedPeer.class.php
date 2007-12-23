@@ -118,6 +118,11 @@
 			return $this->peer->isAlive();
 		}
 
+		public function append($key, $data)
+		{
+			return $this->peer->append($this->getActualWatermark().$key, $data);
+		}
+		
 		protected function store(
 			$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
 		)
