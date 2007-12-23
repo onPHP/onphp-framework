@@ -44,7 +44,11 @@
 			public function replace(
 				$key, $value, $expires = Cache::EXPIRES_MEDIUM
 			)
-
+		
+		add this data to an existing key after existing data:
+		
+			public function append($key, $data)
+		
 		drop object from cache:
 
 			abstract public function delete($key)
@@ -122,6 +126,8 @@
 		abstract protected function store(
 			$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
 		);
+		
+		abstract public function append($key, $data);
 		
 		final public function set($key, $value, $expires = Cache::EXPIRES_MEDIUM)
 		{

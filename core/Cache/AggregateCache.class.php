@@ -145,7 +145,19 @@
 
 			return $stats;
 		}
-
+		
+		public function append($key, $data)
+		{
+			$label = $this->guessLabel($key);
+			
+			if ($this->peers[$label]['object']->isAlive())
+				return $this->peers[$label]['object']->append($key, $data);
+			else
+				$this->checkAlive();
+			
+			return false;
+		}
+		
 		protected function store(
 			$action, $key, $value, $expires = Cache::EXPIRES_MINIMUM
 		)

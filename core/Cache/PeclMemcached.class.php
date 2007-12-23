@@ -105,6 +105,17 @@
 			Assert::isUnreachable();
 		}
 		
+		public function append($key, $data)
+		{
+			try {
+				return $this->instance->append($key, $data);
+			} catch (BaseException $e) {
+				return $this->alive = false;
+			}
+			
+			Assert::isUnreachable();
+		}
+		
 		protected function store(
 			$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
 		)

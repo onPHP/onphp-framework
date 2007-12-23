@@ -59,7 +59,17 @@
 			
 			return parent::clean();
 		}
-
+		
+		public function append($key, $data)
+		{
+			if (isset($this->cache[$key])) {
+				$this->cache[$key] .= $data;
+				return true;
+			}
+			
+			return false;
+		}
+		
 		protected function store($action, $key, $value, $expires = 0)
 		{
 			if ($action == 'add' && isset($this->cache[$key]))

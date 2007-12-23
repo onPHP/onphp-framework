@@ -164,15 +164,35 @@
 				return false;
 			
 			try {
-				$response = trim(fread($this->link, $this->buffer));
+				$response = fread($this->link, $this->buffer);
 			} catch (BaseException $e) {
 				return false;
 			}
 			
-			if ($response === 'DELETED')
+			if ($response === "DELETED\r\n")
 				return true;
 			else
 				return false;
+		}
+		
+		public function append($key, $data)
+		{
+			$packed = serialize($data);
+			
+			$length = strlen($packed);
+			
+			// flags and exptime are ignored
+			$command = "append {$key} 0 0 {$length}\r\n";
+			
+			if (!$this->sendRequest($command))
+				return false;
+			
+			$response = fread($this->link, $this->buffer);
+			
+			if ($response === "STORED\r\n")
+				return true;
+			
+			return false;
 		}
 		
 		protected function store(
@@ -207,9 +227,9 @@
 			if (!$this->sendRequest($command))
 				return false;
 			
-			$response = trim(fread($this->link, $this->buffer));
+			$response = fread($this->link, $this->buffer);
 			
-			if ($response === 'STORED')
+			if ($response === "STORED\r\n")
 				return true;
 			
 			return false;

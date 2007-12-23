@@ -90,6 +90,36 @@
 			return true;
 		}
 		
+		public function append($key, $data)
+		{
+			$path = $this->makePath($key);
+			
+			$directory = dirname($path);
+			
+			if (!file_exists($directory)) {
+				try {
+					mkdir($directory);
+				} catch (BaseException $e) {
+					// we're in race
+				}
+			}
+			
+			if (!is_writable($path))
+				return false;
+			
+			try {
+				$fp = fopen($path, 'ab');
+			} catch (BaseException $e) {
+				return false;
+			}
+			
+			fwrite($fp, $data);
+			
+			fclose($fp);
+			
+			return true;
+		}
+		
 		protected function store($action, $key, $value, $expires = 0)
 		{
 			$path = $this->makePath($key);

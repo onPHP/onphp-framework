@@ -1,5 +1,10 @@
 # $Id$
 
+2007-11-23	Konstantin V. Arkhipov
+
+	* core/Cache/: append() added in CachePeer and implemented in it's
+	available childs.
+
 2007-12-20	Dmitry E. Demidov
 
 	* main/Flow/MultiPrefixPhpViewResolver.class.php: added
