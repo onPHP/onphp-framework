@@ -38,16 +38,7 @@
 			
 			$mseconds = 0;
 			
-			while (!flock($this->pool[$key], LOCK_EX)) {
-				usleep(200);
-				
-				// give up on ten seconds timeout
-				if (($mseconds += 200) > 10000) {
-					return false;
-				}
-			}
-			
-			return true;
+			return flock($this->pool[$key], LOCK_EX);
 		}
 		
 		public function free($key)
