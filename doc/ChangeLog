@@ -2,6 +2,9 @@
 
 2007-11-23	Konstantin V. Arkhipov
 
+	* main/DAOs/Handlers/CacheSegmentHandler.class.php: new experimental
+	segment handler implemented.
+
 	* core/Cache/: append() added in CachePeer and implemented in it's
 	available childs.
 
