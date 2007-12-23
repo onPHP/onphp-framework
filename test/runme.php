@@ -94,6 +94,7 @@
 	if ($daoWorkers)
 		foreach ($daoWorkers as $worker) {
 			echo "Processing with {$worker}\n";
+			Cache::dropWorkers();
 			Cache::setDefaultWorker($worker);
 			$test->run($reporter);
 			echo "\n";

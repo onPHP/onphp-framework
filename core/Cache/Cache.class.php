@@ -40,6 +40,9 @@
 		/// default worker
 		private static $worker	= null;
 		
+		/// spawned workers
+		private static $instances = array();
+		
 		/**
 		 * @return CachePeer
 		**/
@@ -76,21 +79,24 @@
 		**/
 		public static function worker(GenericDAO $dao)
 		{
-			static $instances = array();
-			
 			$class = get_class($dao);
 			
-			if (!isset($instances[$class])) {
+			if (!isset(self::$instances[$class])) {
 				if (isset(self::$map[$class])) {
 					$className = self::$map[$class];
-					$instances[$class] = new $className($dao);
+					self::$instances[$class] = new $className($dao);
 				} elseif ($worker = self::$worker)
-					$instances[$class] = new $worker($dao);
+					self::$instances[$class] = new $worker($dao);
 				else
-					$instances[$class] = new CommonDaoWorker($dao);
+					self::$instances[$class] = new CommonDaoWorker($dao);
 			}
 			
-			return $instances[$class];
+			return self::$instances[$class];
+		}
+		
+		/* void */ public static function dropWorkers()
+		{
+			self::$instances = array();
 		}
 	}
 ?>
