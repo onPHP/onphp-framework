@@ -25,6 +25,25 @@
 			return new self;
 		}
 		
+		/**
+		 * @return HttpUrl
+		 *
+		 * @see rfc2616, sec. 14.23.
+		 *
+		 * Hint: example.com:443
+		 */
+		public function setHttpHost($host)
+		{
+			$parts = explode(':', $host, 2);
+			
+			$this->setHost($parts[0]);
+			
+			if (isset($parts[1]))
+				$this->setPost($parts[1]);
+			
+			return $this;
+		}
+		
 		public function ensureAbsolute()
 		{
 			$this->fixMistakenPath();

@@ -1,11 +1,16 @@
 # $Id$
 
-2007-11-25	Konstantin V. Arkhipov
+2007-12-25	Ivan Y. Khvostishkov
+
+	* main/Net/HttpUrl.class.php: setHttpHost() - setter for Host-like
+	values, as described in rfc2616, sec. 14.23.
+
+2007-12-25	Konstantin V. Arkhipov
 
 	* global.inc.php.tpl: ONPHP_TEMP_PATH now defaults to
 	sys_get_temp_dir(), ONPHP_CLASS_CACHE now defaults to ONPHP_TEMP_PATH.
 
-2007-11-23	Konstantin V. Arkhipov
+2007-12-23	Konstantin V. Arkhipov
 
 	* main/DAOs/Handlers/CacheSegmentHandler.class.php: new experimental
 	segment handler implemented.
