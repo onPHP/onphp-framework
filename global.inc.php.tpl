@@ -29,8 +29,12 @@
 	
 	// overridable constant, don't forget for trailing slash
 	// also you may consider using /dev/shm/ for cache purposes
-	if (!defined('ONPHP_TEMP_PATH'))
-		define('ONPHP_TEMP_PATH', sys_get_temp_dir().DIRECTORY_SEPARATOR);
+	if (!defined('ONPHP_TEMP_PATH')) {
+		if (function_exists('sys_get_temp_dir'))
+			define('ONPHP_TEMP_PATH', sys_get_temp_dir().DIRECTORY_SEPARATOR);
+		else
+			define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
+	}
 	
 	/*
 		if (!defined('ONPHP_CLASS_CACHE'))
