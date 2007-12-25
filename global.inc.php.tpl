@@ -27,97 +27,112 @@
 		);
 	}
 	
+	// overridable constant, don't forget for trailing slash
+	// also you may consider using /dev/shm/ for cache purposes
+	if (!defined('ONPHP_TEMP_PATH'))
+		define('ONPHP_TEMP_PATH', sys_get_temp_dir().DIRECTORY_SEPARATOR);
+	
+	/*
+		if (!defined('ONPHP_CLASS_CACHE'))
+			define('ONPHP_CLASS_CACHE', '/dev/shm/');
+	*/
+	
 	// classes autoload magic
-	/* void */ function __autoload($classname)
-	{
-		// numeric indexes for directories, literal indexes for classes
-		static $cache = null;
-		
-		if (strpos($classname, "\0") !== false) {
-			// we can not avoid fatal error in this case
-			return /* void */;
-		}
-		
-		if (!(defined('ONPHP_CLASS_CACHE') && ONPHP_CLASS_CACHE)) {
-			// cache is disabled
-			try {
-				include $classname.EXT_CLASS;
+	if (defined('ONPHP_CLASS_CACHE') && ONPHP_CLASS_CACHE) {
+		/* void */ function __autoload($classname)
+		{
+			// numeric indexes for directories, literal indexes for classes
+			static $cache = null;
+			
+			if (strpos($classname, "\0") !== false) {
+				// we can not avoid fatal error in this case
 				return /* void */;
-			} catch (ClassNotFoundException $e) {
-				throw $e;
-			} catch (BaseException $e) {
-				return __autoload_failed($classname, $e->getMessage());
 			}
-		}
-		
-		$checksum = crc32(get_include_path());
-		$cacheFile = ONPHP_CLASS_CACHE.$checksum.'.occ';
-		
-		if ($cache && ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $checksum))
-			$cache = null;
-		
-		if (!$cache) {
-			try {
-				$cache = unserialize(@file_get_contents($cacheFile, false));
-			} catch (BaseException $e) {
-				/* ignore */
+			
+			$checksum = crc32(get_include_path());
+			$cacheFile = ONPHP_CLASS_CACHE.$checksum.'.occ';
+			
+			if ($cache && ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $checksum))
+				$cache = null;
+			
+			if (!$cache) {
+				try {
+					$cache = unserialize(@file_get_contents($cacheFile, false));
+				} catch (BaseException $e) {
+					/* ignore */
+				}
+				
+				if (isset($cache[$classname])) {
+					try {
+						include $cache[$cache[$classname]].$classname.EXT_CLASS;
+						return /* void */;
+					} catch (ClassNotFoundException $e) {
+						throw $e;
+					} catch (BaseException $e) {
+						$cache = null;
+					}
+				}
+			}
+			
+			if (!$cache) {
+				$cache = array();
+				$dirCount = 0;
+				
+				foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
+					$cache[$dirCount] = realpath($directory).DIRECTORY_SEPARATOR;
+					
+					foreach (
+						glob($cache[$dirCount].'*'.EXT_CLASS, GLOB_NOSORT)
+						as $class
+					) {
+						$class = basename($class, EXT_CLASS);
+						
+						// emulating include_path searching behaviour
+						if (!isset($cache[$class]))
+							$cache[$class] = $dirCount;
+					}
+					
+					++$dirCount;
+				}
+				
+				$cache[ONPHP_CLASS_CACHE_CHECKSUM] = $checksum;
+				
+				if (
+					is_writable(dirname($cacheFile))
+					&& (
+						!file_exists($cacheFile)
+						|| is_writable($cacheFile)
+					)
+				)
+					file_put_contents($cacheFile, serialize($cache));
 			}
 			
 			if (isset($cache[$classname])) {
+				require $cache[$cache[$classname]].$classname.EXT_CLASS;
+			} else {
+				// ok, last chance to find class in non-cached include_path
 				try {
-					include $cache[$cache[$classname]].$classname.EXT_CLASS;
+					include $classname.EXT_CLASS;
+					$cache[ONPHP_CLASS_CACHE_CHECKSUM] = null;
 					return /* void */;
-				} catch (ClassNotFoundException $e) {
-					throw $e;
 				} catch (BaseException $e) {
-					$cache = null;
+					__autoload_failed($classname, $e->getMessage());
 				}
 			}
 		}
-		
-		if (!$cache) {
-			$cache = array();
-			$dirCount = 0;
-			
-			foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
-				$cache[$dirCount] = realpath($directory).DIRECTORY_SEPARATOR;
-				
-				foreach (
-					glob($cache[$dirCount].'*'.EXT_CLASS, GLOB_NOSORT)
-					as $class
-				) {
-					$class = basename($class, EXT_CLASS);
-					
-					// emulating include_path searching behaviour
-					if (!isset($cache[$class]))
-						$cache[$class] = $dirCount;
-				}
-				
-				++$dirCount;
+	} else {
+		/* void */ function __autoload($classname)
+		{
+			if (strpos($classname, "\0") !== false) {
+				/* are you sane? */
+				return;
 			}
 			
-			$cache[ONPHP_CLASS_CACHE_CHECKSUM] = $checksum;
-			
-			if (
-				is_writable(dirname($cacheFile))
-				&& (
-					!file_exists($cacheFile)
-					|| is_writable($cacheFile)
-				)
-			)
-				file_put_contents($cacheFile, serialize($cache));
-		}
-		
-		if (isset($cache[$classname])) {
-			require $cache[$cache[$classname]].$classname.EXT_CLASS;
-		} else {
-			// ok, last chance to find class in non-cached include_path
 			try {
 				include $classname.EXT_CLASS;
-				$cache[ONPHP_CLASS_CACHE_CHECKSUM] = null;
 				return /* void */;
 			} catch (BaseException $e) {
-				__autoload_failed($classname, $e->getMessage());
+				return __autoload_failed($classname, $e->getMessage());
 			}
 		}
 	}
@@ -127,11 +142,6 @@
 	set_error_handler('error2Exception', E_ALL | E_STRICT);
 	ignore_user_abort(true);
 	define('ONPHP_VERSION', '0.10.8.99');
-	
-	// overridable constant, don't forget for trailing slash
-	// also you may consider using /dev/shm/ for cache purposes
-	if (!defined('ONPHP_TEMP_PATH'))
-		define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
 	
 	if (!defined('ONPHP_IPC_PERMS'))
 		define('ONPHP_IPC_PERMS', 0660);
@@ -213,11 +223,6 @@
 		
 		.ONPHP_META_CLASSES.PATH_SEPARATOR
 	);
-	
-	/*
-		if (!defined('ONPHP_CLASS_CACHE'))
-			define('ONPHP_CLASS_CACHE', '/dev/shm/');
-	*/
 	
 	define('ONPHP_CLASS_CACHE_CHECKSUM', '__occc');
 	
