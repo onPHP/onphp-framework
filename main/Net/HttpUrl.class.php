@@ -39,7 +39,7 @@
 			$this->setHost($parts[0]);
 			
 			if (isset($parts[1]))
-				$this->setPost($parts[1]);
+				$this->setPort($parts[1]);
 			
 			return $this;
 		}
