@@ -1,6 +1,10 @@
 # $Id$
 
-2007-11-25	Konstantin V. Arkhipov
+2007-12-27	Vladimir A. Altuchov
+
+	* main/Markup/Feed: Category attribute added.
+
+2007-12-25	Konstantin V. Arkhipov
 
 	* global.inc.php.tpl: ONPHP_TEMP_PATH now defaults to
 	sys_get_temp_dir(), ONPHP_CLASS_CACHE now defaults to ONPHP_TEMP_PATH.
