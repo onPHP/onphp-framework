@@ -21,6 +21,7 @@
 		private $summary	= null;
 		private $published	= null;
 		private $link		= null;
+		private $category	= null;
 		
 		/**
 		 * @return FeedItem
@@ -124,6 +125,21 @@
 		public function setLink($link)
 		{
 			$this->link = $link;
+			
+			return $this;
+		}
+		
+		public function getCategory()
+		{
+			return $this->category;
+		}
+		
+		/**
+		 * @return FeedItem
+		**/
+		public function setCategory($category)
+		{
+			$this->category = $category;
 			
 			return $this;
 		}

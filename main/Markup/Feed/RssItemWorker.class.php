@@ -43,9 +43,10 @@
 						setLink((string) $item->link);
 					
 					if (isset($item->guid))
-						$feedItem->setId(
-							$item->guid
-						);					
+						$feedItem->setId($item->guid);
+					
+					if (isset($item->category))
+						$feedItem->setCategory((string) $item->category);
 					
 					$result[] = $feedItem;
 				}
@@ -86,6 +87,11 @@
 					.(
 						$item->getSummary()
 							? '<description>'.$item->getSummary().'</description>'
+							: null
+					)
+					.(
+						$item->getCategory()
+							? '<category>'.$item->getCategory().'</category>'
 							: null
 					)
 				.'</item>';
