@@ -52,9 +52,9 @@
 					$prm instanceof PrimitiveFormsList
 					&& $prm->getValue()
 				) {
-					foreach ($prm->getValue() as $form) {
+					foreach ($prm->getValue() as $id => $form) {
 						if ($errors = $form->getInnerErrors())
-							$result[$prm->getName()][] = $errors;
+							$result[$prm->getName()][$id] = $errors;
 					}
 					
 				} elseif (
