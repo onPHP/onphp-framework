@@ -43,6 +43,33 @@
 			return array_merge($this->errors, $this->violated);
 		}
 		
+		public function getInnerErrors()
+		{
+			$result = $this->getErrors();
+			
+			foreach ($this->primitives as $prm) {
+				if (
+					$prm instanceof PrimitiveFormsList
+					&& $prm->getValue()
+				) {
+					foreach ($prm->getValue() as $form) {
+						if ($errors = $form->getInnerErrors())
+							$result[$prm->getName()][] = $errors;
+					}
+					
+				} elseif (
+					$prm instanceof PrimitiveForm
+					&& $prm->getValue()
+					&& ($errors = $prm->getValue()->getInnerErrors())
+				) {
+					$result[$prm->getName()] = $errors;
+					
+				} 
+			}
+			
+			return $result;
+		}
+		
 		/**
 		 * @return Form
 		**/

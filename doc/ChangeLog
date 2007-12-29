@@ -1,5 +1,9 @@
 # $Id$
 
+2007-12-29	Ivan Y. Khvostishkov
+
+	* core/Form/Form.class.php: getInnerErrors() for PrimitiveForm.
+
 2007-12-27	Vladimir A. Altuchov
 
 	* main/Markup/Feed: Category attribute added.
