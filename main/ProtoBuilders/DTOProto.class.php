@@ -66,6 +66,8 @@
 				$this->baseProto()->
 					validate($object, $form, $previousObject);
 			
+			// FIXME: validate inner objects too
+			
 			$this->checkConstraints($object, $form, $previousObject);
 			
 			$errors = $form->getErrors();
