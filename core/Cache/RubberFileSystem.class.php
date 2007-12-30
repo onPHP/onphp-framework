@@ -162,12 +162,14 @@
 			} else {
 				if (($size = filesize($path)) > 0)
 					$data = fread($fp, $size);
+				else
+					$data = null;
 				
 				fclose($fp);
 				
 				$pool->drop($key);
 				
-				return $this->restoreData($data);
+				return $data ? $this->restoreData($data) : null;
 			}
 			
 			Assert::isUnreachable();
