@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -15,7 +15,7 @@
 #include "php.h"
 #include "zend_interfaces.h"
 
-#define ONPHP_VERSION "0.11.1.111"
+#define ONPHP_VERSION "1.0.0.99"
 #define ONPHP_MODULE_NAME "onPHP"
 
 /// dumb copy of zend_call_method
