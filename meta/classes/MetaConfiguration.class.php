@@ -1002,7 +1002,19 @@ XML;
 		
 		private function loadXml($metafile, $generate)
 		{
-			$xml = simplexml_load_file($metafile);
+			$contents = file_get_contents($metafile);
+			
+			$contents = str_replace(
+				'"meta.dtd"',
+				'"'.ONPHP_META_PATH.'dtd'.DIRECTORY_SEPARATOR.'meta.dtd"',
+				$contents
+			);
+			
+			$doc = new DOMDocument('1.0');
+			$doc->loadXML($contents);
+			$doc->validate();
+			
+			$xml = simplexml_import_dom($doc);
 			
 			// populate sources (if any)
 			if (isset($xml->sources[0])) {
