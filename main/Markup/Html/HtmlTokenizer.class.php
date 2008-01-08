@@ -1274,8 +1274,8 @@
 						self::optionalLowercase($buffer[$maxLength], $ignoreCase)
 							=== self::optionalLowercase($char, $ignoreCase)
 					)
-					? $maxLength + 1
-					: 0;
+						? $maxLength + 1
+						: 0;
 				
 				if (
 					$i > $substringLength + 1
