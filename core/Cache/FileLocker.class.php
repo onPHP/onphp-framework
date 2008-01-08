@@ -36,8 +36,6 @@
 		{
 			$this->pool[$key] = fopen($this->directory.$key, 'w+');
 			
-			$mseconds = 0;
-			
 			return flock($this->pool[$key], LOCK_EX);
 		}
 		
@@ -49,7 +47,8 @@
 		public function drop($key)
 		{
 			try {
-				return fclose($this->pool[$key]);
+				fclose($this->pool[$key]);
+				return unlink($this->directory.$key);
 			} catch (BaseException $e) {
 				unset($this->pool[$key]); // already race-removed
 				return false;

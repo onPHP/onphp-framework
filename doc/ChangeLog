@@ -1,5 +1,10 @@
 # $Id$
 
+2008-01-08	Konstantin V. Arkhipov
+
+	* core/Cache/FileLocker.class.php: added forgotten file dropping in
+	drop().
+
 2008-01-07	Konstantin V. Arkhipov
 
 	* main/DAOs/Workers/: getResult() fixed.
