@@ -82,7 +82,11 @@
 			if (!$this->string || $this->isEof())
 				return null;
 			
-			$result = substr($this->string, $this->position, $count);
+			if ($count == 1) {
+				$result = $this->string[$this->position];
+			} else {
+				$result = substr($this->string, $this->position, $count);
+			}
 			
 			$this->position += $count;
 			
