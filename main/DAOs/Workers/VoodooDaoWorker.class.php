@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -145,7 +145,7 @@
 					} elseif (extension_loaded('xcache')) {
 						$handlerName = 'XCacheSegmentHandler';
 					} else {
-						$handlerName = 'FileSystemSegmentHandler';
+						$handlerName = 'CacheSegmentHandler';
 					}
 				}
 			} else {

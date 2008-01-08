@@ -2,6 +2,9 @@
 
 2008-01-07	Konstantin V. Arkhipov
 
+	* main/DAOs/Workers/VoodooDaoWorker.class.php: CacheSegmentHandler is
+	the default handler now.
+
 	* main/DAOs/Workers/CommonDaoWorker.class.php,
 	main/DAOs/Workers/TransparentDaoWorker.class.php: getListByIds() now
 	uses CachePeer's getList().
