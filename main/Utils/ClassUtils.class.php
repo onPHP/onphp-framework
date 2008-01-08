@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Dmitry E. Demidov                               *
+ *   Copyright (C) 2007-2008 by Dmitry E. Demidov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -106,6 +106,28 @@
 			return preg_match('/^'.self::CLASS_NAME_PATTERN.'$/', $className);
 		}
 		
+		/// to avoid dependency on SPL's class_implements
+		public static function isClassImplements($what)
+		{
+			static $classImplements = null;
+			
+			if (!$classImplements) {
+				if (!function_exists('class_implements')) {
+					$classImplements = create_function(
+						'$what',
+						'
+							$info = new ReflectionClass($what);
+							return $info->getInterfaceNames();
+						'
+					);
+				} else {
+					$classImplements = 'class_implements';
+				}
+			}
+			
+			return $classImplements($what, true);
+		}
+		
 		public static function isInstanceOf($object, $class)
 		{
 			if (is_object($class)) {
@@ -127,9 +149,8 @@
 				else
 					return in_array(
 						$class,
-						class_implements($object, true)
+						self::isClassImplements($object)
 					);
-					
 			} elseif (is_object($object)) {
 				return $object instanceof $className;
 				
