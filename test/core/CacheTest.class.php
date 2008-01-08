@@ -16,7 +16,11 @@
 					addPeer('high', Memcached::create(), AggregateCache::LEVEL_HIGH)->
 					setClassLevel('one', 0xb000)
 			);
-		
+			
+			if (!Cache::me()->isAlive()) {
+				return $this->skip();
+			}
+			
 			for ($i = 0; $i < self::QUERIES; ++$i) {
 				Cache::me()->mark('one')->set($i, $i);
 				Cache::me()->mark('two')->set($i, $i);
