@@ -1259,9 +1259,11 @@
 				
 				$maxLength = $prefixTable[$i + 1];
 				
+				$char = self::optionalLowercase($char, $ignoreCase);
+				
 				while (
 					self::optionalLowercase($buffer[$maxLength], $ignoreCase)
-						!== self::optionalLowercase($char, $ignoreCase)
+						!== $char
 					&& $maxLength > 0
 				) {
 					$maxLength = $prefixTable[$maxLength];
@@ -1272,7 +1274,7 @@
 				$prefixTable[$i + 1] =
 					(
 						self::optionalLowercase($buffer[$maxLength], $ignoreCase)
-							=== self::optionalLowercase($char, $ignoreCase)
+							=== $char
 					)
 						? $maxLength + 1
 						: 0;
