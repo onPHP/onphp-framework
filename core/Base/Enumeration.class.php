@@ -29,16 +29,6 @@
 		
 		/// prevent's serialization of names' array
 		//@{
-		public function __sleep()
-		{
-			return array('id');
-		}
-		
-		public function __wakeup()
-		{
-			$this->setId($this->id);
-		}
-		
 		public function serialize()
 		{
 			return (string) $this->id;

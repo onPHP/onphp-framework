@@ -24,32 +24,6 @@ ONPHP_METHOD(Enumeration, __construct)
 	ONPHP_CALL_METHOD_1(getThis(), "setid", NULL, id);
 }
 
-ONPHP_METHOD(Enumeration, __sleep)
-{
-	zval *out;
-	
-	ALLOC_INIT_ZVAL(out);
-	array_init(out);
-	
-	add_next_index_string(
-		out,
-		"id",
-		1
-	);
-	
-	RETURN_ZVAL(out, 1, 1);
-}
-
-ONPHP_METHOD(Enumeration, __wakeup)
-{
-	ONPHP_CALL_METHOD_1(
-		getThis(),
-		"setid",
-		NULL,
-		ONPHP_READ_PROPERTY(getThis(), "id")
-	);
-}
-
 ONPHP_METHOD(Enumeration, serialize)
 {
 	zval *id;
@@ -271,8 +245,6 @@ zend_function_entry onphp_funcs_Enumeration[] = {
 	ONPHP_ME(Enumeration, getObjectList,NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, toString,		NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, getNameList,	NULL, ZEND_ACC_PUBLIC)
-	ONPHP_ME(Enumeration, __sleep,		NULL, ZEND_ACC_PUBLIC)
-	ONPHP_ME(Enumeration, __wakeup,		NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, serialize,	NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, unserialize,	arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Enumeration, getId,		NULL, ZEND_ACC_PUBLIC)
