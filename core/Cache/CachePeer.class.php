@@ -14,23 +14,27 @@
 	CachePeer:
 	
 		get from cache:
-
+		
 			abstract public function get($key)
-			
+		
+		multi-get from cache:
+		
+			abstract public function getList($keys)
+		
 		uncache:
 		
 			abstract public function delete($key)
-
+		
 		drop everything from cache:
 		
 			abstract public function clean()
-	
+		
 		store this data:
 		
 			public function set(
 				$key, $value, $expires = Cache::EXPIRES_MEDIUM
 			)
-
+		
 		store this data, but only if peer *doesn't* already
 		hold data for this key:
 		
@@ -50,13 +54,13 @@
 			public function append($key, $data)
 		
 		drop object from cache:
-
+		
 			abstract public function delete($key)
 		
 		check if cache alive:
 		
 			abstract public function isAlive()
-
+	
 	Memcached <- CachePeer:
 	
 		public function __construct(
