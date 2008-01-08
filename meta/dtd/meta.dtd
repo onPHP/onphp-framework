@@ -49,6 +49,7 @@
 			|SpookedClass
 			|SpookedEnumeration
 			|ValueObject
+			|InternalClass
 		) #REQUIRED
 		fetch		(lazy|cascade) #IMPLIED
 >
@@ -65,5 +66,5 @@
 <!ELEMENT include EMPTY>
 <!ATTLIST include
 		file		CDATA #REQUIRED
-		build		(true|false) "true"
+		generate	(true|false) "true"
 >
