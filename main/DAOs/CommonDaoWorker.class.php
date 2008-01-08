@@ -82,12 +82,12 @@
 			if (
 				($expires !== Cache::DO_NOT_CACHE)
 				&& ($object = $this->getCachedByQuery($query))
-			)
+			) {
 				if ($object === Cache::NOT_FOUND)
 					throw new ObjectNotFoundException();
 				
 				return $object;
-			elseif ($object = $db->queryObjectRow($query, $this->dao)) {
+			} elseif ($object = $db->queryObjectRow($query, $this->dao)) {
 				if ($expires === Cache::DO_NOT_CACHE)
 					return $object;
 				else
@@ -113,12 +113,12 @@
 			if (
 				($expires !== Cache::DO_NOT_CACHE)
 				&& ($object = $this->getCachedByQuery($query))
-			)
+			) {
 				if ($object === Cache::NOT_FOUND)
 					throw new ObjectNotFoundException();
 				
 				return $object;
-			elseif ($object = $db->queryRow($query)) {
+			} elseif ($object = $db->queryRow($query)) {
 				if ($expires === Cache::DO_NOT_CACHE)
 					return $object;
 				else
@@ -208,12 +208,12 @@
 			if (
 				($expires !== Cache::DO_NOT_CACHE)
 				&& ($list = $this->getCachedByQuery($query))
-			)
+			) {
 				if ($list === Cache::NOT_FOUND)
 					throw new ObjectNotFoundException();
 				
 				return $list;
-			elseif ($list = $db->queryObjectSet($query, $this->dao)) {
+			} elseif ($list = $db->queryObjectSet($query, $this->dao)) {
 				if (Cache::DO_NOT_CACHE === $expires) {
 					return $list;
 				} else {
