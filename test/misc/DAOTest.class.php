@@ -106,6 +106,12 @@
 			
 			TestUser::dao()->import($firstClone);
 			TestUser::dao()->import($secondClone);
+			
+			if ($assertions) {
+				// cache multi-get
+				$this->getListByIdsTest();
+				$this->getListByIdsTest();
+			}
 		}
 		
 		protected function getSome()
@@ -139,6 +145,26 @@
 			} catch (WrongStateException $e) {
 				$this->pass();
 			}
+		}
+		
+		private function getListByIdsTest()
+		{
+			$list = TestUser::dao()->getListByIds(array(1, 3, 2));
+			
+			$this->assertEqual(count($list), 2);
+			
+			// since we can't expect any order here
+			if ($list[0]->getId() > $list[1]->getId()) {
+				Range::swap($list[0], $list[1]);
+			}
+			
+			$this->assertEqual($list[0]->getId(), 1);
+			$this->assertEqual($list[1]->getId(), 2);
+			
+			$this->assertEqual(
+				array(),
+				TestUser::dao()->getListByIds(array(42, 42, 1738))
+			);
 		}
 	}
 ?>

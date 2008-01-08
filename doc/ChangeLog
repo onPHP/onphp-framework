@@ -2,6 +2,9 @@
 
 2008-01-07	Konstantin V. Arkhipov
 
+	* main/DAOs/Workers/NullDaoWorker.class.php: getListByIds() now
+	behaves like in all others DAO workers.
+
 	* main/Utils/ClassUtils.class.php: isClassImplements implemented, to
 	avoid SPL's class_implements dependency.
 
