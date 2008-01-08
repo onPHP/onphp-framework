@@ -45,8 +45,10 @@
 			$buffer = Memcached::DEFAULT_BUFFER
 		)
 		{
+			$errno = $errstr = null;
+			
 			try {
-				$this->link = fsockopen($host, $port);
+				$this->link = fsockopen($host, $port, &$errno, &$errstr, 1);
 				$this->alive = true;
 			} catch (BaseException $e) {
 				return null;
@@ -55,7 +57,6 @@
 			$this->buffer = $buffer;
 			
 			stream_set_blocking($this->link, true);
-			stream_set_timeout($this->link, 1);
 		}
 		
 		public function clean()
