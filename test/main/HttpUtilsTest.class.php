@@ -26,8 +26,7 @@
 					send($request);
 			} catch (NetworkException $e) {
 				// ok, we're networkless
-				$this->skip();
-				return;
+				return $this->skip();
 			}
 			
 			$this->assertEqual(
