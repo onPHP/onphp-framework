@@ -84,10 +84,14 @@
 		//@{
 		public function getListByIds($ids)
 		{
-			return
-				$this->getListByLogic(
-					Expression::in($this->dao->getIdName(), $ids)
-				);
+			try {
+				return
+					$this->getListByLogic(
+						Expression::in($this->dao->getIdName(), $ids)
+					);
+			} catch (ObjectNotFoundException $e) {
+				return array();
+			}
 		}
 		
 		public function getListByQuery(SelectQuery $query)
