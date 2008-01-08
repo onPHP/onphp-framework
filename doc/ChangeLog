@@ -2,6 +2,9 @@
 
 2008-01-08	Konstantin V. Arkhipov
 
+	* meta/classes/MetaConfiguration.class.php: validation against
+	meta.dtd implemented.
+
 	* core/Cache/FileLocker.class.php: added forgotten file dropping in
 	drop().
 
