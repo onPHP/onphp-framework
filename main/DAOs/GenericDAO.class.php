@@ -324,7 +324,7 @@
 			);
 		}
 		
-		private function addObjectToMap($object)
+		private function addObjectToMap(Identifiable $object)
 		{
 			return $this->identityMap[$object->getId()] = $object;
 		}
