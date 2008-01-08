@@ -22,8 +22,8 @@
 			}
 			
 			for ($i = 0; $i < self::QUERIES; ++$i) {
-				Cache::me()->mark('one')->set($i, $i);
-				Cache::me()->mark('two')->set($i, $i);
+				$this->assertTrue(Cache::me()->mark('one')->set($i, $i));
+				$this->assertTrue(Cache::me()->mark('two')->set($i, $i));
 			}
 		
 			$oneHit = 0;
