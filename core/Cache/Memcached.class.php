@@ -48,15 +48,14 @@
 			$errno = $errstr = null;
 			
 			try {
-				$this->link = fsockopen($host, $port, &$errno, &$errstr, 1);
-				$this->alive = true;
-			} catch (BaseException $e) {
-				return null;
-			}
-			
-			$this->buffer = $buffer;
-			
-			stream_set_blocking($this->link, true);
+				if ($this->link = @fsockopen($host, $port, &$errno, &$errstr, 1)) {
+					$this->alive = true;
+				
+					$this->buffer = $buffer;
+				
+					stream_set_blocking($this->link, true);
+				}
+			} catch (BaseException $e) {/*_*/}
 		}
 		
 		public function clean()
