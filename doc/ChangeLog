@@ -1,5 +1,10 @@
 # $Id$
 
+2008-01-07	Konstantin V. Arkhipov
+
+	* main/Utils/ClassUtils.class.php: isClassImplements implemented, to
+	avoid SPL's class_implements dependency.
+
 2008-01-06	Konstantin V. Arkhipov
 
 	* 1.0.0 released.
