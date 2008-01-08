@@ -175,10 +175,12 @@
 			$res = new QueryResult();
 
 			return
-				$res->
-					setList($list)->
-					setCount($count['count'])->
-					setQuery($query);
+				$list
+					? $res->
+						setList($list)->
+						setCount($count['count'])->
+						setQuery($query)
+					: $res;
 		}
 		//@}
 

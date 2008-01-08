@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -332,14 +332,7 @@
 		**/
 		public function getResult()
 		{
-			try {
-				$result = $this->dao->getQueryResult($this->toSelectQuery());
-			} catch (ObjectNotFoundException $e) {
-				if (!$this->isSilent())
-					throw $e;
-				
-				return new QueryResult();
-			}
+			$result = $this->dao->getQueryResult($this->toSelectQuery());
 			
 			if (!$this->collections)
 				return $result;

@@ -2,6 +2,8 @@
 
 2008-01-07	Konstantin V. Arkhipov
 
+	* main/DAOs/Workers/: getResult() fixed.
+
 	* main/DAOs/Workers/NullDaoWorker.class.php: getListByIds() now
 	behaves like in all others DAO workers.
 
