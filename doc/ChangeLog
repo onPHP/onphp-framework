@@ -2,6 +2,8 @@
 
 2008-01-07	Konstantin V. Arkhipov
 
+	* main/DAOs/Workers/: getResult() fixed.
+
 	* main/DAOs/Workers/VoodooDaoWorker.class.php: CacheSegmentHandler is
 	the default handler now.
 

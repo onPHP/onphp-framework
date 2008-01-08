@@ -103,6 +103,14 @@
 				} catch (ObjectNotFoundException $e) {
 					$this->pass();
 				}
+				
+				$result =
+					Criteria::create(TestUser::dao())->
+					add(Expression::eq(1, 2))->
+					getResult();
+				
+				$this->assertEqual($result->getCount(), 0);
+				$this->assertEqual($result->getList(), array());
 			}
 			
 			TestUser::dao()->import($firstClone);

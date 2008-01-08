@@ -264,10 +264,14 @@
 					$this->cacheByQuery(
 						$query,
 						
-						QueryResult::create()->
-						setList($list)->
-						setCount($count['count'])->
-						setQuery($query)
+						$list
+							?
+								QueryResult::create()->
+								setList($list)->
+								setCount($count['count'])->
+								setQuery($query)
+							:
+								QueryResult::create()
 					);
 			}
 		}
