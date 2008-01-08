@@ -31,7 +31,10 @@
 	// also you may consider using /dev/shm/ for cache purposes
 	if (!defined('ONPHP_TEMP_PATH')) {
 		if (function_exists('sys_get_temp_dir'))
-			define('ONPHP_TEMP_PATH', sys_get_temp_dir().DIRECTORY_SEPARATOR);
+			define(
+				'ONPHP_TEMP_PATH',
+				sys_get_temp_dir().DIRECTORY_SEPARATOR.'onPHP'.DIRECTORY_SEPARATOR
+			);
 		else
 			define('ONPHP_TEMP_PATH', '/tmp/onPHP/');
 	}
