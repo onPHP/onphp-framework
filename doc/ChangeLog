@@ -1,5 +1,10 @@
 # $Id$
 
+2008-01-07	Konstantin V. Arkhipov
+
+	* main/Utils/ClassUtils.class.php: isClassImplements implemented, to
+	avoid SPL's class_implements dependency.
+
 2007-12-27	Vladimir A. Altuchov
 
 	* main/Markup/Feed/: Category attribute added.
