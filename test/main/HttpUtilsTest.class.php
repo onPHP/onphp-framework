@@ -20,9 +20,15 @@
 				)->
 				setMethod(HttpMethod::get());
 			
-			$response = CurlHttpClient::create()->
-				setTimeout(3)->
-				send($request);
+			try {
+				$response = CurlHttpClient::create()->
+					setTimeout(3)->
+					send($request);
+			} catch (NetworkException $e) {
+				// ok, we're networkless
+				$this->skip();
+				return;
+			}
 			
 			$this->assertEqual(
 				$response->getStatus()->getId(),
