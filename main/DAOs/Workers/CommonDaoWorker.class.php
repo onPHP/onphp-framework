@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -165,23 +165,24 @@
 		public function getListByIds($ids, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			if ($expires !== Cache::DO_NOT_CACHE) {
-				
 				$list = array();
 				$toFetch = array();
 				
-				foreach ($ids as $id) {
-					$cached = $this->getCachedById($id);
-					
-					if ($cached !== Cache::NOT_FOUND) {
-						if ($cached)
-							$list[] = $this->dao->fetchEncapsulants($cached);
-						else
-							$toFetch[] = $id;
+				if ($cachedList = Cache::me()->getList($ids)) {
+					foreach ($cachedList as $cached) {
+						if ($cached !== Cache::NOT_FOUND) {
+							if ($cached)
+								$list[] = $this->dao->fetchEncapsulants($cached);
+							else
+								$toFetch[] = $id;
+						}
 					}
+					
+					if (!$toFetch)
+						return $list;
+				} else {
+					$toFetch = $ids;
 				}
-				
-				if (!$toFetch)
-					return $list;
 				
 				try {
 					return

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -118,34 +118,31 @@
 			$list = array();
 			$toFetch = array();
 			
-			foreach ($ids as $id) {
-				if (
-					!($cached = $this->getCachedById($id))
-					|| ($cached === Cache::NOT_FOUND)
-				) {
-					$toFetch[] = $id;
-				} else {
-					$list[] = $this->dao->fetchEncapsulants($cached);
+			if ($cachedList = Cache::me()->getList($ids)) {
+				foreach ($cachedList as $cached) {
+					if (
+						($cached === Cache::NOT_FOUND)
+						|| !$cached
+					) {
+						$toFetch[] = $id;
+					} else {
+						$list[] = $this->dao->fetchEncapsulants($cached);
+					}
 				}
+				
+				if (!$toFetch)
+					return $list;
+			} else {
+				$toFetch = $ids;
 			}
 			
-			if (!$toFetch)
-				return $list;
-			
-			try {
-				return
-					array_merge(
-						$list,
-						$this->getListByLogic(
-							Expression::in($this->dao->getIdName(), $toFetch)
-						)
-					);
-			} catch (ObjectNotFoundException $e) {
-				// nothing to fetch
-				return $list;
+			foreach ($toFetch as $id) {
+				try {
+					$list[] = $this->getById($id);
+				} catch (ObjectNotFoundException $e) {/*_*/}
 			}
 			
-			Assert::isUnreachable();
+			return $list;
 		}
 		
 		public function getListByQuery(SelectQuery $query)

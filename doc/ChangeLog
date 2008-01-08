@@ -2,6 +2,13 @@
 
 2008-01-07	Konstantin V. Arkhipov
 
+	* main/DAOs/Workers/CommonDaoWorker.class.php,
+	main/DAOs/Workers/TransparentDaoWorker.class.php: getListByIds() now
+	uses CachePeer's getList().
+
+	* core/Cache/: getList() implemented in CachePeer and
+	two memcached childs.
+
 	* main/DAOs/Workers/NullDaoWorker.class.php: getListByIds() now
 	behaves like in all others DAO workers.
 
