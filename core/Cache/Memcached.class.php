@@ -48,7 +48,7 @@
 			$errno = $errstr = null;
 			
 			try {
-				if ($this->link = @fsockopen($host, $port, &$errno, &$errstr, 1)) {
+				if ($this->link = @fsockopen($host, $port, $errno, $errstr, 1)) {
 					$this->alive = true;
 				
 					$this->buffer = $buffer;
