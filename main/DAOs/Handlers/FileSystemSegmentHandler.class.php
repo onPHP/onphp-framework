@@ -19,8 +19,13 @@
 		
 		public function __construct($segmentId)
 		{
-			if (!is_writable($segmentId))
-				mkdir($segmentId, 0700, true);
+			if (!is_writable($segmentId)) {
+				try {
+					mkdir($segmentId, 0700, true);
+				} catch (BaseException $e) {
+					// already created in race
+				}
+			}
 			
 			$this->path = $segmentId;
 		}
