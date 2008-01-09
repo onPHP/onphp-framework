@@ -25,8 +25,13 @@
 				.$segmentId
 				.DIRECTORY_SEPARATOR;
 			
-			if (!is_writable($path))
-				mkdir($path, 0700, true);
+			if (!is_writable($path)) {
+				try {
+					mkdir($path, 0700, true);
+				} catch (BaseException $e) {
+					// already created in race
+				}
+			}
 			
 			$this->path = $path;
 		}
