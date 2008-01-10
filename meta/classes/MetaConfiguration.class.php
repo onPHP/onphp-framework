@@ -1005,22 +1005,20 @@ XML;
 		**/
 		private function processIncludes(SimpleXMLElement $xml)
 		{
-			if (isset($xml->include['file'])) {
-				foreach ($xml->include as $include) {
-					$file = (string) $include['file'];
-					$path = dirname($metafile).'/'.$file;
-					
-					Assert::isTrue(
-						is_readable($path),
-						'can not include '.$file
-					);
-					
-					$this->getOutput()->
-						infoLine('Including "'.$path.'".')->
-						newLine();
-					
-					$this->loadXml($path, !((string) $include['generate'] == 'false'));
-				}
+			foreach ($xml->include as $include) {
+				$file = (string) $include['file'];
+				$path = dirname($metafile).'/'.$file;
+				
+				Assert::isTrue(
+					is_readable($path),
+					'can not include '.$file
+				);
+				
+				$this->getOutput()->
+					infoLine('Including "'.$path.'".')->
+					newLine();
+				
+				$this->loadXml($path, !((string) $include['generate'] == 'false'));
 			}
 			
 			return $this;
@@ -1301,9 +1299,16 @@ XML;
 				}
 			}
 			
-			return $this->
-				processIncludes($xml)->
-				processClasses($xml, $metafile, $generate);
+			if (isset($xml->include['file'])) {
+				$this->processIncludes($xml);
+			}
+			
+			// otherwise it's an ncludes-only config
+			if (isset($xml->classes[0])) {
+				return $this->processClasses($xml, $metafile, $generate);
+			}
+			
+			return $this;
 		}
 		
 		/**
