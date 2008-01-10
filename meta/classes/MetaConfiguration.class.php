@@ -957,6 +957,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return MetaConfiguration
+		**/
 		private function processClasses(SimpleXMLElement $xml, $metafile, $generate)
 		{
 			foreach ($xml->classes[0] as $xmlClass) {
