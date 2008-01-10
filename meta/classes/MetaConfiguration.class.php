@@ -934,7 +934,7 @@
 		/**
 		 * @return MetaConfiguration
 		**/
-		private function processIncludes(SimpleXMLElement $xml)
+		private function processIncludes(SimpleXMLElement $xml, $metafile)
 		{
 			foreach ($xml->include as $include) {
 				$file = (string) $include['file'];
@@ -1231,7 +1231,7 @@
 			}
 			
 			if (isset($xml->include['file'])) {
-				$this->processIncludes($xml);
+				$this->processIncludes($xml, $metafile);
 			}
 			
 			// otherwise it's an ncludes-only config
