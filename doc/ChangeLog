@@ -1,5 +1,10 @@
 # $Id$
 
+2008-01-10	Konstantin V. Arkhipov
+
+	* meta/: configurations without classes are now allowed;
+	includes processing now goes before classes.
+
 2008-01-08	Konstantin V. Arkhipov
 
 	* meta/classes/MetaConfiguration.class.php: validation against
