@@ -1,8 +1,8 @@
 <!-- $Id$ -->
 
-<!ELEMENT metaconfiguration (include*, classes+, sources*)>
+<!ELEMENT metaconfiguration (include*, classes*, sources*)>
 
-<!ELEMENT classes (class+)>
+<!ELEMENT classes (class*)>
 
 <!ELEMENT class (implement*, properties*, pattern)>
 <!ATTLIST class
