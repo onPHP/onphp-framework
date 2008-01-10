@@ -1000,29 +1000,34 @@ XML;
 			return false;
 		}
 		
-		private function loadXml($metafile, $generate)
+		/**
+		 * @return MetaConfiguration
+		**/
+		private function processIncludes(SimpleXMLElement $xml)
 		{
-			$contents = file_get_contents($metafile);
-			
-			$contents = str_replace(
-				'"meta.dtd"',
-				'"'.ONPHP_META_PATH.'dtd'.DIRECTORY_SEPARATOR.'meta.dtd"',
-				$contents
-			);
-			
-			$doc = new DOMDocument('1.0');
-			$doc->loadXML($contents);
-			$doc->validate();
-			
-			$xml = simplexml_import_dom($doc);
-			
-			// populate sources (if any)
-			if (isset($xml->sources[0])) {
-				foreach ($xml->sources[0] as $source) {
-					$this->addSource($source);
+			if (isset($xml->include['file'])) {
+				foreach ($xml->include as $include) {
+					$file = (string) $include['file'];
+					$path = dirname($metafile).'/'.$file;
+					
+					Assert::isTrue(
+						is_readable($path),
+						'can not include '.$file
+					);
+					
+					$this->getOutput()->
+						infoLine('Including "'.$path.'".')->
+						newLine();
+					
+					$this->loadXml($path, !((string) $include['generate'] == 'false'));
 				}
 			}
 			
+			return $this;
+		}
+		
+		private function processClasses(SimpleXMLElement $xml, $metafile, $generate)
+		{
 			foreach ($xml->classes[0] as $xmlClass) {
 				$name = (string) $xmlClass['name'];
 				
@@ -1063,7 +1068,7 @@ XML;
 				// populate implemented interfaces
 				foreach ($xmlClass->implement as $xmlImplement)
 					$class->addInterface((string) $xmlImplement['interface']);
-
+				
 				if (isset($xmlClass->properties[0]->identifier)) {
 					
 					$id = $xmlClass->properties[0]->identifier;
@@ -1267,26 +1272,35 @@ XML;
 				$this->classes[$class->getName()] = $class;
 			}
 			
-			// process includes
-			if (isset($xml->include['file'])) {
-				foreach ($xml->include as $include) {
-					$file = (string) $include['file'];
-					$path = dirname($metafile).'/'.$file;
-					
-					Assert::isTrue(
-						is_readable($path),
-						'can not include '.$file
-					);
-					
-					$this->getOutput()->
-						infoLine('Including "'.$path.'".')->
-						newLine();
-					
-					$this->loadXml($path, !((string) $include['generate'] == 'false'));
+			return $this;
+		}
+		
+		private function loadXml($metafile, $generate)
+		{
+			$contents = file_get_contents($metafile);
+			
+			$contents = str_replace(
+				'"meta.dtd"',
+				'"'.ONPHP_META_PATH.'dtd'.DIRECTORY_SEPARATOR.'meta.dtd"',
+				$contents
+			);
+			
+			$doc = new DOMDocument('1.0');
+			$doc->loadXML($contents);
+			$doc->validate();
+			
+			$xml = simplexml_import_dom($doc);
+			
+			// populate sources (if any)
+			if (isset($xml->sources[0])) {
+				foreach ($xml->sources[0] as $source) {
+					$this->addSource($source);
 				}
 			}
 			
-			return $this;
+			return $this->
+				processIncludes($xml)->
+				processClasses($xml, $metafile, $generate);
 		}
 		
 		/**
