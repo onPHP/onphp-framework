@@ -137,6 +137,7 @@ ONPHP_METHOD(BasePrimitive, import)
 			)
 			== SUCCESS
 		)
+		&& !(Z_TYPE_PP(raw) == IS_NULL)
 		&& !(
 			(Z_TYPE_PP(raw) == IS_STRING)
 			&& (Z_STRLEN_PP(raw) == 0)
