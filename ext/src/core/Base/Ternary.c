@@ -95,18 +95,18 @@ ONPHP_METHOD(Ternary, spawn)
 	}
 	
 	if (
-		is_identical_function(result, value, true)
+		is_identical_function(result, value, true TSRMLS_CC)
 		&& (zval_is_true(result))
 	) {
 		ONPHP_UPDATE_PROPERTY_BOOL(out, "trinity", 1);
 	} else if (
-		is_identical_function(result, value, false)
+		is_identical_function(result, value, false TSRMLS_CC)
 		&& (zval_is_true(result))
 	) {
 		ONPHP_UPDATE_PROPERTY_BOOL(out, "trinity", 0);
 	} else if (
 		(
-			is_identical_function(result, value, null)
+			is_identical_function(result, value, null TSRMLS_CC)
 			&& (zval_is_true(result))
 		) || (
 			Z_TYPE_P(null) == IS_NULL
