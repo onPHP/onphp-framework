@@ -137,7 +137,10 @@ ONPHP_METHOD(BasePrimitive, import)
 			)
 			== SUCCESS
 		)
-		&& ONPHP_CHECK_EMPTY(*raw)
+		&& !(
+			(Z_TYPE_PP(raw) == IS_STRING)
+			&& (Z_STRLEN_PP(raw) == 0)
+		)
 	) {
 		ONPHP_UPDATE_PROPERTY(getThis(), "raw", *raw);
 		
