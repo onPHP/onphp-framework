@@ -46,11 +46,12 @@ ONPHP_METHOD(PrimitiveNumber, import)
 	
 	ONPHP_ASSOC_GET(scope, Z_STRVAL_P(name), value);
 	
-	zend_try {
-		ONPHP_CALL_METHOD_1_NORET(getThis(), "checknumber", NULL, value);
-	} zend_catch {
+	ONPHP_CALL_METHOD_1_NORET(getThis(), "checknumber", NULL, value);
+	
+	if (EG(exception)) {
+		zend_clear_exception(TSRMLS_C);
 		RETURN_FALSE;
-	} zend_end_try();
+	}
 	
 	ONPHP_CALL_METHOD_1(getThis(), "castnumber", &out, value);
 	
