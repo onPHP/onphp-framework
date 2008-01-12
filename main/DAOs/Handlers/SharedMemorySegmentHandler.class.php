@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -31,7 +31,7 @@
 			} catch (BaseException $e) {
 				return false;
 			}
-
+			
 			try {
 				$result = shm_put_var($shm, $key, true);
 				shm_detach($shm);
@@ -54,13 +54,14 @@
 			
 			try {
 				$result = shm_remove_var($shm, $key);
-				shm_detach($shm);
-				return $result;
 			} catch (BaseException $e) {
 				// non existent key
-				shm_detach($shm);
-				return false;
+				$result = false;
 			}
+			
+			shm_detach($shm);
+			
+			return $result;
 			
 			Assert::isUnreachable();
 		}
@@ -77,8 +78,7 @@
 				$result = shm_get_var($shm, $key);
 			} catch (BaseException $e) {
 				// variable key N doesn't exist, bleh
-				shm_detach($shm);
-				return false;
+				$result = false;
 			}
 			
 			shm_detach($shm);
