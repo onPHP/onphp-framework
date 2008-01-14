@@ -174,7 +174,7 @@
 							if ($cached)
 								$list[] = $this->dao->fetchEncapsulants($cached);
 							else
-								$toFetch[] = $id;
+								$toFetch[] = $cached->getId();
 						}
 					}
 					
