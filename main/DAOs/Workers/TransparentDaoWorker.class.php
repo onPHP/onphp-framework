@@ -124,7 +124,7 @@
 						($cached === Cache::NOT_FOUND)
 						|| !$cached
 					) {
-						$toFetch[] = $id;
+						$toFetch[] = $cached->getId();
 					} else {
 						$list[] = $this->dao->fetchEncapsulants($cached);
 					}
