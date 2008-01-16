@@ -176,7 +176,7 @@
 		public function dropById($id)
 		{
 			return
-				DBPool::getByDao($this->dao)->queryNull(
+				DBPool::getByDao($this->dao)->queryCount(
 					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::eq($this->dao->getIdName(), $id))
 				);
@@ -185,7 +185,7 @@
 		public function dropByIds(/* array */ $ids)
 		{
 			return
-				DBPool::getByDao($this->dao)->queryNull(
+				DBPool::getByDao($this->dao)->queryCount(
 					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::in($this->dao->getIdName(), $ids))
 				);

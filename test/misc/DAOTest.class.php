@@ -93,10 +93,13 @@
 			$firstClone = clone $postgreser;
 			$secondClone = clone $mysqler;
 			
-			TestUser::dao()->dropById($postgreser->getId());
-			TestUser::dao()->dropByIds(array($mysqler->getId()));
+			$firstCount = TestUser::dao()->dropById($postgreser->getId());
+			$secondCount = TestUser::dao()->dropByIds(array($mysqler->getId()));
 			
 			if ($assertions) {
+				$this->assertEqual($firstCount, 1);
+				$this->assertEqual($secondCount, 1);
+				
 				try {
 					TestUser::dao()->getById(1);
 					$this->fail();

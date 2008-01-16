@@ -1,5 +1,11 @@
 # $Id$
 
+2008-01-16	Konstantin V. Arkhipov
+
+	* main/DAOs/Workers/BaseDaoWorker.class.php,
+	main/DAOs/Workers/NullDaoWorker.class.php: dropById() and dropByIds()
+	now returns deleted rows count.
+
 2008-01-16	Ivan Y. Khvostishkov
 
 	* core/Base/Assert.class.php: isLesser(), isGreater(),
