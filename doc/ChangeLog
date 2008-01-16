@@ -1,5 +1,10 @@
 # $Id$
 
+2008-01-16	Ivan Y. Khvostishkov
+
+	* core/Base/Assert.class.php: isLesser(), isGreater(),
+	isLesserOrEqual(), isGreaterOrEqual().
+
 2008-01-10	Konstantin V. Arkhipov
 
 	* meta/: configurations without classes are now allowed;

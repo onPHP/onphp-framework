@@ -138,6 +138,38 @@
 				);
 		}
 		
+		public static function isLesser($first, $second, $message = null)
+		{
+			if (!($first < $second))
+				throw new WrongArgumentException(
+					$message.', '.self::dumpOppositeArguments($first, $second)
+				);
+		}
+		
+		public static function isGreater($first, $second, $message = null)
+		{
+			if (!($first > $second))
+				throw new WrongArgumentException(
+					$message.', '.self::dumpOppositeArguments($first, $second)
+				);
+		}
+		
+		public static function isLesserOrEqual($first, $second, $message = null)
+		{
+			if (!($first <= $second))
+				throw new WrongArgumentException(
+					$message.', '.self::dumpOppositeArguments($first, $second)
+				);
+		}
+		
+		public static function isGreaterOrEqual($first, $second, $message = null)
+		{
+			if (!($first >= $second))
+				throw new WrongArgumentException(
+					$message.', '.self::dumpOppositeArguments($first, $second)
+				);
+		}
+		
 		public static function isInstance($first, $second, $message = null)
 		{
 			if (!ClassUtils::isInstanceOf($first, $second))
