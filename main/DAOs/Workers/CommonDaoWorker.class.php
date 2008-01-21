@@ -162,7 +162,10 @@
 
 		/// object's list getters
 		//@{
-		public function getListByIds($ids, $expires = Cache::EXPIRES_MEDIUM)
+		public function getListByIds(
+			array $ids,
+			$expires = Cache::EXPIRES_MEDIUM
+		)
 		{
 			if ($expires !== Cache::DO_NOT_CACHE) {
 				$list = array();
@@ -431,7 +434,7 @@
 			return $object;
 		}
 		
-		protected function cacheListByQuery(SelectQuery $query, /* array */ $array)
+		protected function cacheListByQuery(SelectQuery $query, array $array)
 		{
 			throw new UnimplementedFeatureException();
 		}

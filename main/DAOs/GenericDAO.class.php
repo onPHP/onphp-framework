@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -147,7 +147,7 @@
 		}
 		
 		public function getListByIds(
-			/* array */ $ids, $expires = Cache::EXPIRES_MEDIUM
+			array $ids, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
 			$mapped = $remain = array();
@@ -231,7 +231,7 @@
 			return Cache::worker($this)->dropById($id);
 		}
 		
-		public function dropByIds(/* array */ $ids)
+		public function dropByIds(array $ids)
 		{
 			foreach ($ids as $id)
 				unset($this->identityMap[$id]);

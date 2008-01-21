@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -173,7 +173,7 @@
 		/**
 		 * @return UnifiedContainer
 		**/
-		public function mergeList(/* array */ $list)
+		public function mergeList(array $list)
 		{
 			Assert::isArray($list);
 			
@@ -352,7 +352,7 @@
 		/**
 		 * @return UnifiedContainer
 		**/
-		private function importList(/* array */ $list)
+		private function importList(array $list)
 		{
 			if ($this->lazy) {
 				foreach ($list as $id)

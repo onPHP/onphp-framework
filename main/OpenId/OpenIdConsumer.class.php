@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2007-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -364,7 +364,7 @@
 		 * check_authentication mode request
 		**/
 		private function checkAuthentication(
-			/* array */ $parameters,
+			array $parameters,
 			$manager = null
 		)
 		{
@@ -446,7 +446,7 @@
 			return $result;
 		}
 		
-		private function parseGetParameters(/* array */ $get)
+		private function parseGetParameters(array $get)
 		{
 			$result = array();
 			foreach ($get as $key => $value) {

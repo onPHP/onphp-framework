@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -25,7 +25,7 @@
 		
 		/// object's list getters
 		//@{
-		public function getListByIds($ids);
+		public function getListByIds(array $ids);
 		public function getListByQuery(SelectQuery $query);
 		public function getListByLogic(LogicalObject $logic);
 		public function getPlainList();
@@ -46,7 +46,7 @@
 		//@{
 		public function drop(Identifiable $object);
 		public function dropById($id);
-		public function dropByIds(/* array */ $ids);
+		public function dropByIds(array $ids);
 		//@}
 		
 		/// uncachers

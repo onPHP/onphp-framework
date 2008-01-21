@@ -82,7 +82,7 @@
 		
 		/// object's list getters
 		//@{
-		public function getListByIds($ids)
+		public function getListByIds(array $ids)
 		{
 			try {
 				return
@@ -182,7 +182,7 @@
 				);
 		}
 		
-		public function dropByIds(/* array */ $ids)
+		public function dropByIds(array $ids)
 		{
 			return
 				DBPool::getByDao($this->dao)->queryCount(
@@ -208,7 +208,7 @@
 		
 		protected function cacheListByQuery(
 			SelectQuery $query,
-			/* array */ $array
+			array $array
 		)
 		{
 			return $array;

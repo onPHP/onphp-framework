@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2006-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -68,7 +68,7 @@
 		/**
 		 * @return HttpRequest
 		**/
-		public function setGet(/* array */ $get)
+		public function setGet(array $get)
 		{
 			$this->get = $get;
 			
@@ -102,7 +102,7 @@
 		/**
 		 * @return HttpRequest
 		**/
-		public function setPost(/* array */ $post)
+		public function setPost(array $post)
 		{
 			$this->post = $post;
 			
@@ -136,7 +136,7 @@
 		/**
 		 * @return HttpRequest
 		**/
-		public function setServer(/* array */ $server)
+		public function setServer(array $server)
 		{
 			$this->server = $server;
 			
@@ -161,7 +161,7 @@
 		/**
 		 * @return HttpRequest
 		**/
-		public function setCookie(/* array */ $cookie)
+		public function setCookie(array $cookie)
 		{
 			$this->cookie = $cookie;
 			
@@ -186,7 +186,7 @@
 		/**
 		 * @return HttpRequest
 		**/
-		public function setFiles(/* array */ $files)
+		public function setFiles(array $files)
 		{
 			$this->files = $files;
 			
@@ -211,7 +211,7 @@
 		/**
 		 * @return HttpRequest
 		**/
-		public function setSession(/* array */ &$session)
+		public function setSession(array &$session)
 		{
 			$this->session = &$session;
 			
@@ -294,7 +294,7 @@
 		/**
 		 * @return HttpRequest
 		**/
-		public function setHeaders(/* array */ $headers)
+		public function setHeaders(array $headers)
 		{
 			$this->headers = $headers;
 			return $this;

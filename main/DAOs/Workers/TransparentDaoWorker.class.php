@@ -113,7 +113,7 @@
 		
 		/// object's list getters
 		//@{
-		public function getListByIds($ids)
+		public function getListByIds(array $ids)
 		{
 			$list = array();
 			$toFetch = array();
