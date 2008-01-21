@@ -28,10 +28,14 @@
 			} else {
 				try {
 					$this->fd = fopen($nameOrFd, ($append ? 'a' : 'w').'b');
+					
+					Assert::isNotFalse(
+						$this->fd,
+						"File {$nameOrFd} must be exist"
+					);
 				} catch (BaseException $e) {
 					throw new IOException($e->getMessage());
 				}
-				
 			}
 		}
 		

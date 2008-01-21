@@ -33,6 +33,14 @@
 				);
 		}
 		
+		public static function isNotFalse($boolean, $message = null)
+		{
+			if ($boolean === false)
+				self::fail(
+					$message.', '.self::dumpArgument($boolean)
+				);
+		}
+		
 		public static function isNull($variable, $message = null)
 		{
 			if ($variable !== null)
