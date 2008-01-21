@@ -1,5 +1,12 @@
 # $Id$
 
+2008-01-21	Denis M. Gabaidulin
+
+	* core/Base/Assert.class.php: isNotFalse().
+
+	* main/Utils/IO/FileOutputStream.class.php: now throws IOException,
+	if stream file resource does not exist.
+
 2008-01-21	Konstantin V. Arkhipov
 
 	* 1.0.1 released.
