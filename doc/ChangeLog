@@ -1,5 +1,9 @@
 # $Id$
 
+2008-01-21	Konstantin V. Arkhipov
+
+	* 0.10.9 released.
+
 2008-01-10	Konstantin V. Arkhipov
 
 	* meta/: configurations without classes are now allowed;
