@@ -65,7 +65,7 @@
 			return $object;
 		}
 		
-		protected function cacheListByQuery(SelectQuery $query, array $array)
+		protected function cacheListByQuery(SelectQuery $query, /* array */ $array)
 		{
 			if ($array !== Cache::NOT_FOUND) {
 				Assert::isArray($array);
