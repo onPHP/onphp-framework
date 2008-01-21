@@ -1,5 +1,9 @@
 # $Id$
 
+2008-01-21	Konstantin V. Arkhipov
+
+	* 1.0.1 released.
+
 2008-01-16	Konstantin V. Arkhipov
 
 	* main/DAOs/Workers/BaseDaoWorker.class.php,
