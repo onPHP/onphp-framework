@@ -210,7 +210,7 @@
 					);
 				
 				foreach ($errorStrings as $string) {
-					list ($line, $num, $col, $rest) = explode(' ', $string, 4);
+					list ($line, $num, /* $col */, $rest) = explode(' ', $string, 4);
 					
 					$out .=
 						(
