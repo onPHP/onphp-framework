@@ -62,8 +62,6 @@
 			shm_detach($shm);
 			
 			return $result;
-			
-			Assert::isUnreachable();
 		}
 		
 		public function ping($key)
