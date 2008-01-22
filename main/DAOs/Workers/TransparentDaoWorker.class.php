@@ -330,13 +330,11 @@
 		
 		protected function cacheNullById($id)
 		{
-			static $null = Cache::NOT_FOUND;
-			
 			return
 				Cache::me()->mark($this->className)->
 					add(
 						$this->className.'_'.$id,
-						$null,
+						Cache::NOT_FOUND,
 						Cache::EXPIRES_FOREVER
 					);
 		}

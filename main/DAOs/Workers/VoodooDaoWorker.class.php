@@ -75,7 +75,7 @@
 		
 		protected function cacheListByQuery(
 			SelectQuery $query,
-			/* array */ $array
+			/* array || Cache::NOT_FOUND */ $array
 		)
 		{
 			if ($array !== Cache::NOT_FOUND) {
