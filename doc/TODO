@@ -1,5 +1,8 @@
 # $Id$
 
+* views: improved hierarchy, ex: relative 'parts', absolute '/parts', parent
+'../parts'.  see urls transformation in GenericUri for logic.
+
 * primitives refactoring:
 
 form2object: maybe always use getValue, why lists are special?
