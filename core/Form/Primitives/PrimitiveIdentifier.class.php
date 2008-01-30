@@ -51,7 +51,7 @@
 		{
 			Assert::isNotNull(
 				$this->className,
-				'specify class name first of all'				
+				'specify class name first of all'
 			);
 			
 			return call_user_func(array($this->className, 'dao'));
