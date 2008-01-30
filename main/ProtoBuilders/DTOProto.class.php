@@ -54,10 +54,15 @@
 		}
 		
 		final public function validate(
-			$object, Form $form, $previousObject = null
+			$object, $form, $previousObject = null
 		)
 		{
+			if (is_array($object)) {
+				return $this->validateList($object, $form, $previousObject);
+			}
+			
 			Assert::isInstance($object, $this->className());
+			Assert::isInstance($form, 'Form');
 			
 			if ($previousObject)
 				Assert::isInstance($previousObject, $this->className());
@@ -66,13 +71,78 @@
 				$this->baseProto()->
 					validate($object, $form, $previousObject);
 			
-			// FIXME: validate inner objects too
-			
 			$this->checkConstraints($object, $form, $previousObject);
+			
+			$getter = new ObjectGetter($this, $object);
+			
+			$previousGetter = $previousObject
+				? new ObjectGetter($this, $previousObject)
+				: null;
+			
+			foreach ($this->getFormMapping() as $id => $primitive) {
+				
+				if ($primitive instanceof PrimitiveForm) {
+					$proto = $primitive->getProto();
+					
+					$childForm = $form->getValue($primitive->getName());
+					$child = $getter->get($id);
+					$previousChild = $previousGetter
+						? $previousGetter->get($id)
+						: null;
+					
+					$childResult = true;
+					
+					if (
+						$child
+						&& !$proto->validate(
+							$child, $childForm, $previousChild
+						)
+					) {
+						$form->markWrong($primitive->getName());
+					}
+				}
+			}
 			
 			$errors = $form->getErrors();
 			
 			return empty($errors);
+		}
+		
+		final public function validateList(
+			$objectsList, $formsList, $previousObjectsList = null
+		)
+		{
+			Assert::isEqual(count($objectsList), count($formsList));
+			
+			reset($formsList);
+			
+			if ($previousObjectsList) {
+				Assert::isEqual(
+					count($objectsList), count($previousObjectsList)
+				);
+				
+				reset($previousObjectsList);
+			}
+			
+			$result = true;
+			
+			$previousObject = null;
+			
+			foreach ($objectsList as $object) {
+				
+				$form = current($formsList);
+				next($formsList);
+				
+				if ($previousObjectsList) {
+					$previousObject = current($previousObjectsList);
+					next($previousObjectsList);
+				}
+				
+				if (!$this->validate($object, $form, $previousObject))
+					$result = false;
+			}
+			
+			return $result;
 		}
 		
 		final public function createObject()

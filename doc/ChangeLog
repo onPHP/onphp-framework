@@ -1,5 +1,10 @@
 # $Id$
 
+2008-01-30	Ivan Y. Khvostishkov
+
+	* main/ProtoBuilders/DTOProto.class.php: validate() and validateList()
+	now validate objects recursively.
+
 2008-01-21	Denis M. Gabaidulin
 
 	* core/Base/Assert.class.php: isNotFalse().
