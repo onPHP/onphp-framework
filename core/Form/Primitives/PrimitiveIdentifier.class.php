@@ -80,19 +80,23 @@
 		
 		public function importValue($value)
 		{
-			if ($value instanceof Identifiable) {
-				Assert::isTrue(
-					ClassUtils::isInstanceOf($value, $this->className)
-				);
-				
-				return
-					$this->import(
-						array($this->getName() => $value->getId())
+			try {
+				if ($value instanceof Identifiable) {
+					Assert::isTrue(
+						ClassUtils::isInstanceOf($value, $this->className)
 					);
-			} elseif ($value) {
-				Assert::isInteger($value);
-				
-				return $this->import(array($this->getName() => $value));
+					
+					return
+						$this->import(
+							array($this->getName() => $value->getId())
+						);
+				} elseif ($value) {
+					Assert::isInteger($value);
+					
+					return $this->import(array($this->getName() => $value));
+				}
+			} catch (WrongArgumentException $e) {
+				return false;
 			}
 			
 			return parent::importValue(null);
