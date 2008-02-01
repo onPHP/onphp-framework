@@ -91,7 +91,7 @@
 							array($this->getName() => $value->getId())
 						);
 				} elseif ($value) {
-					Assert::isInteger($value);
+					Assert::isPositiveInteger($value);
 					
 					return $this->import(array($this->getName() => $value));
 				}
