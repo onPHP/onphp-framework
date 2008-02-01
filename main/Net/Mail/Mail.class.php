@@ -22,6 +22,10 @@
 	
 	/**
 	 * @ingroup Mail
+	 *
+	 * Note: when relay rejects your mail, try to
+	 * setSendmailAdditionalArgs('-f from.addr@example.com').
+	 * See 'man sendmail' for details.
 	**/
 	final class Mail
 	{
@@ -32,6 +36,8 @@
 		private $from			= null;
 		private $encoding		= null;
 		private $contentType	= null;
+		
+		private $sendmailAdditionalArgs	= null;
 		
 		/**
 		 * @return Mail
@@ -101,14 +107,19 @@
 			if ($this->contentType === null)
 				$this->contentType = 'text/plain';
 			
-			$headers
-				.= "Content-type: ".$this->contentType
+			$headers .=
+				"Content-type: ".$this->contentType
 				."; charset=".$encoding."\n";
 			
 			$headers .= "Content-Transfer-Encoding: 8bit\n";
 			$headers .= "Date: ".date('r')."\n";
 			
-			if (!mail($to, $subject, $body, $headers))
+			if (
+				!mail(
+					$to, $subject, $body, $headers,
+					$this->getSendmailAdditionalArgs()
+				)
+			)
 				throw new MailNotSentException();
 			
 			return $this;
@@ -179,6 +190,20 @@
 		public function setContentType($contentType)
 		{
 			$this->contentType = $contentType;
+			return $this;
+		}
+
+		public function getSendmailAdditionalArgs()
+		{
+			return $this->sendmailAdditionalArgs;
+		}
+		
+		/**
+		 * @return Mail
+		**/
+		public function setSendmailAdditionalArgs($sendmailAdditionalArgs)
+		{
+			$this->sendmailAdditionalArgs = $sendmailAdditionalArgs;
 			return $this;
 		}
 	}

@@ -1,5 +1,10 @@
 # $Id$
 
+2008-02-01	Ivan Y. Khvostishkov
+
+	* main/Net/Mail/Mail.class.php: setSendmailArgs(): used for setting 5th
+	argument for mail() function.
+
 2008-01-21	Denis M. Gabaidulin
 
 	* core/Base/Assert.class.php: isNotFalse().
