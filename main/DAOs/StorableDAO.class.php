@@ -73,9 +73,14 @@
 			foreach ($this->getProtoClass()->getPropertyList() as $property) {
 				$getter = $property->getGetter();
 				
-				if ($old->$getter() !== $object->$getter()) {
-					$property->fillQuery($query, $object);
+				if ($property->getClassName() === null) {
+					$changed = ($old->$getter() !== $object->$getter());
+				} else { // way to skip pointless update
+					$changed = ($old->$getter() != $object->$getter());
 				}
+				
+				if ($changed)
+					$property->fillQuery($query, $object);
 			}
 			
 			if (!$query->getFieldsCount())
