@@ -5,6 +5,10 @@
 	* meta/classes/MetaClassProperty.class.php: identifier can be any type
 	now.
 
+2008-02-07	Konstantin V. Arkhipov
+
+	* main/DAOs/StorableDAO.class.php: more efficient merge().
+
 2008-02-01	Ivan Y. Khvostishkov
 
 	* main/Net/Mail/Mail.class.php: setSendmailArgs(): used for setting 5th
