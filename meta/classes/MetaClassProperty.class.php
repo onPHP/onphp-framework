@@ -319,7 +319,11 @@
 				// collections
 				$primitiveName = 'identifierList';
 			} elseif ($this->isIdentifier()) {
-				$primitiveName = 'identifier';
+				if ($this->getType() instanceof IntegerType)
+					$primitiveName = 'identifier';
+				else
+					$primitiveName = $this->getType()->getPrimitiveName();
+				
 				$className = $holder->getName();
 			} elseif (
 				!$this->isIdentifier()
@@ -440,9 +444,15 @@ EOT;
 			if ($this->identifier) {
 				$column .= <<<EOT
 ->
-setPrimaryKey(true)->
+setPrimaryKey(true)
+EOT;
+				
+				if ($this->getType() instanceof IntegerType) {
+					$column .= <<<EOT
+->
 setAutoincrement(true)
 EOT;
+				}
 			}
 			
 			if ($this->type->hasDefault()) {
