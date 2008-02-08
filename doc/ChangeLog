@@ -1,5 +1,10 @@
 # $Id$
 
+2008-02-08	Ivan Y. Khvostishkov
+
+	* meta/classes/MetaConfiguration.class.php: fixed identifier names
+	sanity check.
+
 2008-02-08	Konstantin V. Arkhipov
 
 	* meta/: size attribute added to identifier.

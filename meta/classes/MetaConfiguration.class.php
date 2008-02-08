@@ -560,7 +560,7 @@
 					
 					Assert::isEqual(
 						$dao->getIdName(),
-						$class->getIdentifier()->getName(),
+						$class->getIdentifier()->getConvertedName(),
 						'identifier name mismatch in '.$class->getName().' class'
 					);
 					
