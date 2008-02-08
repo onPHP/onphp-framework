@@ -2,6 +2,8 @@
 
 2008-02-08	Konstantin V. Arkhipov
 
+	* meta/: size attribute added to identifier.
+
 	* meta/classes/MetaClassProperty.class.php: identifier can be any type
 	now.
 

@@ -90,7 +90,7 @@
 	
 	<class name="TestBinaryStuff">
 		<properties>
-			<identifier />
+			<identifier type="String" size="40" />
 			<property name="data" type="Binary" required="true" />
 		</properties>
 		<pattern name="StraightMapping" />

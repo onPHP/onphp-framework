@@ -166,18 +166,23 @@
 			for ($i = 0; $i < 256; ++$i)
 				$data .= chr($i);
 			
+			$id = sha1('all sessions are evil');
+			
 			$stuff =
 				TestBinaryStuff::create()->
+				setId($id)->
 				setData($data);
 			
-			$stuff = $stuff->dao()->add($stuff);
+			$stuff = $stuff->dao()->import($stuff);
 			
 			Cache::me()->clean();
 			
 			$this->assertEqual(
-				TestBinaryStuff::dao()->getById(1)->getData(),
+				TestBinaryStuff::dao()->getById($id)->getData(),
 				$data
 			);
+			
+			TestBinaryStuff::dao()->dropById($id);
 		}
 		
 		private function getListByIdsTest()

@@ -24,6 +24,7 @@
 <!ATTLIST identifier
 		name	CDATA #IMPLIED
 		type	CDATA #IMPLIED
+		size	CDATA #IMPLIED
 		column	CDATA #IMPLIED
 >
 

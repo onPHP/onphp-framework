@@ -785,7 +785,7 @@
 		/**
 		 * @return MetaClassProperty
 		**/
-		private function makeProperty($name, $type, MetaClass $class)
+		private function makeProperty($name, $type, MetaClass $class, $size)
 		{
 			if (!$name || !$type)
 				throw new WrongArgumentException(
@@ -797,7 +797,25 @@
 			else
 				$typeClass = 'ObjectType';
 			
-			return new MetaClassProperty($name, new $typeClass($type), $class);
+			$property = new MetaClassProperty($name, new $typeClass($type), $class);
+			
+			if ($size)
+				$property->setSize($size);
+			else {
+				Assert::isTrue(
+					(
+						!$property->getType()
+							instanceof FixedLengthStringType
+					) && (
+						!$property->getType()
+							instanceof NumericType
+					),
+					
+					'size is required for "'.$property->getName().'"'
+				);
+			}
+			
+			return $property;
 		}
 		
 		/**
@@ -1015,7 +1033,13 @@
 					else
 						$type = (string) $id['type'];
 					
-					$property = $this->makeProperty($name, $type, $class);
+					$property = $this->makeProperty(
+						$name,
+						$type,
+						$class,
+						// not casting to int because of Numeric possible size
+						(string) $id['size']
+					);
 					
 					if (isset($id['column'])) {
 						$property->setColumnName(
@@ -1071,7 +1095,8 @@
 					$property = $this->makeProperty(
 						(string) $xmlProperty['name'],
 						(string) $xmlProperty['type'],
-						$class
+						$class,
+						(string) $xmlProperty['size']
 					);
 					
 					if (isset($xmlProperty['column'])) {
@@ -1110,23 +1135,6 @@
 							'obsoleted identifier description found in '
 							."{$class->getName()} class;\n"
 							.'you must use <identifier /> instead.'
-						);
-					}
-					
-					if (isset($xmlProperty['size']))
-						// not casting to int because of Numeric possible size
-						$property->setSize((string) $xmlProperty['size']);
-					else {
-						Assert::isTrue(
-							(
-								!$property->getType()
-									instanceof FixedLengthStringType
-							) && (
-								!$property->getType()
-									instanceof NumericType
-							),
-							
-							'size is required for "'.$property->getName().'"'
 						);
 					}
 					
