@@ -79,7 +79,7 @@
 					)
 				);
 			
-			$days = ($weekNumber * 7);
+			$days = (($weekNumber - 1) * 7) + 1 - $date->getWeekDay();
 			
 			return $date->modify("+{$days} day");
 		}
