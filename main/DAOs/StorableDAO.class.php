@@ -56,7 +56,8 @@
 		
 		public function merge(Identifiable $object, $cacheOnly = true)
 		{
-			Assert::isPositiveInteger($object->getId());
+			Assert::isNotNull($object->getId());
+			
 			$this->checkObjectType($object);
 			
 			$old = Cache::worker($this)->getCachedById($object->getId());
@@ -67,6 +68,18 @@
 				else
 					$old = Cache::worker($this)->getById($object->getId());
 			}
+			
+			return $this->mergeWithOld($object, $old);
+		}
+		
+		public function mergeWithOld(
+			Identifiable $object, Identifiable $old
+		)
+		{
+			Assert::isEqual(
+				$object->getId(), $old->getId(),
+				'cannot merge different objects'
+			);
 			
 			$query = OSQL::update($this->getTable());
 			

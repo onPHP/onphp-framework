@@ -1,5 +1,13 @@
 # $Id$
 
+2008-02-14	Ivan Y. Khvostishkov
+
+	* main/DAOs/StorableDAO.class.php: mergeWithOld() method extracted from
+	merge().
+
+	* main/ProtoBuilders/DTOProto.class.php: validateSelf() extracted from
+	validate().
+
 2008-02-08	Ivan Y. Khvostishkov
 
 	* meta/classes/MetaConfiguration.class.php: fixed identifier names

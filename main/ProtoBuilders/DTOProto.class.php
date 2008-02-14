@@ -71,6 +71,13 @@
 				$this->baseProto()->
 					validate($object, $form, $previousObject);
 			
+			return $this->validateSelf($object, $form, $previousObject);
+		}
+		
+		final public function validateSelf(
+			$object, $form, $previousObject = null
+		)
+		{
 			$this->checkConstraints($object, $form, $previousObject);
 			
 			$getter = new ObjectGetter($this, $object);
