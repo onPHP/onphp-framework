@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -69,10 +69,10 @@
 					$old = Cache::worker($this)->getById($object->getId());
 			}
 			
-			return $this->mergeWithOld($object, $old);
+			return $this->unite($object, $old);
 		}
 		
-		public function mergeWithOld(
+		public function unite(
 			Identifiable $object, Identifiable $old
 		)
 		{

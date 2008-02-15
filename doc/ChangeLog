@@ -1,5 +1,9 @@
 # $Id$
 
+2008-02-15	Konstantin V. Arkhipov
+
+	* main/DAOs/StorableDAO.class.php: mergeWithOld() renamed to unite().
+
 2008-02-14	Ivan Y. Khvostishkov
 
 	* main/DAOs/StorableDAO.class.php: mergeWithOld() method extracted from
