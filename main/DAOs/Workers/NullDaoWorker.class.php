@@ -18,65 +18,28 @@
 	 * 
 	 * @ingroup DAOs
 	**/
-	final class NullDaoWorker extends BaseDaoWorker
+	final class NullDaoWorker extends CommonDaoWorker
 	{
 		/// single object getters
 		//@{
 		public function getById($id)
 		{
-			$query =
-				$this->dao->makeSelectHead()->
-				andWhere(
-					Expression::eq(
-						DBField::create(
-							$this->dao->getIdName(),
-							$this->dao->getTable()
-						),
-						$id
-					)
-				);
-
-			if ($object = $this->fetchObject($query))
-				return $object;
-			else
-				throw new ObjectNotFoundException();
-			
-			Assert::isUnreachable();
+			return parent::getById($id, Cache::DO_NOT_CACHE);
 		}
 		
 		public function getByLogic(LogicalObject $logic)
 		{
-			return
-				$this->getByQuery(
-					$this->dao->makeSelectHead()->andWhere($logic)
-				);
+			return parent::getByLogic($logic, Cache::DO_NOT_CACHE);
 		}
 		
 		public function getByQuery(SelectQuery $query)
 		{
-			if ($object = $this->fetchObject($query))
-				return $object;
-			else
-				throw new ObjectNotFoundException();
-			
-			Assert::isUnreachable();
+			return parent::getByQuery($query, Cache::DO_NOT_CACHE);
 		}
 		
 		public function getCustom(SelectQuery $query)
 		{
-			if ($query->getLimit() > 1)
-				throw new WrongArgumentException(
-					'can not handle non-single row queries'
-				);
-
-			$custom = DBPool::getByDao($this->dao)->queryRow($query);
-			
-			if ($custom)
-				return $this->cacheByQuery($query, $custom);
-			else
-				throw new ObjectNotFoundException();
-			
-			Assert::isUnreachable();
+			return parent::getCustom($query, Cache::DO_NOT_CACHE);
 		}
 		//@}
 		
@@ -102,52 +65,30 @@
 		
 		public function getListByQuery(SelectQuery $query)
 		{
-			if ($list = $this->fetchList($query))
-				return $list;
-			else
-				throw new ObjectNotFoundException();
-			
-			Assert::isUnreachable();
+			return parent::getListByQuery($query, Cache::DO_NOT_CACHE);
 		}
 		
 		public function getListByLogic(LogicalObject $logic)
 		{
-			return $this->getListByQuery(
-				$this->dao->makeSelectHead()->andWhere($logic)
-			);
+			return parent::getListByLogic($logic, Cache::DO_NOT_CACHE);
 		}
 		
 		public function getPlainList()
 		{
-			return $this->getListByQuery($this->dao->makeSelectHead());
+			return parent::getPlainList(Cache::DO_NOT_CACHE);
 		}
 		//@}
 
 		/// custom list getters
 		//@{
-		public function getCustomList(
-			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-		)
+		public function getCustomList(SelectQuery $query)
 		{
-			if ($list = DBPool::getByDao($this->dao)->querySet($query))
-				return $list;
-			else
-				throw new ObjectNotFoundException();
+			return parent::getCustomList($query, Cache::DO_NOT_CACHE);
 		}
 		
-		public function getCustomRowList(
-			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-		)
+		public function getCustomRowList(SelectQuery $query)
 		{
-			if ($query->getFieldsCount() !== 1)
-				throw new WrongArgumentException(
-					'you should select only one row when using this method'
-				);
-			
-			if ($list = DBPool::getByDao($this->dao)->queryColumn($query))
-				return $list;
-			else
-				throw new ObjectNotFoundException();
+			return parent::getCustomList($query, Cache::DO_NOT_CACHE);
 		}
 		//@}
 		
@@ -155,49 +96,10 @@
 		//@{
 		public function getQueryResult(SelectQuery $query)
 		{
-			$list = $this->fetchList($query);
-			
-			$count = clone $query;
-			
-			$count =
-				DBPool::getByDao($this->dao)->queryRow(
-					$count->dropFields()->dropOrder()->limit(null, null)->
-					get(SQLFunction::create('COUNT', '*')->setAlias('count'))
-				);
-
-			$res = new QueryResult();
-
-			return
-				$list
-					? $res->
-						setList($list)->
-						setCount($count['count'])->
-						setQuery($query)
-					: $res;
+			return parent::getQueryResult($query, Cache::DO_NOT_CACHE);
 		}
 		//@}
 
-		/// erasers
-		//@{
-		public function dropById($id)
-		{
-			return
-				DBPool::getByDao($this->dao)->queryCount(
-					OSQL::delete()->from($this->dao->getTable())->
-					where(Expression::eq($this->dao->getIdName(), $id))
-				);
-		}
-		
-		public function dropByIds(array $ids)
-		{
-			return
-				DBPool::getByDao($this->dao)->queryCount(
-					OSQL::delete()->from($this->dao->getTable())->
-					where(Expression::in($this->dao->getIdName(), $ids))
-				);
-		}
-		//@}
-		
 		/// cachers
 		//@{
 		protected function cacheById(Identifiable $object)

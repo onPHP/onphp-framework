@@ -2,7 +2,8 @@
 
 2008-02-17	Konstantin V. Arkhipov
 
-	* main/DAOs/Workers/TransparentDaoWorker.class.php: now extends from
+	* main/DAOs/Workers/TransparentDaoWorker.class.php,
+	main/DAOs/Workers/NullDaoWorker.class.php: now extends from
 	CommonDaoWorker to eliminate code duplication.
 
 	* main/DAOs/Workers/: added expires argument to cachedFetchObject().
