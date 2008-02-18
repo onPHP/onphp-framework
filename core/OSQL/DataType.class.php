@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,8 +16,8 @@
 	 * @ingroup OSQL
 	**/
 	final class DataType
-		extends NamedObject
-		/* mimics Enumeration */
+		extends IdentifiableObject
+		/* mimics NamedObject and Enumeration */
 		implements DialectString
 	{
 		const SMALLINT			= 0x000001;
@@ -42,6 +42,8 @@
 		const HAVE_PRECISION	= 0x001000;
 		const HAVE_SCALE		= 0x010000;
 		const HAVE_TIMEZONE		= 0x100000;
+		
+		private $name	= null;
 		
 		private $size		= null;
 		private $precision	= null;
@@ -73,6 +75,18 @@
 		public static function create($id)
 		{
 			return new DataType($id);
+		}
+		
+		public function getName()
+		{
+			return $this->name;
+		}
+		
+		public function setName($name)
+		{
+			$this->name = $name;
+			
+			return $this;
 		}
 		
 		public static function getAnyId()
