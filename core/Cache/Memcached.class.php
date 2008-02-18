@@ -204,7 +204,7 @@
 					&& is_numeric($flags)
 					&& is_numeric($bytes)
 				) {
-					$value = fread($this->link, $bytes);
+					$value = stream_get_contents($this->link, $bytes);
 					
 					if ($flags & 2)
 						$value = gzuncompress($value);
