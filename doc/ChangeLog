@@ -1,5 +1,10 @@
 # $Id$
 
+2008-02-18	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/Cache/WatermarkedPeer.class.php: further collisions prevention:
+	onPHP's version now appends to watermark.
+
 2007-09-19	Konstantin V. Arkhipov	<voxus@shadanakar.org>
 
 	* main/DAOs/: uncaching fixed in dropByIds().

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -26,7 +26,7 @@
 		)
 		{
 			$this->peer = $peer;
-			$this->watermark = md5($watermark.'::');
+			$this->watermark = md5($watermark.' ['.ONPHP_VERSION.']');
 		}
 		
 		public function getWatermark()
@@ -59,7 +59,7 @@
 		{
 			return $this->peer->isAlive();
 		}
-
+		
 		public function set($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->peer->set($this->watermark.$key, $value, $expires);
@@ -69,7 +69,7 @@
 		{
 			return $this->peer->add($this->watermark.$key, $value, $expires);
 		}
-
+		
 		public function replace($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->peer->replace($this->watermark.$key, $value, $expires);
