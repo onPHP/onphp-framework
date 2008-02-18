@@ -1,5 +1,10 @@
 # $Id$
 
+2008-02-18	Konstantin V. Arkhipov
+
+	* core/Cache/WatermarkedPeer.class.php: further collisions prevention:
+	onPHP's version now appends to watermark.
+
 2008-02-01	Ivan Y. Khvostishkov
 
 	* main/Net/Mail/Mail.class.php: setSendmailArgs(): used for setting 5th
