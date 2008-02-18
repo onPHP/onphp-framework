@@ -113,14 +113,6 @@
 		{
 			return $object;
 		}
-		
-		protected function cacheListByQuery(
-			SelectQuery $query,
-			array $array
-		)
-		{
-			return $array;
-		}
 		//@}
 		
 		/// uncachers
