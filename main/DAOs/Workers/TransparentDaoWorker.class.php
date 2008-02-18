@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -196,9 +196,7 @@
 
 		/// custom list getters
 		//@{
-		public function getCustomList(
-			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-		)
+		public function getCustomList(SelectQuery $query)
 		{
 			$list = $this->getCachedByQuery($query);
 			
@@ -221,9 +219,7 @@
 			Assert::isUnreachable();
 		}
 		
-		public function getCustomRowList(
-			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-		)
+		public function getCustomRowList(SelectQuery $query)
 		{
 			if ($query->getFieldsCount() !== 1)
 				throw new WrongArgumentException(
