@@ -146,6 +146,14 @@
 				);
 		}
 		
+		public static function isTypelessEqual($first, $second, $message = null)
+		{
+			if ($first != $second)
+				throw new WrongArgumentException(
+					$message.', '.self::dumpOppositeArguments($first, $second)
+				);
+		}
+		
 		public static function isLesser($first, $second, $message = null)
 		{
 			if (!($first < $second))

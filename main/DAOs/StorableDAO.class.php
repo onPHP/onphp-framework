@@ -76,7 +76,9 @@
 			Identifiable $object, Identifiable $old
 		)
 		{
-			Assert::isEqual(
+			Assert::isNotNull($object->getId());
+			
+			Assert::isTypelessEqual(
 				$object->getId(), $old->getId(),
 				'cannot merge different objects'
 			);
@@ -88,8 +90,14 @@
 				
 				if ($property->getClassName() === null) {
 					$changed = ($old->$getter() !== $object->$getter());
-				} else { // way to skip pointless update
-					$changed = ($old->$getter() != $object->$getter());
+				} else {
+					/**
+					 * way to skip pointless update and hack for recursive
+					 * comparsion.
+					 */
+					$changed =
+						($old->$getter() !== $object->$getter())
+						|| ($old->$getter() != $object->$getter());
 				}
 				
 				if ($changed)
