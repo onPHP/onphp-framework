@@ -6,11 +6,18 @@
 
 2008-02-14	Ivan Y. Khvostishkov
 
-	* main/DAOs/StorableDAO.class.php: mergeWithOld() method extracted from
-	merge().
+	* main/DAOs/StorableDAO.class.php: mergeWithOld() method extracted
+	from merge().
 
 	* main/ProtoBuilders/DTOProto.class.php: validateSelf() extracted from
 	validate().
+
+2008-02-11	Konstantin V. Arkhipov
+
+	* main/DAOs/GenericDAO.class.php: getListByIds() now preserves
+	requested order in resulting list.
+
+	* main/Utils/ArrayUtils.class.php: regularizeList() added.
 
 2008-02-08	Ivan Y. Khvostishkov
 

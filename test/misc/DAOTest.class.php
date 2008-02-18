@@ -191,11 +191,6 @@
 			
 			$this->assertEqual(count($list), 2);
 			
-			// since we can't expect any order here
-			if ($list[0]->getId() > $list[1]->getId()) {
-				Range::swap($list[0], $list[1]);
-			}
-			
 			$this->assertEqual($list[0]->getId(), 1);
 			$this->assertEqual($list[1]->getId(), 2);
 			

@@ -180,48 +180,47 @@
 								$toFetch[] = $cached->getId();
 						}
 					}
-					
-					if (!$toFetch)
-						return $list;
 				} else {
 					$toFetch = $ids;
 				}
 				
-				try {
-					return
-						array_merge(
-							$list,
-							$this->getListByLogic(
-								Expression::in(
-									new DBField(
-										$this->dao->getIdName(),
-										$this->dao->getTable()
+				if ($toFetch) {
+					try {
+						$list =
+							array_merge(
+								$list,
+								$this->getListByLogic(
+									Expression::in(
+										new DBField(
+											$this->dao->getIdName(),
+											$this->dao->getTable()
+										),
+										$toFetch
 									),
-									$toFetch
-								),
-								$expires
-							)
-						);
-				} catch (ObjectNotFoundException $e) {
-					// nothing to fetch
-					return $list;
+									$expires
+								)
+							);
+					} catch (ObjectNotFoundException $e) {
+						// nothing to fetch
+					}
 				}
 			} elseif (count($ids)) {
-				return
-					$this->getListByLogic(
-						Expression::in(
-							new DBField(
-								$this->dao->getIdName(),
-								$this->dao->getTable()
+				try {
+					$list =
+						$this->getListByLogic(
+							Expression::in(
+								new DBField(
+									$this->dao->getIdName(),
+									$this->dao->getTable()
+								),
+								$ids
 							),
-							$ids
-						),
-						Cache::DO_NOT_CACHE
-					);
-			} else
-				return array();
+							Cache::DO_NOT_CACHE
+						);
+				} catch (ObjectNotFoundException $e) {/*_*/}
+			}
 			
-			Assert::isUnreachable();
+			return $list;
 		}
 		
 		public function getListByQuery(

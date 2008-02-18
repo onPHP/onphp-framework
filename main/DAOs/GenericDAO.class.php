@@ -165,10 +165,10 @@
 					Cache::worker($this)->getListByIds($remain, $expires)
 				);
 				
-				return array_merge($mapped, $list);
+				$mapped = array_merge($mapped, $list);
 			}
 			
-			return $mapped;
+			return ArrayUtils::regularizeList($ids, $mapped);
 		}
 		
 		public function getListByQuery(

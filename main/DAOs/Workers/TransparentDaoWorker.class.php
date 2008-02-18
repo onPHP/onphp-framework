@@ -129,17 +129,16 @@
 						$list[] = $this->dao->fetchEncapsulants($cached);
 					}
 				}
-				
-				if (!$toFetch)
-					return $list;
 			} else {
 				$toFetch = $ids;
 			}
 			
-			foreach ($toFetch as $id) {
-				try {
-					$list[] = $this->getById($id);
-				} catch (ObjectNotFoundException $e) {/*_*/}
+			if ($toFetch) {
+				foreach ($toFetch as $id) {
+					try {
+						$list[] = $this->getById($id);
+					} catch (ObjectNotFoundException $e) {/*_*/}
+				}
 			}
 			
 			return $list;

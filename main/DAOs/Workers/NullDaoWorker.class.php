@@ -87,7 +87,13 @@
 			try {
 				return
 					$this->getListByLogic(
-						Expression::in($this->dao->getIdName(), $ids)
+						Expression::in(
+							new DBField(
+								$this->dao->getIdName(),
+								$this->dao->getTable()
+							),
+							$ids
+						)
 					);
 			} catch (ObjectNotFoundException $e) {
 				return array();
