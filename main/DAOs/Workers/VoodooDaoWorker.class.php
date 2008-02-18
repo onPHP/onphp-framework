@@ -127,7 +127,7 @@
 			}
 		}
 		
-		protected function spawnHandler($classKey)
+		private function spawnHandler($classKey)
 		{
 			if (!self::$defaultHandler) {
 				if (extension_loaded('sysvshm')) {
