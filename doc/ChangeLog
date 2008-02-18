@@ -1,5 +1,10 @@
 # $Id$
 
+2008-02-18	Konstantin V. Arkhipov
+
+	* core/Cache/WatermarkedPeer.class.php: further collisions prevention:
+	onPHP's version now appends to watermark.
+
 2007-10-30	Konstantin V. Arkhipov
 
 	* meta/classes/MetaConfiguration.class.php: class name collision
