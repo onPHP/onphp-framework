@@ -17,7 +17,7 @@
 	 * 
 	 * @ingroup DAOs
 	**/
-	final class CommonDaoWorker extends BaseDaoWorker
+	class CommonDaoWorker extends BaseDaoWorker
 	{
 		/// single object getters
 		//@{
@@ -122,13 +122,13 @@
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
 		{
-			$db = DBPool::getByDao($this->dao);
-		
 			if ($query->getLimit() > 1)
 				throw new WrongArgumentException(
 					'can not handle non-single row queries'
 				);
-		
+			
+			$db = DBPool::getByDao($this->dao);
+			
 			if (
 				($expires !== Cache::DO_NOT_CACHE)
 				&& ($object = $this->getCachedByQuery($query))

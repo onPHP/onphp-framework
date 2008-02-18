@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup DAOs
 	**/
-	abstract class TransparentDaoWorker extends BaseDaoWorker
+	abstract class TransparentDaoWorker extends CommonDaoWorker
 	{
 		abstract protected function gentlyGetByKey($key);
 		
@@ -26,89 +26,36 @@
 		//@{
 		public function getById($id)
 		{
-			$object = $this->getCachedById($id);
-			
-			if ($object) {
-				if ($object === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
-				else
-					return $this->dao->fetchEncapsulants($object);
-			} else {
-				$query =
-					$this->dao->makeSelectHead()->
-					andWhere(
-						Expression::eq(
-							DBField::create(
-								$this->dao->getIdName(),
-								$this->dao->getTable()
-							),
-							$id
-						)
-					);
-
-				// expires argument will be ignored by our cachers
-				if ($object = $this->cachedFetchObject($query, null, true)) {
-					return $object;
-				} else {
-					$this->cacheNullById($id);
-					throw new ObjectNotFoundException();
-				}
+			try {
+				return parent::getById($id, Cache::EXPIRES_FOREVER);
+			} catch (ObjectNotFoundException $e) {
+				$this->cacheNullById($id);
+				throw $e;
 			}
 		}
 		
 		public function getByLogic(LogicalObject $logic)
 		{
-			return
-				$this->getByQuery(
-					$this->dao->makeSelectHead()->andWhere($logic)
-				);
+			return parent::getByLogic($logic, Cache::EXPIRES_FOREVER);
 		}
 		
 		public function getByQuery(SelectQuery $query)
 		{
-			$object = $this->getCachedByQuery($query);
-			
-			if ($object) {
-				
-				if ($object === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
-				else
-					return $this->dao->fetchEncapsulants($object);
-				
-			} else {
-				// expires argument will be ignored by our cachers
-				if ($object = $this->cachedFetchObject($query, null, false))
-					return $object;
-				else {
-					$this->cacheByQuery($query, Cache::NOT_FOUND);
-					throw new ObjectNotFoundException();
-				}
+			try {
+				return parent::getByQuery($query, Cache::EXPIRES_FOREVER);
+			} catch (ObjectNotFoundException $e) {
+				$this->cacheByQuery($query, Cache::NOT_FOUND);
+				throw $e;
 			}
 		}
 		
 		public function getCustom(SelectQuery $query)
 		{
-			if ($query->getLimit() > 1)
-				throw new WrongArgumentException(
-					'can not handle non-single row queries'
-				);
-
-			$custom = $this->getCachedByQuery($query);
-			
-			if ($custom) {
-				if ($custom === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
-				else
-					return $custom;
-			} else {
-				$custom = DBPool::getByDao($this->dao)->queryRow($query);
-				
-				if ($custom)
-					return $this->cacheByQuery($query, $custom);
-				else {
-					$this->cacheByQuery($query, Cache::NOT_FOUND);
-					throw new ObjectNotFoundException();
-				}
+			try {
+				return parent::getCustom($query, Cache::EXPIRES_FOREVER);
+			} catch (ObjectNotFoundException $e) {
+				$this->cacheByQuery($query, Cache::NOT_FOUND);
+				throw $e;
 			}
 		}
 		//@}
@@ -169,74 +116,35 @@
 		
 		public function getListByLogic(LogicalObject $logic)
 		{
-			return $this->getListByQuery(
-				$this->dao->makeSelectHead()->andWhere($logic)
-			);
+			return parent::getListByLogic($logic, Cache::EXPIRES_FOREVER);
 		}
 		
 		public function getPlainList()
 		{
-			return $this->getListByQuery(
-				$this->dao->makeSelectHead()
-			);
+			return parent::getPlainList(Cache::EXPIRES_FOREVER);
 		}
 		//@}
-
+		
 		/// custom list getters
 		//@{
-		public function getCustomList(
-			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-		)
+		public function getCustomList(SelectQuery $query)
 		{
-			$list = $this->getCachedByQuery($query);
-			
-			if ($list) {
-				if ($list === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
-				else
-					return $list;
-			} else {
-				$list = DBPool::getByDao($this->dao)->querySet($query);
-				
-				if ($list)
-					return $this->cacheByQuery($query, $list);
-				else {
-					$this->cacheByQuery($query, Cache::NOT_FOUND);
-					throw new ObjectNotFoundException();
-				}
+			try {
+				return parent::getCustomList($query, Cache::EXPIRES_FOREVER);
+			} catch (ObjectNotFoundException $e) {
+				$this->cacheByQuery($query, Cache::NOT_FOUND);
+				throw $e;
 			}
-			
-			Assert::isUnreachable();
 		}
 		
-		public function getCustomRowList(
-			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-		)
+		public function getCustomRowList(SelectQuery $query)
 		{
-			if ($query->getFieldsCount() !== 1)
-				throw new WrongArgumentException(
-					'you should select only one row when using this method'
-				);
-			
-			$list = $this->getCachedByQuery($query);
-			
-			if ($list) {
-				if ($list === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
-				else
-					return $list;
-			} else {
-				$list = DBPool::getByDao($this->dao)->queryColumn($query);
-				
-				if ($list)
-					return $this->cacheByQuery($query, $list);
-				else {
-					$this->cacheByQuery($query, Cache::NOT_FOUND);
-					throw new ObjectNotFoundException();
-				}
+			try {
+				return parent::getCustomRowList($query, Cache::EXPIRES_FOREVER);
+			} catch (ObjectNotFoundException $e) {
+				$this->cacheByQuery($query, Cache::NOT_FOUND);
+				throw $e;
 			}
-			
-			Assert::isUnreachable();
 		}
 		//@}
 		
@@ -244,37 +152,7 @@
 		//@{
 		public function getQueryResult(SelectQuery $query)
 		{
-			$db = DBPool::getByDao($this->dao);
-
-			$result = $this->getCachedByQuery($query);
-			
-			if ($result) {
-				return $result;
-			} else {
-				$list = $this->fetchList($query);
-				
-				$count = clone $query;
-				
-				$count =
-					$db->queryRow(
-						$count->dropFields()->dropOrder()->limit(null, null)->
-						get(SQLFunction::create('COUNT', '*')->setAlias('count'))
-					);
-				
-				return
-					$this->cacheByQuery(
-						$query,
-						
-						$list
-							?
-								QueryResult::create()->
-								setList($list)->
-								setCount($count['count'])->
-								setQuery($query)
-							:
-								QueryResult::create()
-					);
-			}
+			return parent::getQueryResult($query, Cache::EXPIRES_FOREVER);
 		}
 		//@}
 
@@ -300,14 +178,6 @@
 			$this->dao->uncacheLists();
 
 			return parent::uncacheById($id);
-		}
-		
-		public function uncacheByIds($ids)
-		{
-			foreach ($ids as $id)
-				parent::uncacheById($id);
-			
-			return $this->dao->uncacheLists();
 		}
 		//@}
 		
