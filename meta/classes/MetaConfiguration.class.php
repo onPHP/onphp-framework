@@ -855,6 +855,11 @@ XML;
 		**/
 		private function makeProperty($name, $type, MetaClass $class)
 		{
+			Assert::isFalse(
+				strpos($name, '_'),
+				'naming convention violation spotted'
+			);
+			
 			if (!$name || !$type)
 				throw new WrongArgumentException(
 					'strange name or type given: "'.$name.'" - "'.$type.'"'
