@@ -158,13 +158,15 @@
 
 		/// cachers
 		//@{
-		protected function cacheById(Identifiable $object)
+		protected function cacheById(
+			Identifiable $object,
+			$expires = Cache::EXPIRES_FOREVER)
 		{
 			Cache::me()->mark($this->className)->
 				add(
 					$this->className.'_'.$object->getId(),
 					$object,
-					Cache::EXPIRES_FOREVER
+					$expires
 				);
 			
 			return $object;

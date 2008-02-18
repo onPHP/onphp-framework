@@ -42,7 +42,9 @@
 		/// cachers
 		//@{
 		protected function cacheByQuery(
-			SelectQuery $query, /* Identifiable */ $object
+			SelectQuery $query,
+			/* Identifiable */ $object,
+			$expires = Cache::EXPIRES_FOREVER
 		)
 		{
 			$queryId = $query->getId();
@@ -57,7 +59,7 @@
 				$this->syncMap($key);
 				
 				Cache::me()->mark($this->className)->
-					add($key, $object, Cache::EXPIRES_FOREVER);
+					add($key, $object, $expires);
 				
 				$pool->free($semKey);
 			}

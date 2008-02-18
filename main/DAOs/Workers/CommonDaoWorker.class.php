@@ -433,7 +433,10 @@
 			return $object;
 		}
 		
-		protected function cacheListByQuery(SelectQuery $query, array $array)
+		protected function cacheListByQuery(
+			SelectQuery $query,
+			/* array || Cache::NOT_FOUND */ $array
+		)
 		{
 			throw new UnimplementedFeatureException();
 		}

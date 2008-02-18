@@ -102,13 +102,18 @@
 
 		/// cachers
 		//@{
-		protected function cacheById(Identifiable $object)
+		protected function cacheById(
+			Identifiable $object,
+			$expires = Cache::DO_NOT_CACHE
+		)
 		{
 			return $object;
 		}
 		
 		protected function cacheByQuery(
-			SelectQuery $query, /* Identifiable */ $object
+			SelectQuery $query,
+			/* Identifiable */ $object,
+			$expires = Cache::DO_NOT_CACHE
 		)
 		{
 			return $object;
