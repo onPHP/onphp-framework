@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -15,16 +15,33 @@
 	**/
 	final class ArrayUtils extends StaticFactory
 	{
+		/// orders $objects list by $ids order
+		public static function regularizeList($ids, $objects)
+		{
+			if (!$objects)
+				return array();
+			
+			$result = array();
+			
+			$objects = self::convertObjectList($objects);
+			
+			foreach ($ids as $id)
+				if (isset($objects[$id]))
+					$result[] = $objects[$id];
+			
+			return $result;
+		}
+		
 		public static function convertObjectList($list = null)
 		{
 			$out = array();
-
+			
 			if (!$list)
 				return $out;
-				
+			
 			foreach ($list as $obj)
 				$out[$obj->getId()] = $obj;
-
+			
 			return $out;
 		}
 		
@@ -42,7 +59,7 @@
 			
 			foreach ($objectsList as $object)
 				$out[] = $object->getId();
-
+			
 			return $out;
 		}
 		
@@ -52,7 +69,7 @@
 			
 			foreach ($list as $obj)
 				$out[] = $obj[$key];
-
+			
 			return $out;
 		}
 		
@@ -62,7 +79,7 @@
 				$out = &$array[$var];
 				return $out;
 			}
-
+			
 			return null;
 		}
 		
@@ -110,18 +127,18 @@
 		public static function getMirrorValues($array)
 		{
 			Assert::isArray($array);
-
+			
 			$result = array();
-
+			
 			foreach ($array as $value) {
 				Assert::isTrue(
 					is_integer($value) || is_string($value),
 					'only integer or string values accepted'
 				);
-
+				
 				$result[$value] = $value;
 			}
-
+			
 			return $result;
 		}
 	}
