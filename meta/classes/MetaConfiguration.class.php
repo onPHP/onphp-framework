@@ -407,61 +407,6 @@
 		/**
 		 * @return MetaConfiguration
 		**/
-		public function checkSyntax()
-		{
-			$out = $this->getOutput();
-			
-			$out->
-				newLine()->
-				infoLine('Checking syntax in generated files: ');
-			
-			$currentLength = $previousLength = 0;
-			
-			$fileList = glob(ONPHP_META_AUTO_DIR.'**/*.class.php', GLOB_NOSORT);
-			$fileCount = count($fileList);
-			
-			foreach ($fileList as $file) {
-				$output = $error = null;
-				
-				$previousLength = $currentLength;
-				
-				$file = str_replace(getcwd().DIRECTORY_SEPARATOR, null, $file);
-				
-				$currentLength = strlen($file) + 1; // for leading tab
-				
-				$out->log(
-					str_pad(--$fileCount, 8, ' ', STR_PAD_LEFT)."\t".$file
-				);
-				
-				if ($currentLength < $previousLength)
-					$out->log(str_repeat(' ', $previousLength - $currentLength));
-				
-				$out->log(chr(0x0d));
-				
-				exec('php -l '.$file, $output, $error);
-				
-				if ($error) {
-					$out->
-						errorLine(
-							"\t"
-							.str_replace(
-								getcwd().DIRECTORY_SEPARATOR,
-								null,
-								$output[1]
-							),
-							true
-						);
-				}
-			}
-			
-			$out->log(str_repeat(' ', $currentLength + 16));
-			
-			return $this;
-		}
-		
-		/**
-		 * @return MetaConfiguration
-		**/
 		public function checkIntegrity()
 		{
 			$out = $this->getOutput()->
