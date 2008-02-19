@@ -94,7 +94,7 @@
 					/**
 					 * way to skip pointless update and hack for recursive
 					 * comparsion.
-					 */
+					**/
 					$changed =
 						($old->$getter() !== $object->$getter())
 						|| ($old->$getter() != $object->$getter());
