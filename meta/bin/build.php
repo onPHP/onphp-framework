@@ -223,10 +223,10 @@ Possible options:
 		.'classes'
 		.DIRECTORY_SEPARATOR;
 	
-	require $metaRoot.'ConsoleMode.class.php';
-	require $metaRoot.'MetaOutput.class.php';
-	require $metaRoot.'TextOutput.class.php';
-	require $metaRoot.'ColoredTextOutput.class.php';
+	include_once $metaRoot.'ConsoleMode.class.php';
+	include_once $metaRoot.'MetaOutput.class.php';
+	include_once $metaRoot.'TextOutput.class.php';
+	include_once $metaRoot.'ColoredTextOutput.class.php';
 	
 	if (
 		isset($_SERVER['TERM'])
