@@ -343,6 +343,29 @@ Possible options:
 			
 			if (!$metaNoIntegrityCheck)
 				$meta->checkIntegrity();
+			
+			$out->newLine()->info('Trying to compile all known classes... ');
+			
+			foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
+				foreach (
+					glob(
+						$directory.DIRECTORY_SEPARATOR.'/*'.EXT_CLASS,
+						GLOB_NOSORT
+					)
+					as $file
+				) {
+					$className = basename($file, EXT_CLASS);
+					
+					if (
+						!class_exists($className)
+						&& !interface_exists($className)
+					) {
+						include $file;
+					}
+				}
+			}
+			
+			$out->infoLine('done.');
 		} catch (BaseException $e) {
 			$out->
 				newLine()->

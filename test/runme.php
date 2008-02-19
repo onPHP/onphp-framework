@@ -15,25 +15,6 @@
 	
 	require is_readable($config) ? $config : $config.'.tpl';
 	
-	// full compile time checking
-	error_reporting(E_ALL | E_STRICT);
-	
-	foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
-		foreach (
-			glob($directory.DIRECTORY_SEPARATOR.'/*'.EXT_CLASS, GLOB_NOSORT)
-			as $file
-		) {
-			$className = basename($file, EXT_CLASS);
-			
-			if (!class_exists($className) && !interface_exists($className)) {
-				include $file;
-			}
-		}
-	}
-	
-	// going back due to simpletest limitations
-	error_reporting(E_ALL);
-	
 	$reporter = php_sapi_name() == 'cli' ? new TextReporter() : new HtmlReporter();
 	
 	$test = new GroupTest('onPHP-'.ONPHP_VERSION);
