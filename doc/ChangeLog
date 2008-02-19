@@ -1,5 +1,9 @@
 # $Id$
 
+2008-02-19	Konstantin V. Arkhipov
+
+	* meta/: syntax check replaced by class compiling.
+
 2008-02-18	Ivan Y. Khvostishkov
 
 	* core/Base/Assert.class.php: isTypelessEqual() added.

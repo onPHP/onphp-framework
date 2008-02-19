@@ -21,9 +21,6 @@ Possible options:
 	--no-schema-check:
 		do not try to diff DB schemas.
 	
-	--syntax-check:
-		check generated files with `php -l`.
-	
 	--drop-stale-files:
 		remove found stale files.
 	
@@ -129,7 +126,7 @@ Possible options:
 	
 	// switches
 	$metaForce = $metaOnlyContainers = $metaNoSchema =
-	$metaNoSchemaCheck = $metaSyntaxCheck = $metaDropStaleFiles =
+	$metaNoSchemaCheck = $metaDropStaleFiles =
 	$metaNoIntegrityCheck = $metaDryRun = $metaNoColor = false;
 	
 	$args = $_SERVER['argv'];
@@ -153,10 +150,6 @@ Possible options:
 					
 					case '--no-schema-check':
 						$metaNoSchemaCheck = true;
-						break;
-					
-					case '--syntax-check':
-						$metaSyntaxCheck = true;
 						break;
 					
 					case '--drop-stale-files':
@@ -315,12 +308,6 @@ Possible options:
 			
 			$meta->checkForStaleFiles($metaDropStaleFiles);
 			
-			if ($metaSyntaxCheck)
-				$meta->checkSyntax();
-			
-			if (!$metaNoIntegrityCheck)
-				$meta->checkIntegrity();
-			
 			$out->newLine()->info('Trying to compile all known classes... ');
 			
 			foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
@@ -343,6 +330,9 @@ Possible options:
 			}
 			
 			$out->infoLine('done.');
+			
+			if (!$metaNoIntegrityCheck)
+				$meta->checkIntegrity();
 		} catch (BaseException $e) {
 			$out->
 				newLine()->
