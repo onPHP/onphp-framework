@@ -136,7 +136,8 @@
 				if ($object === Cache::NOT_FOUND)
 					throw new ObjectNotFoundException();
 				
-				return $this->dao->fetchEncapsulants($object);
+				return $object;
+				
 			} elseif ($object = $db->queryRow($query)) {
 				if ($expires === Cache::DO_NOT_CACHE)
 					return $object;
