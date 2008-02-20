@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -55,6 +55,10 @@
 		/// @see FetchStrategy
 		private $strategyId	= null;
 		
+		private $getter		= null;
+		private $setter		= null;
+		private $dropper	= null;
+		
 		/**
 		 * @return LightMetaProperty
 		**/
@@ -75,6 +79,12 @@
 		)
 		{
 			$property->name = $name;
+			
+			$methodSuffix = ucfirst($name);
+			$property->getter = 'get'.$methodSuffix;
+			$property->setter = 'set'.$methodSuffix;
+			$property->dropper = 'drop'.$methodSuffix;
+			
 			$property->columnName = $columnName;
 			
 			$property->type = $type;
@@ -107,17 +117,17 @@
 		
 		public function getGetter()
 		{
-			return 'get'.ucfirst($this->getName());
+			return $this->getter;
 		}
 		
 		public function getSetter()
 		{
-			return 'set'.ucfirst($this->getName());
+			return $this->setter;
 		}
 		
 		public function getDropper()
 		{
-			return 'drop'.ucfirst($this->getName());
+			return $this->dropper;
 		}
 		
 		/**
