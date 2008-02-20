@@ -2,7 +2,7 @@
 
 2008-02-20	Ivan Y. Khvostishkov
 
-	* main/Flow/NullController.class.php: a way for loopback you model
+	* main/Flow/NullController.class.php: a way for loopback your model
 	through the filter.
 
 2008-02-19	Konstantin V. Arkhipov
