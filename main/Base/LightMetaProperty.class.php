@@ -85,7 +85,10 @@
 			$property->setter = 'set'.$methodSuffix;
 			$property->dropper = 'drop'.$methodSuffix;
 			
-			$property->columnName = $columnName;
+			if ($columnName)
+				$property->columnName = $columnName;
+			else
+				$property->columnName = $name;
 			
 			$property->type = $type;
 			$property->className = $className;
@@ -109,10 +112,7 @@
 		
 		public function getColumnName()
 		{
-			if ($this->columnName)
-				return $this->columnName;
-			
-			return $this->name;
+			return $this->columnName;
 		}
 		
 		public function getGetter()
@@ -157,7 +157,7 @@
 		
 		public function getMax()
 		{
-			if ($size = $this->getSize())
+			if ($size = $this->size)
 				return $size;
 			
 			return $this->getLimit(1);
@@ -230,24 +230,24 @@
 		
 		public function isBuildable($array, $prefix = null)
 		{
-			$column = $prefix.$this->getColumnName();
+			$column = $prefix.$this->columnName;
 			$exists = isset($array[$column]);
 			
 			if (
-				$this->getRelationId()
-				|| $this->isGenericType()
+				$this->relationId
+				|| $this->generic
 			) {
 				// skip collections
 				if (
-					($this->getRelationId() <> MetaRelation::ONE_TO_ONE)
-					&& !$this->isGenericType()
+					($this->relationId <> MetaRelation::ONE_TO_ONE)
+					&& !$this->generic
 				)
 					return false;
 				
-				if ($this->isRequired()) {
+				if ($this->required) {
 					Assert::isTrue(
 						$exists,
-						'required property not found: '.$this->getName()
+						'required property not found: '.$this->name
 					);
 				} elseif (!$exists) {
 					return false;
@@ -260,16 +260,16 @@
 		public function fillMapping(array $mapping)
 		{
 			if (
-				!$this->getRelationId()
+				!$this->relationId
 				|| (
-					$this->getRelationId()
+					$this->relationId
 					== MetaRelation::ONE_TO_ONE
 				) || (
-					$this->getFetchStrategyId()
+					$this->strategyId
 					== FetchStrategy::LAZY
 				)
 			) {
-				$mapping[$this->getName()] = $this->getColumnName();
+				$mapping[$this->name] = $this->columnName;
 			}
 			
 			return $mapping;
@@ -282,8 +282,8 @@
 		{
 			$prm =
 				call_user_func(
-					array('Primitive', $this->getType()),
-					$prefix.$this->getName()
+					array('Primitive', $this->type),
+					$prefix.$this->name
 				);
 			
 			if ($min = $this->getMin())
@@ -293,9 +293,9 @@
 				$prm->setMax($max);
 			
 			if ($prm instanceof IdentifiablePrimitive)
-				$prm->of($this->getClassName());
+				$prm->of($this->className);
 			
-			if ($this->isRequired())
+			if ($this->required)
 				$prm->required();
 			
 			return $form->add($prm);
@@ -309,25 +309,23 @@
 			Prototyped $object
 		)
 		{
-			$getter = $this->getGetter();
-			
 			if (
-				$this->getRelationId()
-				|| $this->isGenericType()
+				$this->relationId
+				|| $this->generic
 			) {
 				// skip collections
 				if (
-					($this->getRelationId() <> MetaRelation::ONE_TO_ONE)
-					&& !$this->isGenericType()
+					($this->relationId <> MetaRelation::ONE_TO_ONE)
+					&& !$this->generic
 				)
 					return $query;
 				
-				$value = $object->$getter();
+				$value = $object->{$this->getter}();
 				
 				if ($this->type == 'binary') {
-					$query->set($this->getColumnName(), new DBBinary($value));
+					$query->set($this->columnName, new DBBinary($value));
 				} else {
-					$query->lazySet($this->getColumnName(), $value);
+					$query->lazySet($this->columnName, $value);
 				}
 			}
 			
@@ -337,31 +335,33 @@
 		public function toValue(ProtoDAO $dao = null, $array, $prefix = null)
 		{
 			if ($dao && ($this->getFetchStrategyId() == FetchStrategy::JOIN))
-				$raw = $array[$dao->getJoinPrefix($this->getColumnName(), $prefix)];
+				$raw = $array[$dao->getJoinPrefix($this->columnName, $prefix)];
 			else
-				$raw = $array[$prefix.$this->getColumnName()];
+				$raw = $array[$prefix.$this->columnName];
 			
 			if ($this->type == 'binary') {
 				return DBPool::getByDao($dao)->getDialect()->unquoteBinary($raw);
 			}
 			
+			$isIdentifier = $this->isIdentifier();
+			
 			if (
-				!$this->isIdentifier()
-				&& $this->isGenericType()
-				&& $this->getClassName()
+				!$isIdentifier
+				&& $this->generic
+				&& $this->className
 			) {
-				return call_user_func(array($this->getClassName(), 'create'), $raw);
+				return call_user_func(array($this->className, 'create'), $raw);
 			} elseif (
-				!$this->isIdentifier()
-				&& $this->getClassName()
-				&& !is_subclass_of($this->getClassName(), 'Enumeration')
+				!$isIdentifier
+				&& $this->className
+				&& !is_subclass_of($this->className, 'Enumeration')
 			) {
-				$remoteDao = call_user_func(array($this->getClassName(), 'dao'));
+				$remoteDao = call_user_func(array($this->className, 'dao'));
 				
-				if ($this->getFetchStrategyId() == FetchStrategy::JOIN) {
+				if ($this->strategyId == FetchStrategy::JOIN) {
 					return $remoteDao->makeJoinedObject(
 						$array,
-						$remoteDao->getJoinPrefix($this->getColumnName(), $prefix)
+						$remoteDao->getJoinPrefix($this->columnName, $prefix)
 					);
 				} else {
 					return $remoteDao->getById($raw);
@@ -370,7 +370,7 @@
 			
 			// veeeeery "special" handling, by tradition.
 			// MySQL returns 0/1, others - t/f
-			if ($this->getType() == 'boolean') {
+			if ($this->type == 'boolean') {
 				return (bool) strtr($raw, array('f' => null));
 			}
 			
@@ -384,7 +384,7 @@
 				.'new '.get_class($this).'(), '
 				."'{$this->name}', "
 				.(
-					$this->columnName
+					($this->columnName <> $this->name)
 						? "'{$this->columnName}'"
 						: 'null'
 				)
