@@ -17,6 +17,9 @@
 	{
 		private $model = null;
 		
+		/**
+		 * @return NullController
+		**/
 		public static function create(Model $model = null)
 		{
 			return new self($model);
@@ -27,6 +30,9 @@
 			$this->model = $model;
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function handleRequest(HttpRequest $request)
 		{
 			$result = ModelAndView::create();
