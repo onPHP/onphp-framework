@@ -64,6 +64,12 @@
 			'Я' => 'JA'
 		);
 		
+		private static $monthInGenitiveCase = array(
+			'января', 'февраля', 'марта', 'апреля',
+			'мая', 'июня', 'июля', 'августа', 'сентября',
+			'октября', 'ноября', 'декабря'
+		);
+		
 		private static $flippedLettersMapping = array();
 		
 		private static $ambiguousDetection = false;
@@ -102,13 +108,20 @@
 		**/
 		public static function getMonthInGenitiveCase($month)
 		{
-			static $months = array(
-				'января', 'февраля', 'марта', 'апреля',
-				'мая', 'июня', 'июля', 'августа', 'сентября',
-				'октября', 'ноября', 'декабря'
-			);
+			return self::$monthInGenitiveCase[$month - 1];
+		}
+		
+		public static function getMonthByGenitiveCase($string)
+		{
+			static $flipped = null;
 			
-			return $months[$month - 1];
+			if (!$flipped)
+				$flipped = array_flip(self::$monthInGenitiveCase);
+			
+			if (isset($flipped[$string]))
+				return $flipped[$string] + 1;
+			
+			throw new MissingElementException();
 		}
 		
 		public static function getMonthInSubjectiveCase($month)

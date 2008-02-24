@@ -1,5 +1,10 @@
 # $Id$
 
+2008-02-25	Igor V. Gulyaev
+
+	* main/Utils/RussianTextUtils.class.php: getMonthByGenitiveCase()
+	added.
+
 2008-02-20	Ivan Y. Khvostishkov
 
 	* main/Flow/NullController.class.php: a way for loopback your model
