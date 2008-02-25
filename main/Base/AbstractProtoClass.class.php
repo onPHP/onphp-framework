@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -270,27 +270,29 @@
 							&& is_subclass_of($className, 'Enumeration')
 						);
 						
+						$columnName = $prefix.$property->getColumnName();
+						
 						if ($encapsulants) {
-							$getter = $property->getGetter();
-							
 							$value =
 								$property->toValue(
 									$dao,
 									array(
-										$prefix.$property->getColumnName() =>
-											$object->$getter()->getId()
+										$columnName =>
+											$object->
+												{$property->getGetter()}()->
+													getId()
 									),
 									$prefix
 								);
 						} else {
-							$value = $array[$prefix.$property->getColumnName()];
-							
 							if (!$isEnum) {
 								$value = new $className();
 								
 								$value->setId(
-									$array[$prefix.$property->getColumnName()]
+									$array[$columnName]
 								);
+							} else {
+								$value = $array[$columnName];
 							}
 						}
 						
