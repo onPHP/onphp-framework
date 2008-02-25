@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -36,7 +36,7 @@
 		public static function isNotFalse($boolean, $message = null)
 		{
 			if ($boolean === false)
-				self::fail(
+				throw new WrongArgumentException(
 					$message.', '.self::dumpArgument($boolean)
 				);
 		}
