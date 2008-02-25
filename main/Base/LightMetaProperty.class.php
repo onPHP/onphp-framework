@@ -37,13 +37,13 @@
 			)
 		);
 		
-		private $name			= null;
-		private $columnName		= null;
+		private $name		= null;
+		private $columnName	= null;
 		
-		private $type			= null;
-		private $className		= null;
+		private $type		= null;
+		private $className	= null;
 		
-		private $size			= null;
+		private $size		= null;
 		
 		private $required	= false;
 		private $generic	= false;
@@ -58,6 +58,8 @@
 		private $getter		= null;
 		private $setter		= null;
 		private $dropper	= null;
+		
+		private $identifier	= null;
 		
 		/**
 		 * @return LightMetaProperty
@@ -101,6 +103,11 @@
 			
 			$property->relationId = $relationId;
 			$property->strategyId = $strategyId;
+			
+			$property->identifier =
+				$generic && $required && (
+					$type == 'identifier'
+				);
 			
 			return $property;
 		}
@@ -343,16 +350,14 @@
 				return DBPool::getByDao($dao)->getDialect()->unquoteBinary($raw);
 			}
 			
-			$isIdentifier = $this->isIdentifier();
-			
 			if (
-				!$isIdentifier
+				!$this->identifier
 				&& $this->generic
 				&& $this->className
 			) {
 				return call_user_func(array($this->className, 'create'), $raw);
 			} elseif (
-				!$isIdentifier
+				!$this->identifier
 				&& $this->className
 				&& !is_subclass_of($this->className, 'Enumeration')
 			) {
@@ -375,6 +380,11 @@
 			}
 			
 			return $raw;
+		}
+		
+		public function isIdentifier()
+		{
+			return $this->identifier;
 		}
 		
 		final public function toString()
@@ -432,15 +442,6 @@
 						: 'null'
 				)
 				.')';
-		}
-		
-		public function isIdentifier()
-		{
-			return (
-				$this->generic && $this->required && (
-					$this->type == 'identifier'
-				)
-			);
 		}
 		
 		private function getLimit($whichOne)
