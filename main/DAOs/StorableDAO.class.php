@@ -81,7 +81,8 @@
 				
 				if ($count !== 1)
 					throw new WrongStateException(
-						$count.' rows affected: racy or insane inject happened'
+						$count.' rows affected: racy or insane inject happened '
+						.$query->doDialectString($db->getDialect())
 					);
 			} else {
 				$db->queryNull($query);
