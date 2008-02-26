@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -81,7 +81,7 @@
 				
 				if ($count !== 1)
 					throw new WrongStateException(
-						$count.' rows affected: racy or insane inject happened '
+						$count.' rows affected: racy or insane inject happened: '
 						.$query->toDialectString($db->getDialect())
 					);
 			} else {
