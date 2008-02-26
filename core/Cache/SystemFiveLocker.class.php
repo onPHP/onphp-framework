@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -23,9 +23,7 @@
 				if (!isset($this->pool[$key]))
 					$this->pool[$key] = sem_get($key, 1, 0600, false);
 				
-				sem_acquire($this->pool[$key]);
-				
-				return $this->pool[$key];
+				return sem_acquire($this->pool[$key]);
 			} catch (BaseException $e) {
 				return null;
 			}
