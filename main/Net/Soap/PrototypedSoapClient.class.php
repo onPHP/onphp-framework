@@ -197,7 +197,7 @@
 		protected function getLastRequestCdata()
 		{
 			return $this->getXmlCdata(
-				$this->getSoapClient()->__getLastResponse()
+				$this->getSoapClient()->__getLastRequest()
 			);
 		}
 		
