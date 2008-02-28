@@ -1,5 +1,9 @@
 # $Id$
 
+2008-02-28	Konstantin V. Arkhipov
+
+	* 1.0.2 released.
+
 2008-02-28	Ivan Y. Khvostishkov
 
 	* main/Net/Soap/PrototypedSoapClient.class.php: pretty wrap for
