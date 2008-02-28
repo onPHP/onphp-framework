@@ -21,7 +21,7 @@
 	 *    and exception classes for your faults
 	 * 
 	 * 4. implement your methods, corresponding to operations in wsdl, in such
-	 *    a manner:
+	 *    manner:
 	 *
 	 *	public function login(LoginRequest $request)
 	 *	{
