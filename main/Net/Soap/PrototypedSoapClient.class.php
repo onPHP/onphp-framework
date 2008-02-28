@@ -38,7 +38,7 @@
 	 *
 	 *	5. implement logCall(), if you need debugging output
 	 * 
-	 */
+	**/
 	abstract class PrototypedSoapClient
 	{
 		protected $wsdlUrl		= null;
@@ -160,8 +160,10 @@
 			} else {
 				Assert::isInstance($resultDto, 'DTOClass');
 				
-				Assert::isEqual($resultDto->dtoProto()->className(), $resultClass);
-				
+				Assert::isEqual(
+					$resultDto->dtoProto()->className(),
+					$resultClass
+				);
 				
 				$form = $resultDto->toForm();
 				
@@ -174,7 +176,6 @@
 				);
 				
 				$result = $resultDto->makeObject($form);
-				
 				
 				Assert::isInstance($result, 'DTOMessage');
 				
@@ -212,12 +213,11 @@
 		 * The place for calling getLastRequestCdata() and
 		 * getLastResponseCdata().
 		 * 
-		 */
+		**/
 		protected function logCall()
 		{
 			return $this;
 		}
-		
 		
 		private function getXmlCdata($xml)
 		{
@@ -231,7 +231,7 @@
 		
 		/**
 		 * @return SoapClient
-		 */
+		**/
 		public function getSoapClient()
 		{
 			return $this->soapClient;
