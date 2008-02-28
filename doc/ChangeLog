@@ -1,5 +1,10 @@
 # $Id$
 
+2008-02-28	Ivan Y. Khvostishkov
+
+	* main/Net/Soap/PrototypedSoapClient.class.php: pretty wrap for
+	SoapClient with strict XSD validation and Business classes mappings.
+
 2008-02-28	Vladlen Y. Koshelev
 
 	* core/Form/Filters/RussianTypograph.class.php: now works with
