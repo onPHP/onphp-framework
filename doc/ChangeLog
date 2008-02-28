@@ -1,5 +1,11 @@
 # $Id$
 
+2008-02-28	Vladlen Y. Koshelev
+
+	* core/Form/Filters/RussianTypograph.class.php: now works with
+	unicode correctly; extra rules added: compress whitespaces,
+	&nbsp; after short strings.
+
 2008-02-25	Igor V. Gulyaev
 
 	* main/Utils/RussianTextUtils.class.php: getMonthByGenitiveCase()
