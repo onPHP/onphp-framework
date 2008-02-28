@@ -10,6 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 	
+	// TODO: see oemlib/trunk/Utils/Index.class.php
+	// disadvantage: is's hard to insert some filter inside a chain
 	final class Application extends StaticFactory implements Instantiatable
 	{
 		private static $application = null;
