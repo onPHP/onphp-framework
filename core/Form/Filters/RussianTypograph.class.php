@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -59,19 +59,23 @@
 			);
 		
 		private static $from = array(
-			'~\-{2,}~',						// --
-			'~([\w\pL]+)\s\-\s~',			// foo - bar
-			'~([\s\pP])([\w\pL]{1,2})\s~U',	// bar a foo
-			'~\"([^\s]*)\"~',				// "quote"
-			'~\"([^\s]*)\s+([^\s\.]*)\"~',	// "quote quote"
-			'~\"(.*)\"~e',					// "qu"o"te"
-			'~([\w\pL\']+)~e'				// rock'n'roll
+			'~\-{2,}~',							// --
+			'~([\w\pL\pP]+)\s+\-\s+~u',			// foo - bar
+			'~(\s)\s*~u',						// n -> 2 whitespaces to process short strings (bar to a foo)  
+			'~([\s\pP]|^)([\w\pL]{1,2})\s~Uu',	// bar a foo | bar to a foo
+			'~(&nbsp;|\s)\s+~u',				// compress whitespaces
+			'~\"([^\s]*)\"~',					// "quote"
+			'~\"([^\s]*)\s+([^\s\.]*)\"~',		// "quote quote"
+			'~\"(.*)\"~e',						// "qu"o"te"
+			'~([\w\pL\']+)~eu'					// rock'n'roll
 		);
 		
 		private static $to = array(
 			'-',
 			'$1&nbsp;&#151; ',
+			'$1$1',
 			'$1$2&nbsp;',
+			'$1',
 			'&laquo;$1&raquo;',
 			'&laquo;$1 $2&raquo;',
 			'\'&laquo;\'.$this->innerQuotes(\'$1\').\'&raquo;\'',

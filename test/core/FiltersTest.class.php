@@ -87,6 +87,30 @@
 				$filter->apply($link),
 				$link
 			);
+			
+			$this->assertEqual(
+				$filter->apply('арбайтен   ---   gut'),
+				'арбайтен&nbsp;&#151; gut'
+			);
+			
+			$this->assertEqual(
+				$filter->apply('р  ра  раз,д  дв   два   три'),
+				'р&nbsp;ра&nbsp;раз,д&nbsp;дв&nbsp;два три'
+			);
+			
+			$this->assertEqual(
+				$filter->apply('рок\'н\'ролл'),
+				'рок&#146;н&#146;ролл'
+			);
+			
+			$this->assertEqual(
+				$filter->apply(
+					'Работает   и   с   "unicode-строками (\'utf-8\')"'
+					.' - не только с ansi, и это радует'
+				),
+				'Работает и&nbsp;с&nbsp;&laquo;unicode-строками (&#146;utf-8&#146;)&raquo;'
+				.'&nbsp;&#151; не&nbsp;только с&nbsp;ansi, и&nbsp;это радует'
+			);
 		}
 	}
 ?>
