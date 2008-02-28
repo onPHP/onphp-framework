@@ -36,7 +36,7 @@
 	 *		return $result;
 	 *	}
 	 *
-	 *	5. implement logCall(), if you need debug output
+	 *	5. implement logCall(), if you need debugging output
 	 * 
 	 */
 	abstract class PrototypedSoapClient
@@ -225,7 +225,7 @@
 		}
 		
 		/**
-		 * ONLY FOR TESING:
+		 * ONLY FOR TESTING:
 		 * {{{
 		**/
 		
