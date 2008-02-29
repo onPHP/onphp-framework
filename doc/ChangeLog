@@ -1,5 +1,9 @@
 # $Id$
 
+2008-02-29	Denis M. Gabaidulin
+
+	* core/Cache/WatermarkedPeer.class.php: version duplication removed.
+
 2008-02-28	Konstantin V. Arkhipov
 
 	* 0.10.10 released.
