@@ -26,12 +26,19 @@
 		)
 		{
 			$this->peer = $peer;
-			$this->watermark = md5($watermark.' ['.ONPHP_VERSION.']');
+			$this->setWatermark($watermark);
 		}
 		
 		public function getWatermark()
 		{
 			return $this->watermark;
+		}
+		
+		public function setWatermark($watermark)
+		{
+			$this->watermark = md5($watermark.' ['.ONPHP_VERSION.']::');
+			
+			return $this;
 		}
 		
 		public function mark($className)
