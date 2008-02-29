@@ -28,7 +28,7 @@
 			$watermark = "Single onPHP's project"
 		)
 		{
-			return new self($peer, $watermark.' ['.ONPHP_VERSION.']');
+			return new self($peer, $watermark);
 		}
 
 		public function __construct(
@@ -37,12 +37,19 @@
 		)
 		{
 			$this->peer = $peer;
-			$this->watermark = md5($watermark.' ['.ONPHP_VERSION.']');
+			$this->setWatermark($watermark);
 		}
 		
 		public function getWatermark()
 		{
 			return $this->watermark;
+		}
+		
+		public function setWatermark($watermark)
+		{
+			$this->watermark = md5($watermark.' ['.ONPHP_VERSION.']::');
+			
+			return $this;
 		}
 		
 		public function getActualWatermark()
