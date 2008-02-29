@@ -45,7 +45,7 @@
 		
 		public function setWatermark($watermark)
 		{
-			$this->watermark = md5($watermark.' ['.ONPHP_VERSION.']'.'::');
+			$this->watermark = md5($watermark.' ['.ONPHP_VERSION.']::');
 			
 			return $this;
 		}
