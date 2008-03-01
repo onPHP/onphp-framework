@@ -50,6 +50,9 @@
 			return is_writable($this->directory);
 		}
 		
+		/**
+		 * @return RubberFileSystem
+		**/
 		public function clean()
 		{
 			// just to return 'true'
