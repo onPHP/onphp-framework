@@ -188,7 +188,7 @@
 		{
 			$dialect = PostgresDialect::me();
 			$this->assertWantedPattern(
-				'/^\(\(\(\(\'asdf\' = "b"\) (AND|and) \("e" != \("i" \/ 123\)\) (AND|and) \(\(lower\("a"\) += +lower\("b"\)\) ((IS TRUE)|(is true))\) (AND|and) \("g" = 12\) (AND|and) \("j" (BETWEEN|between) 3 (AND|and) "p"\)\) (OR|or) \("table"\."c" ((IS NOT NULL)|(is not null))\)\) (AND|and) \("sometable"\."a" ((not in)|(NOT IN)) \(\'q\', \'qwer\', \'xcvzxc\', \'wer\'\)\)\)$/',
+				'/^\(\(\(\(\'asdf\' = "b"\) (AND|and) \("e" != \("i" \/ \'123\'\)\) (AND|and) \(\(lower\("a"\) += +lower\("b"\)\) ((IS TRUE)|(is true))\) (AND|and) \("g" = \'12\'\) (AND|and) \("j" (BETWEEN|between) \'3\' (AND|and) "p"\)\) (OR|or) \("table"\."c" ((IS NOT NULL)|(is not null))\)\) (AND|and) \("sometable"\."a" ((not in)|(NOT IN)) \(\'q\', \'qwer\', \'xcvzxc\', \'wer\'\)\)\)$/',
  				Expression::expAnd(
 					Expression::expOr(
 						Expression::andBlock(
@@ -206,8 +206,9 @@
 							Expression::isTrue(
 								Expression::eqLower('a', 'b')
 							),
-							Expression::eq(new DBField('g'), new DBValue(12))
-							,
+							
+							Expression::eq(new DBField('g'), new DBValue(12)),
+							
 							Expression::between('j', new DBValue(3), new DBField('p'))
 						),
 						Expression::notNull(new DBField('c', 'table'))
