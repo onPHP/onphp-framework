@@ -1,5 +1,9 @@
 # $Id$
 
+2008-03-04	Denis M. Gabaidulin
+
+	* core/Base/Assert.class.php: isNotEmptyArray().
+
 2008-02-29	Denis M. Gabaidulin
 
 	* core/Cache/WatermarkedPeer.class.php: version duplication removed.
