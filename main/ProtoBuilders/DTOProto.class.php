@@ -29,6 +29,8 @@
 			return $this->className().'DTO';
 		}
 		
+		// TODO: think about anonymous primitives and persistant mapping
+		// instead of creating new one on each call
 		public function getFormMapping()
 		{
 			return array();
@@ -38,7 +40,7 @@
 			$object, Form $form, $previousObject = null
 		)
 		{
-			return true;
+			return $this;
 		}
 		
 		public function isAbstract()
@@ -190,6 +192,35 @@
 			
 			return $form;
 		}
+		
+		final public function getOwnPrimitive($name)
+		{
+			$mapping = $this->getFormMapping();
+			
+			if (!isset($mapping[$name]))
+				throw new WrongArgumentException(
+					"i know nothing about property '$name'"
+				);
+			
+			return $mapping[$name];
+		}
+		
+		final public function getPrimitive($name)
+		{
+			try {
+				$result = $this->getOwnPrimitive($name);
+				
+			} catch (WrongArgumentException $e) {
+				
+				if (!$this->baseProto())
+					throw $e;
+				
+				$result = $this->baseProto()->getPrimitive($name);
+			}
+			
+			return $result;
+		}
+		
 		
 		final public function toForm(DTOClass $dto)
 		{
