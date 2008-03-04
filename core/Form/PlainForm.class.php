@@ -87,14 +87,29 @@
 			return $this->get($name)->getValue();
 		}
 		
+		public function setValue($name, $value)
+		{
+			$this->get($name)->setValue($value);
+			
+			return $this;
+		}
+		
 		public function getRawValue($name)
 		{
 			return $this->get($name)->getRawValue();
 		}
 		
+		/**
+		 * obsolete voodoo magic
+		 */
 		public function getActualValue($name)
 		{
 			return $this->get($name)->getActualValue();
+		}
+		
+		public function getFormValue($name)
+		{
+			return $this->get($name)->getFormValue();
 		}
 		
 		public function getSafeValue($name)

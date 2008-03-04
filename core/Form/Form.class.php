@@ -409,8 +409,14 @@
 			if (null === $result) {
 				if ($prm->isRequired())
 					$this->errors[$name] = self::MISSING;
+				
 			} elseif (true === $result) {
 				unset($this->errors[$name]);
+				
+			} elseif (($error = $prm->getCustomError())) {
+				
+				$this->errors[$name] = $error;
+				
 			} else
 				$this->errors[$name] = self::WRONG;
 			

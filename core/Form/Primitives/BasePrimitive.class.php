@@ -26,6 +26,8 @@
 		protected $imported	= false;
 
 		protected $raw		= null;
+		
+		protected $customError	= null;
 
 		public function __construct($name)
 		{
@@ -72,13 +74,16 @@
 			return $this->raw;
 		}
 		
+		/**
+		 * obsolete voodoo magic
+		 */
 		public function getActualValue()
 		{
 			if (null !== $this->value)
 				return $this->value;
 			elseif ($this->imported)
 				return $this->raw;
-
+			
 			return $this->default;
 		}
 		
@@ -88,6 +93,18 @@
 				return $this->value;
 			
 			return $this->default;
+		}
+		
+		public function getFormValue()
+		{
+			if (!$this->imported) {
+				if ($this->value === null)
+					return null;
+				
+				return $this->exportValue();
+			}
+			
+			return $this->raw;
 		}
 		
 		/**
@@ -102,6 +119,8 @@
 		
 		/**
 		 * @return BasePrimitive
+		 *
+		 * usually, you should not use this method
 		**/
 		public function setRawValue($raw)
 		{
@@ -170,6 +189,11 @@
 		public function exportValue()
 		{
 			return $this->value;
+		}
+		
+		public function getCustomError()
+		{
+			return $this->customError;
 		}
 		
 		protected function import($scope)
