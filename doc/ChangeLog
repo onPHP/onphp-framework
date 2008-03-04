@@ -1,5 +1,11 @@
 # $Id$
 
+2008-03-04	Konstantin V. Arkhipov
+
+	* core/DB/PostgresDialect.class.php: PostgreSQL-8.3 doesn't like
+	comparsion between integer and varchar, so dialect now quotes all
+	integers by default; again.
+
 2008-03-04	Denis M. Gabaidulin
 
 	* core/Base/Assert.class.php: isNotEmptyArray().
