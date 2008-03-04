@@ -62,7 +62,18 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-
+		
+		public static function isNotEmptyArray(&$variable, $message = null)
+		{
+			if (
+				!self::isArray($variable)
+				|| empty($variable)
+			)
+				self::fail(
+					$message.', '.self::dumpArgument($variable)
+				);
+		}
+		
 		public static function isInteger($variable, $message = null)
 		{
 			if (
