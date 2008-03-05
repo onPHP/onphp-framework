@@ -1,5 +1,16 @@
 # $Id$
 
+2008-03-05	Ivan Y.  Khvostishkov
+
+	* core/Form/Primitives/PrimitiveDate.class.php: exportValue()
+	implemented.
+
+2008-03-04	Ivan Y. Khvostishkov
+
+	* core/Form/Form.class.php: some documentation.
+
+	* core/Form/Primitives/BasePrimitive.class.php: getFormValue() added.
+
 2008-03-04	Konstantin V. Arkhipov
 
 	* core/DB/PostgresDialect.class.php: PostgreSQL-8.3 doesn't like

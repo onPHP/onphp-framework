@@ -180,6 +180,23 @@
 			}
 		}
 		
+		public function exportValue()
+		{
+			if ($this->value === null) {
+				return array(
+					self::DAY => null,
+					self::MONTH => null,
+					self::YEAR => null,
+				);
+			}
+			
+			return array(
+				self::DAY => $this->value->getDay(),
+				self::MONTH => $this->value->getMonth(),
+				self::YEAR => $this->value->getYear(),
+			);
+		}
+		
 		protected function checkRanges(Date $date)
 		{
 			return
