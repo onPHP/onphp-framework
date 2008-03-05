@@ -65,10 +65,9 @@
 		
 		public static function isNotEmptyArray(&$variable, $message = null)
 		{
-			if (
-				!self::isArray($variable)
-				|| empty($variable)
-			)
+			self::isArray($variable, $message);
+			
+			if (empty($variable))
 				self::fail(
 					$message.', '.self::dumpArgument($variable)
 				);
