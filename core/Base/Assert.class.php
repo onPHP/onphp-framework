@@ -67,7 +67,7 @@
 		{
 			self::isArray($variable, $message);
 			
-			if (empty($variable))
+			if (!$variable)
 				throw new WrongArgumentException(
 					$message.', '.self::dumpArgument($variable)
 				);
