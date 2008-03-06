@@ -76,7 +76,7 @@
 			$this->map = array();
 			
 			foreach ($map as $className => $watermark)
-				$this->map[$className] = md5($watermark.' ['.ONPHP_VERSION.']'.'::');
+				$this->map[$className] = md5($watermark.' ['.ONPHP_VERSION.']::');
 		
 			return $this;
 		}
