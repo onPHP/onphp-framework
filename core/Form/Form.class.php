@@ -413,7 +413,7 @@
 			} elseif (true === $result) {
 				unset($this->errors[$name]);
 				
-			} elseif (($error = $prm->getCustomError())) {
+			} elseif ($error = $prm->getCustomError()) {
 				
 				$this->errors[$name] = $error;
 				
