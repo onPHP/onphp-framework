@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -183,18 +183,24 @@
 		public function exportValue()
 		{
 			if ($this->value === null) {
-				return array(
-					self::DAY => null,
-					self::MONTH => null,
-					self::YEAR => null,
-				);
+				if ($this->getState()->isTrue())
+					return null;
+				else
+					return array(
+						self::DAY => null,
+						self::MONTH => null,
+						self::YEAR => null,
+					);
 			}
 			
-			return array(
-				self::DAY => $this->value->getDay(),
-				self::MONTH => $this->value->getMonth(),
-				self::YEAR => $this->value->getYear(),
-			);
+			if ($this->getState()->isTrue())
+				return $this->value->toString();
+			else
+				return array(
+					self::DAY => $this->value->getDay(),
+					self::MONTH => $this->value->getMonth(),
+					self::YEAR => $this->value->getYear(),
+				);
 		}
 		
 		protected function checkRanges(Date $date)
