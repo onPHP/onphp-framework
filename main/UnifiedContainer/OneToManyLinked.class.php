@@ -38,5 +38,10 @@
 		{
 			return false;
 		}
+		
+		public function getHelperTable()
+		{
+			return $this->dao->getTable();
+		}
 	}
 ?>

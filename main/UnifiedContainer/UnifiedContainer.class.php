@@ -351,6 +351,28 @@
 			return $this;
 		}
 		
+		/**
+		 * @return UnifiedContainer
+		**/
+		public function dropListByParent(Identifiable $parent)
+		{
+			$this->clean();
+			
+			DBPool::getByDao($this->dao)->queryNull(
+				OSQL::delete()->from($this->getHelperTable())->
+				where(
+					Expression::eq(
+						$this->getParentIdField(),
+						$parent->getId()
+					)
+				)
+			);
+			
+			$this->dao->uncacheLists();
+			
+			return $this;
+		}
+		
 		/* void */ public static function destroy(UnifiedContainer $container)
 		{
 			unset($container->worker, $container);

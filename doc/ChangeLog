@@ -1,5 +1,9 @@
 # $Id$
 
+2008-03-07	Denis M. Gabaidulin
+
+	* main/UnifiedContainer/UnifiedContainer.class.php: dropListByParent().
+
 2008-03-04	Konstantin V. Arkhipov
 
 	* core/DB/PostgresDialect.class.php: PostgreSQL-8.3 doesn't like
