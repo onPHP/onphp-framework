@@ -63,7 +63,9 @@
 		
 		public function dropList()
 		{
-			DBPool::getByDao($this->container->getDao())->queryNull(
+			$dao = $this->container->getDao();
+			
+			DBPool::getByDao($dao)->queryNull(
 				OSQL::delete()->from($this->container->getHelperTable())->
 				where(
 					Expression::eq(
@@ -72,6 +74,8 @@
 					)
 				)
 			);
+			
+			$dao->uncacheLists();
 			
 			return $this;
 		}
