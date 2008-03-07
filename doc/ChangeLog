@@ -2,7 +2,8 @@
 
 2008-03-07	Denis M. Gabaidulin
 
-	* main/UnifiedContainer/UnifiedContainer.class.php: dropListByParent().
+	* main/UnifiedContainer/UnifiedContainer.class.php: dropList()
+	implemented.
 
 2008-03-04	Konstantin V. Arkhipov
 
