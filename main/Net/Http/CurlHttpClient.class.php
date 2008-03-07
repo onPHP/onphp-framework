@@ -15,7 +15,6 @@
 	**/
 	final class CurlHttpClient implements HttpClient
 	{
-		private $handle			= null;
 		private $timeout		= null;
 		private $followLocation	= null;
 		private $maxRedirects	= null;
