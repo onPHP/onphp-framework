@@ -2,9 +2,10 @@
 
 2008-03-07	Denis M. Gabaidulin
 
-	* main/UnifiedContainer/UnifiedContainer.class.php: dropListByParent().
+	* main/UnifiedContainer/UnifiedContainer.class.php: dropList()
+	implemented.
 
-2008-03-05	Ivan Y.  Khvostishkov
+2008-03-05	Ivan Y. Khvostishkov
 
 	* core/Form/Primitives/PrimitiveDate.class.php: exportValue()
 	implemented.

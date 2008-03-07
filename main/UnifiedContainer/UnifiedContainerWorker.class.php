@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -61,14 +61,14 @@
 					);
 		}
 		
-		public function dropListByParent(Identifiable $parent)
+		public function dropList()
 		{
 			DBPool::getByDao($this->container->getDao())->queryNull(
 				OSQL::delete()->from($this->container->getHelperTable())->
 				where(
 					Expression::eq(
 						$this->container->getParentIdField(),
-						$parent->getId()
+						$this->container->getParentObject()->getId()
 					)
 				)
 			);

@@ -333,13 +333,11 @@
 		/**
 		 * @return UnifiedContainer
 		**/
-		public function dropListByParent(Identifiable $parent)
+		public function dropList()
 		{
+			$this->worker->dropList();
+			
 			$this->clean();
-			
-			$this->worker->dropListByParent($parent);
-			
-			$this->dao->uncacheLists();
 			
 			return $this;
 		}
