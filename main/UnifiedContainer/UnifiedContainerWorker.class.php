@@ -61,6 +61,21 @@
 					);
 		}
 		
+		public function dropListByParent(Identifiable $parent)
+		{
+			DBPool::getByDao($this->container->getDao())->queryNull(
+				OSQL::delete()->from($this->container->getHelperTable())->
+				where(
+					Expression::eq(
+						$this->container->getParentIdField(),
+						$parent->getId()
+					)
+				)
+			);
+			
+			return $this;
+		}
+		
 		/**
 		 * @return SelectQuery
 		**/
