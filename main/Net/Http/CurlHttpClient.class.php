@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Http
 	**/
-	final class CurlHttpClient implements HttpClient
+	class CurlHttpClient implements HttpClient
 	{
 		private $timeout		= null;
 		private $followLocation	= null;
@@ -123,6 +123,32 @@
 			$response = CurlHttpResponse::create()->
 				setMaxFileSize($this->maxFileSize);
 			
+			$options = $this->makeOptions($request, $response);
+			
+			curl_setopt_array($handle, $options);
+			
+			if (curl_exec($handle) === false) {
+				throw new NetworkException(
+					'curl error, code: '
+					.curl_errno($handle)
+					.' description: '
+					.curl_error($handle)
+				);
+			}
+			
+			$response->setStatus(
+				new HttpStatus(
+					curl_getinfo($handle, CURLINFO_HTTP_CODE)
+				)
+			);
+			
+			curl_close($handle);
+			
+			return $response;
+		}
+		
+		protected function makeOptions(HttpRequest $request, CurlHttpResponse $response)
+		{
 			$options = array(
 				CURLOPT_WRITEFUNCTION => array($response, 'writeBody'),
 				CURLOPT_HEADERFUNCTION => array($response, 'writeHeader'),
@@ -155,26 +181,7 @@
 			if ($this->noBody !== null)
 				$options[CURLOPT_NOBODY] = $this->noBody;
 			
-			curl_setopt_array($handle, $options);
-			
-			if (curl_exec($handle) === false) {
-				throw new NetworkException(
-					'curl error, code: '
-					.curl_errno($handle)
-					.' description: '
-					.curl_error($handle)
-				);
-			}
-			
-			$response->setStatus(
-				new HttpStatus(
-					curl_getinfo($handle, CURLINFO_HTTP_CODE)
-				)
-			);
-			
-			curl_close($handle);
-			
-			return $response;
+			return $options;
 		}
 		
 		private function argumentsToString($array)
