@@ -13,11 +13,11 @@
 	/**
 	 * @ingroup Http
 	**/
-	class CurlHttpClient implements HttpClient
+	final class CurlHttpClient implements HttpClient
 	{
-		private $timeout		= null;
+		private $options		= array();
+		
 		private $followLocation	= null;
-		private $maxRedirects	= null;
 		private $maxFileSize	= null;
 		private $noBody			= null;
 		
@@ -31,17 +31,52 @@
 		
 		/**
 		 * @return CurlHttpClient
-		 * @param $timeout in seconds
 		**/
-		public function setTimeout($timeout)
+		public function setOption($key, $value)
 		{
-			$this->timeout = $timeout;
+			$this->options[$key] = $value;
+			
 			return $this;
 		}
 		
+		/**
+		 * @return CurlHttpClient
+		**/
+		public function dropOption($key)
+		{
+			unset($this->options[$key]);
+			
+			return $this;
+		}
+		
+		public function getOption($key)
+		{
+			if (isset($this->options[$key]))
+				return $this->options[$key];
+			
+			throw new MissingElementException();
+		}
+		
+		/**
+		 * @param $timeout in seconds
+		 * @return CurlHttpClient
+		**/
+		public function setTimeout($timeout)
+		{
+			$this->options[CURLOPT_TIMEOUT] = $timeout;
+			
+			return $this;
+		}
+		
+		/**
+		 * @deprecated by getOption()
+		**/
 		public function getTimeout()
 		{
-			return $this->timeout;
+			if (isset($this->options[CURLOPT_TIMEOUT]))
+				return $this->options[CURLOPT_TIMEOUT];
+			
+			return null;
 		}
 		
 		/**
@@ -83,13 +118,17 @@
 		**/
 		public function setMaxRedirects($maxRedirects)
 		{
-			$this->maxRedirects = $maxRedirects;
+			$this->options[CURLOPT_MAXREDIRS] = $maxRedirects;
+			
 			return $this;
 		}
 		
 		public function getMaxRedirects()
 		{
-			return $this->maxRedirects;
+			if (isset($this->options[CURLOPT_MAXREDIRS]))
+				return $this->options[CURLOPT_MAXREDIRS];
+			
+			return null;
 		}
 		
 		/**
@@ -123,9 +162,33 @@
 			$response = CurlHttpResponse::create()->
 				setMaxFileSize($this->maxFileSize);
 			
-			$options = $this->makeOptions($request, $response);
+			$options = array(
+				CURLOPT_WRITEFUNCTION => array($response, 'writeBody'),
+				CURLOPT_HEADERFUNCTION => array($response, 'writeHeader'),
+				CURLOPT_URL => $request->getUrl()->toString(),
+				CURLOPT_USERAGENT => 'onPHP::'.__CLASS__
+			);
 			
-			curl_setopt_array($handle, $options);
+			if ($this->noBody !== null)
+				$options[CURLOPT_NOBODY] = $this->noBody;
+			
+			if ($this->followLocation !== null)
+				$options[CURLOPT_FOLLOWLOCATION] = $this->followLocation;
+			
+			if ($request->getMethod()->getId() == HttpMethod::GET) {
+				$options[CURLOPT_HTTPGET] = true;
+				
+				if ($request->getGet()) {
+					$options[CURLOPT_URL] .=
+						'?'.$this->argumentsToString($request->getGet());
+				}
+			} else {
+				$options[CURLOPT_POST] = true;
+				$options[CURLOPT_POSTFIELDS] =
+					$this->argumentsToString($request->getPost());
+			}
+			
+			curl_setopt_array($handle, array_merge($options, $this->options));
 			
 			if (curl_exec($handle) === false) {
 				throw new NetworkException(
@@ -145,43 +208,6 @@
 			curl_close($handle);
 			
 			return $response;
-		}
-		
-		protected function makeOptions(HttpRequest $request, CurlHttpResponse $response)
-		{
-			$options = array(
-				CURLOPT_WRITEFUNCTION => array($response, 'writeBody'),
-				CURLOPT_HEADERFUNCTION => array($response, 'writeHeader'),
-				CURLOPT_URL => $request->getUrl()->toString(),
-				CURLOPT_USERAGENT => 'onPHP::'.__CLASS__
-			);
-			
-			if ($this->timeout !== null)
-				$options[CURLOPT_TIMEOUT] = $this->timeout;
-			
-			if ($this->followLocation !== null)
-				$options[CURLOPT_FOLLOWLOCATION] = $this->followLocation;
-			
-			if ($this->maxRedirects !== null)
-				$options[CURLOPT_MAXREDIRS] = $this->maxRedirects;
-			
-			if ($request->getMethod()->getId() == HttpMethod::GET) {
-				$options[CURLOPT_HTTPGET] = true;
-				
-				if ($request->getGet()) {
-					$options[CURLOPT_URL] .=
-						'?'.$this->argumentsToString($request->getGet());
-				}
-			} else {
-				$options[CURLOPT_POST] = true;
-				$options[CURLOPT_POSTFIELDS] =
-					$this->argumentsToString($request->getPost());
-			}
-			
-			if ($this->noBody !== null)
-				$options[CURLOPT_NOBODY] = $this->noBody;
-			
-			return $options;
 		}
 		
 		private function argumentsToString($array)
