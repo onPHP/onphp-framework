@@ -58,6 +58,7 @@
 			return $this->object->$setter($value);
 		}
 		
+		// TODO: use export for all primitives
 		private function dtoValue($value, BasePrimitive $primitive)
 		{
 			$result = null;
@@ -66,9 +67,13 @@
 				
 				$result = $value; // have been already built
 				
+			} elseif ($primitive instanceof PrimitivePolymorphicIdentifier) {
+				
+				$result = PrimitivePolymorphicIdentifier::export($value);
+				
 			} elseif ($primitive instanceof PrimitiveBoolean) {
 				
-				$value = (boolean)$value;
+				$result = (boolean)$value;
 				
 			} elseif ($value instanceof Identifiable) {
 				

@@ -1,5 +1,10 @@
 # $Id$
 
+2008-03-13	Ivan Y. Khvostishkov
+
+	* core/Form/Primitives/PrimitivePolymorphicIdentifier.class.php:
+	primitive for holding polymorphic values.
+
 2008-03-07	Denis M. Gabaidulin
 
 	* main/UnifiedContainer/UnifiedContainer.class.php: dropList()

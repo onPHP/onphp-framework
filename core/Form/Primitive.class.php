@@ -60,6 +60,14 @@
 		}
 		
 		/**
+		 * @return PrimitivePolymorphicIdentifier
+		**/
+		public static function polymorphicIdentifier($name)
+		{
+			return new PrimitivePolymorphicIdentifier($name);
+		}
+		
+		/**
 		 * @return PrimitiveIdentifierList
 		**/
 		public static function identifierlist($name)
