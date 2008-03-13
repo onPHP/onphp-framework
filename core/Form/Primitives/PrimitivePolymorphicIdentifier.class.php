@@ -109,6 +109,10 @@
 				parent::of($class);
 				
 				$scope[$this->name] = $id;
+				
+			} else {
+				// we need some class in any case
+				parent::of($this->baseClassName);
 			}
 			
 			return parent::import($scope);
