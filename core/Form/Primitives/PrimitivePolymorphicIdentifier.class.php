@@ -19,7 +19,7 @@
 		const WRONG_CID_FORMAT	= 201;
 		const WRONG_CLASS		= 202;
 		
-		const DELIMITER			= '_';
+		const DELIMITER			= '.';
 		
 		private $baseClassName	= null;
 		
