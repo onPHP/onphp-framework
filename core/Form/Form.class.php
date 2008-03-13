@@ -98,7 +98,7 @@
 		{
 			if (!isset($this->errors[$name]))
 				throw new MissingElementException(
-					$name.' does not contain errors'
+					'"'.$name.'" does not contain errors'
 				);
 			
 			unset($this->errors[$name]);
