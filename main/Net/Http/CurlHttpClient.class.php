@@ -188,7 +188,11 @@
 					$this->argumentsToString($request->getPost());
 			}
 			
-			curl_setopt_array($handle, array_merge($options, $this->options));
+			foreach ($this->options as $key => $value) {
+				$options[$key] = $value;
+			}
+			
+			curl_setopt_array($handle, $options);
 			
 			if (curl_exec($handle) === false) {
 				throw new NetworkException(
