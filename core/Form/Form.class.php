@@ -86,6 +86,24 @@
 			return $this;
 		}
 		
+		public function getPrimitiveError($name)
+		{
+			if (!isset($this->errors[$name]))
+				return null;
+			
+			return $this->errors[$name];
+		}
+		
+		public function dropPrimitiveError($name)
+		{
+			if (!isset($this->errors[$name]))
+				throw new MissingElementException(
+					$name.' does not contain errors'
+				);
+			
+			unset($this->errors[$name]);
+		}
+		
 		/**
 		 * @return Form
 		**/

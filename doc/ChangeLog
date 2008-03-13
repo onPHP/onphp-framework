@@ -5,6 +5,9 @@
 	* core/Form/Primitives/PrimitivePolymorphicIdentifier.class.php:
 	primitive for holding polymorphic values.
 
+	* core/Form/Form.class.php: getPrimitiveError() and
+	dropPrimitiveError() for custom errors handling.
+
 2008-03-07	Denis M. Gabaidulin
 
 	* main/UnifiedContainer/UnifiedContainer.class.php: dropList()

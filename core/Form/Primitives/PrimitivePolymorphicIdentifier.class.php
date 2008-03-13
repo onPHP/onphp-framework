@@ -109,11 +109,9 @@
 				parent::of($class);
 				
 				$scope[$this->name] = $id;
-				
-				return parent::import($scope);
 			}
 			
-			return null;
+			return parent::import($scope);
 		}
 	}
 ?>
