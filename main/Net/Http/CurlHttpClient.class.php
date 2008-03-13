@@ -195,11 +195,11 @@
 			curl_setopt_array($handle, $options);
 			
 			if (curl_exec($handle) === false) {
+				$code = curl_errno($handle);
 				throw new NetworkException(
-					'curl error, code: '
-					.curl_errno($handle)
-					.' description: '
-					.curl_error($handle)
+					'curl error, code: '.$code
+						.' description: '.curl_error($handle),
+					$code
 				);
 			}
 			
