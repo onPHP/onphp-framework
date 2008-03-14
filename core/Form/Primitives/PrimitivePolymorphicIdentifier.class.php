@@ -25,6 +25,9 @@
 		
 		public static function export($value)
 		{
+			if ($value === null)
+				return null;
+			
 			Assert::isInstance($value, 'Identifiable');
 			
 			return get_class($value).self::DELIMITER.$value->getId();
