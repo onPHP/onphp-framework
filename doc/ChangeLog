@@ -1,5 +1,10 @@
 # $Id$
 
+2008-03-15	Ivan Y. Khvostishkov
+
+	* main/Utils/RussianTextUtils.class.php: fixed selectCaseForNumber()
+	for numbers larger than 100.
+
 2008-03-13	Ivan Y. Khvostishkov
 
 	* core/Form/Primitives/PrimitivePolymorphicIdentifier.class.php:

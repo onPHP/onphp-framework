@@ -92,7 +92,7 @@
 			} elseif (
 				($number % 10) > 1
 				&& ($number % 10) < 5
-				&& ($number < 10 || $number > 20)
+				&& ($number % 100 < 10 || $number % 100 > 20)
 			) {
 				
 				return $cases[1];
