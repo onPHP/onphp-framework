@@ -87,13 +87,13 @@
 				self::quoteValue($searchString)."))";
 		}
 		
-		public function fullTextRank($field, $words, $logic, $function = 'rank')
+		public function fullTextRank($field, $words, $logic)
 		{
 			$searchString = self::prepareFullText($words, $logic);
 			$field = $this->fieldToString($field);
 			
 			return
-				"{$function}({$field}, to_tsquery('".self::$tsConfiguration."', ".
+				"rank({$field}, to_tsquery('".self::$tsConfiguration."', ".
 				self::quoteValue($searchString)."))";
 		}
 		
