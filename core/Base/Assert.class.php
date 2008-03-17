@@ -49,12 +49,36 @@
 				);
 		}
 
+		public static function isEmpty($variable, $message = null)
+		{
+			if (!empty($variable))
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
+		}
+		
+		public static function isSetArray($array, $key, $message = null)
+		{
+			if (!isset($array[$key]))
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($key)
+				);
+		}
+		
 		public static function isNotNull($variable, $message = null)
 		{
 			if ($variable === null)
 				throw new WrongArgumentException($message);
 		}
-
+		
+		public static function isScalar($variable, $message = null)
+		{
+			if (!is_scalar($variable))
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
+		}
+		
 		public static function isArray($variable, $message = null)
 		{
 			if (!is_array($variable))
