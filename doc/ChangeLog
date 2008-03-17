@@ -1,5 +1,24 @@
 # $Id$
 
+2008-03-17	Ivan Y. Khvostishkov
+
+	* main/Flow/PartViewer.class.php: references to parent and root model
+	added, useful for widgets.
+
+	* core/Base/Assert.class.php: added isEmpty(), isSetArray(),
+	isScalar().
+
+	* main/ProtoBuilders/: more builders.
+
+	* core/Form/Primitive.class.php: safeHtmlString().
+
+	* core/Form/Form.class.php, core/Form/PlainForm.class.php: added
+	ability to get inner values by path reference.
+
+	* main/ProtoBuilders/: partial objects building ability, useful for
+	wizards.
+
+
 2008-03-15	Ivan Y. Khvostishkov
 
 	* main/Utils/RussianTextUtils.class.php: fixed selectCaseForNumber()
