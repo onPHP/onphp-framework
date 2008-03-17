@@ -32,8 +32,23 @@
 			Assert::isTrue($model === null || $model instanceof Model);
 			
 			// use model from outer template if none specified
-			if ($model === null)
+			if ($model === null) {
 				$model = $this->model;
+				
+				$parentModel = $this->model->has('parentModel')
+					? $this->model->get('parentModel')
+					: null;
+				
+			} else
+				$parentModel = $this->model;
+			
+			$model->set('parentModel', $parentModel);
+			
+			$rootModel = $this->model->has('rootModel')
+				? $this->model->get('rootModel')
+				: $this->model;
+			
+			$model->set('rootModel', $rootModel);
 				
 			$this->viewResolver->resolveViewName($partName)->render($model);
 			
