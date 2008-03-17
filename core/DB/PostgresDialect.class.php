@@ -20,6 +20,7 @@
 	final class PostgresDialect extends Dialect
 	{
 		private static $tsConfiguration = 'utf8_russian';
+		private static $rankFunction = 'rank';
 		
 		/**
 		 * @return PostgresDialect
@@ -37,6 +38,11 @@
 		public static function setTsConfiguration($configuration)
 		{
 			self::$tsConfiguration = $configuration;
+		}
+		
+		public static function setRankFunction($rank)
+		{
+			self::$rankFunction = $rank;
 		}
 		
 		public static function quoteValue($value)
@@ -111,7 +117,7 @@
 			$field = $this->fieldToString($field);
 			
 			return
-				"rank({$field}, to_tsquery('".self::$tsConfiguration."', ".
+				self::$rankFunction."({$field}, to_tsquery('".self::$tsConfiguration."', ".
 				self::quoteValue($searchString)."))";
 		}
 		
