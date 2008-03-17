@@ -82,6 +82,82 @@
 			throw new MissingElementException("knows nothing about '{$name}'");
 		}
 		
+		/**
+		 * ex:
+		 * array('superFormsList', 5, 'subForm', 'primitiveName') =>
+		 * 'superFormsList[5][subForm][primitiveName]'
+		 */
+		public function getFormName($path)
+		{
+			// just checking for existence:
+			$this->getInner($path);
+			
+			$path = $this->getInnerPath($path);
+			
+			$result = array_shift($path);
+			
+			Assert::isScalar($result);
+			
+			foreach ($path as $key) {
+				Assert::isScalar($key);
+				
+				$result .= '['.$key.']';
+			}
+			
+			return $result;
+		}
+		
+		/**
+		 * @throws MissingElementException
+		 * @return BasePrimitive
+		**/
+		public function getInner($path)
+		{
+			return $this->getInnerForm($path)->
+				get($this->getInnerName($path));
+		}
+		
+		public function getInnerName($path)
+		{
+			$path = $this->getInnerPath($path);
+			
+			return array_pop($path);
+		}
+		
+		public function getInnerForm($path)
+		{
+			$path = $this->getInnerPath($path);
+			
+			$subForm = array_shift($path);
+			
+			if (!$path) {
+				// last element is a name
+				return $this;
+			}
+			
+			Assert::isScalar($subForm);
+			
+			$primitive = $this->get($subForm);
+			
+			Assert::isInstance($primitive, 'PrimitiveForm');
+			
+			$subForm = $primitive->getValue();
+			
+			Assert::isNotNull($subForm);
+			
+			if ($primitive instanceof PrimitiveFormsList) {
+				Assert::isNotEmptyArray($path, 'you must specify index');
+				
+				$subIndex = array_shift($path);
+				
+				Assert::isSetArray($subForm, $subIndex, 'index does not exist');
+				
+				$subForm = $subForm[$subIndex];
+			}
+			
+			return $subForm->getInnerForm($path);
+		}
+		
 		public function getValue($name)
 		{
 			return $this->get($name)->getValue();
@@ -117,6 +193,7 @@
 			return $this->get($name)->getSafeValue();
 		}
 		
+		
 		public function getChoiceValue($name)
 		{
 			Assert::isTrue(($prm = $this->get($name)) instanceof ListedPrimitive);
@@ -131,6 +208,9 @@
 			return $prm->getActualChoiceValue();
 		}
 
+		/**
+		 * @deprecated by getFormValue
+		**/
 		public function getDisplayValue($name)
 		{
 			$primitive = $this->get($name);
@@ -140,7 +220,7 @@
 			else
 				return $primitive->getActualValue();		
 		}
-
+		
 		public function getPrimitiveNames()
 		{
 			return array_keys($this->primitives);
@@ -149,6 +229,18 @@
 		public function getPrimitiveList()
 		{
 			return $this->primitives;
+		}
+		
+		private function getInnerPath($path)
+		{
+			if (is_scalar($path))
+				$path = array($path);
+			
+			Assert::isArray($path, 'path must be an array');
+			
+			Assert::isNotEmptyArray($path, 'empty path is erroneous');
+			
+			return $path;
 		}
 	}
 ?>

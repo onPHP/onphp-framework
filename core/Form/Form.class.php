@@ -242,6 +242,24 @@
 				return null;
 		}
 		
+		public function getInnerError($primitivePath)
+		{
+			return
+				$this->getInnerForm($primitivePath)->
+					getTextualErrorFor(
+						$this->getInnerName($primitivePath)
+					);
+		}
+		
+		public function getInnerErrorDescription($primitivePath)
+		{
+			return
+				$this->getInnerForm($primitivePath)->
+					getErrorDescriptionFor(
+						$this->getInnerName($primitivePath)
+					);
+		}
+		
 		/**
 		 * @return Form
 		**/
