@@ -30,6 +30,7 @@
 			
 			$primitive = $this->mapping[$name];
 			
+			// FIXME: result or object??
 			$this->result[$primitive->getName()] =  $value;
 			
 			return $this;
