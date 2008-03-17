@@ -12,7 +12,10 @@
 
 	abstract class PrototypedBuilder
 	{
-		protected $proto	= null;
+		protected $proto		= null;
+		protected $protoMapping	= array();
+		
+		private $limitedPropertiesList	= null;
 		
 		abstract protected function createEmpty();
 		abstract protected function prepareOwn($result);
@@ -35,6 +38,22 @@
 		public function __construct(DTOProto $proto)
 		{
 			$this->proto = $proto;
+			$this->protoMapping = $this->proto->getFormMapping();
+		}
+		
+		public function setLimitedPropertiesList($list)
+		{
+			if ($list !== null)
+				Assert::isArray($list);
+			
+			$mapping = $this->proto->getFullFormMapping();
+			
+			foreach ($list as $key => $inner)
+				Assert::isSetArray($mapping, $key);
+				
+			$this->limitedPropertiesList = $list;
+			
+			return $this;
 		}
 		
 		/**
@@ -42,9 +61,44 @@
 		**/
 		public function cloneBuilder(DTOProto $proto)
 		{
-			return new $this($proto);
+			Assert::isTrue(
+				$this->proto->isInstanceOf($proto)
+				|| $proto->isInstanceOf($this->proto),
+				
+				Assert::dumpArgument($proto)
+			);
+			
+			$result = new $this($proto);
+			
+			$result->limitedPropertiesList = $this->limitedPropertiesList;
+			
+			return $result;
 		}
 		
+		public function cloneInnerBuilder($property)
+		{
+			$mapping = $this->getFormMapping();
+			
+			Assert::isSetArray($mapping, $property);
+			
+			$primitive = $mapping[$property];
+			
+			Assert::isInstance($primitive, 'PrimitiveForm');
+			
+			$result = new $this($primitive->getProto());
+			
+			if (isset($this->limitedPropertiesList[$primitive->getName()])) {
+				$result->setLimitedPropertiesList(
+					$this->limitedPropertiesList[$primitive->getName()]
+				);
+			}
+			
+			return $result;
+		}
+		
+		/**
+		 * @deprecated $recursive, use limitedPropertiesList instead
+		 */
 		public function make($object, $recursive = true)
 		{
 			// FIXME: make dtoProto() non-static, problem with forms here
@@ -131,22 +185,23 @@
 			$getter = $this->getGetter($object);
 			$setter = $this->getSetter($result);
 			
-			foreach ($this->proto->getFormMapping() as $id => $primitive) {
+			foreach ($this->getFormMapping() as $id => $primitive) {
 				
 				$value = $getter->get($id);
 				
 				// NOTE: NULL means the lack of optional value
 				if ($primitive->isRequired() || $value !== null) {
 					
+					
 					if ($primitive instanceof PrimitiveForm) {
 						$proto = $primitive->getProto();
 						
 						if ($primitive instanceof PrimitiveFormsList) {
-							$value = $this->cloneBuilder($proto)->
+							$value = $this->cloneInnerBuilder($id)->
 								makeList($value);
 							
 						} else {
-							$value = $this->cloneBuilder($proto)->
+							$value = $this->cloneInnerBuilder($id)->
 								make($value);
 						}
 					}
@@ -156,6 +211,23 @@
 			}
 			
 			$this->preserveTypeLoss($result);
+			
+			return $result;
+		}
+		
+		protected function getFormMapping()
+		{
+			if ($this->limitedPropertiesList === null)
+				return $this->protoMapping;
+			
+			$result = array();
+			
+			foreach ($this->protoMapping as $id => $value) {
+				if (!isset($this->limitedPropertiesList[$id]))
+					continue;
+				
+				$result[$id] = $value;
+			}
 			
 			return $result;
 		}

@@ -36,6 +36,9 @@
 			return array();
 		}
 		
+		// TODO: use checkConstraints($object, $previousObject = null)
+		// where object may be business object, form, scope, etc.
+		// NOTE: object may contain errors already
 		public function checkConstraints(
 			$object, Form $form, $previousObject = null
 		)
@@ -53,6 +56,16 @@
 			return ClassUtils::isInstanceOf(
 				$this->dtoClassName(), $proto->dtoClassName()
 			);
+		}
+		
+		final public function getFullFormMapping()
+		{
+			$result = $this->getFormMapping();
+			
+			if ($this->baseProto())
+				$result = $result + $this->baseProto()->getFullFormMapping();
+			
+			return $result;
 		}
 		
 		final public function validate(
@@ -170,6 +183,8 @@
 		
 		/**
 		 * @return Form
+		 *
+		 * @deprecated you should use PrototypedBuilder to make forms
 		**/
 		final public function makeForm()
 		{

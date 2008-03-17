@@ -27,8 +27,9 @@
 		{
 			Assert::isInstance($result, 'Form');
 			
-			$this->proto->attachPrimitives($result);
-			
+			foreach ($this->getFormMapping() as $primitive)
+				$result->add($primitive);
+				
 			return $result;
 		}
 		

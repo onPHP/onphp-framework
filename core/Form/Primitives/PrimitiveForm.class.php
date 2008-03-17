@@ -15,12 +15,13 @@
 	**/
 	class PrimitiveForm extends BasePrimitive
 	{
-		protected $className = null;
 		protected $proto = null;
 		
 		/**
 		 * @throws WrongArgumentException
 		 * @return PrimitiveForm
+		 *
+		 * @deprecated You should use ofProto() instead
 		**/
 		public function of($className)
 		{
@@ -36,18 +37,23 @@
 				"knows nothing about '{$protoClass}' class"
 			);
 			
-			$this->proto = Singleton::getInstance($protoClass);
-			
-			Assert::isInstance($this->proto, 'DTOProto');
-			
-			$this->className = $className;
+			return $this->ofProto(Singleton::getInstance($protoClass));
+		}
+		
+		/**
+		 * @throws WrongArgumentException
+		 * @return PrimitiveForm
+		**/
+		public function ofProto(DTOProto $proto)
+		{
+			$this->proto = $proto;
 			
 			return $this;
 		}
 		
 		public function getClassName()
 		{
-			return $this->className;
+			return $this->proto->className();
 		}
 		
 		public function getProto()
@@ -102,9 +108,9 @@
 		
 		private function actualImport($scope, $importFiltering)
 		{
-			if (!$this->className)
+			if (!$this->proto)
 				throw new WrongStateException(
-					"no class defined for PrimitiveForm '{$this->name}'"
+					"no proto defined for PrimitiveForm '{$this->name}'"
 				);
 			
 			if (!isset($scope[$this->name]))
