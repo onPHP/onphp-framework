@@ -124,6 +124,18 @@
 		}
 		
 		/**
+		 * @return PrimitiveString
+		**/
+		public static function safeHtmlString($name)
+		{
+			$result = new PrimitiveString($name);
+			
+			$result->addDisplayFilter(Filter::htmlSpecialChars());
+			
+			return $result;
+		}
+		
+		/**
 		 * @return PrimitiveBinary
 		**/
 		public static function binary($name)
