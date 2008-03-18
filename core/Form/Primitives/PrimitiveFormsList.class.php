@@ -19,9 +19,9 @@
 		
 		public function import($scope)
 		{
-			if (!$this->className)
+			if (!$this->proto)
 				throw new WrongStateException(
-					"no class defined for PrimitiveFormsList '{$this->name}'"
+					"no proto defined for PrimitiveFormsList '{$this->name}'"
 				);
 			
 			if (!isset($scope[$this->name]))
