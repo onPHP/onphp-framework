@@ -13,7 +13,6 @@
 	abstract class PrototypedBuilder
 	{
 		protected $proto		= null;
-		protected $protoMapping	= array();
 		
 		private $limitedPropertiesList	= null;
 		
@@ -38,7 +37,6 @@
 		public function __construct(DTOProto $proto)
 		{
 			$this->proto = $proto;
-			$this->protoMapping = $this->proto->getFormMapping();
 		}
 		
 		public function setLimitedPropertiesList($list)
@@ -217,12 +215,14 @@
 		
 		protected function getFormMapping()
 		{
+			$protoMapping = $this->proto->getFormMapping();
+			
 			if ($this->limitedPropertiesList === null)
-				return $this->protoMapping;
+				return $protoMapping;
 			
 			$result = array();
 			
-			foreach ($this->protoMapping as $id => $value) {
+			foreach ($protoMapping as $id => $value) {
 				if (!isset($this->limitedPropertiesList[$id]))
 					continue;
 				
