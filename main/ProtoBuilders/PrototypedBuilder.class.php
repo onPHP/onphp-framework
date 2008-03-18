@@ -49,7 +49,7 @@
 			$mapping = $this->proto->getFullFormMapping();
 			
 			foreach ($list as $key => $inner)
-				Assert::isSetArray($mapping, $key);
+				Assert::isIndexExists($mapping, $key);
 				
 			$this->limitedPropertiesList = $list;
 			
@@ -79,7 +79,7 @@
 		{
 			$mapping = $this->getFormMapping();
 			
-			Assert::isSetArray($mapping, $property);
+			Assert::isIndexExists($mapping, $property);
 			
 			$primitive = $mapping[$property];
 			

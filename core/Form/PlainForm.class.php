@@ -150,7 +150,7 @@
 				
 				$subIndex = array_shift($path);
 				
-				Assert::isSetArray($subForm, $subIndex, 'index does not exist');
+				Assert::isIndexExists($subForm, $subIndex, 'index does not exist');
 				
 				$subForm = $subForm[$subIndex];
 			}
