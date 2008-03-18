@@ -203,11 +203,16 @@
 				);
 			}
 			
-			$response->setStatus(
-				new HttpStatus(
-					curl_getinfo($handle, CURLINFO_HTTP_CODE)
-				)
-			);
+			$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+			try {
+				$response->setStatus(
+					new HttpStatus($httpCode)
+				);
+			} catch (MissingElementException $e) {
+				throw new NetworkException(
+					'curl error, strange http code: '.$httpCode
+				);
+			}
 			
 			curl_close($handle);
 			
