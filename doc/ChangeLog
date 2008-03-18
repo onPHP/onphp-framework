@@ -5,7 +5,7 @@
 	* main/Flow/PartViewer.class.php: references to parent and root model
 	added, useful for widgets.
 
-	* core/Base/Assert.class.php: added isEmpty(), isSetArray(),
+	* core/Base/Assert.class.php: added isEmpty(), isIndexExists(),
 	isScalar().
 
 	* main/ProtoBuilders/: more builders.

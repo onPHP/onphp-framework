@@ -57,9 +57,11 @@
 				);
 		}
 		
-		public static function isSetArray($array, $key, $message = null)
+		public static function isIndexExists($array, $key, $message = null)
 		{
-			if (!isset($array[$key]))
+			Assert::isArray($array);
+			
+			if (!array_key_exists($key, $array))
 				throw new WrongArgumentException(
 					$message.', '.self::dumpArgument($key)
 				);
