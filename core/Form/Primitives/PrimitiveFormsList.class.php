@@ -47,10 +47,7 @@
 					$error = true;
 			}
 			
-			if ($error)
-				return false;
-			
-			return true;
+			return !$error;
 		}
 		
 		public function importValue($value)
