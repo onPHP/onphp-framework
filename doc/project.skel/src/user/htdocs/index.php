@@ -72,7 +72,7 @@
 					: null
 			)
 			.(
-				isset($_SESSION) ? 
+				isset($_SESSION) ?
 					"\n_SESSION=".var_export($_SESSION, true)
 					: null
 			);
