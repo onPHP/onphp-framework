@@ -11,7 +11,7 @@
 /* $Id$ */
 
 	/**
-	 * Hint: use raw values like 'City_42' or 'Country_42' where City and
+	 * Hint: use raw values like 'City.42' or 'Country.42' where City and
 	 * Country are childrens of base class GeoLocation, for example.
 	**/
 	final class PrimitivePolymorphicIdentifier extends PrimitiveIdentifier
