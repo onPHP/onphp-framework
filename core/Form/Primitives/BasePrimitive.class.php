@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Primitives
 	 * @ingroup Module
-	 *
+	 * 
 	 * Some use cases:
 	 * 
 	 * - rawValue: scope value, as it passed to import()
@@ -33,7 +33,7 @@
 	 * 
 	 * - default: soft-default object, that may be used instead of value when
 	 * import fails (see getSafeValue()). Comfortable for business logic.
-	 *
+	 * 
 	 * TODO:
 	 * 
 	 * - safe exported value: export(getSafeValue()). Comfortable for
@@ -143,7 +143,7 @@
 		
 		/**
 		 * @return BasePrimitive
-		 *
+		 * 
 		 * usually, you should not use this method
 		**/
 		public function setRawValue($raw)

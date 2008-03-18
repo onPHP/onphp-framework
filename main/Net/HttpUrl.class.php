@@ -27,9 +27,9 @@
 		
 		/**
 		 * @return HttpUrl
-		 *
+		 * 
 		 * @see rfc2616, sec. 14.23.
-		 *
+		 * 
 		 * Hint: example.com:443
 		 */
 		public function setHttpHost($host)

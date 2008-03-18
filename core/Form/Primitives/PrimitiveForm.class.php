@@ -20,7 +20,7 @@
 		/**
 		 * @throws WrongArgumentException
 		 * @return PrimitiveForm
-		 *
+		 * 
 		 * @deprecated You should use ofProto() instead
 		**/
 		public function of($className)

@@ -22,7 +22,7 @@
 	 * 
 	 * 4. implement your methods, corresponding to operations in wsdl, in such
 	 *    manner:
-	 *
+	 * 
 	 *	public function login(LoginRequest $request)
 	 *	{
 	 *		// preparations...
@@ -35,7 +35,7 @@
 	 *		
 	 *		return $result;
 	 *	}
-	 *
+	 * 
 	 *	5. implement logCall(), if you need debugging output
 	 * 
 	**/

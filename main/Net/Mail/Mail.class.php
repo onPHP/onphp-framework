@@ -22,7 +22,7 @@
 	
 	/**
 	 * @ingroup Mail
-	 *
+	 * 
 	 * Note: when relay rejects your mail, try to
 	 * setSendmailAdditionalArgs('-f from.addr@example.com').
 	 * See 'man sendmail' for details.

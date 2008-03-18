@@ -86,7 +86,7 @@
 		 * ex:
 		 * array('superFormsList', 5, 'subForm', 'primitiveName') =>
 		 * 'superFormsList[5][subForm][primitiveName]'
-		 */
+		**/
 		public function getFormName($path)
 		{
 			// just checking for existence:

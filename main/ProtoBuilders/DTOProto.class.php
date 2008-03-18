@@ -183,7 +183,7 @@
 		
 		/**
 		 * @return Form
-		 *
+		 * 
 		 * @deprecated you should use PrototypedBuilder to make forms
 		**/
 		final public function makeForm()

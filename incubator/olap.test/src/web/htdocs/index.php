@@ -66,12 +66,12 @@
 			
 			Application::me()->setCssStoragePath('css/');
 			
-			if (isset($_SERVER['HTTP_ACCEPT']))		
+			if (isset($_SERVER['HTTP_ACCEPT']))
 				$model->set('httpAccept', $_SERVER['HTTP_ACCEPT']);
 				
 			if (!isset($_SERVER['HTTP_USER_AGENT']))
 				$httpUserAgent = null;
-			else 
+			else
 				$httpUserAgent = $_SERVER['HTTP_USER_AGENT'];
 				
 			$model->set('httpUserAgent', $httpUserAgent);
@@ -96,7 +96,7 @@
 					: null
 			)
 			.(
-				isset($_SESSION) ? 
+				isset($_SESSION) ?
 					"\n_SESSION=".var_export($_SESSION, true)
 					: null
 			);

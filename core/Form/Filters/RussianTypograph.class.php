@@ -61,7 +61,7 @@
 		private static $from = array(
 			'~\-{2,}~',							// --
 			'~([\w\pL\pP]+)\s+\-\s+~u',			// foo - bar
-			'~(\s)\s*~u',						// n -> 2 whitespaces to process short strings (bar to a foo)  
+			'~(\s)\s*~u',						// n -> 2 whitespaces to process short strings (bar to a foo)
 			'~([\s\pP]|^)([\w\pL]{1,2})\s~Uu',	// bar a foo | bar to a foo
 			'~(&nbsp;|\s)\s+~u',				// compress whitespaces
 			'~\"([^\s]*)\"~',					// "quote"

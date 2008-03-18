@@ -70,7 +70,7 @@
 				) {
 					$result[$prm->getName()] = $errors;
 					
-				} 
+				}
 			}
 			
 			return $result;
