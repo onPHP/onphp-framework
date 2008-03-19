@@ -10,8 +10,6 @@
 
 	* main/ProtoBuilders/: more builders.
 
-	* core/Form/Primitive.class.php: safeHtmlString().
-
 	* core/Form/Form.class.php, core/Form/PlainForm.class.php: added
 	ability to get inner values by path reference.
 

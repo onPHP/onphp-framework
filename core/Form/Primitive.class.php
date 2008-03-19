@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -50,7 +50,7 @@
 		{
 			return new PrimitiveFloat($name);
 		}
-
+		
 		/**
 		 * @return PrimitiveIdentifier
 		**/
@@ -74,7 +74,7 @@
 		{
 			return new PrimitiveIdentifierList($name);
 		}
-
+		
 		/**
 		 * @return PrimitiveEnumeration
 		**/
@@ -124,18 +124,6 @@
 		}
 		
 		/**
-		 * @return PrimitiveString
-		**/
-		public static function safeHtmlString($name)
-		{
-			$result = new PrimitiveString($name);
-			
-			$result->addDisplayFilter(Filter::htmlSpecialChars());
-			
-			return $result;
-		}
-		
-		/**
 		 * @return PrimitiveBinary
 		**/
 		public static function binary($name)
@@ -179,7 +167,7 @@
 		{
 			return new PrimitiveArray($name);
 		}
-
+		
 		/**
 		 * @return PrimitiveMultiList
 		**/
