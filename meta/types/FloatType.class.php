@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Nickolay G. Korolyov                       *
+ *   Copyright (C) 2006-2008 by Nickolay G. Korolyov                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -16,6 +16,26 @@
 	class FloatType extends IntegerType
 	{
 		protected $precision = 0;
+		
+		/**
+		 * @return FloatType
+		**/
+		public function setPrecision($precision)
+		{
+			$this->precision = $precision;
+			
+			return $this;
+		}
+		
+		public function getPrecision()
+		{
+			return $this->precision;
+		}
+		
+		public function isMeasurable()
+		{
+			return true;
+		}
 		
 		/**
 		 * @throws WrongArgumentException
