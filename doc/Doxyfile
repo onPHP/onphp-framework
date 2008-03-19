@@ -4,7 +4,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = onPHP
-PROJECT_NUMBER         = 1.0-dev
+PROJECT_NUMBER         = 1.1-dev
 OUTPUT_DIRECTORY       = ./doxy/trunk/
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
