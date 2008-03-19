@@ -221,7 +221,7 @@
 		
 		private function getXmlCdata($xml)
 		{
-			return "<![CDATA[\n".$xml.']]>';
+			return "<![CDATA[\n".$xml."\n]]>";
 		}
 		
 		/**
