@@ -15,8 +15,6 @@
 	**/
 	final class NumericType extends FloatType
 	{
-		private $precision = 0;
-		
 		/**
 		 * @return NumericType
 		**/

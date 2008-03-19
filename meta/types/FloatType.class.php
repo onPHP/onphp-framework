@@ -15,6 +15,8 @@
 	**/
 	class FloatType extends IntegerType
 	{
+		protected $precision = 0;
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return FloatType
