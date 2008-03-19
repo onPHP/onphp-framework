@@ -15,6 +15,8 @@
 	**/
 	class FloatType extends IntegerType
 	{
+		protected $precision = 0;
+		
 		public function getPrimitiveName()
 		{
 			return 'float';
