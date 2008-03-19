@@ -28,7 +28,10 @@
 			Assert::isInstance($result, 'Form');
 			
 			foreach ($this->getFormMapping() as $primitive) {
-				if ($result->primitiveExists($primitive->getName())) {
+				if (
+					$primitive instanceof PrimitiveForm
+					&& $result->primitiveExists($primitive->getName())
+				) {
 					
 					Assert::isEqual(
 						$primitive->getProto(),
