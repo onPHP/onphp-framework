@@ -111,7 +111,7 @@
 				} else
 					$objectProto = $object->dtoProto();
 				
-				if ($proto !== $objectProto) {
+				if (!ClassUtils::isInstanceOf($proto, $objectProto)) {
 					if (!$objectProto->isInstanceOf($proto))
 						throw new WrongArgumentException(
 							'target proto '.get_class($objectProto)
