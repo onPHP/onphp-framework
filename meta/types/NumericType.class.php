@@ -15,8 +15,6 @@
 	**/
 	final class NumericType extends FloatType
 	{
-		private $precision = 0;
-		
 		public function toColumnType()
 		{
 			return 'DataType::create(DataType::NUMERIC)';
