@@ -44,38 +44,6 @@
 			return array_merge($this->errors, $this->violated);
 		}
 		
-		public function getInnerErrors()
-		{
-			$result = $this->getErrors();
-			
-			foreach ($this->primitives as $prm) {
-				if (
-					$prm instanceof PrimitiveFormsList
-					&& $prm->getValue()
-				) {
-					$innerResult = array();
-					
-					foreach ($prm->getValue() as $id => $form) {
-						if ($errors = $form->getInnerErrors())
-							$innerResult[$id] = $errors;
-					}
-					
-					if ($innerResult)
-						$result[$prm->getName()] = $innerResult;
-					
-				} elseif (
-					$prm instanceof PrimitiveForm
-					&& $prm->getValue()
-					&& ($errors = $prm->getValue()->getInnerErrors())
-				) {
-					$result[$prm->getName()] = $errors;
-					
-				}
-			}
-			
-			return $result;
-		}
-		
 		/**
 		 * @return Form
 		**/
@@ -85,24 +53,6 @@
 			$this->violated	= array();
 			
 			return $this;
-		}
-		
-		public function getPrimitiveError($name)
-		{
-			if (!isset($this->errors[$name]))
-				return null;
-			
-			return $this->errors[$name];
-		}
-		
-		public function dropPrimitiveError($name)
-		{
-			if (!isset($this->errors[$name]))
-				throw new MissingElementException(
-					'"'.$name.'" does not contain errors'
-				);
-			
-			unset($this->errors[$name]);
 		}
 		
 		/**
@@ -241,24 +191,6 @@
 				return $this->describedLabels[$name][$this->errors[$name]];
 			else
 				return null;
-		}
-		
-		public function getInnerError($primitivePath)
-		{
-			return
-				$this->getInnerForm($primitivePath)->
-					getTextualErrorFor(
-						$this->getInnerName($primitivePath)
-					);
-		}
-		
-		public function getInnerErrorDescription($primitivePath)
-		{
-			return
-				$this->getInnerForm($primitivePath)->
-					getErrorDescriptionFor(
-						$this->getInnerName($primitivePath)
-					);
 		}
 		
 		/**

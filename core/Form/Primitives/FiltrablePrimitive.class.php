@@ -58,10 +58,7 @@
 			
 			return $this;
 		}
-	
-		/**
-		 * @deprecated by getFormValue
-		**/
+		
 		public function getDisplayValue()
 		{
 			if (is_array($value = $this->getActualValue())) {
@@ -72,13 +69,6 @@
 			}
 			
 			return $this->displayFilter->apply($value);
-		}
-		
-		public function getFormValue()
-		{
-			return $this->displayFilter->apply(
-				parent::getFormValue()
-			);
 		}
 		
 		/**

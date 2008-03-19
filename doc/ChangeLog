@@ -10,9 +10,6 @@
 
 	* main/ProtoBuilders/: more builders.
 
-	* core/Form/Form.class.php, core/Form/PlainForm.class.php: added
-	ability to get inner values by path reference.
-
 	* main/ProtoBuilders/: partial objects building ability, useful for
 	wizards.
 
@@ -27,9 +24,6 @@
 	* core/Form/Primitives/PrimitivePolymorphicIdentifier.class.php:
 	primitive for holding polymorphic values.
 
-	* core/Form/Form.class.php: getPrimitiveError() and
-	dropPrimitiveError() for custom errors handling.
-
 2008-03-07	Denis M. Gabaidulin
 
 	* main/UnifiedContainer/UnifiedContainer.class.php: dropList()
@@ -39,12 +33,6 @@
 
 	* core/Form/Primitives/PrimitiveDate.class.php: exportValue()
 	implemented.
-
-2008-03-04	Ivan Y. Khvostishkov
-
-	* core/Form/Form.class.php: some documentation.
-
-	* core/Form/Primitives/BasePrimitive.class.php: getFormValue() added.
 
 2008-03-04	Konstantin V. Arkhipov
 

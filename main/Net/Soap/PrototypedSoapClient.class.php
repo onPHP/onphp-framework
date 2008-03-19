@@ -121,8 +121,6 @@
 						validate($request, $form),
 					
 					Assert::dumpArgument($request)
-					."\n"
-					.Assert::dumpArgument($form->getInnerErrors())
 				);
 			}
 			
@@ -171,8 +169,6 @@
 					!$form->getErrors(),
 					
 					Assert::dumpArgument($resultDto)
-					."\n"
-					.Assert::dumpArgument($form->getInnerErrors())
 				);
 				
 				$result = $resultDto->makeObject($form);
@@ -186,8 +182,6 @@
 						validate($result, $form),
 						
 					Assert::dumpArgument($result)
-					."\n"
-					.Assert::dumpArgument($form->getInnerErrors())
 				);
 			}
 			

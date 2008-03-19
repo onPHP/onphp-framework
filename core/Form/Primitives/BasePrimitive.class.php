@@ -15,30 +15,6 @@
 	 * 
 	 * @ingroup Primitives
 	 * @ingroup Module
-	 * 
-	 * Some use cases:
-	 * 
-	 * - rawValue: scope value, as it passed to import()
-	 * 
-	 * - value: 1) object after successful import() or 2) preset
-	 * (hard-default) object for editing (meaning is determined by
-	 * isImported()). Comfortable for business logic.
-	 * 
-	 * - exported value: value, converted back to scope value, possible taking
-	 * into account import filters (see FiltrablePrimitive).
-	 * 
-	 * - formValue: either raw value or exported preset value, possible taking
-	 * into account display filters (see FiltrablePrimitive). Comfortable for
-	 * using in html forms.
-	 * 
-	 * - default: soft-default object, that may be used instead of value when
-	 * import fails (see getSafeValue()). Comfortable for business logic.
-	 * 
-	 * TODO:
-	 * 
-	 * - safe exported value: export(getSafeValue()). Comfortable for
-	 * soft scope correction with valid raw values.
-	 * 
 	**/
 	abstract class BasePrimitive
 	{
@@ -98,9 +74,6 @@
 			return $this->raw;
 		}
 		
-		/**
-		 * @deprecated by getFormValue
-		**/
 		public function getActualValue()
 		{
 			if (null !== $this->value)
@@ -119,18 +92,6 @@
 			return $this->default;
 		}
 		
-		public function getFormValue()
-		{
-			if (!$this->imported) {
-				if ($this->value === null)
-					return null;
-				
-				return $this->exportValue();
-			}
-			
-			return $this->raw;
-		}
-		
 		/**
 		 * @return BasePrimitive
 		**/
@@ -143,7 +104,7 @@
 		
 		/**
 		 * @return BasePrimitive
-		 * 
+		 *
 		 * usually, you should not use this method
 		**/
 		public function setRawValue($raw)
