@@ -1,5 +1,9 @@
 # $Id$
 
+2008-03-19	Ivan Y. Khvostishkov
+
+	* core/Form/Primitives/BasePrimitive.class.php: dropValue() added.
+
 2008-03-17	Ivan Y. Khvostishkov
 
 	* main/Flow/PartViewer.class.php: references to parent and root model

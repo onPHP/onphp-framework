@@ -28,10 +28,12 @@
 			
 			$primitive = $this->mapping[$name];
 			
-			$this->object->setValue(
-				$primitive->getName(),
-				$value
-			);
+			$method = ($value === null)
+				? 'dropValue'
+				: 'setValue';
+			
+			$this->object->get($primitive->getName())->
+				$method($value);
 			
 			return $this;
 		}
