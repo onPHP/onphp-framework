@@ -104,7 +104,7 @@
 		
 		/**
 		 * @return BasePrimitive
-		 *
+		 * 
 		 * usually, you should not use this method
 		**/
 		public function setRawValue($raw)
