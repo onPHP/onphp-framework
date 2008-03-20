@@ -1,5 +1,10 @@
 # $Id$
 
+2008-03-20	Ivan Y. Khvostishkov
+
+	* main/ProtoBuilders/FormExporter.class.php,
+	main/ProtoBuilders/FormToScopeExporter.class.php: new converters.
+
 2008-03-19	Ivan Y. Khvostishkov
 
 	* core/Form/Primitives/BasePrimitive.class.php: dropValue() added.
