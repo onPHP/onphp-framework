@@ -1232,7 +1232,7 @@ XML;
 			
 			$contents = str_replace(
 				'"meta.dtd"',
-				'"'.ONPHP_META_PATH.'dtd'.DIRECTORY_SEPARATOR.'meta.dtd"',
+				'"'.ONPHP_META_PATH.'dtd/meta.dtd"',
 				$contents
 			);
 			
