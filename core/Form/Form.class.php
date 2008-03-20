@@ -62,14 +62,19 @@
 					
 					if ($innerResult)
 						$result[$prm->getName()] = $innerResult;
+					else
+						unset($result[$prm->getName()]);
 					
 				} elseif (
 					$prm instanceof PrimitiveForm
 					&& $prm->getValue()
-					&& ($errors = $prm->getValue()->getInnerErrors())
 				) {
-					$result[$prm->getName()] = $errors;
+					$errors = $prm->getValue()->getInnerErrors();
 					
+					if ($errors)
+						$result[$prm->getName()] = $errors;
+					else
+						unset($result[$prm->getName()]);
 				}
 			}
 			
