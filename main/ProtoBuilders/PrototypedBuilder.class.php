@@ -192,8 +192,6 @@
 					
 					
 					if ($primitive instanceof PrimitiveForm) {
-						$proto = $primitive->getProto();
-						
 						if ($primitive instanceof PrimitiveFormsList) {
 							$value = $this->cloneInnerBuilder($id)->
 								makeList($value);
