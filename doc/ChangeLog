@@ -1,6 +1,6 @@
 # $Id$
 
-2007-12-21	Dmitry E. Demidov
+2008-03-21	Dmitry E. Demidov
 
 	* meta/types/BasePropertyType.class.php: added method getTypeName.
 	
