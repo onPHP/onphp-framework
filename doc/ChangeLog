@@ -2,6 +2,16 @@
 
 2008-03-20	Ivan Y. Khvostishkov
 
+	* main/Utils/ArrayUtils.class.php: mergeRecursiveUnique(),
+	flatToDimensional() helpers.
+	
+	* main/ProtoBuilders/, core/Form/: prototyped builders refactoring.
+
+	* core/Form/Primitives/PrimitiveForm.class.php: setComposite() method
+	to determine aggregation or composition of objects.
+
+2008-03-20	Ivan Y. Khvostishkov
+
 	* main/ProtoBuilders/FormExporter.class.php,
 	main/ProtoBuilders/FormToScopeExporter.class.php: new converters.
 
