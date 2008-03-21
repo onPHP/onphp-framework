@@ -17,6 +17,13 @@
 	{
 		protected $value = array();
 		
+		public function setComposite($composite = true)
+		{
+			throw new UnsupportedMethodException(
+				'composition is not supported for lists'
+			);
+		}
+		
 		public function import($scope)
 		{
 			if (!$this->proto)

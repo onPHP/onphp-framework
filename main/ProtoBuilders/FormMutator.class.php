@@ -10,30 +10,27 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class ObjectToFormImporter extends FormBuilder
+	abstract class FormMutator extends PrototypedSetter
 	{
-		/**
-		 * @return ObjectToFormConverter
-		**/
-		public static function create(DTOProto $proto)
+		private $getter = null;
+		
+		public function __construct(DTOProto $proto, &$object)
 		{
-			return new self($proto);
+			Assert::isInstance($object, 'Form');
+			
+			return parent::__construct($proto, $object);
 		}
 		
 		/**
-		 * @return ObjectGetter
-		**/
-		protected function getGetter($object)
+		 * @return FormGetter
+		 */
+		public function getGetter()
 		{
-			return new ObjectGetter($this->proto, $object);
-		}
-		
-		/**
-		 * @return FormSetter
-		**/
-		protected function getSetter(&$object)
-		{
-			return new FormImporter($this->proto, $object);
+			if (!$this->getter) {
+				$this->getter = new FormGetter($this->proto, $this->object);
+			}
+			
+			return $this->getter;
 		}
 	}
 ?>

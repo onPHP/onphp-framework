@@ -16,20 +16,5 @@
 		{
 			return $this->proto->createDto();
 		}
-		
-		protected function prepareOwn($result)
-		{
-			return $result;
-		}
-		
-		/**
-		 * @return DTOBuilder
-		**/
-		protected function preserveTypeLoss($result)
-		{
-			// data transfer object have a type itself
-			
-			return $this;
-		}
 	}
 ?>

@@ -107,7 +107,9 @@
 					$proto = $primitive->getProto();
 					
 					$childForm = $form->getValue($primitive->getName());
+					
 					$child = $getter->get($id);
+					
 					$previousChild = $previousGetter
 						? $previousGetter->get($id)
 						: null;
@@ -258,7 +260,7 @@
 		final public function fillObject(Form $form, $object)
 		{
 			return FormToObjectConverter::create($this)->
-				fillOwn($form, $object);
+				makeOwn($form, $object);
 		}
 		
 		final public function buildScope(DTOClass $dto)

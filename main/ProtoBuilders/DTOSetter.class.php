@@ -12,6 +12,8 @@
 
 	final class DTOSetter extends PrototypedSetter
 	{
+		private $getter = null;
+		
 		public function set($name, $value)
 		{
 			if (!isset($this->mapping[$name]))
@@ -91,6 +93,18 @@
 				);
 			
 			return $result;
+		}
+		
+		/**
+		 * @return DTOGetter
+		 */
+		public function getGetter()
+		{
+			if (!$this->getter) {
+				$this->getter = new DTOGetter($this->proto, $this->object);
+			}
+			
+			return $this->getter;
 		}
 	}
 ?>

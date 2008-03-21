@@ -12,6 +12,8 @@
 
 	final class ScopeSetter extends PrototypedSetter
 	{
+		private $getter = null;
+		
 		public function __construct(DTOProto $proto, &$object)
 		{
 			Assert::isArray($object);
@@ -33,6 +35,18 @@
 			$this->object[$primitive->getName()] =  $value;
 			
 			return $this;
+		}
+		
+		/**
+		 * @return ScopeGetter
+		 */
+		public function getGetter()
+		{
+			if (!$this->getter) {
+				$this->getter = new ScopeGetter($this->proto, $this->object);
+			}
+			
+			return $this->getter;
 		}
 	}
 ?>

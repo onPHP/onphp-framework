@@ -16,17 +16,5 @@
 		{
 			return $this->proto->createObject();
 		}
-		
-		protected function prepareOwn($result)
-		{
-			return $result;
-		}
-		
-		protected function preserveTypeLoss($result)
-		{
-			// business object have a type itself
-			
-			return $this;
-		}
 	}
 ?>

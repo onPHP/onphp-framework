@@ -25,20 +25,6 @@
 			return array();
 		}
 		
-		protected function prepareOwn($result)
-		{
-			return $result;
-		}
-		
-		/**
-		 * @return DTOToScopeConverter
-		**/
-		protected function preserveTypeLoss($result)
-		{
-			// NOTE: type loss here
-			return $this;
-		}
-		
 		/**
 		 * @return DTOGetter
 		**/

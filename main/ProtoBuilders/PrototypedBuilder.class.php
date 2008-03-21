@@ -17,7 +17,6 @@
 		private $limitedPropertiesList	= null;
 		
 		abstract protected function createEmpty();
-		abstract protected function prepareOwn($result);
 		
 		/**
 		 * @return PrototypedGetter
@@ -28,11 +27,6 @@
 		 * @return PrototypedSetter
 		**/
 		abstract protected function getSetter(&$object);
-		
-		/**
-		 * @return PrototypedBuilder
-		**/
-		abstract protected function preserveTypeLoss($result);
 		
 		public function __construct(DTOProto $proto)
 		{
@@ -111,7 +105,10 @@
 				} else
 					$objectProto = $object->dtoProto();
 				
-				if (!ClassUtils::isInstanceOf($proto, $objectProto)) {
+				if (
+					$objectProto
+					&& !ClassUtils::isInstanceOf($proto, $objectProto)
+				) {
 					if (!$objectProto->isInstanceOf($proto))
 						throw new WrongArgumentException(
 							'target proto '.get_class($objectProto)
@@ -144,22 +141,11 @@
 		public function upperMake($object, &$result)
 		{
 			if ($this->proto->baseProto()) {
-				$result =
-					$this->cloneBuilder(
-						$this->proto->baseProto()
-					)->
+				$this->cloneBuilder($this->proto->baseProto())->
 					upperMake($object, $result);
 			}
 			
 			return $this->makeOwn($object, $result);
-		}
-		
-		public function makeOwn($object, &$result)
-		{
-			$result = $this->prepareOwn($result);
-			$result = $this->fillOwn($object, $result);
-			
-			return $result;
 		}
 		
 		public function makeList($objectsList)
@@ -178,8 +164,26 @@
 			return $result;
 		}
 		
-		public function fillOwn($object, $result)
+		public function makeOwn($object, &$result)
 		{
+			return $this->fillOwn($object, $result);
+		}
+		
+		public function upperFill($object, &$result)
+		{
+			if ($this->proto->baseProto()) {
+				$this->cloneBuilder($this->proto->baseProto())->
+					upperFill($object, $result);
+			}
+			
+			return $this->fillOwn($object, $result);
+		}
+		
+		public function fillOwn($object, &$result)
+		{
+			if ($object === null)
+				return $result;
+			
 			$getter = $this->getGetter($object);
 			$setter = $this->getSetter($result);
 			
@@ -187,26 +191,37 @@
 				
 				$value = $getter->get($id);
 				
-				// NOTE: NULL means the lack of optional value
-				if ($primitive->isRequired() || $value !== null) {
+				if ($primitive instanceof PrimitiveFormsList) {
+						
+					$setter->set(
+						$id,
+						$this->cloneInnerBuilder($id)->
+							makeList($value)
+					);
 					
+				} elseif ($primitive instanceof PrimitiveForm) {
 					
-					if ($primitive instanceof PrimitiveForm) {
-						if ($primitive instanceof PrimitiveFormsList) {
-							$value = $this->cloneInnerBuilder($id)->
-								makeList($value);
-							
-						} else {
-							$value = $this->cloneInnerBuilder($id)->
-								make($value);
-						}
+					if (
+						$primitive->isComposite()
+						&& ($previousValue = $setter->getGetter()->get($id))
+					) {
+						
+						$this->cloneInnerBuilder($id)->
+							upperFill($value, $previousValue);
+						
+					} elseif ($value !== null || $primitive->isRequired()) {
+						
+						$setter->set(
+							$id,
+							$this->cloneInnerBuilder($id)->
+								make($value)
+						);
 					}
-					
+				
+				} else {
 					$setter->set($id, $value);
 				}
 			}
-			
-			$this->preserveTypeLoss($result);
 			
 			return $result;
 		}

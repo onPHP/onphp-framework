@@ -10,15 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class FormHardenedSetter extends PrototypedSetter
+	final class FormHardenedSetter extends FormMutator
 	{
-		public function __construct(DTOProto $proto, &$object)
-		{
-			Assert::isInstance($object, 'Form');
-			
-			return parent::__construct($proto, $object);
-		}
-		
 		public function set($name, $value)
 		{
 			if (!isset($this->mapping[$name]))

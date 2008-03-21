@@ -13,5 +13,12 @@
 	abstract class PrototypedGetter extends PrototypedMethodCaller
 	{
 		abstract public function get($name);
+		
+		public function getSetter()
+		{
+			throw new UnimplementedFeatureException(
+				'inverse operation is not defined yet'
+			);
+		}
 	}
 ?>

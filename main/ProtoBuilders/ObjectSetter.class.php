@@ -12,6 +12,8 @@
 
 	final class ObjectSetter extends PrototypedSetter
 	{
+		private $getter = null;
+		
 		public function set($name, $value)
 		{
 			$setter = 'set'.ucfirst($name);
@@ -31,6 +33,18 @@
 				);
 			
 			return $this->object->$method($value);
+		}
+		
+		/**
+		 * @return ObjectGetter
+		 */
+		public function getGetter()
+		{
+			if (!$this->getter) {
+				$this->getter = new ObjectGetter($this->proto, $this->object);
+			}
+			
+			return $this->getter;
 		}
 	}
 ?>
