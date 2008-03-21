@@ -18,20 +18,26 @@
 	**/
 	class LightMetaProperty implements Stringable
 	{
+		private static $derivedTypes = array(
+			'smallInteger' => 'integer',
+			'unsignedSmallInteger' => 'integer',
+			'unsignedInteger' => 'integer'
+		);
+		
 		private static $limits = array(
-			'SmallInteger' => array(
+			'smallInteger' => array(
 				PrimitiveInteger::SIGNED_SMALL_MIN,
-				PrimitiveInteger::SIGNED_SMALL_MAX
+				PrimitiveInteger::SIGNED_SMALL_MAX,
 			),
-			'UnsignedSmallInteger' => array(
+			'unsignedSmallInteger' => array(
 				0,
 				PrimitiveInteger::UNSIGNED_SMALL_MAX
 			),
-			'Integer' => array(
+			'integer' => array(
 				PrimitiveInteger::SIGNED_MIN,
 				PrimitiveInteger::SIGNED_MAX
 			),
-			'UnsignedInteger' => array(
+			'unsignedInteger' => array(
 				0,
 				PrimitiveInteger::UNSIGNED_MAX
 			)
@@ -172,7 +178,10 @@
 		
 		public function getType()
 		{
-			return $this->type;
+			return
+				!isset(self::$derivedTypes[$this->type])
+					? $this->type
+					: self::$derivedTypes[$this->type];
 		}
 		
 		public function isRequired()
@@ -289,7 +298,7 @@
 		{
 			$prm =
 				call_user_func(
-					array('Primitive', $this->type),
+					array('Primitive', $this->getType()),
 					$prefix.$this->name
 				);
 			

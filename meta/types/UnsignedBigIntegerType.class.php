@@ -15,6 +15,11 @@
 	**/
 	final class UnsignedBigIntegerType extends BigIntegerType
 	{
+		public function getTypeName()
+		{
+			return 'unsignedInteger';
+		}
+		
 		public function toColumnType()
 		{
 			return
