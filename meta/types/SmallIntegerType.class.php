@@ -15,11 +15,6 @@
 	**/
 	class SmallIntegerType extends IntegerType
 	{
-		public function getTypeName()
-		{
-			return 'smallInteger';
-		}
-		
 		public function toColumnType()
 		{
 			return 'DataType::create(DataType::SMALLINT)';

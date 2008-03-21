@@ -1,13 +1,5 @@
 # $Id$
 
-2008-03-21	Dmitry E. Demidov
-
-	* meta/types/BasePropertyType.class.php: added method getTypeName.
-	
-	* main/Base/LightMetaProperty.class.php: fix problem with correct
-	set min and max for UnsignedSmallInteger, SmallInteger,
-	UnsignedBigInteger, UnsignedInteger types
-
 2008-03-20	Ivan Y. Khvostishkov
 
 	* main/ProtoBuilders/FormExporter.class.php,

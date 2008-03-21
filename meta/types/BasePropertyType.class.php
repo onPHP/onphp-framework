@@ -18,7 +18,6 @@
 		abstract public function getDeclaration();
 		abstract public function isMeasurable();
 		abstract public function toColumnType();
-		abstract public function getPrimitiveName();
 		
 		protected $default = null;
 		
@@ -123,11 +122,6 @@ EOT;
 		public function getHint()
 		{
 			return null;
-		}
-		
-		public function getTypeName()
-		{
-			return $this->getPrimitiveName();
 		}
 	}
 ?>

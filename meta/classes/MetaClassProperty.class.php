@@ -317,13 +317,13 @@
 				|| ($this->getRelationId() == MetaRelation::MANY_TO_MANY)
 			) {
 				// collections
-				$type = 'identifierList';
+				$primitiveName = 'identifierList';
 			} elseif ($this->isIdentifier()) {
 				if ($this->getType() instanceof IntegerType) {
-					$type = 'identifier';
+					$primitiveName = 'identifier';
 					$className = $holder->getName();
 				} else
-					$type = $this->getType()->getTypeName();
+					$primitiveName = $this->getType()->getPrimitiveName();
 			} elseif (
 				!$this->isIdentifier()
 				&& (
@@ -335,9 +335,9 @@
 					)
 				)
 			) {
-				$type = 'enumeration';
+				$primitiveName = 'enumeration';
 			} else
-				$type = $this->getType()->getTypeName();
+				$primitiveName = $this->getType()->getPrimitiveName();
 			
 			$inner = false;
 			
@@ -379,7 +379,7 @@
 						$this->getName() <> $this->getRelationColumnName()
 							? $this->getRelationColumnName()
 							: null,
-						$type,
+						$primitiveName,
 						$className,
 						$this->getType()->isMeasurable()
 							? $this->size
