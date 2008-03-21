@@ -15,6 +15,11 @@
 	**/
 	final class UnsignedIntegerType extends IntegerType
 	{
+		public function getTypeName()
+		{
+			return 'unsignedInteger';
+		}
+		
 		public function toColumnType()
 		{
 			return

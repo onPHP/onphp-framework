@@ -15,6 +15,11 @@
 	**/
 	final class UnsignedSmallIntegerType extends SmallIntegerType
 	{
+		public function getTypeName()
+		{
+			return 'unsignedSmallInteger';
+		}
+		
 		public function toColumnType()
 		{
 			return
