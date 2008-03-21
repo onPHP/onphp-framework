@@ -15,18 +15,20 @@
 	**/
 	final class PrimitiveInet extends BasePrimitive
 	{
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
-			if (!BasePrimitive::import($scope))
+			if (!BasePrimitive::import($scope, $prefix))
 				return null;
 			
+			$name = $this->getActualName($prefix);
+			
 			if (
-				is_string($scope[$this->name])
-				&& (($length = strlen($scope[$this->name])) < 16)
-				&& (substr_count($scope[$this->name], '.', null, $length) == 3)
-				&& long2ip(ip2long($scope[$this->name]))
+				is_string($scope[$name])
+				&& (($length = strlen($scope[$name])) < 16)
+				&& (substr_count($scope[$name], '.', null, $length) == 3)
+				&& long2ip(ip2long($scope[$name]))
 			) {
-				$this->value = $scope[$this->name];
+				$this->value = $scope[$name];
 				
 				return true;
 			}

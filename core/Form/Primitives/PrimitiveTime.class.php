@@ -26,7 +26,7 @@
 		public function setValue(/* Time */ $time)
 		{
 			Assert::isTrue($time instanceof Time);
-
+			
 			$this->value = $time;
 			
 			return $this;
@@ -71,13 +71,15 @@
 			return $this;
 		}
 		
-		public function importSingle($scope)
+		public function importSingle($scope, $prefix = null)
 		{
-			if (!BasePrimitive::import($scope))
+			if (!BasePrimitive::import($scope, $prefix))
 				return null;
 			
+			$name = $this->getActualName($prefix);
+			
 			try {
-				$time = new Time($scope[$this->name]);
+				$time = new Time($scope[$name]);
 			} catch (WrongArgumentException $e) {
 				return false;
 			}
@@ -91,30 +93,34 @@
 			return false;
 		}
 		
-		public function isEmpty($scope)
+		public function isEmpty($scope, $prefix = null)
 		{
-			if ($this->getState()->isFalse())
-				return $this->isMarriedEmpty($scope);
+			$name = $this->getActualName($prefix);
 			
-			return empty($scope[$this->name]);
+			if ($this->getState()->isFalse())
+				return $this->isMarriedEmpty($scope, $prefix);
+			
+			return empty($scope[$name]);
 		}
 		
-		public function importMarried($scope)
+		public function importMarried($scope, $prefix = null)
 		{
-			if (!$this->isMarriedEmpty($scope)) {
-				$this->raw = $scope[$this->name];
+			if (!$this->isMarriedEmpty($scope, $prefix)) {
+				$name = $this->getActualName($prefix);
+				
+				$this->raw = $scope[$name];
 				$this->imported = true;
 				
 				$hours = $minutes = $seconds = 0;
 				
-				if (isset($scope[$this->name][self::HOURS]))
-					$hours = (int) $scope[$this->name][self::HOURS];
-
-				if (isset($scope[$this->name][self::MINUTES]))
-					$minutes = (int) $scope[$this->name][self::MINUTES];
-
-				if (isset($scope[$this->name][self::SECONDS]))
-					$seconds = (int) $scope[$this->name][self::SECONDS];
+				if (isset($scope[$name][self::HOURS]))
+					$hours = (int) $scope[$name][self::HOURS];
+				
+				if (isset($scope[$name][self::MINUTES]))
+					$minutes = (int) $scope[$name][self::MINUTES];
+				
+				if (isset($scope[$name][self::SECONDS]))
+					$seconds = (int) $scope[$name][self::SECONDS];
 				
 				try {
 					$time = new Time($hours.':'.$minutes.':'.$seconds);
@@ -132,15 +138,15 @@
 			return false;
 		}
 		
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
 			if ($this->isEmpty($scope)) {
 				$this->value = null;
 				$this->raw = null;
 				return null;
 			}
-
-			return parent::import($scope);
+			
+			return parent::import($scope, $prefix);
 		}
 		
 		public function importValue($value)
@@ -156,13 +162,15 @@
 				);
 		}
 		
-		private function isMarriedEmpty($scope)
+		private function isMarriedEmpty($scope, $prefix)
 		{
-			return empty($scope[$this->name][self::HOURS])
-				|| empty($scope[$this->name][self::MINUTES])
-				|| empty($scope[$this->name][self::SECONDS]);
+			$name = $this->getActualName($prefix);
+			
+			return empty($scope[$name][self::HOURS])
+				|| empty($scope[$name][self::MINUTES])
+				|| empty($scope[$name][self::SECONDS]);
 		}
-
+		
 		private function checkLimits(Time $time)
 		{
 			return

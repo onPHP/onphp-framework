@@ -75,25 +75,25 @@
 		}
 
 		// implement me, child :-)
-		abstract protected function importSingle($scope);
-		abstract protected function importMarried($scope);
+		abstract protected function importSingle($scope, $prefix = null);
+		abstract protected function importMarried($scope, $prefix = null);
 
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
-			if (!BasePrimitive::import($scope))
+			if (!BasePrimitive::import($scope, $prefix))
 				return null;
 			
 			if ($this->single->isTrue())
-				return $this->importSingle($scope);
+				return $this->importSingle($scope, $prefix);
 			elseif ($this->single->isFalse())
-				return $this->importMarried($scope);
+				return $this->importMarried($scope, $prefix);
 			else {
-				if (!$this->importMarried($scope))
-					return $this->importSingle($scope);
-
+				if (!$this->importMarried($scope, $prefix))
+					return $this->importSingle($scope, $prefix);
+				
 				return true;
 			}
-
+			
 			Assert::isUnreachable();
 		}
 		

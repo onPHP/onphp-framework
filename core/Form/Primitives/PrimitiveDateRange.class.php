@@ -73,11 +73,13 @@
 			}
 		}
 		
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
-			if (parent::import($scope)) {
+			if (parent::import($scope, $prefix)) {
+				$name = $this->getActualName($prefix);
+				
 				try {
-					$range = DateRangeList::makeRange($scope[$this->name]);
+					$range = DateRangeList::makeRange($scope[$name]);
 				} catch (WrongArgumentException $e) {
 					return false;
 				}

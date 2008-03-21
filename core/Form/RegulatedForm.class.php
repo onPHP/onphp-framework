@@ -20,7 +20,7 @@
 	{
 		protected $rules		= array(); // forever
 		protected $violated		= array(); // rules
-
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return Form

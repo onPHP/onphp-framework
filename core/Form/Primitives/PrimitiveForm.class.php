@@ -78,10 +78,10 @@
 		**/
 		public function importValue($value)
 		{
-			if ($value !== null)
-				Assert::isTrue($value instanceof Form);
-			else
+			if ($value === null)
 				return $this->value = null;
+			
+			Assert::isTrue($value instanceof Form);
 			
 			$this->value = $value;
 			
@@ -96,27 +96,29 @@
 			return $this->value->export();
 		}
 		
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
-			return $this->actualImport($scope, true);
+			return $this->actualImport($scope, true, $prefix);
 		}
 		
-		public function unfilteredImport($scope)
+		public function unfilteredImport($scope, $prefix = null)
 		{
-			return $this->actualImport($scope, false);
+			return $this->actualImport($scope, false, $prefix);
 		}
 		
-		private function actualImport($scope, $importFiltering)
+		private function actualImport($scope, $importFiltering, $prefix = null)
 		{
+			$name = $this->getActualName($prefix);
+			
 			if (!$this->proto)
 				throw new WrongStateException(
-					"no proto defined for PrimitiveForm '{$this->name}'"
+					"no proto defined for PrimitiveForm '{$name}'"
 				);
 			
-			if (!isset($scope[$this->name]))
+			if (!isset($scope[$name]))
 				return null;
 			
-			$this->rawValue = $scope[$this->name];
+			$this->rawValue = $scope[$name];
 			
 			$this->value = $this->proto->makeForm();
 			
@@ -130,7 +132,7 @@
 			}
 			
 			$this->imported = true;
-				
+			
 			if ($this->value->getErrors())
 				return false;
 			

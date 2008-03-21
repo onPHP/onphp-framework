@@ -15,12 +15,11 @@
 	**/
 	final class PrimitiveBoolean extends BasePrimitive
 	{
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
-			if (isset($scope[$this->name]))
-				$this->value = true;
-			else
-				$this->value = false;
+			$name = $this->getActualName($prefix);
+			
+			$this->value = isset($scope[$name]);
 			
 			return $this->imported = true;
 		}

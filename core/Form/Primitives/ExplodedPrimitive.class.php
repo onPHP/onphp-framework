@@ -45,9 +45,9 @@
 			return $this->splitByRegexp;
 		}
 		
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
-			if (!$result = parent::import($scope))
+			if (!$result = parent::import($scope, $prefix))
 				return $result;
 			
 			if (

@@ -20,7 +20,7 @@
 	{
 		private $importFilter	= null;
 		private $displayFilter 	= null;
-
+		
 		public function __construct($name)
 		{
 			parent::__construct($name);
@@ -28,7 +28,7 @@
 			$this->displayFilter = new FilterChain();
 			$this->importFilter = new FilterChain();
 		}
-
+		
 		/**
 		 * @return FiltrablePrimitive
 		**/
@@ -48,7 +48,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return FiltrablePrimitive
 		**/
@@ -90,7 +90,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return FiltrablePrimitive
 		**/
@@ -108,7 +108,7 @@
 		{
 			return $this->importFilter;
 		}
-
+		
 		/**
 		 * @return FilterChain
 		**/
@@ -116,7 +116,7 @@
 		{
 			return $this->displayFilter;
 		}
-
+		
 		/**
 		 * @return FiltrablePrimitive
 		**/
@@ -127,7 +127,7 @@
 					$value = $this->importFilter->apply($value);
 			else
 				$this->value = $this->importFilter->apply($this->value);
-
+			
 			return $this;
 		}
 	}

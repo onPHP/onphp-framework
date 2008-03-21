@@ -18,7 +18,7 @@
 		const DAY		= 'day';
 		const MONTH		= 'month';
 		const YEAR		= 'year';
-
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return PrimitiveDate
@@ -26,7 +26,7 @@
 		public function setValue(/* Date */ $object)
 		{
 			$this->checkType($object);
-
+			
 			$this->value = $object;
 			
 			return $this;
@@ -71,18 +71,20 @@
 			return $this;
 		}
 		
-		public function importSingle($scope)
+		public function importSingle($scope, $prefix = null)
 		{
+			$name = $this->getActualName($prefix);
+			
 			if (
-				BasePrimitive::import($scope)
+				BasePrimitive::import($scope, $prefix)
 				&& (
-					is_string($scope[$this->name])
-					|| is_numeric($scope[$this->name])
+					is_string($scope[$name])
+					|| is_numeric($scope[$name])
 				)
 			) {
 				try {
 					$class = $this->getObjectName();
-					$ts = new $class($scope[$this->name]);
+					$ts = new $class($scope[$name]);
 				} catch (WrongArgumentException $e) {
 					return false;
 				}
@@ -95,34 +97,38 @@
 			
 			return false;
 		}
-
-		public function isEmpty($scope)
+		
+		public function isEmpty($scope, $prefix = null)
 		{
+			$name = $this->getActualName($prefix);
+			
 			if ($this->getState()->isFalse()) {
-				return empty($scope[$this->name][self::DAY])
-					&& empty($scope[$this->name][self::MONTH])
-					&& empty($scope[$this->name][self::YEAR]);
+				return empty($scope[$name][self::DAY])
+					&& empty($scope[$name][self::MONTH])
+					&& empty($scope[$name][self::YEAR]);
 			} else
-				return empty($scope[$this->name]);
+				return empty($scope[$name]);
 		}
 		
-		public function importMarried($scope)
+		public function importMarried($scope, $prefix = null)
 		{
+			$name = $this->getActualName($prefix);
+			
 			if (
-				BasePrimitive::import($scope)
+				BasePrimitive::import($scope, $prefix)
 				&& isset(
-					$scope[$this->name][self::DAY],
-					$scope[$this->name][self::MONTH],
-					$scope[$this->name][self::YEAR]
+					$scope[$name][self::DAY],
+					$scope[$name][self::MONTH],
+					$scope[$name][self::YEAR]
 				)
-				&& is_array($scope[$this->name])
+				&& is_array($scope[$name])
 			) {
-				if ($this->isEmpty($scope))
+				if ($this->isEmpty($scope, $prefix))
 					return !$this->isRequired();
-
-				$year = (int) $scope[$this->name][self::YEAR];
-				$month = (int) $scope[$this->name][self::MONTH];
-				$day = (int) $scope[$this->name][self::DAY];
+				
+				$year = (int) $scope[$name][self::YEAR];
+				$month = (int) $scope[$name][self::MONTH];
+				$day = (int) $scope[$name][self::DAY];
 				
 				if (!checkdate($month, $day, $year))
 					return false;
@@ -141,7 +147,7 @@
 					return true;
 				}
 			}
-
+			
 			return false;
 		}
 		

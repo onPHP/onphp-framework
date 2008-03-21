@@ -15,19 +15,21 @@
 	**/
 	final class DateRangeList extends BasePrimitive implements Stringable
 	{
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
+			$name = $this->getActualName($prefix);
+			
 			if (
-				empty($scope[$this->name])
-				|| !is_array($scope[$this->name])
+				empty($scope[$name])
+				|| !is_array($scope[$name])
 				|| (
-					count($scope[$this->name]) == 1
-					&& !current($scope[$this->name])
+					count($scope[$name]) == 1
+					&& !current($scope[$name])
 				)
 			)
 				return null;
 			
-			$this->raw = $scope[$this->name];
+			$this->raw = $scope[$name];
 			$this->imported = true;
 			$list = array();
 			

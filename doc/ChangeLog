@@ -7,6 +7,8 @@
 	* main/Base/LightMetaProperty.class.php: fix problem with correct
 	set min and max for UnsignedSmallInteger, SmallInteger,
 	UnsignedBigInteger, UnsignedInteger types
+	
+	* core/Form/: added prefix for form
 
 2008-03-17	Ivan Y. Khvostishkov
 

@@ -31,12 +31,14 @@
 			return $this;
 		}
 		
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
-			if (!BasePrimitive::import($scope))
+			if (!BasePrimitive::import($scope, $prefix))
 				return null;
 			
-			$this->value = (string) $scope[$this->name];
+			$name = $this->getActualName($prefix);
+			
+			$this->value = (string) $scope[$name];
 			
 			$this->selfFilter();
 			

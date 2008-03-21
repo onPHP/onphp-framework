@@ -38,12 +38,14 @@
 			return $this;
 		}
 		
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
-			if (isset($scope[$this->name])) {
-				if ($this->trueValue == $scope[$this->name])
+			$name = $this->getActualName($prefix);
+			
+			if (isset($scope[$name])) {
+				if ($this->trueValue == $scope[$name])
 					$this->value = true;
-				elseif ($this->falseValue == $scope[$this->name])
+				elseif ($this->falseValue == $scope[$name])
 					$this->value = false;
 				else
 					return false;
@@ -53,7 +55,7 @@
 				return null;
 			}
 			
-			$this->raw = $scope[$this->name];
+			$this->raw = $scope[$name];
 			
 			return $this->imported = true;
 		}

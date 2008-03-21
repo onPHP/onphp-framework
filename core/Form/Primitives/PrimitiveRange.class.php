@@ -28,9 +28,9 @@
 				$range instanceof Range,
 				'only ranges accepted today'
 			);
-
+			
 			$this->value = $range;
-
+			
 			return $this;
 		}
 		
@@ -66,13 +66,15 @@
 			return null;
 		}
 		
-		public function importSingle($scope)
+		public function importSingle($scope, $prefix = null)
 		{
-			if (!BasePrimitive::import($scope) || is_array($scope[$this->name]))
+			$name = $this->getActualName($prefix);
+			
+			if (!BasePrimitive::import($scope, $prefix) || is_array($scope[$name]))
 				return null;
 			
-			if (isset($scope[$this->name]) && is_string($scope[$this->name])) {
-				$array = explode('-', $scope[$this->name], 2);
+			if (isset($scope[$name]) && is_string($scope[$name])) {
+				$array = explode('-', $scope[$name], 2);
 				
 				$range =
 					Range::lazyCreate(
@@ -92,19 +94,21 @@
 			
 			return false;
 		}
-
-		public function importMarried($scope) // ;-)
+		
+		public function importMarried($scope, $prefix = null) // ;-)
 		{
+			$name = $this->getActualName($prefix);
+			
 			if (
-				($this->safeGet($scope, $this->name, self::MIN) === null)
-				&& ($this->safeGet($scope, $this->name, self::MAX) === null)
+				($this->safeGet($scope, $name, self::MIN) === null)
+				&& ($this->safeGet($scope, $name, self::MAX) === null)
 			)
 				return null;
 			
 			$range =
 				Range::lazyCreate(
-					$this->safeGet($scope, $this->name, self::MIN),
-					$this->safeGet($scope, $this->name, self::MAX)
+					$this->safeGet($scope, $name, self::MIN),
+					$this->safeGet($scope, $name, self::MAX)
 				);
 			
 			if (
@@ -112,7 +116,7 @@
 				&& $this->checkLimits($range)
 			) {
 				$this->value = $range;
-				$this->raw = $scope[$this->name];
+				$this->raw = $scope[$name];
 				
 				return $this->imported = true;
 			}
@@ -137,7 +141,7 @@
 			
 			return false;
 		}
-
+		
 		private function safeGet($scope, $firstDimension, $secondDimension)
 		{
 			if (isset($scope[$firstDimension]) && is_array($scope[$firstDimension])) {
@@ -148,7 +152,7 @@
 					return $scope[$firstDimension][$secondDimension];
 				}
 			}
-
+			
 			return null;
 		}
 	}

@@ -18,17 +18,19 @@
 	**/
 	abstract class BasePrimitive
 	{
+		const	DELIMITER	= '.';
+		
 		protected $name		= null;
 		protected $default	= null;
 		protected $value	= null;
-
+		
 		protected $required	= false;
 		protected $imported	= false;
-
+		
 		protected $raw		= null;
 		
 		protected $customError	= null;
-
+		
 		public function __construct($name)
 		{
 			$this->name = $name;
@@ -37,6 +39,14 @@
 		public function getName()
 		{
 			return $this->name;
+		}
+		
+		public function getActualName($prefix = null)
+		{
+			return
+				$prefix
+					? $prefix.self::DELIMITER.$this->name
+					: $this->name;
 		}
 		
 		/**
@@ -48,7 +58,7 @@
 			
 			return $this;
 		}
-
+		
 		public function getDefault()
 		{
 			return $this->default;
@@ -181,16 +191,18 @@
 			return $this->customError;
 		}
 		
-		protected function import($scope)
+		protected function import($scope, $prefix = null)
 		{
+			$name = $this->getActualName($prefix);
+			
 			if (
-				!empty($scope[$this->name])
+				!empty($scope[$name])
 				|| (
-					isset($scope[$this->name])
-					&& $scope[$this->name] !== ''
+					isset($scope[$name])
+					&& $scope[$name] !== ''
 				)
 			) {
-				$this->raw = $scope[$this->name];
+				$this->raw = $scope[$name];
 				
 				return $this->imported = true;
 			}

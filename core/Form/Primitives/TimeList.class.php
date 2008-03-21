@@ -15,18 +15,20 @@
 	**/
 	final class TimeList extends BasePrimitive
 	{
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
+			$name = $this->getActualName($prefix);
+			
 			if (
-				empty($scope[$this->name])
-				|| !is_array($scope[$this->name])
+				empty($scope[$name])
+				|| !is_array($scope[$name])
 			)
 				return null;
 			
-			$this->raw = $scope[$this->name];
+			$this->raw = $scope[$name];
 			$this->imported = true;
 			
-			$array = $scope[$this->name];
+			$array = $scope[$name];
 			$list = array();
 			
 			foreach ($array as $string) {

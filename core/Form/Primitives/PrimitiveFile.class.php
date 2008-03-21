@@ -97,20 +97,22 @@
 				);
 		}
 		
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
+			$name = $this->getActualName($prefix);
+			
 			if (
-				!BasePrimitive::import($scope)
-				|| !is_array($scope[$this->name])
+				!BasePrimitive::import($scope, $prefix)
+				|| !is_array($scope[$name])
 				|| (
-					isset($scope[$this->name], $scope[$this->name]['error'])
-					&& $scope[$this->name]['error'] == UPLOAD_ERR_NO_FILE
+					isset($scope[$name], $scope[$name]['error'])
+					&& $scope[$name]['error'] == UPLOAD_ERR_NO_FILE
 				)
 			)
 				return null;
 			
-			if (isset($scope[$this->name]['tmp_name']))
-				$file = $scope[$this->name]['tmp_name'];
+			if (isset($scope[$name]['tmp_name']))
+				$file = $scope[$name]['tmp_name'];
 			else
 				return false;
 				
@@ -119,18 +121,18 @@
 			else
 				return false;
 			
-			$this->mimeType = $scope[$this->name]['type'];
+			$this->mimeType = $scope[$name]['type'];
 			
 			if (!$this->isAllowedMimeType())
 				return false;
 			
 			if (
-				isset($scope[$this->name])
+				isset($scope[$name])
 				&& !($this->max && ($size > $this->max))
 				&& !($this->min && ($size < $this->min))
 			) {
-				$this->value = $scope[$this->name]['tmp_name'];
-				$this->originalName = $scope[$this->name]['name'];
+				$this->value = $scope[$name]['tmp_name'];
+				$this->originalName = $scope[$name]['name'];
 				
 				return true;
 			}

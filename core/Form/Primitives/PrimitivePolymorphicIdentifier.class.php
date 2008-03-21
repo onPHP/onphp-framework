@@ -86,10 +86,12 @@
 			);
 		}
 		
-		public function import($scope)
+		public function import($scope, $prefix = null)
 		{
-			if (isset($scope[$this->name]) && $scope[$this->name]) {
-				$this->raw = $scope[$this->name];
+			$name = $this->getActualName($prefix);
+			
+			if (isset($scope[$name]) && $scope[$name]) {
+				$this->raw = $scope[$name];
 				
 				try {
 					
@@ -111,14 +113,14 @@
 				
 				parent::of($class);
 				
-				$scope[$this->name] = $id;
+				$scope[$name] = $id;
 				
 			} else {
 				// we need some class in any case
 				parent::of($this->baseClassName);
 			}
 			
-			return parent::import($scope);
+			return parent::import($scope, $prefix);
 		}
 	}
 ?>
