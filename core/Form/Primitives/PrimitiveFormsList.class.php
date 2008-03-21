@@ -17,30 +17,28 @@
 	{
 		protected $value = array();
 		
-		public function import($scope, $prefix = null)
+		public function import($scope)
 		{
-			$name = $this->getActualName($prefix);
-			
 			if (!$this->proto)
 				throw new WrongStateException(
-					"no proto defined for PrimitiveFormsList '{$name}'"
+					"no proto defined for PrimitiveFormsList '{$this->name}'"
 				);
 			
-			if (!isset($scope[$name]))
+			if (!isset($scope[$this->name]))
 				return null;
 			
-			$this->rawValue = $scope[$name];
+			$this->rawValue = $scope[$this->name];
 			
 			$this->imported = true;
-			
-			if (!is_array($scope[$name]))
+				
+			if (!is_array($scope[$this->name]))
 				return false;
 			
 			$error = false;
 			
 			$this->value = array();
 			
-			foreach ($scope[$name] as $id => $value) {
+			foreach ($scope[$this->name] as $id => $value) {
 				$this->value[$id] =
 					$this->proto->makeForm()->
 						import($value);

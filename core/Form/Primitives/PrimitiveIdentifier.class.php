@@ -102,22 +102,20 @@
 			return parent::importValue(null);
 		}
 		
-		public function import($scope, $prefix = null)
+		public function import($scope)
 		{
-			$name = $this->getActualName($prefix);
-			
 			if (!$this->className)
 				throw new WrongStateException(
-					"no class defined for PrimitiveIdentifier '{$name}'"
+					"no class defined for PrimitiveIdentifier '{$this->name}'"
 				);
 			
 			$className = $this->className;
 			
 			if (
-				isset($scope[$name])
-				&& $scope[$name] instanceof $className
+				isset($scope[$this->name])
+				&& $scope[$this->name] instanceof $className
 			) {
-				$value = $scope[$name];
+				$value = $scope[$this->name];
 				
 				$this->raw = $value->getId();
 				$this->setValue($value);
@@ -125,7 +123,7 @@
 				return $this->imported = true;
 			}
 			
-			$result = parent::import($scope, $prefix);
+			$result = parent::import($scope);
 			
 			if ($result === true) {
 				try {

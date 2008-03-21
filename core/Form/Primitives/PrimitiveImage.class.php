@@ -95,9 +95,9 @@
 			return $this;
 		}
 		
-		public function import($scope, $prefix = null)
+		public function import($scope)
 		{
-			if (!$result = parent::import($scope, $prefix))
+			if (!$result = parent::import($scope))
 				return $result;
 			
 			try {

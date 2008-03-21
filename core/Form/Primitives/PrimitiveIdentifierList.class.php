@@ -65,22 +65,20 @@
 			return parent::importValue($value);
 		}
 		
-		public function import($scope, $prefix = null)
+		public function import($scope)
 		{
-			$name = $this->getActualName($prefix);
-			
 			if (!$this->className)
 				throw new WrongStateException(
-					"no class defined for PrimitiveIdentifierList '{$name}'"
+					"no class defined for PrimitiveIdentifierList '{$this->name}'"
 				);
 			
-			if (!BasePrimitive::import($scope, $prefix))
+			if (!BasePrimitive::import($scope))
 				return null;
 			
-			if (!is_array($scope[$name]))
+			if (!is_array($scope[$this->name]))
 				return false;
 			
-			$list = array_unique($scope[$name]);
+			$list = array_unique($scope[$this->name]);
 			
 			$values = array();
 			

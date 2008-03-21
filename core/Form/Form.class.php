@@ -31,21 +31,12 @@
 		
 		private $importFiltering	= true;
 		
-		private $prefix				= null;
-		
 		/**
 		 * @return Form
 		**/
 		public static function create()
 		{
 			return new self;
-		}
-		
-		public function setPrefix($prefix)
-		{
-			$this->prefix = $prefix;
-			
-			return $this;
 		}
 		
 		public function getErrors()
@@ -359,7 +350,7 @@
 					
 					$result = $this->checkImportResult(
 						$prm,
-						$prm->import($scope, $this->prefix)
+						$prm->import($scope)
 					);
 					
 					$prm->setImportFilter($chain);
@@ -369,14 +360,12 @@
 				} elseif ($prm instanceof PrimitiveForm) {
 					return $this->checkImportResult(
 						$prm,
-						$prm->unfilteredImport($scope, $this->prefix)
+						$prm->unfilteredImport($scope)
 					);
 				}
 			}
 			
-			return $this->checkImportResult(
-				$prm, $prm->import($scope, $this->prefix)
-			);
+			return $this->checkImportResult($prm, $prm->import($scope));
 		}
 		
 		/**

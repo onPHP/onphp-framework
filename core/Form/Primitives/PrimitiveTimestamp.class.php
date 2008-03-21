@@ -19,36 +19,34 @@
 		const MINUTES	= 'min';
 		const SECONDS	= 'sec';
 		
-		public function importMarried($scope, $prefix = null)
+		public function importMarried($scope)
 		{
-			$name = $this->getActualName($prefix);
-			
 			if (
-				BasePrimitive::import($scope, $prefix)
+				BasePrimitive::import($scope)
 				&& isset(
-					$scope[$name][self::DAY],
-					$scope[$name][self::MONTH],
-					$scope[$name][self::YEAR]
+					$scope[$this->name][self::DAY],
+					$scope[$this->name][self::MONTH],
+					$scope[$this->name][self::YEAR]
 				)
-				&& is_array($scope[$name])
+				&& is_array($scope[$this->name])
 			) {
-				if ($this->isEmpty($scope, $prefix))
+				if ($this->isEmpty($scope))
 					return !$this->isRequired();
 				
 				$hours = $minutes = $seconds = 0;
 				
-				if (isset($scope[$name][self::HOURS]))
-					$hours = (int) $scope[$name][self::HOURS];
+				if (isset($scope[$this->name][self::HOURS]))
+					$hours = (int) $scope[$this->name][self::HOURS];
 				
-				if (isset($scope[$name][self::MINUTES]))
-					$minutes = (int) $scope[$name][self::MINUTES];
+				if (isset($scope[$this->name][self::MINUTES]))
+					$minutes = (int) $scope[$this->name][self::MINUTES];
 				
-				if (isset($scope[$name][self::SECONDS]))
-					$seconds = (int) $scope[$name][self::SECONDS];
+				if (isset($scope[$this->name][self::SECONDS]))
+					$seconds = (int) $scope[$this->name][self::SECONDS];
 				
-				$year = (int) $scope[$name][self::YEAR];
-				$month = (int) $scope[$name][self::MONTH];
-				$day = (int) $scope[$name][self::DAY];
+				$year = (int) $scope[$this->name][self::YEAR];
+				$month = (int) $scope[$this->name][self::MONTH];
+				$day = (int) $scope[$this->name][self::DAY];
 				
 				if (!checkdate($month, $day, $year))
 					return false;

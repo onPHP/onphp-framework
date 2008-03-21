@@ -63,16 +63,14 @@
 			return $this->import(array($this->getName() => $value->getId()));
 		}
 		
-		public function import($scope, $prefix = null)
+		public function import($scope)
 		{
-			$name = $this->getActualName($prefix);
-			
 			if (!$this->className)
 				throw new WrongStateException(
-					"no class defined for PrimitiveEnumeration '{$name}'"
+					"no class defined for PrimitiveEnumeration '{$this->name}'"
 				);
 				
-			$result = parent::import($scope, $prefix);
+			$result = parent::import($scope);
 			
 			if ($result === true) {
 				try {

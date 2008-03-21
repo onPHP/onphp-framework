@@ -15,14 +15,12 @@
 	**/
 	final class PrimitiveBinary extends FiltrablePrimitive
 	{
-		public function import($scope, $prefix = null)
+		public function import($scope)
 		{
-			if (!BasePrimitive::import($scope, $prefix))
+			if (!BasePrimitive::import($scope))
 				return null;
 			
-			$name = $this->getActualName($prefix);
-			
-			$this->value = (string) $scope[$name];
+			$this->value = (string) $scope[$this->name];
 			
 			$this->selfFilter();
 			

@@ -51,9 +51,9 @@
 			return parent::setDefault($default);
 		}
 		
-		public function import($scope, $prefix = null)
+		public function import($scope)
 		{
-			if (!BasePrimitive::import($scope, $prefix))
+			if (!BasePrimitive::import($scope))
 				return null;
 			
 			if (!$this->list)
@@ -62,12 +62,10 @@
 					.'use PrimitiveArray in case it is intentional'
 				);
 			
-			$name = $this->getActualName($prefix);
-			
-			if (is_array($scope[$name])) {
+			if (is_array($scope[$this->name])) {
 				$values = array();
 				
-				foreach ($scope[$name] as $value) {
+				foreach ($scope[$this->name] as $value) {
 					if (isset($this->list[$value])) {
 						$values[] = $value;
 						$this->selected[$value] = $this->list[$value];
@@ -79,8 +77,8 @@
 					
 					return true;
 				}
-			} elseif (!empty($scope[$name])) {
-				$this->value = array($scope[$name]);
+			} elseif (!empty($scope[$this->name])) {
+				$this->value = array($scope[$this->name]);
 				
 				return true;
 			}

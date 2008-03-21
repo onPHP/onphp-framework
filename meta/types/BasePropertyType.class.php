@@ -124,10 +124,5 @@ EOT;
 		{
 			return null;
 		}
-		
-		public function getTypeName()
-		{
-			return $this->getPrimitiveName();
-		}
 	}
 ?>

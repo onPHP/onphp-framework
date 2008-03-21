@@ -19,20 +19,18 @@
 		abstract protected function checkNumber($number);
 		abstract protected function castNumber($number);
 		
-		public function import($scope, $prefix = null)
+		public function import($scope)
 		{
-			if (!BasePrimitive::import($scope, $prefix))
+			if (!BasePrimitive::import($scope))
 				return null;
 			
-			$name = $this->getActualName($prefix);
-			
 			try {
-				$this->checkNumber($scope[$name]);
+				$this->checkNumber($scope[$this->name]);
 			} catch (WrongArgumentException $e) {
 				return false;
 			}
 			
-			$this->value = $this->castNumber($scope[$name]);
+			$this->value = $this->castNumber($scope[$this->name]);
 			
 			$this->selfFilter();
 			

@@ -66,19 +66,20 @@
 			return $this;
 		}
 		
-		public function import($scope, $prefix = null)
+		public function import($scope)
 		{
-			if (!parent::import($scope, $prefix)) {
+			if (!parent::import($scope)) {
 				return null;
 			}
 			
-			$name = $this->getActualName($prefix);
-			
 			if (
-				(is_string($scope[$name]) || is_integer($scope[$name]))
-				&& array_key_exists($scope[$name], $this->list)
+				(
+					is_string($scope[$this->name])
+					|| is_integer($scope[$this->name])
+				)
+				&& array_key_exists($scope[$this->name], $this->list)
 			) {
-				$this->value = $scope[$name];
+				$this->value = $scope[$this->name];
 				
 				return true;
 			}
