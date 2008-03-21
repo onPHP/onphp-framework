@@ -95,7 +95,7 @@
 		{
 			Assert::isArray($scope);
 			
-			$this->applicationScope = array_merge(
+			$this->applicationScope = ArrayUtils::mergeRecursiveUnique(
 				$this->applicationScope, $scope
 			);
 			
@@ -109,7 +109,9 @@
 		{
 			Assert::isArray($userScope);
 			
-			$this->userScope = array_merge($this->userScope, $userScope);
+			$this->userScope = ArrayUtils::mergeRecursiveUnique(
+				$this->userScope, $userScope
+			);
 			
 			return $this;
 		}
@@ -209,7 +211,9 @@
 		)
 		{
 			return $this->scopeHref(
-				array_merge($this->userScope, $additionalScope),
+				ArrayUtils::mergeRecursiveUnique(
+					$this->userScope, $additionalScope
+				),
 				$absolute
 			);
 		}
@@ -221,7 +225,9 @@
 			$path = null;
 			
 			// href scope may override navigation scope
-			$actualScope = array_merge($this->navigationScope, $scope);
+			$actualScope = ArrayUtils::mergeRecursiveUnique(
+				$this->navigationScope, $scope
+			);
 			
 			if ($this->navigationSchema) {
 				$path = $this->navigationSchema->extractPath($actualScope);
