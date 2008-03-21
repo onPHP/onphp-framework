@@ -18,6 +18,7 @@
 		abstract public function getDeclaration();
 		abstract public function isMeasurable();
 		abstract public function toColumnType();
+		abstract public function getPrimitiveName();
 		
 		protected $default = null;
 		
