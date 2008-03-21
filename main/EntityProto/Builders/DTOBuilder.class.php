@@ -14,7 +14,9 @@
 	{
 		protected function createEmpty()
 		{
-			return $this->proto->createDto();
+			$className = $this->proto->className().'DTO';
+			
+			return new $className;
 		}
 	}
 ?>

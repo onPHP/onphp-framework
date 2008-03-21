@@ -14,7 +14,7 @@
 	{
 		private $soapDto	= true;
 		
-		public function __construct(DTOProto $proto, $object)
+		public function __construct(EntityProto $proto, $object)
 		{
 			Assert::isInstance($object, 'DTOClass');
 			

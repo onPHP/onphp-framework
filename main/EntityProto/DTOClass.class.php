@@ -10,11 +10,13 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class DTOClass implements DTOPrototyped
+	abstract class DTOClass implements PrototypedEntity
 	{
 		final public function makeObject(Form $form)
 		{
-			return $this->dtoProto()->makeObject($form);
+			return
+				FormToObjectConverter::create($this->entityProto())->
+					make($form);
 		}
 		
 		/**
@@ -22,7 +24,11 @@
 		**/
 		final public function toForm()
 		{
-			return $this->dtoProto()->toForm($this);
+			return
+				ObjectToFormConverter::create(
+					$this->entityProto()
+				)->
+					make($this);
 		}
 	}
 ?>

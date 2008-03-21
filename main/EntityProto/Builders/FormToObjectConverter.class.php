@@ -15,7 +15,7 @@
 		/**
 		 * @return FormToObjectConverter
 		**/
-		public static function create(DTOProto $proto)
+		public static function create(EntityProto $proto)
 		{
 			return new self($proto);
 		}

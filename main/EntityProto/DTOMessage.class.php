@@ -10,11 +10,15 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class DTOMessage implements DTOPrototyped
+	abstract class DTOMessage implements PrototypedEntity
 	{
 		final public function makeDto()
 		{
-			return $this->dtoProto()->makeDto($this);
+			return
+				ObjectToDTOConverter::create(
+					$this->entityProto()
+				)->
+					make($this);
 		}
 	}
 ?>

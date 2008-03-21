@@ -32,7 +32,7 @@
 				"knows nothing about '{$className}' class"
 			);
 			
-			$protoClass = DTOProto::PROTO_CLASS_PREFIX.$className;
+			$protoClass = EntityProto::PROTO_CLASS_PREFIX.$className;
 			
 			Assert::isTrue(
 				class_exists($protoClass, true),
@@ -46,7 +46,7 @@
 		 * @throws WrongArgumentException
 		 * @return PrimitiveForm
 		**/
-		public function ofProto(DTOProto $proto)
+		public function ofProto(EntityProto $proto)
 		{
 			$this->proto = $proto;
 			

@@ -13,8 +13,8 @@
 	/**
 	 * @ingroup Main
 	**/
-	interface DTOPrototyped
+	interface PrototypedEntity
 	{
-		public static function dtoProto();
+		public static function entityProto();
 	}
 ?>

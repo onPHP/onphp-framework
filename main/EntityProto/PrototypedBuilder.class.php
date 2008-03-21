@@ -28,7 +28,7 @@
 		**/
 		abstract protected function getSetter(&$object);
 		
-		public function __construct(DTOProto $proto)
+		public function __construct(EntityProto $proto)
 		{
 			$this->proto = $proto;
 		}
@@ -51,7 +51,7 @@
 		/**
 		 * @return PrototypedBuilder
 		**/
-		public function cloneBuilder(DTOProto $proto)
+		public function cloneBuilder(EntityProto $proto)
 		{
 			Assert::isTrue(
 				$this->proto->isInstanceOf($proto)
@@ -93,9 +93,9 @@
 		 */
 		public function make($object, $recursive = true)
 		{
-			// FIXME: make dtoProto() non-static, problem with forms here
+			// FIXME: make entityProto() non-static, problem with forms here
 			if (
-				($object instanceof DTOPrototyped)
+				($object instanceof PrototypedEntity)
 				|| ($object instanceof Form)
 			) {
 				$proto = $this->proto;
@@ -103,7 +103,7 @@
 				if ($object instanceof Form) {
 					$objectProto = $object->getProto();
 				} else
-					$objectProto = $object->dtoProto();
+					$objectProto = $object->entityProto();
 				
 				if (
 					$objectProto

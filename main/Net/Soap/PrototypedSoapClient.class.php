@@ -17,7 +17,7 @@
 	 * 
 	 * 2. redefine wsdlUrl and classMap ('complexType' => 'DtoClass')
 	 * 
-	 * 3. make DtoProtos, Dtos and Business classes for your Xsd objects
+	 * 3. make EntityProtos, Dtos and Business classes for your Xsd objects
 	 *    and exception classes for your faults
 	 * 
 	 * 4. implement your methods, corresponding to operations in wsdl, in such
@@ -112,12 +112,12 @@
 			if (defined('__LOCAL_DEBUG__') && !defined('SIMPLE_TEST') ) {
 				// self-validation
 				
-				$form = ObjectToFormConverter::create($request->dtoProto())->
+				$form = ObjectToFormConverter::create($request->entityProto())->
 					make($request);
 				
 				Assert::isTrue(
 					!$form->getErrors()
-					&& $request->dtoProto()->
+					&& $request->entityProto()->
 						validate($request, $form),
 					
 					Assert::dumpArgument($request)
@@ -161,11 +161,12 @@
 				Assert::isInstance($resultDto, 'DTOClass');
 				
 				Assert::isEqual(
-					$resultDto->dtoProto()->className(),
+					$resultDto->entityProto()->className(),
 					$resultClass
 				);
 				
-				$form = $resultDto->toForm();
+				$form = DTOToFormImporter::create($resultDto->entityProto())->
+					make($resultDto);
 				
 				Assert::isTrue(
 					!$form->getErrors(),
@@ -182,7 +183,7 @@
 				Assert::isEqual(get_class($result), $resultClass);
 				
 				Assert::isTrue(
-					$result->dtoProto()->
+					$result->entityProto()->
 						validate($result, $form),
 						
 					Assert::dumpArgument($result)

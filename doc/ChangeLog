@@ -2,7 +2,7 @@
 
 2008-03-20	Ivan Y. Khvostishkov
 
-	* main/EntityProto/: ProtoBuilders renaming.
+	* main/EntityProto/: ProtoBuilders renaming, s/dtoProto/entityProto/.
 
 	* main/Utils/ArrayUtils.class.php: mergeRecursiveUnique(),
 	flatToDimensional() helpers.

@@ -394,7 +394,7 @@
 		/**
 		 * @return Form
 		**/
-		public function setProto(DTOProto $proto)
+		public function setProto(EntityProto $proto)
 		{
 			$this->proto = $proto;
 			
@@ -402,7 +402,7 @@
 		}
 		
 		/**
-		 * @return DTOProto
+		 * @return EntityProto
 		**/
 		public function getProto()
 		{

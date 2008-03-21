@@ -35,9 +35,11 @@
 				
 				if (
 					($primitive instanceof PrimitiveAnyType)
-					&& ($value instanceof DTOPrototyped)
+					&& ($value instanceof PrototypedEntity)
 				)
-					$value = $value->dtoProto()->makeDto($value);
+					$value =
+						ObjectToDTOConverter::create($value->entityProto())->
+							make($value);
 				else
 					$value = $this->dtoValue($value, $primitive);
 				
