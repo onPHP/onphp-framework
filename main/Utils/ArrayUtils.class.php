@@ -122,6 +122,53 @@
 		}
 		
 		/**
+		 * in: array(1, 2, 3, 4)
+		 * out: array(1 => array(2 => array(3 => 4)))
+		 */
+		public static function flatToDimensional($array)
+		{
+			if (!$array)
+				return null;
+			
+			Assert::isArray($array);
+			
+			$first = array_shift($array);
+			
+			if (!$array)
+				return $first;
+			
+			return array($first => self::flatToDimensional($array));
+		}
+		
+		public static function mergeRecursiveUnique($one, $two)
+		{
+			if (!$one)
+				return $two;
+			
+			Assert::isArray($one);
+			Assert::isArray($two);
+			
+			$result = $one;
+			
+			foreach ($two as $key => $value) {
+				
+				if (is_integer($key)) {
+					$result[] = $value;
+				} elseif (
+					isset($one[$key])
+					&& is_array($one[$key])
+					&& is_array($value)
+				) {
+					$result[$key] = self::mergeRecursiveUnique($one[$key], $value);
+				} else {
+					$result[$key] = $value;
+				}
+			}
+			
+			return $result;
+		}
+		
+		/**
 		 * @deprecated by array_combine($array, $array)
 		**/
 		public static function getMirrorValues($array)
