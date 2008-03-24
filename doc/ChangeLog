@@ -1,6 +1,6 @@
 # $Id$
 
-2008-03-19	Ivan Y. Khvostishkov
+2008-03-24	Ivan Y. Khvostishkov
 
 	* core/Form/PlainForm.class.php: getFormId() helper for obtaining ids.
 
