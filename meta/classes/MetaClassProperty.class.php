@@ -370,6 +370,14 @@
 					: 'LightMetaProperty'
 			);
 			
+			if ($this->getType() instanceof IntegerType) {
+				$size = $this->getType()->getSize();
+			} elseif ($this->getType()->isMeasurable()) {
+				$size = $this->size;
+			} else {
+				$size = null;
+			}
+			
 			return
 				call_user_func_array(
 					array($propertyClassName, 'fill'),
@@ -381,9 +389,7 @@
 							: null,
 						$primitiveName,
 						$className,
-						$this->getType()->isMeasurable()
-							? $this->size
-							: null,
+						$size,
 						$this->isRequired(),
 						$this->getType()->isGeneric(),
 						$inner,

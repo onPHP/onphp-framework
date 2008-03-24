@@ -1,5 +1,10 @@
 # $Id$
 
+2008-03-24	Konstantin V. Arkhipov
+
+	* meta/, main/Base/LightMetaProperty.class.php: integer's limits
+	checking restored.
+
 2008-03-17	Ivan Y. Khvostishkov
 
 	* main/Flow/PartViewer.class.php: references to parent and root model
@@ -12,7 +17,6 @@
 
 	* main/ProtoBuilders/: partial objects building ability, useful for
 	wizards.
-
 
 2008-03-15	Ivan Y. Khvostishkov
 

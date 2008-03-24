@@ -18,22 +18,32 @@
 	**/
 	class LightMetaProperty implements Stringable
 	{
+		const UNSIGNED_FLAG = 0x1000;
+		
 		private static $limits = array(
-			'SmallInteger' => array(
+			0x0002 => array(
 				PrimitiveInteger::SIGNED_SMALL_MIN,
 				PrimitiveInteger::SIGNED_SMALL_MAX
 			),
-			'UnsignedSmallInteger' => array(
+			0x1002 => array(
 				0,
 				PrimitiveInteger::UNSIGNED_SMALL_MAX
 			),
-			'Integer' => array(
+			0x0004 => array(
 				PrimitiveInteger::SIGNED_MIN,
 				PrimitiveInteger::SIGNED_MAX
 			),
-			'UnsignedInteger' => array(
+			0x1004 => array(
 				0,
 				PrimitiveInteger::UNSIGNED_MAX
+			),
+			0x0008 => array(
+				PrimitiveInteger::SIGNED_BIG_MIN,
+				PrimitiveInteger::SIGNED_BIG_MAX
+			),
+			0x1008 => array(
+				0,
+				null
 			)
 		);
 		
@@ -44,6 +54,9 @@
 		private $className	= null;
 		
 		private $size		= null;
+		
+		private $min		= null;
+		private $max		= null;
 		
 		private $required	= false;
 		private $generic	= false;
@@ -95,7 +108,16 @@
 			$property->type = $type;
 			$property->className = $className;
 			
-			$property->size = $size;
+			if ($size) {
+				if ($type == 'integer') {
+					$property->min = self::$limits[$size][0];
+					$property->max = self::$limits[$size][1];
+				} else { // string
+					$property->max = $size;
+				}
+				
+				$property->size = $size;
+			}
 			
 			$property->required = $required;
 			$property->generic = $generic;
@@ -152,22 +174,14 @@
 			return $this->className;
 		}
 		
-		public function getSize()
-		{
-			return $this->size;
-		}
-		
 		public function getMin()
 		{
-			return $this->getLimit(0);
+			return $this->min;
 		}
 		
 		public function getMax()
 		{
-			if ($size = $this->size)
-				return $size;
-			
-			return $this->getLimit(1);
+			return $this->max;
 		}
 		
 		public function getType()
@@ -293,10 +307,10 @@
 					$prefix.$this->name
 				);
 			
-			if ($min = $this->getMin())
+			if (null !== ($min = $this->getMin()))
 				$prm->setMin($min);
 			
-			if ($max = $this->getMax())
+			if (null !== ($max = $this->getMax()))
 				$prm->setMax($max);
 			
 			if ($prm instanceof IdentifiablePrimitive)
@@ -442,14 +456,6 @@
 						: 'null'
 				)
 				.')';
-		}
-		
-		private function getLimit($whichOne)
-		{
-			return
-				isset(self::$limits[$this->type])
-					? self::$limits[$this->type][$whichOne]
-					: null;
 		}
 	}
 ?>
