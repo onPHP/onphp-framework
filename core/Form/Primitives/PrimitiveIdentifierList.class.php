@@ -30,6 +30,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return PrimitiveIdentifierList
+		**/
 		public function setValue($value)
 		{
 			if ($value) {
