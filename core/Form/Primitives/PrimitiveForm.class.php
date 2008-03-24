@@ -55,7 +55,7 @@
 		
 		/**
 		 * @return PrimitiveForm
-		 *
+		 * 
 		 * Either composition or aggregation, it is very important on import.
 		**/
 		public function setComposite($composite = true)

@@ -37,7 +37,7 @@
 		
 		/**
 		 * @return ObjectGetter
-		 */
+		**/
 		public function getGetter()
 		{
 			if (!$this->getter) {

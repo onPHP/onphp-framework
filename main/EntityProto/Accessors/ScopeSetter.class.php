@@ -39,7 +39,7 @@
 		
 		/**
 		 * @return ScopeGetter
-		 */
+		**/
 		public function getGetter()
 		{
 			if (!$this->getter) {
