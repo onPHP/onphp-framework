@@ -1,5 +1,10 @@
 # $Id$
 
+2008-03-24	Konstantin V. Arkhipov
+
+	* meta/, main/Base/LightMetaProperty.class.php: integer's limits
+	checking restored.
+
 2008-03-20	Ivan Y. Khvostishkov
 
 	* main/EntityProto/: ProtoBuilders renaming, s/dtoProto/entityProto/.
