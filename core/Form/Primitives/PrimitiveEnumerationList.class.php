@@ -30,6 +30,21 @@
 			return $this;
 		}
 		
+		/**
+		 * @return PrimitiveEnumerationList
+		**/
+		public function setValue(/* Enumeration */ $value)
+		{
+			if ($value) {
+				Assert::isArray($value);
+				Assert::isInstance(current($value), 'Enumeration');
+			}
+			
+			$this->value = $value;
+			
+			return $this;
+		}
+		
 		public function importValue($value)
 		{
 			if (is_array($value)) {
