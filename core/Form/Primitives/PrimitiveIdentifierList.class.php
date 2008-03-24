@@ -1,13 +1,13 @@
 <?php
-/***************************************************************************
- *   Copyright (C) 2007 by Denis M. Gabaidulin, Konstantin V. Arkhipov     *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU Lesser General Public License as        *
- *   published by the Free Software Foundation; either version 3 of the    *
- *   License, or (at your option) any later version.                       *
- *                                                                         *
- ***************************************************************************/
+/****************************************************************************
+ *   Copyright (C) 2007-2008 by Denis M. Gabaidulin, Konstantin V. Arkhipov *
+ *                                                                          *
+ *   This program is free software; you can redistribute it and/or modify   *
+ *   it under the terms of the GNU Lesser General Public License as         *
+ *   published by the Free Software Foundation; either version 3 of the     *
+ *   License, or (at your option) any later version.                        *
+ *                                                                          *
+ ****************************************************************************/
 /* $Id$ */
 
 	/**
@@ -16,6 +16,19 @@
 	final class PrimitiveIdentifierList extends PrimitiveIdentifier
 	{
 		protected $value = array();
+		
+		/**
+		 * @return PrimitiveIdentifierList
+		**/
+		public function clean()
+		{
+			parent::clean();
+			
+			// restoring our very own default
+			$this->value = array();
+			
+			return $this;
+		}
 		
 		public function setValue($value)
 		{
