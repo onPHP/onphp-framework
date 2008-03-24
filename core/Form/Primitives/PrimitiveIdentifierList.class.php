@@ -61,7 +61,7 @@
 				);
 			
 			if (!BasePrimitive::import($scope))
-				return array();
+				return null;
 			
 			if (!is_array($scope[$this->name]))
 				return false;
