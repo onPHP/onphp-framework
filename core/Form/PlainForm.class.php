@@ -108,6 +108,20 @@
 		}
 		
 		/**
+		 * ex:
+		 * array('superFormsList', 5, 'subForm', 'primitiveName') =>
+		 * 'superFormsList:5:subForm:primitiveName'
+		**/
+		public function getFormId($path)
+		{
+			$this->getInner($path);
+			
+			$path = $this->getInnerPath($path);
+			
+			return join(':', $path);
+		}
+		
+		/**
 		 * @throws MissingElementException
 		 * @return BasePrimitive
 		**/
