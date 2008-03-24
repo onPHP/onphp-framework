@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007-2008 by Ivan Y. Khvostishkov                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -24,13 +24,9 @@
 					"no proto defined for PrimitiveFormsList '{$this->name}'"
 				);
 			
-			if (!isset($scope[$this->name]))
+			if (!BasePrimitive::import($scope))
 				return null;
 			
-			$this->rawValue = $scope[$this->name];
-			
-			$this->imported = true;
-				
 			if (!is_array($scope[$this->name]))
 				return false;
 			
