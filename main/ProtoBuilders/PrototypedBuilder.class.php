@@ -96,7 +96,7 @@
 		
 		/**
 		 * @deprecated $recursive, use limitedPropertiesList instead
-		 */
+		**/
 		public function make($object, $recursive = true)
 		{
 			// FIXME: make dtoProto() non-static, problem with forms here
