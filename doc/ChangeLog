@@ -2,6 +2,10 @@
 
 2008-03-24	Konstantin V. Arkhipov
 
+	* core/Form/Primitives/PrimitiveEnumerationList.class.php,
+	core/Form/Primitives/PrimitiveIdentifierList.class.php: custom clean()
+	implemented.
+
 	* meta/, main/Base/LightMetaProperty.class.php: integer's limits
 	checking restored.
 

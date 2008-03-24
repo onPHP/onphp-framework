@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007-2008 by Ivan Y. Khvostishkov                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -16,6 +16,19 @@
 	final class PrimitiveEnumerationList extends PrimitiveEnumeration
 	{
 		protected $value = array();
+		
+		/**
+		 * @return PrimitiveEnumerationList
+		**/
+		public function clean()
+		{
+			parent::clean();
+			
+			// restoring our very own default
+			$this->value = array();
+			
+			return $this;
+		}
 		
 		public function importValue($value)
 		{
