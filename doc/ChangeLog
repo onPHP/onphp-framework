@@ -2,6 +2,8 @@
 
 2008-03-24	Konstantin V. Arkhipov
 
+	* 1.0.3 released.
+
 	* core/Form/Primitives/PrimitiveEnumerationList.class.php,
 	core/Form/Primitives/PrimitiveIdentifierList.class.php: custom clean()
 	implemented.
