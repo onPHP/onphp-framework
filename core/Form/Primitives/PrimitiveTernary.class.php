@@ -45,7 +45,7 @@
 		
 		public function getFalseValue()
 		{
-			return $this->getFalseValue;
+			return $this->falseValue;
 		}
 		
 		public function import($scope)
