@@ -1,5 +1,10 @@
 # $Id$
 
+2008-03-25	Ivan Y. Khvostishkov
+
+	* main/Utils/ArrayUtils.class.php: getArrayValue(), variety of
+	getArrayVar().
+
 2008-03-24	Ivan Y. Khvostishkov
 
 	* core/Form/PlainForm.class.php: getFormId() helper for obtaining ids.
