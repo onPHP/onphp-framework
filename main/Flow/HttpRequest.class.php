@@ -258,6 +258,16 @@
 			return $this->{$type->getName()};
 		}
 		
+		/**
+		 * @return HttpRequest
+		**/
+		public function setByType(RequestType $type, array $array)
+		{
+			$this->{$type->getName()} = $array;
+			
+			return $this;
+		}
+		
 		public function getHeaderList()
 		{
 			return $this->headers;
