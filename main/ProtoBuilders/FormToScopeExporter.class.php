@@ -10,32 +10,44 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class FormHardenedSetter extends PrototypedSetter
+	final class FormToScopeExporter extends ObjectBuilder
 	{
-		public function __construct(DTOProto $proto, &$object)
+		/**
+		 * @return FormToObjectConverter
+		**/
+		public static function create(DTOProto $proto)
 		{
-			Assert::isInstance($object, 'Form');
-			
-			return parent::__construct($proto, $object);
+			return new self($proto);
 		}
 		
-		public function set($name, $value)
+		protected function createEmpty()
 		{
-			if (!isset($this->mapping[$name]))
-				throw new WrongArgumentException(
-					"knows nothing about property '{$name}'"
-				);
-			
-			$primitive = $this->mapping[$name];
-			
-			$method = ($value === null)
-				? 'dropValue'
-				: 'setValue';
-			
-			$this->object->get($primitive->getName())->
-				$method($value);
-			
+			return array();
+		}
+		
+		/**
+		 * @return FormToScopeExporter
+		**/
+		protected function preserveTypeLoss($result)
+		{
+			// NOTE: type loss here
 			return $this;
+		}
+		
+		/**
+		 * @return FormGetter
+		**/
+		protected function getGetter($object)
+		{
+			return new FormExporter($this->proto, $object);
+		}
+		
+		/**
+		 * @return ObjectSetter
+		**/
+		protected function getSetter(&$object)
+		{
+			return new ScopeSetter($this->proto, $object);
 		}
 	}
 ?>

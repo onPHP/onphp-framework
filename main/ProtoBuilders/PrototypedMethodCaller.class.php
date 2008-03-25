@@ -17,10 +17,10 @@
 		
 		protected $mapping = array();
 		
-		public function __construct(DTOProto $proto, $object)
+		public function __construct(DTOProto $proto, &$object)
 		{
 			$this->proto = $proto;
-			$this->object = $object;
+			$this->object = &$object;
 			
 			$this->mapping = $proto->getFormMapping();
 		}

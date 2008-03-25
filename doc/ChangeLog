@@ -1,5 +1,14 @@
 # $Id$
 
+2008-03-25	Ivan Y. Khvostishkov
+
+	* main/ProtoBuilders/FormExporter.class.php,
+	main/ProtoBuilders/FormToScopeExporter.class.php: new converters
+	(merged from trunk).
+
+	* core/Form/Primitives/BasePrimitive.class.php: dropValue() added
+	(merged from trunk).
+
 2008-03-24	Konstantin V. Arkhipov
 
 	* 1.0.3 released.

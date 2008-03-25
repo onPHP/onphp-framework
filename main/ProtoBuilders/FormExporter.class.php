@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2008 by Ivan Y. Khvostishkov                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,29 +10,31 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class ScopeSetter extends PrototypedSetter
+	final class FormExporter extends PrototypedGetter
 	{
-		public function __construct(DTOProto $proto, &$object)
+		public function __construct(DTOProto $proto, $object)
 		{
-			Assert::isArray($object);
+			Assert::isInstance($object, 'Form');
 			
 			return parent::__construct($proto, $object);
 		}
 		
-		public function set($name, $value)
+		public function get($name)
 		{
 			if (!isset($this->mapping[$name]))
 				throw new WrongArgumentException(
 					"knows nothing about property '{$name}'"
 				);
 			
-			Assert::isTrue(!is_object($value), 'cannot put objects into scope');
-			
 			$primitive = $this->mapping[$name];
 			
-			$this->object[$primitive->getName()] =  $value;
+			$formPrimitive = $this->object->get($primitive->getName());
 			
-			return $this;
+			if ($primitive instanceof PrimitiveForm) {
+				// export of inner forms controlled by builder
+				return $formPrimitive->getValue();
+			}
+			return $formPrimitive->exportValue();
 		}
 	}
 ?>

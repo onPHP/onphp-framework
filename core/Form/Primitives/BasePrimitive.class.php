@@ -104,6 +104,16 @@
 		
 		/**
 		 * @return BasePrimitive
+		**/
+		public function dropValue($value)
+		{
+			$this->value = null;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return BasePrimitive
 		 * 
 		 * usually, you should not use this method
 		**/

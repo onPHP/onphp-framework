@@ -88,37 +88,53 @@
 		
 		public function import($scope)
 		{
+			$savedRaw = null;
+			
 			if (isset($scope[$this->name]) && $scope[$this->name]) {
-				$this->raw = $scope[$this->name];
+				$savedRaw = $scope[$this->name];
+				
+				$this->customError = null;
 				
 				try {
 					
-					list($class, $id) = explode(self::DELIMITER, $this->raw, 2);
+					list($class, $id) = explode(self::DELIMITER, $savedRaw, 2);
 					
 				} catch (BaseException $e) {
 					
 					$this->customError = self::WRONG_CID_FORMAT;
 					
-					return false;
 				}
 				
-				if (!ClassUtils::isInstanceOf($class, $this->baseClassName)) {
+				if (
+					!$this->customError
+					&& !ClassUtils::isInstanceOf($class, $this->baseClassName)
+				) {
 					
 					$this->customError = self::WRONG_CLASS;
 					
-					return false;
 				}
 				
-				parent::of($class);
 				
-				$scope[$this->name] = $id;
+				if (!$this->customError) {
+					parent::of($class);
+				
+					$scope[$this->name] = $id;
+				}
 				
 			} else {
 				// we need some class in any case
 				parent::of($this->baseClassName);
 			}
 			
-			return parent::import($scope);
+			if (!$this->customError)
+				$result = parent::import($scope);
+			else
+				$result = false;
+			
+			if ($savedRaw)
+				$this->raw = $savedRaw;
+			
+			return $result;
 		}
 	}
 ?>

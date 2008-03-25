@@ -111,7 +111,7 @@
 				} else
 					$objectProto = $object->dtoProto();
 				
-				if ($proto !== $objectProto) {
+				if (!ClassUtils::isInstanceOf($proto, $objectProto)) {
 					if (!$objectProto->isInstanceOf($proto))
 						throw new WrongArgumentException(
 							'target proto '.get_class($objectProto)
@@ -192,8 +192,6 @@
 					
 					
 					if ($primitive instanceof PrimitiveForm) {
-						$proto = $primitive->getProto();
-						
 						if ($primitive instanceof PrimitiveFormsList) {
 							$value = $this->cloneInnerBuilder($id)->
 								makeList($value);
