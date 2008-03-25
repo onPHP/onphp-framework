@@ -10,9 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class DTOProto extends Singleton
+	class EntityProto extends Singleton
 	{
-		const PROTO_CLASS_PREFIX = 'DtoProto';
+		const PROTO_CLASS_PREFIX = 'EntityProto';
 		
 		public function baseProto()
 		{
@@ -22,11 +22,6 @@
 		public function className()
 		{
 			return null;
-		}
-		
-		public function dtoClassName()
-		{
-			return $this->className().'DTO';
 		}
 		
 		// TODO: think about anonymous primitives and persistant mapping
@@ -51,10 +46,10 @@
 			return false;
 		}
 		
-		public function isInstanceOf(DTOProto $proto)
+		public function isInstanceOf(EntityProto $proto)
 		{
 			return ClassUtils::isInstanceOf(
-				$this->dtoClassName(), $proto->dtoClassName()
+				$this->className(), $proto->className()
 			);
 		}
 		
@@ -107,7 +102,9 @@
 					$proto = $primitive->getProto();
 					
 					$childForm = $form->getValue($primitive->getName());
+					
 					$child = $getter->get($id);
+					
 					$previousChild = $previousGetter
 						? $previousGetter->get($id)
 						: null;
@@ -174,13 +171,6 @@
 			return new $className;
 		}
 		
-		final public function createDto()
-		{
-			$dtoClassName = $this->dtoClassName();
-			
-			return new $dtoClassName;
-		}
-		
 		/**
 		 * @return Form
 		 * 
@@ -234,37 +224,6 @@
 			}
 			
 			return $result;
-		}
-		
-		
-		final public function toForm(DTOClass $dto)
-		{
-			return DTOToFormImporter::create($this)->
-				make($dto);
-		}
-		
-		final public function makeObject(Form $form)
-		{
-			return FormToObjectConverter::create($this)->
-				make($form);
-		}
-		
-		final public function makeDto($object)
-		{
-			return ObjectToDTOConverter::create($this)->
-				make($object);
-		}
-		
-		final public function fillObject(Form $form, $object)
-		{
-			return FormToObjectConverter::create($this)->
-				fillOwn($form, $object);
-		}
-		
-		final public function buildScope(DTOClass $dto)
-		{
-			return DTOToScopeConverter::create($this)->
-				make($dto);
 		}
 	}
 ?>

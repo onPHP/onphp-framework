@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,44 +10,30 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class FormToScopeExporter extends ObjectBuilder
+	final class ObjectToDTOConverter extends DTOBuilder
 	{
 		/**
-		 * @return FormToObjectConverter
+		 * @return ObjectToDTOConverter
 		**/
-		public static function create(DTOProto $proto)
+		public static function create(EntityProto $proto)
 		{
 			return new self($proto);
 		}
 		
-		protected function createEmpty()
-		{
-			return array();
-		}
-		
 		/**
-		 * @return FormToScopeExporter
-		**/
-		protected function preserveTypeLoss($result)
-		{
-			// NOTE: type loss here
-			return $this;
-		}
-		
-		/**
-		 * @return FormGetter
+		 * @return ObjectGetter
 		**/
 		protected function getGetter($object)
 		{
-			return new FormExporter($this->proto, $object);
+			return new ObjectGetter($this->proto, $object);
 		}
 		
 		/**
-		 * @return ObjectSetter
+		 * @return DTOSetter
 		**/
 		protected function getSetter(&$object)
 		{
-			return new ScopeSetter($this->proto, $object);
+			return new DTOSetter($this->proto, $object);
 		}
 	}
 ?>

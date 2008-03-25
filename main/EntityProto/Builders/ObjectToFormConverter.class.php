@@ -10,12 +10,12 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class ObjectToFormImporter extends FormBuilder
+	final class ObjectToFormConverter extends FormBuilder
 	{
 		/**
 		 * @return ObjectToFormConverter
 		**/
-		public static function create(DTOProto $proto)
+		public static function create(EntityProto $proto)
 		{
 			return new self($proto);
 		}
@@ -33,7 +33,7 @@
 		**/
 		protected function getSetter(&$object)
 		{
-			return new FormImporter($this->proto, $object);
+			return new FormSetter($this->proto, $object);
 		}
 	}
 ?>

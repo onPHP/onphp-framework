@@ -10,26 +10,15 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class DTOBuilder extends PrototypedBuilder
+	abstract class PrototypedSetter extends PrototypedMethodCaller
 	{
-		protected function createEmpty()
-		{
-			return $this->proto->createDto();
-		}
+		abstract public function set($name, $value);
 		
-		protected function prepareOwn($result)
+		public function getGetter()
 		{
-			return $result;
-		}
-		
-		/**
-		 * @return DTOBuilder
-		**/
-		protected function preserveTypeLoss($result)
-		{
-			// data transfer object have a type itself
-			
-			return $this;
+			throw new UnimplementedFeatureException(
+				'inverse operation is not defined yet'
+			);
 		}
 	}
 ?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,30 +10,19 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class DTOToFormImporter extends FormBuilder
+	abstract class PrototypedMethodCaller
 	{
-		/**
-		 * @return DTOToFormImporter
-		**/
-		public static function create(DTOProto $proto)
-		{
-			return new self($proto);
-		}
+		protected $proto = null;
+		protected $object = null;
 		
-		/**
-		 * @return FormImporter
-		**/
-		protected function getGetter($object)
-		{
-			return new DTOGetter($this->proto, $object);
-		}
+		protected $mapping = array();
 		
-		/**
-		 * @return FormImporter
-		**/
-		protected function getSetter(&$object)
+		public function __construct(EntityProto $proto, &$object)
 		{
-			return new FormImporter($this->proto, $object);
+			$this->proto = $proto;
+			$this->object = &$object;
+			
+			$this->mapping = $proto->getFormMapping();
 		}
 	}
 ?>

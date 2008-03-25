@@ -10,29 +10,62 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class ScopeSetter extends PrototypedSetter
+	final class DTOGetter extends PrototypedGetter
 	{
-		public function __construct(DTOProto $proto, &$object)
+		private $soapDto	= true;
+		
+		public function __construct(EntityProto $proto, $object)
 		{
-			Assert::isArray($object);
+			Assert::isInstance($object, 'DTOClass');
 			
 			return parent::__construct($proto, $object);
 		}
 		
-		public function set($name, $value)
+		/**
+		 * @return DTOGetter
+		**/
+		public function setSoapDto($soapDto)
+		{
+			$this->soapDto = ($soapDto === true);
+			
+			return $this;
+		}
+		
+		// FIXME: isSoapDto()
+		public function getSoapDto()
+		{
+			return $this->soapDto;
+		}
+		
+		public function get($name)
 		{
 			if (!isset($this->mapping[$name]))
 				throw new WrongArgumentException(
 					"knows nothing about property '{$name}'"
 				);
 			
-			Assert::isTrue(!is_object($value), 'cannot put objects into scope');
-			
 			$primitive = $this->mapping[$name];
 			
-			$this->object[$primitive->getName()] =  $value;
+			$method = 'get'.ucfirst($primitive->getName());
 			
-			return $this;
+			$result = $this->object->$method();
+			
+			// TODO: primitives refactoring
+			if (
+				$result !== null
+				&& $this->soapDto
+				&& !is_array($result)
+				&& (
+					($primitive instanceof PrimitiveFormsList)
+					|| ($primitive instanceof PrimitiveEnumerationList)
+					|| ($primitive instanceof PrimitiveIdentifierList)
+					|| ($primitive instanceof PrimitiveArray)
+				)
+			) {
+				$result = array($result);
+			}
+			
+			return $result;
 		}
 	}
 ?>

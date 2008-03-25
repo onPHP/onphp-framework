@@ -10,11 +10,13 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class FormSetter extends PrototypedSetter
+	final class ScopeSetter extends PrototypedSetter
 	{
-		public function __construct(DTOProto $proto, &$object)
+		private $getter = null;
+		
+		public function __construct(EntityProto $proto, &$object)
 		{
-			Assert::isInstance($object, 'Form');
+			Assert::isArray($object);
 			
 			return parent::__construct($proto, $object);
 		}
@@ -26,14 +28,25 @@
 					"knows nothing about property '{$name}'"
 				);
 			
+			Assert::isTrue(!is_object($value), 'cannot put objects into scope');
+			
 			$primitive = $this->mapping[$name];
 			
-			$this->object->importValue(
-				$primitive->getName(),
-				$value
-			);
+			$this->object[$primitive->getName()] =  $value;
 			
 			return $this;
+		}
+		
+		/**
+		 * @return ScopeGetter
+		 */
+		public function getGetter()
+		{
+			if (!$this->getter) {
+				$this->getter = new ScopeGetter($this->proto, $this->object);
+			}
+			
+			return $this->getter;
 		}
 	}
 ?>

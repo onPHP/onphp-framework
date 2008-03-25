@@ -10,30 +10,25 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class ObjectToDTOConverter extends DTOBuilder
+	abstract class DTOClass implements PrototypedEntity
 	{
-		/**
-		 * @return ObjectToDTOConverter
-		**/
-		public static function create(DTOProto $proto)
+		final public function makeObject(Form $form)
 		{
-			return new self($proto);
+			return
+				FormToObjectConverter::create($this->entityProto())->
+					make($form);
 		}
 		
 		/**
-		 * @return ObjectGetter
+		 * @return Form
 		**/
-		protected function getGetter($object)
+		final public function toForm()
 		{
-			return new ObjectGetter($this->proto, $object);
-		}
-		
-		/**
-		 * @return DTOSetter
-		**/
-		protected function getSetter(&$object)
-		{
-			return new DTOSetter($this->proto, $object);
+			return
+				ObjectToFormConverter::create(
+					$this->entityProto()
+				)->
+					make($this);
 		}
 	}
 ?>

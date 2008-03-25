@@ -12,7 +12,7 @@
 
 	final class FormExporter extends PrototypedGetter
 	{
-		public function __construct(DTOProto $proto, $object)
+		public function __construct(EntityProto $proto, $object)
 		{
 			Assert::isInstance($object, 'Form');
 			

@@ -10,23 +10,30 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class ObjectBuilder extends PrototypedBuilder
+	final class FormToObjectConverter extends ObjectBuilder
 	{
-		protected function createEmpty()
+		/**
+		 * @return FormToObjectConverter
+		**/
+		public static function create(EntityProto $proto)
 		{
-			return $this->proto->createObject();
+			return new self($proto);
 		}
 		
-		protected function prepareOwn($result)
+		/**
+		 * @return FormGetter
+		**/
+		protected function getGetter($object)
 		{
-			return $result;
+			return new FormGetter($this->proto, $object);
 		}
 		
-		protected function preserveTypeLoss($result)
+		/**
+		 * @return ObjectSetter
+		**/
+		protected function getSetter(&$object)
 		{
-			// business object have a type itself
-			
-			return $this;
+			return new ObjectSetter($this->proto, $object);
 		}
 	}
 ?>

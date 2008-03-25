@@ -2,6 +2,18 @@
 
 2008-03-25	Ivan Y. Khvostishkov
 
+	* main/EntityProto/: ProtoBuilders renaming, s/dtoProto/entityProto/
+	(merged from trunk).
+
+	* main/Utils/ArrayUtils.class.php: mergeRecursiveUnique(),
+	flatToDimensional() helpers (merged from trunk).
+	
+	* main/ProtoBuilders/, core/Form/: prototyped builders refactoring
+	(merged from trunk).
+
+	* core/Form/Primitives/PrimitiveForm.class.php: setComposite() method
+	to determine aggregation or composition of objects (merged from trunk).
+
 	* main/ProtoBuilders/FormExporter.class.php,
 	main/ProtoBuilders/FormToScopeExporter.class.php: new converters
 	(merged from trunk).

@@ -10,11 +10,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class DTOMessage implements DTOPrototyped
+	abstract class ObjectBuilder extends PrototypedBuilder
 	{
-		final public function makeDto()
+		protected function createEmpty()
 		{
-			return $this->dtoProto()->makeDto($this);
+			return $this->proto->createObject();
 		}
 	}
 ?>

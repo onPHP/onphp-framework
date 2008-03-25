@@ -69,6 +69,15 @@
 			return $this->baseClassName;
 		}
 		
+		public function setValue($value)
+		{
+			Assert::isInstance($value, $this->baseClassName);
+			
+			parent::of(get_class($value));
+			
+			return parent::setValue($value);
+		}
+		
 		public function exportValue()
 		{
 			if ($this->value === null)
@@ -128,8 +137,10 @@
 			
 			if (!$this->customError)
 				$result = parent::import($scope);
-			else
+			else {
+				$this->value = null;
 				$result = false;
+			}
 			
 			if ($savedRaw)
 				$this->raw = $savedRaw;

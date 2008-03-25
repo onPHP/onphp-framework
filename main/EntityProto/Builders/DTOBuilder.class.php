@@ -10,11 +10,13 @@
  ***************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup Main
-	**/
-	interface DTOPrototyped
+	abstract class DTOBuilder extends PrototypedBuilder
 	{
-		public static function dtoProto();
+		protected function createEmpty()
+		{
+			$className = $this->proto->className().'DTO';
+			
+			return new $className;
+		}
 	}
 ?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2008 by Ivan Y. Khvostishkov                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,30 +10,30 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class FormToObjectConverter extends ObjectBuilder
+	final class ObjectToFormSetter extends FormBuilder
 	{
 		/**
-		 * @return FormToObjectConverter
+		 * @return ObjectToFormSetter
 		**/
-		public static function create(DTOProto $proto)
+		public static function create(EntityProto $proto)
 		{
 			return new self($proto);
 		}
 		
 		/**
-		 * @return FormGetter
+		 * @return ObjectGetter
 		**/
 		protected function getGetter($object)
 		{
-			return new FormGetter($this->proto, $object);
+			return new ObjectGetter($this->proto, $object);
 		}
 		
 		/**
-		 * @return ObjectSetter
+		 * @return FormSetter
 		**/
 		protected function getSetter(&$object)
 		{
-			return new ObjectSetter($this->proto, $object);
+			return new FormHardenedSetter($this->proto, $object);
 		}
 	}
 ?>

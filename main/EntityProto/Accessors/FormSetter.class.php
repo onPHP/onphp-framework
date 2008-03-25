@@ -10,15 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class FormImporter extends PrototypedSetter
+	final class FormSetter extends FormMutator
 	{
-		public function __construct(DTOProto $proto, &$object)
-		{
-			Assert::isInstance($object, 'Form');
-			
-			return parent::__construct($proto, $object);
-		}
-		
 		public function set($name, $value)
 		{
 			if (!isset($this->mapping[$name]))
@@ -28,15 +21,10 @@
 			
 			$primitive = $this->mapping[$name];
 			
-			if ($primitive instanceof PrimitiveForm)
-				// inner form(s) has been already imported
-				$this->object->importValue($primitive->getName(), $value);
-				
-			else
-				$this->object->importOne(
-					$primitive->getName(),
-					array($primitive->getName() => $value)
-				);
+			$this->object->importValue(
+				$primitive->getName(),
+				$value
+			);
 			
 			return $this;
 		}

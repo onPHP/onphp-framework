@@ -17,6 +17,8 @@
 	{
 		protected $proto = null;
 		
+		private $composite = false;
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return PrimitiveForm
@@ -30,7 +32,7 @@
 				"knows nothing about '{$className}' class"
 			);
 			
-			$protoClass = DTOProto::PROTO_CLASS_PREFIX.$className;
+			$protoClass = EntityProto::PROTO_CLASS_PREFIX.$className;
 			
 			Assert::isTrue(
 				class_exists($protoClass, true),
@@ -44,11 +46,28 @@
 		 * @throws WrongArgumentException
 		 * @return PrimitiveForm
 		**/
-		public function ofProto(DTOProto $proto)
+		public function ofProto(EntityProto $proto)
 		{
 			$this->proto = $proto;
 			
 			return $this;
+		}
+		
+		/**
+		 * @return PrimitiveForm
+		 *
+		 * Either composition or aggregation, it is very important on import.
+		**/
+		public function setComposite($composite = true)
+		{
+			$this->composite = ($composite == true);
+			
+			return $this;
+		}
+		
+		public function isComposite()
+		{
+			return $this->composite;
 		}
 		
 		public function getClassName()
@@ -80,10 +99,14 @@
 		{
 			if ($value !== null)
 				Assert::isTrue($value instanceof Form);
-			else
-				return $this->value = null;
 			
-			$this->value = $value;
+			if (!$this->value || !$this->composite) {
+				$this->value = $value;
+			} else {
+				throw new WrongStateException(
+					'composite objects should not be broken'
+				);
+			}
 			
 			return ($value->getErrors() ? false : true);
 		}
@@ -118,7 +141,8 @@
 			
 			$this->rawValue = $scope[$this->name];
 			
-			$this->value = $this->proto->makeForm();
+			if (!$this->value || !$this->composite)
+				$this->value = $this->proto->makeForm();
 			
 			if (!$importFiltering) {
 				$this->value->

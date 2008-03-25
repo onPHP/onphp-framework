@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,30 +10,15 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class ObjectToFormSetter extends FormBuilder
+	abstract class PrototypedGetter extends PrototypedMethodCaller
 	{
-		/**
-		 * @return ObjectToFormSetter
-		**/
-		public static function create(DTOProto $proto)
-		{
-			return new self($proto);
-		}
+		abstract public function get($name);
 		
-		/**
-		 * @return ObjectGetter
-		**/
-		protected function getGetter($object)
+		public function getSetter()
 		{
-			return new ObjectGetter($this->proto, $object);
-		}
-		
-		/**
-		 * @return FormSetter
-		**/
-		protected function getSetter(&$object)
-		{
-			return new FormHardenedSetter($this->proto, $object);
+			throw new UnimplementedFeatureException(
+				'inverse operation is not defined yet'
+			);
 		}
 	}
 ?>

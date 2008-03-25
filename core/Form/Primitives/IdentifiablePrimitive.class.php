@@ -27,6 +27,8 @@
 		{
 			$className = $this->className;
 			
+			Assert::isNotNull($this->className);
+			
 			Assert::isTrue($value instanceof $className);
 			
 			return parent::setValue($value);

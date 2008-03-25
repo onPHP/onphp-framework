@@ -23,7 +23,7 @@
 		/**
 		 * @return Form
 		**/
-		protected function prepareOwn($result)
+		public function makeOwn($object, &$result)
 		{
 			Assert::isInstance($result, 'Form');
 			
@@ -31,6 +31,7 @@
 				if (
 					$primitive instanceof PrimitiveForm
 					&& $result->primitiveExists($primitive->getName())
+					&& $primitive->isComposite()
 				) {
 					
 					Assert::isEqual(
@@ -44,19 +45,11 @@
 				$result->add($primitive);
 			}
 				
-			return $result;
-		}
-		
-		/**
-		 * @return FormBuilder
-		**/
-		protected function preserveTypeLoss($result)
-		{
-			Assert::isInstance($result, 'Form');
+			$result = parent::makeOwn($object, $result);
 			
 			$result->setProto($this->proto);
 			
-			return $this;
+			return $result;
 		}
 	}
 ?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,26 +10,26 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class ScopeToFormImporter extends FormBuilder
+	final class DTOToFormImporter extends FormBuilder
 	{
 		/**
-		 * @return ScopeToFormImporter
+		 * @return DTOToFormImporter
 		**/
-		public static function create(DTOProto $proto)
+		public static function create(EntityProto $proto)
 		{
 			return new self($proto);
 		}
 		
 		/**
-		 * @return ObjectGetter
+		 * @return FormImporter
 		**/
 		protected function getGetter($object)
 		{
-			return new ScopeGetter($this->proto, $object);
+			return new DTOGetter($this->proto, $object);
 		}
 		
 		/**
-		 * @return FormSetter
+		 * @return FormImporter
 		**/
 		protected function getSetter(&$object)
 		{
