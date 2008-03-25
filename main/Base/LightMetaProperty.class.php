@@ -109,7 +109,10 @@
 			$property->className = $className;
 			
 			if ($size) {
-				if ($type == 'integer') {
+				if (
+					($type == 'integer')
+					|| ($type == 'identifier')
+				) {
 					$property->min = self::$limits[$size][0];
 					$property->max = self::$limits[$size][1];
 				} else { // string
