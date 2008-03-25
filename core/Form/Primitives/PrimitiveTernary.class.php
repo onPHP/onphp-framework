@@ -28,6 +28,11 @@
 			return $this;
 		}
 		
+		public function getTrueValue()
+		{
+			return $this->trueValue;
+		}
+		
 		/**
 		 * @return PrimitiveTernary
 		**/
@@ -36,6 +41,11 @@
 			$this->falseValue = $falseValue;
 			
 			return $this;
+		}
+		
+		public function getFalseValue()
+		{
+			return $this->getFalseValue;
 		}
 		
 		public function import($scope)
