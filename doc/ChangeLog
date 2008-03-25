@@ -12,6 +12,9 @@
 	* core/Form/Primitives/PrimitiveTernary.class.php: getters for true and
 	false values.
 
+	* core/Exceptions/BadRequestException.class.php: new exception to be
+	used instead of View('error').
+
 2008-03-24	Ivan Y. Khvostishkov
 
 	* core/Form/PlainForm.class.php: getFormId() helper for obtaining ids.
