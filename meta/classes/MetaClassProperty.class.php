@@ -370,8 +370,16 @@
 					: 'LightMetaProperty'
 			);
 			
-			if ($this->getType() instanceof IntegerType) {
+			if (
+				($this->getType() instanceof IntegerType)
+			) {
 				$size = $this->getType()->getSize();
+			} elseif (
+				($this->getType() instanceof ObjectType)
+				&& ($this->getRelationId() == MetaRelation::ONE_TO_ONE)
+				&& ($identifier = $this->getType()->getClass()->getIdentifier())
+			) {
+				$size = $identifier->getType()->getSize();
 			} elseif ($this->getType()->isMeasurable()) {
 				$size = $this->size;
 			} else {
