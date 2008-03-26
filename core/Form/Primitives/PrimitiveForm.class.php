@@ -119,6 +119,14 @@
 			return $this->value->export();
 		}
 		
+		public function getInnerErrors()
+		{
+			if ($this->value)
+				return $this->value->getInnerErrors();
+			
+			return array();
+		}
+		
 		public function import($scope)
 		{
 			return $this->actualImport($scope, true);

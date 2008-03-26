@@ -50,31 +50,17 @@
 			
 			foreach ($this->primitives as $prm) {
 				if (
-					$prm instanceof PrimitiveFormsList
+					(
+						($prm instanceof PrimitiveFormsList)
+						|| ($prm instanceof PrimitiveForm)
+					)
 					&& $prm->getValue()
 				) {
-					$innerResult = array();
-					
-					foreach ($prm->getValue() as $id => $form) {
-						if ($errors = $form->getInnerErrors())
-							$innerResult[$id] = $errors;
-					}
-					
-					if ($innerResult)
-						$result[$prm->getName()] = $innerResult;
-					else
-						unset($result[$prm->getName()]);
-					
-				} elseif (
-					$prm instanceof PrimitiveForm
-					&& $prm->getValue()
-				) {
-					$errors = $prm->getValue()->getInnerErrors();
-					
-					if ($errors)
+					if ($errors = $prm->getInnerErrors()) {
 						$result[$prm->getName()] = $errors;
-					else
+					} else {
 						unset($result[$prm->getName()]);
+					}
 				}
 			}
 			

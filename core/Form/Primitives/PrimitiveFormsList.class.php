@@ -36,6 +36,18 @@
 			);
 		}
 		
+		public function getInnerErrors()
+		{
+			$result = array();
+			
+			foreach ($this->getValue() as $id => $form) {
+				if ($errors = $form->getInnerErrors())
+					$result[$id] = $errors;
+			}
+			
+			return $result;
+		}
+		
 		public function import($scope)
 		{
 			if (!$this->proto)
