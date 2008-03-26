@@ -214,13 +214,8 @@
 		
 		protected function keyToInt($key)
 		{
-			static $precision = null;
-			
-			if (!$precision) {
-				$precision = strlen(dechex(PHP_INT_MAX)) - 1;
-			}
-			
-			return hexdec(substr(md5($key), 0, $precision)) + strlen($key);
+			// 7 == strlen(dechex(x86 PHP_INT_MAX)) - 1
+			return hexdec(substr(md5($key), 0, 7)) + strlen($key);
 		}
 		//@}
 	}
