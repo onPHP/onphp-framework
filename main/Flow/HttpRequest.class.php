@@ -193,6 +193,16 @@
 			return $this;
 		}
 		
+		/**
+		 * @return HttpRequest
+		**/
+		public function setFilesVar($name, $value)
+		{
+			$this->files[$name] = $value;
+			
+			return $this;
+		}
+		
 		public function &getFiles()
 		{
 			return $this->files;

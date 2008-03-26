@@ -1,5 +1,9 @@
 # $Id$
 
+2008-03-26	Dmitry E. Demidov
+
+	* main/Flow/HttpRequest.class.php: setFilesVar() added.
+
 2008-03-25	Dmitry E. Demidov
 
 	* main/Flow/HttpRequest.class.php: setByType() added.
