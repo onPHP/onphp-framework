@@ -99,7 +99,7 @@
 		
 		/**
 		 * @return DTOGetter
-		 */
+		**/
 		public function getGetter()
 		{
 			if (!$this->getter) {

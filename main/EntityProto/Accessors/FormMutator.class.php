@@ -23,7 +23,7 @@
 		
 		/**
 		 * @return FormGetter
-		 */
+		**/
 		public function getGetter()
 		{
 			if (!$this->getter) {

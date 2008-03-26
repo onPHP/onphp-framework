@@ -90,7 +90,7 @@
 		
 		/**
 		 * @deprecated $recursive, use limitedPropertiesList instead
-		 */
+		**/
 		public function make($object, $recursive = true)
 		{
 			// FIXME: make entityProto() non-static, problem with forms here
