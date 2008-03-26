@@ -74,7 +74,7 @@ ONPHP_METHOD(Form, getInnerErrors)
 		*primitives = ONPHP_READ_PROPERTY(getThis(), "primitives"),
 		**prm;
 	
-	ONPHP_CALL_METHOD_1(getThis(), "geterrors", &result);
+	ONPHP_CALL_METHOD_0(getThis(), "geterrors", &result);
 	
 	ONPHP_MAKE_ARRAY(result);
 	
@@ -94,8 +94,8 @@ ONPHP_METHOD(Form, getInnerErrors)
 		
 		if (ONPHP_CHECK_EMPTY(value)) {
 			if (
-				instanceof_function(Z_OBJCE_P(prm), *pfl TSRMLS_CC)
-				|| instanceof_function(Z_OBJCE_P(prm), *pf TSRMLS_CC)
+				instanceof_function(Z_OBJCE_PP(prm), *pfl TSRMLS_CC)
+				|| instanceof_function(Z_OBJCE_PP(prm), *pf TSRMLS_CC)
 			) {
 				zval *name, *errors;
 				
