@@ -85,9 +85,9 @@
 		
 		/**
 		 * Example:
-		 *
+		 * 
 		 * ArrayUtils::getArrayValue(array('key1' => 'value1', ...), $key)
-		 */
+		**/
 		public static function getArrayValue($array, $var)
 		{
 			return self::getArrayVar($array, $var);

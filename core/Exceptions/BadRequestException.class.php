@@ -12,13 +12,13 @@
 
 	/**
 	 * Example:
-	 *
+	 * 
 	 *	$form->import($request->getGet());
-	 *
+	 * 
 	 *	if ($form->getErrors())
 	 *		throw new BadRequestException('wrong arguments passed');
-	 *
+	 * 
 	 * Use this exception instead of View('error')
-	 */
+	**/
 	class BadRequestException extends BaseException {/* nop */}
 ?>
