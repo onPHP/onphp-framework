@@ -17,6 +17,18 @@
 	{
 		protected $value = array();
 		
+		/**
+		 * @return PrimitiveFormsList
+		**/
+		public function clean()
+		{
+			parent::clean();
+			
+			$this->value = array();
+			
+			return $this;
+		}
+		
 		public function setComposite($composite = true)
 		{
 			throw new UnsupportedMethodException(
