@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2007-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -65,6 +65,59 @@ ONPHP_METHOD(Form, getErrors)
 	);
 	
 	RETURN_ZVAL(out, 1, 1);
+}
+
+ONPHP_METHOD(Form, getInnerErrors)
+{
+	zval
+		*result,
+		*primitives = ONPHP_READ_PROPERTY(getThis(), "primitives"),
+		**prm;
+	
+	ONPHP_CALL_METHOD_1(getThis(), "geterrors", &result);
+	
+	ONPHP_MAKE_ARRAY(result);
+	
+	ONPHP_FOREACH(primitives, prm) {
+		zend_class_entry **pfl, **pf;
+		zval *value;
+		
+		ONPHP_CALL_METHOD_0_NORET(*prm, "getvalue", &value);
+		
+		if (EG(exception)) {
+			ZVAL_FREE(primitives);
+			return;
+		}
+		
+		ONPHP_FIND_FOREIGN_CLASS("PrimitiveFormsList", pfl);
+		ONPHP_FIND_FOREIGN_CLASS("PrimitiveForm", pf);
+		
+		if (ONPHP_CHECK_EMPTY(value)) {
+			if (
+				instanceof_function(Z_OBJCE_P(prm), *pfl TSRMLS_CC)
+				|| instanceof_function(Z_OBJCE_P(prm), *pf TSRMLS_CC)
+			) {
+				zval *name, *errors;
+				
+				ONPHP_CALL_METHOD_0_NORET(*prm, "getinnererrors", &errors);
+				
+				if (EG(exception)) {
+					ZVAL_FREE(primitives);
+					return;
+				}
+				
+				ONPHP_CALL_METHOD_0(*prm, "getname", &name);
+				
+				if (zend_hash_num_elements(Z_ARRVAL_P(errors)) > 0) {
+					ONPHP_ASSOC_SET(result, Z_STRVAL_P(name), errors);
+				} else {
+					ONPHP_ASSOC_UNSET(result, Z_STRVAL_P(name));
+				}
+			}
+		}
+	}
+	
+	RETURN_ZVAL(result, 1, 1);
 }
 
 ONPHP_METHOD(Form, dropAllErrors)
@@ -856,6 +909,7 @@ zend_function_entry onphp_funcs_Form[] = {
 	ONPHP_ME(Form, __construct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
 	ONPHP_ME(Form, create, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	ONPHP_ME(Form, getErrors, NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Form, getInnerErrors, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Form, dropAllErrors, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Form, enableImportFiltering, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Form, disableImportFiltering, NULL, ZEND_ACC_PUBLIC)
