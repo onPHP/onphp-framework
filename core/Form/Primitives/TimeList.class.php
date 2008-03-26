@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov, Igor V. Gulyaev    *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov, Igor V. Gulyaev    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -15,6 +15,20 @@
 	**/
 	final class TimeList extends BasePrimitive
 	{
+		protected $value = array();
+		
+		/**
+		 * @return TimeList
+		**/
+		public function clean()
+		{
+			parent::clean();
+			
+			$this->value = array();
+			
+			return $this;
+		}
+		
 		public function import($scope)
 		{
 			if (
