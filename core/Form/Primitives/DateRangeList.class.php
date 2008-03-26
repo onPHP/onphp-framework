@@ -17,6 +17,18 @@
 	{
 		protected $value = array();
 		
+		/**
+		 * @return DateRangeList
+		**/
+		public function clean()
+		{
+			parent::clean();
+			
+			$this->value = array();
+			
+			return $this;
+		}
+		
 		public function import($scope)
 		{
 			if (
