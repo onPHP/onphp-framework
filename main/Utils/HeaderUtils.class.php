@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -29,28 +29,6 @@
 			self::$redirectSent = true;
 		}
 
-		public static function redirect(BaseModule $mod)
-		{
-			$qs = null;
-			
-			if ($mod->getParameters())
-				foreach ($mod->getParameters() as $key => $val)
-					$qs .= "&{$key}={$val}";
-			
-			$url =
-				(defined('ADMIN_AREA')
-					? PATH_WEB_ADMIN
-					: PATH_WEB)
-				.'?area='
-				.$mod->getName()
-				.$qs;
-			
-			header("Location: {$url}");
-
-			self::$headerSent = true;
-			self::$redirectSent = true;
-		}
-		
 		public static function redirectBack()
 		{
 			if (isset($_SERVER['HTTP_REFERER'])) {
