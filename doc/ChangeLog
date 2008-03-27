@@ -1,5 +1,9 @@
 # $Id$
 
+2008-03-27	Konstantin V. Arkhipov
+
+	* main/Net/Http/HeaderUtils.class.php: redirect() removed, finally.
+
 2008-03-26	Dmitry E. Demidov
 
 	* main/Flow/HttpRequest.class.php: setFilesVar() added.

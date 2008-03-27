@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -23,31 +23,6 @@
 		
 		public static function redirectRaw($url)
 		{
-			header("Location: {$url}");
-
-			self::$headerSent = true;
-			self::$redirectSent = true;
-		}
-		
-		/**
-		 * @deprecated by Flow
-		**/
-		public static function redirect(BaseModule $mod)
-		{
-			$qs = null;
-			
-			if ($mod->getParameters())
-				foreach ($mod->getParameters() as $key => $val)
-					$qs .= "&{$key}={$val}";
-			
-			$url =
-				(defined('ADMIN_AREA')
-					? PATH_WEB_ADMIN
-					: PATH_WEB)
-				.'?area='
-				.$mod->getName()
-				.$qs;
-			
 			header("Location: {$url}");
 
 			self::$headerSent = true;
