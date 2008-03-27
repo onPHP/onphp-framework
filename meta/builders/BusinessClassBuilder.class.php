@@ -52,7 +52,59 @@ EOT;
 EOT;
 
 			if (!$type || $type->getId() !== MetaClassType::CLASS_ABSTRACT) {
-				$out .= <<<EOT
+				$customCreate = null;
+				
+				if (
+					$class->getFinalParent()->getPattern()
+						instanceof InternalClassPattern
+				) {
+					$parent = $class;
+					
+					while ($parent = $parent->getParent()) {
+						$info = new ReflectionClass($parent->getName());
+						
+						if (
+							$info->hasMethod('create')
+							&& ($info->getMethod('create')->getParameters() > 0)
+						) {
+							$customCreate = true;
+							break;
+						}
+					}
+				}
+				
+				if ($customCreate) {
+					$creator = $info->getMethod('create');
+					
+					$declaration = array();
+					
+					foreach ($creator->getParameters() as $parameter) {
+						$declaration[] =
+							'$'.$parameter->getName()
+							// no one can live without default value @ ::create
+							.' = '
+							.(
+								$parameter->getDefaultValue()
+									? $parameter->getDefaultValue()
+									: 'null'
+							);
+					}
+					
+					$declaration = implode(', ', $declaration);
+					
+					$out .= <<<EOT
+
+	/**
+	 * @return {$class->getName()}
+	**/
+	public static function create({$declaration})
+	{
+		return new self({$declaration});
+	}
+		
+EOT;
+				} else {
+					$out .= <<<EOT
 
 	/**
 	 * @return {$class->getName()}
@@ -62,12 +114,14 @@ EOT;
 		return new self;
 	}
 		
-{$dao}
 EOT;
+				}
+				
 				$protoName = 'Proto'.$class->getName();
 			
 				$out .= <<<EOT
 
+{$dao}
 	/**
 	 * @return {$protoName}
 	**/
