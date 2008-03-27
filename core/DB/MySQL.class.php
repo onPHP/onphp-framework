@@ -194,7 +194,7 @@
 				if (
 					preg_match(
 						'~(\w+)(\((\d+?)\)){0,1}\s*(\w*)~',
-						strtolower($row['Type']), 
+						strtolower($row['Type']),
 						$matches
 					)
 				) {
