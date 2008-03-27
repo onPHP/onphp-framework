@@ -2,6 +2,9 @@
 
 2008-03-27	Konstantin V. Arkhipov
 
+	* core/Exceptions/SoapFault.class.php: fake exception added to prevent
+	ClassNotFoundException in several cases.
+
 	* core/Logic/BinaryExpression.class.php: add, substract, multiply and
 	divide logic implemented in toBoolean().
 
