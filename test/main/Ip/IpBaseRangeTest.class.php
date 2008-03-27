@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class IpBaseRangeTest extends UnitTestCase
+	final class IpBaseRangeTest extends TestCase
 	{
 		public function testContains()
 		{

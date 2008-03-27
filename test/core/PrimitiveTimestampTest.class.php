@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class PrimitiveTimestampTest extends UnitTestCase
+	final class PrimitiveTimestampTest extends TestCase
 	{
 		public function testMarried()
 		{
@@ -19,7 +19,7 @@
 			);
 			
 			$this->assertFalse($prm->import($array));
-			$this->assertEqual($prm->getRawValue(), $array['test']);
+			$this->assertEquals($prm->getRawValue(), $array['test']);
 			
 			$array['test'][PrimitiveDate::YEAR] = '3456';
 			
@@ -29,7 +29,7 @@
 			$array['test'][PrimitiveDate::YEAR] = '2006';
 			
 			$this->assertTrue($prm->import($array));
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateTime(),
 				'2006-02-01 17:38.59'
 			);
@@ -71,7 +71,7 @@
 			
 			$this->assertTrue($prm->import($array));
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateTime(),
 				'1975-01-02 17:38.59'
 			);

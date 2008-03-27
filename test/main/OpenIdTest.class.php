@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class OpenIdTest extends UnitTestCase
+	final class OpenIdTest extends TestCase
 	{
 		public function testCredentials()
 		{
@@ -29,12 +29,12 @@ EOT
 				)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$credential->getServer()->toString(),
 				'http://www.myopenid.com/server'
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$credential->getRealId()->toString(),
 				'http://example.myopenid.com/'
 			);
@@ -151,7 +151,7 @@ EOT
 						)
 				)
 			);
-			$this->assertEqual(
+			$this->assertEquals(
 				$credential->getServer()->toString(),
 				'http://www.livejournal.com/openid/server.bml'
 			);
@@ -166,7 +166,7 @@ EOT
 				);
 				$this->fail();
 			} catch (OpenIdException $e) {
-				$this->pass();
+				/* pass */
 			} catch (Exception $e) {
 				$this->fail();
 			}

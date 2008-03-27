@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class PrimitiveDateRangeTest extends UnitTestCase
+	final class PrimitiveDateRangeTest extends TestCase
 	{
 		public function testImport()
 		{
@@ -18,7 +18,7 @@
 				$prm->getValue()->getStart()->getYear() == 1985
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateString(),
 				$array['test']
 			);
@@ -27,7 +27,7 @@
 			$array = array('test' => $start);
 			
 			$this->assertTrue($prm->import($array));
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateString(),
 				$start.$delimiter.$start
 			);
@@ -36,21 +36,21 @@
 			$array = array('test' => $start.$delimiter);
 			
 			$this->assertTrue($prm->import($array));
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateString(), $start
 			);
 			
 			$array = array('test' => $delimiter.$start);
 			
 			$this->assertTrue($prm->import($array));
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateString(), $start
 			);
 			
 			$array = array('test' => $delimiter);
 			
 			$this->assertTrue($prm->import($array));
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateString(), ''
 			);
 			
@@ -80,7 +80,7 @@
 			$array = array('test' => $dottedStart);
 			
 			$this->assertTrue($prm->import($array));
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateString(),
 				$start.$delimiter.$start
 			);
@@ -93,7 +93,7 @@
 			$result = $now->getYear().'-02-14';
 			
 			$this->assertTrue($prm->import($array));
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateString(),
 				$result.$delimiter.$result
 			);
@@ -106,7 +106,7 @@
 			$result = $now->getYear().'-'.$now->getMonth().'-'.$date;
 			
 			$this->assertTrue($prm->import($array));
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateString(),
 				$result.$delimiter.$result
 			);
@@ -117,7 +117,7 @@
 			$result = '2007-02-14';
 			
 			$this->assertTrue($prm->import($array));
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateString(),
 				$result.$delimiter.$result
 			);
@@ -128,7 +128,7 @@
 			$array = array('test' => $date);
 			
 			$this->assertTrue($prm->import($array));
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateString(),
 				$result.$delimiter.$result
 			);
@@ -138,7 +138,7 @@
 			$array = array('test' => $date);
 			
 			$this->assertTrue($prm->import($array));
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateString(),
 				$result.$delimiter.$result
 			);
@@ -155,7 +155,7 @@
 			$result = $now->getYear().'-02-14';
 			
 			$this->assertTrue($prm->import($array));
-			$this->assertEqual(
+			$this->assertEquals(
 				$prm->getValue()->toDateString(),
 				$result.' - '.$result
 			);

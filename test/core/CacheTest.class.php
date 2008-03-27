@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class CacheTest extends UnitTestCase
+	final class CacheTest extends TestCase
 	{
 		const QUERIES = 100;
 		
@@ -36,8 +36,8 @@
 					++$twoHit;
 			}
 			
-			$this->assertEqual($oneHit, $twoHit);
-			$this->assertEqual($twoHit, self::QUERIES);
+			$this->assertEquals($oneHit, $twoHit);
+			$this->assertEquals($twoHit, self::QUERIES);
 		}
 	}
 ?>

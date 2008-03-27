@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class CriteriaTest extends UnitTestCase
+	final class CriteriaTest extends TestCase
 	{
 		public function testClassProjection()
 		{
@@ -16,7 +16,7 @@
 					)
 				);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$criteria->toSelectQuery()->getFieldsCount(),
 				count(TestUser::dao()->getFields())
 			);

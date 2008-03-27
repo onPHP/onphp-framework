@@ -1,17 +1,19 @@
 <?php
 	/* $Id$ */
 	
-	final class AssertTest extends UnitTestCase
+	final class AssertTest extends TestCase
 	{
+		protected $backupGlobals = false;
+		
 		public function testTrue()
 		{
 			Assert::isTrue(true);
-
+			
 			try {
 				Assert::isTrue(false);
 				$this->fail();
 			} catch (WrongArgumentException $e) {
-				$this->pass();
+				/* pass */
 			}
 		}
 		
@@ -23,7 +25,7 @@
 				Assert::isFalse(true);
 				$this->fail();
 			} catch (WrongArgumentException $e) {
-				$this->pass();
+				/* pass */
 			}
 		}
 		
@@ -54,7 +56,7 @@
 				Assert::isFloat($string);
 				$this->fail("'{$string}' is float!");
 			} catch (WrongArgumentException $e) {
-				$this->pass();
+				/* pass */
 			}
 		}
 		
@@ -64,7 +66,7 @@
 				Assert::isInteger($string);
 				$this->fail("'{$string}' is integer!");
 			} catch (WrongArgumentException $e) {
-				$this->pass();
+				/* pass */
 			}
 		}
 		
@@ -74,7 +76,7 @@
 				Assert::isTernaryBase($value = true);
 				Assert::isTernaryBase($value = false);
 				Assert::isTernaryBase($value = null);
-				$this->pass();
+				/* pass */
 			} catch (WrongArgumentException $e) {
 				$this->fail();
 			}

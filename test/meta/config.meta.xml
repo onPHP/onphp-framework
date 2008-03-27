@@ -27,7 +27,7 @@
 		<pattern name="StraightMapping" />
 	</class>
 	
-	<class name="TestRange" extends="DateRange">
+	<!--class name="TestRange" extends="DateRange">
 		<properties>
 			<identifier />
 			
@@ -37,7 +37,7 @@
 		</properties>
 		
 		<pattern name="StraightMapping" />
-	</class>
+	</class-->
 
 	<class name="TestCity" type="final" table="custom_table">
 		<properties>

@@ -5,19 +5,15 @@
 	
 	require ONPHP_TEST_PATH.'../global.inc.php.tpl';
 	
-	error_reporting(E_ALL); // & ~E_STRICT due to simpletest limitations
-	
 	set_include_path(
+		// current path
 		get_include_path().PATH_SEPARATOR
 		.ONPHP_TEST_PATH.'misc'.PATH_SEPARATOR
 	);
 	
 	$testPathes = array(
 		ONPHP_TEST_PATH.'core'.DIRECTORY_SEPARATOR,
-		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR,
-		
 		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR
-		.'Ip'.DIRECTORY_SEPARATOR
 	);
 	
 	$dbs = array(
@@ -32,18 +28,11 @@
 	);
 	
 	$daoWorkers = array(
-		'NullDaoWorker', 'CommonDaoWorker', 'SmartDaoWorker', 'VoodooDaoWorker'
+		'NullDaoWorker', 'CommonDaoWorker', 'SmartDaoWorker', 'VoodooDaoWorker',
+		'SmartDaoWorker', 'CommonDaoWorker', 'NullDaoWorker'
 	);
 	
-	define('SIMPLETEST_PATH', '/usr/share/php/simpletest/');
+	VoodooDaoWorker::setDefaultHandler('CacheSegmentHandler');
 	
 	define('__LOCAL_DEBUG__', true);
-	
-	// avoid E_STRICT, because SimpleTest doesn't support it
-	set_error_handler('error2Exception', E_ALL);
-	
-	ini_set('sqlite.assoc_case', 0);
-	ini_set('html_errors', false);
-	
-	require SIMPLETEST_PATH.'unit_tester.php';
 ?>

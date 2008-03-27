@@ -1,38 +1,38 @@
 <?php
 	/* $Id$ */
 	
-	final class TimestampTest extends UnitTestCase
+	final class TimestampTest extends TestCase
 	{
 		public function testNonEpoch()
 		{
 			$future = '4683-03-04';
 			$after = new Timestamp($future);
 			
-			$this->assertEqual($after->getDay(), '04');
-			$this->assertEqual($after->getMonth(), '03');
-			$this->assertEqual($after->getYear(), '4683');
+			$this->assertEquals($after->getDay(), '04');
+			$this->assertEquals($after->getMonth(), '03');
+			$this->assertEquals($after->getYear(), '4683');
 			
 			$past = '1234-04-03';
 			$before = new Timestamp($past);
 			
-			$this->assertEqual($before->getDay(), '03');
-			$this->assertEqual($before->getMonth(), '04');
-			$this->assertEqual($before->getYear(), '1234');
+			$this->assertEquals($before->getDay(), '03');
+			$this->assertEquals($before->getMonth(), '04');
+			$this->assertEquals($before->getYear(), '1234');
 			
 			$this->assertFalse($after->equals($before));
 
-			$this->assertEqual($future, $after->toDate());
-			$this->assertEqual($past, $before->toDate());
+			$this->assertEquals($future, $after->toDate());
+			$this->assertEquals($past, $before->toDate());
 			
 			$time = ' 00:00.00';
-			$this->assertEqual($future.$time, $after->toDateTime());
-			$this->assertEqual($past.$time, $before->toDateTime());
+			$this->assertEquals($future.$time, $after->toDateTime());
+			$this->assertEquals($past.$time, $before->toDateTime());
 			
 			try {
 				new Timestamp('2007-0-0');
 				$this->fail();
 			} catch (WrongArgumentException $e) {
-				$this->pass();
+				/* pass */
 			}
 		}
 		
@@ -43,7 +43,7 @@
 				
 				$this->fail();
 			} catch (WrongArgumentException $e) {
-				$this->pass();
+				/* pass */
 			}
 		}
 	}

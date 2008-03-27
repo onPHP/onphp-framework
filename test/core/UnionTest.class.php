@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class UnionTest extends UnitTestCase
+	final class UnionTest extends TestCase
 	{
 		private $singleUnion 		= null;
 		private $singleUnionAll		= null;
@@ -62,43 +62,43 @@
 		{
 			$dialect = PostgresDialect::me();
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$this->singleUnion->toDialectString($dialect),
 				'SELECT "leftTable"."a", "leftTable"."b" AS "c" FROM "leftTable" UNION SELECT "rightTable"."d" AS "a", "rightTable"."c" FROM "rightTable"'
 			);
-			$this->assertEqual(
+			$this->assertEquals(
 				$this->singleUnionAll->toDialectString($dialect),
 				'SELECT "leftTable"."a", "leftTable"."b" AS "c" FROM "leftTable" UNION ALL SELECT "rightTable"."d" AS "a", "rightTable"."c" FROM "rightTable"'
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$this->singleIntersect->toDialectString($dialect),
 				'SELECT "leftTable"."a", "leftTable"."b" AS "c" FROM "leftTable" INTERSECT SELECT "rightTable"."d" AS "a", "rightTable"."c" FROM "rightTable"'
 			);
-			$this->assertEqual(
+			$this->assertEquals(
 				$this->singleIntersectAll->toDialectString($dialect),
 				'SELECT "leftTable"."a", "leftTable"."b" AS "c" FROM "leftTable" INTERSECT ALL SELECT "rightTable"."d" AS "a", "rightTable"."c" FROM "rightTable"'
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$this->singleExcept->toDialectString($dialect),
 				'SELECT "leftTable"."a", "leftTable"."b" AS "c" FROM "leftTable" EXCEPT SELECT "rightTable"."d" AS "a", "rightTable"."c" FROM "rightTable"'
 			);
-			$this->assertEqual(
+			$this->assertEquals(
 				$this->singleExceptAll->toDialectString($dialect),
 				'SELECT "leftTable"."a", "leftTable"."b" AS "c" FROM "leftTable" EXCEPT ALL SELECT "rightTable"."d" AS "a", "rightTable"."c" FROM "rightTable"'
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$this->blockUnion->toDialectString($dialect),
 				'(SELECT "leftTable"."a", "leftTable"."b" AS "c" FROM "leftTable" UNION SELECT "middleTable"."a", "middleTable"."c" FROM "middleTable" UNION SELECT "rightTable"."d" AS "a", "rightTable"."c" FROM "rightTable")'
 			);
-			$this->assertEqual(
+			$this->assertEquals(
 				$this->blockUnionAll->toDialectString($dialect),
 				'(SELECT "leftTable"."a", "leftTable"."b" AS "c" FROM "leftTable" UNION ALL SELECT "middleTable"."a", "middleTable"."c" FROM "middleTable" UNION ALL SELECT "rightTable"."d" AS "a", "rightTable"."c" FROM "rightTable")'
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$this->limitedOrderedUnion->toDialectString($dialect),
 				'SELECT "leftTable"."a", "leftTable"."b" AS "c" FROM "leftTable" UNION SELECT "rightTable"."d" AS "a", "rightTable"."c" FROM "rightTable" ORDER BY "a" LIMIT 2 OFFSET 3'
 			);

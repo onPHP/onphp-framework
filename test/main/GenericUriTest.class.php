@@ -5,7 +5,7 @@
  ***************************************************************************/
 /* $Id$ */
 	
-	final class GenericUriTest extends UnitTestCase
+	final class GenericUriTest extends TestCase
 	{
 		private $urls = array(
 			'http://ya.ru'	=> null,
@@ -111,7 +111,7 @@
 				} else {
 					
 					if (!$fix)
-						$this->assertEqual($testUrl, $url->toString());
+						$this->assertEquals($testUrl, $url->toString());
 					
 					$dump .=
 						"class: ".get_class($url)."\n"
@@ -134,7 +134,7 @@
 				}
 				
 				if (isset($stamps[$testUrl])) {
-					$this->assertEqual($stamps[$testUrl], $dump);
+					$this->assertEquals($stamps[$testUrl], $dump);
 				}
 				
 				$newStamps[$testUrl] = $dump;

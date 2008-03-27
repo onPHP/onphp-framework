@@ -1,191 +1,191 @@
 <?php
 	/* $Id$ */
 	
-	final class LogicTest extends UnitTestCase
+	final class LogicTest extends TestCase
 	{
 		public function testBaseSqlGeneration()
 		{
 			$dialect = ImaginaryDialect::me();
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a (AND|and) b\)$/',
 				Expression::expAnd('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a (OR|or) b\)$/',
 				Expression::expOr('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				Expression::eq('a', 'b')->toDialectString($dialect),
 				'(a = b)'
 			);
 			
 			$some = IdentifiableObject::wrap(123);
-			$this->assertEqual(
+			$this->assertEquals(
 				Expression::eqId('a', $some)->toDialectString($dialect),
 				'(a = 123)'
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				Expression::notEq('a', 'b')->toDialectString($dialect),
 				'(a != b)'
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				Expression::gt('a', 'b')->toDialectString($dialect),
 				'(a > b)'
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				Expression::gtEq('a', 'b')->toDialectString($dialect),
 				'(a >= b)'
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				Expression::lt('a', 'b')->toDialectString($dialect),
 				'(a < b)'
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				Expression::ltEq('a', 'b')->toDialectString($dialect),
 				'(a <= b)'
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a ((IS NOT NULL)|(is not null)) *\)$/',
 				Expression::notNull('a')->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a ((IS NULL)|(is null)) *\)$/',
 				Expression::isNull('a')->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a ((IS TRUE)|(is true)) *\)$/',
 				Expression::isTrue('a')->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a ((IS FALSE)|(is false)) *\)$/',
 				Expression::isFalse('a')->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a (LIKE|like) b\)$/',
 				Expression::like('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a ((NOT LIKE)|(not like)) b\)$/',
 				Expression::notLike('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a (ILIKE|ilike) b\)$/',
 				Expression::ilike('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a ((NOT ILIKE)|(not like)) b\)$/',
 				Expression::notIlike('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a ((SIMILAR TO)|(similar to)) b\)$/',
 				Expression::similar('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a ((NOT SIMILAR TO)|(not similar to)) b\)$/',
 				Expression::notSimilar('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(a = b)',
 				Expression::eqLower('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(lower(a) = lower(b))',
 				
 				Expression::eqLower(new DBValue('a'), new DBValue('b'))->
 				toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a (BETWEEN|between) b (AND|and) c\)$/',
 				Expression::between('a', 'b', 'c')->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(a = 123)',
 				Expression::in('a', 123)->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(a = 123)',
 				Expression::in('a', array(123))->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a (in|IN) \(123, 456\)\)$/',
 				Expression::in('a', array(123, 456))->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(a != 123)',
 				Expression::notIn('a', 123)->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(a != 123)',
 				Expression::notIn('a', array(123))->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a ((not in)|(NOT IN)) \(123, 456\)\)$/',
 				Expression::notIn('a', array(123, 456))->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(a + b)',
 				Expression::add('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(a - b)',
 				Expression::sub('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(a * b)',
 				Expression::mul('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(a / b)',
 				Expression::div('a', 'b')->toDialectString($dialect)
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(a (between|BETWEEN) b (and|AND) c\)$/',
 				Expression::between('a', 'b', 'c')->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(-1 IS NULL)',
 				Expression::isNull(-1)->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(NOT a)',
 				Expression::not('a')->toDialectString($dialect)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'(- a)',
 				Expression::minus('a')->toDialectString($dialect)
 			);
@@ -194,7 +194,7 @@
 		public function testPgGeneration()
 		{
 			$dialect = PostgresDialect::me();
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(\(\(\(\'asdf\' = "b"\) (AND|and) \("e" != \("i" \/ \'123\'\)\) (AND|and) \(\(lower\("a"\) += +lower\("b"\)\) ((IS TRUE)|(is true))\) (AND|and) \("g" = \'12\'\) (AND|and) \("j" (BETWEEN|between) \'3\' (AND|and) "p"\)\) (OR|or) \("table"\."c" ((IS NOT NULL)|(is not null))\)\) (AND|and) \("sometable"\."a" ((not in)|(NOT IN)) \(\'q\', \'qwer\', \'xcvzxc\', \'wer\'\)\)\)$/',
  				Expression::expAnd(
 					Expression::expOr(
@@ -295,7 +295,8 @@
 							)
 						)
 					)
-				)
+				)->
+				toBoolean($form)
 			);
 			
 			$this->assertTrue(
@@ -318,7 +319,7 @@
 		
 		public function testChainSQL()
 		{
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(\(a (OR|or) \(b ((IS NOT NULL)|(is not null)) *\)\) (AND|and) \(c = d\) (AND|and) \(e ((IS FALSE)|(is false)) *\)\)$/',
 				Expression::chain()->
 					expAnd(
@@ -336,7 +337,7 @@
 					toDialectString(ImaginaryDialect::me())
 			);
 			
-			$this->assertWantedPattern(
+			$this->assertRegExp(
 				'/^\(\(a = b\) (OR|or) \(d (OR|or) \(c > e\)\) (OR|or) \(f (in|IN) \(qwer, asdf, zxcv\)\)\)$/',
 				Expression::chain()->
 					expOr(

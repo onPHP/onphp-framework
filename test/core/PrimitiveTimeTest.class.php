@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class PrimitiveTimeTest extends UnitTestCase
+	final class PrimitiveTimeTest extends TestCase
 	{
 		public function testImport()
 		{
