@@ -1,5 +1,9 @@
 # $Id$
 
+2008-03-27	Konstantin V. Arkhipov
+
+	* main/Utils/HeaderUtils.class.php: redirect() removed, finally.
+
 2008-02-18	Konstantin V. Arkhipov
 
 	* core/Cache/WatermarkedPeer.class.php: further collisions prevention:
