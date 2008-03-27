@@ -10,11 +10,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class MathTest extends UnitTestCase
+	final class MathTest extends TestCase
 	{
 		public function runMathTest(BigNumberFactory $factory)
 		{
-			$this->assertEqual(
+			$this->assertEquals(
 				'4',
 				$factory->
 					makeNumber(2)->
@@ -22,7 +22,7 @@
 					toString()
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'281470681743360',
 				$factory->
 					makeNumber('281474976710656')->
@@ -30,7 +30,7 @@
 					toString()
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				'281470681743360',
 				$factory->
 					makeNumber(2)->
@@ -54,11 +54,11 @@
 			);
 			
 			foreach ($binaryConversions as $binary => $string) {
-				$this->assertEqual(
+				$this->assertEquals(
 					$factory->makeFromBinary($binary)->toString(),
 					$string
 				);
-				$this->assertEqual(
+				$this->assertEquals(
 					$factory->makeNumber($string)->toBinary(),
 					$binary
 				);
@@ -89,14 +89,14 @@
 		
 		public function runRandomTest(BigNumberFactory $factory, RandomSource $source)
 		{
-			$this->assertNotEqual(
+			$this->assertNotEquals(
 				$factory->
 					makeRandom(100, $source)->
 					cmp($factory->makeRandom(100, $source)),
 				0
 			);
 			
-			$this->assertNotEqual(
+			$this->assertNotEquals(
 				$factory->
 					makeRandom('123456789012345678901234567890', $source)->
 					cmp(
@@ -122,9 +122,9 @@
 		
 		public function runRandomSourceTest(RandomSource $source)
 		{
-			$this->assertNotEqual($source->getBytes(2), $source->getBytes(2));
-			$this->assertNotEqual($source->getBytes(10), $source->getBytes(10));
-			$this->assertNotEqual($source->getBytes(256), $source->getBytes(256));
+			$this->assertNotEquals($source->getBytes(2), $source->getBytes(2));
+			$this->assertNotEquals($source->getBytes(10), $source->getBytes(10));
+			$this->assertNotEquals($source->getBytes(256), $source->getBytes(256));
 		}
 		
 		public function testRandomSource()

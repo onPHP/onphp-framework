@@ -2,6 +2,8 @@
 
 2008-03-27	Konstantin V. Arkhipov
 
+	* test/: now uses PHPUnit; good bye, SimpleTest.
+
 	* core/Exceptions/SoapFault.class.php: fake exception added to prevent
 	ClassNotFoundException in several cases.
 

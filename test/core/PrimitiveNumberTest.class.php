@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class PrimitiveNumberTest extends UnitTestCase
+	final class PrimitiveNumberTest extends TestCase
 	{
 		public function testInteger()
 		{

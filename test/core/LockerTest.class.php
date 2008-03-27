@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class LockerTest extends UnitTestCase
+	final class LockerTest extends TestCase
 	{
 		public function testFileLocker()
 		{

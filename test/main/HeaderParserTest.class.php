@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class HeaderParserTest extends UnitTestCase
+	class HeaderParserTest extends TestCase
 	{
 		public function testSimple()
 		{
@@ -27,8 +27,8 @@ Content-Language: ru
 Vary: accept-charset, user-agent
 EOT;
 			$parser = HeaderParser::create()->parse($raw);
-			$this->assertEqual(9, count($parser->getHeaders()));
-			$this->assertEqual('close', $parser->getHeader('connection'));
+			$this->assertEquals(9, count($parser->getHeaders()));
+			$this->assertEquals('close', $parser->getHeader('connection'));
 		}
 		
 		public function testMultiline()
@@ -45,9 +45,9 @@ Content-Type: text/html;
   charset=utf-8
 EOT;
 			$parser = HeaderParser::create()->parse($raw);
-			$this->assertEqual(6, count($parser->getHeaders()));
-			$this->assertEqual($parser->getHeader('keep-alive'), 'timeout=20, max=200');
-			$this->assertEqual($parser->getHeader('content-length'), '123');
+			$this->assertEquals(6, count($parser->getHeaders()));
+			$this->assertEquals($parser->getHeader('keep-alive'), 'timeout=20, max=200');
+			$this->assertEquals($parser->getHeader('content-length'), '123');
 		}
 	}
 ?>

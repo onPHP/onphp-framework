@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class EnumerationTest extends UnitTestCase
+	final class EnumerationTest extends TestCase
 	{
 		public function testAnyId()
 		{
@@ -14,7 +14,7 @@
 							)
 						);
 						
-						$this->pass();
+						/* pass */
 					} catch (MissingElementException $e) {
 						$this->fail($className);
 					}

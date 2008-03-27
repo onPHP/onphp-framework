@@ -1,11 +1,11 @@
 <?php
 	/* $Id$ */
 
-	final class ClassUtilsTest extends UnitTestCase
+	final class ClassUtilsTest extends TestCase
 	{
 		public function testStaticMethodCalling()
 		{
-			$this->assertEqual(
+			$this->assertEquals(
 				ClassUtils::callStaticMethod(
 					'Singleton::getInstance',
 					'UrlEncodeFilter'
@@ -14,41 +14,32 @@
 				Singleton::getInstance('UrlEncodeFilter')
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				ClassUtils::callStaticMethod('ImaginaryDialect::me'),
 				ImaginaryDialect::me()
 			);
 			
 			try {
-				// in real life it will be only one exception
-				$this->expectError(
-					'include(InexistantClass.class.php): failed to open stream:'
-					.' No such file or directory'
-				);
-				
-				$this->expectError(
-					"include(): Failed opening 'InexistantClass.class.php' for "
-					."inclusion (include_path='".get_include_path()."')"
-				);
-				
 				ClassUtils::callStaticMethod('InexistantClass::InSaNeMeThOd');
 				$this->fail();
 			} catch (ClassNotFoundException $e) {
-				$this->pass();
+				/* first pass */
+			} catch (WrongArgumentException $e) {
+				/* and all others */
 			}
 			
 			try {
 				ClassUtils::callStaticMethod('complete nonsense');
 				$this->fail();
 			} catch (WrongArgumentException $e) {
-				$this->pass();
+				/* pass */
 			}
 			
 			try {
 				ClassUtils::callStaticMethod('Identifier::comp::lete::non::sense');
 				$this->fail();
 			} catch (WrongArgumentException $e) {
-				$this->pass();
+				/* pass */
 			}
 		}
 		
@@ -63,10 +54,10 @@
 				setText('old Text');
 			
 			ClassUtils::fillNullProperties($source, $destination);
-			$this->assertEqual($destination->getText(), 'old Text');
+			$this->assertEquals($destination->getText(), 'old Text');
 
 			ClassUtils::copyNotNullProperties($source, $destination);
-			$this->assertEqual($destination->getText(), 'new Text');
+			$this->assertEquals($destination->getText(), 'new Text');
 		}
 		
 		public function testNotSet()
@@ -78,10 +69,10 @@
 				setText('old Text');			
 			
 			ClassUtils::fillNullProperties($source, $destination);
-			$this->assertEqual($destination->getText(), 'old Text');
+			$this->assertEquals($destination->getText(), 'old Text');
 			
 			ClassUtils::copyNotNullProperties($source, $destination);
-			$this->assertEqual($destination->getText(), 'old Text');
+			$this->assertEquals($destination->getText(), 'old Text');
 		}
 
 		public function testObject()
@@ -113,7 +104,7 @@
 			try {
 				$this->assertFalse(ClassUtils::isInstanceOf('2007-07-14&genre', 'Date'));
 			} catch (WrongArgumentException $e) {
-				$this->pass();
+				/* pass */
 			}
 			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestClassChild', 'ClassUtilsTestClass'));
 			$this->assertFalse(ClassUtils::isInstanceOf('ClassUtilsTestClass', 'ClassUtilsTestClassChild'));

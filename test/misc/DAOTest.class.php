@@ -66,16 +66,16 @@
 			$moscow = TestCity::dao()->add($moscow);
 			
 			if ($assertions) {
-				$this->assertEqual($piter->getId(), 1);
-				$this->assertEqual($moscow->getId(), 2);
+				$this->assertEquals($piter->getId(), 1);
+				$this->assertEquals($moscow->getId(), 2);
 			}
 			
 			$postgreser = TestUser::dao()->add($postgreser);
 			$mysqler = TestUser::dao()->add($mysqler);
 			
 			if ($assertions) {
-				$this->assertEqual($postgreser->getId(), 1);
-				$this->assertEqual($mysqler->getId(), 2);
+				$this->assertEquals($postgreser->getId(), 1);
+				$this->assertEquals($mysqler->getId(), 2);
 			}
 			
 			if ($assertions) {
@@ -97,14 +97,14 @@
 			$secondCount = TestUser::dao()->dropByIds(array($mysqler->getId()));
 			
 			if ($assertions) {
-				$this->assertEqual($firstCount, 1);
-				$this->assertEqual($secondCount, 1);
+				$this->assertEquals($firstCount, 1);
+				$this->assertEquals($secondCount, 1);
 				
 				try {
 					TestUser::dao()->getById(1);
 					$this->fail();
 				} catch (ObjectNotFoundException $e) {
-					$this->pass();
+					/* pass */
 				}
 				
 				$result =
@@ -112,8 +112,8 @@
 					add(Expression::eq(1, 2))->
 					getResult();
 				
-				$this->assertEqual($result->getCount(), 0);
-				$this->assertEqual($result->getList(), array());
+				$this->assertEquals($result->getCount(), 0);
+				$this->assertEquals($result->getList(), array());
 			}
 			
 			TestUser::dao()->import($firstClone);
@@ -137,7 +137,7 @@
 				);
 			}
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				count(TestUser::dao()->getPlainList()),
 				count(TestCity::dao()->getPlainList())
 			);
@@ -155,7 +155,7 @@
 				
 				$this->fail();
 			} catch (WrongStateException $e) {
-				$this->pass();
+				/* pass */
 			}
 		}
 		
@@ -177,7 +177,7 @@
 			
 			Cache::me()->clean();
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				TestBinaryStuff::dao()->getById($id)->getData(),
 				$data
 			);
@@ -189,12 +189,12 @@
 		{
 			$list = TestUser::dao()->getListByIds(array(1, 3, 2));
 			
-			$this->assertEqual(count($list), 2);
+			$this->assertEquals(count($list), 2);
 			
-			$this->assertEqual($list[0]->getId(), 1);
-			$this->assertEqual($list[1]->getId(), 2);
+			$this->assertEquals($list[0]->getId(), 1);
+			$this->assertEquals($list[1]->getId(), 2);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				array(),
 				TestUser::dao()->getListByIds(array(42, 42, 1738))
 			);

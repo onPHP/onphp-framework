@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class IpNetworktest extends UnitTestCase
+	final class IpNetworktest extends TestCase
 	{
 		public function testContains()
 		{

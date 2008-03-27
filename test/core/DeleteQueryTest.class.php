@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class DeleteQueryTest extends UnitTestCase
+	final class DeleteQueryTest extends TestCase
 	{
 		public function testQuery()
 		{
@@ -13,19 +13,19 @@
 				$query->toDialectString($dialect);
 				$this->fail();
 			} catch (WrongArgumentException $e) {
-				$this->pass();
+				/* pass */
 			}
 			
 			$query->where(Expression::eq(1, 2));
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$query->toDialectString($dialect),
 				'DELETE FROM pity_table WHERE (1 = 2)'
 			);
 			
 			$query->andWhere(Expression::notEq('a', 'b'));
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$query->toDialectString($dialect),
 				'DELETE FROM pity_table WHERE (1 = 2) AND (a != b)'
 			);

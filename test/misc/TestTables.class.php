@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	abstract class TestTables extends UnitTestCase
+	abstract class TestTables extends TestCase
 	{
 		private $schema = null;
 		

@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class MimeMailTest extends UnitTestCase
+	final class MimeMailTest extends TestCase
 	{
 		public function testMimeMail()
 		{
@@ -33,14 +33,14 @@
 //			file_put_contents(dirname(__FILE__).'/data/mimeMail/headers.txt', $mimeMail->getHeaders());
 //			file_put_contents(dirname(__FILE__).'/data/mimeMail/encodedBody.txt', $mimeMail->getEncodedBody());
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$mimeMail->getHeaders(),
 				file_get_contents(
 					dirname(__FILE__).'/data/mimeMail/headers.txt'
 				)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$mimeMail->getEncodedBody(),
 				file_get_contents(
 					dirname(__FILE__).'/data/mimeMail/encodedBody.txt'

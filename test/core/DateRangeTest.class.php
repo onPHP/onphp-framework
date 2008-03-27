@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class DateRangeTest extends UnitTestCase
+	final class DateRangeTest extends TestCase
 	{
 		public function testSplit()
 		{
@@ -12,10 +12,10 @@
 			
 			$dates = $range->split();
 			
-			$this->assertEqual(count($dates), 21);
+			$this->assertEquals(count($dates), 21);
 			
-			$this->assertEqual(reset($dates), $start);
-			$this->assertEqual(end($dates), $end);
+			$this->assertEquals(reset($dates), $start);
+			$this->assertEquals(end($dates), $end);
 		}
 		
 		public function testOverlaps()

@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class HttpUtilsTest extends UnitTestCase
+	final class HttpUtilsTest extends TestCase
 	{
 		public function testCurlGet()
 		{
@@ -26,16 +26,16 @@
 					send($request);
 			} catch (NetworkException $e) {
 				// ok, we're networkless
-				return $this->skip();
+				return;
 			}
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$response->getStatus()->getId(),
 				HttpStatus::CODE_200
 			);
 			
-			$this->assertPattern(
-				'/quite official site/',
+			$this->assertContains(
+				'quite official site',
 				$response->getBody()
 			);
 			
@@ -46,7 +46,7 @@
 					send($request);
 				$this->fail();
 			} catch (NetworkException $e) {
-				$this->pass();
+				/* pass */
 			}
 		}
 		
@@ -65,7 +65,7 @@
 				
 				$this->fail();
 			} catch (NetworkException $e) {
-				$this->assertPattern('/curl error/', $e->getMessage());
+				$this->assertContains('curl error', $e->getMessage());
 			}
 		}
 	}

@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class CryptoTest extends UnitTestCase
+	final class CryptoTest extends TestCase
 	{
 		public function runDiffieHellmanExchange(
 			BigNumberFactory $factory,
@@ -33,7 +33,7 @@
 			$sideA = DiffieHellmanKeyPair::generate($parameters, $source);
 			$sideB = DiffieHellmanKeyPair::generate($parameters, $source);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$sideA->makeSharedKey($sideB->getPublic())->toString(),
 				$sideB->makeSharedKey($sideA->getPublic())->toString()
 			);
@@ -48,11 +48,11 @@
 			
 			$sourceA = new RandomSourceStub("\x02");
 			$pairA = DiffieHellmanKeyPair::generate($parameters, $sourceA);
-			$this->assertEqual(
+			$this->assertEquals(
 				$pairA->getPublic()->toString(),
 				'4'
 			);
-			$this->assertEqual(
+			$this->assertEquals(
 				$pairA->getPrivate()->toString(),
 				'2'
 			);
@@ -60,21 +60,21 @@
 			
 			$sourceB = new RandomSourceStub("\x03");
 			$pairB = DiffieHellmanKeyPair::generate($parameters, $sourceB);
-			$this->assertEqual(
+			$this->assertEquals(
 				$pairB->getPublic()->toString(),
 				'8'
 			);
-			$this->assertEqual(
+			$this->assertEquals(
 				$pairB->getPrivate()->toString(),
 				'3'
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$pairA->makeSharedKey($pairB->getPublic())->toString(),
 				'64'
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				$pairB->makeSharedKey($pairA->getPublic())->toString(),
 				'64'
 			);
@@ -95,15 +95,15 @@
 				),
 				$bigSource
 			);
-			$this->assertEqual(
+			$this->assertEquals(
 				$bigPair->getPrivate()->toString(),
 				'17620208266278770330305877401674539709763945430177869257076175454731875847774962345544017639615825508394434743684629375358533661943819685038381342979593382253449035990153308416178843539244884579493167694072720167536494654808080865723281709878280854033940718446755086284684724942649928096406688489109561821711'
 			);
-			$this->assertEqual(
+			$this->assertEquals(
 				$bigPair->getPublic()->toString(),
 				'93611077906724276144355642962486685180052418906604011044062651816823973443710236445918597792417855982839842862368107478409559670530180271906446567838772164434838441509602151691228515001241179534817267036102715381057132924139174991783818894647585751956892566340543905490069919079555140420098531372841096272473'
 			);
-			$this->assertEqual(
+			$this->assertEquals(
 				$bigPair->makeSharedKey(
 						$factory->makeFromBinary(
 							base64_decode(
@@ -143,7 +143,7 @@
 		**/
 		public function testHmacsha1()
 		{
-			$this->assertEqual(
+			$this->assertEquals(
 				TextUtils::hex2Binary('b617318655057264e28bc0b6fb378c8ef146be00'),
 				CryptoFunctions::hmacsha1(
 					TextUtils::hex2Binary('0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b'),
@@ -151,7 +151,7 @@
 				)
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				CryptoFunctions::hmacsha1(
 					"Jefe",
 					"what do ya want for nothing?"
@@ -159,7 +159,7 @@
 				TextUtils::hex2Binary('effcdf6ae5eb2fa2d27416d5f184df9c259a7c79')
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				CryptoFunctions::hmacsha1(
 					TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
 					TextUtils::hex2Binary('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
@@ -167,7 +167,7 @@
 				TextUtils::hex2Binary('125d7342b9ac11cd91a39af48aa17b4f63f175d3')
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				CryptoFunctions::hmacsha1(
 					TextUtils::hex2Binary('0102030405060708090a0b0c0d0e0f10111213141516171819'),
 					TextUtils::hex2Binary('cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd')
@@ -175,7 +175,7 @@
 				TextUtils::hex2Binary('4c9007f4026250c6bc8414f9bf50c86c2d7235da')
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				CryptoFunctions::hmacsha1(
 					TextUtils::hex2Binary('0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c'),
 					"Test With Truncation"
@@ -183,7 +183,7 @@
 				TextUtils::hex2Binary('4c1a03424b55e07fe7f27be1d58bb9324a9a5a04')
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				CryptoFunctions::hmacsha1(
 					TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
 					"Test Using Larger Than Block-Size Key - Hash Key First"
@@ -191,7 +191,7 @@
 				TextUtils::hex2Binary('aa4ae5e15272d00e95705637ce8a3b55ed402112')
 			);
 			
-			$this->assertEqual(
+			$this->assertEquals(
 				CryptoFunctions::hmacsha1(
 					TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
 					"Test Using Larger Than Block-Size Key and Larger Than One Block-Size Data"

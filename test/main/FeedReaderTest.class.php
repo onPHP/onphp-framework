@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class FeedReaderTest extends UnitTestCase
+	final class FeedReaderTest extends TestCase
 	{
 		public function testFeedReaderRss()
 		{
@@ -9,19 +9,18 @@
 				FeedReader::create()->
 				parseFile(dirname(__FILE__).'/data/feedReader/news.xml');
 			
-			$this->assertTrue($feedChannel);
 			$this->assertTrue($feedChannel instanceof FeedChannel);
 			
 			$feedItems = $feedChannel->getFeedItems();
 			
-			$this->assertEqual(count($feedItems), 4);
-			$this->assertEqual($feedChannel->getTitle(), 'Liftoff News');
+			$this->assertEquals(count($feedItems), 4);
+			$this->assertEquals($feedChannel->getTitle(), 'Liftoff News');
 			
 			$this->assertTrue(isset($feedItems[1]));
 			
 			$feedItem = $feedItems[1];
 			
-			$this->assertEqual($feedItem->getTitle(), 'Space Exploration');
+			$this->assertEquals($feedItem->getTitle(), 'Space Exploration');
 		}
 		
 		public function testFeedReaderAtom()
@@ -34,12 +33,12 @@
 			
 			$this->assertTrue($feedChannel instanceof FeedChannel);
 			
-			$this->assertEqual(count($feedItems), 12);
+			$this->assertEquals(count($feedItems), 12);
 			
-			$this->assertEqual($feedChannel->getTitle(), 'hr.rec.kladjenje Google Group');
+			$this->assertEquals($feedChannel->getTitle(), 'hr.rec.kladjenje Google Group');
 			
 			$feedItem = $feedItems[1];
-			$this->assertEqual($feedItem->getTitle(), 'HASO');
+			$this->assertEquals($feedItem->getTitle(), 'HASO');
 		}
 	}
 ?>

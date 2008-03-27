@@ -3,7 +3,7 @@
 	
 	final class SingletonTestInstance extends Singleton {/*_*/}
 	
-	final class SingletonTest extends UnitTestCase
+	final class SingletonTest extends TestCase
 	{
 		private $childName = 'SingletonTestInstance';
 		
@@ -28,7 +28,7 @@
 				Singleton::getInstance('Ternary');
 				$this->fail();
 			} catch (WrongArgumentException $e) {
-				$this->pass();
+				/* pass */
 			}
 		}
 		

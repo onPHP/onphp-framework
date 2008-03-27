@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class FormTest extends UnitTestCase
+	final class FormTest extends TestCase
 	{
 		public function testRange()
 		{
