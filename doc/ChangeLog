@@ -2,6 +2,9 @@
 
 2008-03-27	Konstantin V. Arkhipov
 
+	* meta/builders/BusinessClassBuilder.class.php: building of custom
+	create method implemented for childs of internal classes.
+
 	* test/: now uses PHPUnit; good bye, SimpleTest.
 
 	* core/Exceptions/SoapFault.class.php: fake exception added to prevent
