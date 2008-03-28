@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2007-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -34,17 +34,8 @@
 			try {
 				return msg_send($q, $key, 1, false, false);
 			} catch (BaseException $e) {
-				// queue is full
-				$msg = $type = null;
-
-				msg_receive($q, -(PHP_INT_MAX), $type, 2, $msg, false);
-				
-				try {
-					return msg_send($q, $key, 1, false, false);
-				} catch (BaseException $e) {
-					// still full
-					return false;
-				}
+				// queue is full, rotate it.
+				msg_remove_queue($q);
 			}
 			
 			Assert::isUnreachable();
