@@ -119,7 +119,9 @@
 		/* void */ public function testGmp()
 		{
 			if (!extension_loaded('gmp')) {
-				if (!@dl('gmp.so')) {
+				try {
+					dl('gmp.so');
+				} catch (BaseException $e) {
 					return;
 				}
 			}
