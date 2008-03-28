@@ -106,11 +106,6 @@
 		**/
 		final public function transform(GenericUri $reference, $strict = true)
 		{
-			if ($this->getScheme() === null)
-				throw new WrongStateException(
-					'URI without scheme cannot be a base URI'
-				);
-			
 			if (
 				$reference->getScheme() !== ($strict ? null : $this->getScheme())
 			) {

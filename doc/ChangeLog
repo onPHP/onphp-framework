@@ -1,5 +1,13 @@
 # $Id$
 
+2008-03-29	Ivan Y. Khvostishkov
+
+	* main/Net/HttpUrl.class.php: toHttpRequest() helper.
+
+	* main/Application/: refactoring of ApplicationUrl. New classes:
+	HttpRewriter, ApplicationRequestScope. Removed class:
+	ScopeNavigationSchema (use rewriter instead).
+
 2008-03-28	Konstantin V. Arkhipov
 
 	* main/DAOs/Handlers/MessageSegmentHandler.class.php: now rotates

@@ -139,5 +139,32 @@
 		{
 			return $this->ensureAbsolute()->normalize()->setFragment(null);
 		}
+		
+		public function toHttpRequest()
+		{
+			$getVars = array();
+			$serverVars = array();
+			
+			if ($this->getScheme() == 'https')
+				$serverVars['HTTPS'] = true;
+			
+			if ($this->getHost()) {
+				$serverVars['HTTP_HOST'] = $this->getHost();
+				$serverVars['SERVER_NAME'] = $this->getHost();
+			}
+			
+			if ($this->getPath()) {
+				$serverVars['REQUEST_URI'] = $this->getPath();
+			}
+			
+			if ($this->getQuery()) {
+				$serverVars['QUERY_STRING'] = $this->getQuery();
+				parse_str($this->getQuery(), $getVars);
+			}
+			
+			return HttpRequest::create()->
+				setGet($getVars)->
+				setServer($serverVars);
+		}
 	}
 ?>
