@@ -122,6 +122,8 @@
 				DBPool::me()->dropDefault();
 			}
 			
+			$suite->addTestSuite('DAOTest');
+			
 			return $suite;
 		}
 	}
