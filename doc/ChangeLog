@@ -1,5 +1,11 @@
 # $Id$
 
+2008-03-28	Konstantin V. Arkhipov
+
+	* main/DAOs/Handlers/MessageSegmentHandler.class.php: now rotates
+	queue upon overflow, it's the same strategy as in
+	SharedMemorySegmentHandler.
+
 2008-03-27	Konstantin V. Arkhipov
 
 	* main/Net/Http/HeaderUtils.class.php: redirect() removed, finally.
