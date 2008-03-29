@@ -224,7 +224,7 @@
 					$name
 				)->
 				setAutoincrement(strtolower($row['Extra']) == 'auto_increment')->
-				setPrimaryKey(strtolower($row['Null']) == 'pri');
+				setPrimaryKey(strtolower($row['Key']) == 'pri');
 				
 				if ($row['Default'])
 					$column->setDefault($row['Default']);
