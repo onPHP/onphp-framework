@@ -252,7 +252,7 @@
 			} else {
 				try {
 					return
-						fwrite($this->link,	$command, $commandLenght) !== false;
+						fwrite($this->link, $command, $commandLenght) !== false;
 				} catch (BaseException $e) {
 					return $this->alive = false;
 				}
