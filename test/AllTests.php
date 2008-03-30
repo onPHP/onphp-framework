@@ -14,7 +14,6 @@
 	$config = dirname(__FILE__).'/config.inc.php';
 	
 	include is_readable($config) ? $config : $config.'.tpl';
-	include 'core'.DIRECTORY_SEPARATOR.'TestCase'.EXT_CLASS;
 	
 	// provide fake spooked class
 	class Spook extends IdentifiableObject {/*_*/}
