@@ -125,9 +125,7 @@
 					
 					foreach ($dao->getFields() as $field) {
 						$query->get(
-							DBField::create(
-								$field, $table
-							),
+							DBField::create($field, $table),
 							$prefix.$field
 						);
 					}
@@ -213,16 +211,13 @@
 					);
 			} else {
 				$propertyDao = call_user_func(
-					array(
-						$property->getClassName(),
-						'dao'
-					)
+					array($property->getClassName(), 'dao')
 				);
 			
 				Assert::isNotNull(
 					$propertyDao,
-					'can not find target dao for "'.$property->getName().'" property'
-					.' at "'.get_class($proto).'"'
+					'can not find target dao for "'.$property->getName()
+					.'" property at "'.get_class($proto).'"'
 				);
 			}
 			
