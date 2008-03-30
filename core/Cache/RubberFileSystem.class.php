@@ -147,9 +147,8 @@
 				return true;
 			
 			// do not replace, when file not exist or expired
-			if (
-				$action == 'replace'
-			) {
+			if ($action == 'replace') {
+				
 				if (!is_readable($path)) {
 					return false;
 				} elseif (filemtime($path) <= $time) {
