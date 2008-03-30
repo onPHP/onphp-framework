@@ -1,5 +1,9 @@
 # $Id$
 
+2008-03-30	Konstantin V. Arkhipov
+
+	* 1.0.4 released.
+
 2008-03-28	Konstantin V. Arkhipov
 
 	* main/DAOs/Handlers/MessageSegmentHandler.class.php: now rotates
