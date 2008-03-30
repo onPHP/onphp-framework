@@ -238,11 +238,7 @@
 					try {
 						$result = fwrite(
 							$this->link,
-							substr(
-								$command,
-								$offset,
-								$this->buffer
-							)
+							substr($command, $offset, $this->buffer)
 						);
 					} catch (BaseException $e) {
 						return $this->alive = false;
@@ -255,15 +251,8 @@
 				}
 			} else {
 				try {
-					return (
-						fwrite(
-							$this->link,
-							$command,
-							$commandLenght
-						) === false
-							? false
-							: true
-					);
+					return
+						fwrite($this->link,	$command, $commandLenght) !== false;
 				} catch (BaseException $e) {
 					return $this->alive = false;
 				}
