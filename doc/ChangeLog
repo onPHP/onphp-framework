@@ -1,5 +1,13 @@
 # $Id$
 
+2008-03-31	Ivan Y. Khvostishkov
+
+	* core/Form/Primitives/BasePrimitive.class.php: Assert::isArray() added
+	to import()
+
+	* main/EntityProto/Builders/ObjectToObjectCast.class.php: useful to
+	cast one class to another.
+
 2008-03-31	Konstantin V. Arkhipov
 
 	* global.inc.php.tpl: added cache invalidation upon failed include
