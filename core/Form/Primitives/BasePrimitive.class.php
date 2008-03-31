@@ -232,6 +232,9 @@
 		
 		protected function import($scope)
 		{
+			if ($scope)
+				Assert::isArray($scope);
+			
 			if (
 				!empty($scope[$this->name])
 				|| (
