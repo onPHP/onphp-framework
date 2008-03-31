@@ -109,7 +109,13 @@
 			}
 			
 			if (isset($cache[$classname])) {
-				require $cache[$cache[$classname]].$classname.EXT_CLASS;
+				try {
+					include $cache[$cache[$classname]].$classname.EXT_CLASS;
+				} catch (BaseException $e) {
+					// cache is not actual
+					$cache[ONPHP_CLASS_CACHE_CHECKSUM] = null;
+					__autoload($classname);
+				}
 			} else {
 				// ok, last chance to find class in non-cached include_path
 				try {
