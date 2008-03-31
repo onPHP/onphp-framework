@@ -1,5 +1,10 @@
 # $Id$
 
+2008-03-31	Konstantin V. Arkhipov
+
+	* global.inc.php.tpl: added cache invalidation upon failed include
+	from cached location; solves class moving case.
+
 2008-03-28	Konstantin V. Arkhipov
 
 	* main/DAOs/Handlers/MessageSegmentHandler.class.php: now rotates
