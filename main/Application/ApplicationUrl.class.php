@@ -10,10 +10,10 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class ApplicationUrl
+	class ApplicationUrl implements Stringable
 	{
 		private $rewriter	= null;
-		private $scope		= null;
+		private $scope		= array();
 		
 		/**
 		 * @return ApplicationUrl
@@ -66,6 +66,8 @@
 		public function addApplicationScope($scope)
 		{
 			$this->scope->addGlobalScope($scope);
+			
+			return $this;
 		}
 		
 		/**
@@ -74,34 +76,55 @@
 		public function addUserScope($scope)
 		{
 			$this->scope->addUserScope($scope);
+			
+			return $this;
 		}
 		
 		
-		public function currentHref($additionalScope)
+		/**
+		 * @return ApplicationUrl
+		**/
+		public function currentHref($additionalScope = array())
 		{
-			return $this->rewriter->getUrl(
+			return $this->transform(
 				$this->scope->transform(null)->
-					addUserScope($additionalScope)->
-						getWholeScope()
+					addUserScope($additionalScope)
 			);
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function scopeHref($scope)
 		{
-			return $this->rewriter->getUrl(
-				$this->scope->transform($scope)->
-					getWholeScope()
+			return $this->transform(
+				$this->scope->transform($scope)
 			);
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function baseHref()
 		{
-			return $this->rewriter->getUrl(
-				$this->scope->transform(array())->
-					getWholeScope()
-			);
+			return $this->scopeHref(array());
 		}
 		
+		/**
+		 * @return ApplicationUrl
+		**/
+		public function transform(ApplicationRequestScope $newScope)
+		{
+			$result = clone $this;
+			
+			$result->setRequestScope($newScope);
+			
+			return $result;
+		}
+		
+		/**
+		 * @return ApplicationUrl
+		**/
 		public function href($rawUrl)
 		{
 			$url = HttpUrl::create()->parse($rawUrl);
@@ -115,6 +138,16 @@
 							toHttpRequest()
 				)
 			);
+		}
+		
+		public function toString()
+		{
+			Assert::isNotNull($this->rewriter);
+			
+			return
+				$this->rewriter->
+					getUrl($this->scope->getWholeScope())->
+						toString();
 		}
 	}
 ?>

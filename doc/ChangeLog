@@ -1,5 +1,15 @@
 # $Id$
 
+2008-04-01	Ivan Y. Khvostishkov
+
+	* main/Application/ApplicationUrl.class.php: now reference methods
+	return not a strings, but ApplicationUrl itself. Use below wrappers for
+	back compatibility.
+
+	* main/Application/HtmlUrl.class.php,
+	main/Application/RedirectUrl.class.php: helpers for views and
+	controllers.
+
 2008-03-31	Ivan Y. Khvostishkov
 
 	* core/Form/Primitives/BasePrimitive.class.php: Assert::isArray() added
