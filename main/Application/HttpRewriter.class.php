@@ -10,6 +10,11 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 *
+	 * Note: you may configure arg_separator.output to whatever you want.
+	 * 
+	**/
 	class HttpRewriter extends Singleton
 	{
 		private $base = null;

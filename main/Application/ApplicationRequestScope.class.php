@@ -38,10 +38,12 @@
 		
 		public function getWholeScope()
 		{
-			$result = $this->globalScope + $this->userScope;
+			$result = $this->userScope;
 			
 			foreach ($this->namedScopes as $scope)
-				$result = $result + $scope;
+				$result += $scope;
+			
+			$result += $this->globalScope;
 			
 			return $result;
 		}
