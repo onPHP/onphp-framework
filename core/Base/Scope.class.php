@@ -15,7 +15,7 @@
 		private $scope = array();
 		
 		/**
-		 * @return ApplicationUrl
+		 * @return Scope
 		**/
 		public static function create()
 		{
