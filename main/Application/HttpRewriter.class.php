@@ -26,14 +26,14 @@
 		protected $passHolder	= 'httpPass';
 		protected $pathHolder	= 'httpPath';
 		
-		public function __construct(HttpUrl $base)
-		{
-			$this->base = $base;
-		}
-		
 		public static function create(HttpUrl $base)
 		{
 			return new self($base);
+		}
+		
+		public function __construct(HttpUrl $base)
+		{
+			$this->base = $base;
 		}
 		
 		public function getBase()
