@@ -19,6 +19,13 @@
 	{
 		private $base = null;
 		
+		protected $schemeHolder	= 'httpScheme';
+		protected $hostHolder	= 'httpHost';
+		protected $portHolder	= 'httpPort';
+		protected $userHolder	= 'httpUser';
+		protected $passHolder	= 'httpPass';
+		protected $pathHolder	= 'httpPath';
+		
 		public function __construct(HttpUrl $base)
 		{
 			$this->base = $base;
@@ -42,16 +49,12 @@
 			$result = clone $this->base;
 			
 			if (isset($scope['path'])) {
-				
-				$result = $result->transform(
-					HttpUrl::create()->
-					setPath($scope['path'])
-				);
-				
+				$result = $result->transform($scope['path']);
 				unset($scope['path']);
 			}
 			
-			$result->setQuery(http_build_query($scope));
+			if ($scope)
+				$result->setQuery(http_build_query($scope));
 			
 			return $result;
 		}
@@ -59,11 +62,13 @@
 		/**
 		 * @return array
 		 */
-		public function getScope(HttpRequest $request)
+		public function getScope(HttpUrl $url)
 		{
-			$result = $request->getGet();
+			$result = array();
 			
-			$path = $this->getPath($request);
+			parse_str($url->getQuery(), $result);
+			
+			$path = $this->getPath($url);
 			
 			if ($path)
 				$result['path'] = $path;
@@ -72,41 +77,55 @@
 		}
 		
 		/**
-		 * @return ApplicationUrl
+		 * @return HttpUrl
 		**/
-		final protected function getPath(
-			HttpRequest $request, $normalize = true
-		)
+		public function getPath(HttpUrl $url)
 		{
-			$requestUri = $request->hasServerVar('REQUEST_URI')
-				? $request->getServerVar('REQUEST_URI')
-				: null;
+			$reducedUrl = clone $url;
 			
-			$currentUrl = GenericUri::create()->
-				parse($requestUri);
+			if (!$this->base->getScheme()) {
+				$reducedUrl->
+					setScheme(null)->
+					setAuthority(null);
+			}
 			
-			if (!$currentUrl->isValid())
-				throw new WrongArgumentException(
-					'wtf? request uri is invalid'
-				);
+			$reducedUrl->setQuery(null);
 			
-			if ($normalize)
-				$currentUrl->normalize();
+			if (
+				(
+					$reducedUrl->getScheme() &&
+					$this->base->getScheme() != $reducedUrl->getScheme()
+				)
+				|| (
+					$reducedUrl->getAuthority()
+					&& $this->base->getAuthority() != $reducedUrl->getAuthority()
+				)
+			) {
+				return $reducedUrl;
+			}
 			
-			$path = $currentUrl->getPath();
+			$result = HttpUrl::create();
 			
-			// paranoia
-			if (!$path || ($path[0] !== '/'))
-				$path = '/'.$path;
+			$baseSegments = explode('/', $this->base->getPath());
+			$segments = explode('/', $reducedUrl->getPath());
 			
-			if (strpos($path, $this->base->getPath()) !== 0)
-				throw new WrongArgumentException(
-					'left parts of path and base url does not match: '
-					."$path vs. ".$this->base->getPath()
-				);
+			$originalSegments = $segments;
 			
-			$result = substr($path, strlen($this->base->getPath()));
+			array_pop($baseSegments);
 			
+			while (
+				$baseSegments && $segments
+				&& $baseSegments[0] == $segments[0]
+			) {
+				array_shift($baseSegments);
+				array_shift($segments);
+			}
+			
+			if ($baseSegments && $baseSegments[0])
+				$segments = $originalSegments;
+			
+			$result->setPath(implode('/', $segments));
+				
 			return $result;
 		}
 	}

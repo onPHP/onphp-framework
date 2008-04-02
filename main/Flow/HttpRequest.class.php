@@ -350,5 +350,44 @@
 		{
 			return $this->url;
 		}
+		
+		/**
+		 * @return HttpUrl
+		 *
+		 * See also:
+		 * HttpUrl::toHttpRequest()
+		 * 
+		**/
+		public function toHttpUrl()
+		{
+			$result = HttpUrl::create();
+			
+			if (
+				$this->hasServerVar('HTTP_HOST')
+				|| $this->hasServerVar('SERVER_NAME')
+			) {
+				$result->
+					setScheme(
+						$this->hasServerVar('HTTPS')
+						? 'https'
+						: 'http'
+					)->
+					setHost(
+						$this->hasServerVar('SERVER_NAME')
+						? $this->getServerVar('SERVER_NAME')
+						: $this->hasServerVar('HTTP_HOST')
+					);
+			}
+			
+			if ($this->hasServerVar('REQUEST_URI'))
+				$result->setPath($this->getServerVar('REQUEST_URI'));
+			
+			$getVars = $this->getGet();
+			
+			if ($getVars)
+				$result->setQuery(http_build_query($getVars));
+			
+			return $result;
+		}
 	}
 ?>

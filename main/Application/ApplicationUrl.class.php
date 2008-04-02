@@ -12,8 +12,16 @@
 
 	class ApplicationUrl implements Stringable
 	{
-		private $rewriter	= null;
-		private $scope		= array();
+		private $rewriter		= null;
+		
+		private $globalScope	= null;
+		private $scope			= null;
+		
+		public function __construct()
+		{
+			$this->globalScope = Scope::create();
+			$this->scope = Scope::create();
+		}
 		
 		/**
 		 * @return ApplicationUrl
@@ -45,7 +53,7 @@
 		/**
 		 * @return ApplicationUrl
 		**/
-		public function setRequestScope(ApplicationRequestScope $scope)
+		public function setRequestScope(Scope $scope)
 		{
 			$this->scope = $scope;
 			
@@ -53,7 +61,7 @@
 		}
 		
 		/**
-		 * @return ApplicationRequestScope
+		 * @return Scope
 		**/
 		public function getRequestScope()
 		{
@@ -63,9 +71,27 @@
 		/**
 		 * @return ApplicationUrl
 		**/
-		public function addApplicationScope($scope)
+		public function setApplicationScope(Scope $scope)
 		{
-			$this->scope->addGlobalScope($scope);
+			$this->globalScope = $scope;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return Scope
+		**/
+		public function getApplicationScope()
+		{
+			return $this->globalScope;
+		}
+		
+		/**
+		 * @return ApplicationUrl
+		**/
+		public function addApplicationScope(array $scope)
+		{
+			$this->globalScope->merge($scope);
 			
 			return $this;
 		}
@@ -73,9 +99,9 @@
 		/**
 		 * @return ApplicationUrl
 		**/
-		public function addUserScope($scope)
+		public function addUserScope(array $scope)
 		{
-			$this->scope->addUserScope($scope);
+			$this->scope->merge($scope);
 			
 			return $this;
 		}
@@ -84,21 +110,20 @@
 		/**
 		 * @return ApplicationUrl
 		**/
-		public function currentHref($additionalScope = array())
+		public function currentHref(array $additionalScope = array())
 		{
 			return $this->transform(
-				$this->scope->transform(null)->
-					addUserScope($additionalScope)
+				$this->scope->transform($additionalScope)
 			);
 		}
 		
 		/**
 		 * @return ApplicationUrl
 		**/
-		public function scopeHref($scope)
+		public function scopeHref(array $scope)
 		{
 			return $this->transform(
-				$this->scope->transform($scope)
+				Scope::create()->setScope($scope)
 			);
 		}
 		
@@ -107,13 +132,13 @@
 		**/
 		public function baseHref()
 		{
-			return $this->scopeHref(array());
+			return $this->transform(Scope::create());
 		}
 		
 		/**
 		 * @return ApplicationUrl
 		**/
-		public function transform(ApplicationRequestScope $newScope)
+		public function transform(Scope $newScope)
 		{
 			$result = clone $this;
 			
@@ -134,8 +159,7 @@
 			return $this->currentHref(
 				$this->rewriter->getScope(
 					$this->rewriter->getBase()->
-						transform($url)->
-							toHttpRequest()
+						transform($url)
 				)
 			);
 		}
@@ -146,7 +170,10 @@
 			
 			return
 				$this->rewriter->
-					getUrl($this->scope->getWholeScope())->
+					getUrl(
+						$this->scope->getScope()
+						+ $this->globalScope->getScope()
+					)->
 						toString();
 		}
 	}

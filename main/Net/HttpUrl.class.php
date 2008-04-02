@@ -140,15 +140,16 @@
 			return $this->ensureAbsolute()->normalize()->setFragment(null);
 		}
 		
+		// FIXME: move to HttpRequest
 		public function toHttpRequest()
 		{
 			$getVars = array();
 			$serverVars = array();
 			
-			if ($this->getScheme() == 'https')
-				$serverVars['HTTPS'] = true;
-			
 			if ($this->getHost()) {
+				if ($this->getScheme() == 'https')
+					$serverVars['HTTPS'] = true;
+			
 				$serverVars['HTTP_HOST'] = $this->getHost();
 				$serverVars['SERVER_NAME'] = $this->getHost();
 			}

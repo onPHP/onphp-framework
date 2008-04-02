@@ -1,5 +1,11 @@
 # $Id$
 
+2008-04-02	Ivan Y. Khvostishkov
+
+	* main/Application/: refactoring. Added test cases for HttpRewriter.
+
+	* core/Base/Scope.class.php: simple but useful wrapper for arrays.
+
 2008-04-01	Ivan Y. Khvostishkov
 
 	* main/Application/ApplicationUrl.class.php: now reference methods
