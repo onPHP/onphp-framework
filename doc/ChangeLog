@@ -1,5 +1,10 @@
 # $Id$
 
+2008-04-03	Denis M. Gabaidulin
+
+	* meta/classes/MetaConfiguration.class.php: lazy fetching strategy
+	support for SpookedClass properties.
+
 2008-04-02	Ivan Y. Khvostishkov
 
 	* main/Application/: refactoring. Added test cases for HttpRewriter.
@@ -23,11 +28,6 @@
 
 	* main/EntityProto/Builders/ObjectToObjectCast.class.php: useful to
 	cast one class to another.
-
-2008-04-03	Denis M. Gabaidulin
-
-	* meta/classes/MetaConfiguration.class.php: supporting lazy fetching
-	strategy for properties of Spooked Class Type.
 
 2008-03-31	Konstantin V. Arkhipov
 
