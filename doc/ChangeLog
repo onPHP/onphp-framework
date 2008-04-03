@@ -2,8 +2,8 @@
 
 2008-04-03	Denis M. Gabaidulin
 
-	* meta/classes/MetaConfiguration.class.php: supporting lazy fetching
-	strategy for properties of Spooked Class Type.
+	* meta/classes/MetaConfiguration.class.php: lazy fetching strategy
+	support for SpookedClass properties.
 
 2008-03-31	Konstantin V. Arkhipov
 

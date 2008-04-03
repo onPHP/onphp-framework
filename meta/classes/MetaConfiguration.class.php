@@ -184,7 +184,7 @@
 								$property->getFetchStrategy()
 								&& (
 									$property->getFetchStrategy()->getId()
-									!= FetchStrategy::LAZY 
+									!= FetchStrategy::LAZY
 								)
 							)
 						) {
