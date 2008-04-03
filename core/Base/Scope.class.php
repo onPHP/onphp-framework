@@ -84,7 +84,7 @@
 				'subscope must be an array'
 			);
 			
-			return self::create()->setScope(&$this->scope[$var]);
+			return self::create()->setScope($this->scope[$var]);
 		}
 	}
 ?>
