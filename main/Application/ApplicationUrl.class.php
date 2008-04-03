@@ -87,6 +87,14 @@
 		}
 		
 		/**
+		 * @return array
+		**/
+		public function getWholeScopeVars()
+		{
+			return $this->scope->getScope() + $this->globalScope->getScope();
+		}
+		
+		/**
 		 * @return ApplicationUrl
 		**/
 		public function addApplicationScope(array $scope)
