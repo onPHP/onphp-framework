@@ -36,9 +36,11 @@
 		{
 			$result = clone $this;
 			
-			$result->setScope($this->scope);
+			$scopeCopy = $this->scope;
 			
-			$result->merge($additionalScope);
+			$result->
+				setScope($scopeCopy)->
+				merge($additionalScope);
 			
 			return $result;
 		}
