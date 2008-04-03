@@ -35,7 +35,7 @@
 				return msg_send($q, $key, 1, false, false);
 			} catch (BaseException $e) {
 				// queue is full, rotate it.
-				msg_remove_queue($q);
+				return msg_remove_queue($q);
 			}
 		}
 		
