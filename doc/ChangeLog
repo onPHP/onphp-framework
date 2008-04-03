@@ -24,6 +24,11 @@
 	* main/EntityProto/Builders/ObjectToObjectCast.class.php: useful to
 	cast one class to another.
 
+2008-04-03	Denis M. Gabaidulin
+
+	* meta/classes/MetaConfiguration.class.php: supporting lazy fetching
+	strategy for properties of Spooked Class Type.
+
 2008-03-31	Konstantin V. Arkhipov
 
 	* global.inc.php.tpl: added cache invalidation upon failed include

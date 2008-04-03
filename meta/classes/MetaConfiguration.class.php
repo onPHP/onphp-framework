@@ -173,11 +173,19 @@
 					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
 						if (
 							(
-								$property->getType()->getClass()->getPattern()
-									instanceof SpookedClassPattern
-							) || (
-								$property->getType()->getClass()->getPattern()
-									instanceof SpookedEnumerationPattern
+								(
+									$property->getType()->getClass()->getPattern()
+										instanceof SpookedClassPattern
+								) || (
+									$property->getType()->getClass()->getPattern()
+										instanceof SpookedEnumerationPattern
+								)
+							) && (
+								$property->getFetchStrategy()
+								&& (
+									$property->getFetchStrategy()->getId()
+									!= FetchStrategy::LAZY 
+								)
 							)
 						) {
 							$property->setFetchStrategy(FetchStrategy::cascade());
