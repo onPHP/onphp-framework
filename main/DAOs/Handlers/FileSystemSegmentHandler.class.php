@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,12 +19,10 @@
 		
 		public function __construct($segmentId)
 		{
-			if (!is_writable($segmentId)) {
-				try {
-					mkdir($segmentId, 0700, true);
-				} catch (BaseException $e) {
-					// already created in race
-				}
+			try {
+				mkdir($segmentId, 0700, true);
+			} catch (BaseException $e) {
+				// already created in race
 			}
 			
 			$this->path = $segmentId;
