@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -25,12 +25,10 @@
 				.$segmentId
 				.DIRECTORY_SEPARATOR;
 			
-			if (!is_writable($path)) {
-				try {
-					mkdir($path, 0700, true);
-				} catch (BaseException $e) {
-					// already created in race
-				}
+			try {
+				mkdir($path, 0700, true);
+			} catch (BaseException $e) {
+				// already created in race
 			}
 			
 			$this->path = $path;
