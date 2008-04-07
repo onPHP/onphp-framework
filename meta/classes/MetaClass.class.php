@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -128,7 +128,7 @@
 			return (
 				$this->parent
 				&& (
-					!$this->getFinalParent()->getPattern()
+					!$this->getParent()->getPattern()
 						instanceof InternalClassPattern
 				)
 			);
@@ -386,6 +386,18 @@
 			$this->build = $do;
 			
 			return $this;
+		}
+		
+		public function isRedefinedProperty($name)
+		{
+			$parent = $this;
+			
+			while ($parent = $parent->getParent()) {
+				if ($parent->hasProperty($name))
+					return true;
+			}
+			
+			return false;
 		}
 	}
 ?>
