@@ -17,7 +17,7 @@
 	{
 		public static function build(MetaClass $class)
 		{
-			if ($class->hasBuildableParent())
+			if (!$class->hasBuildableParent())
 				return DictionaryDaoBuilder::build($class);
 			else
 				$parent = $class->getParent();
