@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -40,7 +40,7 @@
 			$out .= "\n{\n";
 			
 			foreach ($class->getProperties() as $property) {
-				if (!self::doPropertyBuild($property, $isNamed))
+				if (!self::doPropertyBuild($class, $property, $isNamed))
 					continue;
 				
 				$out .=
@@ -95,10 +95,14 @@ EOT;
 		}
 		
 		private static function doPropertyBuild(
+			MetaClass $class,
 			MetaClassProperty $property,
 			$isNamed
 		)
 		{
+			if ($class->isRedefinedProperty($property->getName()))
+				return false;
+			
 			if ($isNamed && $property->getName() == 'name')
 				return false;
 			
