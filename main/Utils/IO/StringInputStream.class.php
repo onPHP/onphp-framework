@@ -92,5 +92,10 @@
 			
 			return $result;
 		}
+		
+		public function getPosition()
+		{
+			return $this->position;
+		}
 	}
 ?>
