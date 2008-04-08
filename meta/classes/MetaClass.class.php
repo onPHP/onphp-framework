@@ -154,7 +154,7 @@
 		/// with internal class' properties, if any
 		public function getWithInternalProperties()
 		{
-			if ($this->hasBuildableParent()) {
+			if ($this->parent) {
 				$out = $this->properties;
 				
 				$class = $this;
