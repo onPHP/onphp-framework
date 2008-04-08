@@ -70,7 +70,7 @@
 			
 			$path = $this->getPath($url);
 			
-			if ($path)
+			if ($path->toString())
 				$result['path'] = $path;
 			
 			return $result;
