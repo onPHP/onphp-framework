@@ -164,7 +164,7 @@
 			
 			Assert::isTrue($url->isValid());
 			
-			return $this->currentHref(
+			return $this->scopeHref(
 				$this->rewriter->getScope(
 					$this->rewriter->getBase()->
 						transform($url)

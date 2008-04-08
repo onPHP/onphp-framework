@@ -34,15 +34,17 @@
 		
 		public function transform(array $additionalScope)
 		{
-			$result = clone $this;
-			
-			$scopeCopy = $this->scope;
-			
-			$result->
-				setScope($scopeCopy)->
+			return
+				Scope::create()->
+				copyScope($this->scope)->
 				merge($additionalScope);
+		}
+		
+		public function copyScope(array $scope)
+		{
+			$this->scope = $scope;
 			
-			return $result;
+			return $this;
 		}
 		
 		public function setScope(array &$scope)
