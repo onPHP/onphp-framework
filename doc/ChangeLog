@@ -1,5 +1,11 @@
 # $Id$
 
+2008-04-09	Ivan Y. Khvostishkov
+
+	* core/Form/Primitives/BasePrimitive.class.php: spawn() method for
+	cloning primitives. It's one of the possible soft-tricks to implement
+	anonymous primitives.
+
 2008-04-03	Denis M. Gabaidulin
 
 	* meta/classes/MetaConfiguration.class.php: lazy fetching strategy

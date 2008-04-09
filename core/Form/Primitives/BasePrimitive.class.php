@@ -58,6 +58,15 @@
 			$this->name = $name;
 		}
 		
+		public function spawn($newName)
+		{
+			$result = clone $this;
+			
+			$result->setName($newName);
+			
+			return $result;
+		}
+		
 		public function getName()
 		{
 			return $this->name;
