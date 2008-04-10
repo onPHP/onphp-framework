@@ -89,7 +89,8 @@
 		}
 		
 		/**
-		 * @deprecated $recursive, use limitedPropertiesList instead
+		 * Also try using plain limitedPropertiesList instead of limited
+		 * hierarchy recursing.
 		**/
 		public function make($object, $recursive = true)
 		{
@@ -128,6 +129,11 @@
 					.get_class($this->proto)
 				);
 			
+			return $this->compile($object, $recursive);
+		}
+		
+		public function compile($object, $recursive = true)
+		{
 			$result = $this->createEmpty();
 			
 			if ($recursive)
