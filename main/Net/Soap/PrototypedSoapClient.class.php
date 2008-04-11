@@ -42,6 +42,10 @@
 	abstract class PrototypedSoapClient
 	{
 		protected $wsdlUrl		= null;
+		
+		protected $login		= null;
+		protected $password		= null;
+		
 		protected $classMap		= array();
 		
 		protected $soapClient	= null;
@@ -75,22 +79,21 @@
 			
 			Assert::isNotNull($wsdlUrl);
 			
-			$this->soapClient = new SoapClient(
-				$wsdlUrl,
-				array(
-					'soap_version'	=> SOAP_1_1,
-					'classmap'		=> $this->classMap(),
-					
-					// TODO:?
-					/*
-					'compression'	=> SOAP_COMPRESSION_ACCEPT
-						| SOAP_COMPRESSION_GZIP
-					*/
-					
-					'trace'			=> true,
-					'exceptions'	=> true
-				)
+			$params = array(
+				'soap_version'	=> SOAP_1_1,
+				'classmap'		=> $this->classMap(),
+				'trace'			=> true,
+				'exceptions'	=> true
 			);
+			
+			if ($this->login)
+				$params['login'] = $this->login;
+			
+			if ($this->password)
+				$params['password'] = $this->password;
+				
+			
+			$this->soapClient = new SoapClient($wsdlUrl, $params);
 		}
 		
 		public function getWsdlUrl()

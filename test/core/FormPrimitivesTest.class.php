@@ -52,6 +52,25 @@
 			$this->formAssertsWrong($form, 'property', $raw);
 		}
 		
+		public function testInvalidConstraintsWithDefault()
+		{
+			$form = $this->makeForm();
+			
+			$form->get('property')->
+				setDefault(42);
+			
+			$raw = -1;
+			
+			$form->import(
+				array('property' => $raw)
+			);
+			
+			$this->formErrorAsserts($form, true, true);
+			
+			// value, safe, raw, form, export
+			$this->formAsserts($form, 'property', null, 42, $raw, $raw, null);
+		}
+		
 		public function testBlank()
 		{
 			$form = $this->makeForm();
@@ -147,11 +166,11 @@
 			$exportValue
 		)
 		{
-			$this->assertEquals($form->getValue($prm), $getValue);
-			$this->assertEquals($form->getSafeValue($prm), $getSafeValue);
-			$this->assertEquals($form->getRawValue($prm), $getRawValue);
-			$this->assertEquals($form->getFormValue($prm), $getFormValue);
-			$this->assertEquals($form->exportValue($prm), $exportValue);
+			$this->assertEquals($getValue, $form->getValue($prm));
+			$this->assertEquals($getSafeValue, $form->getSafeValue($prm));
+			$this->assertEquals($getRawValue, $form->getRawValue($prm));
+			$this->assertEquals($getFormValue, $form->getFormValue($prm));
+			$this->assertEquals($exportValue, $form->exportValue($prm));
 		}
 		
 		private function formErrorAsserts(Form $form, $errors, $innerErrors)
