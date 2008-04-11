@@ -379,8 +379,16 @@
 					);
 			}
 			
-			if ($this->hasServerVar('REQUEST_URI'))
-				$result->setPath($this->getServerVar('REQUEST_URI'));
+			if ($this->hasServerVar('REQUEST_URI')) {
+				$path = $this->getServerVar('REQUEST_URI');
+				
+				$pos = strpos($path, '?');
+				
+				if ($pos !== false)
+					$path = substr($path, 0, $pos);
+				
+				$result->setPath($path);
+			}
 			
 			$getVars = $this->getGet();
 			
