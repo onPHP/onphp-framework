@@ -1,5 +1,10 @@
 # $Id$
 
+2008-04-13	Konstantin V. Arkhipov
+
+	* core/Cache/SemaphorePool.class.php: DirectoryLocker is the default
+	locker now.
+
 2008-04-09	Ivan Y. Khvostishkov
 
 	* core/Form/Primitives/BasePrimitive.class.php: spawn() method for
