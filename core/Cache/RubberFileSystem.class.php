@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -172,8 +172,7 @@
 				return null;
 			
 			try {
-				$old = umask();
-				umask(0077);
+				$old = umask(0077);
 				$fp = fopen($path, $value !== null ? 'wb' : 'rb');
 				umask($old);
 			} catch (BaseException $e) {
