@@ -172,7 +172,7 @@
 			);
 		}
 		
-		public function toString()
+		public function toHttpUrl()
 		{
 			Assert::isNotNull($this->rewriter);
 			
@@ -181,8 +181,12 @@
 					getUrl(
 						$this->scope->getScope()
 						+ $this->globalScope->getScope()
-					)->
-						toString();
+					);
+		}
+		
+		public function toString()
+		{
+			return $this->toHttpUrl()->toString();
 		}
 	}
 ?>
