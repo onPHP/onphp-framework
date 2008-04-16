@@ -109,8 +109,16 @@
 				$link = $this->pool[$name];
 			
 			if ($link) {
-				if (!$link->isConnected())
-					$link->connect();
+				if (!$link->isConnected()) {
+					
+					try {
+						$link->connect();
+					} catch (BaseException $e) {
+						throw new DatabaseIsDownException(
+							$e->getMessage()
+						);
+					}
+				}
 				
 				return $link;
 			}

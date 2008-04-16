@@ -1,5 +1,10 @@
 # $Id$
 
+2008-04-16	Ivan Y. Khvostishkov
+
+	* core/Exceptions/DatabaseIsDownException.class.php: when connect
+	fails.
+
 2008-04-13	Konstantin V. Arkhipov
 
 	* core/Cache/SemaphorePool.class.php: DirectoryLocker is the default
