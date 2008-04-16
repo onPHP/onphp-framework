@@ -46,6 +46,8 @@
 		protected $login		= null;
 		protected $password		= null;
 		
+		protected $connectTimeout	= null;
+		
 		protected $classMap		= array();
 		
 		protected $soapClient	= null;
@@ -85,6 +87,9 @@
 				'trace'			=> true,
 				'exceptions'	=> true
 			);
+			
+			if ($this->connectTimeout)
+				$params['connection_timeout'] = $this->connectTimeout;
 			
 			if ($this->login)
 				$params['login'] = $this->login;
