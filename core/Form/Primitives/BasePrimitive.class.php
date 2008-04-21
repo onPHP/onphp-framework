@@ -153,7 +153,7 @@
 		/**
 		 * @return BasePrimitive
 		**/
-		public function dropValue($value)
+		public function dropValue()
 		{
 			$this->value = null;
 			
