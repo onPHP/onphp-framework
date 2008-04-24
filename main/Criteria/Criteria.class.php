@@ -496,6 +496,10 @@
 						array($property->getClassName(), 'dao')
 					);
 					
+					// add's custom dao's injection possibility
+					if (!$propertyDao instanceof ProtoDAO)
+						continue;
+					
 					$tableAlias = $propertyDao->getJoinName(
 						$property->getColumnName(),
 						$prefix
