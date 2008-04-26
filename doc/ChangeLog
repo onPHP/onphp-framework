@@ -1,5 +1,10 @@
 # $Id$
 
+2008-04-26	Denis M. Gabaidulin
+
+	* core/Form/Filters/NormalizeUrlFilter.class.php: url normalizator
+	filter were merged from 0.10.
+
 2008-04-13	Konstantin V. Arkhipov
 
 	* core/Cache/SemaphorePool.class.php: DirectoryLocker is the default
