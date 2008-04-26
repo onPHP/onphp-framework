@@ -19,7 +19,7 @@
 	{
 		private static $headerSent		= false;
 		private static $redirectSent	= false;
-		private static $cacheLifeTime   = 3600;
+		private static $cacheLifeTime	= 3600;
 		
 		public static function redirectRaw($url)
 		{
