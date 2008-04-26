@@ -116,7 +116,7 @@
 				) {
 					$property->min = self::$limits[$size][0];
 					$property->max = self::$limits[$size][1];
-				} else { // string
+				} elseif ($type != 'float') { // string
 					$property->max = $size;
 				}
 				
