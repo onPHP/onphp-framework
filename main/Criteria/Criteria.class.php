@@ -415,7 +415,8 @@
 				$query =
 					$this->getProjection()->process(
 						$this,
-						OSQL::select()->from($this->dao->getTable())
+						$this->dao->makeSelectHead()->
+							dropFields()
 					);
 			} else
 				$query = $this->dao->makeSelectHead();
