@@ -103,11 +103,6 @@
 			return 'AUTO_INCREMENT';
 		}
 		
-		public static function toCasted($field, $type)
-		{
-			return "CAST({$field} AS {$type})";
-		}
-		
 		public function fullTextSearch($fields, $words, $logic)
 		{
 			return
