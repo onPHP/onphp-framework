@@ -127,7 +127,7 @@
 			return true;
 		}
 		
-		public function uncacheByIds($ids)
+		public function uncacheByIds(array $ids)
 		{
 			return true;
 		}

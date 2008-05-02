@@ -246,7 +246,7 @@
 			return Cache::worker($this)->uncacheById($id);
 		}
 		
-		public function uncacheByIds($ids)
+		public function uncacheByIds(array $ids)
 		{
 			foreach ($ids as $id)
 				unset($this->identityMap[$id]);

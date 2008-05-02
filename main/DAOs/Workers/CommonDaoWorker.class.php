@@ -457,7 +457,7 @@
 
 		/// uncachers
 		//@{
-		public function uncacheByIds($ids)
+		public function uncacheByIds(array $ids)
 		{
 			foreach ($ids as $id)
 				$this->uncacheById($id);

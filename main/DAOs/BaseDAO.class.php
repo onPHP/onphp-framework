@@ -52,7 +52,7 @@
 		/// uncachers
 		//@{
 		public function uncacheById($id);
-		public function uncacheByIds($ids);
+		public function uncacheByIds(array $ids);
 		public function uncacheLists();
 		//@}
 	}
