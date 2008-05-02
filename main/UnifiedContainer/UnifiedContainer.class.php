@@ -84,13 +84,8 @@
 			$this->parent 	= $parent;
 			$this->lazy		= $lazy;
 			$this->dao		= $dao;
-
-			$childClass = $dao->getObjectName();
 			
-			Assert::isTrue(
-				new $childClass instanceof Identifiable,
-				"child object should be at least Identifiable"
-			);
+			Assert::isInstance($dao->getObjectName(), 'Identifiable');
 		}
 		
 		public function __sleep()
