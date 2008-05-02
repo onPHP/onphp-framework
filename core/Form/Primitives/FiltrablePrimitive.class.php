@@ -132,11 +132,13 @@
 			if (!BasePrimitive::import($scope))
 				return null;
 			
-			$value = (string) $scope[$this->name];
-			
-			$this->applyImportFilters($value);
-			
-			$scope[$this->name] = $value;
+			if (!is_array($scope[$this->name])) {
+				$value = (string) $scope[$this->name];
+				$this->applyImportFilters($value);
+				$scope[$this->name] = $value;
+			} else {
+				$this->applyImportFilters($scope[$this->name]);
+			}
 			
 			return parent::import($scope);
 		}
