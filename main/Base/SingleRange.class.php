@@ -11,7 +11,7 @@
 /* $Id$ */
 
 	/**
-	  * @ingroup Helpers
+	 * @ingroup Helpers
 	**/
 	interface SingleRange
 	{
