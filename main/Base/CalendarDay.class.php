@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2006-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -23,7 +23,7 @@
 		/**
 		 * @return CalendarDay
 		**/
-		public static function create($timestamp)
+		public static function create($timestamp = null)
 		{
 			return new self($timestamp);
 		}
