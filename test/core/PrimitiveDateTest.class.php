@@ -18,7 +18,11 @@
 				)
 			);
 			
-			$this->assertFalse($prm->import($array)); // wrong year
+			$this->assertTrue($prm->import($array));
+			$this->assertEqual(
+				$prm->getValue()->toString(),
+				'3456-02-01 17:38:59'
+			);
 			
 			$array['test'][PrimitiveDate::YEAR] = '2006';
 			
@@ -37,7 +41,11 @@
 			
 			$array = array('test' => '1234-1-2 17:38:59');
 			
-			$this->assertFalse($prm->import($array)); // wrong year
+			$this->assertTrue($prm->import($array));
+			$this->assertEqual(
+				$prm->getValue()->toString(),
+				'1234-01-02 17:38:59'
+			);
 			
 			$array = array('test' => '1975-1-2 17:38:59');
 			

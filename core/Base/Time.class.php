@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -31,9 +31,12 @@
 		// currently supports '01:23:45', '012345', '1234', '12'
 		public function __construct($input)
 		{
-			$input = (string) $input;
-			
-			$time = split(':', $input);
+			if (Assert::checkInteger($input)) {
+				$time = $input;
+			} else {
+				Assert::isString($input);
+				$time = explode(':', $input);
+			}
 			
 			$lenght = strlen($input);
 			
@@ -53,39 +56,37 @@
 						
 						$this->setHour(substr($input, 0, 2));
 						break;
-					
+						
 					case 3:
-
+						
 						$assumedHour = substr($input, 0, 2);
 						
-						if ($assumedHour > 12)
+						if ($assumedHour > 23)
 							$this->
-								setHour($input[0])->
-								setMinute(substr($input, 1, 3));
+								setHour(substr($input, 0, 1))->
+								setMinute(substr($input, 1, 2));
 						else
 							$this->
 								setHour($assumedHour)->
-								setMinute("{$input[2]}0");
-
-						break;
-
-					case 4:
-					case 5:
-					case 6:
-
-						$this->
-							setHour(substr($input, 0, 2))->
-							setMinute(substr($input, 2, 4))->
-							setSecond(substr($input, 4, 6));
+								setMinute(substr($input, 2, 1).'0');
 						
 						break;
 					
+					case 4:
+					case 5:
+					case 6:
+						
+						$this->
+							setHour(substr($input, 0, 2))->
+							setMinute(substr($input, 2, 2))->
+							setSecond(substr($input, 4, 2));
+						
+						break;
+						
 					default:
 						throw new WrongArgumentException('unknown format');
 				}
 			}
-			
-			/* NOTREACHED */
 		}
 		
 		public function getHour()
