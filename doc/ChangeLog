@@ -20,6 +20,9 @@
 
 2008-04-13	Konstantin V. Arkhipov
 
+	* core/Types/Range.class.php: API changed wrt SingleRange interface
+	and RangedType class.
+
 	* core/Form/Primitives/: ported to use basic types as input validation.
 
 	* core/Types/: new types were implemented or ported from standalone
