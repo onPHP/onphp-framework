@@ -69,5 +69,22 @@
 				$this->fail();
 			} catch (WrongArgumentException $e) {/*_*/}
 		}
+		
+		public function testCreators()
+		{
+			foreach (
+				array(
+					'SmallInteger', 'UnsignedSmallInteger', 'Integer',
+					'UnsignedInteger', 'PositiveInteger', 'NegativeInteger',
+					'BigInteger', 'UnsignedBigInteger'
+				)
+				as $className
+			) {
+				$this->assertEquals(
+					new $className,
+					call_user_func(array($className, 'create'))
+				);
+			}
+		}
 	}
 ?>
