@@ -75,7 +75,7 @@
 					) {
 						$toFetch[] = $cached->getId();
 					} else {
-						$list[] = $this->dao->fetchEncapsulants($cached);
+						$list[] = $this->dao->completeObject($cached);
 					}
 				}
 			} else {
