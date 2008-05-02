@@ -21,6 +21,14 @@
 		/**
 		 * @return Numeric
 		**/
+		public static function create($value = null)
+		{
+			return new self($value);
+		}
+		
+		/**
+		 * @return Numeric
+		**/
 		public function setValue($value)
 		{
 			if ($this->checkValue($value)) {

@@ -18,6 +18,14 @@
 		/**
 		 * @return HashMap
 		**/
+		public static function create($value = null)
+		{
+			return new self($value);
+		}
+		
+		/**
+		 * @return HashMap
+		**/
 		public function setValue($value)
 		{
 			if (is_array($value)) {

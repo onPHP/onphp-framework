@@ -18,6 +18,14 @@
 		/**
 		 * @return Binary
 		**/
+		public static function create($value = null)
+		{
+			return new self($value);
+		}
+		
+		/**
+		 * @return Binary
+		**/
 		public function setValue($value)
 		{
 			if (is_string($value)) {

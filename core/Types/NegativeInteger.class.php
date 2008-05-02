@@ -16,5 +16,13 @@
 	final class NegativeInteger extends Integer
 	{
 		protected $max = -1;
+		
+		/**
+		 * @return NegativeInteger
+		**/
+		public static function create($value = null)
+		{
+			return new self($value);
+		}
 	}
 ?>

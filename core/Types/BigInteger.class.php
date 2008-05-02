@@ -17,5 +17,13 @@
 	{
 		protected $min = Integer::SIGNED_BIG_MIN;
 		protected $max = Integer::SIGNED_BIG_MAX;
+		
+		/**
+		 * @return BigInteger
+		**/
+		public static function create($value = null)
+		{
+			return new self;
+		}
 	}
 ?>

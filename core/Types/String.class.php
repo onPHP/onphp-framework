@@ -18,6 +18,14 @@
 		/**
 		 * @return String
 		**/
+		public static function create($value = null)
+		{
+			return new self($value);
+		}
+		
+		/**
+		 * @return String
+		**/
 		public function setValue($value)
 		{
 			if (is_string($value)) {

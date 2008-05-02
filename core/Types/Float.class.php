@@ -15,6 +15,14 @@
 	**/
 	final class Float extends Numeric
 	{
+		/**
+		 * @return Float
+		**/
+		public static function create($value = null)
+		{
+			return new self($value);
+		}
+		
 		protected function checkValue($value)
 		{
 			return Assert::checkFloat($value);

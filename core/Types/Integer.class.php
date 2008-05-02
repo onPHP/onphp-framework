@@ -30,6 +30,14 @@
 		protected $min = self::SIGNED_MIN;
 		protected $max = self::SIGNED_MAX;
 		
+		/**
+		 * @return Integer
+		**/
+		public static function create($value = null)
+		{
+			return new self($value);
+		}
+		
 		protected function checkValue($value)
 		{
 			return Assert::checkInteger($value);

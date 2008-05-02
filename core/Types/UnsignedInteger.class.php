@@ -17,5 +17,13 @@
 	{
 		protected $min = 0;
 		protected $max = Integer::UNSIGNED_MAX;
+		
+		/**
+		 * @return UnsignedInteger
+		**/
+		public static function create($value = null)
+		{
+			return new self($value);
+		}
 	}
 ?>

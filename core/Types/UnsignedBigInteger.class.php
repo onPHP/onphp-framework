@@ -17,5 +17,13 @@
 	{
 		protected $min = 0;
 		protected $max = null;
+		
+		/**
+		 * @return UnsignedBigInteger
+		**/
+		public static function create($value = null)
+		{
+			return new self($value);
+		}
 	}
 ?>

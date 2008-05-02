@@ -16,5 +16,13 @@
 	final class PositiveInteger extends Integer
 	{
 		protected $min = 1;
+		
+		/**
+		 * @return PositiveInteger
+		**/
+		public static function create($value = null)
+		{
+			return new self($value);
+		}
 	}
 ?>
