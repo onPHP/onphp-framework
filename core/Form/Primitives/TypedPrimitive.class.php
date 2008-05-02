@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2008 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -12,12 +12,34 @@
 
 	/**
 	 * @ingroup Primitives
-	 * @ingroup Module
 	**/
-	abstract class PrimitiveNumber extends FiltrablePrimitive
+	abstract class TypedPrimitive extends BasePrimitive
 	{
-		abstract protected function checkNumber($number);
-		abstract protected function castNumber($number);
+		protected $atom = null;
+		
+		abstract public function getTypeName();
+		abstract public function isObjectType();
+		
+		public function __construct($name)
+		{
+			parent::__construct($name);
+			
+			$typeName = $this->getTypeName();
+			
+			$this->atom = new $typeName;
+		}
+		
+		/**
+		 * @return TypedPrimitive
+		**/
+		public function clean()
+		{
+			parent::clean();
+			
+			$this->atom = new $this->atom;
+			
+			return $this;
+		}
 		
 		public function import(array $scope)
 		{
@@ -25,25 +47,20 @@
 				return null;
 			
 			try {
-				$this->checkNumber($scope[$this->name]);
+				$this->atom->
+					setValue($scope[$this->name]);
+				
+				if ($this->isObjectType())
+					$this->value = clone $this->atom;
+				else
+					$this->value = $this->atom->getValue();
 			} catch (WrongArgumentException $e) {
+				return false;
+			} catch (OutOfRangeException $e) {
 				return false;
 			}
 			
-			$this->value = $this->castNumber($scope[$this->name]);
-			
-			$this->selfFilter();
-			
-			if (
-				!(null !== $this->min && $this->value < $this->min)
-				&& !(null !== $this->max && $this->value > $this->max)
-			) {
-				return true;
-			} else {
-				$this->value = null;
-			}
-			
-			return false;
+			return true;
 		}
 	}
 ?>

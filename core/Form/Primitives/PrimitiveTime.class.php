@@ -19,13 +19,23 @@
 		const MINUTES	= PrimitiveTimestamp::MINUTES;
 		const SECONDS	= PrimitiveTimestamp::SECONDS;
 		
+		public function getTypeName()
+		{
+			return 'Time';
+		}
+		
+		public function isObjectType()
+		{
+			return true;
+		}
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return PrimitiveTime
 		**/
 		public function setValue(/* Time */ $time)
 		{
-			Assert::isTrue($time instanceof Time);
+			Assert::isInstance($time, 'Time');
 			
 			$this->value = $time;
 			
@@ -38,9 +48,9 @@
 		**/
 		public function setMin(/* Time */ $time)
 		{
-			Assert::isTrue($time instanceof Time);
+			Assert::isInstance($time, 'Time');
 			
-			$this->min = $time;
+			$this->atom->setMin($time);
 			
 			return $this;
 		}
@@ -51,9 +61,9 @@
 		**/
 		public function setMax(/* Time */ $time)
 		{
-			Assert::isTrue($time instanceof Time);
+			Assert::isInstance($time, 'Time');
 			
-			$this->max = $time;
+			$this->atom->setMax($time);
 			
 			return $this;
 		}
@@ -64,7 +74,7 @@
 		**/
 		public function setDefault(/* Time */ $time)
 		{
-			Assert::isTrue($time instanceof Time);
+			Assert::isInstance($time, 'Time');
 			
 			$this->default = $time;
 			
@@ -73,22 +83,7 @@
 		
 		public function importSingle(array $scope)
 		{
-			if (!BasePrimitive::import($scope))
-				return null;
-			
-			try {
-				$time = new Time($scope[$this->name]);
-			} catch (WrongArgumentException $e) {
-				return false;
-			}
-				
-			if ($this->checkLimits($time)) {
-				$this->value = $time;
-				
-				return true;
-			}
-			
-			return false;
+			return RangedPrimitive::import($scope);
 		}
 		
 		public function importMarried(array $scope)
@@ -108,31 +103,12 @@
 				if (isset($scope[$this->name][self::SECONDS]))
 					$seconds = (int) $scope[$this->name][self::SECONDS];
 				
-				try {
-					$time = new Time($hours.':'.$minutes.':'.$seconds);
-				} catch (WrongArgumentException $e) {
-					return false;
-				}
+				$scope[$this->name] = $hours.':'.$minutes.':'.$seconds;
 				
-				if ($this->checkLimits($time)) {
-					$this->value = $time;
-					
-					return true;
-				}
+				return RangedPrimitive::import($scope);
 			}
 			
 			return false;
-		}
-		
-		public function import(array $scope)
-		{
-			if ($this->isEmpty($scope)) {
-				$this->value = null;
-				$this->raw = null;
-				return null;
-			}
-			
-			return parent::import($scope);
 		}
 		
 		public function importValue($value)
@@ -140,10 +116,10 @@
 			if ($value)
 				Assert::isTrue($value instanceof Time);
 			else
-				return parent::importValue(null);
+				$value = null;
 			
 			return
-				$this->importSingle(
+				RangedPrimitive::import(
 					array($this->getName() => $value->toString())
 				);
 		}
@@ -161,13 +137,6 @@
 			return empty($scope[$this->name][self::HOURS])
 				|| empty($scope[$this->name][self::MINUTES])
 				|| empty($scope[$this->name][self::SECONDS]);
-		}
-		
-		private function checkLimits(Time $time)
-		{
-			return
-				!($this->min && $this->min->toSeconds() > $time->toSeconds())
-				&& !($this->max && $this->max->toSeconds() < $time->toSeconds());
 		}
 	}
 ?>

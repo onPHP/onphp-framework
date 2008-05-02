@@ -19,16 +19,21 @@
 		const MINUTES	= 'min';
 		const SECONDS	= 'sec';
 		
+		public function getTypeName()
+		{
+			return 'Timestamp';
+		}
+		
 		public function importMarried(array $scope)
 		{
 			if (
 				BasePrimitive::import($scope)
+				&& is_array($scope[$this->name])
 				&& isset(
 					$scope[$this->name][self::DAY],
 					$scope[$this->name][self::MONTH],
 					$scope[$this->name][self::YEAR]
 				)
-				&& is_array($scope[$this->name])
 			) {
 				if ($this->isEmpty($scope))
 					return !$this->isRequired();
@@ -51,28 +56,14 @@
 				if (!checkdate($month, $day, $year))
 					return false;
 				
-				try {
-					$stamp = new Timestamp(
-						$year.'-'.$month.'-'.$day.' '
-						.$hours.':'.$minutes.':'.$seconds
-					);
-				} catch (WrongArgumentException $e) {
-					// fsck wrong stamps
-					return false;
-				}
+				$scope[$this->name] =
+					$year.'-'.$month.'-'.$day.' '
+					.$hours.':'.$minutes.':'.$seconds;
 				
-				if ($this->checkRanges($stamp)) {
-					$this->value = $stamp;
-					return true;
-				}
+				return RangedPrimitive::import($scope);
 			}
 			
 			return false;
-		}
-		
-		protected function getObjectName()
-		{
-			return 'Timestamp';
 		}
 	}
 ?>

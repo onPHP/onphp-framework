@@ -24,6 +24,16 @@
 		**/
 		private $fetchMode = null;
 		
+		public function getTypeName()
+		{
+			return 'HashMap';
+		}
+		
+		public function isObjectType()
+		{
+			return false;
+		}
+		
 		/**
 		 * @return PrimitiveArray
 		**/
@@ -34,28 +44,6 @@
 			$this->fetchMode = $ternary;
 			
 			return $this;
-		}
-		
-		public function import(array $scope)
-		{
-			if (!BasePrimitive::import($scope))
-				return null;
-			
-			$this->value = $scope[$this->name];
-			
-			$this->selfFilter();
-			
-			if (
-				is_array($this->value)
-				&& !($this->min && count($this->value) < $this->min)
-				&& !($this->min && count($this->value) > $this->max)
-			) {
-				return true;
-			} else {
-				$this->value = null;
-			}
-			
-			return false;
 		}
 		
 		public function importValue($value)

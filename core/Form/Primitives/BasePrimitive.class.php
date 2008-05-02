@@ -48,14 +48,14 @@
 		protected $name		= null;
 		protected $default	= null;
 		protected $value	= null;
-
+		
 		protected $required	= false;
 		protected $imported	= false;
-
+		
 		protected $raw		= null;
 		
 		protected $error	= null;
-
+		
 		public function __construct($name)
 		{
 			$this->name = $name;
@@ -84,7 +84,7 @@
 			
 			return $this;
 		}
-
+		
 		public function getDefault()
 		{
 			return $this->default;

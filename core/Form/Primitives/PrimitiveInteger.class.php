@@ -13,16 +13,16 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class PrimitiveInteger extends PrimitiveNumber
+	class PrimitiveInteger extends FiltrablePrimitive
 	{
-		protected function checkNumber($number)
+		public function getTypeName()
 		{
-			Assert::isInteger($number);
+			return 'Integer';
 		}
 		
-		protected function castNumber($number)
+		public function isObjectType()
 		{
-			return (int) $number;
+			return false;
 		}
 	}
 ?>

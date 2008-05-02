@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveDateRange extends FiltrablePrimitive
+	final class PrimitiveDateRange extends RangedPrimitive
 	{
 		private $className = null;
 		
@@ -23,6 +23,16 @@
 		public static function create($name)
 		{
 			return new self($name);
+		}
+		
+		public function getTypeName()
+		{
+			return 'DateRange';
+		}
+		
+		public function isObjectType()
+		{
+			return true;
 		}
 		
 		/**
@@ -66,7 +76,7 @@
 						return false;
 					}
 				} else {
-					return parent::importValue(null);
+					return BasePrimitive::importValue(null);
 				}
 			} catch (WrongArgumentException $e) {
 				return false;
@@ -75,33 +85,34 @@
 		
 		public function import(array $scope)
 		{
-			if (parent::import($scope)) {
-				try {
-					$range = DateRangeList::makeRange($scope[$this->name]);
-				} catch (WrongArgumentException $e) {
-					return false;
-				}
-				
-				if ($this->checkRanges($range)) {
-					if (
-						$this->className
-						&& ($this->className != $this->getObjectName())
-					) {
-						$newRange = new $this->className;
-						
-						if ($start = $range->getStart())
-							$newRange->setStart($start);
-						
-						if ($end = $range->getEnd())
-							$newRange->setEnd($end);
-						
-						$this->value = $newRange;
-						return true;
-					}
+			if (!BasePrimitive::import($scope))
+				return null;
+			
+			try {
+				$range = DateRangeList::makeRange($scope[$this->name]);
+			} catch (WrongArgumentException $e) {
+				return false;
+			}
+			
+			if ($this->checkRanges($range)) {
+				if (
+					$this->className
+					&& ($this->className != $this->getObjectName())
+				) {
+					$newRange = new $this->className;
 					
-					$this->value = $range;
+					if ($start = $range->getStart())
+						$newRange->setStart($start);
+					
+					if ($end = $range->getEnd())
+						$newRange->setEnd($end);
+					
+					$this->value = $newRange;
 					return true;
 				}
+				
+				$this->value = $range;
+				return true;
 			}
 			
 			return false;

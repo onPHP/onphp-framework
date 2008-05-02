@@ -20,6 +20,8 @@
 
 2008-04-13	Konstantin V. Arkhipov
 
+	* core/Form/Primitives/: ported to use basic types as input validation.
+
 	* core/Types/: new types were implemented or ported from standalone
 	classes: Binary, Boolean, Date, DateRange, HashMap, Range, Time,
 	Timestamp, Range.

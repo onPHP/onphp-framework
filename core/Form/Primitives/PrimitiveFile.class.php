@@ -19,14 +19,24 @@
 	{
 		private $originalName		= null;
 		private $mimeType			= null;
-
+		
 		private $allowedMimeTypes	= array();
-
+		
+		public function getTypeName()
+		{
+			throw new UnsupportedMethodException();
+		}
+		
+		public function isObjectType()
+		{
+			throw new UnsupportedMethodException();
+		}
+		
 		public function getOriginalName()
 		{
 			return $this->originalName;
 		}
-
+		
 		public function getMimeType()
 		{
 			return $this->mimeType;
@@ -55,7 +65,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return PrimitiveFile
@@ -65,7 +75,7 @@
 			Assert::isString($mime);
 			
 			$this->allowedMimeTypes[] = $mime;
-
+		
 			return $this;
 		}
 		
@@ -73,7 +83,7 @@
 		{
 			return $this->allowedMimeType;
 		}
-
+		
 		public function isAllowedMimeType()
 		{
 			if (count($this->allowedMimeTypes) > 0) {
@@ -81,7 +91,7 @@
 			} else
 				return true;
 		}
-
+		
 		public function copyTo($path, $name)
 		{
 			return $this->copyToPath($path.$name);

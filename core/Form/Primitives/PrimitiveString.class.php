@@ -21,6 +21,16 @@
 		
 		protected $pattern = null;
 		
+		public function getTypeName()
+		{
+			return 'String';
+		}
+		
+		public function isObjectType()
+		{
+			return false;
+		}
+		
 		/**
 		 * @return PrimitiveString
 		**/
@@ -33,22 +43,10 @@
 		
 		public function import(array $scope)
 		{
-			if (!BasePrimitive::import($scope))
+			if (!parent::import($scope))
 				return null;
 			
-			$this->value = (string) $scope[$this->name];
-			
-			$this->selfFilter();
-			
-			if (
-				is_string($this->value)
-				// zero is quite special value here
-				&& ($this->value === '0' || !empty($this->value))
-				&& ($length = mb_strlen($this->value))
-				&& !($this->max && $length > $this->max)
-				&& !($this->min && $length < $this->min)
-				&& (!$this->pattern || preg_match($this->pattern, $this->value))
-			) {
+			if (!$this->pattern || preg_match($this->pattern, $this->value)) {
 				return true;
 			} else {
 				$this->value = null;

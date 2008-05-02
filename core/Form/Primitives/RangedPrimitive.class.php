@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -14,14 +14,14 @@
 	 * @ingroup Primitives
 	 * @ingroup Module
 	**/
-	abstract class RangedPrimitive extends BasePrimitive
+	abstract class RangedPrimitive extends TypedPrimitive
 	{
 		protected $min = null;
 		protected $max = null;
 		
 		public function getMin()
 		{
-			return $this->min;
+			return $this->atom->getMin();
 		}
 		
 		/**
@@ -29,14 +29,14 @@
 		**/
 		public function setMin($min)
 		{
-			$this->min = $min;
+			$this->atom->setMin($min);
 			
 			return $this;
 		}
 		
 		public function getMax()
 		{
-			return $this->max;
+			return $this->atom->getMax();
 		}
 		
 		/**
@@ -44,7 +44,7 @@
 		**/
 		public function setMax($max)
 		{
-			$this->max = $max;
+			$this->atom->setMax($max);
 			
 			return $this;
 		}

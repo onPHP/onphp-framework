@@ -18,22 +18,32 @@
 				)->
 				import($scope);
 			
-			$this->assertTrue(
-				$form->get('test')->getValue()->getMin()
-				=== $form->get('test')->getMin()
+			$this->assertEquals(
+				$form->get('test')->getValue()->getMin(),
+				$form->get('test')->getMin()
 			);
 			
-			$this->assertTrue(
-				$form->get('test')->getValue()->getMax()
-				=== $form->get('test')->getMax()
+			$this->assertEquals(
+				$form->get('test')->getValue()->getMax(),
+				$form->get('test')->getMax()
 			);
 			
-			$this->assertTrue(
-				$form->get('test')->getMin() == 42
+			$this->assertEquals(
+				$form->get('test')->getValue()->getStart(),
+				$form->get('test')->getStart()
 			);
 			
-			$this->assertTrue(
-				$form->get('test')->getMax() == 64
+			$this->assertEquals(
+				$form->get('test')->getValue()->getEnd(),
+				$form->get('test')->getEnd()
+			);
+			
+			$this->assertEquals(
+				$form->get('test')->getStart(), 42
+			);
+			
+			$this->assertEquals(
+				$form->get('test')->getEnd(), 64
 			);
 		}
 		
@@ -48,8 +58,8 @@
 			
 			$this->assertTrue($prm->isImported());
 			
-			$this->assertTrue(
-				$prm->getSafeValue() == $date
+			$this->assertEquals(
+				$prm->getSafeValue(), $date
 			);
 			
 			$prm = Primitive::date('date')->setDefault(

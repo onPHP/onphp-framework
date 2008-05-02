@@ -17,6 +17,16 @@
 	{
 		const MIN	= 'min';
 		const MAX	= 'max';
+		
+		public function getTypeName()
+		{
+			return 'Range';
+		}
+		
+		public function isObjectType()
+		{
+			return true;
+		}
 
 		/**
 		 * @throws WrongArgumentException
@@ -34,42 +44,28 @@
 			return $this;
 		}
 		
-		public function getMax()
+		public function getStart()
 		{
 			if ($this->value)
-				return $this->value->getMax();
+				return $this->value->getStart();
 			
 			return null;
 		}
 		
-		public function getMin()
+		public function getEnd()
 		{
 			if ($this->value)
-				return $this->value->getMin();
+				return $this->value->getEnd();
 			
 			return null;
 		}
 
-		public function getActualMax()
-		{
-			if ($range = $this->getActualValue())
-				return $range->getMax();
-			
-			return null;
-		}
-		
-		public function getActualMin()
-		{
-			if ($range = $this->getActualValue())
-				return $range->getMin();
-			
-			return null;
-		}
-		
 		public function importSingle(array $scope)
 		{
-			if (!BasePrimitive::import($scope) || is_array($scope[$this->name]))
+			if (!BasePrimitive::import($scope))
 				return null;
+			elseif (is_array($scope[$this->name]))
+				return false;
 			
 			if (isset($scope[$this->name]) && is_string($scope[$this->name])) {
 				$array = explode('-', $scope[$this->name], 2);
@@ -95,17 +91,13 @@
 
 		public function importMarried(array $scope) // ;-)
 		{
-			if (
-				($this->safeGet($scope, $this->name, self::MIN) === null)
-				&& ($this->safeGet($scope, $this->name, self::MAX) === null)
-			)
+			$min = $this->safeGet($scope, $this->name, self::MIN);
+			$max = $this->safeGet($scope, $this->name, self::MAX);
+			
+			if ((null === $min) && (null === $max))
 				return null;
 			
-			$range =
-				Range::lazyCreate(
-					$this->safeGet($scope, $this->name, self::MIN),
-					$this->safeGet($scope, $this->name, self::MAX)
-				);
+			$range = Range::lazyCreate($min, $max);
 			
 			if (
 				$range
