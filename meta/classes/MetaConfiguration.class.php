@@ -492,7 +492,7 @@
 					
 					$object = new $name;
 					$proto = $object->proto();
-					$proto->makeForm();
+					$form = $proto->makeForm();
 					
 					foreach ($class->getProperties() as $name => $property) {
 						Assert::isTrue(
@@ -576,6 +576,20 @@
 						$out->info('H', true);
 					} else {
 						$out->error('H', true);
+					}
+					
+					$out->warning('/');
+					
+					// cloning once again
+					$clone = clone $object;
+					
+					FormUtils::object2form($object, $form);
+					FormUtils::form2object($form, $object);
+					
+					if ($object != $clone) {
+						$out->error('T', true);
+					} else {
+						$out->info('T', true);
 					}
 					
 					$out->warning(')')->info(', ');
