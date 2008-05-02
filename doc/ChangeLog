@@ -10,6 +10,11 @@
 	* core/Cache/SemaphorePool.class.php: DirectoryLocker is the default
 	locker now.
 
+2008-04-07	Konstantin V. Arkhipov
+
+	* main/UnifiedContainer/UnifiedContainer.class.php: worker's
+	serialization prevention implemented.
+
 2008-04-03	Denis M. Gabaidulin
 
 	* meta/classes/MetaConfiguration.class.php: lazy fetching strategy
