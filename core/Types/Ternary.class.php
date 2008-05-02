@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -13,18 +13,11 @@
 	/**
 	 * Atom for ternary-based logic.
 	 * 
-	 * @ingroup Base
+	 * @ingroup Types
 	 * @ingroup Module
 	**/
-	final class Ternary implements Stringable
+	final class Ternary extends BaseType implements Stringable
 	{
-		private $trinity = null;	// ;-)
-		
-		public function __construct($boolean = null)
-		{
-			return $this->setValue($boolean);
-		}
-		
 		/**
 		 * @return Ternary
 		**/
@@ -53,17 +46,17 @@
 		
 		public function isNull()
 		{
-			return (null === $this->trinity);
+			return (null === $this->value);
 		}
 		
 		public function isTrue()
 		{
-			return (true === $this->trinity);
+			return (true === $this->value);
 		}
 		
 		public function isFalse()
 		{
-			return (false === $this->trinity);
+			return (false === $this->value);
 		}
 		
 		/**
@@ -71,7 +64,7 @@
 		**/
 		public function setNull()
 		{
-			$this->trinity = null;
+			$this->value = null;
 			
 			return $this;
 		}
@@ -81,7 +74,7 @@
 		**/
 		public function setTrue()
 		{
-			$this->trinity = true;
+			$this->value = true;
 			
 			return $this;
 		}
@@ -91,35 +84,30 @@
 		**/
 		public function setFalse()
 		{
-			$this->trinity = false;
+			$this->value = false;
 			
 			return $this;
-		}
-		
-		public function getValue()
-		{
-			return $this->trinity;
 		}
 		
 		/**
 		 * @return Ternary
 		**/
-		public function setValue($boolean = null)
+		public function setValue($boolean)
 		{
 			Assert::isTernaryBase($boolean);
 			
-			$this->trinity = $boolean;
+			$this->value = $boolean;
 			
 			return $this;
 		}
 		
 		public function decide($true, $false, $null = null)
 		{
-			if ($this->trinity === true)
+			if ($this->value === true)
 				return $true;
-			elseif ($this->trinity === false)
+			elseif ($this->value === false)
 				return $false;
-			elseif ($this->trinity === null)
+			elseif ($this->value === null)
 				return $null;
 			
 			throw new WrongStateException(
