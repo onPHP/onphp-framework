@@ -15,6 +15,9 @@
 
 2008-04-13	Konstantin V. Arkhipov
 
+	* global.inc.php.tpl: class cache now detects classes with errors
+	during compile time.
+
 	* core/Cache/SemaphorePool.class.php: DirectoryLocker is the default
 	locker now.
 
