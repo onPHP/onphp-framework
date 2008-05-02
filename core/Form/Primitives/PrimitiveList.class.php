@@ -59,7 +59,7 @@
 		/**
 		 * @return PrimitiveList
 		**/
-		public function setList($list)
+		public function setList(array $list)
 		{
 			$this->list = $list;
 			
