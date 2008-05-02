@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2007-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -47,7 +47,7 @@
 			if (is_string($stop)) {
 				$stop = $this->makeNumber($stop);
 			} elseif (
-				$stop instanceof BigInteger
+				$stop instanceof ExternalBigInteger
 				&& !$stop instanceof GmpBigInteger
 			) {
 				$stop = $this->makeNumber($stop->toString());

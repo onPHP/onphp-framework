@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2007-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Math
 	**/
-	final class GmpBigInteger implements BigInteger
+	final class GmpBigInteger implements ExternalBigInteger
 	{
 		private $resource = null;
 		
@@ -68,14 +68,14 @@
 		/**
 		 * @return GmpBigInteger
 		**/
-		public function add(BigInteger $x)
+		public function add(ExternalBigInteger $x)
 		{
 			$result = new self;
 			$result->resource = gmp_add($this->resource, $x->resource);
 			return $result;
 		}
 		
-		public function compareTo(BigInteger $x)
+		public function compareTo(ExternalBigInteger $x)
 		{
 			$out = gmp_cmp($this->resource, $x->resource);
 			
@@ -90,7 +90,7 @@
 		/**
 		 * @return GmpBigInteger
 		**/
-		public function mod(BigInteger $mod)
+		public function mod(ExternalBigInteger $mod)
 		{
 			$result = new self;
 			$result->resource = gmp_mod($this->resource, $mod->resource);
@@ -100,7 +100,7 @@
 		/**
 		 * @return GmpBigInteger
 		**/
-		public function pow(BigInteger $exp)
+		public function pow(ExternalBigInteger $exp)
 		{
 			$result = new self;
 			$result->resource = gmp_pow($this->resource, $exp->intValue());
@@ -110,7 +110,7 @@
 		/**
 		 * @return GmpBigInteger
 		**/
-		public function modPow(BigInteger $exp, BigInteger $mod)
+		public function modPow(ExternalBigInteger $exp, ExternalBigInteger $mod)
 		{
 			$result = new self;
 			$result->resource = gmp_powm(
@@ -124,7 +124,7 @@
 		/**
 		 * @return GmpBigInteger
 		**/
-		public function subtract(BigInteger $x)
+		public function subtract(ExternalBigInteger $x)
 		{
 			$result = new self;
 			$result->resource = gmp_sub($this->resource, $x->resource);
@@ -134,7 +134,7 @@
 		/**
 		 * @return GmpBigInteger
 		**/
-		public function mul(BigInteger $x)
+		public function mul(ExternalBigInteger $x)
 		{
 			$result = new self;
 			$result->resource = gmp_mul($this->resource, $x->resource);
@@ -144,7 +144,7 @@
 		/**
 		 * @return GmpBigInteger
 		**/
-		public function div(BigInteger $x)
+		public function div(ExternalBigInteger $x)
 		{
 			$result = new self;
 			$result->resource = gmp_div($this->resource, $x->resource);

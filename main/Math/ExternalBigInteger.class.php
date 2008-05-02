@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2007-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Math
 	**/
-	interface BigInteger extends Stringable
+	interface ExternalBigInteger extends Stringable
 	{
 		/**
 		 * @return BigNumberFactory
@@ -21,41 +21,41 @@
 		public static function getFactory();
 		
 		/**
-		 * @return BigInteger
+		 * @return ExternalBigInteger
 		**/
-		public function add(BigInteger $x);
+		public function add(ExternalBigInteger $x);
 		
-		public function compareTo(BigInteger $x);
-		
-		/**
-		 * @return BigInteger
-		**/
-		public function mod(BigInteger $mod);
+		public function compareTo(ExternalBigInteger $x);
 		
 		/**
-		 * @return BigInteger
+		 * @return ExternalBigInteger
 		**/
-		public function pow(BigInteger $exp);
+		public function mod(ExternalBigInteger $mod);
 		
 		/**
-		 * @return BigInteger
+		 * @return ExternalBigInteger
 		**/
-		public function modPow(BigInteger $exp, BigInteger $mod);
+		public function pow(ExternalBigInteger $exp);
 		
 		/**
-		 * @return BigInteger
+		 * @return ExternalBigInteger
 		**/
-		public function subtract(BigInteger $x);
+		public function modPow(ExternalBigInteger $exp, ExternalBigInteger $mod);
 		
 		/**
-		 * @return BigInteger
+		 * @return ExternalBigInteger
 		**/
-		public function mul(BigInteger $x);
+		public function subtract(ExternalBigInteger $x);
 		
 		/**
-		 * @return BigInteger
+		 * @return ExternalBigInteger
 		**/
-		public function div(BigInteger $x);
+		public function mul(ExternalBigInteger $x);
+		
+		/**
+		 * @return ExternalBigInteger
+		**/
+		public function div(ExternalBigInteger $x);
 		
 		/**
 		 * convert to big-endian signed two's complement notation

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2007-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -20,7 +20,10 @@
 		private $gen		= null;
 		private $modulus	= null;
 		
-		public function __construct(BigInteger $gen, BigInteger $modulus)
+		public function __construct(
+			ExternalBigInteger $gen,
+			ExternalBigInteger $modulus
+		)
 		{
 			Assert::brothers($gen, $modulus);
 			
@@ -31,13 +34,16 @@
 		/**
 		 * @return DiffieHellmanParameters
 		**/
-		public static function create(BigInteger $gen, BigInteger $modulus)
+		public static function create(
+			ExternalBigInteger $gen,
+			ExternalBigInteger $modulus
+		)
 		{
 			return new self($gen, $modulus);
 		}
 		
 		/**
-		 * @return BigInteger
+		 * @return ExternalBigInteger
 		**/
 		public function getGen()
 		{
@@ -45,7 +51,7 @@
 		}
 		
 		/**
-		 * @return BigInteger
+		 * @return ExternalBigInteger
 		**/
 		public function getModulus()
 		{

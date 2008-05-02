@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2007-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -62,14 +62,14 @@
 		/**
 		 * @return DiffieHellmanKeyPair
 		**/
-		public function setPrivate(BigInteger $private)
+		public function setPrivate(ExternalBigInteger $private)
 		{
 			$this->private = $private;
 			return $this;
 		}
 		
 		/**
-		 * @return BigInteger
+		 * @return ExternalBigInteger
 		**/
 		public function getPrivate()
 		{
@@ -79,14 +79,14 @@
 		/**
 		 * @return DiffieHellmanKeyPair
 		**/
-		public function setPublic(BigInteger $public)
+		public function setPublic(ExternalBigInteger $public)
 		{
 			$this->public = $public;
 			return $this;
 		}
 		
 		/**
-		 * @return BigInteger
+		 * @return ExternalBigInteger
 		**/
 		public function getPublic()
 		{
@@ -94,9 +94,9 @@
 		}
 		
 		/**
-		 * @return BigInteger
+		 * @return ExternalBigInteger
 		**/
-		public function makeSharedKey(BigInteger $otherSitePublic)
+		public function makeSharedKey(ExternalBigInteger $otherSitePublic)
 		{
 			Assert::brothers($this->private, $otherSitePublic);
 			

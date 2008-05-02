@@ -34,6 +34,10 @@
 	* meta/classes/MetaConfiguration.class.php: lazy fetching strategy
 	support for SpookedClass properties.
 
+2008-04-03	Konstantin V. Arkhipov
+
+	* main/Math/BigInteger.class.php: renamed to ExternalBigInteger.
+
 2008-04-02	Ivan Y. Khvostishkov
 
 	* main/Application/: refactoring. Added test cases for HttpRewriter.
