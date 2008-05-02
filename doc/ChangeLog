@@ -1,5 +1,10 @@
 # $Id$
 
+2008-05-02	Konstantin V. Arkhipov
+
+	* core/Form/Primitives/PrimitiveString.class.php: '0' is a valid
+	string too.
+
 2008-04-26	Denis M. Gabaidulin
 
 	* core/Form/Filters/NormalizeUrlFilter.class.php: url normalizator
