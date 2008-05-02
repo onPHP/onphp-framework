@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Garmonbozia Research Group                 *
+ *   Copyright (C) 2006-2008 by Garmonbozia Research Group,                *
  *   Anton E. Lebedevich, Konstantin V. Arkhipov                           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -16,9 +16,9 @@
 	 * 
 	 * @see DateRange
 	 * 
-	 * @ingroup Base
+	 * @ingroup Types
 	**/
-	class Date implements Stringable, DialectString
+	class Date extends BaseType implements Stringable, DialectString
 	{
 		const WEEKDAY_MONDAY 	= 1;
 		const WEEKDAY_TUESDAY	= 2;
@@ -28,17 +28,16 @@
 		const WEEKDAY_SATURDAY	= 6;
 		const WEEKDAY_SUNDAY	= 0; // because strftime('%w') is 0 on Sunday
 		
-		protected $string	= null;
-		protected $int		= null;
+		protected $int		= 0;
 		
-		protected $year		= null;
-		protected $month	= null;
-		protected $day		= null;
+		protected $year		= '0000';
+		protected $month	= 1;
+		protected $day		= 1;
 		
 		/**
 		 * @return Date
 		**/
-		public static function create($date)
+		public static function create($date = null)
 		{
 			return new self($date);
 		}
@@ -107,21 +106,21 @@
 				return ($left->int > $right->int ? 1 : -1);
 		}
 		
-		public function __construct($date)
+		public function setValue($date)
 		{
 			if (is_int($date) || is_numeric($date)) { // unix timestamp
 				$this->int = $date;
-				$this->string = date($this->getFormat(), $date);
+				$this->value = date($this->getFormat(), $date);
 			} elseif ($date && is_string($date))
 				$this->stringImport($date);
 			
-			if ($this->string === null) {
+			if (null === $this->value) {
 				throw new WrongArgumentException(
 					"strange input given - '{$date}'"
 				);
 			}
 			
-			$this->import($this->string);
+			$this->import($this->value);
 		}
 		
 		public function toStamp()
@@ -169,7 +168,7 @@
 		**/
 		public function spawn($modification = null)
 		{
-			$child = new $this($this->string);
+			$child = new $this($this->value);
 			
 			if ($modification)
 				return $child->modify($modification);
@@ -192,8 +191,8 @@
 					);
 				
 				$this->int = $time;
-				$this->string = date($this->getFormat(), $time);
-				$this->import($this->string);
+				$this->value = date($this->getFormat(), $time);
+				$this->import($this->value);
 			} catch (BaseException $e) {
 				throw new WrongArgumentException(
 					"wrong time string '{$string}'"
@@ -247,7 +246,7 @@
 		
 		public function toString()
 		{
-			return $this->string;
+			return $this->value;
 		}
 		
 		public function toDialectString(Dialect $dialect)
@@ -279,7 +278,7 @@
 					'month and day must not be zero'
 				);
 			
-			$this->string =
+			$this->value =
 				sprintf(
 					'%04d-%02d-%02d',
 					$this->year,
@@ -301,10 +300,16 @@
 				preg_match('/^(\d{1,4})-(\d{1,2})-(\d{1,2})$/', $string, $matches)
 			) {
 				if (checkdate($matches[2], $matches[3], $matches[1]))
-					$this->string = $string;
-			
+					$this->value = $string;
+				
 			} elseif ($this->int !== false)
-				$this->string = date($this->getFormat(), $this->int);
+				$this->value = date($this->getFormat(), $this->int);
+		}
+		
+		/* void */ protected function checkState()
+		{
+			if (null === $this->value)
+				throw new WrongStateException('i am valueless');
 		}
 	}
 ?>
