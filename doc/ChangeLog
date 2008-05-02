@@ -1,5 +1,9 @@
 # $Id$
 
+2008-05-02	Konstantin V. Arkhipov
+
+	* core/Form/PrimitiveString.class.php: '0' is a valid string too.
+
 2008-03-27	Konstantin V. Arkhipov
 
 	* main/Utils/HeaderUtils.class.php: redirect() removed, finally.
