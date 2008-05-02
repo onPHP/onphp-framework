@@ -65,15 +65,18 @@
 	{
 		protected $worker	= null;
 		protected $parent	= null;
-
+		
 		protected $dao		= null;
-		protected $daoClass	= null; // sleep state
 		
 		protected $lazy		= true;
 		protected $fetched	= false;
 
 		protected $list		= array();
 		protected $clones	= array();
+		
+		// sleep state
+		protected $workerClass	= null;
+		protected $daoClass		= null;
 		
 		abstract public function getParentIdField();
 		abstract public function getChildIdField();
@@ -94,12 +97,14 @@
 		public function __sleep()
 		{
 			$this->daoClass = get_class($this->dao);
-			return array('worker', 'parent', 'lazy', 'daoClass');
+			$this->workerClass = get_class($this->worker);
+			return array('workerClass', 'daoClass', 'parent', 'lazy');
 		}
 		
 		public function __wakeup()
 		{
 			$this->dao = Singleton::getInstance($this->daoClass);
+			$this->worker = new $this->workerClass($this);
 		}
 		
 		public function getParentObject()
