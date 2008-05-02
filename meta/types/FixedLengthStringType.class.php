@@ -11,7 +11,7 @@
 /* $Id$ */
 
 	/**
-	 * @ingroup Types
+	 * @ingroup MetaTypes
 	**/
 	final class FixedLengthStringType extends StringType
 	{

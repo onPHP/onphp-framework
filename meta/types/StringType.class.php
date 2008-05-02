@@ -11,7 +11,7 @@
 /* $Id$ */
 
 	/**
-	 * @ingroup Types
+	 * @ingroup MetaTypes
 	**/
 	class StringType extends BasePropertyType
 	{

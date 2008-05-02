@@ -11,7 +11,7 @@
 /* $Id$ */
 
 	/**
-	 * @ingroup Types
+	 * @ingroup MetaTypes
 	**/
 	final class TimestampType extends DateType
 	{

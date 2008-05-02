@@ -122,6 +122,9 @@
 	 * @defgroup OSQL Dynamic query builder
 	 * @ingroup Core
 	 *
+	 * @defgroup Types Basic types
+	 * @ingroup Core
+	 *
 	 * @defgroup Main Higher level classes
 	 * Useful stuff for building complex and scalable applications.
 	 *
@@ -196,7 +199,7 @@
 	 * @defgroup Patterns Patterns used to build classes
 	 * @ingroup Meta
 	 *
-	 * @defgroup Types Supported meta-types
+	 * @defgroup MetaTypes Supported meta-types
 	 * @ingroup Meta
 	 *
 	 * @defgroup Module Classes implemented in PHP's extension.
