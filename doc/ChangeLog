@@ -20,6 +20,10 @@
 
 2008-04-13	Konstantin V. Arkhipov
 
+	* core/Types/: new types were implemented or ported from standalone
+	classes: Binary, Boolean, Date, DateRange, HashMap, Range, Time,
+	Timestamp, Range.
+
 	* global.inc.php.tpl: class cache now detects classes with errors
 	during compile time.
 
