@@ -25,6 +25,9 @@
 
 2008-03-31	Konstantin V. Arkhipov
 
+	* core/Base/Time.class.php: several fixes for parsing issues were
+	backported from trunk.
+
 	* global.inc.php.tpl: added cache invalidation upon failed include
 	from cached location; solves class moving case.
 
