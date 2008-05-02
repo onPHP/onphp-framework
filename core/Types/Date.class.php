@@ -187,7 +187,7 @@
 				
 				if ($time === false)
 					throw new WrongArgumentException(
-						"modification yielded false '{$string}'"
+						"modification yielded false"
 					);
 				
 				$this->int = $time;
@@ -195,7 +195,7 @@
 				$this->import($this->value);
 			} catch (BaseException $e) {
 				throw new WrongArgumentException(
-					"wrong time string '{$string}'"
+					"wrong time string '{$string}': {$e->getMessage()}"
 				);
 			}
 			

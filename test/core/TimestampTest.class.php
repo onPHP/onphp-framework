@@ -46,5 +46,69 @@
 				/* pass */
 			}
 		}
+		
+		public function testFromWeekCreation()
+		{
+			$date = Date::makeFromWeek(2, 2008);
+			
+			$this->assertEquals($date->toString(), '2008-01-07');
+		}
+		
+		public function testHelpers()
+		{
+			$first = Date::create('2008-08-08');
+			$second = $first->spawn('-1 week');
+			
+			$this->assertEquals(
+				$second, $second->spawn()
+			);
+			
+			try {
+				$second->modify('dunno to what time');
+				
+				$this->fail();
+			} catch (WrongArgumentException $e) {/*_*/}
+			
+			if (!extension_loaded('calendar')) {
+				try {
+					dl('calendar');
+				} catch (BaseException $e) {
+					/*_*/
+				}
+			}
+
+			if (extension_loaded('calendar')) {
+				$this->assertEquals(
+					Date::dayDifference($second, $first),
+					7
+				);
+			}
+			
+			$this->assertEquals(
+				Date::compare($first, $second),
+				1
+			);
+			
+			$this->assertEquals(
+				$first->getWeek() - $second->getWeek(),
+				1
+			);
+			
+			$this->assertEquals($first->getFirstDayOfWeek()->getDay(), 4);
+			$this->assertEquals($second->getFirstDayOfWeek()->getDay(), 28);
+			
+			$this->assertEquals($first->getLastDayOfWeek()->getDay(), 10);
+			$this->assertEquals($second->getLastDayOfWeek()->getDay(), 3);
+			
+			$this->assertEquals(
+				$first->toString(),
+				$first->toDialectString(ImaginaryDialect::me())
+			);
+			
+			$this->assertEquals(
+				$first->toIsoString(),
+				$first->toDialectString(ImaginaryDialect::me())
+			);
+		}
 	}
 ?>
