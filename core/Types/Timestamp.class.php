@@ -42,7 +42,7 @@
 		**/
 		public static function makeNow()
 		{
-			return new self(time());
+			return new self(self::now());
 		}
 		
 		/**

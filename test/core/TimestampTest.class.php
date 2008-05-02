@@ -54,7 +54,7 @@
 			$this->assertEquals($date->toString(), '2008-01-07');
 		}
 		
-		public function testHelpers()
+		public function testDateHelpers()
 		{
 			$first = Date::create('2008-08-08');
 			$second = $first->spawn('-1 week');
@@ -108,6 +108,31 @@
 			$this->assertEquals(
 				$first->toIsoString(),
 				$first->toDialectString(ImaginaryDialect::me())
+			);
+		}
+		
+		public function testTimestampHelpers()
+		{
+			$this->assertEquals(
+				Timestamp::makeNow()->toDate(),
+				Timestamp::makeToday()->toDate()
+			);
+			
+			$ts = Timestamp::create('2008-08-08 1:2:3');
+			
+			$this->assertEquals($ts->getHour(), 1);
+			$this->assertEquals($ts->getMinute(), 2);
+			$this->assertEquals($ts->getSecond(), 3);
+			
+			$this->assertEquals(
+				$ts->getDayStartStamp(),
+				Timestamp::create($ts->getDayStartStamp())->getDayStartStamp()
+			);
+			
+			$this->assertEquals($ts->toIsoString(true), '2008-08-07T21:02:03Z');
+			$this->assertRegExp(
+				'/^2008\-08\-[\d]{2}T[\d]{2}\:[\d]{2}\:[\d]{2}\+[\d]{4}$/',
+				$ts->toIsoString(false)
 			);
 		}
 	}
