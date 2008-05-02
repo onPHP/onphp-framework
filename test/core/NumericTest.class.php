@@ -5,7 +5,7 @@
 	{
 		public static function numericProvider()
 		{
-			// value and validity for: positive, negative and any integer
+			// value and validity for: positive, negative, any integer and float
 			
 			return array(
 				array(0, false, false, true, true),
