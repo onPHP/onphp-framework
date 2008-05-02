@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2004-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	class DateRange implements Stringable, SingleRange
+	class DateRange extends BaseType implements Stringable, SingleRange
 	{
 		private $start	= null;
 		private $end	= null;
@@ -496,6 +496,19 @@
 		{
 			return (!$this->isOpen())
 				&& ($this->start->toDate() == $this->end->toDate());
+		}
+		
+		/**
+		 * @return DateRange
+		**/
+		public function setValue(/* DateRange */ $range)
+		{
+			Assert::isInstance($range, $this);
+			
+			$this->start = $range->start;
+			$this->end = $range->end;
+			
+			return $this;
 		}
 		
 		protected function checkType($value)

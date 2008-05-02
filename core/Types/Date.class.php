@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup Types
 	**/
-	class Date extends BaseType implements Stringable, DialectString
+	class Date extends RangedType implements Stringable, DialectString
 	{
 		const WEEKDAY_MONDAY 	= 1;
 		const WEEKDAY_TUESDAY	= 2;
@@ -106,21 +106,58 @@
 				return ($left->int > $right->int ? 1 : -1);
 		}
 		
+		/**
+		 * @return Date
+		**/
+		public function setMin(/* Date */ $min)
+		{
+			if (null !== $this->max)
+				Assert::isEqual($this->compare($min, $this->max), -1);
+			
+			$this->min = $min;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return Date
+		**/
+		public function setMax(/* Date */ $max)
+		{
+			if (null !== $this->min)
+				Assert::isEqual($this->compare($this->min, $max), -1);
+			
+			$this->max = $max;
+			
+			return $this;
+		}
+		
 		public function setValue($date)
 		{
+			$value = null;
+			
 			if (is_int($date) || is_numeric($date)) { // unix timestamp
 				$this->int = $date;
-				$this->value = date($this->getFormat(), $date);
+				$value = date($this->getFormat(), $date);
 			} elseif ($date && is_string($date))
-				$this->stringImport($date);
+				$value = $this->stringImport($date);
 			
-			if (null === $this->value) {
+			if (null === $value) {
 				throw new WrongArgumentException(
 					"strange input given - '{$date}'"
 				);
 			}
 			
-			$this->import($this->value);
+			$this->import($value);
+			
+			try {
+				$this->checkLimits($this->value);
+			} catch (OutOfRangeException $e) {
+				$this->value = null;
+				throw $e;
+			}
+			
+			return $this;
 		}
 		
 		public function toStamp()
@@ -300,10 +337,31 @@
 				preg_match('/^(\d{1,4})-(\d{1,2})-(\d{1,2})$/', $string, $matches)
 			) {
 				if (checkdate($matches[2], $matches[3], $matches[1]))
-					$this->value = $string;
+					return $string;
 				
 			} elseif ($this->int !== false)
-				$this->value = date($this->getFormat(), $this->int);
+				return date($this->getFormat(), $this->int);
+		}
+		
+		/* void */ protected function checkLimits(/* Date */ $value)
+		{
+			if (
+				(
+					(null !== ($min = $this->getMin()))
+					&& ($this->compare($min, $value))
+				) || (
+					(null !== ($max = $this->getMax()))
+					&& ($this->compare($value, $max))
+				)
+			) {
+				throw new OutOfRangeException(
+					Assert::dumpArgument($value).' exceeds defined range: '
+					.Assert::dumpArgument($min)
+					.' - '
+					// can be undefined
+					.Assert::dumpArgument($this->getMax())
+				);
+			}
 		}
 	}
 ?>

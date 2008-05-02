@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Types
 	**/
-	final class Time extends BaseType implements Stringable
+	final class Time extends RangedType implements Stringable
 	{
 		private $hour	= 0;
 		private $minute	= 0;
@@ -27,6 +27,36 @@
 		public static function create($input = null)
 		{
 			return new self($input);
+		}
+		
+		/**
+		 * @return Time
+		**/
+		public function setMin(/* Time */ $min)
+		{
+			Assert::isInstance($min, $this);
+			
+			if (null !== $this->max)
+				Assert::isGreater($this->max->toSeconds(), $min->toSeconds());
+			
+			$this->min = $min;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return Time
+		**/
+		public function setMax(/* Time */ $max)
+		{
+			Assert::isInstance($max, $this);
+			
+			if (null !== $this->min)
+				Assert::isGreater($max->toSeconds(), $this->min->toSeconds());
+			
+			$this->max = $max;
+			
+			return $this;
 		}
 		
 		// currently supports '01:23:45', '012345', '1234', '12'
@@ -88,6 +118,15 @@
 						throw new WrongArgumentException('unknown format');
 				}
 			}
+			
+			try {
+				$this->checkLimits($this->toSeconds());
+			} catch (OutOfRangeException $e) {
+				$this->value = null;
+				throw $e;
+			}
+			
+			return $this;
 		}
 		
 		public function getHour()
@@ -202,6 +241,27 @@
 				($this->hour * 3600)
 				+ ($this->minute * 60)
 				+ $this->second;
+		}
+		
+		/* void */ protected function checkLimits($value)
+		{
+			if (
+				(
+					(null !== ($min = $this->getMin()))
+					&& ($value < $min->toSeconds())
+				) || (
+					(null !== ($max = $this->getMax()))
+					&& ($value > $max->toSeconds())
+				)
+			) {
+				throw new OutOfRangeException(
+					Assert::dumpArgument($value).' exceeds defined range: '
+					.Assert::dumpArgument($min)
+					.' - '
+					// can be undefined
+					.Assert::dumpArgument($this->getMax())
+				);
+			}
 		}
 		
 		private function doublize($int)

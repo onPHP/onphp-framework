@@ -151,11 +151,11 @@
 					$string
 				)
 			) {
-				$this->value = $string;
+				return $string;
 			} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
-				$this->value = $string . ' 00:00:00';
+				return $string . ' 00:00:00';
 			elseif ($this->int !== false)
-				$this->value = date($this->getFormat(), $this->int);
+				return date($this->getFormat(), $this->int);
 		}
 	}
 ?>
