@@ -2,6 +2,9 @@
 
 2008-05-02	Konstantin V. Arkhipov
 
+	* main/DAOs/: fetchEncapsulants is now the private method, only
+	makeOnlyObject and completeObject are free for customizations now.
+
 	* core/Form/Primitives/PrimitiveString.class.php: '0' is a valid
 	string too.
 

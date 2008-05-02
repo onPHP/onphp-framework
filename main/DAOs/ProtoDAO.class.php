@@ -33,17 +33,12 @@
 		}
 		
 		public function completeObject(
-			Identifiable $object, $array, $prefix = null
+			Identifiable $object, $array = null, $prefix = null
 		)
 		{
 			return $this->getProtoClass()->completeObject(
 				$object, $array, $prefix
 			);
-		}
-		
-		public function fetchEncapsulants(Prototyped $object)
-		{
-			return $this->getProtoClass()->fetchEncapsulants($object);
 		}
 		
 		public function fetchCollections(

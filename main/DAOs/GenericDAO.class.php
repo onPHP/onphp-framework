@@ -24,7 +24,7 @@
 		
 		abstract public function makeOnlyObject($array, $prefix = null);
 		abstract public function completeObject(
-			Identifiable $object, $array, $prefix = null
+			Identifiable $object, $array = null, $prefix = null
 		);
 		
 		public function makeObject($array, $prefix = null)

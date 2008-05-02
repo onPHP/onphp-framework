@@ -30,7 +30,7 @@
 				if ($object === Cache::NOT_FOUND)
 					throw new ObjectNotFoundException();
 				
-				return $this->dao->fetchEncapsulants($object);
+				return $this->dao->completeObject($object);
 			} else {
 				$query =
 					$this->dao->
@@ -92,7 +92,7 @@
 				if ($object === Cache::NOT_FOUND)
 					throw new ObjectNotFoundException();
 				
-				return $this->dao->fetchEncapsulants($object);
+				return $this->dao->completeObject($object);
 			} else {
 				if ($expires === Cache::DO_NOT_CACHE)
 					$object = $this->fetchObject($query);
@@ -176,7 +176,7 @@
 					foreach ($cachedList as $cached) {
 						if ($cached !== Cache::NOT_FOUND) {
 							if ($cached)
-								$list[] = $this->dao->fetchEncapsulants($cached);
+								$list[] = $this->dao->completeObject($cached);
 							else
 								$toFetch[] = $cached->getId();
 						}

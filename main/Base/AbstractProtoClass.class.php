@@ -23,26 +23,13 @@
 		}
 		
 		public static function completeObject(
-			Prototyped $object, $array, $prefix = null
+			Prototyped $object, array $array = null, $prefix = null
 		)
 		{
-			return self::assemblyObject($object, true, $array, $prefix);
-		}
-		
-		public static function fetchEncapsulants(Prototyped $object)
-		{
-			foreach ($object->proto()->getPropertyList() as $property) {
-				if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
-					$getter = $property->getGetter();
-					
-					if (($inner = $object->$getter()) instanceof DAOConnected) {
-						$setter = $property->getSetter();
-						$object->$setter($inner->dao()->getById($inner->getId()));
-					}
-				}
-			}
-			
-			return $object;
+			if ($array)
+				return self::assemblyObject($object, true, $array, $prefix);
+			else
+				return self::fetchEncapsulants($object);
 		}
 		
 		final public function getPropertyList()
@@ -239,6 +226,22 @@
 					}
 					
 					$object->$setter($value);
+				}
+			}
+			
+			return $object;
+		}
+		
+		private static function fetchEncapsulants(Prototyped $object)
+		{
+			foreach ($object->proto()->getPropertyList() as $property) {
+				if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
+					$getter = $property->getGetter();
+					
+					if (($inner = $object->$getter()) instanceof DAOConnected) {
+						$setter = $property->getSetter();
+						$object->$setter($inner->dao()->getById($inner->getId()));
+					}
 				}
 			}
 			
