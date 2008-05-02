@@ -31,6 +31,10 @@
 
 2008-04-07	Konstantin V. Arkhipov
 
+	* meta/: added __sleep() generation in auto classes to prvent
+	collections serialization; fixed parent's __construct() calling in
+	classes with value objects inside.
+
 	* main/UnifiedContainer/UnifiedContainer.class.php: worker's
 	serialization prevention implemented.
 

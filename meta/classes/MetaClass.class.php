@@ -382,6 +382,98 @@
 			return $this;
 		}
 		
+		public function getValueObjectList()
+		{
+			$valueObjects = array();
+			
+			foreach ($this->getProperties() as $property) {
+				if (
+					$property->getType() instanceof ObjectType
+					&& !$property->getType()->isGeneric()
+					&& $property->getType()->getClass()->getPattern()
+						instanceof ValueObjectPattern
+				) {
+					$valueObjects[$property->getName()] = $property;
+				}
+			}
+			
+			return $valueObjects;
+		}
+		
+		public function hierarchyHaveValueObjects()
+		{
+			$parent = $this;
+			
+			while ($parent = $this->getParent()) {
+				if ($parent->getValueObjectList()) {
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		public function getEncapsulantList()
+		{
+			// FIXME: decide, whether we're really need deep cloning
+			return array();
+			
+			$encapsulants = array();
+			
+			foreach ($this->getProperties() as $property) {
+				if (
+					($property->getType() instanceof ObjectType)
+					&& $property->getRelationId() == MetaRelation::ONE_TO_ONE
+					&& !$this->isRedefinedProperty($property->getName())
+				)
+					$encapsulants[$property->getName()] = $property;
+			}
+			
+			return $encapsulants;
+		}
+		
+		public function hierarchyHaveEncapsulants()
+		{
+			$parent = $this;
+			
+			while ($parent = $this->getParent()) {
+				if ($parent->getEncapsulantList()) {
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		public function getContainersList()
+		{
+			$containersList = array();
+			
+			foreach ($this->getProperties() as $property) {
+				if (
+					$property->getRelationId()
+					&& ($property->getRelationId() <> MetaRelation::ONE_TO_ONE)
+				) {
+					$containersList[$property->getName()] = $property;
+				}
+			}
+			
+			return $containersList;
+		}
+		
+		public function hierarchyHaveContainers()
+		{
+			$parent = $this;
+			
+			while ($parent = $this->getParent()) {
+				if ($parent->getContainersList()) {
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
 		public function isRedefinedProperty($name)
 		{
 			$parent = $this;

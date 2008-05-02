@@ -53,32 +53,86 @@
 				}
 			}
 			
-			$valueObjects = array();
-			
-			foreach ($class->getProperties() as $property) {
-				if (
-					$property->getType() instanceof ObjectType
-					&& !$property->getType()->isGeneric()
-					&& $property->getType()->getClass()->getPattern()
-						instanceof ValueObjectPattern
-				) {
-					$valueObjects[$property->getName()] =
-						$property->getType()->getClassName();
-				}
-			}
-			
-			if ($valueObjects) {
+			if ($valueObjects = $class->getValueObjectList()) {
 				$out .= <<<EOT
 
 public function __construct()
 {
 
 EOT;
-				foreach ($valueObjects as $propertyName => $className) {
-					$out .= "\$this->{$propertyName} = new {$className}();\n";
+				if (
+					$class->getParent()
+					&& $class->hierarchyHaveValueObjects()
+				) {
+					$out .= "parent::__construct();\n\n";
+				}
+				
+				foreach ($valueObjects as $property) {
+					$out .=
+						"\$this->{$property->getName()} "
+						."= new {$property->getType()->getClassName()}();\n";
 				}
 				
 				$out .= "}\n";
+			}
+			
+			if ($encapsulants = $class->getEncapsulantList()) {
+				$out .= <<<EOT
+
+public function __clone()
+{
+
+EOT;
+				
+				if (
+					$class->getParent()
+					&& $class->hierarchyHaveEncapsulants()
+				) {
+					$out .= "parent::__clone();\n\n";
+				}
+				
+				foreach ($encapsulants as $property) {
+					$out .= <<<EOT
+if (\$this->{$property->getName()})
+	\$this->{$property->getName()} = clone \$this->{$property->getName()};
+
+
+EOT;
+				}
+				
+				$out = rtrim($out)."\n}\n";
+			}
+			
+			if ($containers = $class->getContainersList()) {
+				$propertyList = $class->getProperties();
+				
+				foreach ($containers as $property) {
+					unset($propertyList[$property->getName()]);
+				}
+				
+				if ($propertyList) {
+					$out .= <<<EOT
+
+public function __sleep()
+{
+
+EOT;
+					
+					if (
+						$class->getParent()
+						&& $class->hierarchyHaveContainers()
+					) {
+						$out .= "parent::__sleep();\n\n";
+					}
+					
+					$out .= 'return array(';
+					
+					foreach ($propertyList as $property) {
+						$out .= "'{$property->getName()}', ";
+					}
+					
+					$out = rtrim($out, ', ').");\n}\n";
+				}
 			}
 			
 			foreach ($class->getProperties() as $property) {
