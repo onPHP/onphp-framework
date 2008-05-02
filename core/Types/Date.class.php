@@ -305,11 +305,5 @@
 			} elseif ($this->int !== false)
 				$this->value = date($this->getFormat(), $this->int);
 		}
-		
-		/* void */ protected function checkState()
-		{
-			if (null === $this->value)
-				throw new WrongStateException('i am valueless');
-		}
 	}
 ?>
