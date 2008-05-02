@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2008 by Konstantin V. Arkhipov                           *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -11,18 +11,7 @@
 /* $Id$ */
 
 	/**
-	 * @ingroup Primitives
+	 * @ingroup Exceptions
 	**/
-	class PrimitiveInteger extends PrimitiveNumber
-	{
-		protected function checkNumber($number)
-		{
-			Assert::isInteger($number);
-		}
-		
-		protected function castNumber($number)
-		{
-			return (int) $number;
-		}
-	}
+	final class OutOfRangeException extends BaseException {/*_*/}
 ?>

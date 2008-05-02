@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Denis M. Gabaidulin                             *
+ *   Copyright (C) 2008 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -11,29 +11,27 @@
 /* $Id$ */
 
 	/**
-	 * Integer's set.
-	 * 
-	 * @ingroup Helpers
+	 * @ingroup Types
 	**/
-	final class IntegerSet extends Range
+	abstract class Numeric extends RangedType
 	{
-		public static function create(
-			$min = Integer::SIGNED_MIN,
-			$max = Integer::SIGNED_MAX
-		)
-		{
-			return new IntegerSet($min, $max);
-		}
+		abstract protected function checkValue($value);
+		abstract protected function castValue($value);
 		
-		public function contains($value)
+		/**
+		 * @return Numeric
+		**/
+		public function set($value)
 		{
-			if (
-				$this->getMin() <= $value
-				&& $value <= $this->getMax()
-			)
-				return true;
-			else
-				return false;
+			if ($this->checkValue($value)) {
+				$this->checkLimits($value);
+				
+				$this->value = $this->castValue($value);
+				
+				return $this;
+			}
+			
+			throw new WrongArgumentException();
 		}
 	}
 ?>

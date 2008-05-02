@@ -22,24 +22,24 @@
 		
 		private static $limits = array(
 			0x0002 => array(
-				PrimitiveInteger::SIGNED_SMALL_MIN,
-				PrimitiveInteger::SIGNED_SMALL_MAX
+				Integer::SIGNED_SMALL_MIN,
+				Integer::SIGNED_SMALL_MAX
 			),
 			0x1002 => array(
 				0,
-				PrimitiveInteger::UNSIGNED_SMALL_MAX
+				Integer::UNSIGNED_SMALL_MAX
 			),
 			0x0004 => array(
-				PrimitiveInteger::SIGNED_MIN,
-				PrimitiveInteger::SIGNED_MAX
+				Integer::SIGNED_MIN,
+				Integer::SIGNED_MAX
 			),
 			0x1004 => array(
 				0,
-				PrimitiveInteger::UNSIGNED_MAX
+				Integer::UNSIGNED_MAX
 			),
 			0x0008 => array(
-				PrimitiveInteger::SIGNED_BIG_MIN,
-				PrimitiveInteger::SIGNED_BIG_MAX
+				Integer::SIGNED_BIG_MIN,
+				Integer::SIGNED_BIG_MAX
 			),
 			0x1008 => array(
 				0,

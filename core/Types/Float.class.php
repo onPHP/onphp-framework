@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Denis M. Gabaidulin                             *
+ *   Copyright (C) 2008 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -11,29 +11,18 @@
 /* $Id$ */
 
 	/**
-	 * Integer's set.
-	 * 
-	 * @ingroup Helpers
+	 * @ingroup Types
 	**/
-	final class IntegerSet extends Range
+	final class Float extends Numeric
 	{
-		public static function create(
-			$min = Integer::SIGNED_MIN,
-			$max = Integer::SIGNED_MAX
-		)
+		protected function checkValue($value)
 		{
-			return new IntegerSet($min, $max);
+			return Assert::checkFloat($value);
 		}
 		
-		public function contains($value)
+		protected function castValue($value)
 		{
-			if (
-				$this->getMin() <= $value
-				&& $value <= $this->getMax()
-			)
-				return true;
-			else
-				return false;
+			return (float) $value;
 		}
 	}
 ?>

@@ -63,6 +63,11 @@
 	* global.inc.php.tpl: added cache invalidation upon failed include
 	from cached location; solves class moving case.
 
+2008-03-29	Konstantin V. Arkhipov
+
+	* core/Types/: basic types handling logic extracted from
+	core/Form/Primitives/.
+
 2008-03-29	Ivan Y. Khvostishkov
 
 	* main/Net/HttpUrl.class.php: toHttpRequest() helper.
