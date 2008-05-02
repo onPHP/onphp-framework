@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Garmonbozia Research Group,                *
+ *   Copyright (C) 2004-2008 by Garmonbozia Research Group,                *
  *   Anton E. Lebedevich, Konstantin V. Arkhipov                           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,14 +20,14 @@
 	**/
 	class Timestamp extends Date
 	{
-		private $hour		= null;
-		private $minute		= null;
-		private $second		= null;
+		private $hour		= 0;
+		private $minute		= 0;
+		private $second		= 0;
 		
 		/**
 		 * @return Timestamp
 		**/
-		public static function create($timestamp)
+		public static function create($timestamp = null)
 		{
 			return new self($timestamp);
 		}
@@ -138,7 +138,7 @@
 			list($this->hour, $this->minute, $this->second) =
 				explode(':', $time, 3);
 			
-			$this->string .= ' '.$time;
+			$this->value .= ' '.$time;
 		}
 		
 		/* void */ protected function stringImport($string)
@@ -151,11 +151,11 @@
 					$string
 				)
 			) {
-				$this->string = $string;
+				$this->value = $string;
 			} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
-				$this->string = $string . ' 00:00:00';
+				$this->value = $string . ' 00:00:00';
 			elseif ($this->int !== false)
-				$this->string = date($this->getFormat(), $this->int);
+				$this->value = date($this->getFormat(), $this->int);
 		}
 	}
 ?>

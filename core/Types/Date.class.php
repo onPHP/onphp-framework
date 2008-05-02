@@ -287,7 +287,7 @@
 				);
 			
 			list($this->year, $this->month, $this->day) =
-				explode('-', $this->string, 3);
+				explode('-', $this->value, 3);
 		}
 		
 		/* void */ protected function stringImport($string)
