@@ -42,6 +42,9 @@
 
 2008-04-02	Konstantin V. Arkhipov
 
+	* core/Form/: array type-hint added to import's scope argument and all
+	related public methods.
+
 	* core/Form/: error handling moved from Form to primitives.
 
 2008-04-01	Ivan Y. Khvostishkov

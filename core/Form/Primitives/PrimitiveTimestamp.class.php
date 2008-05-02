@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -19,7 +19,7 @@
 		const MINUTES	= 'min';
 		const SECONDS	= 'sec';
 		
-		public function importMarried($scope)
+		public function importMarried(array $scope)
 		{
 			if (
 				BasePrimitive::import($scope)

@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2006-2007 by Dmitry E. Demidov                           *
+ *   Copyright (C) 2006-2008 by Dmitry E. Demidov                           *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -48,7 +48,7 @@
 			return $this->falseValue;
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (isset($scope[$this->name])) {
 				if ($this->trueValue == $scope[$this->name])

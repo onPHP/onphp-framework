@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007-2008 by Ivan Y. Khvostishkov                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -127,12 +127,12 @@
 			return array();
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			return $this->actualImport($scope, true);
 		}
 		
-		public function unfilteredImport($scope)
+		public function unfilteredImport(array $scope)
 		{
 			return $this->actualImport($scope, false);
 		}

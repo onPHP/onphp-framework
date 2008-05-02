@@ -29,7 +29,7 @@
 			return $this;
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (
 				empty($scope[$this->name])

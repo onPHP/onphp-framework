@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Igor V. Gulyaev                                 *
+ *   Copyright (C) 2007-2008 by Igor V. Gulyaev                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -73,7 +73,7 @@
 			}
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (parent::import($scope)) {
 				try {

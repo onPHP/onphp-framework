@@ -31,7 +31,7 @@
 			return $this;
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (!BasePrimitive::import($scope))
 				return null;

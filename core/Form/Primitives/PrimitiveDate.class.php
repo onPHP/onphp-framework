@@ -71,7 +71,7 @@
 			return $this;
 		}
 		
-		public function importSingle($scope)
+		public function importSingle(array $scope)
 		{
 			if (
 				BasePrimitive::import($scope)
@@ -96,17 +96,7 @@
 			return false;
 		}
 
-		public function isEmpty($scope)
-		{
-			if ($this->getState()->isFalse()) {
-				return empty($scope[$this->name][self::DAY])
-					&& empty($scope[$this->name][self::MONTH])
-					&& empty($scope[$this->name][self::YEAR]);
-			} else
-				return empty($scope[$this->name]);
-		}
-		
-		public function importMarried($scope)
+		public function importMarried(array $scope)
 		{
 			if (
 				BasePrimitive::import($scope)
@@ -220,6 +210,16 @@
 			Assert::isTrue(
 				ClassUtils::isInstanceOf($object, $this->getObjectName())
 			);
+		}
+		
+		protected function isEmpty($scope)
+		{
+			if ($this->getState()->isFalse()) {
+				return empty($scope[$this->name][self::DAY])
+					&& empty($scope[$this->name][self::MONTH])
+					&& empty($scope[$this->name][self::YEAR]);
+			} else
+				return empty($scope[$this->name]);
 		}
 	}
 ?>

@@ -48,7 +48,7 @@
 			return $result;
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (!$this->proto)
 				throw new WrongStateException(

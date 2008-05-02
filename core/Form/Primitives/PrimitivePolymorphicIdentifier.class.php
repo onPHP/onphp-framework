@@ -95,7 +95,7 @@
 			);
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			$savedRaw = null;
 			

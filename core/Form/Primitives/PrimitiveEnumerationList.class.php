@@ -64,7 +64,7 @@
 			return parent::importValue($value);
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (!$this->className)
 				throw new WrongStateException(

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -75,10 +75,10 @@
 		}
 
 		// implement me, child :-)
-		abstract protected function importSingle($scope);
-		abstract protected function importMarried($scope);
+		abstract protected function importSingle(array $scope);
+		abstract protected function importMarried(array $scope);
 
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (!BasePrimitive::import($scope))
 				return null;

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -19,7 +19,7 @@
 		abstract protected function checkNumber($number);
 		abstract protected function castNumber($number);
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (!BasePrimitive::import($scope))
 				return null;

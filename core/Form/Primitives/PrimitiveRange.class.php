@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -66,7 +66,7 @@
 			return null;
 		}
 		
-		public function importSingle($scope)
+		public function importSingle(array $scope)
 		{
 			if (!BasePrimitive::import($scope) || is_array($scope[$this->name]))
 				return null;
@@ -93,7 +93,7 @@
 			return false;
 		}
 
-		public function importMarried($scope) // ;-)
+		public function importMarried(array $scope) // ;-)
 		{
 			if (
 				($this->safeGet($scope, $this->name, self::MIN) === null)

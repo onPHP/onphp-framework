@@ -265,11 +265,8 @@
 			return $this;
 		}
 		
-		protected function import($scope)
+		protected function import(array $scope)
 		{
-			if ($scope)
-				Assert::isArray($scope);
-			
 			if (
 				!empty($scope[$this->name])
 				|| (

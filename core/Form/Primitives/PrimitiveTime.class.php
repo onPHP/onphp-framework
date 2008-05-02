@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                      *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                      *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -26,7 +26,7 @@
 		public function setValue(/* Time */ $time)
 		{
 			Assert::isTrue($time instanceof Time);
-
+			
 			$this->value = $time;
 			
 			return $this;
@@ -39,7 +39,7 @@
 		public function setMin(/* Time */ $time)
 		{
 			Assert::isTrue($time instanceof Time);
-
+			
 			$this->min = $time;
 			
 			return $this;
@@ -71,7 +71,7 @@
 			return $this;
 		}
 		
-		public function importSingle($scope)
+		public function importSingle(array $scope)
 		{
 			if (!BasePrimitive::import($scope))
 				return null;
@@ -91,15 +91,7 @@
 			return false;
 		}
 		
-		public function isEmpty($scope)
-		{
-			if ($this->getState()->isFalse())
-				return $this->isMarriedEmpty($scope);
-			
-			return empty($scope[$this->name]);
-		}
-		
-		public function importMarried($scope)
+		public function importMarried(array $scope)
 		{
 			if (!$this->isMarriedEmpty($scope)) {
 				$this->raw = $scope[$this->name];
@@ -109,10 +101,10 @@
 				
 				if (isset($scope[$this->name][self::HOURS]))
 					$hours = (int) $scope[$this->name][self::HOURS];
-
+				
 				if (isset($scope[$this->name][self::MINUTES]))
 					$minutes = (int) $scope[$this->name][self::MINUTES];
-
+				
 				if (isset($scope[$this->name][self::SECONDS]))
 					$seconds = (int) $scope[$this->name][self::SECONDS];
 				
@@ -132,14 +124,14 @@
 			return false;
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if ($this->isEmpty($scope)) {
 				$this->value = null;
 				$this->raw = null;
 				return null;
 			}
-
+			
 			return parent::import($scope);
 		}
 		
@@ -156,13 +148,21 @@
 				);
 		}
 		
+		public function isEmpty($scope)
+		{
+			if ($this->getState()->isFalse())
+				return $this->isMarriedEmpty($scope);
+			
+			return empty($scope[$this->name]);
+		}
+		
 		private function isMarriedEmpty($scope)
 		{
 			return empty($scope[$this->name][self::HOURS])
 				|| empty($scope[$this->name][self::MINUTES])
 				|| empty($scope[$this->name][self::SECONDS]);
 		}
-
+		
 		private function checkLimits(Time $time)
 		{
 			return

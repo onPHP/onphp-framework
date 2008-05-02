@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -95,7 +95,7 @@
 			return $this;
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (!$result = parent::import($scope))
 				return $result;

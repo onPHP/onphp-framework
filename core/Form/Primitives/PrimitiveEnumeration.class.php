@@ -1,6 +1,6 @@
 <?php
 /*****************************************************************************
- *   Copyright (C) 2006-2007 by Ivan Y. Khvostishkov, Konstantin V. Arkhipov *
+ *   Copyright (C) 2006-2008 by Ivan Y. Khvostishkov, Konstantin V. Arkhipov *
  *                                                                           *
  *   This program is free software; you can redistribute it and/or modify    *
  *   it under the terms of the GNU Lesser General Public License as          *
@@ -63,7 +63,7 @@
 			return $this->import(array($this->getName() => $value->getId()));
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (!$this->className)
 				throw new WrongStateException(

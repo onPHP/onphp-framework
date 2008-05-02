@@ -310,7 +310,7 @@
 		/**
 		 * @return Form
 		**/
-		public function import($scope)
+		public function import(array $scope)
 		{
 			foreach ($this->primitives as $prm)
 				$this->importPrimitive($scope, $prm);
@@ -321,7 +321,7 @@
 		/**
 		 * @return Form
 		**/
-		public function importMore($scope)
+		public function importMore(array $scope)
 		{
 			foreach ($this->primitives as $prm) {
 				if (!$prm->isImported())
@@ -334,7 +334,7 @@
 		/**
 		 * @return Form
 		**/
-		public function importOne($primitiveName, $scope)
+		public function importOne($primitiveName, array $scope)
 		{
 			return $this->importPrimitive($scope, $this->get($primitiveName));
 		}
@@ -352,7 +352,7 @@
 		/**
 		 * @return Form
 		**/
-		public function importOneMore($primitiveName, $scope)
+		public function importOneMore($primitiveName, array $scope)
 		{
 			$prm = $this->get($primitiveName);
 			
