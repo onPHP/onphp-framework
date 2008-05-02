@@ -16,7 +16,7 @@
 	 * 
 	 * @see Date
 	 * 
-	 * @ingroup Base
+	 * @ingroup Types
 	**/
 	class Timestamp extends Date
 	{

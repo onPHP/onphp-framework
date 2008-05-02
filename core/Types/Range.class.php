@@ -13,7 +13,7 @@
 	/**
 	 * Integer's interval implementation and accompanying utility methods.
 	 * 
-	 * @ingroup Helpers
+	 * @ingroup Types
 	**/
 	class Range extends RangedType implements SingleRange, Stringable
 	{

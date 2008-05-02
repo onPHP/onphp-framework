@@ -16,7 +16,7 @@
 	 * @see Date
 	 * @see TimestampRange
 	 * 
-	 * @ingroup Helpers
+	 * @ingroup Types
 	**/
 	class DateRange extends BaseType implements Stringable, SingleRange
 	{
