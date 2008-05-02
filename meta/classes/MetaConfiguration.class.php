@@ -577,10 +577,10 @@
 						$out->error('H', true);
 					}
 					
+					$out->warning('/');
+					
 					FormUtils::object2form($object, $form);
 					FormUtils::form2object($form, $object);
-					
-					$out->warning('/');
 					
 					if ($object != $clone) {
 						$out->error('T', true);
