@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -13,26 +13,24 @@
 	/**
 	 * Time's container and utilities.
 	 * 
-	 * @ingroup Base
+	 * @ingroup Types
 	**/
-	final class Time implements Stringable
+	final class Time extends BaseType implements Stringable
 	{
 		private $hour	= 0;
 		private $minute	= 0;
 		private $second	= 0;
 		
-		private $string	= null;
-		
 		/**
 		 * @return Time
 		**/
-		public static function create($input)
+		public static function create($input = null)
 		{
 			return new self($input);
 		}
 		
 		// currently supports '01:23:45', '012345', '1234', '12'
-		public function __construct($input)
+		public function setValue($input)
 		{
 			if (Assert::checkInteger($input)) {
 				$time = $input;
@@ -64,14 +62,14 @@
 						
 						$assumedHour = substr($input, 0, 2);
 						
-						if ($assumedHour > 12)
+						if ($assumedHour > 23)
 							$this->
-								setHour($input[0])->
-								setMinute(substr($input, 1, 3));
+								setHour(substr($input, 0, 1))->
+								setMinute(substr($input, 1, 2));
 						else
 							$this->
 								setHour($assumedHour)->
-								setMinute($input[2].'0');
+								setMinute(substr($input, 2, 1).'0');
 						
 						break;
 					
@@ -81,8 +79,8 @@
 						
 						$this->
 							setHour(substr($input, 0, 2))->
-							setMinute(substr($input, 2, 4))->
-							setSecond(substr($input, 4, 6));
+							setMinute(substr($input, 2, 2))->
+							setSecond(substr($input, 4, 2));
 						
 						break;
 						
@@ -111,7 +109,7 @@
 			);
 			
 			$this->hour = $hour;
-			$this->string = null;
+			$this->value = null;
 			
 			return $this;
 		}
@@ -136,7 +134,7 @@
 			);
 			
 			$this->minute = $minute;
-			$this->string = null;
+			$this->value = null;
 			
 			return $this;
 		}
@@ -161,7 +159,7 @@
 			);
 			
 			$this->second = $second;
-			$this->string = null;
+			$this->value = null;
 			
 			return $this;
 		}
@@ -169,13 +167,13 @@
 		/// HH:MM
 		public function toString($delimiter = ':')
 		{
-			if ($this->string === null)
-				$this->string =
+			if ($this->value === null)
+				$this->value =
 					$this->doublize($this->hour)
 					.$delimiter
 					.$this->doublize($this->minute);
 			
-			return $this->string;
+			return $this->value;
 		}
 		
 		/// HH:MM:SS

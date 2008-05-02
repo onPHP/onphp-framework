@@ -135,5 +135,61 @@
 				$ts->toIsoString(false)
 			);
 		}
+		
+		public static function timeProvider()
+		{
+			return array(
+				array(1, 1, 0, 0),
+				array(12, 12, 0, 0),
+				array(123, 12, 30, 0),
+				array(256, 2, 56, 0),
+				array(1234, 12, 34, 0),
+				array(12345, 12, 34, 5),
+				array(123456, 12, 34, 56),
+				array('12:34', 12, 34, 0),
+				array('12:34:56', 12, 34, 56)
+			);
+		}
+		
+		/**
+		 * @dataProvider timeProvider
+		**/
+		public function testTimeParsing($input, $hour, $minute, $second)
+		{
+			$time = new Time($input);
+			
+			$this->assertEquals($time->getHour(), $hour);
+			$this->assertEquals($time->getMinute(), $minute);
+			$this->assertEquals($time->getSecond(), $second);
+			
+			$this->assertEquals(
+				$time->toString(),
+				sprintf('%02d:%02d', $time->getHour(), $time->getMinute())
+			);
+			
+			$this->assertEquals(
+				$time->toFullString(),
+				sprintf(
+					'%02d:%02d:%02d',
+					$time->getHour(), $time->getMinute(), $time->getSecond()
+				)
+			);
+			
+			$this->assertEquals(
+				round($time->toSeconds() / $time->toMinutes()),
+				60
+			);
+		}
+		
+		public function testTime()
+		{
+			try {
+				$time = new Time('not really');
+				
+				$this->fail();
+			} catch (WrongArgumentException $e) {/*_*/}
+			
+			
+		}
 	}
 ?>
