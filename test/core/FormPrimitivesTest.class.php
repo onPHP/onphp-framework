@@ -68,7 +68,7 @@
 			$this->formErrorAsserts($form, true, true);
 			
 			// value, safe, raw, form, export
-			$this->formAsserts($form, 'property', null, 42, $raw, $raw, null);
+			$this->formAsserts($form, 'property', null, null, $raw, $raw, null);
 		}
 		
 		public function testBlank()
