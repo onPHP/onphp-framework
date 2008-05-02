@@ -492,7 +492,7 @@
 					
 					$object = new $name;
 					$proto = $object->proto();
-					$proto->makeForm();
+					$form = $proto->makeForm();
 					
 					foreach ($class->getProperties() as $name => $property) {
 						Assert::isTrue(
@@ -540,16 +540,6 @@
 						.'/'
 					);
 					
-					$clone = clone $object;
-					
-					if (serialize($clone) == serialize($object))
-						$out->info('C', true);
-					else {
-						$out->error('C', true);
-					}
-					
-					$out->warning('/');
-					
 					try {
 						$object = $dao->getByQuery($query);
 						$form = $object->proto()->makeForm();
@@ -567,6 +557,15 @@
 					
 					$out->warning('/');
 					
+					$clone = clone $object;
+					
+					if (serialize($clone) === serialize($object))
+						$out->info('C', true);
+					else
+						$out->error('C', true);
+					
+					$out->warning('/');
+					
 					if (
 						Criteria::create($dao)->
 						setFetchStrategy(FetchStrategy::cascade())->
@@ -576,6 +575,17 @@
 						$out->info('H', true);
 					} else {
 						$out->error('H', true);
+					}
+					
+					FormUtils::object2form($object, $form);
+					FormUtils::form2object($form, $object);
+					
+					$out->warning('/');
+					
+					if ($object != $clone) {
+						$out->error('T', true);
+					} else {
+						$out->info('T', true);
 					}
 					
 					$out->warning(')')->info(', ');
