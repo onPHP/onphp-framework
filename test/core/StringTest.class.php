@@ -28,7 +28,7 @@
 			try {
 				$object = new String($value);
 				
-				$this->assertEquals($object->get(), $value);
+				$this->assertEquals($object->getValue(), $value);
 				
 				if (!$string)
 					$this->fail(

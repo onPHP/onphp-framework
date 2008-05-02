@@ -18,7 +18,7 @@
 		/**
 		 * @return String
 		**/
-		public function set($value)
+		public function setValue($value)
 		{
 			if (is_string($value)) {
 				$this->checkLimits(mb_strlen($value));

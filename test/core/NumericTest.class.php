@@ -39,7 +39,7 @@
 				try {
 					$object = new $className($value);
 					
-					$this->assertEquals($object->get(), $value);
+					$this->assertEquals($object->getValue(), $value);
 					
 					if (!$$type)
 						$this->fail($value.' can not be '.$type.' number');

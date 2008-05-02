@@ -17,13 +17,15 @@
 	{
 		protected $value = null;
 		
+		abstract public function setValue($value);
+		
 		public function __construct($value = null)
 		{
 			if (null !== $value)
-				$this->set($value);
+				$this->setValue($value);
 		}
 		
-		public function get()
+		public function getValue()
 		{
 			return $this->value;
 		}

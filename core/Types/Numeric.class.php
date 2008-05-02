@@ -21,7 +21,7 @@
 		/**
 		 * @return Numeric
 		**/
-		public function set($value)
+		public function setValue($value)
 		{
 			if ($this->checkValue($value)) {
 				$this->checkLimits($value);
