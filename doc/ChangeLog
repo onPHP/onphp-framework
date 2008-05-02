@@ -40,6 +40,10 @@
 
 	* core/Base/Scope.class.php: simple but useful wrapper for arrays.
 
+2008-04-02	Konstantin V. Arkhipov
+
+	* core/Form/: error handling moved from Form to primitives.
+
 2008-04-01	Ivan Y. Khvostishkov
 
 	* main/Application/ApplicationUrl.class.php: now reference methods

@@ -102,7 +102,7 @@
 			if (isset($scope[$this->name]) && $scope[$this->name]) {
 				$savedRaw = $scope[$this->name];
 				
-				$this->customError = null;
+				$this->error = null;
 				
 				try {
 					
@@ -110,21 +110,21 @@
 					
 				} catch (BaseException $e) {
 					
-					$this->customError = self::WRONG_CID_FORMAT;
+					$this->setError(self::WRONG_CID_FORMAT);
 					
 				}
 				
 				if (
-					!$this->customError
+					!$this->error
 					&& !ClassUtils::isInstanceOf($class, $this->baseClassName)
 				) {
 					
-					$this->customError = self::WRONG_CLASS;
+					$this->setError(self::WRONG_CLASS);
 					
 				}
 				
 				
-				if (!$this->customError) {
+				if (!$this->error) {
 					parent::of($class);
 				
 					$scope[$this->name] = $id;
@@ -135,7 +135,7 @@
 				parent::of($this->baseClassName);
 			}
 			
-			if (!$this->customError)
+			if (!$this->error)
 				$result = parent::import($scope);
 			else {
 				$this->value = null;

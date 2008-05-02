@@ -20,10 +20,6 @@
 	**/
 	final class Form extends RegulatedForm
 	{
-		const WRONG			= 0x0001;
-		const MISSING		= 0x0002;
-		
-		private $errors				= array();
 		private $labels				= array();
 		private $describedLabels	= array();
 		
@@ -41,7 +37,13 @@
 		
 		public function getErrors()
 		{
-			return array_merge($this->errors, $this->violated);
+			$errors = array();
+			
+			foreach ($this->primitives as $prm)
+				if ($error = $prm->getError())
+					$errors[$prm->getName()] = $error;
+			
+			return array_merge($errors, $this->violated);
 		}
 		
 		public function getInnerErrors()
@@ -72,7 +74,9 @@
 		**/
 		public function dropAllErrors()
 		{
-			$this->errors	= array();
+			foreach ($this->primitives as $prm)
+				$prm->dropError();
+			
 			$this->violated	= array();
 			
 			return $this;
@@ -80,20 +84,17 @@
 		
 		public function getPrimitiveError($name)
 		{
-			if (!isset($this->errors[$name]))
-				return null;
-			
-			return $this->errors[$name];
+			return $this->get($name)->getError();
 		}
 		
+		/**
+		 * @return Form
+		**/
 		public function dropPrimitiveError($name)
 		{
-			if (!isset($this->errors[$name]))
-				throw new MissingElementException(
-					'"'.$name.'" does not contain errors'
-				);
+			$this->get($name)->dropError();
 			
-			unset($this->errors[$name]);
+			return $this;
 		}
 		
 		/**
@@ -125,7 +126,9 @@
 		**/
 		public function markMissing($primitiveName)
 		{
-			return $this->markCustom($primitiveName, Form::MISSING);
+			$this->get($primitiveName)->setError(BasePrimitive::MISSING);
+			
+			return $this;
 		}
 		
 		/**
@@ -135,10 +138,10 @@
 		**/
 		public function markWrong($name)
 		{
-			if (isset($this->primitives[$name]))
-				$this->errors[$name] = self::WRONG;
+			if ($this->primitiveExists($name))
+				$this->get($name)->setError(BasePrimitive::WRONG);
 			elseif (isset($this->rules[$name]))
-				$this->violated[$name] = self::WRONG;
+				$this->violated[$name] = BasePrimitive::WRONG;
 			else
 				throw new MissingElementException(
 					$name.' does not match known primitives or rules'
@@ -150,15 +153,15 @@
 		/**
 		 * @return Form
 		**/
-		public function markGood($primitiveName)
+		public function markGood($name)
 		{
-			if (isset($this->primitives[$primitiveName]))
-				unset($this->errors[$primitiveName]);
-			elseif (isset($this->rules[$primitiveName]))
-				unset($this->violated[$primitiveName]);
+			if ($this->primitiveExists($name))
+				$this->get($name)->dropError();
+			elseif (isset($this->rules[$name]))
+				unset($this->violated[$name]);
 			else
 				throw new MissingElementException(
-					$primitiveName.' does not match known primitives or rules'
+					$name.' does not match known primitives or rules'
 				);
 			
 			return $this;
@@ -171,9 +174,7 @@
 		**/
 		public function markCustom($primitiveName, $customMark)
 		{
-			Assert::isInteger($customMark);
-			
-			$this->errors[$this->get($primitiveName)->getName()] = $customMark;
+			$this->get($primitiveName)->setError($customMark);
 			
 			return $this;
 		}
@@ -204,12 +205,11 @@
 			)
 				return $this->labels[$name][$this->violated[$name]];
 			elseif (
-				isset(
-					$this->errors[$name],
-					$this->labels[$name][$this->errors[$name]]
-				)
+				$this->primitiveExists($name)
+				&& ($error = $this->get($name)->getError())
+				&& isset($this->labels[$name][$error])
 			)
-				return $this->labels[$name][$this->errors[$name]];
+				return $this->labels[$name][$error];
 			else
 				return null;
 		}
@@ -224,12 +224,13 @@
 			)
 				return $this->describedLabels[$name][$this->violated[$name]];
 			elseif (
-				isset(
-					$this->errors[$name],
-					$this->describedLabels[$name][$this->errors[$name]]
+				$this->primitiveExists($name)
+				&& ($error = $this->get($name)->getError())
+				&& isset(
+					$this->describedLabels[$name][$error]
 				)
 			)
-				return $this->describedLabels[$name][$this->errors[$name]];
+				return $this->describedLabels[$name][$error];
 			else
 				return null;
 		}
@@ -257,7 +258,6 @@
 		**/
 		public function addErrorDescription($name, $errorType, $description)
 		{
-			
 			if (
 				!isset($this->rules[$name])
 				&& !$this->get($name)->getName()
@@ -276,7 +276,11 @@
 		**/
 		public function addWrongLabel($primitiveName, $label)
 		{
-			return $this->addErrorLabel($primitiveName, Form::WRONG, $label);
+			return $this->addErrorLabel(
+				$primitiveName,
+				BasePrimitive::WRONG,
+				$label
+			);
 		}
 		
 		/**
@@ -284,7 +288,11 @@
 		**/
 		public function addMissingLabel($primitiveName, $label)
 		{
-			return $this->addErrorLabel($primitiveName, Form::MISSING, $label);
+			return $this->addErrorLabel(
+				$primitiveName,
+				BasePrimitive::MISSING,
+				$label
+			);
 		}
 		
 		/**
@@ -292,7 +300,11 @@
 		**/
 		public function addCustomLabel($primitiveName, $customMark, $label)
 		{
-			return $this->addErrorLabel($primitiveName, $customMark, $label);
+			return $this->addErrorLabel(
+				$primitiveName,
+				$customMark,
+				$label
+			);
 		}
 		
 		/**
@@ -436,17 +448,14 @@
 			
 			if (null === $result) {
 				if ($prm->isRequired())
-					$this->errors[$name] = self::MISSING;
+					$prm->setError(BasePrimitive::MISSING);
 				
 			} elseif (true === $result) {
-				unset($this->errors[$name]);
 				
-			} elseif ($error = $prm->getCustomError()) {
-				
-				$this->errors[$name] = $error;
+				$prm->dropError();
 				
 			} else
-				$this->errors[$name] = self::WRONG;
+				$prm->setError(BasePrimitive::WRONG);
 			
 			return $this;
 		}
@@ -456,7 +465,7 @@
 		 * One more example of horrible documentation style.
 		 * 
 		 * @param	$name		string	primitive or rule name
-		 * @param	$errorType	enum	Form::(WRONG|MISSING)
+		 * @param	$errorType	enum	BasePrimitive::(WRONG|MISSING)
 		 * @param	$label		string	YDFB WTF is this :-) (c) /.
 		 * @throws	MissingElementException
 		 * @return	Form

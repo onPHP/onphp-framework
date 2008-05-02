@@ -594,7 +594,7 @@
 						$out->errorLine(
 							"\t\t".$name.' - '
 							.(
-								$error == Form::WRONG
+								$error == BasePrimitive::WRONG
 									? ' wrong'
 									: ' missing'
 							)
