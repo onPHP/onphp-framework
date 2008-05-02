@@ -18,7 +18,7 @@
 	 * 
 	 * @see http://onphp.org/examples.Form.en.html
 	**/
-	final class Form extends RegulatedForm
+	final class Form extends PlainForm
 	{
 		private $labels				= array();
 		private $describedLabels	= array();
@@ -43,7 +43,7 @@
 				if ($error = $prm->getError())
 					$errors[$prm->getName()] = $error;
 			
-			return array_merge($errors, $this->violated);
+			return $errors;
 		}
 		
 		public function getInnerErrors()
@@ -76,8 +76,6 @@
 		{
 			foreach ($this->primitives as $prm)
 				$prm->dropError();
-			
-			$this->violated	= array();
 			
 			return $this;
 		}
@@ -132,19 +130,15 @@
 		}
 		
 		/**
-		 * rule or primitive
-		 * 
 		 * @return Form
 		**/
 		public function markWrong($name)
 		{
 			if ($this->primitiveExists($name))
 				$this->get($name)->setError(BasePrimitive::WRONG);
-			elseif (isset($this->rules[$name]))
-				$this->violated[$name] = BasePrimitive::WRONG;
 			else
 				throw new MissingElementException(
-					$name.' does not match known primitives or rules'
+					$name.' does not match known primitives'
 				);
 			
 			return $this;
@@ -157,11 +151,9 @@
 		{
 			if ($this->primitiveExists($name))
 				$this->get($name)->dropError();
-			elseif (isset($this->rules[$name]))
-				unset($this->violated[$name]);
 			else
 				throw new MissingElementException(
-					$name.' does not match known primitives or rules'
+					$name.' does not match known primitives'
 				);
 			
 			return $this;
@@ -198,13 +190,6 @@
 		public function getTextualErrorFor($name)
 		{
 			if (
-				isset(
-					$this->violated[$name],
-					$this->labels[$name][$this->violated[$name]]
-				)
-			)
-				return $this->labels[$name][$this->violated[$name]];
-			elseif (
 				$this->primitiveExists($name)
 				&& ($error = $this->get($name)->getError())
 				&& isset($this->labels[$name][$error])
@@ -217,13 +202,6 @@
 		public function getErrorDescriptionFor($name)
 		{
 			if (
-				isset(
-					$this->violated[$name],
-					$this->describedLabels[$name][$this->violated[$name]]
-				)
-			)
-				return $this->describedLabels[$name][$this->violated[$name]];
-			elseif (
 				$this->primitiveExists($name)
 				&& ($error = $this->get($name)->getError())
 				&& isset(
@@ -258,15 +236,13 @@
 		**/
 		public function addErrorDescription($name, $errorType, $description)
 		{
-			if (
-				!isset($this->rules[$name])
-				&& !$this->get($name)->getName()
-			)
-				throw new MissingElementException(
-					"knows nothing about '{$name}'"
-				);
-			
-			$this->describedLabels[$name][$errorType] = $description;
+			$this->describedLabels[
+				// checks primitive existence
+				$this->get($name)->getName()
+			][
+				$errorType
+			] =
+				$description;
 			
 			return $this;
 		}
@@ -464,7 +440,7 @@
 		 * Assigns specific label for given primitive and error type.
 		 * One more example of horrible documentation style.
 		 * 
-		 * @param	$name		string	primitive or rule name
+		 * @param	$name		string	primitive name
 		 * @param	$errorType	enum	BasePrimitive::(WRONG|MISSING)
 		 * @param	$label		string	YDFB WTF is this :-) (c) /.
 		 * @throws	MissingElementException
@@ -472,15 +448,12 @@
 		**/
 		private function addErrorLabel($name, $errorType, $label)
 		{
-			if (
-				!isset($this->rules[$name])
-				&& !$this->get($name)->getName()
-			)
-				throw new MissingElementException(
-					"knows nothing about '{$name}'"
-				);
-			
-			$this->labels[$name][$errorType] = $label;
+			$this->labels[
+				// checks primitive existence
+				$this->get($name)->getName()
+			][
+				$errorType
+			] = $label;
 			
 			return $this;
 		}

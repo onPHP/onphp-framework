@@ -29,6 +29,10 @@
 	cloning primitives. It's one of the possible soft-tricks to implement
 	anonymous primitives.
 
+2008-04-08	Konstantin V. Arkhipov
+
+	* core/Form/: RegulatedForm removed in favour of PrimitiveRule.
+
 2008-04-07	Konstantin V. Arkhipov
 
 	* meta/: added __sleep() generation in auto classes to prvent

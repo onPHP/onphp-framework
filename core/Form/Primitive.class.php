@@ -255,5 +255,13 @@
 		{
 			return new PrimitiveHttpUrl($name);
 		}
+		
+		/**
+		 * @return PrimitiveRule
+		**/
+		public static function rule($name)
+		{
+			return new PrimitiveRule($name);
+		}
 	}
 ?>
