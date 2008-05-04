@@ -101,8 +101,6 @@
 				$this->importOne($prm->getName(), $request);
 			}
 			
-			$this->form->checkRules();
-			
 			return $this;
 		}
 		
