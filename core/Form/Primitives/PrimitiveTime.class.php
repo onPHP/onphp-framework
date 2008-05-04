@@ -116,7 +116,7 @@
 			if ($value)
 				Assert::isTrue($value instanceof Time);
 			else
-				$value = null;
+				return parent::importValue(null);
 			
 			return
 				RangedPrimitive::import(
