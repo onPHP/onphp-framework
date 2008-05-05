@@ -24,12 +24,12 @@
 		
 		public function getTypeName()
 		{
-			throw new UnsupportedMethodException();
+			return 'String';
 		}
 		
 		public function isObjectType()
 		{
-			throw new UnsupportedMethodException();
+			return false;
 		}
 		
 		public function getOriginalName()
