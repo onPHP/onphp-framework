@@ -270,7 +270,11 @@
 						
 						$isEnum = (
 							$className
-							&& is_subclass_of($className, 'Enumeration')
+							&&
+								ClassUtils::isInstanceOf(
+									$className,
+									'Enumeration'
+								)
 						);
 						
 						$columnName = $prefix.$property->getColumnName();
