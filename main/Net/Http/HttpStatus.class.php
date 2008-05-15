@@ -108,9 +108,9 @@
 			return 200;
 		}
 		
-		public function toString()
+		public function toString($protocol = 'HTTP/1.1')
 		{
-			return 'HTTP/1.1 '.$this->id.' '.$this->name;
+			return $protocol .' '.$this->id.' '.$this->name;
 		}
 	}
 ?>

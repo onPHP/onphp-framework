@@ -23,6 +23,7 @@
 		
 		public static function redirectRaw($url)
 		{
+			self::sendRedirectStatus();
 			header("Location: {$url}");
 
 			self::$headerSent = true;
@@ -32,12 +33,27 @@
 		public static function redirectBack()
 		{
 			if (isset($_SERVER['HTTP_REFERER'])) {
+				self::sendRedirectStatus();
 				header("Location: {$_SERVER['HTTP_REFERER']}");
 				self::$headerSent = true;
 				self::$redirectSent = true;
 				return $_SERVER['HTTP_REFERER'];
 			} else
 				return false;
+		}
+		
+		public static function sendRedirectStatus()
+		{
+			$protocol = $_SERVER['SERVER_PROTOCOL'];
+			$status = null;
+
+			if ($protocol == 'HTTP/1.0') {
+				$status = new HttpStatus(HttpStatus::CODE_302);
+			} else {
+				$status = new HttpStatus(HttpStatus::CODE_303);
+			}
+			
+			self::sendHttpStatus($status, $protocol);
 		}
 		
 		public static function getParsedURI(/* ... */)
@@ -100,9 +116,12 @@
 			self::$headerSent = true;
 		}
 		
-		public static function sendHttpStatus(HttpStatus $status)
+		public static function sendHttpStatus(
+			HttpStatus $status,
+			$protocol = 'HTTP/1.1'
+		)
 		{
-			header($status->toString());
+			header($status->toString($protocol));
 			
 			self::$headerSent = true;
 		}
