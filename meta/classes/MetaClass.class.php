@@ -465,7 +465,7 @@
 		{
 			$parent = $this;
 			
-			while ($parent = $this->getParent()) {
+			while ($parent = $parent->getParent()) {
 				if ($parent->getContainersList()) {
 					return true;
 				}
