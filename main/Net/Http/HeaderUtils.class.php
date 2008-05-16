@@ -118,7 +118,7 @@
 		
 		public static function sendHttpStatus(
 			HttpStatus $status,
-			$protocol = 'HTTP/1.1'
+			$protocol = HttpStatus::DEFAULT_PROTOCOL
 		)
 		{
 			header($status->toString($protocol));

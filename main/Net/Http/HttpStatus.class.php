@@ -17,6 +17,8 @@
 	**/	
 	final class HttpStatus extends Enumeration
 	{
+		const DEFAULT_PROTOCOL	= 'HTTP/1.1';
+		
 		const CODE_100	= 100;
 		const CODE_101	= 101;
 		const CODE_200	= 200;
@@ -108,9 +110,9 @@
 			return 200;
 		}
 		
-		public function toString($protocol = 'HTTP/1.1')
+		public function toString($protocol = self::DEFAULT_PROTOCOL)
 		{
-			return $protocol .' '.$this->id.' '.$this->name;
+			return $protocol.' '.$this->id.' '.$this->name;
 		}
 	}
 ?>
