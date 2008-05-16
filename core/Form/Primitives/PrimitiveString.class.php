@@ -43,8 +43,8 @@
 		
 		public function import(array $scope)
 		{
-			if (!parent::import($scope))
-				return null;
+			if (!($result = parent::import($scope)))
+				return $result;
 			
 			if (!$this->pattern || preg_match($this->pattern, $this->value)) {
 				return true;
