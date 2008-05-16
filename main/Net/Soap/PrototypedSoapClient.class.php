@@ -117,6 +117,11 @@
 			
 			Assert::isInstance($requestDto, 'DTOClass');
 			
+			// FIXME: next line required only to avoid paranormal segfault,
+			// need for immediate fix
+			$form = ObjectToFormConverter::create($request->entityProto())->
+				make($request);
+			
 			if (defined('__LOCAL_DEBUG__') && !defined('SIMPLE_TEST') ) {
 				// self-validation
 				
@@ -173,6 +178,8 @@
 					$resultClass
 				);
 				
+				// FIXME: possible segmentation fault here, if ObjectToFormConverter
+				// was not called before. paranormal!
 				$form = DTOToFormImporter::create($resultDto->entityProto())->
 					make($resultDto);
 				
