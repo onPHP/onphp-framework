@@ -47,7 +47,7 @@
 			$protocol = $_SERVER['SERVER_PROTOCOL'];
 			$status = null;
 
-			if ($protocol == 'HTTP/1.0') {
+			if ($protocol == HttpStatus::HTTP_1_0) {
 				$status = new HttpStatus(HttpStatus::CODE_302);
 			} else {
 				$status = new HttpStatus(HttpStatus::CODE_303);
@@ -118,7 +118,7 @@
 		
 		public static function sendHttpStatus(
 			HttpStatus $status,
-			$protocol = HttpStatus::DEFAULT_PROTOCOL
+			$protocol = HttpStatus::HTTP_1_1
 		)
 		{
 			header($status->toString($protocol));
