@@ -44,7 +44,12 @@
 		
 		public static function sendRedirectStatus()
 		{
-			$protocol = $_SERVER['SERVER_PROTOCOL'];
+			$protocol = HttpStatus::HTTP_1_1;
+			
+			if (isset($_SERVER['SERVER_PROTOCOL'])) {
+				$protocol = $_SERVER['SERVER_PROTOCOL'];
+			}
+			
 			$status = null;
 
 			if ($protocol == HttpStatus::HTTP_1_0) {
