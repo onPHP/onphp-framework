@@ -27,4 +27,9 @@ ApplicationUrl: factory for easy producing urls of any kind.
 
 ApplicationController: Controller implementation for ApplicationRequest.
 
-ApplicationModel: response, anotated with xsd.
+ApplicationModel: response, annotated with xsd.
+
+* flow
+
+think about controller's protos for splitting forms creation and importing
+from business logic
