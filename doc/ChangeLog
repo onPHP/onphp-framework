@@ -1,5 +1,10 @@
 # $Id$
 
+2008-05-23	Pismenny E. Dmitry
+
+	* main/Net/Http/CurlHttpClient.class.php: can send cookie now.
+	Fixed GET query construction.
+
 2008-05-02	Konstantin V. Arkhipov
 
 	* main/DAOs/: fetchEncapsulants is now the private method, only

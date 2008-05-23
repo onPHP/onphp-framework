@@ -178,14 +178,22 @@
 			if ($request->getMethod()->getId() == HttpMethod::GET) {
 				$options[CURLOPT_HTTPGET] = true;
 				
-				if ($request->getGet()) {
+				if ($request->getGet())
 					$options[CURLOPT_URL] .=
-						'?'.$this->argumentsToString($request->getGet());
-				}
+						($request->getUrl()->getQuery() ? '&' : '?')
+						.$this->argumentsToString($request->getGet());
 			} else {
 				$options[CURLOPT_POST] = true;
 				$options[CURLOPT_POSTFIELDS] =
 					$this->argumentsToString($request->getPost());
+			}
+			
+			if ($request->getCookie()) {
+				$cookies = array();
+				foreach ($request->getCookie() as $name => $value)
+					$cookies[] = $name.'='.urlencode($value);
+				
+				$options[CURLOPT_COOKIE] = implode('; ', $cookies);
 			}
 			
 			foreach ($this->options as $key => $value) {
