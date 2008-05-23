@@ -36,7 +36,7 @@
 		{
 			parent::clean();
 			
-			$this->atom = new $this->atom;
+			$this->atom->dropValue();
 			
 			return $this;
 		}

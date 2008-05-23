@@ -129,6 +129,17 @@
 			return $this;
 		}
 		
+		public function dropValue()
+		{
+			parent::dropValue();
+			
+			$this->hour = null;
+			$this->minute = null;
+			$this->second = null;
+			
+			return $this;
+		}
+		
 		public function getHour()
 		{
 			return $this->hour;

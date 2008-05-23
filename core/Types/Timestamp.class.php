@@ -118,6 +118,17 @@
 			return 'Y-m-d H:i:s';
 		}
 		
+		public function dropValue()
+		{
+			parent::dropValue();
+			
+			$this->hour = null;
+			$this->minute = null;
+			$this->second = null;
+			
+			return $this;
+		}
+		
 		/* void */ protected function import($string)
 		{
 			list($date, $time) = explode(' ', $string, 2);

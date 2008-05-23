@@ -29,5 +29,12 @@
 		{
 			return $this->value;
 		}
+		
+		public function dropValue()
+		{
+			$this->value = null;
+			
+			return $this;
+		}
 	}
 ?>

@@ -511,6 +511,16 @@
 			return $this;
 		}
 		
+		public function dropValue()
+		{
+			parent::dropValue();
+			
+			$this->dropStart();
+			$this->dropEnd();
+			
+			return $this;
+		}
+		
 		protected function checkType($value)
 		{
 			Assert::isTrue(
