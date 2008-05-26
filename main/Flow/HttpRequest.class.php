@@ -328,7 +328,7 @@
 		
 		/**
 		 * @return HttpUrl
-		 */
+		**/
 		public function getUrl()
 		{
 			return $this->url;
