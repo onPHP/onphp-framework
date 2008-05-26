@@ -173,8 +173,6 @@
 					$resultClass
 				);
 				
-				// FIXME: possible segmentation fault here, if ObjectToFormConverter
-				// was not called before. paranormal!
 				$form = DTOToFormImporter::create($resultDto->entityProto())->
 					make($resultDto);
 				
