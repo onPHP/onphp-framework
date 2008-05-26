@@ -263,5 +263,14 @@
 		{
 			return new PrimitiveRule($name);
 		}
+		
+		/**
+		 * @return PrimitiveDomDocument
+		**/
+		public static function domDocument($name)
+		{
+			return new PrimitiveDomDocument($name);
+		}
+		
 	}
 ?>

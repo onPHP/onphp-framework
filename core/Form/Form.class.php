@@ -85,6 +85,11 @@
 			return $this->get($name)->getError();
 		}
 		
+		public function getPrimitiveErrorLabel($name)
+		{
+			return $this->get($name)->getErrorLabel();
+		}
+		
 		/**
 		 * @return Form
 		**/
@@ -179,8 +184,8 @@
 		{
 			$list = array();
 			
-			foreach (array_keys($this->labels) as $name) {
-				if ($label = $this->getTextualErrorFor($name))
+			foreach ($this->primitives as $prm) {
+				if ($label = $this->getTextualErrorFor($prm->getName()))
 					$list[] = $label;
 			}
 			
@@ -192,11 +197,14 @@
 			if (
 				$this->primitiveExists($name)
 				&& ($error = $this->get($name)->getError())
-				&& isset($this->labels[$name][$error])
-			)
-				return $this->labels[$name][$error];
-			else
-				return null;
+			) {
+				if (isset($this->labels[$name][$error]))
+					return $this->labels[$name][$error];
+				else
+					return $this->getPrimitiveErrorLabel($name);
+			}
+			
+			return null;
 		}
 		
 		public function getErrorDescriptionFor($name)

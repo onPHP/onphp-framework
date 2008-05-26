@@ -1,5 +1,19 @@
 # $Id$
 
+2008-05-26	Ivan Y. Khvostishkov
+
+	* core/Form/Primitives/PrimitiveDomDocument.class.php: primitive for
+	parsing and validating XML DOM.
+
+	* core/Form/Primitives/BasePrimitive.class.php: getErrorLabel() for
+	custom validation error messages.
+
+	* core/Form/Form.class.php: getPrimitiveErrorLabel() for custom
+	message, getTextualErrors() fixed to return such a messages too.
+
+	* test/core/PrimitiveDomDocumentTest.class.php, test/misc/text.xsd:
+	corresponding tests.
+
 2008-05-23	Pismenny E. Dmitry
 
 	* main/Net/Http/CurlHttpClient.class.php: can send cookie now.
