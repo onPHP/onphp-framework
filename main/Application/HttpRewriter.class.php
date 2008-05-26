@@ -11,7 +11,7 @@
 /* $Id$ */
 
 	/**
-	 *
+	 * 
 	 * Note: you may configure arg_separator.output to whatever you want.
 	 * 
 	**/
@@ -43,7 +43,7 @@
 		
 		/**
 		 * @return HttpUrl
-		 */
+		**/
 		public function getUrl(array $scope)
 		{
 			$result = clone $this->base;
@@ -61,7 +61,7 @@
 		
 		/**
 		 * @return array
-		 */
+		**/
 		public function getScope(HttpUrl $url)
 		{
 			$result = array();

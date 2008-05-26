@@ -348,7 +348,7 @@
 		
 		/**
 		 * @return HttpUrl
-		 */
+		**/
 		public function getUrl()
 		{
 			return $this->url;
@@ -356,7 +356,7 @@
 		
 		/**
 		 * @return HttpUrl
-		 *
+		 * 
 		 * See also:
 		 * HttpUrl::toHttpRequest()
 		 * 

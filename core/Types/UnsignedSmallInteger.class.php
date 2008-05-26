@@ -19,7 +19,7 @@
 		protected $max = Integer::UNSIGNED_SMALL_MAX;
 		
 		/**
-		 * @return 
+		 * @return UnsignedSmallInteger
 		**/
 		public static function create($value = null)
 		{
