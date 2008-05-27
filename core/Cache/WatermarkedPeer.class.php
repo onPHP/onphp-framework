@@ -93,6 +93,11 @@
 			return $this;
 		}
 		
+		public function getList($indexes)
+		{
+			return $this->peer->getList($indexes);
+		}
+		
 		public function get($key)
 		{
 			return $this->peer->get($this->getActualWatermark().$key);
