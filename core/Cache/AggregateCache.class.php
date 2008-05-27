@@ -111,6 +111,18 @@
 			return null;
 		}
 		
+		public function getList($indexes)
+		{
+			$label = $this->guessLabel(implode(' ', $indexes));
+			
+			if ($this->peers[$label]['object']->isAlive())
+				return $this->peers[$label]['object']->getList($indexes);
+			else
+				$this->checkAlive();
+			
+			return array();
+		}
+		
 		public function delete($key)
 		{
 			$label = $this->guessLabel($key);
