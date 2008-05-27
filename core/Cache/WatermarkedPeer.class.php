@@ -95,6 +95,9 @@
 		
 		public function getList($indexes)
 		{
+			foreach ($indexes as &$index)
+				$index = $this->getActualWatermark().$index;
+			
 			return $this->peer->getList($indexes);
 		}
 		
