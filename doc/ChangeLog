@@ -2,6 +2,9 @@
 
 2008-05-27	Konstantin V. Arkhipov
 
+	* main/DAOs/Handlers/CacheSegmentHandler.class.php: backported from
+	trunk.
+
 	* core/Cache/: getList() and append() were backported from trunk for
 	all CachePeer's.
 
