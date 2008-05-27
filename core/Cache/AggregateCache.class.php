@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2005-2007 by Anton E. Lebedevich, Konstantin V. Arkhipov *
+ *   Copyright (C) 2005-2008 by Anton E. Lebedevich, Konstantin V. Arkhipov *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -113,14 +113,20 @@
 		
 		public function getList($indexes)
 		{
-			$label = $this->guessLabel(implode(' ', $indexes));
+			$labels = array();
+			$out = array();
 			
-			if ($this->peers[$label]['object']->isAlive())
-				return $this->peers[$label]['object']->getList($indexes);
-			else
-				$this->checkAlive();
+			foreach ($indexes as $index)
+				$labels[$this->guessLabel($index)][] = $index;
 			
-			return array();
+			foreach ($labels as $label => $indexList)
+				if ($this->peers[$label]['object']->isAlive()) {
+					if ($list = $this->peers[$label]['object']->getList($indexList))
+						$out = array_merge($out, $list);
+				} else
+					$this->checkAlive();
+			
+			return $out;
 		}
 		
 		public function delete($key)
