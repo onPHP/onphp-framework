@@ -127,16 +127,25 @@
 		{
 			$list = array();
 			$toFetch = array();
+			$prefixed = array();
 			
-			foreach ($ids as $id) {
-				if (
-					!($cached = $this->getCachedById($id))
-					|| ($cached === Cache::NOT_FOUND)
-				) {
-					$toFetch[] = $id;
-				} else {
-					$list[] = $cached;
+			foreach ($ids as $key => $id)
+				$prefixed[$key] = $this->className.'_'.$id;
+			
+			if (
+				$cachedList
+					= Cache::me()->mark($this->className)->getList($prefixed)
+			) {
+				foreach ($cachedList as $key => $cached) {
+					if ($cached !== Cache::NOT_FOUND) {
+						if ($cached)
+							$list[] = $cached;
+						else
+							$toFetch[] = $ids[$key];
+					}
 				}
+			} else {
+				$toFetch = $ids;
 			}
 			
 			if (!$toFetch)

@@ -76,7 +76,7 @@
 			$this->map = array();
 			
 			foreach ($map as $className => $watermark)
-				$this->map[$className] = md5($watermark.' ['.ONPHP_VERSION.']'.'::');
+				$this->map[$className] = md5($watermark.' ['.ONPHP_VERSION.']::');
 		
 			return $this;
 		}
@@ -116,6 +116,11 @@
 		public function isAlive()
 		{
 			return $this->peer->isAlive();
+		}
+		
+		public function append($key, $data)
+		{
+			return $this->peer->append($this->getActualWatermark().$key, $data);
 		}
 		
 		protected function store(

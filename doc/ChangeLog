@@ -1,5 +1,14 @@
 # $Id$
 
+2008-05-27	Konstantin V. Arkhipov
+
+	* core/Cache/: getList() and append() were backported from trunk for
+	all CachePeer's.
+
+	* main/DAOs/Workers/CommonDaoWorker.class.php,
+	main/DAOs/Workers/TransparentDaoWorker.class.php: getListByIds() now
+	uses CachePeer's multi-get ability - getList(); backported from trunk.
+
 2008-05-02	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/PrimitiveString.class.php: '0' is a valid

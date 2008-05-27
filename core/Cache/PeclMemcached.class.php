@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -81,6 +81,11 @@
 			return parent::clean();
 		}
 		
+		public function getList($indexes)
+		{
+			return $this->get($indexes);
+		}
+		
 		public function get($index)
 		{
 			try {
@@ -98,6 +103,17 @@
 		{
 			try {
 				return $this->instance->delete($index);
+			} catch (BaseException $e) {
+				return $this->alive = false;
+			}
+			
+			Assert::isUnreachable();
+		}
+		
+		public function append($key, $data)
+		{
+			try {
+				return $this->instance->append($key, $data);
 			} catch (BaseException $e) {
 				return $this->alive = false;
 			}

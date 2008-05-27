@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -174,16 +174,25 @@
 				
 				$list = array();
 				$toFetch = array();
-
-				foreach ($ids as $id) {
-					$cached = $this->getCachedById($id);
-					
-					if ($cached !== Cache::NOT_FOUND) {
-						if ($cached)
-							$list[] = $cached;
-						else
-							$toFetch[] = $id;
+				$prefixed = array();
+				
+				foreach ($ids as $key => $id)
+					$prefixed[$key] = $this->className.'_'.$id;
+				
+				if (
+					$cachedList
+						= Cache::me()->mark($this->className)->getList($prefixed)
+				) {
+					foreach ($cachedList as $key => $cached) {
+						if ($cached !== Cache::NOT_FOUND) {
+							if ($cached)
+								$list[] = $cached;
+							else
+								$toFetch[] = $ids[$key];
+						}
 					}
+				} else {
+					$toFetch = $ids;
 				}
 				
 				if (!$toFetch)

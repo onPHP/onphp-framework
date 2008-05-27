@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -61,7 +61,17 @@
 			
 			return parent::clean();
 		}
-
+		
+		public function append($key, $data)
+		{
+			if (isset($this->cache[$key])) {
+				$this->cache[$key] .= $data;
+				return true;
+			}
+			
+			return false;
+		}
+		
 		protected function store($action, $key, &$value, $expires = 0)
 		{
 			if ($action == 'add' && isset($this->cache[$key]))
@@ -69,7 +79,11 @@
 			elseif ($action == 'replace' && !isset($this->cache[$key]))
 				return false;
 			
-			$this->cache[$key] = $value;
+			if (is_object($value))
+				$this->cache[$key] = clone $value;
+			else
+				$this->cache[$key] = $value;
+			
 			return true;
 		}
 	}

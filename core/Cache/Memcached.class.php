@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -81,6 +81,19 @@
 			return parent::clean();
 		}
 		
+		public function getList($indexes)
+		{
+			if (!$this->link)
+				return null;
+			
+			$command = 'get '.implode(' ', $indexes)."\r\n";
+			
+			if (!$this->sendRequest($command))
+				return null;
+			
+			return $this->parseGetRequest(false);
+		}
+		
 		public function get($index)
 		{
 			if (!$this->link)
@@ -91,73 +104,7 @@
 			if (!$this->sendRequest($command))
 				return null;
 			
-			$buffer = null;
-			$lenght = 0;
-			$bytesRead = 0;
-			
-			while ($line = fread($this->link, $this->buffer)) {
-				if ($line === false)
-					return null;
-				
-				if ($lenght === 0) {
-					$header = substr($line, 0, strpos($line, "\r\n"));
-					
-					if ($header === 'ERROR')
-						return null;
-					
-					if ($header !== 'END') {
-						$array = explode(' ', $header, 4);
-						
-						if (count($array) <> 4)
-							continue;
-						else
-							list(
-								, $key, $flags, $bytes
-							) = explode(' ', $header);
-						
-						if (
-							is_string($key)
-							&& is_numeric($flags)
-							&& is_numeric($bytes)
-						) {
-							$line =
-								substr(
-									$line,
-									strpos($line, "\r\n") + 2,
-									strlen($line)
-								);
-						} else
-							return null;
-						
-						$lenght = $bytes;
-					} else
-						return null;
-				}
-				
-				$bytesRead += strlen($line);
-				
-				$buffer .= $line;
-				
-				// strlen("\r\nEND\r\n") == 7
-				if ($bytesRead == ($lenght + 7)) {
-					$end = substr($buffer, $lenght + 2, 3);
-					
-					if ($end === 'END') {
-						$result = substr($buffer, 0, $lenght);
-						
-						if ($flags & 2)
-							$result = gzuncompress($result);
-						
-						if ($flags & 1)
-							$result = unserialize($result);
-						
-						return $result;
-					} else
-						return null;
-				}
-			}
-			
-			return null;
+			return $this->parseGetRequest(true);
 		}
 		
 		public function delete($index, $time = null)
@@ -171,15 +118,35 @@
 				return false;
 			
 			try {
-				$response = trim(fread($this->link, $this->buffer));
+				$response = fread($this->link, $this->buffer);
 			} catch (BaseException $e) {
 				return false;
 			}
 			
-			if ($response === 'DELETED')
+			if ($response === "DELETED\r\n")
 				return true;
 			else
 				return false;
+		}
+		
+		public function append($key, $data)
+		{
+			$packed = serialize($data);
+			
+			$length = strlen($packed);
+			
+			// flags and exptime are ignored
+			$command = "append {$key} 0 0 {$length}\r\n{$packed}\r\n";
+			
+			if (!$this->sendRequest($command))
+				return false;
+			
+			$response = fread($this->link, $this->buffer);
+			
+			if ($response === "STORED\r\n")
+				return true;
+			
+			return false;
 		}
 		
 		protected function store(
@@ -214,12 +181,58 @@
 			if (!$this->sendRequest($command))
 				return false;
 			
-			$response = trim(fread($this->link, $this->buffer));
+			$response = fread($this->link, $this->buffer);
 			
-			if ($response === 'STORED')
+			if ($response === "STORED\r\n")
 				return true;
 			
 			return false;
+		}
+		
+		private function parseGetRequest($single)
+		{
+			$result = null;
+			
+			while ($header = fgets($this->link, 8192)) {
+				if ($header === "END\r\n")
+					return $result;
+				elseif ($header === "ERROR\r\n")
+					return $result;
+				
+				$array = explode(' ', rtrim($header, "\r\n"), 4);
+				
+				if (count($array) <> 4)
+					continue;
+				else
+					list(, $key, $flags, $bytes) = $array;
+				
+				if (
+					is_string($key)
+					&& is_numeric($flags)
+					&& is_numeric($bytes)
+				) {
+					$value = stream_get_contents($this->link, $bytes);
+					
+					if ($flags & 2)
+						$value = gzuncompress($value);
+					
+					if ($flags & 1)
+						$value = unserialize($value);
+					
+					if ($single) {
+						fread($this->link, 7); // skip "\r\nEND\r\n"
+						
+						return $value;
+					} else {
+						fread($this->link, 2); // skip "\r\n"
+						
+						$result[] = $value;
+					}
+				} else
+					return $result;
+			}
+			
+			return $result;
 		}
 		
 		private function sendRequest($command)
@@ -232,11 +245,7 @@
 					try {
 						$result = fwrite(
 							$this->link,
-							substr(
-								$command,
-								$offset,
-								$this->buffer
-							)
+							substr($command, $offset, $this->buffer)
 						);
 					} catch (BaseException $e) {
 						return $this->alive = false;
@@ -249,15 +258,8 @@
 				}
 			} else {
 				try {
-					return (
-						fwrite(
-							$this->link,
-							$command,
-							$commandLenght
-						) === false
-							? false
-							: true
-					);
+					return
+						fwrite($this->link, $command, $commandLenght) !== false;
 				} catch (BaseException $e) {
 					return $this->alive = false;
 				}

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -151,6 +151,32 @@
 			shm_remove($segment);
 			
 			return parent::clean();
+		}
+		
+		public function append($key, $data)
+		{
+			$segment = $this->getSegment();
+			
+			$key = $this->stringToInt($key);
+			
+			try {
+				$stored = shm_get_var($segment, $key);
+				
+				if ($stored['expires'] <= time()) {
+					$this->delete($key);
+					return false;
+				}
+				
+				return $this->store(
+					'ignored',
+					$key,
+					$stored['value'].$data,
+					$stored['expires']
+				);
+			} catch (BaseException $e) {
+				// not found there
+				return false;
+			}
 		}
 		
 		protected function store($action, $key, &$value, $expires = 0)
