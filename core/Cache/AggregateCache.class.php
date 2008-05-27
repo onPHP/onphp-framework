@@ -113,14 +113,23 @@
 		
 		public function getList($indexes)
 		{
-			$label = $this->guessLabel(implode(' ', $indexes));
+			$labels = array();
+			$out = array();
 			
-			if ($this->peers[$label]['object']->isAlive())
-				return $this->peers[$label]['object']->getList($indexes);
-			else
-				$this->checkAlive();
+			foreach ($indexes as $index)
+				$labels[$this->guessLabel($index)][] = $index;
 			
-			return array();
+			foreach ($labels as $label => $indexList)
+				if ($this->peers[$label]['object']->isAlive())
+					$out =
+						array_merge(
+							$out,
+							$this->peers[$label]['object']->getList($indexList)
+						);
+				else
+					$this->checkAlive();
+			
+			return $out;
 		}
 		
 		public function delete($key)
