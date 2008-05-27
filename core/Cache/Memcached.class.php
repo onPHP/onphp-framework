@@ -61,6 +61,13 @@
 			} catch (BaseException $e) {/*_*/}
 		}
 		
+		public function __destruct()
+		{
+			try {
+				fclose($this->link);
+			} catch (BaseException $e) {/*_*/}
+		}
+		
 		/**
 		 * @return Memcached
 		**/
