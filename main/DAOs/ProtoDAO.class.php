@@ -196,7 +196,9 @@
 			);
 			
 			// checking whether we're playing with value object
-			if (!method_exists($property->getClassName(), 'dao')) {
+			$class = new ReflectionClass($property->getClassName());
+			
+			if (!$class->hasMethod('dao')) {
 				return
 					$this->guessAtom(
 						implode('.', $path),
