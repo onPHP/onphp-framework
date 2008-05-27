@@ -86,7 +86,7 @@
 			if (!$this->link)
 				return null;
 			
-			$command = 'gets '.implode(' ', $indexes)."\r\n";
+			$command = 'get '.implode(' ', $indexes)."\r\n";
 			
 			if (!$this->sendRequest($command))
 				return null;
