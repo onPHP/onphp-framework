@@ -1,5 +1,10 @@
 # $Id$
 
+2008-05-27	Konstantin V. Arkhipov
+
+	* main/DAOs/Workers/: fixed partial cached list case in
+	getListByIds().
+
 2008-05-26	Ivan Y. Khvostishkov
 
 	* core/Form/Primitives/PrimitiveDomDocument.class.php: primitive for

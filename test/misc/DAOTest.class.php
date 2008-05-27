@@ -79,6 +79,10 @@
 			}
 			
 			if ($assertions) {
+				TestUser::dao()->uncacheById(2);
+				
+				$this->getListByIdsTest();
+				
 				Cache::me()->clean();
 				
 				$this->assertTrue(

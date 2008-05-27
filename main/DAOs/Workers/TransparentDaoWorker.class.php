@@ -66,16 +66,21 @@
 		{
 			$list = array();
 			$toFetch = array();
+			$prefixed = array();
 			
-			if ($cachedList = Cache::me()->getList($ids)) {
-				foreach ($cachedList as $cached) {
-					if (
-						($cached === Cache::NOT_FOUND)
-						|| !$cached
-					) {
-						$toFetch[] = $cached->getId();
-					} else {
-						$list[] = $this->dao->completeObject($cached);
+			foreach ($ids as $key => $id)
+				$prefixed[$key] = $this->className.'_'.$id;
+			
+			if (
+				$cachedList
+					= Cache::me()->mark($this->className)->getList($prefixed)
+			) {
+				foreach ($cachedList as $key => $cached) {
+					if ($cached !== Cache::NOT_FOUND) {
+						if ($cached)
+							$list[] = $this->dao->completeObject($cached);
+						else
+							$toFetch[] = $ids[$key];
 					}
 				}
 			} else {
