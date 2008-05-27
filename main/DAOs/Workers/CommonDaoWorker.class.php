@@ -171,14 +171,21 @@
 			if ($expires !== Cache::DO_NOT_CACHE) {
 				$list = array();
 				$toFetch = array();
+				$prefixed = array();
 				
-				if ($cachedList = Cache::me()->getList($ids)) {
-					foreach ($cachedList as $cached) {
+				foreach ($ids as $key => $id)
+					$prefixed[$key] = $this->className.'_'.$id;
+				
+				if (
+					$cachedList
+						= Cache::me()->mark($this->className)->getList($prefixed)
+				) {
+					foreach ($cachedList as $key => $cached) {
 						if ($cached !== Cache::NOT_FOUND) {
 							if ($cached)
 								$list[] = $this->dao->completeObject($cached);
 							else
-								$toFetch[] = $cached->getId();
+								$toFetch[] = $ids[$key];
 						}
 					}
 				} else {
