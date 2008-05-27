@@ -120,13 +120,10 @@
 				$labels[$this->guessLabel($index)][] = $index;
 			
 			foreach ($labels as $label => $indexList)
-				if ($this->peers[$label]['object']->isAlive())
-					$out =
-						array_merge(
-							$out,
-							$this->peers[$label]['object']->getList($indexList)
-						);
-				else
+				if ($this->peers[$label]['object']->isAlive()) {
+					if ($list = $this->peers[$label]['object']->getList($indexList))
+						$out = array_merge($out, $list);
+				} else
 					$this->checkAlive();
 			
 			return $out;
