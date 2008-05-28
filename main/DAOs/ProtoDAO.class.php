@@ -196,14 +196,9 @@
 			);
 			
 			// checking whether we're playing with value object
-			// NOTE: we can't use method_exists($className, 'dao') here
-			// bacause of it's buggy behaviour with autoload in deep nesting
-			if (
-				ClassUtils::isClassImplements(
-					$property->getClassName(),
-					'Prototyped'
-				)
-			) {
+			$class = new ReflectionClass($property->getClassName());
+			
+			if (!$class->hasMethod('dao')) {
 				return
 					$this->guessAtom(
 						implode('.', $path),
