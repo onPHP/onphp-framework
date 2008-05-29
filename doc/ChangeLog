@@ -1,5 +1,10 @@
 # $Id$
 
+2008-05-29	Denis M. Gabaidulin
+
+	* core/Cache/Cache.class.php: dropWorker() added. We really need
+	change dao workers dinamically.
+
 2008-05-27	Konstantin V. Arkhipov
 
 	* main/DAOs/Handlers/CacheSegmentHandler.class.php: backported from
