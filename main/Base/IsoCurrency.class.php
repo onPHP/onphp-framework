@@ -8,7 +8,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id: Currency.class.php 37033 2007-11-19 17:39:05Z dedmajor $ */
+/* $Id$ */
 
 	final class IsoCurrency extends Enumeration
 	{
