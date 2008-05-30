@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2005-2007 by Anton E. Lebedevich, Konstantin V. Arkhipov *
+ *   Copyright (C) 2005-2008 by Anton E. Lebedevich, Konstantin V. Arkhipov *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -40,6 +40,7 @@
 		/// default worker
 		private static $worker	= null;
 		
+		/// spawned workers
 		private static $instances = array();
 		
 		/**
@@ -93,12 +94,9 @@
 			return self::$instances[$class];
 		}
 		
-		public static function dropWorker(GenericDAO $dao)
+		/* void */ public static function dropWorkers()
 		{
-			$class = get_class($dao);
-			
-			if (isset(self::$instances[$class]))
-				unset(self::$instances[$class]);
+			self::$instances = array();
 		}
 	}
 ?>
