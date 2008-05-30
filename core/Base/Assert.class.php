@@ -220,6 +220,14 @@
 				);
 		}
 		
+		public static function classExists($className, $message = null)
+		{
+			if (!class_exists($className, true))
+				throw new WrongArgumentException(
+					$message.', class "'.$className.'" does not exists'
+				);
+		}
+		
 		public static function isUnreachable($message = 'unreachable code reached')
 		{
 			throw new WrongArgumentException($message);

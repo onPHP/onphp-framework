@@ -195,10 +195,10 @@
 				&& !$property->isGenericType()
 			);
 			
-			// checking whether we're playing with value object
-			$class = new ReflectionClass($property->getClassName());
+			Assert::classExists($property->getClassName());
 			
-			if (!$class->hasMethod('dao')) {
+			// checking whether we're playing with value object
+			if (method_exists($property->getClassName(), 'dao')) {
 				return
 					$this->guessAtom(
 						implode('.', $path),
