@@ -1,5 +1,9 @@
 # $Id$
 
+2008-05-30	Denis M. Gabaidulin
+
+	* main/Base/IsoCurrency.class.php: basic currency's list by lifter.
+
 2008-05-27	Konstantin V. Arkhipov
 
 	* main/DAOs/Workers/: fixed partial cached list case in
