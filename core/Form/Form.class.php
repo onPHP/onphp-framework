@@ -178,15 +178,19 @@
 		//@}
 		
 		/**
-		 * Returns plain list of error's labels
+		 * Returns associated list of prm. names => error's labels
 		**/
 		public function getTextualErrors()
 		{
 			$list = array();
 			
 			foreach ($this->primitives as $prm) {
-				if ($label = $this->getTextualErrorFor($prm->getName()))
-					$list[] = $label;
+				if ($label = $this->
+					getTextualErrorFor(
+						$name = $prm->getName()
+					)
+				)
+					$list[$name] = $label;
 			}
 			
 			return $list;
