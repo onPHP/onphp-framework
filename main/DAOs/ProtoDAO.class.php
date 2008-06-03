@@ -198,7 +198,7 @@
 			Assert::classExists($property->getClassName());
 			
 			// checking whether we're playing with value object
-			if (method_exists($property->getClassName(), 'dao')) {
+			if (!method_exists($property->getClassName(), 'dao')) {
 				return
 					$this->guessAtom(
 						implode('.', $path),
