@@ -1,5 +1,11 @@
 # $Id$
 
+2008-06-03	Konstantin V. Arkhipov
+
+	* core/Cache/Memcached.class.php: multi-get response deserialized
+	all at once now; fixed cache corruption bug in case of custom __wakeup
+	implementation.
+
 2008-05-30	Denis M. Gabaidulin
 
 	* main/Base/IsoCurrency.class.php: basic currency's list by lifter.
