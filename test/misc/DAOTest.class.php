@@ -78,6 +78,14 @@
 			}
 			
 			if ($assertions) {
+				// put them in cache now
+				TestUser::dao()->dropIdentityMap();
+				
+				TestUser::dao()->getById(1);
+				TestUser::dao()->getById(2);
+				
+				$this->getListByIdsTest();
+				
 				Cache::me()->clean();
 				
 				$this->assertTrue(
@@ -157,6 +165,8 @@
 		
 		private function getListByIdsTest()
 		{
+			TestUser::dao()->dropIdentityMap();
+			
 			$list = TestUser::dao()->getListByIds(array(1, 3, 2));
 			
 			$this->assertEqual(count($list), 2);

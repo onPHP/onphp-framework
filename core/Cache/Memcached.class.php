@@ -91,7 +91,7 @@
 			if (!$this->sendRequest($command))
 				return null;
 			
-			return $this->parseGetRequest(false);
+			return unserialize($this->parseGetRequest(false));
 		}
 		
 		public function get($index)
@@ -160,6 +160,7 @@
 			
 			if (!is_scalar($value) || $value === Cache::NOT_FOUND) {
 				$packed = serialize($value);
+				
 				$flags |= 1;
 				
 				if ($this->compress) {
@@ -192,12 +193,14 @@
 		private function parseGetRequest($single)
 		{
 			$result = null;
+			$index = 0;
 			
 			while ($header = fgets($this->link, 8192)) {
-				if ($header === "END\r\n")
-					return $result;
-				elseif ($header === "ERROR\r\n")
-					return $result;
+				if (
+					($header === "END\r\n")
+					|| ($header === "ERROR\r\n")
+				)
+					break;
 				
 				$array = explode(' ', rtrim($header, "\r\n"), 4);
 				
@@ -216,23 +219,27 @@
 					if ($flags & 2)
 						$value = gzuncompress($value);
 					
-					if ($flags & 1)
-						$value = unserialize($value);
-					
 					if ($single) {
 						fread($this->link, 7); // skip "\r\nEND\r\n"
+						
+						if ($flags & 1)
+							$value = unserialize($value);
 						
 						return $value;
 					} else {
 						fread($this->link, 2); // skip "\r\n"
 						
-						$result[] = $value;
+						if ($flags & 1)
+							$result .= 'i:'.$index++.';'.$value;
 					}
 				} else
-					return $result;
+					break;
 			}
 			
-			return $result;
+			if ($single)
+				return $result;
+			else
+				return 'a:'.$index.':{'.$result.'}';
 		}
 		
 		private function sendRequest($command)
