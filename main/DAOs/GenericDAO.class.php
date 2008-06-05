@@ -165,7 +165,7 @@
 					Cache::worker($this)->getListByIds($remain, $expires)
 				);
 				
-				$mapped = array_merge($mapped, $list);
+				$mapped = $mapped + $list;
 			}
 			
 			return ArrayUtils::regularizeList($ids, $mapped);
@@ -189,7 +189,7 @@
 			);
 		}
 		
-		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
+		public function getPlainList($expires = Cache::DO_NOT_CACHE)
 		{
 			return $this->addObjectListToMap(
 				Cache::worker($this)->getPlainList($expires)

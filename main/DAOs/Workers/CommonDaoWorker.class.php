@@ -195,18 +195,16 @@
 				if ($toFetch) {
 					try {
 						$list =
-							array_merge(
-								$list,
-								$this->getListByLogic(
-									Expression::in(
-										new DBField(
-											$this->dao->getIdName(),
-											$this->dao->getTable()
-										),
-										$toFetch
+							$list
+							+ $this->getListByLogic(
+								Expression::in(
+									new DBField(
+										$this->dao->getIdName(),
+										$this->dao->getTable()
 									),
-									$expires
-								)
+									$toFetch
+								),
+								Cache::DO_NOT_CACHE
 							);
 					} catch (ObjectNotFoundException $e) {
 						// nothing to fetch
@@ -276,7 +274,7 @@
 				);
 		}
 		
-		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
+		public function getPlainList($expires = Cache::DO_NOT_CACHE)
 		{
 			return $this->getListByQuery(
 				$this->dao->makeSelectHead(), $expires
