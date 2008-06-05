@@ -156,7 +156,7 @@
 					$list
 					+ $this->getListByLogic(
 						Expression::in($this->dao->getIdName(), $toFetch)
-					)
+					);
 			} catch (ObjectNotFoundException $e) {
 				// nothing to fetch
 				return $list;
