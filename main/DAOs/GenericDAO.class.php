@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -166,7 +166,7 @@
 					Cache::worker($this)->getListByIds($remain, $expires)
 				);
 				
-				return array_merge($mapped, $list);
+				return array_combine($mapped, $list);
 			}
 			
 			return $mapped;
@@ -190,7 +190,7 @@
 			);
 		}
 		
-		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
+		public function getPlainList($expires = Cache::DO_NOT_CACHE)
 		{
 			return $this->addObjectListToMap(
 				Cache::worker($this)->getPlainList($expires)

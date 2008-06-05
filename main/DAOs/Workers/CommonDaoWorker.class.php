@@ -200,7 +200,7 @@
 				
 				try {
 					return
-						array_merge(
+						array_combine(
 							$list,
 							$this->getListByLogic(
 								Expression::in(
@@ -210,7 +210,7 @@
 									),
 									$toFetch
 								),
-								$expires
+								Cache::DO_NOT_CACHE
 							)
 						);
 				} catch (ObjectNotFoundException $e) {
@@ -280,7 +280,7 @@
 				);
 		}
 		
-		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
+		public function getPlainList($expires = Cache::DO_NOT_CACHE)
 		{
 			return $this->getListByQuery(
 				$this->dao->makeSelectHead(), $expires
