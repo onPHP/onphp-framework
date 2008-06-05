@@ -184,16 +184,16 @@
 						= Cache::me()->mark($this->className)->getList($prefixed)
 				) {
 					foreach ($cachedList as $key => $cached) {
-						if ($cached !== Cache::NOT_FOUND) {
-							if ($cached)
-								$list[] = $cached;
-							else
-								$toFetch[] = $ids[$key];
+						if ($cached && ($cached !== Cache::NOT_FOUND)) {
+							$list[] = $cached;
+						} else {
+							$toFetch[] = $ids[$key];
+							unset($ids[$key]);
 						}
 					}
-				} else {
-					$toFetch = $ids;
 				}
+				
+				$toFetch += $ids;
 				
 				if (!$toFetch)
 					return $list;
