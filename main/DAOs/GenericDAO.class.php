@@ -166,7 +166,7 @@
 					Cache::worker($this)->getListByIds($remain, $expires)
 				);
 				
-				return array_combine($mapped, $list);
+				return $mapped + $list;
 			}
 			
 			return $mapped;

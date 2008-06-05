@@ -200,18 +200,16 @@
 				
 				try {
 					return
-						array_combine(
-							$list,
-							$this->getListByLogic(
-								Expression::in(
-									new DBField(
-										$this->dao->getIdName(),
-										$this->dao->getTable()
-									),
-									$toFetch
+						$list
+						+ $this->getListByLogic(
+							Expression::in(
+								new DBField(
+									$this->dao->getIdName(),
+									$this->dao->getTable()
 								),
-								Cache::DO_NOT_CACHE
-							)
+								$toFetch
+							),
+							Cache::DO_NOT_CACHE
 						);
 				} catch (ObjectNotFoundException $e) {
 					// nothing to fetch
