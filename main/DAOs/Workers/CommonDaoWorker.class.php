@@ -173,39 +173,39 @@
 				$toFetch = array();
 				$prefixed = array();
 				
-				foreach ($ids as $key => $id)
-					$prefixed[$key] = $this->className.'_'.$id;
+				foreach ($ids as $id)
+					$prefixed[$id] = $this->className.'_'.$id;
 				
 				if (
 					$cachedList
 						= Cache::me()->mark($this->className)->getList($prefixed)
 				) {
-					foreach ($cachedList as $key => $cached) {
+					foreach ($cachedList as $cached) {
 						if ($cached && ($cached !== Cache::NOT_FOUND)) {
 							$list[] = $cached;
-						} else {
-							$toFetch[] = $ids[$key];
+							
+							unset($prefixed[$cached->getId()]);
 						}
-						
-						unset($ids[$key]);
 					}
 				}
 				
-				$toFetch += $ids;
+				$toFetch += array_keys($prefixed);
 				
 				if ($toFetch) {
 					try {
 						$list =
-							$list
-							+ $this->getListByLogic(
-								Expression::in(
-									new DBField(
-										$this->dao->getIdName(),
-										$this->dao->getTable()
+							array_merge(
+								$list,
+								$this->getListByLogic(
+									Expression::in(
+										new DBField(
+											$this->dao->getIdName(),
+											$this->dao->getTable()
+										),
+										$toFetch
 									),
-									$toFetch
-								),
-								Cache::DO_NOT_CACHE
+									Cache::DO_NOT_CACHE
+								)
 							);
 					} catch (ObjectNotFoundException $e) {
 						// nothing to fetch
