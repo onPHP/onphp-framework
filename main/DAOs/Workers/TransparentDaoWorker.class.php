@@ -153,12 +153,10 @@
 			
 			try {
 				return
-					array_merge(
-						$list,
-						$this->getListByLogic(
-							Expression::in($this->dao->getIdName(), $toFetch)
-						)
-					);
+					$list
+					+ $this->getListByLogic(
+						Expression::in($this->dao->getIdName(), $toFetch)
+					)
 			} catch (ObjectNotFoundException $e) {
 				// nothing to fetch
 				return $list;
