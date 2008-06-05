@@ -188,8 +188,9 @@
 							$list[] = $cached;
 						} else {
 							$toFetch[] = $ids[$key];
-							unset($ids[$key]);
 						}
+						
+						unset($ids[$key]);
 					}
 				}
 				
