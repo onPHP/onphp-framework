@@ -150,6 +150,8 @@
 		**/
 		public function send(HttpRequest $request)
 		{
+			Assert::isNotNull($request->getMethod());
+			
 			Assert::isTrue(
 				in_array(
 					$request->getMethod()->getId(),
