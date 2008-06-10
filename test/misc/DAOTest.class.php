@@ -195,6 +195,8 @@
 		
 		private function getListByIdsTest()
 		{
+			$first = TestUser::dao()->getById(1);
+			
 			TestUser::dao()->dropIdentityMap();
 			
 			$list = TestUser::dao()->getListByIds(array(1, 3, 2));
@@ -203,6 +205,8 @@
 			
 			$this->assertEquals($list[0]->getId(), 1);
 			$this->assertEquals($list[1]->getId(), 2);
+			
+			$this->assertEquals($list[0], $first);
 			
 			$this->assertEquals(
 				array(),
