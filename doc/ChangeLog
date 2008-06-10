@@ -1,5 +1,10 @@
 # $Id$
 
+2008-06-19	Ivan Y. Khvostishkov
+
+	* main/DAOs/Workers/: getListByIds() did not work without objects in
+	identity map, fixed.
+
 2008-06-03	Konstantin V. Arkhipov
 
 	* core/Cache/Memcached.class.php: multi-get response deserialized
