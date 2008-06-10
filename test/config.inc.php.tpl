@@ -17,14 +17,12 @@
 	);
 	
 	$dbs = array(
-/*
 		'PgSQL' => array(
 			'user'	=> 'onphp',
 			'pass'	=> null,
 			'host'	=> 'localhost',
 			'base'	=> 'onphp'
 		)
-*/
 	);
 	
 	$daoWorkers = array(
