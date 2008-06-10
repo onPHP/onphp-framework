@@ -1,5 +1,7 @@
 # $Id$
 
+* FIXME: make core/Types/Integer.class.php to work on x86, not only x86_64.
+
 * views: improved hierarchy, ex: relative 'parts', absolute '/parts', parent
 '../parts'.  see urls transformation in GenericUri for logic.
 
