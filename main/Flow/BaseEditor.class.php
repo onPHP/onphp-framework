@@ -24,20 +24,31 @@
 		protected $map		= null;
 		protected $subject 	= null;
 		
+		protected $idFieldName = null;
+		
 		public function __construct(Prototyped $subject)
 		{
 			$this->subject = $subject;
 			
+			$form =
+				$this->subject->proto()->makeForm()->add(
+					Primitive::choice('action')->setList($this->commandMap)->
+					setDefault('edit')
+				);
+			
+			if ($this->idFieldName)
+				$form->add(
+					Primitive::alias($this->idFieldName, $form->get('id'))
+				);
+			
 			$this->map =
-				MappedForm::create(
-					$this->subject->proto()->makeForm()->add(
-						Primitive::choice('action')->setList($this->commandMap)->
-						setDefault('edit')
-					)
-				)->
+				MappedForm::create($form)->
 				addSource('id', RequestType::get())->
 				addSource('action', RequestType::get())->
 				setDefaultType(RequestType::post());
+			
+			if ($this->idFieldName)
+				$this->map->addSource($this->idFieldName, RequestType::get());
 		}
 		
 		/**
