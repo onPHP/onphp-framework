@@ -1,5 +1,10 @@
 # $Id$
 
+2008-06-11	Konstantin V. Arkhipov
+
+	* core/Form/Primitives/PrimitiveAlias.class.php: closing need for
+	aliases in Form.
+
 2008-06-19	Ivan Y. Khvostishkov
 
 	* main/DAOs/Workers/: getListByIds() did not work without objects in

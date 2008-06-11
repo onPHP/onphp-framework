@@ -28,6 +28,14 @@
 		}
 		
 		/**
+		 * @return Primitive
+		**/
+		public static function alias($name, BasePrimitive $prm)
+		{
+			return new PrimitiveAlias($name, $prm);
+		}
+		
+		/**
 		 * @return PrimitiveAnyType
 		**/
 		public static function anyType($name)
