@@ -1,5 +1,10 @@
 # $Id$
 
+2008-06-11	Denis M. Gabaidulin
+
+	* main/Flow/BaseEditor.class.php: object identifier parameter
+	name customization implemented.
+
 2008-06-11	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/PrimitiveAlias.class.php: closing need for
