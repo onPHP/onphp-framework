@@ -141,7 +141,7 @@
 			return $this->primitive->exportValue();
 		}
 		
-		public function import(array $scope)
+		public function import($scope)
 		{
 			if (array_key_exists($this->name, $scope))
 				return $this->primitive->importValue($scope[$this->name]);
