@@ -182,7 +182,7 @@
 				) {
 					foreach ($cachedList as $cached) {
 						if ($cached && ($cached !== Cache::NOT_FOUND)) {
-							$list[] = $cached;
+							$list[] = $this->dao->completeObject($cached);
 							
 							unset($prefixed[$cached->getId()]);
 						}
