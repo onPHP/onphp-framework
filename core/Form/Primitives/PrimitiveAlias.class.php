@@ -141,9 +141,12 @@
 			return $this->primitive->exportValue();
 		}
 		
-		protected function import(array $scope)
+		public function import(array $scope)
 		{
-			return $this->primitive->import($scope);
+			if (array_key_exists($this->name, $scope))
+				return $this->primitive->importValue($scope[$this->name]);
+			
+			return null;
 		}
 	}
 ?>
