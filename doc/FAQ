@@ -1,0 +1,56 @@
+// $Id$
+
+Q: I am using PHP4 and I...
+Q: I'm using feature, which obsoleted since revision N...
+
+A: You're doomed.
+
+//
+
+Q: What PHP versions are supported?
+
+A: onphp vs. php:
+
+    0.2     >=5.0
+    0.4     >=5.0
+    0.6     >=5.1
+
+0.6 (module) - >=php-5.1.4 with built-in SPL
+
+//
+
+Q: Are there any {unit-,}tests for onPHP?
+
+A: Not yet. Feel free to write them yourself.
+
+//
+
+Q: I've found a Bug at...
+Q: I can't live without <imagine something cool> feature!
+
+A: 24/7 patch(es) acceptance: onphp-dev-(ru|en)@lists.shadanakar.org
+
+//
+
+Q: I've defined __I_HATE_MY_KARMA__ but <some feature> still doesn't work,
+and/or works unexpected way.
+
+A: We don't support those who do not care about their karma.
+
+//
+
+Q: How can I beautify my URLs?
+
+A: You should use rewrite rules. An example for nginx
+(http://sysoev.ru/nginx/):
+
+	rewrite /(.*)/\?(.*)	/index.php?area=$1&$2	last;
+	rewrite /(.*)/&(.*)	/index.php?area=$1&$2	last;
+	rewrite ^/([a-zA-Z]+)/$	/index.php?area=$1	last;
+
+//
+
+Q: What is onCMS?
+Q: Where can I download onCMS? Is it openSource too?
+
+A: There is no spoon. (c) I'm dead serious: onCMS does not even exist.
