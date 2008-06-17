@@ -16,7 +16,7 @@
 #include "zend_interfaces.h"
 #include "Zend/zend_globals.h" // executor_globals
 
-#define ONPHP_VERSION "1.0.4.99"
+#define ONPHP_VERSION "1.0.5.99"
 #define ONPHP_MODULE_NAME "onPHP"
 
 /// dumb copy of zend_call_method

@@ -1,5 +1,9 @@
 # $Id$
 
+2008-06-17	Konstantin V. Arkhipov
+
+	* 1.0.5 released.
+
 2008-06-11	Denis M. Gabaidulin
 
 	* main/Flow/BaseEditor.class.php: object identifier parameter
