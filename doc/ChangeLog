@@ -1,5 +1,9 @@
 # $Id$
 
+2008-06-17	Konstantin V. Arkhipov
+
+	* 0.10.11 released.
+
 2008-06-03	Konstantin V. Arkhipov
 
 	* core/Cache/Memcached.class.php: multi-get response deserialized
