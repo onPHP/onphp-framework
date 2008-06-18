@@ -28,7 +28,7 @@
 			$this->postfix = $postfix;
 		}
 		
-		/* void */ public function render($model = null)
+		/* void */ public function render(Model $model = null)
 		{
 			header($this->status->toString());
 			include $this->prefix.$this->status->getId().$this->postfix;
