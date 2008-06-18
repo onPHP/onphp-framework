@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2008 by Ivan Y. Khvostishkov                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -13,10 +13,27 @@
 	/**
 	 * @ingroup Flow
 	**/
-	interface View
+	class EmptyView implements View, Stringable
 	{
-		const ERROR_VIEW = 'error';
+		/**
+		 * @return EmptyView
+		**/
+		public static function create()
+		{
+			return new self;
+		}
 		
-		public function render(Model $model = null);
+		/**
+		 * @return EmptyView
+		**/
+		public function render(Model $model = null)
+		{
+			return $this;
+		}
+		
+		public function toString()
+		{
+			return null;
+		}
 	}
 ?>

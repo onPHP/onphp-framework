@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class SimplePhpView implements View, Stringable
+	class SimplePhpView extends EmptyView
 	{
 		protected $templatePath		= null;
 		protected $partViewResolver	= null;
@@ -24,10 +24,8 @@
 			$this->partViewResolver = $partViewResolver;
 		}
 		
-		public function render($model = null)
+		public function render(Model $model = null)
 		{
-			Assert::isTrue($model === null || $model instanceof Model);
-			
 			if ($model)
 				extract($model->getList());
 			
@@ -38,6 +36,8 @@
 			include $this->templatePath;
 			
 			$this->postRender();
+			
+			return $this;
 		}
 		
 		public function toString($model = null)
