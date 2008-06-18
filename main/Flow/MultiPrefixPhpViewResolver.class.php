@@ -21,6 +21,10 @@
 	class MultiPrefixPhpViewResolver implements ViewResolver
 	{
 		private $prefixes	= array();
+		private $lastAlias	= null;
+		
+		private $disabled	= array();
+		
 		private $postfix	= EXT_TPL;
 		private $viewClassName	= 'SimplePhpView';
 		
@@ -45,9 +49,20 @@
 		/**
 		 * @return MultiPrefixPhpView
 		**/
-		public function addPrefix($prefix)
+		public function addPrefix($prefix, $alias = null)
 		{
-			$this->prefixes[] = $prefix;
+			if (!$alias)
+				$alias = $this->getAutoAlias($prefix);
+			
+			Assert::isFalse(
+				isset($this->prefixes[$alias]),
+				'alias already exists'
+			);
+				
+			$this->prefixes[$alias] = $prefix;
+			
+			$this->lastAlias = $alias;
+			
 			return $this;
 		}
 		
@@ -57,12 +72,32 @@
 		}
 		
 		/**
-		 * @return MultiPrefixPhpView
+		 * @return MultiPrefixPhpViewResolver
 		**/
 		public function dropPrefixes()
 		{
 			$this->prefixes = array();
 			return $this;
+		}
+		
+		/**
+		 * @return MultiPrefixPhpViewResolver
+		**/
+		public function disablePrefix($alias = null, $disabled = true)
+		{
+			if (!$alias)
+				$alias = $this->lastAlias;
+			
+			Assert::isNotNull($alias, 'nothing to disable');
+			
+			$this->disabled[$alias] = $disabled;
+			
+			return $this;
+		}
+		
+		public function enablePrefix($alias)
+		{
+			return $this->disablePrefix($alias, false);
 		}
 		
 		public function getPostfix()
@@ -96,9 +131,12 @@
 						$this
 					);
 			
-			throw new WrongArgumentException(
-				'can not resolve view: '.$viewName
-			);
+			if (!$this->findPrefix($viewName, false))
+				throw new WrongArgumentException(
+					'can not resolve view: '.$viewName
+				);
+			
+			return EmptyView::create();
 		}
 		
 		public function viewExists($viewName)
@@ -121,13 +159,26 @@
 			return $this->viewClassName;
 		}
 		
-		protected function findPrefix($viewName)
+		protected function findPrefix($viewName, $checkDisabled = true)
 		{
-			foreach ($this->prefixes as $prefix)
+			foreach ($this->prefixes as $alias => $prefix) {
+				if (
+					$checkDisabled
+					&& isset($this->disabled[$alias])
+					&& $this->disabled[$alias]
+				)
+					continue;
+				
 				if (file_exists($prefix.$viewName.$this->postfix))
 					return $prefix;
+			}
 			
 			return null;
+		}
+		
+		private function getAutoAlias($prefix)
+		{
+			return md5($prefix);
 		}
 	}
 ?>

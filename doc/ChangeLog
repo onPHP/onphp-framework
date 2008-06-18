@@ -1,5 +1,13 @@
 # $Id$
 
+2008-06-19	Ivan Y. Khvostishkov
+
+	* main/Flow/EmptyView.class.php: fake view which renders as empty
+	string.
+
+	* main/Flow/MultiPrefixPhpViewResolver.class.php: added useful ability
+	do disable certain views (treated as EmptyView).
+
 2008-06-17	Konstantin V. Arkhipov
 
 	* 1.0.5 released.
