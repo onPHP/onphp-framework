@@ -22,6 +22,11 @@
 		
 		public function __toString()
 		{
+			return $this->toHtmlString();
+		}
+
+		public function toHtmlString()
+		{
 			return htmlspecialchars($this->toString());
 		}
 	}
