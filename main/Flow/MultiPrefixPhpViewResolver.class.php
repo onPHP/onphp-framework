@@ -90,6 +90,11 @@
 			
 			Assert::isNotNull($alias, 'nothing to disable');
 			
+			if (!isset($this->prefixes[$alias]))
+				throw new WrongArgumentException(
+					'no such alias: '.$alias
+				);
+			
 			$this->disabled[$alias] = $disabled;
 			
 			return $this;
