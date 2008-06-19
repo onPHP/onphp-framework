@@ -2,6 +2,11 @@
 
 2008-06-19	Ivan Y. Khvostishkov
 
+	* main/UnifiedContainer/UnifiedContainer.class.php: mergeList() should
+	not override clones, so save() can store new list.
+
+2008-06-19	Ivan Y. Khvostishkov
+
 	* main/Flow/EmptyView.class.php: fake view which renders as empty
 	string.
 

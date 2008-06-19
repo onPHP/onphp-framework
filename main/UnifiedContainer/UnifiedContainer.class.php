@@ -175,9 +175,14 @@
 		**/
 		public function mergeList(array $list)
 		{
-			Assert::isArray($list);
+			if ($this->lazy) {
+				foreach ($list as $id)
+					$this->list[$id] = $id;
+			} else {
+				$this->list = array_merge($this->list, $list);
+			}
 			
-			return $this->importList($list);
+			return $this;
 		}
 
 		public function getList()
@@ -366,12 +371,7 @@
 		**/
 		private function importList(array $list)
 		{
-			if ($this->lazy) {
-				foreach ($list as $id)
-					$this->list[$id] = $id;
-			} else {
-				$this->list = array_merge($this->list, $list);
-			}
+			$this->mergeList($list);
 
 			$this->syncClones();
 			
