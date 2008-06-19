@@ -5,7 +5,10 @@
 	* main/UnifiedContainer/UnifiedContainer.class.php: mergeList() should
 	not override clones, so save() can store new list.
 
-2008-06-19	Ivan Y. Khvostishkov
+	* core/Form/Filters/Stringizer.class.php: cool filter to convert
+	objects to strings before applying other filters.
+
+2008-06-18	Ivan Y. Khvostishkov
 
 	* main/Flow/EmptyView.class.php: fake view which renders as empty
 	string.

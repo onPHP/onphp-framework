@@ -155,5 +155,13 @@
 		{
 			return Singleton::getInstance('SafeUtf8Filter');
 		}
+		
+		/**
+		 * @return Stringizer
+		**/
+		public static function stringizer()
+		{
+			return Singleton::getInstance('Stringizer');
+		}
 	}
 ?>

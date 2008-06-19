@@ -112,5 +112,19 @@
 				.'&nbsp;&#151; не&nbsp;только с&nbsp;ansi, и&nbsp;это радует'
 			);
 		}
+		
+		public function testStringizer()
+		{
+			$object = HttpUrl::create()->
+				setScheme('https')->
+				setHost('example.com');
+			
+			$filter = Filter::stringizer();
+			
+			$this->assertEquals(
+				$filter->apply($object),
+				'https://example.com'
+			);
+		}
 	}
 ?>
