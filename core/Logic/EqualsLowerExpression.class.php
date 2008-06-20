@@ -29,9 +29,7 @@
 			return
 				'('
 				.$dialect->toFieldString(
-					is_string($this->left)
-						? mb_strtolower($this->left)
-						: SQLFunction::create('lower', $this->left)
+					SQLFunction::create('lower', $this->left)
 				).' = '
 				.$dialect->toValueString(
 					is_string($this->right)
