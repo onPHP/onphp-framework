@@ -104,7 +104,7 @@
 			);
 			
 			$this->assertEquals(
-				'(a = b)',
+				'(lower(a) = b)',
 				Expression::eqLower('a', 'b')->toDialectString($dialect)
 			);
 			
