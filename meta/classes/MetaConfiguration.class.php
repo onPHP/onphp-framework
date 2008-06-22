@@ -1195,7 +1195,16 @@
 			
 			$doc = new DOMDocument('1.0');
 			$doc->loadXML($contents);
-			$doc->validate();
+			
+			try {
+				$doc->validate();
+			} catch (BaseException $e) {
+				$error = libxml_get_last_error();
+				throw new WrongArgumentException(
+					$error->message.' in node placed on line '
+					.$error->line.' in file '.$metafile
+				);
+			}
 			
 			$xml = simplexml_import_dom($doc);
 			
