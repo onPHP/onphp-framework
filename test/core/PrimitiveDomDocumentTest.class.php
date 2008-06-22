@@ -130,7 +130,7 @@ EOF;
 		
 		private function makePrimitive()
 		{
-			return 
+			return
 				Primitive::domDocument('dom')->
 				ofXsd($this->schema);
 			

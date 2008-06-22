@@ -109,7 +109,7 @@
 					);
 				
 				foreach ($cases as $arg => $href) {
-					$actualResult = 
+					$actualResult =
 						$rewriter->getPath(HttpUrl::create()->parse($arg))->
 							toString();
 					
@@ -138,7 +138,7 @@
 					);
 				
 				foreach ($cases as $arg => $href) {
-					$actualResult = 
+					$actualResult =
 						$rewriter->getUrl(
 							$rewriter->getScope(
 								HttpUrl::create()->parse($arg)
