@@ -146,7 +146,7 @@
 					$path = $directory.DIRECTORY_SEPARATOR.$item;
 
 					if (is_dir($path))
-						self::removeDirectory($path);
+						self::removeDirectory($path, $recursive);
 					elseif (!unlink($path))
 						throw new WrongStateException(
 							"cannot unlink {$path}"
