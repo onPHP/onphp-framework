@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2008 by Dmitry V. Sokolov, Denis M. Gabaidulin           *
+ *   Copyright (C) 2008 by Dmitry V. Sokolov                                *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -10,56 +10,53 @@
  ****************************************************************************/
 /* $Id$ */
 
-	/**
-	 * @ingroup Flow
-	**/
 	abstract class ControllersCollection implements Controller
 	{
 		private $innerControllers 	= array();
-		private $defaultRequestType = null; // RequestType
-		private $mav 				= null; // ModelAndView
+		private $defaultRequestType = null;
+		private $mav;
 		
 		public function __construct()
 		{
-			$this->defaultRequestType = RequestType::post();
-			
 			$this->mav =
 				ModelAndView::create()->
 				setModel(Model::create());
+			
+			$this->defaultRequestType = RequestType::post();
 		}
 		
 		public function handleRequest(HttpRequest $request)
 		{
 			Assert::isNotEmptyArray(
 				$this->innerControllers,
-				'Atleast one innerController should be exists'
+				'Add atleast one innerController first'
 			);
 			
 			foreach ($this->innerControllers as $controller) {
 				$passedRequest = clone $request;
 				
-				if (!$controller->isActive())
-					$controller->dropAction($passedRequest);
+				if (!$controller->isActive($request)) {
+					$passedRequest->
+						{'set'.$controller->getRequestGetter().'Var'}
+						('action', null);
+				}
 				
 				$subMav = $controller->handleRequest($passedRequest);
-				
 				$model = $this->mav->getModel();
-				$model->set(get_class($controller), $subMav->getModel());
+				
+				$model->set(
+					TextUtils::downFirst(get_class($controller->getInner())),
+					$subMav->getModel()
+				);
 			}
 			
 			return $this->mav;
 		}
 		
-		public function setDefaultRequestType(RequestType $type)
-		{
-			$this->defaultRequestType = $type;
-			
-			return $this;
-		}
-		
 		public function setMav(ModelAndView $mav)
 		{
 			$this->mav = $mav;
+			
 			return $this;
 		}
 		
@@ -68,12 +65,25 @@
 			return $this->mav;
 		}
 		
-		public function add(Controller $controller, RequestType $type = null)
+		public function add(
+			Controller $controller,
+			RequestType $requestType = null
+		)
 		{
+			if (!$requestType)
+				$requestType = $this->defaultRequestType;
+			
 			$this->innerControllers[] =
 				ProxyController::create()->
 				setInner($controller)->
-				setRequestType($type ? $type : $this->defaultRequestType);
+				setRequestType($requestType);
+			
+			return $this;
+		}
+		
+		public function setDefaultRequestType(RequestType $requestType)
+		{
+			$this->defaultRequestType = $requestType;
 			
 			return $this;
 		}
