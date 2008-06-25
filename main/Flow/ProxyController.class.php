@@ -13,19 +13,22 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class ProxyController implements Controller
+	final class ProxyController implements Controller
 	{
-		private $innerController 	= null;
-		private $request 			= null;
-		private $requestType 		= null;
-		private $requestGetter 		= null;
+		private $innerController	= null;
+		private $request			= null;
+		private $requestType		= null;
+		private $requestGetter		= null;
 		
-		private $requestGetterMap = array(
-			RequestType::ATTACHED => 'Attached',
-			RequestType::GET      => 'Get',
-			RequestType::POST     => 'Post'
+		private static $requestGetterMap = array(
+			RequestType::ATTACHED	=> 'Attached',
+			RequestType::GET		=> 'Get',
+			RequestType::POST		=> 'Post'
 		);
 		
+		/**
+		 * @return ProxyController
+		**/
 		public static function create()
 		{
 			return new self;
@@ -36,6 +39,9 @@
 			$this->requestType = RequestType::post();
 		}
 		
+		/**
+		 * @return ProxyController
+		**/
 		public function setInner(Controller $controller)
 		{
 			$this->innerController = $controller;
@@ -43,16 +49,25 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Controller
+		**/
 		public function getInner()
 		{
 			return $this->innerController;
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function handleRequest(HttpRequest $request)
 		{
 			return $this->getInner()->handleRequest($request);
 		}
 		
+		/**
+		 * @return ProxyController
+		**/
 		public function setRequestType(RequestType $requestType)
 		{
 			$this->requestType = $requestType;
@@ -76,7 +91,7 @@
 			
 			if (!$this->requestGetter)
 				$this->requestGetter =
-					$this->requestGetterMap[$this->requestType->getId()];
+					self::$requestGetterMap[$this->requestType->getId()];
 			
 			return $this->requestGetter;
 		}
