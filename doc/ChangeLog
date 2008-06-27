@@ -1,5 +1,10 @@
 # $Id$
 
+2008-06-27	Ivan Y. Khvostishkov
+
+	* core/Exceptions/BadRequestException.class.php: (merged from trunk)
+	new exception to be used instead of View('error').
+
 2008-06-19	Ivan Y. Khvostishkov
 
 	* main/UnifiedContainer/UnifiedContainer.class.php: mergeList() should
