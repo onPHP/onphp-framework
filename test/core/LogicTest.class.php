@@ -115,6 +115,27 @@
 				toDialectString($dialect)
 			);
 			
+			$this->assertEquals(
+				'(lower(\'a\') = lower(\'b\'))',
+				
+				Expression::eqLower(new DBValue('a'), new DBValue('b'))->
+				toDialectString(PostgresDialect::me())
+			);
+			
+			$this->assertEquals(
+				'(lower(\'a\') = lower("b"))',
+				
+				Expression::eqLower(new DBValue('a'), new DBField('b'))->
+				toDialectString(PostgresDialect::me())
+			);
+			
+			$this->assertEquals(
+				'(lower("a") = lower(\'b\'))',
+				
+				Expression::eqLower(new DBField('a'), new DBValue('b'))->
+				toDialectString(PostgresDialect::me())
+			);
+			
 			$this->assertRegExp(
 				'/^\(a (BETWEEN|between) b (AND|and) c\)$/',
 				Expression::between('a', 'b', 'c')->toDialectString($dialect)
