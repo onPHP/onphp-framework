@@ -382,7 +382,7 @@
 				$remoteDao = call_user_func(array($this->className, 'dao'));
 				
 				if ($this->strategyId == FetchStrategy::JOIN) {
-					return $remoteDao->makeJoinedObject(
+					return $remoteDao->makeObject(
 						$array,
 						$remoteDao->getJoinPrefix($this->columnName, $prefix)
 					);
