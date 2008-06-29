@@ -143,8 +143,13 @@
 		
 		public function import($scope)
 		{
-			if (array_key_exists($this->name, $scope))
-				return $this->primitive->importValue($scope[$this->name]);
+			if (array_key_exists($this->name, $scope)) {
+				if ($result = $this->primitive->importValue($scope[$this->name])) {
+					$this->primitive->dropError();
+				}
+				
+				return $result;
+			}
 			
 			return null;
 		}
