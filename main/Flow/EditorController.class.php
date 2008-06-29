@@ -35,12 +35,6 @@
 			
 			$form = $this->map->getForm();
 			
-			if (
-				$this->idFieldName
-				&& $form->getValue($this->idFieldName)
-			)
-				$form->markGood('id');
-			
 			if (!$command = $form->getValue('action'))
 				$command = $form->get('action')->getDefault();
 			
