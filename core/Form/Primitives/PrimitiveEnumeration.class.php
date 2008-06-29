@@ -15,6 +15,11 @@
 	**/
 	class PrimitiveEnumeration extends IdentifiablePrimitive
 	{
+		public function getTypeName()
+		{
+			return 'String';
+		}
+		
 		public function getList()
 		{
 			if ($this->value)
