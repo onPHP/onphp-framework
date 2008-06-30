@@ -396,6 +396,10 @@
 		**/
 		private function checkImportResult(BasePrimitive $prm, $result)
 		{
+			if ($prm instanceof PrimitiveAlias)
+				if ($result !== null)
+					$this->markGood($prm->getInner()->getName());
+			
 			$name = $prm->getName();
 			
 			if (null === $result) {
