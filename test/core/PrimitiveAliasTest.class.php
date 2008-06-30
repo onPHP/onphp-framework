@@ -5,7 +5,7 @@
 	{
 		public function testImport()
 		{
-			$realPrimitive = 
+			$realPrimitive =
 				Primitive::string('stringPrimitive')->
 				required();
 			
