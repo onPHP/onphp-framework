@@ -204,7 +204,8 @@
 				
 				// unhandled types, not ours anyway
 				'tsvector'		=> null,
-				'inet'			=> null
+				'inet'			=> null,
+				'ltree'			=> null
 			);
 			
 			try {
