@@ -172,11 +172,22 @@
 			
 			unset($collectionDao);
 			
+			// fetch
 			$incapsulantsList = $user->getIncapsulants()->getList();
 			
 			for ($i = 0; $i < 10; $i++) {
 				$this->assertEquals($incapsulantsList[$i]->getId(), $i + 1);
 				$this->assertEquals($incapsulantsList[$i]->getName(), $i);
+			}
+			
+			unset($incapsulantsList);
+			
+			// lazy fetch
+			$incapsulantsList = $user->getIncapsulants(true)->getList();
+			print_r($incapsulantsList);
+			for ($i = 1; $i < 11; $i++) {
+				$this->assertEquals($incapsulantsList[$i], $i);
+				//$this->assertEquals($incapsulantsList[$i][$i], $i);
 			}
 		}
 		
