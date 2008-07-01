@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -112,7 +112,7 @@
 			/* AccessMode */ $mode = null
 		)
 		{
-			$begin = 'start transaction';
+			$begin = 'begin';
 			
 			if ($level && $level instanceof IsolationLevel)
 				$begin .= ' '.$level->toString();
