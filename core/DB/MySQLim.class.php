@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2007-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -135,40 +135,7 @@
 		
 		public function queryRaw($queryString)
 		{
-			return $this->realQueryRaw($queryString, false);
-		}
-		
-		/**
-		 * @return MySQLim
-		**/
-		public function queueFlush()
-		{
-			if ($this->queue)
-				$this->realQueryRaw(
-					implode(";\n", $this->queue),
-					true
-				);
-			
-			$this->toQueue = false;
-			
-			return $this->queueDrop();
-		}
-		
-		public function getTableInfo($table)
-		{
-			throw new UnimplementedFeatureException();
-		}
-		
-		protected function getInsertId()
-		{
-			return mysqli_insert_id($this->link);
-		}
-		
-		private function realQueryRaw($queryString, $multi = false)
-		{
-			$function = $multi ? 'mysqli_multi_query' : 'mysqli_query';
-			
-			if (!$result = $function($this->link, $queryString)) {
+			if (!$result = mysqli_query($this->link, $queryString)) {
 				
 				$code = mysqli_errno($this->link);
 				
@@ -176,14 +143,29 @@
 					$e = 'DuplicateObjectException';
 				else
 					$e = 'DatabaseException';
-
+				
 				throw new $e(
 					mysqli_error($this->link).' - '.$queryString,
 					$code
 				);
 			}
-
+			
 			return $result;
+		}
+		
+		public function getTableInfo($table)
+		{
+			throw new UnimplementedFeatureException();
+		}
+		
+		public function hasQueue()
+		{
+			return false;
+		}
+		
+		protected function getInsertId()
+		{
+			return mysqli_insert_id($this->link);
 		}
 		
 		private function checkSingle($result)
