@@ -88,7 +88,7 @@
 			
 			$postgreser = TestUser::dao()->add($postgreser);
 			
-			for ( $i = 0; $i < 10; $i++) {
+			for ($i = 0; $i < 10; $i++) {
 				TestIncapsulant::dao()->add(
 					TestIncapsulant::create()->
 					setName($i)
