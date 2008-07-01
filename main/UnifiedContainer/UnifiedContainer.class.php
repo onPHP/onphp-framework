@@ -356,9 +356,22 @@
 		{
 			$query = $this->worker->makeFetchQuery();
 			
-			if ($this->lazy)
+			if ($this->lazy) {
 				$list = $this->dao->getCustomRowList($query);
-			else
+				
+				// special case for handling result from db
+				if (
+					isset($list[0])
+					&& is_array($list[0])
+				) {
+					$newList = array();
+					
+					foreach ($list as $key => $value)
+						$newList[] = $value[$this->getChildIdField()];
+					
+					$list = $newList;
+				}
+			} else
 				$list = $this->dao->getListByQuery($query);
 			
 			$this->list = array();

@@ -27,6 +27,22 @@
 			$this->drop();
 		}
 		
+		public function testUnified()
+		{
+			$this->create();
+			
+			foreach (DBTestPool::me()->getPool() as $connector => $db) {
+				DBPool::me()->setDefault($db);
+				$this->fill();
+				
+				$this->unified();
+				
+				Cache::me()->clean();
+			}
+			
+			$this->drop();
+		}
+		
 		public function fill($assertions = true)
 		{
 			$moscow =
@@ -71,6 +87,14 @@
 			}
 			
 			$postgreser = TestUser::dao()->add($postgreser);
+			
+			for ($i = 0; $i < 10; $i++) {
+				TestIncapsulant::dao()->add(
+					TestIncapsulant::create()->
+					setName($i)
+				);
+			}
+			
 			$mysqler = TestUser::dao()->add($mysqler);
 			
 			if ($assertions) {
@@ -132,6 +156,37 @@
 				$this->getListByIdsTest();
 				$this->getListByIdsTest();
 			}
+		}
+		
+		public function unified()
+		{
+			$user = TestUser::dao()->getById(1);
+			
+			$incapsulant = TestIncapsulant::dao()->getPlainList();
+			
+			$collectionDao = $user->getIncapsulants();
+			
+			$collectionDao->fetch()->setList($incapsulant);
+			
+			$collectionDao->save();
+			
+			unset($collectionDao);
+			
+			// fetch
+			$incapsulantsList = $user->getIncapsulants()->getList();
+			
+			for ($i = 0; $i < 10; $i++) {
+				$this->assertEquals($incapsulantsList[$i]->getId(), $i + 1);
+				$this->assertEquals($incapsulantsList[$i]->getName(), $i);
+			}
+			
+			unset($incapsulantsList);
+			
+			// lazy fetch
+			$incapsulantsList = $user->getIncapsulants(true)->getList();
+			
+			for ($i = 1; $i < 11; $i++)
+				$this->assertEquals($incapsulantsList[$i], $i);
 		}
 		
 		protected function getSome()
