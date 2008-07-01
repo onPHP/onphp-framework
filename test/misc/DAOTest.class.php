@@ -184,11 +184,9 @@
 			
 			// lazy fetch
 			$incapsulantsList = $user->getIncapsulants(true)->getList();
-			print_r($incapsulantsList);
-			for ($i = 1; $i < 11; $i++) {
+			
+			for ($i = 1; $i < 11; $i++)
 				$this->assertEquals($incapsulantsList[$i], $i);
-				//$this->assertEquals($incapsulantsList[$i][$i], $i);
-			}
 		}
 		
 		protected function getSome()
