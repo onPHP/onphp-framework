@@ -124,7 +124,7 @@
 		/**
 		 * @return Form
 		**/
-		public function unvalidatedCall($method, DTOMessage $request, $resultClass)
+		protected function unvalidatedCall($method, DTOMessage $request, $resultClass)
 		{
 			$requestDto = $request->makeDto();
 			
