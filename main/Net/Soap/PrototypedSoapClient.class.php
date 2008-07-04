@@ -113,6 +113,19 @@
 		
 		protected function call($method, DTOMessage $request, $resultClass)
 		{
+			$form = $this->unvalidatedCall($method, $request, $resultClass);
+			
+			if (!$form)
+				return null;
+			
+			return $this->makeObject($form, $resultClass);
+		}
+		
+		/**
+		 * @return Form
+		**/
+		protected function unvalidatedCall($method, DTOMessage $request, $resultClass)
+		{
 			$requestDto = $request->makeDto();
 			
 			Assert::isInstance($requestDto, 'DTOClass');
@@ -163,42 +176,45 @@
 			
 			if (!$resultClass) {
 				Assert::isNull($resultDto);
-				$result = null;
 				
-			} else {
-				Assert::isInstance($resultDto, 'DTOClass');
+				return null;
 				
-				Assert::isEqual(
-					$resultDto->entityProto()->className(),
-					$resultClass
-				);
-				
-				$form = DTOToFormImporter::create($resultDto->entityProto())->
-					make($resultDto);
-				
-				Assert::isTrue(
-					!$form->getErrors(),
-					
-					Assert::dumpArgument($resultDto)
-					."\n"
-					.Assert::dumpArgument($form->getInnerErrors())
-				);
-				
-				$result = $resultDto->makeObject($form);
-				
-				Assert::isInstance($result, 'DTOMessage');
-				
-				Assert::isEqual(get_class($result), $resultClass);
-				
-				Assert::isTrue(
-					$result->entityProto()->
-						validate($result, $form),
-						
-					Assert::dumpArgument($result)
-					."\n"
-					.Assert::dumpArgument($form->getInnerErrors())
-				);
 			}
+			
+			Assert::isInstance($resultDto, 'DTOClass');
+			
+			Assert::isEqual(
+				$resultDto->entityProto()->className(),
+				$resultClass
+			);
+			
+			return DTOToFormImporter::create($resultDto->entityProto())->
+				make($resultDto);
+		}
+		
+		
+		protected function makeObject(Form $form, $resultClass)
+		{
+			Assert::isTrue(
+				!$form->getErrors(),
+				Assert::dumpArgument($form)
+			);
+			
+			$result = FormToObjectConverter::create($form->getProto())->
+				make($form);
+			
+			Assert::isInstance($result, 'DTOMessage');
+			
+			Assert::isEqual(get_class($result), $resultClass);
+			
+			Assert::isTrue(
+				$result->entityProto()->
+					validate($result, $form),
+					
+				Assert::dumpArgument($result)
+				."\n"
+				.Assert::dumpArgument($form->getInnerErrors())
+			);
 			
 			return $result;
 		}
