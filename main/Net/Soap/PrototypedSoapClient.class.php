@@ -12,32 +12,32 @@
 
 	/**
 	 * Quick reference:
-	 * 
+	 *
 	 * 1. extend this class
-	 * 
+	 *
 	 * 2. redefine wsdlUrl and classMap ('complexType' => 'DtoClass')
-	 * 
+	 *
 	 * 3. make EntityProtos, Dtos and Business classes for your Xsd objects
 	 *    and exception classes for your faults
-	 * 
+	 *
 	 * 4. implement your methods, corresponding to operations in wsdl, in such
 	 *    manner:
-	 * 
+	 *
 	 *	public function login(LoginRequest $request)
 	 *	{
 	 *		// preparations...
-	 *		
+	 *
 	 *		$result = $this->call(
 	 *			'login', $request, 'LoginResponse'
 	 *		);
-	 *		
+	 *
 	 *		// additional asserts...
-	 *		
+	 *
 	 *		return $result;
 	 *	}
-	 * 
+	 *
 	 *	5. implement logCall(), if you need debugging output
-	 * 
+	 *
 	**/
 	abstract class PrototypedSoapClient
 	{
@@ -124,7 +124,7 @@
 		/**
 		 * @return Form
 		**/
-		protected function unvalidatedCall($method, DTOMessage $request, $resultClass)
+		public function unvalidatedCall($method, DTOMessage $request, $resultClass)
 		{
 			$requestDto = $request->makeDto();
 			
@@ -234,10 +234,10 @@
 		}
 		
 		/**
-		 * 
+		 *
 		 * The place for calling getLastRequestCdata() and
 		 * getLastResponseCdata().
-		 * 
+		 *
 		**/
 		protected function logCall()
 		{
