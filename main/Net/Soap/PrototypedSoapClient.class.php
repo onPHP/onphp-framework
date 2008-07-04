@@ -12,32 +12,32 @@
 
 	/**
 	 * Quick reference:
-	 * 
+	 *
 	 * 1. extend this class
-	 * 
+	 *
 	 * 2. redefine wsdlUrl and classMap ('complexType' => 'DtoClass')
-	 * 
+	 *
 	 * 3. make EntityProtos, Dtos and Business classes for your Xsd objects
 	 *    and exception classes for your faults
-	 * 
+	 *
 	 * 4. implement your methods, corresponding to operations in wsdl, in such
 	 *    manner:
-	 * 
+	 *
 	 *	public function login(LoginRequest $request)
 	 *	{
 	 *		// preparations...
-	 *		
+	 *
 	 *		$result = $this->call(
 	 *			'login', $request, 'LoginResponse'
 	 *		);
-	 *		
+	 *
 	 *		// additional asserts...
-	 *		
+	 *
 	 *		return $result;
 	 *	}
-	 * 
+	 *
 	 *	5. implement logCall(), if you need debugging output
-	 * 
+	 *
 	**/
 	abstract class PrototypedSoapClient
 	{
@@ -51,6 +51,9 @@
 		protected $classMap		= array();
 		
 		protected $soapClient	= null;
+		
+		protected $resultClass = null;
+		protected $resultDto = null;
 		
 		final public static function convertSoapFault(SoapFault $e)
 		{
@@ -106,13 +109,37 @@
 			return $this->wsdlUrl;
 		}
 		
+		public function getResultDto()
+		{
+			return $this->resultDto;
+		}
+		
+		protected function setResultDto(DTOClass $resultDto)
+		{
+			$this->resultDto = $resultDto;
+			return $this;
+		}
+
+		protected function getResultClass()
+		{
+			return $this->resultClass;
+		}
+
+		protected function setResultClass($resultClass)
+		{
+			$this->resultClass = $resultClass;
+			return $this;
+		}
+		
 		public function classMap()
 		{
 			return $this->classMap;
 		}
 		
-		protected function call($method, DTOMessage $request, $resultClass)
+		public function processCall($method, DTOMessage $request, $resultClass)
 		{
+			$this->setResultClass($resultClass);
+			
 			$requestDto = $request->makeDto();
 			
 			Assert::isInstance($requestDto, 'DTOClass');
@@ -137,7 +164,9 @@
 			try {
 				try {
 					
-					$resultDto = $this->getSoapClient()->$method($requestDto);
+					$this->setResultDto(
+						$this->getSoapClient()->$method($requestDto)
+					);
 					
 				} catch (BaseException $e) {
 					
@@ -161,34 +190,50 @@
 			
 			$this->logCall();
 			
-			if (!$resultClass) {
-				Assert::isNull($resultDto);
+			return $this;
+		}
+		
+		protected function call($method, DTOMessage $request, $resultClass)
+		{
+			return
+				$this->processCall($method, $request, $resultClass)->
+				validateResponse();
+		}
+		
+		public function validateResponse()
+		{
+			$result = null;
+			
+			if (!$this->getResultClass()) {
+				Assert::isNull($this->getResultDto());
 				$result = null;
 				
 			} else {
-				Assert::isInstance($resultDto, 'DTOClass');
+				Assert::isInstance($this->getResultDto(), 'DTOClass');
 				
 				Assert::isEqual(
-					$resultDto->entityProto()->className(),
-					$resultClass
+					$this->getResultDto()->entityProto()->className(),
+					$this->getResultClass()
 				);
 				
-				$form = DTOToFormImporter::create($resultDto->entityProto())->
-					make($resultDto);
+				$form = DTOToFormImporter::create(
+						$this->getResultDto()->entityProto()
+					)->
+					make($this->getResultDto());
 				
 				Assert::isTrue(
 					!$form->getErrors(),
 					
-					Assert::dumpArgument($resultDto)
+					Assert::dumpArgument($this->getResultDto())
 					."\n"
 					.Assert::dumpArgument($form->getInnerErrors())
 				);
 				
-				$result = $resultDto->makeObject($form);
+				$result = $this->getResultDto()->makeObject($form);
 				
 				Assert::isInstance($result, 'DTOMessage');
 				
-				Assert::isEqual(get_class($result), $resultClass);
+				Assert::isEqual(get_class($result), $this->getResultClass());
 				
 				Assert::isTrue(
 					$result->entityProto()->
@@ -218,10 +263,10 @@
 		}
 		
 		/**
-		 * 
+		 *
 		 * The place for calling getLastRequestCdata() and
 		 * getLastResponseCdata().
-		 * 
+		 *
 		**/
 		protected function logCall()
 		{
