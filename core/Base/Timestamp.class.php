@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Garmonbozia Research Group,                *
+ *   Copyright (C) 2004-2008 by Garmonbozia Research Group,                *
  *   Anton E. Lebedevich, Konstantin V. Arkhipov                           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -145,13 +145,17 @@
 		{
 			$this->int = strtotime($string);
 			
+			$matches = array();
+			
 			if (
 				preg_match(
-					'/^\d{1,4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}$/',
-					$string
+					'/^(\d{1,4})-(\d{1,2})-(\d{1,2})\s\d{1,2}:\d{1,2}:\d{1,2}$/',
+					$string,
+					$matches
 				)
 			) {
-				$this->string = $string;
+				if (checkdate($matches[2], $matches[3], $matches[1]))
+					$this->string = $string;
 			} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
 				$this->string = $string . ' 00:00:00';
 			elseif ($this->int !== false)
