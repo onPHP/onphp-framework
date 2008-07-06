@@ -156,13 +156,17 @@
 		{
 			$this->int = strtotime($string);
 			
+			$matches = array();
+			
 			if (
 				preg_match(
-					'/^\d{1,4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}$/',
-					$string
+					'/^(\d{1,4})-(\d{1,2})-(\d{1,2})\s\d{1,2}:\d{1,2}:\d{1,2}$/',
+					$string,
+					$matches
 				)
 			) {
-				return $string;
+				if (checkdate($matches[2], $matches[3], $matches[1]))
+					return $string;
 			} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
 				return $string . ' 00:00:00';
 			elseif ($this->int !== false)
