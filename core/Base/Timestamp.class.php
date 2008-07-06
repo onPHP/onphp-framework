@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Garmonbozia Research Group,                *
+ *   Copyright (C) 2004-2008 by Garmonbozia Research Group,                *
  *   Anton E. Lebedevich, Konstantin V. Arkhipov                           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -95,13 +95,17 @@
 			} elseif (is_string($timestamp)) {
 				$this->int = strtotime($timestamp);
 				
+				$matches = array();
+				
 				if (
 					preg_match(
-						'/^\d{1,4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}$/',
-						$timestamp
+						'/^(\d{1,4})-(\d{1,2})-(\d{1,2})\s\d{1,2}:\d{1,2}:\d{1,2}$/',
+						$timestamp,
+						$matches
 					)
 				) {
-					$this->string = $timestamp;
+					if (checkdate($matches[2], $matches[3], $matches[1]))
+						$this->string = $timestamp;
 				} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $timestamp))
 					$this->string = $timestamp . ' 00:00:00';
 				else
