@@ -421,6 +421,9 @@
 			} else
 				$query = $this->dao->makeSelectHead();
 			
+			if ($this->distinct)
+				$query->distinct();
+			
 			return $this->fillSelectQuery($query);
 		}
 		
