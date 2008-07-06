@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,7 +19,7 @@
 	{
 		private $directory = null;
 		
-		public function __construct($directory = 'dir-locking/')
+		protected function __construct($directory = 'dir-locking/')
 		{
 			$this->directory = ONPHP_TEMP_PATH.$directory;
 			
