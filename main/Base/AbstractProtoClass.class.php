@@ -268,6 +268,8 @@
 					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
 						$className = $property->getClassName();
 						
+						Assert::classExists($className);
+						
 						$isEnum = (
 							$className
 							&& is_subclass_of($className, 'Enumeration')
