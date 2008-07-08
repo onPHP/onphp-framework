@@ -12,7 +12,7 @@
 
 	/**
 	 * File uploads helper.
-	 * 
+	 *
 	 * @ingroup Primitives
 	**/
 	class PrimitiveFile extends RangedPrimitive
@@ -136,8 +136,8 @@
 			
 			if (
 				isset($scope[$this->name])
-				&& !($this->max && ($size > $this->max))
-				&& !($this->min && ($size < $this->min))
+				&& !($this->getMax() && ($size > $this->getMax()))
+				&& !($this->getMin() && ($size < $this->getMin()))
 			) {
 				$this->value = $scope[$this->name]['tmp_name'];
 				$this->originalName = $scope[$this->name]['name'];
