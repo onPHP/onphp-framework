@@ -112,5 +112,15 @@
 				.'&nbsp;&#151; не&nbsp;только с&nbsp;ansi, и&nbsp;это радует'
 			);
 		}
+		
+		public function testCrop()
+		{
+			$this->assertEqual(
+				CropFilter::create()->
+				setLength(128)->
+				apply(urldecode('Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 Nokia6120c/4.21; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413')),
+				'Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 Nokia6120c/4.21; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, l'
+			);
+		}
 	}
 ?>
