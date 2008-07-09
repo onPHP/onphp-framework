@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Vladimir A. Altuchov                            *
+ *   Copyright (C) 2007-2008 by Vladimir A. Altuchov                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -60,7 +60,7 @@
 			
 			if ($this->longIp > $signedMax)
 				return $this->longIp - $unsignedMax - 1;
-        	else 
+			else
 				return $this->longIp;
 		}
 	}
