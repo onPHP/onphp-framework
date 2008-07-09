@@ -35,7 +35,7 @@
 		**/
 		public function setIp($ip)
 		{
-			if (ip2long($ip) === -1)
+			if (ip2long($ip) === false)
 				throw new WrongArgumentException('wrong ip given');
 			
 			$this->longIp = ip2long($ip);
@@ -51,6 +51,17 @@
 		public function toString()
 		{
 			return long2ip($this->longIp);
+		}
+		
+		public function toSignedInt()
+		{
+			$unsignedMax = 4294967295;
+			$signedMax = 2147483647;
+			
+			if ($this->longIp > $signedMax)
+				return $this->longIp - $unsignedMax;
+        	else 
+				return $this->longIp;
 		}
 	}
 ?>
