@@ -1,5 +1,12 @@
 # $Id$
 
+2008-07-09	Ivan Y. Khvostishkov
+
+	* main/Net/Ip/IpAddress.class.php: fixed construction checking for
+	ip2long() result. Added toSignedInt() - like ip2long(), but suitable
+	for both 32 and 64 bit archs.  Thanks to Evgeny V. Kokovikhin
+		<dovg@dovg.ru>.
+
 2008-06-19	Ivan Y. Khvostishkov
 
 	* main/UnifiedContainer/UnifiedContainer.class.php: mergeList() should
