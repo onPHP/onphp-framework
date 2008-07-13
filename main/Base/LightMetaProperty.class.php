@@ -387,7 +387,7 @@
 						$remoteDao->getJoinPrefix($this->columnName, $prefix)
 					);
 				} else {
-					return $remoteDao->getById($raw);
+					Assert::isUnreachable();
 				}
 			}
 			

@@ -23,9 +23,7 @@
 		abstract public function getObjectName();
 		
 		abstract public function makeOnlyObject($array, $prefix = null);
-		abstract public function completeObject(
-			Identifiable $object, $array = null, $prefix = null
-		);
+		abstract public function completeObject(Identifiable $object);
 		
 		public function makeObject($array, $prefix = null)
 		{
@@ -34,9 +32,7 @@
 			
 			return $this->addObjectToMap(
 				$this->completeObject(
-					$this->makeOnlyObject($array, $prefix),
-					$array,
-					$prefix
+					$this->makeOnlyObject($array, $prefix)
 				)
 			);
 		}

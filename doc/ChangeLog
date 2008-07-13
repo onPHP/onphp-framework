@@ -1,5 +1,10 @@
 # $Id$
 
+2008-07-13	Konstantin V. Arkhipov
+
+	* main/Base/, main/DAOs/: experimental encapsulant's prefetching
+	implemented.
+
 2008-07-09	Ivan Y. Khvostishkov
 
 	* main/Net/Ip/IpAddress.class.php: fixed construction checking for
