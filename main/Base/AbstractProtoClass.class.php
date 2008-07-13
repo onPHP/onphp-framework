@@ -15,21 +15,69 @@
 	**/
 	abstract class AbstractProtoClass extends Singleton
 	{
+		private $prefetch = false;
+		private $prefetchIds = array();
+		private $storage = array();
+		
 		abstract protected function makePropertyList();
+		
+		/**
+		 * @return AbstractProtoClass
+		**/
+		public function beginPrefetch($prefetchId)
+		{
+			$this->prefetchIds[] = $prefetchId;
+			$this->storage[$prefetchId] = array();
+			$this->prefetch = true;
+			
+			return $this;
+		}
+		
+		public function endPrefetch($prefetchId, array $objectList)
+		{
+			if (!$this->prefetch)
+				throw new WrongStateException('prefetch mode is already off');
+			
+			foreach ($this->storage[$prefetchId] as $setter => $innerList) {
+				$ids = array();
+				
+				foreach ($innerList as $inner)
+					$ids[] = $inner->getId();
+				
+				// put them all into dao's identityMap
+				$inner->dao()->getListByIds($ids);
+				
+				$i = 0;
+				
+				foreach ($objectList as $object) {
+					if (isset($innerList[$i]))
+						$object->$setter(
+							$innerList[$i]->dao()->getById(
+								$innerList[$i]->getId()
+							)
+						);
+					
+					++$i;
+				}
+			}
+			
+			unset($this->prefetchIds[array_search($prefetchId, $this->prefetchIds)]);
+			unset($this->storage[$prefetchId]);
+			
+			if (!$this->prefetchIds)
+				$this->prefetch = false;
+			
+			return $objectList;
+		}
 		
 		public static function makeOnlyObject($className, $array, $prefix = null)
 		{
 			return self::assemblyObject(new $className, false, $array, $prefix);
 		}
 		
-		public static function completeObject(
-			Prototyped $object, array $array = null, $prefix = null
-		)
+		public static function completeObject(Prototyped $object)
 		{
-			if ($array)
-				return self::assemblyObject($object, true, $array, $prefix);
-			else
-				return self::fetchEncapsulants($object);
+			return self::fetchEncapsulants($object);
 		}
 		
 		final public function getPropertyList()
@@ -234,13 +282,26 @@
 		
 		private static function fetchEncapsulants(Prototyped $object)
 		{
-			foreach ($object->proto()->getPropertyList() as $property) {
+			$proto = $object->proto();
+			
+			if ($proto->prefetch)
+				$prefetchId = end($proto->prefetchIds);
+			else
+				$prefetchId = null;
+			
+			foreach ($proto->getPropertyList() as $property) {
 				if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
 					$getter = $property->getGetter();
 					
 					if (($inner = $object->$getter()) instanceof DAOConnected) {
 						$setter = $property->getSetter();
-						$object->$setter($inner->dao()->getById($inner->getId()));
+						
+						if ($prefetchId)
+							$proto->storage[$prefetchId][$setter][] = $inner;
+						else
+							$object->$setter(
+								$inner->dao()->getById($inner->getId())
+							);
 					}
 				}
 			}

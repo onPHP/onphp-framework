@@ -168,8 +168,15 @@
 			$expires = Cache::EXPIRES_MEDIUM
 		)
 		{
+			$proto = $this->dao->getProtoClass();
+			
+			$prefetchId = uniqid();
+			
+			$proto->beginPrefetch($prefetchId);
+			
+			$list = array();
+			
 			if ($expires !== Cache::DO_NOT_CACHE) {
-				$list = array();
 				$toFetch = array();
 				$prefixed = array();
 				
@@ -226,6 +233,8 @@
 						);
 				} catch (ObjectNotFoundException $e) {/*_*/}
 			}
+			
+			$proto->endPrefetch($prefetchId, $list);
 			
 			return $list;
 		}

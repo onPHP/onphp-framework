@@ -32,13 +32,9 @@
 			);
 		}
 		
-		public function completeObject(
-			Identifiable $object, $array = null, $prefix = null
-		)
+		public function completeObject(Identifiable $object)
 		{
-			return $this->getProtoClass()->completeObject(
-				$object, $array, $prefix
-			);
+			return $this->getProtoClass()->completeObject($object);
 		}
 		
 		public function fetchCollections(

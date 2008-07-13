@@ -134,7 +134,7 @@
 				else
 					$object = $this->cacheByQuery($query, $object, $expires);
 				
-				return $this->dao->completeObject($object, $row);
+				return $this->dao->completeObject($object);
 			}
 			
 			return null;
@@ -145,10 +145,15 @@
 			$list = array();
 			
 			if ($rows = DBPool::getByDao($this->dao)->querySet($query)) {
+				$proto = $this->dao->getProtoClass();
+				$prefetchId = uniqid();
+				
+				$proto->beginPrefetch($prefetchId);
+				
 				foreach ($rows as $row)
 					$list[] = $this->dao->makeObject($row);
 				
-				return $list;
+				$proto->endPrefetch($prefetchId, $list);
 			}
 			
 			return $list;
