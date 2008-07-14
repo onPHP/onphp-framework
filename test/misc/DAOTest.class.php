@@ -254,12 +254,15 @@
 			
 			TestUser::dao()->dropIdentityMap();
 			
-			$list = TestUser::dao()->getListByIds(array(1, 3, 2));
+			$list = TestUser::dao()->getListByIds(array(1, 3, 2, 1, 1, 1));
 			
-			$this->assertEquals(count($list), 2);
+			$this->assertEquals(count($list), 5);
 			
 			$this->assertEquals($list[0]->getId(), 1);
 			$this->assertEquals($list[1]->getId(), 2);
+			$this->assertEquals($list[2]->getId(), 1);
+			$this->assertEquals($list[3]->getId(), 1);
+			$this->assertEquals($list[4]->getId(), 1);
 			
 			$this->assertEquals($list[0], $first);
 			

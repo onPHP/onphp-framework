@@ -174,6 +174,9 @@
 			
 			$list = array();
 			
+			// dupes, if any, will be resolved later @ ArrayUtils::regularizeList
+			$ids = array_unique($ids);
+			
 			if ($expires !== Cache::DO_NOT_CACHE) {
 				$toFetch = array();
 				$prefixed = array();
