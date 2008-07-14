@@ -170,9 +170,7 @@
 		{
 			$proto = $this->dao->getProtoClass();
 			
-			$prefetchId = uniqid();
-			
-			$proto->beginPrefetch($prefetchId);
+			$proto->beginPrefetch();
 			
 			$list = array();
 			
@@ -234,7 +232,7 @@
 				} catch (ObjectNotFoundException $e) {/*_*/}
 			}
 			
-			$proto->endPrefetch($prefetchId, $list);
+			$proto->endPrefetch($list);
 			
 			return $list;
 		}

@@ -15,8 +15,7 @@
 	**/
 	abstract class AbstractProtoClass extends Singleton
 	{
-		private $prefetch = false;
-		private $prefetchIds = array();
+		private $depth = 0;
 		private $storage = array();
 		
 		abstract protected function makePropertyList();
@@ -24,25 +23,34 @@
 		/**
 		 * @return AbstractProtoClass
 		**/
-		public function beginPrefetch($prefetchId)
+		public function beginPrefetch()
 		{
-			$this->prefetchIds[] = $prefetchId;
-			$this->storage[$prefetchId] = array();
-			$this->prefetch = true;
+			$this->storage[++$this->depth] = array();
 			
 			return $this;
 		}
 		
-		public function endPrefetch($prefetchId, array $objectList)
+		public function endPrefetch(array $objectList)
 		{
-			if (!$this->prefetch)
+			if (!$this->depth)
 				throw new WrongStateException('prefetch mode is already off');
 			
-			foreach ($this->storage[$prefetchId] as $setter => $innerList) {
+			foreach ($this->storage[$this->depth] as $setter => $innerList) {
+				Assert::isEqual(count($objectList), count($innerList));
+				
 				$ids = array();
 				
 				foreach ($innerList as $inner)
-					$ids[] = $inner->getId();
+					if ($inner)
+						$ids[] = $inner->getId();
+				
+				// finding first available inner object
+				foreach ($innerList as $inner)
+					if ($inner)
+						break;
+				
+				if (!$inner)
+					continue;
 				
 				// put them all into dao's identityMap
 				$inner->dao()->getListByIds($ids);
@@ -50,7 +58,7 @@
 				$i = 0;
 				
 				foreach ($objectList as $object) {
-					if (isset($innerList[$i]))
+					if ($innerList[$i])
 						$object->$setter(
 							$innerList[$i]->dao()->getById(
 								$innerList[$i]->getId()
@@ -61,11 +69,7 @@
 				}
 			}
 			
-			unset($this->prefetchIds[array_search($prefetchId, $this->prefetchIds)]);
-			unset($this->storage[$prefetchId]);
-			
-			if (!$this->prefetchIds)
-				$this->prefetch = false;
+			unset($this->storage[$this->depth--]);
 			
 			return $objectList;
 		}
@@ -284,25 +288,20 @@
 		{
 			$proto = $object->proto();
 			
-			if ($proto->prefetch)
-				$prefetchId = end($proto->prefetchIds);
-			else
-				$prefetchId = null;
-			
 			foreach ($proto->getPropertyList() as $property) {
 				if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
 					$getter = $property->getGetter();
+					$setter = $property->getSetter();
 					
 					if (($inner = $object->$getter()) instanceof DAOConnected) {
-						$setter = $property->getSetter();
-						
-						if ($prefetchId)
-							$proto->storage[$prefetchId][$setter][] = $inner;
+						if ($proto->depth)
+							$proto->storage[$proto->depth][$setter][] = $inner;
 						else
 							$object->$setter(
 								$inner->dao()->getById($inner->getId())
 							);
-					}
+					} elseif ($property->getClassName() && $proto->depth)
+						$proto->storage[$proto->depth][$setter][] = null;
 				}
 			}
 			

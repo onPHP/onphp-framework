@@ -146,14 +146,13 @@
 			
 			if ($rows = DBPool::getByDao($this->dao)->querySet($query)) {
 				$proto = $this->dao->getProtoClass();
-				$prefetchId = uniqid();
 				
-				$proto->beginPrefetch($prefetchId);
+				$proto->beginPrefetch();
 				
 				foreach ($rows as $row)
 					$list[] = $this->dao->makeObject($row);
 				
-				$proto->endPrefetch($prefetchId, $list);
+				$proto->endPrefetch($list);
 			}
 			
 			return $list;
