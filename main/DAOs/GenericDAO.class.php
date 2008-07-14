@@ -27,8 +27,14 @@
 		
 		public function makeObject($array, $prefix = null)
 		{
-			if (isset($this->identityMap[$array[$prefix.$this->getIdName()]]))
-				return $this->identityMap[$array[$prefix.$this->getIdName()]];
+			if (
+				isset(
+					$this->identityMap[
+						$array[$idName = $prefix.$this->getIdName()]
+					]
+				)
+			)
+				return $this->identityMap[$array[$idName]];
 			
 			return $this->addObjectToMap(
 				$this->completeObject(
@@ -63,7 +69,12 @@
 		**/
 		public function getProtoClass()
 		{
-			return call_user_func(array($this->getObjectName(), 'proto'));
+			static $proto = null;
+			
+			if (!$proto)
+				$proto = call_user_func(array($this->getObjectName(), 'proto'));
+			
+			return $proto;
 		}
 		
 		public function getMapping()
