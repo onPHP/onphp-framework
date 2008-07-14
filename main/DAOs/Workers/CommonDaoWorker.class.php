@@ -282,7 +282,7 @@
 				);
 		}
 		
-		public function getPlainList($expires = Cache::DO_NOT_CACHE)
+		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->getListByQuery(
 				$this->dao->makeSelectHead(), $expires
@@ -488,7 +488,8 @@
 		// quite useless here
 		public function uncacheLists()
 		{
-			return true;
+			// wipes getPlainList result, if any
+			return $this->uncacheByQuery($this->dao->makeSelectHead());
 		}
 		//@}
 	}
