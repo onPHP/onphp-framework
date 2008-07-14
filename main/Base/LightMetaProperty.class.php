@@ -388,6 +388,8 @@
 					);
 				} else {
 					Assert::isUnreachable();
+					// getById was here, but was removed
+					// due to prefetch @ AbstractProtoClass
 				}
 			}
 			
