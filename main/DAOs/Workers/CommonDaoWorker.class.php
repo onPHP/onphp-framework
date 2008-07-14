@@ -170,6 +170,9 @@
 		
 		public function getListByIds($ids, $expires = Cache::EXPIRES_MEDIUM)
 		{
+			// anyway, dupes will be ignored later
+			$ids = array_unique($ids);
+			
 			if ($expires !== Cache::DO_NOT_CACHE) {
 				
 				$list = array();

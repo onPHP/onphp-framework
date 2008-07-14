@@ -94,6 +94,9 @@
 		
 		public function getListByIds($ids)
 		{
+			// anyway, dupes will be ignored by DB
+			$ids = array_unique($ids);
+			
 			try {
 				return
 					$this->getListByLogic(

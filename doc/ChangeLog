@@ -1,5 +1,10 @@
 # $Id$
 
+2008-07-14	Konstantin V. Arkhipov
+
+	* main/DAOs/Workers/CommonDaoWorker.class.php: trivial getListByIds()
+	optimization - now fetches only unique objects.
+
 2008-06-17	Konstantin V. Arkhipov
 
 	* 0.10.11 released.

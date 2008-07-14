@@ -125,6 +125,9 @@
 		
 		public function getListByIds($ids)
 		{
+			// anyway, dupes will be ignored later
+			$ids = array_unique($ids);
+			
 			$list = array();
 			$toFetch = array();
 			$prefixed = array();

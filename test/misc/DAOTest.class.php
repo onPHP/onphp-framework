@@ -167,11 +167,13 @@
 		{
 			TestUser::dao()->dropIdentityMap();
 			
-			$list = TestUser::dao()->getListByIds(array(1, 3, 2));
+			$list = TestUser::dao()->getListByIds(array(1, 3, 2, 1, 1, 1));
 			
+			// dupes will not be ignore in >=1.0
 			$this->assertEqual(count($list), 2);
 			
 			// since we can't expect any order here
+			// order will be respected in >=1.0
 			if ($list[0]->getId() > $list[1]->getId()) {
 				Range::swap($list[0], $list[1]);
 			}
