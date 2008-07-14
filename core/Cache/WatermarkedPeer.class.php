@@ -95,12 +95,18 @@
 		
 		public function increment($key, $value)
 		{
-			return $this->peer->increment($this->getActualWatermark().$key);
+			return $this->peer->increment(
+				$this->getActualWatermark().$key,
+				$value
+			);
 		}
 		
 		public function decrement($key, $value)
 		{
-			return $this->peer->decrement($this->getActualWatermark().$key);
+			return $this->peer->decrement(
+				$this->getActualWatermark().$key,
+				$value
+			);
 		}
 		
 		public function getList($indexes)
