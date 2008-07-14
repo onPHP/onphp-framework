@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -30,6 +30,22 @@
 		public function isAlive()
 		{
 			return true;
+		}
+		
+		public function increment($key, $value)
+		{
+			if (isset($this->cache[$key]))
+				return ++$this->cache[$key];
+			
+			return null;
+		}
+		
+		public function decrement($key, $value)
+		{
+			if (isset($this->cache[$key]))
+				return --$this->cache[$key];
+			
+			return null;
 		}
 		
 		public function get($key)

@@ -98,7 +98,31 @@
 		/**
 		 * low-level cache access
 		**/
-
+		
+		public function increment($key, $value)
+		{
+			$label = $this->guessLabel($key);
+			
+			if ($this->peers[$label]['object']->isAlive())
+				return $this->peers[$label]['object']->increment($key, $value);
+			else
+				$this->checkAlive();
+			
+			return null;
+		}
+		
+		public function decrement($key, $value)
+		{
+			$label = $this->guessLabel($key);
+			
+			if ($this->peers[$label]['object']->isAlive())
+				return $this->peers[$label]['object']->decrement($key, $value);
+			else
+				$this->checkAlive();
+			
+			return null;
+		}
+		
 		public function get($key)
 		{
 			$label = $this->guessLabel($key);

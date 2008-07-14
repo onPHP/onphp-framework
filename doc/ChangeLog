@@ -1,5 +1,9 @@
 # $Id$
 
+2008-07-15	Konstantin V. Arkhipov
+
+	* core/Cache/: increment/decrement implemented in all CachePeer's.
+
 2008-07-14	Konstantin V. Arkhipov
 
 	* main/DAOs/Workers/CommonDaoWorker.class.php: trivial getListByIds()

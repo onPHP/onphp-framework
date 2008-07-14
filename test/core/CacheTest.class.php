@@ -39,5 +39,38 @@
 			$this->assertEquals($oneHit, $twoHit);
 			$this->assertEquals($twoHit, self::QUERIES);
 		}
+		
+		public function testIntegerChanges()
+		{
+			Cache::me()->set('test_integer', 1);
+			
+			for ($i = 0; $i < self::QUERIES; ++$i) {
+				$this->assertEquals(
+					$i + 2,
+					Cache::me()->increment('test_integer', 1)
+				);
+				
+				$this->assertEquals($i + 2, Cache::me()->get('test_integer'));
+			}
+			
+			$this->assertEquals(
+				self::QUERIES + 1,
+				Cache::me()->get('test_integer')
+			);
+			
+			for ($i = 0; $i < self::QUERIES; ++$i) {
+				$this->assertEquals(
+					self::QUERIES - $i,
+					Cache::me()->decrement('test_integer', 1)
+				);
+				
+				$this->assertEquals(
+					self::QUERIES - $i,
+					Cache::me()->get('test_integer')
+				);
+			}
+			
+			$this->assertEquals(Cache::me()->get('test_integer'), 1);
+		}
 	}
 ?>
