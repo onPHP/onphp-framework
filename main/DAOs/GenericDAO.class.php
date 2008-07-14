@@ -196,7 +196,7 @@
 			);
 		}
 		
-		public function getPlainList($expires = Cache::DO_NOT_CACHE)
+		public function getPlainList($expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->addObjectListToMap(
 				Cache::worker($this)->getPlainList($expires)
