@@ -85,7 +85,7 @@
 		public function increment($key, $value)
 		{
 			if (null !== ($current = $this->get($key))) {
-				$this->set($key, ++$current);
+				$this->set($key, $current += $value);
 				return $current;
 			}
 			
@@ -95,7 +95,7 @@
 		public function decrement($key, $value)
 		{
 			if (null !== ($current = $this->get($key))) {
-				$this->set($key, --$current);
+				$this->set($key, $current -= $value);
 				return $current;
 			}
 			

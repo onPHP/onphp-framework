@@ -37,7 +37,7 @@
 		public function increment($key, $value)
 		{
 			if (isset($this->cache[$key]))
-				return ++$this->cache[$key];
+				return $this->cache[$key] += $value;
 			
 			return null;
 		}
@@ -45,7 +45,7 @@
 		public function decrement($key, $value)
 		{
 			if (isset($this->cache[$key]))
-				return --$this->cache[$key];
+				return $this->cache[$key] -= $value;
 			
 			return null;
 		}

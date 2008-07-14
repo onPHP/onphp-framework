@@ -66,7 +66,7 @@
 			$path = $this->makePath($path);
 			
 			if (null !== ($current = $this->operate($path))) {
-				$this->operate($path, ++$current);
+				$this->operate($path, $current += $value);
 				
 				return $current;
 			}
@@ -79,7 +79,7 @@
 			$path = $this->makePath($path);
 			
 			if (null !== ($current = $this->operate($path))) {
-				$this->operate($path, --$current);
+				$this->operate($path, $current -= $value);
 				
 				return $current;
 			}
