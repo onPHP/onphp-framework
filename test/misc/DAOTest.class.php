@@ -169,7 +169,7 @@
 			
 			$list = TestUser::dao()->getListByIds(array(1, 3, 2, 1, 1, 1));
 			
-			// dupes will not be ignore in >=1.0
+			// dupes will not be ignored in >=1.0
 			$this->assertEqual(count($list), 2);
 			
 			// since we can't expect any order here
