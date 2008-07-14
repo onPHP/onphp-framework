@@ -93,6 +93,16 @@
 			return $this;
 		}
 		
+		public function increment($key, $value)
+		{
+			return $this->peer->increment($this->getActualWatermark().$key);
+		}
+		
+		public function decrement($key, $value)
+		{
+			return $this->peer->decrement($this->getActualWatermark().$key);
+		}
+		
 		public function getList($indexes)
 		{
 			foreach ($indexes as &$index)

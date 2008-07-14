@@ -60,7 +60,33 @@
 			
 			return parent::clean();
 		}
-
+		
+		public function increment($key, $value)
+		{
+			$path = $this->makePath($path);
+			
+			if (null !== ($current = $this->operate($path))) {
+				$this->operate($path, ++$current);
+				
+				return $current;
+			}
+			
+			return null;
+		}
+		
+		public function decrement($key, $value)
+		{
+			$path = $this->makePath($path);
+			
+			if (null !== ($current = $this->operate($path))) {
+				$this->operate($path, --$current);
+				
+				return $current;
+			}
+			
+			return null;
+		}
+		
 		public function get($key)
 		{
 			$path = $this->makePath($key);

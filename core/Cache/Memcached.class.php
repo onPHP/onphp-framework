@@ -94,6 +94,16 @@
 			return unserialize($this->parseGetRequest(false));
 		}
 		
+		public function increment($key, $value)
+		{
+			return $this->changeInteger('incr', $key, $value);
+		}
+		
+		public function decrement($key, $value)
+		{
+			return $this->changeInteger('decr', $key, $value);
+		}
+		
 		public function get($index)
 		{
 			if (!$this->link)
@@ -224,6 +234,10 @@
 						
 						if ($flags & 1)
 							$value = unserialize($value);
+						else
+							// help in case when 100 was decreased to 99
+							// memcached will not honor output lenght then
+							$value = rtrim($value);
 						
 						return $value;
 					} else {
@@ -240,6 +254,28 @@
 				return $result;
 			else
 				return 'a:'.$index.':{'.$result.'}';
+		}
+		
+		private function changeInteger($command, $key, $value)
+		{
+			if (!$this->link)
+				return null;
+			
+			$command = "{$command} {$key} {$value}\r\n";
+			
+			if (!$this->sendRequest($command))
+				return null;
+			
+			try {
+				$response = rtrim(fread($this->link, $this->buffer));
+			} catch (BaseException $e) {
+				return null;
+			}
+			
+			if (is_numeric($response))
+				return (int) $response;
+			
+			return null;
 		}
 		
 		private function sendRequest($command)

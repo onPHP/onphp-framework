@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -80,6 +80,26 @@
 			try {
 				shm_detach($segment);
 			} catch (BaseException $e) {/*_*/}
+		}
+		
+		public function increment($key, $value)
+		{
+			if (null !== ($current = $this->get($key))) {
+				$this->set($key, ++$current);
+				return $current;
+			}
+			
+			return null;
+		}
+		
+		public function decrement($key, $value)
+		{
+			if (null !== ($current = $this->get($key))) {
+				$this->set($key, --$current);
+				return $current;
+			}
+			
+			return null;
 		}
 		
 		public function get($key)
