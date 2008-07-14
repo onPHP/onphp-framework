@@ -37,6 +37,22 @@
 			return $this;
 		}
 		
+		public function increment($key, $value)
+		{
+			if (isset($this->pool[$key]))
+				return ++$this->pool[$key];
+			
+			return null;
+		}
+		
+		public function decrement($key, $value)
+		{
+			if (isset($this->pool[$key]))
+				return --$this->pool[$key];
+			
+			return null;
+		}
+		
 		public function get($key)
 		{
 			if (isset($this->pool[$key]) && $this->pool[$key])

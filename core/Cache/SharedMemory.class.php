@@ -82,6 +82,26 @@
 			} catch (BaseException $e) {/*_*/}
 		}
 		
+		public function increment($key, $value)
+		{
+			if (null !== ($current = $this->get($key))) {
+				$this->set($key, ++$current);
+				return $current;
+			}
+			
+			return null;
+		}
+		
+		public function decrement($key, $value)
+		{
+			if (null !== ($current = $this->get($key))) {
+				$this->set($key, --$current);
+				return $current;
+			}
+			
+			return null;
+		}
+		
 		public function get($key)
 		{
 			$segment = $this->getSegment();

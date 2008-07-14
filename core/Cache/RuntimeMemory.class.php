@@ -34,6 +34,22 @@
 			return true;
 		}
 		
+		public function increment($key, $value)
+		{
+			if (isset($this->cache[$key]))
+				return ++$this->cache[$key];
+			
+			return null;
+		}
+		
+		public function decrement($key, $value)
+		{
+			if (isset($this->cache[$key]))
+				return --$this->cache[$key];
+			
+			return null;
+		}
+		
 		public function get($key)
 		{
 			if (isset($this->cache[$key]))

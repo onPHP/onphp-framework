@@ -81,6 +81,24 @@
 			return parent::clean();
 		}
 		
+		public function increment($key, $value)
+		{
+			try {
+				return $this->instance->increment($key, $value);
+			} catch (BaseException $e) {
+				return null;
+			}
+		}
+		
+		public function decrement($key, $value)
+		{
+			try {
+				return $this->instance->decrement($key, $value);
+			} catch (BaseException $e) {
+				return null;
+			}
+		}
+		
 		public function getList($indexes)
 		{
 			return $this->get($indexes);

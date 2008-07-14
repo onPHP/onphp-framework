@@ -21,6 +21,14 @@
 		
 			abstract public function getList($keys)
 		
+		increment integer value:
+		
+			abstract public function increment($key, $value)
+		
+		decrement integer value:
+		
+			abstract public function decrement($key, $value)
+		
 		uncache:
 		
 			abstract public function delete($key)
@@ -115,6 +123,15 @@
 		abstract public function get($key);
 		abstract public function delete($key);
 		
+		abstract public function increment($key, $value);
+		abstract public function decrement($key, $value);
+		
+		abstract protected function store(
+			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
+		);
+		
+		abstract public function append($key, $data);
+		
 		/**
 		 * @return CachePeer
 		**/
@@ -126,12 +143,6 @@
 			
 			return $this;
 		}
-		
-		abstract protected function store(
-			$action, $key, &$value, $expires = Cache::EXPIRES_MEDIUM
-		);
-		
-		abstract public function append($key, $data);
 		
 		public function getList($indexes)
 		{
@@ -145,7 +156,7 @@
 			return $out;
 		}
 		
-		final public function set($key, $value, $expires = Cache::EXPIRES_MEDIUM)
+		final public function set($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->store('set', $key, $value, $expires);
 		}
