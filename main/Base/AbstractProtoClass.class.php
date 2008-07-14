@@ -52,15 +52,17 @@
 				if (!$inner)
 					continue;
 				
-				// put them all into dao's identityMap
-				$inner->dao()->getListByIds($ids);
+				$dao = $inner->dao();
+				
+				// put yet unmapped objects into dao's identityMap
+				$dao->getListByIds($ids);
 				
 				$i = 0;
 				
 				foreach ($objectList as $object) {
 					if ($innerList[$i])
 						$object->$setter(
-							$innerList[$i]->dao()->getById(
+							$dao->getById(
 								$innerList[$i]->getId()
 							)
 						);
