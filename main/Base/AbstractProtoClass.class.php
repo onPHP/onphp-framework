@@ -302,7 +302,11 @@
 							$object->$setter(
 								$inner->dao()->getById($inner->getId())
 							);
-					} elseif ($property->getClassName() && $proto->depth)
+					} elseif (
+						$proto->depth
+						// emulating 'instanceof DAOConnected'
+						&& method_exists($property->getClassName(), 'dao')
+					)
 						$proto->storage[$proto->depth][$setter][] = null;
 				}
 			}
