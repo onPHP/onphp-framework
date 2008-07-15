@@ -132,6 +132,13 @@
 			$toFetch = array();
 			$prefixed = array();
 			
+			$proto = $this->dao->getProtoClass();
+			
+			$proto->beginPrefetch();
+			
+			// dupes, if any, will be resolved later @ ArrayUtils::regularizeList
+			$ids = array_unique($ids);
+			
 			foreach ($ids as $id)
 				$prefixed[$id] = $this->className.'_'.$id;
 			
@@ -150,23 +157,23 @@
 			
 			$toFetch += array_keys($prefixed);
 			
-			if (!$toFetch)
-				return $list;
-			
-			try {
-				return
-					array_merge(
-						$list,
-						$this->getListByLogic(
-							Expression::in($this->dao->getIdName(), $toFetch)
-						)
-					);
-			} catch (ObjectNotFoundException $e) {
-				// nothing to fetch
-				return $list;
+			if ($toFetch) {
+				try {
+					$list =
+						array_merge(
+							$list,
+							$this->getListByLogic(
+								Expression::in($this->dao->getIdName(), $toFetch)
+							)
+						);
+				} catch (ObjectNotFoundException $e) {
+					// nothing to fetch
+				}
 			}
 			
-			Assert::isUnreachable();
+			$proto->endPrefetch($list);
+			
+			return $list;
 		}
 		
 		public function getListByQuery(SelectQuery $query)
