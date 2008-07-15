@@ -29,8 +29,8 @@
 	**/
 	final class VoodooDaoWorker extends TransparentDaoWorker
 	{
-		protected $classKey = null;
-		protected $handler = null;
+		private $classKey = null;
+		private $handler = null;
 		
 		// will trigger auto-detect
 		private static $defaultHandler = null;
