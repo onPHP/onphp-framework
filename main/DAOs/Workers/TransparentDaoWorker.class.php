@@ -68,6 +68,13 @@
 			$toFetch = array();
 			$prefixed = array();
 			
+			$proto = $this->dao->getProtoClass();
+			
+			$proto->beginPrefetch();
+			
+			// dupes, if any, will be resolved later @ ArrayUtils::regularizeList
+			$ids = array_unique($ids);
+			
 			foreach ($ids as $id)
 				$prefixed[$id] = $this->className.'_'.$id;
 			
@@ -93,6 +100,8 @@
 					} catch (ObjectNotFoundException $e) {/*_*/}
 				}
 			}
+			
+			$proto->endPrefetch($list);
 			
 			return $list;
 		}
