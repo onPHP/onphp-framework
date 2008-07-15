@@ -2,6 +2,9 @@
 
 2008-07-15	Konstantin V. Arkhipov
 
+	* main/DAOs/Workers/CacheDaoWorker.class.php: new scalable voodoo-like
+	dao worker.
+
 	* core/Cache/: increment/decrement implemented in all CachePeer's.
 
 2008-07-14	Konstantin V. Arkhipov
