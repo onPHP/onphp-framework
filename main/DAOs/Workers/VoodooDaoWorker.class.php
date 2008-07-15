@@ -88,24 +88,10 @@
 			$key = $this->className.self::SUFFIX_LIST.$query->getId();
 			
 			if ($this->handler->touch($this->keyToInt($key))) {
-				
 				$cache->mark($this->className)->
 					add($key, $array, Cache::EXPIRES_FOREVER);
-				
-				if ($array !== Cache::NOT_FOUND)
-					foreach ($array as $key => $object) {
-						if (
-							!$this->handler->ping(
-								$this->keyToInt(
-									$this->className.'_'.$object->getId()
-								)
-							)
-						) {
-							$this->cacheById($object);
-						}
-					}
 			}
-
+			
 			return $array;
 		}
 		//@}
