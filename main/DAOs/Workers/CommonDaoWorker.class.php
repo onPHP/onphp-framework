@@ -470,13 +470,20 @@
 			return $result;
 		}
 		//@}
-
+		
 		/// uncachers
 		//@{
+		public function uncacheById($id)
+		{
+			parent::uncacheById($id);
+			
+			return $this->dao->uncacheLists();
+		}
+		
 		public function uncacheByIds($ids)
 		{
 			foreach ($ids as $id)
-				$this->uncacheById($id);
+				parent::uncacheById($id);
 			
 			return $this->dao->uncacheLists();
 		}
