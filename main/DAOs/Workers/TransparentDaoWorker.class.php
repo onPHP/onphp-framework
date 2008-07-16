@@ -186,16 +186,6 @@
 		}
 		//@}
 		
-		/// uncachers
-		//@{
-		public function uncacheById($id)
-		{
-			$this->dao->uncacheLists();
-
-			return parent::uncacheById($id);
-		}
-		//@}
-		
 		/// internal helpers
 		//@{
 		protected function getCachedByQuery(SelectQuery $query)
