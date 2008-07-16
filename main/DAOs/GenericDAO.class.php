@@ -235,7 +235,12 @@
 		{
 			unset($this->identityMap[$id]);
 			
-			return Cache::worker($this)->dropById($id);
+			$count = Cache::worker($this)->dropById($id);
+			
+			if (1 != $count)
+				throw new WrongStateException('no object were dropped');
+			
+			return $count;
 		}
 		
 		public function dropByIds(array $ids)
@@ -243,7 +248,12 @@
 			foreach ($ids as $id)
 				unset($this->identityMap[$id]);
 			
-			return Cache::worker($this)->dropByIds($ids);
+			$count = Cache::worker($this)->dropByIds($ids);
+			
+			if ($count != count($ids))
+				throw new WrongStateException('not all objects were dropped');
+			
+			return $count;
 		}
 		
 		public function uncacheById($id)
