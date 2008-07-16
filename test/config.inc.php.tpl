@@ -33,7 +33,9 @@
 	);
 	
 	$daoWorkers = array(
-		'NullDaoWorker', 'CommonDaoWorker', 'SmartDaoWorker', 'VoodooDaoWorker'
+		'NullDaoWorker', 'CommonDaoWorker', 'SmartDaoWorker', 'VoodooDaoWorker',
+		'CacheDaoWorker', 'VoodooDaoWorker', 'SmartDaoWorker', 'CommonDaoWorker',
+		'NullDaoWorker'
 	);
 	
 	define('SIMPLETEST_PATH', '/usr/share/php/simpletest/');
