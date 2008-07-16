@@ -26,7 +26,7 @@
 		
 		/**
 		 * @return PrimitiveDomDocument
-		 *
+		 * 
 		 * NOTE: take care of setting proper xmlns and targetNamespace both in
 		 * XSD and XML
 		**/

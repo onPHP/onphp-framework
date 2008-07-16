@@ -12,7 +12,7 @@
 
 	/**
 	 * File uploads helper.
-	 *
+	 * 
 	 * @ingroup Primitives
 	**/
 	class PrimitiveFile extends RangedPrimitive

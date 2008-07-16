@@ -3,7 +3,7 @@
 	
 	final class IpAddressToSignedIntTest extends TestCase
 	{
-		private $ips = 
+		private $ips =
 			array(
 				array('0.0.0.0',0),
 				array('0.0.0.1', 1),
