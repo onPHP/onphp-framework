@@ -300,7 +300,7 @@
 		
 		public function uncacheLists()
 		{
-			$this->identityMap = array();
+			$this->dropIdentityMap();
 			
 			return Cache::worker($this)->uncacheLists();
 		}

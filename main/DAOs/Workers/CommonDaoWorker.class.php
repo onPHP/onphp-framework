@@ -479,9 +479,9 @@
 		//@{
 		public function uncacheById($id)
 		{
-			parent::uncacheById($id);
+			$this->dao->uncacheLists();
 			
-			return $this->dao->uncacheLists();
+			return parent::uncacheById($id);
 		}
 		
 		public function uncacheByIds($ids)
