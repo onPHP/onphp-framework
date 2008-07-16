@@ -23,7 +23,6 @@
 		
 		private $properties	= array();
 		private $interfaces	= array();
-		private $references	= array();
 		
 		private $pattern	= null;
 		private $identifier	= null;
@@ -303,21 +302,6 @@
 		public function getSourceLink()
 		{
 			return $this->source;
-		}
-		
-		/**
-		 * @return MetaClass
-		**/
-		public function setReferencingClass($className)
-		{
-			$this->references[$className] = true;
-			
-			return $this;
-		}
-		
-		public function getReferencingClasses()
-		{
-			return array_keys($this->references);
 		}
 		
 		/**

@@ -19,9 +19,7 @@
 		
 		private $classes = array();
 		private $sources = array();
-		
 		private $liaisons = array();
-		private $references = array();
 		
 		private $defaultSource = null;
 		
@@ -121,45 +119,6 @@
 					throw new MissingElementException(
 						"unknown parent class '{$parent}'"
 					);
-			}
-			
-			// search for referencing classes
-			foreach ($this->references as $className => $list) {
-				$class = $this->getClassByName($className);
-				
-				if (
-					(
-						$class->getPattern() instanceof ValueObjectPattern
-					) || (
-						$class->getPattern() instanceof InternalClassPattern
-					) || (
-						$class->getPattern() instanceof AbstractClassPattern
-					)
-				) {
-					continue;
-				}
-				
-				foreach ($list as $refer) {
-					$remote = $this->getClassByName($refer);
-					if (
-						(
-							$remote->getPattern() instanceof ValueObjectPattern
-						) && (
-							isset($this->references[$refer])
-						)
-					) {
-						foreach ($this->references[$refer] as $holder) {
-							$this->classes[$className]->
-								setReferencingClass($holder);
-						}
-					} elseif (
-						(!$remote->getPattern() instanceof AbstractClassPattern)
-						&& (!$remote->getPattern() instanceof InternalClassPattern)
-						&& ($remote->getTypeId() <> MetaClassType::CLASS_ABSTRACT)
-					) {
-						$this->classes[$className]->setReferencingClass($refer);
-					}
-				}
 			}
 			
 			// final sanity checking
@@ -1147,24 +1106,6 @@
 									throw new WrongArgumentException(
 										'strange fetch mode found - '.$fetch
 									);
-							}
-							
-							if (
-								(
-									(
-										$property->getRelationId()
-											== MetaRelation::ONE_TO_ONE
-									) && (
-										$property->getFetchStrategyId()
-										!= FetchStrategy::LAZY
-									)
-								) && (
-									$property->getType()->getClassName()
-									<> $class->getName()
-								)
-							) {
-								$this->references[$property->getType()->getClassName()][]
-									= $class->getName();
 							}
 						}
 					}
