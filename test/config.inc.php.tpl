@@ -28,7 +28,7 @@
 	
 	$daoWorkers = array(
 		'NullDaoWorker', 'CommonDaoWorker', 'SmartDaoWorker', 'VoodooDaoWorker',
-		'SmartDaoWorker', 'CommonDaoWorker', 'NullDaoWorker'
+		'CacheDaoWorker', 'VoodooDaoWorker', 'SmartDaoWorker', 'CommonDaoWorker', 'NullDaoWorker'
 	);
 	
 	VoodooDaoWorker::setDefaultHandler('CacheSegmentHandler');
