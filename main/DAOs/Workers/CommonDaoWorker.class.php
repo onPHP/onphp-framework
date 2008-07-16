@@ -200,6 +200,8 @@
 				$toFetch += array_keys($prefixed);
 				
 				if ($toFetch) {
+					$proto->endPrefetch($list);
+					
 					try {
 						$list =
 							array_merge(
@@ -234,8 +236,6 @@
 						);
 				} catch (ObjectNotFoundException $e) {/*_*/}
 			}
-			
-			$proto->endPrefetch($list);
 			
 			return $list;
 		}
@@ -475,9 +475,9 @@
 		//@{
 		public function uncacheById($id)
 		{
-			parent::uncacheById($id);
+			$this->dao->uncacheLists();
 			
-			return $this->dao->uncacheLists();
+			return parent::uncacheById($id);
 		}
 		
 		public function uncacheByIds($ids)
