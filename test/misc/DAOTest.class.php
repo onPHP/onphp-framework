@@ -40,7 +40,21 @@
 				Cache::me()->clean();
 			}
 			
+			$this->deletedCount();
+			
 			$this->drop();
+		}
+		
+		public function deletedCount()
+		{
+			TestUser::dao()->dropById(1);
+			
+			try {
+				TestUser::dao()->dropByIds(array(1, 2));
+				$this->fail();
+			} catch (WrongStateException $e) {
+				// ok
+			}
 		}
 		
 		public function fill($assertions = true)

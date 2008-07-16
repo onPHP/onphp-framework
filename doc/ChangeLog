@@ -1,5 +1,10 @@
 # $Id$
 
+2008-07-17	Konstantin V. Arkhipov
+
+	* main/DAOs/GenericDAO.class.php: sanity checks added to dropById()
+	and dropByIds().
+
 2008-07-15	Konstantin V. Arkhipov
 
 	* main/DAOs/Workers/CacheDaoWorker.class.php: new scalable voodoo-like
