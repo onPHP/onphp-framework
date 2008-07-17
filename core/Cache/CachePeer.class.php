@@ -156,7 +156,7 @@
 			return $out;
 		}
 		
-		final public function set($key, &$value, $expires = Cache::EXPIRES_MEDIUM)
+		final public function set($key, $value, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			return $this->store('set', $key, $value, $expires);
 		}
