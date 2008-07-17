@@ -70,8 +70,6 @@
 			
 			$proto = $this->dao->getProtoClass();
 			
-			$proto->beginPrefetch();
-			
 			// dupes, if any, will be resolved later @ ArrayUtils::regularizeList
 			$ids = array_unique($ids);
 			
@@ -84,7 +82,7 @@
 			) {
 				foreach ($cachedList as $cached) {
 					if ($cached && ($cached !== Cache::NOT_FOUND)) {
-						$list[] = $this->dao->completeObject($cached);
+						$list[] = $cached;
 						
 						unset($prefixed[$cached->getId()]);
 					}
@@ -94,14 +92,20 @@
 			$toFetch += array_keys($prefixed);
 			
 			if ($toFetch) {
+				$proto->beginPrefetch();
+				
+				$remainList = array();
+				
 				foreach ($toFetch as $id) {
 					try {
-						$list[] = $this->getById($id);
+						$remainList[] = $this->getById($id);
 					} catch (ObjectNotFoundException $e) {/*_*/}
 				}
+				
+				$proto->endPrefetch($remainList);
+				
+				$list = array_merge($list, $remainList);
 			}
-			
-			$proto->endPrefetch($list);
 			
 			return $list;
 		}
