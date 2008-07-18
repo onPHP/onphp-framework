@@ -92,8 +92,6 @@
 			$toFetch += array_keys($prefixed);
 			
 			if ($toFetch) {
-				$proto->beginPrefetch();
-				
 				$remainList = array();
 				
 				foreach ($toFetch as $id) {
@@ -101,8 +99,6 @@
 						$remainList[] = $this->getById($id);
 					} catch (ObjectNotFoundException $e) {/*_*/}
 				}
-				
-				$proto->endPrefetch($remainList);
 				
 				$list = array_merge($list, $remainList);
 			}

@@ -170,8 +170,6 @@
 		{
 			$proto = $this->dao->getProtoClass();
 			
-			$proto->beginPrefetch();
-			
 			$list = array();
 			
 			// dupes, if any, will be resolved later @ ArrayUtils::regularizeList
@@ -200,8 +198,6 @@
 				$toFetch += array_keys($prefixed);
 				
 				if ($toFetch) {
-					$proto->endPrefetch($list);
-					
 					try {
 						$list =
 							array_merge(

@@ -33,8 +33,13 @@
 						$array[$idName = $prefix.$this->getIdName()]
 					]
 				)
-			)
+			) {
+				$this->getProtoClass()->skipObjectPrefetching(
+					$this->identityMap[$array[$idName]]
+				);
+				
 				return $this->identityMap[$array[$idName]];
+			}
 			
 			return $this->addObjectToMap(
 				$this->completeObject(
