@@ -24,34 +24,31 @@
 
 			$cache->clean();
 			
-			$value = 'a';
-			
-			$cache->set('a', $value, Cache::EXPIRES_MEDIUM);
-			$cache->set('b', $value, Cache::EXPIRES_MEDIUM);
+			$cache->set('a', 'a', Cache::EXPIRES_MEDIUM);
+			$cache->set('b', 2, Cache::EXPIRES_MEDIUM);
 			
 			$this->assertEquals($cache->get('a'), 'a');
-			$this->assertEquals($cache->get('b'), 'a');
+			$this->assertEquals($cache->get('b'), 2);
 			
 			$list = $cache->getList(array('a', 'b'));
 			
 			$this->assertEquals(count($list), 2);
 			
-			foreach ($list as $item)
-				$this->assertEquals($item, 'a');
+			$this->assertEquals($list[0], 'a');
+			$this->assertEquals($list[1], 2);
 			
 			$list = $cache->getList(array('a'));
 			
 			$this->assertEquals(count($list), 1);
 			
-			foreach ($list as $item)
-				$this->assertEquals($item, 'a');
+			$this->assertEquals($list[0], 'a');
 				
 			$list = $cache->getList(array('a', 'b', 'c'));
 			
 			$this->assertEquals(count($list), 2);
 			
-			foreach ($list as $item)
-				$this->assertEquals($item, 'a');
+			$this->assertEquals($list[0], 'a');
+			$this->assertEquals($list[1], 2);
 			
 			$list = $cache->getList(array('c'));
 			

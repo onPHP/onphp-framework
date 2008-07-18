@@ -1,5 +1,9 @@
 # $Id$
 
+2008-07-18	Konstantin V. Arkhipov
+
+	* core/Cache/Memcached.class.php: now does not serialize strings.
+
 2008-07-17	Konstantin V. Arkhipov
 
 	* main/DAOs/: back to 0.10-like behaviour - no more encapsulants
