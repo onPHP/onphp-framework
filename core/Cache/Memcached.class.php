@@ -177,7 +177,7 @@
 			
 			$flags = 0;
 			
-			if (!is_scalar($value) || $value === Cache::NOT_FOUND) {
+			if (!is_numeric($value) || $value === Cache::NOT_FOUND) {
 				$packed = serialize($value);
 				$flags |= 1;
 				
