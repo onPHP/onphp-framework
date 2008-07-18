@@ -48,13 +48,13 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-
+		
 		public static function isNotNull($variable, $message = null)
 		{
 			if ($variable === null)
 				self::fail($message);
 		}
-
+		
 		public static function isArray(&$variable, $message = null)
 		{
 			if (!is_array($variable))
@@ -96,20 +96,15 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-
+		
 		public static function isFloat($variable, $message = null)
 		{
-			if (
-				!(
-					$variable == (float) $variable
-					&& is_numeric($variable)
-				)
-			)
+			if (!self::checkFloat($variable))
 				self::fail(
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-
+		
 		public static function isString($variable, $message = null)
 		{
 			if (!is_string($variable))
@@ -125,7 +120,7 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-
+		
 		public static function isTernaryBase($variable, $message = null)
 		{
 			if (
@@ -137,7 +132,7 @@
 			)
 				self::fail($message);
 		}
-
+		
 		public static function brothers(&$first, &$second, $message = null)
 		{
 			if (get_class($first) !== get_class($second))
@@ -173,6 +168,14 @@
 				is_numeric($value)
 				&& ($value == (int) $value)
 				&& (strlen($value) == strlen((int) $value))
+			);
+		}
+		
+		public static function checkFloat($value)
+		{
+			return (
+				is_numeric($value)
+				&& ($value == (float) $value)
 			);
 		}
 		
