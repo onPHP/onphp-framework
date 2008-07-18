@@ -91,7 +91,7 @@
 			if (!$this->sendRequest($command))
 				return null;
 			
-			return $this->parseGetRequest(false);
+			return unserialize($this->parseGetRequest(false));
 		}
 		
 		public function increment($key, $value)
@@ -245,8 +245,6 @@
 						
 						if ($flags & 1)
 							$result .= 'i:'.$index++.';'.$value;
-						else
-							$result[$index++] = $value;
 					}
 				} else
 					break;
@@ -255,10 +253,7 @@
 			if ($single)
 				return $result;
 			else
-				if (!is_array($result))
-					return unserialize('a:'.$index.':{'.$result.'}');
-				else
-					return $result;
+				return 'a:'.$index.':{'.$result.'}';
 		}
 		
 		private function changeInteger($command, $key, $value)
