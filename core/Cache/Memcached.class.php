@@ -91,6 +91,9 @@
 			if (!$this->sendRequest($command))
 				return null;
 			
+			// we can't deserialize objects inside parseGetRequest,
+			// because of possibility further requests to memcached
+			// during deserialization - in __wakeup(), for example
 			return unserialize($this->parseGetRequest(false));
 		}
 		
