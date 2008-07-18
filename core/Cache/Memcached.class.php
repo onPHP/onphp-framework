@@ -171,12 +171,10 @@
 			
 			$flags = 0;
 			
-			if (!is_numeric($value) || $value === Cache::NOT_FOUND) {
-				if (is_string($value)) {
+			if (!is_numeric($value)) {
+				if (is_string($value))
 					$packed = $value;
-					
-					$flags |= 4;
-				} else {
+				else {
 					$packed = serialize($value);
 					
 					$flags |= 1;
@@ -191,6 +189,13 @@
 						unset($compressed);
 					}
 				}
+			} elseif (
+				Assert::checkFloat($value)
+				&& ((int) $value != (float) $value)
+			) {
+				$packed = serialize($value);
+				
+				$flags |= 1;
 			} else
 				$packed = $value;
 			
@@ -256,10 +261,10 @@
 						
 						if ($flags & 1)
 							$result .= $value;
-						elseif ($flags & 4)
-							$result .= 's:'.$bytes.':"'.$value.'";';
-						else // numeric
+						elseif (is_numeric($value))
 							$result .= 'i:'.$value.';';
+						else // string
+							$result .= 's:'.$bytes.':"'.$value.'";';
 					}
 				} else
 					break;
