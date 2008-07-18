@@ -30,7 +30,7 @@
 				if ($object === Cache::NOT_FOUND)
 					throw new ObjectNotFoundException();
 				
-				return $object;
+				return $this->dao->completeObject($object);
 			} else {
 				$query =
 					$this->dao->
@@ -92,7 +92,7 @@
 				if ($object === Cache::NOT_FOUND)
 					throw new ObjectNotFoundException();
 				
-				return $object;
+				return $this->dao->completeObject($object);
 			} else {
 				if ($expires === Cache::DO_NOT_CACHE)
 					$object = $this->fetchObject($query);
@@ -168,8 +168,6 @@
 			$expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			$proto = $this->dao->getProtoClass();
-			
 			$list = array();
 			
 			// dupes, if any, will be resolved later @ ArrayUtils::regularizeList
@@ -186,13 +184,19 @@
 					$cachedList
 						= Cache::me()->mark($this->className)->getList($prefixed)
 				) {
+					$proto = $this->dao->getProtoClass();
+					
+					$proto->beginPrefetch();
+					
 					foreach ($cachedList as $cached) {
 						if ($cached && ($cached !== Cache::NOT_FOUND)) {
-							$list[] = $cached;
+							$list[] = $this->dao->completeObject($cached);
 							
 							unset($prefixed[$cached->getId()]);
 						}
 					}
+					
+					$proto->endPrefetch($list);
 				}
 				
 				$toFetch += array_keys($prefixed);

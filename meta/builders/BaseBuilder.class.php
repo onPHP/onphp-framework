@@ -59,26 +59,6 @@ EOT;
 EOT;
 			}
 			
-			if ($liaisons = $class->getReferencingClasses()) {
-				$uncachers = array();
-				foreach ($liaisons as $className) {
-					$uncachers[] = $className.'::dao()->uncacheLists();';
-				}
-				
-				$uncachers = implode("\n", $uncachers);
-				
-				$out .= <<<EOT
-
-
-public function uncacheLists()
-{
-{$uncachers}
-
-return parent::uncacheLists();
-}
-EOT;
-			}
-			
 			if ($source = $class->getSourceLink()) {
 				$out .= <<<EOT
 

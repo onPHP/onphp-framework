@@ -127,14 +127,14 @@
 		)
 		{
 			if ($row = DBPool::getByDao($this->dao)->queryRow($query)) {
-				$object = $this->dao->makeObject($row);
+				$object = $this->dao->makeOnlyObject($row);
 				
 				if ($byId)
 					$object = $this->cacheById($object, $expires);
 				else
 					$object = $this->cacheByQuery($query, $object, $expires);
 				
-				return $object;
+				return $this->dao->completeObject($object);
 			}
 			
 			return null;
