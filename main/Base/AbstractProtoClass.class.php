@@ -54,8 +54,8 @@
 			
 			foreach ($this->storage[$this->depth] as $setter => $innerList) {
 				Assert::isEqual(
-					count($objectList) + array_sum($this->skipList[$this->depth]),
-					count($innerList)
+					count($objectList),
+					count($innerList) + array_sum($this->skipList[$this->depth])
 				);
 				
 				$ids = array();
