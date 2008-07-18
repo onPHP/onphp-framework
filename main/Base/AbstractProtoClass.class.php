@@ -17,6 +17,7 @@
 	{
 		private $depth = 0;
 		private $storage = array();
+		private $skipList = array();
 		
 		abstract protected function makePropertyList();
 		
@@ -26,6 +27,22 @@
 		public function beginPrefetch()
 		{
 			$this->storage[++$this->depth] = array();
+			$this->skipList[$this->depth] = array();
+			
+			return $this;
+		}
+		
+		/**
+		 * @return AbstractProtoClass
+		**/
+		public function skipObjectPrefetching(Identifiable $object)
+		{
+			if ($this->depth) {
+				if (!isset($this->skipList[$this->depth][$object->getId()]))
+					$this->skipList[$this->depth][$object->getId()] = 1;
+				else
+					++$this->skipList[$this->depth][$object->getId()];
+			}
 			
 			return $this;
 		}
@@ -36,7 +53,10 @@
 				throw new WrongStateException('prefetch mode is already off');
 			
 			foreach ($this->storage[$this->depth] as $setter => $innerList) {
-				Assert::isEqual(count($objectList), count($innerList));
+				Assert::isEqual(
+					count($objectList) + array_sum($this->skipList[$this->depth]),
+					count($innerList)
+				);
 				
 				$ids = array();
 				
@@ -60,6 +80,9 @@
 				$i = 0;
 				
 				foreach ($objectList as $object) {
+					if (isset($this->skipList[$this->depth][$object->getId()]))
+						continue;
+					
 					if ($innerList[$i])
 						$object->$setter(
 							$dao->getById(
@@ -71,7 +94,7 @@
 				}
 			}
 			
-			unset($this->storage[$this->depth--]);
+			unset($this->skipList[$this->depth], $this->storage[$this->depth--]);
 			
 			return $objectList;
 		}
