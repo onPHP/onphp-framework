@@ -111,9 +111,7 @@
 		//@{
 		public function uncacheLists()
 		{
-			$this->handler->drop();
-			
-			return parent::uncacheLists();
+			return $this->handler->drop();
 		}
 		//@}
 		
