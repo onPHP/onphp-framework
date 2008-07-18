@@ -169,9 +169,15 @@
 			$flags = 0;
 			
 			if (!is_numeric($value) || $value === Cache::NOT_FOUND) {
-				$packed = serialize($value);
-				
-				$flags |= 1;
+				if (is_string($value)) {
+					$packed = $value;
+					
+					$flags |= 4;
+				} else {
+					$packed = serialize($value);
+					
+					$flags |= 1;
+				}
 				
 				if ($this->compress) {
 					$compressed = gzcompress($packed);
@@ -243,8 +249,14 @@
 					} else {
 						fread($this->link, 2); // skip "\r\n"
 						
+						$result .= 'i:'.$index++.';';
+						
 						if ($flags & 1)
-							$result .= 'i:'.$index++.';'.$value;
+							$result .= $value;
+						elseif ($flags & 4)
+							$result .= 's:'.$bytes.':"'.$value.'";';
+						else // numeric
+							$result .= 'i:'.$value.';';
 					}
 				} else
 					break;
