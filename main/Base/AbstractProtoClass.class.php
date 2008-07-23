@@ -83,12 +83,20 @@
 					if (isset($this->skipList[$this->depth][$object->getId()]))
 						continue;
 					
-					if ($innerList[$i])
-						$object->$setter(
-							$dao->getById(
-								$innerList[$i]->getId()
-							)
-						);
+					if ($innerList[$i]) {
+						try {
+							$object->$setter(
+								$dao->getById(
+									$innerList[$i]->getId()
+								)
+							);
+						} catch (ObjectNotFoundException $e) {
+							throw new WrongStateException(
+								'object has accidenly disappeared!'
+								.' are you david blaine?'
+							);
+						}
+					}
 					
 					++$i;
 				}
