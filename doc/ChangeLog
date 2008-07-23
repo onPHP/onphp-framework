@@ -1,11 +1,5 @@
 # $Id$
 
-2008-07-23	Ivan Y. Khvostishkov
-
-	* main/Base/AbstractProtoClass.class.php: beware of dangerous yum-yum
-	in main/UnifiedContainer/UnifiedContainer.class.php:220, it may eat a
-	lot of time during debug process.
-
 2008-07-18	Konstantin V. Arkhipov
 
 	* core/Cache/Memcached.class.php: now does not serialize strings.
