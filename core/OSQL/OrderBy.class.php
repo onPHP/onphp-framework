@@ -41,6 +41,15 @@
 		/**
 		 * @return OrderBy
 		**/
+		public function setDirection($direction)
+		{
+			$this->direction->setValue($direction);
+			return $this;
+		}
+		
+		/**
+		 * @return OrderBy
+		**/
 		public function desc()
 		{
 			$this->direction->setFalse();
