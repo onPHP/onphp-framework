@@ -14,7 +14,7 @@
 	{
 		private $innerControllers 	= array();
 		private $defaultRequestType = null;
-		private $mav;
+		private $mav 				= null;
 		
 		public function __construct()
 		{
@@ -32,25 +32,41 @@
 				'Add atleast one innerController first'
 			);
 			
+			$activeController = $this->getActiveController($request);
+			
+			$model = $this->mav->getModel();
+			
+			if ($activeController) {
+				$controllerName = $activeController->getName();
+				$activeMav 		= $activeController->handleRequest($request);
+				
+				$model->set(
+					TextUtils::downFirst($controllerName),
+					$activeMav->getModel()
+				);
+				
+				unset($this->innerControllers[$controllerName]);
+			}
+			
 			foreach ($this->innerControllers as $controller) {
 				$passedRequest = clone $request;
 				
-				if (!$controller->isActive($request)) {
-					$passedRequest->
-						{'set'.$controller->getRequestGetter().'Var'}
-						('action', null);
-				}
+				$passedRequest->
+					{'set'.$controller->getRequestGetter().'Var'}
+					('action', null);
 				
 				$subMav = $controller->handleRequest($passedRequest);
-				$model = $this->mav->getModel();
 				
 				$model->set(
-					TextUtils::downFirst(get_class($controller->getInner())),
+					TextUtils::downFirst($controller->getName()),
 					$subMav->getModel()
 				);
 			}
 			
-			return $this->mav;
+			return
+				isset($activeMav) && $activeMav->viewIsRedirect()
+					? $activeMav
+					: $this->mav;
 		}
 		
 		public function setMav(ModelAndView $mav)
@@ -73,7 +89,7 @@
 			if (!$requestType)
 				$requestType = $this->defaultRequestType;
 			
-			$this->innerControllers[] =
+			$this->innerControllers[get_class($controller)] =
 				ProxyController::create()->
 				setInner($controller)->
 				setRequestType($requestType);
@@ -86,6 +102,19 @@
 			$this->defaultRequestType = $requestType;
 			
 			return $this;
+		}
+		
+		private function getActiveController(HttpRequest $request)
+		{
+			foreach ($this->innerControllers as $controller)
+				if ($controller->isActive($request)) {
+					unset($this->innerControllers[
+						get_class($controller->getInner())]);
+					
+					return $controller;
+				}
+			
+			return null;
 		}
 	}
 ?>

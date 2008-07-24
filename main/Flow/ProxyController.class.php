@@ -57,6 +57,11 @@
 			return $this->innerController;
 		}
 		
+		public function getName()
+		{
+			return get_class($this->innerController);
+		}
+		
 		/**
 		 * @return ModelAndView
 		**/

@@ -1,5 +1,10 @@
 # $Id$
 
+2008-07-24	Dmitry V. Sokolov
+
+	* main/Flow/ControllersCollection.class.php: now handle request
+	from active Controller firstly.
+
 2008-07-18	Konstantin V. Arkhipov
 
 	* core/Cache/Memcached.class.php: now does not serialize strings.
