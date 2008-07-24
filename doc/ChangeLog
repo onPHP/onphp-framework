@@ -1,5 +1,9 @@
 # $Id$
 
+2008-07-24	Denis M. Gabaidulin
+
+	* main/Base/AbstractProtoClass.class.php: isPropertyExists method added.
+
 2008-07-24	Dmitry V. Sokolov
 
 	* main/Flow/ControllersCollection.class.php: now handle request

@@ -158,14 +158,21 @@
 		**/
 		public function getPropertyByName($name)
 		{
-			$list = $this->getPropertyList();
-			
-			if (isset($list[$name]))
-				return $list[$name];
-			
-			throw new MissingElementException(
+			Assert::isTrue(
+				$this->isPropertyExists($name),
 				"unknown property requested by name '{$name}'"
 			);
+			
+			$list = $this->getPropertyList();
+			
+			return $list[$name];
+		}
+		
+		public function isPropertyExists($name)
+		{
+			$list = $this->getPropertyList();
+			
+			return isset($list[$name]);
 		}
 		
 		/**
