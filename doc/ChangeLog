@@ -1,5 +1,9 @@
 # $Id$
 
+2008-07-24	Denis M. Gabaidulin
+
+	* main/Base/AbstractProtoClass.class.php: isPropertyExists method added.
+
 2008-07-18	Konstantin V. Arkhipov
 
 	* core/Cache/Memcached.class.php: now does not serialize strings.
