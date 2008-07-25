@@ -168,7 +168,7 @@
 		
 		public function isPropertyExists($name)
 		{
-			return $this->safePropertyGet($name) !== null
+			return $this->safePropertyGet($name) !== null;
 		}
 		
 		/**
