@@ -158,21 +158,17 @@
 		**/
 		public function getPropertyByName($name)
 		{
-			Assert::isTrue(
-				$this->isPropertyExists($name),
+			if ($property = $this->safePropertyGet($name))
+				return $property;
+			
+			throw new MissingElementException(
 				"unknown property requested by name '{$name}'"
 			);
-			
-			$list = $this->getPropertyList();
-			
-			return $list[$name];
 		}
 		
 		public function isPropertyExists($name)
 		{
-			$list = $this->getPropertyList();
-			
-			return isset($list[$name]);
+			return $this->safePropertyGet($name) !== null
 		}
 		
 		/**
@@ -437,6 +433,16 @@
 				return $property->getProto()->exportPrimitive(
 					$path, $prm, $object->$getter(), $ignoreNull
 				);
+		}
+		
+		private function safePropertyGet($name)
+		{
+			$list = $this->getPropertyList();
+			
+			if (isset($list[$name]))
+				return $list[$name];
+			
+			return null;
 		}
 	}
 ?>
