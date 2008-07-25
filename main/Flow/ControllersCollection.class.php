@@ -12,9 +12,10 @@
 
 	abstract class ControllersCollection implements Controller
 	{
-		private $innerControllers 	= array();
-		private $defaultRequestType = null;
-		private $mav 				= null;
+		private $innerControllers	= array();
+		
+		private $defaultRequestType	= null;
+		private $mav				= null;
 		
 		public function __construct()
 		{
@@ -25,6 +26,9 @@
 			$this->defaultRequestType = RequestType::post();
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function handleRequest(HttpRequest $request)
 		{
 			Assert::isNotEmptyArray(
@@ -37,8 +41,8 @@
 			$model = $this->mav->getModel();
 			
 			if ($activeController) {
-				$controllerName = $activeController->getName();
-				$activeMav 		= $activeController->handleRequest($request);
+				$controllerName	= $activeController->getName();
+				$activeMav		= $activeController->handleRequest($request);
 				
 				$model->set(
 					TextUtils::downFirst($controllerName),
@@ -69,6 +73,9 @@
 					: $this->mav;
 		}
 		
+		/**
+		 * @return ControllersCollection
+		**/
 		public function setMav(ModelAndView $mav)
 		{
 			$this->mav = $mav;
@@ -76,11 +83,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
 		public function getMav()
 		{
 			return $this->mav;
 		}
 		
+		/**
+		 * @return ControllersCollection
+		**/
 		public function add(
 			Controller $controller,
 			RequestType $requestType = null
@@ -97,6 +110,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return ControllersCollection
+		**/
 		public function setDefaultRequestType(RequestType $requestType)
 		{
 			$this->defaultRequestType = $requestType;
@@ -104,6 +120,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Controller
+		**/
 		private function getActiveController(HttpRequest $request)
 		{
 			foreach ($this->innerControllers as $controller)
