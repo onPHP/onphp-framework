@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Igor V. Gulyaev                                 *
+ *   Copyright (C) 2007-2008 by Igor V. Gulyaev                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveDateRange extends FiltrablePrimitive
+	class PrimitiveDateRange extends FiltrablePrimitive
 	{
 		private $className = null;
 		
@@ -76,8 +76,9 @@
 		public function import($scope)
 		{
 			if (parent::import($scope)) {
+				$listName = $this->getObjectName().'List';
 				try {
-					$range = DateRangeList::makeRange($scope[$this->name]);
+					$range = $this->makeRange($scope[$this->name]);
 				} catch (WrongArgumentException $e) {
 					return false;
 				}
@@ -117,6 +118,11 @@
 			return
 				!($this->min && ($this->min->toStamp() < $range->getStartStamp()))
 				&& !($this->max && ($this->max->toStamp() > $range->getEndStamp()));
+		}
+		
+		protected function makeRange($string)
+		{
+			return DateRangeList::makeRange($string);
 		}
 		
 		/* void */ private function checkType($object)

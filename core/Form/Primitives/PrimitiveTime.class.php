@@ -81,7 +81,7 @@
 			} catch (WrongArgumentException $e) {
 				return false;
 			}
-				
+			
 			if ($this->checkLimits($time)) {
 				$this->value = $time;
 				
@@ -152,7 +152,7 @@
 			
 			return
 				$this->importSingle(
-					array($this->getName() => $value->toString())
+					array($this->getName() => $value->toFullString())
 				);
 		}
 		
