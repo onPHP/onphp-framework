@@ -87,7 +87,6 @@ public function getLinkName()
 {
 	return '{$source}';
 }
-
 EOT;
 			}
 			
