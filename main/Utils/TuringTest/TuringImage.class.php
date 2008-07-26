@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Dmitry E. Demidov                          *
+ *   Copyright (C) 2004-2008 by Dmitry E. Demidov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -119,6 +119,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return CodeGenerator
+		**/
 		public function getCodeGenerator()
 		{
 			return $this->generator;
