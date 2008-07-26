@@ -155,9 +155,12 @@
 			return new PrimitiveDateRange($name);
 		}
 		
+		/**
+		 * @return PrimitiveTimestampRange
+		**/
 		public static function timestampRange($name)
 		{
-			throw new UnimplementedFeatureException();
+			return new PrimitiveTimestampRange($name);
 		}
 		
 		/**

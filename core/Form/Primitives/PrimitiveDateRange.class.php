@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveDateRange extends RangedPrimitive
+	class PrimitiveDateRange extends RangedPrimitive
 	{
 		private $className = null;
 		
@@ -89,7 +89,7 @@
 				return null;
 			
 			try {
-				$range = DateRangeList::makeRange($scope[$this->name]);
+				$range = $this->makeRange($scope[$this->name]);
 			} catch (WrongArgumentException $e) {
 				return false;
 			}
@@ -128,6 +128,11 @@
 			return
 				!($this->min && ($this->min->toStamp() < $range->getStartStamp()))
 				&& !($this->max && ($this->max->toStamp() > $range->getEndStamp()));
+		}
+		
+		protected functino makeRange($string)
+		{
+			return DateRangeList::makeRange($string);
 		}
 		
 		/* void */ private function checkType($object)
