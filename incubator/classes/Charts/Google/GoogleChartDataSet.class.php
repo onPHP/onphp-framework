@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup GoogleChart
+	**/
 	final class GoogleChartDataSet
 	{
 		private $data = array();

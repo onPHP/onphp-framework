@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup GoogleChart
+	**/
 	final class GoogleChartColor extends BaseGoogleChartParameter
 	{
 		protected $name = 'chco';

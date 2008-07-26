@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup GoogleChart
+	**/
 	final class GoogleChartData extends BaseGoogleChartData
 	{
 		protected $name = 'chd';
@@ -49,7 +52,7 @@
 			
 			$encodingString = $this->encoding->toQueryString();
 			
-			return "{$this->name}={$encodingString}{$dataString}";
+			return $this->name.'='.$encodingString.$dataString;
 		}
 	}
 ?>

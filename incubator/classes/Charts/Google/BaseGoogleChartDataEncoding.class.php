@@ -10,13 +10,19 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup GoogleChart
+	**/
 	abstract class BaseGoogleChartDataEncoding
 		extends BaseGoogleChartParameter
 		implements GoogleChartDataEncoding
 	{
 		protected $maxValue = null;
-		protected $delimiter = '';
+		protected $delimiter = null;
 		
+		/**
+		 * @return BaseGoogleChartDataEncoding
+		**/
 		public function setMaxValue($maxValue)
 		{
 			$this->maxValue = $maxValue;

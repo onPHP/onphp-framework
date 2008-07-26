@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 	
+	/**
+	 * @ingroup GoogleChart
+	**/
 	interface GoogleChartDataEncoding
 	{
 		public function encode(GoogleChartDataSet $set);

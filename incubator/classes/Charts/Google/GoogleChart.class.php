@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 	
+	/**
+	 * @ingroup GoogleChart
+	**/
 	final class GoogleChart implements GoogleChartParameter
 	{
 		const BASE_URL = 'http://chart.apis.google.com/chart?';
@@ -88,9 +91,7 @@
 			$parameters[] = $this->label->toQueryString();
 			$parameters[] = $this->data->toQueryString();
 			
-			foreach ($parameters as $parameter) {
-				$url .= $parameter.'&';
-			}
+			$url .= implode('&', $parameters);
 			
 			return $url;
 		}

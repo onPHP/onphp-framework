@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup GoogleChart
+	**/
 	interface GoogleChartParameter
 	{
 		public function toQueryString();

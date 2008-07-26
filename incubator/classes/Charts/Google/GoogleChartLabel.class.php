@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 	
+	/**
+	 * @ingroup GoogleChart
+	**/
 	final class GoogleChartLabel extends BaseGoogleChartParameter
 	{
 		protected $name = 'chl';
@@ -38,7 +41,7 @@
 		{
 			$labels = implode('|', $this->labels);
 			
-			return "{$this->name}={$labels}";
+			return $this->name.'='.$labels;
 		}
 	}
 ?>

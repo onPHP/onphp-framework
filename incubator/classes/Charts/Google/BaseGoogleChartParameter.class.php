@@ -10,12 +10,16 @@
  ***************************************************************************/
 /* $Id$ */
 
-	abstract class BaseGoogleChartParameter
-		implements GoogleChartParameter
-		
+	/**
+	 * @ingroup GoogleChart
+	**/
+	abstract class BaseGoogleChartParameter implements GoogleChartParameter
 	{
 		protected $name = null;
 		
+		/**
+		 * @return BaseGoogleChartParameter
+		**/
 		public function setName($name)
 		{
 			$this->name = $name;

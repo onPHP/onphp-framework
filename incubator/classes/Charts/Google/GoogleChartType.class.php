@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup GoogleChart
+	**/
 	final class GoogleChartType extends Enumeration
 		implements GoogleChartParameter
 	{
@@ -25,7 +28,7 @@
 		
 		public function toQueryString()
 		{
-			return "{$this->paramName}={$this->name}";
+			return $this->paramName.'='.$this->name;
 		}
 	}
 ?>

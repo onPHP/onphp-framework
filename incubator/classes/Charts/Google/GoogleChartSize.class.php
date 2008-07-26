@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 	
+	/**
+	 * @ingroup GoogleChart
+	**/
 	final class GoogleChartSize extends BaseGoogleChartParameter
 	{
 		protected $name = 'chs';
@@ -61,7 +64,7 @@
 		
 		public function toQueryString()
 		{
-			return "{$this->name}={$this->width}x{$this->height}";
+			return $this->name.'='.$this->width.'x'.$this->height;
 		}
 	}
 ?>

@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup GoogleChart
+	**/
 	final class GoogleChartDataTextEncoding
 		extends BaseGoogleChartDataEncoding
 		implements GoogleChartDataEncoding
