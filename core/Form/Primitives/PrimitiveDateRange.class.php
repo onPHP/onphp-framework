@@ -130,7 +130,7 @@
 				&& !($this->max && ($this->max->toStamp() > $range->getEndStamp()));
 		}
 		
-		protected functino makeRange($string)
+		protected function makeRange($string)
 		{
 			return DateRangeList::makeRange($string);
 		}
