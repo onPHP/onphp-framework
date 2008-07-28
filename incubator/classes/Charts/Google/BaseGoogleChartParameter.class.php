@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	abstract class BaseGoogleChartParameter implements GoogleChartParameter
+	abstract class BaseGoogleChartParameter implements Stringable
 	{
 		protected $name = null;
 		

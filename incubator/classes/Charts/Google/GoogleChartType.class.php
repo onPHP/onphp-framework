@@ -13,8 +13,7 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleChartType extends Enumeration
-		implements GoogleChartParameter
+	final class GoogleChartType extends Enumeration implements Stringable
 	{
 		const LINE 					= 0x1;
 		const TWO_DIMENSIONAL_PIE 	= 0x2;
@@ -26,7 +25,7 @@
 		
 		private $paramName = 'cht';
 		
-		public function toQueryString()
+		public function toString()
 		{
 			return $this->paramName.'='.$this->name;
 		}

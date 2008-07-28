@@ -62,7 +62,7 @@
 			return $this->height;
 		}
 		
-		public function toQueryString()
+		public function toString()
 		{
 			return $this->name.'='.$this->width.'x'.$this->height;
 		}

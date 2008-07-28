@@ -37,7 +37,7 @@
 			return $this;
 		}
 		
-		public function toQueryString()
+		public function toString()
 		{
 			$queryString = "{$this->name}=";
 			

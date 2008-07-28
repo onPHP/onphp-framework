@@ -37,7 +37,7 @@
 			return $this;
 		}
 		
-		public function toQueryString()
+		public function toString()
 		{
 			Assert::isNotNull($this->encoding, 'Data encdoing Required.');
 			
@@ -50,7 +50,7 @@
 			
 			$dataString = implode('|', $dataStrings);
 			
-			$encodingString = $this->encoding->toQueryString();
+			$encodingString = $this->encoding->toString();
 			
 			return $this->name.'='.$encodingString.$dataString;
 		}

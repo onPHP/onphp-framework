@@ -53,7 +53,7 @@
 			return $encodedString;
 		}
 		
-		public function toQueryString()
+		public function toString()
 		{
 			return $this->name;
 		}

@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleChart implements GoogleChartParameter
+	final class GoogleChart implements Stringable
 	{
 		const BASE_URL = 'http://chart.apis.google.com/chart?';
 		
@@ -81,15 +81,15 @@
 			return $this;
 		}
 		
-		public function toQueryString()
+		public function toString()
 		{
 			$url = self::BASE_URL;
 			
-			$parameters[] = $this->type->toQueryString();
-			$parameters[] = $this->size->toQueryString();
-			$parameters[] = $this->color->toQueryString();
-			$parameters[] = $this->label->toQueryString();
-			$parameters[] = $this->data->toQueryString();
+			$parameters[] = $this->type->toString();
+			$parameters[] = $this->size->toString();
+			$parameters[] = $this->color->toString();
+			$parameters[] = $this->label->toString();
+			$parameters[] = $this->data->toString();
 			
 			$url .= implode('&', $parameters);
 			
