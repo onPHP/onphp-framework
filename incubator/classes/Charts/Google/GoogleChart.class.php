@@ -22,6 +22,7 @@
 		private $type 	= null;
 		private $label 	= null;
 		private $data 	= null;
+		private $legend = null;
 		
 		/**
 		 * @return GoogleChart
@@ -81,6 +82,13 @@
 			return $this;
 		}
 		
+		public function setLegend(GoogleChartLegend $legend)
+		{
+			$this->legend = $legend;
+			
+			return $this;
+		}
+		
 		public function toString()
 		{
 			$url = self::BASE_URL;
@@ -88,8 +96,11 @@
 			$parameters[] = $this->type->toString();
 			$parameters[] = $this->size->toString();
 			$parameters[] = $this->color->toString();
-			$parameters[] = $this->label->toString();
 			$parameters[] = $this->data->toString();
+			$parameters[] = $this->legend->toString();
+
+			if ($this->label)
+				$parameters[] = $this->label->toString();
 			
 			$url .= implode('&', $parameters);
 			
