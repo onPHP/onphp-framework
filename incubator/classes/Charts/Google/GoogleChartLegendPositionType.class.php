@@ -13,51 +13,34 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleChartLegend extends BaseGoogleChartParameter
+	final class GoogleChartLegendPositionType extends Enumeration
+		implements Stringable
 	{
-		protected $name = 'chdl';
+		const BOTTOM 	= 0x1;
+		const TOP		= 0x2;
+		const LEFT		= 0x3;
+		const RIGHT		= 0x4;
 		
-		private $items = array();
-		private $position = null;
+		protected $names = array(
+			self::BOTTOM 	=> 'b',
+			self::TOP 		=> 't',
+			self::LEFT 		=> 'l',
+			self::RIGHT 	=> 'r'
+		);
 		
-		/**
-		 * @return GoogleChartLegend
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function __construct()
-		{
-			$this->position =
-				GoogleChartLegendPositionType::create(
-					GoogleChartLegendPositionType::LEFT
-				);
-		}
-		
-		public function setPosition(GoogleChartLegendPositionType $type)
-		{
-			$this->position = $type;
-			
-			return $this;
-		}
+		private $paramName = 'chdlp';
 		
 		/**
-		 * @return GoogleChartLegend
+		 * @return GoogleChartLegendPositionType
 		**/
-		public function addItem($item)
+		public static function create($id)
 		{
-			$this->items[] = $item;
-			
-			return $this;
+			return new self($id);
 		}
 		
 		public function toString()
 		{
-			$items = implode('|', $this->items);
-			
-			return $this->name.'='.$items.'&'.$this->position->toString();
+			return $this->paramName.'='.$this->name;
 		}
 	}
 ?>
