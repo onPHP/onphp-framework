@@ -182,6 +182,8 @@
 				$this->list = array_merge($this->list, $list);
 			}
 			
+			$this->fetched = true;
+			
 			return $this;
 		}
 
@@ -387,8 +389,6 @@
 			$this->mergeList($list);
 
 			$this->syncClones();
-			
-			$this->fetched = true;
 			
 			return $this;
 		}
