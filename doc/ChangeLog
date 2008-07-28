@@ -1,5 +1,10 @@
 # $Id$
 
+2008-08-28	Sergey S. Sergeev
+
+	* main/DAOs/ProtoDAO.class.php: fixed {get,fill,fetch} collections
+	by Criteria. Thanks to Konstantin V. Arkhipov.
+
 2008-07-18	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/PrimitiveTimestampRange.class.php: new

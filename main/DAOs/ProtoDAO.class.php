@@ -141,18 +141,25 @@
 					} catch (ObjectNotFoundException $e) {/*_*/}
 				}
 				
-				$method = 'fill'.ucfirst($property->getName());
+				$suffix = ucfirst($property->getName());
+				$fillMethod = 'fill'.$suffix;
+				$getMethod = 'get'.$suffix;
 				
 				Assert::isTrue(
-					method_exists(reset($list), $method),
-					'can not find filler method'
+					method_exists(reset($list), $fillMethod),
+					'can not find filler'
+				);
+				
+				Assert::isTrue(
+					method_exists(reset($list), $getMethod),
+					'can not find getter'
 				);
 				
 				foreach ($list as $object) {
 					if (!empty($collection[$object->getId()]))
-						$object->$method($collection[$object->getId()], $lazy);
+						$object->$fillMethod($collection[$object->getId()], $lazy);
 					else
-						$object->$method(array(), $lazy);
+						$object->$getMethod()->mergeList(array());
 				}
 			}
 			
