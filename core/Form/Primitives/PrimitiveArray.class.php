@@ -48,7 +48,7 @@
 			if (
 				is_array($this->value)
 				&& !($this->min && count($this->value) < $this->min)
-				&& !($this->min && count($this->value) > $this->max)
+				&& !($this->max && count($this->value) > $this->max)
 			) {
 				return true;
 			} else {

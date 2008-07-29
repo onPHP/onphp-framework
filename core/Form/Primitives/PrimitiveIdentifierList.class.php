@@ -107,7 +107,11 @@
 			
 			$objectList = $this->dao()->getListByIds($values);
 			
-			if (count($objectList) == count($values)) {
+			if (
+				count($objectList) == count($values)
+				&& !($this->min && count($values) < $this->min)
+				&& !($this->max && count($values) > $this->max)
+			) {
 				$this->value = $objectList;
 				return true;
 			}
