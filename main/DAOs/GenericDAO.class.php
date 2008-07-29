@@ -74,12 +74,12 @@
 		**/
 		public function getProtoClass()
 		{
-			static $proto = null;
+			static $protos = array();
 			
-			if (!$proto)
-				$proto = call_user_func(array($this->getObjectName(), 'proto'));
+			if (!isset($protos[$className = $this->getObjectName()]))
+				$protos[$className] = call_user_func(array($className, 'proto'));
 			
-			return $proto;
+			return $protos[$className];
 		}
 		
 		public function getMapping()
