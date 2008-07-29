@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -48,7 +48,7 @@
 			if (
 				is_array($this->value)
 				&& !($this->min && count($this->value) < $this->min)
-				&& !($this->min && count($this->value) > $this->max)
+				&& !($this->max && count($this->value) > $this->max)
 			) {
 				return true;
 			} else {
