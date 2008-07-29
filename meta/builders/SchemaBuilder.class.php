@@ -51,6 +51,8 @@ EOT;
 		{
 			$out = null;
 			
+			$knownJunctions = array();
+			
 			foreach ($class->getAllProperties() as $property) {
 				if ($relation = $property->getRelation()) {
 					
@@ -72,6 +74,11 @@ EOT;
 							$class->getTableName()
 							.'_'
 							.$foreignClass->getTableName();
+						
+						if (isset($knownJunctions[$tableName]))
+							continue; // collision prevention
+						else
+							$knownJunctions[$tableName] = true;
 						
 						$foreignPropery = clone $foreignClass->getIdentifier();
 						
