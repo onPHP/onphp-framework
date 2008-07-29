@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Base
+	**/
 	final class IntervalUnit
 	{
 		private $months		= null;

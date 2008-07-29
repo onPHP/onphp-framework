@@ -2,7 +2,8 @@
 
 2008-07-20	Ivan Y. Khvostishkov
 
-	* core/Base/IntervalUnit.class.php: helper for time intervals.
+	* core/Base/IntervalUnit.class.php: helper for time intervals, very
+	useful for OLAP.
 
 2008-07-29	Sergey S. Sergeev
 
