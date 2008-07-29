@@ -27,15 +27,17 @@
 		 * Emulates PostgreSQL's date_tunc() function
 		 * 
 		**/
-		public function truncate(Timestamp $time)
+		public function truncate(Timestamp $time, $ceil = false)
 		{
+			$function = $ceil ? 'ceil' : 'floor';
+			
 			if ($this->seconds) {
 				
 				if ($this->seconds < 1)
 					return $time->spawn();
 				
 				$truncated = (int)(
-					floor($time->toStamp() / $this->seconds) * $this->seconds
+					$function($time->toStamp() / $this->seconds) * $this->seconds
 				);
 				
 				return Timestamp::create($truncated);
@@ -49,7 +51,7 @@
 				);
 				
 				$truncated = (int)(
-					floor($difference / $this->days) * $this->days
+					$function($difference / $this->days) * $this->days
 				);
 				
 				return Timestamp::create(
@@ -60,8 +62,18 @@
 				
 				$monthsCount = $time->getYear() * 12 + ($time->getMonth() - 1);
 				
+				if (
+					$ceil
+					&& (
+						($time->getDay() - 1) + $time->getHour()
+						+ $time->getMinute() + $time->getSecond() > 0
+					)
+				)
+					$monthsCount += 0.1; // delta
+				
 				$truncated = (int)(
-					floor($monthsCount / $this->months) * $this->months
+					$function($monthsCount / $this->months) * 
+						($this->months)
 				);
 				
 				$months = $truncated % 12;
