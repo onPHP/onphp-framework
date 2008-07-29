@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
@@ -19,16 +19,17 @@
 		{
 			if (!BasePrimitive::import($scope))
 				return null;
-
-			if (is_array($scope[$this->name]) &&
-				!($this->min && count($scope[$this->name]) < $this->min) &&
-				!($this->min && count($scope[$this->name]) > $this->max))
-			{
+			
+			if (
+				is_array($scope[$this->name])
+				&& !($this->min && count($scope[$this->name]) < $this->min)
+				&& !($this->min && count($scope[$this->name]) > $this->max)
+			) {
 				$this->value = $scope[$this->name];
-
+				
 				return true;
 			}
-
+			
 			return false;
 		}
 	}
