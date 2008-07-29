@@ -1,6 +1,11 @@
 # $Id$
 
-2008-08-28	Sergey S. Sergeev
+2008-07-29	Sergey S. Sergeev
+
+	* core/Form/Primitives/PrimitiveIdentifierList.class.php,
+	core/Form/Primitives/PrimitiveArray.class.php: fixed check conditions.
+
+2008-07-28	Sergey S. Sergeev
 
 	* main/DAOs/ProtoDAO.class.php: fixed {get,fill,fetch} collections
 	by Criteria. Thanks to Konstantin V. Arkhipov.
