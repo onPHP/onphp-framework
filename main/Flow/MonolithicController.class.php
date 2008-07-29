@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2006-2007 by Anton E. Lebedevich, Konstantin V. Arkhipov *
+ *   Copyright (C) 2006-2008 by Anton E. Lebedevich, Konstantin V. Arkhipov *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -45,7 +45,7 @@
 			} else
 				$mav = ModelAndView::create();
 			
-			return parent::postHandleRequest($mav, $request);
+			return $this->postHandleRequest($mav, $request);
 		}
 		
 		/**
