@@ -1219,7 +1219,7 @@
 				$this->processIncludes($xml, $metafile);
 			}
 			
-			// otherwise it's an ncludes-only config
+			// otherwise it's an includes-only config
 			if (isset($xml->classes[0])) {
 				return $this->processClasses($xml, $metafile, $generate);
 			}

@@ -241,6 +241,13 @@
 		{
 			if ($this->strategy)
 				return $this->strategy->getId();
+			elseif (
+				$this->getClass()->getFetchStrategyId()
+				&& ($this->getRelationId() == MetaRelation::ONE_TO_ONE)
+				&& ($this->getType() instanceof ObjectType)
+				&& (!$this->getType()->isGeneric())
+			)
+				return $this->getClass()->getFetchStrategyId();
 			
 			return null;
 		}
@@ -402,9 +409,7 @@
 						$this->getType()->isGeneric(),
 						$inner,
 						$this->getRelationId(),
-						$this->getClass()->getFetchStrategyId()
-							? $this->getClass()->getFetchStrategyId()
-							: $this->getFetchStrategyId()
+						$this->getFetchStrategyId()
 					)
 				);
 		}
