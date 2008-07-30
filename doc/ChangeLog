@@ -5,6 +5,9 @@
 	* core/Base/IntervalUnit.class.php: countInRange() - one more useful
 	OLAP method, complement of truncate().
 
+	* core/OSQL/TimeIntervalsGenerator.class.php: used in subqueries to
+	generate list of time intervals, very useful in OLAP.
+
 	* core/Base/Assert.class.php: isNotEqual() added.
 
 2008-07-20	Ivan Y. Khvostishkov
