@@ -271,5 +271,103 @@
 				$unit->truncate($result)->toString()
 			);
 		}
+		
+		public function testCountSeconds()
+		{
+			$unit = IntervalUnit::create('second');
+			
+			$this->assertEquals(
+				4,
+				$result = $unit->countInRange(
+					TimestampRange::create(
+						$start = Timestamp::create('2008-12-31 23:59:58'),
+						$end = Timestamp::create('2009-01-01 00:00:02')
+					)
+				)
+			);
+			
+			$this->assertGreaterThanOrEqual(
+				$end->toStamp(),
+				$start->spawn($result.' '.$unit->getName())->toStamp()
+			);
+			
+			$this->assertLessThanOrEqual(
+				$unit->truncate($end, true)->toStamp(),
+				$start->spawn(($result - 1).' '.$unit->getName())->toStamp()
+			);
+		}
+		
+		public function testCountHoursDST()
+		{
+			$unit = IntervalUnit::create('hour');
+			
+			$this->assertEquals(
+				4,
+				$result = $unit->countInRange(
+					TimestampRange::create(
+						// In 2008, March, 30 is a 23h-day because of daylight
+						// saving time
+						$start = Timestamp::create('2008-03-30 01:30:00'),
+						$end = Timestamp::create('2008-03-30 05:30:00')
+					)
+				)
+			);
+			
+			$this->assertGreaterThanOrEqual(
+				$end->toStamp(),
+				$start->spawn($result.' '.$unit->getName())->toStamp()
+			);
+			
+			$this->assertLessThanOrEqual(
+				$unit->truncate($end, true)->toStamp(),
+				$start->spawn(($result - 1).' '.$unit->getName())->toStamp()
+			);
+		}
+		
+		public function testCountMonths()
+		{
+			$unit = IntervalUnit::create('month');
+			
+			$this->assertEquals(
+				6,
+				$result = $unit->countInRange(
+					TimestampRange::create(
+						$start = Timestamp::create('2008-12-31 23:59:58'),
+						$end = Timestamp::create('2009-05-28 03:00:00')
+					)
+				)
+			);
+			
+			$this->assertGreaterThanOrEqual(
+				$end->toStamp(),
+				$start->spawn($result.' '.$unit->getName())->toStamp()
+			);
+			
+			$this->assertLessThanOrEqual(
+				$unit->truncate($end, true)->toStamp(),
+				$start->spawn(($result - 1).' '.$unit->getName())->toStamp()
+			);
+		}
+		
+		public function testCountMonthsNotOverlapped()
+		{
+			$unit = IntervalUnit::create('month');
+			
+			$this->assertEquals(
+				4,
+				$result = $unit->countInRange(
+					TimestampRange::create(
+						$start = Timestamp::create('2008-12-31 23:59:58'),
+						$end = Timestamp::create('2009-05-28 03:00:00')
+					),
+					false
+				)
+			);
+			
+			$this->assertLessThanOrEqual(
+				$end->toStamp(),
+				$start->spawn($result.' '.$unit->getName())->toStamp()
+			);
+		}
 	}
 ?>
