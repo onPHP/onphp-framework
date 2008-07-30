@@ -1,5 +1,12 @@
 # $Id$
 
+2008-07-21	Ivan Y. Khvostishkov
+
+	* core/Base/IntervalUnit.class.php: countInRange() - one more useful
+	OLAP method, complement of truncate().
+
+	* core/Base/Assert.class.php: isNotEqual() added.
+
 2008-07-20	Ivan Y. Khvostishkov
 
 	* core/Base/IntervalUnit.class.php: helper for time intervals, very
