@@ -15,6 +15,8 @@
 	**/
 	final class IntervalUnit
 	{
+		private $name		= null;
+		
 		private $months		= null;
 		private $days		= null;
 		private $seconds	= null;
@@ -22,6 +24,11 @@
 		public static function create($name)
 		{
 			return self::getInstance($name);
+		}
+		
+		public function getName()
+		{
+			return $this->name;
 		}
 		
 		/**
@@ -95,6 +102,59 @@
 			Assert::isUnreachable();
 		}
 		
+		public function countInRange(
+			TimestampRange $range,
+			$overlappedBounds = true
+		)
+		{
+			$start = $this->truncate(
+				$range->getStart(), !$overlappedBounds
+			);
+			
+			$end = $this->truncate(
+				$range->getEnd(), $overlappedBounds
+			);
+			
+			if ($this->seconds) {
+				
+				$result =
+					($end->toStamp() - $start->toStamp())
+					/ $this->seconds;
+				
+			} elseif ($this->days) {
+				
+				$epochStartTruncated = Date::create('1970-01-05');
+				
+				$startDifference = Date::dayDifference(
+					$epochStartTruncated, Date::create($start->toDate())
+				);
+				
+				$endDifference = Date::dayDifference(
+					$epochStartTruncated, Date::create($end->toDate())
+				);
+				
+				$result = ($endDifference - $startDifference) / $this->days;
+				
+				
+			} elseif ($this->months) {
+				
+				$startMonthsCount = $start->getYear() * 12 + ($start->getMonth() - 1);
+				$endMonthsCount = $end->getYear() * 12 + ($end->getMonth() - 1);
+				
+				$result = ($endMonthsCount - $startMonthsCount) / $this->months;
+			}
+			
+			Assert::isEqual(
+				$result, (int)$result,
+				'floating point mistake, arguments: '
+				.$this->name.', '
+				.$start->toStamp().', '.$end->toStamp().', '
+				.'result: '.var_export($result, true)
+			);
+			
+			return (int)$result;
+		}
+		
 		private function __construct($name)
 		{
 			$units = self::getUnits();
@@ -108,6 +168,8 @@
 				throw new UnimplementedFeatureException(
 					'need for complex logic, see manual'
 				);
+			
+			$this->name = $name;
 			
 			$this->months = $units[$name][0];
 			$this->days = $units[$name][1];
