@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup OSQL
+	**/
 	final class TimeIntervalsGenerator extends QueryIdentification
 	{
 		private $range		= null;
@@ -26,6 +29,11 @@
 		
 		public function setRange(TimestampRange $range)
 		{
+			if (!defined('__I_HATE_MY_KARMA__'))
+				throw new UnsupportedMethodException(
+					'do not use it. please.'
+				);
+			
 			$this->range = $range;
 			
 			return $this;
@@ -87,6 +95,7 @@
 					'define time range and interval units first'
 				);
 			
+			// FIXME
 			if (!$dialect instanceof PostgresDialect)
 				throw new UnimplementedFeatureException(
 					'only tested with postgres'
@@ -102,6 +111,7 @@
 					$this->range, $this->overlapped
 				) - 1;
 			
+			// FIXME: use OSQL
 			$result = "SELECT "
 				."'{$firstIntervalStart->toString()}'::timestamp "
 				."+ '1 {$this->interval->getName()}'::interval * i "
