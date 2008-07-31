@@ -317,7 +317,10 @@
 			$proto = $object->proto();
 			
 			foreach ($proto->getPropertyList() as $property) {
-				if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
+				if (
+					$property->getRelationId() == MetaRelation::ONE_TO_ONE
+					&& ($property->getFetchStrategyId() != FetchStrategy::LAZY)
+				) {
 					$getter = $property->getGetter();
 					$setter = $property->getSetter();
 					
