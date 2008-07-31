@@ -361,6 +361,18 @@
 					);
 				} elseif ($property->isBuildable($array, $prefix)) {
 					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
+						$columnName = $prefix.$property->getColumnName();
+						
+						if (
+							$property->getFetchStrategyId()
+							== FetchStrategy::LAZY
+						) {
+							$object->
+								{$property->getSetter().'Id'}($array[$columnName]);
+							
+							continue;
+						}
+						
 						$className = $property->getClassName();
 						
 						Assert::classExists($className);
@@ -370,7 +382,7 @@
 							&& is_subclass_of($className, 'Enumeration')
 						);
 						
-						$columnName = $prefix.$property->getColumnName();
+						
 						
 						if ($encapsulants) {
 							$value =
