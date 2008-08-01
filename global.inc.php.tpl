@@ -54,7 +54,7 @@
 			
 			$currentPath = get_include_path();
 			
-			if ($currentPath != get_include_path()) {
+			if ($currentPath != $path) {
 				$checksum = crc32($currentPath);
 				$path = $currentPath;
 			}
