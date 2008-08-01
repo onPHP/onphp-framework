@@ -49,14 +49,22 @@
 		/* void */ function __autoload($classname)
 		{
 			// numeric indexes for directories, literal indexes for classes
-			static $cache = null;
+			static $cache 		= null;
+			static $path 		= null;
+			static $checksum 	= null;
 			
 			if (strpos($classname, "\0") !== false) {
 				// we can not avoid fatal error in this case
 				return /* void */;
 			}
 			
-			$checksum = crc32(get_include_path());
+			$currentPath = get_include_path();
+			
+			if ($currentPath != get_include_path()) {
+				$checksum = crc32($currentPath);
+				$path = $currentPath;
+			}
+			
 			$cacheFile = ONPHP_CLASS_CACHE.$checksum.'.occ';
 			
 			if ($cache && ($cache[ONPHP_CLASS_CACHE_CHECKSUM] <> $checksum))
