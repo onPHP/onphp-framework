@@ -105,20 +105,22 @@
 		**/
 		public function makeSelectHead()
 		{
-			static $selectHead = null;
+			static $selectHead = array();
 			
-			if (!$selectHead) {
+			if (!isset($selectHead[$className = $this->getObjectName()])) {
 				$table = $this->getTable();
 				
-				$selectHead =
+				$object =
 					OSQL::select()->
 					from($table);
 				
 				foreach ($this->getFields() as $field)
-					$selectHead->get(new DBField($field, $table));
+					$object->get(new DBField($field, $table));
+				
+				$selectHead[$className] = $object;
 			}
 			
-			return clone $selectHead;
+			return clone $selectHead[$className];
 		}
 		
 		/// boring delegates
