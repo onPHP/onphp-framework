@@ -317,7 +317,10 @@
 			$proto = $object->proto();
 			
 			foreach ($proto->getPropertyList() as $property) {
-				if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
+				if (
+					$property->getRelationId() == MetaRelation::ONE_TO_ONE
+					&& ($property->getFetchStrategyId() != FetchStrategy::LAZY)
+				) {
 					$getter = $property->getGetter();
 					$setter = $property->getSetter();
 					
@@ -358,6 +361,18 @@
 					);
 				} elseif ($property->isBuildable($array, $prefix)) {
 					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
+						$columnName = $prefix.$property->getColumnName();
+						
+						if (
+							$property->getFetchStrategyId()
+							== FetchStrategy::LAZY
+						) {
+							$object->
+								{$property->getSetter().'Id'}($array[$columnName]);
+							
+							continue;
+						}
+						
 						$className = $property->getClassName();
 						
 						Assert::classExists($className);
@@ -367,7 +382,7 @@
 							&& is_subclass_of($className, 'Enumeration')
 						);
 						
-						$columnName = $prefix.$property->getColumnName();
+						
 						
 						if ($encapsulants) {
 							$value =

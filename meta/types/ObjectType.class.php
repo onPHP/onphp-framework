@@ -100,6 +100,17 @@ EOT;
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$className = $property->getType()->getClassName();
 					
+					$isEnumeration = false;
+					
+					$info = new ReflectionClass($className);
+					
+					while ($info = $info->getParentClass()) {
+						if ($info->getName() == 'Enumeration') {
+							$isEnumeration = true;
+							break;
+						}
+					}
+					
 					if ($property->isRequired()) {
 						$method = <<<EOT
 
@@ -107,7 +118,7 @@ EOT;
 public function {$methodName}()
 {
 	if (!\$this->{$name}) {
-		\$this->{$name} = {$className}::dao()->getById(\$this->{$name}Id);
+		\$this->{$name} = {$this->getFetchLazyObjectString($className, $name, $isEnumeration)}
 	}
 
 	return \$this->{$name};
@@ -121,7 +132,7 @@ EOT;
 public function {$methodName}()
 {
 	if (!\$this->{$name} && \$this->{$name}Id) {
-		\$this->{$name} = {$className}::dao()->getById(\$this->{$name}Id);
+		\$this->{$name} = {$this->getFetchLazyObjectString($className, $name, $isEnumeration)}
 	}
 	
 	return \$this->{$name};
@@ -351,6 +362,14 @@ EOT;
  * @return {$this->getClassName()}
 **/
 EOT;
+		}
+		
+		private function getFetchLazyObjectString($className, $name, $isEnumeration)
+		{
+			if ($isEnumeration)
+				return "new {$className}(\$this->{$name}Id);";
+			else
+				return "{$className}::dao()->getById(\$this->{$name}Id);";
 		}
 	}
 ?>
