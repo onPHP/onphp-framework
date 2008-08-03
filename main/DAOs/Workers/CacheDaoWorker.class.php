@@ -11,10 +11,10 @@
 /* $Id$ */
 
 	/**
-	 * Transparent though experimental yet DAO worker.
+	 * Transparent and scalable DAO worker, Jedi's best choice.
 	 * 
 	 * @see CommonDaoWorker for manual-caching one.
-	 * @see SmartDaoWorker for less obscure, but locking-based worker.
+	 * @see SmartDaoWorker for locking-based worker.
 	 * @see VoodooDaoWorker for greedy and unscalable one.
 	 * 
 	 * @ingroup DAOs
