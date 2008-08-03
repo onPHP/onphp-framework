@@ -28,7 +28,7 @@
 				&& ($object = $this->getCachedById($id))
 			) {
 				if ($object === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
+					throw new CachedObjectNotFoundException();
 				
 				return $this->dao->completeObject($object);
 			} else {
@@ -90,7 +90,7 @@
 				&& ($object = $this->getCachedByQuery($query))
 			) {
 				if ($object === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
+					throw new CachedObjectNotFoundException();
 				
 				return $this->dao->completeObject($object);
 			} else {
@@ -134,7 +134,7 @@
 				&& ($object = $this->getCachedByQuery($query))
 			) {
 				if ($object === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
+					throw new CachedObjectNotFoundException();
 				
 				return $object;
 				
@@ -249,7 +249,7 @@
 				&& ($list = $this->getCachedByQuery($query))
 			) {
 				if ($list === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
+					throw new CachedObjectNotFoundException();
 				
 				return $list;
 			} elseif ($list = $this->fetchList($query)) {
@@ -304,7 +304,7 @@
 				&& ($list = $this->getCachedByQuery($query))
 			) {
 				if ($list === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
+					throw new CachedObjectNotFoundException();
 				
 				return $list;
 			} elseif ($list = DBPool::getByDao($this->dao)->querySet($query)) {
@@ -344,7 +344,7 @@
 				&& ($list = $this->getCachedByQuery($query))
 			) {
 				if ($list === Cache::NOT_FOUND)
-					throw new ObjectNotFoundException();
+					throw new CachedObjectNotFoundException();
 				
 				return $list;
 			} elseif ($list = DBPool::getByDao($this->dao)->queryColumn($query)) {

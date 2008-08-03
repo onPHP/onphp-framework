@@ -28,6 +28,8 @@
 		{
 			try {
 				return parent::getById($id, Cache::EXPIRES_FOREVER);
+			} catch (CachedObjectNotFoundException $e) {
+				throw $e;
 			} catch (ObjectNotFoundException $e) {
 				$this->cacheNullById($id);
 				throw $e;
@@ -43,6 +45,8 @@
 		{
 			try {
 				return parent::getByQuery($query, Cache::EXPIRES_FOREVER);
+			} catch (CachedObjectNotFoundException $e) {
+				throw $e;
 			} catch (ObjectNotFoundException $e) {
 				$this->cacheByQuery($query, Cache::NOT_FOUND);
 				throw $e;
@@ -53,6 +57,8 @@
 		{
 			try {
 				return parent::getCustom($query, Cache::EXPIRES_FOREVER);
+			} catch (CachedObjectNotFoundException $e) {
+				throw $e;
 			} catch (ObjectNotFoundException $e) {
 				$this->cacheByQuery($query, Cache::NOT_FOUND);
 				throw $e;
@@ -148,6 +154,8 @@
 		{
 			try {
 				return parent::getCustomList($query, Cache::EXPIRES_FOREVER);
+			} catch (CachedObjectNotFoundException $e) {
+				throw $e;
 			} catch (ObjectNotFoundException $e) {
 				$this->cacheByQuery($query, Cache::NOT_FOUND);
 				throw $e;
@@ -158,6 +166,8 @@
 		{
 			try {
 				return parent::getCustomRowList($query, Cache::EXPIRES_FOREVER);
+			} catch (CachedObjectNotFoundException $e) {
+				throw $e;
 			} catch (ObjectNotFoundException $e) {
 				$this->cacheByQuery($query, Cache::NOT_FOUND);
 				throw $e;
