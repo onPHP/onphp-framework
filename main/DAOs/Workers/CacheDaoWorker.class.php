@@ -23,27 +23,6 @@
 	{
 		const MAX_RANDOM_ID = 1048576;
 		
-		private $classKey = null;
-		
-		public function __construct(GenericDAO $dao)
-		{
-			parent::__construct($dao);
-			
-			if (($cache = Cache::me()) instanceof WatermarkedPeer)
-				$watermark = $cache->mark($this->className)->getActualWatermark();
-			else
-				$watermark = null;
-			
-			$this->classKey = $watermark.$this->className;
-			
-			if (!Cache::me()->get($this->classKey))
-				Cache::me()->set(
-					$this->classKey,
-					mt_rand(1, self::MAX_RANDOM_ID),
-					Cache::EXPIRES_FOREVER
-				);
-		}
-		
 		/// cachers
 		//@{
 		public function cacheByQuery(
@@ -93,8 +72,12 @@
 		//@{
 		public function uncacheLists()
 		{
-			if (!Cache::me()->increment($this->classKey, 1))
-				Cache::me()->delete($this->classKey);
+			if (
+				!Cache::me()->
+					mark($this->className)->
+					increment($this->className, 1)
+			)
+				Cache::me()->mark($this->className)->delete($this->className);
 			
 			return true;
 		}
@@ -104,18 +87,23 @@
 		//@{
 		protected function gentlyGetByKey($key)
 		{
-			return Cache::me()->mark($this->classKey)->get(
+			return Cache::me()->mark($this->className)->get(
 				$key.$this->getLayerId()
 			);
 		}
 		
 		private function getLayerId()
 		{
-			if (!$result = Cache::me()->get($this->classKey)) {
+			if (
+				!$result =
+					Cache::me()->mark($this->className)->get($this->className)
+			) {
 				$random = mt_rand(1, self::MAX_RANDOM_ID);
 				
-				Cache::me()->set(
-					$this->classKey,
+				Cache::me()->
+				mark($this->className)->
+				set(
+					$this->className,
 					$random,
 					Cache::EXPIRES_FOREVER
 				);
