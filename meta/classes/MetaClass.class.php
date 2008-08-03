@@ -474,13 +474,16 @@
 			return false;
 		}
 		
+		/**
+		 * @return MetaClassProperty
+		**/
 		public function isRedefinedProperty($name)
 		{
 			$parent = $this;
 			
 			while ($parent = $parent->getParent()) {
 				if ($parent->hasProperty($name))
-					return true;
+					return $parent->getPropertyByName($name);
 			}
 			
 			return false;

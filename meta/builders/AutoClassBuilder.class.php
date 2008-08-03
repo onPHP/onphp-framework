@@ -154,8 +154,23 @@ EOT;
 			$isNamed
 		)
 		{
-			if ($class->isRedefinedProperty($property->getName()))
+			if (
+				$parentProperty =
+					$class->isRedefinedProperty($property->getName())
+			) {
+				// check wheter property fetch strategy becomes lazy
+				if (
+					(
+						$parentProperty->getFetchStrategyId()
+						<> $property->getFetchStrategyId()
+					) && (
+						$property->getFetchStrategyId() === FetchStrategy::LAZY
+					)
+				)
+					return true;
+				
 				return false;
+			}
 			
 			if ($isNamed && $property->getName() == 'name')
 				return false;
