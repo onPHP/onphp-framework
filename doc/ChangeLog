@@ -1,5 +1,14 @@
 # $Id$
 
+2008-08-03	Konstantin V. Arkhipov
+
+	* main/DAOs/Workers/CacheDaoWorker.class.php: useless classKey usage
+	removed.
+
+	* core/Exceptions/CachedObjectNotFoundException.class.php: new
+	exception introduced to avoid useless Cache::NOT_FOUND marking in
+	TransparentDaoWorker's childs.
+
 2008-07-21	Ivan Y. Khvostishkov
 
 	* core/Base/IntervalUnit.class.php: countInRange() - one more useful
