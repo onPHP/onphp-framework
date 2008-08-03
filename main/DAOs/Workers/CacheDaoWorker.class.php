@@ -23,18 +23,6 @@
 	{
 		const MAX_RANDOM_ID = 1048576;
 		
-		public function __construct(GenericDAO $dao)
-		{
-			parent::__construct($dao);
-			
-			if (!Cache::me()->mark($this->className)->get($this->className))
-				Cache::me()->mark($this->className)->set(
-					$this->className,
-					mt_rand(1, self::MAX_RANDOM_ID),
-					Cache::EXPIRES_FOREVER
-				);
-		}
-		
 		/// cachers
 		//@{
 		protected function cacheByQuery(
