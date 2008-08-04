@@ -98,17 +98,15 @@
 				!$result =
 					Cache::me()->mark($this->className)->get($this->className)
 			) {
-				$random = mt_rand(1, self::MAX_RANDOM_ID);
+				$result = mt_rand(1, self::MAX_RANDOM_ID);
 				
 				Cache::me()->
 				mark($this->className)->
 				set(
 					$this->className,
-					$random,
+					$result,
 					Cache::EXPIRES_FOREVER
 				);
-				
-				return '@'.$random;
 			}
 			
 			return '@'.$result;
