@@ -47,7 +47,10 @@
 		
 		public function isAlive()
 		{
-			return is_writable($this->directory);
+			if (!is_writable($this->directory))
+				return mkdir($this->directory, 0700, true);
+			else
+				return true;
 		}
 		
 		/**
@@ -63,7 +66,7 @@
 		
 		public function increment($key, $value)
 		{
-			$path = $this->makePath($path);
+			$path = $this->makePath($key);
 			
 			if (null !== ($current = $this->operate($path))) {
 				$this->operate($path, $current += $value);
@@ -76,7 +79,7 @@
 		
 		public function decrement($key, $value)
 		{
-			$path = $this->makePath($path);
+			$path = $this->makePath($key);
 			
 			if (null !== ($current = $this->operate($path))) {
 				$this->operate($path, $current -= $value);
