@@ -17,7 +17,6 @@
 	* main/DAOs/GenericDAO.class.php: getTotalCount() implemented, with
 	correspondent tests.
 
-
 2008-08-03	Konstantin V. Arkhipov
 
 	* main/DAOs/Workers/CacheDaoWorker.class.php: useless classKey usage
