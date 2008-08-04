@@ -149,7 +149,11 @@
 				if ($expires < parent::TIME_SWITCH)
 					$expires += time();
 				
-				touch($path, $expires);
+				try {
+					touch($path, $expires);
+				} catch (BaseException $e) {
+					// race-removed
+				}
 				
 				return $pool->drop($key);
 			} else {
