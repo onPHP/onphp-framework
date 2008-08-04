@@ -23,7 +23,9 @@
 			return new self($class);
 		}
 		
-		/* void */ protected function subProcess(JoinCapableQuery $query, $field)
+		/* void */ protected function subProcess(
+			JoinCapableQuery $query, DBField $field
+		)
 		{
 			$query->groupBy($field);
 		}

@@ -45,12 +45,17 @@
 			$dao = call_user_func(array($this->className, 'dao'));
 			
 			foreach ($dao->getFields() as $field)
-				$this->subProcess($query, $field);
+				$this->subProcess(
+					$query,
+					DBField::create($field, $dao->getTable())
+				);
 			
 			return $query;
 		}
 		
-		/* void */ protected function subProcess(JoinCapableQuery $query, $field)
+		/* void */ protected function subProcess(
+			JoinCapableQuery $query, DBField $field
+		)
 		{
 			$query->get($field);
 		}

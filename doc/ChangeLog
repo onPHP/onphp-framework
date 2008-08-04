@@ -1,5 +1,11 @@
 # $Id$
 
+2008-08-04	Ivan Y. Khvostishkov
+
+	* main/Criteria/Projections/ClassProjection.class.php: proper table
+	attached.
+
+
 2008-08-03	Konstantin V. Arkhipov
 
 	* main/DAOs/Workers/CacheDaoWorker.class.php: useless classKey usage
