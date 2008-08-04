@@ -210,6 +210,11 @@
 			);
 		}
 		
+		public function getTotalCount($expires = Cache::DO_NOT_CACHE)
+		{
+			return Cache::worker($this)->getTotalCount($expires);
+		}
+		
 		public function getCustomList(
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)

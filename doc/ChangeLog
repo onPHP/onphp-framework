@@ -14,6 +14,9 @@
 
 	* core/OSQL/DataType.class.php: added interval.
 
+	* main/DAOs/GenericDAO.class.php: getTotalCount() implemented, with
+	correspondent tests.
+
 
 2008-08-03	Konstantin V. Arkhipov
 
