@@ -66,6 +66,15 @@
 		/**
 		 * @return UpdateQuery
 		**/
+		public function rightJoin($table, LogicalObject $logic, $alias = null)
+		{
+			$this->joiner->rightJoin(new SQLRightJoin($table, $logic, $alias));
+			return $this;
+		}
+		
+		/**
+		 * @return UpdateQuery
+		**/
 		public function setTable($table)
 		{
 			$this->table = $table;

@@ -127,6 +127,17 @@
 		/**
 		 * @return SelectQuery
 		**/
+		public function rightJoin($table, LogicalObject $logic, $alias = null)
+		{
+			$this->joiner->rightJoin(new SQLRightJoin($table, $logic, $alias));
+			$this->aliases[$alias] = true;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return SelectQuery
+		**/
 		public function setOrderChain(OrderChain $chain)
 		{
 			$this->order = $chain;
@@ -244,6 +255,11 @@
 			$this->aliases[$alias] = true;
 			
 			return $this;
+		}
+		
+		public function getFirstTable()
+		{
+			return $this->joiner->getFirstTable();
 		}
 		
 		/**

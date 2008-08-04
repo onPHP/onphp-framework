@@ -61,6 +61,25 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Joiner
+		**/
+		public function rightJoin(SQLRightJoin $join)
+		{
+			$this->from[] = $join;
+			$this->tables[$join->getTable()] = true;
+			
+			return $this;
+		}
+		
+		public function getFirstTable()
+		{
+			if ($this->from)
+				return $this->from[0]->getTable();
+			
+			return null;
+		}
+		
 		public function getLastTable()
 		{
 			if ($this->from)

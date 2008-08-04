@@ -5,6 +5,10 @@
 	* main/Criteria/Projections/ClassProjection.class.php: proper table
 	attached.
 
+	* core/OSQL/SQLRightJoin.class.php: added.
+
+	* core/OSQL/Joiner.class.php: getFirstTable() helper.
+
 
 2008-08-03	Konstantin V. Arkhipov
 
