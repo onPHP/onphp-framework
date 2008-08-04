@@ -11,7 +11,7 @@
 /* $Id$ */
 
 	/**
-	 * Simple filesystem cache requiring external manual cleanup.
+	 * Simple filesystem cache.
 	 * 
 	 * @ingroup Cache
 	**/
