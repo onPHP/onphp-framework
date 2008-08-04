@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2007 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -13,13 +13,11 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	interface JoinCapableQuery
+	final class SQLRightJoin extends SQLBaseJoin
 	{
-		public function from($table, $alias = null);
-		public function join($table, LogicalObject $logic, $alias = null);
-		public function leftJoin($table, LogicalObject $logic, $alias = null);
-		public function rightJoin($table, LogicalObject $logic, $alias = null);
-		
-		public function hasJoinedTable($table);
+		public function toDialectString(Dialect $dialect)
+		{
+			return parent::baseToString($dialect, 'RIGHT ');
+		}
 	}
 ?>

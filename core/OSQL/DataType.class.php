@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -34,8 +34,11 @@
 		const DATE				= 0x00000B;
 		const TIME				= 0x000A0C;
 		const TIMESTAMP			= 0x000A0D;
+		const INTERVAL			= 0x00000E;
 		
-		const BINARY			= 0x00000E;
+		const BINARY			= 0x00000F;
+		
+		// NEXT					= 0x00000H;
 		
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x000200;
@@ -69,6 +72,7 @@
 			self::DATE			=> 'DATE',
 			self::TIME			=> 'TIME',
 			self::TIMESTAMP		=> 'TIMESTAMP',
+			self::INTERVAL		=> 'INTERVAL',
 			
 			self::BINARY		=> 'BINARY'
 		);

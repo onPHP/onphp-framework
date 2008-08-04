@@ -293,6 +293,19 @@
 		}
 		//@}
 		
+		public function getTotalCount($expires = Cache::DO_NOT_CACHE)
+		{
+			$count = $this->getCustom(
+				OSQL::select()->
+				get(
+					SQLFunction::create('count', DBValue::create('*'))
+				)->
+				from($this->dao->getTable())
+			);
+			
+			return $count['count'];
+		}
+		
 		/// custom list getters
 		//@{
 		public function getCustomList(

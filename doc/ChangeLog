@@ -347,6 +347,17 @@
 	* main/ProtoBuilders/: partial objects building ability, useful for
 	wizards.
 
+	* core/OSQL/SQLRightJoin.class.php: added.
+
+	* core/OSQL/Joiner.class.php: getFirstTable() helper.
+
+	* core/OSQL/TimeIntervalsGenerator.class.php: rewritten in OSQL, but
+	still works in PostgreSQL only.
+
+	* core/OSQL/DataType.class.php: added interval.
+
+	* main/DAOs/GenericDAO.class.php: getTotalCount() implemented, with
+	correspondent tests.
 
 2008-03-15	Ivan Y. Khvostishkov
 

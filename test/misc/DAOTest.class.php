@@ -45,6 +45,48 @@
 			$this->drop();
 		}
 		
+		public function testCount()
+		{
+			$this->create();
+			
+			foreach (DBTestPool::me()->getPool() as $connector => $db) {
+				DBPool::me()->setDefault($db);
+				
+				$this->fill();
+				
+				$count = TestUser::dao()->getTotalCount();
+				
+				$this->assertGreaterThan(1, $count);
+				
+				$city =
+					TestCity::create()->
+					setId(1);
+				
+				$newUser =
+					TestUser::create()->
+					setCity($city)->
+					setCredentials(
+						Credentials::create()->
+						setNickname('newuser')->
+						setPassword(sha1('newuser'))
+					)->
+					setLastLogin(
+						Timestamp::create(time())
+					)->
+					setRegistered(
+						Timestamp::create(time())
+					);
+				
+				TestUser::dao()->add($newUser);
+				
+				$newCount = TestUser::dao()->getTotalCount();
+				
+				$this->assertEquals($count + 1, $newCount);
+			}
+			
+			$this->drop();
+		}
+		
 		public function deletedCount()
 		{
 			TestUser::dao()->dropById(1);
