@@ -1,5 +1,11 @@
 # $Id$
 
+2008-08-05	Ivan Y. Khvostishkov
+
+	* core/OSQL/OrderBy.class.php: nullsFirst(), nullsLast(),
+	isNullsFirst(), setNullsFirst() - PosgreSQL 8.3-specific ordering
+	feature support.
+
 2008-08-04	Ivan Y. Khvostishkov
 
 	* main/Criteria/Projections/ClassProjection.class.php: proper table
