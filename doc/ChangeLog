@@ -1,5 +1,28 @@
 # $Id$
 
+2008-08-05	Ivan Y. Khvostishkov
+
+	* core/OSQL/OrderBy.class.php: nullsFirst(), nullsLast(),
+	isNullsFirst(), setNullsFirst() - PosgreSQL 8.3-specific ordering
+	feature support.
+
+2008-08-04	Ivan Y. Khvostishkov
+
+	* main/Criteria/Projections/ClassProjection.class.php: proper table
+	attached.
+
+	* core/OSQL/SQLRightJoin.class.php: added.
+
+	* core/OSQL/Joiner.class.php: getFirstTable() helper.
+
+	* core/OSQL/TimeIntervalsGenerator.class.php: rewritten in OSQL, but
+	still works in PostgreSQL only.
+
+	* core/OSQL/DataType.class.php: added interval.
+
+	* main/DAOs/GenericDAO.class.php: getTotalCount() implemented, with
+	correspondent tests.
+
 2008-08-03	Konstantin V. Arkhipov
 
 	* main/DAOs/Workers/CacheDaoWorker.class.php: useless classKey usage

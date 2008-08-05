@@ -16,7 +16,9 @@
 	**/
 	final class OrderBy extends FieldTable implements MappableObject
 	{
-		private $direction = null;
+		private $direction	= null;
+		
+		private $nulls		= null;
 		
 		/**
 		 * @return OrderBy
@@ -31,6 +33,7 @@
 			parent::__construct($field);
 			
 			$this->direction = new Ternary(null);
+			$this->nulls = new Ternary(null);
 		}
 		
 		public function __clone()
@@ -73,6 +76,38 @@
 		/**
 		 * @return OrderBy
 		**/
+		public function nullsFirst()
+		{
+			$this->nulls->setTrue();
+			return $this;
+		}
+		
+		/**
+		 * @return OrderBy
+		**/
+		public function nullsLast()
+		{
+			$this->direction->setFalse();
+			return $this;
+		}
+		
+		public function isNullsFirst()
+		{
+			return $this->direction->decide(true, false, true);
+		}
+		
+		/**
+		 * @return OrderBy
+		**/
+		public function setNullsFirst($nullsFirst)
+		{
+			$this->nulls->setValue($nullsFirst);
+			return $this;
+		
+		}
+		/**
+		 * @return OrderBy
+		**/
 		public function invert()
 		{
 			return
@@ -100,13 +135,17 @@
 				$this->field instanceof SelectQuery
 				|| $this->field instanceof LogicalObject
 			)
-				return
+				$result =
 					'('.$dialect->fieldToString($this->field).')'
 					.$this->direction->decide(' ASC', ' DESC');
 			else
-				return
+				$result =
 					parent::toDialectString($dialect)
 					.$this->direction->decide(' ASC', ' DESC');
+			
+			$result .= $this->nulls->decide(' NULLS FIRST', ' NULLS LAST');
+			
+			return $result;
 		}
 	}
 ?>
