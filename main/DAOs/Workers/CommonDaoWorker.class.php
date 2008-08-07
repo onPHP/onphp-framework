@@ -291,7 +291,6 @@
 				$this->dao->makeSelectHead(), $expires
 			);
 		}
-		//@}
 		
 		public function getTotalCount($expires = Cache::DO_NOT_CACHE)
 		{
@@ -303,8 +302,9 @@
 				from($this->dao->getTable())
 			);
 			
-			return $count['count'];
+			return current($count);
 		}
+		//@}
 		
 		/// custom list getters
 		//@{
