@@ -368,6 +368,10 @@
 				return DBPool::getByDao($dao)->getDialect()->unquoteBinary($raw);
 			}
 			
+			if ($this->className == 'HttpUrl') {
+				return HttpUrl::create()->parse($raw);
+			}
+			
 			if (
 				!$this->identifier
 				&& $this->generic

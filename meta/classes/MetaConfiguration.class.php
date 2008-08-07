@@ -781,6 +781,9 @@
 					) && (
 						!$property->getType()
 							instanceof NumericType
+					) && (
+						!$property->getType()
+							instanceof HttpUrlType
 					),
 					
 					'size is required for "'.$property->getName().'"'

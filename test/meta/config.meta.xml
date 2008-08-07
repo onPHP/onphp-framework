@@ -74,6 +74,8 @@
 			<property name="parts" type="TestPart" relation="OneToMany" />
 			<property name="incapsulants" type="TestIncapsulant" relation="ManyToMany" />
 			
+			<property name="url" type="HttpUrl" size="256" required="false" />
+			
 		</properties>
 		
 		<pattern name="StraightMapping" />
