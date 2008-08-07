@@ -132,7 +132,8 @@
 					setNickName('postgreser')->
 					setPassword(sha1('postgreser'))
 				)->
-				setCity($piter);
+				setCity($piter)->
+				setUrl(HttpUrl::create()->parse('http://postgresql.org/'));
 			
 			$piter = TestCity::dao()->add($piter);
 			$moscow = TestCity::dao()->add($moscow);

@@ -53,6 +53,8 @@
 		<properties>
 			<identifier />
 			<property name="name" type="String" size="50" required="true" />
+			
+			<property name="users" type="TestUser" relation="ManyToMany" />
 		</properties>
 		<pattern name="DictionaryClass" />
 	</class>
@@ -73,6 +75,8 @@
 			<property name="secondOptional" type="TestCity" relation="OneToOne" required="false" />
 			<property name="parts" type="TestPart" relation="OneToMany" />
 			<property name="incapsulants" type="TestIncapsulant" relation="ManyToMany" />
+			
+			<property name="url" type="HttpUrl" size="256" required="false" />
 			
 		</properties>
 		

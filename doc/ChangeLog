@@ -1,5 +1,9 @@
 # $Id$
 
+2008-08-07	Ivan Y. Khvostishkov
+
+	* meta/types/HttpUrlType.class.php: new internal type implemented.
+
 2008-08-05	Ivan Y. Khvostishkov
 
 	* core/OSQL/OrderBy.class.php: nullsFirst(), nullsLast(),
