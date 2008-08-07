@@ -17,6 +17,8 @@ Such primitives cannot be required or optional - it's field property
 
 make uniform lists: PrimitiveList()->of(AnonymousPrimitive)
 
+error codes as enumeration objects, useful for debugging and organizing primitives inheritance.
+
 * application:
 
 RequestUrl: aggregator for subdomain, subpath, and query vars.
