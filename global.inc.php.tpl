@@ -169,7 +169,7 @@
 	error_reporting(E_ALL | E_STRICT);
 	set_error_handler('error2Exception', E_ALL | E_STRICT);
 	ignore_user_abort(true);
-	define('ONPHP_VERSION', '0.10.11.99');
+	define('ONPHP_VERSION', '0.10.12.99');
 	
 	if (!defined('ONPHP_IPC_PERMS'))
 		define('ONPHP_IPC_PERMS', 0660);
