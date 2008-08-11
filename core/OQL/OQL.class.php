@@ -16,7 +16,7 @@
 	final class OQL extends StaticFactory
 	{
 		/**
-		 * @return OQLQuery
+		 * @return OqlQuery
 		**/
 		public static function select($query)
 		{

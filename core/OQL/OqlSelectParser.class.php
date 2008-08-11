@@ -140,7 +140,7 @@
 		}
 		
 		/**
-		 * @return OQLSelectQuery
+		 * @return OqlSelectQuery
 		**/
 		protected function makeQuery()
 		{

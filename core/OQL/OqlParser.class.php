@@ -25,7 +25,7 @@
 		protected $parentheses	= null;
 		
 		/**
-		 * @return OQLQuery
+		 * @return OqlQuery
 		**/
 		abstract protected function makeQuery();
 		
@@ -34,7 +34,7 @@
 		/**
 		 * @throws WrongStateException
 		 * @throws SyntaxErrorException
-		 * @return OQLQuery
+		 * @return OqlQuery
 		**/
 		public function parse($string)
 		{
