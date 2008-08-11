@@ -12,9 +12,8 @@
 
 	/**
 	 * @ingroup Exceptions
-	 * @ingroup Module
 	**/
-	class SyntaxErrorException extends BaseException
+	final class SyntaxErrorException extends BaseException
 	{
 		private $errorLine		= null;
 		private $errorPosition	= null;
