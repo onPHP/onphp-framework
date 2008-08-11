@@ -164,6 +164,8 @@
 	set_error_handler('error2Exception', E_ALL | E_STRICT);
 	ignore_user_abort(true);
 	define('ONPHP_VERSION', '1.1');
+	define('ONPHP_HOST_INT_MAX', PHP_INT_MAX);
+	define('ONPHP_HOST_INT_MIN', -PHP_INT_MAX - 1);
 	
 	if (!defined('ONPHP_IPC_PERMS'))
 		define('ONPHP_IPC_PERMS', 0660);
