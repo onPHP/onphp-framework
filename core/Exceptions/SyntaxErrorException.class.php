@@ -8,7 +8,7 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
-/* $Id: $ */
+/* $Id$ */
 
 	/**
 	 * @ingroup Exceptions

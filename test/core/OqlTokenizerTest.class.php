@@ -1,5 +1,5 @@
 <?php
-	/* $Id: $ */
+	/* $Id$ */
 	
 	final class OqlTokenizerTest extends TestCase
 	{
