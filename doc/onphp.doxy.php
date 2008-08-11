@@ -122,6 +122,9 @@
 	 * @defgroup OSQL Dynamic query builder
 	 * @ingroup Core
 	 *
+	 * @defgroup OQL Object Query Language based on Criteria
+	 * @ingroup Core
+	 *
 	 * @defgroup Types Basic types
 	 * @ingroup Core
 	 *
