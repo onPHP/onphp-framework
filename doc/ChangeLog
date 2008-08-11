@@ -1,5 +1,15 @@
 # $Id$
 
+2008-08-11	Vladlen Y. Koshelev
+
+	* core/OQL/: OQL select query parser.
+	
+	* test/core/OqlTokenizerTest.class.php, OqlSelectTest.class.php:
+	corresponding tests.
+	
+	* core/Exceptions/SyntaxErrorException.class.php: exception to be used
+	in parsers and syntax analyzers.
+	
 2008-08-07	Ivan Y. Khvostishkov
 
 	* meta/types/HttpUrlType.class.php: new internal type implemented.
