@@ -24,7 +24,7 @@
 			$this->
 				addParameter($left)->
 				addParameter($right);
-				
+			
 			$this->logic = $logic;
 		}
 		

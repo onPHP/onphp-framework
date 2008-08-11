@@ -130,12 +130,12 @@
 		{
 			$criteria = Criteria::create($this->dao)->
 				setDistinct($this->distinct);
-				
+			
 			if ($this->limit)
 				$criteria->setLimit(
 					$this->limit->evaluate($this->parameters)
 				);
-				
+			
 			if ($this->offset)
 				$criteria->setOffset(
 					$this->offset->evaluate($this->parameters)
@@ -161,7 +161,7 @@
 				$criteria->add(
 					$this->whereExpression->evaluate($this->parameters)
 				);
-				
+			
 			if ($this->orderChain) {
 				if (count($this->orderChain) == 1) {
 					$oqlOrder = reset($this->orderChain);

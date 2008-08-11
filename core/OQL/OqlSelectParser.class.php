@@ -11,120 +11,21 @@
 /* $Id: $ */
 
 	/**
-	 * Parses OQL select query
-	 * 
-	 * Backus Normal Form (BNF):
-	 *	<query> ::=
-	 * 		[ <aggregate_clause> ]
-	 * 		"from" <class_clause>
-	 * 		[ "where" <where_clause> ]
-	 * 		[ "group by" <group_by_clause> ]
-	 *		[ "order by" <order_by_clause> ]
-	 *  	[ "having" <having_clause> ]
-	 * 		[ "limit" <limit_clause> ]
-	 *		[ "offset" <offset_clause> ]
-	 * 
-	 *	<aggregate_clause> ::=
-	 * 		(
-	 * 			( ( "sum" | "avg" | "min" | "max" ) "(" <arithmetic_expression> ")" )
-	 * 			| ( "count(" [ "distinct" ] <logical_expression> ")" )
-	 * 			| ( [ "distinct" ] <logical_expression> )
-	 * 		) [ "as" <identifier> ]
-	 * 		[ "," <aggregate_clause> ]
-	 * 
-	 *	<class_clause> ::=
-	 * 		<identifier>
-	 * 
-	 * 	<where_clause> ::=
-	 * 		<logical_expression>
-	 * 
-	 * 	<group_by_clause> ::=
-	 * 		<identifier> [ "," <group_by_clause> ]
-	 * 
-	 * 	<order_by_clause> ::=
-	 * 		<logical_expression> [ "asc" | "desc" ] [ "," <order_by_clause> ]
-	 * 
-	 * 	<having_clause> ::=
-	 * 		<logical_expression>
-	 * 
-	 * 	<limit_clause> ::=
-	 * 		<number> | <substitution>
-	 * 
-	 * 	<offset_clause> ::=
-	 * 		<number> | <substitution>
-	 * 
-	 * 	<logical_expression> ::=
-	 * 		<logical_and_expression> { [ "or" ] <logical_and_expression> }
-	 * 
-	 * 	<logical_and_expression> ::=
-	 * 		<logical_term> { [ "and" ] ( <logical_term> | ( "(" <logical_expression> ")" ) ) }
-	 * 
-	 *	<logical_term> ::=
-	 * 		( "not" <logical_expression> )
-	 * 		| (
-	 * 			( <arithmetic_expression> | <boolean> | <string> )
-	 * 			| (
-	 * 				( <comparison_op> <arithmetic_expression> )
-	 * 				| ( "is" ( "not null" | "true" | "false" ) )
-	 * 				| ( [ "not" ] "in (" <in_expression> ")" )
-	 * 				| ( [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
-	 * 				| ( "between" ( <identifier> | <constant> ) "and" ( <identifier> | <constant> ) )
-	 * 			)
-	 * 		)
-	 * 
-	 * 	<arithmetic_expression> ::=
-	 * 		[ "-" ] <arithmetic_mul_expression> { ( "+" | "-" ) <arithmetic_mul_expression> }
-	 * 
-	 * 	<arithmetic_mul_expression> ::=
-	 * 		<arithmetic_term> { ( "*" | "/" ) ( <arithmetic_term> | ( "(" <arithmetic_expression> ")" ) }
-	 *  
-	 *	<arithmetic_term> ::=
-	 * 		<identifier> | <number> | <substitution>
-	 * 
-	 *	<comparison_op> ::=
-	 * 		"=" | "<" | ">" | "<>" | "!=" | "<=" | ">="
-	 * 
-	 *	<in_expression> ::=
-	 * 		<constant> [ "," <in_expression> ]
-	 * 
-	 *	<pattern> ::=
-	 * 		<string> | <substitution>
-	 * 
-	 *	<constant> ::=
-	 * 		<string> | <number> | <boolean> | <substitution> | "null"
-	 * 
-	 *	<boolean> ::=
-	 * 		"true" | "false"
-	 * 
-	 *	<string> ::=
-	 * 		( """ { <any character> } """ )
-	 * 		| ( "'" { <any character> } "'" )
-	 * 		| ( "`" { <any character> } "`" )
-	 *
-	 * 	<identifier> ::=
-	 * 		( <letter> | "_" ) { <letter> | <digit> | "_" } [ "." <identifier> ]
-	 *
-	 * 	<number> ::=
-	 * 		[ { <digit> } ] [ "." ] { <digit> } [ "e" [ "+" | "-" ] { <digit> } ] 
-	 *
-	 * 	<substitution> ::=
-	 * 		"$" { <digit> }
-	 * 
+	 * Parses OQL select query.
 	 * 
 	 * Examples:
-	 * 	from User where id = $1
-	 *
-	 *	count(id) as count, count(distinct Name) as distinctCount from User
 	 * 
-	 *	(id + -$1) / 2 as idExpression, distinct id from User
-	 *	where (Name not ilike 'user%') and id <= 10 and created between $2 and $3
-	 *	order by id desc, Name asc
-	 *	limit 10 offset $2
-	 * 
-	 *	from User having $1 > 0 group by id
+	 * from User where id = $1
+	 * count(id) as count, count(distinct Name) as distinctCount from User
+	 * (id + -$1) / 2 as idExpression, distinct id from User
+	 * where (Name not ilike 'user%') and id <= 10 and created between $2 and $3
+	 * order by id desc, Name asc
+	 * limit 10 offset $2
+	 * from User having $1 > 0 group by id
 	 * 
 	 * @see OQL::select
 	 * @see http://www.hibernate.org/hib_docs/reference/en/html/queryhql.html
+	 * @see doc/OQL-BNF
 	 * 
 	 * @ingroup OQL
 	**/
@@ -545,13 +446,13 @@
 						$isNot = true;
 					} else
 						$isNot = false;
-						
+					
 					if ($this->checkToken($this->tokenizer->peek(), OqlToken::NULL)) {
 						$this->tokenizer->next();
 						$logic = $isNot
 							? PostfixUnaryExpression::IS_NOT_NULL
 							: PostfixUnaryExpression::IS_NULL;
-					
+						
 					} elseif (
 						!$isNot
 						&& $this->checkToken($this->tokenizer->peek(), OqlToken::BOOLEAN)
@@ -666,7 +567,7 @@
 				
 				if ($isNot)
 					$this->error('expecting in, like, ilike or similar to');
-					
+				
 			// and|or|comparison expression chain
 			} else {
 				$operatorList = self::$logicPriorityMap[$priority];
@@ -741,7 +642,7 @@
 				// argument
 				} elseif ($expression = $this->getArithmeticArgumentExpression()) {
 					// $expression
-				
+					
 				} else
 					$this->error(
 						'expecting argument in expression: '
@@ -777,7 +678,6 @@
 							$expression2,
 							self::$binaryOperatorMap[$operator->getValue()]
 						);
-						
 					else
 						$this->error(
 							'expecting second argument in expression: '
@@ -822,7 +722,7 @@
 			switch ($context) {
 				
 				case self::PROPERTY_CONTEXT:
-
+					
 					$token = $this->tokenizer->peek();
 					
 					// aggregate function

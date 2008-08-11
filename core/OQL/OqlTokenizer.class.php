@@ -89,7 +89,7 @@
 			$token = $this->token;
 			if (!$token)
 				$token = $this->prevToken;
-				
+			
 			return $token ? $token->getLine() : null;
 		}
 		
@@ -98,7 +98,7 @@
 			$token = $this->token;
 			if (!$token)
 				$token = $this->prevToken;
-				
+			
 			return $token ? $token->getPosition() : null;
 		}
 		
@@ -272,7 +272,7 @@
 					
 				case OqlToken::KEYWORD:
 					return mb_strtolower(
-						mb_ereg_replace('\s+', ' ', $value)
+						preg_replace('/\s+/u', ' ', $value)
 					);
 					
 				case OqlToken::COMPARISON_OPERATOR:

@@ -139,7 +139,7 @@
 		public function testWhere()
 		{
 			$userId = 1;
-			$user = TestUser::dao()->getById($userId);
+			$user = TestUser::create()->setId($userId);
 			
 			$this->
 				// bindings, operator chain
@@ -551,6 +551,8 @@
 		
 		public function testBind()
 		{
+			$user = TestUser::create()->setId(1);
+			
 			$bindingsList = array(
 				// number
 				array(1 => 1.123),
@@ -559,7 +561,7 @@
 				// string
 				array(1 => 'test'),
 				// Identifiable object
-				array(1 => TestUser::dao()->getById(1)),
+				array(1 => $user),
 				// DialectString object
 				array(1 => SQLFunction::create('rand'))
 			);
@@ -844,9 +846,11 @@
 				foreach ($bindings as $key => $value)
 					$oqlQuery->bind($key, $value);
 			
+			$dialect = PostgresDialect::me();
+			
 			$this->assertEquals(
-				$oqlQuery->toCriteria()->toString(),
-				$criteria->toString()
+				$oqlQuery->toCriteria()->toDialectString($dialect),
+				$criteria->toDialectString($dialect)
 			);
 			
 			return $this;
