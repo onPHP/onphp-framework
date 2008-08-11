@@ -32,7 +32,7 @@
 		private $rawValue	= null;
 		private $type		= null;
 		private $line		= null;
-		private $position	= null; 
+		private $position	= null;
 		
 		/**
 		 * @return OqlToken

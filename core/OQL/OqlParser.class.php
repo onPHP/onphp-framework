@@ -97,9 +97,9 @@
 					return true;
 				
 				// fix token value if identifier name is equal to
-				// reserved word or aggregate function name 
+				// reserved word or aggregate function name
 				elseif (
-					$token->getType() == OqlToken::KEYWORD				 
+					$token->getType() == OqlToken::KEYWORD				
 					|| $token->getType() == OqlToken::AGGREGATE_FUNCTION
 				) {
 					$token->setValue($token->getRawValue());
