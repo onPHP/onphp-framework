@@ -1,5 +1,10 @@
 # $Id$
 
+2008-08-12	Denis M. Gabaidulin
+
+	* main/DAOs/Workers/DalayedDropDaoWorker.class.php: new dao worker
+	with delayed drop modified objects strategy.
+
 2008-08-07	Ivan Y. Khvostishkov
 
 	* meta/types/HttpUrlType.class.php: new internal type implemented.

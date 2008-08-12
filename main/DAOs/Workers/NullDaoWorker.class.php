@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup DAOs
 	**/
-	final class NullDaoWorker extends CommonDaoWorker
+	class NullDaoWorker extends CommonDaoWorker
 	{
 		/// single object getters
 		//@{
