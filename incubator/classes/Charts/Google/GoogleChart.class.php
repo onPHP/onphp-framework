@@ -13,16 +13,16 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleChart implements Stringable
+	class GoogleChart implements Stringable
 	{
 		const BASE_URL = 'http://chart.apis.google.com/chart?';
 		
-		private $color 	= null;
-		private $size 	= null;
-		private $type 	= null;
-		private $label 	= null;
-		private $data 	= null;
-		private $legend = null;
+		protected $color 	= null;
+		protected $size 	= null;
+		protected $type 	= null;
+		protected $label 	= null;
+		protected $data 	= null;
+		protected $legend = null;
 		
 		/**
 		 * @return GoogleChart
@@ -97,8 +97,10 @@
 			$parameters[] = $this->size->toString();
 			$parameters[] = $this->color->toString();
 			$parameters[] = $this->data->toString();
-			$parameters[] = $this->legend->toString();
-
+			
+			if ($this->legend)
+				$parameters[] = $this->legend->toString();
+			
 			if ($this->label)
 				$parameters[] = $this->label->toString();
 			

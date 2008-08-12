@@ -37,6 +37,16 @@
 			return $this;
 		}
 		
+		public function getDataSetByIndex($index)
+		{
+			if (!isset($this->sets[$index]))
+				throw new WrongArgumentException(
+					"Dataset with index {$index} not found"
+				);
+			
+			return $this->sets[$index];
+		}
+		
 		public function toString()
 		{
 			Assert::isNotNull($this->encoding, 'Data encdoing Required.');
