@@ -88,6 +88,12 @@
 				$link
 			);
 			
+			$img = '<img src="http://site.ru/img.gif" />';
+			$this->assertEquals(
+				$filter->apply($img),
+				$img
+			);
+			
 			$this->assertEqual(
 				$filter->apply('арбайтен   ---   gut'),
 				'арбайтен&nbsp;&#151; gut'
