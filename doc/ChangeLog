@@ -1,5 +1,12 @@
 # $Id$
 
+2008-08-12	Vladlen Y. Koshelev
+
+	* core/Form/Filters/RussianTypograph.class.php: standalone tag content
+	mistakenly typographized; spotted by Sergey M. Skachkov.
+
+	* test/core/FiltersTest.class.php: corresponding test. 
+
 2008-08-12	Denis M. Gabaidulin
 
 	* main/DAOs/Workers/DalayedDropDaoWorker.class.php: new dao worker

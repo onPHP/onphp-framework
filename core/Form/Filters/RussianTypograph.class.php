@@ -108,21 +108,17 @@
 			$tags = array();
 			$text = null;
 			
-			if (count($list) > 1) {
-				foreach ($list as $row) {
-					$string = $row[0];
-					if (
-						(strpos($string, '<') === false)
-						&& (strpos($string, '>') === false)
-					) {
-						$text .= $string;
-					} else {
-						$tags[] = $string;
-						$text .= self::MAGIC_DELIMITER;
-					}
+			foreach ($list as $row) {
+				$string = $row[0];
+				if (
+					(strpos($string, '<') === false)
+					&& (strpos($string, '>') === false)
+				) {
+					$text .= $string;
+				} else {
+					$tags[] = $string;
+					$text .= self::MAGIC_DELIMITER;
 				}
-			} else {
-				$text = $list[0][0];
 			}
 			
 			$text = $this->typographize($text);
@@ -146,7 +142,7 @@
 		
 		private function typographize($text)
 		{
-			if (strlen($text) < 2)
+			if (mb_strlen($text) < 2)
 				return $text;
 			
 			return
