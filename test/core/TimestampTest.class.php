@@ -171,12 +171,12 @@
 			$this->assertEquals($time->getSecond(), $second);
 			
 			$this->assertEquals(
-				$time->toString(),
+				$time->toTimeString(),
 				sprintf('%02d:%02d', $time->getHour(), $time->getMinute())
 			);
 			
 			$this->assertEquals(
-				$time->toFullString(),
+				$time->toString(),
 				sprintf(
 					'%02d:%02d:%02d',
 					$time->getHour(), $time->getMinute(), $time->getSecond()

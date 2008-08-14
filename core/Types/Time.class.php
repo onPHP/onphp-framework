@@ -215,7 +215,7 @@
 		}
 		
 		/// HH:MM
-		public function toString($delimiter = ':')
+		public function toTimeString($delimiter = ':')
 		{
 			if ($this->value === null)
 				$this->value =
@@ -227,10 +227,10 @@
 		}
 		
 		/// HH:MM:SS
-		public function toFullString($delimiter = ':')
+		public function toString($delimiter = ':')
 		{
 			return
-				$this->toString($delimiter)
+				$this->toTimeString($delimiter)
 				.$delimiter.(
 					$this->second
 						? $this->doublize($this->second)

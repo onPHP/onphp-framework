@@ -1,5 +1,10 @@
 # $Id$
 
+2008-08-14	Konstantin V. Arkhipov
+
+	* core/Types/Time.class.php: toFullString() replaced by toString(),
+	toTimeString() introduced.
+
 2008-08-12	Vladlen Y. Koshelev
 
 	* core/Form/Filters/RussianTypograph.class.php: standalone tag content
