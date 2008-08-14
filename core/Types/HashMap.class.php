@@ -26,7 +26,7 @@
 		/**
 		 * @return HashMap
 		**/
-		public function setValue($value)
+		public function setValue(/* array */ $value)
 		{
 			if (is_array($value)) {
 				$this->checkLimits(count($value));
