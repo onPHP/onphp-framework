@@ -101,7 +101,11 @@
 		
 		public function importMarried($scope)
 		{
-			if (!$this->isMarriedEmpty($scope)) {
+			if (
+				BasePrimitive::import($scope)
+				&& is_array($scope[$this->name])
+				&& !$this->isMarriedEmpty($scope)
+			) {
 				$this->raw = $scope[$this->name];
 				$this->imported = true;
 				
