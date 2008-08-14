@@ -1,5 +1,11 @@
 # $Id$
 
+2008-08-14	Konstantin V. Arkhipov
+
+	* core/OSQL/InsertOrUpdateQuery.class.php: lazySet() now aware of
+	broken Time::toString(), which is fixed in trunk by removal of
+	toFullString() in favour of correct toString().
+
 2008-08-12	Vladlen Y. Koshelev
 
 	* core/Form/Filters/RussianTypograph.class.php: standalone tag content

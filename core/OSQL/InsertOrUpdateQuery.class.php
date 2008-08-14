@@ -75,6 +75,8 @@
 				$this->
 					set($field.'_start', $object->getStart())->
 					set($field.'_end', $object->getEnd());
+			elseif ($object instanceof Time)
+				$this->set($field, $object->toFullString());
 			elseif ($object instanceof Stringable)
 				$this->set($field, $object->toString());
 			else
