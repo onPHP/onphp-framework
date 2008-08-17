@@ -142,5 +142,50 @@
 				'Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 Nokia6120c/4.21; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, l'
 			);
 		}
+		
+		public function testCallChain()
+		{
+			$chain =
+				CallChain::create()->
+				add(Filter::nl2br())->
+				add(Filter::htmlSpecialChars());
+			
+			$text = "foo\nbar&";
+			
+			$this->assertEquals(
+				$chain->call('apply', $text),
+				$chain->apply($text)
+			);
+			
+			try {
+				$chain->undefinedMethod();
+			} catch (BaseException $e) {
+				// passed
+			}
+			
+			try {
+				CallChain::create()->call('foo', 'bar');
+			} catch (WrongStateException $e) {
+				// passed
+			}
+			
+			try {
+				CallChain::create()->add(
+					IdentifiableObject::wrap(112233)
+				)->
+				undefinedMethod();
+			} catch (BaseException $e) {
+				// passed;
+			}
+			
+			try {
+				CallChain::create()->add(
+					IdentifiableObject::wrap(332211)
+				)->
+				call('undefinedMethod');
+			} catch (BaseException $e) {
+				// passed;
+			}
+		}
 	}
 ?>

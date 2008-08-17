@@ -1,5 +1,9 @@
 # $Id$
 
+2008-08-17	Garmonbozia Research Group
+
+	* main/Base/CallChain.class.php: helper introduced.
+
 2008-08-14	Konstantin V. Arkhipov
 
 	* core/Types/Time.class.php: toFullString() replaced by toString(),
