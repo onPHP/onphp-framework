@@ -152,6 +152,9 @@
 	 * @defgroup Crypto Diffie-Hellman Key Agreement Method (RFC-2631) implementation
 	 * @ingroup Main
 	 *
+	 * @defgroup OQL Object Query Language based on Criteria
+	 * @ingroup Main
+	 *
 	 * @defgroup OpenId OpenId implementation
 	 * @ingroup Main
 	 *
