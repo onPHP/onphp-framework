@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2009 by Garmonbozia Research Group                      *
+ *   Copyright (C) 2008 by Garmonbozia Research Group                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -41,12 +41,13 @@
 				throw new WrongStateException();
 			
 			$args = func_get_args();
+			$args = array_shift($args);
 			
-			if (count($args) > 1)
+			if (count($args))
 				foreach ($this->chain as $object)
 					$result = call_user_func_array(
 						array($object, $method),
-						array_shift($args)
+						$args
 					);
 			else
 				foreach ($this->chain as $object)
