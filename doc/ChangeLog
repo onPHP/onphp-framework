@@ -23,7 +23,7 @@
 
 2008-08-11	Vladlen Y. Koshelev
 
-	* core/OQL/: OQL select query parser.
+	* main/OQL/: OQL select query parser.
 	
 	* test/core/OqlTokenizerTest.class.php, OqlSelectTest.class.php:
 	corresponding tests.
