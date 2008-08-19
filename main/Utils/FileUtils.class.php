@@ -134,26 +134,19 @@
 					throw new WrongArgumentException($e->getMessage());
 				}
 			} else {
-				if (!$handle = opendir($directory))
-					throw new WrongArgumentException(
-						'cannot read directory '.$directory
-					);
-
-				while (($item = readdir($handle)) !== false) {
-					if ($item == '.' || $item == '..')
+				$directoryIterator = new DirectoryIterator($directory);
+				
+				foreach ($directoryIterator as $file) {
+					if ($file->isDot())
 						continue;
-
-					$path = $directory.DIRECTORY_SEPARATOR.$item;
-
-					if (is_dir($path))
-						self::removeDirectory($path, $recursive);
-					elseif (!unlink($path))
+					
+					if ($file->isDir())
+						self::removeDirectory($file->getPathname(), $recursive);
+					elseif (!unlink($file->getPathname()))
 						throw new WrongStateException(
-							"cannot unlink {$path}"
+							"cannot unlink {$file->getPathname()}"
 						);
 				}
-
-				closedir($handle);
 				
 				try {
 					rmdir($directory);
