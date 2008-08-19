@@ -97,4 +97,23 @@
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
+	
+	<class name="TestItem" type="final">
+		<properties>
+			<identifier />
+			<property name="subItems" type="TestSubItem" relation="OneToMany" required="false" />
+			<property name="name" type="String" size="50" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+	
+	<class name="TestSubItem" type="final">
+		<properties>
+			<identifier />
+			<property name="item" type="TestItem" relation="OneToOne" required="true" column="test_item_id" />
+			<property name="incapsulant" type="TestIncapsulant" relation="OneToOne" required="true" />
+			<property name="name" type="String" size="50" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
 </classes></metaconfiguration>

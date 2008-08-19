@@ -246,6 +246,109 @@
 				$this->assertEquals($incapsulantsList[$i], $i);
 		}
 		
+		public function testWorkingWithCache()
+		{
+			$this->create();
+			
+			foreach (DBTestPool::me()->getPool() as $connector => $db) {
+				DBPool::me()->setDefault($db);
+				
+				$item =
+					TestItem::create()->
+					setName('testItem1');
+				
+				TestItem::dao()->add($item);
+				
+				$incapsulant =
+					TestIncapsulant::create()->
+					setName('testIncapsulant1');
+				
+				TestIncapsulant::dao()->add($incapsulant);
+				
+				$subItem1 =
+					TestSubItem::create()->
+					setName('testSubItem1')->
+					setIncapsulant($incapsulant)->
+					setItem($item);
+				
+				$subItem2 =
+					TestSubItem::create()->
+					setName('testSubItem2')->
+					setIncapsulant($incapsulant)->
+					setItem($item);
+			
+				TestSubItem::dao()->add($subItem1);
+				TestSubItem::dao()->add($subItem2);
+				
+				$items =
+					Criteria::create(TestItem::dao())->
+					getList();
+				
+				foreach ($items as $item) {
+					foreach ($item->getSubItems()->getList() as $subItem) {
+						$this->assertEquals(
+							$subItem->getIncapsulant()->getName(),
+							'testIncapsulant1'
+						);
+					}
+				}
+				
+				$incapsulant = TestIncapsulant::dao()->getById(1);
+				
+				$incapsulant->setName('testIncapsulant1_changed');
+				
+				TestIncapsulant::dao()->save($incapsulant);
+				
+				// drop identityMap
+				TestIncapsulant::dao()->dropIdentityMap();
+				TestSubItem::dao()->dropIdentityMap();
+				TestItem::dao()->dropIdentityMap();
+				
+				$items =
+					Criteria::create(TestItem::dao())->
+					getList();
+				
+				foreach ($items as $item) {
+					foreach ($item->getSubItems()->getList() as $subItem) {
+						$this->assertEquals(
+							$subItem->getIncapsulant()->getName(),
+							'testIncapsulant1_changed'
+						);
+					}
+				}
+				
+				// drop identityMap
+				TestIncapsulant::dao()->dropIdentityMap();
+				TestSubItem::dao()->dropIdentityMap();
+				TestItem::dao()->dropIdentityMap();
+				
+				$subItem = TestSubItem::dao()->getById(1);
+				
+				$this->assertEquals(
+					$subItem->getIncapsulant()->getName(),
+					'testIncapsulant1_changed'
+				);
+				
+				// drop identityMap
+				TestIncapsulant::dao()->dropIdentityMap();
+				TestSubItem::dao()->dropIdentityMap();
+				TestItem::dao()->dropIdentityMap();
+				
+				$subItems =
+					Criteria::create(TestSubItem::dao())->
+					getList();
+				
+				foreach ($subItems as $subItem) {
+					$this->assertEquals(
+						$subItem->getIncapsulant()->getName(),
+						'testIncapsulant1_changed'
+					);
+				}
+			}
+			
+			$this->drop();
+		}
+		
 		protected function getSome()
 		{
 			for ($i = 1; $i < 3; ++$i) {
