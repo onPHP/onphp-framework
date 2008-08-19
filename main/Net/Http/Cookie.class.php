@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Http
 	**/
-	final class Cookie
+	final class Cookie extends CollectionItem
 	{
 		private $name		= null;
 		private $value		= null;
@@ -33,7 +33,7 @@
 		
 		public function __construct($name)
 		{
-			$this->name = $name;
+			$this->id = $this->name = $name;
 		}
 		
 		public function getName()
@@ -123,8 +123,8 @@
 		{
 			if (headers_sent())
 				throw new WrongStateException('headers already send');
-				
-			return 
+			
+			return
 				setcookie(
 					$this->getName(),
 					$this->getValue(),
@@ -135,6 +135,5 @@
 					$this->getHttpOnly()
 				);
 		}
-		
 	}
 ?>
