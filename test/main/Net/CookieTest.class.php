@@ -30,7 +30,6 @@
 						setMaxAge(60*60)
 				)->
 				httpSetAll();
-			
 		}
 	}
 ?>

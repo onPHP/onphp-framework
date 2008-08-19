@@ -16,10 +16,8 @@
 	 *
 	 * @ingroup Http
 	**/
-	final class CookieCollection
+	final class CookieCollection extends AbstractCollection
 	{
-		private $cookies = array();
-		
 		/**
 		 * @return CookieCollection
 		 */
@@ -28,82 +26,12 @@
 			return new self;
 		}
 		
-		public function add(Cookie $cookie)
-		{
-			$this->cookies[$cookie->getName()] = $cookie;
-			
-			return $this;
-		}
-		
-		public function addAll(array /*of Cookies*/ $cookies)
-		{
-			foreach ($cookies as $cookie)
-				$this->cookies[$cookie->getName()] = $cookie;
-				
-			return $this;
-		}
-		
-		public function clear()
-		{
-			$this->cookies = array();
-			
-			return $this;
-		}
-		
-		public function contains(Cookie $cookie)
-		{
-			return isset($this->cookies[$cookie->getName()]);
-		}
-		
-		public function containsAll(array /*of Cookies*/ $cookies)
-		{
-			return (array_intersect($cookies, $this->cookies) == $cookies);
-		}
-		
-		public function isEmpty()
-		{
-			return (count($this->cookies) == 0);
-		}
-		
-		public function size()
-		{
-			return count($this->cookies);
-		}
-		
-		public function remove(Cookie $cookie)
-		{
-			if (isset($this->cookies[$cookie->getName()]))
-				unset($this->cookies[$cookie->getName()]);
-				
-			return $this;
-		}
-		
-		public function removeAll(array /*of Cookies*/ $cookies)
-		{
-			$this->cookies = array_diff($this->cookies, $cookies);
-			
-			return $this;
-		}
-		
-		public function retainAll(array /*of Cookies*/ $cookies)
-		{
-			$this->cookies = $cookies;
-			
-			return $this;
-		}
-		
-		public function getList()
-		{
-			return $this->cookies;
-		}
-		
 		public function httpSetAll()
 		{
-			foreach ($this->cookies as $cookie)
-				$cookie->httpSet();
+			foreach ($this->items as $item)
+				$item->httpSet();
 				
 			return $this;
 		}
-
 	}
 ?>
