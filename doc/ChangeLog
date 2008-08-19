@@ -1,5 +1,10 @@
 # $Id$
 
+2008-08-19	Ivan Y. Khvostishkov
+
+	* main/Net/Http/Cookie.class.php, CookieCollection.class.php: thanx to
+	Evgeny V. Kokovikhin <dovg@dovg.ru>.
+
 2008-08-17	Garmonbozia Research Group
 
 	* main/Base/CallChain.class.php: helper introduced.
