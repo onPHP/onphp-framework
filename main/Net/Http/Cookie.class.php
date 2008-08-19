@@ -25,7 +25,7 @@
 		
 		/**
 		 * @return Cookie
-		 */
+		**/
 		public static function create($name)
 		{
 			return new self($name);
