@@ -35,7 +35,7 @@
 		{
 			Assert::classExists($worker);
 			
-			if ($this->modifiedIds) {	
+			if ($this->modifiedIds) {
 				$workerObject = new $worker($this->dao);
 				
 				$workerObject->uncacheByIds($this->modifiedIds);
