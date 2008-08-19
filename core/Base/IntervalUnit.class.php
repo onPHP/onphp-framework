@@ -33,7 +33,7 @@
 		
 		/**
 		 * @return Timestamp
-		 *
+		 * 
 		 * Emulates PostgreSQL's date_tunc() function
 		 * 
 		**/
@@ -82,7 +82,7 @@
 					$monthsCount += 0.1; // delta
 				
 				$truncated = (int)(
-					$function($monthsCount / $this->months) * 
+					$function($monthsCount / $this->months) *
 						($this->months)
 				);
 				

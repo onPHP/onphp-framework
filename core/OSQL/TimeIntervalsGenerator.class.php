@@ -137,7 +137,7 @@
 		
 		/**
 		 * @return DialectString
-		 *
+		 * 
 		 * FIXME: DBI-result, method works only for PostgreSQL.
 		 * Research how to generate series of values in MySQL and implement
 		 * this.
