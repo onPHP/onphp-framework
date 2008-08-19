@@ -681,8 +681,6 @@ EOT;
 					
 					if ($this->type instanceof InternalType)
 						$toString = null;
-					elseif($this->type instanceof TimeType)
-						$toString = '->toFullString()';
 					else
 						$toString = '->toString()';
 					
