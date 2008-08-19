@@ -1,9 +1,9 @@
 # $Id$
 
-2008-08-19	Ivan Y. Khvostishkov
+2008-08-19	Evgeny V. Kokovikhin
 
-	* main/Net/Http/Cookie.class.php, CookieCollection.class.php: thanx to
-	Evgeny V. Kokovikhin <dovg@dovg.ru>.
+	* main/Net/Http/Cookie.class.php, CookieCollection.class.php: new
+	javaisms introduced.
 
 2008-08-17	Garmonbozia Research Group
 
