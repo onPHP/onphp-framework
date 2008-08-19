@@ -124,7 +124,7 @@
 				strtolower(
 					pathinfo($fileName, PATHINFO_EXTENSION)
 				);
-				
+			
 			$anyImageType = new self(self::getAnyId());
 			$extensionList = $anyImageType->getExtensionList();
 			

@@ -34,7 +34,7 @@
 			
 			return null;
 		}
-
+		
 		public function getEndStamp() // null if end is null
 		{
 			if ($end = $this->getEnd()) {
