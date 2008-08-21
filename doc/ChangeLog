@@ -1,5 +1,12 @@
 # $Id$
 
+2008-08-21	Konstantin V. Arkhipov
+
+	* main/Base/AbstractProtoClass.class.php,
+	main/Base/LightMetaProperty.class.php: unneeded encapsulant's
+	prefetching eliminated, problem was spatted by Denis Shumeev
+	<denis-shumeev@yandex.ru>.
+
 2008-08-19	Evgeny V. Kokovikhin
 
 	* main/Net/Http/Cookie.class.php, CookieCollection.class.php: new

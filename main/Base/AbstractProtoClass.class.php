@@ -101,7 +101,7 @@
 		
 		public static function makeOnlyObject($className, $array, $prefix = null)
 		{
-			return self::assemblyObject(new $className, false, $array, $prefix);
+			return self::assemblyObject(new $className, $array, $prefix);
 		}
 		
 		public static function completeObject(Prototyped $object)
@@ -329,7 +329,9 @@
 							$proto->storage[$proto->depth][$setter][] = $inner;
 						else
 							$object->$setter(
-								$inner->dao()->getById($inner->getId())
+								$inner->dao()->getById(
+									$inner->getId()
+								)
 							);
 					} elseif (
 						$proto->depth
@@ -344,7 +346,7 @@
 		}
 		
 		private static function assemblyObject(
-			Prototyped $object, $encapsulants, $array, $prefix = null
+			Prototyped $object, $array, $prefix = null
 		)
 		{
 			if ($object instanceof DAOConnected)
@@ -352,7 +354,9 @@
 			else
 				$dao = null;
 			
-			foreach ($object->proto()->getPropertyList() as $property) {
+			$proto = $object->proto();
+			
+			foreach ($proto->getPropertyList() as $property) {
 				$setter = $property->getSetter();
 				
 				if ($property instanceof InnerMetaProperty) {
@@ -361,58 +365,17 @@
 					);
 				} elseif ($property->isBuildable($array, $prefix)) {
 					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
-						$columnName = $prefix.$property->getColumnName();
-						
 						if (
 							$property->getFetchStrategyId()
 							== FetchStrategy::LAZY
 						) {
+							$columnName = $prefix.$property->getColumnName();
+							
 							$object->
-								{$property->getSetter().'Id'}($array[$columnName]);
+								{$setter.'Id'}($array[$columnName]);
 							
 							continue;
 						}
-						
-						$className = $property->getClassName();
-						
-						Assert::classExists($className);
-						
-						$isEnum = (
-							$className
-							&& is_subclass_of($className, 'Enumeration')
-						);
-						
-						if ($encapsulants) {
-							$value =
-								$property->toValue(
-									$dao,
-									array(
-										$columnName =>
-											$object->
-												{$property->getGetter()}()->
-													getId()
-									),
-									$prefix
-								);
-						} else {
-							if (!$isEnum) {
-								$value = new $className();
-								
-								$value->setId(
-									$array[$columnName]
-								);
-							} else {
-								$value = $array[$columnName];
-							}
-						}
-						
-						if ($isEnum) {
-							$value = new $className($value);
-						}
-						
-						$object->$setter($value);
-						
-						continue;
 					}
 					
 					$object->$setter($property->toValue($dao, $array, $prefix));
