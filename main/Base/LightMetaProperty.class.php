@@ -359,10 +359,7 @@
 		
 		public function toValue(ProtoDAO $dao = null, $array, $prefix = null)
 		{
-			if ($dao && ($this->getFetchStrategyId() == FetchStrategy::JOIN))
-				$raw = $array[$dao->getJoinPrefix($this->columnName, $prefix)];
-			else
-				$raw = $array[$prefix.$this->columnName];
+			$raw = $array[$prefix.$this->columnName];
 			
 			if ($this->type == 'binary') {
 				return DBPool::getByDao($dao)->getDialect()->unquoteBinary($raw);
@@ -381,19 +378,32 @@
 			} elseif (
 				!$this->identifier
 				&& $this->className
-				&& !is_subclass_of($this->className, 'Enumeration')
 			) {
-				$remoteDao = call_user_func(array($this->className, 'dao'));
-				
-				if ($this->strategyId == FetchStrategy::JOIN) {
-					return $remoteDao->makeObject(
-						$array,
-						$remoteDao->getJoinPrefix($this->columnName, $prefix)
+				if (!is_subclass_of($this->className, 'Enumeration')) {
+					$remoteDao = call_user_func(array($this->className, 'dao'));
+					
+					$joinPrefix = $remoteDao->getJoinPrefix(
+						$this->columnName,
+						$prefix
 					);
+					
+					$joined = (
+						($this->strategyId == FetchStrategy::JOIN)
+						|| isset($array[$joinPrefix.$remoteDao->getIdName()])
+					);
+					
+					if ($joined) {
+						return $remoteDao->makeObject($array, $joinPrefix);
+					} else {
+						// will be fetched later
+						// by AbstractProtoClass::fetchEncapsulants
+						$object = new $this->className;
+						$object->setId($raw);
+						
+						return $object;
+					}
 				} else {
-					Assert::isUnreachable();
-					// getById was here, but was removed
-					// due to prefetch @ AbstractProtoClass
+					return new $this->className($raw);
 				}
 			}
 			
