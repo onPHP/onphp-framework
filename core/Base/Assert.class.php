@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -69,6 +69,12 @@
 		public static function isString(&$variable, $message = null)
 		{
 			if (!is_string($variable))
+				self::fail($message);
+		}
+		
+		public static function isScalar($variable, $message = null)
+		{
+			if (!is_scalar($variable))
 				self::fail($message);
 		}
 		
