@@ -25,10 +25,9 @@
 		
 		public function __construct($field, $words, $logic)
 		{
-			Assert::isTrue(
-				is_string($field) ||
-				$field instanceof DBField
-			);
+			if ($field instanceof DBField)
+				$field = $field->getTable();
+			
 			Assert::isArray($words);
 			
 			$this->field = $field;
@@ -42,7 +41,7 @@
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
 			return new $this(
-				$dao->guessAtom($this->field, $query),
+				$dao->guessAtom(DBField::create($this->field, $dao->getTable()), $query),
 				$this->words,
 				$this->logic
 			);
