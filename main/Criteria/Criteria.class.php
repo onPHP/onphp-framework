@@ -470,7 +470,18 @@
 					($property instanceof LightMetaProperty)
 					&& $property->getRelationId() == MetaRelation::ONE_TO_ONE
 					&& !$property->isGenericType()
-					&& $property->getFetchStrategyId() == FetchStrategy::JOIN
+					&& (
+						(
+							!$property->getFetchStrategyId()
+							&& (
+								$this->getFetchStrategy()->getId()
+								== FetchStrategy::JOIN
+							)
+						) || (
+							$property->getFetchStrategyId()
+							== FetchStrategy::JOIN
+						)
+					)
 				) {
 					if (
 						is_subclass_of(
