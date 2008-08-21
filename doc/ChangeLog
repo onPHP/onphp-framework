@@ -2,6 +2,9 @@
 
 2008-08-21	Konstantin V. Arkhipov
 
+	* main/Criteria/Criteria.class.php: prevent useless join for lazy
+	properties too, spotted by Denis Shumeev <denis-shumeev@yandex.ru>.
+
 	* main/Base/AbstractProtoClass.class.php,
 	main/Base/LightMetaProperty.class.php: unneeded encapsulant's
 	prefetching eliminated, problem was spatted by Denis Shumeev
