@@ -379,6 +379,9 @@
 				!$this->identifier
 				&& $this->className
 			) {
+				// BOVM: prevents segfault on >=php-5.2.5
+				Assert::classExists($this->className);
+				
 				if (!is_subclass_of($this->className, 'Enumeration')) {
 					$remoteDao = call_user_func(array($this->className, 'dao'));
 					
