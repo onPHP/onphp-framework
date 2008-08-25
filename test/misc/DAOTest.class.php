@@ -276,7 +276,7 @@
 					setName('testSubItem2')->
 					setIncapsulant($incapsulant)->
 					setItem($item);
-			
+				
 				TestSubItem::dao()->add($subItem1);
 				TestSubItem::dao()->add($subItem2);
 				
@@ -344,6 +344,39 @@
 						'testIncapsulant1_changed'
 					);
 				}
+				
+				// test getByQuery
+				
+				$item = TestItem::dao()->getById(1);
+				
+				$this->assertEquals(
+					$item->getId(),
+					1
+				);
+				
+				$subItem = TestSubItem::dao()->getById(1);
+				
+				$this->assertEquals(
+					$subItem->getId(),
+					1
+				);
+				
+				$this->assertEquals(
+					$subItem->getItem()->getId(),
+					1
+				);
+				
+				$subItem =
+					Criteria::create(TestSubItem::dao())->
+					add(Expression::eqId('testItem', $item))->
+					setLimit(1)->
+					addOrder(OrderBy::create('id'))->
+					get();
+					
+				$this->assertEquals(
+					$subItem->getId(),
+					1
+				);
 			}
 			
 			$this->drop();
