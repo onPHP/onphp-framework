@@ -29,7 +29,7 @@
 		private $viewClassName	= 'SimplePhpView';
 		
 		/**
-		 * @return MultiPrefixPhpView
+		 * @return MultiPrefixPhpViewResolver
 		**/
 		public static function create()
 		{
@@ -37,7 +37,7 @@
 		}
 		
 		/**
-		 * @return MultiPrefixPhpView
+		 * @return MultiPrefixPhpViewResolver
 		**/
 		public function addFirstPrefix($prefix)
 		{
@@ -47,7 +47,7 @@
 		}
 		
 		/**
-		 * @return MultiPrefixPhpView
+		 * @return MultiPrefixPhpViewResolver
 		**/
 		public function addPrefix($prefix, $alias = null)
 		{
@@ -77,6 +77,7 @@
 		public function dropPrefixes()
 		{
 			$this->prefixes = array();
+			
 			return $this;
 		}
 		
@@ -111,11 +112,12 @@
 		}
 		
 		/**
-		 * @return MultiPrefixPhpView
+		 * @return MultiPrefixPhpViewResolver
 		**/
 		public function setPostfix($postfix)
 		{
 			$this->postfix = $postfix;
+			
 			return $this;
 		}
 		
@@ -150,7 +152,7 @@
 		}
 		
 		/**
-		 * @return MultiPrefixPhpView
+		 * @return MultiPrefixPhpViewResolver
 		**/
 		public function setViewClassName($viewClassName)
 		{

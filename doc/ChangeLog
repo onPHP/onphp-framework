@@ -1,5 +1,12 @@
 # $Id$
 
+2008-08-26	Vladlen Y. Koshelev
+
+	* main/Flow/ViewResolverChain.class.php: useful to resolve views using
+	different resolvers.
+
+	* main/Flow/ViewResolver.class.php: viewExists added to interface.
+
 2008-08-21	Konstantin V. Arkhipov
 
 	* main/Criteria/Criteria.class.php: prevent useless join for lazy
@@ -29,7 +36,7 @@
 	* core/Form/Filters/RussianTypograph.class.php: standalone tag content
 	mistakenly typographized; spotted by Sergey M. Skachkov.
 
-	* test/core/FiltersTest.class.php: corresponding test. 
+	* test/core/FiltersTest.class.php: corresponding test.
 
 2008-08-12	Denis M. Gabaidulin
 
