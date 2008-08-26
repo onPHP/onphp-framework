@@ -2,6 +2,10 @@
 
 2008-08-26	Konstantin V. Arkhipov
 
+	* core/Form/Primitives/PrimitiveClass.class.php,
+	test/core/PrimitiveClassTest.class.php: new primitive with
+	corresponding test introduced.
+
 	* global.inc.php.tpl: don't create useless fake classes in
 	__autoload_failed().
 
