@@ -85,7 +85,7 @@
 						// avoid dao "caching" here
 						// because of possible breakage in overriden properties
 						$object->$setter(
-							$object->dao()->getById(
+							$innerList[$i]->dao()->getById(
 								$innerList[$i]->getId()
 							)
 						);
