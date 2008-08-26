@@ -72,10 +72,8 @@
 				if (!$inner)
 					continue;
 				
-				$dao = $inner->dao();
-				
 				// put yet unmapped objects into dao's identityMap
-				$dao->getListByIds($ids);
+				$inner->dao()->getListByIds($ids);
 				
 				$i = 0;
 				
@@ -84,8 +82,10 @@
 						continue;
 					
 					if ($innerList[$i])
+						// avoid dao "caching" here
+						// because of possible breakage in overriden properties
 						$object->$setter(
-							$dao->getById(
+							$object->dao()->getById(
 								$innerList[$i]->getId()
 							)
 						);
