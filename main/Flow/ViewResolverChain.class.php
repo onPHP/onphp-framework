@@ -40,24 +40,29 @@
 		**/
 		public function resolveViewName($viewName)
 		{
-			Assert::isNotEmptyArray($this->chain, 'view resolver chain is empty');
-			
-			foreach ($this->chain as $resolver)
-				if ($resolver->viewExists($viewName))
-					return $resolver->resolveViewName($viewName);
-			
-			return EmptyView::create();
+			return
+				($resolver = $this->findResolver($viewName))
+					? $resolver->resolveViewName($viewName)
+					: EmptyView::create();
 		}
 		
 		public function viewExists($viewName)
+		{
+			return $this->findResolver($viewName) !== null;
+		}
+		
+		/**
+		 * @return ViewResolver
+		**/
+		private function findResolver($viewName)
 		{
 			Assert::isNotEmptyArray($this->chain, 'view resolver chain is empty');
 			
 			foreach ($this->chain as $resolver)
 				if ($resolver->viewExists($viewName))
-					return true;
+					return $resolver;
 			
-			return false;
+			return null;
 		}
 	}
 ?>
