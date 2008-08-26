@@ -89,7 +89,7 @@
 			);
 			
 			$img = '<img src="http://site.ru/img.gif" />';
-			$this->assertEquals(
+			$this->assertEqual(
 				$filter->apply($img),
 				$img
 			);
