@@ -20,9 +20,8 @@
 	/* void */ function __autoload_failed($classname, $message)
 	{
 		eval(
-			'class '.$classname.'{/*_*/}'
-			.'if (!class_exists("ClassNotFoundException", false)) { '
-			.'class ClassNotFoundException extends BaseException {/*_*/} }'
+			'if (!class_exists("ClassNotFoundException", false)) { '
+			.'final class ClassNotFoundException extends BaseException {/*_*/} }'
 			.'throw new ClassNotFoundException("'.$classname.': '.$message.'");'
 		);
 	}
