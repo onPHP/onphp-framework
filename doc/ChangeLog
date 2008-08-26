@@ -1,5 +1,10 @@
 # $Id$
 
+2008-08-26	Konstantin V. Arkhipov
+
+	* global.inc.php.tpl: don't create useless fake classes in
+	__autoload_failed().
+
 2008-08-12	Vladlen Y. Koshelev
 
 	* core/Form/Filters/RussianTypograph.class.php: standalone tag content
