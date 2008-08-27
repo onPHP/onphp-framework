@@ -1,5 +1,10 @@
 # $Id$
 
+2008-08-27	Vladlen Y. Koshelev
+
+	* core/Form/Primitives/PrimitiveClass.class.php,
+	test/core/PrimitiveClassTest.class.php: of() method and test added.
+
 2008-08-26	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/PrimitiveClass.class.php,

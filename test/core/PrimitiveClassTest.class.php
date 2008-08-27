@@ -13,5 +13,35 @@
 			$this->assertTrue($prm->importValue('IdentifiableObject'));
 			$this->assertEquals($prm->getValue(), 'IdentifiableObject');
 		}
+		
+		public function testOf()
+		{
+			$prm = Primitive::clazz('name');
+			
+			try {
+				$prm->of('InExIsNaNtClass');
+				$this->fail();
+			} catch (ClassNotFoundException $e) {
+				// pass
+			}
+			
+			$this->assertFalse(
+				$prm->
+					of('Enumeration')->
+					importValue('IdentifiableObject')
+			);
+			
+			$this->assertTrue(
+				$prm->
+					of('Identifiable')->
+					importValue('IdentifiableObject')
+			);
+			
+			$this->assertTrue(
+				$prm->
+					of('IdentifiableObject')->
+					importValue('IdentifiableObject')
+			);
+		}
 	}
 ?>
