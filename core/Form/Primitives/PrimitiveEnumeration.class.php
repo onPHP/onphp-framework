@@ -17,7 +17,7 @@
 	{
 		public function getTypeName()
 		{
-			return 'String';
+			return 'Scalar';
 		}
 		
 		public function getList()
