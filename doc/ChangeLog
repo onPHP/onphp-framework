@@ -1,5 +1,10 @@
 # $Id$
 
+2008-08-28	Konstantin V. Arkhipov
+
+	* core/Form/Primitives/PrimitiveEnumeration.class.php: now tries to
+	preserve type for integer values.
+
 2008-08-26	Konstantin V. Arkhipov
 
 	* global.inc.php.tpl: don't create useless fake classes in
