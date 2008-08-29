@@ -86,17 +86,7 @@
 		
 		public static function dayDifference(Date $left, Date $right)
 		{
-			return
-				gregoriantojd(
-					$right->getMonth(),
-					$right->getDay(),
-					$right->getYear()
-				)
-				- gregoriantojd(
-					$left->getMonth(),
-					$left->getDay(),
-					$left->getYear()
-				);
+			return floor(($right->toStamp() - $left->toStamp()) / 86400);
 		}
 		
 		public static function compare(Date $left, Date $right)
