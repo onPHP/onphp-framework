@@ -55,7 +55,6 @@
 		protected $raw		= null;
 		
 		protected $error		= null;
-		protected $errorLabel	= null;
 		
 		public function __construct($name)
 		{
@@ -242,11 +241,6 @@
 		public function getError()
 		{
 			return $this->error;
-		}
-		
-		public function getErrorLabel()
-		{
-			return $this->errorLabel;
 		}
 		
 		/**

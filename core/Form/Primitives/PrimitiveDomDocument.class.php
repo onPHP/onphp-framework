@@ -20,9 +20,10 @@
 		
 		const CACHE_PATH = 'xsd-cache/';
 		
-		private $schemaPath = null;
-		private $schemaContent = null;
+		private $schemaPath		= null;
+		private $schemaContent	= null;
 		
+		private $errorLabel	= null;
 		
 		/**
 		 * @return PrimitiveDomDocument
@@ -113,13 +114,18 @@
 			return true;
 		}
 		
+		public function getErrorLabel()
+		{
+			return $this->errorLabel;
+		}
+		
 		/**
 		 * @return RubberFileSystem
 		**/
 		private static function getCache()
 		{
 			static $result = null;
-		
+			
 			if (!$result)
 				$result = RubberFileSystem::create(self::CACHE_PATH);
 			
