@@ -15,12 +15,12 @@
 	**/
 	final class GoogleChartType extends Enumeration implements Stringable
 	{
-		const LINE 					= 0x1;
-		const TWO_DIMENSIONAL_PIE 	= 0x2;
+		const LINE					= 0x1;
+		const TWO_DIMENSIONAL_PIE	= 0x2;
 		
 		protected $names = array(
-			self::LINE 					=> 'lc',
-			self::TWO_DIMENSIONAL_PIE 	=> 'p',
+			self::LINE					=> 'lc',
+			self::TWO_DIMENSIONAL_PIE	=> 'p'
 		);
 		
 		private $paramName = 'cht';

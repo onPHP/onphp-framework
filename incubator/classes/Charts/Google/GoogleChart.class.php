@@ -9,7 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-	
+
 	/**
 	 * @ingroup GoogleChart
 	**/
@@ -17,11 +17,11 @@
 	{
 		const BASE_URL = 'http://chart.apis.google.com/chart?';
 		
-		protected $color 	= null;
-		protected $size 	= null;
-		protected $type 	= null;
-		protected $label 	= null;
-		protected $data 	= null;
+		protected $color	= null;
+		protected $size		= null;
+		protected $type		= null;
+		protected $label	= null;
+		protected $data		= null;
 		protected $legend	= null;
 		
 		/**

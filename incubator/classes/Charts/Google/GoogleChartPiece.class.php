@@ -9,15 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-	
+
 	/**
 	 * @ingroup GoogleChart
 	**/
 	final class GoogleChartPiece
 	{
-		private $title 	= null;
+		private $title	= null;
 		private $color	= null;
-		private $value 	= null;
+		private $value	= null;
 		
 		/**
 		 * @return GoogleChartPiece

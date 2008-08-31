@@ -9,23 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-	
+
 	/**
 	 * @ingroup GoogleChart
 	**/
 	final class GoogleChartLegendPositionType extends Enumeration
 		implements Stringable
 	{
-		const BOTTOM 	= 0x1;
+		const BOTTOM	= 0x1;
 		const TOP		= 0x2;
 		const LEFT		= 0x3;
 		const RIGHT		= 0x4;
 		
 		protected $names = array(
-			self::BOTTOM 	=> 'b',
-			self::TOP 		=> 't',
-			self::LEFT 		=> 'l',
-			self::RIGHT 	=> 'r'
+			self::BOTTOM	=> 'b',
+			self::TOP		=> 't',
+			self::LEFT		=> 'l',
+			self::RIGHT		=> 'r'
 		);
 		
 		private $paramName = 'chdlp';
