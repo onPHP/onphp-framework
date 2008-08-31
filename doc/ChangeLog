@@ -2,6 +2,8 @@
 
 2008-08-30	Konstantin V. Arkhipov
 
+	* test/: correct test's skipping added.
+
 	* core/Cache/Memcached.class.php: mark peer as dead on link's failure.
 
 2008-08-28	Konstantin V. Arkhipov

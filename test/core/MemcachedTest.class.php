@@ -7,6 +7,10 @@
 		{
 			$cache = Memcached::create('localhost');
 			
+			if (!$cache->isAlive()) {
+				return $this->markTestSkipped('memcached not available');
+			}
+			
 			$cache->clean();
 			
 			$value = 'a';
@@ -22,6 +26,10 @@
 		{
 			$cache = Memcached::create('localhost');
 
+			if (!$cache->isAlive()) {
+				return $this->markTestSkipped('memcached not available');
+			}
+			
 			$cache->clean();
 			
 			$cache->set('a', 'a', Cache::EXPIRES_MEDIUM);

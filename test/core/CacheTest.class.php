@@ -18,7 +18,7 @@
 			);
 			
 			if (!Cache::me()->isAlive()) {
-				return $this->skip();
+				return $this->markTestSkipped('memcached not available');
 			}
 			
 			for ($i = 0; $i < self::QUERIES; ++$i) {

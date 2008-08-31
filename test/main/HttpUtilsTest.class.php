@@ -25,8 +25,7 @@
 					setTimeout(3)->
 					send($request);
 			} catch (NetworkException $e) {
-				// ok, we're networkless
-				return;
+				return $this->markTestSkipped('no network available');
 			}
 			
 			$this->assertEquals(

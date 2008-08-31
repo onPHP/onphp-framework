@@ -115,7 +115,7 @@
 				try {
 					dl('gmp.so');
 				} catch (BaseException $e) {
-					return;
+					return $this->markTestSkipped('gmp module not available');
 				}
 			}
 			
