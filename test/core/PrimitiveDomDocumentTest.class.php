@@ -114,9 +114,13 @@ EOF;
 		
 		public function testBadSchemaFormat()
 		{
-			$prm =
-				Primitive::domDocument('dom')->
-				ofXsd('http://example.com/');
+			try {
+				$prm =
+					Primitive::domDocument('dom')->
+					ofXsd('http://example.com/');
+			} catch (IOException $e) {
+				return $this->markTestSkipped('no network available');
+			}
 			
 			$this->assertFalse($prm->importValue('<body />'));
 			
@@ -133,7 +137,6 @@ EOF;
 			return
 				Primitive::domDocument('dom')->
 				ofXsd($this->schema);
-			
 		}
 	}
 ?>
