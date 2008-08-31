@@ -22,7 +22,7 @@
 		protected $type 	= null;
 		protected $label 	= null;
 		protected $data 	= null;
-		protected $legend = null;
+		protected $legend	= null;
 		
 		/**
 		 * @return GoogleChart
@@ -82,6 +82,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return GoogleChart
+		**/
 		public function setLegend(GoogleChartLegend $legend)
 		{
 			$this->legend = $legend;
@@ -93,9 +96,16 @@
 		{
 			$url = self::BASE_URL;
 			
+			Assert::isNotNull($this->type);
 			$parameters[] = $this->type->toString();
+			
+			Assert::isNotNull($this->size);
 			$parameters[] = $this->size->toString();
+			
+			Assert::isNotNull($this->color);
 			$parameters[] = $this->color->toString();
+			
+			Assert::isNotNull($this->data);
 			$parameters[] = $this->data->toString();
 			
 			if ($this->legend)
