@@ -19,11 +19,17 @@
 		private $color	= null;
 		private $value 	= null;
 		
+		/**
+		 * @return GoogleChartPiece
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return GoogleChartPiece
+		**/
 		public function setTitle($title)
 		{
 			$this->title = $title;
@@ -36,6 +42,9 @@
 			return $this->title;
 		}
 		
+		/**
+		 * @return GoogleChartPiece
+		**/
 		public function setColor(Color $color)
 		{
 			$this->color = $color;
@@ -43,11 +52,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Color
+		**/
 		public function getColor()
 		{
 			return $this->color;
 		}
 		
+		/**
+		 * @return GoogleChartPiece
+		**/
 		public function setValue($value)
 		{
 			$this->value = $value;

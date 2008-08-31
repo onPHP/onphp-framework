@@ -36,6 +36,9 @@
 				);
 		}
 		
+		/**
+		 * @return GoogleChartLegend
+		**/
 		public function setPosition(GoogleChartLegendPositionType $type)
 		{
 			$this->position = $type;
