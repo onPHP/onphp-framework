@@ -2,6 +2,8 @@
 
 2008-08-30	Konstantin V. Arkhipov
 
+	* core/Cache/Memcached.class.php: mark peer as dead on link's failure.
+
 	* core/Form/Primitives/BasePrimitive.class.php,
 	core/Form/Primitives/PrimitiveDomDocument.class.php: getErrorLabel()
 	moved down to PrimitiveDomDocument because no one else uses it.
