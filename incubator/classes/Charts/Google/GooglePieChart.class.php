@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	class GooglePieChart extends GoogleChart
+	final class GooglePieChart extends GoogleChart
 	{
 		/**
 		 * @return GooglePieChart
