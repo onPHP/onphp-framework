@@ -1,5 +1,9 @@
 # $Id$
 
+2008-08-30	Konstantin V. Arkhipov
+
+	* core/Cache/Memcached.class.php: mark peer as dead on link's failure.
+
 2008-08-28	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/PrimitiveEnumeration.class.php: now tries to
