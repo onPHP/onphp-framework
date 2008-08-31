@@ -205,5 +205,27 @@
 			
 			return $nameParts;
 		}
+		
+		/* void */ public static function preloadAllClasses()
+		{
+			foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
+				foreach (
+					glob(
+						$directory.DIRECTORY_SEPARATOR.'/*'.EXT_CLASS,
+						GLOB_NOSORT
+					)
+					as $file
+				) {
+					$className = basename($file, EXT_CLASS);
+					
+					if (
+						!class_exists($className)
+						&& !interface_exists($className)
+					) {
+						include $file;
+					}
+				}
+			}
+		}
 	}
 ?>

@@ -2,6 +2,10 @@
 
 2008-08-30	Konstantin V. Arkhipov
 
+	* main/Utils/ClassUtils.class.php, meta/bin/build.php: classes
+	preloading moved to ClassUtils::preloadAllClasses() from meta's
+	build script.
+
 	* test/: correct test's skipping added.
 
 	* core/Cache/Memcached.class.php: mark peer as dead on link's failure.
