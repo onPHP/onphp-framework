@@ -41,11 +41,11 @@
 			foreach ($set->getData() as $dataElement) {
 				if ($dataElement >= 0)
 					 $encodedString .=
-					 	$this->encodingChars[
-					 		round($this->length - 1)
-					 		* $dataElement
-					 		/ $this->maxValue
-					 	];
+						$this->encodingChars[
+							round($this->length - 1)
+							* $dataElement
+							/ $this->maxValue
+						];
 				else
 					$encodedString .= '_';
 			}
