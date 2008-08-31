@@ -53,9 +53,9 @@
 			try {
 				if ($this->link = @fsockopen($host, $port, $errno, $errstr, 1)) {
 					$this->alive = true;
-				
+					
 					$this->buffer = $buffer;
-				
+					
 					stream_set_blocking($this->link, true);
 				}
 			} catch (BaseException $e) {/*_*/}
@@ -73,6 +73,11 @@
 		**/
 		public function clean()
 		{
+			if (!$this->link) {
+				$this->alive = false;
+				return null;
+			}
+			
 			$this->sendRequest("flush_all\r\n");
 			
 			// flushing obligatory response - "OK\r\n"
@@ -83,8 +88,10 @@
 		
 		public function getList($indexes)
 		{
-			if (!$this->link)
+			if (!$this->link) {
+				$this->alive = false;
 				return null;
+			}
 			
 			$command = 'get '.implode(' ', $indexes)."\r\n";
 			
@@ -109,8 +116,10 @@
 		
 		public function get($index)
 		{
-			if (!$this->link)
+			if (!$this->link) {
+				$this->alive = false;
 				return null;
+			}
 			
 			$command = "get {$index}\r\n";
 			
