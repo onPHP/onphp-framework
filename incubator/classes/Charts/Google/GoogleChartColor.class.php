@@ -46,7 +46,7 @@
 			foreach ($this->colors as $color)
 				$queryString .= $color->toString().',';
 			
-			return $queryString;
+			return rtrim($queryString, ',');
 		}
 	}
 ?>
