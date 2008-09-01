@@ -1,5 +1,10 @@
 # $Id$
 
+2008-09-01	Konstantin V. Arkhipov
+
+	* core/Base/Assert.class.php: isEqual now behaves just like
+	!isNotEqual; isSame and isNotSame were also introduced.
+
 2008-08-30	Konstantin V. Arkhipov
 
 	* main/Utils/ClassUtils.class.php, meta/bin/build.php: classes
