@@ -171,7 +171,7 @@
 		
 		public static function isEqual($first, $second, $message = null)
 		{
-			if ($first !== $second)
+			if ($first != $second)
 				throw new WrongArgumentException(
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
@@ -180,6 +180,22 @@
 		public static function isNotEqual($first, $second, $message = null)
 		{
 			if ($first == $second)
+				throw new WrongArgumentException(
+					$message.', '.self::dumpOppositeArguments($first, $second)
+				);
+		}
+		
+		public static function isSame($first, $second, $message = null)
+		{
+			if ($first !== $second)
+				throw new WrongArgumentException(
+					$message.', '.self::dumpOppositeArguments($first, $second)
+				);
+		}
+		
+		public static function isNotSame($first, $second, $message = null)
+		{
+			if ($first === $second)
 				throw new WrongArgumentException(
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
