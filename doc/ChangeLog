@@ -25,6 +25,11 @@
 	* global.inc.php.tpl: don't create useless fake classes in
 	__autoload_failed().
 
+2008-08-22	Konstantin V. Arkhipov
+
+	* autoload.wholeClassCache.inc.php: new class cache type introduced
+	for people who can not turn off stat syscalls in opcode cachers.
+
 2008-08-21	Konstantin V. Arkhipov
 
 	* main/Criteria/Criteria.class.php: prevent useless join for lazy
