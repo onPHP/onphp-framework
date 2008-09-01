@@ -143,9 +143,9 @@
 				
 				$result = ($endMonthsCount - $startMonthsCount) / $this->months;
 			}
-			
-			Assert::isEqual(
-				$result, (int)$result,
+
+			Assert::isTrue(
+				$result == (int)$result,
 				'floating point mistake, arguments: '
 				.$this->name.', '
 				.$start->toStamp().', '.$end->toStamp().', '
