@@ -1,5 +1,9 @@
 # $Id$
 
+2008-09-02	Denis M. Gabaidulin
+
+	* main/Utils/DateUtils: makeFirstDayOfMonth(), makeLastDayOfMonth() added.
+
 2008-09-02	Vladlen Y. Koshelev
 
 	* core/Form/Primitives/PrimitiveEnumeration.class.php,

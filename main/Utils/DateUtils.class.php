@@ -42,5 +42,21 @@
 			
 			return $result;
 		}
+		
+		public static function makeFirstDayOfMonth(Date $date)
+		{
+			return
+				Timestamp::create(
+					mktime(0, 0, 0, $date->getMonth(), 1, $date->getYear())
+				);
+		}
+		
+		public static function makeLastDayOfMonth(Date $date)
+		{
+			return
+				Timestamp::create(
+					mktime(0, 0, 0, $date->getMonth() + 1, 0, $date->getYear())
+				);
+		}
 	}
 ?>
