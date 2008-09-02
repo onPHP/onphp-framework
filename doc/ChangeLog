@@ -1,5 +1,10 @@
 # $Id$
 
+2008-09-02	Vladlen Y. Koshelev
+
+	* core/Form/Primitives/PrimitiveEnumeration.class.php,
+	test/core/PrimitiveEnumerationTest.class.php: getList() fixed.
+
 2008-09-01	Konstantin V. Arkhipov
 
 	* core/Base/Assert.class.php: isEqual now behaves just like
