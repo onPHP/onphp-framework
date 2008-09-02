@@ -1,6 +1,6 @@
 # $Id$
 
-2008-09-02	Vladlen Y. Koshelev
+2008-09-02	Vladlen Y. Koshelev	<vlad.kosh@gmail.com>
 
 	* core/Form/PrimitiveEnumeration.class.php: getList() fixed.
 
