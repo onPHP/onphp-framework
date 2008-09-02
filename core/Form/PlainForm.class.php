@@ -55,6 +55,16 @@
 		}
 		
 		/**
+		 * @return PlainForm
+		**/
+		public function set(BasePrimitive $prm)
+		{
+			$this->primitives[$prm->getName()] = $prm;
+			
+			return $this;
+		}
+		
+		/**
 		 * @throws MissingElementException
 		 * @return Form
 		**/
