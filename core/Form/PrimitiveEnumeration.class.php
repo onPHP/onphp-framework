@@ -24,9 +24,11 @@
 			elseif ($this->default)
 				return $this->default->getObjectList();
 			else {
-				return new $this->className(
+				$object = new $this->className(
 					call_user_func(array($this->className, 'getAnyId'))
 				);
+				
+				return $object->getObjectList();
 			}
 			
 			/* NOTREACHED */
