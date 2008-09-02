@@ -40,43 +40,16 @@
 			
 			$this->dayDifferenceTest($left, $right, 1);
 			
-			// fail
 			$left = Timestamp::create('2008-03-29 03:00:00');
 			$right = Timestamp::create('2008-03-30 03:00:00');
 			
 			$this->dayDifferenceTest($left, $right, 1);
 
-			// change time from summer to winter
-			$left = Timestamp::create('2008-10-25 03:00:00');
-			$right = Timestamp::create('2008-10-26 02:59:00');
-			
-			$this->dayDifferenceTest($left, $right, 0);
-			
 			return $this;
-		}
-		
-		private function oldDayDifference(Date $left, Date $right)
-		{
-			return
-				gregoriantojd(
-					$right->getMonth(),
-					$right->getDay(),
-					$right->getYear()
-				)
-				- gregoriantojd(
-					$left->getMonth(),
-					$left->getDay(),
-					$left->getYear()
-				);
 		}
 		
 		private function dayDifferenceTest(Date $left, Date $right, $expected)
 		{
-			$this->assertEquals(
-				Date::dayDifference($left, $right),
-				$this->oldDayDifference($left, $right)
-			);
-			
 			$this->assertEquals(Date::dayDifference($left, $right), $expected);
 			
 			return $this;
