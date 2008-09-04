@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2006-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -41,7 +41,7 @@
 		}
 		
 		/**
-		 * ViewResolver
+		 * @return ViewResolver
 		**/
 		public function getResolver()
 		{
@@ -65,11 +65,17 @@
 			return ob_get_clean();
 		}
 		
+		/**
+		 * @return SimplePhpView
+		**/
 		protected function preRender()
 		{
 			return $this;
 		}
 		
+		/**
+		 * @return SimplePhpView
+		**/
 		protected function postRender()
 		{
 			return $this;
