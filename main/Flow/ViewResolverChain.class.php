@@ -40,10 +40,15 @@
 		**/
 		public function resolveViewName($viewName)
 		{
-			return
-				($resolver = $this->findResolver($viewName))
-					? $resolver->resolveViewName($viewName)
-					: EmptyView::create();
+			if ($resolver = $this->findResolver($viewName)) {
+				$view = $resolver->resolveViewName($viewName);
+				if ($view instanceof SimplePhpView)
+					$view->setResolver($this);
+				
+				return $view;
+				
+			} else
+				return EmptyView::create();
 		}
 		
 		public function viewExists($viewName)

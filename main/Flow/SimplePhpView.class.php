@@ -40,6 +40,24 @@
 			return $this;
 		}
 		
+		/**
+		 * ViewResolver
+		**/
+		public function getResolver()
+		{
+			return $this->partViewResolver;
+		}
+		
+		/**
+		 * @return SimplePhpView
+		**/
+		public function setResolver(ViewResolver $resolver)
+		{
+			$this->partViewResolver = $resolver;
+			
+			return $this;
+		}
+		
 		public function toString($model = null)
 		{
 			ob_start();

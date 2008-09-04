@@ -49,7 +49,7 @@
 				: $this->model;
 			
 			$model->set('rootModel', $rootModel);
-				
+			
 			$this->viewResolver->resolveViewName($partName)->render($model);
 			
 			return $this;
