@@ -88,7 +88,6 @@
 				return __autoload_failed($classname, $e->getMessage());
 			}
 			
-			// self-healing race with include above possible here
 			file_put_contents($cacheFile.'-'.$pid, $class, FILE_APPEND);
 			
 			$included[$cacheFile] = true;
