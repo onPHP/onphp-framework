@@ -24,6 +24,9 @@
 			$this->partViewResolver = $partViewResolver;
 		}
 		
+		/**
+		 * @return SimplePhpView
+		**/
 		public function render(Model $model = null)
 		{
 			if ($model)
