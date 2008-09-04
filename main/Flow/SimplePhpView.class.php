@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2006-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -24,6 +24,9 @@
 			$this->partViewResolver = $partViewResolver;
 		}
 		
+		/**
+		 * @return SimplePhpView
+		**/
 		public function render($model = null)
 		{
 			Assert::isTrue($model === null || $model instanceof Model);
@@ -38,6 +41,8 @@
 			include $this->templatePath;
 			
 			$this->postRender();
+			
+			return $this;
 		}
 		
 		public function toString($model = null)
@@ -47,11 +52,17 @@
 			return ob_get_clean();
 		}
 		
+		/**
+		 * @return SimplePhpView
+		**/
 		protected function preRender()
 		{
 			return $this;
 		}
 		
+		/**
+		 * @return SimplePhpView
+		**/
 		protected function postRender()
 		{
 			return $this;
