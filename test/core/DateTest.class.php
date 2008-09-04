@@ -32,7 +32,7 @@
 			$right = Timestamp::create('2008-01-13 13:01:17');
 			
 			$this->dayDifferenceTest($left, $right, 1);
-
+			
 			// change time from winter to summer
 			// 
 			$left = Timestamp::create('2008-03-29 02:00:00');
@@ -44,7 +44,12 @@
 			$right = Timestamp::create('2008-03-30 03:00:00');
 			
 			$this->dayDifferenceTest($left, $right, 1);
-
+			
+			// unsolved giv's case
+			// $left = Timestamp::create('2008-10-25 03:00:00');
+			// $right = Timestamp::create('2008-10-26 02:59:00');
+			// $this->dayDifferenceTest($left, $right, 0);
+			
 			return $this;
 		}
 		
