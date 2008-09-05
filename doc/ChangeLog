@@ -1,5 +1,10 @@
 # $Id$
 
+2008-09-05	Ivan Y. Khvostishkov
+
+	* main/Markup/Csv.class.php: partial Csv implementation (rendering),
+	thanks to Michael V. Tchervyakov <htonus@smtp.ru>.
+
 2008-09-04	Konstantin V. Arkhipov
 
 	* main/Base/ImageType.class.php: progressive jpeg type added, patch
