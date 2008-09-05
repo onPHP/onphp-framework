@@ -63,10 +63,7 @@
 			return $out;
 		}
 		
-		/**
-		 * @deprecated due to obsolete declaration
-		**/
-		public static function &convertToPlainList($list, $key)
+		public static function convertToPlainList($list, $key)
 		{
 			$out = array();
 			
