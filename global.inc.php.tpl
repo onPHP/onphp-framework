@@ -26,6 +26,13 @@
 		);
 	}
 	
+	// file extensions
+	define('EXT_CLASS', '.class.php');
+	define('EXT_TPL', '.tpl.html');
+	define('EXT_MOD', '.inc.php');
+	define('EXT_HTML', '.html');
+	define('EXT_UNIT', '.unit.php');
+	
 	// overridable constant, don't forget for trailing slash
 	// also you may consider using /dev/shm/ for cache purposes
 	if (!defined('ONPHP_TEMP_PATH'))
@@ -41,7 +48,11 @@
 	if (!defined('ONPHP_CLASS_CACHE_TYPE'))
 		define('ONPHP_CLASS_CACHE_TYPE', 'classPathCache');
 	
-	include dirname(__FILE__).'/autoload.'.ONPHP_CLASS_CACHE_TYPE.'.inc.php';
+	include
+		dirname(__FILE__).DIRECTORY_SEPARATOR
+		.'misc'.DIRECTORY_SEPARATOR
+		.'autoload.'
+		.ONPHP_CLASS_CACHE_TYPE.EXT_MOD;
 	
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
@@ -154,13 +165,4 @@
 		.'Documents'.DIRECTORY_SEPARATOR.PATH_SEPARATOR
 	*/
 	);
-	
-	define('ONPHP_CLASS_CACHE_CHECKSUM', '__occc');
-	
-	// file extensions
-	define('EXT_CLASS', '.class.php');
-	define('EXT_TPL', '.tpl.html');
-	define('EXT_MOD', '.inc.php');
-	define('EXT_HTML', '.html');
-	define('EXT_UNIT', '.unit.php');
 ?>

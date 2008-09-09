@@ -10,6 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 
+	define('ONPHP_CLASS_CACHE_CHECKSUM', '__occc');
+	
 	/* void */ function __autoload($classname)
 	{
 		// numeric indexes for directories, literal indexes for classes
