@@ -25,6 +25,9 @@
 	 * this class cache type useful only if you can't turn off
 	 * stat syscalls in your opcode cacher,
 	 * otherwise use classPathCache
+	 * 
+	 * cache directory *must* be created before using this cacher,
+	 * or it will fail with fatal error
 	**/
 	/* void */ function __autoload($classname)
 	{
