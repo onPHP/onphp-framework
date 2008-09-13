@@ -1,5 +1,10 @@
 # $Id$
 
+2008-09-13	Konstantin V. Arkhipov
+
+	* main/DAOs/GenericDAO.class.php: building of circular-dependent
+	objects solved.
+
 2008-09-05	Ivan Y. Khvostishkov
 
 	* main/Markup/Csv.class.php: partial Csv implementation (rendering),
