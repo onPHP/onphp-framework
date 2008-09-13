@@ -43,7 +43,11 @@
 			
 			return $this->addObjectToMap(
 				$this->completeObject(
-					$this->makeOnlyObject($array, $prefix)
+					// adding incomplete object to identity map
+					// solves case with circular-dependent objects
+					$this->addObjectToMap(
+						$this->makeOnlyObject($array, $prefix)
+					)
 				)
 			);
 		}
