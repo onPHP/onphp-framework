@@ -1,5 +1,9 @@
 # $Id$
 
+2008-09-15	Konstantin V. Arkhipov
+
+	* 1.0.7 released.
+
 2008-09-13	Konstantin V. Arkhipov
 
 	* main/DAOs/GenericDAO.class.php: building of circular-dependent
