@@ -81,14 +81,22 @@
 					if (isset($this->skipList[$this->depth][$object->getId()]))
 						continue;
 					
-					if ($innerList[$i])
-						// avoid dao "caching" here
-						// because of possible breakage in overriden properties
-						$object->$setter(
-							$innerList[$i]->dao()->getById(
-								$innerList[$i]->getId()
-							)
-						);
+					if ($innerList[$i]) {
+						try {
+							// avoid dao "caching" here
+							// because of possible breakage
+							// in overriden properties
+							$object->$setter(
+								$innerList[$i]->dao()->getById(
+									$innerList[$i]->getId()
+								)
+							);
+						} catch (ObjectNotFoundException $e) {
+							throw new WrongStateException(
+								'possible corruption found: '.$e->getMessage()
+							);
+						}
+					}
 					
 					++$i;
 				}

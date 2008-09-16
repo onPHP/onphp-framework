@@ -1,5 +1,10 @@
 # $Id$
 
+2008-09-16	Konstantin V. Arkhipov
+
+	* main/Base/AbstractProtoClass.class.php: WrongStateException added
+	for case with required but inexistant encapsulant.
+
 2008-09-15	Konstantin V. Arkhipov
 
 	* 1.0.7 released.
