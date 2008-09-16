@@ -1,5 +1,10 @@
 # $Id$
 
+2008-09-16	Konstantin V. Arkhipov
+
+	* main/Base/AbstractProtoClass.class.php: WrongStateException added
+	for case with required but inexistant encapsulant.
+
 2008-09-13	Konstantin V. Arkhipov
 
 	* main/DAOs/GenericDAO.class.php: building of circular-dependent
