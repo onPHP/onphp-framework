@@ -83,5 +83,10 @@
 		{
 			return call_user_func(array($this->getClassName(), 'proto'));
 		}
+		
+		public function isFormless()
+		{
+			return true;
+		}
 	}
 ?>

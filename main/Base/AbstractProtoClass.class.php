@@ -240,7 +240,8 @@
 				$property = $this->getPropertyByName($path);
 				
 				if (
-					($property->getFetchStrategyId() == FetchStrategy::LAZY)
+					!$property->isFormless()
+					&& ($property->getFetchStrategyId() == FetchStrategy::LAZY)
 				)
 					return $object;
 				

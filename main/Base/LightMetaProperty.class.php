@@ -480,5 +480,14 @@
 				)
 				.')';
 		}
+		
+		public function isFormless()
+		{
+			// NOTE: enum here formless types
+			if ($this->type == 'enumeration')
+				return true;
+			else
+				return false;
+		}
 	}
 ?>
