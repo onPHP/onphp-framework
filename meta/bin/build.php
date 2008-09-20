@@ -32,6 +32,9 @@ Possible options:
 	
 	--no-color:
 		do not use colored output.
+	
+	--with-enum-check-ref-integrity:
+		check enumeration reference integrity [EXPERIMENTAL:for the real nerds].
 
 <?php
 		exit(1);
@@ -127,7 +130,8 @@ Possible options:
 	// switches
 	$metaForce = $metaOnlyContainers = $metaNoSchema =
 	$metaNoSchemaCheck = $metaDropStaleFiles =
-	$metaNoIntegrityCheck = $metaDryRun = $metaNoColor = false;
+	$metaNoIntegrityCheck = $metaDryRun = 
+	$metaCheckEnumerationRefIntegrity = $metaNoColor = false;
 	
 	$args = $_SERVER['argv'];
 	array_shift($args);
@@ -166,6 +170,10 @@ Possible options:
 					
 					case '--no-color':
 						$metaNoColor = true;
+						break;
+					
+					case '--with-enum-check-ref-integrity':
+						$metaCheckEnumerationRefIntegrity = true;
 						break;
 					
 					default:
@@ -313,6 +321,9 @@ Possible options:
 			ClassUtils::preloadAllClasses();
 			
 			$out->infoLine('done.');
+			
+			if ($metaCheckEnumerationRefIntegrity)
+				$meta->setWithEnumerationRefIntegrityCheck(true);
 			
 			if (!$metaNoIntegrityCheck)
 				$meta->checkIntegrity();

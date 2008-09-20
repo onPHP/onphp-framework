@@ -28,6 +28,8 @@
 		private $forcedGeneration	= false;
 		private $dryRun				= false;
 		
+		private $checkEnumerationRefIntegrity = false;
+		
 		/**
 		 * @return MetaConfiguration
 		**/
@@ -72,6 +74,16 @@
 		public function isDryRun()
 		{
 			return $this->dryRun;
+		}
+		
+		/**
+		 * @return MetaConfiguration
+		**/
+		public function setWithEnumerationRefIntegrityCheck($orly)
+		{
+			$this->checkEnumerationRefIntegrity = $orly;
+			
+			return $this;
 		}
 		
 		/**
@@ -482,6 +494,13 @@
 						);
 						
 						$out->info(', ');
+						
+						if ($this->checkEnumerationRefIntegrity)
+							$this->checkEnumerationReferentialIntegrity(
+								$object,
+								$class->getTableName()
+							);
+						
 						continue;
 					}
 					
@@ -1274,6 +1293,57 @@
 					.print_r($public, true)
 				);
 			}
+			
+			return $this;
+		}
+		
+		private function checkEnumerationReferentialIntegrity(
+			Enumeration $enumeration, $tableName
+		)
+		{
+			$updateQueries = null;
+			
+			$db = DBPool::me()->getLink();
+			
+			$class = get_class($enumeration);
+			
+			$ids = array();
+			
+			$list = $enumeration->getObjectList();
+			
+			foreach ($list as $enumerationObject)
+				$ids[$enumerationObject->getId()] = $enumerationObject->getName();
+			
+			$rows =
+				$db->querySet(
+					OSQL::select()->from($tableName)->
+					multiGet('id', 'name')
+				);
+			
+			echo "\n";
+			
+			foreach ($rows as $row) {
+				if (!isset($ids[$row['id']]))
+					echo "Class '{$class}', strange id: {$row['id']} found. \n";
+				else {
+					if ($ids[$row['id']] != $row['name']) {
+						echo "Class '{$class}',id: {$row['id']} sync names. \n";
+						
+						$updateQueries .=
+							OSQL::update($tableName)->
+							set('name', $ids[$row['id']])->
+							where(Expression::eq('id', $row['id']))->
+							toDialectString($db->getDialect()) . ";\n";
+					}
+					
+					unset($ids[$row['id']]);
+				}
+			}
+			
+			foreach ($ids as $id => $name)
+				echo "Class '{$class}', id: {$id} not present in database. \n";
+			
+			echo $updateQueries;
 			
 			return $this;
 		}
