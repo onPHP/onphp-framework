@@ -22,9 +22,6 @@
 		abstract public function getTable();
 		abstract public function getObjectName();
 		
-		abstract public function makeOnlyObject($array, $prefix = null);
-		abstract public function completeObject(Identifiable $object);
-		
 		public function makeObject($array, $prefix = null)
 		{
 			if (
@@ -41,14 +38,29 @@
 				return $this->identityMap[$array[$idName]];
 			}
 			
-			return $this->addObjectToMap(
+			return
 				$this->completeObject(
-					// adding incomplete object to identity map
-					// solves case with circular-dependent objects
-					$this->addObjectToMap(
-						$this->makeOnlyObject($array, $prefix)
-					)
+					$this->makeOnlyObject($array, $prefix)
+				);
+		}
+		
+		public function makeOnlyObject($array, $prefix = null)
+		{
+			// adding incomplete object to identity map
+			// solves case with circular-dependent objects
+			return $this->addObjectToMap(
+				$this->getProtoClass()->makeOnlyObject(
+					$this->getObjectName(), $array, $prefix
 				)
+			);
+		}
+		
+		public function completeObject(Identifiable $object)
+		{
+			return $this->getProtoClass()->completeObject(
+				// same purpose as in makeOnlyObject,
+				// but for objects retrieved from cache
+				$this->addObjectToMap($object)
 			);
 		}
 		
