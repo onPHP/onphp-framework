@@ -25,18 +25,6 @@
 			return dechex(crc32($prefix.$this->getTable())).'_'.$field;
 		}
 		
-		public function makeOnlyObject($array, $prefix = null)
-		{
-			return $this->getProtoClass()->makeOnlyObject(
-				$this->getObjectName(), $array, $prefix
-			);
-		}
-		
-		public function completeObject(Identifiable $object)
-		{
-			return $this->getProtoClass()->completeObject($object);
-		}
-		
 		public function fetchCollections(
 			array $collections, array $list
 		)
