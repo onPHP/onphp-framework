@@ -1,5 +1,10 @@
 # $Id$
 
+2008-09-22	Konstantin V. Arkhipov
+
+	* main/Criteria/Criteria.class.php: do not fetch collections for empty
+	lists, spotted by <alexeydsov@gmail.com>.
+
 2008-09-20	Denis M. Gabaidulin
 
 	* meta/classes/MetaConfiguration: Experimental feature for the real nerds.
