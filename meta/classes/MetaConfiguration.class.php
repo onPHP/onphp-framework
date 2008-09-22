@@ -28,7 +28,7 @@
 		private $forcedGeneration	= false;
 		private $dryRun				= false;
 		
-		private $checkEnumerationRefIntegrity = false;
+		private $checkEnumerations	= false;
 		
 		/**
 		 * @return MetaConfiguration
@@ -79,9 +79,9 @@
 		/**
 		 * @return MetaConfiguration
 		**/
-		public function setWithEnumerationRefIntegrityCheck($orly)
+		public function checkEnumerations($orly)
 		{
-			$this->checkEnumerationRefIntegrity = $orly;
+			$this->checkEnumerations = $orly;
 			
 			return $this;
 		}
@@ -495,7 +495,7 @@
 						
 						$out->info(', ');
 						
-						if ($this->checkEnumerationRefIntegrity)
+						if ($this->checkEnumerations)
 							$this->checkEnumerationReferentialIntegrity(
 								$object,
 								$class->getTableName()
