@@ -5,13 +5,6 @@
 	* main/Criteria/Criteria.class.php: do not fetch collections for empty
 	lists, spotted by <alexeydsov@gmail.com>.
 
-2008-09-18	Denis M. Gabaidulin
-
-	* main/Base/LightMetaProperty.class.php: isFormless method added.
-
-	* main/Base/AbstractProtoClass.class.php: importPrimitive() always import
-	values, if property is formless.
-
 2008-09-02	Vladlen Y. Koshelev
 
 	* core/Form/Primitives/PrimitiveEnumeration.class.php: getList() fixed.
