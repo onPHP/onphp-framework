@@ -19,6 +19,8 @@
 			/* array */ $collections, /* array */ $list
 		)
 		{
+			Assert::isNotEmptyArray($list);
+			
 			$ids = ArrayUtils::getIdsArray($list);
 			
 			$mainId = DBField::create(

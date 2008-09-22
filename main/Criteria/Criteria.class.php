@@ -302,7 +302,7 @@
 				return null;
 			}
 			
-			if (!$this->collections)
+			if (!$this->collections || !$list)
 				return reset($list);
 			
 			$list = $this->dao->fetchCollections($this->collections, $list);
@@ -321,7 +321,7 @@
 				return array();
 			}
 			
-			if (!$this->collections)
+			if (!$this->collections || !$list)
 				return $list;
 			
 			return $this->dao->fetchCollections($this->collections, $list);
@@ -334,7 +334,7 @@
 		{
 			$result = $this->dao->getQueryResult($this->toSelectQuery());
 			
-			if (!$this->collections)
+			if (!$this->collections || !$result->getCount())
 				return $result;
 			
 			return $result->setList(
