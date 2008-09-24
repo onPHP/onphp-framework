@@ -1,5 +1,9 @@
 # $Id$
 
+2008-09-24	Sergey S. Sergeev
+
+	* main/Criteria/Criteria.class.php: criteria {query} combination support.
+
 2008-09-22	Konstantin V. Arkhipov
 
 	* main/Criteria/Criteria.class.php: do not fetch collections for empty
