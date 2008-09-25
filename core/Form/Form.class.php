@@ -85,11 +85,6 @@
 			return $this->get($name)->getError();
 		}
 		
-		public function getPrimitiveErrorLabel($name)
-		{
-			return $this->get($name)->getErrorLabel();
-		}
-		
 		/**
 		 * @return Form
 		**/
