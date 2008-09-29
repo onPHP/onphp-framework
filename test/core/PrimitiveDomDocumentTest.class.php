@@ -100,7 +100,7 @@ EOF;
 			$this->assertNotNull($form->get('dom')->getErrorLabel());
 			
 			$this->assertEquals($form->getTextualErrors(), array());
-			$this->assertNotNull($form->getTextualErrorFor('dom'));
+			$this->assertNull($form->getTextualErrorFor('dom'));
 		}
 		
 		
