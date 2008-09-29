@@ -74,9 +74,10 @@
 			} else
 				$value = $this->getValue();
 			
-			if ($value instanceof Identifiable)
+			if ($value instanceof Query)
+				return $value;
+			elseif ($value instanceof Identifiable)
 				return $value->getId();
-				
 			elseif (is_array($value)) {
 				$list = array();
 				foreach ($value as $key => $parameter)
