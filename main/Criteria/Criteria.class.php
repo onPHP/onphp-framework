@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Criteria
 	**/
-	final class Criteria extends QueryIdentification
+	final class Criteria implements Stringable, DialectString
 	{
 		private $dao		= null;
 		private $daoClass	= null;
