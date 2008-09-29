@@ -199,8 +199,6 @@
 			) {
 				if (isset($this->labels[$name][$error]))
 					return $this->labels[$name][$error];
-				else
-					return $this->getPrimitiveErrorLabel($name);
 			}
 			
 			return null;

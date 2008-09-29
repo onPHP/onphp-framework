@@ -97,9 +97,9 @@ EOF;
 				BasePrimitive::WRONG
 			);
 			
-			$this->assertNotNull($form->getPrimitiveErrorLabel('dom'));
+			$this->assertNotNull($form->get('dom')->getErrorLabel());
 			
-			$this->assertNotEquals($form->getTextualErrors(), array());
+			$this->assertEquals($form->getTextualErrors(), array());
 			$this->assertNotNull($form->getTextualErrorFor('dom'));
 		}
 		
