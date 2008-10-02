@@ -56,8 +56,13 @@
 				
 				$epochStartTruncated = Date::create('1970-01-05');
 				
+				$truncatedDate = Date::create($time->toDate());
+				
+				if ($ceil && $truncatedDate->toStamp() < $time->toStamp())
+					$truncatedDate->modify('+1 day');
+				
 				$difference = Date::dayDifference(
-					$epochStartTruncated, Date::create($time->toDate())
+					$epochStartTruncated, $truncatedDate
 				);
 				
 				$truncated = (int)(

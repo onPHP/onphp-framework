@@ -137,6 +137,26 @@
 			);
 		}
 		
+		public function testDayFloor()
+		{
+			$unit = IntervalUnit::create('day');
+			
+			$result = $unit->truncate(
+				Timestamp::create('2008-06-18 15:42:42'),
+				true
+			);
+			
+			$this->assertEquals(
+				'2008-06-19 00:00:00',
+				$result->toString()
+			);
+			
+			$this->assertEquals(
+				$result->toString(),
+				$unit->truncate($result, true)->toString()
+			);
+		}
+		
 		public function testWeek()
 		{
 			$unit = IntervalUnit::create('week');
