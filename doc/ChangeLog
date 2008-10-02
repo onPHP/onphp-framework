@@ -1,5 +1,10 @@
 # $Id$
 
+2008-10-02	Ivan Y. Khvostishkov
+
+	* core/Base/IntervalUnit.class.php: fixed truncation to day interval
+	for ceil case.
+
 2008-09-24	Sergey S. Sergeev
 
 	* main/Criteria/Criteria.class.php: criteria {query} combination support.
