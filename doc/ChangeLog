@@ -1,5 +1,17 @@
 # $Id$
 
+2008-10-10	Vladlen Y. Koshelev
+
+	* core/Form/Primitives/PrimitiveClass.class.php,
+	test/core/PrimitiveClassTest.class.php: of() method and test added
+	(merged from trunk).
+
+2008-10-10	Konstantin V. Arkhipov
+
+	* core/Form/Primitives/PrimitiveClass.class.php,
+	test/core/PrimitiveClassTest.class.php: new primitive with
+	corresponding test introduced (merged from trunk).
+
 2008-10-02	Ivan Y. Khvostishkov
 
 	* core/Base/IntervalUnit.class.php: fixed truncation to day interval

@@ -84,6 +84,14 @@
 		}
 		
 		/**
+		 * @return PrimitiveClass
+		**/
+		public static function clazz($name)
+		{
+			return new PrimitiveClass($name);
+		}
+		
+		/**
 		 * @return PrimitiveEnumeration
 		**/
 		public static function enumeration($name)
