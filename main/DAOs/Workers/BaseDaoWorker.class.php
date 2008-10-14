@@ -84,7 +84,7 @@
 					delete($this->className.'_'.$id);
 		}
 		
-		protected function uncacheByQuery(SelectQuery $query)
+		public function uncacheByQuery(SelectQuery $query)
 		{
 			return
 				Cache::me()->mark($this->className)->
