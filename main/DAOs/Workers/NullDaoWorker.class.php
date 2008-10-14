@@ -132,7 +132,7 @@
 			return true;
 		}
 		
-		protected function uncacheByQuery(SelectQuery $query)
+		public function uncacheByQuery(SelectQuery $query)
 		{
 			return true;
 		}

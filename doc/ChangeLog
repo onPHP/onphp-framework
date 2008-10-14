@@ -1,5 +1,10 @@
 # $Id$
 
+2008-10-14     Ivan Y. Khvostishkov
+
+	* main/DAOs/Workers/BaseDaoWorker.class.php: uncacheByQuery()'s
+	visibility changed to public.
+
 2008-10-02	Ivan Y. Khvostishkov
 
 	* core/Base/IntervalUnit.class.php: fixed truncation to day interval
