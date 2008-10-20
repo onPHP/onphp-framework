@@ -92,6 +92,11 @@
 					'define time range and interval units first'
 				);
 			
+			if (!$this->range->getStart() || !$this->range->getEnd())
+				throw new WrongArgumentException(
+					'cannot operate with unlimited range'
+				);
+			
 			$firstIntervalStart =
 				$this->interval->truncate(
 					$this->range->getStart(), !$this->overlapped
