@@ -1,5 +1,9 @@
 # $Id$
 
+2008-10-20	Ivan Y. Khvostishkov
+
+	* core/Base/IntervalUnit.class.php: compareTo() implemented.
+
 2008-10-14	Ivan Y. Khvostishkov
 
 	* main/DAOs/Workers/BaseDaoWorker.class.php: uncacheByQuery()'s

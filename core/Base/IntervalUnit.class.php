@@ -159,6 +159,26 @@
 			
 			return (int)$result;
 		}
+
+		public function compareTo(IntervalUnit $unit)
+		{
+			$monthsDiffer = $this->months - $unit->months;
+			
+			if ($monthsDiffer)
+				return $monthsDiffer;
+			
+			$daysDiffer = $this->days - $unit->days;
+
+			if ($daysDiffer)
+				return $daysDiffer;
+			
+			$secondsDiffer = $this->seconds - $unit->seconds;
+
+			if ($secondsDiffer)
+				return $secondsDiffer;
+			
+			return 0;
+		}
 		
 		private function __construct($name)
 		{
