@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2006-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -33,7 +33,7 @@
 		{
 			$this->map->import($request);
 			
-			$form = $this->map->getForm();
+			$form = $this->getForm();
 			
 			if (!$command = $form->getValue('action'))
 				$command = $form->get('action')->getDefault();

@@ -33,7 +33,7 @@
 		{
 			$this->map->import($request);
 			
-			$form = $this->map->getForm();
+			$form = $this->getForm();
 			
 			if (!$command = $form->getValue('action'))
 				$command = $form->get('action')->getDefault();
