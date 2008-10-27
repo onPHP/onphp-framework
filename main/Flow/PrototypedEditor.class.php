@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2007 by Anton E. Lebedevich                              *
+ *   Copyright (C) 2007-2008 by Anton E. Lebedevich                         *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -47,18 +47,18 @@
 		public function doDrop(HttpRequest $request)
 		{
 			$this->map->import($request);
-			$form = $this->map->getForm();
+			$form = $this->getForm();
 			
 			if ($object = $form->getValue('id')) {
 				if ($object instanceof Identifiable) {
 					
 					$this->dropObject($request, $form, $object);
-
+					
 					return ModelAndView::create()->setModel(
 						Model::create()->
 						set('editorResult', self::COMMAND_SUCCEEDED)
 					);
-
+					
 				} else {
 					
 					// already deleted
@@ -92,7 +92,7 @@
 		public function doTake(HttpRequest $request)
 		{
 			$this->map->import($request);
-			$form = $this->map->getForm();
+			$form = $this->getForm();
 			
 			if (!$form->getRawValue('id')) {
 				
@@ -107,7 +107,6 @@
 			}
 			
 			if (!$form->getErrors()) {
-
 				$object = $isAdd
 					? $this->addObject($request, $form, $object)
 					: $this->saveObject($request, $form, $object);
@@ -146,7 +145,7 @@
 		public function doSave(HttpRequest $request)
 		{
 			$this->map->import($request);
-			$form = $this->map->getForm();
+			$form = $this->getForm();
 			
 			$object = $form->getValue('id');
 			
@@ -194,7 +193,7 @@
 		public function doEdit(HttpRequest $request)
 		{
 			$this->map->import($request);
-			$form = $this->map->getForm();
+			$form = $this->getForm();
 			
 			if ($form->getValue('id'))
 				$object = $form->getValue('id');
@@ -218,7 +217,7 @@
 		public function doAdd(HttpRequest $request)
 		{
 			$this->map->import($request);
-			$form = $this->map->getForm();
+			$form = $this->getForm();
 			
 			$form->markGood('id');
 			$object = clone $this->subject;
@@ -230,7 +229,7 @@
 				$editorResult = $form->getErrors()
 					? self::COMMAND_FAILED
 					: self::COMMAND_SUCCEEDED;
-
+				
 				return
 					ModelAndView::create()->
 					setModel(
@@ -252,6 +251,14 @@
 			}
 			
 			Assert::isUnreachable();
+		}
+		
+		/**
+		 * @return Form
+		**/
+		public function getForm()
+		{
+			return $this->map->getForm();
 		}
 		
 		protected function addObject(HttpRequest $request, Form $form, Identifiable $object)
