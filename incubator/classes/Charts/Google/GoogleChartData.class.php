@@ -19,7 +19,7 @@
 		
 		private $sets = array();
 		
-		private $dataScaling = true;
+		private $dataScaling = false;
 		
 		/**
 		 * @return GoogleChartData

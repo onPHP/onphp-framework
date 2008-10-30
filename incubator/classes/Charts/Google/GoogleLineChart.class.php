@@ -42,7 +42,8 @@
 			
 			$this->data =
 				GoogleChartData::create()->
-				setEncoding(GoogleChartDataTextEncoding::create());
+				setEncoding(GoogleChartDataTextEncoding::create())->
+				setDataScaling();
 			
 			$this->axesCollection = GoogleChartAxisCollection::create();
 		}
