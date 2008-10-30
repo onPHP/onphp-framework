@@ -13,76 +13,66 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleChartDataSet
+	final class GoogleChartLine
 	{
-		private $data = array();
-		
-		private $minMax = null;
+		private $title	= null;
+		private $color	= null;
+		private $value	= null;
 		
 		/**
-		 * @return GoogleChartDataSet
+		 * @return GoogleChartLine
 		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
-		public function __construct()
+		/**
+		 * @return GoogleChartLine
+		**/
+		public function setTitle($title)
 		{
-			$this->minMax = IntegerSet::create(0, 0);
+			$this->title = $title;
+			
+			return $this;
+		}
+		
+		public function getTitle()
+		{
+			return $this->title;
 		}
 		
 		/**
-		 * @return GoogleChartDataSet
+		 * @return GoogleChartLine
 		**/
-		public function setData(array $data)
+		public function setColor(Color $color)
 		{
-			$this->data = $data;
+			$this->color = $color;
 			
 			return $this;
-		}
-		
-		public function getData()
-		{
-			return $this->data;
 		}
 		
 		/**
-		 * @return GoogleChartDataSet
+		 * @return Color
 		**/
-		public function addElement($element)
+		public function getColor()
 		{
-			if ($this->minMax->getEnd() < $element)
-				$this->minMax->setEnd($element);
-			
-			$this->data[] = $element;
-			
-			return $this;
+			return $this->color;
 		}
 		
-		public function getSize()
+		/**
+		 * @return GoogleChartLine
+		**/
+		public function setValue(GoogleChartDataSet $set)
 		{
-			return count($this->data);
-		}
-		
-		public function getMin()
-		{
-			return $this->minMax->getStart();
-		}
-		
-		public function getMax()
-		{
-			if ($this->minMax->getEnd() == 0)
-				$this->calculateMax();
-			
-			return $this->minMax->getEnd();
-		}
-		
-		private function calculateMax()
-		{
-			$this->minMax->setEnd(max($this->data));
+			$this->value = $set;
 			
 			return $this;
+		}
+		
+		public function getValue()
+		{
+			return $this->value;
 		}
 	}
 ?>

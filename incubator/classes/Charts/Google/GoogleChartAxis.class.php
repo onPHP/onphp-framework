@@ -13,28 +13,42 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleChartAxisType extends Enumeration implements Stringable
+	final class GoogleChartAxis
 	{
-		const X	= 0x1;
-		const Y	= 0x2;
-		const R	= 0x3; // aka right y
+		private $type = null;
 		
-		protected $names = array(
-			self::X	=> 'x',
-			self::Y	=> 'y',
-			self::R	=> 'r'
-		);
+		private $range = null;
 		
-		private static $paramName = 'chxt';
-		
-		public static function getParamName()
+		public static function create(GoogleChartAxisType $type)
 		{
-			return self::$paramName;
+			return new self($type);
 		}
 		
-		public function toString()
+		public function __construct(GoogleChartAxisType $type)
 		{
-			return $this->name;
+			$this->type = $type;
+		}
+		
+		public function getType()
+		{
+			return $this->type;
+		}
+		
+		public function setRange(IntegerSet $range)
+		{
+			$this->range = $range;
+			
+			return $this;
+		}
+		
+		public function hasRange()
+		{
+			return ($this->range !== null);
+		}
+		
+		public function getRange()
+		{
+			return $this->range;
 		}
 	}
 ?>

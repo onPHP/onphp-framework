@@ -19,12 +19,29 @@
 		
 		private $sets = array();
 		
+		private $dataScaling = true;
+		
 		/**
 		 * @return GoogleChartData
 		**/
 		public static function create()
 		{
 			return new self;
+		}
+		
+		/**
+		 * @return GoogleChartData
+		**/
+		public function setDataScaling($scale = true)
+		{
+			$this->dataScaling = (true === $scale);
+			
+			return $this;
+		}
+		
+		public function withDataScaling()
+		{
+			return $this->dataScaling;
 		}
 		
 		/**
@@ -51,18 +68,29 @@
 		{
 			Assert::isNotNull($this->encoding, 'Data encdoing Required.');
 			
-			$dataStrings = array();
+			$boundString = null;
+			
+			$dataStrings = $bounds = array();
+			
+			if ($this->dataScaling)
+				$boundString = '&'.GoogleChartDataScaling::getParamName().'=';
 			
 			foreach ($this->sets as $set) {
-				$this->encoding->setMaxValue(max($set->getData()) + 1);
+				$this->encoding->setMaxValue($set->getMax() + 1);
 				$dataStrings[] = $this->encoding->encode($set);
+				
+				if ($this->dataScaling)
+					$bounds[] = $set->getMin().','.$set->getMax();
 			}
+			
+			if ($this->dataScaling)
+				$boundString .= implode(',', $bounds);
 			
 			$dataString = implode('|', $dataStrings);
 			
 			$encodingString = $this->encoding->toString();
 			
-			return $this->name.'='.$encodingString.$dataString;
+			return $this->name.'='.$encodingString.$dataString.$boundString;
 		}
 	}
 ?>
