@@ -1,5 +1,12 @@
 # $Id$
 
+2008-10-31	Sergey S. Sergeev
+
+    * incubator/classes/Routers,test/incubator/Routers: experemental feature
+	for rewriting urls.
+
+	* test/misc/ServerVarUtils.class.php: test case helper.
+
 2008-10-20	Ivan Y. Khvostishkov
 
 	* core/Base/IntervalUnit.class.php: compareTo() implemented.
