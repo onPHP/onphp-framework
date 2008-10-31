@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Sergey S. Sergeev                          *
+ *   Copyright (C) 2008 by Sergey S. Sergeev                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -13,13 +13,18 @@
 	class RouterUrlHelper extends StaticFactory
 	{
 		/**
-	     * @return string
-	    **/
-	    public static function url(array $urlOptions = array(), $name, $reset = false, $encode = true)
-	    {
-	        return
-	        	RouterRewrite::me()->
-	        		assemble($urlOptions, $name, $reset, $encode);
-	    }
+		 * @return string
+		**/
+		public static function url(
+			array $urlOptions = array(),
+			$name,
+			$reset = false,
+			$encode = true
+		)
+		{
+			return
+				RouterRewrite::me()->
+				assemble($urlOptions, $name, $reset, $encode);
+		}
 	}
 ?>
