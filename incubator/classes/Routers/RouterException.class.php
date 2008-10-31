@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Sergey S. Sergeev                          *
+ *   Copyright (C) 2008 by Sergey S. Sergeev                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,5 +10,5 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class RouterException extends BaseException {/**/}
+	final class RouterException extends BaseException {/*_*/}
 ?>
