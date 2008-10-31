@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Sergey S. Sergeev                          *
+ *   Copyright (C) 2008 by Sergey S. Sergeev                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -13,9 +13,9 @@
 	interface RouterRule
 	{
 		public function match(HttpRequest $request);
-
+		
 		public function assemble($data = array(), $reset = false, $encode = false);
-
-		public static function create($route /**[,int $param, ... ]**/);
+		
+		public static function create($route /* , ... */);
 	}
 ?>
