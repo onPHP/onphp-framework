@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class RouterChainRule extends RouterBaseRule
+	final class RouterChainRule extends RouterBaseRule
 	{
 		protected $routes		= array();
 		protected $separators	= array();
@@ -18,7 +18,7 @@
 		/**
 		 * @throws UnimplementedFeatureException
 		**/
-		public static function create($route /* , ... */)
+		public static function create($route)
 		{
 			throw new UnimplementedFeatureException();
 		}

@@ -30,14 +30,16 @@
 		
 		public function testStaticMatchWithDefaults()
 		{
-			$route = new RouterStaticRule(
-				'users/all',
-				
-				array(
-					'area' => 'ctrl',
-					'action' => 'act'
-				)
-			);
+			$route = 
+				RouterStaticRule::create(
+					'users/all'
+				)->
+				setDefaults(				
+					array(
+						'area' => 'ctrl',
+						'action' => 'act'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/all')
@@ -76,14 +78,16 @@
 		
 		public function testGetDefaults()
 		{
-			$route = new RouterStaticRule(
-				'users/all',
-				
-				array(
-					'area' => 'ctrl',
-					'action' => 'act'
-				)
-			);
+			$route = 
+				RouterStaticRule::create(
+					'users/all'
+				)->
+				setDefaults(
+					array(
+						'area' => 'ctrl',
+						'action' => 'act'
+					)
+				);
 			
 			$values = $route->getDefaults();
 			
@@ -94,14 +98,16 @@
 		
 		public function testGetDefault()
 		{
-			$route = new RouterStaticRule(
-				'users/all',
-				
-				array(
-					'area' => 'ctrl',
-					'action' => 'act'
-				)
-			);
+			$route = 
+				RouterStaticRule::create(
+					'users/all'
+				)->
+				setDefaults(
+					array(
+						'area' => 'ctrl',
+						'action' => 'act'
+					)
+				);
 			
 			$this->assertSame('ctrl', $route->getDefault('area'));
 			$this->assertSame(null, $route->getDefault('bogus'));
@@ -109,13 +115,15 @@
 		
 		public function testGetInstance()
 		{
-			$route = RouterStaticRule::create(
-				'users/all',
-				
-				array(
-					'area' => 'ctrl'
-				)
-			);
+			$route = 
+				RouterStaticRule::create(
+					'users/all'
+				)->
+				setDefaults(				
+					array(
+						'area' => 'ctrl'
+					)
+				);
 			
 			$this->assertType('RouterStaticRule', $route);
 			

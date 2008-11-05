@@ -10,10 +10,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class RouterRegexpRule extends RouterBaseRule
+	final class RouterRegexpRule extends RouterBaseRule
 	{
 		protected $regexp	= null;
 		protected $reverse	= null;
+		protected $route	= null;
 		
 		protected $map		= array();
 		protected $values	= array();
@@ -21,46 +22,24 @@
 		/**
 		 * @return RouterRegexpRule
 		**/
-		public static function create(
-			$route /* , array $defaults , array $map , boolean $reverse  */
-		)
-		{
-			$list = func_get_args();
-			
-			$defaults = array();
-			$map = array();
-			$reverse = null;
-			
-			if (!empty($list[1]))
-				$defaults = $list[1];
-			
-			if (!empty($list[2]))
-				$map = $list[2];
-			
-			if (!empty($list[3]))
-				$reverse = $list[3];
-			
-			return new self($route, $defaults, $map, $reverse);
+		public static function create($route)
+		{			
+			return new self($route);
 		}
 		
-		public function __construct(
-			$route,
-			$defaults = array(),
-			$map = array(),
-			$reverse = null
-		)
+		public function __construct($route)
 		{
-			$this->regexp = '#^' . $route . '$#i';
-			$this->defaults = (array) $defaults;
-			$this->map = (array) $map;
-			$this->reverse = $reverse;
+			$this->route = $route;
+			$this->regexp = '#^' . $this->route . '$#i';			
 		}
 		
 		/**
 		 * @return RouterRegexpRule
 		**/
-		public function setMap(array $map)
+		public function setMap($map)
 		{
+			Assert::isArray($map);
+			
 			$this->map = $map;
 			
 			return $this;
@@ -76,6 +55,8 @@
 		**/
 		public function setReverse($reverse)
 		{
+			Assert::isString($reverse);
+			
 			$this->reverse = $reverse;
 			
 			return $this;

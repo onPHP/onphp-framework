@@ -10,18 +10,20 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class RouterUrlHelper extends StaticFactory
+	final class RouterUrlHelper extends StaticFactory
 	{
 		/**
 		 * @return string
 		**/
 		public static function url(
-			array $urlOptions = array(),
+			$urlOptions,
 			$name,
 			$reset = false,
 			$encode = true
 		)
 		{
+			Assert::isArray($urlOptions);
+			
 			return
 				RouterRewrite::me()->
 				assemble($urlOptions, $name, $reset, $encode);

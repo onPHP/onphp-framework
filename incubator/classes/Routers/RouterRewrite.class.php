@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class RouterRewrite extends Singleton implements Router, Instantiatable
+	final class RouterRewrite extends Singleton implements Router, Instantiatable
 	{
 		protected $routes		= array();
 		protected $currentRoute	= null;

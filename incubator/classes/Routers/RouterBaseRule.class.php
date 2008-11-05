@@ -37,8 +37,10 @@
 			return null;
 		}
 		
-		public function setDefaults(array $defaults)
+		public function setDefaults($defaults)
 		{
+			Assert::isArray($defaults);
+			
 			$this->defaults = $defaults;
 			
 			return $this;
@@ -120,8 +122,10 @@
 			if ($request->hasServerVar('REQUEST_URI'))
 				$path =
 					$this->
-						getPath(HttpUrl::create()->
-						parse($request->getServerVar('REQUEST_URI')));
+						getPath(
+							HttpUrl::create()->
+							parse($request->getServerVar('REQUEST_URI'))
+						);
 			else
 				throw new RouterException('Cannot resolve path');
 			

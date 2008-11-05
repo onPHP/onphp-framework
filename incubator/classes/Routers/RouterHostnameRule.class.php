@@ -10,13 +10,14 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class RouterHostnameRule extends RouterBaseRule
+	final class RouterHostnameRule extends RouterBaseRule
 	{
 		protected $hostVariable		= ':';
 		protected $regexDelimiter	= '#';
 		
-		protected $defaultRegex		= null;
-		
+		protected $defaultRegex		= null;		
+		protected $route			= null;
+		protected $routeProcessed	= false;
 		protected $variables		= array();
 		protected $parts			= array();
 		protected $requirements		= array();
@@ -27,59 +28,23 @@
 		/**
 		 * @return RouterHostnameRule
 		**/
-		public static function create(
-			$route /* , array $defaults, array $reqs */
-		)
+		public static function create($route)
 		{
-			$list = func_get_args();
-			
-			$defaults = array();
-			$reqs = array();
-			
-			if (!empty($list[1]))
-				$defaults = $list[1];
-			
-			if (!empty($list[2]))
-				$reqs = $list[2];
-			
-			return new self($route, $defaults, $reqs);
+			return new self($route);
 		}
 		
-		public function __construct(
-			$route,
-			$defaults = array(),
-			$reqs = array()
-		)
+		public function __construct($route)
 		{
-			$route = trim($route, '.');
-			$this->defaults = (array) $defaults;
-			$this->requirements = (array) $reqs;
-			
-			if ($route != '') {
-				foreach (explode('.', $route) as $pos => $part) {
-					if (substr($part, 0, 1) == $this->hostVariable) {
-						$name = substr($part, 1);
-						
-						$this->parts[$pos] = (
-							isset($reqs[$name])
-								? $reqs[$name]
-								: $this->defaultRegex
-							);
-						
-						$this->variables[$pos] = $name;
-					} else {
-						$this->parts[$pos] = $part;
-						++$this->staticCount;
-					}
-				}
-			}
+			$this->route = trim($route, '.');			
 		}
 		
 		/**
 		 * @return RouterHostnameRule
 		**/
-		public function setRequirements(array $reqirements)
+		public function setRequirements($reqirements)
 		{
+			Assert::isArray($reqirements);
+			
 			$this->requirements = $reqirements;
 			
 			return $this;
@@ -92,6 +57,8 @@
 		
 		public function match(HttpRequest $request)
 		{
+			$this->processRoute();
+			
 			if ($request->hasServerVar('HTTP_HOST'))
 				$host = $request->getServerVar('HTTP_HOST');
 			else
@@ -171,6 +138,8 @@
 			$encode = false
 		)
 		{
+			$this->processRoute();
+			
 			$host = array();
 			$flag = false;
 			
@@ -246,6 +215,38 @@
 			$url = $scheme . '://' . $url;
 			
 			return $url;
+		}
+		
+		/**
+		 * @return RouterHostnameRule
+		**/
+		protected function processRoute() 
+		{
+			if ($this->routeProcessed)
+				return $this;
+			
+			if ($this->route != '') {
+				foreach (explode('.', $this->route) as $pos => $part) {
+					if (substr($part, 0, 1) == $this->hostVariable) {
+						$name = substr($part, 1);
+						
+						$this->parts[$pos] = (
+							isset($this->requirements[$name])
+								? $this->requirements[$name]
+								: $this->defaultRegex
+							);
+						
+						$this->variables[$pos] = $name;
+					} else {
+						$this->parts[$pos] = $part;
+						++$this->staticCount;
+					}
+				}
+			}
+			
+			$this->routeProcessed = true;
+			
+			return $this;
 		}
 	}
 ?>

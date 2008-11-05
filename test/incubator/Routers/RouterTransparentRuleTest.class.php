@@ -50,20 +50,22 @@
 		
 		public function testStaticMatchWithDefaults()
 		{
-			$route = new RouterTransparentRule(
-				'users/all',
-				
-				array(
-					'area' => 'ctrl',
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'users/all'
+				)->
+				setDefaults(				
+					array(
+						'area' => 'ctrl',
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/all')
 			);
 			
 			$this->assertEquals('ctrl', $values['area']);
-			}
+		}
 		
 		public function testNotMatched()
 		{
@@ -77,14 +79,16 @@
 		
 		public function testNotMatchedWithVariablesAndDefaults()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action',
-				
-				array(
-					'area' => 'index',
-					'action' => 'index',
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action'
+				)->
+				setDefaults(
+					array(
+						'area' => 'index',
+						'action' => 'index',
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/archive/action/bogus')
@@ -105,14 +109,16 @@
 		
 		public function testStaticMatchWithWildcard()
 		{
-			$route = new RouterTransparentRule(
-				'news/view/*',
-				
-				array(
-					'area' => 'news',
-					'action' => 'view',
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'news/view/*'
+				)->
+				setDefaults(				
+					array(
+						'area' => 'news',
+						'action' => 'view',
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest(
@@ -129,14 +135,16 @@
 		
 		public function testWildcardWithUTF()
 		{
-			$route = new RouterTransparentRule(
-				'news/*',
-				
-				array(
-					'area' => 'news',
-					'action' => 'view',
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'news/*'
+				)->
+				setDefaults(				
+					array(
+						'area' => 'news',
+						'action' => 'view',
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest(
@@ -155,14 +163,16 @@
 		
 		public function testWildcardURLDecode()
 		{
-			$route = new RouterTransparentRule(
-				'news/*',
-				
-				array(
-					'area' => 'news',
-					'action' => 'view',
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'news/*'
+				)->
+				setDefaults(		
+					array(
+						'area' => 'news',
+						'action' => 'view',
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest(
@@ -202,14 +212,16 @@
 		
 		public function testOneVariableValue()
 		{
-			$route = new RouterTransparentRule(
-				':action',
-				
-				array(
-					'area' => 'ctrl',
-					'action' => 'action'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':action'
+				)->
+				setDefaults(
+					array(
+						'area' => 'ctrl',
+						'action' => 'action'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/act')
@@ -221,13 +233,15 @@
 		
 		public function testVariablesWithDefault()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/:year',
-				
-				array(
-					'year' => '2006'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/:year'
+				)->
+				setDefaults(				
+					array(
+						'year' => '2006'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/ctrl/act')
@@ -240,13 +254,15 @@
 		
 		public function testVariablesWithNullDefault()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/:year',
-				
-				array(
-					'year' => null
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/:year'
+				)->
+				setDefaults(			
+					array(
+						'year' => null
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/ctrl/act')
@@ -259,11 +275,14 @@
 		
 		public function testVariablesWithDefaultAndValue()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/:year',
-				
-				array(
-					'year' => '2006')
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/:year'
+				)->
+				setDefaults(
+					array(
+						'year' => '2006'
+					)
 				);
 			
 			$values = $route->match(
@@ -277,12 +296,15 @@
 		
 		public function testVariablesWithRequirementAndValue()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/:year',
-				
-				null,
-				array('year' => '\d+')
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/:year'
+				)->
+				setRequirements(
+					array(
+						'year' => '\d+'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/ctrl/act/2000')
@@ -295,13 +317,14 @@
 		
 		public function testVariablesWithRequirementAndIncorrectValue()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/:year',
-				
-				null,
-				
-				array(
-					'year' => '\d+')
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/:year'
+				)->
+				setRequirements(				
+					array(
+						'year' => '\d+'
+					)
 				);
 			
 			$values = $route->match(
@@ -313,17 +336,20 @@
 		
 		public function testVariablesWithDefaultAndRequirement()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/:year',
-				
-				array(
-					'year' => '2006'
-				),
-				
-				array(
-					'year' => '\d+'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/:year'
+				)->
+				setDefaults(				
+					array(
+						'year' => '2006'
+					)
+				)->
+				setRequirements(				
+					array(
+						'year' => '\d+'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/ctrl/act/2000')
@@ -336,17 +362,20 @@
 		
 		public function testVariablesWithDefaultAndRequirementAndIncorrectValue()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/:year',
-				
-				array(
-					'year' => '2006'
-				),
-				
-				array(
-					'year' => '\d+'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/:year'	
+				)->
+				setDefaults(
+					array(
+						'year' => '2006'
+					)
+				)->
+				setRequirements(				
+					array(
+						'year' => '\d+'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/ctrl/act/2000t')
@@ -357,17 +386,20 @@
 		
 		public function testVariablesWithDefaultAndRequirementAndWithoutValue()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/:year',
-				
-				array(
-					'year' => '2006'
-				),
-				
-				array(
-					'year' => '\d+'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/:year'
+				)->
+				setDefaults(				
+					array(
+						'year' => '2006'
+					)
+				)->
+				setRequirements(		
+					array(
+						'year' => '\d+'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/ctrl/act')
@@ -424,13 +456,15 @@
 		
 		public function testAssembleWithDefault()
 		{
-			$route = new RouterTransparentRule(
-				'authors/:name',
-				
-				array(
-					'name' => 'martel'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'authors/:name'
+				)->
+				setDefaults(				
+					array(
+						'name' => 'martel'
+					)					
+				);
 			
 			$url = $route->assemble();
 			
@@ -439,13 +473,15 @@
 		
 		public function testAssembleWithDefaultAndValue()
 		{
-			$route = new RouterTransparentRule(
-				'authors/:name',
-				
-				array(
-					'name' => 'martel'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'authors/:name'
+				)->
+				setDefaults(				
+					array(
+						'name' => 'martel'
+					)
+				);
 			
 			$url = $route->assemble(array('name' => 'mike'));
 			
@@ -462,14 +498,16 @@
 		
 		public function testAssembleWithReset()
 		{
-			$route = new RouterTransparentRule(
-				'archive/:year/*',
-				
-				array(
-					'area' => 'archive',
-					'action' => 'show'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'archive/:year/*'
+				)->
+				setDefaults(
+					array(
+						'area' => 'archive',
+						'action' => 'show'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest(
@@ -484,14 +522,16 @@
 		
 		public function testAssembleWithReset2()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/*',
-				
-				array(
-					'area' => 'archive',
-					'action' => 'show'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/*'
+				)->
+				setDefaults(				
+					array(
+						'area' => 'archive',
+						'action' => 'show'
+					)				
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/list')
@@ -504,15 +544,17 @@
 		
 		public function testAssembleWithReset3()
 		{
-			$route = new RouterTransparentRule(
-				'archive/:year/*',
-				
-				array(
-					'area' => 'archive',
-					'action' => 'show',
-					'year' => 2005
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'archive/:year/*'
+				)->
+				setDefaults(
+					array(
+						'area' => 'archive',
+						'action' => 'show',
+						'year' => 2005
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest(
@@ -527,14 +569,16 @@
 		
 		public function testAssembleWithReset4()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/*',
-				
-				array(
-					'area' => 'archive',
-					'action' => 'show'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/*'
+				)->
+				setDefaults(				
+					array(
+						'area' => 'archive',
+						'action' => 'show'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/list')
@@ -547,14 +591,16 @@
 		
 		public function testAssembleWithReset5()
 		{
-			$route = new RouterTransparentRule(
-				'*',
-				
-				array(
-					'area' => 'index',
-					'action' => 'index'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'*'
+				)->
+				setDefaults(				
+					array(
+						'area' => 'index',
+						'action' => 'index'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest(
@@ -598,13 +644,15 @@
 		
 		public function testWildcardUrlVariablesOverwriting()
 		{
-			$route = new RouterTransparentRule(
-				'archives/:year/:month/*',
-				
-				array(
-					'area' => 'archive'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'archives/:year/:month/*'
+				)->
+				setDefaults(				
+					array(
+						'area' => 'archive'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest(
@@ -622,14 +670,16 @@
 		
 		public function testGetDefaults()
 		{
-			$route = new RouterTransparentRule(
-				'users/all',
-				
-				array(
-					'area' => 'ctrl',
-					'action' => 'act'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'users/all'
+				)->
+				setDefaults(
+					array(
+						'area' => 'ctrl',
+						'action' => 'act'
+					)
+				);
 			
 			$values = $route->getDefaults();
 			
@@ -640,14 +690,16 @@
 		
 		public function testGetDefault()
 		{
-			$route = new RouterTransparentRule(
-				'users/all',
-				
-				array(
-					'area' => 'ctrl',
-					'action' => 'act'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'users/all'
+				)->
+				setDefaults(				
+					array(
+						'area' => 'ctrl',
+						'action' => 'act'
+					)
+				);
 			
 			$this->assertEquals('ctrl', $route->getDefault('area'));
 			$this->assertEquals(null, $route->getDefault('bogus'));
@@ -663,10 +715,13 @@
 				)
 			);
 			
-			$route = RouterTransparentRule::create(
-				$routeConf['route'],
-				$routeConf['defaults']
-			);
+			$route = 
+				RouterTransparentRule::create(
+					$routeConf['route']
+				)->
+				setDefaults(
+					$routeConf['defaults']
+				);
 			
 			$this->assertType('RouterTransparentRule', $route);
 			
@@ -679,14 +734,16 @@
 		
 		public function testAssembleResetDefaults()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/*',
-				
-				array(
-					'area' => 'index',
-					'action' => 'index'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/*'
+				)->
+				setDefaults(				
+					array(
+						'area' => 'index',
+						'action' => 'index'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/news/view/id/3')
@@ -704,14 +761,16 @@
 		
 		public function testAssembleWithRemovedDefaults()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/*',
-				
-				array(
-					'area' => 'index',
-					'action' => 'index'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/*'
+				)->
+				setDefaults(
+					array(
+						'area' => 'index',
+						'action' => 'index'
+					)
+				);			
 			
 			$url = $route->assemble(array('id' => 3));
 			$this->assertEquals('index/index/id/3', $url);
@@ -753,15 +812,17 @@
 		
 		public function testAssembleWithAction()
 		{
-			$route = new RouterTransparentRule(
-				'families/:action/*',
-				
-				array(
-					'module' => 'default',
-					'area' => 'categories',
-					'action' => 'index'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'families/:action/*'
+				)->
+				setDefaults(				
+					array(
+						'module' => 'default',
+						'area' => 'categories',
+						'action' => 'index'
+					)
+				);
 			
 			$this->assertEquals('families', $route->assemble());
 			
@@ -776,17 +837,20 @@
 		
 		public function testAssemlingWithDefaultValueAndParams()
 		{
-			$router = new RouterTransparentRule(
-				'contest/:contest/*',
-				
-				array(
-					'area' => 'contestController'
-				),
-				
-				array(
-					'contest' => '\d+'
-				)
-			);
+			$router = 
+				RouterTransparentRule::create(
+					'contest/:contest/*'
+				)->
+				setDefaults(
+					array(
+						'area' => 'contestController'
+					)
+				)->
+				setRequirements(				
+					array(
+						'contest' => '\d+'
+					)
+				);
 			
 			$this->assertEquals(
 				'contest/123/param/435',
@@ -805,14 +869,16 @@
 		
 		public function testEncode()
 		{
-			$route = new RouterTransparentRule(
-				':area/:action/*',
-				
-				array(
-					'area' => 'index',
-					'action' => 'index'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/:action/*'
+				)->
+				setDefaults(				
+					array(
+						'area' => 'index',
+						'action' => 'index'
+					)
+				);
 			
 			$url = $route->assemble(
 				array('area' => 'My Controller'), false, true
@@ -838,10 +904,15 @@
 			);
 			$this->assertEquals('en/foo/id/My+Other+Value', $url);
 			
-			$route = new RouterTransparentRule(
-				':area/*',
-				array('area' => 'My Controller')
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':area/*'
+				)->
+				setDefaults(
+					array(
+						'area' => 'My Controller'
+					)
+				);
 			
 			$url = $route->assemble(array('id' => 1), false, true);
 			$this->assertEquals('My+Controller/id/1', $url);
@@ -851,17 +922,20 @@
 		{
 			$this->markTestSkipped('Route features not ready');
 			
-			$route = new RouterTransparentRule(
-				':lang/:temp',
-				
-				array(
-					'lang' => 'pl'
-				),
-				
-				array(
-					'temp' => '\d+'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':lang/:temp'
+				)->
+				setDefaults(
+					array(
+						'lang' => 'pl'
+					)
+				)->
+				setRequirements(				
+					array(
+						'temp' => '\d+'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest(
@@ -871,13 +945,15 @@
 			
 			$this->assertFalse($values);
 			
-			$route = new RouterTransparentRule(
-				':lang/:temp',
-				
-				array(
-					'lang' => 'pl'
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					':lang/:temp'
+				)->
+				setDefaults(				
+					array(
+						'lang' => 'pl'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest(

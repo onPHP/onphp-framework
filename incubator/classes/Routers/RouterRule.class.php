@@ -14,8 +14,6 @@
 	{
 		public function match(HttpRequest $request);
 		
-		public function assemble($data = array(), $reset = false, $encode = false);
-		
-		public static function create($route /* , ... */);
+		public function assemble($data = array(), $reset = false, $encode = false);		
 	}
 ?>

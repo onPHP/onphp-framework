@@ -12,19 +12,25 @@
 		{
 			$chain = new RouterChainRule();
 			
-			$foo = new RouterHostnameRule(
-				'www.example.com',
-				array(
-					'foo' => 1
-				)
-			);
+			$foo = 
+				RouterHostnameRule::create(
+					'www.example.com'
+				)->
+				setDefaults(
+					array(
+						'foo' => 1
+					)
+				);
 			
-			$bar = new RouterStaticRule(
-				'bar',
-				array(
-					'bar' => 2
-				)
-			);
+			$bar = 
+				RouterStaticRule::create(
+					'bar'
+				)->
+				setDefaults(
+					array(
+						'bar' => 2
+					)
+				);
 			
 			$chain->
 				chain($foo)->
@@ -46,21 +52,27 @@
 		
 		public function testChainingShortcutMatch()
 		{
-			$foo = new RouterHostnameRule(
-				'www.example.com',
-				array(
-					'foo' => 1
-				)
-			);
+			$foo = 
+				RouterHostnameRule::create(
+					'www.example.com'
+				)->
+				setDefaults(
+					array(
+						'foo' => 1
+					)
+				);
 			
-			$bar = new RouterStaticRule(
-				'bar',
-				array(
-					'bar' => 2,
-					'area' => 'foo',
-					'action' => 'bar'
-				)
-			);
+			$bar = 
+				RouterStaticRule::create(
+					'bar'
+				)->
+				setDefaults(
+					array(
+						'bar' => 2,
+						'area' => 'foo',
+						'action' => 'bar'
+					)
+				);
 			
 			$chain = $foo->chain($bar);
 			
@@ -74,21 +86,27 @@
 		
 		public function testChainingMatchFailure()
 		{
-			$foo = new RouterHostnameRule(
-				'www.example.com',
-				array(
-					'foo' => 1
-				)
-			);
+			$foo = 
+				RouterHostnameRule::create(
+					'www.example.com'
+				)->
+				setDefaults(
+					array(
+						'foo' => 1
+					)
+				);
 			
-			$bar = new RouterStaticRule(
-				'bar',
-				array(
-					'bar' => 2,
-					'area' => 'foo',
-					'action' => 'bar'
-				)
-			);
+			$bar = 
+				RouterStaticRule::create(
+					'bar'
+				)->
+				setDefaults(
+					array(
+						'bar' => 2,
+						'area' => 'foo',
+						'action' => 'bar'
+					)
+				);
 			
 			$chain = $foo->chain($bar);
 			
@@ -101,23 +119,29 @@
 		
 		public function testChainingVariableOverriding()
 		{
-			$foo = new RouterHostnameRule(
-				'www.example.com',
-				array(
-					'foo' => 1,
-					'area' => 'foo',
-					'module' => 'foo'
-				)
-			);
+			$foo = 
+				RouterHostnameRule::create(
+					'www.example.com'
+				)->
+				setDefaults(
+					array(
+						'foo' => 1,
+						'area' => 'foo',
+						'module' => 'foo'
+					)
+				);
 			
-			$bar = new RouterTransparentRule(
-				'bar',
-				array(
-					'bar' => 2,
-					'area' => 'bar',
-					'action' => 'bar'
-				)
-			);
+			$bar = 
+				RouterTransparentRule::create(
+					'bar'
+				)->
+				setDefaults(
+					array(
+						'bar' => 2,
+						'area' => 'bar',
+						'action' => 'bar'
+					)
+				);
 			
 			$chain = $foo->chain($bar);
 			
@@ -133,9 +157,14 @@
 		{
 			$this->markTestSkipped('Route features not ready');
 			
-			$foo = new RouterTransparentRule('foo', array('foo' => 1));
-			$bar = new RouterTransparentRule('bar', array('bar' => 2));
-			$baz = new RouterTransparentRule('baz', array('baz' => 3));
+			$foo = RouterTransparentRule::create('foo')->
+				setDefaults(array('foo' => 1));
+				
+			$bar = RouterTransparentRule::create('bar')->
+				setDefaults(array('bar' => 2));
+				
+			$baz = RouterTransparentRule::create('baz')->
+				setDefaults(array('baz' => 3));
 			
 			$chain = $foo->chain($bar, '.');
 			
@@ -155,11 +184,26 @@
 		{
 			$this->markTestSkipped('Route features not ready');
 			
-			$lang = new RouterTransparentRule(':lang', array('lang' => 'en'));
-			$profile = new RouterTransparentRule(
-				'user/:id',
-				array('area' => 'foo', 'action' => 'bar')
-			);
+			$lang = 
+				RouterTransparentRule::create(
+					':lang'
+				)->
+				setDefaults(
+					array(
+						'lang' => 'en'
+					)
+				);
+			
+			$profile = 
+				RouterTransparentRule::create(
+					'user/:id'
+				)->
+				setDefaults(
+					array(
+						'area' => 'foo', 
+						'action' => 'bar'
+					)
+				);
 			
 			$chain = $lang->chain($profile);
 			
@@ -173,19 +217,25 @@
 		{
 			$chain = new RouterChainRule();
 			
-			$foo = new RouterHostnameRule(
-				'www.example.com',
-				array(
-					'foo' => 'foo'
-				)
-			);
+			$foo = 
+				RouterHostnameRule::create(
+					'www.example.com'
+				)->
+				setDefaults(
+					array(
+						'foo' => 'foo'
+					)
+				);
 			
-			$bar = new RouterStaticRule(
-				'bar',
-				array(
-					'bar' => 'bar'
-				)
-			);
+			$bar = 
+				RouterStaticRule::create(
+					'bar'
+				)->
+				setDefaults(
+					array(
+						'bar' => 'bar'
+					)
+				);
 			
 			$chain->
 				chain($foo)->
@@ -205,21 +255,26 @@
 		{
 			$chain = new RouterChainRule();
 			
-			$foo = new RouterHostnameRule(
-				'www.example.com',
-				array(
-					'foo' => 'foo'
-				)
-			);
+			$foo = 
+				RouterHostnameRule::create(
+					'www.example.com'
+				)->
+				setDefaults(
+					array(
+						'foo' => 'foo'
+					)
+				);
 			
-			$bar = new RouterRegexpRule(
-				'bar',
-				array(
-					'bar' => 'bar'
-				),
-				array(),
-				'bar'
-			);
+			$bar = 
+				RouterRegexpRule::create(
+					'bar'
+				)->
+				setDefaults(
+					array(
+						'bar' => 'bar'
+					)
+				)->
+				setReverse('bar');
 			
 			$chain->
 				chain($foo)->
@@ -237,27 +292,36 @@
 		
 		public function testChainingReuse()
 		{
-			$foo = new RouterHostnameRule(
-				'www.example.com',
-				array(
-					'foo' => 'foo'
-				)
-			);
+			$foo = 
+				RouterHostnameRule::create(
+					'www.example.com'
+				)->
+				setDefaults(
+					array(
+						'foo' => 'foo'
+					)
+				);
 			
-			$profile = new RouterTransparentRule(
-				'user/:id',
-				array(
-					'area' => 'prof'
-				)
-			);
+			$profile = 
+				RouterTransparentRule::create(
+					'user/:id'
+				)->
+				setDefaults(
+					array(
+						'area' => 'prof'
+					)
+				);
 			
-			$article = new RouterTransparentRule(
-				'article/:id',
-				array(
-					'area' => 'art',
-					'action' => 'art'
-				)
-			);
+			$article = 
+				RouterTransparentRule::create(
+					'article/:id'
+				)->
+				setDefaults(
+					array(
+						'area' => 'art',
+						'action' => 'art'
+					)
+				);
 			
 			$profileChain = $foo->chain($profile);
 			$articleChain = $foo->chain($article);

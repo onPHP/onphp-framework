@@ -40,13 +40,15 @@
 		
 		public function testStaticMatchWithDefaults()
 		{
-			$route = new RouterRegexpRule(
-				'users/all',
-				
-				array(
-					'area' => 'ctrl'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/all'
+				)->
+				setDefaults(
+					array(
+						'area' => 'ctrl'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/all')
@@ -89,16 +91,21 @@
 		
 		public function testNegativeMatch()
 		{
-			$route = new RouterRegexpRule(
-				'((?!admin|moderator).+)',
-				
-				array(
-					'module' => 'index',
-					'area' => 'index'
-				),
-				
-				array(1 => 'action')
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'((?!admin|moderator).+)'
+				)->
+				setDefaults(
+					array(
+						'module' => 'index',
+						'area' => 'index'
+					)
+				)->
+				setMap(
+					array(
+						1 => 'action'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users')
@@ -112,13 +119,15 @@
 		
 		public function testNumericDefault()
 		{
-			$route = new RouterRegexpRule(
-				'users/?(.+)?',
-				
-				array(
-					1 => 'martel'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/?(.+)?'
+				)->
+				setDefaults(
+					array(
+						1 => 'martel'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users')
@@ -130,13 +139,15 @@
 		
 		public function testVariableMatchWithNumericDefault()
 		{
-			$route = new RouterRegexpRule(
-				'users/?(.+)?',
-				
-				array(
-					1 => 'martel'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/?(.+)?'
+				)->
+				setDefaults(
+					array(
+						1 => 'martel'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/vicki')
@@ -159,11 +170,15 @@
 		
 		public function testMappedVariableMatch()
 		{
-			$route = new RouterRegexpRule(
-				'users/(.+)',
-				null,
-				array(1 => 'username')
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(.+)'
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel')
@@ -175,17 +190,20 @@
 		
 		public function testMappedVariableWithDefault()
 		{
-			$route = new RouterRegexpRule(
-				'users(?:/(.+))?',
-				
-				array(
-					'username' => 'martel'
-				),
-				
-				array(
-					1 => 'username'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users(?:/(.+))?'
+				)->
+				setDefaults(
+					array(
+						'username' => 'martel'
+					)
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users')
@@ -197,13 +215,15 @@
 		
 		public function testMappedVariableWithNamedSubpattern()
 		{
-			$route = new RouterRegexpRule(
-				'users/(?P<name>.+)',
-				null,
-				array(
-					1 => 'username'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(?P<name>.+)'
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel')
@@ -215,14 +235,16 @@
 		
 		public function testOptionalVar()
 		{
-			$route = new RouterRegexpRule(
-				'users/(\w+)/?(?:p/(\d+))?',
-				null,
-				array(
-					1 => 'username',
-					2 => 'page'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(\w+)/?(?:p/(\d+))?'
+				)->
+				setMap(
+					array(
+						1 => 'username',
+						2 => 'page'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel/p/1')
@@ -235,14 +257,16 @@
 		
 		public function testEmptyOptionalVar()
 		{
-			$route = new RouterRegexpRule(
-				'users/(\w+)/?(?:p/(\d+))?',
-				null,
-				array(
-					1 => 'username',
-					2 => 'page'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(\w+)/?(?:p/(\d+))?'
+				)->
+				setMap(
+					array(
+						1 => 'username',
+						2 => 'page'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel')
@@ -254,13 +278,15 @@
 		
 		public function testMixedMap()
 		{
-			$route = new RouterRegexpRule(
-				'users/(\w+)/?(?:p/(\d+))?',
-				null,
-				array(
-					1 => 'username'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(\w+)/?(?:p/(\d+))?'
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel/p/1')
@@ -273,17 +299,20 @@
 		
 		public function testNumericDefaultWithMap()
 		{
-			$route = new RouterRegexpRule(
-				'users/?(.+)?',
-				
-				array(
-					1 => 'martel'
-				),
-				
-				array(
-					1 => 'username'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/?(.+)?'
+				)->
+				setDefaults(
+					array(
+						1 => 'martel'
+					)
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users')
@@ -295,17 +324,20 @@
 		
 		public function testMixedMapWithDefault()
 		{
-			$route = new RouterRegexpRule(
-				'users/(\w+)/?(?:p/(\d+))?',
-				
-				array(
-					2 => '1'
-				),
-				
-				array(
-					1 => 'username'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(\w+)/?(?:p/(\d+))?'
+				)->
+				setDefaults(
+					array(
+						2 => '1'
+					)
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel/p/10')
@@ -318,18 +350,21 @@
 		
 		public function testMixedMapWithDefaults2()
 		{
-			$route = new RouterRegexpRule(
-				'users/?(\w+)?/?(?:p/(\d+))?',
-				
-				array(
-					2 => '1',
-					'username' => 'martel'
-				),
-				
-				array(
-					1 => 'username'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/?(\w+)?/?(?:p/(\d+))?'
+				)->
+				setDefaults(
+					array(
+						2 => '1',
+						'username' => 'martel'
+					)
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				);
 			
 			$values = $route->match($this->buildRequest('http://localhost/users'));
 			
@@ -340,19 +375,22 @@
 		
 		public function testOptionalVarWithMapAndDefault()
 		{
-			$route = new RouterRegexpRule(
-				'users/(\w+)/?(?:p/(\d+))?',
-				
-				array(
-					'page' => '1',
-					'username' => 'martel'
-				),
-				
-				array(
-					1 => 'username',
-					2 => 'page'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(\w+)/?(?:p/(\d+))?'
+				)->
+				setDefaults(
+					array(
+						'page' => '1',
+						'username' => 'martel'
+					)
+				)->
+				setMap(
+					array(
+						1 => 'username',
+						2 => 'page'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel')
@@ -365,17 +403,20 @@
 		
 		public function testOptionalVarWithMapAndNumericDefault()
 		{
-			$route = new RouterRegexpRule(
-				'users/(\w+)/?(?:p/(\d+))?',
-				
-				array(
-					2 => '1'
-				),
-				
-				array(
-					2 => 'page'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(\w+)/?(?:p/(\d+))?'
+				)->
+				setDefaults(
+					array(
+						2 => '1'
+					)
+				)->
+				setMap(
+					array(
+						2 => 'page'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel')
@@ -388,18 +429,21 @@
 		
 		public function testMappedAndNumericDefault()
 		{
-			$route = new RouterRegexpRule(
-				'users/?(\w+)?',
-				
-				array(
-					1 => 'martel',
-					'username' => 'vicki'
-				),
-				
-				array(
-					1 => 'username'
-				)
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/?(\w+)?'
+				)->
+				setDefaults(
+					array(
+						1 => 'martel',
+						'username' => 'vicki'
+					)
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users')
@@ -411,14 +455,18 @@
 		
 		public function testAssemble()
 		{
-			$route = new RouterRegexpRule(
-				'users/(.+)',
-				null,
-				array(
-					1 => 'username'
-				),
-				'users/%s'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(.+)'
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				)->
+				setReverse(
+					'users/%s'
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel')
@@ -430,14 +478,18 @@
 		
 		public function testAssembleWithDefault()
 		{
-			$route = new RouterRegexpRule(
-				'users/?(.+)?',
-				array(
-					1 => 'martel'
-				),
-				null,
-				'users/%s'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/?(.+)?'
+				)->
+				setDefaults(
+					array(
+						1 => 'martel'
+					)
+				)->
+				setReverse(
+					'users/%s'
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users')
@@ -449,19 +501,23 @@
 		
 		public function testAssembleWithMappedDefault()
 		{
-			$route = new RouterRegexpRule(
-				'users/?(.+)?',
-				
-				array(
-					'username' => 'martel'
-				),
-				
-				array(
-					1 => 'username'
-				),
-				
-				'users/%s'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/?(.+)?'
+				)->
+				setDefaults(
+					array(
+						'username' => 'martel'
+					)
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				)->
+				setReverse(
+					'users/%s'
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users')
@@ -473,12 +529,13 @@
 		
 		public function testAssembleWithData()
 		{
-			$route = new RouterRegexpRule(
-				'users/(.+)',
-				null,
-				null,
-				'users/%s'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(.+)'
+				)->
+				setReverse(
+					'users/%s'
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel')
@@ -490,14 +547,18 @@
 		
 		public function testAssembleWithMappedVariable()
 		{
-			$route = new RouterRegexpRule(
-				'users/(.+)',
-				null,
-				array(
-					1 => 'username'
-				),
-				'users/%s'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(.+)'
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				)->
+				setReverse(
+					'users/%s'
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel')
@@ -512,14 +573,18 @@
 		
 		public function testAssembleWithMappedVariableAndNumericKey()
 		{
-			$route = new RouterRegexpRule(
-				'users/(.+)',
-				null,
-				array(
-					1 => 'username'
-				),
-				'users/%s'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(.+)'
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				)->
+				setReverse(
+					'users/%s'
+				);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel')
@@ -531,12 +596,13 @@
 		
 		public function testAssembleWithoutMatch()
 		{
-			$route = new RouterRegexpRule(
-				'users/(.+)',
-				null,
-				null,
-				'users/%s'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(.+)'
+				)->
+				setReverse(
+					'users/%s'
+				);
 			
 			try {
 				$url = $route->assemble();
@@ -546,14 +612,18 @@
 		
 		public function testAssembleWithDefaultWithoutMatch()
 		{
-			$route = new RouterRegexpRule(
-				'users/?(.+)?',
-				array(
-					1 => 'martel'
-				),
-				null,
-				'users/%s'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/?(.+)?'
+				)->
+				setDefaults(
+					array(
+						1 => 'martel'
+					)
+				)->
+				setReverse(
+					'users/%s'
+				);
 			
 			$url = $route->assemble();
 			$this->assertSame('users/martel', $url);
@@ -561,19 +631,23 @@
 		
 		public function testAssembleWithMappedDefaultWithoutMatch()
 		{
-			$route = new RouterRegexpRule(
-				'users/?(.+)?',
-				
-				array(
-					'username' => 'martel'
-				),
-				
-				array(
-					1 => 'username'
-				),
-				
-				'users/%s'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/?(.+)?'
+				)->
+				setDefaults(
+					array(
+						'username' => 'martel'
+					)
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				)->
+				setReverse(				
+					'users/%s'
+				);
 			
 			$url = $route->assemble();
 			$this->assertSame('users/martel', $url);
@@ -581,12 +655,13 @@
 		
 		public function testAssembleWithDataWithoutMatch()
 		{
-			$route = new RouterRegexpRule(
-				'users/(.+)',
-				null,
-				null,
-				'users/%s'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(.+)'
+				)->
+				setReverse(
+					'users/%s'
+				);
 			
 			$url = $route->assemble(array(1 => 'vicki'));
 			$this->assertSame('users/vicki', $url);
@@ -594,14 +669,18 @@
 		
 		public function testAssembleWithMappedVariableWithoutMatch()
 		{
-			$route = new RouterRegexpRule(
-				'users/(.+)',
-				null,
-				array(
-					1 => 'username'
-				),
-				'users/%s'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'users/(.+)'
+				)->
+				setMap(
+					array(
+						1 => 'username'
+					)
+				)->
+				setReverse(
+					'users/%s'
+				);
 			
 			$url = $route->assemble(array('username' => 'vicki'));
 			$this->assertSame('users/vicki', $url);
@@ -609,23 +688,27 @@
 		
 		public function testAssemble2()
 		{
-			$route = new RouterRegexpRule(
-				'(.+)\.([0-9]+)-([0-9]+)\.html',
-				
-				array(
-					'module' => 'default',
-					'area' => 'content.item',
-					'action' => 'forward'
-				),
-				
-				array(
-					1 => 'name',
-					2 => 'id',
-					3 => 'class'
-				),
-				
-				'%s.%s-%s.html'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'(.+)\.([0-9]+)-([0-9]+)\.html'
+				)->
+				setDefaults(
+					array(
+						'module' => 'default',
+						'area' => 'content.item',
+						'action' => 'forward'
+					)
+				)->
+				setMap(
+					array(
+						1 => 'name',
+						2 => 'id',
+						3 => 'class'
+					)
+				)->
+				setReverse(
+					'%s.%s-%s.html'
+				);
 			
 			$route->match(
 				$this->buildRequest(
@@ -646,13 +729,18 @@
 		
 		public function testCreateInstance()
 		{
-			$route = RouterRegexpRule::create(
-				'forum/(\d+)',
-				array(
-					'area' => 'ctrl'
-				),
-				'forum/%d'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'forum/(\d+)'
+				)->
+				setDefaults(
+					array(
+						'area' => 'ctrl'
+					)
+				)->
+				setReverse(
+					'forum/%d'
+				);
 			
 			$this->assertType('RouterRegexpRule', $route);
 			
@@ -663,19 +751,23 @@
 		
 		public function testAssemblyOfRouteWithMergedMatchedParts()
 		{
-			$route = new RouterRegexpRule(
-				'itemlist(?:/(\d+))?',
-				
-				array(
-					'page' => 1
-				),
-				
-				array(
-					1 => 'page'
-				),
-				
-				'itemlist/%d'
-			);
+			$route = 
+				RouterRegexpRule::create(
+					'itemlist(?:/(\d+))?'
+				)->
+				setDefaults(
+					array(
+						'page' => 1
+					)
+				)->
+				setMap(
+					array(
+						1 => 'page'
+					)
+				)->
+				setReverse(
+					'itemlist/%d'
+				);
 			
 			$this->assertEquals(
 				array('page' => 1),

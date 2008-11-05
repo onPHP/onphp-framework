@@ -10,13 +10,15 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class RouterTransparentRule extends RouterBaseRule
+	final class RouterTransparentRule extends RouterBaseRule
 	{
 		protected $urlVariable		= ':';
 		protected $urlDelimiter		= '/';
 		protected $regexDelimiter	= '#';
 		
 		protected $defaultRegex		= null;
+		protected $route			= null;
+		protected $routeProcessed	= false;
 		protected $variables		= array();
 		protected $parts			= array();
 		protected $requirements		= array();
@@ -28,55 +30,23 @@
 		/**
 		 * @return RouterTransparentRule
 		**/
-		public static function create($route /* , array $defaults, array $reqs */)
+		public static function create($route)
 		{
-			$list = func_get_args();
-			
-			$defaults = array();
-			$reqs = array();
-			
-			if (!empty($list[1]))
-				$defaults = $list[1];
-			
-			if (!empty($list[2]))
-				$reqs = $list[2];
-			
-			return new self($route, $defaults, $reqs);
+			return new self($route);
 		}
 		
-		public function __construct($route, $defaults = array(), $reqs = array())
+		public function __construct($route)
 		{
-			$route = trim($route, $this->urlDelimiter);
-			$this->defaults = (array) $defaults;
-			$this->requirements = (array) $reqs;
-			
-			if ($route !== '') {
-				foreach (explode($this->urlDelimiter, $route) as $pos => $part) {
-					if (substr($part, 0, 1) == $this->urlVariable) {
-						$name = substr($part, 1);
-						
-						$this->parts[$pos] = (
-							isset($reqs[$name])
-								? $reqs[$name]
-								: $this->defaultRegex
-						);
-						
-						$this->variables[$pos] = $name;
-					} else {
-						$this->parts[$pos] = $part;
-						
-						if ($part !== '*')
-							$this->staticCount++;
-					}
-				}
-			}
+			$this->route = trim($route, $this->urlDelimiter);			
 		}
 		
 		/**
 		 * @return RouterTransparentRule
 		**/
-		public function setRequirements(array $reqirements)
+		public function setRequirements($reqirements)
 		{
+			Assert::isArray($reqirements);
+			
 			$this->requirements = $reqirements;
 			
 			return $this;
@@ -95,6 +65,8 @@
 		**/
 		public function match(HttpRequest $request)
 		{
+			$this->processRoute();
+			
 			$path = $this->processPath($request)->toString();
 			
 			$pathStaticCount = 0;
@@ -196,6 +168,8 @@
 			$encode = false
 		)
 		{
+			$this->processRoute();
+			
 			$url = array();
 			$flag = false;
 			
@@ -285,6 +259,40 @@
 			
 			// FIXME: rtrim, probably?
 			return trim($return, $this->urlDelimiter);
+		}
+		
+		/**		 
+		 * @return RouterTransparentRule
+		**/
+		protected function processRoute() 
+		{
+			if ($this->routeProcessed)
+				return $this;
+			
+			if ($this->route !== '') {
+				foreach (explode($this->urlDelimiter, $this->route) as $pos => $part) {
+					if (substr($part, 0, 1) == $this->urlVariable) {
+						$name = substr($part, 1);
+						
+						$this->parts[$pos] = (
+							isset($this->requirements[$name])
+								? $this->requirements[$name]
+								: $this->defaultRegex
+						);
+						
+						$this->variables[$pos] = $name;
+					} else {
+						$this->parts[$pos] = $part;
+						
+						if ($part !== '*')
+							$this->staticCount++;
+					}
+				}
+			}
+			
+			$this->routeProcessed = true;
+			
+			return $this;
 		}
 	}
 ?>

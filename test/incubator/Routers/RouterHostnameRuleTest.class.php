@@ -124,14 +124,16 @@
 			
 			$request = $this->buildRequest('www.example.com');
 			
-			$route = new RouterHostnameRule(
-				'www.example.com',
-				
-				array(
-					'area' => 'host-foo',
-					'action' => 'host-bar'
-				)
-			);
+			$route = 
+				RouterHostnameRule::create(
+					'www.example.com'
+				)->
+				setDefaults(
+					array(
+						'area' => 'host-foo',
+						'action' => 'host-bar'
+					)
+				);
 			
 			$values = $route->match($request);
 			
@@ -144,14 +146,16 @@
 		**/
 		protected function buildStaticHostnameRule()
 		{
-			$route = new RouterHostnameRule(
-				'www.example.com',
-				
-				array(
-					'area' => 'ctrl',
-					'action' => 'act'
-				)
-			);
+			$route = 
+				RouterHostnameRule::create(
+					'www.example.com'
+				)->
+				setDefaults(
+					array(
+						'area' => 'ctrl',
+						'action' => 'act'
+					)
+				);
 			
 			return $route;
 		}
@@ -161,18 +165,21 @@
 		**/
 		protected function buildHostnameRule()
 		{
-			$route = new RouterHostnameRule(
-				':subdomain.example.com',
-				
-				array(
-					'area' => 'ctrl',
-					'action' => 'act'
-				),
-				
-				array(
-					'subdomain' => '(foo|bar)'
-				)
-			);
+			$route = 
+				RouterHostnameRule::create(
+					':subdomain.example.com'
+				)->
+				setDefaults(
+					array(
+						'area' => 'ctrl',
+						'action' => 'act'
+					)
+				)->
+				setRequirements(
+					array(
+						'subdomain' => '(foo|bar)'
+					)
+				);
 			
 			return $route;
 		}
@@ -182,19 +189,22 @@
 		**/
 		protected function buildHostnameRuleWithDefault()
 		{
-			$route = new RouterHostnameRule(
-				':subdomain.example.com',
-				
-				array(
-					'area' => 'ctrl',
-					'action' => 'act',
-					'subdomain' => 'bar'
-				),
-				
-				array(
-					'subdomain' => '(foo|bar)'
-				)
-			);
+			$route = 
+				RouterHostnameRule::create(
+					':subdomain.example.com'
+				)->
+				setDefaults(
+					array(
+						'area' => 'ctrl',
+						'action' => 'act',
+						'subdomain' => 'bar'
+					)
+				)->
+				setRequirements(
+					array(
+						'subdomain' => '(foo|bar)'
+					)
+				);
 			
 			return $route;
 		}

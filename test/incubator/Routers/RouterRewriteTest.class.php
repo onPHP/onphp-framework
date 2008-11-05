@@ -28,15 +28,17 @@
 			$this->router->addRoute(
 				'archive',
 				
-				new RouterTransparentRule(
-					'archive/:year',
-					
+				RouterTransparentRule::create(
+					'archive/:year'
+				)->
+				setDefaults(
 					array(
 						'year' => '2006',
 						'area' => 'archive',
 						'action' => 'show'
-					),
-					
+					)
+				)->
+				setRequirements(
 					array(
 						'year' => '\d+'
 					)
@@ -51,8 +53,10 @@
 			$this->router->addRoute(
 				'register',
 				
-				new RouterTransparentRule(
-					'register/:action',
+				RouterTransparentRule::create(
+					'register/:action'
+				)->
+				setDefaults(
 					array(
 						'area' => 'profile',
 						'action' => 'register'
@@ -69,27 +73,32 @@
 		public function testAddRoutes()
 		{
 			$routes = array(
-				'archive' => new RouterTransparentRule(
-					'archive/:year',
-					
-					array(
-						'year' => '2006',
-						'area' => 'archive',
-						'action' => 'show'
+				'archive' => 
+					RouterTransparentRule::create(
+						'archive/:year'
+					)->
+					setDefaults(
+						array(
+							'year' => '2006',
+							'area' => 'archive',
+							'action' => 'show'
+						)
+					)->
+					setRequirements(	
+						array(
+							'year' => '\d+'
+						)
 					),
-					
-					array(
-						'year' => '\d+'
+				'register' => 
+					RouterTransparentRule::create(
+						'register/:action'
+					)->
+					setDefaults(
+						array(
+							'area' => 'profile',
+							'action' => 'register'
+						)
 					)
-				),
-				'register' => new RouterTransparentRule(
-					'register/:action',
-					
-					array(
-						'area' => 'profile',
-						'action' => 'register'
-					)
-				)
 			);
 			
 			$this->router->addRoutes($routes);
@@ -106,15 +115,17 @@
 			$this->router->addRoute(
 				'archive',
 				
-				new RouterTransparentRule(
-					'archive/:year',
-					
+				RouterTransparentRule::create(
+					'archive/:year'
+				)->
+				setDefaults(
 					array(
 						'year' => '2006',
 						'area' => 'archive',
 						'action' => 'show'
-					),
-					
+					)
+				)->
+				setRequirements(	
 					array(
 						'year' => '\d+'
 					)
@@ -127,19 +138,22 @@
 		
 		public function testGetRoute()
 		{
-			$archive = new RouterTransparentRule(
-				'archive/:year',
-				
-				array(
-					'year' => '2006',
-					'area' => 'archive',
-					'action' => 'show'
-				),
-				
-				array(
-					'year' => '\d+'
-				)
-			);
+			$archive = 
+				RouterTransparentRule::create(
+					'archive/:year'
+				)->
+				setDefaults(
+					array(
+						'year' => '2006',
+						'area' => 'archive',
+						'action' => 'show'
+					)
+				)->
+				setRequirements(
+					array(
+						'year' => '\d+'
+					)
+				);
 			
 			$this->router->addRoute('archive', $archive);
 			
@@ -154,15 +168,17 @@
 			$this->router->addRoute(
 				'archive',
 				
-				new RouterTransparentRule(
-					'archive/:year',
-					
+				RouterTransparentRule::create(
+					'archive/:year'
+				)->
+				setDefaults(
 					array(
 						'year' => '2006',
 						'area' => 'archive',
 						'action' => 'show'
-					),
-					
+					)
+				)->
+				setRequirements(
 					array(
 						'year' => '\d+'
 					)
@@ -258,9 +274,8 @@
 			$this->router->addRoute(
 				'empty',
 				
-				new RouterTransparentRule(
-					'',
-					
+				RouterTransparentRule::create('')->
+				setDefaults(
 					array(
 						'area' => 'ctrl',
 						'action' => 'act'
@@ -281,8 +296,10 @@
 			$this->router->addRoute(
 				'catch-all',
 				
-				new RouterTransparentRule(
-					':area/:action/*',
+				RouterTransparentRule::create(
+					':area/:action/*'
+				)->
+				setDefaults(
 					array(
 						'area' => 'ctrl',
 						'action' => 'act'
@@ -303,9 +320,10 @@
 			$this->router->addRoute(
 				'catch-all',
 				
-				new RouterTransparentRule(
-					'*',
-					
+				RouterTransparentRule::create(
+					'*'
+				)->
+				setDefaults(
 					array(
 						'area' => 'ctrl',
 						'action' => 'act'
@@ -343,27 +361,30 @@
 			$this->router->addRoute(
 				'archive',
 				
-				new RouterTransparentRule(
-					'archive/:year',
-					
+				RouterTransparentRule::create(
+					'archive/:year'
+				)->
+				setDefaults(
 					array(
 						'year' => '2006',
 						'area' => 'archive',
 						'action' => 'show'
-					),
-					
+					)
+				)->
+				setRequirements(	
 					array(
 						'year' => '\d+'
-					)
+					)				
 				)
 			);
 			
 			$this->router->addRoute(
 				'register',
 				
-				new RouterTransparentRule(
-					'register/:action',
-					
+				RouterTransparentRule::create(
+					'register/:action'
+				)->
+				setDefaults(	
 					array(
 						'area' => 'profile',
 						'action' => 'register'
@@ -431,9 +452,10 @@
 			$this->router->addRoute(
 				'foo',
 				
-				new RouterTransparentRule(
-					':lang/foo',
-					
+				RouterTransparentRule::create(
+					':lang/foo'
+				)->
+				setDefaults(
 					array(
 						'lang' => 'nl',
 						'area' => 'index',
@@ -445,9 +467,10 @@
 			$this->router->addRoute(
 				'bar',
 				
-				new RouterTransparentRule(
-					':lang/bar',
-					
+				RouterTransparentRule::create(
+					':lang/bar'
+				)->
+				setDefaults(
 					array(
 						'lang' => 'nl',
 						'area' => 'index',
@@ -475,9 +498,10 @@
 			$this->router->addRoute(
 				'foo',
 				
-				new RouterTransparentRule(
-					':lang/foo',
-					
+				RouterTransparentRule::create(
+					':lang/foo'
+				)->
+				setDefaults(
 					array(
 						'lang' => 'nl',
 						'area' => 'index',
@@ -489,9 +513,10 @@
 			$this->router->addRoute(
 				'bar',
 				
-				new RouterTransparentRule(
-					':lang/bar',
-					
+				RouterTransparentRule::create(
+					':lang/bar'
+				)->
+				setDefaults(
 					array(
 						'lang' => 'nl',
 						'area' => 'index',
@@ -518,9 +543,10 @@
 			$this->router->addRoute(
 				'foo',
 				
-				new RouterTransparentRule(
-					':lang/foo',
-					
+				RouterTransparentRule::create(
+					':lang/foo'
+				)->
+				setDefaults(
 					array(
 						'lang' => 'nl',
 						'area' => 'index',
@@ -532,9 +558,10 @@
 			$this->router->addRoute(
 				'bar',
 				
-				new RouterTransparentRule(
-					':lang/bar',
-					
+				RouterTransparentRule::create(
+					':lang/bar'
+				)->
+				setDefaults(
 					array(
 						'lang' => 'nl',
 						'area' => 'index',
@@ -562,23 +589,27 @@
 			
 			$request = $this->buildRequest('http://localhost/foo/bar');
 			
-			$foo = new RouterTransparentRule(
-				'foo',
-				
-				array(
-					'foo' => true
-				)
-			);
+			$foo = 
+				RouterTransparentRule::create(
+					'foo'
+				)->
+				setDefaults(
+					array(
+						'foo' => true
+					)
+				);
 			
-			$bar = new RouterTransparentRule(
-				'bar',
-				
-				array(
-					'bar' => true,
-					'area' => 'foo',
-					'action' => 'bar'
-				)
-			);
+			$bar = 
+				RouterTransparentRule::create(
+					'bar'
+				)->
+				setDefaults(
+					array(
+						'bar' => true,
+						'area' => 'foo',
+						'action' => 'bar'
+					)
+				);
 			
 			$chain = new RouterChainRule();
 			
@@ -600,31 +631,37 @@
 		{
 			$request = $this->buildRequest('http://www.example.com/bar');
 			
-			$foo = new RouterHostnameRule(
-				'nope.example.com',
-				
-				array(
-					'module' => 'nope-bla',
-					'bogus' => 'bogus'
-				)
-			);
+			$foo = 
+				RouterHostnameRule::create(
+					'nope.example.com'
+				)->
+				setDefaults(
+					array(
+						'module' => 'nope-bla',
+						'bogus' => 'bogus'
+					)
+				);
 			
-			$bar = new RouterHostnameRule(
-				'www.example.com',
-				
-				array(
-					'module' => 'www-bla'
-				)
-			);
+			$bar = 
+				RouterHostnameRule::create(
+					'www.example.com'
+				)->
+				setDefaults(
+					array(
+						'module' => 'www-bla'
+					)
+				);
 			
-			$bla = new RouterStaticRule(
-				'bar',
-				
-				array(
-					'area' => 'foo',
-					'action' => 'bar'
-				)
-			);
+			$bla = 
+				RouterStaticRule::create(
+					'bar'
+				)->
+				setDefaults(
+					array(
+						'area' => 'foo',
+						'action' => 'bar'
+					)
+				);
 			
 			$chainMatch = new RouterChainRule();
 			
@@ -653,13 +690,15 @@
 			$this->router->addRoute(
 				'contest',
 				
-				new RouterTransparentRule(
-					'contest/:contest/*',
-					
+				RouterTransparentRule::create(
+					'contest/:contest/*'
+				)->
+				setDefaults(	
 					array(
 						'area' => 'contestController'
-					),
-					
+					)
+				)->
+				setRequirements(	
 					array(
 						'contest' => '\d+'
 					)
@@ -768,19 +807,22 @@
 		
 		public function testRouteShouldMatchEvenWithTrailingSlash()
 		{
-			$route = new RouterTransparentRule(
-				'blog/articles/:id',
-				
-				array(
-					'area' => 'blog',
-					'action' => 'articles',
-					'id' => 0,
-				),
-				
-				array(
-					'id' => '[0-9]+',
-				)
-			);
+			$route = 
+				RouterTransparentRule::create(
+					'blog/articles/:id'
+				)->
+				setDefaults(
+					array(
+						'area' => 'blog',
+						'action' => 'articles',
+						'id' => 0,
+					)
+				)->
+				setRequirements(
+					array(
+						'id' => '[0-9]+',
+					)
+				);
 			
 			$this->router->addRoute('article-id', $route);
 			

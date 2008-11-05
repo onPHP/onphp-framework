@@ -10,28 +10,21 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class RouterStaticRule extends RouterBaseRule
+	final class RouterStaticRule extends RouterBaseRule
 	{
 		protected $route	= null;
 		
 		/**
 		 * @return RouterStaticRule
 		**/
-		public static function create($route /* , array $defaults */)
+		public static function create($route)
 		{
-			$defaults = array();
-			$list = func_get_args();
-			
-			if (!empty($list[1]))
-				$defaults = $list[1];
-			
-			return new self($route, $defaults);
+			return new self($route);
 		}
 		
-		public function __construct($route, $defaults = array())
+		public function __construct($route)
 		{
 			$this->route = trim($route, '/');
-			$this->defaults = (array) $defaults;
 		}
 		
 		public function match(HttpRequest $request)
