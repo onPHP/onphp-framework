@@ -73,7 +73,7 @@
 		public function testAddRoutes()
 		{
 			$routes = array(
-				'archive' => 
+				'archive' =>
 					RouterTransparentRule::create(
 						'archive/:year'
 					)->
@@ -84,12 +84,12 @@
 							'action' => 'show'
 						)
 					)->
-					setRequirements(	
+					setRequirements(
 						array(
 							'year' => '\d+'
 						)
 					),
-				'register' => 
+				'register' =>
 					RouterTransparentRule::create(
 						'register/:action'
 					)->
@@ -125,7 +125,7 @@
 						'action' => 'show'
 					)
 				)->
-				setRequirements(	
+				setRequirements(
 					array(
 						'year' => '\d+'
 					)
@@ -138,7 +138,7 @@
 		
 		public function testGetRoute()
 		{
-			$archive = 
+			$archive =
 				RouterTransparentRule::create(
 					'archive/:year'
 				)->
@@ -371,10 +371,10 @@
 						'action' => 'show'
 					)
 				)->
-				setRequirements(	
+				setRequirements(
 					array(
 						'year' => '\d+'
-					)				
+					)
 				)
 			);
 			
@@ -384,7 +384,7 @@
 				RouterTransparentRule::create(
 					'register/:action'
 				)->
-				setDefaults(	
+				setDefaults(
 					array(
 						'area' => 'profile',
 						'action' => 'register'
@@ -589,7 +589,7 @@
 			
 			$request = $this->buildRequest('http://localhost/foo/bar');
 			
-			$foo = 
+			$foo =
 				RouterTransparentRule::create(
 					'foo'
 				)->
@@ -599,7 +599,7 @@
 					)
 				);
 			
-			$bar = 
+			$bar =
 				RouterTransparentRule::create(
 					'bar'
 				)->
@@ -631,7 +631,7 @@
 		{
 			$request = $this->buildRequest('http://www.example.com/bar');
 			
-			$foo = 
+			$foo =
 				RouterHostnameRule::create(
 					'nope.example.com'
 				)->
@@ -642,7 +642,7 @@
 					)
 				);
 			
-			$bar = 
+			$bar =
 				RouterHostnameRule::create(
 					'www.example.com'
 				)->
@@ -652,7 +652,7 @@
 					)
 				);
 			
-			$bla = 
+			$bla =
 				RouterStaticRule::create(
 					'bar'
 				)->
@@ -693,12 +693,12 @@
 				RouterTransparentRule::create(
 					'contest/:contest/*'
 				)->
-				setDefaults(	
+				setDefaults(
 					array(
 						'area' => 'contestController'
 					)
 				)->
-				setRequirements(	
+				setRequirements(
 					array(
 						'contest' => '\d+'
 					)
@@ -807,7 +807,7 @@
 		
 		public function testRouteShouldMatchEvenWithTrailingSlash()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'blog/articles/:id'
 				)->

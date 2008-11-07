@@ -15,7 +15,7 @@
 		protected $hostVariable		= ':';
 		protected $regexDelimiter	= '#';
 		
-		protected $defaultRegex		= null;		
+		protected $defaultRegex		= null;
 		protected $route			= null;
 		protected $routeProcessed	= false;
 		protected $variables		= array();
@@ -35,7 +35,7 @@
 		
 		public function __construct($route)
 		{
-			$this->route = trim($route, '.');			
+			$this->route = trim($route, '.');
 		}
 		
 		/**
@@ -220,7 +220,7 @@
 		/**
 		 * @return RouterHostnameRule
 		**/
-		protected function processRoute() 
+		protected function processRoute()
 		{
 			if ($this->routeProcessed)
 				return $this;

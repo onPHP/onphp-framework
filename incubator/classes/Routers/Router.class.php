@@ -36,7 +36,7 @@
 		 *
 		 * Reset is used to signal that all parameters
 		 * must be reset to it's defaults.
-		 * 
+		 *
 		 * Ignoring all URL specified values.
 		 * User specified params still get precedence.
 		 *
@@ -44,11 +44,11 @@
 		 *
 		 * @param  array $userParams Options passed by an user
 		 * used to override parameters
-		 * 
+		 *
 		 * @param  mixed $name The name of a Route to use
 		 * @param  bool $reset Whether to reset to the route defaults
 		 * ignoring URL params
-		 * 
+		 *
 		 * @param  bool $encode Tells to encode URL parts on output
 		 * @throws RouterException
 		 * @return string Resulting URL path

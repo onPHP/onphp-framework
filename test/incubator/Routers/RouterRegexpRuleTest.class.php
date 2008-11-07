@@ -40,7 +40,7 @@
 		
 		public function testStaticMatchWithDefaults()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/all'
 				)->
@@ -91,7 +91,7 @@
 		
 		public function testNegativeMatch()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'((?!admin|moderator).+)'
 				)->
@@ -119,7 +119,7 @@
 		
 		public function testNumericDefault()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
@@ -139,7 +139,7 @@
 		
 		public function testVariableMatchWithNumericDefault()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
@@ -170,7 +170,7 @@
 		
 		public function testMappedVariableMatch()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(.+)'
 				)->
@@ -190,7 +190,7 @@
 		
 		public function testMappedVariableWithDefault()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users(?:/(.+))?'
 				)->
@@ -215,7 +215,7 @@
 		
 		public function testMappedVariableWithNamedSubpattern()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(?P<name>.+)'
 				)->
@@ -235,7 +235,7 @@
 		
 		public function testOptionalVar()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(\w+)/?(?:p/(\d+))?'
 				)->
@@ -257,7 +257,7 @@
 		
 		public function testEmptyOptionalVar()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(\w+)/?(?:p/(\d+))?'
 				)->
@@ -278,7 +278,7 @@
 		
 		public function testMixedMap()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(\w+)/?(?:p/(\d+))?'
 				)->
@@ -299,7 +299,7 @@
 		
 		public function testNumericDefaultWithMap()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
@@ -324,7 +324,7 @@
 		
 		public function testMixedMapWithDefault()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(\w+)/?(?:p/(\d+))?'
 				)->
@@ -350,7 +350,7 @@
 		
 		public function testMixedMapWithDefaults2()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/?(\w+)?/?(?:p/(\d+))?'
 				)->
@@ -375,7 +375,7 @@
 		
 		public function testOptionalVarWithMapAndDefault()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(\w+)/?(?:p/(\d+))?'
 				)->
@@ -403,7 +403,7 @@
 		
 		public function testOptionalVarWithMapAndNumericDefault()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(\w+)/?(?:p/(\d+))?'
 				)->
@@ -429,7 +429,7 @@
 		
 		public function testMappedAndNumericDefault()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/?(\w+)?'
 				)->
@@ -455,7 +455,7 @@
 		
 		public function testAssemble()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(.+)'
 				)->
@@ -478,7 +478,7 @@
 		
 		public function testAssembleWithDefault()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
@@ -501,7 +501,7 @@
 		
 		public function testAssembleWithMappedDefault()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
@@ -529,7 +529,7 @@
 		
 		public function testAssembleWithData()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(.+)'
 				)->
@@ -547,7 +547,7 @@
 		
 		public function testAssembleWithMappedVariable()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(.+)'
 				)->
@@ -573,7 +573,7 @@
 		
 		public function testAssembleWithMappedVariableAndNumericKey()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(.+)'
 				)->
@@ -596,7 +596,7 @@
 		
 		public function testAssembleWithoutMatch()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(.+)'
 				)->
@@ -612,7 +612,7 @@
 		
 		public function testAssembleWithDefaultWithoutMatch()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
@@ -631,7 +631,7 @@
 		
 		public function testAssembleWithMappedDefaultWithoutMatch()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
@@ -645,7 +645,7 @@
 						1 => 'username'
 					)
 				)->
-				setReverse(				
+				setReverse(
 					'users/%s'
 				);
 			
@@ -655,7 +655,7 @@
 		
 		public function testAssembleWithDataWithoutMatch()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(.+)'
 				)->
@@ -669,7 +669,7 @@
 		
 		public function testAssembleWithMappedVariableWithoutMatch()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'users/(.+)'
 				)->
@@ -688,7 +688,7 @@
 		
 		public function testAssemble2()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'(.+)\.([0-9]+)-([0-9]+)\.html'
 				)->
@@ -729,7 +729,7 @@
 		
 		public function testCreateInstance()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'forum/(\d+)'
 				)->
@@ -751,7 +751,7 @@
 		
 		public function testAssemblyOfRouteWithMergedMatchedParts()
 		{
-			$route = 
+			$route =
 				RouterRegexpRule::create(
 					'itemlist(?:/(\d+))?'
 				)->

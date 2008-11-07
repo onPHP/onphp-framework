@@ -37,7 +37,7 @@
 		
 		public function __construct($route)
 		{
-			$this->route = trim($route, $this->urlDelimiter);			
+			$this->route = trim($route, $this->urlDelimiter);
 		}
 		
 		/**
@@ -60,7 +60,7 @@
 		/**
 		 * Matches a user submitted path with parts defined by a map.
 		 * Assigns and returns an array of variables on a successful match.
-		 * 
+		 *
 		 * @return array|false An array of assigned values or a false on a mismatch
 		**/
 		public function match(HttpRequest $request)
@@ -155,7 +155,7 @@
 		/**
 		 * Assembles user submitted parameters forming a URL path
 		 * defined by this route.
-		 * 
+		 *
 		 * @param array $data An array of variable
 		 * and value pairs used as parameters.
 		 * @param boolean $reset Whether or not to set
@@ -261,10 +261,10 @@
 			return trim($return, $this->urlDelimiter);
 		}
 		
-		/**		 
+		/**
 		 * @return RouterTransparentRule
 		**/
-		protected function processRoute() 
+		protected function processRoute()
 		{
 			if ($this->routeProcessed)
 				return $this;

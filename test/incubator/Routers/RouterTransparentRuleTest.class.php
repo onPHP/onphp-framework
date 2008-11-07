@@ -50,11 +50,11 @@
 		
 		public function testStaticMatchWithDefaults()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'users/all'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'area' => 'ctrl',
 					)
@@ -79,7 +79,7 @@
 		
 		public function testNotMatchedWithVariablesAndDefaults()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action'
 				)->
@@ -109,11 +109,11 @@
 		
 		public function testStaticMatchWithWildcard()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'news/view/*'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'area' => 'news',
 						'action' => 'view',
@@ -135,11 +135,11 @@
 		
 		public function testWildcardWithUTF()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'news/*'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'area' => 'news',
 						'action' => 'view',
@@ -163,11 +163,11 @@
 		
 		public function testWildcardURLDecode()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'news/*'
 				)->
-				setDefaults(		
+				setDefaults(
 					array(
 						'area' => 'news',
 						'action' => 'view',
@@ -212,7 +212,7 @@
 		
 		public function testOneVariableValue()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':action'
 				)->
@@ -233,11 +233,11 @@
 		
 		public function testVariablesWithDefault()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'year' => '2006'
 					)
@@ -254,11 +254,11 @@
 		
 		public function testVariablesWithNullDefault()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
-				setDefaults(			
+				setDefaults(
 					array(
 						'year' => null
 					)
@@ -275,7 +275,7 @@
 		
 		public function testVariablesWithDefaultAndValue()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
@@ -296,7 +296,7 @@
 		
 		public function testVariablesWithRequirementAndValue()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
@@ -317,11 +317,11 @@
 		
 		public function testVariablesWithRequirementAndIncorrectValue()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
-				setRequirements(				
+				setRequirements(
 					array(
 						'year' => '\d+'
 					)
@@ -336,16 +336,16 @@
 		
 		public function testVariablesWithDefaultAndRequirement()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'year' => '2006'
 					)
 				)->
-				setRequirements(				
+				setRequirements(
 					array(
 						'year' => '\d+'
 					)
@@ -362,16 +362,16 @@
 		
 		public function testVariablesWithDefaultAndRequirementAndIncorrectValue()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
-					':area/:action/:year'	
+					':area/:action/:year'
 				)->
 				setDefaults(
 					array(
 						'year' => '2006'
 					)
 				)->
-				setRequirements(				
+				setRequirements(
 					array(
 						'year' => '\d+'
 					)
@@ -386,16 +386,16 @@
 		
 		public function testVariablesWithDefaultAndRequirementAndWithoutValue()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'year' => '2006'
 					)
 				)->
-				setRequirements(		
+				setRequirements(
 					array(
 						'year' => '\d+'
 					)
@@ -456,14 +456,14 @@
 		
 		public function testAssembleWithDefault()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'authors/:name'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'name' => 'martel'
-					)					
+					)
 				);
 			
 			$url = $route->assemble();
@@ -473,11 +473,11 @@
 		
 		public function testAssembleWithDefaultAndValue()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'authors/:name'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'name' => 'martel'
 					)
@@ -498,7 +498,7 @@
 		
 		public function testAssembleWithReset()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'archive/:year/*'
 				)->
@@ -522,15 +522,15 @@
 		
 		public function testAssembleWithReset2()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action/*'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'area' => 'archive',
 						'action' => 'show'
-					)				
+					)
 				);
 			
 			$values = $route->match(
@@ -544,7 +544,7 @@
 		
 		public function testAssembleWithReset3()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'archive/:year/*'
 				)->
@@ -569,11 +569,11 @@
 		
 		public function testAssembleWithReset4()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action/*'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'area' => 'archive',
 						'action' => 'show'
@@ -591,11 +591,11 @@
 		
 		public function testAssembleWithReset5()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'*'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'area' => 'index',
 						'action' => 'index'
@@ -644,11 +644,11 @@
 		
 		public function testWildcardUrlVariablesOverwriting()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'archives/:year/:month/*'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'area' => 'archive'
 					)
@@ -670,7 +670,7 @@
 		
 		public function testGetDefaults()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'users/all'
 				)->
@@ -690,11 +690,11 @@
 		
 		public function testGetDefault()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'users/all'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'area' => 'ctrl',
 						'action' => 'act'
@@ -715,7 +715,7 @@
 				)
 			);
 			
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					$routeConf['route']
 				)->
@@ -734,11 +734,11 @@
 		
 		public function testAssembleResetDefaults()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action/*'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'area' => 'index',
 						'action' => 'index'
@@ -761,7 +761,7 @@
 		
 		public function testAssembleWithRemovedDefaults()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action/*'
 				)->
@@ -770,7 +770,7 @@
 						'area' => 'index',
 						'action' => 'index'
 					)
-				);			
+				);
 			
 			$url = $route->assemble(array('id' => 3));
 			$this->assertEquals('index/index/id/3', $url);
@@ -812,11 +812,11 @@
 		
 		public function testAssembleWithAction()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					'families/:action/*'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'module' => 'default',
 						'area' => 'categories',
@@ -837,7 +837,7 @@
 		
 		public function testAssemlingWithDefaultValueAndParams()
 		{
-			$router = 
+			$router =
 				RouterTransparentRule::create(
 					'contest/:contest/*'
 				)->
@@ -846,7 +846,7 @@
 						'area' => 'contestController'
 					)
 				)->
-				setRequirements(				
+				setRequirements(
 					array(
 						'contest' => '\d+'
 					)
@@ -869,11 +869,11 @@
 		
 		public function testEncode()
 		{
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/:action/*'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'area' => 'index',
 						'action' => 'index'
@@ -904,7 +904,7 @@
 			);
 			$this->assertEquals('en/foo/id/My+Other+Value', $url);
 			
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':area/*'
 				)->
@@ -922,7 +922,7 @@
 		{
 			$this->markTestSkipped('Route features not ready');
 			
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':lang/:temp'
 				)->
@@ -931,7 +931,7 @@
 						'lang' => 'pl'
 					)
 				)->
-				setRequirements(				
+				setRequirements(
 					array(
 						'temp' => '\d+'
 					)
@@ -945,11 +945,11 @@
 			
 			$this->assertFalse($values);
 			
-			$route = 
+			$route =
 				RouterTransparentRule::create(
 					':lang/:temp'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'lang' => 'pl'
 					)

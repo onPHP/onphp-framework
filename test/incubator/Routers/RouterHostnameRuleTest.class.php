@@ -124,7 +124,7 @@
 			
 			$request = $this->buildRequest('www.example.com');
 			
-			$route = 
+			$route =
 				RouterHostnameRule::create(
 					'www.example.com'
 				)->
@@ -146,7 +146,7 @@
 		**/
 		protected function buildStaticHostnameRule()
 		{
-			$route = 
+			$route =
 				RouterHostnameRule::create(
 					'www.example.com'
 				)->
@@ -165,7 +165,7 @@
 		**/
 		protected function buildHostnameRule()
 		{
-			$route = 
+			$route =
 				RouterHostnameRule::create(
 					':subdomain.example.com'
 				)->
@@ -189,7 +189,7 @@
 		**/
 		protected function buildHostnameRuleWithDefault()
 		{
-			$route = 
+			$route =
 				RouterHostnameRule::create(
 					':subdomain.example.com'
 				)->

@@ -30,11 +30,11 @@
 		
 		public function testStaticMatchWithDefaults()
 		{
-			$route = 
+			$route =
 				RouterStaticRule::create(
 					'users/all'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'area' => 'ctrl',
 						'action' => 'act'
@@ -78,7 +78,7 @@
 		
 		public function testGetDefaults()
 		{
-			$route = 
+			$route =
 				RouterStaticRule::create(
 					'users/all'
 				)->
@@ -98,7 +98,7 @@
 		
 		public function testGetDefault()
 		{
-			$route = 
+			$route =
 				RouterStaticRule::create(
 					'users/all'
 				)->
@@ -115,11 +115,11 @@
 		
 		public function testGetInstance()
 		{
-			$route = 
+			$route =
 				RouterStaticRule::create(
 					'users/all'
 				)->
-				setDefaults(				
+				setDefaults(
 					array(
 						'area' => 'ctrl'
 					)

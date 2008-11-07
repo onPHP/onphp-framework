@@ -23,14 +23,14 @@
 		 * @return RouterRegexpRule
 		**/
 		public static function create($route)
-		{			
+		{
 			return new self($route);
 		}
 		
 		public function __construct($route)
 		{
 			$this->route = $route;
-			$this->regexp = '#^' . $this->route . '$#i';			
+			$this->regexp = '#^' . $this->route . '$#i';
 		}
 		
 		/**
@@ -151,11 +151,11 @@
 		 * Maps numerically indexed array values to it's associative mapped counterpart.
 		 * Or vice versa. Uses user provided map array which consists of index => name
 		 * parameter mapping. If map is not found, it returns original array.
-		 * 
+		 *
 		 * Method strips destination type of keys form source array. Ie. if source array is
 		 * indexed numerically then every associative key will be stripped. Vice versa if reversed
 		 * is set to true.
-		 * 
+		 *
 		 * @return array
 		**/
 		protected function getMappedValues($values, $reversed = false, $preserve = false)

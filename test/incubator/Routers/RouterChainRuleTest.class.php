@@ -12,7 +12,7 @@
 		{
 			$chain = new RouterChainRule();
 			
-			$foo = 
+			$foo =
 				RouterHostnameRule::create(
 					'www.example.com'
 				)->
@@ -22,7 +22,7 @@
 					)
 				);
 			
-			$bar = 
+			$bar =
 				RouterStaticRule::create(
 					'bar'
 				)->
@@ -52,7 +52,7 @@
 		
 		public function testChainingShortcutMatch()
 		{
-			$foo = 
+			$foo =
 				RouterHostnameRule::create(
 					'www.example.com'
 				)->
@@ -62,7 +62,7 @@
 					)
 				);
 			
-			$bar = 
+			$bar =
 				RouterStaticRule::create(
 					'bar'
 				)->
@@ -86,7 +86,7 @@
 		
 		public function testChainingMatchFailure()
 		{
-			$foo = 
+			$foo =
 				RouterHostnameRule::create(
 					'www.example.com'
 				)->
@@ -96,7 +96,7 @@
 					)
 				);
 			
-			$bar = 
+			$bar =
 				RouterStaticRule::create(
 					'bar'
 				)->
@@ -119,7 +119,7 @@
 		
 		public function testChainingVariableOverriding()
 		{
-			$foo = 
+			$foo =
 				RouterHostnameRule::create(
 					'www.example.com'
 				)->
@@ -131,7 +131,7 @@
 					)
 				);
 			
-			$bar = 
+			$bar =
 				RouterTransparentRule::create(
 					'bar'
 				)->
@@ -184,7 +184,7 @@
 		{
 			$this->markTestSkipped('Route features not ready');
 			
-			$lang = 
+			$lang =
 				RouterTransparentRule::create(
 					':lang'
 				)->
@@ -194,13 +194,13 @@
 					)
 				);
 			
-			$profile = 
+			$profile =
 				RouterTransparentRule::create(
 					'user/:id'
 				)->
 				setDefaults(
 					array(
-						'area' => 'foo', 
+						'area' => 'foo',
 						'action' => 'bar'
 					)
 				);
@@ -217,7 +217,7 @@
 		{
 			$chain = new RouterChainRule();
 			
-			$foo = 
+			$foo =
 				RouterHostnameRule::create(
 					'www.example.com'
 				)->
@@ -227,7 +227,7 @@
 					)
 				);
 			
-			$bar = 
+			$bar =
 				RouterStaticRule::create(
 					'bar'
 				)->
@@ -255,7 +255,7 @@
 		{
 			$chain = new RouterChainRule();
 			
-			$foo = 
+			$foo =
 				RouterHostnameRule::create(
 					'www.example.com'
 				)->
@@ -265,7 +265,7 @@
 					)
 				);
 			
-			$bar = 
+			$bar =
 				RouterRegexpRule::create(
 					'bar'
 				)->
@@ -292,7 +292,7 @@
 		
 		public function testChainingReuse()
 		{
-			$foo = 
+			$foo =
 				RouterHostnameRule::create(
 					'www.example.com'
 				)->
@@ -302,7 +302,7 @@
 					)
 				);
 			
-			$profile = 
+			$profile =
 				RouterTransparentRule::create(
 					'user/:id'
 				)->
@@ -312,7 +312,7 @@
 					)
 				);
 			
-			$article = 
+			$article =
 				RouterTransparentRule::create(
 					'article/:id'
 				)->
