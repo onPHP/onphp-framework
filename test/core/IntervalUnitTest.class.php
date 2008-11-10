@@ -157,6 +157,42 @@
 			);
 		}
 		
+		public function testDayMsdMsk()
+		{
+			$unit = IntervalUnit::create('day');
+			
+			for ($hour = 1; $hour < 24; ++$hour) {
+				$result = $unit->truncate(
+					Timestamp::create("2008-10-26 00:$hour:00")
+				);
+				
+				$this->assertEquals(
+					'2008-10-26 00:00:00',
+					$result->toString()
+				);
+				
+				$this->assertEquals(
+					$result->toString(),
+					$unit->truncate($result)->toString()
+				);
+				
+				$result = $unit->truncate(
+					Timestamp::create("2008-03-30 00:$hour:00"),
+					true
+				);
+				
+				$this->assertEquals(
+					'2008-03-31 00:00:00',
+					$result->toString()
+				);
+				
+				$this->assertEquals(
+					$result->toString(),
+					$unit->truncate($result, true)->toString()
+				);
+			}
+		}
+		
 		public function testWeek()
 		{
 			$unit = IntervalUnit::create('week');
