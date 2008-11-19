@@ -1,5 +1,10 @@
 # $Id$
 
+2008-11-19	Vladlen Y. Koshelev
+
+	* main/DAOs/ProtoDAO.class.php: fixed wrong cid-field table when lazy
+	fetching collection.
+
 2008-10-20	Ivan Y. Khvostishkov
 
 	* core/Base/IntervalUnit.class.php: compareTo() implemented.
