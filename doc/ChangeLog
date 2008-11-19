@@ -1,5 +1,10 @@
 # $Id$
 
+2008-11-19	Vladlen Y. Koshelev
+
+	* main/DAOs/ProtoDAO.class.php: fixed wrong cid-field table when lazy
+	fetching collection.
+
 2008-09-22	Konstantin V. Arkhipov
 
 	* main/Criteria/Criteria.class.php: do not fetch collections for empty

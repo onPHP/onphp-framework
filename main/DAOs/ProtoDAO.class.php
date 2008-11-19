@@ -76,7 +76,10 @@
 					
 					$alias = 'cid'; // childId, collectionId, whatever
 					
-					$field = DBField::create($childId);
+					$field = DBField::create(
+						$childId,
+						$self->$getter()->getHelperTable()
+					);
 					
 					$query->get($field, $alias);
 					
