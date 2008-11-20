@@ -56,13 +56,7 @@
 		{
 			return $this->requirements;
 		}
-		
-		/**
-		 * Matches a user submitted path with parts defined by a map.
-		 * Assigns and returns an array of variables on a successful match.
-		 *
-		 * @return array|false An array of assigned values or a false on a mismatch
-		**/
+				
 		public function match(HttpRequest $request)
 		{
 			$this->processRoute();
@@ -79,7 +73,7 @@
 				
 				foreach ($path as $pos => $pathPart) {
 					if (!array_key_exists($pos, $this->parts)) {
-						return false;
+						return array();
 					}
 					
 					if ($this->parts[$pos] === '*') {
@@ -114,7 +108,7 @@
 						($name === null)
 						&& ($this->parts[$pos] != $pathPart)
 					) {
-						return false;
+						return array();
 					}
 					
 					if (
@@ -126,7 +120,7 @@
 							$pathPart
 						)
 					) {
-						return false;
+						return array();
 					}
 					
 					if ($name !== null) {
@@ -138,13 +132,13 @@
 			}
 			
 			if ($this->staticCount != $pathStaticCount)
-				return false;
+				return array();
 			
 			$return = $values + $this->wildcardData + $this->defaults;
 			
 			foreach ($this->variables as $var) {
 				if (!array_key_exists($var, $return))
-					return false;
+					return array();
 			}
 			
 			$this->values = $values;

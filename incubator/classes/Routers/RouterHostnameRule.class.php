@@ -79,7 +79,7 @@
 				
 				foreach ($host as $pos => $hostPart) {
 					if (!array_key_exists($pos, $this->parts)) {
-						return false;
+						return array();
 					}
 					
 					$name =
@@ -93,7 +93,7 @@
 						($name === null)
 						&& ($this->parts[$pos] != $hostPart)
 					) {
-						return false;
+						return array();
 					}
 					
 					if (
@@ -106,7 +106,7 @@
 							$hostPart
 						)
 					) {
-						return false;
+						return array();
 					}
 					
 					if ($name !== null) {
@@ -118,13 +118,13 @@
 			}
 			
 			if ($this->staticCount != $hostStaticCount)
-				return false;
+				return array();
 			
 			$return = $values + $this->defaults;
 			
 			foreach ($this->variables as $var) {
 				if (!array_key_exists($var, $return))
-					return false;
+					return array();
 			}
 			
 			$this->values = $values;

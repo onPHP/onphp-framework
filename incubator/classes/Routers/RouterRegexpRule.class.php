@@ -75,7 +75,7 @@
 			$res = preg_match($this->regexp, $path, $values);
 			
 			if ($res === 0)
-				return false;
+				return array();
 			
 			/**
 			 * TODO: array_filter_key()? Why isn't this in a standard PHP function set yet? :)

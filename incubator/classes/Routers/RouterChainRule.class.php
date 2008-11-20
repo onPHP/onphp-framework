@@ -41,8 +41,8 @@
 			foreach ($this->routes as $key => $route) {
 				$res = $route->match($request);
 				
-				if ($res === false)
-					return false;
+				if (empty($res))
+					return array();
 				
 				$values = $res + $values;
 			}

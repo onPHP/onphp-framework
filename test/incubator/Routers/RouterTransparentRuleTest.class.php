@@ -35,7 +35,7 @@
 				$this->buildRequest('http://localhost/users/a')
 			);
 			
-			$this->assertSame(false, $values);
+			$this->assertSame(array(), $values);
 		}
 		
 		public function testStaticPathLongerThanParts()
@@ -45,7 +45,7 @@
 				$this->buildRequest('http://localhost/users/a/martel')
 			);
 			
-			$this->assertEquals(false, $values);
+			$this->assertEquals(array(), $values);
 		}
 		
 		public function testStaticMatchWithDefaults()
@@ -74,7 +74,7 @@
 				$this->buildRequest('http://localhost/users/martel')
 			);
 			
-			$this->assertEquals(false, $values);
+			$this->assertEquals(array(), $values);
 		}
 		
 		public function testNotMatchedWithVariablesAndDefaults()
@@ -94,7 +94,7 @@
 				$this->buildRequest('http://localhost/archive/action/bogus')
 			);
 			
-			$this->assertEquals(false, $values);
+			$this->assertEquals(array(), $values);
 		}
 		
 		public function testNotMatchedWithVariablesAndStatic()
@@ -104,7 +104,7 @@
 				$this->buildRequest('http://localhost/ctrl/act/2000')
 			);
 			
-			$this->assertEquals(false, $values);
+			$this->assertEquals(array(), $values);
 		}
 		
 		public function testStaticMatchWithWildcard()
@@ -331,7 +331,7 @@
 				$this->buildRequest('http://localhost/ctrl/act/2000t')
 			);
 			
-			$this->assertEquals(false, $values);
+			$this->assertEquals(array(), $values);
 		}
 		
 		public function testVariablesWithDefaultAndRequirement()
@@ -381,7 +381,7 @@
 				$this->buildRequest('http://localhost/ctrl/act/2000t')
 			);
 			
-			$this->assertEquals(false, $values);
+			$this->assertEquals(array(), $values);
 		}
 		
 		public function testVariablesWithDefaultAndRequirementAndWithoutValue()

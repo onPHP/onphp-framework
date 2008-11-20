@@ -30,7 +30,7 @@
 			$route = $this->buildStaticHostnameRule();
 			
 			$values = $route->match($this->buildRequest('foo.example.com'));
-			$this->assertFalse($values);
+			$this->assertEquals(array(), $values);
 		}
 		
 		public function testCorrectHostMatch()
@@ -46,7 +46,7 @@
 			$route = $this->buildHostnameRule();
 			
 			$values = $route->match($this->buildRequest('www.example.com'));
-			$this->assertFalse($values);
+			$this->assertEquals(array(), $values);
 		}
 		
 		public function testAssembleStaticHost()

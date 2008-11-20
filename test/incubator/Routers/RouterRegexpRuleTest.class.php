@@ -35,7 +35,7 @@
 				$this->buildRequest('http://localhost/users/a')
 			);
 			
-			$this->assertSame(false, $values);
+			$this->assertSame(array(), $values);
 		}
 		
 		public function testStaticMatchWithDefaults()

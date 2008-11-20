@@ -55,8 +55,6 @@
 		}
 		
 		/**
-		 * TODO: simplification, @see parse_url, write tests
-		 *
 		 * @return HttpUrl
 		**/
 		protected function getPath(HttpUrl $url)

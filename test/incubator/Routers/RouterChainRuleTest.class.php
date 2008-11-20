@@ -40,7 +40,7 @@
 			
 			$res = $chain->match($request);
 			
-			$this->assertFalse($res);
+			$this->assertEquals(array(), $res);
 			
 			$request = $this->buildRequest('http://www.example.com/bar');
 			
@@ -114,7 +114,7 @@
 			
 			$res = $chain->match($request);
 			
-			$this->assertFalse($res);
+			$this->assertEquals(array(), $res);
 		}
 		
 		public function testChainingVariableOverriding()
@@ -172,7 +172,7 @@
 			$this->assertType('array', $res);
 			
 			$res = $chain->match('foo/bar');
-			$this->assertEquals(false, $res);
+			$this->assertEquals(array(), $res);
 			
 			$chain->chain($baz, ':');
 			
