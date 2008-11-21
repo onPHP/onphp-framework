@@ -63,7 +63,7 @@
 		{
 			$uc = $this->container;
 			
-			return
+			if (!$query->hasJoinedTable($uc->getHelperTable()))
 				$query->
 					join(
 						$uc->getHelperTable(),
@@ -77,10 +77,16 @@
 								$uc->getHelperTable()
 							)
 						)
-					)->
+					);
+			
+			return
+				$query->
 					andWhere(
 						Expression::eq(
-							new DBField($uc->getParentIdField()),
+							new DBField(
+								$uc->getParentIdField(),
+								$uc->getHelperTable()
+							),
 							new DBValue($uc->getParentObject()->getId())
 						)
 					);
