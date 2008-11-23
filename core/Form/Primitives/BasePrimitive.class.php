@@ -183,9 +183,9 @@
 		/**
 		 * @return BasePrimitive
 		**/
-		public function setRequired($really = false)
+		public function setRequired($really = true)
 		{
-			$this->required = (true === $really ? true : false);
+			$this->required = (false === $really ? false : true);
 			
 			return $this;
 		}
