@@ -19,7 +19,7 @@
 		const SUFFIX_INDEX	= '_lists_index_';
 		const SUFFIX_QUERY	= '_query_';
 		const SUFFIX_RESULT	= '_result_';
-
+		
 		protected $dao = null;
 		
 		protected $className = null;
@@ -80,7 +80,7 @@
 			return $result;
 		}
 		//@}
-
+		
 		/// uncachers
 		//@{
 		public function uncacheById($id)

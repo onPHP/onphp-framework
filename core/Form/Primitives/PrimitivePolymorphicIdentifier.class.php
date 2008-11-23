@@ -49,13 +49,11 @@
 		**/
 		public function ofBase($className)
 		{
-			Assert::isTrue(
-				class_exists($className, true),
-				"knows nothing about '{$className}' class"
-			);
+			Assert::classExists($className);
 			
-			Assert::isTrue(
-				ClassUtils::isInstanceof($className, 'DAOConnected'),
+			Assert::isInstance(
+				$className,
+				'DAOConnected',
 				"class '{$className}' must implement DAOConnected interface"
 			);
 			

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2007-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -15,13 +15,13 @@
 	**/
 	final class PropertyPath
 	{
-		private $root = null;
-		private $path = null;
-		
-		private static $daos	= array();
-		private static $protos 	= array(); // zergs suck anyway ;-)
+		private $root		= null;
+		private $path		= null;
 		
 		private $properties	= array();
+		
+		private static $daos	= array();
+		private static $protos	= array(); // zergs suck anyway ;-)
 		
 		public function __construct($root, $path)
 		{
@@ -30,10 +30,8 @@
 			if (is_object($root))
 				$className = get_class($root);
 			else {
-				Assert::isTrue(
-					class_exists($root, true),
-					'inexistant class given'
-				);
+				Assert::classExists($root);
+				
 				$className = $root;
 			}
 			

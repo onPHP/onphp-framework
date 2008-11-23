@@ -32,7 +32,7 @@
 		
 		public static function setDefaultLocker($name)
 		{
-			Assert::isTrue(class_exists($name, true));
+			Assert::classExists($name);
 			
 			self::$lockerName = $name;
 			self::$locker = Singleton::getInstance($name);

@@ -22,7 +22,7 @@
 		**/
 		public static function spawn($primitive, $name)
 		{
-			Assert::isTrue(class_exists($primitive, true));
+			Assert::classExists($primitive);
 			
 			return new $primitive($name);
 		}

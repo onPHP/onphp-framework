@@ -78,7 +78,7 @@
 			return parent::getPlainList(Cache::DO_NOT_CACHE);
 		}
 		//@}
-
+		
 		/// custom list getters
 		//@{
 		public function getCustomList(SelectQuery $query)
@@ -99,7 +99,7 @@
 			return parent::getQueryResult($query, Cache::DO_NOT_CACHE);
 		}
 		//@}
-
+		
 		/// cachers
 		//@{
 		protected function cacheById(
