@@ -80,7 +80,7 @@
 			return $this;
 		}
 		
-		public function getPrimitiveError($name)
+		public function getError($name)
 		{
 			return $this->get($name)->getError();
 		}
@@ -88,7 +88,7 @@
 		/**
 		 * @return Form
 		**/
-		public function dropPrimitiveError($name)
+		public function dropError($name)
 		{
 			$this->get($name)->dropError();
 			

@@ -93,7 +93,7 @@ EOF;
 			$this->assertNull($form->getValue('dom'));
 			
 			$this->assertEquals(
-				$form->getPrimitiveError('dom'),
+				$form->getError('dom'),
 				BasePrimitive::WRONG
 			);
 			
