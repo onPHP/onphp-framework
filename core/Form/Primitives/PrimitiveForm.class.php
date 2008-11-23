@@ -27,17 +27,11 @@
 		**/
 		public function of($className)
 		{
-			Assert::isTrue(
-				class_exists($className, true),
-				"knows nothing about '{$className}' class"
-			);
+			Assert::classExists($className);
 			
 			$protoClass = EntityProto::PROTO_CLASS_PREFIX.$className;
 			
-			Assert::isTrue(
-				class_exists($protoClass, true),
-				"knows nothing about '{$protoClass}' class"
-			);
+			Assert::classExists($protoClass);
 			
 			return $this->ofProto(Singleton::getInstance($protoClass));
 		}

@@ -19,7 +19,7 @@
 		
 		/* void */ public static function copyProperties($source, $destination)
 		{
-			Assert::isTrue(get_class($source) == get_class($destination));
+			Assert::isEqual(get_class($source), get_class($destination));
 			
 			$class = new ReflectionClass($source);
 			

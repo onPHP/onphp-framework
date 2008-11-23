@@ -37,7 +37,7 @@
 		
 		public static function setDefaultHandler($handler)
 		{
-			Assert::isTrue(class_exists($handler, true));
+			Assert::classExists($handler);
 			
 			self::$defaultHandler = $handler;
 		}
@@ -45,7 +45,7 @@
 		public function __construct(GenericDAO $dao)
 		{
 			parent::__construct($dao);
-
+			
 			if (($cache = Cache::me()) instanceof WatermarkedPeer)
 				$watermark = $cache->mark($this->className)->getActualWatermark();
 			else
@@ -95,7 +95,7 @@
 			return $array;
 		}
 		//@}
-
+		
 		/// uncachers
 		//@{
 		public function uncacheLists()

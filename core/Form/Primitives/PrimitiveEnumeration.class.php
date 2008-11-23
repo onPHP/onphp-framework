@@ -40,15 +40,9 @@
 		{
 			$className = $this->guessClassName($class);
 			
-			Assert::isTrue(
-				class_exists($className, true),
-				"knows nothing about '{$className}' class"
-			);
+			Assert::classExists($className);
 			
-			Assert::isTrue(
-				is_subclass_of($className, 'Enumeration'),
-				'non-enumeration child given'
-			);
+			Assert::isInstance($className, 'Enumeration');
 			
 			$this->className = $className;
 			
@@ -58,7 +52,7 @@
 		public function importValue(/* Identifiable */ $value)
 		{
 			if ($value)
-				Assert::isTrue(get_class($value) == $this->className);
+				Assert::isEqual(get_class($value), $this->className);
 			else
 				return parent::importValue(null);
 			

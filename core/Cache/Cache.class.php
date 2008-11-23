@@ -61,7 +61,7 @@
 		
 		/* void */ public static function setDefaultWorker($worker)
 		{
-			Assert::isTrue(class_exists($worker, true));
+			Assert::classExists($worker);
 			
 			self::$worker = $worker;
 		}

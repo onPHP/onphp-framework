@@ -70,7 +70,7 @@
 				}
 			}
 		}
-
+		
 		public function getByLogic(
 			LogicalObject $logic, $expires = Cache::DO_NOT_CACHE
 		)
@@ -80,7 +80,7 @@
 					$this->dao->makeSelectHead()->andWhere($logic), $expires
 				);
 		}
-
+		
 		public function getByQuery(
 			SelectQuery $query, $expires = Cache::DO_NOT_CACHE
 		)
@@ -160,7 +160,7 @@
 			}
 		}
 		//@}
-
+		
 		/// object's list getters
 		//@{
 		public function getListByIds(
@@ -424,7 +424,7 @@
 			}
 		}
 		//@}
-
+		
 		/// cachers
 		//@{
 		protected function cacheById(

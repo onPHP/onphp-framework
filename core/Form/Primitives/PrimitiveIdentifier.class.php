@@ -15,8 +15,6 @@
 	**/
 	class PrimitiveIdentifier extends IdentifiablePrimitive
 	{
-		private $info = null;
-		
 		private $methodName	= 'getById';
 		
 		/**
@@ -27,15 +25,11 @@
 		{
 			$className = $this->guessClassName($class);
 			
-			Assert::isTrue(
-				class_exists($className, true),
-				"knows nothing about '{$className}' class"
-			);
+			Assert::classExists($className);
 			
-			$this->info = new ReflectionClass($className);
-			
-			Assert::isTrue(
-				$this->info->implementsInterface('DAOConnected'),
+			Assert::isInstance(
+				$className,
+				'DAOConnected',
 				"class '{$className}' must implement DAOConnected interface"
 			);
 			

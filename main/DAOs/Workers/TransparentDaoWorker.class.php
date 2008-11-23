@@ -182,7 +182,7 @@
 			return parent::getQueryResult($query, Cache::EXPIRES_FOREVER);
 		}
 		//@}
-
+		
 		/// cachers
 		//@{
 		protected function cacheById(
