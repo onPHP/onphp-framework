@@ -97,8 +97,8 @@
 		**/
 		public function import(HttpRequest $request)
 		{
-			foreach ($this->form->getPrimitiveList() as $prm) {
-				$this->importOne($prm->getName(), $request);
+			foreach ($this->form->getPrimitiveNames() as $name) {
+				$this->importOne($name, $request);
 			}
 			
 			return $this;
@@ -113,19 +113,19 @@
 			
 			$default = ($this->type == $type);
 			
-			foreach ($this->form->getPrimitiveList() as $prm) {
+			foreach ($this->form->getPrimitiveList() as $name => $prm) {
 				if (
 					(
-						isset($this->map[$prm->getName()])
-						&& in_array($type, $this->map[$prm->getName()])
+						isset($this->map[$name])
+						&& in_array($type, $this->map[$name])
 					)
 					|| (
-						!isset($this->map[$prm->getName()])
+						!isset($this->map[$name])
 						&& $default
 					)
 				) {
 					if ($prm->getValue())
-						$result[$prm->getName()] = $prm->exportValue();
+						$result[$name] = $prm->exportValue();
 				}
 			}
 			
