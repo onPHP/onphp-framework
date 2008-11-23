@@ -22,35 +22,6 @@
 			return $this->selected;
 		}
 		
-		public function getActualChoiceValue()
-		{
-			if ($this->value !== null)
-				return $this->selected;
-			elseif ($this->default) {
-				$out = array();
-				
-				foreach ($this->default as $index)
-					$out[] = $this->list[$index];
-				
-				return $out;
-			}
-			
-			return array();
-		}
-		
-		/**
-		 * @return PrimitiveMultiList
-		**/
-		public function setDefault($default)
-		{
-			Assert::isArray($default);
-			
-			foreach ($default as $index)
-				Assert::isTrue(array_key_exists($index, $this->list));
-			
-			return parent::setDefault($default);
-		}
-		
 		public function import(array $scope)
 		{
 			if (!BasePrimitive::import($scope))

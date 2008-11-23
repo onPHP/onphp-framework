@@ -56,8 +56,8 @@
 			
 			$this->formErrorAsserts($form, false, false);
 			
-			// value, safe, raw, form, export
-			$this->formAsserts($form, 'property', $value, $value, $raw, 42, 42);
+			// value, raw, form, export
+			$this->formAsserts($form, 'property', $value, $raw, 42, 42);
 		}
 		
 		public function testInvalidFormat()
@@ -91,7 +91,7 @@
 			$form = $this->makeForm();
 			
 			$form->get('property')->
-				setDefault(SimpleEnum::thirtyTwo());
+				setValue(SimpleEnum::thirtyTwo());
 			
 			$raw = 31416;
 			
@@ -101,8 +101,8 @@
 			
 			$this->formErrorAsserts($form, true, true);
 			
-			// value, safe, raw, form, export
-			$this->formAsserts($form, 'property', null, SimpleEnum::thirtyTwo(), $raw, $raw, null);
+			// value, raw, form, export
+			$this->formAsserts($form, 'property', null, $raw, $raw, null);
 		}
 		
 		public function testBlank()
@@ -171,38 +171,36 @@
 		{
 			$this->formErrorAsserts($form, false, false);
 			
-			// value, safe, raw, form, export
-			$this->formAsserts($form, 'property', null, null, null, null, null);
+			// value, raw, form, export
+			$this->formAsserts($form, 'property', null, null, null, null);
 		}
 		
 		protected function formAssertsMissing(Form $form, $prm, $default = null)
 		{
 			$this->formErrorAsserts($form, true, true);
 			
-			// value, safe, raw, form, export
-			$this->formAsserts($form, 'property', null, $default, null, null, null);
+			// value, raw, form, export
+			$this->formAsserts($form, 'property', null, null, null, null);
 		}
 		
 		protected function formAssertsWrong(Form $form, $prm, $raw, $default = null)
 		{
 			$this->formErrorAsserts($form, true, true);
 			
-			// value, safe, raw, form, export
-			$this->formAsserts($form, 'property', null, $default, $raw, $raw, null);
+			// value, raw, form, export
+			$this->formAsserts($form, 'property', null, $raw, $raw, null);
 		}
 		
 		private function formAsserts(
 			Form $form,
 			$prm,
 			$getValue,
-			$getSafeValue,
 			$getRawValue,
 			$getFormValue,
 			$exportValue
 		)
 		{
 			$this->assertEquals($getValue, $form->getValue($prm));
-			$this->assertEquals($getSafeValue, $form->getSafeValue($prm));
 			$this->assertEquals($getRawValue, $form->getRawValue($prm));
 			$this->assertEquals($getFormValue, $form->getFormValue($prm));
 			$this->assertEquals($exportValue, $form->exportValue($prm));

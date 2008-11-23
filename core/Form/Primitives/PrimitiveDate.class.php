@@ -68,19 +68,6 @@
 			return $this;
 		}
 		
-		/**
-		 * @throws WrongArgumentException
-		 * @return PrimitiveDate
-		**/
-		public function setDefault(/* Date */ $object)
-		{
-			$this->checkType($object);
-			
-			$this->default = $object;
-			
-			return $this;
-		}
-		
 		public function importSingle(array $scope)
 		{
 			return RangedPrimitive::import($scope);

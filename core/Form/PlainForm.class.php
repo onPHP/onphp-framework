@@ -199,22 +199,9 @@
 			return $this->get($name)->getRawValue();
 		}
 		
-		/**
-		 * @deprecated by getFormValue
-		**/
-		public function getActualValue($name)
-		{
-			return $this->get($name)->getActualValue();
-		}
-		
 		public function getFormValue($name)
 		{
 			return $this->get($name)->getFormValue();
-		}
-		
-		public function getSafeValue($name)
-		{
-			return $this->get($name)->getSafeValue();
 		}
 		
 		public function getChoiceValue($name)
@@ -222,13 +209,6 @@
 			Assert::isTrue(($prm = $this->get($name)) instanceof ListedPrimitive);
 			
 			return $prm->getChoiceValue();
-		}
-		
-		public function getActualChoiceValue($name)
-		{
-			Assert::isTrue(($prm = $this->get($name)) instanceof ListedPrimitive);
-			
-			return $prm->getActualChoiceValue();
 		}
 		
 		/**

@@ -21,6 +21,5 @@
 		public function setList(array $list);
 		
 		public function getChoiceValue();
-		public function getActualChoiceValue();
 	}
 ?>

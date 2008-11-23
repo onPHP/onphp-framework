@@ -31,14 +31,6 @@
 	 * into account display filters (@see FiltrablePrimitive). Comfortable for
 	 * using in html forms.
 	 * 
-	 * - default: soft-default object, that may be used instead of value when
-	 * import fails (see getSafeValue()). Comfortable for business logic.
-	 * 
-	 * TODO:
-	 * 
-	 * - safe exported value: export(getSafeValue()). Comfortable for
-	 * soft scope correction with valid raw values.
-	 * 
 	**/
 	abstract class BasePrimitive
 	{
@@ -46,7 +38,6 @@
 		const MISSING		= 0x0002;
 		
 		protected $name		= null;
-		protected $default	= null;
 		protected $value	= null;
 		protected $raw		= null;
 		
@@ -85,21 +76,6 @@
 			return $this;
 		}
 		
-		public function getDefault()
-		{
-			return $this->default;
-		}
-		
-		/**
-		 * @return BasePrimitive
-		**/
-		public function setDefault($default)
-		{
-			$this->default = $default;
-			
-			return $this;
-		}
-		
 		public function getValue()
 		{
 			return $this->value;
@@ -108,27 +84,6 @@
 		public function getRawValue()
 		{
 			return $this->raw;
-		}
-		
-		/**
-		 * @deprecated by getFormValue
-		**/
-		public function getActualValue()
-		{
-			if (null !== $this->value)
-				return $this->value;
-			elseif ($this->imported)
-				return $this->raw;
-			
-			return $this->default;
-		}
-		
-		public function getSafeValue()
-		{
-			if ($this->imported)
-				return $this->value;
-			
-			return $this->default;
 		}
 		
 		public function getFormValue()

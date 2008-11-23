@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2007-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -112,7 +112,7 @@ ONPHP_METHOD(FiltrablePrimitive, getDisplayValue)
 	
 	unsigned char is_array = (Z_TYPE_P(value) == IS_ARRAY);
 	
-	ONPHP_CALL_METHOD_0(getThis(), "getactualvalue", &value);
+	ONPHP_CALL_METHOD_0(getThis(), "getvalue", &value);
 	
 	ONPHP_FILTRABLE_PRIMITIVE_APPLY_FILTERS;
 	

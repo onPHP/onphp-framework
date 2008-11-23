@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2007-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -29,9 +29,6 @@ ONPHP_SETTER_START(BasePrimitive, setName, name);
 		ONPHP_THROW(WrongArgumentException, NULL);
 	}
 ONPHP_SETTER_END(name);
-
-ONPHP_GETTER(BasePrimitive, getDefault, name);
-ONPHP_SETTER(BasePrimitive, setDefault, name);
 
 ONPHP_GETTER(BasePrimitive, getValue, value);
 ONPHP_SETTER(BasePrimitive, setValue, value);
@@ -66,36 +63,6 @@ ONPHP_METHOD(BasePrimitive, clean)
 	ONPHP_UPDATE_PROPERTY_BOOL(getThis(), "imported", 0);
 	
 	RETURN_THIS;
-}
-
-ONPHP_METHOD(BasePrimitive, getActualValue)
-{
-	zval *value;
-	
-	value = ONPHP_READ_PROPERTY(getThis(), "value");
-	
-	if (Z_TYPE_P(value) == IS_NULL) {
-		RETURN_NULL();
-	} else if (zval_is_true(ONPHP_READ_PROPERTY(getThis(), "imported"))) {
-		value = ONPHP_READ_PROPERTY(getThis(), "raw");
-	} else {
-		value = ONPHP_READ_PROPERTY(getThis(), "default");
-	}
-	
-	RETURN_ZVAL(value, 1, 0);
-}
-
-ONPHP_METHOD(BasePrimitive, getSafeValue)
-{
-	zval *value;
-	
-	if (zval_is_true(ONPHP_READ_PROPERTY(getThis(), "imported"))) {
-		value = ONPHP_READ_PROPERTY(getThis(), "value");
-	} else {
-		value = ONPHP_READ_PROPERTY(getThis(), "default");
-	}
-	
-	RETURN_ZVAL(value, 1, 0);
 }
 
 ONPHP_METHOD(BasePrimitive, importValue)
@@ -163,14 +130,10 @@ zend_function_entry onphp_funcs_BasePrimitive[] = {
 	ONPHP_ME(BasePrimitive, __construct, arginfo_one, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
 	ONPHP_ME(BasePrimitive, getName, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(BasePrimitive, setName, arginfo_one, ZEND_ACC_PUBLIC)
-	ONPHP_ME(BasePrimitive, getDefault, NULL, ZEND_ACC_PUBLIC)
-	ONPHP_ME(BasePrimitive, setDefault, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(BasePrimitive, getValue, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(BasePrimitive, setValue, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(BasePrimitive, getRawValue, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(BasePrimitive, setRawValue, arginfo_one, ZEND_ACC_PUBLIC)
-	ONPHP_ME(BasePrimitive, getActualValue, NULL, ZEND_ACC_PUBLIC)
-	ONPHP_ME(BasePrimitive, getSafeValue, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(BasePrimitive, isRequired, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(BasePrimitive, setRequired, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(BasePrimitive, required, NULL, ZEND_ACC_PUBLIC)

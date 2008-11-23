@@ -35,8 +35,7 @@
 			
 			$form = $this->getForm();
 			
-			if (!$command = $form->getValue('action'))
-				$command = $form->get('action')->getDefault();
+			$command = $form->getValue('action');
 			
 			if ($command) {
 				$mav = $this->{$this->commandMap[$command]}(

@@ -135,8 +135,6 @@ ONPHP_METHOD(PlainForm, method_name)									\
 
 ONPHP_PLAIN_FORM_STRAIGHT_GETTER(getValue, "getvalue");
 ONPHP_PLAIN_FORM_STRAIGHT_GETTER(getRawValue, "getrawvalue");
-ONPHP_PLAIN_FORM_STRAIGHT_GETTER(getActualValue, "getactualvalue");
-ONPHP_PLAIN_FORM_STRAIGHT_GETTER(getSafeValue, "getsafevalue");
 
 ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getChoiceValue) {
 	if (!ONPHP_INSTANCEOF(prm, ListedPrimitive)) {
@@ -145,19 +143,12 @@ ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getChoiceValue) {
 	}
 } ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getchoicevalue");
 
-ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getActualChoiceValue) {
-	if (!ONPHP_INSTANCEOF(prm, ListedPrimitive)) {
-		zval_ptr_dtor(&prm);
-		ONPHP_THROW(WrongArgumentException, NULL);
-	}
-} ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getactualchoicevalue");
-
 ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getDisplayValue) {
 	if (ONPHP_INSTANCEOF(prm, FiltrablePrimitive)) {
 		zval_ptr_dtor(&prm);
 		ONPHP_THROW(WrongArgumentException, NULL);
 	}
-} ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getactualchoicevalue");
+} ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER("getdisplayvalue");
 
 #undef ONPHP_PLAIN_FORM_STRAIGHT_GETTER
 #undef ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER
@@ -202,10 +193,7 @@ zend_function_entry onphp_funcs_PlainForm[] = {
 	ONPHP_ME(PlainForm, get, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, getValue, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, getRawValue, arginfo_one, ZEND_ACC_PUBLIC)
-	ONPHP_ME(PlainForm, getActualValue, arginfo_one, ZEND_ACC_PUBLIC)
-	ONPHP_ME(PlainForm, getSafeValue, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, getChoiceValue, arginfo_one, ZEND_ACC_PUBLIC)
-	ONPHP_ME(PlainForm, getActualChoiceValue, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, getDisplayValue, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, getNameList, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, getList, NULL, ZEND_ACC_PUBLIC)

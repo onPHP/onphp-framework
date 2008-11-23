@@ -68,19 +68,6 @@
 			return $this;
 		}
 		
-		/**
-		 * @throws WrongArgumentException
-		 * @return PrimitiveTime
-		**/
-		public function setDefault(/* Time */ $time)
-		{
-			Assert::isInstance($time, 'Time');
-			
-			$this->default = $time;
-			
-			return $this;
-		}
-		
 		public function importSingle(array $scope)
 		{
 			return RangedPrimitive::import($scope);

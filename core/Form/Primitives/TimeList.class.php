@@ -55,16 +55,6 @@
 			return ($this->value !== array());
 		}
 		
-		public function getActualValue()
-		{
-			if (is_array($this->value) && $this->value[0])
-				return $this->value;
-			elseif (is_array($this->raw) && $this->raw[0])
-				return $this->raw;
-			
-			return array($this->default);
-		}
-		
 		public static function stringToTimeList($string)
 		{
 			$list = array();

@@ -25,32 +25,6 @@
 			return null;
 		}
 		
-		public function getActualChoiceValue()
-		{
-			if ($this->value !== null)
-				return $this->list[$this->value];
-			
-			return $this->list[$this->default];
-		}
-		
-		/**
-		 * @return PrimitiveList
-		**/
-		public function setDefault($default)
-		{
-			Assert::isTrue(
-				$this->list
-				&& array_key_exists(
-					$default,
-					$this->list
-				),
-				
-				'can not find element with such index'
-			);
-			
-			return parent::setDefault($default);
-		}
-		
 		public function getList()
 		{
 			return $this->list;

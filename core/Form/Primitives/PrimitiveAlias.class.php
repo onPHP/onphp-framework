@@ -28,21 +28,6 @@
 			return $this->name;
 		}
 		
-		public function getDefault()
-		{
-			return $this->primitive->getDefault();
-		}
-		
-		/**
-		 * @return PrimitiveAlias
-		**/
-		public function setDefault($default)
-		{
-			$this->primitive->setDefault($default);
-			
-			return $this;
-		}
-		
 		public function getValue()
 		{
 			return $this->primitive->getValue();
@@ -51,27 +36,6 @@
 		public function getRawValue()
 		{
 			return $this->primitive->getRawValue();
-		}
-		
-		/**
-		 * @deprecated by getFormValue
-		**/
-		public function getActualValue()
-		{
-			if (null !== $this->primitive->getValue())
-				return $this->primitive->getValue();
-			elseif ($this->primitive->isImported())
-				return $this->primitive->getRawValue();
-			
-			return $this->primitive->getDefault();
-		}
-		
-		public function getSafeValue()
-		{
-			if ($this->primitive->isImported())
-				return $this->primitive->getValue();
-			
-			return $this->primitive->getDefault();
 		}
 		
 		public function getFormValue()

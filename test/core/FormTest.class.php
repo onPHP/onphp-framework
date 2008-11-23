@@ -46,35 +46,5 @@
 				$form->get('test')->getEnd(), 64
 			);
 		}
-		
-		public function testSafeValues()
-		{
-			$prm = Primitive::date('date');
-			$date = Date::create('2005-02-19');
-			
-			$prm->import(
-				array('date' => '2005-02-19')
-			);
-			
-			$this->assertTrue($prm->isImported());
-			
-			$this->assertEquals(
-				$prm->getSafeValue(), $date
-			);
-			
-			$prm = Primitive::date('date')->setDefault(
-				$date
-			);
-			
-			$prm->import(
-				array('date' => 'omgEvilInput')
-			);
-			
-			$this->assertTrue($prm->isImported());
-			
-			$this->assertTrue(
-				$prm->getSafeValue() === null
-			);
-		}
 	}
 ?>

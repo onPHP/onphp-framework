@@ -33,7 +33,7 @@
 			$form =
 				$this->subject->proto()->makeForm()->add(
 					Primitive::choice('action')->setList($this->commandMap)->
-					setDefault('edit')
+					setValue('edit')
 				);
 			
 			if ($this->idFieldName)

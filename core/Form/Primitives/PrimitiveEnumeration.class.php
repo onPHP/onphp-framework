@@ -24,8 +24,6 @@
 		{
 			if ($this->value)
 				return $this->value->getObjectList();
-			elseif ($this->default)
-				return $this->default->getObjectList();
 			else {
 				$object = new $this->className(
 					call_user_func(array($this->className, 'getAnyId'))

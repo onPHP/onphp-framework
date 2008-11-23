@@ -50,19 +50,6 @@
 			return $this;
 		}
 		
-		/**
-		 * @throws WrongArgumentException
-		 * @return PrimitiveDateRange
-		**/
-		public function setDefault(/* DateRange */ $object)
-		{
-			$this->checkType($object);
-			
-			$this->default = $object;
-			
-			return $this;
-		}
-		
 		public function importValue($value)
 		{
 			try {

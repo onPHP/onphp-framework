@@ -24,7 +24,7 @@
 			
 			$this->assertEquals($primitive->getList(), $enum->getObjectList());
 			
-			$primitive->setDefault($enum);
+			$primitive->setValue($enum);
 			$this->assertEquals($primitive->getList(), $enum->getObjectList());
 			
 			$primitive->import(array('enum' => DataType::getAnyId()));

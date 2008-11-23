@@ -64,7 +64,7 @@
 		**/
 		public function getDisplayValue()
 		{
-			if (is_array($value = $this->getActualValue())) {
+			if (is_array($value = $this->getValue())) {
 				foreach ($value as &$element)
 					$element = $this->displayFilter->apply($element);
 				
