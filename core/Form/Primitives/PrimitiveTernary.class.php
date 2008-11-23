@@ -16,7 +16,7 @@
 	final class PrimitiveTernary extends BasePrimitive
 	{
 		private $falseValue		= 0;
-		private	$trueValue		= 1;
+		private $trueValue		= 1;
 		
 		/**
 		 * @return PrimitiveTernary

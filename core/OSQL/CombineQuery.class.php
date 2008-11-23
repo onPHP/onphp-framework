@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Sergey S. Sergeev                          *
+ *   Copyright (C) 2004-2008 by Sergey S. Sergeev                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -26,10 +26,10 @@
 	{
 		const UNION				= 'UNION';
 		const UNION_ALL			= 'UNION ALL';
-	
+		
 		const INTERSECT			= 'INTERSECT';
 		const INTERSECT_ALL		= 'INTERSECT ALL';
-	
+		
 		const EXCEPT			= 'EXCEPT';
 		const EXCEPT_ALL		= 'EXCEPT ALL';
 		

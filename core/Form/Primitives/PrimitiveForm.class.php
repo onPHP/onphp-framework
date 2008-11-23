@@ -162,7 +162,7 @@
 			}
 			
 			$this->imported = true;
-				
+			
 			if ($this->value->getErrors())
 				return false;
 			
