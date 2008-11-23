@@ -121,40 +121,29 @@
 		//@{
 		/**
 		 * @return Form
+		 * @throws MissingElementException
 		**/
-		public function markMissing($primitiveName)
+		public function markMissing($name)
 		{
-			$this->get($primitiveName)->setError(BasePrimitive::MISSING);
-			
-			return $this;
+			return $this->markCustom($name, BasePrimitive::MISSING);
 		}
 		
 		/**
 		 * @return Form
+		 * @throws MissingElementException
 		**/
 		public function markWrong($name)
 		{
-			if ($this->primitiveExists($name))
-				$this->get($name)->setError(BasePrimitive::WRONG);
-			else
-				throw new MissingElementException(
-					$name.' does not match known primitives'
-				);
-			
-			return $this;
+			return $this->markCustom($name, BasePrimitive::WRONG);
 		}
 		
 		/**
 		 * @return Form
+		 * @throws MissingElementException
 		**/
 		public function markGood($name)
 		{
-			if ($this->primitiveExists($name))
-				$this->get($name)->dropError();
-			else
-				throw new MissingElementException(
-					$name.' does not match known primitives'
-				);
+			$this->get($name)->dropError();
 			
 			return $this;
 		}
@@ -163,10 +152,11 @@
 		 * Set's custom error mark for primitive.
 		 * 
 		 * @return Form
+		 * @throws MissingElementException
 		**/
-		public function markCustom($primitiveName, $customMark)
+		public function markCustom($name, $customMark)
 		{
-			$this->get($primitiveName)->setError($customMark);
+			$this->get($name)->setError($customMark);
 			
 			return $this;
 		}
@@ -194,7 +184,7 @@
 		public function getTextualErrorFor($name)
 		{
 			if (
-				$this->primitiveExists($name)
+				$this->exists($name)
 				&& ($error = $this->get($name)->getError())
 			) {
 				if (isset($this->labels[$name][$error]))
@@ -207,7 +197,7 @@
 		public function getErrorDescriptionFor($name)
 		{
 			if (
-				$this->primitiveExists($name)
+				$this->exists($name)
 				&& ($error = $this->get($name)->getError())
 				&& isset(
 					$this->describedLabels[$name][$error]

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2007-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -35,7 +35,7 @@ ONPHP_METHOD(PlainForm, clean)
 	RETURN_THIS;
 }
 
-ONPHP_METHOD(PlainForm, primitiveExists)
+ONPHP_METHOD(PlainForm, exists)
 {
 	char *name;
 	unsigned int length;
@@ -196,7 +196,7 @@ static ONPHP_ARGINFO_BASE_PRIMITIVE;
 zend_function_entry onphp_funcs_PlainForm[] = {
 	ONPHP_ME(PlainForm, __construct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
 	ONPHP_ME(PlainForm, clean, NULL, ZEND_ACC_PUBLIC)
-	ONPHP_ME(PlainForm, primitiveExists, arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(PlainForm, exists, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, add, arginfo_base_primitive, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, drop, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, get, arginfo_one, ZEND_ACC_PUBLIC)

@@ -31,7 +31,7 @@
 			return $this;
 		}
 		
-		public function primitiveExists($name)
+		public function exists($name)
 		{
 			return isset($this->primitives[$name]);
 		}
@@ -44,10 +44,7 @@
 		{
 			$name = $prm->getName();
 			
-			Assert::isFalse(
-				isset($this->primitives[$name]),
-				'i am already exists!'
-			);
+			Assert::isFalse($this->exists($name), $name.' already exists');
 			
 			$this->primitives[$name] = $prm;
 			
@@ -70,7 +67,7 @@
 		**/
 		public function drop($name)
 		{
-			if (!isset($this->primitives[$name]))
+			if (!$this->exists($name))
 				throw new MissingElementException(
 					"can not drop inexistent primitive '{$name}'"
 				);
@@ -86,14 +83,14 @@
 		**/
 		public function get($name)
 		{
-			if (isset($this->primitives[$name]))
+			if ($this->exists($name))
 				return $this->primitives[$name];
 			
 			throw new MissingElementException("knows nothing about '{$name}'");
 		}
 		
 		/**
-		 * ex:
+		 * @example
 		 * array('superFormsList', 5, 'subForm', 'primitiveName') =>
 		 * 'superFormsList[5][subForm][primitiveName]'
 		**/
@@ -118,7 +115,7 @@
 		}
 		
 		/**
-		 * ex:
+		 * @example
 		 * array('superFormsList', 5, 'subForm', 'primitiveName') =>
 		 * 'superFormsList:5:subForm:primitiveName'
 		**/
@@ -187,6 +184,9 @@
 			return $this->get($name)->getValue();
 		}
 		
+		/**
+		 * @return Form
+		**/
 		public function setValue($name, $value)
 		{
 			$this->get($name)->setValue($value);
@@ -217,7 +217,6 @@
 			return $this->get($name)->getSafeValue();
 		}
 		
-		
 		public function getChoiceValue($name)
 		{
 			Assert::isTrue(($prm = $this->get($name)) instanceof ListedPrimitive);
@@ -231,7 +230,7 @@
 			
 			return $prm->getActualChoiceValue();
 		}
-
+		
 		/**
 		 * @deprecated by getFormValue
 		**/
@@ -242,7 +241,7 @@
 			if ($primitive instanceof FiltrablePrimitive)
 				return $primitive->getDisplayValue();
 			else
-				return $primitive->getActualValue();		
+				return $primitive->getActualValue();
 		}
 		
 		public function getPrimitiveNames()

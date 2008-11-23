@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -28,7 +28,7 @@
 				$proto = $object->proto();
 				
 				foreach (array_keys($proto->getExpandedPropertyList()) as $name) {
-					if ($form->primitiveExists($name)) {
+					if ($form->exists($name)) {
 						$proto->importPrimitive(
 							$name,
 							$form,

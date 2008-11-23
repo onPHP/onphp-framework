@@ -11,10 +11,15 @@
 	* main/DAOs/ProtoDAO.class.php: fixed wrong cid-field table when lazy
 	fetching collection.
 
+2008-11-05	Konstantin V. Arkhipov
+
+	* core/Form/PlainForm.class.php: primitiveExists() renamed to
+	exists().
+
 2008-10-31	Sergey S. Sergeev
 
-	* incubator/classes/Routers,test/incubator/Routers: experemental feature
-	for rewriting urls.
+	* incubator/classes/Routers,test/incubator/Routers: experemental
+	feature for rewriting urls.
 
 	* test/misc/ServerVarUtils.class.php: test case helper.
 

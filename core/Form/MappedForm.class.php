@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -137,7 +137,7 @@
 		**/
 		private function checkExistence($name)
 		{
-			if (!$this->form->primitiveExists($name))
+			if (!$this->form->exists($name))
 				throw new MissingElementException(
 					"there is no '{$name}' primitive"
 				);
