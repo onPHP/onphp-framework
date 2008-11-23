@@ -672,7 +672,7 @@ ONPHP_METHOD(Form, export)
 	RETURN_ZVAL(list, 1, 1);
 }
 
-ONPHP_METHOD(Form, toFormValue)
+ONPHP_METHOD(Form, getLogicValue)
 {
 	zval *value, *out;
 	
@@ -931,7 +931,7 @@ zend_function_entry onphp_funcs_Form[] = {
 	ONPHP_ME(Form, importOneMore, arginfo_two, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Form, exportValue, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Form, export, NULL, ZEND_ACC_PUBLIC)
-	ONPHP_ME(Form, toFormValue, arginfo_one, ZEND_ACC_PUBLIC)
+	ONPHP_ME(Form, getLogicValue, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Form, setProto, arginfo_dto_proto, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Form, getProto, NULL, ZEND_ACC_PUBLIC)
 	ONPHP_ME(Form, importPrimitive, arginfo_one_and_base_primitive, ZEND_ACC_PRIVATE)

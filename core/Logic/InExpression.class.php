@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -87,21 +87,21 @@
 				throw new WrongArgumentException(
 					'sql select or array accepted by '.$this->logic
 				);
-
+			
 			$string .= ')';
-
+			
 			return $string;
 		}
 		
 		public function toBoolean(Form $form)
 		{
-			$left	= $form->toFormValue($this->left);
+			$left	= $form->getLogicValue($this->left);
 			$right	= $this->right;
 			
 			$both =
 				(null !== $left)
 				&& (null !== $right);
-
+			
 			switch ($this->logic) {
 				
 				case self::IN:

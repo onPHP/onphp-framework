@@ -346,7 +346,7 @@
 			return $result;
 		}
 		
-		public function toFormValue($value)
+		public function getLogicValue($value)
 		{
 			if ($value instanceof FormField)
 				return $this->getValue($value->getName());

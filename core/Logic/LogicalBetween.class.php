@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -54,9 +54,9 @@
 		
 		public function toBoolean(Form $form)
 		{
-			$left	= $form->toFormValue($this->left);
-			$right	= $form->toFormValue($this->right);
-			$value	= $form->toFormValue($this->field);
+			$left	= $form->getLogicValue($this->left);
+			$right	= $form->getLogicValue($this->right);
+			$value	= $form->getLogicValue($this->field);
 			
 			return ($left	<= $value)
 				&& ($value	<= $right);

@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -17,10 +17,10 @@
 	{
 		const IS_NULL			= 'IS NULL';
 		const IS_NOT_NULL		= 'IS NOT NULL';
-
+		
 		const IS_TRUE			= 'IS TRUE';
 		const IS_FALSE			= 'IS FALSE';
-
+		
 		private $subject	= null;
 		private $logic		= null;
 		
@@ -52,21 +52,21 @@
 		
 		public function toBoolean(Form $form)
 		{
-			$subject = $form->toFormValue($this->subject);
-				
+			$subject = $form->getLogicValue($this->subject);
+			
 			switch ($this->logic) {
 				case self::IS_NULL:
 					return null === $subject;
-
+				
 				case self::IS_NOT_NULL:
 					return null !== $subject;
-
+				
 				case self::IS_TRUE:
 					return true === $subject;
-
+				
 				case self::IS_FALSE:
 					return false === $subject;
-
+				
 				default:
 					
 					throw new UnsupportedMethodException(

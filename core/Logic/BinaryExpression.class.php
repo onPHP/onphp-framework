@@ -20,18 +20,18 @@
 		
 		const EXPRESSION_AND	= 'AND';
 		const EXPRESSION_OR		= 'OR';
-
+		
 		const GREATER_THAN		= '>';
 		const GREATER_OR_EQUALS	= '>=';
-
+		
 		const LOWER_THAN		= '<';
 		const LOWER_OR_EQUALS	= '<=';
-
+		
 		const LIKE				= 'LIKE';
 		const NOT_LIKE			= 'NOT LIKE';
 		const ILIKE				= 'ILIKE';
 		const NOT_ILIKE			= 'NOT ILIKE';
-
+		
 		const SIMILAR_TO		= 'SIMILAR TO';
 		const NOT_SIMILAR_TO	= 'NOT SIMILAR TO';
 		
@@ -75,32 +75,32 @@
 		
 		public function toBoolean(Form $form)
 		{
-			$left	= $form->toFormValue($this->left);
-			$right	= $form->toFormValue($this->right);
+			$left	= $form->getLogicValue($this->left);
+			$right	= $form->getLogicValue($this->right);
 			
 			$both =
 				(null !== $left)
 				&& (null !== $right);
-				
+			
 			switch ($this->logic) {
 				case self::EQUALS:
 					return $both && ($left == $right);
-
+				
 				case self::NOT_EQUALS:
 					return $both && ($left != $right);
-
+				
 				case self::GREATER_THAN:
 					return $both && ($left > $right);
-
+				
 				case self::GREATER_OR_EQUALS:
 					return $both && ($left >= $right);
-
+				
 				case self::LOWER_THAN:
 					return $both && ($left < $right);
-
+				
 				case self::LOWER_OR_EQUALS:
 					return $both && ($left <= $right);
-
+				
 				case self::EXPRESSION_AND:
 					return $both && ($left && $right);
 				
