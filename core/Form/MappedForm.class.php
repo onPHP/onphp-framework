@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -97,8 +97,8 @@
 		**/
 		public function import(HttpRequest $request)
 		{
-			foreach ($this->form->getPrimitiveList() as $prm) {
-				$this->importOne($prm->getName(), $request);
+			foreach ($this->form->getPrimitiveNames() as $name) {
+				$this->importOne($name, $request);
 			}
 			
 			$this->form->checkRules();
@@ -115,19 +115,19 @@
 			
 			$default = ($this->type == $type);
 			
-			foreach ($this->form->getPrimitiveList() as $prm) {
+			foreach ($this->form->getPrimitiveList() as $name => $prm) {
 				if (
 					(
-						isset($this->map[$prm->getName()])
-						&& in_array($type, $this->map[$prm->getName()])
+						isset($this->map[$name])
+						&& in_array($type, $this->map[$name])
 					)
 					|| (
-						!isset($this->map[$prm->getName()])
+						!isset($this->map[$name])
 						&& $default
 					)
 				) {
 					if ($prm->getValue())
-						$result[$prm->getName()] = $prm->exportValue();
+						$result[$name] = $prm->exportValue();
 				}
 			}
 			

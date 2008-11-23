@@ -48,7 +48,7 @@
 		{
 			$result = $this->getErrors();
 			
-			foreach ($this->primitives as $prm) {
+			foreach ($this->primitives as $name => $prm) {
 				if (
 					(
 						($prm instanceof PrimitiveFormsList)
@@ -57,9 +57,9 @@
 					&& $prm->getValue()
 				) {
 					if ($errors = $prm->getInnerErrors()) {
-						$result[$prm->getName()] = $errors;
+						$result[$name] = $errors;
 					} else {
-						unset($result[$prm->getName()]);
+						unset($result[$name]);
 					}
 				}
 			}
@@ -323,9 +323,9 @@
 		{
 			$result = array();
 			
-			foreach ($this->primitives as $prm) {
+			foreach ($this->primitives as $name => $prm) {
 				if ($prm->isImported())
-					$result[$prm->getName()] = $prm->exportValue();
+					$result[$name] = $prm->exportValue();
 			}
 			
 			return $result;
