@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -21,9 +21,9 @@
 	{
 		protected $table	= null;
 		protected $fields	= array();
-
+		
 		abstract public function setTable($table);
-
+		
 		public function getTable()
 		{
 			return $this->table;
@@ -35,10 +35,10 @@
 		public function set($field, $value = null)
 		{
 			$this->fields[$field] = $value;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @throws MissingElementException
 		 * @return InsertOrUpdateQuery
@@ -47,12 +47,12 @@
 		{
 			if (!array_key_exists($field, $this->fields))
 				throw new MissingElementException("unknown field '{$field}'");
-
+			
 			unset($this->fields[$field]);
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return InsertOrUpdateQuery
 		**/
@@ -77,7 +77,7 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return InsertOrUpdateQuery
 		**/
@@ -87,10 +87,10 @@
 				Assert::isTernaryBase($value);
 				$this->set($field, $value);
 			} catch (WrongArgumentException $e) {/*_*/}
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * Adds values from associative array.
 		 * 
@@ -99,9 +99,9 @@
 		public function arraySet($fields)
 		{
 			Assert::isArray($fields);
-
+			
 			$this->fields = array_merge($this->fields, $fields);
-
+			
 			return $this;
 		}
 	}

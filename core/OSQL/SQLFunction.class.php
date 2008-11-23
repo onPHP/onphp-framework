@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2005-2007 by Anton E. Lebedevich, Konstantin V. Arkhipov *
+ *   Copyright (C) 2005-2008 by Anton E. Lebedevich, Konstantin V. Arkhipov *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -19,13 +19,13 @@
 		extends Castable
 		implements DialectString, MappableObject, Aliased
 	{
-		const AGGREGATE_ALL 		= 1;
-		const AGGREGATE_DISTINCT 	= 2;
-
+		const AGGREGATE_ALL			= 1;
+		const AGGREGATE_DISTINCT	= 2;
+		
 		private $name		= null;
 		private $alias		= null;
 		private $aggregate	= null;
-
+		
 		private $args	= array();
 		
 		/**
@@ -123,7 +123,7 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			$args = array();
-
+			
 			if ($this->args) {
 				foreach ($this->args as $arg)
 					if ($arg instanceof DBValue)
@@ -152,7 +152,7 @@
 				$out .= 'DISTINCT ';
 			}
 			
-			$out .=	($args == array() ? null : implode(', ', $args)).')';
+			$out .= ($args == array() ? null : implode(', ', $args)).')';
 			
 			$out =
 				$this->cast
