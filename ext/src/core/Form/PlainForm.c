@@ -163,7 +163,7 @@ ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER(getDisplayValue) {
 #undef ONPHP_PLAIN_FORM_STRAIGHT_PRE_GETTER
 #undef ONPHP_PLAIN_FORM_STRAIGHT_POST_GETTER
 
-ONPHP_METHOD(PlainForm, getPrimitiveNames)
+ONPHP_METHOD(PlainForm, getNameList)
 {
 	zval *out, *primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
 	
@@ -183,7 +183,7 @@ ONPHP_METHOD(PlainForm, getPrimitiveNames)
 	RETURN_ZVAL(out, 1, 1);
 }
 
-ONPHP_METHOD(PlainForm, getPrimitiveList)
+ONPHP_METHOD(PlainForm, getList)
 {
 	zval *primitives = ONPHP_READ_PROPERTY(getThis(), "primitives");
 	
@@ -207,7 +207,7 @@ zend_function_entry onphp_funcs_PlainForm[] = {
 	ONPHP_ME(PlainForm, getChoiceValue, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, getActualChoiceValue, arginfo_one, ZEND_ACC_PUBLIC)
 	ONPHP_ME(PlainForm, getDisplayValue, arginfo_one, ZEND_ACC_PUBLIC)
-	ONPHP_ME(PlainForm, getPrimitiveNames, NULL, ZEND_ACC_PUBLIC)
-	ONPHP_ME(PlainForm, getPrimitiveList, NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(PlainForm, getNameList, NULL, ZEND_ACC_PUBLIC)
+	ONPHP_ME(PlainForm, getList, NULL, ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };

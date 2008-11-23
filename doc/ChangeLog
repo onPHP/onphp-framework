@@ -13,6 +13,12 @@
 
 2008-11-05	Konstantin V. Arkhipov
 
+	* core/Form/PlainForm.class.php: getPrimitiveList() renamed to
+	getList().
+
+	* core/Form/PlainForm.class.php: getPrimitiveNames() renamed to
+	getNameList().
+
 	* core/Form/PlainForm.class.php: primitiveExists() renamed to
 	exists().
 

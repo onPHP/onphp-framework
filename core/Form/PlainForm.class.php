@@ -244,12 +244,12 @@
 				return $primitive->getActualValue();
 		}
 		
-		public function getPrimitiveNames()
+		public function getNameList()
 		{
 			return array_keys($this->primitives);
 		}
 		
-		public function getPrimitiveList()
+		public function getList()
 		{
 			return $this->primitives;
 		}

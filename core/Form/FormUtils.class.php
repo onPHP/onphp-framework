@@ -21,7 +21,7 @@
 		{
 			Assert::isTrue(is_object($object));
 			
-			$primitives = $form->getPrimitiveList();
+			$primitives = $form->getList();
 			$class = new ReflectionClass($object);
 			
 			if ($object instanceof Prototyped) {
@@ -65,7 +65,7 @@
 				$proto = $object->proto();
 				$list = $proto->getExpandedPropertyList();
 				
-				foreach ($form->getPrimitiveList() as $name => $prm) {
+				foreach ($form->getList() as $name => $prm) {
 					if (isset($list[$name])) {
 						$proto->exportPrimitive($name, $prm, $object, $ignoreNull);
 					}
@@ -73,7 +73,7 @@
 			} else {
 				$class = new ReflectionClass($object);
 				
-				foreach ($form->getPrimitiveList() as $name => $prm) {
+				foreach ($form->getList() as $name => $prm) {
 					$setter = 'set'.ucfirst($name);
 					
 					if ($prm instanceof ListedPrimitive)
