@@ -48,26 +48,26 @@
 		protected $name		= null;
 		protected $default	= null;
 		protected $value	= null;
+		protected $raw		= null;
 		
 		protected $required	= false;
 		protected $imported	= false;
 		
-		protected $raw		= null;
-		
-		protected $error		= null;
+		protected $error	= null;
 		
 		public function __construct($name)
 		{
 			$this->name = $name;
 		}
 		
+		/**
+		 * @return BasePrimitive
+		**/
 		public function spawn($newName)
 		{
 			$result = clone $this;
 			
-			$result->setName($newName);
-			
-			return $result;
+			return $result->setName($newName);
 		}
 		
 		public function getName()
