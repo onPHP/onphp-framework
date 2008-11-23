@@ -25,10 +25,10 @@
 	 * isImported()). Comfortable for business logic.
 	 * 
 	 * - exported value: value, converted back to scope value, possible taking
-	 * into account import filters (see FiltrablePrimitive).
+	 * into account import filters (@see FiltrablePrimitive).
 	 * 
 	 * - formValue: either raw value or exported preset value, possible taking
-	 * into account display filters (see FiltrablePrimitive). Comfortable for
+	 * into account display filters (@see FiltrablePrimitive). Comfortable for
 	 * using in html forms.
 	 * 
 	 * - default: soft-default object, that may be used instead of value when
