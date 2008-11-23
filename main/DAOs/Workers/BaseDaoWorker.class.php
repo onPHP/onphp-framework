@@ -24,11 +24,17 @@
 		
 		protected $className = null;
 		
+		protected $watermark = null;
+		
 		public function __construct(GenericDAO $dao)
 		{
 			$this->dao = $dao;
 			
 			$this->className = $dao->getObjectName();
+			
+			if (($cache = Cache::me()) instanceof WatermarkedPeer)
+				$this->watermark =
+					$cache->mark($this->className)->getActualWatermark();
 		}
 		
 		/**
@@ -81,14 +87,14 @@
 		{
 			return
 				Cache::me()->mark($this->className)->
-					delete($this->className.'_'.$id);
+					delete($this->makeIdKey($id));
 		}
 		
 		public function uncacheByQuery(SelectQuery $query)
 		{
 			return
 				Cache::me()->mark($this->className)->
-					delete($this->className.self::SUFFIX_QUERY.$query->getId());
+					delete($this->makeQueryKey($query, self::SUFFIX_QUERY));
 		}
 		//@}
 		
@@ -98,14 +104,14 @@
 		{
 			return
 				Cache::me()->mark($this->className)->
-					get($this->className.'_'.$id);
+					get($this->makeIdKey($id));
 		}
 		
 		protected function getCachedByQuery(SelectQuery $query)
 		{
 			return
 				Cache::me()->mark($this->className)->
-					get($this->className.self::SUFFIX_QUERY.$query->getId());
+					get($this->makeQueryKey($query, self::SUFFIX_QUERY));
 		}
 		//@}
 		
@@ -158,5 +164,19 @@
 			return $list;
 		}
 		//@}
+		
+		protected function makeIdKey($id)
+		{
+			return $this->className.'_'.$id.$this->watermark;
+		}
+		
+		protected function makeQueryKey(SelectQuery $query, $suffix)
+		{
+			return
+				$this->className
+				.$suffix
+				.$query->getId()
+				.$this->watermark;
+		}
 	}
 ?>

@@ -21,17 +21,10 @@
 	final class SmartDaoWorker extends TransparentDaoWorker
 	{
 		private $indexKey	= null;
-		private $watermark	= null;
 		
 		public function __construct(GenericDAO $dao)
 		{
 			parent::__construct($dao);
-			
-			if (($cache = Cache::me()) instanceof WatermarkedPeer)
-				$this->watermark =
-					$cache->mark($this->className)->getActualWatermark();
-			else
-				$this->watermark = null;
 			
 			$this->indexKey =
 				$this->watermark
@@ -51,7 +44,7 @@
 			
 			$semKey = $this->keyToInt($this->indexKey);
 			
-			$key = $this->watermark.$this->className.self::SUFFIX_QUERY.$queryId;
+			$key = $this->makeQueryKey($query, self::SUFFIX_QUERY);
 			
 			$pool = SemaphorePool::me();
 
@@ -79,11 +72,7 @@
 			
 			$cache = Cache::me();
 			
-			$listKey =
-				$this->watermark
-				.$this->className
-				.self::SUFFIX_LIST
-				.$query->getId();
+			$listKey = $this->makeQueryKey($query, self::SUFFIX_LIST);
 			
 			$semKey = $this->keyToInt($this->indexKey);
 			

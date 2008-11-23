@@ -82,7 +82,7 @@
 			$ids = array_unique($ids);
 			
 			foreach ($ids as $id)
-				$prefixed[$id] = $this->className.'_'.$id;
+				$prefixed[$id] = $this->makeIdKey($id);
 			
 			if (
 				$cachedList
@@ -191,7 +191,7 @@
 		{
 			Cache::me()->mark($this->className)->
 				add(
-					$this->className.'_'.$object->getId(),
+					$this->makeIdKey($object->getId()),
 					$object,
 					$expires
 				);
@@ -206,7 +206,7 @@
 		{
 			return
 				$this->gentlyGetByKey(
-					$this->className.self::SUFFIX_QUERY.$query->getId()
+					$this->makeQueryKey($query, self::SUFFIX_QUERY)
 				);
 		}
 		
@@ -214,7 +214,7 @@
 		{
 			return
 				$this->gentlyGetByKey(
-					$this->className.self::SUFFIX_LIST.$query->getId()
+					$this->makeQueryKey($query, self::SUFFIX_LIST)
 				);
 		}
 		
@@ -223,7 +223,7 @@
 			return
 				Cache::me()->mark($this->className)->
 					add(
-						$this->className.'_'.$id,
+						$this->makeIdKey($id),
 						Cache::NOT_FOUND,
 						Cache::EXPIRES_FOREVER
 					);
