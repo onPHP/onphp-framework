@@ -268,11 +268,8 @@
 		protected function import(array $scope)
 		{
 			if (
-				!empty($scope[$this->name])
-				|| (
-					isset($scope[$this->name])
-					&& $scope[$this->name] !== ''
-				)
+				isset($scope[$this->name])
+				&& ($scope[$this->name] !== '')
 			) {
 				$this->raw = $scope[$this->name];
 				
