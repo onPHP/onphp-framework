@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2005-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -26,7 +26,7 @@
 		{
 			return new self($field, $alias);
 		}
-
+		
 		public function __construct(DialectString $field, $alias)
 		{
 			parent::__construct($field);
@@ -45,7 +45,7 @@
 			
 			return $this->alias;
 		}
-
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			return
