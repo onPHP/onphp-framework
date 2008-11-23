@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,9 +21,9 @@
 	{
 		protected $table	= null;
 		protected $fields	= array();
-
+		
 		abstract public function setTable($table);
-
+		
 		public function getTable()
 		{
 			return $this->table;
@@ -73,16 +73,16 @@
 
 			return $this;
 		}
-
+		
 		/**
 		 * Adds values from associative array.
 		**/
 		public function arraySet($fields)
 		{
 			Assert::isArray($fields);
-
+			
 			$this->fields = array_merge($this->fields, $fields);
-
+			
 			return $this;
 		}
 	}

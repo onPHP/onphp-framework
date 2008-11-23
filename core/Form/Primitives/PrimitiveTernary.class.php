@@ -16,7 +16,7 @@
 	class PrimitiveTernary extends BasePrimitive
 	{
 		private $falseValue		= 0;
-		private	$trueValue		= 1;
+		private $trueValue		= 1;
 		
 		public function setTrueValue($trueValue)
 		{
