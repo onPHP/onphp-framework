@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2005-2008 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,14 +18,14 @@
 		protected $subject	= null;
 		protected $alias	= null;
 		protected $logic	= null;
-
+		
 		public function __construct($subject, LogicalObject $logic, $alias)
 		{
 			$this->subject	= $subject;
 			$this->alias	= $alias;
 			$this->logic	= $logic;
 		}
-
+		
 		public function getTable()
 		{
 			return $this->alias ? $this->alias : $this->subject;
