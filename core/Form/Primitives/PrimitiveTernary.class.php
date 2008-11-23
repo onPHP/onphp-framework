@@ -58,8 +58,6 @@
 				else
 					return false;
 			} else {
-				$this->clean();
-				
 				return null;
 			}
 			
