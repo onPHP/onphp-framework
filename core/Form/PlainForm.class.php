@@ -132,7 +132,7 @@
 			
 			return $prm->getActualChoiceValue();
 		}
-
+		
 		public function getDisplayValue($name)
 		{
 			$primitive = $this->get($name);
@@ -140,9 +140,9 @@
 			if ($primitive instanceof FiltrablePrimitive)
 				return $primitive->getDisplayValue();
 			else
-				return $primitive->getActualValue();		
+				return $primitive->getActualValue();
 		}
-
+		
 		public function getPrimitiveNames()
 		{
 			return array_keys($this->primitives);

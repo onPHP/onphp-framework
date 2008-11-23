@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -20,7 +20,7 @@
 	{
 		protected $rules		= array(); // forever
 		protected $violated		= array(); // rules
-
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return Form
@@ -59,7 +59,7 @@
 				if (!$logicalObject->toBoolean($this))
 					$this->violated[$name] = Form::WRONG;
 			}
-
+			
 			return $this;
 		}
 	}
