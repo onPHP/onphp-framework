@@ -128,7 +128,7 @@
 			
 			$path = $this->getInnerPath($path);
 			
-			return join(':', $path);
+			return implode(':', $path);
 		}
 		
 		/**
