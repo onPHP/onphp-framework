@@ -50,8 +50,8 @@
 			return $values;
 		}
 		
-		public function assemble(
-			$data = array(),
+		public function assembly(
+			array $data = array(),
 			$reset = false,
 			$encode = false
 		)
@@ -62,7 +62,7 @@
 				if ($key > 0)
 					$value .= $this->separators[$key];
 				
-				$value .= $route->assemble($data, $reset, $encode);
+				$value .= $route->assembly($data, $reset, $encode);
 			}
 			
 			return $value;

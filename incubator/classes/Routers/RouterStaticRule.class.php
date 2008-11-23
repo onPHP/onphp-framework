@@ -24,6 +24,7 @@
 		
 		public function __construct($route)
 		{
+			// FIXME: rtrim. probably?
 			$this->route = trim($route, '/');
 		}
 		
@@ -31,14 +32,15 @@
 		{
 			$path = $this->processPath($request)->toString();
 			
+			// FIXME: rtrim, probably?
 			if (trim(urldecode($path), '/') == $this->route)
 				return $this->defaults;
 			
 			return false;
 		}
 		
-		public function assemble(
-			$data = array(),
+		public function assembly(
+			array $data = array(),
 			$reset = false,
 			$encode = false
 		)

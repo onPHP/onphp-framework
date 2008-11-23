@@ -208,7 +208,7 @@
 		/**
 		 * Find a matching route to the current REQUEST_URI and
 		 * inject returning values to the HttpRequest object.
-		 *
+		 * 
 		 * @return HttpRequest
 		**/
 		public function route(HttpRequest $request)
@@ -231,13 +231,18 @@
 		 * @throws RouterException
 		 * @return string
 		**/
-		public function assemble($userParams, $name = null, $reset = false, $encode = true)
+		public function assembly(
+			$userParams,
+			$name = null,
+			$reset = false,
+			$encode = true
+		)
 		{
 			if ($name === null)
 				$name = $this->getCurrentRouteName();
 			
 			$route = $this->getRoute($name);
-			$url = $route->assemble($userParams, $reset, $encode);
+			$url = $route->assembly($userParams, $reset, $encode);
 			
 			if (!preg_match('|^[a-z]+://|', $url)) {
 				if ($this->getBaseUrl())
@@ -267,7 +272,7 @@
 		**/
 		protected function setRequestParams(HttpRequest $request, array $params)
 		{
-			foreach ($params as $param => &$value)
+			foreach ($params as $param => $value)
 				$request->setAttachedVar($param, $value);
 			
 			return $this;

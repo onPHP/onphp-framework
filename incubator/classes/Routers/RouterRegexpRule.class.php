@@ -36,10 +36,8 @@
 		/**
 		 * @return RouterRegexpRule
 		**/
-		public function setMap($map)
+		public function setMap(array $map)
 		{
-			Assert::isArray($map);
-			
 			$this->map = $map;
 			
 			return $this;
@@ -70,7 +68,8 @@
 		public function match(HttpRequest $request)
 		{
 			$path = $this->processPath($request)->toString();
-		
+			
+			// FIXME: rtrim. probably?
 			$path = trim(urldecode($path), '/');
 			$res = preg_match($this->regexp, $path, $values);
 			
@@ -96,11 +95,15 @@
 			return $return;
 		}
 		
-		public function assemble($data = array(), $reset = false, $encode = false)
+		public function assembly(
+			array $data = array(),
+			$reset = false,
+			$encode = false
+		)
 		{
 			if ($this->reverse === null)
 				throw new RouterException(
-					'Cannot assemble. Reversed route is not specified.'
+					'Can not assembly. Reversed route is not specified.'
 				);
 			
 			$defaultValuesMapped  = $this->getMappedValues($this->defaults, true, false);
@@ -126,7 +129,7 @@
 				$return = vsprintf($this->reverse, $mergedData);
 			} catch (BaseException $e) {
 				throw new RouterException(
-					'Cannot assemble. Too few arguments? Error was: '
+					'Can not assembly. Too few arguments? Error was: '
 					.$e->getMessage()
 				);
 			}
@@ -151,11 +154,11 @@
 		 * Maps numerically indexed array values to it's associative mapped counterpart.
 		 * Or vice versa. Uses user provided map array which consists of index => name
 		 * parameter mapping. If map is not found, it returns original array.
-		 *
+		 * 
 		 * Method strips destination type of keys form source array. Ie. if source array is
 		 * indexed numerically then every associative key will be stripped. Vice versa if reversed
 		 * is set to true.
-		 *
+		 * 
 		 * @return array
 		**/
 		protected function getMappedValues($values, $reversed = false, $preserve = false)

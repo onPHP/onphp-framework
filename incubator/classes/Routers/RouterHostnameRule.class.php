@@ -41,10 +41,8 @@
 		/**
 		 * @return RouterHostnameRule
 		**/
-		public function setRequirements($reqirements)
+		public function setRequirements(array $reqirements)
 		{
-			Assert::isArray($reqirements);
-			
 			$this->requirements = $reqirements;
 			
 			return $this;
@@ -74,7 +72,8 @@
 			
 			$host = trim($host, '.');
 			
-			if ($host != '') {
+			// FIXME: strpos('.', ...), probably?
+			if ($host) {
 				$host = explode('.', $host);
 				
 				foreach ($host as $pos => $hostPart) {
@@ -132,8 +131,8 @@
 			return $return;
 		}
 		
-		public function assemble(
-			$data = array(),
+		public function assembly(
+			array $data = array(),
 			$reset = false,
 			$encode = false
 		)
@@ -225,7 +224,8 @@
 			if ($this->routeProcessed)
 				return $this;
 			
-			if ($this->route != '') {
+			// FIXME: if (strpos('.', ...), probably?
+			if ($this->route) {
 				foreach (explode('.', $this->route) as $pos => $part) {
 					if (substr($part, 0, 1) == $this->hostVariable) {
 						$name = substr($part, 1);

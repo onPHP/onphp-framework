@@ -43,10 +43,8 @@
 		/**
 		 * @return RouterTransparentRule
 		**/
-		public function setRequirements($reqirements)
+		public function setRequirements(array $reqirements)
 		{
-			Assert::isArray($reqirements);
-			
 			$this->requirements = $reqirements;
 			
 			return $this;
@@ -56,7 +54,7 @@
 		{
 			return $this->requirements;
 		}
-				
+		
 		public function match(HttpRequest $request)
 		{
 			$this->processRoute();
@@ -79,7 +77,7 @@
 					if ($this->parts[$pos] === '*') {
 						$count = count($path);
 						
-						for($i = $pos; $i < $count; $i += 2) {
+						for ($i = $pos; $i < $count; $i += 2) {
 							$var = urldecode($path[$i]);
 							
 							if (
@@ -149,15 +147,15 @@
 		/**
 		 * Assembles user submitted parameters forming a URL path
 		 * defined by this route.
-		 *
+		 * 
 		 * @param array $data An array of variable
 		 * and value pairs used as parameters.
 		 * @param boolean $reset Whether or not to set
 		 * route defaults with those provided in $data.
 		 * @return string Route path with user submitted parameters.
 		**/
-		public function assemble(
-			$data = array(),
+		public function assembly(
+			array $data = array(),
 			$reset = false,
 			$encode = false
 		)

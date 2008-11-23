@@ -20,6 +20,10 @@
 		**/
 		public function match(HttpRequest $request);
 		
-		public function assemble($data = array(), $reset = false, $encode = false);
+		public function assembly(
+			array $data = array(),
+			$reset = false,
+			$encode = false
+		);
 	}
 ?>

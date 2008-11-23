@@ -37,10 +37,8 @@
 			return null;
 		}
 		
-		public function setDefaults($defaults)
+		public function setDefaults(array $defaults)
 		{
-			Assert::isArray($defaults);
-			
 			$this->defaults = $defaults;
 			
 			return $this;

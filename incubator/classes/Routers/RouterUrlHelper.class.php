@@ -16,17 +16,15 @@
 		 * @return string
 		**/
 		public static function url(
-			$urlOptions,
+			array $urlOptions = array(),
 			$name,
 			$reset = false,
 			$encode = true
 		)
 		{
-			Assert::isArray($urlOptions);
-			
 			return
 				RouterRewrite::me()->
-				assemble($urlOptions, $name, $reset, $encode);
+				assembly($urlOptions, $name, $reset, $encode);
 		}
 	}
 ?>
