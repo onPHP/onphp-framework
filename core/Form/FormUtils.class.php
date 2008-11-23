@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -22,7 +22,6 @@
 			Assert::isTrue(is_object($object));
 			
 			$primitives = $form->getPrimitiveList();
-			$class = new ReflectionClass($object);
 			
 			if ($object instanceof Prototyped) {
 				$proto = $object->proto();
@@ -39,6 +38,8 @@
 					}
 				}
 			} else {
+				$class = new ReflectionClass($object);
+				
 				foreach ($class->getProperties() as $property) {
 					$name = $property->getName();
 					
