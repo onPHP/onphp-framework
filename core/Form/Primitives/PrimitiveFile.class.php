@@ -75,7 +75,7 @@
 			Assert::isString($mime);
 			
 			$this->allowedMimeTypes[] = $mime;
-		
+			
 			return $this;
 		}
 		
@@ -123,7 +123,7 @@
 				$file = $scope[$this->name]['tmp_name'];
 			else
 				return false;
-				
+			
 			if (is_readable($file) && is_uploaded_file($file))
 				$size = filesize($file);
 			else

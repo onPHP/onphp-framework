@@ -32,7 +32,7 @@
 			
 			return get_class($value).self::DELIMITER.$value->getId();
 		}
-			
+		
 		/**
 		 * @throws WrongStateException
 		**/
@@ -69,6 +69,9 @@
 			return $this->baseClassName;
 		}
 		
+		/**
+		 * @return PrimitivePolymorphicIdentifier
+		**/
 		public function setValue($value)
 		{
 			Assert::isInstance($value, $this->baseClassName);
@@ -123,10 +126,9 @@
 					
 				}
 				
-				
 				if (!$this->error) {
 					parent::of($class);
-				
+					
 					$scope[$this->name] = $id;
 				}
 				

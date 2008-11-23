@@ -130,7 +130,7 @@ Possible options:
 	// switches
 	$metaForce = $metaOnlyContainers = $metaNoSchema =
 	$metaNoSchemaCheck = $metaDropStaleFiles =
-	$metaNoIntegrityCheck = $metaDryRun = 
+	$metaNoIntegrityCheck = $metaDryRun =
 	$metaCheckEnumerations = $metaNoColor = false;
 	
 	$args = $_SERVER['argv'];

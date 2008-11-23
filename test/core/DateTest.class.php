@@ -34,7 +34,6 @@
 			$this->dayDifferenceTest($left, $right, 1);
 			
 			// change time from winter to summer
-			// 
 			$left = Timestamp::create('2008-03-29 02:00:00');
 			$right = Timestamp::create('2008-03-30 02:00:00');
 			

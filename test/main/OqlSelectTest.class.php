@@ -431,7 +431,7 @@
 								)
 						)
 				)->
-				// substitution, boolean and arithmetic expressions 
+				// substitution, boolean and arithmetic expressions
 				assertCriteria(
 					'from TestUser order by $1, nickname is null, -id/2 + 1 asc ',
 					Criteria::create(TestUser::dao())->

@@ -74,7 +74,7 @@
 				throw new WrongStateException(
 					"no class defined for PrimitiveEnumeration '{$this->name}'"
 				);
-				
+			
 			$result = parent::import($scope);
 			
 			if ($result === true) {

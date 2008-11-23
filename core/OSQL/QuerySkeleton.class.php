@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -31,7 +31,7 @@
 			else {
 				if (!$this->where && $logic)
 					$logic = null;
-
+				
 				$this->whereLogic[] = $logic;
 				$this->where[] = $exp;
 			}
@@ -54,7 +54,7 @@
 		{
 			return $this->where($exp, 'OR');
 		}
-
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			if ($this->where) {
@@ -72,7 +72,7 @@
 						$this->whereLogic[$i + 1] = null;
 					
 				}
-
+				
 				return rtrim($clause, ' ');
 			}
 			

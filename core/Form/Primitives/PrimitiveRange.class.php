@@ -27,7 +27,7 @@
 		{
 			return true;
 		}
-
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return PrimitiveRange
@@ -38,9 +38,9 @@
 				$range instanceof Range,
 				'only ranges accepted today'
 			);
-
+			
 			$this->value = $range;
-
+			
 			return $this;
 		}
 		
@@ -59,7 +59,7 @@
 			
 			return null;
 		}
-
+		
 		public function importSingle(array $scope)
 		{
 			if (!BasePrimitive::import($scope))
@@ -88,7 +88,7 @@
 			
 			return false;
 		}
-
+		
 		public function importMarried(array $scope) // ;-)
 		{
 			$min = $this->safeGet($scope, $this->name, self::MIN);
@@ -129,7 +129,7 @@
 			
 			return false;
 		}
-
+		
 		private function safeGet($scope, $firstDimension, $secondDimension)
 		{
 			if (isset($scope[$firstDimension]) && is_array($scope[$firstDimension])) {
@@ -140,7 +140,7 @@
 					return $scope[$firstDimension][$secondDimension];
 				}
 			}
-
+			
 			return null;
 		}
 	}

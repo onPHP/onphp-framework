@@ -320,7 +320,7 @@
 					$this->query->setLimit(
 						$this->makeQueryParameter($token)
 					);
-					
+				
 				else
 					$this->error("expecting 'limit' expression");
 			}
@@ -341,7 +341,7 @@
 					$this->query->setOffset(
 						$this->makeQueryParameter($token)
 					);
-					
+				
 				else
 					$this->error("expecting 'offset' expression");
 			}
@@ -518,7 +518,6 @@
 								.$this->getTokenValue($operator)
 							]
 						);
-						
 					else
 						$this->error(
 							'expecting string constant or substitution: '
@@ -605,7 +604,6 @@
 							$expression2,
 							self::$binaryOperatorMap[$operator->getValue()]
 						);
-						
 					else
 						$this->error(
 							'expecting second argument in expression: '
@@ -698,7 +696,7 @@
 				$this->checkToken($this->tokenizer->peek(), OqlToken::PARENTHESES, '(')
 			)
 				$this->tokenizer->next();
-				
+			
 			// skip unary minus
 			if ($this->checkUnaryMinus($this->tokenizer->peek()))
 				$this->tokenizer->next();
