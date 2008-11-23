@@ -5,11 +5,11 @@
 	final class SimpleEnum extends Enumeration
 	{
 		const ONE = 1;
-		const THIRTY_TWO = 42;
+		const FORTY_TWO = 42;
 		
 		protected $names = array(
 			self::ONE	=> 'one',
-			self::THIRTY_TWO	=> 'thirty two',
+			self::FORTY_TWO	=> 'forty two',
 		);
 		
 		public static function one()
@@ -17,9 +17,9 @@
 			return self::getInstance(self::ONE);
 		}
 		
-		public static function thirtyTwo()
+		public static function fortyTwo()
 		{
-			return self::getInstance(self::THIRTY_TWO);
+			return self::getInstance(self::FORTY_TWO);
 		}
 		
 		private static function getInstance($id)
@@ -48,7 +48,7 @@
 			
 			$raw = 42;
 			
-			$value = SimpleEnum::thirtyTwo();
+			$value = SimpleEnum::fortyTwo();
 			
 			$form->import(
 				array('property' => $raw)
@@ -91,7 +91,7 @@
 			$form = $this->makeForm();
 			
 			$form->get('property')->
-				setValue(SimpleEnum::thirtyTwo());
+				setValue(SimpleEnum::fortyTwo());
 			
 			$raw = 31416;
 			
@@ -102,7 +102,14 @@
 			$this->formErrorAsserts($form, true, true);
 			
 			// value, raw, form, export
-			$this->formAsserts($form, 'property', null, $raw, $raw, null);
+			$this->formAsserts(
+				$form,
+				'property',
+				SimpleEnum::fortyTwo(),
+				$raw,
+				$raw,
+				42
+			);
 		}
 		
 		public function testBlank()

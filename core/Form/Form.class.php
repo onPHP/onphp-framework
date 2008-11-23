@@ -313,7 +313,11 @@
 		{
 			$prm = $this->get($primitiveName);
 			
-			return $this->checkImportResult($prm, $prm->importValue($value));
+			return $this->checkImportResult(
+				$prm,
+				$prm->getValue(),
+				$prm->importValue($value)
+			);
 		}
 		
 		/**
@@ -388,6 +392,7 @@
 					
 					$result = $this->checkImportResult(
 						$prm,
+						$prm->getValue(),
 						$prm->import($scope)
 					);
 					
@@ -398,31 +403,39 @@
 				} elseif ($prm instanceof PrimitiveForm) {
 					return $this->checkImportResult(
 						$prm,
+						$prm->getValue(),
 						$prm->unfilteredImport($scope)
 					);
 				}
 			}
 			
-			return $this->checkImportResult($prm, $prm->import($scope));
+			return $this->checkImportResult(
+				$prm,
+				$prm->getValue(),
+				$prm->import($scope)
+			);
 		}
 		
 		/**
 		 * @return Form
 		**/
-		private function checkImportResult(BasePrimitive $prm, $result)
+		private function checkImportResult(BasePrimitive $prm, $value, $result)
 		{
 			$name = $prm->getName();
 			
-			if (null === $result) {
-				if ($prm->isRequired())
-					$prm->setError(BasePrimitive::MISSING);
-				
-			} elseif (true === $result) {
-				
+			if (true === $result)
 				$prm->dropError();
+			else {
+				if (null === $result) {
+					if ($prm->isRequired())
+						$prm->setError(BasePrimitive::MISSING);
+				} else {
+					$prm->setError(BasePrimitive::WRONG);
+				}
 				
-			} else
-				$prm->setError(BasePrimitive::WRONG);
+				if (null <> $value)
+					$prm->setValue($value);
+			}
 			
 			return $this;
 		}

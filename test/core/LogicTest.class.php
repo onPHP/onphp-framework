@@ -467,7 +467,7 @@
 			$form->import(array(
 				'f' => 'asdfwer'
 			));
-			$this->assertFalse($orChain->toBoolean($form));
+			$this->assertTrue($orChain->toBoolean($form));
 			
 			$form->import(array(
 				'f' => 'qwer'

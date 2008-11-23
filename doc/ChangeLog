@@ -13,6 +13,9 @@
 
 2008-11-17	Konstantin V. Arkhipov
 
+	* core/Form/Form.class.php: restore original primitive's value in
+	cases of failed import.
+
 	* core/Form/, ext/core/Form/: removed methods: getActualValue(),
 	getSafeValue(), getDefault(), setDefault(), getActualChoiceValue().
 
