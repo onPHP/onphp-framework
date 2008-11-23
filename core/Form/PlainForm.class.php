@@ -55,7 +55,7 @@
 		}
 		
 		/**
-		 * @return PlainForm
+		 * @return Form
 		**/
 		public function set(BasePrimitive $prm)
 		{
