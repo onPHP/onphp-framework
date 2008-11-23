@@ -31,14 +31,12 @@
 			$expires = Cache::EXPIRES_FOREVER
 		)
 		{
-			$key =
-				$this->className
-				.self::SUFFIX_QUERY
-				.$query->getId()
-				.$this->getLayerId();
-			
 			Cache::me()->mark($this->className)->
-				add($key, $object, $expires);
+				add(
+					$this->makeQueryKey($query, self::SUFFIX_QUERY),
+					$object,
+					$expires
+				);
 			
 			return $object;
 		}
@@ -53,16 +51,12 @@
 				Assert::isTrue(current($array) instanceof Identifiable);
 			}
 			
-			$cache = Cache::me();
-			
-			$key =
-				$this->className
-				.self::SUFFIX_LIST
-				.$query->getId()
-				.$this->getLayerId();
-			
-			$cache->mark($this->className)->
-				add($key, $array, Cache::EXPIRES_FOREVER);
+			Cache::me()->mark($this->className)->
+				add(
+					$this->makeQueryKey($query, self::SUFFIX_LIST),
+					$array,
+					Cache::EXPIRES_FOREVER
+				);
 			
 			return $array;
 		}
@@ -83,13 +77,11 @@
 		}
 		//@}
 		
-		/// internal helper
+		/// internal helpers
 		//@{
 		protected function gentlyGetByKey($key)
 		{
-			return Cache::me()->mark($this->className)->get(
-				$key.$this->getLayerId()
-			);
+			return Cache::me()->mark($this->className)->get($key);
 		}
 		
 		private function getLayerId()
@@ -110,6 +102,11 @@
 			}
 			
 			return '@'.$result;
+		}
+		
+		protected function makeQueryKey(SelectQuery $query, $suffix)
+		{
+			return parent::makeQueryKey($query, $suffix).$this->getLayerId();
 		}
 		//@}
 	}

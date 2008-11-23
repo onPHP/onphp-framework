@@ -64,7 +64,7 @@
 			$expires = Cache::EXPIRES_FOREVER
 		)
 		{
-			$key = $this->className.self::SUFFIX_QUERY.$query->getId();
+			$key = $this->makeQueryKey($query, self::SUFFIX_QUERY);
 			
 			if ($this->handler->touch($this->keyToInt($key)))
 				Cache::me()->mark($this->className)->
@@ -85,7 +85,7 @@
 			
 			$cache = Cache::me();
 			
-			$key = $this->className.self::SUFFIX_LIST.$query->getId();
+			$key = $this->makeQueryKey($query, self::SUFFIX_LIST);
 			
 			if ($this->handler->touch($this->keyToInt($key))) {
 				$cache->mark($this->className)->

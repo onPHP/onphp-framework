@@ -1,5 +1,11 @@
 # $Id$
 
+2008-11-23	Konstantin V. Arkhipov
+
+	* main/DAOs/Workers/: key's generation extracted to makeIdKey() and
+	makeQueryKey(); full support for per-class watermarks, finally;
+	obscure uncaching bug fixed, spooted by giv.
+
 2008-11-21	Vladlen Y. Koshelev
 
 	* main/UnifiedContainer/ManyToManyLinkedWorker.class.php: fixed duplicate

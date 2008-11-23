@@ -178,7 +178,7 @@
 				$prefixed = array();
 				
 				foreach ($ids as $id)
-					$prefixed[$id] = $this->className.'_'.$id;
+					$prefixed[$id] = $this->makeIdKey($id);
 				
 				if (
 					$cachedList
@@ -435,7 +435,7 @@
 				
 				Cache::me()->mark($this->className)->
 					add(
-						$this->className.'_'.$object->getId(),
+						$this->makeIdKey($object->getId()),
 						$object,
 						$expires
 					);
@@ -454,7 +454,7 @@
 			
 				Cache::me()->mark($this->className)->
 					add(
-						$this->className.self::SUFFIX_QUERY.$query->getId(),
+						$this->makeQueryKey($query, self::SUFFIX_QUERY),
 						$object,
 						$expires
 					);
