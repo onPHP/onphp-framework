@@ -433,20 +433,20 @@
 			$this->assertEquals(array(), $values);
 		}
 		
-		public function testAssemble()
+		public function testAssembly()
 		{
 			$route = new RouterTransparentRule('authors/:name');
-			$url = $route->assemble(array('name' => 'martel'));
+			$url = $route->assembly(array('name' => 'martel'));
 			
 			$this->assertEquals('authors/martel', $url);
 		}
 		
-		public function testAssembleWithoutValue()
+		public function testAssemblyWithoutValue()
 		{
 			$route = new RouterTransparentRule('authors/:name');
 			
 			try {
-				$url = $route->assemble();
+				$url = $route->assembly();
 			} catch (BaseException $e) {
 				return true;
 			}
@@ -454,7 +454,7 @@
 			$this->fail();
 		}
 		
-		public function testAssembleWithDefault()
+		public function testAssemblyWithDefault()
 		{
 			$route =
 				RouterTransparentRule::create(
@@ -466,12 +466,12 @@
 					)
 				);
 			
-			$url = $route->assemble();
+			$url = $route->assembly();
 			
 			$this->assertEquals('authors', $url);
 		}
 		
-		public function testAssembleWithDefaultAndValue()
+		public function testAssemblyWithDefaultAndValue()
 		{
 			$route =
 				RouterTransparentRule::create(
@@ -483,20 +483,20 @@
 					)
 				);
 			
-			$url = $route->assemble(array('name' => 'mike'));
+			$url = $route->assembly(array('name' => 'mike'));
 			
 			$this->assertEquals('authors/mike', $url);
 		}
 		
-		public function testAssembleWithWildcardMap()
+		public function testAssemblyWithWildcardMap()
 		{
 			$route = new RouterTransparentRule('authors/:name/*');
-			$url = $route->assemble(array('name' => 'martel'));
+			$url = $route->assembly(array('name' => 'martel'));
 			
 			$this->assertEquals('authors/martel', $url);
 		}
 		
-		public function testAssembleWithReset()
+		public function testAssemblyWithReset()
 		{
 			$route =
 				RouterTransparentRule::create(
@@ -515,12 +515,12 @@
 				)
 			);
 			
-			$url = $route->assemble(array('year' => '2005'), true);
+			$url = $route->assembly(array('year' => '2005'), true);
 			
 			$this->assertEquals('archive/2005', $url);
 		}
 		
-		public function testAssembleWithReset2()
+		public function testAssemblyWithReset2()
 		{
 			$route =
 				RouterTransparentRule::create(
@@ -537,12 +537,12 @@
 				$this->buildRequest('http://localhost/users/list')
 			);
 			
-			$url = $route->assemble(array(), true);
+			$url = $route->assembly(array(), true);
 			
 			$this->assertEquals('', $url);
 		}
 		
-		public function testAssembleWithReset3()
+		public function testAssemblyWithReset3()
 		{
 			$route =
 				RouterTransparentRule::create(
@@ -562,12 +562,12 @@
 				)
 			);
 			
-			$url = $route->assemble(array(), true);
+			$url = $route->assembly(array(), true);
 			
 			$this->assertEquals('archive', $url);
 		}
 		
-		public function testAssembleWithReset4()
+		public function testAssemblyWithReset4()
 		{
 			$route =
 				RouterTransparentRule::create(
@@ -584,12 +584,12 @@
 				$this->buildRequest('http://localhost/users/list')
 			);
 			
-			$url = $route->assemble(array('action' => 'display'), true);
+			$url = $route->assembly(array('action' => 'display'), true);
 			
 			$this->assertEquals('archive/display', $url);
 		}
 		
-		public function testAssembleWithReset5()
+		public function testAssemblyWithReset5()
 		{
 			$route =
 				RouterTransparentRule::create(
@@ -608,16 +608,16 @@
 				)
 			);
 			
-			$url = $route->assemble(array('key1' => 'newvalue'), true);
+			$url = $route->assembly(array('key1' => 'newvalue'), true);
 			
 			$this->assertEquals('key1/newvalue', $url);
 		}
 		
-		public function testAssembleWithWildcardAndAdditionalParameters()
+		public function testAssemblyWithWildcardAndAdditionalParameters()
 		{
 			$route = new RouterTransparentRule('authors/:name/*');
 			
-			$url = $route->assemble(
+			$url = $route->assembly(
 				array(
 					'name' => 'martel',
 					'var' => 'value'
@@ -627,7 +627,7 @@
 			$this->assertEquals('authors/martel/var/value', $url);
 		}
 		
-		public function testAssembleWithUrlVariablesReuse()
+		public function testAssemblyWithUrlVariablesReuse()
 		{
 			$route = new RouterTransparentRule('archives/:year/:month');
 			
@@ -637,7 +637,7 @@
 			
 			$this->assertType('array', $values);
 			
-			$url = $route->assemble(array('month' => '03'));
+			$url = $route->assembly(array('month' => '03'));
 			
 			$this->assertEquals('archives/2006/03', $url);
 		}
@@ -732,7 +732,7 @@
 			$this->assertEquals('ctrl', $values['area']);
 		}
 		
-		public function testAssembleResetDefaults()
+		public function testAssemblyResetDefaults()
 		{
 			$route =
 				RouterTransparentRule::create(
@@ -749,17 +749,17 @@
 				$this->buildRequest('http://localhost/news/view/id/3')
 			);
 			
-			$url = $route->assemble(array('area' => null));
+			$url = $route->assembly(array('area' => null));
 			$this->assertEquals('index/view/id/3', $url);
 			
-			$url = $route->assemble(array('action' => null));
+			$url = $route->assembly(array('action' => null));
 			$this->assertEquals('news/index/id/3', $url);
 			
-			$url = $route->assemble(array('action' => null, 'id' => null));
+			$url = $route->assembly(array('action' => null, 'id' => null));
 			$this->assertEquals('news', $url);
 		}
 		
-		public function testAssembleWithRemovedDefaults()
+		public function testAssemblyWithRemovedDefaults()
 		{
 			$route =
 				RouterTransparentRule::create(
@@ -772,45 +772,45 @@
 					)
 				);
 			
-			$url = $route->assemble(array('id' => 3));
+			$url = $route->assembly(array('id' => 3));
 			$this->assertEquals('index/index/id/3', $url);
 			
-			$url = $route->assemble(array('action' => 'test'));
+			$url = $route->assembly(array('action' => 'test'));
 			$this->assertEquals('index/test', $url);
 			
-			$url = $route->assemble(array('action' => 'test', 'id' => 3));
+			$url = $route->assembly(array('action' => 'test', 'id' => 3));
 			$this->assertEquals('index/test/id/3', $url);
 			
-			$url = $route->assemble(array('area' => 'test'));
+			$url = $route->assembly(array('area' => 'test'));
 			$this->assertEquals('test', $url);
 			
-			$url = $route->assemble(array('area' => 'test', 'action' => 'test'));
+			$url = $route->assembly(array('area' => 'test', 'action' => 'test'));
 			$this->assertEquals('test/test', $url);
 			
-			$url = $route->assemble(array('area' => 'test', 'id' => 3));
+			$url = $route->assembly(array('area' => 'test', 'id' => 3));
 			$this->assertEquals('test/index/id/3', $url);
 			
-			$url = $route->assemble(array());
+			$url = $route->assembly(array());
 			$this->assertEquals('', $url);
 			
 			$route->match($this->buildRequest('http://localhost/ctrl'));
 			
-			$url = $route->assemble(array('id' => 3));
+			$url = $route->assembly(array('id' => 3));
 			$this->assertEquals('ctrl/index/id/3', $url);
 			
-			$url = $route->assemble(array('action' => 'test'));
+			$url = $route->assembly(array('action' => 'test'));
 			$this->assertEquals('ctrl/test', $url);
 			
-			$url = $route->assemble();
+			$url = $route->assembly();
 			$this->assertEquals('ctrl', $url);
 			
 			$route->match($this->buildRequest('http://localhost/index'));
 			
-			$url = $route->assemble();
+			$url = $route->assembly();
 			$this->assertEquals('', $url);
 		}
 		
-		public function testAssembleWithAction()
+		public function testAssemblyWithAction()
 		{
 			$route =
 				RouterTransparentRule::create(
@@ -824,7 +824,7 @@
 					)
 				);
 			
-			$this->assertEquals('families', $route->assemble());
+			$this->assertEquals('families', $route->assembly());
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/families/edit/id/4')
@@ -832,7 +832,7 @@
 			
 			$this->assertType('array', $values);
 			
-			$this->assertEquals('families/edit/id/4', $route->assemble());
+			$this->assertEquals('families/edit/id/4', $route->assembly());
 		}
 		
 		public function testAssemlingWithDefaultValueAndParams()
@@ -855,7 +855,7 @@
 			$this->assertEquals(
 				'contest/123/param/435',
 				
-				$router->assemble(
+				$router->assembly(
 					array(
 						'area' => 'contestController',
 						'contest' => 123,
@@ -880,12 +880,12 @@
 					)
 				);
 			
-			$url = $route->assemble(
+			$url = $route->assembly(
 				array('area' => 'My Controller'), false, true
 			);
 			$this->assertEquals('My+Controller', $url);
 			
-			$url = $route->assemble(
+			$url = $route->assembly(
 				array('area' => 'My Controller'), false, false
 			);
 			$this->assertEquals('My Controller', $url);
@@ -896,10 +896,10 @@
 				)
 			);
 			
-			$url = $route->assemble(array(), false, true);
+			$url = $route->assembly(array(), false, true);
 			$this->assertEquals('en/foo/id/My+Value', $url);
 			
-			$url = $route->assemble(
+			$url = $route->assembly(
 				array('id' => 'My Other Value'), false, true
 			);
 			$this->assertEquals('en/foo/id/My+Other+Value', $url);
@@ -914,7 +914,7 @@
 					)
 				);
 			
-			$url = $route->assemble(array('id' => 1), false, true);
+			$url = $route->assembly(array('id' => 1), false, true);
 			$this->assertEquals('My+Controller/id/1', $url);
 		}
 

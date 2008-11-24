@@ -232,7 +232,7 @@
 		 * @return string
 		**/
 		public function assembly(
-			$userParams,
+			array $userParams = array(),
 			$name = null,
 			$reset = false,
 			$encode = true

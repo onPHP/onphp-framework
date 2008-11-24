@@ -485,11 +485,11 @@
 			
 			$this->assertEquals(
 				'nl/foo',
-				$this->router->getRoute('foo')->assemble()
+				$this->router->getRoute('foo')->assembly()
 			);
 			$this->assertEquals(
 				'nl/bar',
-				$this->router->getRoute('bar')->assemble()
+				$this->router->getRoute('bar')->assembly()
 			);
 		}
 		
@@ -530,11 +530,11 @@
 			
 			$this->assertEquals(
 				'en/foo',
-				$this->router->getRoute('foo')->assemble()
+				$this->router->getRoute('foo')->assembly()
 			);
 			$this->assertEquals(
 				'nl/bar',
-				$this->router->getRoute('bar')->assemble()
+				$this->router->getRoute('bar')->assembly()
 			);
 		}
 		
@@ -575,11 +575,11 @@
 			
 			$this->assertEquals(
 				'nl/foo',
-				$this->router->getRoute('foo')->assemble()
+				$this->router->getRoute('foo')->assembly()
 			);
 			$this->assertEquals(
 				'en/bar',
-				$this->router->getRoute('bar')->assemble()
+				$this->router->getRoute('bar')->assembly()
 			);
 		}
 		
@@ -708,7 +708,7 @@
 			$this->assertEquals(
 				'/contest/123',
 				
-				$this->router->assemble(
+				$this->router->assembly(
 					array(
 						'area' => 'contestController',
 						'contest' => 123,
@@ -729,7 +729,7 @@
 			
 			$this->assertEquals(
 				'http://www.example.com',
-				$this->router->assemble(array(), 'hostname-route')
+				$this->router->assembly(array(), 'hostname-route')
 			);
 		}
 		
@@ -746,7 +746,7 @@
 			
 			$this->assertEquals(
 				'https://www.example.com',
-				$this->router->assemble(array(), 'hostname-route')
+				$this->router->assembly(array(), 'hostname-route')
 			);
 			
 			$_SERVER = $backupServer;
@@ -766,7 +766,7 @@
 			
 			$this->assertEquals(
 				'http://www.example.com/bar',
-				$this->router->assemble(array(),
+				$this->router->assembly(array(),
 				'foo-bar')
 			);
 		}
@@ -784,7 +784,7 @@
 			
 			$this->assertEquals(
 				'http://www.example.com/bar',
-				$this->router->assemble(array(), 'foo-bar')
+				$this->router->assembly(array(), 'foo-bar')
 			);
 		}
 		
@@ -801,7 +801,7 @@
 			
 			$this->assertEquals(
 				'bar/www.example.com',
-				$this->router->assemble(array(), 'foo-bar')
+				$this->router->assembly(array(), 'foo-bar')
 			);
 		}
 		

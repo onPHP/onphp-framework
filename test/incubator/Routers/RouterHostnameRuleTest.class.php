@@ -49,24 +49,24 @@
 			$this->assertEquals(array(), $values);
 		}
 		
-		public function testAssembleStaticHost()
+		public function testAssemblyStaticHost()
 		{
 			$route = $this->buildStaticHostnameRule();
 			
 			$this->assertRegexp(
 				'/[^a-z0-9]?www\.example\.com$/i',
-				$route->assemble()
+				$route->assembly()
 			);
 		}
 		
-		public function testAssembleHost()
+		public function testAssemblyHost()
 		{
 			$route = $this->buildHostnameRule();
 			
 			$this->assertRegexp(
 				'/[^a-z0-9]?foo\.example\.com$/i',
 				
-				$route->assemble(
+				$route->assembly(
 					array(
 						'subdomain' => 'foo'
 					)
@@ -74,25 +74,25 @@
 			);
 		}
 		
-		public function testAssembleHostWithMissingParam()
+		public function testAssemblyHostWithMissingParam()
 		{
 			$route = $this->buildHostnameRule();
 			
 			try {
-				$route->assemble();
+				$route->assembly();
 				$this->fail('An expected RouterException has not been raised');
 			} catch (RouterException $expected) {
 				$this->assertContains('subdomain is not specified', $expected->getMessage());
 			}
 		}
 		
-		public function testAssembleHostWithDefaultParam()
+		public function testAssemblyHostWithDefaultParam()
 		{
 			$route = $this->buildHostnameRuleWithDefault();
 			
 			$this->assertRegexp(
 				'/[^a-z0-9]?bar\.example\.com$/i',
-				$route->assemble()
+				$route->assembly()
 			);
 		}
 		

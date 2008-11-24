@@ -453,7 +453,7 @@
 			$this->assertSame('vicki', $values['username']);
 		}
 		
-		public function testAssemble()
+		public function testAssembly()
 		{
 			$route =
 				RouterRegexpRule::create(
@@ -472,11 +472,11 @@
 				$this->buildRequest('http://localhost/users/martel')
 			);
 			
-			$url = $route->assemble();
+			$url = $route->assembly();
 			$this->assertSame('users/martel', $url);
 		}
 		
-		public function testAssembleWithDefault()
+		public function testAssemblyWithDefault()
 		{
 			$route =
 				RouterRegexpRule::create(
@@ -495,11 +495,11 @@
 				$this->buildRequest('http://localhost/users')
 			);
 			
-			$url = $route->assemble();
+			$url = $route->assembly();
 			$this->assertSame('users/martel', $url);
 		}
 		
-		public function testAssembleWithMappedDefault()
+		public function testAssemblyWithMappedDefault()
 		{
 			$route =
 				RouterRegexpRule::create(
@@ -523,11 +523,11 @@
 				$this->buildRequest('http://localhost/users')
 			);
 			
-			$url = $route->assemble();
+			$url = $route->assembly();
 			$this->assertSame('users/martel', $url);
 		}
 		
-		public function testAssembleWithData()
+		public function testAssemblyWithData()
 		{
 			$route =
 				RouterRegexpRule::create(
@@ -541,11 +541,11 @@
 				$this->buildRequest('http://localhost/users/martel')
 			);
 			
-			$url = $route->assemble(array(1 => 'vicki'));
+			$url = $route->assembly(array(1 => 'vicki'));
 			$this->assertSame('users/vicki', $url);
 		}
 		
-		public function testAssembleWithMappedVariable()
+		public function testAssemblyWithMappedVariable()
 		{
 			$route =
 				RouterRegexpRule::create(
@@ -564,14 +564,14 @@
 				$this->buildRequest('http://localhost/users/martel')
 			);
 			
-			$url = $route->assemble(
+			$url = $route->assembly(
 				array('username' => 'vicki')
 			);
 			
 			$this->assertSame('users/vicki', $url);
 		}
 		
-		public function testAssembleWithMappedVariableAndNumericKey()
+		public function testAssemblyWithMappedVariableAndNumericKey()
 		{
 			$route =
 				RouterRegexpRule::create(
@@ -590,11 +590,11 @@
 				$this->buildRequest('http://localhost/users/martel')
 			);
 			
-			$url = $route->assemble(array(1 => 'vicki'));
+			$url = $route->assembly(array(1 => 'vicki'));
 			$this->assertSame('users/vicki', $url);
 		}
 		
-		public function testAssembleWithoutMatch()
+		public function testAssemblyWithoutMatch()
 		{
 			$route =
 				RouterRegexpRule::create(
@@ -605,12 +605,12 @@
 				);
 			
 			try {
-				$url = $route->assemble();
+				$url = $route->assembly();
 				$this->fail();
 			} catch (BaseException $e) {/*_*/}
 		}
 		
-		public function testAssembleWithDefaultWithoutMatch()
+		public function testAssemblyWithDefaultWithoutMatch()
 		{
 			$route =
 				RouterRegexpRule::create(
@@ -625,11 +625,11 @@
 					'users/%s'
 				);
 			
-			$url = $route->assemble();
+			$url = $route->assembly();
 			$this->assertSame('users/martel', $url);
 		}
 		
-		public function testAssembleWithMappedDefaultWithoutMatch()
+		public function testAssemblyWithMappedDefaultWithoutMatch()
 		{
 			$route =
 				RouterRegexpRule::create(
@@ -649,11 +649,11 @@
 					'users/%s'
 				);
 			
-			$url = $route->assemble();
+			$url = $route->assembly();
 			$this->assertSame('users/martel', $url);
 		}
 		
-		public function testAssembleWithDataWithoutMatch()
+		public function testAssemblyWithDataWithoutMatch()
 		{
 			$route =
 				RouterRegexpRule::create(
@@ -663,11 +663,11 @@
 					'users/%s'
 				);
 			
-			$url = $route->assemble(array(1 => 'vicki'));
+			$url = $route->assembly(array(1 => 'vicki'));
 			$this->assertSame('users/vicki', $url);
 		}
 		
-		public function testAssembleWithMappedVariableWithoutMatch()
+		public function testAssemblyWithMappedVariableWithoutMatch()
 		{
 			$route =
 				RouterRegexpRule::create(
@@ -682,11 +682,11 @@
 					'users/%s'
 				);
 			
-			$url = $route->assemble(array('username' => 'vicki'));
+			$url = $route->assembly(array('username' => 'vicki'));
 			$this->assertSame('users/vicki', $url);
 		}
 		
-		public function testAssemble2()
+		public function testAssembly2()
 		{
 			$route =
 				RouterRegexpRule::create(
@@ -716,11 +716,11 @@
 				)
 			);
 			
-			$url = $route->assemble();
+			$url = $route->assembly();
 			
 			$this->assertSame('uml-explained-composition.72-3.html', $url);
 			
-			$url = $route->assemble(
+			$url = $route->assembly(
 				array('name' => 'post_name', 'id' => '12', 'class' => 5)
 			);
 			
@@ -776,7 +776,7 @@
 			
 			$this->assertEquals(
 				'itemlist/1',
-				$route->assemble()
+				$route->assembly()
 			);
 			
 			$this->assertEquals(
@@ -786,19 +786,19 @@
 			
 			$this->assertEquals(
 				'itemlist/2',
-				$route->assemble()
+				$route->assembly()
 			);
 			
 			$this->assertEquals(
 				'itemlist/3',
-				$route->assemble(
+				$route->assembly(
 					array('page' => 3)
 				)
 			);
 			
 			$this->assertEquals(
 				'itemlist/1',
-				$route->assemble(
+				$route->assembly(
 					array('page' => null)
 				)
 			);

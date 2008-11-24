@@ -213,7 +213,7 @@
 			$this->assertEquals('1', $res['id']);
 		}
 		
-		public function testChainingAssembleWithStatic()
+		public function testChainingAssemblyWithStatic()
 		{
 			$chain = new RouterChainRule();
 			
@@ -247,11 +247,11 @@
 			$this->assertType('array', $res);
 			$this->assertRegexp(
 				'#[^a-z0-9]?www\.example\.com/bar$#i',
-				$chain->assemble()
+				$chain->assembly()
 			);
 		}
 		
-		public function testChainingAssembleWithRegex()
+		public function testChainingAssemblyWithRegex()
 		{
 			$chain = new RouterChainRule();
 			
@@ -286,7 +286,7 @@
 			$this->assertType('array', $res);
 			$this->assertRegexp(
 				'#[^a-z0-9]?www\.example\.com/bar$#i',
-				$chain->assemble()
+				$chain->assembly()
 			);
 		}
 		

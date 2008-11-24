@@ -68,10 +68,10 @@
 			$this->assertSame(array(), $values);
 		}
 		
-		public function testAssemble()
+		public function testAssembly()
 		{
 			$route = new RouterStaticRule('/about');
-			$url = $route->assemble();
+			$url = $route->assembly();
 			
 			$this->assertSame('about', $url);
 		}
