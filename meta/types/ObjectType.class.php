@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -245,7 +245,7 @@ EOT;
 					$method = <<<EOT
 
 /**
- * @return {$class->getName()}
+ * @return {$property->getClass()->getName()}
 **/
 public function {$methodName}({$this->className} \${$name})
 {
@@ -256,7 +256,7 @@ public function {$methodName}({$this->className} \${$name})
 }
 
 /**
- * @return {$class->getName()}
+ * @return {$property->getClass()->getName()}
 **/
 public function {$methodName}Id(\$id)
 {
@@ -271,7 +271,7 @@ EOT;
 					$method = <<<EOT
 
 /**
- * @return {$class->getName()}
+ * @return {$property->getClass()->getName()}
 **/
 public function {$methodName}({$this->className} \${$name})
 {
