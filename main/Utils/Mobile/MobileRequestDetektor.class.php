@@ -45,7 +45,6 @@
 			'HTTP_X_WAP_TOD',
 			'HTTP_X_UNIQUEWCID',
 			'HTTP_WAP_CONNECTION'
-			// TODO: openwave
 		);
 		
 		/**
