@@ -1,5 +1,10 @@
 # $Id$
 
+2008-12-01	Denis M. Gabaidulin
+
+	* main/Utils/Mobile/MobileRequestDetektor.class.php: mobile request
+	detektor added.
+
 2008-11-21	Vladlen Y. Koshelev
 
 	* main/UnifiedContainer/ManyToManyLinkedWorker.class.php: fixed duplicate
