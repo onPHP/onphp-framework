@@ -72,7 +72,22 @@
 				if ($request->hasServerVar($header))
 					return true;
 			
+			if ($this->isIphone($request))
+				return true;
+			
 			return false;
+		}
+		
+		public function isIphone(HttpRequest $request)
+		{
+			return (
+				$request->hasServerVar('HTTP_USER_AGENT')
+				&&
+					stripos(
+						$request->getServerVar('HTTP_USER_AGENT'),
+						'iphone'
+					) !== false
+			);
 		}
 	}
 ?>
