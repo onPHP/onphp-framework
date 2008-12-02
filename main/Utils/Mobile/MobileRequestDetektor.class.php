@@ -57,7 +57,7 @@
 			return new self;
 		}
 		
-		public function isOperaMni(HttpRequest $request)
+		public function isOperaMini(HttpRequest $request)
 		{
 			// mandatory opera mini header
 			return $request->hasServerVar('HTT_X_OPERAMINI_FEATURES');
@@ -65,7 +65,7 @@
 		
 		public function isMobile(HttpRequest $request, $checkAccept = false)
 		{
-			if ($this->isOperaMni($request))
+			if ($this->isOperaMini($request))
 				return true;
 			
 			foreach (self::$headers as $header)
