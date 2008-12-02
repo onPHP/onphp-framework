@@ -63,7 +63,7 @@
 			return $request->hasServerVar('HTT_X_OPERAMINI_FEATURES');
 		}
 		
-		public function isMobile(HttpRequest $request)
+		public function isMobile(HttpRequest $request, $checkAccept = false)
 		{
 			if ($this->isOperaMni($request))
 				return true;
@@ -74,6 +74,9 @@
 			
 			if ($this->isIphone($request))
 				return true;
+			
+			if ($checkAccept)
+				return $this->isMobileByHttpAccept($request);
 			
 			return false;
 		}
@@ -86,6 +89,18 @@
 					stripos(
 						$request->getServerVar('HTTP_USER_AGENT'),
 						'iphone'
+					) !== false
+			);
+		}
+		
+		public function isMobileByHttpAccept(HttpRequest $request)
+		{
+			return (
+				$request->hasServerVar('HTTP_ACCEPT')
+				&&
+					stripos(
+						$request->getServerVar('HTTP_ACCEPT'),
+						'vnd.wap.wml'
 					) !== false
 			);
 		}
