@@ -60,7 +60,7 @@
 		public function isOperaMini(HttpRequest $request)
 		{
 			// mandatory opera mini header
-			return $request->hasServerVar('HTT_X_OPERAMINI_FEATURES');
+			return $request->hasServerVar('HTTP_X_OPERAMINI_FEATURES');
 		}
 		
 		public function isMobile(HttpRequest $request, $checkAccept = false)
