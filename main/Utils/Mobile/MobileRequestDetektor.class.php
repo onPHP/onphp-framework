@@ -21,6 +21,9 @@
 	{
 		static private $headers = array(
 			'HTTP_X_WAP_PROFILE',
+			'HTTP_PROFILE',
+			// has additional info
+			'HTTP_X_OS_PREFS',
 			// msisdn stuff
 			'HTTP_MSISDN',
 			'HTTP_X_MSISDN',
@@ -45,8 +48,13 @@
 			'HTTP_X_WAP_TOD',
 			'HTTP_X_UNIQUEWCID',
 			'HTTP_WAP_CONNECTION',
-			// misc
-			'HTTP_ACCEPT_APPLICATION'
+			'HTTP_X_WAP_GATEWAY',
+			'HTTP_X_WAP_SESSION_ID',
+			'HTTP_X_WAP_NETWORK_CLIENT_IP',
+			'HTTP_X_WAP_CLIENT_SDU_SIZE',
+			'HTTP_ACCEPT_APPLICATION',
+			// lg specific ?
+			'HTTP_BEARER_INDICATION'
 		);
 		
 		/**
