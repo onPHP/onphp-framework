@@ -12,9 +12,13 @@
 
 	final class RouterHostnameRule extends RouterBaseRule
 	{
+		const SCHEME_HTTP			= 'http';
+		const SCHEME_HTTPS			= 'https';
+		
 		protected $hostVariable		= ':';
 		protected $regexDelimiter	= '#';
 		
+		protected $scheme			= null;
 		protected $defaultRegex		= null;
 		protected $route			= null;
 		protected $routeProcessed	= false;
@@ -36,6 +40,7 @@
 		public function __construct($route)
 		{
 			$this->route = trim($route, '.');
+			$this->scheme = self::SCHEME_HTTP;
 		}
 		
 		/**
@@ -53,9 +58,45 @@
 			return $this->requirements;
 		}
 		
+		/**
+		 * @return RouterHostnameRule
+		**/
+		public function setSecure()
+		{
+			$this->scheme = self::SCHEME_HTTPS;
+			
+			return $this;
+		}
+		
+		public function isSecure()
+		{
+			return $this->scheme == self::SCHEME_HTTPS;
+		}
+		
+		/**
+		 * @return RouterHostnameRule
+		**/
+		public function setScheme($schema)
+		{
+			$this->scheme = $schema;
+			
+			return $this;
+		}
+		
+		public function getScheme()
+		{
+			return $this->scheme;
+		}
+		
 		public function match(HttpRequest $request)
 		{
 			$this->processRoute();
+			
+			if (
+				$this->isSecureRequest($request)
+				&& !$this->isSecure()
+			)
+				return array();
 			
 			if ($request->hasServerVar('HTTP_HOST'))
 				$host = $request->getServerVar('HTTP_HOST');
@@ -204,13 +245,16 @@
 			 * 2. resolve schema
 			**/
 			$base = RouterRewrite::me()->getBaseUrl();
-			
-			if ($base instanceof HttpUrl) {
+					
+			if ($this->scheme) {
+				$scheme = $this->scheme;
+			} elseif (
+				($base instanceof HttpUrl)
+				&& $base->getScheme()
+			) {
 				$scheme = $base->getScheme();
-			} else {
-				$scheme = 'http';
 			}
-			
+						
 			$url = $scheme . '://' . $url;
 			
 			return $url;
@@ -247,6 +291,17 @@
 			$this->routeProcessed = true;
 			
 			return $this;
+		}
+		
+		protected function isSecureRequest(HttpRequest $request)
+		{
+			return (
+				$request->hasServerVar('HTTPS')
+				&& $request->getServerVar('HTTPS') == 'on'
+			) || (
+				$request->hasServerVar('SERVER_PORT')
+				&& (int) $request->getServerVar('SERVER_PORT') === 443
+			);
 		}
 	}
 ?>

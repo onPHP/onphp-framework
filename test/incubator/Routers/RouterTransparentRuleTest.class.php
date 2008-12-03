@@ -867,6 +867,48 @@
 			);
 		}
 		
+		public function testAssemblingTransparentDefaultLogic()
+		{
+			$transparent =
+				RouterTransparentRule::create(
+					':bar/:area/:action'
+				)->
+				setDefaults(
+					array(
+						'bar' => 'barvalue',
+						'area' => 'controller',
+						'action' => 'create',
+					)
+				);
+				
+			$this->assertEquals(
+				'barvalue/controller/misc',
+				$transparent->assembly(
+					array(
+						'action' => 'misc'
+					)
+				)
+			);
+			
+			$this->assertEquals(
+				'barvalue/misc',
+				$transparent->assembly(
+					array(
+						'area' => 'misc'
+					)
+				)
+			);
+			
+			$this->assertEquals(
+				'misc',
+				$transparent->assembly(
+					array(
+						'bar' => 'misc'
+					)
+				)
+			);
+		}
+		
 		public function testEncode()
 		{
 			$route =

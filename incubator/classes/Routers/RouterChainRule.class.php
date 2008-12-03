@@ -16,11 +16,11 @@
 		protected $separators	= array();
 		
 		/**
-		 * @throws UnimplementedFeatureException
+		 * @return RouterChainRule
 		**/
-		public static function create($route)
+		public static function create()
 		{
-			throw new UnimplementedFeatureException();
+			return new self();
 		}
 		
 		/**
@@ -32,6 +32,11 @@
 			$this->separators[] = $separator;
 			
 			return $this;
+		}
+		
+		public function getCount()
+		{
+			return count($this->routes);
 		}
 		
 		public function match(HttpRequest $request)
@@ -57,12 +62,31 @@
 		)
 		{
 			$value = null;
-			
+						
 			foreach ($this->routes as $key => $route) {
 				if ($key > 0)
 					$value .= $this->separators[$key];
-				
-				$value .= $route->assembly($data, $reset, $encode);
+					
+				$local = $route->assembly($data, $reset, $encode);
+											
+				if (
+					$key === 0
+					&& ($route instanceof RouterHostnameRule)
+					&& ($base = RouterRewrite::me()->getBaseUrl())
+					&& ($baseHost = $base->getHost())
+					&& ($baseScheme = $base->getScheme())
+					&& $baseHost == parse_url($local, PHP_URL_HOST)
+					&& $baseScheme == parse_url($local, PHP_URL_SCHEME)
+				) {
+					$value = rtrim($base->toString(), '/');
+				} elseif (
+					$route instanceof RouterHostnameRule
+					&& $key > 0
+				) {
+					throw new RouterException('wrong chain route');
+				} else {
+					$value .= $local;
+				}
 			}
 			
 			return $value;

@@ -96,6 +96,18 @@
 			);
 		}
 		
+		public function testAssemblyHostWithDefaultParamInSecureScheme()
+		{
+			$route =
+				$this->buildHostnameRuleWithDefault()->
+				setScheme(RouterHostnameRule::SCHEME_HTTPS);
+			
+			$this->assertRegexp(
+				'/^https\:\/\/bar\.example\.com$/i',
+				$route->assembly()
+			);
+		}
+		
 		public function testHostGetDefault()
 		{
 			$route = $this->buildHostnameRuleWithDefault();
@@ -140,7 +152,7 @@
 			$this->assertEquals('host-foo', $values['area']);
 			$this->assertEquals('host-bar', $values['action']);
 		}
-		
+				
 		/**
 		* @return RouterHostnameRule
 		**/

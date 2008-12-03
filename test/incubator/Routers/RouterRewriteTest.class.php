@@ -223,50 +223,7 @@
 			
 			$this->assertType('HttpRequest', $token);
 		}
-		
-		public function testRouteWithIncorrectRequest()
-		{
-			$this->markTestSkipped('Route features not ready');
-			
-			$request = $this->buildIncorrectRequest();
-			
-			try {
-				$token = $this->router->route($request);
-				$this->fail('Should throw an Exception');
-			} catch (Exception $e) {
-				$this->assertType('RouterException', $e);
-			}
-		}
-		
-		public function testDefaultRoute()
-		{
-			$this->markTestSkipped('Route features not ready');
-			
-			$request = $this->buildRequest();
-			
-			$token = $this->router->route($request);
-			
-			$routes = $this->router->getRoutes();
-			
-			$this->assertType(
-				// FIXME: huh?
-				'RouterTransparentRule_Module',
-				$routes['default']
-			);
-		}
-		
-		public function testDefaultRouteWithEmptyAction()
-		{
-			$this->markTestSkipped('Route features not ready');
-			
-			$request = $this->buildRequest('http://localhost/ctrl');
-			
-			$token = $this->router->route($request);
-			
-			$this->assertEquals('ctrl', $token->getAttachedVar('area'));
-			$this->assertEquals('defact', $token->getAttachedVar('action'));
-		}
-		
+				
 		public function testEmptyRoute()
 		{
 			$request = $this->buildRequest('http://localhost/');
@@ -685,6 +642,155 @@
 			$this->assertFalse($token->hasAttachedVar('bogus'));
 		}
 		
+		public function testRouteWithHostnameAndTransparentRuleChain()
+		{
+			$request = $this->buildRequest('http://www.example.com/test/123');
+			
+			$host =
+				RouterHostnameRule::create(
+					'www.example.com'
+				)->
+				setDefaults(
+					array(
+						'module' => 'nope-bla',
+						'bogus' => 'bogus'
+					)
+				);
+			
+			$transparent =
+				RouterTransparentRule::create(
+					':area/:contest'
+				)->
+				setRequirements(
+					array(
+						'contest' => '\d+',
+						'area' => '\w+'
+					)
+				);
+			
+			$chain = new RouterChainRule();
+			
+			$chain->
+				chain($host)->
+				chain($transparent);
+			
+			$this->router->addRoute('HostnameAndTransparent', $chain);
+			
+			$token = $this->router->route($request);
+			
+			$this->assertEquals('test', $token->getAttachedVar('area'));
+			$this->assertEquals(123, $token->getAttachedVar('contest'));
+			$this->assertEquals('nope-bla', $token->getAttachedVar('module'));
+			$this->assertEquals('bogus', $token->getAttachedVar('bogus'));
+		}
+		
+		public function testRouteWithHostnameAndTransparentAndBaseUrlRuleChain()
+		{
+			$base = 'http://www.example.com/~user/public_html/www/';
+			
+			$request = $this->buildRequest($base.'test/123');
+			
+			$host =
+				RouterHostnameRule::create(
+					'www.example.com'
+				)->
+				setDefaults(
+					array(
+						'module' => 'nope-bla',
+						'domain' => 'www'
+					)
+				);
+			
+			$transparent =
+				RouterTransparentRule::create(
+					':area/:contest'
+				)->
+				setRequirements(
+					array(
+						'contest' => '\d+',
+						'area' => '\w+'
+					)
+				);
+			
+			$chain = new RouterChainRule();
+			
+			$chain->
+				chain($host)->
+				chain($transparent);
+			
+			$this->router->setBaseUrl(
+				HttpUrl::create()->parse($base)
+			);
+			
+			$this->router->addRoute('HostnameAndTransparentWithBaseUrl', $chain);
+			
+			$token = $this->router->route($request);
+			
+			$this->assertEquals(4, count($token->getAttached()));
+			$this->assertEquals('test', $token->getAttachedVar('area'));
+			$this->assertEquals(123, $token->getAttachedVar('contest'));
+			$this->assertEquals('nope-bla', $token->getAttachedVar('module'));
+			$this->assertEquals('www', $token->getAttachedVar('domain'));
+		}
+		
+		public function testRouteWithHostnameMaskAndRegexpAndBaseUrlRuleChain()
+		{
+			$base = 'http://www.example.com/~user/public_html/www/';
+			
+			$request = $this->buildRequest('http://test123d.example.com/~user/public_html/www/test/123.html');
+			
+			$host =
+				RouterHostnameRule::create(
+					':subdomain.example.com'
+				)->
+				setDefaults(
+					array(
+						'module' => 'nope-bla',
+						'area' => 'test',
+					)
+				)->
+				setRequirements(
+					array(
+						'subdomain' => '[\da-z][\da-z\_]*[\da-z]'
+					)
+				);
+			
+			$transparent =
+				RouterRegexpRule::create(
+					'test/(\d+)\.html'
+				)->
+				setDefaults(
+					array(
+						1 => 345
+					)
+				)->
+				setMap(
+					array(
+						1 => 'testId'
+					)
+				);
+			
+			$chain = new RouterChainRule();
+			
+			$chain->
+				chain($host)->
+				chain($transparent);
+			
+			$this->router->setBaseUrl(
+				HttpUrl::create()->parse($base)
+			);
+			
+			$this->router->addRoute('HostnameMaskWithRegexp', $chain);
+			
+			$token = $this->router->route($request);
+			
+			$this->assertEquals(4, count($token->getAttached()));
+			$this->assertEquals('test', $token->getAttachedVar('area'));
+			$this->assertEquals(123, $token->getAttachedVar('testId'));
+			$this->assertEquals('nope-bla', $token->getAttachedVar('module'));
+			$this->assertEquals('test123d', $token->getAttachedVar('subdomain'));
+		}
+		
 		public function testAssemlingWithTransparentRule()
 		{
 			$this->router->addRoute(
@@ -721,8 +827,6 @@
 		
 		public function testAssemblingWithHostnameHttp()
 		{
-			$this->markTestSkipped('Router features not ready');
-			
 			$route = new RouterHostnameRule('www.example.com');
 			
 			$this->router->addRoute('hostname-route', $route);
@@ -735,12 +839,9 @@
 		
 		public function testAssemblingWithHostnameHttps()
 		{
-			$this->markTestSkipped('Router features not ready');
-			
-			$backupServer = $_SERVER;
-			$_SERVER['HTTPS'] = 'on';
-			
-			$route = new RouterHostnameRule('www.example.com');
+			$route =
+				RouterHostnameRule::create('www.example.com')->
+				setSecure();
 			
 			$this->router->addRoute('hostname-route', $route);
 			
@@ -748,33 +849,28 @@
 				'https://www.example.com',
 				$this->router->assembly(array(), 'hostname-route')
 			);
-			
-			$_SERVER = $backupServer;
 		}
 		
 		public function testAssemblingWithHostnameThroughChainHttp()
 		{
-			$this->markTestSkipped('Router features not ready');
-			
 			$foo = new RouterHostnameRule('www.example.com');
 			$bar = new RouterStaticRule('bar');
 			
-			$chain = new RouterChainRule();
-			$chain->chain($foo)->chain($bar);
+			$chain =
+				RouterChainRule::create()->
+				chain($foo)->
+				chain($bar);
 			
 			$this->router->addRoute('foo-bar', $chain);
 			
 			$this->assertEquals(
 				'http://www.example.com/bar',
-				$this->router->assembly(array(),
-				'foo-bar')
+				$this->router->assembly(array(), 'foo-bar')
 			);
 		}
 		
 		public function testAssemblingWithHostnameWithChainHttp()
 		{
-			$this->markTestSkipped('Router features not ready');
-			
 			$foo = new RouterHostnameRule('www.example.com');
 			$bar = new RouterStaticRule('bar');
 			
@@ -788,21 +884,123 @@
 			);
 		}
 		
-		public function testAssemblingWithNonFirstHostname()
+		public function testAssemblingWithHostnameThroughChainHttpAndBaseUrl()
 		{
-			$this->markTestSkipped('Router features not ready');
+			$foo = new RouterHostnameRule('www.example.com');
+			$bar = new RouterStaticRule('bar');
 			
-			$foo = new RouterStaticRule('bar');
-			$bar = new RouterHostnameRule('www.example.com');
+			$chain =
+				RouterChainRule::create()->
+				chain($foo)->
+				chain($bar);
 			
-			$foo->chain($bar);
-			
-			$this->router->addRoute('foo-bar', $foo);
+			$this->router->
+				setBaseUrl(
+					HttpUrl::create()->
+					parse('http://www.example.com/~user/public/')
+				)->
+				addRoute('foo-bar', $chain);
 			
 			$this->assertEquals(
-				'bar/www.example.com',
+				'http://www.example.com/~user/public/bar',
 				$this->router->assembly(array(), 'foo-bar')
 			);
+		}
+		
+		public function testAssemblingWithHostnameThroughChainHttpAndBaseUrlAndDiffHost()
+		{
+			$foo = new RouterHostnameRule('www.example.com');
+			$bar = new RouterStaticRule('bar');
+			
+			$chain =
+				RouterChainRule::create()->
+				chain($foo)->
+				chain($bar);
+			
+			$this->router->
+				setBaseUrl(
+					HttpUrl::create()->
+					parse('http://qwerty.example.com/~user/public/')
+				)->
+				addRoute('foo-bar', $chain);
+			
+			$this->assertEquals(
+				'http://www.example.com/bar',
+				$this->router->assembly(array(), 'foo-bar')
+			);
+		}
+		
+		public function testAssemblingWithHostnameThroughChainHttpAndBaseUrlAndDiffScheme()
+		{
+			$foo = new RouterHostnameRule('http.example.com');
+			$bar = new RouterStaticRule('bar');
+			
+			$chain =
+				RouterChainRule::create()->
+				chain($foo)->
+				chain($bar);
+			
+			$this->router->
+				setBaseUrl(
+					HttpUrl::create()->
+					parse('https://www.example.com/~user/public/')
+				)->
+				addRoute('foo-bar', $chain);
+						
+			$this->assertEquals(
+				'http://http.example.com/bar',
+				$this->router->assembly(array(), 'foo-bar')
+			);
+		}
+		
+		public function testAssemblingWithSettingHostnameThroughChainHttpAndBaseUrlAndDiffScheme()
+		{
+			$foo =
+				RouterHostnameRule::create('https.example.com')->
+				setSecure();
+				
+			$bar = new RouterStaticRule('bar');
+			
+			$chain =
+				RouterChainRule::create()->
+				chain($foo)->
+				chain($bar);
+			
+			$this->router->
+				setBaseUrl(
+					HttpUrl::create()->
+					parse('https://www.example.com/~user/public/')
+				)->
+				addRoute('foo-bar', $chain);
+						
+			$this->assertEquals(
+				'https://https.example.com/bar',
+				$this->router->assembly(array(), 'foo-bar')
+			);
+		}
+					
+		public function testAssemblingWrongChain()
+		{
+			$foo = new RouterStaticRule('bar');
+			$bar = new RouterHostnameRule('mega.example.com');
+			
+			$chain = $foo->chain($bar);
+			
+			$this->router->addRoute('foobar', $chain);
+		
+			$this->assertEquals(
+				2,
+				$chain->getCount()
+			);
+			
+			try {
+				$s = $this->router->assembly(array(), 'foobar');
+			} catch (BaseException $e) {
+				$this->assertType('RouterException', $e);
+				return true;
+			}
+			
+			$this->fail();
 		}
 		
 		public function testRouteShouldMatchEvenWithTrailingSlash()

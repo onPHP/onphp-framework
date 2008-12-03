@@ -6,6 +6,10 @@
 		public function setUp()
 		{
 			ServerVarUtils::unsetVars($_SERVER);
+			RouterRewrite::me()->
+				setBaseUrl(
+					new HttpUrl()
+				);
 		}
 		
 		public function testChainingMatch()
@@ -338,6 +342,69 @@
 			$this->assertType('array', $res);
 			$this->assertEquals('art', $res['area']);
 			$this->assertEquals('art', $res['action']);
+		}
+		
+		public function testAssemblyWithHostnameAndTransparent()
+		{
+			$chain = new RouterChainRule();
+			
+			$host =
+				RouterHostnameRule::create(
+					':subdomain.example.com'
+				)->
+				setDefaults(
+					array(
+						'subdomain' => 'www'
+					)
+				);
+			
+			$transparent =
+				RouterTransparentRule::create(
+					':bar/:area/:action'
+				)->
+				setDefaults(
+					array(
+						'bar' => 'barvalue',
+						'area' => 'controller',
+						'action' => 'create',
+					)
+				);
+			
+			$chain->
+				chain($host)->
+				chain($transparent);
+						
+			$this->assertEquals(
+				'http://www.example.com/',
+				$chain->assembly()
+			);
+			
+			$this->assertEquals(
+				'http://www.example.com/barvalue/controller/misc',
+				$chain->assembly(
+					array(
+						'action' => 'misc'
+					)
+				)
+			);
+						
+			$this->assertEquals(
+				'http://www.example.com/barvalue/misc',
+				$chain->assembly(
+					array(
+						'area' => 'misc'
+					)
+				)
+			);
+			
+			$this->assertEquals(
+				'http://www.example.com/misc',
+				$chain->assembly(
+					array(
+						'bar' => 'misc'
+					)
+				)
+			);
 		}
 		
 		/**
