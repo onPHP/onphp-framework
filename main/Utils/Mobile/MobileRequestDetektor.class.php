@@ -31,6 +31,8 @@
 			'HTTP_X_WAP_NETWORK_CLIENT_MSISDN',
 			'HTTP_X_UP_CALLING_LINE_ID',
 			'HTTP_X_NETWORK_INFO',
+			// device caps
+			'HTTP_X_UP_DEVCAP_ISCOLOR',
 			// ms specific headers
 			'HTTP_UA_PIXELS',
 			'HTTP_UA_COLOR',
@@ -53,6 +55,7 @@
 			'HTTP_X_WAP_NETWORK_CLIENT_IP',
 			'HTTP_X_WAP_CLIENT_SDU_SIZE',
 			'HTTP_ACCEPT_APPLICATION',
+			'HTTP_X_ZTGO_BEARERINFO',
 			// lg specific ?
 			'HTTP_BEARER_INDICATION'
 		);
