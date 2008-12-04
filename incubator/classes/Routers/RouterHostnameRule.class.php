@@ -237,27 +237,10 @@
 			}
 			
 			// FIXME: rtrim, probably?
-			$url = trim($return, '.');
+			$host = trim($return, '.');
 			
-			/**
-			 * TODO:
-			 * 1. detect schema of current request
-			 * 2. resolve schema
-			**/
-			$base = RouterRewrite::me()->getBaseUrl();
-					
-			if ($this->scheme) {
-				$scheme = $this->scheme;
-			} elseif (
-				($base instanceof HttpUrl)
-				&& $base->getScheme()
-			) {
-				$scheme = $base->getScheme();
-			}
-						
-			$url = $scheme . '://' . $url;
+			return $this->resolveSchema() . '://' . $host . $this->resolvePath();
 			
-			return $url;
 		}
 		
 		/**
@@ -302,6 +285,34 @@
 				$request->hasServerVar('SERVER_PORT')
 				&& (int) $request->getServerVar('SERVER_PORT') === 443
 			);
+		}
+		
+		protected function resolveSchema()
+		{
+			$base = RouterRewrite::me()->getBaseUrl();
+			
+			if ($this->scheme) {
+				return $this->scheme;
+			} elseif (
+				($base instanceof HttpUrl)
+				&& $base->getScheme()
+			) {
+				return $base->getScheme();
+			} else {
+				throw new RouterException('Cannot resolve scheme');
+			}
+		}
+		
+		protected function resolvePath()
+		{
+			if (
+				($base = RouterRewrite::me()->getBaseUrl())
+				&& ($this->scheme == $base->getScheme())
+			) {
+				return rtrim($base->getPath(), '/');
+			} else {
+				return '';
+			}
 		}
 	}
 ?>

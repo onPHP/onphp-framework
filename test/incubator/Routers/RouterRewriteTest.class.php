@@ -925,7 +925,7 @@
 				addRoute('foo-bar', $chain);
 			
 			$this->assertEquals(
-				'http://www.example.com/bar',
+				'http://www.example.com/~user/public/bar',
 				$this->router->assembly(array(), 'foo-bar')
 			);
 		}
@@ -974,7 +974,7 @@
 				addRoute('foo-bar', $chain);
 						
 			$this->assertEquals(
-				'https://https.example.com/bar',
+				'https://https.example.com/~user/public/bar',
 				$this->router->assembly(array(), 'foo-bar')
 			);
 		}
@@ -1030,6 +1030,78 @@
 			$this->assertSame('article-id', $this->router->getCurrentRouteName());
 			
 			$this->assertEquals('2006', $token->getAttachedVar('id'));
+		}
+		
+	public function testAssemblingWithHostnameAndBaseUrl()
+		{
+			$base = 'http://www.example.com/~users/public/www/';
+			
+			$hostname =
+				RouterHostnameRule::create(':subdomain.example.com')->
+					setDefaults(
+						array(
+							'subdomain' => 'mega'
+						)
+					);
+			
+			$this->router->setBaseUrl(
+				HttpUrl::create()->parse($base)
+			);
+			
+			$this->router->addRoute('host', $hostname);
+			
+			$this->assertEquals(
+				'http://test.example.com/~users/public/www',
+				$this->router->assembly(
+					array(
+						'subdomain' => 'test'
+					),
+					'host'
+				)
+			);
+		}
+		
+		public function testAssemblingWithHostnameAndTransparentWithBaseUrl()
+		{
+			$base = 'http://www.example.com/~users/public/www/';
+			
+			$hostname =
+				RouterHostnameRule::create(':subdomain.example.com')->
+					setDefaults(
+						array(
+							'subdomain' => 'www'
+						)
+					);
+			
+			$transparent =
+				RouterTransparentRule::create('/company/:id')->
+					setRequirements(
+						array(
+							'id' => '\d+'
+						)
+					);
+			
+			$chain =
+				RouterChainRule::create()->
+				chain($hostname)->
+				chain($transparent);
+			
+			$this->router->setBaseUrl(
+				HttpUrl::create()->parse($base)
+			);
+			
+			$this->router->addRoute('chain', $chain);
+			
+			$this->assertEquals(
+				'http://test.example.com/~users/public/www/company/123',
+				$this->router->assembly(
+					array(
+						'subdomain' => 'test',
+						'id' => 123
+					),
+					'chain'
+				)
+			);
 		}
 		
 		/**
