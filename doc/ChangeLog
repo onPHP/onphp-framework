@@ -1,5 +1,9 @@
 # $Id$
 
+2008-12-05	Ivan Y. Khvostishkov
+
+	* core/Base/Assert.class.php: isNotEmpty() added.
+
 2008-12-01	Denis M. Gabaidulin
 
 	* main/Utils/Mobile/MobileRequestDetektor.class.php: mobile request

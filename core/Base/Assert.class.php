@@ -57,6 +57,14 @@
 				);
 		}
 		
+		public static function isNotEmpty($variable, $message = null)
+		{
+			if (empty($variable))
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
+		}
+		
 		public static function isIndexExists($array, $key, $message = null)
 		{
 			Assert::isArray($array);
