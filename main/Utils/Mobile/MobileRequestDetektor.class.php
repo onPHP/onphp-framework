@@ -36,8 +36,9 @@
 			// ms specific headers
 			'HTTP_UA_PIXELS',
 			'HTTP_UA_COLOR',
-			'HTTP_UA_OS',
-			'HTTP_UA_CPU',
+			// TODO: specify value range
+			//'HTTP_UA_OS',
+			//'HTTP_UA_CPU',
 			'HTTP_UA_VOICE',
 			// misc
 			'HTTP_X_NOKIA_BEARER',
