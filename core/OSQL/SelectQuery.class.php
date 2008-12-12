@@ -210,6 +210,15 @@
 		/**
 		 * @return SelectQuery
 		**/
+		public function dropGroupBy()
+		{
+			$this->group = array();
+			return $this;
+		}
+		
+		/**
+		 * @return SelectQuery
+		**/
 		public function having(LogicalObject $exp)
 		{
 			$this->having = $exp;
