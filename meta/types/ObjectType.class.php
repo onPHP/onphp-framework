@@ -100,16 +100,9 @@ EOT;
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$className = $property->getType()->getClassName();
 					
-					$isEnumeration = false;
-					
-					$info = new ReflectionClass($className);
-					
-					while ($info = $info->getParentClass()) {
-						if ($info->getName() == 'Enumeration') {
-							$isEnumeration = true;
-							break;
-						}
-					}
+					$isEnumeration =
+						$property->getType()->getClass()->getPattern()
+						instanceof EnumerationClassPattern;
 					
 					if ($property->isRequired()) {
 						$method = <<<EOT

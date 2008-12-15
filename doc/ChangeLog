@@ -1,5 +1,14 @@
 # $Id$
 
+2008-12-15	Vladlen Y. Koshelev
+
+	* main/base/AbstractProtoClass.class.php, test/misc/DAOTest.class.php:
+	lazy property import fixed, related test added. 
+
+	* meta/types/ObjectType.class.php: check if lazy property is enumeration
+	using meta information (property's class might not be generated yet to check
+	its type by ReflectionClass).
+
 2008-12-05	Ivan Y. Khvostishkov
 
 	* core/Base/Assert.class.php: isNotEmpty() added.
@@ -15,7 +24,7 @@
 	makeQueryKey(); full support for per-class watermarks, finally;
 	obscure uncaching bug fixed, spooted by giv.
 
-2008-11-21	Vladlen Y. Kosheledv
+2008-11-21	Vladlen Y. Koshelev
 
 	* main/UnifiedContainer/ManyToManyLinkedWorker.class.php: fixed duplicate
 	join error occured when custom criteria has joiner on container's helper
