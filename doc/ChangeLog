@@ -1,5 +1,8 @@
 # $Id$
 
+2008-12-15	Evgeniy N. Sokolov
+	* core/Form/Filters: add WordSplitterFilter
+
 2008-12-15	Vladlen Y. Koshelev
 
 	* main/base/AbstractProtoClass.class.php, test/misc/DAOTest.class.php:
