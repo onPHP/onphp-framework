@@ -1,7 +1,12 @@
 # $Id$
 
+2008-12-15	Konstantin V. Arkhipov
+
+	* main/OQL/OqlQuery.class.php: bindNext() implemented.
+
 2008-12-15	Evgeniy N. Sokolov
-	* core/Form/Filters: add WordSplitterFilter
+
+	* core/Form/Filters/: WordSplitterFilter added.
 
 2008-12-15	Vladlen Y. Koshelev
 

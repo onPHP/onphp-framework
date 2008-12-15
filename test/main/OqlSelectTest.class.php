@@ -653,6 +653,19 @@
 			}
 		}
 		
+		public function testBindNext()
+		{
+			$this->assertEquals(
+				OQL::select('from TestCity where foo = $1 and bar = $2')->
+				bind(1, 'bar')->
+				bind(2, 'foo'),
+				
+				OQL::select('from TestCity where foo = $1 and bar = $2')->
+				bindNext('bar')->
+				bindNext('foo')
+			);
+		}
+		
 		public function testQuery()
 		{
 			$criteria = Criteria::create(TestUser::dao())->

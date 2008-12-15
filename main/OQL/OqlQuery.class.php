@@ -63,6 +63,14 @@
 			return $this;
 		}
 		
+		/**
+		 * @return OqlQuery
+		**/
+		public function bindNext($value)
+		{
+			return $this->bind(key($this->parameters) + 1, $value);
+		}
+		
 		public function toString()
 		{
 			return $this->query;
