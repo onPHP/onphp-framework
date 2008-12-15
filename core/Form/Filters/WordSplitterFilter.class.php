@@ -13,13 +13,13 @@
 	/**
 	 * @ingroup Filters
 	**/
-	final class CutBigWordFilter implements Filtrator
+	final class WordSplitterFilter implements Filtrator
 	{
 		private $maxWordLength 	= 25;
 		private $delimer 		= '&#x200B;';
 		
 		/**
-		 * @return CutBigWordFilter
+		 * @return WordSplitterFilter
 		**/
 		public static function create()
 		{
@@ -27,7 +27,7 @@
 		}
 		
 		/**
-		 * @return CutBigWordFilter
+		 * @return WordSplitterFilter
 		**/
 		public function setMaxWordLength($length)
 		{
@@ -41,7 +41,7 @@
 		}
 		
 		/**
-		 * @return CutBigWordFilter
+		 * @return WordSplitterFilter
 		**/
 		public function setDelimer($delimer)
 		{
