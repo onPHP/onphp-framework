@@ -22,6 +22,8 @@
 				
 				$this->racySave();
 				$this->binaryTest();
+				
+				$this->lazyTest();
 			}
 			
 			$this->drop();
@@ -430,6 +432,43 @@
 				array(),
 				TestUser::dao()->getListByIds(array(42, 42, 1738))
 			);
+		}
+		
+		private function lazyTest()
+		{
+			$city = TestCity::dao()->getById(1);
+			
+			$object = TestLazy::dao()->add(
+				TestLazy::create()->
+					setCity($city)->
+					setCityOptional($city)->
+					setEnum(
+						new ImageType(ImageType::getAnyId())
+					)
+			);
+			
+			Cache::me()->clean();
+			
+			$form = TestLazy::proto()->makeForm();
+			$form->import(
+				array('id' => $object->getId())
+			);
+			
+			$this->assertNotNull($form->getValue('id'));
+			
+			FormUtils::object2form($object, $form);
+			
+			foreach ($object->proto()->getPropertyList() as $name => $property) {
+				if (
+					$property->getRelationId() == MetaRelation::ONE_TO_ONE
+					&& $property->getFetchStrategyId() == FetchStrategy::LAZY
+				) {
+					$this->assertEquals(
+						$object->{$property->getGetter()}(),
+						$form->getValue($name)
+					);
+				}
+			}
 		}
 	}
 ?>

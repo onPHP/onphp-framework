@@ -116,4 +116,21 @@
 		</properties>
 		<pattern name="DictionaryClass" />
 	</class>
+	
+	<class name="ImageType" type="final">
+		<properties>
+			<identifier />
+		</properties>
+		<pattern name="SpookedEnumeration" />
+	</class>
+	
+	<class name="TestLazy" type="final">
+		<properties>
+			<identifier />
+			<property name="city" type="TestCity" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="cityOptional" type="TestCity" relation="OneToOne" required="false" fetch="lazy" />
+			<property name="enum" type="ImageType" relation="OneToOne" required="false" fetch="lazy" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
 </classes></metaconfiguration>

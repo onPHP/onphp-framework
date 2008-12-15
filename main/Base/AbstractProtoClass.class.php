@@ -238,14 +238,15 @@
 				);
 			} else {
 				$property = $this->getPropertyByName($path);
+				$getter = $property->getGetter();
 				
 				if (
 					!$property->isFormless()
 					&& ($property->getFetchStrategyId() == FetchStrategy::LAZY)
-				)
+					&& !$object->{$getter.'Id'}()
+				) {
 					return $object;
-				
-				$getter = $property->getGetter();
+				}
 				
 				$value = $object->$getter();
 				
