@@ -30,4 +30,4 @@
 			return $this->inner->handleRequest($request);
 		}
 	}
-?>\ No newline at end of file
+?>
