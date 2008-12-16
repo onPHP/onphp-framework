@@ -1,5 +1,10 @@
 # $Id$
 
+2008-12-16	Vladlen Y. Koshelev
+
+	* main/Flow/DecoratorController.class.php: controller's decorator added,
+	which may be commonly used for request filters.
+
 2008-12-01	Denis M. Gabaidulin
 
 	* main/Utils/Mobile/MobileRequestDetektor.class.php: mobile request
