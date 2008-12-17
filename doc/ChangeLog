@@ -1,5 +1,9 @@
 # $Id$
 
+2008-12-17	Vladlen Y. Koshelev
+
+	* main/OQL/OqlQuery.class.php: bindNext() wrong index fix.
+
 2008-12-16	Vladlen Y. Koshelev
 
 	* main/Flow/DecoratorController.class.php: controller's decorator added,

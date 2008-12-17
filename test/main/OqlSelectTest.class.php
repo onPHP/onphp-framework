@@ -656,13 +656,15 @@
 		public function testBindNext()
 		{
 			$this->assertEquals(
-				OQL::select('from TestCity where foo = $1 and bar = $2')->
+				OQL::select('from TestCity where foo = $1 and $2 = $3')->
 				bind(1, 'bar')->
-				bind(2, 'foo'),
+				bind(2, 'foo')->
+				bind(3, 'boo'),
 				
-				OQL::select('from TestCity where foo = $1 and bar = $2')->
+				OQL::select('from TestCity where foo = $1 and $2 = $3')->
 				bindNext('bar')->
-				bindNext('foo')
+				bindNext('foo')->
+				bindNext('boo')
 			);
 		}
 		

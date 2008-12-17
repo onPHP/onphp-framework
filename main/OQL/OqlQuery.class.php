@@ -68,6 +68,8 @@
 		**/
 		public function bindNext($value)
 		{
+			end($this->parameters);
+			
 			return $this->bind(key($this->parameters) + 1, $value);
 		}
 		
