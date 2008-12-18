@@ -1,5 +1,9 @@
 # $Id$
 
+2008-12-18	Vladlen Y. Koshelev
+
+	* core/Form/RegulatedForm.class.php: ruleExists() added.
+
 2008-12-17	Vladlen Y. Koshelev
 
 	* main/OQL/OqlQuery.class.php: bindNext() wrong index fix.

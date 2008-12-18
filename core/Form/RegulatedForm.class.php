@@ -50,6 +50,11 @@
 			);
 		}
 		
+		public function ruleExists($name)
+		{
+			return isset($this->rules[$name]);
+		}
+		
 		/**
 		 * @return Form
 		**/
