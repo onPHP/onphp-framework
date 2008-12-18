@@ -21,7 +21,7 @@
 	**/
 	final class CacheDaoWorker extends TransparentDaoWorker
 	{
-		const MAX_RANDOM_ID = 1048576;
+		const MAX_RANDOM_ID = 134217728;
 		
 		/// cachers
 		//@{
