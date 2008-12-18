@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Dmitry E. Demidov                          *
+ *   Copyright (C) 2004-2008 by Dmitry E. Demidov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -26,8 +26,6 @@
 		
 		public function generate()
 		{
-			mt_srand(microtime(true) * 1000000);
-			
 			$code = null;
 			
 			for ($i = 0; $i < $this->length; $i++)
