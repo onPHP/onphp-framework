@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -39,6 +39,11 @@
 			throw new MissingElementException(
 				"no such rule with '{$name}' name"
 			);
+		}
+		
+		public function ruleExists($name)
+		{
+			return isset($this->rules[$name]);
 		}
 		
 		public function checkRules()

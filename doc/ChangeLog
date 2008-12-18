@@ -1,5 +1,9 @@
 # $Id$
 
+2008-12-18	Vladlen Y. Koshelev
+
+	* core/Form/RegulatedForm.class.php: ruleExists() added.
+
 2008-09-02	Vladlen Y. Koshelev
 
 	* core/Form/Primitives/PrimitiveEnumeration.class.php: getList() fixed.
