@@ -230,8 +230,9 @@
 				$classLevel = $this->levels[$class];
 			else
 				$classLevel = self::LEVEL_NORMAL;
-
-			mt_srand(hexdec(substr(md5($key), 3, 7))); // init by $key
+			
+			// init by $key, randomness will be restored later
+			mt_srand(hexdec(substr(md5($key), 3, 7)));
 
 			$zeroDistances = array();
 			$weights = array();
@@ -276,7 +277,15 @@
 				++$this->peers[$selectedLabel]['stat'][$class];
 			else
 				$this->peers[$selectedLabel]['stat'][$class] = 1;
-
+			
+			// restore randomness
+			mt_srand(
+				(int) (
+					(int) (microtime(true) << 2)
+					* (rand(time() / 2, time()) >> 2)
+				)
+			);
+			
 			return $selectedLabel;
 		}
 	}
