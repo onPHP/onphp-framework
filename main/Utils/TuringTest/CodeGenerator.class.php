@@ -34,8 +34,6 @@
 		
 		public function generate()
 		{
-			mt_srand(microtime(true) * 1000000);
-			
 			$code = null;
 			
 			for ($i = 0; $i < $this->length; ++$i)
