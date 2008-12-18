@@ -1,6 +1,11 @@
 # $Id$
 
-2008-12-18	Vladlen Y. Koshelev
+2008-12-18	Konstantin V. Arkhipov	<voxus@shadanakar.org>
+
+	* core/Cache/AggregateCache.class.php: restore true randomness upon
+	exit from guessLabel().
+
+2008-12-18	Vladlen Y. Koshelev	<vlad.kosh@gmail.com>
 
 	* core/Form/RegulatedForm.class.php: ruleExists() added.
 
