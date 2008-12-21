@@ -38,10 +38,7 @@
 			
 			$this->assertEquals(
 				$criteria->getProjection(),
-				Projection::chain()->
-					add(
-						Projection::chain()
-					)
+				Projection::chain()
 			);
 			
 			$criteria = Criteria::create(TestUser::dao())->
