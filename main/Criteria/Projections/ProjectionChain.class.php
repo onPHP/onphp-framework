@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -42,6 +42,11 @@
 				$projection->process($criteria, $query);
 			
 			return $query;
+		}
+		
+		public function isEmpty()
+		{
+			return count($this->list) == 0;
 		}
 	}
 ?>

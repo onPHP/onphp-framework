@@ -1,5 +1,12 @@
 # $Id$
 
+2008-12-21	Vladlen Y. Koshelev
+
+	* main/Criteria/Criteria.class.php, test/main/CriteriaTest.class.php:
+	addProjection() and corresponding tests added.
+
+	* main/Criteria/Projections/ProjectionChain.class.php: isEmpty() added.
+
 2008-12-18	Konstantin V. Arkhipov
 
 	* core/Cache/AggregateCache.class.php: restore true randomness upon
