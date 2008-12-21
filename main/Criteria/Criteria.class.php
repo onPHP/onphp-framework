@@ -50,6 +50,7 @@
 			$this->dao = $dao;
 			$this->logic = Expression::andBlock();
 			$this->order = new OrderChain();
+			$this->projection = Projection::chain();
 			
 			if ($dao)
 				$this->setDao($dao);
@@ -213,7 +214,20 @@
 		**/
 		public function setProjection(ObjectProjection $chain)
 		{
-			$this->projection = $chain;
+			if ($chain instanceof ProjectionChain)
+				$this->projection = $chain;
+			else
+				$this->projection = Projection::chain()->add($chain);
+			
+			return $this;
+		}
+		
+		/**
+		 * @return Criteria
+		**/
+		public function addProjection(ObjectProjection $projection)
+		{
+			$this->projection->add($projection);
 			
 			return $this;
 		}
@@ -231,7 +245,7 @@
 		**/
 		public function dropProjection()
 		{
-			$this->projection = null;
+			$this->projection = Projection::chain();
 			
 			return $this;
 		}
@@ -411,7 +425,7 @@
 		{
 			Assert::isNotNull($this->dao, 'DAO not set');
 			
-			if ($this->projection) {
+			if (!$this->projection->isEmpty()) {
 				$query =
 					$this->getProjection()->process(
 						$this,
@@ -451,7 +465,7 @@
 			}
 			
 			if (
-				!$this->projection
+				$this->projection->isEmpty()
 				&& $this->strategy->getId() == FetchStrategy::JOIN
 			) {
 				$this->joinProperties($query, $this->dao, $this->dao->getTable(), true);
