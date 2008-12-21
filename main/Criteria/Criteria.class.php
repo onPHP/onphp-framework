@@ -60,6 +60,7 @@
 		{
 			$this->logic = clone $this->logic;
 			$this->order = clone $this->order;
+			$this->projection = clone $this->projection;
 		}
 		
 		public function __sleep()
@@ -227,7 +228,11 @@
 		**/
 		public function addProjection(ObjectProjection $projection)
 		{
-			$this->projection->add($projection);
+			if (
+				!$projection instanceof ProjectionChain
+				|| !$projection->isEmpty()
+			)
+				$this->projection->add($projection);
 			
 			return $this;
 		}
