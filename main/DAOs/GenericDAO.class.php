@@ -143,6 +143,8 @@
 		//@{
 		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
 		{
+			Assert::isNotEmpty($id);
+			
 			if (isset($this->identityMap[$id]))
 				return $this->identityMap[$id];
 			
