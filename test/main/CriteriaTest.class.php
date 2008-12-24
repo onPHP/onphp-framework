@@ -26,7 +26,7 @@
 		{
 			$criteria = Criteria::create(TestUser::dao());
 			
-			$this->assertEquals(
+			$this->assertEqual(
 				$criteria->getProjection(),
 				Projection::chain()
 			);
@@ -36,7 +36,7 @@
 					Projection::chain()
 				);
 			
-			$this->assertEquals(
+			$this->assertEqual(
 				$criteria->getProjection(),
 				Projection::chain()
 			);
@@ -46,7 +46,7 @@
 					Projection::property('id')
 				);
 			
-			$this->assertEquals(
+			$this->assertEqual(
 				$criteria->getProjection(),
 				Projection::chain()->
 					add(
@@ -65,7 +65,7 @@
 						)
 				);
 			
-			$this->assertEquals(
+			$this->assertEqual(
 				$criteria->getProjection(),
 				Projection::chain()->
 					add(
@@ -78,7 +78,7 @@
 					Projection::property('id')
 				);
 			
-			$this->assertEquals(
+			$this->assertEqual(
 				$criteria->getProjection(),
 				Projection::chain()->
 					add(
