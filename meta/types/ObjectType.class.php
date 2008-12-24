@@ -103,22 +103,7 @@ EOT;
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$className = $property->getType()->getClassName();
 					
-					if ($property->isRequired()) {
-						$method = <<<EOT
-
-{$classHint}
-public function {$methodName}()
-{
-	if (!\$this->{$name}) {
-		\$this->{$name} = {$className}::dao()->getById(\$this->{$name}Id);
-	}
-
-	return \$this->{$name};
-}
-
-EOT;
-					} else {
-						$method = <<<EOT
+					$method = <<<EOT
 
 {$classHint}
 public function {$methodName}()
@@ -129,11 +114,6 @@ public function {$methodName}()
 	
 	return \$this->{$name};
 }
-
-EOT;
-					}
-					
-					$method .= <<<EOT
 
 public function {$methodName}Id()
 {

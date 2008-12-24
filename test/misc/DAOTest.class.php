@@ -21,7 +21,21 @@
 				$this->getSome();
 				
 				$this->racySave();
+				$this->lazyTest();
 			}
+			
+			$this->drop();
+		}
+		
+		public function testGetByEmptyId()
+		{
+			$this->create();
+			
+			$this->getByEmptyIdTest(0);
+			$this->getByEmptyIdTest(null);
+			$this->getByEmptyIdTest('');
+			$this->getByEmptyIdTest('0');
+			$this->getByEmptyIdTest(false);
 			
 			$this->drop();
 		}
@@ -185,6 +199,53 @@
 				array(),
 				TestUser::dao()->getListByIds(array(42, 42, 1738))
 			);
+		}
+		
+		private function lazyTest()
+		{
+			$city = TestCity::dao()->getById(1);
+			
+			$object = TestLazy::dao()->add(
+				TestLazy::create()->
+					setCity($city)->
+					setCityOptional($city)->
+					setEnum(
+						new ImageType(ImageType::getAnyId())
+					)
+			);
+			
+			Cache::me()->clean();
+			
+			$form = TestLazy::proto()->makeForm();
+			$form->import(
+				array('id' => $object->getId())
+			);
+			
+			$this->assertNotNull($form->getValue('id'));
+			
+			FormUtils::object2form($object, $form);
+			
+			foreach ($object->proto()->getPropertyList() as $name => $property) {
+				if (
+					$property->getRelationId() == MetaRelation::ONE_TO_ONE
+					&& $property->getFetchStrategyId() == FetchStrategy::LAZY
+				) {
+					$this->assertEqual(
+						$object->{'get'.ucfirst($name)}(),
+						$form->getValue($name)
+					);
+				}
+			}
+		}
+		
+		private function getByEmptyIdTest($id)
+		{
+			try {
+				TestUser::dao()->getById($id);
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				// pass
+			}
 		}
 	}
 ?>

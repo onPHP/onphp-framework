@@ -49,6 +49,22 @@
 				);
 		}
 		
+		public static function isEmpty($variable, $message = null)
+		{
+			if (!empty($variable))
+				self::fail(
+					$message.', '.self::dumpArgument($variable)
+				);
+		}
+		
+		public static function isNotEmpty($variable, $message = null)
+		{
+			if (empty($variable))
+				self::fail(
+					$message.', '.self::dumpArgument($variable)
+				);
+		}
+		
 		public static function isNotNull($variable, $message = null)
 		{
 			if ($variable === null)
