@@ -57,6 +57,14 @@
 				);
 		}
 		
+		public static function isNotEmpty($variable, $message = null)
+		{
+			if (empty($variable))
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
+		}
+		
 		public static function isIndexExists($array, $key, $message = null)
 		{
 			Assert::isArray($array);
@@ -101,7 +109,12 @@
 		
 		public static function isInteger($variable, $message = null)
 		{
-			if (!self::checkInteger($variable))
+			if (
+				!(
+					is_numeric($variable)
+					&& $variable == (int) $variable
+				)
+			)
 				throw new WrongArgumentException(
 					$message.', '.self::dumpArgument($variable)
 				);
@@ -264,6 +277,7 @@
 			return (
 				is_numeric($value)
 				&& ($value == (int) $value)
+				&& (strlen($value) == strlen((int) $value))
 			);
 		}
 		
