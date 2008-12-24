@@ -1,5 +1,16 @@
 # $Id$
 
+2008-12-24	Vladlen Y. Koshelev
+
+	* core/Base/Assert.class.php: isNotEmpty() added, checkInteger() checks for
+	leading zero (ported from 1.0).
+
+	* meta/types/ObjectType.class.php: lazy required property getter checks for
+	property's id.
+
+	* main/DAOs/GenericDAO.class.php, test/misc/DAOTest.class.php: check for
+	empty id in getById().
+
 2008-12-21	Vladlen Y. Koshelev
 
 	* main/Criteria/Criteria.class.php, test/main/CriteriaTest.class.php:
