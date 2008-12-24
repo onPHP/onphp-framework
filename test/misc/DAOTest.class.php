@@ -22,7 +22,6 @@
 				
 				$this->racySave();
 				$this->binaryTest();
-				
 				$this->lazyTest();
 			}
 			
@@ -85,6 +84,25 @@
 				
 				$this->assertEquals($count + 1, $newCount);
 			}
+			
+			$this->drop();
+		}
+		
+		public function testGetByEmptyId()
+		{
+			$this->create();
+			
+			$this->getByEmptyIdTest(0);
+			$this->getByEmptyIdTest(null);
+			$this->getByEmptyIdTest('');
+			$this->getByEmptyIdTest('0');
+			$this->getByEmptyIdTest(false);
+			
+			$empty = TestLazy::create();
+			
+			$this->assertNull($empty->getCity());
+			$this->assertNull($empty->getCityOptional());
+			$this->assertNull($empty->getEnum());
 			
 			$this->drop();
 		}
@@ -468,6 +486,16 @@
 						$form->getValue($name)
 					);
 				}
+			}
+		}
+		
+		private function getByEmptyIdTest($id)
+		{
+			try {
+				TestUser::dao()->getById($id);
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				// pass
 			}
 		}
 	}

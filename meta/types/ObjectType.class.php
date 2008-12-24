@@ -104,37 +104,21 @@ EOT;
 						$property->getType()->getClass()->getPattern()
 						instanceof EnumerationClassPattern;
 					
-					if ($property->isRequired()) {
-						$method = <<<EOT
-
-{$classHint}
-public function {$methodName}()
-{
-	if (!\$this->{$name}) {
-		\$this->{$name} = {$this->getFetchLazyObjectString($className, $name, $isEnumeration)}
-	}
-
-	return \$this->{$name};
-}
-
-EOT;
-					} else {
-						$method = <<<EOT
+					$fetchObjectString = $isEnumeration
+						? "new {$className}(\$this->{$name}Id)"
+						: "{$className}::dao()->getById(\$this->{$name}Id)";
+					
+					$method = <<<EOT
 
 {$classHint}
 public function {$methodName}()
 {
 	if (!\$this->{$name} && \$this->{$name}Id) {
-		\$this->{$name} = {$this->getFetchLazyObjectString($className, $name, $isEnumeration)}
+		\$this->{$name} = {$fetchObjectString};
 	}
 	
 	return \$this->{$name};
 }
-
-EOT;
-					}
-					
-					$method .= <<<EOT
 
 public function {$methodName}Id()
 {
@@ -359,14 +343,6 @@ EOT;
  * @return {$this->getClassName()}
 **/
 EOT;
-		}
-		
-		private function getFetchLazyObjectString($className, $name, $isEnumeration)
-		{
-			if ($isEnumeration)
-				return "new {$className}(\$this->{$name}Id);";
-			else
-				return "{$className}::dao()->getById(\$this->{$name}Id);";
 		}
 	}
 ?>
