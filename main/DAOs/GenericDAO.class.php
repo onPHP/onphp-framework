@@ -371,13 +371,20 @@
 		
 		private function addObjectToMap(Identifiable $object)
 		{
-			return $this->identityMap[$object->getId()] = $object;
+			if (isset($this->identityMap[$id = $object->getId()]))
+				return $this->identityMap[$id];
+			else
+				return $this->identityMap[$id] = $object;
 		}
 		
 		private function addObjectListToMap($list)
 		{
-			foreach ($list as $object)
-				$this->identityMap[$object->getId()] = $object;
+			foreach ($list as &$object) {
+				if (isset($this->identityMap[$id = $object->getId()]))
+					$object = $this->identityMap[$id];
+				else
+					$this->identityMap[$id] = $object;
+			}
 			
 			return $list;
 		}
