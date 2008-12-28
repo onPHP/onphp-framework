@@ -20,6 +20,8 @@
 				Cache::me()->clean();
 				$this->getSome();
 				
+				$this->persistenceInIdentityMap();
+				
 				$this->racySave();
 				$this->binaryTest();
 				$this->lazyTest();
@@ -296,7 +298,7 @@
 					setName('testSubItem2')->
 					setIncapsulant($incapsulant)->
 					setItem($item);
-			
+				
 				TestSubItem::dao()->add($subItem1);
 				TestSubItem::dao()->add($subItem2);
 				
@@ -384,6 +386,23 @@
 				count(TestUser::dao()->getPlainList()),
 				count(TestCity::dao()->getPlainList())
 			);
+		}
+		
+		private function persistenceInIdentityMap()
+		{
+			$user1 = TestUser::dao()->getById(1);
+			$user2 = TestUser::dao()->getById(1);
+			
+			$user3 = TestUser::dao()->getByLogic(Expression::eq('id', 1));
+			$user4 = TestUser::dao()->getByLogic(Expression::eq('id', 1));
+			
+			$this->assertSame($user1, $user2);
+			$this->assertSame($user3, $user4);
+			$this->assertSame($user1, $user4);
+			
+			$users = TestUser::dao()->getListByIds(array(1, 2));
+			
+			$this->assertSame($users[0], $user1);
 		}
 		
 		private function racySave()
