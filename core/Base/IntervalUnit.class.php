@@ -46,7 +46,7 @@
 				if ($this->seconds < 1)
 					return $time->spawn();
 				
-				$truncated = (int)(
+				$truncated = (int) (
 					$function($time->toStamp() / $this->seconds) * $this->seconds
 				);
 				
@@ -65,12 +65,12 @@
 					$epochStartTruncated, $truncatedDate
 				);
 				
-				$truncated = (int)(
+				$truncated = (int) (
 					$function($difference / $this->days) * $this->days
 				);
 				
 				return Timestamp::create(
-					$epochStartTruncated->spawn("$truncated days")->toStamp()
+					$epochStartTruncated->spawn($truncated.' days')->toStamp()
 				);
 				
 			} elseif ($this->months) {
@@ -86,7 +86,7 @@
 				)
 					$monthsCount += 0.1; // delta
 				
-				$truncated = (int)(
+				$truncated = (int) (
 					$function($monthsCount / $this->months) *
 						($this->months)
 				);
@@ -95,13 +95,13 @@
 				
 				$years = ($truncated - $months) / 12;
 				
-				Assert::isEqual($years, (int)$years);
+				Assert::isEqual($years, (int) $years);
 				
-				$years = (int)$years;
+				$years = (int) $years;
 				
 				$months = $months + 1;
 				
-				return Timestamp::create("$years-$months-01 00:00:00");
+				return Timestamp::create("{$years}-{$months}-01 00:00:00");
 			}
 			
 			Assert::isUnreachable();
@@ -157,7 +157,7 @@
 				.'result: '.var_export($result, true)
 			);
 			
-			return (int)$result;
+			return (int) $result;
 		}
 
 		public function compareTo(IntervalUnit $unit)
