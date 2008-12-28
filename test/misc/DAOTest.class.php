@@ -20,6 +20,8 @@
 				Cache::me()->clean();
 				$this->getSome();
 				
+				$this->persistenceInIdentityMap();
+				
 				$this->racySave();
 				$this->lazyTest();
 			}
@@ -159,6 +161,23 @@
 				count(TestUser::dao()->getPlainList()),
 				count(TestCity::dao()->getPlainList())
 			);
+		}
+		
+		private function persistenceInIdentityMap()
+		{
+			$user1 = TestUser::dao()->getById(1);
+			$user2 = TestUser::dao()->getById(1);
+			
+			$user3 = TestUser::dao()->getByLogic(Expression::eq('id', 1));
+			$user4 = TestUser::dao()->getByLogic(Expression::eq('id', 1));
+			
+			$this->assertIdentical($user1, $user2);
+			$this->assertIdentical($user3, $user4);
+			$this->assertIdentical($user1, $user4);
+			
+			$users = TestUser::dao()->getListByIds(array(1, 2));
+			
+			$this->assertIdentical($users[0], $user1);
 		}
 		
 		private function racySave()
