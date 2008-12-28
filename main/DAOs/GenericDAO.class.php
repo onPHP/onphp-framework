@@ -363,8 +363,9 @@
 		
 		/* void */ protected function checkObjectType(Identifiable $object)
 		{
-			Assert::isTrue(
-				get_class($object) === $this->getObjectName(),
+			Assert::isSame(
+				get_class($object),
+				$this->getObjectName(),
 				'strange object given, i can not inject it'
 			);
 		}
