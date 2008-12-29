@@ -16,9 +16,29 @@
 		protected $country = null;
 		
 		/**
-		 * see AccuracyLevels to understand
+		 * Build object from SimpleXMLElement
 		 * 
-		 * @return int
+		 * @param SimpleXMLElement $object
+		 * @return GoogleGeoAdrdressDetail
+		**/
+		public static function createFromSimpleXml(SimpleXMLElement $object)
+		{
+			$instance = new GoogleGeoAddressDetail();
+			
+			$instance->setAccuracy(
+				new GoogleGeoAddressAccuracyLevel(
+					(int) $object->attributes()->Accuracy
+				)
+			)->
+			setCountry($object->Country);
+			
+			return $instance;
+		}
+		
+		/**
+		 * @see AccuracyLevels to understand
+		 * 
+		 * @return GoogleGeoAddressAccuracyLevel
 		**/
 		public function getAccuracy()
 		{
@@ -26,12 +46,11 @@
 		}
 		
 		/**
-		 * @param GoogleGeoAddressAccuracyLevel $acu
 		 * @return GoogleGeoAddressDetail
 		**/
-		public function setAccuracy(GoogleGeoAddressAccuracyLevel $acu)
+		public function setAccuracy(GoogleGeoAddressAccuracyLevel $accuracy)
 		{
-			$this->accuracy = $acu;
+			$this->accuracy = $accuracy;
 			return $this;
 		}
 		
@@ -47,24 +66,11 @@
 		 * @param SimpleXMLElement $country
 		 * @return GoogleGeoAddressDetail
 		**/
+		// FIXME: there is no reason to use xml-element instead of just string
 		public function setCountry(SimpleXMLElement $country)
 		{
 			$this->country = $country;
 			return $this;
-		}
-		
-		/**
-		 * Build object from simpleXMLElement
-		 * 
-		 * @param SimpleXMLElement $object
-		 * @return GoogleGeoAdrdressDetail
-		**/
-		public static function createFromSimpleXml(SimpleXMLElement $object)
-		{
-			$instance = new GoogleGeoAddressDetail();
-			$instance->setAccuracy(new GoogleGeoAddressAccuracyLevel((int)$object->attributes()->Accuracy));
-			$instance->setCountry($object->Country);
-			return $instance;
 		}
 	}
 ?>
