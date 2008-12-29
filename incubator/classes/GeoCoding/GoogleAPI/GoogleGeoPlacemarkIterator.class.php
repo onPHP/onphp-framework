@@ -17,7 +17,7 @@
 
 	    public function __construct(SimpleXMLElement $placemarks)
 	    {
-	    	$this->placemarks = $placemarks;
+		$this->placemarks = $placemarks;
 	    }
 	
 	    public function key()
@@ -32,24 +32,24 @@
 	
 	    public function next()
 	    {
-	    	$this->i++;
-	    	return $this;
+		$this->i++;
+		return $this;
 	    }
 	
 	    public function rewind()
 	    {
-	    	$this->i = 0;
-	    	return $this;
+		$this->i = 0;
+		return $this;
 	    }
-	    
+	
 	    public function count()
 	    {
-	    	return count($this->placemarks);
+		return count($this->placemarks);
 	    }
-	    
+	
 	    public function valid()
 	    {
-	    	return isset($this->placemarks[$this->i]);
+		return isset($this->placemarks[$this->i]);
 	    }
 	}
 ?>
