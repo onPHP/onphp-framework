@@ -12,17 +12,17 @@
 
 	final class GoogleGeoStatusCode extends Enumeration
 	{
-		const GOOGLE_GEO_SUCCESS 					= 200;
-		const GOOGLE_GEO_BAD_REQUEST 				= 400;
-		const GOOGLE_GEO_SERVER_ERROR 				= 500;
-		const GOOGLE_GEO_MISSING_QUERY 				= 601;
-		const GOOGLE_GEO_MISSING_ADDRESS 			= 601;
-		const GOOGLE_GEO_UNKNOWN_ADDRESS  			= 602;
-		const GOOGLE_GEO_UNAVAILABLE_ADDRESS 		= 603;
-		const GOOGLE_GEO_UNKNOWN_DIRECTIONS 		= 604;
-		const GOOGLE_GEO_BAD_KEY 					= 610;
-		const GOOGLE_GEO_TOO_MANY_QUERIES 			= 620;
-
+		const GOOGLE_GEO_SUCCESS					= 200;
+		const GOOGLE_GEO_BAD_REQUEST				= 400;
+		const GOOGLE_GEO_SERVER_ERROR				= 500;
+		const GOOGLE_GEO_MISSING_QUERY				= 601;
+		const GOOGLE_GEO_MISSING_ADDRESS			= 601;
+		const GOOGLE_GEO_UNKNOWN_ADDRESS			= 602;
+		const GOOGLE_GEO_UNAVAILABLE_ADDRESS		= 603;
+		const GOOGLE_GEO_UNKNOWN_DIRECTIONS			= 604;
+		const GOOGLE_GEO_BAD_KEY					= 610;
+		const GOOGLE_GEO_TOO_MANY_QUERIES			= 620;
+		
 		protected $names = array(
 			self::GOOGLE_GEO_SUCCESS => "No errors occurred; the address was successfully parsed and its geocode has been returned.",
 			self::GOOGLE_GEO_BAD_REQUEST => "A directions request could not be successfully parsed. For example, the request may have been rejected if it contained more than the maximum number of waypoints allowed.",
@@ -35,6 +35,5 @@
 			self::GOOGLE_GEO_BAD_KEY => "The given key is either invalid or does not match the domain for which it was given.",
 			self::GOOGLE_GEO_TOO_MANY_QUERIES => "The given key has gone over the requests limit in the 24 hour period or has submitted too many requests in too short a period of time. If you're sending multiple requests in parallel or in a tight loop, use a timer or pause in your code to make sure you don't send the requests too quickly."
 		);
-		
 	}
 ?>
