@@ -139,6 +139,16 @@
 			return clone $selectHead[$className];
 		}
 		
+		public function makeTotalCountQuery()
+		{
+			return
+				OSQL::select()->
+				get(
+					SQLFunction::create('count', DBValue::create('*'))
+				)->
+				from($this->getTable());
+		}
+		
 		/// boring delegates
 		//@{
 		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
