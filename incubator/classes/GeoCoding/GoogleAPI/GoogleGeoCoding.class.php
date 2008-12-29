@@ -10,6 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
+	// FIXME: strange properties visibility for a final class
 	final class GoogleGeoCoding
 	{
 		/**
@@ -40,14 +41,25 @@
 		
 		/**
 		 * ll, spn, gl pamar string
-		 * ll (optional) — The {latitude,longitude} of the viewport center expressed as a comma-separated string (e.g. "ll=40.479581,-117.773438" ). This parameter only has meaning if the spn parameter is also passed to the geocoder.
-		 * spn (optional) — The "span" of the viewport expressed as a comma-separated string of {latitude,longitude} (e.g. "spn=11.1873,22.5" ). This parameter only has meaning if the ll parameter is also passed to the geocoder.
-		 * gl (optional) — The country code, specified as a ccTLD ("top-level domain") two-character value.
+		 * 
+		 * ll (optional) — The {latitude,longitude} of the viewport center
+		 * expressed as a comma-separated string
+		 * (e.g. "ll=40.479581,-117.773438").
+		 * This parameter only has meaning if the spn parameter is also
+		 * passed to the geocoder.
+		 * 
+		 * spn (optional) — The "span" of the viewport expressed
+		 * as a comma-separated string of {latitude,longitude}
+		 * (e.g. "spn=11.1873,22.5"). This parameter only has meaning if
+		 * the ll parameter is also passed to the geocoder.
+		 * 
+		 * gl (optional) — The country code, specified as a ccTLD
+		 * ("top-level domain") two-character value.
 		 * 
 		 * @var array
 		**/
+		// FIXME: why not just separate properties?
 		protected $additionalParams = null;
-		
 		
 		/**
 		 * @param string $key
@@ -60,13 +72,15 @@
 		}
 		
 		/**
-		 * Setter for additional params, represent get string like "&ll=...&spn=...&gl=..."
+		 * Setter for additional params, represent get string
+		 * like "&ll=...&spn=...&gl=..."
 		 * 
 		 * @param array $ll
 		 * @param array $spn
 		 * @param string $gl
 		 * @return string
 		**/
+		// FIXME: inconsistent behaviour
 		public function setAdditionalParams($ll = null, $spn = null, $gl = null)
 		{
 			$addParams = array();
@@ -101,27 +115,28 @@
 		 * @param bool $returnXmlObject return object as is
 		 * @return mixed
 		**/
+		// FIXME: split this one into two methods
 		public function lookup($returnXmlObject = false)
 		{
 			$result = simplexml_load_file($this->configureParamString());
 			$this->proceedRequestStatus($result);
 			
-			if($returnXmlObject) {
+			if ($returnXmlObject) {
 				return $result;
 			}
 			
 			return $this->representGeoObject($result);
 		}
-
+		
 		/**
 		 * Represent simple xml response as our representation for google response
 		 * 
-		 * @param simpleXMLElement $obj
+		 * @param SimpleXMLElement $object
 		 * @return GoogleGeoResponse
 		**/
-		public function representGeoObject($obj)
+		public function representGeoObject($object)
 		{
-			return GoogleGeoResponse::createFromSimpleXml($obj);
+			return GoogleGeoResponse::createFromSimpleXml($object);
 		}
 		
 		/**
@@ -129,9 +144,13 @@
 		 * 
 		 * @param simpleXMLElement $request
 		**/
+		// FIXME: private, probably?
 		protected function proceedRequestStatus($request)
 		{
-			$code = new GoogleGeoStatusCode((int)$request->Response->Status->code);
+			$code = new GoogleGeoStatusCode(
+				(int) $request->Response->Status->code
+			);
+			
 			switch ($code->getId()) {
 				case GoogleGeoStatusCode::GOOGLE_GEO_BAD_KEY:
 					throw new GoogleGeoBadKeyException();
@@ -151,6 +170,8 @@
 					throw new GoogleGeoUnknownAddressException();
 				case GoogleGeoStatusCode::GOOGLE_GEO_UNKNOWN_DIRECTIONS:
 					throw new GoogleGeoUnknownDirectionsException();
+				default:
+					throw new WrongStateException('strange code given: '.$code);
 			}
 		}
 		
@@ -159,6 +180,7 @@
 		 * 
 		 * @return string
 		**/
+		// FIXME: private, probably?
 		protected function configureParamString()
 		{
 			$result = '?q='.$this->address;
