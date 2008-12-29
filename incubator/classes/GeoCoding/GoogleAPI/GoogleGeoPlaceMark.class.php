@@ -18,6 +18,33 @@
 		protected $point = null;
 		
 		/**
+		 * Build object from simpleXMLElement
+		 * 
+		 * @param SimpleXMLElement $object
+		 * @return GoogleGeoPlaceMark
+		**/
+		public static function createFromSimpleXml(SimpleXMLElement $object)
+		{
+			$instance = new GoogleGeoPlaceMark();
+			
+			list($lng, $lat, $z) = explode(',', $object->Point->coordinates);
+			
+			$instance->
+				setId((string) $object->attributes()->id)->
+				setAddress((string) $object->address)->
+				setPoint(
+					new GoogleGeoPoint((float) $lat, (float) $lng, (float) $z)
+				)->
+				setAddressDetails(
+					GoogleGeoAddressDetail::createFromSimpleXml(
+						$object->AddressDetails
+					)
+				);
+			
+			return $instance;
+		}
+		
+		/**
 		 * @param string $id
 		 * @return GoogleGeoPlaceMark
 		**/
@@ -87,33 +114,6 @@
 		public function getPoint()
 		{
 			return $this->point;
-		}
-		
-		/**
-		 * Build object from simpleXMLElement
-		 * 
-		 * @param SimpleXMLElement $object
-		 * @return GoogleGeoPlaceMark
-		**/
-		public static function createFromSimpleXml(SimpleXMLElement $object)
-		{
-			$instance = new GoogleGeoPlaceMark();
-			
-			list($lng, $lat, $z) = explode(',', $object->Point->coordinates);
-			
-			$instance->
-				setId((string) $object->attributes()->id)->
-				setAddress((string) $object->address)->
-				setPoint(
-					new GoogleGeoPoint((float) $lat, (float) $lng, (float) $z)
-				)->
-				setAddressDetails(
-					GoogleGeoAddressDetail::createFromSimpleXml(
-						$object->AddressDetails
-					)
-				);
-			
-			return $instance;
 		}
 	}
 ?>
