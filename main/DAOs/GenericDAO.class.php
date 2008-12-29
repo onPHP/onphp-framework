@@ -139,6 +139,9 @@
 			return clone $selectHead[$className];
 		}
 		
+		/**
+		 * @return SelectQuery
+		**/
 		public function makeTotalCountQuery()
 		{
 			return
