@@ -13,43 +13,55 @@
 	final class GoogleGeoPlacemarkIterator implements Countable, Iterator
 	{
 		protected $placemarks = null;
-		protected $i = 0;
-
+		
+		protected $key = 0;
+		
 	    public function __construct(SimpleXMLElement $placemarks)
 	    {
-		$this->placemarks = $placemarks;
+			$this->placemarks = $placemarks;
 	    }
-	
+		
 	    public function key()
 	    {
-	        return $this->i;
+	        return $this->key;
 	    }
-	
+		
+	    /**
+	     * @return GoogleGeoPlaceMark
+	    **/
 	    public function current()
 	    {
-	        return GoogleGeoPlaceMark::createFromSimpleXml($this->placemarks[$this->i]);
+	        return GoogleGeoPlaceMark::createFromSimpleXml(
+	        	$this->placemarks[$this->key]
+	        );
 	    }
-	
+		
+	    /**
+	     * @return GoogleGeoPlacemarkIterator
+	    **/
 	    public function next()
 	    {
-		$this->i++;
-		return $this;
+			++$this->key;
+			return $this;
 	    }
-	
+		
+	    /**
+	     * @return GoogleGeoPlacemarkIterator
+	    **/
 	    public function rewind()
 	    {
-		$this->i = 0;
-		return $this;
+			$this->key = 0;
+			return $this;
 	    }
-	
+		
 	    public function count()
 	    {
-		return count($this->placemarks);
+			return count($this->placemarks);
 	    }
-	
+		
 	    public function valid()
 	    {
-		return isset($this->placemarks[$this->i]);
+			return isset($this->placemarks[$this->key]);
 	    }
 	}
 ?>
