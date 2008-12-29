@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Utils
 	**/
-	final class MobileRequestDeteсtor
+	final class MobileRequestDetector
 	{
 		static private $headers = array(
 			'HTTP_X_WAP_PROFILE',
@@ -60,7 +60,7 @@
 		);
 		
 		/**
-		 * @return MobileRequestDeteсtor
+		 * @return MobileRequestDetector
 		**/
 		public static function create()
 		{
