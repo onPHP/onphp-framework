@@ -20,7 +20,7 @@
 		/**
 		 * @param string $id
 		 * @return GoogleGeoPlaceMark
-		 */
+		**/
 		public function setId($id)
 		{
 			$this->id = $id;
@@ -29,7 +29,7 @@
 		
 		/**
 		 * @return string
-		 */
+		**/
 		public function getId()
 		{
 			return $this->id;
@@ -38,7 +38,7 @@
 		/**
 		 * @param string $adr
 		 * @return GoogleGeoPlaceMark
-		 */
+		**/
 		public function setAddress($adr)
 		{
 			$this->address = $adr;
@@ -47,7 +47,7 @@
 		
 		/**
 		 * @return string
-		 */
+		**/
 		public function getAddress()
 		{
 			return $this->address;
@@ -56,7 +56,7 @@
 		/**
 		 * @param GoogleGeoAddressDetail $details
 		 * @return GoogleGeoPlaceMark
-		 */
+		**/
 		public function setAddressDetails(GoogleGeoAddressDetail $details)
 		{
 			$this->addressDetails = $details;
@@ -65,7 +65,7 @@
 		
 		/**
 		 * @return GoogleGeoAddressDetail
-		 */
+		**/
 		public function getAddressDetails()
 		{
 			return $this->addressDetails;
@@ -74,7 +74,7 @@
 		/**
 		 * @param GoogleGeoPoint $point
 		 * @return string
-		 */
+		**/
 		public function setPoint(GoogleGeoPoint $point)
 		{
 			$this->point = $point;
@@ -83,7 +83,7 @@
 		
 		/**
 		 * @return GoogleGeoPoint
-		 */
+		**/
 		public function getPoint()
 		{
 			return $this->point;
@@ -91,10 +91,10 @@
 		
 		/**
 		 * Build object from simpleXMLElement
-		 *
+		 * 
 		 * @param SimpleXMLElement $object
 		 * @return GoogleGeoPlaceMark
-		 */
+		**/
 		public static function createFromSimpleXml(SimpleXMLElement $object)
 		{
 			$instance = new GoogleGeoPlaceMark();
