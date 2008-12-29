@@ -14,27 +14,27 @@
 	{
 		/**
 		 * @var geocoding service address
-		 */
+		**/
 		const GOOGLE_GEO_SERVICE = 'http://maps.google.com/maps/geo';
 		/**
 		 * Your api key goes here
-		 *
+		 * 
 		 * @var string
-		 */
+		**/
 		protected $key = null;
 		
 		/**
 		 * output format. for now it works only for xml
-		 *
+		 * 
 		 * @var string
-		 */
+		**/
 		protected $output = null;
 		
 		/**
 		 * Address we are looking for
-		 *
+		 * 
 		 * @var string
-		 */
+		**/
 		protected $address = null;
 		
 		/**
@@ -42,16 +42,16 @@
 		 * ll (optional) — The {latitude,longitude} of the viewport center expressed as a comma-separated string (e.g. "ll=40.479581,-117.773438" ). This parameter only has meaning if the spn parameter is also passed to the geocoder.
 		 * spn (optional) — The "span" of the viewport expressed as a comma-separated string of {latitude,longitude} (e.g. "spn=11.1873,22.5" ). This parameter only has meaning if the ll parameter is also passed to the geocoder.
 		 * gl (optional) — The country code, specified as a ccTLD ("top-level domain") two-character value.
-		 *
+		 * 
 		 * @var array
-		 */
+		**/
 		protected $additionalParams = null;
 		
 		
 		/**
 		 * @param string $key
 		 * @param string $output
-		 */
+		**/
 		public function __construct($key, $output = 'xml')
 		{
 			$this->key = $key;
@@ -60,12 +60,12 @@
 		
 		/**
 		 * Setter for additional params, represent get string like "&ll=...&spn=...&gl=..."
-		 *
+		 * 
 		 * @param array $ll
 		 * @param array $spn
 		 * @param string $gl
 		 * @return string
-		 */
+		**/
 		public function setAdditionalParams($ll = null, $spn = null, $gl = null)
 		{
 			$addParams = array();
@@ -84,10 +84,10 @@
 		
 		/**
 		 * Set address we are looking for
-		 *
+		 * 
 		 * @param string $address
 		 * @return GoogleGeoCoding
-		 */
+		**/
 		public function setAddress($address)
 		{
 			$this->address = $address;
@@ -96,10 +96,10 @@
 		
 		/**
 		 * All magic starts here. Makes request
-		 *
+		 * 
 		 * @param bool $returnXmlObject return object as is
 		 * @return mixed
-		 */
+		**/
 		public function lookup($returnXmlObject = false)
 		{
 			$result = simplexml_load_file($this->configureParamString());
@@ -114,10 +114,10 @@
 
 		/**
 		 * Represent simple xml response as our representation for google response
-		 *
+		 * 
 		 * @param simpleXMLElement $obj
 		 * @return GoogleGeoResponse
-		 */
+		**/
 		public function representGeoObject($obj)
 		{
 			return GoogleGeoResponse::createFromSimpleXml($obj);
@@ -125,9 +125,9 @@
 		
 		/**
 		 * Throw all the crap
-		 *
+		 * 
 		 * @param simpleXMLElement $request
-		 */
+		**/
 		protected function proceedRequestStatus($request)
 		{
 			$code = new GoogleGeoStatusCode((int)$request->Response->Status->code);
@@ -155,9 +155,9 @@
 		
 		/**
 		 * Build request string from params
-		 *
+		 * 
 		 * @return string
-		 */
+		**/
 		protected function configureParamString()
 		{
 			$result = '?q='.$this->address;
