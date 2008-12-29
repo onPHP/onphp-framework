@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008 by Shimizu                                         *
+ *   Copyright (C) 2008 by Tsyrulnik Y. Viatcheslav                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -9,6 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
+
 	class GoogleGeoResponse implements IteratorAggregate
 	{
 		protected $name = null;
