@@ -16,6 +16,27 @@
 		protected $status = null;
 		protected $placeMarks = null;
 		
+		/**
+		 * @return GoogleGeoResponse
+		**/
+		public static function createFromSimpleXml(SimpleXMLElement $object)
+		{
+			$instance = new GoogleGeoResponse();
+			
+			$instance->
+				setName((string) $object->Response->name)->
+				setStatus(
+					new GoogleGeoStatusCode(
+						(int) $object->Response->Status->code
+					)
+				)->
+				setPlaceMarks(
+					new GoogleGeoPlacemarkIterator($object->Response->Placemark)
+				);
+			
+			return $instance;
+		}
+		
 		public function getName()
 		{
 			return $this->name;
@@ -64,27 +85,6 @@
 		{
 			$this->placeMarks = $marks;
 			return $this;
-		}
-		
-		/**
-		 * @return GoogleGeoResponse
-		**/
-		public static function createFromSimpleXml(SimpleXMLElement $object)
-		{
-			$instance = new GoogleGeoResponse();
-			
-			$instance->
-				setName((string) $object->Response->name)->
-				setStatus(
-					new GoogleGeoStatusCode(
-						(int) $object->Response->Status->code
-					)
-				)->
-				setPlaceMarks(
-					new GoogleGeoPlacemarkIterator($object->Response->Placemark)
-				);
-			
-			return $instance;
 		}
 	}
 ?>
