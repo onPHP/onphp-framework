@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoResponse implements IteratorAggregate
+	final class GoogleGeoResponse implements IteratorAggregate
 	{
 		protected $name = null;
 		protected $status = null;

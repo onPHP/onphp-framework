@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoAddressAccuracyLevel extends Enumeration
+	final class GoogleGeoAddressAccuracyLevel extends Enumeration
 	{
 		const LEVEL_0 = 0;
 		const LEVEL_1 = 1;

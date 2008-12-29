@@ -10,5 +10,5 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoUnavailableAddressException extends GoogleGeoBaseException {/*_*/}
+	final class GoogleGeoUnavailableAddressException extends GoogleGeoBaseException {/*_*/}
 ?>

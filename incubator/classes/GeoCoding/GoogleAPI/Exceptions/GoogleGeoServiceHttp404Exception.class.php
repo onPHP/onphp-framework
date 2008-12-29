@@ -10,5 +10,5 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoServiceHttp404Exception extends GoogleGeoBaseException {/*_*/}
+	final class GoogleGeoServiceHttp404Exception extends GoogleGeoBaseException {/*_*/}
 ?>

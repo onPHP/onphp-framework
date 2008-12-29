@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoAddressDetail
+	final class GoogleGeoAddressDetail
 	{
 		protected $accuracy = null;
 		protected $country = null;

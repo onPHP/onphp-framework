@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoPlacemarkIterator implements Countable, Iterator
+	final class GoogleGeoPlacemarkIterator implements Countable, Iterator
 	{
 		protected $placemarks = null;
 		protected $i = 0;

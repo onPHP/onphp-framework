@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoCoding
+	final class GoogleGeoCoding
 	{
 		/**
 		 * @var geocoding service address

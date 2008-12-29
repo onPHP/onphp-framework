@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoStatusCode extends Enumeration
+	final class GoogleGeoStatusCode extends Enumeration
 	{
 		const GOOGLE_GEO_SUCCESS 					= 200;
 		const GOOGLE_GEO_BAD_REQUEST 				= 400;

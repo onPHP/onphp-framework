@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoPlaceMark
+	final class GoogleGeoPlaceMark
 	{
 		protected $id = null;
 		protected $address = null;

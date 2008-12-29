@@ -10,5 +10,5 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoUnknownDirectionsException extends GoogleGeoBaseException {/*_*/}
+	final class GoogleGeoUnknownDirectionsException extends GoogleGeoBaseException {/*_*/}
 ?>

@@ -10,5 +10,5 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoTooManyQueriesException extends GoogleGeoBaseException {/*_*/}
+	final class GoogleGeoTooManyQueriesException extends GoogleGeoBaseException {/*_*/}
 ?>

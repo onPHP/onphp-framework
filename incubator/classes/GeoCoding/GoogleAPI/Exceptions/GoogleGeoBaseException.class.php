@@ -10,5 +10,5 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoBaseException extends BaseException {/*_*/}
+	abstract class GoogleGeoBaseException extends BaseException {/*_*/}
 ?>

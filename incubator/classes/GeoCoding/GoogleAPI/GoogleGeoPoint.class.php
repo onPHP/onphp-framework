@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	class GoogleGeoPoint
+	final class GoogleGeoPoint
 	{
 		protected $lat;
 		protected $lng;
