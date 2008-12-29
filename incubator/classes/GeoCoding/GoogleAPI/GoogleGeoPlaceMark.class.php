@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class GoogleGeoPlaceMark
+	final class GoogleGeoPlaceMark implements Identifiable
 	{
 		protected $id = null;
 		protected $address = null;
@@ -39,9 +39,9 @@
 		 * @param string $adr
 		 * @return GoogleGeoPlaceMark
 		**/
-		public function setAddress($adr)
+		public function setAddress($address)
 		{
-			$this->address = $adr;
+			$this->address = $address;
 			return $this;
 		}
 		
@@ -73,7 +73,7 @@
 		
 		/**
 		 * @param GoogleGeoPoint $point
-		 * @return string
+		 * @return GoogleGeoPlaceMark
 		**/
 		public function setPoint(GoogleGeoPoint $point)
 		{
@@ -98,11 +98,21 @@
 		public static function createFromSimpleXml(SimpleXMLElement $object)
 		{
 			$instance = new GoogleGeoPlaceMark();
-			$instance->setId((string)$object->attributes()->id);
-			$instance->setAddress((string)$object->address);
+			
 			list($lng, $lat, $z) = explode(',', $object->Point->coordinates);
-			$instance->setPoint(new GoogleGeoPoint((float)$lat, (float)$lng, (float)$z));
-			$instance->setAddressDetails(GoogleGeoAddressDetail::createFromSimpleXml($object->AddressDetails));
+			
+			$instance->
+				setId((string) $object->attributes()->id)->
+				setAddress((string) $object->address)->
+				setPoint(
+					new GoogleGeoPoint((float) $lat, (float) $lng, (float) $z)
+				)->
+				setAddressDetails(
+					GoogleGeoAddressDetail::createFromSimpleXml(
+						$object->AddressDetails
+					)
+				);
+			
 			return $instance;
 		}
 	}
