@@ -10,14 +10,12 @@
  ***************************************************************************/
 /* $Id$ */
 
-
 	/**
 	 * Try to identify mobile device by http headers
 	 * 
 	 * @ingroup Utils
 	**/
-	
-	final class MobileRequestDetektor
+	final class MobileRequestDeteсtor
 	{
 		static private $headers = array(
 			'HTTP_X_WAP_PROFILE',
@@ -62,7 +60,7 @@
 		);
 		
 		/**
-		 * @return MobileRequestDetektor
+		 * @return MobileRequestDeteсtor
 		**/
 		public static function create()
 		{
