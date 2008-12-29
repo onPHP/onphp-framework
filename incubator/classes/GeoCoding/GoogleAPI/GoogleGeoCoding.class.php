@@ -13,9 +13,10 @@
 	final class GoogleGeoCoding
 	{
 		/**
-		 * @var geocoding service address
+		 * geocoding service address
 		**/
 		const GOOGLE_GEO_SERVICE = 'http://maps.google.com/maps/geo';
+		
 		/**
 		 * Your api key goes here
 		 * 
