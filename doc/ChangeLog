@@ -1,10 +1,16 @@
 # $Id$
 
+2008-12-30	Konstantin V. Arkhipov
+
+	* core/Form/Primitives/IdentifiablePrimitive.class.php: type name
+	changed to scalar; this one fixes non-integer identifiers in
+	PrimitiveIdentifier.
+
 2008-12-30	Vladlen Y. Koshelev
 
 	* core/Form/Primitives/PrimitiveIdentifier.class.php,
 	test/core/PrimitiveIdentifierTest.class.php: import handling for empty or
-	noninteger values and test for empty values added.
+	non-integer values and test for empty values added.
 
 	* main/DAOs/GenericDAO.class.php: check if identifier is scalar.
 
