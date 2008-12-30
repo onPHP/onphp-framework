@@ -88,19 +88,5 @@
 			
 			return $result;
 		}
-		
-		// NOTE: we don't care here about type
-		protected function checkNumber($number)
-		{
-			Assert::isScalar($number);
-		}
-		
-		protected function castNumber($number)
-		{
-			if (Assert::checkInteger($number))
-				return (int) $number;
-			
-			return $number;
-		}
 	}
 ?>
