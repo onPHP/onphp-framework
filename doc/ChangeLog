@@ -1,5 +1,13 @@
 # $Id$
 
+2008-12-30	Vladlen Y. Koshelev
+
+	* core/Form/Primitives/PrimitiveIdentifier.class.php,
+	test/core/PrimitiveIdentifierTest.class.php: import handling for empty or
+	noninteger values and test for empty values added.
+
+	* main/DAOs/GenericDAO.class.php: check if identifier is scalar.
+
 2008-12-29	Ivan Y. Khvostishkov
 
 	* main/DAOs/GenericDAO.class.php: makeTotalCountQuery() extracted from

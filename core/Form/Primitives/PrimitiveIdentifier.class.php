@@ -74,26 +74,21 @@
 		
 		public function importValue($value)
 		{
-			try {
-				if ($value instanceof Identifiable) {
-					Assert::isTrue(
-						ClassUtils::isInstanceOf($value, $this->className)
-					);
+			if ($value instanceof Identifiable) {
+				try {
+					Assert::isInstance($value, $this->className);
 					
 					return
 						$this->import(
 							array($this->getName() => $value->getId())
 						);
-				} elseif ($value) {
-					Assert::isPositiveInteger($value);
-					
-					return $this->import(array($this->getName() => $value));
+				
+				} catch (WrongArgumentException $e) {
+					return false;
 				}
-			} catch (WrongArgumentException $e) {
-				return false;
 			}
 			
-			return parent::importValue(null);
+			return parent::importValue($value);
 		}
 		
 		public function import($scope)
@@ -128,19 +123,21 @@
 								$this->methodName, $this->value
 							);
 					
-					if (!$result || !($result instanceof $className)) {
-						$this->value = null;
-						return false;
-					}
+					Assert::isInstance($result, $className);
 					
 					$this->value = $result;
 					
+					return true;
+				
+				} catch (WrongArgumentException $e) {
+					// not imported
 				} catch (ObjectNotFoundException $e) {
-					$this->value = null;
-					return false;
+					// not imported
 				}
 				
-				return true;
+				$this->value = null;
+				
+				return false;
 			}
 			
 			return $result;

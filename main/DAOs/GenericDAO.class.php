@@ -156,6 +156,7 @@
 		//@{
 		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
 		{
+			Assert::isScalar($id);
 			Assert::isNotEmpty($id);
 			
 			if (isset($this->identityMap[$id]))
