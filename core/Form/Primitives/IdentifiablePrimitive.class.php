@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -13,7 +13,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	abstract class IdentifiablePrimitive extends PrimitiveInteger
+	abstract class IdentifiablePrimitive
+		extends PrimitiveInteger // parent class doesn't really matter here
 	{
 		protected $className = null;
 		
@@ -54,6 +55,20 @@
 				return null;
 			
 			return $this->value->getId();
+		}
+		
+		// NOTE: we don't care here about type
+		protected function checkNumber($number)
+		{
+			Assert::isScalar($number);
+		}
+		
+		protected function castNumber($number)
+		{
+			if (Assert::checkInteger($number))
+				return (int) $number;
+			
+			return $number;
 		}
 	}
 ?>
