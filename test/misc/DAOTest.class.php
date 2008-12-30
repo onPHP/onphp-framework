@@ -20,7 +20,6 @@
 				Cache::me()->clean();
 				$this->getSome();
 				
-				$this->nonIntegerIdentifier();
 				$this->persistenceInIdentityMap();
 				
 				$this->racySave();
@@ -145,32 +144,6 @@
 				$this->getListByIdsTest();
 				$this->getListByIdsTest();
 			}
-		}
-		
-		public function nonIntegerIdentifier()
-		{
-			$id = 'non-integer-one';
-			
-			$bin =
-				TestBinaryStuff::create()->
-				setId($id)->
-				setData("\0!bbq!\0");
-			
-			try {
-				TestBinaryStuff::dao()->import($bin);
-			} catch (DatabaseException $e) {
-				die();
-			}
-			
-			Cache::me()->clean();
-			
-			$prm = Primitive::identifier('id')->of('TestBinaryStuff');
-			
-			$this->assertTrue($prm->import(array('id' => $id)));
-			$this->assertIdentical($prm->getValue()->getId(), $id);
-			
-			$this->assertEqual(TestBinaryStuff::dao()->getById($id), $bin);
-			$this->assertEqual(TestBinaryStuff::dao()->dropById($id), 1);
 		}
 		
 		protected function getSome()
