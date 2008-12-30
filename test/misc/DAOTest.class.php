@@ -374,7 +374,7 @@
 		
 		public function nonIntegerIdentifier()
 		{
-			$id = 'non-integer one';
+			$id = 'non-integer-one';
 			
 			$bin =
 				TestBinaryStuff::create()->
