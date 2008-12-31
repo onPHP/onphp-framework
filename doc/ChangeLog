@@ -1,5 +1,9 @@
 # $Id$
 
+2008-12-31	Konstantin V. Arkhipov
+
+	* 1.0.8 released.
+
 2008-12-30	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/PrimitiveEnumeration.class.php,
