@@ -1,0 +1,120 @@
+<?php
+/***************************************************************************
+ *   Copyright (C) 2008 by Denis M. Gabaidulin                             *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU Lesser General Public License as        *
+ *   published by the Free Software Foundation; either version 3 of the    *
+ *   License, or (at your option) any later version.                       *
+ *                                                                         *
+ ***************************************************************************/
+/* $Id$ */
+
+
+	/**
+	 * Try to identify mobile device by http headers
+	 * 
+	 * @ingroup Utils
+	**/
+	
+	final class MobileRequestDetektor
+	{
+		static private $headers = array(
+			'HTTP_X_WAP_PROFILE',
+			'HTTP_PROFILE',
+			// has additional info
+			'HTTP_X_OS_PREFS',
+			// msisdn stuff
+			'HTTP_MSISDN',
+			'HTTP_X_MSISDN',
+			'HTTP_X_NOKIA_MSISDN',
+			'HTTP_X_WAP_NETWORK_CLIENT_MSISDN',
+			'HTTP_X_UP_CALLING_LINE_ID',
+			'HTTP_X_NETWORK_INFO',
+			// device caps
+			'HTTP_X_UP_DEVCAP_ISCOLOR',
+			// ms specific headers
+			'HTTP_UA_PIXELS',
+			'HTTP_UA_COLOR',
+			// TODO: specify value range
+			//'HTTP_UA_OS',
+			//'HTTP_UA_CPU',
+			'HTTP_UA_VOICE',
+			// misc
+			'HTTP_X_NOKIA_BEARER',
+			'HTTP_X_NOKIA_GATEWAY_ID',
+			'HTTP_X_NOKIA_WIA_ACCEPT_ORIGINAL',
+			'HTTP_X_NOKIA_CONNECTION_MODE',
+			'HTTP_X_NOKIA_WTLS',
+			'HTTP_X_WAP_PROXY_COOKIE',
+			'HTTP_X_WAP_TOD_CODED',
+			'HTTP_X_WAP_TOD',
+			'HTTP_X_UNIQUEWCID',
+			'HTTP_WAP_CONNECTION',
+			'HTTP_X_WAP_GATEWAY',
+			'HTTP_X_WAP_SESSION_ID',
+			'HTTP_X_WAP_NETWORK_CLIENT_IP',
+			'HTTP_X_WAP_CLIENT_SDU_SIZE',
+			'HTTP_ACCEPT_APPLICATION',
+			'HTTP_X_ZTGO_BEARERINFO',
+			// lg specific ?
+			'HTTP_BEARER_INDICATION'
+		);
+		
+		/**
+		 * @return MobileRequestDetektor
+		**/
+		public static function create()
+		{
+			return new self;
+		}
+		
+		public function isOperaMini(HttpRequest $request)
+		{
+			// mandatory opera mini header
+			return $request->hasServerVar('HTTP_X_OPERAMINI_FEATURES');
+		}
+		
+		public function isMobile(HttpRequest $request, $checkAccept = false)
+		{
+			if ($this->isOperaMini($request))
+				return true;
+			
+			foreach (self::$headers as $header)
+				if ($request->hasServerVar($header))
+					return true;
+			
+			if ($this->isIphone($request))
+				return true;
+			
+			if ($checkAccept)
+				return $this->isMobileByHttpAccept($request);
+			
+			return false;
+		}
+		
+		public function isIphone(HttpRequest $request)
+		{
+			return (
+				$request->hasServerVar('HTTP_USER_AGENT')
+				&&
+					stripos(
+						$request->getServerVar('HTTP_USER_AGENT'),
+						'iphone'
+					) !== false
+			);
+		}
+		
+		public function isMobileByHttpAccept(HttpRequest $request)
+		{
+			return (
+				$request->hasServerVar('HTTP_ACCEPT')
+				&&
+					stripos(
+						$request->getServerVar('HTTP_ACCEPT'),
+						'vnd.wap.wml'
+					) !== false
+			);
+		}
+	}
+?>
