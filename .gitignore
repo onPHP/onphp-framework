@@ -1,0 +1,7 @@
+global.inc.php
+test/config.inc.php
+test/meta/Auto/
+test/meta/Business/
+test/meta/DAOs/
+test/meta/Proto/
+test/main/data/urls/parser.dump.new
