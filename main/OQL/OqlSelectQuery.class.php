@@ -215,9 +215,10 @@
 					$this->offset->evaluate($this->parameters)
 				);
 			
-			foreach ($this->properties as $property) {
+			$projections = array_merge($this->properties, $this->groupChain);
+			foreach ($projections as $clause) {
 				$criteria->addProjection(
-					$property->
+					$clause->
 						bindAll($this->parameters)->
 						toProjection()
 				);
