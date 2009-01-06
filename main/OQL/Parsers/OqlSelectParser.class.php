@@ -238,6 +238,9 @@
 					$this->error("expecting 'offset' expression");
 			}
 			
+			if ($token = $this->tokenizer->peek())
+				$this->error("unexpected: {$this->getTokenValue($token, true)}");
+			
 			return self::FINAL_STATE;
 		}
 	}
