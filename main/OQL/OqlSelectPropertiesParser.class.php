@@ -51,7 +51,6 @@
 		{
 			if ($this->state == self::INITIAL_STATE) {
 				$list = $this->getCommaSeparatedList(
-					0,	// FIXME: remove
 					'expecting expression or aggregate function call'
 				);
 				
@@ -63,11 +62,9 @@
 		}
 		
 		/**
-		 * @throws SyntaxErrorException
-		 * @throws WrongArgumentException
 		 * @return OqlQueryParameter
 		**/
-		protected function getArgumentExpression($context, $message)
+		protected function getArgumentExpression()
 		{
 			$token = $this->tokenizer->peek();
 			
