@@ -56,7 +56,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectProjectionClause
+		 * @return OqlSelectHavingClause
 		**/
 		public static function having($clause)
 		{

@@ -10,12 +10,15 @@
  ****************************************************************************/
 /* $Id$ */
 
-	final class OqlSelectHavingParser extends OqlParser
+	/**
+	 * @ingroup OQL
+	**/
+	final class OqlSelectHavingClause extends OqlQueryClause
 	{
-		const HAVING_CLASS = 'HavingProjection';
+		private $expression = null;
 		
 		/**
-		 * @return OqlSelectHavingParser
+		 * @return OqlSelectHavingClause
 		**/
 		public static function create()
 		{
@@ -23,26 +26,33 @@
 		}
 		
 		/**
-		 * @return OqlSelectHavingClause
+		 * @return OqlQueryExpression
 		**/
-		protected function makeOqlObject()
+		public function getExpression()
 		{
-			return OqlSelectHavingClause::create();
+			return $this->expression;
 		}
 		
-		protected function handleState()
+		/**
+		 * @return OqlSelectHavingClause
+		**/
+		public function setExpression(OqlQueryExpression $expression)
 		{
-			if ($this->state == self::INITIAL_STATE) {
-				if ($argument = $this->getLogicExpression()) {
-					$this->oqlObject->setExpression(
-						$this->makeQueryExpression(self::HAVING_CLASS, $argument)
-					);
-				
-				} else
-					$this->error("expecting 'having' expression");
-			}
+			Assert::isInstance($expression->getClassName(), 'HavingProjection');
 			
-			return self::FINAL_STATE;
+			$this->expression = $expression;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return HavingProjection
+		**/
+		public function toProjection()
+		{
+			Assert::isNotNull($this->expression);
+			
+			return $this->expression->evaluate($this->parameters);
 		}
 	}
 ?>

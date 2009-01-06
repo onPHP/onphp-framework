@@ -238,7 +238,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function addHaving(OqlSelectProjectionClause $clause)
+		public function addHaving(OqlSelectHavingClause $clause)
 		{
 			$this->havingChain[] = $clause;
 			
@@ -248,7 +248,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setHaving(OqlSelectProjectionClause $clause)
+		public function setHaving(OqlSelectHavingClause $clause)
 		{
 			$this->havingChain = array();
 			$this->havingChain[] = $clause;
