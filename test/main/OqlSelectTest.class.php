@@ -858,8 +858,7 @@
 			$oqlQuery = OQL::select($query);
 			
 			if (is_array($bindings))
-				foreach ($bindings as $key => $value)
-					$oqlQuery->bind($key, $value);
+				$oqlQuery->bindAll($bindings);
 			
 			$dialect = PostgresDialect::me();
 			
