@@ -100,11 +100,13 @@
 			if ($this->checkKeyword($token, 'from'))
 				return self::FROM_STATE;
 			
-			$this->oqlObject->addProperties(
-				OqlSelectPropertiesParser::create()->
-					setTokenizer($this->tokenizer)->
-					parse()
-			);
+			$clause = OqlSelectPropertiesParser::create()->
+				setTokenizer($this->tokenizer)->
+				parse();
+			
+			$this->oqlObject->addProperties($clause);
+			if ($clause->isDistinct())
+				$this->oqlObject->setDistinct(true);
 			
 			return self::FROM_STATE;
 		}
