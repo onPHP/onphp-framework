@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2008-2009 by Vladlen Y. Koshelev                         *
+ *   Copyright (C) 2009 by Vladlen Y. Koshelev                              *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -13,26 +13,50 @@
 	/**
 	 * @ingroup OQL
 	**/
-	abstract class OqlQuery extends OqlQueryClause
+	abstract class OqlQueryClause implements Stringable
 	{
-		protected $dao = null;
+		protected $parameters = array();
 		
-		/**
-		 * @return ProtoDAO
-		**/
-		public function getDao()
+		private $query = null;
+		
+		public function getQuery()
 		{
-			return $this->dao;
+			return $this->query;
 		}
 		
 		/**
-		 * @return OqlQuery
+		 * @return OqlQueryClause
 		**/
-		public function setDao(ProtoDAO $dao)
+		public function setQuery($query)
 		{
-			$this->dao = $dao;
+			$this->query = $query;
 			
 			return $this;
+		}
+		
+		/**
+		 * @return OqlQueryClause
+		**/
+		public function bind($index, $value)
+		{
+			$this->parameters[$index] = $value;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlQueryClause
+		**/
+		public function bindNext($value)
+		{
+			end($this->parameters);
+			
+			return $this->bind(key($this->parameters) + 1, $value);
+		}
+		
+		public function toString()
+		{
+			return $this->query;
 		}
 	}
 ?>
