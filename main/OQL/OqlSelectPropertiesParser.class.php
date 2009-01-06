@@ -40,11 +40,11 @@
 		}
 		
 		/**
-		 * @return OqlSelectPropertiesClause
+		 * @return OqlSelectProjectionClause
 		**/
 		protected function makeOqlObject()
 		{
-			return OqlSelectPropertiesClause::create();
+			return OqlSelectProjectionClause::create();
 		}
 		
 		protected function handleState()
@@ -56,7 +56,7 @@
 				);
 				
 				foreach ($list as $argument)
-					$this->oqlObject->addProperty($argument);
+					$this->oqlObject->add($argument);
 			}
 			
 			return self::FINAL_STATE;
