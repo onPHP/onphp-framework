@@ -38,7 +38,8 @@
 		**/
 		public function setExpression(OqlQueryExpression $expression)
 		{
-			Assert::isInstance($expression->getClassName(), 'LogicalObject');
+			if (!$expression instanceof OqlInExpression)
+				Assert::isInstance($expression->getClassName(), 'LogicalObject');
 			
 			$this->expression = $expression;
 			
