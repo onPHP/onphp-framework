@@ -42,9 +42,6 @@
 		const LIMIT_STATE		= 7;
 		const OFFSET_STATE		= 8;
 		
-		// contexts for comma separated lists
-		const ORDER_BY_CONTEXT	= 4;
-		
 		/**
 		 * @return OqlSelectParser
 		**/
@@ -179,13 +176,11 @@
 			if ($this->checkKeyword($this->tokenizer->peek(), 'order by')) {
 				$this->tokenizer->next();
 				
-				$list = $this->getCommaSeparatedList(
-					self::ORDER_BY_CONTEXT,
-					"expecting expression in 'order by'"
+				$this->oqlObject->addOrder(
+					OqlSelectOrderByParser::create()->
+						setTokenizer($this->tokenizer)->
+						parse()
 				);
-				
-				foreach ($list as $argument)
-					$this->oqlObject->addOrder($argument);
 			}
 			
 			return self::HAVING_STATE;
@@ -246,36 +241,6 @@
 			}
 			
 			return self::FINAL_STATE;
-		}
-		
-		/**
-		 * @throws SyntaxErrorException
-		 * @throws WrongArgumentException
-		 * @return OqlQueryParameter
-		**/
-		protected function getArgumentExpression($context, $message)
-		{
-			switch ($context) {
-				case self::ORDER_BY_CONTEXT:
-					$expression = $this->getLogicExpression();
-					
-					$token = $this->tokenizer->peek();
-					if ($this->checkKeyword($token, array('asc', 'desc'))) {
-						$direction = $token->getValue() == 'asc';
-						$this->tokenizer->next();
-						
-					} else
-						$direction = null;
-					
-					$argument = new OqlOrderByExpression($expression, $direction);
-					
-					break;
-					
-				default:
-					new WrongArgumentException("unknown context '{$context}'");
-			}
-			
-			return $argument;
 		}
 	}
 ?>
