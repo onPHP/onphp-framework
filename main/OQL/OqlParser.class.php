@@ -437,7 +437,7 @@
 					$this->openParentheses(true, 'in expression: '.$isNotString.'in');
 					
 					$list = $this->getCommaSeparatedList(
-						self::IN_CONTEXT,
+						0,	// FIXME: remove
 						'expecting constant or substitution in expression: '
 						.$isNotString.'in'
 					);
@@ -650,7 +650,7 @@
 		**/
 		protected function getArgumentExpression($context, $message)
 		{
-			return null;
+			return $this->getConstantExpression();
 		}
 		
 		// FIXME: drop context
