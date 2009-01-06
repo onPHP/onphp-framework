@@ -204,7 +204,7 @@
 			return $this;
 		}
 		
-		public function getOrderChain()
+		public function getOrder()
 		{
 			return $this->orderChain;
 		}
@@ -212,9 +212,30 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function addOrder(OqlQueryExpression $order)
+		public function addOrder(OqlSelectOrderByClause $clause)
 		{
-			$this->orderChain[] = $order;
+			$this->orderChain[] = $clause;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function setOrder(OqlSelectOrderByClause $clause)
+		{
+			$this->orderChain = array();
+			$this->orderChain[] = $clause;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function dropOrder()
+		{
+			$this->orderChain = array();
 			
 			return $this;
 		}
@@ -255,20 +276,12 @@
 					$this->whereExpression->evaluate($this->parameters)
 				);
 			
-			if ($this->orderChain) {
-				if (count($this->orderChain) == 1) {
-					$oqlOrder = reset($this->orderChain);
-					$order = $oqlOrder->evaluate($this->parameters);
-					
-				} else {
-					$order = OrderChain::create();
-					foreach ($this->orderChain as $oqlOrder)
-						$order->add(
-							$oqlOrder->evaluate($this->parameters)
-						);
-				}
-				
-				$criteria->addOrder($order);
+			foreach ($this->orderChain as $clause) {
+				$criteria->addOrder(
+					$clause->
+						bindAll($this->parameters)->
+						toOrder()
+				);
 			}
 			
 			return $criteria;
