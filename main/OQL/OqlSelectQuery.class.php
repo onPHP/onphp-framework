@@ -17,9 +17,8 @@
 	{
 		private $properties		= array();
 		private $groupChain		= array();
+		private $havingChain	= array();
 		
-		// FIXME: drop projections
-		private $projections		= array();
 		private $whereExpression	= null;
 		private $distinct			= false;
 		private $limit				= null;
@@ -48,6 +47,7 @@
 			
 			return $this;
 		}
+		
 		/**
 		 * @return OqlSelectQuery
 		**/
@@ -83,6 +83,7 @@
 			
 			return $this;
 		}
+		
 		/**
 		 * @return OqlSelectQuery
 		**/
@@ -104,17 +105,38 @@
 			return $this;
 		}
 		
-		public function getProjections()
+		public function getHaving()
 		{
-			return $this->projections;
+			return $this->havingChain;
 		}
 		
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function addProjection(OqlQueryExpression $projection)
+		public function addHaving(OqlSelectProjectionClause $clause)
 		{
-			$this->projections[] = $projection;
+			$this->havingChain[] = $clause;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function setHaving(OqlSelectProjectionClause $clause)
+		{
+			$this->havingChain = array();
+			$this->havingChain[] = $clause;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function dropHaving()
+		{
+			$this->havingChain = array();
 			
 			return $this;
 		}
@@ -215,7 +237,11 @@
 					$this->offset->evaluate($this->parameters)
 				);
 			
-			$projections = array_merge($this->properties, $this->groupChain);
+			$projections = array_merge(
+				$this->properties,
+				$this->groupChain,
+				$this->havingChain
+			);
 			foreach ($projections as $clause) {
 				$criteria->addProjection(
 					$clause->
