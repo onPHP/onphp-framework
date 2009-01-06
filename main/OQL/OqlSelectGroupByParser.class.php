@@ -34,7 +34,6 @@
 		{
 			if ($this->state == self::INITIAL_STATE) {
 				$list = $this->getCommaSeparatedList(
-					0,	// FIXME: remove
 					"expecting identifier in 'group by' expression"
 				);
 				
@@ -49,11 +48,9 @@
 		}
 		
 		/**
-		 * @throws SyntaxErrorException
-		 * @throws WrongArgumentException
 		 * @return OqlQueryParameter
 		**/
-		protected function getArgumentExpression($context, $message)
+		protected function getArgumentExpression()
 		{
 			return $this->getIdentifierExpression();
 		}

@@ -34,7 +34,6 @@
 		{
 			if ($this->state == self::INITIAL_STATE) {
 				$list = $this->getCommaSeparatedList(
-					0,	// FIXME: remove
 					"expecting expression in 'order by'"
 				);
 				
@@ -48,7 +47,7 @@
 		/**
 		 * @return OqlOrderByExpression
 		**/
-		protected function getArgumentExpression($context, $message)
+		protected function getArgumentExpression()
 		{
 			$expression = $this->getLogicExpression();
 			
