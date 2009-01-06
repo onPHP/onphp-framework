@@ -40,11 +40,11 @@
 		}
 		
 		/**
-		 * @return OqlSelectProjectionClause
+		 * @return OqlSelectPropertiesClause
 		**/
 		protected function makeOqlObject()
 		{
-			return OqlSelectProjectionClause::create();
+			return OqlSelectPropertiesClause::create();
 		}
 		
 		protected function handleState()

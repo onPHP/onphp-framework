@@ -56,7 +56,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function addProperties(OqlSelectProjectionClause $clause)
+		public function addProperties(OqlSelectPropertiesClause $clause)
 		{
 			$this->properties[] = $clause;
 			
@@ -66,7 +66,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setProperties(OqlSelectProjectionClause $clause)
+		public function setProperties(OqlSelectPropertiesClause $clause)
 		{
 			$this->properties = array();
 			$this->properties[] = $clause;

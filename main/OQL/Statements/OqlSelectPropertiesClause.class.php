@@ -13,29 +13,31 @@
 	/**
 	 * @ingroup OQL
 	**/
-	class OqlSelectProjectionClause extends OqlQueryListedClause
+	final class OqlSelectPropertiesClause extends OqlSelectProjectionClause
 	{
+		private $distinct = false;
+		
 		/**
-		 * @return OqlSelectProjectionClause
+		 * @return OqlSelectPropertiesClause
 		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
-		/**
-		 * @return ProjectionChain
-		**/
-		public function toProjection()
+		public function isDistinct()
 		{
-			$projection = Projection::chain();
-			foreach ($this->list as $property) {
-				$projection->add(
-					$property->evaluate($this->parameters)
-				);
-			}
+			return $this->distinct;
+		}
+		
+		/**
+		 * @return OqlSelectPropertiesClause
+		**/
+		public function setDistinct($orly = true)
+		{
+			$this->distinct = ($orly === true);
 			
-			return $projection;
+			return $this;
 		}
 	}
 ?>
