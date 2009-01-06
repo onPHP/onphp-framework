@@ -13,8 +13,10 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlWhereClause extends OqlQueryListedClause
+	final class OqlWhereClause extends OqlQueryClause
 	{
+		private $expression = null;
+		
 		/**
 		 * @return OqlWhereClause
 		**/
@@ -24,16 +26,33 @@
 		}
 		
 		/**
-		 * @return LogicalChain
+		 * @return OqlQueryExpression
 		**/
-		public function toExpression()
+		public function getExpression()
 		{
-			$chain = array();
-			foreach ($this->list as $property) {
-				$chain[] = $property->evaluate($this->parameters);
-			}
+			return $this->expression;
+		}
+		
+		/**
+		 * @return OqlWhereClause
+		**/
+		public function setExpression(OqlQueryExpression $expression)
+		{
+			Assert::isInstance($expression->getClassName(), 'LogicalObject');
 			
-			return Expression::andBlock($chain);
+			$this->expression = $expression;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return LogicalObject
+		**/
+		public function toLogic()
+		{
+			Assert::isNotNull($this->expression);
+			
+			return $this->expression->evaluate($this->parameters);
 		}
 	}
 ?>
