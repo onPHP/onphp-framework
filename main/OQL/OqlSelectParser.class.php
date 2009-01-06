@@ -43,7 +43,6 @@
 		const OFFSET_STATE		= 8;
 		
 		// contexts for comma separated lists
-		const IN_CONTEXT		= 2;
 		const ORDER_BY_CONTEXT	= 4;
 		
 		/**
@@ -257,10 +256,6 @@
 		protected function getArgumentExpression($context, $message)
 		{
 			switch ($context) {
-				case self::IN_CONTEXT:
-					$argument = $this->getConstantExpression();
-					break;
-				
 				case self::ORDER_BY_CONTEXT:
 					$expression = $this->getLogicExpression();
 					
