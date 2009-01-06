@@ -51,7 +51,7 @@
 		{
 			if ($this->state == self::INITIAL_STATE) {
 				$list = $this->getCommaSeparatedList(
-					self::PROPERTY_CONTEXT,
+					0,	// FIXME: remove
 					'expecting expression or aggregate function call'
 				);
 				
