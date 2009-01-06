@@ -34,6 +34,7 @@
 		{
 			if ($this->state == self::INITIAL_STATE) {
 				$list = $this->getCommaSeparatedList(
+					array($this, 'getArgumentExpression'),
 					"expecting expression in 'order by'"
 				);
 				
