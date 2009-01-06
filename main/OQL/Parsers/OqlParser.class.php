@@ -219,13 +219,13 @@
 		protected function checkParentheses($message = null)
 		{
 			if ($this->openParentheses(false, $message))
-				$this->error("unexpected '(' {$message}");
+				$this->error("unexpected '('", $message);
 				
 			elseif ($this->closeParentheses(false, $message))
-				$this->error("unexpected ')' {$message}");
+				$this->error("unexpected ')'", $message);
 				
 			if ($this->parentheses > 0)
-				$this->error("unexpected '(' {$message}");
+				$this->error("unexpected '('", $message);
 			
 			return true;
 		}
@@ -244,7 +244,7 @@
 				return true;
 				
 			} elseif ($required)
-				$this->error("expecting ')' {$message}");
+				$this->error("expecting ')'", $message);
 			
 			return false;
 		}
@@ -260,12 +260,12 @@
 				$this->tokenizer->next();
 				$this->parentheses--;
 				if ($this->parentheses < 0)
-					$this->error("unexpected ')' {$message}");
+					$this->error("unexpected ')'", $message);
 				
 				return true;
 				
 			} elseif ($required)
-				$this->error("expecting ')' {$message}");
+				$this->error("expecting ')'", $message);
 			
 			return false;
 		}
@@ -718,8 +718,11 @@
 		/**
 		 * @throws SyntaxErrorException
 		**/
-		protected function error($message)
+		protected function error($message, $extraMessage = null)
 		{
+			if ($extraMessage)
+				$message .= ' '.$extraMessage;
+			
 			throw new SyntaxErrorException(
 				$message,
 				$this->tokenizer->getLine(),
