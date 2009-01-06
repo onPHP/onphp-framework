@@ -15,17 +15,15 @@
 	**/
 	final class OqlSelectQuery extends OqlQuery
 	{
+		private $distinct		= false;
 		private $properties		= array();
-		private $groupChain		= array();
-		private $havingChain	= array();
-		
 		private $where			= array();
 		private $whereLogic		= array();
-		
-		private $distinct			= false;
-		private $limit				= null;
-		private $offset				= null;
-		private $orderChain			= array();
+		private $groupChain		= array();
+		private $orderChain		= array();
+		private $havingChain	= array();
+		private $limit			= null;
+		private $offset			= null;
 		
 		/**
 		 * @return OqlSelectQuery
@@ -33,6 +31,21 @@
 		public static function create()
 		{
 			return new self;
+		}
+		
+		public function isDistinct()
+		{
+			return $this->distinct;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function setDistinct($orly = true)
+		{
+			$this->distinct = ($orly === true);
+			
+			return $this;
 		}
 		
 		public function getProperties()
@@ -67,78 +80,6 @@
 		public function dropProperties()
 		{
 			$this->properties = array();
-			
-			return $this;
-		}
-		
-		public function getGroupBy()
-		{
-			return $this->groupChain;
-		}
-		
-		/**
-		 * @return OqlSelectQuery
-		**/
-		public function addGroupBy(OqlSelectProjectionClause $clause)
-		{
-			$this->groupChain[] = $clause;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlSelectQuery
-		**/
-		public function setGroupBy(OqlSelectProjectionClause $clause)
-		{
-			$this->groupChain = array();
-			$this->groupChain[] = $clause;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlSelectQuery
-		**/
-		public function dropGroupBy()
-		{
-			$this->groupChain = array();
-			
-			return $this;
-		}
-		
-		public function getHaving()
-		{
-			return $this->havingChain;
-		}
-		
-		/**
-		 * @return OqlSelectQuery
-		**/
-		public function addHaving(OqlSelectProjectionClause $clause)
-		{
-			$this->havingChain[] = $clause;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlSelectQuery
-		**/
-		public function setHaving(OqlSelectProjectionClause $clause)
-		{
-			$this->havingChain = array();
-			$this->havingChain[] = $clause;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlSelectQuery
-		**/
-		public function dropHaving()
-		{
-			$this->havingChain = array();
 			
 			return $this;
 		}
@@ -217,53 +158,38 @@
 			return $this;
 		}
 		
-		public function isDistinct()
+		public function getGroupBy()
 		{
-			return $this->distinct;
+			return $this->groupChain;
 		}
 		
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setDistinct($orly = true)
+		public function addGroupBy(OqlSelectProjectionClause $clause)
 		{
-			$this->distinct = ($orly === true);
+			$this->groupChain[] = $clause;
 			
 			return $this;
 		}
 		
 		/**
-		 * @return OqlQueryParameter
-		**/
-		public function getLimit()
-		{
-			return $this->limit;
-		}
-		
-		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setLimit(OqlQueryParameter $limit)
+		public function setGroupBy(OqlSelectProjectionClause $clause)
 		{
-			$this->limit = $limit;
+			$this->groupChain = array();
+			$this->groupChain[] = $clause;
 			
 			return $this;
 		}
 		
 		/**
-		 * @return OqlQueryParameter
-		**/
-		public function getOffset()
-		{
-			return $this->offset;
-		}
-		
-		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setOffset(OqlQueryParameter $offset)
+		public function dropGroupBy()
 		{
-			$this->offset = $offset;
+			$this->groupChain = array();
 			
 			return $this;
 		}
@@ -304,6 +230,77 @@
 			return $this;
 		}
 		
+		public function getHaving()
+		{
+			return $this->havingChain;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function addHaving(OqlSelectProjectionClause $clause)
+		{
+			$this->havingChain[] = $clause;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function setHaving(OqlSelectProjectionClause $clause)
+		{
+			$this->havingChain = array();
+			$this->havingChain[] = $clause;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function dropHaving()
+		{
+			$this->havingChain = array();
+			
+			return $this;
+		}
+		/**
+		 * @return OqlQueryParameter
+		**/
+		public function getLimit()
+		{
+			return $this->limit;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function setLimit(OqlQueryParameter $limit)
+		{
+			$this->limit = $limit;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlQueryParameter
+		**/
+		public function getOffset()
+		{
+			return $this->offset;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function setOffset(OqlQueryParameter $offset)
+		{
+			$this->offset = $offset;
+			
+			return $this;
+		}
+		
 		/**
 		 * @return Criteria
 		**/
@@ -311,16 +308,6 @@
 		{
 			$criteria = Criteria::create($this->dao)->
 				setDistinct($this->distinct);
-			
-			if ($this->limit)
-				$criteria->setLimit(
-					$this->limit->evaluate($this->parameters)
-				);
-			
-			if ($this->offset)
-				$criteria->setOffset(
-					$this->offset->evaluate($this->parameters)
-				);
 			
 			$projections = array_merge(
 				$this->properties,
@@ -373,6 +360,16 @@
 						toOrder()
 				);
 			}
+			
+			if ($this->limit)
+				$criteria->setLimit(
+					$this->limit->evaluate($this->parameters)
+				);
+			
+			if ($this->offset)
+				$criteria->setOffset(
+					$this->offset->evaluate($this->parameters)
+				);
 			
 			return $criteria;
 		}
