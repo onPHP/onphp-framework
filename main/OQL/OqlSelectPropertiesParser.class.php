@@ -58,6 +58,8 @@
 				foreach ($list as $argument)
 					$this->oqlObject->addProperty($argument);
 			}
+			
+			return self::FINAL_STATE;
 		}
 		
 		/**
