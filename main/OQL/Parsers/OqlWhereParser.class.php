@@ -33,7 +33,7 @@
 			if ($this->state == self::INITIAL_STATE) {
 				$argument = $this->getLogicExpression();
 				if ($argument instanceof OqlQueryExpression)
-					$this->oqlObject->add($argument);
+					$this->oqlObject->setExpression($argument);
 				else
 					$this->error("expecting 'where' expression");
 			}
