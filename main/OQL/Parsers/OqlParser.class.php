@@ -323,7 +323,6 @@
 			return null;
 		}
 		
-		// TODO: move "where" specific logic (like, ilike, similar to) to OqlWhereParser
 		/**
 		 * @return OqlQueryExpression
 		**/
