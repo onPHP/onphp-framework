@@ -42,7 +42,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function addProperties(OqlSelectPropertiesClause $clause)
+		public function addProperties(OqlSelectProjectionClause $clause)
 		{
 			$this->properties[] = $clause;
 			
@@ -51,7 +51,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setProperties(OqlSelectPropertiesClause $clause)
+		public function setProperties(OqlSelectProjectionClause $clause)
 		{
 			$this->properties = array();
 			$this->properties[] = $clause;
@@ -77,7 +77,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function addGroupBy(OqlSelectGroupByClause $clause)
+		public function addGroupBy(OqlSelectProjectionClause $clause)
 		{
 			$this->groupChain[] = $clause;
 			
@@ -86,7 +86,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setGroupBy(OqlSelectGroupByClause $clause)
+		public function setGroupBy(OqlSelectProjectionClause $clause)
 		{
 			$this->groupChain = array();
 			$this->groupChain[] = $clause;

@@ -28,11 +28,11 @@
 		}
 		
 		/**
-		 * @return OqlSelectGroupByClause
+		 * @return OqlSelectProjectionClause
 		**/
 		protected function makeOqlObject()
 		{
-			return OqlSelectGroupByClause::create();
+			return OqlSelectProjectionClause::create();
 		}
 		
 		protected function handleState()
