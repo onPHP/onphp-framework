@@ -34,6 +34,7 @@
 		{
 			if ($this->state == self::INITIAL_STATE) {
 				$list = $this->getCommaSeparatedList(
+					array($this, 'getIdentifierExpression'),
 					"expecting identifier in 'group by' expression"
 				);
 				
@@ -45,14 +46,6 @@
 			}
 			
 			return self::FINAL_STATE;
-		}
-		
-		/**
-		 * @return OqlQueryParameter
-		**/
-		protected function getArgumentExpression()
-		{
-			return $this->getIdentifierExpression();
 		}
 	}
 ?>

@@ -434,6 +434,7 @@
 					$this->openParentheses(true, 'in expression: '.$isNotString.'in');
 					
 					$list = $this->getCommaSeparatedList(
+						array($this, 'getConstantExpression'),
 						'expecting constant or substitution in expression: '
 						.$isNotString.'in'
 					);
@@ -640,15 +641,7 @@
 			return $expression;
 		}
 		
-		/**
-		 * @return OqlQueryParameter
-		**/
-		protected function getArgumentExpression()
-		{
-			return $this->getConstantExpression();
-		}
-		
-		protected function getCommaSeparatedList($message)
+		protected function getCommaSeparatedList($callback, $message)
 		{
 			$isComma = false;
 			$list = array();
@@ -657,7 +650,7 @@
 				if ($isComma)
 					$this->tokenizer->next();
 				
-				if ($argument = $this->getArgumentExpression())
+				if ($argument = call_user_func($callback))
 					$list[] = $argument;
 				else
 					$this->error($message);
