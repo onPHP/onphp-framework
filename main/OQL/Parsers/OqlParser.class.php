@@ -119,9 +119,6 @@
 			
 			$this->checkParentheses();
 			
-			if ($token = $this->tokenizer->peek())
-				$this->error("unexpected: {$this->getTokenValue($token, true)}");
-			
 			return $this->oqlObject;
 		}
 		
