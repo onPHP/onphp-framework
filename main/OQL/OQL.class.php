@@ -24,7 +24,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectProjectionClause
+		 * @return OqlSelectPropertiesClause
 		**/
 		public static function properties($clause)
 		{
