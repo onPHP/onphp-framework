@@ -194,7 +194,7 @@
 			return $this;
 		}
 		
-		public function getOrder()
+		public function getOrderBy()
 		{
 			return $this->orderChain;
 		}
@@ -202,7 +202,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function addOrder(OqlSelectOrderByClause $clause)
+		public function addOrderBy(OqlSelectOrderByClause $clause)
 		{
 			$this->orderChain[] = $clause;
 			
@@ -212,7 +212,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setOrder(OqlSelectOrderByClause $clause)
+		public function setOrderBy(OqlSelectOrderByClause $clause)
 		{
 			$this->orderChain = array();
 			$this->orderChain[] = $clause;
@@ -223,7 +223,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function dropOrder()
+		public function dropOrderBy()
 		{
 			$this->orderChain = array();
 			

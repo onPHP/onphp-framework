@@ -174,7 +174,7 @@
 			if ($this->checkKeyword($this->tokenizer->peek(), 'order by')) {
 				$this->tokenizer->next();
 				
-				$this->oqlObject->addOrder(
+				$this->oqlObject->addOrderBy(
 					OqlSelectOrderByParser::create()->
 						setTokenizer($this->tokenizer)->
 						parse()
