@@ -100,7 +100,7 @@
 			// property
 			if ($this->checkKeyword($token, 'distinct')) {
 				$token = $this->tokenizer->next();
-				$this->query->setDistinct(true);
+				$this->oqlObject->setDistinct(true);
 			}
 			
 			return $this->makeQueryExpression(
