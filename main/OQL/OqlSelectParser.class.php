@@ -46,13 +46,6 @@
 		const IN_CONTEXT		= 2;
 		const ORDER_BY_CONTEXT	= 4;
 		
-		// class map
-		const HAVING_PROJECTION		= 2;
-		
-		private static $classMap = array(
-			self::HAVING_PROJECTION		=> 'HavingProjection'
-		);
-		
 		/**
 		 * @return OqlSelectParser
 		**/
@@ -204,17 +197,11 @@
 			if ($this->checkKeyword($this->tokenizer->peek(), 'having')) {
 				$this->tokenizer->next();
 				
-				if ($argument = $this->getLogicExpression())
-					$this->oqlObject->addProjection(
-						$this->makeQueryExpression(
-							self::$classMap[self::HAVING_PROJECTION],
-							$argument
-						)
-					);
-				else
-					$this->error("expecting 'having' expression");
-				
-				$this->checkParentheses("in 'having' expression");
+				$this->oqlObject->addHaving(
+					OqlSelectHavingParser::create()->
+						setTokenizer($this->tokenizer)->
+						parse()
+				);
 			}
 			
 			return self::LIMIT_STATE;
