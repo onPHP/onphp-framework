@@ -12,12 +12,7 @@
 
 	final class OqlSelectGroupByParser extends OqlParser
 	{
-		// class map
-		const GROUP_BY_PROJECTION	= 1;
-		
-		private static $classMap = array(
-			self::GROUP_BY_PROJECTION	=> 'GroupByPropertyProjection'
-		);
+		const GROUP_BY_CLASS = 'GroupByPropertyProjection';
 		
 		/**
 		 * @return OqlSelectGroupByParser
@@ -43,13 +38,11 @@
 					"expecting identifier in 'group by' expression"
 				);
 				
-				foreach ($list as $argument)
+				foreach ($list as $argument) {
 					$this->oqlObject->add(
-						$this->makeQueryExpression(
-							self::$classMap[self::GROUP_BY_PROJECTION],
-							$argument
-						)
+						$this->makeQueryExpression(self::GROUP_BY_CLASS, $argument)
 					);
+				}
 			}
 			
 			return self::FINAL_STATE;
