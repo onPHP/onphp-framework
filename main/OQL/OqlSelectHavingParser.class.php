@@ -12,12 +12,7 @@
 
 	final class OqlSelectHavingParser extends OqlParser
 	{
-		// class map
-		const HAVING_PROJECTION		= 1;
-		
-		private static $classMap = array(
-			self::HAVING_PROJECTION		=> 'HavingProjection'
-		);
+		const HAVING_CLASS = 'HavingProjection';
 		
 		/**
 		 * @return OqlSelectHavingParser
@@ -38,14 +33,12 @@
 		protected function handleState()
 		{
 			if ($this->state == self::INITIAL_STATE) {
-				if ($argument = $this->getLogicExpression())
+				if ($argument = $this->getLogicExpression()) {
 					$this->oqlObject->add(
-						$this->makeQueryExpression(
-							self::$classMap[self::HAVING_PROJECTION],
-							$argument
-						)
+						$this->makeQueryExpression(self::HAVING_CLASS, $argument)
 					);
-				else
+				
+				} else
 					$this->error("expecting 'having' expression");
 			}
 			
