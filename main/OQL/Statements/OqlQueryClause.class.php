@@ -42,7 +42,8 @@
 		**/
 		public function bindAll(array $parameters)
 		{
-			$this->parameters = $parameters;
+			if ($parameters)
+				$this->parameters = $parameters;
 			
 			return $this;
 		}
