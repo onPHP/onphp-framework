@@ -6,7 +6,7 @@ $Id$
 		[ "where" <where_clause> ]
 		[ "group by" <group_by_clause> ]
 		[ "order by" <order_by_clause> ]
-	[ "having" <having_clause> ]
+		[ "having" <having_clause> ]
 		[ "limit" <limit_clause> ]
 		[ "offset" <offset_clause> ]
 	
