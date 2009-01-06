@@ -111,7 +111,7 @@
 			}
 			
 			$this->state = self::INITIAL_STATE;
-			$this->oqlObject = $this->makeOqlObject()->setQuery($string);
+			$this->oqlObject = $this->makeOqlObject();
 			$this->parentheses = 0;
 			
 			while ($this->state != self::FINAL_STATE)

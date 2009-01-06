@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup OQL
 	**/
-	class OqlQueryParameter
+	class OqlQueryParameter implements Stringable
 	{
 		private $value		= null;
 		private $bindable	= false;
