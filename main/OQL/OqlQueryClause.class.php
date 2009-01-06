@@ -54,6 +54,16 @@
 			return $this->bind(key($this->parameters) + 1, $value);
 		}
 		
+		/**
+		 * @return OqlQueryClause
+		**/
+		public function bindAll(array $parameters)
+		{
+			$this->parameters = $parameters;
+			
+			return $this;
+		}
+		
 		public function toString()
 		{
 			return $this->query;
