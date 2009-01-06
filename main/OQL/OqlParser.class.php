@@ -644,6 +644,7 @@
 			return $expression;
 		}
 		
+		// FIXME: drop context, message
 		/**
 		 * @return OqlQueryParameter
 		**/
@@ -652,6 +653,7 @@
 			return null;
 		}
 		
+		// FIXME: drop context
 		protected function getCommaSeparatedList($context, $message)
 		{
 			$isComma = false;
