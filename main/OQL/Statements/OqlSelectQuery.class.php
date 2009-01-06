@@ -232,6 +232,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return OqlQueryParameter
+		**/
 		public function getLimit()
 		{
 			return $this->limit;
@@ -247,6 +250,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return OqlQueryParameter
+		**/
 		public function getOffset()
 		{
 			return $this->offset;
