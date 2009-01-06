@@ -750,7 +750,7 @@
 				)->
 				assertSyntaxError(
 					'count) from',
-					"expecting 'from' clause"
+					"unexpected ')'"
 				)->
 				assertSyntaxError(
 					'count( from',
@@ -794,7 +794,7 @@
 				)->
 				assertSyntaxError(
 					'from TestUser where ((e=1)))',
-					"unexpected ')' in 'where' expression"
+					"unexpected ')'"
 				)->
 				assertSyntaxError(
 					'from TestUser where a is',
