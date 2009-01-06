@@ -144,13 +144,11 @@
 			if ($this->checkKeyword($this->tokenizer->peek(), 'where')) {
 				$this->tokenizer->next();
 				
-				$argument = $this->getLogicExpression();
-				if ($argument instanceof OqlQueryExpression)
-					$this->oqlObject->setWhereExpression($argument);
-				else
-					$this->error("expecting 'where' expression");
-				
-				$this->checkParentheses("in 'where' expression");
+				$this->oqlObject->addWhere(
+					OqlWhereParser::create()->
+						setTokenizer($this->tokenizer)->
+						parse()
+				);
 			}
 			
 			return self::GROUP_BY_STATE;
