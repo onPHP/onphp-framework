@@ -13,26 +13,9 @@
 	/**
 	 * @ingroup OQL
 	**/
-	abstract class OqlQueryClause implements Stringable
+	abstract class OqlQueryClause
 	{
 		protected $parameters = array();
-		
-		private $query = null;
-		
-		public function getQuery()
-		{
-			return $this->query;
-		}
-		
-		/**
-		 * @return OqlQueryClause
-		**/
-		public function setQuery($query)
-		{
-			$this->query = $query;
-			
-			return $this;
-		}
 		
 		/**
 		 * @return OqlQueryClause
@@ -62,11 +45,6 @@
 			$this->parameters = $parameters;
 			
 			return $this;
-		}
-		
-		public function toString()
-		{
-			return $this->query;
 		}
 	}
 ?>
