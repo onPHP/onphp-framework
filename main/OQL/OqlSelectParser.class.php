@@ -44,15 +44,12 @@
 		
 		// contexts for comma separated lists
 		const IN_CONTEXT		= 2;
-		const GROUP_BY_CONTEXT	= 3;
 		const ORDER_BY_CONTEXT	= 4;
 		
 		// class map
-		const GROUP_BY_PROJECTION	= 1;
 		const HAVING_PROJECTION		= 2;
 		
 		private static $classMap = array(
-			self::GROUP_BY_PROJECTION	=> 'GroupByPropertyProjection',
 			self::HAVING_PROJECTION		=> 'HavingProjection'
 		);
 		
@@ -175,18 +172,11 @@
 			if ($this->checkKeyword($this->tokenizer->peek(), 'group by')) {
 				$this->tokenizer->next();
 				
-				$list = $this->getCommaSeparatedList(
-					self::GROUP_BY_CONTEXT,
-					"expecting identifier in 'group by' expression"
+				$this->oqlObject->addGroupBy(
+					OqlSelectGroupByParser::create()->
+						setTokenizer($this->tokenizer)->
+						parse()
 				);
-				
-				foreach ($list as $argument)
-					$this->oqlObject->addProjection(
-						$this->makeQueryExpression(
-							self::$classMap[self::GROUP_BY_PROJECTION],
-							$argument
-						)
-					);
 			}
 			
 			return self::ORDER_BY_STATE;
@@ -283,11 +273,7 @@
 				case self::IN_CONTEXT:
 					$argument = $this->getConstantExpression();
 					break;
-					
-				case self::GROUP_BY_CONTEXT:
-					$argument = $this->getIdentifierExpression();
-					break;
-					
+				
 				case self::ORDER_BY_CONTEXT:
 					$expression = $this->getLogicExpression();
 					

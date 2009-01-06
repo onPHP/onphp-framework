@@ -16,7 +16,9 @@
 	final class OqlSelectQuery extends OqlQuery
 	{
 		private $properties		= array();
+		private $groupChain		= array();
 		
+		// FIXME: drop projections
 		private $projections		= array();
 		private $whereExpression	= null;
 		private $distinct			= false;
@@ -40,19 +42,19 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function addProperties(OqlSelectPropertiesClause $propertiesClause)
+		public function addProperties(OqlSelectPropertiesClause $clause)
 		{
-			$this->properties[] = $propertiesClause;
+			$this->properties[] = $clause;
 			
 			return $this;
 		}
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setProperties(OqlSelectPropertiesClause $propertiesClause)
+		public function setProperties(OqlSelectPropertiesClause $clause)
 		{
 			$this->properties = array();
-			$this->properties[] = $propertiesClause;
+			$this->properties[] = $clause;
 			
 			return $this;
 		}
@@ -63,6 +65,41 @@
 		public function dropProperties()
 		{
 			$this->properties = array();
+			
+			return $this;
+		}
+		
+		public function getGroupBy()
+		{
+			return $this->groupChain;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function addGroupBy(OqlSelectGroupByClause $clause)
+		{
+			$this->groupChain[] = $clause;
+			
+			return $this;
+		}
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function setGroupBy(OqlSelectGroupByClause $clause)
+		{
+			$this->groupChain = array();
+			$this->groupChain[] = $clause;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function dropGroupBy()
+		{
+			$this->groupChain = array();
 			
 			return $this;
 		}
