@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2008 by Vladlen Y. Koshelev                              *
+ *   Copyright (C) 2008-2009 by Vladlen Y. Koshelev                         *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -18,31 +18,100 @@
 		const INITIAL_STATE		= 254;
 		const FINAL_STATE		= 255;
 		
+		// class map
+		const PREFIX_UNARY_EXPRESSION	= 1;
+		const POSTFIX_UNARY_EXPRESSION	= 2;
+		const BINARY_EXPRESSION			= 3;
+		const BETWEEN_EXPRESSION		= 4;
+		
+		private static $classMap = array(
+			self::PREFIX_UNARY_EXPRESSION	=> 'PrefixUnaryExpression',
+			self::POSTFIX_UNARY_EXPRESSION	=> 'PostfixUnaryExpression',
+			self::BINARY_EXPRESSION			=> 'BinaryExpression',
+			self::BETWEEN_EXPRESSION		=> 'LogicalBetween'
+		);
+		
+		// binary operator map
+		private static $binaryOperatorMap = array(
+			'='					=> BinaryExpression::EQUALS,
+			'!='				=> BinaryExpression::NOT_EQUALS,
+			'and'				=> BinaryExpression::EXPRESSION_AND,
+			'or'				=> BinaryExpression::EXPRESSION_OR,
+			'>'					=> BinaryExpression::GREATER_THAN,
+			'>='				=> BinaryExpression::GREATER_OR_EQUALS,
+			'<'					=> BinaryExpression::LOWER_THAN,
+			'<='				=> BinaryExpression::LOWER_OR_EQUALS,
+			'like'				=> BinaryExpression::LIKE,
+			'not like'			=> BinaryExpression::NOT_LIKE,
+			'ilike'				=> BinaryExpression::ILIKE,
+			'not ilike'			=> BinaryExpression::NOT_ILIKE,
+			'similar to'		=> BinaryExpression::SIMILAR_TO,
+			'not similar to'	=> BinaryExpression::NOT_SIMILAR_TO,
+			'+'					=> BinaryExpression::ADD,
+			'-'					=> BinaryExpression::SUBSTRACT,
+			'*'					=> BinaryExpression::MULTIPLY,
+			'/'					=> BinaryExpression::DIVIDE
+		);
+		
+		// boolean operators priority
+		const LOGIC_PRIORITY_OR			= 1;
+		const LOGIC_PRIORITY_AND		= 2;
+		const LOGIC_PRIORITY_LT_GT		= 3;
+		const LOGIC_PRIORITY_EQ			= 4;
+		const LOGIC_PRIORITY_TERMINAL	= 5;
+		
+		const LOGIC_PRIORITY_LOWEST		= self::LOGIC_PRIORITY_OR;
+		const LOGIC_PRIORITY_UNARY_NOT	= self::LOGIC_PRIORITY_LT_GT;
+		
+		private static $logicPriorityMap = array(
+			self::LOGIC_PRIORITY_OR			=> 'or',
+			self::LOGIC_PRIORITY_AND		=> 'and',
+			self::LOGIC_PRIORITY_LT_GT		=> array('>', '<', '>=', '<='),
+			self::LOGIC_PRIORITY_EQ			=> array('=', '!='),
+			self::LOGIC_PRIORITY_TERMINAL	=> null
+		);
+		
+		// arithmetic operators priority
+		const ARITHMETIC_PRIORITY_ADD		= 1;
+		const ARITHMETIC_PRIORITY_MUL		= 2;
+		const ARITHMETIC_PRIORITY_TERMINAL	= 3;
+		
+		const ARITHMETIC_PRIORITY_LOWEST	= self::ARITHMETIC_PRIORITY_ADD;
+		
+		private static $arithmeticPriorityMap = array(
+			self::ARITHMETIC_PRIORITY_ADD		=> array('+', '-'),
+			self::ARITHMETIC_PRIORITY_MUL		=> array('*', '/'),
+			self::ARITHMETIC_PRIORITY_TERMINAL	=> null
+		);
+		
 		protected $state		= null;
 		protected $tokenizer	= null;
-		protected $query		= null;
+		protected $oqlObject	= null;
 		
 		protected $parentheses	= null;
 		
 		/**
-		 * @return OqlQuery
+		 * @return OqlQueryClause
 		**/
-		abstract protected function makeQuery();
+		abstract protected function makeOqlObject();
 		
 		abstract protected function handleState();
 		
 		/**
-		 * @throws WrongStateException
-		 * @throws SyntaxErrorException
-		 * @return OqlQuery
+		 * @return OqlQueryClause
 		**/
-		public function parse($string)
+		public function parse($string = null)
 		{
-			Assert::isString($string);
+			if ($string === null) {
+				Assert::isNotNull($this->tokenizer);
 			
-			$this->tokenizer = new OqlTokenizer($string);
+			} else {
+				Assert::isString($string);
+				$this->tokenizer = new OqlTokenizer($string);
+			}
+			
 			$this->state = self::INITIAL_STATE;
-			$this->query = $this->makeQuery()->setQuery($string);
+			$this->oqlObject = $this->makeOqlObject()->setQuery($string);
 			$this->parentheses = 0;
 			
 			while ($this->state != self::FINAL_STATE)
@@ -53,7 +122,25 @@
 			if ($token = $this->tokenizer->peek())
 				$this->error("unexpected: {$this->getTokenValue($token, true)}");
 			
-			return $this->query;
+			return $this->oqlObject;
+		}
+		
+		/**
+		 * @return OqlTokenizer
+		**/
+		public function getTokenizer()
+		{
+			return $this->tokenizer;
+		}
+		
+		/**
+		 * @return OqlParser
+		**/
+		public function setTokenizer(OqlTokenizer $tokenizer)
+		{
+			$this->tokenizer = $tokenizer;
+			
+			return $this;
 		}
 		
 		protected function getTokenValue($token, $raw = false)
@@ -99,7 +186,7 @@
 				// fix token value if identifier name is equal to
 				// reserved word or aggregate function name
 				elseif (
-					$token->getType() == OqlToken::KEYWORD				
+					$token->getType() == OqlToken::KEYWORD
 					|| $token->getType() == OqlToken::AGGREGATE_FUNCTION
 				) {
 					$token->setValue($token->getRawValue());
@@ -240,23 +327,321 @@
 		}
 		
 		/**
-		 * @return OqlQueryParameter
+		 * @return OqlQueryExpression
 		**/
-		protected function getArithmeticArgumentExpression()
+		protected function getLogicExpression(
+			$priority = self::LOGIC_PRIORITY_LOWEST
+		)
 		{
-			$token = $this->tokenizer->peek();
+			$expression = null;
 			
-			if (
-				$this->checkIdentifier($token)
-				|| $this->checkToken($token, OqlToken::NUMBER)
-				|| $this->checkToken($token, OqlToken::SUBSTITUTION)
-			) {
-				$this->tokenizer->next();
+			// terminal boolean expressions
+			if ($priority == self::LOGIC_PRIORITY_TERMINAL) {
+				$token = $this->tokenizer->peek();
+				if (!$token)
+					return null;
 				
-				return $this->makeQueryParameter($token);
+				// arithmetic expression
+				if ($this->isArithmeticExpression())
+					return $this->getArithmeticExpression();
+				
+				// parentheses
+				if ($this->openParentheses(false)) {
+					$expression = $this->getLogicExpression();
+					$this->closeParentheses(true, 'in expression');
+					
+					return $expression;
+				}
+				
+				// prefix unary 'not'
+				if ($this->checkKeyword($token, 'not')) {
+					$this->tokenizer->next();
+					
+					if (
+						$argument = $this->getLogicExpression(self::LOGIC_PRIORITY_UNARY_NOT)
+					)
+						return $this->makeQueryExpression(
+							self::$classMap[self::PREFIX_UNARY_EXPRESSION],
+							PrefixUnaryExpression::NOT,
+							$argument
+						);
+						
+					else
+						$this->error('expecting argument in expression: not');
+				}
+				
+				// first argument
+				if (
+					!($expression = $this->getIdentifierExpression())
+					&& !($expression = $this->getConstantExpression())
+				)
+					$this->error(
+						'expecting first argument in expression: '
+						.$this->getTokenValue($this->tokenizer->peek(), true)
+					);
+				
+				// not (like|ilike|between|similar to|in)
+				$operator = $this->tokenizer->peek();
+				if ($this->checkKeyword($operator, 'not')) {
+					$this->tokenizer->next();
+					$operator = $this->tokenizer->peek();
+					$isNot = true;
+				} else
+					$isNot = false;
+				
+				// is ([not] null|true|false)
+				if (
+					!$isNot
+					&& $this->checkKeyword($operator, 'is')
+				) {
+					$this->tokenizer->next();
+					
+					$logic = null;
+					
+					if ($this->checkKeyword($this->tokenizer->peek(), 'not')) {
+						$this->tokenizer->next();
+						$isNot = true;
+					} else
+						$isNot = false;
+					
+					if ($this->checkToken($this->tokenizer->peek(), OqlToken::NULL)) {
+						$this->tokenizer->next();
+						$logic = $isNot
+							? PostfixUnaryExpression::IS_NOT_NULL
+							: PostfixUnaryExpression::IS_NULL;
+						
+					} elseif (
+						!$isNot
+						&& $this->checkToken($this->tokenizer->peek(), OqlToken::BOOLEAN)
+					) {
+						$logic = $this->tokenizer->next()->getValue() === true
+							? PostfixUnaryExpression::IS_TRUE
+							: PostfixUnaryExpression::IS_FALSE;
+					}
+					
+					if ($logic)
+						return $this->makeQueryExpression(
+							self::$classMap[self::POSTFIX_UNARY_EXPRESSION],
+							$expression,
+							$logic
+						);
+					
+					else
+						$this->error("expecting 'null', 'not null', 'true' or 'false'");
+				
+				// [not] in
+				} elseif ($this->checkKeyword($operator, 'in')) {
+					$isNotString = ($isNot ? 'not ' : '');
+					$this->tokenizer->next();
+					
+					$this->openParentheses(true, 'in expression: '.$isNotString.'in');
+					
+					$list = $this->getCommaSeparatedList(
+						self::IN_CONTEXT,
+						'expecting constant or substitution in expression: '
+						.$isNotString.'in'
+					);
+					
+					if (is_array($list) && count($list) == 1)
+						$list = reset($list);
+					
+					$this->closeParentheses(true, 'in expression: '.$isNotString.'in');
+					
+					return new OqlInExpression(
+						$expression,
+						$this->makeQueryParameter($list),
+						$isNot ? InExpression::NOT_IN : InExpression::IN
+					);
+					
+				// [not] (like|ilike|similar to)
+				} elseif (
+					$this->checkKeyword($operator, array('like', 'ilike', 'similar to'))
+				) {
+					$this->tokenizer->next();
+					
+					$isNotString = ($isNot ? 'not ' : '');
+					
+					$argument = $this->tokenizer->next();
+					if (
+						$this->checkToken($argument, OqlToken::STRING)
+						|| $this->checkToken($argument, OqlToken::SUBSTITUTION)
+					)
+						return $this->makeQueryExpression(
+							self::$classMap[self::BINARY_EXPRESSION],
+							$expression,
+							$argument,
+							self::$binaryOperatorMap[
+								$isNotString
+								.$this->getTokenValue($operator)
+							]
+						);
+					else
+						$this->error(
+							'expecting string constant or substitution: '
+							.$isNotString
+							.$this->getTokenValue($operator, true)
+						);
+				
+				// between
+				} elseif (
+					!$isNot
+					&& $this->checkKeyword($operator, 'between')
+				) {
+					$this->tokenizer->next();
+					
+					if (
+						($argument1 = $this->getIdentifierExpression())
+						|| ($argument1 = $this->getConstantExpression())
+					) {
+						if ($this->checkKeyword($this->tokenizer->next(), 'and')) {
+							if (
+								($argument2 = $this->getIdentifierExpression())
+								|| ($argument2 = $this->getConstantExpression())
+							)
+								return $this->makeQueryExpression(
+									self::$classMap[self::BETWEEN_EXPRESSION],
+									$expression,
+									$argument1,
+									$argument2
+								);
+								
+							else
+								$this->error(
+									'expecting second argument in expression: between'
+								);
+							
+						} else
+							$this->error(
+								"expecting 'and' in expression: between"
+							);
+						
+					} else
+						$this->error(
+							'expecting first argument in expression: between'
+						);
+				}
+				
+				if ($isNot)
+					$this->error('expecting in, like, ilike or similar to');
+				
+			// and|or|comparison expression chain
+			} else {
+				$operatorList = self::$logicPriorityMap[$priority];
+				$higherPriority = $priority + 1;
+				
+				if (!($expression = $this->getLogicExpression($higherPriority)))
+					$this->error(
+						'expecting first argument in expression: '
+						.(
+							is_array($operatorList)
+								? implode('|', $operatorList)
+								: $operatorList
+						)
+					);
+				
+				$tokenType =
+					$priority == self::LOGIC_PRIORITY_OR
+					|| $priority == self::LOGIC_PRIORITY_AND
+						? OqlToken::KEYWORD
+						: OqlToken::COMPARISON_OPERATOR;
+				
+				while (
+					$this->checkToken(
+						$this->tokenizer->peek(),
+						$tokenType,
+						$operatorList
+					)
+				) {
+					$operator = $this->tokenizer->next();
+					
+					if ($expression2 = $this->getLogicExpression($higherPriority))
+						$expression = $this->makeQueryExpression(
+							self::$classMap[self::BINARY_EXPRESSION],
+							$expression,
+							$expression2,
+							self::$binaryOperatorMap[$operator->getValue()]
+						);
+					else
+						$this->error(
+							'expecting second argument in expression: '
+							.$this->getTokenValue($operator, true)
+						);
+				}
 			}
 			
-			return null;
+			return $expression;
+		}
+		
+		/**
+		 * @return OqlQueryExpression
+		**/
+		protected function getArithmeticExpression(
+			$priority = self::ARITHMETIC_PRIORITY_LOWEST
+		)
+		{
+			// terminal arithmetic expressions
+			if ($priority == self::ARITHMETIC_PRIORITY_TERMINAL) {
+				$token = $this->tokenizer->peek();
+				if (!$token)
+					return null;
+				
+				// unary minus
+				if ($isUnaryMinus = $this->checkUnaryMinus($token))
+					$this->tokenizer->next();
+				
+				// parentheses
+				if ($this->openParentheses(false)) {
+					$expression = $this->getArithmeticExpression();
+					$this->closeParentheses(true, 'in expression');
+					
+				// argument
+				} elseif ($expression = $this->getArithmeticArgumentExpression()) {
+					// $expression
+					
+				} else
+					$this->error(
+						'expecting argument in expression: '
+						.$this->getTokenValue($this->tokenizer->peek(), true)
+					);
+				
+				$expression = $this->makeQuerySignedExpression($expression, $isUnaryMinus);
+				
+			// +|-|*|/ expression chain
+			} else {
+				$operatorList = self::$arithmeticPriorityMap[$priority];
+				$higherPriority = $priority + 1;
+				
+				if (!($expression = $this->getArithmeticExpression($higherPriority)))
+					$this->error(
+						'expecting first argument in expression: '
+						.implode('|', $operatorList)
+					);
+				
+				while (
+					$this->checkToken(
+						$this->tokenizer->peek(),
+						OqlToken::ARITHMETIC_OPERATOR,
+						$operatorList
+					)
+				) {
+					$operator = $this->tokenizer->next();
+					
+					if ($expression2 = $this->getArithmeticExpression($higherPriority))
+						$expression = $this->makeQueryExpression(
+							self::$classMap[self::BINARY_EXPRESSION],
+							$expression,
+							$expression2,
+							self::$binaryOperatorMap[$operator->getValue()]
+						);
+					else
+						$this->error(
+							'expecting second argument in expression: '
+							.$this->getTokenValue($operator, true)
+						);
+				}
+			}
+			
+			return $expression;
 		}
 		
 		/**
@@ -276,7 +661,10 @@
 				if ($isComma)
 					$this->tokenizer->next();
 				
-				$list[] = $this->getArgumentExpression($context, $message);
+				if ($argument = $this->getArgumentExpression($context, $message))
+					$list[] = $argument;
+				else
+					$this->error($message);
 				
 			} while (
 				$isComma = $this->checkToken($this->tokenizer->peek(), OqlToken::PUNCTUATION, ',')
@@ -348,6 +736,49 @@
 				$this->tokenizer->getLine(),
 				$this->tokenizer->getPosition()
 			);
+		}
+		
+		private function isArithmeticExpression()
+		{
+			$index = $this->tokenizer->getIndex();
+			
+			// skip open parentheses
+			while (
+				$this->checkToken($this->tokenizer->peek(), OqlToken::PARENTHESES, '(')
+			)
+				$this->tokenizer->next();
+			
+			// skip unary minus
+			if ($this->checkUnaryMinus($this->tokenizer->peek()))
+				$this->tokenizer->next();
+			
+			$result =
+				$this->getArithmeticArgumentExpression()
+				&& $this->checkToken($this->tokenizer->peek(), OqlToken::ARITHMETIC_OPERATOR);
+			
+			$this->tokenizer->setIndex($index);
+			
+			return $result;
+		}
+		
+		/**
+		 * @return OqlQueryParameter
+		**/
+		private function getArithmeticArgumentExpression()
+		{
+			$token = $this->tokenizer->peek();
+			
+			if (
+				$this->checkIdentifier($token)
+				|| $this->checkToken($token, OqlToken::NUMBER)
+				|| $this->checkToken($token, OqlToken::SUBSTITUTION)
+			) {
+				$this->tokenizer->next();
+				
+				return $this->makeQueryParameter($token);
+			}
+			
+			return null;
 		}
 	}
 ?>
