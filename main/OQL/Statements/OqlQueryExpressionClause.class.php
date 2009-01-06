@@ -13,27 +13,38 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlSelectHavingClause extends OqlQueryExpressionClause
+	abstract class OqlQueryExpressionClause extends OqlQueryClause
 	{
+		protected $expression = null;
+		
 		/**
-		 * @return OqlSelectHavingClause
+		 * @return OqlQueryExpression
 		**/
-		public static function create()
+		public function getExpression()
 		{
-			return new self;
+			return $this->expression;
 		}
 		
 		/**
-		 * @return HavingProjection
+		 * @return OqlQueryExpressionClause
 		**/
-		public function toProjection()
+		public function setExpression(OqlQueryExpression $expression)
 		{
-			return $this->toLogic();
+			$this->checkExpression($expression);
+			$this->expression = $expression;
+			
+			return $this;
+		}
+		
+		public function toLogic()
+		{
+			Assert::isNotNull($this->expression);
+			
+			return $this->expression->evaluate($this->parameters);
 		}
 		
 		protected static function checkExpression(OqlQueryExpression $expression)
 		{
-			Assert::isInstance($expression->getClassName(), 'HavingProjection');
 		}
 	}
 ?>

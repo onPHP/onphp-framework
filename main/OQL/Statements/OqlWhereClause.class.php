@@ -13,10 +13,8 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlWhereClause extends OqlQueryClause
+	final class OqlWhereClause extends OqlQueryExpressionClause
 	{
-		private $expression = null;
-		
 		/**
 		 * @return OqlWhereClause
 		**/
@@ -25,35 +23,10 @@
 			return new self;
 		}
 		
-		/**
-		 * @return OqlQueryExpression
-		**/
-		public function getExpression()
-		{
-			return $this->expression;
-		}
-		
-		/**
-		 * @return OqlWhereClause
-		**/
-		public function setExpression(OqlQueryExpression $expression)
+		protected static function checkExpression(OqlQueryExpression $expression)
 		{
 			if (!$expression instanceof OqlInExpression)
 				Assert::isInstance($expression->getClassName(), 'LogicalObject');
-			
-			$this->expression = $expression;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return LogicalObject
-		**/
-		public function toLogic()
-		{
-			Assert::isNotNull($this->expression);
-			
-			return $this->expression->evaluate($this->parameters);
 		}
 	}
 ?>
