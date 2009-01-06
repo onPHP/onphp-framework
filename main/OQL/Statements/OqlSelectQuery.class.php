@@ -19,7 +19,9 @@
 		private $groupChain		= array();
 		private $havingChain	= array();
 		
-		private $whereExpression	= null;
+		private $where			= array();
+		private $whereLogic		= array();
+		
 		private $distinct			= false;
 		private $limit				= null;
 		private $offset				= null;
@@ -141,20 +143,76 @@
 			return $this;
 		}
 		
-		/**
-		 * @return OqlQueryExpression
-		**/
-		public function getWhereExpression()
+		public function getWhere()
 		{
-			return $this->whereExpression;
+			return $this->where;
+		}
+		
+		public function getWhereLogic()
+		{
+			return $this->whereLogic;
 		}
 		
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setWhereExpression(OqlQueryExpression $whereExpression)
+		public function where(OqlWhereClause $clause, $logic = null)
 		{
-			$this->whereExpression = $whereExpression;
+			if ($this->where && !$logic) {
+				throw new WrongArgumentException(
+					'you have to specify expression logic'
+				);
+			
+			} else {
+				if (!$this->where && $logic)
+					$logic = null;
+				
+				$this->where[] = $clause;
+				$this->whereLogic[] = $logic;
+			}
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function andWhere(OqlWhereClause $clause)
+		{
+			$this->where($clause, BinaryExpression::EXPRESSION_AND);
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function orWhere(OqlWhereClause $clause)
+		{
+			$this->where($clause, BinaryExpression::EXPRESSION_OR);
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function setWhere(OqlWhereClause $clause)
+		{
+			$this->where = array();
+			$this->whereLogic = array();
+			$this->where($clause);
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function dropWhere()
+		{
+			$this->where = array();
+			$this->whereLogic = array();
 			
 			return $this;
 		}
@@ -271,10 +329,36 @@
 				);
 			}
 			
-			if ($this->whereExpression)
-				$criteria->add(
-					$this->whereExpression->evaluate($this->parameters)
-				);
+			if ($this->where) {
+				if (count($this->where) == 1) {
+					$clause = reset($this->where);
+					
+					$criteria->add(
+						$clause->
+							bindAll($this->parameters)->
+							toLogic()
+					);
+				
+				} else {
+					$logic = Expression::chain();
+					foreach ($this->where as $key => $clause) {
+						$expression = $clause->
+							bindAll($this->parameters)->
+							toLogic();
+						
+						if (
+							$this->whereLogic[$key]
+							== BinaryExpression::EXPRESSION_AND
+						) {
+							$logic->expAnd($expression);
+						} else {
+							$logic->expOr($expression);
+						}
+					}
+					
+					$criteria->add($logic);
+				}
+			}
 			
 			foreach ($this->orderChain as $clause) {
 				$criteria->addOrder(
