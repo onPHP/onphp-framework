@@ -15,6 +15,8 @@
 	**/
 	final class OqlSelectQuery extends OqlQuery
 	{
+		private $properties		= array();
+		
 		private $projections		= array();
 		private $whereExpression	= null;
 		private $distinct			= false;
@@ -28,6 +30,41 @@
 		public static function create()
 		{
 			return new self;
+		}
+		
+		public function getProperties()
+		{
+			return $this->properties;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function addProperties(OqlSelectPropertiesClause $propertiesClause)
+		{
+			$this->properties[] = $propertiesClause;
+			
+			return $this;
+		}
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function setProperties(OqlSelectPropertiesClause $propertiesClause)
+		{
+			$this->properties = array();
+			$this->properties[] = $propertiesClause;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return OqlSelectQuery
+		**/
+		public function dropProperties()
+		{
+			$this->properties = array();
+			
+			return $this;
 		}
 		
 		public function getProjections()
@@ -141,20 +178,12 @@
 					$this->offset->evaluate($this->parameters)
 				);
 			
-			if ($this->projections) {
-				if (count($this->projections) == 1) {
-					$oqlProjection = reset($this->projections);
-					$projection = $oqlProjection->evaluate($this->parameters);
-					
-				} else {
-					$projection = Projection::chain();
-					foreach ($this->projections as $oqlProjection)
-						$projection->add(
-							$oqlProjection->evaluate($this->parameters)
-						);
-				}
-				
-				$criteria->setProjection($projection);
+			foreach ($this->properties as $property) {
+				$criteria->addProjection(
+					$property->
+						bindAll($this->parameters)->
+						toProjection()
+				);
 			}
 			
 			if ($this->whereExpression)
