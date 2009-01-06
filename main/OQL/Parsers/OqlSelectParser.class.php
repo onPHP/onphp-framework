@@ -144,7 +144,7 @@
 			if ($this->checkKeyword($this->tokenizer->peek(), 'where')) {
 				$this->tokenizer->next();
 				
-				$this->oqlObject->addWhere(
+				$this->oqlObject->where(
 					OqlWhereParser::create()->
 						setTokenizer($this->tokenizer)->
 						parse()
