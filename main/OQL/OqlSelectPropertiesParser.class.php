@@ -40,9 +40,9 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return OqlSelectPropertiesClause
 		**/
-		protected function makeQueryClause()
+		protected function makeOqlObject()
 		{
 			return OqlSelectPropertiesClause::create();
 		}

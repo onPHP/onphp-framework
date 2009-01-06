@@ -72,7 +72,7 @@
 				);
 			}
 			
-			return $projection
+			return $projection;
 		}
 	}
 ?>
