@@ -112,11 +112,12 @@
 		**/
 		public function setIndex($index)
 		{
-			if ($index > $this->tokensCount - 1)
+			if ($index > $this->tokensCount - 1) {
 				$index = $this->tokensCount - 1;
 			
-			elseif ($index < -1)
+			} elseif ($index < -1) {
 				$index = -1;
+			}
 			
 			$this->index = $index;
 			$this->token = $this->getByIndex($this->index);
@@ -256,25 +257,25 @@
 						$quote,
 						mb_substr($value, 1, mb_strlen($value) - 2)
 					);
-					
+				
 				case OqlToken::NUMBER:
 					return floatval($value);
-					
+				
 				case OqlToken::BOOLEAN:
 					return mb_strtolower($value) == 'false' ? false : true;
-					
+				
 				case OqlToken::NULL:
 				case OqlToken::AGGREGATE_FUNCTION:
 					return mb_strtolower($value);
-					
+				
 				case OqlToken::SUBSTITUTION:
 					return intval(mb_substr($value, 1));
-					
+				
 				case OqlToken::KEYWORD:
 					return mb_strtolower(
 						preg_replace('/\s+/u', ' ', $value)
 					);
-					
+				
 				case OqlToken::COMPARISON_OPERATOR:
 					return $value == '<>' ? BinaryExpression::NOT_EQUALS : $value;
 			}

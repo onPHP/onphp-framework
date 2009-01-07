@@ -12,8 +12,6 @@
 
 	final class OqlOrderByParser extends OqlParser
 	{
-		const GROUP_BY_CLASS = 'GroupByPropertyProjection';
-		
 		/**
 		 * @return OqlOrderByParser
 		**/
@@ -54,7 +52,7 @@
 			
 			$token = $this->tokenizer->peek();
 			if ($this->checkKeyword($token, array('asc', 'desc'))) {
-				$direction = $token->getValue() == 'asc';
+				$direction = ($token->getValue() == 'asc');
 				$this->tokenizer->next();
 			
 			} else

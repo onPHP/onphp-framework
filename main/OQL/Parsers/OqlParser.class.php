@@ -15,8 +15,8 @@
 	**/
 	abstract class OqlParser
 	{
-		const INITIAL_STATE		= 254;
-		const FINAL_STATE		= 255;
+		const INITIAL_STATE	= 254;
+		const FINAL_STATE	= 255;
 		
 		// class map
 		const PREFIX_UNARY_EXPRESSION	= 1;
@@ -156,14 +156,15 @@
 				$token instanceof OqlToken
 				&& $token->getType() == $type
 			) {
-				if (is_null($value))
+				if ($value === null) {
 					return true;
 					
-				elseif (is_array($value))
+				} elseif (is_array($value)) {
 					return in_array($token->getValue(), $value);
 					
-				else
+				} else {
 					return $token->getValue() == $value;
+				}
 			}
 			
 			return false;
@@ -218,11 +219,12 @@
 		**/
 		protected function checkParentheses($message = null)
 		{
-			if ($this->openParentheses(false, $message))
+			if ($this->openParentheses(false, $message)) {
 				$this->error("unexpected '('", $message);
 				
-			elseif ($this->closeParentheses(false, $message))
+			} elseif ($this->closeParentheses(false, $message)) {
 				$this->error("unexpected ')'", $message);
+			}
 				
 			if ($this->parentheses > 0)
 				$this->error("unexpected '('", $message);
@@ -243,8 +245,9 @@
 				
 				return true;
 				
-			} elseif ($required)
+			} elseif ($required) {
 				$this->error("expecting ')'", $message);
+			}
 			
 			return false;
 		}
@@ -264,8 +267,9 @@
 				
 				return true;
 				
-			} elseif ($required)
+			} elseif ($required) {
 				$this->error("expecting ')'", $message);
+			}
 			
 			return false;
 		}
@@ -356,26 +360,28 @@
 					
 					if (
 						$argument = $this->getLogicExpression(self::LOGIC_PRIORITY_UNARY_NOT)
-					)
+					) {
 						return $this->makeQueryExpression(
 							self::$classMap[self::PREFIX_UNARY_EXPRESSION],
 							PrefixUnaryExpression::NOT,
 							$argument
 						);
-						
-					else
+					
+					} else {
 						$this->error('expecting argument in expression: not');
+					}
 				}
 				
 				// first argument
 				if (
 					!($expression = $this->getIdentifierExpression())
 					&& !($expression = $this->getConstantExpression())
-				)
+				) {
 					$this->error(
-						'expecting first argument in expression: '
-						.$this->getTokenValue($this->tokenizer->peek(), true)
+						'expecting first argument in expression:',
+						$this->getTokenValue($this->tokenizer->peek(), true)
 					);
+				}
 				
 				// not (like|ilike|between|similar to|in)
 				$operator = $this->tokenizer->peek();
@@ -383,8 +389,10 @@
 					$this->tokenizer->next();
 					$operator = $this->tokenizer->peek();
 					$isNot = true;
-				} else
+				
+				} else {
 					$isNot = false;
+				}
 				
 				// is ([not] null|true|false)
 				if (
@@ -398,8 +406,10 @@
 					if ($this->checkKeyword($this->tokenizer->peek(), 'not')) {
 						$this->tokenizer->next();
 						$isNot = true;
-					} else
+					
+					} else {
 						$isNot = false;
+					}
 					
 					if ($this->checkToken($this->tokenizer->peek(), OqlToken::NULL)) {
 						$this->tokenizer->next();
@@ -416,15 +426,16 @@
 							: PostfixUnaryExpression::IS_FALSE;
 					}
 					
-					if ($logic)
+					if ($logic) {
 						return $this->makeQueryExpression(
 							self::$classMap[self::POSTFIX_UNARY_EXPRESSION],
 							$expression,
 							$logic
 						);
 					
-					else
+					} else {
 						$this->error("expecting 'null', 'not null', 'true' or 'false'");
+					}
 				
 				// [not] in
 				} elseif ($this->checkKeyword($operator, 'in')) {
@@ -457,12 +468,12 @@
 					$this->tokenizer->next();
 					
 					$isNotString = ($isNot ? 'not ' : '');
-					
 					$argument = $this->tokenizer->next();
+					
 					if (
 						$this->checkToken($argument, OqlToken::STRING)
 						|| $this->checkToken($argument, OqlToken::SUBSTITUTION)
-					)
+					) {
 						return $this->makeQueryExpression(
 							self::$classMap[self::BINARY_EXPRESSION],
 							$expression,
@@ -472,12 +483,13 @@
 								.$this->getTokenValue($operator)
 							]
 						);
-					else
+					
+					} else {
 						$this->error(
-							'expecting string constant or substitution: '
-							.$isNotString
-							.$this->getTokenValue($operator, true)
+							'expecting string constant or substitution:',
+							$isNotString.$this->getTokenValue($operator, true)
 						);
+					}
 				
 				// between
 				} elseif (
@@ -494,47 +506,49 @@
 							if (
 								($argument2 = $this->getIdentifierExpression())
 								|| ($argument2 = $this->getConstantExpression())
-							)
+							) {
 								return $this->makeQueryExpression(
 									self::$classMap[self::BETWEEN_EXPRESSION],
 									$expression,
 									$argument1,
 									$argument2
 								);
-								
-							else
+							
+							} else {
 								$this->error(
 									'expecting second argument in expression: between'
 								);
-							
-						} else
+							}
+						
+						} else {
 							$this->error(
 								"expecting 'and' in expression: between"
 							);
-						
-					} else
+						}
+					
+					} else {
 						$this->error(
 							'expecting first argument in expression: between'
 						);
+					}
 				}
 				
 				if ($isNot)
 					$this->error('expecting in, like, ilike or similar to');
-				
+			
 			// and|or|comparison expression chain
 			} else {
 				$operatorList = self::$logicPriorityMap[$priority];
 				$higherPriority = $priority + 1;
 				
-				if (!($expression = $this->getLogicExpression($higherPriority)))
+				if (!($expression = $this->getLogicExpression($higherPriority))) {
 					$this->error(
-						'expecting first argument in expression: '
-						.(
-							is_array($operatorList)
-								? implode('|', $operatorList)
-								: $operatorList
-						)
+						'expecting first argument in expression:',
+						is_array($operatorList)
+							? implode('|', $operatorList)
+							: $operatorList
 					);
+				}
 				
 				$tokenType =
 					$priority == self::LOGIC_PRIORITY_OR
@@ -551,18 +565,20 @@
 				) {
 					$operator = $this->tokenizer->next();
 					
-					if ($expression2 = $this->getLogicExpression($higherPriority))
+					if ($expression2 = $this->getLogicExpression($higherPriority)) {
 						$expression = $this->makeQueryExpression(
 							self::$classMap[self::BINARY_EXPRESSION],
 							$expression,
 							$expression2,
 							self::$binaryOperatorMap[$operator->getValue()]
 						);
-					else
+					
+					} else {
 						$this->error(
-							'expecting second argument in expression: '
-							.$this->getTokenValue($operator, true)
+							'expecting second argument in expression:',
+							$this->getTokenValue($operator, true)
 						);
+					}
 				}
 			}
 			
@@ -590,29 +606,31 @@
 				if ($this->openParentheses(false)) {
 					$expression = $this->getArithmeticExpression();
 					$this->closeParentheses(true, 'in expression');
-					
+				
 				// argument
 				} elseif ($expression = $this->getArithmeticArgumentExpression()) {
 					// $expression
-					
-				} else
+				
+				} else {
 					$this->error(
-						'expecting argument in expression: '
-						.$this->getTokenValue($this->tokenizer->peek(), true)
+						'expecting argument in expression:',
+						$this->getTokenValue($this->tokenizer->peek(), true)
 					);
+				}
 				
 				$expression = $this->makeQuerySignedExpression($expression, $isUnaryMinus);
-				
+			
 			// +|-|*|/ expression chain
 			} else {
 				$operatorList = self::$arithmeticPriorityMap[$priority];
 				$higherPriority = $priority + 1;
 				
-				if (!($expression = $this->getArithmeticExpression($higherPriority)))
+				if (!($expression = $this->getArithmeticExpression($higherPriority))) {
 					$this->error(
-						'expecting first argument in expression: '
-						.implode('|', $operatorList)
+						'expecting first argument in expression:',
+						implode('|', $operatorList)
 					);
+				}
 				
 				while (
 					$this->checkToken(
@@ -623,18 +641,20 @@
 				) {
 					$operator = $this->tokenizer->next();
 					
-					if ($expression2 = $this->getArithmeticExpression($higherPriority))
+					if ($expression2 = $this->getArithmeticExpression($higherPriority)) {
 						$expression = $this->makeQueryExpression(
 							self::$classMap[self::BINARY_EXPRESSION],
 							$expression,
 							$expression2,
 							self::$binaryOperatorMap[$operator->getValue()]
 						);
-					else
+					
+					} else {
 						$this->error(
-							'expecting second argument in expression: '
-							.$this->getTokenValue($operator, true)
+							'expecting second argument in expression:',
+							$this->getTokenValue($operator, true)
 						);
+					}
 				}
 			}
 			
@@ -656,7 +676,8 @@
 					$this->error($message);
 				
 			} while (
-				$isComma = $this->checkToken($this->tokenizer->peek(), OqlToken::PUNCTUATION, ',')
+				$isComma
+				= $this->checkToken($this->tokenizer->peek(), OqlToken::PUNCTUATION, ',')
 			);
 			
 			return $list;
@@ -669,7 +690,7 @@
 		{
 			$expression = OqlQueryExpression::create()->
 				setClassName($className);
-				
+			
 			$arguments = func_get_args();
 			reset($arguments);
 			$argument = next($arguments);
@@ -702,17 +723,18 @@
 		**/
 		protected function makeQueryParameter($argument)
 		{
-			if ($argument instanceof OqlQueryParameter)
+			if ($argument instanceof OqlQueryParameter) {
 				return $argument;
-				
-			elseif ($argument instanceof OqlToken)
+			
+			} elseif ($argument instanceof OqlToken) {
 				return OqlQueryParameter::create()->
 					setValue($argument->getValue())->
 					setBindable($argument->getType() == OqlToken::SUBSTITUTION);
-				
-			else
+			
+			} else {
 				return OqlQueryParameter::create()->
 					setValue($argument);
+			}
 		}
 		
 		/**
@@ -737,8 +759,9 @@
 			// skip open parentheses
 			while (
 				$this->checkToken($this->tokenizer->peek(), OqlToken::PARENTHESES, '(')
-			)
+			) {
 				$this->tokenizer->next();
+			}
 			
 			// skip unary minus
 			if ($this->checkUnaryMinus($this->tokenizer->peek()))

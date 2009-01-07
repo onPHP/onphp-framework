@@ -12,7 +12,7 @@
 
 	final class OqlHavingParser extends OqlParser
 	{
-		const HAVING_CLASS = 'HavingProjection';
+		const CLASS_NAME = 'HavingProjection';
 		
 		/**
 		 * @return OqlHavingParser
@@ -35,7 +35,7 @@
 			if ($this->state == self::INITIAL_STATE) {
 				if ($argument = $this->getLogicExpression()) {
 					$this->oqlObject->setExpression(
-						$this->makeQueryExpression(self::HAVING_CLASS, $argument)
+						$this->makeQueryExpression(self::CLASS_NAME, $argument)
 					);
 				
 				} else
