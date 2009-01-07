@@ -83,8 +83,9 @@
 						
 						$expression = $this->getLogicExpression();
 						
-					} else
+					} else {
 						$expression = $this->getArithmeticExpression();
+					}
 					
 					$this->closeParentheses(true, "in function call: {$this->getTokenValue($token)}");
 					
@@ -119,11 +120,15 @@
 			if ($this->checkKeyword($this->tokenizer->peek(), 'as')) {
 				$this->tokenizer->next();
 				
-				$alias = $this->tokenizer->next();
-				if (!$this->checkIdentifier($alias))
+				if (
+					!($alias = $this->tokenizer->next())
+					|| !$this->checkIdentifier($alias)
+				) {
 					$this->error(
-						"expecting alias name: {$this->getTokenValue($alias, true)}"
+						'expecting alias name:',
+						$this->getTokenValue($alias, true)
 					);
+				}
 				
 				return $alias;
 			}

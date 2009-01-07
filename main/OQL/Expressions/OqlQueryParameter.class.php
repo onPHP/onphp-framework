@@ -49,9 +49,9 @@
 		/**
 		 * @return OqlQueryParameter
 		**/
-		public function setBindable($bindable)
+		public function setBindable($orly = true)
 		{
-			$this->bindable = $bindable;
+			$this->bindable = ($orly === true);
 			
 			return $this;
 		}
@@ -74,11 +74,13 @@
 			} else
 				$value = $this->getValue();
 			
-			if ($value instanceof Query)
+			if ($value instanceof Query) {
 				return $value;
-			elseif ($value instanceof Identifiable)
+			
+			} elseif ($value instanceof Identifiable) {
 				return $value->getId();
-			elseif (is_array($value)) {
+			
+			} elseif (is_array($value)) {
 				$list = array();
 				foreach ($value as $key => $parameter)
 					$list[$key] = $parameter->evaluate($values);

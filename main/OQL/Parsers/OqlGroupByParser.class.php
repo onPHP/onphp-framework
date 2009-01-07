@@ -12,7 +12,7 @@
 
 	final class OqlGroupByParser extends OqlParser
 	{
-		const GROUP_BY_CLASS = 'GroupByPropertyProjection';
+		const CLASS_NAME = 'GroupByPropertyProjection';
 		
 		/**
 		 * @return OqlGroupByParser
@@ -40,7 +40,7 @@
 				
 				foreach ($list as $argument) {
 					$this->oqlObject->add(
-						$this->makeQueryExpression(self::GROUP_BY_CLASS, $argument)
+						$this->makeQueryExpression(self::CLASS_NAME, $argument)
 					);
 				}
 			}

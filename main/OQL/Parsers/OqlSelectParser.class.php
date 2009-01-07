@@ -64,25 +64,25 @@
 				case self::INITIAL_STATE:
 				case self::PROPERTY_STATE:
 					return $this->propertyState();
-					
+				
 				case self::FROM_STATE:
 					return $this->fromState();
-					
+				
 				case self::WHERE_STATE:
 					return $this->whereState();
-					
+				
 				case self::GROUP_BY_STATE:
 					return $this->groupByState();
-					
+				
 				case self::ORDER_BY_STATE:
 					return $this->orderByState();
-					
+				
 				case self::HAVING_STATE:
 					return $this->havingState();
-					
+				
 				case self::LIMIT_STATE:
 					return $this->limitState();
-					
+				
 				case self::OFFSET_STATE:
 					return $this->offsetState();
 			}
@@ -122,19 +122,20 @@
 				if (
 					!$this->checkIdentifier($class)
 					|| !ClassUtils::isClassName($className)
-				)
-					$this->error("invalid class name: {$className}");
+				) {
+					$this->error('invalid class name:', $className);
+				}
 				
 				if (!class_exists($className, true))
-					$this->error("class does not exists: {$className}");
+					$this->error('class does not exists:', $className);
 				
 				if (!ClassUtils::isInstanceOf($className, 'DAOConnected'))
-					$this->error("class must implement DAOConnected interface: {$className}");
+					$this->error('class must implement DAOConnected interface:', $className);
 				
 				$this->oqlObject->setDao(
 					call_user_func(array($className, 'dao'))
 				);
-				
+			
 			} else
 				$this->error("expecting 'from' clause");
 			
@@ -210,13 +211,14 @@
 				if (
 					$this->checkToken($token, OqlToken::NUMBER)
 					|| $this->checkToken($token, OqlToken::SUBSTITUTION)
-				)
+				) {
 					$this->oqlObject->setLimit(
 						$this->makeQueryParameter($token)
 					);
 				
-				else
+				} else {
 					$this->error("expecting 'limit' expression");
+				}
 			}
 			
 			return self::OFFSET_STATE;
@@ -231,17 +233,18 @@
 				if (
 					$this->checkToken($token, OqlToken::NUMBER)
 					|| $this->checkToken($token, OqlToken::SUBSTITUTION)
-				)
+				) {
 					$this->oqlObject->setOffset(
 						$this->makeQueryParameter($token)
 					);
 				
-				else
+				} else {
 					$this->error("expecting 'offset' expression");
+				}
 			}
 			
 			if ($token = $this->tokenizer->peek())
-				$this->error("unexpected: {$this->getTokenValue($token, true)}");
+				$this->error('unexpected:', $this->getTokenValue($token, true));
 			
 			return self::FINAL_STATE;
 		}
