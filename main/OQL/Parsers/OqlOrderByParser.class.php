@@ -10,12 +10,12 @@
  ****************************************************************************/
 /* $Id$ */
 
-	final class OqlSelectOrderByParser extends OqlParser
+	final class OqlOrderByParser extends OqlParser
 	{
 		const GROUP_BY_CLASS = 'GroupByPropertyProjection';
 		
 		/**
-		 * @return OqlSelectOrderByParser
+		 * @return OqlOrderByParser
 		**/
 		public static function create()
 		{
@@ -23,11 +23,11 @@
 		}
 		
 		/**
-		 * @return OqlSelectOrderByClause
+		 * @return OqlOrderByClause
 		**/
 		protected function makeOqlObject()
 		{
-			return OqlSelectOrderByClause::create();
+			return OqlOrderByClause::create();
 		}
 		
 		protected function handleState()

@@ -40,27 +40,27 @@
 		}
 		
 		/**
-		 * @return OqlSelectProjectionClause
+		 * @return OqlProjectionClause
 		**/
 		public static function groupBy($clause)
 		{
-			return OqlSelectGroupByParser::create()->parse($clause);
+			return OqlGroupByParser::create()->parse($clause);
 		}
 		
 		/**
-		 * @return OqlSelectOrderByClause
+		 * @return OqlOrderByClause
 		**/
 		public static function orderBy($clause)
 		{
-			return OqlSelectOrderByParser::create()->parse($clause);
+			return OqlOrderByParser::create()->parse($clause);
 		}
 		
 		/**
-		 * @return OqlSelectHavingClause
+		 * @return OqlHavingClause
 		**/
 		public static function having($clause)
 		{
-			return OqlSelectHavingParser::create()->parse($clause);
+			return OqlHavingParser::create()->parse($clause);
 		}
 	}
 ?>

@@ -162,7 +162,7 @@
 				$this->tokenizer->next();
 				
 				$this->oqlObject->addGroupBy(
-					OqlSelectGroupByParser::create()->
+					OqlGroupByParser::create()->
 						setTokenizer($this->tokenizer)->
 						parse()
 				);
@@ -177,7 +177,7 @@
 				$this->tokenizer->next();
 				
 				$this->oqlObject->addOrderBy(
-					OqlSelectOrderByParser::create()->
+					OqlOrderByParser::create()->
 						setTokenizer($this->tokenizer)->
 						parse()
 				);
@@ -192,7 +192,7 @@
 				$this->tokenizer->next();
 				
 				$this->oqlObject->addHaving(
-					OqlSelectHavingParser::create()->
+					OqlHavingParser::create()->
 						setTokenizer($this->tokenizer)->
 						parse()
 				);

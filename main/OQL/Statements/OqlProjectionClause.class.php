@@ -13,10 +13,10 @@
 	/**
 	 * @ingroup OQL
 	**/
-	class OqlSelectProjectionClause extends OqlQueryListedClause
+	class OqlProjectionClause extends OqlQueryListedClause
 	{
 		/**
-		 * @return OqlSelectProjectionClause
+		 * @return OqlProjectionClause
 		**/
 		public static function create()
 		{
