@@ -15,6 +15,8 @@
 	**/
 	class OqlQueryExpression extends OqlQueryParameter
 	{
+		private static $classes = array();
+		
 		private $className	= null;
 		private $parameters	= array();
 		
@@ -83,10 +85,13 @@
 		{
 			$className = $this->getClassName();
 			
-			$class = new ReflectionClass($className);
-			$parametersCount = count($class->getConstructor()->getParameters());
+			if (!isset(self::$classes[$className]))
+				self::$classes[$className] = new ReflectionClass($className);
 			
+			$class = self::$classes[$className];
+			$parametersCount = count($class->getConstructor()->getParameters());
 			$parameters = array();
+			
 			for ($i = 0; $i < $parametersCount; $i++) {
 				if (!$this->hasParameter($i))
 					break;
