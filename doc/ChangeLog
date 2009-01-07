@@ -1,5 +1,16 @@
 # $Id$
 
+2009-01-07	Vladlen Y. Koshelev
+
+	* main/OQL/, test/main/OqlSelectClauseTest.class.php: OQL select query
+	clauses separated from OQL query as independent parsers and wrappers,
+	so they can be used both in Criteria statements (expressions, projections,
+	etc.) and for incremental expansion of OQL query; corresponding tests
+	demonstrates such cases.
+
+	* main/OQL/Expressions/OqlQueryExpression.class.php: classes reflections
+	pool added.
+
 2008-12-31	Konstantin V. Arkhipov
 
 	* 1.0.8 released.
