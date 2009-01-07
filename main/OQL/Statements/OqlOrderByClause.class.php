@@ -13,10 +13,10 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlSelectOrderByClause extends OqlQueryListedClause
+	final class OqlOrderByClause extends OqlQueryListedClause
 	{
 		/**
-		 * @return OqlSelectOrderByClause
+		 * @return OqlOrderByClause
 		**/
 		public static function create()
 		{

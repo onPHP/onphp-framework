@@ -166,7 +166,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function addGroupBy(OqlSelectProjectionClause $clause)
+		public function addGroupBy(OqlProjectionClause $clause)
 		{
 			$this->groupChain[] = $clause;
 			
@@ -176,7 +176,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setGroupBy(OqlSelectProjectionClause $clause)
+		public function setGroupBy(OqlProjectionClause $clause)
 		{
 			$this->groupChain = array();
 			$this->groupChain[] = $clause;
@@ -202,7 +202,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function addOrderBy(OqlSelectOrderByClause $clause)
+		public function addOrderBy(OqlOrderByClause $clause)
 		{
 			$this->orderChain[] = $clause;
 			
@@ -212,7 +212,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setOrderBy(OqlSelectOrderByClause $clause)
+		public function setOrderBy(OqlOrderByClause $clause)
 		{
 			$this->orderChain = array();
 			$this->orderChain[] = $clause;
@@ -238,7 +238,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function addHaving(OqlSelectHavingClause $clause)
+		public function addHaving(OqlHavingClause $clause)
 		{
 			$this->havingChain[] = $clause;
 			
@@ -248,7 +248,7 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public function setHaving(OqlSelectHavingClause $clause)
+		public function setHaving(OqlHavingClause $clause)
 		{
 			$this->havingChain = array();
 			$this->havingChain[] = $clause;
