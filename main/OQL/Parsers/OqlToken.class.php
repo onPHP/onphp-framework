@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2008 by Vladlen Y. Koshelev                              *
+ *   Copyright (C) 2008-2009 by Vladlen Y. Koshelev                         *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -15,18 +15,19 @@
 	**/
 	final class OqlToken
 	{
-		const STRING				= 1;
-		const NUMBER				= 2;
-		const BOOLEAN				= 3;
-		const NULL					= 4;
-		const SUBSTITUTION			= 5;
-		const KEYWORD				= 6;
-		const AGGREGATE_FUNCTION	= 7;
-		const IDENTIFIER			= 8;
-		const PARENTHESES			= 9;
-		const PUNCTUATION			= 10;
-		const COMPARISON_OPERATOR	= 11;
-		const ARITHMETIC_OPERATOR	= 12;
+		const NEW_LINE				= 1;
+		const STRING				= 2;
+		const NUMBER				= 3;
+		const BOOLEAN				= 4;
+		const NULL					= 5;
+		const SUBSTITUTION			= 6;
+		const KEYWORD				= 7;
+		const AGGREGATE_FUNCTION	= 8;
+		const IDENTIFIER			= 9;
+		const PARENTHESES			= 10;
+		const PUNCTUATION			= 11;
+		const COMPARISON_OPERATOR	= 12;
+		const ARITHMETIC_OPERATOR	= 13;
 		
 		private $value		= null;
 		private $rawValue	= null;

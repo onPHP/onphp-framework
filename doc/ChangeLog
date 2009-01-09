@@ -1,5 +1,10 @@
 # $Id$
 
+2009-01-10	Vladlen Y. Koshelev
+
+	* main/OQL/Parsers/OqlTokenizer.class.php: tokenizer simplified and
+	optimized using non-multibyte functions and regexps where it's possible.
+
 2009-01-07	Vladlen Y. Koshelev
 
 	* main/OQL/, test/main/OqlSelectClauseTest.class.php: OQL select query

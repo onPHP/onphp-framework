@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2008 by Vladlen Y. Koshelev                              *
+ *   Copyright (C) 2008-2009 by Vladlen Y. Koshelev                         *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -21,11 +21,10 @@
 		private $prevToken		= null;
 		private $index			= -1;
 		
-		private $string			= null;
-		private $offset			= 0;
-		private $nlPositions	= array();
-		
 		private static $masks = array(
+			OqlToken::NEW_LINE =>
+				'\n',
+			
 			// "'`-quoted string constant
 			OqlToken::STRING =>
 				'"[^"\\\]*(?:\\\.[^"\\\]*)*"|\'[^\'\\\]*(?:\\\.[^\'\\\]*)*\'|`[^`\\\]*(?:\\\.[^`\\\]*)*`',
@@ -180,73 +179,68 @@
 		{
 			Assert::isString($string);
 			
-			$this->string = $string;
+			$maxMultibyteDelta = strlen($string) - mb_strlen($string);
+			$isMultibyte = $maxMultibyteDelta > 0;
 			
-			$offset = 0;
-			while (
-				($position = mb_strpos($string, "\n", $offset)) !== false
-			) {
-				$this->nlPositions[] = $position;
-				$offset = $position + 1;
-			}
-			$this->nlPositions[] = mb_strlen($string);
+			$pattern = '/('.implode(')|(', self::$masks).')/is';
+			if ($isMultibyte)
+				$pattern .= 'u';
 			
-			preg_replace_callback(
-				'/('.implode(')|(', self::$masks).')/ius',
-				array($this, 'makeToken'),
-				$string
+			preg_match_all(
+				$pattern,
+				$string,
+				$matches,
+				PREG_SET_ORDER | PREG_OFFSET_CAPTURE
 			);
+			
+			$line = 1;
+			$lineStart = 0;
+			$multibyteDelta = 0;
+			
+			foreach ($matches as $match) {
+				$type = count($match) - 1;
+				$offset = $match[0][1] - $multibyteDelta;
+				
+				if ($type == OqlToken::NEW_LINE) {
+					$line++;
+					$lineStart = $offset + 1;
+					continue;
+				}
+				
+				$value = $match[0][0];
+				$position = $offset - $lineStart;
+				
+				$this->tokens[] =
+					OqlToken::make(
+						$this->importTokenValue($value, $type),
+						$value,
+						$type,
+						$line,
+						$position
+					);
+				
+				if (
+					$type == OqlToken::KEYWORD
+					&& ($pos = strpos($value, "\n")) !== false
+				) {
+					$line++;
+					$lineStart = $offset + $pos + 1;
+				}
+				
+				if ($isMultibyte && $type == OqlToken::STRING) {
+					$multibyteDelta += (strlen($value) - mb_strlen($value));
+					
+					if ($multibyteDelta >= $maxMultibyteDelta)
+						$isMultibyte = false;
+				}
+			}
 			
 			$this->tokensCount = count($this->tokens);
 			
 			return $this;
 		}
 		
-		private function makeToken($matches)
-		{
-			$value = $matches[0];
-			$line = $position = null;
-			$absolutePosition = mb_strpos($this->string, $value, $this->offset);
-			
-			if ($absolutePosition !== false) {
-				$this->offset = $absolutePosition + mb_strlen($value);
-				
-				$prevNlPosition = -1;
-				
-				foreach ($this->nlPositions as $lineIndex => $nlPosition) {
-					if (
-						$absolutePosition > $prevNlPosition
-						&& $absolutePosition <= $nlPosition
-					) {
-						$line = $lineIndex + 1;
-						
-						$position = $absolutePosition;
-						if ($prevNlPosition >= 0)
-							$position -= $prevNlPosition + 1;
-						
-						break;
-					}
-					
-					$prevNlPosition = $nlPosition;
-				}
-			}
-			
-			$keys = array_keys($matches, $value);
-			$type = $keys[1];
-			
-			$this->tokens[] =
-				OqlToken::make(
-					$this->importTokenValue($value, $type),
-					$value,
-					$type,
-					$line,
-					$position
-				);
-			
-			return $value;
-		}
-		
-		private function importTokenValue($value, $type)
+		private static function importTokenValue($value, $type)
 		{
 			switch ($type) {
 				case OqlToken::STRING:
@@ -262,18 +256,20 @@
 					return floatval($value);
 				
 				case OqlToken::BOOLEAN:
-					return mb_strtolower($value) == 'false' ? false : true;
+					return strtolower($value) == 'false' ? false : true;
 				
 				case OqlToken::NULL:
+					return 'null';
+				
 				case OqlToken::AGGREGATE_FUNCTION:
-					return mb_strtolower($value);
+					return strtolower($value);
 				
 				case OqlToken::SUBSTITUTION:
-					return intval(mb_substr($value, 1));
+					return intval(substr($value, 1));
 				
 				case OqlToken::KEYWORD:
-					return mb_strtolower(
-						preg_replace('/\s+/u', ' ', $value)
+					return strtolower(
+						preg_replace('/\s+/', ' ', $value)
 					);
 				
 				case OqlToken::COMPARISON_OPERATOR:
