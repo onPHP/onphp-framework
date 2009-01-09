@@ -39,3 +39,17 @@ ApplicationModel: response, annotated with xsd.
 
 think about controller's protos for splitting forms creation and importing
 from business logic
+
+OQL: make "from" clause bindable.
+
+OQL: determine parameters numbers in bindAll if array keys doesn't correspond them. 
+
+OQL: allow "count(field)" syntax in "having" clause
+(shortcut to bindNext(SQLFunction::create('count', 'field'))).
+
+OQL: allow expressions with aggregate functions in select "properties" clause
+(e.g. 'count(field) + avg(field) > 0 from Entity group by field').
+
+OQL: implement GroupByClassProjection and ClassProjection using "*" in select clauses.
+ 
+OQL: insert and update queries.
