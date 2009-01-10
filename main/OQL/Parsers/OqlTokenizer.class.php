@@ -256,7 +256,7 @@
 					return floatval($value);
 				
 				case OqlToken::BOOLEAN:
-					return strtolower($value) == 'false' ? false : true;
+					return strtolower($value) != 'false';
 				
 				case OqlToken::NULL:
 					return 'null';
