@@ -167,21 +167,25 @@
 		{
 			static $types = array(
 				'tinyint'	=> DataType::SMALLINT,
+				'smallint'	=> DataType::SMALLINT,
 				'int'		=> DataType::INTEGER,
 				'bigint'	=> DataType::BIGINT,
+				
+				'double'	=> DataType::DOUBLE,
 				
 				'varchar'	=> DataType::VARCHAR,
 				'text'		=> DataType::TEXT,
 				
+				'time'		=> DataType::TIME,
 				'timestamp' => DataType::TIMESTAMP,
 				'date'		=> DataType::DATE
 			);
 			
-			$result = $this->queryRaw('SHOW COLUMNS FROM '.$table);
-			
-			if (!(mysql_num_rows($result) > 0)) {
+			try {
+				$result = $this->queryRaw('SHOW COLUMNS FROM '.$table);
+			} catch (BaseException $e) {
 				throw new ObjectNotFoundException(
-					"no info for table '{$table}'"
+					"unknown table '{$table}'"
 				);
 			}
 			
