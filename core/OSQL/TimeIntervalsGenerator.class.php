@@ -29,7 +29,7 @@
 			return new self;
 		}
 		
-		public function setRange(TimestampRange $range)
+		public function setRange(DateRange $range)
 		{
 			$this->range = $range;
 			
@@ -37,7 +37,7 @@
 		}
 		
 		/**
-		 * @return TimestampRange
+		 * @return DateRange
 		**/
 		public function getRange()
 		{

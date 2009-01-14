@@ -44,6 +44,14 @@
 			return null;
 		}
 		
+		/**
+		 * @return TimestampRange
+		**/
+		public function toTimestampRange()
+		{
+			return $this;
+		}
+		
 		protected function getObjectName()
 		{
 			return 'Timestamp';

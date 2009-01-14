@@ -300,6 +300,14 @@
 			return $this->toString();
 		}
 		
+		/**
+		 * @return Timestamp
+		**/
+		public function toTimestamp()
+		{
+			return Timestamp::create($this->toStamp());
+		}
+		
 		protected static function getFormat()
 		{
 			return 'Y-m-d';

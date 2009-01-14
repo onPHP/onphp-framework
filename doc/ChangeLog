@@ -1,5 +1,10 @@
 # $Id$
 
+2009-01-14	Denis M. Gabaidulin
+
+	* core/Base/IntervalUnit.class.php,
+	core/OSQL/TimeIntervalsGenerator: support Date/DateRange types.
+
 2009-01-10	Vladlen Y. Koshelev
 
 	* main/OQL/Parsers/OqlTokenizer.class.php: tokenizer simplified and

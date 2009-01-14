@@ -37,8 +37,10 @@
 		 * Emulates PostgreSQL's date_tunc() function
 		 * 
 		**/
-		public function truncate(Timestamp $time, $ceil = false)
+		public function truncate(Date $time, $ceil = false)
 		{
+			$time = $time->toTimestamp();
+			
 			$function = $ceil ? 'ceil' : 'floor';
 			
 			if ($this->seconds) {
@@ -108,10 +110,12 @@
 		}
 		
 		public function countInRange(
-			TimestampRange $range,
+			DateRange $range,
 			$overlappedBounds = true
 		)
 		{
+			$range = $range->toTimestampRange();
+			
 			$start = $this->truncate(
 				$range->getStart(), !$overlappedBounds
 			);
