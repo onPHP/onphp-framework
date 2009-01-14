@@ -2,6 +2,9 @@
 
 2009-01-14	Denis M. Gabaidulin
 
+	* main/Math/MathUtils.class.php: fisherYatesShuffle()
+	Fisher Yates shuffle algorithm implementation.
+
 	* core/Base/IntervalUnit.class.php,
 	core/OSQL/TimeIntervalsGenerator: support Date/DateRange types.
 
