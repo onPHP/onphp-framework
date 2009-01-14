@@ -34,7 +34,7 @@
 		/**
 		 * @return Timestamp
 		 * 
-		 * Emulates PostgreSQL's date_tunc() function
+		 * Emulates PostgreSQL's date_trunc() function
 		 * 
 		**/
 		public function truncate(Date $time, $ceil = false)
