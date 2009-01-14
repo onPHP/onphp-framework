@@ -498,6 +498,18 @@
 				&& ($this->start->toDate() == $this->end->toDate());
 		}
 		
+		/**
+		 * @return TimestampRange
+		**/
+		public function toTimestampRange()
+		{
+			return
+				TimestampRange::create(
+					$this->getStart()->toTimestamp(),
+					$this->getEnd()->toTimestamp()
+				);
+		}
+		
 		protected function checkType($value)
 		{
 			Assert::isTrue(

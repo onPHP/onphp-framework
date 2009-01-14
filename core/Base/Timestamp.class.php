@@ -113,6 +113,14 @@
 				return date('Y-m-d\TH:i:sO', $this->int);
 		}
 		
+		/**
+		 * @return Timestamp
+		**/
+		public function toTimestamp()
+		{
+			return $this;
+		}
+		
 		protected static function getFormat()
 		{
 			return 'Y-m-d H:i:s';
