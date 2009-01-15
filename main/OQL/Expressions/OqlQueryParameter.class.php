@@ -82,8 +82,12 @@
 			
 			} elseif (is_array($value)) {
 				$list = array();
-				foreach ($value as $key => $parameter)
-					$list[$key] = $parameter->evaluate($values);
+				foreach ($value as $key => $parameter) {
+					if ($parameter instanceof OqlQueryParameter)
+						$list[$key] = $parameter->evaluate($values);
+					else
+						$list[$key] = $parameter;
+				}
 				
 				return $list;
 			}
