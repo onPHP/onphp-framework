@@ -315,6 +315,20 @@
 						1 => OQL::select('id from TestUser')->toCriteria()
 					)
 				)->
+				// in array
+				assertCriteria(
+					'from TestUser where id in ($1)',
+					Criteria::create(TestUser::dao())->
+						add(
+							Expression::in(
+								'id',
+								array(1, 2)
+							)
+						),
+					array(
+						1 => array(1, 2)
+					)
+				)->
 				// [not] (like|ilike|similar to)
 				assertCriteria(
 					'from TestUser where id like $1 or id not like "Ы%" '

@@ -1,5 +1,10 @@
 # $Id$
 
+2009-01-15	Vladlen Y. Koshelev
+
+	* main/OQL/Expressions/OqlQueryParameter.class.php: "in" expression supports
+	arrays.
+
 2009-01-14	Denis M. Gabaidulin
 
 	* main/Math/MathUtils.class.php: fisherYatesShuffle()
