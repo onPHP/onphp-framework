@@ -173,6 +173,13 @@
 					TestEncapsulant::create()->
 					setName($i)
 				);
+				
+				$encapsulant->getCities()->
+					fetch()->
+					setList(
+						array($piter, $moscow)
+					)->
+					save();
 			}
 			
 			$mysqler = TestUser::dao()->add($mysqler);
@@ -255,9 +262,17 @@
 			// fetch
 			$encapsulantsList = $user->getEncapsulants()->getList();
 			
+			$piter = TestCity::dao()->getById(1);
+			$moscow = TestCity::dao()->getById(2);
+			
 			for ($i = 0; $i < 10; $i++) {
 				$this->assertEquals($encapsulantsList[$i]->getId(), $i + 1);
 				$this->assertEquals($encapsulantsList[$i]->getName(), $i);
+				
+				$cityList = $encapsulantsList[$i]->getCities()->getList();
+				
+				$this->assertEquals($cityList[0], $piter);
+				$this->assertEquals($cityList[1], $moscow);
 			}
 			
 			unset($encapsulantsList);
@@ -267,6 +282,33 @@
 			
 			for ($i = 1; $i < 11; $i++)
 				$this->assertEquals($encapsulantsList[$i], $i);
+			
+			// count
+			$user->getEncapsulants()->clean();
+			
+			$this->assertEquals($user->getEncapsulants()->getCount(), 10);
+			
+			$criteria = Criteria::create(TestEncapsulant::dao())->
+				add(
+					Expression::in(
+						'cities.id',
+						array($piter->getId(), $moscow->getId())
+					)
+				);
+			
+			$user->getEncapsulants()->setCriteria($criteria);
+			
+			$this->assertEquals($user->getEncapsulants()->getCount(), 20);
+			
+			// distinct count
+			$user->getEncapsulants()->clean();
+			
+			$user->getEncapsulants()->setCriteria(
+				$criteria->
+					setDistinct(true)
+			);
+			
+			$this->assertEquals($user->getEncapsulants()->getCount(), 10);
 		}
 		
 		public function testWorkingWithCache()

@@ -1,5 +1,11 @@
 # $Id$
 
+2009-01-17	Vladlen Y. Koshelev
+
+	* main/UnifiedContainer/UnifiedContainerWorker.class.php,
+	test/misc/DAOTest.class.php: generate distinct count query in case of
+	container's criteria is distinct; unified container count-tests added. 
+
 2009-01-15	Vladlen Y. Koshelev
 
 	* main/OQL/Expressions/OqlQueryParameter.class.php: "in" expression supports
