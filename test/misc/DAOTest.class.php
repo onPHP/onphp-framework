@@ -29,6 +29,22 @@
 			$this->drop();
 		}
 		
+		public function testUnified()
+		{
+			$this->create();
+			
+			foreach (DBTestPool::me()->getPool() as $connector => $db) {
+				DBPool::me()->setDefault($db);
+				$this->fill();
+				
+				$this->unified();
+				
+				Cache::me()->clean();
+			}
+			
+			$this->drop();
+		}
+		
 		public function testGetByEmptyId()
 		{
 			$this->create();
@@ -86,6 +102,21 @@
 			}
 			
 			$postgreser = TestUser::dao()->add($postgreser);
+			
+			for ($i = 0; $i < 10; $i++) {
+				$encapsulant = TestEncapsulant::dao()->add(
+					TestEncapsulant::create()->
+					setName($i)
+				);
+				
+				$encapsulant->getCities()->
+					fetch()->
+					setList(
+						array($piter, $moscow)
+					)->
+					save();
+			}
+			
 			$mysqler = TestUser::dao()->add($mysqler);
 			
 			if ($assertions) {
@@ -144,6 +175,72 @@
 				$this->getListByIdsTest();
 				$this->getListByIdsTest();
 			}
+		}
+		
+		public function unified()
+		{
+			$user = TestUser::dao()->getById(1);
+			
+			$encapsulant = TestEncapsulant::dao()->getPlainList();
+			
+			$collectionDao = $user->getEncapsulants();
+			
+			$collectionDao->fetch()->setList($encapsulant);
+			
+			$collectionDao->save();
+			
+			unset($collectionDao);
+			
+			// fetch
+			$encapsulantsList = $user->getEncapsulants()->getList();
+			
+			$piter = TestCity::dao()->getById(1);
+			$moscow = TestCity::dao()->getById(2);
+			
+			for ($i = 0; $i < 10; $i++) {
+				$this->assertEqual($encapsulantsList[$i]->getId(), $i + 1);
+				$this->assertEqual($encapsulantsList[$i]->getName(), $i);
+				
+				$cityList = $encapsulantsList[$i]->getCities()->getList();
+				
+				$this->assertEqual($cityList[0], $piter);
+				$this->assertEqual($cityList[1], $moscow);
+			}
+			
+			unset($encapsulantsList);
+			
+			// lazy fetch
+			$encapsulantsList = $user->getEncapsulants(true)->getList();
+			
+			for ($i = 1; $i < 11; $i++)
+				$this->assertEqual($encapsulantsList[$i], $i);
+			
+			// count
+			$user->getEncapsulants()->clean();
+			
+			$this->assertEqual($user->getEncapsulants()->getCount(), 10);
+			
+			$criteria = Criteria::create(TestEncapsulant::dao())->
+				add(
+					Expression::in(
+						'cities.id',
+						array($piter->getId(), $moscow->getId())
+					)
+				);
+			
+			$user->getEncapsulants()->setCriteria($criteria);
+			
+			$this->assertEqual($user->getEncapsulants()->getCount(), 20);
+			
+			// distinct count
+			$user->getEncapsulants()->clean();
+			
+			$user->getEncapsulants()->setCriteria(
+				$criteria->
+					setDistinct(true)
+			);
+			
+			$this->assertEqual($user->getEncapsulants()->getCount(), 10);
 		}
 		
 		protected function getSome()

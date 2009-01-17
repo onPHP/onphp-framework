@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -62,14 +62,31 @@
 		**/
 		public function makeCountQuery()
 		{
-			return
-				$this->
-					makeFetchQuery()->
-					dropFields()->
-					dropOrder()->
-					get(
-						SQLFunction::create('count', '*')->setAlias('count')
-					);
+			$query = $this->makeFetchQuery();
+			
+			if ($query->isDistinct()) {
+				$countFunction =
+					SQLFunction::create(
+						'count',
+						DBField::create(
+							$this->container->getDao()->getIdName(),
+							$this->container->getDao()->getTable()
+						)
+					)->
+					setAggregateDistinct();
+				
+				$query->unDistinct();
+			
+			} else {
+				$countFunction = SQLFunction::create('count', DBValue::create('*'));
+			}
+			
+			return $query->
+				dropFields()->
+				dropOrder()->
+				get(
+					$countFunction->setAlias('count')
+				);
 		}
 		
 		public function dropList()
