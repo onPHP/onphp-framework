@@ -163,8 +163,8 @@
 			$postgreser = TestUser::dao()->add($postgreser);
 			
 			for ($i = 0; $i < 10; $i++) {
-				TestIncapsulant::dao()->add(
-					TestIncapsulant::create()->
+				$encapsulant = TestEncapsulant::dao()->add(
+					TestEncapsulant::create()->
 					setName($i)
 				);
 			}
@@ -236,31 +236,31 @@
 		{
 			$user = TestUser::dao()->getById(1);
 			
-			$incapsulant = TestIncapsulant::dao()->getPlainList();
+			$encapsulant = TestEncapsulant::dao()->getPlainList();
 			
-			$collectionDao = $user->getIncapsulants();
+			$collectionDao = $user->getEncapsulants();
 			
-			$collectionDao->fetch()->setList($incapsulant);
+			$collectionDao->fetch()->setList($encapsulant);
 			
 			$collectionDao->save();
 			
 			unset($collectionDao);
 			
 			// fetch
-			$incapsulantsList = $user->getIncapsulants()->getList();
+			$encapsulantsList = $user->getEncapsulants()->getList();
 			
 			for ($i = 0; $i < 10; $i++) {
-				$this->assertEquals($incapsulantsList[$i]->getId(), $i + 1);
-				$this->assertEquals($incapsulantsList[$i]->getName(), $i);
+				$this->assertEquals($encapsulantsList[$i]->getId(), $i + 1);
+				$this->assertEquals($encapsulantsList[$i]->getName(), $i);
 			}
 			
-			unset($incapsulantsList);
+			unset($encapsulantsList);
 			
 			// lazy fetch
-			$incapsulantsList = $user->getIncapsulants(true)->getList();
+			$encapsulantsList = $user->getEncapsulants(true)->getList();
 			
 			for ($i = 1; $i < 11; $i++)
-				$this->assertEquals($incapsulantsList[$i], $i);
+				$this->assertEquals($encapsulantsList[$i], $i);
 		}
 		
 		public function testWorkingWithCache()
@@ -276,22 +276,22 @@
 				
 				TestItem::dao()->add($item);
 				
-				$incapsulant =
-					TestIncapsulant::create()->
-					setName('testIncapsulant1');
+				$encapsulant =
+					TestEncapsulant::create()->
+					setName('testEncapsulant1');
 				
-				TestIncapsulant::dao()->add($incapsulant);
+				TestEncapsulant::dao()->add($encapsulant);
 				
 				$subItem1 =
 					TestSubItem::create()->
 					setName('testSubItem1')->
-					setIncapsulant($incapsulant)->
+					setEncapsulant($encapsulant)->
 					setItem($item);
 				
 				$subItem2 =
 					TestSubItem::create()->
 					setName('testSubItem2')->
-					setIncapsulant($incapsulant)->
+					setEncapsulant($encapsulant)->
 					setItem($item);
 				
 				TestSubItem::dao()->add($subItem1);
@@ -304,20 +304,20 @@
 				foreach ($items as $item) {
 					foreach ($item->getSubItems()->getList() as $subItem) {
 						$this->assertEquals(
-							$subItem->getIncapsulant()->getName(),
-							'testIncapsulant1'
+							$subItem->getEncapsulant()->getName(),
+							'testEncapsulant1'
 						);
 					}
 				}
 				
-				$incapsulant = TestIncapsulant::dao()->getById(1);
+				$encapsulant = TestEncapsulant::dao()->getById(1);
 				
-				$incapsulant->setName('testIncapsulant1_changed');
+				$encapsulant->setName('testEncapsulant1_changed');
 				
-				TestIncapsulant::dao()->save($incapsulant);
+				TestEncapsulant::dao()->save($encapsulant);
 				
 				// drop identityMap
-				TestIncapsulant::dao()->dropIdentityMap();
+				TestEncapsulant::dao()->dropIdentityMap();
 				TestSubItem::dao()->dropIdentityMap();
 				TestItem::dao()->dropIdentityMap();
 				
@@ -328,26 +328,26 @@
 				foreach ($items as $item) {
 					foreach ($item->getSubItems()->getList() as $subItem) {
 						$this->assertEquals(
-							$subItem->getIncapsulant()->getName(),
-							'testIncapsulant1_changed'
+							$subItem->getEncapsulant()->getName(),
+							'testEncapsulant1_changed'
 						);
 					}
 				}
 				
 				// drop identityMap
-				TestIncapsulant::dao()->dropIdentityMap();
+				TestEncapsulant::dao()->dropIdentityMap();
 				TestSubItem::dao()->dropIdentityMap();
 				TestItem::dao()->dropIdentityMap();
 				
 				$subItem = TestSubItem::dao()->getById(1);
 				
 				$this->assertEquals(
-					$subItem->getIncapsulant()->getName(),
-					'testIncapsulant1_changed'
+					$subItem->getEncapsulant()->getName(),
+					'testEncapsulant1_changed'
 				);
 				
 				// drop identityMap
-				TestIncapsulant::dao()->dropIdentityMap();
+				TestEncapsulant::dao()->dropIdentityMap();
 				TestSubItem::dao()->dropIdentityMap();
 				TestItem::dao()->dropIdentityMap();
 				
@@ -357,8 +357,8 @@
 				
 				foreach ($subItems as $subItem) {
 					$this->assertEquals(
-						$subItem->getIncapsulant()->getName(),
-						'testIncapsulant1_changed'
+						$subItem->getEncapsulant()->getName(),
+						'testEncapsulant1_changed'
 					);
 				}
 			}
