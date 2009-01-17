@@ -49,7 +49,7 @@
 		<pattern name="DictionaryClass" fetch="cascade" />
 	</class>
 	
-	<class name="TestIncapsulant">
+	<class name="TestEncapsulant">
 		<properties>
 			<identifier />
 			<property name="name" type="String" size="50" required="true" />
@@ -72,7 +72,7 @@
 			<property name="firstOptional" type="TestCity" relation="OneToOne" required="false" />
 			<property name="secondOptional" type="TestCity" relation="OneToOne" required="false" />
 			<property name="parts" type="TestPart" relation="OneToMany" />
-			<property name="incapsulants" type="TestIncapsulant" relation="ManyToMany" />
+			<property name="encapsulants" type="TestEncapsulant" relation="ManyToMany" />
 			
 		</properties>
 		
