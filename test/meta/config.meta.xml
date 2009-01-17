@@ -53,6 +53,7 @@
 		<properties>
 			<identifier />
 			<property name="name" type="String" size="50" required="true" />
+			<property name="cities" type="TestCity" relation="ManyToMany" required="false" />
 		</properties>
 		<pattern name="DictionaryClass" />
 	</class>
