@@ -12,22 +12,22 @@
 
 	/**
 	 * Parses OQL select query.
-	 *
+	 * 
 	 * Examples:
-	 *
+	 * 
 	 * from User where id = $1
 	 * count(id) as count, count(distinct Name) as distinctCount from User
 	 * (id + -$1) / 2 as idExpression, distinct id from User
 	 * where (Name not ilike 'user%') and id <= 10 and created between $2 and $3
 	 * order by id desc, Name asc
 	 * limit 10 offset $2
-	 *
+	 * 
 	 * from User having $1 > 0 group by id
-	 *
+	 * 
 	 * @see OQL::select
 	 * @see http://www.hibernate.org/hib_docs/reference/en/html/queryhql.html
 	 * @see doc/OQL-BNF
-	 *
+	 * 
 	 * @ingroup OQL
 	**/
 	final class OqlSelectParser extends OqlParser

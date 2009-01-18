@@ -22,13 +22,13 @@
 		{
 			$num = count($elts);
 			
-			for ($i = $num - 1; $i > 0; $i--) {
-		    	$j = mt_rand(0, $i);
-		    	
-		      	$tmp 		= $elts[$i];
-		      	$elts[$i] 	= $elts[$j];
-		      	$elts[$j] 	= $tmp;
-	   		}
+			for ($i = $num - 1; $i > 0; --$i) {
+				$j = mt_rand(0, $i);
+				
+				$tmp		= $elts[$i];
+				$elts[$i]	= $elts[$j];
+				$elts[$j]	= $tmp;
+			}
 		}
 	}
 ?>
