@@ -302,6 +302,10 @@
 					setDistinct(true)
 			);
 			
+			if (DBPool::me()->getLink() instanceof SQLite)
+				// TODO: sqlite does not support such queries yet
+				return null;
+			
 			$this->assertEquals($user->getEncapsulants()->getCount(), 10);
 		}
 		
