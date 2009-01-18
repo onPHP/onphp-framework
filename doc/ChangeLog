@@ -1,5 +1,10 @@
 # $Id$
 
+2009-01-19	Vladlen Y. Koshelev
+
+	* core/Form/Primitives/PrimitiveString.class.php: '0' is a valid
+	string too (backported from 1.0).
+
 2009-01-17	Vladlen Y. Koshelev
 
 	* main/UnifiedContainer/UnifiedContainerWorker.class.php,
