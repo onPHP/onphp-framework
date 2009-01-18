@@ -77,6 +77,8 @@
 			
 			<property name="url" type="HttpUrl" size="256" required="false" />
 			
+			<property name="ip" type="Inet" required="false" />
+			
 		</properties>
 		
 		<pattern name="StraightMapping" />
