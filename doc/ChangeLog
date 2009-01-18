@@ -1,5 +1,9 @@
 # $Id$
 
+2009-01-19	Konstantin V. Arkhipov
+
+	* meta/types/InetType.class.php: goes sizeless.
+
 2009-01-17	Vladlen Y. Koshelev
 
 	* main/UnifiedContainer/UnifiedContainerWorker.class.php,
