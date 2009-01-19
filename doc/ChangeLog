@@ -1,5 +1,10 @@
 # $Id$
 
+2008-01-20	Denis M. Gabaidulin
+
+	* main/Utils/Mobile/MobileRequestDetector.class.php: use regular array
+	instead HttpRequest. Warning: Broken BC!
+
 2008-01-19	Denis M. Gabaidulin
 
 	* core/Form/Filters/UnserializeFilter.class.php: added.
