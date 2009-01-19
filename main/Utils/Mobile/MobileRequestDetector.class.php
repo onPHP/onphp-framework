@@ -67,49 +67,49 @@
 			return new self;
 		}
 		
-		public function isOperaMini(HttpRequest $request)
+		public function isOperaMini(array $source)
 		{
 			// mandatory opera mini header
-			return $request->hasServerVar('HTTP_X_OPERAMINI_FEATURES');
+			return isset($source['HTTP_X_OPERAMINI_FEATURES']);
 		}
 		
-		public function isMobile(HttpRequest $request, $checkAccept = false)
+		public function isMobile(array $source, $checkAccept = false)
 		{
-			if ($this->isOperaMini($request))
+			if ($this->isOperaMini($source))
 				return true;
 			
 			foreach (self::$headers as $header)
-				if ($request->hasServerVar($header))
+				if (isset($source[$header]))
 					return true;
 			
-			if ($this->isIphone($request))
+			if ($this->isIphone($source))
 				return true;
 			
 			if ($checkAccept)
-				return $this->isMobileByHttpAccept($request);
+				return $this->isMobileByHttpAccept($source);
 			
 			return false;
 		}
 		
-		public function isIphone(HttpRequest $request)
+		public function isIphone(array $source)
 		{
 			return (
-				$request->hasServerVar('HTTP_USER_AGENT')
+				isset($source['HTTP_USER_AGENT'])
 				&&
 					stripos(
-						$request->getServerVar('HTTP_USER_AGENT'),
+						$source['HTTP_USER_AGENT'],
 						'iphone'
 					) !== false
 			);
 		}
 		
-		public function isMobileByHttpAccept(HttpRequest $request)
+		public function isMobileByHttpAccept(array $source)
 		{
 			return (
-				$request->hasServerVar('HTTP_ACCEPT')
+				isset($source['HTTP_ACCEPT'])
 				&&
 					stripos(
-						$request->getServerVar('HTTP_ACCEPT'),
+						$source['HTTP_ACCEPT'],
 						'vnd.wap.wml'
 					) !== false
 			);
