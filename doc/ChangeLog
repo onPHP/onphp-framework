@@ -1,5 +1,9 @@
 # $Id$
 
+2008-01-19	Denis M. Gabaidulin
+
+	* core/Form/Filters/UnserializeFilter.class.php: added.
+
 2009-01-19	Vladlen Y. Koshelev
 
 	* main/Base/LightMetaProperty.class.php: makePrimitive() added.
