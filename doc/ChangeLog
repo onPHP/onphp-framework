@@ -1,5 +1,12 @@
 # $Id$
 
+2009-01-19	Vladlen Y. Koshelev
+
+	* main/Base/LightMetaProperty.class.php: makePrimitive() added.
+
+	* core/Form/Primitive.class.php: prototyped() and prototypedIdentifier() - 
+	shortcuts for making object's properties primitives.
+
 2009-01-19	Konstantin V. Arkhipov
 
 	* meta/types/InetType.class.php: goes sizeless.

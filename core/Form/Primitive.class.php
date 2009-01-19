@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2009 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -291,5 +291,36 @@
 			return new PrimitiveDomDocument($name);
 		}
 		
+		/**
+		 * @return BasePrimitive
+		**/
+		public static function prototyped($class, $propertyName, $name = null)
+		{
+			Assert::isInstance($class, 'Prototyped');
+			
+			$proto = is_string($class)
+				? call_user_func(array($class, 'proto'))
+				: $class->proto();
+			
+			if (!$name)
+				$name = $propertyName;
+			
+			return $proto->getPropertyByName($propertyName)->
+				makePrimitive($name);
+		}
+		
+		/**
+		 * @return PrimitiveIdentifier
+		**/
+		public static function prototypedIdentifier($class, $name = null)
+		{
+			Assert::isInstance($class, 'DAOConnected');
+			
+			$dao = is_string($class)
+				? call_user_func(array($class, 'dao'))
+				: $class->dao();
+			
+			return self::prototyped($class, $dao->getIdName(), $name); 
+		}
 	}
 ?>
