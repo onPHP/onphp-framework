@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -282,6 +282,32 @@
 			return true;
 		}
 		
+		/**
+		 * @return BasePrimitive
+		**/
+		public function makePrimitive($name)
+		{
+			$prm =
+				call_user_func(
+					array('Primitive', $this->type),
+					$name
+				);
+			
+			if (null !== ($min = $this->getMin()))
+				$prm->setMin($min);
+			
+			if (null !== ($max = $this->getMax()))
+				$prm->setMax($max);
+			
+			if ($prm instanceof IdentifiablePrimitive)
+				$prm->of($this->className);
+			
+			if ($this->required)
+				$prm->required();
+			
+			return $prm;
+		}
+		
 		public function fillMapping(array $mapping)
 		{
 			if (
@@ -305,25 +331,9 @@
 		**/
 		public function fillForm(Form $form, $prefix = null)
 		{
-			$prm =
-				call_user_func(
-					array('Primitive', $this->type),
-					$prefix.$this->name
-				);
-			
-			if (null !== ($min = $this->getMin()))
-				$prm->setMin($min);
-			
-			if (null !== ($max = $this->getMax()))
-				$prm->setMax($max);
-			
-			if ($prm instanceof IdentifiablePrimitive)
-				$prm->of($this->className);
-			
-			if ($this->required)
-				$prm->required();
-			
-			return $form->add($prm);
+			return $form->add(
+				$this->makePrimitive($prefix.$this->name)
+			);
 		}
 		
 		/**
