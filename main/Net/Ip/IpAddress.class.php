@@ -35,10 +35,12 @@
 		**/
 		public function setIp($ip)
 		{
-			if (ip2long($ip) === false)
+			$long = ip2long($ip);
+			
+			if ($long === false)
 				throw new WrongArgumentException('wrong ip given');
 			
-			$this->longIp = ip2long($ip);
+			$this->longIp = $long;
 			
 			return $this;
 		}
