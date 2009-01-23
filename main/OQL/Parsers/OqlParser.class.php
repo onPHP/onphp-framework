@@ -338,8 +338,7 @@
 			
 			// terminal boolean expressions
 			if ($priority == self::LOGIC_PRIORITY_TERMINAL) {
-				$token = $this->tokenizer->peek();
-				if (!$token)
+				if (!$this->tokenizer->peek())
 					return null;
 				
 				// arithmetic expression
@@ -354,187 +353,7 @@
 					return $expression;
 				}
 				
-				// prefix unary 'not'
-				if ($this->checkKeyword($token, 'not')) {
-					$this->tokenizer->next();
-					
-					if (
-						$argument = $this->getLogicExpression(self::LOGIC_PRIORITY_UNARY_NOT)
-					) {
-						return $this->makeQueryExpression(
-							self::$classMap[self::PREFIX_UNARY_EXPRESSION],
-							PrefixUnaryExpression::NOT,
-							$argument
-						);
-					
-					} else {
-						$this->error('expecting argument in expression: not');
-					}
-				}
-				
-				// first argument
-				if (
-					!($expression = $this->getIdentifierExpression())
-					&& !($expression = $this->getConstantExpression())
-				) {
-					$this->error(
-						'expecting first argument in expression:',
-						$this->getTokenValue($this->tokenizer->peek(), true)
-					);
-				}
-				
-				// not (like|ilike|between|similar to|in)
-				$operator = $this->tokenizer->peek();
-				if ($this->checkKeyword($operator, 'not')) {
-					$this->tokenizer->next();
-					$operator = $this->tokenizer->peek();
-					$isNot = true;
-				
-				} else {
-					$isNot = false;
-				}
-				
-				// is ([not] null|true|false)
-				if (
-					!$isNot
-					&& $this->checkKeyword($operator, 'is')
-				) {
-					$this->tokenizer->next();
-					
-					$logic = null;
-					
-					if ($this->checkKeyword($this->tokenizer->peek(), 'not')) {
-						$this->tokenizer->next();
-						$isNot = true;
-					
-					} else {
-						$isNot = false;
-					}
-					
-					if ($this->checkToken($this->tokenizer->peek(), OqlToken::NULL)) {
-						$this->tokenizer->next();
-						$logic = $isNot
-							? PostfixUnaryExpression::IS_NOT_NULL
-							: PostfixUnaryExpression::IS_NULL;
-						
-					} elseif (
-						!$isNot
-						&& $this->checkToken($this->tokenizer->peek(), OqlToken::BOOLEAN)
-					) {
-						$logic = $this->tokenizer->next()->getValue() === true
-							? PostfixUnaryExpression::IS_TRUE
-							: PostfixUnaryExpression::IS_FALSE;
-					}
-					
-					if ($logic) {
-						return $this->makeQueryExpression(
-							self::$classMap[self::POSTFIX_UNARY_EXPRESSION],
-							$expression,
-							$logic
-						);
-					
-					} else {
-						$this->error("expecting 'null', 'not null', 'true' or 'false'");
-					}
-				
-				// [not] in
-				} elseif ($this->checkKeyword($operator, 'in')) {
-					$isNotString = ($isNot ? 'not ' : '');
-					$this->tokenizer->next();
-					
-					$this->openParentheses(true, 'in expression: '.$isNotString.'in');
-					
-					$list = $this->getCommaSeparatedList(
-						array($this, 'getConstantExpression'),
-						'expecting constant or substitution in expression: '
-						.$isNotString.'in'
-					);
-					
-					if (is_array($list) && count($list) == 1)
-						$list = reset($list);
-					
-					$this->closeParentheses(true, 'in expression: '.$isNotString.'in');
-					
-					return new OqlInExpression(
-						$expression,
-						$this->makeQueryParameter($list),
-						$isNot ? InExpression::NOT_IN : InExpression::IN
-					);
-					
-				// [not] (like|ilike|similar to)
-				} elseif (
-					$this->checkKeyword($operator, array('like', 'ilike', 'similar to'))
-				) {
-					$this->tokenizer->next();
-					
-					$isNotString = ($isNot ? 'not ' : '');
-					$argument = $this->tokenizer->next();
-					
-					if (
-						$this->checkToken($argument, OqlToken::STRING)
-						|| $this->checkToken($argument, OqlToken::SUBSTITUTION)
-					) {
-						return $this->makeQueryExpression(
-							self::$classMap[self::BINARY_EXPRESSION],
-							$expression,
-							$argument,
-							self::$binaryOperatorMap[
-								$isNotString
-								.$this->getTokenValue($operator)
-							]
-						);
-					
-					} else {
-						$this->error(
-							'expecting string constant or substitution:',
-							$isNotString.$this->getTokenValue($operator, true)
-						);
-					}
-				
-				// between
-				} elseif (
-					!$isNot
-					&& $this->checkKeyword($operator, 'between')
-				) {
-					$this->tokenizer->next();
-					
-					if (
-						($argument1 = $this->getIdentifierExpression())
-						|| ($argument1 = $this->getConstantExpression())
-					) {
-						if ($this->checkKeyword($this->tokenizer->next(), 'and')) {
-							if (
-								($argument2 = $this->getIdentifierExpression())
-								|| ($argument2 = $this->getConstantExpression())
-							) {
-								return $this->makeQueryExpression(
-									self::$classMap[self::BETWEEN_EXPRESSION],
-									$expression,
-									$argument1,
-									$argument2
-								);
-							
-							} else {
-								$this->error(
-									'expecting second argument in expression: between'
-								);
-							}
-						
-						} else {
-							$this->error(
-								"expecting 'and' in expression: between"
-							);
-						}
-					
-					} else {
-						$this->error(
-							'expecting first argument in expression: between'
-						);
-					}
-				}
-				
-				if ($isNot)
-					$this->error('expecting in, like, ilike or similar to');
+				$expression = $this->getLogicArgumentExpression();
 			
 			// and|or|comparison expression chain
 			} else {
@@ -581,6 +400,195 @@
 					}
 				}
 			}
+			
+			return $expression;
+		}
+		
+		protected function getLogicArgumentExpression()
+		{
+			$token = $this->tokenizer->peek();
+			
+			// prefix unary 'not'
+			if ($this->checkKeyword($token, 'not')) {
+				$this->tokenizer->next();
+				
+				if (
+					$argument = $this->getLogicExpression(self::LOGIC_PRIORITY_UNARY_NOT)
+				) {
+					return $this->makeQueryExpression(
+						self::$classMap[self::PREFIX_UNARY_EXPRESSION],
+						PrefixUnaryExpression::NOT,
+						$argument
+					);
+				
+				} else {
+					$this->error('expecting argument in expression: not');
+				}
+			}
+			
+			// first argument
+			if (
+				!($expression = $this->getIdentifierExpression())
+				&& !($expression = $this->getConstantExpression())
+			) {
+				$this->error(
+					'expecting first argument in expression:',
+					$this->getTokenValue($this->tokenizer->peek(), true)
+				);
+			}
+			
+			// not (like|ilike|between|similar to|in)
+			$operator = $this->tokenizer->peek();
+			if ($this->checkKeyword($operator, 'not')) {
+				$this->tokenizer->next();
+				$operator = $this->tokenizer->peek();
+				$isNot = true;
+			
+			} else {
+				$isNot = false;
+			}
+			
+			// is ([not] null|true|false)
+			if (
+				!$isNot
+				&& $this->checkKeyword($operator, 'is')
+			) {
+				$this->tokenizer->next();
+				
+				$logic = null;
+				
+				if ($this->checkKeyword($this->tokenizer->peek(), 'not')) {
+					$this->tokenizer->next();
+					$isNot = true;
+				
+				} else {
+					$isNot = false;
+				}
+				
+				if ($this->checkToken($this->tokenizer->peek(), OqlToken::NULL)) {
+					$this->tokenizer->next();
+					$logic = $isNot
+						? PostfixUnaryExpression::IS_NOT_NULL
+						: PostfixUnaryExpression::IS_NULL;
+					
+				} elseif (
+					!$isNot
+					&& $this->checkToken($this->tokenizer->peek(), OqlToken::BOOLEAN)
+				) {
+					$logic = $this->tokenizer->next()->getValue() === true
+						? PostfixUnaryExpression::IS_TRUE
+						: PostfixUnaryExpression::IS_FALSE;
+				}
+				
+				if ($logic) {
+					return $this->makeQueryExpression(
+						self::$classMap[self::POSTFIX_UNARY_EXPRESSION],
+						$expression,
+						$logic
+					);
+				
+				} else {
+					$this->error("expecting 'null', 'not null', 'true' or 'false'");
+				}
+			
+			// [not] in
+			} elseif ($this->checkKeyword($operator, 'in')) {
+				$isNotString = ($isNot ? 'not ' : '');
+				$this->tokenizer->next();
+				
+				$this->openParentheses(true, 'in expression: '.$isNotString.'in');
+				
+				$list = $this->getCommaSeparatedList(
+					array($this, 'getConstantExpression'),
+					'expecting constant or substitution in expression: '
+					.$isNotString.'in'
+				);
+				
+				if (is_array($list) && count($list) == 1)
+					$list = reset($list);
+				
+				$this->closeParentheses(true, 'in expression: '.$isNotString.'in');
+				
+				return new OqlInExpression(
+					$expression,
+					$this->makeQueryParameter($list),
+					$isNot ? InExpression::NOT_IN : InExpression::IN
+				);
+				
+			// [not] (like|ilike|similar to)
+			} elseif (
+				$this->checkKeyword($operator, array('like', 'ilike', 'similar to'))
+			) {
+				$this->tokenizer->next();
+				
+				$isNotString = ($isNot ? 'not ' : '');
+				$argument = $this->tokenizer->next();
+				
+				if (
+					$this->checkToken($argument, OqlToken::STRING)
+					|| $this->checkToken($argument, OqlToken::SUBSTITUTION)
+				) {
+					return $this->makeQueryExpression(
+						self::$classMap[self::BINARY_EXPRESSION],
+						$expression,
+						$argument,
+						self::$binaryOperatorMap[
+							$isNotString
+							.$this->getTokenValue($operator)
+						]
+					);
+				
+				} else {
+					$this->error(
+						'expecting string constant or substitution:',
+						$isNotString.$this->getTokenValue($operator, true)
+					);
+				}
+			
+			// between
+			} elseif (
+				!$isNot
+				&& $this->checkKeyword($operator, 'between')
+			) {
+				$this->tokenizer->next();
+				
+				if (
+					($argument1 = $this->getIdentifierExpression())
+					|| ($argument1 = $this->getConstantExpression())
+				) {
+					if ($this->checkKeyword($this->tokenizer->next(), 'and')) {
+						if (
+							($argument2 = $this->getIdentifierExpression())
+							|| ($argument2 = $this->getConstantExpression())
+						) {
+							return $this->makeQueryExpression(
+								self::$classMap[self::BETWEEN_EXPRESSION],
+								$expression,
+								$argument1,
+								$argument2
+							);
+						
+						} else {
+							$this->error(
+								'expecting second argument in expression: between'
+							);
+						}
+					
+					} else {
+						$this->error(
+							"expecting 'and' in expression: between"
+						);
+					}
+				
+				} else {
+					$this->error(
+						'expecting first argument in expression: between'
+					);
+				}
+			}
+			
+			if ($isNot)
+				$this->error('expecting in, like, ilike or similar to');
 			
 			return $expression;
 		}
