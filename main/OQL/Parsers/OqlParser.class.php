@@ -246,7 +246,7 @@
 				return true;
 				
 			} elseif ($required) {
-				$this->error("expecting ')'", $message);
+				$this->error("expecting '('", $message);
 			}
 			
 			return false;
