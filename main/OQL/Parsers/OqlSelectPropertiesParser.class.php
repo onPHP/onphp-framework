@@ -81,12 +81,9 @@
 							$this->tokenizer->next();
 							$functionName = self::DISTINCT_COUNT_PROJECTION;
 						}
-						
-						$expression = $this->getLogicExpression();
-						
-					} else {
-						$expression = $this->getArithmeticExpression();
 					}
+					
+					$expression = $this->getLogicExpression();
 					
 					$this->closeParentheses(true, "in function call: {$this->getTokenValue($token)}");
 					
