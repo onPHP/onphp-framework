@@ -137,80 +137,6 @@
 			return $this;
 		}
 		
-		protected function getTokenValue($token, $raw = false)
-		{
-			if ($token instanceof OqlToken)
-				return $raw
-					? $token->getRawValue()
-					: $token->getValue();
-				
-			return null;
-		}
-		
-		protected function checkToken($token, $type, $value = null)
-		{
-			if (
-				$token instanceof OqlToken
-				&& $token->getType() == $type
-			) {
-				if ($value === null) {
-					return true;
-					
-				} elseif (is_array($value)) {
-					return in_array($token->getValue(), $value);
-					
-				} else {
-					return $token->getValue() == $value;
-				}
-			}
-			
-			return false;
-		}
-		
-		protected function checkKeyword($token, $value)
-		{
-			return $this->checkToken($token, OqlToken::KEYWORD, $value);
-		}
-		
-		protected function checkIdentifier($token)
-		{
-			if ($token instanceof OqlToken) {
-				if ($token->getType() == OqlToken::IDENTIFIER)
-					return true;
-				
-				// fix token value if identifier name is equal to
-				// reserved word or aggregate function name
-				elseif (
-					$token->getType() == OqlToken::KEYWORD
-					|| $token->getType() == OqlToken::AGGREGATE_FUNCTION
-				) {
-					$token->setValue($token->getRawValue());
-					
-					return true;
-				}
-			}
-			
-			return false;
-		}
-		
-		protected function checkConstant($token)
-		{
-			return
-				$token instanceof OqlToken
-				&& (
-					$token->getType() == OqlToken::STRING
-					|| $token->getType() == OqlToken::NUMBER
-					|| $token->getType() == OqlToken::BOOLEAN
-					|| $token->getType() == OqlToken::NULL
-					|| $token->getType() == OqlToken::SUBSTITUTION
-				);
-		}
-		
-		protected function checkUnaryMinus($token)
-		{
-			return $this->checkToken($token, OqlToken::ARITHMETIC_OPERATOR, '-');
-		}
-		
 		/**
 		 * @throws SyntaxErrorException
 		**/
@@ -753,6 +679,80 @@
 				$this->tokenizer->getLine(),
 				$this->tokenizer->getPosition()
 			);
+		}
+		
+		protected static function getTokenValue($token, $raw = false)
+		{
+			if ($token instanceof OqlToken)
+				return $raw
+					? $token->getRawValue()
+					: $token->getValue();
+				
+			return null;
+		}
+		
+		protected static function checkToken($token, $type, $value = null)
+		{
+			if (
+				$token instanceof OqlToken
+				&& $token->getType() == $type
+			) {
+				if ($value === null) {
+					return true;
+					
+				} elseif (is_array($value)) {
+					return in_array($token->getValue(), $value);
+					
+				} else {
+					return $token->getValue() == $value;
+				}
+			}
+			
+			return false;
+		}
+		
+		protected static function checkKeyword($token, $value)
+		{
+			return self::checkToken($token, OqlToken::KEYWORD, $value);
+		}
+		
+		protected static function checkIdentifier($token)
+		{
+			if ($token instanceof OqlToken) {
+				if ($token->getType() == OqlToken::IDENTIFIER)
+					return true;
+				
+				// fix token value if identifier name is equal to
+				// reserved word or aggregate function name
+				elseif (
+					$token->getType() == OqlToken::KEYWORD
+					|| $token->getType() == OqlToken::AGGREGATE_FUNCTION
+				) {
+					$token->setValue($token->getRawValue());
+					
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		protected static function checkConstant($token)
+		{
+			return
+				$token instanceof OqlToken
+				&& (
+					$token->getType() == OqlToken::STRING
+					|| $token->getType() == OqlToken::NUMBER
+					|| $token->getType() == OqlToken::BOOLEAN
+					|| $token->getType() == OqlToken::NULL
+					|| $token->getType() == OqlToken::SUBSTITUTION
+				);
+		}
+		
+		protected static function checkUnaryMinus($token)
+		{
+			return self::checkToken($token, OqlToken::ARITHMETIC_OPERATOR, '-');
 		}
 		
 		/**
