@@ -772,7 +772,7 @@
 				)->
 				assertSyntaxError(
 					'count() from',
-					"expecting first argument in expression: )"
+					"expecting argument in expression: )"
 				)->
 				assertSyntaxError(
 					'prop1 as 123',
@@ -792,7 +792,7 @@
 				)->
 				assertSyntaxError(
 					'from TestUser where',
-					'expecting first argument in expression: =|!='
+					'expecting first argument in expression: *|/'
 				)->
 				assertSyntaxError(
 					'from TestUser where 1 + ',

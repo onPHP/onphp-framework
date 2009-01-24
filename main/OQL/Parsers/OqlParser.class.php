@@ -290,13 +290,16 @@
 				return $this->makeQuerySignedExpression($token, $isUnaryMinus);
 			}
 			
+			if ($isUnaryMinus)
+				$this->tokenizer->back();
+			
 			return null;
 		}
 		
 		/**
 		 * @return OqlQueryParameter
 		**/
-		protected function getConstantExpression()
+		protected function getConstantExpression($silent = true)
 		{
 			if ($isUnaryMinus = $this->checkUnaryMinus($this->tokenizer->peek()))
 				$this->tokenizer->next();
@@ -304,19 +307,12 @@
 			$token = $this->tokenizer->peek();
 			
 			if (
-				$token instanceof OqlToken
+				!$isUnaryMinus
+				&& $token instanceof OqlToken
 				&& (
-					(
-						!$isUnaryMinus
-						&& (
-							$token->getType() == OqlToken::STRING
-							|| $token->getType() == OqlToken::BOOLEAN
-							|| $token->getType() == OqlToken::NULL
-						)
-					) || (
-						$token->getType() == OqlToken::NUMBER
-						|| $token->getType() == OqlToken::SUBSTITUTION
-					)
+					$token->getType() == OqlToken::STRING
+					|| $token->getType() == OqlToken::BOOLEAN
+					|| $token->getType() == OqlToken::NULL
 				)
 			) {
 				$this->tokenizer->next();
@@ -324,7 +320,13 @@
 				return $this->makeQuerySignedExpression($token, $isUnaryMinus);
 			}
 			
-			return null;
+			if ($isUnaryMinus)
+				$this->tokenizer->back();
+			
+			return $this->getArithmeticExpression(
+				self::ARITHMETIC_PRIORITY_LOWEST,
+				$silent
+			);
 		}
 		
 		/**
@@ -334,26 +336,9 @@
 			$priority = self::LOGIC_PRIORITY_LOWEST
 		)
 		{
-			$expression = null;
-			
 			// terminal boolean expressions
 			if ($priority == self::LOGIC_PRIORITY_TERMINAL) {
-				if (!$this->tokenizer->peek())
-					return null;
-				
-				// arithmetic expression
-				if ($this->isArithmeticExpression())
-					return $this->getArithmeticExpression();
-				
-				// parentheses
-				if ($this->openParentheses(false)) {
-					$expression = $this->getLogicExpression();
-					$this->closeParentheses(true, 'in expression');
-					
-					return $expression;
-				}
-				
-				$expression = $this->getLogicArgumentExpression();
+				return $this->getLogicArgumentExpression();
 			
 			// and|or|comparison expression chain
 			} else {
@@ -399,9 +384,9 @@
 						);
 					}
 				}
+				
+				return $expression;
 			}
-			
-			return $expression;
 		}
 		
 		protected function getLogicArgumentExpression()
@@ -428,8 +413,8 @@
 			
 			// first argument
 			if (
-				!($expression = $this->getIdentifierExpression())
-				&& !($expression = $this->getConstantExpression())
+				!($expression = $this->getConstantExpression(false))
+				&& !($expression = $this->getIdentifierExpression())
 			) {
 				$this->error(
 					'expecting first argument in expression:',
@@ -597,7 +582,8 @@
 		 * @return OqlQueryExpression
 		**/
 		protected function getArithmeticExpression(
-			$priority = self::ARITHMETIC_PRIORITY_LOWEST
+			$priority = self::ARITHMETIC_PRIORITY_LOWEST,
+			$silent = false
 		)
 		{
 			// terminal arithmetic expressions
@@ -612,7 +598,7 @@
 				
 				// parentheses
 				if ($this->openParentheses(false)) {
-					$expression = $this->getArithmeticExpression();
+					$expression = $this->getLogicExpression();
 					$this->closeParentheses(true, 'in expression');
 				
 				// argument
@@ -620,10 +606,14 @@
 					// $expression
 				
 				} else {
-					$this->error(
-						'expecting argument in expression:',
-						$this->getTokenValue($this->tokenizer->peek(), true)
-					);
+					if ($silent) {
+						return null;
+					} else {
+						$this->error(
+							'expecting argument in expression:',
+							$this->getTokenValue($this->tokenizer->peek(), true)
+						);
+					}
 				}
 				
 				$expression = $this->makeQuerySignedExpression($expression, $isUnaryMinus);
@@ -633,11 +623,15 @@
 				$operatorList = self::$arithmeticPriorityMap[$priority];
 				$higherPriority = $priority + 1;
 				
-				if (!($expression = $this->getArithmeticExpression($higherPriority))) {
-					$this->error(
-						'expecting first argument in expression:',
-						implode('|', $operatorList)
-					);
+				if (!($expression = $this->getArithmeticExpression($higherPriority, $silent))) {
+					if ($silent) {
+						return null;
+					} else {
+						$this->error(
+							'expecting first argument in expression:',
+							implode('|', $operatorList)
+						);
+					}
 				}
 				
 				while (
@@ -649,7 +643,7 @@
 				) {
 					$operator = $this->tokenizer->next();
 					
-					if ($expression2 = $this->getArithmeticExpression($higherPriority)) {
+					if ($expression2 = $this->getArithmeticExpression($higherPriority, $silent)) {
 						$expression = $this->makeQueryExpression(
 							self::$classMap[self::BINARY_EXPRESSION],
 							$expression,
@@ -658,10 +652,14 @@
 						);
 					
 					} else {
-						$this->error(
-							'expecting second argument in expression:',
-							$this->getTokenValue($operator, true)
-						);
+						if ($silent) {
+							return null;
+						} else {
+							$this->error(
+								'expecting second argument in expression:',
+								$this->getTokenValue($operator, true)
+							);
+						}
 					}
 				}
 			}
@@ -758,30 +756,6 @@
 				$this->tokenizer->getLine(),
 				$this->tokenizer->getPosition()
 			);
-		}
-		
-		private function isArithmeticExpression()
-		{
-			$index = $this->tokenizer->getIndex();
-			
-			// skip open parentheses
-			while (
-				$this->checkToken($this->tokenizer->peek(), OqlToken::PARENTHESES, '(')
-			) {
-				$this->tokenizer->next();
-			}
-			
-			// skip unary minus
-			if ($this->checkUnaryMinus($this->tokenizer->peek()))
-				$this->tokenizer->next();
-			
-			$result =
-				$this->getArithmeticArgumentExpression()
-				&& $this->checkToken($this->tokenizer->peek(), OqlToken::ARITHMETIC_OPERATOR);
-			
-			$this->tokenizer->setIndex($index);
-			
-			return $result;
 		}
 		
 		/**
