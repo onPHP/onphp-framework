@@ -66,15 +66,20 @@
 			
 			// comparison operators
 			OqlToken::COMPARISON_OPERATOR =>
-				'\>\=|\<\=|\<\>|\>|\<|\!\=|\=',
+				'\>\=|\<\=|\<\>|\!\=|[><=]',
 			
 			// arithmetic operators
 			OqlToken::ARITHMETIC_OPERATOR =>
-				'\+|\-|\/|\*'
+				'[+\-\/*]'
 		);
+		
+		private static $pattern = null;
 		
 		public function __construct($string)
 		{
+			if (!self::$pattern)
+				self::$pattern = '/('.implode(')|(', self::$masks).')/is';
+			
 			$this->tokenize($string);
 		}
 		
@@ -182,7 +187,7 @@
 			$maxMultibyteDelta = strlen($string) - mb_strlen($string);
 			$isMultibyte = $maxMultibyteDelta > 0;
 			
-			$pattern = '/('.implode(')|(', self::$masks).')/is';
+			$pattern = self::$pattern;
 			if ($isMultibyte)
 				$pattern .= 'u';
 			
