@@ -28,19 +28,20 @@
 			return OqlOrderByClause::create();
 		}
 		
-		protected function handleState()
+		/**
+		 * @return OqlOrderByParser
+		**/
+		protected function doParse()
 		{
-			if ($this->state == self::INITIAL_STATE) {
-				$list = $this->getCommaSeparatedList(
-					array($this, 'getArgumentExpression'),
-					"expecting expression in 'order by'"
-				);
-				
-				foreach ($list as $argument)
-					$this->oqlObject->add($argument);
-			}
+			$list = $this->getCommaSeparatedList(
+				array($this, 'getArgumentExpression'),
+				"expecting expression in 'order by'"
+			);
 			
-			return self::FINAL_STATE;
+			foreach ($list as $argument)
+				$this->oqlObject->add($argument);
+			
+			return $this;
 		}
 		
 		/**

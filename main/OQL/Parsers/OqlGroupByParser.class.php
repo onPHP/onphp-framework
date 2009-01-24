@@ -30,22 +30,23 @@
 			return OqlProjectionClause::create();
 		}
 		
-		protected function handleState()
+		/**
+		 * @return OqlGroupByParser
+		**/
+		protected function doParse()
 		{
-			if ($this->state == self::INITIAL_STATE) {
-				$list = $this->getCommaSeparatedList(
-					array($this, 'getIdentifierExpression'),
-					"expecting identifier in 'group by' expression"
+			$list = $this->getCommaSeparatedList(
+				array($this, 'getIdentifierExpression'),
+				"expecting identifier in 'group by' expression"
+			);
+			
+			foreach ($list as $argument) {
+				$this->oqlObject->add(
+					$this->makeQueryExpression(self::CLASS_NAME, $argument)
 				);
-				
-				foreach ($list as $argument) {
-					$this->oqlObject->add(
-						$this->makeQueryExpression(self::CLASS_NAME, $argument)
-					);
-				}
 			}
 			
-			return self::FINAL_STATE;
+			return $this;
 		}
 	}
 ?>

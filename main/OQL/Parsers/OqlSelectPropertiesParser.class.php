@@ -47,19 +47,20 @@
 			return OqlSelectPropertiesClause::create();
 		}
 		
-		protected function handleState()
+		/**
+		 * @return OqlSelectPropertiesParser
+		**/
+		protected function doParse()
 		{
-			if ($this->state == self::INITIAL_STATE) {
-				$list = $this->getCommaSeparatedList(
-					array($this, 'getArgumentExpression'),
-					'expecting expression or aggregate function call'
-				);
-				
-				foreach ($list as $argument)
-					$this->oqlObject->add($argument);
-			}
+			$list = $this->getCommaSeparatedList(
+				array($this, 'getArgumentExpression'),
+				'expecting expression or aggregate function call'
+			);
 			
-			return self::FINAL_STATE;
+			foreach ($list as $argument)
+				$this->oqlObject->add($argument);
+			
+			return $this;
 		}
 		
 		/**

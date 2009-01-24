@@ -30,19 +30,20 @@
 			return OqlHavingClause::create();
 		}
 		
-		protected function handleState()
+		/**
+		 * @return OqlHavingParser
+		**/
+		protected function doParse()
 		{
-			if ($this->state == self::INITIAL_STATE) {
-				if ($argument = $this->getLogicExpression()) {
-					$this->oqlObject->setExpression(
-						$this->makeQueryExpression(self::CLASS_NAME, $argument)
-					);
-				
-				} else
-					$this->error("expecting 'having' expression");
-			}
+			if ($argument = $this->getLogicExpression()) {
+				$this->oqlObject->setExpression(
+					$this->makeQueryExpression(self::CLASS_NAME, $argument)
+				);
 			
-			return self::FINAL_STATE;
+			} else
+				$this->error("expecting 'having' expression");
+			
+			return $this;
 		}
 	}
 ?>

@@ -15,9 +15,6 @@
 	**/
 	abstract class OqlParser
 	{
-		const INITIAL_STATE	= 254;
-		const FINAL_STATE	= 255;
-		
 		// class map
 		const PREFIX_UNARY_EXPRESSION	= 1;
 		const POSTFIX_UNARY_EXPRESSION	= 2;
@@ -84,7 +81,6 @@
 			self::ARITHMETIC_PRIORITY_TERMINAL	=> null
 		);
 		
-		protected $state		= null;
 		protected $tokenizer	= null;
 		protected $oqlObject	= null;
 		
@@ -95,7 +91,10 @@
 		**/
 		abstract protected function makeOqlObject();
 		
-		abstract protected function handleState();
+		/**
+		 * @return OqlParser
+		**/
+		abstract protected function doParse();
 		
 		/**
 		 * @return OqlQueryClause
@@ -110,12 +109,10 @@
 				$this->tokenizer = new OqlTokenizer($string);
 			}
 			
-			$this->state = self::INITIAL_STATE;
 			$this->oqlObject = $this->makeOqlObject();
 			$this->parentheses = 0;
 			
-			while ($this->state != self::FINAL_STATE)
-				$this->state = $this->handleState();
+			$this->doParse();
 			
 			$this->checkParentheses();
 			

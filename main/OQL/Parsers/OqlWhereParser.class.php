@@ -28,17 +28,18 @@
 			return OqlWhereClause::create();
 		}
 		
-		protected function handleState()
+		/**
+		 * @return OqlWhereParser
+		**/
+		protected function doParse()
 		{
-			if ($this->state == self::INITIAL_STATE) {
-				$argument = $this->getLogicExpression();
-				if ($argument instanceof OqlQueryExpression)
-					$this->oqlObject->setExpression($argument);
-				else
-					$this->error("expecting 'where' expression");
-			}
+			$argument = $this->getLogicExpression();
+			if ($argument instanceof OqlQueryExpression)
+				$this->oqlObject->setExpression($argument);
+			else
+				$this->error("expecting 'where' expression");
 			
-			return self::FINAL_STATE;
+			return $this;
 		}
 	}
 ?>

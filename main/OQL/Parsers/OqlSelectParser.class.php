@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2008 by Vladlen Y. Koshelev                              *
+ *   Copyright (C) 2008-2009 by Vladlen Y. Koshelev                         *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -32,16 +32,6 @@
 	**/
 	final class OqlSelectParser extends OqlParser
 	{
-		// states
-		const PROPERTY_STATE	= 1;
-		const FROM_STATE		= 2;
-		const WHERE_STATE		= 3;
-		const GROUP_BY_STATE	= 4;
-		const ORDER_BY_STATE	= 5;
-		const HAVING_STATE		= 6;
-		const LIMIT_STATE		= 7;
-		const OFFSET_STATE		= 8;
-		
 		/**
 		 * @return OqlSelectParser
 		**/
@@ -58,60 +48,50 @@
 			return OqlSelectQuery::create();
 		}
 		
-		protected function handleState()
+		/**
+		 * @return OqlSelectParser
+		**/
+		protected function doParse()
 		{
-			switch ($this->state) {
-				case self::INITIAL_STATE:
-				case self::PROPERTY_STATE:
-					return $this->propertyState();
-				
-				case self::FROM_STATE:
-					return $this->fromState();
-				
-				case self::WHERE_STATE:
-					return $this->whereState();
-				
-				case self::GROUP_BY_STATE:
-					return $this->groupByState();
-				
-				case self::ORDER_BY_STATE:
-					return $this->orderByState();
-				
-				case self::HAVING_STATE:
-					return $this->havingState();
-				
-				case self::LIMIT_STATE:
-					return $this->limitState();
-				
-				case self::OFFSET_STATE:
-					return $this->offsetState();
-			}
+			$this->parseProperty();
+			$this->parseFrom();
+			$this->parseWhere();
+			$this->parseGroupBy();
+			$this->parseOrderBy();
+			$this->parseHaving();
+			$this->parseLimit();
+			$this->parseOffset();
 			
-			throw new WrongStateException('state machine is broken');
+			return $this;
 		}
 		
-		private function propertyState()
+		/**
+		 * @return OqlSelectParser
+		**/
+		private function parseProperty()
 		{
 			$token = $this->tokenizer->peek();
 			
 			if (!$token)
 				$this->error("expecting 'from' clause");
 			
-			if ($this->checkKeyword($token, 'from'))
-				return self::FROM_STATE;
+			if (!$this->checkKeyword($token, 'from')) {
+				$clause = OqlSelectPropertiesParser::create()->
+					setTokenizer($this->tokenizer)->
+					parse();
+				
+				$this->oqlObject->addProperties($clause);
+				if ($clause->isDistinct())
+					$this->oqlObject->setDistinct(true);
+			}
 			
-			$clause = OqlSelectPropertiesParser::create()->
-				setTokenizer($this->tokenizer)->
-				parse();
-			
-			$this->oqlObject->addProperties($clause);
-			if ($clause->isDistinct())
-				$this->oqlObject->setDistinct(true);
-			
-			return self::FROM_STATE;
+			return $this;
 		}
 		
-		private function fromState()
+		/**
+		 * @return OqlSelectParser
+		**/
+		private function parseFrom()
 		{
 			if ($this->checkKeyword($this->tokenizer->peek(), 'from')) {
 				$this->tokenizer->next();
@@ -139,10 +119,13 @@
 			} else
 				$this->error("expecting 'from' clause");
 			
-			return self::WHERE_STATE;
+			return $this;
 		}
 		
-		private function whereState()
+		/**
+		 * @return OqlSelectParser
+		**/
+		private function parseWhere()
 		{
 			if ($this->checkKeyword($this->tokenizer->peek(), 'where')) {
 				$this->tokenizer->next();
@@ -154,10 +137,13 @@
 				);
 			}
 			
-			return self::GROUP_BY_STATE;
+			return $this;
 		}
 		
-		private function groupByState()
+		/**
+		 * @return OqlSelectParser
+		**/
+		private function parseGroupBy()
 		{
 			if ($this->checkKeyword($this->tokenizer->peek(), 'group by')) {
 				$this->tokenizer->next();
@@ -169,10 +155,13 @@
 				);
 			}
 			
-			return self::ORDER_BY_STATE;
+			return $this;
 		}
 		
-		private function orderByState()
+		/**
+		 * @return OqlSelectParser
+		**/
+		private function parseOrderBy()
 		{
 			if ($this->checkKeyword($this->tokenizer->peek(), 'order by')) {
 				$this->tokenizer->next();
@@ -184,10 +173,13 @@
 				);
 			}
 			
-			return self::HAVING_STATE;
+			return $this;
 		}
 		
-		private function havingState()
+		/**
+		 * @return OqlSelectParser
+		**/
+		private function parseHaving()
 		{
 			if ($this->checkKeyword($this->tokenizer->peek(), 'having')) {
 				$this->tokenizer->next();
@@ -199,10 +191,13 @@
 				);
 			}
 			
-			return self::LIMIT_STATE;
+			return $this;
 		}
 		
-		private function limitState()
+		/**
+		 * @return OqlSelectParser
+		**/
+		private function parseLimit()
 		{
 			if ($this->checkKeyword($this->tokenizer->peek(), 'limit')) {
 				$this->tokenizer->next();
@@ -221,10 +216,13 @@
 				}
 			}
 			
-			return self::OFFSET_STATE;
+			return $this;
 		}
 		
-		private function offsetState()
+		/**
+		 * @return OqlSelectParser
+		**/
+		private function parseOffset()
 		{
 			if ($this->checkKeyword($this->tokenizer->peek(), 'offset')) {
 				$this->tokenizer->next();
@@ -246,7 +244,7 @@
 			if ($token = $this->tokenizer->peek())
 				$this->error('unexpected:', $this->getTokenValue($token, true));
 			
-			return self::FINAL_STATE;
+			return $this;
 		}
 	}
 ?>
