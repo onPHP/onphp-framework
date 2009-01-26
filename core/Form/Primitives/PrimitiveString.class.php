@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Sveta A. Smirnova  *
+ *   Copyright (C) 2004-2009 by Konstantin V. Arkhipov, Sveta A. Smirnova  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -48,7 +48,7 @@
 				$this->value = null;
 			}
 			
-			return false;
+			return null;
 		}
 	}
 ?>
