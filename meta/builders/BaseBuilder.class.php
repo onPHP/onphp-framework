@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -115,7 +115,7 @@ EOT;
 			$cap = <<<EOT
 <?php
 /*****************************************************************************
- *   Copyright (C) 2006-2008, onPHP's MetaConfiguration Builder.             *
+ *   Copyright (C) 2006-2009, onPHP's MetaConfiguration Builder.             *
 {$info}
 
 EOT;
