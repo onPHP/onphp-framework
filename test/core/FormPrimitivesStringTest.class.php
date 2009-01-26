@@ -27,6 +27,29 @@
 			$this->formErrorAsserts($form, false, false);
 		}
 		
+		public function testWrong()
+		{
+			$form = $this->makeForm();
+
+			$form->get('property')->
+				required()->
+				setAllowedPattern('/^[42]+$/');
+			
+			$raw = 'not a 42';
+			
+			$form->import(
+				array('property' => $raw)
+			);
+
+			$this->assertEquals(
+				array('property' => BasePrimitive::WRONG), $form->getErrors()
+			);
+
+			// value, raw, form, export
+			$this->formAsserts($form, 'property', null, $raw, $raw, null);
+			$this->formErrorAsserts($form, true, true);
+		}
+		
 		public function testInvalidFormat()
 		{
 			$form = $this->makeForm();
