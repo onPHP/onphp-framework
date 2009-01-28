@@ -72,6 +72,44 @@
 		}
 		
 		/**
+		 * @return DateRange
+		**/
+		public function safeSetStart(/* Date */ $start)
+		{
+			if (
+				!$this->getEnd()
+				|| Timestamp::compare(
+					$start, $this->getEnd()
+				) < 0
+			)
+				$this->setStart($start);
+			
+			elseif ($this->getEnd())
+				$this->setStart($this->getEnd());
+			
+			return $this;
+		}
+		
+		/**
+		 * @return DateRange
+		**/
+		public function safeSetEnd(/* Date */ $end)
+		{
+			if (
+				!$this->getStart()
+				|| Timestamp::compare(
+					$end, $this->getStart()
+				) > 0
+			)
+				$this->setEnd($end);
+			
+			elseif ($this->getStart())
+				$this->setEnd($this->getStart());
+			
+			return $this;
+		}
+		
+		/**
 		 * @throws WrongArgumentException
 		 * @return DateRange
 		**/
