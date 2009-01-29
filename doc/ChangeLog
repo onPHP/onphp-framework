@@ -1,5 +1,10 @@
 # $Id$
 
+2009-01-28	Ivan Y. Khvostishkov
+
+	* main/Base/DateRange.class.php: safeSetStart(), safeSetEnd() to ensure
+	that the start will never overlaps the end.
+
 2008-01-20	Denis M. Gabaidulin
 
 	* main/Utils/Mobile/MobileRequestDetector.class.php: use regular array
@@ -38,11 +43,6 @@
 
 	* core/Base/IntervalUnit.class.php,
 	core/OSQL/TimeIntervalsGenerator: support Date/DateRange types.
-
-2009-01-28	Ivan Y. Khvostishkov
-
-	* main/Base/DateRange.class.php: safeSetStart(), safeSetEnd() to ensure
-	that the start will never overlaps the end.
 
 2009-01-10	Vladlen Y. Koshelev
 
