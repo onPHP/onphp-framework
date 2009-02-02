@@ -53,7 +53,7 @@
 				$this->value = null;
 			}
 			
-			return null;
+			return false;
 		}
 	}
 ?>
