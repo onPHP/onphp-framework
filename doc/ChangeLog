@@ -1,13 +1,13 @@
 # $Id$
 
+2008-02-04	Denis M. Gabaidulin
+
+	* main/Math/MathUtils.class.php: makeCartesianProduct() function added.
+
 2009-01-28	Ivan Y. Khvostishkov
 
 	* main/Base/DateRange.class.php: safeSetStart(), safeSetEnd() to ensure
 	that the start will never overlaps the end.
-
-2008-02-04	Denis M. Gabaidulin
-
-	* main/Math/MathUtils.class.php: makeCartesianProduct() function added.
 
 2008-01-20	Denis M. Gabaidulin
 
