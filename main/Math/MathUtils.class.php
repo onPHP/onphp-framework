@@ -50,7 +50,7 @@
 				}
 				
 				if ($generateHash)
-					$result[$i]['hash'] = implode('_', $result[$i]);
+					$result[$i]['hash'] = md5(implode('_', $result[$i]));
 				
 				for ($j = (sizeof($arrays) - 1); $j >= 0; $j--) {
 					if (next($arrays[$j])) {
