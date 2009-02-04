@@ -31,7 +31,9 @@
 			}
 		}
 		
-		public static function makeCartesianProduct($arrays)
+		public static function makeCartesianProduct(
+			$arrays, $generateHash = false
+		)
 		{
 			$result = array();
 			
@@ -46,6 +48,9 @@
 				for ($j = 0; $j < sizeof($arrays); $j++) {
            			array_push($result[$i], current($arrays[$j]));
 				}
+				
+				if ($generateHash)
+					$result[$i]['hash'] = implode('_', $result[$i]);
 				
 				for ($j = (sizeof($arrays) - 1); $j >= 0; $j--) {
 					if (next($arrays[$j])) {
