@@ -30,5 +30,32 @@
 				$elts[$j]	= $tmp;
 			}
 		}
+		
+		public static function makeCartesianProduct($arrays)
+		{
+			$result = array();
+			
+			$size = (sizeof($arrays) > 0) ? 1 : 0;
+			
+			foreach ($arrays as $array)
+				$size *= sizeof($array);
+			
+			for ($i = 0; $i < $size; $i++) {
+				$result[$i] = array();
+				
+				for ($j = 0; $j < sizeof($arrays); $j++) {
+           			array_push($result[$i], current($arrays[$j]));
+				}
+				
+				for ($j = (sizeof($arrays) - 1); $j >= 0; $j--) {
+					if (next($arrays[$j])) {
+               			break;
+           			} else
+               			reset($arrays[$j]);
+				}
+			}
+			
+			return $result;
+		}
 	}
 ?>
