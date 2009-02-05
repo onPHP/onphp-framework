@@ -1,5 +1,10 @@
 # $Id$
 
+2008-02-05	Denis M. Gabaidulin
+
+	* main/Utils/DateUtils.class.php: makeDatesListByRange() added.
+	Function used to create normalized date list by IntervalUnit.
+
 2008-02-04	Denis M. Gabaidulin
 
 	* main/Math/MathUtils.class.php: makeCartesianProduct() function added.
