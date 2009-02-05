@@ -58,5 +58,27 @@
 					mktime(0, 0, 0, $date->getMonth() + 1, 0, $date->getYear())
 				);
 		}
+		
+		public static function makeDatesListByRange(
+			DateRange $range, IntervalUnit $unit, $hash = true
+		)
+		{
+			$date = $unit->truncate($range->getStart());
+			
+			$dates = array();
+			
+			do {
+				if ($hash)
+					$dates[$date->toString()] = $date;
+				else
+					$dates[] = $date;
+				
+				$date = $date->spawn('+ 1'.$unit->getName());
+			} while (
+				$range->getEnd()->toStamp() >= $date->toStamp()
+			);
+			
+			return $dates;
+		}
 	}
 ?>
