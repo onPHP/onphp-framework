@@ -117,6 +117,8 @@
 			
 			$sqlFunction->aggregate = $this->aggregate;
 			
+			$sqlFunction->castTo($this->cast);
+			
 			return $sqlFunction;
 		}
 		
