@@ -65,6 +65,9 @@
 		{
 			$date = $unit->truncate($range->getStart());
 			
+			if ('Date' == get_class($range->getStart()))
+				$date = Date::create($date->toStamp());
+			
 			$dates = array();
 			
 			do {
