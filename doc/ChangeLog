@@ -1,5 +1,10 @@
 # $Id$
 
+2008-02-06	Denis M. Gabaidulin
+
+	* main/Utils/SortHelper.class.php: sorting multi-dimensional assoc array
+	recursively.
+
 2008-02-05	Denis M. Gabaidulin
 
 	* main/Utils/DateUtils.class.php: makeDatesListByRange() added.
