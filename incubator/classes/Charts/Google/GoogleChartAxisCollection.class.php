@@ -43,7 +43,9 @@
 			
 			$rangeString = GoogleChartDataRange::getParamName().'=';
 			
-			$types = $ranges = array();
+			$labelsString = null;
+			
+			$types = $ranges = $labels = array();
 			
 			$i = 0;
 			
@@ -57,13 +59,24 @@
 						.$range->getStart()
 						.','
 						.$range->getEnd();
+				
+				if ($label = $axis->getLabel())
+					$labels[$i] = $label;
 			}
 			
 			$typeString .= implode(',', $types);
 			
 			$rangeString.= implode('|', $ranges);
 			
-			return $typeString.'&'.$rangeString;
+			if ($labels) {
+				$labelsString = '&'.GoogleChartAxisLabel::getParamName().'=';
+				
+				foreach ($labels as $axisId => $label) {
+					$labelsString .= $axisId.':|'.$label->toString();
+				}
+			}
+			
+			return $typeString.'&'.$rangeString.$labelsString;
 		}
 	}
 ?>

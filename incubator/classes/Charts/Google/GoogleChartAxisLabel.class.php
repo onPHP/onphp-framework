@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008 by Denis M. Gabaidulin                             *
+ *   Copyright (C) 2009 by Denis M. Gabaidulin                             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -13,11 +13,9 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	class GoogleChartLabel extends BaseGoogleChartParameter
+	final class GoogleChartAxisLabel extends GoogleChartLabel
 	{
-		protected $name = 'chl';
-		
-		protected $labels = array();
+		protected static $paramName = 'chxl';
 		
 		/**
 		 * @return GoogleChartLabel
@@ -27,31 +25,16 @@
 			return new self;
 		}
 		
-		/**
-		 * @return GoogleChartLabel
-		**/
-		public function addLabel($label)
+		public static function getParamName()
 		{
-			$this->labels[] = $label;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return GoogleChartLabel
-		**/
-		public function setLabels($labels)
-		{
-			$this->labels = $labels;
-			
-			return $this;
+			return self::$paramName;
 		}
 		
 		public function toString()
 		{
 			$labels = implode('|', $this->labels);
 			
-			return $this->name.'='.$labels;
+			return $labels;
 		}
 	}
 ?>

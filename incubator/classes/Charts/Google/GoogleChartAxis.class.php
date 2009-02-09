@@ -19,6 +19,8 @@
 		
 		private $range = null;
 		
+		private $label = null;
+		
 		public static function create(GoogleChartAxisType $type)
 		{
 			return new self($type);
@@ -49,6 +51,18 @@
 		public function getRange()
 		{
 			return $this->range;
+		}
+		
+		public function setLabel(GoogleChartAxisLabel $label)
+		{
+			$this->label = $label;
+			
+			return $this;
+		}
+		
+		public function getLabel()
+		{
+			return $this->label;
 		}
 	}
 ?>

@@ -84,5 +84,72 @@
 				'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,996633&chd=t:195,191,197,183,199,195|3,1,1,3,1,3&chds=0,199,0,3&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,199|1,0,3'
 			);
 		}
+		
+		public function testThreeAxisLineChart()
+		{
+			$views =
+				GoogleChartDataSet::create()->
+				setData(array(195, 191, 197, 183, 199, 195));
+			
+			$clicks =
+				GoogleChartDataSet::create()->
+				setData(array(3, 1, 1, 3, 1, 3));
+			
+			$days =
+				array(
+					'1.01',
+					'2.02',
+					'3.02',
+					'4.02',
+					'5.02',
+					'6.02'
+				);
+			
+			$chart =
+				GoogleLineChart::create()->
+				setSize(
+					GoogleChartSize::create()->
+					setWidth(300)->
+					setHeight(300)
+				)->
+				addAxis(
+					GoogleChartAxis::create(
+						new GoogleChartAxisType(GoogleChartAxisType::Y)
+					)->
+					setRange(IntegerSet::create(0, $views->getMax()))
+				)->
+				addAxis(
+					GoogleChartAxis::create(
+						new GoogleChartAxisType(GoogleChartAxisType::R)
+					)->
+					setRange(IntegerSet::create(0, $clicks->getMax()))
+				)->
+				addAxis(
+					GoogleChartAxis::create(
+						new GoogleChartAxisType(GoogleChartAxisType::X)
+					)->
+					setLabel(
+						GoogleChartAxisLabel::create()->
+						setLabels($days)
+					)
+				)->
+				addLine(
+					GoogleChartLine::create()->
+					setTitle('Показы')->
+					setColor(Color::create('336699'))->
+					setValue($views)
+				)->
+				addLine(
+					GoogleChartLine::create()->
+					setTitle('Клики')->
+					setColor(Color::create('996633'))->
+					setValue($clicks)
+				);
+			
+			$this->assertEquals(
+				$chart->toString(),
+				'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,996633&chd=t:195,191,197,183,199,195|3,1,1,3,1,3&chds=0,199,0,3&chdl=Показы|Клики&chdlp=b&chxt=y,r,x&chxr=0,0,199|1,0,3&chxl=2:|1.01|2.02|3.02|4.02|5.02|6.02'
+			);
+		}
 	}
 ?>
