@@ -147,5 +147,13 @@
 			
 			return $result;
 		}
+		
+		public function getFieldName()
+		{
+			if ($this->field instanceof DBField)
+				return $this->field->getField();
+			else
+				return $this->field;
+		}
 	}
 ?>
