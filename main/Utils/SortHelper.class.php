@@ -61,7 +61,7 @@
 			if ($result == 0) {
 				$keyIndex++;
 			 	
-			 	if ($this->keys[$keyIndex])
+			 	if (isset($this->keys[$keyIndex]))
 			 		$result = $this->compare($one, $two, $keyIndex);
 			 }
 			 
