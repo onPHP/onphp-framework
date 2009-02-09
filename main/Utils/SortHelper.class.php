@@ -49,6 +49,11 @@
 		
 		private function compare($one, $two, $keyIndex = 0)
 		{
+			Assert::isTrue(
+				isset($one[$this->keys[$keyIndex][0]]),
+				'Key must be exist in vector!'
+			);
+			
 			$result =
 				strnatcmp(
 			 		$one[$this->keys[$keyIndex][0]],
