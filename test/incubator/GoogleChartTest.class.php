@@ -97,7 +97,7 @@
 			
 			$days =
 				array(
-					'1.01',
+					'1.02',
 					'2.02',
 					'3.02',
 					'4.02',
@@ -109,8 +109,8 @@
 				GoogleLineChart::create()->
 				setSize(
 					GoogleChartSize::create()->
-					setWidth(300)->
-					setHeight(300)
+					setWidth(640)->
+					setHeight(240)
 				)->
 				addAxis(
 					GoogleChartAxis::create(
@@ -148,7 +148,7 @@
 			
 			$this->assertEquals(
 				$chart->toString(),
-				'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,996633&chd=t:195,191,197,183,199,195|3,1,1,3,1,3&chds=0,199,0,3&chdl=Показы|Клики&chdlp=b&chxt=y,r,x&chxr=0,0,199|1,0,3&chxl=2:|1.01|2.02|3.02|4.02|5.02|6.02'
+				'http://chart.apis.google.com/chart?cht=lc&chs=640x240&chco=336699,996633&chd=t:195,191,197,183,199,195|3,1,1,3,1,3&chds=0,199,0,3&chdl=Показы|Клики&chdlp=b&chxt=y,r,x&chxr=0,0,199|1,0,3&chxl=2:|1.02|2.02|3.02|4.02|5.02|6.02'
 			);
 		}
 	}
