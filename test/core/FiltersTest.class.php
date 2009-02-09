@@ -117,6 +117,11 @@
 				'Работает и&nbsp;с&nbsp;&laquo;unicode-строками (&#146;utf-8&#146;)&raquo;'
 				.'&nbsp;&#151; не&nbsp;только с&nbsp;ansi, и&nbsp;это радует'
 			);
+			
+			$this->assertEquals(
+				$filter->apply('""text" text"'),
+				'&laquo;&#132;text&#147; text&raquo;'
+			);
 		}
 		
 		public function testStringizer()
