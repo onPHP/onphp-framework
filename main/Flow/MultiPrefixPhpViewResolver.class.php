@@ -81,6 +81,17 @@
 			return $this;
 		}
 		
+		public function isPrefixDisabled($alias)
+		{
+			Assert::isIndexExists(
+				$this->prefixes,
+				$alias,
+				'no such alias: '.$alias
+			);
+			
+			return !empty($this->disabled[$alias]);
+		}
+		
 		/**
 		 * @return MultiPrefixPhpViewResolver
 		**/
@@ -90,11 +101,11 @@
 				$alias = $this->lastAlias;
 			
 			Assert::isNotNull($alias, 'nothing to disable');
-			
-			if (!isset($this->prefixes[$alias]))
-				throw new WrongArgumentException(
-					'no such alias: '.$alias
-				);
+			Assert::isIndexExists(
+				$this->prefixes,
+				$alias,
+				'no such alias: '.$alias
+			);
 			
 			$this->disabled[$alias] = $disabled;
 			
