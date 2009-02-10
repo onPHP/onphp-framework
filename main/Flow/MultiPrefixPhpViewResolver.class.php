@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2007-2009 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -130,11 +130,7 @@
 			);
 			
 			if ($prefix = $this->findPrefix($viewName))
-				return
-					new $this->viewClassName(
-						$prefix.$viewName.$this->postfix,
-						$this
-					);
+				return $this->makeView($prefix, $viewName);
 			
 			if (!$this->findPrefix($viewName, false))
 				throw new WrongArgumentException(
@@ -179,6 +175,17 @@
 			}
 			
 			return null;
+		}
+		
+		/**
+		 * @return View
+		**/
+		protected function makeView($prefix, $viewName)
+		{
+			return new $this->viewClassName(
+				$prefix.$viewName.$this->postfix,
+				$this
+			);
 		}
 		
 		private function getAutoAlias($prefix)
