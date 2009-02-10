@@ -1,5 +1,10 @@
 # $Id$
 
+2009-02-10	Vladlen Y. Koshelev
+
+	* main/Flow/MultiPrefixPhpViewResolver.class.php: makeView() hook and
+	isPrefixDisabled() added.
+
 2008-02-06	Denis M. Gabaidulin
 
 	* main/Utils/SortHelper.class.php: sorting multi-dimensional assoc array
