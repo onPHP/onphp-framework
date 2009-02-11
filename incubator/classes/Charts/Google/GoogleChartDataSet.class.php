@@ -78,6 +78,9 @@
 			return $this->minMax->getEnd();
 		}
 		
+		/**
+		 * @return GoogleChartDataSet
+		**/
 		private function calculateMax()
 		{
 			$this->minMax->setEnd(max($this->data));
