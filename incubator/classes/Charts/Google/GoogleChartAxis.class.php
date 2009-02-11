@@ -21,6 +21,9 @@
 		
 		private $label = null;
 		
+		/**
+		 * @return GoogleChartAxis
+		**/
 		public static function create(GoogleChartAxisType $type)
 		{
 			return new self($type);
@@ -31,11 +34,17 @@
 			$this->type = $type;
 		}
 		
+		/**
+		 * @return GoogleChartAxisType
+		**/
 		public function getType()
 		{
 			return $this->type;
 		}
 		
+		/**
+		 * @return GoogleChartAxis
+		**/
 		public function setRange(IntegerSet $range)
 		{
 			$this->range = $range;
@@ -48,11 +57,17 @@
 			return ($this->range !== null);
 		}
 		
+		/**
+		 * @return IntegerSet
+		**/
 		public function getRange()
 		{
 			return $this->range;
 		}
 		
+		/**
+		 * @return GoogleChartAxis
+		**/
 		public function setLabel(GoogleChartAxisLabel $label)
 		{
 			$this->label = $label;
@@ -60,6 +75,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return GoogleChartAxisLabel
+		**/
 		public function getLabel()
 		{
 			return $this->label;
