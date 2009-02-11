@@ -17,9 +17,12 @@
 	{
 		private $axes = array();
 		
+		/**
+		 * @return GoogleChartAxisCollection
+		**/
 		public static function create()
 		{
-			return new self();
+			return new self;
 		}
 		
 		/**
