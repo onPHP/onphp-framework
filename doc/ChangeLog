@@ -1,5 +1,9 @@
 # $Id$
 
+2009-02-13	Ivan Y. Khvostishkov
+
+	* main/Utils/TuringTest/Color.class.php: flyweight pattern implemented.
+
 2009-02-10	Vladlen Y. Koshelev
 
 	* main/Flow/MultiPrefixPhpViewResolver.class.php: makeView() hook and
