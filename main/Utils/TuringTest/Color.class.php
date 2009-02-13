@@ -24,7 +24,16 @@
 		**/
 		public static function create($rgb)
 		{
-			return new self($rgb);
+			static $flyweightColors = array();
+			
+			if (isset($flyweightColors[$rgb]))
+				return $flyweightColors[$rgb];
+			
+			$result = new self($rgb);
+			
+			$flyweightColors[$rgb] = $result;
+			
+			return $result;
 		}
 		
 		// valid values: #AABBCC, DDEEFF, A15B, etc.
