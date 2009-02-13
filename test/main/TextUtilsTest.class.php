@@ -22,6 +22,27 @@
 			);
 		}
 		
+		public function testFriendlyNumber()
+		{
+			$localeInfo = localeconv();
+			$decimalPoint = $localeInfo['decimal_point'];
+			
+			$this->assertEquals(
+				TextUtils::friendlyNumber(100.02), '100'.$decimalPoint.'02'
+			);
+			
+			$this->assertEquals(TextUtils::friendlyNumber((0.1 + 0.7) * 10), '8');
+			$this->assertEquals(TextUtils::friendlyNumber(10000), '10 000');
+
+			$this->assertEquals(
+				TextUtils::friendlyNumber(10000.45), '10 000'.$decimalPoint.'45'
+			);
+
+			$this->assertEquals(
+				TextUtils::friendlyNumber(-999999.99), '-999 999'.$decimalPoint.'99'
+			);
+		}
+		
 		public function testNormalizeUri()
 		{
 			$this->assertEquals(
