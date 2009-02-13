@@ -13,17 +13,8 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class RedirectView implements View
+	class RedirectView extends CleanRedirectView
 	{
-		protected $url = null;
-		
-		private $falseAsUnset = false;
-		
-		public function __construct($url)
-		{
-			$this->url = $url;
-		}
-		
 		/**
 		 * @return RedirectView
 		**/
@@ -32,7 +23,24 @@
 			return new self($url);
 		}
 		
-		public function render(Model $model = null)
+		public function isFalseAsUnset()
+		{
+			return $this->falseAsUnset;
+		}
+		
+		/**
+		 * @return RedirectView
+		**/
+		public function setFalseAsUnset($really)
+		{
+			Assert::isBoolean($really);
+			
+			$this->falseAsUnset = $really;
+			
+			return $this;
+		}
+		
+		protected function getLocationUrl($model = null)
 		{
 			$postfix = null;
 			
@@ -65,29 +73,7 @@
 					$postfix = $first.implode('&', $qs);
 			}
 			
-			HeaderUtils::redirectRaw($this->getUrl().$postfix);
-		}
-		
-		public function getUrl()
-		{
-			return $this->url;
-		}
-		
-		public function isFalseAsUnset()
-		{
-			return $this->falseAsUnset;
-		}
-		
-		/**
-		 * @return RedirectView
-		**/
-		public function setFalseAsUnset($really)
-		{
-			Assert::isBoolean($really);
-			
-			$this->falseAsUnset = $really;
-			
-			return $this;
+			return $this->getUrl().$postfix;
 		}
 	}
 ?>

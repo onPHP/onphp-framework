@@ -1,5 +1,10 @@
 # $Id$
 
+2009-02-13	Ivan Y. Khvostishkov
+
+	* main/Flow/CleanRedirectView.class.php: parent class for RedirectView,
+	clean redirect without model.
+
 2009-02-13	Evgeniy N. Sokolov
 
 	* main/Utils/TextUtils.class.php: friendlyNumber() now works with float
