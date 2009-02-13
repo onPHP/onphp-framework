@@ -160,9 +160,21 @@
 			return $result;
 		}
 		
-		public static function friendlyNumber($integer, $delimiter = ' ')
+		public static function friendlyNumber($number, $delimiter = ' ')
 		{
-			Assert::isInteger($integer);
+			$localeInfo = localeconv();
+			
+			$decimalPoint = $localeInfo['decimal_point'];
+			
+			$number = (string)$number;
+			
+			$parts = explode($decimalPoint, $number);
+			
+			$integer = abs(array_shift($parts));
+			
+			$minus = $number < 0 ? '-' : '';
+			
+			$floatDiff = array_shift($parts);
 			
 			if ($integer > 9999) {
 				$orders = array();
@@ -182,7 +194,10 @@
 			} else
 				$result = (string) $integer;
 			
-			return $result;
+			if ($floatDiff)
+				$result = $result.$decimalPoint.$floatDiff;
+			
+			return $minus.$result;
 		}
 	}
 ?>
