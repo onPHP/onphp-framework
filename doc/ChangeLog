@@ -1,5 +1,10 @@
 # $Id$
 
+2009-02-16	Ivan Y. Khvostishkov
+
+	* main/Flow/RedirectView.class.php: ability to build complex array
+	values upon redirect (involving PrimitiveDateRange, for example).
+
 2009-02-13	Ivan Y. Khvostishkov
 
 	* main/Flow/CleanRedirectView.class.php: parent class for RedirectView,
