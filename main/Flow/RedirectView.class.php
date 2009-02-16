@@ -15,6 +15,8 @@
 	**/
 	class RedirectView extends CleanRedirectView
 	{
+		private $falseAsUnset = null;
+		
 		/**
 		 * @return RedirectView
 		**/
