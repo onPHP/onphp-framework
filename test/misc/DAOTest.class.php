@@ -424,7 +424,7 @@
 			try {
 				TestBinaryStuff::dao()->import($bin);
 			} catch (DatabaseException $e) {
-				die();
+				return $this->fail();
 			}
 			
 			Cache::me()->clean();
@@ -436,6 +436,14 @@
 			
 			$this->assertEquals(TestBinaryStuff::dao()->getById($id), $bin);
 			$this->assertEquals(TestBinaryStuff::dao()->dropById($id), 1);
+			
+			$id = Primitive::prototypedIdentifier('TestUser');
+			
+			try {
+				$id->import(array('id' => 'string-instead-of-integer'));
+			} catch (DatabaseException $e) {
+				return $this->fail();
+			}
 		}
 		
 		protected function getSome()
