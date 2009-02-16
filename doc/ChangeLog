@@ -117,12 +117,6 @@
 	* main/DAOs/GenericDAO.class.php: makeTotalCountQuery() extracted from
 	worker by means of refactoring.
 
-2008-12-26	Ivan Y. Khvostishkov
-
-	* main/DAOs/GenericDAO.class.php, test/misc/DAOTest.class.php:
-	preserve object's persistence during manipulations with identity map;
-	unit test for covering such change.
-
 2008-12-24	Vladlen Y. Koshelev
 
 	* meta/types/ObjectType.class.php: lazy required property getter checks for
