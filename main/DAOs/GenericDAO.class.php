@@ -384,6 +384,7 @@
 			);
 		}
 		
+		// FIXME: resolve case with custom makeObject's
 		private function addObjectToMap(Identifiable $object)
 		{
 			if (isset($this->identityMap[$id = $object->getId()]))
