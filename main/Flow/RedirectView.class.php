@@ -15,6 +15,9 @@
 	**/
 	class RedirectView extends CleanRedirectView
 	{
+		private $falseAsUnset = null;
+		private $buildArrays = null;
+		
 		/**
 		 * @return RedirectView
 		**/
@@ -40,6 +43,23 @@
 			return $this;
 		}
 		
+		public function isBuildArrays()
+		{
+			return $this->buildArrays;
+		}
+		
+		/**
+		 * @return RedirectView
+		**/
+		public function setBuildArrays($really)
+		{
+			Assert::isBoolean($really);
+			
+			$this->buildArrays = $really;
+			
+			return $this;
+		}
+		
 		protected function getLocationUrl($model = null)
 		{
 			$postfix = null;
@@ -51,9 +71,17 @@
 					if (
 						(null === $val)
 						|| is_object($val)
-						|| is_array($val)
 					) {
 						continue;
+					} elseif (is_array($val)) {
+						if ($this->buildArrays) {
+							$qs[] = http_build_query(
+								array($key => $val), null, '&'
+							);
+						}
+						
+						continue;
+						
 					} elseif (is_bool($val)) {
 						if ($this->isFalseAsUnset() && (false === $val))
 							continue;
