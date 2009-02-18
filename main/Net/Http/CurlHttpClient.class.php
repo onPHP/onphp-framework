@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007-2008 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2007-2009 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -152,13 +152,6 @@
 		{
 			Assert::isNotNull($request->getMethod());
 			
-			Assert::isTrue(
-				in_array(
-					$request->getMethod()->getId(),
-					array(HttpMethod::GET, HttpMethod::POST)
-				)
-			);
-			
 			$handle = curl_init();
 			
 			$response = CurlHttpResponse::create()->
@@ -177,17 +170,34 @@
 			if ($this->followLocation !== null)
 				$options[CURLOPT_FOLLOWLOCATION] = $this->followLocation;
 			
-			if ($request->getMethod()->getId() == HttpMethod::GET) {
-				$options[CURLOPT_HTTPGET] = true;
+			switch ($request->getMethod()->getId()) {
+				case HttpMethod::GET:
+					$options[CURLOPT_HTTPGET] = true;
 				
-				if ($request->getGet())
-					$options[CURLOPT_URL] .=
-						($request->getUrl()->getQuery() ? '&' : '?')
-						.$this->argumentsToString($request->getGet());
-			} else {
-				$options[CURLOPT_POST] = true;
-				$options[CURLOPT_POSTFIELDS] =
+					if ($request->getGet())
+						$options[CURLOPT_URL] .=
+							($request->getUrl()->getQuery() ? '&' : '?')
+								.$this->argumentsToString($request->getGet());
+					break;
+					
+				case HttpMethod::POST:
+					$options[CURLOPT_POST] = true;
+					$options[CURLOPT_POSTFIELDS] =
 					$this->argumentsToString($request->getPost());
+					break;
+					
+				default:
+					$options[CURLOPT_CUSTOMREQUEST] = $request->getMethod()->getName();
+					break;
+			}
+			
+			$headers = array();
+			foreach ($request->getHeaderList() as $headerName => $headerValue) {
+				$headers[] = "{$headerName}: $headerValue";
+			}
+			
+			if ($headers) {
+				$options[CURLOPT_HTTPHEADER] = $headers;
 			}
 			
 			if ($request->getCookie()) {
