@@ -474,6 +474,18 @@
 			return $query;
 		}
 		
+		/**
+		 * @return Criteria
+		**/
+		public function dropProjectionByType(/* array */ $dropTypes)
+		{
+			Assert::isInstance($this->projection, 'ProjectionChain');
+			
+			$this->projection->dropByType($dropTypes);
+			
+			return $this;
+		}
+		
 		private function joinProperties(
 			SelectQuery $query,
 			ProtoDAO $parentDao,

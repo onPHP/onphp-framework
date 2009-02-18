@@ -1,5 +1,10 @@
 # $Id$
 
+2008-02-18	Denis M. Gabaidulin
+
+	* main/Criteria/ProjectionChain.class.php: dropByType() added.
+	Drop projection by type from Criteria.
+
 2009-02-16	Ivan Y. Khvostishkov
 
 	* main/Flow/RedirectView.class.php: ability to build complex array
