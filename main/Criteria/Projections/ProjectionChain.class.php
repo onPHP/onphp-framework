@@ -48,5 +48,28 @@
 		{
 			return count($this->list) == 0;
 		}
+		
+		/**
+		 * @return ProjectionChain
+		**/
+		public function dropByType(/* array */ $dropTypes)
+		{
+			$newList = array();
+			
+			if (!is_array($dropTypes))
+				$dropTypes = array($dropTypes);
+			
+			foreach ($this->list as $name => &$projection) {
+				$class = get_class($projection);
+				
+				if (!in_array($class, $dropTypes))
+					$newList[$name] = $projection;
+			}
+			
+			// swap
+			$this->list = $newList;
+			
+			return $this;
+		}
 	}
 ?>
