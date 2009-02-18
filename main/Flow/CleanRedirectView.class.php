@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2009 by Ivan Y. Khvostishkov                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -30,7 +30,7 @@
 			return new self($url);
 		}
 		
-		public function render($model = null)
+		public function render(Model $model = null)
 		{
 			HeaderUtils::redirectRaw($this->getLocationUrl($model));
 		}
