@@ -76,7 +76,10 @@
 		
 		public static function appendDaoMap($map)
 		{
-			self::$map = array_merge(self::$map, $map);
+			if (self::$map)
+				self::$map = array_merge(self::$map, $map);
+			else
+				self::setDaoMap($map);
 		}
 		
 		/**
