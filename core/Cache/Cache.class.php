@@ -74,6 +74,11 @@
 			self::$map = $map;
 		}
 		
+		public static function appendDaoMap($map)
+		{
+			self::$map = array_merge(self::$map, $map);
+		}
+		
 		/**
 		 * @return BaseDaoWorker
 		**/
