@@ -1,5 +1,9 @@
 # $Id$
 
+2009-02-19	Ivan Y. Khvostishkov
+
+	* core/Cache/Cache.class.php: appendDaoMap() - better than replace.
+
 2008-02-18	Tsyrulnik Y. Viatcheslav
 
 	* main/Net/Http/CurlHttpClient.class.php: support for HTTP methods
