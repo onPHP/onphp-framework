@@ -1,6 +1,6 @@
 # $Id$
 
-2008-02-20	Denis M. Gabaidulin
+2009-02-20	Denis M. Gabaidulin
 
 	* main/Math/MathUtils.class.php: randFloat() added.
 
@@ -8,12 +8,12 @@
 
 	* core/Cache/Cache.class.php: appendDaoMap() - better than replace.
 
-2008-02-18	Viatcheslav Y. Tsyrulnik
+2009-02-18	Viatcheslav Y. Tsyrulnik
 
 	* main/Net/Http/CurlHttpClient.class.php: support for HTTP methods
 	other than get/post and additional headers.
 
-2008-02-18	Denis M. Gabaidulin
+2009-02-18	Denis M. Gabaidulin
 
 	* main/Criteria/ProjectionChain.class.php: dropByType() added.
 	Drop projection by type from Criteria.
@@ -42,17 +42,17 @@
 	* main/Flow/MultiPrefixPhpViewResolver.class.php: makeView() hook and
 	isPrefixDisabled() added.
 
-2008-02-06	Denis M. Gabaidulin
+2009-02-06	Denis M. Gabaidulin
 
 	* main/Utils/SortHelper.class.php: sorting multi-dimensional assoc array
 	recursively.
 
-2008-02-05	Denis M. Gabaidulin
+2009-02-05	Denis M. Gabaidulin
 
 	* main/Utils/DateUtils.class.php: makeDatesListByRange() added.
 	Function used to create normalized date list by IntervalUnit.
 
-2008-02-04	Denis M. Gabaidulin
+2009-02-04	Denis M. Gabaidulin
 
 	* main/Math/MathUtils.class.php: makeCartesianProduct() function added.
 
@@ -61,12 +61,12 @@
 	* main/Base/DateRange.class.php: safeSetStart(), safeSetEnd() to ensure
 	that the start will never overlaps the end.
 
-2008-01-20	Denis M. Gabaidulin
+2009-01-20	Denis M. Gabaidulin
 
 	* main/Utils/Mobile/MobileRequestDetector.class.php: use regular array
 	instead HttpRequest. Warning: Broken BC!
 
-2008-01-19	Denis M. Gabaidulin
+2009-01-19	Denis M. Gabaidulin
 
 	* core/Form/Filters/UnserializeFilter.class.php: added.
 
