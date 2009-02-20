@@ -61,5 +61,10 @@
 			
 			return $result;
 		}
+		
+		public static function randFloat($min, $max)
+		{
+			return ($min + lcg_value() * (abs($max - $min)));
+		}
 	}
 ?>

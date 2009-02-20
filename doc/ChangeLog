@@ -1,5 +1,9 @@
 # $Id$
 
+2008-02-20	Denis M. Gabaidulin
+
+	* main/Math/MathUtils.class.php: randFloat() added.
+
 2009-02-19	Ivan Y. Khvostishkov
 
 	* core/Cache/Cache.class.php: appendDaoMap() - better than replace.
