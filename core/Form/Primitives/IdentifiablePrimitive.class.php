@@ -18,7 +18,23 @@
 	{
 		protected $className = null;
 		
+		/**
+		 * due to historical reasons, by default we're dealing only with
+		 * integer identifiers, this problem correctly fixed in master branch
+		*/
+		protected $scalar = false;
+		
 		abstract public function of($className);
+		
+		/**
+		 * @return IdentifiablePrimitive
+		**/
+		public function setScalar($orly = false)
+		{
+			$this->scalar = ($orly === true);
+			
+			return $this;
+		}
 		
 		/**
 		 * @throws WrongArgumentException
@@ -57,15 +73,17 @@
 			return $this->value->getId();
 		}
 		
-		// NOTE: we don't care here about type
-		protected function checkNumber($number)
+		/* void */ protected function checkNumber($number)
 		{
-			Assert::isScalar($number);
+			if ($this->scalar)
+				Assert::isScalar($number);
+			else
+				Assert::isInteger($number);
 		}
 		
 		protected function castNumber($number)
 		{
-			if (Assert::checkInteger($number))
+			if (!$this->scalar && Assert::checkInteger($number))
 				return (int) $number;
 			
 			return $number;

@@ -434,7 +434,10 @@
 			
 			Cache::me()->clean();
 			
-			$prm = Primitive::identifier('id')->of('TestBinaryStuff');
+			$prm =
+				Primitive::identifier('id')->
+				of('TestBinaryStuff')->
+				setScalar(true);
 			
 			$this->assertTrue($prm->import(array('id' => $id)));
 			$this->assertSame($prm->getValue()->getId(), $id);

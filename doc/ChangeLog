@@ -1,5 +1,11 @@
 # $Id$
 
+2009-02-22	Konstantin V. Arkhipov
+
+	* core/Form/Primitives/IdentifiablePrimitive.class.php: added
+	setScalar() to control wheter identifier is really scalar one, this
+	change restores old class' behavior.
+
 2009-02-20	Denis M. Gabaidulin
 
 	* main/Math/MathUtils.class.php: randFloat() added.
