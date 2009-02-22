@@ -111,11 +111,14 @@
 			if ($size) {
 				if (
 					($type == 'integer')
-					|| ($type == 'identifier')
+					|| ($type == 'identifier') // obsoleted
+					|| ($type == 'integerIndetifier')
 					|| ($type == 'enumeration')
 				) {
 					$property->min = self::$limits[$size][0];
 					$property->max = self::$limits[$size][1];
+				} elseif ($type == 'scalarIdentifier') {
+					// supported only in master
 				} elseif ($type != 'float') { // string
 					$property->max = $size;
 				}
@@ -132,7 +135,9 @@
 			
 			$property->identifier =
 				$generic && $required && (
-					$type == 'identifier'
+					($type == 'identifier') // obsoleted
+					|| ($type == 'integerIdentifier')
+					|| ($type == 'scalarIdentifier')
 				);
 			
 			return $property;

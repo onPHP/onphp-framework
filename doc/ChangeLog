@@ -6,6 +6,10 @@
 	setScalar() to control wheter identifier is really scalar one, this
 	change restores old class' behavior.
 
+	* core/Form/Primitives/PrimitiveIntegerIdentifier.class.php,
+	core/Form/Primitives/PrimitiveScalarIdentifier.class.php: two
+	identifier types introduced for forward compatibility with master.
+
 2009-02-20	Denis M. Gabaidulin
 
 	* main/Math/MathUtils.class.php: randFloat() added.
