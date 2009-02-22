@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2008-2009 by Ivan Y. Khvostishkov                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -22,6 +22,16 @@
 		const DELIMITER			= '.';
 		
 		private $baseClassName	= null;
+		
+		public function getTypeName()
+		{
+			throw new UnsupportedMethodException();
+		}
+		
+		public function isObjectType()
+		{
+			return true;
+		}
 		
 		public static function export($value)
 		{

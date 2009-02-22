@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2007-2008 by Denis M. Gabaidulin, Konstantin V. Arkhipov *
+ *   Copyright (C) 2007-2009 by Denis M. Gabaidulin, Konstantin V. Arkhipov *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -16,6 +16,12 @@
 	final class PrimitiveIdentifierList extends PrimitiveIdentifier
 	{
 		protected $value = array();
+		
+		public function getTypeName()
+		{
+			// FIXME: exists due to BC
+			return 'Scalar';
+		}
 		
 		/**
 		 * @return PrimitiveIdentifierList

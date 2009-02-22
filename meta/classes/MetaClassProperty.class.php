@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -325,12 +325,6 @@
 			) {
 				// collections
 				$primitiveName = 'identifierList';
-			} elseif ($this->isIdentifier()) {
-				if ($this->getType() instanceof IntegerType) {
-					$primitiveName = 'identifier';
-					$className = $holder->getName();
-				} else
-					$primitiveName = $this->getType()->getPrimitiveName();
 			} elseif (
 				!$this->isIdentifier()
 				&& (
@@ -343,8 +337,34 @@
 				)
 			) {
 				$primitiveName = 'enumeration';
-			} else
+			} elseif (
+				$this->isIdentifier()
+				|| (
+					($this->getRelationId() == MetaRelation::ONE_TO_ONE)
+					// skip value objects
+					&& ($id = $this->getType()->getClass()->getIdentifier())
+				)
+			) {
+				if ($this->isIdentifier()) {
+					$type = $this->getType();
+					$className = $holder->getName();
+				} else {
+					$type =
+						$this->getType()->
+							getClass()->
+								getIdentifier()->
+									getType();
+				}
+				
+				if ($type instanceof IntegerType) {
+					$primitiveName = 'integerIdentifier';
+				} elseif ($type instanceof StringType) {
+					$primitiveName = 'scalarIdentifier';
+				} else
+					throw new WrongStateException('unsupported identifier type');
+			} else {
 				$primitiveName = $this->getType()->getPrimitiveName();
+			}
 			
 			$inner = false;
 			

@@ -5,7 +5,7 @@
 	{
 		public function testEmpty()
 		{
-			$prm = Primitive::identifier('name')->of('TestCity');
+			$prm = Primitive::prototypedIdentifier('TestCity', 'name');
 			
 			$nullValues = array(null, '', false);
 			foreach ($nullValues as $value) {

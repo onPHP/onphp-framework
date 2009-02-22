@@ -60,11 +60,19 @@
 		}
 		
 		/**
-		 * @return PrimitiveIdentifier
+		 * @return PrimitiveIntegerIdentifier
 		**/
-		public static function identifier($name)
+		public static function integerIdentifier($name)
 		{
-			return new PrimitiveIdentifier($name);
+			return new PrimitiveIntegerIdentifier($name);
+		}
+		
+		/**
+		 * @return PrimitiveScalarIdentifier
+		**/
+		public static function scalarIdentifier($name)
+		{
+			return new PrimitiveScalarIdentifier($name);
 		}
 		
 		/**

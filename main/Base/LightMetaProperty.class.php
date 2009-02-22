@@ -111,12 +111,13 @@
 			if ($size) {
 				if (
 					($type == 'integer')
-					|| ($type == 'identifier')
+					|| ($type == 'integerIdentifier')
 					|| ($type == 'enumeration')
 				) {
 					$property->min = self::$limits[$size][0];
 					$property->max = self::$limits[$size][1];
-				} elseif ($type != 'float') { // string
+				} elseif ($type == 'scalarIdentifier') {
+					$property->min = 1;
 					$property->max = $size;
 				}
 				
@@ -132,7 +133,8 @@
 			
 			$property->identifier =
 				$generic && $required && (
-					$type == 'identifier'
+					($type == 'integerIdentifier')
+					|| ($type == 'scalarIdentifier')
 				);
 			
 			return $property;

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -13,16 +13,11 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	abstract class IdentifiablePrimitive extends PrimitiveInteger
+	abstract class IdentifiablePrimitive extends FiltrablePrimitive
 	{
 		protected $className = null;
 		
 		abstract public function of($className);
-		
-		public function getTypeName()
-		{
-			return 'Scalar';
-		}
 		
 		/**
 		 * @throws WrongArgumentException

@@ -1,5 +1,11 @@
 # $Id$
 
+2009-02-22	Konstantin V. Arkhipov
+
+	* core/Form/Primitives/PrimitiveIntegerIdentifier.class.php,
+	core/Form/Primitives/PrimitiveScalarIdentifier.class.php: new
+	primitives introduced.
+
 2009-02-20	Denis M. Gabaidulin
 
 	* main/Math/MathUtils.class.php: randFloat() added.
