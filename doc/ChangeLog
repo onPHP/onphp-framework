@@ -7,6 +7,9 @@
 
 	* core/DB/PgSQL.class.php: pass error code to DatabaseException.
 
+	* core/Exceptions/SoapFault.class.php: extends BaseException as a usual
+	runtime exception.
+
 2009-02-22	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/PrimitiveIntegerIdentifier.class.php,
