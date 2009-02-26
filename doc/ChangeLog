@@ -2,11 +2,6 @@
 
 2009-02-25	Vladlen Y. Koshelev
 
-	* core/Exceptions/BaseException.class.php: allow to pass string code to
-	exception constructor.
-
-	* core/DB/PgSQL.class.php: pass error code to DatabaseException.
-
 	* core/Exceptions/SoapFault.class.php: extends BaseException as a usual
 	runtime exception.
 
