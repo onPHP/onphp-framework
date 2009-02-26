@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2009 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -16,12 +16,6 @@
 	**/
 	class BaseException extends Exception
 	{
-		public function __construct($message = null, $code = null)
-		{
-			parent::__construct($message);
-			$this->code = $code;
-		}
-		
 		public function __toString()
 		{
 			return
