@@ -112,8 +112,15 @@
 					$e = 'DuplicateObjectException';
 				else
 					$e = 'DatabaseException';
-					
-				throw new $e($error.' - '.$queryString, $code);
+				
+				try {
+					$codeValue = PostgresError::create($code)->toCode();
+				} catch (MissingElementException $e) {
+					// unparsed error 
+					$codeValue = null;
+				}
+				
+				throw new $e($error.' - '.$queryString, $codeValue);
 			}
 		}
 

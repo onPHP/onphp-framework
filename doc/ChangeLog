@@ -1,11 +1,16 @@
 # $Id$
 
+2009-02-26	Vladlen Y. Koshelev
+
+	* core/DB/PostgresError.class.php, test/code/PostgresErrorTest.class.php:
+	added conversion methods for internal numeric representation of error code
+	(toCode(), getByCode(), checkCode()) and corresponding test.
+	Thanks to Ivan Y. Khvostishkov.
+
+	* core/DB/PgSQL.class.php: pass numeric error code value to
+	DatabaseException.
+
 2009-02-25	Vladlen Y. Koshelev
-
-	* core/Exceptions/BaseException.class.php: allow to pass string code to
-	exception constructor.
-
-	* core/DB/PgSQL.class.php: pass error code to DatabaseException.
 
 	* core/Exceptions/SoapFault.class.php: extends BaseException as a usual
 	runtime exception.
