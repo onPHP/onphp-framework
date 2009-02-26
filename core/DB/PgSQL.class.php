@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -112,8 +112,15 @@
 					$e = 'DuplicateObjectException';
 				else
 					$e = 'DatabaseException';
-					
-				throw new $e($error.' - '.$queryString);
+				
+				try {
+					$codeValue = PostgresError::create($code)->toCode();
+				} catch (MissingElementException $e) {
+					// unparsed error 
+					$codeValue = null;
+				}
+				
+				throw new $e($error.' - '.$queryString, $codeValue);
 			}
 		}
 
