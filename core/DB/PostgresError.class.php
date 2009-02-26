@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -553,9 +553,59 @@
 			'XX002'	=> 'INDEX CORRUPTED'
 		);
 		
+		/**
+		 * @return PostgresError
+		**/
+		public static function create($id)
+		{
+			return new self($id);
+		}
+		
 		public static function getAnyId()
 		{
 			return self::SUCCESSFUL_COMPLETION;
+		}
+		
+		/**
+		 * @return PostgresError
+		**/
+		public static function getByCode($code)
+		{
+			Assert::isInteger($code);
+			
+			$id = '';
+			for ($i = 0; $i < 5; $i++, $code = $code >> 6)
+				$id .= self::decodeChar($code);
+			
+			return new self($id);
+		}
+		
+		public static function checkCode($id, $code)
+		{
+			$error = new self($id);
+			return $error->toCode() == $code;
+		}
+		
+		public function toCode()
+		{
+			$id = (string)$this->id;
+			Assert::isTrue(strlen($id) == 5);
+			
+			$result = 0;
+			for ($shift = $i = 0; $i < 5; $i++, $shift += 6)
+				$result += $this->encodeChar($id[$i]) << $shift;
+			
+			return $result;
+		}
+		
+		private static function encodeChar($char)
+		{
+			return (ord($char) - ord('0')) & 0x3F;
+		}
+		
+		private static function decodeChar($value)
+		{
+			return chr(($value & 0x3F) + ord('0'));
 		}
 	}
 ?>
