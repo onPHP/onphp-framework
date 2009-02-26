@@ -1,5 +1,15 @@
 # $Id$
 
+2009-02-26	Vladlen Y. Koshelev
+
+	* core/DB/PostgresError.class.php, test/code/PostgresErrorTest.class.php:
+	added conversion methods for internal numeric representation of error code
+	(toCode(), getByCode(), checkCode()) and corresponding test.
+	Thanks to Ivan Y. Khvostishkov.
+
+	* core/DB/PgSQL.class.php: pass numeric error code value to
+	DatabaseException.
+
 2009-02-22	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/IdentifiablePrimitive.class.php: added
