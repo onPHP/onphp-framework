@@ -1,12 +1,5 @@
 # $Id$
 
-2009-02-25	Vladlen Y. Koshelev
-
-	* core/Exceptions/BaseException.class.php: allow to pass string code to
-	exception constructor.
-
-	* core/DB/PgSQL.class.php: pass error code to DatabaseException.
-
 2009-02-22	Konstantin V. Arkhipov
 
 	* core/Form/Primitives/IdentifiablePrimitive.class.php: added
