@@ -112,7 +112,7 @@
 				if (
 					($type == 'integer')
 					|| ($type == 'identifier') // obsoleted
-					|| ($type == 'integerIndetifier')
+					|| ($type == 'integerIdentifier')
 					|| ($type == 'enumeration')
 				) {
 					$property->min = self::$limits[$size][0];
