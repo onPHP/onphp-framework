@@ -1,7 +1,21 @@
 This is, surprisely, onPHP repository (or just checkout).
 UTF8 is mandatory.
 
-SVN: http://svn.shadanakar.org/
+GIT: git://git.shadanakar.org/onPHP
+
+	Access:
+	
+	git clone git://git.shadanakar.org/onPHP (read-only)
+	git clone git+ssh://git@git.shadanakar.org/onPHP (read/write)
+	
+	Config:
+	
+	git config user.name "Your Name"
+	git config user.email you@example.com
+
+	git config color.diff auto
+	git config color.status auto
+	git config color.branch auto	
 
 Web:
 
