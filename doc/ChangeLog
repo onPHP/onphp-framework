@@ -1,5 +1,10 @@
 # $Id$
 
+2009-02-27	Sergey S. Sergeev
+
+	* incubator/classes/TSearch, test/incubator/TSearch: utils for building
+	tsearch index added.
+
 2009-02-26	Vladlen Y. Koshelev
 
 	* core/DB/PostgresError.class.php, test/code/PostgresErrorTest.class.php:

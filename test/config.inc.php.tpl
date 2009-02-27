@@ -23,6 +23,7 @@
 		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Net'.DIRECTORY_SEPARATOR,
 		//ONPHP_TEST_PATH.'incubator'.DIRECTORY_SEPARATOR,
 		//ONPHP_TEST_PATH.'incubator'.DIRECTORY_SEPARATOR.'Routers'.DIRECTORY_SEPARATOR,
+		//ONPHP_TEST_PATH.'incubator'.DIRECTORY_SEPARATOR.'TSearch'.DIRECTORY_SEPARATOR,
 	);
 	
 	$dbs = array(
@@ -33,7 +34,7 @@
 			'base'	=> 'onphp'
 		)
 	);
-	
+		
 	$daoWorkers = array(
 		'NullDaoWorker', 'CommonDaoWorker', 'SmartDaoWorker', 'VoodooDaoWorker',
 		'CacheDaoWorker', 'VoodooDaoWorker', 'SmartDaoWorker', 'CommonDaoWorker', 'NullDaoWorker'
