@@ -52,6 +52,21 @@
 			return $this;
 		}
 		
+		public function testDateComparsion()
+		{
+			$date1 = Date::create(mktime(0, 0, 0, 1, 1, 2009));
+			$date2 = Date::create(mktime(1, 0, 0, 1, 1, 2009));
+			
+			$this->assertEquals($date1, $date2);
+			
+			$this->assertEquals(
+				Date::compare($date1, $date2),
+				0
+			);
+			
+			return $this;
+		}
+		
 		private function dayDifferenceTest(Date $left, Date $right, $expected)
 		{
 			$this->assertEquals(Date::dayDifference($left, $right), $expected);
