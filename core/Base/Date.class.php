@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Garmonbozia Research Group                 *
+ *   Copyright (C) 2006-2009 by Garmonbozia Research Group                 *
  *   Anton E. Lebedevich, Konstantin V. Arkhipov                           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
