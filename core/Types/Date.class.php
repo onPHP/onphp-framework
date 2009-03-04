@@ -137,7 +137,6 @@
 			$value = null;
 			
 			if (is_int($date) || is_numeric($date)) { // unix timestamp
-				$this->int = $date;
 				$value = date($this->getFormat(), $date);
 			} elseif ($date && is_string($date))
 				$value = $this->stringImport($date);
@@ -331,14 +330,14 @@
 					$this->day
 				);
 			
+			$this->buildInteger();
+			
 			list($this->year, $this->month, $this->day) =
 				explode('-', $this->value, 3);
 		}
 		
 		/* void */ protected function stringImport($string)
 		{
-			$this->int = strtotime($string);
-			
 			$matches = array();
 			
 			if (
@@ -347,8 +346,8 @@
 				if (checkdate($matches[2], $matches[3], $matches[1]))
 					return $string;
 				
-			} elseif ($this->int !== false)
-				return date($this->getFormat(), $this->int);
+			} elseif (($integer = strtotime($string)) !== false)
+				return date($this->getFormat(), $integer);
 		}
 		
 		/* void */ protected function checkLimits(/* Date */ $value)
@@ -370,6 +369,17 @@
 					.Assert::dumpArgument($this->getMax())
 				);
 			}
+		}
+		
+		/* void */ protected function buildInteger()
+		{
+			$this->int =
+				mktime(
+					0, 0, 0,
+					$this->month,
+					$this->day,
+					$this->year
+				);
 		}
 	}
 ?>

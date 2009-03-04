@@ -141,8 +141,6 @@
 		{
 			list($date, $time) = explode(' ', $string, 2);
 			
-			parent::import($date);
-			
 			list($this->hour, $this->minute, $this->second) =
 				explode(':', $time, 3);
 			
@@ -157,13 +155,13 @@
 			list($this->hour, $this->minute, $this->second) =
 				explode(':', $time, 3);
 			
+			parent::import($date);
+			
 			$this->value .= ' '.$time;
 		}
 		
 		/* void */ protected function stringImport($string)
 		{
-			$this->int = strtotime($string);
-			
 			$matches = array();
 			
 			if (
@@ -177,8 +175,21 @@
 					return $string;
 			} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
 				return $string . ' 00:00:00';
-			elseif ($this->int !== false)
-				return date($this->getFormat(), $this->int);
+			elseif (($stamp = strtotime($string)) !== false)
+				return date($this->getFormat(), $integer);
+		}
+		
+		/* void */ protected function buildInteger()
+		{
+			$this->int =
+				mktime(
+					$this->hour,
+					$this->minute,
+					$this->second,
+					$this->month,
+					$this->day,
+					$this->year
+				);
 		}
 	}
 ?>
