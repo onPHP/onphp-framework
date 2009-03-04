@@ -1,5 +1,11 @@
 # $Id$
 
+2009-03-04	Konstantin V. Arkhipov
+
+	* core/Types/Date.class.php, core/Types/Timestamp.class.php: now
+	internal integer's date representation are rounded to days during
+	Date's import.
+
 2009-02-26	Vladlen Y. Koshelev
 
 	* core/DB/PostgresError.class.php, test/code/PostgresErrorTest.class.php:
