@@ -116,12 +116,7 @@
 			
 			if ($result === true) {
 				try {
-					$result =
-						(strpos($this->methodName, '::') === false)
-							? $this->dao()->{$this->methodName}($this->value)
-							: ClassUtils::callStaticMethod(
-								$this->methodName, $this->value
-							);
+					$result = $this->actualImportValue($this->value);
 					
 					Assert::isInstance($result, $className);
 					
@@ -141,6 +136,16 @@
 			}
 			
 			return $result;
+		}
+		
+		protected function actualImportValue($value)
+		{
+			return
+				(strpos($this->methodName, '::') === false)
+					? $this->dao()->{$this->methodName}($value)
+					: ClassUtils::callStaticMethod(
+						$this->methodName, $value
+					);
 		}
 	}
 ?>
