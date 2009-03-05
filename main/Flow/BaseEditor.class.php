@@ -19,7 +19,8 @@
 		const COMMAND_FAILED	= 'error';
 		
 		// to be redefined in __construct
-		protected $commandMap	= array();
+		protected $commandMap		= array();
+		protected $defaultAction	= 'edit';
 		
 		protected $map		= null;
 		protected $subject 	= null;
@@ -33,7 +34,7 @@
 			$form =
 				$this->subject->proto()->makeForm()->add(
 					Primitive::choice('action')->setList($this->commandMap)->
-					setDefault('edit')
+					setDefault($this->defaultAction)
 				);
 			
 			if ($this->idFieldName)
