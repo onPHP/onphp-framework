@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Garmonbozia Research Group                 *
+ *   Copyright (C) 2006-2009 by Garmonbozia Research Group                 *
  *   Anton E. Lebedevich, Konstantin V. Arkhipov                           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -110,7 +110,6 @@
 		public function __construct($date)
 		{
 			if (is_int($date) || is_numeric($date)) { // unix timestamp
-				$this->int = $date;
 				$this->string = date($this->getFormat(), $date);
 			} elseif ($date && is_string($date))
 				$this->stringImport($date);
@@ -122,6 +121,7 @@
 			}
 			
 			$this->import($this->string);
+			$this->buildInteger();
 		}
 		
 		public function toStamp()
@@ -301,8 +301,6 @@
 		
 		/* void */ protected function stringImport($string)
 		{
-			$this->int = strtotime($string);
-			
 			$matches = array();
 			
 			if (
@@ -310,9 +308,20 @@
 			) {
 				if (checkdate($matches[2], $matches[3], $matches[1]))
 					$this->string = $string;
-			
-			} elseif ($this->int !== false)
-				$this->string = date($this->getFormat(), $this->int);
+				
+			} elseif (($integer = strtotime($string)) !== false)
+				return date($this->getFormat(), $integer);
+		}
+		
+		/* void */ protected function buildInteger()
+		{
+			$this->int =
+				mktime(
+					0, 0, 0,
+					$this->month,
+					$this->day,
+					$this->year
+				);
 		}
 	}
 ?>
