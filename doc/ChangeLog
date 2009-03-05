@@ -1,5 +1,9 @@
 # $Id$
 
+2009-03-05	Vladlen Y. Koshelev
+
+	* main/Flow/BaseEditor.class.php: ability to change default action added.
+
 2009-03-04	Konstantin V. Arkhipov
 
 	* core/Types/Date.class.php, core/Types/Timestamp.class.php: now

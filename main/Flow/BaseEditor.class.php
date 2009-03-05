@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -19,7 +19,8 @@
 		const COMMAND_FAILED	= 'error';
 		
 		// to be redefined in __construct
-		protected $commandMap	= array();
+		protected $commandMap		= array();
+		protected $defaultAction	= 'edit';
 		
 		protected $map		= null;
 		protected $subject 	= null;
@@ -33,7 +34,7 @@
 			$form =
 				$this->subject->proto()->makeForm()->add(
 					Primitive::choice('action')->setList($this->commandMap)->
-					setValue('edit')
+					setValue($this->defaultAction)
 				);
 			
 			if ($this->idFieldName)
