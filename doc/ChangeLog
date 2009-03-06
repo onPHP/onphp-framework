@@ -1,10 +1,5 @@
 # $Id$
 
-2009-03-06	Denis M. Gabaidulin
-
-	* core/Form/PlainForm.class.php: has() method added to check
-	that primitive with given name exits.
-
 2009-03-06	Vladlen Y. Koshelev
 
 	* core/Form/Primitives/PrimitiveIdentifier.class.php: actualImportValue()

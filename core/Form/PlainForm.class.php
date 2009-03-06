@@ -92,11 +92,6 @@
 			throw new MissingElementException("knows nothing about '{$name}'");
 		}
 		
-		public function has($name)
-		{
-			return isset($this->primitives[$name]);
-		}
-		
 		public function getValue($name)
 		{
 			return $this->get($name)->getValue();
