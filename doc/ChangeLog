@@ -5,6 +5,10 @@
 	* core/Form/PlainForm.class.php: has() method added to check
 	that primitive with given name exits.
 
+2009-03-06	Sergey S. Sergeev
+
+	* main/Flow/MethodMappedController.class.php: import attached vars to form.
+
 2009-03-06	Vladlen Y. Koshelev
 
 	* core/Form/Primitives/PrimitiveIdentifier.class.php: actualImportValue()
