@@ -51,7 +51,8 @@
 			Form::create()->
 				add($action)->
 				import($request->getGet())->
-				importMore($request->getPost());
+				importMore($request->getPost())->
+				importMore($request->getAttached());
 			
 			if (!$command = $action->getValue())
 				return $action->getDefault();

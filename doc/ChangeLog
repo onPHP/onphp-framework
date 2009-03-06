@@ -1,5 +1,11 @@
 # $Id$
 
+2009-03-06	Sergey S. Sergeev
+
+	* main/Flow/MethodMappedController.class.php: import attached vars to form.
+	
+	* core/Base/Date.class.php, core/Base/Timestamp.class.php: bugfixed.
+
 2009-03-06	Vladlen Y. Koshelev
 
 	* core/Form/Primitives/PrimitiveIdentifier.class.php: actualImportValue()
