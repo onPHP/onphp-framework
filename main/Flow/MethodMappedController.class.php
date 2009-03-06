@@ -51,7 +51,8 @@
 			Form::create()->
 				add($action)->
 				import($request->getGet())->
-				importMore($request->getPost());
+				importMore($request->getPost())->
+				importMore($request->getAttached());
 			
 			return $action->getValue();
 		}
