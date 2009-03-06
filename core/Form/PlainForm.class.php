@@ -89,6 +89,11 @@
 			throw new MissingElementException("knows nothing about '{$name}'");
 		}
 		
+		public function has($name)
+		{
+			return isset($this->primitives[$name]);
+		}
+		
 		/**
 		 * @example
 		 * array('superFormsList', 5, 'subForm', 'primitiveName') =>
