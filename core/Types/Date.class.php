@@ -344,10 +344,10 @@
 				preg_match('/^(\d{1,4})-(\d{1,2})-(\d{1,2})$/', $string, $matches)
 			) {
 				if (checkdate($matches[2], $matches[3], $matches[1]))
-					return $string;
+					$this->value = $string;
 				
 			} elseif (($integer = strtotime($string)) !== false)
-				return date($this->getFormat(), $integer);
+				$this->value = date($this->getFormat(), $integer);
 		}
 		
 		/* void */ protected function checkLimits(/* Date */ $value)

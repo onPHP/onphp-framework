@@ -3,6 +3,8 @@
 2009-03-06	Sergey S. Sergeev
 
 	* main/Flow/MethodMappedController.class.php: import attached vars to form.
+	
+	* core/Types/Date.class.php, core/Types/Timestamp.class.php: bugfixed.
 
 2009-03-06	Vladlen Y. Koshelev
 
