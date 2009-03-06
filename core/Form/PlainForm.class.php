@@ -31,6 +31,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @deprecated by has()
+		**/
 		public function primitiveExists($name)
 		{
 			return isset($this->primitives[$name]);
