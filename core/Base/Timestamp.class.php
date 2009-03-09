@@ -164,8 +164,8 @@
 					$this->string = $string;
 			} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
 				$this->string = $string . ' 00:00:00';
-			elseif (($integer = strtotime($string)) !== false)
-				$this->string = date($this->getFormat(), $integer);
+			elseif (($stamp = strtotime($string)) !== false)
+				return date($this->getFormat(), $integer);
 		}
 		
 		/* void */ protected function buildInteger()

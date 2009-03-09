@@ -310,7 +310,7 @@
 					$this->string = $string;
 				
 			} elseif (($integer = strtotime($string)) !== false)
-				$this->string = date($this->getFormat(), $integer);
+				return date($this->getFormat(), $integer);
 		}
 		
 		/* void */ protected function buildInteger()
