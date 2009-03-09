@@ -172,11 +172,11 @@
 				)
 			) {
 				if (checkdate($matches[2], $matches[3], $matches[1]))
-					$this->value = $string;
+					return $string;
 			} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
-				$this->value = $string . ' 00:00:00';
-			elseif (($integer = strtotime($string)) !== false)
-				$this->value = date($this->getFormat(), $integer);
+				return $string . ' 00:00:00';
+			elseif (($stamp = strtotime($string)) !== false)
+				return date($this->getFormat(), $integer);
 		}
 		
 		/* void */ protected function buildInteger()
