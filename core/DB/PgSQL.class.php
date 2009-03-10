@@ -108,19 +108,13 @@
 				list($error, ) = explode("\n", pg_errormessage($this->link));
 				$code = substr($error, 8, 5);
 				
-				if ($code == PostgresError::UNIQUE_VIOLATION)
+				if ($code == PostgresError::UNIQUE_VIOLATION) {
 					$e = 'DuplicateObjectException';
-				else
-					$e = 'DatabaseException';
+					$code = null;
+				} else
+					$e = 'PostgresDatabaseException';
 				
-				try {
-					$codeValue = PostgresError::create($code)->toCode();
-				} catch (MissingElementException $e) {
-					// unparsed error 
-					$codeValue = null;
-				}
-				
-				throw new $e($error.' - '.$queryString, $codeValue);
+				throw new $e($error.' - '.$queryString, $code);
 			}
 		}
 
