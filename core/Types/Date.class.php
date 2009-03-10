@@ -346,8 +346,8 @@
 				if (checkdate($matches[2], $matches[3], $matches[1]))
 					return $string;
 				
-			} elseif (($integer = strtotime($string)) !== false)
-				return date($this->getFormat(), $integer);
+			} elseif (($stamp = strtotime($string)) !== false)
+				return date($this->getFormat(), $stamp);
 		}
 		
 		/* void */ protected function checkLimits(/* Date */ $value)

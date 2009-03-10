@@ -176,7 +176,7 @@
 			} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
 				return $string . ' 00:00:00';
 			elseif (($stamp = strtotime($string)) !== false)
-				return date($this->getFormat(), $integer);
+				return date($this->getFormat(), $stamp);
 		}
 		
 		/* void */ protected function buildInteger()
