@@ -196,8 +196,24 @@
 				
 				$this->fail();
 			} catch (WrongArgumentException $e) {/*_*/}
+		}	
 			
-			
+		public function testTimestampNow() 
+		{
+			try {
+				Timestamp::create('now');
+			} catch (WrongArgumentException $e) {
+				$this->fail($e->getMessage());
+			}
+		}
+		
+		public function testDateNow() 
+		{
+			try {
+				Date::create('now');
+			} catch (WrongArgumentException $e) {
+				$this->fail($e->getMessage());
+			}
 		}
 	}
 ?>
