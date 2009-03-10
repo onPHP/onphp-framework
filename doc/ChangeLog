@@ -1,5 +1,14 @@
 # $Id$
 
+2009-03-10	Vladlen Y. Koshelev
+
+	* core/DB/PostgresError.class.php: removed internal numeric representation
+	of error code.
+
+	* core/DB/PgSQL.class.php,
+	core/Exceptions/PostgresDatabaseException.class.php: PostgreSQL-specific
+	exception containing string error code within (PostgresError constant). 
+
 2009-03-06	Sergey S. Sergeev
 
 	* main/Flow/MethodMappedController.class.php: import attached vars to form.
