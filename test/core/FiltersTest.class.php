@@ -178,5 +178,16 @@
 				// passed;
 			}
 		}
+		
+		public function testJsonFilters()
+		{
+			$data = array('the keeey' => "that's value");
+			
+			$encoded = JsonEncoderFilter::me()->apply($data);
+			
+			$decoded = JsonDecoderFilter::me()->setAssoc()->apply($encoded);
+			
+			$this->assertEquals($decoded, $data);
+		}
 	}
 ?>
