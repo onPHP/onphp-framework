@@ -16,7 +16,7 @@
 	final class JsonEncoderFilter extends BaseFilter
 	{
 		/**
-		 * @return JsonDecodeFilter
+		 * @return JsonEncoderFilter
 		**/
 		public static function me()
 		{
