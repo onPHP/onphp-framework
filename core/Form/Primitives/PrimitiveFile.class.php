@@ -81,7 +81,7 @@
 		
 		public function getAllowedMimeTypes()
 		{
-			return $this->allowedMimeType;
+			return $this->allowedMimeTypes;
 		}
 		
 		public function isAllowedMimeType()
