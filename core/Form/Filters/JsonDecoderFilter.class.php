@@ -25,6 +25,9 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 		
+		/**
+		 * @return JsonDecodeFilter
+		**/
 		public function setAssoc($orly = true)
 		{
 			$this->assoc = (true === $orly);
