@@ -4,6 +4,9 @@
 
 	* main/Flow/HttpRequest.class.php: setServerVar() added.
 
+	* main/Utils/DateUtils.class.php: alignToSeconds() added.
+	Function used to align date for any interval.
+
 2009-03-16	Denis M. Gabaidulin
 
 	* core/Form/Filters/Json{Encoder|Decoder}Filter.class.php: added
