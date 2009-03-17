@@ -143,6 +143,15 @@
 			return $this;
 		}
 		
+		/**
+		 * @return HttpRequest
+		**/
+		public function setServerVar($name, $value)
+		{
+			$this->server[$name] = $value;
+			return $this;
+		}
+		
 		public function &getCookie()
 		{
 			return $this->cookie;
