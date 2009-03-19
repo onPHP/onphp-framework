@@ -73,5 +73,12 @@
 			
 			return $form;
 		}
+		
+		public function has($name)
+		{
+			return
+				isset($this->items[$name])
+				&& $this->items[$name]->getValue();
+		}
 	}
 ?>
