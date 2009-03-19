@@ -33,5 +33,9 @@
 		public function retainAll(array /*of CollectionItem*/ $items);
 		
 		public function getList();
+		
+		public function getByName($name);
+		
+		public function has($name);
 	}
 ?>
