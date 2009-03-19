@@ -2,6 +2,8 @@
 
 2009-03-19	Denis M. Gabaidulin
 
+	* main/Base/Collection.class.php. Useful accessors added.
+
 	* main/Utils/CommandLine/*.class.php. Simple command line args parser
 	based on getopt().
 
