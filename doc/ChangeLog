@@ -1,5 +1,10 @@
 # $Id$
 
+2009-03-19	Denis M. Gabaidulin
+
+	* main/Utils/CommandLine/*.class.php. Simple command line args parser
+	based on getopt().
+
 2009-03-17	Denis M. Gabaidulin
 
 	* main/Flow/HttpRequest.class.php: setServerVar() added.
