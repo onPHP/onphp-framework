@@ -25,6 +25,14 @@
 			OqlToken::NEW_LINE =>
 				'\n',
 			
+			// parentheses
+			OqlToken::PARENTHESES =>
+				'[\(\)]',
+			
+			// comma
+			OqlToken::PUNCTUATION =>
+				',',
+			
 			// "'`-quoted string constant
 			OqlToken::STRING =>
 				'"[^"\\\]*(?:\\\.[^"\\\]*)*"|\'[^\'\\\]*(?:\\\.[^\'\\\]*)*\'|`[^`\\\]*(?:\\\.[^`\\\]*)*`',
@@ -46,7 +54,11 @@
 			
 			// reserved word
 			OqlToken::KEYWORD =>
-				'\b(?:as|distinct|from|where|not|and|or|in|like|ilike|similar\s+to|between|is|group\s+by|order\s+by|asc|desc|having|limit|offset)\b',
+				'\b(?:as|distinct|all|from|where|not|in|like|ilike|similar\s+to|between|is|group\s+by|order\s+by|asc|desc|having|limit|offset)\b',
+			
+			// operators
+			OqlToken::OPERATOR =>
+				'\>\=|\<\=|\<\>|\>|\<|\!\=|\=|\+|\-|\/|\*|and|or',
 			
 			// aggregate function
 			OqlToken::AGGREGATE_FUNCTION =>
@@ -54,23 +66,7 @@
 			
 			// property, class name
 			OqlToken::IDENTIFIER =>
-				'\b[a-zA-Z_][a-zA-Z\d_]*(?:\.[a-zA-Z_][a-zA-Z\d_]+)*\b',
-			
-			// parentheses
-			OqlToken::PARENTHESES =>
-				'[\(\)]',
-			
-			// comma
-			OqlToken::PUNCTUATION =>
-				',',
-			
-			// comparison operators
-			OqlToken::COMPARISON_OPERATOR =>
-				'\>\=|\<\=|\<\>|\!\=|[><=]',
-			
-			// arithmetic operators
-			OqlToken::ARITHMETIC_OPERATOR =>
-				'[+\-\/*]'
+				'\b[a-zA-Z_][a-zA-Z\d_]*(?:\.[a-zA-Z_][a-zA-Z\d_]+)*\b'
 		);
 		
 		private static $pattern = null;
@@ -277,8 +273,10 @@
 						preg_replace('/\s+/', ' ', $value)
 					);
 				
-				case OqlToken::COMPARISON_OPERATOR:
-					return $value == '<>' ? BinaryExpression::NOT_EQUALS : $value;
+				case OqlToken::OPERATOR:
+					return $value == '<>'
+						? BinaryExpression::NOT_EQUALS
+						: strtolower($value);
 			}
 			
 			return $value;

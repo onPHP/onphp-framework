@@ -72,7 +72,7 @@
 				'123 +123 .123 123.456 1e23 1E+23 1E-23 0.1e23 -.1e23',
 				array(
 					OqlToken::make(123., '123', OqlToken::NUMBER, 1, 0),
-					OqlToken::make('+', '+', OqlToken::ARITHMETIC_OPERATOR, 1, 4),
+					OqlToken::make('+', '+', OqlToken::OPERATOR, 1, 4),
 					OqlToken::make(123., '123', OqlToken::NUMBER, 1, 5),
 					OqlToken::make(.123, '.123', OqlToken::NUMBER, 1, 9),
 					OqlToken::make(123.456, '123.456', OqlToken::NUMBER, 1, 14),
@@ -80,7 +80,7 @@
 					OqlToken::make(1e23, '1E+23', OqlToken::NUMBER, 1, 27),
 					OqlToken::make(1e-23, '1E-23', OqlToken::NUMBER, 1, 33),
 					OqlToken::make(1e22, '0.1e23', OqlToken::NUMBER, 1, 39),
-					OqlToken::make('-', '-', OqlToken::ARITHMETIC_OPERATOR, 1, 46),
+					OqlToken::make('-', '-', OqlToken::OPERATOR, 1, 46),
 					OqlToken::make(1e22, '.1e23', OqlToken::NUMBER, 1, 47)
 				)
 			);
@@ -142,8 +142,8 @@
 					OqlToken::make('limit', 'limit', OqlToken::KEYWORD, 2, 31),
 					OqlToken::make('offset', 'offset', OqlToken::KEYWORD, 2, 37),
 					OqlToken::make('not', 'not', OqlToken::KEYWORD, 2, 44),
-					OqlToken::make('and', 'and', OqlToken::KEYWORD, 2, 48),
-					OqlToken::make('or', 'or', OqlToken::KEYWORD, 2, 52),
+					OqlToken::make('and', 'and', OqlToken::OPERATOR, 2, 48),
+					OqlToken::make('or', 'or', OqlToken::OPERATOR, 2, 52),
 					OqlToken::make('as', 'as', OqlToken::KEYWORD, 2, 55),
 					OqlToken::make('in', 'in', OqlToken::KEYWORD, 2, 58),
 					OqlToken::make('is', 'is', OqlToken::KEYWORD, 2, 61),
@@ -197,17 +197,17 @@
 			$this->assertTokens(
 				'>= <= <> < > != = + - / *',
 				array(
-					OqlToken::make('>=', '>=', OqlToken::COMPARISON_OPERATOR, 1, 0),
-					OqlToken::make('<=', '<=', OqlToken::COMPARISON_OPERATOR, 1, 3),
-					OqlToken::make('!=', '<>', OqlToken::COMPARISON_OPERATOR, 1, 6),
-					OqlToken::make('<', '<', OqlToken::COMPARISON_OPERATOR, 1, 9),
-					OqlToken::make('>', '>', OqlToken::COMPARISON_OPERATOR, 1, 11),
-					OqlToken::make('!=', '!=', OqlToken::COMPARISON_OPERATOR, 1, 13),
-					OqlToken::make('=', '=', OqlToken::COMPARISON_OPERATOR, 1, 16),
-					OqlToken::make('+', '+', OqlToken::ARITHMETIC_OPERATOR, 1, 18),
-					OqlToken::make('-', '-', OqlToken::ARITHMETIC_OPERATOR, 1, 20),
-					OqlToken::make('/', '/', OqlToken::ARITHMETIC_OPERATOR, 1, 22),
-					OqlToken::make('*', '*', OqlToken::ARITHMETIC_OPERATOR, 1, 24)
+					OqlToken::make('>=', '>=', OqlToken::OPERATOR, 1, 0),
+					OqlToken::make('<=', '<=', OqlToken::OPERATOR, 1, 3),
+					OqlToken::make('!=', '<>', OqlToken::OPERATOR, 1, 6),
+					OqlToken::make('<', '<', OqlToken::OPERATOR, 1, 9),
+					OqlToken::make('>', '>', OqlToken::OPERATOR, 1, 11),
+					OqlToken::make('!=', '!=', OqlToken::OPERATOR, 1, 13),
+					OqlToken::make('=', '=', OqlToken::OPERATOR, 1, 16),
+					OqlToken::make('+', '+', OqlToken::OPERATOR, 1, 18),
+					OqlToken::make('-', '-', OqlToken::OPERATOR, 1, 20),
+					OqlToken::make('/', '/', OqlToken::OPERATOR, 1, 22),
+					OqlToken::make('*', '*', OqlToken::OPERATOR, 1, 24)
 				)
 			);
 		}
@@ -234,10 +234,10 @@
 					OqlToken::make(',', ',', OqlToken::PUNCTUATION, 1, 30),
 					OqlToken::make('(', '(', OqlToken::PARENTHESES, 1, 32),
 					OqlToken::make('id', 'id', OqlToken::IDENTIFIER, 1, 33),
-					OqlToken::make('+', '+', OqlToken::ARITHMETIC_OPERATOR, 1, 36),
+					OqlToken::make('+', '+', OqlToken::OPERATOR, 1, 36),
 					OqlToken::make(10., '10', OqlToken::NUMBER, 1, 38),
 					OqlToken::make(')', ')', OqlToken::PARENTHESES, 1, 40),
-					OqlToken::make('/', '/', OqlToken::ARITHMETIC_OPERATOR, 1, 42),
+					OqlToken::make('/', '/', OqlToken::OPERATOR, 1, 42),
 					OqlToken::make(2., '2', OqlToken::NUMBER, 1, 44),
 					OqlToken::make('from', 'from', OqlToken::KEYWORD, 2, 0),
 					OqlToken::make('UserGroup', 'UserGroup', OqlToken::IDENTIFIER, 2, 5),
@@ -250,12 +250,12 @@
 					OqlToken::make(',', ',', OqlToken::PUNCTUATION, 3, 15),
 					OqlToken::make(1, '$1', OqlToken::SUBSTITUTION, 3, 17),
 					OqlToken::make(')', ')', OqlToken::PARENTHESES, 3, 19),
-					OqlToken::make('or', 'or', OqlToken::KEYWORD, 3, 21),
+					OqlToken::make('or', 'or', OqlToken::OPERATOR, 3, 21),
 					OqlToken::make('id', 'id', OqlToken::IDENTIFIER, 3, 24),
-					OqlToken::make('>=', '>=', OqlToken::COMPARISON_OPERATOR, 3, 27),
+					OqlToken::make('>=', '>=', OqlToken::OPERATOR, 3, 27),
 					OqlToken::make(2, '$2', OqlToken::SUBSTITUTION, 3, 30),
 					OqlToken::make(')', ')', OqlToken::PARENTHESES, 3, 32),
-					OqlToken::make('and', 'and', OqlToken::KEYWORD, 3, 34),
+					OqlToken::make('and', 'and', OqlToken::OPERATOR, 3, 34),
 					OqlToken::make('(', '(', OqlToken::PARENTHESES, 3, 38),
 					OqlToken::make('name', 'name', OqlToken::IDENTIFIER, 3, 39),
 					OqlToken::make('like', 'like', OqlToken::KEYWORD, 3, 44),
@@ -276,7 +276,7 @@
 			$tokenizer = new OqlTokenizer($string);
 			$tokens = $tokenizer->getList();
 			
-			$this->assertEquals(sizeof($tokens), sizeof($expectedTokens));
+			$this->assertEquals(count($tokens), count($expectedTokens));
 			
 			reset($tokens);
 			

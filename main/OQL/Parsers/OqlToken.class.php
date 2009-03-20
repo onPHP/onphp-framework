@@ -16,18 +16,17 @@
 	final class OqlToken
 	{
 		const NEW_LINE				= 1;
-		const STRING				= 2;
-		const NUMBER				= 3;
-		const BOOLEAN				= 4;
-		const NULL					= 5;
-		const SUBSTITUTION			= 6;
-		const KEYWORD				= 7;
-		const AGGREGATE_FUNCTION	= 8;
-		const IDENTIFIER			= 9;
-		const PARENTHESES			= 10;
-		const PUNCTUATION			= 11;
-		const COMPARISON_OPERATOR	= 12;
-		const ARITHMETIC_OPERATOR	= 13;
+		const PARENTHESES			= 2;
+		const PUNCTUATION			= 3;
+		const STRING				= 4;
+		const NUMBER				= 5;
+		const BOOLEAN				= 6;
+		const NULL					= 7;
+		const SUBSTITUTION			= 8;
+		const KEYWORD				= 9;
+		const OPERATOR				= 10;
+		const AGGREGATE_FUNCTION	= 11;
+		const IDENTIFIER			= 12;
 		
 		private $value		= null;
 		private $rawValue	= null;
