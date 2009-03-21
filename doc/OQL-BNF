@@ -54,7 +54,7 @@ $Id$
 				| ( "is" ( "not null" | "true" | "false" ) )
 				| ( [ "not" ] "in (" <in_expression> ")" )
 				| ( [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
-				| ( "between" ( <identifier> | <constant> ) "and" ( <identifier> | <constant> ) )
+				| ( "between" <between_expression> "and" <between_expression> )
 			)
 		)
 	
@@ -72,6 +72,9 @@ $Id$
 	
 	<in_expression> ::=
 		<constant> [ "," <in_expression> ]
+	
+	<between_expression> ::=
+		<arithmetic_expression> | <string>
 	
 	<pattern> ::=
 		<string> | <placeholder>
