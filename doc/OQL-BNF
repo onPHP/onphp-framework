@@ -48,15 +48,18 @@ $Id$
 	<logical_term> ::=
 		( "not" <logical_expression> )
 		| (
-			( <arithmetic_expression> | <boolean> | <string> )
+			<logical_operand>
 			(
-				( <comparison_op> <arithmetic_expression> )
-				| ( "is" ( "not null" | "true" | "false" ) )
-				| ( [ "not" ] "in (" <in_expression> ")" )
+				( <comparison_op> <logical_operand> )
+				| ( "is" [ "not" ] ( "null" | <boolean> ) )
+				| ( [ "not" ] "in" "(" <in_expression> ")" )
 				| ( [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
-				| ( "between" <between_expression> "and" <between_expression> )
+				| ( "between" <logical_operand> "and" <logical_operand> )
 			)
 		)
+	
+	<logical_operand> ::=
+		<arithmetic_expression> | <boolean> | <string>
 	
 	<arithmetic_expression> ::=
 		[ "-" ] <arithmetic_mul_expression> { ( "+" | "-" ) <arithmetic_mul_expression> }
@@ -72,9 +75,6 @@ $Id$
 	
 	<in_expression> ::=
 		<constant> [ "," <in_expression> ]
-	
-	<between_expression> ::=
-		<arithmetic_expression> | <string>
 	
 	<pattern> ::=
 		<string> | <placeholder>
