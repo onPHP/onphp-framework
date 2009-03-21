@@ -9,6 +9,9 @@
 	getLogic() added.
 	
 	* core/OSQL/SQLChain.class.php: getChain(), getLogic() added.
+	
+	* test/core/FormPrimitivesDateTest.class.php: test case on PrimitiveDate
+	added.
 
 2009-03-19	Denis M. Gabaidulin
 
