@@ -54,11 +54,11 @@
 			
 			// reserved word
 			OqlToken::KEYWORD =>
-				'\b(?:as|distinct|all|from|where|not|in|like|ilike|similar\s+to|between|is|group\s+by|order\s+by|asc|desc|having|limit|offset)\b',
+				'\b(?:as|distinct|all|from|where|in|like|ilike|similar\s+to|between|is|group\s+by|order\s+by|asc|desc|having|limit|offset)\b',
 			
 			// operators
 			OqlToken::OPERATOR =>
-				'\>\=|\<\=|\<\>|\>|\<|\!\=|\=|\+|\-|\/|\*|and|or',
+				'\>\=|\<\=|\<\>|\>|\<|\!\=|\=|\+|\-|\/|\*|and|or|not',
 			
 			// aggregate function
 			OqlToken::AGGREGATE_FUNCTION =>

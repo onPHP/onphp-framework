@@ -141,7 +141,7 @@
 					OqlToken::make('having', 'having', OqlToken::KEYWORD, 2, 24),
 					OqlToken::make('limit', 'limit', OqlToken::KEYWORD, 2, 31),
 					OqlToken::make('offset', 'offset', OqlToken::KEYWORD, 2, 37),
-					OqlToken::make('not', 'not', OqlToken::KEYWORD, 2, 44),
+					OqlToken::make('not', 'not', OqlToken::OPERATOR, 2, 44),
 					OqlToken::make('and', 'and', OqlToken::OPERATOR, 2, 48),
 					OqlToken::make('or', 'or', OqlToken::OPERATOR, 2, 52),
 					OqlToken::make('as', 'as', OqlToken::KEYWORD, 2, 55),
