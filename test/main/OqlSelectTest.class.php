@@ -445,7 +445,7 @@
 								)
 						)
 				)->
-				// substitution, boolean and arithmetic expressions
+				// placeholder, boolean and arithmetic expressions
 				assertCriteria(
 					'from TestUser order by $1, nickname is null, -id/2 + 1 asc ',
 					Criteria::create(TestUser::dao())->
@@ -518,7 +518,7 @@
 							)
 						)
 				)->
-				// substitution
+				// placeholder
 				assertCriteria(
 					'from TestUser having $1 = 1',
 					Criteria::create(TestUser::dao())->
@@ -740,7 +740,7 @@
 				)->
 				// property, group by, having
 				assertCriteria(
-					'count(id) as count from TestUser group by id having count = 2',
+					'count(id) as count from TestUser group by id having count(id) = 2',
 					Criteria::create(TestUser::dao())->
 						setProjection(
 							Projection::chain()->
@@ -748,7 +748,10 @@
 								add(Projection::group('id'))->
 								add(
 									Projection::having(
-										Expression::eq('count', 2)
+										Expression::eq(
+											SQLFunction::create('count', 'id'),
+											2
+										)
 									)
 								)
 						)
@@ -772,7 +775,7 @@
 				)->
 				assertSyntaxError(
 					'count() from',
-					"expecting argument in expression: )"
+					"expecting first argument in expression: *|/"
 				)->
 				assertSyntaxError(
 					'prop1 as 123',
@@ -816,7 +819,7 @@
 				)->
 				assertSyntaxError(
 					'from TestUser where a in (',
-					'expecting constant or substitution in expression: in'
+					'expecting first argument in expression: *|/'
 				)->
 				assertSyntaxError(
 					'from TestUser where a in (1',
@@ -828,11 +831,11 @@
 				)->
 				assertSyntaxError(
 					'from TestUser where a like 123',
-					'expecting string constant or substitution: like'
+					'expecting string constant or placeholder: like'
 				)->
 				assertSyntaxError(
 					'from TestUser where a between',
-					'expecting first argument in expression: between'
+					'expecting first argument in expression: *|/'
 				)->
 				assertSyntaxError(
 					'from TestUser where a between 1',
@@ -840,7 +843,7 @@
 				)->
 				assertSyntaxError(
 					'from TestUser where a between 1 and',
-					'expecting second argument in expression: between'
+					'expecting first argument in expression: *|/'
 				)->
 				assertSyntaxError(
 					'from TestUser limit',

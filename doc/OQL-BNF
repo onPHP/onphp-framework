@@ -34,10 +34,10 @@ $Id$
 		<logical_expression>
 	
 	<limit_clause> ::=
-		<number> | <substitution>
+		<number> | <placeholder>
 	
 	<offset_clause> ::=
-		<number> | <substitution>
+		<number> | <placeholder>
 	
 	<logical_expression> ::=
 		<logical_and_expression> { [ "or" ] <logical_and_expression> }
@@ -65,7 +65,7 @@ $Id$
 		<arithmetic_term> { ( "*" | "/" ) ( <arithmetic_term> | ( "(" <arithmetic_expression> ")" ) }
 	
 	<arithmetic_term> ::=
-		<identifier> | <number> | <substitution>
+		<identifier> | <number> | <placeholder>
 	
 	<comparison_op> ::=
 		"=" | "<" | ">" | "<>" | "!=" | "<=" | ">="
@@ -74,10 +74,10 @@ $Id$
 		<constant> [ "," <in_expression> ]
 	
 	<pattern> ::=
-		<string> | <substitution>
+		<string> | <placeholder>
 	
 	<constant> ::=
-		<string> | <number> | <boolean> | <substitution> | "null"
+		<string> | <number> | <boolean> | <placeholder> | "null"
 	
 	<boolean> ::=
 		"true" | "false"
@@ -93,7 +93,7 @@ $Id$
 	<number> ::=
 		[ { <digit> } ] [ "." ] { <digit> } [ "e" [ "+" | "-" ] { <digit> } ] 
 	
-	<substitution> ::=
+	<placeholder> ::=
 		"$" { <digit> }
 
 

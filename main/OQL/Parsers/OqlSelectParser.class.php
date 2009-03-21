@@ -205,7 +205,7 @@
 				$token = $this->tokenizer->next();
 				if (
 					$this->checkToken($token, OqlToken::NUMBER)
-					|| $this->checkToken($token, OqlToken::SUBSTITUTION)
+					|| $this->checkToken($token, OqlToken::PLACEHOLDER)
 				) {
 					$this->oqlObject->setLimit(
 						$this->makeQueryParameter($token)
@@ -230,7 +230,7 @@
 				$token = $this->tokenizer->next();
 				if (
 					$this->checkToken($token, OqlToken::NUMBER)
-					|| $this->checkToken($token, OqlToken::SUBSTITUTION)
+					|| $this->checkToken($token, OqlToken::PLACEHOLDER)
 				) {
 					$this->oqlObject->setOffset(
 						$this->makeQueryParameter($token)

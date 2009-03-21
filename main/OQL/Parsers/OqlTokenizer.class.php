@@ -48,8 +48,8 @@
 			OqlToken::NULL =>
 				'\bnull\b',
 			
-			// substitution
-			OqlToken::SUBSTITUTION =>
+			// placeholder
+			OqlToken::PLACEHOLDER =>
 				'\$[\d]+',
 			
 			// reserved word
@@ -265,7 +265,7 @@
 				case OqlToken::AGGREGATE_FUNCTION:
 					return strtolower($value);
 				
-				case OqlToken::SUBSTITUTION:
+				case OqlToken::PLACEHOLDER:
 					return intval(substr($value, 1));
 				
 				case OqlToken::KEYWORD:

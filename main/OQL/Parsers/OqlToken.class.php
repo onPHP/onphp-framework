@@ -22,7 +22,7 @@
 		const NUMBER				= 5;
 		const BOOLEAN				= 6;
 		const NULL					= 7;
-		const SUBSTITUTION			= 8;
+		const PLACEHOLDER			= 8;
 		const KEYWORD				= 9;
 		const OPERATOR				= 10;
 		const AGGREGATE_FUNCTION	= 11;

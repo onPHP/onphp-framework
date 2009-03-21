@@ -116,8 +116,8 @@
 			$this->assertTokens(
 				' $1 $22 $ ',
 				array(
-					OqlToken::make(1, '$1', OqlToken::SUBSTITUTION, 1, 1),
-					OqlToken::make(22, '$22', OqlToken::SUBSTITUTION, 1, 4)
+					OqlToken::make(1, '$1', OqlToken::PLACEHOLDER, 1, 1),
+					OqlToken::make(22, '$22', OqlToken::PLACEHOLDER, 1, 4)
 				)
 			);
 		}
@@ -248,12 +248,12 @@
 					OqlToken::make('(', '(', OqlToken::PARENTHESES, 3, 13),
 					OqlToken::make(1., '1', OqlToken::NUMBER, 3, 14),
 					OqlToken::make(',', ',', OqlToken::PUNCTUATION, 3, 15),
-					OqlToken::make(1, '$1', OqlToken::SUBSTITUTION, 3, 17),
+					OqlToken::make(1, '$1', OqlToken::PLACEHOLDER, 3, 17),
 					OqlToken::make(')', ')', OqlToken::PARENTHESES, 3, 19),
 					OqlToken::make('or', 'or', OqlToken::OPERATOR, 3, 21),
 					OqlToken::make('id', 'id', OqlToken::IDENTIFIER, 3, 24),
 					OqlToken::make('>=', '>=', OqlToken::OPERATOR, 3, 27),
-					OqlToken::make(2, '$2', OqlToken::SUBSTITUTION, 3, 30),
+					OqlToken::make(2, '$2', OqlToken::PLACEHOLDER, 3, 30),
 					OqlToken::make(')', ')', OqlToken::PARENTHESES, 3, 32),
 					OqlToken::make('and', 'and', OqlToken::OPERATOR, 3, 34),
 					OqlToken::make('(', '(', OqlToken::PARENTHESES, 3, 38),
