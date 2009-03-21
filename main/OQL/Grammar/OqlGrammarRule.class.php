@@ -16,6 +16,11 @@
 	{
 		protected $required	= true;
 		
+		public function isRequired()
+		{
+			return $this->required;
+		}
+		
 		/**
 		 * @return OqlGrammarRule
 		**/
