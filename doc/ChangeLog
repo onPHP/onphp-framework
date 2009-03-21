@@ -1,5 +1,15 @@
 # $Id$
 
+2009-03-22	Sergey S. Sergeev
+
+	* core/Form/Primitives/PrimitiveImage.class.php: getMaxWidth(),
+	getMinWidth(), getMaxHeight(), getMinHeight() added.
+	
+	* core/Logic/BinaryExpression.class.php: getLeft(), getRight(),
+	getLogic() added.
+	
+	* core/OSQL/SQLChain.class.php: getChain(), getLogic() added.
+
 2009-03-19	Denis M. Gabaidulin
 
 	* main/Base/Collection.class.php. Useful accessors added.
