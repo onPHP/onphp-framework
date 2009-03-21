@@ -12,14 +12,14 @@
 	/**
 	 * @ingroup OQL
 	**/
-	class OqlTerminal extends OqlGrammarRule
+	class OqlTerminalRule extends OqlGrammarRule
 	{
 		protected $type		= null;
 		protected $value	= null;
 		protected $list		= null;
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		public static function create()
 		{
@@ -32,7 +32,7 @@
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		public function setType($type)
 		{
@@ -47,7 +47,7 @@
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		public function setValue($value)
 		{
@@ -62,7 +62,7 @@
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		public function setList(array $list)
 		{

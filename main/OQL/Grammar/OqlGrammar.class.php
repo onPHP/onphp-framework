@@ -323,11 +323,11 @@
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		private static function keyword($keyword)
 		{
-			return OqlTerminal::create()->
+			return OqlTerminalRuleRule::create()->
 				setType(OqlToken::KEYWORD)->
 				setValue($keyword);
 		}
@@ -346,61 +346,61 @@
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		private static function identifier()
 		{
-			return OqlTerminal::create()->
+			return OqlTerminalRule::create()->
 				setType(OqlToken::IDENTIFIER);
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		private static function number()
 		{
-			return OqlTerminal::create()->
+			return OqlTerminalRule::create()->
 				setType(OqlToken::NUMBER);
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		private static function boolean()
 		{
-			return OqlTerminal::create()->
+			return OqlTerminalRule::create()->
 				setType(OqlToken::BOOLEAN);
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		private static function null()
 		{
-			return OqlTerminal::create()->
+			return OqlTerminalRule::create()->
 				setType(OqlToken::NULL);
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		private static function string()
 		{
-			return OqlTerminal::create()->
+			return OqlTerminalRule::create()->
 				setType(OqlToken::STRING);
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		private static function placeholder()
 		{
-			return OqlTerminal::create()->
+			return OqlTerminalRule::create()->
 				setType(OqlToken::PLACEHOLDER);
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		private static function comparisonOperator()
 		{
@@ -410,40 +410,40 @@
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		private static function operator($value)
 		{
-			return OqlTerminal::create()->
+			return OqlTerminalRule::create()->
 				setType(OqlToken::OPERATOR);
 				setValue($value);
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		private static function operatorList(array $list)
 		{
-			return OqlTerminal::create()->
+			return OqlTerminalRule::create()->
 				setType(OqlToken::OPERATOR);
 				setList($list);
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		private static function punctuation()
 		{
-			return OqlTerminal::create()->
+			return OqlTerminalRule::create()->
 				setType(OqlToken::PUNCTUATION);
 		}
 		
 		/**
-		 * @return OqlTerminal
+		 * @return OqlTerminalRule
 		**/
 		private static function parentheses($open)
 		{
-			return OqlTerminal::create()->
+			return OqlTerminalRule::create()->
 				setType(OqlToken::PARENTHESES)->
 				setValue($open ? '(' : ')');
 		}
