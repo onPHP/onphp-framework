@@ -49,7 +49,7 @@ $Id$
 		( "not" <logical_expression> )
 		| (
 			( <arithmetic_expression> | <boolean> | <string> )
-			| (
+			(
 				( <comparison_op> <arithmetic_expression> )
 				| ( "is" ( "not null" | "true" | "false" ) )
 				| ( [ "not" ] "in (" <in_expression> ")" )
