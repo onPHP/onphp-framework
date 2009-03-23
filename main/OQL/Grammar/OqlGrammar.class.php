@@ -9,317 +9,396 @@
  *                                                                          *
  ****************************************************************************/
 
-	// TODO: use flyweights for terminals and top-level rules (beware of "optional()" for terminals)
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlGrammar extends StaticFactory
+	final class OqlGrammar extends Singleton implements Instantiatable
 	{
+		const NULL					= 1;
+		const IDENTIFIER			= 2;
+		const NUMBER				= 3;
+		const BOOLEAN				= 4;
+		const STRING				= 5;
+		const PLACEHOLDER			= 6;
+		const PUNCTUATION			= 7;
+		const CONSTANT				= 8;
+		const PATTERN				= 9;
+		const OPEN_PARENTHESES		= 10;
+		const CLOSE_PARENTHESES		= 11;
+		
+		const ARITHMETIC_OPERAND	= 12;
+		const ARITHMETIC_EXPRESSION	= 13;
+		
+		const LOGICAL_OPERAND		= 14;
+		const LOGICAL_TERM			= 15;
+		const LOGICAL_EXPRESSION	= 16;
+		
+		const PROPERTIES			= 17;
+		const WHERE					= self::LOGICAL_EXPRESSION;
+		const GROUP_BY				= 18;
+		const ORDER_BY				= 19;
+		const HAVING				= self::LOGICAL_EXPRESSION;
+		const LIMIT					= 20;
+		const OFFSET				= self::LIMIT;
+		const SELECT				= 21;
+		
+		private $rules			= array();
+		private $optionalRules	= array();
+		
 		/**
-		 * @return OqlChainRule
+		 * @return OqlGrammar
 		**/
-		public static function select()
+		public static function me()
 		{
-			return OqlChainRule::create()->
-				add(
-					self::properties()->
-						optional()
+			return Singleton::getInstance(__CLASS__);
+		}
+		
+		protected function __construct()
+		{
+			$this->
+				set($this->terminal(self::NULL, OqlTokenType::NULL))->
+				set($this->terminal(self::IDENTIFIER, OqlTokenType::IDENTIFIER))->
+				set($this->terminal(self::NUMBER, OqlTokenType::NUMBER))->
+				set($this->terminal(self::BOOLEAN, OqlTokenType::BOOLEAN))->
+				set($this->terminal(self::STRING, OqlTokenType::STRING))->
+				set($this->terminal(self::PLACEHOLDER, OqlTokenType::PLACEHOLDER))->
+				set($this->terminal(self::PUNCTUATION, OqlTokenType::PUNCTUATION));
+			
+			$this->
+				set(
+					OqlAlternateRule::create()->
+						setId(self::CONSTANT)->
+						add($this->get(self::STRING))->
+						add($this->get(self::NUMBER))->
+						add($this->get(self::BOOLEAN))->
+						add($this->get(self::PLACEHOLDER))->
+						add($this->get(self::NULL))
 				)->
-				add(self::keyword('from'))->
-				add(self::identifier())->
-				add(
-					OqlChainRule::create()->
-						optional()->
-						add(self::keyword('where'))->
-						add(self::where())
+				set(
+					OqlAlternateRule::create()->
+						setId(self::PATTERN)->
+						add($this->get(self::STRING))->
+						add($this->get(self::PLACEHOLDER))
 				)->
-				add(
-					OqlChainRule::create()->
-						optional()->
-						add(self::keyword('group by'))->
-						add(self::groupBy())
+				set(
+					$this->terminal(self::OPEN_PARENTHESES, OqlTokenType::PARENTHESES)->
+						setValue('(')
 				)->
-				add(
-					OqlChainRule::create()->
-						optional()->
-						add(self::keyword('order by'))->
-						add(self::orderBy())
-				)->
-				add(
-					OqlChainRule::create()->
-						optional()->
-						add(self::keyword('having'))->
-						add(self::having())
-				)->
-				add(
-					OqlChainRule::create()->
-						optional()->
-						add(self::keyword('limit'))->
-						add(self::limit())
-				)->
-				add(
-					OqlChainRule::create()->
-						optional()->
-						add(self::keyword('offset'))->
-						add(self::offset())
+				set(
+					$this->terminal(self::CLOSE_PARENTHESES, OqlTokenType::PARENTHESES)->
+						setValue(')')
 				);
-		}
-		
-		/**
-		 * @return OqlSequenceRule
-		**/
-		public static function properties()
-		{
-			return OqlSequenceRule::create()->
-				setRule(
-					OqlChainRule::create()->
-						add(
-							OqlAlternateRule::create()->
-								add(
-									OqlChainRule::create()->
-										add(
-											OqlAlternateRule::create()->
-												add(self::keyword('sum'))->
-												add(self::keyword('avg'))->
-												add(self::keyword('min'))->
-												add(self::keyword('max'))
+			
+			$this->set(
+				$this->terminal(
+					self::ARITHMETIC_OPERAND,
+					array(
+						OqlTokenType::IDENTIFIER,
+						OqlTokenType::NUMBER
+					)
+				)
+			);
+			
+			$this->set(
+				OqlChainRule::create()->
+					setId(self::ARITHMETIC_EXPRESSION)->
+					add(
+						$this->operator('-')->
+							optional()
+					)->
+					add(
+						$this->parenthesesRule(
+							OqlSequenceRule::create()->
+								setRule(
+									OqlSequenceRule::create()->
+										setRule(
+											$this->get(self::ARITHMETIC_OPERAND)
 										)->
-										add(self::parentheses(true))->
-										add(self::arithmeticExpression())->
-										add(self::parentheses(false))
+										setSeparator(
+											$this->operator(array('*', '/'))
+										)
 								)->
-								add(
-									OqlChainRule::create()->
-										add(self::keyword('count'))->
-										add(self::parentheses(true))->
-										add(
-											self::keyword('distinct')->
-												optional()
-										)->
-										add(self::logicalExpression())->
-										add(self::parentheses(false))
-								)->
-								add(
-									OqlChainRule::create()->
-										add(
-											self::keyword('distinct')->
-												optional()
-										)->
-										add(self::logicalExpression())
+								setSeparator(
+									$this->operator(array('+', '-'))
 								)
-						)->
-						add(
-							OqlChainRule::create()->
-								optional()->
-								add(self::keyword('as'))->
-								add(self::identifier())
 						)
-				)->
-				setSeparator(self::punctuation());
-		}
-		
-		/**
-		 * @return OqlChainRule
-		**/
-		public static function where()
-		{
-			return self::logicalExpression();
-		}
-		
-		/**
-		 * @return OqlSequenceRule
-		**/
-		public static function groupBy()
-		{
-			return OqlSequenceRule::create()->
-				setRule(self::identifier())->
-				setSeparator(self::punctuation());
-		}
-		
-		/**
-		 * @return OqlSequenceRule
-		**/
-		public static function orderBy()
-		{
-			return OqlSequenceRule::create()->
-				setRule(
-					OqlChainRule::create()->
-						add(self::logicalExpression())->
-						add(
-							OqlAlternateRule::create()->
-								optional()->
-								add(self::keyword('asc'))->
-								add(self::keyword('desc'))
-						)
-				)->
-				setSeparator(self::punctuation());
-		}
-		
-		/**
-		 * @return OqlChainRule
-		**/
-		public static function having()
-		{
-			return self::logicalExpression();
-		}
-		
-		/**
-		 * @return OqlAlternateRule
-		**/
-		public static function limit()
-		{
-			return OqlAlternateRule::create()->
-				add(self::number())->
-				add(self::placeholder());
-		}
-		
-		/**
-		 * @return OqlAlternateRule
-		**/
-		public static function offset()
-		{
-			return OqlAlternateRule::create()->
-				add(self::number())->
-				add(self::placeholder());
-		}
-		
-		/**
-		 * @return OqlChainRule
-		**/
-		private static function arithmeticExpression()
-		{
-			return OqlChainRule::create()->
-				add(self::operator('-'))->
-				add(
-					self::parenthesesRule(
-						OqlSequenceRule::create()->
-							setRule(
-								OqlSequenceRule::create()->
-									setRule(
-										self::arithmeticTerm()
+					)
+			);
+			
+			$this->set(
+				OqlAlternateRule::create()->
+					setId(self::LOGICAL_OPERAND)->
+					add($this->get(self::ARITHMETIC_EXPRESSION))->
+					add($this->get(self::BOOLEAN))->
+					add($this->get(self::STRING))	// FIXME: maybe identifier? (and string for between only) 
+			);
+			
+			$this->set(
+				OqlChainRule::create()->
+					setId(self::LOGICAL_TERM)->
+					add($this->get(self::LOGICAL_OPERAND))->
+					add(
+						OqlAlternateRule::create()->
+							add(
+								OqlChainRule::create()->
+									add($this->comparisonOperator())->
+									add($this->get(self::LOGICAL_OPERAND))
+							)->
+							add(
+								OqlChainRule::create()->
+									add($this->keyword('is'))->
+									add(
+										$this->operator('not')->
+											optional()
 									)->
-									setSeparator(
-										self::operatorList(array('*', '/'))
+									add(
+										OqlAlternateRule::create()->
+											add($this->get(self::NULL))->
+											add($this->get(self::BOOLEAN))
 									)
 							)->
-							setSeparator(
-								self::operatorList(array('+', '-'))
+							add(
+								OqlChainRule::create()->
+									add(
+										$this->operator('not')->
+											optional()
+									)->
+									add($this->keyword('in'))->
+									add(
+										OqlSequenceRule::create()->
+											setRule($this->get(self::CONSTANT))->
+											setSeparator($this->get(self::PUNCTUATION))
+									)
+							)->
+							add(
+								OqlChainRule::create()->
+									add(
+										$this->operator('not')->
+											optional()
+									)->
+									add(
+										OqlAlternateRule::create()->
+											add($this->keyword('like'))->
+											add($this->keyword('ilike'))->
+											add($this->keyword('similar to'))
+									)->
+									add(
+										$this->get(self::PATTERN)
+									)
+							)->
+							add(
+								OqlChainRule::create()->
+									add($this->keyword('between'))->
+									add($this->get(self::LOGICAL_OPERAND))->
+									add($this->operator('and'))->
+									add($this->get(self::LOGICAL_OPERAND))
 							)
 					)
-				);
-		}
-		
-		/**
-		 * @return OqlAlternateRule
-		**/
-		private static function arithmeticTerm()
-		{
-			return OqlAlternateRule::create()->
-				add(self::identifier())->
-				add(self::number());
-		}
-		
-		/**
-		 * @return OqlChainRule
-		**/
-		private static function logicalExpression()
-		{
-			return OqlChainRule::create()->
-				add(
-					self::operator('not')->
-						optional()
-				)->
-				add(
-					self::parenthesesRule(
-						OqlSequenceRule::create()->
-							setRule(
-								OqlSequenceRule::create()->
-									setRule(self::logicalTerm())->
-									setSeparator(self::operator('and'))
-							)->
-							setSeparator(self::operator('or'))
-					)
-				);
-		}
-		
-		/**
-		 * @return OqlChainRule
-		**/
-		private static function logicalTerm()
-		{
-			return OqlChainRule::create()->
-				add(self::logicalOperand())->
-				add(
-					OqlAlternateRule::create()->
-						add(
-							OqlChainRule::create()->
-								add(self::comparisonOperator())->
-								add(self::logicalOperand())
-						)->
-						add(
-							OqlChainRule::create()->
-								add(self::keyword('is'))->
-								add(
-									self::operator('not')->
-										optional()
-								)->
-								add(
-									OqlAlternateRule::create()->
-										add(self::null())->
-										add(self::boolean())
-								)
-						)->
-						add(
-							OqlChainRule::create()->
-								add(
-									self::operator('not')->
-										optional()
-								)->
-								add(self::keyword('in'))->
-								add(
+			);
+			
+			$this->set(
+				OqlChainRule::create()->
+					setId(self::LOGICAL_EXPRESSION)->
+					add(
+						$this->operator('not')->
+							optional()
+					)->
+					add(
+						$this->parenthesesRule(
+							OqlSequenceRule::create()->
+								setRule(
 									OqlSequenceRule::create()->
-										setRule(self::constant())->
-										setSeparator(self::punctuation())
-								)
-						)->
-						add(
-							OqlChainRule::create()->
-								add(
-									self::operator('not')->
-										optional()
+										setRule($this->get(self::LOGICAL_TERM))->
+										setSeparator($this->operator('and'))
 								)->
-								add(
-									OqlAlternateRule::create()->
-										add(self::keyword('like'))->
-										add(self::keyword('ilike'))->
-										add(self::keyword('similar to'))
-								)->
-								add(
-									OqlAlternateRule::create()->
-										add(self::string())->
-										add(self::placeholder())
-								)
-						)->
-						add(
-							OqlChainRule::create()->
-								add(self::keyword('between'))->
-								add(self::logicalOperand())->
-								add(self::operator('and'))->
-								add(self::logicalOperand())
+								setSeparator($this->operator('or'))
 						)
+					)
+			);
+			
+			$this->set(
+				OqlSequenceRule::create()->
+					setId(self::PROPERTIES)->
+					setRule(
+						OqlChainRule::create()->
+							add(
+								OqlAlternateRule::create()->
+									add(
+										OqlChainRule::create()->
+											add(
+												OqlAlternateRule::create()->
+													add($this->keyword('sum'))->
+													add($this->keyword('avg'))->
+													add($this->keyword('min'))->
+													add($this->keyword('max'))
+											)->
+											add($this->get(self::OPEN_PARENTHESES))->
+											add($this->get(self::ARITHMETIC_EXPRESSION))->
+											add($this->get(self::CLOSE_PARENTHESES))
+									)->
+									add(
+										OqlChainRule::create()->
+											add($this->keyword('count'))->
+											add($this->get(self::OPEN_PARENTHESES))->
+											add(
+												$this->keyword('distinct')->
+													optional()
+											)->
+											add($this->get(self::LOGICAL_EXPRESSION))->
+											add($this->get(self::CLOSE_PARENTHESES))
+									)->
+									add(
+										OqlChainRule::create()->
+											add(
+												$this->keyword('distinct')->
+													optional()
+											)->
+											add($this->get(self::LOGICAL_EXPRESSION))
+									)
+							)->
+							add(
+								OqlChainRule::create()->
+									optional()->
+									add($this->keyword('as'))->
+									add($this->get(self::IDENTIFIER))
+							)
+					)->
+					setSeparator($this->get(self::PUNCTUATION))
+			);
+			
+			$this->set(
+				OqlSequenceRule::create()->
+					setId(self::GROUP_BY)->
+					setRule($this->get(self::IDENTIFIER))->
+					setSeparator($this->get(self::PUNCTUATION))
+			);
+			
+			$this->set(
+				OqlSequenceRule::create()->
+					setId(self::ORDER_BY)->
+					setRule(
+						OqlChainRule::create()->
+							add($this->get(self::LOGICAL_EXPRESSION))->
+							add(
+								OqlAlternateRule::create()->
+									optional()->
+									add($this->keyword('asc'))->
+									add($this->keyword('desc'))
+							)
+					)->
+					setSeparator($this->get(self::PUNCTUATION))
+			);
+			
+			$this->set(
+				OqlAlternateRule::create()->
+					setId(self::LIMIT)->
+					add($this->get(self::NUMBER))->
+					add($this->get(self::PLACEHOLDER))
+			);
+			
+			$this->set(
+				OqlChainRule::create()->
+					setId(self::SELECT)->
+					add($this->get(self::PROPERTIES, false))->
+					add($this->keyword('from'))->
+					add($this->get(self::IDENTIFIER))->
+					add(
+						OqlChainRule::create()->
+							optional()->
+							add($this->keyword('where'))->
+							add($this->get(self::WHERE))
+					)->
+					add(
+						OqlChainRule::create()->
+							optional()->
+							add($this->keyword('group by'))->
+							add($this->get(self::GROUP_BY))
+					)->
+					add(
+						OqlChainRule::create()->
+							optional()->
+							add($this->keyword('order by'))->
+							add($this->get(self::ORDER_BY))
+					)->
+					add(
+						OqlChainRule::create()->
+							optional()->
+							add($this->keyword('having'))->
+							add($this->get(self::HAVING))
+					)->
+					add(
+						OqlChainRule::create()->
+							optional()->
+							add($this->keyword('limit'))->
+							add($this->get(self::LIMIT))
+					)->
+					add(
+						OqlChainRule::create()->
+							optional()->
+							add($this->keyword('offset'))->
+							add($this->get(self::OFFSET))
+					)
+			);
+		}
+		
+		/**
+		 * @throws MissingElementException
+		 * @return OqlGrammarRule
+		**/
+		public function get($id, $required = true)
+		{
+			if (isset($this->rules[$id])) {
+				Assert::isTrue($this->rules[$id]->isRequired());
+				
+				if ($required) {
+					return $this->rules[$id];
+				
+				} else {
+					if (!isset($this->optionalRules[$id])) {
+						$this->optionalRules[$id] = clone $this->rules[$id];
+						$this->optionalRules[$id]->optional();
+					}
 					
-				);
+					return $this->optionalRules[$id];
+				}
+			}
+			
+			throw new MissingElementException(
+				'knows nothing about rule '.$id
+			);
+		}
+		
+		public function has($id)
+		{
+			return isset($this->rules[$id]);
+		}
+		
+		/**
+		 * @return OqlGrammar
+		**/
+		private function set(OqlGrammarRule $rule)
+		{
+			Assert::isNotNull($rule->getId());
+			Assert::isTrue($rule->isRequired());
+			
+			$this->rules[$rule->getId()] = $rule;
+			
+			return $this;
 		}
 		
 		/**
 		 * @return OqlAlternateRule
 		**/
-		private static function logicalOperand()
+		private function parenthesesRule(OqlGrammarRule $rule)
 		{
 			return OqlAlternateRule::create()->
-				add(self::arithmeticExpression())->
-				add(self::boolean())->
-				add(self::string());
+				add($rule)->
+				add(
+					OqlChainRule::create()->
+						add($this->get(self::OPEN_PARENTHESES))->
+						add($rule)->
+						add($this->get(self::CLOSE_PARENTHESES))
+				);
 		}
 		
 		/**
@@ -327,76 +406,8 @@
 		**/
 		private static function keyword($keyword)
 		{
-			return OqlTerminalRuleRule::create()->
-				setType(OqlToken::KEYWORD)->
+			return self::terminal(null, OqlTokenType::KEYWORD)->
 				setValue($keyword);
-		}
-		
-		/**
-		 * @return OqlAlternateRule
-		**/
-		private static function constant()
-		{
-			return OqlAlternateRule::create()->
-				add(self::string())->
-				add(self::number())->
-				add(self::boolean())->
-				add(self::placeholder())->
-				add(self::null());
-		}
-		
-		/**
-		 * @return OqlTerminalRule
-		**/
-		private static function identifier()
-		{
-			return OqlTerminalRule::create()->
-				setType(OqlToken::IDENTIFIER);
-		}
-		
-		/**
-		 * @return OqlTerminalRule
-		**/
-		private static function number()
-		{
-			return OqlTerminalRule::create()->
-				setType(OqlToken::NUMBER);
-		}
-		
-		/**
-		 * @return OqlTerminalRule
-		**/
-		private static function boolean()
-		{
-			return OqlTerminalRule::create()->
-				setType(OqlToken::BOOLEAN);
-		}
-		
-		/**
-		 * @return OqlTerminalRule
-		**/
-		private static function null()
-		{
-			return OqlTerminalRule::create()->
-				setType(OqlToken::NULL);
-		}
-		
-		/**
-		 * @return OqlTerminalRule
-		**/
-		private static function string()
-		{
-			return OqlTerminalRule::create()->
-				setType(OqlToken::STRING);
-		}
-		
-		/**
-		 * @return OqlTerminalRule
-		**/
-		private static function placeholder()
-		{
-			return OqlTerminalRule::create()->
-				setType(OqlToken::PLACEHOLDER);
 		}
 		
 		/**
@@ -404,7 +415,7 @@
 		**/
 		private static function comparisonOperator()
 		{
-			return self::operatorList(
+			return self::operator(
 				array('=', '!=', '<', '>', '>=', '<=')
 			);
 		}
@@ -414,53 +425,18 @@
 		**/
 		private static function operator($value)
 		{
-			return OqlTerminalRule::create()->
-				setType(OqlToken::OPERATOR);
+			return self::terminal(null, OqlTokenType::OPERATOR)->
 				setValue($value);
 		}
 		
 		/**
 		 * @return OqlTerminalRule
 		**/
-		private static function operatorList(array $list)
+		private static function terminal($ruleId, $tokenTypeId)
 		{
 			return OqlTerminalRule::create()->
-				setType(OqlToken::OPERATOR);
-				setList($list);
-		}
-		
-		/**
-		 * @return OqlTerminalRule
-		**/
-		private static function punctuation()
-		{
-			return OqlTerminalRule::create()->
-				setType(OqlToken::PUNCTUATION);
-		}
-		
-		/**
-		 * @return OqlTerminalRule
-		**/
-		private static function parentheses($open)
-		{
-			return OqlTerminalRule::create()->
-				setType(OqlToken::PARENTHESES)->
-				setValue($open ? '(' : ')');
-		}
-		
-		/**
-		 * @return OqlAlternateRule
-		**/
-		private static function parenthesesRule(OqlGrammarRule $rule)
-		{
-			return OqlAlternateRule::create()->
-				add($rule)->
-				add(
-					OqlChainRule::create()->
-						add(self::parentheses(true))->
-						add($rule)->
-						add(self::parentheses(false))
-				);
+				setId($ruleId)->
+				setType($tokenTypeId);
 		}
 	}
 ?>
