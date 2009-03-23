@@ -14,7 +14,8 @@
 	**/
 	final class OqlParser
 	{
-		private $grammar = null;
+		private $grammar	= null;
+		private $ruleId		= null;
 		
 		/**
 		 * @return OqlParser
@@ -25,20 +26,34 @@
 		}
 		
 		/**
-		 * @return FIXME
+		 * @return OqlGrammar
 		**/
 		public function getGrammar()
 		{
 			return $this->grammar;
 		}
 		
-		// FIXME: grammar is set of rules?
 		/**
 		 * @return OqlParser
 		**/
-		public function setGrammar($grammar)
+		public function setGrammar(OqlGrammar $grammar)
 		{
 			$this->grammar = $grammar;
+			
+			return $this;
+		}
+		
+		public function getRuleId()
+		{
+			return $this->ruleId;
+		}
+		
+		/**
+		 * @return OqlParser
+		**/
+		public function setRuleId($ruleId)
+		{
+			$this->ruleId = $ruleId;
 			
 			return $this;
 		}
@@ -47,12 +62,13 @@
 		{
 			Assert::isString($string);
 			Assert::isNotNull($this->grammar, 'grammar must be set');
+			Assert::isNotNull($this->ruleId);
 			
-			$this->tokenizer = new OqlTokenizer($string);
+			$rule = $this->grammar->get($this->ruleId);
 			
-			return $this->grammar->getParseStrategy()->parse(
-				$this->grammar,
-				$this->tokenizer
+			return $rule->getParseStrategy()->parse(
+				$rule,
+				new OqlTokenizer($string)
 			);
 		}
 	}
