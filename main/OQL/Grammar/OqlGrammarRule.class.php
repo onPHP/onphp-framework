@@ -12,14 +12,30 @@
 	/**
 	 * @ingroup OQL
 	**/
-	abstract class OqlGrammarRule
+	abstract class OqlGrammarRule implements Identifiable
 	{
 		protected $required	= true;
+		private $id = null;
 		
 		/**
 		 * @return OqlGrammarRuleParseStrategy
 		**/
 		abstract public function getParseStrategy();
+		
+		public function getId()
+		{
+			return $this->id;
+		}
+		
+		/**
+		 * @return OqlGrammarRule
+		**/
+		public function setId($id)
+		{
+			$this->id = $id;
+			
+			return $this;
+		}
 		
 		public function isRequired()
 		{
