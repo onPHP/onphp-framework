@@ -9,6 +9,7 @@
  *                                                                          *
  ****************************************************************************/
 
+	// TODO: raise up rules on demand (not in constructor)
 	/**
 	 * @ingroup OQL
 	**/
