@@ -51,6 +51,11 @@
 			$form = Form::create();
 			
 			foreach ($this->items as $item) {
+				if ($primitive = $item->getPrimitive()) {
+					$form->add($primitive);
+					continue;
+				}
+				
 				if (
 					$item->getValueType()->getId()
 					== ArgumentValueType::NO_VALUE

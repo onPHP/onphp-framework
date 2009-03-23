@@ -17,6 +17,8 @@
 		
 		private $value 		= null;
 		
+		private $primitive 	= null;
+		
 		/**
 		 * @return Argument
 		**/
@@ -50,6 +52,9 @@
 			return $this->type;
 		}
 		
+		/**
+		 * @return Argument
+		**/
 		public function setValueType(ArgumentValueType $valueType)
 		{
 			$this->valueType = $valueType;
@@ -65,6 +70,9 @@
 			return $this->valueType;
 		}
 		
+		/**
+		 * @return Argument
+		**/
 		public function setValue($value)
 		{
 			$this->value = $value;
@@ -75,6 +83,24 @@
 		public function getValue()
 		{
 			return $this->value;
+		}
+		
+		/**
+		 * @return Argument
+		**/
+		public function setPrimitive(BasePrimitive $prm)
+		{
+			$this->primitive = $prm;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return BasePrimitive
+		**/
+		public function getPrimitive()
+		{
+			return $this->primitive;
 		}
 	}
 ?>

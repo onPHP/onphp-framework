@@ -5,6 +5,8 @@
 	* main/Utils/CommandLine/ArgumentBuilder.class.php. Simple builder to hide
 	complex interface.
 
+	* main/Utils/CommandLine/Argument.class.php. Primitive member added.
+
 2009-03-22	Sergey S. Sergeev
 
 	* core/Form/Primitives/PrimitiveImage.class.php: getMaxWidth(),
