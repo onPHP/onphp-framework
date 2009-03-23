@@ -83,7 +83,7 @@
 		{
 			return
 				isset($this->items[$name])
-				&& $this->items[$name]->getValue();
+				&& ($this->items[$name]->getValue() !== null);
 		}
 	}
 ?>
