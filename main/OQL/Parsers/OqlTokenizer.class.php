@@ -10,6 +10,8 @@
  ****************************************************************************/
 /* $Id$ */
 
+	// TODO: reduce token objects count (e.g. store tokens in array and
+	// refill one token object with array values on demand)
 	/**
 	 * @ingroup OQL
 	**/
