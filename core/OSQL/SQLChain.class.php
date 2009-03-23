@@ -34,6 +34,16 @@
 			return count($this->chain);
 		}
 		
+		public function getChain()
+		{
+			return $this->chain;
+		}
+		
+		public function getLogic()
+		{
+			return $this->logic;
+		}
+		
 		/**
 		 * @return SQLChain
 		**/

@@ -12,7 +12,7 @@
 
 	/**
 	 * Image uploads helper.
-	 * 
+	 *
 	 * @ingroup Primitives
 	**/
 	final class PrimitiveImage extends PrimitiveFile
@@ -65,6 +65,11 @@
 			return $this;
 		}
 		
+		public function getMaxWidth()
+		{
+			return $this->maxWidth;
+		}
+		
 		/**
 		 * @return PrimitiveImage
 		**/
@@ -73,6 +78,11 @@
 			$this->minWidth = $min;
 			
 			return $this;
+		}
+		
+		public function getMinWidth()
+		{
+			return $this->minWidth;
 		}
 		
 		/**
@@ -85,6 +95,11 @@
 			return $this;
 		}
 		
+		public function getMaxHeight()
+		{
+			return $this->maxHeight;
+		}
+		
 		/**
 		 * @return PrimitiveImage
 		**/
@@ -93,6 +108,11 @@
 			$this->minHeight = $min;
 			
 			return $this;
+		}
+		
+		public function getMinHeight()
+		{
+			return $this->minHeight;
 		}
 		
 		public function import($scope)
