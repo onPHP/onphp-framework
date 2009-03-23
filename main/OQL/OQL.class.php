@@ -18,49 +18,57 @@
 		/**
 		 * @return OqlSelectQuery
 		**/
-		public static function select($query)
+		public static function select($string)
 		{
-			return OqlSelectParser::create()->parse($query);
+			return self::parse(OqlGrammar::SELECT, $string);
 		}
 		
 		/**
 		 * @return OqlSelectPropertiesClause
 		**/
-		public static function properties($clause)
+		public static function properties($string)
 		{
-			return OqlSelectPropertiesParser::create()->parse($clause);
+			return self::parse(OqlGrammar::PROPERTIES, $string);
 		}
 		
 		/**
 		 * @return OqlWhereClause
 		**/
-		public static function where($clause)
+		public static function where($string)
 		{
-			return OqlWhereParser::create()->parse($clause);
+			return self::parse(OqlGrammar::WHERE, $string);
 		}
 		
 		/**
 		 * @return OqlProjectionClause
 		**/
-		public static function groupBy($clause)
+		public static function groupBy($string)
 		{
-			return OqlGroupByParser::create()->parse($clause);
+			return self::parse(OqlGrammar::GROUP_BY, $string);
 		}
 		
 		/**
 		 * @return OqlOrderByClause
 		**/
-		public static function orderBy($clause)
+		public static function orderBy($string)
 		{
-			return OqlOrderByParser::create()->parse($clause);
+			return self::parse(OqlGrammar::ORDER_BY, $string);
 		}
 		
 		/**
 		 * @return OqlHavingClause
 		**/
-		public static function having($clause)
+		public static function having($string)
 		{
-			return OqlHavingParser::create()->parse($clause);
+			return self::parse(OqlGrammar::HAVING, $string);
+		}
+		
+		private static function parse($ruleId, $string)
+		{
+			return OqlParser::create()->
+				setGrammar(OqlGrammar::me())->
+				setRuleId($ruleId)->
+				parse($string);
 		}
 	}
 ?>
