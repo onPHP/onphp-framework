@@ -16,6 +16,11 @@
 	{
 		protected $required	= true;
 		
+		/**
+		 * @return OqlGrammarRuleParseStrategy
+		**/
+		abstract public function getParseStrategy();
+		
 		public function isRequired()
 		{
 			return $this->required;

@@ -26,6 +26,14 @@
 		}
 		
 		/**
+		 * @return OqlSequenceRuleParseStrategy
+		**/
+		public function getParseStrategy()
+		{
+			return OqlSequenceRuleParseStrategy::me();
+		}
+		
+		/**
 		 * @return OqlGrammarRule
 		**/
 		public function getRule()

@@ -21,5 +21,13 @@
 		{
 			return new self;
 		}
+		
+		/**
+		 * @return OqlChainRuleParseStrategy
+		**/
+		public function getParseStrategy()
+		{
+			return OqlChainRuleParseStrategy::me();
+		}
 	}
 ?>

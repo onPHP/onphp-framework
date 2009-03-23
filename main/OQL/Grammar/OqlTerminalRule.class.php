@@ -16,7 +16,6 @@
 	{
 		protected $type		= null;
 		protected $value	= null;
-		protected $list		= null;
 		
 		/**
 		 * @return OqlTerminalRule
@@ -24,6 +23,14 @@
 		public static function create()
 		{
 			return new self;
+		}
+		
+		/**
+		 * @return OqlTerminalRuleParseStrategy
+		**/
+		public function getParseStrategy()
+		{
+			return OqlTerminalRuleParseStrategy::me();
 		}
 		
 		public function getType()
@@ -52,21 +59,6 @@
 		public function setValue($value)
 		{
 			$this->value = $value;
-			
-			return $this;
-		}
-		
-		public function getList()
-		{
-			return $this->list;
-		}
-		
-		/**
-		 * @return OqlTerminalRule
-		**/
-		public function setList(array $list)
-		{
-			$this->list = $list;
 			
 			return $this;
 		}
