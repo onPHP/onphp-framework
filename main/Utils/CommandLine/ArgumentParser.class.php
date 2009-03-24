@@ -64,7 +64,7 @@
 			
 			$this->form->import($this->result);
 			
-			if ($errors = $form->getErrors())
+			if ($errors = $this->form->getErrors())
 				throw new WrongArgumentException(
 					"\nArguments wrong:\n"
 					.print_r($errors, true)
