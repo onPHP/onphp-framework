@@ -11,7 +11,7 @@
 
 	final class ArgumentParser extends Singleton
 	{
-		private $collection = null;
+		private $form = null;
 		private $result = null;
 		
 		/**
@@ -25,9 +25,9 @@
 		/**
 		 * @return ArgumentParser
 		**/
-		public function setCollection(ArgumentCollection $collection)
+		public function setForm(Form $form)
 		{
-			$this->collection = $collection;
+			$this->form = $form;
 			
 			return $this;
 		}
@@ -37,15 +37,20 @@
 		**/
 		public function parse()
 		{
-			Assert::isNotNull($this->collection);
+			Assert::isNotNull($this->form);
 			
-			$long = $this->collection->getLong();
+			$long = FormToArgumentsConverter::getLong($this->form);
 			
 			// NOTE: stupid php, see man about long params
 			if (empty($long))
-				$this->result = getopt($this->collection->getShort());
+				$this->result = getopt(
+					FormToArgumentsConverter::getShort($this->form)
+				);
 			else
-				$this->result = getopt($this->collection->getShort(), $long);
+				$this->result = getopt(
+					FormToArgumentsConverter::getShort($this->form),
+					$long
+				);
 			
 			return $this;
 		}
@@ -57,18 +62,13 @@
 		{
 			Assert::isNotNull($this->result);
 			
-			$form = $this->collection->getForm();
-			
-			$form->import($this->result);
+			$this->form->import($this->result);
 			
 			if ($errors = $form->getErrors())
 				throw new WrongArgumentException(
 					"\nArguments wrong:\n"
 					.print_r($errors, true)
 				);
-			
-			foreach ($this->collection->getList() as $item)
-				$item->setValue($form->getValue($item->getName()));
 			
 			return $this;
 		}

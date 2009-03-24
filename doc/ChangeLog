@@ -5,6 +5,9 @@
 	* core/Form/Primitives/PrimitiveNoValue.class.php. Special primitive
 	w/o value.
 
+	* main/Utils/CommandLine/ArgumentParser.class.php. Refactor. Drop special
+	collection and use only native form.
+
 2009-03-24	Sergey S. Sergeev
 
 	* core/Form/Primitives/PrimitiveDate.class.php: fixed import of empty values.
