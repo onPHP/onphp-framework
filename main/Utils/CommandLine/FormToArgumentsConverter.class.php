@@ -15,7 +15,7 @@
 		{
 			$short = null;
 			
-			foreach ($form->getPrimitiveList() as $primitive)
+			foreach ($form->getList() as $primitive)
 				if (strlen($primitive->getName()) == 1)
 					$short .=
 						$primitive->getName()
@@ -28,7 +28,7 @@
 		{
 			$long = array();
 			
-			foreach ($form->getPrimitiveList() as $primitive)
+			foreach ($form->getList() as $primitive)
 				if (strlen($primitive->getName()) > 1)
 					$long[] =
 						$primitive->getName()
