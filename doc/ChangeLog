@@ -1,5 +1,10 @@
 # $Id$
 
+2009-03-24	Denis M. Gabaidulin
+
+	* main/Utils/ArrayUtils.class.php: isEmpty(). Check for assoc
+	single dimension array.
+
 2009-03-23	Denis M. Gabaidulin
 
 	* main/Utils/CommandLine/ArgumentBuilder.class.php. Simple builder to hide
