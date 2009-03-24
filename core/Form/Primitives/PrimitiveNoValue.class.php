@@ -24,13 +24,6 @@
 			return $this;
 		}
 		
-		public function setDefaultValue($default)
-		{
-			Assert::isUnreachable('No default value!');
-			
-			return $this;
-		}
-		
 		public function setRawValue($raw)
 		{
 			Assert::isUnreachable('No raw value!');
@@ -45,7 +38,7 @@
 			return $this;
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (
 				key_exists($this->name, $scope)
