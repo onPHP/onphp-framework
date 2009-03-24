@@ -1,5 +1,10 @@
 # $Id$
 
+2009-03-25	Denis M. Gabaidulin
+
+	* core/Form/Primitives/PrimitiveNoValue.class.php. Special primitive
+	w/o value.
+
 2009-03-24	Sergey S. Sergeev
 
 	* core/Form/Primitives/PrimitiveDate.class.php: fixed import of empty values.
