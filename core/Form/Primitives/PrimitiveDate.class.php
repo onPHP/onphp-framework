@@ -91,6 +91,8 @@
 					$this->value = $ts;
 					return true;
 				}
+			} elseif ($this->isEmpty($scope)) {
+				return null;
 			}
 			
 			return false;
@@ -98,7 +100,10 @@
 
 		public function isEmpty($scope)
 		{
-			if ($this->getState()->isFalse()) {
+			if (
+				$this->getState()->isFalse()
+				|| $this->getState()->isNull()
+			) {
 				return empty($scope[$this->name][self::DAY])
 					&& empty($scope[$this->name][self::MONTH])
 					&& empty($scope[$this->name][self::YEAR]);

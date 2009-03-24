@@ -1,5 +1,11 @@
 # $Id$
 
+2009-03-24	Sergey S. Sergeev
+
+	* core/Form/Primitives/PrimitiveDate.class.php: fixed import of empty values.
+
+	* core/FormPrimitivesDateTest.class.php: useful tests added.
+
 2009-03-24	Denis M. Gabaidulin
 
 	* main/Utils/ArrayUtils.class.php: isEmpty(). Check for assoc
