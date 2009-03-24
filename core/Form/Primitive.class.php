@@ -276,6 +276,14 @@
 		}
 		
 		/**
+		 * @return PrimitiveNoValue
+		**/
+		public static function noValue($name)
+		{
+			return new PrimitiveNoValue($name);
+		}
+		
+		/**
 		 * @return PrimitiveHttpUrl
 		**/
 		public static function httpUrl($name)
