@@ -33,6 +33,14 @@
 		}
 		
 		/**
+		 * @return Form
+		**/
+		public function getForm()
+		{
+			return $this->form;
+		}
+		
+		/**
 		 * @return ArgumentParser
 		**/
 		public function parse()
