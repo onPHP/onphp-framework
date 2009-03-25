@@ -121,6 +121,15 @@
 			return $result;
 		}
 		
+		public static function isEmpty(array $array)
+		{
+			foreach ($array as $key => $value)
+				if ($value !== null)
+					return false;
+			
+			return true;
+		}
+		
 		/**
 		 * in: array(1, 2, 3, 4)
 		 * out: array(1 => array(2 => array(3 => 4)))

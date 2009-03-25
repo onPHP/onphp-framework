@@ -3,19 +3,80 @@
 	
 	final class FormPrimitivesDateTest extends TestCase
 	{
+		const VALID_DAY		= '22';
+		const VALID_MONTH	= '03';
+		const VALID_YEAR	= '2009';
+		
+		const INVALID_DAY	= '33';
+		const INVALID_MONTH	= '13';
+		const INVALID_YEAR	= '2009';
+		
 		public function testValidScope()
 		{
 			$data =
 				array(
-					PrimitiveDate::DAY => '22',
-					PrimitiveDate::MONTH => '03',
-					PrimitiveDate::YEAR => '2009',
+					PrimitiveDate::DAY => self::VALID_DAY,
+					PrimitiveDate::MONTH => self::VALID_MONTH,
+					PrimitiveDate::YEAR => self::VALID_YEAR,
 				);
 			
 			$scope = array(
 				'test' => $data
 			);
 			
+			$this->processValidScopeBy($scope, $data);
+			
+			$data =
+				self::VALID_YEAR
+				."-".self::VALID_MONTH
+				.'-'.self::VALID_DAY;
+			
+			$scope = array(
+				'test' => $data
+			);
+			
+			$this->processValidScopeBy($scope, $data);
+		}
+		
+		public function testInvalidScope()
+		{
+			$data =
+				array(
+					PrimitiveDate::DAY => self::INVALID_DAY,
+					PrimitiveDate::MONTH => self::INVALID_MONTH,
+					PrimitiveDate::YEAR => self::INVALID_YEAR,
+				);
+			
+			$scope = array(
+				'test' => $data
+			);
+			
+			$this->processInvalidBy($scope, $data);
+			
+			$data =
+				self::INVALID_YEAR
+				."-".self::INVALID_MONTH
+				.'-'.self::INVALID_DAY;
+			
+			$scope = array(
+				'test' => $data
+			);
+			
+			$this->processInvalidBy($scope, $data);
+		}
+		
+		public function testEmptyScope()
+		{
+			$this->processEmptyScope(false);
+		}
+		
+		public function testEmptyScopeWithRequired()
+		{
+			$this->processEmptyScope(true);
+		}
+			
+		protected function processValidScopeBy($scope, $data)
+		{
 			$form =
 				Form::create()->add(
 					Primitive::date('test')
@@ -24,17 +85,17 @@
 			
 			$this->assertEquals(
 				$form->getValue('test')->getDay(),
-				22
+				(int) self::VALID_DAY
 			);
 			
 			$this->assertEquals(
 				$form->getValue('test')->getMonth(),
-				3
+				(int) self::VALID_MONTH
 			);
 			
 			$this->assertEquals(
 				$form->getValue('test')->getYear(),
-				2009
+				(int) self::VALID_YEAR
 			);
 			
 			$this->assertEquals(
@@ -53,19 +114,8 @@
 			);
 		}
 		
-		public function testInvalidScope()
+		protected function processInvalidBy($scope, $data)
 		{
-			$data =
-				array(
-					PrimitiveDate::DAY => '22',
-					PrimitiveDate::MONTH => '14',
-					PrimitiveDate::YEAR => '2009',
-				);
-			
-			$scope = array(
-				'test' => $data
-			);
-			
 			$form =
 				Form::create()->add(
 					Primitive::date('test')
@@ -95,7 +145,7 @@
 			);
 		}
 		
-		public function testEmptyScope()
+		protected function processEmptyScope($required)
 		{
 			$data =
 				array(
@@ -108,10 +158,13 @@
 				'test' => $data
 			);
 			
+			$primitive = Primitive::date('test');
+			if ($required)
+				$primitive->setRequired(true);
+			
 			$form =
-				Form::create()->add(
-					Primitive::date('test')
-				)->
+				Form::create()->
+				add($primitive)->
 				import($scope);
 			
 			$this->assertEquals(
@@ -119,47 +172,19 @@
 				null
 			);
 			
-			$this->assertEquals(
-				$form->get('test')->isImported(),
-				true
-			);
-			
-			$this->assertEquals(
-				$form->getErrors(),
-				array()
-			);
-			
-			$this->assertEquals(
-				$form->getRawValue('test'),
-				$data
-			);
-		}
-		
-		public function testEmptyScopeWithRequired()
-		{
-			$data =
-				array(
-					PrimitiveDate::DAY => '',
-					PrimitiveDate::MONTH => '',
-					PrimitiveDate::YEAR => '',
+			if ($required)
+				$this->assertEquals(
+					$form->getErrors(),
+					array(
+						'test' => Form::MISSING,
+					)
+				);
+			else
+				$this->assertEquals(
+					$form->getErrors(),
+					array()
 				);
 			
-			$scope = array(
-				'test' => $data
-			);
-			
-			$form =
-				Form::create()->add(
-					Primitive::date('test')->
-					required()
-				)->
-				import($scope);
-			
-			$this->assertEquals(
-				$form->getValue('test'),
-				null
-			);
-			
 			$this->assertEquals(
 				$form->get('test')->isImported(),
 				true
@@ -168,13 +193,6 @@
 			$this->assertEquals(
 				$form->getRawValue('test'),
 				$data
-			);
-			
-			$this->assertEquals(
-				$form->getErrors(),
-				array(
-					'test' => Form::MISSING,
-				)
 			);
 		}
 	}
