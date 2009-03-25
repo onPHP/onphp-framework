@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Sveta A. Smirnova                          *
+ *   Copyright (C) 2004-2009 by Sveta A. Smirnova                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -36,19 +36,34 @@
 				return $wrapper;
 			}
 			
-			// for Singleton::getInstance('class_name', $arg1, ...) calling
-			if (2 < func_num_args()) {
-				$args = func_get_args();
-				array_shift($args);
+			if (!isset($instances[$class])) {
+				// for Singleton::getInstance('class_name', $arg1, ...) calling
+				if (2 < func_num_args()) {
+					$args = func_get_args();
+					array_shift($args);
+					
+					// can't call protected constructor through reflection
+					eval(
+						'$object = new '.$class
+						.'($args['.implode('],$args[', array_keys($args)).']);'
+					);
+				
+				} else {
+					$object =
+						$args
+							? new $class($args)
+							: new $class();
+				}
+				
+				Assert::isTrue(
+					$object instanceof Singleton,
+					"Class '{$class}' is something not a Singleton's child"
+				);
+				
+				$instances[$class] = $object;
 			}
 			
-			if (!isset($instances[$class]))
-				return $instances[$class] =
-					$args
-						? new $class($args)
-						: new $class();
-			else
-				return $instances[$class];
+			return $instances[$class];
 		}
 		
 		final private function __clone() {/* do not clone me */}
