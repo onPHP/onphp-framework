@@ -1,5 +1,10 @@
 # $Id$
 
+2009-03-25	Vladlen Y. Koshelev
+
+	* main/Application/ApplicationUrl.class.php: cleanHref() added for building
+	urls using current navigation schema but without navigation scope.
+
 2009-03-25	Denis M. Gabaidulin
 
 	* core/Form/Primitives/PrimitiveNoValue.class.php. Special primitive

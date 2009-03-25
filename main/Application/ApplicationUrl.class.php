@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007-2009 by Ivan Y. Khvostishkov                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -222,18 +222,23 @@
 		{
 			Assert::isArray($scope);
 			
-			$path = null;
-			
 			// href scope may override navigation scope
 			$actualScope = ArrayUtils::mergeRecursiveUnique(
 				$this->navigationScope, $scope
 			);
 			
-			if ($this->navigationSchema) {
-				$path = $this->navigationSchema->extractPath($actualScope);
-			}
+			return $this->cleanHref($actualScope, $absolute);
+		}
+		
+		public function cleanHref($scope, $absolute = null)
+		{
+			Assert::isArray($scope);
 			
-			return $this->href($path.'?'.$this->buildQuery($actualScope), $absolute);
+			$path = $this->navigationSchema
+				? $this->navigationSchema->extractPath($scope)
+				: null;
+			
+			return $this->href($path.'?'.$this->buildQuery($scope), $absolute);
 		}
 		
 		public function baseHref($absolute = null)
