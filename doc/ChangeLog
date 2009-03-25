@@ -1,5 +1,10 @@
 # $Id$
 
+2009-03-26	Vladlen Y. Koshelev
+
+	* core/Base/Singleton.class.php: instantiation of classes with two or more
+	constructor arguments fixed, related tests added.
+
 2009-03-25	Denis M. Gabaidulin
 
 	* core/Form/Primitives/PrimitiveNoValue.class.php. Special primitive
