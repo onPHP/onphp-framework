@@ -1,6 +1,13 @@
 # $Id$
 
-2009-03-27 Sergey S. Sergeev
+2009-03-27	Ivan Y. Khvostishkov
+
+	* main/EntityProto/Builders/DirectoryToObjectBinder.class.php,
+	main/EntityProto/Builders/ObjectToDirectoryBinder.class.php: simple
+	directory service helpers based on a local filesystem. Can be used for
+	easy object configuration management, just like an LDAP.
+
+2009-03-27	Sergey S. Sergeev
 
 	* main/UnifiedContainer/UnifiedContainerWorker.class.php: drop limit and
 	offset in count query fixed.
