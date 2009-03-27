@@ -1,5 +1,9 @@
 # $Id$
 
+2009-03-26	Denis M. Gabaidulin
+
+	* core/DB/MySql dialects classes: quote integers values too.
+
 2009-03-26	Vladlen Y. Koshelev
 
 	* core/Base/Singleton.class.php: instantiation of classes with two or more
