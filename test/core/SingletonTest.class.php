@@ -66,6 +66,13 @@
 		
 		public function testArguments()
 		{
+			// cleaning up
+			try {
+				Singleton::dropInstance(self::SINGLE_CLASS_NAME);
+			} catch (MissingElementException $e) {
+				// that's ok for the first pass
+			}
+			
 			try {
 				Singleton::getInstance(self::SINGLE_CLASS_NAME);
 				$this->fail();
