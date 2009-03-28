@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2009 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -259,6 +259,16 @@
 			return $this->addErrorLabel($primitiveName, $customMark, $label);
 		}
 		
+		public function getWrongLabel($primitiveName)
+		{
+			return $this->getErrorLabel($primitiveName, Form::WRONG);
+		}
+		
+		public function getMissingLabel($primitiveName)
+		{
+			return $this->getErrorLabel($primitiveName, Form::MISSING);
+		}
+		
 		/**
 		 * @return Form
 		**/
@@ -444,6 +454,17 @@
 			$this->labels[$name][$errorType] = $label;
 			
 			return $this;
+		}
+		
+		private function getErrorLabel($name, $errorType)
+		{
+			// checks for primitive's existence
+			$this->get($name);
+			
+			if (isset($this->labels[$name][$errorType]))
+				return $this->labels[$name][$errorType];
+			
+			return null;
 		}
 	}
 ?>

@@ -1,6 +1,11 @@
 # $Id$
 
-2009-03-27 Sergey S. Sergeev
+2009-03-28	Evgeniy N. Sokolov
+
+	* core/Form/Form.class.php: getWrongLabel() and getMissingLabel()
+	added.
+
+2009-03-27	Sergey S. Sergeev
 
 	* main/UnifiedContainer/UnifiedContainerWorker.class.php: drop limit and
 	offset in count query fixed.
