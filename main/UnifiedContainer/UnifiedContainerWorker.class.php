@@ -73,7 +73,7 @@
 			return $query->
 				dropFields()->
 				dropOrder()->
-				limit(null, null)->
+				dropLimit()->
 				get(
 					$countFunction->setAlias('count')
 				);
