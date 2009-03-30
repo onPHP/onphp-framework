@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Sveta A. Smirnova                          *
+ *   Copyright (C) 2004-2009 by Sveta A. Smirnova                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -27,31 +27,47 @@
 			$class, $args = null /* , ... */
 		)
 		{
-			// for Singleton::getInstance('class_name', $arg1, ...) calling
-			if (2 < func_num_args()) {
-				$args = func_get_args();
-				array_shift($args);
-			}
-			
 			if (!isset(self::$instances[$class])) {
-				$object =
-					$args
-						? new $class($args)
-						: new $class();
+				// for Singleton::getInstance('class_name', $arg1, ...) calling
+				if (2 < func_num_args()) {
+					$args = func_get_args();
+					array_shift($args);
+					
+					// can't call protected constructor through reflection
+					eval(
+						'$object = new '.$class
+						.'($args['.implode('],$args[', array_keys($args)).']);'
+					);
+				
+				} else {
+					$object =
+						$args
+							? new $class($args)
+							: new $class();
+				}
 				
 				Assert::isTrue(
 					$object instanceof Singleton,
 					"Class '{$class}' is something not a Singleton's child"
 				);
-
-				return self::$instances[$class] = $object;
-			} else
-				return self::$instances[$class];
+				
+				self::$instances[$class] = $object;
+			}
+			
+			return self::$instances[$class];
 		}
 		
 		final public static function getAllInstances()
 		{
 			return self::$instances;
+		}
+		
+		/* void */ final public static function dropInstance($class)
+		{
+			if (!isset(self::$instances[$class]))
+				throw new MissingElementException('knows nothing about '.$class);
+			
+			unset(self::$instances[$class]);
 		}
 		
 		final private function __clone() {/* do not clone me */}

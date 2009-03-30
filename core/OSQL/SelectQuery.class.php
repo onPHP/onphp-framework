@@ -474,6 +474,15 @@
 			return $this;
 		}
 		
+		/**
+		 * @return SelectQuery
+		**/
+		public function dropLimit()
+		{
+			$this->limit = $this->offset = null;
+			return $this;
+		}
+		
 		private function getLastTable($table = null)
 		{
 			if (!$table && ($last = $this->joiner->getLastTable()))

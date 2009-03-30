@@ -1,5 +1,29 @@
 # $Id$
 
+2009-03-28	Evgeniy N. Sokolov
+
+	* core/Form/Form.class.php: getWrongLabel() and getMissingLabel()
+	added.
+
+2009-03-27	Sergey S. Sergeev
+
+	* main/UnifiedContainer/UnifiedContainerWorker.class.php: drop limit and
+	offset in count query fixed.
+
+2009-03-26	Denis M. Gabaidulin
+
+	* core/DB/MySql dialects classes: quote integers values too.	
+
+2009-03-26	Vladlen Y. Koshelev
+
+	* core/Base/Singleton.class.php: instantiation of classes with two or more
+	constructor arguments fixed, related tests added.
+
+2009-03-25	Vladlen Y. Koshelev
+
+	* main/Application/ApplicationUrl.class.php: cleanHref() added for building
+	urls using current navigation schema but without navigation scope.
+
 2009-03-25	Denis M. Gabaidulin
 
 	* core/Form/Primitives/PrimitiveNoValue.class.php. Special primitive

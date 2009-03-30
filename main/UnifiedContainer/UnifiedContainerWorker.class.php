@@ -12,7 +12,7 @@
 
 	/**
 	 * @see UnifiedContainer
-	 * 
+	 *
 	 * @ingroup Containers
 	**/
 	abstract class UnifiedContainerWorker
@@ -73,6 +73,7 @@
 			return $query->
 				dropFields()->
 				dropOrder()->
+				dropLimit()->
 				get(
 					$countFunction->setAlias('count')
 				);
