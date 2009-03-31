@@ -19,8 +19,6 @@
 		protected $parent	= null;
 		protected $childs	= array();
 		
-		protected $token	= null;
-		
 		/**
 		 * @return OqlSyntaxNode
 		**/
@@ -150,24 +148,6 @@
 		{
 			foreach ($this->childs as $child)
 				$child->dropParent();
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlToken
-		**/
-		public function getToken()
-		{
-			return $this->token;
-		}
-		
-		/**
-		 * @return OqlSyntaxNode
-		**/
-		public function setToken(OqlToken $token)
-		{
-			$this->token = $token;
 			
 			return $this;
 		}
