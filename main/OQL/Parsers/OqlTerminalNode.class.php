@@ -33,7 +33,7 @@
 		}
 		
 		/**
-		 * @return OqlSyntaxNode
+		 * @return OqlTerminalNode
 		**/
 		public function setToken(OqlToken $token)
 		{
