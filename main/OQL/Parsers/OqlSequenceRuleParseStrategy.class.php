@@ -12,22 +12,30 @@
 	/**
 	 * @ingroup OQL
 	**/
-	class OqlChainRule extends OqlListedRule
+	class OqlSequenceRuleParseStrategy extends OqlGrammarRuleParseStrategy
 	{
 		/**
-		 * @return OqlChainRule
+		 * @return OqlSequenceRuleParseStrategy
 		**/
-		public static function create()
+		public static function me()
 		{
-			return new self;
+			return Singleton::getInstance(__CLASS__);
 		}
 		
-		/**
-		 * @return OqlChainRuleParseStrategy
-		**/
-		public function getParseStrategy()
+		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
-			return OqlChainRuleParseStrategy::me();
+			Assert::isInstance($rule, 'OqlSequenceRule');
+			
+			$list = array();
+			
+			foreach ($rule->getList() as $ruleItem) {
+				$list[] =
+					$ruleItem->getParseStrategy()->parse($ruleItem, $tokenizer);
+			}
+			
+			// FIXME: return syntax tree node
+			
+			return $list;
 		}
 	}
 ?>
