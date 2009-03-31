@@ -29,8 +29,11 @@
 		{
 			Assert::isTrue($rule instanceof OqlGrammarRuleWrapper);
 			
-			return $rule->getRule()->getParseStrategy()->
-				parse($rule->getRule(), $tokenizer);
+			$parseStrategy = $rule->getRule()->getParseStrategy();
+			if ($rule->isRequired())
+				return $parseStrategy->parse($rule->getRule(), $tokenizer);
+			else
+				return $parseStrategy->getNode($rule->getRule(), $tokenizer);
 		}
 	}
 ?>
