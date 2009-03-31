@@ -41,5 +41,13 @@
 			
 			return $this;
 		}
+		
+		public function toString()
+		{
+			if ($this->token)
+				return $this->token->getValue();
+			
+			return null;
+		}
 	}
 ?>

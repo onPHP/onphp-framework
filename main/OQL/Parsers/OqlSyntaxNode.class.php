@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup OQL
 	**/
-	class OqlSyntaxNode extends IdentifiableObject
+	abstract class OqlSyntaxNode extends IdentifiableObject implements Stringable
 	{
 		private static $globalId = 0;
 		

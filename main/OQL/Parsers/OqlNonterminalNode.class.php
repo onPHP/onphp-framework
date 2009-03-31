@@ -120,5 +120,22 @@
 			
 			return $this;
 		}
+		
+		public function toString()
+		{
+			if ($this->childs) {
+				$result = '[';
+				
+				foreach ($this->childs as $child) {
+					$result .= $child->toString();
+				}
+				
+				$result .= ']';
+				
+				return $result;
+			}
+			
+			return null;
+		}
 	}
 ?>
