@@ -23,7 +23,7 @@
 		}
 		
 		/**
-		 * @return OqlSyntaxNode
+		 * @return OqlNonterminalNode
 		**/
 		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
@@ -39,7 +39,7 @@
 					$node = $ruleStrategy->getNode($rule->getRule(), $tokenizer)
 				) {
 					if ($parentNode === null)
-						$parentNode = OqlSyntaxNode::create();
+						$parentNode = OqlNonterminalNode::create();
 					
 					$parentNode->addChild($node);
 				}
