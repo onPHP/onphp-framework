@@ -67,7 +67,7 @@
 			
 			$this->
 				set(
-					OqlAlternateRule::create()->
+					OqlAlternationRule::create()->
 						setId(self::CONSTANT)->
 						add($this->get(self::STRING))->
 						add($this->get(self::NUMBER))->
@@ -76,7 +76,7 @@
 						add($this->get(self::NULL))
 				)->
 				set(
-					OqlAlternateRule::create()->
+					OqlAlternationRule::create()->
 						setId(self::PATTERN)->
 						add($this->get(self::STRING))->
 						add($this->get(self::PLACEHOLDER))
@@ -91,13 +91,10 @@
 				);
 			
 			$this->set(
-				$this->terminal(
-					self::ARITHMETIC_OPERAND,
-					array(
-						OqlTokenType::IDENTIFIER,
-						OqlTokenType::NUMBER
-					)
-				)
+				OqlAlternationRule::create()->
+					setId(self::ARITHMETIC_OPERAND)->
+					add($this->get(self::IDENTIFIER))->
+					add($this->get(self::NUMBER))
 			);
 			
 			$this->set(
@@ -127,7 +124,7 @@
 			);
 			
 			$this->set(
-				OqlAlternateRule::create()->
+				OqlAlternationRule::create()->
 					setId(self::LOGICAL_OPERAND)->
 					add($this->get(self::ARITHMETIC_EXPRESSION))->
 					add($this->get(self::BOOLEAN))->
@@ -139,7 +136,7 @@
 					setId(self::LOGICAL_TERM)->
 					add($this->get(self::LOGICAL_OPERAND))->
 					add(
-						OqlAlternateRule::create()->
+						OqlAlternationRule::create()->
 							add(
 								OqlChainRule::create()->
 									add($this->comparisonOperator())->
@@ -153,7 +150,7 @@
 											optional()
 									)->
 									add(
-										OqlAlternateRule::create()->
+										OqlAlternationRule::create()->
 											add($this->get(self::NULL))->
 											add($this->get(self::BOOLEAN))
 									)
@@ -178,7 +175,7 @@
 											optional()
 									)->
 									add(
-										OqlAlternateRule::create()->
+										OqlAlternationRule::create()->
 											add($this->keyword('like'))->
 											add($this->keyword('ilike'))->
 											add($this->keyword('similar to'))
@@ -223,11 +220,11 @@
 					setRule(
 						OqlChainRule::create()->
 							add(
-								OqlAlternateRule::create()->
+								OqlAlternationRule::create()->
 									add(
 										OqlChainRule::create()->
 											add(
-												OqlAlternateRule::create()->
+												OqlAlternationRule::create()->
 													add($this->keyword('sum'))->
 													add($this->keyword('avg'))->
 													add($this->keyword('min'))->
@@ -281,7 +278,7 @@
 						OqlChainRule::create()->
 							add($this->get(self::LOGICAL_EXPRESSION))->
 							add(
-								OqlAlternateRule::create()->
+								OqlAlternationRule::create()->
 									optional()->
 									add($this->keyword('asc'))->
 									add($this->keyword('desc'))
@@ -291,7 +288,7 @@
 			);
 			
 			$this->set(
-				OqlAlternateRule::create()->
+				OqlAlternationRule::create()->
 					setId(self::LIMIT)->
 					add($this->get(self::NUMBER))->
 					add($this->get(self::PLACEHOLDER))
@@ -388,11 +385,11 @@
 		}
 		
 		/**
-		 * @return OqlAlternateRule
+		 * @return OqlAlternationRule
 		**/
 		private function parenthesesRule(OqlGrammarRule $rule)
 		{
-			return OqlAlternateRule::create()->
+			return OqlAlternationRule::create()->
 				add($rule)->
 				add(
 					OqlChainRule::create()->
