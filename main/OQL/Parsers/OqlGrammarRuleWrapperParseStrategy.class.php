@@ -29,7 +29,8 @@
 		{
 			Assert::isTrue($rule instanceof OqlGrammarRuleWrapper);
 			
-			return $rule->getRule()->parse($rule, $tokenizer);
+			return $rule->getRule()->getParseStrategy()->
+				parse($rule->getRule(), $tokenizer);
 		}
 	}
 ?>
