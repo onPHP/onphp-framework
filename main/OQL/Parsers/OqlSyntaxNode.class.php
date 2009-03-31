@@ -16,8 +16,7 @@
 	{
 		private static $globalId = 0;
 		
-		protected $parent	= null;
-		protected $childs	= array();
+		protected $parent = null;
 		
 		/**
 		 * @return OqlSyntaxNode
@@ -30,13 +29,6 @@
 		public function __construct()
 		{
 			$this->id = self::$globalId++;
-		}
-		
-		public function __destruct()
-		{
-			$this->dropChilds();
-			if (isset($this->parent))
-				$this->parent->dropChild($this);
 		}
 		
 		final public function setId($id)
@@ -57,14 +49,7 @@
 		**/
 		public function setParent(OqlSyntaxNode $parent)
 		{
-			if ($this->parent !== $parent) {
-				if ($this->parent)
-					$this->parent->dropChild($this);
-				
-				$this->parent = $parent;
-				
-				$this->parent->addChild($this);
-			}
+			$this->parent = $parent;
 			
 			return $this;
 		}
@@ -74,80 +59,7 @@
 		**/
 		public function dropParent()
 		{
-			if ($this->parent) {
-				$this->parent->dropChild($this);
-				$this->parent = null;
-			}
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlSyntaxNode
-		**/
-		public function hasChild(OqlSyntaxNode $child)
-		{
-			return isset($this->childs[$child->getId()]);
-		}
-		
-		/**
-		 * @return OqlSyntaxNode
-		**/
-		public function getChild(OqlSyntaxNode $child)
-		{
-			return $this->hasChild($child)
-				? $this->childs[$child->getId()]
-				: null;
-		}
-		
-		/**
-		 * @return OqlSyntaxNode
-		**/
-		public function addChild(OqlSyntaxNode $child)
-		{
-			$this->childs[$child->getId()] = $child;
-			$child->parent = $this;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlSyntaxNode
-		**/
-		public function dropChild(OqlSyntaxNode $child)
-		{
-			if ($this->hasChild($child)) {
-				unset($this->childs[$child->getId()]);
-				$child->parent = null;
-			}
-			
-			return $this;
-		}
-		
-		public function getChilds()
-		{
-			return $this->childs;
-		}
-		
-		/**
-		 * @return OqlSyntaxNode
-		**/
-		public function setChilds(array $childs)
-		{
-			$this->dropChilds();
-			foreach ($childs as $child)
-				$this->addChild($child);
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlSyntaxNode
-		**/
-		public function dropChilds()
-		{
-			foreach ($this->childs as $child)
-				$child->dropParent();
+			$this->parent = null;
 			
 			return $this;
 		}
