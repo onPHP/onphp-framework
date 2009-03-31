@@ -14,8 +14,8 @@
 	**/
 	abstract class OqlGrammarRule implements Identifiable
 	{
+		protected $id		= null;
 		protected $required	= true;
-		private $id = null;
 		
 		/**
 		 * @return OqlGrammarRuleParseStrategy
