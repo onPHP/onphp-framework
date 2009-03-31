@@ -43,8 +43,8 @@
 		{
 			throw new SyntaxErrorException(
 				$message,
-				$this->tokenizer->getLine(),
-				$this->tokenizer->getPosition()
+				$tokenizer->getLine(),
+				$tokenizer->getPosition()
 			);
 		}
 	}
