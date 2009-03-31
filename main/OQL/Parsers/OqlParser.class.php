@@ -58,6 +58,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return OqlSyntaxNode
+		**/
 		public function parse($string)
 		{
 			Assert::isString($string);

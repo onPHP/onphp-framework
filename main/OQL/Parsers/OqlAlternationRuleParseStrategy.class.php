@@ -22,6 +22,9 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 		
+		/**
+		 * @return OqlSyntaxNode
+		**/
 		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
 			Assert::isTrue($rule instanceof OqlAlternationRule);

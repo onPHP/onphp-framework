@@ -17,7 +17,7 @@
 	{
 		/**
 		 * @throws SyntaxErrorException
-		 * @return FIXME: syntax tree node
+		 * @return OqlSyntaxNode
 		**/
 		abstract public function parse(
 			OqlGrammarRule $rule,
@@ -25,7 +25,7 @@
 		);
 		
 		/**
-		 * @return FIXME: syntax tree node
+		 * @return OqlSyntaxNode
 		**/
 		public function getNode(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
