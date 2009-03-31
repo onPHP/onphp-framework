@@ -32,10 +32,10 @@
 			$parentNode = null;
 			
 			foreach ($rule->getList() as $ruleItem) {
-				$node = $ruleItem->getParseStrategy()->
-					parse($ruleItem, $tokenizer);
-				
-				if ($node) {
+				if (
+					$node
+					= $ruleItem->getParseStrategy()->parse($ruleItem, $tokenizer)
+				) {
 					if ($parentNode === null)
 						$parentNode = OqlSyntaxNode::create();
 					
