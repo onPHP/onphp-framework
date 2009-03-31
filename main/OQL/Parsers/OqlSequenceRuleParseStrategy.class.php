@@ -22,20 +22,28 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 		
+		/**
+		 * @return OqlSyntaxNode
+		**/
 		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
 			Assert::isTrue($rule instanceof OqlSequenceRule);
 			
-			$list = array();
+			$parentNode = null;
 			
 			foreach ($rule->getList() as $ruleItem) {
-				$list[] =
-					$ruleItem->getParseStrategy()->parse($ruleItem, $tokenizer);
+				$node = $ruleItem->getParseStrategy()->
+					parse($ruleItem, $tokenizer);
+				
+				if ($node) {
+					if ($parentNode === null)
+						$parentNode = OqlSyntaxNode::create();
+					
+					$parentNode->addChild($node);
+				}
 			}
 			
-			// FIXME: return syntax tree node
-			
-			return $list;
+			return $parentNode;
 		}
 	}
 ?>

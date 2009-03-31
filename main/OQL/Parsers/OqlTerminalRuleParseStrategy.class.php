@@ -22,6 +22,9 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 		
+		/**
+		 * @return OqlSyntaxNode
+		**/
 		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
 			Assert::isTrue($rule instanceof OqlTerminalRule);
@@ -34,8 +37,7 @@
 			) {
 				$tokenizer->next();
 				
-				// FIXME: return syntax tree node
-				return $token;
+				return OqlSyntaxNode::create()->setToken($token);
 			
 			} elseif ($rule->isRequired()) {
 				// FIXME: error message

@@ -22,19 +22,26 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 		
+		/**
+		 * @return OqlSyntaxNode
+		**/
 		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
 			Assert::isTrue($rule instanceof OqlRepetitionRule);
 			
 			$ruleStrategy = $rule->getRule()->getParseStrategy();
 			$separatorStrategy = $rule->getSeparator()->getParseStrategy();
-			$list = array();
+			
+			$parentNode = null;
 			
 			do {
 				if (
 					$node = $ruleStrategy->getNode($rule->getRule(), $tokenizer)
 				) {
-					$list[] = $node;
+					if ($parentNode === null)
+						$parentNode = OqlSyntaxNode::create();
+					
+					$parentNode->addChild($node);
 				}
 			
 			} while (
@@ -45,8 +52,7 @@
 			if ($rule->isRequired())
 				$this->raiseError($tokenizer, 'expected');
 			
-			// FIXME: return syntax tree node
-			return $list;
+			return $parentNode;
 		}
 	}
 ?>
