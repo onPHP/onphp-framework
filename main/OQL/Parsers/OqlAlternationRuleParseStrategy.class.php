@@ -24,7 +24,7 @@
 		
 		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
-			Assert::isInstance($rule, 'OqlAlternationRule');
+			Assert::isTrue($rule instanceof OqlAlternationRule);
 			
 			foreach ($rule->getList() as $ruleItem) {
 				if (

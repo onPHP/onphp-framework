@@ -24,7 +24,7 @@
 		
 		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
-			Assert::isInstance($rule, 'OqlTerminalRule');
+			Assert::isTrue($rule instanceof OqlTerminalRule);
 			
 			$token = $tokenizer->peek();
 			

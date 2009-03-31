@@ -24,7 +24,7 @@
 		
 		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
-			Assert::isInstance($rule, 'OqlSequenceRule');
+			Assert::isTrue($rule instanceof OqlSequenceRule);
 			
 			$list = array();
 			

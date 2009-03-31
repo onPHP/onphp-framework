@@ -24,7 +24,7 @@
 		
 		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
-			Assert::isInstance($rule, 'OqlRepetitionRule');
+			Assert::isTrue($rule instanceof OqlRepetitionRule);
 			
 			$ruleStrategy = $rule->getRule()->getParseStrategy();
 			$separatorStrategy = $rule->getSeparator()->getParseStrategy();
