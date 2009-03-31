@@ -106,9 +106,9 @@
 					)->
 					add(
 						$this->parenthesesRule(
-							OqlSequenceRule::create()->
+							OqlRepetitionRule::create()->
 								setRule(
-									OqlSequenceRule::create()->
+									OqlRepetitionRule::create()->
 										setRule(
 											$this->get(self::ARITHMETIC_OPERAND)
 										)->
@@ -163,7 +163,7 @@
 									)->
 									add($this->keyword('in'))->
 									add(
-										OqlSequenceRule::create()->
+										OqlRepetitionRule::create()->
 											setRule($this->get(self::CONSTANT))->
 											setSeparator($this->get(self::PUNCTUATION))
 									)
@@ -203,9 +203,9 @@
 					)->
 					add(
 						$this->parenthesesRule(
-							OqlSequenceRule::create()->
+							OqlRepetitionRule::create()->
 								setRule(
-									OqlSequenceRule::create()->
+									OqlRepetitionRule::create()->
 										setRule($this->get(self::LOGICAL_TERM))->
 										setSeparator($this->operator('and'))
 								)->
@@ -215,7 +215,7 @@
 			);
 			
 			$this->set(
-				OqlSequenceRule::create()->
+				OqlRepetitionRule::create()->
 					setId(self::PROPERTIES)->
 					setRule(
 						OqlChainRule::create()->
@@ -265,14 +265,14 @@
 			);
 			
 			$this->set(
-				OqlSequenceRule::create()->
+				OqlRepetitionRule::create()->
 					setId(self::GROUP_BY)->
 					setRule($this->get(self::IDENTIFIER))->
 					setSeparator($this->get(self::PUNCTUATION))
 			);
 			
 			$this->set(
-				OqlSequenceRule::create()->
+				OqlRepetitionRule::create()->
 					setId(self::ORDER_BY)->
 					setRule(
 						OqlChainRule::create()->

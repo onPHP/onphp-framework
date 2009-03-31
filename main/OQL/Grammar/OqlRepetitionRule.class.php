@@ -12,13 +12,13 @@
 	/**
 	 * @ingroup OQL
 	**/
-	class OqlSequenceRule extends OqlGrammarRule
+	class OqlRepetitionRule extends OqlGrammarRule
 	{
 		protected $rule			= null;
 		protected $separator	= null;
 		
 		/**
-		 * @return OqlSequenceRule
+		 * @return OqlRepetitionRule
 		**/
 		public static function create()
 		{
@@ -26,11 +26,11 @@
 		}
 		
 		/**
-		 * @return OqlSequenceRuleParseStrategy
+		 * @return OqlRepetitionRuleParseStrategy
 		**/
 		public function getParseStrategy()
 		{
-			return OqlSequenceRuleParseStrategy::me();
+			return OqlRepetitionRuleParseStrategy::me();
 		}
 		
 		/**
@@ -42,7 +42,7 @@
 		}
 		
 		/**
-		 * @return OqlSequenceRule
+		 * @return OqlRepetitionRule
 		**/
 		public function setRule(OqlGrammarRule $rule)
 		{
@@ -60,7 +60,7 @@
 		}
 		
 		/**
-		 * @return OqlSequenceRule
+		 * @return OqlRepetitionRule
 		**/
 		public function setSeparator(OqlGrammarRule $separator)
 		{

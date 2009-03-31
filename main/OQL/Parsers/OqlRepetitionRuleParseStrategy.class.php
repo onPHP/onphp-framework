@@ -12,10 +12,10 @@
 	/**
 	 * @ingroup OQL
 	**/
-	class OqlSequenceRuleParseStrategy extends OqlGrammarRuleParseStrategy
+	class OqlRepetitionRuleParseStrategy extends OqlGrammarRuleParseStrategy
 	{
 		/**
-		 * @return OqlSequenceRuleParseStrategy
+		 * @return OqlRepetitionRuleParseStrategy
 		**/
 		public static function me()
 		{
@@ -24,7 +24,7 @@
 		
 		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
-			Assert::isInstance($rule, 'OqlSequenceRule');
+			Assert::isInstance($rule, 'OqlRepetitionRule');
 			
 			$ruleStrategy = $rule->getRule()->getParseStrategy();
 			$separatorStrategy = $rule->getSeparator()->getParseStrategy();
