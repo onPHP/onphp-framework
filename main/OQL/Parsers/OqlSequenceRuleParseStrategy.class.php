@@ -42,8 +42,9 @@
 					}
 				}
 				
-				return OqlNonterminalNode::create()->
-					setChilds($childNodes);
+				return $childNodes
+					? OqlNonterminalNode::create()->setChilds($childNodes)
+					: null;
 			
 			} catch (SyntaxErrorException $e) {
 				if ($rule->isRequired())
