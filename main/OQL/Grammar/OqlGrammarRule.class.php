@@ -61,5 +61,13 @@
 			
 			return $this;
 		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function process(OqlTokenizer $tokenizer, $silent = false)
+		{
+			return $this->getParseStrategy()->parse($this, $tokenizer, $silent);
+		}
 	}
 ?>

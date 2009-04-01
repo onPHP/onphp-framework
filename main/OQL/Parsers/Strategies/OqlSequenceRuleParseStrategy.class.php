@@ -38,12 +38,8 @@
 				$childNodes = array();
 				
 				foreach ($rule->getList() as $ruleItem) {
-					if (
-						$node
-						= $ruleItem->getParseStrategy()->parse($ruleItem, $tokenizer, false)
-					) {
+					if ($node = $ruleItem->process($tokenizer, false))
 						$childNodes[] = $node;
-					}
 				}
 				
 				return $childNodes

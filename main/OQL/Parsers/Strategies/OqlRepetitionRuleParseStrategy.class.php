@@ -35,18 +35,12 @@
 			Assert::isNotNull($rule->getRule());
 			Assert::isNotNull($rule->getSeparator());
 			
-			$ruleStrategy = $rule->getRule()->getParseStrategy();
-			$separatorStrategy = $rule->getSeparator()->getParseStrategy();
-			
 			$childNodes = array();
 			$separatorNode = null;
 			
 			// NOTE: rule and separator are mandatory in spite of optional()
 			do {
-				if (
-					$node
-					= $ruleStrategy->parse($rule->getRule(), $tokenizer, true)
-				) {
+				if ($node = $rule->getRule()->process($tokenizer, true)) {
 					$childNodes[] = $node;
 				} else {
 					if ($separatorNode)
@@ -54,12 +48,9 @@
 					break;
 				}
 				
-				if (
-					$separatorNode
-					= $separatorStrategy->parse($rule->getSeparator(), $tokenizer, true)
-				) {
+				if ($separatorNode = $rule->getSeparator()->process($tokenizer, true))
 					$childNodes[] = $separatorNode;
-				}
+			
 			} while ($separatorNode);
 			
 			if ($childNodes) {

@@ -34,12 +34,8 @@
 			Assert::isTrue($rule instanceof OqlAlternationRule);
 			
 			foreach ($rule->getList() as $ruleItem) {
-				if (
-					$node
-					= $ruleItem->getParseStrategy()->parse($ruleItem, $tokenizer, true)
-				) {
+				if ($node = $ruleItem->process($tokenizer, true))
 					return $node;
-				}
 			}
 			
 			// FIXME: error message

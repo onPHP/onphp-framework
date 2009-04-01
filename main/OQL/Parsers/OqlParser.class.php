@@ -67,11 +67,9 @@
 			Assert::isNotNull($this->grammar, 'grammar must be set');
 			Assert::isNotNull($this->ruleId);
 			
-			$rule = $this->grammar->get($this->ruleId);
-			
-			return $rule->getParseStrategy()->parse(
-				$rule,
-				new OqlTokenizer($string)
+			return $this->grammar->get($this->ruleId)->process(
+				new OqlTokenizer($string),
+				false
 			);
 		}
 	}
