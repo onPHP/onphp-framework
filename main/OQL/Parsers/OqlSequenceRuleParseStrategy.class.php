@@ -29,21 +29,30 @@
 		{
 			Assert::isTrue($rule instanceof OqlSequenceRule);
 			
-			$parentNode = null;
-			
-			foreach ($rule->getList() as $ruleItem) {
-				if (
-					$node
-					= $ruleItem->getParseStrategy()->parse($ruleItem, $tokenizer)
-				) {
-					if ($parentNode === null)
-						$parentNode = OqlNonterminalNode::create();
-					
-					$parentNode->addChild($node);
+			try {
+				$index = $tokenizer->getIndex();
+				$childNodes = array();
+				
+				foreach ($rule->getList() as $ruleItem) {
+					if (
+						$node
+						= $ruleItem->getParseStrategy()->parse($ruleItem, $tokenizer)
+					) {
+						$childNodes[] = $node;
+					}
 				}
+				
+				return OqlNonterminalNode::create()->
+					setChilds($childNodes);
+			
+			} catch (SyntaxErrorException $e) {
+				if ($rule->isRequired())
+					throw $e;
+				else
+					$tokenizer->setIndex($index);
 			}
 			
-			return $parentNode;
+			return null;
 		}
 	}
 ?>
