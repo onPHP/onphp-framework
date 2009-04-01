@@ -195,6 +195,12 @@
 		
 		public function testJsonFilters()
 		{
+			if (!function_exists('json_encode'))
+				$this->markTestSkipped(
+					'dude, you should compile php with json support'
+					.' in order to complete this test'
+				);
+
 			$data = array('the keeey' => "that's value");
 			
 			$encoded = JsonEncoderFilter::me()->apply($data);
