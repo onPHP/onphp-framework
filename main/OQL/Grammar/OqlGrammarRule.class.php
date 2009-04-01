@@ -16,6 +16,7 @@
 	{
 		protected $id		= null;
 		protected $required	= true;
+		protected $mutator	= null;
 		
 		/**
 		 * @return OqlGrammarRuleParseStrategy
@@ -63,11 +64,33 @@
 		}
 		
 		/**
+		 * @return OqlSyntaxNodeMutator
+		**/
+		public function getMutator()
+		{
+			return $this->mutator;
+		}
+		
+		/**
+		 * @return OqlGrammarRule
+		**/
+		public function setMutator(OqlSyntaxNodeMutator $mutator)
+		{
+			$this->mutator = $mutator;
+			
+			return $this;
+		}
+		
+		/**
 		 * @return OqlSyntaxNode
 		**/
 		public function process(OqlTokenizer $tokenizer, $silent = false)
 		{
-			return $this->getParseStrategy()->parse($this, $tokenizer, $silent);
+			$node = $this->getParseStrategy()->parse($this, $tokenizer, $silent);
+			if ($node && $this->mutator)
+				$node = $this->mutator->process($node);
+			
+			return $node;
 		}
 	}
 ?>
