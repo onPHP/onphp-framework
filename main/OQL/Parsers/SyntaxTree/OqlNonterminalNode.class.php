@@ -124,11 +124,10 @@
 		public function toString()
 		{
 			if ($this->childs) {
-				$result = '{';
+				$result = '{ ';
 				
-				foreach ($this->childs as $child) {
-					$result .= $child->toString();
-				}
+				foreach ($this->childs as $child)
+					$result .= $child->toString().' ';
 				
 				$result .= '}';
 				
