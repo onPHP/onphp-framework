@@ -23,7 +23,7 @@
 		}
 		
 		/**
-		 * @return OqlNonterminalNode
+		 * @return OqlSyntaxNode
 		**/
 		public function parse(
 			OqlGrammarRule $rule,
@@ -54,7 +54,10 @@
 			} while ($separatorNode);
 			
 			if ($childNodes) {
-				return OqlNonterminalNode::create()->setChilds($childNodes);
+				if (count($childNodes) == 1)
+					return reset($childNodes);
+				else
+					return OqlNonterminalNode::create()->setChilds($childNodes);
 			
 			} elseif (!$silent && $rule->isRequired()) {
 				// FIXME: error message
