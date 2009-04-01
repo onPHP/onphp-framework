@@ -53,3 +53,6 @@ OQL: allow expressions with aggregate functions in select "properties" clause
 OQL: implement GroupByClassProjection and ClassProjection using "*" in select clauses.
  
 OQL: insert and update queries.
+
+OQL: search for key tokens upon tokenization and build simpler grammars
+(e.g. if no arithmetic operators found then don't use arithmetic expression rules)
