@@ -59,7 +59,7 @@
 		}
 		
 		/**
-		 * @return OqlSyntaxNode
+		 * @return OqlNonterminalNode
 		**/
 		public function parse($string)
 		{
@@ -67,10 +67,15 @@
 			Assert::isNotNull($this->grammar, 'grammar must be set');
 			Assert::isNotNull($this->ruleId);
 			
-			return $this->grammar->get($this->ruleId)->process(
+			$node = $this->grammar->get($this->ruleId)->process(
 				new OqlTokenizer($string),
 				false
 			);
+			
+			if ($node instanceof OqlTerminalNode)
+				return OqlNonterminalNode::create()->addChild($node);
+			
+			return $node;
 		}
 	}
 ?>
