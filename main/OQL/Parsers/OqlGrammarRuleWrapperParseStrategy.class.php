@@ -28,6 +28,7 @@
 		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
 			Assert::isTrue($rule instanceof OqlGrammarRuleWrapper);
+			Assert::isNotNull($rule->getRule());
 			
 			$parseStrategy = $rule->getRule()->getParseStrategy();
 			if ($rule->isRequired())

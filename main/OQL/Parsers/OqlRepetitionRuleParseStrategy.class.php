@@ -28,6 +28,8 @@
 		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
 		{
 			Assert::isTrue($rule instanceof OqlRepetitionRule);
+			Assert::isNotNull($rule->getRule());
+			Assert::isNotNull($rule->getSeparator());
 			
 			$ruleStrategy = $rule->getRule()->getParseStrategy();
 			$separatorStrategy = $rule->getSeparator()->getParseStrategy();
