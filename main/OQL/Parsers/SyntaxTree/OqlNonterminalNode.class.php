@@ -124,13 +124,13 @@
 		public function toString()
 		{
 			if ($this->childs) {
-				$result = '[';
+				$result = '{';
 				
 				foreach ($this->childs as $child) {
 					$result .= $child->toString();
 				}
 				
-				$result .= ']';
+				$result .= '}';
 				
 				return $result;
 			}
