@@ -25,7 +25,11 @@
 		/**
 		 * @return OqlTerminalNode
 		**/
-		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
+		public function parse(
+			OqlGrammarRule $rule,
+			OqlTokenizer $tokenizer,
+			$silent = false
+		)
 		{
 			Assert::isTrue($rule instanceof OqlTerminalRule);
 			
@@ -39,7 +43,7 @@
 				
 				return OqlTerminalNode::create()->setToken($token);
 			
-			} elseif ($rule->isRequired()) {
+			} elseif (!$silent && $rule->isRequired()) {
 				// FIXME: error message
 				$this->raiseError($tokenizer, 'expected');
 			}

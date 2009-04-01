@@ -25,7 +25,11 @@
 		/**
 		 * @return OqlNonterminalNode
 		**/
-		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
+		public function parse(
+			OqlGrammarRule $rule,
+			OqlTokenizer $tokenizer,
+			$silent = false
+		)
 		{
 			Assert::isTrue($rule instanceof OqlRepetitionRule);
 			Assert::isNotNull($rule->getRule());
@@ -41,7 +45,7 @@
 			do {
 				if (
 					$node
-					= $ruleStrategy->getNode($rule->getRule(), $tokenizer)
+					= $ruleStrategy->parse($rule->getRule(), $tokenizer, true)
 				) {
 					$childNodes[] = $node;
 				} else {
@@ -52,7 +56,7 @@
 				
 				if (
 					$separatorNode
-					= $separatorStrategy->getNode($rule->getSeparator(), $tokenizer)
+					= $separatorStrategy->parse($rule->getSeparator(), $tokenizer, true)
 				) {
 					$childNodes[] = $separatorNode;
 				}
@@ -60,7 +64,8 @@
 			
 			if ($childNodes) {
 				return OqlNonterminalNode::create()->setChilds($childNodes);
-			} elseif ($rule->isRequired()) {
+			
+			} elseif (!$silent && $rule->isRequired()) {
 				// FIXME: error message
 				$this->raiseError($tokenizer, 'expected');
 			}

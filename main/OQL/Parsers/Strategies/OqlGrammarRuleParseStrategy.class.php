@@ -21,20 +21,9 @@
 		**/
 		abstract public function parse(
 			OqlGrammarRule $rule,
-			OqlTokenizer $tokenizer
+			OqlTokenizer $tokenizer,
+			$silent = false
 		);
-		
-		/**
-		 * @return OqlSyntaxNode
-		**/
-		public function getNode(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
-		{
-			try {
-				return $this->parse($rule, $tokenizer);
-			} catch (SyntaxErrorException $e) {
-				return null;
-			}
-		}
 		
 		/**
 		 * @throws SyntaxErrorException

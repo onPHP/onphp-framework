@@ -25,7 +25,11 @@
 		/**
 		 * @return OqlNonterminalNode
 		**/
-		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
+		public function parse(
+			OqlGrammarRule $rule,
+			OqlTokenizer $tokenizer,
+			$silent = false
+		)
 		{
 			Assert::isTrue($rule instanceof OqlSequenceRule);
 			
@@ -36,7 +40,7 @@
 				foreach ($rule->getList() as $ruleItem) {
 					if (
 						$node
-						= $ruleItem->getParseStrategy()->parse($ruleItem, $tokenizer)
+						= $ruleItem->getParseStrategy()->parse($ruleItem, $tokenizer, false)
 					) {
 						$childNodes[] = $node;
 					}
@@ -47,7 +51,7 @@
 					: null;
 			
 			} catch (SyntaxErrorException $e) {
-				if ($rule->isRequired())
+				if (!$silent && $rule->isRequired())
 					throw $e;
 				else
 					$tokenizer->setIndex($index);

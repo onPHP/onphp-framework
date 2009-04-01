@@ -25,16 +25,17 @@
 		/**
 		 * @return OqlSyntaxNode
 		**/
-		public function parse(OqlGrammarRule $rule, OqlTokenizer $tokenizer)
+		public function parse(
+			OqlGrammarRule $rule,
+			OqlTokenizer $tokenizer,
+			$silent = false
+		)
 		{
 			Assert::isTrue($rule instanceof OqlGrammarRuleWrapper);
 			Assert::isNotNull($rule->getRule());
 			
-			$parseStrategy = $rule->getRule()->getParseStrategy();
-			if ($rule->isRequired())
-				return $parseStrategy->parse($rule->getRule(), $tokenizer);
-			else
-				return $parseStrategy->getNode($rule->getRule(), $tokenizer);
+			return $rule->getRule()->getParseStrategy()->
+				parse($rule->getRule(), $tokenizer, !$rule->isRequired() || $silent);
 		}
 	}
 ?>
