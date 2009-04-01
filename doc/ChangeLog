@@ -8,6 +8,9 @@
 	recursive). See test/main/EntityProtoConvertersTest.class.php for
 	example of usage.
 
+	* main/Messages/: simple messaging API is starting here. Inspired by
+	Java Message Service.
+
 2009-03-28	Evgeniy N. Sokolov
 
 	* core/Form/Form.class.php: getWrongLabel() and getMissingLabel()
