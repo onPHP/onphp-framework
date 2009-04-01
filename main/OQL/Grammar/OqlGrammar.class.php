@@ -31,17 +31,18 @@
 		const ARITHMETIC_EXPRESSION	= 13;
 		
 		const LOGICAL_OPERAND		= 14;
-		const LOGICAL_TERM			= 15;
-		const LOGICAL_EXPRESSION	= 16;
+		const BETWEEN_OPERAND		= 15;
+		const LOGICAL_TERM			= 16;
+		const LOGICAL_EXPRESSION	= 17;
 		
-		const PROPERTIES			= 17;
+		const PROPERTIES			= 18;
 		const WHERE					= self::LOGICAL_EXPRESSION;
-		const GROUP_BY				= 18;
-		const ORDER_BY				= 19;
+		const GROUP_BY				= 19;
+		const ORDER_BY				= 20;
 		const HAVING				= self::LOGICAL_EXPRESSION;
-		const LIMIT					= 20;
+		const LIMIT					= 21;
 		const OFFSET				= self::LIMIT;
-		const SELECT				= 21;
+		const SELECT				= 22;
 		
 		private $rules			= array();
 		private $optionalRules	= array();
@@ -94,32 +95,40 @@
 				OqlAlternationRule::create()->
 					setId(self::ARITHMETIC_OPERAND)->
 					add($this->get(self::IDENTIFIER))->
-					add($this->get(self::NUMBER))
+					add($this->get(self::NUMBER))->
+					add(
+						OqlParenthesesRule::create()->setRule(
+							OqlGrammarRuleWrapper::create()->
+								setGrammar($this)->
+								setId(self::ARITHMETIC_EXPRESSION)
+						)
+					)
 			);
 			
 			$this->set(
 				OqlSequenceRule::create()->
 					setId(self::ARITHMETIC_EXPRESSION)->
 					add(
-						$this->operator('-')->
-							optional()
-					)->
-					add(
-						$this->parenthesesRule(
-							OqlRepetitionRule::create()->
-								setRule(
-									OqlRepetitionRule::create()->
-										setRule(
-											$this->get(self::ARITHMETIC_OPERAND)
-										)->
-										setSeparator(
-											$this->operator(array('*', '/'))
-										)
-								)->
-								setSeparator(
-									$this->operator(array('+', '-'))
-								)
-						)
+						OqlRepetitionRule::create()->
+							setRule(
+								OqlRepetitionRule::create()->
+									setRule(
+										OqlSequenceRule::create()->
+											add(
+												$this->operator('-')->
+													optional()
+											)->
+											add(
+												$this->get(self::ARITHMETIC_OPERAND)
+											)
+									)->
+									setSeparator(
+										$this->operator(array('*', '/'))
+									)
+							)->
+							setSeparator(
+								$this->operator(array('+', '-'))
+							)
 					)
 			);
 			
@@ -127,91 +136,95 @@
 				OqlAlternationRule::create()->
 					setId(self::LOGICAL_OPERAND)->
 					add($this->get(self::ARITHMETIC_EXPRESSION))->
-					add($this->get(self::BOOLEAN))->
-					add($this->get(self::STRING))	// FIXME: maybe identifier? (and string for between only) 
+					add($this->get(self::IDENTIFIER))->
+					add($this->get(self::NUMBER))->
+					add($this->get(self::BOOLEAN))
 			);
 			
 			$this->set(
-				OqlSequenceRule::create()->
+				OqlAlternationRule::create()->
+					setId(self::BETWEEN_OPERAND)->
+					add($this->get(self::STRING))->
+					add($this->get(self::LOGICAL_OPERAND))
+			);
+			
+			$this->set(
+				OqlAlternationRule::create()->
 					setId(self::LOGICAL_TERM)->
-					add($this->get(self::LOGICAL_OPERAND))->
 					add(
-						OqlAlternationRule::create()->
-							add(
-								OqlSequenceRule::create()->
-									add($this->comparisonOperator())->
-									add($this->get(self::LOGICAL_OPERAND))
-							)->
-							add(
-								OqlSequenceRule::create()->
-									add($this->keyword('is'))->
-									add(
-										$this->operator('not')->
-											optional()
-									)->
-									add(
-										OqlAlternationRule::create()->
-											add($this->get(self::NULL))->
-											add($this->get(self::BOOLEAN))
-									)
-							)->
-							add(
-								OqlSequenceRule::create()->
-									add(
-										$this->operator('not')->
-											optional()
-									)->
-									add($this->keyword('in'))->
-									add(
-										OqlRepetitionRule::create()->
-											setRule($this->get(self::CONSTANT))->
-											setSeparator($this->get(self::PUNCTUATION))
-									)
-							)->
-							add(
-								OqlSequenceRule::create()->
-									add(
-										$this->operator('not')->
-											optional()
-									)->
-									add(
-										OqlAlternationRule::create()->
-											add($this->keyword('like'))->
-											add($this->keyword('ilike'))->
-											add($this->keyword('similar to'))
-									)->
-									add(
-										$this->get(self::PATTERN)
-									)
-							)->
-							add(
-								OqlSequenceRule::create()->
-									add($this->keyword('between'))->
-									add($this->get(self::LOGICAL_OPERAND))->
-									add($this->operator('and'))->
-									add($this->get(self::LOGICAL_OPERAND))
-							)
-					)
-			);
-			
-			$this->set(
-				OqlSequenceRule::create()->
-					setId(self::LOGICAL_EXPRESSION)->
-					add(
-						$this->operator('not')->
-							optional()
+						OqlSequenceRule::create()->
+							add($this->get(self::LOGICAL_OPERAND))->
+							add($this->comparisonOperator())->
+							add($this->get(self::LOGICAL_OPERAND))
 					)->
 					add(
-						$this->parenthesesRule(
-							OqlRepetitionRule::create()->
-								setRule(
-									OqlRepetitionRule::create()->
-										setRule($this->get(self::LOGICAL_TERM))->
-										setSeparator($this->operator('and'))
-								)->
-								setSeparator($this->operator('or'))
+						OqlSequenceRule::create()->
+							add($this->keyword('is'))->
+							add(
+								$this->operator('not')->
+									optional()
+							)->
+							add(
+								OqlAlternationRule::create()->
+									add($this->get(self::NULL))->
+									add($this->get(self::BOOLEAN))
+							)
+					)->
+					add(
+						OqlSequenceRule::create()->
+							add($this->keyword('in'))->
+							add(
+								OqlRepetitionRule::create()->
+									setRule($this->get(self::CONSTANT))->
+									setSeparator($this->get(self::PUNCTUATION))
+							)
+					)->
+					add(
+						OqlSequenceRule::create()->
+							add(
+								OqlAlternationRule::create()->
+									add($this->keyword('like'))->
+									add($this->keyword('ilike'))->
+									add($this->keyword('similar to'))
+							)->
+							add(
+								$this->get(self::PATTERN)
+							)
+					)->
+					add(
+						OqlSequenceRule::create()->
+							add($this->keyword('between'))->
+							add($this->get(self::BETWEEN_OPERAND))->
+							add($this->operator('and'))->
+							add($this->get(self::BETWEEN_OPERAND))
+					)->
+					add(
+						OqlParenthesesRule::create()->setRule(
+							OqlGrammarRuleWrapper::create()->
+								setGrammar($this)->
+								setId(self::LOGICAL_EXPRESSION)
 						)
 					)
+			);
+			
+			$this->set(
+				OqlRepetitionRule::create()->
+					setId(self::LOGICAL_EXPRESSION)->
+					setRule(
+						OqlRepetitionRule::create()->
+							setRule(
+								OqlSequenceRule::create()->
+									add(
+										$this->operator('not')->
+											optional()
+									)->
+									add(
+										$this->get(self::LOGICAL_TERM)
+									)
+							)->
+							setSeparator($this->operator('and'))
+					)->
+					setSeparator($this->operator('or'))
 			);
 			
 			$this->set(
@@ -382,21 +395,6 @@
 			$this->rules[$rule->getId()] = $rule;
 			
 			return $this;
-		}
-		
-		/**
-		 * @return OqlAlternationRule
-		**/
-		private function parenthesesRule(OqlGrammarRule $rule)
-		{
-			return OqlAlternationRule::create()->
-				add($rule)->
-				add(
-					OqlSequenceRule::create()->
-						add($this->get(self::OPEN_PARENTHESES))->
-						add($rule)->
-						add($this->get(self::CLOSE_PARENTHESES))
-				);
 		}
 		
 		/**
