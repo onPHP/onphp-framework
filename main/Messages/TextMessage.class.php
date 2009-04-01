@@ -1,0 +1,53 @@
+<?php
+/***************************************************************************
+ *   Copyright (C) 2009 by Ivan Y. Khvostishkov                            *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU Lesser General Public License as        *
+ *   published by the Free Software Foundation; either version 3 of the    *
+ *   License, or (at your option) any later version.                       *
+ *                                                                         *
+ ***************************************************************************/
+/* $Id$ */
+
+
+	final class TextMessage implements Message
+	{
+		private $timestamp	= null;
+		private $text		= null;
+
+		public static function create()
+		{
+			return new self;
+		}
+
+		public function __construct()
+		{
+			$this->timestamp = Timestamp::makeNow();
+		}
+
+		public function setTimestamp($timestamp)
+		{
+			$this->timestamp = $timestamp;
+
+			return $this;
+		}
+
+		public function getTimestamp()
+		{
+			return $this->timestamp;
+		}
+
+		public function setText($text)
+		{
+			$this->text = $text;
+
+			return $this;
+		}
+
+		public function getText()
+		{
+			return $this->text;
+		}
+	}
+?>
