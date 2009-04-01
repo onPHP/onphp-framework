@@ -13,6 +13,7 @@
 	abstract class DirectoryBuilder extends PrototypedBuilder
 	{
 		protected $directory = null;
+		protected $identityMap = array();
 
 		public function setDirectory($directory)
 		{
@@ -26,6 +27,18 @@
 			return $this->directory;
 		}
 
+		public function setIdentityMap(&$identityMap)
+		{
+			$this->identityMap = &$identityMap;
+
+			return $this;
+		}
+
+		public function getIdentityMap()
+		{
+			return $this->identityMap;
+		}
+
 		/**
 		 * @return PrototypedBuilder
 		**/
@@ -33,7 +46,9 @@
 		{
 			$result = parent::cloneBuilder($proto);
 
-			$result->setDirectory($this->directory);
+			$result->
+				setDirectory($this->directory)->
+				setIdentityMap($this->identityMap);
 
 			return $result;
 		}
@@ -42,9 +57,22 @@
 		{
 			$result = parent::cloneInnerBuilder($property);
 
-			$result->setDirectory($this->directory.'/'.$property);
+			$result->
+				setDirectory($this->directory.'/'.$property)->
+				setIdentityMap($this->identityMap);
 
 			return $result;
+		}
+
+		public function makeListItemBuilder($object)
+		{
+			if (!$object instanceof Identifiable)
+				throw new WrongArgumentException(
+					'cannot build list of items without identity'
+				);
+
+			return $this->cloneBuilder($this->proto)->
+				setDirectory($this->directory.'/'.$object->getId());
 		}
 
 		protected function createEmpty()
@@ -54,10 +82,34 @@
 					'you must specify the context for this builder'
 				);
 
-			if (!file_exists($this->directory))
-				mkdir($this->directory, 0700, true);
+			$result = $this->directory;
 
-			return $this->directory;
+			if (!file_exists($result))
+				mkdir($result, 0700, true);
+			elseif (is_link($result)) {
+				throw new WrongStateException(
+					'cannot make object by reference: '.$this->directory
+				);
+			}
+
+			return $result;
+		}
+
+		protected function safeClean()
+		{
+			if (file_exists($this->directory)) {
+				if (!is_link($this->directory)) {
+					throw new WrongStateException(
+						'you should remove the storage '
+						.$this->directory
+						.' by your hands'
+					);
+				}
+
+				unlink($this->directory);
+			}
+
+			return $this;
 		}
 	}
 ?>

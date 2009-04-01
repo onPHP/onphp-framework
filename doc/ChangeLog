@@ -1,5 +1,13 @@
 # $Id$
 
+2009-04-01	Ivan Y. Khvostishkov
+
+	* main/EntityProto/Builders/DirectoryToObjectBinder.class.php,
+	main/EntityProto/Builders/ObjectToDirectoryBinder.class.php:
+	reference-enabled directory storage with symbolic links (even
+	recursive). See test/main/EntityProtoConvertersTest.class.php for
+	example of usage.
+
 2009-03-28	Evgeniy N. Sokolov
 
 	* core/Form/Form.class.php: getWrongLabel() and getMissingLabel()
