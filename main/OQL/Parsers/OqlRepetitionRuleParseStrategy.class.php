@@ -32,27 +32,38 @@
 			$ruleStrategy = $rule->getRule()->getParseStrategy();
 			$separatorStrategy = $rule->getSeparator()->getParseStrategy();
 			
-			$parentNode = null;
+			$childNodes = array();
+			$separatorNode = null;
 			
+			// NOTE: rule and separator are mandatory in spite of optional()
 			do {
 				if (
-					$node = $ruleStrategy->getNode($rule->getRule(), $tokenizer)
+					$node
+					= $ruleStrategy->getNode($rule->getRule(), $tokenizer)
 				) {
-					if ($parentNode === null)
-						$parentNode = OqlNonterminalNode::create();
-					
-					$parentNode->addChild($node);
+					$childNodes[] = $node;
+				} else {
+					if ($separatorNode)
+						array_pop($childNodes);
+					break;
 				}
+				
+				if (
+					$separatorNode
+					= $separatorStrategy->getNode($rule->getSeparator(), $tokenizer)
+				) {
+					$childNodes[] = $separatorNode;
+				}
+			} while ($separatorNode);
 			
-			} while (
-				$separatorStrategy->getNode($rule->getSeparator(), $tokenizer)
-			);
-			
-			// FIXME: error message
-			if ($rule->isRequired())
+			if ($childNodes) {
+				return OqlNonterminalNode::create()->setChilds($childNodes);
+			} elseif ($rule->isRequired()) {
+				// FIXME: error message
 				$this->raiseError($tokenizer, 'expected');
+			}
 			
-			return $parentNode;
+			return null;
 		}
 	}
 ?>
