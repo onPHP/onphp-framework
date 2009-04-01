@@ -185,6 +185,10 @@
 						OqlSequenceRule::create()->
 							add($this->get(self::LOGICAL_OPERAND))->
 							add(
+								$this->operator('not')->
+									optional()
+							)->
+							add(
 								OqlAlternationRule::create()->
 									add($this->keyword('like'))->
 									add($this->keyword('ilike'))->
