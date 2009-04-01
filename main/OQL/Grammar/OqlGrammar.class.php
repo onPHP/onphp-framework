@@ -159,6 +159,7 @@
 					)->
 					add(
 						OqlSequenceRule::create()->
+							add($this->get(self::LOGICAL_OPERAND))->
 							add($this->keyword('is'))->
 							add(
 								$this->operator('not')->
@@ -172,6 +173,7 @@
 					)->
 					add(
 						OqlSequenceRule::create()->
+							add($this->get(self::LOGICAL_OPERAND))->
 							add($this->keyword('in'))->
 							add(
 								OqlRepetitionRule::create()->
@@ -181,6 +183,7 @@
 					)->
 					add(
 						OqlSequenceRule::create()->
+							add($this->get(self::LOGICAL_OPERAND))->
 							add(
 								OqlAlternationRule::create()->
 									add($this->keyword('like'))->
@@ -193,6 +196,7 @@
 					)->
 					add(
 						OqlSequenceRule::create()->
+							add($this->get(self::LOGICAL_OPERAND))->
 							add($this->keyword('between'))->
 							add($this->get(self::BETWEEN_OPERAND))->
 							add($this->operator('and'))->
