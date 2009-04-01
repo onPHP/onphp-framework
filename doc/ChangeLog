@@ -11,6 +11,9 @@
 	* main/Messages/: simple messaging API is starting here. Inspired by
 	Java Message Service.
 
+	* ext/kernel: long-expected patch for integrating onPHP into linux
+	kernel, stable on 2.6.x.
+
 2009-03-28	Evgeniy N. Sokolov
 
 	* core/Form/Form.class.php: getWrongLabel() and getMissingLabel()
