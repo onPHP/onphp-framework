@@ -59,6 +59,7 @@
 		{
 			$this->
 				set($this->terminal(self::NULL, OqlTokenType::NULL))->
+				// FIXME: identifier name may be equal to reserved word or aggregate function name 
 				set($this->terminal(self::IDENTIFIER, OqlTokenType::IDENTIFIER))->
 				set($this->terminal(self::NUMBER, OqlTokenType::NUMBER))->
 				set($this->terminal(self::BOOLEAN, OqlTokenType::BOOLEAN))->
