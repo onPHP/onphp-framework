@@ -103,7 +103,7 @@
 				);
 			
 			//	<arithmetic_operand> ::=
-			//		<identifier> | <number> | <placeholder> | <arithmetic_expression>
+			//		<identifier> | <number> | <placeholder> | ( "(" <arithmetic_expression> ")" )
 			$this->set(
 				OqlAlternationRule::create()->
 					setId(self::ARITHMETIC_OPERAND)->
@@ -173,7 +173,7 @@
 			//		| ( <logical_operand> [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
 			//		| ( <logical_operand> "between" <logical_operand> "and" <logical_operand> )
 			//		| <logical_unary_operand>
-			//		| <logical_expression>
+			//		| "(" <logical_expression> ")"
 			$this->set(
 				OqlAlternationRule::create()->
 					setId(self::LOGICAL_TERM)->
@@ -269,6 +269,15 @@
 				setId(self::LOGICAL_EXPRESSION)
 			);
 			
+			//	<property> ::=
+			//		(
+			//			( ( "sum" | "avg" | "min" | "max" ) "(" <arithmetic_expression> ")" )
+			//			| ( "count" "(" [ "distinct" ] <logical_expression> ")" )
+			//			| ( [ "distinct" ] <logical_expression> )
+			//		)
+			//		[ "as" <identifier> ]
+			
+			//	<properties> ::= <property> * ( "," <property> )
 			$this->set(
 				self::repetition(
 					OqlSequenceRule::create()->

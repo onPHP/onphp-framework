@@ -47,7 +47,7 @@ $Id$
 		| ( <logical_operand> [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
 		| ( <logical_operand> "between" <logical_operand> "and" <logical_operand> )
 		| <logical_unary_operand>
-		| <logical_expression>
+		| ( "(" <logical_expression> ")" )
 
 	<logical_operand> ::= <arithmetic_expression> | <boolean> | <string> | <null>
 
@@ -60,7 +60,7 @@ $Id$
 		[ "-" ] <arithmetic_operand> * ( ( "*" | "/" ) [ "-" ] <arithmetic_operand> )
 
 	<arithmetic_operand> ::=
-		<identifier> | <number> | <placeholder> | <arithmetic_expression>
+		<identifier> | <number> | <placeholder> | ( "(" <arithmetic_expression> ")" )
 
 	<identifier> ::= <name> | <aggregate_function> | <keyword>
 
