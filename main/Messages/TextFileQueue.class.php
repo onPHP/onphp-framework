@@ -10,7 +10,7 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class TextFileQueue implements MessageQueue
+	class TextFileQueue implements MessageQueue
 	{
 		private $fileName	= null;
 		private $offset		= null;
