@@ -32,25 +32,11 @@
 		)
 		{
 			Assert::isTrue($rule instanceof OqlRepetitionRule);
-			Assert::isNotNull($rule->getRule());
-			Assert::isNotNull($rule->getSeparator());
+			Assert::isNotNull($innerRule = $rule->getRule());
 			
 			$childNodes = array();
-			$separatorNode = null;
-			
-			do {
-				if ($node = $rule->getRule()->process($tokenizer, true)) {
-					$childNodes[] = $node;
-				} else {
-					if ($separatorNode)
-						array_pop($childNodes);
-					break;
-				}
-				
-				if ($separatorNode = $rule->getSeparator()->process($tokenizer, true))
-					$childNodes[] = $separatorNode;
-			
-			} while ($separatorNode);
+			while ($node = $innerRule->process($tokenizer, $silent))
+				$childNodes[] = $node;
 			
 			if ($childNodes) {
 				if (count($childNodes) == 1)

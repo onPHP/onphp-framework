@@ -14,8 +14,7 @@
 	**/
 	class OqlRepetitionRule extends OqlGrammarRule
 	{
-		protected $rule			= null;
-		protected $separator	= null;
+		protected $rule = null;
 		
 		/**
 		 * @return OqlRepetitionRule
@@ -47,24 +46,6 @@
 		public function setRule(OqlGrammarRule $rule)
 		{
 			$this->rule = $rule;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlGrammarRule
-		**/
-		public function getSeparator()
-		{
-			return $this->separator;
-		}
-		
-		/**
-		 * @return OqlRepetitionRule
-		**/
-		public function setSeparator(OqlGrammarRule $separator)
-		{
-			$this->separator = $separator;
 			
 			return $this;
 		}
