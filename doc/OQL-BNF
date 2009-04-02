@@ -1,103 +1,91 @@
 $Id$
 
-	<query> ::=
-		[ <aggregate_clause> ]
-		"from" <class_clause>
-		[ "where" <where_clause> ]
-		[ "group by" <group_by_clause> ]
-		[ "order by" <order_by_clause> ]
-		[ "having" <having_clause> ]
-		[ "limit" <limit_clause> ]
-		[ "offset" <offset_clause> ]
-	
-	<aggregate_clause> ::=
+	<select> ::=
+		[ <properties> ]
+		"from" <identifier>
+		[ "where" <where> ]
+		[ "group by" <group_by> ]
+		[ "order by" <order_by> ]
+		[ "having" <having> ]
+		[ "limit" <limit> ]
+		[ "offset" <offset> ]
+
+	<properties> ::= <property> * ( "," <property> )
+
+	<where> ::= <logical_expression>
+
+	<group_by> ::= <identifier> * ( "," <identifier> )
+
+	<order_by> ::=
+		<logical_expression> [ "asc" | "desc" ]
+		* ( "," <logical_expression> [ "asc" | "desc" ] )
+
+	<having> ::= <logical_expression>
+
+	<limit> ::= <number> | <placeholder> 
+
+	<offset> ::= <limit>
+
+	<property> ::=
 		(
 			( ( "sum" | "avg" | "min" | "max" ) "(" <arithmetic_expression> ")" )
-			| ( "count(" [ "distinct" ] <logical_expression> ")" )
+			| ( "count" "(" [ "distinct" ] <logical_expression> ")" )
 			| ( [ "distinct" ] <logical_expression> )
-		) [ "as" <identifier> ]
-		[ "," <aggregate_clause> ]
-	
-	<class_clause> ::=
-		<identifier>
-	
-	<where_clause> ::=
-		<logical_expression>
-	
-	<group_by_clause> ::=
-		<identifier> [ "," <group_by_clause> ]
-	
-	<order_by_clause> ::=
-		<logical_expression> [ "asc" | "desc" ] [ "," <order_by_clause> ]
-	
-	<having_clause> ::=
-		<logical_expression>
-	
-	<limit_clause> ::=
-		<number> | <placeholder>
-	
-	<offset_clause> ::=
-		<number> | <placeholder>
-	
-	<logical_expression> ::=
-		<logical_and_expression> { [ "or" ] <logical_and_expression> }
-	
-	<logical_and_expression> ::=
-		<logical_term> { [ "and" ] ( <logical_term> | ( "(" <logical_expression> ")" ) ) }
-	
-	<logical_term> ::=
-		( "not" <logical_expression> )
-		| (
-			<logical_operand>
-			(
-				( <comparison_op> <logical_operand> )
-				| ( "is" [ "not" ] ( "null" | <boolean> ) )
-				| ( [ "not" ] "in" "(" <in_expression> ")" )
-				| ( [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
-				| ( "between" <logical_operand> "and" <logical_operand> )
-			)
 		)
-	
-	<logical_operand> ::=
-		<arithmetic_expression> | <boolean> | <string>
-	
+		[ "as" <identifier> ]
+
+	<logical_expression> ::=
+		<logical_and_expression> * ( "or" <logical_and_expression> )
+
+	<logical_and_expression> ::=
+		[ "not" ] <logical_term> * ( "and" [ "not" ] <logical_term> )
+
+	<logical_term> ::=
+		( <logical_operand> <comparison_operator> <logical_operand> )
+		| ( <logical_operand> "is" [ "not" ] ( <null> | <boolean> ) )
+		| ( "in" "(" <constant> * ( "," <constant> ) ")" )
+		| ( <logical_operand> [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
+		| ( <logical_operand> "between" <logical_operand> "and" <logical_operand> )
+		| <logical_unary_operand>
+		| <logical_expression>
+
+	<logical_operand> ::= <arithmetic_expression> | <boolean> | <string> | <null>
+
+	<logical_unary_operand> ::= <identifier> | <placeholder> | <boolean> | <null>
+
 	<arithmetic_expression> ::=
-		[ "-" ] <arithmetic_mul_expression> { ( "+" | "-" ) <arithmetic_mul_expression> }
-	
+		<arithmetic_mul_expression> * ( ( "+" | "-" ) <arithmetic_mul_expression> )
+
 	<arithmetic_mul_expression> ::=
-		<arithmetic_term> { ( "*" | "/" ) ( <arithmetic_term> | ( "(" <arithmetic_expression> ")" ) }
-	
-	<arithmetic_term> ::=
-		<identifier> | <number> | <placeholder>
-	
-	<comparison_op> ::=
-		"=" | "<" | ">" | "<>" | "!=" | "<=" | ">="
-	
-	<in_expression> ::=
-		<constant> [ "," <in_expression> ]
-	
-	<pattern> ::=
-		<string> | <placeholder>
-	
-	<constant> ::=
-		<string> | <number> | <boolean> | <placeholder> | "null"
-	
-	<boolean> ::=
-		"true" | "false"
-	
+		[ "-" ] <arithmetic_operand> * ( ( "*" | "/" ) [ "-" ] <arithmetic_operand> )
+
+	<arithmetic_operand> ::=
+		<identifier> | <number> | <placeholder> | <arithmetic_expression>
+
+	<identifier> ::= <name> | <aggregate_function> | <keyword>
+
+	<constant> ::= <string> | <number> | <boolean> | <placeholder> | <null>
+
+	<pattern> ::= <string> | <placeholder>
+
+	<aggregate_function> ::= "sum" | "avg" | "min" | "max" | "count"
+
+	<comparison_operator> ::= "=" | "<" | ">" | "<>" | "!=" | "<=" | ">="
+
+	<null> ::= "null"
+
+	<boolean> ::= "true" | "false"
+
+	<name> ::= ( <letter> | "_" ) * [ <letter> | <digit> | "_" ] * [ "." <name> ]
+
 	<string> ::=
-		( """ { <any character> } """ )
-		| ( "'" { <any character> } "'" )
-		| ( "`" { <any character> } "`" )
-	
-	<identifier> ::=
-		( <letter> | "_" ) { <letter> | <digit> | "_" } [ "." <identifier> ]
-	
-	<number> ::=
-		[ { <digit> } ] [ "." ] { <digit> } [ "e" [ "+" | "-" ] { <digit> } ] 
-	
-	<placeholder> ::=
-		"$" { <digit> }
+		( "\"" * <character> "\"" )
+		| ( "'" * <character> "'" )
+		| ( "`" * <character> "`" )
+
+	<number> ::= [ <digit> ] [ "." ] * <digit> [ "e" [ "+" | "-" ] * <digit> ]
+
+	<placeholder> ::= "$" 1 * <digit>
 
 
 Examples:
