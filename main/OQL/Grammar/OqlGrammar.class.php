@@ -115,27 +115,19 @@
 				OqlSequenceRule::create()->
 					setId(self::ARITHMETIC_EXPRESSION)->
 					add(
-						OqlRepetitionRule::create()->
-							setRule(
-								OqlRepetitionRule::create()->
-									setRule(
-										OqlSequenceRule::create()->
-											add(
-												OqlOptionalRule::create()->setRule(
-													$this->operator('-')
-												)
-											)->
-											add(
-												$this->get(self::ARITHMETIC_OPERAND)
-											)
+						self::repetition(
+							self::repetition(
+								OqlSequenceRule::create()->
+									add(
+										OqlOptionalRule::create()->setRule(
+											$this->operator('-')
+										)
 									)->
-									setSeparator(
-										$this->operator(array('*', '/'))
-									)
-							)->
-							setSeparator(
-								$this->operator(array('+', '-'))
-							)
+									add($this->get(self::ARITHMETIC_OPERAND)),
+								$this->operator(array('*', '/'))
+							),
+							$this->operator(array('+', '-'))
+						)
 					)
 			);
 			
@@ -186,9 +178,10 @@
 							add($this->get(self::LOGICAL_OPERAND))->
 							add($this->keyword('in'))->
 							add(
-								OqlRepetitionRule::create()->
-									setRule($this->get(self::CONSTANT))->
-									setSeparator($this->get(self::PUNCTUATION))
+								self::repetition(
+									$this->get(self::CONSTANT),
+									$this->get(self::PUNCTUATION)
+								)
 							)
 					)->
 					add(
@@ -228,99 +221,96 @@
 			);
 			
 			$this->set(
-				OqlRepetitionRule::create()->
-					setId(self::LOGICAL_EXPRESSION)->
-					setRule(
-						OqlRepetitionRule::create()->
-							setRule(
-								OqlSequenceRule::create()->
-									add(
-										OqlOptionalRule::create()->setRule(
-											$this->operator('not')
-										)
-									)->
-									add($this->get(self::LOGICAL_TERM))
+				self::repetition(
+					self::repetition(
+						OqlSequenceRule::create()->
+							add(
+								OqlOptionalRule::create()->setRule(
+									$this->operator('not')
+								)
 							)->
-							setSeparator($this->operator('and'))
-					)->
-					setSeparator($this->operator('or'))
+							add($this->get(self::LOGICAL_TERM)),
+						$this->operator('and')
+					),
+					$this->operator('or')
+				)->
+				setId(self::LOGICAL_EXPRESSION)
 			);
 			
 			$this->set(
-				OqlRepetitionRule::create()->
-					setId(self::PROPERTIES)->
-					setRule(
-						OqlSequenceRule::create()->
-							add(
-								OqlAlternationRule::create()->
-									add(
-										OqlSequenceRule::create()->
-											add(
-												OqlAlternationRule::create()->
-													add($this->aggregate('sum'))->
-													add($this->aggregate('avg'))->
-													add($this->aggregate('min'))->
-													add($this->aggregate('max'))
-											)->
-											add($this->get(self::OPEN_PARENTHESES))->
-											add($this->get(self::ARITHMETIC_EXPRESSION))->
-											add($this->get(self::CLOSE_PARENTHESES))
-									)->
-									add(
-										OqlSequenceRule::create()->
-											add($this->aggregate('count'))->
-											add($this->get(self::OPEN_PARENTHESES))->
-											add(
-												OqlOptionalRule::create()->setRule(
-													$this->keyword('distinct')
-												)
-											)->
-											add($this->get(self::LOGICAL_EXPRESSION))->
-											add($this->get(self::CLOSE_PARENTHESES))
-									)->
-									add(
-										OqlSequenceRule::create()->
-											add(
-												OqlOptionalRule::create()->setRule(
-													$this->keyword('distinct')
-												)
-											)->
-											add($this->get(self::LOGICAL_EXPRESSION))
-									)
-							)->
-							add(
-								OqlOptionalRule::create()->setRule(
+				self::repetition(
+					OqlSequenceRule::create()->
+						add(
+							OqlAlternationRule::create()->
+								add(
 									OqlSequenceRule::create()->
-										add($this->keyword('as'))->
-										add($this->get(self::IDENTIFIER))
+										add(
+											OqlAlternationRule::create()->
+												add($this->aggregate('sum'))->
+												add($this->aggregate('avg'))->
+												add($this->aggregate('min'))->
+												add($this->aggregate('max'))
+										)->
+										add($this->get(self::OPEN_PARENTHESES))->
+										add($this->get(self::ARITHMETIC_EXPRESSION))->
+										add($this->get(self::CLOSE_PARENTHESES))
+								)->
+								add(
+									OqlSequenceRule::create()->
+										add($this->aggregate('count'))->
+										add($this->get(self::OPEN_PARENTHESES))->
+										add(
+											OqlOptionalRule::create()->setRule(
+												$this->keyword('distinct')
+											)
+										)->
+										add($this->get(self::LOGICAL_EXPRESSION))->
+										add($this->get(self::CLOSE_PARENTHESES))
+								)->
+								add(
+									OqlSequenceRule::create()->
+										add(
+											OqlOptionalRule::create()->setRule(
+												$this->keyword('distinct')
+											)
+										)->
+										add($this->get(self::LOGICAL_EXPRESSION))
 								)
+						)->
+						add(
+							OqlOptionalRule::create()->setRule(
+								OqlSequenceRule::create()->
+									add($this->keyword('as'))->
+									add($this->get(self::IDENTIFIER))
 							)
-					)->
-					setSeparator($this->get(self::PUNCTUATION))
+						),
+					$this->get(self::PUNCTUATION)
+				)->
+				setId(self::PROPERTIES)
 			);
 			
 			$this->set(
-				OqlRepetitionRule::create()->
-					setId(self::GROUP_BY)->
-					setRule($this->get(self::IDENTIFIER))->
-					setSeparator($this->get(self::PUNCTUATION))
+				self::repetition(
+					$this->get(self::IDENTIFIER),
+					$this->get(self::PUNCTUATION)
+				)->
+				setId(self::GROUP_BY)
 			);
 			
 			$this->set(
-				OqlRepetitionRule::create()->
-					setId(self::ORDER_BY)->
-					setRule(
-						OqlSequenceRule::create()->
-							add($this->get(self::LOGICAL_EXPRESSION))->
-							add(
-								OqlOptionalRule::create()->setRule(
-									OqlAlternationRule::create()->
-										add($this->keyword('asc'))->
-										add($this->keyword('desc'))
-								)
+				self::repetition(
+					OqlSequenceRule::create()->
+						add($this->get(self::LOGICAL_EXPRESSION))->
+						add(
+							OqlOptionalRule::create()->setRule(
+								OqlAlternationRule::create()->
+									add($this->keyword('asc'))->
+									add($this->keyword('desc'))
 							)
-					)->
-					setSeparator($this->get(self::PUNCTUATION))
+						),
+					$this->get(self::PUNCTUATION)
+				)->
+				setId(self::ORDER_BY)
 			);
 			
 			$this->set(
@@ -410,6 +400,27 @@
 			$this->rules[$rule->getId()] = $rule;
 			
 			return $this;
+		}
+		
+		/**
+		 * @return OqlRepetitionRule
+		**/
+		private static function repetition(
+			OqlGrammarRule $rule,
+			OqlGrammarRule $separatorRule
+		)
+		{
+			return OqlSequenceRule::create()->
+				add($rule)->
+				add(
+					OqlOptionalRule::create()->setRule(
+						OqlRepetitionRule::create()->setRule(
+							OqlSequenceRule::create()->
+								add($separatorRule)->
+								add($rule)
+						)
+					)
+				);
 		}
 		
 		/**
