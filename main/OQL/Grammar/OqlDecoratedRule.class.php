@@ -12,22 +12,26 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlParenthesesRule extends OqlDecoratedRule
+	abstract class OqlDecoratedRule extends OqlGrammarRule
 	{
+		protected $rule = null;
+		
 		/**
-		 * @return OqlParenthesesRule
+		 * @return OqlGrammarRule
 		**/
-		public static function create()
+		public function getRule()
 		{
-			return new self;
+			return $this->rule;
 		}
 		
 		/**
-		 * @return OqlParenthesesRuleParseStrategy
+		 * @return OqlOptionalRule
 		**/
-		public function getParseStrategy()
+		public function setRule(OqlGrammarRule $rule)
 		{
-			return OqlParenthesesRuleParseStrategy::me();
+			$this->rule = $rule;
+			
+			return $this;
 		}
 	}
 ?>

@@ -12,10 +12,8 @@
 	/**
 	 * @ingroup OQL
 	**/
-	class OqlOptionalRule extends OqlGrammarRule
+	class OqlOptionalRule extends OqlDecoratedRule
 	{
-		protected $rule = null;
-		
 		/**
 		 * @return OqlOptionalRule
 		**/
@@ -30,24 +28,6 @@
 		public function getParseStrategy()
 		{
 			return OqlOptionalRuleParseStrategy::me();
-		}
-		
-		/**
-		 * @return OqlGrammarRule
-		**/
-		public function getRule()
-		{
-			return $this->rule;
-		}
-		
-		/**
-		 * @return OqlOptionalRule
-		**/
-		public function setRule(OqlGrammarRule $rule)
-		{
-			$this->rule = $rule;
-			
-			return $this;
 		}
 	}
 ?>

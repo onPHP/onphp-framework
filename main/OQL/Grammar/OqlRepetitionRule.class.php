@@ -12,10 +12,8 @@
 	/**
 	 * @ingroup OQL
 	**/
-	class OqlRepetitionRule extends OqlGrammarRule
+	class OqlRepetitionRule extends OqlDecoratedRule
 	{
-		protected $rule = null;
-		
 		/**
 		 * @return OqlRepetitionRule
 		**/
@@ -30,24 +28,6 @@
 		public function getParseStrategy()
 		{
 			return OqlRepetitionRuleParseStrategy::me();
-		}
-		
-		/**
-		 * @return OqlGrammarRule
-		**/
-		public function getRule()
-		{
-			return $this->rule;
-		}
-		
-		/**
-		 * @return OqlRepetitionRule
-		**/
-		public function setRule(OqlGrammarRule $rule)
-		{
-			$this->rule = $rule;
-			
-			return $this;
 		}
 	}
 ?>
