@@ -29,13 +29,10 @@
 			if (!file_exists($path))
 				return null;
 
-			if (
-				$primitive instanceof PrimitiveForm
-				&& !$primitive instanceof PrimitiveFormsList
-			)
-				return $path;
+			if ($primitive instanceof PrimitiveForm) {
+				if (!$primitive instanceof PrimitiveFormsList)
+					return $path;
 
-			if ($primitive instanceof PrimitiveFormsList) {
 				$result = array();
 
 				$subDirs = glob($path.'/*');

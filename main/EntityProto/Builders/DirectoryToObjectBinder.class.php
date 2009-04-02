@@ -99,6 +99,9 @@
 		{
 			$result = parent::makeList($objectsList);
 
+			if (!$result)
+				return $result;
+
 			foreach ($result as $id => $item) {
 				$item->setId($id);
 			}
