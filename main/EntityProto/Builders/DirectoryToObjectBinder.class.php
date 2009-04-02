@@ -80,6 +80,8 @@
 
 				if ($realObject === false)
 					throw new WrongStateException('invalid pointer: '.$object);
+
+				$realObject = realpath($realObject);
 			}
 
 			if (array_key_exists($realObject, $this->identityMap)) {
@@ -93,6 +95,17 @@
 			return $result;
 		}
 
+		public function makeList($objectsList)
+		{
+			$result = parent::makeList($objectsList);
+
+			foreach ($result as $id => $item) {
+				$item->setId($id);
+			}
+
+			return $result;
+		}
+
 		protected function initialize($object, &$result)
 		{
 			parent::initialize($object, $result);
@@ -102,6 +115,8 @@
 			if (is_link($object)) {
 				$realObject = readlink($object);
 			}
+
+			$realObject = realpath($realObject);
 
 			$this->identityMap[$realObject] = $result;
 
