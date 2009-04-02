@@ -117,8 +117,9 @@
 									setRule(
 										OqlSequenceRule::create()->
 											add(
-												$this->operator('-')->
-													optional()
+												OqlOptionalRule::create()->setRule(
+													$this->operator('-')
+												)
 											)->
 											add(
 												$this->get(self::ARITHMETIC_OPERAND)
@@ -166,8 +167,9 @@
 							add($this->get(self::LOGICAL_OPERAND))->
 							add($this->keyword('is'))->
 							add(
-								$this->operator('not')->
-									optional()
+								OqlOptionalRule::create()->setRule(
+									$this->operator('not')
+								)
 							)->
 							add(
 								OqlAlternationRule::create()->
@@ -189,8 +191,9 @@
 						OqlSequenceRule::create()->
 							add($this->get(self::LOGICAL_OPERAND))->
 							add(
-								$this->operator('not')->
-									optional()
+								OqlOptionalRule::create()->setRule(
+									$this->operator('not')
+								)
 							)->
 							add(
 								OqlAlternationRule::create()->
@@ -228,8 +231,9 @@
 							setRule(
 								OqlSequenceRule::create()->
 									add(
-										$this->operator('not')->
-											optional()
+										OqlOptionalRule::create()->setRule(
+											$this->operator('not')
+										)
 									)->
 									add($this->get(self::LOGICAL_TERM))
 							)->
@@ -248,8 +252,9 @@
 									add(
 										OqlSequenceRule::create()->
 											add(
-												$this->keyword('distinct')->
-													optional()
+												OqlOptionalRule::create()->setRule(
+													$this->keyword('distinct')
+												)
 											)->
 											add($this->get(self::LOGICAL_EXPRESSION))
 									)->
@@ -271,8 +276,9 @@
 											add($this->aggregate('count'))->
 											add($this->get(self::OPEN_PARENTHESES))->
 											add(
-												$this->keyword('distinct')->
-													optional()
+												OqlOptionalRule::create()->setRule(
+													$this->keyword('distinct')
+												)
 											)->
 											add($this->get(self::LOGICAL_EXPRESSION))->
 											add($this->get(self::CLOSE_PARENTHESES))
@@ -280,17 +286,19 @@
 									add(
 										OqlSequenceRule::create()->
 											add(
-												$this->keyword('distinct')->
-													optional()
+												OqlOptionalRule::create()->setRule(
+													$this->keyword('distinct')
+												)
 											)->
 											add($this->get(self::LOGICAL_EXPRESSION))
 									)
 							)->
 							add(
-								OqlSequenceRule::create()->
-									optional()->
-									add($this->keyword('as'))->
-									add($this->get(self::IDENTIFIER))
+								OqlOptionalRule::create()->setRule(
+									OqlSequenceRule::create()->
+										add($this->keyword('as'))->
+										add($this->get(self::IDENTIFIER))
+								)
 							)
 					)->
 					setSeparator($this->get(self::PUNCTUATION))
@@ -310,10 +318,11 @@
 						OqlSequenceRule::create()->
 							add($this->get(self::LOGICAL_EXPRESSION))->
 							add(
-								OqlAlternationRule::create()->
-									optional()->
-									add($this->keyword('asc'))->
-									add($this->keyword('desc'))
+								OqlOptionalRule::create()->setRule(
+									OqlAlternationRule::create()->
+										add($this->keyword('asc'))->
+										add($this->keyword('desc'))
+								)
 							)
 					)->
 					setSeparator($this->get(self::PUNCTUATION))
@@ -333,40 +342,46 @@
 					add($this->keyword('from'))->
 					add($this->get(self::IDENTIFIER))->
 					add(
-						OqlSequenceRule::create()->
-							optional()->
-							add($this->keyword('where'))->
-							add($this->get(self::WHERE))
+						OqlOptionalRule::create()->setRule(
+							OqlSequenceRule::create()->
+								add($this->keyword('where'))->
+								add($this->get(self::WHERE))
+						)
 					)->
 					add(
-						OqlSequenceRule::create()->
-							optional()->
-							add($this->keyword('group by'))->
-							add($this->get(self::GROUP_BY))
+						OqlOptionalRule::create()->setRule(
+							OqlSequenceRule::create()->
+								add($this->keyword('group by'))->
+								add($this->get(self::GROUP_BY))
+						)
 					)->
 					add(
-						OqlSequenceRule::create()->
-							optional()->
-							add($this->keyword('order by'))->
-							add($this->get(self::ORDER_BY))
+						OqlOptionalRule::create()->setRule(
+							OqlSequenceRule::create()->
+								add($this->keyword('order by'))->
+								add($this->get(self::ORDER_BY))
+						)
 					)->
 					add(
-						OqlSequenceRule::create()->
-							optional()->
-							add($this->keyword('having'))->
-							add($this->get(self::HAVING))
+						OqlOptionalRule::create()->setRule(
+							OqlSequenceRule::create()->
+								add($this->keyword('having'))->
+								add($this->get(self::HAVING))
+						)
 					)->
 					add(
-						OqlSequenceRule::create()->
-							optional()->
-							add($this->keyword('limit'))->
-							add($this->get(self::LIMIT))
+						OqlOptionalRule::create()->setRule(
+							OqlSequenceRule::create()->
+								add($this->keyword('limit'))->
+								add($this->get(self::LIMIT))
+						)
 					)->
 					add(
-						OqlSequenceRule::create()->
-							optional()->
-							add($this->keyword('offset'))->
-							add($this->get(self::OFFSET))
+						OqlOptionalRule::create()->setRule(
+							OqlSequenceRule::create()->
+								add($this->keyword('offset'))->
+								add($this->get(self::OFFSET))
+						)
 					)
 			);
 		}
