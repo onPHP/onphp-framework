@@ -175,8 +175,8 @@
 			
 			$result = array();
 			
-			foreach ($objectsList as $object) {
-				$result[] = $this->makeListItemBuilder($object)->
+			foreach ($objectsList as $id => $object) {
+				$result[$id] = $this->makeListItemBuilder($object)->
 					make($object);
 			}
 			

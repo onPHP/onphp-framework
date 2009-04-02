@@ -29,8 +29,18 @@
 			if (
 				$primitive instanceof PrimitiveFile
 				|| $primitive instanceof PrimitiveForm
-			)
+			) {
+				if ($primitive instanceof PrimitiveFormsList) {
+					$result = array();
+
+					foreach (glob($path.'/*') as $path)
+						$result[basename($path)] = $path;
+
+					return $result;
+				}
+
 				return $path;
+			}
 
 			$result = file_get_contents($path);
 
