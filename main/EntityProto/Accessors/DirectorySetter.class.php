@@ -30,12 +30,10 @@
 			$path = $this->object.'/'.$primitive->getName();
 
 			if ($primitive instanceof PrimitiveFile) {
-				if ($value != $path) {
+				if ($value && $value != $path) {
 					copy($value, $path);
 				}
 
-				touch($path);
-				
 				return $this;
 
 			} elseif ($primitive instanceof PrimitiveForm) {
