@@ -257,10 +257,10 @@
 										OqlSequenceRule::create()->
 											add(
 												OqlAlternationRule::create()->
-													add($this->keyword('sum'))->
-													add($this->keyword('avg'))->
-													add($this->keyword('min'))->
-													add($this->keyword('max'))
+													add($this->aggregate('sum'))->
+													add($this->aggregate('avg'))->
+													add($this->aggregate('min'))->
+													add($this->aggregate('max'))
 											)->
 											add($this->get(self::OPEN_PARENTHESES))->
 											add($this->get(self::ARITHMETIC_EXPRESSION))->
@@ -268,7 +268,7 @@
 									)->
 									add(
 										OqlSequenceRule::create()->
-											add($this->keyword('count'))->
+											add($this->aggregate('count'))->
 											add($this->get(self::OPEN_PARENTHESES))->
 											add(
 												$this->keyword('distinct')->
@@ -423,6 +423,15 @@
 		{
 			return self::terminal(null, OqlTokenType::KEYWORD)->
 				setValue($keyword);
+		}
+		
+		/**
+		 * @return OqlTerminalRule
+		**/
+		private static function aggregate($aggregate)
+		{
+			return self::terminal(null, OqlTokenType::AGGREGATE_FUNCTION)->
+				setValue($aggregate);
 		}
 		
 		/**
