@@ -31,7 +31,7 @@
 		const ARITHMETIC_EXPRESSION	= 13;
 		
 		const LOGICAL_OPERAND		= 14;
-		const BETWEEN_OPERAND		= 15;
+		const LOGICAL_UNARY_OPERAND	= 15;
 		const LOGICAL_TERM			= 16;
 		const LOGICAL_EXPRESSION	= 17;
 		
@@ -97,6 +97,7 @@
 					setId(self::ARITHMETIC_OPERAND)->
 					add($this->get(self::IDENTIFIER))->
 					add($this->get(self::NUMBER))->
+					add($this->get(self::PLACEHOLDER))->
 					add(
 						OqlParenthesesRule::create()->setRule(
 							OqlGrammarRuleWrapper::create()->
@@ -137,16 +138,18 @@
 				OqlAlternationRule::create()->
 					setId(self::LOGICAL_OPERAND)->
 					add($this->get(self::ARITHMETIC_EXPRESSION))->
-					add($this->get(self::IDENTIFIER))->
-					add($this->get(self::NUMBER))->
-					add($this->get(self::BOOLEAN))
+					add($this->get(self::BOOLEAN))->
+					add($this->get(self::STRING))->
+					add($this->get(self::NULL))
 			);
 			
 			$this->set(
 				OqlAlternationRule::create()->
-					setId(self::BETWEEN_OPERAND)->
-					add($this->get(self::STRING))->
-					add($this->get(self::LOGICAL_OPERAND))
+					setId(self::LOGICAL_UNARY_OPERAND)->
+					add($this->get(self::IDENTIFIER))->
+					add($this->get(self::PLACEHOLDER))->
+					add($this->get(self::BOOLEAN))->
+					add($this->get(self::NULL))
 			);
 			
 			$this->set(
@@ -203,10 +206,11 @@
 						OqlSequenceRule::create()->
 							add($this->get(self::LOGICAL_OPERAND))->
 							add($this->keyword('between'))->
-							add($this->get(self::BETWEEN_OPERAND))->
+							add($this->get(self::LOGICAL_OPERAND))->
 							add($this->operator('and'))->
-							add($this->get(self::BETWEEN_OPERAND))
+							add($this->get(self::LOGICAL_OPERAND))
 					)->
+					add($this->get(self::LOGICAL_UNARY_OPERAND))->
 					add(
 						OqlParenthesesRule::create()->setRule(
 							OqlGrammarRuleWrapper::create()->
@@ -227,9 +231,7 @@
 										$this->operator('not')->
 											optional()
 									)->
-									add(
-										$this->get(self::LOGICAL_TERM)
-									)
+									add($this->get(self::LOGICAL_TERM))
 							)->
 							setSeparator($this->operator('and'))
 					)->
@@ -243,6 +245,14 @@
 						OqlSequenceRule::create()->
 							add(
 								OqlAlternationRule::create()->
+									add(
+										OqlSequenceRule::create()->
+											add(
+												$this->keyword('distinct')->
+													optional()
+											)->
+											add($this->get(self::LOGICAL_EXPRESSION))
+									)->
 									add(
 										OqlSequenceRule::create()->
 											add(
