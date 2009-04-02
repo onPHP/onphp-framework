@@ -13,7 +13,10 @@
 	// TODO: reduce token objects count (e.g. take out context info
 	// (line + position) from OqlToken and use flyweight pattern)
 
-	// TODO: use standart array iteration mechanism (current, next, prev) 
+	// TODO: use standart array iteration mechanism (current, next, prev)
+	
+	// TODO: we need line and position for error handling only, so calculate them
+	// in context getter (getLine(), getPosition() -> getContext()), but not in tokenize()
 	
 	/**
 	 * @ingroup OQL
