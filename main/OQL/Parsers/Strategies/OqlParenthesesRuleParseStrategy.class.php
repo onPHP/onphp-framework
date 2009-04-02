@@ -48,9 +48,8 @@
 				return $node;
 			
 			} catch (SyntaxErrorException $e) {
-				if ($silent)
-					$tokenizer->setIndex($index);
-				else
+				$tokenizer->setIndex($index);
+				if (!$silent)
 					throw $e;
 			}
 			

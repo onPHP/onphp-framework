@@ -43,22 +43,18 @@
 						$childNodes[] = $node;
 				}
 				
-				switch (count($childNodes)) {
-					case 0:
-						return null;
-					
-					case 1:
-						return reset($childNodes);
-					
-					default:
-						return OqlNonterminalNode::create()->
-							setChilds($childNodes);
-				}
+				// FIXME: error message
+				if (!$childNodes)
+					$this->raiseError($tokenizer, 'expected');
+				
+				if (count($childNodes) == 1)
+					return reset($childNodes);
+				else
+					return OqlNonterminalNode::create()->setChilds($childNodes);
 			
 			} catch (SyntaxErrorException $e) {
-				if ($silent)
-					$tokenizer->setIndex($index);
-				else
+				$tokenizer->setIndex($index);
+				if (!$silent)
 					throw $e;
 			}
 			
