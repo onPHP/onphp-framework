@@ -45,7 +45,7 @@
 			
 			} elseif (!$silent && $rule->isRequired()) {
 				// FIXME: error message
-				$this->raiseError($tokenizer, 'expected');
+				$this->raiseError($tokenizer, 'expected "'.$rule->getValue().'"');
 			}
 			
 			return null;
