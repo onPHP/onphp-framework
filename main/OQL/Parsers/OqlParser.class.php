@@ -59,7 +59,8 @@
 		}
 		
 		/**
-		 * @return OqlNonterminalNode
+		 * @throws SyntaxErrorException
+		 * @return OqlSyntaxNode
 		**/
 		public function parse($string)
 		{
@@ -67,13 +68,17 @@
 			Assert::isNotNull($this->grammar, 'grammar must be set');
 			Assert::isNotNull($this->ruleId);
 			
-			$node = $this->grammar->get($this->ruleId)->process(
-				new OqlTokenizer($string),
-				false
-			);
+			$tokenizer = new OqlTokenizer($string);
+			$node = $this->grammar->get($this->ruleId)->
+				process($tokenizer, false);
 			
-			if ($node instanceof OqlTerminalNode)
-				return OqlNonterminalNode::create()->addChild($node);
+			if ($token = $tokenizer->peek()) {
+				throw new SyntaxErrorException(
+					'unexpected "'.$token->getValue().'"',
+					$tokenizer->getLine(),
+					$tokenizer->getPosition()
+				);
+			}
 			
 			return $node;
 		}
