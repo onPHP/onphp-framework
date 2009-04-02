@@ -23,23 +23,32 @@
 
 			$path = $this->object.'/'.$primitive->getName();
 
+			if ($primitive instanceof PrimitiveFile)
+				return $path;
+
 			if (!file_exists($path))
 				return null;
 
 			if (
-				$primitive instanceof PrimitiveFile
-				|| $primitive instanceof PrimitiveForm
-			) {
-				if ($primitive instanceof PrimitiveFormsList) {
-					$result = array();
-
-					foreach (glob($path.'/*') as $path)
-						$result[basename($path)] = $path;
-
-					return $result;
-				}
-
+				$primitive instanceof PrimitiveForm
+				&& !$primitive instanceof PrimitiveFormsList
+			)
 				return $path;
+
+			if ($primitive instanceof PrimitiveFormsList) {
+				$result = array();
+
+				$subDirs = glob($path.'/*');
+
+				if ($subDirs === false)
+					throw new WrongStateException(
+						'cannot read directory '.$path
+					);
+
+				foreach ($subDirs as $path)
+					$result[basename($path)] = $path;
+
+				return $result;
 			}
 
 			$result = file_get_contents($path);
