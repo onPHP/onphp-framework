@@ -21,7 +21,7 @@
 			
 			$primitive = $this->mapping[$name];
 			
-			if ($value && !is_scalar($value)) {
+			if ($value && !is_scalar($value) && !is_array($value)) {
 				throw new UnimplementedFeatureException(
 					"directory services for property $name is unsupported yet"
 				);
