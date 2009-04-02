@@ -32,24 +32,18 @@
 		)
 		{
 			Assert::isTrue($rule instanceof OqlParenthesesRule);
-			Assert::isNotNull($rule->getRule());
+			Assert::isNotNull($innerRule = $rule->getRule());
 			
 			$index = $tokenizer->getIndex();
 			
 			try {
-				if ($this->checkToken($tokenizer->peek(), '('))
-					$tokenizer->next();
-				else
-					$this->raiseError($tokenizer, 'expected (');
+				$this->checkParentheses($tokenizer, '(');
 				
 				// FIXME: error message
-				if (!$node = $rule->getRule()->process($tokenizer, $silent))
+				if (!$node = $innerRule->process($tokenizer, $silent))
 					$this->raiseError($tokenizer, 'expected');
 				
-				if ($this->checkToken($tokenizer->peek(), ')'))
-					$tokenizer->next();
-				else
-					$this->raiseError($tokenizer, 'expected )');
+				$this->checkParentheses($tokenizer, ')');
 				
 				return $node;
 			
@@ -61,6 +55,19 @@
 			}
 			
 			return null;
+		}
+		
+		/**
+		 * @return OqlParenthesesRuleParseStrategy
+		**/
+		private function checkParentheses(OqlTokenizer $tokenizer, $value)
+		{
+			if ($this->checkToken($tokenizer->peek(), $value))
+				$tokenizer->next();
+			else
+				$this->raiseError($tokenizer, 'expected "'.$value.'"');
+			
+			return $this;
 		}
 		
 		private static function checkToken($token, $value)
