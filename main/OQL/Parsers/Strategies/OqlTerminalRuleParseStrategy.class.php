@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup OQL
 	**/
-	class OqlTerminalRuleParseStrategy extends OqlGrammarRuleParseStrategy
+	final class OqlTerminalRuleParseStrategy extends OqlGrammarRuleParseStrategy
 	{
 		/**
 		 * @return OqlTerminalRuleParseStrategy
