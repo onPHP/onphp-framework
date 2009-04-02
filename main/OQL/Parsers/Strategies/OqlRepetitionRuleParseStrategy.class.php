@@ -38,7 +38,6 @@
 			$childNodes = array();
 			$separatorNode = null;
 			
-			// NOTE: rule and separator are mandatory in spite of optional()
 			do {
 				if ($node = $rule->getRule()->process($tokenizer, true)) {
 					$childNodes[] = $node;
@@ -59,7 +58,7 @@
 				else
 					return OqlNonterminalNode::create()->setChilds($childNodes);
 			
-			} elseif (!$silent && $rule->isRequired()) {
+			} elseif (!$silent) {
 				// FIXME: error message
 				$this->raiseError($tokenizer, 'expected');
 			}

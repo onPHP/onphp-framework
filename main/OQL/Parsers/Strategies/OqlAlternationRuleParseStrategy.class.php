@@ -39,7 +39,7 @@
 			}
 			
 			// FIXME: error message
-			if (!$silent && $rule->isRequired())
+			if (!$silent)
 				$this->raiseError($tokenizer, 'expected');
 			
 			return null;

@@ -54,10 +54,10 @@
 				return $node;
 			
 			} catch (SyntaxErrorException $e) {
-				if (!$silent && $rule->isRequired())
-					throw $e;
-				else
+				if ($silent)
 					$tokenizer->setIndex($index);
+				else
+					throw $e;
 			}
 			
 			return null;

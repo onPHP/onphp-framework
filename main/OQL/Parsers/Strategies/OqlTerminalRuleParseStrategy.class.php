@@ -43,7 +43,7 @@
 				
 				return OqlTerminalNode::create()->setToken($token);
 			
-			} elseif (!$silent && $rule->isRequired()) {
+			} elseif (!$silent) {
 				// FIXME: error message
 				$this->raiseError($tokenizer, 'expected "'.$rule->getValue().'"');
 			}

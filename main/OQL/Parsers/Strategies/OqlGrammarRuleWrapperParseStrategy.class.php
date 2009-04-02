@@ -34,10 +34,7 @@
 			Assert::isTrue($rule instanceof OqlGrammarRuleWrapper);
 			Assert::isNotNull($rule->getRule());
 			
-			return $rule->getRule()->process(
-				$tokenizer,
-				!$rule->isRequired() || $silent
-			);
+			return $rule->getRule()->process($tokenizer, $silent);
 		}
 	}
 ?>

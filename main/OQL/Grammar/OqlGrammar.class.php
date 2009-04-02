@@ -44,8 +44,7 @@
 		const OFFSET				= self::LIMIT;
 		const SELECT				= 22;
 		
-		private $rules			= array();
-		private $optionalRules	= array();
+		private $rules = array();
 		
 		/**
 		 * @return OqlGrammar
@@ -390,23 +389,10 @@
 		 * @throws MissingElementException
 		 * @return OqlGrammarRule
 		**/
-		public function get($id, $required = true)
+		public function get($id)
 		{
-			if (isset($this->rules[$id])) {
-				Assert::isTrue($this->rules[$id]->isRequired());
-				
-				if ($required) {
-					return $this->rules[$id];
-				
-				} else {
-					if (!isset($this->optionalRules[$id])) {
-						$this->optionalRules[$id] = clone $this->rules[$id];
-						$this->optionalRules[$id]->optional();
-					}
-					
-					return $this->optionalRules[$id];
-				}
-			}
+			if (isset($this->rules[$id]))
+				return $this->rules[$id];
 			
 			throw new MissingElementException(
 				'knows nothing about rule '.$id
@@ -424,7 +410,6 @@
 		private function set(OqlGrammarRule $rule)
 		{
 			Assert::isNotNull($rule->getId());
-			Assert::isTrue($rule->isRequired());
 			
 			$this->rules[$rule->getId()] = $rule;
 			

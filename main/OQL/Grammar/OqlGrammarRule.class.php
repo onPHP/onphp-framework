@@ -15,7 +15,6 @@
 	abstract class OqlGrammarRule implements Identifiable
 	{
 		protected $id		= null;
-		protected $required	= true;
 		protected $mutator	= null;
 		
 		/**
@@ -34,31 +33,6 @@
 		public function setId($id)
 		{
 			$this->id = $id;
-			
-			return $this;
-		}
-		
-		public function isRequired()
-		{
-			return $this->required;
-		}
-		
-		/**
-		 * @return OqlGrammarRule
-		**/
-		public function required()
-		{
-			$this->required = true;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlGrammarRule
-		**/
-		public function optional()
-		{
-			$this->required = false;
 			
 			return $this;
 		}
