@@ -32,9 +32,9 @@
 		)
 		{
 			Assert::isTrue($rule instanceof OqlGrammarRuleWrapper);
-			Assert::isNotNull($rule->getRule());
+			Assert::isNotNull($innerRule = $rule->getRule());
 			
-			return $rule->getRule()->process($tokenizer, $silent);
+			return $innerRule->process($tokenizer, $silent);
 		}
 	}
 ?>

@@ -54,15 +54,12 @@
 		private static function checkToken(OqlToken $token, $type, $value)
 		{
 			if ($token->getType() == $type) {
-				if ($value === null) {
+				if ($value === null)
 					return true;
-				
-				} elseif (is_array($value)) {
+				elseif (is_array($value))
 					return in_array($token->getValue(), $value);
-				
-				} else {
+				else
 					return $token->getValue() == $value;
-				}
 			}
 			
 			return false;

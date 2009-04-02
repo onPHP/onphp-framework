@@ -33,8 +33,9 @@
 		{
 			Assert::isTrue($rule instanceof OqlSequenceRule);
 			
+			$index = $tokenizer->getIndex();
+			
 			try {
-				$index = $tokenizer->getIndex();
 				$childNodes = array();
 				
 				foreach ($rule->getList() as $ruleItem) {
