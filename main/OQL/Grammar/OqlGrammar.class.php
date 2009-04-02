@@ -58,8 +58,6 @@
 		{
 			$this->
 				set($this->terminal(self::NULL, OqlTokenType::NULL))->
-				// FIXME: identifier name may be equal to reserved word or aggregate function name 
-				set($this->terminal(self::IDENTIFIER, OqlTokenType::IDENTIFIER))->
 				set($this->terminal(self::NUMBER, OqlTokenType::NUMBER))->
 				set($this->terminal(self::BOOLEAN, OqlTokenType::BOOLEAN))->
 				set($this->terminal(self::STRING, OqlTokenType::STRING))->
@@ -67,6 +65,13 @@
 				set($this->terminal(self::PUNCTUATION, OqlTokenType::PUNCTUATION));
 			
 			$this->
+				set(
+					OqlAlternationRule::create()->
+						setId(self::IDENTIFIER)->
+						add($this->terminal(null, OqlTokenType::IDENTIFIER))->
+						add($this->terminal(null, OqlTokenType::AGGREGATE_FUNCTION))->
+						add($this->terminal(null, OqlTokenType::KEYWORD))
+				)->
 				set(
 					OqlAlternationRule::create()->
 						setId(self::CONSTANT)->
@@ -248,15 +253,6 @@
 						OqlSequenceRule::create()->
 							add(
 								OqlAlternationRule::create()->
-									add(
-										OqlSequenceRule::create()->
-											add(
-												OqlOptionalRule::create()->setRule(
-													$this->keyword('distinct')
-												)
-											)->
-											add($this->get(self::LOGICAL_EXPRESSION))
-									)->
 									add(
 										OqlSequenceRule::create()->
 											add(
