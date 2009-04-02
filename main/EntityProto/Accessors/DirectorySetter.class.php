@@ -33,6 +33,8 @@
 				if ($value != $path) {
 					copy($value, $path);
 				}
+
+				touch($path);
 				
 				return $this;
 
