@@ -64,29 +64,35 @@
 				set($this->terminal(self::PLACEHOLDER, OqlTokenType::PLACEHOLDER))->
 				set($this->terminal(self::PUNCTUATION, OqlTokenType::PUNCTUATION));
 			
+			// <identifier> ::= <name> | <aggregate_function> | <keyword> 
+			$this->set(
+				OqlAlternationRule::create()->
+					setId(self::IDENTIFIER)->
+					add($this->terminal(null, OqlTokenType::IDENTIFIER))->
+					add($this->terminal(null, OqlTokenType::AGGREGATE_FUNCTION))->
+					add($this->terminal(null, OqlTokenType::KEYWORD))
+			);
+			
+			//	<constant> ::= <string> | <number> | <boolean> | <placeholder> | <null>
+			$this->set(
+				OqlAlternationRule::create()->
+					setId(self::CONSTANT)->
+					add($this->get(self::STRING))->
+					add($this->get(self::NUMBER))->
+					add($this->get(self::BOOLEAN))->
+					add($this->get(self::PLACEHOLDER))->
+					add($this->get(self::NULL))
+			);
+			
+			//	<pattern> ::= <string> | <placeholder>
+			$this->set(
+				OqlAlternationRule::create()->
+					setId(self::PATTERN)->
+					add($this->get(self::STRING))->
+					add($this->get(self::PLACEHOLDER))
+			);
+			
 			$this->
-				set(
-					OqlAlternationRule::create()->
-						setId(self::IDENTIFIER)->
-						add($this->terminal(null, OqlTokenType::IDENTIFIER))->
-						add($this->terminal(null, OqlTokenType::AGGREGATE_FUNCTION))->
-						add($this->terminal(null, OqlTokenType::KEYWORD))
-				)->
-				set(
-					OqlAlternationRule::create()->
-						setId(self::CONSTANT)->
-						add($this->get(self::STRING))->
-						add($this->get(self::NUMBER))->
-						add($this->get(self::BOOLEAN))->
-						add($this->get(self::PLACEHOLDER))->
-						add($this->get(self::NULL))
-				)->
-				set(
-					OqlAlternationRule::create()->
-						setId(self::PATTERN)->
-						add($this->get(self::STRING))->
-						add($this->get(self::PLACEHOLDER))
-				)->
 				set(
 					$this->terminal(self::OPEN_PARENTHESES, OqlTokenType::PARENTHESES)->
 						setValue('(')
@@ -96,6 +102,8 @@
 						setValue(')')
 				);
 			
+			//	<arithmetic_operand> ::=
+			//		<identifier> | <number> | <placeholder> | <arithmetic_expression>
 			$this->set(
 				OqlAlternationRule::create()->
 					setId(self::ARITHMETIC_OPERAND)->
@@ -111,6 +119,11 @@
 					)
 			);
 			
+			//	<arithmetic_mul_expression> ::=
+			//		[ "-" ] <arithmetic_operand> * ( ( "*" | "/" ) [ "-" ] <arithmetic_operand> )
+			
+			//	<arithmetic_expression> ::=
+			//		<arithmetic_mul_expression> * ( ( "+" | "-" ) <arithmetic_mul_expression> )
 			$this->set(
 				OqlSequenceRule::create()->
 					setId(self::ARITHMETIC_EXPRESSION)->
@@ -131,6 +144,8 @@
 					)
 			);
 			
+			//	<logical_operand> ::=
+			//		<arithmetic_expression> | <boolean> | <string> | <null>
 			$this->set(
 				OqlAlternationRule::create()->
 					setId(self::LOGICAL_OPERAND)->
@@ -140,6 +155,8 @@
 					add($this->get(self::NULL))
 			);
 			
+			//	<logical_unary_operand> ::=
+			//		<identifier> | <placeholder> | <boolean> | <null>
 			$this->set(
 				OqlAlternationRule::create()->
 					setId(self::LOGICAL_UNARY_OPERAND)->
@@ -149,6 +166,14 @@
 					add($this->get(self::NULL))
 			);
 			
+			//	<logical_term> ::=
+			//		( <logical_operand> <comparison_operator> <logical_operand> )
+			//		| ( <logical_operand> "is" [ "not" ] ( <null> | <boolean> ) )
+			//		| ( "in" "(" <constant> * ( "," <constant> ) ")" )
+			//		| ( <logical_operand> [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
+			//		| ( <logical_operand> "between" <logical_operand> "and" <logical_operand> )
+			//		| <logical_unary_operand>
+			//		| <logical_expression>
 			$this->set(
 				OqlAlternationRule::create()->
 					setId(self::LOGICAL_TERM)->
@@ -177,12 +202,14 @@
 						OqlSequenceRule::create()->
 							add($this->get(self::LOGICAL_OPERAND))->
 							add($this->keyword('in'))->
+							add($this->get(self::OPEN_PARENTHESES))->
 							add(
 								self::repetition(
 									$this->get(self::CONSTANT),
 									$this->get(self::PUNCTUATION)
 								)
-							)
+							)->
+							add($this->get(self::CLOSE_PARENTHESES))
 					)->
 					add(
 						OqlSequenceRule::create()->
@@ -220,6 +247,11 @@
 					)
 			);
 			
+			//	<logical_and_expression> ::=
+			//		[ "not" ] <logical_term> * ( "and" [ "not" ] <logical_term> )
+			
+			//	<logical_expression> ::=
+			//		<logical_and_expression> * ( "or" <logical_and_expression> )
 			$this->set(
 				self::repetition(
 					self::repetition(
@@ -289,6 +321,7 @@
 				setId(self::PROPERTIES)
 			);
 			
+			//	<group_by> ::= <identifier> * ( "," <identifier> )
 			$this->set(
 				self::repetition(
 					$this->get(self::IDENTIFIER),
@@ -297,6 +330,9 @@
 				setId(self::GROUP_BY)
 			);
 			
+			//	<order_by> ::=
+			//		<logical_expression> [ "asc" | "desc" ]
+			//		* ( "," <logical_expression> [ "asc" | "desc" ] )
 			$this->set(
 				self::repetition(
 					OqlSequenceRule::create()->
@@ -313,6 +349,7 @@
 				setId(self::ORDER_BY)
 			);
 			
+			//	<limit> ::= <number> | <placeholder> 
 			$this->set(
 				OqlAlternationRule::create()->
 					setId(self::LIMIT)->
@@ -320,10 +357,27 @@
 					add($this->get(self::PLACEHOLDER))
 			);
 			
+			//	<where>  ::= <logical_expression>
+			//	<having> ::= <logical_expression>
+			//	<offset> ::= <limit>
+			
+			//	<select> ::=
+			//		[ <properties> ]
+			//		"from" <identifier>
+			//		[ "where" <where> ]
+			//		[ "group by" <group_by> ]
+			//		[ "order by" <order_by> ]
+			//		[ "having" <having> ]
+			//		[ "limit" <limit> ]
+			//		[ "offset" <offset> ]
 			$this->set(
 				OqlSequenceRule::create()->
 					setId(self::SELECT)->
-					add($this->get(self::PROPERTIES, false))->
+					add(
+						OqlOptionalRule::create()->setRule(
+							$this->get(self::PROPERTIES)
+						)
+					)->
 					add($this->keyword('from'))->
 					add($this->get(self::IDENTIFIER))->
 					add(
