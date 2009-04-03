@@ -45,13 +45,10 @@
 			if ($uTimeout && $this->getStream()->isEof())
 				usleep($uTimeout);
 
-			if ($this->getStream()->isEof())
-				return null;
-
 			$string = $this->getStream()->readString();
 
-			if (!$string)
-				throw new WrongStateException('unexpected end of file?');
+			if (!$string && $this->getStream()->isEof())
+				return null;
 
 			$this->getQueue()->setOffset($this->getStream()->getOffset());
 

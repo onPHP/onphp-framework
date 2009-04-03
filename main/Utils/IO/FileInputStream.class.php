@@ -130,6 +130,9 @@
 				)
 				: fread($this->fd, $length);
 
+			if ($string && $result === false && feof($this->fd))
+				$result = null; // fgets returns false on eof
+
 			if ($result === false)
 				throw new IOException('failed to read from file');
 
