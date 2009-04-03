@@ -116,6 +116,24 @@
 			return $token ? $token->getPosition() : null;
 		}
 		
+		/**
+		 * @return OqlTokenContext
+		**/
+		public function getContext()
+		{
+			$token = $this->token;
+			if ($token === null)
+				$token = $this->prevToken;
+			
+			if ($token !== null) {
+				
+			} else {
+				
+			}
+			
+			return OqlTokenContext::create($line, $position);
+		}
+		
 		public function getIndex()
 		{
 			return $this->index;

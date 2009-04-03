@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2009 by Vladlen Y. Koshelev                              *
+ *   Copyright (C) 2008-2009 by Vladlen Y. Koshelev                         *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -8,31 +8,38 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
+/* $Id$ */
 
 	/**
 	 * @ingroup OQL
 	**/
-	abstract class OqlGrammarRuleParseStrategy extends Singleton
-		implements Instantiatable
+	final class OqlTokenContext
 	{
-		/**
-		 * @throws OqlSyntaxErrorException
-		 * @return OqlSyntaxNode
-		**/
-		abstract public function parse(
-			OqlGrammarRule $rule,
-			OqlTokenizer $tokenizer,
-			$silent = false
-		);
+		private $line		= null;
+		private $position	= null;
 		
 		/**
-		 * @throws OqlSyntaxErrorException
+		 * @return OqlTokenContext
 		**/
-		protected function raiseError(OqlTokenizer $tokenizer, $message)
+		public static function create($line, $position)
 		{
-			throw new OqlSyntaxErrorException(
-				$message, $tokenizer->getIndex()
-			);
+			return new self($line, $position);
+		}
+		
+		public function __construct($line, $position)
+		{
+			$this->line = $line;
+			$this->position = $position;
+		}
+		
+		public function getLine()
+		{
+			return $this->line;
+		}
+		
+		public function getPosition()
+		{
+			return $this->position;
 		}
 	}
 ?>

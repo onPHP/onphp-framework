@@ -8,31 +8,25 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
+/* $Id$ */
 
 	/**
 	 * @ingroup OQL
 	**/
-	abstract class OqlGrammarRuleParseStrategy extends Singleton
-		implements Instantiatable
+	final class OqlSyntaxErrorException extends BaseException
 	{
-		/**
-		 * @throws OqlSyntaxErrorException
-		 * @return OqlSyntaxNode
-		**/
-		abstract public function parse(
-			OqlGrammarRule $rule,
-			OqlTokenizer $tokenizer,
-			$silent = false
-		);
+		private $tokenIndex = null;
 		
-		/**
-		 * @throws OqlSyntaxErrorException
-		**/
-		protected function raiseError(OqlTokenizer $tokenizer, $message)
+		public function __construct($message, $tokenIndex = null, $code = null)
 		{
-			throw new OqlSyntaxErrorException(
-				$message, $tokenizer->getIndex()
-			);
+			parent::__construct($message, $code);
+			
+			$this->tokenIndex = $tokenIndex;
+		}
+		
+		public function getTokenIndex()
+		{
+			return $this->tokenIndex;
 		}
 	}
 ?>

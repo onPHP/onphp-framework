@@ -52,7 +52,7 @@
 				else
 					return OqlNonterminalNode::create()->setChilds($childNodes);
 			
-			} catch (SyntaxErrorException $e) {
+			} catch (OqlSyntaxErrorException $e) {
 				$tokenizer->setIndex($index);
 				if (!$silent)
 					throw $e;
