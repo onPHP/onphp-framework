@@ -25,6 +25,7 @@
 	**/
 	final class OqlTokenizer
 	{
+		private $string			= null;
 		private $tokens			= array();
 		private $tokensCount	= 0;
 		private $token			= null;
@@ -87,10 +88,14 @@
 		
 		public function __construct($string)
 		{
+			Assert::isString($string);
+			
+			$this->string = $string;
+			
 			if (!self::$pattern)
 				self::$pattern = '/('.implode(')|(', self::$masks).')/is';
 			
-			$this->tokenize($string);
+			$this->tokenize();
 		}
 		
 		public function getList()
@@ -119,16 +124,36 @@
 		/**
 		 * @return OqlTokenContext
 		**/
-		public function getContext()
+		public function getContext($index)
 		{
-			$token = $this->token;
-			if ($token === null)
-				$token = $this->prevToken;
+			$line = null;
+			$position = null;
 			
-			if ($token !== null) {
+			if (isset($this->tokens[$index])) {
+				$offset = 0;
 				
-			} else {
+				for ($i = 0; $i <= $index; $i++) {
+					if (!isset($this->tokens[$i]))
+						break;
+					
+					$offset += $this->tokens[$i]->getRawValue();
+				}
 				
+				$pos = mb_strpos(
+					$this->string,
+					$this->tokens[$index]->getRawValue(),
+					$offset
+				);
+				
+				if ($pos !== false) {
+					$nlPositions = $this->getNewLinePositions($this->string, $pos);
+					$line = count($nlPositions) + 1;
+					
+					if ($line > 1)
+						$position = $pos - end($nlPositions);
+					else
+						$position = $pos + 1;
+				}
 			}
 			
 			return OqlTokenContext::create($line, $position);
@@ -208,11 +233,9 @@
 		/**
 		 * @return OqlTokenizer
 		**/
-		private function tokenize($string)
+		private function tokenize()
 		{
-			Assert::isString($string);
-			
-			$maxMultibyteDelta = strlen($string) - mb_strlen($string);
+			$maxMultibyteDelta = strlen($this->string) - mb_strlen($this->string);
 			$isMultibyte = $maxMultibyteDelta > 0;
 			
 			$pattern = self::$pattern;
@@ -221,7 +244,7 @@
 			
 			preg_match_all(
 				$pattern,
-				$string,
+				$this->string,
 				$matches,
 				PREG_SET_ORDER | PREG_OFFSET_CAPTURE
 			);
@@ -312,6 +335,21 @@
 			}
 			
 			return $value;
+		}
+		
+		private static function getNewLinePositions($s, $length)
+		{
+			$s = mb_substr($s, 0, $length);
+			
+			$result = array();
+			$offset = 0;
+			
+			while (($pos = mb_strpos($s, "\n", $offset)) !== false) {
+				$result[] = $pos;
+				$offset = $pos + 1;
+			}
+			
+			return $result;
 		}
 	}
 ?>
