@@ -144,6 +144,11 @@
 					.get_class($this->proto)
 				);
 			
+			return $this->compile($object, $recursive);
+		}
+		
+		public function compile($object, $recursive = true)
+		{
 			$result = $this->createEmpty();
 
 			$this->initialize($object, $result);

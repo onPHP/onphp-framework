@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2008 by Ivan Y. Khvostishkov                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,25 +10,30 @@
  ***************************************************************************/
 /* $Id$ */
 
-	final class FormGetter extends PrototypedGetter
+	final class ObjectToObjectCast extends ObjectBuilder
 	{
-		public function __construct(EntityProto $proto, &$object)
+		/**
+		 * @return ObjectToObjectCast
+		**/
+		public static function create(EntityProto $proto)
 		{
-			Assert::isInstance($object, 'Form');
-			
-			return parent::__construct($proto, $object);
+			return new self($proto);
 		}
 		
-		public function get($name)
+		/**
+		 * @return ObjectGetter
+		**/
+		protected function getGetter($object)
 		{
-			if (!isset($this->mapping[$name]))
-				throw new WrongArgumentException(
-					"knows nothing about property '{$name}'"
-				);
-			
-			$primitive = $this->mapping[$name];
-			
-			return $this->object->getValue($primitive->getName());
+			return new ObjectGetter($this->proto, $object);
+		}
+		
+		/**
+		 * @return ObjectSetter
+		**/
+		protected function getSetter(&$object)
+		{
+			return new ObjectSetter($this->proto, $object);
 		}
 	}
 ?>
