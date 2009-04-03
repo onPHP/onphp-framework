@@ -18,14 +18,6 @@
 		
 		protected $parent = null;
 		
-		/**
-		 * @return OqlSyntaxNode
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
 		public function __construct()
 		{
 			$this->id = self::$globalId++;
