@@ -1,100 +1,106 @@
 $Id$
 
-	<query> ::=
-		[ <aggregate_clause> ]
-		"from" <class_clause>
-		[ "where" <where_clause> ]
-		[ "group by" <group_by_clause> ]
-		[ "order by" <order_by_clause> ]
-		[ "having" <having_clause> ]
-		[ "limit" <limit_clause> ]
-		[ "offset" <offset_clause> ]
-	
-	<aggregate_clause> ::=
+	/**
+	 * @see http://www.w3.org/Notation.html
+	 *
+	 * Specific definitions:
+	 * RULE1 | RULE2	- alternation: returns first-matched rule
+	 * RULE1 || RULE2	- greedy alternation: returns best-matched rule of rules list 
+	**/
+
+	<select> ::=
+		[ <properties> ]
+		"from" <identifier>
+		[ "where" <where> ]
+		[ "group by" <group_by> ]
+		[ "order by" <order_by> ]
+		[ "having" <having> ]
+		[ "limit" <limit> ]
+		[ "offset" <offset> ]
+
+	<properties> ::= <property> * ( "," <property> )
+
+	<where> ::= <logical_expression>
+
+	<group_by> ::= <identifier> * ( "," <identifier> )
+
+	<order_by> ::=
+		<mixed_operand> [ "asc" | "desc" ]
+		* ( "," <mixed_operand> [ "asc" | "desc" ] )
+
+	<having> ::= <logical_expression>
+
+	<limit> ::= <number> | <placeholder> 
+
+	<offset> ::= <limit>
+
+	<property> ::=
 		(
-			( ( "sum" | "avg" | "min" | "max" ) "(" <arithmetic_expression> ")" )
-			| ( "count(" [ "distinct" ] <logical_expression> ")" )
-			| ( [ "distinct" ] <logical_expression> )
-		) [ "as" <identifier> ]
-		[ "," <aggregate_clause> ]
-	
-	<class_clause> ::=
-		<identifier>
-	
-	<where_clause> ::=
-		<logical_expression>
-	
-	<group_by_clause> ::=
-		<identifier> [ "," <group_by_clause> ]
-	
-	<order_by_clause> ::=
-		<logical_expression> [ "asc" | "desc" ] [ "," <order_by_clause> ]
-	
-	<having_clause> ::=
-		<logical_expression>
-	
-	<limit_clause> ::=
-		<number> | <substitution>
-	
-	<offset_clause> ::=
-		<number> | <substitution>
-	
+			( ( "sum" | "avg" | "min" | "max" ) "(" <mixed_operand> ")" )
+			| ( "count" "(" [ "distinct" ] <mixed_operand> ")" )
+			| ( [ "distinct" ] <mixed_operand> )
+		)
+		[ "as" <identifier> ]
+
+	<mixed_operand> ::= <arithmetic_expression> || <logical_expression>
+
 	<logical_expression> ::=
-		<logical_and_expression> { [ "or" ] <logical_and_expression> }
-	
+		<logical_and_expression> * ( "or" <logical_and_expression> )
+
 	<logical_and_expression> ::=
-		<logical_term> { [ "and" ] ( <logical_term> | ( "(" <logical_expression> ")" ) ) }
-	
+		[ "not" ] <logical_term> * ( "and" [ "not" ] <logical_term> )
+
 	<logical_term> ::=
-		( "not" <logical_expression> )
-		| (
-			( <arithmetic_expression> | <boolean> | <string> )
-			| (
-				( <comparison_op> <arithmetic_expression> )
-				| ( "is" ( "not null" | "true" | "false" ) )
-				| ( [ "not" ] "in (" <in_expression> ")" )
+		(
+			<logical_operand>
+			(
+				( <comparison_operator> <logical_operand> )
+				| ( "is" [ "not" ] ( <null> | <boolean> ) )
+				| ( "in" "(" <constant> * ( "," <constant> ) ")" )
 				| ( [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
-				| ( "between" ( <identifier> | <constant> ) "and" ( <identifier> | <constant> ) )
+				| ( "between" <logical_operand> "and" <logical_operand> )
 			)
 		)
-	
+		| <logical_unary_operand>
+		| "(" <logical_expression> ")"
+
+	<logical_operand> ::= <arithmetic_expression> | <boolean> | <string> | <null>
+
+	<logical_unary_operand> ::= <identifier> | <placeholder> | <boolean> | <null>
+
 	<arithmetic_expression> ::=
-		[ "-" ] <arithmetic_mul_expression> { ( "+" | "-" ) <arithmetic_mul_expression> }
-	
+		<arithmetic_mul_expression> * ( ( "+" | "-" ) <arithmetic_mul_expression> )
+
 	<arithmetic_mul_expression> ::=
-		<arithmetic_term> { ( "*" | "/" ) ( <arithmetic_term> | ( "(" <arithmetic_expression> ")" ) }
-	
-	<arithmetic_term> ::=
-		<identifier> | <number> | <substitution>
-	
-	<comparison_op> ::=
-		"=" | "<" | ">" | "<>" | "!=" | "<=" | ">="
-	
-	<in_expression> ::=
-		<constant> [ "," <in_expression> ]
-	
-	<pattern> ::=
-		<string> | <substitution>
-	
-	<constant> ::=
-		<string> | <number> | <boolean> | <substitution> | "null"
-	
-	<boolean> ::=
-		"true" | "false"
-	
+		[ "-" ] <arithmetic_operand> * ( ( "*" | "/" ) [ "-" ] <arithmetic_operand> )
+
+	<arithmetic_operand> ::=
+		<identifier> | <number> | <placeholder> | ( "(" <arithmetic_expression> ")" )
+
+	<identifier> ::= <name> | <aggregate_function> | <keyword>
+
+	<constant> ::= <string> | <number> | <boolean> | <placeholder> | <null>
+
+	<pattern> ::= <string> | <placeholder>
+
+	<aggregate_function> ::= "sum" | "avg" | "min" | "max" | "count"
+
+	<comparison_operator> ::= "=" | "<" | ">" | "<>" | "!=" | "<=" | ">="
+
+	<null> ::= "null"
+
+	<boolean> ::= "true" | "false"
+
+	<name> ::= ( <letter> | "_" ) * [ <letter> | <digit> | "_" ] * [ "." <name> ]
+
 	<string> ::=
-		( """ { <any character> } """ )
-		| ( "'" { <any character> } "'" )
-		| ( "`" { <any character> } "`" )
-	
-	<identifier> ::=
-		( <letter> | "_" ) { <letter> | <digit> | "_" } [ "." <identifier> ]
-	
-	<number> ::=
-		[ { <digit> } ] [ "." ] { <digit> } [ "e" [ "+" | "-" ] { <digit> } ] 
-	
-	<substitution> ::=
-		"$" { <digit> }
+		( "\"" * <character> "\"" )
+		| ( "'" * <character> "'" )
+		| ( "`" * <character> "`" )
+
+	<number> ::= [ <digit> ] [ "." ] * <digit> [ "e" [ "+" | "-" ] * <digit> ]
+
+	<placeholder> ::= "$" 1 * <digit>
 
 
 Examples:

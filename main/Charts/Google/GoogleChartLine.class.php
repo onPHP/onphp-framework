@@ -26,9 +26,9 @@
 		/**
 		 * @return GoogleChartLine
 		**/
-		public function setValue(GoogleChartDataSet $set)
+		public function setValue(/* GoogleChartDataSet */ $value)
 		{
-			return parent::setValue($set);
+			return parent::setValue($value);
 		}
 	}
 ?>
