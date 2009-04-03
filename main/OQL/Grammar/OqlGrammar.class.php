@@ -35,14 +35,16 @@
 		const LOGICAL_TERM			= 16;
 		const LOGICAL_EXPRESSION	= 17;
 		
-		const PROPERTIES			= 18;
+		const MIXED_OPERAND			= 18;
+		
+		const PROPERTIES			= 19;
 		const WHERE					= self::LOGICAL_EXPRESSION;
-		const GROUP_BY				= 19;
-		const ORDER_BY				= 20;
+		const GROUP_BY				= 20;
+		const ORDER_BY				= 21;
 		const HAVING				= self::LOGICAL_EXPRESSION;
-		const LIMIT					= 21;
+		const LIMIT					= 22;
 		const OFFSET				= self::LIMIT;
-		const SELECT				= 22;
+		const SELECT				= 23;
 		
 		private $rules = array();
 		
@@ -276,11 +278,19 @@
 				setId(self::LOGICAL_EXPRESSION)
 			);
 			
+			//	<mixed_operand> ::= <arithmetic_expression> || <logical_expression>
+			$this->set(
+				OqlGreedyAlternationRule::create()->
+					setId(self::MIXED_OPERAND)->
+					add($this->get(self::ARITHMETIC_EXPRESSION))->
+					add($this->get(self::LOGICAL_EXPRESSION))
+			);
+			
 			//	<property> ::=
 			//		(
-			//			( ( "sum" | "avg" | "min" | "max" ) "(" <logical_expression> ")" )
-			//			| ( "count" "(" [ "distinct" ] <logical_expression> ")" )
-			//			| ( [ "distinct" ] <logical_expression> )
+			//			( ( "sum" | "avg" | "min" | "max" ) "(" <mixed_operand> ")" )
+			//			| ( "count" "(" [ "distinct" ] <mixed_operand> ")" )
+			//			| ( [ "distinct" ] <mixed_operand> )
 			//		)
 			//		[ "as" <identifier> ]
 			
@@ -300,7 +310,7 @@
 												add($this->aggregate('max'))
 										)->
 										add($this->get(self::OPEN_PARENTHESES))->
-										add($this->get(self::LOGICAL_EXPRESSION))->
+										add($this->get(self::MIXED_OPERAND))->
 										add($this->get(self::CLOSE_PARENTHESES))
 								)->
 								add(
@@ -312,7 +322,7 @@
 												$this->keyword('distinct')
 											)
 										)->
-										add($this->get(self::LOGICAL_EXPRESSION))->
+										add($this->get(self::MIXED_OPERAND))->
 										add($this->get(self::CLOSE_PARENTHESES))
 								)->
 								add(
@@ -322,11 +332,7 @@
 												$this->keyword('distinct')
 											)
 										)->
-										add(
-											OqlAlternationRule::create()->
-												add($this->get(self::LOGICAL_EXPRESSION))->
-												add($this->get(self::ARITHMETIC_EXPRESSION))
-										)
+										add($this->get(self::MIXED_OPERAND))
 								)
 						)->
 						add(
@@ -351,12 +357,12 @@
 			);
 			
 			//	<order_by> ::=
-			//		<logical_expression> [ "asc" | "desc" ]
-			//		* ( "," <logical_expression> [ "asc" | "desc" ] )
+			//		<mixed_operand> [ "asc" | "desc" ]
+			//		* ( "," <mixed_operand> [ "asc" | "desc" ] )
 			$this->set(
 				self::repetition(
 					OqlSequenceRule::create()->
-						add($this->get(self::LOGICAL_EXPRESSION))->
+						add($this->get(self::MIXED_OPERAND))->
 						add(
 							OqlOptionalRule::create()->setRule(
 								OqlAlternationRule::create()->
