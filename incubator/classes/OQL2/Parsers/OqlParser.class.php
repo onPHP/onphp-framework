@@ -69,15 +69,21 @@
 			Assert::isNotNull($this->ruleId);
 			
 			$tokenizer = new OqlTokenizer($string);
-			$node = $this->grammar->get($this->ruleId)->
-				process($tokenizer, false);
 			
-			if ($token = $tokenizer->peek()) {
-				throw new SyntaxErrorException(
-					'unexpected "'.$token->getValue().'"',
-					$tokenizer->getLine(),
-					$tokenizer->getPosition()
-				);
+			try {
+				$node = $this->grammar->get($this->ruleId)->
+					process($tokenizer, false);
+				
+				if ($token = $tokenizer->peek()) {
+					throw new OqlSyntaxErrorException(
+						'unexpected "'.$token->getValue().'"',
+						$tokenizer->getIndex()
+					);
+				}
+			
+			} catch (OqlSyntaxErrorException $e) {
+				// TODO: calculate line and position by token index, given by $e
+				throw new SyntaxErrorException($e->getMessage());
 			}
 			
 			return $node;
