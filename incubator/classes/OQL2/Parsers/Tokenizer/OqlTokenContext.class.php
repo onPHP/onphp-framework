@@ -15,8 +15,8 @@
 	**/
 	final class OqlTokenContext
 	{
-		private $line		= null;
-		private $position	= null;
+		private $line;
+		private $position;
 		
 		/**
 		 * @return OqlTokenContext
