@@ -12,42 +12,48 @@
 	/**
 	 * @ingroup OQL
 	**/
-	class OqlTerminalNode extends OqlSyntaxNode
+	abstract class OqlTerminalNode extends OqlSyntaxNode
 	{
-		protected $token = null;
-		
-		/**
-		 * @return OqlTerminalNode
-		**/
-		public static function create()
+		public function hasChild(OqlSyntaxNode $child)
 		{
-			return new self;
+			return false;
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @throws UnsupportedMethodException
 		**/
-		public function getToken()
+		public function addChild(OqlSyntaxNode $child)
 		{
-			return $this->token;
+			throw new UnsupportedMethodException("terminal node can't have children");
 		}
 		
 		/**
-		 * @return OqlTerminalNode
+		 * @throws UnsupportedMethodException
 		**/
-		public function setToken(OqlToken $token)
+		public function dropChild(OqlSyntaxNode $child)
 		{
-			$this->token = $token;
-			
-			return $this;
+			throw new UnsupportedMethodException("terminal node can't have children");
 		}
 		
-		public function toString()
+		public function getChilds()
 		{
-			if ($this->token)
-				return $this->token->getValue();
-			
-			return null;
+			return array();
+		}
+		
+		/**
+		 * @throws UnsupportedMethodException
+		**/
+		public function setChilds(array $childs)
+		{
+			throw new UnsupportedMethodException("terminal node can't have children");
+		}
+		
+		/**
+		 * @throws UnsupportedMethodException
+		**/
+		public function dropChilds()
+		{
+			throw new UnsupportedMethodException("terminal node can't have children");
 		}
 	}
 ?>

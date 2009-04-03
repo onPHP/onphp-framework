@@ -31,6 +31,30 @@
 			$this->id = self::$globalId++;
 		}
 		
+		abstract public function hasChild(OqlSyntaxNode $child);
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		abstract public function addChild(OqlSyntaxNode $child);
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		abstract public function dropChild(OqlSyntaxNode $child);
+		
+		abstract public function getChilds();
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		abstract public function setChilds(array $childs);
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		abstract public function dropChilds();
+		
 		final public function setId($id)
 		{
 			throw new UnsupportedMethodException();
