@@ -74,7 +74,11 @@
 			
 			// property, class name
 			OqlTokenType::IDENTIFIER =>
-				'\b[a-zA-Z_][a-zA-Z\d_]*(?:\.[a-zA-Z_][a-zA-Z\d_]*)*\b'
+				'\b[a-zA-Z_][a-zA-Z\d_]*(?:\.[a-zA-Z_][a-zA-Z\d_]*)*\b',
+			
+			// unmatched
+			OqlTokenType::UNKNOWN =>
+				'[\S]+'
 		);
 		
 		private static $pattern = null;
