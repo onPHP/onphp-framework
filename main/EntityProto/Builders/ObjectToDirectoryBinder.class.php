@@ -22,18 +22,13 @@
 		
 		public function make($object, $recursive = true)
 		{
-			if (!$this->directory)
-				throw new WrongStateException(
-					'you must specify the context for this builder'
-				);
+			$this->checkDirectory();
 
 			if (!$object) {
 				$this->safeClean();
 
 				return $this->directory;
 			}
-
-			$id = spl_object_hash($object);
 
 			$realDirectory = null;
 
@@ -46,8 +41,10 @@
 					);
 			}
 
+			$reversePath = $this->identityMap->reverseLookup($object);
+
 			if (
-				!isset($this->identityMap[$id])
+				!$reversePath
 				&& is_link($this->directory)
 			) {
 				throw new WrongStateException(
@@ -58,22 +55,22 @@
 			}
 
 			if (
-				isset($this->identityMap[$id])
+				$reversePath
 				&& file_exists($this->directory)
 				&& !$realDirectory
-				&& $this->directory != $this->identityMap[$id]
+				&& $this->directory != $reversePath
 			) {
 				throw new WrongStateException(
 					'you should relocate object '
 					.$this->directory.' to '
-					.$this->identityMap[$id]
+					.$reversePath
 					.' by yourself.'
 					.' cannot replace object with a link'
 				);
 			}
 
 			if (
-				isset($this->identityMap[$id])
+				$reversePath
 				&& (
 					!file_exists($this->directory)
 					|| $realDirectory
@@ -81,11 +78,11 @@
 			) {
 				if (
 					!$realDirectory
-					|| $realDirectory != $this->identityMap[$id]
+					|| $realDirectory != $reversePath
 				) {
 					$this->safeClean();
 
-					$status = symlink($this->identityMap[$id], $this->directory);
+					$status = symlink($reversePath, $this->directory);
 
 					if ($status !== true)
 						throw new WrongStateException(
@@ -93,12 +90,12 @@
 						);
 				}
 
-				return $this->identityMap[$id];
+				return $reversePath;
 			}
 
 			$result = parent::make($object, $recursive);
 
-			$this->identityMap[$id] = $result;
+			$this->identityMap->bind($result, $object);
 
 			return $result;
 		}

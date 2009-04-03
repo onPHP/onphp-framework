@@ -135,12 +135,15 @@
 			$converter = ObjectToDirectoryBinder::create(
 				Singleton::getInstance('EntityProtoDirectoryItem')
 			)->
+				setDirectory($ringDir);
+
+			$itemsConverter = $converter->cloneBuilder(Singleton::getInstance('EntityProtoDirectoryItem'))->
 				setDirectory($ringDir.'/items');
 
 			$ringListHead = DirectoryItem::create()->
 				setTextField('421');
 
-			$result = $converter->makeList(array($ringListHead));
+			$result = $itemsConverter->makeList(array($ringListHead));
 
 			$ringListHead->setInner(
 				$items[2] = DirectoryItem::create()->
@@ -159,15 +162,12 @@
 			// storing head again to update inner link
 			$items[3] = $ringListHead;
 
-			$result = $converter->makeList($items);
+			$result = $itemsConverter->makeList($items);
 
 			$mainContainer = DirectoryItem::create()->
 				setTextField('main container');
 
 			$mainContainer->setInner($ringListHead);
-
-			$converter->
-				setDirectory($ringDir);
 
 			// storing the container with its link to ring list head
 			$result = $converter->make($mainContainer);
