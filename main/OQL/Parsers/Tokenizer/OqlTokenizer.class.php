@@ -20,6 +20,8 @@
 	
 	/**
 	 * @ingroup OQL
+	 * 
+	 * NOTE: set mb_internal_encoding and mb_regex_encoding for correct multibyte strings parsing
 	**/
 	final class OqlTokenizer
 	{
