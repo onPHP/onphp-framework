@@ -15,18 +15,17 @@
 	**/
 	final class OqlTokenType extends StaticFactory
 	{
-		const NEW_LINE				= 1;
-		const PARENTHESES			= 2;
-		const PUNCTUATION			= 3;
-		const STRING				= 4;
-		const NUMBER				= 5;
-		const BOOLEAN				= 6;
-		const NULL					= 7;
-		const PLACEHOLDER			= 8;
-		const KEYWORD				= 9;
-		const OPERATOR				= 10;
-		const AGGREGATE_FUNCTION	= 11;
-		const IDENTIFIER			= 12;
-		const UNKNOWN				= 13;
+		const PARENTHESES			= 1;
+		const PUNCTUATION			= 2;
+		const STRING				= 3;
+		const NUMBER				= 4;
+		const BOOLEAN				= 5;
+		const NULL					= 6;
+		const PLACEHOLDER			= 7;
+		const KEYWORD				= 8;
+		const OPERATOR				= 9;
+		const AGGREGATE_FUNCTION	= 10;
+		const IDENTIFIER			= 11;
+		const UNKNOWN				= 12;
 	}
 ?>

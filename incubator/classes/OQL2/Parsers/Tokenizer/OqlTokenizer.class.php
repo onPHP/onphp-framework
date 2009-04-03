@@ -15,9 +15,6 @@
 
 	// TODO: use standart array iteration mechanism (current, next, prev)
 	
-	// TODO: we need line and position for error handling only, so calculate them
-	// in context getter (getLine(), getPosition() -> getContext()), but not in tokenize()
-	
 	/**
 	 * @ingroup OQL
 	 * 
@@ -33,9 +30,6 @@
 		private $index			= -1;
 		
 		private static $masks = array(
-			OqlTokenType::NEW_LINE =>
-				'\n',
-			
 			// parentheses
 			OqlTokenType::PARENTHESES =>
 				'[\(\)]',
@@ -101,24 +95,6 @@
 		public function getList()
 		{
 			return $this->tokens;
-		}
-		
-		public function getLine()
-		{
-			$token = $this->token;
-			if (!$token)
-				$token = $this->prevToken;
-			
-			return $token ? $token->getLine() : null;
-		}
-		
-		public function getPosition()
-		{
-			$token = $this->token;
-			if (!$token)
-				$token = $this->prevToken;
-			
-			return $token ? $token->getPosition() : null;
 		}
 		
 		/**
@@ -235,11 +211,8 @@
 		**/
 		private function tokenize()
 		{
-			$maxMultibyteDelta = strlen($this->string) - mb_strlen($this->string);
-			$isMultibyte = $maxMultibyteDelta > 0;
-			
 			$pattern = self::$pattern;
-			if ($isMultibyte)
+			if (strlen($this->string) - mb_strlen($this->string) != 0)	// is multibyte
 				$pattern .= 'u';
 			
 			preg_match_all(
@@ -249,46 +222,15 @@
 				PREG_SET_ORDER | PREG_OFFSET_CAPTURE
 			);
 			
-			$line = 1;
-			$lineStart = 0;
-			$multibyteDelta = 0;
-			
 			foreach ($matches as $match) {
 				$type = count($match) - 1;
-				$offset = $match[0][1] - $multibyteDelta;
-				
-				if ($type == OqlTokenType::NEW_LINE) {
-					$line++;
-					$lineStart = $offset + 1;
-					continue;
-				}
-				
 				$value = $match[0][0];
-				$position = $offset - $lineStart;
 				
-				$this->tokens[] =
-					OqlToken::make(
-						$this->importTokenValue($value, $type),
-						$value,
-						$type,
-						$line,
-						$position
-					);
-				
-				if (
-					$type == OqlTokenType::KEYWORD
-					&& ($pos = strpos($value, "\n")) !== false
-				) {
-					$line++;
-					$lineStart = $offset + $pos + 1;
-				}
-				
-				if ($isMultibyte && $type == OqlTokenType::STRING) {
-					$multibyteDelta += (strlen($value) - mb_strlen($value));
-					
-					if ($multibyteDelta >= $maxMultibyteDelta)
-						$isMultibyte = false;
-				}
+				$this->tokens[] = OqlToken::create(
+					$this->importTokenValue($value, $type),
+					$value,
+					$type
+				);
 			}
 			
 			$this->tokensCount = count($this->tokens);
