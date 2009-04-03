@@ -23,7 +23,7 @@
 		}
 		
 		/**
-		 * @return OqlTerminalNode
+		 * @return OqlTokenNode
 		**/
 		public function parse(
 			OqlGrammarRule $rule,
@@ -41,7 +41,7 @@
 			) {
 				$tokenizer->next();
 				
-				return OqlTerminalNode::create()->setToken($token);
+				return OqlTokenNode::create()->setToken($token);
 			
 			} elseif (!$silent) {
 				// FIXME: error message
