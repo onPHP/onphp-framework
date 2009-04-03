@@ -135,12 +135,14 @@
 			$converter = ObjectToDirectoryBinder::create(
 				Singleton::getInstance('EntityProtoDirectoryItem')
 			)->
-				setDirectory($ringDir.'/items');
+				setDirectory($ringDir);
+
+			$itemsConverter = $converter->cloneInnerBuilder('items');
 
 			$ringListHead = DirectoryItem::create()->
 				setTextField('421');
 
-			$result = $converter->makeList(array($ringListHead));
+			$result = $itemsConverter->makeList(array($ringListHead));
 
 			$ringListHead->setInner(
 				$items[2] = DirectoryItem::create()->
@@ -159,15 +161,12 @@
 			// storing head again to update inner link
 			$items[3] = $ringListHead;
 
-			$result = $converter->makeList($items);
+			$result = $itemsConverter->makeList($items);
 
 			$mainContainer = DirectoryItem::create()->
 				setTextField('main container');
 
 			$mainContainer->setInner($ringListHead);
-
-			$converter->
-				setDirectory($ringDir);
 
 			// storing the container with its link to ring list head
 			$result = $converter->make($mainContainer);
@@ -236,6 +235,20 @@
 
 	final class DirectoryItem extends DirectoryItemBase
 	{
+		private $items = array();
+
+		public function setItems($items)
+		{
+			$this->items = $items;
+
+			return $this;
+		}
+
+		public function getItems()
+		{
+			return $this->items;
+		}
+
 		public static function create()
 		{
 			return new self;
@@ -252,6 +265,10 @@
 		public function getFormMapping()
 		{
 			return array(
+				'items' => Primitive::formsList('items')->
+					of('DirectoryItem')->
+					required(),
+
 				'textField' => Primitive::string('textField')->
 					setMax(256)->
 					optional(),

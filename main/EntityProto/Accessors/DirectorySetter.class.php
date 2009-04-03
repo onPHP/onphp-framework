@@ -30,7 +30,7 @@
 			$path = $this->object.'/'.$primitive->getName();
 
 			if ($primitive instanceof PrimitiveFile) {
-				if ($value && $value != $path) {
+				if ($value && $value != $path && file_exists($value)) {
 					copy($value, $path);
 				}
 

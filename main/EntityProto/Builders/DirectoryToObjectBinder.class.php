@@ -12,7 +12,7 @@
 
 	final class DirectoryToObjectBinder extends ObjectBuilder
 	{
-		private $identityMap = array();
+		private $identityMap = null;
 
 		/**
 		 * @return FormToObjectConverter
@@ -22,13 +22,23 @@
 			return new self($proto);
 		}
 		
-		public function setIdentityMap(&$identityMap)
+		public function __construct(EntityProto $proto)
 		{
-			$this->identityMap = &$identityMap;
+			parent::__construct($proto);
+
+			$this->identityMap = new DirectoryContext;
+		}
+
+		public function setIdentityMap(DirectoryContext $identityMap)
+		{
+			$this->identityMap = $identityMap;
 
 			return $this;
 		}
 
+		/**
+		 * @return DirectoryContext
+		 */
 		public function getIdentityMap()
 		{
 			return $this->identityMap;
@@ -60,15 +70,9 @@
 		**/
 		public function makeReverseBuilder()
 		{
-			$reverseIdentityMap = array();
-
-			foreach ($this->identityMap as $dir => $object) {
-				$reverseIdentityMap[spl_object_hash($object)] = $dir;
-			}
-
 			return
 				ObjectToDirectoryBinder::create($this->proto)->
-				setIdentityMap($reverseIdentityMap);
+				setIdentityMap($this->identityMap);
 		}
 
 		public function make($object, $recursive = true)
@@ -84,11 +88,10 @@
 				$realObject = realpath($realObject);
 			}
 
-			if (array_key_exists($realObject, $this->identityMap)) {
-				$result = $this->identityMap[$realObject];
+			$result = $this->identityMap->lookup($realObject);
 
+			if ($result)
 				return $result;
-			}
 
 			$result = parent::make($object, $recursive);
 
@@ -121,7 +124,10 @@
 
 			$realObject = realpath($realObject);
 
-			$this->identityMap[$realObject] = $result;
+			if ($realObject === false)
+				throw new WrongStateException('invalid context: '.$object);
+
+			$this->identityMap->bind($realObject, $result);
 
 			return $this;
 		}
