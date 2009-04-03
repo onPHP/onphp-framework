@@ -61,7 +61,7 @@
 			if ($this->isBindable()) {
 				Assert::isPositiveInteger(
 					$this->getValue(),
-					'wrong placeholder number: $'.$this->getValue()
+					'wrong substitution number: $'.$this->getValue()
 				);
 				Assert::isIndexExists(
 					$values,
