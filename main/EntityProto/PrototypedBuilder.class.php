@@ -87,9 +87,25 @@
 			
 			return $result;
 		}
+
+		public function makeListItemBuilder($object)
+		{
+			return $this;
+		}
 		
 		/**
-		 * @deprecated $recursive, use limitedPropertiesList instead
+		 * @return PrototypedBuilder
+		**/
+		public function makeReverseBuilder()
+		{
+			throw new UnimplementedFeatureException(
+				'reverse builder is not provided yet'
+			);
+		}
+
+		/**
+		 * Also try using plain limitedPropertiesList instead of limited
+		 * hierarchy recursing.
 		**/
 		public function make($object, $recursive = true)
 		{
@@ -129,7 +145,9 @@
 				);
 			
 			$result = $this->createEmpty();
-			
+
+			$this->initialize($object, $result);
+
 			if ($recursive)
 				$result = $this->upperMake($object, $result);
 			else
@@ -158,7 +176,8 @@
 			$result = array();
 			
 			foreach ($objectsList as $object) {
-				$result[] = $this->make($object);
+				$result[] = $this->makeListItemBuilder($object)->
+					make($object);
 			}
 			
 			return $result;
@@ -188,7 +207,7 @@
 			$setter = $this->getSetter($result);
 			
 			foreach ($this->getFormMapping() as $id => $primitive) {
-				
+
 				$value = $getter->get($id);
 				
 				if ($primitive instanceof PrimitiveFormsList) {
@@ -226,6 +245,11 @@
 			return $result;
 		}
 		
+		protected function initialize($object, &$result)
+		{
+			return $this;
+		}
+
 		protected function getFormMapping()
 		{
 			$protoMapping = $this->proto->getFormMapping();
