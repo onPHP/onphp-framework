@@ -137,8 +137,7 @@
 			)->
 				setDirectory($ringDir);
 
-			$itemsConverter = $converter->cloneBuilder(Singleton::getInstance('EntityProtoDirectoryItem'))->
-				setDirectory($ringDir.'/items');
+			$itemsConverter = $converter->cloneInnerBuilder('items');
 
 			$ringListHead = DirectoryItem::create()->
 				setTextField('421');
@@ -236,6 +235,20 @@
 
 	final class DirectoryItem extends DirectoryItemBase
 	{
+		private $items = array();
+
+		public function setItems($items)
+		{
+			$this->items = $items;
+
+			return $this;
+		}
+
+		public function getItems()
+		{
+			return $this->items;
+		}
+
 		public static function create()
 		{
 			return new self;
@@ -252,6 +265,10 @@
 		public function getFormMapping()
 		{
 			return array(
+				'items' => Primitive::formsList('items')->
+					of('DirectoryItem')->
+					required(),
+
 				'textField' => Primitive::string('textField')->
 					setMax(256)->
 					optional(),
