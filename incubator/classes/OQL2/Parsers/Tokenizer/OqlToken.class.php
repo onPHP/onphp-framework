@@ -10,48 +10,28 @@
  ****************************************************************************/
 /* $Id$ */
 
-	// TODO: make immutable
 	/**
 	 * @ingroup OQL
 	**/
 	final class OqlToken
 	{
-		private $value		= null;
-		private $rawValue	= null;
-		private $type		= null;
-		private $line		= null;
-		private $position	= null;
+		private $value;
+		private $rawValue;
+		private $type;
 		
 		/**
 		 * @return OqlToken
 		**/
-		public static function create()
+		public static function create($value, $rawValue, $type)
 		{
-			return new self;
+			return new self($value, $rawValue, $type);
 		}
 		
-		/**
-		 * @return OqlToken
-		**/
-		public static function make($value, $rawValue, $type, $line, $position)
-		{
-			return
-				self::create()->
-					setValue($value)->
-					setRawValue($rawValue)->
-					setType($type)->
-					setLine($line)->
-					setPosition($position);
-		}
-		
-		/**
-		 * @return OqlToken
-		**/
-		public function setValue($value)
+		public function __construct($value, $rawValue, $type)
 		{
 			$this->value = $value;
-			
-			return $this;
+			$this->rawValue = $rawValue;
+			$this->type = $type;
 		}
 		
 		public function getValue()
@@ -59,64 +39,14 @@
 			return $this->value;
 		}
 		
-		/**
-		 * @return OqlToken
-		**/
-		public function setRawValue($rawValue)
-		{
-			$this->rawValue = $rawValue;
-			
-			return $this;
-		}
-		
 		public function getRawValue()
 		{
 			return $this->rawValue;
 		}
 		
-		/**
-		 * @return OqlToken
-		**/
-		public function setType($type)
-		{
-			$this->type = $type;
-			
-			return $this;
-		}
-		
 		public function getType()
 		{
 			return $this->type;
-		}
-		
-		/**
-		 * @return OqlToken
-		**/
-		public function setLine($line)
-		{
-			$this->line = $line;
-			
-			return $this;
-		}
-		
-		public function getLine()
-		{
-			return $this->line;
-		}
-		
-		/**
-		 * @return OqlToken
-		**/
-		public function setPosition($position)
-		{
-			$this->position = $position;
-			
-			return $this;
-		}
-		
-		public function getPosition()
-		{
-			return $this->position;
 		}
 	}
 ?>
