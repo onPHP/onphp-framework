@@ -215,16 +215,11 @@
 			if (strlen($this->string) - mb_strlen($this->string) != 0)	// is multibyte
 				$pattern .= 'u';
 			
-			preg_match_all(
-				$pattern,
-				$this->string,
-				$matches,
-				PREG_SET_ORDER | PREG_OFFSET_CAPTURE
-			);
+			preg_match_all($pattern, $this->string, $matches, PREG_SET_ORDER);
 			
 			foreach ($matches as $match) {
 				$type = count($match) - 1;
-				$value = $match[0][0];
+				$value = $match[0];
 				
 				$this->tokens[] = OqlToken::create(
 					$this->importTokenValue($value, $type),
