@@ -5,7 +5,9 @@
 	* main/Charts/Google. Google charts implementation(partically)
 	moved from incubator.
 
-2009-04-01	Ivan Y. Khvostishkov
+2009-04-03	Ivan Y. Khvostishkov
+
+	* merged directory services and messaging api from master.
 
 	* main/EntityProto/Builders/DirectoryToObjectBinder.class.php,
 	main/EntityProto/Builders/ObjectToDirectoryBinder.class.php:
@@ -15,6 +17,7 @@
 
 	* main/Messages/: simple messaging API is starting here. Inspired by
 	Java Message Service.
+
 2009-03-28	Evgeniy N. Sokolov
 
 	* core/Form/Form.class.php: getWrongLabel() and getMissingLabel()
