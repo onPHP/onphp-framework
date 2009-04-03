@@ -13,7 +13,14 @@
 	abstract class DirectoryBuilder extends PrototypedBuilder
 	{
 		protected $directory = null;
-		protected $identityMap = array();
+		protected $identityMap = null;
+
+		public function __construct(EntityProto $proto)
+		{
+			parent::__construct($proto);
+
+			$this->identityMap = new DirectoryContext;
+		}
 
 		public function setDirectory($directory)
 		{
@@ -27,9 +34,9 @@
 			return $this->directory;
 		}
 
-		public function setIdentityMap(&$identityMap)
+		public function setIdentityMap(DirectoryContext $identityMap)
 		{
-			$this->identityMap = &$identityMap;
+			$this->identityMap = $identityMap;
 
 			return $this;
 		}
@@ -55,6 +62,8 @@
 
 		public function cloneInnerBuilder($property)
 		{
+			$this->checkDirectory();
+
 			$result = parent::cloneInnerBuilder($property);
 
 			$result->
@@ -66,6 +75,8 @@
 
 		public function makeListItemBuilder($object)
 		{
+			$this->checkDirectory();
+
 			if (!$object instanceof Identifiable)
 				throw new WrongArgumentException(
 					'cannot build list of items without identity'
@@ -77,11 +88,6 @@
 
 		protected function createEmpty()
 		{
-			if (!$this->directory)
-				throw new WrongStateException(
-					'you must specify the context for this builder'
-				);
-
 			$result = $this->directory;
 
 			if (!file_exists($result))
@@ -97,7 +103,7 @@
 
 		protected function safeClean()
 		{
-			if (file_exists($this->directory)) {
+			if (file_exists($this->directory) || is_link($this->directory)) {
 				if (!is_link($this->directory)) {
 					throw new WrongStateException(
 						'you should remove the storage '
@@ -108,6 +114,16 @@
 
 				unlink($this->directory);
 			}
+
+			return $this;
+		}
+
+		protected function checkDirectory()
+		{
+			if (!$this->directory)
+				throw new WrongStateException(
+					'you must specify the context for this builder'
+				);
 
 			return $this;
 		}
