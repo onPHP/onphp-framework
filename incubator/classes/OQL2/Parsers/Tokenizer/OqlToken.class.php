@@ -15,6 +15,8 @@
 	**/
 	final class OqlToken
 	{
+		private static $pool = array();
+		
 		private $value;
 		private $rawValue;
 		private $type;
@@ -24,7 +26,11 @@
 		**/
 		public static function create($value, $rawValue, $type)
 		{
-			return new self($value, $rawValue, $type);
+			$key = $type.'#'.$rawValue;
+			if (!isset(self::$pool[$key]))
+				self::$pool[$key] = new self($value, $rawValue, $type);
+			
+			return self::$pool[$key];
 		}
 		
 		public function __construct($value, $rawValue, $type)
