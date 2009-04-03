@@ -169,7 +169,7 @@
 			//	<logical_term> ::=
 			//		( <logical_operand> <comparison_operator> <logical_operand> )
 			//		| ( <logical_operand> "is" [ "not" ] ( <null> | <boolean> ) )
-			//		| ( "in" "(" <constant> * ( "," <constant> ) ")" )
+			//		| ( <logical_operand> "in" "(" <constant> * ( "," <constant> ) ")" )
 			//		| ( <logical_operand> [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
 			//		| ( <logical_operand> "between" <logical_operand> "and" <logical_operand> )
 			//		| <logical_unary_operand>
@@ -271,7 +271,7 @@
 			
 			//	<property> ::=
 			//		(
-			//			( ( "sum" | "avg" | "min" | "max" ) "(" <arithmetic_expression> ")" )
+			//			( ( "sum" | "avg" | "min" | "max" ) "(" <logical_expression> ")" )
 			//			| ( "count" "(" [ "distinct" ] <logical_expression> ")" )
 			//			| ( [ "distinct" ] <logical_expression> )
 			//		)
@@ -293,7 +293,7 @@
 												add($this->aggregate('max'))
 										)->
 										add($this->get(self::OPEN_PARENTHESES))->
-										add($this->get(self::ARITHMETIC_EXPRESSION))->
+										add($this->get(self::LOGICAL_EXPRESSION))->
 										add($this->get(self::CLOSE_PARENTHESES))
 								)->
 								add(
@@ -315,7 +315,11 @@
 												$this->keyword('distinct')
 											)
 										)->
-										add($this->get(self::LOGICAL_EXPRESSION))
+										add(
+											OqlAlternationRule::create()->
+												add($this->get(self::LOGICAL_EXPRESSION))->
+												add($this->get(self::ARITHMETIC_EXPRESSION))
+										)
 								)
 						)->
 						add(

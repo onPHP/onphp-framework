@@ -28,7 +28,7 @@ $Id$
 
 	<property> ::=
 		(
-			( ( "sum" | "avg" | "min" | "max" ) "(" <arithmetic_expression> ")" )
+			( ( "sum" | "avg" | "min" | "max" ) "(" <logical_expression> ")" )
 			| ( "count" "(" [ "distinct" ] <logical_expression> ")" )
 			| ( [ "distinct" ] <logical_expression> )
 		)
@@ -43,7 +43,7 @@ $Id$
 	<logical_term> ::=
 		( <logical_operand> <comparison_operator> <logical_operand> )
 		| ( <logical_operand> "is" [ "not" ] ( <null> | <boolean> ) )
-		| ( "in" "(" <constant> * ( "," <constant> ) ")" )
+		| ( <logical_operand> "in" "(" <constant> * ( "," <constant> ) ")" )
 		| ( <logical_operand> [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
 		| ( <logical_operand> "between" <logical_operand> "and" <logical_operand> )
 		| <logical_unary_operand>
