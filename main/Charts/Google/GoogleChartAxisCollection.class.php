@@ -59,9 +59,9 @@
 					$ranges[] =
 						$i++
 						.','
-						.$range->getStart()
+						.$range->getMin()
 						.','
-						.$range->getEnd();
+						.$range->getMax();
 				
 				if ($label = $axis->getLabel())
 					$labels[$i] = $label;

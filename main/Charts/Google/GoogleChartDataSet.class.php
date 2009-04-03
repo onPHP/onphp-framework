@@ -52,8 +52,8 @@
 		**/
 		public function addElement($element)
 		{
-			if ($this->minMax->getEnd() < $element)
-				$this->minMax->setEnd($element);
+			if ($this->minMax->getMax() < $element)
+				$this->minMax->getMax($element);
 			
 			$this->data[] = $element;
 			
@@ -67,15 +67,15 @@
 		
 		public function getMin()
 		{
-			return $this->minMax->getStart();
+			return $this->minMax->getMin();
 		}
 		
 		public function getMax()
 		{
-			if ($this->minMax->getEnd() == 0)
+			if ($this->minMax->getMax() == 0)
 				$this->calculateMax();
 			
-			return $this->minMax->getEnd();
+			return $this->minMax->getMax();
 		}
 		
 		/**
@@ -83,7 +83,7 @@
 		**/
 		private function calculateMax()
 		{
-			$this->minMax->setEnd(max($this->data));
+			$this->minMax->setMax(max($this->data));
 			
 			return $this;
 		}
