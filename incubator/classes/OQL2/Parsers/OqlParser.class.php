@@ -82,7 +82,6 @@
 				}
 			
 			} catch (OqlSyntaxErrorException $e) {
-				// TODO: calculate line and position by token index, given by $e
 				$context = $tokenizer->getContext($e->getTokenIndex());
 				
 				throw new SyntaxErrorException(
