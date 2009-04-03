@@ -41,13 +41,18 @@ $Id$
 		[ "not" ] <logical_term> * ( "and" [ "not" ] <logical_term> )
 
 	<logical_term> ::=
-		( <logical_operand> <comparison_operator> <logical_operand> )
-		| ( <logical_operand> "is" [ "not" ] ( <null> | <boolean> ) )
-		| ( <logical_operand> "in" "(" <constant> * ( "," <constant> ) ")" )
-		| ( <logical_operand> [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
-		| ( <logical_operand> "between" <logical_operand> "and" <logical_operand> )
+		(
+			<logical_operand>
+			(
+				( <comparison_operator> <logical_operand> )
+				| ( "is" [ "not" ] ( <null> | <boolean> ) )
+				| ( "in" "(" <constant> * ( "," <constant> ) ")" )
+				| ( [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
+				| ( "between" <logical_operand> "and" <logical_operand> )
+			)
+		)
 		| <logical_unary_operand>
-		| ( "(" <logical_expression> ")" )
+		| "(" <logical_expression> ")"
 
 	<logical_operand> ::= <arithmetic_expression> | <boolean> | <string> | <null>
 

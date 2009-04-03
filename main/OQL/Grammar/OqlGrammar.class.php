@@ -167,11 +167,16 @@
 			);
 			
 			//	<logical_term> ::=
-			//		( <logical_operand> <comparison_operator> <logical_operand> )
-			//		| ( <logical_operand> "is" [ "not" ] ( <null> | <boolean> ) )
-			//		| ( <logical_operand> "in" "(" <constant> * ( "," <constant> ) ")" )
-			//		| ( <logical_operand> [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
-			//		| ( <logical_operand> "between" <logical_operand> "and" <logical_operand> )
+			//		(
+			//			<logical_operand>
+			//			(
+			//				( <comparison_operator> <logical_operand> )
+			//				| ( "is" [ "not" ] ( <null> | <boolean> ) )
+			//				| ( "in" "(" <constant> * ( "," <constant> ) ")" )
+			//				| ( [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
+			//				| ( "between" <logical_operand> "and" <logical_operand> )
+			//			)
+			//		)
 			//		| <logical_unary_operand>
 			//		| "(" <logical_expression> ")"
 			$this->set(
@@ -180,62 +185,64 @@
 					add(
 						OqlSequenceRule::create()->
 							add($this->get(self::LOGICAL_OPERAND))->
-							add($this->comparisonOperator())->
-							add($this->get(self::LOGICAL_OPERAND))
-					)->
-					add(
-						OqlSequenceRule::create()->
-							add($this->get(self::LOGICAL_OPERAND))->
-							add($this->keyword('is'))->
-							add(
-								OqlOptionalRule::create()->setRule(
-									$this->operator('not')
-								)
-							)->
 							add(
 								OqlAlternationRule::create()->
-									add($this->get(self::NULL))->
-									add($this->get(self::BOOLEAN))
+									add(
+										OqlSequenceRule::create()->
+											add($this->comparisonOperator())->
+											add($this->get(self::LOGICAL_OPERAND))
+									)->
+									add(
+										OqlSequenceRule::create()->
+											add($this->keyword('is'))->
+											add(
+												OqlOptionalRule::create()->setRule(
+													$this->operator('not')
+												)
+											)->
+											add(
+												OqlAlternationRule::create()->
+													add($this->get(self::NULL))->
+													add($this->get(self::BOOLEAN))
+											)
+									)->
+									add(
+										OqlSequenceRule::create()->
+											add($this->keyword('in'))->
+											add($this->get(self::OPEN_PARENTHESES))->
+											add(
+												self::repetition(
+													$this->get(self::CONSTANT),
+													$this->get(self::PUNCTUATION)
+												)
+											)->
+											add($this->get(self::CLOSE_PARENTHESES))
+									)->
+									add(
+										OqlSequenceRule::create()->
+											add(
+												OqlOptionalRule::create()->setRule(
+													$this->operator('not')
+												)
+											)->
+											add(
+												OqlAlternationRule::create()->
+													add($this->keyword('like'))->
+													add($this->keyword('ilike'))->
+													add($this->keyword('similar to'))
+											)->
+											add(
+												$this->get(self::PATTERN)
+											)
+									)->
+									add(
+										OqlSequenceRule::create()->
+											add($this->keyword('between'))->
+											add($this->get(self::LOGICAL_OPERAND))->
+											add($this->operator('and'))->
+											add($this->get(self::LOGICAL_OPERAND))
+									)
 							)
-					)->
-					add(
-						OqlSequenceRule::create()->
-							add($this->get(self::LOGICAL_OPERAND))->
-							add($this->keyword('in'))->
-							add($this->get(self::OPEN_PARENTHESES))->
-							add(
-								self::repetition(
-									$this->get(self::CONSTANT),
-									$this->get(self::PUNCTUATION)
-								)
-							)->
-							add($this->get(self::CLOSE_PARENTHESES))
-					)->
-					add(
-						OqlSequenceRule::create()->
-							add($this->get(self::LOGICAL_OPERAND))->
-							add(
-								OqlOptionalRule::create()->setRule(
-									$this->operator('not')
-								)
-							)->
-							add(
-								OqlAlternationRule::create()->
-									add($this->keyword('like'))->
-									add($this->keyword('ilike'))->
-									add($this->keyword('similar to'))
-							)->
-							add(
-								$this->get(self::PATTERN)
-							)
-					)->
-					add(
-						OqlSequenceRule::create()->
-							add($this->get(self::LOGICAL_OPERAND))->
-							add($this->keyword('between'))->
-							add($this->get(self::LOGICAL_OPERAND))->
-							add($this->operator('and'))->
-							add($this->get(self::LOGICAL_OPERAND))
 					)->
 					add($this->get(self::LOGICAL_UNARY_OPERAND))->
 					add(
