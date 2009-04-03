@@ -49,7 +49,7 @@
 		{
 			Assert::isNotNull($this->grammar, 'grammar must be set');
 			
-			return $this->grammar->get($this->id, $this->required);
+			return $this->grammar->get($this->id);
 		}
 		
 		/**
