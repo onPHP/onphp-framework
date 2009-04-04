@@ -76,8 +76,8 @@
 			OqlTokenType::UNKNOWN =>
 				'[\S]+',
 			
-			OqlTokenType::SPACE =>
-				'[ \r\t]+'
+			OqlTokenType::WHITESPACE =>
+				'\s+'
 		);
 		
 		private static $pattern = null;
@@ -227,7 +227,7 @@
 				$type = count($match) - 1;
 				$value = $match[0];
 				
-				if ($type == OqlTokenType::SPACE) {
+				if ($type == OqlTokenType::WHITESPACE) {
 					$this->spaces[$index] = strlen($value);
 					continue;
 				}
