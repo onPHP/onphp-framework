@@ -27,5 +27,6 @@
 		const AGGREGATE_FUNCTION	= 10;
 		const IDENTIFIER			= 11;
 		const UNKNOWN				= 12;
+		const SPACE					= 13;
 	}
 ?>

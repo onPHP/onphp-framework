@@ -22,6 +22,8 @@
 		private $string			= null;
 		private $tokens			= array();
 		private $tokensCount	= 0;
+		private $spaces			= array();
+		
 		private $token			= null;
 		private $prevToken		= null;
 		private $index			= -1;
@@ -72,7 +74,10 @@
 			
 			// unmatched
 			OqlTokenType::UNKNOWN =>
-				'[\S]+'
+				'[\S]+',
+			
+			OqlTokenType::SPACE =>
+				'[ \r\t]+'
 		);
 		
 		private static $pattern = null;
@@ -110,6 +115,9 @@
 						break;
 					
 					$offset += $this->tokens[$i]->getRawValue();
+					
+					if (isset($this->spaces[$i]))
+						$offset += $this->spaces[$i];
 				}
 				
 				$pos = mb_strpos(
@@ -214,11 +222,17 @@
 			
 			preg_match_all($pattern, $this->string, $matches, PREG_SET_ORDER);
 			
+			$index = 0;
 			foreach ($matches as $match) {
 				$type = count($match) - 1;
 				$value = $match[0];
 				
-				$this->tokens[] = OqlToken::create(
+				if ($type == OqlTokenType::SPACE) {
+					$this->spaces[$index] = strlen($value);
+					continue;
+				}
+				
+				$this->tokens[$index++] = OqlToken::create(
 					$this->importTokenValue($value, $type),
 					$value,
 					$type
