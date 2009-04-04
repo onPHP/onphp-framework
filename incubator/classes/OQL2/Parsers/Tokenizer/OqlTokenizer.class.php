@@ -110,11 +110,11 @@
 			if (isset($this->tokens[$index])) {
 				$offset = 0;
 				
-				for ($i = 0; $i <= $index; $i++) {
+				for ($i = 0; $i < $index; $i++) {
 					if (!isset($this->tokens[$i]))
 						break;
 					
-					$offset += $this->tokens[$i]->getRawValue();
+					$offset += mb_strlen($this->tokens[$i]->getRawValue());
 					
 					if (isset($this->spaces[$i]))
 						$offset += $this->spaces[$i];
