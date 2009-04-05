@@ -1,0 +1,39 @@
+
+	/**
+	 * Nginx rewrite rules example
+	 * @see http://sysoev.ru/nginx/docs/http/ngx_http_rewrite_module.html
+	**/
+	
+	location / {
+		if (-e $request_filename) {
+			break;
+		}
+		
+		if ($request_filename !~ "\.(js|ico|gif|jpg|png|css)$") {
+			rewrite
+				^(.+)
+				/index.php	last;
+		}
+	}
+	
+	/**
+	 * Lighttpd rewrite rules example
+	 * @see http://redmine.lighttpd.net/wiki/lighttpd/Docs:ModRewrite
+	**/
+	
+	url.rewrite-once = (
+		".+\.(js|ico|gif|jpg|png|css)$" => "$0",
+		"" => "/index.php"
+	)
+	
+	/**
+	 * Apache rewrite rules example
+	 * @see http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html
+	**/
+	
+	<Location />
+		RewriteEngine on
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteCond %{REQUEST_FILENAME} !-d
+		RewriteRule !\.(js|ico|gif|jpg|png|css)$ /index.php
+	</Location>

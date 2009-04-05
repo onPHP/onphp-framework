@@ -5,6 +5,8 @@
 	
 	require '../../../config.inc.php';
 	
+	define('DEFAULT_CONTROLLER', 'main');
+	
 	try {
 		$request =
 			HttpRequest::create()->
@@ -16,13 +18,40 @@
 			// setSession($_SESSION)->
 			setFiles($_FILES);
 
-		$controllerName = 'main';
+		$controllerName = DEFAULT_CONTROLLER;
+		
+		RouterRewrite::me()->
+		setBaseUrl(
+			HttpUrl::create()->
+			parse(PATH_WEB)
+		)->
+		addRoute(
+			'default',
+			RouterTransparentRule::create(
+				':area/*'
+			)->
+			setDefaults(
+				array(
+					'area' => DEFAULT_CONTROLLER
+				)
+			)
+		)->
+		route($request);
 		
 		if (
-			isset($_GET['area'])
-			&& is_readable(PATH_CONTROLLERS.$_GET['area'].EXT_CLASS)
+			$request->hasGetVar('area')
+			&& ClassUtils::isClassName($_GET['area'])
+			&& defined('PATH_CONTROLLERS')
+			&& is_readable(PATH_CONTROLLERS.$request->getGetVar('area').EXT_CLASS)
 		) {
-			$controllerName = $_GET['area'];
+			$controllerName = $request->getGetVar('area');
+		} elseif (
+			$request->hasAttachedVar('area')
+			&& ClassUtils::isClassName($request->getAttachedVar('area'))
+			&& defined('PATH_CONTROLLERS')
+			&& is_readable(PATH_CONTROLLERS.$request->getAttachedVar('area').EXT_CLASS)
+		) {
+			$controllerName = $request->getAttachedVar('area');
 		}
 
 		$controller = new $controllerName;
@@ -49,7 +78,14 @@
 		
 		if (!$view instanceof RedirectView) {
 			$model->
-				set('selfUrl', $_SERVER['PHP_SELF'].'?area='.$controllerName)->
+				set(
+					'selfUrl',
+					RouterUrlHelper::url(
+						$controllerName, // $request->getAttached()
+						RouterRewrite::me()->getCurrentRouteName(),
+						true
+					)
+				)->
 				set('baseUrl', $_SERVER['PHP_SELF']);
 		}
 		
