@@ -185,16 +185,6 @@
 		/**
 		 * @return OqlToken
 		**/
-		public function back()
-		{
-			$this->setIndex($this->index - 1);
-			
-			return $this->token;
-		}
-		
-		/**
-		 * @return OqlToken
-		**/
 		public function peek()
 		{
 			if ($this->token)
