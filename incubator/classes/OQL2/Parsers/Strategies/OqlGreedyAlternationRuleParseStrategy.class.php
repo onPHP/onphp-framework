@@ -12,7 +12,8 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlGreedyAlternationRuleParseStrategy extends OqlGrammarRuleParseStrategy
+	final class OqlGreedyAlternationRuleParseStrategy extends
+		OqlGrammarRuleParseStrategy
 	{
 		/**
 		 * @return OqlGreedyAlternationRuleParseStrategy
@@ -33,24 +34,25 @@
 		{
 			Assert::isTrue($rule instanceof OqlGreedyAlternationRule);
 			
-			$maxLength = 0;
+			$maxIndex = -1;
 			$maxNode = null;
-			$index = $tokenizer->getIndex();
 			
 			foreach ($rule->getList() as $ruleItem) {
+				$index = $tokenizer->getIndex();
+				
 				if (
 					($node = $ruleItem->process($tokenizer, true))
-					&& ($maxLength < $tokenizer->getIndex() - $index)
+					&& $maxIndex < $tokenizer->getIndex()
 				) {
-					$maxLength = $tokenizer->getIndex() - $index;
+					$maxIndex = $tokenizer->getIndex();
 					$maxNode = $node;
 				}
 				
 				$tokenizer->setIndex($index);
 			}
 			
-			if ($maxNode)
-				$tokenizer->setIndex($index + $maxLength);
+			if ($maxNode !== null)
+				$tokenizer->setIndex($maxIndex);
 			// FIXME: error message
 			elseif (!$silent)
 				$this->raiseError($tokenizer, 'expected');
