@@ -69,7 +69,7 @@
 			
 			// unmatched
 			OqlTokenType::UNKNOWN =>
-				'[\S]+',
+				'\S+',
 			
 			OqlTokenType::WHITESPACE =>
 				'\s+'
