@@ -10,8 +10,6 @@
  ****************************************************************************/
 /* $Id$ */
 
-	// TODO: use standart array iteration mechanism (current, next, prev)
-	
 	/**
 	 * @ingroup OQL
 	 * 
@@ -21,12 +19,10 @@
 	{
 		private $string			= null;
 		private $tokens			= array();
-		private $tokensCount	= 0;
 		private $spaces			= array();
 		
-		private $token			= null;
-		private $prevToken		= null;
-		private $index			= -1;
+		private $bookmarks		= array();
+		private $lastBookmark	= -1;
 		
 		private static $masks = array(
 			// parentheses
@@ -142,24 +138,37 @@
 		
 		public function getIndex()
 		{
-			return $this->index;
+			return key($this->tokens);
+		}
+		
+		public function addBookmark()
+		{
+			$this->lastBookmark++;
+			$this->bookmarks[$this->lastBookmark] = $this->tokens;
+			
+			return $this->lastBookmark;
 		}
 		
 		/**
 		 * @return OqlTokenizer
 		**/
-		public function setIndex($index)
+		public function gotoBookmark($bookmark)
 		{
-			if ($index > $this->tokensCount - 1) {
-				$index = $this->tokensCount - 1;
+			Assert::isIndexExists($this->bookmarks, $bookmark);
 			
-			} elseif ($index < -1) {
-				$index = -1;
-			}
+			$this->tokens = $this->bookmarks[$bookmark];
 			
-			$this->index = $index;
-			$this->token = $this->getByIndex($this->index);
-			$this->prevToken = $this->getByIndex($this->index - 1);
+			return $this;
+		}
+		
+		/**
+		 * @return OqlTokenizer
+		**/
+		public function dropBookmark($bookmark)
+		{
+			Assert::isIndexExists($this->bookmarks, $bookmark);
+			
+			unset($this->bookmarks[$bookmark]);
 			
 			return $this;
 		}
@@ -169,7 +178,10 @@
 		**/
 		public function get()
 		{
-			return $this->token;
+			if (($token = current($this->tokens)) !== false)
+				return $token;
+			
+			return null;
 		}
 		
 		/**
@@ -177,9 +189,10 @@
 		**/
 		public function next()
 		{
-			$this->setIndex($this->index + 1);
+			if (($token = next($this->tokens)) !== false)
+				return $token;
 			
-			return $this->token;
+			return null;
 		}
 		
 		/**
@@ -187,18 +200,13 @@
 		**/
 		public function peek()
 		{
-			if ($this->token)
-				$this->prevToken = $this->token;
+			if (
+				($index = key($this->tokens)) !== null
+				&& isset($this->tokens[$index + 1])
+			)
+				return $this->tokens[$index + 1];
 			
-			return $this->token = $this->getByIndex($this->index + 1);
-		}
-		
-		/**
-		 * @return OqlToken
-		**/
-		private function getByIndex($index)
-		{
-			return isset($this->tokens[$index]) ? $this->tokens[$index] : null;
+			return null;
 		}
 		
 		/**
@@ -228,8 +236,6 @@
 					$type
 				);
 			}
-			
-			$this->tokensCount = count($this->tokens);
 			
 			return $this;
 		}
