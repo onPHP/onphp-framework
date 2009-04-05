@@ -21,8 +21,7 @@
 		private $tokens			= array();
 		private $spaces			= array();
 		
-		private $bookmarks		= array();
-		private $lastBookmark	= -1;
+		private $index			= -1;
 		
 		private static $masks = array(
 			// parentheses
@@ -138,50 +137,20 @@
 		
 		public function getIndex()
 		{
-			return key($this->tokens);
-		}
-		
-		public function addBookmark()
-		{
-			$this->lastBookmark++;
-			$this->bookmarks[$this->lastBookmark] = $this->tokens;
-			
-			return $this->lastBookmark;
+			return $this->index;
 		}
 		
 		/**
 		 * @return OqlTokenizer
 		**/
-		public function gotoBookmark($bookmark)
+		public function setIndex($index)
 		{
-			Assert::isIndexExists($this->bookmarks, $bookmark);
+			if ($index != -1)
+				Assert::isIndexExists($this->tokens, $index);
 			
-			$this->tokens = $this->bookmarks[$bookmark];
+			$this->index = $index;
 			
 			return $this;
-		}
-		
-		/**
-		 * @return OqlTokenizer
-		**/
-		public function dropBookmark($bookmark)
-		{
-			Assert::isIndexExists($this->bookmarks, $bookmark);
-			
-			unset($this->bookmarks[$bookmark]);
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlToken
-		**/
-		public function get()
-		{
-			if (($token = current($this->tokens)) !== false)
-				return $token;
-			
-			return null;
 		}
 		
 		/**
@@ -189,10 +158,11 @@
 		**/
 		public function next()
 		{
-			if (($token = next($this->tokens)) !== false)
-				return $token;
+			$this->index++;
 			
-			return null;
+			return isset($this->tokens[$this->index])
+				? $this->tokens[$this->index]
+				: null;
 		}
 		
 		/**
@@ -200,13 +170,9 @@
 		**/
 		public function peek()
 		{
-			if (
-				($index = key($this->tokens)) !== null
-				&& isset($this->tokens[$index + 1])
-			)
-				return $this->tokens[$index + 1];
-			
-			return null;
+			return isset($this->tokens[$this->index + 1])
+				? $this->tokens[$this->index + 1]
+				: null;
 		}
 		
 		/**
