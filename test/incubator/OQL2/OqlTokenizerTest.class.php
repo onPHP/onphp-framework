@@ -361,6 +361,64 @@
 			);
 		}
 		
+		public function testMovements()
+		{
+			$tokenizer = new OqlTokenizer('token1 token2 token3');
+			
+			$tokens = array(
+				OqlToken::create('token1', 'token1', OqlTokenType::IDENTIFIER),
+				OqlToken::create('token2', 'token2', OqlTokenType::IDENTIFIER),
+				OqlToken::create('token3', 'token3', OqlTokenType::IDENTIFIER)
+			);
+			
+			$this->assertEquals(-1, $tokenizer->getIndex());
+			
+			for ($i = 0; $i < count($tokens) + 10; $i++) {
+				$token = isset($tokens[$i]) ? $tokens[$i] : null;
+				
+				$this->assertEquals($token, $tokenizer->peek());
+				$this->assertEquals($i - 1, $tokenizer->getIndex());
+				
+				$this->assertEquals($token, $tokenizer->next());
+				$this->assertEquals($i, $tokenizer->getIndex());
+			}
+			
+			try {
+				$tokenizer->setIndex(-10);
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				// pass
+			}
+			
+			try {
+				$tokenizer->setIndex(-1);
+				// pass
+			} catch (WrongArgumentException $e) {
+				$this->fail();
+			}
+			
+			try {
+				$tokenizer->setIndex(0);
+				// pass
+			} catch (WrongArgumentException $e) {
+				$this->fail();
+			}
+			
+			try {
+				$tokenizer->setIndex(count($tokens) - 1);
+				// pass
+			} catch (WrongArgumentException $e) {
+				$this->fail();
+			}
+			
+			try {
+				$tokenizer->setIndex(count($tokens));
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				// pass
+			}
+		}
+		
 		/**
 		 * @return OqlTokenizerTest
 		**/
