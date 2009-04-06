@@ -30,7 +30,12 @@
 		**/
 		public function reset(OqlSyntaxNode $node)
 		{
-			return $this->node = $node;
+			$this->node = $node;
+			
+			if ($this->node instanceof OqlNonterminalNode)
+				$this->next();
+			
+			return $this->node;
 		}
 		
 		/**
