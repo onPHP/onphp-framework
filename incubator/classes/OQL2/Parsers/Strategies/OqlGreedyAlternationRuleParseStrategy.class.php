@@ -41,6 +41,7 @@
 				$index = $tokenizer->getIndex();
 				
 				if (
+					// TODO: just parse, process (apply mutator) $maxNode only
 					($node = $ruleItem->process($tokenizer, true))
 					&& $maxIndex < $tokenizer->getIndex()
 				) {
