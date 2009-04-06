@@ -27,7 +27,7 @@
 		**/
 		public function process(OqlSyntaxNode $node)
 		{
-			$iterator = OqlSyntaxTreeRecursiveIterator::me();
+			$iterator = OqlSyntaxTreeDeepRecursiveIterator::me();
 			
 			var_dump($node->toString());
 			

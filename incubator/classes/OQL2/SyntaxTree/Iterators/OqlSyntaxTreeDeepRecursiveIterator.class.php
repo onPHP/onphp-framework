@@ -12,10 +12,13 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlPostfixUnaryExpressionNodeMutator extends OqlSyntaxNodeMutator
+	final class OqlSyntaxTreeDeepRecursiveIterator extends Singleton
+		implements Instantiatable
 	{
+		private $node = null;
+		
 		/**
-		 * @return OqlPostfixUnaryExpressionNodeMutator
+		 * @return OqlSyntaxTreeDeepRecursiveIterator
 		**/
 		public static function me()
 		{
@@ -23,24 +26,37 @@
 		}
 		
 		/**
-		 * @return OqlLogicalObjectNode
+		 * @return OqlSyntaxNode
 		**/
-		public function process(OqlSyntaxNode $node)
+		public function reset(OqlSyntaxNode $node)
 		{
-			$iterator = OqlSyntaxTreeDeepRecursiveIterator::me();
+			$this->node = $node;
 			
-			if (($operand = $iterator->reset($node)) === null)
-				return $node;
+			if ($this->node instanceof OqlNonterminalNode)
+				$this->next();
 			
-			if (($operator = $iterator->next()) === null)
-				return $node;
+			return $this->node;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function next()
+		{
+			if ($this->node === null)
+				return null;
 			
-			return OqlLogicalObjectNode::create()->setObject( 
-				new PostfixUnaryExpression(
-					$operand->toValue(),
-					$operator->toValue()
-				)
-			);
+			$node = $this->node;
+			
+			do {
+				if ($child = $node->getFirstChild())
+					$node = $child;
+				else
+					$node = $node->getNextSibling();
+			
+			} while ($node instanceof OqlNonterminalNode);
+			
+			return $this->node = $node;
 		}
 	}
 ?>
