@@ -79,8 +79,8 @@
 			if ($labels) {
 				$labelsString = '&'.GoogleChartAxisLabel::getParamName().'=';
 				
-				foreach ($labels as $axisId => $label) {
-					$labelsString .= $axisId.':|'.$label->toString();
+				foreach ($labels as $index => $label) {
+					$labelsString .= $index.':|'.$label->toString();
 				}
 			}
 			
