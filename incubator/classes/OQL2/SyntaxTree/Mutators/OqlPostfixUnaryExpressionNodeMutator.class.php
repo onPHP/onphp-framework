@@ -28,13 +28,8 @@
 		public function process(OqlSyntaxNode $node)
 		{
 			$iterator = OqlSyntaxTreeRecursiveIterator::me();
-			$iterator->reset($node);
 			
-			$operand = $node;
-			if ($operand instanceof OqlNonterminalNode)
-				$operand = $iterator->next();
-			
-			if ($operand === null)
+			if (($operand = $iterator->reset($node)) === null)
 				return $node;
 			
 			if (($operator = $iterator->next()) === null)

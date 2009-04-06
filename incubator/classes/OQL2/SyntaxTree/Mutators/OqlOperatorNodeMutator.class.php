@@ -59,19 +59,16 @@
 		public function process(OqlSyntaxNode $node)
 		{
 			$iterator = OqlSyntaxTreeRecursiveIterator::me();
-			$iterator->reset($node);
-			
-			if ($node instanceof OqlNonterminalNode)
-				$node = $iterator->next();
+			$node = $iterator->reset($node);
 			
 			$operator = '';
 			
 			do {
 				$value = $node->toValue();
-				if (is_bool($value))
-					$operator .= ($value === true ? 'true' : 'false');
-				else
-					$operator .= $value;
+				$operator .= is_bool($value)
+					? ($value === true ? 'true' : 'false')
+					: $value;
+			
 			} while ($node = $iterator->next());
 			
 			Assert::isIndexExists(self::$operatorMap, $operator);
