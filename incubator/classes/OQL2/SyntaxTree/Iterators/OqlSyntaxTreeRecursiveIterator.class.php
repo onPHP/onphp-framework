@@ -15,7 +15,8 @@
 	final class OqlSyntaxTreeRecursiveIterator extends Singleton
 		implements Instantiatable
 	{
-		private $node = null;
+		private $node	= null;
+		private $stack	= array();
 		
 		/**
 		 * @return OqlSyntaxTreeRecursiveIterator
@@ -31,6 +32,7 @@
 		public function reset(OqlSyntaxNode $node)
 		{
 			$this->node = $node;
+			$this->stack = array();
 			
 			if ($this->node instanceof OqlNonterminalNode)
 				$this->next();
@@ -49,10 +51,19 @@
 			$node = $this->node;
 			
 			do {
-				if ($child = $node->getFirstChild())
+				if ($child = $node->getFirstChild()) {
+					array_push($this->stack, $node);
 					$node = $child;
-				else
+				} else {
 					$node = $node->getNextSibling();
+				}
+				
+				if (
+					$node === null
+					&& ($node = array_pop($this->stack))
+				) {
+					$node = $node->getNextSibling();
+				}
 			
 			} while ($node instanceof OqlNonterminalNode);
 			
