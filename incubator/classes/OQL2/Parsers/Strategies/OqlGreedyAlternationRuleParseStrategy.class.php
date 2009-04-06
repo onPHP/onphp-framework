@@ -36,26 +36,35 @@
 			
 			$maxIndex = -1;
 			$maxNode = null;
+			$maxRule = null;
 			
 			foreach ($rule->getList() as $ruleItem) {
 				$index = $tokenizer->getIndex();
 				
 				if (
-					// TODO: just parse, process (apply mutator) $maxNode only
-					($node = $ruleItem->process($tokenizer, true))
-					&& $maxIndex < $tokenizer->getIndex()
+					(
+						$node = $ruleItem->getParseStrategy()->
+							parse($ruleItem, $tokenizer, true)
+					)
+					&&
+					$maxIndex < $tokenizer->getIndex()
 				) {
 					$maxIndex = $tokenizer->getIndex();
 					$maxNode = $node;
+					$maxRule = $ruleItem;
 				}
 				
 				$tokenizer->setIndex($index);
 			}
 			
-			if ($maxNode !== null)
+			if ($maxNode !== null) {
+				if ($maxRule->getMutator())
+					$maxNode = $maxRule->getMutator()->process($maxNode);
+				
 				$tokenizer->setIndex($maxIndex);
+			
 			// FIXME: error message
-			elseif (!$silent)
+			} elseif (!$silent)
 				$this->raiseError($tokenizer, 'expected');
 			
 			return $maxNode;
