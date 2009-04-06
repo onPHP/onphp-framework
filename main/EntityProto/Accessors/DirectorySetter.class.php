@@ -34,6 +34,8 @@
 					copy($value, $path);
 				}
 
+				touch($path);
+
 				return $this;
 
 			} elseif ($primitive instanceof PrimitiveForm) {

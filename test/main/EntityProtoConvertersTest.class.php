@@ -55,6 +55,7 @@
 			$actual = glob($ringDir.'/*');
 
 			$expected = array(
+				$ringDir.'/contents',
 				$ringDir.'/inner',
 				$ringDir.'/items',
 				$ringDir.'/textField'
@@ -76,6 +77,7 @@
 			$actual = glob($ringDir.'/items/424/*');
 
 			$expected = array(
+				$ringDir.'/items/424/contents',
 				$ringDir.'/items/424/inner',
 				$ringDir.'/items/424/textField'
 			);
