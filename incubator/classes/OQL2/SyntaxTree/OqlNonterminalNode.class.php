@@ -121,6 +121,15 @@
 			return $this;
 		}
 		
+		public function toValue()
+		{
+			$result = array();
+			foreach ($this->childs as $child)
+				$result[] = $child->toValue();
+			
+			return $result;
+		}
+		
 		public function toString()
 		{
 			if ($this->childs) {

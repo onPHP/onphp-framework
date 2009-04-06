@@ -14,7 +14,7 @@
 	**/
 	final class OqlTokenNode extends OqlTerminalNode 
 	{
-		protected $token = null;
+		private $token = null;
 		
 		/**
 		 * @return OqlTokenNode
@@ -42,19 +42,14 @@
 			return $this;
 		}
 		
-		public function getValue()
+		public function toValue()
 		{
 			return $this->token ? $this->token->getValue() : null;
 		}
 		
-		public function getType()
-		{
-			return $this->token ? $this->token->getType() : null;
-		}
-		
 		public function toString()
 		{
-			return $this->getValue();
+			return $this->toValue();
 		}
 	}
 ?>

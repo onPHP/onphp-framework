@@ -47,6 +47,8 @@
 		**/
 		abstract public function dropChilds();
 		
+		abstract public function toValue();
+		
 		final public function setId($id)
 		{
 			throw new UnsupportedMethodException();
