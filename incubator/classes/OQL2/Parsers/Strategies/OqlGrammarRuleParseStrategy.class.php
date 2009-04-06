@@ -9,6 +9,8 @@
  *                                                                          *
  ****************************************************************************/
 
+	// TODO: think about storing parse result in simplest structure (arrays) by default
+	// (SyntaxNodeMutator -> SyntaxNodeBuilder)
 	/**
 	 * @ingroup OQL
 	**/
