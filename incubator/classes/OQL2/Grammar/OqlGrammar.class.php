@@ -138,15 +138,16 @@
 								OqlSequenceRule::create()->
 									add(
 										OqlOptionalRule::create()->setRule(
-											$this->operator('-')
+											$this->operator('-')->
+												setMutator(OqlOperatorNodeMutator::me())
 										)
 									)->
 									add($this->get(self::ARITHMETIC_OPERAND)),
 								$this->operator(array('*', '/'))->
-									setMutator(OqlBinaryOperatorNodeMutator::me())
+									setMutator(OqlOperatorNodeMutator::me())
 							),
 							$this->operator(array('+', '-'))->
-								setMutator(OqlBinaryOperatorNodeMutator::me())
+								setMutator(OqlOperatorNodeMutator::me())
 						)
 					)
 			);
@@ -214,7 +215,8 @@
 															add($this->get(self::NULL))
 													)->
 													add($this->get(self::BOOLEAN))
-											)
+											)->
+											setMutator(OqlOperatorNodeMutator::me())
 									)->
 									add(
 										OqlSequenceRule::create()->
@@ -243,7 +245,7 @@
 															add($this->keyword('ilike'))->
 															add($this->keyword('similar to'))
 													)->
-													setMutator(OqlBinaryOperatorNodeMutator::me())
+													setMutator(OqlOperatorNodeMutator::me())
 											)->
 											add(
 												$this->get(self::PATTERN)
@@ -279,15 +281,16 @@
 						OqlSequenceRule::create()->
 							add(
 								OqlOptionalRule::create()->setRule(
-									$this->operator('not')
+									$this->operator('not')->
+										setMutator(OqlOperatorNodeMutator::me())
 								)
 							)->
 							add($this->get(self::LOGICAL_TERM)),
 						$this->operator('and')->
-							setMutator(OqlBinaryOperatorNodeMutator::me())
+							setMutator(OqlOperatorNodeMutator::me())
 					),
 					$this->operator('or')->
-						setMutator(OqlBinaryOperatorNodeMutator::me())
+						setMutator(OqlOperatorNodeMutator::me())
 				)->
 				setId(self::LOGICAL_EXPRESSION)
 			);
