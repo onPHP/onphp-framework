@@ -64,10 +64,11 @@
 			$operator .= $node->toValue();
 			
 			Assert::isIndexExists(self::$operatorMap, $operator);
+			Assert::isNull($iterator->next());
 			
 			return OqlValueNode::create()->setValue(
 				self::$operatorMap[$operator]
-			);			
+			);
 		}
 	}
 ?>
