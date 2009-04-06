@@ -1,5 +1,9 @@
 # $Id$
 
+2009-04-06	Denis M. Gabaidulin
+
+	* main/Math/MathUtils.class.php: alignByBase() added.
+
 2009-04-05	Sergey S. Sergeev
 
 	* main/Utils/Routers, test/main/Utils/Routers: utils for rewriting 

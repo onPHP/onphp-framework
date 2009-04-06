@@ -19,6 +19,8 @@
 		
 		private $minMax = null;
 		
+		private $base = null;
+		
 		/**
 		 * @return GoogleChartDataSet
 		**/
@@ -52,12 +54,21 @@
 		**/
 		public function addElement($element)
 		{
-			if ($this->minMax->getMax() < $element)
-				$this->minMax->getMax($element);
-			
 			$this->data[] = $element;
 			
 			return $this;
+		}
+		
+		public function setBase($base)
+		{
+			$this->base = $base;
+			
+			return $this;
+		}
+		
+		public function getBase()
+		{
+			return $this->base;
 		}
 		
 		public function getSize()
@@ -83,7 +94,13 @@
 		**/
 		private function calculateMax()
 		{
-			$this->minMax->setMax(max($this->data));
+			$maxValue = max($this->data);
+			
+			if ($this->base)
+				$maxValue =
+					MathUtils::alignByBase($maxValue, $this->base, true);
+			
+			$this->minMax->setMax($maxValue);
 			
 			return $this;
 		}
