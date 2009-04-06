@@ -42,6 +42,9 @@
 		 */
 		public function receive($uTimeout = null)
 		{
+			if (!$this->queue)
+				throw new WrongStateException('you must set the queue first');
+
 			if ($uTimeout && $this->getStream()->isEof())
 				usleep($uTimeout);
 
