@@ -130,28 +130,25 @@
 			//	<arithmetic_expression> ::=
 			//		<arithmetic_mul_expression> * ( ( "+" | "-" ) <arithmetic_mul_expression> )
 			$this->set(
-				OqlSequenceRule::create()->
-					setId(self::ARITHMETIC_EXPRESSION)->
-					add(
-						self::repetition(
-							self::repetition(
-								OqlSequenceRule::create()->
-									add(
-										OqlOptionalRule::create()->setRule(
-											$this->operator('-')->
-												setMutator(OqlOperatorNodeMutator::me())
-										)
-									)->
-									add($this->get(self::ARITHMETIC_OPERAND)),
-								$this->operator(array('*', '/'))->
-									setMutator(OqlOperatorNodeMutator::me())
+				self::repetition(
+					self::repetition(
+						OqlSequenceRule::create()->
+							add(
+								OqlOptionalRule::create()->setRule(
+									$this->operator('-')->
+										setMutator(OqlOperatorNodeMutator::me())
+								)
 							)->
-							setMutator(OqlBinaryExpressionNodeMutator::me()),
-							$this->operator(array('+', '-'))->
-								setMutator(OqlOperatorNodeMutator::me())
-						)->
-						setMutator(OqlBinaryExpressionNodeMutator::me())
-					)
+							add($this->get(self::ARITHMETIC_OPERAND)),
+						$this->operator(array('*', '/'))->
+							setMutator(OqlOperatorNodeMutator::me())
+					)->
+					setMutator(OqlBinaryExpressionNodeMutator::me()),
+					$this->operator(array('+', '-'))->
+						setMutator(OqlOperatorNodeMutator::me())
+				)->
+				setId(self::ARITHMETIC_EXPRESSION)->
+				setMutator(OqlBinaryExpressionNodeMutator::me())
 			);
 			
 			//	<logical_operand> ::=
