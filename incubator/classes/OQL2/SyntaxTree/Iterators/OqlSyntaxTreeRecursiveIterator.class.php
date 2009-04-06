@@ -12,11 +12,9 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlSyntaxTreeRecursiveIterator extends Singleton
-		implements Instantiatable
+	final class OqlSyntaxTreeRecursiveIterator extends OqlSyntaxTreeIterator
 	{
-		private $node	= null;
-		private $stack	= array();
+		private $stack = array();
 		
 		/**
 		 * @return OqlSyntaxTreeRecursiveIterator
@@ -24,20 +22,6 @@
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
-		}
-		
-		/**
-		 * @return OqlSyntaxNode
-		**/
-		public function reset(OqlSyntaxNode $node)
-		{
-			$this->node = $node;
-			$this->stack = array();
-			
-			if ($this->node instanceof OqlNonterminalNode)
-				$this->next();
-			
-			return $this->node;
 		}
 		
 		/**

@@ -12,35 +12,27 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlSyntaxTreeDeepRecursiveIterator extends OqlSyntaxTreeIterator
+	abstract class OqlSyntaxTreeIterator extends Singleton
+		implements Instantiatable
 	{
-		/**
-		 * @return OqlSyntaxTreeDeepRecursiveIterator
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
+		protected $node = null;
 		
 		/**
 		 * @return OqlSyntaxNode
 		**/
-		public function next()
+		abstract public function next();
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function reset(OqlSyntaxNode $node)
 		{
-			if ($this->node === null)
-				return null;
+			$this->node = $node;
 			
-			$node = $this->node;
+			if ($this->node instanceof OqlNonterminalNode)
+				$this->next();
 			
-			do {
-				if ($child = $node->getFirstChild())
-					$node = $child;
-				else
-					$node = $node->getNextSibling();
-			
-			} while ($node instanceof OqlNonterminalNode);
-			
-			return $this->node = $node;
+			return $this->node;
 		}
 	}
 ?>
