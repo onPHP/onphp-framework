@@ -12,14 +12,11 @@
 	/**
 	 * @ingroup OQL
 	**/
-	abstract class OqlSyntaxNodeMutator extends Singleton
+	abstract class OqlSyntaxNodeMutator extends Singleton implements Instantiatable
 	{
 		/**
 		 * @return OqlSyntaxNode
 		**/
-		public function process(OqlSyntaxNode $node)
-		{
-			return $node;
-		}
+		abstract public function process(OqlSyntaxNode $node);
 	}
 ?>
