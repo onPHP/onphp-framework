@@ -209,6 +209,31 @@
 		private static function importTokenValue($value, $type)
 		{
 			switch ($type) {
+				case OqlTokenType::KEYWORD:
+					return strtolower(
+						preg_replace('/\s+/', ' ', $value)
+					);
+				
+				case OqlTokenType::PLACEHOLDER:
+					return intval(substr($value, 1));
+				
+				case OqlTokenType::NUMBER:
+					return floatval($value);
+				
+				case OqlTokenType::OPERATOR:
+					return $value == '<>'
+						? BinaryExpression::NOT_EQUALS
+						: strtolower($value);
+				
+				case OqlTokenType::AGGREGATE_FUNCTION:
+					return strtolower($value);
+				
+				case OqlTokenType::BOOLEAN:
+					return strtolower($value) != 'false';
+				
+				case OqlTokenType::NULL:
+					return 'null';
+				
 				case OqlTokenType::STRING:
 					$quote = mb_substr($value, 0, 1);
 					
@@ -217,31 +242,6 @@
 						$quote,
 						mb_substr($value, 1, mb_strlen($value) - 2)
 					);
-				
-				case OqlTokenType::NUMBER:
-					return floatval($value);
-				
-				case OqlTokenType::BOOLEAN:
-					return strtolower($value) != 'false';
-				
-				case OqlTokenType::NULL:
-					return 'null';
-				
-				case OqlTokenType::AGGREGATE_FUNCTION:
-					return strtolower($value);
-				
-				case OqlTokenType::PLACEHOLDER:
-					return intval(substr($value, 1));
-				
-				case OqlTokenType::KEYWORD:
-					return strtolower(
-						preg_replace('/\s+/', ' ', $value)
-					);
-				
-				case OqlTokenType::OPERATOR:
-					return $value == '<>'
-						? BinaryExpression::NOT_EQUALS
-						: strtolower($value);
 			}
 			
 			return $value;
