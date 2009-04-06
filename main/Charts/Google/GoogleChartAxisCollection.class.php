@@ -56,15 +56,20 @@
 				$types[] = $axis->getType()->toString();
 				
 				if ($range = $axis->getRange())
-					$ranges[] =
-						$i++
+					$ranges[$i] =
+						$i
 						.','
 						.$range->getStart()
 						.','
 						.$range->getEnd();
 				
+				if ($interval = $axis->getInterval())
+					$ranges[$i] .= ','.$interval;
+						
 				if ($label = $axis->getLabel())
 					$labels[$i] = $label;
+				
+				$i++;
 			}
 			
 			$typeString .= implode(',', $types);
