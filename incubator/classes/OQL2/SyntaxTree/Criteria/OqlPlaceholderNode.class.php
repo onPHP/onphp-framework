@@ -41,7 +41,7 @@
 		
 		public function toString()
 		{
-			return $this->placeholder ? $this->placeholder->getName() : null;
+			return $this->placeholder ? '$'.$this->placeholder->getName() : null;
 		}
 		
 		/**
