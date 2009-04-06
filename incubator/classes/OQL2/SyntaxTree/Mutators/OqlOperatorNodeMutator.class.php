@@ -39,7 +39,10 @@
 			'istrue'		=> PostfixUnaryExpression::IS_TRUE,
 			'isfalse'		=> PostfixUnaryExpression::IS_FALSE,
 			
-			'not'			=> PrefixUnaryExpression::NOT
+			'not'			=> PrefixUnaryExpression::NOT,
+			
+			'in'			=> InExpression::IN,
+			'notin'			=> InExpression::NOT_IN
 		);
 		
 		/**

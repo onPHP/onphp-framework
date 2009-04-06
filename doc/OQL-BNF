@@ -56,7 +56,7 @@ $Id$
 			(
 				( <comparison_operator> <logical_operand> )
 				| ( "is" ( ( [ "not" ] <null> ) | <boolean> ) )
-				| ( "in" "(" <constant> * ( "," <constant> ) ")" )
+				| ( [ "not" ] "in" "(" <constant> * ( "," <constant> ) ")" )
 				| ( [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
 				| ( "between" <logical_operand> "and" <logical_operand> )
 			)
