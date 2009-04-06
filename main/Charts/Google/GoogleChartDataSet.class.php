@@ -63,6 +63,9 @@
 		{
 			$this->base = $base;
 			
+			// reset
+			$this->minMax->setMax(0);
+			
 			return $this;
 		}
 		
