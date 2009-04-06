@@ -35,6 +35,26 @@
 		**/
 		abstract public function dropChild(OqlSyntaxNode $child);
 		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		abstract public function getFirstChild();
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		abstract public function getLastChild();
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		abstract public function getNextChild(OqlSyntaxNode $child);
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		abstract public function getPrevChild(OqlSyntaxNode $child);
+		
 		abstract public function getChilds();
 		
 		/**
@@ -80,6 +100,28 @@
 			$this->parent = null;
 			
 			return $this;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function getNextSibling()
+		{
+			if ($this->parent)
+				return $this->parent->getNextChild($this);
+			
+			return null;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function getPrevSibling()
+		{
+			if ($this->parent)
+				return $this->parent->getPrevChild($this);
+			
+			return null;
 		}
 	}
 ?>

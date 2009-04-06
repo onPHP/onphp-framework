@@ -14,7 +14,8 @@
 	**/
 	class OqlNonterminalNode extends OqlSyntaxNode
 	{
-		protected $childs = array();
+		protected $childs	= array();
+		protected $childIds	= array();
 		
 		/**
 		 * @return OqlNonterminalNode
@@ -66,7 +67,7 @@
 		
 		public function hasChild(OqlSyntaxNode $child)
 		{
-			return isset($this->childs[$child->getId()]);
+			return isset($this->childIds[$child->id]);
 		}
 		
 		/**
@@ -74,7 +75,9 @@
 		**/
 		public function addChild(OqlSyntaxNode $child)
 		{
-			$this->childs[$child->getId()] = $child;
+			$this->childs[] = $child;
+			$this->childIds[$child->id] = count($this->childs) - 1;
+			
 			$child->parent = $this;
 			
 			return $this;
@@ -86,11 +89,69 @@
 		public function dropChild(OqlSyntaxNode $child)
 		{
 			if ($this->hasChild($child)) {
-				unset($this->childs[$child->getId()]);
+				unset($this->childs[$this->childIds[$child->id]]);
+				unset($this->childIds[$child->id]);
+				
 				$child->parent = null;
 			}
 			
 			return $this;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function getFirstChild()
+		{
+			if (($child = reset($this->childs)) !== false) 
+				return $child;
+			
+			return null;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function getLastChild()
+		{
+			if (($child = end($this->childs)) !== false) 
+				return $child;
+			
+			return null;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function getNextChild(OqlSyntaxNode $child)
+		{
+			Assert::isTrue(
+				$this->hasChild($child),
+				$child->toString().' is not in children list of '.$this->toString()
+			);
+			
+			$index = $this->childIds[$child->id];
+			if (isset($this->childs[$index + 1]))
+				return $this->childs[$index + 1];
+			
+			return null;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function getPrevChild(OqlSyntaxNode $child)
+		{
+			Assert::isTrue(
+				$this->hasChild($child),
+				$child->toString().' is not in children list of '.$this->toString()
+			);
+			
+			$index = $this->childIds[$child->id];
+			if (isset($this->childs[$index - 1]))
+				return $this->childs[$index - 1];
+			
+			return null;
 		}
 		
 		public function getChilds()
