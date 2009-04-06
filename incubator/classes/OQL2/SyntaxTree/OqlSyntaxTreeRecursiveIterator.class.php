@@ -53,26 +53,5 @@
 			
 			return $this->node = $node;
 		}
-		
-		/**
-		 * @return OqlSyntaxNode
-		**/
-		public function prev()
-		{
-			if ($this->node === null)
-				return null;
-			
-			$node = $this->node;
-			
-			do {
-				if ($sibling = $node->getPrevSibling())
-					$node = $sibling;
-				else
-					$node = $node->getParent();
-			
-			} while ($node instanceof OqlNonterminalNode);
-			
-			return $this->node = $node;
-		}
 	}
 ?>
