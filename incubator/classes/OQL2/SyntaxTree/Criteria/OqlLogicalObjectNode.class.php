@@ -44,7 +44,9 @@
 		
 		public function toString()
 		{
-			return get_class($this->object);
+			return $this->object ?
+				$this->object->toDialectString(ImaginaryDialect::me())
+				: null;
 		}
 		
 		/**
