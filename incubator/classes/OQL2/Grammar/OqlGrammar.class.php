@@ -130,25 +130,25 @@
 			//	<arithmetic_expression> ::=
 			//		<arithmetic_mul_expression> * ( ( "+" | "-" ) <arithmetic_mul_expression> )
 			$this->set(
-				OqlSequenceRule::create()->
-					setId(self::ARITHMETIC_EXPRESSION)->
-					add(
-						self::repetition(
-							self::repetition(
-								OqlSequenceRule::create()->
-									add(
-										OqlOptionalRule::create()->setRule(
-											$this->operator('-')
-										)
-									)->
-									add($this->get(self::ARITHMETIC_OPERAND)),
-								$this->operator(array('*', '/'))->
-									setMutator(OqlBinaryOperatorNodeMutator::me())
-							),
-							$this->operator(array('+', '-'))->
-								setMutator(OqlBinaryOperatorNodeMutator::me())
-						)
-					)
+				self::repetition(
+					self::repetition(
+						OqlSequenceRule::create()->
+							add(
+								OqlOptionalRule::create()->setRule(
+									$this->operator('-')->
+										setMutator(OqlOperatorNodeMutator::me())
+								)
+							)->
+							add($this->get(self::ARITHMETIC_OPERAND)),
+						$this->operator(array('*', '/'))->
+							setMutator(OqlOperatorNodeMutator::me())
+					)->
+					setMutator(OqlBinaryExpressionNodeMutator::me()),
+					$this->operator(array('+', '-'))->
+						setMutator(OqlOperatorNodeMutator::me())
+				)->
+				setId(self::ARITHMETIC_EXPRESSION)->
+				setMutator(OqlBinaryExpressionNodeMutator::me())
 			);
 			
 			//	<logical_operand> ::=
@@ -178,7 +178,7 @@
 			//			<logical_operand>
 			//			(
 			//				( <comparison_operator> <logical_operand> )
-			//				| ( "is" [ "not" ] ( <null> | <boolean> ) )
+			//				| ( "is" ( ( [ "not" ] <null> ) | <boolean> ) )
 			//				| ( "in" "(" <constant> * ( "," <constant> ) ")" )
 			//				| ( [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
 			//				| ( "between" <logical_operand> "and" <logical_operand> )
@@ -203,15 +203,19 @@
 										OqlSequenceRule::create()->
 											add($this->keyword('is'))->
 											add(
-												OqlOptionalRule::create()->setRule(
-													$this->operator('not')
-												)
-											)->
-											add(
 												OqlAlternationRule::create()->
-													add($this->get(self::NULL))->
+													add(
+														OqlSequenceRule::create()->
+															add(
+																OqlOptionalRule::create()->setRule(
+																	$this->operator('not')
+																)
+															)->
+															add($this->get(self::NULL))
+													)->
 													add($this->get(self::BOOLEAN))
-											)
+											)->
+											setMutator(OqlOperatorNodeMutator::me())
 									)->
 									add(
 										OqlSequenceRule::create()->
@@ -240,7 +244,7 @@
 															add($this->keyword('ilike'))->
 															add($this->keyword('similar to'))
 													)->
-													setMutator(OqlBinaryOperatorNodeMutator::me())
+													setMutator(OqlOperatorNodeMutator::me())
 											)->
 											add(
 												$this->get(self::PATTERN)
@@ -276,17 +280,20 @@
 						OqlSequenceRule::create()->
 							add(
 								OqlOptionalRule::create()->setRule(
-									$this->operator('not')
+									$this->operator('not')->
+										setMutator(OqlOperatorNodeMutator::me())
 								)
 							)->
 							add($this->get(self::LOGICAL_TERM)),
 						$this->operator('and')->
-							setMutator(OqlBinaryOperatorNodeMutator::me())
-					),
+							setMutator(OqlOperatorNodeMutator::me())
+					)->
+					setMutator(OqlBinaryExpressionNodeMutator::me()),
 					$this->operator('or')->
-						setMutator(OqlBinaryOperatorNodeMutator::me())
+						setMutator(OqlOperatorNodeMutator::me())
 				)->
-				setId(self::LOGICAL_EXPRESSION)
+				setId(self::LOGICAL_EXPRESSION)->
+				setMutator(OqlBinaryExpressionNodeMutator::me())
 			);
 			
 			//	<mixed_operand> ::= <arithmetic_expression> || <logical_expression>

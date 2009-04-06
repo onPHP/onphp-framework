@@ -38,6 +38,9 @@
 		**/
 		public function next()
 		{
+			if ($this->node === null)
+				return null;
+			
 			$node = $this->node;
 			
 			do {
@@ -56,6 +59,9 @@
 		**/
 		public function prev()
 		{
+			if ($this->node === null)
+				return null;
+			
 			$node = $this->node;
 			
 			do {

@@ -61,6 +61,9 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
+			if ($dialect instanceof ImaginaryDialect)
+				return '$'.$this->name;
+			
 			Assert::isTrue($this->binded);
 			
 			// FIXME: will be resolved by container (expression, projection, etc.)?

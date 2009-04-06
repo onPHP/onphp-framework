@@ -12,49 +12,44 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlLogicalObjectNode extends OqlTerminalNode
+	final class OqlBinaryExpressionNodeMutator extends OqlSyntaxNodeMutator
 	{
-		private $object = null;
-		
 		/**
-		 * @return OqlLogicalObjectNode
+		 * @return OqlBinaryExpressionNodeMutator
 		**/
-		public static function create()
+		public static function me()
 		{
-			return new self;
-		}
-		
-		/**
-		 * @return LogicalObject
-		**/
-		public function getObject()
-		{
-			return $this->object;
+			return Singleton::getInstance(__CLASS__);
 		}
 		
 		/**
 		 * @return OqlLogicalObjectNode
 		**/
-		public function setObject(LogicalObject $object)
+		public function process(OqlSyntaxNode $node)
 		{
-			$this->object = $object;
+			$iterator = OqlSyntaxTreeRecursiveIterator::me();
+			$iterator->reset($node);
 			
-			return $this;
-		}
-		
-		public function toString()
-		{
-			return $this->object ?
-				$this->object->toDialectString(ImaginaryDialect::me())
-				: null;
-		}
-		
-		/**
-		 * @return LogicalObject
-		**/
-		public function toValue()
-		{
-			return $this->object;
+			$left = $node;
+			if ($left instanceof OqlNonterminalNode)
+				$left = $iterator->next();
+			
+			if ($left === null)
+				return $node;
+			
+			if (!$operator = $iterator->next())
+				return $node;
+			
+			if (!$right = $iterator->next())
+				return $node;
+			
+			return OqlLogicalObjectNode::create()->setObject( 
+				new BinaryExpression(
+					$left->toValue(),
+					$right->toValue(),
+					$operator->toValue()
+				)
+			);
 		}
 	}
 ?>
