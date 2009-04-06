@@ -63,10 +63,13 @@
 				set($this->terminal(self::NUMBER, OqlTokenType::NUMBER))->
 				set($this->terminal(self::BOOLEAN, OqlTokenType::BOOLEAN))->
 				set($this->terminal(self::STRING, OqlTokenType::STRING))->
-				set($this->terminal(self::PLACEHOLDER, OqlTokenType::PLACEHOLDER))->
+				set(
+					$this->terminal(self::PLACEHOLDER, OqlTokenType::PLACEHOLDER)->
+						setMutator(OqlPlaceholderNodeMutator::me())
+				)->
 				set($this->terminal(self::PUNCTUATION, OqlTokenType::PUNCTUATION));
 			
-			// <identifier> ::= <name> | <aggregate_function> | <keyword> 
+			//	<identifier> ::= <name> | <aggregate_function> | <keyword> 
 			$this->set(
 				OqlAlternationRule::create()->
 					setId(self::IDENTIFIER)->
