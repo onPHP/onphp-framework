@@ -35,6 +35,38 @@
 			throw new UnsupportedMethodException("terminal node can't have children");
 		}
 		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function getFirstChild()
+		{
+			return null;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function getLastChild()
+		{
+			return null;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function getNextChild(OqlSyntaxNode $child)
+		{
+			return null;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function getPrevChild(OqlSyntaxNode $child)
+		{
+			return null;
+		}
+		
 		public function getChilds()
 		{
 			return array();

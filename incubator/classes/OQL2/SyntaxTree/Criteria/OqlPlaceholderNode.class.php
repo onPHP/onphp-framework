@@ -34,6 +34,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return OqlPlaceholder
+		**/
 		public function getPlaceholder()
 		{
 			return $this->placeholder;

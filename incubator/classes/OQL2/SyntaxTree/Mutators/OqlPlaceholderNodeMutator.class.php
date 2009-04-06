@@ -13,7 +13,6 @@
 	 * @ingroup OQL
 	**/
 	final class OqlPlaceholderNodeMutator extends OqlSyntaxNodeMutator
-		implements Instantiatable
 	{
 		/**
 		 * @return OqlPlaceholderNodeMutator

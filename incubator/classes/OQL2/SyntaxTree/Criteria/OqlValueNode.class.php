@@ -9,32 +9,44 @@
  *                                                                          *
  ****************************************************************************/
 
-	// TODO: think about storing parse result in simplest structure (arrays) by default
-	// (SyntaxNodeMutator -> SyntaxNodeBuilder)
 	/**
 	 * @ingroup OQL
 	**/
-	abstract class OqlGrammarRuleParseStrategy extends Singleton
-		implements Instantiatable
+	final class OqlValueNode extends OqlTerminalNode
 	{
-		/**
-		 * @throws OqlSyntaxErrorException
-		 * @return OqlSyntaxNode
-		**/
-		abstract public function parse(
-			OqlGrammarRule $rule,
-			OqlTokenizer $tokenizer,
-			$silent = false
-		);
+		private $value = null;
 		
 		/**
-		 * @throws OqlSyntaxErrorException
+		 * @return OqlValueNode
 		**/
-		protected function raiseError(OqlTokenizer $tokenizer, $message)
+		public static function create()
 		{
-			throw new OqlSyntaxErrorException(
-				$message, $tokenizer->getIndex()
-			);
+			return new self;
+		}
+		
+		public function getValue()
+		{
+			return $this->value;
+		}
+		
+		/**
+		 * @return OqlValueNode
+		**/
+		public function setValue($value)
+		{
+			$this->value = $value;
+			
+			return $this;
+		}
+		
+		public function toString()
+		{
+			return $this->value;
+		}
+		
+		public function toValue()
+		{
+			return $this->value;
 		}
 	}
 ?>

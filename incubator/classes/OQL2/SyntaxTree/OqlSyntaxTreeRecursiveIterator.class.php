@@ -12,11 +12,13 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlGreedyAlternationRuleParseStrategy extends
-		OqlGrammarRuleParseStrategy
+	final class OqlSyntaxTreeRecursiveIterator extends Singleton
+		implements Instantiatable
 	{
+		private $node = null;
+		
 		/**
-		 * @return OqlGreedyAlternationRuleParseStrategy
+		 * @return OqlSyntaxTreeRecursiveIterator
 		**/
 		public static function me()
 		{
@@ -26,39 +28,45 @@
 		/**
 		 * @return OqlSyntaxNode
 		**/
-		public function parse(
-			OqlGrammarRule $rule,
-			OqlTokenizer $tokenizer,
-			$silent = false
-		)
+		public function reset(OqlSyntaxNode $node)
 		{
-			Assert::isTrue($rule instanceof OqlGreedyAlternationRule);
+			return $this->node = $node;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function next()
+		{
+			$node = $this->node;
 			
-			$maxIndex = -1;
-			$maxNode = null;
+			do {
+				if ($child = $node->getFirstChild())
+					$node = $child;
+				else
+					$node = $node->getNextSibling();
 			
-			foreach ($rule->getList() as $ruleItem) {
-				$index = $tokenizer->getIndex();
-				
-				if (
-					// TODO: just parse, process (apply mutator) $maxNode only
-					($node = $ruleItem->process($tokenizer, true))
-					&& $maxIndex < $tokenizer->getIndex()
-				) {
-					$maxIndex = $tokenizer->getIndex();
-					$maxNode = $node;
-				}
-				
-				$tokenizer->setIndex($index);
-			}
+			} while ($node instanceof OqlNonterminalNode);
 			
-			if ($maxNode !== null)
-				$tokenizer->setIndex($maxIndex);
-			// FIXME: error message
-			elseif (!$silent)
-				$this->raiseError($tokenizer, 'expected');
+			return $this->node = $node;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function prev()
+		{
+			$node = $this->node;
 			
-			return $maxNode;
+			do {
+				if ($sibling = $node->getPrevSibling())
+					$node = $sibling;
+				else
+					$node = $node->getParent();
+			
+			} while ($node instanceof OqlNonterminalNode);
+			
+			return $this->node = $node;
 		}
 	}
 ?>
