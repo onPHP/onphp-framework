@@ -69,13 +69,12 @@
 				)->
 				set($this->terminal(self::PUNCTUATION, OqlTokenType::PUNCTUATION));
 			
-			//	<identifier> ::= <name> | <aggregate_function> | <keyword> 
+			//	<identifier> ::= <name> | <aggregate_function>
 			$this->set(
 				OqlAlternationRule::create()->
 					setId(self::IDENTIFIER)->
 					add($this->terminal(null, OqlTokenType::IDENTIFIER))->
-					add($this->terminal(null, OqlTokenType::AGGREGATE_FUNCTION))->
-					add($this->terminal(null, OqlTokenType::KEYWORD))
+					add($this->terminal(null, OqlTokenType::AGGREGATE_FUNCTION))
 			);
 			
 			//	<constant> ::= <string> | <number> | <boolean> | <placeholder> | <null>

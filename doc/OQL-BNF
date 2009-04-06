@@ -77,7 +77,7 @@ $Id$
 	<arithmetic_operand> ::=
 		<identifier> | <number> | <placeholder> | ( "(" <arithmetic_expression> ")" )
 
-	<identifier> ::= <name> | <aggregate_function> | <keyword>
+	<identifier> ::= <name> | <aggregate_function>
 
 	<constant> ::= <string> | <number> | <boolean> | <placeholder> | <null>
 
