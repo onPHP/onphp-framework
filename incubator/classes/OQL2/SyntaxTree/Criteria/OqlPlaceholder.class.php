@@ -69,5 +69,12 @@
 			// FIXME: will be resolved by container (expression, projection, etc.)?
 			return $this->value;
 		}
+		
+		public function __toString()
+		{
+			return $this->binded
+				? $this->value
+				: '$'.$this->name;
+		}
 	}
 ?>
