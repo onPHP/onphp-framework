@@ -66,5 +66,12 @@
 		{
 			return ($min + lcg_value() * (abs($max - $min)));
 		}
+		
+		public static function alignByBase($value, $base, $ceil = false)
+		{
+			$function = $ceil ? 'ceil' : 'floor';
+			
+			return $function($value / $base) * $base;
+		}
 	}
 ?>
