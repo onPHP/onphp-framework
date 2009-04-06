@@ -21,6 +21,8 @@
 		
 		private $label = null;
 		
+		private $interval = null;
+		
 		/**
 		 * @return GoogleChartAxis
 		**/
@@ -81,6 +83,20 @@
 		public function getLabel()
 		{
 			return $this->label;
+		}
+		
+		public function setInterval($interval)
+		{
+			Assert::isTrue(is_numeric($interval));
+			
+			$this->interval = $interval;
+			
+			return $this;
+		}
+		
+		public function getInterval()
+		{
+			return $this->interval;
 		}
 	}
 ?>
