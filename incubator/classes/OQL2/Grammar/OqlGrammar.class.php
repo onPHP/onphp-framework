@@ -139,7 +139,8 @@
 										setMutator(OqlOperatorNodeMutator::me())
 								)
 							)->
-							add($this->get(self::ARITHMETIC_OPERAND)),
+							add($this->get(self::ARITHMETIC_OPERAND))->
+							setMutator(OqlPrefixUnaryExpressionNodeMutator::me()),
 						$this->operator(array('*', '/'))->
 							setMutator(OqlOperatorNodeMutator::me())
 					)->
@@ -179,7 +180,7 @@
 			//			(
 			//				( <comparison_operator> <logical_operand> )
 			//				| ( "is" ( ( [ "not" ] <null> ) | <boolean> ) )
-			//				| ( "in" "(" <constant> * ( "," <constant> ) ")" )
+			//				| ( [ "not" ] "in" "(" <constant> * ( "," <constant> ) ")" )
 			//				| ( [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
 			//				| ( "between" <logical_operand> "and" <logical_operand> )
 			//			)
@@ -201,36 +202,6 @@
 									)->
 									add(
 										OqlSequenceRule::create()->
-											add($this->keyword('is'))->
-											add(
-												OqlAlternationRule::create()->
-													add(
-														OqlSequenceRule::create()->
-															add(
-																OqlOptionalRule::create()->setRule(
-																	$this->operator('not')
-																)
-															)->
-															add($this->get(self::NULL))
-													)->
-													add($this->get(self::BOOLEAN))
-											)->
-											setMutator(OqlOperatorNodeMutator::me())
-									)->
-									add(
-										OqlSequenceRule::create()->
-											add($this->keyword('in'))->
-											add($this->get(self::OPEN_PARENTHESES))->
-											add(
-												self::repetition(
-													$this->get(self::CONSTANT),
-													$this->get(self::PUNCTUATION)
-												)
-											)->
-											add($this->get(self::CLOSE_PARENTHESES))
-									)->
-									add(
-										OqlSequenceRule::create()->
 											add(
 												OqlSequenceRule::create()->
 													add(
@@ -249,15 +220,67 @@
 											add(
 												$this->get(self::PATTERN)
 											)
-									)->
+									)
+							)->
+							setMutator(OqlBinaryExpressionNodeMutator::me())
+					)->
+					add(
+						OqlSequenceRule::create()->
+							add($this->get(self::LOGICAL_OPERAND))->
+							add(
+								OqlAlternationRule::create()->
 									add(
 										OqlSequenceRule::create()->
-											add($this->keyword('between'))->
-											add($this->get(self::LOGICAL_OPERAND))->
-											add($this->operator('and'))->
-											add($this->get(self::LOGICAL_OPERAND))
+											add($this->keyword('is'))->
+											add(
+												OqlAlternationRule::create()->
+													add(
+														OqlSequenceRule::create()->
+															add(
+																OqlOptionalRule::create()->setRule(
+																	$this->operator('not')
+																)
+															)->
+															add($this->get(self::NULL))
+													)->
+													add($this->get(self::BOOLEAN))
+											)->
+											setMutator(OqlOperatorNodeMutator::me())
 									)
-							)
+							)->
+							setMutator(OqlPostfixUnaryExpressionNodeMutator::me())
+					)->
+					add(
+						OqlSequenceRule::create()->
+							add($this->get(self::LOGICAL_OPERAND))->
+							add(
+								OqlSequenceRule::create()->
+									add(
+										OqlOptionalRule::create()->setRule(
+											$this->operator('not')
+										)
+									)->
+									add($this->keyword('in'))->
+									setMutator(OqlOperatorNodeMutator::me())
+							)->
+							add(
+								OqlParenthesesRule::create()->setRule(
+									self::repetition(
+										$this->get(self::CONSTANT),
+										$this->get(self::PUNCTUATION)
+									)
+								)
+							)->
+							setMutator(OqlInExpressionNodeMutator::me())
+					)->
+					add(
+						OqlSequenceRule::create()->
+							add($this->get(self::LOGICAL_OPERAND))->
+							add($this->keyword('between'))->
+							add($this->get(self::LOGICAL_OPERAND))->
+							add($this->operator('and'))->
+							add($this->get(self::LOGICAL_OPERAND))->
+							setMutator(OqlBetweenExpressionNodeMutator::me())
 					)->
 					add($this->get(self::LOGICAL_UNARY_OPERAND))->
 					add(
@@ -284,7 +307,8 @@
 										setMutator(OqlOperatorNodeMutator::me())
 								)
 							)->
-							add($this->get(self::LOGICAL_TERM)),
+							add($this->get(self::LOGICAL_TERM))->
+							setMutator(OqlPrefixUnaryExpressionNodeMutator::me()),
 						$this->operator('and')->
 							setMutator(OqlOperatorNodeMutator::me())
 					)->
@@ -544,9 +568,11 @@
 		**/
 		private static function comparisonOperator()
 		{
-			return self::operator(
-				array('=', '!=', '<', '>', '>=', '<=')
-			);
+			return
+				self::operator(
+					array('=', '!=', '<', '>', '>=', '<=')
+				)->
+				setMutator(OqlOperatorNodeMutator::me());
 		}
 		
 		/**
