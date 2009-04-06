@@ -145,10 +145,12 @@
 									add($this->get(self::ARITHMETIC_OPERAND)),
 								$this->operator(array('*', '/'))->
 									setMutator(OqlOperatorNodeMutator::me())
-							),
+							)->
+							setMutator(OqlBinaryExpressionNodeMutator::me()),
 							$this->operator(array('+', '-'))->
 								setMutator(OqlOperatorNodeMutator::me())
-						)
+						)->
+						setMutator(OqlBinaryExpressionNodeMutator::me())
 					)
 			);
 			
@@ -288,11 +290,13 @@
 							add($this->get(self::LOGICAL_TERM)),
 						$this->operator('and')->
 							setMutator(OqlOperatorNodeMutator::me())
-					),
+					)->
+					setMutator(OqlBinaryExpressionNodeMutator::me()),
 					$this->operator('or')->
 						setMutator(OqlOperatorNodeMutator::me())
 				)->
-				setId(self::LOGICAL_EXPRESSION)
+				setId(self::LOGICAL_EXPRESSION)->
+				setMutator(OqlBinaryExpressionNodeMutator::me())
 			);
 			
 			//	<mixed_operand> ::= <arithmetic_expression> || <logical_expression>
