@@ -178,7 +178,7 @@
 			//			<logical_operand>
 			//			(
 			//				( <comparison_operator> <logical_operand> )
-			//				| ( "is" [ "not" ] ( <null> | <boolean> ) )
+			//				| ( "is" ( ( [ "not" ] <null> ) | <boolean> ) )
 			//				| ( "in" "(" <constant> * ( "," <constant> ) ")" )
 			//				| ( [ "not" ] ( "like" | "ilike" | "similar to" ) <pattern> )
 			//				| ( "between" <logical_operand> "and" <logical_operand> )
@@ -203,13 +203,16 @@
 										OqlSequenceRule::create()->
 											add($this->keyword('is'))->
 											add(
-												OqlOptionalRule::create()->setRule(
-													$this->operator('not')
-												)
-											)->
-											add(
 												OqlAlternationRule::create()->
-													add($this->get(self::NULL))->
+													add(
+														OqlSequenceRule::create()->
+															add(
+																OqlOptionalRule::create()->setRule(
+																	$this->operator('not')
+																)
+															)->
+															add($this->get(self::NULL))
+													)->
 													add($this->get(self::BOOLEAN))
 											)
 									)->
