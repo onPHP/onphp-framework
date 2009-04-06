@@ -39,6 +39,9 @@
 
 		public function send(Message $message)
 		{
+			if (!$this->queue)
+				throw new WrongStateException('you must set the queue first');
+
 			Assert::isInstance($message, 'TextMessage');
 
 			$this->getStream()->write(
