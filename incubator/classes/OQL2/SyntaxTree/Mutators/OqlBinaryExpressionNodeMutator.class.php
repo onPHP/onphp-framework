@@ -37,10 +37,10 @@
 			if ($left === null)
 				return $node;
 			
-			if (!$operator = $iterator->next())
+			if (($operator = $iterator->next()) === null)
 				return $node;
 			
-			if (!$right = $iterator->next())
+			if (($right = $iterator->next()) === null)
 				return $node;
 			
 			return OqlLogicalObjectNode::create()->setObject( 
