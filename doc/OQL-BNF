@@ -45,10 +45,10 @@ $Id$
 	<mixed_operand> ::= <arithmetic_expression> || <logical_expression>
 
 	<logical_expression> ::=
-		<logical_and_expression> * ( "or" <logical_and_expression> )
+		<logical_and_expression> [ "or" <logical_expression> ]
 
 	<logical_and_expression> ::=
-		[ "not" ] <logical_term> * ( "and" [ "not" ] <logical_term> )
+		[ "not" ] <logical_term> [ "and" <logical_and_expression> ]
 
 	<logical_term> ::=
 		(
