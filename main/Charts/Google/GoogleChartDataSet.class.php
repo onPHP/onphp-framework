@@ -99,6 +99,11 @@
 			return $this->minMax->getEnd();
 		}
 		
+		public function getMinMax()
+		{
+			return $this->minMax;
+		}
+		
 		public function getStepSize()
 		{
 			return $this->getMax() / $this->base;
