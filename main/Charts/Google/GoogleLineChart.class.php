@@ -13,10 +13,10 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleLineChart extends GoogleChart
+	class GoogleLineChart extends GoogleChart
 	{
-		private $axesCollection = null;
-		private $style 			= null;
+		protected $axesCollection = null;
+		protected $style 			= null;
 		
 		/**
 		 * @return GoogleLineChart
