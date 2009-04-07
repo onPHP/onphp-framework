@@ -156,7 +156,7 @@
 			if ($recursive)
 				$result = $this->upperMake($object, $result);
 			else
-				$result = $this->makeOwn($object, $result);
+				$result = $this->fillOwn($object, $result);
 			
 			return $result;
 		}
@@ -168,10 +168,10 @@
 					upperMake($object, $result);
 			}
 			
-			return $this->makeOwn($object, $result);
+			return $this->fillOwn($object, $result);
 		}
 		
-		public function makeList($objectsList)
+		public function makeList($objectsList, $recursive = true)
 		{
 			if ($objectsList === null)
 				return null;
@@ -182,12 +182,15 @@
 			
 			foreach ($objectsList as $id => $object) {
 				$result[$id] = $this->makeListItemBuilder($object)->
-					make($object);
+					make($object, $recursive);
 			}
 			
 			return $result;
 		}
 		
+		/**
+		 * @deprecated in favour of fillOwn()
+		**/
 		public function makeOwn($object, &$result)
 		{
 			return $this->fillOwn($object, $result);
