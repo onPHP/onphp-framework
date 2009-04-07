@@ -58,7 +58,7 @@
 		**/
 		public function process(OqlSyntaxNode $node)
 		{
-			$iterator = OqlSyntaxTreeDeepRecursiveIterator::me();
+			$iterator = OqlSyntaxTreeDeepRecursiveIterator::create();
 			$node = $iterator->reset($node);
 			
 			$operator = '';
