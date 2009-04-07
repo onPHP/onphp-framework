@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008-2009 by Denis M. Gabaidulin                        *
+ *   Copyright (C) 2009 by Denis M. Gabaidulin                             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -12,36 +12,42 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleChartLine extends GoogleChartPiece
+	final class GoogleChartLineStyle extends BaseGoogleChartParameter
 	{
-		private $style = null;
+		protected $name = 'chls';
 		
-		/**
-		 * @return GoogleChartLine
-		**/
+		private $styles = array();
+		
 		public static function create()
 		{
 			return new self;
 		}
 		
 		/**
-		 * @return GoogleChartLine
+		 * @return GoogleChartLineStyle
 		**/
-		public function setValue(/* GoogleChartDataSet */ $value)
+		public function addStyle(ChartLineStyle $style)
 		{
-			return parent::setValue($value);
-		}
-		
-		public function setStyle(ChartLineStyle $style)
-		{
-			$this->style = $style;
+			$this->styles[] = $style;
 			
 			return $this;
 		}
 		
-		public function getStyle()
+		public function hasStyles()
 		{
-			return $this->style;
+			return !empty($this->styles);
+		}
+		
+		public function toString()
+		{
+			$queryString = "{$this->name}=";
+			
+			Assert::isNotEmptyArray($this->styles);
+			
+			foreach ($this->styles as $style)
+				$queryString .= $style->toString().'|';
+			
+			return rtrim($queryString, '|');
 		}
 	}
 ?>
