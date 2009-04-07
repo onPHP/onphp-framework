@@ -64,7 +64,7 @@
 			$this->base = $base;
 			
 			// reset
-			$this->minMax->setMax(0);
+			$this->minMax = IntegerSet::create(0, 0);
 			
 			return $this;
 		}
@@ -86,7 +86,7 @@
 		
 		public function setMax($max)
 		{
-			$this->minMax->setMax($max);
+			$this->minMax->setEnd($max);
 			
 			return $this;
 		}
