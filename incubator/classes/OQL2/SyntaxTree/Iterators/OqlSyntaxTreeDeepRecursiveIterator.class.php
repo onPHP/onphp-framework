@@ -17,9 +17,9 @@
 		/**
 		 * @return OqlSyntaxTreeDeepRecursiveIterator
 		**/
-		public static function me()
+		public static function create()
 		{
-			return Singleton::getInstance(__CLASS__);
+			return new self;
 		}
 		
 		/**
