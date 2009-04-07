@@ -15,7 +15,7 @@
 	final class OqlBetweenExpressionNodeMutator extends OqlSyntaxNodeMutator
 	{
 		/**
-		 * @return OqlInExpressionNodeMutator
+		 * @return OqlBetweenExpressionNodeMutator
 		**/
 		public static function me()
 		{
