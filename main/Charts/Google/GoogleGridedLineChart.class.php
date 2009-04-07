@@ -15,6 +15,8 @@
 	**/
 	final class GoogleGridedLineChart extends GoogleLineChart
 	{
+		private $grid = null;
+		
 		/**
 		 * @return GoogleGridedLineChart
 		**/
@@ -28,7 +30,29 @@
 			parent::__construct();
 			
 			$this->data->setNormalize();
+		}
+		
+		public function setGrid(GoogleChartGrid $grid)
+		{
+			$this->grid = $grid;
 			
+			return $this;
+		}
+		
+		public function getGrid()
+		{
+			return $this->grid;
+		}
+		
+		public function toString()
+		{
+			Assert::isNotNull($this->grid);
+			
+			$string = parent::toString();
+			
+			$string .= '&'.$this->grid->toString();
+			
+			return $string;
 		}
 	}
 ?>
