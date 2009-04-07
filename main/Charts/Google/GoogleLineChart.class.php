@@ -13,9 +13,10 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleLineChart extends GoogleChart
+	class GoogleLineChart extends GoogleChart
 	{
-		private $axesCollection = null;
+		protected $axesCollection = null;
+		protected $style 			= null;
 		
 		/**
 		 * @return GoogleLineChart
@@ -46,6 +47,8 @@
 				setDataScaling();
 			
 			$this->axesCollection = GoogleChartAxisCollection::create();
+			
+			$this->style = GoogleChartLineStyle::create();
 		}
 		
 		/**
@@ -56,6 +59,9 @@
 			$this->color->addColor($line->getColor());
 			$this->legend->addItem($line->getTitle());
 			$this->data->addDataSet($line->getValue());
+			
+			if ($style = $line->getStyle())
+				$this->style->addStyle($style);
 			
 			return $this;
 		}
@@ -85,6 +91,9 @@
 			$string = parent::toString();
 			
 			$string .= '&'.$this->axesCollection->toString();
+			
+			if ($this->style->hasStyles())
+				$string .= '&'.$this->style->toString();
 			
 			return $string;
 		}

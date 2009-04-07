@@ -31,7 +31,7 @@
 		
 		public function __construct()
 		{
-			$this->minMax = IntegerSet::create(0, 0);
+			$this->minMax = FloatRange::create(0, 0);
 		}
 		
 		/**
@@ -84,12 +84,29 @@
 			return $this->minMax->getMin();
 		}
 		
+		public function setMax($max)
+		{
+			$this->minMax->setMax($max);
+			
+			return $this;
+		}
+		
 		public function getMax()
 		{
 			if ($this->minMax->getMax() == 0)
 				$this->calculateMax();
 			
 			return $this->minMax->getMax();
+		}
+		
+		public function getMinMax()
+		{
+			return $this->minMax;
+		}
+		
+		public function getStepSize()
+		{
+			return $this->getMax() / $this->base;
 		}
 		
 		/**

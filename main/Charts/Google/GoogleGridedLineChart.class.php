@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008-2009 by Denis M. Gabaidulin                        *
+ *   Copyright (C) 2009 by Denis M. Gabaidulin                             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -8,40 +8,51 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+/* $Id$ */
 
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleChartLine extends GoogleChartPiece
+	final class GoogleGridedLineChart extends GoogleLineChart
 	{
-		private $style = null;
+		private $grid = null;
 		
 		/**
-		 * @return GoogleChartLine
+		 * @return GoogleGridedLineChart
 		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
-		/**
-		 * @return GoogleChartLine
-		**/
-		public function setValue(/* GoogleChartDataSet */ $value)
+		public function __construct()
 		{
-			return parent::setValue($value);
+			parent::__construct();
+			
+			$this->data->setNormalize();
 		}
 		
-		public function setStyle(ChartLineStyle $style)
+		public function setGrid(GoogleChartGrid $grid)
 		{
-			$this->style = $style;
+			$this->grid = $grid;
 			
 			return $this;
 		}
 		
-		public function getStyle()
+		public function getGrid()
 		{
-			return $this->style;
+			return $this->grid;
+		}
+		
+		public function toString()
+		{
+			Assert::isNotNull($this->grid);
+			
+			$string = parent::toString();
+			
+			$string .= '&'.$this->grid->toString();
+			
+			return $string;
 		}
 	}
 ?>

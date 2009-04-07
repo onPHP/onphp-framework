@@ -21,6 +21,8 @@
 		
 		private $dataScaling = false;
 		
+		private $normalize = false;
+		
 		/**
 		 * @return GoogleChartData
 		**/
@@ -42,6 +44,16 @@
 		public function withDataScaling()
 		{
 			return $this->dataScaling;
+		}
+		
+		/**
+		 * @return GoogleChartData
+		**/
+		public function setNormalize($orly = true)
+		{
+			$this->normalize = (true === $orly);
+			
+			return $this;
 		}
 		
 		/**
@@ -75,6 +87,9 @@
 			if ($this->dataScaling)
 				$boundString = '&'.GoogleChartDataScaling::getParamName().'=';
 			
+			if ($this->normalize)
+				$this->normalize();
+			
 			foreach ($this->sets as $set) {
 				$this->encoding->setMaxValue($set->getMax() + 1);
 				$dataStrings[] = $this->encoding->encode($set);
@@ -91,6 +106,32 @@
 			$encodingString = $this->encoding->toString();
 			
 			return $this->name.'='.$encodingString.$dataString.$boundString;
+		}
+		
+		public function getMaxSteps()
+		{
+			$max = 0;
+			
+			foreach ($this->sets as $set) {
+				if ($max < $set->getStepSize())
+					$max = $set->getStepSize();
+			}
+			
+			return $max;
+		}
+		
+		private function normalize()
+		{
+			$maxSteps = $this->getMaxSteps();
+			
+			foreach ($this->sets as $set) {
+				if ($maxSteps > $set->getStepSize())
+					$set->setMax(
+						$maxSteps * $set->getBase()
+					);
+			}
+			
+			return $this;
 		}
 	}
 ?>
