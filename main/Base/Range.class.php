@@ -15,11 +15,8 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	class Range implements Stringable
+	class Range extends BaseRange
 	{
-		private $min = null;
-		private $max = null;
-		
 		public function __construct($min = null, $max = null)
 		{
 			if ($min !== null)
@@ -28,8 +25,7 @@
 			if ($max !== null)
 				Assert::isInteger($max);
 			
-			$this->min = $min;
-			$this->max = $max;
+			parent::__construct($min, $max);
 		}
 		
 		/**
@@ -38,22 +34,6 @@
 		public static function create($min = null, $max = null)
 		{
 			return new self($min, $max);
-		}
-		
-		/**
-		 * @return Range
-		**/
-		public static function lazyCreate($min = null, $max = null)
-		{
-			if ($min > $max)
-				self::swap($min, $max);
-			
-			return new self($min, $max);
-		}
-		
-		public function getMin()
-		{
-			return $this->min;
 		}
 		
 		/**
@@ -67,19 +47,7 @@
 			else
 				return $this;
 			
-			iF (($this->max !== null) && $min > $this->max)
-				throw new WrongArgumentException(
-					'can not set minimal value, which is greater than maximum one'
-				);
-			else
-				$this->min = $min;
-			
-			return $this;
-		}
-		
-		public function getMax()
-		{
-			return $this->max;
+			return parent::setMin($min);
 		}
 		
 		/**
@@ -93,82 +61,7 @@
 			else
 				return $this;
 			
-			if (($this->min !== null) && $max < $this->min)
-				throw new WrongArgumentException(
-					'can not set maximal value, which is lower than minimum one'
-				);
-			else
-				$this->max = $max;
-			
-			return $this;
-		}
-
-		/// atavism wrt BC
-		public function toString($from = 'от', $to = 'до')
-		{
-			$out = null;
-			
-			if ($this->min)
-				$out .= "{$from} ".$this->min;
-
-			if ($this->max)
-				$out .= " {$to} ".$this->max;
-				
-			return trim($out);
-		}
-		
-		/**
-		 * @return Range
-		**/
-		public function divide($factor, $precision = null)
-		{
-			if ($this->min)
-				$this->min = round($this->min / $factor, $precision);
-
-			if ($this->max)
-				$this->max = round($this->max / $factor, $precision);
-			
-			return $this;
-		}
-		
-		/**
-		 * @return Range
-		**/
-		public function multiply($multiplier)
-		{
-			if ($this->min)
-				$this->min = $this->min * $multiplier;
-			
-			if ($this->max)
-				$this->max = $this->max * $multiplier;
-			
-			return $this;
-		}
-
-		public function equals(Range $range)
-		{
-			return ($this->min === $range->getMin() &&
-					$this->max === $range->getMax());
-		}
-		
-		public function intersects(Range $range)
-		{
-			return ($this->max >= $range->getMin() &&
-					$this->min <= $range->getMax());
-		}
-		
-		public function isEmpty()
-		{
-			return
-				($this->min === null)
-				&& ($this->max === null);
-		}
-		
-		public static function swap(&$a, &$b)
-		{
-			$c = $a;
-			$a = $b;
-			$b = $c;
+			return parent::setMax($max);
 		}
 	}
 ?>
