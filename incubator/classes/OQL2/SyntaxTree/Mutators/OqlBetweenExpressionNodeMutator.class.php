@@ -29,8 +29,6 @@
 		{
 			$iterator = OqlSyntaxTreeDeepRecursiveIterator::me();
 			
-			var_dump($node->toString());
-			
 			if (($field = $iterator->reset($node)) === null)
 				return $node;
 			
