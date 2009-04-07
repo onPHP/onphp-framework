@@ -382,7 +382,8 @@
 									add($this->keyword('as'))->
 									add($this->get(self::IDENTIFIER))
 							)
-						),
+						)->
+						setMutator(OqlProjectionNodeMutator::me()),
 					$this->get(self::PUNCTUATION)
 				)->
 				setId(self::PROPERTIES)
