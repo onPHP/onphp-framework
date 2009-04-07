@@ -31,7 +31,7 @@
 		
 		public function __construct()
 		{
-			$this->minMax = IntegerSet::create(0, 0);
+			$this->minMax = FloatRange::create(0, 0);
 		}
 		
 		/**
