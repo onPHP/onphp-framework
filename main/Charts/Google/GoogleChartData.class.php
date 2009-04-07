@@ -108,7 +108,7 @@
 			return $this->name.'='.$encodingString.$dataString.$boundString;
 		}
 		
-		private function getMaxSteps()
+		public function getMaxSteps()
 		{
 			$max = 0;
 			
