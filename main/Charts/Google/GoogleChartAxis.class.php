@@ -47,7 +47,7 @@
 		/**
 		 * @return GoogleChartAxis
 		**/
-		public function setRange(IntegerSet $range)
+		public function setRange(BaseRange $range)
 		{
 			$this->range = $range;
 			
