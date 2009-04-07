@@ -15,7 +15,7 @@
 	final class OqlBetweenExpressionNodeMutator extends OqlSyntaxNodeMutator
 	{
 		/**
-		 * @return OqlInExpressionNodeMutator
+		 * @return OqlBetweenExpressionNodeMutator
 		**/
 		public static function me()
 		{
@@ -27,9 +27,7 @@
 		**/
 		public function process(OqlSyntaxNode $node)
 		{
-			$iterator = OqlSyntaxTreeDeepRecursiveIterator::me();
-			
-			var_dump($node->toString());
+			$iterator = OqlSyntaxTreeDeepRecursiveIterator::create();
 			
 			if (($field = $iterator->reset($node)) === null)
 				return $node;

@@ -12,35 +12,30 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlSyntaxTreeDeepRecursiveIterator extends OqlSyntaxTreeIterator
+	final class OqlHavingProjectionNodeMutator extends OqlSyntaxNodeMutator
 	{
 		/**
-		 * @return OqlSyntaxTreeDeepRecursiveIterator
+		 * @return OqlHavingProjectionNodeMutator
 		**/
-		public static function create()
+		public static function me()
 		{
-			return new self;
+			return Singleton::getInstance(__CLASS__);
 		}
 		
 		/**
-		 * @return OqlSyntaxNode
+		 * @return OqlObjectProjectionNode
 		**/
-		public function next()
+		public function process(OqlSyntaxNode $node)
 		{
-			if ($this->node === null)
-				return null;
+			Assert::isNotNull($node->toValue());
 			
-			$node = $this->node;
+			// TODO: nothing more expected assertion?
 			
-			do {
-				if ($child = $node->getFirstChild())
-					$node = $child;
-				else
-					$node = $node->getNextSibling();
-			
-			} while ($node instanceof OqlNonterminalNode);
-			
-			return $this->node = $node;
+			return OqlObjectProjectionNode::create()->
+				setObject(
+					Projection::having($node->toValue())
+				)->
+				setProperty($node->toValue());
 		}
 	}
 ?>

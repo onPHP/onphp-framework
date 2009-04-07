@@ -14,14 +14,26 @@
 	**/
 	final class OqlSyntaxTreeRecursiveIterator extends OqlSyntaxTreeIterator
 	{
-		private $stack = array();
+		private $stack		= array();
+		private $visited	= array();
 		
 		/**
 		 * @return OqlSyntaxTreeRecursiveIterator
 		**/
-		public static function me()
+		public static function create()
 		{
-			return Singleton::getInstance(__CLASS__);
+			return new self;
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function reset(OqlSyntaxNode $node)
+		{
+			$this->stack = array();
+			$this->visited = array();
+			
+			return parent::reset($node);
 		}
 		
 		/**
@@ -35,23 +47,47 @@
 			$node = $this->node;
 			
 			do {
-				if ($child = $node->getFirstChild()) {
-					array_push($this->stack, $node);
-					$node = $child;
-				} else {
-					$node = $node->getNextSibling();
-				}
+				$this->markNodeVisited($node);
+				$nodeParent = $node->getParent();
 				
 				if (
-					$node === null
-					&& ($node = array_pop($this->stack))
+					($child = $node->getFirstChild())
+					&& !$this->isNodeVisited($child)
 				) {
-					$node = $node->getNextSibling();
+					array_push($this->stack, $node);
+					$node = $child;
+				
+				} elseif (
+					($node = $node->getNextSibling())
+					&& $this->isNodeVisited($node)
+				) {
+					$node = null;
 				}
+				
+				if ($node === null)
+					$node = array_pop($this->stack);
+				
+				if ($node === null)
+					$node = $nodeParent;
 			
 			} while ($node instanceof OqlNonterminalNode);
 			
 			return $this->node = $node;
+		}
+		
+		/**
+		 * @return OqlSyntaxTreeRecursiveIterator
+		**/
+		private function markNodeVisited(OqlSyntaxNode $node)
+		{
+			$this->visited[$node->getId()] = true;
+			
+			return $this;
+		}
+		
+		private function isNodeVisited(OqlSyntaxNode $node)
+		{
+			return isset($this->visited[$node->getId()]);
 		}
 	}
 ?>

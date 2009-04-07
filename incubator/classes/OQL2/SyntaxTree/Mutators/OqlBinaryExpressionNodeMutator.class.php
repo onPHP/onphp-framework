@@ -38,6 +38,8 @@
 			if (($right = $iterator->next()) === null)
 				return $node;
 			
+			// TODO: assertions?
+			
 			return OqlLogicalObjectNode::create()->setObject( 
 				new BinaryExpression(
 					$left->toValue(),

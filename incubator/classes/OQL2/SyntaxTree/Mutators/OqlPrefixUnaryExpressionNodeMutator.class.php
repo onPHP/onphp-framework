@@ -27,13 +27,15 @@
 		**/
 		public function process(OqlSyntaxNode $node)
 		{
-			$iterator = OqlSyntaxTreeDeepRecursiveIterator::me();
+			$iterator = OqlSyntaxTreeDeepRecursiveIterator::create();
 			
 			if (($operator = $iterator->reset($node)) === null)
 				return $node;
 			
 			if (($operand = $iterator->next()) === null)
 				return $node;
+			
+			// TODO: assertions?
 			
 			return OqlLogicalObjectNode::create()->setObject( 
 				new PrefixUnaryExpression(
