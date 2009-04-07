@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Helpers
 	**/
-	abstract class BaseRange implements Stringable
+	class BaseRange implements Stringable
 	{
 		protected $min = null;
 		protected $max = null;
