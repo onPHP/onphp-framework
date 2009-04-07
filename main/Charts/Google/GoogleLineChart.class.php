@@ -91,7 +91,9 @@
 			$string = parent::toString();
 			
 			$string .= '&'.$this->axesCollection->toString();
-			$string .= '&'.$this->style->toString();
+			
+			if ($this->style->hasStyles())
+				$string .= '&'.$this->style->toString();
 			
 			return $string;
 		}
