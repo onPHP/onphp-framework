@@ -69,10 +69,10 @@ $Id$
 	<logical_unary_operand> ::= <identifier> | <placeholder> | <boolean> | <null>
 
 	<arithmetic_expression> ::=
-		<arithmetic_mul_expression> * ( ( "+" | "-" ) <arithmetic_mul_expression> )
+		<arithmetic_mul_expression> [ ( "+" | "-" ) <arithmetic_expression> ]
 
 	<arithmetic_mul_expression> ::=
-		[ "-" ] <arithmetic_operand> * ( ( "*" | "/" ) [ "-" ] <arithmetic_operand> )
+		[ "-" ] <arithmetic_operand> [ ( "*" | "/" ) <arithmetic_mul_expression> ]
 
 	<arithmetic_operand> ::=
 		<identifier> | <number> | <placeholder> | ( "(" <arithmetic_expression> ")" )
