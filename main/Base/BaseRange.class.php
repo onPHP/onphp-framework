@@ -121,13 +121,13 @@
 			return $this;
 		}
 
-		public function equals(Range $range)
+		public function equals(BaseRange $range)
 		{
 			return ($this->min === $range->getMin() &&
 					$this->max === $range->getMax());
 		}
 		
-		public function intersects(Range $range)
+		public function intersects(BaseRange $range)
 		{
 			return ($this->max >= $range->getMin() &&
 					$this->min <= $range->getMax());
