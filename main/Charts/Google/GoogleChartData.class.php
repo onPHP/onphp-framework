@@ -21,6 +21,8 @@
 		
 		private $dataScaling = false;
 		
+		private $normalize = false;
+		
 		/**
 		 * @return GoogleChartData
 		**/
@@ -42,6 +44,16 @@
 		public function withDataScaling()
 		{
 			return $this->dataScaling;
+		}
+		
+		/**
+		 * @return GoogleChartData
+		**/
+		public function setNormalize($orly = true)
+		{
+			$this->normalize = (true === $orly);
+			
+			return $this;
 		}
 		
 		/**
