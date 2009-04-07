@@ -84,12 +84,24 @@
 			return $this->minMax->getStart();
 		}
 		
+		public function setMax($max)
+		{
+			$this->minMax->setMax($max);
+			
+			return $this;
+		}
+		
 		public function getMax()
 		{
 			if ($this->minMax->getEnd() == 0)
 				$this->calculateMax();
 			
 			return $this->minMax->getEnd();
+		}
+		
+		public function getStepSize()
+		{
+			return $this->getMax() / $this->base;
 		}
 		
 		/**
