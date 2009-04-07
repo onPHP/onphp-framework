@@ -41,10 +41,10 @@
 		const WHERE					= self::LOGICAL_EXPRESSION;
 		const GROUP_BY				= 20;
 		const ORDER_BY				= 21;
-		const HAVING				= self::LOGICAL_EXPRESSION;
-		const LIMIT					= 22;
+		const HAVING				= 22;
+		const LIMIT					= 23;
 		const OFFSET				= self::LIMIT;
-		const SELECT				= 23;
+		const SELECT				= 24;
 		
 		private $rules = array();
 		
@@ -425,8 +425,17 @@
 					add($this->get(self::PLACEHOLDER))
 			);
 			
-			//	<where>  ::= <logical_expression>
 			//	<having> ::= <logical_expression>
+			$havingRule = clone $this->get(self::LOGICAL_EXPRESSION);
+			$this->set(
+				$havingRule->
+					setId(self::HAVING)->
+					setMutator(
+						OqlHavingProjectionNodeMutator::me()
+					)
+			);
+			
+			//	<where>  ::= <logical_expression>
 			//	<offset> ::= <limit>
 			
 			//	<select> ::=
