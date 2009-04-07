@@ -98,9 +98,9 @@
 			return $result;
 		}
 
-		public function makeList($objectsList)
+		public function makeList($objectsList, $recursive = true)
 		{
-			$result = parent::makeList($objectsList);
+			$result = parent::makeList($objectsList, $recursive);
 
 			if (!$result)
 				return $result;
