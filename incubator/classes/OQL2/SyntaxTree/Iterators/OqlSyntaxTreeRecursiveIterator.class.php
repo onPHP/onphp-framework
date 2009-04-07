@@ -27,6 +27,16 @@
 		/**
 		 * @return OqlSyntaxNode
 		**/
+		public function reset(OqlSyntaxNode $node)
+		{
+			$this->stack = array();
+			
+			return parent::reset($node);
+		}
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
 		public function next()
 		{
 			if ($this->node === null)
