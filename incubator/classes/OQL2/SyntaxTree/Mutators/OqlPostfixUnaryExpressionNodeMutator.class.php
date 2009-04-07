@@ -35,6 +35,8 @@
 			if (($operator = $iterator->next()) === null)
 				return $node;
 			
+			// TODO: assertions?
+			
 			return OqlLogicalObjectNode::create()->setObject( 
 				new PostfixUnaryExpression(
 					$operand->toValue(),

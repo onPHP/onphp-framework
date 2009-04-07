@@ -44,6 +44,8 @@
 					$values[] = $value->toValue();
 			}
 			
+			// TODO: assertions?
+			
 			return OqlLogicalObjectNode::create()->setObject(
 				$operator->toValue() == InExpression::IN
 					? Expression::in($field->toValue(), $values)
