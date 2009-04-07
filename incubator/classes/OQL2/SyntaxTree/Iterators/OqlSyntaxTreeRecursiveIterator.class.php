@@ -30,8 +30,8 @@
 		**/
 		public function reset(OqlSyntaxNode $node)
 		{
-			$this->stack = array($node);
-			$this->visited = array($node->getId() => true);
+			$this->stack = array();
+			$this->visited = array();
 			
 			return parent::reset($node);
 		}
@@ -41,36 +41,34 @@
 		**/
 		public function next()
 		{
-			$node = null;
+			if ($this->node === null)
+				return null;
+			
+			$node = $this->node;
 			
 			do {
+				$this->markNodeVisited($node);
+				$nodeParent = $node->getParent();
+				
+				if (
+					($child = $node->getFirstChild())
+					&& !$this->isNodeVisited($child)
+				) {
+					array_push($this->stack, $node);
+					$node = $child;
+				
+				} elseif (
+					($node = $node->getNextSibling())
+					&& $this->isNodeVisited($node)
+				) {
+					$node = null;
+				}
+				
 				if ($node === null)
 					$node = array_pop($this->stack);
 				
 				if ($node === null)
-					break;
-				
-				$nextNode = $node;
-				if (
-					($child = $nextNode->getFirstChild())
-					&& !$this->isNodeVisited($child)
-				) {
-					array_push($this->stack, $nextNode);
-					$nextNode = $child;
-				
-				} elseif (
-					($nextNode = $nextNode->getNextSibling())
-					&& $this->isNodeVisited($nextNode)
-				) {
-					$nextNode = null;
-				}
-				
-				if ($nextNode === null) {
-					$node = $node->getParent();
-				} else {
-					$node = $nextNode;
-					$this->markNodeVisited($node);
-				}
+					$node = $nodeParent;
 			
 			} while ($node instanceof OqlNonterminalNode);
 			
