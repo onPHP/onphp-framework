@@ -23,7 +23,7 @@
 		/**
 		 * @return Form
 		**/
-		public function makeOwn($object, &$result)
+		public function fillOwn($object, &$result)
 		{
 			Assert::isInstance($result, 'Form');
 			
@@ -45,7 +45,7 @@
 				$result->add($primitive);
 			}
 				
-			$result = parent::makeOwn($object, $result);
+			$result = parent::fillOwn($object, $result);
 			
 			$result->setProto($this->proto);
 			
