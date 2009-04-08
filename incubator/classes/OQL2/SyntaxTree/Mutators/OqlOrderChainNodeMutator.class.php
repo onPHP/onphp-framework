@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlOrderChainNodeMutator extends OqlSyntaxNodeMutator
+	final class OqlOrderChainNodeMutator extends OqlAbstractChainNodeMutator
 	{
 		/**
 		 * @return OqlOrderChainNodeMutator
@@ -23,35 +23,16 @@
 		}
 		
 		/**
-		 * @return OqlObjectOrderNode
+		 * @return OqlMappableObjectNode
 		**/
-		public function process(OqlSyntaxNode $node)
+		protected function makeChainNode(array $list)
 		{
-			$list = array();
+			$chain = OrderChain::create();
+			foreach ($list as $order)
+				$chain->add($order->toValue());
 			
-			$iterator = OqlSyntaxTreeRecursiveIterator::create();
-			$current = $iterator->reset($node);
-			
-			while ($current) {
-				if ($current->toValue() !== ',')
-					$list[] = $current;
-				
-				$current = $iterator->next();
-			}
-			
-			if (count($list) == 1) {
-				return reset($list);
-			
-			} else {
-				$chain = OrderChain::create();
-				foreach ($list as $order)
-					$chain->add($order->toValue());
-				
-				return OqlMappableObjectNode::create()->
-					setObject($chain);
-			}
-			
-			Assert::isUnreachable();
+			return OqlMappableObjectNode::create()->
+				setObject($chain);
 		}
 	}
 ?>

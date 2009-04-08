@@ -12,28 +12,38 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlProjectionChainNodeMutator extends OqlAbstractChainNodeMutator
+	abstract class OqlAbstractChainNodeMutator extends OqlSyntaxNodeMutator
 	{
-		/**
-		 * @return OqlProjectionChainNodeMutator
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
+		const SEPARATOR = ',';
 		
 		/**
-		 * @return OqlObjectProjectionNode
+		 * @return OqlSyntaxNode
 		**/
-		protected function makeChainNode(array $list)
+		abstract protected function makeChainNode(array $list);
+		
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function process(OqlSyntaxNode $node)
 		{
-			$chain = Projection::chain();
-			foreach ($list as $projection)
-				$chain->add($projection->toValue());
+			$list = array();
 			
-			return OqlObjectProjectionNode::create()->
-				setObject($chain)->
-				setList($list);
+			$iterator = OqlSyntaxTreeRecursiveIterator::create();
+			$current = $iterator->reset($node);
+			
+			while ($current) {
+				if ($current->toValue() !== self::SEPARATOR)
+					$list[] = $current;
+				
+				$current = $iterator->next();
+			}
+			
+			if (count($list) == 1)
+				return reset($list);
+			else
+				return $this->makeChainNode($list);
+			
+			Assert::isUnreachable();
 		}
 	}
 ?>
