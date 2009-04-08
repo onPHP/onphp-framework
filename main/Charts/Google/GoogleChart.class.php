@@ -23,6 +23,7 @@
 		protected $label	= null;
 		protected $data		= null;
 		protected $legend	= null;
+		protected $title 	= null;
 		
 		/**
 		 * @return GoogleChart
@@ -97,6 +98,13 @@
 			return $this;
 		}
 		
+		public function setTitle($title)
+		{
+			$this->title = GoogleChartTitle::create($title);
+			
+			return $this;
+		}
+		
 		public function toString()
 		{
 			$url = self::BASE_URL;
@@ -118,6 +126,9 @@
 			
 			if ($this->label)
 				$parameters[] = $this->label->toString();
+			
+			if ($this->title)
+				$parameters[] = $this->title->toString();
 			
 			$url .= implode('&', $parameters);
 			

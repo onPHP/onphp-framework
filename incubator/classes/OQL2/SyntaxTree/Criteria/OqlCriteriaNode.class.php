@@ -12,12 +12,12 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlLogicalObjectNode extends OqlObjectNode
+	final class OqlCriteriaNode extends OqlObjectNode
 	{
-		protected $class = 'LogicalObject';
+		protected $class = 'Criteria';
 		
 		/**
-		 * @return OqlLogicalObjectNode
+		 * @return OqlCriteriaNode
 		**/
 		public static function create()
 		{

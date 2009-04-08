@@ -12,23 +12,28 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlLogicalObjectNode extends OqlObjectNode
+	final class OqlProjectionChainNodeMutator extends OqlAbstractChainNodeMutator
 	{
-		protected $class = 'LogicalObject';
-		
 		/**
-		 * @return OqlLogicalObjectNode
+		 * @return OqlProjectionChainNodeMutator
 		**/
-		public static function create()
+		public static function me()
 		{
-			return new self;
+			return Singleton::getInstance(__CLASS__);
 		}
 		
-		public function toString()
+		/**
+		 * @return OqlObjectProjectionNode
+		**/
+		protected function makeChainNode(array $list)
 		{
-			return $this->object ?
-				$this->object->toDialectString(ImaginaryDialect::me())
-				: null;
+			$chain = Projection::chain();
+			foreach ($list as $projection)
+				$chain->add($projection->toValue());
+			
+			return OqlObjectProjectionNode::create()->
+				setObject($chain)->
+				setList($list);
 		}
 	}
 ?>

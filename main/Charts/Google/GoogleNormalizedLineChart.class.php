@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008-2009 by Denis M. Gabaidulin                        *
+ *   Copyright (C) 2009 by Denis M. Gabaidulin                             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -8,55 +8,25 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	/**
 	 * @ingroup GoogleChart
 	**/
-	class GoogleChartLabel extends BaseGoogleChartParameter
+	class GoogleNormalizedLineChart extends GoogleLineChart
 	{
-		protected $name = 'chl';
-		
-		protected $labels = array();
-		
 		/**
-		 * @return GoogleChartLabel
+		 * @return GoogleNormalizedLineChart
 		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
-		/**
-		 * @return GoogleChartLabel
-		**/
-		public function addLabel($label)
+		public function __construct()
 		{
-			$this->labels[] = $label;
+			parent::__construct();
 			
-			return $this;
-		}
-		
-		/**
-		 * @return GoogleChartLabel
-		**/
-		public function setLabels($labels)
-		{
-			$this->labels = $labels;
-			
-			return $this;
-		}
-		
-		public function getCount()
-		{
-			return count($this->labels);
-		}
-		
-		public function toString()
-		{
-			$labels = implode('|', $this->labels);
-			
-			return $this->name.'='.$labels;
+			$this->data->setNormalize();
 		}
 	}
 ?>

@@ -1,4 +1,20 @@
-# $Id$
+
+2009-04-08	Denis M. Gabaidulin
+
+	* main/Charts/Google/GoogleChartTitle.class.php added.
+
+2009-04-07	Denis M. Gabaidulin
+
+	* main/Base/BaseRange.class.php: common numeric range logic extracted.
+
+	* main/Base/FloatRange.class.php: float range implemention.
+
+2009-04-08	Vladlen Y. Koshelev
+
+	* main/Utils/ClassUtils.class.php, test/main/ClassUtilsTest.class.php:
+	isClassName() returns boolen.
+
+2009-04-07	Denis M. Gabaidulin
 
 	* main/Charts/Google. Chart line styles implemented.
 

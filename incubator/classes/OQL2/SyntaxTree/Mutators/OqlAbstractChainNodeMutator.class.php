@@ -12,23 +12,38 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlLogicalObjectNode extends OqlObjectNode
+	abstract class OqlAbstractChainNodeMutator extends OqlSyntaxNodeMutator
 	{
-		protected $class = 'LogicalObject';
+		const SEPARATOR = ',';
 		
 		/**
-		 * @return OqlLogicalObjectNode
+		 * @return OqlSyntaxNode
 		**/
-		public static function create()
-		{
-			return new self;
-		}
+		abstract protected function makeChainNode(array $list);
 		
-		public function toString()
+		/**
+		 * @return OqlSyntaxNode
+		**/
+		public function process(OqlSyntaxNode $node)
 		{
-			return $this->object ?
-				$this->object->toDialectString(ImaginaryDialect::me())
-				: null;
+			$list = array();
+			
+			$iterator = OqlSyntaxTreeRecursiveIterator::create();
+			$current = $iterator->reset($node);
+			
+			while ($current) {
+				if ($current->toValue() !== self::SEPARATOR)
+					$list[] = $current;
+				
+				$current = $iterator->next();
+			}
+			
+			if (count($list) == 1)
+				return reset($list);
+			else
+				return $this->makeChainNode($list);
+			
+			Assert::isUnreachable();
 		}
 	}
 ?>

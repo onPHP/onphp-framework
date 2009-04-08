@@ -15,36 +15,38 @@
 	**/
 	final class OqlGrammar extends Singleton implements Instantiatable
 	{
-		const NULL					= 1;
-		const IDENTIFIER			= 2;
-		const NUMBER				= 3;
-		const BOOLEAN				= 4;
-		const STRING				= 5;
-		const PLACEHOLDER			= 6;
-		const PUNCTUATION			= 7;
-		const CONSTANT				= 8;
-		const PATTERN				= 9;
-		const OPEN_PARENTHESES		= 10;
-		const CLOSE_PARENTHESES		= 11;
+		const NULL						= 1;
+		const IDENTIFIER				= 2;
+		const NUMBER					= 3;
+		const BOOLEAN					= 4;
+		const STRING					= 5;
+		const PLACEHOLDER				= 6;
+		const PUNCTUATION				= 7;
+		const CONSTANT					= 8;
+		const PATTERN					= 9;
+		const OPEN_PARENTHESES			= 10;
+		const CLOSE_PARENTHESES			= 11;
 		
-		const ARITHMETIC_OPERAND	= 12;
-		const ARITHMETIC_EXPRESSION	= 13;
+		const ARITHMETIC_OPERAND		= 12;
+		const ARITHMETIC_MUL_EXPRESSION	= 13;
+		const ARITHMETIC_EXPRESSION		= 14;
 		
-		const LOGICAL_OPERAND		= 14;
-		const LOGICAL_UNARY_OPERAND	= 15;
-		const LOGICAL_TERM			= 16;
-		const LOGICAL_EXPRESSION	= 17;
+		const LOGICAL_OPERAND			= 15;
+		const LOGICAL_UNARY_OPERAND		= 16;
+		const LOGICAL_TERM				= 17;
+		const LOGICAL_AND_EXPRESSION	= 18;
+		const LOGICAL_EXPRESSION		= 19;
 		
-		const MIXED_OPERAND			= 18;
+		const MIXED_OPERAND				= 20;
 		
-		const PROPERTIES			= 19;
-		const WHERE					= self::LOGICAL_EXPRESSION;
-		const GROUP_BY				= 20;
-		const ORDER_BY				= 21;
-		const HAVING				= 22;
-		const LIMIT					= 23;
-		const OFFSET				= self::LIMIT;
-		const SELECT				= 24;
+		const PROPERTIES				= 21;
+		const WHERE						= self::LOGICAL_EXPRESSION;
+		const GROUP_BY					= 22;
+		const ORDER_BY					= 23;
+		const HAVING					= 24;
+		const LIMIT						= 25;
+		const OFFSET					= self::LIMIT;
+		const SELECT					= 26;
 		
 		private $rules = array();
 		
@@ -118,19 +120,17 @@
 						OqlParenthesesRule::create()->setRule(
 							OqlGrammarRuleWrapper::create()->
 								setGrammar($this)->
-								setId(self::ARITHMETIC_EXPRESSION)
+								setRuleId(self::ARITHMETIC_EXPRESSION)
 						)
 					)
 			);
 			
 			//	<arithmetic_mul_expression> ::=
-			//		[ "-" ] <arithmetic_operand> * ( ( "*" | "/" ) [ "-" ] <arithmetic_operand> )
-			
-			//	<arithmetic_expression> ::=
-			//		<arithmetic_mul_expression> * ( ( "+" | "-" ) <arithmetic_mul_expression> )
+			//		[ "-" ] <arithmetic_operand> [ ( "*" | "/" ) <arithmetic_mul_expression> ]
 			$this->set(
-				self::repetition(
-					self::repetition(
+				OqlSequenceRule::create()->
+					setId(self::ARITHMETIC_MUL_EXPRESSION)->
+					add(
 						OqlSequenceRule::create()->
 							add(
 								OqlOptionalRule::create()->setRule(
@@ -139,16 +139,46 @@
 								)
 							)->
 							add($this->get(self::ARITHMETIC_OPERAND))->
-							setMutator(OqlPrefixUnaryExpressionNodeMutator::me()),
-						$this->operator(array('*', '/'))->
-							setMutator(OqlOperatorNodeMutator::me())
+							setMutator(OqlPrefixUnaryExpressionNodeMutator::me())
 					)->
-					setMutator(OqlBinaryExpressionNodeMutator::me()),
-					$this->operator(array('+', '-'))->
-						setMutator(OqlOperatorNodeMutator::me())
-				)->
-				setId(self::ARITHMETIC_EXPRESSION)->
-				setMutator(OqlBinaryExpressionNodeMutator::me())
+					add(
+						OqlOptionalRule::create()->setRule(
+							OqlSequenceRule::create()->
+								add(
+									$this->operator(array('*', '/'))->
+										setMutator(OqlOperatorNodeMutator::me())
+								)->
+								add(
+									OqlGrammarRuleWrapper::create()->
+										setGrammar($this)->
+										setRuleId(self::ARITHMETIC_MUL_EXPRESSION)
+								)
+						)
+					)->
+					setMutator(OqlBinaryExpressionNodeMutator::me())
+			);
+			
+			//	<arithmetic_expression> ::=
+			//		<arithmetic_mul_expression> [ ( "+" | "-" ) <arithmetic_expression> ]
+			$this->set(
+				OqlSequenceRule::create()->
+					setId(self::ARITHMETIC_EXPRESSION)->
+					add($this->get(self::ARITHMETIC_MUL_EXPRESSION))->
+					add(
+						OqlOptionalRule::create()->setRule(
+							OqlSequenceRule::create()->
+								add(
+									$this->operator(array('+', '-'))->
+										setMutator(OqlOperatorNodeMutator::me())
+								)->
+								add(
+									OqlGrammarRuleWrapper::create()->
+										setGrammar($this)->
+										setRuleId(self::ARITHMETIC_EXPRESSION)
+								)
+						)
+					)->
+					setMutator(OqlBinaryExpressionNodeMutator::me())
 			);
 			
 			//	<logical_operand> ::=
@@ -286,19 +316,17 @@
 						OqlParenthesesRule::create()->setRule(
 							OqlGrammarRuleWrapper::create()->
 								setGrammar($this)->
-								setId(self::LOGICAL_EXPRESSION)
+								setRuleId(self::LOGICAL_EXPRESSION)
 						)
 					)
 			);
 			
 			//	<logical_and_expression> ::=
-			//		[ "not" ] <logical_term> * ( "and" [ "not" ] <logical_term> )
-			
-			//	<logical_expression> ::=
-			//		<logical_and_expression> * ( "or" <logical_and_expression> )
+			//		[ "not" ] <logical_term> [ "and" <logical_and_expression> ]
 			$this->set(
-				self::repetition(
-					self::repetition(
+				OqlSequenceRule::create()->
+					setId(self::LOGICAL_AND_EXPRESSION)->
+					add(
 						OqlSequenceRule::create()->
 							add(
 								OqlOptionalRule::create()->setRule(
@@ -307,16 +335,46 @@
 								)
 							)->
 							add($this->get(self::LOGICAL_TERM))->
-							setMutator(OqlPrefixUnaryExpressionNodeMutator::me()),
-						$this->operator('and')->
-							setMutator(OqlOperatorNodeMutator::me())
+							setMutator(OqlPrefixUnaryExpressionNodeMutator::me())
 					)->
-					setMutator(OqlBinaryExpressionNodeMutator::me()),
-					$this->operator('or')->
-						setMutator(OqlOperatorNodeMutator::me())
-				)->
-				setId(self::LOGICAL_EXPRESSION)->
-				setMutator(OqlBinaryExpressionNodeMutator::me())
+					add(
+						OqlOptionalRule::create()->setRule(
+							OqlSequenceRule::create()->
+								add(
+									$this->operator('and')->
+										setMutator(OqlOperatorNodeMutator::me())
+								)->
+								add(
+									OqlGrammarRuleWrapper::create()->
+										setGrammar($this)->
+										setRuleId(self::LOGICAL_AND_EXPRESSION)
+								)
+						)
+					)->
+					setMutator(OqlBinaryExpressionNodeMutator::me())
+			);
+			
+			//	<logical_expression> ::=
+			//		<logical_and_expression> [ "or" <logical_expression> ]
+			$this->set(
+				OqlSequenceRule::create()->
+					setId(self::LOGICAL_EXPRESSION)->
+					add($this->get(self::LOGICAL_AND_EXPRESSION))->
+					add(
+						OqlOptionalRule::create()->setRule(
+							OqlSequenceRule::create()->
+								add(
+									$this->operator('or')->
+										setMutator(OqlOperatorNodeMutator::me())
+								)->
+								add(
+									OqlGrammarRuleWrapper::create()->
+										setGrammar($this)->
+										setRuleId(self::LOGICAL_EXPRESSION)
+								)
+						)
+					)->
+					setMutator(OqlBinaryExpressionNodeMutator::me())
 			);
 			
 			//	<mixed_operand> ::= <arithmetic_expression> || <logical_expression>
@@ -386,16 +444,21 @@
 						setMutator(OqlProjectionNodeMutator::me()),
 					$this->get(self::PUNCTUATION)
 				)->
-				setId(self::PROPERTIES)
+				setId(self::PROPERTIES)->
+				setMutator(OqlProjectionChainNodeMutator::me())
 			);
 			
 			//	<group_by> ::= <identifier> * ( "," <identifier> )
 			$this->set(
 				self::repetition(
-					$this->get(self::IDENTIFIER),
+					OqlGrammarRuleWrapper::create()->
+						setGrammar($this)->
+						setRuleId(self::IDENTIFIER)->
+						setMutator(OqlProjectionNodeMutator::me()),
 					$this->get(self::PUNCTUATION)
 				)->
-				setId(self::GROUP_BY)
+				setId(self::GROUP_BY)->
+				setMutator(OqlProjectionChainNodeMutator::me())
 			);
 			
 			//	<order_by> ::=
@@ -411,10 +474,12 @@
 									add($this->keyword('asc'))->
 									add($this->keyword('desc'))
 							)
-						),
+						)->
+						setMutator(OqlOrderByNodeMutator::me()),
 					$this->get(self::PUNCTUATION)
 				)->
-				setId(self::ORDER_BY)
+				setId(self::ORDER_BY)->
+				setMutator(OqlOrderChainNodeMutator::me())
 			);
 			
 			//	<limit> ::= <number> | <placeholder> 
@@ -426,16 +491,18 @@
 			);
 			
 			//	<having> ::= <logical_expression>
-			$havingRule = clone $this->get(self::LOGICAL_EXPRESSION);
 			$this->set(
-				$havingRule->
+				OqlGrammarRuleWrapper::create()->
 					setId(self::HAVING)->
+					setGrammar($this)->
+					setRuleId(self::LOGICAL_EXPRESSION)->
 					setMutator(
 						OqlHavingProjectionNodeMutator::me()
 					)
 			);
 			
 			//	<where>  ::= <logical_expression>
+			
 			//	<offset> ::= <limit>
 			
 			//	<select> ::=
@@ -456,7 +523,12 @@
 						)
 					)->
 					add($this->keyword('from'))->
-					add($this->get(self::IDENTIFIER))->
+					add(
+						OqlGrammarRuleWrapper::create()->
+							setGrammar($this)->
+							setRuleId(self::IDENTIFIER)->
+							setMutator(OqlProtoDAONodeMutator::me())
+					)->
 					add(
 						OqlOptionalRule::create()->setRule(
 							OqlSequenceRule::create()->
@@ -498,7 +570,8 @@
 								add($this->keyword('offset'))->
 								add($this->get(self::OFFSET))
 						)
-					)
+					)->
+					setMutator(OqlCriteriaNodeMutator::me())
 			);
 		}
 		
