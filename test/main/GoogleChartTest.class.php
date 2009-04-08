@@ -229,17 +229,6 @@
 					)
 				);
 			
-			// finaly, calc grid size
-			$chart->setGrid(
-				GoogleChartGrid::create()->
-					setHorizontalStepSize(
-						round(100 / (count($days) - 1), 2)
-					)->
-					setVerticalStepSize(
-						round(100 / $chart->getData()->getMaxSteps(), 1)
-					)
-				);
-			
 			$this->assertEquals(
 				$chart->toString(),
 				'http://chart.apis.google.com/chart?cht=lc&chs=640x240&chco=6699CC,339922&chd=t:0,0,20,2491,2334,0|0,0,10,480,530,0&chds=0,6000,0,600&chdl=Показы|Клики&chdlp=b&chxt=y,r,x&chxr=0,0,6000,1000|1,0,600,100&chxl=2:|2.03|9.03|16.03|23.03|30.03|6.04&chls=2,1,0|2,1,0&chg=20,16.7,0'
