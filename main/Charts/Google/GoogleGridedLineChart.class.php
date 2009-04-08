@@ -25,6 +25,9 @@
 			return new self;
 		}
 		
+		/**
+		 * @return GoogleGridedLineChart
+		**/
 		public function setGrid(GoogleChartGrid $grid)
 		{
 			$this->grid = $grid;
@@ -32,6 +35,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return GoogleChartGrid
+		**/
 		public function getGrid()
 		{
 			return $this->grid;
@@ -49,6 +55,9 @@
 			return $string;
 		}
 		
+		/**
+		 * @return GoogleGridedLineChart
+		**/
 		private function createDefault()
 		{
 			$this->grid = GoogleChartGrid::create();

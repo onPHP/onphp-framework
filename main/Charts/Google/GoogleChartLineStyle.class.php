@@ -18,6 +18,9 @@
 		
 		private $styles = array();
 		
+		/**
+		 * @return GoogleChartLineStyle
+		**/
 		public static function create()
 		{
 			return new self;

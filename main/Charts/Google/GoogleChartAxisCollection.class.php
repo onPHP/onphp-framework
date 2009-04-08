@@ -40,6 +40,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return GoogleChartAxis
+		**/
 		public function getAxisByTypeId($typeId)
 		{
 			if (isset($this->axes[$typeId]))

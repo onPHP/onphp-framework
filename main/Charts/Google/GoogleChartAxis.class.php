@@ -85,6 +85,9 @@
 			return $this->label;
 		}
 		
+		/**
+		 * @return GoogleChartAxis
+		**/
 		public function setInterval($interval)
 		{
 			Assert::isTrue(is_numeric($interval));

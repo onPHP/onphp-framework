@@ -98,6 +98,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return GoogleChart
+		**/
 		public function setTitle($title)
 		{
 			$this->title = GoogleChartTitle::create($title);

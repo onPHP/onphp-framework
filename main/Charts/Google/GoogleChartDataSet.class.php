@@ -59,6 +59,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return GoogleChartDataSet
+		**/
 		public function setBase($base)
 		{
 			$this->base = $base;
