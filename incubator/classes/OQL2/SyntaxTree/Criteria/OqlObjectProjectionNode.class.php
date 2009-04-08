@@ -25,6 +25,7 @@
 		
 		private $object		= null;
 		private $property	= null;
+		private $list		= array();
 		
 		/**
 		 * @return OqlObjectProjectionNode
@@ -67,28 +68,55 @@
 			return $this;
 		}
 		
+		public function getList()
+		{
+			return $this->list;
+		}
+		
+		/**
+		 * @return OqlObjectProjectionNode
+		**/
+		public function setList(array $list)
+		{
+			$this->list = $list;
+			
+			return $this;
+		}
+		
 		public function toString()
 		{
 			if ($this->object) {
 				$result = '';
 				
-				$isAggregate = isset(self::$classMap[get_class($this->object)]);
-				if ($isAggregate) {
-					$result .= self::$classMap[get_class($this->object)].'(';
-					if ($this->object instanceof DistinctCountProjection)
-						$result .= 'distinct ';
+				if ($this->object instanceof ProjectionChain) {
+					if ($this->list) {
+						foreach ($this->list as $key => $node) {
+							if ($key > 0)
+								$result .= ', ';
+							
+							$result .= $node->toString();
+						}
+					}
+				
+				} else {
+					$isAggregate = isset(self::$classMap[get_class($this->object)]);
+					if ($isAggregate) {
+						$result .= self::$classMap[get_class($this->object)].'(';
+						if ($this->object instanceof DistinctCountProjection)
+							$result .= 'distinct ';
+					}
+					
+					if ($this->property instanceof DialectString)
+						$result .= $this->property->toDialectString(ImaginaryDialect::me());
+					else
+						$result .= $this->property;
+					
+					if ($isAggregate)
+						$result .= ')';
+					
+					if ($this->object instanceof Aliased && $this->object->getAlias())
+						$result .= ' as '.$this->object->getAlias();
 				}
-				
-				if ($this->property instanceof DialectString)
-					$result .= $this->property->toDialectString(ImaginaryDialect::me());
-				else
-					$result .= $this->property;
-				
-				if ($isAggregate)
-					$result .= ')';
-				
-				if ($this->object instanceof Aliased && $this->object->getAlias())
-					$result .= ' as '.$this->object->getAlias();
 				
 				return $result;
 			}

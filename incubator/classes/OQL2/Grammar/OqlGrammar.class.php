@@ -444,7 +444,8 @@
 						setMutator(OqlProjectionNodeMutator::me()),
 					$this->get(self::PUNCTUATION)
 				)->
-				setId(self::PROPERTIES)
+				setId(self::PROPERTIES)->
+				setMutator(OqlProjectionChainNodeMutator::me())
 			);
 			
 			//	<group_by> ::= <identifier> * ( "," <identifier> )
