@@ -14,8 +14,6 @@
 
 	* main/Base/FloatRange.class.php: float range implemention.
 
-2009-04-07	Denis M. Gabaidulin
-
 	* main/Charts/Google. Chart line styles implemented.
 
 	* main/Charts/Google/GoogleGridedLineChart.class.php added.
