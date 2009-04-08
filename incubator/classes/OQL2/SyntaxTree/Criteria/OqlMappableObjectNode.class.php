@@ -12,12 +12,12 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlLogicalObjectNode extends OqlObjectNode
+	final class OqlMappableObjectNode extends OqlObjectNode
 	{
-		protected $class = 'LogicalObject';
+		protected $class = 'MappableObject';
 		
 		/**
-		 * @return OqlLogicalObjectNode
+		 * @return OqlMappableObjectNode
 		**/
 		public static function create()
 		{

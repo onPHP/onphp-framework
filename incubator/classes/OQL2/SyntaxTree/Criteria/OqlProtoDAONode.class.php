@@ -12,12 +12,12 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlLogicalObjectNode extends OqlObjectNode
+	final class OqlProtoDAONode extends OqlObjectNode
 	{
-		protected $class = 'LogicalObject';
+		protected $class = 'ProtoDAO';
 		
 		/**
-		 * @return OqlLogicalObjectNode
+		 * @return OqlProtoDAONode
 		**/
 		public static function create()
 		{
@@ -26,9 +26,7 @@
 		
 		public function toString()
 		{
-			return $this->object ?
-				$this->object->toDialectString(ImaginaryDialect::me())
-				: null;
+			return $this->object ? $this->object->getObjectName() : null;
 		}
 	}
 ?>

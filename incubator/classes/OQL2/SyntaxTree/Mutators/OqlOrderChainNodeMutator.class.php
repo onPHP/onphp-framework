@@ -12,23 +12,27 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlLogicalObjectNode extends OqlObjectNode
+	final class OqlOrderChainNodeMutator extends OqlAbstractChainNodeMutator
 	{
-		protected $class = 'LogicalObject';
-		
 		/**
-		 * @return OqlLogicalObjectNode
+		 * @return OqlOrderChainNodeMutator
 		**/
-		public static function create()
+		public static function me()
 		{
-			return new self;
+			return Singleton::getInstance(__CLASS__);
 		}
 		
-		public function toString()
+		/**
+		 * @return OqlMappableObjectNode
+		**/
+		protected function makeChainNode(array $list)
 		{
-			return $this->object ?
-				$this->object->toDialectString(ImaginaryDialect::me())
-				: null;
+			$chain = OrderChain::create();
+			foreach ($list as $order)
+				$chain->add($order->toValue());
+			
+			return OqlMappableObjectNode::create()->
+				setObject($chain);
 		}
 	}
 ?>

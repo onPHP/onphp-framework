@@ -444,16 +444,21 @@
 						setMutator(OqlProjectionNodeMutator::me()),
 					$this->get(self::PUNCTUATION)
 				)->
-				setId(self::PROPERTIES)
+				setId(self::PROPERTIES)->
+				setMutator(OqlProjectionChainNodeMutator::me())
 			);
 			
 			//	<group_by> ::= <identifier> * ( "," <identifier> )
 			$this->set(
 				self::repetition(
-					$this->get(self::IDENTIFIER),
+					OqlGrammarRuleWrapper::create()->
+						setGrammar($this)->
+						setRuleId(self::IDENTIFIER)->
+						setMutator(OqlProjectionNodeMutator::me()),
 					$this->get(self::PUNCTUATION)
 				)->
-				setId(self::GROUP_BY)
+				setId(self::GROUP_BY)->
+				setMutator(OqlProjectionChainNodeMutator::me())
 			);
 			
 			//	<order_by> ::=
@@ -469,10 +474,12 @@
 									add($this->keyword('asc'))->
 									add($this->keyword('desc'))
 							)
-						),
+						)->
+						setMutator(OqlOrderByNodeMutator::me()),
 					$this->get(self::PUNCTUATION)
 				)->
-				setId(self::ORDER_BY)
+				setId(self::ORDER_BY)->
+				setMutator(OqlOrderChainNodeMutator::me())
 			);
 			
 			//	<limit> ::= <number> | <placeholder> 
@@ -516,7 +523,12 @@
 						)
 					)->
 					add($this->keyword('from'))->
-					add($this->get(self::IDENTIFIER))->
+					add(
+						OqlGrammarRuleWrapper::create()->
+							setGrammar($this)->
+							setRuleId(self::IDENTIFIER)->
+							setMutator(OqlProtoDAONodeMutator::me())
+					)->
 					add(
 						OqlOptionalRule::create()->setRule(
 							OqlSequenceRule::create()->

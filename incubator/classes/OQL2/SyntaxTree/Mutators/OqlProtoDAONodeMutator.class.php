@@ -12,23 +12,39 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlLogicalObjectNode extends OqlObjectNode
+	final class OqlProtoDAONodeMutator extends OqlSyntaxNodeMutator
 	{
-		protected $class = 'LogicalObject';
-		
 		/**
-		 * @return OqlLogicalObjectNode
+		 * @return OqlProtoDAONodeMutator
 		**/
-		public static function create()
+		public static function me()
 		{
-			return new self;
+			return Singleton::getInstance(__CLASS__);
 		}
 		
-		public function toString()
+		/**
+		 * @return OqlProtoDAONode
+		**/
+		public function process(OqlSyntaxNode $node)
 		{
-			return $this->object ?
-				$this->object->toDialectString(ImaginaryDialect::me())
-				: null;
+			$class = $node->toValue();
+			
+			Assert::isTrue(
+				ClassUtils::isClassName($class),
+				'invalid class name: '.$class
+			);
+			Assert::classExists($class);
+			Assert::isInstance(
+				$class,
+				'DAOConnected',
+				"class {$class} must implement DAOConnected interface"
+			);
+			
+			// TODO: nothing more expected assertion?
+			
+			return OqlProtoDAONode::create()->setObject(
+				call_user_func(array($class, 'dao'))
+			);
 		}
 	}
 ?>
