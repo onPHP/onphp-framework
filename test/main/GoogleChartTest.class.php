@@ -229,9 +229,12 @@
 					)
 				);
 			
-			// finaly, calc grid size(its depends on real chart height!)
+			// finaly, calc grid size
 			$chart->setGrid(
 				GoogleChartGrid::create()->
+					setHorizontalStepSize(
+						round(100 / (count($days)) - 1, 2)
+					)->
 					setVerticalStepSize(
 						round(100 / $chart->getData()->getMaxSteps(), 1)
 					)
