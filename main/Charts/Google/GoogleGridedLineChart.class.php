@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleGridedLineChart extends GoogleLineChart
+	final class GoogleGridedLineChart extends GoogleNormalizedLineChart
 	{
 		private $grid = null;
 		
@@ -23,13 +23,6 @@
 		public static function create()
 		{
 			return new self;
-		}
-		
-		public function __construct()
-		{
-			parent::__construct();
-			
-			$this->data->setNormalize();
 		}
 		
 		public function setGrid(GoogleChartGrid $grid)
