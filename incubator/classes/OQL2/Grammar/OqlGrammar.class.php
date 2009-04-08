@@ -451,10 +451,14 @@
 			//	<group_by> ::= <identifier> * ( "," <identifier> )
 			$this->set(
 				self::repetition(
-					$this->get(self::IDENTIFIER),
+					OqlGrammarRuleWrapper::create()->
+						setGrammar($this)->
+						setRuleId(self::IDENTIFIER)->
+						setMutator(OqlProjectionNodeMutator::me()),
 					$this->get(self::PUNCTUATION)
 				)->
-				setId(self::GROUP_BY)
+				setId(self::GROUP_BY)->
+				setMutator(OqlProjectionChainNodeMutator::me())
 			);
 			
 			//	<order_by> ::=
