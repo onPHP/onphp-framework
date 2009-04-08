@@ -484,16 +484,18 @@
 			);
 			
 			//	<having> ::= <logical_expression>
-			$havingRule = clone $this->get(self::LOGICAL_EXPRESSION);
 			$this->set(
-				$havingRule->
+				OqlGrammarRuleWrapper::create()->
 					setId(self::HAVING)->
+					setGrammar($this)->
+					setRuleId(self::LOGICAL_EXPRESSION)->
 					setMutator(
 						OqlHavingProjectionNodeMutator::me()
 					)
 			);
 			
 			//	<where>  ::= <logical_expression>
+			
 			//	<offset> ::= <limit>
 			
 			//	<select> ::=
