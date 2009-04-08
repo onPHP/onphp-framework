@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007-2008 by Dmitry E. Demidov                          *
+ *   Copyright (C) 2007-2009 by Dmitry E. Demidov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -103,7 +103,7 @@
 		
 		public static function isClassName($className)
 		{
-			return preg_match('/^'.self::CLASS_NAME_PATTERN.'$/', $className);
+			return preg_match('/^'.self::CLASS_NAME_PATTERN.'$/', $className) > 0;
 		}
 		
 		/// to avoid dependency on SPL's class_implements

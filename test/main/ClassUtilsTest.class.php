@@ -128,6 +128,18 @@
 			$this->assertFalse(ClassUtils::isInstanceOf($base, 'ClassUtilsTestClassChild'));
 			$this->assertTrue(ClassUtils::isInstanceOf($child, 'ClassUtilsTestClass'));
 		}
+		
+		public function testIsClassName()
+		{
+			$this->assertFalse(ClassUtils::isClassName(null));
+			$this->assertFalse(ClassUtils::isClassName(''));
+			$this->assertFalse(ClassUtils::isClassName(0));
+			$this->assertFalse(ClassUtils::isClassName('0'));
+			$this->assertTrue(ClassUtils::isClassName('A0'));
+			$this->assertTrue(ClassUtils::isClassName('_'));
+			$this->assertTrue(ClassUtils::isClassName('_1'));
+			$this->assertTrue(ClassUtils::isClassName('Correct_Class1'));
+		}
 	}
 	
 	interface ClassUtilsTestInterface {}
