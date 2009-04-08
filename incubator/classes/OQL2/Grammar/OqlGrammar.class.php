@@ -570,7 +570,8 @@
 								add($this->keyword('offset'))->
 								add($this->get(self::OFFSET))
 						)
-					)
+					)->
+					setMutator(OqlCriteriaNodeMutator::me())
 			);
 		}
 		
