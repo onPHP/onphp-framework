@@ -15,7 +15,7 @@
 	**/
 	class GoogleLineChart extends GoogleChart
 	{
-		protected $axesCollection = null;
+		protected $axesCollection 	= null;
 		protected $style 			= null;
 		
 		/**
