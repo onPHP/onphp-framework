@@ -64,6 +64,7 @@
 		public function getRule()
 		{
 			Assert::isNotNull($this->grammar, 'grammar must be set');
+			Assert::isNotNull($this->ruleId, 'rule id must be set');
 			
 			return $this->grammar->get($this->ruleId);
 		}

@@ -66,7 +66,7 @@
 		{
 			Assert::isString($string);
 			Assert::isNotNull($this->grammar, 'grammar must be set');
-			Assert::isNotNull($this->ruleId);
+			Assert::isNotNull($this->ruleId, 'rule id must be set');
 			
 			$tokenizer = new OqlTokenizer($string);
 			
