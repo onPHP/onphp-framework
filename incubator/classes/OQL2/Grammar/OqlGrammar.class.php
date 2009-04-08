@@ -474,10 +474,12 @@
 									add($this->keyword('asc'))->
 									add($this->keyword('desc'))
 							)
-						),
+						)->
+						setMutator(OqlOrderByNodeMutator::me()),
 					$this->get(self::PUNCTUATION)
 				)->
-				setId(self::ORDER_BY)
+				setId(self::ORDER_BY)->
+				setMutator(OqlOrderChainNodeMutator::me())
 			);
 			
 			//	<limit> ::= <number> | <placeholder> 
