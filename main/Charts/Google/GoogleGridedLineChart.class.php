@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleGridedLineChart extends GoogleLineChart
+	final class GoogleGridedLineChart extends GoogleNormalizedLineChart
 	{
 		private $grid = null;
 		
@@ -23,13 +23,6 @@
 		public static function create()
 		{
 			return new self;
-		}
-		
-		public function __construct()
-		{
-			parent::__construct();
-			
-			$this->data->setNormalize();
 		}
 		
 		public function setGrid(GoogleChartGrid $grid)
@@ -46,13 +39,38 @@
 		
 		public function toString()
 		{
-			Assert::isNotNull($this->grid);
+			if (!$this->grid)
+				$this->createDefault();
 			
 			$string = parent::toString();
 			
 			$string .= '&'.$this->grid->toString();
 			
 			return $string;
+		}
+		
+		private function createDefault()
+		{
+			$this->grid = GoogleChartGrid::create();
+			
+			$maxSteps = $this->getData()->getMaxSteps();
+			
+			if ($maxSteps > 0)
+				$this->grid->setVerticalStepSize(round(100 / $maxSteps, 1));
+			
+			if (
+				(
+					$axis = $this->axesCollection->getAxisByTypeId(
+						GoogleChartAxisType::X
+					)
+				) && ($label = $axis->getLabel())
+				&& ($label->getCount() > 0)
+			)
+				$this->grid->setHorizontalStepSize(
+					round(100 / ($label->getCount() - 1), 2)
+				);
+			
+			return $this;
 		}
 	}
 ?>
