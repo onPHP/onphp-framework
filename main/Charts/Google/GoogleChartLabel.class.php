@@ -47,6 +47,11 @@
 			return $this;
 		}
 		
+		public function getCount()
+		{
+			return count($this->labels);
+		}
+		
 		public function toString()
 		{
 			$labels = implode('|', $this->labels);

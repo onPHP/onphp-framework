@@ -40,6 +40,14 @@
 			return $this;
 		}
 		
+		public function getAxisByTypeId($typeId)
+		{
+			if (isset($this->axes[$typeId]))
+				return $this->axes[$typeId];
+			else
+				return null;
+		}
+		
 		public function toString()
 		{
 			$typeString = GoogleChartAxisType::getParamName().'=';
