@@ -1,5 +1,5 @@
 <?php
-	/* $Id$ */
+	// FIXME: some tests with float values could be broken, wating FloatRange
 	
 	final class GoogleChartTest extends TestCase
 	{
