@@ -14,7 +14,8 @@
 	**/
 	final class OqlGrammarRuleWrapper extends OqlGrammarRule
 	{
-		private $grammar = null;
+		private $grammar	= null;
+		private $ruleId		= null;
 		
 		/**
 		 * @return OqlGrammarRuleWrapper
@@ -42,6 +43,21 @@
 			return $this;
 		}
 		
+		public function getRuleId()
+		{
+			return $this->ruleId;
+		}
+		
+		/**
+		 * @return OqlGrammarRuleWrapper
+		**/
+		public function setRuleId($ruleId)
+		{
+			$this->ruleId = $ruleId;
+			
+			return $this;
+		}
+		
 		/**
 		 * @return OqlGrammarRule
 		**/
@@ -49,7 +65,7 @@
 		{
 			Assert::isNotNull($this->grammar, 'grammar must be set');
 			
-			return $this->grammar->get($this->id);
+			return $this->grammar->get($this->ruleId);
 		}
 		
 		/**
