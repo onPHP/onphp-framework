@@ -56,6 +56,12 @@
 			return $this;
 		}
 		
+		public function isNormalized()
+		{
+			return $this->normalize;
+		}
+		
+		
 		/**
 		 * @return GoogleChartData
 		**/
