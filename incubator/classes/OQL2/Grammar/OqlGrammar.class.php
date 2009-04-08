@@ -120,7 +120,7 @@
 						OqlParenthesesRule::create()->setRule(
 							OqlGrammarRuleWrapper::create()->
 								setGrammar($this)->
-								setId(self::ARITHMETIC_EXPRESSION)
+								setRuleId(self::ARITHMETIC_EXPRESSION)
 						)
 					)
 			);
@@ -151,7 +151,7 @@
 								add(
 									OqlGrammarRuleWrapper::create()->
 										setGrammar($this)->
-										setId(self::ARITHMETIC_MUL_EXPRESSION)
+										setRuleId(self::ARITHMETIC_MUL_EXPRESSION)
 								)
 						)
 					)->
@@ -174,7 +174,7 @@
 								add(
 									OqlGrammarRuleWrapper::create()->
 										setGrammar($this)->
-										setId(self::ARITHMETIC_EXPRESSION)
+										setRuleId(self::ARITHMETIC_EXPRESSION)
 								)
 						)
 					)->
@@ -316,7 +316,7 @@
 						OqlParenthesesRule::create()->setRule(
 							OqlGrammarRuleWrapper::create()->
 								setGrammar($this)->
-								setId(self::LOGICAL_EXPRESSION)
+								setRuleId(self::LOGICAL_EXPRESSION)
 						)
 					)
 			);
@@ -347,7 +347,7 @@
 								add(
 									OqlGrammarRuleWrapper::create()->
 										setGrammar($this)->
-										setId(self::LOGICAL_AND_EXPRESSION)
+										setRuleId(self::LOGICAL_AND_EXPRESSION)
 								)
 						)
 					)->
@@ -370,7 +370,7 @@
 								add(
 									OqlGrammarRuleWrapper::create()->
 										setGrammar($this)->
-										setId(self::LOGICAL_EXPRESSION)
+										setRuleId(self::LOGICAL_EXPRESSION)
 								)
 						)
 					)->
