@@ -44,8 +44,8 @@
 			
 			} else {
 				$chain = Projection::chain();
-				foreach ($list as $projectionNode)
-					$chain->add($projectionNode->toValue());
+				foreach ($list as $projection)
+					$chain->add($projection->toValue());
 				
 				return OqlObjectProjectionNode::create()->
 					setObject($chain)->
