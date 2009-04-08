@@ -41,7 +41,7 @@
 			$current = $iterator->reset($node);
 			
 			while ($current) {
-				// properties, group_by, having projections
+				// properties, group by, having projections
 				if ($current instanceof OqlObjectProjectionNode) {
 					$criteria->addProjection($current->toValue());
 				
