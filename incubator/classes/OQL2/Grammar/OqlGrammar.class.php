@@ -523,7 +523,12 @@
 						)
 					)->
 					add($this->keyword('from'))->
-					add($this->get(self::IDENTIFIER))->
+					add(
+						OqlGrammarRuleWrapper::create()->
+							setGrammar($this)->
+							setRuleId(self::IDENTIFIER)->
+							setMutator(OqlProtoDAONodeMutator::me())
+					)->
 					add(
 						OqlOptionalRule::create()->setRule(
 							OqlSequenceRule::create()->
