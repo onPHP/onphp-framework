@@ -12,23 +12,34 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlLogicalObjectNode extends OqlObjectNode
+	abstract class OqlObjectNode extends OqlTerminalNode
 	{
-		protected $class = 'LogicalObject';
+		protected $object	= null;
+		protected $class	= null;
 		
-		/**
-		 * @return OqlLogicalObjectNode
-		**/
-		public static function create()
+		public function getObject()
 		{
-			return new self;
+			return $this->object;
 		}
 		
-		public function toString()
+		/**
+		 * @return OqlObjectNode
+		**/
+		public function setObject($object)
 		{
-			return $this->object ?
-				$this->object->toDialectString(ImaginaryDialect::me())
-				: null;
+			Assert::isInstance($object, $this->class);
+			
+			$this->object = $object;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return Object
+		**/
+		public function toValue()
+		{
+			return $this->object;
 		}
 	}
 ?>

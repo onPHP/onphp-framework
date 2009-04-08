@@ -12,9 +12,9 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlMappableObjectNode extends OqlTerminalNode
+	final class OqlMappableObjectNode extends OqlObjectNode
 	{
-		private $object = null;
+		protected $class = 'MappableObject';
 		
 		/**
 		 * @return OqlMappableObjectNode
@@ -24,37 +24,11 @@
 			return new self;
 		}
 		
-		/**
-		 * @return MappableObject
-		**/
-		public function getObject()
-		{
-			return $this->object;
-		}
-		
-		/**
-		 * @return OqlMappableObjectNode
-		**/
-		public function setObject(MappableObject $object)
-		{
-			$this->object = $object;
-			
-			return $this;
-		}
-		
 		public function toString()
 		{
 			return $this->object ?
 				$this->object->toDialectString(ImaginaryDialect::me())
 				: null;
-		}
-		
-		/**
-		 * @return MappableObject
-		**/
-		public function toValue()
-		{
-			return $this->object;
 		}
 	}
 ?>
