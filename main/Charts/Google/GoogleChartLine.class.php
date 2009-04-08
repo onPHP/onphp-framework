@@ -32,6 +32,9 @@
 			return parent::setValue($value);
 		}
 		
+		/**
+		 * @return GoogleChartLine
+		**/
 		public function setStyle(ChartLineStyle $style)
 		{
 			$this->style = $style;
@@ -39,6 +42,9 @@
 			return $this;
 		}
 		
+		/**
+		 * @return ChartLineStyle
+		**/
 		public function getStyle()
 		{
 			return $this->style;

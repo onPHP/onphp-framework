@@ -61,7 +61,6 @@
 			return $this->normalize;
 		}
 		
-		
 		/**
 		 * @return GoogleChartData
 		**/
@@ -126,6 +125,9 @@
 			return $max;
 		}
 		
+		/**
+		 * @return GoogleChartData
+		**/
 		private function normalize()
 		{
 			$maxSteps = $this->getMaxSteps();

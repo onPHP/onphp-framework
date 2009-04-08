@@ -18,11 +18,17 @@
 		private $lineSegmentLength 	= 1;
 		private $blankSegmentLength = 0;
 		
+		/**
+		 * @return ChartLineStyle
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return ChartLineStyle
+		**/
 		public function setThickness($size)
 		{
 			$this->thickness = $size;
@@ -35,6 +41,9 @@
 			return $this->thickness;
 		}
 		
+		/**
+		 * @return ChartLineStyle
+		**/
 		public function setLineSegmentLength($length)
 		{
 			$this->lineSegmentLength = $length;
@@ -47,6 +56,9 @@
 			return $this->lineSegmentLength;
 		}
 		
+		/**
+		 * @return ChartLineStyle
+		**/
 		public function setBlankSegmentLength($length)
 		{
 			$this->blankSegmentLength = $length;
