@@ -28,6 +28,9 @@
 		
 		public function __construct($name)
 		{
+			Assert::isString($name);
+			Assert::isNotEqual($name, '');
+			
 			$this->name = $name;
 			
 			// TODO: add to query placeholders pool
