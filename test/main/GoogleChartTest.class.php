@@ -402,6 +402,17 @@
 						'GoogleGridedLineChart' => 
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,0.24,1,0.2,0.3,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1,0.1&chg=0,10,0'
 					)
+				),
+				array(
+					array(0, 0, 0),
+					array(
+						'GoogleLineChart' =>
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0,0,0&chds=0,0&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,0',
+						'GoogleNormalizedLineChart' => 
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0,0,0&chds=0,0&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,0,0.1',
+						'GoogleGridedLineChart' => 
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0,0,0&chds=0,0&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,0,0.1&chg=0,0,0'
+					)
 				)
 			);
 		}
@@ -443,6 +454,18 @@
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0.1,0.24,1,0.2,0.3,0|0.01,0.124,0.1,0.22,0.03,0&chds=0,1,0,1&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,1,0.1|1,0,1,0.1',
 						'GoogleGridedLineChart' => 
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0.1,0.24,1,0.2,0.3,0|0.01,0.124,0.1,0.22,0.03,0&chds=0,1,0,1&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,1,0.1|1,0,1,0.1&chg=0,10,0'
+					)
+				),
+				array(
+					array(0, 0, 0),
+					array(0.01, 0.124, 0.1),
+					array(
+						'GoogleLineChart' =>
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0,0,0|0.01,0.124,0.1&chds=0,0,0,0.124&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,0|1,0,0.124',
+						'GoogleNormalizedLineChart' => 
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0,0,0|0.01,0.124,0.1&chds=0,0.2,0,0.2&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,0.2,0.1|1,0,0.2,0.1',
+						'GoogleGridedLineChart' => 
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0,0,0|0.01,0.124,0.1&chds=0,0.2,0,0.2&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,0.2,0.1|1,0,0.2,0.1&chg=0,50,0'
 					)
 				)
 			);
