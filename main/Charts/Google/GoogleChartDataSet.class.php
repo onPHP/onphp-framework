@@ -109,9 +109,12 @@
 		
 		public function getStepSize()
 		{
-			Assert::isTrue($this->base > 0);
+			Assert::isTrue($this->base !== null);
 			
-			return $this->getMax() / $this->base;
+			if ($this->base == 0)
+				return 0;
+			else
+				return $this->getMax() / $this->base;
 		}
 		
 		/**
