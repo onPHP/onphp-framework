@@ -6,6 +6,7 @@
 	constructor arguments fixed, related tests added.
 
 2008-12-18	Konstantin V. Arkhipov
+
 	* core/Cache/AggregateCache.class.php: restore true randomness upon
 	exit from guessLabel().
 
