@@ -1,7 +1,7 @@
 
 2009-04-08	Denis M. Gabaidulin
 
-	* main/Charts/Google/GoogleChartTitle.class.php added.
+	* main/Charts/Google/GoogleChartTitle.class.php: added.
 
 2009-04-07	Denis M. Gabaidulin
 
@@ -16,9 +16,9 @@
 
 2009-04-07	Denis M. Gabaidulin
 
-	* main/Charts/Google. Chart line styles implemented.
+	* main/Charts/Google/: chart line styles implemented.
 
-	* main/Charts/Google/GoogleGridedLineChart.class.php added.
+	* main/Charts/Google/GoogleGridedLineChart.class.php: added.
 
 2009-04-06	Denis M. Gabaidulin
 
@@ -31,8 +31,8 @@
 
 2009-04-04	Denis M. Gabaidulin
 
-	* main/Charts/Google. Google charts implementation(partically)
-	moved from incubator.
+	* main/Charts/Google/: Google charts implementation (partially) moved
+	from incubator.
 
 2009-04-01	Ivan Y. Khvostishkov
 
@@ -76,11 +76,11 @@
 
 2009-03-25	Denis M. Gabaidulin
 
-	* core/Form/Primitives/PrimitiveNoValue.class.php. Special primitive
+	* core/Form/Primitives/PrimitiveNoValue.class.php: special primitive
 	w/o value.
 
-	* main/Utils/CommandLine/ArgumentParser.class.php. Refactor. Drop special
-	collection and use only native form.
+	* main/Utils/CommandLine/ArgumentParser.class.php: refactor, drop
+	special collection and use only native form.
 
 2009-03-24	Denis M. Gabaidulin
 
@@ -89,10 +89,10 @@
 
 2009-03-23	Denis M. Gabaidulin
 
-	* main/Utils/CommandLine/ArgumentBuilder.class.php. Simple builder to hide
-	complex interface.
+	* main/Utils/CommandLine/ArgumentBuilder.class.php: simple builder to
+	hide complex interface.
 
-	* main/Utils/CommandLine/Argument.class.php. Primitive member added.
+	* main/Utils/CommandLine/Argument.class.php: primitive member added.
 
 2009-03-22	Sergey S. Sergeev
 
@@ -106,9 +106,9 @@
 
 2009-03-19	Denis M. Gabaidulin
 
-	* main/Base/Collection.class.php. Useful accessors added.
+	* main/Base/Collection.class.php: useful accessors added.
 
-	* main/Utils/CommandLine/*.class.php. Simple command line args parser
+	* main/Utils/CommandLine/: simple command line args parser
 	based on getopt().
 
 2009-03-17	Denis M. Gabaidulin
@@ -120,8 +120,8 @@
 
 2009-03-16	Denis M. Gabaidulin
 
-	* core/Form/Filters/Json{Encoder|Decoder}Filter.class.php: added
-	and tested.
+	* core/Form/Filters/JsonEncoderFilter.class.php,
+	core/Form/Filters/JsonDecoderFilter.class.php: added and tested.
 
 2009-03-10	Vladlen Y. Koshelev
 
