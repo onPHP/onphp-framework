@@ -28,6 +28,8 @@
 		
 		public function __construct()
 		{
+			parent::__construct();
+			
 			$this->type =
 				new GoogleChartType(GoogleChartType::LINE);
 			
