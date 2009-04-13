@@ -175,8 +175,8 @@
 			if ($this->title)
 				$parameters[] = $this->title->toString();
 			
-			if ($this->filler)
-				$parameters[] = $this->filler->toString();
+			if ($this->fillers)
+				$parameters[] = $this->fillers->toString();
 			
 			$url .= implode('&', $parameters);
 			
