@@ -367,7 +367,9 @@
 					if (isset($result[$index]))
 						return $result[$index];
 					
-					throw new MissingElementException();
+					throw new MissingElementException(
+						'No such key: "'.$index.'" in result set.'
+					);
 				}
 				
 				return $result;
