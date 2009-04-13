@@ -27,9 +27,9 @@
 		/**
 		 * @return GoogleChartSolidFillType
 		**/
-		public static function create()
+		public static function create($id)
 		{
-			return new self;
+			return new self($id);
 		}
 		
 		public function toString()
