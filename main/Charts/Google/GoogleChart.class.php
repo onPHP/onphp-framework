@@ -112,7 +112,7 @@
 		/**
 		 * @return GoogleChart
 		**/
-		public function setFiiler(GoogleChartSolidFill $filler)
+		public function setFiller(GoogleChartSolidFill $filler)
 		{
 			$this->filler = $filler;
 			
