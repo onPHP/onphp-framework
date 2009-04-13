@@ -20,7 +20,7 @@
 		
 		protected $names = array(
 			self::CHART_AREA 	=> 'c',
-			self::BACKGROUND	=> 'b',
+			self::BACKGROUND	=> 'bg',
 			self::TRANSPARENCY	=> 'a'
 		);
 		
