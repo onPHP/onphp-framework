@@ -52,7 +52,7 @@
 		
 		public function toString()
 		{
-			if ($this->type != GoogleChartSolidFillType::TRANSPARENCY)
+			if ($this->type->getId() != GoogleChartSolidFillType::TRANSPARENCY)
 				Assert::isNotNull($this->color, 'Color parameter required!');
 			
 			return
