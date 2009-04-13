@@ -12,58 +12,40 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleChartSolidFill extends BaseGoogleChartParameter
+	final class GoogleChartSolidFillCollection extends BaseGoogleChartParameter
 	{
-		protected static $paramName = 'chf';
-		
-		private $type 	= null;
-		private $color 	= null;
+		private $fillers = array();
 		
 		/**
-		 * @return GoogleChartSolidFill
+		 * @return GoogleChartSolidFillCollection
 		**/
-		public static function create(GoogleChartSolidFillType $type)
+		public static function create()
 		{
-			return new self($type);
+			return new self;
 		}
 		
-		public function __construct(GoogleChartSolidFillType $type)
+		public function addFiller(GoogleChartSolidFillType $type, Color $color)
 		{
-			$this->type = $type;
-		}
-		
-		/**
-		 * @return GoogleChartSolidFill
-		**/
-		public function setColor(Color $color)
-		{
-			$this->color = $color;
+			$this->fillers[] =
+				GoogleChartSolidFill::create($type)->
+				setColor($color);
 			
 			return $this;
 		}
 		
-		/**
-		 * @return Color
-		**/
-		public function getColor()
+		public function hasFillers()
 		{
-			return $this->color;
+			return !empty($this->fillers);
 		}
 		
 		public function toString()
 		{
-			Assert::isNotNull($this->color, 'Color parameter required!');
+			$fillerString = GoogleChartSolidFill::getParamName().'=';
 			
-			return
-				$this->type->toString()
-				.',s'
-				.','.$this->color->toString();
-		}
-		
-		
-		public static function getParamName()
-		{
-			return self::$paramName;
+			foreach ($this->fillers as $filler)
+				$fillers[] = $filler->toString();
+			
+			return $fillerString.implode('|', $fillers);
 		}
 	}
 ?>

@@ -25,6 +25,8 @@
 		
 		public function __construct()
 		{
+			parent::__construct();
+			
 			$this->type =
 				new GoogleChartType(GoogleChartType::TWO_DIMENSIONAL_PIE);
 			

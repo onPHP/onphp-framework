@@ -24,7 +24,7 @@
 		protected $data		= null;
 		protected $legend	= null;
 		protected $title 	= null;
-		protected $filler	= null;
+		protected $fillers	= null;
 		
 		/**
 		 * @return GoogleChart
@@ -32,6 +32,11 @@
 		public static function create()
 		{
 			return new self;
+		}
+		
+		public function __construct()
+		{
+			$this->fillers = GoogleChartSolidFillCollection::create();
 		}
 		
 		/**
@@ -109,12 +114,38 @@
 			return $this;
 		}
 		
-		/**
-		 * @return GoogleChart
-		**/
-		public function setFiller(GoogleChartSolidFill $filler)
+		public function addChartAreaFiller(Color $color)
 		{
-			$this->filler = $filler;
+			$this->fillers->addFiller(
+				GoogleChartSolidFillType::create(
+					GoogleChartSolidFillType::CHART_AREA
+				),
+				$color
+			);
+			
+			return $this;
+		}
+		
+		public function addBackgroundFiller(Color $color)
+		{
+			$this->fillers->addFiller(
+				GoogleChartSolidFillType::create(
+					GoogleChartSolidFillType::BACKGROUND
+				),
+				$color
+			);
+			
+			return $this;
+		}
+		
+		public function addTransparencyFiller(Color $color)
+		{
+			$this->fillers->addFiller(
+				GoogleChartSolidFillType::create(
+					GoogleChartSolidFillType::TRANSPARENCY
+				),
+				$color
+			);
 			
 			return $this;
 		}
