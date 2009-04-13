@@ -52,18 +52,13 @@
 		
 		public function toString()
 		{
-			if ($this->type->getId() != GoogleChartSolidFillType::TRANSPARENCY)
-				Assert::isNotNull($this->color, 'Color parameter required!');
+			Assert::isNotNull($this->color, 'Color parameter required!');
 			
 			return
 				'chf='
 				.$this->type->toString()
 				.',s'
-				.(
-					$this->color
-						? ','.$this->color->toString()
-						: null
-				);
+				.','.$this->color->toString();
 		}
 	}
 ?>
