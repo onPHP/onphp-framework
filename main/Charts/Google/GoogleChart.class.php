@@ -24,6 +24,7 @@
 		protected $data		= null;
 		protected $legend	= null;
 		protected $title 	= null;
+		protected $filler	= null;
 		
 		/**
 		 * @return GoogleChart
@@ -108,6 +109,16 @@
 			return $this;
 		}
 		
+		/**
+		 * @return GoogleChart
+		**/
+		public function setSolidFill(GoogleChartSolidFill $filler)
+		{
+			$this->filler = $filler;
+			
+			return $this;
+		}
+		
 		public function toString()
 		{
 			$url = self::BASE_URL;
@@ -132,6 +143,9 @@
 			
 			if ($this->title)
 				$parameters[] = $this->title->toString();
+			
+			if ($this->filler)
+				$parameters[] = $this->filler->toString();
 			
 			$url .= implode('&', $parameters);
 			

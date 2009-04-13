@@ -25,7 +25,7 @@
 		);
 		
 		/**
-		 * @return GoogleChartSolidFill
+		 * @return GoogleChartSolidFillType
 		**/
 		public static function create()
 		{
