@@ -128,6 +128,13 @@
 				$maxValue =
 					MathUtils::alignByBase($maxValue, $this->base, true);
 			
+			if ($maxValue == 0) {
+				if ($this->base)
+					$maxValue = $this->base;
+				else
+					$maxValue = 1;
+			}
+			
 			$this->minMax->setMax($maxValue);
 			
 			return $this;
