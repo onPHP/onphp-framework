@@ -73,7 +73,7 @@
 						GoogleChartAxisType::X
 					)
 				) && ($label = $axis->getLabel())
-				&& ($label->getCount() > 0)
+				&& ($label->getCount() > 1)
 			)
 				$this->grid->setHorizontalStepSize(
 					round(100 / ($label->getCount() - 1), 2)
