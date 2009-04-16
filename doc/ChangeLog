@@ -1,4 +1,9 @@
 
+2009-04-16	Sergey S. Sergeev
+
+	* test/misc/ServerVarUtils.class.php: forgotten class added, thanks to
+	Ivan Khvostishkov.
+
 2009-04-16	Vladlen Y. Koshelev
 
 	* core/OSQL/OrderBy.class.php, test/main/CriteriaTest.class.php:
