@@ -86,5 +86,47 @@
 					)
 			);
 		}
+		
+		/**
+		 * @dataProvider orderDataProvider
+		**/
+		public function testOrder($order, $expectedString)
+		{
+			$criteria = Criteria::create(TestUser::dao())->
+				setProjection(
+					Projection::property('id')
+				)->
+				addOrder($order);
+			
+			$this->assertEquals(
+				$criteria->toDialectString(ImaginaryDialect::me()),
+				'SELECT test_user.id FROM test_user ORDER BY '.$expectedString
+			);
+		}
+		
+		public static function orderDataProvider()
+		{
+			return array(
+				array(OrderBy::create('id'), 'test_user.id'),
+				array(
+					OrderChain::create()->
+						add(OrderBy::create('id')->asc())->
+						add(OrderBy::create('id')),
+					'test_user.id ASC, test_user.id'
+				),
+				array(OrderBy::create('id')->asc(), 'test_user.id ASC'),
+				array(OrderBy::create('id')->desc(), 'test_user.id DESC'),
+				array(OrderBy::create('id')->nullsFirst(), 'test_user.id NULLS FIRST'),
+				array(OrderBy::create('id')->nullsLast(), 'test_user.id NULLS LAST'),
+				array(OrderBy::create('id')->asc()->nullsLast(), 'test_user.id ASC NULLS LAST'),
+				array(OrderBy::create('id')->desc()->nullsFirst(), 'test_user.id DESC NULLS FIRST'),
+				array(
+					OrderBy::create(Expression::isNull('id'))->
+						asc()->
+						nullsFirst(),
+					'((test_user.id IS NULL)) ASC NULLS FIRST'
+				)
+			);
+		}
 	}
 ?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2005-2009 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -17,7 +17,6 @@
 	final class OrderBy extends FieldTable implements MappableObject
 	{
 		private $direction	= null;
-		
 		private $nulls		= null;
 		
 		/**
@@ -39,6 +38,7 @@
 		public function __clone()
 		{
 			$this->direction = clone $this->direction;
+			$this->nulls = clone $this->nulls;
 		}
 		
 		/**
@@ -87,13 +87,13 @@
 		**/
 		public function nullsLast()
 		{
-			$this->direction->setFalse();
+			$this->nulls->setFalse();
 			return $this;
 		}
 		
 		public function isNullsFirst()
 		{
-			return $this->direction->decide(true, false, true);
+			return $this->nulls->decide(true, false, true);
 		}
 		
 		/**
@@ -103,8 +103,8 @@
 		{
 			$this->nulls->setValue($nullsFirst);
 			return $this;
-		
 		}
+		
 		/**
 		 * @return OrderBy
 		**/
@@ -123,10 +123,13 @@
 		{
 			$order = self::create($dao->guessAtom($this->field, $query));
 			
-			if ($this->direction->isNull())
-				return $order;
+			if (!$this->nulls->isNull())
+				$order->setNullsFirst($this->nulls->getValue());
 			
-			return $order->{$this->direction->decide('asc', 'desc')}();
+			if (!$this->direction->isNull())
+				$order->setDirection($this->direction->getValue());
+			
+			return $order;
 		}
 		
 		public function toDialectString(Dialect $dialect)
@@ -135,15 +138,13 @@
 				$this->field instanceof SelectQuery
 				|| $this->field instanceof LogicalObject
 			)
-				$result =
-					'('.$dialect->fieldToString($this->field).')'
-					.$this->direction->decide(' ASC', ' DESC');
+				$result = '('.$dialect->fieldToString($this->field).')';
 			else
-				$result =
-					parent::toDialectString($dialect)
-					.$this->direction->decide(' ASC', ' DESC');
+				$result = parent::toDialectString($dialect);
 			
-			$result .= $this->nulls->decide(' NULLS FIRST', ' NULLS LAST');
+			$result .=
+				$this->direction->decide(' ASC', ' DESC')
+				.$this->nulls->decide(' NULLS FIRST', ' NULLS LAST');
 			
 			return $result;
 		}
