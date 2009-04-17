@@ -1,4 +1,15 @@
 
+2009-04-16	Sergey S. Sergeev
+
+	* test/misc/ServerVarUtils.class.php: forgotten class added, thanks to
+	Ivan Khvostishkov.
+
+2009-04-16	Vladlen Y. Koshelev
+
+	* core/OSQL/OrderBy.class.php, test/main/CriteriaTest.class.php:
+	nullsLast(), isNullsFirst() fixed; support for clone and toMapped() for
+	nulls ordering feature added; corresponding tests added.
+
 2009-04-08	Denis M. Gabaidulin
 
 	* main/Charts/Google/GoogleChartTitle.class.php: added.
