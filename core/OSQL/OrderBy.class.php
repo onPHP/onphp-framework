@@ -14,7 +14,7 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
-	final class OrderBy extends FieldTable implements MappableObject
+	class OrderBy extends FieldTable implements MappableObject
 	{
 		private $direction	= null;
 		private $nulls		= null;
