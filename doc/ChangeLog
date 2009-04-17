@@ -1,4 +1,8 @@
 
+2009-04-17	Denis M. Gabaidulin
+
+	* main/Utils/SortHelper.class.php: customizable cmp function.
+
 2009-04-16	Sergey S. Sergeev
 
 	* test/misc/ServerVarUtils.class.php: forgotten class added, thanks to

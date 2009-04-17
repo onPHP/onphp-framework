@@ -20,6 +20,8 @@
 		private $vector = null;
 		private $keys 	= null; // pairs of key name and direction
 		
+		private $defaultCmpFunction = 'strnatcmp';
+		
 		public static function me()
 		{
 			return Singleton::getInstance('SortHelper');
@@ -35,6 +37,10 @@
 		public function setKeys($keys)
 		{
 			$this->keys = $keys;
+			
+			foreach ($this->keys as &$keyData)
+				if (!isset($keyData[2]))
+					$keyData[2] = $this->defaultCmpFunction;
 			
 			return $this;
 		}
@@ -55,7 +61,7 @@
 			);
 			
 			$result =
-				strnatcmp(
+				$this->keys[$keyIndex][2](
 			 		$one[$this->keys[$keyIndex][0]],
 			 		$two[$this->keys[$keyIndex][0]]
 			 	);
