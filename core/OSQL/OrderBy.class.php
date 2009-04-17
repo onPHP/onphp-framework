@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Anton E. Lebedevich                        *
+ *   Copyright (C) 2005-2009 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -14,7 +14,7 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
-	final class OrderBy extends FieldTable implements MappableObject
+	class OrderBy extends FieldTable implements MappableObject
 	{
 		private $direction	= null;
 		
