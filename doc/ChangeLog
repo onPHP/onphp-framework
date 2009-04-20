@@ -1,4 +1,9 @@
 
+2009-04-20	Denis M. Gabaidulin
+
+	* main/Math/MathUtils.class.php: makeCartesianProduct() support
+	assoc arrays.
+
 2009-04-17	Denis M. Gabaidulin
 
 	* main/Utils/SortHelper.class.php: customizable cmp function.
