@@ -41,20 +41,26 @@
 			foreach ($arrays as $array)
 				$size *= sizeof($array);
 			
+			$keys = array_keys($arrays);
+			
+			foreach ($keys as $key)
+				$tmpArrays[] = $arrays[$key];
+			
 			for ($i = 0; $i < $size; $i++) {
 				$result[$i] = array();
 				
-				for ($j = 0; $j < sizeof($arrays); $j++)
-           			$result[$i][] = current($arrays[$j]);
+				for ($j = 0; $j < sizeof($tmpArrays); $j++) {
+           			$result[$i][$keys[$j]] = current($tmpArrays[$j]);
+				}
 				
 				if ($generateHash)
 					$result[$i]['hash'] = md5(implode('_', $result[$i]));
 				
-				for ($j = (sizeof($arrays) - 1); $j >= 0; $j--) {
-					if (next($arrays[$j])) {
+				for ($j = (sizeof($tmpArrays) - 1); $j >= 0; $j--) {
+					if (next($tmpArrays[$j])) {
                			break;
            			} else
-               			reset($arrays[$j]);
+               			reset($tmpArrays[$j]);
 				}
 			}
 			
