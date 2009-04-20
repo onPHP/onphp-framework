@@ -44,9 +44,8 @@
 			for ($i = 0; $i < $size; $i++) {
 				$result[$i] = array();
 				
-				for ($j = 0; $j < sizeof($arrays); $j++) {
-           			array_push($result[$i], current($arrays[$j]));
-				}
+				for ($j = 0; $j < sizeof($arrays); $j++)
+           			$result[$i][] = current($arrays[$j]);
 				
 				if ($generateHash)
 					$result[$i]['hash'] = md5(implode('_', $result[$i]));
