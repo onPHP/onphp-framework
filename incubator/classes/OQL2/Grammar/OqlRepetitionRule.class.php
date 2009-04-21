@@ -27,13 +27,14 @@
 		**/
 		protected function parse(
 			OqlTokenizer $tokenizer,
+			OqlSyntaxNode $rootNode,
 			$silent = false
 		)
 		{
 			Assert::isNotNull($this->rule);
 			
 			$childNodes = array();
-			while ($node = $this->rule->process($tokenizer, $silent))
+			while ($node = $this->rule->process($tokenizer, $rootNode, $silent))
 				$childNodes[] = $node;
 			
 			if ($childNodes) {

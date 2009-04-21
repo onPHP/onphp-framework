@@ -17,6 +17,6 @@
 		/**
 		 * @return OqlSyntaxNode
 		**/
-		abstract public function process(OqlSyntaxNode $node);
+		abstract public function process(OqlSyntaxNode $node, OqlSyntaxNode $rootNode);
 	}
 ?>

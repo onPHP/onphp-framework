@@ -70,7 +70,7 @@
 			return OqlParser::create()->
 				setGrammar(OqlGrammar::me())->
 				setRuleId($ruleId)->
-				parse($string);
+				parse($string, new OqlBindableNodeWrapper());	// FIXME
 		}
 	}
 ?>

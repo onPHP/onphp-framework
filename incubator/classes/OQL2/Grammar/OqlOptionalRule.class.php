@@ -27,12 +27,13 @@
 		**/
 		protected function parse(
 			OqlTokenizer $tokenizer,
+			OqlSyntaxNode $rootNode,
 			$silent = false
 		)
 		{
 			Assert::isNotNull($this->rule);
 			
-			return $this->rule->process($tokenizer, true);
+			return $this->rule->process($tokenizer, $rootNode, true);
 		}
 	}
 ?>

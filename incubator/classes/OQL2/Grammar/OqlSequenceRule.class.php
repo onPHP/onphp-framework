@@ -27,6 +27,7 @@
 		**/
 		protected function parse(
 			OqlTokenizer $tokenizer,
+			OqlSyntaxNode $rootNode,
 			$silent = false
 		)
 		{
@@ -36,7 +37,7 @@
 				$childNodes = array();
 				
 				foreach ($this->list as $rule) {
-					if ($node = $rule->process($tokenizer, false))
+					if ($node = $rule->process($tokenizer, $rootNode, false))
 						$childNodes[] = $node;
 				}
 				

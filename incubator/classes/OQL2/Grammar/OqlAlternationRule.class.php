@@ -27,11 +27,12 @@
 		**/
 		protected function parse(
 			OqlTokenizer $tokenizer,
+			OqlSyntaxNode $rootNode,
 			$silent = false
 		)
 		{
 			foreach ($this->list as $rule) {
-				if ($node = $rule->process($tokenizer, true))
+				if ($node = $rule->process($tokenizer, $rootNode, true))
 					return $node;
 			}
 			

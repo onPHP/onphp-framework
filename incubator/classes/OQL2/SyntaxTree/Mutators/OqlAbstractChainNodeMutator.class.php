@@ -24,7 +24,7 @@
 		/**
 		 * @return OqlSyntaxNode
 		**/
-		public function process(OqlSyntaxNode $node)
+		public function process(OqlSyntaxNode $node, OqlSyntaxNode $rootNode)
 		{
 			$list = array();
 			

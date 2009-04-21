@@ -25,7 +25,7 @@
 		/**
 		 * @return OqlObjectProjectionNode
 		**/
-		public function process(OqlSyntaxNode $node)
+		public function process(OqlSyntaxNode $node, OqlSyntaxNode $rootNode)
 		{
 			Assert::isNotNull($node->toValue());
 			

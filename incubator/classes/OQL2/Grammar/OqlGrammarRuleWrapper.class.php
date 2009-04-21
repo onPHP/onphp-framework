@@ -74,10 +74,11 @@
 		**/
 		protected function parse(
 			OqlTokenizer $tokenizer,
+			OqlSyntaxNode $rootNode,
 			$silent = false
 		)
 		{
-			return $this->getRule()->process($tokenizer, $silent);
+			return $this->getRule()->process($tokenizer, $rootNode, $silent);
 		}
 	}
 ?>

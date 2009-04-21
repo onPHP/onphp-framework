@@ -56,7 +56,7 @@
 		/**
 		 * @return OqlValueNode
 		**/
-		public function process(OqlSyntaxNode $node)
+		public function process(OqlSyntaxNode $node, OqlSyntaxNode $rootNode)
 		{
 			$iterator = OqlSyntaxTreeDeepRecursiveIterator::create();
 			$node = $iterator->reset($node);

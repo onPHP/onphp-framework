@@ -25,7 +25,7 @@
 		/**
 		 * @return OqlProtoDAONode
 		**/
-		public function process(OqlSyntaxNode $node)
+		public function process(OqlSyntaxNode $node, OqlSyntaxNode $rootNode)
 		{
 			$class = $node->toValue();
 			

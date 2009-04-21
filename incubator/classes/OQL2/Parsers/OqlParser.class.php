@@ -60,9 +60,9 @@
 		
 		/**
 		 * @throws SyntaxErrorException
-		 * @return OqlSyntaxNode
+		 * @return OqlSyntaxNodeWrapper
 		**/
-		public function parse($string)
+		public function parse($string, OqlSyntaxNodeWrapper $rootNode)
 		{
 			Assert::isString($string);
 			Assert::isNotNull($this->grammar, 'grammar must be set');
@@ -72,7 +72,7 @@
 			
 			try {
 				$node = $this->grammar->get($this->ruleId)->
-					process($tokenizer, false);
+					process($tokenizer, $rootNode, false);
 				
 				if ($token = $tokenizer->peek()) {
 					throw new OqlSyntaxErrorException(
@@ -80,6 +80,8 @@
 						$tokenizer->getIndex()
 					);
 				}
+				
+				return $rootNode->setNode($node);
 			
 			} catch (OqlSyntaxErrorException $e) {
 				$context = $tokenizer->getContext($e->getTokenIndex());
@@ -91,7 +93,7 @@
 				);
 			}
 			
-			return $node;
+			return null;
 		}
 	}
 ?>

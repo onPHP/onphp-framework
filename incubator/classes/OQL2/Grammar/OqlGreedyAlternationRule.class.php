@@ -27,6 +27,7 @@
 		**/
 		protected function parse(
 			OqlTokenizer $tokenizer,
+			OqlSyntaxNode $rootNode,
 			$silent = false
 		)
 		{
@@ -38,7 +39,7 @@
 				$index = $tokenizer->getIndex();
 				
 				if (
-					($node = $rule->parse($tokenizer, true))
+					($node = $rule->parse($tokenizer, $rootNode, true))
 					&& $maxIndex < $tokenizer->getIndex()
 				) {
 					$maxIndex = $tokenizer->getIndex();
@@ -51,7 +52,7 @@
 			
 			if ($maxNode !== null) {
 				if ($maxRule->getMutator())
-					$maxNode = $maxRule->getMutator()->process($maxNode);
+					$maxNode = $maxRule->getMutator()->process($maxNode, $rootNode);
 				
 				$tokenizer->setIndex($maxIndex);
 			

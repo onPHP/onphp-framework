@@ -22,7 +22,11 @@
 		/**
 		 * @return OqlSyntaxNode
 		**/
-		abstract protected function parse(OqlTokenizer $tokenizer, $silend = false);
+		abstract protected function parse(
+			OqlTokenizer $tokenizer,
+			OqlSyntaxNode $rootNode,
+			$silent = false
+		);
 		
 		public function getId()
 		{
@@ -60,11 +64,15 @@
 		/**
 		 * @return OqlSyntaxNode
 		**/
-		public function process(OqlTokenizer $tokenizer, $silent = false)
+		public function process(
+			OqlTokenizer $tokenizer,
+			OqlSyntaxNode $rootNode,
+			$silent = false
+		)
 		{
-			$node = $this->parse($tokenizer, $silent);
+			$node = $this->parse($tokenizer, $rootNode, $silent);
 			if ($node && $this->mutator)
-				$node = $this->mutator->process($node);
+				$node = $this->mutator->process($node, $rootNode);
 			
 			return $node;
 		}

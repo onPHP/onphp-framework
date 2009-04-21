@@ -27,6 +27,7 @@
 		**/
 		protected function parse(
 			OqlTokenizer $tokenizer,
+			OqlSyntaxNode $rootNode,
 			$silent = false
 		)
 		{
@@ -38,7 +39,7 @@
 				$this->checkParentheses($tokenizer, '(');
 				
 				// FIXME: error message
-				if (!$node = $this->rule->process($tokenizer, $silent))
+				if (!$node = $this->rule->process($tokenizer, $rootNode, $silent))
 					$this->raiseError($tokenizer, 'expected');
 				
 				$this->checkParentheses($tokenizer, ')');
