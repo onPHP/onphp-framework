@@ -57,7 +57,7 @@
 		{
 			Assert::isTrue($this->binded);
 			
-			return $dao->guessAtom($this->value, $query);
+			return $this->value;
 		}
 		
 		public function toDialectString(Dialect $dialect)
@@ -67,7 +67,6 @@
 			
 			Assert::isTrue($this->binded);
 			
-			// FIXME: will be resolved by container (expression, projection, etc.)?
 			return $this->value;
 		}
 		
