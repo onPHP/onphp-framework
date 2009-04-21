@@ -109,5 +109,13 @@
 			
 			return null;
 		}
+		
+		/**
+		 * @return ObjectProjection
+		**/
+		public function toProjection()
+		{
+			return $this->toValue();
+		}
 	}
 ?>

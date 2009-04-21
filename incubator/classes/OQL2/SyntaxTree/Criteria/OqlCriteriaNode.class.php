@@ -23,5 +23,13 @@
 		{
 			return new self;
 		}
+		
+		/**
+		 * @return Criteria
+		**/
+		public function toCriteria()
+		{
+			return $this->toValue();
+		}
 	}
 ?>

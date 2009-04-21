@@ -23,5 +23,13 @@
 		{
 			return new self;
 		}
+		
+		/**
+		 * @return LogicalObject
+		**/
+		public function toLogic()
+		{
+			return $this->toValue();
+		}
 	}
 ?>
