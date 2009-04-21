@@ -35,7 +35,7 @@
 		**/
 		public function process(OqlSyntaxNode $node, OqlSyntaxNode $rootNode)
 		{
-			$iterator = OqlSyntaxTreeRecursiveIterator::create();
+			$iterator = OqlSyntaxTreeRecursiveIterator::me();
 			
 			$aggregate = $iterator->reset($node);
 			Assert::isNotNull($aggregate);

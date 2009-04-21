@@ -12,7 +12,8 @@
 	/**
 	 * @ingroup OQL
 	**/
-	abstract class OqlSyntaxTreeIterator
+	abstract class OqlSyntaxTreeIterator extends Singleton
+		implements Instantiatable
 	{
 		protected $node = null;
 		

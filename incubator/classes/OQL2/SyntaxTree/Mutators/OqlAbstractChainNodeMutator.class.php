@@ -28,7 +28,7 @@
 		{
 			$list = array();
 			
-			$iterator = OqlSyntaxTreeRecursiveIterator::create();
+			$iterator = OqlSyntaxTreeRecursiveIterator::me();
 			$current = $iterator->reset($node);
 			
 			while ($current) {

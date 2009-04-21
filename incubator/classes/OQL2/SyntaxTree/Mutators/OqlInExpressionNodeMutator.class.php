@@ -27,7 +27,7 @@
 		**/
 		public function process(OqlSyntaxNode $node, OqlSyntaxNode $rootNode)
 		{
-			$iterator = OqlSyntaxTreeRecursiveIterator::create();
+			$iterator = OqlSyntaxTreeRecursiveIterator::me();
 			
 			if (($field = $iterator->reset($node)) === null)
 				return $node;
