@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008-2009 by Vladlen Y. Koshelev                        *
+ *   Copyright (C) 2009 by Vladlen Y. Koshelev                             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -8,10 +8,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
-	// FIXME: type-hints
-	
 	/**
 	 * @ingroup OQL
 	**/
@@ -22,23 +19,35 @@
 		**/
 		public static function select($string)
 		{
-			return self::parse(OqlGrammar::SELECT, $string);
+			return self::parse(
+				OqlGrammar::SELECT,
+				$string,
+				OqlSelectQuery::create()
+			);
 		}
 		
 		/**
-		 * @return OqlSelectPropertiesClause
+		 * @return OqlProjectionClause
 		**/
 		public static function properties($string)
 		{
-			return self::parse(OqlGrammar::PROPERTIES, $string);
+			return self::parse(
+				OqlGrammar::PROPERTIES,
+				$string,
+				OqlProjectionClause::create()
+			);
 		}
 		
 		/**
-		 * @return OqlWhereClause
+		 * @return OqlExpressionClause
 		**/
 		public static function where($string)
 		{
-			return self::parse(OqlGrammar::WHERE, $string);
+			return self::parse(
+				OqlGrammar::WHERE,
+				$string,
+				OqlExpressionClause::create()
+			);
 		}
 		
 		/**
@@ -46,31 +55,43 @@
 		**/
 		public static function groupBy($string)
 		{
-			return self::parse(OqlGrammar::GROUP_BY, $string);
+			return self::parse(
+				OqlGrammar::GROUP_BY,
+				$string,
+				OqlProjectionClause::create()
+			);
 		}
 		
 		/**
-		 * @return OqlOrderByClause
+		 * @return OqlOrderClause
 		**/
 		public static function orderBy($string)
 		{
-			return self::parse(OqlGrammar::ORDER_BY, $string);
+			return self::parse(
+				OqlGrammar::ORDER_BY,
+				$string,
+				OqlOrderClause::create()
+			);
 		}
 		
 		/**
-		 * @return OqlHavingClause
+		 * @return OqlProjectionClause
 		**/
 		public static function having($string)
 		{
-			return self::parse(OqlGrammar::HAVING, $string);
+			return self::parse(
+				OqlGrammar::HAVING,
+				$string,
+				OqlProjectionClause::create()
+			);
 		}
 		
-		private static function parse($ruleId, $string)
+		private static function parse($ruleId, $string, OqlBindableNodeWrapper $node)
 		{
 			return OqlParser::create()->
 				setGrammar(OqlGrammar::me())->
 				setRuleId($ruleId)->
-				parse($string, new OqlBindableNodeWrapper());	// FIXME
+				parse($string, $node);
 		}
 	}
 ?>
