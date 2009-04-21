@@ -34,9 +34,6 @@
 			return $this;
 		}
 		
-		/**
-		 * @return Object
-		**/
 		public function toValue()
 		{
 			return $this->object;
