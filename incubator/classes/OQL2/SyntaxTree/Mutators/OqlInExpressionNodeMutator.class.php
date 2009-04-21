@@ -27,7 +27,7 @@
 		**/
 		public function process(OqlSyntaxNode $node)
 		{
-			$iterator = OqlSyntaxTreeDeepRecursiveIterator::create();
+			$iterator = OqlSyntaxTreeRecursiveIterator::create();
 			
 			if (($field = $iterator->reset($node)) === null)
 				return $node;
@@ -35,11 +35,8 @@
 			if (($operator = $iterator->next()) === null)
 				return $node;
 			
-			$recursiveIterator = OqlSyntaxTreeRecursiveIterator::create();
-			$recursiveIterator->reset($operator);
 			$values = array();
-			
-			while ($value = $recursiveIterator->next()) {
+			while ($value = $iterator->next()) {
 				if ($value->toValue() !== ',')
 					$values[] = $value->toValue();
 			}
