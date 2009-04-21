@@ -31,7 +31,7 @@
 		public function spawn($name)
 		{
 			if (!$this->has($name))
-				return OqlPlaceholder::create($name);
+				$this->add(OqlPlaceholder::create($name));
 			
 			return $this->get($name);
 		}
