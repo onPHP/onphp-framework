@@ -25,14 +25,6 @@
 			return new self;
 		}
 		
-		/**
-		 * @return OqlTerminalRuleParseStrategy
-		**/
-		public function getParseStrategy()
-		{
-			return OqlTerminalRuleParseStrategy::me();
-		}
-		
 		public function getType()
 		{
 			return $this->type;
