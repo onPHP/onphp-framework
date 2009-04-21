@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlMappableObjectNode extends OqlDialectStringNode
+	class OqlMappableObjectNode extends OqlDialectStringNode
 	{
 		protected $class = 'MappableObject';
 		

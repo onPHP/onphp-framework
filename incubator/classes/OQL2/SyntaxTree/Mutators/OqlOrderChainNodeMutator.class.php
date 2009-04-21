@@ -23,7 +23,7 @@
 		}
 		
 		/**
-		 * @return OqlMappableObjectNode
+		 * @return OqlOrderNode
 		**/
 		protected function makeChainNode(array $list)
 		{
@@ -31,7 +31,7 @@
 			foreach ($list as $order)
 				$chain->add($order->toValue());
 			
-			return OqlMappableObjectNode::create()->
+			return OqlOrderNode::create()->
 				setObject($chain);
 		}
 	}

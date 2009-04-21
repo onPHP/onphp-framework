@@ -12,34 +12,37 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlOrderByNodeMutator extends OqlSyntaxNodeMutator
+	final class OqlOrderNode extends OqlMappableObjectNode
 	{
 		/**
-		 * @return OqlOrderByNodeMutator
+		 * @return OqlOrderNode
 		**/
-		public static function me()
+		public static function create()
 		{
-			return Singleton::getInstance(__CLASS__);
+			return new self;
 		}
 		
 		/**
 		 * @return OqlOrderNode
 		**/
-		public function process(OqlSyntaxNode $node, OqlSyntaxNode $rootNode)
+		public function setObject($object)
 		{
-			$iterator = OqlSyntaxTreeDeepRecursiveIterator::create();
+			Assert::isTrue(
+				$object instanceof OrderBy
+				|| $object instanceof OrderChain
+			);
 			
-			$field = $iterator->reset($node);
-			Assert::isNotNull($field);
+			parent::setOBject($object);
 			
-			$order = OrderBy::create($field->toValue());
-			
-			if ($direction = $iterator->next())
-				$order->setDirection($direction->toValue() != 'desc');
-			
-			// TODO: nothing more expected assertion?
-			
-			return OqlOrderNode::create()->setObject($order); 
+			return $this;
+		}
+		
+		/**
+		 * @return MappableObject
+		**/
+		public function toOrder()
+		{
+			return $this->toValue();
 		}
 	}
 ?>
