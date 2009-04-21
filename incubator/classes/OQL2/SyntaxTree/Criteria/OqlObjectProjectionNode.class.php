@@ -17,7 +17,7 @@
 		protected $class = 'ObjectProjection';
 		
 		private static $classMap = array(
-			'SumProjection'	=> 'sum',
+			'SumProjection'				=> 'sum',
 			'AverageNumberProjection'	=> 'avg',
 			'MinimalNumberProjection'	=> 'min',
 			'MaximalNumberProjection'	=> 'max',
@@ -97,7 +97,10 @@
 					if ($isAggregate)
 						$result .= ')';
 					
-					if ($this->object instanceof Aliased && $this->object->getAlias())
+					if (
+						$this->object instanceof Aliased
+						&& $this->object->getAlias()
+					)
 						$result .= ' as '.$this->object->getAlias();
 				}
 				
