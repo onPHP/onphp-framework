@@ -36,7 +36,7 @@
 			Assert::isTrue($rootNode instanceof OqlBindableNodeWrapper);
 			
 			return OqlPlaceholderNode::create()->
-				setPlacehoder(
+				setPlaceholder(
 					$rootNode->getPool()->spawn($node->toValue())
 				);
 		}
