@@ -257,11 +257,11 @@
 		/**
 		 * @return Criteria
 		**/
-		public function toCriteria()
+		public function toValue()
 		{
 			Assert::isNotNull($this->node);
 			
-			$criteria = $this->node->toCriteria()->
+			$criteria = $this->node->toValue()->
 				setDistinct($this->distinct);
 			
 			$parameters = $this->pool->getList();
@@ -319,6 +319,13 @@
 			}
 			
 			return $criteria;
+		}
+		
+		public function toCriteria()
+		{
+			Assert::isNotNull($this->node);
+			
+			return $this->node->toValue();
 		}
 		
 		protected function checkNode(OqlSyntaxNode $node)
