@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlLogicalObjectNode extends OqlObjectNode
+	final class OqlLogicalObjectNode extends OqlDialectStringNode
 	{
 		protected $class = 'LogicalObject';
 		
@@ -22,13 +22,6 @@
 		public static function create()
 		{
 			return new self;
-		}
-		
-		public function toString()
-		{
-			return $this->object ?
-				$this->object->toDialectString(ImaginaryDialect::me())
-				: null;
 		}
 	}
 ?>

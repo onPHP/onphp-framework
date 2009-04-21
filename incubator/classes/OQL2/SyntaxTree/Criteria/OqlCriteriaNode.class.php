@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlCriteriaNode extends OqlObjectNode
+	final class OqlCriteriaNode extends OqlDialectStringNode
 	{
 		protected $class = 'Criteria';
 		
@@ -22,13 +22,6 @@
 		public static function create()
 		{
 			return new self;
-		}
-		
-		public function toString()
-		{
-			return $this->object ?
-				$this->object->toDialectString(ImaginaryDialect::me())
-				: null;
 		}
 	}
 ?>

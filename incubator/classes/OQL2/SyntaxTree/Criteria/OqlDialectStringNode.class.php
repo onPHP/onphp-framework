@@ -12,16 +12,15 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlMappableObjectNode extends OqlDialectStringNode
+	abstract class OqlDialectStringNode extends OqlObjectNode
 	{
-		protected $class = 'MappableObject';
+		protected $class = 'DialectString';
 		
-		/**
-		 * @return OqlMappableObjectNode
-		**/
-		public static function create()
+		public function toString()
 		{
-			return new self;
+			return $this->object ?
+				$this->object->toDialectString(ImaginaryDialect::me())
+				: null;
 		}
 	}
 ?>
