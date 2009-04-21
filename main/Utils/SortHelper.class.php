@@ -56,7 +56,8 @@
 		private function compare($one, $two, $keyIndex = 0)
 		{
 			Assert::isTrue(
-				isset($one[$this->keys[$keyIndex][0]]),
+				isset($one[$this->keys[$keyIndex][0]])
+				|| array_key_exists($this->keys[$keyIndex][0], $one),
 				'Key must be exist in vector!'
 			);
 			
