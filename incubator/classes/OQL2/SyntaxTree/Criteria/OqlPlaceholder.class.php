@@ -28,7 +28,7 @@
 		
 		public function __construct($name)
 		{
-			Assert::isString($name);
+			Assert::isScalar($name);
 			Assert::isNotEqual($name, '');
 			
 			$this->name = $name;
