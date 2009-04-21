@@ -27,9 +27,9 @@
 		/**
 		 * @return OqlPlaceholderNode
 		**/
-		public function setPlaceholderName($name)
+		public function setPlaceholder(OqlPlaceholder $placeholder)
 		{
-			$this->placeholder = OqlPlaceholder::create($name);
+			$this->placeholder = $placeholder;
 			
 			return $this;
 		}

@@ -32,8 +32,6 @@
 			Assert::isNotEqual($name, '');
 			
 			$this->name = $name;
-			
-			// TODO: add to query placeholders pool
 		}
 		
 		public function getName()

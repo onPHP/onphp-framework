@@ -33,8 +33,12 @@
 				&& $node->getToken()->getType() == OqlTokenType::PLACEHOLDER
 			);
 			
+			Assert::isTrue($rootNode instanceof OqlBindableNodeWrapper);
+			
 			return OqlPlaceholderNode::create()->
-				setPlaceholderName($node->toValue());
+				setPlacehoder(
+					$rootNode->getPool()->spawn($node->toValue())
+				);
 		}
 	}
 ?>
