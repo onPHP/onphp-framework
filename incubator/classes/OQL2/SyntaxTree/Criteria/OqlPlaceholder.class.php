@@ -29,7 +29,7 @@
 		public function __construct($name)
 		{
 			Assert::isScalar($name);
-			Assert::isNotEqual($name, '');
+			Assert::isNotSame($name, '');
 			
 			$this->name = $name;
 		}
