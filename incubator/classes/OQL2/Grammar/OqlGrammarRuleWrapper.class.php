@@ -70,11 +70,14 @@
 		}
 		
 		/**
-		 * @return OqlGrammarRuleWrapperParseStrategy
+		 * @return OqlSyntaxNode
 		**/
-		public function getParseStrategy()
+		protected function parse(
+			OqlTokenizer $tokenizer,
+			$silent = false
+		)
 		{
-			return OqlGrammarRuleWrapperParseStrategy::me();
+			return $this->getRule()->process($tokenizer, $silent);
 		}
 	}
 ?>

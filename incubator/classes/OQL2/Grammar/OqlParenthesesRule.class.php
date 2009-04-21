@@ -23,11 +23,57 @@
 		}
 		
 		/**
-		 * @return OqlParenthesesRuleParseStrategy
+		 * @return OqlSyntaxNode
 		**/
-		public function getParseStrategy()
+		protected function parse(
+			OqlTokenizer $tokenizer,
+			$silent = false
+		)
 		{
-			return OqlParenthesesRuleParseStrategy::me();
+			Assert::isNotNull($this->rule);
+			
+			$index = $tokenizer->getIndex();
+			
+			try {
+				$this->checkParentheses($tokenizer, '(');
+				
+				// FIXME: error message
+				if (!$node = $this->rule->process($tokenizer, $silent))
+					$this->raiseError($tokenizer, 'expected');
+				
+				$this->checkParentheses($tokenizer, ')');
+				
+				return $node;
+			
+			} catch (OqlSyntaxErrorException $e) {
+				$tokenizer->setIndex($index);
+				if (!$silent)
+					throw $e;
+			}
+			
+			return null;
 		}
+		
+		/**
+		 * @return OqlParenthesesRule
+		**/
+		private function checkParentheses(OqlTokenizer $tokenizer, $value)
+		{
+			if ($this->checkToken($tokenizer->peek(), $value))
+				$tokenizer->next();
+			else
+				$this->raiseError($tokenizer, 'expected "'.$value.'"');
+			
+			return $this;
+		}
+		
+		private static function checkToken($token, $value)
+		{
+			return
+				$token instanceof OqlToken
+				&& $token->getType() == OqlTokenType::PARENTHESES
+				&& $token->getValue() == $value;
+		}
+		
 	}
 ?>

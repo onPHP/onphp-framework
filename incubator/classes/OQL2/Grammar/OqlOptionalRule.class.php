@@ -23,11 +23,16 @@
 		}
 		
 		/**
-		 * @return OqlOptionalRuleParseStrategy
+		 * @return OqlSyntaxNode
 		**/
-		public function getParseStrategy()
+		protected function parse(
+			OqlTokenizer $tokenizer,
+			$silent = false
+		)
 		{
-			return OqlOptionalRuleParseStrategy::me();
+			Assert::isNotNull($this->rule);
+			
+			return $this->rule->process($tokenizer, true);
 		}
 	}
 ?>

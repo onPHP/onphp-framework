@@ -23,11 +23,43 @@
 		}
 		
 		/**
-		 * @return OqlGreedyAlternationRuleParseStrategy
+		 * @return OqlSyntaxNode
 		**/
-		public function getParseStrategy()
+		protected function parse(
+			OqlTokenizer $tokenizer,
+			$silent = false
+		)
 		{
-			return OqlGreedyAlternationRuleParseStrategy::me();
+			$maxIndex = -1;
+			$maxNode = null;
+			$maxRule = null;
+			
+			foreach ($this->list as $rule) {
+				$index = $tokenizer->getIndex();
+				
+				if (
+					($node = $rule->parse($tokenizer, true))
+					&& $maxIndex < $tokenizer->getIndex()
+				) {
+					$maxIndex = $tokenizer->getIndex();
+					$maxNode = $node;
+					$maxRule = $rule;
+				}
+				
+				$tokenizer->setIndex($index);
+			}
+			
+			if ($maxNode !== null) {
+				if ($maxRule->getMutator())
+					$maxNode = $maxRule->getMutator()->process($maxNode);
+				
+				$tokenizer->setIndex($maxIndex);
+			
+			// FIXME: error message
+			} elseif (!$silent)
+				$this->raiseError($tokenizer, 'expected');
+			
+			return $maxNode;
 		}
 	}
 ?>

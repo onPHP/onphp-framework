@@ -23,11 +23,23 @@
 		}
 		
 		/**
-		 * @return OqlAlternationRuleParseStrategy
+		 * @return OqlSyntaxNode
 		**/
-		public function getParseStrategy()
+		protected function parse(
+			OqlTokenizer $tokenizer,
+			$silent = false
+		)
 		{
-			return OqlAlternationRuleParseStrategy::me();
+			foreach ($this->list as $rule) {
+				if ($node = $rule->process($tokenizer, true))
+					return $node;
+			}
+			
+			// FIXME: error message
+			if (!$silent)
+				$this->raiseError($tokenizer, 'expected');
+			
+			return null;
 		}
 	}
 ?>

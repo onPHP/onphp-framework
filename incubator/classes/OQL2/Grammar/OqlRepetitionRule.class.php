@@ -23,11 +23,31 @@
 		}
 		
 		/**
-		 * @return OqlRepetitionRuleParseStrategy
+		 * @return OqlSyntaxNode
 		**/
-		public function getParseStrategy()
+		protected function parse(
+			OqlTokenizer $tokenizer,
+			$silent = false
+		)
 		{
-			return OqlRepetitionRuleParseStrategy::me();
+			Assert::isNotNull($this->rule);
+			
+			$childNodes = array();
+			while ($node = $this->rule->process($tokenizer, $silent))
+				$childNodes[] = $node;
+			
+			if ($childNodes) {
+				if (count($childNodes) == 1)
+					return reset($childNodes);
+				else
+					return OqlNonterminalNode::create()->setChilds($childNodes);
+			
+			} elseif (!$silent) {
+				// FIXME: error message
+				$this->raiseError($tokenizer, 'expected');
+			}
+			
+			return null;
 		}
 	}
 ?>

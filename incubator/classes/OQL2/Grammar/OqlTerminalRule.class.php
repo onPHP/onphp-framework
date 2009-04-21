@@ -62,5 +62,45 @@
 			
 			return $this;
 		}
+		
+		/**
+		 * @return OqlTokenNode
+		**/
+		protected function parse(
+			OqlTokenizer $tokenizer,
+			$silent = false
+		)
+		{
+			$token = $tokenizer->peek();
+			
+			if (
+				$token !== null
+				&& $this->checkToken($token, $this->type, $this->value)
+			) {
+				$tokenizer->next();
+				
+				return OqlTokenNode::create()->setToken($token);
+			
+			} elseif (!$silent) {
+				// FIXME: error message
+				$this->raiseError($tokenizer, 'expected "'.$this->value.'"');
+			}
+			
+			return null;
+		}
+		
+		private static function checkToken(OqlToken $token, $type, $value)
+		{
+			if ($token->getType() == $type) {
+				if ($value === null)
+					return true;
+				elseif (is_array($value))
+					return in_array($token->getValue(), $value);
+				else
+					return $token->getValue() == $value;
+			}
+			
+			return false;
+		}
 	}
 ?>

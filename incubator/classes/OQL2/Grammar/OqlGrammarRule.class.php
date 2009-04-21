@@ -17,10 +17,12 @@
 		protected $id		= null;
 		protected $mutator	= null;
 		
+		// TODO: think about storing parse result in simplest structure (arrays) by default
+		// (SyntaxNodeMutator -> SyntaxNodeBuilder)
 		/**
-		 * @return OqlGrammarRuleParseStrategy
+		 * @return OqlSyntaxNode
 		**/
-		abstract public function getParseStrategy();
+		abstract protected function parse(OqlTokenizer $tokenizer, $silend = false);
 		
 		public function getId()
 		{
@@ -60,11 +62,21 @@
 		**/
 		public function process(OqlTokenizer $tokenizer, $silent = false)
 		{
-			$node = $this->getParseStrategy()->parse($this, $tokenizer, $silent);
+			$node = $this->parse($tokenizer, $silent);
 			if ($node && $this->mutator)
 				$node = $this->mutator->process($node);
 			
 			return $node;
+		}
+		
+		/**
+		 * @throws OqlSyntaxErrorException
+		**/
+		protected function raiseError(OqlTokenizer $tokenizer, $message)
+		{
+			throw new OqlSyntaxErrorException(
+				$message, $tokenizer->getIndex()
+			);
 		}
 	}
 ?>
