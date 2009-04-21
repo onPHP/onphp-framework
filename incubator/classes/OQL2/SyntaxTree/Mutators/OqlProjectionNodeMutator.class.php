@@ -74,7 +74,9 @@
 			if ($funcName === null) {
 				$funcName = 'property';
 				if ($aggregate->toValue() == 'distinct') {
-					// TODO: set distinct to criteria
+					Assert::isTrue($rootNode instanceof OqlSelectQuery);
+					$rootNode->setDistinct(true);
+					
 					$property = $current;
 					Assert::isNotNull($property);
 				} else
