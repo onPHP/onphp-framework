@@ -19,7 +19,8 @@
 			'where'		=> 'add',
 			'order by'	=> 'addOrder',
 			'limit'		=> 'setLimit',
-			'offset'	=> 'setOffset'
+			'offset'	=> 'setOffset',
+			'having'	=> null
 		);
 		
 		/**
@@ -49,11 +50,12 @@
 				} elseif ($current instanceof OqlTokenNode) {
 					Assert::isIndexExists(self::$methodMap, $current->toValue());
 					
-					$next = $iterator->next();
-					Assert::isNotNull($next);
-					
-					$setter = self::$methodMap[$current->toValue()];
-					$criteria->{$setter}($next->toValue());
+					if ($setter = self::$methodMap[$current->toValue()]) {
+						$next = $iterator->next();
+						Assert::isNotNull($next);
+						
+						$criteria->{$setter}($next->toValue());
+					}
 				}
 				
 				$current = $iterator->next();
