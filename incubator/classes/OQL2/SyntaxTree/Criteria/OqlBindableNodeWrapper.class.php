@@ -17,6 +17,14 @@
 		protected $pool		= null;
 		private $lastBinded	= null; 
 		
+		/**
+		 * @return OqlBindableNodeWrapper
+		**/
+		public static function create()
+		{
+			return new self;
+		}
+		
 		public function __construct()
 		{
 			parent::__construct();
