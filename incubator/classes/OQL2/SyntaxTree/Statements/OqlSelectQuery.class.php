@@ -257,9 +257,11 @@
 		/**
 		 * @return Criteria
 		**/
-		public function toValue()
+		public function toCriteria()
 		{
-			$criteria = parent::toValue()->
+			Assert::isNotNull($this->node);
+			
+			$criteria = $this->node->toCriteria()->
 				setDistinct($this->distinct);
 			
 			$parameters = $this->pool->getList();
