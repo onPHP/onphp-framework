@@ -29,6 +29,8 @@
 		**/
 		public function setNode(OqlSyntaxNode $node)
 		{
+			$this->checkNode($node);
+			
 			$this->node = $node;
 			$this->parent = $node->getParent();
 			
@@ -182,6 +184,10 @@
 			Assert::isNotNull($this->node);
 			
 			return $this->node->toString();
+		}
+		
+		protected function checkNode(OqlSyntaxNode $node)
+		{
 		}
 	}
 ?>
