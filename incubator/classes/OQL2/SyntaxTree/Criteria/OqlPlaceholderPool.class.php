@@ -89,11 +89,11 @@
 		{
 			Assert::isFalse(
 				$this->has($placeholder->getName()),
-				"placeholder named '{$name}' is already in pool. use spawn to create one."
+				"placeholder named '{$placeholder->getName()}' is already in pool. use spawn to create one."
 			);
 			
 			$this->pool[] = $placeholder;
-			$this->keys[$placeholder->getName()] = count($this->placeholders) - 1;
+			$this->keys[$placeholder->getName()] = count($this->pool) - 1;
 			
 			return $this;
 		}
