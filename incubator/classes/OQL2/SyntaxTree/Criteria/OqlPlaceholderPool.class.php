@@ -79,7 +79,10 @@
 		
 		public function getList()
 		{
-			return array_combine(array_keys($this->keys), $this->pool);
+			if ($this->keys)
+				return array_combine(array_keys($this->keys), $this->pool);
+			else
+				return array();
 		}
 		
 		/**
