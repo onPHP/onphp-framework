@@ -77,6 +77,8 @@
 
 		public function make($object, $recursive = true)
 		{
+			Assert::isTrue(is_readable($object), "required object `$object` must exist");
+
 			$realObject = $object;
 
 			if (is_link($object)) {
@@ -95,19 +97,8 @@
 
 			$result = parent::make($object, $recursive);
 
-			return $result;
-		}
-
-		public function makeList($objectsList, $recursive = true)
-		{
-			$result = parent::makeList($objectsList, $recursive);
-
-			if (!$result)
-				return $result;
-
-			foreach ($result as $id => $item) {
-				$item->setId($id);
-			}
+			if ($result instanceof Identifiable)
+				$result->setId(basename($object));
 
 			return $result;
 		}
