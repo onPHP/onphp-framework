@@ -50,6 +50,10 @@
 
 			$result = file_get_contents($path);
 
+			if ($result === false) {
+				throw new WrongArgumentException("failed to read $path");
+			}
+
 			return $result;
 		}
 	}
