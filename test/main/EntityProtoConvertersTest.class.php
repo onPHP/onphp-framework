@@ -142,19 +142,19 @@
 			$itemsConverter = $converter->cloneInnerBuilder('items');
 
 			$ringListHead = DirectoryItem::create()->
-				setTextField('421');
+				setId('421');
 
 			$result = $itemsConverter->makeList(array($ringListHead));
 
 			$ringListHead->setInner(
 				$items[2] = DirectoryItem::create()->
-				setTextField('422')->
+				setId('422')->
 				setInner(
 					$items[1] = DirectoryItem::create()->
-					setTextField('423')->
+					setId('423')->
 					setInner(
 						$items[0] = DirectoryItem::create()->
-						setTextField('424')->
+						setId('424')->
 						setInner($ringListHead)
 					)
 				)
@@ -180,15 +180,18 @@
 		protected $textField;
 		protected $fileName;
 		protected $inner;
-
-		public function getId()
-		{
-			return $this->getTextField();
-		}
+		protected $id;
 
 		public function setId($id)
 		{
-			return $this->setTextField($id);
+			$this->id = $id;
+
+			return $this;
+		}
+
+		public function getId()
+		{
+			return $this->id;
 		}
 
 		public function setTextField($textField)
@@ -280,7 +283,7 @@
 
 				'inner' => Primitive::form('inner')->
 					of('DirectoryItem')->
-					required(),
+					optional(),
 			);
 		}
 	}

@@ -48,10 +48,19 @@
 				return $result;
 			}
 
-			$result = file_get_contents($path);
+			for ($i = 0; $i <= 42; ++$i) { // yanetut
+				$result = file_get_contents($path);
 
-			if ($result === false) {
-				throw new WrongArgumentException("failed to read $path");
+				if ($result === false) {
+					throw new WrongArgumentException("failed to read $path");
+				}
+
+				if ($result)
+					break;
+
+				// NOTE: empty file COULD mean that data is being prepared now.
+				// On heavy loaded systems it means that file was just
+				// truncated and we should try again several times.
 			}
 
 			return $result;
