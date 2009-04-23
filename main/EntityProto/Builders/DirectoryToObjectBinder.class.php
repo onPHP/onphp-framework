@@ -79,16 +79,7 @@
 		{
 			Assert::isTrue(is_readable($object), "required object `$object` must exist");
 
-			$realObject = $object;
-
-			if (is_link($object)) {
-				$realObject = readlink($object);
-
-				if ($realObject === false)
-					throw new WrongStateException('invalid pointer: '.$object);
-
-				$realObject = realpath($realObject);
-			}
+			$realObject = $this->getRealObject($object);
 
 			$result = $this->identityMap->lookup($realObject);
 
@@ -107,16 +98,7 @@
 		{
 			parent::initialize($object, $result);
 
-			$realObject = $object;
-
-			if (is_link($object)) {
-				$realObject = readlink($object);
-			}
-
-			$realObject = realpath($realObject);
-
-			if ($realObject === false)
-				throw new WrongStateException('invalid context: '.$object);
+			$realObject = $this->getRealObject($object);
 
 			$this->identityMap->bind($realObject, $result);
 
@@ -137,6 +119,38 @@
 		protected function getSetter(&$object)
 		{
 			return new ObjectSetter($this->proto, $object);
+		}
+
+		private function getRealObject($object)
+		{
+			$result = $object;
+
+			if (is_link($object)) {
+				$result = readlink($object);
+
+				if ($result === false)
+					throw new WrongStateException("invalid link: $object");
+
+				if (substr($result, 0, 1) !== DIRECTORY_SEPARATOR) {
+					$result = GenericUri::create()->
+						setScheme('file')->
+						setPath($object)->
+							transform(
+								GenericUri::create()->
+								setPath($result)
+							)->
+								getPath();
+				}
+			}
+
+			$realResult = realpath($result);
+
+			if ($realResult === false)
+				throw new WrongStateException(
+					"invalid context: $object ($result)"
+				);
+
+			return $realResult;
 		}
 	}
 ?>
