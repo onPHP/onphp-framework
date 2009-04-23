@@ -1,4 +1,8 @@
 
+2009-04-23	Denis M. Gabaidulin
+
+	* main/Charts/Google/: experimental support for Data point labels API.
+
 2009-04-20	Denis M. Gabaidulin
 
 	* main/Math/MathUtils.class.php: makeCartesianProduct() support
