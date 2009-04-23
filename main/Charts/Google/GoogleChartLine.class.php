@@ -14,7 +14,8 @@
 	**/
 	final class GoogleChartLine extends GoogleChartPiece
 	{
-		private $style = null;
+		private $style 		= null;
+		private $labelStyle = null;
 		
 		/**
 		 * @return GoogleChartLine
@@ -48,6 +49,24 @@
 		public function getStyle()
 		{
 			return $this->style;
+		}
+		
+		/**
+		 * @return GoogleChartLine
+		**/
+		public function setLabelStyle(ChartLabelStyle $style)
+		{
+			$this->labelStyle = $style;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return GoogleChartLabelStyle
+		**/
+		public function getLabelStyle()
+		{
+			return $this->labelStyle;
 		}
 	}
 ?>

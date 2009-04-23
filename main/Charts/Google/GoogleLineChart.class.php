@@ -17,6 +17,7 @@
 	{
 		protected $axesCollection 	= null;
 		protected $style 			= null;
+		protected $labelStyle 		= null;
 		
 		/**
 		 * @return GoogleLineChart
@@ -51,6 +52,8 @@
 			$this->axesCollection = GoogleChartAxisCollection::create();
 			
 			$this->style = GoogleChartLineStyle::create();
+			
+			$this->labelStyle = GoogleChartLabelStyle::create();
 		}
 		
 		/**
@@ -64,6 +67,9 @@
 			
 			if ($style = $line->getStyle())
 				$this->style->addStyle($style);
+			
+			if ($labelStyle = $line->getLabelStyle())
+				$this->labelStyle->addStyle($labelStyle);
 			
 			return $this;
 		}
@@ -96,6 +102,9 @@
 			
 			if ($this->style->hasStyles())
 				$string .= '&'.$this->style->toString();
+			
+			if ($this->labelStyle->hasStyles())
+				$string .= '&'.$this->labelStyle->toString();
 			
 			return $string;
 		}
