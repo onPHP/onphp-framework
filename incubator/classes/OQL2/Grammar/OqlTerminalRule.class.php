@@ -68,7 +68,7 @@
 			
 			if (
 				$token !== null
-				&& $this->checkToken($token, $this->type, $this->value)
+				&& $this->checkToken($token)
 			) {
 				$tokenizer->next();
 				
@@ -82,18 +82,14 @@
 			return null;
 		}
 		
-		private static function checkToken(OqlToken $token, $type, $value)
+		private function checkToken(OqlToken $token)
 		{
-			if ($token->getType() == $type) {
-				if ($value === null)
-					return true;
-				elseif (is_array($value))
-					return in_array($token->getValue(), $value);
-				else
-					return $token->getValue() == $value;
-			}
-			
-			return false;
+			return
+				$token->getType() == $this->type
+				&& (
+					$this->value === null
+					|| $token->getValue() == $this->value
+				);
 		}
 	}
 ?>

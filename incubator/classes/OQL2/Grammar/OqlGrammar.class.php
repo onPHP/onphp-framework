@@ -100,12 +100,10 @@
 			
 			$this->
 				set(
-					$this->terminal(self::OPEN_PARENTHESES, OqlTokenType::PARENTHESES)->
-						setValue('(')
+					$this->terminal(self::OPEN_PARENTHESES, OqlTokenType::PARENTHESES, '(')
 				)->
 				set(
-					$this->terminal(self::CLOSE_PARENTHESES, OqlTokenType::PARENTHESES)->
-						setValue(')')
+					$this->terminal(self::CLOSE_PARENTHESES, OqlTokenType::PARENTHESES, ')')
 				);
 			
 			//	<arithmetic_operand> ::=
@@ -145,7 +143,9 @@
 						OqlOptionalRule::create()->setRule(
 							OqlSequenceRule::create()->
 								add(
-									$this->operator(array('*', '/'))->
+									OqlAlternationRule::create()->
+										add($this->operator('*'))->
+										add($this->operator('/'))->
 										setMutator(OqlOperatorNodeMutator::me())
 								)->
 								add(
@@ -168,7 +168,9 @@
 						OqlOptionalRule::create()->setRule(
 							OqlSequenceRule::create()->
 								add(
-									$this->operator(array('+', '-'))->
+									OqlAlternationRule::create()->
+										add($this->operator('+'))->
+										add($this->operator('-'))->
 										setMutator(OqlOperatorNodeMutator::me())
 								)->
 								add(
@@ -226,7 +228,16 @@
 								OqlAlternationRule::create()->
 									add(
 										OqlSequenceRule::create()->
-											add($this->comparisonOperator())->
+											add(
+												OqlAlternationRule::create()->
+													add($this->operator('='))->
+													add($this->operator('!='))->
+													add($this->operator('<'))->
+													add($this->operator('>'))->
+													add($this->operator('>='))->
+													add($this->operator('<='))->
+													setMutator(OqlOperatorNodeMutator::me())
+											)->
 											add($this->get(self::LOGICAL_OPERAND))
 									)->
 									add(
@@ -630,31 +641,17 @@
 		/**
 		 * @return OqlTerminalRule
 		**/
-		private static function keyword($keyword)
+		private static function keyword($value)
 		{
-			return self::terminal(null, OqlTokenType::KEYWORD)->
-				setValue($keyword);
+			return self::terminal(null, OqlTokenType::KEYWORD, $value);
 		}
 		
 		/**
 		 * @return OqlTerminalRule
 		**/
-		private static function aggregate($aggregate)
+		private static function aggregate($value)
 		{
-			return self::terminal(null, OqlTokenType::AGGREGATE_FUNCTION)->
-				setValue($aggregate);
-		}
-		
-		/**
-		 * @return OqlTerminalRule
-		**/
-		private static function comparisonOperator()
-		{
-			return
-				self::operator(
-					array('=', '!=', '<', '>', '>=', '<=')
-				)->
-				setMutator(OqlOperatorNodeMutator::me());
+			return self::terminal(null, OqlTokenType::AGGREGATE_FUNCTION, $value);
 		}
 		
 		/**
@@ -662,18 +659,18 @@
 		**/
 		private static function operator($value)
 		{
-			return self::terminal(null, OqlTokenType::OPERATOR)->
-				setValue($value);
+			return self::terminal(null, OqlTokenType::OPERATOR, $value);
 		}
 		
 		/**
 		 * @return OqlTerminalRule
 		**/
-		private static function terminal($ruleId, $tokenTypeId)
+		private static function terminal($ruleId, $typeId, $value = null)
 		{
 			return OqlTerminalRule::create()->
 				setId($ruleId)->
-				setType($tokenTypeId);
+				setType($typeId)->
+				setValue($value);
 		}
 	}
 ?>
