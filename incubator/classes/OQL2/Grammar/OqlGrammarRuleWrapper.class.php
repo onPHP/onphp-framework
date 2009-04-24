@@ -70,6 +70,16 @@
 		}
 		
 		/**
+		 * @return OqlGrammarRuleWrapper
+		**/
+		protected function buildTerminals()
+		{
+			$this->getRule()->build();
+			
+			return $this;
+		}
+		
+		/**
 		 * @return OqlSyntaxNode
 		**/
 		protected function parse(

@@ -23,6 +23,29 @@
 		}
 		
 		/**
+		 * @return OqlTerminalRule
+		**/
+		protected function buildTerminals()
+		{
+			$collect = true;
+			
+			foreach ($this->list as $rule) {
+				$rule->build();
+				
+				if ($collect)
+					$this->terminals = array_merge(
+						$this->terminals,
+						$rule->terminals
+					);
+				
+				if (!$rule instanceof OqlOptionalRule)
+					$collect = false;
+			}
+			
+			return $this;
+		}
+		
+		/**
 		 * @return OqlSyntaxNode
 		**/
 		protected function parse(

@@ -14,8 +14,10 @@
 	**/
 	abstract class OqlGrammarRule implements Identifiable
 	{
-		protected $id		= null;
-		protected $mutator	= null;
+		protected $id			= null;
+		protected $mutator		= null;
+		
+		protected $terminals	= null;
 		
 		// TODO: think about storing parse result in simplest structure (arrays) by default
 		// (SyntaxNodeMutator -> SyntaxNodeBuilder)
@@ -27,6 +29,11 @@
 			OqlSyntaxNode $rootNode,
 			$silent = false
 		);
+		
+		/**
+		 * @return OqlGrammarRule
+		**/
+		abstract protected function buildTerminals();
 		
 		public function getId()
 		{
@@ -57,6 +64,16 @@
 		public function setMutator(OqlSyntaxNodeMutator $mutator)
 		{
 			$this->mutator = $mutator;
+			
+			return $this;
+		}
+		
+		public function build()
+		{
+			if ($this->terminals === null) {
+				$this->terminals = array();
+				$this->buildTerminals();
+			}
 			
 			return $this;
 		}

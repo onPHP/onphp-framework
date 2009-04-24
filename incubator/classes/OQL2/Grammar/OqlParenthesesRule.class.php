@@ -23,6 +23,19 @@
 		}
 		
 		/**
+		 * @return OqlParenthesesRule
+		**/
+		protected function buildTerminals()
+		{
+			parent::buildTerminals();
+			
+			$token = OqlToken::create(OqlTokenType::PARENTHESES, '(');
+			$this->terminals[$token->toKey()] = $token;
+			
+			return $this;
+		}
+		
+		/**
 		 * @return OqlSyntaxNode
 		**/
 		protected function parse(

@@ -584,6 +584,8 @@
 					)->
 					setMutator(OqlCriteriaNodeMutator::me())
 			);
+			
+			$this->get(self::SELECT)->build();
 		}
 		
 		/**

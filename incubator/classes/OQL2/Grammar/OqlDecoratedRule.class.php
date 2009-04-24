@@ -33,5 +33,15 @@
 			
 			return $this;
 		}
+		
+		/**
+		 * @return OqlDecoratedRule
+		**/
+		protected function buildTerminals()
+		{
+			$this->rule->build();
+			
+			return $this;
+		}
 	}
 ?>

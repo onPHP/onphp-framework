@@ -22,6 +22,23 @@
 			return new self;
 		}
 		
+		/**
+		 * @return OqlTerminalRule
+		**/
+		protected function buildTerminals()
+		{
+			foreach ($this->list as $rule) {
+				$rule->build();
+				
+				$this->terminals = array_merge(
+					$this->terminals,
+					$rule->terminals
+				);
+			}
+			
+			return $this;
+		}
+		
 		protected function getMatches($token)
 		{
 			if ($token instanceof OqlToken) {

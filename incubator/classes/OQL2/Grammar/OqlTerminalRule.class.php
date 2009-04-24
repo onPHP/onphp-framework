@@ -55,6 +55,17 @@
 			return $this;
 		}
 		
+		/**
+		 * @return OqlTerminalRule
+		**/
+		protected function buildTerminals()
+		{
+			$token = OqlToken::create($this->type, $this->value);
+			$this->terminals[$token->toKey()] = $token;
+			
+			return $this;
+		}
+		
 		protected function match($token)
 		{
 			return
@@ -71,11 +82,7 @@
 			$silent = false
 		)
 		{
-			$token = $tokenizer->peek();
-			if (
-				$token !== null
-				&& $this->match($token)
-			) {
+			if ($this->match($tokenizer->peek())) {
 				return OqlTokenNode::create()->setToken(
 					$tokenizer->next()
 				);
