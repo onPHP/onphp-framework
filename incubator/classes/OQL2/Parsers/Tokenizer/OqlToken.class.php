@@ -28,7 +28,7 @@
 		{
 			Assert::isNotNull($type);
 			
-			$key = $type.self::DELIMITER.$value;
+			$key = self::getKey($type, $value);
 			if (!isset(self::$pool[$key]))
 				self::$pool[$key] = new self($type, $value);
 			
@@ -64,6 +64,16 @@
 					$value === null
 					|| $this->value == $value
 				);
+		}
+		
+		public function toKey()
+		{
+			return $this->getKey($this->type, $this->value);
+		}
+		
+		private static function getKey($type, $value)
+		{
+			return $type.self::DELIMITER.$value;
 		}
 	}
 ?>
