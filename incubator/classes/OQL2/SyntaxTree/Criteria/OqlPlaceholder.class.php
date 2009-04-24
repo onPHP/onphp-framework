@@ -70,6 +70,8 @@
 			$value = $this->value;
 			if ($value instanceof Identifiable)
 				$value = $value->getId();
+			elseif (is_array($value))
+				return $value;
 			
 			return $dao->guessAtom($value, $query);
 		}
