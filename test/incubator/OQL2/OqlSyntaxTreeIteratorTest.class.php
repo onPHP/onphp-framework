@@ -40,7 +40,7 @@
 		public function testRecursiveIterator($start, array $path)
 		{
 			$this->assertPath(
-				OqlSyntaxTreeRecursiveIterator::create(),
+				OqlSyntaxTreeRecursiveIterator::me(),
 				$start,
 				$path
 			);
@@ -52,7 +52,7 @@
 		public function testDeepRecursiveIterator($start, array $path)
 		{
 			$this->assertPath(
-				OqlSyntaxTreeDeepRecursiveIterator::create(),
+				OqlSyntaxTreeDeepRecursiveIterator::me(),
 				$start,
 				$path
 			);
