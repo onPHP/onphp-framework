@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov, Anton E. Lebedevich *
+ *   Copyright (C) 2004-2009 by Konstantin V. Arkhipov, Anton E. Lebedevich *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -29,6 +29,7 @@
 			Assert::isTrue(
 				($right instanceof Query)
 				|| ($right instanceof Criteria)
+				|| ($right instanceof MappableObject)
 				|| is_array($right)
 			);
 			
@@ -53,7 +54,7 @@
 					$right[] = $dao->guessAtom($atom, $query);
 				}
 			} elseif ($this->right instanceof MappableObject)
-				$right = $right->toMapped($dao, $query);
+				$right = $this->right->toMapped($dao, $query);
 			else
 				$right = $this->right; // untransformable
 			
