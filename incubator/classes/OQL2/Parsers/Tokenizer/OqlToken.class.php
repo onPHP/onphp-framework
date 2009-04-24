@@ -8,51 +8,45 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
-/* $Id$ */
 
 	/**
 	 * @ingroup OQL
 	**/
 	final class OqlToken
 	{
+		const DELIMITER = '::';
+		
 		private static $pool = array();
 		
-		private $value;
-		private $rawValue;
 		private $type;
+		private $value;
 		
 		/**
 		 * @return OqlToken
 		**/
-		public static function create($value, $rawValue, $type)
+		public static function create($type, $value)
 		{
-			$key = $type.'#'.$rawValue;
+			$key = $type.self::DELIMITER.$value;
 			if (!isset(self::$pool[$key]))
-				self::$pool[$key] = new self($value, $rawValue, $type);
+				self::$pool[$key] = new self($type, $value);
 			
 			return self::$pool[$key];
 		}
 		
-		public function __construct($value, $rawValue, $type)
+		public function __construct($type, $value)
 		{
-			$this->value = $value;
-			$this->rawValue = $rawValue;
 			$this->type = $type;
-		}
-		
-		public function getValue()
-		{
-			return $this->value;
-		}
-		
-		public function getRawValue()
-		{
-			return $this->rawValue;
+			$this->value = $value;
 		}
 		
 		public function getType()
 		{
 			return $this->type;
+		}
+		
+		public function getValue()
+		{
+			return $this->value;
 		}
 	}
 ?>
