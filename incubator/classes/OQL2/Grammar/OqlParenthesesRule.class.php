@@ -60,21 +60,15 @@
 		**/
 		private function checkParentheses(OqlTokenizer $tokenizer, $value)
 		{
-			if ($this->checkToken($tokenizer->peek(), $value))
+			if (
+				($token = $tokenizer->peek())
+				&& $token->match(OqlTokenType::PARENTHESES, $value)
+			)
 				$tokenizer->next();
 			else
 				$this->raiseError($tokenizer, 'expected "'.$value.'"');
 			
 			return $this;
 		}
-		
-		private static function checkToken($token, $value)
-		{
-			return
-				$token instanceof OqlToken
-				&& $token->getType() == OqlTokenType::PARENTHESES
-				&& $token->getValue() == $value;
-		}
-		
 	}
 ?>
