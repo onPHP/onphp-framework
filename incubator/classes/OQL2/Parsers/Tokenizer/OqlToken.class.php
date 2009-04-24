@@ -26,6 +26,8 @@
 		**/
 		public static function create($type, $value)
 		{
+			Assert::isNotNull($type);
+			
 			$key = $type.self::DELIMITER.$value;
 			if (!isset(self::$pool[$key]))
 				self::$pool[$key] = new self($type, $value);
@@ -33,7 +35,7 @@
 			return self::$pool[$key];
 		}
 		
-		public function __construct($type, $value)
+		private function __construct($type, $value)
 		{
 			$this->type = $type;
 			$this->value = $value;
