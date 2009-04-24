@@ -55,6 +55,11 @@
 			return $this;
 		}
 		
+		protected function match(OqlToken $token)
+		{
+			return $token->match($this->type, $this->value);
+		}
+		
 		/**
 		 * @return OqlTokenNode
 		**/
@@ -65,14 +70,13 @@
 		)
 		{
 			$token = $tokenizer->peek();
-			
 			if (
 				$token !== null
-				&& $this->checkToken($token)
+				&& $this->match($token)
 			) {
-				$tokenizer->next();
-				
-				return OqlTokenNode::create()->setToken($token);
+				return OqlTokenNode::create()->setToken(
+					$tokenizer->next()
+				);
 			
 			} elseif (!$silent) {
 				// FIXME: error message
@@ -80,16 +84,6 @@
 			}
 			
 			return null;
-		}
-		
-		private function checkToken(OqlToken $token)
-		{
-			return
-				$token->getType() == $this->type
-				&& (
-					$this->value === null
-					|| $token->getValue() == $this->value
-				);
 		}
 	}
 ?>

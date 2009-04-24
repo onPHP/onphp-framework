@@ -48,5 +48,20 @@
 		{
 			return $this->value;
 		}
+		
+		public function matchToken(OqlToken $token)
+		{
+			return $this->match($token->type, $token->value);
+		}
+		
+		public function match($type, $value)
+		{
+			return
+				$this->type == $type
+				&& (
+					$value === null
+					|| $this->value == $value
+				);
+		}
 	}
 ?>

@@ -77,6 +77,11 @@
 			return $node;
 		}
 		
+		protected function match(OqlToken $token)
+		{
+			return true;
+		}
+		
 		/**
 		 * @throws OqlSyntaxErrorException
 		**/
