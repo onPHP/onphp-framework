@@ -279,14 +279,14 @@
 				Criteria::create(TestUser::dao())->
 					add(
 						Expression::expOr(
+							Expression::isNull('id'),
 							Expression::expOr(
+								Expression::notNull('id'),
 								Expression::expOr(
-									Expression::isNull('id'),
-									Expression::notNull('id')
-								),
-								Expression::isTrue('id')
-							),
-							Expression::isFalse('id')
+									Expression::isTrue('id'),
+									Expression::isFalse('id')
+								)
+							)
 						)
 					)
 			);
