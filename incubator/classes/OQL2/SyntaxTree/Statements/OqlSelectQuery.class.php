@@ -264,6 +264,12 @@
 			$criteria = $this->node->toValue()->
 				setDistinct($this->distinct);
 			
+			if ($criteria->getLimit() instanceof OqlPlaceholder)
+				$criteria->setLimit($criteria->getLimit()->getValue());
+			
+			if ($criteria->getOffset() instanceof OqlPlaceholder)
+				$criteria->setOffset($criteria->getOffset()->getValue());
+			
 			$parameters = $this->pool->getList();
 			
 			$projections = array_merge(

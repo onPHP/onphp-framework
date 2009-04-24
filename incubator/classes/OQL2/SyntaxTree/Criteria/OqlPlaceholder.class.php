@@ -39,6 +39,16 @@
 			return $this->name;
 		}
 		
+		public function getValue()
+		{
+			return $this->value;
+		}
+		
+		public function isBinded()
+		{
+			return $this->binded;
+		}
+		
 		/**
 		 * @return OqlPlaceholder
 		**/
