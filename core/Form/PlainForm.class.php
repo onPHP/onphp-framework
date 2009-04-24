@@ -31,9 +31,17 @@
 			return $this;
 		}
 		
-		public function primitiveExists($name)
+		public function exists($name)
 		{
 			return isset($this->primitives[$name]);
+		}
+
+		/**
+		 * @deprecated, use exists()
+		**/
+		public function primitiveExists($name)
+		{
+			return $this->exists($name);
 		}
 		
 		/**

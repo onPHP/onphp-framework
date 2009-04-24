@@ -20,6 +20,8 @@
 		private $vector = null;
 		private $keys 	= null; // pairs of key name and direction
 		
+		private $defaultCmpFunction = 'strnatcmp';
+		
 		public static function me()
 		{
 			return Singleton::getInstance('SortHelper');
@@ -36,6 +38,10 @@
 		{
 			$this->keys = $keys;
 			
+			foreach ($this->keys as &$keyData)
+				if (!isset($keyData[2]))
+					$keyData[2] = $this->defaultCmpFunction;
+			
 			return $this;
 		}
 		
@@ -50,12 +56,13 @@
 		private function compare($one, $two, $keyIndex = 0)
 		{
 			Assert::isTrue(
-				isset($one[$this->keys[$keyIndex][0]]),
+				isset($one[$this->keys[$keyIndex][0]])
+				|| array_key_exists($this->keys[$keyIndex][0], $one),
 				'Key must be exist in vector!'
 			);
 			
 			$result =
-				strnatcmp(
+				$this->keys[$keyIndex][2](
 			 		$one[$this->keys[$keyIndex][0]],
 			 		$two[$this->keys[$keyIndex][0]]
 			 	);

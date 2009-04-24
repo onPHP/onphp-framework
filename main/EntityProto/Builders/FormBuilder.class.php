@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2007-2008 by Ivan Y. Khvostishkov                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -23,14 +23,14 @@
 		/**
 		 * @return Form
 		**/
-		public function makeOwn($object, &$result)
+		public function fillOwn($object, &$result)
 		{
 			Assert::isInstance($result, 'Form');
 			
 			foreach ($this->getFormMapping() as $primitive) {
 				if (
 					$primitive instanceof PrimitiveForm
-					&& $result->primitiveExists($primitive->getName())
+					&& $result->exists($primitive->getName())
 					&& $primitive->isComposite()
 				) {
 					
@@ -45,7 +45,7 @@
 				$result->add($primitive);
 			}
 				
-			$result = parent::makeOwn($object, $result);
+			$result = parent::fillOwn($object, $result);
 			
 			$result->setProto($this->proto);
 			

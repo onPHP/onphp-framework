@@ -22,10 +22,10 @@
 		 * @throws WrongArgumentException
 		 * @return PrimitiveRange
 		**/
-		public function setValue(/* Range */ $range)
+		public function setValue(/* BaseRange */ $range)
 		{
 			Assert::isTrue(
-				$range instanceof Range,
+				$range instanceof BaseRange,
 				'only ranges accepted today'
 			);
 			
@@ -75,7 +75,7 @@
 				$array = explode('-', $scope[$this->name], 2);
 				
 				$range =
-					Range::lazyCreate(
+					BaseRange::lazyCreate(
 						ArrayUtils::getArrayVar($array, 0),
 						ArrayUtils::getArrayVar($array, 1)
 					);
@@ -102,7 +102,7 @@
 				return null;
 			
 			$range =
-				Range::lazyCreate(
+				BaseRange::lazyCreate(
 					$this->safeGet($scope, $this->name, self::MIN),
 					$this->safeGet($scope, $this->name, self::MAX)
 				);
@@ -120,7 +120,7 @@
 			return false;
 		}
 		
-		private function checkLimits(Range $range)
+		private function checkLimits(BaseRange $range)
 		{
 			if (
 				!(

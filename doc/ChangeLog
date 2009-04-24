@@ -1,9 +1,85 @@
-# $Id$
+
+2009-04-23	Denis M. Gabaidulin
+
+	* main/Charts/Google/: experimental support for Data point labels API.
+
+2009-04-20	Denis M. Gabaidulin
+
+	* main/Math/MathUtils.class.php: makeCartesianProduct() support
+	assoc arrays.
+
+2009-04-17	Denis M. Gabaidulin
+
+	* main/Utils/SortHelper.class.php: customizable cmp function.
+
+2009-04-16	Sergey S. Sergeev
+
+	* test/misc/ServerVarUtils.class.php: forgotten class added, thanks to
+	Ivan Khvostishkov.
+
+2009-04-16	Vladlen Y. Koshelev
+
+	* core/OSQL/OrderBy.class.php, test/main/CriteriaTest.class.php:
+	nullsLast(), isNullsFirst() fixed; support for clone and toMapped() for
+	nulls ordering feature added; corresponding tests added.
+
+2009-04-08	Denis M. Gabaidulin
+
+	* main/Charts/Google/GoogleChartTitle.class.php: added.
+
+2009-04-08	Vladlen Y. Koshelev
+
+	* main/Utils/ClassUtils.class.php, test/main/ClassUtilsTest.class.php:
+	isClassName() returns boolean.
+
+2009-04-07	Denis M. Gabaidulin
+
+	* main/Base/BaseRange.class.php: common numeric range logic extracted.
+
+	* main/Base/FloatRange.class.php: float range implemention.
+
+	* main/Charts/Google/: chart line styles implemented.
+
+	* main/Charts/Google/GoogleGridedLineChart.class.php: added.
+
+2009-04-06	Denis M. Gabaidulin
+
+	* main/Math/MathUtils.class.php: alignByBase() added.
+
+2009-04-05	Sergey S. Sergeev
+
+	* main/Utils/Routers, test/main/Utils/Routers: utils for rewriting 
+	urls moved from incubator.
+
+2009-04-04	Denis M. Gabaidulin
+
+	* main/Charts/Google/: Google charts implementation (partially) moved
+	from incubator.
+
+2009-04-03	Ivan Y. Khvostishkov
+
+	* main/: merged directory services and messaging api from master.
+
+	* main/EntityProto/Builders/DirectoryToObjectBinder.class.php,
+	main/EntityProto/Builders/ObjectToDirectoryBinder.class.php:
+	reference-enabled directory storage with symbolic links (even
+	recursive). See test/main/EntityProtoConvertersTest.class.php for
+	example of usage.
+
+	* main/Messages/: simple messaging API is starting here. Inspired by
+	Java Message Service.
 
 2009-03-28	Evgeniy N. Sokolov
 
 	* core/Form/Form.class.php: getWrongLabel() and getMissingLabel()
 	added.
+
+2009-03-27	Ivan Y. Khvostishkov
+
+	* main/EntityProto/Builders/DirectoryToObjectBinder.class.php,
+	main/EntityProto/Builders/ObjectToDirectoryBinder.class.php: simple
+	directory service helpers based on a local filesystem. Can be used for
+	easy object configuration management, just like an LDAP.
 
 2009-03-27	Sergey S. Sergeev
 
@@ -26,11 +102,11 @@
 
 2009-03-25	Denis M. Gabaidulin
 
-	* core/Form/Primitives/PrimitiveNoValue.class.php. Special primitive
+	* core/Form/Primitives/PrimitiveNoValue.class.php: special primitive
 	w/o value.
 
-	* main/Utils/CommandLine/ArgumentParser.class.php. Refactor. Drop special
-	collection and use only native form.
+	* main/Utils/CommandLine/ArgumentParser.class.php: refactor, drop
+	special collection and use only native form.
 
 2009-03-24	Sergey S. Sergeev
 
@@ -45,10 +121,10 @@
 
 2009-03-23	Denis M. Gabaidulin
 
-	* main/Utils/CommandLine/ArgumentBuilder.class.php. Simple builder to hide
-	complex interface.
+	* main/Utils/CommandLine/ArgumentBuilder.class.php: simple builder to
+	hide complex interface.
 
-	* main/Utils/CommandLine/Argument.class.php. Primitive member added.
+	* main/Utils/CommandLine/Argument.class.php: primitive member added.
 
 2009-03-22	Sergey S. Sergeev
 
@@ -65,9 +141,9 @@
 
 2009-03-19	Denis M. Gabaidulin
 
-	* main/Base/Collection.class.php. Useful accessors added.
+	* main/Base/Collection.class.php: useful accessors added.
 
-	* main/Utils/CommandLine/*.class.php. Simple command line args parser
+	* main/Utils/CommandLine/: simple command line args parser
 	based on getopt().
 
 2009-03-17	Denis M. Gabaidulin
@@ -79,8 +155,8 @@
 
 2009-03-16	Denis M. Gabaidulin
 
-	* core/Form/Filters/Json{Encoder|Decoder}Filter.class.php: added
-	and tested.
+	* core/Form/Filters/JsonEncoderFilter.class.php,
+	core/Form/Filters/JsonDecoderFilter.class.php: added and tested.
 
 2009-03-10	Vladlen Y. Koshelev
 

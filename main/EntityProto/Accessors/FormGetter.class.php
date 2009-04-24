@@ -12,6 +12,13 @@
 
 	final class FormGetter extends PrototypedGetter
 	{
+		public function __construct(EntityProto $proto, &$object)
+		{
+			Assert::isInstance($object, 'Form');
+			
+			return parent::__construct($proto, $object);
+		}
+		
 		public function get($name)
 		{
 			if (!isset($this->mapping[$name]))
