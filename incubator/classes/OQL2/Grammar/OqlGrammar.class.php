@@ -480,7 +480,7 @@
 					OqlGrammarRuleWrapper::create()->
 						setGrammar($this)->
 						setRuleId(self::IDENTIFIER)->
-						setMutator(OqlProjectionNodeMutator::me()),
+						setMutator(OqlGroupByProjectionNodeMutator::me()),
 					$this->get(self::PUNCTUATION)
 				)->
 				setId(self::GROUP_BY)->
