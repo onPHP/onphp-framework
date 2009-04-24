@@ -5,7 +5,6 @@
 	{
 		public function testProperty()
 		{
-			/*
 			// no properties
 			$this->assertCriteria(
 				'from TestUser',
@@ -18,8 +17,6 @@
 				Criteria::create(TestUser::dao())->
 					setProjection(Projection::property('id'))
 			);
-			
-			*/
 			
 			// aggregate functions, distinct, aliases, properties
 			$this->assertCriteria(
@@ -44,7 +41,6 @@
 					)
 			);
 			
-			/*
 			// arithmetic expression in aggregate function
 			$this->assertCriteria(
 				'avg(-id - -1 / -$1), avg((10-id) * -($1+-2.1)), avg(10) as ten '
@@ -142,7 +138,6 @@
 							)
 					)
 			);
-			*/
 		}
 		
 		public function testWhere()
