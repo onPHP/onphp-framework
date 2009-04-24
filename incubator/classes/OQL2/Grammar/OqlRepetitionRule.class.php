@@ -34,8 +34,11 @@
 			Assert::isNotNull($this->rule);
 			
 			$childNodes = array();
-			while ($node = $this->rule->process($tokenizer, $rootNode, $silent))
-				$childNodes[] = $node;
+			
+			if ($this->match($tokenizer->peek())) {
+				while ($node = $this->rule->process($tokenizer, $rootNode, $silent))
+					$childNodes[] = $node;
+			}
 			
 			if ($childNodes) {
 				if (count($childNodes) == 1)

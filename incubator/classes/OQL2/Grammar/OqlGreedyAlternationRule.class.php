@@ -22,6 +22,16 @@
 			return new self;
 		}
 		
+		protected function getMatches($token)
+		{
+			if ($token instanceof OqlToken) {
+				// FIXME: return first all matches
+				return $this->list;
+			}
+			
+			return array();
+		}
+		
 		/**
 		 * @return OqlSyntaxNode
 		**/
@@ -35,19 +45,21 @@
 			$maxNode = null;
 			$maxRule = null;
 			
-			foreach ($this->list as $rule) {
-				$index = $tokenizer->getIndex();
-				
-				if (
-					($node = $rule->parse($tokenizer, $rootNode, true))
-					&& $maxIndex < $tokenizer->getIndex()
-				) {
-					$maxIndex = $tokenizer->getIndex();
-					$maxNode = $node;
-					$maxRule = $rule;
+			if ($list = $this->getMatches($tokenizer->peek())) {
+				foreach ($list as $rule) {
+					$index = $tokenizer->getIndex();
+					
+					if (
+						($node = $rule->parse($tokenizer, $rootNode, true))
+						&& $maxIndex < $tokenizer->getIndex()
+					) {
+						$maxIndex = $tokenizer->getIndex();
+						$maxNode = $node;
+						$maxRule = $rule;
+					}
+					
+					$tokenizer->setIndex($index);
 				}
-				
-				$tokenizer->setIndex($index);
 			}
 			
 			if ($maxNode !== null) {

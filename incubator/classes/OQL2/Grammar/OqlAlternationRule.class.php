@@ -22,6 +22,16 @@
 			return new self;
 		}
 		
+		protected function getMatches($token)
+		{
+			if ($token instanceof OqlToken) {
+				// FIXME: return first match only
+				return $this->list;
+			}
+			
+			return array();
+		}
+		
 		/**
 		 * @return OqlSyntaxNode
 		**/
@@ -31,9 +41,11 @@
 			$silent = false
 		)
 		{
-			foreach ($this->list as $rule) {
-				if ($node = $rule->process($tokenizer, $rootNode, true))
-					return $node;
+			if ($list = $this->getMatches($tokenizer->peek())) {
+				foreach ($list as $rule) {
+					if ($node = $rule->process($tokenizer, $rootNode, true))
+						return $node;
+				}
 			}
 			
 			// FIXME: error message

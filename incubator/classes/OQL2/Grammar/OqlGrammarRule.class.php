@@ -77,9 +77,9 @@
 			return $node;
 		}
 		
-		protected function match(OqlToken $token)
+		protected function match($token)
 		{
-			return true;
+			return $token instanceof OqlToken;
 		}
 		
 		/**

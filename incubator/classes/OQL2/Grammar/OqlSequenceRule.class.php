@@ -36,9 +36,11 @@
 			try {
 				$childNodes = array();
 				
-				foreach ($this->list as $rule) {
-					if ($node = $rule->process($tokenizer, $rootNode, false))
-						$childNodes[] = $node;
+				if ($this->match($tokenizer->peek())) {
+					foreach ($this->list as $rule) {
+						if ($node = $rule->process($tokenizer, $rootNode, false))
+							$childNodes[] = $node;
+					}
 				}
 				
 				// FIXME: error message

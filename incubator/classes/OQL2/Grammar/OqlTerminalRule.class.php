@@ -55,9 +55,11 @@
 			return $this;
 		}
 		
-		protected function match(OqlToken $token)
+		protected function match($token)
 		{
-			return $token->match($this->type, $this->value);
+			return
+				$token instanceof OqlToken
+				&& $token->match($this->type, $this->value);
 		}
 		
 		/**
