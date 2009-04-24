@@ -29,8 +29,7 @@
 		{
 			parent::buildTerminals();
 			
-			$token = OqlToken::create(OqlTokenType::PARENTHESES, '(');
-			$this->terminals[$token->toKey()] = $token;
+			$this->terminals[OqlToken::getKey(OqlTokenType::PARENTHESES, '(')] = true;
 			
 			return $this;
 		}

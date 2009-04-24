@@ -60,8 +60,7 @@
 		**/
 		protected function buildTerminals()
 		{
-			$token = OqlToken::create($this->type, $this->value);
-			$this->terminals[$token->toKey()] = $token;
+			$this->terminals[OqlToken::getKey($this->type, $this->value)] = true;
 			
 			return $this;
 		}

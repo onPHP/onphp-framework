@@ -99,10 +99,10 @@
 			Assert::isNotNull($this->terminals, 'build rule first');
 			
 			if ($token instanceof OqlToken) {
-				foreach ($this->getTerminals() as $terminalToken) {
-					if ($token->matchToken($terminalToken))
-						return true;
-				}
+				$terminals = $this->getTerminals();
+				return
+					isset($terminals[$token->toKey()])
+					|| isset($terminals[OqlToken::getKey($token->getType())]);
 			}
 			
 			return false;

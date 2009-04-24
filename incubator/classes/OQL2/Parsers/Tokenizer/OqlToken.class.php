@@ -71,7 +71,7 @@
 			return $this->getKey($this->type, $this->value);
 		}
 		
-		private static function getKey($type, $value)
+		public static function getKey($type, $value = null)
 		{
 			return $type.self::DELIMITER.$value;
 		}
