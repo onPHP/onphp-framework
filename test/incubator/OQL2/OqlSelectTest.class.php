@@ -643,7 +643,7 @@
 					$bindings
 				);
 					
-				if (is_integer($value) && $value >= 0)
+				if (is_integer($bindings[1]) && $bindings[1] >= 0) {
 					// in limit expression
 					$this->assertCriteria(
 						'from TestUser limit $1',
@@ -659,6 +659,7 @@
 							setOffset($value),
 						$bindings
 					);
+				}
 			}
 		}
 		
