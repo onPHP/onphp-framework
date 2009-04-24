@@ -116,24 +116,20 @@
 				."'многа \' \" ` букаф' `strange quotes` ",
 				array(
 					OqlToken::create(
-						'',
-						'""',
-						OqlTokenType::STRING
+						OqlTokenType::STRING,
+						''
 					),
 					OqlToken::create(
-						'some string "substring1" \'substring2\' `substring3`',
-						'"some string \"substring1\" \'substring2\' `substring3`"',
-						OqlTokenType::STRING
+						OqlTokenType::STRING,
+						'some string "substring1" \'substring2\' `substring3`'
 					),
 					OqlToken::create(
-						"многа ' \" ` букаф",
-						"'многа \' \" ` букаф'",
-						OqlTokenType::STRING
+						OqlTokenType::STRING,
+						"многа ' \" ` букаф"
 					),
 					OqlToken::create(
-						'strange quotes',
-						'`strange quotes`',
-						OqlTokenType::STRING
+						OqlTokenType::STRING,
+						'strange quotes'
 					)
 				)
 			);
@@ -144,8 +140,8 @@
 			$this->assertTokens(
 				'TrUe falSE',
 				array(
-					OqlToken::create(true, 'TrUe', OqlTokenType::BOOLEAN),
-					OqlToken::create(false, 'falSE', OqlTokenType::BOOLEAN)
+					OqlToken::create(OqlTokenType::BOOLEAN, true),
+					OqlToken::create(OqlTokenType::BOOLEAN, false)
 				)
 			);
 		}
@@ -155,11 +151,11 @@
 			$this->assertTokens(
 				'null testNULL nullTest testNULLtest NULL',
 				array(
-					OqlToken::create('null', 'null', OqlTokenType::NULL),
-					OqlToken::create('testNULL', 'testNULL', OqlTokenType::IDENTIFIER),
-					OqlToken::create('nullTest', 'nullTest', OqlTokenType::IDENTIFIER),
-					OqlToken::create('testNULLtest', 'testNULLtest', OqlTokenType::IDENTIFIER),
-					OqlToken::create('null', 'NULL', OqlTokenType::NULL)
+					OqlToken::create(OqlTokenType::NULL, 'null'),
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'testNULL'),
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'nullTest'),
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'testNULLtest'),
+					OqlToken::create(OqlTokenType::NULL, 'null')
 				)
 			);
 		}
@@ -169,9 +165,9 @@
 			$this->assertTokens(
 				' $1 $22 $ ',
 				array(
-					OqlToken::create(1, '$1', OqlTokenType::PLACEHOLDER),
-					OqlToken::create(22, '$22', OqlTokenType::PLACEHOLDER),
-					OqlToken::create('$', '$', OqlTokenType::UNKNOWN)
+					OqlToken::create(OqlTokenType::PLACEHOLDER, 1),
+					OqlToken::create(OqlTokenType::PLACEHOLDER, 22),
+					OqlToken::create(OqlTokenType::UNKNOWN, '$')
 				)
 			);
 		}
@@ -183,26 +179,26 @@
 				."ORDER BY asc desc having limit offset not and or "
 				."as in is SIMILAR  TO ilike",
 				array(
-					OqlToken::create('distinct', 'distinct', OqlTokenType::KEYWORD),
-					OqlToken::create('from', 'From', OqlTokenType::KEYWORD),
-					OqlToken::create('where', 'WHERE', OqlTokenType::KEYWORD),
-					OqlToken::create('like', 'like', OqlTokenType::KEYWORD),
-					OqlToken::create('between', 'between', OqlTokenType::KEYWORD),
-					OqlToken::create('group by', "group \n\t\r by", OqlTokenType::KEYWORD),
-					OqlToken::create('order by', 'ORDER BY', OqlTokenType::KEYWORD),
-					OqlToken::create('asc', 'asc', OqlTokenType::KEYWORD),
-					OqlToken::create('desc', 'desc', OqlTokenType::KEYWORD),
-					OqlToken::create('having', 'having', OqlTokenType::KEYWORD),
-					OqlToken::create('limit', 'limit', OqlTokenType::KEYWORD),
-					OqlToken::create('offset', 'offset', OqlTokenType::KEYWORD),
-					OqlToken::create('not', 'not', OqlTokenType::OPERATOR),
-					OqlToken::create('and', 'and', OqlTokenType::OPERATOR),
-					OqlToken::create('or', 'or', OqlTokenType::OPERATOR),
-					OqlToken::create('as', 'as', OqlTokenType::KEYWORD),
-					OqlToken::create('in', 'in', OqlTokenType::KEYWORD),
-					OqlToken::create('is', 'is', OqlTokenType::KEYWORD),
-					OqlToken::create('similar to', 'SIMILAR  TO', OqlTokenType::KEYWORD),
-					OqlToken::create('ilike', 'ilike', OqlTokenType::KEYWORD)
+					OqlToken::create(OqlTokenType::KEYWORD, 'distinct'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'from'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'where'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'like'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'between'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'group by'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'order by'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'asc'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'desc'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'having'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'limit'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'offset'),
+					OqlToken::create(OqlTokenType::OPERATOR, 'not'),
+					OqlToken::create(OqlTokenType::OPERATOR, 'and'),
+					OqlToken::create(OqlTokenType::OPERATOR, 'or'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'as'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'in'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'is'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'similar to'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'ilike')
 				)
 			);
 		}
@@ -212,11 +208,11 @@
 			$this->assertTokens(
 				'SUM aVg min Max count',
 				array(
-					OqlToken::create('sum', 'SUM', OqlTokenType::AGGREGATE_FUNCTION),
-					OqlToken::create('avg', 'aVg', OqlTokenType::AGGREGATE_FUNCTION),
-					OqlToken::create('min', 'min', OqlTokenType::AGGREGATE_FUNCTION),
-					OqlToken::create('max', 'Max', OqlTokenType::AGGREGATE_FUNCTION),
-					OqlToken::create('count', 'count', OqlTokenType::AGGREGATE_FUNCTION)
+					OqlToken::create(OqlTokenType::AGGREGATE_FUNCTION, 'sum'),
+					OqlToken::create(OqlTokenType::AGGREGATE_FUNCTION, 'avg'),
+					OqlToken::create(OqlTokenType::AGGREGATE_FUNCTION, 'min'),
+					OqlToken::create(OqlTokenType::AGGREGATE_FUNCTION, 'max'),
+					OqlToken::create(OqlTokenType::AGGREGATE_FUNCTION, 'count')
 				)
 			);
 		}
@@ -226,11 +222,11 @@
 			$this->assertTokens(
 				'User _prop1.prop2.prop3 .prop4..prop5 0prop f.oo.ba.r.buzz',
 				array(
-					OqlToken::create('User', 'User', OqlTokenType::IDENTIFIER),
-					OqlToken::create('_prop1.prop2.prop3', '_prop1.prop2.prop3', OqlTokenType::IDENTIFIER),
-					OqlToken::create('.prop4..prop5', '.prop4..prop5', OqlTokenType::UNKNOWN),
-					OqlToken::create('0prop', '0prop', OqlTokenType::UNKNOWN),
-					OqlToken::create('f.oo.ba.r.buzz', 'f.oo.ba.r.buzz', OqlTokenType::IDENTIFIER)
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'User'),
+					OqlToken::create(OqlTokenType::IDENTIFIER, '_prop1.prop2.prop3'),
+					OqlToken::create(OqlTokenType::UNKNOWN, '.prop4..prop5'),
+					OqlToken::create(OqlTokenType::UNKNOWN, '0prop'),
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'f.oo.ba.r.buzz')
 				)
 			);
 		}
@@ -240,9 +236,9 @@
 			$this->assertTokens(
 				'(,)',
 				array(
-					OqlToken::create('(', '(', OqlTokenType::PARENTHESES),
-					OqlToken::create(',', ',', OqlTokenType::PUNCTUATION),
-					OqlToken::create(')', ')', OqlTokenType::PARENTHESES)
+					OqlToken::create(OqlTokenType::PARENTHESES, '('),
+					OqlToken::create(OqlTokenType::PUNCTUATION, ','),
+					OqlToken::create(OqlTokenType::PARENTHESES, ')')
 				)
 			);
 		}
@@ -252,20 +248,20 @@
 			$this->assertTokens(
 				'>= <= <> < > != = + - / * and Or not',
 				array(
-					OqlToken::create('>=', '>=', OqlTokenType::OPERATOR),
-					OqlToken::create('<=', '<=', OqlTokenType::OPERATOR),
-					OqlToken::create('!=', '<>', OqlTokenType::OPERATOR),
-					OqlToken::create('<', '<', OqlTokenType::OPERATOR),
-					OqlToken::create('>', '>', OqlTokenType::OPERATOR),
-					OqlToken::create('!=', '!=', OqlTokenType::OPERATOR),
-					OqlToken::create('=', '=', OqlTokenType::OPERATOR),
-					OqlToken::create('+', '+', OqlTokenType::OPERATOR),
-					OqlToken::create('-', '-', OqlTokenType::OPERATOR),
-					OqlToken::create('/', '/', OqlTokenType::OPERATOR),
-					OqlToken::create('*', '*', OqlTokenType::OPERATOR),
-					OqlToken::create('and', 'and', OqlTokenType::OPERATOR),
-					OqlToken::create('or', 'Or', OqlTokenType::OPERATOR),
-					OqlToken::create('not', 'not', OqlTokenType::OPERATOR)
+					OqlToken::create(OqlTokenType::OPERATOR, '>='),
+					OqlToken::create(OqlTokenType::OPERATOR, '<='),
+					OqlToken::create(OqlTokenType::OPERATOR, '!='),
+					OqlToken::create(OqlTokenType::OPERATOR, '<'),
+					OqlToken::create(OqlTokenType::OPERATOR, '>'),
+					OqlToken::create(OqlTokenType::OPERATOR, '!='),
+					OqlToken::create(OqlTokenType::OPERATOR, '='),
+					OqlToken::create(OqlTokenType::OPERATOR, '+'),
+					OqlToken::create(OqlTokenType::OPERATOR, '-'),
+					OqlToken::create(OqlTokenType::OPERATOR, '/'),
+					OqlToken::create(OqlTokenType::OPERATOR, '*'),
+					OqlToken::create(OqlTokenType::OPERATOR, 'and'),
+					OqlToken::create(OqlTokenType::OPERATOR, 'or'),
+					OqlToken::create(OqlTokenType::OPERATOR, 'not')
 				)
 			);
 		}
@@ -275,17 +271,17 @@
 			$this->assertTokens(
 				'123 +123 .123 123.456 1e23 1E+23 1E-23 0.1e23 -.1e23',
 				array(
-					OqlToken::create(123., '123', OqlTokenType::NUMBER),
-					OqlToken::create('+', '+', OqlTokenType::OPERATOR),
-					OqlToken::create(123., '123', OqlTokenType::NUMBER),
-					OqlToken::create(.123, '.123', OqlTokenType::NUMBER),
-					OqlToken::create(123.456, '123.456', OqlTokenType::NUMBER),
-					OqlToken::create(1e23, '1e23', OqlTokenType::NUMBER),
-					OqlToken::create(1e23, '1E+23', OqlTokenType::NUMBER),
-					OqlToken::create(1e-23, '1E-23', OqlTokenType::NUMBER),
-					OqlToken::create(1e22, '0.1e23', OqlTokenType::NUMBER),
-					OqlToken::create('-', '-', OqlTokenType::OPERATOR),
-					OqlToken::create(1e22, '.1e23', OqlTokenType::NUMBER)
+					OqlToken::create(OqlTokenType::NUMBER, 123.),
+					OqlToken::create(OqlTokenType::OPERATOR, '+'),
+					OqlToken::create(OqlTokenType::NUMBER, 123.),
+					OqlToken::create(OqlTokenType::NUMBER, .123),
+					OqlToken::create(OqlTokenType::NUMBER, 123.456),
+					OqlToken::create(OqlTokenType::NUMBER, 1e23),
+					OqlToken::create(OqlTokenType::NUMBER, 1e23),
+					OqlToken::create(OqlTokenType::NUMBER, 1e-23),
+					OqlToken::create(OqlTokenType::NUMBER, 1e22),
+					OqlToken::create(OqlTokenType::OPERATOR, '-'),
+					OqlToken::create(OqlTokenType::NUMBER, 1e22)
 				)
 			);
 		}
@@ -295,12 +291,12 @@
 			$this->assertTokens(
 				' ##3asdf ыфвафыв !! [ ~sdf } ',
 				array(
-					OqlToken::create('##3asdf', '##3asdf', OqlTokenType::UNKNOWN),
-					OqlToken::create('ыфвафыв', 'ыфвафыв', OqlTokenType::UNKNOWN),
-					OqlToken::create('!!', '!!', OqlTokenType::UNKNOWN),
-					OqlToken::create('[', '[', OqlTokenType::UNKNOWN),
-					OqlToken::create('~sdf', '~sdf', OqlTokenType::UNKNOWN),
-					OqlToken::create('}', '}', OqlTokenType::UNKNOWN)
+					OqlToken::create(OqlTokenType::UNKNOWN, '##3asdf'),
+					OqlToken::create(OqlTokenType::UNKNOWN, 'ыфвафыв'),
+					OqlToken::create(OqlTokenType::UNKNOWN, '!!'),
+					OqlToken::create(OqlTokenType::UNKNOWN, '['),
+					OqlToken::create(OqlTokenType::UNKNOWN, '~sdf'),
+					OqlToken::create(OqlTokenType::UNKNOWN, '}')
 				)
 			);
 		}
@@ -313,50 +309,50 @@
 				."where (id in (1, $1) or id >= $2) and (name like \"%'ы'%\") "
 				."order by id desc",
 				array(
-					OqlToken::create('avg', 'AVG', OqlTokenType::AGGREGATE_FUNCTION),
-					OqlToken::create('(', '(', OqlTokenType::PARENTHESES),
-					OqlToken::create('user.id', 'user.id', OqlTokenType::IDENTIFIER),
-					OqlToken::create(')', ')', OqlTokenType::PARENTHESES),
-					OqlToken::create('as', 'as', OqlTokenType::KEYWORD),
-					OqlToken::create('avg', 'Avg', OqlTokenType::AGGREGATE_FUNCTION),	// identifier actually
-					OqlToken::create(',', ',', OqlTokenType::PUNCTUATION),
-					OqlToken::create('count', 'count', OqlTokenType::AGGREGATE_FUNCTION),
-					OqlToken::create('(', '(', OqlTokenType::PARENTHESES),
-					OqlToken::create('id', 'id', OqlTokenType::IDENTIFIER),
-					OqlToken::create(')', ')', OqlTokenType::PARENTHESES),
-					OqlToken::create(',', ',', OqlTokenType::PUNCTUATION),
-					OqlToken::create('(', '(', OqlTokenType::PARENTHESES),
-					OqlToken::create('id', 'id', OqlTokenType::IDENTIFIER),
-					OqlToken::create('+', '+', OqlTokenType::OPERATOR),
-					OqlToken::create(10., '10', OqlTokenType::NUMBER),
-					OqlToken::create(')', ')', OqlTokenType::PARENTHESES),
-					OqlToken::create('/', '/', OqlTokenType::OPERATOR),
-					OqlToken::create(2., '2', OqlTokenType::NUMBER),
-					OqlToken::create('from', 'from', OqlTokenType::KEYWORD),
-					OqlToken::create('UserGroup', 'UserGroup', OqlTokenType::IDENTIFIER),
-					OqlToken::create('where', 'where', OqlTokenType::KEYWORD),
-					OqlToken::create('(', '(', OqlTokenType::PARENTHESES),
-					OqlToken::create('id', 'id', OqlTokenType::IDENTIFIER),
-					OqlToken::create('in', 'in', OqlTokenType::KEYWORD),
-					OqlToken::create('(', '(', OqlTokenType::PARENTHESES),
-					OqlToken::create(1., '1', OqlTokenType::NUMBER),
-					OqlToken::create(',', ',', OqlTokenType::PUNCTUATION),
-					OqlToken::create(1, '$1', OqlTokenType::PLACEHOLDER),
-					OqlToken::create(')', ')', OqlTokenType::PARENTHESES),
-					OqlToken::create('or', 'or', OqlTokenType::OPERATOR),
-					OqlToken::create('id', 'id', OqlTokenType::IDENTIFIER),
-					OqlToken::create('>=', '>=', OqlTokenType::OPERATOR),
-					OqlToken::create(2, '$2', OqlTokenType::PLACEHOLDER),
-					OqlToken::create(')', ')', OqlTokenType::PARENTHESES),
-					OqlToken::create('and', 'and', OqlTokenType::OPERATOR),
-					OqlToken::create('(', '(', OqlTokenType::PARENTHESES),
-					OqlToken::create('name', 'name', OqlTokenType::IDENTIFIER),
-					OqlToken::create('like', 'like', OqlTokenType::KEYWORD),
-					OqlToken::create('%\'ы\'%', '"%\'ы\'%"', OqlTokenType::STRING),
-					OqlToken::create(')', ')', OqlTokenType::PARENTHESES),
-					OqlToken::create('order by', 'order by', OqlTokenType::KEYWORD),
-					OqlToken::create('id', 'id', OqlTokenType::IDENTIFIER),
-					OqlToken::create('desc', 'desc', OqlTokenType::KEYWORD)
+					OqlToken::create(OqlTokenType::AGGREGATE_FUNCTION, 'avg'),
+					OqlToken::create(OqlTokenType::PARENTHESES, '('),
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'user.id'),
+					OqlToken::create(OqlTokenType::PARENTHESES, ')'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'as'),
+					OqlToken::create(OqlTokenType::AGGREGATE_FUNCTION, 'avg'),	// identifier actually
+					OqlToken::create(OqlTokenType::PUNCTUATION, ','),
+					OqlToken::create(OqlTokenType::AGGREGATE_FUNCTION, 'count'),
+					OqlToken::create(OqlTokenType::PARENTHESES, '('),
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'id'),
+					OqlToken::create(OqlTokenType::PARENTHESES, ')'),
+					OqlToken::create(OqlTokenType::PUNCTUATION, ','),
+					OqlToken::create(OqlTokenType::PARENTHESES, '('),
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'id'),
+					OqlToken::create(OqlTokenType::OPERATOR, '+'),
+					OqlToken::create(OqlTokenType::NUMBER, 10.),
+					OqlToken::create(OqlTokenType::PARENTHESES, ')'),
+					OqlToken::create(OqlTokenType::OPERATOR, '/'),
+					OqlToken::create(OqlTokenType::NUMBER, 2.),
+					OqlToken::create(OqlTokenType::KEYWORD, 'from'),
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'UserGroup'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'where'),
+					OqlToken::create(OqlTokenType::PARENTHESES, '('),
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'id'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'in'),
+					OqlToken::create(OqlTokenType::PARENTHESES, '('),
+					OqlToken::create(OqlTokenType::NUMBER, 1.),
+					OqlToken::create(OqlTokenType::PUNCTUATION, ','),
+					OqlToken::create(OqlTokenType::PLACEHOLDER, 1),
+					OqlToken::create(OqlTokenType::PARENTHESES, ')'),
+					OqlToken::create(OqlTokenType::OPERATOR, 'or'),
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'id'),
+					OqlToken::create(OqlTokenType::OPERATOR, '>='),
+					OqlToken::create(OqlTokenType::PLACEHOLDER, 2),
+					OqlToken::create(OqlTokenType::PARENTHESES, ')'),
+					OqlToken::create(OqlTokenType::OPERATOR, 'and'),
+					OqlToken::create(OqlTokenType::PARENTHESES, '('),
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'name'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'like'),
+					OqlToken::create(OqlTokenType::STRING, '%\'ы\'%'),
+					OqlToken::create(OqlTokenType::PARENTHESES, ')'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'order by'),
+					OqlToken::create(OqlTokenType::IDENTIFIER, 'id'),
+					OqlToken::create(OqlTokenType::KEYWORD, 'desc')
 				)
 			);
 		}
@@ -366,9 +362,9 @@
 			$tokenizer = new OqlTokenizer('token1 token2 token3');
 			
 			$tokens = array(
-				OqlToken::create('token1', 'token1', OqlTokenType::IDENTIFIER),
-				OqlToken::create('token2', 'token2', OqlTokenType::IDENTIFIER),
-				OqlToken::create('token3', 'token3', OqlTokenType::IDENTIFIER)
+				OqlToken::create(OqlTokenType::IDENTIFIER, 'token1'),
+				OqlToken::create(OqlTokenType::IDENTIFIER, 'token2'),
+				OqlToken::create(OqlTokenType::IDENTIFIER, 'token3')
 			);
 			
 			$this->assertEquals(-1, $tokenizer->getIndex());

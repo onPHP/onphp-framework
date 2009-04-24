@@ -6,23 +6,18 @@
 		public function testInstances()
 		{
 			$this->assertSame(
-				OqlToken::create('value', 'value', OqlTokenType::UNKNOWN),
-				OqlToken::create('value', 'value', OqlTokenType::UNKNOWN)
-			);
-			
-			$this->assertSame(
-				OqlToken::create('value1', 'value', OqlTokenType::UNKNOWN),
-				OqlToken::create('value2', 'value', OqlTokenType::UNKNOWN)
+				OqlToken::create(OqlTokenType::UNKNOWN, 'value'),
+				OqlToken::create(OqlTokenType::UNKNOWN, 'value')
 			);
 			
 			$this->assertNotEquals(
-				OqlToken::create('value', 'value1', OqlTokenType::UNKNOWN),
-				OqlToken::create('value', 'value2', OqlTokenType::UNKNOWN)
+				OqlToken::create(OqlTokenType::UNKNOWN, 'value1'),
+				OqlToken::create(OqlTokenType::UNKNOWN, 'value2')
 			);
 			
 			$this->assertNotEquals(
-				OqlToken::create('value', 'value', OqlTokenType::UNKNOWN),
-				OqlToken::create('value', 'value', OqlTokenType::KEYWORD)
+				OqlToken::create(OqlTokenType::UNKNOWN, 'value'),
+				OqlToken::create(OqlTokenType::KEYWORD, 'value')
 			);
 		}
 	}
