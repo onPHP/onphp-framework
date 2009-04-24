@@ -23,7 +23,7 @@
 		}
 		
 		/**
-		 * @return OqlLogicalObjectNode
+		 * @return OqlTerminalNode
 		**/
 		public function process(OqlSyntaxNode $node, OqlSyntaxNode $rootNode)
 		{
@@ -37,12 +37,21 @@
 			
 			// TODO: assertions?
 			
-			return OqlLogicalObjectNode::create()->setObject( 
-				new PrefixUnaryExpression(
-					$operator->toValue(),
-					$operand->toValue()
-				)
-			);
+			if (
+				is_numeric($operand->toValue())
+				&& $operator->toValue() == PrefixUnaryExpression::MINUS
+			)
+				return OqlValueNode::create()->setValue(
+					-$operand->toValue()
+				);
+			
+			else
+				return OqlLogicalObjectNode::create()->setObject( 
+					new PrefixUnaryExpression(
+						$operator->toValue(),
+						$operand->toValue()
+					)
+				);
 		}
 	}
 ?>
