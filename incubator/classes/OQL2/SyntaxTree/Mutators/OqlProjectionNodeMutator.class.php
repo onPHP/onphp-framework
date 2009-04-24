@@ -51,7 +51,8 @@
 			$current = $iterator->next();
 			
 			if (
-				isset(self::$projectionMap[$aggregate->toValue()])
+				is_string($aggregate->toValue())
+				&& isset(self::$projectionMap[$aggregate->toValue()])
 				&& $current !== null
 				&& $current->toValue() == '('
 			) {
