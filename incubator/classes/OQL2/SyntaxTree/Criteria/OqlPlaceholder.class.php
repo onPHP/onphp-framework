@@ -57,7 +57,11 @@
 		{
 			Assert::isTrue($this->binded);
 			
-			return $this->value;
+			$value = $this->value;
+			if ($value instanceof Identifiable)
+				$value = $value->getId();
+			
+			return $dao->guessAtom($value, $query);
 		}
 		
 		public function toDialectString(Dialect $dialect)
@@ -67,7 +71,10 @@
 			
 			Assert::isTrue($this->binded);
 			
-			return $this->value;
+			return
+				$this->value instanceof Identifiable
+					? $this->value->getId()
+					: $this->value;
 		}
 		
 		public function __toString()
