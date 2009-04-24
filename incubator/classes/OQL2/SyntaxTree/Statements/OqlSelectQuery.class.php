@@ -325,7 +325,7 @@
 		{
 			Assert::isNotNull($this->node);
 			
-			return $this->node->toValue();
+			return $this->toValue();
 		}
 		
 		protected function checkNode(OqlSyntaxNode $node)
