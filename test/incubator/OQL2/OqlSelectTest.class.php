@@ -196,24 +196,26 @@
 			// priority
 			$this->assertCriteria(
 				'from TestUser where id = 1 and Name = "some" '
-				.'or Name = "any" or id = 1 > 2 = id * 2 + 1',
+				.'or Name = "any" or not id > 1 and 2 = id * 2 + 1',
 				Criteria::create(TestUser::dao())->
 					add(
 						Expression::expOr(
-							Expression::expOr(
-								Expression::expAnd(
-									Expression::eq('id', 1),
-									Expression::eq('Name', 'some')
-								),
-								Expression::eq('Name', 'any')
-							),
-							Expression::gt(
+							Expression::expAnd(
 								Expression::eq('id', 1),
-								Expression::eq(
-									2,
-									Expression::add(
-										Expression::mul('id', 2),
-										1
+								Expression::eq('Name', 'some')
+							),
+							Expression::expOr(
+								Expression::eq('Name', 'any'),
+								Expression::expAnd(
+									Expression::not(
+										Expression::gt('id', 1)
+									),
+									Expression::eq(
+										2,
+										Expression::add(
+											Expression::mul('id', 2),
+											1
+										)
 									)
 								)
 							)
@@ -247,21 +249,6 @@
 								Expression::eq('Name', 'any')
 							),
 							Expression::eq('id', 1)
-						)
-					)
-			);
-			
-			// complex boolean expressions
-			$this->assertCriteria(
-				'from TestUser where (id = 1) != ((1 = id) = (id >= 2))',
-				Criteria::create(TestUser::dao())->
-					add(
-						Expression::notEq(
-							Expression::eq('id', 1),
-							Expression::eq(
-								Expression::eq(1, 'id'),
-								Expression::gtEq('id', 2)
-							)
 						)
 					)
 			);
