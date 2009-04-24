@@ -286,7 +286,13 @@
 						GoogleChartLine::create()->
 						setTitle('Показы')->
 						setColor(Color::create('336699'))->
-						setValue($views)
+						setValue($views)->
+						setLabelStyle(
+							ChartLabelStyle::create()->
+							setType(GoogleChartLabelStyleNumberType::create())->
+							setSize(11)->
+							setColor(Color::create('117700'))
+						)
 					);
 				
 				$this->assertEquals($expectedString, $chart->toString());
@@ -374,44 +380,44 @@
 					array(195, 191, 197, 183, 199, 195),
 					array(
 						'GoogleLineChart' => 
-						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:195,191,197,183,199,195&chds=0,199&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,199',
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:195,191,197,183,199,195&chds=0,199&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,199&chm=N**,117700,0,-1,11',
 						'GoogleNormalizedLineChart' => 
-						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:195,191,197,183,199,195&chds=0,200&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,200,100',
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:195,191,197,183,199,195&chds=0,200&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,200,100&chm=N**,117700,0,-1,11',
 						'GoogleGridedLineChart' => 
-						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:195,191,197,183,199,195&chds=0,200&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,200,100&chg=0,50,0'
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:195,191,197,183,199,195&chds=0,200&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,200,100&chm=N**,117700,0,-1,11&chg=0,50,0'
 					)
 				),
 				array(
 					array(0.1, 191, 0.2, 0, 199, 195),
 					array(
 						'GoogleLineChart' =>
-						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,191,0.2,0,199,195&chds=0,199&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,199',
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,191,0.2,0,199,195&chds=0,199&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,199&chm=N**,117700,0,-1,11',
 						'GoogleNormalizedLineChart' => 
-						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,191,0.2,0,199,195&chds=0,200&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,200,100',
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,191,0.2,0,199,195&chds=0,200&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,200,100&chm=N**,117700,0,-1,11',
 						'GoogleGridedLineChart' => 
-						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,191,0.2,0,199,195&chds=0,200&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,200,100&chg=0,50,0'
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,191,0.2,0,199,195&chds=0,200&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,200,100&chm=N**,117700,0,-1,11&chg=0,50,0'
 					)
 				),
 				array(
 					array(0.1, 0.24, 1, 0.2, 0.3, 0),
 					array(
 						'GoogleLineChart' =>
-						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,0.24,1,0.2,0.3,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1',
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,0.24,1,0.2,0.3,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1&chm=N**,117700,0,-1,11',
 						'GoogleNormalizedLineChart' => 
-						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,0.24,1,0.2,0.3,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1,0.1',
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,0.24,1,0.2,0.3,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1,0.1&chm=N**,117700,0,-1,11',
 						'GoogleGridedLineChart' => 
-						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,0.24,1,0.2,0.3,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1,0.1&chg=0,10,0'
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,0.24,1,0.2,0.3,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1,0.1&chm=N**,117700,0,-1,11&chg=0,10,0'
 					)
 				),
 				array(
 					array(0, 0, 0),
 					array(
 						'GoogleLineChart' =>
-						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0,0,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1',
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0,0,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1&chm=N**,117700,0,-1,11',
 						'GoogleNormalizedLineChart' => 
-						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0,0,0&chds=0,0.1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,0.1,0.1',
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0,0,0&chds=0,0.1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,0.1,0.1&chm=N**,117700,0,-1,11',
 						'GoogleGridedLineChart' => 
-						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0,0,0&chds=0,0.1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,0.1,0.1&chg=0,100,0'
+						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0,0,0&chds=0,0.1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,0.1,0.1&chm=N**,117700,0,-1,11&chg=0,100,0'
 					)
 				)
 			);
