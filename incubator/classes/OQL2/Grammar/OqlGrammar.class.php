@@ -228,7 +228,8 @@
 			//			)
 			//		)
 			//		| <logical_unary_operand>
-			//		| "(" <logical_expression> ")"
+			//		| ( "(" <logical_expression> ")" )
+			//		| ( "not" <logical_term> )
 			$this->set(
 				OqlAlternationRule::create()->
 					setId(self::LOGICAL_TERM)->
@@ -340,25 +341,28 @@
 								setGrammar($this)->
 								setRuleId(self::LOGICAL_EXPRESSION)
 						)
+					)->
+					add(
+						OqlSequenceRule::create()->
+							add(
+								$this->operator('not')->
+									setMutator(OqlOperatorNodeMutator::me())
+							)->
+							add(
+								OqlGrammarRuleWrapper::create()->
+									setGrammar($this)->
+									setRuleId(self::LOGICAL_TERM)
+							)->
+							setMutator(OqlPrefixUnaryExpressionNodeMutator::me())
 					)
 			);
 			
 			//	<logical_and_expression> ::=
-			//		[ "not" ] <logical_term> [ "and" <logical_and_expression> ]
+			//		<logical_term> [ "and" <logical_and_expression> ]
 			$this->set(
 				OqlSequenceRule::create()->
 					setId(self::LOGICAL_AND_EXPRESSION)->
-					add(
-						OqlSequenceRule::create()->
-							add(
-								OqlOptionalRule::create()->setRule(
-									$this->operator('not')->
-										setMutator(OqlOperatorNodeMutator::me())
-								)
-							)->
-							add($this->get(self::LOGICAL_TERM))->
-							setMutator(OqlPrefixUnaryExpressionNodeMutator::me())
-					)->
+					add($this->get(self::LOGICAL_TERM))->
 					add(
 						OqlOptionalRule::create()->setRule(
 							OqlSequenceRule::create()->
