@@ -53,7 +53,6 @@
 			// TODO: assertions?
 			
 			if ($hasPlaceholder && count($values) == 1) {
-				$values = reset($values);
 				$expression = new InExpression(
 					$field->toValue(),
 					reset($values),
