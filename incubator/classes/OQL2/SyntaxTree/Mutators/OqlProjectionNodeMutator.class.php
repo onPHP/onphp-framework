@@ -37,19 +37,24 @@
 		{
 			$iterator = OqlSyntaxTreeRecursiveIterator::me();
 			
-			$aggregate = $iterator->reset($node);
-			Assert::isNotNull($aggregate);
+			$current = $iterator->reset($node);
+			Assert::isNotNull($current);
+			
+			if ($current->toValue() == 'distinct') {
+				Assert::isTrue($rootNode instanceof OqlSelectQuery);
+				$rootNode->setDistinct(true);
+				
+				$aggregate = $iterator->next();
+			} else
+				$aggregate = $current;
 			
 			$current = $iterator->next();
-			
-			$funcName = null;
 			
 			if (
 				isset(self::$projectionMap[$aggregate->toValue()])
 				&& $current !== null
+				&& $current->toValue() == '('
 			) {
-				Assert::isTrue($current->toValue() == '(');
-				
 				$current = $iterator->next();
 				Assert::isNotNull($current);
 				
@@ -69,21 +74,18 @@
 				
 				$current = $iterator->next();	// skip )
 				Assert::isTrue($current !== null && $current->toValue() == ')');
-			}
+				
+				$current = $iterator->next();	// as (if any)
 			
-			if ($funcName === null) {
+			} else {
 				$funcName = 'property';
-				if ($aggregate->toValue() == 'distinct') {
-					Assert::isTrue($rootNode instanceof OqlSelectQuery);
-					$rootNode->setDistinct(true);
-					
-					$property = $current;
-					Assert::isNotNull($property);
-				} else
-					$property = $aggregate;
+				$property = $aggregate;
 			}
 			
-			if (($current = $iterator->next()) && $current->toValue() == 'as') {
+			if (
+				$current !== null
+				&& $current->toValue() == 'as'
+			) {
 				$alias = $iterator->next();
 				Assert::isNotNull($alias);
 				$aliasName = $alias->toValue(); 
