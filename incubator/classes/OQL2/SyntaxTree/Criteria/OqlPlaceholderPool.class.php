@@ -68,7 +68,7 @@
 				return reset($this->pool);
 			
 			if ($this->has($placeholder->getName())) {
-				$index = $this->keys[$name];
+				$index = $this->keys[$placeholder->getName()];
 				
 				if (isset($this->pool[$index + 1]))
 					return $this->pool[$index + 1];
