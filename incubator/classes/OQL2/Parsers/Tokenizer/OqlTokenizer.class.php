@@ -102,14 +102,14 @@
 			$line = null;
 			$position = null;
 			
-			if (isset($this->tokens[$index])) {
+			if (isset($this->rawValues[$index])) {
 				$offset = 0;
 				
 				for ($i = 0; $i < $index; $i++) {
-					if (!isset($this->tokens[$i]))
+					if (!isset($this->rawValues[$i]))
 						break;
 					
-					$offset += mb_strlen($this->tokens[$i]->getRawValue());
+					$offset += mb_strlen($this->rawValues[$i]);
 					
 					if (isset($this->spaces[$i]))
 						$offset += $this->spaces[$i];
@@ -117,7 +117,7 @@
 				
 				$pos = mb_strpos(
 					$this->string,
-					$this->tokens[$index]->getRawValue(),
+					$this->rawValues[$index],
 					$offset
 				);
 				
@@ -196,11 +196,13 @@
 					continue;
 				}
 				
-				$this->tokens[$index++] = OqlToken::create(
-					$this->importTokenValue($value, $type),
-					$value,
-					$type
+				$this->rawValues[$index] = $value;
+				$this->tokens[$index] = OqlToken::create(
+					$type,
+					$this->importTokenValue($value, $type)
 				);
+				
+				$index++;
 			}
 			
 			return $this;
