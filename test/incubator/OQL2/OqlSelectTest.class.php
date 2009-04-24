@@ -305,20 +305,24 @@
 			);
 			
 			// in subquery
-			$this->assertCriteria(
-				'from TestUser where id in ($1)',
-				Criteria::create(TestUser::dao())->
-					add(
-						Expression::in(
-							'id',
-							Criteria::create(TestUser::dao())->
-								setProjection(Projection::property('id'))
-						)
-					),
-				array(
-					1 => OQL::select('id from TestUser')->toCriteria()
-				)
-			);
+			try {
+				$this->assertCriteria(
+					'from TestUser where id in ($1)',
+					Criteria::create(TestUser::dao())->
+						add(
+							Expression::in(
+								'id',
+								Criteria::create(TestUser::dao())->
+									setProjection(Projection::property('id'))
+							)
+						),
+					array(
+						1 => OQL::select('id from TestUser')->toCriteria()
+					)
+				);
+			} catch (MissingElementException $e) {
+				// no db link
+			}
 			
 			// in array
 			$this->assertCriteria(
