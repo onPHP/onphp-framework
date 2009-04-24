@@ -69,7 +69,7 @@
 		protected function match($token)
 		{
 			return
-				$token instanceof OqlToken
+				parent::match($token)
 				&& $token->match($this->type, $this->value);
 		}
 		
