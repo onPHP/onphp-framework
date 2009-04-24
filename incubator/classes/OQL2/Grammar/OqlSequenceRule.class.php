@@ -35,7 +35,7 @@
 				if ($collect)
 					$this->terminals = array_merge(
 						$this->terminals,
-						$rule->terminals
+						$rule->getTerminals()
 					);
 				
 				if (!$rule instanceof OqlOptionalRule)

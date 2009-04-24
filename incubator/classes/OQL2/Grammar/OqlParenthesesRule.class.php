@@ -35,6 +35,11 @@
 			return $this;
 		}
 		
+		protected function getTerminals()
+		{
+			return $this->terminals;
+		}
+		
 		/**
 		 * @return OqlSyntaxNode
 		**/

@@ -99,6 +99,11 @@
 			return $token instanceof OqlToken;
 		}
 		
+		protected function getTerminals()
+		{
+			return $this->terminals;
+		}
+		
 		/**
 		 * @throws OqlSyntaxErrorException
 		**/

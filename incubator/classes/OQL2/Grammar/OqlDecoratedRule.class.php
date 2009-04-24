@@ -43,5 +43,10 @@
 			
 			return $this;
 		}
+		
+		protected function getTerminals()
+		{
+			return $this->rule->getTerminals();
+		}
 	}
 ?>

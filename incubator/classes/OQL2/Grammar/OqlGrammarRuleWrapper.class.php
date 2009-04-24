@@ -79,6 +79,11 @@
 			return $this;
 		}
 		
+		protected function getTerminals()
+		{
+			return $this->getRule()->getTerminals();
+		}
+		
 		/**
 		 * @return OqlSyntaxNode
 		**/
