@@ -14,7 +14,7 @@
 	**/
 	final class OqlToken
 	{
-		const DELIMITER = '::';
+		const DELIMITER = ':';
 		
 		private static $pool = array();
 		
