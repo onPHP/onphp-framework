@@ -1,4 +1,8 @@
 
+2009-04-25	Vladlen Y. Koshelev
+
+	* core/Logic/InExpression.class.php: MappableObject support added.
+
 2009-04-23	Denis M. Gabaidulin
 
 	* main/Charts/Google/: experimental support for Data point labels API.
