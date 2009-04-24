@@ -12,47 +12,23 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleChartLabelStyle extends BaseGoogleChartStyle
+	abstract class BaseGoogleChartStyle extends BaseGoogleChartParameter
 	{
-		protected $name = 'chm';
+		protected $styles = array();
 		
 		/**
-		 * @return GoogleChartLabelStyle
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return GoogleChartLineStyle
+		 * @return BaseGoogleChartStyle
 		**/
 		public function addStyle($style)
 		{
-			Assert::isInstance($style, 'ChartLabelStyle');
+			$this->styles[] = $style;
 			
-			return parent::addStyle($style);
+			return $this;
 		}
 		
 		public function hasStyles()
 		{
 			return !empty($this->styles);
-		}
-		
-		public function toString()
-		{
-			$queryString = "{$this->name}=";
-			
-			Assert::isNotEmptyArray($this->styles);
-			
-			$i = 0;
-			
-			foreach ($this->styles as $style) {
-				$style->setDataSetIndex($i++);
-				$queryString .= $style->toString().'|';
-			}
-			
-			return rtrim($queryString, '|');
 		}
 	}
 ?>

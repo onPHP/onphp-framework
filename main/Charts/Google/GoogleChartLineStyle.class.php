@@ -12,11 +12,9 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
-	final class GoogleChartLineStyle extends BaseGoogleChartParameter
+	final class GoogleChartLineStyle extends BaseGoogleChartStyle
 	{
 		protected $name = 'chls';
-		
-		private $styles = array();
 		
 		/**
 		 * @return GoogleChartLineStyle
@@ -29,16 +27,11 @@
 		/**
 		 * @return GoogleChartLineStyle
 		**/
-		public function addStyle(ChartLineStyle $style)
+		public function addStyle($style)
 		{
-			$this->styles[] = $style;
+			Assert::isInstance($style, 'ChartLineStyle');
 			
-			return $this;
-		}
-		
-		public function hasStyles()
-		{
-			return !empty($this->styles);
+			return parent::addStyle($style);
 		}
 		
 		public function toString()
