@@ -36,18 +36,38 @@
 				return $node;
 			
 			$values = array();
+			$hasPlaceholder = false;
 			while ($value = $iterator->next()) {
-				if ($value->toValue() !== ',')
+				if ($value->toValue() !== ',') {
 					$values[] = $value->toValue();
+					
+					if (
+						!$hasPlaceholder
+						&& $value->toValue() instanceof OqlPlaceholder
+					) {
+						$hasPlaceholder = true;
+					}
+				}
 			}
 			
 			// TODO: assertions?
 			
-			return OqlLogicalObjectNode::create()->setObject(
-				$operator->toValue() == InExpression::IN
-					? Expression::in($field->toValue(), $values)
-					: Expression::notIn($field->toValue(), $values)
-			);
+			if ($hasPlaceholder && count($values) == 1) {
+				$values = reset($values);
+				$expression = new InExpression(
+					$field->toValue(),
+					reset($values),
+					$operator->toValue()
+				);
+			
+			} else {
+				$expression =
+					$operator->toValue() == InExpression::IN
+						? Expression::in($field->toValue(), $values)
+						: Expression::notIn($field->toValue(), $values);
+			}
+			
+			return OqlLogicalObjectNode::create()->setObject($expression);
 		}
 	}
 ?>
