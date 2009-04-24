@@ -96,7 +96,16 @@
 		
 		protected function match($token)
 		{
-			return $token instanceof OqlToken;
+			Assert::isNotNull($this->terminals, 'build rule first');
+			
+			if ($token instanceof OqlToken) {
+				foreach ($this->getTerminals() as $terminalToken) {
+					if ($token->matchToken($terminalToken))
+						return true;
+				}
+			}
+			
+			return false;
 		}
 		
 		protected function getTerminals()

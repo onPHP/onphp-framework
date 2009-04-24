@@ -45,20 +45,6 @@
 			return $this;
 		}
 		
-		protected function match($token)
-		{
-			Assert::isNotNull($this->terminals, 'build rule first');
-			
-			if (parent::match($token)) {
-				foreach ($this->terminals as $terminalToken) {
-					if ($token->matchToken($terminalToken))
-						return true;
-				}
-			}
-			
-			return false;
-		}
-		
 		/**
 		 * @return OqlSyntaxNode
 		**/

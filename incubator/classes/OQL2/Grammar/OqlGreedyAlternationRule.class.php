@@ -22,16 +22,6 @@
 			return new self;
 		}
 		
-		protected function getMatches($token)
-		{
-			if ($token instanceof OqlToken) {
-				// FIXME: return first all matches
-				return $this->list;
-			}
-			
-			return array();
-		}
-		
 		/**
 		 * @return OqlSyntaxNode
 		**/
@@ -45,8 +35,8 @@
 			$maxNode = null;
 			$maxRule = null;
 			
-			if ($list = $this->getMatches($tokenizer->peek())) {
-				foreach ($list as $rule) {
+			if ($this->match($tokenizer->peek())) {
+				foreach ($this->list as $rule) {
 					$index = $tokenizer->getIndex();
 					
 					if (

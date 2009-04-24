@@ -66,13 +66,6 @@
 			return $this;
 		}
 		
-		protected function match($token)
-		{
-			return
-				parent::match($token)
-				&& $token->match($this->type, $this->value);
-		}
-		
 		/**
 		 * @return OqlTokenNode
 		**/
