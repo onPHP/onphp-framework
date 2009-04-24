@@ -81,10 +81,11 @@
 			
 			Assert::isTrue($this->binded);
 			
-			return
-				$this->value instanceof Identifiable
-					? $this->value->getId()
-					: $this->value;
+			$value = $this->value;
+			if ($value instanceof Identifiable)
+				return $value->getId();
+			
+			return $value;
 		}
 		
 		public function __toString()
