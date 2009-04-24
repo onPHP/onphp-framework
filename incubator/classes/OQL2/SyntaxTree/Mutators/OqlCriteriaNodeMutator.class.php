@@ -20,7 +20,8 @@
 			'order by'	=> 'addOrder',
 			'limit'		=> 'setLimit',
 			'offset'	=> 'setOffset',
-			'having'	=> null
+			'having'	=> null,
+			'group by'	=> null
 		);
 		
 		/**
