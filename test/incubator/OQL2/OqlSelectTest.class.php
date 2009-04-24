@@ -510,23 +510,6 @@
 					)
 			);
 			
-			// complex boolean expressions
-			$this->assertCriteria(
-				'from TestUser having (id = 1) != ((1 = id) = (id >= 2))',
-				Criteria::create(TestUser::dao())->
-					setProjection(
-						Projection::having(
-							Expression::notEq(
-								Expression::eq('id', 1),
-								Expression::eq(
-									Expression::eq(1, 'id'),
-									Expression::gtEq('id', 2)
-								)
-							)
-						)
-					)
-			);
-			
 			// placeholder
 			$this->assertCriteria(
 				'from TestUser having $1 = 1',
