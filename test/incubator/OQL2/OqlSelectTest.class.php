@@ -52,7 +52,10 @@
 								Projection::avg(
 									Expression::sub(
 										Expression::minus('id'),
-										Expression::div(-1, -10)
+										Expression::div(
+											-1,
+											Expression::minus(10)
+										)
 									)
 								)
 							)->
@@ -73,7 +76,7 @@
 			
 			// boolean and arithmetic expressions in count function
 			$this->assertCriteria(
-				'count(distinct -id * 2 / -3 > 10), count(id in (1, -$1, -3) and Name like `test`)'
+				'count(distinct -id * 2 / -3 > 10), count(id in (1, $1, -3) and Name like `test`)'
 				.'from TestUser',
 				Criteria::create(TestUser::dao())->
 					setProjection(
@@ -81,12 +84,9 @@
 							add(
 								Projection::distinctCount(
 									Expression::gt(
-										Expression::div(
-											Expression::mul(
-												Expression::minus('id'),
-												2
-											),
-											-3
+										Expression::mul(
+											Expression::minus('id'),
+											Expression::div(2, -3)
 										),
 										10
 									)
@@ -95,7 +95,7 @@
 							add(
 								Projection::count(
 									Expression::expAnd(
-										Expression::in('id', array(1, -2, -3)),
+										Expression::in('id', array(1, 2, -3)),
 										Expression::like('Name', 'test')
 									)
 								)
@@ -342,20 +342,20 @@
 				Criteria::create(TestUser::dao())->
 					add(
 						Expression::expOr(
+							Expression::like('id', 'ы'),
 							Expression::expOr(
+								Expression::notLike('id', 'Ы%'),
 								Expression::expOr(
+									Expression::ilike('id', 'Ы'),
 									Expression::expOr(
+										Expression::notIlike('id', 'ы%'),
 										Expression::expOr(
-											Expression::like('id', 'ы'),
-											Expression::notLike('id', 'Ы%')
-										),
-										Expression::ilike('id', 'Ы')
-									),
-									Expression::notIlike('id', 'ы%')
-								),
-								Expression::similar('Name', 's')
-							),
-							Expression::notSimilar('Name', 'S')
+											Expression::similar('Name', 's'),
+											Expression::notSimilar('Name', 'S')
+										)
+									)
+								)
+							)
 						)
 					),
 				array(
@@ -390,12 +390,12 @@
 					add(
 						Expression::eq(
 							Expression::div(
-								Expression::sub(
-									Expression::add(
-										2,
-										Expression::minus('id')
-									),
-									-1
+								Expression::add(
+									2,
+									Expression::sub(
+										Expression::minus('id'),
+										-1
+									)
 								),
 								2
 							),
