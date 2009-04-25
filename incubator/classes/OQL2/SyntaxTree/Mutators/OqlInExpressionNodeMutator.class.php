@@ -36,26 +36,26 @@
 				return $node;
 			
 			$values = array();
-			$hasPlaceholder = false;
-			while ($value = $iterator->next()) {
-				if ($value->toValue() !== ',') {
+			do {
+				$value = $iterator->next();
+				
+				if ($value)
 					$values[] = $value->toValue();
-					
-					if (
-						!$hasPlaceholder
-						&& $value->toValue() instanceof OqlPlaceholder
-					) {
-						$hasPlaceholder = true;
-					}
-				}
-			}
+				
+				$comma = $iterator->next();
+				Assert::isTrue(
+					$comma == null || $comma->toValue() == ','
+				);
 			
-			// TODO: assertions?
+			} while ($comma && $comma->toValue() == ',');
 			
-			if ($hasPlaceholder && count($values) == 1) {
+			if (
+				count($values) == 1
+				&& (($value = reset($values)) instanceof OqlPlaceholder)
+			) {
 				$expression = new InExpression(
 					$field->toValue(),
-					reset($values),
+					$value,
 					$operator->toValue()
 				);
 			
