@@ -79,7 +79,7 @@
 					add($this->terminal(null, OqlTokenType::AGGREGATE_FUNCTION))
 			);
 			
-			//	<constant> ::= <string> | ( [ "-" ] ( <number> | <placeholder> ) ) | <boolean> | <null>
+			//	<constant> ::= <string> | ( [ "-" ] <number> ) | <placeholder> | <boolean> | <null>
 			$this->set(
 				OqlAlternationRule::create()->
 					setId(self::CONSTANT)->
@@ -89,14 +89,13 @@
 							add(
 								OqlOptionalRule::create()->setRule(
 									$this->operator('-')
-								)
+								)->
+								setMutator(OqlOperatorNodeMutator::me())
 							)->
-							add(
-								OqlAlternationRule::create()->
-									add($this->get(self::NUMBER))->
-									add($this->get(self::PLACEHOLDER))
-							)
+							add($this->get(self::NUMBER))->
+							setMutator(OqlPrefixUnaryExpressionNodeMutator::me())
 					)->
+					add($this->get(self::PLACEHOLDER))->
 					add($this->get(self::BOOLEAN))->
 					add($this->get(self::NULL))
 			);

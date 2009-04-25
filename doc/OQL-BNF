@@ -80,7 +80,7 @@ $Id$
 
 	<identifier> ::= <name> | <aggregate_function>
 
-	<constant> ::= <string> | ( [ "-" ] ( <number> | <placeholder> ) ) | <boolean> | <null>
+	<constant> ::= <string> | ( [ "-" ] <number> ) | <placeholder> | <boolean> | <null>
 
 	<pattern> ::= <string> | <placeholder>
 
