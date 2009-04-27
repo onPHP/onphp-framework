@@ -81,6 +81,11 @@
 			return $this->sets[$index];
 		}
 		
+		public function getCount()
+		{
+			return count($this->sets);
+		}
+		
 		public function toString()
 		{
 			Assert::isNotNull($this->encoding, 'Data encdoing Required.');
