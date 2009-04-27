@@ -1,4 +1,8 @@
 
+2009-04-27	Denis M. Gabaidulin
+
+	* main/Charts/Google/GoogleChartData.class.php: getCount() added.
+
 2009-04-25	Vladlen Y. Koshelev
 
 	* core/Logic/InExpression.class.php: MappableObject support added.
