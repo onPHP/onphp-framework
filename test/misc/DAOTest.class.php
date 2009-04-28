@@ -417,6 +417,10 @@
 			$this->drop();
 		}
 		
+		
+		/**
+		 * @see http://lists.shadanakar.org/onphp-dev-ru/0811/0774.html
+		**/
 		public function testRecursiveContainers()
 		{
 			$this->create();
