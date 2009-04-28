@@ -5,4 +5,3 @@ test/meta/Business/
 test/meta/DAOs/
 test/meta/Proto/
 test/main/data/urls/parser.dump.new
-!test/meta/DAOs/TestTypeObjectsDAO.class.php
