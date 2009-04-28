@@ -412,6 +412,41 @@
 			$this->drop();
 		}
 		
+		public function testRecursiveContainers()
+		{
+			$this->create();
+			
+			TestObject::dao()->import(
+				TestObject::create()->
+				setId(1)->
+				setName('test object')
+			);
+			
+			TestType::dao()->import(
+				TestType::create()->
+				setId(1)->
+				setName('test type')
+			);
+			
+			$type = TestType::dao()->getById(1);
+			
+			$type->getObjects()->fetch()->setList(
+				array(TestObject::dao()->getById(1))
+			)->save();
+			
+			$object = TestObject::dao()->getById(1);
+			
+			TestObject::dao()->save($object->setName('test object modified'));
+			
+			$list = $type->getObjects()->getList();
+			
+			$modifiedObject = TestObject::dao()->getById(1);
+			
+			$this->assertEquals($list[0], $modifiedObject);
+			
+			$this->drop();
+		}
+		
 		public function nonIntegerIdentifier()
 		{
 			$id = 'non-integer-one';
