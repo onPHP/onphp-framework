@@ -1,4 +1,9 @@
 
+2009-04-30	Ivan Y. Khvostishkov
+
+	* main/Math/MathUtils.class.php: randomNormalStd(): generation of
+	random normal deviates.
+
 2009-04-27	Denis M. Gabaidulin
 
 	* main/Charts/Google/GoogleChartData.class.php: getCount() added.

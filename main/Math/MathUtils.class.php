@@ -78,5 +78,25 @@
 			
 			return $function($value / $base) * $base;
 		}
+
+		/**
+		 * G. E. P. Box and Mervin E. Muller, A Note on the Generation of
+		 * Random Normal Deviates, The Annals of Mathematical Statistics
+		 * (1958), Vol. 29, No. 2 pp. 610-611
+		**/
+		public static function randomNormalStd()
+		{
+			do {
+				$x = rand() / getrandmax() * 2 - 1;
+				$y = rand() / getrandmax() * 2 - 1;
+
+				$r = ($x * $x) + ($y * $y);
+
+			} while (($r > 1) || ($x + $y == 0));
+
+			$z = $x * sqrt(-2 * log($r) / $r);
+
+			return $z;
+		}
 	}
 ?>
