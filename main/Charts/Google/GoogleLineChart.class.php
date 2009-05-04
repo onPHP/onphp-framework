@@ -69,7 +69,9 @@
 				$this->style->addStyle($style);
 			
 			if ($labelStyle = $line->getLabelStyle())
-				$this->labelStyle->addStyle($labelStyle);
+				$this->labelStyle->addStyle(
+					$labelStyle->setDataSetIndex($this->data->getCount() - 1)
+				);
 			
 			return $this;
 		}

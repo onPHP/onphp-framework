@@ -136,4 +136,22 @@
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
+	
+	<class name="TestObject" type="final">
+		<properties>
+				<identifier />
+				<property name="types" type="TestType" relation="ManyToMany" required="false" />
+				<property name="name" type="String" size="50" required="true" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+	
+	<class name="TestType" type="final">
+		<properties>
+				<identifier />
+				<property name="objects" type="TestObject" relation="ManyToMany" required="false" />
+				<property name="name" type="String" size="50" required="true" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
 </classes></metaconfiguration>

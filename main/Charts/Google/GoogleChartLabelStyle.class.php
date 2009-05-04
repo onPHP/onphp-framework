@@ -47,10 +47,8 @@
 			
 			$i = 0;
 			
-			foreach ($this->styles as $style) {
-				$style->setDataSetIndex($i++);
+			foreach ($this->styles as $style)
 				$queryString .= $style->toString().'|';
-			}
 			
 			return rtrim($queryString, '|');
 		}
