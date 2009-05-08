@@ -1,4 +1,9 @@
 
+2009-05-08	Ivan Y. Khvostishkov
+
+	* main/DAOs/DaoIterator.class.php: foreach() iterator through the DAO
+	would be useful.
+
 2009-04-30	Ivan Y. Khvostishkov
 
 	* main/Math/MathUtils.class.php: randomNormalStd(): generation of
