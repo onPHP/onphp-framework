@@ -59,8 +59,8 @@
 			return
 				preg_replace(
 					'/([^\s]{'.$this->getMaxWordLength().','
-						.$this->getMaxWordLength().'})/u',
-					'$1'.$this->getDelimer(),
+						.$this->getMaxWordLength().'})([^\s])/u',
+					'$1'.$this->getDelimer().'$2',
 					$value
 				);
 		}
