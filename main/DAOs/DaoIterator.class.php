@@ -45,7 +45,8 @@
 
 		public function current()
 		{
-			Assert::isTrue($this->valid());
+			if (!$this->valid())
+				return null;
 
 			return $this->chunk[$this->offset];
 		}
@@ -59,7 +60,8 @@
 
 		public function next()
 		{
-			Assert::isTrue($this->valid());
+			if (!$this->valid())
+				return null;
 
 			$key = $this->key();
 
@@ -93,7 +95,11 @@
 			// preseving memory bloat
 			$this->dao->dropIdentityMap();
 
-			$this->chunk = $this->dao->getListByQuery($query);
+			try {
+				$this->chunk = $this->dao->getListByQuery($query);
+			} catch (ObjectNotFoundException $e) {
+				$this->chunk = array();
+			}
 
 			return $this->chunk;
 		}
