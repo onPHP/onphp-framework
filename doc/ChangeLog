@@ -1,4 +1,8 @@
 
+2009-05-14	Ivan Y. Khvostishkov
+
+	* core/Base/Assert.class.php: methodExists() assert.
+
 2009-05-08	Ivan Y. Khvostishkov
 
 	* main/DAOs/DaoIterator.class.php: foreach() iterator through the DAO
