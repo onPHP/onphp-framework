@@ -86,10 +86,10 @@
 			if ($result)
 				return $result;
 
-			$result = parent::make($object, $recursive);
+			$result = parent::make($realObject, $recursive);
 
 			if ($result instanceof Identifiable)
-				$result->setId(basename($object));
+				$result->setId(basename($realObject));
 
 			return $result;
 		}

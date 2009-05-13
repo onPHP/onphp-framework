@@ -105,6 +105,7 @@
 			$this->assertNotNull($result->getInner());
 
 			$this->assertEquals(421, $result->getInner()->getId());
+			$this->assertEquals(422, $result->getInner()->getInner()->getId());
 
 			$this->assertNotNull($result->getInner()->getInner());
 
@@ -117,7 +118,6 @@
 				setDirectory($newItemTmpDir);
 
 			$saver->makeList(array($newHead));
-
 
 			$result->setInner($newHead);
 

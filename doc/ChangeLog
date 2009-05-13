@@ -1,5 +1,11 @@
 
-2009-05-14	Ivan Y. Khvostishkov
+2009-05-13	Ivan Y. Khvostishkov
+
+	* main/EntityProto/Builders/DirectoryToObjectBinder.class.php: fixed
+	bug related to symlinks reading, unit test provided, crush test spotted
+	by Deinis M. Gabaidulin. 
+
+2009-05-12	Ivan Y. Khvostishkov
 
 	* core/Base/Assert.class.php: methodExists() assert.
 
