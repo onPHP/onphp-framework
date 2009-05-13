@@ -265,6 +265,14 @@
 				);
 		}
 		
+		public static function methodExists($object, $method, $message = null)
+		{
+			if (!method_exists($object, $method))
+				throw new WrongArgumentException(
+					$message.', method "'.get_class($object).'::'.$method.'()" does not exists'
+				);
+		}
+
 		public static function isUnreachable($message = 'unreachable code reached')
 		{
 			throw new WrongArgumentException($message);
