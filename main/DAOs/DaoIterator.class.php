@@ -11,17 +11,43 @@
 
 	final class DaoIterator implements Iterator
 	{
-		private $dao = null;
+		private $dao			= null;
+		private $projection		= null;
+		private $keyProperty	= 'id';
 
-		private $chunkSize = 42;
+		private $chunkSize		= 42;
 
-		private $chunk = array();
-		private $offset = 0;
+		private $chunk			= null;
+		private $offset			= 0;
 
-		public function __construct(GenericDAO $dao)
+		public function setDao(ProtoDao $dao)
 		{
 			$this->dao = $dao;
-			$this->rewind();
+
+			return $this;
+		}
+
+		/**
+		 * @return ProtoDao
+		 */
+		public function getDao()
+		{
+			return $this->dao;
+		}
+
+		public function setProjection(ObjectProjection $projection)
+		{
+			$this->projection = $projection;
+
+			return $this;
+		}
+
+		/**
+		 * @return ObjectProjection
+		 */
+		public function getProjection()
+		{
+			return $this->projection;
 		}
 
 		public function setChunkSize($chunkSize)
@@ -34,6 +60,18 @@
 		public function getChunkSize()
 		{
 			return $this->chunkSize;
+		}
+
+		public function setKeyProperty($keyProperty)
+		{
+			$this->keyProperty = $keyProperty;
+
+			return $this;
+		}
+
+		public function getKeyProperty()
+		{
+			return $this->keyProperty;
 		}
 
 		public function rewind()
@@ -53,9 +91,11 @@
 
 		public function key()
 		{
-			Assert::isInstance($this->current(), 'Identifiable');
+			$method = 'get'.ucfirst($this->keyProperty);
 
-			return $this->current()->getId();
+			Assert::methodExists($this->current(), $method);
+
+			return $this->current()->$method();
 		}
 
 		public function next()
@@ -76,30 +116,36 @@
 
 		public function valid()
 		{
+			if ($this->chunk === null)
+				$this->loadNextChunk(null);
+
 			return isset($this->chunk[$this->offset]);
 		}
 
 		private function loadNextChunk($id)
 		{
+			Assert::isNotNull($this->dao);
+
 			$this->offset = 0;
 
-			$query = $this->dao->makeSelectHead()->
-				orderBy($this->dao->getIdName())->
-				limit($this->chunkSize);
+			$criteria = Criteria::create($this->dao);
+
+			if ($this->projection)
+				$criteria->setProjection($this->projection);
+
+			$criteria->
+				addOrder($this->keyProperty)->
+				setLimit($this->chunkSize);
 
 			if ($id !== null)
-				$query->where(
-					Expression::gt($this->dao->getIdName(), $id)
+				$criteria->add(
+					Expression::gt($this->keyProperty, $id)
 				);
 
-			// preseving memory bloat
+			// preserving memory bloat
 			$this->dao->dropIdentityMap();
 
-			try {
-				$this->chunk = $this->dao->getListByQuery($query);
-			} catch (ObjectNotFoundException $e) {
-				$this->chunk = array();
-			}
+			$this->chunk = $criteria->getList();
 
 			return $this->chunk;
 		}
