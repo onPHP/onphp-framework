@@ -222,6 +222,8 @@
 			echo ($this->reallyDelete ? 'really ' : null)
 				."deleted: ".$slaveObject.PHP_EOL;
 
+			$slaveGetter = 'get'.ucfirst($this->slaveKeyProperty);
+
 			if (!$this->dryRun && $this->reallyDelete)
 				$this->slave->dropById($slaveObject->$slaveGetter());
 
@@ -289,7 +291,7 @@
 			echo PHP_EOL;
 
 			if (!$this->dryRun)
-				$this->slave->merge($masterObject);
+				$this->slave->merge($object);
 		}
 
 		private function convertMasterObjectToSlave($masterObject)
