@@ -1,4 +1,9 @@
 
+2009-05-14	Ivan Y. Khvostishkov
+
+	* main/Utils/DaoSynchronizer.class.php: flexible master-slave data
+	transformation and replication tool.
+
 2009-05-13	Ivan Y. Khvostishkov
 
 	* main/EntityProto/Builders/DirectoryToObjectBinder.class.php: fixed
@@ -11,7 +16,7 @@
 
 2009-05-08	Ivan Y. Khvostishkov
 
-	* main/DAOs/DaoIterator.class.php: foreach() iterator through the DAO
+	* main/Utils/DaoIterator.class.php: foreach() iterator through the DAO
 	would be useful.
 
 2009-04-30	Ivan Y. Khvostishkov
