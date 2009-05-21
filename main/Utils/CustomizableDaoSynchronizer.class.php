@@ -217,7 +217,7 @@
 				}
 			}
 
-			echo "Total: updated: $updated, deleted: $deleted,".
+			echo "Total: updated: $updated, deleted: $deleted, ".
 				"inserted: $inserted".PHP_EOL.PHP_EOL;
 
 			return $this;
