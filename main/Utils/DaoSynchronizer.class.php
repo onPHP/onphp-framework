@@ -70,6 +70,7 @@
 
 		protected function delete($slaveObject)
 		{
+			// FIXME: remove presentation logic
 			echo ($this->reallyDelete ? 'really ' : null)
 				."deleted: ".$slaveObject.PHP_EOL;
 
@@ -78,6 +79,7 @@
 
 		protected function insert($masterObject)
 		{
+			// FIXME: remove presentation logic
 			echo "inserted: ".$masterObject.PHP_EOL;
 
 			return parent::insert($masterObject);
@@ -85,6 +87,7 @@
 
 		private function changed($old, $object, $properties)
 		{
+			// FIXME: remove presentation logic
 			echo "updated: ".$old.' ';
 
 			foreach ($properties as $propertyName => $property) {
@@ -96,6 +99,7 @@
 				echo "[$propertyName: '$oldValue' => '$newValue'] ";
 			}
 
+			// FIXME: remove presentation logic
 			echo PHP_EOL;
 
 			return $this;
