@@ -35,6 +35,7 @@
 			return $this;
 		}
 
+		// FIXME: isDryRun
 		public function getDryRun()
 		{
 			return $this->dryRun;
@@ -47,6 +48,7 @@
 			return $this;
 		}
 
+		// FIXME: isReallyDelete
 		public function getReallyDelete()
 		{
 			return $this->reallyDelete;
@@ -138,6 +140,7 @@
 
 		public function run()
 		{
+			// FIXME: remove presentation logic
 			echo 'Synchronizing: '.get_class($this->master)
 				.' => '.get_class($this->slave).PHP_EOL;
 
@@ -217,6 +220,7 @@
 				}
 			}
 
+			// FIXME: remove presentation logic
 			echo "Total: updated: $updated, deleted: $deleted, ".
 				"inserted: $inserted".PHP_EOL.PHP_EOL;
 
@@ -233,6 +237,7 @@
 
 		protected function delete($slaveObject)
 		{
+			// FIXME: assertion for method's existence is missing
 			$slaveGetter = 'get'.ucfirst($this->slaveKeyProperty);
 
 			if (!$this->dryRun && $this->reallyDelete)
@@ -282,4 +287,3 @@
 		}
 	}
 ?>
-
