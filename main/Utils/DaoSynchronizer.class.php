@@ -10,43 +10,43 @@
  ***************************************************************************/
 
 	/**
-	 * Prototyped varian of DAO synchronizer.
+	 * Prototyped variant of DAO synchronizer.
 	**/
-	final class DaoSynchronizer extends CustomizableDaoSynchronizer
+	class DaoSynchronizer extends CustomizableDaoSynchronizer
 	{
 		public static function create()
 		{
 			return new self;
 		}
-
+		
 		public function setMaster(GenericDAO $master)
 		{
 			Assert::isInstance($master, 'ProtoDAO');
-
+			
 			return parent::setMaster($master);
 		}
-
+		
 		public function setSlave(GenericDAO $slave)
 		{
 			Assert::isInstance($slave, 'ProtoDAO');
-
+			
 			return parent::setSlave($slave);
 		}
-
+		
 		protected function sync($old, $object)
 		{
 			$changed = array();
-
+			
 			foreach (
 				$this->slave->getProtoClass()->
 					getPropertyList() as $property
 			) {
 				$getter = $property->getGetter();
-
+				
 				if ($property->getClassName() === null) {
 					if ($old->$getter() != $object->$getter())
 						$changed[$property->getName()] = $property;
-
+					
 				} else {
 					if (
 						(
@@ -58,47 +58,17 @@
 						$changed[$property->getName()] = $property;
 				}
 			}
-
+			
 			if ($changed) {
-				$this->changed($old, $object, $changed);
-
-				return parent::sync($old, $object);
+				return $this->changed($old, $object, $changed);
 			}
-
+			
 			return 0;
 		}
-
-		protected function delete($slaveObject)
+		
+		protected function changed($old, $object, $properties)
 		{
-			echo ($this->reallyDelete ? 'really ' : null)
-				."deleted: ".$slaveObject.PHP_EOL;
-
-			return parent::delete($slaveObject);
-		}
-
-		protected function insert($masterObject)
-		{
-			echo "inserted: ".$masterObject.PHP_EOL;
-
-			return parent::insert($masterObject);
-		}
-
-		private function changed($old, $object, $properties)
-		{
-			echo "updated: ".$old.' ';
-
-			foreach ($properties as $propertyName => $property) {
-				$getter = $property->getGetter();
-
-				$oldValue = $old->$getter();
-				$newValue = $object->$getter();
-
-				echo "[$propertyName: '$oldValue' => '$newValue'] ";
-			}
-
-			echo PHP_EOL;
-
-			return $this;
+			return parent::sync($old, $object);
 		}
 	}
 ?>
