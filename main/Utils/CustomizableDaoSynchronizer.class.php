@@ -11,56 +11,58 @@
 
 	class CustomizableDaoSynchronizer
 	{
-		protected $dryRun = false;
-		protected $reallyDelete = false;
-
-		protected $master = null;
-		protected $slave = null;
-
-		private $masterProjection = null;
-		private $slaveProjection = null;
-
-		private $masterKeyProperty = 'id';
-		private $slaveKeyProperty = 'id';
-
+		protected $dryRun			= false;
+		protected $reallyDelete		= false;
+		
+		protected $master			= null;
+		protected $slave			= null;
+		
+		private $masterProjection	= null;
+		private $slaveProjection	= null;
+		
+		private $masterKeyProperty	= 'id';
+		private $slaveKeyProperty	= 'id';
+		
+		private $totalUpdated		= 0;
+		private $totalInserted		= 0;
+		private $totalDeleted		= 0;
+		
 		public static function create()
 		{
 			return new self;
 		}
-
+		
 		public function setDryRun($dryRun)
 		{
 			$this->dryRun = $dryRun;
-
+			
 			return $this;
 		}
-
-		// FIXME: isDryRun
-		public function getDryRun()
+		
+		public function isDryRun()
 		{
 			return $this->dryRun;
 		}
-
+		
 		public function setReallyDelete($reallyDelete)
 		{
 			$this->reallyDelete = $reallyDelete;
-
+			
 			return $this;
 		}
-
-		// FIXME: isReallyDelete
-		public function getReallyDelete()
+		
+		public function isReallyDelete()
 		{
 			return $this->reallyDelete;
 		}
-
+		
 		public function setMaster(GenericDAO $master)
 		{
 			$this->master = $master;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return GenericDAO
 		**/
@@ -68,14 +70,14 @@
 		{
 			return $this->master;
 		}
-
+		
 		public function setSlave(GenericDAO $slave)
 		{
 			$this->slave = $slave;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return GenericDAO
 		**/
@@ -83,38 +85,38 @@
 		{
 			return $this->slave;
 		}
-
+		
 		public function setMasterKeyProperty($masterKeyProperty)
 		{
 			$this->masterKeyProperty = $masterKeyProperty;
-
+			
 			return $this;
 		}
-
+		
 		public function getMasterKeyProperty()
 		{
 			return $this->masterKeyProperty;
 		}
-
+		
 		public function setSlaveKeyProperty($slaveKeyProperty)
 		{
 			$this->slaveKeyProperty = $slaveKeyProperty;
-
+			
 			return $this;
 		}
-
+		
 		public function getSlaveKeyProperty()
 		{
 			return $this->slaveKeyProperty;
 		}
-
+		
 		public function setMasterProjection(ObjectProjection $masterProjection)
 		{
 			$this->masterProjection = $masterProjection;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return ObjectProjection
 		**/
@@ -122,14 +124,14 @@
 		{
 			return $this->masterProjection;
 		}
-
+		
 		public function setSlaveProjection(ObjectProjection $slaveProjection)
 		{
 			$this->slaveProjection = $slaveProjection;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return ObjectProjection
 		**/
@@ -137,42 +139,40 @@
 		{
 			return $this->slaveProjection;
 		}
-
+		
 		public function run()
 		{
-			// FIXME: remove presentation logic
-			echo 'Synchronizing: '.get_class($this->master)
-				.' => '.get_class($this->slave).PHP_EOL;
-
 			$masterIterator = new DaoIterator();
 			$slaveIterator = new DaoIterator();
-
+			
 			$masterIterator->setDao($this->master);
 			$slaveIterator->setDao($this->slave);
-
+			
 			if ($this->masterKeyProperty)
 				$masterIterator->setKeyProperty($this->masterKeyProperty);
-
+			
 			if ($this->slaveKeyProperty)
 				$slaveIterator->setKeyProperty($this->slaveKeyProperty);
-
+			
 			if ($this->masterProjection)
 				$masterIterator->setProjection($this->masterProjection);
-
+			
 			if ($this->slaveProjection)
 				$slaveIterator->setProjection($this->slaveProjection);
-
-			$deleted = $inserted = $updated = 0;
-
+			
+			$this->totalDeleted = 0;
+			$this->totalInserted = 0;
+			$this->totalUpdated = 0;
+			
 			while ($masterIterator->valid() || $slaveIterator->valid()) {
 				$masterObject = $masterIterator->current();
 				$slaveObject = $slaveIterator->current();
-
+				
 				$masterObject = $this->convertMasterObjectToSlave($masterObject);
-
+				
 				$masterGetter = 'get'.ucfirst($this->masterKeyProperty);
 				$slaveGetter = 'get'.ucfirst($this->slaveKeyProperty);
-
+				
 				if (
 					$masterObject && $slaveObject
 					&& (
@@ -180,8 +180,8 @@
 							== $slaveObject->$slaveGetter()
 					)
 				) {
-					$updated += $this->sync($slaveObject, $masterObject);
-
+					$this->totalUpdated += $this->sync($slaveObject, $masterObject);
+					
 					$masterIterator->next();
 					$slaveIterator->next();
 				} elseif (
@@ -194,10 +194,8 @@
 						) > 0
 					)
 				) {
-					$deleted++;
-
-					$this->delete($slaveObject);
-
+					$this->totalDeleted += $this->delete($slaveObject);
+					
 					$slaveIterator->next();
 				} elseif (
 					!$slaveObject
@@ -209,61 +207,56 @@
 						) < 0
 					)
 				) {
-					$inserted++;
-
-					$this->insert($masterObject);
-
+					$this->totalInserted += $this->insert($masterObject);
+					
 					$masterIterator->next();
-
+					
 				} else {
 					Assert::isUnreachable('how did you get here?');
 				}
 			}
-
-			// FIXME: remove presentation logic
-			echo "Total: updated: $updated, deleted: $deleted, ".
-				"inserted: $inserted".PHP_EOL.PHP_EOL;
-
+			
 			return $this;
 		}
-
+		
 		protected function sync($old, $object)
 		{
 			if (!$this->dryRun)
 				$this->slave->merge($object);
-
+			
 			return 1;
 		}
-
+		
 		protected function delete($slaveObject)
 		{
-			// FIXME: assertion for method's existence is missing
 			$slaveGetter = 'get'.ucfirst($this->slaveKeyProperty);
-
+			
+			Assert::methodExists($slaveObject, $slaveGetter);
+			
 			if (!$this->dryRun && $this->reallyDelete)
 				$this->slave->dropById($slaveObject->$slaveGetter());
-
+			
 			return 1;
 		}
-
+		
 		protected function insert($masterObject)
 		{
 			if (!$this->dryRun)
 				$this->slave->import($masterObject);
-
+			
 			return 1;
 		}
-
+		
 		protected function compareKeys($min, $sub)
 		{
 			if ($min > $sub) 
 				return 1;
 			elseif ($min < $sub)
 				return -1;
-
+			
 			return 0;
 		}
-
+		
 		private function convertMasterObjectToSlave($masterObject)
 		{
 			if (
@@ -282,7 +275,7 @@
 					),
 					$masterObject
 				);
-
+			
 			return $masterObject;
 		}
 	}
