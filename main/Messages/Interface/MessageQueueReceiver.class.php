@@ -10,18 +10,16 @@
  ***************************************************************************/
 /* $Id$ */
 
-
 	interface MessageQueueReceiver
 	{
 		/**
 		 * @return Message
-		 */
+		**/
 		public function receive($uTimeout = null);
-
+		
 		/**
 		 * @return MessageQueue
-		 */
+		**/
 		public function getQueue();
 	}
-
 ?>

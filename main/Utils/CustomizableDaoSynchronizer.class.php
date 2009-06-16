@@ -294,7 +294,7 @@
 		
 		protected function compareKeys($min, $sub)
 		{
-			if ($min > $sub) 
+			if ($min > $sub)
 				return 1;
 			elseif ($min < $sub)
 				return -1;

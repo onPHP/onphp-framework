@@ -63,21 +63,21 @@
 			
 			$result =
 				$this->keys[$keyIndex][2](
-			 		$one[$this->keys[$keyIndex][0]],
-			 		$two[$this->keys[$keyIndex][0]]
-			 	);
+					$one[$this->keys[$keyIndex][0]],
+					$two[$this->keys[$keyIndex][0]]
+				);
 			
 			if ($this->keys[$keyIndex][1] == self::DESC)
 				$result *= -1;
-			 
+			
 			if ($result == 0) {
 				$keyIndex++;
-			 	
-			 	if (isset($this->keys[$keyIndex]))
-			 		$result = $this->compare($one, $two, $keyIndex);
+				
+				if (isset($this->keys[$keyIndex]))
+					$result = $this->compare($one, $two, $keyIndex);
 			 }
-			 
+			
 			 return $result;
 		}
-    }
+	}
 ?>

@@ -20,7 +20,7 @@
 			$this->assertEquals($before->getYear(), '1234');
 			
 			$this->assertFalse($after->equals($before));
-
+			
 			$this->assertEquals($future, $after->toDate());
 			$this->assertEquals($past, $before->toDate());
 			
@@ -56,7 +56,7 @@
 			}
 		}
 		
-		public function testDateNow() 
+		public function testDateNow()
 		{
 			try {
 				Date::create('now');
