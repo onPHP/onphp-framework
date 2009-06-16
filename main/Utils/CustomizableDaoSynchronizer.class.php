@@ -27,11 +27,17 @@
 		private $totalInserted		= 0;
 		private $totalDeleted		= 0;
 		
+		/**
+		 * @return CustomizableDaoSynchronizer
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return CustomizableDaoSynchronizer
+		**/
 		public function setDryRun($dryRun)
 		{
 			$this->dryRun = $dryRun;
@@ -44,6 +50,9 @@
 			return $this->dryRun;
 		}
 		
+		/**
+		 * @return CustomizableDaoSynchronizer
+		**/
 		public function setReallyDelete($reallyDelete)
 		{
 			$this->reallyDelete = $reallyDelete;
@@ -56,6 +65,9 @@
 			return $this->reallyDelete;
 		}
 		
+		/**
+		 * @return CustomizableDaoSynchronizer
+		**/
 		public function setMaster(GenericDAO $master)
 		{
 			$this->master = $master;
@@ -71,6 +83,9 @@
 			return $this->master;
 		}
 		
+		/**
+		 * @return CustomizableDaoSynchronizer
+		**/
 		public function setSlave(GenericDAO $slave)
 		{
 			$this->slave = $slave;
@@ -86,6 +101,9 @@
 			return $this->slave;
 		}
 		
+		/**
+		 * @return CustomizableDaoSynchronizer
+		**/
 		public function setMasterKeyProperty($masterKeyProperty)
 		{
 			$this->masterKeyProperty = $masterKeyProperty;
@@ -98,6 +116,9 @@
 			return $this->masterKeyProperty;
 		}
 		
+		/**
+		 * @return CustomizableDaoSynchronizer
+		**/
 		public function setSlaveKeyProperty($slaveKeyProperty)
 		{
 			$this->slaveKeyProperty = $slaveKeyProperty;
@@ -110,6 +131,9 @@
 			return $this->slaveKeyProperty;
 		}
 		
+		/**
+		 * @return CustomizableDaoSynchronizer
+		**/
 		public function setMasterProjection(ObjectProjection $masterProjection)
 		{
 			$this->masterProjection = $masterProjection;
@@ -125,6 +149,9 @@
 			return $this->masterProjection;
 		}
 		
+		/**
+		 * @return CustomizableDaoSynchronizer
+		**/
 		public function setSlaveProjection(ObjectProjection $slaveProjection)
 		{
 			$this->slaveProjection = $slaveProjection;
@@ -140,6 +167,9 @@
 			return $this->slaveProjection;
 		}
 		
+		/**
+		 * @return CustomizableDaoSynchronizer
+		**/
 		public function run()
 		{
 			$masterIterator = new DaoIterator();

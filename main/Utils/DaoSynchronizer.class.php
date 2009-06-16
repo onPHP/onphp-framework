@@ -14,11 +14,17 @@
 	**/
 	class DaoSynchronizer extends CustomizableDaoSynchronizer
 	{
+		/**
+		 * @return DaoSynchronizer
+		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return DaoSynchronizer
+		**/
 		public function setMaster(GenericDAO $master)
 		{
 			Assert::isInstance($master, 'ProtoDAO');
@@ -26,6 +32,9 @@
 			return parent::setMaster($master);
 		}
 		
+		/**
+		 * @return DaoSynchronizer
+		**/
 		public function setSlave(GenericDAO $slave)
 		{
 			Assert::isInstance($slave, 'ProtoDAO');
