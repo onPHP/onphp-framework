@@ -219,6 +219,21 @@
 			return $this;
 		}
 		
+		public function getTotalInserted()
+		{
+			return $this->totalInserted;
+		}
+		
+		public function getTotalDeleted()
+		{
+			return $this->totalDeleted;
+		}
+		
+		public function getTotalUpdated()
+		{
+			return $this->totalUpdated;
+		}
+		
 		protected function sync($old, $object)
 		{
 			if (!$this->dryRun)
