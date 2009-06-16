@@ -12,7 +12,7 @@
 
 	/**
 	 * Factory for various Primitives.
-	 * 
+	 *
 	 * @ingroup Form
 	**/
 	final class Primitive extends StaticFactory
@@ -193,6 +193,14 @@
 		public static function set($name)
 		{
 			return new PrimitiveArray($name);
+		}
+		
+		/**
+		 * @return PrimitiveHstore
+		**/
+		public static function hstore($name)
+		{
+			return new PrimitiveHstore($name);
 		}
 		
 		/**
