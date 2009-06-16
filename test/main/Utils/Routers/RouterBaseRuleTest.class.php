@@ -32,9 +32,9 @@
 		 * 		),
 		 * 	...
 		 * )
-		 *
+		 * 
 		 * @var array
-		 */
+		**/
 		protected static $fixtures = array(
 			'/example/' => array(
 				'' => '',
@@ -44,7 +44,7 @@
 				'/login?user=boo' => '/login',
 				'/example/login/?user=boo' => 'login/',
 				'/example/script.php' => 'script.php',
-				'http://example.org/example/login/?user=boo' => 'login/',
+				'http://example.org/example/login/?user=boo' => 'login/'
 			),
 			
 			'http://example.org/example/' => array(
@@ -56,7 +56,7 @@
 				'/example/login/?user=boo' => 'login/',
 				'/example/script.php' => 'script.php',
 				'http://example.org/example/login/?user=boo' => 'login/',
-				'http://example.com/example/login/?user=boo' => 'http://example.com/example/login/',
+				'http://example.com/example/login/?user=boo' => 'http://example.com/example/login/'
 			),
 			
 			'http://example.org/' => array(
@@ -69,7 +69,7 @@
 				'/example/script.php' => 'example/script.php',
 				'http://example.org/' => '',
 				'http://example.org' => '',
-				'http://example.com' => 'http://example.com',
+				'http://example.com' => 'http://example.com'
 			),
 			
 			'http://example.org' => array(
@@ -82,7 +82,7 @@
 				'/example/script.php' => '/example/script.php',
 				'http://example.org/?user=boo' => '/',
 				'http://example.org?user=boo' => '',
-				'http://example.com?user=boo' => 'http://example.com',
+				'http://example.com?user=boo' => 'http://example.com'
 			),
 			
 			'/' => array(
@@ -93,7 +93,7 @@
 				'/example/login/?user=boo' => 'example/login/',
 				'/example/script.php' => 'example/script.php',
 				'http://example.org/?user=boo' => '',
-				'http://example.org?user=boo' => '',
+				'http://example.org?user=boo' => ''
 			),
 			
 			'/example/index.php' => array(
@@ -104,9 +104,9 @@
 				'/login?user=boo' => '/login',
 				'/example/login/?user=boo' => 'login/',
 				'/example/script.php' => 'script.php',
-				'http://example.org/example/login/' => 'login/',
+				'http://example.org/example/login/' => 'login/'
 			),
-						
+			
 			'index.php' => array(
 				'' => '',
 				'/' => '/',
@@ -117,7 +117,7 @@
 				'http://example.org/example/login/?user=boo' => '/example/login/',
 				'http://example.org/index.php?user=boo' => '/index.php',
 				'script.php' => 'script.php',
-				'index.php/boo' => 'index.php/boo',
+				'index.php/boo' => 'index.php/boo'
 			),
 			
 			'' => array(
@@ -128,8 +128,8 @@
 				'/example/login/?user=boo' => '/example/login/',
 				'/example/script.php' => '/example/script.php',
 				'http://example.org/?user=boo' => '/',
-				'http://example.org?user=boo' => '',
-			),
+				'http://example.org?user=boo' => ''
+			)
 		);
 		
 		public function testGetPath()

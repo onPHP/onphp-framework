@@ -10,14 +10,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-
 	interface Message
 	{
 		/**
 		 * @return Timestamp
-		 */
+		**/
 		public function getTimestamp();
 	}
-
 ?>
-
