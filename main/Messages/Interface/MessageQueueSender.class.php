@@ -10,18 +10,16 @@
  ***************************************************************************/
 /* $Id$ */
 
-
 	interface MessageQueueSender
 	{
 		/**
 		 * @return MessageQueueReceiver
-		 */
+		**/
 		public function send(Message $message);
-
+		
 		/**
 		 * @return MessageQueue
-		 */
+		**/
 		public function getQueue();
 	}
-
 ?>

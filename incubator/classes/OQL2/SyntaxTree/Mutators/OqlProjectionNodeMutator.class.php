@@ -89,7 +89,7 @@
 			) {
 				$alias = $iterator->next();
 				Assert::isNotNull($alias);
-				$aliasName = $alias->toValue(); 
+				$aliasName = $alias->toValue();
 			} else
 				$aliasName = null;
 			

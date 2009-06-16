@@ -46,7 +46,7 @@
 				);
 			
 			else
-				return OqlLogicalObjectNode::create()->setObject( 
+				return OqlLogicalObjectNode::create()->setObject(
 					new PrefixUnaryExpression(
 						$operator->toValue(),
 						$operand->toValue()

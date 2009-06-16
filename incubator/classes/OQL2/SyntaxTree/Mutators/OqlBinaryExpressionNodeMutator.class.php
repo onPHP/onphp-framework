@@ -40,7 +40,7 @@
 			
 			// TODO: assertions?
 			
-			return OqlLogicalObjectNode::create()->setObject( 
+			return OqlLogicalObjectNode::create()->setObject(
 				new BinaryExpression(
 					$left->toValue(),
 					$right->toValue(),

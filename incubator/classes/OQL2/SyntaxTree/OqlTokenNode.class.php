@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup OQL
 	**/
-	final class OqlTokenNode extends OqlTerminalNode 
+	final class OqlTokenNode extends OqlTerminalNode
 	{
 		private $token = null;
 		

@@ -336,7 +336,7 @@
 				? call_user_func(array($class, 'dao'))
 				: $class->dao();
 			
-			return self::prototyped($class, $dao->getIdName(), $name); 
+			return self::prototyped($class, $dao->getIdName(), $name);
 		}
 	}
 ?>

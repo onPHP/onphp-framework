@@ -12,7 +12,7 @@
 
 	/**
 	 * Image uploads helper.
-	 *
+	 * 
 	 * @ingroup Primitives
 	**/
 	final class PrimitiveImage extends PrimitiveFile

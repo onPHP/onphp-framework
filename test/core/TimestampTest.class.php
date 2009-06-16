@@ -20,7 +20,7 @@
 			$this->assertEquals($before->getYear(), '1234');
 			
 			$this->assertFalse($after->equals($before));
-
+			
 			$this->assertEquals($future, $after->toDate());
 			$this->assertEquals($past, $before->toDate());
 			
@@ -84,7 +84,7 @@
 					/*_*/
 				}
 			}
-
+			
 			if (extension_loaded('calendar')) {
 				$this->assertEquals(
 					Date::dayDifference($second, $first),
@@ -196,9 +196,9 @@
 				
 				$this->fail();
 			} catch (WrongArgumentException $e) {/*_*/}
-		}	
-			
-		public function testTimestampNow() 
+		}
+		
+		public function testTimestampNow()
 		{
 			try {
 				Timestamp::create('now');
@@ -207,7 +207,7 @@
 			}
 		}
 		
-		public function testDateNow() 
+		public function testDateNow()
 		{
 			try {
 				Date::create('now');

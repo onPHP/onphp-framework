@@ -15,7 +15,7 @@
 	class OqlBindableNodeWrapper extends OqlSyntaxNodeWrapper
 	{
 		protected $pool		= null;
-		private $lastBinded	= null; 
+		private $lastBinded	= null;
 		
 		/**
 		 * @return OqlBindableNodeWrapper

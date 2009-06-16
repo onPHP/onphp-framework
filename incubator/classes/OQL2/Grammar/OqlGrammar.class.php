@@ -507,7 +507,7 @@
 				setMutator(OqlOrderChainNodeMutator::me())
 			);
 			
-			//	<limit> ::= <number> | <placeholder> 
+			//	<limit> ::= <number> | <placeholder>
 			$this->set(
 				OqlAlternationRule::create()->
 					setId(self::LIMIT)->

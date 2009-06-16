@@ -103,7 +103,7 @@
 		**/
 		public function getFirstChild()
 		{
-			if (($child = reset($this->childs)) !== false) 
+			if (($child = reset($this->childs)) !== false)
 				return $child;
 			
 			return null;
@@ -114,7 +114,7 @@
 		**/
 		public function getLastChild()
 		{
-			if (($child = end($this->childs)) !== false) 
+			if (($child = end($this->childs)) !== false)
 				return $child;
 			
 			return null;

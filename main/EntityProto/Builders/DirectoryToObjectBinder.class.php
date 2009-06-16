@@ -13,7 +13,7 @@
 	final class DirectoryToObjectBinder extends ObjectBuilder
 	{
 		private $identityMap = null;
-
+		
 		/**
 		 * @return FormToObjectConverter
 		**/
@@ -25,46 +25,46 @@
 		public function __construct(EntityProto $proto)
 		{
 			parent::__construct($proto);
-
+			
 			$this->identityMap = new DirectoryContext;
 		}
-
+		
 		public function setIdentityMap(DirectoryContext $identityMap)
 		{
 			$this->identityMap = $identityMap;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return DirectoryContext
-		 */
+		**/
 		public function getIdentityMap()
 		{
 			return $this->identityMap;
 		}
-
+		
 		/**
 		 * @return PrototypedBuilder
 		**/
 		public function cloneBuilder(EntityProto $proto)
 		{
 			$result = parent::cloneBuilder($proto);
-
+			
 			$result->setIdentityMap($this->identityMap);
-
+			
 			return $result;
 		}
-
+		
 		public function cloneInnerBuilder($property)
 		{
 			$result = parent::cloneInnerBuilder($property);
-
+			
 			$result->setIdentityMap($this->identityMap);
-
+			
 			return $result;
 		}
-
+		
 		/**
 		 * @return PrototypedBuilder
 		**/
@@ -74,37 +74,37 @@
 				ObjectToDirectoryBinder::create($this->proto)->
 				setIdentityMap($this->identityMap);
 		}
-
+		
 		public function make($object, $recursive = true)
 		{
 			Assert::isTrue(is_readable($object), "required object `$object` must exist");
-
+			
 			$realObject = $this->getRealObject($object);
-
+			
 			$result = $this->identityMap->lookup($realObject);
-
+			
 			if ($result)
 				return $result;
-
+			
 			$result = parent::make($realObject, $recursive);
-
+			
 			if ($result instanceof Identifiable)
 				$result->setId(basename($realObject));
-
+			
 			return $result;
 		}
-
+		
 		protected function initialize($object, &$result)
 		{
 			parent::initialize($object, $result);
-
+			
 			$realObject = $this->getRealObject($object);
-
+			
 			$this->identityMap->bind($realObject, $result);
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return FormGetter
 		**/
@@ -120,17 +120,17 @@
 		{
 			return new ObjectSetter($this->proto, $object);
 		}
-
+		
 		private function getRealObject($object)
 		{
 			$result = $object;
-
+			
 			if (is_link($object)) {
 				$result = readlink($object);
-
+				
 				if ($result === false)
 					throw new WrongStateException("invalid link: $object");
-
+				
 				if (substr($result, 0, 1) !== DIRECTORY_SEPARATOR) {
 					$result = GenericUri::create()->
 						setScheme('file')->
@@ -142,14 +142,14 @@
 								getPath();
 				}
 			}
-
+			
 			$realResult = realpath($result);
-
+			
 			if ($realResult === false)
 				throw new WrongStateException(
 					"invalid context: $object ($result)"
 				);
-
+			
 			return $realResult;
 		}
 	}

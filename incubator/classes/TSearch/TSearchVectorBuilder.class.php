@@ -61,7 +61,7 @@
 		public function save()
 		{
 			$db = DBPool::getByDao($this->dao);
-
+			
 			if (!$db->isQueueActive()) {
 				return $db->queryCount($this);
 			} else {
@@ -71,7 +71,7 @@
 		
 		/**
 		 * For using in <DAO>::setQueryFields()
-		 *
+		 * 
 		 * @return InsertOrUpdateQuery
 		**/
 		public function toUpdateOrInsertQuery(InsertOrUpdateQuery $query)

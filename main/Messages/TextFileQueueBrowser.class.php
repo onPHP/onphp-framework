@@ -13,27 +13,33 @@
 	final class TextFileQueueBrowser implements MessageQueueBrowser
 	{
 		private $queue = null;
-
+		
+		/**
+		 * @return TextFileQueueBrowser
+		**/
 		public static function create()
 		{
 			return new self;
 		}
-
+		
+		/**
+		 * @return TextFileQueueBrowser
+		**/
 		public function setQueue(MessageQueue $queue)
 		{
 			$this->queue = $queue;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return MessageQueue
-		 */
+		**/
 		public function getQueue()
 		{
 			return $this->queue;
 		}
-
+		
 		public function getNextMessage()
 		{
 			throw new UnimplementedFeatureException;
