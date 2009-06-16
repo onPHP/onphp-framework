@@ -13,7 +13,7 @@
 	/**
 	 * Simplified MetaClassProperty for passing information
 	 * between userspace and MetaConfiguration.
-	 * 
+	 *
 	 * @ingroup Helpers
 	**/
 	class LightMetaProperty implements Stringable
@@ -84,7 +84,7 @@
 		
 		/**
 		 * must by in sync with InnerMetaProperty::make()
-		 * 
+		 *
 		 * @return LightMetaProperty
 		**/
 		public static function fill(
@@ -364,6 +364,16 @@
 				
 				if ($this->type == 'binary') {
 					$query->set($this->columnName, new DBBinary($value));
+				} elseif ($this->type == 'hstore') {
+					$string = null;
+					if (!empty($value))
+						foreach ($value as $k => $v) {
+							if ($v !== null)
+								$string .= "{$k}=>{$v},";
+							else
+								$string .= "{$k}=>NULL,";
+						}
+					$query->set($this->columnName, $string);
 				} else {
 					$query->lazySet($this->columnName, $value);
 				}
@@ -382,6 +392,10 @@
 			
 			if ($this->className == 'HttpUrl') {
 				return HttpUrl::create()->parse($raw);
+			}
+					
+			if ($this->type == 'hstore') {
+				return $this->hstoreStringToArray($raw);
 			}
 			
 			if (
@@ -500,6 +514,16 @@
 		{
 			// NOTE: enum here formless types
 			return ($this->type == 'enumeration');
+		}
+		
+		protected function hstoreStringToArray($string)
+		{
+			if (!$string)
+				return array();
+			
+			eval("\$return = array({$string});");
+			
+			return $return;
 		}
 	}
 ?>

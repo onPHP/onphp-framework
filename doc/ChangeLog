@@ -1,4 +1,12 @@
 
+2009-06-16	Sergey S. Sergeev
+
+	* core/Form/Primitive.class.php, core/OSQL/DataType.class.php,
+	main/Base/LightMetaProperty.class.php, test/misc/DAOTest.class.php,
+	core/Form/Primitives/PrimitiveHstore.class.php, 
+	core/Logic/HstoreExpression.class.php, test/core/PrimitiveHstoreTest.class.php, 
+	meta/types/PgHstoreType.class.php: new internal type implemented.
+
 2009-05-14	Ivan Y. Khvostishkov
 
 	* main/Utils/DaoSynchronizer.class.php: flexible master-slave data
