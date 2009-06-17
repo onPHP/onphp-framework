@@ -11,6 +11,8 @@
 
 	/**
 	 * Prototyped variant of DAO synchronizer.
+	 *
+	 * @ingroup Utils
 	**/
 	class DaoSynchronizer extends CustomizableDaoSynchronizer
 	{

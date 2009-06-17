@@ -10,6 +10,9 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Utils
+	**/
 	abstract class FileArchive
 	{
 		protected $cmdBinPath	= null;

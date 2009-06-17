@@ -9,6 +9,9 @@
  *                                                                         *
  ***************************************************************************/
 
+	/**
+	 * @ingroup Utils
+	**/
 	interface SynchronizableObject
 	{
 		public static function createFromMasterObject($masterObject);

@@ -14,6 +14,8 @@
 	 * GNU Tar wrapper.
 	 * 
 	 * @see http://www.gnu.org/software/tar/
+	 *
+	 * @ingroup Utils
 	**/
 	final class TarArchive extends FileArchive
 	{

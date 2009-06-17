@@ -14,6 +14,8 @@
 	 * PECL ZipArchive proxy with Info-Zip wrapper.
 	 * 
 	 * @see http://pecl.php.net/package/zip
+	 *
+	 * @ingroup Utils
 	**/
 	final class InfoZipArchive extends FileArchive
 	{
