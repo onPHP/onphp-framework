@@ -102,7 +102,7 @@
 			$this->assertTrue($instance1 === $instance2);
 			
 			$all = Singleton::getAllInstances();
-			$this->assertTrue($instance1 === $all[$className]); 
+			$this->assertTrue($instance1 === $all[$className]);
 		}
 	}
 ?>

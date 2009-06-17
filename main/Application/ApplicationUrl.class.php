@@ -115,6 +115,17 @@
 			
 			return $this;
 		}
+
+		/**
+		 * @return ApplicationUrl
+		**/
+		public function dropFromUserScope($key)
+		{
+			if (isset($this->userScope[$key]))
+				$this->userScope[$key] = null;
+
+			return $this;
+		}
 		
 		public function getUserScope()
 		{
