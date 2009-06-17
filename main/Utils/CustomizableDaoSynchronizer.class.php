@@ -183,7 +183,8 @@
 							== $slaveObject->$slaveGetter()
 					)
 				) {
-					$this->totalUpdated += $this->sync($slaveObject, $masterObject);
+					if ($this->sync($slaveObject, $masterObject))
+						$this->totalUpdated++;
 					
 					$masterIterator->next();
 					$slaveIterator->next();
@@ -197,7 +198,8 @@
 						) > 0
 					)
 				) {
-					$this->totalDeleted += $this->delete($slaveObject);
+					if ($this->delete($slaveObject))
+						$this->totalDeleted++;
 					
 					$slaveIterator->next();
 				} elseif (
@@ -210,7 +212,8 @@
 						) < 0
 					)
 				) {
-					$this->totalInserted += $this->insert($masterObject);
+					if ($this->insert($masterObject))
+						$this->totalInserted++;
 					
 					$masterIterator->next();
 					
@@ -242,7 +245,7 @@
 			if (!$this->dryRun)
 				$this->slave->merge($object);
 			
-			return 1;
+			return true;
 		}
 		
 		protected function delete($slaveObject)
@@ -254,7 +257,7 @@
 			if (!$this->dryRun && $this->reallyDelete)
 				$this->slave->dropById($slaveObject->$slaveGetter());
 			
-			return 1;
+			return true;
 		}
 		
 		protected function insert($masterObject)
@@ -262,7 +265,7 @@
 			if (!$this->dryRun)
 				$this->slave->import($masterObject);
 			
-			return 1;
+			return true;
 		}
 		
 		protected function compareKeys($min, $sub)

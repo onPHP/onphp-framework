@@ -65,7 +65,7 @@
 				return $this->changed($old, $object, $changed);
 			}
 			
-			return 0;
+			return false;
 		}
 		
 		protected function changed($old, $object, $properties)
