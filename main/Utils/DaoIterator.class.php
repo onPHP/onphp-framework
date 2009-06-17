@@ -9,6 +9,9 @@
  *                                                                         *
  ***************************************************************************/
 
+	/**
+	 * @ingroup Utils
+	**/
 	final class DaoIterator implements Iterator
 	{
 		private $dao			= null;

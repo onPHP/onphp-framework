@@ -10,5 +10,8 @@
  ***************************************************************************/
 /* $Id$ */
 
+	/**
+	 * @ingroup Utils
+	**/
 	class ArchiverException extends BaseException {/*_*/}
 ?>

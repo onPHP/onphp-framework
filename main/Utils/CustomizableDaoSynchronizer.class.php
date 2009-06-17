@@ -9,6 +9,9 @@
  *                                                                         *
  ***************************************************************************/
 
+	/**
+	 * @ingroup Utils
+	**/
 	class CustomizableDaoSynchronizer
 	{
 		protected $dryRun			= false;
