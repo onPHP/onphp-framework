@@ -12,7 +12,7 @@
 
 	/**
 	 * Helper for builds tsearch index.
-	 *
+	 * 
 	 * @ingroup Bussiness
 	**/
 	interface TSearchConfigurator extends DAOConnected

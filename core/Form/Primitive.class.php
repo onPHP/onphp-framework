@@ -12,7 +12,7 @@
 
 	/**
 	 * Factory for various Primitives.
-	 * 
+	 *
 	 * @ingroup Form
 	**/
 	final class Primitive extends StaticFactory
@@ -196,6 +196,14 @@
 		}
 		
 		/**
+		 * @return PrimitiveHstore
+		**/
+		public static function hstore($name)
+		{
+			return new PrimitiveHstore($name);
+		}
+		
+		/**
 		 * @return PrimitiveMultiList
 		**/
 		public static function multiChoice($name)
@@ -336,7 +344,7 @@
 				? call_user_func(array($class, 'dao'))
 				: $class->dao();
 			
-			return self::prototyped($class, $dao->getIdName(), $name); 
+			return self::prototyped($class, $dao->getIdName(), $name);
 		}
 	}
 ?>

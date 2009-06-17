@@ -10,14 +10,11 @@
  ***************************************************************************/
 /* $Id$ */
 
-
 	interface MessageQueueBrowser
 	{
 		/**
 		 * @return Message
-		 */
+		**/
 		public function getNextMessage();
 	}
-
 ?>
-

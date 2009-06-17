@@ -412,12 +412,81 @@
 			$this->drop();
 		}
 		
+		/**
+		 * Install hstore
+		 * /usr/share/postgresql/contrib # cat hstore.sql | psql -U pgsql -d onphp
+		**/
+		public function testPgHstore()
+		{
+			$this->create();
+			
+			$properties = array(
+				'a' => '1',
+				'b' => 4,
+				'c' => null,
+			);
+			
+			$user =
+				TestUser::create()->
+				setCity(
+					$moscow = TestCity::create()->
+					setName('Moscow')
+				)->
+				setCredentials(
+					Credentials::create()->
+					setNickname('fake')->
+					setPassword(sha1('passwd'))
+				)->
+				setLastLogin(
+					Timestamp::create(time())
+				)->
+				setRegistered(
+					Timestamp::create(time())->modify('-1 day')
+				)->
+				setProperties($properties);
+			
+			$moscow = TestCity::dao()->add($moscow);
+			
+			$user = TestUser::dao()->add($user);
+			
+			Cache::me()->clean();
+			TestUser::dao()->dropIdentityMap();
+			
+			$user = TestUser::dao()->getById('1');
+			
+			$this->assertEquals(
+				$properties,
+				$user->getProperties()
+			);
+			
+			
+			$form = TestUser::proto()->makeForm();
+			
+			$form->import(
+				array('id' => $user->getId())
+			);
+			
+			$this->assertNotNull($form->getValue('id'));
+			
+			$object = $user;
+			FormUtils::object2form($object, $form);
+			
+			$this->assertEquals(
+				$properties,
+				$form->getValue('properties')
+			);
+			
+			
+			$this->drop();
+		}
 		
 		/**
 		 * @see http://lists.shadanakar.org/onphp-dev-ru/0811/0774.html
 		**/
 		public function testRecursiveContainers()
 		{
+			$this->markTestSkipped('wontfix');
+			
 			$this->create();
 			
 			TestObject::dao()->import(
@@ -436,7 +505,8 @@
 			
 			$type->getObjects()->fetch()->setList(
 				array(TestObject::dao()->getById(1))
-			)->save();
+			)->
+			save();
 			
 			$object = TestObject::dao()->getById(1);
 			
@@ -450,7 +520,7 @@
 			
 			$this->drop();
 		}
-		
+				
 		public function nonIntegerIdentifier()
 		{
 			$id = 'non-integer-one';

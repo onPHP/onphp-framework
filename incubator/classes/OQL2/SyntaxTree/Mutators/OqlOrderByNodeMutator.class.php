@@ -39,7 +39,7 @@
 			
 			// TODO: nothing more expected assertion?
 			
-			return OqlOrderNode::create()->setObject($order); 
+			return OqlOrderNode::create()->setObject($order);
 		}
 	}
 ?>

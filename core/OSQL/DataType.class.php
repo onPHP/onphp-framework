@@ -12,7 +12,7 @@
 
 	/**
 	 * Generic SQL data types.
-	 * 
+	 *
 	 * @ingroup OSQL
 	**/
 	final class DataType extends Enumeration implements DialectString
@@ -38,7 +38,8 @@
 		
 		const BINARY			= 0x00000F;
 		
-		// NEXT					= 0x00000H;
+		// postgresql specific
+		const PGHSTORE			= 0x002001;
 		
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x000200;
@@ -74,7 +75,9 @@
 			self::TIMESTAMP		=> 'TIMESTAMP',
 			self::INTERVAL		=> 'INTERVAL',
 			
-			self::BINARY		=> 'BINARY'
+			self::BINARY		=> 'BINARY',
+			
+			self::PGHSTORE		=> 'HSTORE',
 		);
 		
 		/**

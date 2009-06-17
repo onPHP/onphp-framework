@@ -81,7 +81,7 @@
 				set(
 					'selfUrl',
 					RouterUrlHelper::url(
-						$controllerName, // $request->getAttached()
+						array('area' => $controllerName), // $request->getAttached()
 						RouterRewrite::me()->getCurrentRouteName(),
 						true
 					)

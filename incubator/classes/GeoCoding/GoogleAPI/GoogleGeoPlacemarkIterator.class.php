@@ -16,52 +16,52 @@
 		
 		protected $key = 0;
 		
-	    public function __construct(SimpleXMLElement $placemarks)
-	    {
+		public function __construct(SimpleXMLElement $placemarks)
+		{
 			$this->placemarks = $placemarks;
-	    }
+		}
 		
-	    public function key()
-	    {
-	        return $this->key;
-	    }
+		public function key()
+		{
+			return $this->key;
+		}
 		
-	    /**
-	     * @return GoogleGeoPlaceMark
-	    **/
-	    public function current()
-	    {
-	        return GoogleGeoPlaceMark::createFromSimpleXml(
-	        	$this->placemarks[$this->key]
-	        );
-	    }
+		/**
+		 * @return GoogleGeoPlaceMark
+		**/
+		public function current()
+		{
+			return GoogleGeoPlaceMark::createFromSimpleXml(
+				$this->placemarks[$this->key]
+			);
+		}
 		
-	    /**
-	     * @return GoogleGeoPlacemarkIterator
-	    **/
-	    public function next()
-	    {
+		/**
+		 * @return GoogleGeoPlacemarkIterator
+		**/
+		public function next()
+		{
 			++$this->key;
 			return $this;
-	    }
+		}
 		
-	    /**
-	     * @return GoogleGeoPlacemarkIterator
-	    **/
-	    public function rewind()
-	    {
+		/**
+		 * @return GoogleGeoPlacemarkIterator
+		**/
+		public function rewind()
+		{
 			$this->key = 0;
 			return $this;
-	    }
+		}
 		
-	    public function count()
-	    {
+		public function count()
+		{
 			return count($this->placemarks);
-	    }
+		}
 		
-	    public function valid()
-	    {
+		public function valid()
+		{
 			return isset($this->placemarks[$this->key]);
-	    }
+		}
 	}
 ?>

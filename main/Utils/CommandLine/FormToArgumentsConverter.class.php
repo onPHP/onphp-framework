@@ -9,7 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class FormToArgumentsConverter extends StaticFactory 
+	final class FormToArgumentsConverter extends StaticFactory
 	{
 		public static function getShort(Form $form)
 		{

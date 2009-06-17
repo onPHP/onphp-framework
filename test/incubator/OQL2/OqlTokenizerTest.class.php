@@ -47,7 +47,7 @@
 			$this->assertContext(
 				" \tкЪВэре \n  \r безоПасно\nстЕ ",
 				array(
-					OqlTokenContext::create(1, 3),	// кЪВэре 
+					OqlTokenContext::create(1, 3),	// кЪВэре
 					OqlTokenContext::create(2, 5),	// безоПасно
 					OqlTokenContext::create(3, 1)	// стЕ
 				)

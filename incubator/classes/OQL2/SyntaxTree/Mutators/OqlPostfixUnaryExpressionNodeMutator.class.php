@@ -37,7 +37,7 @@
 			
 			// TODO: assertions?
 			
-			return OqlLogicalObjectNode::create()->setObject( 
+			return OqlLogicalObjectNode::create()->setObject(
 				new PostfixUnaryExpression(
 					$operand->toValue(),
 					$operator->toValue()
