@@ -57,13 +57,7 @@
 		
 		public function toSignedInt()
 		{
-			$unsignedMax = 4294967295;
-			$signedMax = 2147483647;
-			
-			if ($this->longIp > $signedMax)
-				return $this->longIp - $unsignedMax - 1;
-			else
-				return $this->longIp;
+			return TypesUtils::unsignedToSigned($this->longIp);
 		}
 	}
 ?>
