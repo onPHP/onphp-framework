@@ -19,6 +19,7 @@
 		
 		public static function signedToUnsigned($signedInt)
 		{
+			echo "gg1";
 			if ($signedInt < 0)
 				return $signedInt + self::UNSINGED_MAX + 1;
 			else
@@ -27,6 +28,7 @@
 
 		public static function unsignedToSigned($unsignedInt)
 		{
+			echo "gg2";
 			if ($unsignedInt > self::SIGNED_MAX)
 				return $unsignedInt - self::UNSIGNED_MAX - 1;
 			else
