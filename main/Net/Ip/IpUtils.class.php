@@ -29,15 +29,15 @@
 
 			$j = 0;
 
-			$ranges[$j][] = $ipsAsIntegers[0];
+			$ranges[$j][] = long2ip($ipsAsIntegers[0]);
 
 			for ($i = 1; $i < $size; ++$i) {
 				if ($ipsAsIntegers[$i] != $ipsAsIntegers[$i - 1] + 1) {
-					$ranges[++$j][] = $ipsAsIntegers[$i]; // start new range
+					$ranges[++$j][] = long2ip($ipsAsIntegers[$i]); // start new range
 				} else
-					$ranges[$j][] = $ipsAsIntegers[$i];
+					$ranges[$j][] = long2ip($ipsAsIntegers[$i]);
 			}
-
+			
 			return $ranges;
 		}
 	}
