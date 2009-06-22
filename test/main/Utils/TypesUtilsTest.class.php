@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 
-	final class IpTypesTest extends TestCase
+	final class TypesUtilsTest extends TestCase
 	{
 		/**
 		 * @dataProvider integers
@@ -23,7 +23,7 @@
 		{
 			return
 				array(
-					// signed => unsined
+					// signed => unsigned
 					'-926365496'	=> '3368601800',
 					'16843009'		=> '16843009'
 				);
