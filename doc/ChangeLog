@@ -3,6 +3,8 @@
 
 * main/Utils/TypesUtils.class.php added.
 
+* main/Net/Ip/IpUtils.class.php added.
+
 2009-06-16	Sergey S. Sergeev
 
 	* core/Form/Primitive.class.php, core/OSQL/DataType.class.php,
