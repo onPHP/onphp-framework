@@ -15,20 +15,18 @@
 	final class TypesUtils extends StaticFactory
 	{
 		const SIGNED_MAX	= 2147483647;
-		const UNSINGED_MAX	= 4294967295;
+		const UNSIGNED_MAX	= 4294967295;
 		
 		public static function signedToUnsigned($signedInt)
 		{
-			echo "gg1";
 			if ($signedInt < 0)
-				return $signedInt + self::UNSINGED_MAX + 1;
+				return $signedInt + self::UNSIGNED_MAX + 1;
 			else
 				return $signedInt;
 		}
 
 		public static function unsignedToSigned($unsignedInt)
 		{
-			echo "gg2";
 			if ($unsignedInt > self::SIGNED_MAX)
 				return $unsignedInt - self::UNSIGNED_MAX - 1;
 			else
