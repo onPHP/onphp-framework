@@ -423,6 +423,9 @@
 		**/
 		public function testPgHstore()
 		{
+			if (!$this->isExistsPgType('hstore'))
+				return $this;
+			
 			$this->create();
 			
 			$properties = array(
@@ -688,6 +691,32 @@
 			} catch (WrongArgumentException $e) {
 				// pass
 			}
+		}
+		
+		private function isExistsPgType($type)
+		{
+			$db = DBPool::me()->getLink();
+			
+			if (!$db->getDialect() instanceof PostgresDialect)
+				return false;
+			
+			$check = OSQL::select()->
+			get(new DBValue('1'))->
+			from('pg_type')->
+			where(
+				Expression::eq(
+					SQLFunction::create(
+						'format_type',
+						new DBField('oid'),
+						new DBValue('-1')
+					),
+					new DBValue($type)
+				)
+			);
+			
+			$result = $db->queryRow($check);
+			
+			return !empty($result);
 		}
 	}
 ?>
