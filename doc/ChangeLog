@@ -1,9 +1,14 @@
 
-2009-06-22 Denis M. Gabaidulin
+2009-06-23	Sergey S. Sergeev
 
-* main/Utils/TypesUtils.class.php added.
+	* test/misc/DAOTest.class.php: check of PostgreSql type added, thanks to
+	Denis Gabaidulin.
 
-* main/Net/Ip/IpUtils.class.php added.
+2009-06-22	Denis M. Gabaidulin
+
+	* main/Utils/TypesUtils.class.php added.
+
+	* main/Net/Ip/IpUtils.class.php added.
 
 2009-06-16	Sergey S. Sergeev
 
