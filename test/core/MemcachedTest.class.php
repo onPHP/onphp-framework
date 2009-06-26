@@ -17,7 +17,7 @@
 		
 		protected function clientTestSingleGet($className)
 		{
-			$cache = new $className('172.16.0.200');
+			$cache = new $className('localhost');
 			
 			if (!$cache->isAlive()) {
 				return $this->markTestSkipped('memcached not available');
@@ -36,7 +36,7 @@
 		
 		protected function clientTestMultiGet($className)
 		{
-			$cache = new $className('172.16.0.200');
+			$cache = new $className('localhost');
 			
 			if (!$cache->isAlive()) {
 				return $this->markTestSkipped('memcached not available');
