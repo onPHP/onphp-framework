@@ -15,9 +15,9 @@
 
 	/**
 	 * Memcached-based cache.
-	 * 
+	 *
 	 * @see http://www.danga.com/memcached/
-	 * 
+	 *
 	 * @ingroup Cache
 	**/
 	final class Memcached extends CachePeer
@@ -266,7 +266,13 @@
 					} else {
 						fread($this->link, 2); // skip "\r\n"
 						
-						$result .= 'i:'.$index++.';';
+						$index++;
+						
+						if (is_numeric($key)) {
+							$result .= 'i:'.$key.';';
+						} else {
+							$result .= 's:'.strlen($key).':"'.$key.'";';
+						}
 						
 						if ($flags & 1)
 							$result .= $value;
