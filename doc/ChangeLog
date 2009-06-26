@@ -2,6 +2,10 @@
 2009-06-26	Sergey S. Sergeev
 
 	* /main/Flow/PartViewer.class.php: PartViewer can't resolve EmptyView.
+	
+	* meta/classes/MetaConfiguration.class.php, test/misc/DAOTest.class.php,
+	test/misc/TestTables.class.php: fix meta generation for recurcive lazy dependant
+	objects.
 
 2009-06-23	Sergey S. Sergeev
 
