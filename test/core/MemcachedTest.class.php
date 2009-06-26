@@ -3,9 +3,21 @@
 	
 	final class MemcachedTest extends TestCase
 	{
-		public function testSingleGet()
+		public function testClients()
 		{
-			$cache = Memcached::create('localhost');
+			$this->clientTest('PeclMemcached');
+			$this->clientTest('Memcached');
+		}
+		
+		protected function clientTest($className)
+		{
+			$this->clientTestSingleGet($className);
+			$this->clientTestMultiGet($className);
+		}
+		
+		protected function clientTestSingleGet($className)
+		{
+			$cache = new $className('172.16.0.200');
 			
 			if (!$cache->isAlive()) {
 				return $this->markTestSkipped('memcached not available');
@@ -22,10 +34,10 @@
 			$cache->clean();
 		}
 		
-		public function testMultiGet()
+		protected function clientTestMultiGet($className)
 		{
-			$cache = Memcached::create('localhost');
-
+			$cache = new $className('172.16.0.200');
+			
 			if (!$cache->isAlive()) {
 				return $this->markTestSkipped('memcached not available');
 			}
@@ -44,23 +56,23 @@
 			
 			$this->assertEquals(count($list), 3);
 			
-			$this->assertEquals($list[0], 'a');
-			$this->assertEquals($list[1], 2);
-			$this->assertEquals($list[2], 42.28);
+			$this->assertEquals($list['a'], 'a');
+			$this->assertEquals($list['b'], 2);
+			$this->assertEquals($list['c'], 42.28);
 			
 			$list = $cache->getList(array('a'));
 			
 			$this->assertEquals(count($list), 1);
 			
-			$this->assertEquals($list[0], 'a');
+			$this->assertEquals($list['a'], 'a');
 				
 			$list = $cache->getList(array('a', 'b', 'c', 'd'));
 			
 			$this->assertEquals(count($list), 3);
 			
-			$this->assertEquals($list[0], 'a');
-			$this->assertEquals($list[1], 2);
-			$this->assertEquals($list[2], 42.28);
+			$this->assertEquals($list['a'], 'a');
+			$this->assertEquals($list['b'], 2);
+			$this->assertEquals($list['c'], 42.28);
 			
 			$list = $cache->getList(array('d'));
 			

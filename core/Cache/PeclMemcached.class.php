@@ -12,10 +12,10 @@
 
 	/**
 	 * Connector for PECL's Memcache extension by Antony Dovgal.
-	 * 
+	 *
 	 * @see http://tony2001.phpclub.net/
 	 * @see http://pecl.php.net/package/memcache
-	 * 
+	 *
 	 * @ingroup Cache
 	**/
 	final class PeclMemcached extends CachePeer
@@ -101,7 +101,10 @@
 		
 		public function getList($indexes)
 		{
-			return $this->get($indexes);
+			return
+				($return = $this->get($indexes))
+					? $return
+					: array();
 		}
 		
 		public function get($index)

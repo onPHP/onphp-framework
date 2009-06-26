@@ -4,8 +4,12 @@
 	* /main/Flow/PartViewer.class.php: PartViewer can't resolve EmptyView.
 	
 	* meta/classes/MetaConfiguration.class.php, test/misc/DAOTest.class.php,
-	test/misc/TestTables.class.php: fix meta generation for recurcive lazy dependant
+	test/misc/TestTables.class.php: fixed meta generation for recurcive lazy dependant
 	objects.
+	
+	* core/Cache/Memcached.class.php, core/Cache/PeclMemcached.class.php,
+	test/core/MemcachedTest.class.php: fixed multi get operations - Memcached
+	compatability with PeclMemcached now.
 
 2009-06-23	Sergey S. Sergeev
 
