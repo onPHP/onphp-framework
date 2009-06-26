@@ -201,7 +201,13 @@
 							)
 						) {
 							$property->setFetchStrategy(FetchStrategy::cascade());
-						} else {
+						} elseif (
+							!$property->getFetchStrategy()
+							|| (
+								$property->getFetchStrategy()->getId()
+								== FetchStrategy::JOIN
+							)
+						) {
 							$this->checkRecursion($property, $class);
 						}
 					}

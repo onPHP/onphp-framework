@@ -3,6 +3,20 @@
 	
 	class DAOTest extends TestTables
 	{
+		public function create()
+		{
+			/**
+			 * @see testRecursionObjects() and meta
+			 * for TestParentObject and TestChildObject
+			**/
+			$this->schema->
+				getTableByName('test_parent_object')->
+				getColumnByName('root_id')->
+				dropReference();
+			
+			return parent::create();
+		}
+		
 		public function testSchema()
 		{
 			return $this->create()->drop();
@@ -528,7 +542,29 @@
 			
 			$this->drop();
 		}
-				
+		
+		public function testRecursionObjects()
+		{
+			$this->create();
+			
+			$parentProperties =
+				Singleton::getInstance('ProtoTestParentObject')->
+				getPropertyList();
+			
+			$resultRoot = $parentProperties['root']->getFetchStrategyId() == FetchStrategy::LAZY;
+			
+			$childProperties =
+				Singleton::getInstance('ProtoTestChildObject')->
+				getPropertyList();
+			
+			$resultParent = $childProperties['parent']->getFetchStrategyId() == FetchStrategy::LAZY;
+			
+			$this->drop();
+			
+			$this->assertTrue($resultRoot);
+			$this->assertTrue($resultParent);
+		}
+		
 		public function nonIntegerIdentifier()
 		{
 			$id = 'non-integer-one';

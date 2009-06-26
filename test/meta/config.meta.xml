@@ -121,6 +121,22 @@
 		<pattern name="DictionaryClass" />
 	</class>
 	
+	<class name="TestParentObject" type="final">
+		<properties>
+			<identifier />
+			<property name="root" column="root_id" type="TestChildObject" relation="OneToOne" fetch="lazy" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+	
+	<class name="TestChildObject" type="final">
+		<properties>
+			<identifier />
+			<property name="parent" column="parent_id" type="TestParentObject" relation="OneToOne" fetch="lazy" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+	
 	<class name="ImageType" type="final">
 		<properties>
 			<identifier />
