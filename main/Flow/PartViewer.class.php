@@ -49,8 +49,11 @@
 				: $this->model;
 			
 			$model->set('rootModel', $rootModel);
-				
-			$this->viewResolver->resolveViewName($partName)->render($model);
+			
+			if ($partName instanceof View)
+				$partName->render($model);
+			else
+				$this->viewResolver->resolveViewName($partName)->render($model);
 			
 			return $this;
 		}
