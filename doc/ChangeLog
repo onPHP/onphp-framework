@@ -1,4 +1,8 @@
 
+2009-06-26	Sergey S. Sergeev
+
+	* /main/Flow/PartViewer.class.php: PartViewer can't resolve EmptyView.
+
 2009-06-23	Sergey S. Sergeev
 
 	* test/misc/DAOTest.class.php: check of PostgreSql type added, thanks to
