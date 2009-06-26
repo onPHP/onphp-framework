@@ -10,6 +10,8 @@
 	* core/Cache/Memcached.class.php, core/Cache/PeclMemcached.class.php,
 	test/core/MemcachedTest.class.php: fixed multi get operations - Memcached
 	compatability with PeclMemcached now.
+	
+	* core/Logic/LTreeExpression.class.php: ltree logic implemented.
 
 2009-06-23	Sergey S. Sergeev
 
