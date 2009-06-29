@@ -1,7 +1,11 @@
 
+2009-06-29	Sergey S. Sergeev
+
+	* core/Base/Timestamp.class.php, test/core/TimestampTest.class.php: checkdate added.
+
 2009-06-26	Sergey S. Sergeev
 
-	* /main/Flow/PartViewer.class.php: PartViewer can't resolve EmptyView.
+	* main/Flow/PartViewer.class.php: PartViewer can't resolve EmptyView.
 	
 	* meta/classes/MetaConfiguration.class.php, test/misc/DAOTest.class.php,
 	test/misc/TestTables.class.php: fixed meta generation for recurcive lazy dependant

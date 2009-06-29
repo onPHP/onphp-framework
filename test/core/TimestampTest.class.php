@@ -27,7 +27,10 @@
 			$time = ' 00:00.00';
 			$this->assertEquals($future.$time, $after->toDateTime());
 			$this->assertEquals($past.$time, $before->toDateTime());
-			
+		}
+		
+		public function testInvalidTimestamp()
+		{
 			try {
 				new Timestamp('2007-0-0');
 				$this->fail();
@@ -36,8 +39,28 @@
 			}
 			
 			try {
+				new Timestamp('2007-00-00');
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				/* pass */
+			}
+			
+			try {
+				new Timestamp('2007-01-00');
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				/* pass */
+			}
+			
+			try {
+				new Timestamp('2007-00-01');
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				/* pass */
+			}
+			
+			try {
 				new Timestamp('2008-07-40 14:30:24');
-				die();
 				$this->fail();
 			} catch (WrongArgumentException $e) {
 				/* pass */
