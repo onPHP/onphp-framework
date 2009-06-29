@@ -13,9 +13,9 @@
 
 	/**
 	 * Date and time container and utilities.
-	 * 
+	 *
 	 * @see Date
-	 * 
+	 *
 	 * @ingroup Base
 	**/
 	class Timestamp extends Date
@@ -162,9 +162,16 @@
 			) {
 				if (checkdate($matches[2], $matches[3], $matches[1]))
 					$this->string = $string;
-			} elseif (preg_match('/^\d{1,4}-\d{1,2}-\d{1,2}$/', $string))
-				$this->string = $string . ' 00:00:00';
-			elseif (($stamp = strtotime($string)) !== false)
+			} elseif (
+				preg_match(
+					'/^(\d{1,4})-(\d{1,2})-(\d{1,2})$/',
+					$string,
+					$matches
+				)
+			) {
+				if (checkdate($matches[2], $matches[3], $matches[1]))
+					$this->string = $string . ' 00:00:00';
+			} elseif (($stamp = strtotime($string)) !== false)
 				$this->string = date($this->getFormat(), $stamp);
 		}
 		
