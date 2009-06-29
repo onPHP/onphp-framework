@@ -23,6 +23,16 @@
 		**/
 		protected $allowedKeys = array();
 		
+		public function getTypeName()
+		{
+			return 'HashMap';
+		}
+		
+		public function isObjectType()
+		{
+			return false;
+		}
+		
 		/**
 		 * @return PrimitiveHstore
 		**/
@@ -45,7 +55,7 @@
 			return !empty($this->allowedKeys);
 		}
 		
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (!BasePrimitive::import($scope))
 				return null;
@@ -57,12 +67,13 @@
 				return false;
 			}
 			
-			$this->selfFilter();
+			$this->applyImportFilters($this->value);
 			
 			if (
 				is_array($this->value)
-				&& !($this->min && count($this->value) < $this->min)
-				&& !($this->max && count($this->value) > $this->max)
+				&& $this->atom
+				&& !($this->atom->getMin() && count($this->value) < $this->atom->getMin())
+				&& !($this->atom->getMax() && count($this->value) > $this->atom->getMax())
 			) {
 				return true;
 			} else {

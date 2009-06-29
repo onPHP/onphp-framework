@@ -2,6 +2,8 @@
 2009-06-29	Sergey S. Sergeev
 
 	* core/Base/Timestamp.class.php, test/core/TimestampTest.class.php: checkdate added.
+	
+	* core/Form/Primitives/PrimitiveHstore.class.php: fixed primitive compatibility.
 
 2009-06-26	Sergey S. Sergeev
 
