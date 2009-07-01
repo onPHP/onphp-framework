@@ -269,10 +269,10 @@
 						$insert[] = $object;
 					} elseif (
 						isset($clones[$id])
-						&& (
-							($object !== $clones[$id])
-							|| ($object != $clones[$id])
-						)
+						// there is no another way yet to compare objects without
+						// risk of falling into fatal error:
+						// "nesting level too deep?"
+						&& (serialize($object) != serialize($clones[$id]))
 					) {
 						$update[] = $object;
 					} elseif (!isset($clones[$id])) {
