@@ -72,7 +72,8 @@
 		**/
 		public function importValue($value)
 		{
-			Assert::isArray($value);
+			if ($value !== null)
+				Assert::isArray($value);
 			
 			if (!$this->value instanceof Form)
 				$this->value = $this->makeForm();
