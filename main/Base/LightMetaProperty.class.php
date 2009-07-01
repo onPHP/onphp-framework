@@ -365,10 +365,13 @@
 					$string = null;
 					if (!empty($value))
 						foreach ($value as $k => $v) {
-							if ($v !== null)
-								$string .= "{$k}=>{$v},";
-							else
-								$string .= "{$k}=>NULL,";
+							$k = addslashes($k);
+							if ($v !== null) {
+								$v = addslashes($v);
+								$string .= "\"{$k}\"=>\"{$k}\",";
+							} else {
+								$string .= "\"{$k}\"=>NULL,";
+							}
 						}
 					$query->set($this->columnName, $string);
 				} else {
