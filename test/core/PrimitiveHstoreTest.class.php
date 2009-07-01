@@ -3,83 +3,86 @@
 	
 	final class PrimitiveHstoreTest extends TestCase
 	{
-		protected static $scope = 
+		protected static $scope =
 			array(
 				'properties' => array(
-					 'a' => '1',
-					 'b' => '2',
-					 'c' => '3',
+					 'age' => '23',
+					 'weight' => 80,
+					 'comment' => 'test user case',
+				)
+			);
+			
+		protected static $invalidScope =
+			array(
+				'properties' => array(
+					 'weight' => 'test error',
 				)
 			);
 		
 		public function testImport()
 		{
 			$prm = $this->create();
+			
 			$this->assertTrue(
-				$prm->import(self::$scope)
-			);
-			$this->assertFalse($prm->isCheckAllowedKeys());
-			$prm->clean();
-		}
-		
-		public function testMax() 
-		{
-			$prm = $this->create();
-			$this->assertFalse(
-				$prm->
-					setMax(2)->
-					import(self::$scope)
-			);
-			$this->assertFalse($prm->isCheckAllowedKeys());
-			$prm->clean();
-		}
-		
-		public function testMin() 
-		{	
-			$prm = $this->create();
-			$this->assertFalse(
-				$prm->
-					setMin(4)->
-					import(self::$scope)
-			);
-			$this->assertFalse($prm->isCheckAllowedKeys());
-			$prm->clean();
-		}	
-		
-		public function testValidKeys() 
-		{
-			$prm = $this->create();
-			$this->assertTrue(
-				$prm->
-					setAllowedKeys(
-						array('a', 'b', 'c', 'd', 'e')
-					)->
-					import(self::$scope)
+				$prm->import(
+					self::$scope
+				)
 			);
 			
-			$this->assertTrue($prm->isCheckAllowedKeys());
+			$subform = $prm->getInnerForm();
+			
+			$this->assertEquals($subform->getValue('age'), '23');
+			$this->assertEquals($subform->getValue('weight'), 80);
+			$this->assertEquals($subform->getValue('comment'), 'test user case');
+			
+			$this->assertEquals(
+				$prm->getValue(),
+				self::$scope['properties']
+			);
+			
 			$prm->clean();
 		}
 		
-		public function testInvalidKeys() 
-		{	
+		public function testInvalidImport()
+		{
 			$prm = $this->create();
-					
+			
 			$this->assertFalse(
-				$prm->
-					setAllowedKeys(
-						array('a', 'b', 'd')
-					)->
-					import(self::$scope)
+				$prm->import(
+					self::$invalidScope
+				)
 			);
 			
-			$this->assertTrue($prm->isCheckAllowedKeys());			
-			$prm->clean();			
+			$subform = $prm->getInnerForm();
+			
+			$this->assertNull(
+				$subform->getValue('weight')
+			);
+			
+			$this->assertEquals(
+				$prm->getInnerErrors(),
+				array(
+					'weight' => BasePrimitive::WRONG
+				)
+			);
+			
+			$prm->clean();
 		}
 		
-		protected function create() 
+		/**
+		 * @return PrimitiveHstore
+		**/
+		protected function create()
 		{
-			return Primitive::hstore('properties');
+			return
+				Primitive::hstore('properties')->
+				setFormMapping(
+					array(
+						Primitive::string('age'),
+						Primitive::integer('weight'),
+						Primitive::string('comment'),
+					)
+				);
 		}
 	}
 ?>

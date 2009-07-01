@@ -434,13 +434,13 @@
 		{
 			if (!$this->isExistsPgType('hstore'))
 				return $this;
-			
+				
 			$this->create();
 			
 			$properties = array(
-				'a' => '1',
-				'b' => 4,
-				'c' => null,
+				'age' => '23',
+				'weight' => 80,
+				'comment' => null,
 			);
 			
 			$user =
@@ -479,6 +479,15 @@
 			
 			$form = TestUser::proto()->makeForm();
 			
+			$form->get('properties')->
+				setFormMapping(
+					array(
+						Primitive::string('age'),
+						Primitive::integer('weight'),
+						Primitive::string('comment'),
+					)
+				);
+			
 			$form->import(
 				array('id' => $user->getId())
 			);
@@ -486,13 +495,38 @@
 			$this->assertNotNull($form->getValue('id'));
 			
 			$object = $user;
+			
 			FormUtils::object2form($object, $form);
 			
 			$this->assertEquals(
-				$properties,
+				array_filter($properties),
 				$form->getValue('properties')
 			);
 			
+			$subform = $form->get('properties')->getInnerForm();
+			
+			$this->assertEquals(
+				$subform->getValue('age'),
+				'23'
+			);
+			
+			$this->assertEquals(
+				$subform->getValue('weight'),
+				80
+			);
+			
+			$this->assertNull(
+				$subform->getValue('comment')
+			);
+			
+			$user = new TestUser();
+			
+			FormUtils::form2object($form, $user, false);
+			
+			$this->assertEquals(
+				$user->getProperties(),
+				array_filter($properties)
+			);
 			
 			$this->drop();
 		}

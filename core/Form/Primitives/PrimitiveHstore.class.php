@@ -13,15 +13,9 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveHstore extends FiltrablePrimitive
+	final class PrimitiveHstore extends BasePrimitive
 	{
-		/**
-		 * List of allowed keys.
-		 * If list is empty - all keys is allowed.
-		 *
-		 * @var array
-		**/
-		protected $allowedKeys = array();
+		protected $formMapping	= array();
 		
 		public function getTypeName()
 		{
@@ -36,82 +30,101 @@
 		/**
 		 * @return PrimitiveHstore
 		**/
-		public function setAllowedKeys($array)
+		public function setFormMapping($array)
 		{
-			Assert::isArray($array);
-			
-			$this->allowedKeys = $array;
-			
+			$this->formMapping = $array;
+
 			return $this;
 		}
 		
-		public function getAllowedKeys()
+		public function getFormMapping()
 		{
-			return $this->allowedKeys;
+			return $this->formMapping;
 		}
 		
-		public function isCheckAllowedKeys()
+		public function getInnerErrors()
 		{
-			return !empty($this->allowedKeys);
+			if ($this->value instanceof Form)
+				return $this->value->getInnerErrors();
+			
+			return array();
+		}
+		
+		/**
+		 * @return Form
+		**/
+		public function getInnerForm()
+		{
+			return $this->value;
+		}
+		
+		public function getValue()
+		{
+			if ($this->value instanceof Form)
+				return $this->value->export();
+			else
+				return array();
+		}
+		
+		/**
+		 * @throws WrongArgumentException
+		 * @return boolean
+		**/
+		public function importValue($value)
+		{
+			Assert::isArray($value);
+			
+			if (!$this->value instanceof Form)
+				$this->value = $this->makeForm();
+
+			$this->value->import($value);
+			
+			return
+				$this->value->getErrors()
+					? false
+					: true;
+			
 		}
 		
 		public function import(array $scope)
 		{
-			if (!BasePrimitive::import($scope))
+			if (!isset($scope[$this->name]))
 				return null;
 			
-			$this->value = $scope[$this->name];
+			$this->rawValue = $scope[$this->name];
 			
-			if (!$this->checkAllowedKeys()) {
-				$this->value = null;
+			if (!$this->value instanceof Form)
+				$this->value = $this->makeForm();
+			
+			$this->value->import($this->rawValue);
+			
+			$this->imported = true;
+			
+			if ($this->value->getErrors())
 				return false;
-			}
-			
-			$this->applyImportFilters($this->value);
-			
-			if (
-				is_array($this->value)
-				&& $this->atom
-				&& !($this->atom->getMin() && count($this->value) < $this->atom->getMin())
-				&& !($this->atom->getMax() && count($this->value) > $this->atom->getMax())
-			) {
-				return true;
-			} else {
-				$this->value = null;
-			}
-			
-			return false;
-		}
-		
-		public function importValue($value)
-		{
-			if (
-				is_array($value)
-				&& $this->checkAllowedKeys()
-			)
-				return $this->import(array($this->getName() => $value));
-			
-			return false;
-		}
-		
-		public function clean()
-		{
-			$this->allowedKeys = array();
-			
-			return parent::clean();
-		}
-		
-		protected function checkAllowedKeys()
-		{
-			if (
-				$this->isCheckAllowedKeys()
-				&& is_array($this->value)
-			)
-				foreach ($this->value as $k => $v)
-					if (!in_array($k, $this->allowedKeys))
-						return false;
 			
 			return true;
+		}
+		
+		public function exportValue()
+		{
+			if (!$this->value instanceof Form)
+				return null;
+			
+			return $this->value->export();
+		}
+		
+		/**
+		 * @return Form
+		**/
+		protected function makeForm()
+		{
+			$form = Form::create();
+			
+			foreach ($this->getFormMapping() as $primitive)
+				$form->add($primitive);
+			
+			return $form;
 		}
 	}
 ?>
