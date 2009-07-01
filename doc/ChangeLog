@@ -1,4 +1,10 @@
 
+2009-07-01	Sergey S. Sergeev
+
+	* core/Form/Primitives/PrimitiveHstore.class.php,
+	test/core/PrimitiveHstoreTest.class.php, test/misc/DAOTest.class.php,
+	core/DB/PgSQL.class.php: reimplemented PrimitiveHstore.
+
 2009-06-29	Sergey S. Sergeev
 
 	* core/Base/Timestamp.class.php, test/core/TimestampTest.class.php: checkdate added.
