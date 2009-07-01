@@ -371,7 +371,7 @@
 							$k = addslashes($k);
 							if ($v !== null) {
 								$v = addslashes($v);
-								$string .= "\"{$k}\"=>\"{$k}\",";
+								$string .= "\"{$k}\"=>\"{$v}\",";
 							} else {
 								$string .= "\"{$k}\"=>NULL,";
 							}
