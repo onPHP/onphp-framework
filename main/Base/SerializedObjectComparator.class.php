@@ -14,7 +14,7 @@
 	{
 		public static function me()
 		{
-			return Singleton::me(__CLASS__);
+			return Singleton::getInstance(__CLASS__);
 		}
 		
 		public function compare($one, $two)

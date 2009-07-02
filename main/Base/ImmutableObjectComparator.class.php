@@ -14,13 +14,13 @@
 	{
 		public static function me()
 		{
-			return Singleton::me(__CLASS__);
+			return Singleton::getInstance(__CLASS__);
 		}
 
 		public function compare($one, $two)
 		{
-			Assert::isInstance($one, Identifiable);
-			Assert::isInstance($two, Identifiable);
+			Assert::isInstance($one, 'Identifiable');
+			Assert::isInstance($two, 'Identifiable');
 
 			$oneId = $one->getId();
 			$twoId = $two->getId();
