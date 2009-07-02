@@ -9,8 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 
-	interface Comparator
+	final class SerializedObjectComparator extends Singleton
+		implements Comparator, Instantiatable
 	{
-		public function compare($one, $two);
+		public static function me()
+		{
+			return Singleton::me(__CLASS__);
+		}
+		
+		public function compare($one, $two)
+		{
+			$serializedOne = serialize($one);
+			$serializedTwo = serialize($two);
+			
+			if ($serializedOne == $serializedTwo)
+				return 0;
+			
+			return ($serializedOne < $serializedTwo) ? -1 : 1;
+		}
 	}
 ?>

@@ -9,8 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
-	interface Comparator
+	final class ImmutableObjectComparator extends Singleton
+		implements Comparator, Instantiatable
 	{
-		public function compare($one, $two);
+		public static function me()
+		{
+			return Singleton::me(__CLASS__);
+		}
+
+		public function compare($one, $two)
+		{
+			Assert::isInstance($one, Identifiable);
+			Assert::isInstance($two, Identifiable);
+
+			$oneId = $one->getId();
+			$twoId = $two->getId();
+
+			if ($oneId === $twoId)
+				return 0;
+
+			return ($oneId < $twoId) ? -1 : 1;
+		}
 	}
 ?>
