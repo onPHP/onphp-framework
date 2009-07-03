@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -11,44 +11,27 @@
 /* $Id$ */
 
 	/**
-	 * Integer's interval implementation and accompanying utility methods.
+	 * Base interval implementation and accompanying utility methods.
 	 * 
 	 * @ingroup Types
 	**/
-	class Range extends RangedType implements SingleRange, Stringable
+	abstract class Range extends RangedType implements SingleRange, Stringable
 	{
 		private $start = null;
 		private $end = null;
 		
+		abstract protected function checkNumber($number);
+		
 		public function __construct($start = null, $end = null)
 		{
 			if ($start !== null)
-				Assert::isInteger($start);
+				$this->checkNumber($start);
 			
 			if ($end !== null)
-				Assert::isInteger($end);
+				$this->checkNumber($end);
 			
 			$this->start = $start;
 			$this->end = $end;
-		}
-		
-		/**
-		 * @return Range
-		**/
-		public static function create($start = null, $end = null)
-		{
-			return new self($start, $end);
-		}
-		
-		/**
-		 * @return Range
-		**/
-		public static function lazyCreate($start = null, $end = null)
-		{
-			if ($start > $end)
-				self::swap($start, $end);
-			
-			return new self($start, $end);
 		}
 		
 		/**
@@ -76,7 +59,7 @@
 		public function setStart($start = null)
 		{
 			if ($start !== null)
-				Assert::isInteger($start);
+				$this->checkNumber($start);
 			else
 				return $this;
 			
@@ -102,7 +85,7 @@
 		public function setEnd($end = null)
 		{
 			if ($end !== null)
-				Assert::isInteger($end);
+				$this->checkNumber($end);
 			else
 				return $this;
 			
@@ -115,7 +98,7 @@
 			
 			return $this;
 		}
-
+		
 		public function toString($from = 'from', $to = 'to')
 		{
 			$out = null;
@@ -136,7 +119,7 @@
 		{
 			if ($this->start)
 				$this->start = round($this->start / $factor, $precision);
-
+			
 			if ($this->end)
 				$this->end = round($this->end / $factor, $precision);
 			
@@ -182,7 +165,7 @@
 		
 		public function contains($probe)
 		{
-			Assert::isInteger($probe);
+			$this->checkNumber($probe);
 			
 			return (
 				($this->start >= $probe)

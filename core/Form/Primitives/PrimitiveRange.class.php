@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2004-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -20,7 +20,7 @@
 		
 		public function getTypeName()
 		{
-			return 'Range';
+			return 'NumericRange';
 		}
 		
 		public function isObjectType()
@@ -97,7 +97,7 @@
 			if ((null === $min) && (null === $max))
 				return null;
 			
-			$range = Range::lazyCreate($min, $max);
+			$range = NumericRange::lazyCreate($min, $max);
 			
 			if (
 				$range

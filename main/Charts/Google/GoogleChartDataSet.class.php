@@ -31,7 +31,7 @@
 		
 		public function __construct()
 		{
-			$this->minMax = IntegerSet::create(0, 0);
+			$this->minMax = NumericRange::create(0, 0);
 		}
 		
 		/**
@@ -67,7 +67,7 @@
 			$this->base = $base;
 			
 			// reset
-			$this->minMax = IntegerSet::create(0, 0);
+			$this->minMax = NumericRange::create(0, 0);
 			
 			return $this;
 		}
