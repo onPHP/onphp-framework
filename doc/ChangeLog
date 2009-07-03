@@ -3,8 +3,8 @@
 
 	* main/Base/Comparator.class.php interface added.
 	Main/Base/ImmutableObjectComparator.class.php,
-	main/Base/SerializedObjectComparator.class.php classes to compare object
-	in different context added.
+	main/Base/SerializedObjectComparator.class.php: classes to compare
+	object in different context added.
 
 2009-07-01	Sergey S. Sergeev
 
