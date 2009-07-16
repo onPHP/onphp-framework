@@ -3,6 +3,20 @@
 	
 	class DAOTest extends TestTables
 	{
+		public function create()
+		{
+			/**
+			 * @see testRecursionObjects() and meta
+			 * for TestParentObject and TestChildObject
+			**/
+			$this->schema->
+				getTableByName('test_parent_object')->
+				getColumnByName('root_id')->
+				dropReference();
+			
+			return parent::create();
+		}
+		
 		public function testSchema()
 		{
 			return $this->create()->drop();
@@ -418,12 +432,15 @@
 		**/
 		public function testPgHstore()
 		{
+			if (!$this->isExistsPgType('hstore'))
+				return $this;
+				
 			$this->create();
 			
 			$properties = array(
-				'a' => '1',
-				'b' => 4,
-				'c' => null,
+				'age' => '23',
+				'weight' => 80,
+				'comment' => null,
 			);
 			
 			$user =
@@ -462,6 +479,15 @@
 			
 			$form = TestUser::proto()->makeForm();
 			
+			$form->get('properties')->
+				setFormMapping(
+					array(
+						Primitive::string('age'),
+						Primitive::integer('weight'),
+						Primitive::string('comment'),
+					)
+				);
+			
 			$form->import(
 				array('id' => $user->getId())
 			);
@@ -469,13 +495,38 @@
 			$this->assertNotNull($form->getValue('id'));
 			
 			$object = $user;
+			
 			FormUtils::object2form($object, $form);
 			
 			$this->assertEquals(
-				$properties,
+				array_filter($properties),
 				$form->getValue('properties')
 			);
 			
+			$subform = $form->get('properties')->getInnerForm();
+			
+			$this->assertEquals(
+				$subform->getValue('age'),
+				'23'
+			);
+			
+			$this->assertEquals(
+				$subform->getValue('weight'),
+				80
+			);
+			
+			$this->assertNull(
+				$subform->getValue('comment')
+			);
+			
+			$user = new TestUser();
+			
+			FormUtils::form2object($form, $user, false);
+			
+			$this->assertEquals(
+				$user->getProperties(),
+				array_filter($properties)
+			);
 			
 			$this->drop();
 		}
@@ -520,7 +571,29 @@
 			
 			$this->drop();
 		}
-				
+		
+		public function testRecursionObjects()
+		{
+			$this->create();
+			
+			$parentProperties =
+				Singleton::getInstance('ProtoTestParentObject')->
+				getPropertyList();
+			
+			$resultRoot = $parentProperties['root']->getFetchStrategyId() == FetchStrategy::LAZY;
+			
+			$childProperties =
+				Singleton::getInstance('ProtoTestChildObject')->
+				getPropertyList();
+			
+			$resultParent = $childProperties['parent']->getFetchStrategyId() == FetchStrategy::LAZY;
+			
+			$this->drop();
+			
+			$this->assertTrue($resultRoot);
+			$this->assertTrue($resultParent);
+		}
+		
 		public function nonIntegerIdentifier()
 		{
 			$id = 'non-integer-one';
@@ -700,6 +773,32 @@
 			} catch (WrongArgumentException $e) {
 				// pass
 			}
+		}
+		
+		private function isExistsPgType($type)
+		{
+			$db = DBPool::me()->getLink();
+			
+			if (!$db->getDialect() instanceof PostgresDialect)
+				return false;
+			
+			$check = OSQL::select()->
+			get(new DBValue('1'))->
+			from('pg_type')->
+			where(
+				Expression::eq(
+					SQLFunction::create(
+						'format_type',
+						new DBField('oid'),
+						new DBValue('-1')
+					),
+					new DBValue($type)
+				)
+			);
+			
+			$result = $db->queryRow($check);
+			
+			return !empty($result);
 		}
 	}
 ?>

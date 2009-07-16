@@ -9,48 +9,54 @@
  *                                                                         *
  ***************************************************************************/
 /* $Id$ */
-	
+
 	/**
+	 * Extensive facilities for searching through label trees are provided.
+	 *
+	 * @see http://www.postgresql.org/docs/current/interactive/ltree.html
 	 * @ingroup Logic
-	 * @see http://www.postgresql.org/docs/8.3/interactive/hstore.html
 	**/
-	final class HstoreExpression extends StaticFactory
+	final class LTreeExpression extends StaticFactory
 	{
-		const CONTAIN 		= '?';
-		const GET_VALUE		= '->';
-		const LEFT_CONTAIN	= '@>';
-		const CONCAT		= '||';
+		const ANCESTOR 		= '@>';
+		const DESCENDANT	= '<@';
+		const MATCH			= '~';
+		const SEARCH		= '@';
 		
 		/**
+		 * Is left argument an ancestor of right (or equal)?
+		 *
 		 * @return BinaryExpression
 		**/
-		public static function containKey($field, $key)
+		public static function ancestor($left, $right)
 		{
-			return new BinaryExpression($field, $key, self::CONTAIN);
+			return new BinaryExpression($left, $right, self::ANCESTOR);
+		}
+		
+		/**
+		 * Is left argument a descendant of right (or equal)?
+		 *
+		 * @return BinaryExpression
+		**/
+		public static function descendant($left, $right)
+		{
+			return new BinaryExpression($left, $right, self::DESCENDANT);
 		}
 		
 		/**
 		 * @return BinaryExpression
 		**/
-		public static function getValueByKey($field, $key)
+		public static function match($ltree, $lquery)
 		{
-			return new BinaryExpression($field, $key, self::GET_VALUE);
+			return new BinaryExpression($ltree, $lquery, self::MATCH);
 		}
 		
 		/**
 		 * @return BinaryExpression
 		**/
-		public static function containValue($field, $key, $value)
+		public static function search($ltree, $ltxtquery)
 		{
-			return new BinaryExpression($field, "{$key}=>{$value}", self::LEFT_CONTAIN);
-		}
-		
-		/**
-		 * @return BinaryExpression
-		**/
-		public static function concat($field, $value)
-		{
-			return new BinaryExpression($field, $value, self::CONCAT);
+			return new BinaryExpression($ltree, $ltxtquery, self::SEARCH);
 		}
 	}
 ?>

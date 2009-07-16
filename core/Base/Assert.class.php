@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2005-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -134,6 +134,14 @@
 		public static function isFloat($variable, $message = null)
 		{
 			if (!self::checkFloat($variable))
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
+		}
+		
+		public static function isNumeric($variable, $message = null)
+		{
+			if (!is_numeric($variable))
 				throw new WrongArgumentException(
 					$message.', '.self::dumpArgument($variable)
 				);

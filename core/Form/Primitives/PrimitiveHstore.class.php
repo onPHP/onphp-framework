@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2004-2009 by Sergey S. Sergeev                           *
+ *   Copyright (C) 2009 by Sergey S. Sergeev                                *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -13,94 +13,119 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveHstore extends FiltrablePrimitive
+	final class PrimitiveHstore extends BasePrimitive
 	{
-		/**
-		 * List of allowed keys.
-		 * If list is empty - all keys is allowed.
-		 *
-		 * @var array
-		**/
-		protected $allowedKeys = array();
+		protected $formMapping	= array();
+		
+		public function getTypeName()
+		{
+			return 'HashMap';
+		}
+		
+		public function isObjectType()
+		{
+			return false;
+		}
 		
 		/**
 		 * @return PrimitiveHstore
 		**/
-		public function setAllowedKeys($array)
+		public function setFormMapping($array)
 		{
-			Assert::isArray($array);
-			
-			$this->allowedKeys = $array;
-			
+			$this->formMapping = $array;
+
 			return $this;
 		}
 		
-		public function getAllowedKeys()
+		public function getFormMapping()
 		{
-			return $this->allowedKeys;
+			return $this->formMapping;
 		}
 		
-		public function isCheckAllowedKeys()
+		public function getInnerErrors()
 		{
-			return !empty($this->allowedKeys);
+			if ($this->value instanceof Form)
+				return $this->value->getInnerErrors();
+			
+			return array();
 		}
 		
-		public function import($scope)
+		/**
+		 * @return Form
+		**/
+		public function getInnerForm()
 		{
-			if (!BasePrimitive::import($scope))
-				return null;
-			
-			$this->value = $scope[$this->name];
-			
-			if (!$this->checkAllowedKeys()) {
-				$this->value = null;
-				return false;
-			}
-			
-			$this->selfFilter();
-			
-			if (
-				is_array($this->value)
-				&& !($this->min && count($this->value) < $this->min)
-				&& !($this->max && count($this->value) > $this->max)
-			) {
-				return true;
-			} else {
-				$this->value = null;
-			}
-			
-			return false;
+			return $this->value;
 		}
 		
+		public function getValue()
+		{
+			if ($this->value instanceof Form)
+				return $this->value->export();
+			else
+				return array();
+		}
+		
+		/**
+		 * @throws WrongArgumentException
+		 * @return boolean
+		**/
 		public function importValue($value)
 		{
-			if (
-				is_array($value)
-				&& $this->checkAllowedKeys()
-			)
-				return $this->import(array($this->getName() => $value));
+			if ($value !== null)
+				Assert::isArray($value);
 			
-			return false;
+			if (!$this->value instanceof Form)
+				$this->value = $this->makeForm();
+
+			$this->value->import($value);
+			
+			return
+				$this->value->getErrors()
+					? false
+					: true;
+			
 		}
 		
-		public function clean()
+		public function import(array $scope)
 		{
-			$this->allowedKeys = array();
+			if (!isset($scope[$this->name]))
+				return null;
 			
-			return parent::clean();
-		}
-		
-		protected function checkAllowedKeys()
-		{
-			if (
-				$this->isCheckAllowedKeys()
-				&& is_array($this->value)
-			)
-				foreach ($this->value as $k => $v)
-					if (!in_array($k, $this->allowedKeys))
-						return false;
+			$this->rawValue = $scope[$this->name];
+			
+			if (!$this->value instanceof Form)
+				$this->value = $this->makeForm();
+			
+			$this->value->import($this->rawValue);
+			
+			$this->imported = true;
+			
+			if ($this->value->getErrors())
+				return false;
 			
 			return true;
+		}
+		
+		public function exportValue()
+		{
+			if (!$this->value instanceof Form)
+				return null;
+			
+			return $this->value->export();
+		}
+		
+		/**
+		 * @return Form
+		**/
+		protected function makeForm()
+		{
+			$form = Form::create();
+			
+			foreach ($this->getFormMapping() as $primitive)
+				$form->add($primitive);
+			
+			return $form;
 		}
 	}
 ?>

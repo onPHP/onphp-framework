@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Denis M. Gabaidulin                             *
+ *   Copyright (C) 2009 by Konstantin V. Arkhipov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -11,29 +11,34 @@
 /* $Id$ */
 
 	/**
-	 * Integer's set.
+	 * Integer interval implementation.
 	 * 
-	 * @ingroup Helpers
+	 * @ingroup Types
 	**/
-	final class IntegerSet extends Range
+	final class IntegerRange extends Range
 	{
-		public static function create(
-			$min = Integer::SIGNED_MIN,
-			$max = Integer::SIGNED_MAX
-		)
+		/**
+		 * @return IntegerRange
+		**/
+		public static function create($start = null, $end = null)
 		{
-			return new IntegerSet($min, $max);
+			return new self($start, $end);
 		}
 		
-		public function contains($value)
+		/**
+		 * @return IntegerRange
+		**/
+		public static function lazyCreate($start = null, $end = null)
 		{
-			if (
-				$this->getMin() <= $value
-				&& $value <= $this->getMax()
-			)
-				return true;
-			else
-				return false;
+			if ($start > $end)
+				self::swap($start, $end);
+			
+			return new self($start, $end);
+		}
+		
+		/* void */ protected function checkNumber($number)
+		{
+			Assert::isInteger($number);
 		}
 	}
 ?>

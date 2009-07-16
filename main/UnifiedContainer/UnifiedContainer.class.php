@@ -74,6 +74,8 @@
 		// sleep state
 		protected $workerClass	= null;
 		protected $daoClass		= null;
+
+		protected $comparator	= null;
 		
 		abstract public function getParentIdField();
 		abstract public function getChildIdField();
@@ -89,6 +91,8 @@
 			$this->dao		= $dao;
 			
 			Assert::isInstance($dao->getObjectName(), 'Identifiable');
+
+			$this->comparator = SerializedObjectComparator::me();
 		}
 		
 		public function __sleep()
@@ -155,6 +159,13 @@
 		public function getCriteria()
 		{
 			return $this->worker->getCriteria();
+		}
+		
+		public function setObjectComparator(Comparator $comparator)
+		{
+			$this->comparator = $comparator;
+			
+			return $this;
 		}
 		
 		/**
@@ -269,10 +280,10 @@
 						$insert[] = $object;
 					} elseif (
 						isset($clones[$id])
-						&& (
-							($object !== $clones[$id])
-							|| ($object != $clones[$id])
-						)
+						// there is no another way yet to compare objects without
+						// risk of falling into fatal error:
+						// "nesting level too deep?"
+						&& ($this->comparator->compare($object, $clones[$id]) <> 0)
 					) {
 						$update[] = $object;
 					} elseif (!isset($clones[$id])) {

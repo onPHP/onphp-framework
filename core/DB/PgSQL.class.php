@@ -12,9 +12,9 @@
 
 	/**
 	 * PostgreSQL DB connector.
-	 * 
+	 *
 	 * @see http://www.postgresql.org/
-	 * 
+	 *
 	 * @ingroup DB
 	**/
 	final class PgSQL extends DB
@@ -203,6 +203,8 @@
 				
 				'bytea'			=> DataType::BINARY,
 				
+				'hstore'		=> DataType::PGHSTORE,
+			
 				// unhandled types, not ours anyway
 				'tsvector'		=> null,
 				'inet'			=> null,

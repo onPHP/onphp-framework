@@ -1,3 +1,51 @@
+2009-02-22	Konstantin V. Arkhipov
+
+	* core/Types/Range.class.php: splitted into IntegerRange and
+	NumericRange.
+
+2009-07-02	Denis M. Gabaidulin
+
+	* main/Base/Comparator.class.php interface added.
+	Main/Base/ImmutableObjectComparator.class.php,
+	main/Base/SerializedObjectComparator.class.php: classes to compare
+	object in different context added.
+
+2009-07-01	Sergey S. Sergeev
+
+	* core/Form/Primitives/PrimitiveHstore.class.php,
+	test/core/PrimitiveHstoreTest.class.php, test/misc/DAOTest.class.php,
+	core/DB/PgSQL.class.php: reimplemented PrimitiveHstore.
+
+2009-06-29	Sergey S. Sergeev
+
+	* core/Base/Timestamp.class.php, test/core/TimestampTest.class.php: checkdate added.
+	
+	* core/Form/Primitives/PrimitiveHstore.class.php: fixed primitive compatibility.
+
+2009-06-26	Sergey S. Sergeev
+
+	* main/Flow/PartViewer.class.php: PartViewer can't resolve EmptyView.
+	
+	* meta/classes/MetaConfiguration.class.php, test/misc/DAOTest.class.php,
+	test/misc/TestTables.class.php: fixed meta generation for recurcive lazy dependant
+	objects.
+	
+	* core/Cache/Memcached.class.php, core/Cache/PeclMemcached.class.php,
+	test/core/MemcachedTest.class.php: fixed multi get operations - Memcached
+	compatability with PeclMemcached now.
+	
+	* core/Logic/LTreeExpression.class.php: ltree logic implemented.
+
+2009-06-23	Sergey S. Sergeev
+
+	* test/misc/DAOTest.class.php: check of PostgreSql type added, thanks to
+	Denis Gabaidulin.
+
+2009-06-22	Denis M. Gabaidulin
+
+	* main/Utils/TypesUtils.class.php added.
+
+	* main/Net/Ip/IpUtils.class.php added.
 
 2009-06-16	Sergey S. Sergeev
 

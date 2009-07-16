@@ -76,7 +76,8 @@
 			<property name="encapsulants" type="TestEncapsulant" relation="ManyToMany" />
 			
 			<property name="url" type="HttpUrl" size="256" required="false" />
-			<property name="properties" type="PgHstore" required="false" />
+			<!-- awaiting for Sergey's work
+			<property name="properties" type="PgHstore" required="false" / -->
 			
 			<property name="ip" type="Inet" required="false" />
 			
@@ -117,6 +118,22 @@
 			<property name="item" type="TestItem" relation="OneToOne" required="true" column="test_item_id" />
 			<property name="encapsulant" type="TestEncapsulant" relation="OneToOne" required="true" />
 			<property name="name" type="String" size="50" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+	
+	<class name="TestParentObject" type="final">
+		<properties>
+			<identifier />
+			<property name="root" column="root_id" type="TestChildObject" relation="OneToOne" fetch="lazy" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+	
+	<class name="TestChildObject" type="final">
+		<properties>
+			<identifier />
+			<property name="parent" column="parent_id" type="TestParentObject" relation="OneToOne" fetch="lazy" required="true" />
 		</properties>
 		<pattern name="DictionaryClass" />
 	</class>

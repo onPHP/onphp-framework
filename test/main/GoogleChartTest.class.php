@@ -58,13 +58,13 @@
 					GoogleChartAxis::create(
 						new GoogleChartAxisType(GoogleChartAxisType::Y)
 					)->
-					setRange(IntegerSet::create(0, $views->getMax()))
+					setRange(NumericRange::create(0, $views->getMax()))
 				)->
 				addAxis(
 					GoogleChartAxis::create(
 						new GoogleChartAxisType(GoogleChartAxisType::R)
 					)->
-					setRange(IntegerSet::create(0, $clicks->getMax()))
+					setRange(NumericRange::create(0, $clicks->getMax()))
 				)->
 				addLine(
 					GoogleChartLine::create()->
@@ -116,13 +116,13 @@
 					GoogleChartAxis::create(
 						new GoogleChartAxisType(GoogleChartAxisType::Y)
 					)->
-					setRange(IntegerSet::create(0, $views->getMax()))
+					setRange(NumericRange::create(0, $views->getMax()))
 				)->
 				addAxis(
 					GoogleChartAxis::create(
 						new GoogleChartAxisType(GoogleChartAxisType::R)
 					)->
-					setRange(IntegerSet::create(0, $clicks->getMax()))
+					setRange(NumericRange::create(0, $clicks->getMax()))
 				)->
 				addAxis(
 					GoogleChartAxis::create(

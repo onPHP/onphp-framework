@@ -3,7 +3,7 @@
 	
 	abstract class TestTables extends TestCase
 	{
-		private $schema = null;
+		protected $schema = null;
 		
 		public function __construct()
 		{
