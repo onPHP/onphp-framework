@@ -103,6 +103,9 @@
 		
 		public static function isClassName($className)
 		{
+			if (!is_string($className))
+				return false;
+
 			return preg_match('/^'.self::CLASS_NAME_PATTERN.'$/', $className) > 0;
 		}
 		
