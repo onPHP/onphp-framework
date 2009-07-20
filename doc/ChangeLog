@@ -3,6 +3,10 @@
 	* core/Types/Range.class.php: splitted into IntegerRange and
 	NumericRange.
 
+2009-07-20	Denis M. Gabaidulin
+
+	* core/Cache/MemcachedLocker.class.php added.
+
 2009-07-16	Denis M. Gabaidulin
 
 	* main/Utils/WebMoneyUtils.class.php added.
