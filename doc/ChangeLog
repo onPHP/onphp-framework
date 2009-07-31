@@ -3,6 +3,9 @@
 	* main/Net/Mail/MailAddress.class.php: mail address encoding
 	implementation according to RFC822 / RFC 2047.
 
+	* main/EntityProto/Builders/DirectoryBuilder.class.php: fine-grained
+	tuning on file permissions.
+
 2009-07-22	Konstantin V. Arkhipov
 
 	* core/Types/Range.class.php: splitted into IntegerRange and
