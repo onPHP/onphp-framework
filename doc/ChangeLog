@@ -6,6 +6,9 @@
 	* main/EntityProto/Builders/DirectoryBuilder.class.php: fine-grained
 	tuning on file permissions.
 
+	* core/Form/Filters/Utf16ConverterFilter.class.php: very-special filter
+	for broken unicode implementations on some platforms.
+
 2009-07-22	Konstantin V. Arkhipov
 
 	* core/Types/Range.class.php: splitted into IntegerRange and
