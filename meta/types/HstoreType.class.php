@@ -14,11 +14,16 @@
 	 * @ingroup Types
 	 * @see http://www.postgresql.org/docs/8.3/interactive/hstore.html
 	**/
-	final class PgHstoreType extends BasePropertyType
+	final class HstoreType extends ObjectType
 	{
 		public function getPrimitiveName()
 		{
 			return 'hstore';
+		}
+		
+		public function isGeneric()
+		{
+			return true;
 		}
 		
 		public function isMeasurable()
@@ -36,7 +41,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::PGHSTORE)';
+			return 'DataType::create(DataType::TEXT)';
 		}
 	}
 ?>

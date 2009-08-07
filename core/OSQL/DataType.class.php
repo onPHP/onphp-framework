@@ -38,9 +38,6 @@
 		
 		const BINARY			= 0x00000F;
 		
-		// postgresql specific
-		const PGHSTORE			= 0x002001;
-		
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x000200;
 		const HAVE_SCALE		= 0x000400;
@@ -76,8 +73,6 @@
 			self::INTERVAL		=> 'INTERVAL',
 			
 			self::BINARY		=> 'BINARY',
-			
-			self::PGHSTORE		=> 'HSTORE',
 		);
 		
 		/**
