@@ -35,10 +35,25 @@
 			$this->assertEquals($subform->getValue('weight'), 80);
 			$this->assertEquals($subform->getValue('comment'), 'test user case');
 			
+			$this->assertType('Hstore', $prm->getValue());
+			
+			$hstore = $prm->getValue();
+			
+			$this->assertEquals($hstore->get('age'), '23');
+			$this->assertEquals($hstore->get('weight'), 80);
+			$this->assertEquals($hstore->get('comment'), 'test user case');
+			
 			$this->assertEquals(
-				$prm->getValue(),
+				$hstore->getList(),
 				self::$scope['properties']
 			);
+			
+			try {
+				$hstore->get('NotFound');
+				$this->fail('NotFound');
+			} catch (ObjectNotFoundException $e) {
+				/** ok **/
+			}
 			
 			$prm->clean();
 		}
