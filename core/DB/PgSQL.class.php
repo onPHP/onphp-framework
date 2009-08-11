@@ -203,12 +203,11 @@
 				
 				'bytea'			=> DataType::BINARY,
 				
-				'hstore'		=> DataType::PGHSTORE,
-			
 				// unhandled types, not ours anyway
 				'tsvector'		=> null,
 				'inet'			=> null,
-				'ltree'			=> null
+				'ltree'			=> null,
+				'hstore'		=> null,
 			);
 			
 			try {

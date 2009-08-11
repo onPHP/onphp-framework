@@ -60,10 +60,7 @@
 		
 		public function getValue()
 		{
-			if ($this->value instanceof Form)
-				return $this->value->export();
-			else
-				return array();
+			return $this->exportValue();
 		}
 		
 		/**
@@ -72,19 +69,21 @@
 		**/
 		public function importValue($value)
 		{
-			if ($value !== null)
-				Assert::isArray($value);
+			if ($value === null)
+				return parent::importValue(null);
 			
+			Assert::isTrue($value instanceof Hstore, 'importValue');
+				
 			if (!$this->value instanceof Form)
 				$this->value = $this->makeForm();
-
-			$this->value->import($value);
+			
+			$this->value->import($value->getList());
+			$this->imported = true;
 			
 			return
 				$this->value->getErrors()
 					? false
 					: true;
-			
 		}
 		
 		public function import(array $scope)
@@ -107,12 +106,15 @@
 			return true;
 		}
 		
+		/**
+		 * @return Hstore
+		**/
 		public function exportValue()
 		{
 			if (!$this->value instanceof Form)
 				return null;
 			
-			return $this->value->export();
+			return Hstore::make($this->value->export());
 		}
 		
 		/**

@@ -76,8 +76,7 @@
 			<property name="encapsulants" type="TestEncapsulant" relation="ManyToMany" />
 			
 			<property name="url" type="HttpUrl" size="256" required="false" />
-			<!-- awaiting for Sergey's work
-			<property name="properties" type="PgHstore" required="false" / -->
+			<property name="properties" type="Hstore" required="false" />
 			
 			<property name="ip" type="Inet" required="false" />
 			
