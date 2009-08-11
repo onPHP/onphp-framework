@@ -1,4 +1,9 @@
 
+2009-08-11	Denis M. Gabaidulin
+
+	* core/Form/Primitives/PrimitiveForm.class.php ofAutoProto() method added
+	to use with generated proto classes. 
+
 2009-07-20	Denis M. Gabaidulin
 
 	* core/Cache/MemcachedLocker.class.php added.
