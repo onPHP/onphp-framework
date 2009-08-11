@@ -12,8 +12,9 @@
 
 	abstract class DirectoryBuilder extends PrototypedBuilder
 	{
-		protected $directory = null;
-		protected $identityMap = null;
+		protected $directory	= null;
+		protected $permissions	= 0700;
+		protected $identityMap	= null;
 
 		public function __construct(EntityProto $proto)
 		{
@@ -32,6 +33,18 @@
 		public function getDirectory()
 		{
 			return $this->directory;
+		}
+
+		public function setPermissions($permissions)
+		{
+			$this->permissions = $permissions;
+
+			return $this;
+		}
+
+		public function getPermissions()
+		{
+			return $this->permissions;
 		}
 
 		public function setIdentityMap(DirectoryContext $identityMap)
@@ -55,6 +68,7 @@
 
 			$result->
 				setDirectory($this->directory)->
+				setPermissions($this->permissions)->
 				setIdentityMap($this->identityMap);
 
 			return $result;
@@ -68,6 +82,7 @@
 
 			$result->
 				setDirectory($this->directory.'/'.$property)->
+				setPermissions($this->permissions)->
 				setIdentityMap($this->identityMap);
 
 			return $result;
@@ -83,6 +98,7 @@
 				);
 
 			return $this->cloneBuilder($this->proto)->
+				setPermissions($this->permissions)->
 				setDirectory($this->directory.'/'.$object->getId());
 		}
 
@@ -91,7 +107,7 @@
 			$result = $this->directory;
 
 			if (!file_exists($result))
-				mkdir($result, 0700, true);
+				mkdir($result, $this->permissions, true);
 			elseif (is_link($result)) {
 				throw new WrongStateException(
 					'cannot make object by reference: '.$this->directory

@@ -1,3 +1,26 @@
+2009-08-07	Sergey S. Sergeev
+
+	* main/Base/Hstore.class.php, meta/types/HstoreType.class.php,
+	core/DB/PgSQL.class.php, core/Form/Primitives/PrimitiveHstore.class.php,
+	core/OSQL/DataType.class.php, main/Base/LightMetaProperty.class.php,
+	test/core/PrimitiveHstoreTest.class.php, test/misc/DAOTest.class.php:
+	hstore PostgreSql specific dropped.
+
+2009-07-31	Ivan Y. Khvostishkov
+
+	* main/Net/Mail/MailAddress.class.php: mail address encoding
+	implementation according to RFC822 / RFC 2047.
+
+	* main/EntityProto/Builders/DirectoryBuilder.class.php: fine-grained
+	tuning on file permissions.
+
+	* core/Form/Filters/Utf16ConverterFilter.class.php: very-special filter
+	for broken unicode implementations on some platforms.
+
+2009-07-22	Konstantin V. Arkhipov
+
+	* core/Types/Range.class.php: splitted into IntegerRange and
+	NumericRange.
 
 2009-08-11	Denis M. Gabaidulin
 
