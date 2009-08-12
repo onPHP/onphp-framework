@@ -32,7 +32,10 @@
 
 		public function apply($value)
 		{
-			if (mb_check_encoding($value, 'UTF-16'))
+			if (
+				mb_check_encoding($value, 'UTF-16')
+				&& mb_substr_count($value, "\000") > 0
+			)
 				$value = mb_convert_encoding($value, 'UTF-8', 'UTF-16');
 
 			return $value;
