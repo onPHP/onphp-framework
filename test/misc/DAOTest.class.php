@@ -430,11 +430,8 @@
 		 * Install hstore
 		 * /usr/share/postgresql/contrib # cat hstore.sql | psql -U pgsql -d onphp
 		**/
-		public function testPgHstore()
+		public function testHstore()
 		{
-			if (!$this->isExistsPgType('hstore'))
-				return $this;
-				
 			$this->create();
 			
 			$properties = array(
@@ -460,7 +457,7 @@
 				setRegistered(
 					Timestamp::create(time())->modify('-1 day')
 				)->
-				setProperties($properties);
+				setProperties(Hstore::make($properties));
 			
 			$moscow = TestCity::dao()->add($moscow);
 			
@@ -471,9 +468,11 @@
 			
 			$user = TestUser::dao()->getById('1');
 			
+			$this->assertType('Hstore', $user->getProperties());
+			
 			$this->assertEquals(
 				$properties,
-				$user->getProperties()
+				$user->getProperties()->getList()
 			);
 			
 			
@@ -498,9 +497,11 @@
 			
 			FormUtils::object2form($object, $form);
 			
+			$this->assertType('Hstore', $form->getValue('properties'));
+			
 			$this->assertEquals(
 				array_filter($properties),
-				$form->getValue('properties')
+				$form->getValue('properties')->getList()
 			);
 			
 			$subform = $form->get('properties')->getInnerForm();
@@ -524,7 +525,7 @@
 			FormUtils::form2object($form, $user, false);
 			
 			$this->assertEquals(
-				$user->getProperties(),
+				$user->getProperties()->getList(),
 				array_filter($properties)
 			);
 			
@@ -773,32 +774,6 @@
 			} catch (WrongArgumentException $e) {
 				// pass
 			}
-		}
-		
-		private function isExistsPgType($type)
-		{
-			$db = DBPool::me()->getLink();
-			
-			if (!$db->getDialect() instanceof PostgresDialect)
-				return false;
-			
-			$check = OSQL::select()->
-			get(new DBValue('1'))->
-			from('pg_type')->
-			where(
-				Expression::eq(
-					SQLFunction::create(
-						'format_type',
-						new DBField('oid'),
-						new DBValue('-1')
-					),
-					new DBValue($type)
-				)
-			);
-			
-			$result = $db->queryRow($check);
-			
-			return !empty($result);
 		}
 	}
 ?>
