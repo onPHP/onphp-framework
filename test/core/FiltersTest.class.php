@@ -230,6 +230,12 @@
 				Utf16ConverterFilter::me()->apply($utf16be),
 				$utf8
 			);
+
+			// most difficult case, because it is a vaild utf16 chineese (?)
+			$this->assertEquals(
+				'привет',
+				Utf16ConverterFilter::me()->apply('привет')
+			);
 		}
 	}
 ?>
