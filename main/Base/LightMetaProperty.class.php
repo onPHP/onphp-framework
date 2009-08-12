@@ -364,19 +364,6 @@
 				
 				if ($this->type == 'binary') {
 					$query->set($this->columnName, new DBBinary($value));
-				} elseif ($this->type == 'hstore') {
-					$string = null;
-					if (!empty($value))
-						foreach ($value as $k => $v) {
-							$k = addslashes($k);
-							if ($v !== null) {
-								$v = addslashes($v);
-								$string .= "\"{$k}\"=>\"{$v}\",";
-							} else {
-								$string .= "\"{$k}\"=>NULL,";
-							}
-						}
-					$query->set($this->columnName, $string);
 				} else {
 					$query->lazySet($this->columnName, $value);
 				}
@@ -395,10 +382,6 @@
 			
 			if ($this->className == 'HttpUrl') {
 				return HttpUrl::create()->parse($raw);
-			}
-					
-			if ($this->type == 'hstore') {
-				return $this->hstoreStringToArray($raw);
 			}
 			
 			if (
@@ -517,16 +500,6 @@
 		{
 			// NOTE: enum here formless types
 			return ($this->type == 'enumeration');
-		}
-		
-		protected function hstoreStringToArray($string)
-		{
-			if (!$string)
-				return array();
-			
-			eval("\$return = array({$string});");
-			
-			return $return;
 		}
 	}
 ?>

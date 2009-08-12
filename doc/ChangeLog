@@ -1,3 +1,16 @@
+2009-08-11	Denis M. Gabaidulin
+
+	* core/Form/Primitives/PrimitiveForm.class.php ofAutoProto() method added
+	to use with generated proto classes. 
+
+2009-08-07	Sergey S. Sergeev
+
+	* main/Base/Hstore.class.php, meta/types/HstoreType.class.php,
+	core/DB/PgSQL.class.php, core/Form/Primitives/PrimitiveHstore.class.php,
+	core/OSQL/DataType.class.php, main/Base/LightMetaProperty.class.php,
+	test/core/PrimitiveHstoreTest.class.php, test/misc/DAOTest.class.php:
+	hstore PostgreSql specific dropped.
+
 2009-07-31	Ivan Y. Khvostishkov
 
 	* main/Net/Mail/MailAddress.class.php: mail address encoding
