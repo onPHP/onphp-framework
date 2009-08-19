@@ -8,6 +8,6 @@
  * @see http://framework.zend.com/manual/en/zend.acl.html
  * @author Petr 'PETRUHA' Korobeinikov <onphp at petruha.net>
  */
-class AclRoleExistsException extends Exception { /*_*/ }
+class AclRoleExistsException extends BaseException { /*_*/ }
 
 ?>
