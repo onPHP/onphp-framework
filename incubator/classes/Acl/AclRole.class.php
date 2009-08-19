@@ -77,18 +77,18 @@ final class AclRole
 
 	/**
 	 * Inherits permissions from role.
-	 * When using array_merge() order of inheritance is important!
+	 * You can inherit from many roles.
 	 *
-	 * @todo array_merge() to inherit from many roles?
-	 * @todo inherit from one role, list of roles, array of roles?
 	 * @param string $from
 	 */
 	public function inherit($from)
 	{
-		// May be array_merge?
-		$this->permissionsList = Acl::me()->
-			getRole($from)->
-			getList();
+		$this->permissionsList = array_merge(
+			$this->permissionsList,
+			Acl::me()->
+				getRole($from)->
+				getList()
+		);
 
 		return $this;
 	}

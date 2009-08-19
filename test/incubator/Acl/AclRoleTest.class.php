@@ -78,10 +78,6 @@ final class AclRoleTest extends TestCase
 		);
 
 
-		$bar = Acl::me()->
-			getRole('bar');
-
-		
 		$this->assertEquals(
 			array(
 				'news'  => array(
@@ -96,7 +92,48 @@ final class AclRoleTest extends TestCase
 					'delete'  =>  true,
 				),
 			),
-			$bar->getList()
+			Acl::me()->getRole('bar')->getList()
+		);
+	}
+
+
+	public function testInheritMany()
+	{
+		Acl::me()->
+		addRole(
+			AclRole::create('foo')->
+				grant('news', 'view')->
+				grant('news', 'add')->
+				grant('news', 'edit')->
+				grant('news', 'delete')
+		)->
+		addRole(
+			AclRole::create('bar')->
+				grant('users', 'view')->
+				grant('users', 'edit')->
+				grant('users', 'delete')
+		)->
+		addRole(
+			AclRole::create('baz')->
+				inherit('foo')->
+				inherit('bar')
+		);
+
+		$this->assertEquals(
+			array(
+				'news'  => array(
+					'view'    =>  true,
+					'add'     =>  true,
+					'edit'    =>  true,
+					'delete'  =>  true,
+				),
+				'users' => array(
+					'view'    =>  true,
+					'edit'    =>  true,
+					'delete'  =>  true,
+				),
+			),
+			Acl::me()->getRole('baz')->getList()
 		);
 	}
 
