@@ -1,3 +1,7 @@
+2009-08-20	Denis M. Gabaidulin
+
+	* main/Crypto/Crypter.class.php simple mcrypt ext. wrapper added.
+
 2009-08-11	Denis M. Gabaidulin
 
 	* core/Form/Primitives/PrimitiveForm.class.php ofAutoProto() method added
