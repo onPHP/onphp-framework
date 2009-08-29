@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2007 by Sveta A. Smirnova                          *
+ *   Copyright (C) 2004-2009 by Sveta A. Smirnova                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -43,11 +43,16 @@
 		**/
 		public function connect()
 		{
+			$hostname =
+				$this->port
+					? $this->hostname.':'.$this->port
+					: $this->hostname;
+			
 			$this->link =
 				$this->persistent
 					?
 						mysql_pconnect(
-							$this->hostname,
+							$hostname,
 							$this->username,
 							$this->password,
 							// 2 == CLIENT_FOUND_ROWS
@@ -55,14 +60,14 @@
 						)
 					:
 						mysql_connect(
-							$this->hostname,
+							$hostname,
 							$this->username,
 							$this->password,
 							true,
 							// 2 == CLIENT_FOUND_ROWS
 							2
 						);
-							
+			
 			if (
 				!$this->link
 				|| (
