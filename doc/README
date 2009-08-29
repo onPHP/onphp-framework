@@ -42,25 +42,6 @@ Quick start:
 	refer to doc/project.skel/ - copy config.inc.php.tpl to config.inc.php,
 	edit copied file and try to launch that simple project.
 
-PHP's extension quick start:
-
-	as shared module:
-
-		phpize
-		./configure
-
-	with php:
-
-		cd into php's source
-		cp -a /path/to/onphp/ext ext/onphp
-		./buildconf --force
-		./configure --enable-onphp
-
-	and finally:
-
-		make
-		su -c make install
-
 php.ini recommended settings:
 
 	; unneeded
