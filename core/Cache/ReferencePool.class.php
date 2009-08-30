@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	/**
 	 * A wrapper to single cache to prevent cloning of returned cached objects.

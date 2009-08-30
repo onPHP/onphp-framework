@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	/**
 	 * Parses common doctype FPI (Formal Public Identifier) in form:

@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	/**
 	 * Default process RAM cache.

@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	require dirname(__FILE__).'/../../global.inc.php.tpl';
 	

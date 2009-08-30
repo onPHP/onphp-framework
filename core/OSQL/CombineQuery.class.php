@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 	
 	/**
 	 * The results of queries can be combined using the set

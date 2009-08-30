@@ -1,7 +1,6 @@
 #!/usr/bin/php
 <?php
-	/* $Id$ */
-	
+		
 	function help()
 	{
 ?>

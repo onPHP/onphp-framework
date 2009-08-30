@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
-/* $Id$ */
 
 	/**
 	 * Full-text ranking. Mostly used in "ORDER BY".
