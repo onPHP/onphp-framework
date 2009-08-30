@@ -5,13 +5,17 @@
 
 	* main/Base/DateObjectComparator.class.php added.
 
+2009-08-29	Konstantin V. Arkhipov
+
+	* core/DB/MySQL.class.php: respect port setting.
+
 2009-08-20	Denis M. Gabaidulin
 
-	* main/Crypto/Crypter.class.php simple mcrypt ext. wrapper added.
+	* main/Crypto/Crypter.class.php: simple mcrypt ext. wrapper added.
 
 2009-08-11	Denis M. Gabaidulin
 
-	* core/Form/Primitives/PrimitiveForm.class.php ofAutoProto() method added
+	* core/Form/Primitives/PrimitiveForm.class.php: ofAutoProto() method added
 	to use with generated proto classes. 
 
 2009-08-07	Sergey S. Sergeev
@@ -25,7 +29,7 @@
 2009-07-31	Ivan Y. Khvostishkov
 
 	* main/Net/Mail/MailAddress.class.php: mail address encoding
-	implementation according to RFC822 / RFC 2047.
+	implementation according to RFC822 / RFC2047.
 
 	* main/EntityProto/Builders/DirectoryBuilder.class.php: fine-grained
 	tuning on file permissions.
