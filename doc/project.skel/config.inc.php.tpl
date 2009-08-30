@@ -1,6 +1,4 @@
 <?php
-	/* $Id$ */
-	
 	// copy this file to 'config.inc.php' for local customization
 	
 	// system settings
