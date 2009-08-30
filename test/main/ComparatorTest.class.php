@@ -23,6 +23,17 @@
 			);
 		}
 
+		/**
+		 * @dataProvider dateTestData
+		**/
+		public function testDateObjectComparator($one, $two, $result)
+		{
+			$this->assertEquals(
+				$result,
+				DateObjectComparator::me()->compare($one, $two)
+			);
+		}
+
 		public static function serializedTestObjects()
 		{
 			$object = new CompatatorTestObject();
@@ -62,6 +73,16 @@
 					array($object, $secondObject, 0),
 					array($object, $modifiedObject, 0),
 					array($modifiedObject, $anotherModifiedObject, -1)
+				);
+		}
+
+		public static function dateTestData()
+		{
+			return
+				array(
+					array(Date::makeToday(), Date::makeToday(), 0),
+					array(Date::makeToday(), Date::makeToday()->modify('-1 day'), 1),
+					array(Date::makeToday()->modify('-1 day'), Date::makeToday(), -1)
 				);
 		}
 	}
