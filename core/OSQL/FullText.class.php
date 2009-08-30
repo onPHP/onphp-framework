@@ -8,7 +8,6 @@
  *   (at your option) any later version.                                    *
  *                                                                          *
  ****************************************************************************/
-/* $Id$ */
 
 	/**
 	 * Base for all full-text stuff.

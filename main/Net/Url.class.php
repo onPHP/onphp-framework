@@ -10,7 +10,6 @@
  *   Based on Net/URL.php (C) PEAR: Richard Heyes <richard at php net>     *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	class UrlException extends BaseException {}
 	

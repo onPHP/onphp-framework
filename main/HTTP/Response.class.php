@@ -10,7 +10,6 @@
  *   Based on HTTP/Request.php (C) PEAR:                                   *
  *   Richard Heyes <richard@phpguru.org>                                   *
  ***************************************************************************/
-/* $Id$ */
 	
 	class ResponseException extends BaseException {}
 
