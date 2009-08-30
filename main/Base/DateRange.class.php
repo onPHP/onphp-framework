@@ -8,7 +8,6 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	/**
 	 * Date's interval implementation and accompanying utility methods.

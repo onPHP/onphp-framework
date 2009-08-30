@@ -8,7 +8,6 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	/**
 	 * Straight and inefficient implementation of object's tree.

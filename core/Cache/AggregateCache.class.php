@@ -8,7 +8,6 @@
  *   (at your option) any later version.                                    *
  *                                                                          *
  ****************************************************************************/
-/* $Id$ */
 
 	/**
 	 * A wrapper to multiple cache for workload

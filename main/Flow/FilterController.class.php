@@ -8,7 +8,6 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	/**
 	 * @deprecated useless constraint on constructor args

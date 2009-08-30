@@ -8,7 +8,6 @@
  *   (at your option) any later version.                                    *
  *                                                                          *
  ****************************************************************************/
-/* $Id$ */
 	
 	/**
 	 * System-wide access to selected CachePeer and DaoWorker.

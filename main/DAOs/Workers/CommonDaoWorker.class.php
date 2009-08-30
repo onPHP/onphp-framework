@@ -8,7 +8,6 @@
  *   (at your option) any later version.                                    *
  *                                                                          *
  ****************************************************************************/
-/* $Id$ */
 
 	/**
 	 * Tunable (aka manual) caching DAO worker.
