@@ -1,6 +1,4 @@
 <?php
-	/* $Id$ */
-
 	error_reporting(E_ALL | E_STRICT);
 	
 	setlocale(LC_CTYPE, "ru_RU.UTF8");
