@@ -17,8 +17,11 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 
-		public function compare(Date $one, Date $two)
+		public function compare(/*Date*/ $one,/*Date*/ $two)
 		{
+			Assert::isInstance($one, 'Date');
+			Assert::isInstance($two, 'Date');
+
 			$stamp1 = $one->toStamp();
 			$stamp2 = $two->toStamp();
 
