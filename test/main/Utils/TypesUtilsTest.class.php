@@ -14,7 +14,7 @@
 		/**
 		 * @dataProvider integers
 		**/
-		public function testUnsignedToSigned($values)
+		public function testUnsignedToSigned($signed, $unsigned)
 		{
 			$this->assertEquals($signed, TypesUtils::unsignedToSigned($unsigned));
 		}
@@ -23,9 +23,9 @@
 		{
 			return
 				array(
-					// signed => unsigned
-					'-926365496'	=> '3368601800',
-					'16843009'		=> '16843009'
+					// signed, unsigned
+					array('-926365496', '3368601800'),
+					array('16843009', '16843009')
 				);
 		}
 	}
