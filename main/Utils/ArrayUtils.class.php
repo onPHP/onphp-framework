@@ -197,5 +197,33 @@
 			
 			return $result;
 		}
+
+		public static function mergeSortedLists(
+			$list1, $list2, Comparator $comparator
+		)
+		{
+			$list1Size = count($list1);
+			$list2Size = count($list2);
+
+			$i = $j = 0;
+
+			$newList = array();
+
+			while ($i < $list1Size && $j < $list2Size) {
+				// list1 elt < list2 elt
+				if ($comparator->compare($list1[$i], $list2[$j]) == -1)
+					$newList[] = $list2[$j++];
+				else
+					$newList[] = $list1[$i++];
+			}
+
+			while ($i < $list1Size)
+				$newList[] = $list1[$i++];
+
+			while ($j < $list2Size)
+				$newList[] = $list2[$j++];
+
+			return $newList;
+		}
 	}
 ?>
