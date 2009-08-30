@@ -206,5 +206,63 @@
 			
 			return $result;
 		}
+
+		// TODO: drop Reflection
+		public static function mergeSortedLists(
+			$list1,
+			$list2,
+			Comparator $comparator,
+			$compareValueGetter,
+			$limit = null
+		)
+		{
+			$list1Size = count($list1);
+			$list2Size = count($list2);
+
+			$i = $j = $k = 0;
+
+			$newList = array();
+
+			while ($i < $list1Size && $j < $list2Size) {
+				if (
+					$limit
+					&& $k == $limit
+				)
+					return $newList;
+				
+				// list1 elt < list2 elt
+				if (
+					$comparator->compare(
+						$list1[$i]->{$compareValueGetter}(),
+						$list2[$j]->{$compareValueGetter}()
+					) == -1
+				)
+					$newList[$k++] = $list2[$j++];
+				else
+					$newList[$k++] = $list1[$i++];
+			}
+
+			while ($i < $list1Size) {
+				if (
+					$limit
+					&& $k == $limit
+				)
+					return $newList;
+				
+				$newList[$k++] = $list1[$i++];
+			}
+
+			while ($j < $list2Size) {
+				if (
+					$limit
+					&& $k == $limit
+				)
+					return $newList;
+				
+				$newList[$k++] = $list2[$j++];
+			}
+
+			return $newList;
+		}
 	}
 ?>
