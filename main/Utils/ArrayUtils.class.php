@@ -198,6 +198,7 @@
 			return $result;
 		}
 
+		// TODO: drop Reflection
 		public static function mergeSortedLists(
 			$list1,
 			$list2,
