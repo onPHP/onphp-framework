@@ -8,8 +8,6 @@
 			$data, $secretKey, $expectedHash, $assertFunction
 		)
 		{
-			echo WebMoneyUtils::makePaymentHash($secretKey, $data);
-			
 			$this->{$assertFunction}(
 				WebMoneyUtils::isValidPayment(
 					$expectedHash,
