@@ -8,7 +8,6 @@
  *   (at your option) any later version.                                    *
  *                                                                          *
  ****************************************************************************/
-/* $Id$ */
 
 	/**
 	 * Reference for calling built-in database functions.

@@ -8,7 +8,6 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	class MailException extends BaseException {/*_*/};
 	class MailNotSentException extends MailException {/*_*/};

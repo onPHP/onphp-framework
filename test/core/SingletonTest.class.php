@@ -29,7 +29,7 @@
 		
 		public function testOverloadedCall()
 		{
-			$name = $this->childName;
+			$name = self::CLASS_NAME;
 			
 			$this->assertTrue(
 				Singleton::getInstance()->$name()
