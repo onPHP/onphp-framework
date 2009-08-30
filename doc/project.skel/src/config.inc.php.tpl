@@ -1,13 +1,11 @@
 <?php
-	/* $Id$ */
-	
 	// copy this file to 'config.inc.php' for local customization
-
+	
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
 	setlocale(LC_CTYPE, "ru_RU.UTF8");
 	setlocale(LC_TIME, "ru_RU.UTF8");
-
+	
 	// paths
 	define('PATH_BASE', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
 	define('PATH_WEB', 'http://path/to/src/www/');
@@ -18,7 +16,7 @@
 	define('PATH_CLASSES', PATH_BASE.'classes'.DIRECTORY_SEPARATOR);
 	define('PATH_CONTROLLERS', PATH_BASE.'controllers'.DIRECTORY_SEPARATOR);
 	define('PATH_TEMPLATES', PATH_BASE.'templates'.DIRECTORY_SEPARATOR);
-
+	
 	// onPHP init
 	require realpath('/path/to/onPHP/global.inc.php.tpl');
 	
