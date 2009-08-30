@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 	
 	// TODO: see oemlib/trunk/Utils/Index.class.php
 	// disadvantage: is's hard to insert some filter inside a chain

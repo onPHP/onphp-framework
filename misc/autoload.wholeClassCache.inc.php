@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	// we must duplicate this one here, otherwise any fail will be silent
 	class BaseException extends Exception
