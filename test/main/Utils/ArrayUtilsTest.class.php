@@ -4,7 +4,7 @@
 		/**
 		 * @dataProvider sortedLists
 		**/
-		public function testMergeSortedLists($list1, $list2, $method, $result)
+		public function testMergeSortedLists($list1, $list2, $method, $result, $limit)
 		{
 			$this->assertEquals(
 				$result,
@@ -12,7 +12,8 @@
 					$list1,
 					$list2,
 					DateObjectComparator::me(),
-					$method
+					$method,
+					$limit
 				)
 			);
 		}
@@ -42,7 +43,8 @@
 							SortableObjectForTheTest::create()->setDate($today->spawn('-2 day')),
 							SortableObjectForTheTest::create()->setDate($today->spawn('-2 day')),
 							SortableObjectForTheTest::create()->setDate($today->spawn('-3 day'))
-						)
+						),
+						null
 					),
 					array(
 						array(
@@ -59,7 +61,8 @@
 							SortableObjectForTheTest::create()->setDate($today->spawn('-1 day')),
 							SortableObjectForTheTest::create()->setDate($today->spawn('-2 day')),
 							SortableObjectForTheTest::create()->setDate($today->spawn('-3 day'))
-						)
+						),
+						null
 					),
 					array(
 						array(
@@ -78,7 +81,42 @@
 							SortableObjectForTheTest::create()->setDate($today->spawn('-3 day')),
 							SortableObjectForTheTest::create()->setDate($today->spawn('-4 day')),
 							SortableObjectForTheTest::create()->setDate($today->spawn('-6 day'))
-						)
+						),
+						null
+					),
+					array(
+						array(
+							SortableObjectForTheTest::create()->setDate($today->spawn('-1 day')),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-3 day'))
+						),
+						array(
+							SortableObjectForTheTest::create()->setDate($today),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-4 day')),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-6 day')),
+						),
+						'getDate',
+						array(
+							SortableObjectForTheTest::create()->setDate($today),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-1 day')),
+						),
+						2
+					),
+					array(
+						array(
+							SortableObjectForTheTest::create()->setDate($today->spawn('-1 day')),
+						),
+						array(
+							SortableObjectForTheTest::create()->setDate($today),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-4 day')),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-6 day')),
+						),
+						'getDate',
+						array(
+							SortableObjectForTheTest::create()->setDate($today),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-1 day')),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-4 day'))
+						),
+						3
 					)
 				);
 		}
