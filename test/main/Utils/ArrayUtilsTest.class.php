@@ -43,6 +43,42 @@
 							SortableObjectForTheTest::create()->setDate($today->spawn('-2 day')),
 							SortableObjectForTheTest::create()->setDate($today->spawn('-3 day'))
 						)
+					),
+					array(
+						array(
+							SortableObjectForTheTest::create()->setDate($today),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-1 day')),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-3 day'))
+						),
+						array(
+							SortableObjectForTheTest::create()->setDate($today->spawn('-2 day')),
+						),
+						'getDate',
+						array(
+							SortableObjectForTheTest::create()->setDate($today),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-1 day')),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-2 day')),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-3 day'))
+						)
+					),
+					array(
+						array(
+							SortableObjectForTheTest::create()->setDate($today->spawn('-1 day')),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-3 day'))
+						),
+						array(
+							SortableObjectForTheTest::create()->setDate($today),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-4 day')),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-6 day')),
+						),
+						'getDate',
+						array(
+							SortableObjectForTheTest::create()->setDate($today),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-1 day')),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-3 day')),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-4 day')),
+							SortableObjectForTheTest::create()->setDate($today->spawn('-6 day'))
+						)
 					)
 				);
 		}
