@@ -1,7 +1,9 @@
-2009-08-21	Denis M. Gabaidulin
+2009-08-30	Denis M. Gabaidulin
 
 	* main/Utils/ArrayUtils.class.php: mergeSortedLists() added.
 	Classic algorithm implementation for two sorted list merge.
+
+	* main/Base/DateObjectComparator.class.php added.
 
 2009-08-20	Denis M. Gabaidulin
 
