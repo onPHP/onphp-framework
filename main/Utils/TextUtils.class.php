@@ -12,7 +12,6 @@
  *    by massimo dot scamarcia at gmail dot com                            *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	/**
 	 * @ingroup Utils
