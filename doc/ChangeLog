@@ -1,3 +1,8 @@
+2009-08-21	Denis M. Gabaidulin
+
+	* main/Utils/ArrayUtils.class.php: mergeSortedLists() added.
+	Classic algorithm implementation for two sorted list merge.
+
 2009-08-29	Konstantin V. Arkhipov
 
 	* core/DB/MySQL.class.php: respect port setting.
