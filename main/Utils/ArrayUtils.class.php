@@ -223,8 +223,8 @@
 				// list1 elt < list2 elt
 				if (
 					$comparator->compare(
-						$list1[$i]->{$compareValueGetter()},
-						$list2[$j]->{$compareValueGetter()}
+						$list1[$i]->{$compareValueGetter}(),
+						$list2[$j]->{$compareValueGetter}()
 					) == -1
 				)
 					$newList[] = $list2[$j++];
