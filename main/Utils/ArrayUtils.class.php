@@ -199,7 +199,7 @@
 		}
 
 		public static function mergeSortedLists(
-			$list1, $list2, Comparator $comparator
+			$list1, $list2, Comparator $comparator, $compareValueGetter
 		)
 		{
 			$list1Size = count($list1);
@@ -211,7 +211,12 @@
 
 			while ($i < $list1Size && $j < $list2Size) {
 				// list1 elt < list2 elt
-				if ($comparator->compare($list1[$i], $list2[$j]) == -1)
+				if (
+					$comparator->compare(
+						$list1[$i]->{$compareValueGetter()},
+						$list2[$j]->{$compareValueGetter()}
+					) == -1
+				)
 					$newList[] = $list2[$j++];
 				else
 					$newList[] = $list1[$i++];
