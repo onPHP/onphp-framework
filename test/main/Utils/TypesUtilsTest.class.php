@@ -1,6 +1,4 @@
 <?php
-	/* $Id$ */
-
 	final class TypesUtilsTest extends TestCase
 	{
 		/**
