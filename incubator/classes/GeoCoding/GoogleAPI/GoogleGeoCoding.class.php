@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	// FIXME: strange properties visibility for a final class
 	final class GoogleGeoCoding

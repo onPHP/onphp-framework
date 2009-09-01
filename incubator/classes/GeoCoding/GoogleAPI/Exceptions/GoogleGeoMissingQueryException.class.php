@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	final class GoogleGeoMissingQueryException extends GoogleGeoBaseException {/*_*/}
 ?>

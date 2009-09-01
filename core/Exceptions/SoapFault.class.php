@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
-/* $Id$ */
 
 	/**
 	 * In case we're soapless.
