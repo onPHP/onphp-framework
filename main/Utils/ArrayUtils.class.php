@@ -203,7 +203,7 @@
 			$list1,
 			$list2,
 			Comparator $comparator,
-			$compareValueGetter,
+			$compareValueGetter = null,
 			$limit = null
 		)
 		{
@@ -220,14 +220,19 @@
 					&& $k == $limit
 				)
 					return $newList;
-				
-				// list1 elt < list2 elt
-				if (
-					$comparator->compare(
+
+				if (!$compareValueGetter)
+					$compareResult = $comparator->compare(
+						$list1[$i], $list2[$j]
+					);
+				else
+					$compareResult = $comparator->compare(
 						$list1[$i]->{$compareValueGetter}(),
 						$list2[$j]->{$compareValueGetter}()
-					) == -1
-				)
+					);
+
+				// list1 elt < list2 elt
+				if ($compareResult == -1)
 					$newList[$k++] = $list2[$j++];
 				else
 					$newList[$k++] = $list1[$i++];
