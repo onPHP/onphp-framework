@@ -3,7 +3,7 @@
 	* main/Utils/ArrayUtils.class.php: mergeSortedLists() added.
 	Classic algorithm implementation for two sorted list merge.
 
-	* main/Base/DateObjectComparator.class.php added.
+	* main/Base/DateObjectComparator.class.php: added.
 
 2009-08-29	Konstantin V. Arkhipov
 

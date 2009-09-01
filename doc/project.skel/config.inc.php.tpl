@@ -1,8 +1,6 @@
 <?php
-	/* $Id$ */
-	
 	// copy this file to 'config.inc.php' for local customization
-
+	
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
 	setlocale(LC_CTYPE, "ru_RU.UTF8");

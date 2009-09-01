@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	define('ONPHP_CLASS_CACHE_CHECKSUM', '__occc');
 	
