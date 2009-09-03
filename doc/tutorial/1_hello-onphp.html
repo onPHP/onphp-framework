@@ -84,15 +84,12 @@
 		if (!$view)
 			$view = $controllerName;
 		elseif (is_string($view)) {
+			// if non fatal error occured in controller,
+			// you can return 'error'(special sort of view) or throw exception,
+			// which should be handled here
 			if ($view == 'error')
 				$view = new RedirectView($prefix);
-			elseif (strpos($view, 'redirect:') !== false) {
-				list(, $area) = explode(':', $view, 2);
-
-				$view = new RedirectView(PATH_WEB.'?area='.$area);
-			}
-		}
-		elseif ($view instanceof RedirectToView)
+		} elseif ($view instanceof RedirectToView)
 			$view->setPrefix($prefix);
 
 		if (!$view instanceof View) {
@@ -146,7 +143,6 @@
 		else {
 			mail(BUGLOVERS, $uri, $msg);
 			DBPool::me()->shutdown();
-			sleep(10);
 			if (!HeaderUtils::redirectBack())
 				HeaderUtils::redirectRaw('/');
 		}
