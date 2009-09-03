@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>Quick start: Используем базу данных</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<style type="text/css">
+			body {
+				font-family: Georia, serif;
+			}
+
+			pre {
+				background: #ccc;
+				padding: 1em;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Quick start: Используем базу данных</h1>
+
+		<h2>config.xml</h2>
+		<p>Для описания сущностей используется файл config.xml. Чтобы узнать больше, изучите файл meta/dtd/meta.dtd.</p>
+		<p>Создадим класс текстовых страниц. Можно скопировать этот конфиг себе в src/config.xml.</p>
+		<pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE metaconfiguration SYSTEM &quot;meta.dtd&quot;&gt;
+
+&lt;metaconfiguration&gt;
+        &lt;classes&gt;
+
+                &lt;class name=&quot;Page&quot; type=&quot;final&quot; table=&quot;pages&quot;&gt;
+                        &lt;properties&gt;
+                                &lt;identifier type=&quot;Integer&quot; /&gt;
+                                &lt;property   name=&quot;caption&quot; type=&quot;String&quot; size=&quot;255&quot;  required=&quot;true&quot; /&gt;
+                                &lt;property   name=&quot;body&quot;    type=&quot;String&quot; size=&quot;2048&quot; required=&quot;true&quot; /&gt;
+                        &lt;/properties&gt;
+                        &lt;pattern name=&quot;DictionaryClass&quot; /&gt;
+                &lt;/class&gt;
+
+        &lt;/classes&gt;
+&lt;/metaconfiguration&gt;</pre>
+		<p>Теперь нам понадобится таблица для хранения страниц. Для создания всех полей, кроме идентификатора, фреймворк предложит sql-запрос. Выполять его придется вручную (пока?).</p>
+		<pre>create table pages (
+	id serial
+);</pre>
+
+		<h2>meta/bin/build.php</h2>
+		<p>Генерируем наши классы.</p>
+		<pre>php /var/www/lib/onPHP/meta/bin/build.php</pre>
+		<p>После запуска билдера будут автоматически созданы каталоги Auto/, Business/, DAOs/, Proto/ в каталоге src/classes/ и классы в этих каталогах.</p>
+		<p>Выполните предложенные запросы.</p>
+		<pre>ALTER TABLE "pages" ADD COLUMN "caption" CHARACTER VARYING(255) NOT NULL;
+ALTER TABLE "pages" ADD COLUMN "body" CHARACTER VARYING(2048) NOT NULL;</pre>
+		<p>Запустите билдер еще раз, чтобы прогнать тесты.</p>
+		
+		<h2>Тестовые данные</h2>
+		<p>Посмотрим на нашу таблицу "pages":</p>
+		<pre>\d pages</pre>
+		<pre>
+                                  Table "public.pages"
+ Column  |          Type           |                     Modifiers
+---------+-------------------------+----------------------------------------------------
+ id      | integer                 | not null default nextval('pages_id_seq'::regclass)
+ caption | character varying(255)  | not null
+ body    | character varying(2048) | not null</pre>
+
+		<p>И вгоним в неё три статейки.</p>
+		<pre>insert into "pages" ("caption", "body") values('First page.', 'Some content of first page. Some content of first page. Some content of first page.');
+insert into "pages" ("caption", "body") values('Second page.', 'Some content of second page. Some content of second page. Some content of second page.');
+insert into "pages" ("caption", "body") values('Third page.', 'Some content of third page. Some content of third page. Some content of third page.');</pre>
+
+		<p>Убедимся, что они прошли:</p>
+		<pre>select * from pages;</pre>
+		<pre>
+ id |   caption    |                                          body
+----+--------------+----------------------------------------------------------------------------------------
+  1 | First page.  | Some content of first page. Some content of first page. Some content of first page.
+  2 | Second page. | Some content of second page. Some content of second page. Some content of second page.
+  3 | Third page.  | Some content of third page. Some content of third page. Some content of third page.</pre>
+
+		<h2>Получаем данные и выводим их</h2>
+		<p>Для получения данных изменим контроллер index:</p>
+		<pre>&lt;?php
+
+class index implements Controller
+{
+	public function handleRequest(HttpRequest $request)
+	{
+		$pages = Criteria::create(Page::dao())->
+			getList();
+
+		return ModelAndView::create()->
+			setModel(
+				Model::create()->
+					set('pages', $pages)
+			);
+	}
+}
+
+?&gt;</pre>
+
+
+		
+		<p>И соответствующую ему вьюху:</p>
+
+		<pre>&lt;h1&gt;Hello, onPHP!&lt;/h1&gt;
+
+&lt;pre&gt;
+&lt;?php
+        DebugUtils::ev($pages);
+?&gt;
+&lt;/pre&gt;</pre>
+
+		<p>Ну вот как-то так. Теперь давайте это приукрасим: сделаем меню.</p>
+
+		
+
+
+	</body>
+</html>

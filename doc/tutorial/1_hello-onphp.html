@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>Quick start: Hello, onPHP</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<style type="text/css">
+			body {
+				font-family: Georia, serif;
+			}
+
+			pre {
+				background: #ccc;
+				padding: 1em;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Quick start: Hello, onPHP</h1>
+
+		
+		
+		<h2>Получение фреймворка</h2>
+		<p>Получить фреймворк onPHP можно несколькими способами.</p>
+		<ul>
+			<li><a href="http://onphp.ru/">Взять один из релизов</a></li>
+			<li><a href="git://git.shadanakar.org/onPHP">Получить копию репозитория git://git.shadanakar.org/onPHP</a></li>
+			<li><a href="http://onphp.ru/snapshots/">Взять snapshot</a></li>
+		</ul>
+		<p>Положите скачанный фремворк куда удобно, например в /var/www/lib/onPHP/.</p>
+		
+		
+
+
+		<h2>Базовая структура проекта</h2>
+		<pre>src/
+	controllers/
+		web/ - контроллеры будут здесь
+	views/
+		web/ - представления будут здесь
+	classes/ - классы приложения будут здесь
+	www/
+		index.php
+	config.inc.php - конфигурационный файл проекта
+		</pre>
+
+
+		<h2>index.php и config.inc.php</h2>
+		<p>index.php</p>
+		<pre>&lt;?php
+
+	require '../config.inc.php';
+
+	try {
+		Session::start();
+
+		$request =
+			HttpRequest::create()->
+			setGet($_GET)->
+			setPost($_POST)->
+			setCookie($_COOKIE)->
+			setServer($_SERVER)->
+			setSession($_SESSION)->
+			setFiles($_FILES);
+
+		$controllerName = DEFAULT_CONTROLLER;
+
+		if (
+			isset($_GET['area']) && ClassUtils::isClassName($_GET['area'])
+			&& defined('PATH_CONTROLLERS')
+			&& (is_readable(PATH_CONTROLLERS.'web'.DIRECTORY_SEPARATOR.$_GET['area'].EXT_CLASS))
+		) {
+			$controllerName = $_GET['area'];
+		}
+
+		$controller = new $controllerName;
+
+		$modelAndView = $controller->handleRequest($request);
+
+		$view 	= $modelAndView->getView();
+		$model 	= $modelAndView->getModel();
+
+		$prefix = PATH_WEB.'?area=';
+
+		if (!$view)
+			$view = $controllerName;
+		elseif (is_string($view)) {
+			if ($view == 'error')
+				$view = new RedirectView($prefix);
+			elseif (strpos($view, 'redirect:') !== false) {
+				list(, $area) = explode(':', $view, 2);
+
+				$view = new RedirectView(PATH_WEB.'?area='.$area);
+			}
+		}
+		elseif ($view instanceof RedirectToView)
+			$view->setPrefix($prefix);
+
+		if (!$view instanceof View) {
+			$viewName = $view;
+
+			$viewResolver =
+				MultiPrefixPhpViewResolver::create()->
+				setViewClassName('SimplePhpView')->
+				addPrefix(
+					PATH_TEMPLATES.'common'.DIRECTORY_SEPARATOR
+				)->
+				addPrefix(
+					PATH_TEMPLATES.'web'.DIRECTORY_SEPARATOR
+				);
+
+			$view = $viewResolver->resolveViewName($viewName);
+		}
+
+		if (!$view instanceof RedirectView) {
+			$model->
+				set('selfUrl', PATH_WEB.'?area='.$controllerName)->
+				set('baseUrl', PATH_WEB)->
+				set('controllerName', $controllerName);
+		}
+
+		$view->render($model);
+	} catch (Exception $e) {
+
+		$uri = $_SERVER['HTTP_HOST'].$_SERVER["REQUEST_URI"];
+
+		$msg =
+			'class: '.get_class($e)."\n"
+			.'code: '.$e->getCode()."\n"
+			.'message: '.$e->getMessage()."\n\n"
+			.$e->getTraceAsString()."\n"
+			."\n_POST=".var_export($_POST, true)
+			."\n_GET=".var_export($_GET, true)
+			.(
+				isset($_SERVER['HTTP_REFERER'])
+					? "\nREFERER=".var_export($_SERVER['HTTP_REFERER'], true)
+					: null
+			)
+			.(
+				isset($_SESSION) ?
+					"\n_SESSION=".var_export($_SESSION, true)
+					: null
+			);
+
+		if (defined('__LOCAL_DEBUG__'))
+			echo '&lt;pre&gt;'.$msg.'&lt;/pre&gt;';
+		else {
+			mail(BUGLOVERS, $uri, $msg);
+			DBPool::me()->shutdown();
+			sleep(10);
+			if (!HeaderUtils::redirectBack())
+				HeaderUtils::redirectRaw('/');
+		}
+	}
+?&gt;</pre>
+
+		<p>config.inc.php</p>
+		<pre>&lt;?php
+
+	error_reporting(E_ALL);
+
+	setlocale(LC_CTYPE, "ru_RU.UTF8");
+	setlocale(LC_TIME, "ru_RU.UTF8");
+
+	// paths
+	define('PATH_BASE', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
+
+	define('PATH_WEB', 'http://onphp.lan/src/www/');
+	define('PATH_WEB_CSS', PATH_WEB.'css/');
+	define('PATH_WEB_IMG', PATH_WEB.'img/');
+
+
+	define('DEFAULT_CONTROLLER', 'index');
+
+
+	define('PATH_CLASSES', PATH_BASE.'classes'.DIRECTORY_SEPARATOR);
+	define('PATH_CONTROLLERS', PATH_BASE.'controllers'.DIRECTORY_SEPARATOR);
+	define('PATH_TEMPLATES', PATH_BASE.'views'.DIRECTORY_SEPARATOR);
+
+	// onPHP
+	require '/var/www/lib/onPHP/global.inc.php.tpl';
+
+	// everything else
+	define('DEFAULT_ENCODING', 'UTF-8');
+	mb_internal_encoding(DEFAULT_ENCODING);
+	mb_regex_encoding(DEFAULT_ENCODING);
+
+	ini_set('magic_quotes_gpc', 'Off');
+
+	ini_set(
+		'include_path',
+		get_include_path().PATH_SEPARATOR
+			.PATH_CONTROLLERS.'web'.DIRECTORY_SEPARATOR.PATH_SEPARATOR
+	);
+
+	ini_set(
+		'include_path',
+		PATH_CLASSES.PATH_SEPARATOR
+		.PATH_CLASSES.'DAOs'.PATH_SEPARATOR
+		.PATH_CLASSES.'Business'.PATH_SEPARATOR
+		.PATH_CLASSES.'Proto'.PATH_SEPARATOR
+		.PATH_CLASSES.'Filters'.PATH_SEPARATOR
+		.PATH_CLASSES.'Utils'.PATH_SEPARATOR
+		.PATH_CLASSES.'ViewHelpers'.PATH_SEPARATOR
+		.PATH_CLASSES.'Flow'.PATH_SEPARATOR
+
+		.PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR.'Business'.PATH_SEPARATOR
+		.PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR.'Proto'.PATH_SEPARATOR
+		.PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR.'DAOs'.PATH_SEPARATOR
+
+		.PATH_CONTROLLERS.PATH_SEPARATOR
+
+		.get_include_path().PATH_SEPARATOR
+	);
+
+	define('__LOCAL_DEBUG__', true);
+	define('BUGLOVERS', 'your at host dot tld');
+
+
+	DBPool::me()->
+	setDefault(
+		DB::spawn('PgSQL', 'onphp', 'password', '127.0.0.1', 'onphp', false, DEFAULT_ENCODING)
+	);
+
+?&gt;</pre>
+
+
+		<h2>Создаем controller и view</h2>
+		Создаем наш первый контроллер index.class.php и кладем его в src/controllers/web/.
+		<pre>&lt;?php
+
+class index implements Controller
+{
+	public function handleRequest(HttpRequest $request)
+	{
+		return ModelAndView::create();
+	}
+}
+
+?&gt;</pre>
+
+		Создаем представление для контроллера index под названием index.tpl.html и кладем его в src/views/web/.
+		<pre>&lt;h1&gt;Hello, onPHP!&lt;/h1&gt;</pre>
+
+		<h2>Смотрим, что получилось</h2>
+		Набираем строку в своем браузере: http://onphp.lan/src/www/ и смотрим.
+
+		<hr>
+
+		<p>К вопросу о:</p>
+		<ul>
+			<li><a href="http://git.or.cz/course/svn.html">git crash course</a></li>
+		</ul>
+
+	</body>
+</html>
