@@ -141,6 +141,7 @@
 		if (defined('__LOCAL_DEBUG__'))
 			echo '&lt;pre&gt;'.$msg.'&lt;/pre&gt;';
 		else {
+			// keep in mind a lot of msgs put down you mail server
 			mail(BUGLOVERS, $uri, $msg);
 			DBPool::me()->shutdown();
 			if (!HeaderUtils::redirectBack())
