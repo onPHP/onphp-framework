@@ -85,7 +85,7 @@
 			$view = $controllerName;
 		elseif (is_string($view)) {
 			// if non fatal error occured in controller,
-			// you can return 'error'(special sort of view) or throw exception,
+			// you can return 'error'(special kind of view) or throw exception,
 			// which should be handled here
 			if ($view == 'error')
 				$view = new RedirectView($prefix);
