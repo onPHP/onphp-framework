@@ -77,5 +77,32 @@
 		{
 			self::$nullValue = $nullValue;
 		}
+
+		public static function increment(
+			DAOConnected &$object,
+			array $fields /* fieldName => value */,
+			$refreshCurrent = true
+		)
+		{
+			$objectDao = $object->dao();
+
+			$updateQuery = OSQL::update()->setTable($objectDao->getTable());
+
+			$mapping = $objectDao->getProtoClass()->getMapping();
+
+			foreach ($mapping as $field => $column)
+				if (isset($fields[$field]))
+					$updateQuery->set(
+						$column,
+						Expression::add($column, $fields[$field])
+					);
+			
+			DBPool::getByDao($objectDao)->queryNull($updateQuery);
+
+			$objectDao->uncacheById($object->getId());
+
+			if ($refreshCurrent)
+				$object = $objectDao->getById($object->getId());
+		}
 	}
 ?>
