@@ -331,6 +331,13 @@
 			
 			return $this;
 		}
+
+		public function dropObjectIdentityMapById($id)
+		{
+			unset($this->identityMap[$id]);
+
+			return $this;
+		}
 		
 		protected function inject(
 			InsertOrUpdateQuery $query,
