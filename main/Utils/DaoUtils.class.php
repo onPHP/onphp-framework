@@ -102,14 +102,18 @@
 						$column,
 						Expression::add($column, $fields[$field])
 					);
+
 			echo $updateQuery->toDialectString(PostgresDialect::me());
 			
 			$updateCount =
 				DBPool::getByDao($objectDao)->queryCount($updateQuery);
 
-			$objectDao->uncacheById($object->getId());
+			if ($query)
+				$objectDao->uncacheLists();
+			else
+				$objectDao->uncacheById($object->getId());
 
-			if ($refreshCurrent)
+			if ($refreshCurrent && !$query)
 				$object = $objectDao->getById($object->getId());
 
 			return $updateCount;
