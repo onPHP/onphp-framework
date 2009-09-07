@@ -103,8 +103,6 @@
 						Expression::add($column, $fields[$field])
 					);
 
-			echo $updateQuery->toDialectString(PostgresDialect::me());
-			
 			$updateCount =
 				DBPool::getByDao($objectDao)->queryCount($updateQuery);
 
