@@ -97,12 +97,15 @@
 						Expression::add($column, $fields[$field])
 					);
 			
-			DBPool::getByDao($objectDao)->queryNull($updateQuery);
+			$updateCount =
+				DBPool::getByDao($objectDao)->queryCount($updateQuery);
 
 			$objectDao->uncacheById($object->getId());
 
 			if ($refreshCurrent)
 				$object = $objectDao->getById($object->getId());
+
+			return $updateCount;
 		}
 	}
 ?>
