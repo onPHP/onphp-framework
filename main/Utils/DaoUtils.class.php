@@ -81,12 +81,18 @@
 		public static function increment(
 			DAOConnected &$object,
 			array $fields /* fieldName => value */,
-			$refreshCurrent = true
+			$refreshCurrent = true,
+			/*UpdateQuery*/ $query = null
 		)
 		{
 			$objectDao = $object->dao();
 
-			$updateQuery = OSQL::update()->setTable($objectDao->getTable());
+			if ($query)
+				$updateQuery = $query;
+			else
+				$updateQuery =
+					OSQL::update()->setTable($objectDao->getTable())->
+					where(Expression::eqId('id', $object));
 
 			$mapping = $objectDao->getProtoClass()->getMapping();
 
@@ -96,6 +102,7 @@
 						$column,
 						Expression::add($column, $fields[$field])
 					);
+			echo $updateQuery->toDialectString(PostgresDialect::me());
 			
 			$updateCount =
 				DBPool::getByDao($objectDao)->queryCount($updateQuery);
