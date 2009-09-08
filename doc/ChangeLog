@@ -1,3 +1,8 @@
+2009-09-08	Denis M. Gabaidulin
+
+	* main/Utils/Mobile/MobileUtils.class.php: extract ip/user agent
+	from headers wrt Opera mini.
+
 2009-09-04	Denis M. Gabaidulin
 
 	* main/Utils/DaoUtils.class.php: increment() method added to work
