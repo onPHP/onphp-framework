@@ -4,7 +4,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = onPHP
-PROJECT_NUMBER         = 1.0.9
+PROJECT_NUMBER         = 1.0-dev
 OUTPUT_DIRECTORY       = ./doxy/trunk/
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
@@ -200,7 +200,7 @@ SKIP_FUNCTION_MACROS   = YES
 #---------------------------------------------------------------------------
 # Configuration::additions related to external references   
 #---------------------------------------------------------------------------
-TAGFILES               = 
+TAGFILES               = doxy/spl/spl.tag=../spl
 GENERATE_TAGFILE       = 
 ALLEXTERNALS           = NO
 EXTERNAL_GROUPS        = YES
