@@ -86,7 +86,6 @@ INPUT                  = ./onphp.doxy.php ../
 FILE_PATTERNS          = *.php *.c *.h
 RECURSIVE              = YES
 EXCLUDE                = ../test/ \
-			 ../incubator/ \
 			 project.skel/ \
 			 examples/ \
 			 spl/
