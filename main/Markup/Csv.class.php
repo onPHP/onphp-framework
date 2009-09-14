@@ -22,6 +22,8 @@
 		const CRLF						= "\x0D\x0A";
 		const QUOTE_REQUIRED_PATTERN	= "/(\x2C|\x22|\x0D|\x0A)/";
 		
+		private $separator				= self::SEPARATOR;
+		
 		private $header	= false;
 		private $data	= array();
 		
@@ -35,7 +37,7 @@
 		
 		public function __construct($header = false)
 		{
-			$this->header = $header === true;
+			$this->header = (true === $header);
 		}
 		
 		public function getArray()
@@ -55,6 +57,16 @@
 			return $this;
 		}
 		
+		/**
+		 * @return Csv
+		**/
+		public function setSeparator($separator)
+		{
+			$this->separator = $separator;
+			
+			return $this;
+		}
+		
 		public function parse($rawData)
 		{
 			throw new UnimplementedFeatureException('is not implemented yet');
@@ -62,18 +74,19 @@
 		
 		public function render($forceQuotes = false)
 		{
+			Assert::isNotNull($this->separator);
+			
 			$csvString	= null;
 			
 			foreach ($this->data as $row) {
-				
 				Assert::isArray($row);
 				
 				$rowString = null;
 				
 				foreach ($row as $value) {
 					if (
-						preg_match(self::QUOTE_REQUIRED_PATTERN, $value)
-						|| $forceQuotes
+						$forceQuotes
+						|| preg_match(self::QUOTE_REQUIRED_PATTERN, $value)
 					)
 						$value =
 							self::QUOTE
@@ -87,8 +100,8 @@
 					$rowString .=
 						(
 							$rowString
-							? self::SEPARATOR
-							: null
+								? $this->separator
+								: null
 						)
 						.$value;
 				}
