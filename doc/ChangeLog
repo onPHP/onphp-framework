@@ -1,3 +1,7 @@
+2009-09-13	Konstantin V. Arkhipov
+
+	* 1.0.9 released.
+
 2009-09-08	Denis M. Gabaidulin
 
 	* main/Utils/Mobile/MobileUtils.class.php: extract ip/user agent
