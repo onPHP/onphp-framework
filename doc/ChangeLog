@@ -1,8 +1,3 @@
-2009-09-17	Konstantin V. Arkhipov
-
-	* misc/autoload.wholeClassCache.inc.php: no more pid usage in
-	filenames for cli sessions.
-
 2009-09-17	Vladimir A. Altuchov
 
 	* misc/autoload.classPathCache.inc.php,
