@@ -1,3 +1,8 @@
+2009-09-17	Viatcheslav Y. Tsyrulnik
+
+	* meta/classes/MetaClassProperty.class.php: fixed support for
+	identifiers of string type.
+
 2009-09-08	Denis M. Gabaidulin
 
 	* main/Utils/Mobile/MobileUtils.class.php: extract ip/user agent

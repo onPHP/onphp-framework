@@ -404,6 +404,7 @@
 				($this->getType() instanceof ObjectType)
 				&& ($this->getRelationId() == MetaRelation::ONE_TO_ONE)
 				&& ($identifier = $this->getType()->getClass()->getIdentifier())
+				&& ($this->getType()->isMeasurable())
 			) {
 				$size = $identifier->getType()->getSize();
 			} elseif ($this->getType()->isMeasurable()) {
