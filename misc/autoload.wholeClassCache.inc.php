@@ -42,7 +42,7 @@
 		$currentPath = get_include_path();
 		
 		if ($currentPath != $path) {
-			$checksum = crc32($currentPath);
+			$checksum = crc32($currentPath.ONPHP_VERSION);
 			$path = $currentPath;
 		}
 		
