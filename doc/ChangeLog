@@ -1,3 +1,8 @@
+2009-09-17	Viatcheslav Y. Tsyrulnik
+
+	* meta/classes/MetaClassProperty.class.php: fixed support for
+	identifiers of string type.
+
 2009-09-13	Konstantin V. Arkhipov
 
 	* 1.0.9 released.

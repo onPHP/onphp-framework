@@ -171,4 +171,20 @@
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
+
+	<class name="TestStringIdentifier" type="final">
+		<properties>
+				<identifier name="id" type="String" size="40" />
+				<property name="name" type="String" size="32" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="TestStringIdentifierRelated" type="final">
+		<properties>
+				<identifier />
+				<property name="test" type="TestStringIdentifier" relation="OneToOne" required="false" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
 </classes></metaconfiguration>
