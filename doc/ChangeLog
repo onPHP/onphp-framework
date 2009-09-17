@@ -1,3 +1,8 @@
+2009-09-17	Denis M. Gabaidulin
+
+	* misc/autload.classPathCache.inc.php, misc/autload.wholeClassCache.inc.php:
+	added ONPHP_VERSION to checksum hash.
+
 2009-09-17	Vladimir A. Altuchov
 
 	* misc/autoload.classPathCache.inc.php,
