@@ -26,6 +26,7 @@ addRole(
 addRole(
 	AclRole::create('baz')->
 		inherit('foo')->
+		inherit('bar')->
 		revoke('news', 'delete')
 );
 

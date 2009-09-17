@@ -1,7 +1,72 @@
-$Id$
 
-Acl component for onPHP.
+onPHP Acl
 
-acl.config.inc.php       - Acl config example for your application.
-doc/onphp-acl.vpp        - VisualParadigm UML model of Acl.
-test                     - PHPUnit tests (originally placed in test/incubator)
+Как использовать Acl?
+
+Для начала нужно определить, какие роли будут использоваться в приложении.
+Список ролей можно дополнить или урезать в любой момент.
+Например:
+	"newsmaker" может создавать и редактировать новости
+	"content manager" может создавать, редактировать и удалять статьи
+	"user manager" может создавать,
+	               редактировать, удалять роли и менять привилегии
+	"root" может делать все
+
+Для создания роли используется класс AclRole.
+
+	AclRole::create('role name');
+
+
+Давайте создадим список ролей.
+
+	Acl::me()->
+	addRole(
+		AclRole::create('newsmaker')
+	)->
+	addRole(
+		AclRole::create('content manager')
+	)->
+	addRole(
+		AclRole::create('user manager')
+	)->
+	addRole(
+		AclRole::create('root')
+	);
+
+
+Список создан, но привилегии пока не выставлены.
+Для того чтобы разрешить или отклонить привилегии используются методы grant()
+и revoke() класса AclRole.
+Например:
+
+
+	AclRole::create('newsmaker')->
+		grant('news', 'view')->
+		grant('news', 'create')->
+		grant('news', 'edit');
+
+
+	AclRole::create('content manager')->
+		grant(
+			'pages',
+			array(
+				'view',
+				'create',
+				'edit',
+				'delete',
+			)
+		);
+
+
+Можно унаследовать привилегии от одной или нескольких ролей:
+
+	AclRole::create('root')->
+		inherit('newsmaker')->
+		inherit('content manager')->
+		inherit('user manager');
+
+
+
+... In process
+
+
