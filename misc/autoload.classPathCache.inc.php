@@ -61,15 +61,14 @@
 			foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
 				$cache[$dirCount] = realpath($directory).DIRECTORY_SEPARATOR;
 				
-				foreach (
-					glob($cache[$dirCount].'*'.EXT_CLASS, GLOB_NOSORT)
-					as $class
-				) {
-					$class = basename($class, EXT_CLASS);
-					
-					// emulating include_path searching behaviour
-					if (!isset($cache[$class]))
-						$cache[$class] = $dirCount;
+				if ($paths = glob($cache[$dirCount].'*'.EXT_CLASS, GLOB_NOSORT)) {
+					foreach ($paths as $class) {
+						$class = basename($class, EXT_CLASS);
+						
+						// emulating include_path searching behaviour
+						if (!isset($cache[$class]))
+							$cache[$class] = $dirCount;
+					}
 				}
 				
 				++$dirCount;
