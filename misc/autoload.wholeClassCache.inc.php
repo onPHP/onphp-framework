@@ -61,10 +61,7 @@
 			static $pid = null;
 			
 			if (!$pid) {
-				if (PHP_SAPI == 'cli')
-					$pid = 'cli';
-				else
-					$pid = getmypid();
+				$pid = getmypid();
 				
 				register_shutdown_function('__autoload_cleanup');
 			}
@@ -104,7 +101,7 @@
 	{
 		$pid = getmypid();
 		
-		if ($paths = glob($cache[$dirCount].'*'.EXT_CLASS, GLOB_NOSORT)) {
+		if ($paths = glob(ONPHP_CLASS_CACHE.'*-'.$pid, GLOB_NOSORT)) {
 			foreach ($paths as $file) {
 				rename($file, ONPHP_CLASS_CACHE.basename($file, '-'.$pid));
 			}
