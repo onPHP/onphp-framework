@@ -1,3 +1,14 @@
+2009-09-17	Konstantin V. Arkhipov
+
+	* misc/autoload.wholeClassCache.inc.php: no more pid usage in
+	filenames for cli sessions.
+
+2009-09-17	Vladimir A. Altuchov
+
+	* misc/autoload.classPathCache.inc.php,
+	misc/autoload.wholeClassCache.inc.php: added handling for inconsistent
+	glob() behaviour.
+
 2009-09-17	Viatcheslav Y. Tsyrulnik
 
 	* meta/classes/MetaClassProperty.class.php: fixed support for

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2008-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -61,7 +61,11 @@
 			static $pid = null;
 			
 			if (!$pid) {
-				$pid = getmypid();
+				if (PHP_SAPI == 'cli')
+					$pid = 'cli';
+				else
+					$pid = getmypid();
+				
 				register_shutdown_function('__autoload_cleanup');
 			}
 			
@@ -100,8 +104,10 @@
 	{
 		$pid = getmypid();
 		
-		foreach (glob(ONPHP_CLASS_CACHE.'*-'.$pid, GLOB_NOSORT) as $file) {
-			rename($file, ONPHP_CLASS_CACHE.basename($file, '-'.$pid));
+		if ($paths = glob($cache[$dirCount].'*'.EXT_CLASS, GLOB_NOSORT)) {
+			foreach ($paths as $file) {
+				rename($file, ONPHP_CLASS_CACHE.basename($file, '-'.$pid));
+			}
 		}
 	}
 ?>
