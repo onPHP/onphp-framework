@@ -116,6 +116,14 @@
 		}
 		
 		/**
+		 * @return PrimitiveEnumerationByValue
+		**/
+		public static function enumerationByValue($name)
+		{
+			return new PrimitiveEnumerationByValue($name);
+		}
+		
+		/**
 		 * @return PrimitiveEnumerationList
 		**/
 		public static function enumerationList($name)

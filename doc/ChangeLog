@@ -1,3 +1,9 @@
+2009-09-22	Denis M. Gabaidulin
+
+	* core/Form/Primitives/PrimitiveEnumerationByValue.class.php: added
+	to manage with enums by the value instead id. Type usage: every element
+	in Enumeration has input[type=submit] html representation.
+
 2009-09-17	Denis M. Gabaidulin
 
 	* misc/autload.classPathCache.inc.php, misc/autload.wholeClassCache.inc.php:
