@@ -33,16 +33,20 @@ class index implements Controller
 		$pages = Criteria::create(Page::dao())->
 			getList();
 
-
 		// Использование PrimitiveIntegerIdentifier для
 		// получения объекта по его id.
 		$form = Form::create()->
 			add(
 				Primitive::integerIdentifier('page')->
-					of('Page')
+				of('Page')->
+				required()
 			)->
 			import($request->getGet());
 
+		// Если из $_GET пришли неверные параметры, то возвращаем ошибку.
+		// Типичные ошибки: указан идентификатор, которого не существует в базе.
+		if ($form->getErrors())
+			return ModelAndView::create()->setView('error');
 
 		return ModelAndView::create()->
 			setModel(
