@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>Quick start: Используем базу данных</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<style type="text/css">
+			body {
+				font-family: Georia, serif;
+			}
+
+			pre {
+				background: #ccc;
+				padding: 1em;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Quick start: Используем Form</h1>
+
+		<h2>Form</h2>
+		<p>Класс Form используется для безопасной обработки запросов, пришедших от пользователя.</p>
+
+		<h2>Выводим меню и выбранный раздел</h2>
+		<p>*** Вывод на самом деле сделан не очень грамотно. Мы вытащили весь список страниц, а потом лезем еще раз за одной из них. Для меню достаточно получить название страницы и ее id/url, но об этом позже.</p>
+		<p>Добавляем в наш index-controller объект класса Form. Primitive::integerIdentifier('page') будет вытаскивать из базы объект по переданному через $_GET параметру page. Если значение параметра page будет не целым числом, он вернет NULL.</p>
+
+		<pre>&lt;?php
+
+class index implements Controller
+{
+	public function handleRequest(HttpRequest $request)
+	{
+		$pages = Criteria::create(Page::dao())->
+			getList();
+
+
+		// Использование PrimitiveIntegerIdentifier для
+		// получения объекта по его id.
+		$form = Form::create()->
+			add(
+				Primitive::integerIdentifier('page')->
+					of('Page')
+			)->
+			import($request->getGet());
+
+
+		return ModelAndView::create()->
+			setModel(
+				Model::create()->
+					set('pages', $pages)->
+					set('currentPage', $form->getValue('page'))
+			);
+	}
+}
+
+?&gt;</pre>
+
+		<p>И соответствующим образом изменим представление:</p>
+		<pre>&lt;h1&gt;Hello, onPHP!&lt;/h1&gt;
+
+&lt;ul&gt;
+        &lt;?php
+        foreach ($pages as $page) {
+                ?&gt;
+                &lt;li&gt;&lt;a href=&quot;&lt;?=PATH_WEB?&gt;?area=index&amp;page=&lt;?=$page-&gt;getId()?&gt;&quot;&gt;&lt;?=$page-&gt;getCaption()?&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;?php
+        }
+        ?&gt;
+&lt;/ul&gt;
+
+&lt;?php
+if ($currentPage) {
+        ?&gt;&lt;h2&gt;&lt;?=$currentPage-&gt;getCaption()?&gt;&lt;/h2&gt;&lt;?php
+        ?&gt;&lt;div&gt;&lt;?=$currentPage-&gt;getBody()?&gt;&lt;/div&gt;&lt;?php
+}
+?&gt;</pre>
+
+		<p>Теперь при выборе одного из пунктов меню будет отображаться выбранная статья. Попобуйте насовать в $_GET всяких кавычек, плюсов и UNION+DROP+DATABASE ;)</p>
+
+	</body>
+</html>
