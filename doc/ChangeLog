@@ -1,8 +1,8 @@
 2009-09-22	Denis M. Gabaidulin
 
 	* core/Form/Primitives/PrimitiveEnumerationByValue.class.php: added
-	to manage with enums by the value instead id. Type usage: every element
-	in Enumeration has input[type=submit] html representation.
+	to manage with enums by the value instead id. Typical usage: every element
+	in Enumeration has input[type=submit] representation in html.
 
 2009-09-17	Denis M. Gabaidulin
 
