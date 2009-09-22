@@ -24,7 +24,10 @@
 			if (isset($scope[$this->name])) {
 				$scopedValue = urldecode($scope[$this->name]);
 				
-				$object = new $this->className(1);
+				$anyId =
+					ClassUtils::callStaticMethod($this->className.'::getAnyId');
+				
+				$object = new $this->className($anyId);
 				
 				$names = $object->getNameList();
 				
