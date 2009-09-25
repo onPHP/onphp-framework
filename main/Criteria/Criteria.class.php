@@ -363,7 +363,7 @@
 				$result = $this->dao->getCustom($this->toSelectQuery());
 				
 				if ($index) {
-					if (isset($result[$index]))
+					if (array_key_exists($index, $result))
 						return $result[$index];
 					
 					throw new MissingElementException(
