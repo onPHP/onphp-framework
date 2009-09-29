@@ -74,13 +74,18 @@
 				// put yet unmapped objects into dao's identityMap
 				$inner->dao()->getListByIds($ids);
 				
+				$skippedMap = $this->skipList[$this->depth];
+				
 				$i = $j = 0;
 				
 				foreach ($objectList as $object) {
 					$objectId = $object->getId();
 					
-					if (isset($this->skipList[$this->depth][$objectId])) {
-						unset($this->skipList[$this->depth][$objectId]);
+					if (isset($skippedMap[$objectId])) {
+						if ($skippedMap[$objectId] == 1)
+							unset($skippedMap[$objectId]);
+						else
+							--$skippedMap[$objectId];
 						++$j;
 						continue;
 					}
