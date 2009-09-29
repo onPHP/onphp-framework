@@ -74,11 +74,16 @@
 				// put yet unmapped objects into dao's identityMap
 				$inner->dao()->getListByIds($ids);
 				
-				$i = 0;
+				$i = $j = 0;
 				
 				foreach ($objectList as $object) {
-					if (isset($this->skipList[$this->depth][$object->getId()]))
+					$objectId = $object->getId();
+					
+					if (isset($this->skipList[$this->depth][$objectId])) {
+						unset($this->skipList[$this->depth][$objectId]);
+						++$j;
 						continue;
+					}
 					
 					if ($innerList[$i]) {
 						try {
@@ -99,6 +104,11 @@
 					
 					++$i;
 				}
+				
+				Assert::isEqual(
+					$i,
+					count($objectList) - $j
+				);
 			}
 			
 			unset($this->skipList[$this->depth], $this->storage[$this->depth--]);
