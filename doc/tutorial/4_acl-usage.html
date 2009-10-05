@@ -18,7 +18,94 @@
 		<h1>Quick start: Используем Acl</h1>
 
 		<p>***Acl пока в инкубаторе, боевого крещения не прошел.</p>
-		
+
+
+
+
+
+
+
+
+		<h2>Как использовать Acl?</h2>
+
+		<p>Для начала нужно определить, какие роли будут использоваться в приложении.
+		Список ролей можно дополнить или урезать в любой момент. Например:</p>
+		<ul>
+			<li>"newsmaker" может создавать и редактировать новости</li>
+			<li>"content manager" может создавать, редактировать
+					и удалять статьи</li>
+			<li>"user manager" может создавать,
+	               редактировать, удалять роли и менять привилегии</li>
+			<li>"root" может делать все</li>
+		</ul>
+	
+	
+	
+	
+
+		<p>Для создания роли используется класс AclRole.</p>
+
+		<pre>AclRole::create('role name');</pre>
+
+
+	<p>Давайте создадим список ролей.</p>
+
+	<pre>Acl::me()->
+	addRole(
+		AclRole::create('newsmaker')
+	)->
+	addRole(
+		AclRole::create('content manager')
+	)->
+	addRole(
+		AclRole::create('user manager')
+	)->
+	addRole(
+		AclRole::create('root')
+	);</pre>
+
+
+	<p>Список создан, но привилегии пока не выставлены.
+Для того чтобы разрешить или отклонить привилегии используются методы grant()
+и revoke() класса AclRole.
+	Например:</p>
+
+	<pre>AclRole::create('newsmaker')->
+	grant('news', 'view')->
+	grant('news', 'create')->
+	grant('news', 'edit');</pre>
+
+	<pre>AclRole::create('content manager')->
+	grant(
+		'pages',
+		array(
+			'view',
+			'create',
+			'edit',
+			'delete',
+		)
+	);</pre>
+
+
+Можно унаследовать привилегии от одной или нескольких ролей:
+
+	<pre>AclRole::create('root')->
+	inherit('newsmaker')->
+	inherit('content manager')->
+	inherit('user manager');</pre>
+
+
+
+<h2>Использование AclMappedController</h2>
+<p></p>
+
+
+
+
+
+
+
+
 
 	</body>
 </html>
