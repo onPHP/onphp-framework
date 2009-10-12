@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class PrimitiveEnumerationByValue extends PrimitiveEnumeration
+	final class PrimitiveEnumerationByValue extends PrimitiveEnumeration
 	{
 		public function import($scope)
 		{
