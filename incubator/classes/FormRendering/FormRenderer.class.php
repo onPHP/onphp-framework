@@ -36,23 +36,57 @@
 
 		public function render()
 		{
-			//echo 'Rendering form with '.get_class($this->controlMapping).' mapping.';
-			//echo '<pre>'.DebugUtils::ec($this->form->getList());
-
+			$output = '';
+			
 			foreach ($this->form->getList() as $primitive) {
 				$class = get_class($primitive);
 				$mappingList = $this->controlMapping->
 					getList();
 
-				//$output .= $class . ' - render to - ' . $mappingList[$class] . '<br>';
 
-				echo '<div style="padding: 3px;"><label for="" style="width: 150px; display: block; float: left;">'._($primitive->getName()).':</label>';
-				echo $mappingList[$class];
-				echo '</div>';
+				//echo '<pre>';
+				//DebugUtils::ec($primitive);
+
+
+				$name = $primitive->getName();
+
+
+/*
+if ($primitive instanceof PrimitiveList) {
+	print_r($primitive->getList());
+	print_r($primitive->getValue());
+}
+*/
+	
+	//$output .= $primitive->isImported();
+
+				$value = $primitive->isImported()
+					? $primitive->getValue()
+					: null;
+
+				$output .= '<div style="padding: 3px; border: 1px solid #ссс; border-bottom: none; clear: both;">' . "\n";
+
+				if (!($mappingList[$class] instanceof HtmlInputHidden)) {
+					$output .= '<label for="'.$name.'" style="width: 150px; display: block; float: left;">'._($name).':</label>' . "\n";
+				}
+
+				$control = $mappingList[$class]->
+					setValue($value)->
+					setName($name);
+
+				if ($primitive instanceof PrimitiveList) {
+					$control->setList(
+						$primitive->
+							getList()
+					);
+				}
+
+				$output .= $control->render();
 				
+				$output .=  "\n" . '</div>' . "\n";
 			}
 
-			echo HtmlControl::submit();
+			return $output;
 		}
 	}
 

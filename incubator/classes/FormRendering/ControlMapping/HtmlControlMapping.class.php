@@ -9,7 +9,8 @@
 				'PrimitiveString'             => HtmlControl::text(),
 				'PrimitiveInteger'            => HtmlControl::text(),
 				'PrimitiveFile'               => HtmlControl::file(),
-				'PrimitiveChoice'             => HtmlControl::select(),
+				'PrimitiveList'               => HtmlControl::select(),
+				'PrimitiveBoolean'            => HtmlControl::checkbox(),
 			);
 		}
 	}
