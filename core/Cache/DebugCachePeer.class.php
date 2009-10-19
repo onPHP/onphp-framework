@@ -218,7 +218,11 @@
 			$record = null;
 			
 			if ($this->isWeb)
-				$record .= $_SERVER['REQUEST_URI']."\t";
+				$record .= (
+					(isset($_SERVER['SSI_REQUEST_URI']))
+						? $_SERVER['SSI_REQUEST_URI']
+						: $_SERVER['REQUEST_URI']
+				)."\t";
 			
 			$record .= $action."\t".$key."\t".$beginTime."\t".$endTime;
 			
