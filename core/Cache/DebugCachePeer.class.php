@@ -16,9 +16,13 @@
 	**/
 	final class DebugCachePeer extends SelectivePeer
 	{
-		private $peer	= null;
-		private $logger	= null;
-		private $isWeb	= true;
+		private $peer				= null;
+		private $logger				= null;
+		private $isWeb				= true;
+		private $whiteListActions	= array();
+		private $blackListActions	= array();
+		private $actionFilter		= false;
+		
 		
 		/**
 		 * @return DebugCachePeer
@@ -35,6 +39,48 @@
 			$this->logger	=
 				StreamLogger::create()->
 				setOutputStream(FileOutputStream::create($logfile, true));
+		}
+		
+		public function setBlackListActions($actions)
+		{
+			if (!empty($this->whiteListActions))
+				throw new WrongStateException('You already setup black list!');
+			
+			$this->blackListActions = $actions;
+			
+			$this->actionFilter = true;
+			
+			return $this;
+		}
+		
+		public function dropBlackListActions()
+		{
+			$this->blackListActions = array();
+			
+			$this->actionFilter = false;
+			
+			return $this;
+		}
+		
+		public function setWhiteListActions($actions)
+		{
+			if (!empty($this->blackListActions))
+				throw new WrongStateException('You already setup white list!');
+			
+			$this->whiteListActions = $actions;
+			
+			$this->actionFilter = true;
+			
+			return  $this;
+		}
+		
+		public function dropWhiteListActions()
+		{
+			$this->whiteListActions = array();
+			
+			$this->actionFilter = false;
+			
+			return $this;
 		}
 		
 		/**
@@ -151,6 +197,20 @@
 		
 		private function log($action, $beginTime, $endTime, $key = null)
 		{
+			if ($this->actionFilter) {
+				if (
+					!empty($this->blackListActions)
+					&& in_array($action, $this->blackListActions)
+				)
+					return $this;
+				
+				if (
+					!empty($this->whiteListActions)
+					&& !in_array($action, $this->whiteListActions)
+				)
+					return $this;
+			}
+			
 			$record = null;
 			
 			if ($this->isWeb)
@@ -159,6 +219,8 @@
 			$record .= $action."\t".$key."\t".$beginTime."\t".$endTime;
 			
 			$this->logger->info($record);
+			
+			return $this;
 		}
 	}
 ?>
