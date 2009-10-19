@@ -12,9 +12,9 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class PrimitiveEnumerationByValue extends PrimitiveEnumeration
+	final class PrimitiveEnumerationByValue extends PrimitiveEnumeration
 	{
-		public function import($scope)
+		public function import(array $scope)
 		{
 			if (!$this->className)
 				throw new WrongStateException(

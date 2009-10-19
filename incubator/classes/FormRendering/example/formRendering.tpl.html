@@ -1,0 +1,12 @@
+<h1>FormRendering</h1>
+
+<?
+
+	echo FormRenderer::me()->
+		setForm($form)->
+		setControlMapping(
+			ControlMapping::html()
+		)->
+		render();
+
+?>
