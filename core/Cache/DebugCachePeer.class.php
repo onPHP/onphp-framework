@@ -27,18 +27,22 @@
 		/**
 		 * @return DebugCachePeer
 		**/
-		public static function create(CachePeer $peer, $logfile, $isWeb = true)
+		public static function create(
+			CachePeer $peer, $logfile, $isWeb = true, $appendFile = true
+		)
 		{
-			return new self($peer, $logfile, $isWeb);
+			return new self($peer, $logfile, $isWeb, $appendFile);
 		}
 		
-		public function __construct(CachePeer $peer, $logfile, $isWeb = true)
+		public function __construct(
+			CachePeer $peer, $logfile, $isWeb = true, $appendFile = true
+		)
 		{
 			$this->peer		= $peer;
 			$this->isWeb	= $isWeb;
 			$this->logger	=
 				StreamLogger::create()->
-				setOutputStream(FileOutputStream::create($logfile, true));
+				setOutputStream(FileOutputStream::create($logfile, $appendFile));
 		}
 		
 		public function setBlackListActions($actions)
