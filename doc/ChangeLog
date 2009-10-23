@@ -1,3 +1,9 @@
+2009-10-23	Denis M. Gabaidulin
+
+	* main/Application/SimpleApplicationUrl.class.php: very simple,
+	but much more lightweight and faster version of app url. It could be used
+	with already validated urls.
+
 2009-10-23	Sergey S. Sergeev
 
 	* main/DAOs/ProtoDAO.class.php: fixed resolve path for ValueObjects.
