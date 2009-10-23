@@ -187,4 +187,27 @@
 		</properties>
 		<pattern name="DictionaryClass" />
 	</class>
+
+	<class name="TestContactValue" type="final">
+		<properties>
+			<property name="email" type="String" size="255" required="true" />
+			<property name="icq" type="Integer" />
+			<property name="phone" type="String" size="255" required="true" />
+			<property name="city" type="TestCity" relation="OneToOne" required="true" fetch='lazy' />
+		</properties>
+
+		<pattern name="ValueObject" />
+	</class>
+
+	<class name="TestUserWithContact" type="final">
+		<properties>
+			<identifier />
+			<property name="name" type="String" size="255" required="true" />
+			<property name="surname" type="String" size="255" />			
+			<property name="contacts" type="TestContactValue" relation="OneToOne" required="true" />
+		</properties>
+
+		<pattern name="StraightMapping" />
+	</class>
+
 </classes></metaconfiguration>

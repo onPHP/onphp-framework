@@ -103,7 +103,38 @@
 				'SELECT test_user.id FROM test_user ORDER BY '.$expectedString
 			);
 		}
-		
+
+		public function testValueObject()
+		{
+			$criteria =
+				Criteria::create(TestUserWithContact::dao())->
+				setProjection(
+					Projection::property('id')
+				)->
+				add(
+					Expression::eq('contacts.city', 1)
+				);			
+
+			$this->assertEquals(
+				$criteria->toDialectString(ImaginaryDialect::me()),
+				'SELECT test_user_with_contact.id FROM test_user_with_contact WHERE (test_user_with_contact.city_id = 1)'
+			);
+
+			$criteria =
+				Criteria::create(TestUserWithContact::dao())->
+				setProjection(
+					Projection::property('id')
+				)->
+				add(
+					Expression::eq('contacts.city.name', 'Moscow')
+				);		
+
+			$this->assertEquals(
+				$criteria->toDialectString(ImaginaryDialect::me()),
+				'SELECT test_user_with_contact.id FROM test_user_with_contact JOIN custom_table AS 3524772f_city_id ON (test_user_with_contact.city_id = 3524772f_city_id.id) WHERE (3524772f_city_id.name = Moscow)'
+			);
+		}
+
 		public static function orderDataProvider()
 		{
 			return array(
