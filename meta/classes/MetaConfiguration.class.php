@@ -200,13 +200,7 @@
 							)
 						) {
 							$property->setFetchStrategy(FetchStrategy::cascade());
-						} elseif (
-							!$property->getFetchStrategy()
-							|| (
-								$property->getFetchStrategy()->getId()
-								== FetchStrategy::JOIN
-							)
-						) {
+						} else {
 							$this->checkRecursion($property, $class);
 						}
 					}
@@ -918,6 +912,13 @@
 				== MetaRelation::ONE_TO_ONE
 			);
 			
+			if (
+				$property->getFetchStrategy()
+				&& $property->getFetchStrategy()->getId() != FetchStrategy::JOIN
+			) {
+				return false;
+			}
+
 			$remote = $property->getType()->getClass();
 			
 			if (isset($paths[$holder->getName()][$remote->getName()]))
