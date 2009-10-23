@@ -188,7 +188,7 @@
 		<pattern name="DictionaryClass" />
 	</class>
 
-	<class name="TestContactValue" type="final">
+	<class name="TestContactValue">
 		<properties>
 			<property name="email" type="String" size="255" required="true" />
 			<property name="icq" type="Integer" />
@@ -205,6 +205,26 @@
 			<property name="name" type="String" size="255" required="true" />
 			<property name="surname" type="String" size="255" />			
 			<property name="contacts" type="TestContactValue" relation="OneToOne" required="true" />
+		</properties>
+
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="TestContactValueExtended" extends="TestContactValue" type="final">
+		<properties>
+			<property name="web" type="String" size="255" required="true" />
+			<property name="skype" type="String" size="255" required="true" />
+		</properties>
+
+		<pattern name="ValueObject" />
+	</class>
+
+	<class name="TestUserWithContactExtended" type="final">
+		<properties>
+			<identifier />
+			<property name="name" type="String" size="255" required="true" />
+			<property name="surname" type="String" size="255" />
+			<property name="contactExt" type="TestContactValueExtended" relation="OneToOne" required="true" />
 		</properties>
 
 		<pattern name="StraightMapping" />

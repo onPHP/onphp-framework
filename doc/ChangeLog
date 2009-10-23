@@ -2,6 +2,9 @@
 
 	* main/DAOs/ProtoDAO.class.php: fixed resolve path for ValueObjects.
 
+	* meta/builders/AutoProtoClassBuilder.class.php,
+	meta/classes/MetaClassProperty.class.php: ValueObject supports inheritance now.
+
 2009-10-19	Denis M. Gabaidulin
 
 	* core/Cache/DebugCachePeer.class.php: cache peer for debugging

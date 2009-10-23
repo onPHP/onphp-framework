@@ -133,6 +133,35 @@
 				$criteria->toDialectString(ImaginaryDialect::me()),
 				'SELECT test_user_with_contact.id FROM test_user_with_contact JOIN custom_table AS 3524772f_city_id ON (test_user_with_contact.city_id = 3524772f_city_id.id) WHERE (3524772f_city_id.name = Moscow)'
 			);
+
+			//check extending ValueObject
+			$criteria =
+				Criteria::create(TestUserWithContactExtended::dao())->
+				setProjection(
+					Projection::property('id')
+				)->
+				add(
+					Expression::eq('contactExt.skype', 'skype_nick_name')
+				);
+
+			$this->assertEquals(
+				$criteria->toDialectString(ImaginaryDialect::me()),
+				'SELECT test_user_with_contact_extended.id FROM test_user_with_contact_extended WHERE (test_user_with_contact_extended.skype = skype_nick_name)'
+			);
+
+			$criteria =
+				Criteria::create(TestUserWithContactExtended::dao())->
+				setProjection(
+					Projection::property('id')
+				)->
+				add(
+					Expression::eq('contactExt.city.name', 'Moscow')
+				);
+
+			$this->assertEquals(
+				$criteria->toDialectString(ImaginaryDialect::me()),
+				'SELECT test_user_with_contact_extended.id FROM test_user_with_contact_extended JOIN custom_table AS 3524772f_city_id ON (test_user_with_contact_extended.city_id = 3524772f_city_id.id) WHERE (3524772f_city_id.name = Moscow)'
+			);
 		}
 
 		public static function orderDataProvider()
