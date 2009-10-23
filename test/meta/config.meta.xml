@@ -136,6 +136,14 @@
 		</properties>
 		<pattern name="DictionaryClass" />
 	</class>
+
+	<class name="TestSelfRecursion" type="final">
+		<properties>
+			<identifier />
+			<property name="parent" column="parent_id" type="TestSelfRecursion" relation="OneToOne" fetch="lazy" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
 	
 	<class name="ImageType" type="final">
 		<properties>

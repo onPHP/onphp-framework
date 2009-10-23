@@ -576,23 +576,33 @@
 		public function testRecursionObjects()
 		{
 			$this->create();
-			
+
 			$parentProperties =
 				Singleton::getInstance('ProtoTestParentObject')->
 				getPropertyList();
-			
-			$resultRoot = $parentProperties['root']->getFetchStrategyId() == FetchStrategy::LAZY;
-			
+
+			$resultRoot = $parentProperties['root']->
+				getFetchStrategyId() == FetchStrategy::LAZY;
+
 			$childProperties =
 				Singleton::getInstance('ProtoTestChildObject')->
 				getPropertyList();
-			
-			$resultParent = $childProperties['parent']->getFetchStrategyId() == FetchStrategy::LAZY;
-			
+
+			$resultParent = $childProperties['parent']->
+				getFetchStrategyId() == FetchStrategy::LAZY;
+
+			$selfRecursiveProperties =
+				Singleton::getInstance('ProtoTestSelfRecursion')->
+				getPropertyList();
+
+			$resultSelfRecursive = $selfRecursiveProperties['parent']->
+				getFetchStrategyId() == FetchStrategy::LAZY;
+
 			$this->drop();
-			
+
 			$this->assertTrue($resultRoot);
 			$this->assertTrue($resultParent);
+			$this->assertTrue($resultSelfRecursive);
 		}
 		
 		public function nonIntegerIdentifier()
