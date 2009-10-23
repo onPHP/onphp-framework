@@ -59,8 +59,10 @@ EOT;
 				array(
 
 EOT;
-				$propertyList[$class->getIdentifier()->getName()] =
-					$class->getIdentifier();
+				if ($class->getIdentifier()) {
+					$propertyList[$class->getIdentifier()->getName()] =
+						$class->getIdentifier();
+				}
 			} else {
 				$out .= <<<EOT
 		return array(

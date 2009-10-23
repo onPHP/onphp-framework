@@ -302,7 +302,7 @@
 				
 				$remote = $this->getType()->getClass();
 				
-				foreach ($remote->getProperties() as $property) {
+				foreach ($remote->getAllProperties() as $property) {
 					$columns[] = $property->buildColumn(
 						$prefix.$property->getRelationColumnName()
 					);
