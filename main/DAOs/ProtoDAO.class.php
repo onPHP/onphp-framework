@@ -194,13 +194,26 @@
 			
 			// checking whether we're playing with value object
 			if (!method_exists($property->getClassName(), 'dao')) {
-				return
-					$this->guessAtom(
-						implode('.', $path),
-						$query,
-						$table,
-						$prefix
-					);
+				if (
+					method_exists($property->getClassName(), 'proto')
+					&& count($path) > 1
+				) {
+					return
+						$this->processPath(
+							$property->getProto(),
+							implode('.', $path),
+							$query,
+							$table
+						);
+				} else {
+					return
+						$this->guessAtom(
+							implode('.', $path),
+							$query,
+							$table,
+							$prefix
+						);
+				}
 			} else {
 				$propertyDao = call_user_func(
 					array($property->getClassName(), 'dao')

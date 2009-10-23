@@ -1,3 +1,7 @@
+2009-10-23	Sergey S. Sergeev
+
+	* main/DAOs/ProtoDAO.class.php: fixed resolve path for ValueObjects.
+
 2009-10-19	Denis M. Gabaidulin
 
 	* core/Cache/DebugCachePeer.class.php: cache peer for debugging
