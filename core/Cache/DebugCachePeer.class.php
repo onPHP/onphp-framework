@@ -99,9 +99,9 @@
 		{
 			$beginTime 	= microtime(true);
 			$value 		= $this->peer->increment($key, $value);
-			$endTime 	=  microtime(true) - $beginTime;
+			$totalTime 	=  microtime(true) - $beginTime;
 			
-			$this->log('increment', $beginTime, $endTime, $key);
+			$this->log('increment', $totalTime, $key);
 			
 			return $value;
 		}
@@ -110,9 +110,9 @@
 		{
 			$beginTime 	= microtime(true);
 			$value 		= $this->peer->decrement($key, $value);
-			$endTime 	=  microtime(true) - $beginTime;
+			$totalTime 	=  microtime(true) - $beginTime;
 			
-			$this->log('decrement', $beginTime, $endTime, $key);
+			$this->log('decrement', $totalTime, $key);
 			
 			return $value;
 		}
@@ -121,9 +121,9 @@
 		{
 			$beginTime 	= microtime(true);
 			$value 		= $this->peer->getList($indexes);
-			$endTime 	=  microtime(true) - $beginTime;
+			$totalTime 	=  microtime(true) - $beginTime;
 			
-			$this->log('getList', $beginTime, $endTime);
+			$this->log('getList', $totalTime);
 			
 			return $value;
 		}
@@ -132,9 +132,9 @@
 		{
 			$beginTime 	= microtime(true);
 			$value 		= $this->peer->get($key);
-			$endTime 	=  microtime(true) - $beginTime;
+			$totalTime 	=  microtime(true) - $beginTime;
 			
-			$this->log('get', $beginTime, $endTime, $key);
+			$this->log('get', $totalTime, $key);
 			
 			return $value;
 		}
@@ -143,9 +143,9 @@
 		{
 			$beginTime 	= microtime(true);
 			$value 		= $this->peer->delete($key);
-			$endTime 	=  microtime(true) - $beginTime;
+			$totalTime 	=  microtime(true) - $beginTime;
 			
-			$this->log('delete', $beginTime, $endTime, $key);
+			$this->log('delete', $totalTime, $key);
 			
 			return $value;
 		}
@@ -157,9 +157,9 @@
 		{
 			$beginTime 	= microtime(true);
 			$value 		= $this->peer->clean();
-			$endTime 	=  microtime(true) - $beginTime;
+			$totalTime 	=  microtime(true) - $beginTime;
 			
-			$this->log('clean', $beginTime, $endTime);
+			$this->log('clean', $totalTime);
 			
 			return $value;
 		}
@@ -168,9 +168,9 @@
 		{
 			$beginTime 	= microtime(true);
 			$value 		= $this->peer->isAlive();
-			$endTime 	=  microtime(true) - $beginTime;
+			$totalTime 	=  microtime(true) - $beginTime;
 			
-			$this->log('isAlive', $beginTime, $endTime);
+			$this->log('isAlive', $totalTime);
 			
 			return $value;
 		}
@@ -179,9 +179,9 @@
 		{
 			$beginTime 	= microtime(true);
 			$value 		= $this->peer->append($key, $data);
-			$endTime 	=  microtime(true) - $beginTime;
+			$totalTime 	=  microtime(true) - $beginTime;
 			
-			$this->log('append', $beginTime, $endTime, $key);
+			$this->log('append', $totalTime, $key);
 			
 			return $value;
 		}
@@ -192,14 +192,14 @@
 		{
 			$beginTime 	= microtime(true);
 			$value 		= $this->peer->store($action, $key, $value, $expires);
-			$endTime 	=  microtime(true) - $beginTime;
+			$totalTime 	=  microtime(true) - $beginTime;
 			
-			$this->log('store + '.$action, $beginTime, $endTime, $key);
+			$this->log('store + '.$action, $totalTime, $key);
 			
 			return $value;
 		}
 		
-		private function log($action, $beginTime, $endTime, $key = null)
+		private function log($action, $totalTime, $key = null)
 		{
 			if ($this->actionFilter) {
 				if (
@@ -224,7 +224,7 @@
 						: $_SERVER['REQUEST_URI']
 				)."\t";
 			
-			$record .= $action."\t".$key."\t".$beginTime."\t".$endTime;
+			$record .= $action."\t".$key."\t".$totalTime;
 			
 			$this->logger->info($record);
 			
