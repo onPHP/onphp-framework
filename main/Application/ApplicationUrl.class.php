@@ -14,19 +14,19 @@
 	 * not only path/query - subdomains may be involved too,
 	 * ex: username.example.com
 	**/
-	final class ApplicationUrl
+	class ApplicationUrl
 	{
-		private $base				= null;
+		protected $base				= null;
 		
-		private $applicationScope	= array();
-		private $userScope			= array();
-		private $navigationScope	= array();
+		protected $applicationScope	= array();
+		protected $userScope			= array();
+		protected $navigationScope	= array();
 		
-		private $argSeparator		= null;
+		protected $argSeparator		= null;
 		
-		private $navigationSchema	= null;
+		protected $navigationSchema	= null;
 		
-		private $absolute			= false;
+		protected $absolute			= false;
 		
 		/**
 		 * @return ApplicationUrl
@@ -304,7 +304,7 @@
 			return $this->getQueryVars($this->applicationScope);
 		}
 		
-		private function getQueryVars($scope)
+		protected function getQueryVars($scope)
 		{
 			$queryParts = explode(
 				$this->getArgSeparator(),
@@ -325,7 +325,7 @@
 			return $result;
 		}
 		
-		private function buildQuery($scope)
+		protected function buildQuery($scope)
 		{
 			return http_build_query(
 				$scope, null, $this->getArgSeparator()
