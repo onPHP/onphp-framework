@@ -123,7 +123,7 @@
 			$value 		= $this->peer->getList($indexes);
 			$totalTime 	=  microtime(true) - $beginTime;
 			
-			$this->log('getList', $totalTime);
+			$this->log('getList', $totalTime, implode(',', $indexes));
 			
 			return $value;
 		}
