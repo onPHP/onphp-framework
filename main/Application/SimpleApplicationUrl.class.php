@@ -30,7 +30,10 @@
 					.$this->buildQuery($this->applicationScope);
 			
 			if ($absolute)
-				$baseUrl = 'http://'.$baseUrl;
+				$baseUrl =
+					'http:'.$this->base->getSchemeSpecificPart()
+					.ltrim($baseUrl, '/');
+			
 			
 			return rtrim($baseUrl, '?');
 		}
