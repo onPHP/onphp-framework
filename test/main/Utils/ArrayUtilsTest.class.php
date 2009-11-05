@@ -2,7 +2,7 @@
 	final class ArrayUtilsTest extends TestCase
 	{
 		/**
-		 * @dataProvider sortedLists
+		 * @dataProvider dateObjectsSortedLists
 		**/
 		public function testMergeDateSortedLists($list1, $list2, $method, $result, $limit)
 		{
@@ -18,7 +18,7 @@
 			);
 		}
 
-		public static function sortedLists()
+		public static function dateObjectsSortedLists()
 		{
 			$today = Date::makeToday();
 
@@ -120,6 +120,50 @@
 					)
 				);
 		}
+		
+		/**
+		 * @dataProvider textDataSortedLists
+		**/
+		public function testMergeTextDataSortedLists($list1, $list2, $method, $result, $limit)
+		{
+			$this->assertEquals(
+				$result,
+				ArrayUtils::mergeSortedLists(
+					$list1,
+					$list2,
+					StandardComparator::me(),
+					$method,
+					$limit
+				)
+			);
+		}
+
+		public static function textDataSortedLists()
+		{
+			return
+				array(
+					array(
+						array(
+							SortableTextDataObjectForTheTest::create()->setData('SIBN'),
+							SortableTextDataObjectForTheTest::create()->setData('SBER03'),
+							SortableTextDataObjectForTheTest::create()->setData('HYDR')
+						),
+						array(
+							SortableTextDataObjectForTheTest::create()->setData('MTSI'),
+							SortableTextDataObjectForTheTest::create()->setData('GAZP')
+						),
+						'getData',
+						array(
+							SortableTextDataObjectForTheTest::create()->setData('SIBN'),
+							SortableTextDataObjectForTheTest::create()->setData('SBER03'),
+							SortableTextDataObjectForTheTest::create()->setData('MTSI'),
+							SortableTextDataObjectForTheTest::create()->setData('HYDR'),
+							SortableTextDataObjectForTheTest::create()->setData('GAZP')
+						),
+						null
+					)
+				);
+		}
 	}
 
 	// for the test
@@ -142,6 +186,28 @@
 		public function getDate()
 		{
 			return $this->date;
+		}
+	}
+	
+	final class SortableTextDataObjectForTheTest
+	{
+		private $data = null;
+
+		public static function create()
+		{
+			return new self;
+		}
+
+		public function setData($data)
+		{
+			$this->data = $data;
+			
+			return $this;
+		}
+
+		public function getData()
+		{
+			return $this->data;
 		}
 	}
 ?>
