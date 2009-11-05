@@ -4,7 +4,7 @@
 		/**
 		 * @dataProvider sortedLists
 		**/
-		public function testMergeSortedLists($list1, $list2, $method, $result, $limit)
+		public function testMergeDateSortedLists($list1, $list2, $method, $result, $limit)
 		{
 			$this->assertEquals(
 				$result,
