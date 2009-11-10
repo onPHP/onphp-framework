@@ -18,7 +18,7 @@
 	 * 
 	 * @ingroup DAOs
 	**/
-	final class CacheDaoWorker extends TransparentDaoWorker
+	class CacheDaoWorker extends TransparentDaoWorker
 	{
 		const MAX_RANDOM_ID = 134217728;
 		
@@ -83,7 +83,7 @@
 			return Cache::me()->mark($this->className)->get($key);
 		}
 		
-		private function getLayerId()
+		protected function getLayerId()
 		{
 			if (
 				!$result =
