@@ -59,7 +59,8 @@
 				$this->className
 				.$suffix
 				.$key
-				.$this->watermark;
+				.$this->watermark
+				.$this->getLayerId();
 		}
 	}
 ?>
