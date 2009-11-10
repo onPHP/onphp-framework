@@ -1,3 +1,8 @@
+2009-11-10	Denis M. Gabaidulin
+
+	* main/DAOs/Workers/CustomDataScopedWorker.class.php: added worker
+	to cache/uncache some scoped(by class, e.g.) data.
+
 2009-11-05	Denis M. Gabaidulin
 
 	* main/Base/StandardComparator.class.php: added.
