@@ -84,7 +84,7 @@
 		/**
 		 * @return BaseDaoWorker
 		**/
-		public static function worker(GenericDAO $dao)
+		public static function worker(/*GenericDAO*/ $dao)
 		{
 			$class = get_class($dao);
 			
