@@ -245,6 +245,54 @@
 						Projection::group('name')
 					)
 			);
+			
+			$this->assertEquals(
+				OQL::groupBy('id + 2')->
+					toProjection(),
+				Projection::chain()->
+					add(
+						Projection::group(
+							Expression::add('id', 2)
+						)
+					)
+			);
+			
+			$this->assertEquals(
+				OQL::groupBy('id > 2')->
+					toProjection(),
+				Projection::chain()->
+					add(
+						Projection::group(
+							Expression::gt('id', 2)
+						)
+					)
+			);
+			
+			$this->assertEquals(
+				OQL::groupBy('$1')->
+					bindNext('id')->
+					toProjection(),
+				Projection::chain()->
+					add(
+						Projection::group('id')
+					)
+			);
+			
+			$this->assertEquals(
+				OQL::groupBy('$1, $2 + 3')->
+					bindNext('name')->
+					bindNext('id')->
+					toProjection(),
+				Projection::chain()->
+					add(
+						Projection::group('name')
+					)->
+					add(
+						Projection::group(
+							Expression::add('id', 3)
+						)
+					)
+			);
 		}
 		
 		public function testOrderBy()
