@@ -473,6 +473,7 @@
 				setMutator(OqlProjectionChainNodeMutator::me())
 			);
 			
+			// TODO: <group_by> ::= <mixed_operand> * ( "," <mixed_operand> )
 			//	<group_by> ::= <identifier> * ( "," <identifier> )
 			$this->set(
 				self::repetition(
