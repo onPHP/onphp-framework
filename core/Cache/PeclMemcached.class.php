@@ -123,7 +123,8 @@
 		{
 			try {
 				// second parameter required, wrt new memcached protocol:
-				// delete key 0
+				// delete key 0 (see process_delete_command in the memcached.c)
+				// Warning: it is workaround!
 				return $this->instance->delete($index, 0);
 			} catch (BaseException $e) {
 				return $this->alive = false;
