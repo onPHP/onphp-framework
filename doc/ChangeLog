@@ -1,3 +1,8 @@
+2009-11-25	Vladlen Y. Koshelev
+
+	* main/OQL/Parsers/OqlGroupByParser.class.php: added support for logical,
+	arithmetic and bindable expressions in group by clause.
+
 2009-11-10	Denis M. Gabaidulin
 
 	* main/DAOs/Workers/CustomDataScopedWorker.class.php: added worker

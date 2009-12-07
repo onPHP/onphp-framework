@@ -33,8 +33,8 @@
 		{
 			if ($this->state == self::INITIAL_STATE) {
 				$list = $this->getCommaSeparatedList(
-					array($this, 'getIdentifierExpression'),
-					"expecting identifier in 'group by' expression"
+					array($this, 'getLogicExpression'),
+					"expecting expression in 'group by' clause"
 				);
 				
 				foreach ($list as $argument) {
