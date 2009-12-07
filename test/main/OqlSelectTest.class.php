@@ -417,6 +417,59 @@
 								add(Projection::group('id'))->
 								add(Projection::group('nickname'))
 						)
+				)->
+				assertCriteria(
+					'from TestUser group by id + 1, id / 2',
+					Criteria::create(TestUser::dao())->
+						setProjection(
+							Projection::chain()->
+								add(
+									Projection::group(
+										Expression::add('id', 1)
+									)
+								)->
+								add(
+									Projection::group(
+										Expression::div('id', 2)
+									)
+								)
+						)
+				)->
+				assertCriteria(
+					'from TestUser group by id > (1 + id) / 2',
+					Criteria::create(TestUser::dao())->
+						setProjection(
+							Projection::group(
+								Expression::gt(
+									'id',
+									Expression::div(
+										Expression::add(1, 'id'),
+										2
+									)
+								)
+							)
+						)
+				)->
+				assertCriteria(
+					'from TestUser group by $1, $2 - $3',
+					Criteria::create(TestUser::dao())->
+						setProjection(
+							Projection::chain()->
+								add(Projection::group('id'))->
+								add(
+									Projection::group(
+										Expression::sub(
+											SQLFunction::create('rand'),
+											10
+										)
+									)
+								)
+						),
+					array(
+						1 => 'id',
+						2 => SQLFunction::create('rand'),
+						3 => 10 
+					)
 				);
 		}
 		
@@ -642,6 +695,17 @@
 						Criteria::create(TestUser::dao())->
 							setProjection(
 								Projection::having(
+									Expression::eq('id', $value)
+								)
+							),
+						$bindings
+					)->
+					// in group by expression
+					assertCriteria(
+						'from TestUser group by id = $1',
+						Criteria::create(TestUser::dao())->
+							setProjection(
+								Projection::group(
 									Expression::eq('id', $value)
 								)
 							),
