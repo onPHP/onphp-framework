@@ -122,7 +122,9 @@
 		public function delete($index)
 		{
 			try {
-				return $this->instance->delete($index);
+				// second parameter required, wrt new memcached protocol:
+				// delete key 0
+				return $this->instance->delete($index, 0);
 			} catch (BaseException $e) {
 				return $this->alive = false;
 			}
