@@ -22,7 +22,7 @@ $Id$
 
 	<where> ::= <logical_expression>
 
-	<group_by> ::= <identifier> * ( "," <identifier> )
+	<group_by> ::= <mixed_operand> * ( "," <mixed_operand> )
 
 	<order_by> ::=
 		<mixed_operand> [ "asc" | "desc" ]
