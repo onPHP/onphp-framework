@@ -2,6 +2,9 @@
 
 	* main/Math/MathUtils.class.php: getStandardDeviation(): calculate
 	standard deviation.
+	
+	* main/Math/MathUtils.class.php: getAbsoluteDeviation(): calculate
+	absolute deviation.
 
 2009-11-25	Vladlen Y. Koshelev
 
