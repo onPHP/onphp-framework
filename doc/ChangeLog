@@ -1,3 +1,8 @@
+2009-12-19	Denis M. Gabaidulin
+
+	* main/Math/MathUtils.class.php: getStandardDeviation(): calculate
+	standard deviation.
+
 2009-11-25	Vladlen Y. Koshelev
 
 	* main/OQL/Parsers/OqlGroupByParser.class.php: added support for logical,

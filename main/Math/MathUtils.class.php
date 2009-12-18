@@ -98,5 +98,15 @@
 
 			return $z;
 		}
+		
+		public static function getStandardDeviation($list, $averageValue)
+		{
+			$tempSum = 0;
+			
+			foreach ($list as $elt)
+				$tempSum += pow($elt - $averageValue, 2);
+		
+			return sqrt($tempSum / count($list));
+		}
 	}
 ?>
