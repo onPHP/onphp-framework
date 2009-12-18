@@ -108,5 +108,15 @@
 		
 			return sqrt($tempSum / count($list));
 		}
+		
+		public static function getAbsoluteDeviation($list, $averageValue)
+		{
+			$value = 0;
+			
+			foreach ($list as $elt)
+				$value += abs($elt - $averageValue);
+			
+			return $value / count($list);
+		}
 	}
 ?>
