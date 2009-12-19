@@ -101,14 +101,24 @@
 		
 		public static function getStandardDeviation(array $list)
 		{
+			return self::getStandardDeviationP($list, count($list) - 1);
+		}
+		
+		public static function getStandardDeviationP(array $list, $size = null)
+		{
 			$tempSum = 0;
 			
-			$averageValue = self::getAverage($list);
+			if (!$size)
+				$size = count($list);
 			
-			foreach ($list as $elt)
-				$tempSum += pow($elt - $averageValue, 2);
+			Assert::isPositiveInteger($size);
+			
+			$averageValue = self::getAverage($list, $size);
+			
+			for ($i = 0; $i < $size; $i++)
+				$tempSum += pow($list[$i] - $averageValue, 2);
 		
-			return sqrt($tempSum / count($list));
+			return sqrt($tempSum / $size);
 		}
 		
 		public static function getAbsoluteDeviation(array $list)
@@ -128,9 +138,19 @@
 			return $elt - $averageValue;
 		}
 		
-		public static function getAverage(array $list)
+		public static function getAverage(array $list, $size = null)
 		{
-			return array_sum($list) / count($list);
+			if (!$size)
+				$size = count($list);
+			
+			Assert::isPositiveInteger($size);
+			
+			$tempSum = 0;
+			
+			for ($i = 0; $i < $size; $i++)
+				$tempSum += $list[$i];
+			
+			return $tempSum / $size;
 		}
 		
 		public static function getCovariance(array $list1, array $list2)
@@ -153,6 +173,16 @@
 			}
 			
 			return $tempSum / ($list1Size - 1);
+		}
+		
+		public static function getPearsonProductMomentCorrelation(array $list1, array $list2)
+		{
+			return
+				self::getCovariance($list1, $list2)
+				/ (
+					self::getStandardDeviation($list1)
+					* self::getStandardDeviation($list2)
+				);
 		}
 	}
 ?>
