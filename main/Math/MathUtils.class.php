@@ -99,7 +99,7 @@
 			return $z;
 		}
 		
-		public static function getStandardDeviation($list)
+		public static function getStandardDeviation(array $list)
 		{
 			$tempSum = 0;
 			
@@ -111,7 +111,7 @@
 			return sqrt($tempSum / count($list));
 		}
 		
-		public static function getAbsoluteDeviation($list)
+		public static function getAbsoluteDeviation(array $list)
 		{
 			$value = 0;
 			
@@ -123,9 +123,36 @@
 			return $value / count($list);
 		}
 		
-		public static function getAverage($list)
+		public static function getMeanDeviation($elt, $averageValue)
+		{
+			return $elt - $averageValue;
+		}
+		
+		public static function getAverage(array $list)
 		{
 			return array_sum($list) / count($list);
+		}
+		
+		public static function getCovariance(array $list1, array $list2)
+		{
+			$list1Size = count($list1);
+			$list2Size = count($list2);
+			
+			Assert::isEqual($list1Size, $list2Size, 'Array sizes should be equals!');
+			
+			$list1AverageValue = self::getAverage($list1);
+			$list2AverageValue = self::getAverage($list2);
+			
+			$tempSum = 0;
+			
+			for ($i = 0; $i < $list1Size; $i++) {
+				$elt1Dev = self::getMeanDeviation($list1[$i], $list1AverageValue);
+				$elt2Dev = self::getMeanDeviation($list2[$i], $list2AverageValue);
+				
+				$tempSum += $elt1Dev * $elt2Dev;
+			}
+			
+			return $tempSum / ($list1Size - 1);
 		}
 	}
 ?>
