@@ -99,9 +99,11 @@
 			return $z;
 		}
 		
-		public static function getStandardDeviation($list, $averageValue)
+		public static function getStandardDeviation($list)
 		{
 			$tempSum = 0;
+			
+			$averageValue = self::getAverage($list);
 			
 			foreach ($list as $elt)
 				$tempSum += pow($elt - $averageValue, 2);
@@ -109,14 +111,21 @@
 			return sqrt($tempSum / count($list));
 		}
 		
-		public static function getAbsoluteDeviation($list, $averageValue)
+		public static function getAbsoluteDeviation($list)
 		{
 			$value = 0;
+			
+			$averageValue = self::getAverage($list);
 			
 			foreach ($list as $elt)
 				$value += abs($elt - $averageValue);
 			
 			return $value / count($list);
+		}
+		
+		public static function getAverage($list)
+		{
+			return array_sum($list) / count($list);
 		}
 	}
 ?>
