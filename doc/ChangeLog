@@ -1,3 +1,8 @@
+2009-12-21	Denis M. Gabaidulin
+
+	* core/Base/PriorityQueue.class.php: simple priority queue impl. based
+	on binary heap.
+
 2009-11-25	Vladlen Y. Koshelev
 
 	* main/OQL/Parsers/OqlGroupByParser.class.php: added support for logical,
