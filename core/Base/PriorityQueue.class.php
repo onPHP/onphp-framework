@@ -11,8 +11,9 @@
 
 	final class PriorityQueue
 	{
-		private $heap = array(0);
-		private $heapSize = 0;
+		private $heap 			= array(0);
+		private $heapSize		= 0;
+		private $cmpFunction	= null;
 		
 		public function getLength()
 		{
@@ -29,18 +30,34 @@
 			return $this->heap[$this->heapSize];
 		}
 		
-		public static function create($unsortedData)
+		public static function create($unsortedData = array())
 		{
 			return new self($unsortedData);
 		}
 		
-		public function __construct($unsortedData)
+		public function __construct($unsortedData = array())
 		{
 			$this->heap = array_merge($this->heap, $unsortedData);
 			
 			$this->heapSize = count($this->heap) - 1;
 			
 			$this->buildMaxHeap();
+		}
+		
+		/*
+		function cmp($one, $two)
+		{
+			if ($one['d'] == $two['d'])
+				return 0;
+			
+			return ($one['d'] < $two['d']) ? -1 : 1;
+		}
+		*/
+		public function setCmpFunction($function)
+		{
+			$this->cmpFunction = $function;
+			
+			return $this;
 		}
 		
 		public function parent($index)
@@ -65,12 +82,14 @@
 			
 			$largest = null;
 			
-			if ($left <= $this->heapSize && $this->heap[$left] > $this->heap[$index])
+			$cmp = $this->cmpFunction;
+			
+			if ($left <= $this->heapSize && $cmp($this->heap[$left], $this->heap[$index]) == 1)
 				$largest = $left;
 			else
 				$largest = $index;
 				
-			if ($right <= $this->heapSize && $this->heap[$right] > $this->heap[$largest])
+			if ($right <= $this->heapSize && $cmp($this->heap[$right], $this->heap[$largest]) == 1)
 				$largest = $right;
 			
 			if ($largest != $index) {
@@ -111,9 +130,15 @@
 			
 			$this->heap[$index] = $elt;
 			
+			$cmp = $this->cmpFunction;
+			
 			while (
 				$index > 1
-				&& $this->heap[$this->parent($index)] < $this->heap[$index]
+				&&
+					$cmp(
+						$this->heap[$this->parent($index)],
+						$this->heap[$index]
+					) == -1
 			) {
 				$this->swapElts($index, $this->parent($index));
 				
