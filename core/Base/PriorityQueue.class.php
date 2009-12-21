@@ -14,6 +14,11 @@
 		private $heap = array(0);
 		private $heapSize = 0;
 		
+		public function getLength()
+		{
+			return $this->heapSize;
+		}
+		
 		public function first()
 		{
 			return $this->heap[1];
