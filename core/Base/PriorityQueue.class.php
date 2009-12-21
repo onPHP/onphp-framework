@@ -69,9 +69,7 @@
 				$largest = $right;
 			
 			if ($largest != $index) {
-				$tmp = $this->heap[$largest];
-				$this->heap[$largest] = $this->heap[$index];
-				$this->heap[$index] = $tmp;
+				$this->swapElts($index, $largest);
 				
 				$this->maxHeapify($largest);
 			}
@@ -112,12 +110,17 @@
 				$index > 1
 				&& $this->heap[$this->parent($index)] < $this->heap[$index]
 			) {
-				$tmp = $this->heap[$index];
-				$this->heap[$index] = $this->heap[$this->parent($index)];
-				$this->heap[$this->parent($index)] = $tmp;
+				$this->swapElts($index, $this->parent($index));
 				
 				$index = $this->parent($index);
 			}
+		}
+		
+		private function swapElts($index1, $index2)
+		{
+			$tmp 					= $this->heap[$index2];
+			$this->heap[$index2]	= $this->heap[$index1];
+			$this->heap[$index1]	= $tmp;
 		}
 	}
 ?>
