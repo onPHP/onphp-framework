@@ -25,11 +25,6 @@
 			return $this->heap[1];
 		}
 		
-		public function last()
-		{
-			return $this->heap[$this->heapSize];
-		}
-		
 		public static function create($unsortedData = array())
 		{
 			return new self($unsortedData);
@@ -144,6 +139,13 @@
 				
 				$index = $this->parent($index);
 			}
+		}
+		
+		public function delete($index)
+		{
+			$this->heap[$index] = $heap[$this->heapSize--];
+			
+			$this->maxHeapify($index);
 		}
 		
 		private function swapElts($index1, $index2)
