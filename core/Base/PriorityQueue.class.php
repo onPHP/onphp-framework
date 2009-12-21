@@ -143,7 +143,11 @@
 		
 		public function delete($index)
 		{
-			$this->heap[$index] = $heap[$this->heapSize--];
+			$this->heap[$index] = $this->heap[$this->heapSize];
+			
+			unset($this->heap[$this->heapSize]);
+			
+			$this->heapSize--;
 			
 			$this->maxHeapify($index);
 		}
