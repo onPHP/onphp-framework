@@ -98,5 +98,91 @@
 
 			return $z;
 		}
+		
+		public static function getStandardDeviation(array $list)
+		{
+			return self::getStandardDeviationP($list, count($list) - 1);
+		}
+		
+		public static function getStandardDeviationP(array $list, $size = null)
+		{
+			$tempSum = 0;
+			
+			if (!$size)
+				$size = count($list);
+			
+			Assert::isPositiveInteger($size);
+			
+			$averageValue = self::getAverage($list, $size);
+			
+			for ($i = 0; $i < $size; $i++)
+				$tempSum += pow($list[$i] - $averageValue, 2);
+		
+			return sqrt($tempSum / $size);
+		}
+		
+		public static function getAbsoluteDeviation(array $list)
+		{
+			$value = 0;
+			
+			$averageValue = self::getAverage($list);
+			
+			foreach ($list as $elt)
+				$value += abs($elt - $averageValue);
+			
+			return $value / count($list);
+		}
+		
+		public static function getMeanDeviation($elt, $averageValue)
+		{
+			return $elt - $averageValue;
+		}
+		
+		public static function getAverage(array $list, $size = null)
+		{
+			if (!$size)
+				$size = count($list);
+			
+			Assert::isPositiveInteger($size);
+			
+			$tempSum = 0;
+			
+			for ($i = 0; $i < $size; $i++)
+				$tempSum += $list[$i];
+			
+			return $tempSum / $size;
+		}
+		
+		public static function getCovariance(array $list1, array $list2)
+		{
+			$list1Size = count($list1);
+			$list2Size = count($list2);
+			
+			Assert::isEqual($list1Size, $list2Size, 'Array sizes should be equals!');
+			
+			$list1AverageValue = self::getAverage($list1);
+			$list2AverageValue = self::getAverage($list2);
+			
+			$tempSum = 0;
+			
+			for ($i = 0; $i < $list1Size; $i++) {
+				$elt1Dev = self::getMeanDeviation($list1[$i], $list1AverageValue);
+				$elt2Dev = self::getMeanDeviation($list2[$i], $list2AverageValue);
+				
+				$tempSum += $elt1Dev * $elt2Dev;
+			}
+			
+			return $tempSum / ($list1Size - 1);
+		}
+		
+		public static function getPearsonProductMomentCorrelation(array $list1, array $list2)
+		{
+			return
+				self::getCovariance($list1, $list2)
+				/ (
+					self::getStandardDeviation($list1)
+					* self::getStandardDeviation($list2)
+				);
+		}
 	}
 ?>

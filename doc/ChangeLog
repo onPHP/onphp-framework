@@ -3,6 +3,18 @@
 	* core/Base/PriorityQueue.class.php: simple priority queue impl. based
 	on binary heap.
 
+2009-12-19	Denis M. Gabaidulin
+
+	* main/Math/MathUtils.class.php: getStandardDeviation(): calculate
+	standard deviation.
+	
+	* main/Math/MathUtils.class.php: getAbsoluteDeviation(): calculate
+	absolute deviation.
+	
+	* main/Math/MathUtils.class.php: getCovariance(): calculate
+	covariance between two value arrays by formula:
+	cov(X,Y) = sum((Xi-Xavg) * (Yj-Xavg) / n-1).
+
 2009-11-25	Vladlen Y. Koshelev
 
 	* main/OQL/Parsers/OqlGroupByParser.class.php: added support for logical,
