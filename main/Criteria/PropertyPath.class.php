@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007-2008 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2007-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -99,11 +99,17 @@
 				return /* boo */;
 			
 			self::$protos[$className] = call_user_func(array($className, 'proto'));
-			self::$daos[$className] = call_user_func(array($className, 'dao'));
+			self::$daos[$className] =
+				ClassUtils::isInstanceOf($className, 'DAOConnected')
+					? call_user_func(array($className, 'dao'))
+					: null;
 			
 			Assert::isTrue(
 				(self::$protos[$className] instanceof AbstractProtoClass)
-				&& (self::$daos[$className] instanceof ProtoDAO)
+				&& (
+					self::$daos[$className] instanceof ProtoDAO
+					|| self::$daos[$className] === null
+				)
 			);
 		}
 	}

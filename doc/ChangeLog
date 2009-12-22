@@ -1,3 +1,8 @@
+2009-12-22	Vladlen Y. Koshelev
+
+	* main/Criteria/PropertyPath.class.php: correct handling of non-DAOConnected
+	properties in path (e.g. ValueObject properties).
+
 2009-12-21	Denis M. Gabaidulin
 
 	* core/Base/PriorityQueue.class.php: simple priority queue impl. based
