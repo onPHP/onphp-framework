@@ -1,3 +1,8 @@
+2009-12-21	Denis M. Gabaidulin
+
+	* core/Base/PriorityQueue.class.php: simple priority queue impl. based
+	on binary heap.
+
 2009-12-19	Denis M. Gabaidulin
 
 	* main/Math/MathUtils.class.php: getStandardDeviation(): calculate
