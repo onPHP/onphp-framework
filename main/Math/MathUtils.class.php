@@ -190,8 +190,6 @@
 			$list1Size = count($list1);
 			$list2Size = count($list2);
 			
-			Assert::isEqual($list1Size, $list2Size, 'Array sizes should be equals!');
-			
 			$result = array();
     	
 			for ($i = 0; $i < $list1Size; $i++) {
