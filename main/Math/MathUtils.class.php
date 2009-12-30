@@ -67,6 +67,42 @@
 			return $result;
 		}
 		
+		public static function applyFunctorToCartesianProduct(
+			$arrays, TupleFunctor $functor
+		)
+		{
+			$result = array();
+			
+			$size = (sizeof($arrays) > 0) ? 1 : 0;
+			
+			foreach ($arrays as $array)
+				$size *= sizeof($array);
+			
+			$keys = array_keys($arrays);
+			
+			foreach ($keys as $key)
+				$tmpArrays[] = $arrays[$key];
+			
+			for ($i = 0; $i < $size; $i++) {
+				$result[$i] = array();
+				
+				for ($j = 0; $j < sizeof($tmpArrays); $j++) {
+           			$result[$i][$keys[$j]] = current($tmpArrays[$j]);
+				}
+				
+				$functor->apply($result[$i]);
+				
+				unset($result[$i]);
+				
+				for ($j = (sizeof($tmpArrays) - 1); $j >= 0; $j--) {
+					if (next($tmpArrays[$j])) {
+               			break;
+           			} else
+               			reset($tmpArrays[$j]);
+				}
+			}
+		}
+		
 		public static function randFloat($min, $max)
 		{
 			return ($min + lcg_value() * (abs($max - $min)));
