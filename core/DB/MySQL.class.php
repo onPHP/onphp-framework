@@ -173,16 +173,26 @@
 				'tinyint'	=> DataType::SMALLINT,
 				'smallint'	=> DataType::SMALLINT,
 				'int'		=> DataType::INTEGER,
+				'mediumint'	=> DataType::INTEGER,
+
 				'bigint'	=> DataType::BIGINT,
 				
 				'double'	=> DataType::DOUBLE,
-				
+				'decimal'	=> DataType::NUMERIC,
+
+				'char'		=> DataType::CHAR,
 				'varchar'	=> DataType::VARCHAR,
 				'text'		=> DataType::TEXT,
+				'tinytext'	=> DataType::TEXT,
 				
+				'date'		=> DataType::DATE,
 				'time'		=> DataType::TIME,
-				'timestamp' => DataType::TIMESTAMP,
-				'date'		=> DataType::DATE
+				'timestamp'	=> DataType::TIMESTAMP,
+				'datetime'	=> DataType::TIMESTAMP,
+
+				// unhandled types
+				'enum'		=> null,
+				'year'		=> null
 			);
 			
 			try {
