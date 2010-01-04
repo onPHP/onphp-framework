@@ -227,13 +227,24 @@
 			$list2Size = count($list2);
 			
 			$result = array();
-    		
+			
 			for ($i = 0; $i < $list1Size; $i++) {
 				for ($j = 0; $j < $list2Size; $j++) {
 					$x = 0;
 					
-					for ($k = 0; $k < $list2Size; $k++)
-						$x += $list1[$i][$k] * $list2[$k][$j];
+					for ($k = 0; $k < $list2Size; $k++) {
+						if (isset($list1[$i][$k]))
+							$l1 = $list1[$i][$k];
+						else
+							$l1 = 0;
+						
+						if (isset($list2[$k][$j]))
+							$l2 = $list2[$k][$j];
+						else
+							$l2 = 0;
+						
+						$x += $l1 * $l2;
+					}
 					
 					$result[$i][$j] = $x;
 				}
