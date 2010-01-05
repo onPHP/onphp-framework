@@ -1,3 +1,7 @@
+2009-12-29	Denis M. Gabaidulin
+
+	* main/Math/MathUtils.class.php: getMmult(): added.
+
 2009-12-22	Vladlen Y. Koshelev
 
 	* main/Criteria/PropertyPath.class.php: correct handling of non-DAOConnected

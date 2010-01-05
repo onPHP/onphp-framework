@@ -184,5 +184,28 @@
 					* self::getStandardDeviation($list2)
 				);
 		}
+		
+		public static function getMmult(array $list1, array $list2)
+		{
+			$list1Size = count($list1);
+			$list2Size = count($list2);
+			
+			Assert::isEqual($list1Size, $list2Size, 'Array sizes should be equals!');
+			
+			$result = array();
+    	
+			for ($i = 0; $i < $list1Size; $i++) {
+				for ($j =0 ; $j < $list2Size; $j++) {
+					$x = 0;
+					
+					for ($k = 0; $k < $list2Size; $k++)
+						$x += $list1[$i][$k] * $list2[$k][$j];
+					
+					$result[$i][$j] = $x;
+				}
+			}
+    		
+    		return $result;
+		}
 	}
 ?>
