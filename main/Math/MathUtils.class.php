@@ -67,6 +67,42 @@
 			return $result;
 		}
 		
+		public static function applyFunctorToCartesianProduct(
+			$arrays, TupleFunctor $functor
+		)
+		{
+			$result = array();
+			
+			$size = (sizeof($arrays) > 0) ? 1 : 0;
+			
+			foreach ($arrays as $array)
+				$size *= sizeof($array);
+			
+			$keys = array_keys($arrays);
+			
+			foreach ($keys as $key)
+				$tmpArrays[] = $arrays[$key];
+			
+			for ($i = 0; $i < $size; $i++) {
+				$result[$i] = array();
+				
+				for ($j = 0; $j < sizeof($tmpArrays); $j++) {
+           			$result[$i][$keys[$j]] = current($tmpArrays[$j]);
+				}
+				
+				$functor->apply($result[$i]);
+				
+				unset($result[$i]);
+				
+				for ($j = (sizeof($tmpArrays) - 1); $j >= 0; $j--) {
+					if (next($tmpArrays[$j])) {
+               			break;
+           			} else
+               			reset($tmpArrays[$j]);
+				}
+			}
+		}
+		
 		public static function randFloat($min, $max)
 		{
 			return ($min + lcg_value() * (abs($max - $min)));
@@ -183,6 +219,38 @@
 					self::getStandardDeviation($list1)
 					* self::getStandardDeviation($list2)
 				);
+		}
+		
+		public static function getMmult(array $list1, array $list2)
+		{
+			$list1Size = count($list1);
+			$list2Size = count($list2);
+			
+			$result = array();
+			
+			for ($i = 0; $i < $list1Size; $i++) {
+				for ($j = 0; $j < $list2Size; $j++) {
+					$x = 0;
+					
+					for ($k = 0; $k < $list2Size; $k++) {
+						if (isset($list1[$i][$k]))
+							$l1 = $list1[$i][$k];
+						else
+							$l1 = 0;
+						
+						if (isset($list2[$k][$j]))
+							$l2 = $list2[$k][$j];
+						else
+							$l2 = 0;
+						
+						$x += $l1 * $l2;
+					}
+					
+					$result[$i][$j] = $x;
+				}
+			}
+			
+    		return $result;
 		}
 	}
 ?>
