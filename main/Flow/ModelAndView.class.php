@@ -72,8 +72,7 @@
 		public function viewIsRedirect()
 		{
 			return
-				($this->view instanceof RedirectView)
-				|| ($this->view instanceof RedirectToView)
+				($this->view instanceof CleanRedirectView)
 				|| (
 					is_string($this->view)
 					&& strpos($this->view, 'redirect') === 0
