@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
- *   Copyright (C) 2008 by Konstantin V. Arkhipov                           *
+ *   Copyright (C) 2008-2010 by Konstantin V. Arkhipov                      *
  *                                                                          *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU Lesser General Public License as         *
@@ -143,6 +143,11 @@
 		public function exportValue()
 		{
 			return $this->primitive->exportValue();
+		}
+		
+		public function getCustomError()
+		{
+			return $this->primitive->getCustomError();
 		}
 		
 		public function import($scope)

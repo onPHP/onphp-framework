@@ -1,3 +1,8 @@
+2010-01-27	Vladlen Y. Koshelev
+
+	* core/Form/Primitives/PrimitiveAlias.class.php: forward custom error from
+	inner primitive.
+
 2009-12-30	Denis M. Gabaidulin
 
 	* main/Math/MathUtils.class.php: applyFunctorToCartesianProduct(): to apply
