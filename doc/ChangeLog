@@ -1,3 +1,7 @@
+2010-02-02	Evgeny V. Kokovikhin
+
+	* main/Net/Http/Cookie.class.php: zero expire for cookie
+
 2009-12-30	Denis M. Gabaidulin
 
 	* main/Math/MathUtils.class.php: applyFunctorToCartesianProduct(): to apply
