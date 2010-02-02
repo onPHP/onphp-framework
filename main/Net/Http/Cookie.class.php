@@ -128,7 +128,9 @@
 				setcookie(
 					$this->getName(),
 					$this->getValue(),
-					$this->getMaxAge() + time(),
+					($this->getMaxAge() === 0)
+						? 0
+						: $this->getMaxAge() + time(),
 					$this->getPath(),
 					$this->getDomain(),
 					$this->getSecure(),
