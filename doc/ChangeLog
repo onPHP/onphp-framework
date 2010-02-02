@@ -1,3 +1,7 @@
+2010-02-02	Evgeny V. Kokovikhin
+
+	* main/Net/Http/Cookie.class.php: zero expire for cookie
+
 2010-01-27	Vladlen Y. Koshelev
 
 	* core/Form/Primitives/PrimitiveAlias.class.php: forward custom error from
