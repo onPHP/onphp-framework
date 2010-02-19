@@ -1,3 +1,11 @@
+2010-02-20	Sergey S. Sergeev
+
+	* core/Logic/Expression.class.php, core/Logic/BinaryExpression.class.php:
+	modulus logic implemented.
+
+	* core/Logic/HstoreExpression.class.php: containHstore(),
+	containValueList() added.
+
 2010-02-19	Sergey S. Sergeev
 
 	* main/Base/CallChain.class.php: call() method fixed.

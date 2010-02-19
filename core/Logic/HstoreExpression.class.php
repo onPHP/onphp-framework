@@ -51,5 +51,22 @@
 		{
 			return new BinaryExpression($field, $value, self::CONCAT);
 		}
+		
+		/**
+		 * @return BinaryExpression
+		**/
+		public static function containHstore($field, Hstore $hstore)
+		{
+			return new BinaryExpression($field, $hstore->toString(), self::LEFT_CONTAIN);
+		}
+		
+		public static function containValueList($field, array $list)
+		{
+			return
+				self::containHstore(
+					$field,
+					Hstore::make($list)
+				);
+		}
 	}
 ?>
