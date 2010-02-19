@@ -1,8 +1,11 @@
 2010-02-19	Sergey S. Sergeev
 
-	* main/Base/CallChain.class.php; call() method fixed.
+	* main/Base/CallChain.class.php: call() method fixed.
 
-	* test/core/FiltersTest.class.php: test case added. 
+	* test/core/FiltersTest.class.php, test/main/Net/MailTest.class.php:
+	test assertions added. 
+
+	* main/Net/Mail/MailAddress.class.php: toString() method fixed.
 
 2010-02-02	Evgeny V. Kokovikhin
 

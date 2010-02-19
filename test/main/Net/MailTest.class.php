@@ -71,5 +71,24 @@
 				$address->toString()
 			);
 		}
+		
+		public function testBadMailAddresses()
+		{
+			$address1 = MailAddress::create()->
+				setAddress("va\004sya@example.com");
+				
+			$address2 = MailAddress::create()->
+				setAddress("va sya@example.com");
+			
+				
+			try {
+				$address1->toString();
+				$address2->toString();
+				
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				//pass
+			}
+		}
 	}
 ?>
