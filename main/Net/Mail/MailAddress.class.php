@@ -67,13 +67,12 @@
 		
 		public function toString()
 		{
-			$specials = preg_quote('()<>@,;:".[]\\');
-			$cr = preg_quote("\015");
-			$space = ' ';
+			$specials = preg_quote('()<>@,;:".[]\\', '/');
+			$cr = '\015';
+			$space = '\ ';
 			
-			$ctls = preg_quote("\000-\037\177");
-			$char = preg_quote("\000-\177");
-			
+			$ctls = '\000-\037\177';
+			$char = '\000-\177';
 			
 			$atom = "[^{$specials}{$space}{$ctls}]+";
 			$asciiAtom = "[$char]+";
