@@ -1,3 +1,9 @@
+2010-02-19	Sergey S. Sergeev
+
+	* main/Base/CallChain.class.php; call() method fixed.
+
+	* test/core/FiltersTest.class.php: test case added. 
+
 2010-02-02	Evgeny V. Kokovikhin
 
 	* main/Net/Http/Cookie.class.php: zero expire for cookie

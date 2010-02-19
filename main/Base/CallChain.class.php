@@ -40,19 +40,23 @@
 				throw new WrongStateException();
 			
 			$args = func_get_args();
-			$args = array_shift($args);
+			array_shift($args);
 			
-			if (count($args))
+			if (count($args)) {
+				$result = $args;
 				foreach ($this->chain as $object)
 					$result = call_user_func_array(
 						array($object, $method),
-						$args
+						is_array($result)
+							? $result
+							: array($result)
 					);
-			else
+			} else {
 				foreach ($this->chain as $object)
 					$result = call_user_func(array($object, $method));
+			}
 			
-			return $method;
+			return $result;
 		}
 		
 		public function __call($method, $args = null)

@@ -145,7 +145,12 @@
 			
 			$this->assertEquals(
 				$chain->call('apply', $text),
-				$chain->apply($text)
+				$return = $chain->apply($text)
+			);
+			
+			$this->assertEquals(
+				"foo&lt;br /&gt;\nbar&amp;",
+				$return
 			);
 			
 			try {
