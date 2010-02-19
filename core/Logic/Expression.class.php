@@ -11,7 +11,7 @@
 
 	/**
 	 * Factory for various childs of LogicalObjects
-	 * 
+	 *
 	 * @ingroup Logic
 	**/
 	final class Expression extends StaticFactory
@@ -64,7 +64,7 @@
 		
 		/**
 		 * greater than
-		 * 
+		 *
 		 * @return BinaryExpression
 		**/
 		public static function gt($field, $value)
@@ -76,7 +76,7 @@
 		
 		/**
 		 * greater than or equals
-		 * 
+		 *
 		 * @return BinaryExpression
 		**/
 		public static function gtEq($field, $value)
@@ -88,7 +88,7 @@
 		
 		/**
 		 * lower than
-		 * 
+		 *
 		 * @return BinaryExpression
 		**/
 		public static function lt($field, $value)
@@ -100,7 +100,7 @@
 		
 		/**
 		 * lower than or equals
-		 * 
+		 *
 		 * @return BinaryExpression
 		**/
 		public static function ltEq($field, $value)
@@ -208,7 +208,7 @@
 		
 		/**
 		 * {,not}in handles strings, arrays and SelectQueries
-		 * 
+		 *
 		 * @return LogicalObject
 		**/
 		public static function in($field, $value)
@@ -242,7 +242,7 @@
 
 		/**
 		 * +
-		 * 
+		 *
 		 * @return BinaryExpression
 		**/
 		public static function add($field, $value)
@@ -252,7 +252,7 @@
 		
 		/**
 		 * -
-		 * 
+		 *
 		 * @return BinaryExpression
 		**/
 		public static function sub($field, $value)
@@ -262,7 +262,7 @@
 		
 		/**
 		 * *
-		 * 
+		 *
 		 * @return BinaryExpression
 		**/
 		public static function mul($field, $value)
@@ -272,14 +272,24 @@
 		
 		/**
 		 * /
-		 * 
+		 *
 		 * @return BinaryExpression
 		**/
 		public static function div($field, $value)
 		{
 			return new BinaryExpression($field, $value, BinaryExpression::DIVIDE);
 		}
-
+		
+		/**
+		 * %
+		 *
+		 * @return BinaryExpression
+		**/
+		public static function mod($field, $value)
+		{
+			return new BinaryExpression($field, $value, BinaryExpression::MOD);
+		}
+		
 		/**
 		 * @return FullTextSearch
 		**/

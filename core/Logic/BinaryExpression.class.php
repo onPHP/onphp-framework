@@ -38,6 +38,7 @@
 		const SUBSTRACT			= '-';
 		const MULTIPLY			= '*';
 		const DIVIDE			= '/';
+		const MOD				= '%';
 		
 		private $left	= null;
 		private $right	= null;
@@ -132,6 +133,9 @@
 				
 				case self::DIVIDE:
 					return $both && $right && ($left / $right);
+					
+				case self::MOD:
+					return $both && $right && ($left % $right);
 				
 				default:
 					throw new UnsupportedMethodException(
