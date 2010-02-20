@@ -59,8 +59,28 @@
 		{
 			if (!$this->isExists($key))
 				throw new ObjectNotFoundException("Property with name '{$key}' does not exists");
-				
+			
 			return $this->properties[$key];
+		}
+		
+		/**
+		 * @return Hstore
+		**/
+		public function set($key, $value)
+		{
+			$this->properties[$key] = $value;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return Hstore
+		**/
+		public function drop($key)
+		{
+			unset($this->properties[$key]);
+			
+			return $this;
 		}
 		
 		public function isExists($key)
