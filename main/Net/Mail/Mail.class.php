@@ -21,7 +21,7 @@
 	
 	/**
 	 * @ingroup Mail
-	 * 
+	 *
 	 * Note: when relay rejects your mail, try to
 	 * setSendmailAdditionalArgs('-f from.addr@example.com').
 	 * See 'man sendmail' for details.
@@ -35,6 +35,7 @@
 		private $from			= null;
 		private $encoding		= null;
 		private $contentType	= null;
+		private $returnPath		= null;
 		
 		private $sendmailAdditionalArgs	= null;
 		
@@ -76,6 +77,11 @@
 				else
 					$from = null;
 				
+				if ($this->returnPath)
+					$returnPath = mb_convert_encoding($this->returnPath, $encoding);
+				else
+					$returnPath = null;
+				
 				$subject =
 					"=?".$encoding."?B?"
 					.base64_encode(
@@ -95,9 +101,14 @@
 			
 			$headers = null;
 			
+			$returnPathAtom =
+				$returnPath !== null
+					? $returnPath
+					: $from;
+			
 			if ($from != null) {
 				$headers .= "From: ".$from."\n";
-				$headers .= "Return-Path: ".$from."\n";
+				$headers .= "Return-Path: ".$returnPathAtom."\n";
 			}
 			
 			if ($this->cc != null)
@@ -191,7 +202,7 @@
 			$this->contentType = $contentType;
 			return $this;
 		}
-
+		
 		public function getSendmailAdditionalArgs()
 		{
 			return $this->sendmailAdditionalArgs;
@@ -203,6 +214,20 @@
 		public function setSendmailAdditionalArgs($sendmailAdditionalArgs)
 		{
 			$this->sendmailAdditionalArgs = $sendmailAdditionalArgs;
+			return $this;
+		}
+		
+		public function getReturnPath()
+		{
+			return $this->returnPath;
+		}
+		
+		/**
+		 * @return Mail
+		**/
+		public function setReturnPath($returnPath)
+		{
+			$this->returnPath = $returnPath;
 			return $this;
 		}
 	}
