@@ -1,3 +1,7 @@
+2010-02-21	Sergey S. Sergeev
+
+	* main/Base/Hstore.class.php: set(), drop() added.
+
 2010-02-20	Sergey S. Sergeev
 
 	* core/Logic/Expression.class.php, core/Logic/BinaryExpression.class.php:
