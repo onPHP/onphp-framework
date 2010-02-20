@@ -11,7 +11,7 @@
 
 	/**
 	 * Single roof for InsertQuery and UpdateQuery.
-	 * 
+	 *
 	 * @ingroup OSQL
 	**/
 	abstract class InsertOrUpdateQuery
@@ -99,7 +99,7 @@
 		
 		/**
 		 * Adds values from associative array.
-		 * 
+		 *
 		 * @return InsertOrUpdateQuery
 		**/
 		public function arraySet($fields)
@@ -109,6 +109,21 @@
 			$this->fields = array_merge($this->fields, $fields);
 			
 			return $this;
+		}
+		
+		public function toDialectString(Dialect $dialect)
+		{
+			$this->checkReturning($dialect);
+			
+			if (empty($this->returning))
+				return parent::toDialectString($dialect);
+			
+			$query =
+				parent::toDialectString($dialect)
+				.' RETURNING '
+				.$this->toDialectStringReturning($dialect);
+			
+			return $query;
 		}
 	}
 ?>

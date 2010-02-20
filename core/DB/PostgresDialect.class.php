@@ -11,9 +11,9 @@
 
 	/**
 	 * PostgreSQL dialect.
-	 * 
+	 *
 	 * @see http://www.postgresql.org/
-	 * 
+	 *
 	 * @ingroup DB
 	**/
 	final class PostgresDialect extends Dialect
@@ -96,6 +96,11 @@
 		}
 		
 		public function hasMultipleTruncate()
+		{
+			return true;
+		}
+		
+		public function hasReturning()
 		{
 			return true;
 		}

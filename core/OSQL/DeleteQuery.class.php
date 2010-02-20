@@ -14,7 +14,7 @@
 	**/
 	final class DeleteQuery extends QuerySkeleton implements SQLTableName
 	{
-		private $table	= null;
+		protected $table	= null;
 		
 		public function getId()
 		{
@@ -38,11 +38,24 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			if ($this->where)
-				return
+			if ($this->where) {
+				$deleteStr =
 					'DELETE FROM '.$dialect->quoteTable($this->table)
 					.parent::toDialectString($dialect);
-			else
+				
+				$this->checkReturning($dialect);
+				
+				if (empty($this->returning)) {
+					return $deleteStr;
+				} else {
+					$query =
+						$deleteStr
+						.' RETURNING '
+						.$this->toDialectStringReturning($dialect);
+					
+					return $query;
+				}
+			} else
 				throw new WrongArgumentException(
 					"leave '{$this->table}' table alone in peace, bastard"
 				);

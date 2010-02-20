@@ -11,9 +11,9 @@
 
 	/**
 	 * SQLite dialect.
-	 * 
+	 *
 	 * @see http://www.sqlite.org/
-	 * 
+	 *
 	 * @ingroup DB
 	**/
 	final class LiteDialect extends Dialect
@@ -89,6 +89,11 @@
 		}
 		
 		public function hasMultipleTruncate()
+		{
+			return false;
+		}
+		
+		public function hasReturning()
 		{
 			return false;
 		}

@@ -6,6 +6,18 @@
 	* core/Logic/HstoreExpression.class.php: containHstore(),
 	containValueList() added.
 
+	* core/DB/Dialect.class.php, core/DB/ImaginaryDialect.class.php,
+	core/DB/LiteDialect.class.php, core/DB/MyDialect.class.php,
+	core/DB/PostgresDialect.class.php, core/OSQL/DeleteQuery.class.php,
+	core/OSQL/InsertOrUpdateQuery.class.php, core/OSQL/InsertQuery.class.php,
+	core/OSQL/QuerySkeleton.class.php, core/OSQL/SelectQuery.class.php:
+	refactoring code. OSQL INSERT/UPDATE/DELETE RETURNING, INSERT from SELECT
+	clause implemented.
+
+	* test/main/OsqlDeleteTest.class.php, test/main/OsqlInsertTest.class.php,
+	test/main/OsqlReturningTest.class.php, test/main/OsqlSelectTest.class.php:
+	useful test cases added.
+
 2010-02-19	Sergey S. Sergeev
 
 	* main/Base/CallChain.class.php: call() method fixed.

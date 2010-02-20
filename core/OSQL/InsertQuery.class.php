@@ -15,6 +15,11 @@
 	final class InsertQuery extends InsertOrUpdateQuery
 	{
 		/**
+		 * @var SelectQuery
+		**/
+		protected $select = null;
+		
+		/**
 		 * @return InsertQuery
 		**/
 		public function into($table)
@@ -26,7 +31,7 @@
 		
 		/**
 		 * Just an alias to behave like UpdateQuery.
-		 * 
+		 *
 		 * @return InsertQuery
 		**/
 		public function setTable($table)
@@ -34,10 +39,48 @@
 			return $this->into($table);
 		}
 		
+		/**
+		 * @return InsertQuery
+		**/
+		public function setSelect(SelectQuery $select)
+		{
+			$this->select = $select;
+			
+			return $this;
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			$query = 'INSERT INTO '.$dialect->quoteTable($this->table).' ';
 			
+			if ($this->select === null) {
+				$query = $this->toDialectStringValues($query, $dialect);
+			} else {
+				$query = $this->toDialectStringSelect($query, $dialect);
+			}
+			
+			$query .= parent::toDialectString($dialect);
+			
+			return $query;
+		}
+		
+		public function where(LogicalObject $exp, $logic = null)
+		{
+			throw new UnsupportedMethodException();
+		}
+		
+		public function andWhere(LogicalObject $exp)
+		{
+			throw new UnsupportedMethodException();
+		}
+		
+		public function orWhere(LogicalObject $exp)
+		{
+			throw new UnsupportedMethodException();
+		}
+		
+		protected function toDialectStringValues($query, Dialect $dialect)
+		{
 			$fields = array();
 			$values = array();
 			
@@ -62,24 +105,26 @@
 			$fields = implode(', ', $fields);
 			$values = implode(', ', $values);
 			
-			$query .= "({$fields}) VALUES ({$values})";
+			return $query . "({$fields}) VALUES ({$values})";
+		}
+		
+		protected function toDialectStringSelect($query, Dialect $dialect)
+		{
+			$fields = array();
 			
-			return $query;
-		}
-		
-		public function where(LogicalObject $exp, $logic = null)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function andWhere(LogicalObject $exp)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function orWhere(LogicalObject $exp)
-		{
-			throw new UnsupportedMethodException();
+			foreach ($this->fields as $var => $val) {
+				$fields[] = $dialect->quoteField($var);
+			}
+			
+			if (!$fields)
+				throw new WrongStateException('what should i insert?');
+			if ($this->select->getFieldsCount() != count($fields))
+				throw new WrongStateException('count of select fields must be equal with count of insert fields');
+			
+			$fields = implode(', ', $fields);
+			
+			return $query . "({$fields}) ("
+				.$this->select->toDialectString($dialect).")";
 		}
 	}
 ?>

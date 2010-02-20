@@ -11,7 +11,7 @@
 
 	/**
 	 * Inexistent imaginary helper for OSQL's Query self-identification.
-	 * 
+	 *
 	 * @ingroup DB
 	 * @ingroup Module
 	**/
@@ -59,7 +59,12 @@
 		{
 			return false;
 		}
-
+		
+		public function hasReturning()
+		{
+			return false;
+		}
+		
 		public function fieldToString($field)
 		{
 			return
