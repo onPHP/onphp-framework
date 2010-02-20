@@ -16,6 +16,18 @@
 	{
 		protected $where		= array();	// where clauses
 		protected $whereLogic	= array();	// logic between where's
+		protected $aliases		= array();
+		protected $returning 	= array();
+		
+		public function getWhere()
+		{
+			return $this->where;
+		}
+		
+		public function getWhereLogic()
+		{
+			return $this->whereLogic;
+		}
 		
 		/**
 		 * @throws WrongArgumentException
@@ -54,6 +66,35 @@
 			return $this->where($exp, 'OR');
 		}
 		
+		/**
+		 * @return QuerySkeleton
+		**/
+		public function returning($field, $alias = null)
+		{
+			$this->returning[] =
+				$this->resolveSelectField(
+					$field,
+					$alias,
+					$this->table
+				);
+			
+			if ($alias = $this->resolveAliasByField($field, $alias)) {
+				$this->aliases[$alias] = true;
+			}
+			
+			return $this;
+		}
+		
+		/**
+		 * @return QuerySkeleton
+		**/
+		public function dropReturning()
+		{
+			$this->returning = array();
+			
+			return $this;
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			if ($this->where) {
@@ -76,6 +117,104 @@
 			}
 			
 			return null;
+		}
+		
+		protected function resolveSelectField($field, $alias, $table)
+		{
+			if (is_object($field)) {
+				if (
+					($field instanceof DBField)
+					&& ($field->getTable() === null)
+				) {
+					$result = new SelectField(
+						$field->setTable($table),
+						$alias
+					);
+				} elseif ($field instanceof SelectQuery) {
+					$result = $field;
+				} elseif ($field instanceof DialectString) {
+					$result = new SelectField($field, $alias);
+				} else
+					throw new WrongArgumentException('unknown field type');
+				
+				return $result;
+			} elseif (false !== strpos($field, '*'))
+				throw new WrongArgumentException(
+					'do not fsck with us: specify fields explicitly'
+				);
+			elseif (false !== strpos($field, '.'))
+				throw new WrongArgumentException(
+					'forget about dot: use DBField'
+				);
+			else
+				$fieldName = $field;
+			
+			$result = new SelectField(
+				new DBField($fieldName, $table), $alias
+			);
+			
+			return $result;
+		}
+		
+		protected function resolveAliasByField($field, $alias)
+		{
+			if (is_object($field)) {
+				if (
+					($field instanceof DBField)
+					&& ($field->getTable() === null)
+				) {
+					return null;
+				}
+				
+				if (
+					$field instanceof SelectQuery
+					|| ($field instanceof DialectString	&& $field instanceof Aliased)
+				) {
+					return $field->getAlias();
+				}
+			}
+			
+			return $alias;
+		}
+		
+		/**
+		 * @return QuerySkeleton
+		**/
+		protected function checkReturning(Dialect $dialect)
+		{
+			if (
+				$this->returning
+				&& !$dialect->hasReturning()
+			) {
+				throw new UnimplementedFeatureException();
+			}
+			
+			return $this;
+		}
+		
+		protected function toDialectStringField($field, Dialect $dialect)
+		{
+			if ($field instanceof SelectQuery) {
+				Assert::isTrue(
+					null !== $alias = $field->getName(),
+					'can not use SelectQuery without name as get field'
+				);
+				
+				return
+					"({$field->toDialectString($dialect)}) AS ".
+					$dialect->quoteField($alias);
+			} else
+				return $field->toDialectString($dialect);
+		}
+		
+		protected function toDialectStringReturning(Dialect $dialect)
+		{
+			$fields = array();
+			
+			foreach ($this->returning as $field)
+				$fields[] = $this->toDialectStringField($field, $dialect);
+			
+			return implode(', ', $fields);
 		}
 	}
 ?>

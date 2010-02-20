@@ -11,10 +11,10 @@
 
 	/**
 	 * MySQL dialect.
-	 * 
+	 *
 	 * @see http://www.mysql.com/
 	 * @see http://www.php.net/mysql
-	 * 
+	 *
 	 * @ingroup DB
 	**/
 	class MyDialect extends Dialect
@@ -83,6 +83,11 @@
 		}
 		
 		public function hasMultipleTruncate()
+		{
+			return false;
+		}
+		
+		public function hasReturning()
 		{
 			return false;
 		}

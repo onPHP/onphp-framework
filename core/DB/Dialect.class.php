@@ -11,7 +11,7 @@
 
 	/**
 	 * Base (aka ANSI) SQL dialect.
-	 * 
+	 *
 	 * @ingroup DB
 	 * @ingroup Module
 	**/
@@ -24,6 +24,7 @@
 		
 		abstract public function hasTruncate();
 		abstract public function hasMultipleTruncate();
+		abstract public function hasReturning();
 		
 		/**
 			must be implemented too:

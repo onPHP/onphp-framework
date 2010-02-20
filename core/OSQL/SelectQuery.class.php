@@ -33,8 +33,6 @@
 		
 		private $having			= null;
 		
-		private $aliases		= array();
-		
 		public function __construct()
 		{
 			$this->joiner = new Joiner();
@@ -271,54 +269,21 @@
 		}
 		
 		/**
-		 * BOVM: achtung!
-		 * 
 		 * @throws WrongArgumentException
 		 * @return SelectQuery
 		**/
 		public function get($field, $alias = null)
 		{
-			$table = null;
-			if (is_object($field)) {
-				if (
-					($field instanceof DBField)
-					&& ($field->getTable() === null)
-				) {
-					$this->fields[] = new SelectField(
-						$field->setTable($this->getLastTable()),
-						$alias
-					);
-				} elseif ($field instanceof SelectQuery) {
-					$this->fields[] = $field;
-					$this->aliases[$field->getAlias()] = true;
-				} elseif ($field instanceof DialectString) {
-					$this->fields[] = new SelectField($field, $alias);
-					
-					if ($field instanceof Aliased)
-						$this->aliases[$field->getAlias()] = true;
-					elseif ($alias)
-						$this->aliases[$alias] = true;
-				} else
-					throw new WrongArgumentException('unknown field type');
-				
-				return $this;
-				
-			} elseif (false !== strpos($field, '*'))
-				throw new WrongArgumentException(
-					'do not fsck with us: specify fields explicitly'
+			$this->fields[] =
+				$this->resolveSelectField(
+					$field,
+					$alias,
+					$this->getLastTable()
 				);
-			elseif (false !== strpos($field, '.'))
-				throw new WrongArgumentException(
-					'forget about dot: use DBField'
-				);
-			else
-				$fieldName = $field;
 			
-			$this->fields[] = new SelectField(
-				new DBField($fieldName, $this->getLastTable($table)), $alias
-			);
-			
-			$this->aliases[$alias] = true;
+			if ($alias = $this->resolveAliasByField($field, $alias)) {
+				$this->aliases[$alias] = true;
+			}
 			
 			return $this;
 		}
@@ -402,24 +367,17 @@
 			return $nameList;
 		}
 		
+		public function returning($field, $alias = null)
+		{
+			throw new UnsupportedMethodException();
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			$fieldList = array();
-			foreach ($this->fields as $field) {
-				
-				if ($field instanceof SelectQuery) {
-					
-					Assert::isTrue(
-						null !== $alias = $field->getName(),
-						'can not use SelectQuery without name as get field'
-					);
-					
-					$fieldList[] =
-						"({$field->toDialectString($dialect)}) AS ".
-						$dialect->quoteField($alias);
-				} else
-					$fieldList[] = $field->toDialectString($dialect);
-			}
+			
+			foreach ($this->fields as $field)
+				$fieldList[] = $this->toDialectStringField($field, $dialect);
 			
 			$query =
 				'SELECT '.($this->distinct ? 'DISTINCT ' : null)
