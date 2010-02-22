@@ -8,6 +8,10 @@
 	extensions support implemented, sreg and attribute exchange 
 	supports - thanks to Alexander V. Solomatin (aka Lom).
 
+	* main/Net/Http/CurlHttpClient.class.php: curl multi send implemented.
+
+	* main/Net/Http/HttpMethod.class.php: methods added.
+
 2010-02-21	Sergey S. Sergeev
 
 	* main/Base/Hstore.class.php: set(), drop() added.

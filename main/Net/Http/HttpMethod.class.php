@@ -22,6 +22,13 @@
 		const DELETE	= 6;
 		const TRACE		= 7;
 		const CONNECT	= 8;
+		const PROPFIND	= 9;
+		const PROPPATCH	= 10;
+		const MKCOL 	= 11;
+		const COPY		= 12;
+		const MOVE		= 13;
+		const LOCK		= 14;
+		const UNLOCK	= 15;
 		
 		protected $names = array(
 			self::OPTIONS 	=> 'OPTIONS',
@@ -31,7 +38,14 @@
 			self::PUT		=> 'PUT',
 			self::DELETE	=> 'DELETE',
 			self::TRACE 	=> 'TRACE',
-			self::CONNECT 	=> 'CONNECT'
+			self::CONNECT 	=> 'CONNECT',
+			self::PROPFIND	=> 'PROPFIND',
+			self::PROPPATCH => 'PROPPATCH',
+			self::MKCOL 	=> 'MKCOL',
+			self::COPY		=> 'COPY',
+			self::MOVE		=> 'MOVE',
+			self::LOCK		=> 'LOCK',
+			self::UNLOCK 	=> 'UNLOCK',
 		);
 		
 		public static function get()
