@@ -8,6 +8,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+/* $Id: CurlHttpClient.class.php 45 2009-05-08 07:41:33Z lom $ */
 
 	/**
 	 * @ingroup Http
@@ -19,6 +20,9 @@
 		private $followLocation	= null;
 		private $maxFileSize	= null;
 		private $noBody			= null;
+		private $multiRequests = array();
+		private $multiResponses = array();
+		private $multiThreadOptions = array();
 		
 		/**
 		 * @return CurlHttpClient
@@ -80,7 +84,7 @@
 		
 		/**
 		 * whether to follow header Location or not
-		 * 
+		 *
 		 * @param $really boolean
 		 * @return CurlHttpClient
 		**/
@@ -145,16 +149,112 @@
 		}
 		
 		/**
+		 * @return CurlHttpClient
+		**/
+		public function addRequest(HttpRequest $request, $options = array())
+		{
+			Assert::isArray($options);
+			
+			$key = $this->getRequestKey($request);
+			
+			if (isset($this->multiRequests[$key]))
+				throw new WrongArgumentException('There is allready such alias');
+			
+			$this->multiRequests[$key] = $request;
+			
+			foreach ($options as $k => $val)
+				$this->multiThreadOptions[$key][$k] = $val;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return CurlHttpResponse
+		**/
+		public function getResponse(HttpRequest $request)
+		{
+			$key = $this->getRequestKey($request);
+			
+			if (!isset($this->multiResponses[$key]))
+				throw new WrongArgumentException('There is no response fo this alias');
+			
+			return $this->multiResponses[$key];
+		}
+		
+		/**
 		 * @return HttpResponse
 		**/
 		public function send(HttpRequest $request)
 		{
-			Assert::isNotNull($request->getMethod());
-			
-			$handle = curl_init();
-			
 			$response = CurlHttpResponse::create()->
 				setMaxFileSize($this->maxFileSize);
+			
+			$handle = $this->makeHandle($request, $response);
+			
+			if (curl_exec($handle) === false) {
+				$code = curl_errno($handle);
+				throw new NetworkException(
+					'curl error, code: '.$code
+						.' description: '.curl_error($handle),
+					$code
+				);
+			}
+			
+			$this->makeResponse($handle, $response);
+			
+			curl_close($handle);
+			
+			return $response;
+		}
+		
+		public function multiSend()
+		{
+			Assert::isNotEmptyArray($this->multiRequests);
+			
+			$handles = array();
+			$mh = curl_multi_init();
+			
+			foreach ($this->multiRequests as $alias => $request) {
+				$this->multiResponses[$alias] = new CurlHttpResponse();
+				
+				$handles[$alias] =
+					$this->makeHandle(
+						$request,
+						$this->multiResponses[$alias]
+					);
+				
+				if (isset($this->multiThreadOptions[$alias]))
+					foreach ($this->multiThreadOptions[$alias] as $key => $value)
+						curl_setopt($handles[$alias], $key, $value);
+				
+				curl_multi_add_handle($mh, $handles[$alias]);
+			}
+			
+			$running = null;
+			do {
+				curl_multi_exec($mh, $running);
+			} while ($running > 0);
+			
+			foreach ($this->multiResponses as $alias => $response) {
+				$this->makeResponse($handles[$alias], $response);
+				curl_multi_remove_handle($mh, $handles[$alias]);
+				curl_close($handles[$alias]);
+			}
+			
+			curl_multi_close($mh);
+			
+			return true;
+		}
+		
+		protected function getRequestKey(HttpRequest $request)
+		{
+			return md5(serialize($request));
+		}
+		
+		protected function makeHandle(HttpRequest $request, CurlHttpResponse $response)
+		{
+			$handle = curl_init();
+			Assert::isNotNull($request->getMethod());
 			
 			$options = array(
 				CURLOPT_WRITEFUNCTION => array($response, 'writeBody'),
@@ -172,7 +272,7 @@
 			switch ($request->getMethod()->getId()) {
 				case HttpMethod::GET:
 					$options[CURLOPT_HTTPGET] = true;
-				
+					
 					if ($request->getGet())
 						$options[CURLOPT_URL] .=
 							($request->getUrl()->getQuery() ? '&' : '?')
@@ -213,14 +313,15 @@
 			
 			curl_setopt_array($handle, $options);
 			
-			if (curl_exec($handle) === false) {
-				$code = curl_errno($handle);
-				throw new NetworkException(
-					'curl error, code: '.$code
-						.' description: '.curl_error($handle),
-					$code
-				);
-			}
+			return $handle;
+		}
+		
+		/**
+		 * @return CurlHttpClient
+		**/
+		protected function makeResponse($handle, CurlHttpResponse $response)
+		{
+			Assert::isNotNull($handle);
 			
 			$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
 			try {
@@ -233,9 +334,7 @@
 				);
 			}
 			
-			curl_close($handle);
-			
-			return $response;
+			return $this;
 		}
 		
 		private function argumentsToString($array)
