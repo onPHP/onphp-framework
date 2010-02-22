@@ -11,10 +11,10 @@
 
 	/**
 	 * openId consumer library entry point
-	 * 
+	 *
 	 * @see http://openid.net/specs/openid-authentication-1_1.html
 	 * @todo use nonce to limit time frame of replay attacks
-	 * 
+	 *
 	 * @ingroup OpenId
 	**/
 	final class OpenIdConsumer
@@ -22,9 +22,16 @@
 		const DIFFIE_HELLMAN_P = '155172898181473697471232257763715539915724801966915404479707795314057629378541917580651227423698188993727816152646631438561595825688188889951272158842675419950341258706556549803580104870537681476726513255747040765857479291291572334510643245094715007229621094194349783925984760375594985848253359305585439638443';
 		const DIFFIE_HELLMAN_G = 2;
 		const ASSOCIATION_TYPE = 'HMAC-SHA1';
+		const NAMESPACE_2_0 = 'http://specs.openid.net/auth/2.0';
+		
+		private $extensions		= array();
 		
 		private $randomSource	= null;
 		private $numberFactory	= null;
+		
+		/**
+		 * @var HttpClient
+		**/
 		private $httpClient		= null;
 		
 		public function __construct(
@@ -52,7 +59,7 @@
 		
 		/**
 		 * "associate" mode request
-		 * 
+		 *
 		 * @param $server to make association with (usually obtained from OpenIdCredentials)
 		 * @param $manager - dao-like association manager
 		 * @return OpenIdConsumerAssociation
@@ -80,6 +87,7 @@
 			$request = HttpRequest::create()->
 				setMethod(HttpMethod::post())->
 				setUrl($server)->
+				setPostVar('openid.ns', self::NAMESPACE_2_0)->
 				setPostVar('openid.mode', 'associate')->
 				setPostVar('openid.assoc_type', self::ASSOCIATION_TYPE)->
 				setPostVar('openid.session_type', 'DH-SHA1')->
@@ -96,7 +104,10 @@
 					base64_encode($keyPair->getPublic()->toBinary())
 				);
 			
-			$response = $this->httpClient->send($request);
+			$response = $this->httpClient->
+				setFollowLocation(true)->
+				send($request);
+			
 			if ($response->getStatus()->getId() != HttpStatus::CODE_200)
 				throw new OpenIdException('bad response code from server');
 			
@@ -168,13 +179,25 @@
 			
 			$model = Model::create()->
 				set(
+					'openid.ns',
+					self::NAMESPACE_2_0
+				)->
+				set(
 					'openid.identity',
 					$credentials->getRealId()->toString()
 				)->
 				set(
 					'openid.return_to',
 					$returnTo->toString()
+				)->
+				set(
+					'openid.claimed_id',
+					$credentials->getRealId()->toString()
 				);
+			
+			foreach ($this->extensions as $extension) {
+				$extension->addParamsToModel($model);
+			}
 			
 			if ($association) {
 				Assert::isTrue(
@@ -195,10 +218,15 @@
 					&& $trustRoot->isValid()
 				);
 				
-				$model->set(
-					'openid.trust_root',
-					$trustRoot->toString()
-				);
+				$model->
+					set(
+						'openid.trust_root',
+						$trustRoot->toString()
+					)->
+					set(
+						'openid.realm',
+						$trustRoot->toString()
+					);
 			}
 			
 			return ModelAndView::create()->setModel($model)->setView($view);
@@ -206,7 +234,7 @@
 		
 		/**
 		 * "checkid_immediate" mode request
-		 * 
+		 *
 		 * @param $credentials - id and server urls
 		 * @param $returnTo - URL where the provider should return the User-Agent back to
 		 * @param $trustRoot - URL the Provider shall ask the End User to trust
@@ -235,7 +263,7 @@
 		
 		/**
 		 * "checkid_setup" mode request
-		 * 
+		 *
 		 * @param $credentials - id and server urls
 		 * @param $returnTo - URL where the provider should return the User-Agent back to
 		 * @param $trustRoot - URL the Provider shall ask the End User to trust
@@ -264,7 +292,7 @@
 		
 		/**
 		 * proceed results of checkid_immediate and checkid_setup
-		 * 
+		 *
 		 * @param $request incoming request
 		 * @param
 		**/
@@ -274,6 +302,11 @@
 				Assert::isTrue($manager instanceof OpenIdConsumerAssociationManager);
 			
 			$parameters = $this->parseGetParameters($request->getGet());
+			
+			
+			foreach ($this->extensions as $extension) {
+				$extension->parseResponce($request, $parameters);
+			}
 			
 			if (!isset($parameters['openid.mode']))
 				throw new WrongArgumentException('not an openid request');
@@ -329,7 +362,7 @@
 					$tokenContents .=
 						$signedField
 						.':'
-						.$parameters['openid.'.$signedField]
+						.$parameters['openid.'.strtr($signedField, '.', '_')]
 						."\n";
 				}
 				
@@ -357,6 +390,17 @@
 			}
 			
 			Assert::isUnreachable();
+		}
+		
+		/**
+		 * @param OpenIdExtension $extension
+		 * @return OpenIdConsumer
+		**/
+		public function addExtension(OpenIdExtension $extension)
+		{
+			$this->extensions[] = $extension;
+			
+			return $this;
 		}
 		
 		/**

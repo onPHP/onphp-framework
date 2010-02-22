@@ -216,12 +216,12 @@ EOT
 		
 		public function hasHeader($name)
 		{
-			throw new UnsupportedMethodException();
+			return false;
 		}
 		
 		public function getHeader($name)
 		{
-			throw new UnsupportedMethodException();
+			return 'text/html';
 		}
 	}
 	
@@ -274,5 +274,4 @@ EOT
 			return $this->response;
 		}
 	}
-	
 ?>
