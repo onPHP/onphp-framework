@@ -5,7 +5,7 @@
 	main/OpenId/OpenIdExtensionAttributeExchange.class.php,
 	main/OpenId/OpenIdCredentials.class.php,
 	main/OpenId/OpenIdExtensionSreg.class.php: openId 2.0 support, 
-	extesions support implemented, sreg and attribute exchange 
+	extensions support implemented, sreg and attribute exchange 
 	supports - thanks to Alexander V. Solomatin (aka Lom).
 
 2010-02-21	Sergey S. Sergeev
