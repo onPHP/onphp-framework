@@ -1,3 +1,6 @@
+2010-02-25      Evgeny V. Kokovikhin
+	* main/Net/Mail/Mail.class.php: send() without returnPatn fixed.
+
 2010-02-23	Sergey S. Sergeev
 
 	* main/OpenId/OpenIdConsumer.class.php,
