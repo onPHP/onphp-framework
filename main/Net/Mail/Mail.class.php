@@ -68,6 +68,7 @@
 					.base64_encode($this->subject)
 					."?=";
 				$body = $this->text;
+				$returnPath = $this->returnPath;
 			} else {
 				$encoding = $this->encoding;
 				$to = mb_convert_encoding($this->to, $encoding);
