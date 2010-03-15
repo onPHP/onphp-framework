@@ -27,6 +27,7 @@
 		
 		public function __construct()
 		{
+			$this->formats[] = YandexRssFeedFormat::me();
 			$this->formats[] = AtomFeedFormat::me();
 			$this->formats[] = RssFeedFormat::me();
 		}
