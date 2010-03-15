@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup Feed
 	**/
-	final class FeedItem
+	class FeedItem
 	{
 		private $id			= null;
 		private $title		= null;

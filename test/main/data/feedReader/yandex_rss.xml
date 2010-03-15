@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns="http://backend.userland.com/rss2" xmlns:yandex="http://news.yandex.ru">
+<channel>
+    <title>RSS understanding</title>
+    <link>http://rssblog.whatisrss.com</link>
+    <description>From Understanding to Using RSS</description>
+    <pubDate>Mon, 30 Jul 2007 00:16:05 +0000</pubDate>
+    <language>en</language>
+    <item>
+	<title>Massive List of RSS Resources</title>
+	<link>http://rssblog.whatisrss.com/rss-resources-list/</link>
+	<pubDate>Mon, 30 Jul 2007 00:16:05 +0000</pubDate>
+	<category><![CDATA[RSS]]></category>
+	<guid isPermaLink="false">http://rssblog.whatisrss.com/rss-resources-list/</guid>
+	<description><![CDATA[Mashable has put together a huge list of RSS Tools]]></description>
+	<yandex:full-text>
+<![CDATA[<p>Mashable has put together a huge list of RSS Tools which includes:</p>
+<ul>
+<li>Windows RSS Readers</li>
+<li>OS X RSS Readers</li>
+<li>Linux RSS Readers</li>
+<li>Web-based RSS Readers</li>
+<li>Mobile RSS Readers</li>
+<li>RSS-to-email tools</li>
+<li>Feed Validators</li>
+<li>RSS-related Firefox plugins</li>
+<li>RSS plugins for Wordpress</li>
+<li>RSS Managers</li>
+<li>Tools for combining or mixing RSS feeds</li>
+<li>RSS ping tools</li>
+<li>RSS feed directories</li>
+</ul>
+<p> <a href="http://rssblog.whatisrss.com/rss-resources-list/#more-8" class="more-link">(more&#8230;)</a></p>
+]]>
+	</yandex:full-text>
+    </item>
+    <item>
+	<title><![CDATA[Where to submit your RSS feeds &#8230;]]></title>
+	<link>http://rssblog.whatisrss.com/where-to-submit-your-rss-feeds/</link>
+	<pubDate>Fri, 27 Jul 2007 01:54:09 +0000</pubDate>
+	<category><![CDATA[RSS]]></category>
+	<guid isPermaLink="false">http://rssblog.whatisrss.com/where-to-submit-your-rss-feeds/</guid>
+	<description><![CDATA[Have a blog or other site that outputs an RSS feed?]]></description>
+	<yandex:full-text>
+<![CDATA[<p>Have a blog or other site that outputs an RSS feed? Want more exposure for your site or feed? Masternewmedia has compiled and regularly updates a list of websites where RSS feeds can be submitted. Each link has been tested and there is information on the website and how it works, as well as a direct link to the feed submission page.</p>
+<p> <a href="http://rssblog.whatisrss.com/where-to-submit-your-rss-feeds/#more-6" class="more-link">(more&#8230;)</a></p>
+]]>
+	</yandex:full-text>
+    </item>
+    <item>
+	<title><![CDATA[Where to get your RSS Feed Icons &#8230;]]></title>
+	<link>http://rssblog.whatisrss.com/rss-feed-icons/</link>
+	<pubDate>Thu, 26 Jul 2007 07:10:57 +0000</pubDate>
+	<category><![CDATA[RSS]]></category>
+	<guid isPermaLink="false">http://rssblog.whatisrss.com/rss-feed-icons/</guid>
+	<description><![CDATA[Need a standard feed icon or a feed icon PSD]]></description>
+	<yandex:full-text>
+<![CDATA[<p><img src='http://rssblog.whatisrss.com/wp-content/uploads/2007/07/feed-icon-128x128.gif' alt='RSS Feed Icon' align='left' style='margin-right:3px;' />Need a standard feed icon or a feed icon PSD so you can manipulate how the icon looks? </p>
+<p>Mozilla Foundation has made RSS feed icons available to help feed links become more recognizable and standardized. Their <a href="http://www.mozilla.org/foundation/feed-icon-guidelines/">guidelines</a> and <a href="http://www.mozilla.org/foundation/feed-icon-guidelines/faq.html">FAQ</a> provide full information on the icon and how it should be used. </p>
+<p> <a href="http://rssblog.whatisrss.com/rss-feed-icons/#more-5" class="more-link">(more&#8230;)</a></p>
+]]>
+	</yandex:full-text>
+    </item>
+</channel>
+</rss>

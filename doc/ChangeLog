@@ -1,3 +1,13 @@
+2010-03-15      Evgeny V. Kokovikhin
+	* main/Markup/Feed/YandexRssFeedFormat.class.php,
+	main/Markup/Feed/YandexRssFeedItem.class.php,
+	main/Markup/Feed/YandexRssItemWorker.class.php,
+	main/Markup/Feed/FeedItem.class.php,
+	main/Markup/Feed/FeedReader.class.php:
+	+ Yandex rss format support: for details of format
+	see http://partner.news.yandex.ru/tech.pdf
+	thanks to Alexander S. Krotov
+
 2010-02-25      Evgeny V. Kokovikhin
 	* main/Net/Mail/Mail.class.php: send() without returnPatn fixed.
 
