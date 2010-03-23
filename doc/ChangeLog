@@ -1,3 +1,7 @@
+2010-03-23      Evgeny V. Kokovikhin
+	* core/Form/Primitives/PrimitiveInet.class.php: right check for ip. 
+	Thanks to Timofey Anisimov.
+
 2010-03-15      Evgeny V. Kokovikhin
 	* main/Markup/Feed/YandexRssFeedFormat.class.php,
 	main/Markup/Feed/YandexRssFeedItem.class.php,
