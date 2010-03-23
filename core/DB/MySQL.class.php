@@ -191,6 +191,7 @@
 				'datetime'	=> DataType::TIMESTAMP,
 
 				// unhandled types
+				'set'		=> null,
 				'enum'		=> null,
 				'year'		=> null
 			);
