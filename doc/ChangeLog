@@ -1,3 +1,6 @@
+2010-04-09      Evgeny V. Kokovikhin
+	* core/Base/Timestamp.class.php: getHourStartStamp method added
+
 2010-03-23      Evgeny V. Kokovikhin
 	* core/Form/Primitives/PrimitiveInet.class.php: right check for ip. 
 	Thanks to Timofey Anisimov.

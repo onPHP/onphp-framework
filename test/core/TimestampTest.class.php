@@ -88,5 +88,25 @@
 				$this->fail($e->getMessage());
 			}
 		}
+
+		public function testStartHour()
+		{
+			$stamp = Timestamp::create('2010-03-25 14:15:10');
+			
+			$this->assertNotEquals(
+				$stamp->toStamp(),
+				$stamp->getHourStartStamp()
+			);
+			
+			$this->assertTrue(
+				Timestamp::create($stamp->getHourStartStamp())
+				instanceof Timestamp
+			);
+			
+			$this->assertEquals(
+				Timestamp::create($stamp->getHourStartStamp())->toString(),
+				'2010-03-25 14:00:00'
+			);
+		}
 	}
 ?>

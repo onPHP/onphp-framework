@@ -101,6 +101,22 @@
 			else
 				return parent::getDayStartStamp();
 		}
+
+		public function getHourStartStamp()
+		{
+			if (!$this->minute && !$this->second)
+				return $this->int;
+			
+			return
+				mktime(
+					$this->hour,
+					0,
+					0,
+					$this->month,
+					$this->day,
+					$this->year
+				);
+		}
 		
 		/**
 		 * ISO 8601 time string
