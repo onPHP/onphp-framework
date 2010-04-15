@@ -1,3 +1,6 @@
+2010-04-15      Evgeny N. Sokolov
+	* main/Net/Http/CurlHttpCLient.class.php: ability post array HttpRequest vars
+
 2010-04-09      Evgeny V. Kokovikhin
 	* core/Base/Timestamp.class.php: getHourStartStamp method added
 
