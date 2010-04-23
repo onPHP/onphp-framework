@@ -1,3 +1,9 @@
+2010-04-23      Evgeny V. Kokovikhin
+	* core/Base/Date.class.php: fix week of year defenition.
+		Week 01 of a year is per definition the first week that has the
+		Thursday in this year.
+	Thanks to Alexander A. Klestov.
+
 2010-04-15      Evgeny N. Sokolov
 	* main/Net/Http/CurlHttpCLient.class.php: ability post array HttpRequest vars
 

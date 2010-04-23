@@ -57,15 +57,17 @@
 		
 		/**
 		 * @return Date
+		 * @see http://www.faqs.org/rfcs/rfc3339.html
+		 * @see http://www.cl.cam.ac.uk/~mgk25/iso-time.html
 		**/
 		public static function makeFromWeek($weekNumber, $year = null)
 		{
 			if (!$year)
 				$year = date('Y');
-			
+
 			Assert::isTrue(
 				($weekNumber > 0)
-				&& ($weekNumber < 53)
+				&& ($weekNumber <= self::getWeekCountInYear($year))
 			);
 			
 			$date =
@@ -78,7 +80,14 @@
 					)
 				);
 			
-			$days = (($weekNumber - 1) * 7) + 1 - $date->getWeekDay();
+			$days =
+				(
+					(
+						$weekNumber - 1
+						+ (self::getWeekCountInYear($year - 1) == 53 ? 1 : 0)
+					)
+					* 7
+				) + 1 - $date->getWeekDay();
 			
 			return $date->modify("+{$days} day");
 		}
@@ -132,6 +141,11 @@
 			return $this;
 		}
 		
+		public static function getWeekCountInYear($year)
+		{
+			return date('W', mktime(0, 0, 0, 12, 31, $year));
+		}
+
 		public function setValue($date)
 		{
 			$value = null;
