@@ -66,11 +66,35 @@
 			
 			return $this;
 		}
+
+		public function testMakeFromWeek()
+		{
+			$this->makeFromWeekTest(Date::create('2009-12-28'));
+			$this->makeFromWeekTest(Date::create('2010-01-04'));
+
+			return $this;
+		}
 		
 		private function dayDifferenceTest(Date $left, Date $right, $expected)
 		{
 			$this->assertEquals(Date::dayDifference($left, $right), $expected);
 			
+			return $this;
+		}
+
+		private function makeFromWeekTest(Date $date)
+		{
+			// day is monday?
+			$this->assertEquals(date('w', $date->toStamp()), 1);
+
+			$this->assertEquals(
+				Date::makeFromWeek(
+					date('W', $date->toStamp()),
+					date('Y', $date->toStamp())
+				),
+				$date
+			);
+
 			return $this;
 		}
 	}
