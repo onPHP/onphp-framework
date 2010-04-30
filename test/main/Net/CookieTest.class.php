@@ -8,6 +8,9 @@
 		*/
 		public function testCookie()
 		{
+			if (!isset($_SERVER["DOCUMENT_ROOT"]) || !$_SERVER["DOCUMENT_ROOT"])
+				$this->markTestSkipped('can\'t test cookies without web');
+
 			echo "\0";
 			
 			Cookie::create('testCookie')->
@@ -21,6 +24,9 @@
 		*/
 		public function testCookieCollection()
 		{
+			if (!isset($_SERVER["DOCUMENT_ROOT"]) || !$_SERVER["DOCUMENT_ROOT"])
+				$this->markTestSkipped('can\'t test cookies without web');
+			
 			echo "\0";
 			
 			CookieCollection::create()->
