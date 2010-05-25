@@ -15,7 +15,7 @@
 	 * 
 	 * @ingroup Cache
 	**/
-	final class AggregateCache extends SelectivePeer
+	class AggregateCache extends SelectivePeer
 	{
 		const LEVEL_ULTRAHIGH	= 0xFFFF;
 		const LEVEL_HIGH		= 0xC000;
@@ -23,8 +23,8 @@
 		const LEVEL_LOW			= 0x4000;
 		const LEVEL_VERYLOW		= 0x0001;
 
-		private $peers	= array();
-		private $levels	= array();
+		protected $peers	= array();
+		private $levels		= array();
 
 		/**
 		 * @return AggregateCache
@@ -221,7 +221,7 @@
 		/**
 		 * brain
 		**/
-		private function guessLabel($key)
+		protected function guessLabel($key)
 		{
 			$class = $this->getClassName();
 

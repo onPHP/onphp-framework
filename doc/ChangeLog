@@ -1,3 +1,8 @@
+2010-05-25      Evgeny V. Kokovikhin
+	* core/Cache/SimpleAggregateCache.class.php:
+		new implementation of Aggregate cache - simple selective peer algorithm
+	* test/core/CacheTest.class.php: test updated
+
 2010-04-23      Evgeny V. Kokovikhin
 	* core/Base/Date.class.php: fix week of year defenition.
 		Week 01 of a year is per definition the first week that has the
