@@ -335,16 +335,25 @@
 					$primitiveName = $this->getType()->getPrimitiveName();
 			} elseif (
 				!$this->isIdentifier()
-				&& (
-					!$this->getType()->isGeneric()
-					&& ($this->getType() instanceof ObjectType)
-					&& (
-						$this->getType()->getClass()->getPattern()
-							instanceof EnumerationClassPattern
-					)
-				)
+				&& !$this->getType()->isGeneric()
+				&& ($this->getType() instanceof ObjectType)
 			) {
-				$primitiveName = 'enumeration';
+				$pattern = $this->getType()->getClass()->getPattern();
+
+				if ($pattern instanceof EnumerationClassPattern) {
+					$primitiveName = 'enumeration';
+				} elseif (
+					$pattern instanceof DictionaryClassPattern
+					&& ($identifier = $this->getType()->getClass()->getIdentifier())
+				) {
+					if ($identifier->getType() instanceof IntegerType) {
+						$primitiveName = 'integerIdentifier';
+					} elseif ($identifier->getType() instanceof StringType) {
+						$primitiveName = 'scalarIdentifier';
+					} else
+						$primitiveName = $this->getType()->getPrimitiveName();
+				} else 
+					$primitiveName = $this->getType()->getPrimitiveName();
 			} else
 				$primitiveName = $this->getType()->getPrimitiveName();
 			
@@ -416,7 +425,7 @@
 					)
 				);
 		}
-		
+
 		private function buildColumn($columnName)
 		{
 			if (is_array($columnName)) {

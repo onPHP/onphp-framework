@@ -609,7 +609,20 @@
 			$this->assertTrue($resultParent);
 			$this->assertTrue($resultSelfRecursive);
 		}
-		
+
+		public function testStringIdentifier()
+		{
+			$identifier =
+				TestStringIdentifier::proto()->getPropertyByName('id');
+
+			$this->assertEquals($identifier->getType(), 'scalarIdentifier');
+
+			$identifier =
+				TestStringIdentifierRelated::proto()->getPropertyByName('test');
+
+			$this->assertEquals($identifier->getType(), 'scalarIdentifier');
+		}
+
 		public function nonIntegerIdentifier()
 		{
 			$id = 'non-integer-one';
