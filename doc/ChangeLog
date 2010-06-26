@@ -1,35 +1,44 @@
-2010-05-25      Evgeny V. Kokovikhin
-	* core/Cache/SimpleAggregateCache.class.php:
-		new implementation of Aggregate cache - simple selective peer algorithm
-	* test/core/CacheTest.class.php: test updated
+2010-06-26	Sergey S. Sergeev
 
-2010-04-23      Evgeny V. Kokovikhin
-	* core/Base/Date.class.php: fix week of year defenition.
-		Week 01 of a year is per definition the first week that has the
-		Thursday in this year.
-	Thanks to Alexander A. Klestov.
+	* core/OSQL/DBTable.class.php: setName() added.
 
-2010-04-15      Evgeny N. Sokolov
-	* main/Net/Http/CurlHttpCLient.class.php: ability post array HttpRequest vars
+2010-05-25	Evgeny V. Kokovikhin
 
-2010-04-09      Evgeny V. Kokovikhin
-	* core/Base/Timestamp.class.php: getHourStartStamp method added
+	* core/Cache/SimpleAggregateCache.class.php: new implementation of Aggregate
+	cache - simple selective peer algorithm.
 
-2010-03-23      Evgeny V. Kokovikhin
-	* core/Form/Primitives/PrimitiveInet.class.php: right check for ip. 
-	Thanks to Timofey Anisimov.
+	* test/core/CacheTest.class.php: test updated.
 
-2010-03-15      Evgeny V. Kokovikhin
+2010-04-23	Evgeny V. Kokovikhin
+
+	* core/Base/Date.class.php: fix week of year defenition. Week 01 of a year is
+	per definition the first week that has the Thursday in this year. Thanks to
+	Alexander A. Klestov.
+
+2010-04-15	Evgeny N. Sokolov
+
+	* main/Net/Http/CurlHttpCLient.class.php: ability post array HttpRequest vars.
+
+2010-04-09	Evgeny V. Kokovikhin
+
+	* core/Base/Timestamp.class.php: getHourStartStamp method added.
+
+2010-03-23	Evgeny V. Kokovikhin
+
+	* core/Form/Primitives/PrimitiveInet.class.php: right check for ip. Thanks to
+	Timofey Anisimov.
+
+2010-03-15	Evgeny V. Kokovikhin
+
 	* main/Markup/Feed/YandexRssFeedFormat.class.php,
 	main/Markup/Feed/YandexRssFeedItem.class.php,
 	main/Markup/Feed/YandexRssItemWorker.class.php,
-	main/Markup/Feed/FeedItem.class.php,
-	main/Markup/Feed/FeedReader.class.php:
-	+ Yandex rss format support: for details of format
-	see http://partner.news.yandex.ru/tech.pdf
-	thanks to Alexander S. Krotov
+	main/Markup/Feed/FeedItem.class.php, main/Markup/Feed/FeedReader.class.php:
+	yandex rss format supports added.  For details see
+	http://partner.news.yandex.ru/tech.pdf. Thanks to Alexander S. Krotov.
 
-2010-02-25      Evgeny V. Kokovikhin
+2010-02-25	Evgeny V. Kokovikhin
+
 	* main/Net/Mail/Mail.class.php: send() without returnPatn fixed.
 
 2010-02-23	Sergey S. Sergeev
