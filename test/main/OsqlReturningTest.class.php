@@ -71,7 +71,7 @@
 		
 		public function testHasNoReturning()
 		{
-			$dialect = MyDialect::me();
+			$dialect = ImaginaryDialect::me();
 			
 			$query = OSQL::update('test_table')->
 				set('field1', 1)->
