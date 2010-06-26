@@ -4,6 +4,9 @@
 
 	* test/main/OsqlReturningTest.class.php: typo fixed.
 
+	* meta/classes/MetaClassProperty.class.php: fixed support for identifiers
+	of string type. Thanks to Alexander V. Solomatin (aka Lom).
+
 2010-05-25	Evgeny V. Kokovikhin
 
 	* core/Cache/SimpleAggregateCache.class.php: new implementation of Aggregate
