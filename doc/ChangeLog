@@ -1,3 +1,8 @@
+2010-06-30	Sergey S. Sergeev
+
+	* core/Form/Primitives/PrimitiveFile.class.php:
+	{is,enable,disable}CheckUploaded methods added.
+
 2010-06-26	Sergey S. Sergeev
 
 	* core/OSQL/DBTable.class.php: setName() added.

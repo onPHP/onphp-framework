@@ -20,6 +20,7 @@
 		private $mimeType			= null;
 
 		private $allowedMimeTypes	= array();
+		private $checkUploaded		= true;
 
 		public function getOriginalName()
 		{
@@ -89,7 +90,11 @@
 		public function copyToPath($path)
 		{
 			if (is_readable($this->value) && is_writable(dirname($path))) {
-				return move_uploaded_file($this->value, $path);
+				if ($this->checkUploaded) {
+					return move_uploaded_file($this->value, $path);
+				} else {
+					return rename($this->value, $path);
+				}
 			} else
 				throw new WrongArgumentException(
 					"can not move '{$this->value}' to '{$path}'"
@@ -113,7 +118,7 @@
 			else
 				return false;
 			
-			if (is_readable($file) && is_uploaded_file($file))
+			if (is_readable($file) && $this->checkUploaded($file))
 				$size = filesize($file);
 			else
 				return false;
@@ -140,6 +145,36 @@
 		public function exportValue()
 		{
 			throw new UnimplementedFeatureException();
+		}
+		
+		/**
+		 * @return PrimitiveFile
+		**/
+		public function enableCheckUploaded()
+		{
+			$this->checkUploaded = true;
+			
+			return $this;
+		}
+		
+		/**
+		 * @return PrimitiveFile
+		**/
+		public function disableCheckUploaded()
+		{
+			$this->checkUploaded = false;
+			
+			return $this;
+		}
+		
+		public function isCheckUploaded()
+		{
+			return $this->checkUploaded;
+		}
+		
+		private function checkUploaded($file)
+		{
+			return !$this->checkUploaded || is_uploaded_file($file);
 		}
 	}
 ?>
