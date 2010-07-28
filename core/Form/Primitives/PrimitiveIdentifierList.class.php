@@ -15,6 +15,7 @@
 	final class PrimitiveIdentifierList extends PrimitiveIdentifier
 	{
 		protected $value = array();
+		private $ignoreEmpty = false;
 		
 		public function getTypeName()
 		{
@@ -71,7 +72,10 @@
 			
 			if (is_array($value)) {
 				try {
-					Assert::isInteger(current($value));
+					if ($this->scalar)
+						Assert::isScalar(current($value));
+					else
+						Assert::isInteger(current($value));
 					
 					return $this->import(
 						array($this->name => $value)
@@ -104,7 +108,13 @@
 			$values = array();
 			
 			foreach ($list as $id) {
-				if (!Assert::checkInteger($id))
+				if ((string) $id == "" && $this->isIgnoreEmpty())
+					continue;
+
+				if (
+					($this->scalar && !Assert::checkScalar($id))
+					|| (!$this->scalar && !Assert::checkInteger($id))
+				)
 					return false;
 				
 				$values[] = $id;
@@ -130,6 +140,18 @@
 				return null;
 			
 			return ArrayUtils::getIdsArray($this->value);
+		}
+
+		public function setIgnoreEmpty($orly = true)
+		{
+			$this->ignoreEmpty = ($orly === true);
+
+			return $this;
+		}
+
+		public function isIgnoreEmpty()
+		{
+			return $this->ignoreEmpty;
 		}
 	}
 ?>
