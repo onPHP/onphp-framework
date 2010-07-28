@@ -1,3 +1,9 @@
+2010-07-28	Evgeny V. Kokovikhin
+
+	* core/Base/Assert.class.php: checkScalar() added.
+	* core/Form/Primitives/PrimitiveIdentifierList.class.php:
+	optional ability to ignore empty values added
+
 2010-06-30	Sergey S. Sergeev
 
 	* core/Form/Primitives/PrimitiveFile.class.php:

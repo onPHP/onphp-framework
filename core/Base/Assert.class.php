@@ -295,6 +295,11 @@
 				&& ($value == (float) $value)
 			);
 		}
+
+		public static function checkScalar($value)
+		{
+			return is_scalar($value);
+		}
 		
 		public static function dumpArgument($argument)
 		{
