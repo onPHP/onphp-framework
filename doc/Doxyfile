@@ -1,8 +1,10 @@
+# $Id$
+
 #---------------------------------------------------------------------------
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = onPHP
-PROJECT_NUMBER         = 1.0.10
+PROJECT_NUMBER         = 1.0-dev
 OUTPUT_DIRECTORY       = ./doxy/trunk/
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
@@ -84,7 +86,6 @@ INPUT                  = ./onphp.doxy.php ../
 FILE_PATTERNS          = *.php *.c *.h
 RECURSIVE              = YES
 EXCLUDE                = ../test/ \
-			 ../incubator/ \
 			 project.skel/ \
 			 examples/ \
 			 spl/
@@ -119,8 +120,8 @@ IGNORE_PREFIX          =
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
-HTML_HEADER            = 
-HTML_FOOTER            = 
+HTML_HEADER            = parts/doxyHead.html
+HTML_FOOTER            = parts/doxyHeel.html
 HTML_STYLESHEET        = 
 HTML_ALIGN_MEMBERS     = YES
 GENERATE_HTMLHELP      = NO
@@ -198,7 +199,7 @@ SKIP_FUNCTION_MACROS   = YES
 #---------------------------------------------------------------------------
 # Configuration::additions related to external references   
 #---------------------------------------------------------------------------
-TAGFILES               = 
+TAGFILES               = doxy/spl/spl.tag=../spl
 GENERATE_TAGFILE       = 
 ALLEXTERNALS           = NO
 EXTERNAL_GROUPS        = YES
