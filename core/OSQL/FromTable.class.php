@@ -52,7 +52,13 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			if ($this->table instanceof Query)
+			if (
+				$this->table instanceof Query
+				|| (
+					$this->table instanceof SQLChain
+					&& $this->table->getSize() === 1
+				)
+			)
 				return
 					"({$this->table->toDialectString($dialect)}) AS "
 					.$dialect->quoteTable($this->alias);

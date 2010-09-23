@@ -1,4 +1,9 @@
-2010-09-23	Konstantin V. Arkhipov
+2010-09-23	Sergey S. Sergeev
+
+	* core/OSQL/FromTable.class.php: fixed no brackets for SQLChain with
+	size = 1 in SELECT FROM statements.
+
+2010-08-23	Konstantin V. Arkhipov
 
 	* 1.0.10 released.
 
