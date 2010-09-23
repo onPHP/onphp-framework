@@ -1,3 +1,8 @@
+2010-09-23	Sergey S. Sergeev
+
+	* core/OSQL/FromTable.class.php: fixed no brackets for SQLChain with
+	size = 1 in SELECT FROM statements.
+
 2010-07-28	Evgeny V. Kokovikhin
 
 	* core/Base/Assert.class.php: checkScalar() added.
