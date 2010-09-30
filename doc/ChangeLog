@@ -1,3 +1,8 @@
+2010-09-30	Evgeny V. Kokovikhin
+	* core/Cache/Memcached.class.php: ability to set TimeOut added.
+	Thanks to Alexander A. Klestov.
+
+
 2010-09-23	Sergey S. Sergeev
 
 	* core/OSQL/FromTable.class.php: fixed no brackets for SQLChain with

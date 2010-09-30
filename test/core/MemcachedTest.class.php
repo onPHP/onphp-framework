@@ -8,6 +8,19 @@
 			$this->clientTest('PeclMemcached');
 			$this->clientTest('Memcached');
 		}
+
+		public function testWithTimeout()
+		{
+			$cache =
+				Memcached::create('localhost')->
+				setTimeout(200);
+
+			$cache->add('a', 'b');
+
+			$this->assertEquals($cache->get('a'), 'b');
+
+			$cache->clean();
+		}
 		
 		protected function clientTest($className)
 		{

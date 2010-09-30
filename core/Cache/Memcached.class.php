@@ -27,6 +27,8 @@
 		const DEFAULT_BUFFER	= 16384;
 		
 		private $link		= null;
+
+		private $timeout	= null;
 		
 		private $buffer		= Memcached::DEFAULT_BUFFER;
 		
@@ -67,7 +69,27 @@
 				fclose($this->link);
 			} catch (BaseException $e) {/*_*/}
 		}
-		
+
+		/**
+		 * @return Memcached
+		 */
+		public function setTimeout($microseconds)
+		{
+			Assert::isGreater($microseconds, 0);
+			
+			$this->timeout = $microseconds;
+
+			if ($this->alive) {
+				$seconds = floor($microseconds / 1000);
+				$fraction = $microseconds - ($seconds * 1000);
+				
+				stream_set_timeout($this->link, $seconds, $fraction);
+			}
+			
+			return $this;
+		}
+
+
 		/**
 		 * @return Memcached
 		**/
@@ -144,7 +166,10 @@
 			} catch (BaseException $e) {
 				return false;
 			}
-			
+
+			if ($this->isTimeout())
+				return false;
+
 			if ($response === "DELETED\r\n")
 				return true;
 			else
@@ -164,7 +189,10 @@
 				return false;
 			
 			$response = fread($this->link, $this->buffer);
-			
+
+			if ($this->isTimeout())
+				return false;
+
 			if ($response === "STORED\r\n")
 				return true;
 			
@@ -216,6 +244,9 @@
 				return false;
 			
 			$response = fread($this->link, $this->buffer);
+
+			if ($this->isTimeout())
+				return false;
 			
 			if ($response === "STORED\r\n")
 				return true;
@@ -284,7 +315,10 @@
 				} else
 					break;
 			}
-			
+
+			if ($this->isTimeout())
+				return null;
+
 			if ($single)
 				return $result;
 			else
@@ -306,7 +340,10 @@
 			} catch (BaseException $e) {
 				return null;
 			}
-			
+
+			if ($this->isTimeout())
+				return null;
+
 			if (is_numeric($response))
 				return (int) $response;
 			
@@ -342,8 +379,21 @@
 					return $this->alive = false;
 				}
 			}
+
+			if ($this->isTimeout())
+				return false;
 			
 			return true;
+		}
+
+		private function isTimeout()
+		{
+			if (!$this->timeout)
+				return false;
+
+			$meta = stream_get_meta_data($this->link);
+
+			return $meta['timed_out'];
 		}
 	}
 ?>
