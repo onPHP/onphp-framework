@@ -1,7 +1,13 @@
+2010-10-06	Evgeny V. Kokovikhin
+
+	* core/Form/Primitives/PrimitiveAlias.class.php: alias for
+	PrimitiveEnumeration fixed.
+	Thanks to Timofey A. Anisimov.
+
 2010-09-30	Evgeny V. Kokovikhin
+
 	* core/Cache/Memcached.class.php: ability to set TimeOut added.
 	Thanks to Alexander A. Klestov.
-
 
 2010-09-23	Sergey S. Sergeev
 

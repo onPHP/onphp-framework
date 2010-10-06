@@ -107,13 +107,18 @@
 		public function import(array $scope)
 		{
 			if (array_key_exists($this->name, $scope)) {
-				if ($result = $this->primitive->importValue($scope[$this->name])) {
+				$result = 
+					$this->primitive->import(
+						array($this->primitive->getName() => $scope[$this->name])
+					);
+
+				if ($result)
 					$this->primitive->dropError();
-				}
 				
 				return $result;
 			}
 			
+
 			return null;
 		}
 	}
