@@ -62,9 +62,14 @@
 		
 		public function toString($model = null)
 		{
-			ob_start();
-			$this->render($model);
-			return ob_get_clean();
+			try {
+				ob_start();
+				$this->render($model);
+				return ob_get_clean();
+			} catch (Exception $e) {
+				ob_end_clean();
+				throw $e;
+			}
 		}
 		
 		/**
