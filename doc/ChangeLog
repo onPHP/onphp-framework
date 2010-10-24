@@ -1,3 +1,8 @@
+2010-10-25	Sergey S. Sergeev
+
+	* main/Flow/SimplePhpView.class.php: clear the output buffer
+	if exceptions was thrown. Thanks to Alexey Denisov (stalkerxey).
+
 2010-10-06	Evgeny V. Kokovikhin
 
 	* core/Form/Primitives/PrimitiveAlias.class.php: alias for
