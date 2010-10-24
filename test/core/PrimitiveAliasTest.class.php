@@ -18,6 +18,21 @@
 			$errors = $form->getErrors();
 			
 			$this->assertFalse(isset($errors['stringPrimitive']));
+
+			$enumPrimitive =
+				Primitive::enumeration('enumerationPrimitive')->
+				of('DataType')->
+				required();
+
+			$form =
+				Form::create()->
+				add($enumPrimitive)->
+				add(Primitive::alias('alias', $enumPrimitive))->
+				import(array('alias' => DataType::getAnyId()));
+
+			$errors = $form->getErrors();
+
+			$this->assertFalse(isset($errors['enumerationPrimitive']));
 		}
 	}
 ?>
