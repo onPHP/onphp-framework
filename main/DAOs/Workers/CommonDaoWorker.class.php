@@ -27,7 +27,10 @@
 				&& ($object = $this->getCachedById($id))
 			) {
 				if ($object === Cache::NOT_FOUND)
-					throw new CachedObjectNotFoundException();
+					throw new CachedObjectNotFoundException(
+						"there is no such object for '"
+						.$this->dao->getObjectName()."' with id=".$id
+					);
 				
 				return $this->dao->completeObject($object);
 			} else {
