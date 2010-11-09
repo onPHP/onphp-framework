@@ -1,3 +1,8 @@
+2010-11-09	Evgeny V. Kokovikhin
+
+	* main/DAOs/Workers/CommonDaoWorker.class.php: human-frendly message in 
+	the exception
+
 2010-10-25	Sergey S. Sergeev
 
 	* main/Flow/SimplePhpView.class.php: clear the output buffer
