@@ -58,15 +58,10 @@
 				} else {
 					throw new ObjectNotFoundException(
 						"there is no such object for '".$this->dao->getObjectName()
-						.(
-							defined('__LOCAL_DEBUG__')
-								?
-									"' with query == "
-									.$query->toDialectString(
-										DBPool::me()->getByDao($this->dao)->
-											getDialect()
-									)
-								: null
+						."' with query == "
+						.$query->toDialectString(
+							DBPool::me()->getByDao($this->dao)->
+								getDialect()
 						)
 					);
 				}
