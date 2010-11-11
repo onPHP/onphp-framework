@@ -1,3 +1,6 @@
+2010-11-11      Evgeny V. Kokovikhin
+	* main/DAOs/Workers/CommonDaoWorker.class.php: just change exception message
+
 2010-11-09	Evgeny V. Kokovikhin
 
 	* main/DAOs/Workers/CommonDaoWorker.class.php: human-frendly message in 
