@@ -317,7 +317,9 @@
 		**/
 		public function shutdownInput()
 		{
-			socket_shutdown($this->socket, 0);
+			try {
+				socket_shutdown($this->socket, 0);
+			} catch (BaseException $e) {/*socket was closed*/}
 			
 			$this->inputShutdown = true;
 			
@@ -329,10 +331,12 @@
 		**/
 		public function shutdownOutput()
 		{
-			socket_shutdown($this->socket, 1);
+			try {
+				socket_shutdown($this->socket, 1);
+			} catch (BaseException $e) {/*socket was closed*/}
 			
 			$this->outputShutdown = true;
-			
+
 			return $this;
 		}
 		

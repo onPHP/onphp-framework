@@ -1,4 +1,10 @@
+2010-12-01	Evgeny V. Kokovikhin
+
+	* main/Utils/IO/Socket.class.php: eat exception 
+	if we try to close already closed socket
+
 2010-11-11      Evgeny V. Kokovikhin
+
 	* main/DAOs/Workers/CommonDaoWorker.class.php: just change exception message
 
 2010-11-09	Evgeny V. Kokovikhin
