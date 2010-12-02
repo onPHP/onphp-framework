@@ -1,3 +1,8 @@
+2010-12-02	Evgeny V. Kokovikhin
+
+	* meta/classes/MetaConfiguration.class.php: more informative error messages
+	at the meta configuration
+
 2010-12-01	Evgeny V. Kokovikhin
 
 	* main/Utils/IO/Socket.class.php: eat exception 
