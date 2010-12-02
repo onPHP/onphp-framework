@@ -845,9 +845,9 @@
 			) {
 				Assert::isTrue(
 					$class->getIdentifier() !== null,
-					
 					'only value objects can live without identifiers. '
-					.'do not use them anyway'
+					.'do not use them anyway ('
+					.$class->getName().')'
 				);
 			}
 			
@@ -858,13 +858,15 @@
 			) {
 				Assert::isFalse(
 					count($class->getProperties()) > 1,
-					'spooked classes must have only identifier'
+					'spooked classes must have only identifier: '
+					.$class->getName()
 				);
 				
 				Assert::isTrue(
 					($class->getPattern() instanceof SpookedClassPattern
 					|| $class->getPattern() instanceof SpookedEnumerationPattern),
-					'spooked classes must use spooked patterns only'
+					'spooked classes must use spooked patterns only: '
+					.$class->getName()
 				);
 			}
 			
@@ -878,12 +880,15 @@
 				) {
 					Assert::isTrue(
 						$property->isRequired(),
-						'optional value object is not supported'
+						'optional value object is not supported:'
+						.$property->getName().' @ '.$class->getName()
 					);
 					
 					Assert::isTrue(
 						$property->getRelationId() == MetaRelation::ONE_TO_ONE,
-						'value objects must have OneToOne relation'
+						'value objects must have OneToOne relation: '
+						.$property->getName().' @ '.$class->getName()
+
 					);
 				} elseif (
 					($property->getFetchStrategyId() == FetchStrategy::LAZY)
