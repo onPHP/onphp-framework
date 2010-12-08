@@ -345,6 +345,13 @@
 		**/
 		public function close()
 		{
+			socket_set_option(
+				$this->socket,
+				SOL_SOCKET,
+				SO_LINGER,
+				array('l_onoff' => 1, 'l_linger' => 1)
+			);
+
 			if (!$this->inputShutdown)
 				$this->shutdownInput();
 			
