@@ -28,16 +28,16 @@
 		 * @return PeclMemcached
 		**/
 		public static function create(
-			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT
+			$host = self::DEFAULT_HOST,
+			$port = self::DEFAULT_PORT
 		)
 		{
 			return new self($host, $port);
 		}
 		
 		public function __construct(
-			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT
+			$host = self::DEFAULT_HOST,
+			$port = self::DEFAULT_PORT
 		)
 		{
 			$this->instance = new Memcache();

@@ -6,13 +6,13 @@
 		public function testClients()
 		{
 			$this->clientTest('PeclMemcached');
-			$this->clientTest('Memcached');
+			$this->clientTest('SocketMemcached');
 		}
 
 		public function testWithTimeout()
 		{
 			$cache =
-				Memcached::create('localhost')->
+				SocketMemcached::create('localhost')->
 				setTimeout(200);
 
 			$cache->add('a', 'b');
