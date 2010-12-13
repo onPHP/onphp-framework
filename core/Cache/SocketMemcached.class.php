@@ -20,10 +20,8 @@
 	 *
 	 * @ingroup Cache
 	**/
-	final class SocketMemcached extends CachePeer
+	final class SocketMemcached extends BaseMemcache
 	{
-		const DEFAULT_PORT		= 11211;
-		const DEFAULT_HOST		= '127.0.0.1';
 		const DEFAULT_BUFFER	= 16384;
 		
 		private $link		= null;
@@ -36,8 +34,8 @@
 		 * @return SocketMemcached
 		**/
 		public static function create(
-			$host	= self::DEFAULT_HOST,
-			$port	= self::DEFAULT_PORT,
+			$host	= BaseMemcache::DEFAULT_HOST,
+			$port	= BaseMemcache::DEFAULT_PORT,
 			$buffer	= self::DEFAULT_BUFFER
 		)
 		{
@@ -45,8 +43,8 @@
 		}
 		
 		public function __construct(
-			$host	= self::DEFAULT_HOST,
-			$port	= self::DEFAULT_PORT,
+			$host	= BaseMemcache::DEFAULT_HOST,
+			$port	= BaseMemcache::DEFAULT_PORT,
 			$buffer	= self::DEFAULT_BUFFER
 		)
 		{

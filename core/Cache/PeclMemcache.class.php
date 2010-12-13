@@ -17,27 +17,24 @@
 	 *
 	 * @ingroup Cache
 	**/
-	final class PeclMemcache extends CachePeer
-	{
-		const DEFAULT_PORT		= 11211;
-		const DEFAULT_HOST		= '127.0.0.1';
-		
+	final class PeclMemcache extends BaseMemcache
+	{		
 		private $instance = null;
 		
 		/**
 		 * @return PeclMemcache
 		**/
 		public static function create(
-			$host = self::DEFAULT_HOST,
-			$port = self::DEFAULT_PORT
+			$host = BaseMemcache::DEFAULT_HOST,
+			$port = BaseMemcache::DEFAULT_PORT
 		)
 		{
 			return new self($host, $port);
 		}
 		
 		public function __construct(
-			$host = self::DEFAULT_HOST,
-			$port = self::DEFAULT_PORT
+			$host = BaseMemcache::DEFAULT_HOST,
+			$port = BaseMemcache::DEFAULT_PORT
 		)
 		{
 			$this->instance = new Memcache();
