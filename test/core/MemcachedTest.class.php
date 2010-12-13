@@ -5,14 +5,36 @@
 	{
 		public function testClients()
 		{
+			if (
+				substr(
+					`echo "stats\r\nquit\r\n" | nc localhost 11211`,
+					0,
+					4
+				)
+				!= 'STAT'
+			)
+				return $this->markTestSkipped('memcached not available');
+			
 			$this->clientTest('PeclMemcache');
+			$this->clientTest('PeclMemcached');
+			
 			$this->clientTest('SocketMemcached');
 		}
 
 		public function testWithTimeout()
 		{
+			if (
+				substr(
+					`echo "stats\nquit\n" | nc localhost 11211`,
+					0,
+					4
+				)
+				!= 'STAT'
+			)
+				return $this->markTestSkipped('memcached not available');
+
 			$cache =
-				SocketMemcached::create('localhost')->
+				SocketMemcached::create('localhost', 11211)->
 				setTimeout(200);
 
 			$cache->add('a', 'b');
@@ -30,11 +52,7 @@
 		
 		protected function clientTestSingleGet($className)
 		{
-			$cache = new $className('localhost');
-			
-			if (!$cache->isAlive()) {
-				return $this->markTestSkipped('memcached not available');
-			}
+			$cache = new $className('localhost', 11211);
 			
 			$cache->clean();
 			
@@ -49,11 +67,7 @@
 		
 		protected function clientTestMultiGet($className)
 		{
-			$cache = new $className('localhost');
-			
-			if (!$cache->isAlive()) {
-				return $this->markTestSkipped('memcached not available');
-			}
+			$cache = new $className('localhost', 11211);
 			
 			$cache->clean();
 			
