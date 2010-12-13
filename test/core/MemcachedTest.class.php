@@ -5,7 +5,7 @@
 	{
 		public function testClients()
 		{
-			$this->clientTest('PeclMemcached');
+			$this->clientTest('PeclMemcache');
 			$this->clientTest('SocketMemcached');
 		}
 
