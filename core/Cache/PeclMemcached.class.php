@@ -56,6 +56,30 @@
 
 		/**
 		 * @return PeclMemcached
+		 */
+		public function enableCompression()
+		{
+			parent::enableCompression();
+
+			$this->instance->setOption(Memcached::OPT_COMPRESSION, true);
+
+			return $this;
+		}
+
+		/**
+		 * @return PeclMemcached
+		**/
+		public function disableCompression()
+		{
+			parent::disableCompression();
+
+			$this->instance->setOption(Memcached::OPT_COMPRESSION, false);
+
+			return $this;
+		}
+
+		/**
+		 * @return PeclMemcached
 		**/
 		public function clean()
 		{
