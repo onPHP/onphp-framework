@@ -35,7 +35,7 @@
 
 			$cache =
 				SocketMemcached::create('localhost', 11211)->
-				setTimeout(200);
+				setTimeout(2000);
 
 			$cache->add('a', 'b');
 
@@ -44,13 +44,15 @@
 			$cache->clean();
 		}
 		
-		protected function clientTest($class)
+		protected function clientTest(CachePeer $class)
 		{
 			$this->clientTestSingleGet($class);
 			$this->clientTestMultiGet($class);
+			$this->clientTestChangeInteger($class);
+			$this->clientTestWithObjects($class);
 		}
 		
-		protected function clientTestSingleGet($cache)
+		protected function clientTestSingleGet(CachePeer $cache)
 		{
 			$cache->clean();
 			
@@ -63,7 +65,7 @@
 			$cache->clean();
 		}
 		
-		protected function clientTestMultiGet($cache)
+		protected function clientTestMultiGet(CachePeer $cache)
 		{
 			$cache->clean();
 			
@@ -102,6 +104,30 @@
 			$this->assertEquals(count($list), 0);
 			
 			$cache->clean();
+		}
+
+		protected function clientTestChangeInteger(CachePeer $cache)
+		{
+			$cache->clean();
+
+			$cache->add('int', 42);
+			$this->assertEquals($cache->get('int'), 42);
+
+			$cache->increment('int', 2);
+			$this->assertEquals($cache->get('int'), 44);
+
+			$cache->decrement('int', 40);
+			$this->assertEquals($cache->get('int'), 4);
+		}
+
+		protected function clientTestWithObjects(CachePeer $cache)
+		{
+			$cache->clean();
+
+			$object = TestUser::create()->setId(666)->setRegistered(Timestamp::makeNow());
+
+			$cache->add('user', $object);
+			$this->assertEquals($cache->get('user')->getId(), 666);
 		}
 	}
 ?>
