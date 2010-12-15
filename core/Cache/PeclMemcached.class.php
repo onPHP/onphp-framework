@@ -86,6 +86,16 @@
 			return $this;
 		}
 
+		public function setTimeout($microseconds)
+		{
+			$this->instance->setOption(Memcached::OPT_CONNECT_TIMEOUT, $microseconds);
+			$this->instance->setOption(Memcached::OPT_SEND_TIMEOUT, $microseconds);
+			$this->instance->setOption(Memcached::OPT_RECV_TIMEOUT, $microseconds);
+			$this->instance->setOption(Memcached::OPT_POLL_TIMEOUT, $microseconds);
+
+			return $this;
+		}
+
 		/**
 		 * @return PeclMemcached
 		**/

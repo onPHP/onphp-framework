@@ -201,6 +201,14 @@
 			return $this;
 		}
 
+		/**
+		 * @return CachePeer
+		 */
+		public function setTimeout($microseconds)
+		{
+			throw new UnimplementedFeatureException();
+		}
+
 		protected function prepareData($value)
 		{
 			if ($this->compress)
