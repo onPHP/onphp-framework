@@ -85,7 +85,7 @@
 		{
 			$this->instance->flush();
 
-			return $this;
+			return parent::clean();
 		}
 
 		public function increment($key, $value)
