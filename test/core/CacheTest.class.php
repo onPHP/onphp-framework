@@ -55,7 +55,7 @@
 					addPeer('low', SocketMemcached::create(), AggregateCache::LEVEL_LOW)->
 					addPeer('normal1', SocketMemcached::create())->
 					addPeer('normal2', PeclMemcache::create())->
-					addPeer('normal3', PeclMemcached::create())->
+					addPeer('normal3', PeclMemcache::create())->
 					addPeer('high', SocketMemcached::create(), AggregateCache::LEVEL_HIGH)->
 					setClassLevel('one', 0xb000)
 			);
