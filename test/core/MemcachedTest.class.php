@@ -15,10 +15,10 @@
 			)
 				return $this->markTestSkipped('memcached not available');
 			
-			$this->clientTest('PeclMemcache');
-			$this->clientTest('PeclMemcached');
+			$this->clientTest(new PeclMemcache());
+			$this->clientTest(new PeclMemcached());
 			
-			$this->clientTest('SocketMemcached');
+			$this->clientTest(new SocketMemcached());
 		}
 
 		public function testWithTimeout()
@@ -44,16 +44,14 @@
 			$cache->clean();
 		}
 		
-		protected function clientTest($className)
+		protected function clientTest($class)
 		{
-			$this->clientTestSingleGet($className);
-			$this->clientTestMultiGet($className);
+			$this->clientTestSingleGet($class);
+			$this->clientTestMultiGet($class);
 		}
 		
-		protected function clientTestSingleGet($className)
+		protected function clientTestSingleGet($cache)
 		{
-			$cache = new $className('localhost', 11211);
-			
 			$cache->clean();
 			
 			$value = 'a';
@@ -65,10 +63,8 @@
 			$cache->clean();
 		}
 		
-		protected function clientTestMultiGet($className)
+		protected function clientTestMultiGet($cache)
 		{
-			$cache = new $className('localhost', 11211);
-			
 			$cache->clean();
 			
 			$cache->set('a', 'a', Cache::EXPIRES_MEDIUM);
