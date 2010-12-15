@@ -17,6 +17,17 @@
 			
 			$this->clientTest(new PeclMemcache());
 			$this->clientTest(new PeclMemcached());
+
+			$this->clientTest(new PeclMemcached('I_am_persistent'));
+			$this->clientTest(
+				new PeclMemcached(
+					'I_am_persistent_and_multiserver',
+					array(
+						array('localhost', 11211, 42),
+						array('127.0.0.1', 11211, 13)
+					)
+				)
+			);
 			
 			$this->clientTest(new SocketMemcached());
 		}
