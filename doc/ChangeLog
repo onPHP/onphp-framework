@@ -1,3 +1,7 @@
+2011-01-19	Evgeny N. Sokolov
+
+	* main/Math/MathUtils.class.php: add compareFloat function
+
 2010-12-08      Evgeny V. Kokovikhin
 
 	* main/Utils/IO/Socket.class.php: try to close socket immediately.

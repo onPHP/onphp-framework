@@ -14,6 +14,8 @@
 	**/
 	final class MathUtils extends StaticFactory
 	{
+		const DEFAULT_PRECISION = 0.00001;
+
 		/**
 		 * Fisher Yates shuffle algorithm implementation
 		**/
@@ -251,6 +253,20 @@
 			}
 			
     		return $result;
+		}
+
+		public static function compareFloat(
+			$floatOne,
+			$floatTwo,
+			$precision = self::DEFAULT_PRECISION
+		)
+		{
+			$diff = $floatOne - $floatTwo;
+
+			if(abs($diff) < $precision)
+				return 0;
+			else
+				return $diff < 0 ? -1 : 1;
 		}
 	}
 ?>
