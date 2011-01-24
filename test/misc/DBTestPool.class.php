@@ -10,7 +10,7 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 		
-		protected function __construct(array $dbs)
+		protected function __construct(array $dbs = array())
 		{
 			Assert::isArray($dbs);
 			

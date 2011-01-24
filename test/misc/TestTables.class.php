@@ -83,5 +83,11 @@
 			
 			return $this;
 		}
+
+		protected function setUp()
+		{
+			if (!DBTestPool::me()->getPool())
+				$this->markTestSkipped('haven\'t connected database pool');
+		}
 	}
 ?>
