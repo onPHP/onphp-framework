@@ -1,3 +1,7 @@
+2011-01-24	Evgeny N. Sokolov
+
+	* databases tests: skip, when fail connection, instead fatal
+
 2011-01-19	Evgeny N. Sokolov
 
 	* main/Math/MathUtils.class.php: add compareFloat function

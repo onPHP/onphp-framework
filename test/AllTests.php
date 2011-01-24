@@ -59,7 +59,12 @@
 			
 			// meta, DB and DAOs ordered tests portion
 			if (self::$dbs) {
-				Singleton::getInstance('DBTestPool', self::$dbs)->connect();
+				try {
+					Singleton::getInstance('DBTestPool', self::$dbs)->connect();
+				} catch (Exception $e) {
+					Singleton::dropInstance('DBTestPool');
+					Singleton::getInstance('DBTestPool');
+				}
 				
 				// build stuff from meta
 				
