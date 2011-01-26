@@ -74,6 +74,21 @@
 
 			return $this;
 		}
+
+		public function testSleeping()
+		{
+			$date = new Date('1984-03-25');
+
+			$serializedDate = serialize($date);
+
+			$unserializedDate = unserialize($serializedDate);
+
+			$this->assertEquals($date->getDay(), $unserializedDate->getDay());
+			$this->assertEquals($date->getMonth(), $unserializedDate->getMonth());
+			$this->assertEquals($date->getYear(), $unserializedDate->getYear());
+
+			$this->assertEquals($date->getFirstDayOfWeek(), $unserializedDate->getFirstDayOfWeek());
+		}
 		
 		private function dayDifferenceTest(Date $left, Date $right, $expected)
 		{

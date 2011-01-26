@@ -26,6 +26,11 @@
 		{
 			return new self($timestamp);
 		}
+
+		public function  __sleep()
+		{
+			return array('int', 'selected', 'outside');
+		}
 		
 		public function isSelected()
 		{
