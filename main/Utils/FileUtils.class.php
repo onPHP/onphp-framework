@@ -123,6 +123,20 @@
 				.'_'.uniqid()
 				.substr($fileName, $extensionPosition);
 		}
+
+		public static function makeUniqueLatinName($originalName)
+		{
+			$extension = substr($originalName, strrpos($originalName, '.'));
+			
+			Assert::isEqual(
+				(preg_match('/\.[^0-9a-zA-Z]/', $extension)),
+				0,
+				'I don\'t know how to work with this extension: '.$extension
+			);
+			
+			return time().'_'.uniqid().$extension;
+
+		}
 		
 		/* void */ public static function removeDirectory($directory, $recursive = false)
 		{
