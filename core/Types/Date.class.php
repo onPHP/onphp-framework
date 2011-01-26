@@ -172,6 +172,16 @@
 			
 			return $this;
 		}
+
+		public function  __sleep()
+		{
+			return array('int');
+		}
+
+		public function  __wakeup()
+		{
+			$this->import(date($this->getFormat(), $this->int));
+		}
 		
 		public function toStamp()
 		{

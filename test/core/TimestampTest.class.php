@@ -258,5 +258,21 @@
 				'2010-03-25 14:00:00'
 			);
 		}
+
+		public function testSleeping()
+		{
+			$stamp = Timestamp::makeNow();
+
+			$serializedStamp = serialize($stamp);
+
+			$unserializedStamp = unserialize($serializedStamp);
+
+			$this->assertEquals($stamp->getDay(), $unserializedStamp->getDay());
+			$this->assertEquals($stamp->getMonth(), $unserializedStamp->getMonth());
+			$this->assertEquals($stamp->getYear(), $unserializedStamp->getYear());
+			
+			$this->assertEquals($stamp->getMinute(), $unserializedStamp->getMinute());
+			$this->assertEquals($stamp->getSecond(), $unserializedStamp->getSecond());
+		}
 	}
 ?>
