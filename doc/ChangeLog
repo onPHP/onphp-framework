@@ -1,3 +1,7 @@
+2011-01-26      Evgeny V. Kokovikhin
+
+	* main/Utils/FileUtils: makeUniqueLatinName method added
+
 2011-01-24	Evgeny N. Sokolov
 
 	* databases tests: skip, when fail connection, instead fatal
