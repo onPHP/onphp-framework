@@ -7,12 +7,39 @@
 
 		public function testAggregateCache()
 		{
-			return $this->doTestMemcached(AggregateCache::create());
+			return $this->doTestMemcached(
+				AggregateCache::create()->
+					addPeer('low', Memcached::create(), AggregateCache::LEVEL_LOW)->
+					addPeer('normal1', Memcached::create())->
+					addPeer('normal2', Memcached::create())->
+					addPeer('normal3', Memcached::create())->
+					addPeer('high', Memcached::create(), AggregateCache::LEVEL_HIGH)->
+					setClassLevel('one', 0xb000)
+			);
 		}
 
 		public function testSimpleAggregateCache()
 		{
-			return $this->doTestMemcached(SimpleAggregateCache::create());
+			return $this->doTestMemcached(
+				SimpleAggregateCache::create()->
+					addPeer('low', Memcached::create(), AggregateCache::LEVEL_LOW)->
+					addPeer('normal1', Memcached::create())->
+					addPeer('normal2', Memcached::create())->
+					addPeer('normal3', Memcached::create())->
+					addPeer('high', Memcached::create(), AggregateCache::LEVEL_HIGH)->
+					setClassLevel('one', 0xb000)
+			);
+		}
+
+		public function testCyclicAggregateCache()
+		{
+			$this->doTestMemcached(
+				CyclicAggregateCache::create()->
+					setSummaryWeight(42)->
+					addPeer('first', Memcached::create(), 25)->
+					addPeer('second', PeclMemcached::create(), 1)->
+					addPeer('third', PeclMemcached::create(), 13)
+			);
 		}
 		
 		public function testIntegerChanges()
@@ -48,17 +75,10 @@
 			$this->assertEquals(Cache::me()->get('test_integer'), 1);
 		}
 		
-		private function doTestMemcached(AggregateCache $cache)
+		private function doTestMemcached(SelectivePeer $cache)
 		{
-			Cache::setPeer(
-				$cache->
-					addPeer('low', Memcached::create(), AggregateCache::LEVEL_LOW)->
-					addPeer('normal1', Memcached::create())->
-					addPeer('normal2', Memcached::create())->
-					addPeer('normal3', Memcached::create())->
-					addPeer('high', Memcached::create(), AggregateCache::LEVEL_HIGH)->
-					setClassLevel('one', 0xb000)
-			);
+			Cache::setPeer($cache);
+			
 			
 			if (!Cache::me()->isAlive()) {
 				return $this->markTestSkipped('memcached not available');

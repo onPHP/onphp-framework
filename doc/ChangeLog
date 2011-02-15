@@ -1,3 +1,9 @@
+2011-02-15	Evgeny V. Kokovikhin
+	
+	* core/Cache/CyclicAggregateCache.class.php, test/core/CacheTest.class.php, 
+	core/Cache/AggregateCache.class.php, core/Cache/BaseAggregateCache.class.php:
+	new implementation of AggregateCache added.
+
 2011-01-26      Evgeny V. Kokovikhin
 
 	* main/Utils/FileUtils: makeUniqueLatinName method added

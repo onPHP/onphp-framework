@@ -15,15 +15,14 @@
 	 * 
 	 * @ingroup Cache
 	**/
-	class AggregateCache extends SelectivePeer
+	class AggregateCache extends BaseAggregateCache
 	{
 		const LEVEL_ULTRAHIGH	= 0xFFFF;
 		const LEVEL_HIGH		= 0xC000;
 		const LEVEL_NORMAL		= 0x8000;
 		const LEVEL_LOW			= 0x4000;
 		const LEVEL_VERYLOW		= 0x0001;
-
-		protected $peers	= array();
+		
 		private $levels		= array();
 
 		/**
@@ -41,32 +40,9 @@
 			$label, CachePeer $peer, $level = self::LEVEL_NORMAL
 		)
 		{
-			if (isset($this->peers[$label]))
-				throw new WrongArgumentException(
-					'use unique names for your peers'
-				);
-			
-			if ($peer->isAlive()) {
-				$this->peers[$label]['object'] = $peer;
-				$this->peers[$label]['level'] = $level;
-				$this->peers[$label]['stat'] = array();
-				$this->alive = true;
-			}
-			
-			return $this;
-		}
-		
-		/**
-		 * @return AggregateCache
-		**/
-		public function dropPeer($label)
-		{
-			if (!isset($this->peers[$label]))
-				throw new MissingElementException(
-					"there is no peer with '{$label}' label"
-				);
+			$this->doAddPeer($label, $peer);
 
-			unset($this->peer[$label]);
+			$this->peers[$label]['level'] = $level;
 			
 			return $this;
 		}
@@ -80,144 +56,7 @@
 			
 			return $this;
 		}
-
-		public function checkAlive()
-		{
-			$this->alive = false;
-			
-			foreach ($this->peers as $label => $peer)
-				if ($peer['object']->isAlive())
-					$this->alive = true;
-				else
-					unset($this->peers[$label]);
-
-			return $this->alive;
-		}
-
-		/**
-		 * low-level cache access
-		**/
 		
-		public function increment($key, $value)
-		{
-			$label = $this->guessLabel($key);
-			
-			if ($this->peers[$label]['object']->isAlive())
-				return $this->peers[$label]['object']->increment($key, $value);
-			else
-				$this->checkAlive();
-			
-			return null;
-		}
-		
-		public function decrement($key, $value)
-		{
-			$label = $this->guessLabel($key);
-			
-			if ($this->peers[$label]['object']->isAlive())
-				return $this->peers[$label]['object']->decrement($key, $value);
-			else
-				$this->checkAlive();
-			
-			return null;
-		}
-		
-		public function get($key)
-		{
-			$label = $this->guessLabel($key);
-			
-			if ($this->peers[$label]['object']->isAlive())
-				return $this->peers[$label]['object']->get($key);
-			else
-				$this->checkAlive();
-			
-			return null;
-		}
-		
-		public function getList($indexes)
-		{
-			$labels = array();
-			$out = array();
-			
-			foreach ($indexes as $index)
-				$labels[$this->guessLabel($index)][] = $index;
-			
-			foreach ($labels as $label => $indexList)
-				if ($this->peers[$label]['object']->isAlive()) {
-					if ($list = $this->peers[$label]['object']->getList($indexList))
-						$out = array_merge($out, $list);
-				} else
-					$this->checkAlive();
-			
-			return $out;
-		}
-		
-		public function delete($key)
-		{
-			$label = $this->guessLabel($key);
-			
-			if (!$this->peers[$label]['object']->isAlive()) {
-				$this->checkAlive();
-				return false;
-			}
-
-			return $this->peers[$label]['object']->delete($key);
-		}
-
-		/**
-		 * @return AggregateCache
-		**/
-		public function clean()
-		{
-			foreach ($this->peers as $peer)
-				$peer['object']->clean();
-
-			$this->checkAlive();
-
-			return parent::clean();
-		}
-
-		public function getStats()
-		{
-			$stats = array();
-
-			foreach ($this->peers as $level => $peer)
-				$stats[$level] = $peer['stat'];
-
-			return $stats;
-		}
-		
-		public function append($key, $data)
-		{
-			$label = $this->guessLabel($key);
-			
-			if ($this->peers[$label]['object']->isAlive())
-				return $this->peers[$label]['object']->append($key, $data);
-			else
-				$this->checkAlive();
-			
-			return false;
-		}
-		
-		protected function store(
-			$action, $key, $value, $expires = Cache::EXPIRES_MINIMUM
-		)
-		{
-			$label = $this->guessLabel($key);
-			
-			if ($this->peers[$label]['object']->isAlive())
-				return
-					$this->peers[$label]['object']->$action(
-						$key,
-						$value,
-						$expires
-					);
-			else
-				$this->checkAlive();
-			
-			return false;
-		}
-
 		/**
 		 * brain
 		**/
