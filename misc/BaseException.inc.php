@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2011 by Slava Tsyrulnik                                 *
+ *   Copyright (C) 2008-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -18,3 +18,4 @@
 				$this->getTraceAsString();
 		}
 	}
+?>
