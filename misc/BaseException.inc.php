@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 20011 by Slava Tsyrulnik                                *
+ *   Copyright (C) 2011 by Slava Tsyrulnik                                 *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
