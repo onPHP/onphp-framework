@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2008-2009 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -9,18 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/* void */ function __autoload($classname)
+	class BaseException extends Exception
 	{
-		if (strpos($classname, "\0") !== false) {
-			/* are you sane? */
-			return;
-		}
-		
-		try {
-			include $classname.EXT_CLASS;
-			return /* void */;
-		} catch (BaseException $e) {
-			return __autoload_failed($classname, $e->getMessage());
+		public function __toString()
+		{
+			return
+				"[$this->message] in: \n".
+				$this->getTraceAsString();
 		}
 	}
 ?>
