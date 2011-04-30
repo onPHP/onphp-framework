@@ -26,11 +26,25 @@
 	$dbs = array(
 		'PgSQL' => array(
 			'user'	=> 'onphp',
-			'pass'	=> null,
-			'host'	=> 'localhost',
+			'pass'	=> 'onphp',
+			'host'	=> '127.0.0.1',
 			'base'	=> 'onphp'
-		)
+		),
+		'MySQL' => array(
+			'user'	=> 'onphp',
+			'pass'	=> 'onphp',
+			'host'	=> '127.0.0.1',
+			'base'	=> 'onphp'
+		),
+		'SQLite' => array(
+			'user'	=> 'onphp',
+			'pass'	=> 'onphp',
+			'host'	=> '127.0.0.1',
+			'base'	=> 'onphp'
+		),
 	);
+
+	Singleton::getInstance('DBTestPool', $dbs)->connect();
 	
 	$daoWorkers = array(
 		'NullDaoWorker', 'CommonDaoWorker', 'SmartDaoWorker', 'VoodooDaoWorker',
