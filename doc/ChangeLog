@@ -1,3 +1,13 @@
+2011-05-01	Sergey S. Sergeev
+
+	* test/runme.sh: added ability to run the test cases with different 
+	arguments, for example:
+		- ./runme.sh (by default)
+		- ./runme.sh --verbose --repeat 1 AllTests (launch test suite in
+		verbose mode)
+		- ./runme.sh --bootstrap config.inc.php core/CacheTest.class.php (
+		launch 'CacheTest' only)
+
 2011-04-20	Viatcheslav Y. Tsyrulnik
 
 	* misc/Autoloader.inc.php: all autoloaders merged in one abstract class.
