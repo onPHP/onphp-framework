@@ -1,10 +1,22 @@
+2011-04-20	Viatcheslav Y. Tsyrulnik
+
+	* misc/Autoloader.inc.php: all autoloaders merged in one abstract class.
+
+	* misc/BaseException.inc.php: for now it's duplication of BaseException,
+	needed by wholeClassCache.
+
+	* global.inc.php.tpl: spl_autoload_register instead of including file
+	with __autoload().
+
+	* misc/autoload.*: obsolete.
+
 2011-02-15	Evgeny V. Kokovikhin
-	
+
 	* core/Cache/CyclicAggregateCache.class.php, test/core/CacheTest.class.php, 
 	core/Cache/AggregateCache.class.php, core/Cache/BaseAggregateCache.class.php:
 	new implementation of AggregateCache added.
 
-2011-01-26      Evgeny V. Kokovikhin
+2011-01-26	Evgeny V. Kokovikhin
 
 	* main/Utils/FileUtils: makeUniqueLatinName method added
 	* core/Base/Date, main/Base/CalendarDay: __sleep and __wakeup method added.
@@ -17,7 +29,7 @@
 
 	* main/Math/MathUtils.class.php: add compareFloat function
 
-2010-12-08      Evgeny V. Kokovikhin
+2010-12-08	Evgeny V. Kokovikhin
 
 	* main/Utils/IO/Socket.class.php: try to close socket immediately.
 	see: http://ru.php.net/manual/en/function.socket-close.php#66810
@@ -32,7 +44,7 @@
 	* main/Utils/IO/Socket.class.php: eat exception 
 	if we try to close already closed socket
 
-2010-11-11      Evgeny V. Kokovikhin
+2010-11-11	Evgeny V. Kokovikhin
 
 	* main/DAOs/Workers/CommonDaoWorker.class.php: just change exception message
 
