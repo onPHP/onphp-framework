@@ -14,6 +14,8 @@
 	"integer" or "string" whereas assertInstanceOf() should be used for
 	asserting that an object is an instance of a specified class or interface.
 
+	* main/Utils/AMQP/, test/main/Utils/AMQP/: AMQP supports added.
+
 2011-04-20	Viatcheslav Y. Tsyrulnik
 
 	* misc/Autoloader.inc.php: all autoloaders merged in one abstract class.
