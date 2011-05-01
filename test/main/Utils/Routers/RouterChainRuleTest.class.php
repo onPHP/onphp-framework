@@ -173,7 +173,7 @@
 			$chain = $foo->chain($bar, '.');
 			
 			$res = $chain->match('foo.bar');
-			$this->assertType('array', $res);
+			$this->assertInternalType('array', $res);
 			
 			$res = $chain->match('foo/bar');
 			$this->assertEquals(array(), $res);
@@ -181,7 +181,7 @@
 			$chain->chain($baz, ':');
 			
 			$res = $chain->match('foo.bar:baz');
-			$this->assertType('array', $res);
+			$this->assertInternalType('array', $res);
 		}
 		
 		public function testI18nChaining()
@@ -248,7 +248,7 @@
 			$request = $this->buildRequest('http://www.example.com/bar');
 			$res = $chain->match($request);
 			
-			$this->assertType('array', $res);
+			$this->assertInternalType('array', $res);
 			$this->assertRegexp(
 				'#[^a-z0-9]?www\.example\.com/bar$#i',
 				$chain->assembly()
@@ -287,7 +287,7 @@
 			$request = $this->buildRequest('http://www.example.com/bar');
 			$res = $chain->match($request);
 			
-			$this->assertType('array', $res);
+			$this->assertInternalType('array', $res);
 			$this->assertRegexp(
 				'#[^a-z0-9]?www\.example\.com/bar$#i',
 				$chain->assembly()
@@ -333,13 +333,13 @@
 			$request = $this->buildRequest('http://www.example.com/user/1');
 			$res = $profileChain->match($request);
 			
-			$this->assertType('array', $res);
+			$this->assertInternalType('array', $res);
 			$this->assertEquals('prof', $res['area']);
 			
 			$request = $this->buildRequest('http://www.example.com/article/1');
 			$res = $articleChain->match($request);
 			
-			$this->assertType('array', $res);
+			$this->assertInternalType('array', $res);
 			$this->assertEquals('art', $res['area']);
 			$this->assertEquals('art', $res['action']);
 		}

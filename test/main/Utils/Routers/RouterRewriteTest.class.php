@@ -48,7 +48,7 @@
 			$routes = $this->router->getRoutes();
 			
 			$this->assertEquals(1, count($routes));
-			$this->assertType('RouterTransparentRule', $routes['archive']);
+			$this->assertInstanceOf('RouterTransparentRule', $routes['archive']);
 			
 			$this->router->addRoute(
 				'register',
@@ -67,7 +67,7 @@
 			$routes = $this->router->getRoutes();
 			
 			$this->assertEquals(2, count($routes));
-			$this->assertType('RouterTransparentRule', $routes['register']);
+			$this->assertInstanceOf('RouterTransparentRule', $routes['register']);
 		}
 		
 		public function testAddRoutes()
@@ -106,8 +106,8 @@
 			$values = $this->router->getRoutes();
 			
 			$this->assertEquals(2, count($values));
-			$this->assertType('RouterTransparentRule', $values['archive']);
-			$this->assertType('RouterTransparentRule', $values['register']);
+			$this->assertInstanceOf('RouterTransparentRule', $values['archive']);
+			$this->assertInstanceOf('RouterTransparentRule', $values['register']);
 		}
 		
 		public function testHasRoute()
@@ -159,7 +159,7 @@
 			
 			$route = $this->router->getRoute('archive');
 			
-			$this->assertType('RouterTransparentRule', $route);
+			$this->assertInstanceOf('RouterTransparentRule', $route);
 			$this->assertSame($route, $archive);
 		}
 		
@@ -196,7 +196,7 @@
 			try {
 				$route = $this->router->removeRoute('archive');
 			} catch (RouterException $e) {
-				$this->assertType('RouterException', $e);
+				$this->assertInstanceOf('RouterException', $e);
 				return true;
 			}
 			
@@ -208,7 +208,7 @@
 			try {
 				$route = $this->router->getRoute('bogus');
 			} catch (RouterException $e) {
-				$this->assertType('RouterException', $e);
+				$this->assertInstanceOf('RouterException', $e);
 				return true;
 			}
 			
@@ -221,7 +221,7 @@
 			
 			$token = $this->router->route($request);
 			
-			$this->assertType('HttpRequest', $token);
+			$this->assertInstanceOf('HttpRequest', $token);
 		}
 				
 		public function testEmptyRoute()
@@ -360,7 +360,7 @@
 					$this->router->getCurrentRouteName()
 				);
 				
-				$this->assertType(
+				$this->assertInstanceOf(
 					'RouterTransparentRule',
 					$this->router->getCurrentRoute()
 				);
@@ -377,7 +377,7 @@
 				$route = $this->router->getCurrentRouteName();
 				$this->fail();
 			} catch (BaseException $e) {
-				$this->assertType('RouterException', $e);
+				$this->assertInstanceOf('RouterException', $e);
 			}
 		}
 		
@@ -996,7 +996,7 @@
 			try {
 				$s = $this->router->assembly(array(), 'foobar');
 			} catch (BaseException $e) {
-				$this->assertType('RouterException', $e);
+				$this->assertInstanceOf('RouterException', $e);
 				return true;
 			}
 			

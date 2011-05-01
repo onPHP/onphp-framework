@@ -8,6 +8,12 @@
 		- ./runme.sh --bootstrap config.inc.php core/CacheTest.class.php (
 		launch 'CacheTest' only)
 
+	* main/Utils/Routers/, core/PrimitiveHstoreTest.class.php,
+	misc/DAOTest.class.php: assertType() has been deprecated.
+	assertInternalType() should be used for asserting internal types such as
+	"integer" or "string" whereas assertInstanceOf() should be used for
+	asserting that an object is an instance of a specified class or interface.
+
 2011-04-20	Viatcheslav Y. Tsyrulnik
 
 	* misc/Autoloader.inc.php: all autoloaders merged in one abstract class.
