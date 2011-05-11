@@ -1,3 +1,8 @@
+2011-05-11	Sergey S. Sergeev
+
+	* main/Net/Http/HeaderUtils.class.php: fetch HTTP request headers
+	implemented.
+
 2011-05-01	Sergey S. Sergeev
 
 	* test/runme.sh: added ability to run the test cases with different 
