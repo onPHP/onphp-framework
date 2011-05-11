@@ -3,6 +3,9 @@
 	* main/Net/Http/HeaderUtils.class.php: fetch HTTP request headers
 	implemented.
 
+	* main/Flow/MethodMappedController.class.php: default action override
+	fixed.
+
 2011-05-01	Sergey S. Sergeev
 
 	* test/runme.sh: added ability to run the test cases with different 
