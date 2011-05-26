@@ -17,7 +17,7 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
-	class /* spirit of */ IdentifiableObject implements Identifiable
+	class /* spirit of */ IdentifiableObject implements Identifiable, DialectString
 	{
 		protected $id = null;
 		
@@ -50,6 +50,11 @@
 			$this->id = $id;
 			
 			return $this;
+		}
+		
+		public function toDialectString(Dialect $dialect)
+		{
+			return $dialect->quoteValue($this->getId());
 		}
 	}
 ?>
