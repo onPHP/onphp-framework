@@ -388,6 +388,7 @@
 			elseif (
 				($atom instanceof DBValue)
 				|| ($atom instanceof DBField)
+				|| ($atom instanceof DialectString)
 			) {
 				return $atom;
 			}
