@@ -164,6 +164,56 @@
 			);
 		}
 
+		public function testDialectStringObjects()
+		{
+			$criteria =
+				Criteria::create(TestUser::dao())->
+				setProjection(
+					Projection::property('id')
+				)->
+				add(
+					Expression::gt('registered', Date::create('2011-01-01'))
+				);
+			
+			$this->assertEquals(
+				$criteria->toDialectString(ImaginaryDialect::me()),
+				'SELECT test_user.id FROM test_user WHERE (test_user.registered > 2011-01-01)'
+			);
+			
+			$criteria =
+				Criteria::create(TestUserWithContactExtended::dao())->
+				setProjection(
+					Projection::property('contactExt.city.id', 'cityId')
+				)->
+				add(
+					Expression::eq('contactExt.city', TestCity::create()->setId(22))
+				);
+			
+			$this->assertEquals(
+				$criteria->toDialectString(ImaginaryDialect::me()),
+				'SELECT test_user_with_contact_extended.city_id AS cityId FROM test_user_with_contact_extended WHERE (test_user_with_contact_extended.city_id = 22)'
+			);
+			
+			$cityList = array(
+				TestCity::create()->setId(3),
+				TestCity::create()->setId(44),
+			);
+			
+			$criteria =
+				Criteria::create(TestUser::dao())->
+				setProjection(
+					Projection::property('id')
+				)->
+				add(
+					Expression::in('city', $cityList)
+				);
+			
+			$this->assertEquals(
+				$criteria->toDialectString(ImaginaryDialect::me()),
+				'SELECT test_user.id FROM test_user WHERE (test_user.city_id IN (3, 44))'
+			);
+		}
+
 		public static function orderDataProvider()
 		{
 			return array(

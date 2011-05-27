@@ -43,8 +43,13 @@
 			if (is_array($array)) {
 				$quoted = array();
 				
-				foreach ($array as $item)
-					$quoted[] = $dialect->valueToString($item);
+				foreach ($array as $item) {
+					if ($item instanceof DialectString) {
+						$quoted[] = $item->toDialectString($dialect);
+					} else {
+						$quoted[] = $dialect->valueToString($item);
+					}
+				}
 				
 				$value = implode(', ', $quoted);
 			} else
