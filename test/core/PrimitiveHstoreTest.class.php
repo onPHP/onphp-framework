@@ -35,7 +35,7 @@
 			$this->assertEquals($subform->getValue('weight'), 80);
 			$this->assertEquals($subform->getValue('comment'), 'test user case');
 			
-			$this->assertType('Hstore', $prm->getValue());
+			$this->assertInstanceOf('Hstore', $prm->getValue());
 			
 			$hstore = $prm->getValue();
 			

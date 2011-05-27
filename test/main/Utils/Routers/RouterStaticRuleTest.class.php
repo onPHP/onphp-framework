@@ -15,7 +15,7 @@
 				$this->buildRequest('http://localhost/users/all')
 			);
 			
-			$this->assertType('array', $values);
+			$this->assertInternalType('array', $values);
 		}
 		
 		public function testStaticMatchFailure()
@@ -45,7 +45,7 @@
 				$this->buildRequest('http://localhost/users/all')
 			);
 			
-			$this->assertType('array', $values);
+			$this->assertInternalType('array', $values);
 			$this->assertSame('ctrl', $values['area']);
 			$this->assertSame('act', $values['action']);
 		}
@@ -57,7 +57,7 @@
 				$this->buildRequest('http://localhost/'.urlencode('żółć'))
 			);
 			
-			$this->assertType('array', $values);
+			$this->assertInternalType('array', $values);
 		}
 		
 		public function testRootRoute()
@@ -91,7 +91,7 @@
 			
 			$values = $route->getDefaults();
 			
-			$this->assertType('array', $values);
+			$this->assertInternalType('array', $values);
 			$this->assertSame('ctrl', $values['area']);
 			$this->assertSame('act', $values['action']);
 		}
@@ -125,7 +125,7 @@
 					)
 				);
 			
-			$this->assertType('RouterStaticRule', $route);
+			$this->assertInstanceOf('RouterStaticRule', $route);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/all')

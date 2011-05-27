@@ -44,8 +44,8 @@
 		{
 			$action = Primitive::choice('action')->setList($this->methodMap);
 
-			if ($this->defaultAction)
-				$action->setDefault($this->defaultAction);
+			if ($this->getDefaultAction())
+				$action->setDefault($this->getDefaultAction());
 
 			Form::create()->
 				add($action)->
@@ -55,7 +55,7 @@
 			
 			if (!$command = $action->getValue())
 				return $action->getDefault();
-			
+
 			return $command;
 		}
 		

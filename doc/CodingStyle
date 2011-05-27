@@ -104,9 +104,9 @@ switch ($foo) {
 Class Method Sorting:
 	* public static function create() (if any)
 	* public function __construct (if any)
-	* public fucntion __destruct (if any)
-	* public fucntion __sleep (if any)
-	* public fucntion __wakeup (if any)
+	* public function __destruct (if any)
+	* public function __sleep (if any)
+	* public function __wakeup (if any)
 	* abstract public
 	* abstract protected
 	* final public

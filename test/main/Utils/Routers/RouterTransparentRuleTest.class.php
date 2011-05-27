@@ -635,7 +635,7 @@
 				$this->buildRequest('http://localhost/archives/2006/07')
 			);
 			
-			$this->assertType('array', $values);
+			$this->assertInternalType('array', $values);
 			
 			$url = $route->assembly(array('month' => '03'));
 			
@@ -660,7 +660,7 @@
 				)
 			);
 			
-			$this->assertType('array', $values);
+			$this->assertInternalType('array', $values);
 			
 			$this->assertEquals('archive', $values['area']);
 			$this->assertEquals('2006', $values['year']);
@@ -683,7 +683,7 @@
 			
 			$values = $route->getDefaults();
 			
-			$this->assertType('array', $values);
+			$this->assertInternalType('array', $values);
 			$this->assertEquals('ctrl', $values['area']);
 			$this->assertEquals('act', $values['action']);
 		}
@@ -723,7 +723,7 @@
 					$routeConf['defaults']
 				);
 			
-			$this->assertType('RouterTransparentRule', $route);
+			$this->assertInstanceOf('RouterTransparentRule', $route);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/all')
@@ -830,7 +830,7 @@
 				$this->buildRequest('http://localhost/families/edit/id/4')
 			);
 			
-			$this->assertType('array', $values);
+			$this->assertInternalType('array', $values);
 			
 			$this->assertEquals('families/edit/id/4', $route->assembly());
 		}
@@ -1003,7 +1003,7 @@
 				)
 			);
 			
-			$this->assertType('array', $values);
+			$this->assertInternalType('array', $values);
 			$this->assertEquals('en', $values['lang']);
 			$this->assertEquals('tmp', $values['temp']);
 			$this->assertEquals(6, $values[null]);

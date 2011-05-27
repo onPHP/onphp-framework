@@ -19,6 +19,7 @@
 		private static $headerSent		= false;
 		private static $redirectSent	= false;
 		private static $cacheLifeTime   = 3600;
+		private static $headers			= array();
 		
 		public static function redirectRaw($url)
 		{
@@ -37,6 +38,36 @@
 				return $_SERVER['HTTP_REFERER'];
 			} else
 				return false;
+		}
+
+		public static function getRequestHeaderList()
+		{
+			if (!empty(self::$headers))
+				return self::$headers;
+
+			if (function_exists('apache_request_headers')) {
+				self::$headers = apache_request_headers();
+			} else {
+				foreach($_SERVER as $key => $value) {
+					if (substr($key, 0, 5) == "HTTP_") {
+						$name = self::extractHeader($key, "_", 5);
+						self::$headers[$name] = $value;
+					}
+				}
+			}
+
+			return self::$headers;
+		}
+
+		public static function getRequestHeader($name)
+		{
+			$name = self::extractHeader($name, "-", 0);
+			$list = self::getRequestHeaderList();
+
+			if (isset($list[$name]))
+				return $list[$name];
+
+			return null;
 		}
 		
 		public static function getParsedURI(/* ... */)
@@ -138,6 +169,26 @@
 			parse_str($_SERVER['QUERY_STRING'], $out);
 			
 			return $out;
+		}
+
+		private static function extractHeader($name, $delimiter, $length)
+		{
+			return
+				str_replace(
+					" ",
+					"-",
+					ucwords(
+						strtolower(
+							str_replace(
+								$delimiter,
+								" ",
+								$length
+									? substr($name, $length)
+									: $name
+							)
+						)
+					)
+				);
 		}
 	}
 ?>

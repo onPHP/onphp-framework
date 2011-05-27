@@ -61,12 +61,12 @@
 					'use unique names for your peers'
 				);
 
-			if ($peer->isAlive()) {
-				$this->peers[$label]['object'] = $peer;
-				$this->peers[$label]['stat'] = array();
+			if ($peer->isAlive())
 				$this->alive = true;
-			}
-
+			
+			$this->peers[$label]['object'] = $peer;
+			$this->peers[$label]['stat'] = array();
+			
 			return $this;
 		}
 

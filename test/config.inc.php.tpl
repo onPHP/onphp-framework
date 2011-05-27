@@ -20,18 +20,31 @@
 		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Ip'.DIRECTORY_SEPARATOR,
 		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Net'.DIRECTORY_SEPARATOR,
 		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR,
-		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR.'Routers'.DIRECTORY_SEPARATOR
+		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR.'Routers'.DIRECTORY_SEPARATOR,
+		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR.'AMQP'.DIRECTORY_SEPARATOR,
 	);
 	
 	$dbs = array(
 		'PgSQL' => array(
 			'user'	=> 'onphp',
-			'pass'	=> null,
-			'host'	=> 'localhost',
+			'pass'	=> 'onphp',
+			'host'	=> '127.0.0.1',
 			'base'	=> 'onphp'
-		)
+		),
+		'MySQL' => array(
+			'user'	=> 'onphp',
+			'pass'	=> 'onphp',
+			'host'	=> '127.0.0.1',
+			'base'	=> 'onphp'
+		),
+		'SQLite' => array(
+			'user'	=> 'onphp',
+			'pass'	=> 'onphp',
+			'host'	=> '127.0.0.1',
+			'base'	=> 'onphp'
+		),
 	);
-	
+
 	$daoWorkers = array(
 		'NullDaoWorker', 'CommonDaoWorker', 'SmartDaoWorker', 'VoodooDaoWorker',
 		'CacheDaoWorker', 'VoodooDaoWorker', 'SmartDaoWorker', 'CommonDaoWorker', 'NullDaoWorker'

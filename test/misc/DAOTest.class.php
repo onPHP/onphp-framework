@@ -473,7 +473,7 @@
 			
 			$user = TestUser::dao()->getById('1');
 			
-			$this->assertType('Hstore', $user->getProperties());
+			$this->assertInstanceOf('Hstore', $user->getProperties());
 			
 			$this->assertEquals(
 				$properties,
@@ -502,7 +502,7 @@
 			
 			FormUtils::object2form($object, $form);
 			
-			$this->assertType('Hstore', $form->getValue('properties'));
+			$this->assertInstanceOf('Hstore', $form->getValue('properties'));
 			
 			$this->assertEquals(
 				array_filter($properties),

@@ -742,7 +742,7 @@
 					'forum/%d'
 				);
 			
-			$this->assertType('RouterRegexpRule', $route);
+			$this->assertInstanceOf('RouterRegexpRule', $route);
 			
 			$values = $route->match($this->buildRequest('http://localhost/forum/1'));
 			

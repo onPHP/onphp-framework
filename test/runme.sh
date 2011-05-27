@@ -1,6 +1,13 @@
 #!/bin/sh
 cd `dirname $0`
 
-phpunit --repeat 9 AllTests
+if [ "$*" == "" ]; 
+then
+	ARGS='--repeat 9 AllTests'
+else
+	ARGS="$*"
+fi
+
+eval "phpunit ${ARGS}"
 
 cd -
