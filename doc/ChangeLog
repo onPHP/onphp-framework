@@ -1,4 +1,4 @@
-2011-05-27	Alexey Denisov
+2011-05-27	Alexey S. Denisov
 
 	* core/Base/IdentifiableObject.class.php, core/Logic/Expression.class.php,
 	core/OSQL/SQLArray.class.php, main/DAOs/ProtoDAO.class.php,
