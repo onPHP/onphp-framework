@@ -122,6 +122,11 @@
 				$filter->apply('""text" text"'),
 				'&laquo;&#132;text&#147; text&raquo;'
 			);
+			
+			$this->assertEquals(
+				 $filter->apply('"text" "text"'),
+				 '&laquo;text&laquo; &raquo;text&raquo;'
+			);
 		}
 		
 		public function testCrop()

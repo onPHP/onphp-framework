@@ -157,8 +157,8 @@
 			return
 				preg_replace(
 					array(
-						'~&laquo;(.*)&raquo;~U',
-						'~\"(.*)\"~U',
+						'~&laquo;(\S*)&raquo;~U',
+						'~\"(\S*)\"~U',
 					),
 					'&#132;$1&#147;',
 					stripslashes($text)
