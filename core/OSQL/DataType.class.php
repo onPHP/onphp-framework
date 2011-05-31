@@ -37,7 +37,7 @@
 		
 		const BINARY			= 0x00000E;
 		
-		const IP4				= 0x000010;
+		const IP				= 0x000010;
 		
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x000200;
@@ -75,7 +75,7 @@
 			
 			self::BINARY		=> 'BINARY',
 			
-			self::IP4			=> 'IP4',
+			self::IP			=> 'IP',
 		);
 		
 		/**
