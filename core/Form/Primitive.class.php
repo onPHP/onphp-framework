@@ -346,5 +346,13 @@
 			
 			return self::prototyped($class, $dao->getIdName(), $name);
 		}
+		
+		/**
+		 * @return PrimitiveInet
+		**/
+		public static function ipAddress($name)
+		{
+			return new PrimitiveIpAddress($name);
+		}
 	}
 ?>
