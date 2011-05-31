@@ -202,6 +202,8 @@
 				
 				'bytea'			=> DataType::BINARY,
 				
+				'ip4'			=> DataType::IP4,
+				
 				// unhandled types, not ours anyway
 				'tsvector'		=> null,
 				'inet'			=> null,
