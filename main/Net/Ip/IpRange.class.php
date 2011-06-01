@@ -16,7 +16,7 @@
 	{
 		const MASK_MAX_SIZE = 31;
 		
-		const INTERVAL_PATTERN = '/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}-\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/';
+		const INTERVAL_PATTERN = '/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\s*-\s*\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/';
 		const IP_SLASH_PATTERN = '/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}/';
 		
 		private $startIp 	= null;
@@ -128,8 +128,8 @@
 				$parts = explode('-', $interval);
 
 				$this->setup(
-					IpAddress::create($parts[0]),
-					IpAddress::create($parts[1])
+					IpAddress::create(trim($parts[0])),
+					IpAddress::create(trim($parts[1]))
 				);
 
 			} catch (Exception $e) {
