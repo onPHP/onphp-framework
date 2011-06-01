@@ -12,46 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveIpAddress extends BasePrimitive
+	final class PrimitiveIpAddress extends BaseObjectPrimitive
 	{
-		public function import($scope)
-		{
-			if (!BasePrimitive::import($scope))
-				return null;
-			
-			if ($scope[$this->getName()] instanceof IpAddress) {
-				$this->value = $scope[$this->getName()];
-				
-				return true;
-			}
-			
-			try {
-				$this->value = IpAddress::create($scope[$this->getName()]);
-				
-				return true;
-			} catch (WrongArgumentException $e) {
-				return false;
-			}
-			
-			Assert::isUnreachable();
-		}
-		
-		public function setValue(/*IpAddress*/ $value)
-		{
-			Assert::isInstance($value, 'IpAddress');
-			
-			$this->value = $value;
-			
-			return $this;
-		}
-		
-		public function setDefault($default)
-		{
-			Assert::isInstance($default, 'IpAddress');
-			
-			$this->default = $default;
-			
-			return $this;
-		}
+		protected $className = 'IpAddress';
 	}
 ?>

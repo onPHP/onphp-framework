@@ -12,46 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveIpRange extends BasePrimitive
+	final class PrimitiveIpRange extends BaseObjectPrimitive
 	{
-		public function import($scope)
-		{
-			if (!BasePrimitive::import($scope))
-				return null;
-			
-			if ($scope[$this->getName()] instanceof IpRange) {
-				$this->value = $scope[$this->getName()];
-				
-				return true;
-			}
-			
-			try {
-				$this->value = IpRange::create($scope[$this->getName()]);
-				
-				return true;
-			} catch (WrongArgumentException $e) {
-				return false;
-			}
-			
-			Assert::isUnreachable();
-		}
-		
-		public function setValue(/*IpRange*/ $value)
-		{
-			Assert::isInstance($value, 'IpRange');
-			
-			$this->value = $value;
-			
-			return $this;
-		}
-		
-		public function setDefault($default)
-		{
-			Assert::isInstance($default, 'IpRange');
-			
-			$this->default = $default;
-			
-			return $this;
-		}
+		protected $className = 'IpRange';
 	}
 ?>
