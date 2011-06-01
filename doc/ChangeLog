@@ -1,10 +1,14 @@
+2011-06-01	Sergey S. Sergeev
+
+	* main/Crypto/Base62Utils.class.php: Base62 encode/decode implemented.
+	Util will be useful for generating short URLs.
+
 2011-05-27	Alexey S. Denisov
 
 	* core/Base/IdentifiableObject.class.php, core/Logic/Expression.class.php,
 	core/OSQL/SQLArray.class.php, main/DAOs/ProtoDAO.class.php,
 	test/main/CriteriaTest.class.php: ability to use DialectString in Criteria added;
 	DialectString implementation added to IdentifiableObject
-
 
 2011-05-18	Evgeny V. Kokovikhin
 
