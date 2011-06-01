@@ -231,27 +231,15 @@
 		
 		public function testCallbackFilter()
 		{
-			//first simple test
-			$callback = function($value) {
-				return $value . ' callbacked';
-			};
-			$filter = CallbackFilter::create()->setCallback($callback);
-			
-			$this->assertEquals(
-				'somevalue callbacked',
-				$filter->apply('somevalue')
-			);
-			
-			//second simple test
+			//simple test
 			$postApply = ' and my applying';
-			$callback = function($value) use ($postApply) {
+			$filter = CallbackFilter::create(function($value) use ($postApply) {
 				return $value . $postApply;
-			};
-			$filter->setCallback($callback);
+			});
 			
 			$this->assertEquals(
-				'some other value and my applying',
-				$filter->apply('some other value')
+				'one another value and my applying',
+				$filter->apply('one another value')
 			);
 		}
 	}

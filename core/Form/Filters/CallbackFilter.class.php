@@ -22,26 +22,19 @@
 		/**
 		 * @return CallbackFilter
 		**/
-		public static function create()
+		public static function create(Closure $callback)
 		{
-			return new self;
+			return new self($callback);
 		}
 		
-		/**
-		 * @return CallbackFilter
-		**/
-		public function setCallback(Closure $callback)
+		public function __construct(Closure $callback)
 		{
 			$this->callback = $callback;
-			
-			return $this;
 		}
 		
 		public function apply($value)
 		{
-			Assert::isNotNull($this->callback, 'You must set callback function first');
-			$callback = $this->callback;
-			return $callback($value);
+			return $this->callback->__invoke($value);
 		}
 	}
 ?>
