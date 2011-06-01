@@ -8,16 +8,6 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-
-	/**
-	 * @ingroup Exceptions
-	**/
-	class MailException extends BaseException {/*_*/};
-	
-	/**
-	 * @ingroup Exceptions
-	**/
-	class MailNotSentException extends MailException {/*_*/};
 	
 	/**
 	 * @ingroup Mail
