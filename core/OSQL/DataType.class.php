@@ -38,6 +38,7 @@
 		const BINARY			= 0x00000E;
 		
 		const IP				= 0x000010;
+		const IP_RANGE			= 0x000011;
 		
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x000200;
@@ -76,6 +77,7 @@
 			self::BINARY		=> 'BINARY',
 			
 			self::IP			=> 'IP',
+			self::IP_RANGE		=> 'IP_RANGE'
 		);
 		
 		/**

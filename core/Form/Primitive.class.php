@@ -348,11 +348,19 @@
 		}
 		
 		/**
-		 * @return PrimitiveInet
+		 * @return PrimitiveIpAddress
 		**/
 		public static function ipAddress($name)
 		{
 			return new PrimitiveIpAddress($name);
+		}
+		
+		/**
+		 * @return PrimitiveIpRange
+		 */
+		public static function ipRange($name)
+		{
+			return new PrimitiveIpRange($name);
 		}
 	}
 ?>
