@@ -117,6 +117,25 @@
 				
 				$this->fail();
 			} catch (WrongArgumentException $e) {/**/}
+			
+			$slashRange = IpRange::create('192.168.1.0/30');
+			
+			$this->assertEquals(
+				'192.168.1.0',
+				$slashRange->getStart()->toString()
+			);
+			
+			$this->assertEquals(
+				'192.168.1.3',
+				$slashRange->getEnd()->toString()
+			);
+			
+			try {
+				$range =
+					IpRange::create('192.168.1.0/4');
+				
+				$this->fail();
+			} catch (WrongArgumentException $e) {/**/}
 		}
 	}
 ?>
