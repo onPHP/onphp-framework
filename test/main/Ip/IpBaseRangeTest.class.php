@@ -83,5 +83,40 @@
 					$range->toDialectString(ImaginaryDialect::me())
 				);
 		}
+		
+		public function testCreation()
+		{
+			$range =
+				IpRange::create('192.168.2.1-192.168.255.255');
+			
+			$anotherRange =
+				IpRange::create(
+					IpAddress::create('192.168.2.1'),
+					IpAddress::create('192.168.255.255')
+				);
+			
+			$this->assertEquals($range->toString(), $anotherRange->toString());
+			
+			try {
+				$range =
+					IpRange::create('192.168.2.1-192.168.255.666');
+				
+				$this->fail();
+			} catch (WrongArgumentException $e) {/**/}
+			
+			try {
+				$range =
+					IpRange::create('192.168.666.1-192.168.255.254');
+				
+				$this->fail();
+			} catch (WrongArgumentException $e) {/**/}
+			
+			try {
+				$range =
+					IpRange::create(array(array(array(false))));
+				
+				$this->fail();
+			} catch (WrongArgumentException $e) {/**/}
+		}
 	}
 ?>

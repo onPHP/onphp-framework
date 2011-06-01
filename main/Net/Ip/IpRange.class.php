@@ -20,20 +20,38 @@
 		/**
 		 * @return IpRange
 		**/
-		public static function create(IpAddress $startIp, IpAddress $endIp)
+		public static function create(/**/)
 		{
-			return new self($startIp, $endIp);
+			return new self(func_get_args());
 		}
 		
-		public function __construct(IpAddress $startIp, IpAddress $endIp)
+		public function __construct(/**/)
 		{
-			if ($startIp->getLongIp() > $endIp->getLongIp())
-				throw new WrongArgumentException(
-					'start ip must be lower than ip end'
-				);
+			$args = func_get_args();
 			
-			$this->startIp 	= $startIp;
-			$this->endIp 	= $endIp;
+			if (count($args) == 1 && is_array($args[0]))
+				$args = $args[0];
+			
+			if (count($args) == 1) { //start-end
+				Assert::isString($args[0]);
+				
+				try {
+					$parts = explode('-', $args[0]);
+					
+					$this->setup(
+						IpAddress::create($parts[0]),
+						IpAddress::create($parts[1])
+					);
+					
+				} catch (Exception $e) {
+					throw new WrongArgumentException('strange parameters received');
+				}
+				
+			} elseif (count($args) == 2) //aka start and end
+				$this->setup($args[0], $args[1]);
+			
+			else
+				throw new WrongArgumentException('strange parameters received');
 		}
 		
 		/**
@@ -90,6 +108,19 @@
 		public function toDialectString(Dialect $dialect)
 		{
 			return $dialect->quoteValue($this->toString());
+		}
+		
+		private function setup(IpAddress $startIp, IpAddress $endIp)
+		{
+			if ($startIp->getLongIp() > $endIp->getLongIp())
+				throw new WrongArgumentException(
+					'start ip must be lower than ip end'
+				);
+			
+			$this->startIp 	= $startIp;
+			$this->endIp 	= $endIp;
+			
+			return $this;
 		}
 	}
 ?>
