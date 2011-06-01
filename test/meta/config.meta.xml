@@ -78,7 +78,7 @@
 			<property name="url" type="HttpUrl" size="256" required="false" />
 			<property name="properties" type="Hstore" required="false" />
 			
-			<property name="ip" type="Inet" required="false" />
+			<property name="ip" type="IpAddress" required="false" />
 			
 		</properties>
 		

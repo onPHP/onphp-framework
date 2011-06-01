@@ -87,6 +87,9 @@
 			if ($type->getId() == DataType::BINARY)
 				return 'BYTEA';
 			
+			if ($type->getId() == DataType::IP)
+				return 'ip4';
+			
 			return parent::typeToString($type);
 		}
 		

@@ -657,6 +657,47 @@
 			}
 		}
 		
+		public function testIpAddressProperty()
+		{
+			$this->create();
+			
+			$city =
+				TestCity::create()->
+				setName('Khimki');
+			
+			TestCity::dao()->add($city);
+			
+			$userWithIp =
+				TestUser::create()->
+					setCredentials(
+						Credentials::create()->
+						setNickName('postgreser')->
+						setPassword(sha1('postgreser'))
+					)->
+					setLastLogin(Timestamp::makeNow())->
+					setRegistered(Timestamp::makeNow())->
+					setCity($city)->
+					setIp(IpAddress::create('127.0.0.1'));
+			
+			TestUser::dao()->add($userWithIp);
+			
+			$this->assertTrue($userWithIp->getId() >= 1);
+			
+			$this->assertTrue($userWithIp->getIp() instanceof IpAddress);
+			
+			$plainIp =
+				DBPool::me()->getByDao(TestUser::dao())->
+				queryColumn(
+					OSQL::select()->get('ip')->
+					from(TestUser::dao()->getTable())->
+					where(Expression::eq('id', $userWithIp->getId()))
+				);
+			
+			$this->assertEquals($plainIp[0], $userWithIp->getIp()->toString());
+			
+			$this->drop();
+		}
+		
 		protected function getSome()
 		{
 			for ($i = 1; $i < 3; ++$i) {
