@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup Ip
 	**/
-	class IpRange implements SingleRange
+	class IpRange implements SingleRange, DialectString, Stringable
 	{
 		private $startIp 	= null;
 		private $endIp		= null;
@@ -80,6 +80,16 @@
 				($this->startIp->getLongIp() <= $probe->getLongIp())
 				&& ($this->endIp->getLongIp() >= $probe->getLongIp())
 			);
+		}
+		
+		public function toString()
+		{
+			return $this->startIp->toString().'-'.$this->endIp->toString();
+		}
+		
+		public function toDialectString(Dialect $dialect)
+		{
+			return $dialect->quoteValue($this->toString());
 		}
 	}
 ?>

@@ -59,5 +59,29 @@
 				)
 			);
 		}
+		
+		public function testToString()
+		{
+			$range =
+				IpRange::create(
+					IpAddress::create('192.168.1.1'),
+					IpAddress::create('192.168.255.255')
+				);
+			
+				$this->assertEquals(
+					'192.168.1.1-192.168.255.255',
+					$range->toString()
+				);
+				
+				$this->assertEquals(
+					'\'192.168.1.1-192.168.255.255\'',
+					$range->toDialectString(PostgresDialect::me())
+				);
+				
+				$this->assertEquals(
+					'192.168.1.1-192.168.255.255',
+					$range->toDialectString(ImaginaryDialect::me())
+				);
+		}
 	}
 ?>
