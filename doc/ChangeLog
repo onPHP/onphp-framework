@@ -2,6 +2,11 @@
 
 	* main/Crypto/Base62Utils.class.php: assert check in decode() added.
 
+2011-06-01	Alexey S. Denisov
+
+	* core/Form/Filters/CallbackFilter.class.php: implemented CallbackFilter
+	to work with anonymous functions.
+
 2011-06-01	Sergey S. Sergeev
 
 	* main/Crypto/Base62Utils.class.php: Base62 encode/decode implemented.
