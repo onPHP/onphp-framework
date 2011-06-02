@@ -40,6 +40,20 @@
 			} catch (WrongArgumentException $e) {
 				//is ok
 			}
+
+			try {
+				Base62Utils::decode('q1w2e3r4t5y');
+				$this->fail('Wrong: max length of code');
+			} catch (WrongArgumentException $e) {
+				//is ok
+			}
+
+			try {
+				Base62Utils::decode('');
+				$this->fail('Wrong: min length of code');
+			} catch (WrongArgumentException $e) {
+				//is ok
+			}
 		}
 
 		public function testEncodeDecode()
