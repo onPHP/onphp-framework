@@ -51,9 +51,15 @@
 		public static function decode($string)
 		{
 			Assert::isString($string);
-			$magicInt = strlen(self::$chars);
 
 			$len = strlen($string);
+			Assert::isTrue(
+				$len > 0 && $len <= 6,
+				'Wrong code'
+			);
+
+			$magicInt = strlen(self::$chars);
+
 			$val = 0;
 			$arr = array_flip(str_split(self::$chars));
 			for($i = 0; $i < $len; ++$i) {
