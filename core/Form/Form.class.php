@@ -43,6 +43,22 @@
 			return array_merge($this->errors, $this->violated);
 		}
 		
+		public function hasError($name)
+		{
+			return array_key_exists($name, $this->errors)
+				|| array_key_exists($name, $this->violated);
+		}
+		
+		public function getError($name)
+		{
+			if (array_key_exists($name, $this->errors)) {
+				return $this->errors[$name];
+			} elseif (array_key_exists($name, $this->violated)) {
+				return $this->violated[$name];
+			}
+			return null;
+		}
+		
 		public function getInnerErrors()
 		{
 			$result = $this->getErrors();
