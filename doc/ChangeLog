@@ -1,3 +1,9 @@
+2011-06-01	Alexey S. Denisov
+
+	* core/Form/Form.class.php: implemented methods
+	Form::getError and Form::hasError.
+	* test/core/FormTest.class.php: added tests for Form errors.
+
 2011-06-02	Sergey S. Sergeev
 
 	* main/Crypto/Base62Utils.class.php: assert check in decode() added.
