@@ -54,7 +54,8 @@
 
 			$len = strlen($string);
 			Assert::isTrue(
-				$len > 0 && $len <= 6,
+				(PHP_INT_SIZE === 4 && $len > 0 && $len <= 6)
+				|| (PHP_INT_SIZE === 8 && $len > 0 && $len <= 11),
 				'Wrong code'
 			);
 
