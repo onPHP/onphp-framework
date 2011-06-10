@@ -35,15 +35,29 @@
 		public function testOutOfRange()
 		{
 			try {
-				Base62Utils::encode(pow(2, 31));
+				Base62Utils::encode(PHP_INT_MAX + 1);
 				$this->fail('Out of range failed');
 			} catch (WrongArgumentException $e) {
 				//is ok
 			}
 
 			try {
-				Base62Utils::decode('q1w2e3r4t5y');
-				$this->fail('Wrong: max length of code');
+				switch(PHP_INT_SIZE) {
+					case 4:
+						Base62Utils::decode('q1w2e3r'); // 7 symbols
+						$this->fail('Wrong: int4 max length of code');
+						break;
+
+					case 8:
+						Base62Utils::decode('q1w2e3r4t5y6'); // 12 symbols
+						$this->fail('Wrong: int8 max length of code');
+						break;
+
+					default:
+						$this->fail('Wrong: PHP is rock');
+						break;
+				}
+
 			} catch (WrongArgumentException $e) {
 				//is ok
 			}
