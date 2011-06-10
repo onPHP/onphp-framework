@@ -35,7 +35,7 @@
 
 		public static function encode($integer)
 		{
-			Assert::isInteger($integer, 'Out of range');
+			Assert::isPositiveInteger($integer, 'Out of range');
 			$magicInt = strlen(self::$chars);
 
 			$string = '';

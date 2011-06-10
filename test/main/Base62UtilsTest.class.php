@@ -70,6 +70,16 @@
 			}
 		}
 
+		public function testPositiveInteger()
+		{
+			try {
+				Base62Utils::encode(-1);
+				$this->fail('Positive integer failed');
+			} catch (WrongArgumentException $e) {
+				//is ok
+			}
+		}
+
 		public function testEncodeDecode()
 		{
 			$int = Base62Utils::decode('onPHP');
