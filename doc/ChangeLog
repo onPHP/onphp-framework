@@ -1,3 +1,9 @@
+2011-06-11	Alexey S. Denisov
+
+	* core/DB/LiteDialect.class.php,  core/DB/PostgresDialect.class.php
+	core/OSQL/DBBinary.class.php, test/misc/DAOTest.class.php:
+		fixed work with *Dialect::quoteBinary and DBBinary
+
 2011-06-10	Sergey S. Sergeev
 
 	* main/Crypto/Base62Utils.class.php: fixed logic for 64 bit systems.

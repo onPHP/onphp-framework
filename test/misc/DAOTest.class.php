@@ -626,11 +626,12 @@
 		public function nonIntegerIdentifier()
 		{
 			$id = 'non-integer-one';
+			$binaryData = "\0!bbq!\0";
 			
 			$bin =
 				TestBinaryStuff::create()->
 				setId($id)->
-				setData("\0!bbq!\0");
+				setData($binaryData);
 			
 			try {
 				TestBinaryStuff::dao()->import($bin);
@@ -645,13 +646,14 @@
 			$this->assertTrue($prm->import(array('id' => $id)));
 			$this->assertSame($prm->getValue()->getId(), $id);
 			
-			$this->assertEquals(TestBinaryStuff::dao()->getById($id), $bin);
+			$binLoaded = TestBinaryStuff::dao()->getById($id);
+			$this->assertEquals($binLoaded, $bin);
+			$this->assertEquals($binLoaded->getData(), $binaryData);
 			$this->assertEquals(TestBinaryStuff::dao()->dropById($id), 1);
 			
-			$id = Primitive::prototypedIdentifier('TestUser');
-			
+			$integerIdPrimitive = Primitive::prototypedIdentifier('TestUser');
 			try {
-				$id->import(array('id' => 'string-instead-of-integer'));
+				$integerIdPrimitive->import(array('id' => 'string-instead-of-integer'));
 			} catch (DatabaseException $e) {
 				return $this->fail();
 			}
