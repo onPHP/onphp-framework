@@ -27,7 +27,7 @@
 		
 		public function toDialectString(Dialect $dialect)
 		{
-			return "'".$dialect->quoteBinary($this->getValue())."'";
+			return $dialect->quoteBinary($this->getValue());
 		}
 	}
 ?>
