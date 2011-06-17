@@ -46,7 +46,7 @@
 		
 		public function quoteBinary($data)
 		{
-			return sqlite_udf_encode_binary($data);
+			return "'" .sqlite_udf_encode_binary($data)."'";
 		}
 		
 		public function unquoteBinary($data)
