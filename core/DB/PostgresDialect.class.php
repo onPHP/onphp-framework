@@ -74,7 +74,7 @@
 		
 		public function quoteBinary($data)
 		{
-			return pg_escape_bytea($data);
+			return "E'".pg_escape_bytea($data)."'";
 		}
 		
 		public function unquoteBinary($data)
