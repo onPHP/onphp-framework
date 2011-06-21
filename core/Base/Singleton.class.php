@@ -21,6 +21,14 @@
 		
 		protected function __construct() {/* you can't create me */}
 		
+		final public static function i($args = null /* , ... */)
+		{
+			if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300)
+				throw new PhpOldVersionException('LSB (5.3) is needed');
+			
+			return self::getInstance(get_called_class(), $args);
+		}
+
 		/// @example singleton.php
 		final public static function getInstance(
 			$class, $args = null /* , ... */

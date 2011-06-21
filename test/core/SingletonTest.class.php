@@ -28,6 +28,17 @@
 			);
 		}
 		
+		public function testLateStaticBinding()
+		{
+			if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300)
+				$this->markTestSkipped('working only at php 5.3 or later');
+			
+			$this->assertTrue(
+				SingletonSingleArgumentTestInstance::i(self::CLASS_NAME)
+				instanceof SingletonSingleArgumentTestInstance
+			);
+		}
+		
 		public function testNonSingletonChilds()
 		{
 			try {
