@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2004-2007 by Anton E. Lebedevich                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,24 +10,7 @@
  ***************************************************************************/
 
 	/**
-	 * Container for passing binary values into OSQL queries.
-	 * 
-	 * @ingroup OSQL
-	 * @ingroup Module
+	 * @ingroup Exceptions
 	**/
-	final class DBBinary extends DBValue
-	{
-		/**
-		 * @return DBBinary
-		**/
-		public static function create($value)
-		{
-			return new self($value);
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			return $dialect->quoteBinary($this->getValue());
-		}
-	}
+	class MailException extends BaseException {/*_*/};
 ?>

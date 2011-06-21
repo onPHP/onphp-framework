@@ -228,5 +228,19 @@
 				Utf16ConverterFilter::me()->apply('привет')
 			);
 		}
+		
+		public function testCallbackFilter()
+		{
+			//simple test
+			$postApply = ' and my applying';
+			$filter = CallbackFilter::create(function($value) use ($postApply) {
+				return $value . $postApply;
+			});
+			
+			$this->assertEquals(
+				'one another value and my applying',
+				$filter->apply('one another value')
+			);
+		}
 	}
 ?>

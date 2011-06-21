@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2011 by Alexey S. Denisov                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,24 +10,31 @@
  ***************************************************************************/
 
 	/**
-	 * Container for passing binary values into OSQL queries.
-	 * 
-	 * @ingroup OSQL
-	 * @ingroup Module
+	 * @ingroup Filters
 	**/
-	final class DBBinary extends DBValue
+	final class CallbackFilter implements Filtrator
 	{
 		/**
-		 * @return DBBinary
+		 * @var Closure
+		 */
+		private $callback = null;
+		
+		/**
+		 * @return CallbackFilter
 		**/
-		public static function create($value)
+		public static function create(Closure $callback)
 		{
-			return new self($value);
+			return new self($callback);
 		}
 		
-		public function toDialectString(Dialect $dialect)
+		public function __construct(Closure $callback)
 		{
-			return $dialect->quoteBinary($this->getValue());
+			$this->callback = $callback;
+		}
+		
+		public function apply($value)
+		{
+			return $this->callback->__invoke($value);
 		}
 	}
 ?>

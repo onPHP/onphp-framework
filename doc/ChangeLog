@@ -1,10 +1,44 @@
-2011-05-27	Alexey Denisov
+2011-06-18	Alexey S. Denisov
+
+	* core/DB/LiteDialect.class.php,  core/DB/PostgresDialect.class.php,
+	core/OSQL/DBBinary.class.php, test/misc/DAOTest.class.php:
+		fixed work with *Dialect::quoteBinary and DBBinary
+
+2011-06-11	Alexey S. Denisov
+
+	* core/Form/Form.class.php: implemented methods
+	Form::getError and Form::hasError.
+	* test/core/FormTest.class.php: added tests for Form errors.
+
+2011-06-11	Sergey S. Sergeev
+
+	* main/Crypto/Base62Utils.class.php: isPositiveInteger fixed,
+	thanks to klestoff. 
+
+2011-06-10	Sergey S. Sergeev
+
+	* main/Crypto/Base62Utils.class.php: fixed logic for 64 bit systems.
+
+2011-06-02	Sergey S. Sergeev
+
+	* main/Crypto/Base62Utils.class.php: assert check in decode() added.
+
+2011-06-01	Alexey S. Denisov
+
+	* core/Form/Filters/CallbackFilter.class.php: implemented CallbackFilter
+	to work with anonymous functions.
+
+2011-06-01	Sergey S. Sergeev
+
+	* main/Crypto/Base62Utils.class.php: Base62 encode/decode implemented.
+	Util will be useful for generating short URLs.
+
+2011-05-27	Alexey S. Denisov
 
 	* core/Base/IdentifiableObject.class.php, core/Logic/Expression.class.php,
 	core/OSQL/SQLArray.class.php, main/DAOs/ProtoDAO.class.php,
 	test/main/CriteriaTest.class.php: ability to use DialectString in Criteria added;
 	DialectString implementation added to IdentifiableObject
-
 
 2011-05-18	Evgeny V. Kokovikhin
 
