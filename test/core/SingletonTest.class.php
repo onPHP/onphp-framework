@@ -26,6 +26,15 @@
 				Singleton::getInstance(self::CLASS_NAME),
 				Singleton::getInstance(self::CLASS_NAME)
 			);
+
+			$className = self::CLASS_NAME;
+			$this->assertSameInstances(
+				self::CLASS_NAME,
+				$className::getInstance(),
+				Singleton::getInstance(self::CLASS_NAME)
+			);
+
+
 		}
 		
 		public function testNonSingletonChilds()
@@ -79,7 +88,7 @@
 			} catch (BaseException $e) {
 				// pass
 			}
-			
+
 			$this->assertSameInstances(
 				self::SINGLE_CLASS_NAME,
 				Singleton::getInstance(self::SINGLE_CLASS_NAME, 'val1'),
