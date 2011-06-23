@@ -76,7 +76,7 @@
 		public function typeToString(DataType $type)
 		{
 			if ($type->getId() == DataType::IP)
-				return 'char(15)';
+				return 'varchar(19)';
 			
 			return $type->getName();
 		}

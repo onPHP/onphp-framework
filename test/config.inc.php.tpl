@@ -30,7 +30,7 @@
 			'pass'	=> 'onphp',
 			'host'	=> '127.0.0.1',
 			'base'	=> 'onphp'
-		),
+		)/*,
 		'MySQL' => array(
 			'user'	=> 'onphp',
 			'pass'	=> 'onphp',
@@ -42,7 +42,7 @@
 			'pass'	=> 'onphp',
 			'host'	=> '127.0.0.1',
 			'base'	=> 'onphp'
-		),
+		),*/
 	);
 
 	$daoWorkers = array(
