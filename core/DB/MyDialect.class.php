@@ -66,7 +66,7 @@
 		
 		public function quoteBinary($data)
 		{
-			return mysql_real_escape_string($data);
+			return "'".mysql_real_escape_string($data)."'";
 		}
 		
 		public function typeToString(DataType $type)
