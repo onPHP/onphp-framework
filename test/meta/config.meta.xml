@@ -237,5 +237,14 @@
 
 		<pattern name="StraightMapping" />
 	</class>
+	
+	<class name="TestInternetProvider" type="final">
+		<properties>
+			<identifier />
+			<property name="name" type="String" size="255" required="true" />
+			<property name="range" type="IpRange" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
 
 </classes></metaconfiguration>
