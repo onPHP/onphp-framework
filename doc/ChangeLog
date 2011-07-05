@@ -1,3 +1,8 @@
+2011-07-05	Evgeny V. Kokovikhin
+	
+	* main/Criteria/Criteria.class.php, test/main/CriteriaTest.class.php:
+	sleep and wakeup fixed, more frendly error added
+
 2011-07-04	Evgeny V. Kokovikhin
 
 	* core/DB/MyDialect.class.php: binary quoting fixed
