@@ -99,7 +99,8 @@
 		
 		public function checkAndGetDao()
 		{
-			Assert::isNotNull($this->dao, 'You forgot to set dao');
+			if (!$this->dao)
+				throw new WrongStateException('You forgot to set dao');
 			
 			return $this->dao;
 		}
@@ -309,7 +310,10 @@
 			$this->collections[$path]['lazy'] = $lazy;
 			$this->collections[$path]['criteria'] = $criteria;
 			$this->collections[$path]['propertyPath']
-				= new PropertyPath($this->dao->getObjectName(), $path);
+				= new PropertyPath(
+					$this->checkAndGetDao()->getObjectName(),
+					$path
+				);
 			
 			return $this;
 		}
@@ -317,7 +321,10 @@
 		public function get()
 		{
 			try {
-				$list = array($this->dao->getByQuery($this->toSelectQuery()));
+				$list = array(
+					$this->checkAndGetDao()->
+						getByQuery($this->toSelectQuery())
+				);
 			} catch (ObjectNotFoundException $e) {
 				if (!$this->isSilent())
 					throw $e;
@@ -328,7 +335,9 @@
 			if (!$this->collections || !$list)
 				return reset($list);
 			
-			$list = $this->dao->fetchCollections($this->collections, $list);
+			$list =
+				$this->checkAndGetDao()->
+				fetchCollections($this->collections, $list);
 			
 			return reset($list);
 		}
@@ -336,7 +345,10 @@
 		public function getList()
 		{
 			try {
-				$list = $this->dao->getListByQuery($this->toSelectQuery());
+				$list =
+					$this->checkAndGetDao()->
+					getListByQuery($this->toSelectQuery());
+				
 			} catch (ObjectNotFoundException $e) {
 				if (!$this->isSilent())
 					throw $e;
@@ -347,7 +359,9 @@
 			if (!$this->collections || !$list)
 				return $list;
 			
-			return $this->dao->fetchCollections($this->collections, $list);
+			return
+				$this->checkAndGetDao()->
+				fetchCollections($this->collections, $list);
 		}
 		
 		/**
@@ -355,13 +369,15 @@
 		**/
 		public function getResult()
 		{
-			$result = $this->dao->getQueryResult($this->toSelectQuery());
+			$result =
+				$this->checkAndGetDao()->
+				getQueryResult($this->toSelectQuery());
 			
 			if (!$this->collections || !$result->getCount())
 				return $result;
 			
 			return $result->setList(
-				$this->dao->fetchCollections(
+				$this->checkAndGetDao()->fetchCollections(
 					$this->collections,
 					$result->getList()
 				)
@@ -371,7 +387,8 @@
 		public function getCustom($index = null)
 		{
 			try {
-				$result = $this->dao->getCustom($this->toSelectQuery());
+				$result =
+					$this->checkAndGetDao()->getCustom($this->toSelectQuery());
 				
 				if ($index) {
 					if (array_key_exists($index, $result))
@@ -394,7 +411,10 @@
 		public function getCustomList()
 		{
 			try {
-				return $this->dao->getCustomList($this->toSelectQuery());
+				return
+					$this->checkAndGetDao()->
+					getCustomList($this->toSelectQuery());
+				
 			} catch (ObjectNotFoundException $e) {
 				if (!$this->isSilent())
 					throw $e;
@@ -406,7 +426,10 @@
 		public function getPropertyList()
 		{
 			try {
-				return $this->dao->getCustomRowList($this->toSelectQuery());
+				return
+					$this->checkAndGetDao()->
+					getCustomRowList($this->toSelectQuery());
+				
 			} catch (ObjectNotFoundException $e) {
 				if (!$this->isSilent())
 					throw $e;
@@ -434,17 +457,15 @@
 		**/
 		public function toSelectQuery()
 		{
-			Assert::isNotNull($this->dao, 'DAO not set');
-			
 			if (!$this->projection->isEmpty()) {
 				$query =
 					$this->getProjection()->process(
 						$this,
-						$this->dao->makeSelectHead()->
+						$this->checkAndGetDao()->makeSelectHead()->
 							dropFields()
 					);
 			} else
-				$query = $this->dao->makeSelectHead();
+				$query = $this->checkAndGetDao()->makeSelectHead();
 			
 			if ($this->distinct)
 				$query->distinct();
@@ -466,12 +487,14 @@
 			if ($this->logic->getSize()) {
 				$query->
 					andWhere(
-						$this->logic->toMapped($this->dao, $query)
+						$this->logic->toMapped($this->checkAndGetDao(), $query)
 					);
 			}
 			
 			if ($this->order) {
-				$query->setOrderChain($this->order->toMapped($this->dao, $query));
+				$query->setOrderChain(
+					$this->order->toMapped($this->checkAndGetDao(), $query)
+				);
 			}
 			
 			if (
@@ -480,7 +503,12 @@
 					$this->strategy->getId() <> FetchStrategy::CASCADE
 				)
 			) {
-				$this->joinProperties($query, $this->dao, $this->dao->getTable(), true);
+				$this->joinProperties(
+					$query,
+					$this->checkAndGetDao(),
+					$this->checkAndGetDao()->getTable(),
+					true
+				);
 			}
 			
 			return $query;
@@ -611,7 +639,7 @@
 		{
 			return
 				call_user_func(
-					array($this->dao->getObjectName(), 'proto')
+					array($this->checkAndGetDao()->getObjectName(), 'proto')
 				);
 		}
 	}
