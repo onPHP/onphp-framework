@@ -37,19 +37,14 @@
 			if (count($args) == 1 && is_array($args[0]))
 				$args = $args[0];
 			
-			if (count($args) == 1) { //start-end or ip/mask
-				Assert::isString($args[0]);
-				
-				if (preg_match(self::INTERVAL_PATTERN, $args[0]))
-					$this->createFromInterval($args[0]);
-				elseif (preg_match(self::IP_SLASH_PATTERN, $args[0]))
-					$this->createFromSlash($args[0]);
-				else
-					throw new WrongArgumentException('strange parameters received');
-				
-			} elseif (count($args) == 2) //aka start and end
+			if (count($args) == 2) //aka start and end
 				$this->setup($args[0], $args[1]);
-			else
+			
+			elseif (count($args) == 1) { //start-end or ip/mask	
+				Assert::isString($args[0]);
+				$this->createFromString($args[0]);
+				
+			} else
 				throw new WrongArgumentException('strange parameters received');
 		}
 		
@@ -160,6 +155,19 @@
 					long2ip($ip->getLongIp() | ~$longMask)
 				)
 			);
+		}
+		
+		private function createFromString($string)
+		{
+			if (strstr($string, '/') !== false) {
+				if (preg_match(self::IP_SLASH_PATTERN, $string))
+					$this->createFromSlash($string);
+				else
+					throw new WrongArgumentException('strange parameters received');
+			} elseif (preg_match(self::INTERVAL_PATTERN, $string))
+				$this->createFromInterval($string);
+			else
+				throw new WrongArgumentException('strange parameters received');
 		}
 	}
 ?>
