@@ -87,11 +87,14 @@
 			if ($type->getId() == DataType::BINARY)
 				return 'BYTEA';
 			
-			if (
-				$type->getId() == DataType::IP
-				&& defined('POSTGRES_IP4_ENABLED')
-			)
-				return 'ip4';
+			if (defined('POSTGRES_IP4_ENABLED')) {
+				
+				if ($type->getId() == DataType::IP)
+					return 'ip4';
+				
+				if ($type->getId() == DataType::IP_RANGE)
+					return 'ip4r';
+			}
 			
 			return parent::typeToString($type);
 		}

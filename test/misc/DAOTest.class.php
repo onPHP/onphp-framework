@@ -700,6 +700,42 @@
 			$this->drop();
 		}
 		
+		public function testIpRangeProperty()
+		{
+			$this->create();
+			
+			$akado =
+				TestInternetProvider::create()->
+				setName('Akada')->
+				setRange(
+					IpRange::create(
+						IpAddress::create('192.168.1.1'),
+						IpAddress::create('192.168.1.42')
+					)
+				);
+			
+			TestInternetProvider::dao()->
+				add($akado);
+			
+			$plainRange =
+					Criteria::create(TestInternetProvider::dao())->
+					addProjection(Projection::property('range'))->
+					add(Expression::eq('name', 'Akada'))->
+					getCustom();
+			
+			$this->assertEquals(
+				$plainRange['range'],
+				'192.168.1.1-192.168.1.42'
+			);
+			
+			$this->drop();
+		}
+		
+		public function testIpIn()
+		{
+			
+		}
+		
 		protected function getSome()
 		{
 			for ($i = 1; $i < 3; ++$i) {

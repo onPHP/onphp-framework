@@ -78,6 +78,9 @@
 			if ($type->getId() == DataType::IP)
 				return 'varchar(19)';
 			
+			if ($type->getId() == DataType::IP_RANGE)
+				return 'varchar(41)';
+			
 			return $type->getName();
 		}
 		
