@@ -136,6 +136,10 @@
 				
 				$this->fail();
 			} catch (WrongArgumentException $e) {/**/}
+			
+			$range = IpRange::create('8.8/16');
+			
+			$this->assertEquals($range->toString(), '8.8.0.0-8.8.255.255');
 		}
 	}
 ?>
