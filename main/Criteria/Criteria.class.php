@@ -63,7 +63,10 @@
 		
 		public function __sleep()
 		{
-			$this->daoClass = get_class($this->dao);
+			$this->daoClass =
+				$this->getDao()
+					? get_class($this->dao)
+					: null;
 			
 			$vars = get_object_vars($this);
 			unset($vars['dao']);
@@ -72,7 +75,8 @@
 		
 		public function __wakeup()
 		{
-			$this->dao = Singleton::getInstance($this->daoClass);
+			if ($this->daoClass)
+				$this->dao = Singleton::getInstance($this->daoClass);
 		}
 		
 		/**
@@ -91,6 +95,13 @@
 			$this->dao = $dao;
 			
 			return $this;
+		}
+		
+		public function checkAndGetDao()
+		{
+			Assert::isNotNull($this->dao, 'You forgot to set dao');
+			
+			return $this->dao;
 		}
 		
 		/**
