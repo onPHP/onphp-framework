@@ -16,7 +16,7 @@
 	{
 		const MASK_MAX_SIZE = 31;
 		
-		const INTERVAL_PATTERN = '/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\s*-\s*\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/';
+		const INTERVAL_PATTERN = '/^\d{1,3}(\.\d{1,3}){3}\s*-\s*\d{1,3}(\.\d{1,3}){3}$/';
 		const IP_SLASH_PATTERN = '/(\d{1,3}\.){0,3}\d{1,3}\/\d{1,2}/';
 		
 		private $startIp 	= null;
