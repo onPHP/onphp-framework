@@ -728,6 +728,22 @@
 				'192.168.1.1-192.168.1.42'
 			);
 			
+			TestInternetProvider::dao()->
+			add(
+				TestInternetProvider::create()->
+				setName('DomRu')->
+				setRange(
+					IpRange::create('192.168.2.0/24')
+				)
+			);
+			
+			$list =
+				Criteria::create(TestInternetProvider::dao())->
+				addOrder('id')->
+				getList();
+			
+			$this->assertEquals(count($list), 2);
+			
 			$this->drop();
 		}
 		
