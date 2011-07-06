@@ -147,6 +147,12 @@
 					throw new WrongArgumentException($e->getMessage());
 				}
 			} else {
+				if (!is_dir($directory)) {
+					throw new WrongStateException(
+						'Unable to found target directory: '.$directory
+					);
+				}
+
 				$directoryIterator = new DirectoryIterator($directory);
 				
 				foreach ($directoryIterator as $file) {
