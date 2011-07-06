@@ -80,6 +80,16 @@
 			}
 		}
 
+		public function testWrongDecode()
+		{
+			try {
+				Base62Utils::decode('abc]');
+				$this->fail('Wrong code');
+			} catch (WrongArgumentException $e) {
+				//is ok
+			}
+		}
+
 		public function testEncodeDecode()
 		{
 			$int = Base62Utils::decode('onPHP');

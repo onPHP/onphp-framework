@@ -1,3 +1,7 @@
+2011-07-06	Sergey S. Sergeev
+
+	* main/Crypto/Base62Utils.class.php: extract check() method.
+
 2011-07-04	Evgeny V. Kokovikhin
 
 	* core/DB/MyDialect.class.php: binary quoting fixed
