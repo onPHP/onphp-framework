@@ -1,3 +1,7 @@
+2011-07-04	Evgeny V. Kokovikhin
+
+	* core/DB/MyDialect.class.php: binary quoting fixed
+
 2011-06-18	Alexey S. Denisov
 
 	* core/DB/LiteDialect.class.php,  core/DB/PostgresDialect.class.php,
