@@ -147,10 +147,11 @@
 					throw new WrongArgumentException($e->getMessage());
 				}
 			} else {
-				Assert::isTrue(
-					is_dir($directory),
-					'Unable to found target directory'
-				);
+				if (!is_dir($directory)) {
+					throw new WrongStateException(
+						'Unable to found target directory: '.$directory
+					);
+				}
 
 				$directoryIterator = new DirectoryIterator($directory);
 				
