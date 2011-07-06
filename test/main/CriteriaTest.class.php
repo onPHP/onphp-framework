@@ -213,6 +213,51 @@
 				'SELECT test_user.id FROM test_user WHERE (test_user.city_id IN (3, 44))'
 			);
 		}
+		
+		public function testSleepWithEmptyDao()
+		{
+			$baseCriteria =
+				Criteria::create()->
+				setLimit(10);
+			
+			$newBaseCriteria =
+				unserialize(serialize($baseCriteria));
+			
+			$this->assertEquals(
+				$newBaseCriteria->getLimit(),
+				$baseCriteria->getLimit()
+			);
+			
+			$this->assertEquals(
+				$newBaseCriteria->getDao(),
+				$baseCriteria->getDao()
+			);
+		}
+		
+		public function testForgottenDao()
+		{
+			$criteria =
+				Criteria::create()->
+				add(Expression::eq('id', 42));
+			
+			$listCriteria = clone $criteria;
+			
+			try {
+				$listCriteria->getList();
+				
+				$this->fail();
+			} catch (WrongStateException $e) {/*it's good*/}
+			
+			$customCriteria = clone $criteria;
+			
+			try {
+				$customCriteria->
+					addProjection(Projection::property('id'))->
+					getCustomList();
+				
+				$this->fail();
+			} catch (WrongStateException $e) {/*it's good*/}
+		}
 
 		public static function orderDataProvider()
 		{
