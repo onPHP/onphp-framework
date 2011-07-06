@@ -147,6 +147,11 @@
 					throw new WrongArgumentException($e->getMessage());
 				}
 			} else {
+				Assert::isTrue(
+					is_dir($directory),
+					'Unable to found target directory'
+				);
+
 				$directoryIterator = new DirectoryIterator($directory);
 				
 				foreach ($directoryIterator as $file) {
