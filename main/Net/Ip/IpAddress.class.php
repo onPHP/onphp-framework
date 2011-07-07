@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup Ip
 	**/
-	class IpAddress implements Stringable
+	class IpAddress implements Stringable, DialectString
 	{
 		private $longIp = null;
 		
@@ -60,6 +60,11 @@
 		public function toString()
 		{
 			return long2ip($this->longIp);
+		}
+		
+		public function toDialectString(Dialect $dialect)
+		{
+			return $dialect->quoteValue($this->toString());
 		}
 		
 		public function toSignedInt()
