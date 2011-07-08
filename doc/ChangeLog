@@ -1,3 +1,7 @@
+2011-07-08      Dmitry V. Snezhinskiy
+
+	* main/Utils/FileUtils.class.php: fix of removing nonexistent directory in FileUtils
+
 2011-07-04	Evgeny V. Kokovikhin
 
 	* core/DB/MyDialect.class.php: binary quoting fixed
