@@ -157,13 +157,11 @@
 		
 		private function createFromString($string)
 		{
-			if (strstr($string, '/') !== false) {
-				if (preg_match(self::IP_SLASH_PATTERN, $string)) {
-					list($ip, $mask) = explode('/', $string);
-					$this->createFromSlash($ip, $mask);
-					
-				} else
-					throw new WrongArgumentException('strange parameters received');
+			if (preg_match(self::IP_SLASH_PATTERN, $string)) {
+				
+				list($ip, $mask) = explode('/', $string);
+				$this->createFromSlash($ip, $mask);
+				
 			} elseif (preg_match(self::INTERVAL_PATTERN, $string))
 				$this->createFromInterval($string);
 			else
