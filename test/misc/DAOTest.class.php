@@ -755,11 +755,6 @@
 			$this->drop();
 		}
 		
-		public function testIpIn()
-		{
-			
-		}
-		
 		protected function getSome()
 		{
 			for ($i = 1; $i < 3; ++$i) {
