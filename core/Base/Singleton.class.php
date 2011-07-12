@@ -23,9 +23,11 @@
 		
 		/// @example singleton.php
 		final public static function getInstance(
-			$class, $args = null /* , ... */
+			$class = null, $args = null /* , ... */
 		)
 		{
+			$class = self::selectClassName($class);
+
 			if (!isset(self::$instances[$class])) {
 				// for Singleton::getInstance('class_name', $arg1, ...) calling
 				if (2 < func_num_args()) {
@@ -68,7 +70,18 @@
 			
 			unset(self::$instances[$class]);
 		}
-		
+
+		final private static function selectClassName($class = null)
+		{
+			if ($class === null && defined('PHP_VERSION_ID') && PHP_VERSION_ID >= 50300) {
+				$class = get_called_class();
+			}
+
+			Assert::isNotNull($class, 'class name required');
+
+			return $class;
+		}
+
 		final private function __clone() {/* do not clone me */}
 		final private function __sleep() {/* restless class */}
 	}
