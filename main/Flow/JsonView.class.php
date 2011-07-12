@@ -13,7 +13,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class JsonView extends JsonView
+	class JsonView extends EmptyView
 	{
 		protected $options;
 
