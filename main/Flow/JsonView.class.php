@@ -35,7 +35,10 @@
 		**/
 		public function render(/* Model */ $model = null)
 		{
-			echo json_encode($model->getList(), $this->options);
+			if ($model instanceof Model) {
+				echo json_encode($model->getList(), $this->options);
+			}
+			
 			return $this;
 		}
 
