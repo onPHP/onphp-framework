@@ -1,3 +1,21 @@
+2011-07-13 	Evgeny V. Kokovikhin
+
+	* core/DB/Dialect.class.php, core/DB/PgSQL.class.php, 
+	core/DB/PostgresDialect.class.php, core/Form/Primitive.class.php
+	core/Form/Primitives/BaseObjectPrimitive.class.php,
+	core/Form/Primitives/PrimitiveIpAddress.class.php,
+	core/Form/Primitives/PrimitiveIpRange.class.php,
+	core/Logic/Expression.class.php, core/Logic/Ip4ContainsExpression.class.php,
+	core/OSQL/DataType.class.php, global.inc.php.tpl,
+	main/Net/Ip/IpAddress.class.php, main/Net/Ip/IpNetwork.class.php,
+	main/Net/Ip/IpRange.class.php, meta/types/IpAddressType.class.php,
+	meta/types/IpRangeType.class.php, test/config.inc.php.tpl,
+	test/core/Ip4ContainsExpressionTest.class.php, 
+	test/core/PrimitiveIpTest.class.php, test/main/Ip/IpBaseRangeTest.class.php,
+	test/meta/config.meta.xml, test/misc/DAOTest.class.php:
+		IpAddress type, IpRange type, primitives and db support for new types; 
+		Postgresql ip4r support added.
+
 2011-07-08	Dmitry V. Snezhinskiy
 
 	* main/Utils/FileUtils.class.php: fix of removing nonexistent directory 

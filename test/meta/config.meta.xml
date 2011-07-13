@@ -78,7 +78,7 @@
 			<property name="url" type="HttpUrl" size="256" required="false" />
 			<property name="properties" type="Hstore" required="false" />
 			
-			<property name="ip" type="Inet" required="false" />
+			<property name="ip" type="IpAddress" required="false" />
 			
 		</properties>
 		
@@ -236,6 +236,15 @@
 		</properties>
 
 		<pattern name="StraightMapping" />
+	</class>
+	
+	<class name="TestInternetProvider" type="final">
+		<properties>
+			<identifier />
+			<property name="name" type="String" size="255" required="true" />
+			<property name="range" type="IpRange" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
 	</class>
 
 </classes></metaconfiguration>
