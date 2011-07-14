@@ -87,6 +87,15 @@
 			if ($type->getId() == DataType::BINARY)
 				return 'BYTEA';
 			
+			if (defined('POSTGRES_IP4_ENABLED')) {
+				
+				if ($type->getId() == DataType::IP)
+					return 'ip4';
+				
+				if ($type->getId() == DataType::IP_RANGE)
+					return 'ip4r';
+			}
+			
 			return parent::typeToString($type);
 		}
 		
@@ -141,6 +150,25 @@
 			return
 				'default nextval(\''
 				.$this->makeSequenceName($column).'\')';
+		}
+		
+		public function quoteIpInRange($range, $ip)
+		{
+			$string = '';
+			
+			if ($ip instanceof DialectString)
+				$string .= $ip->toDialectString($this);
+			else
+				$string .= $this->quoteValue($ip);
+			
+			$string .= ' <<= ';
+			
+			if ($range instanceof DialectString)
+				$string .= $range->toDialectString($this);
+			else
+				$string .= $this->quoteValue($range);
+			
+			return $string;	
 		}
 		
 		protected function makeSequenceName(DBColumn $column)
