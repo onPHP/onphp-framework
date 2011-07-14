@@ -1,3 +1,6 @@
+2011-07-14	Evgeny V. Kokovikhin
+	* core/DB/ImaginaryDialect.class.php: quiting added
+
 2011-07-13 	Evgeny V. Kokovikhin
 
 	* core/DB/Dialect.class.php, core/DB/PgSQL.class.php, 
@@ -45,7 +48,7 @@
 2011-06-11	Sergey S. Sergeev
 
 	* main/Crypto/Base62Utils.class.php: isPositiveInteger fixed,
-	thanks to klestoff. 
+	thanks to Alexander A. Klestoff. 
 
 2011-06-10	Sergey S. Sergeev
 
