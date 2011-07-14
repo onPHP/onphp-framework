@@ -98,5 +98,26 @@
 					.implode($logic, $words)
 				.'")';
 		}
+		
+		public function quoteIpInRange($range, $ip)
+		{
+			$string = '';
+			
+			if ($ip instanceof DialectString)
+				$string .= $ip->toDialectString($this);
+			else
+				$string .= $this->quoteValue($ip);
+			
+			$string .= ' in (';
+			
+			if ($range instanceof DialectString)
+				$string .= $range->toDialectString($this);
+			else
+				$string .= $this->quoteValue($range);
+			
+			$string .= ')';
+			
+			return $string;	
+		}
 	}
 ?>
