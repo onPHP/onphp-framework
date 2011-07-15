@@ -10,8 +10,6 @@
  ****************************************************************************/
 	
 	/**
-	 * Basis for almost all implementations of SQL parts.
-	 * 
 	 * @ingroup OSQL
 	**/
 	final class UnquotedDbString implements DialectString
