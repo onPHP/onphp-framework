@@ -15,7 +15,7 @@
 	 */
 	final class PinbaClient extends Singleton
 	{
-		private $enabled = null;
+		private static $enabled = null;
 		private $timers = array();
 		
 		/**
@@ -26,12 +26,12 @@
 			return Singleton::getInstance(__CLASS__);
 		}
 		
-		public function isEnabled()
+		public static function isEnabled()
 		{
-			if ($this->enabled === null)
-				$this->enabled = ini_get("pinba.enabled") === "1";
+			if (self::$enabled === null)
+				self::$enabled = ini_get("pinba.enabled") === "1";
 			
-			return $this->enabled;
+			return self::$enabled;
 		}
 		
 		public function timerStart($name, array $tags, array $data = null)
