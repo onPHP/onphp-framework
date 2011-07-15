@@ -18,6 +18,9 @@
 		private $enabled = null;
 		private $timers = array();
 		
+		/**
+		 * @return PinbaClient
+		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
