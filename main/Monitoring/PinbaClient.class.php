@@ -34,12 +34,15 @@
 			return self::$enabled;
 		}
 		
-		public function timerStart($name, array $tags, array $data = null)
+		public function timerStart($name, array $tags, array $data = array())
 		{
 			if (array_key_exists($name, $this->timers))
 				throw new WrongArgumentException('a timer with the same name allready exists');
 			
-			$this->timers[$name] = pinba_timer_start($tags, $data);
+			$this->timers[$name] =
+				count($data)
+					? pinba_timer_start($tags, $data)
+					: pinba_timer_start($tags);
 			
 			return $this;
 		}
