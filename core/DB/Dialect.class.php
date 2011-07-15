@@ -75,6 +75,12 @@
 		
 		public function typeToString(DataType $type)
 		{
+			if ($type->getId() == DataType::IP)
+				return 'varchar(19)';
+			
+			if ($type->getId() == DataType::IP_RANGE)
+				return 'varchar(41)';
+			
 			return $type->getName();
 		}
 		
@@ -128,6 +134,11 @@
 		}
 		
 		public function fullTextRank($field, $words, $logic)
+		{
+			throw new UnimplementedFeatureException();
+		}
+		
+		public function quoteIpInRange($range, $ip)
 		{
 			throw new UnimplementedFeatureException();
 		}

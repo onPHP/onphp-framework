@@ -202,9 +202,14 @@
 				
 				'bytea'			=> DataType::BINARY,
 				
+				'ip4'			=> DataType::IP,
+				'inet'			=> DataType::IP,
+				
+				'ip4r'			=> DataType::IP_RANGE,
+				
 				// unhandled types, not ours anyway
 				'tsvector'		=> null,
-				'inet'			=> null,
+				
 				'ltree'			=> null,
 				'hstore'		=> null,
 			);
