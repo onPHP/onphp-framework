@@ -369,6 +369,14 @@
 		}
 		
 		/**
+		 * @return Ip4ContainsExpression 
+		**/
+		public static function containsIp($range, $ip)
+		{
+			return new Ip4ContainsExpression($range, $ip);
+		}
+		
+		/**
 		 * @return LogicalChain
 		**/
 		private static function block($args, $logic)

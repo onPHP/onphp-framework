@@ -37,6 +37,9 @@
 		
 		const BINARY			= 0x00000E;
 		
+		const IP				= 0x000010;
+		const IP_RANGE			= 0x000011;
+		
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x000200;
 		const HAVE_SCALE		= 0x000400;
@@ -72,6 +75,9 @@
 			self::INTERVAL		=> 'INTERVAL',
 			
 			self::BINARY		=> 'BINARY',
+			
+			self::IP			=> 'IP',
+			self::IP_RANGE		=> 'IP_RANGE'
 		);
 		
 		/**

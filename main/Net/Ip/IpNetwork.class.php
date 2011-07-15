@@ -11,6 +11,7 @@
 
 	/**
 	 * @ingroup Ip
+	 * @deprecated use IpRange instead
 	**/
 	final class IpNetwork implements SingleRange
 	{
