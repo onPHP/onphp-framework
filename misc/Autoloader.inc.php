@@ -100,7 +100,7 @@
 					else {
 						// cache is not actual
 						$cache[ONPHP_CLASS_CACHE_CHECKSUM] = null;
-						__autoload($classname);
+						self::classPathCache($classname);
 					}
 				}
 			} else {
