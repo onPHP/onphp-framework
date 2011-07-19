@@ -20,7 +20,7 @@
 	 *
 	 * @ingroup Cache
 	**/
-	final class Memcached extends CachePeer
+	class Memcached extends CachePeer
 	{
 		const DEFAULT_PORT		= 11211;
 		const DEFAULT_HOST		= '127.0.0.1';
