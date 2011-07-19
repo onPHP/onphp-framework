@@ -36,7 +36,7 @@
 					array('pecl_memcached_connect' => $host.'_'.$port)
 				);
 			
-			parent::__construct($host, $port, $buffer);
+			parent::__construct($host, $port);
 			
 			if (PinbaClient::isEnabled())
 				PinbaClient::me()->timerStop(
