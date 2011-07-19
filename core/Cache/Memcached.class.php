@@ -11,7 +11,6 @@
  *   Copyright (c) 2003, under the GNU GPL license                         *
  *                                                                         *
  ***************************************************************************/
-/* $Id$ */
 
 	/**
 	 * Memcached-based cache.
