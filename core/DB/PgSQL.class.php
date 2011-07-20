@@ -16,7 +16,7 @@
 	 *
 	 * @ingroup DB
 	**/
-	final class PgSQL extends DB
+	class PgSQL extends DB
 	{
 		/**
 		 * @return PostgresDialect

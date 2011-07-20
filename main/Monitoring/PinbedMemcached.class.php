@@ -10,7 +10,7 @@
  ****************************************************************************/
 	
 	/**
-	 *  @ingroup Cache
+	 *
 	**/
 	final class PinbedMemcached extends Memcached
 	{
