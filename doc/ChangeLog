@@ -1,3 +1,11 @@
+2011-07-20	Evgeny V. Kokovikhin
+	* core/Cache/Memcached.class.php, core/Cache/PeclMemcached.class.php,
+	core/DB/PgSQL.class.php, global.inc.php.tpl,
+	main/Monitoring/PinbaClient.class.php, main/Monitoring/PinbedMemcached.class.php,
+	main/Monitoring/PinbedPeclMemcached.class.php,
+	main/Monitoring/PinbedPgSQL.class.php: wrapper for pinba added.
+		see http://pinba.org/wiki/Main_Page for details
+
 2011-07-14	Evgeny V. Kokovikhin
 	* core/DB/ImaginaryDialect.class.php: quiting added
 
