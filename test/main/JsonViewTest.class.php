@@ -13,38 +13,36 @@
 	{
 		protected $array = array('<foo>',"'bar'",'"baz"','&blong&');
 		
-		
-		
 		public function testOptions()
 		{
 			$model = Model::create()->set('array', $this->array);
 			$data = array('array' => $this->array);
-			
+
 			$this->assertEquals(
-					json_encode($data, JSON_HEX_QUOT),
-					JsonView::create()->setHexQuot(true)->toString($model)
+				json_encode($data, JSON_HEX_QUOT),
+				JsonView::create()->setHexQuot(true)->toString($model)
 			);
-			
+
 			$this->assertEquals(
-					json_encode($data, JSON_HEX_TAG),
-					JsonView::create()->setHexTag(true)->toString($model)
+				json_encode($data, JSON_HEX_TAG),
+				JsonView::create()->setHexTag(true)->toString($model)
 			);
-			
+
 			$this->assertEquals(
-					json_encode($data, JSON_HEX_AMP),
-					JsonView::create()->setHexAmp(true)->toString($model)
+				json_encode($data, JSON_HEX_AMP),
+				JsonView::create()->setHexAmp(true)->toString($model)
 			);
-			
+
 			$this->assertEquals(
-					json_encode($data, JSON_HEX_APOS),
-					JsonView::create()->setHexApos(true)->toString($model)
+				json_encode($data, JSON_HEX_APOS),
+				JsonView::create()->setHexApos(true)->toString($model)
 			);
-			
+
 			$this->assertEquals(
-					json_encode($data, JSON_NUMERIC_CHECK),
-					JsonView::create()->setNumericCheck(true)->toString($model)
+				json_encode($data, JSON_NUMERIC_CHECK),
+				JsonView::create()->setNumericCheck(true)->toString($model)
 			);
-			
+
 			if (defined("JSON_PRETTY_PRINT")) {
 				$this->assertEquals(
 					json_encode($data, JSON_PRETTY_PRINT),
@@ -53,7 +51,7 @@
 						toString($model)
 				);
 			}
-			
+
 			if (defined("JSON_UNESCAPED_SLASHES")) {
 				$this->assertEquals(
 					json_encode($data, JSON_UNESCAPED_SLASHES),
@@ -62,7 +60,7 @@
 						toString($model)
 				);
 			}
-			
+
 			//without any flags
 			$this->assertEquals(
 				json_encode($data),
@@ -74,16 +72,16 @@
 					setNumericCheck(false)->
 					toString($model)
 			);
-			
+
 			//with all flags
 			$this->assertEquals(
 				json_encode(
 					$data,
 					JSON_HEX_QUOT
-					|JSON_HEX_TAG
-					|JSON_HEX_AMP
-					|JSON_HEX_APOS
-					|JSON_NUMERIC_CHECK
+						| JSON_HEX_TAG
+						| JSON_HEX_AMP
+						| JSON_HEX_APOS
+						| JSON_NUMERIC_CHECK
 				),
 				JsonView::create()->
 					setHexQuot(true)->
@@ -93,8 +91,6 @@
 					setNumericCheck(true)->
 					toString($model)
 			);
-			
-			
 		}
 	}
 ?>

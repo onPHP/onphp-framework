@@ -23,7 +23,7 @@
 		{
 			return new self;
 		}
-		
+
 		/**
 		 * @param bool $flag
 		 * @return JsonView
@@ -31,14 +31,14 @@
 		public function setHexQuot($flag = false)
 		{
 			if ($flag) {
-				$this->options = $this->options|JSON_HEX_QUOT;
+				$this->options = $this->options | JSON_HEX_QUOT;
 			} else {
-				$this->options = $this->options&~JSON_HEX_QUOT;
+				$this->options = $this->options & ~JSON_HEX_QUOT;
 			}
 			
 			return $this;
 		}
-		
+
 		/**
 		 * @param bool $flag
 		 * @return JsonView
@@ -46,14 +46,14 @@
 		public function setHexTag($flag = false)
 		{
 			if ($flag) {
-				$this->options = $this->options|JSON_HEX_TAG;
+				$this->options = $this->options | JSON_HEX_TAG;
 			} else {
-				$this->options = $this->options&~JSON_HEX_TAG;
+				$this->options = $this->options & ~JSON_HEX_TAG;
 			}
 			
 			return $this;
 		}
-		
+
 		/**
 		 * @param bool $flag
 		 * @return JsonView
@@ -61,14 +61,14 @@
 		public function setHexAmp($flag = false)
 		{
 			if ($flag) {
-				$this->options = $this->options|JSON_HEX_AMP;
+				$this->options = $this->options | JSON_HEX_AMP;
 			} else {
-				$this->options = $this->options&~JSON_HEX_AMP;
+				$this->options = $this->options & ~JSON_HEX_AMP;
 			}
 			
 			return $this;
 		}
-		
+
 		/**
 		 * @param bool $flag
 		 * @return JsonView
@@ -76,14 +76,14 @@
 		public function setHexApos($flag = false)
 		{
 			if ($flag) {
-				$this->options = $this->options|JSON_HEX_APOS;
+				$this->options = $this->options | JSON_HEX_APOS;
 			} else {
-				$this->options = $this->options&~JSON_HEX_APOS;
+				$this->options = $this->options & ~JSON_HEX_APOS;
 			}
 			
 			return $this;
 		}
-		
+
 		/**
 		 * @param bool $flag
 		 * @return JsonView
@@ -91,9 +91,9 @@
 		public function setForceObject($flag = false)
 		{
 			if ($flag) {
-				$this->options = $this->options|JSON_FORCE_OBJECT;
+				$this->options = $this->options | JSON_FORCE_OBJECT;
 			} else {
-				$this->options = $this->options&~JSON_FORCE_OBJECT;
+				$this->options = $this->options & ~JSON_FORCE_OBJECT;
 			}
 			
 			return $this;
@@ -106,14 +106,14 @@
 		public function setNumericCheck($flag = false)
 		{
 			if ($flag) {
-				$this->options = $this->options|JSON_NUMERIC_CHECK;
+				$this->options = $this->options | JSON_NUMERIC_CHECK;
 			} else {
-				$this->options = $this->options&~JSON_NUMERIC_CHECK;
+				$this->options = $this->options & ~JSON_NUMERIC_CHECK;
 			}
 			
 			return $this;
 		}
-		
+
 		/**
 		 * @param bool $flag
 		 * @return JsonView
@@ -122,15 +122,15 @@
 		{
 			if (defined("JSON_PRETTY_PRINT")) {
 				if ($flag) {
-					$this->options = $this->options|JSON_PRETTY_PRINT;
+					$this->options = $this->options | JSON_PRETTY_PRINT;
 				} else {
-					$this->options = $this->options&~JSON_PRETTY_PRINT;
+					$this->options = $this->options & ~JSON_PRETTY_PRINT;
 				}
 			}
 			
 			return $this;
 		}
-		
+
 		/**
 		 * @param bool $flag
 		 * @return JsonView
@@ -139,9 +139,9 @@
 		{
 			if (defined("JSON_UNESCAPED_SLASHES")) {
 				if ($flag) {
-					$this->options = $this->options|JSON_UNESCAPED_SLASHES;
+					$this->options = $this->options | JSON_UNESCAPED_SLASHES;
 				} else {
-					$this->options = $this->options&~JSON_UNESCAPED_SLASHES;
+					$this->options = $this->options & ~JSON_UNESCAPED_SLASHES;
 				}
 			}
 			
@@ -164,7 +164,11 @@
 			return $this;
 		}
 
-		public function toString($model = null)
+		/**
+		 * @param Model $model
+		 * @return string
+		 */
+		public function toString(/* Model */ $model = null)
 		{
 			ob_start();
 			$this->render($model);
