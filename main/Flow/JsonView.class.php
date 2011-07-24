@@ -25,7 +25,7 @@
 		}
 		
 		/**
-		 * @param int $flag
+		 * @param bool $flag
 		 * @return JsonView
 		**/
 		public function setHexQuot($flag = false)
@@ -40,7 +40,7 @@
 		}
 		
 		/**
-		 * @param int $flag
+		 * @param bool $flag
 		 * @return JsonView
 		**/
 		public function setHexTag($flag = false)
@@ -55,7 +55,7 @@
 		}
 		
 		/**
-		 * @param int $flag
+		 * @param bool $flag
 		 * @return JsonView
 		**/
 		public function setHexAmp($flag = false)
@@ -70,7 +70,7 @@
 		}
 		
 		/**
-		 * @param int $flag
+		 * @param bool $flag
 		 * @return JsonView
 		**/
 		public function setHexApos($flag = false)
@@ -85,7 +85,7 @@
 		}
 		
 		/**
-		 * @param int $flag
+		 * @param bool $flag
 		 * @return JsonView
 		**/
 		public function setForceObject($flag = false)
@@ -100,7 +100,7 @@
 		}
 
 		/**
-		 * @param int $flag
+		 * @param bool $flag
 		 * @return JsonView
 		**/
 		public function setNumericCheck($flag = false)
@@ -115,7 +115,7 @@
 		}
 		
 		/**
-		 * @param int $flag
+		 * @param bool $flag
 		 * @return JsonView
 		**/
 		public function setPrettyPrint($flag = false)
@@ -132,7 +132,7 @@
 		}
 		
 		/**
-		 * @param int $flag
+		 * @param bool $flag
 		 * @return JsonView
 		**/
 		public function setUnescapedSlashes($flag = false)
@@ -144,27 +144,6 @@
 					$this->options = $this->options^JSON_UNESCAPED_SLASHES;
 				}
 			}
-			
-			return $this;
-		}
-		
-		/**
-		 * @param array $indexList
-		 * @return JsonView
-		**/
-		public function setIndexList(array $indexList)
-		{
-			$this->indexes = $indexList;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return JsonView
-		**/
-		public function dropIndexes()
-		{
-			$this->indexList = array();
 			
 			return $this;
 		}
