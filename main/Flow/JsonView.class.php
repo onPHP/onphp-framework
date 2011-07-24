@@ -193,21 +193,5 @@
 			$this->render($model);
 			return ob_get_clean();
 		}
-
-		/**
-		 * @return JsonView
-		**/
-		protected function preRender()
-		{
-			return $this;
-		}
-
-		/**
-		 * @return JsonView
-		**/
-		protected function postRender()
-		{
-			return $this;
-		}
 	}
 ?>
