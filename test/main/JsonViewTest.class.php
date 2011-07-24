@@ -62,11 +62,11 @@
 			$this->assertEquals(
 				json_encode(
 					$data,
-					JSON_HEX_QUOT|
-					JSON_HEX_TAG|
-					JSON_HEX_AMP|
-					JSON_HEX_APOS|
-					JSON_NUMERIC_CHECK
+					JSON_HEX_QUOT
+					|JSON_HEX_TAG
+					|JSON_HEX_AMP
+					|JSON_HEX_APOS
+					|JSON_NUMERIC_CHECK
 				),
 				JsonView::create()->
 					setHexQuot()->
