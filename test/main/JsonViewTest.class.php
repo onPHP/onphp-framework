@@ -47,18 +47,35 @@
 			
 			if (defined("JSON_PRETTY_PRINT")) {
 				$this->assertEquals(
-						json_encode($data, JSON_PRETTY_PRINT),
-						JsonView::create()->setPrettyPrint()->toString($model)
+					json_encode($data, JSON_PRETTY_PRINT),
+					JsonView::create()->setPrettyPrint()->toString($model)
 				);
 			}
 			
 			if (defined("JSON_UNESCAPED_SLASHES")) {
 				$this->assertEquals(
-						json_encode($data, JSON_UNESCAPED_SLASHES),
-						JsonView::create()->setUnescapedSlashes()->toString($model)
+					json_encode($data, JSON_UNESCAPED_SLASHES),
+					JsonView::create()->setUnescapedSlashes()->toString($model)
 				);
 			}
+			
+			$this->assertEquals(
+				json_encode(
+					$data,
+					JSON_HEX_QUOT|
+					JSON_HEX_TAG|
+					JSON_HEX_AMP|
+					JSON_HEX_APOS|
+					JSON_NUMERIC_CHECK
+				),
+				JsonView::create()->
+					setHexQuot()->
+					setHexTag()->
+					setHexAmp()->
+					setHexApos()->
+					setNumericCheck()->
+					toString($model)
+			);
 		}
-		
 	}
 ?>
