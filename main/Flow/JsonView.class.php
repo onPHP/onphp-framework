@@ -84,7 +84,6 @@
 			return $this;
 		}
 		
-		
 		/**
 		 * @param int $flag
 		 * @return JsonView
@@ -100,7 +99,6 @@
 			return $this;
 		}
 
-		
 		/**
 		 * @param int $flag
 		 * @return JsonView
