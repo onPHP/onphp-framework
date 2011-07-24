@@ -22,43 +22,60 @@
 			
 			$this->assertEquals(
 					json_encode($data, JSON_HEX_QUOT),
-					JsonView::create()->setHexQuot()->toString($model)
+					JsonView::create()->setHexQuot(true)->toString($model)
 			);
 			
 			$this->assertEquals(
 					json_encode($data, JSON_HEX_TAG),
-					JsonView::create()->setHexTag()->toString($model)
+					JsonView::create()->setHexTag(true)->toString($model)
 			);
 			
 			$this->assertEquals(
 					json_encode($data, JSON_HEX_AMP),
-					JsonView::create()->setHexAmp()->toString($model)
+					JsonView::create()->setHexAmp(true)->toString($model)
 			);
 			
 			$this->assertEquals(
 					json_encode($data, JSON_HEX_APOS),
-					JsonView::create()->setHexApos()->toString($model)
+					JsonView::create()->setHexApos(true)->toString($model)
 			);
 			
 			$this->assertEquals(
 					json_encode($data, JSON_NUMERIC_CHECK),
-					JsonView::create()->setNumericCheck()->toString($model)
+					JsonView::create()->setNumericCheck(true)->toString($model)
 			);
 			
 			if (defined("JSON_PRETTY_PRINT")) {
 				$this->assertEquals(
 					json_encode($data, JSON_PRETTY_PRINT),
-					JsonView::create()->setPrettyPrint()->toString($model)
+					JsonView::create()->
+						setPrettyPrint(true)->
+						toString($model)
 				);
 			}
 			
 			if (defined("JSON_UNESCAPED_SLASHES")) {
 				$this->assertEquals(
 					json_encode($data, JSON_UNESCAPED_SLASHES),
-					JsonView::create()->setUnescapedSlashes()->toString($model)
+					JsonView::create()->
+						setUnescapedSlashes(true)->
+						toString($model)
 				);
 			}
 			
+			//without any flags
+			$this->assertEquals(
+				json_encode($data),
+				JsonView::create()->
+					setHexQuot(false)->
+					setHexTag(false)->
+					setHexAmp(false)->
+					setHexApos(false)->
+					setNumericCheck(false)->
+					toString($model)
+			);
+			
+			//with all flags
 			$this->assertEquals(
 				json_encode(
 					$data,
@@ -69,13 +86,15 @@
 					|JSON_NUMERIC_CHECK
 				),
 				JsonView::create()->
-					setHexQuot()->
-					setHexTag()->
-					setHexAmp()->
-					setHexApos()->
-					setNumericCheck()->
+					setHexQuot(true)->
+					setHexTag(true)->
+					setHexAmp(true)->
+					setHexApos(true)->
+					setNumericCheck(true)->
 					toString($model)
 			);
+			
+			
 		}
 	}
 ?>
