@@ -1,4 +1,7 @@
 2011-07-14	Evgeny V. Kokovikhin
+	* main/Net/Ip/IpRange.class.php: range with single ip fixed
+
+2011-07-14	Evgeny V. Kokovikhin
 	* core/DB/ImaginaryDialect.class.php: quiting added
 
 2011-07-13 	Evgeny V. Kokovikhin
