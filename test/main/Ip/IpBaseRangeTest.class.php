@@ -140,6 +140,13 @@
 			$range = IpRange::create('8.8/16');
 			
 			$this->assertEquals($range->toString(), '8.8.0.0-8.8.255.255');
+			
+			$range = IpRange::create('192.168.1.1');
+			
+			$this->assertEquals(
+				$range->getStart()->toString(),
+				$range->getEnd()->toString()
+			);
 		}
 	}
 ?>
