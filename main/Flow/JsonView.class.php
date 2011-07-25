@@ -147,32 +147,28 @@
 			
 			return $this;
 		}
-
+		
 		/**
 		 * @return JsonView
 		**/
 		public function render(/* Model */ $model = null)
 		{
-			if ($model instanceof Model) {
-				if ($this->options) {
-					echo json_encode($model->getList(), $this->options);
-				} else {
-					echo json_encode($model->getList());
-				}
-			}
-			
+			echo $this->toString($model);
+
 			return $this;
 		}
-
+		
 		/**
 		 * @param Model $model
 		 * @return string
 		 */
 		public function toString(/* Model */ $model = null)
 		{
-			ob_start();
-			$this->render($model);
-			return ob_get_clean();
+			if ($this->options) {
+				return json_encode($model->getList(), $this->options);
+			} else {
+				return json_encode($model->getList());
+			}
 		}
 	}
 ?>

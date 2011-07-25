@@ -92,5 +92,35 @@
 					toString($model)
 			);
 		}
+		
+		public function testRender()
+		{
+			$model = Model::create()->set('array', $this->array);
+			$data = array('array' => $this->array);
+			
+			ob_start();
+			JsonView::create()->
+				setHexQuot(true)->
+				setHexTag(true)->
+				setHexAmp(true)->
+				setHexApos(true)->
+				setNumericCheck(true)->
+				setHexQuot(false)->
+				setHexQuot(false)->	//double set(false), right
+				render($model);
+			$result = ob_get_clean();
+			
+			//with all flags
+			$this->assertEquals(
+				json_encode(
+					$data,
+					JSON_HEX_TAG
+						| JSON_HEX_AMP
+						| JSON_HEX_APOS
+						| JSON_NUMERIC_CHECK
+				),
+				$result
+			);
+		}
 	}
 ?>
