@@ -164,10 +164,11 @@
 		 */
 		public function toString(/* Model */ $model = null)
 		{
+			Assert::isTrue($model === null || $model instanceof Model);
 			if ($this->options) {
-				return json_encode($model->getList(), $this->options);
+				return json_encode($model ? $model->getList() : array(), $this->options);
 			} else {
-				return json_encode($model->getList());
+				return json_encode($model ? $model->getList() : array());
 			}
 		}
 	}

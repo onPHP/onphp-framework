@@ -122,5 +122,19 @@
 				$result
 			);
 		}
+		
+		public function testNoModel() {
+			//setup
+			$view = JsonView::create()->setHexQuot(true)->setHexApos(true);
+			
+			//execution and check
+			$this->assertEquals(
+				json_encode(
+					array(),
+					JSON_HEX_QUOT | JSON_HEX_APOS
+				),
+				$view->toString()
+			);
+		}
 	}
 ?>
