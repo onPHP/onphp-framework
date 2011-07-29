@@ -6,6 +6,12 @@
 	main/Monitoring/PinbedPeclMemcached.class.php,
 	main/Monitoring/PinbedPgSQL.class.php: wrapper for pinba added.
 		see http://pinba.org/wiki/Main_Page for details
+2011-07-26	Dmitry V. Snezhinskiy, Alexey S. Denisov
+	* main/Flow/JsonView.class.php,
+	test/main/JsonViewTest.class.php: add JsonView
+
+2011-07-14	Evgeny V. Kokovikhin
+	* main/Net/Ip/IpRange.class.php: range with single ip fixed
 
 2011-07-14	Evgeny V. Kokovikhin
 
