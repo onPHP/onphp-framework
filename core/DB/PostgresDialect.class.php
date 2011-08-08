@@ -152,6 +152,25 @@
 				.$this->makeSequenceName($column).'\')';
 		}
 		
+		public function quoteIpInRange($range, $ip)
+		{
+			$string = '';
+			
+			if ($ip instanceof DialectString)
+				$string .= $ip->toDialectString($this);
+			else
+				$string .= $this->quoteValue($ip);
+			
+			$string .= ' <<= ';
+			
+			if ($range instanceof DialectString)
+				$string .= $range->toDialectString($this);
+			else
+				$string .= $this->quoteValue($range);
+			
+			return $string;	
+		}
+		
 		protected function makeSequenceName(DBColumn $column)
 		{
 			return $column->getTable()->getName().'_'.$column->getName();

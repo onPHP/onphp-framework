@@ -697,6 +697,14 @@
 			
 			$this->assertEquals($plainIp[0], $userWithIp->getIp()->toString());
 			
+			$count =
+				Criteria::create(TestUser::dao())->
+				add(Expression::eq('ip', IpAddress::create('127.0.0.1')))->
+				addProjection(Projection::count('*', 'count'))->
+				getCustom('count');
+			
+			$this->assertEquals($count, 1);
+			
 			$this->drop();
 		}
 		
@@ -745,11 +753,6 @@
 			$this->assertEquals(count($list), 2);
 			
 			$this->drop();
-		}
-		
-		public function testIpIn()
-		{
-			
 		}
 		
 		protected function getSome()

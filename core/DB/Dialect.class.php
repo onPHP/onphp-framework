@@ -137,5 +137,10 @@
 		{
 			throw new UnimplementedFeatureException();
 		}
+		
+		public function quoteIpInRange($range, $ip)
+		{
+			throw new UnimplementedFeatureException();
+		}
 	}
 ?>
