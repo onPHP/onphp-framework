@@ -1,6 +1,47 @@
+2011-07-26	Dmitry V. Snezhinskiy, Alexey S. Denisov
+	
+	* main/Flow/JsonView.class.php,
+	test/main/JsonViewTest.class.php: add JsonView.
+
+2011-07-14	Evgeny V. Kokovikhin
+
+	* main/Net/Ip/IpRange.class.php: range with single ip fixed.
+
+2011-07-14	Evgeny V. Kokovikhin
+
+	* core/DB/ImaginaryDialect.class.php: quiting added.
+
+2011-07-13 	Evgeny V. Kokovikhin
+
+	* core/DB/Dialect.class.php, core/DB/PgSQL.class.php,
+	core/DB/PostgresDialect.class.php, core/Form/Primitive.class.php,
+	core/Form/Primitives/BaseObjectPrimitive.class.php,
+	core/Form/Primitives/PrimitiveIpAddress.class.php,
+	core/Form/Primitives/PrimitiveIpRange.class.php,
+	core/Logic/Expression.class.php, core/Logic/Ip4ContainsExpression.class.php,
+	core/OSQL/DataType.class.php, global.inc.php.tpl,
+	main/Net/Ip/IpAddress.class.php, main/Net/Ip/IpNetwork.class.php,
+	main/Net/Ip/IpRange.class.php, meta/types/IpAddressType.class.php,
+	meta/types/IpRangeType.class.php, test/config.inc.php.tpl,
+	test/core/Ip4ContainsExpressionTest.class.php,
+	test/core/PrimitiveIpTest.class.php, test/main/Ip/IpBaseRangeTest.class.php,
+	test/meta/config.meta.xml, test/misc/DAOTest.class.php:
+	IpAddress type, IpRange type, primitives and db support for new types;
+	Postgresql ip4r support added.
+
+2011-07-08	Dmitry V. Snezhinskiy
+
+	* main/Utils/FileUtils.class.php: fix of removing nonexistent directory 
+	in FileUtils.
+
 2011-07-06	Sergey S. Sergeev
 
 	* main/Crypto/Base62Utils.class.php: extract check() method.
+
+2011-07-05	Evgeny V. Kokovikhin
+
+	* main/Criteria/Criteria.class.php, test/main/CriteriaTest.class.php:
+	sleep and wakeup fixed, more frendly error added.
 
 2011-07-04	Evgeny V. Kokovikhin
 
@@ -8,20 +49,21 @@
 
 2011-06-18	Alexey S. Denisov
 
-	* core/DB/LiteDialect.class.php,  core/DB/PostgresDialect.class.php,
+	* core/DB/LiteDialect.class.php, core/DB/PostgresDialect.class.php,
 	core/OSQL/DBBinary.class.php, test/misc/DAOTest.class.php:
-		fixed work with *Dialect::quoteBinary and DBBinary
+	fixed work with *Dialect::quoteBinary and DBBinary.
 
 2011-06-11	Alexey S. Denisov
 
 	* core/Form/Form.class.php: implemented methods
 	Form::getError and Form::hasError.
+
 	* test/core/FormTest.class.php: added tests for Form errors.
 
 2011-06-11	Sergey S. Sergeev
 
 	* main/Crypto/Base62Utils.class.php: isPositiveInteger fixed,
-	thanks to klestoff. 
+	thanks to Alexander A. Klestoff.
 
 2011-06-10	Sergey S. Sergeev
 
