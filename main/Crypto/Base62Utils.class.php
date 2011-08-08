@@ -18,12 +18,8 @@
 
 		public static function setChars($chars)
 		{
+			self::check($chars);
 			Assert::isEqual(mb_strlen($chars), 62, 'Wrong length');
-
-			Assert::isTrue(
-				preg_match('/^[a-z0-9]+$/iu', $chars) !== 0,
-				'Wrong pattern matching'
-			);
 
 			self::$chars = $chars;
 		}
@@ -48,9 +44,14 @@
 			return $string;
 		}
 
+		/**
+		 * @throws WrongArgumentException
+		 * @param string $string
+		 * @return int
+		**/
 		public static function decode($string)
 		{
-			Assert::isString($string);
+			self::check($string);
 
 			$len = strlen($string);
 			Assert::isTrue(
@@ -68,6 +69,16 @@
 			}
 
 			return $val;
+		}
+
+		protected static function check($string)
+		{
+			Assert::isString($string);
+
+			Assert::isTrue(
+				preg_match('/^[a-z0-9]+$/iu', $string) !== 0,
+				'Wrong pattern matching'
+			);
 		}
 	}
 ?>

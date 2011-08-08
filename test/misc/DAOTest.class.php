@@ -626,11 +626,12 @@
 		public function nonIntegerIdentifier()
 		{
 			$id = 'non-integer-one';
+			$binaryData = "\0!bbq!\0";
 			
 			$bin =
 				TestBinaryStuff::create()->
 				setId($id)->
-				setData("\0!bbq!\0");
+				setData($binaryData);
 			
 			try {
 				TestBinaryStuff::dao()->import($bin);
@@ -645,16 +646,110 @@
 			$this->assertTrue($prm->import(array('id' => $id)));
 			$this->assertSame($prm->getValue()->getId(), $id);
 			
-			$this->assertEquals(TestBinaryStuff::dao()->getById($id), $bin);
+			$binLoaded = TestBinaryStuff::dao()->getById($id);
+			$this->assertEquals($binLoaded, $bin);
+			$this->assertEquals($binLoaded->getData(), $binaryData);
 			$this->assertEquals(TestBinaryStuff::dao()->dropById($id), 1);
 			
-			$id = Primitive::prototypedIdentifier('TestUser');
-			
+			$integerIdPrimitive = Primitive::prototypedIdentifier('TestUser');
 			try {
-				$id->import(array('id' => 'string-instead-of-integer'));
+				$integerIdPrimitive->import(array('id' => 'string-instead-of-integer'));
 			} catch (DatabaseException $e) {
 				return $this->fail();
 			}
+		}
+		
+		public function testIpAddressProperty()
+		{
+			$this->create();
+			
+			$city =
+				TestCity::create()->
+				setName('Khimki');
+			
+			TestCity::dao()->add($city);
+			
+			$userWithIp =
+				TestUser::create()->
+					setCredentials(
+						Credentials::create()->
+						setNickName('postgreser')->
+						setPassword(sha1('postgreser'))
+					)->
+					setLastLogin(Timestamp::makeNow())->
+					setRegistered(Timestamp::makeNow())->
+					setCity($city)->
+					setIp(IpAddress::create('127.0.0.1'));
+			
+			TestUser::dao()->add($userWithIp);
+			
+			$this->assertTrue($userWithIp->getId() >= 1);
+			
+			$this->assertTrue($userWithIp->getIp() instanceof IpAddress);
+			
+			$plainIp =
+				DBPool::me()->getByDao(TestUser::dao())->
+				queryColumn(
+					OSQL::select()->get('ip')->
+					from(TestUser::dao()->getTable())->
+					where(Expression::eq('id', $userWithIp->getId()))
+				);
+			
+			$this->assertEquals($plainIp[0], $userWithIp->getIp()->toString());
+			
+			$this->drop();
+		}
+		
+		public function testIpRangeProperty()
+		{
+			$this->create();
+			
+			$akado =
+				TestInternetProvider::create()->
+				setName('Akada')->
+				setRange(
+					IpRange::create(
+						IpAddress::create('192.168.1.1'),
+						IpAddress::create('192.168.1.42')
+					)
+				);
+			
+			TestInternetProvider::dao()->
+				add($akado);
+			
+			$plainRange =
+					Criteria::create(TestInternetProvider::dao())->
+					addProjection(Projection::property('range'))->
+					add(Expression::eq('name', 'Akada'))->
+					getCustom();
+			
+			$this->assertEquals(
+				$plainRange['range'],
+				'192.168.1.1-192.168.1.42'
+			);
+			
+			TestInternetProvider::dao()->
+			add(
+				TestInternetProvider::create()->
+				setName('DomRu')->
+				setRange(
+					IpRange::create('192.168.2.0/24')
+				)
+			);
+			
+			$list =
+				Criteria::create(TestInternetProvider::dao())->
+				addOrder('id')->
+				getList();
+			
+			$this->assertEquals(count($list), 2);
+			
+			$this->drop();
+		}
+		
+		public function testIpIn()
+		{
+			
 		}
 		
 		protected function getSome()

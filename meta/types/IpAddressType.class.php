@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Konstantin V. Arkhipov                          *
+ *   Copyright (C) 2011 by Evgeny V. Kokovikhin                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,24 +10,28 @@
  ***************************************************************************/
 
 	/**
-	 * Container for passing binary values into OSQL queries.
-	 * 
-	 * @ingroup OSQL
-	 * @ingroup Module
+	 * @ingroup Types
 	**/
-	final class DBBinary extends DBValue
+	class IpAddressType extends ObjectType
 	{
-		/**
-		 * @return DBBinary
-		**/
-		public static function create($value)
+		public function getPrimitiveName()
 		{
-			return new self($value);
+			return 'ipAddress';
 		}
 		
-		public function toDialectString(Dialect $dialect)
+		public function isGeneric()
 		{
-			return $dialect->quoteBinary($this->getValue());
+			return true;
+		}
+		
+		public function isMeasurable()
+		{
+			return true;
+		}
+		
+		public function toColumnType()
+		{
+			return 'DataType::create(DataType::IP)';
 		}
 	}
 ?>

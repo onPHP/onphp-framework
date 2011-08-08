@@ -1,7 +1,7 @@
 #!/bin/sh
 cd `dirname $0`
 
-if [ "$*" == "" ]; 
+if [ "$*" = '' ]
 then
 	ARGS='--repeat 9 AllTests'
 else

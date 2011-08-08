@@ -24,6 +24,14 @@
 			return new self($ip);
 		}
 		
+		public static function createFromCutted($ip)
+		{
+			if (substr_count($ip, '.') < 3)
+				return self::createFromCutted($ip.'.0');
+			
+			return self::create($ip);
+		}
+		
 		public function __construct($ip)
 		{
 			$this->setIp($ip);

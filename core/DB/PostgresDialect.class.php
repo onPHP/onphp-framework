@@ -74,7 +74,7 @@
 		
 		public function quoteBinary($data)
 		{
-			return pg_escape_bytea($data);
+			return "E'".pg_escape_bytea($data)."'";
 		}
 		
 		public function unquoteBinary($data)
@@ -86,6 +86,15 @@
 		{
 			if ($type->getId() == DataType::BINARY)
 				return 'BYTEA';
+			
+			if (defined('POSTGRES_IP4_ENABLED')) {
+				
+				if ($type->getId() == DataType::IP)
+					return 'ip4';
+				
+				if ($type->getId() == DataType::IP_RANGE)
+					return 'ip4r';
+			}
 			
 			return parent::typeToString($type);
 		}
