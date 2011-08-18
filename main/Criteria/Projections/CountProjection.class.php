@@ -19,7 +19,11 @@
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
-			return $query->get($this->getFunction($criteria, $query));
+			return
+				$query->get(
+					$this->getFunction($criteria, $query),
+					$this->alias
+				);
 		}
 		
 		/**
@@ -38,8 +42,7 @@
 					$this->property
 						? $criteria->getDao()->guessAtom($this->property, $query)
 						: $criteria->getDao()->getIdName()
-				)->
-				setAlias($this->alias);
+				);
 		}
 	}
 ?>
