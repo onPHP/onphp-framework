@@ -29,6 +29,8 @@
 		
 		public function notify()
 		{
+			InstanceObserver::me()->handle($this);
+			
 			foreach ($this->observerList as $observer)
 				$observer->handle($this);
 			

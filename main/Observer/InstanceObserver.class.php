@@ -9,9 +9,17 @@
  *                                                                          *
  ****************************************************************************/
 	
-	final class InstanceObserver implements Observer
+	final class InstanceObserver extends Singleton implements Observer
 	{
 		private $observerList = array();
+		
+		/**
+		 * @return InstanceObserver 
+		 */
+		public static function me()
+		{
+			return Singleton::getInstance(__CLASS__);
+		}
 		
 		public function addCorrespondence(Observer $observer, /*Observable*/ $clazz)
 		{
