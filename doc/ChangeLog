@@ -1,3 +1,9 @@
+2011-08-18	Evgeny V. Kokovikhin
+
+	* main/Criteria/Projections/CountProjection.class.php,
+	main/Criteria/Projections/PropertyProjection.class.php:
+	criteria's query for sqlite fixed
+
 2011-07-26	Dmitry V. Snezhinskiy, Alexey S. Denisov
 
 	* main/Flow/JsonView.class.php, 
