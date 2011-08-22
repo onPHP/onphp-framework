@@ -1,6 +1,12 @@
+2011-08-18	Evgeny V. Kokovikhin
+
+	* main/Criteria/Projections/CountProjection.class.php,
+	main/Criteria/Projections/PropertyProjection.class.php:
+	criteria's query for sqlite fixed
+
 2011-07-26	Dmitry V. Snezhinskiy, Alexey S. Denisov
-	
-	* main/Flow/JsonView.class.php,
+
+	* main/Flow/JsonView.class.php, 
 	test/main/JsonViewTest.class.php: add JsonView.
 
 2011-07-14	Evgeny V. Kokovikhin
@@ -9,12 +15,20 @@
 
 2011-07-14	Evgeny V. Kokovikhin
 
+<<<<<<< HEAD
 	* core/DB/ImaginaryDialect.class.php: quiting added.
+=======
+	* core/DB/ImaginaryDialect.class.php: quiting added
+>>>>>>> onphp-master
 
 2011-07-13 	Evgeny V. Kokovikhin
 
 	* core/DB/Dialect.class.php, core/DB/PgSQL.class.php,
+<<<<<<< HEAD
 	core/DB/PostgresDialect.class.php, core/Form/Primitive.class.php,
+=======
+	core/DB/PostgresDialect.class.php, core/Form/Primitive.class.php
+>>>>>>> onphp-master
 	core/Form/Primitives/BaseObjectPrimitive.class.php,
 	core/Form/Primitives/PrimitiveIpAddress.class.php,
 	core/Form/Primitives/PrimitiveIpRange.class.php,
@@ -45,7 +59,7 @@
 
 2011-07-04	Evgeny V. Kokovikhin
 
-	* core/DB/MyDialect.class.php: binary quoting fixed
+	* core/DB/MyDialect.class.php: binary quoting fixed.
 
 2011-06-18	Alexey S. Denisov
 
