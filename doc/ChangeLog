@@ -1,3 +1,14 @@
+2011-08-26	Sergey S. Sergeev
+
+	* /main/Utils/AMQP/AMQPChannelInterface.class.php,
+	/main/Utils/AMQP/AMQPBaseChannel.class.php, /main/Utils/AMQP/AMQP.class.php,
+	/main/Utils/AMQP/Pecl/AMQPPeclChannel.class.php,
+	/main/Utils/AMQP/Pecl/AMQPPecl.class.php, /main/Utils/AMQP/Exceptions:
+	extract AMQPChannelInterface, all channel classes implements
+	AMQPChannelInterface; methods returns an instance of AMQPChannelInterface;
+	throws AMQPServerException, AMQPServerConnectionException if RabbitMQ
+	is down OR connection is not available.
+
 2011-08-18	Evgeny V. Kokovikhin
 
 	* main/Criteria/Projections/CountProjection.class.php,

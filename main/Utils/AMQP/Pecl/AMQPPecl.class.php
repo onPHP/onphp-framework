@@ -26,30 +26,72 @@
 		**/
 		public function isConnected()
 		{
-			return $this->link->isConnected();
+			try {
+				return $this->link->isConnected();
+			} catch (Exception $e) {
+				return false;
+			}
 		}
 
 		/**
-		 * @throws AMQPConnectionException
-		 * @return boolean
+		 * @throws AMQPServerConnectionException
+		 * @return AMQP
 		**/
 		public function connect()
 		{
-			if ($this->isConnected())
-				return true;
+			try {
+				if ($this->isConnected())
+					return $this;
 
-			return $this->link->connect();
+				$this->link->connect();
+
+			} catch (AMQPConnectionException $e) {
+				throw new AMQPServerConnectionException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
+
+			return $this;
+		}
+
+		/**
+		 * @throws AMQPServerConnectionException
+		 * @return AMQP
+		**/
+		public function reconnect()
+		{
+			try {
+				$this->link->reconnect();
+				return $this;
+			} catch (AMQPConnectionException $e) {
+				throw new AMQPServerConnectionException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
 		}
 		
 		/**
-		 * @return boolean
+		 * @throws AMQPServerConnectionException
+		 * @return AMQP
 		**/
 		public function disconnect()
 		{
-			if ($this->isConnected())
-				return $this->link->disconnect();
-
-			return false;
+			try {
+				if ($this->isConnected()) {
+					$this->link->disconnect();
+					return $this;
+				}
+			} catch (AMQPConnectionException $e) {
+				throw new AMQPServerConnectionException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
 		}
 
 		/**

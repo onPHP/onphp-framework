@@ -23,6 +23,9 @@
 			return $this->opened === true;
 		}
 
+		/**
+		 * @return AMQPPeclChannel
+		**/
 		public function open()
 		{
 			$this->opened = true;
@@ -30,6 +33,9 @@
 			return $this;
 		}
 
+		/**
+		 * @return AMQPPeclChannel
+		**/
 		public function close()
 		{
 			$this->opened = false;
@@ -37,23 +43,61 @@
 			return $this;
 		}
 
+		/**
+		 * @throws AMQPServerException, AMQPServerConnectionException
+		 * @return AMQPPeclChannel
+		**/
 		public function basicAck($deliveryTag, $multiple = false)
 		{
-			return 
-				$this->lookupQueue(self::NIL)->
-				ack(
+			$obj = $this->lookupQueue(self::NIL);
+
+			try {
+				$result = $obj->ack(
 					$deliveryTag,
 					$multiple === true
 						? AMQP_MULTIPLE
 						: self::AMQP_NONE
 				);
+			} catch (AMQPQueueException $e) {
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
+
+			$this->checkCommandResult(
+				$result,
+				"Could not ack message. No connection available"
+			);
+
+			return $this;
 		}
 
+		/**
+		 * @throws AMQPServerQueueException, AMQPServerConnectionException
+		 * @return AMQPPeclChannel
+		**/
 		public function basicCancel($consumerTag)
 		{
-			return
-				$this->lookupQueue(self::NIL)->
-				cancel($consumerTag);
+			$obj = $this->lookupQueue(self::NIL);
+
+			try {
+				$result = $obj->cancel($consumerTag);
+			} catch (AMQPQueueException $e) {
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
+
+			$this->checkCommandResult(
+				$result,
+				"Could not cancel queue. No connection available"
+			);
+
+			return $this;
 		}
 
 		public function basicConsume($queue, $callback)
@@ -64,17 +108,33 @@
 		}
 
 		/**
+		 * @throws AMQPServerException, AMQPServerConnectionException,
+		 * ObjectNotFoundException
+		 * 
 		 * @return AMQPIncomingMessage
 		**/
 		public function basicGet($queue, $noAck = true)
 		{
-			$message =
-				$this->lookupQueue($queue)->
-				get(
+			$obj = $this->lookupQueue($queue);
+
+			try {
+				$message = $obj->get(
 					($noAck === true)
 						? AMQP_NOACK
 						: self::AMQP_NONE
 				);
+			} catch (AMQPQueueException $e) {
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
+
+			$this->checkCommandResult(
+				is_array($message),
+				"Could not get from queue. No connection available"
+			);
 
 			if (
 				isset($message[AMQPIncomingMessage::COUNT])
@@ -88,19 +148,35 @@
 		}
 
 		/**
-		 * @throws AMQPExchangeException
+		 * @throws AMQPServerExchangeException, AMQPServerConnectionException
+		 * @return AMQPPeclChannel
 		**/
 		public function basicPublish(
 			$exchange, $routingKey, AMQPOutgoingMessage $msg
 		) {
-			return
-				$this->lookupExchange($exchange)->
-				publish(
+			$obj = $this->lookupExchange($exchange);
+
+			try {
+				$result = $obj->publish(
 					$msg->getBody(),
 					$routingKey,
 					$msg->getBitmask(new AMQPPeclOutgoingMessageBitmask()),
 					$msg->getProperties()
 				);
+			} catch (AMQPExchangeException $e) {
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
+
+			$this->checkCommandResult(
+				$result,
+				"Could not publish to exchange. No connection available."
+			);
+
+			return $this;
 		}
 
 		public function basicQos($prefetchSize, $prefetchCount)
@@ -127,13 +203,29 @@
 		}
 
 		/**
-		 * @throws AMQPExchangeException
+		 * @throws AMQPServerException, AMQPServerConnectionException
+		 * @return AMQPPeclChannel
 		**/
 		public function exchangeBind($name, $queue, $routingKey)
 		{
-			return
-				$this->lookupExchange($name)->
-				bind($queue, $routingKey);
+			$obj = $this->lookupExchange($name);
+
+			try {
+				$result = $obj->bind($queue, $routingKey);
+			} catch (AMQPExchangeException $e) {
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
+
+			$this->checkCommandResult(
+				$result,
+				"Could not bind exchange. No connection available"
+			);
+
+			return $this;
 		}
 
 		public function exchangeUnbind($name, $queue, $routingKey)
@@ -142,11 +234,13 @@
 		}
 
 		/**
-		 * @throws AMQPExchangeException
-		 * @return boolean
+		 * @throws AMQPServerException, AMQPServerConnectionException
+		 * @return AMQPPeclChannel
 		**/
 		public function exchangeDeclare($name, AMQPExchangeConfig $conf)
 		{
+			$this->checkConnection();
+
 			if (!$conf->getType() instanceof AMQPExchangeType)
 				throw new WrongArgumentException(
 					"AMQP exchange type is not set"
@@ -155,18 +249,33 @@
 			$this->exchangeList[$name] =
 				new AMQPExchange($this->transport->getLink());
 
-			return
-				$this->exchangeList[$name]->
-				declare(
+			$obj = $this->exchangeList[$name];
+
+			try {
+				$result = $obj->declare(
 					$name,
 					$conf->getType()->getName(),
-					$mask = $conf->getBitmask(new AMQPPeclExchangeBitmask())
+					$conf->getBitmask(new AMQPPeclExchangeBitmask())
 				);
+			} catch (AMQPExchangeException $e) {
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
+
+			$this->checkCommandResult(
+				$result,
+				"Could not declare exchange. No connection available"
+			);
+
+			return $this;
 		}
 
 		/**
-		 * @throws AMQPExchangeException
-		 * @return boolean
+		 * @throws AMQPServerException, AMQPServerConnectionException
+		 * @return AMQPPeclChannel
 		**/
 		public function exchangeDelete(
 			$name, $ifUnused = false, $ifEmpty = false
@@ -179,81 +288,176 @@
 			if ($ifEmpty)
 				$bitmask = $bitmask | AMQP_IFEMPTY;
 
-			$result = 
-				$this->lookupExchange($name)->
-				delete($name, $bitmask);
+			$obj = $this->lookupExchange($name);
+
+			try {
+				$result = $obj->delete($name, $bitmask);
+			} catch (AMQPExchangeException $e) {
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
+
+			$this->checkCommandResult(
+				$result,
+				"Could not delete exchange. No connection available"
+			);
 
 			$this->unsetExchange($name);
 
-			return $result;
+			return $this;
 		}		
 
+		/**
+		 * @throws AMQPServerException, AMQPServerConnectionException
+		 * @return AMQPPeclChannel
+		**/
 		public function queueBind($name, $exchange, $routingKey)
 		{
-			return
-				$this->lookupQueue($name)->
-				bind($exchange, $routingKey);
+			$obj = $this->lookupQueue($name);
+
+			try {
+				$result = $obj->bind($exchange, $routingKey);
+			} catch (AMQPQueueException $e) {
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
+
+			$this->checkCommandResult(
+				$result,
+				"Could not bind queue. No connection available"
+			);
+
+			return $this;
 		}
 
 		/**
-		 * @throws AMQPQueueException
+		 * @throws AMQPServerException, AMQPServerConnectionException
 		 * @return integer - the message count in queue
 		**/
 		public function queueDeclare($name, AMQPQueueConfig $conf)
 		{
+			$this->checkConnection();
+
 			$this->queueList[$name] =
 				new AMQPQueue($this->transport->getLink());
 
-			return
-				$this->queueList[$name]->
-				declare(
+			$obj = $this->queueList[$name];
+
+			try {
+				$result = $obj->declare(
 					$name,
 					$conf->getBitmask(new AMQPPeclQueueBitmask())
 				);
-		}
+			} catch (AMQPQueueException $e) {
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
 
-		/**
-		 * @throws AMQPQueueException
-		 * @return boolean
-		**/
-		public function queueDelete($name)
-		{
-			$result = 
-				$this->lookupQueue($name)->
-				delete($name);
-
-			$this->unsetQueue($name);
+			$this->checkCommandResult(
+				is_int($result),
+				"Could not declare queue. No connection available."
+			);
 
 			return $result;
 		}
 
 		/**
-		 * @throws AMQPQueueException
-		 * @return boolean
+		 * @throws AMQPServerException, AMQPServerConnectionException
+		 * @return AMQPPeclChannel
+		**/
+		public function queueDelete($name)
+		{
+			$obj = $this->lookupQueue($name);
+
+			try {
+				$result = $obj->delete($name);
+			} catch (AMQPQueueException $e) {
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
+
+			$this->checkCommandResult(
+				$result,
+				"Could not delete queue. No connection available"
+			);
+
+			$this->unsetQueue($name);
+
+			return $this;
+		}
+
+		/**
+		 * @throws AMQPServerException, AMQPServerConnectionException
+		 * @return AMQPPeclChannel
 		**/
 		public function queuePurge($name)
 		{
-			return 
-				$this->lookupQueue($name)->
-				purge($name);
+			$obj = $this->lookupQueue($name);
+
+			try {
+				$result = $obj->purge($name);
+			} catch (AMQPQueueException $e) {
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
+
+			$this->checkCommandResult(
+				$result,
+				"Could not purge queue. No connection available"
+			);
+
+			return $this;
 		}
 
 		/**
-		 * @throws AMQPQueueException
-		 * @return boolean
+		 * @throws AMQPServerException, AMQPServerConnectionException
+		 * @return AMQPPeclChannel
 		**/
 		public function queueUnbind($name, $exchange, $routingKey)
 		{
-			return
-				$this->lookupQueue($name)->
-				unbind($exchange, $routingKey);
+			$obj = $this->lookupQueue($name);
+
+			try {
+				$result = $obj->unbind($exchange, $routingKey);
+			} catch (AMQPQueueException $e) {
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
+
+			$this->checkCommandResult(
+				$result,
+				"Could not unbind queue. No connection available"
+			);
+
+			return $this;
 		}
 
 		/**
+		 * @throws AMQPServerConnectionException
 		 * @return AMQPExchange
 		**/
 		protected function lookupExchange($name)
 		{
+			$this->checkConnection();
+
 			if (!isset($this->exchangeList[$name])) {
 				$this->exchangeList[$name] =
 					new AMQPExchange($this->transport->getLink(), $name);
@@ -274,10 +478,13 @@
 		}
 
 		/**
+		 * @throws AMQPServerConnectionException
 		 * @return AMQPQueue
 		**/
 		protected function lookupQueue($name)
 		{
+			$this->checkConnection();
+
 			if (!isset($this->queueList[$name])) {
 				$this->queueList[$name] =
 					($name == self::NIL)
@@ -295,6 +502,21 @@
 		{
 			if (isset($this->queueList[$name]))
 				unset($this->queueList[$name]);
+
+			return $this;
+		}
+
+		/**
+		 * @throws AMQPServerConnectionException
+		 * @return AMQPPeclChannel
+		**/
+		protected function checkCommandResult($boolean, $message)
+		{
+			if ($boolean !== true) {
+				//link is not alive!!!
+				$this->transport->getLink()->disconnect();
+				throw new AMQPServerConnectionException($message);
+			}
 
 			return $this;
 		}

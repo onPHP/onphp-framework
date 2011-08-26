@@ -32,7 +32,7 @@
 					AMQPCredentials::createDefault()
 				);
 				
-				$this->assertTrue($c->connect());
+				$this->assertInstanceOf('AMQP', $c->connect());
 				$this->assertTrue($c->isConnected());
 				
 			} catch (Exception $e) {
@@ -52,7 +52,7 @@
 						setVirtualHost('/')
 				);
 				
-				$this->assertTrue($c->connect());
+				$this->assertInstanceOf('AMQP', $c->connect());
 				$this->assertTrue($c->isConnected());
 				
 			} catch (Exception $e) {
@@ -104,7 +104,7 @@
 			$channel = $c->createChannel(1);
 
 			try {
-				$bool = $channel->exchangeDeclare(
+				$channel = $channel->exchangeDeclare(
 					self::EXCHANGE_NAME,
 					AMQPExchangeConfig::create()->
 						setType(
@@ -112,9 +112,10 @@
 						)->
 						setDurable(true)
 				);
-				$this->assertTrue($bool);
 
-			} catch(Exception $e) {
+				$this->assertInstanceOf('AMQPChannelInterface', $channel);
+
+			} catch (Exception $e) {
 				$this->fail($e->getMessage());
 			}
 		}
@@ -133,7 +134,8 @@
 					AMQPQueueConfig::create()->
 						setDurable(true)
 				);
-				$this->assertTrue($int === 0);
+
+				$this->assertSame($int, 0);
 
 			} catch (Exception $e) {
 				$this->fail($e->getMessage());
@@ -163,17 +165,17 @@
 					setDurable(true)
 			);
 
-			$bool = $channel->queueBind(
+			$channelInterface = $channel->queueBind(
 				self::QUEUE_NAME, self::EXCHANGE_NAME, self::ROUTING_KEY
 			);
-			$this->assertTrue($bool);
+			$this->assertInstanceOf('AMQPChannelInterface', $channelInterface);
 
 			//cleanup queue
-			$bool = $channel->queuePurge(self::QUEUE_NAME);
-			$this->assertTrue($bool);
+			$channelInterface = $channel->queuePurge(self::QUEUE_NAME);
+			$this->assertInstanceOf('AMQPChannelInterface', $channelInterface);
 
 			for($i = 1; $i <= self::COUNT_OF_PUBLISH; $i++) {
-				$bool = $channel->basicPublish(
+				$channelInterface = $channel->basicPublish(
 					self::EXCHANGE_NAME,
 					self::ROUTING_KEY,
 					AMQPOutgoingMessage::create()->
@@ -184,7 +186,10 @@
 						setContentEncoding('utf-8')
 				);
 
-				$this->assertTrue($bool);
+				$this->assertInstanceOf(
+					'AMQPChannelInterface',
+					$channelInterface
+				);
 			}
 		}
 
@@ -266,18 +271,28 @@
 
 			$channel = $c->createChannel(1);
 
-			$bool = $channel->queueUnbind(
+			$channelInterface = $channel->queueUnbind(
 				self::QUEUE_NAME,
 				self::EXCHANGE_NAME,
 				self::ROUTING_KEY
 			);
-			$this->assertSame(true, $bool);
 
-			$bool = $channel->queueDelete(self::QUEUE_NAME);
-			$this->assertSame(true, $bool);
+			$this->assertInstanceOf(
+				'AMQPChannelInterface',
+				$channelInterface
+			);
 
-			$bool = $channel->exchangeDelete(self::EXCHANGE_NAME);
-			$this->assertSame(true, $bool);
+			$channelInterface = $channel->queueDelete(self::QUEUE_NAME);
+			$this->assertInstanceOf(
+				'AMQPChannelInterface',
+				$channelInterface
+			);
+
+			$channelInterface = $channel->exchangeDelete(self::EXCHANGE_NAME);
+			$this->assertInstanceOf(
+				'AMQPChannelInterface',
+				$channelInterface
+			);
 		}
 	}
 ?>
