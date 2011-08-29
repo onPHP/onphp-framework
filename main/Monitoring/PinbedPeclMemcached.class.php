@@ -104,6 +104,20 @@
 			return $result;
 		}
 		
+		protected function store(
+			$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
+		)
+		{
+			$this->log(__METHOD__.$action);
+			
+			$result = parent::store($action, $key, $value, $expires);
+			
+			$this->stopLog(__METHOD__.$action);
+			
+			return $result;
+			
+		}
+		
 		/*void */ private function log($methodName)
 		{
 			if (PinbaClient::isEnabled())
