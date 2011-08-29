@@ -14,6 +14,9 @@
 	**/
 	final class PinbedPeclMemcached extends PeclMemcached
 	{
+		private $host = null;
+		private $port = null;
+		
 		/**
 		 * @return PinbedPeclMemcached 
 		**/
@@ -30,6 +33,9 @@
 			$port = Memcached::DEFAULT_PORT
 		)
 		{
+			$this->host = $host;
+			$this->port = $port;
+			
 			if (PinbaClient::isEnabled())
 				PinbaClient::me()->timerStart(
 					'pecl_memcached_'.$host.'_'.$port.'_connect',
@@ -41,6 +47,77 @@
 			if (PinbaClient::isEnabled())
 				PinbaClient::me()->timerStop(
 					'pecl_memcached_'.$host.'_'.$port.'_connect'
+				);
+		}
+		
+		public function append($key, $data)
+		{
+			$this->log(__METHOD__);
+			$result = parent::append($key, $data);
+			$this->stopLog(__METHOD__);
+			
+			return $result;
+		}
+		
+		public function decrement($key, $value)
+		{
+			$this->log(__METHOD__);
+			$result = parent::decrement($key, $value);
+			$this->stopLog(__METHOD__);
+			
+			return $result;
+		}
+		
+		public function delete($index)
+		{
+			$this->log(__METHOD__);
+			$result = parent::delete($index);
+			$this->stopLog(__METHOD__);
+			
+			return $result;
+		}
+		
+		public function get($index)
+		{
+			$this->log(__METHOD__);
+			$result = parent::get($index);
+			$this->stopLog(__METHOD__);
+			
+			return $result;
+		}
+		
+		public function getList($indexes)
+		{
+			$this->log(__METHOD__);
+			$result = parent::getList($indexes);
+			$this->stopLog(__METHOD__);
+			
+			return $result;
+		}
+		
+		public function increment($key, $value)
+		{
+			$this->log(__METHOD__);
+			$result = parent::increment($key, $value);
+			$this->stopLog(__METHOD__);
+			
+			return $result;
+		}
+		
+		/*void */ private function log($methodName)
+		{
+			if (PinbaClient::isEnabled())
+				PinbaClient::me()->timerStart(
+					'pecl_memcached_'.$this->host.'_'.$this->port.'_'.$methodName,
+					array('pecl_memcached_'.__METHOD__ => $this->host.'_'.$this->port)
+				);
+		}
+		
+		/*void */ private function stopLog($methodName)
+		{
+			if (PinbaClient::isEnabled())
+				PinbaClient::me()->timerStop(
+					'pecl_memcached_'.$this->host.'_'.$this->port.'_'.$methodName
 				);
 		}
 	}

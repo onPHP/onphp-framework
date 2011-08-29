@@ -10,7 +10,7 @@
  ****************************************************************************/
 	
 	/**
-	 *  @ingroup Cache
+	 *  @ingroup DB
 	**/
 	final class PinbedPgSQL extends PgSQL
 	{
