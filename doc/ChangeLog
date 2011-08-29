@@ -24,12 +24,20 @@
 
 2011-07-14	Evgeny V. Kokovikhin
 
+<<<<<<< HEAD
+	* core/DB/ImaginaryDialect.class.php: quiting added.
+=======
 	* core/DB/ImaginaryDialect.class.php: quiting added
+>>>>>>> onphp-master
 
 2011-07-13 	Evgeny V. Kokovikhin
 
 	* core/DB/Dialect.class.php, core/DB/PgSQL.class.php,
+<<<<<<< HEAD
+	core/DB/PostgresDialect.class.php, core/Form/Primitive.class.php,
+=======
 	core/DB/PostgresDialect.class.php, core/Form/Primitive.class.php
+>>>>>>> onphp-master
 	core/Form/Primitives/BaseObjectPrimitive.class.php,
 	core/Form/Primitives/PrimitiveIpAddress.class.php,
 	core/Form/Primitives/PrimitiveIpRange.class.php,
@@ -64,7 +72,7 @@
 
 2011-06-18	Alexey S. Denisov
 
-	* core/DB/LiteDialect.class.php,  core/DB/PostgresDialect.class.php,
+	* core/DB/LiteDialect.class.php, core/DB/PostgresDialect.class.php,
 	core/OSQL/DBBinary.class.php, test/misc/DAOTest.class.php:
 	fixed work with *Dialect::quoteBinary and DBBinary.
 
@@ -72,12 +80,13 @@
 
 	* core/Form/Form.class.php: implemented methods
 	Form::getError and Form::hasError.
+
 	* test/core/FormTest.class.php: added tests for Form errors.
 
 2011-06-11	Sergey S. Sergeev
 
 	* main/Crypto/Base62Utils.class.php: isPositiveInteger fixed,
-	thanks to Alexander A. Klestoff. 
+	thanks to Alexander A. Klestoff.
 
 2011-06-10	Sergey S. Sergeev
 
