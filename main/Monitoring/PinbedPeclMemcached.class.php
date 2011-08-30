@@ -123,7 +123,11 @@
 			if (PinbaClient::isEnabled())
 				PinbaClient::me()->timerStart(
 					'pecl_memcached_'.$this->host.'_'.$this->port.'_'.$methodName,
-					array('pecl_memcached_'.$methodName => $this->host.'_'.$this->port)
+					array(
+						'group'				=> 'cache',
+						'memcached_server'	=> $this->host.'::'.$this->port,
+						'memcached_type'	=> $methodName
+					)
 				);
 		}
 		

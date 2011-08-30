@@ -37,7 +37,12 @@
 				
 				PinbaClient::me()->timerStart(
 					'pg_sql_query_'.$this->basename,
-					array('pg_sql_query' => $this->basename.'_'.$queryLabel)
+					array(
+						'group'			=> 'sql',
+						'pg_sql_query'	=> $queryLabel,
+						'pg_sql_server'	=> $this->hostname,
+						'pg_sql_base'	=> $this->basename
+					)
 				);
 			}
 			
