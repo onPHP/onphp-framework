@@ -111,11 +111,16 @@
 		/**
 		 * @return AMQPChannelInterface
 		**/
-		public function basicConsume($queue, /*Consumer*/ $callback);
+		public function basicConsume($queue, $autoAck, AMQPConsumer $callback);
 
 		/**
 		 * @return AMQPChannelInterface
 		**/
 		public function basicCancel($consumerTag);
+
+		/**
+		 * @return AMQPIncomingMessage
+		**/
+		public function getNextDelivery();
 	}
 ?>
