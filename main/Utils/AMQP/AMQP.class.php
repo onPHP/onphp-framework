@@ -22,19 +22,24 @@
 		protected $link	= null;
 
 		/**
-		 * @var array of AMQPBaseChannel instances
+		 * @var array of AMQPChannelInterface instances
 		**/
 		protected $channels	= array();
 
 		/**
-		 * @return boolean
+		 * @return AMQP
 		**/
 		abstract public function connect();
 
 		/**
-		 * @return bolean
+		 * @return AMQP
 		**/
 		abstract public function disconnect();
+		
+		/**
+		 * @return AMQP
+		**/
+		abstract public function reconnect();
 
 		/**
 		 * @return boolean
@@ -42,7 +47,7 @@
 		abstract public function isConnected();
 
 		/**
-		 * @return AMQPBaseChannel
+		 * @return AMQPChannelInterface
 		 */
 		abstract protected function spawnChannel($id, AMQP $transport);
 		
@@ -66,6 +71,9 @@
 			return new $class($credentials);
 		}
 
+		/**
+		 * @return AMQP
+		**/
 		public function getLink()
 		{
 			return $this->link;
@@ -74,7 +82,7 @@
 		/**
 		 * @param integer $id
 		 * @throws WrongArgumentException
-		 * @return AMQPBaseChannel
+		 * @return AMQPChannelInterface
 		**/
 		public function createChannel($id)
 		{
@@ -97,7 +105,7 @@
 
 		/**
 		 * @throws MissingElementException
-		 * @return AMQPBaseChannel
+		 * @return AMQPChannelInterface
 		**/
 		public function getChannel($id)
 		{
@@ -120,7 +128,7 @@
 		/**
 		 * @param integer $id
 		 * @throws MissingElementException
-		 * @return AMQPBaseChannel
+		 * @return AMQPChannelInterface
 		**/
 		public function dropChannel($id)
 		{

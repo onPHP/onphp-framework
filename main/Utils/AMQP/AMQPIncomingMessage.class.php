@@ -28,8 +28,7 @@
 		protected $consumerTag = null;
 
 		protected static $mandatoryFields = array(
-			self::COUNT, self::ROUTING_KEY,
-			self::DELIVERY_TAG, self::EXCHANGE
+			self::ROUTING_KEY, self::DELIVERY_TAG, self::EXCHANGE
 		);
 
 		/**
@@ -150,7 +149,11 @@
 		{
 			$this->checkMandatory($assoc);
 
-			$this->setCount($assoc[self::COUNT]);
+			if (isset($assoc[self::COUNT])) {
+				$this->setCount($assoc[self::COUNT]);
+				unset($assoc[self::COUNT]);
+			}
+
 			$this->setRoutingKey($assoc[self::ROUTING_KEY]);
 			$this->setDeliveryTag($assoc[self::DELIVERY_TAG]);
 			$this->setExchange($assoc[self::EXCHANGE]);
@@ -171,13 +174,15 @@
 			}
 
 			if (isset($assoc[self::REDELIVERED])) {
-				$this->setConsumerTag($assoc[self::REDELIVERED]);
+				$this->setRedelivered($assoc[self::REDELIVERED]);
 				unset($assoc[self::REDELIVERED]);
 			}
 
+			//unset mandatory
 			unset(
-				$assoc[self::COUNT], $assoc[self::ROUTING_KEY],
-				$assoc[self::DELIVERY_TAG], $assoc[self::EXCHANGE]				
+				$assoc[self::ROUTING_KEY],
+				$assoc[self::DELIVERY_TAG],
+				$assoc[self::EXCHANGE]
 			);
 
 			$this->setProperties($assoc);
