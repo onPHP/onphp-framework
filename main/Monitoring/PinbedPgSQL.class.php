@@ -19,7 +19,10 @@
 			if (PinbaClient::isEnabled())
 				PinbaClient::me()->timerStart(
 					'pg_sql_connect_'.$this->basename,
-					array('pg_sql_connect' => $this->basename)
+					array(
+					'group' => 'sql',
+					'pg_sql_connect' => $this->basename
+					)
 				);
 			
 			$result = parent::connect();
