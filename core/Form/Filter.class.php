@@ -23,8 +23,8 @@
 		{
 			return
 				FilterChain::create()->
-					add(Filter::trim())->
-					add(Filter::stripTags());
+					add(Filter::stripTags())->
+					add(Filter::trim());
 		}
 		
 		/**

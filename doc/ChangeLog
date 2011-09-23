@@ -3,6 +3,8 @@
 	* core/Form/Primitives/PrimitiveString.class.php: import only scalar values,
 	except bool.
 
+	* core/Form/Filter.class.php: fix filter order in Filter::textImport().
+
 2011-09-01	Sergey S. Sergeev
 
 	* main/Utils/AMQP/AMQPQueueConsumer.class.php,
