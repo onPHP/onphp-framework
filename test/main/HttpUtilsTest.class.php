@@ -15,7 +15,7 @@
 		{
 			$request = HttpRequest::create()->
 				setUrl(
-					HttpUrl::create()->parse('http://onphp.org/')
+					HttpUrl::create()->parse('https://github.com/')
 				)->
 				setMethod(HttpMethod::get());
 			
@@ -33,14 +33,14 @@
 			);
 			
 			$this->assertContains(
-				'quite official site',
+				'github',
 				$response->getBody()
 			);
 			
 			try {
 				$badResponse = CurlHttpClient::create()->
 					setTimeout(3)->
-					setMaxFileSize(100)-> // onPHP page is bigger than 100 bytes
+					setMaxFileSize(100)-> // github page is bigger than 100 bytes
 					send($request);
 				$this->fail();
 			} catch (NetworkException $e) {
@@ -52,7 +52,7 @@
 		{
 			$request = HttpRequest::create()->
 				setUrl(
-					HttpUrl::create()->parse('http://nonexistentdomain.xxx')
+					HttpUrl::create()->parse('http://nonexistentdomain.xyz')
 				)->
 				setMethod(HttpMethod::get());
 			
