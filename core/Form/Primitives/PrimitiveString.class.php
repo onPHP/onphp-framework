@@ -37,6 +37,9 @@
 			if (!BasePrimitive::import($scope))
 				return null;
 			
+			if (!is_scalar($scope[$this->name]) || is_bool($scope[$this->name]))
+				return false;
+			
 			$this->value = (string) $scope[$this->name];
 			
 			$this->selfFilter();
