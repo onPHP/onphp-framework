@@ -1,3 +1,7 @@
+2011-09-29	Alexander A. Zaytsev
+
+	* main/Flow/EmptyGifView.class.php: view with hardcoded empty gif 1x1 image.
+
 2011-09-14	Alexander A. Zaytsev
 
 	* core/Form/Primitives/PrimitiveString.class.php: import only scalar values,
