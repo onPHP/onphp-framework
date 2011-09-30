@@ -9,6 +9,31 @@
  *                                                                         *
  ***************************************************************************/
 
+	class AMQPTestCaseQueueConsumer extends AMQPQueueConsumer
+	{
+		protected $checkString = '';
+
+		public function handleCancelOk($consumerTag)
+		{
+			$this->checkString .= 'C';
+		}
+
+		public function handleConsumeOk($consumerTag)
+		{
+			$this->checkString .= 'A';
+		}
+
+		public function handleDelivery(AMQPIncomingMessage $delivery)
+		{
+			$this->checkString .= 'B';
+		}
+
+		public function getCheckString()
+		{
+			return $this->checkString;
+		}
+	}
+
 	class AMQPPeclTest extends TestCase
 	{
 		const EXCHANGE_NAME = 'AMQPPeclTestExchange';
@@ -32,7 +57,7 @@
 					AMQPCredentials::createDefault()
 				);
 				
-				$this->assertTrue($c->connect());
+				$this->assertInstanceOf('AMQP', $c->connect());
 				$this->assertTrue($c->isConnected());
 				
 			} catch (Exception $e) {
@@ -52,7 +77,7 @@
 						setVirtualHost('/')
 				);
 				
-				$this->assertTrue($c->connect());
+				$this->assertInstanceOf('AMQP', $c->connect());
 				$this->assertTrue($c->isConnected());
 				
 			} catch (Exception $e) {
@@ -104,7 +129,7 @@
 			$channel = $c->createChannel(1);
 
 			try {
-				$bool = $channel->exchangeDeclare(
+				$channel = $channel->exchangeDeclare(
 					self::EXCHANGE_NAME,
 					AMQPExchangeConfig::create()->
 						setType(
@@ -112,9 +137,10 @@
 						)->
 						setDurable(true)
 				);
-				$this->assertTrue($bool);
 
-			} catch(Exception $e) {
+				$this->assertInstanceOf('AMQPChannelInterface', $channel);
+
+			} catch (Exception $e) {
 				$this->fail($e->getMessage());
 			}
 		}
@@ -133,7 +159,8 @@
 					AMQPQueueConfig::create()->
 						setDurable(true)
 				);
-				$this->assertTrue($int === 0);
+
+				$this->assertSame($int, 0);
 
 			} catch (Exception $e) {
 				$this->fail($e->getMessage());
@@ -163,17 +190,17 @@
 					setDurable(true)
 			);
 
-			$bool = $channel->queueBind(
+			$channelInterface = $channel->queueBind(
 				self::QUEUE_NAME, self::EXCHANGE_NAME, self::ROUTING_KEY
 			);
-			$this->assertTrue($bool);
+			$this->assertInstanceOf('AMQPChannelInterface', $channelInterface);
 
 			//cleanup queue
-			$bool = $channel->queuePurge(self::QUEUE_NAME);
-			$this->assertTrue($bool);
+			$channelInterface = $channel->queuePurge(self::QUEUE_NAME);
+			$this->assertInstanceOf('AMQPChannelInterface', $channelInterface);
 
 			for($i = 1; $i <= self::COUNT_OF_PUBLISH; $i++) {
-				$bool = $channel->basicPublish(
+				$channelInterface = $channel->basicPublish(
 					self::EXCHANGE_NAME,
 					self::ROUTING_KEY,
 					AMQPOutgoingMessage::create()->
@@ -184,7 +211,10 @@
 						setContentEncoding('utf-8')
 				);
 
-				$this->assertTrue($bool);
+				$this->assertInstanceOf(
+					'AMQPChannelInterface',
+					$channelInterface
+				);
 			}
 		}
 
@@ -266,18 +296,151 @@
 
 			$channel = $c->createChannel(1);
 
-			$bool = $channel->queueUnbind(
+			$channelInterface = $channel->queueUnbind(
 				self::QUEUE_NAME,
 				self::EXCHANGE_NAME,
 				self::ROUTING_KEY
 			);
-			$this->assertSame(true, $bool);
 
-			$bool = $channel->queueDelete(self::QUEUE_NAME);
-			$this->assertSame(true, $bool);
+			$this->assertInstanceOf(
+				'AMQPChannelInterface',
+				$channelInterface
+			);
 
-			$bool = $channel->exchangeDelete(self::EXCHANGE_NAME);
-			$this->assertSame(true, $bool);
+			$channelInterface = $channel->queueDelete(self::QUEUE_NAME);
+			$this->assertInstanceOf(
+				'AMQPChannelInterface',
+				$channelInterface
+			);
+
+			$channelInterface = $channel->exchangeDelete(self::EXCHANGE_NAME);
+			$this->assertInstanceOf(
+				'AMQPChannelInterface',
+				$channelInterface
+			);
+		}
+
+		public function testQueueConsumer()
+		{
+			$c = new AMQPPecl(
+				AMQPCredentials::createDefault()
+			);
+
+			$channel = $c->createChannel(1);
+
+			$channel->exchangeDeclare(
+				self::EXCHANGE_NAME,
+				AMQPExchangeConfig::create()->
+					setType(
+						new AMQPExchangeType(AMQPExchangeType::DIRECT)
+					)->
+					setDurable(true)
+			);
+
+			$inQueueCount = $channel->queueDeclare(
+				self::QUEUE_NAME,
+				AMQPQueueConfig::create()->
+					setDurable(true)
+			);
+
+			$this->assertSame(0, $inQueueCount);
+
+			$channel->queueBind(
+				self::QUEUE_NAME, self::EXCHANGE_NAME, self::ROUTING_KEY
+			);
+
+			//cleanup
+			$channel->queuePurge(self::QUEUE_NAME);
+			
+			for($i = 1; $i <= self::COUNT_OF_PUBLISH; $i++) {
+				$channel->basicPublish(
+					self::EXCHANGE_NAME,
+					self::ROUTING_KEY,
+					AMQPOutgoingMessage::create()->
+						setBody("message {$i}")->
+						setTimestamp(Timestamp::makeNow())->
+						setAppId(__CLASS__)->
+						setMessageId($i)->
+						setContentEncoding('utf-8')
+				);
+			}
+
+			$consumer = new AMQPTestCaseQueueConsumer($channel);
+
+			$channel->basicConsume(
+				self::QUEUE_NAME,
+				false,
+				$consumer
+			);
+
+			$i = 0;
+
+			while (true) {
+				$message = $consumer->getNextDelivery();
+
+				//send acknowledge to RabbitMQ
+				$channel->basicAck(
+					$message->getDeliveryTag(),
+					false
+				);
+
+				$i++;
+
+				$this->assertSame(
+					$consumer->getConsumerTag(),
+					$message->getConsumerTag()
+				);
+
+				$this->assertEquals(
+					$i,
+					$message->getMessageId()
+				);
+
+				$this->assertEquals(
+					__CLASS__,
+					$message->getAppId()
+				);
+
+				$this->assertEquals(
+					"message {$i}",
+					$message->getBody()
+				);
+
+				if ($i == self::COUNT_OF_PUBLISH)
+					break;
+			}
+
+			$channel->basicCancel($consumer->getConsumerTag());
+
+			//observer logic test
+			$this->assertSame('ABBBBBC', $consumer->getCheckString());
+
+			//drop channels and close connection
+			$c->disconnect();
+
+			$c = new AMQPPecl(AMQPCredentials::createDefault());
+			$channel = $c->createChannel(1);
+
+			$channel->exchangeDeclare(
+				self::EXCHANGE_NAME,
+				AMQPExchangeConfig::create()->
+					setType(
+						new AMQPExchangeType(AMQPExchangeType::DIRECT)
+					)->
+					setDurable(true)
+			);
+
+			//queue must be empty, because we sent acknowledge
+			$inQueueCount = $channel->queueDeclare(
+				self::QUEUE_NAME,
+				AMQPQueueConfig::create()->
+					setDurable(true)
+			);
+
+			$this->assertSame(0, $inQueueCount);
+
+			//cleanup
+			$channel->queuePurge(self::QUEUE_NAME);
 		}
 	}
 ?>

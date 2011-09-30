@@ -242,5 +242,13 @@
 				$filter->apply('one another value')
 			);
 		}
+		
+		public function testTextImport()
+		{
+			$this->assertEquals(
+				Filter::textImport()->apply('  <b> some bold text    </b>   '),
+				'some bold text'
+			);
+		}
 	}
 ?>
