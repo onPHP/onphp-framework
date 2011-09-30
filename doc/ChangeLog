@@ -1,3 +1,12 @@
+2011-09-30	Evgeny V. Kokovikhin
+
+	*  core/Cache/Memcached.class.php, core/Cache/PeclMemcached.class.php,
+	core/DB/PgSQL.class.php, global.inc.php.tpl, main/Monitoring/PinbaClient.class.php,
+	main/Monitoring/PinbedMemcached.class.php, 
+	main/Monitoring/PinbedPeclMemcached.class.php,
+	main/Monitoring/PinbedPgSQL.class.php: wrapper for pinba
+
+
 2011-09-29	Alexander A. Zaytsev
 
 	* main/Flow/EmptyGifView.class.php: view with hardcoded empty gif 1x1 image.
@@ -48,20 +57,12 @@
 
 2011-07-14	Evgeny V. Kokovikhin
 
-<<<<<<< HEAD
-	* core/DB/ImaginaryDialect.class.php: quiting added.
-=======
 	* core/DB/ImaginaryDialect.class.php: quiting added
->>>>>>> onphp-master
 
 2011-07-13 	Evgeny V. Kokovikhin
 
 	* core/DB/Dialect.class.php, core/DB/PgSQL.class.php,
-<<<<<<< HEAD
 	core/DB/PostgresDialect.class.php, core/Form/Primitive.class.php,
-=======
-	core/DB/PostgresDialect.class.php, core/Form/Primitive.class.php
->>>>>>> onphp-master
 	core/Form/Primitives/BaseObjectPrimitive.class.php,
 	core/Form/Primitives/PrimitiveIpAddress.class.php,
 	core/Form/Primitives/PrimitiveIpRange.class.php,
