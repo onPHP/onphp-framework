@@ -474,5 +474,24 @@
 			));
 			$this->assertTrue($orChain->toBoolean($form));
 		}
+		
+		public function testCallbackLogicalObject()
+		{
+			$callBack = function(Form $form) {
+				return $form->getValue('repository') == 'git';
+			};
+			
+			$form = Form::create()->
+				add(Primitive::string('repository'))->
+				addRule('isOurRepository', CallbackLogicalObject::create($callBack));
+			
+			$form->import(array('repository' => 'svn'))->checkRules();
+			$this->assertEquals(array('isOurRepository' => Form::WRONG), $form->getErrors());
+			
+			$form->clean()->dropAllErrors();
+			
+			$form->import(array('repository' => 'git'))->checkRules();
+			$this->assertEquals(array(), $form->getErrors());
+		}
 	}
 ?>
