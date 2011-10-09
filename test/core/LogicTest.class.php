@@ -477,6 +477,9 @@
 		
 		public function testCallbackLogicalObject()
 		{
+			if (mb_substr(PHP_VERSION, 0, 3) < '5.3') {
+				$this->markTestSkipped('only php 5.3 or later');
+			}
 			$callBack = function(Form $form) {
 				return $form->getValue('repository') == 'git';
 			};
