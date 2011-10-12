@@ -197,7 +197,8 @@
 			if ($field instanceof SelectQuery) {
 				Assert::isTrue(
 					null !== $alias = $field->getName(),
-					'can not use SelectQuery without name as get field'
+					'can not use SelectQuery to table without name as get field: '
+					.$field->toDialectString(ImaginaryDialect::me())
 				);
 				
 				return
