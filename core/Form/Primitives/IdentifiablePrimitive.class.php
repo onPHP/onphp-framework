@@ -26,6 +26,14 @@
 		abstract public function of($className);
 		
 		/**
+		 * @return string
+		**/
+		public function getClassName()
+		{
+			return $this->className;
+		}
+		
+		/**
 		 * @return IdentifiablePrimitive
 		**/
 		public function setScalar($orly = false)
