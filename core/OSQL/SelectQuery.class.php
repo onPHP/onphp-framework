@@ -355,11 +355,17 @@
 			$nameList = array();
 			
 			foreach ($this->fields as $field) {
-				if ($field instanceof SelectField)
+				if ($field instanceof SelectField) {
 					if ($alias = $field->getAlias()) {
 						$nameList[] = $alias;
 						continue;
+					} elseif (($subField = $field->getField()) instanceof Aliased) {
+						if ($alias = $subField->getAlias()) {
+							$nameList[] = $alias;
+							continue;
+						}
 					}
+				}
 				
 				$nameList[] = $field->getName();
 			}
