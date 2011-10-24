@@ -44,6 +44,24 @@
 			$this->drop();
 		}
 		
+		public function testCriteria()
+		{
+			$this->create();
+			
+			foreach (DBTestPool::me()->getPool() as $connector => $db) {
+				DBPool::me()->setDefault($db);
+				$this->fill();
+				
+				$this->criteriaResult();
+				
+				Cache::me()->clean();
+			}
+			
+			$this->deletedCount();
+			
+			$this->drop();
+		}
+		
 		public function testUnified()
 		{
 			$this->create();
@@ -256,6 +274,12 @@
 				$this->getListByIdsTest();
 				$this->getListByIdsTest();
 			}
+		}
+		
+		public function criteriaResult()
+		{
+			$queryResult = Criteria::create(TestCity::dao())->getResult();
+			$this->assertEquals(2, $queryResult->getCount());
 		}
 		
 		public function unified()
