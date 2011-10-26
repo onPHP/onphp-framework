@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class PartViewer
+	class PartViewer implements Stringable
 	{
 		protected $viewResolver 	= null;
 		protected $model			= null;
@@ -55,6 +55,18 @@
 				$this->viewResolver->resolveViewName($partName)->render($model);
 			
 			return $this;
+		}
+		
+		public function toString($model = null)
+		{
+			try {
+				ob_start();
+				$this->view($model);
+				return ob_get_clean();
+			} catch (Exception $e) {
+				ob_end_clean();
+				throw $e;
+			}
 		}
 		
 		public function partExists($partName)
