@@ -170,30 +170,31 @@
 		public function getTableInfo($table)
 		{
 			static $types = array(
-				'tinyint'	=> DataType::SMALLINT,
-				'smallint'	=> DataType::SMALLINT,
-				'int'		=> DataType::INTEGER,
-				'mediumint'	=> DataType::INTEGER,
+				'tinyint'		=> DataType::SMALLINT,
+				'smallint'		=> DataType::SMALLINT,
+				'int'			=> DataType::INTEGER,
+				'mediumint'		=> DataType::INTEGER,
 
-				'bigint'	=> DataType::BIGINT,
+				'bigint'		=> DataType::BIGINT,
 				
-				'double'	=> DataType::DOUBLE,
-				'decimal'	=> DataType::NUMERIC,
+				'double'		=> DataType::DOUBLE,
+				'decimal'		=> DataType::NUMERIC,
 
-				'char'		=> DataType::CHAR,
-				'varchar'	=> DataType::VARCHAR,
-				'text'		=> DataType::TEXT,
-				'tinytext'	=> DataType::TEXT,
+				'char'			=> DataType::CHAR,
+				'varchar'		=> DataType::VARCHAR,
+				'text'			=> DataType::TEXT,
+				'tinytext'		=> DataType::TEXT,
+				'mediumtext'	=> DataType::TEXT,
 				
-				'date'		=> DataType::DATE,
-				'time'		=> DataType::TIME,
-				'timestamp'	=> DataType::TIMESTAMP,
-				'datetime'	=> DataType::TIMESTAMP,
+				'date'			=> DataType::DATE,
+				'time'			=> DataType::TIME,
+				'timestamp'		=> DataType::TIMESTAMP,
+				'datetime'		=> DataType::TIMESTAMP,
 
 				// unhandled types
-				'set'		=> null,
-				'enum'		=> null,
-				'year'		=> null
+				'set'			=> null,
+				'enum'			=> null,
+				'year'			=> null
 			);
 			
 			try {
