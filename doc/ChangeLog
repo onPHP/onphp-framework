@@ -1,3 +1,7 @@
+2011-10-28	Vasily M. Stashko
+
+	* core/DB/MySQL.class.php : fix for correct DB schemas check with MySQL
+
 2011-10-24	Alexey S. Denisov
 
 	* core/OSQL/SelectQuery.class.php,
