@@ -34,7 +34,7 @@
 			return
 				'('
 				.$dialect->toFieldString($this->subject)
-				.' '.$this->logic
+				.' '.$dialect->logicToString($this->logic)
 				.')';
 		}
 		

@@ -44,6 +44,8 @@
 			<identifier />
 			
 			<property name="name" type="String" size="50" required="true" />
+			<property name="capital" type="Boolean" required="true" default="false" />
+			<property name="large" type="Boolean" required="false" />
 		</properties>
 		
 		<pattern name="DictionaryClass" fetch="cascade" />
