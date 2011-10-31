@@ -1,3 +1,11 @@
+2011-10-31	Vasily M. Stashko
+
+	* core/DB/MySQL.class.php : fix for correct DB schemas check with MySQL
+
+2011-10-27	Vasily M. Stashko
+
+	* main/Flow/PartViewer.class.php: added method PartViewer::toString
+
 2011-10-24	Alexey S. Denisov
 
 	* core/OSQL/SelectQuery.class.php,
