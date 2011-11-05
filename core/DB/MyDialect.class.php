@@ -92,6 +92,17 @@
 			return false;
 		}
 		
+		public function literalToString($literal)
+		{
+			switch ($literal) {
+				case self::LITERAL_FALSE:
+					return '0';
+				case self::LITERAL_TRUE:
+					return '1';
+			}
+			return parent::literalToString($literal);
+		}
+		
 		public function preAutoincrement(DBColumn $column)
 		{
 			$column->setDefault(null);
