@@ -11,13 +11,16 @@
 
 	final class ViewTest extends TestCase
 	{
-		private $resolver = null;
+		protected static $resolver;
 
-		public function __construct($name = NULL, array $data = array(), $dataName = '')
+		public static function setUpBeforeClass()
 		{
-			parent::__construct($name, $data, $dataName);
+			self::$resolver = new PhpViewResolver(ONPHP_TEST_PATH.'main/data/views/', EXT_TPL);
+		}
 
-			$this->resolver = new PhpViewResolver(ONPHP_TEST_PATH.'main/data/views/', EXT_TPL);
+		public static function tearDownAfterClass()
+		{
+			self::$resolver = NULL;
 		}
 
 		public function testToString()
