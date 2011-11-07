@@ -25,8 +25,8 @@
 
 		public function testToString()
 		{
-			$renderView = $this->resolver->resolveViewName('testView');
-			$toStringView = $this->resolver->resolveViewName('testViewToString');
+			$renderView = self::$resolver->resolveViewName('testView');
+			$toStringView = self::$resolver->resolveViewName('testViewToString');
 
 			$model = Model::create();
 
