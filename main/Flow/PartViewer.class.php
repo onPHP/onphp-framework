@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class PartViewer implements Stringable
+	class PartViewer
 	{
 		protected $viewResolver 	= null;
 		protected $model			= null;
@@ -57,11 +57,11 @@
 			return $this;
 		}
 		
-		public function toString($model = null)
+		public function toString($partName, $model = null)
 		{
 			try {
 				ob_start();
-				$this->view($model);
+				$this->view($partName, $model);
 				return ob_get_clean();
 			} catch (Exception $e) {
 				ob_end_clean();
