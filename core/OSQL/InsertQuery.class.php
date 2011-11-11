@@ -88,11 +88,11 @@
 				$fields[] = $dialect->quoteField($var);
 				
 				if ($val === null)
-					$values[] = 'NULL';
+					$values[] = $dialect->literalToString(Dialect::LITERAL_NULL);
 				elseif (true === $val)
-					$values[] = 'TRUE';
+					$values[] = $dialect->literalToString(Dialect::LITERAL_TRUE);
 				elseif (false === $val)
-					$values[] = 'FALSE';
+					$values[] = $dialect->literalToString(Dialect::LITERAL_FALSE);
 				elseif ($val instanceof DialectString)
 					$values[] = $val->toDialectString($dialect);
 				else

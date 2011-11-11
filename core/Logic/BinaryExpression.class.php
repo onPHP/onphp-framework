@@ -71,7 +71,7 @@
 			return
 				'('
 				.$dialect->toFieldString($this->left)
-				." {$this->logic} "
+				.' '.$dialect->logicToString($this->logic).' '
 				.$dialect->toValueString($this->right)
 				.')';
 		}

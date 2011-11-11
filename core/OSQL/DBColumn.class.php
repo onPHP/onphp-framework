@@ -172,17 +172,13 @@
 			if (null !== $this->default) {
 				
 				if ($this->type->getId() == DataType::BOOLEAN)
-					$default = $this->default ? 'true' : 'false';
+					$default = $this->default
+						? $dialect->literalToString(Dialect::LITERAL_TRUE)
+						: $dialect->literalToString(Dialect::LITERAL_FALSE);
 				else
-					$default = $this->default;
+					$default = $dialect->valueToString($default);
 				
-				$out .=
-					' DEFAULT '
-					.(
-						$this->default instanceof DialectString
-							? $this->default->toDialectString($dialect)
-							: $dialect->valueToString($default)
-					);
+				$out .= ' DEFAULT '.($default);
 			}
 			
 			if ($this->reference) {

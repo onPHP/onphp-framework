@@ -69,6 +69,28 @@
 			return parent::typeToString($type);
 		}
 		
+		public function logicToString($logic)
+		{
+			switch ($logic) {
+				case PostfixUnaryExpression::IS_FALSE:
+					return '= '.$this->quoteValue('0');
+				case PostfixUnaryExpression::IS_TRUE:
+					return '= '.$this->quoteValue('1');
+			}
+			return parent::logicToString($logic);
+		}
+		
+		public function literalToString($literal)
+		{
+			switch ($literal) {
+				case self::LITERAL_FALSE:
+					return $this->quoteValue('0');
+				case self::LITERAL_TRUE:
+					return $this->quoteValue('1');
+			}
+			return parent::literalToString($literal);
+		}
+		
 		public function preAutoincrement(DBColumn $column)
 		{
 			self::checkColumn($column);
