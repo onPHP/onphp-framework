@@ -19,6 +19,10 @@
 		extends Singleton
 		implements Instantiatable
 	{
+		const LITERAL_NULL = 'NULL';
+		const LITERAL_TRUE = 'TRUE';
+		const LITERAL_FALSE = 'FALSE';
+		
 		abstract public function preAutoincrement(DBColumn $column);
 		abstract public function postAutoincrement(DBColumn $column);
 		
@@ -126,6 +130,16 @@
 				$value instanceof DBValue
 					? $value->toDialectString($this)
 					: $this->quoteValue($value);
+		}
+		
+		public function logicToString($logic)
+		{
+			return $logic;
+		}
+		
+		public function literalToString($literal)
+		{
+			return $literal;
 		}
 		
 		public function fullTextSearch($field, $words, $logic)

@@ -95,11 +95,14 @@
 						.$val->toDialectString($dialect)
 						.')';
 				elseif ($val === null)
-					$sets[] = $dialect->quoteField($var).' = NULL';
+					$sets[] = $dialect->quoteField($var).' = '
+						.$dialect->literalToString(Dialect::LITERAL_NULL);
 				elseif (true === $val)
-					$sets[] = $dialect->quoteField($var).' = TRUE';
+					$sets[] = $dialect->quoteField($var).' = '
+						.$dialect->literalToString(Dialect::LITERAL_TRUE);
 				elseif (false === $val)
-					$sets[] = $dialect->quoteField($var).' = FALSE';
+					$sets[] = $dialect->quoteField($var).' = '
+						.$dialect->literalToString(Dialect::LITERAL_FALSE);
 				else
 					$sets[] =
 						$dialect->quoteField($var)
