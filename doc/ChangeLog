@@ -1,3 +1,7 @@
+2011-11-14	Evgeny V. Kokovikhin
+	* core/Cache/PeclMemcached.class.php, test/core/MemcachedTest.class.php :
+	fix PeclMemcached working with wrong keys. Thanks to Nikita V. Konstantinov
+
 2011-10-31	Vasily M. Stashko
 
 	* core/DB/MySQL.class.php : fix for correct DB schemas check with MySQL
