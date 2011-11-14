@@ -8,6 +8,12 @@
 			$this->clientTest('PeclMemcached');
 			$this->clientTest('Memcached');
 		}
+		
+		public function testWrongKeys()
+		{
+			$this->doTestWrongKeys('Memcached');
+			$this->doTestWrongKeys('PeclMemcached');
+		}
 
 		public function testWithTimeout()
 		{
@@ -92,6 +98,14 @@
 			$this->assertEquals(count($list), 0);
 			
 			$cache->clean();
+		}
+		
+		private function doTestWrongKeys($classname)
+		{
+			$peer = new $classname('localhost');
+			$peer->get(null);
+			
+			$this->assertTrue($peer->isAlive());
 		}
 	}
 ?>
