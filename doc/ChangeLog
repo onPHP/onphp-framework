@@ -1,4 +1,5 @@
 2011-11-14	Evgeny V. Kokovikhin
+	
 	* core/Cache/PeclMemcached.class.php, test/core/MemcachedTest.class.php :
 	fix PeclMemcached working with wrong keys. Thanks to Nikita V. Konstantinov
 
