@@ -1,3 +1,8 @@
+2011-11-14      Dmitry V. Snezhinskiy
+	
+	* main/Utils/AMQP/Pecl/AMQPPeclChannel.class.php :
+	customize AMQPPeclChannel Exception. Author Evgenia T. Tekalin
+
 2011-11-14	Evgeny V. Kokovikhin
 	
 	* core/Cache/PeclMemcached.class.php, test/core/MemcachedTest.class.php :
