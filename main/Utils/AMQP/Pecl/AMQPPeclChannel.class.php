@@ -317,7 +317,7 @@
 			$this->unsetExchange($name);
 
 			return $this;
-		}		
+		}
 
 		/**
 		 * @throws AMQPServerException|AMQPServerConnectionException
@@ -499,7 +499,12 @@
 				$this->consumer->getConsumerTag()
 				!= $incoming->getConsumerTag()
 			) {
-				throw new WrongStateException('Consumer change tag');
+				throw new WrongStateException(
+					"Consumer change tag consumerTag="
+					."{$this->consumer->getConsumerTag()}, "
+					."message.consumerTag={$incoming->getConsumerTag()}, "
+					."message.body={$incoming->getBody()}"
+				);
 			}
 
 			$this->consumer->handleDelivery($incoming);
