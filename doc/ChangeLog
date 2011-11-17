@@ -1,10 +1,15 @@
-2011-11-14      Dmitry V. Snezhinskiy
-	
+2011-11-17	Sergey S. Sergeev
+
+	* main/Base/LightMetaProperty.class.php: speed up insert or update operations,
+	removes loading objects if property is lazy. Thanks to Alexander V. Solomatin.
+
+2011-11-14	Dmitry V. Snezhinskiy
+
 	* main/Utils/AMQP/Pecl/AMQPPeclChannel.class.php :
 	customize AMQPPeclChannel Exception. Author Evgenia T. Tekalin
 
 2011-11-14	Evgeny V. Kokovikhin
-	
+
 	* core/Cache/PeclMemcached.class.php, test/core/MemcachedTest.class.php :
 	fix PeclMemcached working with wrong keys. Thanks to Nikita V. Konstantinov
 
