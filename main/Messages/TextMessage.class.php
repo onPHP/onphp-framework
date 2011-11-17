@@ -17,7 +17,7 @@
 
 		public static function create(Timestamp $timestamp = null)
 		{
-			return new self;
+			return new self($timestamp);
 		}
 
 		public function __construct(Timestamp $timestamp = null)
