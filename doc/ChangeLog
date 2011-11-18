@@ -1,3 +1,8 @@
+2011-11-18	Evgeny V. Kokovikhin
+
+	* main/Messages/TextMessage.class.php, main/Messages/TextFileReceiver.class.php:
+	a bit optimize: don't needed to make Timestamp twice
+
 2011-11-17	Sergey S. Sergeev
 
 	* main/Base/LightMetaProperty.class.php: speed up insert or update operations,
@@ -6,7 +11,7 @@
 2011-11-14	Dmitry V. Snezhinskiy
 
 	* main/Utils/AMQP/Pecl/AMQPPeclChannel.class.php :
-	customize AMQPPeclChannel Exception. Author Evgenia T. Tekalin
+	customize AMQPPeclChannel Exception. Author Evgenia T. Tekalin.
 
 2011-11-14	Evgeny V. Kokovikhin
 

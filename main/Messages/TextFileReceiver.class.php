@@ -69,8 +69,7 @@
 			
 			Assert::isNotNull($time);
 			
-			$result = TextMessage::create()->
-				setTimestamp(Timestamp::create($time))->
+			$result = TextMessage::create(Timestamp::create($time))->
 				setText($text);
 			
 			return $result;
