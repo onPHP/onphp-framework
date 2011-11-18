@@ -3,12 +3,12 @@
 	* main/Utils/AMQP/AMQPConsumer.class.php,
 	main/Utils/AMQP/AMQPDefaultConsumer.class.php,
 	main/Utils/AMQP/Pecl/AMQPPeclChannel.class.php:
-	handle change СonsumerTag implemented.
+	handle the change of СonsumerTag implemented.
 
 2011-11-18	Evgeny V. Kokovikhin
 
 	* main/Messages/TextMessage.class.php, main/Messages/TextFileReceiver.class.php:
-	a bit optimize: don't needed to make Timestamp twice
+	a bit optimize: don't needed to make Timestamp twice.
 
 2011-11-17	Sergey S. Sergeev
 
@@ -23,7 +23,7 @@
 2011-11-14	Evgeny V. Kokovikhin
 
 	* core/Cache/PeclMemcached.class.php, test/core/MemcachedTest.class.php :
-	fix PeclMemcached working with wrong keys. Thanks to Nikita V. Konstantinov
+	fix PeclMemcached working with wrong keys. Thanks to Nikita V. Konstantinov.
 
 2011-10-31	Vasily M. Stashko
 
