@@ -15,17 +15,17 @@
 		private $timestamp	= null;
 		private $text		= null;
 
-		public static function create()
+		public static function create(Timestamp $timestamp = null)
 		{
-			return new self;
+			return new self($timestamp);
 		}
 
-		public function __construct()
+		public function __construct(Timestamp $timestamp = null)
 		{
-			$this->timestamp = Timestamp::makeNow();
+			$this->timestamp = $timestamp ?: Timestamp::makeNow();
 		}
 
-		public function setTimestamp($timestamp)
+		public function setTimestamp(Timestamp $timestamp)
 		{
 			$this->timestamp = $timestamp;
 
