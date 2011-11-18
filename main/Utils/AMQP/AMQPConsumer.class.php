@@ -42,6 +42,15 @@
 		public function handleCancelOk($consumerTag);
 
 		/**
+		 * Called when the consumer is changed tag
+		 *
+		 * @param string $fromTag
+		 * @param string $toTag
+		 * @return void
+		**/
+		public function handleChangeConsumerTag($fromTag, $toTag);
+
+		/**
 		 * @return AMQPConsumer
 		**/
 		public function setQueueName($name);

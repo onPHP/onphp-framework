@@ -32,6 +32,11 @@
 		{
 			return $this->checkString;
 		}
+
+		public function handleChangeConsumerTag($fromTag, $toTag)
+		{
+			return;
+		}
 	}
 
 	class AMQPPeclTest extends TestCase

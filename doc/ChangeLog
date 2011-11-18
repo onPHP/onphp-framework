@@ -1,3 +1,10 @@
+2011-11-18	Sergey S. Sergeev
+
+	* main/Utils/AMQP/AMQPConsumer.class.php,
+	main/Utils/AMQP/AMQPDefaultConsumer.class.php,
+	main/Utils/AMQP/Pecl/AMQPPeclChannel.class.php:
+	handle change СonsumerTag implemented.
+
 2011-11-18	Evgeny V. Kokovikhin
 
 	* main/Messages/TextMessage.class.php, main/Messages/TextFileReceiver.class.php:
