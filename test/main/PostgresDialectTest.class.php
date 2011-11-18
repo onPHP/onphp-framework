@@ -1,6 +1,5 @@
 <?php
-	/* $Id$ */
-	
+
 	final class PostgresDialectTest extends TestCase
 	{
 		public function testPrepareFullText()
