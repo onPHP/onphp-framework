@@ -54,14 +54,12 @@
 			return "{$field}::{$type}";
 		}
 		
-		public static function prepareFullText($words, $logic)
+		public static function prepareFullText(array $words, $logic)
 		{
-			Assert::isArray($words);
-			
 			$glue = ($logic == DB::FULL_TEXT_AND) ? ' & ' : ' | ';
 			
 			return
-				strtolower(
+				mb_strtolower(
 					implode(
 						$glue,
 						array_map(
