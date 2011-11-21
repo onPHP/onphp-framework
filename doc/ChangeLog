@@ -1,22 +1,34 @@
 2011-11-21	Evgeny V. Kokovikhin
 
 	* core/DB/PostgresDialect.class.php, test/main/PostgresDialectTest.class.php:
-	use mb_* string function for utf-8 strings
+	use mb_* string function for utf-8 strings.
+
+2011-11-18	Sergey S. Sergeev
+
+	* main/Utils/AMQP/AMQPConsumer.class.php,
+	main/Utils/AMQP/AMQPDefaultConsumer.class.php,
+	main/Utils/AMQP/Pecl/AMQPPeclChannel.class.php:
+	handle the change of СonsumerTag implemented.
 
 2011-11-18	Evgeny V. Kokovikhin
-	
-	* main/Messages/TextMessage.class.php, main/Messages/TextFileReceiver.class.php :
-	a bit optimize: don't needed to make Timestamp twice
 
-2011-11-14      Dmitry V. Snezhinskiy
-	
+	* main/Messages/TextMessage.class.php, main/Messages/TextFileReceiver.class.php:
+	a bit optimize: don't needed to make Timestamp twice.
+
+2011-11-17	Sergey S. Sergeev
+
+	* main/Base/LightMetaProperty.class.php: speed up insert or update operations,
+	removes loading objects if property is lazy. Thanks to Alexander V. Solomatin.
+
+2011-11-14	Dmitry V. Snezhinskiy
+
 	* main/Utils/AMQP/Pecl/AMQPPeclChannel.class.php :
-	customize AMQPPeclChannel Exception. Author Evgenia T. Tekalin
+	customize AMQPPeclChannel Exception. Author Evgenia T. Tekalin.
 
 2011-11-14	Evgeny V. Kokovikhin
-	
+
 	* core/Cache/PeclMemcached.class.php, test/core/MemcachedTest.class.php :
-	fix PeclMemcached working with wrong keys. Thanks to Nikita V. Konstantinov
+	fix PeclMemcached working with wrong keys. Thanks to Nikita V. Konstantinov.
 
 2011-10-31	Vasily M. Stashko
 

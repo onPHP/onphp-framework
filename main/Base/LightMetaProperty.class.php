@@ -358,8 +358,17 @@
 					&& !$this->generic
 				)
 					return $query;
-				
-				$value = $object->{$this->getter}();
+
+				$getter = $this->getter;
+
+				if (
+					$this->relationId
+					&& $this->strategyId == FetchStrategy::LAZY
+				) {
+					$getter = $getter.'Id';
+				}
+
+				$value = $object->{$getter}();
 				
 				if ($this->type == 'binary') {
 					$query->set($this->columnName, new DBBinary($value));

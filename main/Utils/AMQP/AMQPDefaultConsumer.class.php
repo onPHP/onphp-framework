@@ -73,6 +73,14 @@
 		}
 
 		/**
+		 * @return void
+		**/
+		public function handleChangeConsumerTag($fromTag, $toTag)
+		{
+			// no work to do
+		}
+
+		/**
 		 * @return AMQPDefaultConsumer
 		**/
 		public function setQueueName($name)

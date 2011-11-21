@@ -485,11 +485,12 @@
 			}
 
 			$this->checkCommandResult(
-				is_array($messages),
+				is_array($messages) && !empty($messages),
 				"Could not consume from queue"
 			);
 
 			$message = array_shift($messages);
+
 			$incoming = AMQPIncomingMessage::spawn($message);
 
 			if ($this->consumer->getConsumerTag() === null) {
@@ -499,11 +500,9 @@
 				$this->consumer->getConsumerTag()
 				!= $incoming->getConsumerTag()
 			) {
-				throw new WrongStateException(
-					"Consumer change tag consumerTag="
-					."{$this->consumer->getConsumerTag()}, "
-					."message.consumerTag={$incoming->getConsumerTag()}, "
-					."message.body={$incoming->getBody()}"
+				$this->consumer->handleChangeConsumerTag(
+					$this->consumer->getConsumerTag(),
+					$incoming->getConsumerTag()
 				);
 			}
 
