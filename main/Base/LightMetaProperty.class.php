@@ -360,14 +360,7 @@
 					return $query;
 
 				$getter = $this->getter;
-
-				if (
-					$this->relationId
-					&& $this->strategyId == FetchStrategy::LAZY
-				) {
-					$getter = $getter.'Id';
-				}
-
+				
 				$value = $object->{$getter}();
 				
 				if ($this->type == 'binary') {
