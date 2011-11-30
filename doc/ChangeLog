@@ -1,3 +1,8 @@
+2011-11-21      Alexey S. Denisov, Evgeny V. Kokovikhin
+	
+	* meta/types/ObjectType.class.php, test/misc/DAOTest.class.php: changed logic
+	for getObjectId method of lazy encapsulant; test for lazy logic added
+
 2011-11-21	Evgeny V. Kokovikhin
 
 	* core/DB/PostgresDialect.class.php, test/main/PostgresDialectTest.class.php:
