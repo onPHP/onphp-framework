@@ -121,7 +121,9 @@ public function {$methodName}()
 
 public function {$methodName}Id()
 {
-	return \$this->{$name}Id;
+	return \$this->{$name}
+		? \$this->{$name}->getId()
+		: \$this->{$name}Id;
 }
 
 EOT;
