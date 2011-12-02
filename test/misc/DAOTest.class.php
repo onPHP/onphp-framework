@@ -826,6 +826,30 @@
 			$this->drop();
 		}
 		
+		public function testLazy()
+		{
+			$this->create();
+			
+			$parent = TestParentObject::create();
+			$child = TestChildObject::create()->setParent($parent);
+			
+			$parent->dao()->add($parent);
+			
+			$child->dao()->add($child);
+			
+			$this->assertEquals(
+				$parent->getId(),
+				Criteria::create(TestChildObject::dao())->
+					setProjection(
+						Projection::property('parent.id', 'parentId')
+					)->
+					add(Expression::eq('id', $child->getId()))->
+					getCustom('parentId')
+			);
+			
+			$this->drop();
+		}
+		
 		protected function getSome()
 		{
 			for ($i = 1; $i < 3; ++$i) {
