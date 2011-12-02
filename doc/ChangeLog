@@ -3,6 +3,10 @@
 	* meta/types/ObjectType.class.php, test/misc/DAOTest.class.php: changed logic
 	for getObjectId method of lazy encapsulant; test for lazy logic added
 
+2011-11-29	Igor V. Gulyaev
+
+	* test/main/ViewTest.class.php: added View test
+
 2011-11-21	Evgeny V. Kokovikhin
 
 	* core/DB/PostgresDialect.class.php, test/main/PostgresDialectTest.class.php:
