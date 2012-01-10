@@ -110,10 +110,18 @@
 		
 		public function getList($indexes)
 		{
-			foreach ($indexes as &$index)
-				$index = $this->getActualWatermark().$index;
-			
-			return $this->peer->getList($indexes);
+			$peerIndexMap = array();
+			foreach ($indexes as $index)
+				$peerIndexMap[$this->getActualWatermark().$index] = $index;
+
+			$peerResult = $this->peer->getList(array_keys($peerIndexMap));
+
+			$result = array();
+			foreach ($peerResult as $key => $value) {
+				$result[$peerIndexMap[$key]] = $value;
+			}
+
+			return $result;
 		}
 		
 		public function get($key)
