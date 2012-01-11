@@ -114,11 +114,16 @@
 			foreach ($indexes as $index)
 				$peerIndexMap[$this->getActualWatermark().$index] = $index;
 
-			$peerResult = $this->peer->getList(array_keys($peerIndexMap));
+			$peerIndexes = array_keys($peerIndexMap);
+			$peerResult = $this->peer->getList($peerIndexes);
 
 			$result = array();
-			foreach ($peerResult as $key => $value) {
-				$result[$peerIndexMap[$key]] = $value;
+			if (!empty($peerResult)) {
+				foreach ($peerResult as $key => $value) {
+					$result[$peerIndexMap[$key]] = $value;
+				}
+			} else {
+				$result = $peerResult;
 			}
 
 			return $result;
