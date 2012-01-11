@@ -210,6 +210,14 @@
 				'(- a)',
 				Expression::minus('a')->toDialectString($dialect)
 			);
+			
+			try {
+				Expression::eq('id', null)->toDialectString($dialect);
+				
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				//it's Ok
+			}
 		}
 		
 		public function testPgGeneration()
