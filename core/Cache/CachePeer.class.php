@@ -150,7 +150,7 @@
 			
 			foreach ($indexes as $key)
 				if (null !== ($value = $this->get($key)))
-					$out[] = $value;
+					$out[$key] = $value;
 			
 			return $out;
 		}
