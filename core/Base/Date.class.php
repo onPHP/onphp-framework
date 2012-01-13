@@ -274,6 +274,11 @@
 			return $this->string;
 		}
 		
+		public function toFormatString($format)
+		{
+			return date($format, $this->toStamp());
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			// there are no known differences yet
