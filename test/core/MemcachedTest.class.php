@@ -5,21 +5,27 @@
 	{
 		public function testClients()
 		{
-			$this->clientTest('PeclMemcached');
-			$this->clientTest('Memcached');
+			$this->clientTest(new PeclMemcached('localhost'));
+			$this->clientTest(new Memcached('localhost'));
+			$this->clientTest(Redis::create());
 		}
 		
 		public function testWrongKeys()
 		{
-			$this->doTestWrongKeys('Memcached');
-			$this->doTestWrongKeys('PeclMemcached');
+			$this->doTestWrongKeys(new Memcached('localhost'));
+			$this->doTestWrongKeys(new PeclMemcached('localhost'));
+			$this->doTestWrongKeys(Redis::create());
 		}
 
 		public function testWithTimeout()
 		{
-			$cache =
-				Memcached::create('localhost')->
-				setTimeout(200);
+			$this->withTimeout(Memcached::create('localhost'));
+//			$this->withTimeout(new Redis());
+		}
+
+		protected function withTimeout(CachePeer $cache)
+		{
+			$cache->setTimeout(200);
 
 			$cache->add('a', 'b');
 
@@ -27,19 +33,17 @@
 
 			$cache->clean();
 		}
-		
-		protected function clientTest($className)
+
+		protected function clientTest(CachePeer $cache)
 		{
-			$this->clientTestSingleGet($className);
-			$this->clientTestMultiGet($className);
+			$this->clientTestSingleGet($cache);
+			$this->clientTestMultiGet($cache);
 		}
 		
-		protected function clientTestSingleGet($className)
+		protected function clientTestSingleGet(CachePeer $cache)
 		{
-			$cache = new $className('localhost');
-			
 			if (!$cache->isAlive()) {
-				return $this->markTestSkipped('memcached not available');
+				return $this->markTestSkipped('cache not available');
 			}
 			
 			$cache->clean();
@@ -47,16 +51,35 @@
 			$value = 'a';
 			
 			$cache->set('a', $value, Cache::EXPIRES_MEDIUM);
-			
-			$this->assertEquals($cache->get('a'), 'a');
-			
+			$this->assertEquals($cache->get('a'), $value);
+
+			$cache->append('a', $value);
+			$this->assertEquals($cache->get('a'), $value.$value);
+
+			$value = 'L'.str_repeat('o', 256).'ng string';
+			$cache->set('a', $value, Cache::EXPIRES_MEDIUM);
+			$this->assertEquals($cache->get('a'), $value);
+
+			$cache->delete('a');
+
+			$cache->set('a', 1, Cache::EXPIRES_MEDIUM);
+			$this->assertEquals($cache->get('a'), 1);
+			$cache->increment('a', 1);
+			$this->assertEquals($cache->get('a'), 2);
+			$cache->decrement('a', 2);
+			$this->assertEquals($cache->get('a'), 0);
+
+			$cache->set('c', 42.28, Cache::EXPIRES_MEDIUM);
+			$this->assertEquals($cache->get('c'), 42.28);
+
+			$cache->replace('c', 42.297, Cache::EXPIRES_MEDIUM);
+			$this->assertEquals($cache->get('c'), 42.297);
+
 			$cache->clean();
 		}
 		
-		protected function clientTestMultiGet($className)
+		protected function clientTestMultiGet(CachePeer $cache)
 		{
-			$cache = new $className('localhost');
-			
 			if (!$cache->isAlive()) {
 				return $this->markTestSkipped('memcached not available');
 			}
@@ -100,12 +123,11 @@
 			$cache->clean();
 		}
 		
-		private function doTestWrongKeys($classname)
+		private function doTestWrongKeys(CachePeer $cache)
 		{
-			$peer = new $classname('localhost');
-			$peer->get(null);
-			
-			$this->assertTrue($peer->isAlive());
+			$this->assertNull($cache->get(null));
+
+			$this->assertTrue($cache->isAlive());
 		}
 	}
 ?>
