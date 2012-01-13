@@ -100,17 +100,20 @@
 		
 		private function toNeededString($expression, $method)
 		{
+			if (null === $expression)
+				throw new WrongArgumentException(
+					'not null expression expected'
+				);
+			
 			$string = null;
 			
-			if (null !== $expression) {
-				if ($expression instanceof DialectString) {
-					if ($expression instanceof Query)
-						$string .= '('.$expression->toDialectString($this).')';
-					else
-						$string .= $expression->toDialectString($this);
-				} else {
-					$string .= $this->$method($expression);
-				}
+			if ($expression instanceof DialectString) {
+				if ($expression instanceof Query)
+					$string .= '('.$expression->toDialectString($this).')';
+				else
+					$string .= $expression->toDialectString($this);
+			} else {
+				$string .= $this->$method($expression);
 			}
 			
 			return $string;
