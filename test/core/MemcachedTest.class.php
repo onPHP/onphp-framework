@@ -56,7 +56,7 @@
 			$cache->append('a', $value);
 			$this->assertEquals($cache->get('a'), $value.$value);
 
-			$value = 'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong string';
+			$value = 'L'.str_repeat('o', 256).'ng string';
 			$cache->set('a', $value, Cache::EXPIRES_MEDIUM);
 			$this->assertEquals($cache->get('a'), $value);
 
@@ -68,6 +68,12 @@
 			$this->assertEquals($cache->get('a'), 2);
 			$cache->decrement('a', 2);
 			$this->assertEquals($cache->get('a'), 0);
+
+			$cache->set('c', 42.28, Cache::EXPIRES_MEDIUM);
+			$this->assertEquals($cache->get('c'), 42.28);
+
+			$cache->replace('c', 42.297, Cache::EXPIRES_MEDIUM);
+			$this->assertEquals($cache->get('c'), 42.297);
 
 			$cache->clean();
 		}
