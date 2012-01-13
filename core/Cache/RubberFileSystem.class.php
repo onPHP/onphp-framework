@@ -17,7 +17,7 @@
 	final class RubberFileSystem extends CachePeer
 	{
 		private $directory	= null;
-		
+
 		/**
 		 * @return RubberFileSystem
 		**/
@@ -58,15 +58,19 @@
 		public function clean()
 		{
 			// just to return 'true'
-			FileUtils::removeDirectory($this->directory, true);
-			
+			try {
+				FileUtils::removeDirectory($this->directory, true);
+			} catch (WrongStateException $e) {
+				// alredy not exist
+			}
+
 			return parent::clean();
 		}
 		
 		public function increment($key, $value)
 		{
 			$path = $this->makePath($key);
-			
+
 			if (null !== ($current = $this->operate($path))) {
 				$this->operate($path, $current += $value);
 				
@@ -79,7 +83,7 @@
 		public function decrement($key, $value)
 		{
 			$path = $this->makePath($key);
-			
+
 			if (null !== ($current = $this->operate($path))) {
 				$this->operate($path, $current -= $value);
 				
@@ -88,13 +92,30 @@
 			
 			return null;
 		}
-		
-		public function get($key)
+
+		public function append($key, $data)
 		{
 			$path = $this->makePath($key);
-			
+
+			if (null !== ($current = $this->operate($path))) {
+				$this->operate($path, $current .= $data);
+
+				return $current;
+			}
+
+			return null;
+		}
+
+		public function get($key)
+		{
+			if ($key === null) {
+				return null;
+			}
+
+			$path = $this->makePath($key);
+
 			if (is_readable($path)) {
-				
+
 				if (filemtime($path) <= time()) {
 					try {
 						unlink($path);
@@ -103,7 +124,7 @@
 					}
 					return null;
 				}
-				
+
 				return $this->operate($path);
 			}
 			
@@ -121,36 +142,6 @@
 			return true;
 		}
 		
-		public function append($key, $data)
-		{
-			$path = $this->makePath($key);
-			
-			$directory = dirname($path);
-			
-			if (!file_exists($directory)) {
-				try {
-					mkdir($directory);
-				} catch (BaseException $e) {
-					// we're in race
-				}
-			}
-			
-			if (!is_writable($path))
-				return false;
-			
-			try {
-				$fp = fopen($path, 'ab');
-			} catch (BaseException $e) {
-				return false;
-			}
-			
-			fwrite($fp, $data);
-			
-			fclose($fp);
-			
-			return true;
-		}
-		
 		protected function store($action, $key, $value, $expires = 0)
 		{
 			$path = $this->makePath($key);
@@ -160,7 +151,7 @@
 			
 			if (!file_exists($directory)) {
 				try {
-					mkdir($directory);
+					mkdir($directory, 0700, true);
 				} catch (BaseException $e) {
 					// we're in race
 				}
@@ -195,10 +186,14 @@
 			$key = hexdec(substr(md5($path), 3, 2)) + 1;
 
 			$pool = SemaphorePool::me();
-			
+
 			if (!$pool->get($key))
 				return null;
-			
+
+			if ($expires === null && file_exists($path)) {
+				$expires = filemtime($path);
+			}
+
 			try {
 				$old = umask(0077);
 				$fp = fopen($path, $value !== null ? 'wb' : 'rb');
@@ -211,7 +206,7 @@
 			if ($value !== null) {
 				fwrite($fp, $this->prepareData($value));
 				fclose($fp);
-				
+
 				if ($expires < parent::TIME_SWITCH)
 					$expires += time();
 				
@@ -220,14 +215,15 @@
 				} catch (BaseException $e) {
 					// race-removed
 				}
-				
+
 				return $pool->drop($key);
 			} else {
+
 				if (($size = filesize($path)) > 0)
 					$data = fread($fp, $size);
 				else
 					$data = null;
-				
+
 				fclose($fp);
 				
 				$pool->drop($key);
@@ -240,6 +236,12 @@
 		
 		private function makePath($key)
 		{
+			Assert::isNotNull($key);
+
+			if (strlen($key) <= 2) {
+				return $this->directory.$key;
+			}
+			
 			return
 				$this->directory
 				.$key[0].$key[1]
