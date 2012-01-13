@@ -3,10 +3,14 @@
 	final class WatermarkedPeerTest extends TestCase
 	{
 
-		public function testMultiGet()
-		{
+		public function testMultiGet() {
+			$this->multiGet(new RuntimeMemory());
+			$this->multiGet(new Redis());
+		}
 
-			$cache = new WatermarkedPeer(new RuntimeMemory());
+		protected function multiGet(CachePeer $peer)
+		{
+			$cache = new WatermarkedPeer($peer);
 
 			$cache->clean();
 			

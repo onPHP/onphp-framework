@@ -177,8 +177,11 @@
 		
 		public function append($key, $data)
 		{
-			$packed = serialize($data);
-			
+// WHY?
+// see $this->store() check type need
+//			$packed = serialize($data);
+			$packed = $data;
+
 			$length = strlen($packed);
 			
 			// flags and exptime are ignored
