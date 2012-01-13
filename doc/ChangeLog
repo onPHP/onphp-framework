@@ -1,3 +1,7 @@
+2012-01-13	Alexander A. Zaytsev
+	
+	* core/Base/Date.class.php: toFormatString method added.
+
 2012-01-11	Evgeny V. Kokovikhin
 
 	* core/DB/Dialect.class.php: throw exception for null values. Thanks to 
