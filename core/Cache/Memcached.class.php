@@ -177,8 +177,12 @@
 		
 		public function append($key, $data)
 		{
-			$packed = serialize($data);
-			
+			if (is_scalar($data)) {
+				$packed = $data;
+			} else {
+				$packed = serialize($data);
+			}
+
 			$length = strlen($packed);
 			
 			// flags and exptime are ignored

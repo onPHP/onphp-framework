@@ -69,6 +69,10 @@
 		
 		public function increment($key, $value)
 		{
+			if ($key === null || $key === false || $key === true) {
+				return null;
+			}
+
 			$path = $this->makePath($key);
 
 			if (null !== ($current = $this->operate($path))) {
@@ -82,6 +86,10 @@
 		
 		public function decrement($key, $value)
 		{
+			if ($key === null || $key === false || $key === true) {
+				return null;
+			}
+
 			$path = $this->makePath($key);
 
 			if (null !== ($current = $this->operate($path))) {
@@ -95,15 +103,19 @@
 
 		public function append($key, $data)
 		{
+			if ($key === null || $key === false || $key === true) {
+				return false;
+			}
+
 			$path = $this->makePath($key);
 
 			if (null !== ($current = $this->operate($path))) {
 				$this->operate($path, $current .= $data);
 
-				return $current;
+				return true;
 			}
 
-			return null;
+			return false;
 		}
 
 		public function get($key)
@@ -141,9 +153,13 @@
 			
 			return true;
 		}
-		
+
 		protected function store($action, $key, $value, $expires = 0)
 		{
+			if ($key === null || $key === false || $key === true) {
+				return false;
+			}
+
 			$path = $this->makePath($key);
 			$time = time();
 			

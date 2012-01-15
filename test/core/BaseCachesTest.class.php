@@ -6,7 +6,7 @@
 		{
 			return array(
 				array(Memcached::create()),
-//				array(SharedMemory::create()),
+				array(SharedMemory::create()),
 				array(PeclMemcached::create()),
 				array(RuntimeMemory::create()),
 				array(RubberFileSystem::create())
@@ -19,6 +19,7 @@
 		public function testClients(CachePeer $cache)
 		{
 			$this->clientTest($cache);
+			$this->clientTest($cache->enableCompression());
 		}
 
 		/**
@@ -28,6 +29,7 @@
 		{
 			$cache = WatermarkedPeer::create($cache);
 			$this->clientTest($cache);
+			$this->clientTest($cache->enableCompression());
 			$this->doTestWrongKeys($cache);
 		}
 
@@ -36,6 +38,9 @@
 		  */
 		public function testWrongKeys(CachePeer $cache)
 		{
+			if (!$cache->isAlive()) {
+				return $this->markTestSkipped('cache not available');
+			}
 			$this->doTestWrongKeys($cache);
 		}
 
@@ -68,11 +73,14 @@
 			
 			$value = 'a';
 			
-			$cache->set('a', $value, Cache::EXPIRES_MEDIUM);
+			$this->assertTrue($cache->set('a', $value, Cache::EXPIRES_MEDIUM));
 			$this->assertEquals($cache->get('a'), $value);
 
-			$cache->append('a', $value);
+			$this->assertTrue($cache->append('a', $value));
 			$this->assertEquals($cache->get('a'), $value.$value);
+
+			$this->assertTrue($cache->replace('a', $value));
+			$this->assertEquals($cache->get('a'), $value);
 
 			$value = array(1,'s', 1234.18, array(1,'w'));
 			$this->assertSame($value, $value);
@@ -87,6 +95,13 @@
 			$this->assertEquals($cache->get('a'), $value+3);
 			$cache->decrement('a', 2);
 			$this->assertEquals($cache->get('a'), $value+1);
+
+			$value = '25';
+			$cache->set('a', $value, Cache::EXPIRES_MEDIUM);
+			$cache->append('a', $value);
+			$this->assertEquals($cache->get('a'), $value.$value);
+
+			$this->assertTrue($cache->delete('a'));
 
 			$cache->clean();
 		}
@@ -131,12 +146,56 @@
 			
 			$cache->clean();
 		}
-		
+
+		private function doExpired(CachePeer $cache)
+		{
+			// FIXME: implement me
+//			$value = '';
+//			$cache->set('a', $value, Cache::EXPIRES_MAXIMUM);
+//			$this->assertEquals($cache->get('a'), $value);
+//			$this->assertTrue($cache->set('a', $value.'!!!', 1));
+//			$this->assertEquals($cache->get('a'), $value);
+
+//			sleep(2);
+//			$cache->replace('a', $value, 1);
+//			sleep(2);
+//			$this->assertFalse($cache->get('a'));
+
+		}
 		private function doTestWrongKeys(CachePeer $cache)
 		{
-			$cache->get(null);
-			
+			$cache->clean();
+
+			$value = 'a';
+			// unexist key
+			$this->assertNull($cache->get('b'));
 			$this->assertTrue($cache->isAlive());
+			$this->assertFalse($cache->replace('b', $value));
+			$this->assertTrue($cache->isAlive());
+			$this->assertFalse($cache->append('b', $value));
+			$this->assertTrue($cache->isAlive());
+			$this->assertNull($cache->increment('b', $value));
+			$this->assertTrue($cache->isAlive());
+			$this->assertNull($cache->decrement('b', $value));
+			$this->assertTrue($cache->isAlive());
+			$this->assertFalse($cache->delete('b'));
+			$this->assertTrue($cache->isAlive());
+
+			// wrong key
+			$this->assertNull($cache->get(null));
+			$this->assertTrue($cache->isAlive());
+			$this->assertFalse($cache->replace(null, $value));
+			$this->assertTrue($cache->isAlive());
+			$this->assertFalse($cache->append(null, $value));
+			$this->assertTrue($cache->isAlive());
+			$this->assertNull($cache->increment(null, $value));
+			$this->assertTrue($cache->isAlive());
+			$this->assertNull($cache->decrement(null, $value));
+			$this->assertTrue($cache->isAlive());
+			$this->assertFalse($cache->delete(null));
+
+			$this->assertTrue($cache->isAlive());
+			$cache->clean();
 		}
 	}
 ?>

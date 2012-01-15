@@ -100,31 +100,17 @@
 			
 			return null;
 		}
-		
+
 		public function get($key)
 		{
-			$segment = $this->getSegment();
-			
-			$key = $this->stringToInt($key);
-			
-			try {
-				$stored = shm_get_var($segment, $key);
-				
-				if ($stored['expires'] <= time()) {
-					$this->delete($key);
-					return null;
-				}
-				
+			$stored = $this->getStored($key);
+			if ($stored) {
 				return $this->restoreData($stored['value']);
-				
-			} catch (BaseException $e) {
-				// not found there
-				return null;
 			}
-			
-			Assert::isUnreachable();
+
+			return $stored;
 		}
-		
+
 		public function delete($key)
 		{
 			try {
@@ -174,28 +160,23 @@
 		
 		public function append($key, $data)
 		{
-			$segment = $this->getSegment();
-			
-			$key = $this->stringToInt($key);
-			
+			$stored = $this->getStored($key);
+
+			if ($stored === null)
+				return false;
+
 			try {
-				$stored = shm_get_var($segment, $key);
-				
-				if ($stored['expires'] <= time()) {
-					$this->delete($key);
-					return false;
-				}
-				
 				return $this->store(
 					'ignored',
 					$key,
-					$stored['value'].$data,
+					$this->restoreData($stored['value']).$data,
 					$stored['expires']
 				);
 			} catch (BaseException $e) {
 				// not found there
 				return false;
 			}
+
 		}
 		
 		protected function store($action, $key, $value, $expires = 0)
@@ -204,7 +185,8 @@
 			
 			if ($expires < parent::TIME_SWITCH)
 				$expires += time();
-			
+
+			//FIXME return false on replace unexist key
 			try {
 				shm_put_var(
 					$segment,
@@ -224,7 +206,32 @@
 			
 			Assert::isUnreachable();
 		}
-		
+
+		private function getStored($key)
+		{
+			$segment = $this->getSegment();
+
+			$key = $this->stringToInt($key);
+
+			try {
+				$stored = shm_get_var($segment, $key);
+//				var_dump($segment, $key, $stored);
+				if ($stored['expires'] <= time()) {
+					$this->delete($key);
+					return null;
+				}
+
+				return $stored;
+
+			} catch (BaseException $e) {
+				// not found there
+				return null;
+			}
+
+			Assert::isUnreachable();
+
+		}
+
 		private function getSegment()
 		{
 			$class = $this->getClassName();
