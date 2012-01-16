@@ -109,17 +109,16 @@
 		public function get($index)
 		{
 			try {
-				return $this->instance->get($index);
-			} catch (BaseException $e) {
-				if(strpos($e->getMessage(), 'Invalid key') !== false)
-					return null;
-				
-				$this->alive = false;
-				
-				return null;
+				$result = $this->instance->get($index);
+				if ($result === false)
+					$result = null;
+ 			} catch (BaseException $e) {
+				$result = null;
+				if(strpos($e->getMessage(), 'Invalid key') === false)
+					$this->alive = false;
 			}
-			
-			Assert::isUnreachable();
+
+			return $result;
 		}
 		
 		public function delete($index)
@@ -130,7 +129,9 @@
 				// Warning: it is workaround!
 				return $this->instance->delete($index, 0);
 			} catch (BaseException $e) {
-				return $this->alive = false;
+				if(strpos($e->getMessage(), 'Invalid key') === false)
+					$this->alive = false;
+				return false;
 			}
 			
 			Assert::isUnreachable();
@@ -141,7 +142,9 @@
 			try {
 				return $this->instance->append($key, $data);
 			} catch (BaseException $e) {
-				return $this->alive = false;
+				if(strpos($e->getMessage(), 'Invalid key') === false)
+					$this->alive = false;
+				return false;
 			}
 			
 			Assert::isUnreachable();
@@ -162,7 +165,10 @@
 						$expires
 					);
 			} catch (BaseException $e) {
-				return $this->alive = false;
+				if(strpos($e->getMessage(), 'Invalid key') === false)
+					$this->alive = false;
+
+				return false;
 			}
 			
 			Assert::isUnreachable();
