@@ -89,12 +89,12 @@
 
 			$value = 1;
 			$cache->set('a', $value, Cache::EXPIRES_MEDIUM);
-			$cache->increment('a', 1);
+			$this->assertEquals($cache->increment('a', 1), $value+1);
 			$this->assertEquals($cache->get('a'), $value+1);
-			$cache->increment('a', 2);
+			$this->assertEquals($cache->increment('a', 2), $value+3);
 			$this->assertEquals($cache->get('a'), $value+3);
 			$cache->decrement('a', 2);
-			$this->assertEquals($cache->get('a'), $value+1);
+			$this->assertEquals($cache->decrement('a', 2), $value+1);
 
 			$value = '25';
 			$cache->set('a', $value, Cache::EXPIRES_MEDIUM);
