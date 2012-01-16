@@ -215,7 +215,6 @@
 
 			try {
 				$stored = shm_get_var($segment, $key);
-//				var_dump($segment, $key, $stored);
 				if ($stored['expires'] <= time()) {
 					$this->delete($key);
 					return null;
