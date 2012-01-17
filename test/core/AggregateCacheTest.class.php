@@ -99,9 +99,7 @@
 		private function doTestMemcached(SelectivePeer $cache)
 		{
 			Cache::setPeer($cache);
-			$cache->clean();
-			
-			
+
 			if (!Cache::me()->isAlive()) {
 				return $this->markTestSkipped('memcached not available');
 			}
