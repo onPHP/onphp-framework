@@ -16,6 +16,18 @@
 	**/
 	final class ReadOnlyPeer extends Memcached
 	{
+		/**
+		 * @return ReadOnlyPeer
+		 */
+		public static function create(
+			$host = Memcached::DEFAULT_HOST,
+			$port = Memcached::DEFAULT_PORT,
+			$buffer = Memcached::DEFAULT_BUFFER
+		)
+		{
+			return new ReadOnlyPeer($host, $port, $buffer);
+		}
+
 		public function clean()
 		{
 			throw new UnsupportedMethodException();
