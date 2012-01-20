@@ -18,43 +18,43 @@
 		{
 			return true;
 		}
-		
+
 		public function daoExists()
 		{
 			return false;
 		}
-		
+
 		public static function dumpFile($path, $content)
 		{
 			$content = trim($content);
-			
+
 			if (is_readable($path)) {
 				$pattern =
 					array(
 						'@\/\*(.*)\*\/@sU',
 						'@[\r\n]@sU'
 					);
-				
+
 				// strip only header and svn's Id-keyword, don't skip type hints
 				$old = preg_replace($pattern, null, file_get_contents($path), 2);
 				$new = preg_replace($pattern, null, $content, 2);
 			} else {
 				$old = 1; $new = 2;
 			}
-			
+
 			$out = MetaConfiguration::out();
 			$className = basename($path, EXT_CLASS);
-			
+
 			if ($old !== $new) {
 				$out->
 					warning("\t\t".$className.' ');
-				
+
 				if (!MetaConfiguration::me()->isDryRun()) {
 					$fp = fopen($path, 'wb');
 					fwrite($fp, $content);
 					fclose($fp);
 				}
-				
+
 				$out->
 					log('(')->
 					remark(
@@ -66,12 +66,12 @@
 					infoLine("\t\t".$className.' ', true);
 			}
 		}
-		
+
 		public function build(MetaClass $class)
 		{
 			return $this->fullBuild($class);
 		}
-		
+
 		/**
 		 * @return BasePattern
 		**/
@@ -82,7 +82,7 @@
 				buildBusiness($class)->
 				buildDao($class);
 		}
-		
+
 		/**
 		 * @return BasePattern
 		**/
@@ -92,9 +92,9 @@
 				ONPHP_META_AUTO_PROTO_DIR.'AutoProto'.$class->getName().EXT_CLASS,
 				Format::indentize(AutoProtoClassBuilder::build($class))
 			);
-			
+
 			$userFile = ONPHP_META_PROTO_DIR.'Proto'.$class->getName().EXT_CLASS;
-			
+
 			if (
 				MetaConfiguration::me()->isForcedGeneration()
 				|| !file_exists($userFile)
@@ -103,10 +103,10 @@
 					$userFile,
 					Format::indentize(ProtoClassBuilder::build($class))
 				);
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return BasePattern
 		**/
@@ -116,9 +116,9 @@
 				ONPHP_META_AUTO_BUSINESS_DIR.'Auto'.$class->getName().EXT_CLASS,
 				Format::indentize(AutoClassBuilder::build($class))
 			);
-			
+
 			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
-			
+
 			if (
 				MetaConfiguration::me()->isForcedGeneration()
 				|| !file_exists($userFile)
@@ -127,10 +127,10 @@
 					$userFile,
 					Format::indentize(BusinessClassBuilder::build($class))
 				);
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return BasePattern
 		**/
@@ -140,9 +140,9 @@
 				ONPHP_META_AUTO_DAO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
 				Format::indentize(AutoDaoBuilder::build($class))
 			);
-			
+
 			$userFile = ONPHP_META_DAO_DIR.$class->getName().'DAO'.EXT_CLASS;
-			
+
 			if (
 				MetaConfiguration::me()->isForcedGeneration()
 				|| !file_exists($userFile)
@@ -151,7 +151,31 @@
 					$userFile,
 					Format::indentize(DaoBuilder::build($class))
 				);
-			
+
+			return $this;
+		}
+
+		/**
+		 * @return BasePattern
+		**/
+		protected function buildNoSqlDao(MetaClass $class)
+		{
+			$this->dumpFile(
+				ONPHP_META_AUTO_DAO_DIR.'Auto'.$class->getName().'DAO'.EXT_CLASS,
+				Format::indentize(AutoNoSqlDaoBuilder::build($class))
+			);
+
+			$userFile = ONPHP_META_DAO_DIR.$class->getName().'DAO'.EXT_CLASS;
+
+			if (
+				MetaConfiguration::me()->isForcedGeneration()
+				|| !file_exists($userFile)
+			)
+				$this->dumpFile(
+					$userFile,
+					Format::indentize(DaoBuilder::build($class))
+				);
+
 			return $this;
 		}
 	}

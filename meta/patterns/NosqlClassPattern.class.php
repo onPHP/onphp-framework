@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *	 Created by Alexey V. Gorbylev at 27.12.2011                           *
+ *	 Created by Alexey V. Gorbylev at 29.12.2011                           *
  *	 email: alex@gorbylev.ru, icq: 1079586, skype: avid40k                 *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -10,11 +10,31 @@
  *                                                                         *
  ***************************************************************************/
 
-class PrimitiveUuidIdentifier extends PrimitiveIdentifier {
+/**
+ * @ingroup Patterns
+**/
+class NosqlClassPattern extends BasePattern {
 
-	public function getTypeName()
+	public function tableExists()
 	{
-		return 'Uuid';
+		return false;
+	}
+
+	public function daoExists()
+	{
+		return true;
+	}
+
+	/**
+	 * @param MetaClass $class
+	 * @return NosqlClassPattern
+	 */
+	protected function fullBuild(MetaClass $class)
+	{
+		return $this->
+			buildProto($class)->
+			buildBusiness($class)->
+			buildNoSqlDao($class);
 	}
 
 }

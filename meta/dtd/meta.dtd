@@ -51,6 +51,7 @@
 			|SpookedEnumeration
 			|ValueObject
 			|InternalClass
+			|NosqlClass
 		) #REQUIRED
 		fetch		(lazy|cascade) #IMPLIED
 >

@@ -10,11 +10,9 @@
  *                                                                         *
  ***************************************************************************/
 
-class PrimitiveUuidIdentifier extends PrimitiveIdentifier {
-
-	public function getTypeName()
-	{
-		return 'Uuid';
-	}
-
-}
+	/**
+	 * @ingroup Exceptions
+	 * @ingroup Module
+	 */
+	class NoSQLException extends BaseException {/*_*/}
+?>

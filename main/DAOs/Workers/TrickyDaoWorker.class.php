@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *	 Created by Alexey V. Gorbylev at 27.12.2011                           *
+ *	 Created by Alexey V. Gorbylev at 19.01.2012                           *
  *	 email: alex@gorbylev.ru, icq: 1079586, skype: avid40k                 *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -10,11 +10,28 @@
  *                                                                         *
  ***************************************************************************/
 
-class PrimitiveUuidIdentifier extends PrimitiveIdentifier {
+	/**
+	 * Tricky caching worker for SQL-NoSQL projects
+	 *
+	 * @ingroup DAOs
+	**/
+	class TrickyDaoWorker extends CommonDaoWorker {
 
-	public function getTypeName()
-	{
-		return 'Uuid';
+		public function uncacheLists() {
+			if( $this->isNoSqlDao() ) {
+				return true;
+			}
+
+			return parent::uncacheLists();
+		}
+
+		/**
+		 * Проверяем является ли текущий DAO реализацией NoSqlDAO
+		 * @return bool
+		 */
+		protected function isNoSqlDao() {
+			return ($this->dao instanceof NoSqlDAO);
+		}
+
+
 	}
-
-}

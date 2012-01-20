@@ -1,6 +1,7 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2011 by Alexey V. Gorbylev                              *
+ *	 Created by Alexey V. Gorbylev at 25.12.2011                           *
+ *	 email: alex@gorbylev.ru, icq: 1079586, skype: avid40k                 *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *

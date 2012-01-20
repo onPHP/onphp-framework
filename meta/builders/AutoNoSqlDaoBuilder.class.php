@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *	 Created by Alexey V. Gorbylev at 27.12.2011                           *
+ *	 Created by Alexey V. Gorbylev at 29.12.2011                           *
  *	 email: alex@gorbylev.ru, icq: 1079586, skype: avid40k                 *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -10,11 +10,34 @@
  *                                                                         *
  ***************************************************************************/
 
-class PrimitiveUuidIdentifier extends PrimitiveIdentifier {
+/**
+ * @ingroup Builders
+ */
+final class AutoNoSqlDaoBuilder extends BaseBuilder {
 
-	public function getTypeName()
+	public static function build(MetaClass $class)
 	{
-		return 'Uuid';
+		if (
+			is_null( $class->getParent() )
+			||
+			$class->getParent()->getPattern() instanceof InternalClassPattern
+		) {
+			$parentName = 'NoSqlDAO';
+		} else {
+			$parentName = $class->getParent()->getName().'DAO';
+		}
+
+		$out = self::getHead();
+
+		$out .= <<<EOT
+abstract class Auto{$class->getName()}DAO extends {$parentName}
+{
+
+EOT;
+
+		$out .= self::buildPointers($class)."\n}\n";
+
+		return $out.self::getHeel();
 	}
 
 }

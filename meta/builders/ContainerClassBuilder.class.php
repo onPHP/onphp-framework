@@ -18,27 +18,30 @@
 		{
 			throw new UnsupportedMethodException();
 		}
-		
+
 		public static function buildContainer(
 			MetaClass $class, MetaClassProperty $holder
 		)
 		{
 			$out = self::getHead();
-			
+
 			$containerName = $class->getName().ucfirst($holder->getName()).'DAO';
-			
+
+			$isNoSQL = is_subclass_of($holder->getType()->getClassName(), 'NoSqlObject');
+			$parentExtend = $isNoSQL ? 'NoSql' : '';
+
 			$out .=
 				'final class '
 				.$containerName
 				.' extends '
-				.$holder->getRelation()->toString().'Linked'
+				.$holder->getRelation()->toString().$parentExtend.'Linked'
 				."\n{\n";
 
 			$className = $class->getName();
 			$propertyName = strtolower($className[0]).substr($className, 1);
-			
+
 			$remoteColumnName = $holder->getType()->getClass()->getTableName();
-			
+
 			$out .= <<<EOT
 public function __construct({$className} \${$propertyName}, \$lazy = false)
 {
@@ -74,7 +77,7 @@ public function getChildIdField()
 
 EOT;
 			}
-			
+
 			$out .= <<<EOT
 
 public function getParentIdField()
@@ -83,11 +86,23 @@ public function getParentIdField()
 }
 
 EOT;
-			
-			
+
+			if ($isNoSQL) {
+				$out .= <<<EOT
+
+protected function getViewName()
+{
+	return '_design/{$holder->getName()}/_view/getBy{$class->getName()}Id';
+}
+
+EOT;
+			}
+
+
+
 			$out .= "}\n";
 			$out .= self::getHeel();
-			
+
 			return $out;
 		}
 	}

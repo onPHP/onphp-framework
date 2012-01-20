@@ -96,11 +96,7 @@
 		 */
 		protected function obtainUuid()
 		{
-			if( !extension_loaded('uuid') ) {
-				throw new MissingModuleException('UUID module not found!');
-			}
-
-			return uuid_create();
+			return UuidUtils::generate();
 		}
 
 		/**
