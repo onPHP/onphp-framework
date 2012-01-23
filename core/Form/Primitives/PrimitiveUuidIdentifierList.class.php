@@ -93,8 +93,6 @@ class PrimitiveUuidIdentifierList extends PrimitiveIdentifier {
 		if (!BasePrimitive::import($scope))
 			return null;
 
-		$this->applyImportFilters($scope[$this->name]);
-
 		if (!is_array($scope[$this->name]))
 			return false;
 

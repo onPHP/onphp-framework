@@ -318,10 +318,10 @@
 					continue;
 				}
 
-				if( $class->getPattern() instanceof NosqlClassPattern ) {
+				if( $class->getPattern() instanceof NoSqlClassPattern ) {
 					// checking NoSQL-DB
 					try {
-						$db = NoSQLPool::me()->getLink($class->getSourceLink());
+						$db = NoSqlPool::me()->getLink($class->getSourceLink());
 					} catch (BaseException $e) {
 						$out->
 							errorLine(
@@ -553,82 +553,95 @@
 						'identifier name mismatch in '.$class->getName().' class'
 					);
 
-					try {
-						DBPool::getByDao($dao);
-					} catch (MissingElementException $e) {
-						// skipping
+					if( $class->getPattern() instanceof NoSqlClassPattern ) {
+						try {
+							NoSqlPool::getByDao($dao);
+						} catch (MissingElementException $e) {
+							// skipping
+							$out->info(', ');
+							continue;
+						}
+
 						$out->info(', ');
-						continue;
-					}
+					} else {
+						try {
+							DBPool::getByDao($dao);
+						} catch (MissingElementException $e) {
+							// skipping
+							$out->info(', ');
+							continue;
+						}
 
-					$query =
-						Criteria::create($dao)->
-						setLimit(1)->
-						add(Expression::notNull($class->getIdentifier()->getName()))->
-						addOrder($class->getIdentifier()->getName())->
-						toSelectQuery();
+						$query =
+							Criteria::create($dao)->
+							setLimit(1)->
+							add(Expression::notNull($class->getIdentifier()->getName()))->
+							addOrder($class->getIdentifier()->getName())->
+							toSelectQuery();
 
-					$out->warning(
-						' ('
-						.$query->getFieldsCount()
-						.'/'
-						.$query->getTablesCount()
-						.'/'
-					);
+						$out->warning(
+							' ('
+							.$query->getFieldsCount()
+							.'/'
+							.$query->getTablesCount()
+							.'/'
+						);
 
-					$clone = clone $object;
+						$clone = clone $object;
 
-					if (serialize($clone) == serialize($object))
-						$out->info('C', true);
-					else {
-						$out->error('C', true);
-					}
+						if (serialize($clone) == serialize($object))
+							$out->info('C', true);
+						else {
+							$out->error('C', true);
+						}
 
-					$out->warning('/');
+						$out->warning('/');
 
-					try {
-						$object = $dao->getByQuery($query);
-						$form = $object->proto()->makeForm();
+						try {
+							$object = $dao->getByQuery($query);
+							$form = $object->proto()->makeForm();
+							FormUtils::object2form($object, $form);
+
+							if ($errors = $form->getErrors()) {
+								$formErrors[$class->getName()] = $errors;
+
+								$out->error('F', true);
+							} else
+								$out->info('F', true);
+						} catch (ObjectNotFoundException $e) {
+							$out->warning('F');
+						}
+
+						$out->warning('/');
+
+						if (
+							Criteria::create($dao)->
+							setFetchStrategy(FetchStrategy::cascade())->
+							toSelectQuery()
+							== $dao->makeSelectHead()
+						) {
+							$out->info('H', true);
+						} else {
+							$out->error('H', true);
+						}
+
+						$out->warning('/');
+
+						// cloning once again
+						$clone = clone $object;
+
 						FormUtils::object2form($object, $form);
+						FormUtils::form2object($form, $object);
 
-						if ($errors = $form->getErrors()) {
-							$formErrors[$class->getName()] = $errors;
+						if ($object != $clone) {
+							$out->error('T', true);
+						} else {
+							$out->info('T', true);
+						}
 
-							$out->error('F', true);
-						} else
-							$out->info('F', true);
-					} catch (ObjectNotFoundException $e) {
-						$out->warning('F');
+						$out->warning(')')->info(', ');
 					}
 
-					$out->warning('/');
-
-					if (
-						Criteria::create($dao)->
-						setFetchStrategy(FetchStrategy::cascade())->
-						toSelectQuery()
-						== $dao->makeSelectHead()
-					) {
-						$out->info('H', true);
-					} else {
-						$out->error('H', true);
-					}
-
-					$out->warning('/');
-
-					// cloning once again
-					$clone = clone $object;
-
-					FormUtils::object2form($object, $form);
-					FormUtils::form2object($form, $object);
-
-					if ($object != $clone) {
-						$out->error('T', true);
-					} else {
-						$out->info('T', true);
-					}
-
-					$out->warning(')')->info(', ');
 				}
 			}
 

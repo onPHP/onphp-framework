@@ -18,7 +18,7 @@
 	class LightMetaProperty implements Stringable
 	{
 		const UNSIGNED_FLAG = 0x1000;
-		
+
 		private static $limits = array(
 			0x0002 => array(
 				PrimitiveInteger::SIGNED_SMALL_MIN,
@@ -45,34 +45,34 @@
 				null
 			)
 		);
-		
+
 		private $name		= null;
 		private $columnName	= null;
-		
+
 		private $type		= null;
 		private $className	= null;
-		
+
 		private $size		= null;
-		
+
 		private $min		= null;
 		private $max		= null;
-		
+
 		private $required	= false;
 		private $generic	= false;
 		private $inner		= false;
-		
+
 		/// @see MetaRelation
 		private $relationId	= null;
-		
+
 		/// @see FetchStrategy
 		private $strategyId	= null;
-		
+
 		private $getter		= null;
 		private $setter		= null;
 		private $dropper	= null;
-		
+
 		private $identifier	= null;
-		
+
 		/**
 		 * @return LightMetaProperty
 		**/
@@ -80,7 +80,7 @@
 		{
 			return new self;
 		}
-		
+
 		/**
 		 * must by in sync with InnerMetaProperty::make()
 		 *
@@ -93,20 +93,20 @@
 		)
 		{
 			$property->name = $name;
-			
+
 			$methodSuffix = ucfirst($name);
 			$property->getter = 'get'.$methodSuffix;
 			$property->setter = 'set'.$methodSuffix;
 			$property->dropper = 'drop'.$methodSuffix;
-			
+
 			if ($columnName)
 				$property->columnName = $columnName;
 			else
 				$property->columnName = $name;
-			
+
 			$property->type = $type;
 			$property->className = $className;
-			
+
 			if ($size) {
 				if (
 					($type == 'integer')
@@ -121,147 +121,148 @@
 				} elseif ($type != 'float') { // string
 					$property->max = $size;
 				}
-				
+
 				$property->size = $size;
 			}
-			
+
 			$property->required = $required;
 			$property->generic = $generic;
 			$property->inner = $inner;
-			
+
 			$property->relationId = $relationId;
 			$property->strategyId = $strategyId;
-			
+
 			$property->identifier =
 				$generic && $required && (
 					($type == 'identifier') // obsoleted
 					|| ($type == 'integerIdentifier')
 					|| ($type == 'scalarIdentifier')
+					|| ($type == 'uuidIdentifier')
 				);
-			
+
 			return $property;
 		}
-		
+
 		public function getName()
 		{
 			return $this->name;
 		}
-		
+
 		public function getColumnName()
 		{
 			return $this->columnName;
 		}
-		
+
 		public function getGetter()
 		{
 			return $this->getter;
 		}
-		
+
 		public function getSetter()
 		{
 			return $this->setter;
 		}
-		
+
 		public function getDropper()
 		{
 			return $this->dropper;
 		}
-		
+
 		/**
 		 * @return LightMetaProperty
 		**/
 		public function setColumnName($name)
 		{
 			$this->columnName = $name;
-			
+
 			return $this;
 		}
-		
+
 		public function getClassName()
 		{
 			return $this->className;
 		}
-		
+
 		public function getMin()
 		{
 			return $this->min;
 		}
-		
+
 		public function getMax()
 		{
 			return $this->max;
 		}
-		
+
 		public function getType()
 		{
 			return $this->type;
 		}
-		
+
 		public function isRequired()
 		{
 			return $this->required;
 		}
-		
+
 		/**
 		 * @return LightMetaProperty
 		**/
 		public function setRequired($yrly)
 		{
 			$this->required = $yrly;
-			
+
 			return $this;
 		}
-		
+
 		public function isGenericType()
 		{
 			return $this->generic;
 		}
-		
+
 		public function isInner()
 		{
 			return $this->inner;
 		}
-		
+
 		public function getRelationId()
 		{
 			return $this->relationId;
 		}
-		
+
 		public function getFetchStrategyId()
 		{
 			return $this->strategyId;
 		}
-		
+
 		/**
 		 * @return LightMetaProperty
 		**/
 		public function setFetchStrategy(FetchStrategy $strategy)
 		{
 			$this->strategyId = $strategy->getId();
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return LightMetaProperty
 		**/
 		public function dropFetchStrategy()
 		{
 			$this->strategyId = null;
-			
+
 			return $this;
 		}
-		
+
 		public function getContainerName($holderName)
 		{
 			return $holderName.ucfirst($this->getName()).'DAO';
 		}
-		
+
 		public function isBuildable($array, $prefix = null)
 		{
 			$column = $prefix.$this->columnName;
 			$exists = isset($array[$column]);
-			
+
 			if (
 				$this->relationId
 				|| $this->generic
@@ -272,7 +273,7 @@
 					&& !$this->generic
 				)
 					return false;
-				
+
 				if ($this->required) {
 					Assert::isTrue(
 						$exists,
@@ -282,10 +283,10 @@
 					return false;
 				}
 			}
-			
+
 			return true;
 		}
-		
+
 		/**
 		 * @return BasePrimitive
 		**/
@@ -296,22 +297,22 @@
 					array('Primitive', $this->type),
 					$name
 				);
-			
+
 			if (null !== ($min = $this->getMin()))
 				$prm->setMin($min);
-			
+
 			if (null !== ($max = $this->getMax()))
 				$prm->setMax($max);
-			
+
 			if ($prm instanceof IdentifiablePrimitive)
 				$prm->of($this->className);
-			
+
 			if ($this->required)
 				$prm->required();
-			
+
 			return $prm;
 		}
-		
+
 		public function fillMapping(array $mapping)
 		{
 			if (
@@ -326,10 +327,10 @@
 			) {
 				$mapping[$this->name] = $this->columnName;
 			}
-			
+
 			return $mapping;
 		}
-		
+
 		/**
 		 * @return Form
 		**/
@@ -339,7 +340,7 @@
 				$this->makePrimitive($prefix.$this->name)
 			);
 		}
-		
+
 		/**
 		 * @return InsertOrUpdateQuery
 		**/
@@ -369,29 +370,29 @@
 				}
 
 				$value = $object->{$getter}();
-				
+
 				if ($this->type == 'binary') {
 					$query->set($this->columnName, new DBBinary($value));
 				} else {
 					$query->lazySet($this->columnName, $value);
 				}
 			}
-			
+
 			return $query;
 		}
-		
+
 		public function toValue(ProtoDAO $dao = null, $array, $prefix = null)
 		{
 			$raw = $array[$prefix.$this->columnName];
-			
+
 			if ($this->type == 'binary') {
 				return DBPool::getByDao($dao)->getDialect()->unquoteBinary($raw);
 			}
-			
+
 			if ($this->className == 'HttpUrl') {
 				return HttpUrl::create()->parse($raw);
 			}
-			
+
 			if (
 				!$this->identifier
 				&& $this->generic
@@ -404,20 +405,20 @@
 			) {
 				// BOVM: prevents segfault on >=php-5.2.5
 				Assert::classExists($this->className);
-				
+
 				if (!is_subclass_of($this->className, 'Enumeration')) {
 					$remoteDao = call_user_func(array($this->className, 'dao'));
-					
+
 					$joinPrefix = $remoteDao->getJoinPrefix(
 						$this->columnName,
 						$prefix
 					);
-					
+
 					$joined = (
 						($this->strategyId == FetchStrategy::JOIN)
 						|| isset($array[$joinPrefix.$remoteDao->getIdName()])
 					);
-					
+
 					if ($joined) {
 						return $remoteDao->makeObject($array, $joinPrefix);
 					} else {
@@ -425,28 +426,28 @@
 						// by AbstractProtoClass::fetchEncapsulants
 						$object = new $this->className;
 						$object->setId($raw);
-						
+
 						return $object;
 					}
 				} else {
 					return new $this->className($raw);
 				}
 			}
-			
+
 			// veeeeery "special" handling, by tradition.
 			// MySQL returns 0/1, others - t/f
 			if ($this->type == 'boolean') {
 				return (bool) strtr($raw, array('f' => null));
 			}
-			
+
 			return $raw;
 		}
-		
+
 		public function isIdentifier()
 		{
 			return $this->identifier;
 		}
-		
+
 		final public function toString()
 		{
 			return
@@ -503,7 +504,7 @@
 				)
 				.')';
 		}
-		
+
 		public function isFormless()
 		{
 			// NOTE: enum here formless types
