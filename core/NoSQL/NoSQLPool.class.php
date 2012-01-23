@@ -15,14 +15,14 @@
  *
  * @ingroup NoSQL
 **/
-final class NoSQLPool extends Singleton implements Instantiatable
+final class NoSqlPool extends Singleton implements Instantiatable
 {
 	private $default = null;
 
 	private $pool = array();
 
 	/**
-	 * @return NoSQLPool
+	 * @return NoSqlPool
 	**/
 	public static function me()
 	{
@@ -41,7 +41,7 @@ final class NoSQLPool extends Singleton implements Instantiatable
 
 	/**
 	 * @param NoSQL $db
-	 * @return NoSQLPool
+	 * @return NoSqlPool
 	 */
 	public function setDefault(NoSQL $db)
 	{
@@ -51,7 +51,7 @@ final class NoSQLPool extends Singleton implements Instantiatable
 	}
 
 	/**
-	 * @return NoSQLPool
+	 * @return NoSqlPool
 	**/
 	public function dropDefault()
 	{
@@ -63,7 +63,7 @@ final class NoSQLPool extends Singleton implements Instantiatable
 	/**
 	 * @param string $name
 	 * @param NoSQL $db
-	 * @return NoSQLPool
+	 * @return NoSqlPool
 	 * @throws WrongArgumentException
 	 */
 	public function addLink($name, NoSQL $db)
@@ -80,7 +80,7 @@ final class NoSQLPool extends Singleton implements Instantiatable
 
 	/**
 	 * @param string $name
-	 * @return NoSQLPool
+	 * @return NoSqlPool
 	 * @throws MissingElementException
 	 */
 	public function dropLink($name)
@@ -127,7 +127,7 @@ final class NoSQLPool extends Singleton implements Instantiatable
 	}
 
 	/**
-	 * @return NoSQLPool
+	 * @return NoSqlPool
 	 */
 	public function shutdown()
 	{

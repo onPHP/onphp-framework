@@ -130,7 +130,7 @@ abstract class NoSqlDAO extends StorableDAO {
 	public function drop(Identifiable $object) {
 		$this->assertNoSqlObject( $object );
 
-		$link = NoSQLPool::getByDao( $this );
+		$link = NoSqlPool::getByDao( $this );
 		// delete
 		return
 			$link
@@ -174,7 +174,7 @@ abstract class NoSqlDAO extends StorableDAO {
 		$this->assertNoSqlObject( $object );
 
 		// make sequence
-		$link = NoSQLPool::getByDao( $this );
+		$link = NoSqlPool::getByDao( $this );
 		$object->setId(
 			$link->obtainSequence(
 				$this->getSequence()
@@ -200,7 +200,7 @@ abstract class NoSqlDAO extends StorableDAO {
 	public function save(Identifiable $object) {
 		$this->assertNoSqlObject( $object );
 
-		$link = NoSQLPool::getByDao( $this );
+		$link = NoSqlPool::getByDao( $this );
 		// insert
 		$entity =
 			$link
@@ -221,7 +221,7 @@ abstract class NoSqlDAO extends StorableDAO {
 	public function import(Identifiable $object) {
 		$this->assertNoSqlObject( $object );
 
-		$link = NoSQLPool::getByDao( $this );
+		$link = NoSqlPool::getByDao( $this );
 		// insert
 		$entity =
 			$link
@@ -377,7 +377,7 @@ abstract class NoSqlDAO extends StorableDAO {
 	 * @return NoSQL
 	 */
 	public function getLink() {
-		return NoSQLPool::me()->getLink( $this->getLinkName() );;
+		return NoSqlPool::me()->getLink( $this->getLinkName() );;
 	}
 
 }
