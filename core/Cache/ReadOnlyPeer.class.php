@@ -14,7 +14,7 @@
 	 *
 	 * @ingroup Cache
 	**/
-	final class ReadOnlyPeer extends Memcached
+	final class ReadOnlyPeer extends PeclMemcached
 	{
 		/**
 		 * @return ReadOnlyPeer
