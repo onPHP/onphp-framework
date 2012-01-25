@@ -23,7 +23,7 @@
 		private $hour		= null;
 		private $minute		= null;
 		private $second		= null;
-		
+
 		/**
 		 * @return Timestamp
 		**/
@@ -31,12 +31,12 @@
 		{
 			return new self($timestamp);
 		}
-		
+
 		public static function now()
 		{
 			return date(self::getFormat());
 		}
-		
+
 		/**
 		 * @return Timestamp
 		**/
@@ -44,7 +44,7 @@
 		{
 			return new self(time());
 		}
-		
+
 		/**
 		 * @return Timestamp
 		**/
@@ -52,7 +52,7 @@
 		{
 			return new self(self::today());
 		}
-		
+
 		public function toTime($timeDelimiter = ':', $secondDelimiter = '.')
 		{
 			return
@@ -62,7 +62,7 @@
 				.$secondDelimiter
 				.$this->second;
 		}
-		
+
 		public function toDateTime(
 			$dateDelimiter = '-',
 			$timeDelimiter = ':',
@@ -73,27 +73,27 @@
 				$this->toDate($dateDelimiter).' '
 				.$this->toTime($timeDelimiter, $secondDelimiter);
 		}
-		
+
 		public function getHour()
 		{
 			return $this->hour;
 		}
-		
+
 		public function getMinute()
 		{
 			return $this->minute;
 		}
-		
+
 		public function getSecond()
 		{
 			return $this->second;
 		}
-		
+
 		public function equals(Timestamp $timestamp)
 		{
 			return ($this->toDateTime() === $timestamp->toDateTime());
 		}
-		
+
 		public function getDayStartStamp()
 		{
 			if (!$this->hour && !$this->minute && !$this->second)
@@ -106,7 +106,7 @@
 		{
 			if (!$this->minute && !$this->second)
 				return $this->int;
-			
+
 			return
 				mktime(
 					$this->hour,
@@ -117,7 +117,7 @@
 					$this->year
 				);
 		}
-		
+
 		/**
 		 * ISO 8601 time string
 		**/
@@ -128,7 +128,15 @@
 			else
 				return date('Y-m-d\TH:i:sO', $this->int);
 		}
-		
+
+		/**
+		 * @param string $format
+		 * @return string
+		 */
+		public function toFormatString($format = 'd.m.Y H:i:s') {
+			return date($format, $this->int);
+		}
+
 		/**
 		 * @return Timestamp
 		**/
@@ -136,19 +144,19 @@
 		{
 			return $this;
 		}
-		
+
 		protected static function getFormat()
 		{
 			return 'Y-m-d H:i:s';
 		}
-		
+
 		/* void */ protected function import($string)
 		{
 			list($date, $time) = explode(' ', $string, 2);
-			
+
 			list($this->hour, $this->minute, $this->second) =
 				explode(':', $time, 3);
-			
+
 			$time =
 				sprintf(
 					'%02d:%02d:%02d',
@@ -156,19 +164,19 @@
 					$this->minute,
 					$this->second
 				);
-			
+
 			list($this->hour, $this->minute, $this->second) =
 				explode(':', $time, 3);
-			
+
 			parent::import($date);
-			
+
 			$this->string .= ' '.$time;
 		}
-		
+
 		/* void */ protected function stringImport($string)
 		{
 			$matches = array();
-			
+
 			if (
 				preg_match(
 					'/^(\d{1,4})-(\d{1,2})-(\d{1,2})\s\d{1,2}:\d{1,2}:\d{1,2}$/',
@@ -190,7 +198,7 @@
 			} elseif (($stamp = strtotime($string)) !== false)
 				$this->string = date($this->getFormat(), $stamp);
 		}
-		
+
 		/* void */ protected function buildInteger()
 		{
 			$this->int =
