@@ -274,6 +274,15 @@
 			return $this->string;
 		}
 
+		/**
+		 * @param string $format
+		 * @return string
+		 */
+		public function toFormatString($format)
+		{
+			return date($format, $this->toStamp());
+		}
+
 		public function toDialectString(Dialect $dialect)
 		{
 			// there are no known differences yet
@@ -286,14 +295,6 @@
 		public function toIsoString()
 		{
 			return $this->toString();
-		}
-
-		/**
-		 * @param string $format
-		 * @return string
-		 */
-		public function toFormatString($format = 'd.m.Y') {
-			return date($format, $this->int);
 		}
 
 		/**
