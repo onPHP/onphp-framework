@@ -85,9 +85,6 @@
 			if ($type->getId() == DataType::IP_RANGE)
 				return 'varchar(41)';
 
-			if ($type->getId() == DataType::UUID)
-				return 'varchar(36)';
-
 			return $type->getName();
 		}
 

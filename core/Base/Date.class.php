@@ -274,10 +274,6 @@
 			return $this->string;
 		}
 
-		/**
-		 * @param string $format
-		 * @return string
-		 */
 		public function toFormatString($format)
 		{
 			return date($format, $this->toStamp());
