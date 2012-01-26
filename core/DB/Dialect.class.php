@@ -22,25 +22,25 @@
 		const LITERAL_NULL = 'NULL';
 		const LITERAL_TRUE = 'TRUE';
 		const LITERAL_FALSE = 'FALSE';
-
+		
 		abstract public function preAutoincrement(DBColumn $column);
 		abstract public function postAutoincrement(DBColumn $column);
-
+		
 		abstract public function hasTruncate();
 		abstract public function hasMultipleTruncate();
 		abstract public function hasReturning();
-
+		
 		/**
 			must be implemented too:
-
+			
 			public static function quoteValue($value);
 		**/
-
+		
 		public static function quoteField($field)
 		{
 			return self::quoteTable($field);
 		}
-
+		
 		public static function quoteTable($table)
 		{
 			return '"'.$table.'"';
@@ -50,7 +50,7 @@
 		{
 			return "CAST ({$field} AS {$type})";
 		}
-
+		
 		public static function timeZone($exist = false)
 		{
 			return
@@ -58,7 +58,7 @@
 					? ' WITH TIME ZONE'
 					: ' WITHOUT TIME ZONE';
 		}
-
+		
 		public static function dropTableMode($cascade = false)
 		{
 			return
@@ -66,47 +66,47 @@
 					? ' CASCADE'
 					: ' RESTRICT';
 		}
-
+		
 		public function quoteBinary($data)
 		{
 			return $this->quoteValue($data);
 		}
-
+		
 		public function unquoteBinary($data)
 		{
 			return $data;
 		}
-
+		
 		public function typeToString(DataType $type)
 		{
 			if ($type->getId() == DataType::IP)
 				return 'varchar(19)';
-
+			
 			if ($type->getId() == DataType::IP_RANGE)
 				return 'varchar(41)';
-
+			
 			return $type->getName();
 		}
-
+		
 		public function toFieldString($expression)
 		{
 			return $this->toNeededString($expression, 'quoteField');
 		}
-
+		
 		public function toValueString($expression)
 		{
 			return $this->toNeededString($expression, 'quoteValue');
 		}
-
+		
 		private function toNeededString($expression, $method)
 		{
 			if (null === $expression)
 				throw new WrongArgumentException(
 					'not null expression expected'
 				);
-
+			
 			$string = null;
-
+			
 			if ($expression instanceof DialectString) {
 				if ($expression instanceof Query)
 					$string .= '('.$expression->toDialectString($this).')';
@@ -115,10 +115,10 @@
 			} else {
 				$string .= $this->$method($expression);
 			}
-
+			
 			return $string;
 		}
-
+		
 		public function fieldToString($field)
 		{
 			return
@@ -126,7 +126,7 @@
 					? $field->toDialectString($this)
 					: $this->quoteField($field);
 		}
-
+		
 		public function valueToString($value)
 		{
 			return
@@ -134,27 +134,27 @@
 					? $value->toDialectString($this)
 					: $this->quoteValue($value);
 		}
-
+		
 		public function logicToString($logic)
 		{
 			return $logic;
 		}
-
+		
 		public function literalToString($literal)
 		{
 			return $literal;
 		}
-
+		
 		public function fullTextSearch($field, $words, $logic)
 		{
 			throw new UnimplementedFeatureException();
 		}
-
+		
 		public function fullTextRank($field, $words, $logic)
 		{
 			throw new UnimplementedFeatureException();
 		}
-
+		
 		public function quoteIpInRange($range, $ip)
 		{
 			throw new UnimplementedFeatureException();
