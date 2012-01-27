@@ -1,6 +1,6 @@
 <?php
-	/* $Id$ */
-	
+
+
 	final class MimeMailTest extends TestCase
 	{
 		public function testMimeMail()
