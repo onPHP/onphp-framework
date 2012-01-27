@@ -10,22 +10,48 @@
 	 ***************************************************************************/
 
 	/**
-	 * Memcached-based cache with read-only access.
+	 * Cache with read-only access.
 	 *
 	 * @ingroup Cache
 	**/
-	final class ReadOnlyPeer extends PeclMemcached
+	final class ReadOnlyPeer extends CachePeer
 	{
+		/**
+		 * @var CachePeer
+		 */
+		private $innerPeer = null;
+
 		/**
 		 * @return ReadOnlyPeer
 		 */
-		public static function create(
-			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT,
-			$buffer = Memcached::DEFAULT_BUFFER
-		)
+		public static function create(CachePeer $peer)
 		{
-			return new ReadOnlyPeer($host, $port, $buffer);
+			return new ReadOnlyPeer($peer);
+		}
+
+		public function __construct(CachePeer $peer)
+		{
+			$this->innerPeer = $peer;
+		}
+
+		public function isAlive()
+		{
+			return $this->innerPeer->isAlive();
+		}
+
+		public function mark($className)
+		{
+			return $this->innerPeer->mark($className);
+		}
+
+		public function get($key)
+		{
+			return $this->innerPeer->get($key);
+		}
+
+		public function getList($indexes)
+		{
+			return $this->innerPeer->getList($indexes);
 		}
 
 		public function clean()
