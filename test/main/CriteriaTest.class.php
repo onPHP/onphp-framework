@@ -214,6 +214,33 @@
 			);
 		}
 		
+		public function testSqlFunction()
+		{
+			$criteria =
+				Criteria::create(TestCity::dao())->
+				addProjection(
+					Projection::property(
+						SQLFunction::create(
+							'count',
+							SQLFunction::create(
+								'substring',
+								'name',
+								DBValue::create('M....w'),
+								DBValue::create('#')
+							)->
+							setJoiner('from')->
+							setJoiner('for', 1)
+						)
+						->setAggregateDistinct()
+					)
+				);
+			
+			$this->assertEquals(
+				$criteria->toDialectString(PostgresDialect::me()),
+				'SELECT count(DISTINCT substring("custom_table"."name" from \'M....w\' for \'#\')) FROM "custom_table"'
+			);
+		}
+		
 		public function testSleepWithEmptyDao()
 		{
 			$baseCriteria =
@@ -258,6 +285,8 @@
 				$this->fail();
 			} catch (WrongStateException $e) {/*it's good*/}
 		}
+		
+//		public function
 
 		public static function orderDataProvider()
 		{

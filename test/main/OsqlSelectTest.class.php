@@ -16,7 +16,16 @@
 					SQLFunction::create(
 						'count', DBField::create('field5', 'test_table')
 					)->
+					setAggregateDistinct()->
 					setAlias('alias5')
+				)->
+				get(
+					SQLFunction::create(
+						'substring',
+						DBField::create('field6', 'test_table'),
+						DBValue::create('a..b')
+					)->
+					setJoiner('from', 0)
 				);
 			
 			$this->assertEquals(
@@ -26,7 +35,8 @@
 					.'"test_table"."field2", '
 					.'"test_table"."field3" AS "alias3", '
 					.'"test_table"."field4", '
-					.'count("test_table"."field5") AS "alias5" '
+					.'count(DISTINCT "test_table"."field5") AS "alias5", '
+					.'substring("test_table"."field6" from \'a..b\') '
 				.'FROM "test_table"'
 			);
 		}

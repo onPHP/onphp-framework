@@ -24,6 +24,7 @@
 		private $aggregate	= null;
 		
 		private $args	= array();
+		private $joiners = array();
 		
 		/**
 		 * @return SQLFunction
@@ -97,6 +98,25 @@
 		/**
 		 * @return SQLFunction
 		**/
+		public function setJoiner($joiner, $index = 0)
+		{
+			$this->joiners[$index] = $joiner;
+			
+			return $this;
+		}
+		
+		public function getJoiner($index)
+		{
+			if (array_key_exists($index, $this->joiners)) {
+				return $this->joiners[$index];
+			} else {
+				return ', ';
+			}
+		}
+
+		/**
+		 * @return SQLFunction
+		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
 			$mapped = array();
@@ -111,10 +131,14 @@
 			}
 			
 			$sqlFunction = call_user_func_array(array('self', 'create'), $mapped);
+			/* @var $sqlFunction SQLFunction */
 			
 			$sqlFunction->aggregate = $this->aggregate;
 			
 			$sqlFunction->castTo($this->cast);
+			foreach ($this->joiners as $index => $joiner) {
+				$sqlFunction->setJoiner($joiner, $index);
+			}
 			
 			return $sqlFunction;
 		}
@@ -151,7 +175,7 @@
 				$out .= 'DISTINCT ';
 			}
 			
-			$out .= ($args == array() ? null : implode(', ', $args)).')';
+			$out .= ($args == array() ? null : $this->joinArgs($args)).')';
 			
 			$out =
 				$this->cast
@@ -162,6 +186,23 @@
 				$this->alias
 					? $out.' AS '.$dialect->quoteTable($this->alias)
 					: $out;
+		}
+		
+		private function joinArgs(array $args) {
+			if (count($args) == 0) {
+				return '';
+			} elseif (count($this->joiners) == 0) {
+				return implode(', ', $args);
+			} else {
+				$joinedArgs = '';
+				for ($i = 0; $i < count($args); $i++) {
+					$joinedArgs .= $args[$i];
+					if ($i < count($args) - 1) {
+						$joinedArgs .= ' ' . $this->getJoiner($i) . ' ';
+					}
+				}
+				return $joinedArgs;
+			}
 		}
 	}
 ?>
