@@ -193,6 +193,8 @@ abstract class NoSqlDAO extends StorableDAO {
 		if( $link instanceof CouchDB ) {
 			$object->setRev($entity['_rev']);
 		}
+		// проверка добалвения
+		//$object = $this->getById( $entity['id'] );
 
 		return $object;
 	}

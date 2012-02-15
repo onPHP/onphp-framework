@@ -42,19 +42,22 @@ class NoSqlObject extends IdentifiableObject {
 		$entity = array();
 		/** @var $property LightMetaProperty */
 		foreach ($this->proto()->getPropertyList() as $property) {
-			if( $property->isGenericType() || $property->getType()=='enumeration' ) {
+			// обрабатываем базовые типы
+			if( $property->isGenericType() ) {
 				$value = call_user_func(array($this, $property->getGetter()));
-				if( is_object( $value ) ) {
-					if( $value instanceof Date ) {
+				if( is_object( $value )&& $value instanceof Date ) {
 						//$value = $value->toStamp();
 						$value = $value->toString();
-					}
-					if( $value instanceof Enumeration ) {
-						$value = $value->getId();
-					}
-
 				}
 				$entity[ $property->getColumnName() ] = $value;
+
+			} // обрабатываем перечисления
+			elseif( $property->getType()=='enumeration' ) {
+				$value = call_user_func(array($this, $property->getGetter()));
+				$entity[ $property->getColumnName() ] = $value = $value->getId();
+			} // обрабатываем связи 1к1
+			elseif( $property->getType()=='identifier' && $property->getRelationId()==1 ) {
+				$entity[ $property->getColumnName() ] = call_user_func(array($this, $property->getGetter().'Id'));
 			}
 		}
 //		$entity[ '_id' ] = $this->id;

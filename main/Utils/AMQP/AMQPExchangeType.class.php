@@ -23,6 +23,10 @@
 			self::HEADER => "header"
 		);
 
+		public static function create($id) {
+			return new self($id);
+		}
+
 		public function getDefault()
 		{
 			return self::DIRECT;
