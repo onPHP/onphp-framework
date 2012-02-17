@@ -17,7 +17,7 @@ final class UuidType extends BasePropertyType {
 	}
 
 	public function getDeclaration() {
-		return null;
+		return 'null';
 	}
 
 	public function toColumnType() {

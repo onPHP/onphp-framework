@@ -40,7 +40,7 @@ final class UuidUtils extends StaticFactory {
 	}
 
 	public static function parseHash( $hash ) {
-		return preg_replace( '/([a-z0-9]{8})([a-z0-9]{4})([a-z0-9]{4})([a-z0-9]{4})([a-z0-9]{12})/iu', '$1-$2-$3-$4-$5', strtolower($hash) );
+		return preg_replace( '/([a-f0-9]{8})([a-f0-9]{4})([a-f0-9]{4})([a-f0-9]{4})([a-f0-9]{12})/iu', '$1-$2-$3-$4-$5', strtolower($hash) );
 	}
 
 
