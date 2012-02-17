@@ -46,6 +46,8 @@ public function getObjectName()
 {
 	return '{$class->getName()}';
 }
+
+
 EOT;
 
 
