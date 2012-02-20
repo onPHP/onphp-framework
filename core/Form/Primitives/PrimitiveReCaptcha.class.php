@@ -60,22 +60,6 @@ class PrimitiveReCaptcha extends BasePrimitive {
 	}
 
 	/**
-	 * Encodes the given data into a query string format
-	 * @param $data - array of string elements to be encoded
-	 * @return string - encoded request
-	 */
-	protected static function _recaptcha_qsencode ($data) {
-		$req = "";
-		foreach ( $data as $key => $value ) {
-			$req .= $key . '=' . urlencode( stripslashes($value) ) . '&';
-		}
-
-		// Cut the last '&'
-		$req=substr($req,0,strlen($req)-1);
-		return $req;
-	}
-
-	/**
 	 * Submits an HTTP POST to a reCAPTCHA server
 	 * @param string $host
 	 * @param string $path
@@ -84,30 +68,39 @@ class PrimitiveReCaptcha extends BasePrimitive {
 	 * @return array response
 	 */
 	protected static function _recaptcha_http_post($host, $path, $data, $port = 80) {
-		$req = self::_recaptcha_qsencode ($data);
-
-		$http_request  = "POST $path HTTP/1.0\r\n";
-		$http_request .= "Host: $host\r\n";
-		$http_request .= "Content-Type: application/x-www-form-urlencoded;\r\n";
-		$http_request .= "Content-Length: " . strlen($req) . "\r\n";
-		$http_request .= "User-Agent: reCAPTCHA/PHP\r\n";
-		$http_request .= "\r\n";
-		$http_request .= $req;
-
-		$response = '';
-		if( false == ( $fs = @fsockopen($host, $port, $errno, $errstr, 10) ) ) {
-			die ('Could not open socket');
+		$req = "";
+		foreach ( $data as $key => $value ) {
+			$req .= $key . '=' . urlencode( stripslashes($value) ) . '&';
 		}
+		// Cut the last '&'
+		$req=substr($req,0,strlen($req)-1);
 
-		fwrite($fs, $http_request);
+		$options = array(
+			CURLOPT_URL => 'http://'.$host.':'.$port.$path,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_USERAGENT => 'reCAPTCHA/PHP',
+			CURLOPT_HTTPHEADER => array('Content-Type: application/x-www-form-urlencoded', 'Content-Length: '.strlen($req)),
+			CURLOPT_POSTFIELDS => $req,
+			CURLOPT_TIMEOUT => 3,
+		);
 
-		while ( !feof($fs) ) {
-			$response .= fgets($fs, 1160); // One TCP-IP packet
+		// переменная под результат
+		$result = false;
+
+		// делаем запрос
+		$handler = curl_init();
+		curl_setopt_array($handler, $options);
+		$response = curl_exec($handler);
+		if( curl_errno($handler)==0 && curl_getinfo($handler, CURLINFO_HTTP_CODE)==200 ) {
+			$response = explode("\n", $response);
+			if( isset($response[0]) && trim($response[0])=='true' ) {
+				$result = true;
+			}
 		}
-		fclose($fs);
-		$response = explode("\r\n\r\n", $response, 2);
+		curl_close($handler);
 
-		return $response;
+		return $result;
 	}
 
 	/**
@@ -120,7 +113,7 @@ class PrimitiveReCaptcha extends BasePrimitive {
 
 	 * @return string - The HTML to be embedded in the user's form.
 	 */
-	public static function recaptcha_get_html ($pubkey, $error = null, $use_ssl = false) {
+	public static function getHtmlCode ($pubkey, $error = null, $use_ssl = false) {
 		if ($pubkey == null || $pubkey == '') {
 			die ("To use reCAPTCHA you must get an API key from <a href='https://www.google.com/recaptcha/admin/create'>https://www.google.com/recaptcha/admin/create</a>");
 		}
@@ -162,30 +155,16 @@ class PrimitiveReCaptcha extends BasePrimitive {
 			return false;
 		}
 
-		$response =
-		self::_recaptcha_http_post (
-			self::RECAPTCHA_VERIFY_SERVER, "/recaptcha/api/verify",
-			array (
-				'privatekey' => $privkey,
-				'remoteip' => $remoteip,
-				'challenge' => $challenge,
-				'response' => $response
-			) + $extra_params
-		);
-
-		$answers = explode ("\n", $response [1]);
-
-		return (trim ($answers [0]) == 'true');
+		return
+			self::_recaptcha_http_post (
+				self::RECAPTCHA_VERIFY_SERVER, "/recaptcha/api/verify",
+				array (
+					'privatekey' => $privkey,
+					'remoteip' => $remoteip,
+					'challenge' => $challenge,
+					'response' => $response
+				) + $extra_params
+			);
 	}
-
-//	protected static function _recaptcha_aes_pad($val) {
-//		$block_size = 16;
-//		$numpad = $block_size - (strlen ($val) % $block_size);
-//		return str_pad($val, strlen ($val) + $numpad, chr($numpad));
-//	}
-
-
-
-
 
 }
