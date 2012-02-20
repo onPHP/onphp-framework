@@ -376,7 +376,7 @@
 		/**
 		 * @static
 		 * @param $name
-		 * @return PrimitiveUniversalUniqueIdentifier
+		 * @return PrimitiveUuidIdentifier
 		**/
 		public static function uuidIdentifier($name)
 		{
@@ -386,11 +386,20 @@
 		/**
 		 * @static
 		 * @param $name
-		 * @return PrimitiveUniversalUniqueIdentifierList
+		 * @return PrimitiveUuidIdentifierList
 		**/
 		public static function uuidIdentifierList($name)
 		{
 			return new PrimitiveUuidIdentifierList($name);
+		}
+
+		/**
+		 * @static
+		 * @return PrimitiveReCaptcha
+		**/
+		public static function reCaptcha()
+		{
+			return new PrimitiveReCaptcha();
 		}
 
 	}
