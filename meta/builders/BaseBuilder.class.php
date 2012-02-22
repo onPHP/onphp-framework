@@ -79,7 +79,9 @@ EOT;
 			if ($liaisons = $class->getReferencingClasses()) {
 				$uncachers = array();
 				foreach ($liaisons as $className) {
-					$uncachers[] = $className.'::dao()->uncacheLists();';
+					if( method_exists($className,'dao') ) {
+						$uncachers[] = $className.'::dao()->uncacheLists();';
+					}
 				}
 
 				$uncachers = implode("\n", $uncachers);
