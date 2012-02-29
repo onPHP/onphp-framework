@@ -214,6 +214,39 @@
 			);
 		}
 		
+		public function testSqlFunction()
+		{
+			$criteria = Criteria::create(TestCity::dao())->
+				addProjection(
+					Projection::property(
+						SQLFunction::create(
+							'count',
+							SQLFunction::create(
+								'substring',
+								BinaryExpression::create(
+									'name',
+									BinaryExpression::create(
+										DBValue::create('M....w'),
+										DBValue::create('#'),
+										'for'
+									)->
+									noBrackets(),
+									'from'
+								)->
+								noBrackets()
+							)
+						)->
+						setAggregateDistinct()->
+						setAlias('my_alias')
+					)
+				);
+			
+			$this->assertEquals(
+				$criteria->toDialectString(PostgresDialect::me()),
+				'SELECT count(DISTINCT substring("custom_table"."name" from \'M....w\' for \'#\')) AS "my_alias" FROM "custom_table"'
+			);
+		}
+		
 		public function testSleepWithEmptyDao()
 		{
 			$baseCriteria =
