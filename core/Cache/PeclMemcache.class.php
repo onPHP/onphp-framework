@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2012 by Kutsurua Georgy Tamazievich,                    *
- *   Andrew N. Fediushin, Konstantin V. Arkhipov                           *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -11,23 +10,20 @@
  ***************************************************************************/
 
 	/**
-	 * Connector for PECL's Memcached extension.
+	 * Connector for PECL's Memcache extension by Antony Dovgal.
 	 *
-	 * @see http://pecl.php.net/package/memcached
+	 * @see http://tony2001.phpclub.net/
+	 * @see http://pecl.php.net/package/memcache
 	 *
 	 * @ingroup Cache
 	**/
-	class PeclMemcached extends CachePeer
+	class PeclMemcache extends CachePeer
 	{
 		const DEFAULT_PORT		= 11211;
 		const DEFAULT_HOST		= '127.0.0.1';
-	
-		/**
-		 * Ссылка на объект Memcached (который из PECL)
-		 * @var Memcached
-		 */
+		
 		private $instance = null;
-	
+		
 		/**
 		 * @return PeclMemcached
 		**/
@@ -38,30 +34,39 @@
 		{
 			return new self($host, $port);
 		}
-	
+		
 		public function __construct(
 			$host = self::DEFAULT_HOST,
 			$port = self::DEFAULT_PORT
 		)
 		{
-			$this->instance = new Memcached();
-	
-			$this->instance->addServer($host, $port);
-			$this->instance->setOption(Memcached::OPT_COMPRESSION, false);
-			$this->instance->setOption(Memcached::OPT_BINARY_PROTOCOL, true);
-			$this->instance->setOption(Memcached::OPT_BUFFER_WRITES, false);
-			$this->instance->setOption(Memcached::OPT_NO_BLOCK, false);
-	
-			$this->alive = is_array($this->instance->getVersion());
+			$this->instance = new Memcache();
+			
+			try {
+				try {
+					$this->instance->pconnect($host, $port);
+				} catch (BaseException $e) {
+					$this->instance->connect($host, $port);
+				}
+				
+				$this->alive = true;
+			} catch (BaseException $e) {
+				// bad luck.
+			}
 		}
-	
+		
 		public function __destruct()
 		{
-	
+			if ($this->alive) {
+				try {
+					$this->instance->close();
+				} catch (BaseException $e) {
+					// shhhh.
+				}
+			}
 		}
-	
+		
 		/**
-		 * очищает весь кэш (равносильно рестарту)
 		 * @return PeclMemcached
 		**/
 		public function clean()
@@ -71,93 +76,63 @@
 			} catch (BaseException $e) {
 				$this->alive = false;
 			}
-	
+			
 			return parent::clean();
 		}
-	
-		/**
-		 * @return PeclMemcached
-		 **/
-		public function enableCompression()
-		{
-			$this->compress = true;
-			$this->instance->setOption(Memcached::OPT_COMPRESSION, true);
-	
-			return $this;
-		}
-	
-		/**
-		 * @return PeclMemcached
-		 **/
-		public function disableCompression()
-		{
-			$this->compress = false;
-			$this->instance->setOption(Memcached::OPT_COMPRESSION, false);
-	
-			return $this;
-		}
-	
+		
 		public function increment($key, $value)
 		{
 			try {
 				return $this->instance->increment($key, $value);
 			} catch (BaseException $e) {
-				$this->alive = false;
 				return null;
 			}
 		}
-	
+		
 		public function decrement($key, $value)
 		{
 			try {
 				return $this->instance->decrement($key, $value);
 			} catch (BaseException $e) {
-				$this->alive = false;
 				return null;
 			}
 		}
-	
+		
 		public function getList($indexes)
 		{
-			try {
-				return $this->instance->getMulti(
-					$indexes,
-					$cas/*,
-						Why ?
-					Memcached::GET_PRESERVE_ORDER
-					*/
-				);
-			} catch (BaseException $e) {
-				$this->alive = false;
-				return array();
-			}
-	
-			Assert::isUnreachable();
+			return
+				($return = $this->get($indexes))
+					? $return
+					: array();
 		}
-	
+		
 		public function get($index)
 		{
 			try {
 				return $this->instance->get($index);
 			} catch (BaseException $e) {
 				$this->alive = false;
+				
 				return null;
 			}
-	
+			
 			Assert::isUnreachable();
 		}
-	
+		
 		public function delete($index)
 		{
 			try {
+				// second parameter required, wrt new memcached protocol:
+				// delete key 0 (see process_delete_command in the memcached.c)
+				// Warning: it is workaround!
 				return $this->instance->delete($index, 0);
 			} catch (BaseException $e) {
 				return $this->alive = false;
 			}
-	
+			
 			Assert::isUnreachable();
 		}
-	
+		
 		public function append($key, $data)
 		{
 			try {
@@ -165,10 +140,10 @@
 			} catch (BaseException $e) {
 				return $this->alive = false;
 			}
-	
+			
 			Assert::isUnreachable();
 		}
-	
+		
 		protected function store(
 			$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
 		)
@@ -178,12 +153,15 @@
 					$this->instance->$action(
 						$key,
 						$value,
+						$this->compress
+							? MEMCACHE_COMPRESSED
+							: false,
 						$expires
 					);
 			} catch (BaseException $e) {
 				return $this->alive = false;
 			}
-	
+			
 			Assert::isUnreachable();
 		}
 	}
