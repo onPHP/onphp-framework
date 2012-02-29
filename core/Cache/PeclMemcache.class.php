@@ -25,7 +25,7 @@
 		private $instance = null;
 		
 		/**
-		 * @return PeclMemcached
+		 * @return PeclMemcache
 		**/
 		public static function create(
 			$host = self::DEFAULT_HOST,
@@ -111,6 +111,9 @@
 			try {
 				return $this->instance->get($index);
 			} catch (BaseException $e) {
+				if(strpos($e->getMessage(), 'Invalid key') !== false)
+					return null;
+				
 				$this->alive = false;
 				
 				return null;
