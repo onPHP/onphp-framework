@@ -1,3 +1,11 @@
+2012-05-28	Georgiy T. Kutsurua
+
+	* core/Cache/PeclMemcache.class.php
+		core/Cache/PeclMemcached.class.php
+		core/Cache/{Memcached.class.php → SocketMemcached.class.php}
+		
+Code clean & add SocketMemcached instead of Memcached
+
 2012-05-23	Georgiy T. Kutsurua
 
 	* main/Base/LightMetaProperty.class.php: fix after Enum update
