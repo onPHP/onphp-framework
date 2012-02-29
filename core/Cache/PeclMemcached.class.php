@@ -23,7 +23,6 @@
 		const DEFAULT_HOST		= '127.0.0.1';
 	
 		/**
-		 * Ссылка на объект Memcached (который из PECL)
 		 * @var Memcached
 		 */
 		private $instance = null;
@@ -61,7 +60,7 @@
 		}
 	
 		/**
-		 * очищает весь кэш (равносильно рестарту)
+		 * Clean cache, equal restart memcache server
 		 * @return PeclMemcached
 		**/
 		public function clean()
