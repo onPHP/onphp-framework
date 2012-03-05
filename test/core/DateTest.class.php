@@ -43,6 +43,13 @@
 			$right = Timestamp::create('2008-03-30 03:00:00');
 			
 			$this->dayDifferenceTest($left, $right, 1);
+
+			$weekCount = Date::getWeekCountInYear(2012);
+			$this->assertEquals($weekCount, 52, "Week count is incorrect");
+
+			$dateFromWeekNumberStamp = Date::makeFromWeek(5, 2012)->toStamp();
+			$expectedDate = Date::create('2012-01-30 00:00:00')->toStamp();
+			$this->assertEquals($dateFromWeekNumberStamp, $expectedDate, 'Creating date from week number is incorrect.');
 			
 			// unsolved giv's case
 			// $left = Timestamp::create('2008-10-25 03:00:00');
