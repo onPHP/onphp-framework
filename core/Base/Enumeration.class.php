@@ -11,39 +11,39 @@
 
 	/**
 	 * Parent of all enumeration classes.
-	 * 
+	 *
 	 * @see AccessMode for example
-	 * 
+	 *
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
 	abstract class Enumeration extends NamedObject implements Serializable
 	{
 		protected $names = array(/* override me */);
-		
+
 		final public function __construct($id)
 		{
 			$this->setId($id);
 		}
-		
+
 		/// prevent's serialization of names' array
 		//@{
 		public function serialize()
 		{
 			return (string) $this->id;
 		}
-		
+
 		public function unserialize($serialized)
 		{
 			$this->setId($serialized);
 		}
 		//@}
-		
+
 		public static function getList(Enumeration $enum)
 		{
 			return $enum->getObjectList();
 		}
-		
+
 		/**
 		 * must return any existent ID
 		 * 1 should be ok for most enumerations
@@ -52,18 +52,18 @@
 		{
 			return 1;
 		}
-		
+
 		/// parent's getId() is too complex in our case
 		public function getId()
 		{
 			return $this->id;
 		}
-		
+
 		public function getObjectList()
 		{
 			$list = array();
 			$names = $this->getNameList();
-			
+
 			foreach (array_keys($names) as $id)
 				$list[] = new $this($id);
 
@@ -74,12 +74,12 @@
 		{
 			return $this->name;
 		}
-		
+
 		public function getNameList()
 		{
 			return $this->names;
 		}
-		
+
 		/**
 		 * @return Enumeration
 		**/
@@ -94,8 +94,26 @@
 				throw new MissingElementException(
 					'knows nothing about such id == '.$id
 				);
-			
+
 			return $this;
+		}
+
+		/**
+		 * @static
+		 * @return array
+		 */
+		public static function makeObjectList() {
+			$enum = new static( static::getAnyId() );
+			return $enum->getObjectList();
+		}
+
+		/**
+		 * @static
+		 * @return array
+		 */
+		public static function makeNameList() {
+			$enum = new static( static::getAnyId() );
+			return $enum->getNameList();
 		}
 	}
 ?>
