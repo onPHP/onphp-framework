@@ -360,6 +360,18 @@
 						$primitiveName = 'scalarIdentifier';
 					} else
 						$primitiveName = $this->getType()->getPrimitiveName();
+				} elseif (
+					$this->getType() instanceof ObjectType
+					&& ($identifier = $this->getType()->getClass()->getIdentifier())
+				) {
+					if ($identifier->getType() instanceof IntegerType) {
+						$primitiveName = 'integerIdentifier';
+					} elseif ($identifier->getType() instanceof UuidType) {
+						$primitiveName = 'uuidIdentifier';
+					} elseif ($identifier->getType() instanceof StringType) {
+						$primitiveName = 'scalarIdentifier';
+					} else
+						$primitiveName = $this->getType()->getPrimitiveName();
 				} else
 					$primitiveName = $this->getType()->getPrimitiveName();
 			} else
