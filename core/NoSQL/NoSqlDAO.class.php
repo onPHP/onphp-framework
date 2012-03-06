@@ -12,6 +12,8 @@
 
 abstract class NoSqlDAO extends StorableDAO {
 
+	const COUCHDB_VIEW_PREFIX = '_design/data/_view/';
+
 /// single object getters
 //@{
 	/**
@@ -294,12 +296,29 @@ abstract class NoSqlDAO extends StorableDAO {
 
 /// object's list getters
 //@{
-	public function getListByView($view, $key, $criteria=null) {
+	public function getListByView($view, array $keys, $criteria=null) {
 		$params = array();
 
 		// parse key
 		switch( get_class($this->getLink()) ) {
 			case 'CouchDB': {
+				// собираем правильное имя вьюшки
+				$view = self::COUCHDB_VIEW_PREFIX.$view;
+				// проверяем что в массиве ключей есть хоть один
+				if( count($keys)<1 ) {
+					throw new WrongArgumentException( '$keys must be an array with one or more values' );
+				}
+				// собираем ключи
+				$key = '';
+				if( count($keys)==1 ) {
+					$key = array_shift($keys);
+				} else {
+					foreach($keys as &$val) {
+						$val = '"'.$val.'"';
+					}
+					$key = '['.implode(',', $keys).']';
+				}
+
 				$params['key'] = $key;
 			} break;
 			default: {
@@ -379,7 +398,7 @@ abstract class NoSqlDAO extends StorableDAO {
 	 * @return NoSQL
 	 */
 	public function getLink() {
-		return NoSqlPool::me()->getLink( $this->getLinkName() );;
+		return NoSqlPool::me()->getLink( $this->getLinkName() );
 	}
 
 }
