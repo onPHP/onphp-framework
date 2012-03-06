@@ -12,7 +12,14 @@
 
 class PrimitiveUuidIdentifierList extends PrimitiveIdentifier {
 
+	protected $scalar = true;
+
 	protected $value = array();
+
+	public function setScalar($orly = false)
+	{
+		throw new WrongStateException();
+	}
 
 	public function getTypeName()
 	{

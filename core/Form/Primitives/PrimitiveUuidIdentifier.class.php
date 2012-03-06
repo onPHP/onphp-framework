@@ -12,6 +12,13 @@
 
 class PrimitiveUuidIdentifier extends PrimitiveIdentifier {
 
+	protected $scalar = true;
+
+	public function setScalar($orly = false)
+	{
+		throw new WrongStateException();
+	}
+
 	public function getTypeName()
 	{
 		return 'Uuid';
