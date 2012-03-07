@@ -14,7 +14,10 @@
 	**/
 	final class PrimitiveRule extends BasePrimitive
 	{
+		/** @var Form */
 		private $form		= null;
+
+		/** @var BinaryExpression */
 		private $expression	= null;
 
 		/**
