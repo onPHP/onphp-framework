@@ -402,5 +402,14 @@
 			return new PrimitiveReCaptcha();
 		}
 
+		/**
+		 * @return PrimitiveRule
+		**/
+		public static function rule($name)
+		{
+			return new PrimitiveRule($name);
+		}
+
+
 	}
 ?>
