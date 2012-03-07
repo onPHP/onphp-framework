@@ -13,9 +13,6 @@
 	 * @ingroup Flow
 	**/
 
-	/**
-	 * @see
-	 */
 	class JsonXssView extends JsonPView
 	{
 
