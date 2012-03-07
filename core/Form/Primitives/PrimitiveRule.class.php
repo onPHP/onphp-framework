@@ -16,32 +16,32 @@
 	{
 		private $form		= null;
 		private $expression	= null;
-		
+
 		/**
 		 * @return PrimitiveRule
 		**/
 		public function setForm(Form $form)
 		{
 			$this->form = $form;
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return PrimitiveRule
 		**/
 		public function setExpression(LogicalObject $exp)
 		{
 			$this->expression = $exp;
-			
+
 			return $this;
 		}
-		
-		public function import(array $scope)
+
+		public function import($scope)
 		{
 			Assert::isNotNull($this->form);
 			Assert::isNotNull($this->expression);
-			
+
 			return $this->expression->toBoolean($this->form);
 		}
 	}
