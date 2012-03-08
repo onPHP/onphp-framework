@@ -17,6 +17,15 @@
 	{
 
 		/**
+		 * @static
+		 * @return JsonXssView
+		 */
+		public static function create()
+		{
+			return new self();
+		}
+
+		/**
 		 * @param Model $model
 		 * @return string
 		 */

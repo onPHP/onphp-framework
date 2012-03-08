@@ -16,6 +16,15 @@
 	class JsonPView extends JsonView
 	{
 		/**
+		 * @static
+		 * @return JsonPView
+		 */
+		public static function create()
+		{
+			return new self();
+		}
+
+		/**
 		 * Callback function name
 		 * @see http://en.wikipedia.org/wiki/JSONP
 		 * @var string
@@ -39,18 +48,18 @@
 		 */
 		public function toString(/* Model */ $model = null)
 		{
-			Assert::isNotNull($this->callback, 'callback can not be null!');
-
 			$callback = null;
 
 			if(is_scalar($this->callback))
 				$callback = $this->callback;
-			elseif(is_object($this->callback) && $this->callback instanceof Stringable)
+			elseif($this->callback instanceof Stringable)
 				$callback = $this->callback->toString();
 			else
-				throw new UnexpectedValueException('undefined type of callback, gived "'.gettype($this->callback).'"');
+				throw new WrongArgumentException('undefined type of callback, gived "'.gettype($this->callback).'"');
 
-			if(!preg_match('/^[$A-Z_][0-9A-Z_$]*$/i', $callback))
+			Assert::isNotEmpty($callback, 'callback can not be empty!');
+
+			if(!preg_match('/^[\$A-Z_][0-9A-Z_\$]*$/i', $callback))
 				throw new WrongArgumentException('invalid function name, you should set valid javascript function name! gived "'.$callback.'"');
 
 			$json = parent::toString($model);
