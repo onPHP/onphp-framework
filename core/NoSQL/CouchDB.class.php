@@ -19,11 +19,18 @@
 **/
 class CouchDB extends NoSQL {
 
+	// methods
+	const
+		GET		= 1,
+		POST	= 2,
+		PUT		= 3,
+		DELETE	= 4;
+
 	// credentials
 	protected $port		= 5984;
 
 	// quering
-	protected $_methods = array( 'get'=>'get', 'post'=>'post', 'put'=>'put', 'delete'=>'delete' );
+	protected $_methods = array( self::GET=>self::GET, self::POST=>self::POST, self::PUT=>self::PUT, self::DELETE=>self::DELETE );
 
 
 	public function  __construct() {
@@ -55,7 +62,7 @@ class CouchDB extends NoSQL {
 		Assert::isString($id);
 		Assert::isNotEmpty($id);
 
-		return  $this->exec( $this->getUrl($dbname, $id), 'get' );
+		return  $this->exec( $this->getUrl($dbname, $id), self::GET );
 	}
 
 	/**
@@ -86,7 +93,7 @@ class CouchDB extends NoSQL {
 		$id = $object['id'];
 		unset( $object['id'] );
 
-		$response = $this->exec( $this->getUrl($dbname, $id), 'put', json_encode($object) );
+		$response = $this->exec( $this->getUrl($dbname, $id), self::PUT, json_encode($object) );
 		$object['id'] = $response['id'];
 		$object['_rev'] = $response['rev'];
 		return $object;
@@ -126,7 +133,7 @@ class CouchDB extends NoSQL {
 		// add rev
 		$object['_rev'] = $rev;
 
-		$response = $this->exec( $this->getUrl($dbname, $id), 'put', json_encode($object) );
+		$response = $this->exec( $this->getUrl($dbname, $id), self::PUT, json_encode($object) );
 		$object['id'] = $response['id'];
 		$object['_rev'] = $response['rev'];
 		return $object;
@@ -160,7 +167,7 @@ class CouchDB extends NoSQL {
 		Assert::isString($rev);
 		Assert::isNotEmpty($rev);
 
-		$response = $this->exec( $this->getUrl($dbname, $id, array('rev'=>$rev)), 'delete' );
+		$response = $this->exec( $this->getUrl($dbname, $id, array('rev'=>$rev)), self::DELETE );
 
 		return $response['ok'] ? 1 : 0;
 	}
@@ -183,7 +190,7 @@ class CouchDB extends NoSQL {
 		Assert::isString($dbname);
 		Assert::isNotEmpty($dbname);
 
-		$response = $this->exec( $this->getUrl($dbname, '_all_docs'), 'get' );
+		$response = $this->exec( $this->getUrl($dbname, '_all_docs'), self::GET );
 		$list = array();
 		if( isset($response['total_rows']) && isset($response['rows']) ) {
 			$list = $response['rows'];
@@ -210,7 +217,7 @@ class CouchDB extends NoSQL {
 		Assert::isString($dbname);
 		Assert::isNotEmpty($dbname);
 
-		$response = $this->exec( $this->getUrl($dbname, '_all_docs'), 'post', '{"keys":[]}' );
+		$response = $this->exec( $this->getUrl($dbname, '_all_docs'), self::POST, '{"keys":[]}' );
 		$count = 0;
 		if( isset($response['total_rows']) ) {
 			$count = $response['total_rows'];
@@ -253,7 +260,7 @@ class CouchDB extends NoSQL {
 		}
 
 		//die( $this->getUrl($dbname, $view, $params) );
-		$response = $this->exec( $this->getUrl($dbname, $view, $params), 'get' );
+		$response = $this->exec( $this->getUrl($dbname, $view, $params), self::GET );
 		$list = array();
 		if( isset($response['total_rows']) && isset($response['rows']) ) {
 			$list = $response['rows'];
@@ -298,7 +305,7 @@ class CouchDB extends NoSQL {
 		$params['reduce'] = 'false';
 
 		// query
-		$response = $this->exec( $this->getUrl($dbname, $view, $params), 'get' );
+		$response = $this->exec( $this->getUrl($dbname, $view, $params), self::GET );
 		$result = null;
 		if( isset($response['rows']) ) {
 			$result = $response['value'];
@@ -315,11 +322,8 @@ class CouchDB extends NoSQL {
 		) {
 			return UuidUtils::generate();
 		} else {
-			$request = $this->makeRequest('_uuids')->setMethod( HttpMethod::get() );
-			$response = $this->makeCurlClient()->send( $request );
-			$result = json_decode( $response->getBody(), true );
-			$this->checkErrors( $result );
-			return array_shift( $result );
+			$response = $this->exec( $this->getUrl('_uuids'), self::GET );
+			return array_shift( $response );
 
 		}
 	}
@@ -391,20 +395,20 @@ class CouchDB extends NoSQL {
 		}
 
 		switch( $method ) {
-			case $this->_methods['get']: {
+			case self::GET: {
 				$options[CURLOPT_HTTPGET] = true;
 			} break;
-			case $this->_methods['post']: {
+			case self::POST: {
 				$options[CURLOPT_CUSTOMREQUEST] = 'POST';
 				$options[CURLOPT_POSTFIELDS] = $data;
 				$options[CURLOPT_HTTPHEADER] = array( 'Content-type: application/json' );
 			} break;
-			case $this->_methods['put']: {
+			case self::PUT: {
 				$options[CURLOPT_CUSTOMREQUEST] = 'PUT';
 				$options[CURLOPT_POSTFIELDS] = $data;
 				$options[CURLOPT_HTTPHEADER] = array( 'Content-type: application/json' );
 			} break;
-			case $this->_methods['delete']: {
+			case self::DELETE: {
 				$options[CURLOPT_CUSTOMREQUEST] = 'DELETE';
 			} break;
 		}

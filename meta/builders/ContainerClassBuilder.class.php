@@ -96,7 +96,7 @@ EOT;
 
 protected function getViewName()
 {
-	return '_design/{$holder->getName()}/_view/getBy{$class->getName()}Id';
+	return '_design/data/_view/getBy{$class->getName()}Id';
 }
 
 EOT;
