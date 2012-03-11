@@ -119,7 +119,7 @@
 		public static function getWeekCountInYear($year)
 		{
 			$weekCount = date('W', mktime(0, 0, 0, 12, 31, $year));
-			
+
 			if ($weekCount == '01') {
 				return date('W', mktime(0, 0, 0, 12, 24, $year));
 			} else {
