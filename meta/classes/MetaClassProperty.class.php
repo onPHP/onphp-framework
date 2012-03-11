@@ -328,6 +328,9 @@
 				if ($this->getType() instanceof IntegerType) {
 					$primitiveName = 'integerIdentifier';
 					$className = $holder->getName();
+				} elseif ($this->getType() instanceof UuidType) {
+					$primitiveName = 'uuidIdentifier';
+					$className = $holder->getName();
 				} elseif ($this->getType() instanceof StringType) {
 					$primitiveName = 'scalarIdentifier';
 					$className = $holder->getName();
@@ -348,6 +351,8 @@
 				) {
 					if ($identifier->getType() instanceof IntegerType) {
 						$primitiveName = 'integerIdentifier';
+					} elseif ($identifier->getType() instanceof UuidType) {
+						$primitiveName = 'uuidIdentifier';
 					} elseif ($identifier->getType() instanceof StringType) {
 						$primitiveName = 'scalarIdentifier';
 					} else
