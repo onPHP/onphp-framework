@@ -362,5 +362,35 @@
 		{
 			return new PrimitiveIpRange($name);
 		}
+
+		/**
+		 * @static
+		 * @param $name
+		 * @return PrimitiveUuid
+		 */
+		public static function uuid($name)
+		{
+			return new PrimitiveUuid($name);
+		}
+
+		/**
+		 * @static
+		 * @param $name
+		 * @return PrimitiveUuidIdentifier
+		 */
+		public static function uuidIdentifier($name)
+		{
+			return new PrimitiveUuidIdentifier($name);
+		}
+
+		/**
+		 * @static
+		 * @param $name
+		 * @return PrimitiveUuidIdentifierList
+		 */
+		public static function uuidIdentifierList($name)
+		{
+			return new PrimitiveUuidIdentifierList($name);
+		}
 	}
 ?>

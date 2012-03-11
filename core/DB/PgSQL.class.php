@@ -77,10 +77,22 @@
 		
 		public function obtainSequence($sequence)
 		{
+			if($sequence === 'uuid')
+				return $this->obtainUuid();
+
 			$res = $this->queryRaw("select nextval('{$sequence}') as seq");
 			$row = pg_fetch_assoc($res);
 			pg_free_result($res);
 			return $row['seq'];
+		}
+
+
+		/**
+		 * @return string
+		 */
+		public function obtainUuid()
+		{
+			return UuidUtils::make();
 		}
 		
 		/**

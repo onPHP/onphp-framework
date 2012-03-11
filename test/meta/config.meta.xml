@@ -249,4 +249,14 @@
 		<pattern name="DictionaryClass" />
 	</class>
 
+	<class name="TestUuidObject" type="final">
+		<properties>
+			<identifier type="Uuid"/>
+
+			<property name="name" type="String" size="50" required="true" />
+		</properties>
+
+		<pattern name="DictionaryClass" />
+	</class>
+
 </classes></metaconfiguration>

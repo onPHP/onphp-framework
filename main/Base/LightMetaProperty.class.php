@@ -137,6 +137,7 @@
 					($type == 'identifier') // obsoleted
 					|| ($type == 'integerIdentifier')
 					|| ($type == 'scalarIdentifier')
+					|| ($type == 'uuidIdentifier')
 				);
 			
 			return $property;
