@@ -41,9 +41,9 @@
 			
 			$left = Timestamp::create('2008-03-29 03:00:00');
 			$right = Timestamp::create('2008-03-30 03:00:00');
-			
+
 			$this->dayDifferenceTest($left, $right, 1);
-			
+
 			// unsolved giv's case
 			// $left = Timestamp::create('2008-10-25 03:00:00');
 			// $right = Timestamp::create('2008-10-26 02:59:00');
@@ -65,6 +65,38 @@
 			);
 			
 			return $this;
+		}
+
+		/**
+		 * @test
+		**/
+		public function testWeekCount()
+		{
+			$weekCount = Date::getWeekCountInYear(2012);
+			$this->assertEquals($weekCount, 52, "Week count is incorrect");
+
+			$dateFromWeekNumberStamp = Date::makeFromWeek(5, 2012)->toStamp();
+			$expectedDate = Date::create('2012-01-30 00:00:00')->toStamp();
+			$this->assertEquals($dateFromWeekNumberStamp, $expectedDate, 'Creating date from week number is incorrect.');
+
+			$weekCount2009 = Date::getWeekCountInYear(2009);
+			$expectedCount2009 = 53;
+			$this->assertEquals($weekCount2009, $expectedCount2009, 'Week count for 2009 year is incorrect.');
+
+			$weekBegin2009Stamp = Date::makeFromWeek(53, 2009)->toStamp();
+			$expectedDate2009 = Date::create('2009-12-28 00:00:00')->toStamp();
+			$this->assertEquals($weekBegin2009Stamp, $expectedDate2009, 'Week 53 for 2009 starts with incorrect date.');
+
+			$this->
+				assertEquals(
+					Date::makeFromWeek(1,2010)->toStamp(),
+					Date::create('2010-01-04')->toStamp(),
+					'Week 1 for 2010 starts with incorrect date.'
+				);
+
+			$this->assertEquals(Date::getWeekCountInYear(1996), 52, 'Incorrect week count in 1996 year');
+
+			$this->assertEquals(Date::getWeekCountInYear(1976), 53, 'Incorrect week count in 1976 year');
 		}
 
 		public function testMakeFromWeek()
