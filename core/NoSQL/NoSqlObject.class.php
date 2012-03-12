@@ -22,6 +22,8 @@ class NoSqlObject extends IdentifiableObject {
 	 */
 	protected $_rev = null;
 
+	protected $identifiers = array('identifier', 'integerIdentifier', 'scalarIdentifier', 'uuidIdentifier');
+
 	/**
 	 * @param $rev
 	 * @return NoSqlObject
@@ -56,7 +58,7 @@ class NoSqlObject extends IdentifiableObject {
 				$value = call_user_func(array($this, $property->getGetter()));
 				$entity[ $property->getColumnName() ] = $value = $value->getId();
 			} // обрабатываем связи 1к1
-			elseif( $property->getType()=='identifier' && $property->getRelationId()==1 ) {
+			elseif( in_array($property->getType(), $this->identifiers) && $property->getRelationId()==1 ) {
 				$entity[ $property->getColumnName() ] = call_user_func(array($this, $property->getGetter().'Id'));
 			}
 		}

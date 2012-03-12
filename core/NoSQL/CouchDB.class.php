@@ -62,7 +62,7 @@ class CouchDB extends NoSQL {
 		Assert::isString($id);
 		Assert::isNotEmpty($id);
 
-		return  $this->exec( $this->getUrl($dbname, $id), self::GET );
+		return $this->exec( $this->getUrl($dbname, $id), self::GET );
 	}
 
 	/**
@@ -340,7 +340,7 @@ class CouchDB extends NoSQL {
 		if( !empty($dbname) ) {
 			$urlPath .= $dbname;
 			if( !empty($path) ) {
-				$urlPath .= '/'.$path;
+				$urlPath .= '/'.urlencode($path);
 			}
 		}
 

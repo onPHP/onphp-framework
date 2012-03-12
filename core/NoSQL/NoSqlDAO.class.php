@@ -379,7 +379,7 @@ abstract class NoSqlDAO extends StorableDAO {
 		$object = null;
 
 		if( $this->getLink() instanceof CouchDB ) {
-			$array['id'] = $array['_id'];
+			$array['id'] = urldecode($array['_id']);
 			unset( $array['_id'] );
 		}
 
