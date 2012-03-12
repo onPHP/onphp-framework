@@ -48,8 +48,8 @@ class NoSqlObject extends IdentifiableObject {
 			if( $property->isGenericType() ) {
 				$value = call_user_func(array($this, $property->getGetter()));
 				if( is_object( $value )&& $value instanceof Date ) {
-						//$value = $value->toStamp();
-						$value = $value->toString();
+						$value = $value->toStamp();
+						//$value = $value->toString();
 				}
 				$entity[ $property->getColumnName() ] = $value;
 
