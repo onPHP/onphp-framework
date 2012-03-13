@@ -449,7 +449,7 @@ class CouchDB extends NoSQL {
 				throw new ObjectNotFoundException( $reason );
 			} break;
 			case 405: {
-				throw new NoSQLException( 'Resource Not Allowed' );
+				throw new NoSQLException( 'Resource Not Allowed, url: '.$url );
 			} break;
 			case 406: {
 				throw new NoSQLException( 'Not Acceptable' );

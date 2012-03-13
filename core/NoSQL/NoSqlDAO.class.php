@@ -296,7 +296,7 @@ abstract class NoSqlDAO extends StorableDAO {
 
 /// object's list getters
 //@{
-	public function getListByView($view, array $keys, $criteria=null) {
+	public function getListByView($view, $keys, $criteria=null) {
 		$params = array();
 
 		// parse key
@@ -304,19 +304,23 @@ abstract class NoSqlDAO extends StorableDAO {
 			case 'CouchDB': {
 				// собираем правильное имя вьюшки
 				$view = self::COUCHDB_VIEW_PREFIX.$view;
-				// проверяем что в массиве ключей есть хоть один
-				if( count($keys)<1 ) {
-					throw new WrongArgumentException( '$keys must be an array with one or more values' );
-				}
 				// собираем ключи
 				$key = '';
-				if( count($keys)==1 ) {
-					$key = array_shift($keys);
+				if( !is_array($keys) ) {
+					$key = $keys;
 				} else {
-					foreach($keys as &$val) {
-						$val = '"'.$val.'"';
+					// проверяем что в массиве ключей есть хоть один
+					if( count($keys)<1 ) {
+						throw new WrongArgumentException( '$keys must be an array with one or more values' );
 					}
-					$key = '['.implode(',', $keys).']';
+					if( count($keys)==1 ) {
+						$key = array_shift($keys);
+					} else {
+						foreach($keys as &$val) {
+							$val = '"'.$val.'"';
+						}
+						$key = '['.implode(',', $keys).']';
+					}
 				}
 
 				$params['key'] = $key;

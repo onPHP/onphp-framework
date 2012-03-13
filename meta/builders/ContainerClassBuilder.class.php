@@ -94,9 +94,14 @@ EOT;
 			if ($isNoSQL) {
 				$out .= <<<EOT
 
+protected function getViewPrefix()
+{
+	return '_design/data/_view';
+}
+
 protected function getViewName()
 {
-	return '_design/data/_view/getBy{$class->getName()}Id';
+	return 'getBy{$class->getName()}Id';
 }
 
 EOT;
