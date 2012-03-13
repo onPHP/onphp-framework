@@ -90,7 +90,7 @@ class CouchDB extends NoSQL {
 
 
 		// remove id
-		$id = $object['id'];
+		$id = urlencode($object['id']);
 		unset( $object['id'] );
 
 		$response = $this->exec( $this->getUrl($dbname, $id), self::PUT, json_encode($object) );
@@ -128,7 +128,7 @@ class CouchDB extends NoSQL {
 		Assert::isNotEmpty($rev);
 
 		// remove id
-		$id = $object['id'];
+		$id = urlencode($object['id']);
 		unset( $object['id'] );
 		// add rev
 		$object['_rev'] = $rev;
@@ -154,7 +154,7 @@ class CouchDB extends NoSQL {
 
 		// parse args
 		$dbname = func_get_arg(0);
-		$id = func_get_arg(1);
+		$id = urlencode(func_get_arg(1));
 		$rev = func_get_arg(2);
 
 		// checking dbname
@@ -340,7 +340,7 @@ class CouchDB extends NoSQL {
 		if( !empty($dbname) ) {
 			$urlPath .= $dbname;
 			if( !empty($path) ) {
-				$urlPath .= '/'.urlencode($path);
+				$urlPath .= '/'.$path;
 			}
 		}
 
@@ -385,6 +385,7 @@ class CouchDB extends NoSQL {
 		$options = array(
 			CURLOPT_RETURNTRANSFER => true,
 			CURLINFO_HEADER_OUT => true,
+			//CURLOPT_FOLLOWLOCATION => true,
 			CURLOPT_URL => $url,
 			CURLOPT_PORT => $this->port,
 			CURLOPT_USERAGENT => 'onPHP::'.__CLASS__
@@ -466,10 +467,10 @@ class CouchDB extends NoSQL {
 				throw new NoSQLException( 'Unauthorized' );
 			} break;
 			case 500: {
-				throw new NoSQLException( 'CouchDB server error' );
+				throw new NoSQLException( 'CouchDB server error: '.var_export($response, true) );
 			} break;
 			default: {
-				die('NOSQL FATAL!!!');
+				throw new NoSQLException( 'CouchDB fatal error. Code: '.$status.'  Info:'.var_export($response, true) );
 			} break;
 		}
 
