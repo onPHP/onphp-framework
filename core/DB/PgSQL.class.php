@@ -115,6 +115,7 @@
 
 		public function queryRaw($queryString)
 		{
+			if( defined('DB_PROFILE_LOG') ) { file_put_contents(DB_PROFILE_LOG, $queryString."\n", FILE_APPEND); }
 			try {
 				return pg_query($this->link, $queryString);
 			} catch (BaseException $e) {
