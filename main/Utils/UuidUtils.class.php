@@ -15,6 +15,18 @@
 	class UuidUtils extends StaticFactory
 	{
 
+		const SEQUENCE_NAME			= 'uuid';
+
+		/**
+		 * @static
+		 * @param $sequence
+		 * @return bool
+		 */
+		public static function isUuidSequence($sequence)
+		{
+			return ($sequence === self::SEQUENCE_NAME);
+		}
+
 		/**
 		 * @static
 		 * @return bool
