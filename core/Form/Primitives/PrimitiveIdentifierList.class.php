@@ -12,11 +12,11 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveIdentifierList extends PrimitiveIdentifier
+	class PrimitiveIdentifierList extends PrimitiveIdentifier
 	{
 		protected $value = array();
 		private $ignoreEmpty = false;
-		
+
 		/**
 		 * @return PrimitiveIdentifierList
 		**/

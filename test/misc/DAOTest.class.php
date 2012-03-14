@@ -321,6 +321,22 @@
 				$this->getListByIdsTest();
 				$this->getListByIdsTest();
 			}
+
+			$testUuidObj = TestUuidObject::create()->setName('test-uuid-name');
+			TestUuidObject::dao()->add($testUuidObj);
+			$uuid1 = $testUuidObj->getId();
+
+			$uuid2 = UuidUtils::make();
+			$testUuidObj2 = TestUuidObject::create()->setId(
+				$uuid2
+			)->setName('test-uuid-name2');
+			TestUuidObject::dao()->import($testUuidObj2);
+
+			if($assertions)
+			{
+				$this->uuidTest();
+			}
+
 		}
 		
 		public function criteriaResult()
@@ -698,7 +714,7 @@
 		{
 			$id = 'non-integer-one';
 			$binaryData = "\0!bbq!\0";
-			
+
 			$bin =
 				TestBinaryStuff::create()->
 				setId($id)->
@@ -978,6 +994,51 @@
 			} catch (WrongArgumentException $e) {
 				// pass
 			}
+		}
+
+		private function uuidTest()
+		{
+			$count = TestUuidObject::dao()->getTotalCount();
+			$list = TestUuidObject::dao()->getPlainList();
+
+			$this->assertEquals(2, $count);
+			$this->assertEquals(2, count($list));
+
+			try{
+				Assert::isUuid($list[0]->getId() );
+			} catch(WrongArgumentException $e) {
+				$this->fail('object::id must be uuid, but is not it!');
+			}
+
+			$ids = ArrayUtils::getIdsArray($list);
+
+			unset($list);
+			$list = TestUuidObject::dao()->getListByIds($ids);
+
+			$this->assertEquals(2, count($list) );
+
+			$prm = Primitive::uuidIdentifierList('ids')->of('TestUuidObject');
+			$prm->import(
+				array(
+					'ids' => $ids,
+				)
+			);
+
+			$this->assertEquals(2, count($prm->getValue() ) );
+			$this->assertEquals($list, $prm->getValue() );
+
+			unset($prm);
+			$firstId = reset($ids);
+
+			$prm = Primitive::uuidIdentifier('id')->of('TestUuidObject');
+			$prm->import(
+				array(
+					'id'=> $firstId
+				)
+			);
+
+			$this->assertEquals(reset($list), $prm->getValue() );
+
 		}
 	}
 ?>

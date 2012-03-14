@@ -19,7 +19,7 @@
 	 *
 	 * @ingroup Cache
 	**/
-	class Memcached extends CachePeer
+	class SocketMemcached extends CachePeer
 	{
 		const DEFAULT_PORT		= 11211;
 		const DEFAULT_HOST		= '127.0.0.1';
@@ -29,24 +29,24 @@
 
 		private $timeout	= null;
 		
-		private $buffer		= Memcached::DEFAULT_BUFFER;
+		private $buffer		= self::DEFAULT_BUFFER;
 		
 		/**
 		 * @return Memcached
 		**/
 		public static function create(
-			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT,
-			$buffer = Memcached::DEFAULT_BUFFER
+			$host = self::DEFAULT_HOST,
+			$port = self::DEFAULT_PORT,
+			$buffer = self::DEFAULT_BUFFER
 		)
 		{
-			return new Memcached($host, $port, $buffer);
+			return new self($host, $port, $buffer);
 		}
 		
 		public function __construct(
-			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT,
-			$buffer = Memcached::DEFAULT_BUFFER
+			$host = self::DEFAULT_HOST,
+			$port = self::DEFAULT_PORT,
+			$buffer = self::DEFAULT_BUFFER
 		)
 		{
 			$errno = $errstr = null;

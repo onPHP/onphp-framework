@@ -24,6 +24,11 @@
 			$out = null;
 			
 			if (!$class->getPattern() instanceof AbstractClassPattern) {
+				$sequenceName = $class->getTableName().'_id';
+
+				if($class->getIdentifier()->getType() instanceof UuidType)
+					$sequenceName = 'uuid';
+
 				if (
 					$class->getIdentifier()->getColumnName() !== 'id'
 				) {
@@ -49,7 +54,7 @@ public function getObjectName()
 
 public function getSequence()
 {
-	return '{$class->getTableName()}_id';
+	return '{$sequenceName}';
 }
 EOT;
 			} elseif ($class->getWithInternalProperties()) {

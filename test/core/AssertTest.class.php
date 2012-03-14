@@ -81,5 +81,24 @@
 				$this->fail();
 			}
 		}
+
+		public function testUuid()
+		{
+			$exampleUuid = '550e8400-e29b-41d4-a716-446655440000';
+			try {
+				Assert::isUuid($exampleUuid);
+				Assert::isUuid(strtoupper($exampleUuid));
+			} catch (WrongArgumentException $e) {
+				$this->fail('uuid asserts working uncorrectly!');
+			}
+
+			$uncorrectlyUuid = '550j8400-e29b-41d4-a716-446655440000';
+			try {
+				Assert::isUuid($uncorrectlyUuid);
+
+				$this->fail('uuid asserts working uncorrectly!');
+			} catch (WrongArgumentException $e) {}
+
+		}
 	}
 ?>
