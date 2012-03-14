@@ -28,6 +28,16 @@
 		public function __construct($name)
 		{
 			parent::__construct($name);
-			$this->setAllowedPattern(self::UUID_PATTERN);
+			parent::setAllowedPattern(self::UUID_PATTERN);
 		}
+
+		/**
+		 * @param $pattern
+		 * @throws UnsupportedMethodException
+		 */
+		public function setAllowedPattern($pattern)
+		{
+			throw new UnsupportedMethodException('this method not supported yet!');
+		}
+
 	}
