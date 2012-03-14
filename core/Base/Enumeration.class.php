@@ -65,7 +65,7 @@
 			$names = $this->getNameList();
 
 			foreach (array_keys($names) as $id)
-				$list[] = new $this($id);
+				$list[$id] = new $this($id);
 
 			return $list;
 		}
