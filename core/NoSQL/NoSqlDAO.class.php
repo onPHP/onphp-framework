@@ -317,12 +317,15 @@ abstract class NoSqlDAO extends StorableDAO {
 						$key = array_shift($keys);
 					} else {
 						foreach($keys as &$val) {
-							$val = '"'.$val.'"';
+							if( is_null($val) ) {
+								$val = 'null';
+							} else {
+								$val = '"'.$val.'"';
+							}
 						}
 						$key = '['.implode(',', $keys).']';
 					}
 				}
-
 				$params['key'] = $key;
 			} break;
 			default: {

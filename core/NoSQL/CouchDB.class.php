@@ -59,7 +59,7 @@ class CouchDB extends NoSQL {
 		Assert::isString($dbname);
 		Assert::isNotEmpty($dbname);
 		// checking id
-		Assert::isString($id);
+		Assert::isScalar($id);
 		Assert::isNotEmpty($id);
 
 		return $this->exec( $this->getUrl($dbname, $id), self::GET );
@@ -473,6 +473,8 @@ class CouchDB extends NoSQL {
 				throw new NoSQLException( 'CouchDB fatal error. Code: '.$status.'  Info:'.var_export($response, true) );
 			} break;
 		}
+		// closing
+		curl_close($ch);
 
 		return $answer;
 	}
