@@ -15,18 +15,40 @@
 
 		public function testMain()
 		{
-			$callback = 'myCallback';
+			$prefix = 'window.';
+			$callback = 'name';
 
 			$model = Model::create()->set('array', $this->array);
 			$data = array('array' => $this->array);
 
 			//setup
-			$view = JsonXssView::create()->setCallback($callback);
+			$view = JsonXssView::create();
 
-			//execution and check
-			$this->assertEquals(
-				'<script type="text/javascript">'."\n".
-				"\t".$callback.'('.
+			$defaultString = $view->toString($model);
+
+			$this->assertEquals($defaultString, $this->makeString($prefix, $callback, $data) );
+
+
+			$prefix='window2.';
+			$callback='name2';
+
+			$view->setCallback($callback);
+			$view->setPrefix($prefix);
+
+			$customString = $view->toString($model);
+
+			$this->assertEquals($customString, $this->makeString($prefix, $callback, $data) );
+		}
+
+		/**
+		 * @param $prefix
+		 * @param $callback
+		 * @return string
+		 */
+		protected function makeString($prefix, $callback, $data)
+		{
+			return '<script type="text/javascript">'."\n".
+				"\t".$prefix.$callback.'=\''.
 				str_ireplace(
 					array('u0022', 'u0027'),
 					array('\u0022', '\u0027'),
@@ -38,11 +60,8 @@
 						JSON_HEX_TAG
 					)
 				).
-				');'."\n".
-				'</script>'."\n",
-				$view->toString($model)
-			);
-
+				'\';'."\n".
+				'</script>'."\n";
 		}
 
 	}

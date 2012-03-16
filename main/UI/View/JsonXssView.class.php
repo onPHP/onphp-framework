@@ -15,6 +15,22 @@
 
 	class JsonXssView extends JsonPView
 	{
+		/**
+		 * Javascript valid function name pattern
+		 */
+		const CALLBACK_PATTERN		= '/^[\$A-Z_][0-9A-Z_\$\.]*$/i';
+
+		/**
+		 * Default prefix
+		 * @var string
+		 */
+		protected $prefix			= 'window.';
+
+		/**
+		 * Default callback
+		 * @var string
+		 */
+		protected $callback			= 'name';
 
 		/**
 		 * @static
@@ -23,6 +39,21 @@
 		public static function create()
 		{
 			return new self();
+		}
+
+		/**
+		 * @param $value
+		 * @return JsonXssView
+		 * @throws WrongArgumentException
+		 */
+		public function setPrefix($value)
+		{
+			if(!preg_match(static::CALLBACK_PATTERN, $value))
+				throw new WrongArgumentException('invalid prefix name, you should set valid javascript function name! gived "'.$value.'"');
+
+			$this->prefix = $value;
+
+			return $this;
 		}
 
 		/**
@@ -39,16 +70,16 @@
 			$this->setHexQuot(true);
 			$this->setHexTag(true);
 
-			$jsonp = parent::toString($model);
+			$json = JsonView::toString($model);
 
-			$jsonp = str_ireplace(
+			$json = str_ireplace(
 				array('u0022', 'u0027'),
 				array('\u0022', '\u0027'),
-				$jsonp
+				$json
 			);
 
 			$result = '<script type="text/javascript">'."\n";
-			$result.="\t".$jsonp."\n";
+			$result.="\t".$this->prefix.$this->callback.'=\''.$json.'\';'."\n";
 			$result.='</script>'."\n";
 
 			return $result;

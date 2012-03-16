@@ -16,6 +16,11 @@
 	class JsonPView extends JsonView
 	{
 		/**
+		 * Javascript valid function name pattern
+		 */
+		const CALLBACK_PATTERN		= '/^[\$A-Z_][0-9A-Z_\$]*$/i';
+
+		/**
 		 * @static
 		 * @return JsonPView
 		 */
@@ -37,7 +42,19 @@
 		 */
 		public function setCallback($callback)
 		{
-			$this->callback = $callback;
+			$realCallbackName = null;
+
+			if(is_scalar($callback))
+				$realCallbackName = $callback;
+			elseif($callback instanceof Stringable)
+				$realCallbackName = $callback->toString();
+			else
+				throw new WrongArgumentException('undefined type of callback, gived "'.gettype($callback).'"');
+
+			if(!preg_match(static::CALLBACK_PATTERN, $realCallbackName))
+				throw new WrongArgumentException('invalid function name, you should set valid javascript function name! gived "'.$realCallbackName.'"');
+
+			$this->callback = $realCallbackName;
 
 			return $this;
 		}
@@ -48,23 +65,11 @@
 		 */
 		public function toString(/* Model */ $model = null)
 		{
-			$callback = null;
-
-			if(is_scalar($this->callback))
-				$callback = $this->callback;
-			elseif($this->callback instanceof Stringable)
-				$callback = $this->callback->toString();
-			else
-				throw new WrongArgumentException('undefined type of callback, gived "'.gettype($this->callback).'"');
-
-			Assert::isNotEmpty($callback, 'callback can not be empty!');
-
-			if(!preg_match('/^[\$A-Z_][0-9A-Z_\$]*$/i', $callback))
-				throw new WrongArgumentException('invalid function name, you should set valid javascript function name! gived "'.$callback.'"');
+			Assert::isNotEmpty($this->callback, 'callback can not be empty!');
 
 			$json = parent::toString($model);
 
-			return $callback.'('.$json.');';
+			return $this->callback.'('.$json.');';
 		}
 
 	}

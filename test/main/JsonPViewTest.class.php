@@ -16,53 +16,47 @@
 
 		public function testMain()
 		{
-			$this->execCallback('myCallback');
+			$model = Model::create()->set('array', $this->array);
+			$data = array('array' => $this->array);
+			$callback = 'myFunc';
+
+			//setup
+			$view = JsonPView::create();
 
 			try{
-				$this->execCallback(''); // empty js callback function name
+				// empty js callback function name
+				$view->toString($model);
 
 				$this->fail('empty callback javascript function name expected!');
 			} catch(WrongArgumentException $e) {}
 
 			try{
-				$this->execCallback('34_callback'); // invalid javascript function name
+				$view->setCallback('34_callback'); // invalid javascript function name
 
 				$this->fail('invalid javascript function name expected!');
 			} catch(WrongArgumentException $e) {}
 
+			$view->setCallback($callback);
+
+			$this->assertEquals($this->makeString($callback, $data), $view->toString($model) );
+
+			$simpleStringableObject = SimpleStringableObject::create()->setString($callback);
+
+			$view->setCallback($simpleStringableObject);
+
+			$this->assertEquals($this->makeString($callback, $data), $view->toString($model) );
 		}
 
-		protected function execCallback($callback)
+		/**
+		 * @param $callback
+		 * @param $data
+		 * @return string
+		 */
+		protected function makeString($callback, $data)
 		{
-			Assert::isScalar($callback);
-
-			$model = Model::create()->set('array', $this->array);
-			$data = array('array' => $this->array);
-
-			//setup
-			$view = JsonPView::create()->setCallback($callback);
-
-			//execution and check
-			$this->assertEquals(
-				$callback.'('.json_encode(
+			return $callback.'('.json_encode(
 					$data
-				).');',
-				$view->toString($model)
-			);
-
-			//setup from stringable object
-			$view = JsonPView::create()->setCallback(
-				SimpleStringableObject::create()->setString($callback)
-			);
-
-			//execution and check
-			$this->assertEquals(
-				$callback.'('.json_encode(
-					$data
-				).');',
-				$view->toString($model)
-			);
-
+				).');';
 		}
 
 	}
