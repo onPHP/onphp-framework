@@ -119,7 +119,7 @@
 			$res = $this->query($query);
 			/* @var $res PDOStatement */
 			
-			$array = $res->fetchAll(PDO::FETCH_COLUMN);
+			$array = $res->fetchAll(PDO::FETCH_ASSOC);
 			if (count($array) > 1)
 				throw new TooManyRowsException(
 					'query returned too many rows (we need only one)'
@@ -135,9 +135,10 @@
 			$res = $this->query($query);
 			/* @var $res PDOStatement */
 			
-			if ($res->rowCount()) {
+			$resArray = $res->fetchAll(PDO::FETCH_ASSOC);
+			if ($resArray) {
 				$array = array();
-				foreach ($res->fetchAll(PDO::FETCH_COLUMN) as $row) {
+				foreach ($resArray as $row) {
 					$array[] = reset($row);
 				}
 				
