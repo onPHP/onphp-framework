@@ -19,6 +19,8 @@
 	**/
 	final class SQLitePDO extends Sequenceless
 	{
+		
+		const ERROR_CONSTRAINT = 19;
 		/**
 		 * @var PDO 
 		 */
@@ -90,7 +92,7 @@
 			} catch (PDOException $e) {
 				$code = $e->getCode();
 				
-				if ($code == 19)
+				if ($code == self::ERROR_CONSTRAINT)
 					$e = 'DuplicateObjectException';
 				else
 					$e = 'DatabaseException';
