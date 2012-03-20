@@ -320,7 +320,7 @@ abstract class NoSqlDAO extends StorableDAO {
 							if( is_null($val) ) {
 								$val = 'null';
 							} elseif(is_numeric($val)) {
-								$val = $val;
+								//$val = $val;
 							} else {
 								$val = '"'.$val.'"';
 							}
