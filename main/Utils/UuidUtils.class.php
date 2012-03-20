@@ -42,10 +42,13 @@
 		 * @return string
 		 * @throws UnsupportedExtensionException
 		 */
-		public static function make($type=UUID_TYPE_TIME)
+		public static function make($type=null)
 		{
 			if(!static::isExtensionLoaded() )
 				throw new UnsupportedExtensionException('uuid is unloaded, but it needed!');
+
+			if($type===null)
+				$type=UUID_TYPE_TIME;
 
 			return uuid_create($type);
 		}
