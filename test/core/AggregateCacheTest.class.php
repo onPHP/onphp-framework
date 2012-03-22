@@ -1,7 +1,6 @@
 <?php
-	/* $Id$ */
-	
-	final class CacheTest extends TestCase
+
+	final class AggregateCacheTest extends TestCase
 	{
 		const QUERIES = 100;
 
@@ -17,7 +16,19 @@
 					setClassLevel('one', 0xb000)
 			);
 		}
-
+/*
+ * temporary disabled. fix base cache peers first
+		public function testCompositeAggregateCache()
+		{
+			return $this->doTestMemcached(
+				AggregateCache::create()->
+					addPeer('low', Memcached::create(), AggregateCache::LEVEL_LOW)->
+					addPeer('normal', RuntimeMemory::create())->
+					addPeer('high', RubberFileSystem::create(), AggregateCache::LEVEL_HIGH)->
+					setClassLevel('one', 0xb000)
+			);
+		}
+*/
 		public function testSimpleAggregateCache()
 		{
 			return $this->doTestMemcached(
@@ -41,7 +52,19 @@
 					addPeer('third', PeclMemcached::create(), 13)
 			);
 		}
-		
+/*
+ * temporary disabled. fix base cache peers first
+		public function testCompositeCyclicAggregateCache()
+		{
+			$this->doTestMemcached(
+				CyclicAggregateCache::create()->
+					setSummaryWeight(42)->
+					addPeer('first', Memcached::create(), 25)->
+					addPeer('second', RuntimeMemory::create(), 1)->
+					addPeer('third', RubberFileSystem::create(), 13)
+			);
+		}
+*/
 		public function testIntegerChanges()
 		{
 			Cache::me()->set('test_integer', 1);
@@ -78,8 +101,7 @@
 		private function doTestMemcached(SelectivePeer $cache)
 		{
 			Cache::setPeer($cache);
-			
-			
+
 			if (!Cache::me()->isAlive()) {
 				return $this->markTestSkipped('memcached not available');
 			}
