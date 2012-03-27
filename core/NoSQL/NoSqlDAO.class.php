@@ -80,7 +80,7 @@ abstract class NoSqlDAO extends StorableDAO {
 		$stack = $this->getLink()->getAllObjects( $this->getTable() );
 		if( !empty($stack) ) {
 			foreach( $stack as $row ) {
-				$object = $this->getById( $row['id'] );
+                $object = $this->makeNoSqlObject($row);
 				$list[ $object->getId() ] = $object;
 			}
 		}

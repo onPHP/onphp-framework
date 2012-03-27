@@ -190,10 +190,12 @@ class CouchDB extends NoSQL {
 		Assert::isString($dbname);
 		Assert::isNotEmpty($dbname);
 
-		$response = $this->exec( $this->getUrl($dbname, '_all_docs'), self::GET );
+		$response = $this->exec( $this->getUrl($dbname, '_all_docs', array('include_docs' => 'true')), self::GET );
 		$list = array();
 		if( isset($response['total_rows']) && isset($response['rows']) ) {
-			$list = $response['rows'];
+            foreach ($response['rows'] as $row) {
+                $list[] = $row['doc'];
+            }
 		}
 
 		return $list;
@@ -259,7 +261,7 @@ class CouchDB extends NoSQL {
 			Assert::isNotEmptyArray($params);
 		}
 
-		//die( $this->getUrl($dbname, $view, $params) );
+        //die( $this->getUrl($dbname, $view, $params) );
 		$response = $this->exec( $this->getUrl($dbname, $view, $params), self::GET );
 		$list = array();
 		if( isset($response['total_rows']) && isset($response['rows']) ) {
