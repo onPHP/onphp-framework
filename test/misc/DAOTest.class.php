@@ -324,21 +324,15 @@
 
 			$testUuidObj = TestUuidObject::create()->setName('test-uuid-name');
 			TestUuidObject::dao()->add($testUuidObj);
-			$uuid1 = $testUuidObj->getId();
 
-			$uuid2 = UuidUtils::make();
+			$uuid = UuidUtils::make();
 			$testUuidObj2 = TestUuidObject::create()->setId(
-				$uuid2
+				$uuid
 			)->setName('test-uuid-name2');
 			TestUuidObject::dao()->import($testUuidObj2);
 
-			if($assertions)
-			{
-				$this->uuidTest();
-			}
-
 		}
-		
+
 		public function criteriaResult()
 		{
 			$queryResult = Criteria::create(TestCity::dao())->getResult();
@@ -515,6 +509,24 @@
 				}
 			}
 			
+			$this->drop();
+		}
+
+		public function testUuid()
+		{
+			$this->create();
+
+			foreach (DBTestPool::me()->getPool() as $connector => $db) {
+				DBPool::me()->setDefault($db);
+				$this->fill();
+
+				$this->uuidTest();
+
+				Cache::me()->clean();
+			}
+
+			$this->deletedCount();
+
 			$this->drop();
 		}
 		

@@ -83,7 +83,20 @@
 			
 			return parent::importValue($value);
 		}
-		
+
+		/**
+		 * Here we check a identifier
+		 * @param $id
+		 * @return bool
+		 */
+		protected function checkIdentifier($id)
+		{
+			return (
+				($this->scalar && Assert::checkScalar($id))
+				|| (!$this->scalar && Assert::checkInteger($id))
+			);
+		}
+
 		public function import($scope)
 		{
 			if (!$this->className)
@@ -106,8 +119,7 @@
 					continue;
 
 				if (
-					($this->scalar && !Assert::checkScalar($id))
-					|| (!$this->scalar && !Assert::checkInteger($id))
+					!$this->checkIdentifier($id)
 				)
 					return false;
 				

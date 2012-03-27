@@ -14,6 +14,16 @@
 	**/
 	class PrimitiveUuidIdentifierList extends PrimitiveIdentifierList
 	{
+		/**
+		 * @param $id
+		 * @return bool
+		 */
+		protected function checkIdentifier($id)
+		{
+			return (
+				Assert::checkUuid($id)
+			);
+		}
 
 		protected function checkNumber($number)
 		{
