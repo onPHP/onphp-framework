@@ -304,30 +304,31 @@ abstract class NoSqlDAO extends StorableDAO {
 			case 'CouchDB': {
 				// собираем правильное имя вьюшки
 				$view = self::COUCHDB_VIEW_PREFIX.$view;
-				// собираем ключи
-				$key = '';
+				// приводим к массиву даже если ключ один
 				if( !is_array($keys) ) {
-					$key = $keys;
-				} else {
-					// проверяем что в массиве ключей есть хоть один
-					if( count($keys)<1 ) {
-						throw new WrongArgumentException( '$keys must be an array with one or more values' );
-					}
-					if( count($keys)==1 ) {
-						$key = array_shift($keys);
-					} else {
-						foreach($keys as &$val) {
-							if( is_null($val) ) {
-								$val = 'null';
-							} elseif(is_numeric($val)) {
-								//$val = $val;
-							} else {
-								$val = '"'.$val.'"';
-							}
-						}
-						$key = '['.implode(',', $keys).']';
-					}
+                    $keys = array($keys);
 				}
+                // проверяем что в массиве ключей есть хоть один
+                if( count($keys)<1 ) {
+                    throw new WrongArgumentException( '$keys must be an array with one or more values' );
+                }
+                // проверяем типы
+                foreach($keys as &$val) {
+                    if( is_null($val) ) {
+                        $val = 'null';
+                    } elseif(is_numeric($val)) {
+                        //$val = $val;
+                    } else {
+                        $val = '"'.$val.'"';
+                    }
+                }
+                // сериализуем
+                if( count($keys)==1 ) {
+                    $key = array_shift($keys);
+                } else {
+                    $key = '['.implode(',', $keys).']';
+                }
+
 				$params['key'] = $key;
 			} break;
 			default: {
