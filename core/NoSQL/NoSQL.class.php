@@ -48,6 +48,7 @@ abstract class NoSQL {
 	 * @return NoSQL
 	 */
 	public static function spawn( $connector, $user, $pass, $host, $port=null ) {
+        Assert::classExists($connector);
 		$db = new $connector;
 
 		$db->
