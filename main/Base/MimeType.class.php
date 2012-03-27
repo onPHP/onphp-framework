@@ -790,43 +790,35 @@
 		/**
 		 * Return MimeType object by mime-type string
 		 * @param string $value
-		 * @throws ObjectNotFoundException
+		 * @throws MissingElementException
 		 * @return MimeType
 		 */
 		public static function getByMimeType($value)
 		{
 			$list = static::getNameList();
-			foreach ( $list as $key => $mimeType )
-			{
-				if( mb_strtolower($mimeType) === mb_strtolower($value) )
-					return new self($key);
 
-			}
+			$id = array_search(mb_strtolower($value), $list);
+			if ($id === false)
+				throw new MissingElementException('Can not find similar mime type "'.$value.'" !');
 
-			throw new ObjectNotFoundException(
-				'Can not find similar mime type "'.$value.'" !'
-			);
+			return new self($id);
 		}
 
 		/**
 		 * Return MimeType object by extension without [dot] prefix
 		 * @param string $value
-		 * @throws ObjectNotFoundException
+		 * @throws MissingElementException
 		 * @return MimeType
 		 */
 		public static function getByExtension($value)
 		{
 			$list = static::getExtensionList();
-			foreach ( $list as $key => $extension )
-			{
-				if( mb_strtolower( $extension ) === mb_strtolower($value) )
-					return new self($key);
 
-			}
+			$id = array_search(mb_strtolower($value), $list);
+			if ($id === false)
+				throw new MissingElementException('Can not find similar extension "'.$value.'" !');
 
-			throw new ObjectNotFoundException(
-				'Can not find similar extension "'.$value.'" !'
-			);
+			return new self($id);
 		}
 
 
@@ -841,17 +833,17 @@
 
 		/**
 		 * Return extension without [dot] prefix.
-		 * @throws ObjectNotFoundException
+		 * @throws MissingElementException
 		 * @return string
 		 */
 		public function getExtension()
 		{
 			if(
-				isset( $this->extensions[$this->id] )
+				isset( static::$extensions[$this->id] )
 			)
-				return $this->extensions[$this->id];
+				return static::$extensions[$this->id];
 
-			throw new ObjectNotFoundException(
+			throw new MissingElementException(
 				'Can not find "'.$this->id.'" in extensions map!'
 			);
 		}

@@ -33,7 +33,7 @@
 			return new $className($id);
 		}
 
-		final public function __construct($id)
+		public function __construct($id)
 		{
 			$this->setId($id);
 		}
@@ -51,9 +51,18 @@
 		}
 		//@}
 
+		/**
+		 * Array of object
+		 * @static
+		 * @return array
+		 */
 		public static function getList()
 		{
-			return static::$names;
+			$list = array();
+			foreach (array_keys(static::$names) as $id)
+				$list[] = static::create($id);
+
+			return $list;
 		}
 
 		/**
@@ -71,15 +80,16 @@
 			return $this->id;
 		}
 
+
+		/**
+		 * Alias for getList()
+		 * @static
+		 * @deprecated
+		 * @return array
+		 */
 		public static function getObjectList()
 		{
-			$list = array();
-			$names = static::$names;
-
-			foreach (array_keys($names) as $id)
-				$list[] = static::create($id);
-
-			return $list;
+			return static::getList();
 		}
 
 		public function toString()

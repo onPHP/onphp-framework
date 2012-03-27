@@ -505,13 +505,11 @@
 						
 						if ($this->checkEnumerationRefIntegrity)
 						{
-							if($object instanceof Enumeration)
+							if(
+								$object instanceof Enumeration
+								|| $object instanceof Enum
+							)
 								$this->checkEnumerationReferentialIntegrity(
-									$object,
-									$class->getTableName()
-								);
-							elseif($object instanceof Enum)
-								$this->checkEnumReferentialIntegrity(
 									$object,
 									$class->getTableName()
 								);
@@ -1334,9 +1332,17 @@
 		}
 		
 		private function checkEnumerationReferentialIntegrity(
-			Enumeration $enumeration, $tableName
+			$enumeration, $tableName
 		)
 		{
+			Assert::isTrue(
+				(
+					$enumeration instanceof Enumeration
+					|| $enumeration instanceof Enum
+				),
+				'argument enumeation must be instacne of Enumeration or Enum! gived, "'.gettype($enumeration).'"'
+			);
+
 			$updateQueries = null;
 			
 			$db = DBPool::me()->getLink();
@@ -1344,8 +1350,11 @@
 			$class = get_class($enumeration);
 			
 			$ids = array();
-			
-			$list = $enumeration->getObjectList();
+
+			if ($enumeration instanceof Enumeration)
+				$list = $enumeration->getList();
+			elseif ($enumeration instanceof Enum)
+				$list = ClassUtils::callStaticMethod($class.'::getList');
 			
 			foreach ($list as $enumerationObject)
 				$ids[$enumerationObject->getId()] = $enumerationObject->getName();
@@ -1381,57 +1390,6 @@
 			
 			echo $updateQueries;
 			
-			return $this;
-		}
-
-		private function checkEnumReferentialIntegrity(
-			Enum $enum, $tableName
-		)
-		{
-			$updateQueries = null;
-
-			$db = DBPool::me()->getLink();
-
-			$class = get_class($enum);
-
-			$ids = array();
-
-			$list = ClassUtils::callStaticMethod($class.'::'.'getObjectList');
-
-			foreach ($list as $enumerationObject)
-				$ids[$enumerationObject->getId()] = $enumerationObject->getName();
-
-			$rows =
-				$db->querySet(
-					OSQL::select()->from($tableName)->
-					multiGet('id', 'name')
-				);
-
-			echo "\n";
-
-			foreach ($rows as $row) {
-				if (!isset($ids[$row['id']]))
-					echo "Class '{$class}', strange id: {$row['id']} found. \n";
-				else {
-					if ($ids[$row['id']] != $row['name']) {
-						echo "Class '{$class}',id: {$row['id']} sync names. \n";
-
-						$updateQueries .=
-							OSQL::update($tableName)->
-							set('name', $ids[$row['id']])->
-							where(Expression::eq('id', $row['id']))->
-							toDialectString($db->getDialect()) . ";\n";
-					}
-
-					unset($ids[$row['id']]);
-				}
-			}
-
-			foreach ($ids as $id => $name)
-				echo "Class '{$class}', id: {$id} not present in database. \n";
-
-			echo $updateQueries;
-
 			return $this;
 		}
 	}
