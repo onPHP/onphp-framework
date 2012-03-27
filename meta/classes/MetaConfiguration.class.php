@@ -190,6 +190,9 @@
 								) || (
 									$property->getType()->getClass()->getPattern()
 										instanceof SpookedEnumerationPattern
+								) || (
+									$property->getType()->getClass()->getPattern()
+										instanceof SpookedEnumPattern
 								)
 							) && (
 								$property->getFetchStrategy()
@@ -307,6 +310,8 @@
 				if (
 					$class->getTypeId() == MetaClassType::CLASS_ABSTRACT
 					|| $class->getPattern() instanceof EnumerationClassPattern
+					|| $class->getPattern() instanceof EnumClassPattern
+
 				)
 					continue;
 				
@@ -452,6 +457,7 @@
 					!(
 						$class->getPattern() instanceof SpookedClassPattern
 						|| $class->getPattern() instanceof SpookedEnumerationPattern
+						|| $class->getPattern() instanceof SpookedEnumPattern
 						|| $class->getPattern() instanceof InternalClassPattern
 					) && (
 						class_exists($class->getName(), true)
@@ -485,7 +491,10 @@
 						);
 					
 					// special handling for Enumeration instances
-					if ($class->getPattern() instanceof EnumerationClassPattern) {
+					if (
+						$class->getPattern() instanceof EnumerationClassPattern
+						|| $class->getPattern() instanceof EnumClassPattern
+					) {
 						$object = new $name(call_user_func(array($name, 'getAnyId')));
 						
 						Assert::isTrue(
@@ -495,10 +504,19 @@
 						$out->info(', ');
 						
 						if ($this->checkEnumerationRefIntegrity)
-							$this->checkEnumerationReferentialIntegrity(
-								$object,
-								$class->getTableName()
-							);
+						{
+							if($object instanceof Enumeration)
+								$this->checkEnumerationReferentialIntegrity(
+									$object,
+									$class->getTableName()
+								);
+							elseif($object instanceof Enum)
+								$this->checkEnumReferentialIntegrity(
+									$object,
+									$class->getTableName()
+								);
+						}
+
 						
 						continue;
 					}
@@ -864,7 +882,8 @@
 				
 				Assert::isTrue(
 					($class->getPattern() instanceof SpookedClassPattern
-					|| $class->getPattern() instanceof SpookedEnumerationPattern),
+					|| $class->getPattern() instanceof SpookedEnumerationPattern
+					|| $class->getPattern() instanceof SpookedEnumPattern),
 					'spooked classes must use spooked patterns only: '
 					.$class->getName()
 				);
@@ -1085,6 +1104,8 @@
 						$class->getPattern() instanceof SpookedClassPattern
 					) || (
 						$class->getPattern() instanceof SpookedEnumerationPattern
+					) || (
+						$class->getPattern() instanceof SpookedEnumPattern
 					)
 				) {
 					$class->setType(
@@ -1360,6 +1381,57 @@
 			
 			echo $updateQueries;
 			
+			return $this;
+		}
+
+		private function checkEnumReferentialIntegrity(
+			Enum $enum, $tableName
+		)
+		{
+			$updateQueries = null;
+
+			$db = DBPool::me()->getLink();
+
+			$class = get_class($enum);
+
+			$ids = array();
+
+			$list = ClassUtils::callStaticMethod($class.'::'.'getObjectList');
+
+			foreach ($list as $enumerationObject)
+				$ids[$enumerationObject->getId()] = $enumerationObject->getName();
+
+			$rows =
+				$db->querySet(
+					OSQL::select()->from($tableName)->
+					multiGet('id', 'name')
+				);
+
+			echo "\n";
+
+			foreach ($rows as $row) {
+				if (!isset($ids[$row['id']]))
+					echo "Class '{$class}', strange id: {$row['id']} found. \n";
+				else {
+					if ($ids[$row['id']] != $row['name']) {
+						echo "Class '{$class}',id: {$row['id']} sync names. \n";
+
+						$updateQueries .=
+							OSQL::update($tableName)->
+							set('name', $ids[$row['id']])->
+							where(Expression::eq('id', $row['id']))->
+							toDialectString($db->getDialect()) . ";\n";
+					}
+
+					unset($ids[$row['id']]);
+				}
+			}
+
+			foreach ($ids as $id => $name)
+				echo "Class '{$class}', id: {$id} not present in database. \n";
+
+			echo $updateQueries;
+
 			return $this;
 		}
 	}

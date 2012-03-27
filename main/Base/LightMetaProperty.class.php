@@ -113,6 +113,7 @@
 					|| ($type == 'identifier') // obsoleted
 					|| ($type == 'integerIdentifier')
 					|| ($type == 'enumeration')
+					|| ($type == 'enum')
 				) {
 					$property->min = self::$limits[$size][0];
 					$property->max = self::$limits[$size][1];
@@ -405,7 +406,10 @@
 				// BOVM: prevents segfault on >=php-5.2.5
 				Assert::classExists($this->className);
 				
-				if (!is_subclass_of($this->className, 'Enumeration')) {
+				if (
+					!is_subclass_of($this->className, 'Enumeration') ||
+					!is_subclass_of($this->className, 'Enum')
+				) {
 					$remoteDao = call_user_func(array($this->className, 'dao'));
 					
 					$joinPrefix = $remoteDao->getJoinPrefix(
@@ -507,7 +511,13 @@
 		public function isFormless()
 		{
 			// NOTE: enum here formless types
-			return ($this->type == 'enumeration');
+			return in_array(
+				$this->type,
+				array(
+					'enumeration',
+					'enum',
+				)
+			);
 		}
 	}
 ?>
