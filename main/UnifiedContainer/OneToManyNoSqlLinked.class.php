@@ -30,10 +30,16 @@
 				);
 			}
 
-			/** @var $object NoSqlObject */
-			foreach($this->list as &$object) {
-				$object->dao->drop( $object );
+			$idList = array();
+			if( current($this->list) instanceof NoSqlObject ) {
+				/** @var $object NoSqlObject */
+				foreach($this->list as &$object) {
+					$idList[] = $object->getId();
+				}
+			} else {
+				$idList = $this->list;
 			}
+			$this->dao->dropByIds($idList);
 
 			$this->clean();
 
@@ -54,10 +60,12 @@
 
 			/** @var $object NoSqlObject */
 			foreach( $this->list as &$object ) {
-				if( $object->getId() ) {
-					$object->dao->save( $object );
-				} else {
-					$object->dao->add( $object );
+				if( $object instanceof NoSqlObject ) {
+					if( $object->getId() ) {
+						$object->dao->save( $object );
+					} else {
+						$object->dao->add( $object );
+					}
 				}
 			}
 
@@ -69,18 +77,13 @@
 		 * @return array
 		 */
 		protected function fetchList() {
-			$list = $this->dao->getListByView( $this->getViewName(), $this->parent->getId(), $this->worker->getCriteria() );
 			if( $this->lazy ) {
-				$newList = array();
-				foreach( $list as $obj ) {
-					$newList[] = $obj->getId();
-				}
+				$this->list = $this->dao->getIdListByField( $this->getParentIdField(), $this->parent->getId(), $this->worker->getCriteria() );
 			} else {
-				$this->list = $list;
+				$this->list = $this->dao->getListByField( $this->getParentIdField(), $this->parent->getId(), $this->worker->getCriteria() );
 			}
 
 			return $this;
 		}
 
-		protected abstract function getViewName();
 	}

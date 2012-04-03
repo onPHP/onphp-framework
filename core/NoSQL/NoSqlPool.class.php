@@ -102,6 +102,7 @@ final class NoSqlPool extends Singleton implements Instantiatable
 	 */
 	public function getLink($name = null)
 	{
+		/** @var $link NoSQL */
 		$link = null;
 
 		// single-NoSQL project
@@ -118,6 +119,9 @@ final class NoSqlPool extends Singleton implements Instantiatable
 		}
 		// check if found and return
 		if ($link) {
+			if (!$link->isConnected())
+				$link->connect();
+
 			return $link;
 		}
 

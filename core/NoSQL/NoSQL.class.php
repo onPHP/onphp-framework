@@ -15,93 +15,62 @@
  *
  * @ingroup NoSQL
 **/
-abstract class NoSQL {
+abstract class NoSQL extends DB {
+
+	protected $link		= null;
 
 	// credentials
 	protected $username	= null;
 	protected $password	= null;
 	protected $hostname	= null;
 	protected $port		= null;
+	protected $basename	= null;
+	protected $encoding	= null;
 
 	// queries
-	abstract public function select();
-	abstract public function insert();
-	abstract public function update();
-	abstract public function delete();
+	abstract public function selectOne($table, $key);
+	abstract public function selectList($table, array $keys);
+	abstract public function insert($table, array $row);
+	abstract public function update($table, array $row);
+	abstract public function deleteOne($table, $key);
+	abstract public function deleteList($table, array $keys);
 
 	// full table queries
-	abstract public function getAllObjects();
-	abstract public function getTotalCount();
+	abstract public function getPlainList($table);
+	abstract public function getTotalCount($table);
 
 	// custom queries
-	abstract public function getCustomList();
-	abstract public function getCustomData();
+	abstract public function getListByField($table, $field, $value, Criteria $criteria = null);
+	abstract public function getIdListByField($table, $field, $value, Criteria $criteria = null);
+	abstract public function find($table, $query);
+//	abstract public function count($table, $query);
 
-	/**
-	 * Shortcut
-	 * @static
-	 * @param string $connector
-	 * @param string $user
-	 * @param string $pass
-	 * @param string $host
-	 * @param string $port
-	 * @return NoSQL
-	 */
-	public static function spawn( $connector, $user, $pass, $host, $port=null ) {
-        Assert::classExists($connector);
-		$db = new $connector;
-
-		$db->
-			setUsername($user)->
-			setPassword($pass)->
-			setHostname($host);
-		if( !empty($port) ) {
-			$db->setPort($port);
-		}
-
-		return $db;
+	public function getTableInfo($table) {
+		throw new UnsupportedMethodException('Can not execute getTableInfo in NoSQL');
 	}
 
-	/**
-	 * @param string $name
-	 * @return NoSQL
-	 */
-	public function setUsername($name) {
-		$this->username = $name;
-
-		return $this;
+	public function queryRaw($queryString) {
+		throw new UnsupportedMethodException('Can not execute queryRaw in NoSQL');
 	}
 
-	/**
-	 * @param string $password
-	 * @return NoSQL
-	 */
-	public function setPassword($password) {
-		$this->password = $password;
-
-		return $this;
+	public function queryRow(Query $query) {
+		throw new UnsupportedMethodException('Can not execute queryRow in NoSQL');
 	}
 
-	/**
-	 * @param string $host
-	 * @return NoSQL
-	 */
-	public function setHostname($host) {
-		$port = null;
-
-		if (strpos($host, ':') !== false)
-			list($host, $port) = explode(':', $host, 2);
-
-		$this->hostname = $host;
-		$this->port = $port;
-
-		return $this;
+	public function querySet(Query $query) {
+		throw new UnsupportedMethodException('Can not execute querySet in NoSQL');
 	}
 
-	public function setPort($port) {
-		$this->port = $port;
+	public function queryColumn(Query $query) {
+		throw new UnsupportedMethodException('Can not execute queryColumn in NoSQL');
+	}
 
-		return $this;
+	public function queryCount(Query $query) {
+		throw new UnsupportedMethodException('Can not execute queryCount in NoSQL');
+	}
+
+	public function setDbEncoding() {
+		throw new UnsupportedMethodException('Can not set encoding in NoSQL');
 	}
 
 }

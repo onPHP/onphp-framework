@@ -91,24 +91,6 @@ public function getParentIdField()
 
 EOT;
 
-			if ($isNoSQL) {
-				$out .= <<<EOT
-
-protected function getViewPrefix()
-{
-	return '_design/data/_view';
-}
-
-protected function getViewName()
-{
-	return 'getBy{$class->getName()}Id';
-}
-
-EOT;
-			}
-
-
-
 			$out .= "}\n";
 			$out .= self::getHeel();
 

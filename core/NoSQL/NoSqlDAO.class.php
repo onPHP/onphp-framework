@@ -12,8 +12,6 @@
 
 abstract class NoSqlDAO extends StorableDAO {
 
-	const COUCHDB_VIEW_PREFIX = '_design/data/_view/';
-
 /// single object getters
 //@{
 	/**
@@ -23,23 +21,39 @@ abstract class NoSqlDAO extends StorableDAO {
 	 */
 	public function getById($id, $expires = Cache::EXPIRES_MEDIUM) {
 		$object = null;
-		if ($row = $this->getLink()->select( $this->getTable(), $id )) {
+		if ($row = $this->getLink()->selectOne( $this->getTable(), $id )) {
 			$object = $this->makeNoSqlObject($row);
+		} else {
+			throw new ObjectNotFoundException( 'Object with id '.$id.' does not exist' );
 		}
-
 		return $object;
 	}
 
 	public function getByLogic(LogicalObject $logic, $expires = Cache::DO_NOT_CACHE) {
-		throw new UnsupportedMethodException( 'Method "getByLogic" is not supported in NoSQL' );
+		if( !($logic instanceof NoSQLExpression) ) {
+			throw new WrongArgumentException( '$logic should be instance of NoSQLExpression' );
+		}
+		// quering for different NoSQL types
+		$rows = array();
+		if( $this->getLink() instanceof MongoBase ) {
+			$rows = $this->getLink()->find($this->getTable(), $logic->toMongoQuery());
+		} else {
+			throw new UnimplementedFeatureException( 'Method "getByLogic" is not implemented now for your NoSQL DB' );
+		}
+		// processing list
+		$list = array();
+		foreach($rows as $row) {
+			$list[] = $this->makeNoSqlObject($row);
+		}
+		return $list;
 	}
 
 	public function getByQuery(SelectQuery $query, $expires = Cache::DO_NOT_CACHE) {
-		throw new UnsupportedMethodException( 'Method "getByQuery" is not supported in NoSQL' );
+		throw new UnsupportedMethodException( 'Can not execute "getByQuery" in NoSQL' );
 	}
 
 	public function getCustom(SelectQuery $query, $expires = Cache::DO_NOT_CACHE) {
-		throw new UnsupportedMethodException( 'Method "getCustom" is not supported in NoSQL' );
+		throw new UnsupportedMethodException( 'Can not execute "getCustom" in NoSQL' );
 	}
 //@}
 
@@ -52,23 +66,19 @@ abstract class NoSqlDAO extends StorableDAO {
 	 */
 	public function getListByIds(array $ids, $expires = Cache::EXPIRES_MEDIUM) {
 		$list = array();
-		foreach( $ids as $id ) {
-			try {
-				$obj = $this->getById( $id );
-				$list[ $id ] = $obj;
-			} catch(Exception $e) {
-				// it's ok
-			}
+		$rows = $this->getLink()->selectList( $this->getTable(), $ids );
+		foreach($rows as $row) {
+			$list[] = $this->makeNoSqlObject($row);
 		}
 		return $list;
 	}
 
 	public function getListByQuery(SelectQuery $query, $expires = Cache::DO_NOT_CACHE) {
-		throw new UnsupportedMethodException( 'Method "getCustom" is not supported in NoSQL' );
+		throw new UnsupportedMethodException( 'Can not execute "getListByQuery" in NoSQL' );
 	}
 
 	public function getListByLogic(LogicalObject $logic, $expires = Cache::DO_NOT_CACHE) {
-		throw new UnsupportedMethodException( 'Method "getCustom" is not supported in NoSQL' );
+		throw new UnimplementedFeatureException( 'Method "getListByLogic" is not implemented now' );
 	}
 
 	/**
@@ -77,12 +87,10 @@ abstract class NoSqlDAO extends StorableDAO {
 	 */
 	public function getPlainList($expires = Cache::EXPIRES_MEDIUM) {
 		$list = array();
-		$stack = $this->getLink()->getAllObjects( $this->getTable() );
-		if( !empty($stack) ) {
-			foreach( $stack as $row ) {
-                $object = $this->makeNoSqlObject($row);
-				$list[ $object->getId() ] = $object;
-			}
+		$stack = $this->getLink()->getPlainList( $this->getTable() );
+		foreach( $stack as $row ) {
+			$object = $this->makeNoSqlObject($row);
+			$list[ $object->getId() ] = $object;
 		}
 
 		return $list;
@@ -101,18 +109,18 @@ abstract class NoSqlDAO extends StorableDAO {
 /// custom list getters
 //@{
 	public function getCustomList(SelectQuery $query, $expires = Cache::DO_NOT_CACHE) {
-		throw new UnsupportedMethodException( 'Method "getCustomList" is not supported in NoSQL' );
+		throw new UnsupportedMethodException( 'Can not execute "getCustomList" in NoSQL' );
 	}
 
 	public function getCustomRowList(SelectQuery $query, $expires = Cache::DO_NOT_CACHE) {
-		throw new UnsupportedMethodException( 'Method "getCustomRowList" is not supported in NoSQL' );
+		throw new UnsupportedMethodException( 'Can not execute "getCustomRowList" in NoSQL' );
 	}
 //@}
 
 /// query result getters
 //@{
 	public function getQueryResult(SelectQuery $query, $expires = Cache::DO_NOT_CACHE) {
-		throw new UnsupportedMethodException( 'Method "getQueryResult" is not supported in NoSQL' );
+		throw new UnsupportedMethodException( 'Can not execute "getQueryResult" in NoSQL' );
 	}
 //@}
 
@@ -131,24 +139,17 @@ abstract class NoSqlDAO extends StorableDAO {
 //@{
 	public function drop(Identifiable $object) {
 		$this->assertNoSqlObject( $object );
-
-		$link = NoSqlPool::getByDao( $this );
-		// delete
-		return
-			$link
-				->delete(
-					$this->getTable(),
-					$object->getId(),
-					$object->getRev()
-				);
+		return $this->dropById( $object->getId() );
 	}
 
 	public function dropById($id) {
-		return parent::dropById($id);
+		$link = NoSqlPool::getByDao( $this );
+		return $link->deleteOne($this->getTable(), $id);
 	}
 
 	public function dropByIds(array $ids) {
-		return parent::dropByIds($ids);
+		$link = NoSqlPool::getByDao( $this );
+		return $link->deleteList($this->getTable(), $ids);
 	}
 //@}
 
@@ -192,10 +193,7 @@ abstract class NoSqlDAO extends StorableDAO {
 				);
 
 		$object->setId( $entity['id'] );
-		if( $link instanceof CouchDB ) {
-			$object->setRev($entity['_rev']);
-		}
-		// проверка добалвения
+		// проверка добавления
 		//$object = $this->getById( $entity['id'] );
 
 		return $object;
@@ -205,19 +203,14 @@ abstract class NoSqlDAO extends StorableDAO {
 		$this->assertNoSqlObject( $object );
 
 		$link = NoSqlPool::getByDao( $this );
-		// insert
+		// save
 		$entity =
 			$link
 				->update(
 					$this->getTable(),
-					$object->toArray(),
-					$object->getRev()
+					$object->toArray()
 				);
-
 		$object->setId( $entity['id'] );
-		if( $link instanceof CouchDB ) {
-			$object->setRev($entity['_rev']);
-		}
 
 		return $object;
 	}
@@ -233,10 +226,9 @@ abstract class NoSqlDAO extends StorableDAO {
 					$this->getTable(),
 					$object->toArray()
 				);
-
-		if( $link instanceof CouchDB ) {
-			$object->setRev($entity['_rev']);
-		}
+		$object->setId( $entity['id'] );
+		// проверка сохранения
+		//$object = $this->getById( $entity['id'] );
 
 		return $object;
 	}
@@ -247,7 +239,7 @@ abstract class NoSqlDAO extends StorableDAO {
 		$this->checkObjectType($object);
 
 		try {
-			$old = Cache::worker($this)->getById($object->getId());
+			$old = $this->getById($object->getId());
 		} catch( Exception $e ) {
 			return $this->save($object);
 		}
@@ -294,81 +286,50 @@ abstract class NoSqlDAO extends StorableDAO {
 //@}
 
 
-/// object's list getters
+/// object's list getters by foreign_key
 //@{
-	public function getListByView($view, $keys, $criteria=null) {
-		$params = array();
-
-		// parse key
-		switch( get_class($this->getLink()) ) {
-			case 'CouchDB': {
-				// собираем правильное имя вьюшки
-				$view = self::COUCHDB_VIEW_PREFIX.$view;
-				// приводим к массиву даже если ключ один
-				if( !is_array($keys) ) {
-                    $keys = array($keys);
-				}
-                // проверяем что в массиве ключей есть хоть один
-                if( count($keys)<1 ) {
-                    throw new WrongArgumentException( '$keys must be an array with one or more values' );
-                }
-                // проверяем типы
-                foreach($keys as &$val) {
-                    if( is_null($val) ) {
-                        $val = 'null';
-                    } elseif(is_numeric($val)) {
-                        //$val = $val;
-                    } else {
-                        $val = '"'.$val.'"';
-                    }
-                }
-                // сериализуем
-                if( count($keys)==1 ) {
-                    $key = array_shift($keys);
-                } else {
-                    $key = '['.implode(',', $keys).']';
-                }
-
-				$params['key'] = $key;
-			} break;
-			default: {
-				throw new WrongStateException( 'Do not know how to work with link type '.get_class($this->getLink()) );
-			} break;
+	public function getOneByField($field, $value, Criteria $criteria = null) {
+		if( is_null($criteria) ) {
+			$criteria = Criteria::create();
 		}
-
-		// parse criteria
-		if( !is_null($criteria) && ($criteria instanceof Criteria) ) {
-			switch( get_class($this->getLink()) ) {
-				case 'CouchDB': {
-					if( $criteria->getOffset() ) {
-						$params['skip'] = $criteria->getOffset();
-					}
-					if( $criteria->getLimit() ) {
-						$params['limit'] = $criteria->getLimit();
-					}
-					if( !$criteria->getOrder()->getLast()->isAsc() ) {
-						$params['descending'] = 'true';
-					}
-				} break;
-				default: {
-					throw new WrongStateException( 'Do not know how to work with criteria and link type '.get_class($this->getLink()) );
-				} break;
-			}
+		$criteria->setLimit(1);
+		// get object
+		$list = $this->getListByField( $field, $value, $criteria );
+		if( empty($list) ) {
+			throw new ObjectNotFoundException();
 		}
+		return array_shift($list);
+	}
 
-		// query
+	public function getListByField($field, $value, Criteria $criteria = null) {
 		$list = array();
-		$stack = $this->getLink()->getCustomList( $this->getTable(), $view, $params );
-		if( !empty($stack) ) {
-			foreach( $stack as $row ) {
-				$list[ $row['id'] ] = $this->makeNoSqlObject( $row['value'] );
-			}
+		$rows = $this->getLink()->getListByField( $this->getTable(), $field, $value, $criteria );
+		foreach($rows as $row) {
+			$list[] = $this->makeNoSqlObject($row);
 		}
+		return $list;
+	}
 
+	public function getIdListByField($field, $value, Criteria $criteria = null) {
+		$list = array();
+		$rows = $this->getLink()->getIdListByField( $this->getTable(), $field, $value, $criteria );
+		foreach($rows as $row) {
+			$list[] = $row['id'];
+		}
 		return $list;
 	}
 //@}
 
+/// object finder
+//@{
+//	public function find($table, $options) {
+//
+//	}
+//
+//	public function findByCriteria($table, Criteria $criteria) {
+//		throw new UnimplementedFeatureException( 'Method "getByLogic" is not implemented now' );
+//	}
+//@}
 
 	/**
 	 * @param $object
@@ -381,25 +342,16 @@ abstract class NoSqlDAO extends StorableDAO {
 	}
 
 	/**
-	 * @param array $array
+	 * @param array $row
 	 * @param null $prefix
 	 * @return Identifiable|Prototyped
 	 */
-	public function makeNoSqlObject($array, $prefix = null) {
+	public function makeNoSqlObject($row, $prefix = null) {
 		$object = null;
-
-		if( $this->getLink() instanceof CouchDB ) {
-			$array['id'] = urldecode($array['_id']);
-			unset( $array['_id'] );
-		}
-
 		try {
-			$object = $this->makeObject( $array, $prefix );
-			if( $this->getLink() instanceof CouchDB ) {
-				$object->setRev($array['_rev']);
-			}
+			$object = $this->makeObject( $row, $prefix );
 		} catch(Exception $e) {
-			throw new WrongStateException( 'Can not parse object with id '.$array['id'] );
+			throw new WrongStateException( 'Can not make object with id '.$row['id'].'. Dump: '.var_export($row, true) );
 		}
 		return $object;
 	}

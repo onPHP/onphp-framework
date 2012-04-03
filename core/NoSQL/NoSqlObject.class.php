@@ -17,28 +17,7 @@
 **/
 class NoSqlObject extends IdentifiableObject {
 
-	/**
-	 * @var string
-	 */
-	protected $_rev = null;
-
-	protected $identifiers = array('identifier', 'integerIdentifier', 'scalarIdentifier', 'uuidIdentifier');
-
-	/**
-	 * @param $rev
-	 * @return NoSqlObject
-	 */
-	public function setRev($rev) {
-		$this->_rev = $rev;
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getRev() {
-		return $this->_rev;
-	}
+	protected static $identifiers = array('identifier', 'integerIdentifier', 'scalarIdentifier', 'uuidIdentifier');
 
 	public function toArray() {
 		$entity = array();
@@ -58,13 +37,12 @@ class NoSqlObject extends IdentifiableObject {
 				$value = call_user_func(array($this, $property->getGetter()));
 				$entity[ $property->getColumnName() ] = (int)$value->getId();
 			} // обрабатываем связи 1к1
-			elseif( in_array($property->getType(), $this->identifiers) && $property->getRelationId()==1 ) {
+			elseif( in_array($property->getType(), self::$identifiers) && $property->getRelationId()==1 ) {
 				$value = call_user_func(array($this, $property->getGetter().'Id'));
 				$entity[ $property->getColumnName() ] = is_numeric($value) ? (int)$value : $value;
 			}
 		}
 //		$entity[ '_id' ] = $this->id;
-//		$entity[ '_rev' ] = $this->_rev;
 		return $entity;
 	}
 
