@@ -1,3 +1,9 @@
+2012-04-04	Georgiy T. Kutsurua
+	
+	* main/UI/View/JsonPView.class.php,
+		main/UI/View/JsonPView.class.php:
+		For easy using jsonp, @see http://www.json-p.org/
+
 2012-03-26	Alexey S. Denisov
 	
 	* core/DB/SQLitePDO.class.php: Added SQLite3 though PDO
