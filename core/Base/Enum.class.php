@@ -12,7 +12,7 @@
 	/**
 	 * Parent of all enumeration classes.
 	 *
-	 * @see AccessMode for example
+	 * @see MimeType for example
 	 *
 	 * @ingroup Base
 	 * @ingroup Module
