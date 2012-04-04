@@ -35,21 +35,44 @@
 
 		public function __construct($id)
 		{
-			$this->setId($id);
+			$this->setInternalId($id);
 		}
 
-		/// prevent's serialization of names' array
-		//@{
+		/**
+		 * @param $id
+		 * @return Enum
+		 * @throws MissingElementException
+		 */
+		protected function setInternalId($id)
+		{
+			$names = static::$names;
+
+			if (isset($names[$id])) {
+				$this->id = $id;
+				$this->name = $names[$id];
+			} else
+				throw new MissingElementException(
+					'knows nothing about such id == '.$id
+				);
+
+			return $this;
+		}
+
+		/**
+		 * @return string
+		 */
 		public function serialize()
 		{
 			return (string) $this->id;
 		}
 
+		/**
+		 * @param $serialized
+		 */
 		public function unserialize($serialized)
 		{
-			$this->setId($serialized);
+			$this->setInternalId($serialized);
 		}
-		//@}
 
 		/**
 		 * Array of object
@@ -68,13 +91,16 @@
 		/**
 		 * must return any existent ID
 		 * 1 should be ok for most enumerations
+		 * @return integer
 		**/
 		public static function getAnyId()
 		{
 			return 1;
 		}
 
-		/// parent's getId() is too complex in our case
+		/**
+		 * @return null|integer
+		 */
 		public function getId()
 		{
 			return $this->id;
@@ -92,11 +118,19 @@
 			return static::getList();
 		}
 
+		/**
+		 * @return string
+		 */
 		public function toString()
 		{
 			return $this->name;
 		}
 
+		/**
+		 * Plain list
+		 * @static
+		 * @return array
+		 */
 		public static function getNameList()
 		{
 			return static::$names;
@@ -107,17 +141,7 @@
 		**/
 		public function setId($id)
 		{
-			$names = static::$names;
-
-			if (isset($names[$id])) {
-				$this->id = $id;
-				$this->name = $names[$id];
-			} else
-				throw new MissingElementException(
-					'knows nothing about such id == '.$id
-				);
-
-			return $this;
+			throw new UnsupportedMethodException('You can not change id here, because it is politics for Enum!');
 		}
 	}
 ?>
