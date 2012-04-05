@@ -186,6 +186,9 @@ class MongoBase extends NoSQL {
 	}
 
 	public function getListByField($table, $field, $value, Criteria $criteria = null) {
+		if( Assert::checkInteger($value) ) {
+			$value = (int)$value;
+		}
 		// quering
 		$cursor =
 			$this
@@ -215,6 +218,9 @@ class MongoBase extends NoSQL {
 	}
 
 	public function getIdListByField($table, $field, $value, Criteria $criteria = null) {
+		if( Assert::checkInteger($value) ) {
+			$value = (int)$value;
+		}
 		// quering
 		$cursor =
 			$this

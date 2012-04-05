@@ -178,11 +178,11 @@ abstract class NoSqlDAO extends StorableDAO {
 
 		// make sequence
 		$link = NoSqlPool::getByDao( $this );
-		$object->setId(
-			$link->obtainSequence(
-				$this->getSequence()
-			)
-		);
+//		$object->setId(
+//			$link->obtainSequence(
+//				$this->getSequence()
+//			)
+//		);
 
 		// insert
 		$entity =
