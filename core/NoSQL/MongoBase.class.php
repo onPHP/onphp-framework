@@ -296,14 +296,14 @@ class MongoBase extends NoSQL {
 	 * @param Criteria $criteria
 	 * @return array
 	 */
-	protected function parseCriteria(Criteria $criteria) {
+	protected function parseCriteria(Criteria $criteria=null) {
 		$result = array();
 		// парсим табличку
-		if( $criteria->getDao() ) {
+		if( !is_null($criteria) && $criteria->getDao() ) {
 			$result[self::C_TABLE] = $criteria->getDao()->getTable();
 		}
 		// парсим запросы
-		if( $criteria->getLogic()->getLogic() ) {
+		if( !is_null($criteria) && $criteria->getLogic()->getLogic() ) {
 			$logic = $criteria->getLogic()->getChain();
 			$expression = array_shift($logic);
 			if( $expression instanceof NoSQLExpression ) {
@@ -311,7 +311,7 @@ class MongoBase extends NoSQL {
 			}
 		}
 		// парсим сортировку
-		if( $criteria->getOrder() ) {
+		if( !is_null($criteria) && $criteria->getOrder() ) {
 			/** @var $order OrderBy */
 			$order = $criteria->getOrder()->getLast();
 			if( $order instanceof OrderBy ) {
@@ -323,13 +323,13 @@ class MongoBase extends NoSQL {
 			$result[self::C_ORDER] = null;
 		}
 		// парсим лимит
-		if( $criteria->getLimit() ) {
+		if( !is_null($criteria) && $criteria->getLimit() ) {
 			$result[self::C_LIMIT] = $criteria->getLimit();
 		} else {
 			$result[self::C_LIMIT] = null;
 		}
 		// парсим сдвиг
-		if( $criteria->getOffset() ) {
+		if( !is_null($criteria) && $criteria->getOffset() ) {
 			$result[self::C_SKIP] = $criteria->getOffset();
 		} else {
 			$result[self::C_SKIP] = null;
