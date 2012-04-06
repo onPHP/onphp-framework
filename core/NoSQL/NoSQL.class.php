@@ -43,6 +43,7 @@ abstract class NoSQL extends DB {
 	abstract public function getListByField($table, $field, $value, Criteria $criteria = null);
 	abstract public function getIdListByField($table, $field, $value, Criteria $criteria = null);
 	abstract public function find($table, $query);
+	abstract public function findByCriteria(Criteria $criteria);
 //	abstract public function count($table, $query);
 
 	public function getTableInfo($table) {

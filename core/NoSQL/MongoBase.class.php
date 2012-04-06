@@ -10,6 +10,12 @@
  */
 class MongoBase extends NoSQL {
 
+	const C_TABLE	= 1001;
+	const C_QUERY	= 1002;
+	const C_ORDER	= 1003;
+	const C_LIMIT	= 1004;
+	const C_SKIP	= 1005;
+
 	/**
 	 * @var Mongo
 	 */
@@ -189,75 +195,57 @@ class MongoBase extends NoSQL {
 		if( Assert::checkInteger($value) ) {
 			$value = (int)$value;
 		}
-		// quering
-		$cursor =
-			$this
-				->db
-					->selectCollection($table)
-						->find( array($field => $value) );
-		// criteria
-		if( !is_null($criteria) ) {
-			if( $limit = $criteria->getLimit() ) {
-				$cursor->limit( $limit );
-			}
-			if( $offset = $criteria->getOffset() ) {
-				$cursor->skip( $offset );
-			}
-			if( $order = $criteria->getOrder()->getLast() ) {
-				$cursor->sort( array($order->getFieldName() => $order->isAsc()?1:-1) );
-			}
-		}
+		$options = $this->parseCriteria($criteria);
 
-		// recieving objects
-		$rows = array();
-		foreach ($cursor as $row) {
-			$rows[] = $this->decodeId($row);
-		}
-		// return result
-		return $rows;
+		return
+			$this->mongoFind($table, array($field => $value), array(), $options[self::C_ORDER], $options[self::C_LIMIT], $options[self::C_SKIP]);
 	}
 
 	public function getIdListByField($table, $field, $value, Criteria $criteria = null) {
 		if( Assert::checkInteger($value) ) {
 			$value = (int)$value;
 		}
-		// quering
-		$cursor =
-			$this
-				->db
-					->selectCollection($table)
-						->find( array($field => $value), array('_id') );
-		// criteria
-		if( !is_null($criteria) ) {
-			if( $criteria->getLimit() ) {
-				$cursor->limit( $criteria->getLimit() );
-			}
-			if( $criteria->getOffset() ) {
-				$cursor->skip( $criteria->getOffset() );
-			}
-			if( $criteria->getOrder() ) {
-				/** @var $order OrderBy */
-				$order = $criteria->getOrder()->getLast();
-				$cursor->sort( array($order->getFieldName() => $order->isAsc()?1:-1) );
-			}
-		}
+		$options = $this->parseCriteria($criteria);
 
-		// recieving objects
-		$rows = array();
-		foreach ($cursor as $row) {
-			$rows[] = $this->decodeId($row);
-		}
-		// return result
-		return $rows;
+		return
+			$this->mongoFind($table, array($field => $value), array('_id'), $options[self::C_ORDER], $options[self::C_LIMIT], $options[self::C_SKIP]);
 	}
 
 	public function find($table, $query) {
+		return
+			$this->mongoFind($table, $query);
+	}
+
+	public function findByCriteria(Criteria $criteria) {
+		$options = $this->parseCriteria($criteria);
+
+		if( !isset($options[self::C_TABLE]) ) {
+			throw new NoSQLException('Can not find without table!');
+		}
+		if( !isset($options[self::C_QUERY]) ) {
+			throw new NoSQLException('Can not find without query!');
+		}
+
+		return
+			$this->mongoFind($options[self::C_TABLE], $options[self::C_QUERY], array(), $options[self::C_ORDER], $options[self::C_LIMIT], $options[self::C_SKIP]);
+	}
+
+	protected function mongoFind($table, array $query, array $fields=array(), array $order=null, $limit=null, $skip=null) {
 		// quering
 		$cursor =
 			$this
 				->db
 					->selectCollection($table)
-						->find( $query );
+						->find( $query, $fields );
+		if( !is_null($order) ) {
+			$cursor->sort( $order );
+		}
+		if( !is_null($limit) ) {
+			$cursor->limit( $limit );
+		}
+		if( !is_null($skip) ) {
+			$cursor->skip( $skip );
+		}
 		// recieving objects
 		$rows = array();
 		foreach ($cursor as $row) {
@@ -303,16 +291,47 @@ class MongoBase extends NoSQL {
 		return $fields;
 	}
 
-//	protected function prepareQuery($terms, $unite) {
-//		$query = array();
-//		foreach( $terms as $key=>$value ) {
-//			$query[$key] = $value;
-//		}
-//		// query type check
-//		if( !$unite ) {
-//			$query = array('$or'=>$query );
-//		}
-//		return $query;
-//	}
+	/**
+	 * Разбираем критерию на параметры запроса к монго
+	 * @param Criteria $criteria
+	 * @return array
+	 */
+	protected function parseCriteria(Criteria $criteria) {
+		$result = array();
+		// парсим табличку
+		if( $criteria->getDao() ) {
+			$result[self::C_TABLE] = $criteria->getDao()->getTable();
+		}
+		// парсим запросы
+		if( $criteria->getLogic()->getLogic() ) {
+			$expression = array_shift($criteria->getLogic()->getLogic());
+			if( $expression instanceof NoSQLExpression ) {
+				$result[self::C_QUERY] = $expression->toMongoQuery();
+			}
+		}
+		// парсим сортировку
+		if( $criteria->getOrder() ) {
+			/** @var $order OrderBy */
+			$order = $criteria->getOrder()->getLast();
+			$result[self::C_ORDER] = array($order->getFieldName() => $order->isAsc()?1:-1);
+		} else {
+			$result[self::C_ORDER] = null;
+		}
+		// парсим лимит
+		if( $criteria->getLimit() ) {
+			$result[self::C_LIMIT] = $criteria->getLimit();
+		} else {
+			$result[self::C_LIMIT] = null;
+		}
+		// парсим сдвиг
+		if( $criteria->getOffset() ) {
+			$result[self::C_SKIP] = $criteria->getOffset();
+		} else {
+			$result[self::C_SKIP] = null;
+		}
+		// отдаем результат
+		return $result;
+	}
+
 //@}
 }

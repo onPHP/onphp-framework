@@ -41,11 +41,11 @@ abstract class NoSqlDAO extends StorableDAO {
 			throw new UnimplementedFeatureException( 'Method "getByLogic" is not implemented now for your NoSQL DB' );
 		}
 		// processing list
-		$list = array();
-		foreach($rows as $row) {
-			$list[] = $this->makeNoSqlObject($row);
+		if( count($rows)==0 ) {
+			throw new ObjectNotFoundException('Can not find object for your query');
+		} else {
+			return $this->makeNoSqlObject( array_shift($rows) );
 		}
-		return $list;
 	}
 
 	public function getByQuery(SelectQuery $query, $expires = Cache::DO_NOT_CACHE) {
@@ -78,7 +78,22 @@ abstract class NoSqlDAO extends StorableDAO {
 	}
 
 	public function getListByLogic(LogicalObject $logic, $expires = Cache::DO_NOT_CACHE) {
-		throw new UnimplementedFeatureException( 'Method "getListByLogic" is not implemented now' );
+		if( !($logic instanceof NoSQLExpression) ) {
+			throw new WrongArgumentException( '$logic should be instance of NoSQLExpression' );
+		}
+		// quering for different NoSQL types
+		$rows = array();
+		if( $this->getLink() instanceof MongoBase ) {
+			$rows = $this->getLink()->find($this->getTable(), $logic->toMongoQuery());
+		} else {
+			throw new UnimplementedFeatureException( 'Method "getByLogic" is not implemented now for your NoSQL DB' );
+		}
+		// processing list
+		$list = array();
+		foreach($rows as $row) {
+			$list[] = $this->makeNoSqlObject($row);
+		}
+		return $list;
 	}
 
 	/**
@@ -318,17 +333,6 @@ abstract class NoSqlDAO extends StorableDAO {
 		}
 		return $list;
 	}
-//@}
-
-/// object finder
-//@{
-//	public function find($table, $options) {
-//
-//	}
-//
-//	public function findByCriteria($table, Criteria $criteria) {
-//		throw new UnimplementedFeatureException( 'Method "getByLogic" is not implemented now' );
-//	}
 //@}
 
 	/**
