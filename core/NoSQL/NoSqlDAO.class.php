@@ -29,6 +29,12 @@ abstract class NoSqlDAO extends StorableDAO {
 		return $object;
 	}
 
+	/**
+	 * @param LogicalObject $logic
+	 * @param int $expires
+	 * @return Identifiable|Prototyped
+	 * @throws ObjectNotFoundException|UnimplementedFeatureException|WrongArgumentException
+	 */
 	public function getByLogic(LogicalObject $logic, $expires = Cache::DO_NOT_CACHE) {
 		if( !($logic instanceof NoSQLExpression) ) {
 			throw new WrongArgumentException( '$logic should be instance of NoSQLExpression' );
@@ -48,10 +54,20 @@ abstract class NoSqlDAO extends StorableDAO {
 		}
 	}
 
+	/**
+	 * @param SelectQuery $query
+	 * @param int $expires
+	 * @throws UnsupportedMethodException
+	 */
 	public function getByQuery(SelectQuery $query, $expires = Cache::DO_NOT_CACHE) {
 		throw new UnsupportedMethodException( 'Can not execute "getByQuery" in NoSQL' );
 	}
 
+	/**
+	 * @param SelectQuery $query
+	 * @param int $expires
+	 * @throws UnsupportedMethodException
+	 */
 	public function getCustom(SelectQuery $query, $expires = Cache::DO_NOT_CACHE) {
 		throw new UnsupportedMethodException( 'Can not execute "getCustom" in NoSQL' );
 	}
@@ -73,10 +89,21 @@ abstract class NoSqlDAO extends StorableDAO {
 		return $list;
 	}
 
+	/**
+	 * @param SelectQuery $query
+	 * @param int $expires
+	 * @throws UnsupportedMethodException
+	 */
 	public function getListByQuery(SelectQuery $query, $expires = Cache::DO_NOT_CACHE) {
 		throw new UnsupportedMethodException( 'Can not execute "getListByQuery" in NoSQL' );
 	}
 
+	/**
+	 * @param LogicalObject $logic
+	 * @param int $expires
+	 * @return array
+	 * @throws UnimplementedFeatureException|WrongArgumentException
+	 */
 	public function getListByLogic(LogicalObject $logic, $expires = Cache::DO_NOT_CACHE) {
 		if( !($logic instanceof NoSQLExpression) ) {
 			throw new WrongArgumentException( '$logic should be instance of NoSQLExpression' );
@@ -92,6 +119,21 @@ abstract class NoSqlDAO extends StorableDAO {
 		$list = array();
 		foreach($rows as $row) {
 			$list[] = $this->makeNoSqlObject($row);
+		}
+		return $list;
+	}
+
+	/**
+	 * @param Criteria $criteria
+	 * @param int $expires
+	 * @return array
+	 */
+	public function getListByCriteria(Criteria $criteria, $expires = Cache::DO_NOT_CACHE) {
+		$list = array();
+		$stack = $this->getLink()->findByCriteria($criteria);
+		foreach( $stack as $row ) {
+			$object = $this->makeNoSqlObject($row);
+			$list[ $object->getId() ] = $object;
 		}
 		return $list;
 	}

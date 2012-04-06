@@ -304,7 +304,8 @@ class MongoBase extends NoSQL {
 		}
 		// парсим запросы
 		if( $criteria->getLogic()->getLogic() ) {
-			$expression = array_shift($criteria->getLogic()->getLogic());
+			$logic = $criteria->getLogic()->getChain();
+			$expression = array_shift($logic);
 			if( $expression instanceof NoSQLExpression ) {
 				$result[self::C_QUERY] = $expression->toMongoQuery();
 			}
@@ -313,7 +314,11 @@ class MongoBase extends NoSQL {
 		if( $criteria->getOrder() ) {
 			/** @var $order OrderBy */
 			$order = $criteria->getOrder()->getLast();
-			$result[self::C_ORDER] = array($order->getFieldName() => $order->isAsc()?1:-1);
+			if( $order instanceof OrderBy ) {
+				$result[self::C_ORDER] = array($order->getFieldName() => $order->isAsc()?1:-1);
+			} else {
+				$result[self::C_ORDER] = null;
+			}
 		} else {
 			$result[self::C_ORDER] = null;
 		}
