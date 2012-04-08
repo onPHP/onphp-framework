@@ -255,6 +255,55 @@ class MongoBase extends NoSQL {
 		return $rows;
 	}
 
+	/**
+	 * @param string $table
+	 * @param string $map
+	 * @param string $reduce
+	 * @param Criteria $criteria
+	 * @return array
+	 */
+	public function mapReduce($table, $map, $reduce, Criteria $criteria=null) {
+		$options = $this->parseCriteria($criteria);
+
+		$command = array(
+			'mapreduce'	=> $table,
+			'map'		=> new MongoCode($map),
+			'reduce'	=> new MongoCode($reduce),
+			'out'		=> array('inline' => 1)
+		);
+		// обрабатываем критерию
+		if( !is_null($options[self::C_QUERY]) ) {
+			$command['query'] = $options[self::C_QUERY];
+		}
+		if( !is_null($options[self::C_QUERY]) ) {
+			$command['sort'] = $options[self::C_ORDER];
+		}
+		if( !is_null($options[self::C_LIMIT]) ) {
+			$command['limit'] = $options[self::C_LIMIT];
+		}
+
+		$result = $this->db->command($command);
+		// обрабатываем результаты
+		$list = array();
+		if( is_array($result) && isset($result['ok']) && $result['ok']==1 ) {
+			foreach( $result['results'] as $row ) {
+				// prepare id
+				$row['id'] = $row['_id'];
+				unset($row['_id']);
+				// prepare values
+				foreach($row['value'] as $key=>$value) {
+					$row[$key] = is_bool($value) ? (int)$value : $value;
+				}
+				unset($row['value']);
+
+				$list[ $row['id'] ] = $row;
+			}
+		} else {
+			throw new NoSQLException('Error during map/reduce running');
+		}
+		return $list;
+	}
+
 /// helper functions
 //@{
 	/**
