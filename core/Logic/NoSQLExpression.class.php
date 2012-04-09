@@ -10,12 +10,17 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 	const C_FIELD		= 2;
 	const C_VALUE		= 3;
 
+	const V_LEFT		= 101;
+	const V_RIGHT		= 102;
+
 	const EXP_EQ		= 1001;
 	const EXP_NOTEQ		= 1002;
 	const EXP_GT		= 1003;
 	const EXP_GTE		= 1004;
 	const EXP_LT		= 1005;
 	const EXP_LTE		= 1006;
+	const EXP_BTW_STR	= 1006;
+	const EXP_BTW_SFT	= 1006;
 
 	/**
 	 * true = объединять условия по И
@@ -111,6 +116,28 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 		);
 		return $this;
 	}
+
+	public function addBetweenStrict($field, $left, $right) {
+		Assert::isInteger($left);
+		Assert::isInteger($right);
+		$this->conditions[] = array(
+			self::C_TYPE	=> self::EXP_BTW_STR,
+			self::C_FIELD	=> (string)$field,
+			self::C_VALUE	=> array( self::V_LEFT=>$left, self::V_RIGHT=>$right ),
+		);
+		return $this;
+	}
+
+	public function addBetweenSoft($field, $left, $right) {
+		Assert::isInteger($left);
+		Assert::isInteger($right);
+		$this->conditions[] = array(
+			self::C_TYPE	=> self::EXP_BTW_SFT,
+			self::C_FIELD	=> (string)$field,
+			self::C_VALUE	=> array( self::V_LEFT=>$left, self::V_RIGHT=>$right ),
+		);
+		return $this;
+	}
 //@}
 
 /// helper functions
@@ -168,6 +195,20 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 						$query[ $condition[self::C_FIELD] ] = array('$lte' => $condition[self::C_VALUE]);
 					} else {
 						$query[] = array( $condition[self::C_FIELD] => array('$lte' => $condition[self::C_VALUE]) );
+					}
+				} break;
+				case self::EXP_BTW_STR: {
+					if( $this->unite ) {
+						$query[ $condition[self::C_FIELD] ] = array('$gt' => $condition[self::C_VALUE][self::V_LEFT], '$lt' => $condition[self::C_VALUE][self::V_RIGHT]);
+					} else {
+						$query[] = array( $condition[self::C_FIELD] => array('$gt' => $condition[self::C_VALUE][self::V_LEFT], '$lt' => $condition[self::C_VALUE][self::V_RIGHT]) );
+					}
+				} break;
+				case self::EXP_BTW_SFT: {
+					if( $this->unite ) {
+						$query[ $condition[self::C_FIELD] ] = array('$gte' => $condition[self::C_VALUE][self::V_LEFT], '$lte' => $condition[self::C_VALUE][self::V_RIGHT]);
+					} else {
+						$query[] = array( $condition[self::C_FIELD] => array('$gte' => $condition[self::C_VALUE][self::V_LEFT], '$lte' => $condition[self::C_VALUE][self::V_RIGHT]) );
 					}
 				} break;
 				default: {
