@@ -275,7 +275,7 @@ class MongoBase extends NoSQL {
 		if( !is_null($options[self::C_QUERY]) ) {
 			$command['query'] = $options[self::C_QUERY];
 		}
-		if( !is_null($options[self::C_QUERY]) ) {
+		if( !is_null($options[self::C_ORDER]) ) {
 			$command['sort'] = $options[self::C_ORDER];
 		}
 		if( !is_null($options[self::C_LIMIT]) ) {
