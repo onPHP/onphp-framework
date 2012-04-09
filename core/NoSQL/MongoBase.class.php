@@ -264,6 +264,8 @@ class MongoBase extends NoSQL {
 	 */
 	public function mapReduce($table, $map, $reduce, Criteria $criteria=null) {
 		$options = $this->parseCriteria($criteria);
+		var_dump($options[self::C_QUERY]);
+		die();
 
 		$command = array(
 			'mapreduce'	=> $table,

@@ -19,8 +19,8 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 	const EXP_GTE		= 1004;
 	const EXP_LT		= 1005;
 	const EXP_LTE		= 1006;
-	const EXP_BTW_STR	= 1006;
-	const EXP_BTW_SFT	= 1006;
+	const EXP_BTW_STR	= 1007;
+	const EXP_BTW_SFT	= 1008;
 
 	/**
 	 * true = объединять условия по И
