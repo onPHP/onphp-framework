@@ -129,6 +129,8 @@ abstract class NoSqlDAO extends StorableDAO {
 	 * @return array
 	 */
 	public function getListByCriteria(Criteria $criteria, $expires = Cache::DO_NOT_CACHE) {
+		$criteria->setDao( $this );
+		// getting list
 		$list = array();
 		$stack = $this->getLink()->findByCriteria($criteria);
 		foreach( $stack as $row ) {

@@ -105,7 +105,7 @@ class MongoBase extends NoSQL {
 			$this
 				->db
 					->selectCollection($table)
-						->find( array('$or' => $this->makeIdList($keys)) );
+						->find( array('_id' => array('$in'=>$this->makeIdList($keys)) ) );
 		// recieving objects
 		$rows = array();
 		foreach ($cursor as $row) {
@@ -335,7 +335,8 @@ class MongoBase extends NoSQL {
 	protected function makeIdList(array $keys) {
 		$fields = array();
 		foreach( $keys as $key ) {
-			$fields[] = array( '_id'=>$this->makeId($key) );
+			//$fields[] = array( '_id'=>$this->makeId($key) );
+			$fields[] = $this->makeId($key);
 		}
 		return $fields;
 	}
