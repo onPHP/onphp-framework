@@ -30,12 +30,17 @@ class NoSqlObject extends IdentifiableObject {
 						$value = $value->toStamp();
 						//$value = $value->toString();
 				}
-				$entity[ $property->getColumnName() ] = is_numeric($value) ? (int)$value : $value;
-
+				if( Assert::checkInteger($value) ) {
+					$entity[ $property->getColumnName() ] = (int)$value;
+				} elseif( Assert::checkFloat($value) ) {
+					$entity[ $property->getColumnName() ] = (float)$value;
+				} else {
+					$entity[ $property->getColumnName() ] = $value;
+				}
 			} // обрабатываем перечисления
 			elseif( $property->getType()=='enumeration' ) {
 				$value = call_user_func(array($this, $property->getGetter()));
-				$entity[ $property->getColumnName() ] = (int)$value->getId();
+				$entity[ $property->getColumnName() ] = is_null($value) ? null : (int)$value->getId();
 			} // обрабатываем связи 1к1
 			elseif( in_array($property->getType(), self::$identifiers) && $property->getRelationId()==1 ) {
 				$value = call_user_func(array($this, $property->getGetter().'Id'));
