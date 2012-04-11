@@ -1,3 +1,8 @@
+2012-04-11	Evgeny V. Kokovikhin
+	
+	* main/Monitoring/PinbaClient.class.php: base ability of
+	tree (integral) logging added. thanks to Artem A. Naumenko
+
 2012-04-04	Georgiy T. Kutsurua
 	
 	* main/UI/View/JsonPView.class.php,
