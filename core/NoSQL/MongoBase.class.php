@@ -116,9 +116,7 @@ class MongoBase extends NoSQL {
 	}
 
 	public function insert($table, array $row) {
-		if( isset($row['id']) ) {
-			$row = $this->encodeId($row);
-		}
+		$row = $this->encodeId($row);
 		// save
 		$result =
 			$this
@@ -349,7 +347,9 @@ class MongoBase extends NoSQL {
 	 * @return array
 	 */
 	protected function encodeId(array $row) {
-		$row['_id'] = $this->makeId($row['id']);
+		if( isset($row['id']) ) {
+			$row['_id'] = $this->makeId($row['id']);
+		}
 		unset($row['id']);
 		return $row;
 	}
