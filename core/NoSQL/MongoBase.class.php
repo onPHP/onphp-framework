@@ -116,7 +116,9 @@ class MongoBase extends NoSQL {
 	}
 
 	public function insert($table, array $row) {
-		$row = $this->encodeId($row);
+		if( isset($row['id']) ) {
+			$row = $this->encodeId($row);
+		}
 		// save
 		$result =
 			$this
@@ -132,6 +134,7 @@ class MongoBase extends NoSQL {
 	}
 
 	public function batchInsert($table, array $rows) {
+		throw new UnimplementedFeatureException('Unfortunately method "batchInsert" is not implemented yet :(');
 	}
 
 	public function update($table, array $row) {

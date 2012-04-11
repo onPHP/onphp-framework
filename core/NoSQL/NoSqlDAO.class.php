@@ -264,6 +264,7 @@ abstract class NoSqlDAO extends StorableDAO {
 	 */
 	public function multiAdd(array $objectList) {
 		$rows = array();
+		$objectList = array_values($objectList);
 		foreach( $objectList as $object ) {
 			$this->assertNoSqlObject( $object );
 			// преобразуем объект в массив для nosql
@@ -272,30 +273,27 @@ abstract class NoSqlDAO extends StorableDAO {
 
 		if( !empty($rows) ) {
 			$link = NoSqlPool::getByDao( $this );
-			
+			// insert
+			$entityList =
+				$link
+					->batchInsert(
+						$this->getTable(),
+						$rows
+					);
+			foreach($entityList as $key=>$entity) {
+				$object = $objectList[$key];
+				$object->setId($entity['id']);
+			}
 		}
 
-		// make sequence
+		// проверяем наличие ИДешек
+		foreach($objectList as &$object) {
+			if(!$object->getId()) {
+				unset($object);
+			}
+		}
 
-//		$object->setId(
-//			$link->obtainSequence(
-//				$this->getSequence()
-//			)
-//		);
-
-		// insert
-		$entity =
-			$link
-				->insert(
-					$this->getTable(),
-					$object->toArray()
-				);
-
-		$object->setId( $entity['id'] );
-		// проверка добавления
-		//$object = $this->getById( $entity['id'] );
-
-		return $object;
+		return $objectList;
 	}
 
 	public function save(Identifiable $object) {
