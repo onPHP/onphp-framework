@@ -77,7 +77,7 @@
 		
 		public function timerStop($name)
 		{
-			 if ($this->isTreeLogEnabeled())
+			 if ($this->isTreeLogEnabled())
 				array_pop($this->queue);
 			 
 			 if (!array_key_exists($name, $this->timers))
