@@ -377,6 +377,10 @@ abstract class NoSqlDAO extends StorableDAO {
 		}
 		return $list;
 	}
+
+	public function getCountByField($field, $value, Criteria $criteria = null) {
+		return $this->getLink()->getCountByField( $this->getTable(), $field, $value, $criteria );
+	}
 //@}
 
 /// map/reduce

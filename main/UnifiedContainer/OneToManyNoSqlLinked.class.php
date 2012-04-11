@@ -86,4 +86,13 @@
 			return $this;
 		}
 
+		public function getCount()
+		{
+			if (!$this->isFetched() && $this->parent->getId()) {
+				return $this->dao->getCountByField( $this->getParentIdField(), $this->parent->getId(), $this->worker->getCriteria() );
+			}
+
+			return count($this->list);
+		}
+
 	}

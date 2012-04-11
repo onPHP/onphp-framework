@@ -191,6 +191,16 @@ class MongoBase extends NoSQL {
 							->count();
 	}
 
+	public function getCountByField($table, $field, $value, Criteria $criteria = null) {
+		if( Assert::checkInteger($value) ) {
+			$value = (int)$value;
+		}
+		$options = $this->parseCriteria($criteria);
+
+		return
+			$this->mongoCount($table, array($field => $value), array('_id'), $options[self::C_ORDER], $options[self::C_LIMIT], $options[self::C_SKIP]);
+	}
+
 	public function getListByField($table, $field, $value, Criteria $criteria = null) {
 		if( Assert::checkInteger($value) ) {
 			$value = (int)$value;
@@ -232,6 +242,33 @@ class MongoBase extends NoSQL {
 
 	protected function mongoFind($table, array $query, array $fields=array(), array $order=null, $limit=null, $skip=null) {
 		// quering
+		$cursor = $this->mongoMakeCursor($table, $query, $fields, $order, $limit, $skip);
+		// recieving objects
+		$rows = array();
+		foreach ($cursor as $row) {
+			$rows[] = $this->decodeId($row);
+		}
+		// return result
+		return $rows;
+	}
+
+	protected function mongoCount($table, array $query, array $fields=array(), array $order=null, $limit=null, $skip=null) {
+		// quering
+		$cursor = $this->mongoMakeCursor($table, $query, $fields, $order, $limit, $skip);
+		// return result
+		return $cursor->count();
+	}
+
+	/**
+	 * @param $table
+	 * @param array $query
+	 * @param array $fields
+	 * @param array $order
+	 * @param int $limit
+	 * @param int $skip
+	 * @return MongoCursor
+	 */
+	protected function mongoMakeCursor($table, array $query, array $fields=array(), array $order=null, $limit=null, $skip=null) {
 		$cursor =
 			$this
 				->db
@@ -246,13 +283,7 @@ class MongoBase extends NoSQL {
 		if( !is_null($skip) ) {
 			$cursor->skip( $skip );
 		}
-		// recieving objects
-		$rows = array();
-		foreach ($cursor as $row) {
-			$rows[] = $this->decodeId($row);
-		}
-		// return result
-		return $rows;
+		return $cursor;
 	}
 
 	/**
