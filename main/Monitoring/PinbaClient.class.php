@@ -54,7 +54,7 @@
 			if (array_key_exists($name, $this->timers))
 				throw new WrongArgumentException('a timer with the same name allready exists');
 			
-			if ($this->isTreeLogEnabeled()) {
+			if ($this->isTreeLogEnabled()) {
 				
 				$id = uniqid();
 				$tags['treeId'] = $id;
