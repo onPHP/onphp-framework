@@ -258,6 +258,46 @@ abstract class NoSqlDAO extends StorableDAO {
 		return $object;
 	}
 
+	/**
+	 * @param NoSqlObject[] $objectList
+	 * @return AbstractAmqpObject|mixed|null
+	 */
+	public function multiAdd(array $objectList) {
+		$rows = array();
+		foreach( $objectList as $object ) {
+			$this->assertNoSqlObject( $object );
+			// преобразуем объект в массив для nosql
+			$rows[] = $object->toArray();
+		}
+
+		if( !empty($rows) ) {
+			$link = NoSqlPool::getByDao( $this );
+			
+		}
+
+		// make sequence
+
+//		$object->setId(
+//			$link->obtainSequence(
+//				$this->getSequence()
+//			)
+//		);
+
+		// insert
+		$entity =
+			$link
+				->insert(
+					$this->getTable(),
+					$object->toArray()
+				);
+
+		$object->setId( $entity['id'] );
+		// проверка добавления
+		//$object = $this->getById( $entity['id'] );
+
+		return $object;
+	}
+
 	public function save(Identifiable $object) {
 		$this->assertNoSqlObject( $object );
 
