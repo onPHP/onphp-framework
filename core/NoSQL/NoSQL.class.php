@@ -31,6 +31,7 @@ abstract class NoSQL extends DB {
 	abstract public function selectOne($table, $key);
 	abstract public function selectList($table, array $keys);
 	abstract public function insert($table, array $row);
+	abstract public function batchInsert($table, array $rows);
 	abstract public function update($table, array $row);
 	abstract public function deleteOne($table, $key);
 	abstract public function deleteList($table, array $keys);

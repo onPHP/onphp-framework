@@ -131,6 +131,9 @@ class MongoBase extends NoSQL {
 		return $this->decodeId($row);
 	}
 
+	public function batchInsert($table, array $rows) {
+	}
+
 	public function update($table, array $row) {
 		$row = $this->encodeId($row);
 		$id = $row['_id'];
@@ -382,6 +385,8 @@ class MongoBase extends NoSQL {
 		// парсим табличку
 		if( !is_null($criteria) && $criteria->getDao() ) {
 			$result[self::C_TABLE] = $criteria->getDao()->getTable();
+		} else {
+			$result[self::C_TABLE] = null;
 		}
 		// парсим запросы
 		if( !is_null($criteria) && $criteria->getLogic()->getLogic() ) {
@@ -389,7 +394,11 @@ class MongoBase extends NoSQL {
 			$expression = array_shift($logic);
 			if( $expression instanceof NoSQLExpression ) {
 				$result[self::C_QUERY] = $expression->toMongoQuery();
+			} else {
+				$result[self::C_QUERY] = array();
 			}
+		} else {
+			$result[self::C_QUERY] = array();
 		}
 		// парсим сортировку
 		if( !is_null($criteria) && $criteria->getOrder() ) {
