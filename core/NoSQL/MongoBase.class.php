@@ -232,9 +232,9 @@ class MongoBase extends NoSQL {
 		if( !isset($options[self::C_TABLE]) ) {
 			throw new NoSQLException('Can not find without table!');
 		}
-		if( !isset($options[self::C_QUERY]) ) {
-			throw new NoSQLException('Can not find without query!');
-		}
+//		if( !isset($options[self::C_QUERY]) ) {
+//			throw new NoSQLException('Can not find without query!');
+//		}
 
 		return
 			$this->mongoFind($options[self::C_TABLE], $options[self::C_QUERY], array(), $options[self::C_ORDER], $options[self::C_LIMIT], $options[self::C_SKIP]);
