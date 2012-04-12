@@ -49,6 +49,11 @@
 			return $this->treeLogEnabled;
 		}
 		
+		public function getTreeQueue()
+		{
+			return $this->queue;
+		}
+		
 		public function timerStart($name, array $tags, array $data = array())
 		{
 			if (array_key_exists($name, $this->timers))
@@ -60,7 +65,7 @@
 				$tags['treeId'] = $id;
 				
 				if (!empty($this->queue))
-					list($tags['treeParentId']) = end($this->queue);
+					$tags['treeParentId'] = end($this->queue);
 				else
 					$tags['treeParentId'] = 'root';
 				
