@@ -1,3 +1,8 @@
+2012-12-23  Alexey S. Denisov
+	* main/Base/AbstractProtoClass.class.php
+		main/Base/InnerMetaProperty.class.php:
+			InnerMetaProperty (ValueObject) unquoting binary field fix
+
 2012-12-06  Evgeny V. Kokovikhin
 	* main/DAOs/GenericDAO.class.php 
 		meta/builders/AutoDaoBuilder.class.php 
