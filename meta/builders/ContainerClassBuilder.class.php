@@ -18,27 +18,30 @@
 		{
 			throw new UnsupportedMethodException();
 		}
-		
+
 		public static function buildContainer(
 			MetaClass $class, MetaClassProperty $holder
 		)
 		{
 			$out = self::getHead();
-			
+
 			$containerName = $class->getName().ucfirst($holder->getName()).'DAO';
-			
+
+			$isNoSQL = is_subclass_of($holder->getType()->getClassName(), 'NoSqlObject');
+			$parentExtend = $isNoSQL ? 'NoSql' : '';
+
 			$out .=
 				'final class '
 				.$containerName
 				.' extends '
-				.$holder->getRelation()->toString().'Linked'
+				.$holder->getRelation()->toString().$parentExtend.'Linked'
 				."\n{\n";
 
 			$className = $class->getName();
 			$propertyName = strtolower($className[0]).substr($className, 1);
-			
+
 			$remoteColumnName = $holder->getType()->getClass()->getTableName();
-			
+
 			$out .= <<<EOT
 public function __construct({$className} \${$propertyName}, \$lazy = false)
 {
@@ -60,11 +63,15 @@ public static function create({$className} \${$propertyName}, \$lazy = false)
 EOT;
 
 			if ($holder->getRelation()->getId() == MetaRelation::MANY_TO_MANY) {
-				$out .= <<<EOT
+				$helper_table_name = $class->getTableName().'_'.$remoteColumnName;
+				if( strcmp($class->getTableName(), $remoteColumnName)>=0 ) {
+					$helper_table_name = $remoteColumnName.'_'.$class->getTableName();
+				}
+					$out .= <<<EOT
 
 public function getHelperTable()
 {
-	return '{$class->getTableName()}_{$remoteColumnName}';
+	return '{$helper_table_name}';
 }
 
 public function getChildIdField()
@@ -74,7 +81,7 @@ public function getChildIdField()
 
 EOT;
 			}
-			
+
 			$out .= <<<EOT
 
 public function getParentIdField()
@@ -83,11 +90,10 @@ public function getParentIdField()
 }
 
 EOT;
-			
-			
+
 			$out .= "}\n";
 			$out .= self::getHeel();
-			
+
 			return $out;
 		}
 	}

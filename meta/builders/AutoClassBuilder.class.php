@@ -17,11 +17,11 @@
 		public static function build(MetaClass $class)
 		{
 			$out = self::getHead();
-			
+
 			$out .= "abstract class Auto{$class->getName()}";
-			
+
 			$isNamed = false;
-			
+
 			if ($parent = $class->getParent())
 				$out .= " extends {$parent->getName()}";
 			elseif (
@@ -30,30 +30,36 @@
 			) {
 				$out .= " extends NamedObject";
 				$isNamed = true;
-			} elseif (!$class->getPattern() instanceof ValueObjectPattern)
+			} elseif (
+				$class->getPattern() instanceof NoSqlClassPattern
+				&& $class->hasProperty('id')
+			) {
+				$out .= " extends NoSqlObject";
+			} elseif (!$class->getPattern() instanceof ValueObjectPattern) {
 				$out .= " extends IdentifiableObject";
-			
+			}
+
 			if ($interfaces = $class->getInterfaces())
 				$out .= ' implements '.implode(', ', $interfaces);
-			
+
 			$out .= "\n{\n";
-			
+
 			foreach ($class->getProperties() as $property) {
 				if (!self::doPropertyBuild($class, $property, $isNamed))
 					continue;
-				
+
 				$out .=
 					"protected \${$property->getName()} = "
 					."{$property->getType()->getDeclaration()};\n";
-				
+
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$out .=
 						"protected \${$property->getName()}Id = null;\n";
 				}
 			}
-			
+
 			$valueObjects = array();
-			
+
 			foreach ($class->getProperties() as $property) {
 				if (
 					$property->getType() instanceof ObjectType
@@ -65,7 +71,7 @@
 						$property->getType()->getClassName();
 				}
 			}
-			
+
 			if ($valueObjects) {
 				$out .= <<<EOT
 
@@ -76,23 +82,23 @@ EOT;
 				foreach ($valueObjects as $propertyName => $className) {
 					$out .= "\$this->{$propertyName} = new {$className}();\n";
 				}
-				
+
 				$out .= "}\n";
 			}
-			
+
 			foreach ($class->getProperties() as $property) {
 				if (!self::doPropertyBuild($class, $property, $isNamed))
 					continue;
-				
+
 				$out .= $property->toMethods($class);
 			}
-			
+
 			$out .= "}\n";
 			$out .= self::getHeel();
-			
+
 			return $out;
 		}
-		
+
 		private static function doPropertyBuild(
 			MetaClass $class,
 			MetaClassProperty $property,
@@ -113,19 +119,19 @@ EOT;
 					)
 				)
 					return true;
-				
+
 				return false;
 			}
-			
+
 			if ($isNamed && $property->getName() == 'name')
 				return false;
-			
+
 			if (
 				($property->getName() == 'id')
 				&& !$property->getClass()->getParent()
 			)
 				return false;
-			
+
 			// do not redefine parent's properties
 			if (
 				$property->getClass()->getParent()
@@ -135,7 +141,7 @@ EOT;
 				)
 			)
 				return false;
-			
+
 			return true;
 		}
 	}

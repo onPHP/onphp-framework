@@ -22,10 +22,10 @@
 		public static function spawn($primitive, $name)
 		{
 			Assert::classExists($primitive);
-			
+
 			return new $primitive($name);
 		}
-		
+
 		/**
 		 * @return Primitive
 		**/
@@ -33,7 +33,7 @@
 		{
 			return new PrimitiveAlias($name, $prm);
 		}
-		
+
 		/**
 		 * @return PrimitiveAnyType
 		**/
@@ -41,7 +41,7 @@
 		{
 			return new PrimitiveAnyType($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveInteger
 		**/
@@ -49,7 +49,7 @@
 		{
 			return new PrimitiveInteger($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveFloat
 		**/
@@ -57,7 +57,7 @@
 		{
 			return new PrimitiveFloat($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveIdentifier
 		 * @obsoleted by integerIdentifier and scalarIdentifier
@@ -66,7 +66,7 @@
 		{
 			return new PrimitiveIdentifier($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveIntegerIdentifier
 		**/
@@ -74,7 +74,7 @@
 		{
 			return new PrimitiveIntegerIdentifier($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveScalarIdentifier
 		**/
@@ -82,7 +82,7 @@
 		{
 			return new PrimitiveScalarIdentifier($name);
 		}
-		
+
 		/**
 		 * @return PrimitivePolymorphicIdentifier
 		**/
@@ -90,7 +90,7 @@
 		{
 			return new PrimitivePolymorphicIdentifier($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveIdentifierList
 		**/
@@ -98,7 +98,7 @@
 		{
 			return new PrimitiveIdentifierList($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveClass
 		**/
@@ -106,7 +106,7 @@
 		{
 			return new PrimitiveClass($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveEnumeration
 		**/
@@ -114,7 +114,7 @@
 		{
 			return new PrimitiveEnumeration($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveEnumerationByValue
 		**/
@@ -122,7 +122,7 @@
 		{
 			return new PrimitiveEnumerationByValue($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveEnumerationList
 		**/
@@ -130,7 +130,7 @@
 		{
 			return new PrimitiveEnumerationList($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveDate
 		**/
@@ -138,7 +138,7 @@
 		{
 			return new PrimitiveDate($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveTimestamp
 		**/
@@ -146,7 +146,7 @@
 		{
 			return new PrimitiveTimestamp($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveTime
 		**/
@@ -154,7 +154,7 @@
 		{
 			return new PrimitiveTime($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveString
 		**/
@@ -162,7 +162,7 @@
 		{
 			return new PrimitiveString($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveBinary
 		**/
@@ -170,7 +170,7 @@
 		{
 			return new PrimitiveBinary($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveRange
 		**/
@@ -178,7 +178,7 @@
 		{
 			return new PrimitiveRange($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveDateRange
 		**/
@@ -186,7 +186,7 @@
 		{
 			return new PrimitiveDateRange($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveTimestampRange
 		**/
@@ -194,7 +194,7 @@
 		{
 			return new PrimitiveTimestampRange($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveList
 		**/
@@ -202,7 +202,7 @@
 		{
 			return new PrimitiveList($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveArray
 		**/
@@ -210,7 +210,7 @@
 		{
 			return new PrimitiveArray($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveHstore
 		**/
@@ -218,7 +218,7 @@
 		{
 			return new PrimitiveHstore($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveMultiList
 		**/
@@ -226,7 +226,7 @@
 		{
 			return new PrimitiveMultiList($name);
 		}
-		
+
 		/**
 		 * @return PrimitivePlainList
 		**/
@@ -234,7 +234,7 @@
 		{
 			return new PrimitivePlainList($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveBoolean
 		**/
@@ -242,7 +242,7 @@
 		{
 			return new PrimitiveBoolean($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveTernary
 		**/
@@ -250,7 +250,7 @@
 		{
 			return new PrimitiveTernary($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveFile
 		**/
@@ -258,7 +258,7 @@
 		{
 			return new PrimitiveFile($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveImage
 		**/
@@ -266,7 +266,7 @@
 		{
 			return new PrimitiveImage($name);
 		}
-		
+
 		/**
 		 * @return ExplodedPrimitive
 		**/
@@ -274,7 +274,7 @@
 		{
 			return new ExplodedPrimitive($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveInet
 		**/
@@ -282,7 +282,7 @@
 		{
 			return new PrimitiveInet($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveForm
 		**/
@@ -290,7 +290,7 @@
 		{
 			return new PrimitiveForm($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveFormsList
 		**/
@@ -298,7 +298,7 @@
 		{
 			return new PrimitiveFormsList($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveNoValue
 		**/
@@ -306,7 +306,7 @@
 		{
 			return new PrimitiveNoValue($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveHttpUrl
 		**/
@@ -314,39 +314,39 @@
 		{
 			return new PrimitiveHttpUrl($name);
 		}
-		
+
 		/**
 		 * @return BasePrimitive
 		**/
 		public static function prototyped($class, $propertyName, $name = null)
 		{
 			Assert::isInstance($class, 'Prototyped');
-			
+
 			$proto = is_string($class)
 				? call_user_func(array($class, 'proto'))
 				: $class->proto();
-			
+
 			if (!$name)
 				$name = $propertyName;
-			
+
 			return $proto->getPropertyByName($propertyName)->
 				makePrimitive($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveIdentifier
 		**/
 		public static function prototypedIdentifier($class, $name = null)
 		{
 			Assert::isInstance($class, 'DAOConnected');
-			
+
 			$dao = is_string($class)
 				? call_user_func(array($class, 'dao'))
 				: $class->dao();
-			
+
 			return self::prototyped($class, $dao->getIdName(), $name);
 		}
-		
+
 		/**
 		 * @return PrimitiveIpAddress
 		**/
@@ -354,7 +354,7 @@
 		{
 			return new PrimitiveIpAddress($name);
 		}
-		
+
 		/**
 		 * @return PrimitiveIpRange
 		 */
@@ -362,5 +362,54 @@
 		{
 			return new PrimitiveIpRange($name);
 		}
+
+		/**
+		 * @static
+		 * @param $name
+		 * @return PrimitiveUuidString
+		**/
+		public static function uuid($name)
+		{
+			return new PrimitiveUuidString($name);
+		}
+
+		/**
+		 * @static
+		 * @param $name
+		 * @return PrimitiveUuidIdentifier
+		**/
+		public static function uuidIdentifier($name)
+		{
+			return new PrimitiveUuidIdentifier($name);
+		}
+
+		/**
+		 * @static
+		 * @param $name
+		 * @return PrimitiveUuidIdentifierList
+		**/
+		public static function uuidIdentifierList($name)
+		{
+			return new PrimitiveUuidIdentifierList($name);
+		}
+
+		/**
+		 * @static
+		 * @return PrimitiveReCaptcha
+		**/
+		public static function reCaptcha()
+		{
+			return new PrimitiveReCaptcha();
+		}
+
+		/**
+		 * @return PrimitiveRule
+		**/
+		public static function rule($name)
+		{
+			return new PrimitiveRule($name);
+		}
+
+
 	}
 ?>

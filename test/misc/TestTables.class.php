@@ -1,18 +1,18 @@
 <?php
 	/* $Id$ */
-	
+
 	abstract class TestTables extends TestCase
 	{
 		protected $schema = null;
-		
+
 		public function __construct()
 		{
 			require ONPHP_META_AUTO_DIR.'schema.php';
-			
+
 			Assert::isTrue(isset($schema));
-			
+
 			$this->schema = $schema;
-			
+
 			// in case of unclean shutdown of previous tests
 			foreach (DBTestPool::me()->getPool() as $name => $db) {
 				foreach ($this->schema->getTableNames() as $name) {
@@ -25,7 +25,7 @@
 					} catch (DatabaseException $e) {
 						// ok
 					}
-					
+
 					if ($db->hasSequences()) {
 						foreach (
 							$this->schema->getTableByName($name)->getColumns()
@@ -34,7 +34,7 @@
 						{
 							try {
 								if ($column->isAutoincrement())
-									$db->queryRaw("DROP SEQUENCE {$name}_id;");
+									$db->queryRaw("DROP SEQUENCE {$name}_id CASCADE;");
 							} catch (DatabaseException $e) {
 								// ok
 							}
@@ -43,24 +43,30 @@
 				}
 			}
 		}
-		
+
 		public function create()
 		{
 			$pool = DBTestPool::me()->getPool();
-			
+
 			foreach ($pool as $name => $db) {
+				try {
+					$this->drop();
+				} catch(DatabaseException $e) {
+					// ok
+				}
+
 				foreach ($this->schema->getTables() as $name => $table) {
 					$db->queryRaw($table->toDialectString($db->getDialect()));
 				}
 			}
-			
+
 			return $this;
 		}
-		
+
 		public function drop()
 		{
 			$pool = DBTestPool::me()->getPool();
-			
+
 			foreach ($pool as $name => $db) {
 				foreach ($this->schema->getTableNames() as $name) {
 					$db->queryRaw(
@@ -68,19 +74,19 @@
 							$db->getDialect()
 						)
 					);
-					
+
 					if ($db->hasSequences()) {
 						foreach (
 							$this->schema->getTableByName($name)->getColumns()
 								as $columnName => $column)
 						{
 							if ($column->isAutoincrement())
-								$db->queryRaw("DROP SEQUENCE {$name}_id;");
+								$db->queryRaw("DROP SEQUENCE {$name}_id CASCADE;");
 						}
 					}
 				}
 			}
-			
+
 			return $this;
 		}
 
