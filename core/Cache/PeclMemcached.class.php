@@ -21,33 +21,43 @@
 	{
 		const DEFAULT_PORT		= 11211;
 		const DEFAULT_HOST		= '127.0.0.1';
+		const DEFAULT_TIMEOUT	= 1;
 		
 		private $instance = null;
+		private $timeout = null;
+		private $host = null;
+		private $port = null;
 		
 		/**
 		 * @return PeclMemcached
 		**/
 		public static function create(
 			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT
+			$port = Memcached::DEFAULT_PORT,
+			$timeout = PeclMemcached::DEFAULT_TIMEOUT
 		)
 		{
-			return new self($host, $port);
+			return new self($host, $port, $timeout);
 		}
 		
 		public function __construct(
 			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT
+			$port = Memcached::DEFAULT_PORT,
+			$timeout = PeclMemcached::DEFAULT_TIMEOUT
 		)
 		{
 			$this->instance = new Memcache();
+			$this->host = $host;
+			$this->port = $port;
+			$this->timeout = $timeout;
 			
 			try {
 				try {
-					$this->instance->pconnect($host, $port);
+					$this->instance->pconnect($host, $port, $timeout);
 				} catch (BaseException $e) {
-					$this->instance->connect($host, $port);
+					$this->instance->connect($host, $port, $timeout);
 				}
+				$this->setTimeout($timeout);
 				
 				$this->alive = true;
 			} catch (BaseException $e) {
@@ -166,6 +176,26 @@
 			}
 			
 			Assert::isUnreachable();
+		}
+		
+		/**
+		 * @param float $timeout time in seconds
+		 * @return \PeclMemcached 
+		 */
+		public function setTimeout($timeout)
+		{
+			$this->timeout = $timeout;
+			$this->instance->setServerParams($this->host, $this->port, $timeout);
+			
+			return $this;
+		}
+		
+		/**
+		 * @return float 
+		 */
+		public function getTimeout()
+		{
+			return $this->timeout;
 		}
 	}
 ?>
