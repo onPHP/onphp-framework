@@ -24,7 +24,7 @@
 		const DEFAULT_TIMEOUT	= 1;
 		
 		private $instance = null;
-		private $timeout = null;
+		private $requestTimeout = null;
 		private $host = null;
 		private $port = null;
 		
@@ -49,7 +49,6 @@
 			$this->instance = new Memcache();
 			$this->host = $host;
 			$this->port = $port;
-			$this->timeout = $timeout;
 			
 			try {
 				try {
@@ -57,6 +56,7 @@
 				} catch (BaseException $e) {
 					$this->instance->connect($host, $port, $timeout);
 				}
+				
 				$this->setTimeout($timeout);
 				
 				$this->alive = true;
@@ -182,10 +182,10 @@
 		 * @param float $timeout time in seconds
 		 * @return \PeclMemcached 
 		 */
-		public function setTimeout($timeout)
+		public function setTimeout($requestTimeout)
 		{
-			$this->timeout = $timeout;
-			$this->instance->setServerParams($this->host, $this->port, $timeout);
+			$this->requestTimeout = $requestTimeout;
+			$this->instance->setServerParams($this->host, $this->port, $requestTimeout);
 			
 			return $this;
 		}

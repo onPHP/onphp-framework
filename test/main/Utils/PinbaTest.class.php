@@ -2,7 +2,7 @@
 	
 	final class PinbaTest extends TestCase
 	{
-		protected $isSkipped = false;
+		protected $skipped = false;
 		public function setUp()
 		{
 			if (!extension_loaded('pinba'))
@@ -18,7 +18,7 @@
 			if (!ini_get('runkit.internal_override'))
 				$this->skip('The runkit.internal_override is not enabled (enabled it at php.ini).');
 			
-			if ($this->isSkipped)
+			if ($this->skipped)
 				return;
 				
 			runkit_function_rename('pinba_timer_start', 'pinba_timer_start_bak');
@@ -27,13 +27,17 @@
 			runkit_function_rename('pinba_timer_start_callback', 'pinba_timer_start');
 			runkit_function_rename('pinba_timer_stop_callback', 'pinba_timer_stop');
 		}
-		protected function skip($message){
+		
+		protected function skip($message)
+		{
 			$this->markTestSkipped($message);
-			$this->isSkipped = true;
+			$this->skipped = true;
 		}
-		public function tearDown(){
+		
+		public function tearDown()
+		{
 			
-			if ($this->isSkipped)
+			if ($this->skipped)
 				return;
 			
 			runkit_function_rename('pinba_timer_start', 'pinba_timer_start_callback');
