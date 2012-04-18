@@ -2,42 +2,38 @@
 	
 	final class PinbaTest extends TestCase
 	{
-		protected function setUp()
+		protected $isSkipped = false;
+		public function setUp()
 		{
 			if (!extension_loaded('pinba'))
-				$this->markTestSkipped(
-					'The pinba extension is not available.'
-				);
+				$this->skip('The pinba extension is not available.');
 			
 			if (!PinbaClient::isEnabled())
-				$this->markTestSkipped(
-					'The pinba is not enabled at php.ini (pinba.enabled=1).'
-				);
+				$this->skip('The pinba is not enabled at php.ini (pinba.enabled=1).');
 			
 			if (!extension_loaded('runkit')) {
-				$this->markTestSkipped(
-					'The runkit extension is not available.'
-				);
+				$this->skip('The runkit extension is not available.');
 			}
 			
 			if (!ini_get('runkit.internal_override'))
-				$this->markTestSkipped(
-					'The runkit.internal_override is not enabled (enabled it at php.ini).'
-				);
+				$this->skip('The runkit.internal_override is not enabled (enabled it at php.ini).');
 			
+			if ($this->isSkipped)
+				return;
+				
 			runkit_function_rename('pinba_timer_start', 'pinba_timer_start_bak');
 			runkit_function_rename('pinba_timer_stop', 'pinba_timer_stop_bak');
 			
 			runkit_function_rename('pinba_timer_start_callback', 'pinba_timer_start');
 			runkit_function_rename('pinba_timer_stop_callback', 'pinba_timer_stop');
 		}
-		
-		public static function tearDownAfterClass(){
+		protected function skip($message){
+			$this->markTestSkipped($message);
+			$this->isSkipped = true;
+		}
+		public function tearDown(){
 			
-			if (
-				!extension_loaded('runkit') 
-				|| !ini_get('runkit.internal_override')
-			)
+			if ($this->isSkipped)
 				return;
 			
 			runkit_function_rename('pinba_timer_start', 'pinba_timer_start_callback');
