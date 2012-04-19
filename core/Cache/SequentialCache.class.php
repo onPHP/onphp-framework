@@ -11,20 +11,53 @@
 
 	final class SequentialCache extends CachePeer
 	{
-		protected $list = array();
+		/**
+		 * List of all peers, including master
+		 * @var array of CachePeer
+		 */
+		protected $list		= array();
+		
+		/**
+		 * List of slaves only
+		 * @var array of CachePeer
+		 */
+		protected $slaves	= array();
+		
+		/**
+		 * @var CachePeer
+		 */
+		protected $master	= null;
 
-		public function __construct()
+		public function __construct($master, $slaves = array())
 		{
-			$list = func_get_args();
-
-			foreach ($list as $cache) {
+			$this->setMaster($master);
+			
+			foreach ($slaves as $cache) {
 				$this->addPeer($cache);
 			}
 		}
-
-		public function addPeer($peer)
+		
+		/**
+		 * @param CachePeer $master
+		 * @return \SequentialCache 
+		 */
+		public function setMaster(CachePeer $master)
 		{
-			$this->list[] = $peer;
+			$this->master = $master;
+			$this->list = $this->slaves;
+			array_unshift($this->list, $this->master);
+			
+			return $this;
+		}
+		
+		/**
+		 * @param CachePeer $master
+		 * @return \SequentialCache 
+		 */
+		public function addPeer(CachePeer $peer)
+		{
+			$this->list[]	= $peer;
+			$this->slaves[]	= $peer;
 
 			return $this;
 		}
@@ -36,7 +69,6 @@
 				* @var $val CachePeer 
 				*/
 				try {
-					
 					if ($val->isAlive()) {
 						$result = $val->get($key);
 						if ($val->isAlive()) {
@@ -69,7 +101,6 @@
 		{
 			return $this->foreachItem(__METHOD__, func_get_args());
 		}
-
 
 		public function increment($key, $value)
 		{
