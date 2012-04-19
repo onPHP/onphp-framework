@@ -7,4 +7,5 @@ test/meta/Proto/
 test/main/data/urls/parser.dump.new
 .idea
 test/onphp
-/nbproject/private/
+/nbproject/
+
