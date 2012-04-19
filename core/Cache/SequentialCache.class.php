@@ -9,11 +9,12 @@
  *                                                                          *
  ****************************************************************************/
 
-	class SequentialCache extends CachePeer {
-		protected
-			$list = array();
+	class SequentialCache extends CachePeer
+	{
+		protected $list = array();
 
-		public function __construct() {
+		public function __construct()
+		{
 			$list = func_get_args();
 
 			foreach ($list as $cache) {
@@ -21,18 +22,21 @@
 			}
 		}
 
-		public function addPeer($peer) {
+		public function addPeer($peer)
+		{
 			$this->list[] = $peer;
 
 			return $this;
 		}
 
-		public function get($key) {
+		public function get($key)
+		{
 			foreach ($this->list as $val) {
 				/**
-				* @var $cache CachePeer 
+				* @var $val CachePeer 
 				*/
 				try {
+					
 					if ($val->isAlive()) {
 						$result = $val->get($key);
 						if ($val->isAlive()) {
@@ -46,30 +50,36 @@
 			throw new RuntimeException("All peers are dead");
 		}
 
-		protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM){
+		protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
+		{
 			return $this->foreachItem(__METHOD__, func_get_args());
 		}
 
-		public function append($key, $data) {
+		public function append($key, $data)
+		{
 			return $this->foreachItem(__METHOD__, func_get_args());
 		}
 
-		public function decrement($key, $value) {
+		public function decrement($key, $value)
+		{
 			return $this->foreachItem(__METHOD__, func_get_args());
 		}
 
-		public function delete($key) {
+		public function delete($key)
+		{
 			return $this->foreachItem(__METHOD__, func_get_args());
 		}
 
 
-		public function increment($key, $value) {
+		public function increment($key, $value)
+		{
 			return $this->foreachItem(__METHOD__, func_get_args());
 		}
 
-		private function foreachItem($method, $args){
+		private function foreachItem($method, $args)
+		{
 			foreach ($this->list as $val) {
-				call_user_func_array(array($val['obj'], $method), $args);
+				call_user_func_array(array($val, $method), $args);
 			}
 			
 			return $this;

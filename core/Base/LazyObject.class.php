@@ -10,7 +10,8 @@
 	****************************************************************************/
 
 	class LazyObject {
-		protected $inner = false;
+		protected $inner		= null;
+		protected $icallback	= null;
 
 		public function __construct($constructor)
 		{

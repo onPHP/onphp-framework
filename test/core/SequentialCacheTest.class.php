@@ -81,8 +81,6 @@
 			
 			$cache = new SequentialCache($slave1, $slave2);
 
-			$result = $cache->get("some_key");
-
-			$this->assertEquals($result, 'some_value');
+			$result = $cache->get("some_key");	//will be throw RuntimeException
 		}
 	}

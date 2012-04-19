@@ -2,8 +2,8 @@
 	
 	final class PinbaTest extends TestCase
 	{
-		protected $skipped = false;
-		public function setUp()
+		protected static $skipped = false;
+		public static function setUpBeforeClass()
 		{
 			if (!extension_loaded('pinba'))
 				$this->skip('The pinba extension is not available.');
@@ -18,7 +18,7 @@
 			if (!ini_get('runkit.internal_override'))
 				$this->skip('The runkit.internal_override is not enabled (enabled it at php.ini).');
 			
-			if ($this->skipped)
+			if (self::$skipped)
 				return;
 				
 			runkit_function_rename('pinba_timer_start', 'pinba_timer_start_bak');
@@ -31,13 +31,12 @@
 		protected function skip($message)
 		{
 			$this->markTestSkipped($message);
-			$this->skipped = true;
+			self::$skipped = true;
 		}
 		
-		public function tearDown()
+		public static function tearDownAfterClass()
 		{
-			
-			if ($this->skipped)
+			if (self::$skipped)
 				return;
 			
 			runkit_function_rename('pinba_timer_start', 'pinba_timer_start_callback');
