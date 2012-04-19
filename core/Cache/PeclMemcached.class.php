@@ -25,8 +25,10 @@
 		
 		private $instance = null;
 		private $requestTimeout = null;
+		private $connectTimeout = null;
 		private $host = null;
 		private $port = null;
+		private $connected = false;
 		
 		/**
 		 * @return PeclMemcached
@@ -34,35 +36,49 @@
 		public static function create(
 			$host = Memcached::DEFAULT_HOST,
 			$port = Memcached::DEFAULT_PORT,
-			$timeout = PeclMemcached::DEFAULT_TIMEOUT
+			$connectTimeout = PeclMemcached::DEFAULT_TIMEOUT
 		)
 		{
-			return new self($host, $port, $timeout);
+			return new self($host, $port, $connectTimeout);
 		}
 		
 		public function __construct(
 			$host = Memcached::DEFAULT_HOST,
 			$port = Memcached::DEFAULT_PORT,
-			$timeout = PeclMemcached::DEFAULT_TIMEOUT
+			$connectTimeout = PeclMemcached::DEFAULT_TIMEOUT
 		)
 		{
-			$this->instance = new Memcache();
 			$this->host = $host;
 			$this->port = $port;
+			$this->connectTimeout = $connectTimeout;
+		}
+		
+		public function isAlive() {
+			$this->ensureConnected();
+			return parent::isAlive();
+		}
+		
+		protected function ensureConnected() {
+			if ($this->connected) 
+				return $this;
 			
+			$this->connected = true;
+			$this->instance = new Memcache();
 			try {
 				try {
-					$this->instance->pconnect($host, $port, $timeout);
+					$this->instance->pconnect($this->host, $this->port, $this->connectTimeout);
 				} catch (BaseException $e) {
-					$this->instance->connect($host, $port, $timeout);
+					$this->instance->connect($this->host, $this->port, $this->connectTimeout);
 				}
 				
-				$this->setTimeout($timeout);
-				
 				$this->alive = true;
+				$this->setTimeout($this->connectTimeout);
+				
 			} catch (BaseException $e) {
 				// bad luck.
 			}
+			
+			return $this;
 		}
 		
 		public function __destruct()
@@ -81,6 +97,7 @@
 		**/
 		public function clean()
 		{
+			$this->ensureConnected();
 			try {
 				$this->instance->flush();
 			} catch (BaseException $e) {
@@ -92,6 +109,7 @@
 		
 		public function increment($key, $value)
 		{
+			$this->ensureConnected();
 			try {
 				return $this->instance->increment($key, $value);
 			} catch (BaseException $e) {
@@ -101,6 +119,7 @@
 		
 		public function decrement($key, $value)
 		{
+			$this->ensureConnected();
 			try {
 				return $this->instance->decrement($key, $value);
 			} catch (BaseException $e) {
@@ -110,6 +129,7 @@
 		
 		public function getList($indexes)
 		{
+			$this->ensureConnected();
 			return
 				($return = $this->get($indexes))
 					? $return
@@ -118,6 +138,7 @@
 		
 		public function get($index)
 		{
+			$this->ensureConnected();
 			try {
 				return $this->instance->get($index);
 			} catch (BaseException $e) {
@@ -134,6 +155,7 @@
 		
 		public function delete($index)
 		{
+			$this->ensureConnected();
 			try {
 				// second parameter required, wrt new memcached protocol:
 				// delete key 0 (see process_delete_command in the memcached.c)
@@ -148,6 +170,7 @@
 		
 		public function append($key, $data)
 		{
+			$this->ensureConnected();
 			try {
 				return $this->instance->append($key, $data);
 			} catch (BaseException $e) {
@@ -161,6 +184,7 @@
 			$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
+			$this->ensureConnected();
 			try {
 				return
 					$this->instance->$action(
@@ -179,11 +203,12 @@
 		}
 		
 		/**
-		 * @param float $timeout time in seconds
+		 * @param float $requestTimeout time in seconds
 		 * @return \PeclMemcached 
 		 */
 		public function setTimeout($requestTimeout)
 		{
+			$this->ensureConnected();
 			$this->requestTimeout = $requestTimeout;
 			$this->instance->setServerParams($this->host, $this->port, $requestTimeout);
 			
@@ -195,7 +220,7 @@
 		 */
 		public function getTimeout()
 		{
-			return $this->timeout;
+			return $this->requestTimeout;
 		}
 	}
 ?>
