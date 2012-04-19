@@ -69,7 +69,7 @@
 				* @var $val CachePeer 
 				*/
 				$result = $val->get($key);
-				if ($result !== null) {
+				if (!empty($result) || $val->isAlive()) {
 					return $result;
 				}
 			}
