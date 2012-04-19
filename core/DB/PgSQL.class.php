@@ -195,6 +195,7 @@
 				'int4'			=> DataType::INTEGER,
 				'int8'			=> DataType::BIGINT,
 				'numeric'		=> DataType::NUMERIC,
+				'uuid'			=> DataType::UUID,
 				
 				'float4'		=> DataType::REAL,
 				'float8'		=> DataType::DOUBLE,
