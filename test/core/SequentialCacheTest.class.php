@@ -21,7 +21,7 @@
 
 			$slave2 = new PeclMemcached("165.34.176.221", "11211", 0.01);	//some not existing memcache
 
-			$cache = new SequentialCache($slave1, $slave1, $slave2, $alife_peer);
+			$cache = new SequentialCache($alife_peer, array($slave1, $slave2, $alife_peer));
 
 			$result = $cache->get("some_key");
 
@@ -37,7 +37,7 @@
 
 			$slave2 = new PeclMemcached("165.34.176.221", "11211", 0.01);	//some not existing memcache
 
-			$cache = new SequentialCache($alife_peer, $slave1, $slave1, $slave2);
+			$cache = new SequentialCache($alife_peer, array($slave1, $slave1, $slave2));
 
 			$result = $cache->get("some_key");
 
@@ -64,7 +64,7 @@
 			$slave1 = new PeclMemcached("35.143.65.241", "11211", 0.01);	//some not existing memcache
 			$slave2 = new PeclMemcached("165.34.176.221", "11211", 0.01);	//some not existing memcache
 			
-			$cache = new SequentialCache($slave1, $slave2);
+			$cache = new SequentialCache($slave1, array($slave2));
 
 			$result = $cache->get("some_key");	//will be throw RuntimeException
 		}
