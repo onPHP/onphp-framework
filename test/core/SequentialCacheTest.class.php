@@ -11,54 +11,45 @@
 
 	final class SequentialCacheTest extends TestCase
 	{
-		public function testMultiCacheMaterLast() {
+		public function testMultiCacheAliveLast()
+		{
 			$t = microtime(true);
-			$master = new PeclMemcached("127.0.0.1", "11211", 0.01);		//some existing memcached
-			$master->set('some_key', 'some_value');
+			$alife_peer = new PeclMemcached("127.0.0.1", "11211", 0.01);		//some existing memcached
+			$alife_peer->set('some_key', 'some_value');
 
-			$slave1 = new LazyObject(function(){
-				$obj = new PeclMemcached("35.143.65.241", "11211", 0.01);	//some not existing memcache
-				return $obj;
-			});
+			$slave1 = new PeclMemcached("35.143.65.241", "11211", 0.01);	//some not existing memcache
 
-			$slave2 = new LazyObject(function(){
-				$obj = new PeclMemcached("165.34.176.221", "11211", 0.01);	//some not existing memcache
-				return $obj;
-			});
+			$slave2 = new PeclMemcached("165.34.176.221", "11211", 0.01);	//some not existing memcache
 
-			$cache = new SequentialCache($slave1, $slave1, $slave2, $master);
+			$cache = new SequentialCache($slave1, $slave1, $slave2, $alife_peer);
 
 			$result = $cache->get("some_key");
 
 			$this->assertEquals($result, 'some_value');
 		}
 		
-		public function testMultiCacheMasterFirst() {
-			$master = new PeclMemcached("127.0.0.1", "11211", 0.01);		//some existing memcached
-			$master->set('some_key', 'some_value');
+		public function testMultiCacheAliveFirst()
+		{
+			$alife_peer = new PeclMemcached("127.0.0.1", "11211", 0.01);		//some existing memcached
+			$alife_peer->set('some_key', 'some_value');
 			
-			$slave1 = new LazyObject(function(){
-				$obj = new PeclMemcached("35.143.65.241", "11211", 0.01);	//some not existing memcache
-				return $obj;
-			});
+			$slave1 = new PeclMemcached("35.143.65.241", "11211", 0.01);	//some not existing memcache
 
-			$slave2 = new LazyObject(function(){
-				$obj = new PeclMemcached("165.34.176.221", "11211", 0.01);	//some not existing memcache
-				return $obj;
-			});
+			$slave2 = new PeclMemcached("165.34.176.221", "11211", 0.01);	//some not existing memcache
 
-			$cache = new SequentialCache($master, $slave1, $slave1, $slave2);
+			$cache = new SequentialCache($alife_peer, $slave1, $slave1, $slave2);
 
 			$result = $cache->get("some_key");
 
 			$this->assertEquals($result, 'some_value');
 		}
 		
-		public function testMultiCacheMasterOnly() {
-			$master = new PeclMemcached("127.0.0.1", "11211", 0.01);		//some existing memcached
-			$master->set('some_key', 'some_value');
+		public function testMultiCacheAliveOnly()
+		{
+			$alife_peer = new PeclMemcached("127.0.0.1", "11211", 0.01);		//some existing memcached
+			$alife_peer->set('some_key', 'some_value');
 			
-			$cache = new SequentialCache($master);
+			$cache = new SequentialCache($alife_peer);
 
 			$result = $cache->get("some_key");
 
@@ -68,16 +59,10 @@
 		/**
 		 * @expectedException RuntimeException 
 		 */
-		public function testMultiCacheNoMaster() {
-			$slave1 = new LazyObject(function(){
-				$obj = new PeclMemcached("35.143.65.241", "11211", 0.01);	//some not existing memcache
-				return $obj;
-			});
-
-			$slave2 = new LazyObject(function(){
-				$obj = new PeclMemcached("165.34.176.221", "11211", 0.01);	//some not existing memcache
-				return $obj;
-			});
+		public function testMultiCacheNoAlive()
+		{
+			$slave1 = new PeclMemcached("35.143.65.241", "11211", 0.01);	//some not existing memcache
+			$slave2 = new PeclMemcached("165.34.176.221", "11211", 0.01);	//some not existing memcache
 			
 			$cache = new SequentialCache($slave1, $slave2);
 

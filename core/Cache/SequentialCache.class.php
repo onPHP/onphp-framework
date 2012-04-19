@@ -9,7 +9,7 @@
  *                                                                          *
  ****************************************************************************/
 
-	class SequentialCache extends CachePeer
+	final class SequentialCache extends CachePeer
 	{
 		protected $list = array();
 

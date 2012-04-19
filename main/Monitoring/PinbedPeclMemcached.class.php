@@ -23,7 +23,7 @@
 		public static function create(
 			$host = Memcached::DEFAULT_HOST,
 			$port = Memcached::DEFAULT_PORT,
-			$timeout = PeclMemcached::DEFAULT_TIMEOUT
+			$connectTimeout = PeclMemcached::DEFAULT_TIMEOUT
 		)
 		{
 			return new self($host, $port);
@@ -32,7 +32,7 @@
 		public function __construct(
 			$host = Memcached::DEFAULT_HOST,
 			$port = Memcached::DEFAULT_PORT,
-			$timeout = PeclMemcached::DEFAULT_TIMEOUT
+			$connectTimeout = PeclMemcached::DEFAULT_TIMEOUT
 		)
 		{
 			$this->host = $host;
@@ -44,7 +44,7 @@
 					array('pecl_memcached_connect' => $host.'_'.$port)
 				);
 			
-			parent::__construct($host, $port, $timeout);
+			parent::__construct($host, $port, $connectTimeout);
 			
 			if (PinbaClient::isEnabled())
 				PinbaClient::me()->timerStop(
