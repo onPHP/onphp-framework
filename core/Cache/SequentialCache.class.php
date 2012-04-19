@@ -68,15 +68,9 @@
 				/**
 				* @var $val CachePeer 
 				*/
-				try {
-					if ($val->isAlive()) {
-						$result = $val->get($key);
-						if ($val->isAlive()) {
-							return $result;
-						}
-					}
-				} catch (Exception $e) {
-					//go next...
+				$result = $val->get($key);
+				if ($result !== null) {
+					return $result;
 				}
 			}
 			throw new RuntimeException("All peers are dead");
