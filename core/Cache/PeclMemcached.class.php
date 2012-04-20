@@ -28,7 +28,7 @@
 		private $connectTimeout = null;
 		private $host = null;
 		private $port = null;
-		private $connected = false;
+		private $triedConnect = false;
 		
 		/**
 		 * @return PeclMemcached
@@ -67,6 +67,7 @@
 		public function isAlive()
 		{
 			$this->ensureConnected();
+			
 			return parent::isAlive();
 		}
 		
@@ -187,10 +188,10 @@
 		}
 		
 		protected function ensureConnected() {
-			if ($this->connected) 
+			if ($this->triedConnect) 
 				return $this;
 			
-			$this->connected = true;
+			$this->triedConnect = true;
 			$this->instance = new Memcache();
 			
 			try {
