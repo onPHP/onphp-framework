@@ -132,4 +132,3 @@
 	{
 		return RunkitCallback::stop($id);
 	}
-?>
