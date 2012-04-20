@@ -707,9 +707,10 @@
 			try {
 				TestBinaryStuff::dao()->import($bin);
 			} catch (DatabaseException $e) {
-				return $this->fail();
+				return $this->fail($e->getMessage());
 			}
 			
+			TestBinaryStuff::dao()->dropIdentityMap();
 			Cache::me()->clean();
 			
 			$prm = Primitive::prototypedIdentifier('TestBinaryStuff', 'id');
@@ -726,7 +727,7 @@
 			try {
 				$integerIdPrimitive->import(array('id' => 'string-instead-of-integer'));
 			} catch (DatabaseException $e) {
-				return $this->fail();
+				return $this->fail($e->getMessage());
 			}
 		}
 		
