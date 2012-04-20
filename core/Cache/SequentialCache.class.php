@@ -32,7 +32,7 @@
 		 * @param CachePeer $master
 		 * @param array $slaves or CachePeer
 		 */
-		public function __construct($master, $slaves = array())
+		public function __construct(CachePeer $master, $slaves = array())
 		{
 			$this->setMaster($master);
 			
@@ -46,7 +46,7 @@
 		 * @param array $slaves or CachePeer
 		 * @return SequentialCache 
 		 */
-		public static function create($master, $slaves = array())
+		public static function create(CachePeer $master, $slaves = array())
 		{
 			return new self($master, $slaves);
 		}
