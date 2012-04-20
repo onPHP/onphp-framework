@@ -3,6 +3,7 @@
 	final class PinbaTest extends TestCase
 	{
 		protected static $skipped = false;
+		
 		public static function setUpBeforeClass()
 		{
 			if (!extension_loaded('pinba'))
