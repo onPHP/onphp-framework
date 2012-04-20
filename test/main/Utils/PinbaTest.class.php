@@ -2,8 +2,8 @@
 	
 	final class PinbaTest extends TestCase
 	{
-		protected static $skipMessage = 'unknown error';
-		protected static $skipped = false;
+		protected static $skipMessage	= 'unknown error';
+		protected static $skipped		= false;
 		
 		public static function setUpBeforeClass()
 		{
@@ -39,7 +39,8 @@
 			runkit_function_rename('pinba_timer_stop_bak', 'pinba_timer_stop');
 		}
 		
-		public function setUp(){
+		public function setUp()
+		{
 			if (self::$skipped) {
 				$this->markTestSkipped(self::$skipMessage);
 			}
@@ -92,7 +93,10 @@
 			self::$log[] = $tags;
 			end(self::$log);
 			
-			if (!empty($tags['treeParentId']) && $tags['treeParentId'] != "root") {
+			if (
+				!empty($tags['treeParentId'])
+				&& $tags['treeParentId'] != "root"
+			) {
 				if ($tags['treeParentId'] != end(self::$queue)) {
 					throw new Exception('Error generatin tree');
 				}
@@ -119,11 +123,13 @@
 		}
 	}
 	
-	function pinba_timer_start_callback ($tags, $data = array()) {
+	function pinba_timer_start_callback ($tags, $data = array())
+	{
 		return RunkitCallback::start($tags, $data);
 	}
 
-	function pinba_timer_stop_callback($id){
+	function pinba_timer_stop_callback($id)
+	{
 		return RunkitCallback::stop($id);
 	}
 ?>
