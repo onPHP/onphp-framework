@@ -23,12 +23,12 @@
 		const DEFAULT_HOST		= '127.0.0.1';
 		const DEFAULT_TIMEOUT	= 1;
 		
-		private $instance = null;
+		private $instance		= null;
 		private $requestTimeout = null;
 		private $connectTimeout = null;
-		private $host = null;
-		private $port = null;
-		private $triedConnect = false;
+		private $host			= null;
+		private $port			= null;
+		private $triedConnect	= false;
 		
 		/**
 		 * @return PeclMemcached
@@ -187,7 +187,8 @@
 			return $this->requestTimeout;
 		}
 		
-		protected function ensureTriedToConnect() {
+		protected function ensureTriedToConnect()
+		{
 			if ($this->triedConnect) 
 				return $this;
 			
