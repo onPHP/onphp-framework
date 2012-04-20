@@ -79,16 +79,14 @@
 		public function get($key)
 		{
 			foreach ($this->list as $val) {
-				/**
-				* @var $val CachePeer 
-				*/
+				/* @var $val CachePeer */
 				$result = $val->get($key);
 				
 				if (!empty($result) || $val->isAlive()) {
 					return $result;
 				}
 			}
-			throw new RuntimeException("All peers are dead");
+			throw new RuntimeException('All peers are dead');
 		}
 
 		public function append($key, $data)
@@ -98,7 +96,7 @@
 
 		public function decrement($key, $value)
 		{
-			throw new UnsupportedMethodException("decrement is not supported");
+			throw new UnsupportedMethodException('decrement is not supported');
 		}
 
 		public function delete($key)
@@ -108,7 +106,7 @@
 
 		public function increment($key, $value)
 		{
-			throw new UnsupportedMethodException("increment is not supported");
+			throw new UnsupportedMethodException('increment is not supported');
 		}
 		
 		protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
