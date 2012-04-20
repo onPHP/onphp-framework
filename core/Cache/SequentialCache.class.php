@@ -33,7 +33,7 @@
 		 * @param array $slaves or CachePeer
 		 * @return SequentialCache 
 		 */
-		public static function create(CachePeer $master, $slaves = array())
+		public static function create(CachePeer $master, array $slaves = array())
 		{
 			return new self($master, $slaves);
 		}
@@ -42,7 +42,7 @@
 		 * @param CachePeer $master
 		 * @param array $slaves or CachePeer
 		 */
-		public function __construct(CachePeer $master, $slaves = array())
+		public function __construct(CachePeer $master, array $slaves = array())
 		{
 			$this->setMaster($master);
 			
@@ -89,6 +89,7 @@
 					return $result;
 				}
 			}
+			
 			throw new RuntimeException('All peers are dead');
 		}
 
@@ -117,14 +118,14 @@
 			return $this->foreachItem(__METHOD__, func_get_args());
 		}
 
-		private function foreachItem($method, $args)
+		private function foreachItem($method, array $args)
 		{
 			$result = true;
 			
 			foreach ($this->list as $val) {
-				$result &= call_user_func_array(array($val, $method), $args);
+				$result = call_user_func_array(array($val, $method), $args) && $result;
 			}
 			
-			return (bool)$result;
+			return $result;
 		}
 	}

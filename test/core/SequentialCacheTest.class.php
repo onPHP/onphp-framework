@@ -13,7 +13,6 @@
 	{
 		public function testMultiCacheAliveLast()
 		{
-			$t = microtime(true);
 			$alife_peer = new PeclMemcached("127.0.0.1", "11211", 0.01);		//some existing memcached
 			$alife_peer->set('some_key', 'some_value');
 

@@ -13,9 +13,8 @@
 			if (!PinbaClient::isEnabled())
 				return self::skip('The pinba is not enabled at php.ini (pinba.enabled=1).');
 			
-			if (!extension_loaded('runkit')) {
+			if (!extension_loaded('runkit'))
 				return self::skip('The runkit extension is not available.');
-			}
 			
 			if (!ini_get('runkit.internal_override'))
 				return self::skip('The runkit.internal_override is not enabled (enabled it at php.ini).');
@@ -88,7 +87,7 @@
 		public static $queue = array();
 		public static $log = array();
 		
-		public static function start($tags, $data = array())
+		public static function start($tags, array $data = array())
 		{
 			self::$log[] = $tags;
 			end(self::$log);
@@ -123,7 +122,7 @@
 		}
 	}
 	
-	function pinba_timer_start_callback ($tags, $data = array())
+	function pinba_timer_start_callback ($tags, array $data = array())
 	{
 		return RunkitCallback::start($tags, $data);
 	}
