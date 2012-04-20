@@ -109,7 +109,7 @@
 			}
 		}
 		
-		public function getList(array $indexes)
+		public function getList($indexes)
 		{
 			$this->ensureTriedToConnect();
 			
