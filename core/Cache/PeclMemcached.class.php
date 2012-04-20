@@ -53,34 +53,6 @@
 			$this->connectTimeout = $connectTimeout;
 		}
 		
-		public function isAlive() {
-			$this->ensureConnected();
-			return parent::isAlive();
-		}
-		
-		protected function ensureConnected() {
-			if ($this->connected) 
-				return $this;
-			
-			$this->connected = true;
-			$this->instance = new Memcache();
-			try {
-				try {
-					$this->instance->pconnect($this->host, $this->port, $this->connectTimeout);
-				} catch (BaseException $e) {
-					$this->instance->connect($this->host, $this->port, $this->connectTimeout);
-				}
-				
-				$this->alive = true;
-				$this->setTimeout($this->connectTimeout);
-				
-			} catch (BaseException $e) {
-				// bad luck.
-			}
-			
-			return $this;
-		}
-		
 		public function __destruct()
 		{
 			if ($this->alive) {
@@ -92,12 +64,19 @@
 			}
 		}
 		
+		public function isAlive()
+		{
+			$this->ensureConnected();
+			return parent::isAlive();
+		}
+		
 		/**
 		 * @return PeclMemcached
 		**/
 		public function clean()
 		{
 			$this->ensureConnected();
+			
 			try {
 				$this->instance->flush();
 			} catch (BaseException $e) {
@@ -121,6 +100,7 @@
 		public function decrement($key, $value)
 		{
 			$this->ensureConnected();
+			
 			try {
 				return $this->instance->decrement($key, $value);
 			} catch (BaseException $e) {
@@ -131,6 +111,7 @@
 		public function getList($indexes)
 		{
 			$this->ensureConnected();
+			
 			return
 				($return = $this->get($indexes))
 					? $return
@@ -140,6 +121,7 @@
 		public function get($index)
 		{
 			$this->ensureConnected();
+			
 			try {
 				return $this->instance->get($index);
 			} catch (BaseException $e) {
@@ -157,6 +139,7 @@
 		public function delete($index)
 		{
 			$this->ensureConnected();
+			
 			try {
 				// second parameter required, wrt new memcached protocol:
 				// delete key 0 (see process_delete_command in the memcached.c)
@@ -172,30 +155,9 @@
 		public function append($key, $data)
 		{
 			$this->ensureConnected();
+			
 			try {
 				return $this->instance->append($key, $data);
-			} catch (BaseException $e) {
-				return $this->alive = false;
-			}
-			
-			Assert::isUnreachable();
-		}
-		
-		protected function store(
-			$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
-		)
-		{
-			$this->ensureConnected();
-			try {
-				return
-					$this->instance->$action(
-						$key,
-						$value,
-						$this->compress
-							? MEMCACHE_COMPRESSED
-							: false,
-						$expires
-					);
 			} catch (BaseException $e) {
 				return $this->alive = false;
 			}
@@ -223,5 +185,53 @@
 		{
 			return $this->requestTimeout;
 		}
+		
+		protected function ensureConnected() {
+			if ($this->connected) 
+				return $this;
+			
+			$this->connected = true;
+			$this->instance = new Memcache();
+			
+			try {
+				
+				try {
+					$this->instance->pconnect($this->host, $this->port, $this->connectTimeout);
+				} catch (BaseException $e) {
+					$this->instance->connect($this->host, $this->port, $this->connectTimeout);
+				}
+				
+				$this->alive = true;
+				$this->setTimeout($this->connectTimeout);
+				
+			} catch (BaseException $e) {
+				// bad luck.
+			}
+			
+			return $this;
+		}
+		
+		protected function store(
+			$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
+		)
+		{
+			$this->ensureConnected();
+			try {
+				return
+					$this->instance->$action(
+						$key,
+						$value,
+						$this->compress
+							? MEMCACHE_COMPRESSED
+							: false,
+						$expires
+					);
+			} catch (BaseException $e) {
+				return $this->alive = false;
+			}
+			
+			Assert::isUnreachable();
+		}
+		
 	}
 ?>

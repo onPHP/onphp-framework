@@ -31,6 +31,16 @@
 		/**
 		 * @param CachePeer $master
 		 * @param array $slaves or CachePeer
+		 * @return SequentialCache 
+		 */
+		public static function create(CachePeer $master, $slaves = array())
+		{
+			return new self($master, $slaves);
+		}
+		
+		/**
+		 * @param CachePeer $master
+		 * @param array $slaves or CachePeer
 		 */
 		public function __construct(CachePeer $master, $slaves = array())
 		{
@@ -39,16 +49,6 @@
 			foreach ($slaves as $cache) {
 				$this->addPeer($cache);
 			}
-		}
-		
-		/**
-		 * @param CachePeer $master
-		 * @param array $slaves or CachePeer
-		 * @return SequentialCache 
-		 */
-		public static function create(CachePeer $master, $slaves = array())
-		{
-			return new self($master, $slaves);
 		}
 		
 		/**
@@ -83,16 +83,12 @@
 				* @var $val CachePeer 
 				*/
 				$result = $val->get($key);
+				
 				if (!empty($result) || $val->isAlive()) {
 					return $result;
 				}
 			}
 			throw new RuntimeException("All peers are dead");
-		}
-
-		protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
-		{
-			return $this->foreachItem(__METHOD__, func_get_args());
 		}
 
 		public function append($key, $data)
@@ -114,10 +110,16 @@
 		{
 			throw new UnsupportedMethodException("increment is not supported");
 		}
+		
+		protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
+		{
+			return $this->foreachItem(__METHOD__, func_get_args());
+		}
 
 		private function foreachItem($method, $args)
 		{
 			$result = true;
+			
 			foreach ($this->list as $val) {
 				$result &= call_user_func_array(array($val, $method), $args);
 			}
