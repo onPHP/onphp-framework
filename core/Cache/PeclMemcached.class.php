@@ -110,6 +110,7 @@
 		public function increment($key, $value)
 		{
 			$this->ensureConnected();
+			
 			try {
 				return $this->instance->increment($key, $value);
 			} catch (BaseException $e) {

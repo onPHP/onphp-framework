@@ -28,6 +28,10 @@
 		 */
 		protected $master	= null;
 
+		/**
+		 * @param CachePeer $master
+		 * @param array $slaves or CachePeer
+		 */
 		public function __construct($master, $slaves = array())
 		{
 			$this->setMaster($master);
@@ -35,6 +39,16 @@
 			foreach ($slaves as $cache) {
 				$this->addPeer($cache);
 			}
+		}
+		
+		/**
+		 * @param CachePeer $master
+		 * @param array $slaves or CachePeer
+		 * @return SequentialCache 
+		 */
+		public static function create($master, $slaves = array())
+		{
+			return new self($master, $slaves);
 		}
 		
 		/**
@@ -88,7 +102,7 @@
 
 		public function decrement($key, $value)
 		{
-			return $this->foreachItem(__METHOD__, func_get_args());
+			throw new UnsupportedMethodException("decrement is not supported");
 		}
 
 		public function delete($key)
@@ -98,15 +112,16 @@
 
 		public function increment($key, $value)
 		{
-			return $this->foreachItem(__METHOD__, func_get_args());
+			throw new UnsupportedMethodException("increment is not supported");
 		}
 
 		private function foreachItem($method, $args)
 		{
+			$result = true;
 			foreach ($this->list as $val) {
-				call_user_func_array(array($val, $method), $args);
+				$result &= call_user_func_array(array($val, $method), $args);
 			}
 			
-			return $this;
+			return (bool)$result;
 		}
 	}
