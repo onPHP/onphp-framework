@@ -15,18 +15,18 @@
 		 * List of all peers, including master
 		 * @var array of CachePeer
 		 */
-		protected $list		= array();
+		private $list		= array();
 		
 		/**
 		 * List of slaves only
 		 * @var array of CachePeer
 		 */
-		protected $slaves	= array();
+		private $slaves	= array();
 		
 		/**
 		 * @var CachePeer
 		 */
-		protected $master	= null;
+		private $master	= null;
 
 		/**
 		 * @param CachePeer $master
@@ -122,8 +122,9 @@
 		{
 			$result = true;
 			
-			foreach ($this->list as $val) {
-				$result = call_user_func_array(array($val, $method), $args) && $result;
+			foreach ($this->list as $peer) {
+				/* @var $peer CachePeer */
+				$result = call_user_func_array(array($peer, $method), $args) && $result;
 			}
 			
 			return $result;

@@ -218,6 +218,7 @@
 		)
 		{
 			$this->ensureTriedToConnect();
+			
 			try {
 				return
 					$this->instance->$action(
