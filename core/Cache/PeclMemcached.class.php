@@ -66,7 +66,7 @@
 		
 		public function isAlive()
 		{
-			$this->ensureConnected();
+			$this->ensureTriedToConnect();
 			
 			return parent::isAlive();
 		}
@@ -76,7 +76,7 @@
 		**/
 		public function clean()
 		{
-			$this->ensureConnected();
+			$this->ensureTriedToConnect();
 			
 			try {
 				$this->instance->flush();
@@ -89,7 +89,7 @@
 		
 		public function increment($key, $value)
 		{
-			$this->ensureConnected();
+			$this->ensureTriedToConnect();
 			
 			try {
 				return $this->instance->increment($key, $value);
@@ -100,7 +100,7 @@
 		
 		public function decrement($key, $value)
 		{
-			$this->ensureConnected();
+			$this->ensureTriedToConnect();
 			
 			try {
 				return $this->instance->decrement($key, $value);
@@ -111,7 +111,7 @@
 		
 		public function getList($indexes)
 		{
-			$this->ensureConnected();
+			$this->ensureTriedToConnect();
 			
 			return
 				($return = $this->get($indexes))
@@ -121,7 +121,7 @@
 		
 		public function get($index)
 		{
-			$this->ensureConnected();
+			$this->ensureTriedToConnect();
 			
 			try {
 				return $this->instance->get($index);
@@ -139,7 +139,7 @@
 		
 		public function delete($index)
 		{
-			$this->ensureConnected();
+			$this->ensureTriedToConnect();
 			
 			try {
 				// second parameter required, wrt new memcached protocol:
@@ -155,7 +155,7 @@
 		
 		public function append($key, $data)
 		{
-			$this->ensureConnected();
+			$this->ensureTriedToConnect();
 			
 			try {
 				return $this->instance->append($key, $data);
@@ -172,7 +172,7 @@
 		 */
 		public function setTimeout($requestTimeout)
 		{
-			$this->ensureConnected();
+			$this->ensureTriedToConnect();
 			$this->requestTimeout = $requestTimeout;
 			$this->instance->setServerParams($this->host, $this->port, $requestTimeout);
 			
@@ -187,7 +187,7 @@
 			return $this->requestTimeout;
 		}
 		
-		protected function ensureConnected() {
+		protected function ensureTriedToConnect() {
 			if ($this->triedConnect) 
 				return $this;
 			
@@ -216,7 +216,7 @@
 			$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			$this->ensureConnected();
+			$this->ensureTriedToConnect();
 			try {
 				return
 					$this->instance->$action(
