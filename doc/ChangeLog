@@ -2,6 +2,13 @@
 	
 	* core/OSQL/DBColumn.class.php: Fix DBColumn
 
+2012-04-20
+	* test/main/OsqlSelectTest.class.php,
+	core/SQLFullOuterJoin.class.php,
+	core/Joiner.class.php
+	core/SelectQuery.class.php:
+	Full outer join capability in select query
+
 2012-04-12	Evgeny V. Kokovikhin
 
 	* test/main/Utils/PinbaTest.class.php, main/Monitoring/PinbaClient.class.php:
