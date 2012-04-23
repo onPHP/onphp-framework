@@ -53,5 +53,73 @@
 				.'FROM "test_table"'
 			);
 		}
+
+		public function testSelectJoin()
+		{
+			$dialect = PostgresDialect::me();
+
+			$joinTypeList = array(
+				'JOIN ' => 'join',
+				'LEFT JOIN ' => 'leftJoin',
+				'RIGHT JOIN ' => 'rightJoin',
+				'FULL OUTER JOIN ' => 'fullOuterJoin'
+			);
+
+			$joinExpression =
+				Expression::eq(
+					DBField::create('joinField', 'table1'),
+					DBField::create('joinField', 'table2')
+				);
+
+			$baseRawQuery =
+					'SELECT '
+						.'"table1"."field1", '
+						.'"table2"."field2" '
+					.'FROM "table1" ';
+
+
+			foreach ($joinTypeList as $sqlJoin => $method) {
+				$query =
+					$this->getBaseJoinSelect()->{$method}('table2', $joinExpression);
+
+				$rawQuery =
+					$baseRawQuery
+					.$sqlJoin
+					.'"table2" ON ("table1"."joinField" = "table2"."joinField")';
+
+				$this->assertEquals(
+					$rawQuery,
+					$query->toDialectString($dialect)
+				);
+
+				$query =
+					$this->getBaseJoinSelect()->{$method}(
+						'table2',
+						$joinExpression,
+						'table2'
+					);
+
+				$rawQuery =
+					$baseRawQuery
+					.$sqlJoin
+					.'"table2" AS "table2" '
+					.'ON ("table1"."joinField" = "table2"."joinField")';
+
+				$this->assertEquals(
+					$rawQuery,
+					$query->toDialectString($dialect)
+				);
+			}
+		}
+
+		private function getBaseJoinSelect()
+		{
+			return
+				OSQL::select()->
+				from('table1')->
+				get(DBField::create('field1', 'table1'))->
+				get(DBField::create('field2', 'table2'));
+		}
+
 	}
 ?>

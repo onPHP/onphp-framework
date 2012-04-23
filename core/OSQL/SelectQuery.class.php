@@ -131,6 +131,23 @@
 			
 			return $this;
 		}
+
+		/**
+		 * @param $table
+		 * @param LogicalObject $logic
+		 * @param null $alias
+		 * @return SelectQuery
+		 */
+		public function fullOuterJoin($table, LogicalObject $logic, $alias = null)
+		{
+			$this->joiner->fullOuterJoin(
+				new SQLFullOuterJoin($table, $logic, $alias)
+			);
+
+			$this->aliases[$alias] = true;
+
+			return $this;
+		}
 		
 		/**
 		 * @return SelectQuery

@@ -70,6 +70,18 @@
 			
 			return $this;
 		}
+
+		/**
+		 * @param SQLFullOuterJoin $join
+		 * @return Joiner
+		 */
+		public function fullOuterJoin(SQLFullOuterJoin $join)
+		{
+			$this->from[] = $join;
+			$this->tables[$join->getTable()] = true;
+
+			return $this;
+		}
 		
 		public function getFirstTable()
 		{
