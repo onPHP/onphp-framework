@@ -70,7 +70,7 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 
 	public function addNotEq($field, $value) {
 		$this->conditions[] = array(
-			self::C_TYPE	=> self::EXP_EQ,
+			self::C_TYPE	=> self::EXP_NOTEQ,
 			self::C_FIELD	=> (string)$field,
 			self::C_VALUE	=> Assert::checkInteger($value) ? (int)$value : $value,
 		);
