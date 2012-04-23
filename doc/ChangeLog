@@ -2,7 +2,8 @@
 	
 	* core/OSQL/DBColumn.class.php: Fix DBColumn
 
-2012-04-20
+2012-04-20 Timofey A. Anisimov
+
 	* test/main/OsqlSelectTest.class.php,
 	core/SQLFullOuterJoin.class.php,
 	core/Joiner.class.php
