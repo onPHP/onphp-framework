@@ -307,13 +307,13 @@ class MongoBase extends NoSQL {
 			'out'		=> array('inline' => 1)
 		);
 		// обрабатываем критерию
-		if( !is_null($options[self::C_QUERY]) ) {
+		if( !empty($options[self::C_QUERY]) ) {
 			$command['query'] = $options[self::C_QUERY];
 		}
-		if( !is_null($options[self::C_ORDER]) ) {
+		if( !empty($options[self::C_ORDER]) ) {
 			$command['sort'] = $options[self::C_ORDER];
 		}
-		if( !is_null($options[self::C_LIMIT]) ) {
+		if( !empty($options[self::C_LIMIT]) ) {
 			$command['limit'] = $options[self::C_LIMIT];
 		}
 
