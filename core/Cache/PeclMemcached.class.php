@@ -204,7 +204,6 @@
 				}
 				
 				$this->alive = true;
-				$this->setTimeout($this->connectTimeout);
 				
 			} catch (BaseException $e) {
 				// bad luck.
