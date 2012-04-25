@@ -29,8 +29,7 @@
 		 */
 		public static function create($id)
 		{
-			$className = get_called_class();
-			return new $className($id);
+			return new static($id);
 		}
 
 		public function __construct($id)
@@ -45,11 +44,9 @@
 		 */
 		protected function setInternalId($id)
 		{
-			$names = static::$names;
-
-			if (isset($names[$id])) {
+			if (isset(static::$names[$id])) {
 				$this->id = $id;
-				$this->name = $names[$id];
+				$this->name = static::$names[$id];
 			} else
 				throw new MissingElementException(
 					'knows nothing about such id == '.$id
