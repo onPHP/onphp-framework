@@ -12,14 +12,14 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	class PrimitiveEnum extends IdentifiablePrimitive
+	class PrimitiveEnum extends IdentifiablePrimitive implements ListedPrimitive
 	{
 		public function getList()
 		{
 			if ($this->value)
-				return ClassUtils::callStaticMethod(get_class($this->value).'::getObjectList');
+				return ClassUtils::callStaticMethod(get_class($this->value).'::getList');
 			elseif ($this->default)
-				return ClassUtils::callStaticMethod(get_class($this->default).'::getObjectList');
+				return ClassUtils::callStaticMethod(get_class($this->default).'::getList');
 			else {
 				$object = new $this->className(
 					ClassUtils::callStaticMethod($this->className.'::getAnyId')
@@ -60,16 +60,11 @@
 		
 		public function import($scope)
 		{
-			if (!$this->className)
-				throw new WrongStateException(
-					"no class defined for PrimitiveEnum '{$this->name}'"
-				);
-			
 			$result = parent::import($scope);
 			
 			if ($result === true) {
 				try {
-					$this->value = new $this->className($this->value);
+					$this->value = $this->makeEnumById($this->value);
 				} catch (MissingElementException $e) {
 					$this->value = null;
 					
@@ -80,6 +75,58 @@
 			}
 			
 			return $result;
+		}
+
+		/**
+		 * @param $list
+		 * @throws UnsupportedMethodException
+		 */
+		public function setList($list)
+		{
+			throw new UnsupportedMethodException('you cannot set list here, it is impossible, because list getted from enum classes');
+		}
+
+		/**
+		 * @return null|string
+		 */
+		public function getChoiceValue()
+		{
+			if(
+				($value = $this->getValue() ) &&
+				$value instanceof Enum
+			)
+				return $value->getName();
+
+			return null;
+		}
+
+
+		/**
+		 * @return Enum|mixed|null
+		 */
+		public function getActualChoiceValue()
+		{
+			if(
+				!$this->getChoiceValue() &&
+				$this->getDefault()
+			)
+				return $this->getDefault()->getName();
+
+			return null;
+		}
+
+		/**
+		 * @param $id
+		 * @return Enum|mixed
+		 */
+		protected function makeEnumById($id)
+		{
+			if (!$this->className)
+				throw new WrongStateException(
+					"no class defined for PrimitiveEnum '{$this->name}'"
+				);
+
+			return new $this->className($id);
 		}
 	}
 ?>

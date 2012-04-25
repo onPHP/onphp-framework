@@ -13,16 +13,35 @@
 	{
 		public function testIntegerValues()
 		{
+			$defaultId = 2;
+			$importId = 1;
+
+			$default = MimeType::wrap($defaultId);
+			$imported = MimeType::wrap($importId);
+
 			$form =
 				Form::create()->
 				add(
-					Primitive::enum('enum')->of('MimeType')
+					Primitive::enum('enum')
+						->of('MimeType')
+						->setDefault($default)
 				);
 			
-			$form->import(array('enum' => '1'));
+			$form->import(array('enum' => $importId));
 			
-			$this->assertEquals($form->getValue('enum')->getId(), 1);
-			$this->assertSame($form->getValue('enum')->getId(), 1);
+			$this->assertEquals($form->getValue('enum')->getId(), $importId);
+			$this->assertSame($form->getValue('enum')->getId(), $importId);
+
+			$this->assertEquals($form->getChoiceValue('enum'), $imported->getName());
+			$this->assertSame($form->getChoiceValue('enum'), $imported->getName());
+
+			$form->clean();
+
+			$this->assertNull($form->getValue('enum'));
+			$this->assertNull($form->getChoiceValue('enum'));
+			$this->assertEquals($form->getActualValue('enum')->getId(), $defaultId);
+			$this->assertEquals($form->getActualChoiceValue('enum'), $default->getName());
+
 		}
 		
 		public function testGetList()
