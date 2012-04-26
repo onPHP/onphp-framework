@@ -1,8 +1,17 @@
+2012-04-26	Artem A. Naumenko, Evgeny V. Kokovikhin
+
+	* core/Base/Assert.class.php, core/Cache/PeclMemcached.class.php,
+	main/Monitoring/PinbedPeclMemcached.class.php, test/main/Utils/PinbaTest.class.php,
+	core/Cache/SequentialCache.class.php,
+	test/core/SequentialCacheTest.class.php:
+	Assert::isObject added, lazy ability to PeclMemcached, Pinba's tests tune,
+	Addd SequentialCache with tests.
+
 2012-04-22	Georgiy T. Kutsurua
 
 	* core/OSQL/DBColumn.class.php: Fix DBColumn
 
-2012-04-20 Timofey A. Anisimov
+2012-04-20	Timofey A. Anisimov
 
 	* test/main/OsqlSelectTest.class.php,
 	core/SQLFullOuterJoin.class.php,
