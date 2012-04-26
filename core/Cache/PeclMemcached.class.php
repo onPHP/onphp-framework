@@ -168,7 +168,7 @@
 		
 		/**
 		 * @param float $requestTimeout time in seconds
-		 * @return \PeclMemcached 
+		 * @return PeclMemcached
 		 */
 		public function setTimeout($requestTimeout)
 		{
