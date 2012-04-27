@@ -100,8 +100,10 @@ EOT;
 					$className = $property->getType()->getClassName();
 					
 					$isEnumeration =
-						$property->getType()->getClass()->getPattern()
-						instanceof EnumerationClassPattern;
+						(
+							$property->getType()->getClass()->getPattern() instanceof EnumerationClassPattern
+							|| $property->getType()->getClass()->getPattern() instanceof EnumClassPattern
+						);
 					
 					$fetchObjectString = $isEnumeration
 						? "new {$className}(\$this->{$name}Id)"
