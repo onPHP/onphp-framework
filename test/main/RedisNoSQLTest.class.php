@@ -41,7 +41,7 @@
 			$redis	= new RedisNoSQL('localhost', 6379);
 			$redis->delete('list');
 			
-			$list	= $redis->getList('list');
+			$list	= $redis->fetchList('list');
 			$this->assertEquals($list->count(), 0);
 			
 			$list->append('preved');
@@ -57,7 +57,7 @@
 			$redis	= new RedisNoSQL('localhost', 6379);
 			$redis->delete('list');
 			
-			$list	= $redis->getList('list');
+			$list	= $redis->fetchList('list');
 			$list->append('preved');
 			$list->append('medved');
 			
@@ -77,7 +77,7 @@
 			$redis	= new RedisNoSQL('localhost', 6379);
 			$redis->delete('list');
 			
-			$list	= $redis->getList('list');
+			$list	= $redis->fetchList('list');
 			$list->append('preved');
 			$list->append('medved');
 			
@@ -91,7 +91,7 @@
 			$redis	= new RedisNoSQL('localhost', 6379);
 			$redis->delete('list');
 			
-			$list	= $redis->getList('list');
+			$list	= $redis->fetchList('list');
 			
 			for ($i = 0; $i < 100; $i ++) {
 				$list->append(md5($i));
