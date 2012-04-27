@@ -50,8 +50,14 @@
 			
 			$this->redis = new redis();
 			
-			$this->alive = $this->redis->pconnect($this->host, $this->port, $this->timeout);
-			
+			$this->redis->pconnect($this->host, $this->port, $this->timeout);
+			$this->isAlive();
+		}
+		
+		public function isAlive()
+		{
+			$this->alive = $this->redis->ping() == '+PONG';
+			return parent::isAlive();
 		}
 
 		protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
@@ -109,7 +115,7 @@
 		 * 
 		 * @return RedisNoSQLList
 		 */
-		public function getList($key)
+		public function fetchList($key)
 		{
 			return new RedisNoSQLList($this->redis, $key);
 		}
@@ -119,7 +125,7 @@
 		 * 
 		 * @return ISet
 		 */
-		public function getSet($key)
+		public function fetchSet($key)
 		{
 			throw new NotImplementedException();
 		}
@@ -129,7 +135,7 @@
 		 * 
 		 * @return IHash
 		 */
-		public function getHash($key)
+		public function fetchHash($key)
 		{
 			throw new NotImplementedException();
 		}
