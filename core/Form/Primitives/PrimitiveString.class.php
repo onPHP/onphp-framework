@@ -21,6 +21,14 @@
 		const MD5_PATTERN	= '/^[0-9a-f]{32}$/';
 		
 		protected $pattern = null;
+
+		/**
+		 * @return null|string
+		 */
+		public function getAllowedPattern()
+		{
+			return $this->pattern;
+		}
 		
 		/**
 		 * @return PrimitiveString
