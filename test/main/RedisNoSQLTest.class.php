@@ -1,5 +1,14 @@
 <?php
-
+	/***************************************************************************
+	*   Copyright (C) 2012 by Artem Naumenko	                              *
+	*                                                                         *
+	*   This program is free software; you can redistribute it and/or modify  *
+	*   it under the terms of the GNU Lesser General Public License as        *
+	*   published by the Free Software Foundation; either version 3 of the    *
+	*   License, or (at your option) any later version.                       *
+	*                                                                         *
+	***************************************************************************/
+	
 	final class RedisNoSQLTest extends TestCase
 	{
 		public function setUp()
@@ -23,65 +32,65 @@
 			$result = $redis->get('some_key');
 			$this->assertEquals($result, false);
 			
-			$redis->delete("some_key");		//cleanup
+			$redis->delete('some_key');
 		}
 		
 		public function testList()
 		{
 			$redis	= new RedisNoSQL('localhost', 6379);
-			$redis->delete("list");		//ensure empty
+			$redis->delete('list');
 			
-			$list	= $redis->getList("list");
+			$list	= $redis->getList('list');
 			$this->assertEquals($list->count(), 0);
 			
-			$list->append("preved");
-			$list->append("medved");
+			$list->append('preved');
+			$list->append('medved');
 			
 			$this->assertEquals($list->count(), 2);
 			
-			$redis->delete("list");		//cleanup
+			$redis->delete('list');
 		}
 		
 		public function testListIterator()
 		{
 			$redis	= new RedisNoSQL('localhost', 6379);
-			$redis->delete("list");		//ensure empty
+			$redis->delete('list');
 			
-			$list	= $redis->getList("list");
-			$list->append("preved");
-			$list->append("medved");
+			$list	= $redis->getList('list');
+			$list->append('preved');
+			$list->append('medved');
 			
-			$string = "";
+			$string = '';
 			
 			foreach ($list as $val) {
-				$string .= $val."_";
+				$string .= $val.'_';
 			}
 			
-			$this->assertEquals($string, "preved_medved_");
+			$this->assertEquals($string, 'preved_medved_');
 			
-			$redis->delete("list");		//cleanup
+			$redis->delete('list');
 		}
 		
 		public function testListArrayAccess()
 		{
 			$redis	= new RedisNoSQL('localhost', 6379);
-			$redis->delete("list");		//ensure empty
+			$redis->delete('list');
 			
-			$list	= $redis->getList("list");
-			$list->append("preved");
-			$list->append("medved");
+			$list	= $redis->getList('list');
+			$list->append('preved');
+			$list->append('medved');
 			
-			$this->assertEquals($list[1], "medved");
+			$this->assertEquals($list[1], 'medved');
 			
-			$redis->delete("list");		//cleanup
+			$redis->delete('list');
 		}
 		
 		public function testListTrim()
 		{
 			$redis	= new RedisNoSQL('localhost', 6379);
-			$redis->delete("list");		//ensure empty
+			$redis->delete('list');
 			
-			$list	= $redis->getList("list");
+			$list	= $redis->getList('list');
 			
 			for ($i = 0; $i < 100; $i ++) {
 				$list->append(md5($i));
@@ -93,6 +102,6 @@
 			$this->assertEquals($list->count(), 10);
 			$this->assertEquals($list[0], md5(0));
 			
-			$redis->delete("list");		//cleanup
+			$redis->delete('list');
 		}
 	}
