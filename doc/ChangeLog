@@ -1,3 +1,8 @@
+2012-04-27	Georgiy T. Kutsurua
+
+	* core/Form/Primitives/PrimitiveString.class.php:
+		added method PrimitiveString::getAllowedPattern
+
 2012-04-26	Artem A. Naumenko, Evgeny V. Kokovikhin
 
 	* core/Base/Assert.class.php, core/Cache/PeclMemcached.class.php,
