@@ -1,3 +1,9 @@
+2012-03-26	Alexey S. Denisov
+	* core/Logic/BinaryExpression.class.php,
+		core/Logic/PostfixUnaryExpression.class.php,
+		core/Logic/PrefixUnaryExpression.class.php,
+		core/OSQL/SQLFunction.class.php: Added option noBrackets for binary/unary expressions
+
 2012-04-27	Georgiy T. Kutsurua
 
 	* core/Form/Primitives/PrimitiveString.class.php:
