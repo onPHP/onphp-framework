@@ -43,6 +43,15 @@
 		private $left	= null;
 		private $right	= null;
 		private $logic	= null;
+		private $brackets = true;
+		
+		/**
+		 * @return BinaryExpression
+		 */
+		public static function create($left, $right, $logic)
+		{
+			return new self($left, $right, $logic);
+		}
 		
 		public function __construct($left, $right, $logic)
 		{
@@ -66,14 +75,22 @@
 			return $this->logic;
 		}
 		
+		/**
+		 * @param boolean $noBrackets
+		 * @return BinaryExpression
+		 */
+		public function noBrackets($noBrackets = true)
+		{
+			$this->brackets = !$noBrackets;
+			return $this;
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
-			return
-				'('
-				.$dialect->toFieldString($this->left)
+			$sql = $dialect->toFieldString($this->left)
 				.' '.$dialect->logicToString($this->logic).' '
-				.$dialect->toValueString($this->right)
-				.')';
+				.$dialect->toValueString($this->right);
+			return $this->brackets ? "({$sql})" : $sql;
 		}
 		
 		/**
@@ -81,15 +98,18 @@
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
-			return new self(
+			$expression = new self(
 				$dao->guessAtom($this->left, $query),
 				$dao->guessAtom($this->right, $query),
 				$this->logic
 			);
+			
+			return $expression->noBrackets(!$this->brackets);
 		}
 		
 		public function toBoolean(Form $form)
 		{
+			Assert::isTrue($this->brackets, 'brackets must be enabled');
 			$left	= $form->toFormValue($this->left);
 			$right	= $form->toFormValue($this->right);
 			
