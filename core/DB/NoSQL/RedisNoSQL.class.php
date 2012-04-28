@@ -54,7 +54,7 @@
 			try {
 				$this->redis->pconnect($this->host, $this->port, $this->timeout);
 				$this->isAlive();
-			} catch (Exception $e) {
+			} catch (RedisException $e) {
 				$this->alive = false;
 			}
 		}
@@ -64,7 +64,7 @@
 			if ($this->alive) {
 				try {
 					$this->redis->close();		//if pconnect - it will be ignored
-				} catch (BaseException $e) {
+				} catch (RedisException $e) {
 					// shhhh.
 				}
 			}
@@ -74,7 +74,7 @@
 		{
 			try {
 				$this->redis->flushDB();
-			} catch (BaseException $e) {
+			} catch (RedisException $e) {
 				$this->alive = false;
 			}
 			
@@ -85,7 +85,7 @@
 		{
 			try {
 				$this->alive = $this->redis->ping() == '+PONG';
-			} catch (Exception $e) {
+			} catch (RedisException $e) {
 				$this->alive = false;
 			}
 			
@@ -96,7 +96,7 @@
 		{
 			try {
 				return $this->redis->append($key, $data);
-			} catch (Exception $e) {
+			} catch (RedisException $e) {
 				return $this->alive = false;
 			}
 		}
@@ -105,7 +105,7 @@
 		{
 			try {
 				return $this->redis->decrBy($key, $value);
-			} catch (Exception $e) {
+			} catch (RedisException $e) {
 				return null;
 			}
 		}
@@ -114,7 +114,7 @@
 		{
 			try {
 				return $this->redis->delete($key);
-			} catch (Exception $e) {
+			} catch (RedisException $e) {
 				return $this->alive = false;
 			}
 		}
@@ -123,7 +123,7 @@
 		{
 			try {
 				return $this->redis->get($key);
-			} catch (Exception $e) {
+			} catch (RedisException $e) {
 				$this->alive = false;
 				
 				return null;
@@ -134,7 +134,7 @@
 		{
 			try {
 				return $this->redis->incrBy($key, $value);
-			} catch (Exception $e) {
+			} catch (RedisException $e) {
 				return null;
 			}
 		}
@@ -176,14 +176,14 @@
 				case 'replace':
 					try {
 						return $this->redis->setEx($key, $expires, $value);
-					} catch (Exception $e) {
+					} catch (RedisException $e) {
 						return null;
 					}
 					
 				case 'add':
 					try {
 						return $this->redis->append($key, $value);
-					} catch (Exception $e) {
+					} catch (RedisException $e) {
 						return null;
 					}
 					
