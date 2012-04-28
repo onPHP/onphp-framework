@@ -109,6 +109,7 @@
 		
 		public function toBoolean(Form $form)
 		{
+			Assert::isTrue($this->brackets, 'brackets must be enabled');
 			$left	= $form->toFormValue($this->left);
 			$right	= $form->toFormValue($this->right);
 			

@@ -67,6 +67,7 @@
 		
 		public function toBoolean(Form $form)
 		{
+			Assert::isTrue($this->brackets, 'brackets must be enabled');
 			$subject = $form->toFormValue($this->subject);
 				
 			switch ($this->logic) {
