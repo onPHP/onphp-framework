@@ -9,7 +9,8 @@
 	*                                                                         *
 	***************************************************************************/
 
-	final class RedisNoSQL extends CachePeer {
+	final class RedisNoSQL extends CachePeer
+	{
 		const DEFAULT_HOST = 'localhost';
 		const DEFAULT_PORT = '6379';
 		const DEFAULT_TIMEOUT = 1.0;
@@ -48,66 +49,94 @@
 			$this->port		= $port;
 			$this->timeout	= $timeout;
 			
-			$this->redis = new redis();
+			$this->redis = new Redis();
 			
-			$this->redis->pconnect($this->host, $this->port, $this->timeout);
-			$this->isAlive();
+			try {
+				$this->redis->pconnect($this->host, $this->port, $this->timeout);
+				$this->isAlive();
+			} catch (Exception $e) {
+				$this->alive = false;
+			}
+		}
+		
+		public function __destruct()
+		{
+			if ($this->alive) {
+				try {
+					$this->redis->close();		//if pconnect - it will be ignored
+				} catch (BaseException $e) {
+					// shhhh.
+				}
+			}
+		}
+		
+		public function clean()
+		{
+			try {
+				$this->redis->flushDB();
+			} catch (BaseException $e) {
+				$this->alive = false;
+			}
+			
+			return parent::clean();
 		}
 		
 		public function isAlive()
 		{
-			$this->alive = $this->redis->ping() == '+PONG';
-			return parent::isAlive();
-		}
-
-		protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
-		{
-			switch ($action) {
-				case 'set':
-				case 'replace':
-					$this->redis->setEx($key, $expires, $value);
-					break;
-				case 'add':
-					$this->redis->append($key, $value);
-					break;
-				default:
-					throw new NotImplementedException();
+			try {
+				$this->alive = $this->redis->ping() == '+PONG';
+			} catch (Exception $e) {
+				$this->alive = false;
 			}
 			
-			return $this;
+			return parent::isAlive();
 		}
 
 		public function append($key, $data)
 		{
-			$this->redis->append($key, $data);
-			
-			return $this;
+			try {
+				return $this->redis->append($key, $data);
+			} catch (Exception $e) {
+				return $this->alive = false;
+			}
 		}
 
 		public function decrement($key, $value)
 		{
-			$this->redis->decrBy($key, $value);
-			
-			return $this;
+			try {
+				return $this->redis->decrBy($key, $value);
+			} catch (Exception $e) {
+				return null;
+			}
 		}
 
 		public function delete($key)
 		{
-			$this->redis->delete($key);
-			
-			return $this;
+			try {
+				return $this->redis->delete($key);
+			} catch (Exception $e) {
+				return $this->alive = false;
+			}
 		}
 
 		public function get($key)
 		{
-			return $this->redis->get($key);
+			try {
+				return $this->redis->get($key);
+			} catch (Exception $e) {
+				$this->alive = false;
+				
+				return null;
+			}
 		}
 
 		public function increment($key, $value)
 		{
-			$this->redis->incrBy($key, $value);
-			
-			return $this;
+			try {
+				return $this->redis->incrBy($key, $value);
+			} catch (Exception $e) {
+				return null;
+			}
 		}
 
 		/**
@@ -140,6 +169,27 @@
 			throw new NotImplementedException();
 		}
 		
-
+		protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
+		{
+			switch ($action) {
+				case 'set':
+				case 'replace':
+					try {
+						return $this->redis->setEx($key, $expires, $value);
+					} catch (Exception $e) {
+						return null;
+					}
+					
+				case 'add':
+					try {
+						return $this->redis->append($key, $value);
+					} catch (Exception $e) {
+						return null;
+					}
+					
+				default:
+					throw new NotImplementedException();
+			}
+		}
 	}
 
