@@ -142,5 +142,9 @@
 		{
 			throw new NotImplementedException();
 		}
+
+		public function seek($position) {
+			$this->position = $position;
+		}
 		//endregion
 	}

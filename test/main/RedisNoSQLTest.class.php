@@ -42,7 +42,7 @@
 			$redis->delete('list');
 			
 			$list	= $redis->fetchList('list');
-			$this->assertEquals($list->count(), 0);
+			$this->assertEquals(count($list), 0);
 			
 			$list->append('preved');
 			$list->append('medved');

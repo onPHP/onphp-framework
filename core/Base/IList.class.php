@@ -4,7 +4,7 @@
 	 * @copyright (C) 2012-2012 by Artem Naumenko
 	 */
 	 
-	interface IList extends Iterator, ArrayAccess
+	interface IList extends Iterator, ArrayAccess, Countable, SeekableIterator
 	{
 		/**
 		 * Push new list item to the tail of list
@@ -19,13 +19,6 @@
 		 * @return IList 
 		 */
 		public function prepend($value);
-		
-		/**
-		 * Returns count of items stored in list
-		 * 
-		 * @return int 
-		 */
-		public function count();
 		
 		/**
 		 * Trims $length items starting from @start
