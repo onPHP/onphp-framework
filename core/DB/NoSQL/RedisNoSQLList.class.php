@@ -48,7 +48,7 @@
 		 */
 		public function clear()
 		{
-			$this->redis->LTrim($this->key, 0, 2000000000);
+			$this->redis->LTrim($this->key, -1, 0);
 			
 			return $this;
 		}

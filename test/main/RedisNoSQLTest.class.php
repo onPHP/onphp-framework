@@ -105,4 +105,23 @@
 			
 			$redis->delete('list');
 		}
+		
+		public function testListClean()
+		{
+			$redis	= new RedisNoSQL('localhost', 6379);
+			$redis->delete('list');
+			
+			$list	= $redis->fetchList('list');
+			
+			for ($i = 0; $i < 100; $i ++) {
+				$list->append(md5($i));
+			}
+			
+			$this->assertEquals(count($list), 100);
+			$list->clear();
+			$this->assertEquals(count($list), 0);
+			$this->assertEquals($list->get(0), false);
+			
+			$redis->delete('list');
+		}
 	}
