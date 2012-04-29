@@ -244,6 +244,20 @@ class MongoBase extends NoSQL {
 			$this->mongoFind($options[self::C_TABLE], $options[self::C_QUERY], array(), $options[self::C_ORDER], $options[self::C_LIMIT], $options[self::C_SKIP]);
 	}
 
+	public function countByCriteria(Criteria $criteria) {
+		$options = $this->parseCriteria($criteria);
+
+		if( !isset($options[self::C_TABLE]) ) {
+			throw new NoSQLException('Can not find without table!');
+		}
+//		if( !isset($options[self::C_QUERY]) ) {
+//			throw new NoSQLException('Can not find without query!');
+//		}
+
+		return
+			$this->mongoCount($options[self::C_TABLE], $options[self::C_QUERY], array(), $options[self::C_ORDER], $options[self::C_LIMIT], $options[self::C_SKIP]);
+	}
+
 	protected function mongoFind($table, array $query, array $fields=array(), array $order=null, $limit=null, $skip=null) {
 		// quering
 		$cursor = $this->mongoMakeCursor($table, $query, $fields, $order, $limit, $skip);

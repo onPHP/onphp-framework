@@ -46,6 +46,7 @@ abstract class NoSQL extends DB {
 	abstract public function getIdListByField($table, $field, $value, Criteria $criteria = null);
 	abstract public function find($table, $query);
 	abstract public function findByCriteria(Criteria $criteria);
+	abstract public function countByCriteria(Criteria $criteria);
 
 	abstract public function mapReduce($table, $map, $reduce, Criteria $criteria=null);
 

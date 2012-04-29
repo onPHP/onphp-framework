@@ -141,6 +141,16 @@ abstract class NoSqlDAO extends StorableDAO {
 	}
 
 	/**
+	 * @param Criteria $criteria
+	 * @param int $expires
+	 * @return int
+	 */
+	public function getCountByCriteria(Criteria $criteria, $expires = Cache::DO_NOT_CACHE) {
+		$criteria->setDao( $this );
+		return $this->getLink()->countByCriteria($criteria);
+	}
+
+	/**
 	 * @param int $expires
 	 * @return array
 	 */
