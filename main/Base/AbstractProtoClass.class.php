@@ -196,11 +196,15 @@
 		/**
 		 * @return Form
 		**/
-		public function makeForm($prefix = null)
+		public function makeForm($prefix = null, $includeManyRelations = true)
 		{
 			$form = Form::create();
 
+			/** @var $property LightMetaProperty */
 			foreach ($this->getPropertyList() as $property) {
+				if($property->getRelationId()!=MetaRelation::ONE_TO_ONE && $includeManyRelations==false) {
+					continue;
+				}
 				$property->fillForm($form, $prefix);
 			}
 

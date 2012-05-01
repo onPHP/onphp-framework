@@ -245,6 +245,12 @@ abstract class NoSqlDAO extends StorableDAO {
 	public function add(Identifiable $object) {
 		$this->assertNoSqlObject( $object );
 
+		// converting object into Array
+		$arrayObj = $object->toArray();
+
+		// checking object completance
+		$this->checkNoSqlObject( $object );
+
 		// make sequence
 		$link = NoSqlPool::getByDao( $this );
 //		$object->setId(
@@ -258,12 +264,10 @@ abstract class NoSqlDAO extends StorableDAO {
 			$link
 				->insert(
 					$this->getTable(),
-					$object->toArray()
+					$arrayObj
 				);
 
 		$object->setId( $entity['id'] );
-		// проверка добавления
-		//$object = $this->getById( $entity['id'] );
 
 		return $object;
 	}
@@ -309,13 +313,19 @@ abstract class NoSqlDAO extends StorableDAO {
 	public function save(Identifiable $object) {
 		$this->assertNoSqlObject( $object );
 
+		// converting object into Array
+		$arrayObj = $object->toArray();
+
+		// checking object completance
+		$this->checkNoSqlObject( $object );
+
 		$link = NoSqlPool::getByDao( $this );
 		// save
 		$entity =
 			$link
 				->update(
 					$this->getTable(),
-					$object->toArray()
+					$arrayObj
 				);
 		$object->setId( $entity['id'] );
 
@@ -325,13 +335,19 @@ abstract class NoSqlDAO extends StorableDAO {
 	public function import(Identifiable $object) {
 		$this->assertNoSqlObject( $object );
 
+		// converting object into Array
+		$arrayObj = $object->toArray();
+
+		// checking object completance
+		$this->checkNoSqlObject( $object );
+
 		$link = NoSqlPool::getByDao( $this );
 		// insert
 		$entity =
 			$link
 				->insert(
 					$this->getTable(),
-					$object->toArray()
+					$arrayObj
 				);
 		$object->setId( $entity['id'] );
 		// проверка сохранения
@@ -449,8 +465,28 @@ abstract class NoSqlDAO extends StorableDAO {
 	}
 
 	/**
+	 * @param Identifiable $object
+	 * @return bool
+	 * @throws NoSQLException
+	 */
+	protected function checkNoSqlObject(Identifiable $object) {
+		$className = get_class($object);
+		// checking by proto
+		Assert::methodExists($className, 'proto');
+		/** @var $form Form */
+		$form = $className::proto()->makeForm(null, false);
+		FormUtils::object2form($object, $form);
+		if( $form->getErrors() ) {
+			throw new NoSQLException( 'Object does not have all required fields: '.var_export($form->getErrors(), true) );
+		}
+
+		return true;
+	}
+
+	/**
 	 * @param array $row
-	 * @param null $prefix
+	 * @param null  $prefix
+	 * @throws WrongStateException
 	 * @return Identifiable|Prototyped
 	 */
 	public function makeNoSqlObject($row, $prefix = null) {
