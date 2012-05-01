@@ -45,7 +45,6 @@
 
 		public function makeOnlyObject($array, $prefix = null)
 		{
-			FirePHP::me()->log($array);
 			// adding incomplete object to identity map
 			// solves case with circular-dependent objects
 			return $this->addObjectToMap(
