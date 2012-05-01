@@ -373,8 +373,6 @@
 			Prototyped $object, $array, $prefix = null
 		)
 		{
-//			FirePHP::me()->log($array);
-//			die('zzz');
 			if ($object instanceof DAOConnected)
 				$dao = $object->dao();
 			else
