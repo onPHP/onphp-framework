@@ -373,14 +373,16 @@
 			Prototyped $object, $array, $prefix = null
 		)
 		{
-			FirePHP::me()->log($array);
-			die('zzz');
+//			FirePHP::me()->log($array);
+//			die('zzz');
 			if ($object instanceof DAOConnected)
 				$dao = $object->dao();
 			else
 				$dao = null;
 
 			$proto = $object->proto();
+
+			try {
 
 			foreach ($proto->getPropertyList() as $property) {
 				$setter = $property->getSetter();
@@ -406,6 +408,13 @@
 
 					$object->$setter($property->toValue($dao, $array, $prefix));
 				}
+			}
+
+			} catch( Exception $e ) {
+				echo '<pre>';
+				echo $e->getTraceAsString();
+				echo '</pre>';
+				die('error');
 			}
 
 			return $object;
