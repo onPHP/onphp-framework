@@ -176,7 +176,7 @@
 						? $dialect->literalToString(Dialect::LITERAL_TRUE)
 						: $dialect->literalToString(Dialect::LITERAL_FALSE);
 				else
-					$default = $dialect->valueToString($default);
+					$default = $dialect->valueToString($this->default);
 				
 				$out .= ' DEFAULT '.($default);
 			}

@@ -184,6 +184,7 @@
 			$this->assertNull($empty->getCity());
 			$this->assertNull($empty->getCityOptional());
 			$this->assertNull($empty->getEnum());
+			$this->assertNull($empty->getStaticEnum());
 			
 			$this->drop();
 		}
@@ -707,9 +708,10 @@
 			try {
 				TestBinaryStuff::dao()->import($bin);
 			} catch (DatabaseException $e) {
-				return $this->fail();
+				return $this->fail($e->getMessage());
 			}
 			
+			TestBinaryStuff::dao()->dropIdentityMap();
 			Cache::me()->clean();
 			
 			$prm = Primitive::prototypedIdentifier('TestBinaryStuff', 'id');
@@ -726,7 +728,7 @@
 			try {
 				$integerIdPrimitive->import(array('id' => 'string-instead-of-integer'));
 			} catch (DatabaseException $e) {
-				return $this->fail();
+				return $this->fail($e->getMessage());
 			}
 		}
 		
@@ -943,6 +945,8 @@
 					setCityOptional($city)->
 					setEnum(
 						new ImageType(ImageType::getAnyId())
+					)->setStaticEnum(
+						new MimeType(MimeType::getAnyId())
 					)
 			);
 			

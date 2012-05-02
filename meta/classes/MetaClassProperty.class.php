@@ -342,6 +342,8 @@
 
 				if ($pattern instanceof EnumerationClassPattern) {
 					$primitiveName = 'enumeration';
+				} elseif ($pattern instanceof EnumClassPattern) {
+					$primitiveName = 'enum';
 				} elseif (
 					$pattern instanceof DictionaryClassPattern
 					&& ($identifier = $this->getType()->getClass()->getIdentifier())
