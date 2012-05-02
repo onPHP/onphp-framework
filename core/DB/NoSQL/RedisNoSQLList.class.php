@@ -15,7 +15,7 @@
 		private $key		= null;
 		private $position	= null;
 		
-		public function __construct(redis $redis, $key)
+		public function __construct(Redis $redis, $key)
 		{
 			$this->redis	= $redis;
 			$this->key		= $key;
@@ -23,7 +23,7 @@
 		
 		/**
 		 * @param mixed $value
-		 * @return \RedisList 
+		 * @return RedisList 
 		 */
 		public function append($value)
 		{
@@ -34,7 +34,7 @@
 		
 		/**
 		 * @param mixed $value
-		 * @return \RedisList 
+		 * @return RedisList 
 		 */
 		public function prepend($value)
 		{
@@ -44,7 +44,7 @@
 		}
 		
 		/**
-		 * @return \RedisList 
+		 * @return RedisList 
 		 */
 		public function clear()
 		{
@@ -140,7 +140,7 @@
 		
 		public function offsetUnset($offset)
 		{
-			throw new NotImplementedException();
+			throw new UnimplementedFeatureException();
 		}
 
 		public function seek($position) {

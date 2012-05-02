@@ -15,24 +15,30 @@
 		{
 			if (!extension_loaded('redis'))
 				$this->markTestSkipped('Install phpredis https://github.com/nicolasff/phpredis/');
+			
+			$redis = new RedisNoSQL('localhost', 6379);
+
+			if (!$redis->isAlive()) {
+				$this->markTestSkipped('Can\'t connect to redis server at localhost');
+			}
 		}
 		
 		public function testCachePeer()
 		{
 			$redis = new RedisNoSQL('localhost', 6379);
-			$redis->isAlive();
+
 			$redis->set('some_key', 'some_value');
 			$result = $redis->get('some_key');
 			$this->assertEquals($result, 'some_value');
-			
+
 			$redis->set('some_key', 'other_value');
 			$result = $redis->get('some_key');
 			$this->assertEquals($result, 'other_value');
-			
+
 			$redis->delete('some_key');
 			$result = $redis->get('some_key');
 			$this->assertEquals($result, false);
-			
+
 			$redis->delete('some_key');
 		}
 		

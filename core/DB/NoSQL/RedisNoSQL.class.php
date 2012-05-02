@@ -42,7 +42,7 @@
 		)
 		{
 			if (!extension_loaded('redis')) {
-				throw new Exception('Install phpredis https://github.com/nicolasff/phpredis/');
+				throw new RedisException('Install phpredis https://github.com/nicolasff/phpredis/');
 			}
 			
 			$this->host		= $host;
@@ -156,7 +156,7 @@
 		 */
 		public function fetchSet($key)
 		{
-			throw new NotImplementedException();
+			throw new UnimplementedFeatureException();
 		}
 		
 		/**
@@ -166,7 +166,7 @@
 		 */
 		public function fetchHash($key)
 		{
-			throw new NotImplementedException();
+			throw new UnimplementedFeatureException();
 		}
 		
 		protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
@@ -188,7 +188,7 @@
 					}
 					
 				default:
-					throw new NotImplementedException();
+					throw new UnimplementedFeatureException();
 			}
 		}
 	}
