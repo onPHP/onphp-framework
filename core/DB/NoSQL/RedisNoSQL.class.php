@@ -41,10 +41,6 @@
 			$timeout = self::DEFAULT_TIMEOUT
 		)
 		{
-			if (!extension_loaded('redis')) {
-				throw new RedisException('Install phpredis https://github.com/nicolasff/phpredis/');
-			}
-			
 			$this->host		= $host;
 			$this->port		= $port;
 			$this->timeout	= $timeout;
