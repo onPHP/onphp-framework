@@ -170,17 +170,11 @@
 			switch ($action) {
 				case 'set':
 				case 'replace':
+				case 'add':
 					try {
 						return $this->redis->setEx($key, $expires, $value);
 					} catch (RedisException $e) {
-						return null;
-					}
-					
-				case 'add':
-					try {
-						return $this->redis->append($key, $value);
-					} catch (RedisException $e) {
-						return null;
+						return $this->alive = false;
 					}
 					
 				default:

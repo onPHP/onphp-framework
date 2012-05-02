@@ -123,6 +123,7 @@
 				$list->append(md5($i));
 			}
 			
+			$this->assertEquals($list[58], md5(58));
 			$this->assertEquals(count($list), 100);
 			$list->clear();
 			$this->assertEquals(count($list), 0);

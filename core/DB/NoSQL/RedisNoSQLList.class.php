@@ -9,7 +9,7 @@
 	*                                                                         *
 	***************************************************************************/
 
-	final class RedisNoSQLList implements IList
+	final class RedisNoSQLList implements Listable
 	{
 		private $redis		= null;
 		private $key		= null;
