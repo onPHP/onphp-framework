@@ -35,6 +35,10 @@
 		 * flag to indicate whether we're in transaction
 		**/
 		private $transaction	= false;
+		/**
+		 * @var list of all started savepoints
+		 */
+		private $savepointList	= array();
 		
 		private $queue			= array();
 		private $toQueue		= false;
@@ -140,6 +144,7 @@
 				$this->queryRaw("commit;\n");
 			
 			$this->transaction = false;
+			$this->savepointList = array();
 			
 			return $this;
 		}
@@ -155,6 +160,7 @@
 				$this->queryRaw("rollback;\n");
 			
 			$this->transaction = false;
+			$this->savepointList = array();
 			
 			return $this;
 		}
@@ -221,6 +227,66 @@
 			return $this->toQueue;
 		}
 		//@}
+		
+		/**
+		 * @param string $savepointName
+		 * @return DB 
+		 */
+		public function savepointBegin($savepointName)
+		{
+			if (!$this->inTransaction())
+				throw new DatabaseException('To use savepoint begin transaction first');
+			
+			$query = 'savepoint '.$this->savepointName;
+			if ($this->toQueue)
+				$this->queue[] = $query;
+			else
+				$this->queryRaw("{$query};\n");
+				
+			return $this->addSavepoint($savepointName);
+		}
+		
+		/**
+		 * @param string $savepointName
+		 * @return DB 
+		 */
+		public function savepointRelease($savepointName)
+		{
+			if (!$this->inTransaction())
+				throw new DatabaseException('To release savepoint begin transaction first');
+			
+			if (!$this->checkSavepointExist($savepointName))
+				throw new DatabaseException("savepoint with name '{$savepointName}' nor registered");
+			
+			$query = 'release savepoint '.$this->savepointName;
+			if ($this->toQueue)
+				$this->queue[] = $query;
+			else
+				$this->queryRaw("{$query};\n");
+				
+			return $this->dropSavepoint($savepointName);
+		}
+		
+		/**
+		 * @param string $savepointName
+		 * @return DB 
+		 */
+		public function savepointRollback($savepointName)
+		{
+			if (!$this->inTransaction())
+				throw new DatabaseException('To rollback savepoint begin transaction first');
+			
+			if (!$this->checkSavepointExist($savepointName))
+				throw new DatabaseException("savepoint with name '{$savepointName}' nor registered");
+			
+			$query = 'rollback to savepoint '.$this->savepointName;
+			if ($this->toQueue)
+				$this->queue[] = $query;
+			else
+				$this->queryRaw("{$query};\n");
+				
+			return $this->dropSavepoint($savepointName);
+		}
 		
 		/**
 		 * base queries
@@ -330,6 +396,37 @@
 			$this->encoding = $encoding;
 			
 			return $this;
+		}
+		
+		/**
+		 * @param string $savepointName 
+		 * @return DB
+		 */
+		private function addSavepoint($savepointName)
+		{
+			if ($this->checkSavepointExist($savepointName))
+				throw new DatabaseException("savepoint with name '{$savepointName}' already marked");
+				
+			$this->savepointList[$savepointName] = true;
+			return $this;
+		}
+		
+		/**
+		 * @param string $savepointName 
+		 * @return DB
+		 */
+		private function dropSavepoint($savepointName)
+		{
+			if (!$this->checkSavepointExist($savepointName))
+				throw new DatabaseException("savepoint with name '{$savepointName}' nor registered");
+				
+			unset($this->savepointList[$savepointName]);
+			return $this;
+		}
+		
+		private function checkSavepointExist($savepointName)
+		{
+			return isset($this->savepointList[$savepointName]);
 		}
 	}
 ?>

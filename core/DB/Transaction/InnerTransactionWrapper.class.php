@@ -56,6 +56,7 @@
 		 */
 		public function setFunction($function)
 		{
+			Assert::isTrue(is_callable($function, false), '$function must be callable');
 			$this->function = $function;
 			return $this;
 		}

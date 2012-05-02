@@ -47,10 +47,8 @@
 		{
 			//setup
 			$db = $this->spawnDb(array(
-				'queries' => array(
-					'savepoint innerSavepoint',
-					'release savepoint innerSavepoint',
-				),
+				'savepointBegin' => 1,
+				'savepointRelease' => 1,
 				'inTransaction' => true,
 			));
 			
@@ -71,10 +69,8 @@
 		{
 			//setup
 			$db = $this->spawnDb(array(
-				'queries' => array(
-					'savepoint innerSavepoint',
-					'rollback to savepoint innerSavepoint',
-				),
+				'savepointBegin' => 1,
+				'savepointRollback' => 1,
 				'inTransaction' => true,
 			));
 			
@@ -104,9 +100,9 @@
 				return $foo . $bar;
 			};
 			
-			$wrapper = InnerTransactionWrapper::create()
-				->setDB($db)
-				->setFunction($innerFunction);
+			$wrapper = InnerTransactionWrapper::create()->
+				setDB($db)->
+				setFunction($innerFunction);
 			
 			$this->assertEquals($foo . $bar, $wrapper->run($foo));
 		}
@@ -121,9 +117,9 @@
 			$foo = 'foo';
 			$bar = 'bar';
 			
-			$wrapper = InnerTransactionWrapper::create()
-				->setDB($db)
-				->setFunction(array($this, 'wrapExceptionFunction'));
+			$wrapper = InnerTransactionWrapper::create()->
+				setDB($db)->
+				setFunction(array($this, 'wrapExceptionFunction'));
 			
 			$this->assertEquals($foo . $bar, $wrapper->run($foo, $bar));
 		}
@@ -139,9 +135,9 @@
 			
 			$function = function () use ($exception) {throw $exception;};
 			
-			$wrapper = InnerTransactionWrapper::create()
-				->setDB($db)
-				->setFunction($function);
+			$wrapper = InnerTransactionWrapper::create()->
+				setDB($db)->
+				setFunction($function);
 			
 			try {
 				$wrapper->run();
@@ -165,39 +161,29 @@
 				'begin' => 0,
 				'commit' => 0,
 				'rollback' => 0,
-				'queries' => array(),
+				'savepointBegin' => 0,
+				'savepointRelease' => 0,
+				'savepointRollback' => 0,
 				'inTransaction' => false,
 			);
 			
 			$mock = $this->getMock('DB');
-			$mock->expects($this->exactly($options['begin']))->method('begin');
-			$mock->expects($this->exactly($options['commit']))->method('commit');
-			$mock->expects($this->exactly($options['rollback']))->method('rollback');
-			$mock->expects($this->any())->method('inTransaction')->will($this->returnValue($options['inTransaction']));
+			$countMethods = array(
+				'begin', 'commit', 'rollback',
+				'savepointBegin', 'savepointRelease', 'savepointRollback'
+			);
+			foreach ($countMethods as $method)
+				$mock->
+					expects($this->exactly($options[$method]))->
+					method($method)->
+					will($this->returnSelf());
 			
-			$this->applyQueryList($mock, $options['queries']);
+			$mock->
+				expects($this->any())->
+				method('inTransaction')->
+				will($this->returnValue($options['inTransaction']));
 			
 			return $mock;
-		}
-		
-		private function applyQueryList(
-			PHPUnit_Framework_MockObject_MockObject $mock,
-			$queryList
-		)
-		{
-			$mock->expects($this->exactly(count($queryList)))->method('queryRaw');
-			
-			$self = $this;
-			$i = 1;
-			foreach ($queryList as $at => $expQuery) {
-				$cb = function ($query) use ($self, $expQuery) {
-					$self->assertStringStartsWith($expQuery, $query);
-				};
-				$mock->
-					expects($this->at($i++))->
-					method('queryRaw')->
-					will($this->returnCallback($cb));
-			}
 		}
 	}
 ?>

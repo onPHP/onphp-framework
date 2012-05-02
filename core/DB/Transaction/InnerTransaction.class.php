@@ -31,8 +31,8 @@
 		**/
 		public static function begin(
 			$database,
-			/* IsolationLevel */ $level = null,
-			/* AccessMode */ $mode = null
+			IsolationLevel $level = null,
+			AccessMode $mode = null
 		)
 		{
 			return new self($database, $level, $mode);
@@ -45,8 +45,8 @@
 		**/
 		public function __construct(
 			$database,
-			/* IsolationLevel */ $level = null,
-			/* AccessMode */ $mode = null
+			IsolationLevel $level = null,
+			AccessMode $mode = null
 		)
 		{
 			if ($database instanceof DB) {
@@ -69,7 +69,7 @@
 			if (!$this->savepointName) {
 				$this->db->commit();
 			} else {
-				$this->db->queryRaw("release savepoint {$this->savepointName};");
+				$this->db->savepointRelease($this->savepointName);
 			}
 		}
 		
@@ -80,13 +80,13 @@
 			if (!$this->savepointName) {
 				$this->db->rollback();
 			} else {
-				$this->db->queryRaw("rollback to savepoint {$this->savepointName};");
+				$this->db->savepointRollback($this->savepointName);
 			}
 		}
 		
 		private function beginTransaction(
-			/* IsolationLevel */ $level = null,
-			/* AccessMode */ $mode = null
+			IsolationLevel $level = null,
+			AccessMode $mode = null
 		)
 		{
 			$this->assertFinished();
@@ -94,7 +94,7 @@
 				$this->db->begin($level, $mode);
 			} else {
 				$this->savepointName = $this->createSavepointName();
-				$this->db->queryRaw("savepoint {$this->savepointName};");
+				$this->db->savepointBegin($this->savepointName);
 			}
 		}
 		
