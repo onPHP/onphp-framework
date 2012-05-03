@@ -245,8 +245,22 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 						$query[] = array( $condition[self::C_FIELD] => array('$gte' => $condition[self::C_VALUE][self::V_LEFT], '$lte' => $condition[self::C_VALUE][self::V_RIGHT]) );
 					}
 				} break;
+				case self::EXP_IN: {
+					if( $this->unite ) {
+						$query[ $condition[self::C_FIELD] ] = array('$in' => $condition[self::C_VALUE]);
+					} else {
+						$query[] = array( $condition[self::C_FIELD] => array('$in' => $condition[self::C_VALUE]) );
+					}
+				} break;
+				case self::EXP_NOT_IN: {
+					if( $this->unite ) {
+						$query[ $condition[self::C_FIELD] ] = array('$nin' => $condition[self::C_VALUE]);
+					} else {
+						$query[] = array( $condition[self::C_FIELD] => array('$nin' => $condition[self::C_VALUE]) );
+					}
+				} break;
 				default: {
-					throw new WrongStateException( 'Sorry, I do not know how to work with you condition with ' );
+					throw new WrongStateException( 'Sorry, I do not know how to work with you condition!' );
 				} break;
 			}
 		}
