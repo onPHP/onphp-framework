@@ -14,13 +14,15 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 	const V_RIGHT		= 102;
 
 	const EXP_EQ		= 1001;
-	const EXP_NOTEQ		= 1002;
+	const EXP_NOT_EQ	= 1002;
 	const EXP_GT		= 1003;
 	const EXP_GTE		= 1004;
 	const EXP_LT		= 1005;
 	const EXP_LTE		= 1006;
 	const EXP_BTW_STR	= 1007;
 	const EXP_BTW_SFT	= 1008;
+	const EXP_IN		= 1009;
+	const EXP_NOT_IN	= 1010;
 
 	/**
 	 * true = объединять условия по И
@@ -70,7 +72,7 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 
 	public function addNotEq($field, $value) {
 		$this->conditions[] = array(
-			self::C_TYPE	=> self::EXP_NOTEQ,
+			self::C_TYPE	=> self::EXP_NOT_EQ,
 			self::C_FIELD	=> (string)$field,
 			self::C_VALUE	=> Assert::checkInteger($value) ? (int)$value : $value,
 		);
@@ -138,6 +140,38 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 		);
 		return $this;
 	}
+
+	public function addIn($field, array $value) {
+		foreach($value as &$inVal) {
+			if(Assert::checkInteger($inVal)) {
+				$inVal = (int)$inVal;
+			} else {
+				$inVal = (string)$inVal;
+			}
+		}
+		$this->conditions[] = array(
+			self::C_TYPE	=> self::EXP_IN,
+			self::C_FIELD	=> (string)$field,
+			self::C_VALUE	=> $value,
+		);
+		return $this;
+	}
+
+	public function addNotIn($field, $value) {
+		foreach($value as &$inVal) {
+			if(Assert::checkInteger($inVal)) {
+				$inVal = (int)$inVal;
+			} else {
+				$inVal = (string)$inVal;
+			}
+		}
+		$this->conditions[] = array(
+			self::C_TYPE	=> self::EXP_NOT_IN,
+			self::C_FIELD	=> (string)$field,
+			self::C_VALUE	=> $value,
+		);
+		return $this;
+	}
 //@}
 
 /// helper functions
@@ -162,7 +196,7 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 					}
 
 				} break;
-				case self::EXP_NOTEQ: {
+				case self::EXP_NOT_EQ: {
 					if( $this->unite ) {
 						$query[ $condition[self::C_FIELD] ] = array('$ne' => $condition[self::C_VALUE]);
 					} else {
