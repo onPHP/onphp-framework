@@ -1,3 +1,10 @@
+2012-05-05	Artem A. Naumenko, Evgeny V. Kokovikhin
+
+	* core/DB/NoSQL/RedisNoSQL.class.php, 
+	core/DB/NoSQL/RedisNoSQLList.class.php, core/Base/Listable.class.php,
+	global.inc.php.tpl, test/main/RedisNoSQLTest.class.php:
+	Added wrapper to phpredis https://github.com/nicolasff/phpredis with tests
+
 2012-03-26	Alexey S. Denisov
 	* core/Logic/BinaryExpression.class.php,
 		core/Logic/PostfixUnaryExpression.class.php,
