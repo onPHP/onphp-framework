@@ -18,6 +18,6 @@ try {
 	include PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR.'schema.php';
 
 	echo PHP_EOL . $schema->toDialectString(DBPool::me()->getLink()->getDialect());
-}catch (Exception $e) {
-	file_put_contents('php://outerr', "$e");
+} catch (Exception $e) {
+	file_put_contents(STDERR, $e);
 }
