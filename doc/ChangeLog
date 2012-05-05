@@ -1,4 +1,4 @@
-2012-05-05	Artem A. Naumenko, Evgeny V. Kokovikhin
+2012-05-05	Artem A. Naumenko
 
 	* core/DB/NoSQL/RedisNoSQL.class.php, 
 	core/DB/NoSQL/RedisNoSQLList.class.php, core/Base/Listable.class.php,
