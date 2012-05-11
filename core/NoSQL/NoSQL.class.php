@@ -48,7 +48,7 @@ abstract class NoSQL extends DB {
 	abstract public function findByCriteria(Criteria $criteria);
 	abstract public function countByCriteria(Criteria $criteria);
 
-	abstract public function mapReduce($table, $map, $reduce, Criteria $criteria=null);
+	abstract public function mapReduce($table, $map, $reduce, Criteria $criteria=null, $timeout=30);
 
 	public function getTableInfo($table) {
 		throw new UnsupportedMethodException('Can not execute getTableInfo in NoSQL');
