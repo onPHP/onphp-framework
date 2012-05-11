@@ -305,13 +305,15 @@ class MongoBase extends NoSQL {
 	}
 
 	/**
-	 * @param string $table
-	 * @param string $map
-	 * @param string $reduce
+	 * @param string   $table
+	 * @param string   $map
+	 * @param string   $reduce
 	 * @param Criteria $criteria
+	 * @param int      $timeout
+	 * @throws NoSQLException
 	 * @return array
 	 */
-	public function mapReduce($table, $map, $reduce, Criteria $criteria=null) {
+	public function mapReduce($table, $map, $reduce, Criteria $criteria=null, $timeout=30) {
 		$options = $this->parseCriteria($criteria);
 
 		$command = array(
@@ -331,12 +333,7 @@ class MongoBase extends NoSQL {
 			$command['limit'] = $options[self::C_LIMIT];
 		}
 
-		try {
-			$result = $this->db->command($command, array('timeout'=>150000));
-		} catch( Exception $e ) {
-			Logger::me()->error( $e );
-			return array();
-		}
+		$result = $this->db->command($command, array('timeout'=>$timeout*1000));
 
 		// обрабатываем результаты
 		$list = array();
