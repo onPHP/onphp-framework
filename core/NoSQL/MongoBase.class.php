@@ -331,7 +331,13 @@ class MongoBase extends NoSQL {
 			$command['limit'] = $options[self::C_LIMIT];
 		}
 
-		$result = $this->db->command($command);
+		try {
+			$result = $this->db->command($command, array('timeout'=>150000));
+		} catch( Exception $e ) {
+			Logger::me()->error( $e );
+			return array();
+		}
+
 		// обрабатываем результаты
 		$list = array();
 		if( is_array($result) && isset($result['ok']) && $result['ok']==1 ) {
