@@ -11,7 +11,7 @@
 class MongoBase extends NoSQL {
 
 	const C_TABLE	= 1001;
-	const C_FILEDS	= 1002;
+	const C_FIELDS	= 1002;
 	const C_QUERY	= 1003;
 	const C_ORDER	= 1004;
 	const C_LIMIT	= 1005;
@@ -213,7 +213,7 @@ class MongoBase extends NoSQL {
 		$options = $this->parseCriteria($criteria);
 
 		return
-			$this->mongoFind($table, array($field => $value), $options[self::C_FILEDS], $options[self::C_ORDER], $options[self::C_LIMIT], $options[self::C_SKIP]);
+			$this->mongoFind($table, array($field => $value), $options[self::C_FIELDS], $options[self::C_ORDER], $options[self::C_LIMIT], $options[self::C_SKIP]);
 	}
 
 	public function getIdListByField($table, $field, $value, Criteria $criteria = null) {
@@ -242,7 +242,7 @@ class MongoBase extends NoSQL {
 //		}
 
 		return
-			$this->mongoFind($options[self::C_TABLE], $options[self::C_QUERY], $options[self::C_FILEDS], $options[self::C_ORDER], $options[self::C_LIMIT], $options[self::C_SKIP]);
+			$this->mongoFind($options[self::C_TABLE], $options[self::C_QUERY], $options[self::C_FIELDS], $options[self::C_ORDER], $options[self::C_LIMIT], $options[self::C_SKIP]);
 	}
 
 	public function countByCriteria(Criteria $criteria) {
@@ -414,13 +414,14 @@ class MongoBase extends NoSQL {
 			$logic = $criteria->getLogic()->getChain();
 			$expression = array_shift($logic);
 			if( $expression instanceof NoSQLExpression ) {
-				$result[self::C_FILEDS] = $expression->getFieldList();
+				$result[self::C_FIELDS] = $expression->getFieldList();
 				$result[self::C_QUERY] = $expression->toMongoQuery();
 			} else {
-				$result[self::C_FILEDS] = array();
+				$result[self::C_FIELDS] = array();
 				$result[self::C_QUERY] = array();
 			}
 		} else {
+			$result[self::C_FIELDS] = array();
 			$result[self::C_QUERY] = array();
 		}
 		// парсим сортировку
