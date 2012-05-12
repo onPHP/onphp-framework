@@ -31,6 +31,7 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 	 */
 	protected $unite = null;
 
+	protected $fields = array();
 	protected $conditions = array();
 
 //	public static function create($unite = true) {
@@ -58,6 +59,18 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 	public function __construct($unite = true) {
 		$this->unite = (bool)$unite;
 	}
+
+/// field list
+//@{
+	/**
+	 * @param string $fieldName
+	 * @return NoSQLExpression
+	 */
+	public function addField($fieldName) {
+		$this->fields = $fieldName;
+		return $this;
+	}
+//@}
 
 /// condition setters
 //@{
@@ -180,6 +193,10 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 
 /// condition setters
 //@{
+	public function getFieldList() {
+		return $this->fields;
+	}
+
 	public function toMongoQuery() {
 		if( empty($this->conditions) ) {
 			throw new WrongStateException('Sorry, query conditions are empty!');
