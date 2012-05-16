@@ -17,6 +17,9 @@
 	**/
 	abstract class BasePrimitive
 	{
+		const WRONG			= 0x0001;
+		const MISSING		= 0x0002;
+
 		protected $name		= null;
 		protected $default	= null;
 		protected $value	= null;
@@ -25,8 +28,13 @@
 		protected $imported	= false;
 
 		protected $raw		= null;
-		
-		protected $customError	= null;
+
+		protected $error	= null;
+
+		/**
+		 * @deprecated by error
+		 */
+		protected $customError = null;
 
 		public function __construct($name)
 		{
@@ -171,6 +179,7 @@
 			$this->raw = null;
 			$this->value = null;
 			$this->imported = false;
+			$this->dropError();
 			
 			return $this;
 		}
@@ -184,13 +193,45 @@
 		{
 			return $this->value;
 		}
-		
+
+		public function getError()
+		{
+			return $this->error | $this->customError;
+		}
+
+		/**
+		 * @return BasePrimitive
+		**/
+		public function setError($error)
+		{
+			Assert::isPositiveInteger($error);
+
+			$this->error = $error;
+			$this->customError = $error;
+
+			return $this;
+		}
+
+		/**
+		 * @return BasePrimitive
+		**/
+		public function dropError()
+		{
+			$this->error = null;
+			$this->customError = null;
+
+			return $this;
+		}
+
+		/**
+		 * @deprecated by getError
+		 */
 		public function getCustomError()
 		{
-			return $this->customError;
+			return $this->getError();
 		}
 		
-		protected function import($scope)
+		public function import($scope)
 		{
 			if (
 				!empty($scope[$this->name])
