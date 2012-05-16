@@ -123,25 +123,25 @@
 				import($scope);
 			
 			$this->assertEquals(
-				$form->getValue('test'),
-				null
+				null,
+				$form->getValue('test')
 			);
 			
 			$this->assertEquals(
-				$form->getRawValue('test'),
-				$data
+				$data,
+				$form->getRawValue('test')
 			);
 			
 			$this->assertEquals(
-				$form->get('test')->isImported(),
-				true
+				true,
+				$form->get('test')->isImported()
 			);
 			
 			$this->assertEquals(
-				$form->getErrors(),
 				array(
 					'test' => Form::WRONG,
-				)
+				),
+				$form->getErrors()
 			);
 		}
 		
