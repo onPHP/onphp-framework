@@ -237,7 +237,7 @@
 			if (!$this->inTransaction())
 				throw new DatabaseException('To use savepoint begin transaction first');
 			
-			$query = 'savepoint '.$this->savepointName;
+			$query = 'savepoint '.$savepointName;
 			if ($this->toQueue)
 				$this->queue[] = $query;
 			else
@@ -258,7 +258,7 @@
 			if (!$this->checkSavepointExist($savepointName))
 				throw new DatabaseException("savepoint with name '{$savepointName}' nor registered");
 			
-			$query = 'release savepoint '.$this->savepointName;
+			$query = 'release savepoint '.$savepointName;
 			if ($this->toQueue)
 				$this->queue[] = $query;
 			else
@@ -279,7 +279,7 @@
 			if (!$this->checkSavepointExist($savepointName))
 				throw new DatabaseException("savepoint with name '{$savepointName}' nor registered");
 			
-			$query = 'rollback to savepoint '.$this->savepointName;
+			$query = 'rollback to savepoint '.$savepointName;
 			if ($this->toQueue)
 				$this->queue[] = $query;
 			else

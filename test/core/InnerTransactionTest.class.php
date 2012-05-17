@@ -107,7 +107,7 @@
 			$this->assertEquals($foo . $bar, $wrapper->run($foo));
 		}
 		
-		public function testWrapRollbackByWrapException()
+		public function testWrapRollbackByException()
 		{
 			$db = $this->spawnDb(array(
 				'begin' => 1,
@@ -117,11 +117,16 @@
 			$foo = 'foo';
 			$bar = 'bar';
 			
+			$catchExceptionFunc = function ($e, $foo, $bar) {
+				return $e->getMessage().' '.$foo.$bar;
+			};
+			
 			$wrapper = InnerTransactionWrapper::create()->
 				setDB($db)->
-				setFunction(array($this, 'wrapExceptionFunction'));
+				setFunction(array($this, 'wrapExceptionFunction'))->
+				setExceptionFunction($catchExceptionFunc);
 			
-			$this->assertEquals($foo . $bar, $wrapper->run($foo, $bar));
+			$this->assertEquals('some unimplemented feature foobar', $wrapper->run($foo, $bar));
 		}
 		
 		public function testWrapRollbackByOtherException()
@@ -148,11 +153,11 @@
 		
 		public function wrapExceptionFunction($foo, $bar)
 		{
-			throw InnerTransactionWrapperException::createValue($foo.$bar);
+			throw new UnimplementedFeatureException('some unimplemented feature');
 		}
 		
 		/**
-		 * @param array $options 
+		 * @param array $options
 		 * @return DB
 		 */
 		private function spawnDb($options = array())

@@ -16,10 +16,23 @@
 	**/
 	final class InnerTransactionWrapper
 	{
+		/**
+		 * @var DB
+		 */
 		private $db = null;
+		/**
+		 * @var StorableDAO
+		 */
 		private $dao = null;
 		private $function = null;
+		private $exceptionFunction = null;
+		/**
+		 * @var IsolationLevel
+		 */
 		private $level = null;
+		/**
+		 * @var AccessMode
+		 */
 		private $mode = null;
 		
 		/**
@@ -42,7 +55,7 @@
 		
 		/**
 		 * @param StorableDAO $dao
-		 * @return InnerTransactionWrapper 
+		 * @return InnerTransactionWrapper
 		 */
 		public function setDao(StorableDAO $dao)
 		{
@@ -51,8 +64,8 @@
 		}
 		
 		/**
-		 * @param mixed $function
-		 * @return InnerTransactionWrapper 
+		 * @param collable $function
+		 * @return InnerTransactionWrapper
 		 */
 		public function setFunction($function)
 		{
@@ -60,10 +73,21 @@
 			$this->function = $function;
 			return $this;
 		}
+		
+		/**
+		 * @param collable $function
+		 * @return InnerTransactionWrapper
+		 */
+		public function setExceptionFunction($function)
+		{
+			Assert::isTrue(is_callable($function, false), '$function must be callable');
+			$this->exceptionFunction = $function;
+			return $this;
+		}
 
 		/**
 		 * @param IsolationLevel $level
-		 * @return InnerTransactionWrapper 
+		 * @return InnerTransactionWrapper
 		 */
 		public function setLevel(IsolationLevel $level)
 		{
@@ -73,7 +97,7 @@
 
 		/**
 		 * @param AccessMode $mode
-		 * @return InnerTransactionWrapper 
+		 * @return InnerTransactionWrapper
 		 */
 		public function setMode(AccessMode $mode)
 		{
@@ -96,11 +120,13 @@
 				$result = call_user_func_array($this->function, func_get_args());
 				$transaction->commit();
 				return $result;
-			} catch (InnerTransactionWrapperException $e) {
-				$transaction->rollback();
-				return $e->getReturnValue();
 			} catch (Exception $e) {
 				$transaction->rollback();
+				if ($this->exceptionFunction) {
+					$args = func_get_args();
+					array_unshift($args, $e);
+					return call_user_func_array($this->exceptionFunction, $args);
+				}
 				throw $e;
 			}
 		}
