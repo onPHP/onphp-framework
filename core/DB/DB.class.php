@@ -234,6 +234,7 @@
 		 */
 		public function savepointBegin($savepointName)
 		{
+			$this->assertSavePointName($savepointName);
 			if (!$this->inTransaction())
 				throw new DatabaseException('To use savepoint begin transaction first');
 			
@@ -252,8 +253,9 @@
 		 */
 		public function savepointRelease($savepointName)
 		{
+			$this->assertSavePointName($savepointName);
 			if (!$this->inTransaction())
-				throw new DatabaseException('To release savepoint begin transaction first');
+				throw new DatabaseException('To release savepoint need first begin transaction');
 			
 			if (!$this->checkSavepointExist($savepointName))
 				throw new DatabaseException("savepoint with name '{$savepointName}' nor registered");
@@ -273,8 +275,9 @@
 		 */
 		public function savepointRollback($savepointName)
 		{
+			$this->assertSavePointName($savepointName);
 			if (!$this->inTransaction())
-				throw new DatabaseException('To rollback savepoint begin transaction first');
+				throw new DatabaseException('To rollback savepoint need first begin transaction');
 			
 			if (!$this->checkSavepointExist($savepointName))
 				throw new DatabaseException("savepoint with name '{$savepointName}' nor registered");
@@ -427,6 +430,11 @@
 		private function checkSavepointExist($savepointName)
 		{
 			return isset($this->savepointList[$savepointName]);
+		}
+		
+		private function assertSavePointName($savepointName)
+		{
+			Assert::isEqual(1, preg_match('~^[A-Za-z][A-Za-z0-9]*$~iu', $savepointName));
 		}
 	}
 ?>
