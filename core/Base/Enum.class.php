@@ -49,7 +49,7 @@
 				$this->name = static::$names[$id];
 			} else
 				throw new MissingElementException(
-					'knows nothing about such id == '.$id
+					get_class($this) . ' knows nothing about such id == '.$id
 				);
 
 			return $this;
