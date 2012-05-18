@@ -386,5 +386,13 @@
 		{
 			return new PrimitiveEnumList($name);
 		}
+
+		/**
+		 * @return PrimitiveRule
+		**/
+		public static function rule($name)
+		{
+			return new PrimitiveRule($name);
+		}
 	}
 ?>

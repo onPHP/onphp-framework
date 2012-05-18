@@ -32,6 +32,30 @@
 		protected $error	= null;
 
 		/**
+		 * Label for presentation
+		 * @var string
+		 */
+		protected $label		= null;
+
+		/**
+		 * Description for presentation
+		 * @var string
+		 */
+		protected $description	= null;
+
+		/**
+		 * Error labels for each error type
+		 * @var array of ('errorType' => 'label')
+		 */
+		protected $errorLabels = array();
+
+		/**
+		 * Error description for each error type
+		 * @var array of ('errorType' => 'label')
+		 */
+		protected $errorDescriptions = array();
+
+		/**
 		 * @deprecated by error
 		 */
 		protected $customError = null;
@@ -224,12 +248,162 @@
 		}
 
 		/**
+		 * @alias dropError
+		 * @return BasePrimitive
+		 */
+		public function markGood()
+		{
+			return $this->dropError();
+		}
+
+		/**
+		 * @alias setError
+		 * @return BasePrimitive
+		 */
+		public function markWrong()
+		{
+			return $this->setError(static::WRONG);
+		}
+
+		/**
+		 * @alias setError
+		 * @return BasePrimitive
+		 */
+		public function markMissing()
+		{
+			return $this->setError(static::MISSING);
+		}
+
+		/**
 		 * @deprecated by getError
 		 */
 		public function getCustomError()
 		{
 			return $this->getError();
 		}
+
+		/**
+		 * @param null $val
+		 * @return BasePrimitive
+		 */
+		public function setLabel($val=null)
+		{
+			$this->label = $val;
+
+			return $this;
+		}
+
+		/**
+		 * @return null|string
+		 */
+		public function getLabel()
+		{
+			return $this->label;
+		}
+
+		public function setDescription($val)
+		{
+			$this->description = $val;
+
+			return $this;
+		}
+
+		/**
+		 * @return null|string
+		 */
+		public function getDescription()
+		{
+			return $this->description;
+		}
+
+		/**
+		 * @param $type
+		 * @param $val
+		 * @return BasePrimitive
+		 */
+		public function setErrorLabel($type, $val)
+		{
+			$this->errorLabels[$type] = $val;
+
+			return $this;
+		}
+
+		/**
+		 * @param integer $type
+		 * @return null|string
+		 */
+		public function getErrorLabel($type)
+		{
+			return (isset($this->errorLabels[$type]))
+					? $this->errorLabels[$type]
+					: null;
+		}
+
+		/**
+		 * @return null|string
+		 */
+		public function getActualErrorLabel()
+		{
+			$type = $this->getError();
+
+			if($type === null)
+				return null;
+
+			return $this->getErrorLabel($type);
+		}
+
+		/**
+		 * @return array
+		 */
+		public function getErrorLabels()
+		{
+			return $this->errorLabels;
+		}
+
+		/**
+		 * @param $type
+		 * @param $val
+		 * @return BasePrimitive
+		 */
+		public function setErrorDescription($type, $val)
+		{
+			$this->errorDescription[$type] = $val;
+
+			return $this;
+		}
+
+		/**
+		 * @param integer $type
+		 * @return null|string
+		 */
+		public function getErrorDescription($type)
+		{
+			return (isset($this->errorDescription[$type]))
+					? $this->errorDescription[$type]
+					: null;
+		}
+
+		/**
+		 * @return null|string
+		 */
+		public function getActualErrorDescription()
+		{
+			$type = $this->getError();
+
+			if($type === null)
+				return null;
+
+			return $this->getErrorDescription($type);
+		}
+
+		/**
+		 * @return array
+		 */
+		public function getErrorDescriptions()
+		{
+			return $this->errorDescriptions;
+		}
+
 		
 		public function import($scope)
 		{
