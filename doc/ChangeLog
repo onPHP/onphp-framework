@@ -1,3 +1,10 @@
+2012-05-18	Alexey S. Denisov
+	* core/DB/DB.class.php,
+		core/DB/Transaction/InnerTransaction.class.php,
+		core/DB/Transaction/InnerTransactionWrapper.class.php,
+		test/core/InnerTransactionTest.class.php,
+		test/misc/DAOTest.class.php: DB can work with savepoints; Added InnerTransaction, InnerTransactionWrapper
+
 2012-05-05	Artem A. Naumenko
 
 	* core/DB/NoSQL/RedisNoSQL.class.php, 
