@@ -46,9 +46,6 @@
 			$this->assertEquals($customErrorLabel, $prm->getActualErrorLabel());
 
 
-			$prm->import(array('someString'=>'abc'));
-
-
 		}
 
 	}
