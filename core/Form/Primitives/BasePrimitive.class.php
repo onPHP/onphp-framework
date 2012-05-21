@@ -329,6 +329,20 @@
 		}
 
 		/**
+		 * @param $val
+		 * @return BasePrimitive
+		 */
+		public function setWrongLabel($val)
+		{
+			return $this->setErrorLabel(BasePrimitive::WRONG, $val);
+		}
+
+		public function setMissingLabel($val)
+		{
+			return $this->setErrorLabel(BasePrimitive::MISSING, $val);
+		}
+
+		/**
 		 * @param integer $type
 		 * @return null|string
 		 */

@@ -148,10 +148,18 @@
 		public function import($scope)
 		{
 			if (array_key_exists($this->name, $scope))
-				return
+			{
+				$result =
 					$this->primitive->import(
 						array($this->primitive->getName() => $scope[$this->name])
 					);
+
+				if($error = $this->primitive->getError())
+					$this->setError($error);
+
+				return $result;
+			}
+
 
 			return null;
 		}
