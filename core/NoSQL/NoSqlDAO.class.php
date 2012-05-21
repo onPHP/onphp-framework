@@ -449,8 +449,8 @@ abstract class NoSqlDAO extends StorableDAO {
 
 /// map/reduce
 //@{
-	public function mapReduce($map, $reduce, Criteria $criteria=null, $timeout=30) {
-		return $this->getLink()->mapReduce( $this->getTable(), $map, $reduce, $criteria, $timeout );
+	public function mapReduce($map, $reduce, Criteria $criteria=null, $timeout=30, $out=array('inline'=>1)) {
+		return $this->getLink()->mapReduce( $this->getTable(), $map, $reduce, $criteria, $timeout, $out );
 	}
 //@}
 

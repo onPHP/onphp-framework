@@ -311,17 +311,18 @@ class MongoBase extends NoSQL {
 	 * @param string   $reduce
 	 * @param Criteria $criteria
 	 * @param int      $timeout
+	 * @param array	   $out
 	 * @throws NoSQLException
 	 * @return array
 	 */
-	public function mapReduce($table, $map, $reduce, Criteria $criteria=null, $timeout=30) {
+	public function mapReduce($table, $map, $reduce, Criteria $criteria=null, $timeout=30, $out=array('inline'=>1)) {
 		$options = $this->parseCriteria($criteria);
 
 		$command = array(
 			'mapreduce'	=> $table,
 			'map'		=> new MongoCode($map),
 			'reduce'	=> new MongoCode($reduce),
-			'out'		=> array('inline' => 1)
+			'out'		=> $out
 		);
 		// обрабатываем критерию
 		if( !empty($options[self::C_QUERY]) ) {
@@ -339,17 +340,21 @@ class MongoBase extends NoSQL {
 		// обрабатываем результаты
 		$list = array();
 		if( is_array($result) && isset($result['ok']) && $result['ok']==1 ) {
-			foreach( $result['results'] as $row ) {
-				// prepare id
-				$row['id'] = $row['_id'];
-				unset($row['_id']);
-				// prepare values
-				foreach($row['value'] as $key=>$value) {
-					$row[$key] = is_bool($value) ? (int)$value : $value;
-				}
-				unset($row['value']);
+			if (isset($result['results'])) {
+				foreach( $result['results'] as $row ) {
+					// prepare id
+					$row['id'] = $row['_id'];
+					unset($row['_id']);
+					// prepare values
+					foreach($row['value'] as $key=>$value) {
+						$row[$key] = is_bool($value) ? (int)$value : $value;
+					}
+					unset($row['value']);
 
-				$list[ $row['id'] ] = $row;
+					$list[ $row['id'] ] = $row;
+				}
+			} else {
+				$list = $result;
 			}
 		} else {
 			throw new NoSQLException('Error during map/reduce running');
