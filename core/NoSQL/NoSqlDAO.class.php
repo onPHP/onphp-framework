@@ -220,6 +220,17 @@ abstract class NoSqlDAO extends StorableDAO {
 		$link = NoSqlPool::getByDao( $this );
 		return $link->deleteList($this->getTable(), $ids);
 	}
+
+	public function dropByCriteria(Criteria $criteria) {
+		$criteria->setDao($this);
+		$link = $this->getLink();
+		if ($link instanceof MongoBase) {
+			/** @var $link MongoBase */
+			$link->deleteByCriteria($criteria);
+		} else {
+			throw new WrongStateException('only available in MongoBase NoSqlDAO');
+		}
+	}
 //@}
 
 /// injects

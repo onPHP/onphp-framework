@@ -259,6 +259,22 @@ class MongoBase extends NoSQL {
 			$this->mongoCount($options[self::C_TABLE], $options[self::C_QUERY], array(), $options[self::C_ORDER], $options[self::C_LIMIT], $options[self::C_SKIP]);
 	}
 
+	public function deleteByCriteria(Criteria $criteria, array $options = array('safe' => true)) {
+		$query = $this->parseCriteria($criteria);
+
+		if( !isset($query[self::C_TABLE]) ) {
+			throw new NoSQLException('Can not find without table!');
+		}
+
+		// extend options
+		$options = array_merge(
+			array('safe' => true),
+			$options
+		);
+
+		$this->mongoDelete($query[self::C_TABLE], $query[self::C_QUERY], $options);
+	}
+
 	protected function mongoFind($table, array $query, array $fields=array(), array $order=null, $limit=null, $skip=null) {
 		// quering
 		$cursor = $this->mongoMakeCursor($table, $query, $fields, $order, $limit, $skip);
@@ -276,6 +292,13 @@ class MongoBase extends NoSQL {
 		$cursor = $this->mongoMakeCursor($table, $query, $fields, $order, $limit, $skip);
 		// return result
 		return $cursor->count();
+	}
+
+	protected function mongoDelete($table, array $query, array $options) {
+		$res = $this->db->selectCollection($table)->remove($query, $options);
+		if (isset($res['err']) && !is_null($res['err'])) {
+			throw new NoSQLException($res['err']);
+		}
 	}
 
 	/**
