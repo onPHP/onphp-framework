@@ -55,10 +55,11 @@
 			Assert::isNotNull($this->form);
 			Assert::isNotNull($this->expression);
 
-			$result = $this->expression->toBoolean($this->form);
-
-			if(!$result)
-				$this->setError(BasePrimitive::WRONG);
+			if(
+				!($result = $this->expression->toBoolean($this->form))
+			) {
+				$this->markWrong();
+			}
 
 			return $result;
 		}

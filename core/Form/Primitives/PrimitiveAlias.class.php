@@ -151,11 +151,18 @@
 			{
 				$result =
 					$this->primitive->import(
-						array($this->primitive->getName() => $scope[$this->name])
+						array(
+							$this->primitive->getName() => $scope[$this->name]
+						)
 					);
 
-				if($error = $this->primitive->getError())
+				if(
+					($error = $this->primitive->getError())
+					&& $error !== null
+				) {
 					$this->setError($error);
+				}
+
 
 				return $result;
 			}

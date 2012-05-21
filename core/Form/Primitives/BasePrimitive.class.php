@@ -51,7 +51,7 @@
 
 		/**
 		 * Error description for each error type
-		 * @var array of ('errorType' => 'label')
+		 * @var array of ('errorType' => 'description')
 		 */
 		protected $errorDescriptions = array();
 
@@ -358,12 +358,15 @@
 		 */
 		public function getActualErrorLabel()
 		{
-			$type = $this->getError();
+			if(
+				($error = $this->getError())
+				&& $error !==null
+			) {
+				return $this->getErrorLabel($error);
+			}
 
-			if($type === null)
-				return null;
 
-			return $this->getErrorLabel($type);
+			return null;
 		}
 
 		/**
@@ -381,7 +384,7 @@
 		 */
 		public function setErrorDescription($type, $val)
 		{
-			$this->errorDescription[$type] = $val;
+			$this->errorDescriptions[$type] = $val;
 
 			return $this;
 		}
@@ -392,8 +395,8 @@
 		 */
 		public function getErrorDescription($type)
 		{
-			return (isset($this->errorDescription[$type]))
-					? $this->errorDescription[$type]
+			return (isset($this->errorDescriptions[$type]))
+					? $this->errorDescriptions[$type]
 					: null;
 		}
 
@@ -402,12 +405,14 @@
 		 */
 		public function getActualErrorDescription()
 		{
-			$type = $this->getError();
+			if(
+				($error = $this->getError())
+				&& $error !==null
+			) {
+				return $this->getErrorDescription($error);
+			}
 
-			if($type === null)
-				return null;
-
-			return $this->getErrorDescription($type);
+			return null;
 		}
 
 		/**

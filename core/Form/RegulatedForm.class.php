@@ -24,9 +24,9 @@
 		public function addRule($name, LogicalObject $rule)
 		{
 			return $this->add(
-				Primitive::rule($name)
-					->setExpression($rule)
-					->setForm($this)
+				Primitive::rule($name)->
+					setExpression($rule)->
+					setForm($this)
 			);
 		}
 		
@@ -47,7 +47,10 @@
 		
 		public function ruleExists($name)
 		{
-			return ($this->exists($name) && ($this->get($name) instanceof PrimitiveRule));
+			return (
+				$this->exists($name)
+				&& ($this->get($name) instanceof PrimitiveRule)
+			);
 		}
 		
 		/**
@@ -56,11 +59,14 @@
 		public function checkRules()
 		{
 			$primitives = $this->getPrimitiveList();
-			foreach($primitives as $prm)
-			{
-				if($prm instanceof PrimitiveRule)
-					if (!$prm->import(null))
-						$prm->markWrong();
+			foreach($primitives as $prm) {
+				if(
+					$prm instanceof PrimitiveRule
+					&& !$prm->import(null)
+				) {
+					$prm->markWrong();
+				}
+
 			}
 			
 			return $this;

@@ -130,9 +130,9 @@
 		/**
 		 * @return Form
 		**/
-		public function markMissing($primitiveName)
+		public function markMissing($name)
 		{
-			return $this->markCustom($primitiveName, BasePrimitive::MISSING);
+			return $this->markCustom($name, BasePrimitive::MISSING);
 		}
 		
 		/**
@@ -148,9 +148,9 @@
 		/**
 		 * @return Form
 		**/
-		public function markGood($primitiveName)
+		public function markGood($name)
 		{
-			$this->get($primitiveName)->dropError();
+			$this->get($name)->dropError();
 
 			return $this;
 		}
@@ -206,35 +206,35 @@
 		/**
 		 * @return Form
 		**/
-		public function addWrongLabel($primitiveName, $label)
+		public function addWrongLabel($name, $label)
 		{
-			return $this->addErrorLabel($primitiveName, BasePrimitive::WRONG, $label);
+			return $this->addErrorLabel($name, BasePrimitive::WRONG, $label);
 		}
 		
 		/**
 		 * @return Form
 		**/
-		public function addMissingLabel($primitiveName, $label)
+		public function addMissingLabel($name, $label)
 		{
-			return $this->addErrorLabel($primitiveName, BasePrimitive::MISSING, $label);
+			return $this->addErrorLabel($name, BasePrimitive::MISSING, $label);
 		}
 		
 		/**
 		 * @return Form
 		**/
-		public function addCustomLabel($primitiveName, $customMark, $label)
+		public function addCustomLabel($name, $customMark, $label)
 		{
-			return $this->addErrorLabel($primitiveName, $customMark, $label);
+			return $this->addErrorLabel($name, $customMark, $label);
 		}
 		
-		public function getWrongLabel($primitiveName)
+		public function getWrongLabel($name)
 		{
-			return $this->getErrorLabel($primitiveName, BasePrimitive::WRONG);
+			return $this->getErrorLabel($name, BasePrimitive::WRONG);
 		}
 		
-		public function getMissingLabel($primitiveName)
+		public function getMissingLabel($name)
 		{
-			return $this->getErrorLabel($primitiveName, BasePrimitive::MISSING);
+			return $this->getErrorLabel($name, BasePrimitive::MISSING);
 		}
 		
 		/**
@@ -264,17 +264,17 @@
 		/**
 		 * @return Form
 		**/
-		public function importOne($primitiveName, $scope)
+		public function importOne($name, $scope)
 		{
-			return $this->importPrimitive($scope, $this->get($primitiveName));
+			return $this->importPrimitive($scope, $this->get($name));
 		}
 		
 		/**
 		 * @return Form
 		**/
-		public function importValue($primitiveName, $value)
+		public function importValue($name, $value)
 		{
-			$prm = $this->get($primitiveName);
+			$prm = $this->get($name);
 			
 			return $this->checkImportResult($prm, $prm->importValue($value));
 		}
@@ -282,9 +282,9 @@
 		/**
 		 * @return Form
 		**/
-		public function importOneMore($primitiveName, $scope)
+		public function importOneMore($name, $scope)
 		{
-			$prm = $this->get($primitiveName);
+			$prm = $this->get($name);
 			
 			if (!$prm->isImported())
 				return $this->importPrimitive($scope, $prm);
@@ -292,9 +292,9 @@
 			return $this;
 		}
 		
-		public function exportValue($primitiveName)
+		public function exportValue($name)
 		{
-			return $this->get($primitiveName)->exportValue();
+			return $this->get($name)->exportValue();
 		}
 		
 		public function export()
