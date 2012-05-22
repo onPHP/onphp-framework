@@ -18,6 +18,16 @@ class MongoBase extends NoSQL {
 	const C_SKIP	= 1006;
 
 	/**
+	 * @var string|null
+	 */
+	protected $connectionString = null;
+
+	/**
+	 * @var array|null
+	 */
+	protected $connectionOptions = null;
+
+	/**
 	 * @var Mongo
 	 */
 	protected $link			= null;
@@ -32,13 +42,23 @@ class MongoBase extends NoSQL {
 	 * @throws NoSQLException
 	 */
 	public function connect() {
-		$conn =
-			'mongodb://'
-			.($this->username && $this->password ? "{$this->username}:{$this->password}@" : null)
-			.$this->hostname
-			.($this->port ? ":{$this->port}" : null);
+		if (empty($this->connectionString)) {
+			$conn =
+				'mongodb://'
+				.($this->username && $this->password ? "{$this->username}:{$this->password}@" : null)
+				.$this->hostname
+				.($this->port ? ":{$this->port}" : null);
+		} else {
+			preg_match('#(.+)/(\w+)#', $this->connectionString, $matches);
+			$conn = $matches[1];
+			$base = $matches[2];
+			$this->setBasename($base);
+		}
 
 		$options = array("connect" => true);
+		if (!empty($this->connectionOptions)) {
+			$options = array_merge($options, $this->connectionOptions);
+		}
 
 		if ($this->persistent) {
 			$options['persist'] = $this->hostname.'-'.$this->basename;
@@ -77,6 +97,24 @@ class MongoBase extends NoSQL {
 	 */
 	public function isConnected() {
 		return ($this->link instanceof Mongo && $this->link->connected);
+	}
+
+	/**
+	 * @param $connectionString
+	 * @return MongoBase
+	 */
+	public function setConnectionString($connectionString) {
+		$this->connectionString = $connectionString;
+		return $this;
+	}
+
+	/**
+	 * @param $connectionOptions
+	 * @return MongoBase
+	 */
+	public function setConnectionOptions($connectionOptions) {
+		$this->connectionOptions = $connectionOptions;
+		return $this;
 	}
 
 	/**
