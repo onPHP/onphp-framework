@@ -407,8 +407,8 @@
 				Assert::classExists($this->className);
 				
 				if (
-					!is_subclass_of($this->className, 'Enumeration') ||
-					!is_subclass_of($this->className, 'Enum')
+					!is_subclass_of($this->className, 'Enumeration')
+					&& !is_subclass_of($this->className, 'Enum')
 				) {
 					$remoteDao = call_user_func(array($this->className, 'dao'));
 					
