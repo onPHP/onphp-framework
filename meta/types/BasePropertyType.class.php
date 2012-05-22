@@ -66,9 +66,29 @@
 				$name = $property->getName();
 			
 			$methodName = 'get'.ucfirst($property->getName());
-			
+
+			$doc = '/**'."\n";
+			$doced = null;
+
+			if($label = $property->getLabel()) {
+				$doc .= ' * '.$label."\n";
+				$doced = true;
+			}
+
+			if($desc = $property->getDescription()) {
+				$doc.=" *\n";
+				$doc.=' * '.$desc."\n";
+				$doced = true;
+			}
+
+			$doc .= "**/";
+
+			if($doced===null)
+				$doc = '';
+
 			return <<<EOT
 
+{$doc}
 public function {$methodName}()
 {
 	return \$this->{$name};
@@ -85,13 +105,31 @@ EOT;
 		{
 			$name = $property->getName();
 			$methodName = 'set'.ucfirst($name);
-			
+
+			$doc = '/**'."\n";
+			$doced = false;
+
+			if($label = $property->getLabel()) {
+				$doc .= ' * '.$label."\n";
+			}
+
+			if($desc = $property->getDescription()) {
+				$doc.=" *\n";
+				$doc.=' * '.$desc."\n";
+			}
+
+			if($holder) {
+				$doc .= ' * @return '.$holder->getClass()->getName()."\n";
+			} else {
+				$doc .= ' * @return '.$class->getName()."\n";
+			}
+
+			$doc .= "**/";
+
 			if ($holder) {
 				return <<<EOT
 
-/**
- * @return {$holder->getClass()->getName()}
-**/
+{$doc}
 public function {$methodName}(\${$name})
 {
 	\$this->{$holder->getName()}->{$methodName}(\${$name});
@@ -103,9 +141,7 @@ EOT;
 			} else {
 				return <<<EOT
 
-/**
- * @return {$class->getName()}
-**/
+{$doc}
 public function {$methodName}(\${$name})
 {
 	\$this->{$name} = \${$name};

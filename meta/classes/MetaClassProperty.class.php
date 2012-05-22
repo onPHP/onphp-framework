@@ -14,20 +14,23 @@
 	**/
 	class MetaClassProperty
 	{
-		private $class		= null;
+		private $class			= null;
 		
-		private $name		= null;
-		private $columnName	= null;
+		private $name			= null;
+		private $columnName		= null;
 		
-		private $type		= null;
-		private $size		= null;
+		private $type			= null;
+		private $size			= null;
 		
-		private $required	= false;
-		private $identifier	= false;
+		private $required		= false;
+		private $identifier		= false;
 		
-		private $relation	= null;
+		private $relation		= null;
 		
-		private $strategy	= null;
+		private $strategy		= null;
+
+		private $label			= null;
+		private $description	= null;
 		
 		public function __construct(
 			$name,
@@ -250,6 +253,44 @@
 			
 			return null;
 		}
+
+		/**
+		 * @param $label
+		 * @return MetaClassProperty
+		 */
+		public function setLabel($label)
+		{
+			$this->label = $label;
+
+			return $this;
+		}
+
+		/**
+		 * @return null|string
+		 */
+		public function getLabel()
+		{
+			return $this->label;
+		}
+
+		/**
+		 * @param $description
+		 * @return MetaClassProperty
+		 */
+		public function setDescription($description)
+		{
+			$this->description = $description;
+
+			return $this;
+		}
+
+		/**
+		 * @return null|string
+		 */
+		public function getDescription()
+		{
+			return $this->description;
+		}
 		
 		public function toMethods(
 			MetaClass $class,
@@ -423,7 +464,9 @@
 						$this->getType()->isGeneric(),
 						$inner,
 						$this->getRelationId(),
-						$this->getFetchStrategyId()
+						$this->getFetchStrategyId(),
+						$this->getLabel(),
+						$this->getDescription()
 					)
 				);
 		}

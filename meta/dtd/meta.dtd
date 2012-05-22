@@ -38,6 +38,8 @@
 		required	(true|false) "false"
 		relation	(OneToOne|OneToMany|ManyToMany) #IMPLIED
 		fetch		(lazy|cascade) #IMPLIED
+		label		CDATA #IMPLIED
+		description	CDATA #IMPLIED
 >
 
 <!ELEMENT pattern EMPTY>
