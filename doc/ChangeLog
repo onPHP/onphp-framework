@@ -1,4 +1,9 @@
+2012-05-23	Georgiy T. Kutsurua
+
+	* main/Base/LightMetaProperty.class.php: fix after Enum update
+
 2012-05-18	Alexey S. Denisov
+
 	* core/DB/DB.class.php,
 		core/DB/Transaction/InnerTransaction.class.php,
 		core/DB/Transaction/InnerTransactionWrapper.class.php,
