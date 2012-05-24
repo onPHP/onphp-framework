@@ -67,6 +67,8 @@
 				else
 					$old = Cache::worker($this)->getById($object->getId());
 			}
+			if ($object === $old)
+				return $this->save($object);
 			
 			return $this->unite($object, $old);
 		}
