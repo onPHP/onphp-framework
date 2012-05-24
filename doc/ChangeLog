@@ -1,3 +1,7 @@
+2012-05-31	Alexey S. Denisov
+
+	* main/DAOs/StorableDAO.class.php: fix merge object with self
+		
 2012-05-28	Georgiy T. Kutsurua
 
 	* core/Cache/PeclMemcache.class.php
