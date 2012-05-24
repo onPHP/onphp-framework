@@ -346,7 +346,8 @@
 		**/
 		public function fillQuery(
 			InsertOrUpdateQuery $query,
-			Prototyped $object
+			Prototyped $object,
+			Prototyped $old = null
 		)
 		{
 			if (
@@ -370,6 +371,35 @@
 				}
 
 				$value = $object->{$getter}();
+				if ($old) {
+					$oldValue = $old->{$getter}();
+					if ($oldValue === null && $value === $oldValue) {
+						return $query;
+					} elseif (
+						$this->relationId
+						&& $this->strategyId == FetchStrategy::LAZY
+						&& ($value === $oldValue)
+					) {
+						return $query;
+					} elseif (
+						$value instanceof Identifiable
+						&& $oldValue instanceof Identifiable
+						&& $value->getId() === $oldValue->getId()
+					) {
+						return $query;
+					} elseif (
+						$value instanceof Stringable
+						&& $oldValue instanceof Stringable
+						&& $value->toString() == $oldValue->toString()
+					) {
+						return $query;
+					} elseif (
+						!$this->relationId
+						&& ($value === $oldValue)
+					) {
+						return $query;
+					}
+				}
 				
 				if ($this->type == 'binary') {
 					$query->set($this->columnName, new DBBinary($value));
