@@ -117,7 +117,7 @@
 			//checking
 			$this->assertEquals(array(), $form->getErrors());
 		}
-
+		
 		public function testClosureRule()
 		{
 			$form =
@@ -138,18 +138,18 @@
 							}
 						)
 					);
-
+			
 			$form->import(array('one' => 'test1', 'two' => 'test2'));
 			$form->checkRules();
 
 			$this->assertEquals(Form::WRONG, $form->getError('equals'));
-
+			
 			$form->dropAllErrors()->clean()->import(
 				array('one' => 'test1', 'two' => 'test1')
 			);
-
+			
 			$form->checkRules();
-
+			
 			$this->assertEquals(array(), $form->getErrors());
 		}
 	}

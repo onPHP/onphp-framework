@@ -15,7 +15,7 @@
 	final class ClosureFormRule implements LogicalObject
 	{
 		private $closure = null;
-
+		
 		/**
 		 * @static
 		 * @param Closure $closure
@@ -25,12 +25,12 @@
 		{
 			return new self($closure);
 		}
-
+		
 		public function __construct(Closure $closure)
 		{
 			$this->closure = $closure;
 		}
-
+		
 		/**
 		 * @param Form $form
 		 * @return boolean
@@ -41,7 +41,7 @@
 
 			return $func($form);
 		}
-
+		
 		/**
 		 * @param Dialect $dialect
 		 * @throws UnsupportedMethodException
