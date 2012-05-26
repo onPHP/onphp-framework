@@ -1,6 +1,6 @@
 <?php
 	/* $Id$ */
-	
+
 	final class FormTest extends TestCase
 	{
 		public function testRange()
@@ -115,6 +115,41 @@
 				importMore(array('flag' => '1', 'old' => '35'));
 			
 			//checking
+			$this->assertEquals(array(), $form->getErrors());
+		}
+
+		public function testClosureRule()
+		{
+			$form =
+				Form::create()->
+					add(
+						Primitive::string('one')
+					)->
+					add(
+						Primitive::string('two')
+					)->
+					addRule(
+						'equals',
+						ClosureFormRule::create(
+							function ($form) {
+								return
+									$form->getValue('one')
+									== $form->getValue('two');
+							}
+						)
+					);
+
+			$form->import(array('one' => 'test1', 'two' => 'test2'));
+			$form->checkRules();
+
+			$this->assertEquals(Form::WRONG, $form->getError('equals'));
+
+			$form->dropAllErrors()->clean()->import(
+				array('one' => 'test1', 'two' => 'test1')
+			);
+
+			$form->checkRules();
+
 			$this->assertEquals(array(), $form->getErrors());
 		}
 	}
