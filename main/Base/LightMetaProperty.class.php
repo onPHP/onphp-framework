@@ -387,16 +387,7 @@
 						&& $value->getId() === $oldValue->getId()
 					) {
 						return $query;
-					} elseif (
-						$value instanceof Stringable
-						&& $oldValue instanceof Stringable
-						&& $value->toString() == $oldValue->toString()
-					) {
-						return $query;
-					} elseif (
-						!$this->relationId
-						&& ($value === $oldValue)
-					) {
+					} elseif (serialize($value) == serialize($oldValue)) {
 						return $query;
 					}
 				}
