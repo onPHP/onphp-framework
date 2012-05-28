@@ -6,7 +6,7 @@
 	// set up default cache peer
 
 	Cache::setPeer(
-		Memcached::create()
+		SocketMemcached::create()
 	);
 
 	// or even several aggregated peers
@@ -15,7 +15,7 @@
 		AggregateCache::create()->
 		addPeer(
 			'memcached daemon at localhost',
-			Memcached::create()
+			SocketMemcached::create()
 		)->
 		addPeer(
 			'local low-priority file system',

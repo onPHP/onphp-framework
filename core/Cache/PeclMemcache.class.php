@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2012 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -17,40 +17,42 @@
 	 *
 	 * @ingroup Cache
 	**/
-	class PeclMemcached extends CachePeer
+	class PeclMemcache extends CachePeer
 	{
 		const DEFAULT_PORT		= 11211;
 		const DEFAULT_HOST		= '127.0.0.1';
-		const DEFAULT_TIMEOUT	= 1;
 		
-		private $instance		= null;
-		private $requestTimeout = null;
-		private $connectTimeout = null;
-		private $host			= null;
-		private $port			= null;
-		private $triedConnect	= false;
+		private $instance = null;
 		
 		/**
-		 * @return PeclMemcached
+		 * @return PeclMemcache
 		**/
 		public static function create(
 			$host = self::DEFAULT_HOST,
-			$port = self::DEFAULT_PORT,
-			$connectTimeout = self::DEFAULT_TIMEOUT
+			$port = self::DEFAULT_PORT
 		)
 		{
-			return new self($host, $port, $connectTimeout);
+			return new self($host, $port);
 		}
 		
 		public function __construct(
 			$host = self::DEFAULT_HOST,
-			$port = self::DEFAULT_PORT,
-			$connectTimeout = self::DEFAULT_TIMEOUT
+			$port = self::DEFAULT_PORT
 		)
 		{
-			$this->host = $host;
-			$this->port = $port;
-			$this->connectTimeout = $connectTimeout;
+			$this->instance = new Memcache();
+			
+			try {
+				try {
+					$this->instance->pconnect($host, $port);
+				} catch (BaseException $e) {
+					$this->instance->connect($host, $port);
+				}
+				
+				$this->alive = true;
+			} catch (BaseException $e) {
+				// bad luck.
+			}
 		}
 		
 		public function __destruct()
@@ -64,20 +66,11 @@
 			}
 		}
 		
-		public function isAlive()
-		{
-			$this->ensureTriedToConnect();
-			
-			return parent::isAlive();
-		}
-		
 		/**
 		 * @return PeclMemcached
 		**/
 		public function clean()
 		{
-			$this->ensureTriedToConnect();
-			
 			try {
 				$this->instance->flush();
 			} catch (BaseException $e) {
@@ -89,8 +82,6 @@
 		
 		public function increment($key, $value)
 		{
-			$this->ensureTriedToConnect();
-			
 			try {
 				return $this->instance->increment($key, $value);
 			} catch (BaseException $e) {
@@ -100,8 +91,6 @@
 		
 		public function decrement($key, $value)
 		{
-			$this->ensureTriedToConnect();
-			
 			try {
 				return $this->instance->decrement($key, $value);
 			} catch (BaseException $e) {
@@ -111,8 +100,6 @@
 		
 		public function getList($indexes)
 		{
-			$this->ensureTriedToConnect();
-			
 			return
 				($return = $this->get($indexes))
 					? $return
@@ -121,8 +108,6 @@
 		
 		public function get($index)
 		{
-			$this->ensureTriedToConnect();
-			
 			try {
 				return $this->instance->get($index);
 			} catch (BaseException $e) {
@@ -139,8 +124,6 @@
 		
 		public function delete($index)
 		{
-			$this->ensureTriedToConnect();
-			
 			try {
 				// second parameter required, wrt new memcached protocol:
 				// delete key 0 (see process_delete_command in the memcached.c)
@@ -155,8 +138,6 @@
 		
 		public function append($key, $data)
 		{
-			$this->ensureTriedToConnect();
-			
 			try {
 				return $this->instance->append($key, $data);
 			} catch (BaseException $e) {
@@ -166,58 +147,10 @@
 			Assert::isUnreachable();
 		}
 		
-		/**
-		 * @param float $requestTimeout time in seconds
-		 * @return PeclMemcached
-		 */
-		public function setTimeout($requestTimeout)
-		{
-			$this->ensureTriedToConnect();
-			$this->requestTimeout = $requestTimeout;
-			$this->instance->setServerParams($this->host, $this->port, $requestTimeout);
-			
-			return $this;
-		}
-		
-		/**
-		 * @return float 
-		 */
-		public function getTimeout()
-		{
-			return $this->requestTimeout;
-		}
-		
-		protected function ensureTriedToConnect()
-		{
-			if ($this->triedConnect) 
-				return $this;
-			
-			$this->triedConnect = true;
-			$this->instance = new Memcache();
-			
-			try {
-				
-				try {
-					$this->instance->pconnect($this->host, $this->port, $this->connectTimeout);
-				} catch (BaseException $e) {
-					$this->instance->connect($this->host, $this->port, $this->connectTimeout);
-				}
-				
-				$this->alive = true;
-				
-			} catch (BaseException $e) {
-				// bad luck.
-			}
-			
-			return $this;
-		}
-		
 		protected function store(
 			$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
 		)
 		{
-			$this->ensureTriedToConnect();
-			
 			try {
 				return
 					$this->instance->$action(
@@ -234,5 +167,5 @@
 			
 			Assert::isUnreachable();
 		}
-		
 	}
+?>
