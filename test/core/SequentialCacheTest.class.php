@@ -16,7 +16,7 @@
 			$alifePeer = new PeclMemcached("127.0.0.1", "11211"); //some existing memcached
 			$alifePeer->set('some_key', 'some_value');
 			
-			$deadPeer = new Memcached("165.42.42.42", "11211"); //some not existing memcache
+			$deadPeer = new SocketMemcached("165.42.42.42", "11211"); //some not existing memcache
 			
 			$slave1 = new PeclMemcached("35.143.65.241", "11211"); //some not existing memcache
 
@@ -34,7 +34,7 @@
 		
 		public function testMultiCacheAliveFirst()
 		{
-			$alifePeer = new Memcached("127.0.0.1", "11211"); //some existing memcached
+			$alifePeer = new SocketMemcached("127.0.0.1", "11211"); //some existing memcached
 			$alifePeer->set('some_key', 'some_value');
 			
 			$slave1 = new PeclMemcached("35.143.65.241", "11211"); //some not existing memcache
@@ -54,7 +54,7 @@
 				CyclicAggregateCache::create()-> //some existing memcached
 				setSummaryWeight(42)->
 				addPeer('first', new PeclMemcached("127.0.0.1", "11211"), 0)->
-				addPeer('second', new Memcached("127.0.0.1", "11211"), 21);
+				addPeer('second', new SocketMemcached("127.0.0.1", "11211"), 21);
 			
 			$alifePeer->set('some_key', 'some_value');
 			
