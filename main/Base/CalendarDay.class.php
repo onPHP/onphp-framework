@@ -29,7 +29,10 @@
 
 		public function  __sleep()
 		{
-			return array('int', 'selected', 'outside');
+			$sleep = parent::__sleep();
+			$sleep[] = 'selected';
+			$sleep[] = 'outside';
+			return $sleep;
 		}
 		
 		public function isSelected()
