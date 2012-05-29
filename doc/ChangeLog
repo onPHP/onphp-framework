@@ -63,35 +63,35 @@ Code clean & add SocketMemcached instead of Memcached
 	test for PinbaClient added. Thanks to Artem A. Naumenko
 
 2012-04-11	Evgeny V. Kokovikhin
-	
+
 	* main/Monitoring/PinbaClient.class.php: base ability of
 	tree (integral) logging added. Thanks to Artem A. Naumenko
 
 2012-04-04	Georgiy T. Kutsurua
-	
+
 	* main/UI/View/JsonPView.class.php,
 		main/UI/View/JsonPView.class.php:
 		For easy using jsonp, @see http://www.json-p.org/
 
 2012-03-26	Alexey S. Denisov
-	
+
 	* core/DB/SQLitePDO.class.php: Added SQLite3 though PDO
 
 2012-03-14	Alexander A. Sayapin
-	
+
 	* core/Base/Date.class.php: Fixed calculating number of weeks in year accordingly ISO 8601.
 
 2012-01-13	Alexander A. Zaytsev
-	
+
 	* core/Base/Date.class.php: toFormatString method added.
 
 2012-01-11	Evgeny V. Kokovikhin
 
-	* core/DB/Dialect.class.php: throw exception for null values. Thanks to 
+	* core/DB/Dialect.class.php: throw exception for null values. Thanks to
 	Nikita V. Konstantinov.
 
 2011-11-21      Alexey S. Denisov, Evgeny V. Kokovikhin
-	
+
 	* meta/types/ObjectType.class.php, test/misc/DAOTest.class.php: changed logic
 	for getObjectId method of lazy encapsulant; test for lazy logic added
 
@@ -160,7 +160,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 	*  core/Cache/Memcached.class.php, core/Cache/PeclMemcached.class.php,
 	core/DB/PgSQL.class.php, global.inc.php.tpl, main/Monitoring/PinbaClient.class.php,
-	main/Monitoring/PinbedMemcached.class.php, 
+	main/Monitoring/PinbedMemcached.class.php,
 	main/Monitoring/PinbedPeclMemcached.class.php,
 	main/Monitoring/PinbedPgSQL.class.php: wrapper for pinba
 
@@ -206,7 +206,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2011-07-26	Dmitry V. Snezhinskiy, Alexey S. Denisov
 
-	* main/Flow/JsonView.class.php, 
+	* main/Flow/JsonView.class.php,
 	test/main/JsonViewTest.class.php: add JsonView.
 
 2011-07-14	Evgeny V. Kokovikhin
@@ -237,7 +237,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2011-07-08	Dmitry V. Snezhinskiy
 
-	* main/Utils/FileUtils.class.php: fix of removing nonexistent directory 
+	* main/Utils/FileUtils.class.php: fix of removing nonexistent directory
 	in FileUtils.
 
 2011-07-06	Sergey S. Sergeev
@@ -311,7 +311,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2011-05-01	Sergey S. Sergeev
 
-	* test/runme.sh: added ability to run the test cases with different 
+	* test/runme.sh: added ability to run the test cases with different
 	arguments, for example:
 		- ./runme.sh (by default)
 		- ./runme.sh --verbose --repeat 1 AllTests (launch test suite in
@@ -341,7 +341,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2011-02-15	Evgeny V. Kokovikhin
 
-	* core/Cache/CyclicAggregateCache.class.php, test/core/CacheTest.class.php, 
+	* core/Cache/CyclicAggregateCache.class.php, test/core/CacheTest.class.php,
 	core/Cache/AggregateCache.class.php, core/Cache/BaseAggregateCache.class.php:
 	new implementation of AggregateCache added.
 
@@ -370,7 +370,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2010-12-01	Evgeny V. Kokovikhin
 
-	* main/Utils/IO/Socket.class.php: eat exception 
+	* main/Utils/IO/Socket.class.php: eat exception
 	if we try to close already closed socket
 
 2010-11-11	Evgeny V. Kokovikhin
@@ -379,7 +379,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2010-11-09	Evgeny V. Kokovikhin
 
-	* main/DAOs/Workers/CommonDaoWorker.class.php: human-frendly message in 
+	* main/DAOs/Workers/CommonDaoWorker.class.php: human-frendly message in
 	the exception
 
 2010-10-25	Sergey S. Sergeev
@@ -472,8 +472,8 @@ Code clean & add SocketMemcached instead of Memcached
 	main/OpenId/OpenIdExtension.class.php,
 	main/OpenId/OpenIdExtensionAttributeExchange.class.php,
 	main/OpenId/OpenIdCredentials.class.php,
-	main/OpenId/OpenIdExtensionSreg.class.php: openId 2.0 support, 
-	extensions support implemented, sreg and attribute exchange 
+	main/OpenId/OpenIdExtensionSreg.class.php: openId 2.0 support,
+	extensions support implemented, sreg and attribute exchange
 	supports - thanks to Alexander V. Solomatin (aka Lom).
 
 	* main/Net/Http/CurlHttpClient.class.php: curl multi send implemented.
@@ -511,7 +511,7 @@ Code clean & add SocketMemcached instead of Memcached
 	* main/Base/CallChain.class.php: call() method fixed.
 
 	* test/core/FiltersTest.class.php, test/main/Net/MailTest.class.php:
-	test assertions added. 
+	test assertions added.
 
 	* main/Net/Mail/MailAddress.class.php: toString() method fixed.
 
@@ -547,10 +547,10 @@ Code clean & add SocketMemcached instead of Memcached
 
 	* main/Math/MathUtils.class.php: getStandardDeviation(): calculate
 	standard deviation.
-	
+
 	* main/Math/MathUtils.class.php: getAbsoluteDeviation(): calculate
 	absolute deviation.
-	
+
 	* main/Math/MathUtils.class.php: getCovariance(): calculate
 	covariance between two value arrays by formula:
 	cov(X,Y) = sum((Xi-Xavg) * (Yj-Xavg) / n-1).
@@ -643,7 +643,7 @@ Code clean & add SocketMemcached instead of Memcached
 2009-08-11	Denis M. Gabaidulin
 
 	* core/Form/Primitives/PrimitiveForm.class.php: ofAutoProto() method added
-	to use with generated proto classes. 
+	to use with generated proto classes.
 
 2009-08-07	Sergey S. Sergeev
 
@@ -697,15 +697,15 @@ Code clean & add SocketMemcached instead of Memcached
 2009-06-26	Sergey S. Sergeev
 
 	* main/Flow/PartViewer.class.php: PartViewer can't resolve EmptyView.
-	
+
 	* meta/classes/MetaConfiguration.class.php, test/misc/DAOTest.class.php,
 	test/misc/TestTables.class.php: fixed meta generation for recurcive lazy dependant
 	objects.
-	
+
 	* core/Cache/Memcached.class.php, core/Cache/PeclMemcached.class.php,
 	test/core/MemcachedTest.class.php: fixed multi get operations - Memcached
 	compatability with PeclMemcached now.
-	
+
 	* core/Logic/LTreeExpression.class.php: ltree logic implemented.
 
 2009-06-23	Sergey S. Sergeev
@@ -723,8 +723,8 @@ Code clean & add SocketMemcached instead of Memcached
 
 	* core/Form/Primitive.class.php, core/OSQL/DataType.class.php,
 	main/Base/LightMetaProperty.class.php, test/misc/DAOTest.class.php,
-	core/Form/Primitives/PrimitiveHstore.class.php, 
-	core/Logic/HstoreExpression.class.php, test/core/PrimitiveHstoreTest.class.php, 
+	core/Form/Primitives/PrimitiveHstore.class.php,
+	core/Logic/HstoreExpression.class.php, test/core/PrimitiveHstoreTest.class.php,
 	meta/types/PgHstoreType.class.php: new internal type implemented.
 
 2009-05-14	Ivan Y. Khvostishkov
@@ -736,7 +736,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 	* main/EntityProto/Builders/DirectoryToObjectBinder.class.php: fixed
 	bug related to symlinks reading, unit test provided, crush test spotted
-	by Deinis M. Gabaidulin. 
+	by Deinis M. Gabaidulin.
 
 2009-05-12	Ivan Y. Khvostishkov
 
@@ -809,7 +809,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2009-04-05	Sergey S. Sergeev
 
-	* main/Utils/Routers, test/main/Utils/Routers: utils for rewriting 
+	* main/Utils/Routers, test/main/Utils/Routers: utils for rewriting
 	urls moved from incubator.
 
 2009-04-04	Denis M. Gabaidulin
@@ -849,7 +849,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2009-03-26	Denis M. Gabaidulin
 
-	* core/DB/MySql dialects classes: quote integers values too.	
+	* core/DB/MySql dialects classes: quote integers values too.
 
 2009-03-26	Vladlen Y. Koshelev
 
@@ -926,12 +926,12 @@ Code clean & add SocketMemcached instead of Memcached
 
 	* core/DB/PgSQL.class.php,
 	core/Exceptions/PostgresDatabaseException.class.php: PostgreSQL-specific
-	exception containing string error code within (PostgresError constant). 
+	exception containing string error code within (PostgresError constant).
 
 2009-03-06	Sergey S. Sergeev
 
 	* main/Flow/MethodMappedController.class.php: import attached vars to form.
-	
+
 	* core/Base/Date.class.php, core/Base/Timestamp.class.php: bugfixed.
 
 2009-03-06	Vladlen Y. Koshelev
@@ -1043,7 +1043,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 	* main/Base/LightMetaProperty.class.php: makePrimitive() added.
 
-	* core/Form/Primitive.class.php: prototyped() and prototypedIdentifier() - 
+	* core/Form/Primitive.class.php: prototyped() and prototypedIdentifier() -
 	shortcuts for making object's properties primitives.
 
 2009-01-19	Konstantin V. Arkhipov
@@ -1054,7 +1054,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 	* main/UnifiedContainer/UnifiedContainerWorker.class.php,
 	test/misc/DAOTest.class.php: generate distinct count query in case of
-	container's criteria is distinct; unified container count-tests added. 
+	container's criteria is distinct; unified container count-tests added.
 
 2009-01-15	Vladlen Y. Koshelev
 
@@ -1153,7 +1153,7 @@ Code clean & add SocketMemcached instead of Memcached
 2008-12-15	Vladlen Y. Koshelev
 
 	* main/base/AbstractProtoClass.class.php, test/misc/DAOTest.class.php:
-	lazy property import fixed, related test added. 
+	lazy property import fixed, related test added.
 
 	* meta/types/ObjectType.class.php: check if lazy property is enumeration
 	using meta information (property's class might not be generated yet to check
@@ -1313,13 +1313,13 @@ Code clean & add SocketMemcached instead of Memcached
 2008-08-18	Vladlen Y. Koshelev
 
 	* main/OQL/: OQL select query parser (from trunk).
-	
+
 	* test/core/OqlTokenizerTest.class.php, OqlSelectTest.class.php:
 	corresponding tests.
-	
+
 	* core/Exceptions/SyntaxErrorException.class.php: exception to be used
 	in parsers and syntax analyzers.
-	
+
 2008-08-14	Konstantin V. Arkhipov
 
 	* core/OSQL/InsertOrUpdateQuery.class.php: lazySet() now aware of
@@ -1331,7 +1331,7 @@ Code clean & add SocketMemcached instead of Memcached
 	* core/Form/Filters/RussianTypograph.class.php: standalone tag content
 	mistakenly typographized; spotted by Sergey M. Skachkov.
 
-	* test/core/FiltersTest.class.php: corresponding test. 
+	* test/core/FiltersTest.class.php: corresponding test.
 
 2008-08-12	Denis M. Gabaidulin
 
@@ -1578,7 +1578,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 	* main/Utils/ArrayUtils.class.php: mergeRecursiveUnique(),
 	flatToDimensional() helpers (merged from trunk).
-	
+
 	* main/ProtoBuilders/, core/Form/: prototyped builders refactoring
 	(merged from trunk).
 
@@ -2197,7 +2197,7 @@ Code clean & add SocketMemcached instead of Memcached
 	* test/core/PrimitiveTimeTest.class.php: test case for primitive time.
 
 2007-08-13	Anton E. Lebedevich
-	
+
 	* main/Net/GenericUri.class.php, main/Net/HttpUrl.class.php,
 	main/Utils/TextUtils.class.php: url normalization moved from TextUtils
 	to GenericUri and HttpUrl.
@@ -2219,7 +2219,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2007-08-09	Dmitry A. Lomash
 
-	* main/Utils/CodeGenerator.class.php: setCharactersAllowed() method 
+	* main/Utils/CodeGenerator.class.php: setCharactersAllowed() method
 	was added.
 
 2007-08-08	Vladimir A. Altuchov
@@ -2280,7 +2280,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2007-07-10	Dmitry E. Pismenny
 
-	* main/Utils/TextUtils.class.php: cutOnSpace now return string, which 
+	* main/Utils/TextUtils.class.php: cutOnSpace now return string, which
 	cutted to needfull length, if there is no space after length.
 
 2007-07-09	Konstantin V. Arkhipov
@@ -2624,7 +2624,7 @@ Code clean & add SocketMemcached instead of Memcached
 	InnerMetaProperty because of former unnecessary complexity.
 
 2007-04-14	Anton E. Lebedevich
-	
+
 	* main/Flow/MultiPrefixPhpViewResolver.class.php: added resolver for
 	multiple prefixes.
 
@@ -2646,7 +2646,7 @@ Code clean & add SocketMemcached instead of Memcached
 	* main/DAOs/ObjectQuery.class.php: dropped finally.
 
 2007-04-09	Anton E. Lebedevich
-	
+
 	* meta/types/ObjectType.class.php: unconditionally fill collection.
 
 2007-04-09	Ivan Y. Khvostishkov
@@ -2686,9 +2686,9 @@ Code clean & add SocketMemcached instead of Memcached
 2007-04-08	Dmitry E. Demidov
 
 	* main/Flow/RedirectView.class.php,
-	main/Flow/RedirectToView.class.php: change visibility of getUrl 
+	main/Flow/RedirectToView.class.php: change visibility of getUrl
 	to public.
-	
+
 2007-04-06	Ivan Y. Khvostishkov
 
 	* main/Base/RequestType.class.php: added ability to import data from
@@ -2756,7 +2756,7 @@ Code clean & add SocketMemcached instead of Memcached
 2007-03-20	Dmitry E. Demidov
 
 	* main/Flow/PrototypedEditor.class.php: added method dropObject,
-	added form state checking after calling addObject/saveObject to 
+	added form state checking after calling addObject/saveObject to
 	doSave/doAdd methods.
 
 	* main/Flow/MethodMappedController.class.php: added method
@@ -2896,17 +2896,17 @@ Code clean & add SocketMemcached instead of Memcached
 	core/Form/Primitives/PrimitiveArray.class.php: PrimitiveArray
 	implements FiltrablePrimitive.
 
-	* core/Form/Primitives/PrimitiveString.class.php, 
+	* core/Form/Primitives/PrimitiveString.class.php,
 	core/Form/Primitives/PrimitiveNumber.class.php,
 	core/Form/Primitives/PrimitiveArray.class.php: apply filters before
 	check values.
 
 2007-03-02	Dmitry E. Demidov
 
-	* core/Cache/WatermarkedPeer.class.php, 
+	* core/Cache/WatermarkedPeer.class.php,
 	main/DAOs/Workers/FileSystemDaoWorker.class.php,
 	main/DAOs/Workers/SmartDaoWorker.class.php,
-	main/DAOs/Workers/VoodooDaoWorker.class.php: added ability to set separate 
+	main/DAOs/Workers/VoodooDaoWorker.class.php: added ability to set separate
 	watermark on classes.
 
 2007-02-28	Anton E. Lebedevich
@@ -2978,7 +2978,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 	* main/Containers/Unified/UnifiedContainer.class.php: sync list with
 	clones after container save.
-	
+
 2007-02-19	Ivan Y. Khvostishkov
 
 	* main/Base/TempDirectory.class.php, main/Utils/FileUtils.class.php:
@@ -3057,7 +3057,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2007-01-31	Dmitry E. Demidov
 
-	* main/Utils/ClassUtils.class.php: added class for copy 
+	* main/Utils/ClassUtils.class.php: added class for copy
 	object properties.
 
 2007-01-31	Konstantin V. Arkhipov
@@ -3092,7 +3092,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 	* core/Form/FormUtils.class.php: form2object() and object2form()
 	now accepts any objects.
-	
+
 2007-01-22	Konstantin V. Arkhipov
 
 	* main/DAOs/Handlers/MessageSegmentHandler.class.php,
@@ -3513,7 +3513,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 	* core/OSQL/SelectQuery.class.php: added method leftJoinQuery.
 
-	* core/OSQL/SQLQueryJoin.class.php: added property left for ability 
+	* core/OSQL/SQLQueryJoin.class.php: added property left for ability
 	generate left outer join with query.
 
 2006-10-18	Konstantin V. Arkhipov
@@ -3692,7 +3692,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2006-08-15	Dmitry E. Demidov
 
-	* core/Form/Primitives/PrimitiveTernary.class.php: ternary primitive 
+	* core/Form/Primitives/PrimitiveTernary.class.php: ternary primitive
 	can be required
 
 2006-08-11	Konstantin V. Arkhipov
@@ -3720,7 +3720,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2006-08-08	Dmitry E. Demidov
 
-	* main/Utils/TuringTest/ErrorDrawer.class.php: added ability 
+	* main/Utils/TuringTest/ErrorDrawer.class.php: added ability
 	enable/disable error drawer.
 
 2006-08-04	Dmitry E. Demidov
@@ -3784,7 +3784,7 @@ Code clean & add SocketMemcached instead of Memcached
 	dedmajor.
 
 2006-07-12	Konstantin V. Arkhipov
-	
+
 	* core/Form/Form.class.php: markCustom() added, as requested by
 	dedmajor.
 
@@ -3880,7 +3880,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2006-06-25	Anton E. Lebedevich
 
-	* main/Utils/TextUtils.class.php: getHostFromUrl() renamed to 
+	* main/Utils/TextUtils.class.php: getHostFromUrl() renamed to
 	getRootFromUrl().
 
 2006-06-25	Konstantin V. Arkhipov
@@ -3888,8 +3888,8 @@ Code clean & add SocketMemcached instead of Memcached
 	* 0.4.7 released.
 
 2006-06-24	Anton E. Lebedevich
-	
-	* main/Utils/TextUtils.class.php: getHostFromUrl(), getPathFromUrl(), 
+
+	* main/Utils/TextUtils.class.php: getHostFromUrl(), getPathFromUrl(),
 	UrlSafeBase64Encode(), UrlSafeBase64Decode() added.
 
 2006-06-22	Konstantin V. Arkhipov
@@ -3987,7 +3987,7 @@ Code clean & add SocketMemcached instead of Memcached
 	* main/Utils/Mail.class.php: encoding interface simplified.
 
 	* main/Flow/SimplePhpView.class.php: toString function added.
-	
+
 	* core/Form/Form.class.php: getTextualErrorFor function added.
 
 2006-05-05	Sergey S. Sergeev
@@ -4092,9 +4092,9 @@ Code clean & add SocketMemcached instead of Memcached
 
 	* core/DB/DBFactory.class.php: introduced ability to specify
 	conntector's type for custom connections.
-	
+
 	* core/Base/Creatable.class.php: deprecated.
-	
+
 	* meta/: removed support for Creatable interface.
 
 2006-04-09	Konstantin V. Arkhipov
@@ -4351,7 +4351,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2006-01-22	Anton E. Lebedevich
 
-	* main/Base/Calendar*: calendar helper classes added. 
+	* main/Base/Calendar*: calendar helper classes added.
 
 2006-01-22	Konstantin V. Arkhipov
 
@@ -4498,7 +4498,7 @@ Code clean & add SocketMemcached instead of Memcached
 
 2005-11-03	Anton E. Lebedevich
 
-	* main/DAOs/SmartDAO.class.php: fixed semaphore obscure locking problems. 
+	* main/DAOs/SmartDAO.class.php: fixed semaphore obscure locking problems.
 
 2005-11-02	Konstantin V. Arkhipov
 

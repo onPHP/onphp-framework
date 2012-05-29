@@ -97,24 +97,24 @@
 				return $this;
 			
 			$return = null;
-			eval("\$return = array({$raw});");
+			eval('$return = array('.$raw.');');
 			$this->properties = $return;
-			
+
 			return $this;
 		}
-		
+
 		public function toString()
 		{
 			if (empty($this->properties))
 				return null;
-			
+
 			$string = '';
 			
 			foreach ($this->properties as $k => $v) {
 				if ($v !== null)
-					$string .= "\"{$this->quoteValue($k)}\"=>\"{$this->quoteValue($v)}\",";
+					$string .= "'".$this->quoteValue($k)."'=>'".$this->quoteValue($v)."',";
 				else
-					$string .= "\"{$this->quoteValue($k)}\"=>NULL,";
+					$string .= "'{$this->quoteValue($k)}'=>NULL,";
 			}
 			
 			return $string;
