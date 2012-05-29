@@ -8,11 +8,11 @@
 		{
 			return $this->doTestMemcached(
 				AggregateCache::create()->
-					addPeer('low', Memcached::create(), AggregateCache::LEVEL_LOW)->
-					addPeer('normal1', Memcached::create())->
-					addPeer('normal2', Memcached::create())->
-					addPeer('normal3', Memcached::create())->
-					addPeer('high', Memcached::create(), AggregateCache::LEVEL_HIGH)->
+					addPeer('low', SocketMemcached::create(), AggregateCache::LEVEL_LOW)->
+					addPeer('normal1', SocketMemcached::create())->
+					addPeer('normal2', SocketMemcached::create())->
+					addPeer('normal3', SocketMemcached::create())->
+					addPeer('high', SocketMemcached::create(), AggregateCache::LEVEL_HIGH)->
 					setClassLevel('one', 0xb000)
 			);
 		}
@@ -33,11 +33,11 @@
 		{
 			return $this->doTestMemcached(
 				SimpleAggregateCache::create()->
-					addPeer('low', Memcached::create(), AggregateCache::LEVEL_LOW)->
-					addPeer('normal1', Memcached::create())->
-					addPeer('normal2', Memcached::create())->
-					addPeer('normal3', Memcached::create())->
-					addPeer('high', Memcached::create(), AggregateCache::LEVEL_HIGH)->
+					addPeer('low', SocketMemcached::create(), AggregateCache::LEVEL_LOW)->
+					addPeer('normal1', SocketMemcached::create())->
+					addPeer('normal2', SocketMemcached::create())->
+					addPeer('normal3', SocketMemcached::create())->
+					addPeer('high', SocketMemcached::create(), AggregateCache::LEVEL_HIGH)->
 					setClassLevel('one', 0xb000)
 			);
 		}
@@ -47,7 +47,7 @@
 			$this->doTestMemcached(
 				CyclicAggregateCache::create()->
 					setSummaryWeight(42)->
-					addPeer('first', Memcached::create(), 25)->
+					addPeer('first', SocketMemcached::create(), 25)->
 					addPeer('second', PeclMemcached::create(), 1)->
 					addPeer('third', PeclMemcached::create(), 13)
 			);

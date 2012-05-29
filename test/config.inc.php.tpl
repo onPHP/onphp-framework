@@ -37,7 +37,7 @@
 			'host'	=> '127.0.0.1',
 			'base'	=> 'onphp'
 		),
-		'SQLite' => array(
+		'SQLitePDO' => array(
 			'user'	=> 'onphp',
 			'pass'	=> 'onphp',
 			'host'	=> '127.0.0.1',

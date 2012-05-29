@@ -1,3 +1,30 @@
+2012-05-28	Georgiy T. Kutsurua
+
+	* core/Cache/PeclMemcache.class.php
+		core/Cache/PeclMemcached.class.php
+		core/Cache/{Memcached.class.php → SocketMemcached.class.php}
+		
+Code clean & add SocketMemcached instead of Memcached
+
+2012-05-23	Georgiy T. Kutsurua
+
+	* main/Base/LightMetaProperty.class.php: fix after Enum update
+
+2012-05-18	Alexey S. Denisov
+
+	* core/DB/DB.class.php,
+		core/DB/Transaction/InnerTransaction.class.php,
+		core/DB/Transaction/InnerTransactionWrapper.class.php,
+		test/core/InnerTransactionTest.class.php,
+		test/misc/DAOTest.class.php: DB can work with savepoints; Added InnerTransaction, InnerTransactionWrapper
+
+2012-05-05	Artem A. Naumenko
+
+	* core/DB/NoSQL/RedisNoSQL.class.php, 
+	core/DB/NoSQL/RedisNoSQLList.class.php, core/Base/Listable.class.php,
+	global.inc.php.tpl, test/main/RedisNoSQLTest.class.php:
+	Added wrapper to phpredis https://github.com/nicolasff/phpredis with tests
+
 2012-03-26	Alexey S. Denisov
 	* core/Logic/BinaryExpression.class.php,
 		core/Logic/PostfixUnaryExpression.class.php,

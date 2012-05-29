@@ -184,7 +184,7 @@
 				return $property;
 			
 			throw new MissingElementException(
-				"unknown property requested by name '{$name}'"
+				get_class($this) . ": unknown property requested by name '{$name}'"
 			);
 		}
 		
