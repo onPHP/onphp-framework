@@ -423,6 +423,10 @@ class MongoBase extends NoSQL {
 		return $list;
 	}
 
+	public function increment($table, array $fields, Criteria $criteria = null) {
+		return null;
+	}
+
 /// helper functions
 //@{
 	/**

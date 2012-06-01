@@ -70,6 +70,7 @@
 		private $getter		= null;
 		private $setter		= null;
 		private $dropper	= null;
+		private $defaulter	= null;
 
 		private $identifier	= null;
 
@@ -98,6 +99,7 @@
 			$property->getter = 'get'.$methodSuffix;
 			$property->setter = 'set'.$methodSuffix;
 			$property->dropper = 'drop'.$methodSuffix;
+			$property->defaulter = 'getDefault'.$methodSuffix;
 
 			if ($columnName)
 				$property->columnName = $columnName;
@@ -166,6 +168,11 @@
 		public function getDropper()
 		{
 			return $this->dropper;
+		}
+
+		public function getDefaulter()
+		{
+			return $this->defaulter;
 		}
 
 		/**

@@ -86,6 +86,7 @@ EOT;
 				$out .= "}\n";
 			}
 
+			/** @var $property MetaClassProperty */
 			foreach ($class->getProperties() as $property) {
 				if (!self::doPropertyBuild($class, $property, $isNamed))
 					continue;

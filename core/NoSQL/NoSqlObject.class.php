@@ -44,7 +44,7 @@ class NoSqlObject extends IdentifiableObject {
 			} // обрабатываем связи 1к1
 			elseif( in_array($property->getType(), self::$identifiers) && $property->getRelationId()==1 ) {
 				$value = call_user_func(array($this, $property->getGetter().'Id'));
-				$entity[ $property->getColumnName() ] = is_numeric($value) ? (int)$value : $value;
+				$entity[ $property->getColumnName() ] = Assert::checkInteger($value) ? (int)$value : $value;
 			}
 		}
 //		$entity[ '_id' ] = $this->id;
