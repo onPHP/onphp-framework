@@ -1,3 +1,7 @@
+2012-06-04	Evgeny M. Stepanov
+
+	* main/Base/Hstore.class.php: fix
+
 2012-05-31	Alexey S. Denisov
 
 	* main/DAOs/StorableDAO.class.php: fix merge object with self
