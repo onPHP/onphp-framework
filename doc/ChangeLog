@@ -1,3 +1,90 @@
+2012-05-31	Alexey S. Denisov
+
+	* main/DAOs/StorableDAO.class.php: fix merge object with self
+		
+2012-05-28	Georgiy T. Kutsurua
+
+	* core/Cache/PeclMemcache.class.php
+		core/Cache/PeclMemcached.class.php
+		core/Cache/{Memcached.class.php → SocketMemcached.class.php}
+		
+Code clean & add SocketMemcached instead of Memcached
+
+2012-05-23	Georgiy T. Kutsurua
+
+	* main/Base/LightMetaProperty.class.php: fix after Enum update
+
+2012-05-18	Alexey S. Denisov
+
+	* core/DB/DB.class.php,
+		core/DB/Transaction/InnerTransaction.class.php,
+		core/DB/Transaction/InnerTransactionWrapper.class.php,
+		test/core/InnerTransactionTest.class.php,
+		test/misc/DAOTest.class.php: DB can work with savepoints; Added InnerTransaction, InnerTransactionWrapper
+
+2012-05-05	Artem A. Naumenko
+
+	* core/DB/NoSQL/RedisNoSQL.class.php, 
+	core/DB/NoSQL/RedisNoSQLList.class.php, core/Base/Listable.class.php,
+	global.inc.php.tpl, test/main/RedisNoSQLTest.class.php:
+	Added wrapper to phpredis https://github.com/nicolasff/phpredis with tests
+
+2012-03-26	Alexey S. Denisov
+	* core/Logic/BinaryExpression.class.php,
+		core/Logic/PostfixUnaryExpression.class.php,
+		core/Logic/PrefixUnaryExpression.class.php,
+		core/OSQL/SQLFunction.class.php: Added option noBrackets for binary/unary expressions
+
+2012-04-27	Georgiy T. Kutsurua
+
+	* core/Form/Primitives/PrimitiveString.class.php:
+		added method PrimitiveString::getAllowedPattern
+
+2012-04-26	Artem A. Naumenko, Evgeny V. Kokovikhin
+
+	* core/Base/Assert.class.php, core/Cache/PeclMemcached.class.php,
+	main/Monitoring/PinbedPeclMemcached.class.php, test/main/Utils/PinbaTest.class.php,
+	core/Cache/SequentialCache.class.php,
+	test/core/SequentialCacheTest.class.php:
+	Assert::isObject added, lazy ability to PeclMemcached, Pinba's tests tune,
+	Addd SequentialCache with tests.
+
+2012-04-22	Georgiy T. Kutsurua
+
+	* core/OSQL/DBColumn.class.php: Fix DBColumn
+
+2012-04-20	Timofey A. Anisimov
+
+	* test/main/OsqlSelectTest.class.php,
+	core/SQLFullOuterJoin.class.php,
+	core/Joiner.class.php
+	core/SelectQuery.class.php:
+	Full outer join capability in select query
+
+2012-04-12	Evgeny V. Kokovikhin
+
+	* test/main/Utils/PinbaTest.class.php, main/Monitoring/PinbaClient.class.php:
+	test for PinbaClient added. Thanks to Artem A. Naumenko
+
+2012-04-11	Evgeny V. Kokovikhin
+	
+	* main/Monitoring/PinbaClient.class.php: base ability of
+	tree (integral) logging added. Thanks to Artem A. Naumenko
+
+2012-04-04	Georgiy T. Kutsurua
+	
+	* main/UI/View/JsonPView.class.php,
+		main/UI/View/JsonPView.class.php:
+		For easy using jsonp, @see http://www.json-p.org/
+
+2012-03-26	Alexey S. Denisov
+	
+	* core/DB/SQLitePDO.class.php: Added SQLite3 though PDO
+
+2012-03-14	Alexander A. Sayapin
+	
+	* core/Base/Date.class.php: Fixed calculating number of weeks in year accordingly ISO 8601.
+
 2012-01-13	Alexander A. Zaytsev
 	
 	* core/Base/Date.class.php: toFormatString method added.

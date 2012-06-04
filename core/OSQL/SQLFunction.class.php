@@ -113,6 +113,7 @@
 			$sqlFunction = call_user_func_array(array('self', 'create'), $mapped);
 			
 			$sqlFunction->aggregate = $this->aggregate;
+			$sqlFunction->alias = $this->alias;
 			
 			$sqlFunction->castTo($this->cast);
 			

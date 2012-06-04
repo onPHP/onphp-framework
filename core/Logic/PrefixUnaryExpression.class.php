@@ -19,6 +19,15 @@
 
 		private $subject	= null;
 		private $logic		= null;
+		private $brackets   = true;
+		
+		/**
+		 * @return PrefixUnaryExpression
+		 */
+		public static function create($subject, $logic)
+		{
+			return new self($subject, $logic);
+		}
 		
 		public function __construct($logic, $subject)
 		{
@@ -26,13 +35,22 @@
 			$this->logic	= $logic;
 		}
 		
+		/**
+		 * @param boolean $noBrackets
+		 * @return PrefixUnaryExpression
+		 */
+		public function noBrackets($noBrackets = true)
+		{
+			$this->brackets = !$noBrackets;
+			return $this;
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
-			return
-				'('
-				.$dialect->logicToString($this->logic)
-				.' '.$dialect->toFieldString($this->subject)
-				.')';
+			$sql = $dialect->logicToString($this->logic)
+				.' '.$dialect->toFieldString($this->subject);
+			
+			return $this->brackets ? "({$sql})" : $sql;
 		}
 		
 		/**
@@ -40,14 +58,16 @@
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
-			return new self(
+			$expression = new self(
 				$this->logic,
 				$dao->guessAtom($this->subject, $query)
 			);
+			return $expression->noBrackets($this->brackets);
 		}
 		
 		public function toBoolean(Form $form)
 		{
+			Assert::isTrue($this->brackets, 'brackets must be enabled');
 			$subject = $form->toFormValue($this->subject);
 				
 			switch ($this->logic) {

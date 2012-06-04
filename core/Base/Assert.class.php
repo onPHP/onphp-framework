@@ -301,6 +301,14 @@
 				);
 		}
 		
+		public static function isObject($object, $message = null)
+		{
+			if (!is_object($object))
+				throw new WrongArgumentException(
+					$message.' not object given'
+				);
+		}
+		
 		/// exceptionless methods
 		//@{
 		public static function checkInteger($value)
