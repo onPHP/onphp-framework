@@ -66,6 +66,7 @@ class MongoBase extends NoSQL {
 		try {
 			$this->link = new Mongo($conn, $options);
 			$this->db = $this->link->selectDB($this->basename);
+			MongoCursor::$slaveOkay = true;
 		} catch(MongoConnectionException $e) {
 			throw new NoSQLException(
 				'can not connect to MongoBase server: '.$e->getMessage()
