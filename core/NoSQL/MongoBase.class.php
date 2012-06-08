@@ -55,7 +55,7 @@ class MongoBase extends NoSQL {
 			$this->setBasename($base);
 		}
 
-		$options = array("connect" => true);
+		$options = array('connect' => true, 'slaveOkay' => true);
 		if (!empty($this->connectionOptions)) {
 			$options = array_merge($options, $this->connectionOptions);
 		}
@@ -66,7 +66,7 @@ class MongoBase extends NoSQL {
 		try {
 			$this->link = new Mongo($conn, $options);
 			$this->db = $this->link->selectDB($this->basename);
-			MongoCursor::$slaveOkay = true;
+			$this->link->setSlaveOkay($options['slaveOkay']);
 		} catch(MongoConnectionException $e) {
 			throw new NoSQLException(
 				'can not connect to MongoBase server: '.$e->getMessage()
