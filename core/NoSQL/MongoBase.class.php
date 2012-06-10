@@ -350,7 +350,6 @@ class MongoBase extends NoSQL {
 	 * @return MongoCursor
 	 */
 	protected function mongoMakeCursor($table, array $query, array $fields=array(), array $order=null, $limit=null, $skip=null) {
-		file_put_contents( '/tmp/ap_tracking.log', json_encode($query), FILE_APPEND );
 		$cursor =
 			$this
 				->db
