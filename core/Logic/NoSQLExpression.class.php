@@ -75,10 +75,17 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 /// condition setters
 //@{
 	public function addEq($field, $value) {
+		$dbValue = (string)$value;
+		if( Assert::checkInteger($value) ) {
+			$dbValue = (int)$value;
+		} elseif( Assert::checkFloat($value) ) {
+			$dbValue = (float)$value;
+		}
+
 		$this->conditions[] = array(
 			self::C_TYPE	=> self::EXP_EQ,
 			self::C_FIELD	=> (string)$field,
-			self::C_VALUE	=> Assert::checkInteger($value) ? (int)$value : $value,
+			self::C_VALUE	=> $dbValue,
 		);
 		return $this;
 	}
