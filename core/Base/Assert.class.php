@@ -148,7 +148,7 @@
 
 		public static function isBoolean($variable, $message = null)
 		{
-			if (!($variable === true || $variable === false))
+			if (!self::checkBoolean($variable))
 				throw new WrongArgumentException(
 					$message.', '.self::dumpArgument($variable)
 				);
@@ -299,6 +299,11 @@
 		public static function checkScalar($value)
 		{
 			return is_scalar($value);
+		}
+
+		public static function checkBoolean($value)
+		{
+			return ($value === true || $value === false);
 		}
 
 		/**

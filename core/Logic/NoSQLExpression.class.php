@@ -76,7 +76,9 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 //@{
 	public function addEq($field, $value) {
 		$dbValue = (string)$value;
-		if( Assert::checkInteger($value) ) {
+		if( Assert::checkBoolean($value) ) {
+			$dbValue = (bool)$value;
+		} elseif( Assert::checkInteger($value) ) {
 			$dbValue = (int)$value;
 		} elseif( Assert::checkFloat($value) ) {
 			$dbValue = (float)$value;
