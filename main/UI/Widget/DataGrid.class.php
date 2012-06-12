@@ -123,7 +123,7 @@ class DataGrid extends BaseWidget
      * @return DataGrid
      * @throws WrongArgumentException
      */
-    public function addRow($data, $key) {
+    public function addRow($data, $key=null) {
         $rowId = count($this->rows); // id следующей строки
 		if( $key=='total' ) {
 			$this->totalId = $rowId;
