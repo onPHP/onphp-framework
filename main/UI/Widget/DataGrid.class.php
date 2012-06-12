@@ -29,6 +29,9 @@ class DataGrid extends BaseWidget
     /** @var array массив строк таблицы */
     protected $rows = array();
 
+    /** @var int ИД строки с "итого" */
+    protected $totalId = null;
+
 
     /** @var array аттрибуты заголовков таблицы <th> */
     protected $fieldHtmlOptions = array();
@@ -108,8 +111,8 @@ class DataGrid extends BaseWidget
      * @throws WrongArgumentException
      */
     public function addRows(array $data) {
-        foreach ($data as $row) {
-            $this->addRow($row);
+        foreach ($data as $key=>$row) {
+            $this->addRow($row, $key);
         }
         return $this;
     }
@@ -120,8 +123,11 @@ class DataGrid extends BaseWidget
      * @return DataGrid
      * @throws WrongArgumentException
      */
-    public function addRow($data) {
+    public function addRow($data, $key) {
         $rowId = count($this->rows); // id следующей строки
+		if( $key=='total' ) {
+			$this->totalId = $rowId;
+		}
 
         // если это объект, то смотрим его поля в протипе
         // и через геттеры получаем все параметры, а если
@@ -707,6 +713,7 @@ class DataGrid extends BaseWidget
         $model = parent::makeModel()
             ->set('fields', $this->fields)
             ->set('data', $data)
+            ->set('totalId', $this->totalId)
             ->set('htmlOptions', $htmlOptions)
             ->set('formOptions', $formOptions)
             ->set('showHeader', $this->showHeader)
