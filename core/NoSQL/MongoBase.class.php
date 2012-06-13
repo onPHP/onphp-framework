@@ -73,13 +73,15 @@ class MongoBase extends NoSQL {
 			$this->db = $this->link->selectDB($this->basename);
 			$this->link->setSlaveOkay($options['slaveOkay']);
 			// получаем количество реплик в статусах PRIMARY и SECONDARY в сете
-			$safe = 2;
-			/*foreach ($this->link->getHosts() as $host) {
-				if ($host['state'] == 1 || $host['state'] == 2) {
+			$safe = 0;
+			foreach ($this->link->getHosts() as $host) {
+				if (isset($host['state']) && ($host['state'] == 1 || $host['state'] == 2)) {
 					$safe++;
 				}
-			}*/
-			$this->safeOnWrite = $safe;
+			}
+			if ($safe > 0) {
+				$this->safeOnWrite = $safe;
+			}
 
 		} catch(MongoConnectionException $e) {
 			throw new NoSQLException(
