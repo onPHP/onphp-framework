@@ -38,6 +38,11 @@ class MongoBase extends NoSQL {
 	protected $db			= null;
 
 	/**
+	 * @var int параметр safe
+	 */
+	protected $safeOnWrite	= true;
+
+	/**
 	 * @return MongoDB
 	 * @throws NoSQLException
 	 */
@@ -67,6 +72,15 @@ class MongoBase extends NoSQL {
 			$this->link = new Mongo($conn, $options);
 			$this->db = $this->link->selectDB($this->basename);
 			$this->link->setSlaveOkay($options['slaveOkay']);
+			// получаем количество реплик в статусах PRIMARY и SECONDARY в сете
+			$safe = 0;
+			foreach ($this->link->getHosts() as $host) {
+				if ($host['state'] == 1 || $host['state'] == 2) {
+					$safe++;
+				}
+			}
+			$this->safeOnWrite = $safe;
+
 		} catch(MongoConnectionException $e) {
 			throw new NoSQLException(
 				'can not connect to MongoBase server: '.$e->getMessage()
@@ -162,7 +176,7 @@ class MongoBase extends NoSQL {
 			$this
 				->db
 					->selectCollection($table)
-						->insert($row);
+						->insert($row, array('safe' => $this->safeOnWrite));
 		// checking result
 		if( !$result ) {
 			throw new NoSQLException('Could not insert object: '.var_export($row, true));
@@ -184,7 +198,7 @@ class MongoBase extends NoSQL {
 			$this
 				->db
 					->selectCollection($table)
-						->update(array('_id' => $id), $row);
+						->update(array('_id' => $id), $row, array('safe' => $this->safeOnWrite));
 		// checking result
 		if( !$result ) {
 			throw new NoSQLException('Could not update object: '.var_export($row, true));
