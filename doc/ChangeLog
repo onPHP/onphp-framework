@@ -1,3 +1,10 @@
+2012-09-12	Alexey S. Denisov
+
+	* main/Flow/HttpRequest.class.php
+		main/Net/Http/CurlHttpClient.class.php
+		main/Utils/UrlParamsUtils.class.php:
+			allowing curlHttpClient upload files and send post/get arrays with any deep lvl
+
 2012-09-06	Igor V. Gulyaev
 
 	* main/Base/Hstore.class.php

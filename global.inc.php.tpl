@@ -76,6 +76,12 @@
 			ONPHP_ROOT_PATH.'meta'.DIRECTORY_SEPARATOR
 		);
 	
+	/**
+	 * @deprecated 
+	 */
+	if (!defined('ONPHP_CURL_CLIENT_OLD_TO_STRING'))
+		define('ONPHP_CURL_CLIENT_OLD_TO_STRING', false);
+	
 	define('ONPHP_META_CLASSES', ONPHP_META_PATH.'classes'.DIRECTORY_SEPARATOR);
 	
 	define(
