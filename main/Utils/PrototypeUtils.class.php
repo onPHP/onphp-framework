@@ -206,6 +206,12 @@ class PrototypeUtils
 					$entity[ $property->getColumnName() ] = (int)$value;
 				} elseif( $property->getType() == 'float' ) {
 					$entity[ $property->getColumnName() ] = (float)$value;
+				} elseif( $property->getType() == 'string' ) {
+					$value = (string)$value;
+					if ($property->getMax() > 0) {
+						$value = substr($value, 0, $property->getMax());
+					}
+					$entity[ $property->getColumnName() ] = $value;
 				} else {
 					$entity[ $property->getColumnName() ] = $value;
 				}
