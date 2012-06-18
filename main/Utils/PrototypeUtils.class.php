@@ -202,9 +202,9 @@ class PrototypeUtils
 						$value = $value->toStamp();
 						//$value = $value->toString();
 				}
-				if( Assert::checkInteger($value) ) {
+				if( $property->getType() == 'integer' ) {
 					$entity[ $property->getColumnName() ] = (int)$value;
-				} elseif( Assert::checkFloat($value) ) {
+				} elseif( $property->getType() == 'float' ) {
 					$entity[ $property->getColumnName() ] = (float)$value;
 				} else {
 					$entity[ $property->getColumnName() ] = $value;
