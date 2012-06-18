@@ -79,7 +79,6 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 		$dbValue = (string)$value;
 		if( Assert::checkBoolean($value) ) {
 			$dbValue = (bool)$value;
-			$strict = false;
 		} elseif( Assert::checkInteger($value) ) {
 			$dbValue = (int)$value;
 			$strict = false;
@@ -92,7 +91,7 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 			$this->conditions[] = array(
 				self::C_TYPE	=> self::EXP_IN,
 				self::C_FIELD	=> (string)$field,
-				self::C_VALUE	=> array($dbValue, (string)$value),
+				self::C_VALUE	=> array((string)$value, (float)$value, (int)$value),
 			);
 		} else {
 			$this->conditions[] = array(
