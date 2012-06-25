@@ -83,6 +83,8 @@ class MongoBase extends NoSQL {
 				$this->safeOnWrite = $safe;
 			}
 
+			$this->safeOnWrite = true;
+
 		} catch(MongoConnectionException $e) {
 			throw new NoSQLException(
 				'can not connect to MongoBase server: '.$e->getMessage()
