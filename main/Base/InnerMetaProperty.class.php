@@ -52,13 +52,20 @@
 		
 		public function fillQuery(
 			InsertOrUpdateQuery $query,
-			Prototyped $object
+			Prototyped $object,
+			Prototyped $old = null
 		)
 		{
+			$inner = $object->{$this->getGetter()}();
+			$oldInner = $old ? $old->{$this->getGetter()}() : null;
+			
 			return
 				$this->getProto()->fillQuery(
 					$query,
-					$object->{$this->getGetter()}()
+					$inner,
+					//when old and objects have one value object
+					//  we'll update all valueObject fields:
+					$oldInner !== $inner ? $oldInner : null
 				);
 		}
 		

@@ -211,11 +211,24 @@
 		 * @return InsertOrUpdateQuery
 		**/
 		public function fillQuery(
-			InsertOrUpdateQuery $query, Prototyped $object
+			InsertOrUpdateQuery $query,
+			Prototyped $object,
+			Prototyped $old = null
 		)
 		{
+			if ($old) {
+				if ($object instanceof Identifiable) {
+					Assert::isNotNull($object->getId());
+
+					Assert::isTypelessEqual(
+						$object->getId(), $old->getId(),
+						'cannot merge different objects'
+					);
+				}
+			}
+			
 			foreach ($this->getPropertyList() as $property) {
-				$property->fillQuery($query, $object);
+				$property->fillQuery($query, $object, $old);
 			}
 			
 			return $query;

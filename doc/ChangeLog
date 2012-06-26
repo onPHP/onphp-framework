@@ -1,3 +1,14 @@
+2012-06-27	Alexey S. Denisov
+
+	* main/Base/AbstractProtoClass.class.php
+		main/Base/InnerMetaProperty.class.php
+		main/Base/LightMetaProperty.class.php
+		main/DAOs/StorableDAO.class.php
+		test/core/AbstractProtoClassFillQueryTest.class.php:
+
+	moved and updated StorableDAO::unite "properties compare logic" to AbstractProtoClass
+		and (Inner|Light)MetaProperty and covered with tests
+		
 2012-06-04	Evgeny M. Stepanov
 
 	* main/Base/Hstore.class.php: fix
@@ -12,7 +23,7 @@
 		core/Cache/PeclMemcached.class.php
 		core/Cache/{Memcached.class.php → SocketMemcached.class.php}
 		
-Code clean & add SocketMemcached instead of Memcached
+	Code clean & add SocketMemcached instead of Memcached
 
 2012-05-23	Georgiy T. Kutsurua
 
