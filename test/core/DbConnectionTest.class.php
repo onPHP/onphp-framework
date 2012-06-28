@@ -15,7 +15,7 @@
 		{
 			try {
 				$link = DBPool::me()->getLink('badLink');
-				$this->assertFalse(true, 'Unreachable code');
+				$this->fail('Unreachable code');
 			} catch(Exception $e) {
 				$this->assertInstanceOf('DatabaseException', $e);
 			}
