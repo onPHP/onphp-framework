@@ -1,3 +1,10 @@
+2012-06-29	N. Konstantinov
+
+	* core/DB/PgSQL.class.php
+		test/core/DbConnectionTest.class.php:
+
+	throw DatabaseException instead of BaseException in case of connection's failure
+
 2012-06-27	Alexey S. Denisov
 
 	* main/Base/AbstractProtoClass.class.php
