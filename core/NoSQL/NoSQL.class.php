@@ -47,6 +47,7 @@ abstract class NoSQL extends DB {
 	abstract public function find($table, $query);
 	abstract public function findByCriteria(Criteria $criteria);
 	abstract public function countByCriteria(Criteria $criteria);
+	abstract public function makeCursorByCriteria(Criteria $criteria);
 	abstract public function increment($table, array $fields, Criteria $criteria = null);
 
 	abstract public function mapReduce($table, $map, $reduce, Criteria $criteria=null, $timeout=30, $out=array('inline'=>1));

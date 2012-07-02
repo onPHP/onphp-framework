@@ -332,6 +332,28 @@ class MongoBase extends NoSQL {
 		$this->mongoDelete($query[self::C_TABLE], $query[self::C_QUERY], $options);
 	}
 
+	/**
+	 * @param Criteria $criteria
+	 * @return MongoCursor
+	 * @throws NoSQLException
+	 */
+	public function makeCursorByCriteria(Criteria $criteria) {
+		$options = $this->parseCriteria($criteria);
+
+		if (!isset($options[self::C_TABLE])) {
+			throw new NoSQLException('Can not find without table!');
+		}
+
+		return $this->mongoMakeCursor(
+			$options[self::C_TABLE],
+			$options[self::C_QUERY],
+			$options[self::C_FIELDS],
+			$options[self::C_ORDER],
+			$options[self::C_LIMIT],
+			$options[self::C_SKIP]
+		);
+	}
+
 	protected function mongoFind($table, array $query, array $fields=array(), array $order=null, $limit=null, $skip=null) {
 		// quering
 		$cursor = $this->mongoMakeCursor($table, $query, $fields, $order, $limit, $skip);

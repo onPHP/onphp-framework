@@ -191,6 +191,14 @@ abstract class NoSqlDAO extends StorableDAO {
 	public function getQueryResult(SelectQuery $query, $expires = Cache::DO_NOT_CACHE) {
 		throw new UnsupportedMethodException( 'Can not execute "getQueryResult" in NoSQL' );
 	}
+
+	public function getNoSqlResult(Criteria $criteria, $expires = Cache::DO_NOT_CACHE) {
+		$criteria->setDao( $this );
+		$cursor = $this->getLink()->makeCursorByCriteria($criteria);
+		return NoSqlResult::create()
+			->setDao($this)
+			->setMongoCursor($cursor);
+	}
 //@}
 
 /// some queries

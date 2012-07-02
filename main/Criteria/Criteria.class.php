@@ -371,13 +371,17 @@
 		}
 
 		/**
-		 * @return QueryResult
+		 * @return QueryResult|NoSqlResult
 		**/
 		public function getResult()
 		{
-			$result =
-				$this->checkAndGetDao()->
-				getQueryResult($this->toSelectQuery());
+			$dao = $this->checkAndGetDao();
+			if ($dao instanceof NoSqlDAO) {
+				/** @var $dao NoSqlDAO */
+				$result = $dao->getNoSqlResult($this);
+			} else {
+				$result = $dao->getQueryResult($this->toSelectQuery());
+			}
 
 			if (!$this->collections || !$result->getCount())
 				return $result;
