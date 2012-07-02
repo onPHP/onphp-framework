@@ -261,6 +261,20 @@ abstract class NoSqlDAO extends StorableDAO {
 				: $this->add($object);
 	}
 
+	public function addNoCheck(NoSqlObject $object) {
+		$link = NoSqlPool::getByDao( $this );
+		$entity =
+			$link
+				->insert(
+				$this->getTable(),
+				$object->toArray()
+			);
+
+		$object->setId( $entity['id'] );
+
+		return $object;
+	}
+
 	public function add(Identifiable $object) {
 		$this->assertNoSqlObject( $object );
 
@@ -327,6 +341,20 @@ abstract class NoSqlDAO extends StorableDAO {
 		}
 
 		return $objectList;
+	}
+
+	public function saveNoCheck(NoSqlObject $object) {
+		$link = NoSqlPool::getByDao( $this );
+
+		$entity =
+			$link
+				->update(
+				$this->getTable(),
+				$object->toArray()
+			);
+		$object->setId( $entity['id'] );
+
+		return $object;
 	}
 
 	public function save(Identifiable $object) {
