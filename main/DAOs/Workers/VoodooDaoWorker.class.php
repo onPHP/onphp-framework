@@ -29,6 +29,9 @@
 	final class VoodooDaoWorker extends TransparentDaoWorker
 	{
 		private $classKey = null;
+		/**
+		 * @var SegmentHandler
+		 */
 		private $handler = null;
 		
 		// will trigger auto-detect
@@ -99,9 +102,9 @@
 		//@{
 		public function uncacheLists()
 		{
-			$this->handler->drop();
-			
-			return parent::uncacheLists();
+			return $this->registerUncacher(
+				UncacherVoodoDaoWorkerLists::create($this->className, $this->handler)
+			);
 		}
 		//@}
 		
