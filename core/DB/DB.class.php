@@ -42,6 +42,11 @@
 		
 		private $queue			= array();
 		private $toQueue		= false;
+		/**
+		 * @var UncachersPool
+		 */
+		private $uncacher		= null;
+		private $outOfTransactionCachePeer = null;
 		
 		abstract public function connect();
 		abstract public function disconnect();
@@ -130,6 +135,9 @@
 			
 			$this->transaction = true;
 			
+			$this->outOfTransactionCachePeer = Cache::getPeer();
+			Cache::setPeer(new RuntimeMemory());
+			
 			return $this;
 		}
 		
@@ -146,6 +154,9 @@
 			$this->transaction = false;
 			$this->savepointList = array();
 			
+			Cache::setPeer($this->outOfTransactionCachePeer);
+			$this->triggerUncacher();
+			
 			return $this;
 		}
 		
@@ -161,6 +172,9 @@
 			
 			$this->transaction = false;
 			$this->savepointList = array();
+			
+			Cache::setPeer($this->outOfTransactionCachePeer);
+			$this->triggerUncacher();
 			
 			return $this;
 		}
@@ -401,6 +415,14 @@
 			return $this;
 		}
 		
+		public function registerUncacher(UncacherBase $uncacher)
+		{
+			$uncacher->uncache();
+			if ($this->inTransaction()) {
+				$this->getUncacher()->merge($uncacher);
+			}
+		}
+		
 		/**
 		 * @param string $savepointName 
 		 * @return DB
@@ -435,6 +457,22 @@
 		private function assertSavePointName($savepointName)
 		{
 			Assert::isEqual(1, preg_match('~^[A-Za-z][A-Za-z0-9]*$~iu', $savepointName));
+		}
+		
+		/**
+		 * @return UncachersPool
+		 */
+		private function getUncacher()
+		{
+			return $this->uncacher = $this->uncacher ?: UncachersPool::create();
+		}
+		
+		private function triggerUncacher()
+		{
+			if ($this->uncacher) {
+				$this->uncacher->uncache();
+				$this->uncacher = null;
+			}
 		}
 	}
 ?>

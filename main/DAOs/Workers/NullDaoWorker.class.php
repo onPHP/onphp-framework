@@ -126,6 +126,13 @@
 			return true;
 		}
 		
+		/**
+		 * @return UncacherNullDaoWorker
+		 */
+		public function getUncacherById($id) {
+			return UncacherNullDaoWorker::create();
+		}
+		
 		public function uncacheByIds($ids)
 		{
 			return true;

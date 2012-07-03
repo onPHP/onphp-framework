@@ -65,14 +65,9 @@
 		//@{
 		public function uncacheLists()
 		{
-			if (
-				!Cache::me()->
-					mark($this->className)->
-					increment($this->className, 1)
-			)
-				Cache::me()->mark($this->className)->delete($this->className);
-			
-			return true;
+			return $this->registerUncacher(
+				UncacherCacheDaoWorkerLists::create($this->className)
+			);
 		}
 		//@}
 		

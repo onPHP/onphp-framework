@@ -1,3 +1,30 @@
+2012-07-03	Alexey S. Denisov
+
+	* core/Cache/Cache.class.php
+		core/DB/DB.class.php
+		global.inc.php.tpl
+		main/DAOs/BaseDAO.class.php
+		main/DAOs/GenericDAO.class.php
+		main/DAOs/Uncachers/UncacherBase.class.php
+		main/DAOs/Uncachers/UncacherBaseDaoWorker.class.php
+		main/DAOs/Uncachers/UncacherCacheDaoWorkerLists.class.php
+		main/DAOs/Uncachers/UncacherCommonDaoWorker.class.php
+		main/DAOs/Uncachers/UncacherGenericDAO.class.php
+		main/DAOs/Uncachers/UncacherNullDaoWorker.class.php
+		main/DAOs/Uncachers/UncacherSmartDaoWorkerLists.class.php
+		main/DAOs/Uncachers/UncacherTaggableDaoWorker.class.php
+		main/DAOs/Uncachers/UncacherVoodoDaoWorkerLists.class.php
+		main/DAOs/Uncachers/UncachersPool.class.php
+		main/DAOs/Workers/BaseDaoWorker.class.php
+		main/DAOs/Workers/CacheDaoWorker.class.php
+		main/DAOs/Workers/CommonDaoWorker.class.php
+		main/DAOs/Workers/DalayedDropDaoWorker.class.php
+		main/DAOs/Workers/NullDaoWorker.class.php
+		main/DAOs/Workers/SmartDaoWorker.class.php
+		main/DAOs/Workers/VoodooDaoWorker.class.php:
+
+	Introducing Uncachers
+
 2012-06-29	N. Konstantinov
 
 	* core/DB/PgSQL.class.php
