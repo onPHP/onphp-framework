@@ -14,6 +14,8 @@ class NoSqlResult extends QueryResult {
 	/** @var NoSqlResultList */
 	protected $resultList;
 
+	protected $count = null;
+
 	/**
 	 * @static
 	 * @param MongoCursor $cursor
@@ -22,6 +24,14 @@ class NoSqlResult extends QueryResult {
 	public static function create() {
 		return new static;
 	}
+
+	public function getCount() {
+		if ($this->count == null && $this->getMongoCursor()) {
+			$this->count = $this->getMongoCursor()->count();
+		}
+		return $this->count;
+	}
+
 
 	/**
 	 * @return NoSqlResultList
@@ -51,7 +61,7 @@ class NoSqlResult extends QueryResult {
 		$this->mongoCursor = $cursor;
 		$this
 			->setList(NoSqlResultList::create($this))
-			->setCount($cursor->count());
+			->setCount(null); // lazy
 		return $this;
 	}
 
