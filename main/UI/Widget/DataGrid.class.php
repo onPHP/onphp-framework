@@ -125,7 +125,7 @@ class DataGrid extends BaseWidget
      */
     public function addRow($data, $key=null) {
         $rowId = count($this->rows); // id следующей строки
-		if( $key=='total' ) {
+		if( isset($key) && $key=='total' ) {
 			$this->totalId = $rowId;
 		}
 
