@@ -12,22 +12,21 @@
 	/**
 	 * @ingroup Uncachers
 	**/
-	class UncacherTaggableDaoWorker implements UncacherBase
+	class UncacherTaggableDaoWorkerTags implements UncacherBase
 	{
 		private $classNameMap = array();
 		
 		/**
-		 * @return UncacherTaggableDaoWorker
+		 * @return UncacherTaggableDaoWorkerTags
 		 */
-		public static function create($className, $idKey, array $tags = array())
+		public static function create($className, array $tags = array())
 		{
-			return new self($className, $idKey, $tags);
+			return new self($className, $tags);
 		}
 		
-		public function __construct($className, $idKey, array $tags = array())
+		public function __construct($className, array $tags = array())
 		{
-			$idKeyList = $idKey ? array($idKey) : array();
-			$this->classNameMap[$className] = array($idKeyList, $tags);
+			$this->classNameMap[$className] = $tags;
 		}
 		
 		/**
@@ -38,47 +37,36 @@
 			return $this->classNameMap;
 		}
 		/**
-		 * @param $uncacher UncacherNullDaoWorker same as self class
+		 * @param $uncacher UncacherTaggableDaoWorkerTags same as self class
 		 * @return BaseUncacher (this)
 		 */
 		public function merge(UncacherBase $uncacher)
 		{
-			Assert::isInstance($uncacher, 'UncacherTaggableDaoWorker');
+			Assert::isInstance($uncacher, 'UncacherTaggableDaoWorkerTags');
 			return $this->mergeSelf($uncacher);
 		}
 		
 		public function uncache()
 		{
-			foreach ($this->classNameMap as $className => $uncaches) {
-				list($idKeys, $tags) = $uncaches;
+			foreach ($this->classNameMap as $className => $tags) {
 				$dao = ClassUtils::callStaticMethod("$className::dao");
 				/* @var $dao StorableDAO */
 				$worker = Cache::worker($dao);
 				Assert::isInstance($worker, 'TaggableDaoWorker');
 				
 				$worker->expireTags($tags);
-				
-				foreach ($idKeys as $key)
-					Cache::me()->mark($className)->delete($key);
-				
-				$dao->uncacheLists();
 			}
 		}
 		
-		private function mergeSelf(UncacherTaggableDaoWorker $uncacher) {
-			foreach ($uncacher->getClassNameMap() as $className => $uncaches) {
+		private function mergeSelf(UncacherTaggableDaoWorkerTags $uncacher) {
+			foreach ($uncacher->getClassNameMap() as $className => $tags) {
 				if (!isset($this->classNameMap[$className])) {
-					$this->classNameMap[$className] = $uncaches;
+					$this->classNameMap[$className] = $tags;
 				} else {
 					//merging idkeys
-					$this->classNameMap[$className][0] = ArrayUtils::mergeUnique(
-						$this->classNameMap[$className][0],
-						$uncaches[0]
-					);
-					//merging tags
-					$this->classNameMap[$className][1] = ArrayUtils::mergeUnique(
-						$this->classNameMap[$className][1],
-						$uncaches[1]
+					$this->classNameMap[$className] = ArrayUtils::mergeUnique(
+						$this->classNameMap[$className],
+						$tags
 					);
 				}
 			}

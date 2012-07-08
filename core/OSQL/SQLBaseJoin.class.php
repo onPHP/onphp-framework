@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup OSQL
 	**/
-	abstract class SQLBaseJoin implements SQLTableName, Aliased
+	abstract class SQLBaseJoin implements SQLTableName, SQLRealTableName, Aliased
 	{
 		protected $subject	= null;
 		protected $alias	= null;
@@ -33,6 +33,11 @@
 		public function getTable()
 		{
 			return $this->alias ? $this->alias : $this->subject;
+		}
+		
+		public function getRealTable()
+		{
+			return $this->subject;
 		}
 		
 		protected function baseToString(Dialect $dialect, $logic = null)

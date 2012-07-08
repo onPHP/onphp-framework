@@ -330,6 +330,7 @@
 			
 			$this->clones = array();
 			$this->syncClones();
+			$this->parent->dao()->uncacheById($this->getParentObject()->getId());
 			$this->dao->uncacheLists();
 
 			return $this;

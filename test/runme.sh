@@ -3,7 +3,7 @@ cd `dirname $0`
 
 if [ "$*" = '' ]
 then
-	ARGS='--repeat 9 AllTests'
+	ARGS='--repeat 10 AllTests'
 else
 	ARGS="$*"
 fi

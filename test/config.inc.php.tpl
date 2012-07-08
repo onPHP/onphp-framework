@@ -48,10 +48,11 @@
 
 	$daoWorkers = array(
 		'NullDaoWorker', 'CommonDaoWorker', 'SmartDaoWorker', 'VoodooDaoWorker',
-		'CacheDaoWorker', 'VoodooDaoWorker', 'SmartDaoWorker', 'CommonDaoWorker', 'NullDaoWorker'
+		'CacheDaoWorker', 'TaggableDaoWorker', 'VoodooDaoWorker', 'SmartDaoWorker', 'CommonDaoWorker', 'NullDaoWorker'
 	);
 	
 	VoodooDaoWorker::setDefaultHandler('CacheSegmentHandler');
+	TaggableDaoWorker::setHandler('TaggableSmartHandler');
 	
 	define('__LOCAL_DEBUG__', true);
 ?>
