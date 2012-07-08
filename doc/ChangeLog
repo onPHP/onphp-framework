@@ -1,3 +1,7 @@
+2012-07-08	Alexey S. Denisov
+
+	* main/Base/Hstore.class.php: hstore fix and tests update
+
 2012-06-29	N. Konstantinov
 
 	* core/DB/PgSQL.class.php
