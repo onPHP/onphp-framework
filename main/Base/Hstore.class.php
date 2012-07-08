@@ -96,9 +96,7 @@
 			if (!$raw)
 				return $this;
 			
-			$return = null;
-			eval('$return = array('.$raw.');');
-			$this->properties = $return;
+			$this->properties = $this->parseString($raw);
 
 			return $this;
 		}
@@ -112,9 +110,9 @@
 			
 			foreach ($this->properties as $k => $v) {
 				if ($v !== null)
-					$string .= "'".$this->quoteValue($k)."'=>'".$this->quoteValue($v)."',";
+					$string .= "\"{$this->quoteValue($k)}\"=>\"{$this->quoteValue($v)}\",";
 				else
-					$string .= "'{$this->quoteValue($k)}'=>NULL,";
+					$string .= "\"{$this->quoteValue($k)}\"=>NULL,";
 			}
 			
 			return $string;
@@ -123,6 +121,14 @@
 		protected function quoteValue($value)
 		{
 			return addslashes($value);
+		}
+		
+		private function parseString($raw)
+		{
+			$raw = preg_replace('/([$])/u', "\\\\$1", $raw);
+			$unescapedHStore = array();
+			eval('$unescapedHStore = array(' . $raw . ');');
+			return $unescapedHStore;
 		}
 	}
 ?>
