@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2006-2008 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2006-2012 by Konstantin V. Arkhipov                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -34,18 +34,18 @@
 		 * @return PeclMemcached
 		**/
 		public static function create(
-			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT,
-			$connectTimeout = PeclMemcached::DEFAULT_TIMEOUT
+			$host = self::DEFAULT_HOST,
+			$port = self::DEFAULT_PORT,
+			$connectTimeout = self::DEFAULT_TIMEOUT
 		)
 		{
 			return new self($host, $port, $connectTimeout);
 		}
 		
 		public function __construct(
-			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT,
-			$connectTimeout = PeclMemcached::DEFAULT_TIMEOUT
+			$host = self::DEFAULT_HOST,
+			$port = self::DEFAULT_PORT,
+			$connectTimeout = self::DEFAULT_TIMEOUT
 		)
 		{
 			$this->host = $host;

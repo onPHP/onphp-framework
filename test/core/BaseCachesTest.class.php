@@ -5,7 +5,7 @@
 		public static function cacheProvider()
 		{
 			return array(
-//				array(Memcached::create()),
+//				array(SocketMemcached::create()),
 //				array(SharedMemory::create()),
 //				array(PeclMemcached::create()),
 				array(RuntimeMemory::create()),
@@ -61,7 +61,7 @@
 		public function testWithTimeout()
 		{
 			$cache =
-				Memcached::create('localhost')->
+				SocketMemcached::create('localhost')->
 				setTimeout(200);
 
 			$cache->add('a', 'b');

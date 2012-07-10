@@ -96,18 +96,16 @@
 			if (!$raw)
 				return $this;
 			
-			$return = null;
-			eval("\$return = array({$raw});");
-			$this->properties = $return;
-			
+			$this->properties = $this->parseString($raw);
+
 			return $this;
 		}
-		
+
 		public function toString()
 		{
 			if (empty($this->properties))
 				return null;
-			
+
 			$string = '';
 			
 			foreach ($this->properties as $k => $v) {
@@ -123,6 +121,14 @@
 		protected function quoteValue($value)
 		{
 			return addslashes($value);
+		}
+		
+		private function parseString($raw)
+		{
+			$raw = preg_replace('/([$])/u', "\\\\$1", $raw);
+			$unescapedHStore = array();
+			eval('$unescapedHStore = array(' . $raw . ');');
+			return $unescapedHStore;
 		}
 	}
 ?>

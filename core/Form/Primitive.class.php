@@ -362,5 +362,29 @@
 		{
 			return new PrimitiveIpRange($name);
 		}
+
+		/**
+		 * @return PrimitiveEnum
+		**/
+		public static function enum($name)
+		{
+			return new PrimitiveEnum($name);
+		}
+
+		/**
+		 * @return PrimitiveEnumByValue
+		**/
+		public static function enumByValue($name)
+		{
+			return new PrimitiveEnumByValue($name);
+		}
+
+		/**
+		 * @return PrimitiveEnumList
+		**/
+		public static function enumList($name)
+		{
+			return new PrimitiveEnumList($name);
+		}
 	}
 ?>
