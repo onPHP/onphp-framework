@@ -14,11 +14,13 @@
 		private $redis		= null;
 		private $key		= null;
 		private $position	= null;
+		private $timeout	= null;
 		
-		public function __construct(Redis $redis, $key)
+		public function __construct(Redis $redis, $key, $timeout = null)
 		{
 			$this->redis	= $redis;
 			$this->key		= $key;
+			$this->timeout	= $timeout;
 		}
 		
 		/**
@@ -28,6 +30,9 @@
 		public function append($value)
 		{
 			$this->redis->rpush($this->key, $value);
+			
+			if ($this->timeout)
+				$this->redis->setTimeout($this->key, $this->timeout);
 			
 			return $this;
 		}
@@ -39,6 +44,9 @@
 		public function prepend($value)
 		{
 			$this->redis->lpush($this->key, $value);
+			
+			if ($this->timeout)
+				$this->redis->setTimeout($this->key, $this->timeout);
 			
 			return $this;
 		}
@@ -81,6 +89,9 @@
 		public function set($index, $value)
 		{
 			$this->redis->lset($this->key, $index, $value);
+			
+			if ($this->timeout)
+				$this->redis->expire($this->key, $this->timeout);
 			
 			return $this;
 		}
