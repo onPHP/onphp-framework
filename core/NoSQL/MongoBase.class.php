@@ -171,14 +171,19 @@ class MongoBase extends NoSQL {
 		return $rows;
 	}
 
-	public function insert($table, array $row) {
+	public function insert($table, array $row, $options = array()) {
 		$row = $this->encodeId($row);
+		$options = array_merge(
+			array('safe' => true),
+			$options
+		);
+		if ($options['safe']) $options['safe'] = $this->safeOnWrite;
 		// save
 		$result =
 			$this
 				->db
 					->selectCollection($table)
-						->insert($row, array('safe' => $this->safeOnWrite));
+						->insert($row, $options);
 		// checking result
 		if( !$result ) {
 			throw new NoSQLException('Could not insert object: '.var_export($row, true));
@@ -191,16 +196,21 @@ class MongoBase extends NoSQL {
 		throw new UnimplementedFeatureException('Unfortunately method "batchInsert" is not implemented yet :(');
 	}
 
-	public function update($table, array $row) {
+	public function update($table, array $row, $options = array()) {
 		$row = $this->encodeId($row);
 		$id = $row['_id'];
 		unset($row['_id']);
+		$options = array_merge(
+			array('safe' => true),
+			$options
+		);
+		if ($options['safe']) $options['safe'] = $this->safeOnWrite;
 
 		$result =
 			$this
 				->db
 					->selectCollection($table)
-						->update(array('_id' => $id), $row, array('safe' => $this->safeOnWrite));
+						->update(array('_id' => $id), $row, $options);
 		// checking result
 		if( !$result ) {
 			throw new NoSQLException('Could not update object: '.var_export($row, true));
