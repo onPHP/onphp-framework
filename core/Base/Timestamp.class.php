@@ -20,21 +20,17 @@
 	**/
 	class Timestamp extends Date
 	{
-		private $hour		= null;
-		private $minute		= null;
-		private $second		= null;
-		
 		/**
 		 * @return Timestamp
 		**/
-		public static function create($timestamp)
+		public static function create($timestamp, DateTimeZone $zone=null)
 		{
-			return new self($timestamp);
+			return new static($timestamp, $zone);
 		}
 		
 		public static function now()
 		{
-			return date(self::getFormat());
+			return date(static::getFormat());
 		}
 		
 		/**
@@ -42,7 +38,7 @@
 		**/
 		public static function makeNow()
 		{
-			return new self(time());
+			return new static(time());
 		}
 		
 		/**
@@ -50,17 +46,40 @@
 		**/
 		public static function makeToday()
 		{
-			return new self(self::today());
+			return new static(static::today());
+		}
+
+		public function __construct($dateTime, DateTimeZone $zone=null)
+		{
+			parent::__construct($dateTime);
+
+			if($zone) {
+				$this->dateTime->setTimezone($zone);
+			}
+
+		}
+
+		private function getDefaultTimeZone()
+		{
+			try {
+				$defaultTimeZoneName = date_default_timezone_get();
+				return new DateTimeZone($defaultTimeZoneName);
+			} catch(Exception $e) {
+				throw new WrongStateException(
+					"strange default time zone given - '{$defaultTimeZoneName}'!".
+					'Use date_default_timezone_set() for set valid default time zone.'
+				);
+			}
 		}
 		
 		public function toTime($timeDelimiter = ':', $secondDelimiter = '.')
 		{
 			return
-				$this->hour
+				$this->getHour()
 				.$timeDelimiter
-				.$this->minute
+				.$this->getMinute()
 				.$secondDelimiter
-				.$this->second;
+				.$this->getSecond();
 		}
 		
 		public function toDateTime(
@@ -76,17 +95,17 @@
 		
 		public function getHour()
 		{
-			return $this->hour;
+			return $this->dateTime->format('H');
 		}
 		
 		public function getMinute()
 		{
-			return $this->minute;
+			return $this->dateTime->format('i');
 		}
 		
 		public function getSecond()
 		{
-			return $this->second;
+			return $this->dateTime->format('s');
 		}
 		
 		public function equals(Timestamp $timestamp)
@@ -96,25 +115,25 @@
 		
 		public function getDayStartStamp()
 		{
-			if (!$this->hour && !$this->minute && !$this->second)
-				return $this->int;
+			if (!$this->getHour() && !$this->getMinute() && !$this->getSecond())
+				return $this->dateTime->getTimestamp();
 			else
 				return parent::getDayStartStamp();
 		}
 
 		public function getHourStartStamp()
 		{
-			if (!$this->minute && !$this->second)
-				return $this->int;
+			if (!$this->getMinute() && !$this->getSecond())
+				return $this->dateTime->getTimestamp();
 			
 			return
 				mktime(
-					$this->hour,
+					$this->getHour(),
 					0,
 					0,
-					$this->month,
-					$this->day,
-					$this->year
+					$this->getMonth(),
+					$this->getDay(),
+					$this->getYear()
 				);
 		}
 		
@@ -124,9 +143,9 @@
 		public function toIsoString($convertToUtc = true)
 		{
 			if ($convertToUtc)
-				return date('Y-m-d\TH:i:s\Z', $this->int - date('Z', $this->int));
+				return date('Y-m-d\TH:i:s\Z', $this->dateTime->getTimestamp() - date('Z', $this->dateTime->getTimestamp()));
 			else
-				return date('Y-m-d\TH:i:sO', $this->int);
+				return date('Y-m-d\TH:i:sO', $this->dateTime->getTimestamp());
 		}
 		
 		/**
@@ -134,74 +153,12 @@
 		**/
 		public function toTimestamp()
 		{
-			return $this;
+			return $this->spawn();
 		}
 		
 		protected static function getFormat()
 		{
 			return 'Y-m-d H:i:s';
-		}
-		
-		/* void */ protected function import($string)
-		{
-			list($date, $time) = explode(' ', $string, 2);
-			
-			list($this->hour, $this->minute, $this->second) =
-				explode(':', $time, 3);
-			
-			$time =
-				sprintf(
-					'%02d:%02d:%02d',
-					$this->hour,
-					$this->minute,
-					$this->second
-				);
-			
-			list($this->hour, $this->minute, $this->second) =
-				explode(':', $time, 3);
-			
-			parent::import($date);
-			
-			$this->string .= ' '.$time;
-		}
-		
-		/* void */ protected function stringImport($string)
-		{
-			$matches = array();
-			
-			if (
-				preg_match(
-					'/^(\d{1,4})-(\d{1,2})-(\d{1,2})\s\d{1,2}:\d{1,2}:\d{1,2}$/',
-					$string,
-					$matches
-				)
-			) {
-				if (checkdate($matches[2], $matches[3], $matches[1]))
-					$this->string = $string;
-			} elseif (
-				preg_match(
-					'/^(\d{1,4})-(\d{1,2})-(\d{1,2})$/',
-					$string,
-					$matches
-				)
-			) {
-				if (checkdate($matches[2], $matches[3], $matches[1]))
-					$this->string = $string . ' 00:00:00';
-			} elseif (($stamp = strtotime($string)) !== false)
-				$this->string = date($this->getFormat(), $stamp);
-		}
-		
-		/* void */ protected function buildInteger()
-		{
-			$this->int =
-				mktime(
-					$this->hour,
-					$this->minute,
-					$this->second,
-					$this->month,
-					$this->day,
-					$this->year
-				);
 		}
 	}
 ?>

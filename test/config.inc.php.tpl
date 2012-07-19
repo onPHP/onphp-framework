@@ -1,4 +1,5 @@
 <?php
+	date_default_timezone_set('Europe/Moscow');
 	define('ONPHP_TEST_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
 	
 	require ONPHP_TEST_PATH.'../global.inc.php.tpl';
