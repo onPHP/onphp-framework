@@ -179,7 +179,9 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 
 	public function addIn($field, array $value) {
 		foreach($value as &$inVal) {
-			if(Assert::checkInteger($inVal)) {
+			if( is_null($inVal) ) {
+				$inVal = null;
+			} elseif( Assert::checkInteger($inVal) ) {
 				$inVal = (int)$inVal;
 			} else {
 				$inVal = (string)$inVal;
