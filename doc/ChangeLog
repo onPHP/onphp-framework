@@ -1,3 +1,7 @@
+2012-07-20	Alexey S. Denisov
+
+	* main/Utils/ClassUtils.class.php: fix for php 5.4 support
+
 2012-07-11	Artem A. Naumenko
 
 	* core/Cache/ListGenerator.class.php, core/DB/NoSQL/RedisNoSQL.class.php:
