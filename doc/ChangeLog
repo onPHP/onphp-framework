@@ -1,3 +1,7 @@
+2012-07-20	Alexey S. Denisov
+
+	* main/Utils/ClassUtils.class.php: fix for php 5.4 support
+
 2012-07-19	Georgiy T. Kutsurua, Alexey S. Denisov (some fixes, ideas)
 
 	* core/Base/Date.class.php
