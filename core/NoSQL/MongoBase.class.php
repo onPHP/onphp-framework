@@ -199,7 +199,7 @@ class MongoBase extends NoSQL {
 	public function update($table, array $row, $options = array()) {
 		$row = $this->encodeId($row);
 		$id = $row['_id'];
-		unset($row['_id']);
+		//unset($row['_id']);
 		$options = array_merge(
 			array('safe' => true),
 			$options
