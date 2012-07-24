@@ -106,4 +106,16 @@ class NoSqlResult extends QueryResult {
 	public function getQuery() {
 		throw new UnimplementedFeatureException('NoSqlResult has no SelectQuery');
 	}
+
+	public function setLimit($limit) {
+		Assert::isInteger($limit);
+		$this->getMongoCursor()->limit($limit);
+		return $this;
+	}
+
+	public function setOffset($offset) {
+		Assert::isInteger($offset);
+		$this->getMongoCursor()->skip($offset);
+		return $this;
+	}
 }
