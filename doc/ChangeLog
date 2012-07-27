@@ -1,3 +1,35 @@
+2012-07-20	Alexey S. Denisov
+
+	* main/Utils/ClassUtils.class.php: fix for php 5.4 support
+
+2012-07-19	Georgiy T. Kutsurua, Alexey S. Denisov (some fixes, ideas)
+
+	* core/Base/Date.class.php
+		core/Base/Timestamp.class.php
+		core/Base/TimestampTZ.class.php
+		core/DB/PgSQL.class.php
+		core/Form/Primitive.class.php
+		core/Form/Primitives/ComplexPrimitive.class.php
+		core/Form/Primitives/PrimitiveTimestamp.class.php
+		core/Form/Primitives/PrimitiveTimestampTZ.class.php
+		core/OSQL/DataType.class.php
+		main/Base/CalendarDay.class.php
+		meta/types/TimeType.class.php
+		meta/types/TimestampTZType.class.php
+		test/config.inc.php.tpl
+		test/core/DateTest.class.php
+		test/core/PrimitiveTimestampTZTest.class.php
+		test/core/PrimitiveTimestampTest.class.php
+		test/core/TimestampTZTest.class.php
+		test/core/TimestampTest.class.php
+
+	Refactoring Date and Timestamp, added TimestampTZ with support database type "timestamp with time zone"
+
+2012-07-11	Artem A. Naumenko
+
+	* core/Cache/ListGenerator.class.php, core/DB/NoSQL/RedisNoSQL.class.php:
+	redis nosql became lazy
+
 2012-07-08	Alexey S. Denisov
 
 	* main/Base/Hstore.class.php: hstore fix and tests update

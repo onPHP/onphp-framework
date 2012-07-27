@@ -12,21 +12,16 @@
 	/**
 	 * @ingroup Types
 	**/
-	final class TimeType extends ObjectType
+	final class TimestampTZType extends DateType
 	{
 		public function getPrimitiveName()
 		{
-			return 'time';
-		}
-
-		public function isGeneric()
-		{
-			return true;
+			return 'timestampTZ';
 		}
 
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::TIME)';
+			return 'DataType::create(DataType::TIMESTAMPTZ)->setTimezoned(true)';
 		}
 	}
 ?>
