@@ -182,7 +182,9 @@
 				case 'replace':
 				case 'add':
 					try {
-						return $this->redis->setEx($key, $expires, $value);
+						$result = $this->redis->set($key, $value);
+						$this->redis->expire($key, $expires);
+						return $result;
 					} catch (RedisException $e) {
 						return $this->alive = false;
 					}
