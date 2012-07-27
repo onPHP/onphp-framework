@@ -51,7 +51,7 @@
 			Assert::isTrue(
 				class_exists($className, true)
 				|| interface_exists($className, true),
-				"knows nothing about '{$className}' class"
+				"knows nothing about '{$className}' class/interface"
 			);
 			
 			$this->ofClassName = $className;

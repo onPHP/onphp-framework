@@ -109,8 +109,10 @@
 					include $classname.EXT_CLASS;
 					$cache[ONPHP_CLASS_CACHE_CHECKSUM] = null;
 					return /* void */;
+				} catch (ClassNotFoundException $e) {
+					throw $e;
 				} catch (BaseException $e) {
-					__autoload_failed($classname, $e->getMessage());
+					/* try another auto loader */
 				}
 			}
 		}
@@ -125,8 +127,10 @@
 			try {
 				include $classname.EXT_CLASS;
 				return /* void */;
+			} catch (ClassNotFoundException $e) {
+				throw $e;
 			} catch (BaseException $e) {
-				return __autoload_failed($classname, $e->getMessage());
+				/* try another auto loader */
 			}
 		}
 		
@@ -192,8 +196,11 @@
 					$class = file_get_contents($classPath);
 					
 					eval('?>'.$class);
+				} catch (ClassNotFoundException $e) {
+					throw $e;
 				} catch (BaseException $e) {
-					return __autoload_failed($classname, $e->getMessage());
+					/* try another auto loader */
+					return;
 				}
 				
 				file_put_contents($cacheFile.'-'.$pid, $class, FILE_APPEND);
@@ -201,7 +208,7 @@
 				$included[$cacheFile] = true;
 			}
 		}
-			
+		
 		public static function autoloadCleanup()
 		{
 			$pid = getmypid();
@@ -212,7 +219,43 @@
 				}
 			}
 		}
-	
 		
+		public static function registerClassNotFoundLoader()
+		{
+			static $func = null;
+			if ($func === null)
+				$func = function($classname) {
+					Autoloader::__autoload_failed($classname);
+				};
+			spl_autoload_unregister($func);
+			spl_autoload_register($func);
+		}
+		
+		public static function __autoload_failed($classname, $message = '')
+		{
+			static $checkMethods = array(
+				'class_exists',
+				'interface_exists',
+				'trait_exists',
+			);
+			eval(
+				'if (!class_exists("ClassNotFoundException", false)) { '
+				.'final class ClassNotFoundException extends BaseException {/*_*/} }'
+			);
+
+			try {
+				throw new ClassNotFoundException('"'.$classname.': '.$message.'"');
+			} catch (ClassNotFoundException $e) {
+				foreach ($e->getTrace() as $call) {
+					if (
+						!empty($call['function'])
+						&& empty($call['class'])
+						&& in_array($call['function'], $checkMethods)
+					)
+						return;
+				}
+				throw $e;
+			}
+		}
 	}
 ?>
