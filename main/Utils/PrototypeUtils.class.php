@@ -211,6 +211,10 @@ class PrototypeUtils
 					if ($property->getMax() > 0) {
 						$value = substr($value, 0, $property->getMax());
 					}
+					if (empty($value)) {
+						// если false или "", то null
+						$value = null;
+					}
 					$entity[ $property->getColumnName() ] = $value;
 				} else {
 					$entity[ $property->getColumnName() ] = $value;

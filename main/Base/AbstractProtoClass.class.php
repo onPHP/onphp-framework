@@ -202,7 +202,7 @@
 
 			/** @var $property LightMetaProperty */
 			foreach ($this->getPropertyList() as $property) {
-				if($property->getRelationId()!=MetaRelation::ONE_TO_ONE && $includeManyRelations==false) {
+				if ($property->getRelationId() > MetaRelation::ONE_TO_ONE && !$includeManyRelations) {
 					continue;
 				}
 				$property->fillForm($form, $prefix);

@@ -261,51 +261,6 @@ abstract class NoSqlDAO extends StorableDAO {
 				: $this->add($object);
 	}
 
-	public function addNoCheck(NoSqlObject $object, $safe = true) {
-		$link = NoSqlPool::getByDao( $this );
-		$entity =
-			$link
-				->insert(
-				$this->getTable(),
-				$object->toArray(),
-				array('safe' => $safe)
-			);
-
-		$object->setId( $entity['id'] );
-
-		return $object;
-	}
-
-	public function add(Identifiable $object) {
-		$this->assertNoSqlObject( $object );
-
-		// converting object into Array
-		$arrayObj = $object->toArray();
-
-		// checking object completance
-		$this->checkNoSqlObject( $object );
-
-		// make sequence
-		$link = NoSqlPool::getByDao( $this );
-//		$object->setId(
-//			$link->obtainSequence(
-//				$this->getSequence()
-//			)
-//		);
-
-		// insert
-		$entity =
-			$link
-				->insert(
-					$this->getTable(),
-					$arrayObj
-				);
-
-		$object->setId( $entity['id'] );
-
-		return $object;
-	}
-
 	/**
 	 * @param NoSqlObject[] $objectList
 	 * @return AbstractAmqpObject|mixed|null
@@ -344,65 +299,57 @@ abstract class NoSqlDAO extends StorableDAO {
 		return $objectList;
 	}
 
-	public function saveNoCheck(NoSqlObject $object, $safe = true) {
-		$link = NoSqlPool::getByDao( $this );
 
-		$entity =
-			$link
-				->update(
+	public function addUnsafe(NoSqlObject $object) {
+		return $this->doAdd($object, false);
+	}
+
+	public function add(Identifiable $object) {
+		$this->assertNoSqlObject( $object );
+		return $this->doAdd($object, true);
+	}
+
+	protected function doAdd(NoSqlObject $object, $safe = true) {
+		$this->checkNoSqlObject($object);
+
+		$row = NoSqlPool::getByDao($this)
+			->insert(
 				$this->getTable(),
 				$object->toArray(),
 				array('safe' => $safe)
 			);
-		$object->setId( $entity['id'] );
+
+		$object->setId($row['id']);
 
 		return $object;
 	}
 
+	public function saveUnsafe(NoSqlObject $object) {
+		return $this->doSave($object, false);
+	}
+
 	public function save(Identifiable $object) {
 		$this->assertNoSqlObject( $object );
+		return $this->doSave($object, true);
+	}
 
-		// converting object into Array
-		$arrayObj = $object->toArray();
+	protected function doSave(NoSqlObject $object, $safe = true) {
+		$this->checkNoSqlObject($object);
 
-		// checking object completance
-		$this->checkNoSqlObject( $object );
+		$row = NoSqlPool::getByDao($this)
+			->update(
+				$this->getTable(),
+				$object->toArray(),
+				array('safe' => $safe)
+			);
 
-		$link = NoSqlPool::getByDao( $this );
-		// save
-		$entity =
-			$link
-				->update(
-					$this->getTable(),
-					$arrayObj
-				);
-		$object->setId( $entity['id'] );
+		//$object->setId($row['id']);
 
 		return $object;
 	}
 
 	public function import(Identifiable $object) {
-		$this->assertNoSqlObject( $object );
-
-		// converting object into Array
-		$arrayObj = $object->toArray();
-
-		// checking object completance
-		$this->checkNoSqlObject( $object );
-
-		$link = NoSqlPool::getByDao( $this );
-		// insert
-		$entity =
-			$link
-				->insert(
-					$this->getTable(),
-					$arrayObj
-				);
-		$object->setId( $entity['id'] );
-		// проверка сохранения
-		//$object = $this->getById( $entity['id'] );
-
-		return $object;
+		return $this->save($object);
 	}
 
 	public function merge(Identifiable $object, $cacheOnly = true) {
@@ -518,17 +465,33 @@ abstract class NoSqlDAO extends StorableDAO {
 	}
 
 	/**
-	 * @param Identifiable $object
+	 * @param Prototyped $object
 	 * @return bool
 	 * @throws NoSQLException
 	 */
-	protected function checkNoSqlObject(Identifiable $object) {
-		$className = get_class($object);
-		// checking by proto
-		Assert::methodExists($className, 'proto');
-		/** @var $form Form */
-		$form = $className::proto()->makeForm(null, false);
-		FormUtils::object2form($object, $form);
+	protected function checkNoSqlObject(Prototyped $object) {
+		$form = Form::create();
+		foreach ($object->proto()->getPropertyList() as $property) {
+			/** @var $property LightMetaProperty */
+			if ($property->isIdentifier() || $property->getRelationId() > MetaRelation::ONE_TO_ONE) {
+				continue;
+			}
+			if ($property->getType() == 'scalarIdentifier') {
+				$form->add(
+					Primitive::string($property->getColumnName())
+						->setRequired($property->isRequired())
+				);
+			} else if ($property->getType() == 'integerIdentifier') {
+				$form->add(
+					Primitive::integer($property->getColumnName())
+						->setRequired($property->isRequired())
+				);
+			} else {
+				$form->add($property->makePrimitive($property->getColumnName()));
+			}
+		}
+
+		$form->import(PrototypeUtils::toArray($object));
 		if( $form->getErrors() ) {
 			throw new NoSQLException( 'Object does not have all required fields: '.var_export($form->getErrors(), true) );
 		}
