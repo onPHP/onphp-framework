@@ -16,15 +16,6 @@
 		throw new BaseException($string, $code);
 	}
 	
-	/* void */ function __autoload_failed($classname, $message)
-	{
-		eval(
-			'if (!class_exists("ClassNotFoundException", false)) { '
-			.'final class ClassNotFoundException extends BaseException {/*_*/} }'
-			.'throw new ClassNotFoundException("'.$classname.': '.$message.'");'
-		);
-	}
-	
 	// file extensions
 	define('EXT_CLASS', '.class.php');
 	define('EXT_TPL', '.tpl.html');
@@ -53,6 +44,7 @@
 		.'Autoloader'.EXT_MOD;
 	
 	spl_autoload_register(array('Autoloader', ONPHP_CLASS_CACHE_TYPE), false);
+	Autoloader::registerClassNotFoundLoader();
 	
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
