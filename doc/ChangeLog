@@ -1,3 +1,8 @@
+2012-08-10	Alexey S. Denisov
+
+	* core/DB/PostgresDialect.class.php:
+		fix incorrect bytea escaping for Postgres 9.1+
+
 2012-08-08	Artem A. Naumenko
 
 	* core/DB/NoSQL/RedisNoSQL.class.php

@@ -72,7 +72,16 @@
 		
 		public function quoteBinary($data)
 		{
-			return "E'".pg_escape_bytea($data)."'";
+			$esc = pg_escape_bytea($data);
+			if (mb_strpos($esc, '\\x') === 0) {
+				// http://www.postgresql.org/docs/9.1/static/datatype-binary.html
+				// if pg_escape_bytea use postgres 9.1+ it's return value like '\x00aabb' (new bytea hex format),
+				// but must return '\\x00aabb'. So we use this fix:'
+				return "E'\\".$esc."'";
+			} else {
+				//if function escape value like '\\000\\123' - all ok
+				return "E'".$esc."'";
+			}
 		}
 		
 		public function unquoteBinary($data)
