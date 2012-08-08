@@ -1,3 +1,9 @@
+2012-08-08	Artem A. Naumenko
+
+	* core/DB/NoSQL/RedisNoSQL.class.php
+
+	added campability with old version of redis servers
+
 2012-07-20	Alexey S. Denisov
 
 	* main/Utils/ClassUtils.class.php: fix for php 5.4 support
