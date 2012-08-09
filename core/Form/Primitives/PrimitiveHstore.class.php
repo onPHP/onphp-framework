@@ -49,7 +49,10 @@
 		
 		public function getValue()
 		{
-			return $this->exportValue();
+			if (!$this->value instanceof Form)
+				return null;
+			
+			return Hstore::make($this->value->export());
 		}
 		
 		/**
@@ -103,7 +106,9 @@
 			if (!$this->value instanceof Form)
 				return null;
 			
-			return Hstore::make($this->value->export());
+			return !$this->value->getErrors()
+				? $this->value->export()
+				: null;
 		}
 		
 		/**
