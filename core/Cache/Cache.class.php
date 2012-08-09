@@ -58,14 +58,6 @@
 			self::$peer = $peer;
 		}
 		
-		/**
-		 * @return CachePeer 
-		 */
-		public static function getPeer()
-		{
-			return self::$peer;
-		}
-		
 		/* void */ public static function setDefaultWorker($worker)
 		{
 			Assert::classExists($worker);

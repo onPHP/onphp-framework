@@ -135,7 +135,7 @@
 			
 			$this->transaction = true;
 			
-			$this->outOfTransactionCachePeer = Cache::getPeer();
+			$this->outOfTransactionCachePeer = Cache::me();
 			Cache::setPeer(new RuntimeMemory());
 			
 			return $this;
