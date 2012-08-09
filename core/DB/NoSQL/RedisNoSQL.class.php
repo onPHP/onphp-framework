@@ -25,7 +25,7 @@
 		 * @param type $host
 		 * @param type $port
 		 * @param type $timeout
-		 * @return RedisNoSQL 
+		 * @return RedisNoSQL
 		 */
 		public static function create(
 			$host = self::DEFAULT_HOST,
@@ -142,8 +142,8 @@
 		}
 
 		/**
-		 * @param string $key 
-		 * 
+		 * @param string $key
+		 *
 		 * @return RedisNoSQLList
 		 */
 		public function fetchList($key, $timeout = null)
@@ -154,8 +154,8 @@
 		}
 		
 		/**
-		 * @param string $key 
-		 * 
+		 * @param string $key
+		 *
 		 * @return RedisNoSQLSet
 		 */
 		public function fetchSet($key)
@@ -164,8 +164,8 @@
 		}
 		
 		/**
-		 * @param string $key 
-		 * 
+		 * @param string $key
+		 *
 		 * @return RedisNoSQLHash
 		 */
 		public function fetchHash($key)
@@ -196,7 +196,7 @@
 		
 		protected function ensureTriedToConnect()
 		{
-			if ($this->triedConnect) 
+			if ($this->triedConnect)
 				return $this;
 			
 			$this->triedConnect = true;
