@@ -1,8 +1,12 @@
+2012-08-10	Alexey S. Denisov
+
+	* core/Form/Primitives/PrimitiveHstore.class.php:
+		PrimitiveHstore exportValue now return array|null instead Hstore object
+
 2012-08-08	Artem A. Naumenko
 
-	* core/DB/NoSQL/RedisNoSQL.class.php
-
-	added campability with old version of redis servers
+	* core/DB/NoSQL/RedisNoSQL.class.php:
+		added campability with old version of redis servers
 
 2012-07-20	Alexey S. Denisov
 
