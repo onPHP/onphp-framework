@@ -99,6 +99,10 @@
 			return null;
 		}
 		
+		public function getTables() {
+			return $this->from ?: array();
+		}
+		
 		public function toDialectString(Dialect $dialect)
 		{
 			$fromString = null;

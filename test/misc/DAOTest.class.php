@@ -871,10 +871,9 @@
 			$this->create();
 			
 			$parent = TestParentObject::create();
-			$child = TestChildObject::create()->setParent($parent);
-			
 			$parent->dao()->add($parent);
 			
+			$child = TestChildObject::create()->setParent($parent);
 			$child->dao()->add($child);
 			
 			$this->assertEquals(
