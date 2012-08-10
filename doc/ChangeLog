@@ -1,4 +1,11 @@
 2012-09-12	Alexey S. Denisov
+	* main/Net/GenericUri.class.php
+		main/Net/HttpUrl.class.php
+		main/Net/Url.class.php
+		main/Net/Urn.class.php:
+			GenericUri::parse now static
+
+2012-09-12	Alexey S. Denisov
 
 	* main/Flow/HttpRequest.class.php
 		main/Net/Http/CurlHttpClient.class.php

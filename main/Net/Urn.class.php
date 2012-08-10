@@ -18,7 +18,7 @@
 	{
 		protected $schemeSpecificPart	= null;
 		
-		protected $knownSubSchemes	= array(
+		protected static $knownSubSchemes	= array(
 			'urn'		=> 'Urn',
 			'mailto'	=> 'Urn',
 			'news'		=> 'Urn',
@@ -35,9 +35,9 @@
 			return new self;
 		}
 		
-		public function getKnownSubSchemes()
+		public static function getKnownSubSchemes()
 		{
-			return $this->knownSubSchemes;
+			return static::$knownSubSchemes;
 		}
 		
 		public function isValid()
