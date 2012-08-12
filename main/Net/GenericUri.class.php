@@ -778,7 +778,7 @@
 			if (mb_strlen($char) == 1) {
 				if (
 					!preg_match(
-						'/^['.$this->unreservedPartChars.']$/',
+						'/^['.$this->unreservedPartChars.']$/u',
 						$char
 					)
 				)
@@ -786,7 +786,7 @@
 			} else {
 				if (
 					preg_match(
-						'/^['.GenericUri::CHARS_UNRESERVED.']$/',
+						'/^['.GenericUri::CHARS_UNRESERVED.']$/u',
 						rawurldecode($char)
 					)
 				)
