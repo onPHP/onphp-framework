@@ -140,8 +140,7 @@ class DataGrid extends BaseWidget
             $row = array();
             foreach ($data->proto()->getPropertyList() as $property) {
                 try {
-                    $getter = $property->getGetter();
-                    $value = $this->objects[$rowId]->$getter();
+					$value = $this->getPropertyValue($rowId, $property);
                 } catch (BadMethodCallException $e) {
                     continue;
                 } catch (ObjectNotFoundException $e) {
@@ -182,7 +181,18 @@ class DataGrid extends BaseWidget
         return $this;
     }
 
-    /**
+	/**
+	 * @param $rowId
+	 * @param $property
+	 * @return mixed
+	 */
+	protected function getPropertyValue($rowId, $property) {
+		$getter = $property->getGetter();
+		$value = $this->objects[$rowId]->$getter();
+		return $value;
+	}
+
+	/**
      * Выставляет значение конкретного поля конкретной строки
      * @param $rowId
      * @param $fieldId
