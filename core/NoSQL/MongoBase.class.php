@@ -60,7 +60,7 @@ class MongoBase extends NoSQL {
 			$this->setBasename($base);
 		}
 
-		$options = array('connect' => true, 'slaveOkay' => true);
+		$options = array('connect' => true, 'slaveOkay' => false);
 		if (!empty($this->connectionOptions)) {
 			$options = array_merge($options, $this->connectionOptions);
 		}
@@ -75,9 +75,9 @@ class MongoBase extends NoSQL {
 			// получаем количество реплик в статусах PRIMARY и SECONDARY в сете
 			$safe = 0;
 			foreach ($this->link->getHosts() as $host) {
-				//if (isset($host['state']) && ($host['state'] == 1 || $host['state'] == 2)) {
+				if (isset($host['state']) && ($host['state'] == 1 || $host['state'] == 2)) {
 					$safe++;
-				//}
+				}
 			}
 			if ($safe > 0) {
 				$this->safeOnWrite = $safe;
