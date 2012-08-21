@@ -75,9 +75,9 @@ class MongoBase extends NoSQL {
 			// получаем количество реплик в статусах PRIMARY и SECONDARY в сете
 			$safe = 0;
 			foreach ($this->link->getHosts() as $host) {
-				if (isset($host['state']) && ($host['state'] == 1 || $host['state'] == 2)) {
+				//if (isset($host['state']) && ($host['state'] == 1 || $host['state'] == 2)) {
 					$safe++;
-				}
+				//}
 			}
 			if ($safe > 0) {
 				$this->safeOnWrite = $safe;
