@@ -119,6 +119,11 @@
 					.self::prepareFullText($words, $logic)
 				.')';
 		}
+
+        public static function toCasted($field, $type)
+        {   
+        	return "CAST({$field} AS {$type})";
+		}   
 		
 		private static function prepareFullText($words, $logic)
 		{
