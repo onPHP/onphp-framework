@@ -120,9 +120,9 @@
 				.')';
 		}
 
-        public static function toCasted($field, $type)
-        {   
-        	return "CAST({$field} AS {$type})";
+		public static function toCasted($field, $type)
+		{   
+			return "CAST({$field} AS {$type})";
 		}   
 		
 		private static function prepareFullText($words, $logic)
