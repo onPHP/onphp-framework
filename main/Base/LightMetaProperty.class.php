@@ -103,7 +103,7 @@
 
 			if ($columnName)
 				$property->columnName = $columnName;
-			else
+			else if ($columnName === null)
 				$property->columnName = $name;
 
 			$property->type = $type;
@@ -322,6 +322,10 @@
 
 		public function fillMapping(array $mapping)
 		{
+			if (empty($this->columnName)) {
+				return $mapping;
+			}
+
 			if (
 				!$this->relationId
 				|| (

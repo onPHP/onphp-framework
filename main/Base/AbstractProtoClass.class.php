@@ -219,7 +219,10 @@
 		)
 		{
 			foreach ($this->getPropertyList() as $property) {
-				$property->fillQuery($query, $object);
+				/** @var $property LightMetaProperty */
+				if ($property->getColumnName()) {
+					$property->fillQuery($query, $object);
+				}
 			}
 
 			return $query;
