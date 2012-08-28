@@ -1,3 +1,7 @@
+2012-08-28	Artem A. Naumenko
+
+	* main/Net/GenericUri.class.php: utf modifier added to RegExp pattern
+
 2012-08-10	Alexey S. Denisov
 
 	* core/DB/PostgresDialect.class.php:
