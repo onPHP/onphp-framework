@@ -22,10 +22,20 @@
 			$this->property = $propertyName;
 			$this->alias = $alias;
 		}
-		
+
 		public function getAlias()
 		{
 			return $this->alias;
+		}
+
+		public function getPropertyName()
+		{
+			return $this->property;
+		}
+
+		public function setPropertyName($propertyName = null)
+		{
+			$this->property = $propertyName;
 		}
 	}
 ?>

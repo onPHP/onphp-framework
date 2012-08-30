@@ -33,6 +33,9 @@
 		// dao-like behaviour: will throw ObjectNotFoundException when 'false'
 		private $silent = true;
 
+		// Обработчик критерии перед вызовом
+		public static $prepareCriteriaCallBack = null;
+
 		/**
 		 * @return Criteria
 		**/
@@ -115,6 +118,16 @@
 		public function getLogic()
 		{
 			return $this->logic;
+		}
+
+		/**
+		 * @return Criteria
+		 */
+		public function dropLogic()
+		{
+			$this->logic = Expression::andBlock();
+
+			return $this;
 		}
 
 		/**
@@ -463,10 +476,30 @@
 		}
 
 		/**
+		 * Вызов before-обработчика
+		 * @param bool $fullQuery обрабатываем всю критерию или нет (только select-часть)
+		 */
+		public function prepareCriteria($fullQuery = true)
+		{
+			if (
+				self::$prepareCriteriaCallBack !== null &&
+				is_callable(self::$prepareCriteriaCallBack)
+			) {
+				try {
+					call_user_func_array( self::$prepareCriteriaCallBack, array($this, $fullQuery) );
+				}
+				catch(Exception $e) {
+					// pass
+				}
+			}
+		}
+		/**
 		 * @return SelectQuery
 		**/
 		public function toSelectQuery()
 		{
+			$this->prepareCriteria(false);
+
 			if (!$this->projection->isEmpty()) {
 				$query =
 					$this->getProjection()->process(
@@ -488,6 +521,8 @@
 		**/
 		public function fillSelectQuery(SelectQuery $query)
 		{
+			$this->prepareCriteria(true);
+
 			$query->
 				limit($this->limit, $this->offset);
 

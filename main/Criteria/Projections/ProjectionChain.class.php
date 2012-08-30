@@ -31,6 +31,14 @@
 			
 			return $this;
 		}
+
+		/**
+		 * @return array
+		 */
+		public function getList()
+		{
+			return $this->list;
+		}
 		
 		/**
 		 * @return JoinCapableQuery
