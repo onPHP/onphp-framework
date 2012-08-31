@@ -489,7 +489,9 @@
 					call_user_func_array( self::$prepareCriteriaCallBack, array($this, $fullQuery) );
 				}
 				catch(Exception $e) {
-					// pass
+					// pass, saving
+					//Logger::me()->error($e);
+					throw $e;
 				}
 			}
 		}

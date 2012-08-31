@@ -353,6 +353,11 @@ class DataGrid extends BaseWidget
 		$trueName = $this->trueName;
 		$falseName = $this->falseName;
 
+		if ($value instanceof InternationalString) {
+			return function ($value) {
+				return $value->__toString();
+			};
+		}
 		// для прототипированного объекта можно построить
 		// вложенную табличку. Важно запомнить родителя,
 		// чтобы избежать бесконечной рекурсии
