@@ -121,6 +121,16 @@
 		}
 
 		/**
+		 * @param LogicalChain $logic
+		 * @return Criteria
+		 */
+		public function setLogic(LogicalChain $logic) {
+			$this->logic = $logic;
+
+			return $this;
+		}
+
+		/**
 		 * @return Criteria
 		 */
 		public function dropLogic()
@@ -146,6 +156,16 @@
 		public function getOrder()
 		{
 			return $this->order;
+		}
+
+		/**
+		 * @param OrderChain $order
+		 * @return Criteria
+		 */
+		public function setOrder(OrderChain $order) {
+			$this->order = $order;
+
+			return $this;
 		}
 
 		/**
