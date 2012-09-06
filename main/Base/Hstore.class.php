@@ -85,7 +85,7 @@
 		
 		public function isExists($key)
 		{
-			return isset($this->properties[$key]);
+			return key_exists($key, $this->properties);
 		}
 		
 		/**
