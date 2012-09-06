@@ -68,7 +68,7 @@
 		
 			abstract public function isAlive()
 	
-	Memcached <- CachePeer:
+	SocketMemcached <- CachePeer:
 	
 		public function __construct(
 			$host = Memcached::DEFAULT_PORT,

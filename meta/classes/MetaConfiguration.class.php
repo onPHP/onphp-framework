@@ -190,6 +190,9 @@
 								) || (
 									$property->getType()->getClass()->getPattern()
 										instanceof SpookedEnumerationPattern
+								) || (
+									$property->getType()->getClass()->getPattern()
+										instanceof SpookedEnumPattern
 								)
 							) && (
 								$property->getFetchStrategy()
@@ -308,6 +311,8 @@
 				if (
 					$class->getTypeId() == MetaClassType::CLASS_ABSTRACT
 					|| $class->getPattern() instanceof EnumerationClassPattern
+					|| $class->getPattern() instanceof EnumClassPattern
+
 				)
 					continue;
 
@@ -470,6 +475,7 @@
 					!(
 						$class->getPattern() instanceof SpookedClassPattern
 						|| $class->getPattern() instanceof SpookedEnumerationPattern
+						|| $class->getPattern() instanceof SpookedEnumPattern
 						|| $class->getPattern() instanceof InternalClassPattern
 					) && (
 						class_exists($class->getName(), true)
@@ -503,7 +509,10 @@
 						);
 
 					// special handling for Enumeration instances
-					if ($class->getPattern() instanceof EnumerationClassPattern) {
+					if (
+						$class->getPattern() instanceof EnumerationClassPattern
+						|| $class->getPattern() instanceof EnumClassPattern
+					) {
 						$object = new $name(call_user_func(array($name, 'getAnyId')));
 
 						Assert::isTrue(
@@ -513,11 +522,18 @@
 						$out->info(', ');
 
 						if ($this->checkEnumerationRefIntegrity)
-							$this->checkEnumerationReferentialIntegrity(
-								$object,
-								$class->getTableName()
-							);
+						{
+							if(
+								$object instanceof Enumeration
+								|| $object instanceof Enum
+							)
+								$this->checkEnumerationReferentialIntegrity(
+									$object,
+									$class->getTableName()
+								);
+						}
 
+						
 						continue;
 					}
 
@@ -895,7 +911,8 @@
 
 				Assert::isTrue(
 					($class->getPattern() instanceof SpookedClassPattern
-					|| $class->getPattern() instanceof SpookedEnumerationPattern),
+					|| $class->getPattern() instanceof SpookedEnumerationPattern
+					|| $class->getPattern() instanceof SpookedEnumPattern),
 					'spooked classes must use spooked patterns only: '
 					.$class->getName()
 				);
@@ -1116,6 +1133,8 @@
 						$class->getPattern() instanceof SpookedClassPattern
 					) || (
 						$class->getPattern() instanceof SpookedEnumerationPattern
+					) || (
+						$class->getPattern() instanceof SpookedEnumPattern
 					)
 				) {
 					$class->setType(
@@ -1344,9 +1363,17 @@
 		}
 
 		private function checkEnumerationReferentialIntegrity(
-			Enumeration $enumeration, $tableName
+			$enumeration, $tableName
 		)
 		{
+			Assert::isTrue(
+				(
+					$enumeration instanceof Enumeration
+					|| $enumeration instanceof Enum
+				),
+				'argument enumeation must be instacne of Enumeration or Enum! gived, "'.gettype($enumeration).'"'
+			);
+
 			$updateQueries = null;
 
 			$db = DBPool::me()->getLink();
@@ -1355,8 +1382,11 @@
 
 			$ids = array();
 
-			$list = $enumeration->getObjectList();
-
+			if ($enumeration instanceof Enumeration)
+				$list = $enumeration->getList();
+			elseif ($enumeration instanceof Enum)
+				$list = ClassUtils::callStaticMethod($class.'::getList');
+			
 			foreach ($list as $enumerationObject)
 				$ids[$enumerationObject->getId()] = $enumerationObject->getName();
 

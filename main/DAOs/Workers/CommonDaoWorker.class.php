@@ -479,19 +479,29 @@
 		
 		/// uncachers
 		//@{
-		public function uncacheById($id)
+		
+		/**
+		 * @return UncacherBase
+		 */
+		public function getUncacherById($id)
 		{
-			$this->dao->uncacheLists();
-			
-			return parent::uncacheById($id);
+			return UncacherCommonDaoWorker::create(
+				$this->className,
+				$this->makeIdKey($id)
+			);
 		}
 		
 		public function uncacheByIds($ids)
 		{
-			foreach ($ids as $id)
-				parent::uncacheById($id);
+			if (empty($ids))
+				return;
 			
-			return $this->dao->uncacheLists();
+			$uncacher = $this->getUncacherById(array_shift($ids));
+			
+			foreach ($ids as $id)
+				$uncacher->merge($this->getUncacherById($id));
+			
+			return $this->registerUncacher($uncacher->uncache());
 		}
 		
 		// quite useless here

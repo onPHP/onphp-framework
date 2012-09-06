@@ -30,6 +30,14 @@
 			return true;
 		}
 		
+		/**
+		 * @param mixed $id
+		 * @return UncacherBase
+		 */
+		public function getUncacherById($id) {
+			return UncacherNullDaoWorker::create();
+		}
+		
 		public function dropWith($worker)
 		{
 			Assert::classExists($worker);

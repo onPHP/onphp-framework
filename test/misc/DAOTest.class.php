@@ -91,6 +91,42 @@
 			$this->drop();
 		}
 
+		public function testInnerTransaction()
+		{
+			$this->create();
+			
+			foreach (DBTestPool::me()->getPool() as $connector => $db) {
+				DBPool::me()->setDefault($db);
+				$this->fill();
+				
+				$moscow = TestCity::dao()->getByLogic(Expression::eq('name', 'Moscow'));
+				$piter = TestCity::dao()->getByLogic(Expression::eq('name', 'Saint-Peterburg'));
+				
+				$cityNewer = function(TestCity $city) {
+					$city->dao()->merge($city->setName('New '.$city->getName()));
+				};
+				
+				$citiesNewer = function($moscow, $piter) use ($cityNewer, $db) {
+					$cityNewer($moscow);
+					
+					InnerTransactionWrapper::create()->
+						setDB($db)->
+						setFunction($cityNewer)->
+						run($piter);
+				};
+				
+				InnerTransactionWrapper::create()->
+					setDao($moscow->dao())->
+					setFunction($citiesNewer)->
+					run($moscow, $piter);
+				
+				$this->assertNotNull(TestCity::dao()->getByLogic(Expression::eq('name', 'New Moscow')));
+				$this->assertNotNull(TestCity::dao()->getByLogic(Expression::eq('name', 'New Saint-Peterburg')));
+			}
+			
+			$this->drop();
+		}
+		
 		public function testCriteria()
 		{
 			$this->create();
@@ -184,7 +220,8 @@
 			$this->assertNull($empty->getCity());
 			$this->assertNull($empty->getCityOptional());
 			$this->assertNull($empty->getEnum());
-
+			$this->assertNull($empty->getStaticEnum());
+			
 			$this->drop();
 		}
 
@@ -522,101 +559,103 @@
 		{
 			$this->create();
 
-			$properties = array(
-				'age' => '23',
-				'weight' => 80,
-				'comment' => null,
-			);
-
-			$user =
-				TestUser::create()->
-				setCity(
-					$moscow = TestCity::create()->
-					setName('Moscow')
-				)->
-				setCredentials(
-					Credentials::create()->
-					setNickname('fake')->
-					setPassword(sha1('passwd'))
-				)->
-				setLastLogin(
-					Timestamp::create(time())
-				)->
-				setRegistered(
-					Timestamp::create(time())->modify('-1 day')
-				)->
-				setProperties(Hstore::make($properties));
-
-			$moscow = TestCity::dao()->add($moscow);
-
-			$user = TestUser::dao()->add($user);
-
-			Cache::me()->clean();
-			TestUser::dao()->dropIdentityMap();
-
-			$user = TestUser::dao()->getById('1');
-
-			$this->assertInstanceOf('Hstore', $user->getProperties());
-
-			$this->assertEquals(
-				$properties,
-				$user->getProperties()->getList()
-			);
-
-
-			$form = TestUser::proto()->makeForm();
-
-			$form->get('properties')->
-				setFormMapping(
-					array(
-						Primitive::string('age'),
-						Primitive::integer('weight'),
-						Primitive::string('comment'),
-					)
+			foreach (DBTestPool::me()->getPool() as $connector => $db) {
+				DBPool::me()->setDefault($db);
+				$properties = array(
+					'age' => '23',
+					'weight' => 80,
+					'comment' => null,
 				);
 
-			$form->import(
-				array('id' => $user->getId())
-			);
+				$user =
+					TestUser::create()->
+					setCity(
+						$moscow = TestCity::create()->
+						setName('Moscow')
+					)->
+					setCredentials(
+						Credentials::create()->
+						setNickname('fake')->
+						setPassword(sha1('passwd'))
+					)->
+					setLastLogin(
+						Timestamp::create(time())
+					)->
+					setRegistered(
+						Timestamp::create(time())->modify('-1 day')
+					)->
+					setProperties(Hstore::make($properties));
 
-			$this->assertNotNull($form->getValue('id'));
+				$moscow = TestCity::dao()->add($moscow);
 
-			$object = $user;
+				$user = TestUser::dao()->add($user);
 
-			FormUtils::object2form($object, $form);
+				Cache::me()->clean();
+				TestUser::dao()->dropIdentityMap();
 
-			$this->assertInstanceOf('Hstore', $form->getValue('properties'));
+				$user = TestUser::dao()->getById('1');
 
-			$this->assertEquals(
-				array_filter($properties),
-				$form->getValue('properties')->getList()
-			);
+				$this->assertInstanceOf('Hstore', $user->getProperties());
 
-			$subform = $form->get('properties')->getInnerForm();
+				$this->assertEquals(
+					$properties,
+					$user->getProperties()->getList()
+				);
 
-			$this->assertEquals(
-				$subform->getValue('age'),
-				'23'
-			);
+				$form = TestUser::proto()->makeForm();
 
-			$this->assertEquals(
-				$subform->getValue('weight'),
-				80
-			);
+				$form->get('properties')->
+					setFormMapping(
+						array(
+							Primitive::string('age'),
+							Primitive::integer('weight'),
+							Primitive::string('comment'),
+						)
+					);
 
-			$this->assertNull(
-				$subform->getValue('comment')
-			);
+				$form->import(
+					array('id' => $user->getId())
+				);
 
-			$user = new TestUser();
+				$this->assertNotNull($form->getValue('id'));
 
-			FormUtils::form2object($form, $user, false);
+				$object = $user;
 
-			$this->assertEquals(
-				$user->getProperties()->getList(),
-				array_filter($properties)
-			);
+				FormUtils::object2form($object, $form);
 
+				$this->assertInstanceOf('Hstore', $form->getValue('properties'));
+
+				$this->assertEquals(
+					array_filter($properties),
+					$form->getValue('properties')->getList()
+				);
+
+				$subform = $form->get('properties')->getInnerForm();
+
+				$this->assertEquals(
+					$subform->getValue('age'),
+					'23'
+				);
+
+				$this->assertEquals(
+					$subform->getValue('weight'),
+					80
+				);
+
+				$this->assertNull(
+					$subform->getValue('comment')
+				);
+
+				$user = new TestUser();
+
+				FormUtils::form2object($form, $user, false);
+
+				$this->assertEquals(
+					$user->getProperties()->getList(),
+					array_filter($properties)
+				);
+			}
+			
 			$this->drop();
 		}
 
@@ -719,9 +758,10 @@
 			try {
 				TestBinaryStuff::dao()->import($bin);
 			} catch (DatabaseException $e) {
-				return $this->fail();
+				return $this->fail($e->getMessage());
 			}
 
+			TestBinaryStuff::dao()->dropIdentityMap();
 			Cache::me()->clean();
 
 			$prm = Primitive::prototypedIdentifier('TestBinaryStuff', 'id');
@@ -738,7 +778,7 @@
 			try {
 				$integerIdPrimitive->import(array('id' => 'string-instead-of-integer'));
 			} catch (DatabaseException $e) {
-				return $this->fail();
+				return $this->fail($e->getMessage());
 			}
 		}
 
@@ -955,6 +995,8 @@
 					setCityOptional($city)->
 					setEnum(
 						new ImageType(ImageType::getAnyId())
+					)->setStaticEnum(
+						new MimeType(MimeType::getAnyId())
 					)
 			);
 

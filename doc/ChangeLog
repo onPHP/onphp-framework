@@ -1,3 +1,190 @@
+2012-08-28	Artem A. Naumenko
+
+	* main/Net/GenericUri.class.php: utf modifier added to RegExp pattern
+
+2012-08-10	Alexey S. Denisov
+
+	* core/DB/PostgresDialect.class.php:
+		fix incorrect bytea escaping for Postgres 9.1+
+
+2012-08-10	Alexey S. Denisov
+
+	* core/Form/Primitives/PrimitiveHstore.class.php:
+		PrimitiveHstore exportValue now return array|null instead Hstore object
+
+2012-08-08	Artem A. Naumenko
+
+	* core/DB/NoSQL/RedisNoSQL.class.php:
+		added campability with old version of redis servers
+
+2012-07-20	Alexey S. Denisov
+
+	* main/Utils/ClassUtils.class.php: fix for php 5.4 support
+
+2012-07-19	Georgiy T. Kutsurua, Alexey S. Denisov (some fixes, ideas)
+
+	* core/Base/Date.class.php
+		core/Base/Timestamp.class.php
+		core/Base/TimestampTZ.class.php
+		core/DB/PgSQL.class.php
+		core/Form/Primitive.class.php
+		core/Form/Primitives/ComplexPrimitive.class.php
+		core/Form/Primitives/PrimitiveTimestamp.class.php
+		core/Form/Primitives/PrimitiveTimestampTZ.class.php
+		core/OSQL/DataType.class.php
+		main/Base/CalendarDay.class.php
+		meta/types/TimeType.class.php
+		meta/types/TimestampTZType.class.php
+		test/config.inc.php.tpl
+		test/core/DateTest.class.php
+		test/core/PrimitiveTimestampTZTest.class.php
+		test/core/PrimitiveTimestampTest.class.php
+		test/core/TimestampTZTest.class.php
+		test/core/TimestampTest.class.php
+
+	Refactoring Date and Timestamp, added TimestampTZ with support database type "timestamp with time zone"
+
+2012-07-11	Artem A. Naumenko
+
+	* core/Cache/ListGenerator.class.php, core/DB/NoSQL/RedisNoSQL.class.php:
+	redis nosql became lazy
+
+2012-07-08	Alexey S. Denisov
+
+	* main/Base/Hstore.class.php: hstore fix and tests update
+
+2012-07-03	Alexey S. Denisov
+
+	* core/Cache/Cache.class.php
+		core/DB/DB.class.php
+		global.inc.php.tpl
+		main/DAOs/BaseDAO.class.php
+		main/DAOs/GenericDAO.class.php
+		main/DAOs/Uncachers/UncacherBase.class.php
+		main/DAOs/Uncachers/UncacherBaseDaoWorker.class.php
+		main/DAOs/Uncachers/UncacherCacheDaoWorkerLists.class.php
+		main/DAOs/Uncachers/UncacherCommonDaoWorker.class.php
+		main/DAOs/Uncachers/UncacherGenericDAO.class.php
+		main/DAOs/Uncachers/UncacherNullDaoWorker.class.php
+		main/DAOs/Uncachers/UncacherSmartDaoWorkerLists.class.php
+		main/DAOs/Uncachers/UncacherTaggableDaoWorker.class.php
+		main/DAOs/Uncachers/UncacherVoodoDaoWorkerLists.class.php
+		main/DAOs/Uncachers/UncachersPool.class.php
+		main/DAOs/Workers/BaseDaoWorker.class.php
+		main/DAOs/Workers/CacheDaoWorker.class.php
+		main/DAOs/Workers/CommonDaoWorker.class.php
+		main/DAOs/Workers/DalayedDropDaoWorker.class.php
+		main/DAOs/Workers/NullDaoWorker.class.php
+		main/DAOs/Workers/SmartDaoWorker.class.php
+		main/DAOs/Workers/VoodooDaoWorker.class.php:
+
+	Introducing Uncachers
+
+2012-06-29	N. Konstantinov
+
+	* core/DB/PgSQL.class.php
+		test/core/DbConnectionTest.class.php:
+
+	throw DatabaseException instead of BaseException in case of connection's failure
+
+2012-06-27	Alexey S. Denisov
+
+	* main/Base/AbstractProtoClass.class.php
+		main/Base/InnerMetaProperty.class.php
+		main/Base/LightMetaProperty.class.php
+		main/DAOs/StorableDAO.class.php
+		test/core/AbstractProtoClassFillQueryTest.class.php:
+
+	moved and updated StorableDAO::unite "properties compare logic" to AbstractProtoClass
+		and (Inner|Light)MetaProperty and covered with tests
+		
+2012-06-04	Evgeny M. Stepanov
+
+	* main/Base/Hstore.class.php: fix
+
+2012-05-31	Alexey S. Denisov
+
+	* main/DAOs/StorableDAO.class.php: fix merge object with self
+		
+2012-05-28	Georgiy T. Kutsurua
+
+	* core/Cache/PeclMemcache.class.php
+		core/Cache/PeclMemcached.class.php
+		core/Cache/{Memcached.class.php → SocketMemcached.class.php}
+		
+	Code clean & add SocketMemcached instead of Memcached
+
+2012-05-23	Georgiy T. Kutsurua
+
+	* main/Base/LightMetaProperty.class.php: fix after Enum update
+
+2012-05-18	Alexey S. Denisov
+
+	* core/DB/DB.class.php,
+		core/DB/Transaction/InnerTransaction.class.php,
+		core/DB/Transaction/InnerTransactionWrapper.class.php,
+		test/core/InnerTransactionTest.class.php,
+		test/misc/DAOTest.class.php: DB can work with savepoints; Added InnerTransaction, InnerTransactionWrapper
+
+2012-05-05	Artem A. Naumenko
+
+	* core/DB/NoSQL/RedisNoSQL.class.php, 
+	core/DB/NoSQL/RedisNoSQLList.class.php, core/Base/Listable.class.php,
+	global.inc.php.tpl, test/main/RedisNoSQLTest.class.php:
+	Added wrapper to phpredis https://github.com/nicolasff/phpredis with tests
+
+2012-03-26	Alexey S. Denisov
+	* core/Logic/BinaryExpression.class.php,
+		core/Logic/PostfixUnaryExpression.class.php,
+		core/Logic/PrefixUnaryExpression.class.php,
+		core/OSQL/SQLFunction.class.php: Added option noBrackets for binary/unary expressions
+
+2012-04-27	Georgiy T. Kutsurua
+
+	* core/Form/Primitives/PrimitiveString.class.php:
+		added method PrimitiveString::getAllowedPattern
+
+2012-04-26	Artem A. Naumenko, Evgeny V. Kokovikhin
+
+	* core/Base/Assert.class.php, core/Cache/PeclMemcached.class.php,
+	main/Monitoring/PinbedPeclMemcached.class.php, test/main/Utils/PinbaTest.class.php,
+	core/Cache/SequentialCache.class.php,
+	test/core/SequentialCacheTest.class.php:
+	Assert::isObject added, lazy ability to PeclMemcached, Pinba's tests tune,
+	Addd SequentialCache with tests.
+
+2012-04-22	Georgiy T. Kutsurua
+
+	* core/OSQL/DBColumn.class.php: Fix DBColumn
+
+2012-04-20	Timofey A. Anisimov
+
+	* test/main/OsqlSelectTest.class.php,
+	core/SQLFullOuterJoin.class.php,
+	core/Joiner.class.php
+	core/SelectQuery.class.php:
+	Full outer join capability in select query
+
+2012-04-12	Evgeny V. Kokovikhin
+
+	* test/main/Utils/PinbaTest.class.php, main/Monitoring/PinbaClient.class.php:
+	test for PinbaClient added. Thanks to Artem A. Naumenko
+
+2012-04-11	Evgeny V. Kokovikhin
+	
+	* main/Monitoring/PinbaClient.class.php: base ability of
+	tree (integral) logging added. Thanks to Artem A. Naumenko
+
+2012-04-04	Georgiy T. Kutsurua
+	
+	* main/UI/View/JsonPView.class.php,
+		main/UI/View/JsonPView.class.php:
+		For easy using jsonp, @see http://www.json-p.org/
+
+2012-03-26	Alexey S. Denisov
+	
+	* core/DB/SQLitePDO.class.php: Added SQLite3 though PDO
+
 2012-03-14	Alexander A. Sayapin
 	
 	* core/Base/Date.class.php: Fixed calculating number of weeks in year accordingly ISO 8601.

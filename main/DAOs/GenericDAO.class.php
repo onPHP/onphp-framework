@@ -301,17 +301,32 @@
 
 		public function uncacheById($id)
 		{
-			unset($this->identityMap[$id]);
-
-			return Cache::worker($this)->uncacheById($id);
+			return $this->getUncacherById($id)->uncache();
+		}
+		
+		/**
+		 * @return UncachersPool
+		 */
+		public function getUncacherById($id)
+		{
+			return UncacherGenericDAO::create(
+				$this,
+				$id,
+				Cache::worker($this)->getUncacherById($id)
+			);
 		}
 
 		public function uncacheByIds($ids)
 		{
+			if (empty($ids))
+				return;
+				
+			$uncacher = $this->getUncacherById(array_shift($ids));
+			
 			foreach ($ids as $id)
-				unset($this->identityMap[$id]);
-
-			return Cache::worker($this)->uncacheByIds($ids);
+				$uncacher->merge($this->getUncacherById($id));
+			
+			return $uncacher->uncache();
 		}
 
 		public function uncacheLists()
@@ -339,6 +354,11 @@
 			return $this;
 		}
 
+		public function registerWorkerUncacher(UncacherBase $uncacher)
+		{
+			DBPool::getByDao($this)->registerUncacher($uncacher);
+		}
+		
 		protected function inject(
 			InsertOrUpdateQuery $query,
 			Identifiable $object
@@ -362,19 +382,35 @@
 			$db = DBPool::getByDao($this);
 
 			if (!$db->isQueueActive()) {
+				$preUncacher = is_scalar($object->getId())
+					? $this->getUncacherById($object->getId())
+					: null;
+				
 				$count = $db->queryCount($query);
 
-				$this->uncacheById($object->getId());
-
+				$uncacher = $this->getUncacherById($object->getId());
+				if ($preUncacher) {
+					$uncacher->merge($uncacher);
+				}
+				$uncacher->uncache();
+				
 				if ($count !== 1)
 					throw new WrongStateException(
 						$count.' rows affected: racy or insane inject happened: '
 						.$query->toDialectString($db->getDialect())
 					);
 			} else {
+				$preUncacher = is_scalar($object->getId())
+					? $this->getUncacherById($object->getId())
+					: null;
+				
 				$db->queryNull($query);
 
-				$this->uncacheById($object->getId());
+				$uncacher = $this->getUncacherById($object->getId());
+				if ($preUncacher) {
+					$uncacher->merge($uncacher);
+				}
+				$uncacher->uncache();
 			}
 
 			// clean out Identifier, if any

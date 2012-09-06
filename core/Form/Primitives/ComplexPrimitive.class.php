@@ -74,8 +74,8 @@
 		}
 
 		// implement me, child :-)
-		abstract protected function importSingle($scope);
-		abstract protected function importMarried($scope);
+		abstract public function importSingle($scope);
+		abstract public function importMarried($scope);
 
 		public function import($scope)
 		{

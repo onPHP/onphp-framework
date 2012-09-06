@@ -37,15 +37,18 @@
 				.($this->basename ? " dbname={$this->basename}" : null)
 				.($this->port ? " port={$this->port}" : null);
 
-			if ($this->persistent)
-				$this->link = pg_pconnect($conn);
-			else
-				$this->link = pg_connect($conn);
-
-			if (!$this->link)
+			try {
+				if ($this->persistent)
+					$this->link = pg_pconnect($conn);
+				else
+					$this->link = pg_connect($conn);
+			} catch (Exception $e) {
 				throw new DatabaseException(
-					'can not connect to PostgreSQL server: '.pg_errormessage()
+					'can not connect to PostgreSQL server: '.$e->getMessage(),
+					$e->getCode(),
+					$e
 				);
+			}
 
 			if ($this->encoding)
 				$this->setDbEncoding();
@@ -201,8 +204,11 @@
 			static $types = array(
 				'time'			=> DataType::TIME,
 				'date'			=> DataType::DATE,
-				'timestamp'		=> DataType::TIMESTAMP,
 
+				'timestamp'						=> DataType::TIMESTAMP,
+				'timestamptz'					=> DataType::TIMESTAMPTZ,
+				'timestamp with time zone'   	=> DataType::TIMESTAMPTZ,
+				
 				'bool'			=> DataType::BOOLEAN,
 
 				'int2'			=> DataType::SMALLINT,

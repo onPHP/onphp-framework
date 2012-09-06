@@ -1,6 +1,4 @@
 <?php
-	/* $Id$ */
-	
 	final class PrimitiveHstoreTest extends TestCase
 	{
 		protected static $scope =
@@ -47,6 +45,10 @@
 				$hstore->getList(),
 				self::$scope['properties']
 			);
+			$this->assertEquals(
+				$prm->exportValue(),
+				self::$scope['properties']
+			);
 			
 			try {
 				$hstore->get('NotFound');
@@ -80,6 +82,8 @@
 					'weight' => Form::WRONG
 				)
 			);
+			
+			$this->assertNull($prm->exportValue());
 			
 			$prm->clean();
 		}

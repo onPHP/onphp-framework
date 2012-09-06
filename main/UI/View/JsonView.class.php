@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup Flow
 	**/
-	final class JsonView implements View, Stringable
+	class JsonView implements View, Stringable
 	{
 		protected $options = 0;
 

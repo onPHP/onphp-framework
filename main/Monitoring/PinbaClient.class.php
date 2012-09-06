@@ -17,6 +17,9 @@
 	{
 		private static $enabled = null;
 		private $timers = array();
+		private $queue = array();
+		private $treeLogEnabled = false;
+		
 		
 		/**
 		 * @return PinbaClient
@@ -34,10 +37,40 @@
 			return self::$enabled;
 		}
 		
+		public function setTreeLogEnabled($orly = true)
+		{
+			$this->treeLogEnabled = ($orly === true);
+			
+			return $this;
+		}
+		
+		public function isTreeLogEnabled()
+		{
+			return $this->treeLogEnabled;
+		}
+		
+		public function getTreeQueue()
+		{
+			return $this->queue;
+		}
+		
 		public function timerStart($name, array $tags, array $data = array())
 		{
 			if (array_key_exists($name, $this->timers))
 				throw new WrongArgumentException('a timer with the same name allready exists');
+			
+			if ($this->isTreeLogEnabled()) {
+				
+				$id = uniqid();
+				$tags['treeId'] = $id;
+				
+				if (!empty($this->queue))
+					$tags['treeParentId'] = end($this->queue);
+				else
+					$tags['treeParentId'] = 'root';
+				
+				$this->queue[] = $id;
+			}
 			
 			$this->timers[$name] =
 				count($data)
@@ -49,6 +82,9 @@
 		
 		public function timerStop($name)
 		{
+			 if ($this->isTreeLogEnabled())
+				array_pop($this->queue);
+			 
 			 if (!array_key_exists($name, $this->timers))
 				throw new WrongArgumentException('have no any timer with name '.$name);
 			 
