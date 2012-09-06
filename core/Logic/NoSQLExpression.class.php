@@ -171,7 +171,7 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 	}
 
 	public function addIn($field, array $value) {
-		/*foreach($value as &$inVal) {
+		foreach($value as &$inVal) {
 			if( is_null($inVal) ) {
 				$inVal = null;
 			} elseif( Assert::checkInteger($inVal) ) {
@@ -179,7 +179,7 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 			} else {
 				$inVal = (string)$inVal;
 			}
-		}*/
+		}
 		$this->conditions[] = array(
 			self::C_TYPE	=> self::EXP_IN,
 			self::C_FIELD	=> (string)$field,
