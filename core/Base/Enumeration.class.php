@@ -21,7 +21,7 @@
 	{
 		protected $names = array(/* override me */);
 
-		final public function __construct($id)
+		public function __construct($id)
 		{
 			$this->setId($id);
 		}
