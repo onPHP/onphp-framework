@@ -1,3 +1,8 @@
+2012-09-06	Igor V. Gulyaev
+
+	* main/Base/Hstore.class.php
+		test/main/HstoreTest.class.php: fix hstore key exist check
+
 2012-08-28	Artem A. Naumenko
 
 	* main/Net/GenericUri.class.php: utf modifier added to RegExp pattern
