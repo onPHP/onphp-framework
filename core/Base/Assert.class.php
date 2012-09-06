@@ -11,7 +11,7 @@
 
 	/**
 	 * Widely used assertions.
-	 * 
+	 *
 	 * @ingroup Base
 	**/
 	final class Assert extends StaticFactory
@@ -23,7 +23,7 @@
 					$message.', '.self::dumpArgument($boolean)
 				);
 		}
-		
+
 		public static function isFalse($boolean, $message = null)
 		{
 			if ($boolean !== false)
@@ -31,7 +31,7 @@
 					$message.', '.self::dumpArgument($boolean)
 				);
 		}
-		
+
 		public static function isNotFalse($boolean, $message = null)
 		{
 			if ($boolean === false)
@@ -39,7 +39,7 @@
 					$message.', '.self::dumpArgument($boolean)
 				);
 		}
-		
+
 		public static function isNull($variable, $message = null)
 		{
 			if ($variable !== null)
@@ -47,7 +47,7 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-		
+
 		public static function isEmpty($variable, $message = null)
 		{
 			if (!empty($variable))
@@ -55,7 +55,7 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-		
+
 		public static function isNotEmpty($variable, $message = null)
 		{
 			if (empty($variable))
@@ -63,23 +63,23 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-		
+
 		public static function isIndexExists($array, $key, $message = null)
 		{
 			Assert::isArray($array);
-			
+
 			if (!array_key_exists($key, $array))
 				throw new WrongArgumentException(
 					$message.', '.self::dumpArgument($key)
 				);
 		}
-		
+
 		public static function isNotNull($variable, $message = null)
 		{
 			if ($variable === null)
 				throw new WrongArgumentException($message);
 		}
-		
+
 		public static function isScalar($variable, $message = null)
 		{
 			if (!is_scalar($variable))
@@ -87,7 +87,7 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-		
+
 		public static function isArray($variable, $message = null)
 		{
 			if (!is_array($variable))
@@ -95,17 +95,17 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-		
+
 		public static function isNotEmptyArray(&$variable, $message = null)
 		{
 			self::isArray($variable, $message);
-			
+
 			if (!$variable)
 				throw new WrongArgumentException(
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-		
+
 		public static function isInteger($variable, $message = null)
 		{
 			if (
@@ -118,7 +118,7 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-		
+
 		public static function isPositiveInteger($variable, $message = null)
 		{
 			if (
@@ -129,7 +129,7 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-		
+
 		public static function isFloat($variable, $message = null)
 		{
 			if (!self::checkFloat($variable))
@@ -137,7 +137,7 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-		
+
 		public static function isString($variable, $message = null)
 		{
 			if (!is_string($variable))
@@ -145,15 +145,15 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-		
+
 		public static function isBoolean($variable, $message = null)
 		{
-			if (!($variable === true || $variable === false))
+			if (!self::checkBoolean($variable))
 				throw new WrongArgumentException(
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-		
+
 		public static function isTernaryBase($variable, $message = null)
 		{
 			if (
@@ -167,7 +167,7 @@
 					$message.', '.self::dumpArgument($variable)
 				);
 		}
-		
+
 		public static function brothers($first, $second, $message = null)
 		{
 			if (get_class($first) !== get_class($second))
@@ -175,7 +175,7 @@
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
 		}
-		
+
 		public static function isEqual($first, $second, $message = null)
 		{
 			if ($first != $second)
@@ -183,7 +183,7 @@
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
 		}
-		
+
 		public static function isNotEqual($first, $second, $message = null)
 		{
 			if ($first == $second)
@@ -191,7 +191,7 @@
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
 		}
-		
+
 		public static function isSame($first, $second, $message = null)
 		{
 			if ($first !== $second)
@@ -199,7 +199,7 @@
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
 		}
-		
+
 		public static function isNotSame($first, $second, $message = null)
 		{
 			if ($first === $second)
@@ -207,7 +207,7 @@
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
 		}
-		
+
 		public static function isTypelessEqual($first, $second, $message = null)
 		{
 			if ($first != $second)
@@ -215,7 +215,7 @@
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
 		}
-		
+
 		public static function isLesser($first, $second, $message = null)
 		{
 			if (!($first < $second))
@@ -223,7 +223,7 @@
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
 		}
-		
+
 		public static function isGreater($first, $second, $message = null)
 		{
 			if (!($first > $second))
@@ -231,7 +231,7 @@
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
 		}
-		
+
 		public static function isLesserOrEqual($first, $second, $message = null)
 		{
 			if (!($first <= $second))
@@ -239,7 +239,7 @@
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
 		}
-		
+
 		public static function isGreaterOrEqual($first, $second, $message = null)
 		{
 			if (!($first >= $second))
@@ -247,7 +247,7 @@
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
 		}
-		
+
 		public static function isInstance($first, $second, $message = null)
 		{
 			if (!ClassUtils::isInstanceOf($first, $second))
@@ -255,7 +255,7 @@
 					$message.', '.self::dumpOppositeArguments($first, $second)
 				);
 		}
-		
+
 		public static function classExists($className, $message = null)
 		{
 			if (!class_exists($className, true))
@@ -263,7 +263,7 @@
 					$message.', class "'.$className.'" does not exists'
 				);
 		}
-		
+
 		public static function methodExists($object, $method, $message = null)
 		{
 			if (!method_exists($object, $method))
@@ -276,7 +276,7 @@
 		{
 			throw new WrongArgumentException($message);
 		}
-		
+
 		public static function isObject($object, $message = null)
 		{
 			if (!is_object($object))
@@ -295,7 +295,7 @@
 				&& (strlen($value) == strlen((int) $value))
 			);
 		}
-		
+
 		public static function checkFloat($value)
 		{
 			return (
@@ -308,12 +308,41 @@
 		{
 			return is_scalar($value);
 		}
-		
+
+		public static function checkBoolean($value)
+		{
+			return ($value === true || $value === false);
+		}
+
+		/**
+		 * Checking UUID
+		 * @see http://tools.ietf.org/html/rfc4122
+ 		 * @param string $value
+		 * @return boolean
+		 */
+		public static function checkUniversalUniqueIdentifier($value)
+		{
+			return (
+				is_string($value) &&
+				preg_match(PrimitiveUuidString::UUID_PATTERN, $value)
+			);
+		}
+
+		public static function isUniversalUniqueIdentifier($variable, $message = null)
+		{
+			if(
+				!self::checkUniversalUniqueIdentifier($variable)
+			)
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
+		}
+
 		public static function dumpArgument($argument)
 		{
 			return 'argument: ['.print_r($argument, true).']';
 		}
-		
+
 		public static function dumpOppositeArguments($first, $second)
 		{
 			return

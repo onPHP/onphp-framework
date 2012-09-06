@@ -15,20 +15,20 @@
 	final class MetaConfiguration extends Singleton implements Instantiatable
 	{
 		private $out = null;
-		
+
 		private $classes = array();
 		private $sources = array();
-		
+
 		private $liaisons = array();
 		private $references = array();
-		
+
 		private $defaultSource = null;
-		
+
 		private $forcedGeneration	= false;
 		private $dryRun				= false;
-		
+
 		private $checkEnumerationRefIntegrity = false;
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
@@ -36,7 +36,7 @@
 		{
 			return Singleton::getInstance('MetaConfiguration');
 		}
-		
+
 		/**
 		 * @return MetaOutput
 		**/
@@ -44,54 +44,54 @@
 		{
 			return self::me()->getOutput();
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
 		public function setForcedGeneration($orly)
 		{
 			$this->forcedGeneration = $orly;
-			
+
 			return $this;
 		}
-		
+
 		public function isForcedGeneration()
 		{
 			return $this->forcedGeneration;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
 		public function setDryRun($dry)
 		{
 			$this->dryRun = $dry;
-			
+
 			return $this;
 		}
-		
+
 		public function isDryRun()
 		{
 			return $this->dryRun;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
 		public function setWithEnumerationRefIntegrityCheck($orly)
 		{
 			$this->checkEnumerationRefIntegrity = $orly;
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
 		public function load($metafile, $generate = true)
 		{
 			$this->loadXml($metafile, $generate);
-			
+
 			// check sources
 			foreach ($this->classes as $name => $class) {
 				$sourceLink = $class->getSourceLink();
@@ -105,17 +105,17 @@
 					$class->setSourceLink($this->defaultSource);
 				}
 			}
-			
+
 			foreach ($this->liaisons as $class => $parent) {
 				if (isset($this->classes[$parent])) {
-					
+
 					Assert::isFalse(
 						$this->classes[$parent]->getTypeId()
 						== MetaClassType::CLASS_FINAL,
-						
+
 						"'{$parent}' is final, thus can not have childs"
 					);
-					
+
 					if (
 						$this->classes[$class]->getPattern()
 							instanceof DictionaryClassPattern
@@ -124,7 +124,7 @@
 							'DictionaryClass pattern does '
 							.'not support inheritance'
 						);
-					
+
 					$this->classes[$class]->setParent(
 						$this->classes[$parent]
 					);
@@ -133,11 +133,11 @@
 						"unknown parent class '{$parent}'"
 					);
 			}
-			
+
 			// search for referencing classes
 			foreach ($this->references as $className => $list) {
 				$class = $this->getClassByName($className);
-				
+
 				if (
 					(
 						$class->getPattern() instanceof ValueObjectPattern
@@ -149,7 +149,7 @@
 				) {
 					continue;
 				}
-				
+
 				foreach ($list as $refer) {
 					$remote = $this->getClassByName($refer);
 					if (
@@ -172,12 +172,12 @@
 					}
 				}
 			}
-			
+
 			// final sanity checking
 			foreach ($this->classes as $name => $class) {
 				$this->checkSanity($class);
 			}
-			
+
 			// check for recursion in relations and spooked properties
 			foreach ($this->classes as $name => $class) {
 				foreach ($class->getProperties() as $property) {
@@ -209,20 +209,20 @@
 					}
 				}
 			}
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
 		public function buildClasses()
 		{
 			$out = $this->getOutput();
-			
+
 			$out->
 				infoLine('Building classes:');
-			
+
 			foreach ($this->classes as $name => $class) {
 				if (
 					!$class->doBuild()
@@ -232,14 +232,14 @@
 				} else {
 					$out->infoLine("\t".$name.':');
 				}
-				
+
 				$class->dump();
 				$out->newLine();
 			}
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
@@ -250,11 +250,11 @@
 			$out->
 				newLine()->
 				infoLine('Building DB schema:');
-			
+
 			$schema = SchemaBuilder::getHead();
-			
+
 			$tables = array();
-			
+
 			foreach ($this->classes as $class) {
 				if (
 					(!$class->getParent() && !count($class->getProperties()))
@@ -262,7 +262,7 @@
 				) {
 					continue;
 				}
-				
+
 				foreach ($class->getAllProperties() as $property)
 					$tables[
 						$class->getTableName()
@@ -271,21 +271,21 @@
 						$property->getColumnName()
 					] = $property;
 			}
-			
+
 			foreach ($tables as $name => $propertyList)
 				if ($propertyList)
 					$schema .= SchemaBuilder::buildTable($name, $propertyList);
-			
+
 			foreach ($this->classes as $class) {
 				if (!$class->getPattern()->tableExists()) {
 					continue;
 				}
-				
+
 				$schema .= SchemaBuilder::buildRelations($class);
 			}
-			
+
 			$schema .= '?>';
-			
+
 			BasePattern::dumpFile(
 				ONPHP_META_AUTO_DIR.'schema.php',
 				Format::indentize($schema)
@@ -293,7 +293,7 @@
 
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
@@ -303,9 +303,10 @@
 			$out->
 				newLine()->
 				infoLine('Suggested DB-schema changes: ');
-			
+
 			require ONPHP_META_AUTO_DIR.'schema.php';
-			
+
+			/** @var $class MetaClass */
 			foreach ($this->classes as $class) {
 				if (
 					$class->getTypeId() == MetaClassType::CLASS_ABSTRACT
@@ -314,73 +315,90 @@
 
 				)
 					continue;
-				
+
 				try {
 					$target = $schema->getTableByName($class->getTableName());
 				} catch (MissingElementException $e) {
 					// dropped or tableless
 					continue;
 				}
-				
-				try {
-					$db = DBPool::me()->getLink($class->getSourceLink());
-				} catch (BaseException $e) {
-					$out->
-						errorLine(
-							'Can not connect using source link in \''
-							.$class->getName().'\' class, skipping this step.'
+
+				if( $class->getPattern() instanceof NoSqlClassPattern ) {
+					// checking NoSQL-DB
+					try {
+						$db = NoSqlPool::me()->getLink($class->getSourceLink());
+					} catch (BaseException $e) {
+						$out->
+							errorLine(
+								'Can not connect using source link in \''
+								.$class->getName().'\' class, skipping this step.'
+							);
+
+						break;
+					}
+				} else {
+					// checking SQL-DB
+					try {
+						$db = DBPool::me()->getLink($class->getSourceLink());
+					} catch (BaseException $e) {
+						$out->
+							errorLine(
+								'Can not connect using source link in \''
+								.$class->getName().'\' class, skipping this step.'
+							);
+
+						break;
+					}
+
+					try {
+						$source = $db->getTableInfo($class->getTableName());
+					} catch (UnsupportedMethodException $e) {
+						$out->
+							errorLine(
+								get_class($db)
+								.' does not support tables introspection yet.',
+
+								true
+							);
+
+						break;
+					} catch (ObjectNotFoundException $e) {
+						$out->errorLine(
+							"table '{$class->getTableName()}' not found, skipping."
 						);
-					
-					break;
-				}
-				
-				try {
-					$source = $db->getTableInfo($class->getTableName());
-				} catch (UnsupportedMethodException $e) {
-					$out->
-						errorLine(
-							get_class($db)
-							.' does not support tables introspection yet.',
-							
-							true
-						);
-					
-					break;
-				} catch (ObjectNotFoundException $e) {
-					$out->errorLine(
-						"table '{$class->getTableName()}' not found, skipping."
+						continue;
+					}
+
+					$diff = DBTable::findDifferences(
+						$db->getDialect(),
+						$source,
+						$target
 					);
-					continue;
+
+					if ($diff) {
+						foreach ($diff as $line)
+							$out->warningLine($line);
+
+						$out->newLine();
+					}
 				}
-				
-				$diff = DBTable::findDifferences(
-					$db->getDialect(),
-					$source,
-					$target
-				);
-				
-				if ($diff) {
-					foreach ($diff as $line)
-						$out->warningLine($line);
-					
-					$out->newLine();
-				}
+
 			}
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
 		public function buildContainers()
 		{
 			$force = $this->isForcedGeneration();
-			
+
 			$out = $this->getOutput();
 			$out->
 				infoLine('Building containers: ');
-			
+
 			foreach ($this->classes as $class) {
 				foreach ($class->getProperties() as $property) {
 					if (
@@ -392,7 +410,7 @@
 							.$class->getName().ucfirst($property->getName())
 							.'DAO'
 							.EXT_CLASS;
-						
+
 						if ($force || !file_exists($userFile)) {
 							BasePattern::dumpFile(
 								$userFile,
@@ -404,7 +422,7 @@
 								)
 							);
 						}
-						
+
 						// check for old-style naming
 						$oldStlye =
 							ONPHP_META_DAO_DIR
@@ -413,7 +431,7 @@
 							.$property->getType()->getClassName()
 							.'DAO'
 							.EXT_CLASS;
-						
+
 						if (is_readable($oldStlye)) {
 							$out->
 								newLine()->
@@ -424,10 +442,10 @@
 					}
 				}
 			}
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
@@ -437,7 +455,7 @@
 				newLine()->
 				infoLine('Checking sanity of generated files: ')->
 				newLine();
-			
+
 			set_include_path(
 				get_include_path().PATH_SEPARATOR
 				.ONPHP_META_BUSINESS_DIR.PATH_SEPARATOR
@@ -447,11 +465,11 @@
 				.ONPHP_META_AUTO_DAO_DIR.PATH_SEPARATOR
 				.ONPHP_META_AUTO_PROTO_DIR.PATH_SEPARATOR
 			);
-			
+
 			$out->info("\t");
-			
+
 			$formErrors = array();
-			
+
 			foreach ($this->classes as $name => $class) {
 				if (
 					!(
@@ -464,45 +482,45 @@
 					)
 				) {
 					$out->info($name, true);
-					
+
 					$info = new ReflectionClass($name);
-					
+
 					$this->
 						checkClassSanity($class, $info);
-					
+
 					if ($info->implementsInterface('Prototyped'))
 						$this->checkClassSanity(
 							$class,
 							new ReflectionClass('Proto'.$name)
 						);
-					
+
 					if ($info->implementsInterface('DAOConnected'))
 						$this->checkClassSanity(
 							$class,
 							new ReflectionClass($name.'DAO')
 						);
-					
+
 					foreach ($class->getInterfaces() as $interface)
 						Assert::isTrue(
 							$info->implementsInterface($interface),
-							
+
 							'class '.$class->getName()
 							.' expected to implement interface '.$interface
 						);
-					
+
 					// special handling for Enumeration instances
 					if (
 						$class->getPattern() instanceof EnumerationClassPattern
 						|| $class->getPattern() instanceof EnumClassPattern
 					) {
 						$object = new $name(call_user_func(array($name, 'getAnyId')));
-						
+
 						Assert::isTrue(
 							unserialize(serialize($object)) == $object
 						);
-						
+
 						$out->info(', ');
-						
+
 						if ($this->checkEnumerationRefIntegrity)
 						{
 							if(
@@ -518,126 +536,139 @@
 						
 						continue;
 					}
-					
+
 					if ($class->getPattern() instanceof AbstractClassPattern) {
 						$out->info(', ');
 						continue;
 					}
-					
+
 					$object = new $name;
 					$proto = $object->proto();
 					$form = $proto->makeForm();
-					
+
 					foreach ($class->getProperties() as $name => $property) {
 						Assert::isTrue(
 							$property->toLightProperty($class)
 							== $proto->getPropertyByName($name),
-							
+
 							'defined property does not match autogenerated one - '
 							.$class->getName().'::'.$property->getName()
 						);
 					}
-					
+
 					if (!$object instanceof DAOConnected) {
 						$out->info(', ');
 						continue;
 					}
-					
+
 					$dao = $object->dao();
-					
+
 					Assert::isEqual(
 						$dao->getIdName(),
 						$class->getIdentifier()->getColumnName(),
 						'identifier name mismatch in '.$class->getName().' class'
 					);
-					
-					try {
-						DBPool::getByDao($dao);
-					} catch (MissingElementException $e) {
-						// skipping
+
+					if( $class->getPattern() instanceof NoSqlClassPattern ) {
+						try {
+							NoSqlPool::getByDao($dao);
+						} catch (MissingElementException $e) {
+							// skipping
+							$out->info(', ');
+							continue;
+						}
+
 						$out->info(', ');
-						continue;
-					}
-					
-					$query =
-						Criteria::create($dao)->
-						setLimit(1)->
-						add(Expression::notNull($class->getIdentifier()->getName()))->
-						addOrder($class->getIdentifier()->getName())->
-						toSelectQuery();
-					
-					$out->warning(
-						' ('
-						.$query->getFieldsCount()
-						.'/'
-						.$query->getTablesCount()
-						.'/'
-					);
-					
-					$clone = clone $object;
-					
-					if (serialize($clone) == serialize($object))
-						$out->info('C', true);
-					else {
-						$out->error('C', true);
-					}
-					
-					$out->warning('/');
-					
-					try {
-						$object = $dao->getByQuery($query);
-						$form = $object->proto()->makeForm();
+					} else {
+						try {
+							DBPool::getByDao($dao);
+						} catch (MissingElementException $e) {
+							// skipping
+							$out->info(', ');
+							continue;
+						}
+
+						$query =
+							Criteria::create($dao)->
+							setLimit(1)->
+							add(Expression::notNull($class->getIdentifier()->getName()))->
+							addOrder($class->getIdentifier()->getName())->
+							toSelectQuery();
+
+						$out->warning(
+							' ('
+							.$query->getFieldsCount()
+							.'/'
+							.$query->getTablesCount()
+							.'/'
+						);
+
+						$clone = clone $object;
+
+						if (serialize($clone) == serialize($object))
+							$out->info('C', true);
+						else {
+							$out->error('C', true);
+						}
+
+						$out->warning('/');
+
+						try {
+							$object = $dao->getByQuery($query);
+							$form = $object->proto()->makeForm();
+							FormUtils::object2form($object, $form);
+
+							if ($errors = $form->getErrors()) {
+								$formErrors[$class->getName()] = $errors;
+
+								$out->error('F', true);
+							} else
+								$out->info('F', true);
+						} catch (ObjectNotFoundException $e) {
+							$out->warning('F');
+						}
+
+						$out->warning('/');
+
+						if (
+							Criteria::create($dao)->
+							setFetchStrategy(FetchStrategy::cascade())->
+							toSelectQuery()
+							== $dao->makeSelectHead()
+						) {
+							$out->info('H', true);
+						} else {
+							$out->error('H', true);
+						}
+
+						$out->warning('/');
+
+						// cloning once again
+						$clone = clone $object;
+
 						FormUtils::object2form($object, $form);
-						
-						if ($errors = $form->getErrors()) {
-							$formErrors[$class->getName()] = $errors;
-							
-							$out->error('F', true);
-						} else
-							$out->info('F', true);
-					} catch (ObjectNotFoundException $e) {
-						$out->warning('F');
+						FormUtils::form2object($form, $object);
+
+						if ($object != $clone) {
+							$out->error('T', true);
+						} else {
+							$out->info('T', true);
+						}
+
+						$out->warning(')')->info(', ');
 					}
-					
-					$out->warning('/');
-					
-					if (
-						Criteria::create($dao)->
-						setFetchStrategy(FetchStrategy::cascade())->
-						toSelectQuery()
-						== $dao->makeSelectHead()
-					) {
-						$out->info('H', true);
-					} else {
-						$out->error('H', true);
-					}
-					
-					$out->warning('/');
-					
-					// cloning once again
-					$clone = clone $object;
-					
-					FormUtils::object2form($object, $form);
-					FormUtils::form2object($form, $object);
-					
-					if ($object != $clone) {
-						$out->error('T', true);
-					} else {
-						$out->info('T', true);
-					}
-					
-					$out->warning(')')->info(', ');
+
 				}
 			}
-			
+
 			$out->infoLine('done.');
-			
+
 			if ($formErrors) {
 				$out->newLine()->errorLine('Errors found:')->newLine();
-				
+
 				foreach ($formErrors as $class => $errors) {
 					$out->errorLine("\t".$class.':', true);
-					
+
 					foreach ($errors as $name => $error) {
 						$out->errorLine(
 							"\t\t".$name.' - '
@@ -648,14 +679,14 @@
 							)
 						);
 					}
-					
+
 					$out->newLine();
 				}
 			}
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
@@ -664,13 +695,13 @@
 			$this->getOutput()->
 				newLine()->
 				infoLine('Checking for stale files: ');
-			
+
 			return $this->
 				checkDirectory(ONPHP_META_AUTO_BUSINESS_DIR, 'Auto', null, $drop)->
 				checkDirectory(ONPHP_META_AUTO_DAO_DIR, 'Auto', 'DAO', $drop)->
 				checkDirectory(ONPHP_META_AUTO_PROTO_DIR, 'AutoProto', null, $drop);
 		}
-		
+
 		/**
 		 * @throws MissingElementException
 		 * @return MetaClass
@@ -679,27 +710,27 @@
 		{
 			if (isset($this->classes[$name]))
 				return $this->classes[$name];
-			
+
 			throw new MissingElementException(
 				"knows nothing about '{$name}' class"
 			);
 		}
-		
+
 		public function getClassList()
 		{
 			return $this->classes;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
 		public function setOutput(MetaOutput $out)
 		{
 			$this->out = $out;
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaOutput
 		**/
@@ -707,7 +738,7 @@
 		{
 			return $this->out;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
@@ -716,7 +747,7 @@
 		)
 		{
 			$out = $this->getOutput();
-			
+
 			foreach (
 				glob($directory.'*.class.php', GLOB_NOSORT)
 				as $filename
@@ -726,7 +757,7 @@
 						basename($filename, $postStrip.EXT_CLASS),
 						strlen($preStrip)
 					);
-				
+
 				if (!isset($this->classes[$name])) {
 					$out->warning(
 						"\t"
@@ -736,7 +767,7 @@
 							$filename
 						)
 					);
-					
+
 					if ($drop) {
 						try {
 							unlink($filename);
@@ -749,40 +780,40 @@
 					}
 				}
 			}
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
 		private function addSource(SimpleXMLElement $source)
 		{
 			$name = (string) $source['name'];
-			
+
 			$default =
 				isset($source['default']) && (string) $source['default'] == 'true'
 					? true
 					: false;
-			
+
 			Assert::isFalse(
 				isset($this->sources[$name]),
 				"duplicate source - '{$name}'"
 			);
-			
+
 			Assert::isFalse(
 				$default && $this->defaultSource !== null,
 				'too many default sources'
 			);
-			
+
 			$this->sources[$name] = $default;
-			
+
 			if ($default)
 				$this->defaultSource = $name;
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaClassProperty
 		**/
@@ -792,19 +823,19 @@
 				strpos($name, '_'),
 				'naming convention violation spotted'
 			);
-			
+
 			if (!$name || !$type)
 				throw new WrongArgumentException(
 					'strange name or type given: "'.$name.'" - "'.$type.'"'
 				);
-			
+
 			if (is_readable(ONPHP_META_TYPES.$type.'Type'.EXT_CLASS))
 				$typeClass = $type.'Type';
 			else
 				$typeClass = 'ObjectType';
-			
+
 			$property = new MetaClassProperty($name, new $typeClass($type), $class);
-			
+
 			if ($size)
 				$property->setSize($size);
 			else {
@@ -819,14 +850,14 @@
 						!$property->getType()
 							instanceof HttpUrlType
 					),
-					
+
 					'size is required for "'.$property->getName().'"'
 				);
 			}
-			
+
 			return $property;
 		}
-		
+
 		/**
 		 * @throws MissingElementException
 		 * @return GenerationPattern
@@ -834,15 +865,15 @@
 		private function guessPattern($name)
 		{
 			$class = $name.'Pattern';
-			
+
 			if (is_readable(ONPHP_META_PATTERNS.$class.EXT_CLASS))
 				return Singleton::getInstance($class);
-			
+
 			throw new MissingElementException(
 				"unknown pattern '{$name}'"
 			);
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
@@ -866,7 +897,7 @@
 					.$class->getName().')'
 				);
 			}
-			
+
 			if (
 				$class->getType()
 				&& $class->getTypeId()
@@ -877,7 +908,7 @@
 					'spooked classes must have only identifier: '
 					.$class->getName()
 				);
-				
+
 				Assert::isTrue(
 					($class->getPattern() instanceof SpookedClassPattern
 					|| $class->getPattern() instanceof SpookedEnumerationPattern
@@ -886,7 +917,7 @@
 					.$class->getName()
 				);
 			}
-			
+
 			foreach ($class->getProperties() as $property) {
 				if (
 					!$property->getType()->isGeneric()
@@ -900,7 +931,7 @@
 						'optional value object is not supported:'
 						.$property->getName().' @ '.$class->getName()
 					);
-					
+
 					Assert::isTrue(
 						$property->getRelationId() == MetaRelation::ONE_TO_ONE,
 						'value objects must have OneToOne relation: '
@@ -920,10 +951,10 @@
 					);
 				}
 			}
-			
+
 			return $this;
 		}
-		
+
 		private function checkRecursion(
 			MetaClassProperty $property,
 			MetaClass $holder,
@@ -933,7 +964,7 @@
 				$property->getRelationId()
 				== MetaRelation::ONE_TO_ONE
 			);
-			
+
 			if (
 				$property->getFetchStrategy()
 				&& $property->getFetchStrategy()->getId() != FetchStrategy::JOIN
@@ -942,12 +973,12 @@
 			}
 
 			$remote = $property->getType()->getClass();
-			
+
 			if (isset($paths[$holder->getName()][$remote->getName()]))
 				return true;
 			else {
 				$paths[$holder->getName()][$remote->getName()] = true;
-				
+
 				foreach ($remote->getProperties() as $remoteProperty) {
 					if (
 						$remoteProperty->getRelationId()
@@ -967,10 +998,10 @@
 					}
 				}
 			}
-			
+
 			return false;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
@@ -979,22 +1010,22 @@
 			foreach ($xml->include as $include) {
 				$file = (string) $include['file'];
 				$path = dirname($metafile).'/'.$file;
-				
+
 				Assert::isTrue(
 					is_readable($path),
 					'can not include '.$file
 				);
-				
+
 				$this->getOutput()->
 					infoLine('Including "'.$path.'".')->
 					newLine();
-				
+
 				$this->loadXml($path, !((string) $include['generate'] == 'false'));
 			}
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
@@ -1002,59 +1033,59 @@
 		{
 			foreach ($xml->classes[0] as $xmlClass) {
 				$name = (string) $xmlClass['name'];
-				
+
 				Assert::isFalse(
 					isset($this->classes[$name]),
 					'class name collision found for '.$name
 				);
-				
+
 				$class = new MetaClass($name);
-				
+
 				if (isset($xmlClass['source']))
 					$class->setSourceLink((string) $xmlClass['source']);
-				
+
 				if (isset($xmlClass['table']))
 					$class->setTableName((string) $xmlClass['table']);
-				
+
 				if (isset($xmlClass['type'])) {
 					$type = (string) $xmlClass['type'];
-					
+
 					if ($type == 'spooked') {
 						$this->getOutput()->
 							warning($class->getName(), true)->
 							warningLine(': uses obsoleted "spooked" type.')->
 							newLine();
 					}
-					
+
 					$class->setType(
 						new MetaClassType(
 							(string) $xmlClass['type']
 						)
 					);
 				}
-				
+
 				// lazy existence checking
 				if (isset($xmlClass['extends']))
 					$this->liaisons[$class->getName()] = (string) $xmlClass['extends'];
-				
+
 				// populate implemented interfaces
 				foreach ($xmlClass->implement as $xmlImplement)
 					$class->addInterface((string) $xmlImplement['interface']);
-				
+
 				if (isset($xmlClass->properties[0]->identifier)) {
-					
+
 					$id = $xmlClass->properties[0]->identifier;
-					
+
 					if (!isset($id['name']))
 						$name = 'id';
 					else
 						$name = (string) $id['name'];
-					
+
 					if (!isset($id['type']))
 						$type = 'BigInteger';
 					else
 						$type = (string) $id['type'];
-					
+
 					$property = $this->makeProperty(
 						$name,
 						$type,
@@ -1062,7 +1093,7 @@
 						// not casting to int because of Numeric possible size
 						(string) $id['size']
 					);
-					
+
 					if (isset($id['column'])) {
 						$property->setColumnName(
 							(string) $id['column']
@@ -1075,23 +1106,23 @@
 					} else {
 						$property->setColumnName($property->getConvertedName());
 					}
-					
+
 					$property->
 						setIdentifier(true)->
 						required();
-					
+
 					$class->addProperty($property);
-					
+
 					unset($xmlClass->properties[0]->identifier);
 				}
-				
+
 				$class->setPattern(
 					$this->guessPattern((string) $xmlClass->pattern['name'])
 				);
-				
+
 				if ((string) $xmlClass->pattern['fetch'] == 'cascade')
 					$class->setFetchStrategy(FetchStrategy::cascade());
-				
+
 				if ($class->getPattern() instanceof InternalClassPattern) {
 					Assert::isTrue(
 						$metafile === ONPHP_META_PATH.'internal.xml',
@@ -1112,17 +1143,17 @@
 						)
 					);
 				}
-				
+
 				// populate properties
 				foreach ($xmlClass->properties[0] as $xmlProperty) {
-					
+
 					$property = $this->makeProperty(
 						(string) $xmlProperty['name'],
 						(string) $xmlProperty['type'],
 						$class,
 						(string) $xmlProperty['size']
 					);
-					
+
 					if (isset($xmlProperty['column'])) {
 						$property->setColumnName(
 							(string) $xmlProperty['column']
@@ -1145,15 +1176,15 @@
 								'you can not use internal classes directly atm'
 							);
 						}
-						
+
 						$property->setColumnName($property->getConvertedName().'_id');
 					} else {
 						$property->setColumnName($property->getConvertedName());
 					}
-					
+
 					if ((string) $xmlProperty['required'] == 'true')
 						$property->required();
-					
+
 					if (isset($xmlProperty['identifier'])) {
 						throw new WrongArgumentException(
 							'obsoleted identifier description found in '
@@ -1161,9 +1192,9 @@
 							.'you must use <identifier /> instead.'
 						);
 					}
-					
+
 					if (!$property->getType()->isGeneric()) {
-						
+
 						if (!isset($xmlProperty['relation']))
 							throw new MissingElementException(
 								'relation should be set for non-generic '
@@ -1177,16 +1208,16 @@
 									(string) $xmlProperty['relation']
 								)
 							);
-							
+
 							if ($fetch = (string) $xmlProperty['fetch']) {
 								Assert::isTrue(
 									$property->getRelationId()
 									== MetaRelation::ONE_TO_ONE,
-									
+
 									'fetch mode can be specified
 									only for OneToOne relations'
 								);
-								
+
 								if ($fetch == 'lazy')
 									$property->setFetchStrategy(
 										FetchStrategy::lazy()
@@ -1200,7 +1231,7 @@
 										'strange fetch mode found - '.$fetch
 									);
 							}
-							
+
 							if (
 								(
 									(
@@ -1220,38 +1251,38 @@
 							}
 						}
 					}
-					
+
 					if (isset($xmlProperty['default'])) {
 						// will be correctly autocasted further down the code
 						$property->getType()->setDefault(
 							(string) $xmlProperty['default']
 						);
 					}
-					
+
 					$class->addProperty($property);
 				}
-				
+
 				$class->setBuild($generate);
-				
+
 				$this->classes[$class->getName()] = $class;
 			}
-			
+
 			return $this;
 		}
-		
+
 		private function loadXml($metafile, $generate)
 		{
 			$contents = file_get_contents($metafile);
-			
+
 			$contents = str_replace(
 				'"meta.dtd"',
 				'"'.ONPHP_META_PATH.'dtd/meta.dtd"',
 				$contents
 			);
-			
+
 			$doc = new DOMDocument('1.0');
 			$doc->loadXML($contents);
-			
+
 			try {
 				$doc->validate();
 			} catch (BaseException $e) {
@@ -1261,28 +1292,28 @@
 					.$error->line.' in file '.$metafile
 				);
 			}
-			
+
 			$xml = simplexml_import_dom($doc);
-			
+
 			// populate sources (if any)
 			if (isset($xml->sources[0])) {
 				foreach ($xml->sources[0] as $source) {
 					$this->addSource($source);
 				}
 			}
-			
+
 			if (isset($xml->include['file'])) {
 				$this->processIncludes($xml, $metafile);
 			}
-			
+
 			// otherwise it's an includes-only config
 			if (isset($xml->classes[0])) {
 				return $this->processClasses($xml, $metafile, $generate);
 			}
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaConfiguration
 		**/
@@ -1294,7 +1325,7 @@
 			switch ($class->getTypeId()) {
 				case null:
 					break;
-				
+
 				case MetaClassType::CLASS_ABSTRACT:
 					Assert::isTrue(
 						$info->isAbstract(),
@@ -1305,20 +1336,20 @@
 						'class '.$info->getName().' must use AbstractClassPattern'
 					);
 					break;
-				
+
 				case MetaClassType::CLASS_FINAL:
 					Assert::isTrue(
 						$info->isFinal(),
 						'class '.$info->getName().' expected to be final'
 					);
 					break;
-				
+
 				case MetaClassType::CLASS_SPOOKED:
 				default:
 					Assert::isUnreachable();
 					break;
 			}
-			
+
 			if ($public = $info->getProperties(ReflectionProperty::IS_PUBLIC)) {
 				Assert::isUnreachable(
 					$class->getName()
@@ -1327,10 +1358,10 @@
 					.print_r($public, true)
 				);
 			}
-			
+
 			return $this;
 		}
-		
+
 		private function checkEnumerationReferentialIntegrity(
 			$enumeration, $tableName
 		)
@@ -1344,11 +1375,11 @@
 			);
 
 			$updateQueries = null;
-			
+
 			$db = DBPool::me()->getLink();
-			
+
 			$class = get_class($enumeration);
-			
+
 			$ids = array();
 
 			if ($enumeration instanceof Enumeration)
@@ -1358,38 +1389,38 @@
 			
 			foreach ($list as $enumerationObject)
 				$ids[$enumerationObject->getId()] = $enumerationObject->getName();
-			
+
 			$rows =
 				$db->querySet(
 					OSQL::select()->from($tableName)->
 					multiGet('id', 'name')
 				);
-			
+
 			echo "\n";
-			
+
 			foreach ($rows as $row) {
 				if (!isset($ids[$row['id']]))
 					echo "Class '{$class}', strange id: {$row['id']} found. \n";
 				else {
 					if ($ids[$row['id']] != $row['name']) {
 						echo "Class '{$class}',id: {$row['id']} sync names. \n";
-						
+
 						$updateQueries .=
 							OSQL::update($tableName)->
 							set('name', $ids[$row['id']])->
 							where(Expression::eq('id', $row['id']))->
 							toDialectString($db->getDialect()) . ";\n";
 					}
-					
+
 					unset($ids[$row['id']]);
 				}
 			}
-			
+
 			foreach ($ids as $id => $name)
 				echo "Class '{$class}', id: {$id} not present in database. \n";
-			
+
 			echo $updateQueries;
-			
+
 			return $this;
 		}
 	}

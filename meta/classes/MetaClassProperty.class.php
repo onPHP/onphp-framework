@@ -15,20 +15,20 @@
 	class MetaClassProperty
 	{
 		private $class		= null;
-		
+
 		private $name		= null;
 		private $columnName	= null;
-		
+
 		private $type		= null;
 		private $size		= null;
-		
+
 		private $required	= false;
 		private $identifier	= false;
-		
+
 		private $relation	= null;
-		
+
 		private $strategy	= null;
-		
+
 		public function __construct(
 			$name,
 			BasePropertyType $type,
@@ -36,12 +36,12 @@
 		)
 		{
 			$this->name = $name;
-			
+
 			$this->type = $type;
-			
+
 			$this->class = $class;
 		}
-		
+
 		public function equals(MetaClassProperty $property)
 		{
 			return (
@@ -54,7 +54,7 @@
 				&& ($property->isIdentifier() == $this->isIdentifier())
 			);
 		}
-		
+
 		/**
 		 * @return MetaClass
 		**/
@@ -62,37 +62,37 @@
 		{
 			return $this->class;
 		}
-		
+
 		public function getName()
 		{
 			return $this->name;
 		}
-		
+
 		/**
 		 * @return MetaClassProperty
 		**/
 		public function setName($name)
 		{
 			$this->name = $name;
-			
+
 			return $this;
 		}
-		
+
 		public function getColumnName()
 		{
 			return $this->columnName;
 		}
-		
+
 		/**
 		 * @return MetaClassProperty
 		**/
 		public function setColumnName($name)
 		{
 			$this->columnName = $name;
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaClassProperty
 		**/
@@ -102,7 +102,7 @@
 				preg_replace(':([A-Z]):', '_\1', $this->name)
 			);
 		}
-		
+
 		/**
 		 * @return BasePropertyType
 		**/
@@ -110,12 +110,12 @@
 		{
 			return $this->type;
 		}
-		
+
 		public function getSize()
 		{
 			return $this->size;
 		}
-		
+
 		/**
 		 * @throws WrongArgumentException
 		 * @return MetaClassProperty
@@ -125,16 +125,16 @@
 			if ($this->type instanceof NumericType) {
 				if (strpos($size, ',') !== false) {
 					list($size, $precision) = explode(',', $size, 2);
-				
+
 					$this->type->setPrecision($precision);
 				}
 			}
-			
+
 			Assert::isInteger(
 				$size,
 				'only integers allowed in size parameter'
 			);
-			
+
 			if ($this->type->isMeasurable()) {
 				$this->size = $size;
 			} else
@@ -143,55 +143,55 @@
 					.$this->getName().'::'.get_class($this->type)
 					."' type"
 				);
-			
+
 			return $this;
 		}
-		
+
 		public function isRequired()
 		{
 			return $this->required;
 		}
-		
+
 		public function isOptional()
 		{
 			return !$this->required;
 		}
-		
+
 		/**
 		 * @return MetaClassProperty
 		**/
 		public function required()
 		{
 			$this->required = true;
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaClassProperty
 		**/
 		public function optional()
 		{
 			$this->required = false;
-			
+
 			return $this;
 		}
-		
+
 		public function isIdentifier()
 		{
 			return $this->identifier;
 		}
-		
+
 		/**
 		 * @return MetaClassProperty
 		**/
 		public function setIdentifier($really = false)
 		{
 			$this->identifier = ($really === true);
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaRelation
 		**/
@@ -199,35 +199,35 @@
 		{
 			return $this->relation;
 		}
-		
+
 		public function getRelationId()
 		{
 			if ($this->relation)
 				return $this->relation->getId();
-			
+
 			return null;
 		}
-		
+
 		/**
 		 * @return MetaClassProperty
 		**/
 		public function setRelation(MetaRelation $relation)
 		{
 			$this->relation = $relation;
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return MetaClassProperty
 		**/
 		public function setFetchStrategy(FetchStrategy $strategy)
 		{
 			$this->strategy = $strategy;
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return FetchStrategy
 		**/
@@ -235,7 +235,7 @@
 		{
 			return $this->strategy;
 		}
-		
+
 		public function getFetchStrategyId()
 		{
 			if ($this->strategy)
@@ -247,10 +247,10 @@
 				&& (!$this->getType()->isGeneric())
 			)
 				return $this->getClass()->getFetchStrategyId();
-			
+
 			return null;
 		}
-		
+
 		public function toMethods(
 			MetaClass $class,
 			MetaClassProperty $holder = null
@@ -258,7 +258,7 @@
 		{
 			return $this->type->toMethods($class, $this, $holder);
 		}
-		
+
 		public function getRelationColumnName()
 		{
 			if ($this->type instanceof ObjectType && !$this->type->isGeneric()) {
@@ -274,10 +274,10 @@
 				return $out;
 			} else
 				$columnName = $this->getColumnName();
-			
+
 			return $columnName;
 		}
-		
+
 		public function toColumn()
 		{
 			if (
@@ -294,39 +294,45 @@
 				)
 			) {
 				$columns = array();
-				
+
 				$prefix =
 					$this->getType() instanceof InternalType
 						? $this->getColumnName().'_'
 						: null;
-				
+
 				$remote = $this->getType()->getClass();
-				
+
 				foreach ($remote->getAllProperties() as $property) {
 					$columns[] = $property->buildColumn(
 						$prefix.$property->getRelationColumnName()
 					);
 				}
-				
+
 				return $columns;
 			}
-			
+
 			return $this->buildColumn($this->getRelationColumnName());
 		}
-		
+
 		public function toLightProperty(MetaClass $holder)
 		{
 			$className = null;
-			
+
 			if (
 				($this->getRelationId() == MetaRelation::ONE_TO_MANY)
 				|| ($this->getRelationId() == MetaRelation::MANY_TO_MANY)
 			) {
 				// collections
 				$primitiveName = 'identifierList';
+				if( is_subclass_of($this->getType()->getClassName(), 'UuidIdentifiable') ) {
+					$primitiveName = 'uuidIdentifierList';
+				}
 			} elseif ($this->isIdentifier()) {
 				if ($this->getType() instanceof IntegerType) {
 					$primitiveName = 'integerIdentifier';
+					$className = $holder->getName();
+				} elseif ($this->getType() instanceof UuidType) {
+					$primitiveName = 'uuidIdentifier';
 					$className = $holder->getName();
 				} elseif ($this->getType() instanceof StringType) {
 					$primitiveName = 'scalarIdentifier';
@@ -350,27 +356,41 @@
 				) {
 					if ($identifier->getType() instanceof IntegerType) {
 						$primitiveName = 'integerIdentifier';
+					} elseif ($identifier->getType() instanceof UuidType) {
+						$primitiveName = 'uuidIdentifier';
 					} elseif ($identifier->getType() instanceof StringType) {
 						$primitiveName = 'scalarIdentifier';
 					} else
 						$primitiveName = $this->getType()->getPrimitiveName();
-				} else 
+				} elseif (
+					$this->getType() instanceof ObjectType
+					&& ($identifier = $this->getType()->getClass()->getIdentifier())
+				) {
+					if ($identifier->getType() instanceof IntegerType) {
+						$primitiveName = 'integerIdentifier';
+					} elseif ($identifier->getType() instanceof UuidType) {
+						$primitiveName = 'uuidIdentifier';
+					} elseif ($identifier->getType() instanceof StringType) {
+						$primitiveName = 'scalarIdentifier';
+					} else
+						$primitiveName = $this->getType()->getPrimitiveName();
+				} else
 					$primitiveName = $this->getType()->getPrimitiveName();
 			} else
 				$primitiveName = $this->getType()->getPrimitiveName();
-			
+
 			$inner = false;
-			
+
 			if ($this->getType() instanceof ObjectType) {
 				$className = $this->getType()->getClassName();
-				
+
 				if (!$this->getType()->isGeneric()) {
 					$class = $this->getType()->getClass();
 					$pattern = $class->getPattern();
-					
+
 					if ($pattern instanceof InternalClassPattern)
 						$className = $holder->getName();
-					
+
 					if (
 						(
 							($pattern instanceof InternalClassPattern)
@@ -383,13 +403,13 @@
 					}
 				}
 			}
-			
+
 			$propertyClassName = (
 				$inner
 					? 'InnerMetaProperty'
 					: 'LightMetaProperty'
 			);
-			
+
 			if (
 				($this->getType() instanceof IntegerType)
 			) {
@@ -406,7 +426,7 @@
 			} else {
 				$size = null;
 			}
-			
+
 			return
 				call_user_func_array(
 					array($propertyClassName, 'fill'),
@@ -432,14 +452,14 @@
 		{
 			if (is_array($columnName)) {
 				$out = array();
-				
+
 				foreach ($columnName as $name) {
 					$out[] = $this->buildColumn($name);
 				}
-				
+
 				return $out;
 			}
-			
+
 			$column = <<<EOT
 addColumn(
 	DBColumn::create(
@@ -452,21 +472,21 @@ EOT;
 setNull(false)
 EOT;
 			}
-			
+
 			if ($this->size) {
 				$column .= <<<EOT
 ->
 setSize({$this->size})
 EOT;
 			}
-			
+
 			if ($this->type instanceof NumericType) {
 				$column .= <<<EOT
 ->
 setPrecision({$this->type->getPrecision()})
 EOT;
 			}
-			
+
 			$column .= <<<EOT
 ,
 '{$columnName}'
@@ -478,7 +498,7 @@ EOT;
 ->
 setPrimaryKey(true)
 EOT;
-				
+
 				if ($this->getType() instanceof IntegerType) {
 					$column .= <<<EOT
 ->
@@ -486,10 +506,10 @@ setAutoincrement(true)
 EOT;
 				}
 			}
-			
+
 			if ($this->type->hasDefault()) {
 				$default = $this->type->getDefault();
-				
+
 				if ($this->type instanceof BooleanType) {
 					if ($default)
 						$default = 'true';
@@ -498,21 +518,21 @@ EOT;
 				} elseif ($this->type instanceof StringType) {
 					$default = "'{$default}'";
 				}
-				
+
 				$column .= <<<EOT
 ->
 setDefault({$default})
 EOT;
 			}
-			
+
 			$column .= <<<EOT
 
 )
 EOT;
-			
+
 			return $column;
 		}
-		
+
 		private function toVarName($name)
 		{
 			return strtolower($name[0]).substr($name, 1);

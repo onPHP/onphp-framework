@@ -11,30 +11,31 @@
 
 	/**
 	 * Karma's destroyer.
-	 * 
-	 * @deprecated since the begining of time
-	 * 
+	 *
 	 * @ingroup OSQL
 	**/
 	final class DBRaw implements LogicalObject
 	{
 		private $string = null;
-		
+
+		/**
+		 * @return DBRaw
+		**/
+		public static function create($value)
+		{
+			return new self($value);
+		}
+
 		public function __construct($rawString)
 		{
-			if (!defined('__I_HATE_MY_KARMA__'))
-				throw new UnsupportedMethodException(
-					'do not use it. please.'
-				);
-			
 			$this->string = $rawString;
 		}
-		
+
 		public function toDialectString(Dialect $dialect)
 		{
 			return $this->string;
 		}
-		
+
 		public function toBoolean(Form $form)
 		{
 			throw new UnsupportedMethodException();

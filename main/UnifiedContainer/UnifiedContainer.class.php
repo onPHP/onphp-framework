@@ -107,6 +107,10 @@
 			$this->worker = new $this->workerClass($this);
 		}
 		
+		public function __clone() {
+			$this->worker = clone $this->worker;
+		}
+		
 		public function getParentObject()
 		{
 			return $this->parent;

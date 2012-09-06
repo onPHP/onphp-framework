@@ -27,8 +27,9 @@
 		private $contentType	= null;
 		private $returnPath		= null;
 		
+		private $sendmailAdditionalHeaders	= null;
 		private $sendmailAdditionalArgs	= null;
-		
+
 		/**
 		 * @return Mail
 		**/
@@ -114,6 +115,10 @@
 			
 			$headers .= "Content-Transfer-Encoding: 8bit\n";
 			$headers .= "Date: ".date('r')."\n";
+
+			if($this->sendmailAdditionalHeaders != null) {
+				$headers .= $this->sendmailAdditionalHeaders."\n";
+			}
 			
 			if (
 				!mail(
@@ -221,5 +226,20 @@
 			$this->returnPath = $returnPath;
 			return $this;
 		}
+
+		public function getSendmailAdditionalHeaders()
+		{
+			return $this->sendmailAdditionalHeaders;
+		}
+
+		/**
+		 * @return Mail
+		 **/
+		public function setSendmailAdditionalHeaders($sendmailAdditionalHeaders)
+		{
+			$this->sendmailAdditionalHeaders = $sendmailAdditionalHeaders;
+			return $this;
+		}
+
 	}
 ?>

@@ -16,7 +16,7 @@
 	{
 		const EQUALS			= '=';
 		const NOT_EQUALS		= '!=';
-		
+
 		const EXPRESSION_AND	= 'AND';
 		const EXPRESSION_OR		= 'OR';
 
@@ -33,13 +33,13 @@
 
 		const SIMILAR_TO		= 'SIMILAR TO';
 		const NOT_SIMILAR_TO	= 'NOT SIMILAR TO';
-		
+
 		const ADD				= '+';
 		const SUBSTRACT			= '-';
 		const MULTIPLY			= '*';
 		const DIVIDE			= '/';
 		const MOD				= '%';
-		
+
 		private $left	= null;
 		private $right	= null;
 		private $logic	= null;
@@ -59,22 +59,22 @@
 			$this->right	= $right;
 			$this->logic	= $logic;
 		}
-		
+
 		public function getLeft()
 		{
 			return $this->left;
 		}
-		
+
 		public function getRight()
 		{
 			return $this->right;
 		}
-		
+
 		public function getLogic()
 		{
 			return $this->logic;
 		}
-		
+
 		/**
 		 * @param boolean $noBrackets
 		 * @return BinaryExpression
@@ -92,7 +92,7 @@
 				.$dialect->toValueString($this->right);
 			return $this->brackets ? "({$sql})" : $sql;
 		}
-		
+
 		/**
 		 * @return BinaryExpression
 		**/
@@ -106,17 +106,17 @@
 			
 			return $expression->noBrackets(!$this->brackets);
 		}
-		
+
 		public function toBoolean(Form $form)
 		{
 			Assert::isTrue($this->brackets, 'brackets must be enabled');
 			$left	= $form->toFormValue($this->left);
 			$right	= $form->toFormValue($this->right);
-			
+
 			$both =
 				(null !== $left)
 				&& (null !== $right);
-				
+
 			switch ($this->logic) {
 				case self::EQUALS:
 					return $both && ($left == $right);
@@ -138,25 +138,25 @@
 
 				case self::EXPRESSION_AND:
 					return $both && ($left && $right);
-				
+
 				case self::EXPRESSION_OR:
 					return $both && ($left || $right);
-				
+
 				case self::ADD:
 					return $both && ($left + $right);
-				
+
 				case self::SUBSTRACT:
 					return $both && ($left - $right);
-				
+
 				case self::MULTIPLY:
 					return $both && ($left * $right);
-				
+
 				case self::DIVIDE:
 					return $both && $right && ($left / $right);
-					
+
 				case self::MOD:
 					return $both && $right && ($left % $right);
-				
+
 				default:
 					throw new UnsupportedMethodException(
 						"'{$this->logic}' doesn't supported yet"

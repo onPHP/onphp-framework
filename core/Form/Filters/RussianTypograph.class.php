@@ -63,7 +63,7 @@
 			'~(\s)\s*~u',						// n -> 2 whitespaces to process short strings (bar to a foo)
 			'~([\s\pP]|^)([\w\pL]{1,2})\s~Uu',	// bar a foo | bar to a foo
 			'~(&nbsp;|\s)\s+~u',				// compress whitespaces
-			'~\"(.*)\"~e',						// "qu"o"te"
+			'~\"(.*?)\"~e',						// "qu"o"te"
 			'~\"([^\s]*)\"~',					// "quote"
 			'~\"([^\s]*)\s+([^\s\.]*)\"~',		// "quote quote"
 			'~([\w\pL\']+)~eu'					// rock'n'roll

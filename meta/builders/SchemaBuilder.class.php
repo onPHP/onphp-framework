@@ -14,6 +14,8 @@
 	**/
 	final class SchemaBuilder extends BaseBuilder
 	{
+		protected static $knownTables = array();
+
 		public static function buildTable($tableName, array $propertyList)
 		{
 			$out = <<<EOT
@@ -24,7 +26,7 @@
 EOT;
 
 			$columns = array();
-			
+
 			foreach ($propertyList as $property) {
 				if (
 					$property->getRelation()
@@ -32,31 +34,31 @@ EOT;
 				) {
 					continue;
 				}
-				
+
 				$column = $property->toColumn();
-				
+
 				if (is_array($column))
 					$columns = array_merge($columns, $column);
 				else
 					$columns[] = $property->toColumn();
 			}
-			
+
 			$out .= implode("->\n", $columns);
-			
+
 			return $out."\n);\n\n";
 		}
-		
+
 		public static function buildRelations(MetaClass $class)
 		{
 			$out = null;
-			
+
 			$knownJunctions = array();
-			
+
 			foreach ($class->getAllProperties() as $property) {
 				if ($relation = $property->getRelation()) {
-					
+
 					$foreignClass = $property->getType()->getClass();
-					
+
 					if (
 						$relation->getId() == MetaRelation::ONE_TO_MANY
 						// nothing to build, it's in the same table
@@ -69,32 +71,41 @@ EOT;
 					} elseif (
 						$relation->getId() == MetaRelation::MANY_TO_MANY
 					) {
-						$tableName =
-							$class->getTableName()
-							.'_'
-							.$foreignClass->getTableName();
-						
-						if (isset($knownJunctions[$tableName]))
+						if( strcmp($class->getTableName(), $foreignClass->getTableName())>=0 ) {
+							$tableName =
+								$foreignClass->getTableName()
+								.'_'
+								.$class->getTableName();
+						} else {
+							$tableName =
+								$class->getTableName()
+								.'_'
+								.$foreignClass->getTableName();
+						}
+
+						if (isset($knownJunctions[$tableName]) || isset(self::$knownTables[$tableName]))
 							continue; // collision prevention
-						else
+						else {
 							$knownJunctions[$tableName] = true;
-						
+							self::$knownTables[$tableName] = true;
+						}
+
 						$foreignPropery = clone $foreignClass->getIdentifier();
-						
+
 						$name = $class->getName();
 						$name = strtolower($name[0]).substr($name, 1);
 						$name .= 'Id';
-						
+
 						$foreignPropery->
 							setName($name)->
 							setColumnName($foreignPropery->getConvertedName())->
 							// we don't need primary key here
 							setIdentifier(false);
-						
+
 						// we don't want any garbage in such tables
 						$property = clone $property;
 						$property->required();
-						
+
 						// prevent name collisions
 						if (
 							$property->getRelationColumnName()
@@ -105,7 +116,7 @@ EOT;
 								.$property->getConvertedName().'_id'
 							);
 						}
-						
+
 						$out .= <<<EOT
 \$schema->
 	addTable(
@@ -117,13 +128,54 @@ EOT;
 
 
 EOT;
+
+						$sourceColumn = $property->getRelationColumnName();
+						$targetTable = $foreignClass->getTableName();
+						$targetColumn = $foreignClass->getIdentifier()->getColumnName();
+
+						$out .= <<<EOT
+// {$tableName}.{$sourceColumn} -> {$targetTable}.{$targetColumn}
+\$schema->
+	getTableByName('{$tableName}')->
+		getColumnByName('{$sourceColumn}')->
+			setReference(
+				\$schema->
+					getTableByName('{$targetTable}')->
+					getColumnByName('{$targetColumn}'),
+				ForeignChangeAction::cascade(),
+				ForeignChangeAction::cascade()
+			);
+
+
+EOT;
+
+						$sourceColumn = $foreignPropery->getRelationColumnName();
+						$targetTable = $class->getTableName();
+						$targetColumn = $class->getIdentifier()->getColumnName();
+
+						$out .= <<<EOT
+// {$tableName}.{$sourceColumn} -> {$targetTable}.{$targetColumn}
+\$schema->
+	getTableByName('{$tableName}')->
+		getColumnByName('{$sourceColumn}')->
+			setReference(
+				\$schema->
+					getTableByName('{$targetTable}')->
+					getColumnByName('{$targetColumn}'),
+				ForeignChangeAction::cascade(),
+				ForeignChangeAction::cascade()
+			);
+
+
+EOT;
+
 					} else {
 						$sourceTable = $class->getTableName();
 						$sourceColumn = $property->getRelationColumnName();
-						
+
 						$targetTable = $foreignClass->getTableName();
 						$targetColumn = $foreignClass->getIdentifier()->getColumnName();
-						
+
 						$out .= <<<EOT
 // {$sourceTable}.{$sourceColumn} -> {$targetTable}.{$targetColumn}
 \$schema->
@@ -139,20 +191,20 @@ EOT;
 
 
 EOT;
-					
+
 					}
 				}
 			}
-			
+
 			return $out;
 		}
-		
+
 		public static function getHead()
 		{
 			$out = parent::getHead();
-			
+
 			$out .= "\$schema = new DBSchema();\n\n";
-			
+
 			return $out;
 		}
 	}
