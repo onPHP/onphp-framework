@@ -1,3 +1,6 @@
+2012-09-16	Alexey S. Denisov
+	* DAOTest splitted to more Test classes in new db directory
+
 2012-09-12	Alexey S. Denisov
 	* main/Net/GenericUri.class.php
 		main/Net/HttpUrl.class.php
