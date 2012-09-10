@@ -77,7 +77,7 @@
 
 			$this->current = null;
 
-			echo "\namq: dropLink {$name}";
+			//echo "\namq: dropLink {$name}";
 
 			return $this;
 		}
@@ -235,7 +235,7 @@
 				for ($i = 0; $i < count($this->pool); $i++) {
 					try {
 
-						echo "\namqp: {$method}[{$this->getCurrentItem()->getCredentials()->getPort()}] (".join(',', $args).")";
+						//echo "\namqp: {$method}[{$this->getCurrentItem()->getCredentials()->getPort()}] (".join(',', $args).")";
 
 						$this->getCurrentItem()->connect();
 						
@@ -273,7 +273,7 @@
 		 */
 		public function setCurrent($name)
 		{
-			echo "\namqp: setCurrent($name) isAlive: {$this->pool[$name]->isAlive()}";
+			//echo "\namqp: setCurrent($name) isAlive: {$this->pool[$name]->isAlive()}";
 
 			Assert::isIndexExists($this->pool, $name);
 			

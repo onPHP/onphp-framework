@@ -172,8 +172,6 @@
 			} catch (Exception $e) {
 				$this->fail($e->getMessage());
 			}
-			echo "\n!testDefaulConnection";
-
 		}
 		
 		public function testCustomConnection()
@@ -194,8 +192,6 @@
 			} catch (Exception $e) {
 				$this->fail($e->getMessage());
 			}
-
-			echo "\n!testCustomConnection";
 		}
 
 		public function testChannel()
@@ -231,8 +227,6 @@
 			} catch (MissingElementException $e) {
 				//ok
 			}
-
-			echo "\n!testChannel";
 		}
 
 		public function testDeclareExchange()
@@ -248,7 +242,6 @@
 			} catch (Exception $e) {
 				$this->fail($e->getMessage());
 			}
-			echo "\n!testDeclareExchange";
 		}
 
 		public function testDeclareQueue()
@@ -267,8 +260,6 @@
 			} catch (Exception $e) {
 				$this->fail($e->getMessage());
 			}
-
-			echo "\n!testDeclareQueue";
 		}
 
 		public function testProducerLogic()
@@ -285,8 +276,6 @@
 			$this->queuePurge($channel, 'basic');
 			$this->publishMessages($channel);
 
-			echo "\n!testProducerLogic";
-			
 		}
 
 		/**
@@ -315,8 +304,6 @@
 			$this->checkMessageCount($channel, 'basic', 0);
 			
 			$c->disconnect();
-
-			echo "\n!testNoAckConsumerLogic";
 		}
 
 		/**
@@ -340,8 +327,6 @@
 				//it's ok, because queue is empty
 				$this->assertSame(self::COUNT_OF_PUBLISH, $i);
 			}
-
-			echo "\n!testConsumerLogic";
 		}
 
 		/**
@@ -380,8 +365,6 @@
 			} catch (Exception $e) {
 				$this->fail($e->getMessage());
 			}
-
-			echo "\n!testDeclareQueueMirrored";
 		}
 
 		public function testProducerLogicMirrored()
@@ -429,46 +412,6 @@
 
 			$this->checkMessageCount($channel, 'mirrored');
 
-			echo "\n!testProducerLogicMirrored";
-
-		}
-
-		protected function switchNodes(AMQPSelective $amqp)
-		{
-			$nodes = array(
-				'slave' =>
-				new AMQPPecl(
-					AMQPCredentials::createDefault()->
-					setPort(self::PORT_MIRRORED)
-				),
-				'master' =>
-				new AMQPPecl(
-					AMQPCredentials::createDefault()
-				)
-			);
-
-			foreach (array_keys($nodes) as $name) {
-				try {
-					$amqp->dropLink($name);
-					break;
-				} catch (MissingElementException $e) {/**/}
-			}
-
-//			echo "<pre>name:";
-//			print_r($name);
-//			echo "</pre>";
-//			die;
-			foreach ($nodes as $nodeName => $node) {
-				if ($nodeName != $name) {
-					try {
-						$amqp->addLink($nodeName, $node);
-						break;
-					} catch (WrongArgumentException $e) {/**/}
-					//break;
-				}
-			}
-
-			return $this;
 		}
 
 		/**
@@ -503,14 +446,11 @@
 					self::messageTest($mess, ++$i);
 			} catch (ObjectNotFoundException $e) {/**/}
 			$this->assertSame(self::COUNT_OF_PUBLISH, $i);
-
-			echo "\n!testConsumerLogicMirrored";
 		}
 
 		public function testCleanup()
 		{
 			$this->cleanUp(true);
-			echo "\n!testCleanup";
 		}
 
 
@@ -552,8 +492,6 @@
 			$this->exchangeDeclare($channel, 'basic');
 			$inQueueCount = $this->queueDeclare($channel, 'basic');
 			$this->assertSame(0, $inQueueCount);
-
-			echo "\n!testQueueConsumerNoAck";
 		}
 
 		public function testQueueConsumerAutoAck()
@@ -593,8 +531,6 @@
 			$this->exchangeDeclare($channel, 'basic');
 			$inQueueCount = $this->queueDeclare($channel, 'basic');
 			$this->assertSame(0, $inQueueCount);
-
-			echo "\n!testQueueConsumerAutoAck";
 		}
 
 		
@@ -653,8 +589,6 @@
 
 			 // message count in exchangeBinded-queue
 			$this->checkMessageCount($channel, 'exchangeBinded');
-
-			echo "\n!testExchangeToExchangeProduceLogic";
 		}
 
 		/**
@@ -686,8 +620,6 @@
 						.self::COUNT_OF_PUBLISH
 				);
 			}
-
-			echo "\n!testExchangeToExchangeConsumerLogic";
 		}
 
 
@@ -959,7 +891,6 @@
 
 			return $channelInterface;
 		}
-
 
 	}
 ?>
