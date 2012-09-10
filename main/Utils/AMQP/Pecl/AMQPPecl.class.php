@@ -101,7 +101,6 @@
 		}
 
 		/**
-		 * @todo!!!
 		 * @param mixed $id
 		 * @param AMQPInterface $transport
 		 * @return AMQPPeclChannel

@@ -36,7 +36,6 @@
 
 		public function isOpen()
 		{
-			echo "\nchannel: isOpen";
 			return $this->opened === true;
 		}
 
@@ -45,7 +44,6 @@
 		**/
 		public function open()
 		{
-			echo "\nchannel: open";
 			$this->opened = true;
 
 			return $this;
@@ -56,7 +54,6 @@
 		**/
 		public function close()
 		{
-			echo "\nchannel: close";
 			$this->opened = false;
 
 			return $this;
@@ -70,7 +67,6 @@
 		 */
 		public function basicAck($deliveryTag, $multiple = false)
 		{
-			echo "\nchannel: basicAck";
 			try {
 				$obj = $this->lookupQueue(self::NIL);
 				$result = $obj->ack(
@@ -113,8 +109,6 @@
 		 */
 		public function basicCancel($consumerTag)
 		{
-			echo "\nchannel: basicCancel";
-
 			if (!$this->consumer instanceof AMQPConsumer)
 				throw new WrongStateException();
 
@@ -154,28 +148,45 @@
 		**/
 		public function basicConsume($queue, $autoAck, AMQPConsumer $callback)
 		{
-			echo "\nchannel: basicConsume";
 			Assert::isInstance($callback, 'AMQPPeclQueueConsumer');
 
-			$this->consumer = $callback->
-				setQueueName($queue)->
-				setAutoAcknowledge($autoAck === true);
-			
-			$obj = $this->lookupQueue($queue);
+			try {
+				$this->consumer = $callback->
+					setQueueName($queue)->
+					setAutoAcknowledge($autoAck === true);
 
-			$this->consumer->handleConsumeOk(
-				$this->consumer->getConsumerTag()
-			);
+				$obj = $this->lookupQueue($queue);
 
-			/**
-			 * blocking function
-			 */
-			$obj->consume(
-				array($callback, 'handlePeclDelivery'),
-				$autoAck 
-					? AMQP_AUTOACK
-					: self::AMQP_NONE
-			);
+				$this->consumer->handleConsumeOk(
+					$this->consumer->getConsumerTag()
+				);
+
+				/**
+				 * blocking function
+				 */
+				$obj->consume(
+					array($callback, 'handlePeclDelivery'),
+					$autoAck
+						? AMQP_AUTOACK
+						: self::AMQP_NONE
+				);
+			} catch (AMQPChannelException $e) {
+				$this->clearConnection();
+
+				throw new AMQPServerException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			} catch (AMQPConnectionException $e) {
+				$this->clearConnection();
+
+				throw new AMQPServerConnectionException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e
+				);
+			}
 
 			return $this;
 		}
@@ -186,7 +197,6 @@
 		**/
 		public function basicGet($queue, $autoAck = true)
 		{
-			echo "\nchannel: basicGet";
 			try {
 				$obj = $this->lookupQueue($queue);
 				$message = $obj->get(
@@ -231,7 +241,6 @@
 		public function basicPublish(
 			$exchange, $routingKey, AMQPOutgoingMessage $msg
 		) {
-			echo "\nchannel: basicPublish";
 			try {
 				$obj = $this->lookupExchange($exchange);
 
@@ -274,7 +283,6 @@
 		 */
 		public function basicQos($prefetchSize, $prefetchCount)
 		{
-			echo "\nchannel: basicQos";
 			try {
 				$result = $this->getChannelLink()->qos(
 					$prefetchSize,
@@ -315,7 +323,6 @@
 		 */
 		public function exchangeBind($destinationName, $sourceName, $routingKey)
 		{
-			echo "\nchannel: exchangeBind";
 			try {
 				$obj = $this->lookupExchange($destinationName);
 				
@@ -362,7 +369,6 @@
 		 */
 		public function exchangeDeclare($name, AMQPExchangeConfig $conf)
 		{
-			echo "\nchannel: exchangeDeclare";
 			$this->checkConnection();
 
 			if (!$conf->getType() instanceof AMQPExchangeType)
@@ -417,7 +423,6 @@
 		public function exchangeDelete(
 			$name, $ifUnused = false
 		) {
-			echo "\nchannel: exchangeDelete";
 			$bitmask = self::AMQP_NONE;
 
 			if ($ifUnused)
@@ -460,7 +465,6 @@
 		**/
 		public function queueBind($name, $exchange, $routingKey)
 		{
-			echo "\nchannel: queueBind";
 			try {
 				$obj = $this->lookupQueue($name);
 				$result = $obj->bind($exchange, $routingKey);
@@ -496,7 +500,6 @@
 		**/
 		public function queueDeclare($name, AMQPQueueConfig $conf)
 		{
-			echo "\nchannel: queueDeclare";
 			$this->checkConnection();
 
 			try {
@@ -547,7 +550,6 @@
 		**/
 		public function queueDelete($name)
 		{
-			echo "\nchannel: queueDelete";
 			try {
 				$obj = $this->lookupQueue($name);
 				$result = $obj->delete();
@@ -585,7 +587,6 @@
 		**/
 		public function queuePurge($name)
 		{
-			echo "\nchannel: queuePurge";
 			try {
 				$obj = $this->lookupQueue($name);
 				$result = $obj->purge();
@@ -621,7 +622,6 @@
 		**/
 		public function queueUnbind($name, $exchange, $routingKey)
 		{
-			echo "\nchannel: queueUnbind";
 			try {
 				$obj = $this->lookupQueue($name);
 				$result = $obj->unbind($exchange, $routingKey);
@@ -736,7 +736,7 @@
 		protected function getChannelLink()
 		{
 			if (!$this->link) {
-				echo "\nchannel: restart pecl-channel";
+				//echo "\nchannel: restart pecl-channel";
 				$this->link = new AMQPChannel(
 					$this->getTransport()->getLink()
 				);
@@ -745,6 +745,10 @@
 			return $this->link;
 		}
 
+		/**
+		 * we dont know if connection is boken until request is made
+		 * @return AMQPPeclChannel
+		 */
 		protected function checkConnection()
 		{
 			return $this;
