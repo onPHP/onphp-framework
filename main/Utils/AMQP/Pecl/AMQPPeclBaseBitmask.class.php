@@ -27,8 +27,8 @@
 			if ($config->getNowait())
 				throw new UnimplementedFeatureException();
 
-			if ($config->getArguments())
-				throw new UnimplementedFeatureException();
+//			if ($config->getArguments())
+//				throw new UnimplementedFeatureException();
 
 			return $bitmask;
 		}

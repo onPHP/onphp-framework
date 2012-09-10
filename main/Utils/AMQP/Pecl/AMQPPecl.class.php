@@ -46,6 +46,8 @@
 				$this->link->connect();
 
 			} catch (AMQPConnectionException $e) {
+				$this->alive = false;
+
 				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
@@ -66,6 +68,8 @@
 				$this->link->reconnect();
 				return $this;
 			} catch (AMQPConnectionException $e) {
+				$this->alive = false;
+
 				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
@@ -86,6 +90,8 @@
 					return $this;
 				}
 			} catch (AMQPConnectionException $e) {
+				$this->alive = false;
+				
 				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
@@ -95,11 +101,12 @@
 		}
 
 		/**
+		 * @todo!!!
 		 * @param mixed $id
-		 * @param AMQP $transport
+		 * @param AMQPInterface $transport
 		 * @return AMQPPeclChannel
 		**/
-		protected function spawnChannel($id, AMQP $transport)
+		public function spawnChannel($id, AMQPInterface $transport)
 		{
 			return new AMQPPeclChannel($id, $transport);
 		}
