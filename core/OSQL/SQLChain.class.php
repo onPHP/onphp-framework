@@ -37,7 +37,13 @@
 		{
 			return $this->chain;
 		}
-		
+
+		public function dropChain()
+		{
+			$this->chain = array();
+			$this->logic = array();
+		}
+
 		public function getLogic()
 		{
 			return $this->logic;
