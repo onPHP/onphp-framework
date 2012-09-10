@@ -13,13 +13,14 @@
 	 * AMQP stands for Advanced Message Queue Protocol, which is
 	 * an open standard middleware layer for message routing and queuing.
 	**/
-	abstract class AMQP
+	abstract class AMQP implements AMQPInterface
 	{
 		/**
 		 * @var AMQPCredentials
 		**/
 		protected $credentials = null;
 		protected $link	= null;
+		protected $alive = true;
 
 		/**
 		 * @var array of AMQPChannelInterface instances
@@ -47,9 +48,10 @@
 		abstract public function isConnected();
 
 		/**
+		 * @todo!!!
 		 * @return AMQPChannelInterface
 		 */
-		abstract protected function spawnChannel($id, AMQP $transport);
+		abstract public function spawnChannel($id, AMQPInterface $transport);
 		
 		public function __construct(AMQPCredentials $credentials)
 		{
@@ -143,5 +145,34 @@
 
 			return $this;
 		}
+
+		/**
+		 * @return AMQPCredentials
+		 */
+		public function getCredentials()
+		{
+			return $this->credentials;
+		}
+
+		/**
+		 * @return bool
+		 */
+		public function isAlive()
+		{
+			return $this->alive;
+		}
+
+		/**
+		 * @param bool $alive
+		 * @return AMQP
+		 */
+		public function setAlive($alive)
+		{
+			$this->alive = ($alive === true);
+
+			return $this;
+		}
+
+
 	}
 ?>
