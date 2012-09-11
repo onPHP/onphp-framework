@@ -276,6 +276,30 @@
 		{
 			throw new WrongArgumentException($message);
 		}
+
+		/**
+		 * Checking UUID
+		 * @see http://tools.ietf.org/html/rfc4122
+		 * @param string $value
+		 * @return boolean
+		 */
+		public static function checkUuid($value)
+		{
+			return (
+				is_string($value) &&
+				preg_match(PrimitiveUuid::UUID_PATTERN, $value)
+			);
+		}
+
+		public static function isUuid($variable, $message = null)
+		{
+			if(
+				!self::checkUuid($variable)
+			)
+				throw new WrongArgumentException(
+					$message.', '.self::dumpArgument($variable)
+				);
+		}
 		
 		public static function isObject($object, $message = null)
 		{

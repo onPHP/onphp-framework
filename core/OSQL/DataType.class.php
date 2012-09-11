@@ -36,6 +36,7 @@
 		const TIMESTAMPTZ		= 0x000A0E;
 
 		const INTERVAL			= 0x00000F;
+		const UUID				= 0x000005;
 		
 		const BINARY			= 0x00000E;
 		
@@ -76,6 +77,7 @@
 			self::TIMESTAMP		=> 'TIMESTAMP',
 			self::TIMESTAMPTZ  	=> 'TIMESTAMP',
 			self::INTERVAL		=> 'INTERVAL',
+			self::UUID			=> 'UUID',
 			
 			self::BINARY		=> 'BINARY',
 			

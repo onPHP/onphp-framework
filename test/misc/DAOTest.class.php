@@ -358,8 +358,18 @@
 				$this->getListByIdsTest();
 				$this->getListByIdsTest();
 			}
+
+			$testUuidObj = TestUuidObject::create()->setName('test-uuid-name');
+			TestUuidObject::dao()->add($testUuidObj);
+
+			$uuid = UuidUtils::make();
+			$testUuidObj2 = TestUuidObject::create()->setId(
+				$uuid
+			)->setName('test-uuid-name2');
+			TestUuidObject::dao()->import($testUuidObj2);
+
 		}
-		
+
 		public function criteriaResult()
 		{
 			$queryResult = Criteria::create(TestCity::dao())->getResult();
@@ -536,6 +546,24 @@
 				}
 			}
 			
+			$this->drop();
+		}
+
+		public function testUuid()
+		{
+			$this->create();
+
+			foreach (DBTestPool::me()->getPool() as $connector => $db) {
+				DBPool::me()->setDefault($db);
+				$this->fill();
+
+				$this->uuidTest();
+
+				Cache::me()->clean();
+			}
+
+			$this->deletedCount();
+
 			$this->drop();
 		}
 		
@@ -737,7 +765,7 @@
 		{
 			$id = 'non-integer-one';
 			$binaryData = "\0!bbq!\0";
-			
+
 			$bin =
 				TestBinaryStuff::create()->
 				setId($id)->
@@ -1020,6 +1048,51 @@
 			} catch (WrongArgumentException $e) {
 				// pass
 			}
+		}
+
+		private function uuidTest()
+		{
+			$count = TestUuidObject::dao()->getTotalCount();
+			$list = TestUuidObject::dao()->getPlainList();
+
+			$this->assertEquals(2, $count);
+			$this->assertEquals(2, count($list));
+
+			try{
+				Assert::isUuid($list[0]->getId() );
+			} catch(WrongArgumentException $e) {
+				$this->fail('object::id must be uuid, but is not it!');
+			}
+
+			$ids = ArrayUtils::getIdsArray($list);
+
+			unset($list);
+			$list = TestUuidObject::dao()->getListByIds($ids);
+
+			$this->assertEquals(2, count($list) );
+
+			$prm = Primitive::uuidIdentifierList('ids')->of('TestUuidObject');
+			$prm->import(
+				array(
+					'ids' => $ids,
+				)
+			);
+
+			$this->assertEquals(2, count($prm->getValue() ) );
+			$this->assertEquals($list, $prm->getValue() );
+
+			unset($prm);
+			$firstId = reset($ids);
+
+			$prm = Primitive::uuidIdentifier('id')->of('TestUuidObject');
+			$prm->import(
+				array(
+					'id'=> $firstId
+				)
+			);
+
+			$this->assertEquals(reset($list), $prm->getValue() );
+
 		}
 	}
 ?>
