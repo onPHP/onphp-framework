@@ -54,4 +54,5 @@
 	VoodooDaoWorker::setDefaultHandler('CacheSegmentHandler');
 	
 	define('__LOCAL_DEBUG__', true);
+	define('ONPHP_CURL_TEST_URL', 'http://localhost/curlTest.php'); //set here url to test script test/main/data/curlTest/curlTest.php
 ?>
