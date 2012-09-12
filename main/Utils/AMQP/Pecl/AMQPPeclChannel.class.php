@@ -75,18 +75,10 @@
 						? AMQP_MULTIPLE
 						: self::AMQP_NONE
 				);
-			} catch (AMQPQueueException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -117,18 +109,10 @@
 
 				$result = $obj->cancel($consumerTag);
 
-			} catch (AMQPQueueException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 				
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -170,18 +154,10 @@
 						? AMQP_AUTOACK
 						: self::AMQP_NONE
 				);
-			} catch (AMQPChannelException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -204,19 +180,10 @@
 						? AMQP_AUTOACK
 						: self::AMQP_NONE
 				);
-			} catch (AMQPQueueException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -250,18 +217,10 @@
 					$msg->getBitmask(new AMQPPeclOutgoingMessageBitmask()),
 					$msg->getProperties()
 				);
-			} catch (AMQPExchangeException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -288,18 +247,10 @@
 					$prefetchSize,
 					$prefetchCount
 				);
-			} catch (AMQPExchangeException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -330,18 +281,10 @@
 					$sourceName,
 					$routingKey
 				);
-			} catch (AMQPExchangeException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -390,18 +333,10 @@
 				$obj->setArguments($conf->getArguments());
 
 				$result = $obj->declare();
-			} catch (AMQPExchangeException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -431,18 +366,10 @@
 			try {
 				$obj = $this->lookupExchange($name);
 				$result = $obj->delete($name, $bitmask);
-			} catch (AMQPExchangeException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -468,18 +395,10 @@
 			try {
 				$obj = $this->lookupQueue($name);
 				$result = $obj->bind($exchange, $routingKey);
-			} catch (AMQPQueueException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -503,7 +422,6 @@
 			$this->checkConnection();
 
 			try {
-
 				if (isset($this->queueList[$name]))
 					unset($this->queueList[$name]);
 				
@@ -518,18 +436,10 @@
 				$obj->setArguments($conf->getArguments());
 				
 				$result = $obj->declare();
-			} catch (AMQPQueueException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -553,18 +463,10 @@
 			try {
 				$obj = $this->lookupQueue($name);
 				$result = $obj->delete();
-			} catch (AMQPQueueException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -590,18 +492,10 @@
 			try {
 				$obj = $this->lookupQueue($name);
 				$result = $obj->purge();
-			} catch (AMQPQueueException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -625,18 +519,10 @@
 			try {
 				$obj = $this->lookupQueue($name);
 				$result = $obj->unbind($exchange, $routingKey);
-			} catch (AMQPQueueException $e) {
+			} catch (Exception $e) {
 				$this->clearConnection();
 				
 				throw new AMQPServerException(
-					$e->getMessage(),
-					$e->getCode(),
-					$e
-				);
-			} catch (AMQPConnectionException $e) {
-				$this->clearConnection();
-
-				throw new AMQPServerConnectionException(
 					$e->getMessage(),
 					$e->getCode(),
 					$e
@@ -736,7 +622,6 @@
 		protected function getChannelLink()
 		{
 			if (!$this->link) {
-				//echo "\nchannel: restart pecl-channel";
 				$this->link = new AMQPChannel(
 					$this->getTransport()->getLink()
 				);
