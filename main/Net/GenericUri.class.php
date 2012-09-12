@@ -41,24 +41,22 @@
 		/**
 		 * @return GenericUri
 		**/
-		final public function parse($uri, $guessClass = false)
+		final public static function parse($uri, $guessClass = false)
 		{
-			$schemePattern = '([^:/?#]+):';
-			$authorityPattern = '(//([^/?#]*))';
-			$restPattern = '([^?#]*)(\?([^#]*))?(#(.*))?';
+			static $schemePattern = '([^:/?#]+):';
+			static $authorityPattern = '(//([^/?#]*))';
+			static $restPattern = '([^?#]*)(\?([^#]*))?(#(.*))?';
 			$matches = array();
 			
 			if (
 				$guessClass
-				&& ($knownSubSchemes = $this->getKnownSubSchemes())
+				&& ($knownSubSchemes = static::getKnownSubSchemes())
 				&& preg_match("~^{$schemePattern}~", $uri, $matches)
 				&& isset($knownSubSchemes[strtolower($matches[1])])
 			)
-				$class = $knownSubSchemes[strtolower($matches[1])];
+				$result = new $knownSubSchemes[strtolower($matches[1])];
 			else
-				$class = get_class($this);
-			
-			$result = new $class;
+				$result = new static;
 			
 			if ($result instanceof Url)
 				$pattern = "({$schemePattern}{$authorityPattern})?";
@@ -171,11 +169,11 @@
 			return $result;
 		}
 		
-		public function getKnownSubSchemes()
+		public static function getKnownSubSchemes()
 		{
 			return array_merge(
-				Urn::create()->getKnownSubSchemes(),
-				Url::create()->getKnownSubSchemes()
+				Urn::getKnownSubSchemes(),
+				Url::getKnownSubSchemes()
 			);
 		}
 		
