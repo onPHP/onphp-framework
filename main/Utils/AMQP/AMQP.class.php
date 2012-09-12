@@ -48,7 +48,6 @@
 		abstract public function isConnected();
 
 		/**
-		 * @todo!!!
 		 * @return AMQPChannelInterface
 		 */
 		abstract public function spawnChannel($id, AMQPInterface $transport);
