@@ -57,7 +57,7 @@
 				return $this->channel->exchangeDeclare($name, $conf);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					exchangeDeclare($name, $conf);
 			}
 		}
@@ -71,7 +71,7 @@
 				return $this->channel->exchangeDelete($name, $ifUnused);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					exchangeDelete($name, $ifUnused);
 			}
 		}
@@ -86,7 +86,7 @@
 				);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					exchangeBind(
 						$destinationName,
 						$sourceName,
@@ -108,7 +108,7 @@
 				);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					exchangeUnbind(
 						$destinationName,
 						$sourceName,
@@ -126,7 +126,7 @@
 				return $this->channel->queueDeclare($name, $conf);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					queueDeclare($name, $conf);
 			}
 		}
@@ -144,7 +144,7 @@
 				);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					queueBind(
 						$name,
 						$exchange,
@@ -166,7 +166,7 @@
 				);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					queueUnbind(
 						$name,
 						$exchange,
@@ -184,7 +184,7 @@
 				return $this->channel->queuePurge($name);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					queuePurge($name);
 			}
 		}
@@ -198,7 +198,7 @@
 				return $this->channel->queueDelete($name);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					queueDelete($name);
 			}
 		}
@@ -216,7 +216,7 @@
 				);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					basicPublish($exchange, $routingKey, $msg);
 			}
 		}
@@ -227,10 +227,10 @@
 		public function basicQos($prefetchSize, $prefetchCount)
 		{
 			try {
-			return $this->channel->basicQos($prefetchSize, $prefetchCount);
+				return $this->channel->basicQos($prefetchSize, $prefetchCount);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					basicQos($prefetchSize, $prefetchCount);
 			}
 		}
@@ -244,7 +244,7 @@
 				return $this->channel->basicGet($queue, $autoAck);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					basicGet($queue, $autoAck);
 			}
 		}
@@ -259,7 +259,7 @@
 				return $this->channel->basicAck($deliveryTag, $multiple);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					basicAck($deliveryTag, $multiple);
 			}
 		}
@@ -273,7 +273,7 @@
 				return $this->channel->basicConsume($queue, $autoAck, $callback);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					basicConsume($queue, $autoAck, $callback);
 			}
 		}
@@ -287,20 +287,21 @@
 				return $this->channel->basicCancel($consumerTag);
 			} catch (AMQPServerException $e) {
 				return $this->
-					transportReconnect()->
+					transportReconnect($e)->
 					basicCancel($consumerTag);
 			}
 		}
 
 		/**
 		 * @throws AMQPServerException
+		 * @param Exception $e
 		 * @return AMQPProxyChannel
 		 */
-		protected function transportReconnect()
+		protected function transportReconnect(Exception $e)
 		{
 			$this->markAlive(false);
 
-			$this->reconnect();
+			$this->reconnect($e);
 
 			return $this;
 		}
@@ -319,7 +320,7 @@
 		 * @return AMQPProxyChannel
 		 * @throws AMQPServerException
 		 */
-		private function reconnect()
+		private function reconnect(Exception $amqpException)
 		{
 			try {
 				$this->channel->getTransport()->
@@ -327,7 +328,11 @@
 						$this->channel->getTransport()->getAlive()
 					);
 			} catch (WrongArgumentException $e) {
-				throw new AMQPServerException($e->getMessage());
+				throw new AMQPServerException(
+					$amqpException->getMessage(),
+					$amqpException->getCode(),
+					$amqpException
+				);
 			}
 
 			return $this;

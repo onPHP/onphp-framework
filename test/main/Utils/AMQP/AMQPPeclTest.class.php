@@ -332,7 +332,7 @@
 		/**
 		 * test connection on drop node
 		 */
-		public function testDeclareQueueMirrored()
+		public function testDeclareQueueCluster()
 		{
 			$c = AMQPSelective::me()->
 				addLink(
@@ -369,10 +369,6 @@
 
 		public function testProducerLogicMirrored()
 		{
-			/**
-			 * AMQPPool засечивать
-			 * addPool
-			 */
 			$c = AMQPSelective::me()->
 				addLink(
 					'slave',
@@ -438,6 +434,7 @@
 			$c->dropLink('slave');
 			
 			$channel = $c->createChannel(1);
+			
 			$this->checkMessageCount($channel, 'mirrored');
 
 			$i = 0;
@@ -446,11 +443,30 @@
 					self::messageTest($mess, ++$i);
 			} catch (ObjectNotFoundException $e) {/**/}
 			$this->assertSame(self::COUNT_OF_PUBLISH, $i);
+
+			AMQPPeclTest::assertEquals(
+				AMQPCredentials::DEFAULT_PORT,
+				$c->getCredentials()->getPort()
+			);
+				
 		}
 
 		public function testCleanup()
 		{
-			$this->cleanUp(true);
+			$c = new AMQPPecl(
+				AMQPCredentials::createDefault()
+			);
+
+			$channel = $c->createChannel(1);
+
+			foreach (array('basic', 'mirrored') as $label) {
+				$this->exchangeDeclare($channel, $label);
+				$this->queueDeclare($channel, $label);
+				$this->queueBind($channel, $label);
+				$this->queueUnbind($channel, $label);
+				$this->queueDelete($channel, $label);
+				$this->exchangeDelete($channel, $label);
+			}
 		}
 
 
@@ -534,8 +550,10 @@
 		}
 
 		
-		public function testExchangeToExchangeProduceLogic()
+		public function testExchangeToExchangeProducerLogic()
 		{
+			$this->exchangeToExchangeCleanup();
+			
 			$c = new AMQPPecl(
 				AMQPCredentials::createDefault()
 			);
@@ -592,7 +610,7 @@
 		}
 
 		/**
-		 * @depends testExchangeToExchangeProduceLogic
+		 * @depends testExchangeToExchangeProducerLogic
 		**/
 		public function testExchangeToExchangeConsumerLogic()
 		{
@@ -622,8 +640,52 @@
 			}
 		}
 
+		public function testExchangeToExchangeCleanup()
+		{
+			$this->exchangeToExchangeCleanup();
+		}
 
-		/**
+		protected function exchangeToExchangeCleanup()
+		{
+			$c = new AMQPPecl(
+				AMQPCredentials::createDefault()
+			);
+
+			$channel = $c->createChannel(1);
+
+			$this->exchangeDeclare($channel, 'basic');
+			$this->exchangeDeclare($channel, 'exchangeBinded');
+			$this->queueDeclare($channel, 'exchangeBinded');
+			$this->queueDeclare($channel, 'basic');
+			$this->queueBind($channel, 'basic');
+			$this->queueBind($channel, 'exchangeBinded');
+
+			$channel->queueBind(
+				self::$queueList['basic']['name'],
+				self::$queueList['exchangeBinded']['exchange'],
+				self::$queueList['basic']['key']
+			);
+
+			$this->queueUnbind($channel, 'basic');
+			$this->queueUnbind($channel, 'exchangeBinded');
+
+			$channelInterface = $channel->queueUnbind(
+				self::$queueList['basic']['name'],
+				self::$queueList['exchangeBinded']['exchange'],
+				self::$queueList['basic']['key']
+			);
+			$this->assertInstanceOf(
+				'AMQPChannelInterface',
+				$channelInterface
+			);
+			$this->queueDelete($channel, 'exchangeBinded');
+			$this->queueDelete($channel, 'basic');
+
+			$this->exchangeDelete($channel, 'basic');
+			$this->exchangeDelete($channel, 'exchangeBinded');
+		}
+
+				/**
 		 * @param AMQPChannelInterface $channel
 		 * @param bool $check
 		 * @param string $key
@@ -702,53 +764,6 @@
 			self::assertEquals("message {$i}", $mess->getBody());
 		}
 
-		protected function cleanUp($binding = false)
-		{
-			$c = new AMQPPecl(
-				AMQPCredentials::createDefault()
-			);
-
-			if ($binding) {
-				$channel = $c->createChannel(2);
-
-				$this->exchangeDeclare($channel, 'exchangeBinded');
-				$this->queueDeclare($channel, 'exchangeBinded');
-				$this->queueBind($channel, 'exchangeBinded');
-
-				$channel->queueBind(
-					self::$queueList['basic']['name'], 
-					self::$queueList['exchangeBinded']['exchange'],
-					self::$queueList['basic']['key']
-				);
-
-				$this->queueUnbind($channel, 'exchangeBinded');
-
-				$channelInterface = $channel->queueUnbind(
-					self::$queueList['basic']['name'],
-					self::$queueList['exchangeBinded']['exchange'],
-					self::$queueList['basic']['key']
-				);
-				$this->assertInstanceOf(
-					'AMQPChannelInterface',
-					$channelInterface
-				);
-
-				$this->queueDelete($channel, 'exchangeBinded');
-				$this->exchangeDelete($channel, 'exchangeBinded');
-			}
-
-			$channel = $c->createChannel(1);
-			
-			foreach (array('basic', 'mirrored') as $label) {
-				$this->exchangeDeclare($channel, $label);
-				$this->queueDeclare($channel, $label);
-				$this->queueBind($channel, $label);
-				$this->queueUnbind($channel, $label);
-				$this->queueDelete($channel, $label);
-				$this->exchangeDelete($channel, $label);
-			}
-		}
-
 		/**
 		 * @param AMQPPeclChannel $channel
 		 * @param AMQPPeclChannel $label
@@ -772,7 +787,7 @@
 			return $interface;
 		}
 
-				/**
+		/**
 		 * @param AMQPChannelInterface $channel
 		 * @param string $label
 		 * @return AMQPChannelInterface

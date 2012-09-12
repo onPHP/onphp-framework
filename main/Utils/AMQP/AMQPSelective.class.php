@@ -77,8 +77,6 @@
 
 			$this->current = null;
 
-			//echo "\namq: dropLink {$name}";
-
 			return $this;
 		}
 
@@ -231,25 +229,18 @@
 			$args = func_get_args();
 			array_shift($args);
 
-//			try {
-				for ($i = 0; $i < count($this->pool); $i++) {
-					try {
+			for ($i = 0; $i < count($this->pool); $i++) {
+				try {
+					$this->getCurrentItem()->connect();
 
-						//echo "\namqp: {$method}[{$this->getCurrentItem()->getCredentials()->getPort()}] (".join(',', $args).")";
-
-						$this->getCurrentItem()->connect();
-						
-						return call_user_func_array(
-							array($this->getCurrentItem(), $method),
-							$args
-						);
-					} catch (AMQPServerConnectionException $e) {
-						$this->setCurrent($this->getAlive());
-					}
+					return call_user_func_array(
+						array($this->getCurrentItem(), $method),
+						$args
+					);
+				} catch (AMQPServerConnectionException $e) {
+					$this->setCurrent($this->getAlive());
 				}
-//			} catch (WrongStateException $e) {
-//				throw new AMQPServerConnectionException($e->getMessage());
-//			}
+			}
 		}
 
 		/**
@@ -259,7 +250,6 @@
 		public function getAlive()
 		{
 			foreach ($this->pool as $name => $item) {
-				//echo "\n$name isAlive: {$item->isAlive()}";
 				if ($item->isAlive())
 					return $name;
 			}
@@ -273,8 +263,6 @@
 		 */
 		public function setCurrent($name)
 		{
-			//echo "\namqp: setCurrent($name) isAlive: {$this->pool[$name]->isAlive()}";
-
 			Assert::isIndexExists($this->pool, $name);
 			
 			$this->current = $name;
