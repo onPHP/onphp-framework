@@ -1,6 +1,4 @@
 <?php
-	/* $Id$ */
-
 	if (!extension_loaded('onphp')) {
 		echo 'Trying to load onPHP extension.. ';
 		
@@ -11,32 +9,36 @@
 		}
 	}
 	
+	date_default_timezone_set('Europe/Moscow');
+	define('ONPHP_TEST_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
+	
+	require ONPHP_TEST_PATH.'../global.inc.php.tpl';
+	
+	define('ENCODING', 'UTF-8');
+	
+	mb_internal_encoding(ENCODING);
+	mb_regex_encoding(ENCODING);
+	
+	set_include_path(
+		// current path
+		get_include_path().PATH_SEPARATOR
+		.ONPHP_TEST_PATH.'misc'.PATH_SEPARATOR
+	);
+	
+	$testPathes = array(
+		ONPHP_TEST_PATH.'core'.DIRECTORY_SEPARATOR,
+		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR,
+		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Ip'.DIRECTORY_SEPARATOR,
+		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Net'.DIRECTORY_SEPARATOR,
+		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR,
+		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR.'Routers'.DIRECTORY_SEPARATOR,
+		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR.'AMQP'.DIRECTORY_SEPARATOR,
+		ONPHP_TEST_PATH.'db'.DIRECTORY_SEPARATOR,
+	);
+	
 	$config = dirname(__FILE__).'/config.inc.php';
 	
 	include is_readable($config) ? $config : $config.'.tpl';
-	
-	// provide fake spooked class
-	class Spook extends IdentifiableObject {/*_*/}
-	
-	final class TestSuite extends PHPUnit_Framework_TestSuite
-	{
-		public function setUp()
-		{
-			if (AllTests::$workers) {
-				$worker = array_pop(AllTests::$workers);
-				echo "\nProcessing with {$worker}\n";
-				Cache::dropWorkers();
-				Cache::setDefaultWorker($worker);
-			} else {
-				$this->markTestSuiteSkipped('No more workers available.');
-			}
-		}
-		
-		public function tearDown()
-		{
-			echo "\n";
-		}
-	}
 	
 	final class AllTests
 	{
@@ -53,13 +55,12 @@
 		{
 			$suite = new TestSuite('onPHP-'.ONPHP_VERSION);
 			
-			foreach (self::$paths as $testPath)
-				foreach (glob($testPath.'*Test'.EXT_CLASS, GLOB_BRACE) as $file)
-					$suite->addTestFile($file);
-			
 			// meta, DB and DAOs ordered tests portion
 			if (self::$dbs) {
 				try {
+					/**
+					 * @todo fail - constructor with argument, but static method 'me' - without
+					 */
 					Singleton::getInstance('DBTestPool', self::$dbs)->connect();
 				} catch (Exception $e) {
 					Singleton::dropInstance('DBTestPool');
@@ -97,7 +98,9 @@
 					.ONPHP_META_PROTO_DIR
 				);
 				
-				$daoTest = new DAOTest();
+				$dBCreator = DBTestCreator::create()->
+					setSchemaPath(ONPHP_META_AUTO_DIR.'schema.php')->
+					setTestPool(DBTestPool::me());
 				
 				$out = MetaConfiguration::me()->getOutput();
 				
@@ -109,24 +112,22 @@
 						info(get_class($db), true)->
 						infoLine(' connector.');
 					
-					try {
-						$daoTest->drop();
-					} catch (DatabaseException $e) {
-						// previous shutdown was clean
-					}
+					$dBCreator->dropDB(true);
 					
-					$daoTest->create()->fill(false);
+					$dBCreator->createDB()->fillDB();
 					
 					MetaConfiguration::me()->checkIntegrity();
 					$out->newLine();
 					
-					$daoTest->drop();
+					$dBCreator->dropDB();
 				}
 				
 				DBPool::me()->dropDefault();
 			}
 			
-			$suite->addTestSuite('DAOTest');
+			foreach (self::$paths as $testPath)
+				foreach (glob($testPath.'*Test'.EXT_CLASS, GLOB_BRACE) as $file)
+					$suite->addTestFile($file);
 			
 			return $suite;
 		}
