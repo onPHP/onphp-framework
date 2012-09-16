@@ -1,10 +1,14 @@
 <?php
 	/* $Id$ */
 	
-	final class TruncateQueryTest extends TestCase
+	final class TruncateQueryTest extends TestCaseDB
 	{
 		public function testQuery()
 		{
+			$pgDialect = $this->getDbByType('PgSQL')->getDialect();
+			$myDialect = $this->getDbByType('MySQL')->getDialect();
+			$liteDialect = $this->getDbByType('SQLitePDO')->getDialect();
+			
 			$query = OSQL::truncate('single_table');
 			
 			try {
@@ -20,17 +24,17 @@
 			);
 			
 			$this->assertEquals(
-				$query->toDialectString(PostgresDialect::me()),
+				$query->toDialectString($pgDialect),
 				'TRUNCATE TABLE "single_table";'
 			);
 			
 			$this->assertEquals(
-				$query->toDialectString(LiteDialect::me()),
+				$query->toDialectString($liteDialect),
 				'DELETE FROM "single_table";'
 			);
 			
 			$this->assertEquals(
-				$query->toDialectString(MyDialect::me()),
+				$query->toDialectString($myDialect),
 				'TRUNCATE TABLE `single_table`;'
 			);
 			
@@ -42,17 +46,17 @@
 			);
 			
 			$this->assertEquals(
-				$query->toDialectString(PostgresDialect::me()),
+				$query->toDialectString($pgDialect),
 				'TRUNCATE TABLE "foo", "bar", "bleh";'
 			);
 			
 			$this->assertEquals(
-				$query->toDialectString(LiteDialect::me()),
+				$query->toDialectString($liteDialect),
 				'DELETE FROM "foo"; DELETE FROM "bar"; DELETE FROM "bleh";'
 			);
 
 			$this->assertEquals(
-				$query->toDialectString(MyDialect::me()),
+				$query->toDialectString($myDialect),
 				'TRUNCATE TABLE `foo`; TRUNCATE TABLE `bar`; TRUNCATE TABLE `bleh`;'
 			);
 		}

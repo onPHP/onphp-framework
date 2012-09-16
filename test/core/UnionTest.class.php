@@ -1,7 +1,5 @@
 <?php
-	/* $Id$ */
-	
-	final class UnionTest extends TestCase
+	final class UnionTest extends TestCaseDB
 	{
 		private $singleUnion 		= null;
 		private $singleUnionAll		= null;
@@ -60,7 +58,7 @@
 			
 		public function testPostgresql()
 		{
-			$dialect = PostgresDialect::me();
+			$dialect = $this->getDbByType('PgSQL')->getDialect();
 			
 			$this->assertEquals(
 				$this->singleUnion->toDialectString($dialect),
