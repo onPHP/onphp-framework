@@ -44,6 +44,22 @@
 		}
 
 		/**
+		 * @param AMQPPool $pool
+		 * @return AMQPSelective
+		 */
+		public function addPool(AMQPPool $pool)
+		{
+			foreach ($pool->getList() as $name => $amqp) {
+				$this->addLink($name, $amqp);
+
+				if ($name == 'default')
+					$this->setCurrent('default');
+			}
+
+			return $this;
+		}
+
+		/**
 		 * @throws WrongArgumentException
 		 * @return AMQPPool
 		**/
