@@ -14,7 +14,7 @@
         main/Utils/AMQP/AMQPProxyChannel.class.php,
         main/Utils/AMQP/AMQPSelective.class.php,
         test/main/Utils/AMQP/AMQPPeclTest.class.php:
-                added suppot for pecl amqp 1.0.4
+                added support for pecl amqp 1.0.4
 
 2012-09-16	Alexey S. Denisov
 	* DAOTest splitted to more Test classes in new db directory
