@@ -17,11 +17,11 @@
 		protected $id = null;
 
 		/**
-		 * @var AMQP
+		 * @var AMQPInterface
 		**/
 		protected $transport = null;
 
-		public function __construct($id, AMQP $transport)
+		public function __construct($id, AMQPInterface $transport)
 		{
 			$this->id = $id;
 			$this->transport = $transport;

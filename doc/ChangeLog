@@ -1,3 +1,21 @@
+2012-09-18	Evgeniy Tekalin
+
+	* main/Utils/AMQP/AMQP.class.php,
+	main/Utils/AMQP/AMQPBaseChannel.class.php,
+	main/Utils/AMQP/AMQPBaseMessage.class.php,
+	main/Utils/AMQP/AMQPChannelInterface.class.php,
+	main/Utils/AMQP/AMQPPool.class.php,
+	main/Utils/AMQP/Pecl/AMQPPecl.class.php,
+	main/Utils/AMQP/Pecl/AMQPPeclBaseBitmask.class.php,
+	main/Utils/AMQP/Pecl/AMQPPeclChannel.class.php,
+	main/Utils/AMQP/AMQPInterface.class.php,
+	main/Utils/AMQP/Pecl/AMQPPeclIncomingMessageAdapter.class.php,
+	main/Utils/AMQP/Pecl/AMQPPeclQueueConsumer.class.php,
+	main/Utils/AMQP/AMQPProxyChannel.class.php,
+	main/Utils/AMQP/AMQPSelective.class.php,
+	test/main/Utils/AMQP/AMQPPeclTest.class.php:
+		added suppot for pecl amqp 1.0.4
+
 2012-09-06	Igor V. Gulyaev
 
 	* main/Base/Hstore.class.php
