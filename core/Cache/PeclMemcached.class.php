@@ -193,21 +193,8 @@
 				return $this;
 			
 			$this->triedConnect = true;
-			$this->instance = new Memcache();
 			
-			try {
-				
-				try {
-					$this->instance->pconnect($this->host, $this->port, $this->connectTimeout);
-				} catch (BaseException $e) {
-					$this->instance->connect($this->host, $this->port, $this->connectTimeout);
-				}
-				
-				$this->alive = true;
-				
-			} catch (BaseException $e) {
-				// bad luck.
-			}
+			$this->connect();
 			
 			return $this;
 		}
@@ -235,4 +222,23 @@
 			Assert::isUnreachable();
 		}
 		
+		protected function connect()
+		{
+			$this->instance = new Memcache();
+			
+			try {
+				
+				try {
+					$this->instance->pconnect($this->host, $this->port, $this->connectTimeout);
+				} catch (BaseException $e) {
+					$this->instance->connect($this->host, $this->port, $this->connectTimeout);
+				}
+				
+				$this->alive = true;
+				
+			} catch (BaseException $e) {
+				// bad luck.
+			}
+		}
 	}
+?>
