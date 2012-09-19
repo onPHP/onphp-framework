@@ -37,29 +37,19 @@
 		 * @return AMQPChannelInterface
 		**/
 		public function exchangeDelete(
-			$name, $ifUnused = false, $ifEmpty = false
+			$name, $ifUnused = false
 		);
-
-		/**
-		 * @return AMQPChannelInterface
-		**/
-		public function exchangeBind($name, $queue, $routingKey);
-
-		/**
-		 * @return AMQPChannelInterface
-		**/
-		public function exchangeUnbind($name, $queue, $routingKey);
 
 		/**
 		 * @see http://www.rabbitmq.com/blog/2010/10/19/exchange-to-exchange-bindings/
+		 * @return AMQPChannelInterface
 		**/
-		public function exchangeToExchangeBind(
-			$destination, $source, $routingKey
-		);
+		public function exchangeBind($destinationName, $sourceName, $routingKey);
 
-		public function exchangeToExchangeUnbind(
-			$destination, $source, $routingKey
-		);
+		/**
+		 * @return AMQPChannelInterface
+		**/
+		public function exchangeUnbind($destinationName, $sourceName, $routingKey);
 
 		/**
 		 * @return integer - the message count in queue
@@ -101,7 +91,7 @@
 		/**
 		 * @return AMQPIncomingMessage
 		**/
-		public function basicGet($queue, $noAck = true);
+		public function basicGet($queue, $autoAck = true);
 
 		/**
 		 * @return AMQPChannelInterface
@@ -117,10 +107,5 @@
 		 * @return AMQPChannelInterface
 		**/
 		public function basicCancel($consumerTag);
-
-		/**
-		 * @return AMQPIncomingMessage
-		**/
-		public function getNextDelivery();
 	}
 ?>
