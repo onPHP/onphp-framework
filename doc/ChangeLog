@@ -1,3 +1,7 @@
+2012-09-19	Evgeny V. Kokovikhin
+
+	* main/Monitoring/PinbedMemcached.class.php: cosmetics
+
 2012-09-18      Evgeniy Tekalin
 
         * main/Utils/AMQP/AMQP.class.php,
@@ -120,7 +124,7 @@
 
 	Introducing Uncachers
 
-2012-06-29	N. Konstantinov
+2012-06-29	Nikita Konstantinov
 
 	* core/DB/PgSQL.class.php
 		test/core/DbConnectionTest.class.php:
