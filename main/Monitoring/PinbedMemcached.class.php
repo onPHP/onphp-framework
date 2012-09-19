@@ -12,24 +12,24 @@
 	/**
 	 *
 	**/
-	final class PinbedMemcached extends Memcached
+	final class PinbedMemcached extends SocketMemcached
 	{
 		/**
 		 * @return PinbedMemcached 
 		**/
 		public static function create(
-			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT,
-			$buffer = Memcached::DEFAULT_BUFFER
+			$host = SocketMemcached::DEFAULT_HOST,
+			$port = SocketMemcached::DEFAULT_PORT,
+			$buffer = SocketMemcached::DEFAULT_BUFFER
 		)
 		{
 			return new self($host, $port, $buffer);
 		}
 		
 		public function __construct(
-			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT,
-			$buffer = Memcached::DEFAULT_BUFFER
+			$host = SocketMemcached::DEFAULT_HOST,
+			$port = SocketMemcached::DEFAULT_PORT,
+			$buffer = SocketMemcached::DEFAULT_BUFFER
 		)
 		{
 			if (PinbaClient::isEnabled())
