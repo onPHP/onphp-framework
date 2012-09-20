@@ -38,7 +38,7 @@
 		
 		public function toBoolean(Form $form)
 		{
-			throw new UnsupportedMethodException('It makes no sense');
+			throw new UnsupportedMethodException('Author was lazy');
 		}
 	}
 ?>

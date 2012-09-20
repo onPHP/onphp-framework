@@ -4,7 +4,7 @@
 	{
 		/**
 		 * @return array 
-		 */
+		**/
 		public static function providerPolygonToString()
 		{
 			return 
@@ -25,7 +25,7 @@
 		
 		/**
 		 * @return array 
-		 */
+		**/
 		public static function providerCreationFromString()
 		{
 			return 

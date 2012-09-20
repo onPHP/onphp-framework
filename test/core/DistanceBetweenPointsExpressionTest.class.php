@@ -3,10 +3,10 @@
 	final class DistanceBetweenPointsExpressionTest extends TestCase
 	{
 		/**
-		 * [[polygon, point, DialectString], ...]
+		 * [[point, point, DialectString], ...]
 		 *  
 		 * @return array 
-		 */
+		**/
 		public static function provider()
 		{
 			return 

@@ -42,7 +42,7 @@
 		 *     x1 , y1   , ... ,   xn , yn   
 		 * 
 		 * @return Polygon
-		 */
+		**/
 		public static function createFromString($polygon)
 		{
 			$polygon =
@@ -134,7 +134,7 @@
 		
 		/**
 		 * @return Polygon 
-		 */
+		**/
 		public function getBoundingBox()
 		{
 			Assert::isNotEmpty($this->vertexList);

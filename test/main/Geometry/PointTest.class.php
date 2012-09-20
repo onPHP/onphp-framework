@@ -4,7 +4,7 @@
 	{
 		/**
 		 * @return array 
-		 */
+		**/
 		public static function providerPointToString()
 		{
 			return 
@@ -26,7 +26,7 @@
 		
 		/**
 		 * @return array 
-		 */
+		**/
 		public static function providerCreationFromString()
 		{
 			return 

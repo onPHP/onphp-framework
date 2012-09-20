@@ -6,7 +6,7 @@
 		 * [[polygon, point, DialectString], ...]
 		 *  
 		 * @return array 
-		 */
+		**/
 		public static function provider()
 		{
 			return 

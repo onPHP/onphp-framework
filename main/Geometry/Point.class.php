@@ -41,7 +41,7 @@
 		 * 
 		 * Expected values:
 		 * ( x , y, ... )
- 		 *   x , y, ...
+		 *   x , y, ...
 		 * 
 		 * @return Point
 		**/
@@ -105,7 +105,7 @@
 		 * @param int $n
 		 * @throws WrongArgumentException 
 		 * @return float|int
-		 */
+		**/
 		public function getCoordinate($n)
 		{
 			if (!isset($this->vector[$n])) {
