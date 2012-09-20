@@ -161,21 +161,42 @@
 		
 		public function quoteIpInRange($range, $ip)
 		{
-			$string = '';
-			
-			if ($ip instanceof DialectString)
-				$string .= $ip->toDialectString($this);
-			else
-				$string .= $this->quoteValue($ip);
-			
-			$string .= ' <<= ';
-			
-			if ($range instanceof DialectString)
-				$string .= $range->toDialectString($this);
-			else
-				$string .= $this->quoteValue($range);
-			
-			return $string;	
+			return 
+				$this->quoteExpression($ip)
+				.' <<= '
+				.$this->quoteExpression($range);	
+		}
+		
+		public function quotePointInPolygon($polygon, $point)
+		{
+			return 
+				$this->getCastedExpr($polygon, 'POLYGON')
+				.' @> '
+				.$this->getCastedExpr($point, 'POINT');
+		}
+		
+		public function quoteDistanceBetweenPoints($left, $right)
+		{
+			return 
+				$this->getCastedExpr($left, 'POINT')
+				.' <-> '
+				.$this->getCastedExpr($right, 'POINT');
+		}
+		
+		public function quoteEqPolygons($left, $right)
+		{
+			return 
+				$this->getCastedExpr($left, 'POLYGON')
+				.' ~= '
+				.$this->getCastedExpr($right, 'POLYGON');			
+		}
+		
+		public function quoteEqPoints($left, $right)
+		{
+			return 
+				$this->getCastedExpr($left, 'POINT')
+				.' ~= '
+				.$this->getCastedExpr($right, 'POINT');			
 		}
 		
 		protected function makeSequenceName(DBColumn $column)

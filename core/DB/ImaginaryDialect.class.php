@@ -101,23 +101,39 @@
 		
 		public function quoteIpInRange($range, $ip)
 		{
-			$string = '';
-			
-			if ($ip instanceof DialectString)
-				$string .= $ip->toDialectString($this);
-			else
-				$string .= $this->quoteValue($ip);
-			
-			$string .= ' in (';
-			
-			if ($range instanceof DialectString)
-				$string .= $range->toDialectString($this);
-			else
-				$string .= $this->quoteValue($range);
-			
-			$string .= ')';
-			
-			return $string;	
+			return 
+				$this->quoteExpression($ip)
+				.' in ('
+				.$this->quoteExpression($range)
+				.')';
 		}
+		
+		public function quotePointInPolygon($polygon, $point)
+		{
+			return 
+				$this->quoteExpression($polygon)
+				.' CONTAINTS '
+				.$this->quoteExpression($point);
+		}
+		
+		public function quoteDistanceBetweenPoints($p1, $p2)
+		{
+			$left = $this->quoteExpression($p1);
+			$right = $this->quoteExpression($p2);
+			
+			return 'DISTANCE('.$left.', '.$right.')';
+		}
+		
+		public function quoteIntersection($polygon1, $polygon2)
+		{
+			return 
+				$this->toCasted(
+					$this->quoteExpression($polygon1), 'POLYGON'
+				)
+				.' ?# '
+				.$this->toCasted(
+					$this->quoteExpression($polygon2), 'POLYGON'
+				);			
+		}		
 	}
 ?>
