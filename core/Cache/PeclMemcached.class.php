@@ -23,11 +23,11 @@
 		const DEFAULT_HOST		= '127.0.0.1';
 		const DEFAULT_TIMEOUT	= 1;
 		
+		protected $host			= null;
+		protected $port			= null;
 		private $instance		= null;
 		private $requestTimeout = null;
 		private $connectTimeout = null;
-		private $host			= null;
-		private $port			= null;
 		private $triedConnect	= false;
 		
 		/**

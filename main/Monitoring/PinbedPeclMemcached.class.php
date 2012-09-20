@@ -14,9 +14,6 @@
 	**/
 	final class PinbedPeclMemcached extends PeclMemcached
 	{
-		private $host = null;
-		private $port = null;
-		
 		/**
 		 * @return PinbedPeclMemcached 
 		**/
