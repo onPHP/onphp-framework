@@ -38,6 +38,23 @@
 				);
 		}
 		
+		public function testFactory()
+		{
+			$point = Point::create(42, 24);
+
+			$this->assertTrue(
+				$point->isEqual(Point::create('(42, 24)'))
+			);
+			
+			$this->assertTrue(
+				$point->isEqual(Point::create('42, 24'))
+			);
+			
+			$this->assertTrue(
+				$point->isEqual(Point::create(array(42, 24)))
+			);
+		}		
+		
 		/**
 		 * @dataProvider providerPointToString
 		**/		
@@ -55,8 +72,8 @@
 				$expectedStr,
 				Point::create($point)->toString()
 			);
-		}	
-		
+		}
+				
 		public function testCoordinates()
 		{
 			$this->assertEquals(
@@ -74,6 +91,15 @@
 				Point::create(array(42))->
 					belongsToPlane()
 			);			
+		}
+		
+		public function testGettersSetters()
+		{
+			$point = Point::create(array(1, 1, 42));
+			
+			$this->assertEquals(42, $point->getZ());
+			
+			$this->assertEquals(8, $point->setY(8)->getY());
 		}
 	}
 ?>

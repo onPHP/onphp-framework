@@ -22,57 +22,25 @@
 		/**
 		 * @return Polygon
 		**/
-		public static function create($vertexList = array())
+		public static function create(/* ... */)
 		{
-			if (is_array($vertexList))
-				return new self($vertexList);
-			elseif (is_string($vertexList))
-				return self::createFromString($vertexList);
-			else
-				throw new WrongArgumentException('Strange arguments given');
-		}
-
-		/**
-		 * @param string $polygon
-		 * 
-		 * Expected values (according to Postgres format):
-		 * ( ( x1 , y1 ) , ... , ( xn , yn ) )
-		 *   ( x1 , y1 ) , ... , ( xn , yn )  
-		 *   ( x1 , y1   , ... ,   xn , yn )  
-		 *     x1 , y1   , ... ,   xn , yn   
-		 * 
-		 * @return Polygon
-		**/
-		public static function createFromString($polygon)
-		{
-			$polygon =
-				str_replace(array('(', ')', ' '), '', $polygon);
+			if (func_num_args() == 1)
+				return new self(func_get_arg(0));
 			
-			$coordinateList = explode(',', $polygon);
-			
-			if (count($coordinateList) % 2 !== 0) {
-				throw new WrongArgumentException(
-					'Strange list of points given'
-				);
-			}
-				
-			$vertexList = array();
-			
-			for ($i = 0; $i < count($coordinateList); $i += 2) {
-				$vertexList[] =
-					Point::create(
-						array(
-							$coordinateList[$i],
-							$coordinateList[$i + 1],
-						)
-					);
-			}
-			
-			return new self($vertexList);
+			return new self(func_get_args());
 		}
 		
-		public function __construct(array $vertexList)
+		public function __construct(/* ... */)
 		{
+			$vertexList = func_get_arg(0);
+			
+			if (!is_array($vertexList)) {
+				if (is_string($vertexList))
+					$vertexList = $this->getVertexListByString($vertexList);
+				else
+					$vertexList = func_get_args();
+			}			
+			
 			$this->vertexList = $vertexList;
 			
 			$this->normalizeVertextList();			
@@ -98,6 +66,14 @@
 		}
 		
 		/**
+		 * @return Point[] 
+		**/
+		public function getVertexList()
+		{
+			return $this->vertexList;
+		}		
+		
+		/**
 		 * @return Polygon 
 		**/
 		public function addVertex(Point $point)
@@ -112,6 +88,52 @@
 			$this->normalizeVertextList();
 			
 			return $this;
+		}
+		
+		/**
+		 * @param int $n
+		 * @return Point
+		 * @throws WrongArgumentException 
+		**/
+		public function getVertex($n)
+		{
+			if (!isset($this->vertexList[$n])) {
+				throw new WrongArgumentException(
+					'There is no vertex #'.$n
+				);
+			}
+			
+			return $this->vertexList[$n];
+		}
+		
+		/**
+		 * @param int $n
+		 * @return Polygon
+		 * @throws WrongArgumentException 
+		**/
+		public function setVertex($n, Point $vertex)
+		{
+			if (!isset($this->vertexList[$n])) {
+				throw new WrongArgumentException(
+					'There is no vertex #'.$n
+				);
+			}
+			
+			$this->vertexList[$n] = $vertex;
+			
+			return $this;			
+		}		
+		
+		/**
+		 * @return bool
+		**/
+		public function hasVertex(Point $vertex)
+		{
+			foreach ($this->vertexList as $v)
+				if ($vertex->isEqual($v))
+					return true;
+				
+			return false;
 		}
 		
 		/**
@@ -137,24 +159,24 @@
 		**/
 		public function getBoundingBox()
 		{
-			Assert::isNotEmpty($this->vertexList);
+			Assert::isNotEmptyArray($this->vertexList);
 			
 			$vertex = reset($this->vertexList);
 						
-			$x1 = $vertex->getCoordinate(Point::X_COORDINATE);
-			$y1 = $vertex->getCoordinate(Point::Y_COORDINATE);
+			$x1 = $vertex->getX();
+			$y1 = $vertex->getY();
 
-			$x2 = $vertex->getCoordinate(Point::X_COORDINATE);
-			$y2 = $vertex->getCoordinate(Point::Y_COORDINATE);
+			$x2 = $vertex->getX();
+			$y2 = $vertex->getY();
 			
 			foreach ($this->vertexList as $vertex) {
 				// left bottom				
-				$x1 = min($vertex->getCoordinate(Point::X_COORDINATE), $x1);
-				$y1 = min($vertex->getCoordinate(Point::Y_COORDINATE), $y1);
+				$x1 = min($vertex->getX(), $x1);
+				$y1 = min($vertex->getY(), $y1);
 				
 				// right top
-				$x2 = max($vertex->getCoordinate(Point::X_COORDINATE), $x2);
-				$y2 = max($vertex->getCoordinate(Point::Y_COORDINATE), $y2);				
+				$x2 = max($vertex->getX(), $x2);
+				$y2 = max($vertex->getY(), $y2);				
 			}
 			
 			return 
@@ -183,5 +205,42 @@
 					
 			return $this;
 		}
+		
+		/**
+		 * @param string $polygon
+		 * 
+		 * Expected values (according to Postgres format):
+		 * ( ( x1 , y1 ) , ... , ( xn , yn ) )
+		 *   ( x1 , y1 ) , ... , ( xn , yn )  
+		 *   ( x1 , y1   , ... ,   xn , yn )  
+		 *     x1 , y1   , ... ,   xn , yn   
+		 * 
+		 * @return Polygon
+		**/
+		private function getVertexListByString($polygon)
+		{			
+			$polygon =
+				str_replace(array('(', ')', ' '), '', $polygon);
+			
+			$coordinateList = explode(',', $polygon);
+			
+			if (count($coordinateList) % 2 !== 0) {
+				throw new WrongArgumentException(
+					'Strange list of points given'
+				);
+			}
+				
+			$vertexList = array();
+			
+			for ($i = 0; $i < count($coordinateList); $i += 2) {
+				$vertexList[] =
+					Point::create(
+						$coordinateList[$i],
+						$coordinateList[$i + 1]
+					);
+			}
+			
+			return $vertexList;
+		}		
 	}
 ?>

@@ -14,9 +14,9 @@
 	**/
 	final class Point implements Stringable, DialectString
 	{
-		const X_COORDINATE = 0;
-		const Y_COORDINATE = 1;
-		const Z_COORDINATE = 2;
+		const X = 0;
+		const Y = 1;
+		const Z = 2;
 		
 		/**
 		 * Coordinates
@@ -26,36 +26,26 @@
 		/**
 		 * @return Point
 		**/
-		public static function create($vector)
+		public static function create(/* ... */)
 		{
-			if (is_array($vector))
-				return new self($vector);
-			elseif (is_string($vector))
-				return self::createFromString($vector);
-			else
-				throw new WrongArgumentException('Strange arguments given');
+			if (func_num_args() == 1)
+				return new self(func_get_arg(0));
+			
+			return new self(func_get_args());
 		}
 
-		/**
-		 * @param string $point
-		 * 
-		 * Expected values:
-		 * ( x , y, ... )
-		 *   x , y, ...
-		 * 
-		 * @return Point
-		**/
-		public static function createFromString($point)
+		public function __construct(/* ... */)
 		{
-			if (strpos($point, '(') === 0)
-				$point = substr($point, 1, -1);
+			$vector = func_get_arg(0);
 			
-			return new self(preg_split('/\s*,\s*/', $point));
-		}		
-		
-		public function __construct(array $vector)
-		{
-			Assert::isNotEmpty($vector);
+			if (!is_array($vector)) {
+				if (is_string($vector))
+					$vector = $this->getVectorByString($vector);
+				else
+					$vector = func_get_args();
+			}
+
+			Assert::isNotEmptyArray($vector);
 			
 			$this->vector = $vector;
 		}
@@ -100,6 +90,52 @@
 				
 			return true;
 		}
+	
+		/**
+		 * @param int $n
+		 * @param int|float $value
+		 * @return Point
+		 * @throws WrongArgumentException 
+		**/
+		public function setCoordinate($n, $value)
+		{
+			if (!isset($this->vector[$n])) {
+				throw new WrongArgumentException(
+					'You cannot set coordinate #'.$n.' for this point'
+				);
+			}
+			
+			$this->vector[$n] = $value;
+			
+			return $this;			
+		}
+		
+		/**
+		 * @return Point 
+		 */
+		public function setX($value)
+		{
+			$this->setCoordinate(self::X, $value);
+			return $this;
+		}
+		
+		/**
+		 * @return Point 
+		 */
+		public function setY($value)
+		{
+			$this->setCoordinate(self::Y, $value);
+			return $this;
+		}
+		
+		/**
+		 * @return Point 
+		 */
+		public function setZ($value)
+		{
+			$this->setCoordinate(self::Z, $value);
+			return $this;
+		}
 		
 		/**
 		 * @param int $n
@@ -110,11 +146,43 @@
 		{
 			if (!isset($this->vector[$n])) {
 				throw new WrongArgumentException(
-					'Invalid coordinate number: '.$n
+					'There is no coordinate #'.$n
 				);
 			}
 			
 			return $this->vector[$n];
 		}
+		
+		public function getX()
+		{
+			return $this->getCoordinate(self::X);
+		}
+		
+		public function getY()
+		{
+			return $this->getCoordinate(self::Y);
+		}
+		
+		public function getZ()
+		{
+			return $this->getCoordinate(self::Z);
+		}
+		
+		/**
+		 * @param string $point
+		 * 
+		 * Expected values:
+		 * ( x , y, ... )
+		 *   x , y, ...
+		 * 
+		 * @return array
+		**/
+		private function getVectorByString($point)
+		{			
+			if (strpos($point, '(') === 0)
+				$point = substr($point, 1, -1);
+			
+			return preg_split('/\s*,\s*/', $point);
+		}		
 	}
 ?>

@@ -10,13 +10,13 @@
 			return 
 				array(
 					array(
-						Polygon::create(array(array(0, 0))),
+						Polygon::create(Point::create(0, 0)),
 						'(0, 0)'
 					),
 					array(
-						Polygon::create(array(array(0, 0)))->
+						Polygon::create(Point::create(0, 0))->
 							addVertex(
-								Point::create(array(42, 0))
+								Point::create(42, 0)
 							),
 						'(0, 0), (42, 0)'
 					)				
@@ -79,7 +79,7 @@
 		{			
 			Polygon::create()->
 				addVertex(
-					Point::create(array(42))
+					Point::create(42)
 				);
 		}
 	
@@ -93,7 +93,33 @@
 			
 			$this->assertTrue(
 				$polygon->getBoundingBox()->isEqual($expected)
-			);	
+			);
+		}
+		
+		public function testVertexMethods()
+		{
+			$polygon =
+				Polygon::create('(0, 0), (0, 1), (1, 0)');
+			
+			$polygon->addVertex(Point::create(1, -1));
+			
+			$this->assertTrue(
+				$polygon->getVertex(0)->isEqual(Point::create(0, 0))
+			);
+			
+			$polygon->setVertex(0, Point::create(-1, 0));
+			
+			$this->assertTrue(
+				$polygon->getVertex(0)->isEqual(Point::create(-1, 0))
+			);
+			
+			$this->assertTrue(
+				$polygon->hasVertex(Point::create(1, 0))
+			);
+			
+			$this->assertFalse(
+				$polygon->hasVertex(Point::create(42, 666))
+			);
 		}
 	}
 ?>
