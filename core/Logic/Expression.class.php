@@ -377,6 +377,48 @@
 		}
 		
 		/**
+		 * @return PointContainsExpression 
+		**/
+		public static function containsPoint($area, $point)
+		{
+			return new PointContainsExpression($area, $point);
+		}
+		
+		/**
+		 * @return DistanceBetweenPointsExpression 
+		**/
+		public static function distanceBetweenPoints($left, $right)
+		{
+			return new DistanceBetweenPointsExpression($left, $right);
+		}
+		
+		/**
+		 * @param $left Point|string
+		 * @param $right Point|string
+		 * @return EqGeometricObjectsExpression 
+		**/
+		public static function eqPoints($left, $right)
+		{
+			return
+				new EqGeometricObjectsExpression(
+					$left, $right, DataType::POINT
+				);
+		}
+		
+		/**
+		 * @param $left Polygon|string
+		 * @param $right Polygon|string
+		 * @return EqGeometricObjectsExpression 
+		**/
+		public static function eqPolygons($left, $right)
+		{
+			return
+				new EqGeometricObjectsExpression(
+					$left, $right, DataType::POLYGON
+				);
+		}
+		
+		/**
 		 * @return LogicalChain
 		**/
 		private static function block($args, $logic)

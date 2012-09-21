@@ -256,5 +256,18 @@
 		</properties>
 		<pattern name="DictionaryClass" />
 	</class>
+	
+	<class name="TestRegion" type="final">
+		<properties>
+			<identifier />
+
+			<property name="name" type="String" required="true" />
+			<property name="location" type="Polygon" required="true" />
+			<property name="capital" type="Point" required="true" />			
+			
+		</properties>
+		
+		<pattern name="StraightMapping" />
+	</class>
 
 </classes></metaconfiguration>

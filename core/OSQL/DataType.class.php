@@ -42,6 +42,9 @@
 		const IP				= 0x000010;
 		const IP_RANGE			= 0x000011;
 		
+		const POINT             = 0x000012;
+		const POLYGON           = 0x000013;
+		
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x000200;
 		const HAVE_SCALE		= 0x000400;
@@ -80,7 +83,10 @@
 			self::BINARY		=> 'BINARY',
 			
 			self::IP			=> 'IP',
-			self::IP_RANGE		=> 'IP_RANGE'
+			self::IP_RANGE		=> 'IP_RANGE',
+			
+			self::POINT         => 'POINT',
+			self::POLYGON       => 'POLYGON'
 		);
 		
 		/**

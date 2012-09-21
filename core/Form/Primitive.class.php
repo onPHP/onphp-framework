@@ -365,10 +365,26 @@
 		
 		/**
 		 * @return PrimitiveIpRange
-		 */
+		**/
 		public static function ipRange($name)
 		{
 			return new PrimitiveIpRange($name);
+		}
+		
+		/**
+		 * @return PrimitivePoint
+		**/
+		public static function point($name)
+		{
+			return new PrimitivePoint($name);
+		}		
+		
+		/**
+		 * @return PrimitivePolygon
+		**/
+		public static function polygon($name)
+		{
+			return new PrimitivePolygon($name);
 		}
 
 		/**
