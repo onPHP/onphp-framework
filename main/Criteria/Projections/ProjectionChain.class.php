@@ -39,6 +39,11 @@
 		{
 			return $this->list;
 		}
+
+		public function dropChain()
+		{
+			$this->list = array();
+		}
 		
 		/**
 		 * @return JoinCapableQuery

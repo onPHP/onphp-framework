@@ -510,7 +510,6 @@
 				}
 				catch(Exception $e) {
 					// pass, saving
-					//Logger::me()->error($e);
 					throw $e;
 				}
 			}

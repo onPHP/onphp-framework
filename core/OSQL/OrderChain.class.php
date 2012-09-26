@@ -59,6 +59,11 @@
 		{
 			return $this->chain;
 		}
+
+		public function dropChain()
+		{
+			$this->chain = array();
+		}
 		
 		public function getCount()
 		{
