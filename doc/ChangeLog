@@ -1,3 +1,9 @@
+2012-09-26	Alexey S. Denisov
+
+	* core/Form/Form.class.php:
+		added to Form methods markMissing, markWrong, markCustom
+		optional argument "label" to set it without calling special method add*Label
+
 2012-09-19	Evgeny V. Kokovikhin
 
 	* main/Monitoring/PinbedMemcached.class.php: cosmetics
