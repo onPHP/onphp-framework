@@ -35,34 +35,34 @@
 
 		// Обработчик логики джойна
 		public static $prepareJoinLogic = null;
-		
+
 		public function __construct()
 		{
 			$this->joiner = new Joiner();
 			$this->order = new OrderChain();
 		}
-		
+
 		public function __clone()
 		{
 			$this->joiner = clone $this->joiner;
 			$this->order = clone $this->order;
 		}
-		
+
 		public function hasAliasInside($alias)
 		{
 			return isset($this->aliases[$alias]);
 		}
-		
+
 		public function getAlias()
 		{
 			return $this->name;
 		}
-		
+
 		public function getName()
 		{
 			return $this->name;
 		}
-		
+
 		/**
 		 * @return SelectQuery
 		**/
@@ -70,10 +70,10 @@
 		{
 			$this->name = $name;
 			$this->aliases[$name] = true;
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return SelectQuery
 		**/
@@ -82,12 +82,12 @@
 			$this->distinct = true;
 			return $this;
 		}
-		
+
 		public function isDistinct()
 		{
 			return $this->distinct;
 		}
-		
+
 		/**
 		 * @return SelectQuery
 		**/
@@ -96,12 +96,12 @@
 			$this->distinct = false;
 			return $this;
 		}
-		
+
 		public function hasJoinedTable($table)
 		{
 			return $this->joiner->hasJoinedTable($table);
 		}
-		
+
 		/**
 		 * @return SelectQuery
 		**/
@@ -109,10 +109,10 @@
 		{
 			$this->joiner->join(new SQLJoin($table, $logic, $alias));
 			$this->aliases[$alias] = true;
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return SelectQuery
 		**/
@@ -123,7 +123,7 @@
 				is_callable(self::$prepareJoinLogic)
 			) {
 				try {
-					$logic = call_user_func_array( self::$prepareJoinLogic, array($logic) );
+					$logic = call_user_func_array( self::$prepareJoinLogic, array($logic, $this) );
 				}
 				catch(Exception $e) {
 					// pass, saving

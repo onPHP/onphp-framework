@@ -113,8 +113,8 @@ class PrimitiveReCaptcha extends BasePrimitive {
 
 	 * @return string - The HTML to be embedded in the user's form.
 	 */
-	public static function getHtmlCode ($pubkey, $error = null, $use_ssl = false) {
-		if ($pubkey == null || $pubkey == '') {
+	public static function getHtmlCode ($pubKey, $lang = null, $error = null, $use_ssl = false) {
+		if ($pubKey == null || $pubKey == '') {
 			die ("To use reCAPTCHA you must get an API key from <a href='https://www.google.com/recaptcha/admin/create'>https://www.google.com/recaptcha/admin/create</a>");
 		}
 
@@ -124,11 +124,17 @@ class PrimitiveReCaptcha extends BasePrimitive {
 			$server = self::RECAPTCHA_API_SERVER;
 		}
 
-		$errorpart = "";
-		if ($error) {
-		   $errorpart = "&amp;error=" . $error;
+		$langPart = "";
+		if ($lang) {
+			$langPart = "&amp;hl=" . $lang;
 		}
-		return '<script type="text/javascript" src="'. $server . '/challenge?k=' . $pubkey . $errorpart . '"></script>';
+
+		$errorPart = "";
+		if ($error) {
+			$errorPart = "&amp;error=" . $error;
+		}
+
+		return '<script type="text/javascript" src="'. $server . '/challenge?k=' . $pubKey . $langPart . $errorPart . '"></script>';
 	}
 
 	/**
