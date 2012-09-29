@@ -15,13 +15,15 @@
 	 * @ingroup DB
 	 * @ingroup Module
 	**/
-	abstract class /* ANSI's */ Dialect
-		extends Singleton
-		implements Instantiatable
-	{
+	abstract class /* ANSI's */ Dialect {
 		const LITERAL_NULL = 'NULL';
 		const LITERAL_TRUE = 'TRUE';
 		const LITERAL_FALSE = 'FALSE';
+		
+		/**
+		 * @var DB
+		 */
+		protected $db = null;
 		
 		abstract public function preAutoincrement(DBColumn $column);
 		abstract public function postAutoincrement(DBColumn $column);
@@ -30,18 +32,23 @@
 		abstract public function hasMultipleTruncate();
 		abstract public function hasReturning();
 		
-		/**
-			must be implemented too:
-			
-			public static function quoteValue($value);
-		**/
+		abstract public function quoteValue($value);
 		
-		public static function quoteField($field)
+		/**
+		 * @deprecated remove after onPHP 1.2+
+		 * @return LiteDialect
+		**/
+		public static function me()
 		{
-			return self::quoteTable($field);
+			throw new UnimplementedFeatureException('Deprecated: dialects not extends Singleton now');
 		}
 		
-		public static function quoteTable($table)
+		public function quoteField($field)
+		{
+			return $this->quoteTable($field);
+		}
+		
+		public function quoteTable($table)
 		{
 			return '"'.$table.'"';
 		}
@@ -65,6 +72,16 @@
 				$cascade
 					? ' CASCADE'
 					: ' RESTRICT';
+		}
+		
+		/**
+		 * @param DB $db
+		 * @return Dialect
+		 */
+		public function setDB(DB $db)
+		{
+			$this->db = $db;
+			return $this;
 		}
 		
 		public function quoteBinary($data)
@@ -158,6 +175,17 @@
 		public function quoteIpInRange($range, $ip)
 		{
 			throw new UnimplementedFeatureException();
+		}
+		
+		protected function getLink()
+		{
+			if (!$this->db)
+				throw new WrongStateException('Expected setted db');
+			if (!$this->db->isConnected()) {
+				$this->db->connect();
+			}
+			
+			return $this->db->getLink();
 		}
 	}
 ?>

@@ -1,10 +1,10 @@
 <?php
 	
-	final class OsqlSelectTest extends TestCase
+	final class OsqlSelectTest extends TestCaseDB
 	{
 		public function testSelectGet()
 		{
-			$dialect = PostgresDialect::me();
+			$dialect = $this->getDbByType('PgSQL')->getDialect();
 			
 			$query = OSQL::select()->
 				from('test_table')->
@@ -46,7 +46,7 @@
 		
 		public function testSelectSubqueryGet()
 		{
-			$dialect = PostgresDialect::me();
+			$dialect = $this->getDbByType('PgSQL')->getDialect();
 			
 			$query = OSQL::select()->
 				from('test_table')->
@@ -69,7 +69,7 @@
 
 		public function testSelectJoin()
 		{
-			$dialect = PostgresDialect::me();
+			$dialect = $this->getDbByType('PgSQL')->getDialect();
 
 			$joinTypeList = array(
 				'JOIN ' => 'join',

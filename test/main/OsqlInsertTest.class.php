@@ -1,10 +1,10 @@
 <?php
 	
-	final class OsqlInsertTest extends TestCase
+	final class OsqlInsertTest extends TestCaseDB
 	{
 		public function testInsertFromSelect()
 		{
-			$dialect = PostgresDialect::me();
+			$dialect = $this->getDbByType('PgSQL')->getDialect();
 			
 			$select = OSQL::select()->
 				from('test_table2')->

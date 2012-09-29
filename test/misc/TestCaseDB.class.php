@@ -22,5 +22,18 @@
 		protected function getDBCreator() {
 			return $this->dBCreator;
 		}
+		
+		/**
+		 * @param type $type
+		 * @return DB
+		 */
+		protected function getDbByType($type) {
+			foreach (DBTestPool::me()->getPool() as $db) {
+				if (get_class($db) == $type)
+					return $db;
+			}
+			
+			$this->fail('couldn\'t get db type "'.$type.'"');
+		}
 	}
 ?>

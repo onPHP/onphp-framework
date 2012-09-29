@@ -1,6 +1,4 @@
 <?php
-	/* $Id$ */
-	
 	final class CriteriaTest extends TestCase
 	{
 		public function testClassProjection()
@@ -242,8 +240,8 @@
 				);
 			
 			$this->assertEquals(
-				$criteria->toDialectString(PostgresDialect::me()),
-				'SELECT count(DISTINCT substring("custom_table"."name" from \'M....w\' for \'#\')) AS "my_alias" FROM "custom_table"'
+				$criteria->toDialectString(ImaginaryDialect::me()),
+				'SELECT count(DISTINCT substring(custom_table.name from M....w for #)) AS my_alias FROM custom_table'
 			);
 		}
 		

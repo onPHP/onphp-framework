@@ -1,12 +1,12 @@
 <?php
 	
-	final class OsqlDeleteTest extends TestCase
+	final class OsqlDeleteTest extends TestCaseDB
 	{
 		public function testQuery()
 		{
 			$query = OSQL::delete()->from('pity_table');
 			
-			$dialect = PostgresDialect::me();
+			$dialect = $this->getDbByType('PgSQL')->getDialect();
 			
 			try {
 				$query->toDialectString($dialect);

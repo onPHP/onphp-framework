@@ -1,10 +1,10 @@
 <?php
 	
-	final class OsqlReturningTest extends TestCase
+	final class OsqlReturningTest extends TestCaseDB
 	{
 		public function testUpdate()
 		{
-			$dialect = PostgresDialect::me();
+			$dialect = $this->getDbByType('PgSQL')->getDialect();
 			
 			$query = OSQL::update('test_table')->
 				set('field1', 1)->
@@ -27,7 +27,7 @@
 		
 		public function testInsert()
 		{
-			$dialect = PostgresDialect::me();
+			$dialect = $this->getDbByType('PgSQL')->getDialect();
 			
 			$query = OSQL::insert()->
 				into('test_table')->
@@ -52,7 +52,7 @@
 		{
 			$query = OSQL::delete()->from('pity_table');
 			
-			$dialect = PostgresDialect::me();
+			$dialect = $this->getDbByType('PgSQL')->getDialect();
 			
 			try {
 				$query->toDialectString($dialect);
