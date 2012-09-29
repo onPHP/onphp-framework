@@ -1,3 +1,20 @@
+2012-09-29	Alexey S. Denisov
+
+	* core/DB/DB.class.php
+		core/DB/Dialect.class.php
+		core/DB/ImaginaryDialect.class.php
+		core/DB/LiteDialect.class.php
+		core/DB/LitePDODialect.class.php
+		core/DB/MyDialect.class.php
+		core/DB/MyImprovedDialect.class.php
+		core/DB/MySQL.class.php
+		core/DB/MySQLim.class.php
+		core/DB/PgSQL.class.php
+		core/DB/PostgresDialect.class.php
+		core/DB/SQLite.class.php
+		core/DB/SQLitePDO.class.php:
+			Dialects not Singletons now. Some methods now unstatic and they use DB for correct quoting
+
 2012-09-26	Alexey S. Denisov
 
 	* core/Form/Form.class.php:
@@ -10,21 +27,21 @@
 
 2012-09-18      Evgeniy Tekalin
 
-        * main/Utils/AMQP/AMQP.class.php,
-        main/Utils/AMQP/AMQPBaseChannel.class.php,
-        main/Utils/AMQP/AMQPBaseMessage.class.php,
-        main/Utils/AMQP/AMQPChannelInterface.class.php,
-        main/Utils/AMQP/AMQPPool.class.php,
-        main/Utils/AMQP/Pecl/AMQPPecl.class.php,
-        main/Utils/AMQP/Pecl/AMQPPeclBaseBitmask.class.php,
-        main/Utils/AMQP/Pecl/AMQPPeclChannel.class.php,
-        main/Utils/AMQP/AMQPInterface.class.php,
-        main/Utils/AMQP/Pecl/AMQPPeclIncomingMessageAdapter.class.php,
-        main/Utils/AMQP/Pecl/AMQPPeclQueueConsumer.class.php,
-        main/Utils/AMQP/AMQPProxyChannel.class.php,
-        main/Utils/AMQP/AMQPSelective.class.php,
-        test/main/Utils/AMQP/AMQPPeclTest.class.php:
-                added support for pecl amqp 1.0.4
+	* main/Utils/AMQP/AMQP.class.php,
+		main/Utils/AMQP/AMQPBaseChannel.class.php,
+		main/Utils/AMQP/AMQPBaseMessage.class.php,
+		main/Utils/AMQP/AMQPChannelInterface.class.php,
+		main/Utils/AMQP/AMQPPool.class.php,
+		main/Utils/AMQP/Pecl/AMQPPecl.class.php,
+		main/Utils/AMQP/Pecl/AMQPPeclBaseBitmask.class.php,
+		main/Utils/AMQP/Pecl/AMQPPeclChannel.class.php,
+		main/Utils/AMQP/AMQPInterface.class.php,
+		main/Utils/AMQP/Pecl/AMQPPeclIncomingMessageAdapter.class.php,
+		main/Utils/AMQP/Pecl/AMQPPeclQueueConsumer.class.php,
+		main/Utils/AMQP/AMQPProxyChannel.class.php,
+		main/Utils/AMQP/AMQPSelective.class.php,
+		test/main/Utils/AMQP/AMQPPeclTest.class.php:
+				added support for pecl amqp 1.0.4
 
 2012-09-16	Alexey S. Denisov
 	* DAOTest splitted to more Test classes in new db directory
