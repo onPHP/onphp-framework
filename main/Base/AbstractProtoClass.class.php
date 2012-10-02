@@ -416,10 +416,11 @@
 			}
 
 			} catch( Exception $e ) {
-				echo '<pre>';
-				echo $e->getTraceAsString();
-				echo '</pre>';
-				die('error');
+//				echo '<pre>';
+//				echo $e->getTraceAsString();
+//				echo '</pre>';
+//				die('error');
+				throw $e;
 			}
 
 			return $object;
