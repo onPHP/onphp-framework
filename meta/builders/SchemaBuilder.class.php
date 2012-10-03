@@ -65,7 +65,7 @@ EOT;
 						// or table does not exist at all
 						|| !$foreignClass->getPattern()->tableExists()
 						// no need to process them
-						|| $class->getParent()
+						|| !$class->getPattern()->tableExists()
 					) {
 						continue;
 					} elseif (
