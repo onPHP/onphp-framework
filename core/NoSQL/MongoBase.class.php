@@ -234,7 +234,7 @@ class MongoBase extends NoSQL {
 			$this
 				->db
 					->selectCollection($table)
-						->remove( array('$or' => $this->makeIdList($keys)) );
+						->remove( array('_id' => array('$in' => $this->makeIdList($keys))) );
 	}
 
 	public function getPlainList($table) {
