@@ -339,21 +339,24 @@
 		
 		private function argumentsToString($array)
 		{
-			Assert::isArray($array);
-			$result = array();
-			
-			foreach ($array as $key => $value) {
-				if (is_array($value)) {
-					foreach ($value as $valueKey => $simpleValue) {
-						$result[] =
-							$key.'['.$valueKey.']='.urlencode($simpleValue);
+			if( is_array($array) ) {
+				$result = array();
+
+				foreach ($array as $key => $value) {
+					if (is_array($value)) {
+						foreach ($value as $valueKey => $simpleValue) {
+							$result[] =
+								$key.'['.$valueKey.']='.urlencode($simpleValue);
+						}
+					} else {
+						$result[] = $key.'='.urlencode($value);
 					}
-				} else {
-					$result[] = $key.'='.urlencode($value);
 				}
+
+				return implode('&', $result);
+			} else {
+				return $array;
 			}
-			
-			return implode('&', $result);
 		}
 	}
 ?>

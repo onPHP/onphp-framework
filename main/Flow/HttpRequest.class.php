@@ -82,7 +82,17 @@
 			$this->get[$name] = $value;
 			return $this;
 		}
-		
+
+		/**
+		 * @return HttpRequest
+		 **/
+		public function setGetString($get)
+		{
+			$this->get = $get;
+
+			return $this;
+		}
+
 		public function &getPost()
 		{
 			return $this->post;
@@ -116,7 +126,17 @@
 			$this->post[$name] = $value;
 			return $this;
 		}
-		
+
+		/**
+		 * @return HttpRequest
+		 **/
+		public function setPostString($post)
+		{
+			$this->post = $post;
+
+			return $this;
+		}
+
 		public function &getServer()
 		{
 			return $this->server;
