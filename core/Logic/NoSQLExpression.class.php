@@ -215,9 +215,17 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 		return $this->fields;
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getConditions() {
+		return $this->conditions;
+	}
+
 	public function toMongoQuery() {
 		if( empty($this->conditions) ) {
-			throw new WrongStateException('Sorry, query conditions are empty!');
+			//throw new WrongStateException('Sorry, query conditions are empty!');
+			return array();
 		}
 		// make query
 		$query = array();
