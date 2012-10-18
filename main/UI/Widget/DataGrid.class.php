@@ -367,7 +367,9 @@ class DataGrid extends BaseWidget
 					return get_class($value) . ' ID:' . $value->getId();
 				} else {
 					try {
-						return DataGrid::details()->setParent($self)->addRow($value)->ToString();
+						return
+							'<b>' . get_class($value) . '</b><br>' .
+							DataGrid::details()->setParent($self)->addRow($value)->ToString();
 					} catch (Exception $e) {
 						return $e->getMessage();
 					}
