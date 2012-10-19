@@ -9,6 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 
+	define('PORT_MIRRORED', 5673);
+	
+	AMQPPool::me()->
+		setDefault(
+			new AMQPPecl(
+				AMQPCredentials::createDefault()->
+				setPort(PORT_MIRRORED)
+			)
+		)->
+		addLink(
+			'master',
+			new AMQPPecl(
+				AMQPCredentials::createDefault()
+			)
+		);
+
+
 	class AMQPTestCaseNoAckQueueConsumer extends AMQPPeclQueueConsumer
 	{
 		protected $checkString = '';
@@ -83,6 +100,7 @@
 		}
 	}
 
+
 	class AMQPPeclTest extends TestCase
 	{
 		const COUNT_OF_PUBLISH = 5;
@@ -91,7 +109,7 @@
 		/**
 		 * cluster master-slave of 2 nodes on single machine
 		 */
-		const PORT_MIRRORED = 5673; // port of slave node
+		const PORT_MIRRORED = PORT_MIRRORED; // port of slave node
 		
 		protected static $queueList = array(
 			// basic queue
@@ -127,6 +145,7 @@
 					'The amqp extension is not available.'
 				);
 			}
+
 		}
 
 		public static function messageTest(AMQPIncomingMessage $mess, $i)
@@ -334,23 +353,9 @@
 		 */
 		public function testDeclareQueueCluster()
 		{
-			$c = AMQPSelective::me()->
-				addLink(
-					'slave',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()->
-						setPort(self::PORT_MIRRORED)
-					)
-				)->
-				addLink(
-					'master',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()
-					)
-				)->
-				setCurrent('slave');
+			$c = AMQPSelective::me()->addPool(AMQPPool::me());
 
-			$c->dropLink('slave');
+			$c->dropLink('default');
 
 			$channel = $c->createChannel(1);
 
@@ -369,42 +374,24 @@
 
 		public function testProducerLogicMirrored()
 		{
-			$c = AMQPSelective::me()->
-				addLink(
-					'slave',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()->
-						setPort(self::PORT_MIRRORED)
-					)
-				)->
-				addLink(
-					'master',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()
-					)
-				)->
-				setCurrent('slave');
+			$c = AMQPSelective::me()->addPool(AMQPPool::me());
 
-			$channel = $c->createChannel(1);
+			$c->dropLink('default');
 			
+			$channel = $c->createChannel(1);
+
 			$this->exchangeDeclare($channel, 'mirrored');
 			$this->queueDeclare($channel, 'mirrored');
 			$this->queueBind($channel, 'mirrored');
 			$this->queuePurge($channel, 'mirrored');
 
 			AMQPPeclTest::assertEquals(
-				self::PORT_MIRRORED,
-				$c->getCredentials()->getPort()
-			);
-
-			$c->dropLink('slave');
-
-			$this->publishMessages($channel, false, 'mirrored');
-
-			AMQPPeclTest::assertEquals(
 				AMQPCredentials::DEFAULT_PORT,
 				$c->getCredentials()->getPort()
 			);
+
+
+			$this->publishMessages($channel, false, 'mirrored');
 
 			$this->checkMessageCount($channel, 'mirrored');
 
@@ -415,24 +402,9 @@
 		**/
 		public function testConsumerLogicMirrored()
 		{
-			$c = AMQPSelective::me()->
-				addLink(
-					'slave',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()->
-						setPort(self::PORT_MIRRORED)
-					)
-				)->
-				addLink(
-					'master',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()
-					)
-				)->
-				setCurrent('slave');
+			$c = AMQPSelective::me()->addPool(AMQPPool::me());
+			$c->dropLink('default');
 
-			$c->dropLink('slave');
-			
 			$channel = $c->createChannel(1);
 			
 			$this->checkMessageCount($channel, 'mirrored');
@@ -908,4 +880,7 @@
 		}
 
 	}
+
+
+
 ?>
