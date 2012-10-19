@@ -131,7 +131,16 @@
 			} else
 				return null;
 		}
-		
+
+		public function queryNumRows(Query $query) {
+			$res = $this->query($query);
+
+			if ($res) {
+				return mysqli_num_rows($res);
+			} else
+				return null;
+		}
+
 		public function queryRaw($queryString)
 		{
 			if (!$result = mysqli_query($this->link, $queryString)) {

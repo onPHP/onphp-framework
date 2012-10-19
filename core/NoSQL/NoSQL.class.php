@@ -68,6 +68,10 @@ abstract class NoSQL extends DB {
 		throw new UnsupportedMethodException('Can not execute querySet in NoSQL');
 	}
 
+	public function queryNumRows(Query $query) {
+		throw new UnsupportedMethodException('Can not execute queryNumRows in NoSQL');
+	}
+
 	public function queryColumn(Query $query) {
 		throw new UnsupportedMethodException('Can not execute queryColumn in NoSQL');
 	}

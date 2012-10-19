@@ -187,6 +187,15 @@
 				return null;
 		}
 
+		public function queryNumRows(Query $query) {
+			$res = $this->query($query);
+
+			if ($res) {
+				return pg_num_rows($res);
+			} else
+				return null;
+		}
+
 		public function hasSequences()
 		{
 			return true;

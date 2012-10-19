@@ -48,6 +48,7 @@
 
 		abstract public function queryRow(Query $query);
 		abstract public function querySet(Query $query);
+		abstract public function queryNumRows(Query $query);
 		abstract public function queryColumn(Query $query);
 		abstract public function queryCount(Query $query);
 		
