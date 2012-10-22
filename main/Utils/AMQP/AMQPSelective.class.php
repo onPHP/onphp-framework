@@ -110,7 +110,9 @@
 					"AMQP channel with id '{$id}' already registered"
 				);
 
-			if (!$this->current)
+			if (!$this->current 
+				|| !$this->pool[$this->current]->isAlive()
+			)
 				$this->setCurrent($this->getAlive());
 			
 			if (!$this->isConnected())

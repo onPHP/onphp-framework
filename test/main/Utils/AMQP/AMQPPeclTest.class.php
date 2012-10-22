@@ -83,6 +83,7 @@
 		}
 	}
 
+
 	class AMQPPeclTest extends TestCase
 	{
 		const COUNT_OF_PUBLISH = 5;
@@ -119,6 +120,28 @@
 				'args' => array('x-ha-policy' => 'all')
 			)
 		);
+
+		public function __construct()
+		{
+			parent::__construct();
+
+			if (!AMQPPool::me()->getList()) {
+				AMQPPool::me()->
+					setDefault(
+						new AMQPPecl(
+							AMQPCredentials::createDefault()->
+							setPort(self::PORT_MIRRORED)
+						)
+					)->
+					addLink(
+						'master',
+						new AMQPPecl(
+							AMQPCredentials::createDefault()
+						)
+					);
+			}
+
+		}
 
 		protected function setUp()
 		{
@@ -334,23 +357,9 @@
 		 */
 		public function testDeclareQueueCluster()
 		{
-			$c = AMQPSelective::me()->
-				addLink(
-					'slave',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()->
-						setPort(self::PORT_MIRRORED)
-					)
-				)->
-				addLink(
-					'master',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()
-					)
-				)->
-				setCurrent('slave');
+			$c = AMQPSelective::me()->addPool(AMQPPool::me());
 
-			$c->dropLink('slave');
+			$c->dropLink('default');
 
 			$channel = $c->createChannel(1);
 
@@ -369,42 +378,24 @@
 
 		public function testProducerLogicMirrored()
 		{
-			$c = AMQPSelective::me()->
-				addLink(
-					'slave',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()->
-						setPort(self::PORT_MIRRORED)
-					)
-				)->
-				addLink(
-					'master',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()
-					)
-				)->
-				setCurrent('slave');
+			$c = AMQPSelective::me()->addPool(AMQPPool::me());
 
-			$channel = $c->createChannel(1);
+			$c->dropLink('default');
 			
+			$channel = $c->createChannel(1);
+
 			$this->exchangeDeclare($channel, 'mirrored');
 			$this->queueDeclare($channel, 'mirrored');
 			$this->queueBind($channel, 'mirrored');
 			$this->queuePurge($channel, 'mirrored');
 
 			AMQPPeclTest::assertEquals(
-				self::PORT_MIRRORED,
-				$c->getCredentials()->getPort()
-			);
-
-			$c->dropLink('slave');
-
-			$this->publishMessages($channel, false, 'mirrored');
-
-			AMQPPeclTest::assertEquals(
 				AMQPCredentials::DEFAULT_PORT,
 				$c->getCredentials()->getPort()
 			);
+
+
+			$this->publishMessages($channel, false, 'mirrored');
 
 			$this->checkMessageCount($channel, 'mirrored');
 
@@ -415,24 +406,9 @@
 		**/
 		public function testConsumerLogicMirrored()
 		{
-			$c = AMQPSelective::me()->
-				addLink(
-					'slave',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()->
-						setPort(self::PORT_MIRRORED)
-					)
-				)->
-				addLink(
-					'master',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()
-					)
-				)->
-				setCurrent('slave');
+			$c = AMQPSelective::me()->addPool(AMQPPool::me());
+			$c->dropLink('default');
 
-			$c->dropLink('slave');
-			
 			$channel = $c->createChannel(1);
 			
 			$this->checkMessageCount($channel, 'mirrored');
@@ -908,4 +884,7 @@
 		}
 
 	}
+
+
+
 ?>
