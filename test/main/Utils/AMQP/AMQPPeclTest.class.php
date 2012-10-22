@@ -9,23 +9,6 @@
  *                                                                         *
  ***************************************************************************/
 
-	define('PORT_MIRRORED', 5673);
-	
-	AMQPPool::me()->
-		setDefault(
-			new AMQPPecl(
-				AMQPCredentials::createDefault()->
-				setPort(PORT_MIRRORED)
-			)
-		)->
-		addLink(
-			'master',
-			new AMQPPecl(
-				AMQPCredentials::createDefault()
-			)
-		);
-
-
 	class AMQPTestCaseNoAckQueueConsumer extends AMQPPeclQueueConsumer
 	{
 		protected $checkString = '';
@@ -109,7 +92,7 @@
 		/**
 		 * cluster master-slave of 2 nodes on single machine
 		 */
-		const PORT_MIRRORED = PORT_MIRRORED; // port of slave node
+		const PORT_MIRRORED = 5673; // port of slave node
 		
 		protected static $queueList = array(
 			// basic queue
@@ -138,6 +121,28 @@
 			)
 		);
 
+		public function __construct()
+		{
+			parent::__construct();
+
+			if (!AMQPPool::me()->getList()) {
+				AMQPPool::me()->
+					setDefault(
+						new AMQPPecl(
+							AMQPCredentials::createDefault()->
+							setPort(self::PORT_MIRRORED)
+						)
+					)->
+					addLink(
+						'master',
+						new AMQPPecl(
+							AMQPCredentials::createDefault()
+						)
+					);
+			}
+
+		}
+
 		protected function setUp()
 		{
 			if (!extension_loaded('amqp')) {
@@ -145,7 +150,6 @@
 					'The amqp extension is not available.'
 				);
 			}
-
 		}
 
 		public static function messageTest(AMQPIncomingMessage $mess, $i)

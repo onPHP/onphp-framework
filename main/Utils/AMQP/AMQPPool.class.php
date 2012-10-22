@@ -144,7 +144,8 @@
 			$list = $this->pool;
 
 			try {
-				$list['default'] = $this->default;
+				if ($this->default)
+					$list['default'] = $this->default;
 			} catch (MissingElementException $e) {/**/}
 
 			return $list;
