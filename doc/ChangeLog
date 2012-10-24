@@ -1,3 +1,25 @@
+2012-24-10  Alexey S. Denisov
+	* global.inc.php.tpl
+		main/Autoloader/Autoloader.class.php
+		main/Autoloader/AutoloaderClassNotFound.class.php
+		main/Autoloader/AutoloaderClassPathCache.class.php
+		main/Autoloader/AutoloaderNoCache.class.php
+		main/Autoloader/AutoloaderPool.class.php
+		main/Autoloader/AutoloaderRecachable.class.php
+		main/Autoloader/AutoloaderWithNamespace.class.php
+		main/Autoloader/NamespaceDirScaner.class.php
+		main/Autoloader/NamespaceDirScanerOnPHP.class.php
+		main/Autoloader/NamespaceDirScanerPSR0.class.php
+		main/Autoloader/NamespaceResolver.class.php
+		main/Autoloader/NamespaceResolverOnPHP.class.php
+		main/Autoloader/NamespaceResolverPSR0.class.php
+		main/Autoloader/require.inc.php
+		meta/bin/build.php
+		meta/classes/MetaConfiguration.class.php
+		misc/Autoloader.inc.php
+		misc/BaseException.inc.php:
+			New Autoloader which work without include_paths and use optional namespaces
+
 2012-09-29	Alexey S. Denisov
 
 	* core/DB/DB.class.php
