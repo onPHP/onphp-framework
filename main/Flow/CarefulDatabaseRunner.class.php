@@ -14,8 +14,11 @@
 	**/
 	final class CarefulDatabaseRunner implements CarefulCommand
 	{
-		private $command	= null;
-		private $db			= null;
+		private $command		= null;
+		/**
+		 * @var InnerTransaction
+		 */
+		private $transaction	= null;
 		
 		private $running = false;
 		
@@ -33,9 +36,7 @@
 			Assert::isFalse($this->running, 'command already running');
 			Assert::isTrue($subject instanceof DAOConnected);
 			
-			$this->db = DBPool::getByDao($subject->dao());
-			
-			$this->db->begin();
+			$this->transaction = InnerTransaction::begin($subject->dao());
 			
 			try {
 				$mav = $this->command->run($subject, $form, $request);
@@ -44,7 +45,7 @@
 				
 				return $mav;
 			} catch (BaseException $e) {
-				$this->db->rollback();
+				$this->transaction->rollback();
 				
 				throw $e;
 			}
@@ -58,7 +59,7 @@
 		public function commit()
 		{
 			if ($this->running) {
-				$this->db->commit();
+				$this->transaction->commit();
 				$this->running = false;
 			}
 			
@@ -72,7 +73,7 @@
 		{
 			if ($this->running) {
 				try {
-					$this->db->rollback();
+					$this->transaction->rollback();
 				} catch (DatabaseException $e) {
 					// keep silence
 				}
@@ -86,11 +87,7 @@
 		public function __destruct()
 		{
 			if ($this->running) {
-				try {
-					$this->db->rollback();
-				} catch (BaseException $e) {
-					// fear of fatal error's
-				}
+				$this->rollback();
 			}
 		}
 	}
