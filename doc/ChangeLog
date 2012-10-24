@@ -1,4 +1,9 @@
 2012-24-10  Alexey S. Denisov
+	* main/Flow/CarefulDatabaseRunner.class.php
+		main/UnifiedContainer/UnifiedContainer.class.php:
+			CarefulDatabaseRunner and UnifiedContainer will use InnerTransaction
+
+2012-24-10  Alexey S. Denisov
 	* global.inc.php.tpl
 		main/Autoloader/Autoloader.class.php
 		main/Autoloader/AutoloaderClassNotFound.class.php
