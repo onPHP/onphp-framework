@@ -36,6 +36,9 @@
 		// Обработчик критерии перед вызовом
 		public static $prepareCriteriaCallBack = null;
 
+		// Кастомный запрос
+		private $selectQuery = null;
+
 		/**
 		 * @return Criteria
 		**/
@@ -519,6 +522,10 @@
 		**/
 		public function toSelectQuery()
 		{
+			if( !is_null($this->selectQuery) ) {
+				return $this->selectQuery;
+			}
+
 			$this->prepareCriteria(false);
 
 			if (!$this->projection->isEmpty()) {
@@ -589,6 +596,15 @@
 
 			$this->projection->dropByType($dropTypes);
 
+			return $this;
+		}
+
+		/**
+		 * @param SelectQuery $query
+		 * @return Criteria
+		**/
+		public function setSelectQuery(SelectQuery $query) {
+			$this->selectQuery = $query;
 			return $this;
 		}
 
