@@ -25,7 +25,7 @@
 		{
 			$out = self::getHead();
 
-			if ($namespace = rtrim($class->getNamespace(), '\\'))
+			if ($namespace = trim($class->getNamespace(), '\\'))
 				$out .= "namespace {$namespace};\n\n";
 			
 			$containerName = $class->getName(ucfirst($holder->getName()).'DAO');

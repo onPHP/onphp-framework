@@ -18,7 +18,7 @@
 		{
 			$out = self::getHead();
 
-			if ($namespace = rtrim($class->getNamespace(), '\\'))
+			if ($namespace = trim($class->getNamespace(), '\\'))
 				$out .= "namespace {$namespace};\n\n";
 			
 			if ($type = $class->getType())
@@ -129,7 +129,7 @@ EOT;
 	**/
 	public static function proto()
 	{
-		return Singleton::getInstance('{$protoName}');
+		return \Singleton::getInstance('{$protoName}');
 	}
 
 EOT;

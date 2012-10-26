@@ -420,7 +420,7 @@
 		/* void */ protected function checkObjectType(Identifiable $object)
 		{
 			Assert::isSame(
-				get_class($object),
+				'\\'.ltrim(get_class($object), '\\'),
 				$this->getObjectName(),
 				'strange object given, i can not inject it'
 			);

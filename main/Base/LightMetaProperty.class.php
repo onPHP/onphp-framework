@@ -474,9 +474,11 @@
 		
 		final public function toString()
 		{
+			$class = '\\'.ltrim(get_class($this));
+			
 			return
-				get_class($this).'::fill('
-				.'new '.get_class($this).'(), '
+				$class.'::fill('
+				.'new '.$class.'(), '
 				."'{$this->name}', "
 				.(
 					($this->columnName <> $this->name)

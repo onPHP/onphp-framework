@@ -327,10 +327,10 @@
 			} elseif ($this->isIdentifier()) {
 				if ($this->getType() instanceof IntegerType) {
 					$primitiveName = 'integerIdentifier';
-					$className = $holder->getName();
+					$className = $holder->getFullClassName();
 				} elseif ($this->getType() instanceof StringType) {
 					$primitiveName = 'scalarIdentifier';
-					$className = $holder->getName();
+					$className = $holder->getFullClassName();
 				} else
 					$primitiveName = $this->getType()->getPrimitiveName();
 			} elseif (

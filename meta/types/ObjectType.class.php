@@ -137,7 +137,7 @@ EOT;
 						$methodName = ucfirst($name);
 						$remoteName = ucfirst($property->getName());
 						
-						$containerName = $class->getFullClassName($remoteName.'DAO');
+						$containerName = $class->getFullClassName('',$remoteName.'DAO');
 						
 						$method = <<<EOT
 

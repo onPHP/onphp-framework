@@ -23,7 +23,7 @@
 			else
 				$type = null;
 			
-			if ($namespace = rtrim($class->getNamespace(), '\\'))
+			if ($namespace = trim($class->getNamespace(), '\\'))
 				$out .= "namespace {$namespace};\n\n";
 			
 			$out .= <<<EOT
