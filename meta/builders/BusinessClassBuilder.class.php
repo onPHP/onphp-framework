@@ -17,28 +17,31 @@
 		public static function build(MetaClass $class)
 		{
 			$out = self::getHead();
+
+			if ($namespace = rtrim($class->getNamespace(), '\\'))
+				$out .= "namespace {$namespace};\n\n";
 			
 			if ($type = $class->getType())
 				$typeName = $type->toString().' ';
 			else
 				$typeName = null;
 			
-			$interfaces = ' implements Prototyped';
+			$interfaces = ' implements \Prototyped';
 			
 			if (
 				$class->getPattern()->daoExists()
 				&& (!$class->getPattern() instanceof AbstractClassPattern)
 			) {
-				$interfaces .= ', DAOConnected';
+				$interfaces .= ', \DAOConnected';
 				
-				$daoName = $class->getName().'DAO';
+				$daoName = $class->getFullClassName('', 'DAO');
 				$dao = <<<EOT
 	/**
 	 * @return {$daoName}
 	**/
 	public static function dao()
 	{
-		return Singleton::getInstance('{$daoName}');
+		return \Singleton::getInstance('{$daoName}');
 	}
 
 EOT;
@@ -46,7 +49,7 @@ EOT;
 				$dao = null;
 			
 			$out .= <<<EOT
-{$typeName}class {$class->getName()} extends Auto{$class->getName()}{$interfaces}
+{$typeName}class {$class->getName()} extends {$class->getFullClassName('Auto')}{$interfaces}
 {
 EOT;
 
@@ -94,7 +97,7 @@ EOT;
 					$out .= <<<EOT
 
 	/**
-	 * @return {$class->getName()}
+	 * @return {$class->getFullClassName()}
 	**/
 	public static function create({$declaration})
 	{
@@ -106,7 +109,7 @@ EOT;
 					$out .= <<<EOT
 
 	/**
-	 * @return {$class->getName()}
+	 * @return {$class->getFullClassName()}
 	**/
 	public static function create()
 	{
@@ -116,7 +119,7 @@ EOT;
 EOT;
 				}
 				
-				$protoName = 'Proto'.$class->getName();
+				$protoName = $class->getFullClassName('Proto');
 			
 				$out .= <<<EOT
 

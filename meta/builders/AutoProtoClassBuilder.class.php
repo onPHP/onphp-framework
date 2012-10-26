@@ -21,12 +21,15 @@
 			$parent = $class->getParent();
 			
 			if ($class->hasBuildableParent())
-				$parentName = 'Proto'.$parent->getName();
+				$parentName = $parent->getFullClassName('Proto');
 			else
-				$parentName = 'AbstractProtoClass';
+				$parentName = '\AbstractProtoClass';
 			
+			if ($namespace = rtrim($class->getNamespace(), '\\'))
+				$out .= "namespace {$namespace};\n\n";
+				
 			$out .= <<<EOT
-abstract class AutoProto{$class->getName()} extends {$parentName}
+abstract class {$class->getName('AutoProto')} extends {$parentName}
 {
 EOT;
 			$classDump = self::dumpMetaClass($class);
@@ -73,6 +76,7 @@ EOT;
 			$list = array();
 			
 			foreach ($propertyList as $property) {
+				/* @var $property MetaClassProperty */
 				$list[] =
 					"'{$property->getName()}' => "
 					.$property->toLightProperty($class)->toString();

@@ -18,20 +18,23 @@
 		{
 			$out = self::getHead();
 			
-			$out .= "abstract class Auto{$class->getName()}";
+			if ($namespace = rtrim($class->getNamespace(), '\\'))
+				$out .= "namespace {$namespace};\n\n";
+				
+			$out .= "abstract class {$class->getName('Auto')}";
 			
 			$isNamed = false;
 			
 			if ($parent = $class->getParent())
-				$out .= " extends {$parent->getName()}";
+				$out .= " extends {$parent->getFullClassName()}";
 			elseif (
 				$class->getPattern() instanceof DictionaryClassPattern
 				&& $class->hasProperty('name')
 			) {
-				$out .= " extends NamedObject";
+				$out .= " extends \NamedObject";
 				$isNamed = true;
 			} elseif (!$class->getPattern() instanceof ValueObjectPattern)
-				$out .= " extends IdentifiableObject";
+				$out .= " extends \IdentifiableObject";
 			
 			if ($interfaces = $class->getInterfaces())
 				$out .= ' implements '.implode(', ', $interfaces);
@@ -39,6 +42,7 @@
 			$out .= "\n{\n";
 			
 			foreach ($class->getProperties() as $property) {
+				/* @var $property MetaClassProperty */
 				if (!self::doPropertyBuild($class, $property, $isNamed))
 					continue;
 				
@@ -55,6 +59,7 @@
 			$valueObjects = array();
 			
 			foreach ($class->getProperties() as $property) {
+				/* @var $property MetaClassProperty */
 				if (
 					$property->getType() instanceof ObjectType
 					&& !$property->getType()->isGeneric()
@@ -62,7 +67,7 @@
 						instanceof ValueObjectPattern
 				) {
 					$valueObjects[$property->getName()] =
-						$property->getType()->getClassName();
+						$property->getType()->getClass()->getFullClassName();
 				}
 			}
 			
@@ -81,6 +86,7 @@ EOT;
 			}
 			
 			foreach ($class->getProperties() as $property) {
+				/* @var $property MetaClassProperty */
 				if (!self::doPropertyBuild($class, $property, $isNamed))
 					continue;
 				

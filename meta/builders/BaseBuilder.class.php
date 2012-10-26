@@ -44,7 +44,7 @@ public function getTable()
 
 public function getObjectName()
 {
-	return '{$class->getName()}';
+	return '{$class->getFullClassName()}';
 }
 
 public function getSequence()
@@ -61,7 +61,10 @@ EOT;
 			if ($liaisons = $class->getReferencingClasses()) {
 				$uncachers = array();
 				foreach ($liaisons as $className) {
-					$uncachers[] = $className.'::dao()->uncacheLists();';
+					$fullClassName = MetaConfiguration::me()
+						->getClassByName($className)
+						->getFullClassName();
+					$uncachers[] = $fullClassName.'::dao()->uncacheLists();';
 				}
 				
 				$uncachers = implode("\n", $uncachers);

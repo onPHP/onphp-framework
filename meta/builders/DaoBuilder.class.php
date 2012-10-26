@@ -45,9 +45,12 @@
 				$abstract = null;
 				$notes = 'your brilliant stuff goes here';
 			}
+
+			if ($namespace = rtrim($class->getNamespace(), '\\'))
+				$out .= "namespace {$namespace};\n\n";
 			
 			$out .= <<<EOT
-{$abstract}class {$class->getName()}DAO extends Auto{$class->getName()}DAO
+{$abstract}class {$class->getName('', 'DAO')} extends {$class->getFullClassName('Auto', 'DAO')}
 {
 	// {$notes}
 }

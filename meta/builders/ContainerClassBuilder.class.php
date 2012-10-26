@@ -24,14 +24,18 @@
 		)
 		{
 			$out = self::getHead();
+
+			if ($namespace = rtrim($class->getNamespace(), '\\'))
+				$out .= "namespace {$namespace};\n\n";
 			
-			$containerName = $class->getName().ucfirst($holder->getName()).'DAO';
+			$containerName = $class->getName(ucfirst($holder->getName()).'DAO');
+			$containerFullName = $class->getFullClassName(ucfirst($holder->getName()).'DAO');
 			
 			$out .=
 				'final class '
 				.$containerName
 				.' extends '
-				.$holder->getRelation()->toString().'Linked'
+				.'\\'.$holder->getRelation()->toString().'Linked'
 				."\n{\n";
 
 			$className = $class->getName();
@@ -40,19 +44,19 @@
 			$remoteColumnName = $holder->getType()->getClass()->getTableName();
 			
 			$out .= <<<EOT
-public function __construct({$className} \${$propertyName}, \$lazy = false)
+public function __construct({$class->getFullClassName()} \${$propertyName}, \$lazy = false)
 {
 	parent::__construct(
 		\${$propertyName},
-		{$holder->getType()->getClassName()}::dao(),
+		{$holder->getType()->getFullClassName()}::dao(),
 		\$lazy
 	);
 }
 
 /**
- * @return {$containerName}
+ * @return {$containerFullName}
 **/
-public static function create({$className} \${$propertyName}, \$lazy = false)
+public static function create({$class->getFullClassName()} \${$propertyName}, \$lazy = false)
 {
 	return new self(\${$propertyName}, \$lazy);
 }

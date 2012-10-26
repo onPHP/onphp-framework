@@ -78,17 +78,9 @@
 			$classHint = $property->getType()->getHint();
 			
 			if ($holder) {
-				if ($property->getType() instanceof ObjectType) {
-					$class = $property->getType()->getClassName();
-				} else {
-					$class = null;
-				}
-				
 				return <<<EOT
 
-/**
- * @return {$class}
-**/
+{$classHint}
 public function {$methodName}()
 {
 	return \$this->{$holder->getName()}->{$methodName}();
@@ -97,7 +89,7 @@ public function {$methodName}()
 EOT;
 			} else {
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
-					$className = $property->getType()->getClassName();
+					$className = $property->getType()->getClass()->getFullClassName();
 					
 					$isEnumeration =
 						(
@@ -137,7 +129,7 @@ EOT;
 						$methodName = ucfirst($name);
 						$remoteName = ucfirst($property->getName());
 						
-						$containerName = $class->getName().$remoteName.'DAO';
+						$containerName = $class->getFullClassName($remoteName.'DAO');
 						
 						$method = <<<EOT
 
@@ -154,7 +146,7 @@ public function get{$methodName}(\$lazy = false)
 }
 
 /**
- * @return {$class->getName()}
+ * @return {$class->getFullClassName()}
 **/
 public function fill{$methodName}(\$collection, \$lazy = false)
 {
@@ -204,15 +196,14 @@ EOT;
 			
 			$name = $property->getName();
 			$methodName = 'set'.ucfirst($name);
-			$classHint = $this->getHint();
 			
 			if ($holder) {
 				return <<<EOT
 
 /**
- * @return {$holder->getClass()->getName()}
+ * @return {$holder->getClass()->getFullClassName()}
 **/
-public function {$methodName}({$property->getType()->getClassName()} \${$name})
+public function {$methodName}({$property->getType()->getClass()->getFullClassName()} \${$name})
 {
 	\$this->{$holder->getName()}->{$methodName}(\${$name});
 	
@@ -225,9 +216,9 @@ EOT;
 					$method = <<<EOT
 
 /**
- * @return {$property->getClass()->getName()}
+ * @return {$property->getClass()->getFullClassName()}
 **/
-public function {$methodName}({$this->className} \${$name})
+public function {$methodName}({$this->getClass()->getFullClassName()} \${$name})
 {
 	\$this->{$name} = \${$name};
 	\$this->{$name}Id = \${$name}->getId();
@@ -236,7 +227,7 @@ public function {$methodName}({$this->className} \${$name})
 }
 
 /**
- * @return {$property->getClass()->getName()}
+ * @return {$property->getClass()->getFullClassName()}
 **/
 public function {$methodName}Id(\$id)
 {
@@ -251,9 +242,9 @@ EOT;
 					$method = <<<EOT
 
 /**
- * @return {$property->getClass()->getName()}
+ * @return {$property->getClass()->getFullClassName()}
 **/
-public function {$methodName}({$this->className} \${$name})
+public function {$methodName}({$this->getClass()->getFullClassName()} \${$name})
 {
 	\$this->{$name} = \${$name};
 
@@ -288,7 +279,7 @@ EOT;
 					$method = <<<EOT
 
 /**
- * @return {$holder->getClass()->getName()}
+ * @return {$holder->getClass()->getFullClassName()}
 **/
 public function {$methodName}()
 {
@@ -303,7 +294,7 @@ EOT;
 					$method = <<<EOT
 
 /**
- * @return {$class->getName()}
+ * @return {$class->getFullClassName()}
 **/
 public function {$methodName}()
 {
@@ -318,7 +309,7 @@ EOT;
 					$method = <<<EOT
 
 /**
- * @return {$class->getName()}
+ * @return {$class->getFullClassName()}
 **/
 public function {$methodName}()
 {
@@ -343,7 +334,7 @@ EOT;
 		{
 			return <<<EOT
 /**
- * @return {$this->getClassName()}
+ * @return {$this->getClass()->getFullClassName()}
 **/
 EOT;
 		}

@@ -25,15 +25,18 @@
 				$class->getParent()->getPattern()
 					instanceof InternalClassPattern
 			) {
-				$parentName = 'StorableDAO';
+				$parentName = '\StorableDAO';
 			} else {
-				$parentName = $parent->getName().'DAO';
+				$parentName = $parent->getFullClassName('', 'DAO');
 			}
 			
 			$out = self::getHead();
 			
+			if ($namespace = rtrim($class->getNamespace(), '\\'))
+				$out .= "namespace {$namespace};\n\n";
+			
 			$out .= <<<EOT
-abstract class Auto{$class->getName()}DAO extends {$parentName}
+abstract class {$class->getName('Auto', 'DAO')} extends {$parentName}
 {
 
 EOT;

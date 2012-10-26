@@ -23,8 +23,11 @@
 			else
 				$typeName = null;
 			
+			if ($namespace = rtrim($class->getNamespace(), '\\'))
+				$out .= "namespace {$namespace};\n\n";
+			
 			$out .= <<<EOT
-{$typeName}class Proto{$class->getName()} extends AutoProto{$class->getName()} {/*_*/}
+{$typeName}class {$class->getName('Proto')} extends {$class->getFullClassName('AutoProto')} {/*_*/}
 
 EOT;
 			

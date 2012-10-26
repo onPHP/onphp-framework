@@ -90,7 +90,7 @@ EOT;
 				return <<<EOT
 
 /**
- * @return {$holder->getClass()->getName()}
+ * @return {$holder->getClass()->getFullClassName()}
 **/
 public function {$methodName}(\${$name})
 {
@@ -104,7 +104,7 @@ EOT;
 				return <<<EOT
 
 /**
- * @return {$class->getName()}
+ * @return {$class->getFullClassName()}
 **/
 public function {$methodName}(\${$name})
 {

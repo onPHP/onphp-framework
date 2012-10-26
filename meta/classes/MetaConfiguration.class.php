@@ -1000,15 +1000,17 @@
 		**/
 		private function processClasses(SimpleXMLElement $xml, $metafile, $generate)
 		{
+			$classesNamespace = (string)$xml->classes['namespace'] ?: null;
 			foreach ($xml->classes[0] as $xmlClass) {
 				$name = (string) $xmlClass['name'];
+				$namespace = ((string) $xmlClass['namespace']) ?: $classesNamespace;
 				
 				Assert::isFalse(
 					isset($this->classes[$name]),
 					'class name collision found for '.$name
 				);
 				
-				$class = new MetaClass($name);
+				$class = new MetaClass($name, $namespace);
 				
 				if (isset($xmlClass['source']))
 					$class->setSourceLink((string) $xmlClass['source']);

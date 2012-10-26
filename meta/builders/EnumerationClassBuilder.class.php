@@ -23,8 +23,11 @@
 			else
 				$type = null;
 			
+			if ($namespace = rtrim($class->getNamespace(), '\\'))
+				$out .= "namespace {$namespace};\n\n";
+			
 			$out .= <<<EOT
-{$type}class {$class->getName()} extends Enumeration
+{$type}class {$class->getName()} extends \Enumeration
 {
 	// implement me!
 }

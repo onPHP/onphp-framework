@@ -17,9 +17,12 @@
 		public static function build(MetaClass $class)
 		{
 			$out = self::getHead();
+
+			if ($namespace = rtrim($class->getNamespace(), '\\'))
+				$out .= "namespace {$namespace};\n\n";
 			
 			$out .= <<<EOT
-abstract class Auto{$class->getName()}DAO extends StorableDAO
+abstract class {$class->getName('Auto', 'DAO')} extends \StorableDAO
 {
 
 EOT;

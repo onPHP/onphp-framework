@@ -3,6 +3,9 @@
 <!ELEMENT metaconfiguration (include*, classes*, sources*)>
 
 <!ELEMENT classes (class*)>
+<!ATTLIST classes
+		namespace	CDATA #IMPLIED
+>
 
 <!ELEMENT class (implement*, properties*, pattern)>
 <!ATTLIST class
@@ -11,6 +14,7 @@
 		extends		CDATA #IMPLIED
 		source		CDATA #IMPLIED
 		table		CDATA #IMPLIED
+		namespace	CDATA #IMPLIED
 >
 
 <!ELEMENT implement EMPTY>

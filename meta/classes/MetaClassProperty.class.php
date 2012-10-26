@@ -362,21 +362,21 @@
 			$inner = false;
 			
 			if ($this->getType() instanceof ObjectType) {
-				$className = $this->getType()->getClassName();
+				$className = $this->getType()->getClass()->getFullClassName();
 				
 				if (!$this->getType()->isGeneric()) {
 					$class = $this->getType()->getClass();
 					$pattern = $class->getPattern();
 					
 					if ($pattern instanceof InternalClassPattern)
-						$className = $holder->getName();
+						$className = $holder->getFullClassName();
 					
 					if (
 						(
 							($pattern instanceof InternalClassPattern)
 							|| ($pattern instanceof ValueObjectPattern)
 						) && (
-							$className <> $holder->getName()
+							$className <> $holder->getFullClassName()
 						)
 					) {
 						$inner = true;
@@ -386,8 +386,8 @@
 			
 			$propertyClassName = (
 				$inner
-					? 'InnerMetaProperty'
-					: 'LightMetaProperty'
+					? '\InnerMetaProperty'
+					: '\LightMetaProperty'
 			);
 			
 			if (
@@ -511,11 +511,6 @@ EOT;
 EOT;
 			
 			return $column;
-		}
-		
-		private function toVarName($name)
-		{
-			return strtolower($name[0]).substr($name, 1);
 		}
 	}
 ?>

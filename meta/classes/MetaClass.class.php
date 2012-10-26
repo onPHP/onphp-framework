@@ -15,6 +15,7 @@
 	class MetaClass
 	{
 		private $name		= null;
+		private $namespace	= null;
 		private $tableName	= null;
 		private $type		= null;
 		
@@ -33,7 +34,7 @@
 		
 		private $build		= true;
 		
-		public function __construct($name)
+		public function __construct($name, $namespace = null)
 		{
 			$this->name = $name;
 			
@@ -45,11 +46,24 @@
 				$this->tableName = substr($dumb, 1);
 			else
 				$this->tableName = $dumb;
+			
+			$namespace = trim($namespace, '\\');
+			$this->namespace = '\\'.($namespace ? ($namespace . '\\') : '');
 		}
 		
-		public function getName()
+		public function getName($prefix = '', $postfix = '')
 		{
-			return $this->name;
+			return $prefix.$this->name.$postfix;
+		}
+		
+		public function getNamespace()
+		{
+			return $this->namespace ?: '\\';
+		}
+		
+		public function getFullClassName($prefix = '', $postfix = '')
+		{
+			return $this->getNamespace().$this->getName($prefix, $postfix);
 		}
 		
 		public function getTableName()
