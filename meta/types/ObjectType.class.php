@@ -39,6 +39,14 @@
 			return $this->className;
 		}
 		
+		public function getFullClassName()
+		{
+			if ($this->isGeneric())
+				return '\\'.$this->className;
+			
+			return $this->getClass()->getFullClassName();
+		}
+		
 		public function getDeclaration()
 		{
 			return 'null';
@@ -244,7 +252,7 @@ EOT;
 /**
  * @return {$property->getClass()->getFullClassName()}
 **/
-public function {$methodName}({$this->getClass()->getFullClassName()} \${$name})
+public function {$methodName}({$this->getFullClassName()} \${$name})
 {
 	\$this->{$name} = \${$name};
 
@@ -334,7 +342,7 @@ EOT;
 		{
 			return <<<EOT
 /**
- * @return {$this->getClass()->getFullClassName()}
+ * @return {$this->getFullClassName()}
 **/
 EOT;
 		}

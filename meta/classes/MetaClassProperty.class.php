@@ -362,7 +362,7 @@
 			$inner = false;
 			
 			if ($this->getType() instanceof ObjectType) {
-				$className = $this->getType()->getClass()->getFullClassName();
+				$className = $this->getType()->getFullClassName();
 				
 				if (!$this->getType()->isGeneric()) {
 					$class = $this->getType()->getClass();
