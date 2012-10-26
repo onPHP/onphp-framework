@@ -28,8 +28,8 @@
 			if ($namespace = trim($class->getNamespace(), '\\'))
 				$out .= "namespace {$namespace};\n\n";
 			
-			$containerName = $class->getName(ucfirst($holder->getName()).'DAO');
-			$containerFullName = $class->getFullClassName(ucfirst($holder->getName()).'DAO');
+			$containerName = $class->getName('',ucfirst($holder->getName()).'DAO');
+			$containerFullName = $class->getFullClassName('',ucfirst($holder->getName()).'DAO');
 			
 			$out .=
 				'final class '
