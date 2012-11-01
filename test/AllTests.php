@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	if (!extension_loaded('onphp')) {
 		echo 'Trying to load onPHP extension.. ';
 		
@@ -19,17 +21,17 @@
 	mb_internal_encoding(ENCODING);
 	mb_regex_encoding(ENCODING);
 	
-	AutoloaderPool::get('onPHP')->addPath(ONPHP_TEST_PATH.'misc');
+	\Onphp\AutoloaderPool::get('onPHP')->addPath(ONPHP_TEST_PATH.'misc');
 	
 	$testPathes = array(
 		ONPHP_TEST_PATH.'core'.DIRECTORY_SEPARATOR,
 		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR,
-		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Autoloader'.DIRECTORY_SEPARATOR,
+		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'\Onphp\Autoloader'.DIRECTORY_SEPARATOR,
 		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Ip'.DIRECTORY_SEPARATOR,
 		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Net'.DIRECTORY_SEPARATOR,
 		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR,
 		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR.'Routers'.DIRECTORY_SEPARATOR,
-		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR.'AMQP'.DIRECTORY_SEPARATOR,
+		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR.'\Onphp\AMQP'.DIRECTORY_SEPARATOR,
 		ONPHP_TEST_PATH.'db'.DIRECTORY_SEPARATOR,
 	);
 	
@@ -45,7 +47,7 @@
 		
 		public static function main()
 		{
-			PHPUnit_TextUI_TestRunner::run(self::suite());
+			\PHPUnit_TextUI_TestRunner::run(self::suite());
 		}
 		
 		public static function suite()
@@ -58,10 +60,10 @@
 					/**
 					 * @todo fail - constructor with argument, but static method 'me' - without
 					 */
-					Singleton::getInstance('DBTestPool', self::$dbs)->connect();
-				} catch (Exception $e) {
-					Singleton::dropInstance('DBTestPool');
-					Singleton::getInstance('DBTestPool');
+					\Onphp\Singleton::getInstance('\Onphp\Test\DBTestPool', self::$dbs)->connect();
+				} catch (\Exception $e) {
+					\Onphp\Singleton::dropInstance('\Onphp\Test\DBTestPool');
+					\Onphp\Singleton::getInstance('\Onphp\Test\DBTestPool');
 				}
 				
 				// build stuff from meta
@@ -83,7 +85,7 @@
 				
 				include $path;
 				
-				AutoloaderPool::get('onPHP')->addPaths(array(
+				\Onphp\AutoloaderPool::get('onPHP')->addPaths(array(
 						ONPHP_META_AUTO_BUSINESS_DIR,
 						ONPHP_META_AUTO_DAO_DIR,
 						ONPHP_META_AUTO_PROTO_DIR,
@@ -97,10 +99,10 @@
 					setSchemaPath(ONPHP_META_AUTO_DIR.'schema.php')->
 					setTestPool(DBTestPool::me());
 				
-				$out = MetaConfiguration::me()->getOutput();
+				$out = \Onphp\MetaConfiguration::me()->getOutput();
 				
 				foreach (DBTestPool::me()->getPool() as $connector => $db) {
-					DBPool::me()->setDefault($db);
+					\Onphp\DBPool::me()->setDefault($db);
 					
 					$out->
 						info('Using ')->
@@ -111,13 +113,13 @@
 					
 					$dBCreator->createDB()->fillDB();
 					
-					MetaConfiguration::me()->checkIntegrity();
+					\Onphp\MetaConfiguration::me()->checkIntegrity();
 					$out->newLine();
 					
 					$dBCreator->dropDB();
 				}
 				
-				DBPool::me()->dropDefault();
+				\Onphp\DBPool::me()->dropDefault();
 			}
 			
 			foreach (self::$paths as $testPath)
