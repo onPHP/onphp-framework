@@ -8,13 +8,13 @@
 		{
 			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
-			$select = OSQL::select()->
+			$select = \Onphp\OSQL::select()->
 				from('test_table2')->
 				get('field3')->
 				get('field_7')->
 				andWhere(\Onphp\Expression::gt('field2', \Onphp\DBValue::create('33')));
 			
-			$insert = OSQL::insert()->
+			$insert = \Onphp\OSQL::insert()->
 				setSelect($select)->
 				into('test_table')->
 				set('field2', 2)->

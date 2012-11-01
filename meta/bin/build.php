@@ -1,4 +1,3 @@
-#!/usr/bin/php
 <?php
 
 	namespace Onphp;
@@ -52,7 +51,7 @@ Possible options:
 				ONPHP_META_BUILDERS,
 				ONPHP_META_PATTERNS,
 				ONPHP_META_TYPES,
-			));
+			), 'Onphp');
 		
 		if (!defined('ONPHP_META_DAO_DIR'))
 			define(
@@ -118,7 +117,7 @@ Possible options:
 	
 	function stop($message = null)
 	{
-		echo $message."\n\n";
+		echo $message."; \n\n";
 		
 		help();
 		
@@ -325,7 +324,7 @@ Possible options:
 			
 			if ($metaCheckEnumerationRefIntegrity)
 				$meta->setWithEnumerationRefIntegrityCheck(true);
-			
+
 			if (!$metaNoIntegrityCheck)
 				$meta->checkIntegrity();
 		} catch (BaseException $e) {

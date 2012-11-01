@@ -7,7 +7,7 @@
 		{
 			$city = $this->spawnCity();
 			
-			$insertCity = $city->proto()->fillQuery(OSQL::insert(), $city);
+			$insertCity = $city->proto()->fillQuery(\Onphp\OSQL::insert(), $city);
 			$this->assertEquals(
 				'INSERT INTO  (id, name, capital, large) VALUES (20, Saint-Peterburg, TRUE, TRUE)',
 				$insertCity->toDialectString(\Onphp\ImaginaryDialect::me())
@@ -18,7 +18,7 @@
 		{
 			$city = $this->spawnCity();
 			$user = $this->spawnUser(array('city' => $city));
-			$updateUser = $user->proto()->fillQuery(OSQL::update(), $user);
+			$updateUser = $user->proto()->fillQuery(\Onphp\OSQL::update(), $user);
 			$this->assertEquals(
 				'UPDATE  SET id = 77, nickname = NULL, password = NULL, '
 					.'very_custom_field_name = 2011-12-31 00:00:00, '
@@ -35,7 +35,7 @@
 			$contactValue = $this->spawnContactValueExt();
 			$user = $this->spawnUserWithContactExt(array('contactExt' => $contactValue));
 			
-			$updateUser = $user->proto()->fillQuery(OSQL::update(), $user);
+			$updateUser = $user->proto()->fillQuery(\Onphp\OSQL::update(), $user);
 			$this->assertEquals(
 				'UPDATE  SET id = 77, name = Aleksey, surname = Alekseev, email = foo@bar.com, '
 					.'icq = 12345678, phone = 89012345678, city_id = NULL, '
@@ -49,7 +49,7 @@
 			$cityOld = $this->spawnCity(array('capital' => false));
 			$city = $this->spawnCity(array('capital' => true)); //1918
 			
-			$updateCity = $city->proto()->fillQuery(OSQL::update(), $city, $cityOld);
+			$updateCity = $city->proto()->fillQuery(\Onphp\OSQL::update(), $city, $cityOld);
 			$this->assertEquals(
 				'UPDATE  SET capital = TRUE',
 				$updateCity->toDialectString(\Onphp\ImaginaryDialect::me())
@@ -61,7 +61,7 @@
 			$cityOld = $this->spawnCity(array('name' => 'Leningrad'));
 			$city = $this->spawnCity(array('name' => 'Saint-Peterburg'));
 			
-			$updateCity = $city->proto()->fillQuery(OSQL::update(), $city, $cityOld);
+			$updateCity = $city->proto()->fillQuery(\Onphp\OSQL::update(), $city, $cityOld);
 			$this->assertEquals(
 				'UPDATE  SET name = Saint-Peterburg',
 				$updateCity->toDialectString(\Onphp\ImaginaryDialect::me())
@@ -76,7 +76,7 @@
 			));
 			$user = $this->spawnUser(array('lastLogin' => \Onphp\Timestamp::create('2012-01-01')));
 			
-			$updateUser = $user->proto()->fillQuery(OSQL::update(), $user, $oldUser);
+			$updateUser = $user->proto()->fillQuery(\Onphp\OSQL::update(), $user, $oldUser);
 			$this->assertEquals(
 				'UPDATE  SET very_custom_field_name = 2012-01-01 00:00:00, '
 					.'strange_time = 01:23:45, url = https://www.github.com',
@@ -105,7 +105,7 @@
 			);
 			$user = $this->spawnUser($userParams);
 			
-			$updateUser = $user->proto()->fillQuery(OSQL::update(), $user, $oldUser);
+			$updateUser = $user->proto()->fillQuery(\Onphp\OSQL::update(), $user, $oldUser);
 			$this->assertEquals(
 				'UPDATE  SET city_id = 2, first_optional_id = NULL, '
 					.'second_optional_id = 3, properties = "param"=>"value",',
@@ -121,7 +121,7 @@
 			$contactExt = $this->spawnContactValueExt(array('city' => $moscow));
 			$user = $this->spawnUserWithContactExt(array('contactExt' => $contactExt));
 			
-			$updateUser = $user->proto()->fillQuery(OSQL::update(), $user, $oldUser);
+			$updateUser = $user->proto()->fillQuery(\Onphp\OSQL::update(), $user, $oldUser);
 			$this->assertEquals(
 				'UPDATE  SET email = foo@bar.com, city_id = 20',
 				$updateUser->toDialectString(\Onphp\ImaginaryDialect::me())
@@ -135,7 +135,7 @@
 			$oldUser = $this->spawnUserWithContactExt(array('contactExt' => $contactExt));
 			$user = $this->spawnUserWithContactExt(array('contactExt' => $contactExt));
 			
-			$updateUser = $user->proto()->fillQuery(OSQL::update(), $user, $oldUser);
+			$updateUser = $user->proto()->fillQuery(\Onphp\OSQL::update(), $user, $oldUser);
 			$this->assertEquals(
 				'UPDATE  SET email = foo@bar.com, icq = 12345678, '
 					.'phone = 89012345678, city_id = NULL, '

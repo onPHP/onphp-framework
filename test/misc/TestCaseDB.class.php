@@ -31,7 +31,7 @@
 		 */
 		protected function getDbByType($type) {
 			foreach (DBTestPool::me()->getPool() as $db) {
-				if (get_class($db) == $type)
+				if (('\\'.ltrim(get_class($db), '\\')) == $type)
 					return $db;
 			}
 			

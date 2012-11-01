@@ -183,6 +183,7 @@
 				throw new WrongArgumentException('incorrect method signature');
 			
 			list($className, $methodName) = $nameParts;
+			$className = '\\'.ltrim($className, '\\');
 			
 			try {
 				$class = new \ReflectionClass($className);

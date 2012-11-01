@@ -65,7 +65,8 @@ EOT;
 					$parent = $class;
 					
 					while ($parent = $parent->getParent()) {
-						$info = new \ReflectionClass($parent->getName());
+						/* @var $parent MetaClass */
+						$info = new \ReflectionClass($parent->getFullClassName());
 						
 						if (
 							$info->hasMethod('create')

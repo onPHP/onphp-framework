@@ -18,7 +18,7 @@
 				foreach ($this->schema->getTableNames() as $name) {
 					try {
 						$db->queryRaw(
-							OSQL::dropTable($name, true)->toDialectString(
+							\Onphp\OSQL::dropTable($name, true)->toDialectString(
 								$db->getDialect()
 							)
 						);
@@ -64,7 +64,7 @@
 			foreach ($pool as $name => $db) {
 				foreach ($this->schema->getTableNames() as $name) {
 					$db->queryRaw(
-						OSQL::dropTable($name, true)->toDialectString(
+						\Onphp\OSQL::dropTable($name, true)->toDialectString(
 							$db->getDialect()
 						)
 					);

@@ -28,6 +28,8 @@
 			$class, $args = null /* , ... */
 		)
 		{
+			$class = '\\'.ltrim($class, '\\');
+			
 			if (!isset(self::$instances[$class])) {
 				// for Singleton::getInstance('class_name', $arg1, ...) calling
 				if (2 < func_num_args()) {
@@ -65,6 +67,8 @@
 		
 		/* void */ final public static function dropInstance($class)
 		{
+			$class = '\\'.ltrim($class, '\\');
+			
 			if (!isset(self::$instances[$class]))
 				throw new MissingElementException('knows nothing about '.$class);
 			

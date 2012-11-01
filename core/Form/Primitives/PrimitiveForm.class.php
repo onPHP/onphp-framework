@@ -29,8 +29,11 @@
 		public function of($className)
 		{
 			Assert::classExists($className);
-			
-			$protoClass = EntityProto::PROTO_CLASS_PREFIX.$className;
+
+			$parts = explode('\\', $className);
+			$className = array_pop($parts);
+			$parts[] = EntityProto::PROTO_CLASS_PREFIX.$className;
+			$protoClass = implode('\\', $parts);
 			
 			Assert::classExists($protoClass);
 			

@@ -13,7 +13,7 @@
 
 	class EntityProto extends Singleton
 	{
-		const PROTO_CLASS_PREFIX = '\Onphp\EntityProto';
+		const PROTO_CLASS_PREFIX = 'EntityProto';
 		
 		public function baseProto()
 		{

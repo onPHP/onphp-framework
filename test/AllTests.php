@@ -20,8 +20,8 @@
 	
 	mb_internal_encoding(ENCODING);
 	mb_regex_encoding(ENCODING);
-	
-	\Onphp\AutoloaderPool::get('onPHP')->addPath(ONPHP_TEST_PATH.'misc');
+
+	\Onphp\AutoloaderPool::get('onPHP')->addPath(ONPHP_TEST_PATH.'misc', 'Onphp\Test');
 	
 	$testPathes = array(
 		ONPHP_TEST_PATH.'core'.DIRECTORY_SEPARATOR,
@@ -93,7 +93,7 @@
 						ONPHP_META_DAO_DIR,
 						ONPHP_META_BUSINESS_DIR,
 						ONPHP_META_PROTO_DIR
-					));
+					), 'Onphp\Test');
 				
 				$dBCreator = DBTestCreator::create()->
 					setSchemaPath(ONPHP_META_AUTO_DIR.'schema.php')->

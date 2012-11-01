@@ -6,7 +6,7 @@
 		public function testCriteria()
 		{
 			foreach (DBTestPool::me()->getPool() as $db) {
-				/* @var $\Onphp\DB \Onphp\DB */
+				/* @var $db \Onphp\DB */
 				\Onphp\DBPool::me()->setDefault($db);
 				$this->getDBCreator()->fillDB();
 

@@ -8,7 +8,7 @@
 		{
 			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
-			$query = OSQL::select()->
+			$query = \Onphp\OSQL::select()->
 				from('test_table')->
 				get(\Onphp\DBField::create('field1', 'test_table'), 'alias1')->
 				get(\Onphp\DBField::create('field2', 'test_table'))->
@@ -50,11 +50,11 @@
 		{
 			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
-			$query = OSQL::select()->
+			$query = \Onphp\OSQL::select()->
 				from('test_table')->
 				get('field1')->
 				get(
-					OSQL::select()->
+					\Onphp\OSQL::select()->
 						from('test_table1')->
 						setName('foo1')->
 						get('id')
@@ -130,7 +130,7 @@
 		private function getBaseJoinSelect()
 		{
 			return
-				OSQL::select()->
+				\Onphp\OSQL::select()->
 				from('table1')->
 				get(\Onphp\DBField::create('field1', 'table1'))->
 				get(\Onphp\DBField::create('field2', 'table2'));

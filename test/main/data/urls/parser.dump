@@ -3,12 +3,12 @@ class: HttpUrl
 toString(): http://ya.ru
 getSchemeSpecificPart(): //ya.ru
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): ya.ru
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -20,13 +20,13 @@ isValidFragment(): 1
 class: GenericUri
 toString(): /etc/passwd
 getSchemeSpecificPart(): /etc/passwd
-getScheme(): 
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getScheme():
+getUserInfo():
+getHost():
+getPort():
 getPath(): /etc/passwd
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -39,12 +39,12 @@ class: Url
 toString(): file:///etc/
 getSchemeSpecificPart(): ///etc/
 getScheme(): file
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getUserInfo():
+getHost():
+getPort():
 getPath(): /etc/
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -56,36 +56,36 @@ isValidFragment(): 1
 class: HttpUrl
 toString(): http:/uri
 getSchemeSpecificPart(): http:/uri
-getScheme(): 
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getScheme():
+getUserInfo():
+getHost():
+getPort():
 getPath(): http:/uri
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 
+isValidPath():
 isValidQuery(): 1
 isValidFragment(): 1
 ";s:8:"http:uri";s:316:"url: http:uri
 class: HttpUrl
 toString(): http:uri
 getSchemeSpecificPart(): http:uri
-getScheme(): 
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getScheme():
+getUserInfo():
+getHost():
+getPort():
 getPath(): http:uri
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 
+isValidPath():
 isValidQuery(): 1
 isValidFragment(): 1
 ";s:22:"mailto://localhost.com";s:360:"url: mailto://localhost.com
@@ -93,17 +93,17 @@ class: Urn
 toString(): mailto://localhost.com
 getSchemeSpecificPart(): //localhost.com
 getScheme(): mailto
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getUserInfo():
+getHost():
+getPort():
 getPath(): //localhost.com
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 
+isValidPath():
 isValidQuery(): 1
 isValidFragment(): 1
 ";s:23:"mailto://spam@localhost";s:364:"url: mailto://spam@localhost
@@ -111,17 +111,17 @@ class: Urn
 toString(): mailto://spam@localhost
 getSchemeSpecificPart(): //spam@localhost
 getScheme(): mailto
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getUserInfo():
+getHost():
+getPort():
 getPath(): //spam@localhost
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 
+isValidPath():
 isValidQuery(): 1
 isValidFragment(): 1
 ";s:37:"mailto://cuckoo@localhost.com:boo.com";s:420:"url: mailto://cuckoo@localhost.com:boo.com
@@ -129,17 +129,17 @@ class: Urn
 toString(): mailto://cuckoo@localhost.com:boo.com
 getSchemeSpecificPart(): //cuckoo@localhost.com:boo.com
 getScheme(): mailto
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getUserInfo():
+getHost():
+getPort():
 getPath(): //cuckoo@localhost.com:boo.com
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 
+isValidPath():
 isValidQuery(): 1
 isValidFragment(): 1
 ";s:37:"mailto://cuckoo:localhost.com@boo.com";s:420:"url: mailto://cuckoo:localhost.com@boo.com
@@ -147,30 +147,30 @@ class: Urn
 toString(): mailto://cuckoo:localhost.com@boo.com
 getSchemeSpecificPart(): //cuckoo:localhost.com@boo.com
 getScheme(): mailto
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getUserInfo():
+getHost():
+getPort():
 getPath(): //cuckoo:localhost.com@boo.com
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 
+isValidPath():
 isValidQuery(): 1
 isValidFragment(): 1
 ";s:18:"//samba/de/janeiro";s:358:"url: //samba/de/janeiro
 class: GenericUri
 toString(): //samba/de/janeiro
 getSchemeSpecificPart(): //samba/de/janeiro
-getScheme(): 
-getUserInfo(): 
+getScheme():
+getUserInfo():
 getHost(): samba
-getPort(): 
+getPort():
 getPath(): /de/janeiro
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -185,10 +185,10 @@ getSchemeSpecificPart(): //cnn.example.com&story=breaking_news@10.0.0.1/top_stor
 getScheme(): ftp
 getUserInfo(): cnn.example.com&story=breaking_news
 getHost(): 10.0.0.1
-getPort(): 
+getPort():
 getPath(): /top_story.htm
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -201,12 +201,12 @@ class: HttpUrl
 toString(): http://a/b/c/d;p?q
 getSchemeSpecificPart(): //a/b/c/d;p?q
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): a
-getPort(): 
+getPort():
 getPath(): /b/c/d;p
 getQuery(): q
-getFragment(): 
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -218,10 +218,10 @@ isValidFragment(): 1
 class: GenericUri
 toString(): g;x?y#s
 getSchemeSpecificPart(): g;x?y#s
-getScheme(): 
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getScheme():
+getUserInfo():
+getHost():
+getPort():
 getPath(): g;x
 getQuery(): y
 getFragment(): s
@@ -232,17 +232,17 @@ isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
 isValidFragment(): 1
-";s:0:"";s:288:"url: 
+";s:0:"";s:288:"url:
 class: GenericUri
-toString(): 
-getSchemeSpecificPart(): 
-getScheme(): 
-getUserInfo(): 
-getHost(): 
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+toString():
+getSchemeSpecificPart():
+getScheme():
+getUserInfo():
+getHost():
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -254,13 +254,13 @@ isValidFragment(): 1
 class: GenericUri
 toString(): ../../../../g
 getSchemeSpecificPart(): ../../../../g
-getScheme(): 
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getScheme():
+getUserInfo():
+getHost():
+getPort():
 getPath(): ../../../../g
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -273,12 +273,12 @@ class: Urn
 toString(): tel:+1-816-555-1212
 getSchemeSpecificPart(): +1-816-555-1212
 getScheme(): tel
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getUserInfo():
+getHost():
+getPort():
 getPath(): +1-816-555-1212
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -291,12 +291,12 @@ class: Url
 toString(): telnet://192.0.2.16:80/
 getSchemeSpecificPart(): //192.0.2.16:80/
 getScheme(): telnet
-getUserInfo(): 
+getUserInfo():
 getHost(): 192.0.2.16
 getPort(): 80
 getPath(): /
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -309,12 +309,12 @@ class: Urn
 toString(): urn:oasis:names:specification:docbook:dtd:xml:4.1.2
 getSchemeSpecificPart(): oasis:names:specification:docbook:dtd:xml:4.1.2
 getScheme(): urn
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getUserInfo():
+getHost():
+getPort():
 getPath(): oasis:names:specification:docbook:dtd:xml:4.1.2
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -327,30 +327,30 @@ class: GenericUri
 toString(): ldap://[2001:db8::7]/c=GB?objectClass?one]
 getSchemeSpecificPart(): //[2001:db8::7]/c=GB?objectClass?one]
 getScheme(): ldap
-getUserInfo(): 
+getUserInfo():
 getHost(): [2001:db8::7]
-getPort(): 
+getPort():
 getPath(): /c=GB
 getQuery(): objectClass?one]
-getFragment(): 
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
 isValidPath(): 1
-isValidQuery(): 
+isValidQuery():
 isValidFragment(): 1
 ";s:27:"mailto:John.Doe@example.com";s:381:"url: mailto:John.Doe@example.com
 class: Urn
 toString(): mailto:John.Doe@example.com
 getSchemeSpecificPart(): John.Doe@example.com
 getScheme(): mailto
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getUserInfo():
+getHost():
+getPort():
 getPath(): John.Doe@example.com
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -363,12 +363,12 @@ class: HttpUrl
 toString(): http://[1080:0:0:0:8:800:200C:417A]/
 getSchemeSpecificPart(): //[1080:0:0:0:8:800:200C:417A]/
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): [1080:0:0:0:8:800:200C:417A]
-getPort(): 
+getPort():
 getPath(): /
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -381,12 +381,12 @@ class: HttpUrl
 toString(): http://[1080::8:800:200C:417A]/
 getSchemeSpecificPart(): //[1080::8:800:200C:417A]/
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): [1080::8:800:200C:417A]
-getPort(): 
+getPort():
 getPath(): /
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -399,12 +399,12 @@ class: HttpUrl
 toString(): http://[::FFFF:129.144.52.38]
 getSchemeSpecificPart(): //[::FFFF:129.144.52.38]
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): [::FFFF:129.144.52.38]
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -417,12 +417,12 @@ class: HttpUrl
 toString(): http://[::129.144.52.38]
 getSchemeSpecificPart(): //[::129.144.52.38]
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): [::129.144.52.38]
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -435,15 +435,15 @@ class: HttpUrl
 toString(): http://[::FFFF:1.1.1]
 getSchemeSpecificPart(): //[::FFFF:1.1.1]
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): [::FFFF:1.1.1]
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
-isValidHost(): 
+isValidHost():
 isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
@@ -453,15 +453,15 @@ class: HttpUrl
 toString(): http://[::FFFF:1.1]
 getSchemeSpecificPart(): //[::FFFF:1.1]
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): [::FFFF:1.1]
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
-isValidHost(): 
+isValidHost():
 isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
@@ -471,15 +471,15 @@ class: HttpUrl
 toString(): http://[::66.66.66]
 getSchemeSpecificPart(): //[::66.66.66]
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): [::66.66.66]
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
-isValidHost(): 
+isValidHost():
 isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
@@ -489,15 +489,15 @@ class: HttpUrl
 toString(): http://[::5.5]
 getSchemeSpecificPart(): //[::5.5]
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): [::5.5]
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
-isValidHost(): 
+isValidHost():
 isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
@@ -507,12 +507,12 @@ class: HttpUrl
 toString(): http://[::FFFF:10]
 getSchemeSpecificPart(): //[::FFFF:10]
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): [::FFFF:10]
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -525,15 +525,15 @@ class: HttpUrl
 toString(): http://[192.168.0.1]
 getSchemeSpecificPart(): //[192.168.0.1]
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): [192.168.0.1]
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
-isValidHost(): 
+isValidHost():
 isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
@@ -543,15 +543,15 @@ class: HttpUrl
 toString(): http://266.66.66.66
 getSchemeSpecificPart(): //266.66.66.66
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): 266.66.66.66
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
-isValidHost(): 
+isValidHost():
 isValidPort(): 1
 isValidPath(): 1
 isValidQuery(): 1
@@ -561,17 +561,17 @@ class: Urn
 toString(): mailto:"George, Ted" <Shared@Group.Arpanet>
 getSchemeSpecificPart(): "George, Ted" <Shared@Group.Arpanet>
 getScheme(): mailto
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getUserInfo():
+getHost():
+getPort():
 getPath(): "George, Ted" <Shared@Group.Arpanet>
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 
+isValidPath():
 isValidQuery(): 1
 isValidFragment(): 1
 ";s:55:"mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E";s:493:"url: mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
@@ -579,12 +579,12 @@ class: Urn
 toString(): mailto:%22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
 getSchemeSpecificPart(): %22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
 getScheme(): mailto
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getUserInfo():
+getHost():
+getPort():
 getPath(): %22George,%20Ted%22%20%3CShared@Group.Arpanet%3E
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -597,30 +597,30 @@ class: Urn
 toString(): mailto:astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node
 getSchemeSpecificPart(): astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node
 getScheme(): mailto
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getUserInfo():
+getHost():
+getPort():
 getPath(): astark1@unl.edu,ASTARK1@UNL.EDU
 getQuery(): subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node
-getFragment(): 
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
 isValidPath(): 1
-isValidQuery(): 
+isValidQuery():
 isValidFragment(): 1
 ";s:8:"//ya0.ru";s:318:"url: //ya0.ru
 class: GenericUri
 toString(): //ya0.ru
 getSchemeSpecificPart(): //ya0.ru
-getScheme(): 
-getUserInfo(): 
+getScheme():
+getUserInfo():
 getHost(): ya0.ru
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -632,49 +632,49 @@ isValidFragment(): 1
 class: Url
 toString(): //yandex.ru
 getSchemeSpecificPart(): //yandex.ru
-getScheme(): 
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getScheme():
+getUserInfo():
+getHost():
+getPort():
 getPath(): //yandex.ru
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 
+isValidPath():
 isValidQuery(): 1
 isValidFragment(): 1
 ";s:14:"//yandex.ru:80";s:336:"url: //yandex.ru:80
 class: Url
 toString(): //yandex.ru:80
 getSchemeSpecificPart(): //yandex.ru:80
-getScheme(): 
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getScheme():
+getUserInfo():
+getHost():
+getPort():
 getPath(): //yandex.ru:80
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
 isValidPort(): 1
-isValidPath(): 
+isValidPath():
 isValidQuery(): 1
 isValidFragment(): 1
 ";s:6:"ya1.ru";s:312:"url: ya1.ru
 class: GenericUri
 toString(): ya1.ru
 getSchemeSpecificPart(): ya1.ru
-getScheme(): 
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getScheme():
+getUserInfo():
+getHost():
+getPort():
 getPath(): ya1.ru
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -686,13 +686,13 @@ isValidFragment(): 1
 class: Url
 toString(): ya2.ru
 getSchemeSpecificPart(): ya2.ru
-getScheme(): 
-getUserInfo(): 
-getHost(): 
-getPort(): 
+getScheme():
+getUserInfo():
+getHost():
+getPort():
 getPath(): ya2.ru
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -705,12 +705,12 @@ class: HttpUrl
 toString(): http://ya3.ru/
 getSchemeSpecificPart(): //ya3.ru/
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): ya3.ru
-getPort(): 
+getPort():
 getPath(): /
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -723,12 +723,12 @@ class: HttpUrl
 toString(): http://ya4.ru/
 getSchemeSpecificPart(): //ya4.ru/
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): ya4.ru
-getPort(): 
+getPort():
 getPath(): /
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -741,12 +741,12 @@ class: HttpUrl
 toString(): http://ya5.ru/
 getSchemeSpecificPart(): //ya5.ru/
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): ya5.ru
-getPort(): 
+getPort():
 getPath(): /
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -759,12 +759,12 @@ class: HttpUrl
 toString(): http://ya6.ru/
 getSchemeSpecificPart(): //ya6.ru/
 getScheme(): http
-getUserInfo(): 
+getUserInfo():
 getHost(): ya6.ru
-getPort(): 
+getPort():
 getPath(): /
-getQuery(): 
-getFragment(): 
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1
@@ -777,12 +777,12 @@ class: HttpUrl
 toString(): hTTP://onphp.org
 getSchemeSpecificPart(): //onphp.org
 getScheme(): hTTP
-getUserInfo(): 
+getUserInfo():
 getHost(): onphp.org
-getPort(): 
-getPath(): 
-getQuery(): 
-getFragment(): 
+getPort():
+getPath():
+getQuery():
+getFragment():
 isValidScheme(): 1
 isValidUserInfo(): 1
 isValidHost(): 1

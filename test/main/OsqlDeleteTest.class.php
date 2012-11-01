@@ -6,7 +6,7 @@
 	{
 		public function testQuery()
 		{
-			$query = OSQL::delete()->from('pity_table');
+			$query = \Onphp\OSQL::delete()->from('pity_table');
 			
 			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			

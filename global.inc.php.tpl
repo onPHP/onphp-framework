@@ -10,6 +10,8 @@
  ***************************************************************************/
 
 	// sample system-wide configuration file
+
+	namespace Onphp;
 	
 	function error2Exception($code, $string, $file, $line, $context)
 	{
@@ -33,7 +35,7 @@
 	
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
-	set_error_handler('error2Exception', E_ALL | E_STRICT);
+	set_error_handler('\Onphp\error2Exception', E_ALL | E_STRICT);
 	ignore_user_abort(true);
 	define('ONPHP_VERSION', '1.1.master');
 	
@@ -71,7 +73,7 @@
 	
 	// classes autoload magic
 	if (!defined('ONPHP_CLASS_CACHE_TYPE'))
-		define('ONPHP_CLASS_CACHE_TYPE', 'AutoloaderClassPathCache');
+		define('ONPHP_CLASS_CACHE_TYPE', '\Onphp\AutoloaderClassPathCache');
 	
 	require ONPHP_MAIN_PATH.'Autoloader'.DIRECTORY_SEPARATOR.'require'.EXT_MOD;
 	
@@ -184,7 +186,7 @@
 			.'Markups'.DIRECTORY_SEPARATOR
 			.'Documents'.DIRECTORY_SEPARATOR,
 	*/
-	));
+	), 'Onphp');
 	
 	//NOTE: disable by default
 	//see http://pgfoundry.org/docman/view.php/1000079/117/README.txt

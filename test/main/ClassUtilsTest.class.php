@@ -9,7 +9,7 @@
 		{
 			$this->assertEquals(
 				\Onphp\ClassUtils::callStaticMethod(
-					'Singleton::getInstance',
+					'\Onphp\Singleton::getInstance',
 					'\Onphp\UrlEncodeFilter'
 				),
 				
@@ -17,7 +17,7 @@
 			);
 			
 			$this->assertEquals(
-				\Onphp\ClassUtils::callStaticMethod('ImaginaryDialect::me'),
+				\Onphp\ClassUtils::callStaticMethod('\Onphp\ImaginaryDialect::me'),
 				\Onphp\ImaginaryDialect::me()
 			);
 			
@@ -40,7 +40,7 @@
 			try {
 				\Onphp\ClassUtils::callStaticMethod('Identifier::comp::lete::non::sense');
 				$this->fail();
-			} catch (\Onphp\WrongArgumentException $e) {
+			} catch (\Onphp\ClassNotFoundException $e) {
 				/* pass */
 			}
 		}

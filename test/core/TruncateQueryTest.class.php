@@ -11,10 +11,10 @@
 			$myDialect = $this->getDbByType('\Onphp\MySQL')->getDialect();
 			$liteDialect = $this->getDbByType('\Onphp\SQLitePDO')->getDialect();
 			
-			$query = OSQL::truncate('single_table');
+			$query = \Onphp\OSQL::truncate('single_table');
 			
 			try {
-				OSQL::truncate()->toDialectString(\Onphp\ImaginaryDialect::me());
+				\Onphp\OSQL::truncate()->toDialectString(\Onphp\ImaginaryDialect::me());
 				$this->fail();
 			} catch (\Onphp\WrongArgumentException $e) {
 				/* pass */
@@ -40,7 +40,7 @@
 				'TRUNCATE TABLE `single_table`;'
 			);
 			
-			$query = OSQL::truncate(array('foo', 'bar', 'bleh'));
+			$query = \Onphp\OSQL::truncate(array('foo', 'bar', 'bleh'));
 			
 			$this->assertEquals(
 				$query->toDialectString(\Onphp\ImaginaryDialect::me()),

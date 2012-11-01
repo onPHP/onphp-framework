@@ -72,11 +72,11 @@
 		public function dropDB($clean = false)
 		{
 			foreach ($this->pool->getPool() as $name => $db) {
-				/* @var $\Onphp\DB \Onphp\DB */
+				/* @var $db \Onphp\DB */
 				foreach ($this->schema->getTableNames() as $name) {
 					try {
 						$db->queryRaw(
-							OSQL::dropTable($name, true)->toDialectString(
+							\Onphp\OSQL::dropTable($name, true)->toDialectString(
 								$db->getDialect()
 							)
 						);

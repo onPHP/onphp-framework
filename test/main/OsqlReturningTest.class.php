@@ -8,7 +8,7 @@
 		{
 			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
-			$query = OSQL::update('test_table')->
+			$query = \Onphp\OSQL::update('test_table')->
 				set('field1', 1)->
 				where(\Onphp\Expression::eq('field1',2));
 			
@@ -31,7 +31,7 @@
 		{
 			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
-			$query = OSQL::insert()->
+			$query = \Onphp\OSQL::insert()->
 				into('test_table')->
 				set('field2', 2)->
 				set('field16', 3);
@@ -52,7 +52,7 @@
 		
 		public function testDelete()
 		{
-			$query = OSQL::delete()->from('pity_table');
+			$query = \Onphp\OSQL::delete()->from('pity_table');
 			
 			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
@@ -75,7 +75,7 @@
 		{
 			$dialect = \Onphp\ImaginaryDialect::me();
 			
-			$query = OSQL::update('test_table')->
+			$query = \Onphp\OSQL::update('test_table')->
 				set('field1', 1)->
 				where(\Onphp\Expression::eq('field1',2))->
 				returning('field1');
@@ -104,7 +104,7 @@
 					setAlias('alias5')
 				)->
 				returning(
-					OSQL::select()->
+					\Onphp\OSQL::select()->
 						from('test_table1')->
 						setName('foo1')->
 						get('id')

@@ -28,7 +28,7 @@
 				"'новый год' & 'снегурочка' & 'праздник'",
 				$db->getDialect()->prepareFullText(
 					array('Новый год', 'Снегурочка', 'ПрАзДнИк'),
-					DB::FULL_TEXT_AND
+					\Onphp\DB::FULL_TEXT_AND
 				)
 			);
 		}

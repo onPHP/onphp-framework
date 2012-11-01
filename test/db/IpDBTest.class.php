@@ -97,7 +97,7 @@
 				$plainIp =
 					\Onphp\DBPool::me()->getByDao(TestUser::dao())->
 					queryColumn(
-						OSQL::select()->get('ip')->
+						\Onphp\OSQL::select()->get('ip')->
 						from(TestUser::dao()->getTable())->
 						where(\Onphp\Expression::eq('id', $userWithIp->getId()))
 					);

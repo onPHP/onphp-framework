@@ -15,17 +15,17 @@
 		
 		public function setUp()
 		{
-			$left = OSQL::select()->
+			$left = \Onphp\OSQL::select()->
 				from('leftTable')->
 				get('a')->
 				get('b', 'c');
 				
-			$middle = OSQL::select()->
+			$middle = \Onphp\OSQL::select()->
 				from('middleTable')->
 				get('a')->
 				get('c');
 				
-			$right = OSQL::select()->
+			$right = \Onphp\OSQL::select()->
 				from('rightTable')->
 				get('d', 'a')->
 				get('c');

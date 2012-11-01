@@ -7,7 +7,7 @@
 	{
 		public function testQuery()
 		{
-			$query = OSQL::delete()->from('pity_table');
+			$query = \Onphp\OSQL::delete()->from('pity_table');
 			
 			$dialect = \Onphp\ImaginaryDialect::me();
 			

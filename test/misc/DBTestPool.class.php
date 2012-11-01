@@ -16,9 +16,9 @@
 		protected function __construct(array $dbs = array())
 		{
 			\Onphp\Assert::isArray($dbs);
-			
+
 			foreach ($dbs as $connector => $credentials) {
-				$this->pool[$connector] = DB::spawn(
+				$this->pool[$connector] = \Onphp\DB::spawn(
 					$connector,
 					$credentials['user'],
 					$credentials['pass'],

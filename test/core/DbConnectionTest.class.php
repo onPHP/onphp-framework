@@ -9,7 +9,7 @@
 			\Onphp\DBPool::me()->
 				addLink(
 					'badLink',
-					DB::spawn('\Onphp\PinbedPgSQL', 'postgres', '', 'localhost', 'wrongDatabase')
+					\Onphp\DB::spawn('\Onphp\PinbedPgSQL', 'postgres', '', 'localhost', 'wrongDatabase')
 				);
 		}
 		

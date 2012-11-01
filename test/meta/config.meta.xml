@@ -147,14 +147,14 @@
 		<pattern name="DictionaryClass" />
 	</class>
 
-	<class name="ImageType" type="final">
+	<class name="ImageType" type="final" namespace="Onphp" >
 		<properties>
 			<identifier />
 		</properties>
 		<pattern name="SpookedEnumeration" />
 	</class>
 
-	<class name="MimeType" type="final">
+	<class name="MimeType" type="final" namespace="Onphp" >
 		<properties>
 			<identifier />
 		</properties>

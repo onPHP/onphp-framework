@@ -44,7 +44,7 @@
 		public function getFullClassName()
 		{
 			if ($this->isGeneric())
-				return '\\'.$this->className;
+				return '\Onphp\\'.$this->className;
 			
 			return $this->getClass()->getFullClassName();
 		}
