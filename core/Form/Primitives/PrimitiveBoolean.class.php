@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveBoolean extends BasePrimitive
 	{
 		public function import($scope)

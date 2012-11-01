@@ -13,6 +13,8 @@
 	 * @ingroup Primitives
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface ListedPrimitive
 	{
 		/// @return plain array of possible primitive choices

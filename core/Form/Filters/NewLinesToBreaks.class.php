@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class NewLinesToBreaks extends BaseFilter
 	{
 		/**
-		 * @return NewLinesToBreaks
+		 * @return \Onphp\NewLinesToBreaks
 		**/
 		public static function me()
 		{

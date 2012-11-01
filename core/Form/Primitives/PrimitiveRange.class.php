@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveRange extends ComplexPrimitive
 	{
 		const MIN	= 'min';
@@ -19,7 +21,7 @@
 
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveRange
+		 * @return \Onphp\PrimitiveRange
 		**/
 		public function setValue(/* BaseRange */ $range)
 		{

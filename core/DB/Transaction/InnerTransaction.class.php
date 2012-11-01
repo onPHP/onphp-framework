@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Transaction
 	**/
+	namespace Onphp;
+
 	final class InnerTransaction
 	{
 		/**
-		 * @var DB
+		 * @var \Onphp\DB
 		**/
 		private $db = null;
 		private $savepointName = null;
@@ -25,9 +27,9 @@
 		
 		/**
 		 * @param DB|GenericDAO $database
-		 * @param IsolationLevel $level
-		 * @param AccessMode $mode
-		 * @return InnerTransaction
+		 * @param \Onphp\IsolationLevel $level
+		 * @param \Onphp\AccessMode $mode
+		 * @return \Onphp\InnerTransaction
 		**/
 		public static function begin(
 			$database,
@@ -40,8 +42,8 @@
 		
 		/**
 		 * @param DB|GenericDAO $database
-		 * @param IsolationLevel $level
-		 * @param AccessMode $mode
+		 * @param \Onphp\IsolationLevel $level
+		 * @param \Onphp\AccessMode $mode
 		**/
 		public function __construct(
 			$database,

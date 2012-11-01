@@ -13,7 +13,9 @@
 	 * @ingroup Exceptions
 	 * @ingroup Module
 	**/
-	class BaseException extends Exception
+	namespace Onphp;
+
+	class BaseException extends \Exception
 	{
 		public function __toString()
 		{

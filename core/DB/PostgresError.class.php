@@ -16,6 +16,8 @@
 	 * 
 	 * @see http://www.postgresql.org/docs/current/interactive/errcodes-appendix.html
 	**/
+	namespace Onphp;
+
 	final class PostgresError extends Enumeration
 	{
 		// Class 00 - Successful Completion

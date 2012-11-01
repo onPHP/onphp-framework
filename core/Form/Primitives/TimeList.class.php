@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class TimeList extends BasePrimitive
 	{
 		protected $value = array();
 		
 		/**
-		 * @return TimeList
+		 * @return \Onphp\TimeList
 		**/
 		public function clean()
 		{

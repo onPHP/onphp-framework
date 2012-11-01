@@ -13,5 +13,7 @@
 	 * @ingroup Exceptions
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	class IOException extends BaseException {/*_*/}
 ?>

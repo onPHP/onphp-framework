@@ -15,6 +15,8 @@
 	 *
 	 * @ingroup Lockers
 	**/
+	namespace Onphp;
+
 	final class MemcachedLocker extends BaseLocker implements Instantiatable
 	{
 		const VALUE = 0x1;

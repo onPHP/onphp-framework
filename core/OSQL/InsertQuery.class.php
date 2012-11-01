@@ -12,15 +12,17 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class InsertQuery extends InsertOrUpdateQuery
 	{
 		/**
-		 * @var SelectQuery
+		 * @var \Onphp\SelectQuery
 		**/
 		protected $select = null;
 		
 		/**
-		 * @return InsertQuery
+		 * @return \Onphp\InsertQuery
 		**/
 		public function into($table)
 		{
@@ -32,7 +34,7 @@
 		/**
 		 * Just an alias to behave like UpdateQuery.
 		 *
-		 * @return InsertQuery
+		 * @return \Onphp\InsertQuery
 		**/
 		public function setTable($table)
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return InsertQuery
+		 * @return \Onphp\InsertQuery
 		**/
 		public function setSelect(SelectQuery $select)
 		{

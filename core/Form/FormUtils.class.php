@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Form
 	**/
+	namespace Onphp;
+
 	final class FormUtils extends StaticFactory
 	{
 		/* void */ public static function object2form(
@@ -37,7 +39,7 @@
 					}
 				}
 			} else {
-				$class = new ReflectionClass($object);
+				$class = new \ReflectionClass($object);
 				
 				foreach ($class->getProperties() as $property) {
 					$name = $property->getName();
@@ -71,7 +73,7 @@
 					}
 				}
 			} else {
-				$class = new ReflectionClass($object);
+				$class = new \ReflectionClass($object);
 				
 				foreach ($form->getPrimitiveList() as $name => $prm) {
 					$setter = 'set'.ucfirst($name);

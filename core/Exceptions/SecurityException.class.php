@@ -13,5 +13,7 @@
 	 * @ingroup Exceptions
 	 * @ingroup Module
 	**/
-	class SecurityException extends Exception {/*_*/}
+	namespace Onphp;
+
+	class SecurityException extends \Exception {/*_*/}
 ?>

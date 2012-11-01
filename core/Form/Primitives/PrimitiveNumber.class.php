@@ -13,6 +13,8 @@
 	 * @ingroup Primitives
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class PrimitiveNumber extends FiltrablePrimitive
 	{
 		abstract protected function checkNumber($number);

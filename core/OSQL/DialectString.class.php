@@ -15,6 +15,8 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface DialectString
 	{
 		public function toDialectString(Dialect $dialect);

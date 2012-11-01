@@ -17,6 +17,8 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface Identifiable
 	{
 		public function getId();

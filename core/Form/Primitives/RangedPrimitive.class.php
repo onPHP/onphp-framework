@@ -13,6 +13,8 @@
 	 * @ingroup Primitives
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class RangedPrimitive extends BasePrimitive
 	{
 		protected $min = null;
@@ -24,7 +26,7 @@
 		}
 		
 		/**
-		 * @return RangedPrimitive
+		 * @return \Onphp\RangedPrimitive
 		**/
 		public function setMin($min)
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return RangedPrimitive
+		 * @return \Onphp\RangedPrimitive
 		**/
 		public function setMax($max)
 		{

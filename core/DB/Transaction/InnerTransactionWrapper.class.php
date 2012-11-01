@@ -14,29 +14,31 @@
 	 * 
 	 * @ingroup Transaction
 	**/
+	namespace Onphp;
+
 	final class InnerTransactionWrapper
 	{
 		/**
-		 * @var DB
+		 * @var \Onphp\DB
 		 */
 		private $db = null;
 		/**
-		 * @var StorableDAO
+		 * @var \Onphp\StorableDAO
 		 */
 		private $dao = null;
 		private $function = null;
 		private $exceptionFunction = null;
 		/**
-		 * @var IsolationLevel
+		 * @var \Onphp\IsolationLevel
 		 */
 		private $level = null;
 		/**
-		 * @var AccessMode
+		 * @var \Onphp\AccessMode
 		 */
 		private $mode = null;
 		
 		/**
-		 * @return InnerTransactionWrapper
+		 * @return \Onphp\InnerTransactionWrapper
 		 */
 		public static function create()
 		{
@@ -44,8 +46,8 @@
 		}
 		
 		/**
-		 * @param DB $db
-		 * @return InnerTransactionWrapper
+		 * @param \Onphp\DB $\Onphp\DB
+		 * @return \Onphp\InnerTransactionWrapper
 		 */
 		public function setDB(DB $db)
 		{
@@ -54,8 +56,8 @@
 		}
 		
 		/**
-		 * @param StorableDAO $dao
-		 * @return InnerTransactionWrapper
+		 * @param \Onphp\StorableDAO $dao
+		 * @return \Onphp\InnerTransactionWrapper
 		 */
 		public function setDao(StorableDAO $dao)
 		{
@@ -65,7 +67,7 @@
 		
 		/**
 		 * @param collable $function
-		 * @return InnerTransactionWrapper
+		 * @return \Onphp\InnerTransactionWrapper
 		 */
 		public function setFunction($function)
 		{
@@ -76,7 +78,7 @@
 		
 		/**
 		 * @param collable $function
-		 * @return InnerTransactionWrapper
+		 * @return \Onphp\InnerTransactionWrapper
 		 */
 		public function setExceptionFunction($function)
 		{
@@ -86,8 +88,8 @@
 		}
 
 		/**
-		 * @param IsolationLevel $level
-		 * @return InnerTransactionWrapper
+		 * @param \Onphp\IsolationLevel $level
+		 * @return \Onphp\InnerTransactionWrapper
 		 */
 		public function setLevel(IsolationLevel $level)
 		{
@@ -96,8 +98,8 @@
 		}
 
 		/**
-		 * @param AccessMode $mode
-		 * @return InnerTransactionWrapper
+		 * @param \Onphp\AccessMode $mode
+		 * @return \Onphp\InnerTransactionWrapper
 		 */
 		public function setMode(AccessMode $mode)
 		{
@@ -120,7 +122,7 @@
 				$result = call_user_func_array($this->function, func_get_args());
 				$transaction->commit();
 				return $result;
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$transaction->rollback();
 				if ($this->exceptionFunction) {
 					$args = func_get_args();

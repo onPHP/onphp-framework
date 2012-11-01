@@ -20,10 +20,12 @@
 	 *
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class Utf16ConverterFilter extends BaseFilter
 	{
 		/**
-		 * @return Utf16ConverterFilter
+		 * @return \Onphp\Utf16ConverterFilter
 		**/
 		public static function me()
 		{

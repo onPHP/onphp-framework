@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	class PrimitiveForm extends BasePrimitive
 	{
 		protected $proto = null;
@@ -20,7 +22,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveForm
+		 * @return \Onphp\PrimitiveForm
 		 * 
 		 * @deprecated You should use ofProto() instead
 		**/
@@ -37,7 +39,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveForm
+		 * @return \Onphp\PrimitiveForm
 		**/
 		public function ofProto(EntityProto $proto)
 		{
@@ -54,7 +56,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveForm
+		 * @return \Onphp\PrimitiveForm
 		 * 
 		 * Either composition or aggregation, it is very important on import.
 		**/
@@ -82,7 +84,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveForm
+		 * @return \Onphp\PrimitiveForm
 		**/
 		public function setValue($value)
 		{
@@ -93,7 +95,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveForm
+		 * @return \Onphp\PrimitiveForm
 		**/
 		public function importValue($value)
 		{

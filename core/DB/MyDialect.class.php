@@ -17,6 +17,8 @@
 	 *
 	 * @ingroup DB
 	**/
+	namespace Onphp;
+
 	class MyDialect extends Dialect
 	{
 		const IN_BOOLEAN_MODE = 1;

@@ -13,6 +13,8 @@
 	 * @ingroup Logic
 	 * @see http://www.postgresql.org/docs/8.3/interactive/hstore.html
 	**/
+	namespace Onphp;
+
 	final class HstoreExpression extends StaticFactory
 	{
 		const CONTAIN 		= '?';
@@ -21,7 +23,7 @@
 		const CONCAT		= '||';
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function containKey($field, $key)
 		{
@@ -29,7 +31,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function getValueByKey($field, $key)
 		{
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function containValue($field, $key, $value)
 		{
@@ -45,7 +47,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function concat($field, $value)
 		{
@@ -53,7 +55,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function containHstore($field, Hstore $hstore)
 		{

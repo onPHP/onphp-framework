@@ -12,8 +12,10 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveIpRange extends BaseObjectPrimitive
 	{
-		protected $className = 'IpRange';
+		protected $className = '\Onphp\IpRange';
 	}
 ?>

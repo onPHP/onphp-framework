@@ -13,5 +13,7 @@
 	 * @ingroup Exceptions
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class ClassNotFoundException extends BaseException {/*_*/}
 ?>

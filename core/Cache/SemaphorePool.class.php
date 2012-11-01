@@ -19,9 +19,11 @@
 	 * 
 	 * @ingroup Lockers
 	**/
+	namespace Onphp;
+
 	final class SemaphorePool extends BaseLocker implements Instantiatable
 	{
-		private static $lockerName	= 'DirectoryLocker';
+		private static $lockerName	= '\Onphp\DirectoryLocker';
 		private static $locker		= null;
 		
 		protected function __construct()
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return SemaphorePool
+		 * @return \Onphp\SemaphorePool
 		**/
 		public static function me()
 		{

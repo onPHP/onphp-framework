@@ -15,12 +15,14 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	class DBValue extends Castable
 	{
 		private $value = null;
 		
 		/**
-		 * @return DBValue
+		 * @return \Onphp\DBValue
 		**/
 		public static function create($value)
 		{

@@ -17,6 +17,8 @@
 	 * 
 	 * @ingroup DB
 	**/
+	namespace Onphp;
+
 	final class MyImprovedDialect extends MyDialect
 	{
 		public function quoteValue($value)

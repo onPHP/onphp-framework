@@ -9,6 +9,8 @@
  *                                                                          *
  ****************************************************************************/
 
+	namespace Onphp;
+
 	final class SequentialCache extends CachePeer
 	{
 		/**
@@ -24,14 +26,14 @@
 		private $slaves	= array();
 		
 		/**
-		 * @var CachePeer
+		 * @var \Onphp\CachePeer
 		 */
 		private $master	= null;
 
 		/**
-		 * @param CachePeer $master
+		 * @param \Onphp\CachePeer $master
 		 * @param array $slaves or CachePeer
-		 * @return SequentialCache 
+		 * @return \Onphp\SequentialCache 
 		 */
 		public static function create(CachePeer $master, array $slaves = array())
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @param CachePeer $master
+		 * @param \Onphp\CachePeer $master
 		 * @param array $slaves or CachePeer
 		 */
 		public function __construct(CachePeer $master, array $slaves = array())
@@ -52,8 +54,8 @@
 		}
 		
 		/**
-		 * @param CachePeer $master
-		 * @return \SequentialCache 
+		 * @param \Onphp\CachePeer $master
+		 * @return \Onphp\SequentialCache 
 		 */
 		public function setMaster(CachePeer $master)
 		{
@@ -65,8 +67,8 @@
 		}
 		
 		/**
-		 * @param CachePeer $master
-		 * @return \SequentialCache 
+		 * @param \Onphp\CachePeer $master
+		 * @return \Onphp\SequentialCache 
 		 */
 		public function addPeer(CachePeer $peer)
 		{
@@ -79,7 +81,7 @@
 		public function get($key)
 		{
 			foreach ($this->list as $val) {
-				/* @var $val CachePeer */
+				/* @var $val \Onphp\CachePeer */
 				$result = $val->get($key);
 				
 				if (
@@ -90,7 +92,7 @@
 				}
 			}
 			
-			throw new RuntimeException('All peers are dead');
+			throw new \RuntimeException('All peers are dead');
 		}
 
 		public function append($key, $data)
@@ -123,7 +125,7 @@
 			$result = true;
 			
 			foreach ($this->list as $peer) {
-				/* @var $peer CachePeer */
+				/* @var $peer \Onphp\CachePeer */
 				$result = call_user_func_array(array($peer, $method), $args) && $result;
 			}
 			

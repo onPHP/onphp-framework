@@ -13,6 +13,8 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class ExtractPart implements DialectString, MappableObject
 	{
 		private $what = null;
@@ -47,7 +49,7 @@
 		}
 		
 		/**
-		 * @return ExtractPart
+		 * @return \Onphp\ExtractPart
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{

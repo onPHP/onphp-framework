@@ -14,6 +14,8 @@
 	 * 
 	 * @see http://www.artlebedev.ru/tools/typograf/
 	**/
+	namespace Onphp;
+
 	final class RussianTypograph extends BaseFilter
 	{
 		const MAGIC_DELIMITER = '<>'; // brilliant!
@@ -82,7 +84,7 @@
 		);
 		
 		/**
-		 * @return RussianTypograph
+		 * @return \Onphp\RussianTypograph
 		**/
 		public static function me()
 		{

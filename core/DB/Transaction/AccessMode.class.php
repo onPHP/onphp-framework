@@ -16,6 +16,8 @@
 	 * 
 	 * @ingroup Transaction
 	**/
+	namespace Onphp;
+
 	final class AccessMode extends Enumeration
 	{
 		const READ_ONLY		= 0x01;

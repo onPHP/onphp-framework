@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class PriorityQueue
 	{
 		private $heap 			= array(0);

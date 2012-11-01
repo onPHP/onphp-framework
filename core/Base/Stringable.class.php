@@ -13,6 +13,8 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface Stringable
 	{
 		public function toString();

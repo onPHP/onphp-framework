@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class FullTextRank extends FullText
 	{
 		public function toDialectString(Dialect $dialect)

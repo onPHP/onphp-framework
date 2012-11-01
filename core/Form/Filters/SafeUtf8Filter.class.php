@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class SafeUtf8Filter extends BaseFilter
 	{
 		/**
-		 * @return SafeUtf8Filter
+		 * @return \Onphp\SafeUtf8Filter
 		**/
 		public static function me()
 		{

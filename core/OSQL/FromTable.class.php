@@ -15,6 +15,8 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class FromTable implements Aliased, SQLTableName
 	{
 		private $table	= null;

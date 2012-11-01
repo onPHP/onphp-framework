@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	abstract class SelectivePeer extends CachePeer
 	{
 		const MARGINAL_VALUE = 'i_am_declassed_element'; // Yanka R.I.P.
@@ -19,7 +21,7 @@
 		protected $className	= null;
 		
 		/**
-		 * @return SelectivePeer
+		 * @return \Onphp\SelectivePeer
 		**/
 		public function mark($className)
 		{

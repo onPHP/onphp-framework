@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Lockers
 	**/
+	namespace Onphp;
+
 	final class eAcceleratorLocker extends BaseLocker
 	{
 		public function get($key)

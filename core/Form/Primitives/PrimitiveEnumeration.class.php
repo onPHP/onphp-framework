@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	class PrimitiveEnumeration extends IdentifiablePrimitive
 	{
 		public function getList()
@@ -33,7 +35,7 @@
 
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveEnumeration
+		 * @return \Onphp\PrimitiveEnumeration
 		**/
 		public function of($class)
 		{
@@ -41,7 +43,7 @@
 			
 			Assert::classExists($className);
 			
-			Assert::isInstance($className, 'Enumeration');
+			Assert::isInstance($className, '\Onphp\Enumeration');
 			
 			$this->className = $className;
 			

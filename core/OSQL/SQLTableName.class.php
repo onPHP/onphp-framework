@@ -13,6 +13,8 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface SQLTableName extends DialectString
 	{
 		public function getTable();

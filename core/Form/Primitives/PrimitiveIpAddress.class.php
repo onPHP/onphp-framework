@@ -12,8 +12,10 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveIpAddress extends BaseObjectPrimitive
 	{
-		protected $className = 'IpAddress';
+		protected $className = '\Onphp\IpAddress';
 	}
 ?>

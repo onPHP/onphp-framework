@@ -18,6 +18,8 @@
 	 * 
 	 * @ingroup Base
 	**/
+	namespace Onphp;
+
 	class Date implements Stringable, DialectString
 	{
 		const WEEKDAY_MONDAY 	= 1;
@@ -29,12 +31,12 @@
 		const WEEKDAY_SUNDAY	= 0; // because strftime('%w') is 0 on Sunday
 
 		/**
-		 * @var DateTime
+		 * @var \DateTime
 		 */
 		protected $dateTime = null;
 
 		/**
-		 * @return Date
+		 * @return \Onphp\Date
 		**/
 		public static function create($date)
 		{
@@ -47,7 +49,7 @@
 		}
 		
 		/**
-		 * @return Date
+		 * @return \Onphp\Date
 		**/
 		public static function makeToday()
 		{
@@ -55,7 +57,7 @@
 		}
 		
 		/**
-		 * @return Date
+		 * @return \Onphp\Date
 		 * @see http://www.faqs.org/rfcs/rfc3339.html
 		 * @see http://www.cl.cam.ac.uk/~mgk25/iso-time.html
 		**/
@@ -181,7 +183,7 @@
 		}
 		
 		/**
-		 * @return Date
+		 * @return \Onphp\Date
 		**/
 		public function spawn($modification = null)
 		{
@@ -196,13 +198,13 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return Date
+		 * @return \Onphp\Date
 		**/
 		public function modify($string)
 		{
 			try {
 				$this->dateTime->modify($string);
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				throw new WrongArgumentException(
 					"wrong time string '{$string}'"
 				);
@@ -234,7 +236,7 @@
 		}
 		
 		/**
-		 * @return Date
+		 * @return \Onphp\Date
 		**/
 		public function getFirstDayOfWeek($weekStart = Date::WEEKDAY_MONDAY)
 		{
@@ -244,7 +246,7 @@
 		}
 		
 		/**
-		 * @return Date
+		 * @return \Onphp\Date
 		**/
 		public function getLastDayOfWeek($weekStart = Date::WEEKDAY_MONDAY)
 		{
@@ -278,7 +280,7 @@
 		}
 		
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		**/
 		public function toTimestamp()
 		{
@@ -286,7 +288,7 @@
 		}
 
 		/**
-		 * @return DateTime|null
+		 * @return \DateTime|null
 		 */
 		public function getDateTime()
 		{
@@ -303,7 +305,7 @@
 		{
 			try{
 				if (is_int($date) || is_numeric($date)) { // unix timestamp
-					$this->dateTime = new DateTime(date(static::getFormat(), $date));
+					$this->dateTime = new \DateTime(date(static::getFormat(), $date));
 
 				} elseif ($date && is_string($date)) {
 
@@ -321,11 +323,11 @@
 						);
 					}
 
-					$this->dateTime = new DateTime($date);
+					$this->dateTime = new \DateTime($date);
 				}
 
 
-			} catch(Exception $e) {
+			} catch(\Exception $e) {
 				throw new WrongArgumentException(
 					"strange input given - '{$date}'"
 				);

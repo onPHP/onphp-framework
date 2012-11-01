@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	abstract class QuerySkeleton extends QueryIdentification
 	{
 		protected $where		= array();	// where clauses
@@ -31,7 +33,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return QuerySkeleton
+		 * @return \Onphp\QuerySkeleton
 		**/
 		public function where(LogicalObject $exp, $logic = null)
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return QuerySkeleton
+		 * @return \Onphp\QuerySkeleton
 		**/
 		public function andWhere(LogicalObject $exp)
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return QuerySkeleton
+		 * @return \Onphp\QuerySkeleton
 		**/
 		public function orWhere(LogicalObject $exp)
 		{
@@ -67,7 +69,7 @@
 		}
 		
 		/**
-		 * @return QuerySkeleton
+		 * @return \Onphp\QuerySkeleton
 		**/
 		public function returning($field, $alias = null)
 		{
@@ -86,7 +88,7 @@
 		}
 		
 		/**
-		 * @return QuerySkeleton
+		 * @return \Onphp\QuerySkeleton
 		**/
 		public function dropReturning()
 		{
@@ -178,7 +180,7 @@
 		}
 		
 		/**
-		 * @return QuerySkeleton
+		 * @return \Onphp\QuerySkeleton
 		**/
 		protected function checkReturning(Dialect $dialect)
 		{

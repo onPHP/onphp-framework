@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Form
 	**/
+	namespace Onphp;
+
 	final class MappedForm
 	{
 		private $form = null;
@@ -20,7 +22,7 @@
 		private $map = array();
 		
 		/**
-		 * @return MappedForm
+		 * @return \Onphp\MappedForm
 		**/
 		public static function create(Form $form)
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function getForm()
 		{
@@ -41,7 +43,7 @@
 		}
 		
 		/**
-		 * @return MappedForm
+		 * @return \Onphp\MappedForm
 		**/
 		public function setDefaultType(RequestType $type)
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return MappedForm
+		 * @return \Onphp\MappedForm
 		**/
 		public function addSource($primitiveName, RequestType $type)
 		{
@@ -63,7 +65,7 @@
 		}
 		
 		/**
-		 * @return MappedForm
+		 * @return \Onphp\MappedForm
 		**/
 		public function importOne($name, HttpRequest $request)
 		{
@@ -92,7 +94,7 @@
 		}
 		
 		/**
-		 * @return MappedForm
+		 * @return \Onphp\MappedForm
 		**/
 		public function import(HttpRequest $request)
 		{
@@ -106,7 +108,7 @@
 		}
 		
 		/**
-		 * @return MappedForm
+		 * @return \Onphp\MappedForm
 		**/
 		public function export(RequestType $type)
 		{
@@ -134,7 +136,7 @@
 		}
 		
 		/**
-		 * @return MappedForm
+		 * @return \Onphp\MappedForm
 		**/
 		private function checkExistence($name)
 		{

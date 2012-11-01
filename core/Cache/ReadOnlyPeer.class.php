@@ -14,15 +14,17 @@
 	 *
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	final class ReadOnlyPeer extends CachePeer
 	{
 		/**
-		 * @var CachePeer
+		 * @var \Onphp\CachePeer
 		 */
 		private $innerPeer = null;
 
 		/**
-		 * @return ReadOnlyPeer
+		 * @return \Onphp\ReadOnlyPeer
 		 */
 		public static function create(CachePeer $peer)
 		{

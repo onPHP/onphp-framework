@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	class PrimitiveIdentifier extends IdentifiablePrimitive
 	{
 		private $methodName	= 'getById';
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveIdentifier
+		 * @return \Onphp\PrimitiveIdentifier
 		**/
 		public function of($class)
 		{
@@ -28,7 +30,7 @@
 			
 			Assert::isInstance(
 				$className,
-				'DAOConnected',
+				'\Onphp\DAOConnected',
 				"class '{$className}' must implement DAOConnected interface"
 			);
 			
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return GenericDAO
+		 * @return \Onphp\GenericDAO
 		**/
 		public function dao()
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveIdentifier
+		 * @return \Onphp\PrimitiveIdentifier
 		**/
 		public function setMethodName($methodName)
 		{

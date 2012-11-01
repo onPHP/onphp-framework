@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveTernary extends BasePrimitive
 	{
 		private $falseValue		= 0;
 		private $trueValue		= 1;
 		
 		/**
-		 * @return PrimitiveTernary
+		 * @return \Onphp\PrimitiveTernary
 		**/
 		public function setTrueValue($trueValue)
 		{
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveTernary
+		 * @return \Onphp\PrimitiveTernary
 		**/
 		public function setFalseValue($falseValue)
 		{

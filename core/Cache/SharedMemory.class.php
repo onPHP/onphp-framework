@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	final class SharedMemory extends SelectivePeer
 	{
 		const INDEX_SEGMENT			= 12345678;
@@ -26,7 +28,7 @@
 		private static $attached = array();
 		
 		/**
-		 * @return SharedMemory
+		 * @return \Onphp\SharedMemory
 		**/
 		public static function create(
 			$defaultSize = self::DEFAULT_SEGMENT_SIZE,
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return SharedMemory
+		 * @return \Onphp\SharedMemory
 		**/
 		public function __construct(
 			$defaultSize = self::DEFAULT_SEGMENT_SIZE,
@@ -145,7 +147,7 @@
 		}
 		
 		/**
-		 * @return SharedMemory
+		 * @return \Onphp\SharedMemory
 		**/
 		public function clean()
 		{

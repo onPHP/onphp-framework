@@ -17,17 +17,19 @@
 	 * 
 	 * @ingroup DB
 	**/
+	namespace Onphp;
+
 	final class SQLitePDO extends Sequenceless
 	{
 		
 		const ERROR_CONSTRAINT = 19;
 		/**
-		 * @var PDO 
+		 * @var \PDO 
 		 */
 		protected $link = null;
 		
 		/**
-		 * @return SQLitePDO
+		 * @return \Onphp\SQLitePDO
 		**/
 		public function connect()
 		{
@@ -38,7 +40,7 @@
 					'',
 					array(PDO::ATTR_PERSISTENT => $this->persistent)
 				);
-			} catch (PDOException $e) {
+			} catch (\PDOException $e) {
 				throw new DatabaseException(
 					'can not open SQLitePDO base: '
 					.$e->getMessage()
@@ -50,7 +52,7 @@
 		}
 		
 		/**
-		 * @return SQLitePDO
+		 * @return \Onphp\SQLitePDO
 		**/
 		public function disconnect()
 		{
@@ -81,13 +83,13 @@
 		{
 			try {
 				return $this->link->query($queryString);
-			} catch (PDOException $e) {
+			} catch (\PDOException $e) {
 				$code = $e->getCode();
 				
 				if ($code == self::ERROR_CONSTRAINT)
-					$exc = 'DuplicateObjectException';
+					$exc = '\Onphp\DuplicateObjectException';
 				else
-					$exc = 'DatabaseException';
+					$exc = '\Onphp\DatabaseException';
 				
 				throw new $exc($e->getMessage().': '.$queryString);
 			}
@@ -100,7 +102,7 @@
 		public function queryCount(Query $query)
 		{
 			$res = $this->queryNull($query);
-			/* @var $res PDOStatement */
+			/* @var $res \PDOStatement */
 			
 			return $res->rowCount();
 		}
@@ -108,7 +110,7 @@
 		public function queryRow(Query $query)
 		{
 			$res = $this->query($query);
-			/* @var $res PDOStatement */
+			/* @var $res \PDOStatement */
 			
 			$array = $res->fetchAll(PDO::FETCH_ASSOC);
 			if (count($array) > 1)
@@ -124,7 +126,7 @@
 		public function queryColumn(Query $query)
 		{
 			$res = $this->query($query);
-			/* @var $res PDOStatement */
+			/* @var $res \PDOStatement */
 			
 			$resArray = $res->fetchAll(PDO::FETCH_ASSOC);
 			if ($resArray) {
@@ -141,7 +143,7 @@
 		public function querySet(Query $query)
 		{
 			$res = $this->query($query);
-			/* @var $res PDOStatement */
+			/* @var $res \PDOStatement */
 			
 			return $res->fetchAll(PDO::FETCH_ASSOC) ?: null;
 		}
@@ -162,7 +164,7 @@
 		}
 		
 		/**
-		 * @return LitePDODialect
+		 * @return \Onphp\LitePDODialect
 		**/
 		protected function spawnDialect()
 		{

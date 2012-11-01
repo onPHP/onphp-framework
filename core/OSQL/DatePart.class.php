@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class DatePart extends Enumeration
 	{
 		const CENTURY			= 1;

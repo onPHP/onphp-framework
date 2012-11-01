@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class TruncateQuery extends QueryIdentification
 	{
 		private $targets = array();
@@ -32,7 +34,7 @@
 		}
 		
 		/**
-		 * @return TruncateQuery
+		 * @return \Onphp\TruncateQuery
 		**/
 		public function table($table)
 		{

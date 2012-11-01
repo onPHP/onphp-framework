@@ -14,6 +14,8 @@
 	 *
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	final class DebugCachePeer extends SelectivePeer
 	{
 		private $peer				= null;
@@ -25,7 +27,7 @@
 		
 		
 		/**
-		 * @return DebugCachePeer
+		 * @return \Onphp\DebugCachePeer
 		**/
 		public static function create(
 			CachePeer $peer, $logfile, $isWeb = true, $appendFile = true
@@ -88,7 +90,7 @@
 		}
 		
 		/**
-		 * @return CachePeer
+		 * @return \Onphp\CachePeer
 		**/
 		public function mark($className)
 		{
@@ -151,7 +153,7 @@
 		}
 		
 		/**
-		 * @return CachePeer
+		 * @return \Onphp\CachePeer
 		**/
 		public function clean()
 		{

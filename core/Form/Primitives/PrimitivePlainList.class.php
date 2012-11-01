@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitivePlainList extends PrimitiveList
 	{
 		/**
-		 * @return PrimitivePlainList
+		 * @return \Onphp\PrimitivePlainList
 		**/
 		public function setList($list)
 		{

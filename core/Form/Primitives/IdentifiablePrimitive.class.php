@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	abstract class IdentifiablePrimitive
 		extends PrimitiveInteger // parent class doesn't really matter here
 	{
@@ -34,7 +36,7 @@
 		}
 		
 		/**
-		 * @return IdentifiablePrimitive
+		 * @return \Onphp\IdentifiablePrimitive
 		**/
 		public function setScalar($orly = false)
 		{
@@ -45,7 +47,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return IdentifiablePrimitive
+		 * @return \Onphp\IdentifiablePrimitive
 		**/
 		public function setValue($value)
 		{

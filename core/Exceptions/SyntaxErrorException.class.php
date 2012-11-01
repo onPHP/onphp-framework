@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Exceptions
 	**/
+	namespace Onphp;
+
 	final class SyntaxErrorException extends BaseException
 	{
 		private $errorLine		= null;

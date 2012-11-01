@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class PCREFilter implements Filtrator
 	{
 		private $search 	= null;
@@ -19,7 +21,7 @@
 		private $limit		= -1;
 		
 		/**
-		 * @return PCREFilter
+		 * @return \Onphp\PCREFilter
 		**/
 		public static function create()
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return PCREFilter
+		 * @return \Onphp\PCREFilter
 		**/
 		public function setExpression($search, $replace)
 		{
@@ -49,7 +51,7 @@
 		}
 		
 		/**
-		 * @return PCREFilter
+		 * @return \Onphp\PCREFilter
 		**/
 		public function setLimit($limit)
 		{

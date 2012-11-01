@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class SelectQuery
 		extends QuerySkeleton
 		implements Named, JoinCapableQuery, Aliased
@@ -61,7 +63,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function setName($name)
 		{
@@ -72,7 +74,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function distinct()
 		{
@@ -86,7 +88,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function unDistinct()
 		{
@@ -100,7 +102,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function join($table, LogicalObject $logic, $alias = null)
 		{
@@ -111,7 +113,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function leftJoin($table, LogicalObject $logic, $alias = null)
 		{
@@ -122,7 +124,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function rightJoin($table, LogicalObject $logic, $alias = null)
 		{
@@ -134,9 +136,9 @@
 
 		/**
 		 * @param $table
-		 * @param LogicalObject $logic
+		 * @param \Onphp\LogicalObject $logic
 		 * @param null $alias
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		 */
 		public function fullOuterJoin($table, LogicalObject $logic, $alias = null)
 		{
@@ -150,7 +152,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function setOrderChain(OrderChain $chain)
 		{
@@ -160,7 +162,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function orderBy($field, $table = null)
 		{
@@ -170,7 +172,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function prependOrderBy($field, $table = null)
 		{
@@ -181,7 +183,7 @@
 		
 		/**
 		 * @throws WrongStateException
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function desc()
 		{
@@ -195,7 +197,7 @@
 		
 		/**
 		 * @throws WrongStateException
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function asc()
 		{
@@ -208,7 +210,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function groupBy($field, $table = null)
 		{
@@ -222,7 +224,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function dropGroupBy()
 		{
@@ -231,7 +233,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function having(LogicalObject $exp)
 		{
@@ -252,7 +254,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function limit($limit = null, $offset = null)
 		{
@@ -269,7 +271,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function from($table, $alias = null)
 		{
@@ -287,7 +289,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function get($field, $alias = null)
 		{
@@ -306,7 +308,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function multiGet(/* ... */)
 		{
@@ -320,7 +322,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function arrayGet($array, $prefix = null)
 		{
@@ -437,7 +439,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function dropFields()
 		{
@@ -446,7 +448,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function dropOrder()
 		{
@@ -455,7 +457,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function dropLimit()
 		{
@@ -472,7 +474,7 @@
 		}
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		private function makeOrder($field, $table = null)
 		{

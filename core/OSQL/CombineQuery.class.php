@@ -21,6 +21,8 @@
 	 * 
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class CombineQuery extends StaticFactory
 	{
 		const UNION				= 'UNION';
@@ -33,7 +35,7 @@
 		const EXCEPT_ALL		= 'EXCEPT ALL';
 		
 		/**
-		 * @return QueryCombination
+		 * @return \Onphp\QueryCombination
 		**/
 		public static function union($left, $right)
 		{
@@ -41,7 +43,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public static function unionBlock()
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return QueryCombination
+		 * @return \Onphp\QueryCombination
 		**/
 		public static function unionAll($left, $right)
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public static function unionAllBlock()
 		{
@@ -69,7 +71,7 @@
 		}
 		
 		/**
-		 * @return QueryCombination
+		 * @return \Onphp\QueryCombination
 		**/
 		public static function intersect($left, $right)
 		{
@@ -77,7 +79,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public static function intersectBlock()
 		{
@@ -87,7 +89,7 @@
 		}
 		
 		/**
-		 * @return QueryCombination
+		 * @return \Onphp\QueryCombination
 		**/
 		public static function intersectAll($left, $right)
 		{
@@ -95,7 +97,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public static function intersectAllBlock()
 		{
@@ -105,7 +107,7 @@
 		}
 		
 		/**
-		 * @return QueryCombination
+		 * @return \Onphp\QueryCombination
 		**/
 		public static function except($left, $right)
 		{
@@ -113,7 +115,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public static function exceptBlock()
 		{
@@ -123,7 +125,7 @@
 		}
 	
 		/**
-		 * @return QueryCombination
+		 * @return \Onphp\QueryCombination
 		**/
 		public static function exceptAll($left, $right)
 		{
@@ -131,7 +133,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public static function exceptAllBlock()
 		{

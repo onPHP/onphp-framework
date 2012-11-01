@@ -15,13 +15,15 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class Identifier implements Identifiable
 	{
 		private $id		= null;
 		private $final	= false;
 		
 		/**
-		 * @return Identifier
+		 * @return \Onphp\Identifier
 		**/
 		public static function create()
 		{
@@ -29,7 +31,7 @@
 		}
 		
 		/**
-		 * @return Identifier
+		 * @return \Onphp\Identifier
 		**/
 		public static function wrap($id)
 		{
@@ -42,7 +44,7 @@
 		}
 		
 		/**
-		 * @return Identifier
+		 * @return \Onphp\Identifier
 		**/
 		public function setId($id)
 		{
@@ -52,7 +54,7 @@
 		}
 		
 		/**
-		 * @return Identifier
+		 * @return \Onphp\Identifier
 		**/
 		public function finalize()
 		{

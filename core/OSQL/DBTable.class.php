@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class DBTable implements DialectString
 	{
 		private $name		= null;
@@ -22,7 +24,7 @@
 		private $uniques	= array();
 		
 		/**
-		 * @return DBTable
+		 * @return \Onphp\DBTable
 		**/
 		public static function create($name)
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return DBTable
+		 * @return \Onphp\DBTable
 		**/
 		public function addUniques(/* ... */)
 		{
@@ -67,7 +69,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return DBTable
+		 * @return \Onphp\DBTable
 		**/
 		public function addColumn(DBColumn $column)
 		{
@@ -87,7 +89,7 @@
 		
 		/**
 		 * @throws MissingElementException
-		 * @return DBColumn
+		 * @return \Onphp\DBColumn
 		**/
 		public function getColumnByName($name)
 		{
@@ -100,7 +102,7 @@
 		}
 		
 		/**
-		 * @return DBTable
+		 * @return \Onphp\DBTable
 		**/
 		public function dropColumnByName($name)
 		{
@@ -116,7 +118,7 @@
 		}
 		
 		/**
-		 * @return DBTable
+		 * @return \Onphp\DBTable
 		**/
 		public function setName($name)
 		{

@@ -15,6 +15,8 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class Singleton
 	{
 		private static $instances = array();

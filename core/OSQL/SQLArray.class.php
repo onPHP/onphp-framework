@@ -14,12 +14,14 @@
 	 * 
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class SQLArray implements DialectString
 	{
 		private $array = array();
 		
 		/**
-		 * @return SQLArray
+		 * @return \Onphp\SQLArray
 		**/
 		public static function create($array)
 		{

@@ -17,12 +17,14 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	class /* spirit of */ IdentifiableObject implements Identifiable, DialectString
 	{
 		protected $id = null;
 		
 		/**
-		 * @return IdentifiableObject
+		 * @return \Onphp\IdentifiableObject
 		**/
 		public static function wrap($id)
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return IdentifiableObject
+		 * @return \Onphp\IdentifiableObject
 		**/
 		public function setId($id)
 		{

@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup DB
 	**/
+	namespace Onphp;
+
 	abstract class DB
 	{
 		const FULL_TEXT_AND		= 1;
@@ -44,7 +46,7 @@
 		private $queue			= array();
 		private $toQueue		= false;
 		/**
-		 * @var UncachersPool
+		 * @var \Onphp\UncachersPool
 		 */
 		private $uncacher		= null;
 		private $outOfTransactionCachePeer = null;
@@ -65,7 +67,7 @@
 		abstract public function setDbEncoding();
 		
 		/**
-		 * @return Dialect
+		 * @return \Onphp\Dialect
 		 */
 		abstract protected function spawnDialect();
 
@@ -89,7 +91,7 @@
 		/**
 		 * Shortcut.
 		 * 
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public static function spawn(
 			$connector, $user, $pass, $host,
@@ -120,7 +122,7 @@
 		**/
 		//@{
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function begin(
 			/* IsolationLevel */ $level = null,
@@ -149,7 +151,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function commit()
 		{
@@ -168,7 +170,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function rollback()
 		{
@@ -198,7 +200,7 @@
 		**/
 		//@{
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function queueStart()
 		{
@@ -209,7 +211,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function queueStop()
 		{
@@ -219,7 +221,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function queueDrop()
 		{
@@ -229,7 +231,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function queueFlush()
 		{
@@ -251,7 +253,7 @@
 		
 		/**
 		 * @param string $savepointName
-		 * @return DB 
+		 * @return \Onphp\DB 
 		 */
 		public function savepointBegin($savepointName)
 		{
@@ -270,7 +272,7 @@
 		
 		/**
 		 * @param string $savepointName
-		 * @return DB 
+		 * @return \Onphp\DB 
 		 */
 		public function savepointRelease($savepointName)
 		{
@@ -292,7 +294,7 @@
 		
 		/**
 		 * @param string $savepointName
-		 * @return DB 
+		 * @return \Onphp\DB 
 		 */
 		public function savepointRollback($savepointName)
 		{
@@ -357,7 +359,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function setPersistent($really = false)
 		{
@@ -367,7 +369,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function setUsername($name)
 		{
@@ -377,7 +379,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function setPassword($password)
 		{
@@ -387,7 +389,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function setHostname($host)
 		{
@@ -403,7 +405,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function setBasename($base)
 		{
@@ -413,7 +415,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function setEncoding($encoding)
 		{
@@ -432,7 +434,7 @@
 		
 		/**
 		 * @param string $savepointName 
-		 * @return DB
+		 * @return \Onphp\DB
 		 */
 		private function addSavepoint($savepointName)
 		{
@@ -445,7 +447,7 @@
 		
 		/**
 		 * @param string $savepointName 
-		 * @return DB
+		 * @return \Onphp\DB
 		 */
 		private function dropSavepoint($savepointName)
 		{
@@ -467,7 +469,7 @@
 		}
 		
 		/**
-		 * @return UncachersPool
+		 * @return \Onphp\UncachersPool
 		 */
 		private function getUncacher()
 		{

@@ -13,5 +13,7 @@
 	 * @ingroup Exceptions
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	class NetworkException extends IOException {/*_*/}
 ?>

@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	final class WatermarkedPeer extends SelectivePeer
 	{
 		private $peer		= null;
@@ -23,7 +25,7 @@
 		private $map		= null;
 		
 		/**
-		 * @return WatermarkedPeer
+		 * @return \Onphp\WatermarkedPeer
 		**/
 		public static function create(
 			CachePeer $peer,
@@ -68,7 +70,7 @@
 		/**
 		 * associative array, className -> watermark
 		 * 
-		 * @return WatermarkedPeer
+		 * @return \Onphp\WatermarkedPeer
 		**/
 		public function setClassMap($map)
 		{
@@ -81,7 +83,7 @@
 		}
 		
 		/**
-		 * @return CachePeer
+		 * @return \Onphp\CachePeer
 		**/
 		public function mark($className)
 		{
@@ -140,7 +142,7 @@
 		}
 		
 		/**
-		 * @return CachePeer
+		 * @return \Onphp\CachePeer
 		**/
 		public function clean()
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class TrimFilter implements Filtrator
 	{
 		const LEFT	= 'l';
@@ -22,7 +24,7 @@
 		private $direction	= self::BOTH;
 		
 		/**
-		 * @return TrimFilter
+		 * @return \Onphp\TrimFilter
 		**/
 		public static function create()
 		{
@@ -30,7 +32,7 @@
 		}
 		
 		/**
-		 * @return TrimFilter
+		 * @return \Onphp\TrimFilter
 		**/
 		public function setLeft()
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return TrimFilter
+		 * @return \Onphp\TrimFilter
 		**/
 		public function setRight()
 		{
@@ -50,7 +52,7 @@
 		}
 		
 		/**
-		 * @return TrimFilter
+		 * @return \Onphp\TrimFilter
 		**/
 		public function setBoth()
 		{
@@ -71,7 +73,7 @@
 		}
 		
 		/**
-		 * @return TrimFilter
+		 * @return \Onphp\TrimFilter
 		**/
 		public function setCharlist($charlist)
 		{

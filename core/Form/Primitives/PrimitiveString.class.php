@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	class PrimitiveString extends FiltrablePrimitive
 	{
 		// TODO: consider making a primitive based on main::Net::Mail::MailAddress
@@ -31,7 +33,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveString
+		 * @return \Onphp\PrimitiveString
 		**/
 		public function setAllowedPattern($pattern)
 		{

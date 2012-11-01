@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveIdentifierList extends PrimitiveIdentifier
 	{
 		protected $value = array();
 		private $ignoreEmpty = false;
 		
 		/**
-		 * @return PrimitiveIdentifierList
+		 * @return \Onphp\PrimitiveIdentifierList
 		**/
 		public function clean()
 		{
@@ -31,7 +33,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveIdentifierList
+		 * @return \Onphp\PrimitiveIdentifierList
 		**/
 		public function setValue($value)
 		{

@@ -13,13 +13,15 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class OrderBy extends FieldTable implements MappableObject
 	{
 		private $direction	= null;
 		private $nulls		= null;
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		public static function create($field)
 		{
@@ -41,7 +43,7 @@
 		}
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		public function setDirection($direction)
 		{
@@ -50,7 +52,7 @@
 		}
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		public function desc()
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		public function asc()
 		{
@@ -73,7 +75,7 @@
 		}
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		public function nullsFirst()
 		{
@@ -82,7 +84,7 @@
 		}
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		public function nullsLast()
 		{
@@ -96,7 +98,7 @@
 		}
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		public function setNullsFirst($nullsFirst)
 		{
@@ -105,7 +107,7 @@
 		}
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		public function invert()
 		{
@@ -116,7 +118,7 @@
 		}
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{

@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class UnixToUnixDecode extends BaseFilter
 	{
 		/**
-		 * @return UnixToUnixDecode
+		 * @return \Onphp\UnixToUnixDecode
 		**/
 		public static function me()
 		{

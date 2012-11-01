@@ -15,12 +15,14 @@
 	 * @ingroup DB
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class ImaginaryDialect extends Dialect
 	{
 		private static $self = null;
 		
 		/**
-		 * @return ImaginaryDialect
+		 * @return \Onphp\ImaginaryDialect
 		**/
 		public static function me()
 		{

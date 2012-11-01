@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Transaction
 	**/
+	namespace Onphp;
+
 	final class Transaction extends StaticFactory
 	{
 		/**
-		 * @return DBTransaction
+		 * @return \Onphp\DBTransaction
 		**/
 		public static function immediate(DB $db)
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return TransactionQueue
+		 * @return \Onphp\TransactionQueue
 		**/
 		public static function deferred(DB $db)
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return FakeTransaction
+		 * @return \Onphp\FakeTransaction
 		**/
 		public static function fake(DB $db)
 		{

@@ -112,6 +112,8 @@
 	 * 
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	abstract class CachePeer
 	{
 		const TIME_SWITCH		= 2592000; // 60 * 60 * 24 * 30
@@ -132,7 +134,7 @@
 		abstract public function append($key, $data);
 		
 		/**
-		 * @return CachePeer
+		 * @return \Onphp\CachePeer
 		**/
 		public function clean()
 		{
@@ -176,7 +178,7 @@
 		}
 		
 		/**
-		 * @return CachePeer
+		 * @return \Onphp\CachePeer
 		**/
 		public function mark($className)
 		{
@@ -184,7 +186,7 @@
 		}
 		
 		/**
-		 * @return CachePeer
+		 * @return \Onphp\CachePeer
 		**/
 		public function enableCompression()
 		{
@@ -193,7 +195,7 @@
 		}
 
 		/**
-		 * @return CachePeer
+		 * @return \Onphp\CachePeer
 		**/
 		public function disableCompression()
 		{

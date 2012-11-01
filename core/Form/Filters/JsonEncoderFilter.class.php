@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class JsonEncoderFilter extends BaseFilter
 	{
 		/**
-		 * @return JsonEncoderFilter
+		 * @return \Onphp\JsonEncoderFilter
 		**/
 		public static function me()
 		{

@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class UnserializeFilter extends BaseFilter
 	{
 		/**
-		 * @return UnserializeFilter
+		 * @return \Onphp\UnserializeFilter
 		**/
 		public static function me()
 		{

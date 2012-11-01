@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Logic
 	**/
+	namespace Onphp;
+
 	interface LogicalObject extends DialectString
 	{
 		public function toBoolean(Form $form);

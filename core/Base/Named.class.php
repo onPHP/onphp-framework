@@ -15,6 +15,8 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface Named extends Identifiable
 	{
 		public function getName();

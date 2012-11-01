@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class NormalizeUrlFilter implements Filtrator
 	{
 		/**
-		 * @return NormalizeUrlFilter
+		 * @return \Onphp\NormalizeUrlFilter
 		**/
 		public static function create()
 		{

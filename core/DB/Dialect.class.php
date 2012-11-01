@@ -15,13 +15,15 @@
 	 * @ingroup DB
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class /* ANSI's */ Dialect {
 		const LITERAL_NULL = 'NULL';
 		const LITERAL_TRUE = 'TRUE';
 		const LITERAL_FALSE = 'FALSE';
 		
 		/**
-		 * @var DB
+		 * @var \Onphp\DB
 		 */
 		protected $db = null;
 		
@@ -36,7 +38,7 @@
 		
 		/**
 		 * @deprecated remove after onPHP 1.2+
-		 * @return LiteDialect
+		 * @return \Onphp\LiteDialect
 		**/
 		public static function me()
 		{
@@ -75,8 +77,8 @@
 		}
 		
 		/**
-		 * @param DB $db
-		 * @return Dialect
+		 * @param \Onphp\DB $\Onphp\DB
+		 * @return \Onphp\Dialect
 		 */
 		public function setDB(DB $db)
 		{

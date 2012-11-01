@@ -12,22 +12,24 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class CallbackFilter implements Filtrator
 	{
 		/**
-		 * @var Closure
+		 * @var \Closure
 		 */
 		private $callback = null;
 		
 		/**
-		 * @return CallbackFilter
+		 * @return \Onphp\CallbackFilter
 		**/
-		public static function create(Closure $callback)
+		public static function create(\Closure $callback)
 		{
 			return new self($callback);
 		}
 		
-		public function __construct(Closure $callback)
+		public function __construct(\Closure $callback)
 		{
 			$this->callback = $callback;
 		}

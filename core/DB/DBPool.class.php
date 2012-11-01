@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup DB
 	**/
+	namespace Onphp;
+
 	final class DBPool extends Singleton implements Instantiatable
 	{
 		private $default = null;
@@ -21,7 +23,7 @@
 		private $pool = array();
 		
 		/**
-		 * @return DBPool
+		 * @return \Onphp\DBPool
 		**/
 		public static function me()
 		{
@@ -29,7 +31,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public static function getByDao(GenericDAO $dao)
 		{
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return DBPool
+		 * @return \Onphp\DBPool
 		**/
 		public function setDefault(DB $db)
 		{
@@ -47,7 +49,7 @@
 		}
 		
 		/**
-		 * @return DBPool
+		 * @return \Onphp\DBPool
 		**/
 		public function dropDefault()
 		{
@@ -58,7 +60,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return DBPool
+		 * @return \Onphp\DBPool
 		**/
 		public function addLink($name, DB $db)
 		{
@@ -74,7 +76,7 @@
 		
 		/**
 		 * @throws MissingElementException
-		 * @return DBPool
+		 * @return \Onphp\DBPool
 		**/
 		public function dropLink($name)
 		{
@@ -90,7 +92,7 @@
 		
 		/**
 		 * @throws MissingElementException
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function getLink($name = null)
 		{
@@ -120,7 +122,7 @@
 		}
 		
 		/**
-		 * @return DBPool
+		 * @return \Onphp\DBPool
 		**/
 		public function shutdown()
 		{
@@ -133,7 +135,7 @@
 		}
 		
 		/**
-		 * @return DBPool
+		 * @return \Onphp\DBPool
 		**/
 		public function disconnect()
 		{

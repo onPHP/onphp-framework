@@ -12,9 +12,11 @@
 	/**
 	 * @param string $key 
 	 * 
-	 * @return Listable
+	 * @return \Onphp\Listable
 	 */
 	 
+	namespace Onphp;
+
 	interface ListGenerator
 	{
 		public function fetchList($key);

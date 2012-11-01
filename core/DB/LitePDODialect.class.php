@@ -16,6 +16,8 @@
 	 *
 	 * @ingroup DB
 	**/
+	namespace Onphp;
+
 	class LitePDODialect extends LiteDialect
 	{
 		public function quoteValue($value)
@@ -41,13 +43,13 @@
 		{
 			try {
 				return base64_decode($data);
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				throw new UnimplementedFeatureException('Wrong encoding, if you get it, throw correct exception');
 			}
 		}
 		
 		/**
-		 * @return PDO
+		 * @return \PDO
 		 */
 		protected function getLink() {
 			return parent::getLink();

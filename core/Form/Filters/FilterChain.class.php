@@ -14,12 +14,14 @@
 	 * 
 	 * @ingroup Form
 	**/
+	namespace Onphp;
+
 	final class FilterChain implements Filtrator
 	{
 		private $chain = array();
 
 		/**
-		 * @return FilterChain
+		 * @return \Onphp\FilterChain
 		**/
 		public static function create()
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return FilterChain
+		 * @return \Onphp\FilterChain
 		**/
 		public function add(Filtrator $filter)
 		{
@@ -36,7 +38,7 @@
 		}
 
 		/**
-		 * @return FilterChain
+		 * @return \Onphp\FilterChain
 		**/
 		public function dropAll()
 		{

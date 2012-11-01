@@ -14,12 +14,14 @@
 	 * 
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class StripTagsFilter implements Filtrator
 	{
 		private $exclude = null;
 		
 		/**
-		 * @return StripTagsFilter
+		 * @return \Onphp\StripTagsFilter
 		**/
 		public static function create()
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return StripTagsFilter
+		 * @return \Onphp\StripTagsFilter
 		**/
 		public function setAllowableTags($exclude)
 		{

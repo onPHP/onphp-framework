@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveAlias extends BasePrimitive
 	{
 		private $primitive = null;
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveAlias
+		 * @return \Onphp\PrimitiveAlias
 		**/
 		public function setDefault($default)
 		{
@@ -91,7 +93,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveAlias
+		 * @return \Onphp\PrimitiveAlias
 		**/
 		public function setValue($value)
 		{
@@ -101,7 +103,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveAlias
+		 * @return \Onphp\PrimitiveAlias
 		**/
 		public function dropValue()
 		{
@@ -111,7 +113,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveAlias
+		 * @return \Onphp\PrimitiveAlias
 		**/
 		public function setRawValue($raw)
 		{
@@ -126,7 +128,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveAlias
+		 * @return \Onphp\PrimitiveAlias
 		**/
 		public function clean()
 		{

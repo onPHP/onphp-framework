@@ -14,12 +14,14 @@
 	 * 
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	final class RubberFileSystem extends CachePeer
 	{
 		private $directory	= null;
 		
 		/**
-		 * @return RubberFileSystem
+		 * @return \Onphp\RubberFileSystem
 		**/
 		public static function create($directory = 'cache/')
 		{
@@ -53,7 +55,7 @@
 		}
 		
 		/**
-		 * @return RubberFileSystem
+		 * @return \Onphp\RubberFileSystem
 		**/
 		public function clean()
 		{

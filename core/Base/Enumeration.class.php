@@ -17,7 +17,9 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
-	abstract class Enumeration extends NamedObject implements Serializable
+	namespace Onphp;
+
+	abstract class Enumeration extends NamedObject implements \Serializable
 	{
 		protected $names = array(/* override me */);
 		
@@ -81,7 +83,7 @@
 		}
 		
 		/**
-		 * @return Enumeration
+		 * @return \Onphp\Enumeration
 		**/
 		public function setId($id)
 		{

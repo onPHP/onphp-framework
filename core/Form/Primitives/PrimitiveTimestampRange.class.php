@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveTimestampRange extends PrimitiveDateRange
 	{
 		private $className = null;
 		
 		/**
-		 * @return PrimitiveTimestampRange
+		 * @return \Onphp\PrimitiveTimestampRange
 		**/
 		public static function create($name)
 		{
@@ -26,7 +28,7 @@
 		
 		protected function getObjectName()
 		{
-			return 'TimestampRange';
+			return '\Onphp\TimestampRange';
 		}
 		
 		protected function makeRange($string)

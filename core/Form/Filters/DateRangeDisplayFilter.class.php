@@ -12,14 +12,16 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class DateRangeDisplayFilter extends BaseFilter
 	{
 		/**
-		 * @return DateRangeDisplayFilter
+		 * @return \Onphp\DateRangeDisplayFilter
 		**/
 		public static function me()
 		{
-			return Singleton::getInstance('DateRangeDisplayFilter');
+			return Singleton::getInstance('\Onphp\DateRangeDisplayFilter');
 		}
 		
 		public function apply($value)

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class DBSchema extends QueryIdentification
 	{
 		private $tables	= array();
@@ -29,7 +31,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return DBSchema
+		 * @return \Onphp\DBSchema
 		**/
 		public function addTable(DBTable $table)
 		{
@@ -48,7 +50,7 @@
 		
 		/**
 		 * @throws MissingElementException
-		 * @return DBTable
+		 * @return \Onphp\DBTable
 		**/
 		public function getTableByName($name)
 		{

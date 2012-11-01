@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveTime extends ComplexPrimitive
 	{
 		const HOURS		= PrimitiveTimestamp::HOURS;
@@ -20,7 +22,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveTime
+		 * @return \Onphp\PrimitiveTime
 		**/
 		public function setValue(/* Time */ $time)
 		{
@@ -33,7 +35,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveTime
+		 * @return \Onphp\PrimitiveTime
 		**/
 		public function setMin(/* Time */ $time)
 		{
@@ -46,7 +48,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveTime
+		 * @return \Onphp\PrimitiveTime
 		**/
 		public function setMax(/* Time */ $time)
 		{
@@ -59,7 +61,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveTime
+		 * @return \Onphp\PrimitiveTime
 		**/
 		public function setDefault(/* Time */ $time)
 		{

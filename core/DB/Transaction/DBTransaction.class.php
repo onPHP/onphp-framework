@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Transaction
 	**/
+	namespace Onphp;
+
 	final class DBTransaction extends BaseTransaction
 	{
 		private $started	= false;
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return DBTransaction
+		 * @return \Onphp\DBTransaction
 		**/
 		public function setDB(DB $db)
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return DBTransaction
+		 * @return \Onphp\DBTransaction
 		**/
 		public function add(Query $query)
 		{
@@ -58,7 +60,7 @@
 		}
 		
 		/**
-		 * @return DBTransaction
+		 * @return \Onphp\DBTransaction
 		**/
 		public function flush()
 		{

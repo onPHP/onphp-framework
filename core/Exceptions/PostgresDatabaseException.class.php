@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Exceptions
 	**/
+	namespace Onphp;
+
 	class PostgresDatabaseException extends DatabaseException
 	{
 		public function __construct($message = null, $code = null)

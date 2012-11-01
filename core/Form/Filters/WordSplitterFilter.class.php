@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class WordSplitterFilter implements Filtrator
 	{
 		private $maxWordLength 	= 25;
 		private $delimer 		= '&#x200B;';
 		
 		/**
-		 * @return WordSplitterFilter
+		 * @return \Onphp\WordSplitterFilter
 		**/
 		public static function create()
 		{
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return WordSplitterFilter
+		 * @return \Onphp\WordSplitterFilter
 		**/
 		public function setMaxWordLength($length)
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return WordSplitterFilter
+		 * @return \Onphp\WordSplitterFilter
 		**/
 		public function setDelimer($delimer)
 		{

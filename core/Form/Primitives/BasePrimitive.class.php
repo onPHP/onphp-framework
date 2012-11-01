@@ -15,6 +15,8 @@
 	 * @ingroup Primitives
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class BasePrimitive
 	{
 		protected $name		= null;
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		**/
 		public function setName($name)
 		{
@@ -54,7 +56,7 @@
 		}
 		
 		/**
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		**/
 		public function setDefault($default)
 		{
@@ -92,7 +94,7 @@
 		}
 		
 		/**
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		**/
 		public function setValue($value)
 		{
@@ -102,7 +104,7 @@
 		}
 		
 		/**
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		**/
 		public function dropValue()
 		{
@@ -112,7 +114,7 @@
 		}
 		
 		/**
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		 * 
 		 * usually, you should not use this method
 		**/
@@ -129,7 +131,7 @@
 		}
 		
 		/**
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		**/
 		public function setRequired($really = false)
 		{
@@ -139,7 +141,7 @@
 		}
 		
 		/**
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		**/
 		public function required()
 		{
@@ -149,7 +151,7 @@
 		}
 		
 		/**
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		**/
 		public function optional()
 		{
@@ -164,7 +166,7 @@
 		}
 		
 		/**
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		**/
 		public function clean()
 		{

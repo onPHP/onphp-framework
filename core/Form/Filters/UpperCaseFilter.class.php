@@ -12,10 +12,12 @@
 	/**
 	  * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class UpperCaseFilter extends BaseFilter
 	{
 		/**
-		 * @return LowerCaseFilter
+		 * @return \Onphp\LowerCaseFilter
 		**/
 		public static function me()
 		{

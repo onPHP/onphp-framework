@@ -14,13 +14,15 @@
 	 * 
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class CropFilter implements Filtrator
 	{
 		private $start	= 0;
 		private $length	= 0;
 		
 		/**
-		 * @return CropFilter
+		 * @return \Onphp\CropFilter
 		**/
 		public static function create()
 		{
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return CropFilter
+		 * @return \Onphp\CropFilter
 		**/
 		public function setStart($start)
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return CropFilter
+		 * @return \Onphp\CropFilter
 		**/
 		public function setLength($length)
 		{

@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	class PrimitiveDateRange extends FiltrablePrimitive
 	{
 		private $className = null;
 		
 		/**
-		 * @return PrimitiveDateRange
+		 * @return \Onphp\PrimitiveDateRange
 		**/
 		public static function create($name)
 		{
@@ -26,7 +28,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveDateRange
+		 * @return \Onphp\PrimitiveDateRange
 		**/
 		public function of($class)
 		{
@@ -41,7 +43,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveDateRange
+		 * @return \Onphp\PrimitiveDateRange
 		**/
 		public function setDefault(/* DateRange */ $object)
 		{
@@ -109,7 +111,7 @@
 		
 		protected function getObjectName()
 		{
-			return 'DateRange';
+			return '\Onphp\DateRange';
 		}
 		
 		protected function checkRanges(DateRange $range)

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Lockers
 	**/
+	namespace Onphp;
+
 	abstract class BaseLocker extends Singleton
 	{
 		protected $pool = array();

@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class OrderChain implements DialectString, MappableObject
 	{
 		private $chain = array();
 		
 		/**
-		 * @return OrderChain
+		 * @return \Onphp\OrderChain
 		**/
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return OrderChain
+		 * @return \Onphp\OrderChain
 		**/
 		public function add($order)
 		{
@@ -35,7 +37,7 @@
 		}
 		
 		/**
-		 * @return OrderChain
+		 * @return \Onphp\OrderChain
 		**/
 		public function prepend($order)
 		{
@@ -48,7 +50,7 @@
 		}
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		public function getLast()
 		{
@@ -66,7 +68,7 @@
 		}
 		
 		/**
-		 * @return OrderChain
+		 * @return \Onphp\OrderChain
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
@@ -92,7 +94,7 @@
 		}
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		private function makeOrder($object)
 		{

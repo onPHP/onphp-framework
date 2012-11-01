@@ -16,5 +16,7 @@
 	 * @ingroup Exceptions
 	 * @ingroup Module
 	**/
-	class UnimplementedFeatureException extends Exception {/*_*/}
+	namespace Onphp;
+
+	class UnimplementedFeatureException extends \Exception {/*_*/}
 ?>

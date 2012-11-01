@@ -15,6 +15,8 @@
 	 * @ingroup Filters
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class BaseFilter
 		extends Singleton
 		implements Filtrator, Instantiatable {/*_*/}

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Logic
 	**/
+	namespace Onphp;
+
 	final class BinaryExpression implements LogicalObject, MappableObject
 	{
 		const EQUALS			= '=';
@@ -46,7 +48,7 @@
 		private $brackets = true;
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		 */
 		public static function create($left, $right, $logic)
 		{
@@ -77,7 +79,7 @@
 		
 		/**
 		 * @param boolean $noBrackets
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		 */
 		public function noBrackets($noBrackets = true)
 		{
@@ -94,7 +96,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{

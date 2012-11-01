@@ -16,6 +16,8 @@
 	 * 
 	 * @ingroup Transaction
 	**/
+	namespace Onphp;
+
 	final class TransactionQueue extends BaseTransaction implements Query
 	{
 		private $queue = null;
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return TransactionQueue
+		 * @return \Onphp\TransactionQueue
 		**/
 		public function add(Query $query)
 		{
@@ -48,7 +50,7 @@
 		
 		/**
 		 * @throws DatabaseException
-		 * @return TransactionQueue
+		 * @return \Onphp\TransactionQueue
 		**/
 		public function flush()
 		{

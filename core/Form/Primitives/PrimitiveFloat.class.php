@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveFloat extends PrimitiveNumber
 	{
 		protected function checkNumber($number)

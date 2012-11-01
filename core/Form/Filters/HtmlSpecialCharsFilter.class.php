@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class HtmlSpecialCharsFilter extends BaseFilter
 	{
 		/**
-		 * @return HtmlSpecialCharsFilter
+		 * @return \Onphp\HtmlSpecialCharsFilter
 		**/
 		public static function me()
 		{

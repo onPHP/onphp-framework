@@ -13,5 +13,7 @@
 	 * @ingroup Exceptions
 	 * @ingroup Module
 	**/
-	class BusinessLogicException extends Exception {/*_*/}
+	namespace Onphp;
+
+	class BusinessLogicException extends \Exception {/*_*/}
 ?>

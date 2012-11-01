@@ -13,6 +13,8 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class QueryIdentification implements Query
 	{
 		public function getId()

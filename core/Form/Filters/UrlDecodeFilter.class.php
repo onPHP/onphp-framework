@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class UrlDecodeFilter extends BaseFilter
 	{
 		/**
-		 * @return UrlDecodeFilter
+		 * @return \Onphp\UrlDecodeFilter
 		**/
 		public static function me()
 		{

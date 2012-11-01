@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class Paragraphizer extends BaseFilter
 	{
 		/**
-		 * @return Paragraphizer
+		 * @return \Onphp\Paragraphizer
 		**/
 		public static function me()
 		{

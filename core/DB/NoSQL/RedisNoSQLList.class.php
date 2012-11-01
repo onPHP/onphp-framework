@@ -9,6 +9,8 @@
 	*                                                                         *
 	***************************************************************************/
 
+	namespace Onphp;
+
 	final class RedisNoSQLList implements Listable
 	{
 		private $redis		= null;
@@ -16,7 +18,7 @@
 		private $position	= null;
 		private $timeout	= null;
 		
-		public function __construct(Redis $redis, $key, $timeout = null)
+		public function __construct(\Redis $redis, $key, $timeout = null)
 		{
 			$this->redis	= $redis;
 			$this->key		= $key;

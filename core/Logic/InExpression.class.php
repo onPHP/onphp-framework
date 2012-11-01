@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Logic
 	**/
+	namespace Onphp;
+
 	final class InExpression implements LogicalObject, MappableObject
 	{
 		const IN		= 'IN';
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return InExpression
+		 * @return \Onphp\InExpression
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{

@@ -17,15 +17,17 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class Enum extends NamedObject
 		implements
-			Serializable
+			\Serializable
 	{
 		protected static $names = array(/* override me */);
 
 		/**
 		 * @param integer $id
-		 * @return Enum
+		 * @return \Onphp\Enum
 		 */
 		public static function create($id)
 		{
@@ -39,7 +41,7 @@
 
 		/**
 		 * @param $id
-		 * @return Enum
+		 * @return \Onphp\Enum
 		 * @throws MissingElementException
 		 */
 		protected function setInternalId($id)
@@ -134,7 +136,7 @@
 		}
 
 		/**
-		 * @return Enum
+		 * @return \Onphp\Enum
 		**/
 		public function setId($id)
 		{

@@ -12,5 +12,7 @@
 	/**
 	 * @ingroup Exceptions
 	**/
+	namespace Onphp;
+
 	class CachedObjectNotFoundException extends ObjectNotFoundException {/*_*/}
 ?>

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	class PrimitiveList extends BasePrimitive implements ListedPrimitive
 	{
 		protected $list = array();
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveList
+		 * @return \Onphp\PrimitiveList
 		**/
 		public function setDefault($default)
 		{
@@ -56,7 +58,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveList
+		 * @return \Onphp\PrimitiveList
 		**/
 		public function setList($list)
 		{

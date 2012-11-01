@@ -14,6 +14,8 @@
 	 *
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	abstract class InsertOrUpdateQuery
 		extends QuerySkeleton
 		implements SQLTableName
@@ -34,7 +36,7 @@
 		}
 		
 		/**
-		 * @return InsertOrUpdateQuery
+		 * @return \Onphp\InsertOrUpdateQuery
 		**/
 		public function set($field, $value = null)
 		{
@@ -45,7 +47,7 @@
 		
 		/**
 		 * @throws MissingElementException
-		 * @return InsertOrUpdateQuery
+		 * @return \Onphp\InsertOrUpdateQuery
 		**/
 		public function drop($field)
 		{
@@ -58,7 +60,7 @@
 		}
 		
 		/**
-		 * @return InsertOrUpdateQuery
+		 * @return \Onphp\InsertOrUpdateQuery
 		**/
 		public function lazySet($field, /* Identifiable */ $object = null)
 		{
@@ -85,7 +87,7 @@
 		}
 		
 		/**
-		 * @return InsertOrUpdateQuery
+		 * @return \Onphp\InsertOrUpdateQuery
 		**/
 		public function setBoolean($field, $value = false)
 		{
@@ -100,7 +102,7 @@
 		/**
 		 * Adds values from associative array.
 		 *
-		 * @return InsertOrUpdateQuery
+		 * @return \Onphp\InsertOrUpdateQuery
 		**/
 		public function arraySet($fields)
 		{

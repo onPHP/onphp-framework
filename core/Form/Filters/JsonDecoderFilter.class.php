@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class JsonDecoderFilter extends BaseFilter
 	{
 		private $assoc = false;

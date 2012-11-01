@@ -16,10 +16,12 @@
 	 *
 	 * @ingroup DB
 	**/
+	namespace Onphp;
+
 	class PgSQL extends DB
 	{
 		/**
-		 * @return PgSQL
+		 * @return \Onphp\PgSQL
 		**/
 		public function connect()
 		{
@@ -34,7 +36,7 @@
 					$this->link = pg_pconnect($conn);
 				else
 					$this->link = pg_connect($conn);
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				throw new DatabaseException(
 					'can not connect to PostgreSQL server: '.$e->getMessage(),
 					$e->getCode(),
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return PgSQL
+		 * @return \Onphp\PgSQL
 		**/
 		public function disconnect()
 		{
@@ -79,7 +81,7 @@
 		}
 		
 		/**
-		 * @return PgSQL
+		 * @return \Onphp\PgSQL
 		**/
 		public function setDbEncoding()
 		{
@@ -103,10 +105,10 @@
 				$code = substr($error, 8, 5);
 				
 				if ($code == PostgresError::UNIQUE_VIOLATION) {
-					$e = 'DuplicateObjectException';
+					$e = '\Onphp\DuplicateObjectException';
 					$code = null;
 				} else
-					$e = 'PostgresDatabaseException';
+					$e = '\Onphp\PostgresDatabaseException';
 				
 				throw new $e($error.' - '.$queryString, $code);
 			}
@@ -172,7 +174,7 @@
 		
 		/**
 		 * @throws ObjectNotFoundException
-		 * @return DBTable
+		 * @return \Onphp\DBTable
 		**/
 		public function getTableInfo($table)
 		{
@@ -250,7 +252,7 @@
 		}
 		
 		/**
-		 * @return PostgresDialect
+		 * @return \Onphp\PostgresDialect
 		**/
 		protected function spawnDialect()
 		{

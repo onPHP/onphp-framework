@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveArray extends FiltrablePrimitive
 	{
 		/**
@@ -24,7 +26,7 @@
 		private $fetchMode = null;
 		
 		/**
-		 * @return PrimitiveArray
+		 * @return \Onphp\PrimitiveArray
 		**/
 		public function setFetchMode($ternary)
 		{

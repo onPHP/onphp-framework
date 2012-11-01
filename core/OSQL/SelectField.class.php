@@ -15,12 +15,14 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class SelectField extends FieldTable implements Aliased
 	{
 		private $alias = null;
 		
 		/**
-		 * @return SelectField
+		 * @return \Onphp\SelectField
 		**/
 		public static function create(DialectString $field, $alias)
 		{

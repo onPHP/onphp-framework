@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Transaction
 	**/
+	namespace Onphp;
+
 	abstract class BaseTransaction
 	{
 		protected $db		= null;
@@ -29,7 +31,7 @@
 		}
 		
 		/**
-		 * @return BaseTransaction
+		 * @return \Onphp\BaseTransaction
 		**/
 		public function setDB(DB $db)
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return DB
+		 * @return \Onphp\DB
 		**/
 		public function getDB()
 		{
@@ -47,7 +49,7 @@
 		}
 		
 		/**
-		 * @return BaseTransaction
+		 * @return \Onphp\BaseTransaction
 		**/
 		public function setIsolationLevel(IsolationLevel $level)
 		{
@@ -57,7 +59,7 @@
 		}
 		
 		/**
-		 * @return BaseTransaction
+		 * @return \Onphp\BaseTransaction
 		**/
 		public function setAccessMode(AccessMode $mode)
 		{

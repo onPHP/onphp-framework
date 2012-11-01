@@ -14,10 +14,12 @@
 	 *
 	 * @ingroup Logic
 	**/
+	namespace Onphp;
+
 	final class Expression extends StaticFactory
 	{
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function expAnd($left, $right)
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function expOr($left, $right)
 		{
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function eq($field, $value)
 		{
@@ -45,7 +47,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function eqId($field, Identifiable $object)
 		{
@@ -53,7 +55,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function notEq($field, $value)
 		{
@@ -65,7 +67,7 @@
 		/**
 		 * greater than
 		 *
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function gt($field, $value)
 		{
@@ -77,7 +79,7 @@
 		/**
 		 * greater than or equals
 		 *
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function gtEq($field, $value)
 		{
@@ -89,7 +91,7 @@
 		/**
 		 * lower than
 		 *
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function lt($field, $value)
 		{
@@ -101,7 +103,7 @@
 		/**
 		 * lower than or equals
 		 *
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function ltEq($field, $value)
 		{
@@ -111,7 +113,7 @@
 		}
 		
 		/**
-		 * @return PostfixUnaryExpression
+		 * @return \Onphp\PostfixUnaryExpression
 		**/
 		public static function notNull($field)
 		{
@@ -119,7 +121,7 @@
 		}
 		
 		/**
-		 * @return PostfixUnaryExpression
+		 * @return \Onphp\PostfixUnaryExpression
 		**/
 		public static function isNull($field)
 		{
@@ -127,7 +129,7 @@
 		}
 		
 		/**
-		 * @return PostfixUnaryExpression
+		 * @return \Onphp\PostfixUnaryExpression
 		**/
 		public static function isTrue($field)
 		{
@@ -135,7 +137,7 @@
 		}
 		
 		/**
-		 * @return PostfixUnaryExpression
+		 * @return \Onphp\PostfixUnaryExpression
 		**/
 		public static function isFalse($field)
 		{
@@ -143,7 +145,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function like($field, $value)
 		{
@@ -151,7 +153,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function notLike($field, $value)
 		{
@@ -159,7 +161,7 @@
 		}
 
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function ilike($field, $value)
 		{
@@ -167,7 +169,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function notIlike($field, $value)
 		{
@@ -175,7 +177,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function similar($field, $value)
 		{
@@ -183,7 +185,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function notSimilar($field, $value)
 		{
@@ -191,7 +193,7 @@
 		}
 		
 		/**
-		 * @return EqualsLowerExpression
+		 * @return \Onphp\EqualsLowerExpression
 		**/
 		public static function eqLower($field, $value)
 		{
@@ -199,7 +201,7 @@
 		}
 		
 		/**
-		 * @return LogicalBetween
+		 * @return \Onphp\LogicalBetween
 		**/
 		public static function between($field, $left, $right)
 		{
@@ -209,7 +211,7 @@
 		/**
 		 * {,not}in handles strings, arrays and SelectQueries
 		 *
-		 * @return LogicalObject
+		 * @return \Onphp\LogicalObject
 		**/
 		public static function in($field, $value)
 		{
@@ -225,7 +227,7 @@
 		}
 		
 		/**
-		 * @return LogicalObject
+		 * @return \Onphp\LogicalObject
 		**/
 		public static function notIn($field, $value)
 		{
@@ -243,7 +245,7 @@
 		/**
 		 * +
 		 *
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function add($field, $value)
 		{
@@ -253,7 +255,7 @@
 		/**
 		 * -
 		 *
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function sub($field, $value)
 		{
@@ -263,7 +265,7 @@
 		/**
 		 * *
 		 *
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function mul($field, $value)
 		{
@@ -273,7 +275,7 @@
 		/**
 		 * /
 		 *
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function div($field, $value)
 		{
@@ -283,7 +285,7 @@
 		/**
 		 * %
 		 *
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function mod($field, $value)
 		{
@@ -291,7 +293,7 @@
 		}
 		
 		/**
-		 * @return FullTextSearch
+		 * @return \Onphp\FullTextSearch
 		**/
 		public static function fullTextAnd($field, $wordsList)
 		{
@@ -299,7 +301,7 @@
 		}
 		
 		/**
-		 * @return FullTextSearch
+		 * @return \Onphp\FullTextSearch
 		**/
 		public static function fullTextOr($field, $wordsList)
 		{
@@ -307,7 +309,7 @@
 		}
 		
 		/**
-		 * @return FullTextRank
+		 * @return \Onphp\FullTextRank
 		**/
 		public static function fullTextRankOr($field, $wordsList)
 		{
@@ -315,7 +317,7 @@
 		}
 		
 		/**
-		 * @return FullTextRank
+		 * @return \Onphp\FullTextRank
 		**/
 		public static function fullTextRankAnd($field, $wordsList)
 		{
@@ -323,7 +325,7 @@
 		}
 		
 		/**
-		 * @return LogicalChain
+		 * @return \Onphp\LogicalChain
 		**/
 		public static function orBlock(/* ... */)
 		{
@@ -334,7 +336,7 @@
 		}
 
 		/**
-		 * @return LogicalChain
+		 * @return \Onphp\LogicalChain
 		**/
 		public static function andBlock(/* ... */)
 		{
@@ -345,7 +347,7 @@
 		}
 		
 		/**
-		 * @return LogicalChain
+		 * @return \Onphp\LogicalChain
 		**/
 		public static function chain()
 		{
@@ -353,7 +355,7 @@
 		}
 		
 		/**
-		 * @return PrefixUnaryExpression
+		 * @return \Onphp\PrefixUnaryExpression
 		**/
 		public static function not($field)
 		{
@@ -361,7 +363,7 @@
 		}
 
 		/**
-		 * @return PrefixUnaryExpression
+		 * @return \Onphp\PrefixUnaryExpression
 		**/
 		public static function minus($field)
 		{
@@ -369,7 +371,7 @@
 		}
 		
 		/**
-		 * @return Ip4ContainsExpression 
+		 * @return \Onphp\Ip4ContainsExpression 
 		**/
 		public static function containsIp($range, $ip)
 		{
@@ -377,7 +379,7 @@
 		}
 		
 		/**
-		 * @return LogicalChain
+		 * @return \Onphp\LogicalChain
 		**/
 		private static function block($args, $logic)
 		{

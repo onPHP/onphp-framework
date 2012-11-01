@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class UnTypographizer extends BaseFilter
 	{
 		private static $symbols =
@@ -36,7 +38,7 @@
 			);
 		
 		/**
-		 * @return UnTypographizer
+		 * @return \Onphp\UnTypographizer
 		**/
 		public static function me()
 		{

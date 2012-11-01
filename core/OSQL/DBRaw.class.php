@@ -16,6 +16,8 @@
 	 * 
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class DBRaw implements LogicalObject
 	{
 		private $string = null;

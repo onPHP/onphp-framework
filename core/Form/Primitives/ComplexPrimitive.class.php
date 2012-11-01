@@ -15,6 +15,8 @@
 	 * @ingroup Primitives
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class ComplexPrimitive extends RangedPrimitive
 	{
 		private $single = null;	// single, not single or fsck it
@@ -26,7 +28,7 @@
 		}
 
 		/**
-		 * @return Ternary
+		 * @return \Onphp\Ternary
 		**/
 		public function getState()
 		{
@@ -34,7 +36,7 @@
 		}
 
 		/**
-		 * @return ComplexPrimitive
+		 * @return \Onphp\ComplexPrimitive
 		**/
 		public function setState(Ternary $ternary)
 		{
@@ -44,7 +46,7 @@
 		}
 
 		/**
-		 * @return ComplexPrimitive
+		 * @return \Onphp\ComplexPrimitive
 		**/
 		public function setSingle()
 		{
@@ -54,7 +56,7 @@
 		}
 
 		/**
-		 * @return ComplexPrimitive
+		 * @return \Onphp\ComplexPrimitive
 		**/
 		public function setComplex()
 		{
@@ -64,7 +66,7 @@
 		}
 
 		/**
-		 * @return ComplexPrimitive
+		 * @return \Onphp\ComplexPrimitive
 		**/
 		public function setAnyState()
 		{

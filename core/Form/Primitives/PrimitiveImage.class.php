@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveImage extends PrimitiveFile
 	{
 		private $width		= null;
@@ -28,7 +30,7 @@
 		private $type		= null;
 		
 		/**
-		 * @return PrimitiveImage
+		 * @return \Onphp\PrimitiveImage
 		**/
 		public function clean()
 		{
@@ -55,7 +57,7 @@
 		}
 
 		/**
-		 * @return PrimitiveImage
+		 * @return \Onphp\PrimitiveImage
 		**/
 		public function setMaxWidth($max)
 		{
@@ -70,7 +72,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveImage
+		 * @return \Onphp\PrimitiveImage
 		**/
 		public function setMinWidth($min)
 		{
@@ -85,7 +87,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveImage
+		 * @return \Onphp\PrimitiveImage
 		**/
 		public function setMaxHeight($max)
 		{
@@ -100,7 +102,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveImage
+		 * @return \Onphp\PrimitiveImage
 		**/
 		public function setMinHeight($min)
 		{

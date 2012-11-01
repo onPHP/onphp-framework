@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveHttpUrl extends PrimitiveString
 	{
 		public function import($scope)

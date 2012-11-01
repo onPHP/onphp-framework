@@ -14,6 +14,8 @@
 	 *
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class DataType extends Enumeration implements DialectString
 	{
 		const SMALLINT			= 0x001001;
@@ -84,7 +86,7 @@
 		);
 		
 		/**
-		 * @return DataType
+		 * @return \Onphp\DataType
 		**/
 		public static function create($id)
 		{
@@ -103,7 +105,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return DataType
+		 * @return \Onphp\DataType
 		**/
 		public function setSize($size)
 		{
@@ -127,7 +129,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return DataType
+		 * @return \Onphp\DataType
 		**/
 		public function setPrecision($precision)
 		{
@@ -151,7 +153,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return DataType
+		 * @return \Onphp\DataType
 		**/
 		public function setScale($scale)
 		{
@@ -165,7 +167,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return DataType
+		 * @return \Onphp\DataType
 		**/
 		public function setTimezoned($zoned = false)
 		{
@@ -182,7 +184,7 @@
 		}
 		
 		/**
-		 * @return DataType
+		 * @return \Onphp\DataType
 		**/
 		public function setNull($isNull = false)
 		{
@@ -198,7 +200,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return DataType
+		 * @return \Onphp\DataType
 		**/
 		public function setUnsigned($unsigned = false)
 		{

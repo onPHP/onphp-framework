@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Base
 	**/
+	namespace Onphp;
+
 	final class SessionNotStartedException extends BaseException
 	{
 		public function __construct()

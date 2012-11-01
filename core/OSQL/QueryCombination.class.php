@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class QueryCombination
 		extends QueryIdentification
 		implements DialectString
@@ -56,7 +58,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return QueryCombination
+		 * @return \Onphp\QueryCombination
 		**/
 		public function limit($limit = null, $offset = null)
 		{
@@ -73,7 +75,7 @@
 		}
 		
 		/**
-		 * @return QueryCombination
+		 * @return \Onphp\QueryCombination
 		**/
 		public function dropOrder()
 		{
@@ -83,7 +85,7 @@
 		}
 		
 		/**
-		 * @return QueryCombination
+		 * @return \Onphp\QueryCombination
 		**/
 		public function setOrderChain(OrderChain $chain)
 		{
@@ -93,7 +95,7 @@
 		}
 		
 		/**
-		 * @return QueryCombination
+		 * @return \Onphp\QueryCombination
 		**/
 		public function orderBy($field)
 		{

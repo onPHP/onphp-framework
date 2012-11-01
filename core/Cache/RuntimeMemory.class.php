@@ -14,12 +14,14 @@
 	 * 
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	final class RuntimeMemory extends CachePeer
 	{
 		private $cache = array();
 		
 		/**
-		 * @return RuntimeMemory
+		 * @return \Onphp\RuntimeMemory
 		**/
 		public static function create()
 		{
@@ -66,7 +68,7 @@
 		}
 		
 		/**
-		 * @return RuntimeMemory
+		 * @return \Onphp\RuntimeMemory
 		**/
 		public function clean()
 		{

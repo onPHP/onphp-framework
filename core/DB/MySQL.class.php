@@ -17,10 +17,12 @@
 	 * 
 	 * @ingroup DB
 	**/
+	namespace Onphp;
+
 	final class MySQL extends Sequenceless
 	{
 		/**
-		 * @return MySQL
+		 * @return \Onphp\MySQL
 		**/
 		public function setDbEncoding()
 		{
@@ -30,7 +32,7 @@
 		}
 
 		/**
-		 * @return MySQL
+		 * @return \Onphp\MySQL
 		**/
 		public function connect()
 		{
@@ -78,7 +80,7 @@
 		}
 		
 		/**
-		 * @return MySQL
+		 * @return \Onphp\MySQL
 		**/
 		public function disconnect()
 		{
@@ -146,9 +148,9 @@
 				$code = mysql_errno($this->link);
 				
 				if ($code == 1062)
-					$e = 'DuplicateObjectException';
+					$e = '\Onphp\DuplicateObjectException';
 				else
-					$e = 'DatabaseException';
+					$e = '\Onphp\DatabaseException';
 
 				throw new $e(
 					mysql_error($this->link).' - '.$queryString,
@@ -258,7 +260,7 @@
 		}
 		
 		/**
-		 * @return MyDialect
+		 * @return \Onphp\MyDialect
 		**/
 		protected function spawnDialect()
 		{

@@ -19,5 +19,7 @@
 	 * 
 	 * Use this exception instead of View('error')
 	**/
+	namespace Onphp;
+
 	class BadRequestException extends BaseException {/* nop */}
 ?>

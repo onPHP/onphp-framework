@@ -14,33 +14,35 @@
 	 * 
 	 * @ingroup Logic
 	**/
+	namespace Onphp;
+
 	class CallbackLogicalObject implements LogicalObject
 	{
 		/**
-		 * @var Closure
+		 * @var \Closure
 		 */
 		private $callback = null;
 
 		/**
 		 * @static
-		 * @param Closure $callback
-		 * @return CallbackLogicalObject
+		 * @param \Closure $callback
+		 * @return \Onphp\CallbackLogicalObject
 		 */
-		static public function create(Closure $callback)
+		static public function create(\Closure $callback)
 		{
 			return new self($callback);
 		}
 
 		/**
-		 * @param Closure $callback
+		 * @param \Closure $callback
 		 */
-		public function __construct(Closure $callback)
+		public function __construct(\Closure $callback)
 		{
 			$this->callback = $callback;
 		}
 
 		/**
-		 * @param Form $form
+		 * @param \Onphp\Form $\Onphp\Form
 		 * @return bool
 		 */
 		public function toBoolean(Form $form)
@@ -49,7 +51,7 @@
 		}
 
 		/**
-		 * @param Dialect $dialect
+		 * @param \Onphp\Dialect $\Onphp\Dialect
 		 * @throws UnimplementedFeatureException 
 		 */
 		public function toDialectString(Dialect $dialect)

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class CreateTableQuery extends QueryIdentification
 	{
 		private $table = null;

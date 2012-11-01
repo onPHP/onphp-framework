@@ -19,6 +19,8 @@
 	 * 
 	 * @example cacheSettings.php
 	**/
+	namespace Onphp;
+
 	final class Cache extends StaticFactory implements Instantiatable
 	{
 		const NOT_FOUND			= 'nil';
@@ -43,7 +45,7 @@
 		private static $instances = array();
 		
 		/**
-		 * @return CachePeer
+		 * @return \Onphp\CachePeer
 		**/
 		public static function me()
 		{
@@ -82,7 +84,7 @@
 		}
 		
 		/**
-		 * @return BaseDaoWorker
+		 * @return \Onphp\BaseDaoWorker
 		**/
 		public static function worker($dao)
 		{

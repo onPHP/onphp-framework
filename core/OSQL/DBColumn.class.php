@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class DBColumn implements SQLTableName
 	{
 		private $type		= null;
@@ -29,7 +31,7 @@
 		private $sequenced	= null;
 		
 		/**
-		 * @return DBColumn
+		 * @return \Onphp\DBColumn
 		**/
 		public static function create(DataType $type, $name)
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return DataType
+		 * @return \Onphp\DataType
 		**/
 		public function getType()
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return DBColumn
+		 * @return \Onphp\DBColumn
 		**/
 		public function setTable(DBTable $table)
 		{
@@ -66,7 +68,7 @@
 		}
 		
 		/**
-		 * @return DBTable
+		 * @return \Onphp\DBTable
 		**/
 		public function getTable()
 		{
@@ -79,7 +81,7 @@
 		}
 		
 		/**
-		 * @return DBColumn
+		 * @return \Onphp\DBColumn
 		**/
 		public function setPrimaryKey($primary = false)
 		{
@@ -89,7 +91,7 @@
 		}
 		
 		/**
-		 * @return DBColumn
+		 * @return \Onphp\DBColumn
 		**/
 		public function setDefault($default)
 		{
@@ -105,7 +107,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return DBColumn
+		 * @return \Onphp\DBColumn
 		**/
 		public function setReference(
 			DBColumn $column,
@@ -132,7 +134,7 @@
 		}
 		
 		/**
-		 * @return DBColumn
+		 * @return \Onphp\DBColumn
 		**/
 		public function dropReference()
 		{
@@ -149,7 +151,7 @@
 		}
 		
 		/**
-		 * @return DBColumn
+		 * @return \Onphp\DBColumn
 		**/
 		public function setAutoincrement($auto = false)
 		{

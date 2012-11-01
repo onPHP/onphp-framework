@@ -11,6 +11,8 @@
 	/**
 	 * Timestamp with time zone
 	 */
+	namespace Onphp;
+
 	class TimestampTZ extends Timestamp
 	{
 		/**
@@ -23,17 +25,17 @@
 		}
 
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		**/
 		public function toTimestamp($zone=null)
 		{
 			if($zone) {
 
 				if(
-					!($zone instanceof DateTimeZone)
+					!($zone instanceof \DateTimeZone)
 					&& is_scalar($zone)
 				) {
-					$zone = new DateTimeZone($zone);
+					$zone = new \DateTimeZone($zone);
 				}
 
 				return new static($this->toStamp(), $zone);

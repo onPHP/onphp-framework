@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Logic
 	**/
+	namespace Onphp;
+
 	final class LogicalBetween implements LogicalObject, MappableObject
 	{
 		private $field  = null;
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return LogicalBetween
+		 * @return \Onphp\LogicalBetween
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{

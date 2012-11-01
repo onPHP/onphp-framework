@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class SQLFullOuterJoin extends SQLBaseJoin
 	{
 		/**
-		 * @param Dialect $dialect
+		 * @param \Onphp\Dialect $\Onphp\Dialect
 		 * @return string
 		 */
 		public function toDialectString(Dialect $dialect)

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class QueryChain extends SQLChain
 	{
 		public function toBoolean(Form $form)
@@ -20,7 +22,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public static function block($args, $logic)
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public function union(SelectQuery $query)
 		{
@@ -47,7 +49,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public function unionAll(SelectQuery $query)
 		{
@@ -55,7 +57,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public function intersect(SelectQuery $query)
 		{
@@ -63,7 +65,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public function intersectAll(SelectQuery $query)
 		{
@@ -71,7 +73,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public function except(SelectQuery $query)
 		{
@@ -79,7 +81,7 @@
 		}
 		
 		/**
-		 * @return QueryChain
+		 * @return \Onphp\QueryChain
 		**/
 		public function exceptAll(SelectQuery $query)
 		{

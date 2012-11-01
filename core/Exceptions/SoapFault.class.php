@@ -14,5 +14,7 @@
 	 * 
 	 * @ingroup Exceptions
 	**/
-	class SoapFault extends Exception {/*_*/}
+	namespace Onphp;
+
+	class SoapFault extends \Exception {/*_*/}
 ?>

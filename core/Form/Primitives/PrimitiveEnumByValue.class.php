@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveEnumByValue extends PrimitiveEnum
 	{
 		public function import($scope)

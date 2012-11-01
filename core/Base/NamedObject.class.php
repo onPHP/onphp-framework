@@ -15,6 +15,8 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class NamedObject
 		extends IdentifiableObject
 		implements Named, Stringable
@@ -34,7 +36,7 @@
 		}
 		
 		/**
-		 * @return NamedObject
+		 * @return \Onphp\NamedObject
 		**/
 		public function setName($name)
 		{

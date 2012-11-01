@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	class PrimitiveTimestamp extends PrimitiveDate
 	{
 		const HOURS		= 'hrs';
@@ -71,7 +73,7 @@
 		
 		protected function getObjectName()
 		{
-			return 'Timestamp';
+			return '\Onphp\Timestamp';
 		}
 
 		public function exportValue()

@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class UrlEncodeFilter extends BaseFilter
 	{
 		/**
-		 * @return UrlEncodeFilter
+		 * @return \Onphp\UrlEncodeFilter
 		**/
 		public static function me()
 		{

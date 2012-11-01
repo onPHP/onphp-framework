@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class HashFilter implements Filtrator
 	{
 		private $binary = false;
@@ -24,7 +26,7 @@
 		}
 		
 		/**
-		 * @return HashFilter
+		 * @return \Onphp\HashFilter
 		**/
 		public static function create($binary = false)
 		{

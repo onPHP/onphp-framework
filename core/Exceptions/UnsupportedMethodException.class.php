@@ -13,5 +13,7 @@
 	 * @ingroup Exceptions
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	class UnsupportedMethodException extends BaseException {/*_*/}
 ?>

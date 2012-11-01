@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class FullTextSearch extends FullText
 	{
 		public function toDialectString(Dialect $dialect)

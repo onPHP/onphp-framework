@@ -9,33 +9,35 @@
 	*                                                                         *
 	***************************************************************************/
 	
-	interface Listable extends Iterator, ArrayAccess, Countable, SeekableIterator
+	namespace Onphp;
+
+	interface Listable extends \Iterator, \ArrayAccess, \Countable, \SeekableIterator
 	{
 		/**
 		 * Push new list item to the tail of list
 		 *
-		 * @return Listable
+		 * @return \Onphp\Listable
 		 */
 		public function append($value);
 		
 		/**
 		 * Push new list item to the head of list
 		 *
-		 * @return Listable
+		 * @return \Onphp\Listable
 		 */
 		public function prepend($value);
 		
 		/**
 		 * Trims $length items starting from @start
 		 *
-		 * @return Listable
+		 * @return \Onphp\Listable
 		 */
 		public function trim($start, $length);
 		
 		/**
 		 * Truncates list
 		 *
-		 * @return Listable
+		 * @return \Onphp\Listable
 		 */
 		public function clear();
 		
@@ -52,7 +54,7 @@
 		public function pop();
 		
 		/**
-		 * @return Listable
+		 * @return \Onphp\Listable
 		 */
 		public function set($index, $value);
 		

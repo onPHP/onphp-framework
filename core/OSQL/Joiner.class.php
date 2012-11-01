@@ -13,13 +13,15 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class Joiner implements DialectString
 	{
 		private $from	= array();
 		private $tables	= array();
 		
 		/**
-		 * @return Joiner
+		 * @return \Onphp\Joiner
 		**/
 		public function from(FromTable $from)
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return Joiner
+		 * @return \Onphp\Joiner
 		**/
 		public function join(SQLJoin $join)
 		{
@@ -50,7 +52,7 @@
 		}
 		
 		/**
-		 * @return Joiner
+		 * @return \Onphp\Joiner
 		**/
 		public function leftJoin(SQLLeftJoin $join)
 		{
@@ -61,7 +63,7 @@
 		}
 		
 		/**
-		 * @return Joiner
+		 * @return \Onphp\Joiner
 		**/
 		public function rightJoin(SQLRightJoin $join)
 		{
@@ -72,8 +74,8 @@
 		}
 
 		/**
-		 * @param SQLFullOuterJoin $join
-		 * @return Joiner
+		 * @param \Onphp\SQLFullOuterJoin $join
+		 * @return \Onphp\Joiner
 		 */
 		public function fullOuterJoin(SQLFullOuterJoin $join)
 		{

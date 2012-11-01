@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Transaction
 	**/
+	namespace Onphp;
+
 	final class FakeTransaction extends BaseTransaction
 	{
 		/**
-		 * @return FakeTransaction
+		 * @return \Onphp\FakeTransaction
 		**/
 		public function add(Query $query)
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return FakeTransaction
+		 * @return \Onphp\FakeTransaction
 		**/
 		public function flush()
 		{

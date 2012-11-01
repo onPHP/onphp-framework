@@ -16,6 +16,8 @@
 	 *
 	 * @ingroup DB
 	**/
+	namespace Onphp;
+
 	class LiteDialect extends Dialect implements Instantiatable
 	{
 		public function quoteValue($value)

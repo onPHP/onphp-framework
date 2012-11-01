@@ -13,10 +13,12 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class GroupBy extends FieldTable implements MappableObject
 	{
 		/**
-		 * @return GroupBy
+		 * @return \Onphp\GroupBy
 		**/
 		public static function create($field)
 		{
@@ -24,7 +26,7 @@
 		}
 		
 		/**
-		 * @return GroupBy
+		 * @return \Onphp\GroupBy
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{

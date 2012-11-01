@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	class PrimitiveFile extends RangedPrimitive
 	{
 		private $originalName		= null;
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveFile
+		 * @return \Onphp\PrimitiveFile
 		**/
 		public function clean()
 		{
@@ -45,7 +47,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveFile
+		 * @return \Onphp\PrimitiveFile
 		**/
 		public function setAllowedMimeTypes($mimes)
 		{
@@ -58,7 +60,7 @@
 
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveFile
+		 * @return \Onphp\PrimitiveFile
 		**/
 		public function addAllowedMimeType($mime)
 		{
@@ -148,7 +150,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveFile
+		 * @return \Onphp\PrimitiveFile
 		**/
 		public function enableCheckUploaded()
 		{
@@ -158,7 +160,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveFile
+		 * @return \Onphp\PrimitiveFile
 		**/
 		public function disableCheckUploaded()
 		{

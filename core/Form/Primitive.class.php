@@ -14,10 +14,12 @@
 	 *
 	 * @ingroup Form
 	**/
+	namespace Onphp;
+
 	final class Primitive extends StaticFactory
 	{
 		/**
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		**/
 		public static function spawn($primitive, $name)
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return Primitive
+		 * @return \Onphp\Primitive
 		**/
 		public static function alias($name, BasePrimitive $prm)
 		{
@@ -35,7 +37,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveAnyType
+		 * @return \Onphp\PrimitiveAnyType
 		**/
 		public static function anyType($name)
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveInteger
+		 * @return \Onphp\PrimitiveInteger
 		**/
 		public static function integer($name)
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveFloat
+		 * @return \Onphp\PrimitiveFloat
 		**/
 		public static function float($name)
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveIdentifier
+		 * @return \Onphp\PrimitiveIdentifier
 		 * @obsoleted by integerIdentifier and scalarIdentifier
 		**/
 		public static function identifier($name)
@@ -68,7 +70,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveIntegerIdentifier
+		 * @return \Onphp\PrimitiveIntegerIdentifier
 		**/
 		public static function integerIdentifier($name)
 		{
@@ -76,7 +78,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveScalarIdentifier
+		 * @return \Onphp\PrimitiveScalarIdentifier
 		**/
 		public static function scalarIdentifier($name)
 		{
@@ -84,7 +86,7 @@
 		}
 		
 		/**
-		 * @return PrimitivePolymorphicIdentifier
+		 * @return \Onphp\PrimitivePolymorphicIdentifier
 		**/
 		public static function polymorphicIdentifier($name)
 		{
@@ -92,7 +94,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveIdentifierList
+		 * @return \Onphp\PrimitiveIdentifierList
 		**/
 		public static function identifierlist($name)
 		{
@@ -100,7 +102,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveClass
+		 * @return \Onphp\PrimitiveClass
 		**/
 		public static function clazz($name)
 		{
@@ -108,7 +110,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveEnumeration
+		 * @return \Onphp\PrimitiveEnumeration
 		**/
 		public static function enumeration($name)
 		{
@@ -116,7 +118,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveEnumerationByValue
+		 * @return \Onphp\PrimitiveEnumerationByValue
 		**/
 		public static function enumerationByValue($name)
 		{
@@ -124,7 +126,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveEnumerationList
+		 * @return \Onphp\PrimitiveEnumerationList
 		**/
 		public static function enumerationList($name)
 		{
@@ -132,7 +134,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveDate
+		 * @return \Onphp\PrimitiveDate
 		**/
 		public static function date($name)
 		{
@@ -140,7 +142,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveTimestamp
+		 * @return \Onphp\PrimitiveTimestamp
 		**/
 		public static function timestamp($name)
 		{
@@ -148,7 +150,7 @@
 		}
 
 		/**
-		 * @return PrimitiveTimestampTZ
+		 * @return \Onphp\PrimitiveTimestampTZ
 		**/
 		public static function timestampTZ($name)
 		{
@@ -156,7 +158,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveTime
+		 * @return \Onphp\PrimitiveTime
 		**/
 		public static function time($name)
 		{
@@ -164,7 +166,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveString
+		 * @return \Onphp\PrimitiveString
 		**/
 		public static function string($name)
 		{
@@ -172,7 +174,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveBinary
+		 * @return \Onphp\PrimitiveBinary
 		**/
 		public static function binary($name)
 		{
@@ -180,7 +182,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveRange
+		 * @return \Onphp\PrimitiveRange
 		**/
 		public static function range($name)
 		{
@@ -188,7 +190,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveDateRange
+		 * @return \Onphp\PrimitiveDateRange
 		**/
 		public static function dateRange($name)
 		{
@@ -196,7 +198,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveTimestampRange
+		 * @return \Onphp\PrimitiveTimestampRange
 		**/
 		public static function timestampRange($name)
 		{
@@ -204,7 +206,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveList
+		 * @return \Onphp\PrimitiveList
 		**/
 		public static function choice($name)
 		{
@@ -212,7 +214,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveArray
+		 * @return \Onphp\PrimitiveArray
 		**/
 		public static function set($name)
 		{
@@ -220,7 +222,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveHstore
+		 * @return \Onphp\PrimitiveHstore
 		**/
 		public static function hstore($name)
 		{
@@ -228,7 +230,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveMultiList
+		 * @return \Onphp\PrimitiveMultiList
 		**/
 		public static function multiChoice($name)
 		{
@@ -236,7 +238,7 @@
 		}
 		
 		/**
-		 * @return PrimitivePlainList
+		 * @return \Onphp\PrimitivePlainList
 		**/
 		public static function plainChoice($name)
 		{
@@ -244,7 +246,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveBoolean
+		 * @return \Onphp\PrimitiveBoolean
 		**/
 		public static function boolean($name)
 		{
@@ -252,7 +254,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveTernary
+		 * @return \Onphp\PrimitiveTernary
 		**/
 		public static function ternary($name)
 		{
@@ -260,7 +262,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveFile
+		 * @return \Onphp\PrimitiveFile
 		**/
 		public static function file($name)
 		{
@@ -268,7 +270,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveImage
+		 * @return \Onphp\PrimitiveImage
 		**/
 		public static function image($name)
 		{
@@ -276,7 +278,7 @@
 		}
 		
 		/**
-		 * @return ExplodedPrimitive
+		 * @return \Onphp\ExplodedPrimitive
 		**/
 		public static function exploded($name)
 		{
@@ -284,7 +286,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveInet
+		 * @return \Onphp\PrimitiveInet
 		**/
 		public static function inet($name)
 		{
@@ -292,7 +294,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveForm
+		 * @return \Onphp\PrimitiveForm
 		**/
 		public static function form($name)
 		{
@@ -300,7 +302,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveFormsList
+		 * @return \Onphp\PrimitiveFormsList
 		**/
 		public static function formsList($name)
 		{
@@ -308,7 +310,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveNoValue
+		 * @return \Onphp\PrimitiveNoValue
 		**/
 		public static function noValue($name)
 		{
@@ -316,7 +318,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveHttpUrl
+		 * @return \Onphp\PrimitiveHttpUrl
 		**/
 		public static function httpUrl($name)
 		{
@@ -324,11 +326,11 @@
 		}
 		
 		/**
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		**/
 		public static function prototyped($class, $propertyName, $name = null)
 		{
-			Assert::isInstance($class, 'Prototyped');
+			Assert::isInstance($class, '\Onphp\Prototyped');
 			
 			$proto = is_string($class)
 				? call_user_func(array($class, 'proto'))
@@ -342,11 +344,11 @@
 		}
 		
 		/**
-		 * @return PrimitiveIdentifier
+		 * @return \Onphp\PrimitiveIdentifier
 		**/
 		public static function prototypedIdentifier($class, $name = null)
 		{
-			Assert::isInstance($class, 'DAOConnected');
+			Assert::isInstance($class, '\Onphp\DAOConnected');
 			
 			$dao = is_string($class)
 				? call_user_func(array($class, 'dao'))
@@ -356,7 +358,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveIpAddress
+		 * @return \Onphp\PrimitiveIpAddress
 		**/
 		public static function ipAddress($name)
 		{
@@ -364,7 +366,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveIpRange
+		 * @return \Onphp\PrimitiveIpRange
 		 */
 		public static function ipRange($name)
 		{
@@ -372,7 +374,7 @@
 		}
 
 		/**
-		 * @return PrimitiveEnum
+		 * @return \Onphp\PrimitiveEnum
 		**/
 		public static function enum($name)
 		{
@@ -380,7 +382,7 @@
 		}
 
 		/**
-		 * @return PrimitiveEnumByValue
+		 * @return \Onphp\PrimitiveEnumByValue
 		**/
 		public static function enumByValue($name)
 		{
@@ -388,7 +390,7 @@
 		}
 
 		/**
-		 * @return PrimitiveEnumList
+		 * @return \Onphp\PrimitiveEnumList
 		**/
 		public static function enumList($name)
 		{

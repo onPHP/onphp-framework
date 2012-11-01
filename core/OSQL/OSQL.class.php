@@ -16,10 +16,12 @@
 	 * 
 	 * @see http://onphp.org/examples.OSQL.en.html
 	**/
+	namespace Onphp;
+
 	final class OSQL extends StaticFactory
 	{
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public static function select()
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return InsertQuery
+		 * @return \Onphp\InsertQuery
 		**/
 		public static function insert()
 		{
@@ -35,7 +37,7 @@
 		}
 		
 		/**
-		 * @return UpdateQuery
+		 * @return \Onphp\UpdateQuery
 		**/
 		public static function update($table = null)
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return DeleteQuery
+		 * @return \Onphp\DeleteQuery
 		**/
 		public static function delete()
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return TruncateQuery
+		 * @return \Onphp\TruncateQuery
 		**/
 		public static function truncate($whom = null)
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return CreateTableQuery
+		 * @return \Onphp\CreateTableQuery
 		**/
 		public static function createTable(DBTable $table)
 		{
@@ -67,7 +69,7 @@
 		}
 		
 		/**
-		 * @return DropTableQuery
+		 * @return \Onphp\DropTableQuery
 		**/
 		public static function dropTable($name, $cascade = false)
 		{

@@ -15,10 +15,12 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class DBBinary extends DBValue
 	{
 		/**
-		 * @return DBBinary
+		 * @return \Onphp\DBBinary
 		**/
 		public static function create($value)
 		{

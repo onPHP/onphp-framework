@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Logic
 	**/
+	namespace Onphp;
+
 	final class PrefixUnaryExpression implements LogicalObject, MappableObject
 	{
 		const NOT	= 'NOT';
@@ -22,7 +24,7 @@
 		private $brackets   = true;
 		
 		/**
-		 * @return PrefixUnaryExpression
+		 * @return \Onphp\PrefixUnaryExpression
 		 */
 		public static function create($subject, $logic)
 		{
@@ -37,7 +39,7 @@
 		
 		/**
 		 * @param boolean $noBrackets
-		 * @return PrefixUnaryExpression
+		 * @return \Onphp\PrefixUnaryExpression
 		 */
 		public function noBrackets($noBrackets = true)
 		{
@@ -54,7 +56,7 @@
 		}
 		
 		/**
-		 * @return PrefixUnaryExpression
+		 * @return \Onphp\PrefixUnaryExpression
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{

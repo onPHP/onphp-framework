@@ -15,6 +15,8 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class FullText
 		implements DialectString, MappableObject, LogicalObject
 	{
@@ -35,7 +37,7 @@
 		}
 		
 		/**
-		 * @return FullText
+		 * @return \Onphp\FullText
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{

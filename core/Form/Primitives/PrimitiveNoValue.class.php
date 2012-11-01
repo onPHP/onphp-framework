@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveNoValue extends BasePrimitive
 	{
 		/**
-		 * @return PrimitiveNoValue
+		 * @return \Onphp\PrimitiveNoValue
 		**/
 		public function setValue($value)
 		{

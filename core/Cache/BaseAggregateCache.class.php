@@ -14,12 +14,14 @@
 	 *
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	abstract class BaseAggregateCache extends SelectivePeer
 	{
 		protected $peers	= array();
 		
 		/**
-		 * @return BaseAggregateCache
+		 * @return \Onphp\BaseAggregateCache
 		**/
 		public function dropPeer($label)
 		{
@@ -34,7 +36,7 @@
 		}
 
 		/**
-		 * @return BaseAggregateCache
+		 * @return \Onphp\BaseAggregateCache
 		**/
 		public function checkAlive()
 		{
@@ -52,7 +54,7 @@
 		abstract protected function guessLabel($key);
 
 		/**
-		 * @return BaseAggregateCache
+		 * @return \Onphp\BaseAggregateCache
 		**/
 		protected function doAddPeer($label, CachePeer $peer)
 		{
@@ -141,7 +143,7 @@
 		}
 
 		/**
-		 * @return AggregateCache
+		 * @return \Onphp\AggregateCache
 		**/
 		public function clean()
 		{

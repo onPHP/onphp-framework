@@ -13,6 +13,8 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class FieldTable extends Castable
 	{
 		protected $field = null;

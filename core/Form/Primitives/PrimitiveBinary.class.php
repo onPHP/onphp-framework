@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveBinary extends FiltrablePrimitive
 	{
 		public function import($scope)

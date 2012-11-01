@@ -15,12 +15,14 @@
 	 * @ingroup Form
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class PlainForm
 	{
 		protected $primitives = array();
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function clean()
 		{
@@ -45,7 +47,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function add(BasePrimitive $prm)
 		{
@@ -62,7 +64,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function set(BasePrimitive $prm)
 		{
@@ -73,7 +75,7 @@
 		
 		/**
 		 * @throws MissingElementException
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function drop($name)
 		{
@@ -89,7 +91,7 @@
 		
 		/**
 		 * @throws MissingElementException
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		**/
 		public function get($name)
 		{

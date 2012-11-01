@@ -13,10 +13,12 @@
 	 * @ingroup Logic
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface MappableObject extends DialectString
 	{
 		/**
-		 * @return MappableObject
+		 * @return \Onphp\MappableObject
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query);
 	}

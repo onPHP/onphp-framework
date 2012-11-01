@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveHstore extends BasePrimitive
 	{
 		protected $formMapping	= array();
 		
 		/**
-		 * @return PrimitiveHstore
+		 * @return \Onphp\PrimitiveHstore
 		**/
 		public function setFormMapping($array)
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function getInnerForm()
 		{
@@ -99,7 +101,7 @@
 		}
 		
 		/**
-		 * @return Hstore
+		 * @return \Onphp\Hstore
 		**/
 		public function exportValue()
 		{
@@ -112,7 +114,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		protected function makeForm()
 		{

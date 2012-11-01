@@ -24,6 +24,8 @@
 	 * 
 	 * @ingroup DB
 	**/
+	namespace Onphp;
+
 	abstract class Sequenceless extends DB
 	{
 		protected $sequencePool = array();
@@ -31,7 +33,7 @@
 		abstract protected function getInsertId();
 
 		/**
-		 * @return Identifier
+		 * @return \Onphp\Identifier
 		**/
 		final public function obtainSequence($sequence)
 		{

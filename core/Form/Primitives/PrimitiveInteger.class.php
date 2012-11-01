@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	class PrimitiveInteger extends PrimitiveNumber
 	{
 		const SIGNED_SMALL_MIN = -32768;

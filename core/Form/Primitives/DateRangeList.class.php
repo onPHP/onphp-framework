@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class DateRangeList extends BasePrimitive implements Stringable
 	{
 		protected $value = array();
 		
 		/**
-		 * @return DateRangeList
+		 * @return \Onphp\DateRangeList
 		**/
 		public function clean()
 		{
@@ -95,7 +97,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public static function makeRange($string)
 		{
@@ -138,7 +140,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return Date
+		 * @return \Onphp\Date
 		**/
 		private static function toDate($date)
 		{

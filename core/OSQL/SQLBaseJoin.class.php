@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	abstract class SQLBaseJoin implements SQLTableName, Aliased
 	{
 		protected $subject	= null;

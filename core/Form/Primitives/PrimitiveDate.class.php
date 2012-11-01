@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	class PrimitiveDate extends ComplexPrimitive
 	{
 		const DAY		= 'day';
@@ -20,7 +22,7 @@
 
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveDate
+		 * @return \Onphp\PrimitiveDate
 		**/
 		public function setValue(/* Date */ $object)
 		{
@@ -33,7 +35,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveDate
+		 * @return \Onphp\PrimitiveDate
 		**/
 		public function setMin(/* Date */ $object)
 		{
@@ -46,7 +48,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveDate
+		 * @return \Onphp\PrimitiveDate
 		**/
 		public function setMax(/* Date */ $object)
 		{
@@ -59,7 +61,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveDate
+		 * @return \Onphp\PrimitiveDate
 		**/
 		public function setDefault(/* Date */ $object)
 		{
@@ -216,7 +218,7 @@
 		
 		protected function getObjectName()
 		{
-			return 'Date';
+			return '\Onphp\Date';
 		}
 		
 		/* void */ protected function checkType($object)

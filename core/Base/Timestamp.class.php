@@ -18,12 +18,14 @@
 	 *
 	 * @ingroup Base
 	**/
+	namespace Onphp;
+
 	class Timestamp extends Date
 	{
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		**/
-		public static function create($timestamp, DateTimeZone $zone=null)
+		public static function create($timestamp, \DateTimeZone $zone=null)
 		{
 			return new static($timestamp, $zone);
 		}
@@ -34,7 +36,7 @@
 		}
 		
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		**/
 		public static function makeNow()
 		{
@@ -42,14 +44,14 @@
 		}
 		
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		**/
 		public static function makeToday()
 		{
 			return new static(static::today());
 		}
 
-		public function __construct($dateTime, DateTimeZone $zone=null)
+		public function __construct($dateTime, \DateTimeZone $zone=null)
 		{
 			parent::__construct($dateTime);
 
@@ -63,8 +65,8 @@
 		{
 			try {
 				$defaultTimeZoneName = date_default_timezone_get();
-				return new DateTimeZone($defaultTimeZoneName);
-			} catch(Exception $e) {
+				return new \DateTimeZone($defaultTimeZoneName);
+			} catch(\Exception $e) {
 				throw new WrongStateException(
 					"strange default time zone given - '{$defaultTimeZoneName}'!".
 					'Use date_default_timezone_set() for set valid default time zone.'
@@ -149,7 +151,7 @@
 		}
 		
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		**/
 		public function toTimestamp()
 		{

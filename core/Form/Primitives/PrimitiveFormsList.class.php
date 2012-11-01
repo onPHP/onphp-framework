@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveFormsList extends PrimitiveForm
 	{
 		protected $value = array();
 		
 		/**
-		 * @return PrimitiveFormsList
+		 * @return \Onphp\PrimitiveFormsList
 		**/
 		public function clean()
 		{
@@ -88,7 +90,7 @@
 			$resultValue = array();
 			
 			foreach ($value as $id => $form) {
-				Assert::isInstance($form, 'Form');
+				Assert::isInstance($form, '\Onphp\Form');
 				
 				$resultValue[$id] = $form;
 				

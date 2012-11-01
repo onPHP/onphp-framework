@@ -15,6 +15,8 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class DBField extends Castable implements SQLTableName
 	{
 		private $field	= null;
@@ -29,7 +31,7 @@
 		}
 		
 		/**
-		 * @return DBField
+		 * @return \Onphp\DBField
 		**/
 		public static function create($field, $table = null)
 		{
@@ -58,7 +60,7 @@
 		}
 		
 		/**
-		 * @return DialectString
+		 * @return \Onphp\DialectString
 		**/
 		public function getTable()
 		{
@@ -67,7 +69,7 @@
 		
 		/**
 		 * @throws WrongStateException
-		 * @return DBField
+		 * @return \Onphp\DBField
 		**/
 		public function setTable($table)
 		{

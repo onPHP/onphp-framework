@@ -17,6 +17,8 @@
 	 * @ingroup Filters
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface Filtrator
 	{
 		public function apply($value);

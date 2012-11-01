@@ -17,6 +17,8 @@
 	 * 
 	 * @see http://onphp.org/examples.Form.en.html
 	**/
+	namespace Onphp;
+
 	final class Form extends RegulatedForm
 	{
 		const WRONG			= 0x0001;
@@ -31,7 +33,7 @@
 		private $importFiltering	= true;
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public static function create()
 		{
@@ -83,7 +85,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function dropAllErrors()
 		{
@@ -94,7 +96,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function enableImportFiltering()
 		{
@@ -104,7 +106,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function disableImportFiltering()
 		{
@@ -118,7 +120,7 @@
 		**/
 		//@{
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function markMissing($primitiveName, $label = null)
 		{
@@ -128,7 +130,7 @@
 		/**
 		 * rule or primitive
 		 * 
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function markWrong($name, $label = null)
 		{
@@ -148,7 +150,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function markGood($primitiveName)
 		{
@@ -167,7 +169,7 @@
 		/**
 		 * Set's custom error mark for primitive.
 		 * 
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function markCustom($primitiveName, $customMark, $label = null)
 		{
@@ -238,7 +240,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function addErrorDescription($name, $errorType, $description)
 		{
@@ -257,7 +259,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function addWrongLabel($primitiveName, $label)
 		{
@@ -265,7 +267,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function addMissingLabel($primitiveName, $label)
 		{
@@ -273,7 +275,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function addCustomLabel($primitiveName, $customMark, $label)
 		{
@@ -291,7 +293,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function import($scope)
 		{
@@ -302,7 +304,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function importMore($scope)
 		{
@@ -315,7 +317,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function importOne($primitiveName, $scope)
 		{
@@ -323,7 +325,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function importValue($primitiveName, $value)
 		{
@@ -333,7 +335,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function importOneMore($primitiveName, $scope)
 		{
@@ -373,7 +375,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function setProto(EntityProto $proto)
 		{
@@ -383,7 +385,7 @@
 		}
 		
 		/**
-		 * @return EntityProto
+		 * @return \Onphp\EntityProto
 		**/
 		public function getProto()
 		{
@@ -391,7 +393,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		private function importPrimitive($scope, BasePrimitive $prm)
 		{
@@ -423,7 +425,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		private function checkImportResult(BasePrimitive $prm, $result)
 		{
@@ -460,7 +462,7 @@
 		 * @param	$errorType	enum	Form::(WRONG|MISSING)
 		 * @param	$label		string	YDFB WTF is this :-) (c) /.
 		 * @throws	MissingElementException
-		 * @return	Form
+		 * @return	\Onphp\Form
 		**/
 		private function addErrorLabel($name, $errorType, $label)
 		{

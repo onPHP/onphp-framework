@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class RemoveNewlineFilter extends BaseFilter
 	{
 		/**

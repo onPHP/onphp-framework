@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class ExplodedPrimitive extends PrimitiveString
 	{
 		protected $separator 		= ' ';
 		protected $splitByRegexp	= false;
 		
 		/**
-		 * @return ExplodedPrimitive
+		 * @return \Onphp\ExplodedPrimitive
 		**/
 		public function setSeparator($separator)
 		{

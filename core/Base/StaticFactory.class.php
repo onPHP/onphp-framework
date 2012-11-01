@@ -15,6 +15,8 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class StaticFactory
 	{
 		final private function __construct() {/*_*/}

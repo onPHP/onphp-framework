@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveEnumerationByValue extends PrimitiveEnumeration
 	{
 		public function import($scope)

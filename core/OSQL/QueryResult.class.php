@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class QueryResult implements Identifiable
 	{
 		private $list		= array();
@@ -24,7 +26,7 @@
 		private $query		= null;
 		
 		/**
-		 * @return QueryResult
+		 * @return \Onphp\QueryResult
 		**/
 		public static function create()
 		{
@@ -42,7 +44,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function getQuery()
 		{
@@ -50,7 +52,7 @@
 		}
 		
 		/**
-		 * @return QueryResult
+		 * @return \Onphp\QueryResult
 		**/
 		public function setQuery(SelectQuery $query)
 		{
@@ -65,7 +67,7 @@
 		}
 		
 		/**
-		 * @return QueryResult
+		 * @return \Onphp\QueryResult
 		**/
 		public function setList($list)
 		{
@@ -80,7 +82,7 @@
 		}
 		
 		/**
-		 * @return QueryResult
+		 * @return \Onphp\QueryResult
 		**/
 		public function setCount($count)
 		{
@@ -95,7 +97,7 @@
 		}
 		
 		/**
-		 * @return QueryResult
+		 * @return \Onphp\QueryResult
 		**/
 		public function setAffected($affected)
 		{

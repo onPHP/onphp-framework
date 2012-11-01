@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class TimeIntervalsGenerator extends QueryIdentification
 	{
 		const ITERATOR_ALIAS	= 'iterator';
@@ -36,7 +38,7 @@
 		}
 		
 		/**
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function getRange()
 		{
@@ -77,7 +79,7 @@
 		}
 		
 		/**
-		 * @return IntervalUnit
+		 * @return \Onphp\IntervalUnit
 		**/
 		public function getInterval()
 		{
@@ -140,7 +142,7 @@
 		}
 		
 		/**
-		 * @return DialectString
+		 * @return \Onphp\DialectString
 		 * 
 		 * FIXME: DBI-result, method works only for PostgreSQL.
 		 * Research how to generate series of values in MySQL and implement

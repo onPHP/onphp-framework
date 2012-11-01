@@ -15,6 +15,8 @@
 	 * @ingroup Primitives
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class FiltrablePrimitive extends RangedPrimitive
 	{
 		private $importFilter	= null;
@@ -29,7 +31,7 @@
 		}
 
 		/**
-		 * @return FiltrablePrimitive
+		 * @return \Onphp\FiltrablePrimitive
 		**/
 		public function setDisplayFilter(FilterChain $chain)
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return FiltrablePrimitive
+		 * @return \Onphp\FiltrablePrimitive
 		**/
 		public function addDisplayFilter(Filtrator $filter)
 		{
@@ -49,7 +51,7 @@
 		}
 
 		/**
-		 * @return FiltrablePrimitive
+		 * @return \Onphp\FiltrablePrimitive
 		**/
 		public function dropDisplayFilters()
 		{
@@ -71,7 +73,7 @@
 		}
 		
 		/**
-		 * @return FiltrablePrimitive
+		 * @return \Onphp\FiltrablePrimitive
 		**/
 		public function setImportFilter(FilterChain $chain)
 		{
@@ -81,7 +83,7 @@
 		}
 		
 		/**
-		 * @return FiltrablePrimitive
+		 * @return \Onphp\FiltrablePrimitive
 		**/
 		public function addImportFilter(Filtrator $filter)
 		{
@@ -91,7 +93,7 @@
 		}
 
 		/**
-		 * @return FiltrablePrimitive
+		 * @return \Onphp\FiltrablePrimitive
 		**/
 		public function dropImportFilters()
 		{
@@ -101,7 +103,7 @@
 		}
 		
 		/**
-		 * @return FilterChain
+		 * @return \Onphp\FilterChain
 		**/
 		public function getImportFilter()
 		{
@@ -109,7 +111,7 @@
 		}
 
 		/**
-		 * @return FilterChain
+		 * @return \Onphp\FilterChain
 		**/
 		public function getDisplayFilter()
 		{
@@ -117,7 +119,7 @@
 		}
 
 		/**
-		 * @return FiltrablePrimitive
+		 * @return \Onphp\FiltrablePrimitive
 		**/
 		protected function selfFilter()
 		{

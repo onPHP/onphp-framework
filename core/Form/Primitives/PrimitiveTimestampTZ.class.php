@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveTimestampTZ extends PrimitiveTimestamp
 	{
 		const ZONE = 'zone';
@@ -68,7 +70,7 @@
 
 		protected function getObjectName()
 		{
-			return 'TimestampTZ';
+			return '\Onphp\TimestampTZ';
 		}
 
 		public function exportValue()

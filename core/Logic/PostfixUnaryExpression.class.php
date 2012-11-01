@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Logic
 	**/
+	namespace Onphp;
+
 	final class PostfixUnaryExpression implements LogicalObject, MappableObject
 	{
 		const IS_NULL			= 'IS NULL';
@@ -25,7 +27,7 @@
 		private $brackets   = true;
 		
 		/**
-		 * @return PostfixUnaryExpression
+		 * @return \Onphp\PostfixUnaryExpression
 		 */
 		public static function create($subject, $logic)
 		{
@@ -40,7 +42,7 @@
 		
 		/**
 		 * @param boolean $noBrackets
-		 * @return PostfixUnaryExpression
+		 * @return \Onphp\PostfixUnaryExpression
 		 */
 		public function noBrackets($noBrackets = true)
 		{
@@ -56,7 +58,7 @@
 		}
 		
 		/**
-		 * @return PostfixUnaryExpression
+		 * @return \Onphp\PostfixUnaryExpression
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{

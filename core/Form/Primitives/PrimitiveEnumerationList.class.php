@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveEnumerationList extends PrimitiveEnumeration
 	{
 		protected $value = array();
 		
 		/**
-		 * @return PrimitiveEnumerationList
+		 * @return \Onphp\PrimitiveEnumerationList
 		**/
 		public function clean()
 		{
@@ -30,13 +32,13 @@
 		}
 		
 		/**
-		 * @return PrimitiveEnumerationList
+		 * @return \Onphp\PrimitiveEnumerationList
 		**/
 		public function setValue(/* Enumeration */ $value)
 		{
 			if ($value) {
 				Assert::isArray($value);
-				Assert::isInstance(current($value), 'Enumeration');
+				Assert::isInstance(current($value), '\Onphp\Enumeration');
 			}
 			
 			$this->value = $value;

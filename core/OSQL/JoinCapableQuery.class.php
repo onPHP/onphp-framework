@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	interface JoinCapableQuery
 	{
 		public function from($table, $alias = null);

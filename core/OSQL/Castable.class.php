@@ -15,12 +15,14 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class Castable implements DialectString
 	{
 		protected $cast	= null;
 		
 		/**
-		 * @return Castable
+		 * @return \Onphp\Castable
 		**/
 		public function castTo($cast)
 		{

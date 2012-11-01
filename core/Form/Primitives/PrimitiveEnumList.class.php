@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveEnumList extends PrimitiveEnum
 	{
 		protected $value = array();
 		
 		/**
-		 * @return PrimitiveEnumList
+		 * @return \Onphp\PrimitiveEnumList
 		**/
 		public function clean()
 		{
@@ -30,13 +32,13 @@
 		}
 		
 		/**
-		 * @return PrimitiveEnumList
+		 * @return \Onphp\PrimitiveEnumList
 		**/
 		public function setValue(/* Enum */ $value)
 		{
 			if ($value) {
 				Assert::isArray($value);
-				Assert::isInstance(current($value), 'Enum');
+				Assert::isInstance(current($value), '\Onphp\Enum');
 			}
 			
 			$this->value = $value;

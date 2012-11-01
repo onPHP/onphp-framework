@@ -13,6 +13,8 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class DropTableQuery extends QueryIdentification
 	{
 		private $name		= null;

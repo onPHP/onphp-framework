@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveIntegerIdentifier extends PrimitiveIdentifier
 	{
 		protected $scalar = false;

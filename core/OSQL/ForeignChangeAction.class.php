@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class ForeignChangeAction extends Enumeration
 	{
 		const NO_ACTION		= 0x01;
@@ -29,7 +31,7 @@
 		);
 		
 		/**
-		 * @return ForeignChangeAction
+		 * @return \Onphp\ForeignChangeAction
 		**/
 		public static function noAction()
 		{
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return ForeignChangeAction
+		 * @return \Onphp\ForeignChangeAction
 		**/
 		public static function restrict()
 		{
@@ -45,7 +47,7 @@
 		}
 		
 		/**
-		 * @return ForeignChangeAction
+		 * @return \Onphp\ForeignChangeAction
 		**/
 		public static function cascade()
 		{
@@ -53,7 +55,7 @@
 		}
 		
 		/**
-		 * @return ForeignChangeAction
+		 * @return \Onphp\ForeignChangeAction
 		**/
 		public static function setNull()
 		{
@@ -61,7 +63,7 @@
 		}
 		
 		/**
-		 * @return ForeignChangeAction
+		 * @return \Onphp\ForeignChangeAction
 		**/
 		public static function setDefault()
 		{

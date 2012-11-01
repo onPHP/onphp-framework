@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	abstract class BaseObjectPrimitive extends BasePrimitive
 	{
 		protected $className = null;

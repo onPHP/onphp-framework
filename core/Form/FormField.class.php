@@ -16,6 +16,8 @@
 	 * 
 	 * @ingroup Form
 	**/
+	namespace Onphp;
+
 	final class FormField
 	{
 		private $primitiveName	= null;
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return FormField
+		 * @return \Onphp\FormField
 		**/
 		public static function create($name)
 		{

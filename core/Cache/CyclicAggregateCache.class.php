@@ -13,6 +13,8 @@
 	 *
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	final class CyclicAggregateCache extends BaseAggregateCache
 	{
 		const DEFAULT_SUMMARY_WEIGHT = 1000;
@@ -21,7 +23,7 @@
 		private $sorted = false;
 
 		/**
-		 * @return CyclicAggregateCache
+		 * @return \Onphp\CyclicAggregateCache
 		**/
 		public static function create()
 		{

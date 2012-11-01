@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	class PrimitiveEnum extends IdentifiablePrimitive implements ListedPrimitive
 	{
 		public function getList()
@@ -33,7 +35,7 @@
 
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveEnum
+		 * @return \Onphp\PrimitiveEnum
 		**/
 		public function of($class)
 		{
@@ -41,7 +43,7 @@
 			
 			Assert::classExists($className);
 			
-			Assert::isInstance($className, 'Enum');
+			Assert::isInstance($className, '\Onphp\Enum');
 			
 			$this->className = $className;
 			
@@ -102,7 +104,7 @@
 
 
 		/**
-		 * @return Enum|mixed|null
+		 * @return \Onphp\Enum|mixed|null
 		 */
 		public function getActualChoiceValue()
 		{
@@ -117,7 +119,7 @@
 
 		/**
 		 * @param $id
-		 * @return Enum|mixed
+		 * @return \Onphp\Enum|mixed
 		 */
 		protected function makeEnumById($id)
 		{

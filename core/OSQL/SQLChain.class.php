@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	abstract class SQLChain implements LogicalObject, MappableObject
 	{
 		protected $chain = array();
 		protected $logic = array();
 		
 		/**
-		 * @return SQLChain
+		 * @return \Onphp\SQLChain
 		**/
 		protected function exp(DialectString $exp, $logic)
 		{
@@ -44,7 +46,7 @@
 		}
 		
 		/**
-		 * @return SQLChain
+		 * @return \Onphp\SQLChain
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{

@@ -18,12 +18,14 @@
 	 * 
 	 * @todo introduce DBs without multi-query support handling
 	**/
+	namespace Onphp;
+
 	final class Queue implements Query
 	{
 		private $queue = array();
 		
 		/**
-		 * @return Queue
+		 * @return \Onphp\Queue
 		**/
 		public static function create()
 		{
@@ -46,7 +48,7 @@
 		}
 
 		/**
-		 * @return Queue
+		 * @return \Onphp\Queue
 		**/
 		public function add(Query $query)
 		{
@@ -56,7 +58,7 @@
 		}
 		
 		/**
-		 * @return Queue
+		 * @return \Onphp\Queue
 		**/
 		public function remove(Query $query)
 		{
@@ -69,7 +71,7 @@
 		}
 		
 		/**
-		 * @return Queue
+		 * @return \Onphp\Queue
 		**/
 		public function drop()
 		{
@@ -79,7 +81,7 @@
 		}
 		
 		/**
-		 * @return Queue
+		 * @return \Onphp\Queue
 		**/
 		public function run(DB $db)
 		{
@@ -89,7 +91,7 @@
 		}
 		
 		/**
-		 * @return Queue
+		 * @return \Onphp\Queue
 		**/
 		public function flush(DB $db)
 		{

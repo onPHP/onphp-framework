@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class FieldGroup implements DialectString
 	{
 		private $list = array();
 		
 		/**
-		 * @return FieldGroup
+		 * @return \Onphp\FieldGroup
 		**/
 		public function add(Castable $field)
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class SQLJoin extends SQLBaseJoin
 	{
 		public function toDialectString(Dialect $dialect)

@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Form
 	**/
+	namespace Onphp;
+
 	final class Filter extends StaticFactory
 	{
 		/**
-		 * @return FilterChain
+		 * @return \Onphp\FilterChain
 		**/
 		public static function textImport()
 		{
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return FilterChain
+		 * @return \Onphp\FilterChain
 		**/
 		public static function chain()
 		{
@@ -36,7 +38,7 @@
 		}
 		
 		/**
-		 * @return HashFilter
+		 * @return \Onphp\HashFilter
 		**/
 		public static function hash($binary = false)
 		{
@@ -44,7 +46,7 @@
 		}
 		
 		/**
-		 * @return PCREFilter
+		 * @return \Onphp\PCREFilter
 		**/
 		public static function pcre()
 		{
@@ -52,7 +54,7 @@
 		}
 		
 		/**
-		 * @return TrimFilter
+		 * @return \Onphp\TrimFilter
 		**/
 		public static function trim()
 		{
@@ -60,7 +62,7 @@
 		}
 		
 		/**
-		 * @return CropFilter
+		 * @return \Onphp\CropFilter
 		**/
 		public static function crop()
 		{
@@ -68,7 +70,7 @@
 		}
 		
 		/**
-		 * @return StripTagsFilter
+		 * @return \Onphp\StripTagsFilter
 		**/
 		public static function stripTags()
 		{
@@ -76,71 +78,71 @@
 		}
 		
 		/**
-		 * @return LowerCaseFilter
+		 * @return \Onphp\LowerCaseFilter
 		**/
 		public static function lowerCase()
 		{
-			return Singleton::getInstance('LowerCaseFilter');
+			return Singleton::getInstance('\Onphp\LowerCaseFilter');
 		}
 		
 		/**
-		 * @return UpperCaseFilter
+		 * @return \Onphp\UpperCaseFilter
 		**/
 		public static function upperCase()
 		{
-			return Singleton::getInstance('UpperCaseFilter');
+			return Singleton::getInstance('\Onphp\UpperCaseFilter');
 		}
 		
 		/**
-		 * @return HtmlSpecialCharsFilter
+		 * @return \Onphp\HtmlSpecialCharsFilter
 		**/
 		public static function htmlSpecialChars()
 		{
-			return Singleton::getInstance('HtmlSpecialCharsFilter');
+			return Singleton::getInstance('\Onphp\HtmlSpecialCharsFilter');
 		}
 		
 		/**
-		 * @return NewLinesToBreaks
+		 * @return \Onphp\NewLinesToBreaks
 		**/
 		public static function nl2br()
 		{
-			return Singleton::getInstance('NewLinesToBreaks');
+			return Singleton::getInstance('\Onphp\NewLinesToBreaks');
 		}
 		
 		/**
-		 * @return UrlEncodeFilter
+		 * @return \Onphp\UrlEncodeFilter
 		**/
 		public static function urlencode()
 		{
-			return Singleton::getInstance('UrlEncodeFilter');
+			return Singleton::getInstance('\Onphp\UrlEncodeFilter');
 		}
 		
 		/**
-		 * @return UrlDecodeFilter
+		 * @return \Onphp\UrlDecodeFilter
 		**/
 		public static function urldecode()
 		{
-			return Singleton::getInstance('UrlDecodeFilter');
+			return Singleton::getInstance('\Onphp\UrlDecodeFilter');
 		}
 		
 		/**
-		 * @return UnixToUnixDecode
+		 * @return \Onphp\UnixToUnixDecode
 		**/
 		public static function uudecode()
 		{
-			return Singleton::getInstance('UnixToUnixDecode');
+			return Singleton::getInstance('\Onphp\UnixToUnixDecode');
 		}
 		
 		/**
-		 * @return UnixToUnixEncode
+		 * @return \Onphp\UnixToUnixEncode
 		**/
 		public static function uuencode()
 		{
-			return Singleton::getInstance('UnixToUnixEncode');
+			return Singleton::getInstance('\Onphp\UnixToUnixEncode');
 		}
 		
 		/**
-		 * @return StringReplaceFilter
+		 * @return \Onphp\StringReplaceFilter
 		**/
 		public static function replaceSymbols($search = null, $replace = null)
 		{
@@ -148,11 +150,11 @@
 		}
 		
 		/**
-		 * @return SafeUtf8Filter
+		 * @return \Onphp\SafeUtf8Filter
 		**/
 		public static function safeUtf8()
 		{
-			return Singleton::getInstance('SafeUtf8Filter');
+			return Singleton::getInstance('\Onphp\SafeUtf8Filter');
 		}
 	}
 ?>

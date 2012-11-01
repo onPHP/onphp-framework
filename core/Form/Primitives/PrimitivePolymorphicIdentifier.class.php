@@ -13,6 +13,8 @@
 	 * Hint: use raw values like 'City.42' or 'Country.42' where City and
 	 * Country are childrens of base class GeoLocation, for example.
 	**/
+	namespace Onphp;
+
 	final class PrimitivePolymorphicIdentifier extends PrimitiveIdentifier
 	{
 		const WRONG_CID_FORMAT	= 201;
@@ -27,7 +29,7 @@
 			if ($value === null)
 				return null;
 			
-			Assert::isInstance($value, 'Identifiable');
+			Assert::isInstance($value, '\Onphp\Identifiable');
 			
 			return get_class($value).self::DELIMITER.$value->getId();
 		}
@@ -44,7 +46,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitivePolymorphicIdentifier
+		 * @return \Onphp\PrimitivePolymorphicIdentifier
 		**/
 		public function ofBase($className)
 		{
@@ -52,7 +54,7 @@
 			
 			Assert::isInstance(
 				$className,
-				'DAOConnected',
+				'\Onphp\DAOConnected',
 				"class '{$className}' must implement DAOConnected interface"
 			);
 			
@@ -67,7 +69,7 @@
 		}
 		
 		/**
-		 * @return PrimitivePolymorphicIdentifier
+		 * @return \Onphp\PrimitivePolymorphicIdentifier
 		**/
 		public function setValue($value)
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class DeleteQuery extends QuerySkeleton implements SQLTableName
 	{
 		protected $table	= null;
@@ -22,7 +24,7 @@
 		}
 		
 		/**
-		 * @return DeleteQuery
+		 * @return \Onphp\DeleteQuery
 		**/
 		public function from($table)
 		{

@@ -18,10 +18,12 @@
 	 * 
 	 * @ingroup DB
 	**/
+	namespace Onphp;
+
 	final class SQLite extends Sequenceless
 	{
 		/**
-		 * @return SQLite
+		 * @return \Onphp\SQLite
 		**/
 		public function connect()
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return SQLite
+		 * @return \Onphp\SQLite
 		**/
 		public function disconnect()
 		{
@@ -76,9 +78,9 @@
 				$code = sqlite_last_error($this->link);
 				
 				if ($code == 19)
-					$e = 'DuplicateObjectException';
+					$e = '\Onphp\DuplicateObjectException';
 				else
-					$e = 'DatabaseException';
+					$e = '\Onphp\DatabaseException';
 				
 				throw new $e(
 					sqlite_error_string($code).' - '.$queryString,
@@ -172,7 +174,7 @@
 		}
 		
 		/**
-		 * @return LiteDialect
+		 * @return \Onphp\LiteDialect
 		**/
 		protected function spawnDialect()
 		{

@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Base
 	**/
+	namespace Onphp;
+
 	final class Assert extends StaticFactory
 	{
 		public static function isTrue($boolean, $message = null)

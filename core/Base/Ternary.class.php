@@ -15,6 +15,8 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class Ternary implements Stringable
 	{
 		private $trinity = null;	// ;-)
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return Ternary
+		 * @return \Onphp\Ternary
 		**/
 		public static function create($boolean = null)
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return Ternary
+		 * @return \Onphp\Ternary
 		**/
 		public static function spawn($value, $true, $false, $null = null)
 		{
@@ -66,7 +68,7 @@
 		}
 		
 		/**
-		 * @return Ternary
+		 * @return \Onphp\Ternary
 		**/
 		public function setNull()
 		{
@@ -76,7 +78,7 @@
 		}
 		
 		/**
-		 * @return Ternary
+		 * @return \Onphp\Ternary
 		**/
 		public function setTrue()
 		{
@@ -86,7 +88,7 @@
 		}
 		
 		/**
-		 * @return Ternary
+		 * @return \Onphp\Ternary
 		**/
 		public function setFalse()
 		{
@@ -101,7 +103,7 @@
 		}
 		
 		/**
-		 * @return Ternary
+		 * @return \Onphp\Ternary
 		**/
 		public function setValue($boolean = null)
 		{

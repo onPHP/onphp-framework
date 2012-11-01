@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveMultiList extends PrimitiveList
 	{
 		private $selected = array();
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveMultiList
+		 * @return \Onphp\PrimitiveMultiList
 		**/
 		public function setDefault($default)
 		{
@@ -86,7 +88,7 @@
 		}
 		
 		/**
-		 * @return PrimitiveMultiList
+		 * @return \Onphp\PrimitiveMultiList
 		**/
 		public function clean()
 		{

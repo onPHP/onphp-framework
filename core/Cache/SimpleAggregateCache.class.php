@@ -15,13 +15,15 @@
 	 * 
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	final class SimpleAggregateCache extends AggregateCache
 	{
 		private $peerAmount	= null;
 		private $labels		= null;
 		
 		/**
-		 * @return SimpleAggregateCache
+		 * @return \Onphp\SimpleAggregateCache
 		**/
 		public static function create()
 		{

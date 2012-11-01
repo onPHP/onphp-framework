@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Base
 	**/
+	namespace Onphp;
+
 	final class IntervalUnit
 	{
 		private $name		= null;
@@ -31,7 +33,7 @@
 		}
 		
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		 * 
 		 * Emulates PostgreSQL's date_trunc() function
 		 * 

@@ -16,6 +16,8 @@
 	 *
 	 * @ingroup DB
 	**/
+	namespace Onphp;
+
 	final class PostgresDialect extends Dialect
 	{
 		private static $tsConfiguration = 'utf8_russian';

@@ -15,6 +15,8 @@
 	 * @see http://www.postgresql.org/docs/current/interactive/ltree.html
 	 * @ingroup Logic
 	**/
+	namespace Onphp;
+
 	final class LTreeExpression extends StaticFactory
 	{
 		const ANCESTOR 		= '@>';
@@ -25,7 +27,7 @@
 		/**
 		 * Is left argument an ancestor of right (or equal)?
 		 *
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function ancestor($left, $right)
 		{
@@ -35,7 +37,7 @@
 		/**
 		 * Is left argument a descendant of right (or equal)?
 		 *
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function descendant($left, $right)
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function match($ltree, $lquery)
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return BinaryExpression
+		 * @return \Onphp\BinaryExpression
 		**/
 		public static function search($ltree, $ltxtquery)
 		{

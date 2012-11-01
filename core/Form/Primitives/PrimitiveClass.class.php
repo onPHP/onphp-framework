@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveClass extends PrimitiveString
 	{
 		private $ofClassName = null;
@@ -42,7 +44,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return PrimitiveIdentifier
+		 * @return \Onphp\PrimitiveIdentifier
 		**/
 		public function of($class)
 		{

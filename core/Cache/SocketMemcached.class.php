@@ -19,6 +19,8 @@
 	 *
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	class SocketMemcached extends CachePeer
 	{
 		const DEFAULT_PORT		= 11211;
@@ -32,7 +34,7 @@
 		private $buffer		= self::DEFAULT_BUFFER;
 		
 		/**
-		 * @return SocketMemcached
+		 * @return \Onphp\SocketMemcached
 		**/
 		public static function create(
 			$host = self::DEFAULT_HOST,
@@ -70,7 +72,7 @@
 		}
 
 		/**
-		 * @return SocketMemcached
+		 * @return \Onphp\SocketMemcached
 		 */
 		public function setTimeout($microseconds)
 		{
@@ -90,7 +92,7 @@
 
 
 		/**
-		 * @return SocketMemcached
+		 * @return \Onphp\SocketMemcached
 		**/
 		public function clean()
 		{

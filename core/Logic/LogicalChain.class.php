@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Logic
 	**/
+	namespace Onphp;
+
 	final class LogicalChain extends SQLChain
 	{
 		/**
-		 * @return LogicalChain
+		 * @return \Onphp\LogicalChain
 		**/
 		public static function block($args, $logic)
 		{
@@ -46,7 +48,7 @@
 		}
 		
 		/**
-		 * @return LogicalChain
+		 * @return \Onphp\LogicalChain
 		**/
 		public function expAnd(LogicalObject $exp)
 		{
@@ -54,7 +56,7 @@
 		}
 		
 		/**
-		 * @return LogicalChain
+		 * @return \Onphp\LogicalChain
 		**/
 		public function expOr(LogicalObject $exp)
 		{

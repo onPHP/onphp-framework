@@ -16,5 +16,7 @@
 	 * @ingroup Exceptions
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	class DuplicateObjectException extends DatabaseException {/*_*/}
 ?>

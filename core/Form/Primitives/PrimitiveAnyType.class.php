@@ -12,5 +12,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
+	namespace Onphp;
+
 	final class PrimitiveAnyType extends BasePrimitive {/* nop */}
 ?>

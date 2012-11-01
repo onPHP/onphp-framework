@@ -13,5 +13,7 @@
 	 * @ingroup OSQL
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface Query extends DialectString, Identifiable, Stringable {/*_*/}
 ?>

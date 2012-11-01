@@ -15,6 +15,8 @@
 	 * 
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	class AggregateCache extends BaseAggregateCache
 	{
 		const LEVEL_ULTRAHIGH	= 0xFFFF;
@@ -26,7 +28,7 @@
 		private $levels		= array();
 
 		/**
-		 * @return AggregateCache
+		 * @return \Onphp\AggregateCache
 		**/
 		public static function create()
 		{
@@ -34,7 +36,7 @@
 		}
 
 		/**
-		 * @return AggregateCache
+		 * @return \Onphp\AggregateCache
 		**/
 		public function addPeer(
 			$label, CachePeer $peer, $level = self::LEVEL_NORMAL
@@ -48,7 +50,7 @@
 		}
 		
 		/**
-		 * @return AggregateCache
+		 * @return \Onphp\AggregateCache
 		**/
 		public function setClassLevel($class, $level)
 		{

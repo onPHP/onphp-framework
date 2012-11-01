@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class StringReplaceFilter implements Filtrator
 	{
 		private $search		= null;
@@ -20,7 +22,7 @@
 		private $count		= null;
 		
 		/**
-		 * @return StringReplaceFilter
+		 * @return \Onphp\StringReplaceFilter
 		**/
 		public static function create($search = null, $replace = null)
 		{
@@ -34,7 +36,7 @@
 		}
 		
 		/**
-		 * @return StringReplaceFilter
+		 * @return \Onphp\StringReplaceFilter
 		**/
 		public function setSearch($search)
 		{
@@ -49,7 +51,7 @@
 		}
 		
 		/**
-		 * @return StringReplaceFilter
+		 * @return \Onphp\StringReplaceFilter
 		**/
 		public function setReplace($replace)
 		{

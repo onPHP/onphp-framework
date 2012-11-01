@@ -17,6 +17,8 @@
 	 *
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	class PeclMemcached extends CachePeer
 	{
 		const DEFAULT_PORT		= 11211;
@@ -31,7 +33,7 @@
 		private $triedConnect	= false;
 		
 		/**
-		 * @return PeclMemcached
+		 * @return \Onphp\PeclMemcached
 		**/
 		public static function create(
 			$host = self::DEFAULT_HOST,
@@ -72,7 +74,7 @@
 		}
 		
 		/**
-		 * @return PeclMemcached
+		 * @return \Onphp\PeclMemcached
 		**/
 		public function clean()
 		{
@@ -168,7 +170,7 @@
 		
 		/**
 		 * @param float $requestTimeout time in seconds
-		 * @return PeclMemcached
+		 * @return \Onphp\PeclMemcached
 		 */
 		public function setTimeout($requestTimeout)
 		{
@@ -224,7 +226,7 @@
 		
 		protected function connect()
 		{
-			$this->instance = new Memcache();
+			$this->instance = new \Memcache();
 			
 			try {
 				

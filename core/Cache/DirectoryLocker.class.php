@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Lockers
 	**/
+	namespace Onphp;
+
 	final class DirectoryLocker extends BaseLocker
 	{
 		private $directory = null;

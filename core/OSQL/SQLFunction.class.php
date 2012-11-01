@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class SQLFunction extends Castable implements MappableObject, Aliased
 	{
 		const AGGREGATE_ALL			= 1;
@@ -26,7 +28,7 @@
 		private $args	= array();
 		
 		/**
-		 * @return SQLFunction
+		 * @return \Onphp\SQLFunction
 		**/
 		public static function create($name /* , ... */)
 		{
@@ -65,7 +67,7 @@
 		}
 		
 		/**
-		 * @return SQLFunction
+		 * @return \Onphp\SQLFunction
 		**/
 		public function setAlias($alias)
 		{
@@ -75,7 +77,7 @@
 		}
 		
 		/**
-		 * @return SQLFunction
+		 * @return \Onphp\SQLFunction
 		**/
 		public function setAggregateAll()
 		{
@@ -85,7 +87,7 @@
 		}
 		
 		/**
-		 * @return SQLFunction
+		 * @return \Onphp\SQLFunction
 		**/
 		public function setAggregateDistinct()
 		{
@@ -95,7 +97,7 @@
 		}
 		
 		/**
-		 * @return SQLFunction
+		 * @return \Onphp\SQLFunction
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{

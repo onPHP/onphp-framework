@@ -13,10 +13,12 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface Prototyped
 	{
 		/**
-		 * @return AbstractProtoClass
+		 * @return \Onphp\AbstractProtoClass
 		**/
 		public static function proto();
 	}

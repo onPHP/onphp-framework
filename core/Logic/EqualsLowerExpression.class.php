@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Logic
 	**/
+	namespace Onphp;
+
 	final class EqualsLowerExpression implements LogicalObject, MappableObject
 	{
 		private $left	= null;
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return EqualsLowerExpression
+		 * @return \Onphp\EqualsLowerExpression
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{

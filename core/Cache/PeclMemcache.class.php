@@ -17,6 +17,8 @@
 	 *
 	 * @ingroup Cache
 	**/
+	namespace Onphp;
+
 	class PeclMemcache extends CachePeer
 	{
 		const DEFAULT_PORT		= 11211;
@@ -25,7 +27,7 @@
 		private $instance = null;
 		
 		/**
-		 * @return PeclMemcache
+		 * @return \Onphp\PeclMemcache
 		**/
 		public static function create(
 			$host = self::DEFAULT_HOST,
@@ -40,7 +42,7 @@
 			$port = self::DEFAULT_PORT
 		)
 		{
-			$this->instance = new Memcache();
+			$this->instance = new \Memcache();
 			
 			try {
 				try {
@@ -67,7 +69,7 @@
 		}
 		
 		/**
-		 * @return PeclMemcached
+		 * @return \Onphp\PeclMemcached
 		**/
 		public function clean()
 		{

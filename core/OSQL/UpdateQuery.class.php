@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OSQL
 	**/
+	namespace Onphp;
+
 	final class UpdateQuery
 		extends InsertOrUpdateQuery
 		implements JoinCapableQuery
@@ -30,7 +32,7 @@
 		}
 		
 		/**
-		 * @return UpdateQuery
+		 * @return \Onphp\UpdateQuery
 		**/
 		public function from($table, $alias = null)
 		{
@@ -45,7 +47,7 @@
 		}
 		
 		/**
-		 * @return UpdateQuery
+		 * @return \Onphp\UpdateQuery
 		**/
 		public function join($table, LogicalObject $logic, $alias = null)
 		{
@@ -54,7 +56,7 @@
 		}
 		
 		/**
-		 * @return UpdateQuery
+		 * @return \Onphp\UpdateQuery
 		**/
 		public function leftJoin($table, LogicalObject $logic, $alias = null)
 		{
@@ -63,7 +65,7 @@
 		}
 		
 		/**
-		 * @return UpdateQuery
+		 * @return \Onphp\UpdateQuery
 		**/
 		public function rightJoin($table, LogicalObject $logic, $alias = null)
 		{
@@ -72,7 +74,7 @@
 		}
 		
 		/**
-		 * @return UpdateQuery
+		 * @return \Onphp\UpdateQuery
 		**/
 		public function setTable($table)
 		{

@@ -15,6 +15,8 @@
 	 * @ingroup Form
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class RegulatedForm extends PlainForm
 	{
 		protected $rules		= array(); // forever
@@ -22,7 +24,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function addRule($name, LogicalObject $rule)
 		{
@@ -35,7 +37,7 @@
 		
 		/**
 		 * @throws MissingElementException
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function dropRuleByName($name)
 		{
@@ -55,7 +57,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function checkRules()
 		{

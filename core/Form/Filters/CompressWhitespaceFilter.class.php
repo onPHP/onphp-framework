@@ -16,10 +16,12 @@
 	 * 
 	 * @ingroup Filters
 	**/
+	namespace Onphp;
+
 	final class CompressWhitespaceFilter extends BaseFilter
 	{
 		/**
-		 * @return CompressWhitespaceFilter
+		 * @return \Onphp\CompressWhitespaceFilter
 		**/
 		public static function me()
 		{

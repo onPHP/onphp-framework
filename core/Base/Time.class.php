@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Base
 	**/
+	namespace Onphp;
+
 	final class Time implements Stringable
 	{
 		private $hour	= 0;
@@ -23,7 +25,7 @@
 		private $string	= null;
 		
 		/**
-		 * @return Time
+		 * @return \Onphp\Time
 		**/
 		public static function create($input)
 		{
@@ -97,7 +99,7 @@
 		}
 		
 		/**
-		 * @return Time
+		 * @return \Onphp\Time
 		**/
 		public function setHour($hour)
 		{
@@ -121,7 +123,7 @@
 		}
 		
 		/**
-		 * @return Time
+		 * @return \Onphp\Time
 		**/
 		public function setMinute($minute)
 		{
@@ -146,7 +148,7 @@
 		}
 		
 		/**
-		 * @return Time
+		 * @return \Onphp\Time
 		**/
 		public function setSecond($second)
 		{

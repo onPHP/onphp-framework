@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Logic
 	**/
+	namespace Onphp;
+
 	final class Ip4ContainsExpression implements LogicalObject, MappableObject
 	{
 		private $range = null;
