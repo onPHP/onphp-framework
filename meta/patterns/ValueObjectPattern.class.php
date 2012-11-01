@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Patterns
 	**/
+	namespace Onphp;
+
 	final class ValueObjectPattern extends BasePattern
 	{
 		public function tableExists()
@@ -20,7 +22,7 @@
 		}
 		
 		/**
-		 * @return ValueObjectPattern
+		 * @return \Onphp\ValueObjectPattern
 		**/
 		protected function fullBuild(MetaClass $class)
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Patterns
 	**/
+	namespace Onphp;
+
 	final class AbstractClassPattern extends BasePattern
 	{
 		public function tableExists()

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup MetaBase
 	**/
+	namespace Onphp;
+
 	final class MetaConfiguration extends Singleton implements Instantiatable
 	{
 		private $out = null;
@@ -30,15 +32,15 @@
 		private $checkEnumerationRefIntegrity = false;
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		public static function me()
 		{
-			return Singleton::getInstance('MetaConfiguration');
+			return Singleton::getInstance('\Onphp\MetaConfiguration');
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public static function out()
 		{
@@ -46,7 +48,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		public function setForcedGeneration($orly)
 		{
@@ -61,7 +63,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		public function setDryRun($dry)
 		{
@@ -76,7 +78,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		public function setWithEnumerationRefIntegrityCheck($orly)
 		{
@@ -86,7 +88,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		public function load($metafile, $generate = true)
 		{
@@ -214,7 +216,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		public function buildClasses()
 		{
@@ -241,7 +243,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		public function buildSchema()
 		{
@@ -295,7 +297,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		public function buildSchemaChanges()
 		{
@@ -371,7 +373,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		public function buildContainers()
 		{
@@ -429,7 +431,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		public function checkIntegrity()
 		{
@@ -465,21 +467,21 @@
 				) {
 					$out->info($name, true);
 					
-					$info = new ReflectionClass($name);
+					$info = new \ReflectionClass($name);
 					
 					$this->
 						checkClassSanity($class, $info);
 					
-					if ($info->implementsInterface('Prototyped'))
+					if ($info->implementsInterface('\Onphp\Prototyped'))
 						$this->checkClassSanity(
 							$class,
-							new ReflectionClass('Proto'.$name)
+							new \ReflectionClass('Proto'.$name)
 						);
 					
-					if ($info->implementsInterface('DAOConnected'))
+					if ($info->implementsInterface('\Onphp\DAOConnected'))
 						$this->checkClassSanity(
 							$class,
-							new ReflectionClass($name.'DAO')
+							new \ReflectionClass($name.'DAO')
 						);
 					
 					foreach ($class->getInterfaces() as $interface)
@@ -657,7 +659,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		public function checkForStaleFiles($drop = false)
 		{
@@ -672,8 +674,8 @@
 		}
 		
 		/**
-		 * @throws MissingElementException
-		 * @return MetaClass
+		 * @throws \Onphp\MissingElementException
+		 * @return \Onphp\MetaClass
 		**/
 		public function getClassByName($name)
 		{
@@ -691,7 +693,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		public function setOutput(MetaOutput $out)
 		{
@@ -701,7 +703,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public function getOutput()
 		{
@@ -709,7 +711,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		private function checkDirectory(
 			$directory, $preStrip, $postStrip, $drop = false
@@ -754,9 +756,9 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
-		private function addSource(SimpleXMLElement $source)
+		private function addSource(\SimpleXMLElement $source)
 		{
 			$name = (string) $source['name'];
 			
@@ -784,7 +786,7 @@
 		}
 		
 		/**
-		 * @return MetaClassProperty
+		 * @return \Onphp\MetaClassProperty
 		**/
 		private function makeProperty($name, $type, MetaClass $class, $size)
 		{
@@ -801,7 +803,7 @@
 			if (is_readable(ONPHP_META_TYPES.$type.'Type'.EXT_CLASS))
 				$typeClass = $type.'Type';
 			else
-				$typeClass = 'ObjectType';
+				$typeClass = '\Onphp\ObjectType';
 			
 			$property = new MetaClassProperty($name, new $typeClass($type), $class);
 			
@@ -828,8 +830,8 @@
 		}
 		
 		/**
-		 * @throws MissingElementException
-		 * @return GenerationPattern
+		 * @throws \Onphp\MissingElementException
+		 * @return \Onphp\GenerationPattern
 		**/
 		private function guessPattern($name)
 		{
@@ -844,7 +846,7 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		private function checkSanity(MetaClass $class)
 		{
@@ -972,9 +974,9 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
-		private function processIncludes(SimpleXMLElement $xml, $metafile)
+		private function processIncludes(\SimpleXMLElement $xml, $metafile)
 		{
 			foreach ($xml->include as $include) {
 				$file = (string) $include['file'];
@@ -996,9 +998,9 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
-		private function processClasses(SimpleXMLElement $xml, $metafile, $generate)
+		private function processClasses(\SimpleXMLElement $xml, $metafile, $generate)
 		{
 			$classesNamespace = (string)$xml->classes['namespace'] ?: null;
 			foreach ($xml->classes[0] as $xmlClass) {
@@ -1053,7 +1055,7 @@
 						$name = (string) $id['name'];
 					
 					if (!isset($id['type']))
-						$type = 'BigInteger';
+						$type = '\Onphp\BigInteger';
 					else
 						$type = (string) $id['type'];
 					
@@ -1251,7 +1253,7 @@
 				$contents
 			);
 			
-			$doc = new DOMDocument('1.0');
+			$doc = new \DOMDocument('1.0');
 			$doc->loadXML($contents);
 			
 			try {
@@ -1286,11 +1288,11 @@
 		}
 		
 		/**
-		 * @return MetaConfiguration
+		 * @return \Onphp\MetaConfiguration
 		**/
 		private function checkClassSanity(
 			MetaClass $class,
-			ReflectionClass $info
+			\ReflectionClass $info
 		)
 		{
 			switch ($class->getTypeId()) {
@@ -1321,7 +1323,7 @@
 					break;
 			}
 			
-			if ($public = $info->getProperties(ReflectionProperty::IS_PUBLIC)) {
+			if ($public = $info->getProperties(\ReflectionProperty::IS_PUBLIC)) {
 				Assert::isUnreachable(
 					$class->getName()
 					.' contains properties with evil visibility:'

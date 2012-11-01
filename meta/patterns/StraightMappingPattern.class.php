@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Patterns
 	**/
+	namespace Onphp;
+
 	final class StraightMappingPattern extends BasePattern
 	{
 		public function daoExists()

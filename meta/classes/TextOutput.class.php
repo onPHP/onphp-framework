@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup MetaBase
 	**/
+	namespace Onphp;
+
 	class TextOutput
 	{
 		/**
-		 * @return TextOutput
+		 * @return \Onphp\TextOutput
 		**/
 		public function write($text)
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return TextOutput
+		 * @return \Onphp\TextOutput
 		**/
 		public function writeLine($text)
 		{
@@ -35,7 +37,7 @@
 		}
 		
 		/**
-		 * @return TextOutput
+		 * @return \Onphp\TextOutput
 		**/
 		public function newLine()
 		{
@@ -45,7 +47,7 @@
 		}
 		
 		/**
-		 * @return TextOutput
+		 * @return \Onphp\TextOutput
 		**/
 		public function setMode(
 			$attribute = ConsoleMode::ATTR_RESET_ALL,
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return TextOutput
+		 * @return \Onphp\TextOutput
 		**/
 		public function resetAll()
 		{

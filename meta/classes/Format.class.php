@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup MetaBase
 	**/
+	namespace Onphp;
+
 	final class Format extends StaticFactory
 	{
 		// dumb and straigh beautifier

@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Patterns
 	**/
+	namespace Onphp;
+
 	final class SpookedEnumerationPattern extends EnumerationClassPattern
 	{
 		/**
-		 * @return SpookedEnumerationPattern
+		 * @return \Onphp\SpookedEnumerationPattern
 		**/
 		public function build(MetaClass $class)
 		{

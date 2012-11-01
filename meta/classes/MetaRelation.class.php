@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup MetaBase
 	**/
+	namespace Onphp;
+
 	final class MetaRelation extends Enumeration
 	{
 		const ONE_TO_ONE		= 1;
@@ -25,7 +27,7 @@
 		);
 		
 		/**
-		 * @return MetaRelation
+		 * @return \Onphp\MetaRelation
 		**/
 		public static function create($id)
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return MetaRelation
+		 * @return \Onphp\MetaRelation
 		**/
 		public static function makeFromName($name)
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Builders
 	**/
+	namespace Onphp;
+
 	final class AutoProtoClassBuilder extends BaseBuilder
 	{
 		public static function build(MetaClass $class)
@@ -23,7 +25,7 @@
 			if ($class->hasBuildableParent())
 				$parentName = $parent->getFullClassName('Proto');
 			else
-				$parentName = '\AbstractProtoClass';
+				$parentName = '\Onphp\AbstractProtoClass';
 			
 			if ($namespace = trim($class->getNamespace(), '\\'))
 				$out .= "namespace {$namespace};\n\n";
@@ -76,7 +78,7 @@ EOT;
 			$list = array();
 			
 			foreach ($propertyList as $property) {
-				/* @var $property MetaClassProperty */
+				/* @var $property \Onphp\MetaClassProperty */
 				$list[] =
 					"'{$property->getName()}' => "
 					.$property->toLightProperty($class)->toString();

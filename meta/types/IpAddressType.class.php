@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	class IpAddressType extends ObjectType
 	{
 		public function getPrimitiveName()

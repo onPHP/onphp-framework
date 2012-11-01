@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Builders
 	**/
+	namespace Onphp;
+
 	abstract class OnceBuilder extends BaseBuilder
 	{
 		protected static function getHead()

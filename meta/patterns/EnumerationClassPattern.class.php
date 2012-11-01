@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Patterns
 	**/
+	namespace Onphp;
+
 	class EnumerationClassPattern extends BasePattern
 	{
 		public function daoExists()
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return EnumerationClassPattern
+		 * @return \Onphp\EnumerationClassPattern
 		**/
 		public function build(MetaClass $class)
 		{

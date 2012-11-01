@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	final class InetType extends IntegerType
 	{
 		public function getPrimitiveName()
@@ -25,8 +27,8 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
-		 * @return InetType
+		 * @throws \Onphp\WrongArgumentException
+		 * @return \Onphp\InetType
 		**/
 		public function setDefault($default)
 		{

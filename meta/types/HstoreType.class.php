@@ -13,6 +13,8 @@
 	 * @ingroup Types
 	 * @see http://www.postgresql.org/docs/8.3/interactive/hstore.html
 	**/
+	namespace Onphp;
+
 	final class HstoreType extends ObjectType
 	{
 		public function getPrimitiveName()

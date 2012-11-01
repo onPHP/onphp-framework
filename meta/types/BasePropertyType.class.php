@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	abstract class BasePropertyType
 	{
 		abstract public function getDeclaration();

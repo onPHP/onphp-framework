@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	class IpRangeType extends ObjectType
 	{
 		public function getPrimitiveName()

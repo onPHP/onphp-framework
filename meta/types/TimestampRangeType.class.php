@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	class TimestampRangeType extends DateRangeType
 	{
 		public function toPrimitive()

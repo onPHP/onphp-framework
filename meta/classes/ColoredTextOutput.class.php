@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup MetaBase
 	**/
+	namespace Onphp;
+
 	final class ColoredTextOutput extends TextOutput
 	{
 		/**
-		 * @return ColoredTextOutput
+		 * @return \Onphp\ColoredTextOutput
 		**/
 		public function setMode(
 			$attribute = ConsoleMode::ATTR_RESET_ALL,
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return ColoredTextOutput
+		 * @return \Onphp\ColoredTextOutput
 		**/
 		public function resetAll()
 		{

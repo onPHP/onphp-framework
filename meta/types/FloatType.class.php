@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	class FloatType extends IntegerType
 	{
 		protected $precision = 0;
@@ -22,8 +24,8 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
-		 * @return FloatType
+		 * @throws \Onphp\WrongArgumentException
+		 * @return \Onphp\FloatType
 		**/
 		public function setDefault($default)
 		{
@@ -38,7 +40,7 @@
 		}
 
 		/**
-		 * @return NumericType
+		 * @return \Onphp\NumericType
 		**/
 		public function setPrecision($precision)
 		{

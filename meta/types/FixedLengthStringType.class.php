@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	final class FixedLengthStringType extends StringType
 	{
 		public function toColumnType($length = null)

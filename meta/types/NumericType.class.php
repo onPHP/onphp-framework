@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	final class NumericType extends FloatType
 	{
 		public function toColumnType()

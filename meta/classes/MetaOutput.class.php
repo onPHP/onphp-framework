@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup MetaBase
 	**/
+	namespace Onphp;
+
 	final class MetaOutput
 	{
 		private $out = null;
@@ -22,7 +24,7 @@
 		}
 		
 		/**
-		 * @return TextOutput
+		 * @return \Onphp\TextOutput
 		**/
 		public function getOutput()
 		{
@@ -30,7 +32,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public function newLine()
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public function log($text, $bold = false)
 		{
@@ -48,7 +50,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public function logLine($text, $bold = false)
 		{
@@ -56,7 +58,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public function info($text, $bold = false)
 		{
@@ -64,7 +66,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public function infoLine($text, $bold = false)
 		{
@@ -72,7 +74,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public function warning($text)
 		{
@@ -80,7 +82,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public function warningLine($text)
 		{
@@ -88,7 +90,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public function error($text, $bold = false)
 		{
@@ -96,7 +98,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public function errorLine($text, $bold = false)
 		{
@@ -104,7 +106,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public function remark($text)
 		{
@@ -112,7 +114,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		public function remarkLine($text)
 		{
@@ -120,7 +122,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		private function defaultText($text, $color, $bold)
 		{
@@ -139,7 +141,7 @@
 		}
 		
 		/**
-		 * @return MetaOutput
+		 * @return \Onphp\MetaOutput
 		**/
 		private function defaultTextLine($text, $color, $bold)
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	final class BinaryType extends BasePropertyType
 	{
 		public function getPrimitiveName()

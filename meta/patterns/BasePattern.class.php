@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Patterns
 	**/
+	namespace Onphp;
+
 	abstract class BasePattern extends Singleton implements GenerationPattern
 	{
 		public function tableExists()
@@ -73,7 +75,7 @@
 		}
 		
 		/**
-		 * @return BasePattern
+		 * @return \Onphp\BasePattern
 		**/
 		protected function fullBuild(MetaClass $class)
 		{
@@ -84,7 +86,7 @@
 		}
 		
 		/**
-		 * @return BasePattern
+		 * @return \Onphp\BasePattern
 		**/
 		protected function buildProto(MetaClass $class)
 		{
@@ -108,7 +110,7 @@
 		}
 		
 		/**
-		 * @return BasePattern
+		 * @return \Onphp\BasePattern
 		**/
 		protected function buildBusiness(MetaClass $class)
 		{
@@ -132,7 +134,7 @@
 		}
 		
 		/**
-		 * @return BasePattern
+		 * @return \Onphp\BasePattern
 		**/
 		protected function buildDao(MetaClass $class)
 		{

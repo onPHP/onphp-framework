@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	class BigIntegerType extends IntegerType
 	{
 		public function getSize()

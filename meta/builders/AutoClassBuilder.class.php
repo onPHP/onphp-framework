@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Builders
 	**/
+	namespace Onphp;
+
 	final class AutoClassBuilder extends BaseBuilder
 	{
 		public static function build(MetaClass $class)
@@ -42,7 +44,7 @@
 			$out .= "\n{\n";
 			
 			foreach ($class->getProperties() as $property) {
-				/* @var $property MetaClassProperty */
+				/* @var $property \Onphp\MetaClassProperty */
 				if (!self::doPropertyBuild($class, $property, $isNamed))
 					continue;
 				
@@ -59,7 +61,7 @@
 			$valueObjects = array();
 			
 			foreach ($class->getProperties() as $property) {
-				/* @var $property MetaClassProperty */
+				/* @var $property \Onphp\MetaClassProperty */
 				if (
 					$property->getType() instanceof ObjectType
 					&& !$property->getType()->isGeneric()
@@ -86,7 +88,7 @@ EOT;
 			}
 			
 			foreach ($class->getProperties() as $property) {
-				/* @var $property MetaClassProperty */
+				/* @var $property \Onphp\MetaClassProperty */
 				if (!self::doPropertyBuild($class, $property, $isNamed))
 					continue;
 				

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	abstract class InternalType extends ObjectType
 	{
 		public function isGeneric()

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	class SmallIntegerType extends IntegerType
 	{
 		public function getSize()

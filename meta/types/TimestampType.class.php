@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	final class TimestampType extends DateType
 	{
 		public function getPrimitiveName()

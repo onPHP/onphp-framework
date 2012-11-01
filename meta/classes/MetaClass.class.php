@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup MetaBase
 	**/
+	namespace Onphp;
+
 	class MetaClass
 	{
 		private $name		= null;
@@ -72,7 +74,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function setTableName($name)
 		{
@@ -82,7 +84,7 @@
 		}
 		
 		/**
-		 * @return MetaClassType
+		 * @return \Onphp\MetaClassType
 		**/
 		public function getType()
 		{
@@ -98,7 +100,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function setType(MetaClassType $type)
 		{
@@ -108,7 +110,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function getParent()
 		{
@@ -116,7 +118,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function getFinalParent()
 		{
@@ -127,7 +129,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function setParent(MetaClass $parent)
 		{
@@ -202,7 +204,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function addProperty(MetaClassProperty $property)
 		{
@@ -222,8 +224,8 @@
 		}
 		
 		/**
-		 * @return MetaClassProperty
-		 * @throws MissingElementException
+		 * @return \Onphp\MetaClassProperty
+		 * @throws \Onphp\MissingElementException
 		**/
 		public function getPropertyByName($name)
 		{
@@ -239,7 +241,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function dropProperty($name)
 		{
@@ -264,7 +266,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function addInterface($name)
 		{
@@ -274,7 +276,7 @@
 		}
 		
 		/**
-		 * @return GenerationPattern
+		 * @return \Onphp\GenerationPattern
 		**/
 		public function getPattern()
 		{
@@ -282,7 +284,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function setPattern(GenerationPattern $pattern)
 		{
@@ -292,7 +294,7 @@
 		}
 		
 		/**
-		 * @return MetaClassProperty
+		 * @return \Onphp\MetaClassProperty
 		**/
 		public function getIdentifier()
 		{
@@ -304,7 +306,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function setSourceLink($link)
 		{
@@ -319,7 +321,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function setReferencingClass($className)
 		{
@@ -334,7 +336,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function setFetchStrategy(FetchStrategy $strategy)
 		{
@@ -344,7 +346,7 @@
 		}
 		
 		/**
-		 * @return FetchStrategy
+		 * @return \Onphp\FetchStrategy
 		**/
 		public function getFetchStrategy()
 		{
@@ -386,7 +388,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function setBuild($do)
 		{
@@ -396,7 +398,7 @@
 		}
 		
 		/**
-		 * @return MetaClassProperty
+		 * @return \Onphp\MetaClassProperty
 		**/
 		public function isRedefinedProperty($name)
 		{

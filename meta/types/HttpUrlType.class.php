@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	final class HttpUrlType extends ObjectType
 	{
 		public function getPrimitiveName()

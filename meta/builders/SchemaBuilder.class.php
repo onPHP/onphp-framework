@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Builders
 	**/
+	namespace Onphp;
+
 	final class SchemaBuilder extends BaseBuilder
 	{
 		public static function buildTable($tableName, array $propertyList)

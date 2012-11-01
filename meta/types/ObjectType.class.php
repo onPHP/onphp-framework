@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	class ObjectType extends BasePropertyType
 	{
 		private $className = null;
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function getClass()
 		{

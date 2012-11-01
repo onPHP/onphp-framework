@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Builders
 	**/
+	namespace Onphp;
+
 	final class AutoDaoBuilder extends BaseBuilder
 	{
 		public static function build(MetaClass $class)
@@ -25,7 +27,7 @@
 				$class->getParent()->getPattern()
 					instanceof InternalClassPattern
 			) {
-				$parentName = '\StorableDAO';
+				$parentName = '\Onphp\StorableDAO';
 			} else {
 				$parentName = $parent->getFullClassName('', 'DAO');
 			}

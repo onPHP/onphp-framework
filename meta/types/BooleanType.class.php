@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	class BooleanType extends BasePropertyType
 	{
 		public function getPrimitiveName()
@@ -20,8 +22,8 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
-		 * @return BooleanType
+		 * @throws \Onphp\WrongArgumentException
+		 * @return \Onphp\BooleanType
 		**/
 		public function setDefault($default)
 		{

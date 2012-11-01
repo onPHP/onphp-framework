@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	final class TimestampTZType extends DateType
 	{
 		public function getPrimitiveName()

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Patterns
 	**/
+	namespace Onphp;
+
 	interface GenerationPattern
 	{
 		/// builds everything for given class

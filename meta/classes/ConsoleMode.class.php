@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup MetaBase
 	**/
+	namespace Onphp;
+
 	final class ConsoleMode /* extends StaticFactory */
 	{
 		const ATTR_RESET_ALL		= 0;

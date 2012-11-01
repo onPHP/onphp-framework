@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	class StringType extends BasePropertyType
 	{
 		public function getPrimitiveName()
@@ -20,8 +22,8 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
-		 * @return StringType
+		 * @throws \Onphp\WrongArgumentException
+		 * @return \Onphp\StringType
 		**/
 		public function setDefault($default)
 		{

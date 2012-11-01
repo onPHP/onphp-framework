@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	class IntegerType extends BasePropertyType
 	{
 		public function getSize()
@@ -25,8 +27,8 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
-		 * @return IntegerType
+		 * @throws \Onphp\WrongArgumentException
+		 * @return \Onphp\IntegerType
 		**/
 		public function setDefault($default)
 		{

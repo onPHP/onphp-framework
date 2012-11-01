@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Patterns
 	**/
+	namespace Onphp;
+
 	final class InternalClassPattern
 		extends BasePattern
 		implements GenerationPattern
 	{
 		/**
-		 * @return InternalClassPattern
+		 * @return \Onphp\InternalClassPattern
 		**/
 		public function build(MetaClass $class)
 		{

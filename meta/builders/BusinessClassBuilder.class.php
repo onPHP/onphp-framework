@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Builders
 	**/
+	namespace Onphp;
+
 	final class BusinessClassBuilder extends OnceBuilder
 	{
 		public static function build(MetaClass $class)
@@ -63,7 +65,7 @@ EOT;
 					$parent = $class;
 					
 					while ($parent = $parent->getParent()) {
-						$info = new ReflectionClass($parent->getName());
+						$info = new \ReflectionClass($parent->getName());
 						
 						if (
 							$info->hasMethod('create')

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Patterns
 	**/
+	namespace Onphp;
+
 	final class SpookedClassPattern extends Singleton implements GenerationPattern
 	{
 		public function build(MetaClass $class)

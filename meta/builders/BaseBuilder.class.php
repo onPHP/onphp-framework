@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Builders
 	**/
+	namespace Onphp;
+
 	abstract class BaseBuilder extends StaticFactory
 	{
 		public static function build(MetaClass $class)

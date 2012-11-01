@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Builders
 	**/
+	namespace Onphp;
+
 	final class DaoBuilder extends OnceBuilder
 	{
 		public static function build(MetaClass $class)

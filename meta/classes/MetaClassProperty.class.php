@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup MetaBase
 	**/
+	namespace Onphp;
+
 	class MetaClassProperty
 	{
 		private $class		= null;
@@ -56,7 +58,7 @@
 		}
 		
 		/**
-		 * @return MetaClass
+		 * @return \Onphp\MetaClass
 		**/
 		public function getClass()
 		{
@@ -69,7 +71,7 @@
 		}
 		
 		/**
-		 * @return MetaClassProperty
+		 * @return \Onphp\MetaClassProperty
 		**/
 		public function setName($name)
 		{
@@ -84,7 +86,7 @@
 		}
 		
 		/**
-		 * @return MetaClassProperty
+		 * @return \Onphp\MetaClassProperty
 		**/
 		public function setColumnName($name)
 		{
@@ -94,7 +96,7 @@
 		}
 		
 		/**
-		 * @return MetaClassProperty
+		 * @return \Onphp\MetaClassProperty
 		**/
 		public function getConvertedName()
 		{
@@ -104,7 +106,7 @@
 		}
 		
 		/**
-		 * @return BasePropertyType
+		 * @return \Onphp\BasePropertyType
 		**/
 		public function getType()
 		{
@@ -117,8 +119,8 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
-		 * @return MetaClassProperty
+		 * @throws \Onphp\WrongArgumentException
+		 * @return \Onphp\MetaClassProperty
 		**/
 		public function setSize($size)
 		{
@@ -158,7 +160,7 @@
 		}
 		
 		/**
-		 * @return MetaClassProperty
+		 * @return \Onphp\MetaClassProperty
 		**/
 		public function required()
 		{
@@ -168,7 +170,7 @@
 		}
 		
 		/**
-		 * @return MetaClassProperty
+		 * @return \Onphp\MetaClassProperty
 		**/
 		public function optional()
 		{
@@ -183,7 +185,7 @@
 		}
 		
 		/**
-		 * @return MetaClassProperty
+		 * @return \Onphp\MetaClassProperty
 		**/
 		public function setIdentifier($really = false)
 		{
@@ -193,7 +195,7 @@
 		}
 		
 		/**
-		 * @return MetaRelation
+		 * @return \Onphp\MetaRelation
 		**/
 		public function getRelation()
 		{
@@ -209,7 +211,7 @@
 		}
 		
 		/**
-		 * @return MetaClassProperty
+		 * @return \Onphp\MetaClassProperty
 		**/
 		public function setRelation(MetaRelation $relation)
 		{
@@ -219,7 +221,7 @@
 		}
 		
 		/**
-		 * @return MetaClassProperty
+		 * @return \Onphp\MetaClassProperty
 		**/
 		public function setFetchStrategy(FetchStrategy $strategy)
 		{
@@ -229,7 +231,7 @@
 		}
 		
 		/**
-		 * @return FetchStrategy
+		 * @return \Onphp\FetchStrategy
 		**/
 		public function getFetchStrategy()
 		{
@@ -386,8 +388,8 @@
 			
 			$propertyClassName = (
 				$inner
-					? '\InnerMetaProperty'
-					: '\LightMetaProperty'
+					? '\Onphp\InnerMetaProperty'
+					: '\Onphp\LightMetaProperty'
 			);
 			
 			if (

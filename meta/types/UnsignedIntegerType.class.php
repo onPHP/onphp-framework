@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Types
 	**/
+	namespace Onphp;
+
 	final class UnsignedIntegerType extends IntegerType
 	{
 		public function getSize()

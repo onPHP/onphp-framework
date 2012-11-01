@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup MetaBase
 	**/
+	namespace Onphp;
+
 	final class MetaClassType extends Enumeration
 	{
 		const CLASS_FINAL		= 'final';

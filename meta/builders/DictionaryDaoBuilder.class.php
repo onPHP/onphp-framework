@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Builders
 	**/
+	namespace Onphp;
+
 	final class DictionaryDaoBuilder extends BaseBuilder
 	{
 		public static function build(MetaClass $class)
