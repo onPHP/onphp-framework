@@ -476,7 +476,7 @@
 		
 		final public function toString()
 		{
-			$class = '\\'.ltrim(get_class($this), '\\');
+			$class = ClassUtils::normalClassName($this);
 			
 			return
 				$class.'::fill('

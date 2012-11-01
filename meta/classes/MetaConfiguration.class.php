@@ -1355,7 +1355,7 @@
 			
 			$db = DBPool::me()->getLink();
 			
-			$class = '\\'.ltrim(get_class($enumeration), '\\');
+			$class = ClassUtils::normalClassName($enumeration);
 			
 			$ids = array();
 

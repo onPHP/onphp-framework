@@ -53,7 +53,10 @@
 		public function importValue(/* Identifiable */ $value)
 		{
 			if ($value)
-				Assert::isEqual(get_class($value), $this->className);
+				Assert::isEqual(
+					ClassUtils::normalClassName($value),
+					$this->className
+				);
 			else
 				return parent::importValue(null);
 			

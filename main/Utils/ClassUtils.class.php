@@ -135,7 +135,7 @@
 		public static function isInstanceOf($object, $class)
 		{
 			if (is_object($class)) {
-				$className = get_class($class);
+				$className = self::normalClassName($class);
 			} elseif (is_string($class)) {
 				$className = $class;
 			} else {
@@ -183,7 +183,7 @@
 				throw new WrongArgumentException('incorrect method signature');
 			
 			list($className, $methodName) = $nameParts;
-			$className = '\\'.ltrim($className, '\\');
+			$className = self::normalClassName($className);
 			
 			try {
 				$class = new \ReflectionClass($className);
@@ -209,6 +209,24 @@
 			);
 			
 			return $nameParts;
+		}
+
+		/**
+		 * @param mixed $className can be string or object
+		 * @return string
+		 * @throws WrongStateException
+		 */
+		public static function normalClassName($className)
+		{
+			if (is_object($className)) {
+				$className = get_class($className);
+			} elseif (!is_scalar($className)) {
+				throw new WrongStateException(
+					'Undefined argument passed - not scalar and not object'
+				);
+			}
+			
+			return '\\'.ltrim($className, '\\');
 		}
 		
 		/* void */ public static function preloadAllClasses()

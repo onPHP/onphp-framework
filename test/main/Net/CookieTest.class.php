@@ -6,7 +6,7 @@
 	final class CookieTest extends TestCase
 	{
 		/**
-		* @expectedException WrongStateException
+		* @expectedException \Onphp\WrongStateException
 		*/
 		public function testCookie()
 		{
@@ -22,7 +22,7 @@
 		}
 		
 		/**
-		* @expectedException WrongStateException
+		* @expectedException \Onphp\WrongStateException
 		*/
 		public function testCookieCollection()
 		{

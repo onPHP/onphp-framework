@@ -55,7 +55,7 @@
 			
 			// property, class name
 			OqlToken::IDENTIFIER =>
-				'\b[a-zA-Z_][a-zA-Z\d_]*(?:\.[a-zA-Z_][a-zA-Z\d_]+)*\b',
+				'\b[\\\\a-zA-Z_][\\\\a-zA-Z\d_]*(?:\.[\\\\a-zA-Z_][\\\\a-zA-Z\d_]+)*\b',
 			
 			// parentheses
 			OqlToken::PARENTHESES =>

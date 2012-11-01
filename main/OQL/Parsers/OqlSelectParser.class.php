@@ -118,7 +118,7 @@
 				$this->tokenizer->next();
 				
 				$class = $this->tokenizer->next();
-				$className = $this->getTokenValue($class, true);
+				$className = ClassUtils::normalClassName($this->getTokenValue($class, true));
 				
 				if (
 					!$this->checkIdentifier($class)
@@ -130,8 +130,9 @@
 				if (!class_exists($className, true))
 					$this->error('class does not exists:', $className);
 				
-				if (!ClassUtils::isInstanceOf($className, '\Onphp\DAOConnected'))
+				if (!ClassUtils::isInstanceOf($className, '\Onphp\DAOConnected')) {
 					$this->error('class must implement DAOConnected interface:', $className);
+				}
 				
 				$this->oqlObject->setDao(
 					call_user_func(array($className, 'dao'))
