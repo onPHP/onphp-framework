@@ -34,11 +34,11 @@
 		public function connect()
 		{
 			try {
-				$this->link = new PDO(
+				$this->link = new \PDO(
 					"sqlite:{$this->basename}",
 					'',
 					'',
-					array(PDO::ATTR_PERSISTENT => $this->persistent)
+					array(\PDO::ATTR_PERSISTENT => $this->persistent)
 				);
 			} catch (\PDOException $e) {
 				throw new DatabaseException(
@@ -46,7 +46,7 @@
 					.$e->getMessage()
 				);
 			}
-			$this->link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$this->link->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 			
 			return $this;
 		}
@@ -112,7 +112,7 @@
 			$res = $this->query($query);
 			/* @var $res \PDOStatement */
 			
-			$array = $res->fetchAll(PDO::FETCH_ASSOC);
+			$array = $res->fetchAll(\PDO::FETCH_ASSOC);
 			if (count($array) > 1)
 				throw new TooManyRowsException(
 					'query returned too many rows (we need only one)'
@@ -128,7 +128,7 @@
 			$res = $this->query($query);
 			/* @var $res \PDOStatement */
 			
-			$resArray = $res->fetchAll(PDO::FETCH_ASSOC);
+			$resArray = $res->fetchAll(\PDO::FETCH_ASSOC);
 			if ($resArray) {
 				$array = array();
 				foreach ($resArray as $row) {
@@ -145,7 +145,7 @@
 			$res = $this->query($query);
 			/* @var $res \PDOStatement */
 			
-			return $res->fetchAll(PDO::FETCH_ASSOC) ?: null;
+			return $res->fetchAll(\PDO::FETCH_ASSOC) ?: null;
 		}
 		
 		public function hasQueue()
