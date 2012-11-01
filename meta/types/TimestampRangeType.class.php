@@ -18,7 +18,7 @@
 	{
 		public function toPrimitive()
 		{
-			return 'Primitive::timestampRange';
+			return '\Onphp\Primitive::timestampRange';
 		}
 	}
 ?>

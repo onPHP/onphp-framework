@@ -28,7 +28,7 @@
 
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::TIME)';
+			return '\Onphp\DataType::create(\Onphp\DataType::TIME)';
 		}
 	}
 ?>

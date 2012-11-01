@@ -29,7 +29,7 @@
 				$out .= "namespace {$namespace};\n\n";
 			
 			$out .= <<<EOT
-{$type}class {$class->getName()} extends \Enumeration
+{$type}class {$class->getName()} extends \Onphp\Enumeration
 {
 	// implement me!
 }

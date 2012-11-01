@@ -42,7 +42,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::TEXT)';
+			return '\Onphp\DataType::create(\Onphp\DataType::TEXT)';
 		}
 	}
 ?>

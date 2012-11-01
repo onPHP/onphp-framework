@@ -23,7 +23,7 @@
 
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::TIMESTAMPTZ)->setTimezoned(true)';
+			return '\Onphp\DataType::create(\Onphp\DataType::TIMESTAMPTZ)->setTimezoned(true)';
 		}
 	}
 ?>

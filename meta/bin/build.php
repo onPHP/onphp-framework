@@ -1,5 +1,7 @@
 #!/usr/bin/php
 <?php
+
+	namespace Onphp;
 	
 	function help()
 	{

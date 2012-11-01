@@ -800,9 +800,10 @@
 					'strange name or type given: "'.$name.'" - "'.$type.'"'
 				);
 			
-			if (is_readable(ONPHP_META_TYPES.$type.'Type'.EXT_CLASS))
-				$typeClass = $type.'Type';
-			else
+			if (is_readable(ONPHP_META_TYPES.$type.'Type'.EXT_CLASS)) {
+				var_dump($type); exit;
+				$typeClass = '\Onphp\\'.$type.'Type';
+			} else
 				$typeClass = '\Onphp\ObjectType';
 			
 			$property = new MetaClassProperty($name, new $typeClass($type), $class);
@@ -835,7 +836,9 @@
 		**/
 		private function guessPattern($name)
 		{
-			$class = $name.'Pattern';
+			$class = '\Onphp\\'.$name.'Pattern';
+			var_dump($class);
+			exit;
 			
 			if (is_readable(ONPHP_META_PATTERNS.$class.EXT_CLASS))
 				return Singleton::getInstance($class);
@@ -1306,7 +1309,7 @@
 					);
 					Assert::isTrue(
 						$class->getPattern() instanceof AbstractClassPattern,
-						'class '.$info->getName().' must use AbstractClassPattern'
+						'class '.$info->getName().' must use \Onphp\AbstractClassPattern'
 					);
 					break;
 				
@@ -1351,7 +1354,7 @@
 			
 			$db = DBPool::me()->getLink();
 			
-			$class = get_class($enumeration);
+			$class = '\\'.ltrim(get_class($enumeration), '\\');
 			
 			$ids = array();
 

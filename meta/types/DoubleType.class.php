@@ -18,7 +18,7 @@
 	{
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::DOUBLE)';
+			return '\Onphp\DataType::create(\Onphp\DataType::DOUBLE)';
 		}
 	}
 ?>

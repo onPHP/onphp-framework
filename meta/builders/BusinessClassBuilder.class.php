@@ -28,13 +28,13 @@
 			else
 				$typeName = null;
 			
-			$interfaces = ' implements \Prototyped';
+			$interfaces = ' implements \Onphp\Prototyped';
 			
 			if (
 				$class->getPattern()->daoExists()
 				&& (!$class->getPattern() instanceof AbstractClassPattern)
 			) {
-				$interfaces .= ', \DAOConnected';
+				$interfaces .= ', \Onphp\DAOConnected';
 				
 				$daoName = $class->getFullClassName('', 'DAO');
 				$dao = <<<EOT
@@ -43,7 +43,7 @@
 	**/
 	public static function dao()
 	{
-		return \Singleton::getInstance('{$daoName}');
+		return \Onphp\Singleton::getInstance('{$daoName}');
 	}
 
 EOT;
@@ -131,7 +131,7 @@ EOT;
 	**/
 	public static function proto()
 	{
-		return \Singleton::getInstance('{$protoName}');
+		return \Onphp\Singleton::getInstance('{$protoName}');
 	}
 
 EOT;

@@ -29,7 +29,7 @@
 				$out .= "namespace {$namespace};\n\n";
 			
 			$out .= <<<EOT
-{$type}class {$class->getName()} extends \Enum
+{$type}class {$class->getName()} extends \Onphp\Enum
 {
 	// implement me!
 	protected static \$names = array();

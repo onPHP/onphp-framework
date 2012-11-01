@@ -54,8 +54,8 @@
 		{
 			return
 				$length
-					? 'DataType::create(DataType::VARCHAR)'
-					: 'DataType::create(DataType::TEXT)';
+					? '\Onphp\DataType::create(\Onphp\DataType::VARCHAR)'
+					: '\Onphp\DataType::create(\Onphp\DataType::TEXT)';
 		}
 	}
 ?>

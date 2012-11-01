@@ -24,7 +24,7 @@
 				$out .= "namespace {$namespace};\n\n";
 			
 			$out .= <<<EOT
-abstract class {$class->getName('Auto', 'DAO')} extends \StorableDAO
+abstract class {$class->getName('Auto', 'DAO')} extends \Onphp\StorableDAO
 {
 
 EOT;

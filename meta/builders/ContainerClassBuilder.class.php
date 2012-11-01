@@ -37,7 +37,7 @@
 				'final class '
 				.$containerName
 				.' extends '
-				.'\\'.$holder->getRelation()->toString().'Linked'
+				.'\Onphp\\'.$holder->getRelation()->toString().'Linked'
 				."\n{\n";
 
 			$className = $class->getName();

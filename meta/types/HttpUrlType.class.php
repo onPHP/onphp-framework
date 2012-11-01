@@ -33,7 +33,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::VARCHAR)';
+			return '\Onphp\DataType::create(\Onphp\DataType::VARCHAR)';
 		}
 	}
 ?>

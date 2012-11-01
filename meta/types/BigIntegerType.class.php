@@ -23,7 +23,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::BIGINT)';
+			return '\Onphp\DataType::create(\Onphp\DataType::BIGINT)';
 		}
 	}
 ?>

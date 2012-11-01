@@ -163,7 +163,7 @@ public function fill{$methodName}(\$collection, \$lazy = false)
 	\$this->{$name} = new {$containerName}(\$this, \$lazy);
 	
 	if (!\$this->id) {
-		throw new WrongStateException(
+		throw new \Onphp\WrongStateException(
 			'i do not know which object i belong to'
 		);
 	}

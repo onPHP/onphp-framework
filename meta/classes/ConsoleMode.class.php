@@ -16,7 +16,7 @@
 	**/
 	namespace Onphp;
 
-	final class ConsoleMode /* extends StaticFactory */
+	final class ConsoleMode /* extends \Onphp\StaticFactory */
 	{
 		const ATTR_RESET_ALL		= 0;
 		const ATTR_BOLD				= 1;

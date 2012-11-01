@@ -33,7 +33,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::IP_RANGE)';
+			return '\Onphp\DataType::create(\Onphp\DataType::IP_RANGE)';
 		}
 	}
 ?>

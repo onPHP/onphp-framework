@@ -444,7 +444,7 @@
 			
 			$column = <<<EOT
 addColumn(
-	DBColumn::create(
+	\Onphp\DBColumn::create(
 		{$this->type->toColumnType($this->size)}
 EOT;
 

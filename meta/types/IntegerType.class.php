@@ -57,7 +57,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::INTEGER)';
+			return '\Onphp\DataType::create(\Onphp\DataType::INTEGER)';
 		}
 	}
 ?>

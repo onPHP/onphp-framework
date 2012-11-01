@@ -61,7 +61,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::REAL)';
+			return '\Onphp\DataType::create(\Onphp\DataType::REAL)';
 		}
 	}
 ?>

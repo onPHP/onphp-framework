@@ -23,7 +23,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::TIMESTAMP)';
+			return '\Onphp\DataType::create(\Onphp\DataType::TIMESTAMP)';
 		}
 	}
 ?>

@@ -33,10 +33,10 @@
 				$class->getPattern() instanceof DictionaryClassPattern
 				&& $class->hasProperty('name')
 			) {
-				$out .= " extends \NamedObject";
+				$out .= " extends \Onphp\NamedObject";
 				$isNamed = true;
 			} elseif (!$class->getPattern() instanceof ValueObjectPattern)
-				$out .= " extends \IdentifiableObject";
+				$out .= " extends \Onphp\IdentifiableObject";
 			
 			if ($interfaces = $class->getInterfaces())
 				$out .= ' implements '.implode(', ', $interfaces);

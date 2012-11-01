@@ -21,7 +21,7 @@
 			$out = <<<EOT
 \$schema->
 	addTable(
-		DBTable::create('{$tableName}')->
+		\Onphp\DBTable::create('{$tableName}')->
 
 EOT;
 
@@ -111,7 +111,7 @@ EOT;
 						$out .= <<<EOT
 \$schema->
 	addTable(
-		DBTable::create('{$tableName}')->
+		\Onphp\DBTable::create('{$tableName}')->
 		{$property->toColumn()}->
 		{$foreignPropery->toColumn()}->
 		addUniques('{$property->getRelationColumnName()}', '{$foreignPropery->getColumnName()}')
@@ -135,8 +135,8 @@ EOT;
 				\$schema->
 					getTableByName('{$targetTable}')->
 					getColumnByName('{$targetColumn}'),
-				ForeignChangeAction::restrict(),
-				ForeignChangeAction::cascade()
+				\Onphp\ForeignChangeAction::restrict(),
+				\Onphp\ForeignChangeAction::cascade()
 			);
 
 
@@ -153,7 +153,7 @@ EOT;
 		{
 			$out = parent::getHead();
 			
-			$out .= "\$schema = new DBSchema();\n\n";
+			$out .= "\$schema = new \Onphp\DBSchema();\n\n";
 			
 			return $out;
 		}

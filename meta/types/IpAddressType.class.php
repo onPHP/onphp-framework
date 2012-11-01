@@ -33,7 +33,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::IP)';
+			return '\Onphp\DataType::create(\Onphp\DataType::IP)';
 		}
 	}
 ?>

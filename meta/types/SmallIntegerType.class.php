@@ -23,7 +23,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::SMALLINT)';
+			return '\Onphp\DataType::create(\Onphp\DataType::SMALLINT)';
 		}
 	}
 ?>

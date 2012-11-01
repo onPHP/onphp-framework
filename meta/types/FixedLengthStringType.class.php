@@ -18,7 +18,7 @@
 	{
 		public function toColumnType($length = null)
 		{
-			return 'DataType::create(DataType::CHAR)';
+			return '\Onphp\DataType::create(\Onphp\DataType::CHAR)';
 		}
 	}
 ?>
