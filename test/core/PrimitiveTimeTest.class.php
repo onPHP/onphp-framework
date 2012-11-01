@@ -1,15 +1,17 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class PrimitiveTimeTest extends TestCase
 	{
 		public function testImport()
 		{
 			$prm =
-				Primitive::time('test')->
+				\Onphp\Primitive::time('test')->
 					setSingle(true)->
-					setMax(Time::create('00:12:00'))->
-					setMin(Time::create('00:10:00'));
+					setMax(\Onphp\Time::create('00:12:00'))->
+					setMin(\Onphp\Time::create('00:10:00'));
 			
 			$array =
 				array (

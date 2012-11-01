@@ -2,6 +2,8 @@
 	/**
 	 * @group rdb
 	 */
+	namespace Onphp\Test;
+
 	class RecursionDBTest extends TestCaseDAO
 	{
 		/**
@@ -12,7 +14,7 @@
 			$this->markTestSkipped('wontfix');
 			
 			foreach (DBTestPool::me()->getPool() as $db) {
-				DBPool::me()->setDefault($db);
+				\Onphp\DBPool::me()->setDefault($db);
 				TestObject::dao()->import(
 					TestObject::create()->
 					setId(1)->
@@ -47,28 +49,28 @@
 		public function testRecursionObjects()
 		{
 			foreach (DBTestPool::me()->getPool() as $db) {
-				DBPool::me()->setDefault($db);
+				\Onphp\DBPool::me()->setDefault($db);
 				
 				$parentProperties =
-					Singleton::getInstance('ProtoTestParentObject')->
+					\Onphp\Singleton::getInstance('\Onphp\Test\ProtoTestParentObject')->
 					getPropertyList();
 
 				$resultRoot = $parentProperties['root']->
-					getFetchStrategyId() == FetchStrategy::LAZY;
+					getFetchStrategyId() == \Onphp\FetchStrategy::LAZY;
 
 				$childProperties =
-					Singleton::getInstance('ProtoTestChildObject')->
+					\Onphp\Singleton::getInstance('\Onphp\Test\ProtoTestChildObject')->
 					getPropertyList();
 
 				$resultParent = $childProperties['parent']->
-					getFetchStrategyId() == FetchStrategy::LAZY;
+					getFetchStrategyId() == \Onphp\FetchStrategy::LAZY;
 
 				$selfRecursiveProperties =
-					Singleton::getInstance('ProtoTestSelfRecursion')->
+					\Onphp\Singleton::getInstance('\Onphp\Test\ProtoTestSelfRecursion')->
 					getPropertyList();
 
 				$resultSelfRecursive = $selfRecursiveProperties['parent']->
-					getFetchStrategyId() == FetchStrategy::LAZY;
+					getFetchStrategyId() == \Onphp\FetchStrategy::LAZY;
 
 				$this->assertTrue($resultRoot);
 				$this->assertTrue($resultParent);

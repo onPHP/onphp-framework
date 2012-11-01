@@ -1,6 +1,8 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class IpUtilsTest extends TestCase
 	{
 		/**
@@ -8,7 +10,7 @@
 		**/
 		public function testMakeRanges($ips, $ranges)
 		{
-			$this->assertEquals($ranges, IpUtils::makeRanges($ips));
+			$this->assertEquals($ranges, \Onphp\IpUtils::makeRanges($ips));
 		}
 		
 		public static function ips()

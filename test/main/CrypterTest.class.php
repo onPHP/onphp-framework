@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	final class CrypterTest extends TestCase
 	{
 		/**
@@ -36,7 +38,7 @@
 			static $crypter;
 
 			if (!$crypter)
-				$crypter = Crypter::create(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
+				$crypter = \Onphp\Crypter::create(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
 
 			return $crypter;
 		}

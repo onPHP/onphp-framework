@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	final class JsonXssViewTest extends TestCase
 	{
 		protected $array = array('<foo>',"'bar'",'"baz"','&blong&');
@@ -18,11 +20,11 @@
 			$prefix = 'window.';
 			$callback = 'name';
 
-			$model = Model::create()->set('array', $this->array);
+			$model = \Onphp\Model::create()->set('array', $this->array);
 			$data = array('array' => $this->array);
 
 			//setup
-			$view = JsonXssView::create();
+			$view = \Onphp\JsonXssView::create();
 
 			$defaultString = $view->toString($model);
 

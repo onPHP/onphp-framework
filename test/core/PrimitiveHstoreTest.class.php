@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	final class PrimitiveHstoreTest extends TestCase
 	{
 		protected static $scope =
@@ -33,7 +35,7 @@
 			$this->assertEquals($subform->getValue('weight'), 80);
 			$this->assertEquals($subform->getValue('comment'), 'test user case');
 			
-			$this->assertInstanceOf('Hstore', $prm->getValue());
+			$this->assertInstanceOf('\Onphp\Hstore', $prm->getValue());
 			
 			$hstore = $prm->getValue();
 			
@@ -53,7 +55,7 @@
 			try {
 				$hstore->get('NotFound');
 				$this->fail('NotFound');
-			} catch (ObjectNotFoundException $e) {
+			} catch (\Onphp\ObjectNotFoundException $e) {
 				/** ok **/
 			}
 			
@@ -79,7 +81,7 @@
 			$this->assertEquals(
 				$prm->getInnerErrors(),
 				array(
-					'weight' => Form::WRONG
+					'weight' => \Onphp\Form::WRONG
 				)
 			);
 			
@@ -89,17 +91,17 @@
 		}
 		
 		/**
-		 * @return PrimitiveHstore
+		 * @return \Onphp\PrimitiveHstore
 		**/
 		protected function create()
 		{
 			return
-				Primitive::hstore('properties')->
+				\Onphp\Primitive::hstore('properties')->
 				setFormMapping(
 					array(
-						Primitive::string('age'),
-						Primitive::integer('weight'),
-						Primitive::string('comment'),
+						\Onphp\Primitive::string('age'),
+						\Onphp\Primitive::integer('weight'),
+						\Onphp\Primitive::string('comment'),
 					)
 				);
 		}

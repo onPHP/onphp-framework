@@ -9,9 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	final class MathTest extends TestCase
 	{
-		public function runMathTest(BigNumberFactory $factory)
+		public function runMathTest(\Onphp\BigNumberFactory $factory)
 		{
 			$this->assertEquals(
 				'4',
@@ -86,7 +88,7 @@
 			);
 		}
 		
-		public function runRandomTest(BigNumberFactory $factory, RandomSource $source)
+		public function runRandomTest(\Onphp\BigNumberFactory $factory, \Onphp\RandomSource $source)
 		{
 			$this->assertNotEquals(
 				$factory->
@@ -113,15 +115,15 @@
 			if (!extension_loaded('gmp')) {
 				try {
 					dl('gmp.so');
-				} catch (BaseException $e) {
+				} catch (\Onphp\BaseException $e) {
 					return $this->markTestSkipped('gmp module not available');
 				}
 			}
 			
-			$this->runMathTest(GmpBigIntegerFactory::me());
+			$this->runMathTest(\Onphp\GmpBigIntegerFactory::me());
 		}
 		
-		public function runRandomSourceTest(RandomSource $source)
+		public function runRandomSourceTest(\Onphp\RandomSource $source)
 		{
 			$this->assertNotEquals($source->getBytes(2), $source->getBytes(2));
 			$this->assertNotEquals($source->getBytes(10), $source->getBytes(10));
@@ -130,10 +132,10 @@
 		
 		public function testRandomSource()
 		{
-			$this->runRandomSourceTest(MtRandomSource::me());
+			$this->runRandomSourceTest(\Onphp\MtRandomSource::me());
 			
 			if (file_exists('/dev/urandom') && is_readable('/dev/urandom'))
-				$this->runRandomSourceTest(new FileRandomSource('/dev/urandom'));
+				$this->runRandomSourceTest(new \Onphp\FileRandomSource('/dev/urandom'));
 		}
 	}
 ?>

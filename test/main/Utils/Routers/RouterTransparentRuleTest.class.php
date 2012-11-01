@@ -1,6 +1,8 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	class RouterTransparentRuleTest extends TestCase
 	{
 		public function setUp()
@@ -10,7 +12,7 @@
 		
 		public function testStaticMatch()
 		{
-			$route = new RouterTransparentRule('users/all');
+			$route = new \Onphp\RouterTransparentRule('users/all');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/all')
 			);
@@ -20,7 +22,7 @@
 		
 		public function testURLDecode()
 		{
-			$route = new RouterTransparentRule('żółć');
+			$route = new \Onphp\RouterTransparentRule('żółć');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/'.urlencode('żółć'))
 			);
@@ -30,7 +32,7 @@
 		
 		public function testStaticPathShorterThanParts()
 		{
-			$route = new RouterTransparentRule('users/a/martel');
+			$route = new \Onphp\RouterTransparentRule('users/a/martel');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/a')
 			);
@@ -40,7 +42,7 @@
 		
 		public function testStaticPathLongerThanParts()
 		{
-			$route = new RouterTransparentRule('users/a');
+			$route = new \Onphp\RouterTransparentRule('users/a');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/a/martel')
 			);
@@ -51,7 +53,7 @@
 		public function testStaticMatchWithDefaults()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'users/all'
 				)->
 				setDefaults(
@@ -69,7 +71,7 @@
 		
 		public function testNotMatched()
 		{
-			$route = new RouterTransparentRule('users/all');
+			$route = new \Onphp\RouterTransparentRule('users/all');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel')
 			);
@@ -80,7 +82,7 @@
 		public function testNotMatchedWithVariablesAndDefaults()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action'
 				)->
 				setDefaults(
@@ -99,7 +101,7 @@
 		
 		public function testNotMatchedWithVariablesAndStatic()
 		{
-			$route = new RouterTransparentRule('archive/:year/:month');
+			$route = new \Onphp\RouterTransparentRule('archive/:year/:month');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/ctrl/act/2000')
 			);
@@ -110,7 +112,7 @@
 		public function testStaticMatchWithWildcard()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'news/view/*'
 				)->
 				setDefaults(
@@ -136,7 +138,7 @@
 		public function testWildcardWithUTF()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'news/*'
 				)->
 				setDefaults(
@@ -164,7 +166,7 @@
 		public function testWildcardURLDecode()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'news/*'
 				)->
 				setDefaults(
@@ -187,7 +189,7 @@
 		
 		public function testVariableValues()
 		{
-			$route = new RouterTransparentRule(':area/:action/:year');
+			$route = new \Onphp\RouterTransparentRule(':area/:action/:year');
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/ctrl/act/2000')
@@ -200,7 +202,7 @@
 		
 		public function testVariableUTFValues()
 		{
-			$route = new RouterTransparentRule('test/:param');
+			$route = new \Onphp\RouterTransparentRule('test/:param');
 			$values = $route->match(
 				$this->buildRequest(
 					'http://localhost/test/'.urlencode('aä')
@@ -213,7 +215,7 @@
 		public function testOneVariableValue()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':action'
 				)->
 				setDefaults(
@@ -234,7 +236,7 @@
 		public function testVariablesWithDefault()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
 				setDefaults(
@@ -255,7 +257,7 @@
 		public function testVariablesWithNullDefault()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
 				setDefaults(
@@ -276,7 +278,7 @@
 		public function testVariablesWithDefaultAndValue()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
 				setDefaults(
@@ -297,7 +299,7 @@
 		public function testVariablesWithRequirementAndValue()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
 				setRequirements(
@@ -318,7 +320,7 @@
 		public function testVariablesWithRequirementAndIncorrectValue()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
 				setRequirements(
@@ -337,7 +339,7 @@
 		public function testVariablesWithDefaultAndRequirement()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
 				setDefaults(
@@ -363,7 +365,7 @@
 		public function testVariablesWithDefaultAndRequirementAndIncorrectValue()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
 				setDefaults(
@@ -387,7 +389,7 @@
 		public function testVariablesWithDefaultAndRequirementAndWithoutValue()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/:year'
 				)->
 				setDefaults(
@@ -412,7 +414,7 @@
 		
 		public function testVariablesWithWildcardAndNumericKey()
 		{
-			$route = new RouterTransparentRule(':area/:action/:next/*');
+			$route = new \Onphp\RouterTransparentRule(':area/:action/:next/*');
 			$values = $route->match(
 				$this->buildRequest(
 					'http://localhost/c/a/next/2000/show/all/sort/name'
@@ -427,7 +429,7 @@
 		
 		public function testRootRoute()
 		{
-			$route = new RouterTransparentRule('/');
+			$route = new \Onphp\RouterTransparentRule('/');
 			$values = $route->match($this->buildRequest('http://localhost/'));
 			
 			$this->assertEquals(array(), $values);
@@ -435,7 +437,7 @@
 		
 		public function testAssembly()
 		{
-			$route = new RouterTransparentRule('authors/:name');
+			$route = new \Onphp\RouterTransparentRule('authors/:name');
 			$url = $route->assembly(array('name' => 'martel'));
 			
 			$this->assertEquals('authors/martel', $url);
@@ -443,11 +445,11 @@
 		
 		public function testAssemblyWithoutValue()
 		{
-			$route = new RouterTransparentRule('authors/:name');
+			$route = new \Onphp\RouterTransparentRule('authors/:name');
 			
 			try {
 				$url = $route->assembly();
-			} catch (BaseException $e) {
+			} catch (\Onphp\BaseException $e) {
 				return true;
 			}
 			
@@ -457,7 +459,7 @@
 		public function testAssemblyWithDefault()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'authors/:name'
 				)->
 				setDefaults(
@@ -474,7 +476,7 @@
 		public function testAssemblyWithDefaultAndValue()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'authors/:name'
 				)->
 				setDefaults(
@@ -490,7 +492,7 @@
 		
 		public function testAssemblyWithWildcardMap()
 		{
-			$route = new RouterTransparentRule('authors/:name/*');
+			$route = new \Onphp\RouterTransparentRule('authors/:name/*');
 			$url = $route->assembly(array('name' => 'martel'));
 			
 			$this->assertEquals('authors/martel', $url);
@@ -499,7 +501,7 @@
 		public function testAssemblyWithReset()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'archive/:year/*'
 				)->
 				setDefaults(
@@ -523,7 +525,7 @@
 		public function testAssemblyWithReset2()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/*'
 				)->
 				setDefaults(
@@ -545,7 +547,7 @@
 		public function testAssemblyWithReset3()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'archive/:year/*'
 				)->
 				setDefaults(
@@ -570,7 +572,7 @@
 		public function testAssemblyWithReset4()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/*'
 				)->
 				setDefaults(
@@ -592,7 +594,7 @@
 		public function testAssemblyWithReset5()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'*'
 				)->
 				setDefaults(
@@ -615,7 +617,7 @@
 		
 		public function testAssemblyWithWildcardAndAdditionalParameters()
 		{
-			$route = new RouterTransparentRule('authors/:name/*');
+			$route = new \Onphp\RouterTransparentRule('authors/:name/*');
 			
 			$url = $route->assembly(
 				array(
@@ -629,7 +631,7 @@
 		
 		public function testAssemblyWithUrlVariablesReuse()
 		{
-			$route = new RouterTransparentRule('archives/:year/:month');
+			$route = new \Onphp\RouterTransparentRule('archives/:year/:month');
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/archives/2006/07')
@@ -645,7 +647,7 @@
 		public function testWildcardUrlVariablesOverwriting()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'archives/:year/:month/*'
 				)->
 				setDefaults(
@@ -671,7 +673,7 @@
 		public function testGetDefaults()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'users/all'
 				)->
 				setDefaults(
@@ -691,7 +693,7 @@
 		public function testGetDefault()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'users/all'
 				)->
 				setDefaults(
@@ -716,14 +718,14 @@
 			);
 			
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					$routeConf['route']
 				)->
 				setDefaults(
 					$routeConf['defaults']
 				);
 			
-			$this->assertInstanceOf('RouterTransparentRule', $route);
+			$this->assertInstanceOf('\Onphp\RouterTransparentRule', $route);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/all')
@@ -735,7 +737,7 @@
 		public function testAssemblyResetDefaults()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/*'
 				)->
 				setDefaults(
@@ -762,7 +764,7 @@
 		public function testAssemblyWithRemovedDefaults()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/*'
 				)->
 				setDefaults(
@@ -813,7 +815,7 @@
 		public function testAssemblyWithAction()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'families/:action/*'
 				)->
 				setDefaults(
@@ -838,7 +840,7 @@
 		public function testAssemlingWithDefaultValueAndParams()
 		{
 			$router =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'contest/:contest/*'
 				)->
 				setDefaults(
@@ -870,7 +872,7 @@
 		public function testAssemblingTransparentDefaultLogic()
 		{
 			$transparent =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':bar/:area/:action'
 				)->
 				setDefaults(
@@ -912,7 +914,7 @@
 		public function testEncode()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/*'
 				)->
 				setDefaults(
@@ -947,7 +949,7 @@
 			$this->assertEquals('en/foo/id/My+Other+Value', $url);
 			
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/*'
 				)->
 				setDefaults(
@@ -965,7 +967,7 @@
 			$this->markTestSkipped('Route features not ready');
 			
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':lang/:temp'
 				)->
 				setDefaults(
@@ -988,7 +990,7 @@
 			$this->assertFalse($values);
 			
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':lang/:temp'
 				)->
 				setDefaults(
@@ -1014,7 +1016,7 @@
 			ServerVarUtils::build($_SERVER, $url);
 			
 			return
-				HttpRequest::create()->
+				\Onphp\HttpRequest::create()->
 				setServer($_SERVER);
 		}
 	}

@@ -1,25 +1,27 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class TruncateQueryTest extends TestCaseDB
 	{
 		public function testQuery()
 		{
-			$pgDialect = $this->getDbByType('PgSQL')->getDialect();
-			$myDialect = $this->getDbByType('MySQL')->getDialect();
-			$liteDialect = $this->getDbByType('SQLitePDO')->getDialect();
+			$pgDialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
+			$myDialect = $this->getDbByType('\Onphp\MySQL')->getDialect();
+			$liteDialect = $this->getDbByType('\Onphp\SQLitePDO')->getDialect();
 			
 			$query = OSQL::truncate('single_table');
 			
 			try {
-				OSQL::truncate()->toDialectString(ImaginaryDialect::me());
+				OSQL::truncate()->toDialectString(\Onphp\ImaginaryDialect::me());
 				$this->fail();
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				/* pass */
 			}
 			
 			$this->assertEquals(
-				$query->toDialectString(ImaginaryDialect::me()),
+				$query->toDialectString(\Onphp\ImaginaryDialect::me()),
 				'DELETE FROM single_table;'
 			);
 			
@@ -41,7 +43,7 @@
 			$query = OSQL::truncate(array('foo', 'bar', 'bleh'));
 			
 			$this->assertEquals(
-				$query->toDialectString(ImaginaryDialect::me()),
+				$query->toDialectString(\Onphp\ImaginaryDialect::me()),
 				'DELETE FROM foo; DELETE FROM bar; DELETE FROM bleh;'
 			);
 			

@@ -1,14 +1,16 @@
 <?php
 	
+	namespace Onphp\Test;
+
 	final class OsqlReturningTest extends TestCaseDB
 	{
 		public function testUpdate()
 		{
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
 			$query = OSQL::update('test_table')->
 				set('field1', 1)->
-				where(Expression::eq('field1',2));
+				where(\Onphp\Expression::eq('field1',2));
 			
 			$this->addReturning($query);
 			
@@ -27,7 +29,7 @@
 		
 		public function testInsert()
 		{
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
 			$query = OSQL::insert()->
 				into('test_table')->
@@ -52,16 +54,16 @@
 		{
 			$query = OSQL::delete()->from('pity_table');
 			
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
 			try {
 				$query->toDialectString($dialect);
 				$this->fail();
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				//pass
 			}
 			
-			$query->where(Expression::eq('count', 2))->returning('id');
+			$query->where(\Onphp\Expression::eq('count', 2))->returning('id');
 			
 			$this->assertEquals(
 				$query->toDialectString($dialect),
@@ -71,16 +73,16 @@
 		
 		public function testHasNoReturning()
 		{
-			$dialect = ImaginaryDialect::me();
+			$dialect = \Onphp\ImaginaryDialect::me();
 			
 			$query = OSQL::update('test_table')->
 				set('field1', 1)->
-				where(Expression::eq('field1',2))->
+				where(\Onphp\Expression::eq('field1',2))->
 				returning('field1');
 			
 			try {
 				$query->toDialectString($dialect);
-			} catch (UnimplementedFeatureException $e) {
+			} catch (\Onphp\UnimplementedFeatureException $e) {
 				return $this;
 			}
 			
@@ -88,16 +90,16 @@
 		}
 		
 		/**
-		 * @return InsertOrUpdateQuery
+		 * @return \Onphp\InsertOrUpdateQuery
 		**/
-		protected function addReturning(InsertOrUpdateQuery $query)
+		protected function addReturning(\Onphp\InsertOrUpdateQuery $query)
 		{
 			$query->
-				returning(DBField::create('field1', 'test_table'), 'alias1')->
+				returning(\Onphp\DBField::create('field1', 'test_table'), 'alias1')->
 				returning('field2')->
 				returning(
-					SQLFunction::create(
-						'count', DBField::create('field5', 'test_table')
+					\Onphp\SQLFunction::create(
+						'count', \Onphp\DBField::create('field5', 'test_table')
 					)->
 					setAlias('alias5')
 				)->

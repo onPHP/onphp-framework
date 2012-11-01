@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	class HstoreDBTest extends TestCaseDAO
 	{
 		/**
@@ -8,7 +10,7 @@
 		public function testHstore()
 		{
 			foreach (DBTestPool::me()->getPool() as $connector => $db) {
-				DBPool::me()->setDefault($db);
+				\Onphp\DBPool::me()->setDefault($db);
 				$properties = array(
 					'age' => '23',
 					'weight' => 80,
@@ -27,23 +29,23 @@
 						setPassword(sha1('passwd'))
 					)->
 					setLastLogin(
-						Timestamp::create(time())
+						\Onphp\Timestamp::create(time())
 					)->
 					setRegistered(
-						Timestamp::create(time())->modify('-1 day')
+						\Onphp\Timestamp::create(time())->modify('-1 day')
 					)->
-					setProperties(Hstore::make($properties));
+					setProperties(\Onphp\Hstore::make($properties));
 
 				$moscow = TestCity::dao()->add($moscow);
 
 				$user = TestUser::dao()->add($user);
 
-				Cache::me()->clean();
+				\Onphp\Cache::me()->clean();
 				TestUser::dao()->dropIdentityMap();
 
 				$user = TestUser::dao()->getById('1');
 
-				$this->assertInstanceOf('Hstore', $user->getProperties());
+				$this->assertInstanceOf('\Onphp\Hstore', $user->getProperties());
 
 				$this->assertEquals(
 					$properties,
@@ -55,9 +57,9 @@
 				$form->get('properties')->
 					setFormMapping(
 						array(
-							Primitive::string('age'),
-							Primitive::integer('weight'),
-							Primitive::string('comment'),
+							\Onphp\Primitive::string('age'),
+							\Onphp\Primitive::integer('weight'),
+							\Onphp\Primitive::string('comment'),
 						)
 					);
 
@@ -69,9 +71,9 @@
 
 				$object = $user;
 
-				FormUtils::object2form($object, $form);
+				\Onphp\FormUtils::object2form($object, $form);
 
-				$this->assertInstanceOf('Hstore', $form->getValue('properties'));
+				$this->assertInstanceOf('\Onphp\Hstore', $form->getValue('properties'));
 
 				$this->assertEquals(
 					array_filter($properties),
@@ -96,7 +98,7 @@
 
 				$user = new TestUser();
 
-				FormUtils::form2object($form, $user, false);
+				\Onphp\FormUtils::form2object($form, $user, false);
 
 				$this->assertEquals(
 					$user->getProperties()->getList(),

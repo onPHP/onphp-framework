@@ -1,26 +1,28 @@
 <?php
 	/* $Id$ */
 
+	namespace Onphp\Test;
+
 	final class PrimitiveTimestampTZTest extends TestCase
 	{
 
 		public function testMarried()
 		{
-			$currentTimeZone = new DateTimeZone(date_default_timezone_get());
-			$now = new DateTime('now', $currentTimeZone);
+			$currentTimeZone = new \DateTimeZone(date_default_timezone_get());
+			$now = new \DateTime('now', $currentTimeZone);
 			$zone = $now->format('O');
 
-			$prm = Primitive::timestampTZ('test')->setComplex();
+			$prm = \Onphp\Primitive::timestampTZ('test')->setComplex();
 
 			$array = array(
 				'test' => array(
-					PrimitiveDate::DAY		=> '1',
-					PrimitiveDate::MONTH	=> '2',
-					PrimitiveDate::YEAR		=> '',
-					PrimitiveTimestamp::HOURS	=> '17',
-					PrimitiveTimestamp::MINUTES	=> '38',
-					PrimitiveTimestamp::SECONDS	=> '59',
-					PrimitiveTimestampTZ::ZONE => $currentTimeZone->getName(),
+					\Onphp\PrimitiveDate::DAY		=> '1',
+					\Onphp\PrimitiveDate::MONTH	=> '2',
+					\Onphp\PrimitiveDate::YEAR		=> '',
+					\Onphp\PrimitiveTimestamp::HOURS	=> '17',
+					\Onphp\PrimitiveTimestamp::MINUTES	=> '38',
+					\Onphp\PrimitiveTimestamp::SECONDS	=> '59',
+					\Onphp\PrimitiveTimestampTZ::ZONE => $currentTimeZone->getName(),
 				)
 			);
 
@@ -32,7 +34,7 @@
 			);
 
 			//not supported other epochs
-			$array['test'][PrimitiveDate::YEAR] = '3456';
+			$array['test'][\Onphp\PrimitiveDate::YEAR] = '3456';
 			$this->assertTrue($prm->import($array));
 			$this->assertEquals(3456, $prm->getValue()->getYear());
 			$this->assertEquals(17, $prm->getValue()->getHour());
@@ -42,7 +44,7 @@
 				$prm->exportValue()
 			);
 
-			$array['test'][PrimitiveDate::YEAR] = '2012';
+			$array['test'][\Onphp\PrimitiveDate::YEAR] = '2012';
 
 			$this->assertTrue($prm->import($array));
 			$this->assertEquals(
@@ -53,7 +55,7 @@
 
 		public function testSingle()
 		{
-			$prm = Primitive::timestampTZ('test')->setSingle();
+			$prm = \Onphp\Primitive::timestampTZ('test')->setSingle();
 
 			$array = array('test' => '1234-01-02 17:38:59');
 

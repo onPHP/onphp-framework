@@ -1,6 +1,8 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class OqlSelectClauseTest extends TestCaseDB
 	{
 		public function testEmpty()
@@ -11,20 +13,20 @@
 			
 			foreach ($clauses as $clauseName) {
 				try {
-					call_user_func(array('OQL', $clauseName), null);
+					call_user_func(array('\Onphp\OQL', $clauseName), null);
 					$this->fail();
 				
-				} catch (WrongArgumentException $e) {
+				} catch (\Onphp\WrongArgumentException $e) {
 					// pass
 				}
 			}
 			
 			foreach ($clauses as $clauseName) {
 				try {
-					call_user_func(array('OQL', $clauseName), '');
+					call_user_func(array('\Onphp\OQL', $clauseName), '');
 					$this->fail();
 				
-				} catch (SyntaxErrorException $e) {
+				} catch (\Onphp\SyntaxErrorException $e) {
 					// pass
 				}
 			}
@@ -33,7 +35,7 @@
 		public function testProperties()
 		{
 			$query = OQL::select('from TestUser');
-			$criteria = Criteria::create(TestUser::dao());
+			$criteria = \Onphp\Criteria::create(TestUser::dao());
 			
 			$this->assertCriteria($query, $criteria);
 			
@@ -42,8 +44,8 @@
 					OQL::properties('id, count(id) as count')
 				),
 				$criteria->
-					addProjection(Projection::property('id'))->
-					addProjection(Projection::count('id', 'count'))
+					addProjection(\Onphp\Projection::property('id'))->
+					addProjection(\Onphp\Projection::count('id', 'count'))
 			);
 			
 			$this->assertCriteria(
@@ -51,7 +53,7 @@
 					OQL::properties('city.id')
 				),
 				$criteria->addProjection(
-					Projection::property('city.id')
+					\Onphp\Projection::property('city.id')
 				)
 			);
 			
@@ -59,8 +61,8 @@
 			$this->assertFalse($properties->isDistinct());
 			$this->assertEquals(
 				$properties->toProjection(),
-				Projection::chain()->add(
-					Projection::property('id')
+				\Onphp\Projection::chain()->add(
+					\Onphp\Projection::property('id')
 				)
 			);
 			
@@ -68,12 +70,12 @@
 			$this->assertTrue($properties->isDistinct());
 			$this->assertEquals(
 				$properties->toProjection(),
-				Projection::chain()->
+				\Onphp\Projection::chain()->
 					add(
-						Projection::property('id')
+						\Onphp\Projection::property('id')
 					)->
 					add(
-						Projection::property('name')
+						\Onphp\Projection::property('name')
 					)
 			);
 			
@@ -81,16 +83,16 @@
 				bind(1, 'foo');
 			$this->assertEquals(
 				$properties->toProjection(),
-				Projection::chain()->add(
-					Projection::property('foo')
+				\Onphp\Projection::chain()->add(
+					\Onphp\Projection::property('foo')
 				)
 			);
 			
 			$properties->bind(1, 'bar');
 			$this->assertEquals(
 				$properties->toProjection(),
-				Projection::chain()->add(
-					Projection::property('bar')
+				\Onphp\Projection::chain()->add(
+					\Onphp\Projection::property('bar')
 				)
 			);
 			
@@ -100,9 +102,9 @@
 						$properties->bind(1, 'foo')
 					)->
 					bind(1, 'bar'),
-				Criteria::create(TestUser::dao())->
+				\Onphp\Criteria::create(TestUser::dao())->
 					addProjection(
-						Projection::property('bar')		// not foo!
+						\Onphp\Projection::property('bar')		// not foo!
 					)
 			);
 			
@@ -118,39 +120,39 @@
 			$this->assertFalse($properties->isDistinct());
 			$this->assertEquals(
 				$properties->toProjection(),
-				Projection::chain()->
+				\Onphp\Projection::chain()->
 					add(
-						Projection::property('id')
+						\Onphp\Projection::property('id')
 					)->
 					add(
-						Projection::distinctCount(
-							Expression::add('city.id', 1)
+						\Onphp\Projection::distinctCount(
+							\Onphp\Expression::add('city.id', 1)
 						)
 					)->
 					add(
-						Projection::avg('some', 'someAverage')
+						\Onphp\Projection::avg('some', 'someAverage')
 					)->
 					add(
-						Projection::property(
-							Expression::notLike('name', '%Ы%')
+						\Onphp\Projection::property(
+							\Onphp\Expression::notLike('name', '%Ы%')
 						)
 					)->
 					add(
-						Projection::property(
-							Expression::expAnd(
+						\Onphp\Projection::property(
+							\Onphp\Expression::expAnd(
 								'foo',
-								Expression::expOr('bar', 'baz')
+								\Onphp\Expression::expOr('bar', 'baz')
 							)
 						)
 					)->
 					add(
-						Projection::property(
-							Expression::div(2, 'num')
+						\Onphp\Projection::property(
+							\Onphp\Expression::div(2, 'num')
 						)
 					)->
 					add(
-						Projection::property(
-							Expression::in('a', array('test', 1))
+						\Onphp\Projection::property(
+							\Onphp\Expression::in('a', array('test', 1))
 						)
 					)
 			);
@@ -159,14 +161,14 @@
 		public function testWhere()
 		{
 			$query = OQL::select('from TestUser');
-			$criteria = Criteria::create(TestUser::dao());
+			$criteria = \Onphp\Criteria::create(TestUser::dao());
 			
 			$this->assertCriteria(
 				$query->andWhere(
 					OQL::where('id = 1')
 				),
 				$criteria->add(
-					Expression::eq('id', 1)
+					\Onphp\Expression::eq('id', 1)
 				)
 			);
 			
@@ -174,12 +176,12 @@
 				$query->orWhere(
 					OQL::where('id = 2 and city.id is not null')
 				),
-				Criteria::create(TestUser::dao())->add(
-					Expression::expOr(
-						Expression::eq('id', 1),
-						Expression::expAnd(
-							Expression::eq('id', 2),
-							Expression::notNull('city.id')
+				\Onphp\Criteria::create(TestUser::dao())->add(
+					\Onphp\Expression::expOr(
+						\Onphp\Expression::eq('id', 1),
+						\Onphp\Expression::expAnd(
+							\Onphp\Expression::eq('id', 2),
+							\Onphp\Expression::notNull('city.id')
 						)
 					)
 				)
@@ -189,9 +191,9 @@
 				OQL::where('name similar to "test" and not $1')->
 					bindNext('name')->
 					toLogic(),
-				Expression::expAnd(
-					Expression::similar('name', 'test'),
-					Expression::not('name')
+				\Onphp\Expression::expAnd(
+					\Onphp\Expression::similar('name', 'test'),
+					\Onphp\Expression::not('name')
 				)
 			);
 			
@@ -202,9 +204,9 @@
 							bindNext(1)
 					)->
 					bindNext(2),
-				Criteria::create(TestUser::dao())->
+				\Onphp\Criteria::create(TestUser::dao())->
 					add(
-						Expression::gt('id', 2)
+						\Onphp\Expression::gt('id', 2)
 					)
 			);
 		}
@@ -212,14 +214,14 @@
 		public function testGroupBy()
 		{
 			$query = OQL::select('from TestUser');
-			$criteria = Criteria::create(TestUser::dao());
+			$criteria = \Onphp\Criteria::create(TestUser::dao());
 			
 			$this->assertCriteria(
 				$query->addGroupBy(
 					OQL::groupBy('id')
 				),
 				$criteria->addProjection(
-					Projection::group('id')
+					\Onphp\Projection::group('id')
 				)
 			);
 			
@@ -228,8 +230,8 @@
 					OQL::groupBy('-name')
 				),
 				$criteria->addProjection(
-					Projection::group(
-						Expression::minus('name')
+					\Onphp\Projection::group(
+						\Onphp\Expression::minus('name')
 					)
 				)
 			);
@@ -237,22 +239,22 @@
 			$this->assertEquals(
 				OQL::groupBy('id, name')->
 					toProjection(),
-				Projection::chain()->
+				\Onphp\Projection::chain()->
 					add(
-						Projection::group('id')
+						\Onphp\Projection::group('id')
 					)->
 					add(
-						Projection::group('name')
+						\Onphp\Projection::group('name')
 					)
 			);
 			
 			$this->assertEquals(
 				OQL::groupBy('id + 2')->
 					toProjection(),
-				Projection::chain()->
+				\Onphp\Projection::chain()->
 					add(
-						Projection::group(
-							Expression::add('id', 2)
+						\Onphp\Projection::group(
+							\Onphp\Expression::add('id', 2)
 						)
 					)
 			);
@@ -260,10 +262,10 @@
 			$this->assertEquals(
 				OQL::groupBy('id > 2')->
 					toProjection(),
-				Projection::chain()->
+				\Onphp\Projection::chain()->
 					add(
-						Projection::group(
-							Expression::gt('id', 2)
+						\Onphp\Projection::group(
+							\Onphp\Expression::gt('id', 2)
 						)
 					)
 			);
@@ -272,9 +274,9 @@
 				OQL::groupBy('$1')->
 					bindNext('id')->
 					toProjection(),
-				Projection::chain()->
+				\Onphp\Projection::chain()->
 					add(
-						Projection::group('id')
+						\Onphp\Projection::group('id')
 					)
 			);
 			
@@ -283,13 +285,13 @@
 					bindNext('name')->
 					bindNext('id')->
 					toProjection(),
-				Projection::chain()->
+				\Onphp\Projection::chain()->
 					add(
-						Projection::group('name')
+						\Onphp\Projection::group('name')
 					)->
 					add(
-						Projection::group(
-							Expression::add('id', 3)
+						\Onphp\Projection::group(
+							\Onphp\Expression::add('id', 3)
 						)
 					)
 			);
@@ -298,14 +300,14 @@
 		public function testOrderBy()
 		{
 			$query = OQL::select('from TestUser');
-			$criteria = Criteria::create(TestUser::dao());
+			$criteria = \Onphp\Criteria::create(TestUser::dao());
 			
 			$this->assertCriteria(
 				$query->addOrderBy(
 					OQL::orderBy('id')
 				),
 				$criteria->addOrder(
-					OrderBy::create('id')
+					\Onphp\OrderBy::create('id')
 				)
 			);
 			
@@ -315,25 +317,25 @@
 				),
 				$criteria->
 					addOrder(
-						OrderBy::create('name')->asc()
+						\Onphp\OrderBy::create('name')->asc()
 					)->
 					addOrder(
-						OrderBy::create('city.id')->desc()
+						\Onphp\OrderBy::create('city.id')->desc()
 					)
 			);
 			
 			$this->assertEquals(
 				OQL::orderBy('id + city.id desc, name')->
 					toOrder(),
-				OrderChain::create()->
+				\Onphp\OrderChain::create()->
 					add(
-						OrderBy::create(
-							Expression::add('id', 'city.id')
+						\Onphp\OrderBy::create(
+							\Onphp\Expression::add('id', 'city.id')
 						)->
 						desc()
 					)->
 					add(
-						OrderBy::create('name')
+						\Onphp\OrderBy::create('name')
 					)
 			);
 			
@@ -341,10 +343,10 @@
 				bindNext('%ЙЦуК');
 			$this->assertEquals(
 				$order->toOrder(),
-				OrderChain::create()->
+				\Onphp\OrderChain::create()->
 					add(
-						OrderBy::create(
-							Expression::ilike('name', '%ЙЦуК')
+						\Onphp\OrderBy::create(
+							\Onphp\Expression::ilike('name', '%ЙЦуК')
 						)
 					)
 			);
@@ -353,10 +355,10 @@
 				OQL::select('from TestUser')->
 					addOrderBy($order)->
 					bindNext('test'),
-				Criteria::create(TestUser::dao())->
+				\Onphp\Criteria::create(TestUser::dao())->
 					addOrder(
-						OrderBy::create(
-							Expression::ilike('name', 'test')
+						\Onphp\OrderBy::create(
+							\Onphp\Expression::ilike('name', 'test')
 						)
 					)
 			);
@@ -365,15 +367,15 @@
 		public function testHaving()
 		{
 			$query = OQL::select('from TestUser');
-			$criteria = Criteria::create(TestUser::dao());
+			$criteria = \Onphp\Criteria::create(TestUser::dao());
 			
 			$this->assertCriteria(
 				$query->addHaving(
 					OQL::having('id > 0')
 				),
 				$criteria->addProjection(
-					Projection::having(
-						Expression::gt('id', 0)
+					\Onphp\Projection::having(
+						\Onphp\Expression::gt('id', 0)
 					)
 				)
 			);
@@ -385,12 +387,12 @@
 						bindNext(8)
 				),
 				$criteria->addProjection(
-					Projection::having(
-						Expression::expAnd(
-							Expression::notNull('name'),
-							Expression::expOr(
-								Expression::notEq('id', 4),
-								Expression::notEq('id', 8)
+					\Onphp\Projection::having(
+						\Onphp\Expression::expAnd(
+							\Onphp\Expression::notNull('name'),
+							\Onphp\Expression::expOr(
+								\Onphp\Expression::notEq('id', 4),
+								\Onphp\Expression::notEq('id', 8)
 							)
 						)
 					)
@@ -401,8 +403,8 @@
 				OQL::having('id + $15')->
 					bind(15, 16)->
 					toProjection(),
-				Projection::having(
-					Expression::add('id', 16)
+				\Onphp\Projection::having(
+					\Onphp\Expression::add('id', 16)
 				)
 			);
 			
@@ -413,21 +415,21 @@
 							bindNext(23)
 					)->
 					bindNext(42),
-				Criteria::create(TestUser::dao())->
+				\Onphp\Criteria::create(TestUser::dao())->
 					addProjection(
-						Projection::having(
-							Expression::eq('id', 42)
+						\Onphp\Projection::having(
+							\Onphp\Expression::eq('id', 42)
 						)
 					)
 			);
 		}
 		
 		/**
-		 * @return OqlSelectClauseTest
+		 * @return \Onphp\Test\OqlSelectClauseTest
 		**/
-		private function assertCriteria(OqlQuery $query, Criteria $criteria)
+		private function assertCriteria(\Onphp\OqlQuery $query, \Onphp\Criteria $criteria)
 		{
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
 			$this->assertEquals(
 				$query->toCriteria()->toDialectString($dialect),

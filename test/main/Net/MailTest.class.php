@@ -9,11 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	final class MailTest extends TestCase
 	{
 		public function testMailAddressWithoutPerson()
 		{
-			$address = MailAddress::create()->
+			$address = \Onphp\MailAddress::create()->
 				setAddress('vasya@example.com');
 			
 			$this->assertEquals(
@@ -24,7 +26,7 @@
 		
 		public function testMailAddressWithPerson()
 		{
-			$address = MailAddress::create()->
+			$address = \Onphp\MailAddress::create()->
 				setAddress('vasya@example.com')->
 				setPerson('Vasya Pupkin');
 			
@@ -36,7 +38,7 @@
 		
 		public function testMailAddressWithQuotedPerson()
 		{
-			$address = MailAddress::create()->
+			$address = \Onphp\MailAddress::create()->
 				setAddress('vasya@example.com')->
 				setPerson('!@#$%^&*()_+');
 			
@@ -48,7 +50,7 @@
 		
 		public function testMailAddressUnicode()
 		{
-			$address = MailAddress::create()->
+			$address = \Onphp\MailAddress::create()->
 				setAddress('vasya@example.com')->
 				setPerson('Вася Пупкин');
 			
@@ -60,7 +62,7 @@
 		
 		public function testMailAddressUnicodeLong()
 		{
-			$address = MailAddress::create()->
+			$address = \Onphp\MailAddress::create()->
 				setAddress('vasya@example.com')->
 				setPerson('Ваня Пупкин Ваня Пупкин Ваня Пупкин Ваня Пупкин');
 			
@@ -74,10 +76,10 @@
 		
 		public function testBadMailAddresses()
 		{
-			$address1 = MailAddress::create()->
+			$address1 = \Onphp\MailAddress::create()->
 				setAddress("va\004sya@example.com");
 				
-			$address2 = MailAddress::create()->
+			$address2 = \Onphp\MailAddress::create()->
 				setAddress("va sya@example.com");
 			
 				
@@ -86,7 +88,7 @@
 				$address2->toString();
 				
 				$this->fail();
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				//pass
 			}
 		}
@@ -94,11 +96,11 @@
 		public function testSendWithoutReturnPath()
 		{
 			try {
-				Mail::create()->
+				\Onphp\Mail::create()->
 				setTo('admin@localhost')->
 				send();
 				
-			} catch (MailNotSentException $e) {
+			} catch (\Onphp\MailNotSentException $e) {
 				//it's ok
 			}
 		}

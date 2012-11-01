@@ -1,44 +1,46 @@
 <?php
 	/* $Id$ */
 
+	namespace Onphp\Test;
+
 	final class ClassUtilsTest extends TestCase
 	{
 		public function testStaticMethodCalling()
 		{
 			$this->assertEquals(
-				ClassUtils::callStaticMethod(
+				\Onphp\ClassUtils::callStaticMethod(
 					'Singleton::getInstance',
-					'UrlEncodeFilter'
+					'\Onphp\UrlEncodeFilter'
 				),
 				
-				Singleton::getInstance('UrlEncodeFilter')
+				\Onphp\Singleton::getInstance('\Onphp\UrlEncodeFilter')
 			);
 			
 			$this->assertEquals(
-				ClassUtils::callStaticMethod('ImaginaryDialect::me'),
-				ImaginaryDialect::me()
+				\Onphp\ClassUtils::callStaticMethod('ImaginaryDialect::me'),
+				\Onphp\ImaginaryDialect::me()
 			);
 			
 			try {
-				ClassUtils::callStaticMethod('InexistantClass::InSaNeMeThOd');
+				\Onphp\ClassUtils::callStaticMethod('InexistantClass::InSaNeMeThOd');
 				$this->fail();
-			} catch (ClassNotFoundException $e) {
+			} catch (\Onphp\ClassNotFoundException $e) {
 				/* first pass */
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				/* and all others */
 			}
 			
 			try {
-				ClassUtils::callStaticMethod('complete nonsense');
+				\Onphp\ClassUtils::callStaticMethod('complete nonsense');
 				$this->fail();
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				/* pass */
 			}
 			
 			try {
-				ClassUtils::callStaticMethod('Identifier::comp::lete::non::sense');
+				\Onphp\ClassUtils::callStaticMethod('Identifier::comp::lete::non::sense');
 				$this->fail();
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				/* pass */
 			}
 		}
@@ -53,10 +55,10 @@
 				ClassUtilsTestClass::create()->
 				setText('old Text');
 			
-			ClassUtils::fillNullProperties($source, $destination);
+			\Onphp\ClassUtils::fillNullProperties($source, $destination);
 			$this->assertEquals($destination->getText(), 'old Text');
 
-			ClassUtils::copyNotNullProperties($source, $destination);
+			\Onphp\ClassUtils::copyNotNullProperties($source, $destination);
 			$this->assertEquals($destination->getText(), 'new Text');
 		}
 		
@@ -68,10 +70,10 @@
 				ClassUtilsTestClass::create()->
 				setText('old Text');			
 			
-			ClassUtils::fillNullProperties($source, $destination);
+			\Onphp\ClassUtils::fillNullProperties($source, $destination);
 			$this->assertEquals($destination->getText(), 'old Text');
 			
-			ClassUtils::copyNotNullProperties($source, $destination);
+			\Onphp\ClassUtils::copyNotNullProperties($source, $destination);
 			$this->assertEquals($destination->getText(), 'old Text');
 		}
 
@@ -89,56 +91,56 @@
 				ClassUtilsTestClass::create()->
 				setText('old Text');			
 			
-			ClassUtils::fillNullProperties($source, $destination);
+			\Onphp\ClassUtils::fillNullProperties($source, $destination);
 			
 			$this->assertTrue($destination->getObject() === $innerObject);
 			
 			$destination->dropObject();
 			
-			ClassUtils::copyNotNullProperties($source, $destination);
+			\Onphp\ClassUtils::copyNotNullProperties($source, $destination);
 			$this->assertTrue($destination->getObject() === $innerObject);
 		}
 		
 		public function testInstanceOf()
 		{
 			try {
-				$this->assertFalse(ClassUtils::isInstanceOf('2007-07-14&genre', 'Date'));
-			} catch (WrongArgumentException $e) {
+				$this->assertFalse(\Onphp\ClassUtils::isInstanceOf('2007-07-14&genre', '\Onphp\Date'));
+			} catch (\Onphp\WrongArgumentException $e) {
 				/* pass */
 			}
-			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestClassChild', 'ClassUtilsTestClass'));
-			$this->assertFalse(ClassUtils::isInstanceOf('ClassUtilsTestClass', 'ClassUtilsTestClassChild'));
-			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestClassChild', 'ClassUtilsTestInterface'));
-			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestClass', 'ClassUtilsTestInterface'));
-			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestAbstract', 'ClassUtilsTestInterface'));
-			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestAbstract', 'ClassUtilsTestClass'));
-			$this->assertFalse(ClassUtils::isInstanceOf('ClassUtilsTestAbstract', 'ClassUtilsTestClassChild'));
+			$this->assertTrue(\Onphp\ClassUtils::isInstanceOf('\Onphp\Test\ClassUtilsTestClassChild', '\Onphp\Test\ClassUtilsTestClass'));
+			$this->assertFalse(\Onphp\ClassUtils::isInstanceOf('\Onphp\Test\ClassUtilsTestClass', '\Onphp\Test\ClassUtilsTestClassChild'));
+			$this->assertTrue(\Onphp\ClassUtils::isInstanceOf('\Onphp\Test\ClassUtilsTestClassChild', '\Onphp\Test\ClassUtilsTestInterface'));
+			$this->assertTrue(\Onphp\ClassUtils::isInstanceOf('\Onphp\Test\ClassUtilsTestClass', '\Onphp\Test\ClassUtilsTestInterface'));
+			$this->assertTrue(\Onphp\ClassUtils::isInstanceOf('\Onphp\Test\ClassUtilsTestAbstract', '\Onphp\Test\ClassUtilsTestInterface'));
+			$this->assertTrue(\Onphp\ClassUtils::isInstanceOf('\Onphp\Test\ClassUtilsTestAbstract', '\Onphp\Test\ClassUtilsTestClass'));
+			$this->assertFalse(\Onphp\ClassUtils::isInstanceOf('\Onphp\Test\ClassUtilsTestAbstract', '\Onphp\Test\ClassUtilsTestClassChild'));
 			
 			$base = new ClassUtilsTestClass;
-			$this->assertTrue(ClassUtils::isInstanceOf($base, $base));
+			$this->assertTrue(\Onphp\ClassUtils::isInstanceOf($base, $base));
 			
-			$this->assertTrue(ClassUtils::isInstanceOf('ClassUtilsTestAbstract', $base));
-			$this->assertFalse(ClassUtils::isInstanceOf($base, 'ClassUtilsTestAbstract'));
+			$this->assertTrue(\Onphp\ClassUtils::isInstanceOf('\Onphp\Test\ClassUtilsTestAbstract', $base));
+			$this->assertFalse(\Onphp\ClassUtils::isInstanceOf($base, '\Onphp\Test\ClassUtilsTestAbstract'));
 			
 			$child = new ClassUtilsTestClassChild();
 			
-			$this->assertFalse(ClassUtils::isInstanceOf($base, $child));
-			$this->assertTrue(ClassUtils::isInstanceOf($child, $base));
+			$this->assertFalse(\Onphp\ClassUtils::isInstanceOf($base, $child));
+			$this->assertTrue(\Onphp\ClassUtils::isInstanceOf($child, $base));
 			
-			$this->assertFalse(ClassUtils::isInstanceOf($base, 'ClassUtilsTestClassChild'));
-			$this->assertTrue(ClassUtils::isInstanceOf($child, 'ClassUtilsTestClass'));
+			$this->assertFalse(\Onphp\ClassUtils::isInstanceOf($base, '\Onphp\Test\ClassUtilsTestClassChild'));
+			$this->assertTrue(\Onphp\ClassUtils::isInstanceOf($child, '\Onphp\Test\ClassUtilsTestClass'));
 		}
 		
 		public function testIsClassName()
 		{
-			$this->assertFalse(ClassUtils::isClassName(null));
-			$this->assertFalse(ClassUtils::isClassName(''));
-			$this->assertFalse(ClassUtils::isClassName(0));
-			$this->assertFalse(ClassUtils::isClassName('0'));
-			$this->assertTrue(ClassUtils::isClassName('A0'));
-			$this->assertTrue(ClassUtils::isClassName('_'));
-			$this->assertTrue(ClassUtils::isClassName('_1'));
-			$this->assertTrue(ClassUtils::isClassName('Correct_Class1'));
+			$this->assertFalse(\Onphp\ClassUtils::isClassName(null));
+			$this->assertFalse(\Onphp\ClassUtils::isClassName(''));
+			$this->assertFalse(\Onphp\ClassUtils::isClassName(0));
+			$this->assertFalse(\Onphp\ClassUtils::isClassName('0'));
+			$this->assertTrue(\Onphp\ClassUtils::isClassName('A0'));
+			$this->assertTrue(\Onphp\ClassUtils::isClassName('_'));
+			$this->assertTrue(\Onphp\ClassUtils::isClassName('_1'));
+			$this->assertTrue(\Onphp\ClassUtils::isClassName('Correct_Class1'));
 		}
 	}
 	

@@ -1,6 +1,8 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class FormPrimitivesDateTest extends TestCase
 	{
 		const VALID_DAY		= '22';
@@ -15,9 +17,9 @@
 		{
 			$data =
 				array(
-					PrimitiveDate::DAY => self::VALID_DAY,
-					PrimitiveDate::MONTH => self::VALID_MONTH,
-					PrimitiveDate::YEAR => self::VALID_YEAR,
+					\Onphp\PrimitiveDate::DAY => self::VALID_DAY,
+					\Onphp\PrimitiveDate::MONTH => self::VALID_MONTH,
+					\Onphp\PrimitiveDate::YEAR => self::VALID_YEAR,
 				);
 			
 			$scope = array(
@@ -42,9 +44,9 @@
 		{
 			$data =
 				array(
-					PrimitiveDate::DAY => self::INVALID_DAY,
-					PrimitiveDate::MONTH => self::INVALID_MONTH,
-					PrimitiveDate::YEAR => self::INVALID_YEAR,
+					\Onphp\PrimitiveDate::DAY => self::INVALID_DAY,
+					\Onphp\PrimitiveDate::MONTH => self::INVALID_MONTH,
+					\Onphp\PrimitiveDate::YEAR => self::INVALID_YEAR,
 				);
 			
 			$scope = array(
@@ -78,8 +80,8 @@
 		protected function processValidScopeBy($scope, $data)
 		{
 			$form =
-				Form::create()->add(
-					Primitive::date('test')
+				\Onphp\Form::create()->add(
+					\Onphp\Primitive::date('test')
 				)->
 				import($scope);
 			
@@ -117,8 +119,8 @@
 		protected function processInvalidBy($scope, $data)
 		{
 			$form =
-				Form::create()->add(
-					Primitive::date('test')
+				\Onphp\Form::create()->add(
+					\Onphp\Primitive::date('test')
 				)->
 				import($scope);
 			
@@ -140,7 +142,7 @@
 			$this->assertEquals(
 				$form->getErrors(),
 				array(
-					'test' => Form::WRONG,
+					'test' => \Onphp\Form::WRONG,
 				)
 			);
 		}
@@ -149,21 +151,21 @@
 		{
 			$data =
 				array(
-					PrimitiveDate::DAY => '',
-					PrimitiveDate::MONTH => '',
-					PrimitiveDate::YEAR => '',
+					\Onphp\PrimitiveDate::DAY => '',
+					\Onphp\PrimitiveDate::MONTH => '',
+					\Onphp\PrimitiveDate::YEAR => '',
 				);
 			
 			$scope = array(
 				'test' => $data
 			);
 			
-			$primitive = Primitive::date('test');
+			$primitive = \Onphp\Primitive::date('test');
 			if ($required)
 				$primitive->setRequired(true);
 			
 			$form =
-				Form::create()->
+				\Onphp\Form::create()->
 				add($primitive)->
 				import($scope);
 			
@@ -176,7 +178,7 @@
 				$this->assertEquals(
 					$form->getErrors(),
 					array(
-						'test' => Form::MISSING,
+						'test' => \Onphp\Form::MISSING,
 					)
 				);
 			else

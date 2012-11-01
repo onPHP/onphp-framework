@@ -1,14 +1,16 @@
 <?php
+	namespace Onphp\Test;
+
 	class DataDBTest extends TestCaseDAO
 	{
 		public function testData()
 		{
 			foreach (DBTestPool::me()->getPool() as $db) {
-				DBPool::me()->setDefault($db);
+				\Onphp\DBPool::me()->setDefault($db);
 				$this->getDBCreator()->fillDB($this);
 				
 				$this->getSome(); // 41!
-				Cache::me()->clean();
+				\Onphp\Cache::me()->clean();
 				$this->getSome();
 				
 				$this->nonIntegerIdentifier();
@@ -22,27 +24,27 @@
 		public function testBoolean()
 		{
 			foreach (DBTestPool::me()->getPool() as $db) {
-				DBPool::me()->setDefault($db);
+				\Onphp\DBPool::me()->setDefault($db);
 				
 				//creating moscow
 				$moscow = TestCity::create()->setName('Moscow');
 				$moscow = $moscow->dao()->add($moscow);
 				$moscowId = $moscow->getId();
-				/* @var $moscow TestCity */
+				/* @var $moscow \Onphp\Test\TestCity */
 				
 				//now moscow capital
 				$moscow->dao()->merge($moscow->setCapital(true));
 				TestCity::dao()->dropIdentityMap();
 				
-				Criteria::create(TestCity::dao())->
+				\Onphp\Criteria::create(TestCity::dao())->
 					setSilent(false)->
-					add(Expression::isTrue('capital'))->
+					add(\Onphp\Expression::isTrue('capital'))->
 					get();
 				TestCity::dao()->dropIdentityMap();
 				
-				$moscow = Criteria::create(TestCity::dao())->
+				$moscow = \Onphp\Criteria::create(TestCity::dao())->
 					setSilent(false)->
-					add(Expression::isNull('large'))->
+					add(\Onphp\Expression::isNull('large'))->
 					get();
 				TestCity::dao()->dropIdentityMap();
 				
@@ -54,9 +56,9 @@
 				$this->assertTrue($moscow->getCapital());
 				$this->assertTrue($moscow->getLarge());
 				
-				Criteria::create(TestCity::dao())->
+				\Onphp\Criteria::create(TestCity::dao())->
 					setSilent(false)->
-					add(Expression::not(Expression::isFalse('large')))->
+					add(\Onphp\Expression::not(\Onphp\Expression::isFalse('large')))->
 					get();
 				TestCity::dao()->dropIdentityMap();
 			}
@@ -94,7 +96,7 @@
 			for ($i = 1; $i < 3; ++$i) {
 				$this->assertTrue(
 					TestUser::dao()->getByLogic(
-						Expression::eq('city_id', $i)
+						\Onphp\Expression::eq('city_id', $i)
 					)
 					== TestUser::dao()->getById($i)
 				);
@@ -118,14 +120,14 @@
 			
 			try {
 				TestBinaryStuff::dao()->import($bin);
-			} catch (DatabaseException $e) {
+			} catch (\Onphp\DatabaseException $e) {
 				return $this->fail($e->getMessage());
 			}
 			
 			TestBinaryStuff::dao()->dropIdentityMap();
-			Cache::me()->clean();
+			\Onphp\Cache::me()->clean();
 			
-			$prm = Primitive::prototypedIdentifier('TestBinaryStuff', 'id');
+			$prm = \Onphp\Primitive::prototypedIdentifier('\Onphp\Test\TestBinaryStuff', 'id');
 			
 			$this->assertTrue($prm->import(array('id' => $id)));
 			$this->assertSame($prm->getValue()->getId(), $id);
@@ -135,10 +137,10 @@
 			$this->assertEquals($binLoaded->getData(), $binaryData);
 			$this->assertEquals(TestBinaryStuff::dao()->dropById($id), 1);
 			
-			$integerIdPrimitive = Primitive::prototypedIdentifier('TestUser');
+			$integerIdPrimitive = \Onphp\Primitive::prototypedIdentifier('\Onphp\Test\TestUser');
 			try {
 				$integerIdPrimitive->import(array('id' => 'string-instead-of-integer'));
-			} catch (DatabaseException $e) {
+			} catch (\Onphp\DatabaseException $e) {
 				return $this->fail($e->getMessage());
 			}
 		}
@@ -154,7 +156,7 @@
 				TestCity::dao()->save($lost);
 				
 				$this->fail();
-			} catch (WrongStateException $e) {
+			} catch (\Onphp\WrongStateException $e) {
 				/* pass */
 			}
 		}
@@ -175,7 +177,7 @@
 			
 			$stuff = $stuff->dao()->import($stuff);
 			
-			Cache::me()->clean();
+			\Onphp\Cache::me()->clean();
 			
 			$this->assertEquals(
 				TestBinaryStuff::dao()->getById($id)->getData(),
@@ -194,13 +196,13 @@
 					setCity($city)->
 					setCityOptional($city)->
 					setEnum(
-						new ImageType(ImageType::getAnyId())
+						new \Onphp\ImageType(\Onphp\ImageType::getAnyId())
 					)->setStaticEnum(
-						new MimeType(MimeType::getAnyId())
+						new \Onphp\MimeType(\Onphp\MimeType::getAnyId())
 					)
 			);
 			
-			Cache::me()->clean();
+			\Onphp\Cache::me()->clean();
 			
 			$form = TestLazy::proto()->makeForm();
 			$form->import(
@@ -209,12 +211,12 @@
 			
 			$this->assertNotNull($form->getValue('id'));
 			
-			FormUtils::object2form($object, $form);
+			\Onphp\FormUtils::object2form($object, $form);
 			
 			foreach ($object->proto()->getPropertyList() as $name => $property) {
 				if (
-					$property->getRelationId() == MetaRelation::ONE_TO_ONE
-					&& $property->getFetchStrategyId() == FetchStrategy::LAZY
+					$property->getRelationId() == \Onphp\MetaRelation::ONE_TO_ONE
+					&& $property->getFetchStrategyId() == \Onphp\FetchStrategy::LAZY
 				) {
 					$this->assertEquals(
 						$object->{$property->getGetter()}(),

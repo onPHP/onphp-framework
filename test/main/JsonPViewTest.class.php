@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	final class JsonPViewTest extends TestCase
 	{
 		protected $array = array('<foo>',"'bar'",'"baz"','&blong&');
@@ -16,25 +18,25 @@
 
 		public function testMain()
 		{
-			$model = Model::create()->set('array', $this->array);
+			$model = \Onphp\Model::create()->set('array', $this->array);
 			$data = array('array' => $this->array);
 			$callback = 'myFunc';
 
 			//setup
-			$view = JsonPView::create();
+			$view = \Onphp\JsonPView::create();
 
 			try{
 				// empty js callback function name
 				$view->toString($model);
 
 				$this->fail('empty callback javascript function name expected!');
-			} catch(WrongArgumentException $e) {}
+			} catch(\Onphp\WrongArgumentException $e) {}
 
 			try{
 				$view->setCallback('34_callback'); // invalid javascript function name
 
 				$this->fail('invalid javascript function name expected!');
-			} catch(WrongArgumentException $e) {}
+			} catch(\Onphp\WrongArgumentException $e) {}
 
 			$view->setCallback($callback);
 
@@ -61,14 +63,14 @@
 
 	}
 
-	class SimpleStringableObject implements Stringable
+	class SimpleStringableObject implements \Onphp\Stringable
 	{
 		protected $string		= null;
 
 
 		/**
 		 * @static
-		 * @return SimpleStringableObject
+		 * @return \Onphp\Test\SimpleStringableObject
 		 */
 		public static function create()
 		{
@@ -77,11 +79,11 @@
 
 		/**
 		 * @param $value
-		 * @return SimpleStringableObject
+		 * @return \Onphp\Test\SimpleStringableObject
 		 */
 		public function setString($value)
 		{
-			Assert::isString($value);
+			\Onphp\Assert::isString($value);
 
 			$this->string = $value;
 

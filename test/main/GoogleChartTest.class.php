@@ -1,33 +1,35 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class GoogleChartTest extends TestCase
 	{
 		public function testPieChart()
 		{
 			$chart =
-				GooglePieChart::create()->
+				\Onphp\GooglePieChart::create()->
 				setSize(
-					GoogleChartSize::create()->
+					\Onphp\GoogleChartSize::create()->
 					setWidth(500)->
 					setHeight(300)
 				)->
 				addPiece(
-					GoogleChartPiece::create()->
+					\Onphp\GoogleChartPiece::create()->
 					setTitle('Nokia')->
-					setColor(Color::create('ff0000'))->
+					setColor(\Onphp\Color::create('ff0000'))->
 					setValue(40)
 				)->
 				addPiece(
-					GoogleChartPiece::create()->
+					\Onphp\GoogleChartPiece::create()->
 					setTitle('Samsung')->
-					setColor(Color::create('336677'))->
+					setColor(\Onphp\Color::create('336677'))->
 					setValue(35)
 				)->
 				addPiece(
-					GoogleChartPiece::create()->
+					\Onphp\GoogleChartPiece::create()->
 					setTitle('Opera')->
-					setColor(Color::create('112200'))->
+					setColor(\Onphp\Color::create('112200'))->
 					setValue(25)
 				);
 			
@@ -40,42 +42,42 @@
 		public function testTwoAxisLineChart()
 		{
 			$views =
-				GoogleChartDataSet::create()->
+				\Onphp\GoogleChartDataSet::create()->
 				setData(array(195, 191, 197, 183, 199, 195));
 			
 			$clicks =
-				GoogleChartDataSet::create()->
+				\Onphp\GoogleChartDataSet::create()->
 				setData(array(3, 1, 1, 3, 1, 3));
 			
 			$chart =
-				GoogleLineChart::create()->
+				\Onphp\GoogleLineChart::create()->
 				setSize(
-					GoogleChartSize::create()->
+					\Onphp\GoogleChartSize::create()->
 					setWidth(300)->
 					setHeight(300)
 				)->
 				addAxis(
-					GoogleChartAxis::create(
-						new GoogleChartAxisType(GoogleChartAxisType::Y)
+					\Onphp\GoogleChartAxis::create(
+						new \Onphp\GoogleChartAxisType(\Onphp\GoogleChartAxisType::Y)
 					)->
-					setRange(IntegerSet::create(0, $views->getMax()))
+					setRange(\Onphp\IntegerSet::create(0, $views->getMax()))
 				)->
 				addAxis(
-					GoogleChartAxis::create(
-						new GoogleChartAxisType(GoogleChartAxisType::R)
+					\Onphp\GoogleChartAxis::create(
+						new \Onphp\GoogleChartAxisType(\Onphp\GoogleChartAxisType::R)
 					)->
-					setRange(IntegerSet::create(0, $clicks->getMax()))
+					setRange(\Onphp\IntegerSet::create(0, $clicks->getMax()))
 				)->
 				addLine(
-					GoogleChartLine::create()->
+					\Onphp\GoogleChartLine::create()->
 					setTitle('Показы')->
-					setColor(Color::create('336699'))->
+					setColor(\Onphp\Color::create('336699'))->
 					setValue($views)
 				)->
 				addLine(
-					GoogleChartLine::create()->
+					\Onphp\GoogleChartLine::create()->
 					setTitle('Клики')->
-					setColor(Color::create('996633'))->
+					setColor(\Onphp\Color::create('996633'))->
 					setValue($clicks)
 				);
 			
@@ -88,11 +90,11 @@
 		public function testThreeAxisLineChart()
 		{
 			$views =
-				GoogleChartDataSet::create()->
+				\Onphp\GoogleChartDataSet::create()->
 				setData(array(195, 191, 197, 183, 199, 195));
 			
 			$clicks =
-				GoogleChartDataSet::create()->
+				\Onphp\GoogleChartDataSet::create()->
 				setData(array(3, 1, 1, 3, 1, 3));
 			
 			$days =
@@ -106,46 +108,46 @@
 				);
 			
 			$chart =
-				GoogleLineChart::create()->
+				\Onphp\GoogleLineChart::create()->
 				setSize(
-					GoogleChartSize::create()->
+					\Onphp\GoogleChartSize::create()->
 					setWidth(640)->
 					setHeight(240)
 				)->
 				addAxis(
-					GoogleChartAxis::create(
-						new GoogleChartAxisType(GoogleChartAxisType::Y)
+					\Onphp\GoogleChartAxis::create(
+						new \Onphp\GoogleChartAxisType(\Onphp\GoogleChartAxisType::Y)
 					)->
-					setRange(IntegerSet::create(0, $views->getMax()))
+					setRange(\Onphp\IntegerSet::create(0, $views->getMax()))
 				)->
 				addAxis(
-					GoogleChartAxis::create(
-						new GoogleChartAxisType(GoogleChartAxisType::R)
+					\Onphp\GoogleChartAxis::create(
+						new \Onphp\GoogleChartAxisType(\Onphp\GoogleChartAxisType::R)
 					)->
-					setRange(IntegerSet::create(0, $clicks->getMax()))
+					setRange(\Onphp\IntegerSet::create(0, $clicks->getMax()))
 				)->
 				addAxis(
-					GoogleChartAxis::create(
-						new GoogleChartAxisType(GoogleChartAxisType::X)
+					\Onphp\GoogleChartAxis::create(
+						new \Onphp\GoogleChartAxisType(\Onphp\GoogleChartAxisType::X)
 					)->
 					setLabel(
-						GoogleChartAxisLabel::create()->
+						\Onphp\GoogleChartAxisLabel::create()->
 						setLabels($days)
 					)
 				)->
 				addLine(
-					GoogleChartLine::create()->
+					\Onphp\GoogleChartLine::create()->
 					setTitle('Показы')->
-					setColor(Color::create('336699'))->
+					setColor(\Onphp\Color::create('336699'))->
 					setValue($views)
 				)->
 				addLine(
-					GoogleChartLine::create()->
+					\Onphp\GoogleChartLine::create()->
 					setTitle('Клики')->
-					setColor(Color::create('996633'))->
+					setColor(\Onphp\Color::create('996633'))->
 					setValue($clicks)->
 					setStyle(
-						ChartLineStyle::create()->
+						\Onphp\ChartLineStyle::create()->
 						setThickness(2)
 					)
 				);
@@ -159,13 +161,13 @@
 		public function testGridedLineChart()
 		{
 			$views =
-				GoogleChartDataSet::create()->
+				\Onphp\GoogleChartDataSet::create()->
 				setData(
 					array(0,0,20,2491,2334,0)
 				);
 			
 			$clicks =
-				GoogleChartDataSet::create()->
+				\Onphp\GoogleChartDataSet::create()->
 				setData(
 					array(0,0,10,480,530,0)
 				);
@@ -177,54 +179,54 @@
 			$clicks->setBase(pow(10, floor(log10($clicks->getMax()))));
 			
 			$viewAxis =
-				GoogleChartAxis::create(
-					new GoogleChartAxisType(GoogleChartAxisType::Y)
+				\Onphp\GoogleChartAxis::create(
+					new \Onphp\GoogleChartAxisType(\Onphp\GoogleChartAxisType::Y)
 				)->
 				setRange($views->getMinMax())->
 				setInterval($views->getBase());
 			
 			$clickAxis =
-				GoogleChartAxis::create(
-					new GoogleChartAxisType(GoogleChartAxisType::R)
+				\Onphp\GoogleChartAxis::create(
+					new \Onphp\GoogleChartAxisType(\Onphp\GoogleChartAxisType::R)
 				)->
 				setRange($clicks->getMinMax())->
 				setInterval($clicks->getBase());
 			
 			$chart =
-				GoogleGridedLineChart::create()->
+				\Onphp\GoogleGridedLineChart::create()->
 				setSize(
-					GoogleChartSize::create()->
+					\Onphp\GoogleChartSize::create()->
 					setWidth(640)->
 					setHeight(240)
 				)->
 				addAxis($viewAxis)->
 				addAxis($clickAxis)->
 				addAxis(
-					GoogleChartAxis::create(
-						new GoogleChartAxisType(GoogleChartAxisType::X)
+					\Onphp\GoogleChartAxis::create(
+						new \Onphp\GoogleChartAxisType(\Onphp\GoogleChartAxisType::X)
 					)->
 					setLabel(
-						GoogleChartAxisLabel::create()->
+						\Onphp\GoogleChartAxisLabel::create()->
 						setLabels($days)
 					)
 				)->
 				addLine(
-					GoogleChartLine::create()->
+					\Onphp\GoogleChartLine::create()->
 					setTitle('Показы')->
-					setColor(Color::create('6699cc'))->
+					setColor(\Onphp\Color::create('6699cc'))->
 					setValue($views)->
 					setStyle(
-						ChartLineStyle::create()->
+						\Onphp\ChartLineStyle::create()->
 						setThickness(2)
 					)
 				)->
 				addLine(
-					GoogleChartLine::create()->
+					\Onphp\GoogleChartLine::create()->
 					setTitle('Клики')->
-					setColor(Color::create('339922'))->
+					setColor(\Onphp\Color::create('339922'))->
 					setValue($clicks)->
 					setStyle(
-						ChartLineStyle::create()->
+						\Onphp\ChartLineStyle::create()->
 						setThickness(2)
 					)
 				);
@@ -235,7 +237,7 @@
 			);
 			
 			$chart->setGrid(
-				GoogleChartGrid::create()->
+				\Onphp\GoogleChartGrid::create()->
 				setVerticalStepSize(10)
 			);
 			
@@ -252,7 +254,7 @@
 		{
 			foreach ($result as $chartClass => $expectedString) {
 				$views =
-					GoogleChartDataSet::create()->
+					\Onphp\GoogleChartDataSet::create()->
 					setData($axisData);
 				
 				$chart = new $chartClass;
@@ -267,8 +269,8 @@
 				}
 				
 				$axis =
-					GoogleChartAxis::create(
-						new GoogleChartAxisType(GoogleChartAxisType::Y)
+					\Onphp\GoogleChartAxis::create(
+						new \Onphp\GoogleChartAxisType(\Onphp\GoogleChartAxisType::Y)
 					)->
 					setRange($views->getMinMax());
 				
@@ -277,21 +279,21 @@
 				
 				$chart->
 					setSize(
-						GoogleChartSize::create()->
+						\Onphp\GoogleChartSize::create()->
 						setWidth(300)->
 						setHeight(300)
 					)->
 					addAxis($axis)->
 					addLine(
-						GoogleChartLine::create()->
+						\Onphp\GoogleChartLine::create()->
 						setTitle('Показы')->
-						setColor(Color::create('336699'))->
+						setColor(\Onphp\Color::create('336699'))->
 						setValue($views)->
 						setLabelStyle(
-							ChartLabelStyle::create()->
-							setType(GoogleChartLabelStyleNumberType::create())->
+							\Onphp\ChartLabelStyle::create()->
+							setType(\Onphp\GoogleChartLabelStyleNumberType::create())->
 							setSize(11)->
-							setColor(Color::create('117700'))
+							setColor(\Onphp\Color::create('117700'))
 						)
 					);
 				
@@ -306,11 +308,11 @@
 		{
 			foreach ($result as $chartClass => $expectedString) {
 				$views =
-					GoogleChartDataSet::create()->
+					\Onphp\GoogleChartDataSet::create()->
 					setData($firstAxisData);
 				
 				$clicks =
-					GoogleChartDataSet::create()->
+					\Onphp\GoogleChartDataSet::create()->
 					setData($secondtAxisData);
 				
 				$chart = new $chartClass;
@@ -332,14 +334,14 @@
 				}
 				
 				$viewAxis =
-					GoogleChartAxis::create(
-						new GoogleChartAxisType(GoogleChartAxisType::Y)
+					\Onphp\GoogleChartAxis::create(
+						new \Onphp\GoogleChartAxisType(\Onphp\GoogleChartAxisType::Y)
 					)->
 					setRange($views->getMinMax());
 				
 				$clickAxis =
-					GoogleChartAxis::create(
-						new GoogleChartAxisType(GoogleChartAxisType::R)
+					\Onphp\GoogleChartAxis::create(
+						new \Onphp\GoogleChartAxisType(\Onphp\GoogleChartAxisType::R)
 					)->
 					setRange($clicks->getMinMax());
 				
@@ -350,22 +352,22 @@
 				
 				$chart->
 					setSize(
-						GoogleChartSize::create()->
+						\Onphp\GoogleChartSize::create()->
 						setWidth(300)->
 						setHeight(300)
 					)->
 					addAxis($viewAxis)->
 					addLine(
-						GoogleChartLine::create()->
+						\Onphp\GoogleChartLine::create()->
 						setTitle('Показы')->
-						setColor(Color::create('336699'))->
+						setColor(\Onphp\Color::create('336699'))->
 						setValue($views)
 					)->
 					addAxis($clickAxis)->
 					addLine(
-						GoogleChartLine::create()->
+						\Onphp\GoogleChartLine::create()->
 						setTitle('Клики')->
-						setColor(Color::create('339911'))->
+						setColor(\Onphp\Color::create('339911'))->
 						setValue($clicks)
 					);
 				
@@ -379,44 +381,44 @@
 				array(
 					array(195, 191, 197, 183, 199, 195),
 					array(
-						'GoogleLineChart' =>
+						'\Onphp\GoogleLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:195,191,197,183,199,195&chds=0,199&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,199&chm=N**,117700,0,-1,11',
-						'GoogleNormalizedLineChart' =>
+						'\Onphp\GoogleNormalizedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:195,191,197,183,199,195&chds=0,200&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,200,100&chm=N**,117700,0,-1,11',
-						'GoogleGridedLineChart' =>
+						'\Onphp\GoogleGridedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:195,191,197,183,199,195&chds=0,200&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,200,100&chm=N**,117700,0,-1,11&chg=0,50,0'
 					)
 				),
 				array(
 					array(0.1, 191, 0.2, 0, 199, 195),
 					array(
-						'GoogleLineChart' =>
+						'\Onphp\GoogleLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,191,0.2,0,199,195&chds=0,199&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,199&chm=N**,117700,0,-1,11',
-						'GoogleNormalizedLineChart' =>
+						'\Onphp\GoogleNormalizedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,191,0.2,0,199,195&chds=0,200&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,200,100&chm=N**,117700,0,-1,11',
-						'GoogleGridedLineChart' =>
+						'\Onphp\GoogleGridedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,191,0.2,0,199,195&chds=0,200&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,200,100&chm=N**,117700,0,-1,11&chg=0,50,0'
 					)
 				),
 				array(
 					array(0.1, 0.24, 1, 0.2, 0.3, 0),
 					array(
-						'GoogleLineChart' =>
+						'\Onphp\GoogleLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,0.24,1,0.2,0.3,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1&chm=N**,117700,0,-1,11',
-						'GoogleNormalizedLineChart' =>
+						'\Onphp\GoogleNormalizedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,0.24,1,0.2,0.3,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1,0.1&chm=N**,117700,0,-1,11',
-						'GoogleGridedLineChart' =>
+						'\Onphp\GoogleGridedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0.1,0.24,1,0.2,0.3,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1,0.1&chm=N**,117700,0,-1,11&chg=0,10,0'
 					)
 				),
 				array(
 					array(0, 0, 0),
 					array(
-						'GoogleLineChart' =>
+						'\Onphp\GoogleLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0,0,0&chds=0,1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,1&chm=N**,117700,0,-1,11',
-						'GoogleNormalizedLineChart' =>
+						'\Onphp\GoogleNormalizedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0,0,0&chds=0,0.1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,0.1,0.1&chm=N**,117700,0,-1,11',
-						'GoogleGridedLineChart' =>
+						'\Onphp\GoogleGridedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699&chd=t:0,0,0&chds=0,0.1&chdl=Показы&chdlp=b&chxt=y&chxr=0,0,0.1,0.1&chm=N**,117700,0,-1,11&chg=0,100,0'
 					)
 				)
@@ -430,11 +432,11 @@
 					array(195, 191, 197, 183, 199, 195),
 					array(2, 3, 10, 1, 0, 22),
 					array(
-						'GoogleLineChart' =>
+						'\Onphp\GoogleLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:195,191,197,183,199,195|2,3,10,1,0,22&chds=0,199,0,22&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,199|1,0,22',
-						'GoogleNormalizedLineChart' =>
+						'\Onphp\GoogleNormalizedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:195,191,197,183,199,195|2,3,10,1,0,22&chds=0,300,0,30&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,300,100|1,0,30,10',
-						'GoogleGridedLineChart' =>
+						'\Onphp\GoogleGridedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:195,191,197,183,199,195|2,3,10,1,0,22&chds=0,300,0,30&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,300,100|1,0,30,10&chg=0,33.3,0'
 					)
 				),
@@ -442,11 +444,11 @@
 					array(0.1, 191, 0.2, 0, 199, 195),
 					array(234, 3, 10, 0.1, 0, 22),
 					array(
-						'GoogleLineChart' =>
+						'\Onphp\GoogleLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0.1,191,0.2,0,199,195|234,3,10,0.1,0,22&chds=0,199,0,234&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,199|1,0,234',
-						'GoogleNormalizedLineChart' =>
+						'\Onphp\GoogleNormalizedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0.1,191,0.2,0,199,195|234,3,10,0.1,0,22&chds=0,300,0,300&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,300,100|1,0,300,100',
-						'GoogleGridedLineChart' =>
+						'\Onphp\GoogleGridedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0.1,191,0.2,0,199,195|234,3,10,0.1,0,22&chds=0,300,0,300&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,300,100|1,0,300,100&chg=0,33.3,0'
 					)
 				),
@@ -454,11 +456,11 @@
 					array(0.1, 0.24, 1, 0.2, 0.3, 0),
 					array(0.01, 0.124, 0.1, 0.22, 0.03, 0),
 					array(
-						'GoogleLineChart' =>
+						'\Onphp\GoogleLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0.1,0.24,1,0.2,0.3,0|0.01,0.124,0.1,0.22,0.03,0&chds=0,1,0,0.22&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,1|1,0,0.22',
-						'GoogleNormalizedLineChart' =>
+						'\Onphp\GoogleNormalizedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0.1,0.24,1,0.2,0.3,0|0.01,0.124,0.1,0.22,0.03,0&chds=0,1,0,1&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,1,0.1|1,0,1,0.1',
-						'GoogleGridedLineChart' =>
+						'\Onphp\GoogleGridedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0.1,0.24,1,0.2,0.3,0|0.01,0.124,0.1,0.22,0.03,0&chds=0,1,0,1&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,1,0.1|1,0,1,0.1&chg=0,10,0'
 					)
 				),
@@ -466,11 +468,11 @@
 					array(0, 0, 0),
 					array(0.01, 0.124, 0.1),
 					array(
-						'GoogleLineChart' =>
+						'\Onphp\GoogleLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0,0,0|0.01,0.124,0.1&chds=0,1,0,0.124&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,1|1,0,0.124',
-						'GoogleNormalizedLineChart' =>
+						'\Onphp\GoogleNormalizedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0,0,0|0.01,0.124,0.1&chds=0,0.2,0,0.2&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,0.2,0.1|1,0,0.2,0.1',
-						'GoogleGridedLineChart' =>
+						'\Onphp\GoogleGridedLineChart' =>
 						'http://chart.apis.google.com/chart?cht=lc&chs=300x300&chco=336699,339911&chd=t:0,0,0|0.01,0.124,0.1&chds=0,0.2,0,0.2&chdl=Показы|Клики&chdlp=b&chxt=y,r&chxr=0,0,0.2,0.1|1,0,0.2,0.1&chg=0,50,0'
 					)
 				)

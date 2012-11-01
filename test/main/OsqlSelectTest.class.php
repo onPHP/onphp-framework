@@ -1,30 +1,32 @@
 <?php
 	
+	namespace Onphp\Test;
+
 	final class OsqlSelectTest extends TestCaseDB
 	{
 		public function testSelectGet()
 		{
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
 			$query = OSQL::select()->
 				from('test_table')->
-				get(DBField::create('field1', 'test_table'), 'alias1')->
-				get(DBField::create('field2', 'test_table'))->
+				get(\Onphp\DBField::create('field1', 'test_table'), 'alias1')->
+				get(\Onphp\DBField::create('field2', 'test_table'))->
 				get('field3', 'alias3')->
 				get('field4')->
 				get(
-					SQLFunction::create(
-						'count', DBField::create('field5', 'test_table')
+					\Onphp\SQLFunction::create(
+						'count', \Onphp\DBField::create('field5', 'test_table')
 					)->
 					setAggregateDistinct()->
 					setAlias('alias5')
 				)->
 				get(
-					SQLFunction::create(
+					\Onphp\SQLFunction::create(
 						'substring',
-						BinaryExpression::create(
-							DBField::create('field6', 'test_table'),
-							DBValue::create('a..b'),
+						\Onphp\BinaryExpression::create(
+							\Onphp\DBField::create('field6', 'test_table'),
+							\Onphp\DBValue::create('a..b'),
 							'from'
 						)->
 						noBrackets()
@@ -46,7 +48,7 @@
 		
 		public function testSelectSubqueryGet()
 		{
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
 			$query = OSQL::select()->
 				from('test_table')->
@@ -69,7 +71,7 @@
 
 		public function testSelectJoin()
 		{
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 
 			$joinTypeList = array(
 				'JOIN ' => 'join',
@@ -79,9 +81,9 @@
 			);
 
 			$joinExpression =
-				Expression::eq(
-					DBField::create('joinField', 'table1'),
-					DBField::create('joinField', 'table2')
+				\Onphp\Expression::eq(
+					\Onphp\DBField::create('joinField', 'table1'),
+					\Onphp\DBField::create('joinField', 'table2')
 				);
 
 			$baseRawQuery =
@@ -130,8 +132,8 @@
 			return
 				OSQL::select()->
 				from('table1')->
-				get(DBField::create('field1', 'table1'))->
-				get(DBField::create('field2', 'table2'));
+				get(\Onphp\DBField::create('field1', 'table1'))->
+				get(\Onphp\DBField::create('field2', 'table2'));
 		}
 
 	}

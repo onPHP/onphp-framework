@@ -1,19 +1,21 @@
 <?php
-	final class DBTestPool extends Singleton implements Instantiatable
+	namespace Onphp\Test;
+
+	final class DBTestPool extends \Onphp\Singleton implements \Onphp\Instantiatable
 	{
 		private $pool = array();
 		
 		/**
-		 * @return DBTestPool
+		 * @return \Onphp\Test\DBTestPool
 		 */
 		public static function me()
 		{
-			return Singleton::getInstance(__CLASS__);
+			return \Onphp\Singleton::getInstance(__CLASS__);
 		}
 		
 		protected function __construct(array $dbs = array())
 		{
-			Assert::isArray($dbs);
+			\Onphp\Assert::isArray($dbs);
 			
 			foreach ($dbs as $connector => $credentials) {
 				$this->pool[$connector] = DB::spawn(

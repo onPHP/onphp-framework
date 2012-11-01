@@ -4,6 +4,8 @@
  *   dedmajor@oemdesign.ru                                                 *
  ***************************************************************************/
 	
+	namespace Onphp\Test;
+
 	final class GenericUriTest extends TestCase
 	{
 		private $urls = array(
@@ -51,16 +53,16 @@
 			'mailto:astark1@unl.edu,ASTARK1@UNL.EDU?subject=MailTo Comments&cc=ASTARK1@UNL.EDU&bcc=id@internet.node' => null,
 			
 			'//ya0.ru'	=> null,
-			'//yandex.ru'	=> 'Url',
-			'//yandex.ru:80'	=> 'Url',
+			'//yandex.ru'	=> '\Onphp\Url',
+			'//yandex.ru:80'	=> '\Onphp\Url',
 			'ya1.ru'	=> null,
-			'ya2.ru'	=> 'Url',
-			'ya3.ru'	=> 'HttpUrl',
-			'http:ya4.ru'	=> 'HttpUrl',
-			'http:/ya5.ru'	=> 'HttpUrl',
-			'http:///ya6.ru'	=> 'HttpUrl',
+			'ya2.ru'	=> '\Onphp\Url',
+			'ya3.ru'	=> '\Onphp\HttpUrl',
+			'http:ya4.ru'	=> '\Onphp\HttpUrl',
+			'http:/ya5.ru'	=> '\Onphp\HttpUrl',
+			'http:///ya6.ru'	=> '\Onphp\HttpUrl',
 			
-			'hTTP://onphp.org'	=> 'HttpUrl',
+			'hTTP://onphp.org'	=> '\Onphp\HttpUrl',
 		);
 		
 		public function testParser()
@@ -90,15 +92,15 @@
 				$exception = null;
 				
 				if (!$parserClass)
-					$parserClass = 'GenericUri';
+					$parserClass = '\Onphp\GenericUri';
 				
 				try {
-					$url = ClassUtils::callStaticMethod("$parserClass::parse", $testUrl, true);
-				} catch (WrongArgumentException $e) {
+					$url = \Onphp\ClassUtils::callStaticMethod("$parserClass::parse", $testUrl, true);
+				} catch (\Onphp\WrongArgumentException $e) {
 					$exception = $e;
 				}
 				
-				$fix = $parserClass == 'HttpUrl';
+				$fix = $parserClass == '\Onphp\HttpUrl';
 				
 				if ($fix)
 					$url->ensureAbsolute();

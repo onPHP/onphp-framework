@@ -1,19 +1,21 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class TimestampTest extends TestCase
 	{
 		public function testNonEpoch()
 		{
 			$future = '4683-03-04';
-			$after = new Timestamp($future);
+			$after = new \Onphp\Timestamp($future);
 			
 			$this->assertEquals('04', $after->getDay());
 			$this->assertEquals('03', $after->getMonth());
 			$this->assertEquals('4683', $after->getYear());
 			
 			$past = '1234-04-03';
-			$before = new Timestamp($past);
+			$before = new \Onphp\Timestamp($past);
 			
 			$this->assertEquals('03', $before->getDay());
 			$this->assertEquals('04', $before->getMonth());
@@ -29,7 +31,7 @@
 			$this->assertEquals($past.$time, $before->toDateTime());
 
 			$past = '1-04-03';
-			$before = new Timestamp($past);
+			$before = new \Onphp\Timestamp($past);
 
 			$this->assertEquals('03', $before->getDay());
 			$this->assertEquals('04', $before->getMonth());
@@ -39,7 +41,7 @@
 			);
 
 			$past = '14-01-02';
-			$before = new Timestamp($past);
+			$before = new \Onphp\Timestamp($past);
 
 			$this->assertEquals('02', $before->getDay());
 			$this->assertEquals('01', $before->getMonth());
@@ -49,7 +51,7 @@
 			);
 
 			$past = '113-01-02';
-			$before = new Timestamp($past);
+			$before = new \Onphp\Timestamp($past);
 
 			$this->assertEquals('02', $before->getDay());
 			$this->assertEquals('01', $before->getMonth());
@@ -62,30 +64,30 @@
 		public function testInvalidTimestamp()
 		{
 			try {
-				new Timestamp('2007-0-0');
+				new \Onphp\Timestamp('2007-0-0');
 				$this->fail();
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				/* pass */
 			}
 			
 			try {
-				new Timestamp('2007-00-00');
+				new \Onphp\Timestamp('2007-00-00');
 				$this->fail();
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				/* pass */
 			}
 			
 			try {
-				new Timestamp('2007-01-00');
+				new \Onphp\Timestamp('2007-01-00');
 				$this->fail();
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				/* pass */
 			}
 			
 			try {
-				new Timestamp('2007-00-01');
+				new \Onphp\Timestamp('2007-00-01');
 				$this->fail();
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				/* pass */
 			}
 		}
@@ -93,10 +95,10 @@
 		public function testCornerCases()
 		{
 			try {
-				Date::create('2007-10-0');
+				\Onphp\Date::create('2007-10-0');
 				
 				$this->fail();
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				/* pass */
 			}
 		}
@@ -104,8 +106,8 @@
 		public function testTimestampNow()
 		{
 			try {
-				Timestamp::create('now');
-			} catch (WrongArgumentException $e) {
+				\Onphp\Timestamp::create('now');
+			} catch (\Onphp\WrongArgumentException $e) {
 				$this->fail($e->getMessage());
 			}
 		}
@@ -113,15 +115,15 @@
 		public function testDateNow()
 		{
 			try {
-				Date::create('now');
-			} catch (WrongArgumentException $e) {
+				\Onphp\Date::create('now');
+			} catch (\Onphp\WrongArgumentException $e) {
 				$this->fail($e->getMessage());
 			}
 		}
 
 		public function testStartHour()
 		{
-			$stamp = Timestamp::create('2010-03-25 14:15:10');
+			$stamp = \Onphp\Timestamp::create('2010-03-25 14:15:10');
 			
 			$this->assertNotEquals(
 				$stamp->toStamp(),
@@ -129,19 +131,19 @@
 			);
 			
 			$this->assertTrue(
-				Timestamp::create($stamp->getHourStartStamp())
-				instanceof Timestamp
+				\Onphp\Timestamp::create($stamp->getHourStartStamp())
+				instanceof \Onphp\Timestamp
 			);
 			
 			$this->assertEquals(
-				Timestamp::create($stamp->getHourStartStamp())->toString(),
+				\Onphp\Timestamp::create($stamp->getHourStartStamp())->toString(),
 				'2010-03-25 14:00:00'
 			);
 		}
 
 		public function testSleeping()
 		{
-			$stamp = Timestamp::makeNow();
+			$stamp = \Onphp\Timestamp::makeNow();
 
 			$serializedStamp = serialize($stamp);
 
@@ -154,7 +156,7 @@
 			$this->assertEquals($stamp->getMinute(), $unserializedStamp->getMinute());
 			$this->assertEquals($stamp->getSecond(), $unserializedStamp->getSecond());
 
-			$stamp = Timestamp::create('2039-01-05 12:14:05 Europe/Moscow');
+			$stamp = \Onphp\Timestamp::create('2039-01-05 12:14:05 Europe/Moscow');
 
 			$serializedStamp = serialize($stamp);
 
@@ -167,7 +169,7 @@
 			$this->assertEquals($stamp->getMinute(), $unserializedStamp->getMinute());
 			$this->assertEquals($stamp->getSecond(), $unserializedStamp->getSecond());
 
-			$stamp = Timestamp::create('1899-12-31 16:07:45 Europe/London');
+			$stamp = \Onphp\Timestamp::create('1899-12-31 16:07:45 Europe/London');
 
 			$serializedStamp = serialize($stamp);
 

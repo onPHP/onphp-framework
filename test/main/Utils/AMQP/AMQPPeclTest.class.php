@@ -9,7 +9,9 @@
  *                                                                         *
  ***************************************************************************/
 
-	class AMQPTestCaseNoAckQueueConsumer extends AMQPPeclQueueConsumer
+	namespace Onphp\Test;
+
+	class AMQPTestCaseNoAckQueueConsumer extends \Onphp\AMQPPeclQueueConsumer
 	{
 		protected $checkString = '';
 
@@ -25,7 +27,7 @@
 			AMQPPeclTest::checkMessageCount($this->getChannel());
 		}
 
-		public function handleDelivery(AMQPIncomingMessage $delivery)
+		public function handleDelivery(\Onphp\AMQPIncomingMessage $delivery)
 		{
 			AMQPPeclTest::messageTest($delivery, $this->count);
 
@@ -49,7 +51,7 @@
 		}
 	}
 
-	class AMQPTestCaseAutoAckQueueConsumer extends AMQPPeclQueueConsumer
+	class AMQPTestCaseAutoAckQueueConsumer extends \Onphp\AMQPPeclQueueConsumer
 	{
 		protected $checkString = '';
 
@@ -65,7 +67,7 @@
 			AMQPPeclTest::checkMessageCount($this->getChannel());
 		}
 
-		public function handleDelivery(AMQPIncomingMessage $delivery)
+		public function handleDelivery(\Onphp\AMQPIncomingMessage $delivery)
 		{
 			AMQPPeclTest::messageTest($delivery, $this->count);
 
@@ -97,7 +99,7 @@
 			// basic queue
 			'basic' => array(
 				'exchange' => 'AMQPPeclTestExchange',
-				'exchangeType' => AMQPExchangeType::DIRECT,
+				'exchangeType' => \Onphp\AMQPExchangeType::DIRECT,
 				'name' => 'AMQPPeclTestQueue',
 				'key' => 'routing.key',
 				'args' => array()
@@ -105,7 +107,7 @@
 			// exchange2exchange binding
 			'exchangeBinded' => array(
 				'exchange' => 'AMQPPeclTestExchangeBinded',
-				'exchangeType' => AMQPExchangeType::FANOUT,
+				'exchangeType' => \Onphp\AMQPExchangeType::FANOUT,
 				'name' => 'AMQPPeclTestQueueBinded',
 				'key' => 'routing.key.binded',
 				'args' => array()
@@ -113,7 +115,7 @@
 			// Highly Available Queues
 			'mirrored' => array(
 				'exchange' => 'AMQPPeclTestExchange',
-				'exchangeType' => AMQPExchangeType::DIRECT,
+				'exchangeType' => \Onphp\AMQPExchangeType::DIRECT,
 				'name' => 'AMQPPeclTestQueueMirrored',
 				'key' => 'routing.key.mirrored',
 				'args' => array('x-ha-policy' => 'all')
@@ -129,18 +131,18 @@
 			}
 		}
 
-		public static function messageTest(AMQPIncomingMessage $mess, $i)
+		public static function messageTest(\Onphp\AMQPIncomingMessage $mess, $i)
 		{
 			self::messageAssertion($mess, $i);
 		}
 
 
 		/**
-		 * @param AMQPPeclChannel $channel
+		 * @param \Onphp\AMQPPeclChannel $channel
 		 * @param string $label
 		 * @param int $value
 		 */
-		public static function checkMessageCount(AMQPChannelInterface $channel,
+		public static function checkMessageCount(\Onphp\AMQPChannelInterface $channel,
 			$label = 'basic', $value = self::COUNT_OF_PUBLISH
 		) {
 			usleep(self::MESSAGE_COUNT_WAIT);
@@ -149,7 +151,7 @@
 
 			$count =  $channel->queueDeclare(
 				self::$queueList[$label]['name'],
-				AMQPQueueConfig::create()->
+				\Onphp\AMQPQueueConfig::create()->
 					setDurable(true)->
 					setArguments(
 						self::$queueList[$label]['args']
@@ -162,14 +164,14 @@
 		public function testDefaulConnection()
 		{
 			try {
-				$c = new AMQPPecl(
-					AMQPCredentials::createDefault()
+				$c = new \Onphp\AMQPPecl(
+					\Onphp\AMQPCredentials::createDefault()
 				);
 				
-				$this->assertInstanceOf('AMQP', $c->connect());
+				$this->assertInstanceOf('\Onphp\AMQP', $c->connect());
 				$this->assertTrue($c->isConnected());
 				
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$this->fail($e->getMessage());
 			}
 		}
@@ -177,8 +179,8 @@
 		public function testCustomConnection()
 		{
 			try {
-				$c = new AMQPPecl(
-					AMQPCredentials::create()->
+				$c = new \Onphp\AMQPPecl(
+					\Onphp\AMQPCredentials::create()->
 						setHost('localhost')->
 						setPort(5672)->
 						setLogin('guest')->
@@ -186,18 +188,18 @@
 						setVirtualHost('/')
 				);
 				
-				$this->assertInstanceOf('AMQP', $c->connect());
+				$this->assertInstanceOf('\Onphp\AMQP', $c->connect());
 				$this->assertTrue($c->isConnected());
 				
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$this->fail($e->getMessage());
 			}
 		}
 
 		public function testChannel()
 		{
-			$c = new AMQPPecl(
-				AMQPCredentials::create()->
+			$c = new \Onphp\AMQPPecl(
+				\Onphp\AMQPCredentials::create()->
 					setHost('localhost')->
 					setPort(5672)->
 					setLogin('guest')->
@@ -212,7 +214,7 @@
 			$this->assertSame(3, count($c->getChannelList()));
 
 			$this->assertInstanceOf(
-				'AMQPPeclChannel',
+				'\Onphp\AMQPPeclChannel',
 				$c->getChannel(1)
 			);
 
@@ -224,30 +226,30 @@
 				$c->getChannel(1);
 				$this->fail("Channel was't dropped");
 
-			} catch (MissingElementException $e) {
+			} catch (\Onphp\MissingElementException $e) {
 				//ok
 			}
 		}
 
 		public function testDeclareExchange()
 		{
-			$c = new AMQPPecl(
-				AMQPCredentials::createDefault()
+			$c = new \Onphp\AMQPPecl(
+				\Onphp\AMQPCredentials::createDefault()
 			);
 
 			$channel = $c->createChannel(1);
 
 			try {
 				$this->exchangeDeclare($channel, 'basic');
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$this->fail($e->getMessage());
 			}
 		}
 
 		public function testDeclareQueue()
 		{
-			$c = new AMQPPecl(
-				AMQPCredentials::createDefault()
+			$c = new \Onphp\AMQPPecl(
+				\Onphp\AMQPCredentials::createDefault()
 			);
 
 			$channel = $c->createChannel(1);
@@ -257,15 +259,15 @@
 
 				$this->assertSame($int, 0);
 
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$this->fail($e->getMessage());
 			}
 		}
 
 		public function testProducerLogic()
 		{
-			$c = new AMQPPecl(
-				AMQPCredentials::createDefault()
+			$c = new \Onphp\AMQPPecl(
+				\Onphp\AMQPCredentials::createDefault()
 			);
 
 			$channel = $c->createChannel(1);
@@ -283,8 +285,8 @@
 		**/
 		public function testNoAckConsumerLogic()
 		{
-			$c = new AMQPPecl(
-				AMQPCredentials::createDefault()
+			$c = new \Onphp\AMQPPecl(
+				\Onphp\AMQPCredentials::createDefault()
 			);
 
 			$channel = $c->createChannel(1);
@@ -311,8 +313,8 @@
 		**/
 		public function testConsumerLogic()
 		{
-			$c = new AMQPPecl(
-				AMQPCredentials::createDefault()
+			$c = new \Onphp\AMQPPecl(
+				\Onphp\AMQPCredentials::createDefault()
 			);
 
 			$channel = $c->createChannel(1);
@@ -323,7 +325,7 @@
 			try {
 				while($mess = $channel->basicGet(self::$queueList['basic']['name']))
 					self::messageTest($mess, ++$i);
-			} catch (ObjectNotFoundException $e) {
+			} catch (\Onphp\ObjectNotFoundException $e) {
 				//it's ok, because queue is empty
 				$this->assertSame(self::COUNT_OF_PUBLISH, $i);
 			}
@@ -334,18 +336,18 @@
 		 */
 		public function testDeclareQueueCluster()
 		{
-			$c = AMQPSelective::me()->
+			$c = \Onphp\AMQPSelective::me()->
 				addLink(
 					'slave',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()->
+					new \Onphp\AMQPPecl(
+						\Onphp\AMQPCredentials::createDefault()->
 						setPort(self::PORT_MIRRORED)
 					)
 				)->
 				addLink(
 					'master',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()
+					new \Onphp\AMQPPecl(
+						\Onphp\AMQPCredentials::createDefault()
 					)
 				)->
 				setCurrent('slave');
@@ -355,32 +357,32 @@
 			$channel = $c->createChannel(1);
 
 			AMQPPeclTest::assertEquals(
-				AMQPCredentials::DEFAULT_PORT,
+				\Onphp\AMQPCredentials::DEFAULT_PORT,
 				$c->getCredentials()->getPort()
 			);
 
 			try {
 				$int = $this->queueDeclare($channel, 'mirrored');
 				$this->assertSame($int, 0);
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$this->fail($e->getMessage());
 			}
 		}
 
 		public function testProducerLogicMirrored()
 		{
-			$c = AMQPSelective::me()->
+			$c = \Onphp\AMQPSelective::me()->
 				addLink(
 					'slave',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()->
+					new \Onphp\AMQPPecl(
+						\Onphp\AMQPCredentials::createDefault()->
 						setPort(self::PORT_MIRRORED)
 					)
 				)->
 				addLink(
 					'master',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()
+					new \Onphp\AMQPPecl(
+						\Onphp\AMQPCredentials::createDefault()
 					)
 				)->
 				setCurrent('slave');
@@ -402,7 +404,7 @@
 			$this->publishMessages($channel, false, 'mirrored');
 
 			AMQPPeclTest::assertEquals(
-				AMQPCredentials::DEFAULT_PORT,
+				\Onphp\AMQPCredentials::DEFAULT_PORT,
 				$c->getCredentials()->getPort()
 			);
 
@@ -415,18 +417,18 @@
 		**/
 		public function testConsumerLogicMirrored()
 		{
-			$c = AMQPSelective::me()->
+			$c = \Onphp\AMQPSelective::me()->
 				addLink(
 					'slave',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()->
+					new \Onphp\AMQPPecl(
+						\Onphp\AMQPCredentials::createDefault()->
 						setPort(self::PORT_MIRRORED)
 					)
 				)->
 				addLink(
 					'master',
-					new AMQPPecl(
-						AMQPCredentials::createDefault()
+					new \Onphp\AMQPPecl(
+						\Onphp\AMQPCredentials::createDefault()
 					)
 				)->
 				setCurrent('slave');
@@ -441,11 +443,11 @@
 			try {
 				while($mess = $channel->basicGet(self::$queueList['mirrored']['name']))
 					self::messageTest($mess, ++$i);
-			} catch (ObjectNotFoundException $e) {/**/}
+			} catch (\Onphp\ObjectNotFoundException $e) {/**/}
 			$this->assertSame(self::COUNT_OF_PUBLISH, $i);
 
 			AMQPPeclTest::assertEquals(
-				AMQPCredentials::DEFAULT_PORT,
+				\Onphp\AMQPCredentials::DEFAULT_PORT,
 				$c->getCredentials()->getPort()
 			);
 				
@@ -453,8 +455,8 @@
 
 		public function testCleanup()
 		{
-			$c = new AMQPPecl(
-				AMQPCredentials::createDefault()
+			$c = new \Onphp\AMQPPecl(
+				\Onphp\AMQPCredentials::createDefault()
 			);
 
 			$channel = $c->createChannel(1);
@@ -472,8 +474,8 @@
 
 		public function testQueueConsumerNoAck()
 		{
-			$c = new AMQPPecl(
-				AMQPCredentials::createDefault()
+			$c = new \Onphp\AMQPPecl(
+				\Onphp\AMQPCredentials::createDefault()
 			);
 
 			$channel = $c->createChannel(1);
@@ -502,7 +504,7 @@
 			//drop channels and close connection
 			$c->disconnect();
 
-			$c = new AMQPPecl(AMQPCredentials::createDefault());
+			$c = new \Onphp\AMQPPecl(\Onphp\AMQPCredentials::createDefault());
 			$channel = $c->createChannel(1);
 
 			$this->exchangeDeclare($channel, 'basic');
@@ -512,8 +514,8 @@
 
 		public function testQueueConsumerAutoAck()
 		{
-			$c = new AMQPPecl(
-				AMQPCredentials::createDefault()
+			$c = new \Onphp\AMQPPecl(
+				\Onphp\AMQPCredentials::createDefault()
 			);
 
 			$channel = $c->createChannel(1);
@@ -541,7 +543,7 @@
 			//drop channels and close connection
 			$c->disconnect();
 
-			$c = new AMQPPecl(AMQPCredentials::createDefault());
+			$c = new \Onphp\AMQPPecl(\Onphp\AMQPCredentials::createDefault());
 			$channel = $c->createChannel(1);
 
 			$this->exchangeDeclare($channel, 'basic');
@@ -554,8 +556,8 @@
 		{
 			$this->exchangeToExchangeCleanup();
 			
-			$c = new AMQPPecl(
-				AMQPCredentials::createDefault()
+			$c = new \Onphp\AMQPPecl(
+				\Onphp\AMQPCredentials::createDefault()
 			);
 
 			$channel = $c->createChannel(1);
@@ -578,7 +580,7 @@
 				self::$queueList['exchangeBinded']['exchange'],
 				self::$queueList['basic']['key']
 			);
-			$this->assertInstanceOf('AMQPChannelInterface', $channelInterface);
+			$this->assertInstanceOf('\Onphp\AMQPChannelInterface', $channelInterface);
 
 			/**
 			 * publish messages to 2 queues throw exchangeBinded-exchange
@@ -588,16 +590,16 @@
 				$channelInterface = $channel->basicPublish(
 					self::$queueList['exchangeBinded']['exchange'],
 					self::$queueList['basic']['key'],
-					AMQPOutgoingMessage::create()->
+					\Onphp\AMQPOutgoingMessage::create()->
 						setBody("message {$i}")->
-						setTimestamp(Timestamp::makeNow())->
+						setTimestamp(\Onphp\Timestamp::makeNow())->
 						setAppId(__CLASS__)->
 						setMessageId($i)->
 						setContentEncoding('utf-8')
 				);
 
 				$this->assertInstanceOf(
-					'AMQPChannelInterface',
+					'\Onphp\AMQPChannelInterface',
 					$channelInterface
 				);
 			}
@@ -614,8 +616,8 @@
 		**/
 		public function testExchangeToExchangeConsumerLogic()
 		{
-			$c = new AMQPPecl(
-				AMQPCredentials::createDefault()
+			$c = new \Onphp\AMQPPecl(
+				\Onphp\AMQPCredentials::createDefault()
 			);
 
 			$channel = $c->createChannel(1);
@@ -629,7 +631,7 @@
 				try {
 					while($mess = $channel->basicGet($name)) 
 						self::messageTest($mess, ++$i);
-				} catch (ObjectNotFoundException $e) {/**/}
+				} catch (\Onphp\ObjectNotFoundException $e) {/**/}
 				
 				$this->assertSame(
 					self::COUNT_OF_PUBLISH,
@@ -647,8 +649,8 @@
 
 		protected function exchangeToExchangeCleanup()
 		{
-			$c = new AMQPPecl(
-				AMQPCredentials::createDefault()
+			$c = new \Onphp\AMQPPecl(
+				\Onphp\AMQPCredentials::createDefault()
 			);
 
 			$channel = $c->createChannel(1);
@@ -675,7 +677,7 @@
 				self::$queueList['basic']['key']
 			);
 			$this->assertInstanceOf(
-				'AMQPChannelInterface',
+				'\Onphp\AMQPChannelInterface',
 				$channelInterface
 			);
 			$this->queueDelete($channel, 'exchangeBinded');
@@ -686,21 +688,21 @@
 		}
 
 				/**
-		 * @param AMQPChannelInterface $channel
+		 * @param \Onphp\AMQPChannelInterface $channel
 		 * @param bool $check
 		 * @param string $key
 		 * @param string $queueName
 		 */
-		protected function publishMessages(AMQPChannelInterface $channel, $check = true,
+		protected function publishMessages(\Onphp\AMQPChannelInterface $channel, $check = true,
 			$label = 'basic'
 		) {
 			for($i = 1; $i <= self::COUNT_OF_PUBLISH; $i++) {
 				$channelInterface = $channel->basicPublish(
 					self::$queueList[$label]['exchange'],
 					self::$queueList[$label]['key'],
-					AMQPOutgoingMessage::create()->
+					\Onphp\AMQPOutgoingMessage::create()->
 						setBody("message {$i}")->
-						setTimestamp(Timestamp::makeNow())->
+						setTimestamp(\Onphp\Timestamp::makeNow())->
 						setAppId(__CLASS__)->
 						setMessageId($i)->
 						setContentEncoding('utf-8')
@@ -708,7 +710,7 @@
 
 				if ($check)
 					$this->assertInstanceOf(
-						'AMQPChannelInterface',
+						'\Onphp\AMQPChannelInterface',
 						$channelInterface
 					);
 			}
@@ -717,47 +719,47 @@
 				$this->checkMessageCount($channel, $label);
 		}
 
-		protected static function messageAssertion(AMQPIncomingMessage $mess, $i)
+		protected static function messageAssertion(\Onphp\AMQPIncomingMessage $mess, $i)
 		{
-			self::assertInstanceOf('AMQPIncomingMessage', $mess);
-			self::assertInstanceOf('Timestamp', $mess->getTimestamp());
+			self::assertInstanceOf('\Onphp\AMQPIncomingMessage', $mess);
+			self::assertInstanceOf('\Onphp\Timestamp', $mess->getTimestamp());
 			self::assertTrue(strlen(trim($mess->getDeliveryTag())) > 0);
 
 			$properties = $mess->getProperties();
 
 			//self::assertEquals('guest', $mess->getUserId());
 			self::assertTrue(
-				isset($properties[AMQPIncomingMessage::USER_ID])
-				&& $properties[AMQPIncomingMessage::USER_ID] ==
+				isset($properties[\Onphp\AMQPIncomingMessage::USER_ID])
+				&& $properties[\Onphp\AMQPIncomingMessage::USER_ID] ==
 				$mess->getUserId()
 			);
 
 			self::assertEquals(__CLASS__, $mess->getAppId());
 			self::assertTrue(
-				isset($properties[AMQPIncomingMessage::APP_ID])
-				&& $properties[AMQPIncomingMessage::APP_ID] ==
+				isset($properties[\Onphp\AMQPIncomingMessage::APP_ID])
+				&& $properties[\Onphp\AMQPIncomingMessage::APP_ID] ==
 				$mess->getAppId()
 			);
 
 			self::assertEquals($i, $mess->getMessageId());
 			self::assertTrue(
-				isset($properties[AMQPIncomingMessage::MESSAGE_ID])
-				&& $properties[AMQPIncomingMessage::MESSAGE_ID] ==
+				isset($properties[\Onphp\AMQPIncomingMessage::MESSAGE_ID])
+				&& $properties[\Onphp\AMQPIncomingMessage::MESSAGE_ID] ==
 				$mess->getMessageId()
 			);
 
 
 			self::assertEquals('text/plain', $mess->getContentType());
 			self::assertTrue(
-				isset($properties[AMQPIncomingMessage::CONTENT_TYPE])
-				&& $properties[AMQPIncomingMessage::CONTENT_TYPE] ==
+				isset($properties[\Onphp\AMQPIncomingMessage::CONTENT_TYPE])
+				&& $properties[\Onphp\AMQPIncomingMessage::CONTENT_TYPE] ==
 				$mess->getContentType()
 			);
 
 			self::assertEquals('utf-8', $mess->getContentEncoding());
 			self::assertTrue(
-				isset($properties[AMQPIncomingMessage::CONTENT_ENCODING])
-				&& $properties[AMQPIncomingMessage::CONTENT_ENCODING] ==
+				isset($properties[\Onphp\AMQPIncomingMessage::CONTENT_ENCODING])
+				&& $properties[\Onphp\AMQPIncomingMessage::CONTENT_ENCODING] ==
 				$mess->getContentEncoding()
 			);
 
@@ -765,34 +767,34 @@
 		}
 
 		/**
-		 * @param AMQPPeclChannel $channel
-		 * @param AMQPPeclChannel $label
-		 * @return AMQPPeclChannel
+		 * @param \Onphp\AMQPPeclChannel $channel
+		 * @param \Onphp\AMQPPeclChannel $label
+		 * @return \Onphp\AMQPPeclChannel
 		 */
-		protected function exchangeDeclare(AMQPChannelInterface $channel, $label)
+		protected function exchangeDeclare(\Onphp\AMQPChannelInterface $channel, $label)
 		{
 			$this->assertTrue(isset(self::$queueList[$label]));
 			
 			$interface = $channel->exchangeDeclare(
 				self::$queueList[$label]['exchange'],
-				AMQPExchangeConfig::create()->
+				\Onphp\AMQPExchangeConfig::create()->
 					setType(
-						new AMQPExchangeType(self::$queueList[$label]['exchangeType'])
+						new \Onphp\AMQPExchangeType(self::$queueList[$label]['exchangeType'])
 					)->
 					setDurable(true)
 			);
 
-			$this->assertInstanceOf('AMQPChannelInterface', $interface);
+			$this->assertInstanceOf('\Onphp\AMQPChannelInterface', $interface);
 
 			return $interface;
 		}
 
 		/**
-		 * @param AMQPChannelInterface $channel
+		 * @param \Onphp\AMQPChannelInterface $channel
 		 * @param string $label
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		 */
-		protected function exchangeDelete(AMQPChannelInterface $channel, $label)
+		protected function exchangeDelete(\Onphp\AMQPChannelInterface $channel, $label)
 		{
 			$this->assertTrue(isset(self::$queueList[$label]));
 
@@ -801,7 +803,7 @@
 			);
 
 			$this->assertInstanceOf(
-				'AMQPChannelInterface',
+				'\Onphp\AMQPChannelInterface',
 				$channelInterface
 			);
 
@@ -809,17 +811,17 @@
 		}
 		
 		/**
-		 * @param AMQPChannelInterface $channel
+		 * @param \Onphp\AMQPChannelInterface $channel
 		 * @param string $label
 		 * @return int
 		 */
-		protected function queueDeclare(AMQPChannelInterface $channel, $label)
+		protected function queueDeclare(\Onphp\AMQPChannelInterface $channel, $label)
 		{
 			$this->assertTrue(isset(self::$queueList[$label]));
 
 			return $channel->queueDeclare(
 				self::$queueList[$label]['name'],
-				AMQPQueueConfig::create()->
+				\Onphp\AMQPQueueConfig::create()->
 					setDurable(true)->
 					setArguments(
 						self::$queueList[$label]['args']
@@ -828,11 +830,11 @@
 		}
 
 		/**
-		 * @param AMQPChannelInterface $channel
+		 * @param \Onphp\AMQPChannelInterface $channel
 		 * @param string $label
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		 */
-		protected function queueBind(AMQPChannelInterface $channel, $label)
+		protected function queueBind(\Onphp\AMQPChannelInterface $channel, $label)
 		{
 			$this->assertTrue(isset(self::$queueList[$label]));
 
@@ -842,33 +844,33 @@
 				self::$queueList[$label]['key']
 			);
 			
-			$this->assertInstanceOf('AMQPChannelInterface', $channelInterface);
+			$this->assertInstanceOf('\Onphp\AMQPChannelInterface', $channelInterface);
 
 			return $channelInterface;
 		}
 
 		/**
-		 * @param AMQPChannelInterface $channel
+		 * @param \Onphp\AMQPChannelInterface $channel
 		 * @param string $label
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		 */
-		protected function queuePurge(AMQPChannelInterface $channel, $label)
+		protected function queuePurge(\Onphp\AMQPChannelInterface $channel, $label)
 		{
 			$this->assertTrue(isset(self::$queueList[$label]));
 
 			$channelInterface = $channel->queuePurge(self::$queueList[$label]['name']);
 
-			$this->assertInstanceOf('AMQPChannelInterface', $channelInterface);
+			$this->assertInstanceOf('\Onphp\AMQPChannelInterface', $channelInterface);
 
 			return $channelInterface;
 		}
 
 		/**
-		 * @param AMQPChannelInterface $channel
-		 * @param AMQPPeclChannel $label
-		 * @return AMQPChannelInterface
+		 * @param \Onphp\AMQPChannelInterface $channel
+		 * @param \Onphp\AMQPPeclChannel $label
+		 * @return \Onphp\AMQPChannelInterface
 		 */
-		protected function queueUnbind(AMQPChannelInterface $channel, $label)
+		protected function queueUnbind(\Onphp\AMQPChannelInterface $channel, $label)
 		{
 			$this->assertTrue(isset(self::$queueList[$label]));
 
@@ -879,7 +881,7 @@
 			);
 
 			$this->assertInstanceOf(
-				'AMQPChannelInterface',
+				'\Onphp\AMQPChannelInterface',
 				$channelInterface
 			);
 
@@ -887,11 +889,11 @@
 		}
 
 		/**
-		 * @param AMQPChannelInterface $channel
+		 * @param \Onphp\AMQPChannelInterface $channel
 		 * @param string $label
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		 */
-		protected function queueDelete(AMQPChannelInterface $channel, $label)
+		protected function queueDelete(\Onphp\AMQPChannelInterface $channel, $label)
 		{
 			$this->assertTrue(isset(self::$queueList[$label]));
 
@@ -900,7 +902,7 @@
 			);
 
 			$this->assertInstanceOf(
-				'AMQPChannelInterface',
+				'\Onphp\AMQPChannelInterface',
 				$channelInterface
 			);
 

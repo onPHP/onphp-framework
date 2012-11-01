@@ -9,7 +9,9 @@
  *                                                                         *
  ***************************************************************************/
 	
-	final class CsvTest extends PHPUnit_Framework_TestCase
+	namespace Onphp\Test;
+
+	final class CsvTest extends \PHPUnit_Framework_TestCase
 	{
 		public function testRender()
 		{
@@ -19,23 +21,23 @@
 			);
 			
 			$string =
-				'1,2.2,-3,'.Csv::CRLF
-				."\"5\n5\",6'6,\"7\"\"7\",\"8,8\"".Csv::CRLF;
+				'1,2.2,-3,'.\Onphp\Csv::CRLF
+				."\"5\n5\",6'6,\"7\"\"7\",\"8,8\"".\Onphp\Csv::CRLF;
 			
-			$csv = Csv::create()->setArray($array);
+			$csv = \Onphp\Csv::create()->setArray($array);
 			$this->assertEquals($csv->render(), $string);
 		}
 		
 		public function testContentHeader()
 		{
-			$csv = Csv::create(false);
+			$csv = \Onphp\Csv::create(false);
 			
 			$this->assertEquals(
 				$csv->getContentTypeHeader()->toString(),
 				'text/csv; header="absent"'
 			);
 			
-			$csv = Csv::create(true);
+			$csv = \Onphp\Csv::create(true);
 			
 			$this->assertEquals(
 				$csv->getContentTypeHeader()->toString(),

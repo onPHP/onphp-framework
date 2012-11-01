@@ -1,17 +1,19 @@
 <?php
+	namespace Onphp\Test;
+
 	class CriteriaDBTest extends TestCaseDAO
 	{
 		public function testCriteria()
 		{
 			foreach (DBTestPool::me()->getPool() as $db) {
-				/* @var $db DB */
-				DBPool::me()->setDefault($db);
+				/* @var $\Onphp\DB \Onphp\DB */
+				\Onphp\DBPool::me()->setDefault($db);
 				$this->getDBCreator()->fillDB();
 
-				$queryResult = Criteria::create(TestCity::dao())->getResult();
+				$queryResult = \Onphp\Criteria::create(TestCity::dao())->getResult();
 				$this->assertEquals(2, $queryResult->getCount());
 
-				Cache::me()->clean();
+				\Onphp\Cache::me()->clean();
 			}
 		}
 	}

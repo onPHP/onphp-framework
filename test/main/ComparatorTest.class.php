@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	final class CompatatorTest extends TestCase
 	{
 		/**
@@ -8,7 +10,7 @@
 		{
 			$this->assertEquals(
 				$result,
-				SerializedObjectComparator::me()->compare($one, $two)
+				\Onphp\SerializedObjectComparator::me()->compare($one, $two)
 			);
 		}
 
@@ -19,7 +21,7 @@
 		{
 			$this->assertEquals(
 				$result,
-				ImmutableObjectComparator::me()->compare($one, $two)
+				\Onphp\ImmutableObjectComparator::me()->compare($one, $two)
 			);
 		}
 
@@ -30,7 +32,7 @@
 		{
 			$this->assertEquals(
 				$result,
-				DateObjectComparator::me()->compare($one, $two)
+				\Onphp\DateObjectComparator::me()->compare($one, $two)
 			);
 		}
 
@@ -80,14 +82,14 @@
 		{
 			return
 				array(
-					array(Date::makeToday(), Date::makeToday(), 0),
-					array(Date::makeToday(), Date::makeToday()->modify('-1 day'), 1),
-					array(Date::makeToday()->modify('-1 day'), Date::makeToday(), -1)
+					array(\Onphp\Date::makeToday(), \Onphp\Date::makeToday(), 0),
+					array(\Onphp\Date::makeToday(), \Onphp\Date::makeToday()->modify('-1 day'), 1),
+					array(\Onphp\Date::makeToday()->modify('-1 day'), \Onphp\Date::makeToday(), -1)
 				);
 		}
 	}
 
-	final class CompatatorTestObject extends IdentifiableObject
+	final class CompatatorTestObject extends \Onphp\IdentifiableObject
 	{
 		public $anotherObject	= null;
 		public $testVariable	= null;

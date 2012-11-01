@@ -1,15 +1,17 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class FeedReaderTest extends TestCase
 	{
 		public function testFeedReaderRss()
 		{
 			$feedChannel =
-				FeedReader::create()->
+				\Onphp\FeedReader::create()->
 				parseFile(dirname(__FILE__).'/data/feedReader/news.xml');
 			
-			$this->assertTrue($feedChannel instanceof FeedChannel);
+			$this->assertTrue($feedChannel instanceof \Onphp\FeedChannel);
 			
 			$feedItems = $feedChannel->getFeedItems();
 			
@@ -26,12 +28,12 @@
 		public function testFeedReaderAtom()
 		{
 			$feedChannel =
-				FeedReader::create()->
+				\Onphp\FeedReader::create()->
 				parseFile(dirname(__FILE__).'/data/feedReader/atom_v1_0.xml');
 			
 			$feedItems = $feedChannel->getFeedItems();
 			
-			$this->assertTrue($feedChannel instanceof FeedChannel);
+			$this->assertTrue($feedChannel instanceof \Onphp\FeedChannel);
 			
 			$this->assertEquals(count($feedItems), 12);
 			
@@ -44,13 +46,13 @@
 		public function testFeedReaderYandexRss()
 		{
 			$feedChannel =
-				FeedReader::create()->
+				\Onphp\FeedReader::create()->
 				parseFile(dirname(__FILE__).'/data/feedReader/yandex_rss.xml');
 
 			$feedItems = $feedChannel->getFeedItems();
 			
-			$this->assertTrue($feedChannel instanceof FeedChannel);
-			$this->assertTrue($feedItems[1] instanceof YandexRssFeedItem);
+			$this->assertTrue($feedChannel instanceof \Onphp\FeedChannel);
+			$this->assertTrue($feedItems[1] instanceof \Onphp\YandexRssFeedItem);
 			
 			$this->assertEquals(count($feedItems), 3);
 			

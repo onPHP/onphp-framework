@@ -1,20 +1,22 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class PrimitiveTimestampTest extends TestCase
 	{
 		public function testMarried()
 		{
-			$prm = Primitive::timestamp('test')->setComplex();
+			$prm = \Onphp\Primitive::timestamp('test')->setComplex();
 			
 			$array = array(
 				'test' => array(
-					PrimitiveDate::DAY		=> '1',
-					PrimitiveDate::MONTH	=> '2',
-					PrimitiveDate::YEAR		=> '',
-					PrimitiveTimestamp::HOURS	=> '17',
-					PrimitiveTimestamp::MINUTES	=> '38',
-					PrimitiveTimestamp::SECONDS	=> '59'
+					\Onphp\PrimitiveDate::DAY		=> '1',
+					\Onphp\PrimitiveDate::MONTH	=> '2',
+					\Onphp\PrimitiveDate::YEAR		=> '',
+					\Onphp\PrimitiveTimestamp::HOURS	=> '17',
+					\Onphp\PrimitiveTimestamp::MINUTES	=> '38',
+					\Onphp\PrimitiveTimestamp::SECONDS	=> '59'
 				)
 			);
 			
@@ -25,7 +27,7 @@
 				array_filter($prm->exportValue())
 			);
 			
-			$array['test'][PrimitiveDate::YEAR] = '3456';
+			$array['test'][\Onphp\PrimitiveDate::YEAR] = '3456';
 			
 			$this->assertTrue($prm->import($array));
 			$this->assertTrue($prm->getValue()->getYear() == 3456);
@@ -35,7 +37,7 @@
 				$prm->exportValue()
 			);
 			
-			$array['test'][PrimitiveDate::YEAR] = '2006';
+			$array['test'][\Onphp\PrimitiveDate::YEAR] = '2006';
 			
 			$this->assertTrue($prm->import($array));
 			$this->assertEquals(
@@ -49,18 +51,18 @@
 		public function testMarriedOptional()
 		{
 			$prm =
-				Primitive::timestamp('test')->
+				\Onphp\Primitive::timestamp('test')->
 				setComplex()->
 				optional();
 			
 			$array = array(
 				'test' => array(
-					PrimitiveDate::DAY		=> '',
-					PrimitiveDate::MONTH	=> '',
-					PrimitiveDate::YEAR		=> '',
-					PrimitiveTimestamp::HOURS	=> '',
-					PrimitiveTimestamp::MINUTES	=> '',
-					PrimitiveTimestamp::SECONDS	=> ''
+					\Onphp\PrimitiveDate::DAY		=> '',
+					\Onphp\PrimitiveDate::MONTH	=> '',
+					\Onphp\PrimitiveDate::YEAR		=> '',
+					\Onphp\PrimitiveTimestamp::HOURS	=> '',
+					\Onphp\PrimitiveTimestamp::MINUTES	=> '',
+					\Onphp\PrimitiveTimestamp::SECONDS	=> ''
 				)
 			);
 			
@@ -69,7 +71,7 @@
 		
 		public function testSingle()
 		{
-			$prm = Primitive::timestamp('test')->setSingle();
+			$prm = \Onphp\Primitive::timestamp('test')->setSingle();
 			
 			$array = array('test' => '1234-01-02 17:38:59');
 			

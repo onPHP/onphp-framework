@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	final class RangeTest extends TestCase
 	{
 		/**
@@ -7,9 +9,9 @@
 		public function testCreation($min, $max, $throwsException)
 		{
 			if ($throwsException)
-				$this->setExpectedException('WrongArgumentException');
+				$this->setExpectedException('\Onphp\WrongArgumentException');
 			
-			$range = Range::create($min, $max);
+			$range = \Onphp\Range::create($min, $max);
 		} 
 		
 		public static function rangeDataProvider()

@@ -1,6 +1,8 @@
 <?php
 	/* $Id$ */
 
+	namespace Onphp\Test;
+
 	final class MessagesTest extends TestCase
 	{
 		public function testFileQueue()
@@ -16,23 +18,23 @@
 				unlink($uri);
 
 
-			$queue = TextFileQueue::create()->
+			$queue = \Onphp\TextFileQueue::create()->
 				setFileName($uri);
 
-			$sender = TextFileSender::create()->
+			$sender = \Onphp\TextFileSender::create()->
 				setQueue($queue);
 
-			$receiver = TextFileReceiver::create()->
+			$receiver = \Onphp\TextFileReceiver::create()->
 				setQueue($queue);
 
 
 			$sender->send(
-				TextMessage::create()->
+				\Onphp\TextMessage::create()->
 				setText('first ape')
 			);
 
 			$sender->send(
-				TextMessage::create()->
+				\Onphp\TextMessage::create()->
 				setText('second ape')
 			);
 
@@ -52,7 +54,7 @@
 
 
 			$sender->send(
-				TextMessage::create()->
+				\Onphp\TextMessage::create()->
 				setText('third ape')
 			);
 

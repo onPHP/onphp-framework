@@ -1,6 +1,8 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class CookieTest extends TestCase
 	{
 		/**
@@ -13,7 +15,7 @@
 
 			echo "\0";
 			
-			Cookie::create('testCookie')->
+			\Onphp\Cookie::create('testCookie')->
 				setValue('testValue')->
 				setMaxAge(60*60)->
 				httpSet();
@@ -29,9 +31,9 @@
 			
 			echo "\0";
 			
-			CookieCollection::create()->
+			\Onphp\CookieCollection::create()->
 				add(
-					Cookie::create('anotherTestCookie')->
+					\Onphp\Cookie::create('anotherTestCookie')->
 						setValue('testValue')->
 						setMaxAge(60*60)
 				)->

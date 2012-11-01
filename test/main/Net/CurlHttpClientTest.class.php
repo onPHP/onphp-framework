@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	final class CurlHttpClientTest extends TestCase
 	{
 		private static $failTestMsg = null;
@@ -31,7 +33,7 @@
 				'e' => array('f' => array('&1&', '3', '5')),
 			);
 			
-			$request = $this->spawnRequest(HttpMethod::get(), 'urlGet=really')->
+			$request = $this->spawnRequest(\Onphp\HttpMethod::get(), 'urlGet=really')->
 				setGet($get)->
 				setPost(array('post' => 'value'));
 			
@@ -65,13 +67,13 @@
 			);
 			$body = file_get_contents($this->getFile1Path());
 			
-			$request1 = $this->spawnRequest(HttpMethod::post(), 'urlGet=super')->
+			$request1 = $this->spawnRequest(\Onphp\HttpMethod::post(), 'urlGet=super')->
 				setGet($get)->
 				setPost($post1);
-			$request2 = $this->spawnRequest(HttpMethod::post())->
+			$request2 = $this->spawnRequest(\Onphp\HttpMethod::post())->
 				setPost($post2)->
 				setFiles($files);
-			$request3 = $this->spawnRequest(HttpMethod::post())->
+			$request3 = $this->spawnRequest(\Onphp\HttpMethod::post())->
 				setBody($body);
 			
 			$client = $this->spawnClient()->
@@ -82,7 +84,7 @@
 			
 			//check response 1st request
 			$this->assertEquals(
-				$this->generateString(array('urlGet' => 'super') + $get, $post1, array(), UrlParamsUtils::toString($post1)),
+				$this->generateString(array('urlGet' => 'super') + $get, $post1, array(), \Onphp\UrlParamsUtils::toString($post1)),
 				$client->getResponse($request1)->getBody()
 			);
 			
@@ -113,14 +115,14 @@
 			
 			$files = array('file' => $this->getFile1Path());
 			
-			$request = $this->spawnRequest(HttpMethod::post())->
+			$request = $this->spawnRequest(\Onphp\HttpMethod::post())->
 				setPost($post)->
 				setFiles($files);
 			
 			try {
 				$this->spawnClient()->send($request);
 				$this->fail('expected NetworkException about security');
-			} catch (NetworkException $e) {
+			} catch (\Onphp\NetworkException $e) {
 				$this->assertStringStartsWith('Security excepion:', $e->getMessage());
 			}
 		}
@@ -129,37 +131,37 @@
 		{	
 			$files = array('file' => $this->getFileNotExists());
 			
-			$request = $this->spawnRequest(HttpMethod::post())->
+			$request = $this->spawnRequest(\Onphp\HttpMethod::post())->
 				setFiles($files);
 			
 			try {
 				$this->spawnClient()->send($request);
 				$this->fail('expected exception about not exists file');
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				$this->assertStringStartsWith('couldn\'t access to file with path:', $e->getMessage());
 			}
 		}
 		
 		/**
-		 * @param HttpMethod $method
-		 * @return HttpRequest
+		 * @param \Onphp\HttpMethod $method
+		 * @return \Onphp\HttpRequest
 		 */
-		private function spawnRequest(HttpMethod $method, $urlPostfix = '')
+		private function spawnRequest(\Onphp\HttpMethod $method, $urlPostfix = '')
 		{
-			$url = HttpUrl::create()->parse(ONPHP_CURL_TEST_URL);
+			$url = \Onphp\HttpUrl::create()->parse(ONPHP_CURL_TEST_URL);
 			$glue = $url->getQuery() ? '&' : '?';
 			
-			return HttpRequest::create()->
+			return \Onphp\HttpRequest::create()->
 				setUrl($url->parse(ONPHP_CURL_TEST_URL.$glue.$urlPostfix))->
 				setMethod($method);
 		}
 		
 		/**
-		 * @return CurlHttpClient
+		 * @return \Onphp\CurlHttpClient
 		 */
 		private function spawnClient()
 		{
-			return CurlHttpClient::create()->
+			return \Onphp\CurlHttpClient::create()->
 				setOldUrlConstructor(false)->
 				setTimeout(5);
 		}

@@ -1,6 +1,8 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	class RouterRegexpRuleTest extends TestCase
 	{
 		public function setUp()
@@ -10,7 +12,7 @@
 		
 		public function testStaticMatch()
 		{
-			$route = new RouterRegexpRule('users/all');
+			$route = new \Onphp\RouterRegexpRule('users/all');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/all')
 			);
@@ -20,7 +22,7 @@
 		
 		public function testURLDecode()
 		{
-			$route = new RouterRegexpRule('żółć');
+			$route = new \Onphp\RouterRegexpRule('żółć');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/'.urlencode('żółć'))
 			);
@@ -30,7 +32,7 @@
 		
 		public function testStaticNoMatch()
 		{
-			$route = new RouterRegexpRule('users/a/martel');
+			$route = new \Onphp\RouterRegexpRule('users/a/martel');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/a')
 			);
@@ -41,7 +43,7 @@
 		public function testStaticMatchWithDefaults()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/all'
 				)->
 				setDefaults(
@@ -60,7 +62,7 @@
 		
 		public function testRootRoute()
 		{
-			$route = new RouterRegexpRule('');
+			$route = new \Onphp\RouterRegexpRule('');
 			$values = $route->match($this->buildRequest('http://localhost/'));
 			
 			$this->assertSame(array(), $values);
@@ -68,7 +70,7 @@
 		
 		public function testVariableMatch()
 		{
-			$route = new RouterRegexpRule('users/(.+)');
+			$route = new \Onphp\RouterRegexpRule('users/(.+)');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel')
 			);
@@ -79,7 +81,7 @@
 		
 		public function testDoubleMatch()
 		{
-			$route = new RouterRegexpRule('users/(user_(\d+).html)');
+			$route = new \Onphp\RouterRegexpRule('users/(user_(\d+).html)');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/user_1354.html')
 			);
@@ -92,7 +94,7 @@
 		public function testNegativeMatch()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'((?!admin|moderator).+)'
 				)->
 				setDefaults(
@@ -120,7 +122,7 @@
 		public function testNumericDefault()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
 				setDefaults(
@@ -140,7 +142,7 @@
 		public function testVariableMatchWithNumericDefault()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
 				setDefaults(
@@ -159,7 +161,7 @@
 		
 		public function testNamedVariableMatch()
 		{
-			$route = new RouterRegexpRule('users/(?P<username>.+)');
+			$route = new \Onphp\RouterRegexpRule('users/(?P<username>.+)');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/martel')
 			);
@@ -171,7 +173,7 @@
 		public function testMappedVariableMatch()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(.+)'
 				)->
 				setMap(
@@ -191,7 +193,7 @@
 		public function testMappedVariableWithDefault()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users(?:/(.+))?'
 				)->
 				setDefaults(
@@ -216,7 +218,7 @@
 		public function testMappedVariableWithNamedSubpattern()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(?P<name>.+)'
 				)->
 				setMap(
@@ -236,7 +238,7 @@
 		public function testOptionalVar()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(\w+)/?(?:p/(\d+))?'
 				)->
 				setMap(
@@ -258,7 +260,7 @@
 		public function testEmptyOptionalVar()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(\w+)/?(?:p/(\d+))?'
 				)->
 				setMap(
@@ -279,7 +281,7 @@
 		public function testMixedMap()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(\w+)/?(?:p/(\d+))?'
 				)->
 				setMap(
@@ -300,7 +302,7 @@
 		public function testNumericDefaultWithMap()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
 				setDefaults(
@@ -325,7 +327,7 @@
 		public function testMixedMapWithDefault()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(\w+)/?(?:p/(\d+))?'
 				)->
 				setDefaults(
@@ -351,7 +353,7 @@
 		public function testMixedMapWithDefaults2()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/?(\w+)?/?(?:p/(\d+))?'
 				)->
 				setDefaults(
@@ -376,7 +378,7 @@
 		public function testOptionalVarWithMapAndDefault()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(\w+)/?(?:p/(\d+))?'
 				)->
 				setDefaults(
@@ -404,7 +406,7 @@
 		public function testOptionalVarWithMapAndNumericDefault()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(\w+)/?(?:p/(\d+))?'
 				)->
 				setDefaults(
@@ -430,7 +432,7 @@
 		public function testMappedAndNumericDefault()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/?(\w+)?'
 				)->
 				setDefaults(
@@ -456,7 +458,7 @@
 		public function testAssembly()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(.+)'
 				)->
 				setMap(
@@ -479,7 +481,7 @@
 		public function testAssemblyWithDefault()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
 				setDefaults(
@@ -502,7 +504,7 @@
 		public function testAssemblyWithMappedDefault()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
 				setDefaults(
@@ -530,7 +532,7 @@
 		public function testAssemblyWithData()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(.+)'
 				)->
 				setReverse(
@@ -548,7 +550,7 @@
 		public function testAssemblyWithMappedVariable()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(.+)'
 				)->
 				setMap(
@@ -574,7 +576,7 @@
 		public function testAssemblyWithMappedVariableAndNumericKey()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(.+)'
 				)->
 				setMap(
@@ -597,7 +599,7 @@
 		public function testAssemblyWithoutMatch()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(.+)'
 				)->
 				setReverse(
@@ -607,13 +609,13 @@
 			try {
 				$url = $route->assembly();
 				$this->fail();
-			} catch (BaseException $e) {/*_*/}
+			} catch (\Onphp\BaseException $e) {/*_*/}
 		}
 		
 		public function testAssemblyWithDefaultWithoutMatch()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
 				setDefaults(
@@ -632,7 +634,7 @@
 		public function testAssemblyWithMappedDefaultWithoutMatch()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/?(.+)?'
 				)->
 				setDefaults(
@@ -656,7 +658,7 @@
 		public function testAssemblyWithDataWithoutMatch()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(.+)'
 				)->
 				setReverse(
@@ -670,7 +672,7 @@
 		public function testAssemblyWithMappedVariableWithoutMatch()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'users/(.+)'
 				)->
 				setMap(
@@ -689,7 +691,7 @@
 		public function testAssembly2()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'(.+)\.([0-9]+)-([0-9]+)\.html'
 				)->
 				setDefaults(
@@ -730,7 +732,7 @@
 		public function testCreateInstance()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'forum/(\d+)'
 				)->
 				setDefaults(
@@ -742,7 +744,7 @@
 					'forum/%d'
 				);
 			
-			$this->assertInstanceOf('RouterRegexpRule', $route);
+			$this->assertInstanceOf('\Onphp\RouterRegexpRule', $route);
 			
 			$values = $route->match($this->buildRequest('http://localhost/forum/1'));
 			
@@ -752,7 +754,7 @@
 		public function testAssemblyOfRouteWithMergedMatchedParts()
 		{
 			$route =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'itemlist(?:/(\d+))?'
 				)->
 				setDefaults(
@@ -809,7 +811,7 @@
 			ServerVarUtils::build($_SERVER, $url);
 			
 			return
-				HttpRequest::create()->
+				\Onphp\HttpRequest::create()->
 				setServer($_SERVER);
 		}
 	}

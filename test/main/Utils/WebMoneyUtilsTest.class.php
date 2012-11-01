@@ -1,5 +1,7 @@
 <?php
-	final class WebMoneyUtilsTest extends PHPUnit_Framework_TestCase
+	namespace Onphp\Test;
+
+	final class WebMoneyUtilsTest extends \PHPUnit_Framework_TestCase
 	{
 		/**
 		 * @dataProvider data
@@ -9,9 +11,9 @@
 		)
 		{
 			$this->{$assertFunction}(
-				WebMoneyUtils::isValidPayment(
+				\Onphp\WebMoneyUtils::isValidPayment(
 					$expectedHash,
-					WebMoneyUtils::makePaymentHash($secretKey, $data)
+					\Onphp\WebMoneyUtils::makePaymentHash($secretKey, $data)
 				)
 			);
 		}

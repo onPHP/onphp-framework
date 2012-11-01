@@ -1,11 +1,13 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class PrimitiveNumberTest extends TestCase
 	{
 		public function testInteger()
 		{
-			$prm = Primitive::integer('int');
+			$prm = \Onphp\Primitive::integer('int');
 			
 			$this->assertTrue($prm->importValue(0));
 			

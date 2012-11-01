@@ -1,5 +1,7 @@
 <?php
 	
+	namespace Onphp\Test;
+
 	final class PinbaTest extends TestCase
 	{
 		protected static $skipMessage	= 'unknown error';
@@ -10,7 +12,7 @@
 			if (!extension_loaded('pinba'))
 				return self::skip('The pinba extension is not available.');
 			
-			if (!PinbaClient::isEnabled())
+			if (!\Onphp\PinbaClient::isEnabled())
 				return self::skip('The pinba is not enabled at php.ini (pinba.enabled=1).');
 			
 			if (!extension_loaded('runkit'))
@@ -47,31 +49,31 @@
 		
 		public function testTreeLog()
 		{
-			PinbaClient::me()->setTreeLogEnabled();
+			\Onphp\PinbaClient::me()->setTreeLogEnabled();
 			
-			$this->assertEquals(count(PinbaClient::me()->getTreeQueue()), 0);
+			$this->assertEquals(count(\Onphp\PinbaClient::me()->getTreeQueue()), 0);
 			
-			PinbaClient::me()->timerStart(
+			\Onphp\PinbaClient::me()->timerStart(
 				'test',
 				array("test" => 'main')
 			);
 			
-			$this->assertEquals(count(PinbaClient::me()->getTreeQueue()), 1);
+			$this->assertEquals(count(\Onphp\PinbaClient::me()->getTreeQueue()), 1);
 			
-			PinbaClient::me()->timerStart(
+			\Onphp\PinbaClient::me()->timerStart(
 				'subtest',
 				array("test" => 'submain')
 			);
 			
-			$this->assertEquals(count(PinbaClient::me()->getTreeQueue()), 2);
+			$this->assertEquals(count(\Onphp\PinbaClient::me()->getTreeQueue()), 2);
 			
-			PinbaClient::me()->timerStop('subtest');
+			\Onphp\PinbaClient::me()->timerStop('subtest');
 			
-			$this->assertEquals(count(PinbaClient::me()->getTreeQueue()), 1);
+			$this->assertEquals(count(\Onphp\PinbaClient::me()->getTreeQueue()), 1);
 			
-			PinbaClient::me()->timerStop('test');
+			\Onphp\PinbaClient::me()->timerStop('test');
 			
-			$this->assertEquals(count(PinbaClient::me()->getTreeQueue()), 0);
+			$this->assertEquals(count(\Onphp\PinbaClient::me()->getTreeQueue()), 0);
 			
 		}
 		
@@ -97,7 +99,7 @@
 				&& $tags['treeParentId'] != "root"
 			) {
 				if ($tags['treeParentId'] != end(self::$queue)) {
-					throw new Exception('Error generatin tree');
+					throw new \Exception('Error generatin tree');
 				}
 			}
 			
@@ -114,7 +116,7 @@
 			$tree_id = $current['treeId'];
 			
 			if (end(self::$queue) != $tree_id) {
-				throw new Exception('Error generatin tree');
+				throw new \Exception('Error generatin tree');
 			}
 			
 			array_pop(self::$queue);

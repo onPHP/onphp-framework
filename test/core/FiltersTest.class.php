@@ -1,11 +1,13 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class FiltersTest extends TestCase
 	{
 		public function testTrim()
 		{
-			$filter = TrimFilter::create();
+			$filter = \Onphp\TrimFilter::create();
 			$text = ' qq ';
 			
 			$this->assertEquals(
@@ -34,7 +36,7 @@
 			$text = 'foo und bar';
 			
 			$this->assertEquals(
-				Filter::uudecode()->apply(Filter::uuencode()->apply($text)),
+				\Onphp\Filter::uudecode()->apply(\Onphp\Filter::uuencode()->apply($text)),
 				$text
 			);
 		}
@@ -42,14 +44,14 @@
 		public function testNewLines()
 		{
 			$this->assertEquals(
-				Filter::nl2br()->apply("strange\nthings\nhappens"),
+				\Onphp\Filter::nl2br()->apply("strange\nthings\nhappens"),
 				"strange<br />\nthings<br />\nhappens"
 			);
 		}
 		
 		public function testRussianTypograf()
 		{
-			$filter = RussianTypograph::me();
+			$filter = \Onphp\RussianTypograph::me();
 			$emptyValues = array(null, '', false, 0, '  ', "\n");
 			
 			foreach ($emptyValues as $value) {
@@ -127,7 +129,7 @@
 		public function testCrop()
 		{
 			$this->assertEquals(
-				CropFilter::create()->
+				\Onphp\CropFilter::create()->
 				setLength(128)->
 				apply(urldecode('Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 Nokia6120c/4.21; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413')),
 				'Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 Nokia6120c/4.21; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, l'
@@ -137,9 +139,9 @@
 		public function testCallChain()
 		{
 			$chain =
-				CallChain::create()->
-				add(Filter::nl2br())->
-				add(Filter::htmlSpecialChars());
+				\Onphp\CallChain::create()->
+				add(\Onphp\Filter::nl2br())->
+				add(\Onphp\Filter::htmlSpecialChars());
 			
 			$text = "foo\nbar&";
 			
@@ -155,31 +157,31 @@
 			
 			try {
 				$chain->undefinedMethod();
-			} catch (BaseException $e) {
+			} catch (\Onphp\BaseException $e) {
 				// passed
 			}
 			
 			try {
-				CallChain::create()->call('foo', 'bar');
-			} catch (WrongStateException $e) {
+				\Onphp\CallChain::create()->call('foo', 'bar');
+			} catch (\Onphp\WrongStateException $e) {
 				// passed
 			}
 			
 			try {
-				CallChain::create()->add(
-					IdentifiableObject::wrap(112233)
+				\Onphp\CallChain::create()->add(
+					\Onphp\IdentifiableObject::wrap(112233)
 				)->
 				undefinedMethod();
-			} catch (BaseException $e) {
+			} catch (\Onphp\BaseException $e) {
 				// passed;
 			}
 			
 			try {
-				CallChain::create()->add(
-					IdentifiableObject::wrap(332211)
+				\Onphp\CallChain::create()->add(
+					\Onphp\IdentifiableObject::wrap(332211)
 				)->
 				call('undefinedMethod');
-			} catch (BaseException $e) {
+			} catch (\Onphp\BaseException $e) {
 				// passed;
 			}
 		}
@@ -194,9 +196,9 @@
 
 			$data = array('the keeey' => "that's value");
 			
-			$encoded = JsonEncoderFilter::me()->apply($data);
+			$encoded = \Onphp\JsonEncoderFilter::me()->apply($data);
 			
-			$decoded = JsonDecoderFilter::me()->setAssoc()->apply($encoded);
+			$decoded = \Onphp\JsonDecoderFilter::me()->setAssoc()->apply($encoded);
 			
 			$this->assertEquals($decoded, $data);
 		}
@@ -208,24 +210,24 @@
 			$utf16be = file_get_contents(dirname(__FILE__).'/../main/data/unicode/utf16be.txt');
 
 			$this->assertEquals(
-				Utf16ConverterFilter::me()->apply($utf8),
+				\Onphp\Utf16ConverterFilter::me()->apply($utf8),
 				$utf8
 			);
 
 			$this->assertEquals(
-				Utf16ConverterFilter::me()->apply($utf16),
+				\Onphp\Utf16ConverterFilter::me()->apply($utf16),
 				$utf8
 			);
 
 			$this->assertEquals(
-				Utf16ConverterFilter::me()->apply($utf16be),
+				\Onphp\Utf16ConverterFilter::me()->apply($utf16be),
 				$utf8
 			);
 
 			// most difficult case, because it is a vaild utf16 chineese (?)
 			$this->assertEquals(
 				'привет',
-				Utf16ConverterFilter::me()->apply('привет')
+				\Onphp\Utf16ConverterFilter::me()->apply('привет')
 			);
 		}
 		
@@ -233,7 +235,7 @@
 		{
 			//simple test
 			$postApply = ' and my applying';
-			$filter = CallbackFilter::create(function($value) use ($postApply) {
+			$filter = \Onphp\CallbackFilter::create(function($value) use ($postApply) {
 				return $value . $postApply;
 			});
 			
@@ -246,7 +248,7 @@
 		public function testTextImport()
 		{
 			$this->assertEquals(
-				Filter::textImport()->apply('  <b> some bold text    </b>   '),
+				\Onphp\Filter::textImport()->apply('  <b> some bold text    </b>   '),
 				'some bold text'
 			);
 		}

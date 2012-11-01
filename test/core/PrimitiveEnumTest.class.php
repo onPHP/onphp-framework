@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	final class PrimitiveEnumTest extends TestCase
 	{
 		public function testIntegerValues()
@@ -16,14 +18,14 @@
 			$defaultId = 2;
 			$importId = 1;
 
-			$default = MimeType::wrap($defaultId);
-			$imported = MimeType::wrap($importId);
+			$default = \Onphp\MimeType::wrap($defaultId);
+			$imported = \Onphp\MimeType::wrap($importId);
 
 			$form =
-				Form::create()->
+				\Onphp\Form::create()->
 				add(
-					Primitive::enum('enum')
-						->of('MimeType')
+					\Onphp\Primitive::enum('enum')
+						->of('\Onphp\MimeType')
 						->setDefault($default)
 				);
 			
@@ -46,16 +48,16 @@
 		
 		public function testGetList()
 		{
-			$primitive = Primitive::enum('enum')->of('MimeType');
-			$enum = MimeType::wrap(1);
+			$primitive = \Onphp\Primitive::enum('enum')->of('\Onphp\MimeType');
+			$enum = \Onphp\MimeType::wrap(1);
 			
-			$this->assertEquals($primitive->getList(), MimeType::getObjectList());
+			$this->assertEquals($primitive->getList(), \Onphp\MimeType::getObjectList());
 			
 			$primitive->setDefault($enum);
-			$this->assertEquals($primitive->getList(), MimeType::getObjectList());
+			$this->assertEquals($primitive->getList(), \Onphp\MimeType::getObjectList());
 			
-			$primitive->import(array('enum' => MimeType::getAnyId()));
-			$this->assertEquals($primitive->getList(), MimeType::getObjectList());
+			$primitive->import(array('enum' => \Onphp\MimeType::getAnyId()));
+			$this->assertEquals($primitive->getList(), \Onphp\MimeType::getObjectList());
 		}
 	}
 ?>

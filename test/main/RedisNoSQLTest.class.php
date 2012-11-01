@@ -9,6 +9,8 @@
 	*                                                                         *
 	***************************************************************************/
 	
+	namespace Onphp\Test;
+
 	final class RedisNoSQLTest extends TestCase
 	{
 		public function setUp()
@@ -16,7 +18,7 @@
 			if (!extension_loaded('redis'))
 				$this->markTestSkipped('Install phpredis https://github.com/nicolasff/phpredis/');
 			
-			$redis = new RedisNoSQL('localhost', 6379);
+			$redis = new \Onphp\RedisNoSQL('localhost', 6379);
 
 			if (!$redis->isAlive()) {
 				$this->markTestSkipped('Can\'t connect to redis server at localhost');
@@ -25,7 +27,7 @@
 		
 		public function testCachePeer()
 		{
-			$redis = new RedisNoSQL('localhost', 6379);
+			$redis = new \Onphp\RedisNoSQL('localhost', 6379);
 
 			$redis->set('some_key', 'some_value');
 			$result = $redis->get('some_key');
@@ -44,7 +46,7 @@
 		
 		public function testList()
 		{
-			$redis	= new RedisNoSQL('localhost', 6379);
+			$redis	= new \Onphp\RedisNoSQL('localhost', 6379);
 			$redis->delete('list');
 			
 			$list	= $redis->fetchList('list');
@@ -60,7 +62,7 @@
 		
 		public function testListIterator()
 		{
-			$redis	= new RedisNoSQL('localhost', 6379);
+			$redis	= new \Onphp\RedisNoSQL('localhost', 6379);
 			$redis->delete('list');
 			
 			$list	= $redis->fetchList('list');
@@ -80,7 +82,7 @@
 		
 		public function testListArrayAccess()
 		{
-			$redis	= new RedisNoSQL('localhost', 6379);
+			$redis	= new \Onphp\RedisNoSQL('localhost', 6379);
 			$redis->delete('list');
 			
 			$list	= $redis->fetchList('list');
@@ -94,7 +96,7 @@
 		
 		public function testListTrim()
 		{
-			$redis	= new RedisNoSQL('localhost', 6379);
+			$redis	= new \Onphp\RedisNoSQL('localhost', 6379);
 			$redis->delete('list');
 			
 			$list	= $redis->fetchList('list');
@@ -114,7 +116,7 @@
 		
 		public function testListClean()
 		{
-			$redis	= new RedisNoSQL('localhost', 6379);
+			$redis	= new \Onphp\RedisNoSQL('localhost', 6379);
 			$redis->delete('list');
 			
 			$list	= $redis->fetchList('list');

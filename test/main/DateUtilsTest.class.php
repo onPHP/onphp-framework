@@ -1,13 +1,15 @@
 <?php
-	final class DateUtilsTest extends PHPUnit_Framework_TestCase
+	namespace Onphp\Test;
+
+	final class DateUtilsTest extends \PHPUnit_Framework_TestCase
 	{
 		/**
 		 * @dataProvider alignToSecondsDataProvider
 		**/
-		public function testAlignToSeconds(Timestamp $stamp, $expected)
+		public function testAlignToSeconds(\Onphp\Timestamp $stamp, $expected)
 		{
 			$this->assertEquals(
-				DateUtils::alignToSeconds($stamp, 42)->toString(),
+				\Onphp\DateUtils::alignToSeconds($stamp, 42)->toString(),
 				$expected
 			);
 		}
@@ -16,19 +18,19 @@
 		{
 			return array(
 				array(
-					Timestamp::create('2009-01-01 10:00:42'),
+					\Onphp\Timestamp::create('2009-01-01 10:00:42'),
 					'2009-01-01 10:00:42'
 				),
 				array(
-					Timestamp::create('2009-01-01 10:00:41'),
+					\Onphp\Timestamp::create('2009-01-01 10:00:41'),
 					'2009-01-01 10:00:00'
 				),
 				array(
-					Timestamp::create('2009-01-01 10:01:34'),
+					\Onphp\Timestamp::create('2009-01-01 10:01:34'),
 					'2009-01-01 10:01:24'
 				),
 				array(
-					Timestamp::create('2009-01-01 10:10:01'),
+					\Onphp\Timestamp::create('2009-01-01 10:10:01'),
 					'2009-01-01 10:09:48'
 				)
 			);

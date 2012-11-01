@@ -1,17 +1,19 @@
 <?php
+	namespace Onphp\Test;
+
 	class DBTestCreator
 	{
 		/**
-		 * @var DBSchema
+		 * @var \Onphp\DBSchema
 		 */
 		private $schema = null;
 		/**
-		 * @var DBTestPool
+		 * @var \Onphp\Test\DBTestPool
 		 */
 		private $pool = null;
 		
 		/**
-		 * @return DBTestCreator
+		 * @return \Onphp\Test\DBTestCreator
 		 */
 		public static function create()
 		{
@@ -20,20 +22,20 @@
 		
 		/**
 		 * @param string $path
-		 * @return DBTestCreator
+		 * @return \Onphp\Test\DBTestCreator
 		 */
 		public function setSchemaPath($path)
 		{
 			require $path;
-			Assert::isTrue(isset($schema));
-			Assert::isInstance($schema, 'DBSchema');
+			\Onphp\Assert::isTrue(isset($schema));
+			\Onphp\Assert::isInstance($schema, '\Onphp\DBSchema');
 			$this->schema = $schema;
 			return $this;
 		}
 		
 		/**
-		 * @param DBTestPool $testPool
-		 * @return DBTestCreator
+		 * @param \Onphp\Test\DBTestPool $testPool
+		 * @return \Onphp\Test\DBTestCreator
 		 */
 		public function setTestPool(DBTestPool $testPool) {
 			$this->pool = $testPool;
@@ -41,7 +43,7 @@
 		}
 		
 		/**
-		 * @return DBTestCreator
+		 * @return \Onphp\Test\DBTestCreator
 		 */
 		public function createDB() {
 			/**
@@ -64,13 +66,13 @@
 		
 		/**
 		 * @param bool $clean
-		 * @return DBTestCreator
-		 * @throws DatabaseException
+		 * @return \Onphp\Test\DBTestCreator
+		 * @throws \Onphp\DatabaseException
 		 */
 		public function dropDB($clean = false)
 		{
 			foreach ($this->pool->getPool() as $name => $db) {
-				/* @var $db DB */
+				/* @var $\Onphp\DB \Onphp\DB */
 				foreach ($this->schema->getTableNames() as $name) {
 					try {
 						$db->queryRaw(
@@ -78,7 +80,7 @@
 								$db->getDialect()
 							)
 						);
-					} catch (DatabaseException $e) {
+					} catch (\Onphp\DatabaseException $e) {
 						if (!$clean)
 							throw $e;
 					}
@@ -91,7 +93,7 @@
 							try {
 								if ($column->isAutoincrement())
 									$db->queryRaw("DROP SEQUENCE {$name}_id;");
-							} catch (DatabaseException $e) {
+							} catch (\Onphp\DatabaseException $e) {
 								if (!$clean)
 									throw $e;
 							}
@@ -104,8 +106,8 @@
 		}
 		
 		/**
-		 * @param TestCase $test
-		 * @return DBTestCreator
+		 * @param \Onphp\Test\TestCase $test
+		 * @return \Onphp\Test\DBTestCreator
 		 */
 		public function fillDB(TestCase $test = null)
 		{
@@ -126,10 +128,10 @@
 					setPassword(sha1('mysqler'))
 				)->
 				setLastLogin(
-					Timestamp::create(time())
+					\Onphp\Timestamp::create(time())
 				)->
 				setRegistered(
-					Timestamp::create(time())->modify('-1 day')
+					\Onphp\Timestamp::create(time())->modify('-1 day')
 				);
 			
 			$postgreser = clone $mysqler;
@@ -141,7 +143,7 @@
 					setPassword(sha1('postgreser'))
 				)->
 				setCity($piter)->
-				setUrl(HttpUrl::create()->parse('http://postgresql.org/'));
+				setUrl(\Onphp\HttpUrl::create()->parse('http://postgresql.org/'));
 			
 			$piter = TestCity::dao()->add($piter);
 			$moscow = TestCity::dao()->add($moscow);
@@ -185,7 +187,7 @@
 					$test->getListByIdsTest();
 				}
 				
-				Cache::me()->clean();
+				\Onphp\Cache::me()->clean();
 				
 				$test->assertTrue(
 					($postgreser == TestUser::dao()->getById(1))
@@ -209,13 +211,13 @@
 				try {
 					TestUser::dao()->getById(1);
 					$test->fail();
-				} catch (ObjectNotFoundException $e) {
+				} catch (\Onphp\ObjectNotFoundException $e) {
 					/* pass */
 				}
 				
 				$result =
-					Criteria::create(TestUser::dao())->
-					add(Expression::eq(1, 2))->
+					\Onphp\Criteria::create(TestUser::dao())->
+					add(\Onphp\Expression::eq(1, 2))->
 					getResult();
 				
 				$test->assertEquals($result->getCount(), 0);

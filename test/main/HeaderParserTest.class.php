@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	class HeaderParserTest extends TestCase
 	{
 		public function testSimple()
@@ -25,7 +27,7 @@ Content-Type: text/html; charset=koi8-r
 Content-Language: ru
 Vary: accept-charset, user-agent
 EOT;
-			$parser = HeaderParser::create()->parse($raw);
+			$parser = \Onphp\HeaderParser::create()->parse($raw);
 			$this->assertEquals(9, count($parser->getHeaders()));
 			$this->assertEquals('close', $parser->getHeader('connection'));
 		}
@@ -43,7 +45,7 @@ Connection: Keep-Alive
 Content-Type: text/html;
   charset=utf-8
 EOT;
-			$parser = HeaderParser::create()->parse($raw);
+			$parser = \Onphp\HeaderParser::create()->parse($raw);
 			$this->assertEquals(6, count($parser->getHeaders()));
 			$this->assertEquals($parser->getHeader('keep-alive'), 'timeout=20, max=200');
 			$this->assertEquals($parser->getHeader('content-length'), '123');

@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	final class AbstractProtoClassFillQueryTest extends TestCase
 	{
 		public function testFullInsertQueryByCity()
@@ -8,7 +10,7 @@
 			$insertCity = $city->proto()->fillQuery(OSQL::insert(), $city);
 			$this->assertEquals(
 				'INSERT INTO  (id, name, capital, large) VALUES (20, Saint-Peterburg, TRUE, TRUE)',
-				$insertCity->toDialectString(ImaginaryDialect::me())
+				$insertCity->toDialectString(\Onphp\ImaginaryDialect::me())
 			);
 		}
 		
@@ -24,7 +26,7 @@
 					.'city_id = 20, first_optional_id = NULL, second_optional_id = NULL, '
 					.'url = https://www.github.com, '
 					.'properties = "a"=>"apple","b"=>"bananas",, ip = 127.0.0.1',
-				$updateUser->toDialectString(ImaginaryDialect::me())
+				$updateUser->toDialectString(\Onphp\ImaginaryDialect::me())
 			);
 		}
 		
@@ -38,7 +40,7 @@
 				'UPDATE  SET id = 77, name = Aleksey, surname = Alekseev, email = foo@bar.com, '
 					.'icq = 12345678, phone = 89012345678, city_id = NULL, '
 					.'web = https://www.github.com/, skype = github',
-				$updateUser->toDialectString(ImaginaryDialect::me())
+				$updateUser->toDialectString(\Onphp\ImaginaryDialect::me())
 			);
 		}
 		
@@ -50,7 +52,7 @@
 			$updateCity = $city->proto()->fillQuery(OSQL::update(), $city, $cityOld);
 			$this->assertEquals(
 				'UPDATE  SET capital = TRUE',
-				$updateCity->toDialectString(ImaginaryDialect::me())
+				$updateCity->toDialectString(\Onphp\ImaginaryDialect::me())
 			);
 		}
 		
@@ -62,23 +64,23 @@
 			$updateCity = $city->proto()->fillQuery(OSQL::update(), $city, $cityOld);
 			$this->assertEquals(
 				'UPDATE  SET name = Saint-Peterburg',
-				$updateCity->toDialectString(ImaginaryDialect::me())
+				$updateCity->toDialectString(\Onphp\ImaginaryDialect::me())
 			);
 		}
 		
 		public function testUpdateQueryByUserTimesAndUrl()
 		{
 			$oldUser = $this->spawnUser(array(
-				'strangeTime' => Time::create('12:12:12'),
-				'url' => HttpUrl::create()->parse('http://code.google.com/'),
+				'strangeTime' => \Onphp\Time::create('12:12:12'),
+				'url' => \Onphp\HttpUrl::create()->parse('http://code.google.com/'),
 			));
-			$user = $this->spawnUser(array('lastLogin' => Timestamp::create('2012-01-01')));
+			$user = $this->spawnUser(array('lastLogin' => \Onphp\Timestamp::create('2012-01-01')));
 			
 			$updateUser = $user->proto()->fillQuery(OSQL::update(), $user, $oldUser);
 			$this->assertEquals(
 				'UPDATE  SET very_custom_field_name = 2012-01-01 00:00:00, '
 					.'strange_time = 01:23:45, url = https://www.github.com',
-				$updateUser->toDialectString(ImaginaryDialect::me())
+				$updateUser->toDialectString(\Onphp\ImaginaryDialect::me())
 			);
 		}
 		
@@ -92,14 +94,14 @@
 				'city' => $moscow,
 				'firstOptional' => $piter,
 				'secondOptional' => null,
-				'properties' => Hstore::make(array()),
+				'properties' => \Onphp\Hstore::make(array()),
 			);
 			$oldUser = $this->spawnUser($userParams);
 			$userParams = array(
 				'city' => $piter,
 				'firstOptional' => null,
 				'secondOptional' => $omsk,
-				'properties' => Hstore::make(array('param' => 'value')),
+				'properties' => \Onphp\Hstore::make(array('param' => 'value')),
 			);
 			$user = $this->spawnUser($userParams);
 			
@@ -107,7 +109,7 @@
 			$this->assertEquals(
 				'UPDATE  SET city_id = 2, first_optional_id = NULL, '
 					.'second_optional_id = 3, properties = "param"=>"value",',
-				$updateUser->toDialectString(ImaginaryDialect::me())
+				$updateUser->toDialectString(\Onphp\ImaginaryDialect::me())
 			);
 		}
 		
@@ -122,7 +124,7 @@
 			$updateUser = $user->proto()->fillQuery(OSQL::update(), $user, $oldUser);
 			$this->assertEquals(
 				'UPDATE  SET email = foo@bar.com, city_id = 20',
-				$updateUser->toDialectString(ImaginaryDialect::me())
+				$updateUser->toDialectString(\Onphp\ImaginaryDialect::me())
 			);
 		}
 		
@@ -138,12 +140,12 @@
 				'UPDATE  SET email = foo@bar.com, icq = 12345678, '
 					.'phone = 89012345678, city_id = NULL, '
 					.'web = https://www.github.com/, skype = github',
-				$updateUser->toDialectString(ImaginaryDialect::me())
+				$updateUser->toDialectString(\Onphp\ImaginaryDialect::me())
 			);
 		}
 		
 		/**
-		 * @return TestCity
+		 * @return \Onphp\Test\TestCity
 		 */
 		private function spawnCity($options = array())
 		{
@@ -158,22 +160,22 @@
 		}
 		
 		/**
-		 * @return TestUser
+		 * @return \Onphp\Test\TestUser
 		 */
 		private function spawnUser($options = array())
 		{
 			$options += array(
 				'id' => '77',
 				'credentials' => Credentials::create(),
-				'lastLogin' => Timestamp::create('2011-12-31'),
-				'registered' => Timestamp::create('2011-12-30'),
-				'strangeTime' => Time::create('01:23:45'),
+				'lastLogin' => \Onphp\Timestamp::create('2011-12-31'),
+				'registered' => \Onphp\Timestamp::create('2011-12-30'),
+				'strangeTime' => \Onphp\Time::create('01:23:45'),
 				'city' => null,
 				'firstOptional' => null,
 				'secondOptional' => null,
-				'url' => HttpUrl::create()->parse('https://www.github.com'),
-				'properties' => Hstore::make(array('a' => 'apple', 'b' => 'bananas')),
-				'ip' => IpAddress::create('127.0.0.1'),
+				'url' => \Onphp\HttpUrl::create()->parse('https://www.github.com'),
+				'properties' => \Onphp\Hstore::make(array('a' => 'apple', 'b' => 'bananas')),
+				'ip' => \Onphp\IpAddress::create('127.0.0.1'),
 			);
 			
 			return $this->spawnObject(TestUser::create(), $options);
@@ -181,7 +183,7 @@
 		}
 		
 		/**
-		 * @return TestContactValueExtended
+		 * @return \Onphp\Test\TestContactValueExtended
 		 */
 		private function spawnContactValueExt($options = array())
 		{
@@ -198,7 +200,7 @@
 		}
 		
 		/**
-		 * @return TestUserWithContactExtended
+		 * @return \Onphp\Test\TestUserWithContactExtended
 		 */
 		private function spawnUserWithContactExt($options = array())
 		{
@@ -212,10 +214,10 @@
 			return $this->spawnObject(TestUserWithContactExtended::create(), $options);
 		}
 		
-		private function spawnObject(Prototyped $object, array $options)
+		private function spawnObject(\Onphp\Prototyped $object, array $options)
 		{
 			foreach ($object->proto()->getPropertyList() as $propName => $property) {
-				/* @var $property LightMetaProperty */
+				/* @var $property \Onphp\LightMetaProperty */
 				if (isset($options[$propName])) {
 					$setter = $property->getSetter();
 					$object->{$setter}($options[$propName]);

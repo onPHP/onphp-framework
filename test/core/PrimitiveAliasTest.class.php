@@ -1,7 +1,9 @@
 <?php
 	/* $Id$ */
 	
-	final class PrimitiveCustomError extends PrimitiveString
+	namespace Onphp\Test;
+
+	final class PrimitiveCustomError extends \Onphp\PrimitiveString
 	{
 		const CUSTOM_MARK = 0xff;
 		
@@ -23,13 +25,13 @@
 		public function testImport()
 		{
 			$realPrimitive =
-				Primitive::string('stringPrimitive')->
+				\Onphp\Primitive::string('stringPrimitive')->
 				required();
 			
 			$form =
-				Form::create()->
+				\Onphp\Form::create()->
 				add($realPrimitive)->
-				add(Primitive::alias('alias',$realPrimitive))->
+				add(\Onphp\Primitive::alias('alias',$realPrimitive))->
 				import(array('alias' => 'Йа строка'));
 			
 			$errors = $form->getErrors();
@@ -37,15 +39,15 @@
 			$this->assertFalse(isset($errors['stringPrimitive']));
 
 			$enumPrimitive =
-				Primitive::enumeration('enumerationPrimitive')->
-				of('DataType')->
+				\Onphp\Primitive::enumeration('enumerationPrimitive')->
+				of('\Onphp\DataType')->
 				required();
 
 			$form =
-				Form::create()->
+				\Onphp\Form::create()->
 				add($enumPrimitive)->
-				add(Primitive::alias('alias', $enumPrimitive))->
-				import(array('alias' => DataType::getAnyId()));
+				add(\Onphp\Primitive::alias('alias', $enumPrimitive))->
+				import(array('alias' => \Onphp\DataType::getAnyId()));
 
 			$errors = $form->getErrors();
 
@@ -58,9 +60,9 @@
 			$realPrimitive->setMax(1);
 			
 			$form =
-				Form::create()->
+				\Onphp\Form::create()->
 				add($realPrimitive)->
-				add(Primitive::alias('alias', $realPrimitive))->
+				add(\Onphp\Primitive::alias('alias', $realPrimitive))->
 				import(array('alias' => 'Toooo long'));
 			
 			$errors = $form->getErrors();

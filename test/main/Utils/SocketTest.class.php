@@ -1,15 +1,17 @@
 <?php
+	namespace Onphp\Test;
+
 	final class SocketTest extends TestCase
 	{
 		public function testShutdown()
 		{
-			Socket::create()->
+			\Onphp\Socket::create()->
 				setHost('localhost')->
 				setPort(80)->
 				close();
 			
 			$timedOutSocket =
-				Socket::create()->
+				\Onphp\Socket::create()->
 					setHost('google.com')->
 					setPort(80)->
 					setTimeout(1)->

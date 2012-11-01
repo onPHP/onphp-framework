@@ -9,27 +9,29 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	final class HttpUtilsTest extends TestCase
 	{
 		public function testCurlGet()
 		{
-			$request = HttpRequest::create()->
+			$request = \Onphp\HttpRequest::create()->
 				setUrl(
-					HttpUrl::create()->parse('https://github.com/')
+					\Onphp\HttpUrl::create()->parse('https://github.com/')
 				)->
-				setMethod(HttpMethod::get());
+				setMethod(\Onphp\HttpMethod::get());
 			
 			try {
-				$response = CurlHttpClient::create()->
+				$response = \Onphp\CurlHttpClient::create()->
 					setTimeout(3)->
 					send($request);
-			} catch (NetworkException $e) {
+			} catch (\Onphp\NetworkException $e) {
 				return $this->markTestSkipped('no network available');
 			}
 			
 			$this->assertEquals(
 				$response->getStatus()->getId(),
-				HttpStatus::CODE_200
+				\Onphp\HttpStatus::CODE_200
 			);
 			
 			$this->assertContains(
@@ -38,31 +40,31 @@
 			);
 			
 			try {
-				$badResponse = CurlHttpClient::create()->
+				$badResponse = \Onphp\CurlHttpClient::create()->
 					setTimeout(3)->
 					setMaxFileSize(100)-> // github page is bigger than 100 bytes
 					send($request);
 				$this->fail();
-			} catch (NetworkException $e) {
+			} catch (\Onphp\NetworkException $e) {
 				/* pass */
 			}
 		}
 		
 		public function testCurlException()
 		{
-			$request = HttpRequest::create()->
+			$request = \Onphp\HttpRequest::create()->
 				setUrl(
-					HttpUrl::create()->parse('http://nonexistentdomain.xyz')
+					\Onphp\HttpUrl::create()->parse('http://nonexistentdomain.xyz')
 				)->
-				setMethod(HttpMethod::get());
+				setMethod(\Onphp\HttpMethod::get());
 			
 			try {
-				$response = CurlHttpClient::create()->
+				$response = \Onphp\CurlHttpClient::create()->
 					setTimeout(3)->
 					send($request);
 				
 				$this->fail();
-			} catch (NetworkException $e) {
+			} catch (\Onphp\NetworkException $e) {
 				$this->assertContains('curl error', $e->getMessage());
 			}
 		}

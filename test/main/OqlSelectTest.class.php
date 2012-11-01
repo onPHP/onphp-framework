@@ -1,6 +1,8 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class OqlSelectTest extends TestCaseDB
 	{
 		public function testProperty()
@@ -9,13 +11,13 @@
 				// no properties
 				assertCriteria(
 					'from TestUser',
-					Criteria::create(TestUser::dao())
+					\Onphp\Criteria::create(TestUser::dao())
 				)->
 				// simple property
 				assertCriteria(
 					'id from TestUser',
-					Criteria::create(TestUser::dao())->
-						setProjection(Projection::property('id'))
+					\Onphp\Criteria::create(TestUser::dao())->
+						setProjection(\Onphp\Projection::property('id'))
 				)->
 				// aggregate functions, distinct, aliases, properties
 				assertCriteria(
@@ -23,48 +25,48 @@
 					.'count(distinct city.id) as distinctCount, '
 					.'sum(id), min(id), max(id), city.Name as cityName, '
 					.'distinct id, city, min from TestUser',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setDistinct(true)->
 						setProjection(
-							Projection::chain()->
-								add(Projection::avg('id'))->
-								add(Projection::count('city.id', 'count'))->
-								add(Projection::distinctCount('city.id', 'distinctCount'))->
-								add(Projection::sum('id'))->
-								add(Projection::min('id'))->
-								add(Projection::max('id'))->
-								add(Projection::property('city.Name', 'cityName'))->
-								add(Projection::property('id'))->
-								add(Projection::property('city'))->
-								add(Projection::property('min'))
+							\Onphp\Projection::chain()->
+								add(\Onphp\Projection::avg('id'))->
+								add(\Onphp\Projection::count('city.id', 'count'))->
+								add(\Onphp\Projection::distinctCount('city.id', 'distinctCount'))->
+								add(\Onphp\Projection::sum('id'))->
+								add(\Onphp\Projection::min('id'))->
+								add(\Onphp\Projection::max('id'))->
+								add(\Onphp\Projection::property('city.Name', 'cityName'))->
+								add(\Onphp\Projection::property('id'))->
+								add(\Onphp\Projection::property('city'))->
+								add(\Onphp\Projection::property('min'))
 						)
 				)->
 				// arithmetic expression in aggregate function
 				assertCriteria(
 					'avg(-id - -1 / -$1), avg((10-id) * -($1+-2.1)), avg(10) as ten '
 					.'from TestUser',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setProjection(
-							Projection::chain()->
+							\Onphp\Projection::chain()->
 								add(
-									Projection::avg(
-										Expression::sub(
-											Expression::minus('id'),
-											Expression::div(-1, -10)
+									\Onphp\Projection::avg(
+										\Onphp\Expression::sub(
+											\Onphp\Expression::minus('id'),
+											\Onphp\Expression::div(-1, -10)
 										)
 									)
 								)->
 								add(
-									Projection::avg(
-										Expression::mul(
-											Expression::sub(10, 'id'),
-											Expression::minus(
-												Expression::add(10, -2.1)
+									\Onphp\Projection::avg(
+										\Onphp\Expression::mul(
+											\Onphp\Expression::sub(10, 'id'),
+											\Onphp\Expression::minus(
+												\Onphp\Expression::add(10, -2.1)
 											)
 										)
 									)
 								)->
-								add(Projection::avg(10, 'ten'))
+								add(\Onphp\Projection::avg(10, 'ten'))
 						),
 					array(1 => 10)
 				)->
@@ -72,15 +74,15 @@
 				assertCriteria(
 					'count(distinct -id * 2 / -3 > 10), count(id in (1, -$1, -3) and Name like `test`)'
 					.'from TestUser',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setProjection(
-							Projection::chain()->
+							\Onphp\Projection::chain()->
 								add(
-									Projection::distinctCount(
-										Expression::gt(
-											Expression::div(
-												Expression::mul(
-													Expression::minus('id'),
+									\Onphp\Projection::distinctCount(
+										\Onphp\Expression::gt(
+											\Onphp\Expression::div(
+												\Onphp\Expression::mul(
+													\Onphp\Expression::minus('id'),
 													2
 												),
 												-3
@@ -90,10 +92,10 @@
 									)
 								)->
 								add(
-									Projection::count(
-										Expression::expAnd(
-											Expression::in('id', array(1, -2, -3)),
-											Expression::like('Name', 'test')
+									\Onphp\Projection::count(
+										\Onphp\Expression::expAnd(
+											\Onphp\Expression::in('id', array(1, -2, -3)),
+											\Onphp\Expression::like('Name', 'test')
 										)
 									)
 								)
@@ -104,23 +106,23 @@
 				assertCriteria(
 					'(id > 10) and (20 > id) as inInterval, ((2*id + 1) / id), -id '
 					.'from TestUser',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setProjection(
-							Projection::chain()->
+							\Onphp\Projection::chain()->
 								add(
-									Projection::property(
-										Expression::expAnd(
-											Expression::gt('id', 10),
-											Expression::gt(20, 'id')
+									\Onphp\Projection::property(
+										\Onphp\Expression::expAnd(
+											\Onphp\Expression::gt('id', 10),
+											\Onphp\Expression::gt(20, 'id')
 										),
 										'inInterval'
 									)
 								)->
 								add(
-									Projection::property(
-										Expression::div(
-											Expression::add(
-												Expression::mul(2, 'id'),
+									\Onphp\Projection::property(
+										\Onphp\Expression::div(
+											\Onphp\Expression::add(
+												\Onphp\Expression::mul(2, 'id'),
 												1
 											),
 											'id'
@@ -128,8 +130,8 @@
 									)
 								)->
 								add(
-									Projection::property(
-										Expression::minus('id')
+									\Onphp\Projection::property(
+										\Onphp\Expression::minus('id')
 									)
 								)
 						)
@@ -145,17 +147,17 @@
 				// bindings, operator chain
 				assertCriteria(
 					'from TestUser where id = $1 or id = $2 or $2 = id or $1 = $2',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::expOr(
-								Expression::expOr(
-									Expression::expOr(
-										Expression::eqId('id', $user),
-										Expression::eq('id', $userId)
+							\Onphp\Expression::expOr(
+								\Onphp\Expression::expOr(
+									\Onphp\Expression::expOr(
+										\Onphp\Expression::eqId('id', $user),
+										\Onphp\Expression::eq('id', $userId)
 									),
-									Expression::eq($userId, 'id')
+									\Onphp\Expression::eq($userId, 'id')
 								),
-								Expression::eq($userId, $userId)
+								\Onphp\Expression::eq($userId, $userId)
 							)
 						),
 					array(
@@ -166,20 +168,20 @@
 				// comparison operators
 				assertCriteria(
 					'from TestUser where id = 1 or id >= 1 or id <= 1 or id <> 1 or id != 1',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::expOr(
-								Expression::expOr(
-									Expression::expOr(
-										Expression::expOr(
-											Expression::eq('id', 1),
-											Expression::gtEq('id', 1)
+							\Onphp\Expression::expOr(
+								\Onphp\Expression::expOr(
+									\Onphp\Expression::expOr(
+										\Onphp\Expression::expOr(
+											\Onphp\Expression::eq('id', 1),
+											\Onphp\Expression::gtEq('id', 1)
 										),
-										Expression::ltEq('id', 1)
+										\Onphp\Expression::ltEq('id', 1)
 									),
-									Expression::notEq('id', 1)
+									\Onphp\Expression::notEq('id', 1)
 								),
-								Expression::notEq('id', 1)
+								\Onphp\Expression::notEq('id', 1)
 							)
 						)
 				)->
@@ -187,22 +189,22 @@
 				assertCriteria(
 					'from TestUser where id = 1 and Name = "some" '
 					.'or Name = "any" or id = 1 > 2 = id * 2 + 1',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::expOr(
-								Expression::expOr(
-									Expression::expAnd(
-										Expression::eq('id', 1),
-										Expression::eq('Name', 'some')
+							\Onphp\Expression::expOr(
+								\Onphp\Expression::expOr(
+									\Onphp\Expression::expAnd(
+										\Onphp\Expression::eq('id', 1),
+										\Onphp\Expression::eq('Name', 'some')
 									),
-									Expression::eq('Name', 'any')
+									\Onphp\Expression::eq('Name', 'any')
 								),
-								Expression::gt(
-									Expression::eq('id', 1),
-									Expression::eq(
+								\Onphp\Expression::gt(
+									\Onphp\Expression::eq('id', 1),
+									\Onphp\Expression::eq(
 										2,
-										Expression::add(
-											Expression::mul('id', 2),
+										\Onphp\Expression::add(
+											\Onphp\Expression::mul('id', 2),
 											1
 										)
 									)
@@ -213,13 +215,13 @@
 				// parentheses priority
 				assertCriteria(
 					'from TestUser where (id = 1 and (Name = "some" or Name = "any"))',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::expAnd(
-								Expression::eq('id', 1),
-								Expression::expOr(
-									Expression::eq('Name', 'some'),
-									Expression::eq('Name', 'any')
+							\Onphp\Expression::expAnd(
+								\Onphp\Expression::eq('id', 1),
+								\Onphp\Expression::expOr(
+									\Onphp\Expression::eq('Name', 'some'),
+									\Onphp\Expression::eq('Name', 'any')
 								)
 							)
 						)
@@ -227,27 +229,27 @@
 				// parentheses priority
 				assertCriteria(
 					'from TestUser where ((Name = "some" or Name = "any")) and (id = 1)',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::expAnd(
-								Expression::expOr(
-									Expression::eq('Name', 'some'),
-									Expression::eq('Name', 'any')
+							\Onphp\Expression::expAnd(
+								\Onphp\Expression::expOr(
+									\Onphp\Expression::eq('Name', 'some'),
+									\Onphp\Expression::eq('Name', 'any')
 								),
-								Expression::eq('id', 1)
+								\Onphp\Expression::eq('id', 1)
 							)
 						)
 				)->
 				// complex boolean expressions
 				assertCriteria(
 					'from TestUser where (id = 1) != ((1 = id) = (id >= 2))',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::notEq(
-								Expression::eq('id', 1),
-								Expression::eq(
-									Expression::eq(1, 'id'),
-									Expression::gtEq('id', 2)
+							\Onphp\Expression::notEq(
+								\Onphp\Expression::eq('id', 1),
+								\Onphp\Expression::eq(
+									\Onphp\Expression::eq(1, 'id'),
+									\Onphp\Expression::gtEq('id', 2)
 								)
 							)
 						)
@@ -255,17 +257,17 @@
 				// unary not
 				assertCriteria(
 					'from TestUser where not (not not id = 1 and not id > 1)',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::not(
-								Expression::expAnd(
-									Expression::not(
-										Expression::not(
-											Expression::eq('id', 1)
+							\Onphp\Expression::not(
+								\Onphp\Expression::expAnd(
+									\Onphp\Expression::not(
+										\Onphp\Expression::not(
+											\Onphp\Expression::eq('id', 1)
 										)
 									),
-									Expression::not(
-										Expression::gt('id', 1)
+									\Onphp\Expression::not(
+										\Onphp\Expression::gt('id', 1)
 									)
 								)
 							)
@@ -274,28 +276,28 @@
 				// is ([not] null|true|false)
 				assertCriteria(
 					'from TestUser where id is null or id is not null or id is true or id is false',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::expOr(
-								Expression::expOr(
-									Expression::expOr(
-										Expression::isNull('id'),
-										Expression::notNull('id')
+							\Onphp\Expression::expOr(
+								\Onphp\Expression::expOr(
+									\Onphp\Expression::expOr(
+										\Onphp\Expression::isNull('id'),
+										\Onphp\Expression::notNull('id')
 									),
-									Expression::isTrue('id')
+									\Onphp\Expression::isTrue('id')
 								),
-								Expression::isFalse('id')
+								\Onphp\Expression::isFalse('id')
 							)
 						)
 				)->
 				// [not] in
 				assertCriteria(
 					'from TestUser where id in (1) or id not in (1, "2", $1, true)',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::expOr(
-								Expression::in('id', array(1)),
-								Expression::notIn('id', array(1, '2', true, true))
+							\Onphp\Expression::expOr(
+								\Onphp\Expression::in('id', array(1)),
+								\Onphp\Expression::notIn('id', array(1, '2', true, true))
 							)
 						),
 					array(1 => true)
@@ -303,12 +305,12 @@
 				// in subquery
 				assertCriteria(
 					'from TestUser where id in ($1)',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::in(
+							\Onphp\Expression::in(
 								'id',
-								Criteria::create(TestUser::dao())->
-									setProjection(Projection::property('id'))
+								\Onphp\Criteria::create(TestUser::dao())->
+									setProjection(\Onphp\Projection::property('id'))
 							)
 						),
 					array(
@@ -318,9 +320,9 @@
 				// in array
 				assertCriteria(
 					'from TestUser where id in ($1)',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::in(
+							\Onphp\Expression::in(
 								'id',
 								array(1, 2)
 							)
@@ -334,23 +336,23 @@
 					'from TestUser where id like $1 or id not like "Ы%" '
 					.'or id ilike $2 or id not ilike "ы%" '
 					.'or Name similar to "s" or Name not similar to $3',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::expOr(
-								Expression::expOr(
-									Expression::expOr(
-										Expression::expOr(
-											Expression::expOr(
-												Expression::like('id', 'ы'),
-												Expression::notLike('id', 'Ы%')
+							\Onphp\Expression::expOr(
+								\Onphp\Expression::expOr(
+									\Onphp\Expression::expOr(
+										\Onphp\Expression::expOr(
+											\Onphp\Expression::expOr(
+												\Onphp\Expression::like('id', 'ы'),
+												\Onphp\Expression::notLike('id', 'Ы%')
 											),
-											Expression::ilike('id', 'Ы')
+											\Onphp\Expression::ilike('id', 'Ы')
 										),
-										Expression::notIlike('id', 'ы%')
+										\Onphp\Expression::notIlike('id', 'ы%')
 									),
-									Expression::similar('Name', 's')
+									\Onphp\Expression::similar('Name', 's')
 								),
-								Expression::notSimilar('Name', 'S')
+								\Onphp\Expression::notSimilar('Name', 'S')
 							)
 						),
 					array(
@@ -363,30 +365,30 @@
 				assertCriteria(
 					'from TestUser where created between "2008-08-06 10:00" and $1 '
 					.'or id between id and 10',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::expOr(
-								Expression::between(
+							\Onphp\Expression::expOr(
+								\Onphp\Expression::between(
 									'created',
 									'2008-08-06 10:00',
-									SQLFunction::create('now')
+									\Onphp\SQLFunction::create('now')
 								),
-								Expression::between('id', 'id', 10)
+								\Onphp\Expression::between('id', 'id', 10)
 							)
 						),
-					array(1 => SQLFunction::create('now'))
+					array(1 => \Onphp\SQLFunction::create('now'))
 				)->
 				// arithmetic expression
 				assertCriteria(
 					'from TestUser where (2 + -id --1) / 2 = id',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						add(
-							Expression::eq(
-								Expression::div(
-									Expression::sub(
-										Expression::add(
+							\Onphp\Expression::eq(
+								\Onphp\Expression::div(
+									\Onphp\Expression::sub(
+										\Onphp\Expression::add(
 											2,
-											Expression::minus('id')
+											\Onphp\Expression::minus('id')
 										),
 										-1
 									),
@@ -404,46 +406,46 @@
 			$this->
 				assertCriteria(
 					'from TestUser group by id',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setProjection(
-							Projection::group('id')
+							\Onphp\Projection::group('id')
 						)
 				)->
 				assertCriteria(
 					'from TestUser group by id, nickname',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setProjection(
-							Projection::chain()->
-								add(Projection::group('id'))->
-								add(Projection::group('nickname'))
+							\Onphp\Projection::chain()->
+								add(\Onphp\Projection::group('id'))->
+								add(\Onphp\Projection::group('nickname'))
 						)
 				)->
 				assertCriteria(
 					'from TestUser group by id + 1, id / 2',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setProjection(
-							Projection::chain()->
+							\Onphp\Projection::chain()->
 								add(
-									Projection::group(
-										Expression::add('id', 1)
+									\Onphp\Projection::group(
+										\Onphp\Expression::add('id', 1)
 									)
 								)->
 								add(
-									Projection::group(
-										Expression::div('id', 2)
+									\Onphp\Projection::group(
+										\Onphp\Expression::div('id', 2)
 									)
 								)
 						)
 				)->
 				assertCriteria(
 					'from TestUser group by id > (1 + id) / 2',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setProjection(
-							Projection::group(
-								Expression::gt(
+							\Onphp\Projection::group(
+								\Onphp\Expression::gt(
 									'id',
-									Expression::div(
-										Expression::add(1, 'id'),
+									\Onphp\Expression::div(
+										\Onphp\Expression::add(1, 'id'),
 										2
 									)
 								)
@@ -452,14 +454,14 @@
 				)->
 				assertCriteria(
 					'from TestUser group by $1, $2 - $3',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setProjection(
-							Projection::chain()->
-								add(Projection::group('id'))->
+							\Onphp\Projection::chain()->
+								add(\Onphp\Projection::group('id'))->
 								add(
-									Projection::group(
-										Expression::sub(
-											SQLFunction::create('rand'),
+									\Onphp\Projection::group(
+										\Onphp\Expression::sub(
+											\Onphp\SQLFunction::create('rand'),
 											10
 										)
 									)
@@ -467,7 +469,7 @@
 						),
 					array(
 						1 => 'id',
-						2 => SQLFunction::create('rand'),
+						2 => \Onphp\SQLFunction::create('rand'),
 						3 => 10 
 					)
 				);
@@ -479,44 +481,44 @@
 				// property
 				assertCriteria(
 					'from TestUser order by id',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						addOrder(
-							OrderBy::create('id')
+							\Onphp\OrderBy::create('id')
 						)
 				)->
 				// asc|desc
 				assertCriteria(
 					'from TestUser order by id asc, nickname desc',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						addOrder(
-							OrderChain::create()->
+							\Onphp\OrderChain::create()->
 								add(
-									OrderBy::create('id')->asc()
+									\Onphp\OrderBy::create('id')->asc()
 								)->
 								add(
-									OrderBy::create('nickname')->desc()
+									\Onphp\OrderBy::create('nickname')->desc()
 								)
 						)
 				)->
 				// substitution, boolean and arithmetic expressions
 				assertCriteria(
 					'from TestUser order by $1, nickname is null, -id/2 + 1 asc ',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						addOrder(
-							OrderChain::create()->
+							\Onphp\OrderChain::create()->
 								add(
-									OrderBy::create(SQLFunction::create('rand'))
+									\Onphp\OrderBy::create(\Onphp\SQLFunction::create('rand'))
 								)->
 								add(
-									OrderBy::create(
-										Expression::isNull('nickname')
+									\Onphp\OrderBy::create(
+										\Onphp\Expression::isNull('nickname')
 									)
 								)->
 								add(
-									OrderBy::create(
-										Expression::add(
-											Expression::div(
-												Expression::minus('id'),
+									\Onphp\OrderBy::create(
+										\Onphp\Expression::add(
+											\Onphp\Expression::div(
+												\Onphp\Expression::minus('id'),
 												2
 											),
 											1
@@ -525,7 +527,7 @@
 									asc()
 								)
 						),
-					array(1 => SQLFunction::create('rand'))
+					array(1 => \Onphp\SQLFunction::create('rand'))
 				);
 		}
 		
@@ -535,15 +537,15 @@
 				// arithmetic expression
 				assertCriteria(
 					'from TestUser having (2 + -id --1) / 2 = id',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setProjection(
-							Projection::having(
-								Expression::eq(
-									Expression::div(
-										Expression::sub(
-											Expression::add(
+							\Onphp\Projection::having(
+								\Onphp\Expression::eq(
+									\Onphp\Expression::div(
+										\Onphp\Expression::sub(
+											\Onphp\Expression::add(
 												2,
-												Expression::minus('id')
+												\Onphp\Expression::minus('id')
 											),
 											-1
 										),
@@ -558,14 +560,14 @@
 				// complex boolean expressions
 				assertCriteria(
 					'from TestUser having (id = 1) != ((1 = id) = (id >= 2))',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setProjection(
-							Projection::having(
-								Expression::notEq(
-									Expression::eq('id', 1),
-									Expression::eq(
-										Expression::eq(1, 'id'),
-										Expression::gtEq('id', 2)
+							\Onphp\Projection::having(
+								\Onphp\Expression::notEq(
+									\Onphp\Expression::eq('id', 1),
+									\Onphp\Expression::eq(
+										\Onphp\Expression::eq(1, 'id'),
+										\Onphp\Expression::gtEq('id', 2)
 									)
 								)
 							)
@@ -574,16 +576,16 @@
 				// substitution
 				assertCriteria(
 					'from TestUser having $1 = 1',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setProjection(
-							Projection::having(
-								Expression::eq(
-									SQLFunction::create('count', 'id'),
+							\Onphp\Projection::having(
+								\Onphp\Expression::eq(
+									\Onphp\SQLFunction::create('count', 'id'),
 									1
 								)
 							)
 						),
-					array(1 => SQLFunction::create('count', 'id'))
+					array(1 => \Onphp\SQLFunction::create('count', 'id'))
 				);
 		}
 		
@@ -592,24 +594,24 @@
 			$this->
 				assertCriteria(
 					'from TestUser limit 10',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setLimit(10)
 				)->
 				assertCriteria(
 					'from TestUser limit $1',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setLimit(31),
 					array(1 => 31)
 				)->
 				assertCriteria(
 					'from TestUser limit 10 offset 0',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setLimit(10)->
 						setOffset(0)
 				)->
 				assertCriteria(
 					'from TestUser limit $1 offset $2',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setLimit(10)->
 						setOffset(31),
 					array(1 => 10, 2 => 31)
@@ -630,39 +632,39 @@
 				// Identifiable object
 				array(1 => $user),
 				// DialectString object
-				array(1 => SQLFunction::create('rand'))
+				array(1 => \Onphp\SQLFunction::create('rand'))
 			);
 			
 			foreach ($bindingsList as $bindings) {
 				$value = $bindings[1];
-				if ($value instanceof Identifiable)
+				if ($value instanceof \Onphp\Identifiable)
 					$value = $value->getId();
 				
 				$this->
 					// in property list
 					assertCriteria(
 						'$1 from TestUser',
-						Criteria::create(TestUser::dao())->
+						\Onphp\Criteria::create(TestUser::dao())->
 							setProjection(
-								Projection::property($value)
+								\Onphp\Projection::property($value)
 							),
 						$bindings
 					)->
 					// in aggregate function
 					assertCriteria(
 						'count($1) from TestUser',
-						Criteria::create(TestUser::dao())->
+						\Onphp\Criteria::create(TestUser::dao())->
 							setProjection(
-								Projection::count($value)
+								\Onphp\Projection::count($value)
 							),
 						$bindings
 					)->
 					// in where expression
 					assertCriteria(
 						'from TestUser where id = $1',
-						Criteria::create(TestUser::dao())->
+						\Onphp\Criteria::create(TestUser::dao())->
 							add(
-								Expression::eq('id', $value)
+								\Onphp\Expression::eq('id', $value)
 							),
 						$bindings
 					);
@@ -671,9 +673,9 @@
 				if (is_scalar($value)) {
 					$this->assertCriteria(
 						'from TestUser where id in (1, $1)',
-						Criteria::create(TestUser::dao())->
+						\Onphp\Criteria::create(TestUser::dao())->
 							add(
-								Expression::in('id', array(1, $value))
+								\Onphp\Expression::in('id', array(1, $value))
 							),
 						$bindings
 					);
@@ -683,19 +685,19 @@
 					// in order by expression
 					assertCriteria(
 						'from TestUser order by $1',
-						Criteria::create(TestUser::dao())->
+						\Onphp\Criteria::create(TestUser::dao())->
 							addOrder(
-								OrderBy::create($value)
+								\Onphp\OrderBy::create($value)
 							),
 						$bindings
 					)->
 					// in having expression
 					assertCriteria(
 						'from TestUser having id = $1',
-						Criteria::create(TestUser::dao())->
+						\Onphp\Criteria::create(TestUser::dao())->
 							setProjection(
-								Projection::having(
-									Expression::eq('id', $value)
+								\Onphp\Projection::having(
+									\Onphp\Expression::eq('id', $value)
 								)
 							),
 						$bindings
@@ -703,10 +705,10 @@
 					// in group by expression
 					assertCriteria(
 						'from TestUser group by id = $1',
-						Criteria::create(TestUser::dao())->
+						\Onphp\Criteria::create(TestUser::dao())->
 							setProjection(
-								Projection::group(
-									Expression::eq('id', $value)
+								\Onphp\Projection::group(
+									\Onphp\Expression::eq('id', $value)
 								)
 							),
 						$bindings
@@ -717,14 +719,14 @@
 						// in limit expression
 						assertCriteria(
 							'from TestUser limit $1',
-							Criteria::create(TestUser::dao())->
+							\Onphp\Criteria::create(TestUser::dao())->
 								setLimit($value),
 							$bindings
 						)->
 						// in offset expression
 						assertCriteria(
 							'from TestUser offset $1',
-							Criteria::create(TestUser::dao())->
+							\Onphp\Criteria::create(TestUser::dao())->
 								setOffset($value),
 							$bindings
 						);
@@ -748,12 +750,12 @@
 		
 		public function testQuery()
 		{
-			$criteria = Criteria::create(TestUser::dao())->
+			$criteria = \Onphp\Criteria::create(TestUser::dao())->
 				setProjection(
-					Projection::property('id')
+					\Onphp\Projection::property('id')
 				)->
 				add(
-					Expression::isTrue('id')
+					\Onphp\Expression::isTrue('id')
 				);
 			
 			$this->
@@ -767,7 +769,7 @@
 					'id from TestUser where id is true order by id asc',
 					$criteria->
 						addOrder(
-							OrderBy::create('id')->asc()
+							\Onphp\OrderBy::create('id')->asc()
 						)
 				)->
 				// property, where, order by, limit, offset
@@ -782,9 +784,9 @@
 					'id from TestUser where id is true group by id order by id asc limit 10 offset 1',
 					$criteria->
 						setProjection(
-							Projection::chain()->
-								add(Projection::property('id'))->
-								add(Projection::group('id'))
+							\Onphp\Projection::chain()->
+								add(\Onphp\Projection::property('id'))->
+								add(\Onphp\Projection::group('id'))
 						)
 				)->
 				// property, where, order by, limit, offset, group by, having
@@ -792,12 +794,12 @@
 					'id from TestUser where id is true group by id order by id asc having id = 1 limit 10 offset 1',
 					$criteria->
 						setProjection(
-							Projection::chain()->
-								add(Projection::property('id'))->
-								add(Projection::group('id'))->
+							\Onphp\Projection::chain()->
+								add(\Onphp\Projection::property('id'))->
+								add(\Onphp\Projection::group('id'))->
 								add(
-									Projection::having(
-										Expression::eq('id', 1)
+									\Onphp\Projection::having(
+										\Onphp\Expression::eq('id', 1)
 									)
 								)
 						)
@@ -805,14 +807,14 @@
 				// property, group by, having
 				assertCriteria(
 					'count(id) as count from TestUser group by id having count = 2',
-					Criteria::create(TestUser::dao())->
+					\Onphp\Criteria::create(TestUser::dao())->
 						setProjection(
-							Projection::chain()->
-								add(Projection::count('id', 'count'))->
-								add(Projection::group('id'))->
+							\Onphp\Projection::chain()->
+								add(\Onphp\Projection::count('id', 'count'))->
+								add(\Onphp\Projection::group('id'))->
 								add(
-									Projection::having(
-										Expression::eq('count', 2)
+									\Onphp\Projection::having(
+										\Onphp\Expression::eq('count', 2)
 									)
 								)
 						)
@@ -929,16 +931,16 @@
 		}
 		
 		/**
-		 * @return OqlSelectTest
+		 * @return \Onphp\Test\OqlSelectTest
 		**/
-		private function assertCriteria($query, Criteria $criteria, $bindings = null)
+		private function assertCriteria($query, \Onphp\Criteria $criteria, $bindings = null)
 		{
 			$oqlQuery = OQL::select($query);
 			
 			if (is_array($bindings))
 				$oqlQuery->bindAll($bindings);
 			
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
 			$this->assertEquals(
 				$oqlQuery->toCriteria()->toDialectString($dialect),
@@ -949,14 +951,14 @@
 		}
 		
 		/**
-		 * @return OqlSelectTest
+		 * @return \Onphp\Test\OqlSelectTest
 		**/
 		private function assertSyntaxError($query, $message)
 		{
 			try {
 				OQL::select($query);
 				
-			} catch (SyntaxErrorException $e) {
+			} catch (\Onphp\SyntaxErrorException $e) {
 				$this->assertEquals($e->getMessage(), $message);
 			}
 			

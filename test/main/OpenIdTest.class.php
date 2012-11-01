@@ -9,15 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	final class OpenIdTest extends TestCase
 	{
 		public function testCredentials()
 		{
-			$credential = OpenIdCredentials::create(
-				HttpUrl::create()->parse('http://www.example.com/'),
+			$credential = \Onphp\OpenIdCredentials::create(
+				\Onphp\HttpUrl::create()->parse('http://www.example.com/'),
 				HttpClientStub::create(
 					HttpResponseStub::create()->
-						setStatus(new HttpStatus(HttpStatus::CODE_200))->
+						setStatus(new \Onphp\HttpStatus(\Onphp\HttpStatus::CODE_200))->
 						setBody(<<<EOT
 <html><head><link rel="openid.server"
                   href="http://www.myopenid.com/server" />
@@ -39,11 +41,11 @@ EOT
 			);
 			
 			// from openId creator blog
-			$credential = OpenIdCredentials::create(
-				HttpUrl::create()->parse('http://brad.livejournal.com/'),
+			$credential = \Onphp\OpenIdCredentials::create(
+				\Onphp\HttpUrl::create()->parse('http://brad.livejournal.com/'),
 				HttpClientStub::create(
 					HttpResponseStub::create()->
-						setStatus(new HttpStatus(HttpStatus::CODE_200))->
+						setStatus(new \Onphp\HttpStatus(\Onphp\HttpStatus::CODE_200))->
 						setBody(<<<EOT
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -156,23 +158,23 @@ EOT
 			);
 			
 			try {
-				$credential = OpenIdCredentials::create(
-					HttpUrl::create()->parse('http://www.example.com/'),
+				$credential = \Onphp\OpenIdCredentials::create(
+					\Onphp\HttpUrl::create()->parse('http://www.example.com/'),
 					HttpClientStub::create(
 						HttpResponseStub::create()->
-							setStatus(new HttpStatus(HttpStatus::CODE_404))
+							setStatus(new \Onphp\HttpStatus(\Onphp\HttpStatus::CODE_404))
 					)
 				);
 				$this->fail();
-			} catch (OpenIdException $e) {
+			} catch (\Onphp\OpenIdException $e) {
 				/* pass */
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$this->fail();
 			}
 		}
 	}
 	
-	class HttpResponseStub implements HttpResponse
+	class HttpResponseStub implements \Onphp\HttpResponse
 	{
 		private $status = null;
 		private $body = null;
@@ -187,7 +189,7 @@ EOT
 			return $this->status;
 		}
 		
-		public function setStatus(HttpStatus $status)
+		public function setStatus(\Onphp\HttpStatus $status)
 		{
 			$this->status = $status;
 			return $this;
@@ -206,12 +208,12 @@ EOT
 		
 		public function getReasonPhrase()
 		{
-			throw new UnsupportedMethodException();
+			throw new \Onphp\UnsupportedMethodException();
 		}
 		
 		public function getHeaders()
 		{
-			throw new UnsupportedMethodException();
+			throw new \Onphp\UnsupportedMethodException();
 		}
 		
 		public function hasHeader($name)
@@ -225,51 +227,51 @@ EOT
 		}
 	}
 	
-	class HttpClientStub implements HttpClient
+	class HttpClientStub implements \Onphp\HttpClient
 	{
 		private $response = null;
 		
-		public function __construct(HttpResponse $response)
+		public function __construct(\Onphp\HttpResponse $response)
 		{
 			$this->response = $response;
 		}
 		
-		public static function create(HttpResponse $response)
+		public static function create(\Onphp\HttpResponse $response)
 		{
 			return new self($response);
 		}
 		
 		public function setTimeout($timeout)
 		{
-			throw new UnsupportedMethodException();
+			throw new \Onphp\UnsupportedMethodException();
 		}
 		
 		public function getTimeout()
 		{
-			throw new UnsupportedMethodException();
+			throw new \Onphp\UnsupportedMethodException();
 		}
 		
 		public function setFollowLocation(/* boolean */ $really)
 		{
-			throw new UnsupportedMethodException();
+			throw new \Onphp\UnsupportedMethodException();
 		}
 		
 		public function isFollowLocation()
 		{
-			throw new UnsupportedMethodException();
+			throw new \Onphp\UnsupportedMethodException();
 		}
 		
 		public function setMaxRedirects($maxRedirects)
 		{
-			throw new UnsupportedMethodException();
+			throw new \Onphp\UnsupportedMethodException();
 		}
 		
 		public function getMaxRedirects()
 		{
-			throw new UnsupportedMethodException();
+			throw new \Onphp\UnsupportedMethodException();
 		}
 		
-		public function send(HttpRequest $request)
+		public function send(\Onphp\HttpRequest $request)
 		{
 			return $this->response;
 		}

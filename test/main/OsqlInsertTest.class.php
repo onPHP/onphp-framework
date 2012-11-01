@@ -1,16 +1,18 @@
 <?php
 	
+	namespace Onphp\Test;
+
 	final class OsqlInsertTest extends TestCaseDB
 	{
 		public function testInsertFromSelect()
 		{
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
 			$select = OSQL::select()->
 				from('test_table2')->
 				get('field3')->
 				get('field_7')->
-				andWhere(Expression::gt('field2', DBValue::create('33')));
+				andWhere(\Onphp\Expression::gt('field2', \Onphp\DBValue::create('33')));
 			
 			$insert = OSQL::insert()->
 				setSelect($select)->

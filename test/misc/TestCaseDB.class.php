@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	abstract class TestCaseDB extends TestCase
 	{
 		private $dBCreator = null;
@@ -17,7 +19,7 @@
 		}
 		
 		/**
-		 * @return DBTestCreator
+		 * @return \Onphp\Test\DBTestCreator
 		 */
 		protected function getDBCreator() {
 			return $this->dBCreator;
@@ -25,7 +27,7 @@
 		
 		/**
 		 * @param type $type
-		 * @return DB
+		 * @return \Onphp\DB
 		 */
 		protected function getDbByType($type) {
 			foreach (DBTestPool::me()->getPool() as $db) {

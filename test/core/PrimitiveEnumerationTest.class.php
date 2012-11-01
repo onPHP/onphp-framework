@@ -1,14 +1,16 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class PrimitiveEnumerationTest extends TestCase
 	{
 		public function testIntegerValues()
 		{
 			$form =
-				Form::create()->
+				\Onphp\Form::create()->
 				add(
-					Primitive::enumeration('enum')->of('DataType')
+					\Onphp\Primitive::enumeration('enum')->of('\Onphp\DataType')
 				);
 			
 			$form->import(array('enum' => '4097'));
@@ -19,15 +21,15 @@
 		
 		public function testGetList()
 		{
-			$primitive = Primitive::enumeration('enum')->of('DataType');
-			$enum = DataType::create(DataType::getAnyId());
+			$primitive = \Onphp\Primitive::enumeration('enum')->of('\Onphp\DataType');
+			$enum = \Onphp\DataType::create(\Onphp\DataType::getAnyId());
 			
 			$this->assertEquals($primitive->getList(), $enum->getObjectList());
 			
 			$primitive->setDefault($enum);
 			$this->assertEquals($primitive->getList(), $enum->getObjectList());
 			
-			$primitive->import(array('enum' => DataType::getAnyId()));
+			$primitive->import(array('enum' => \Onphp\DataType::getAnyId()));
 			$this->assertEquals($primitive->getList(), $enum->getObjectList());
 		}
 	}

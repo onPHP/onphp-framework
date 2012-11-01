@@ -1,22 +1,24 @@
 <?php
 	/** $Id$ **/
 	
-	class RouterBaseRuleStub extends RouterBaseRule
+	namespace Onphp\Test;
+
+	class RouterBaseRuleStub extends \Onphp\RouterBaseRule
 	{
 		/**
-		 * @return RouterBaseRuleStub
+		 * @return \Onphp\Test\RouterBaseRuleStub
 		**/
 		public static function create()
 		{
 			return new self();
 		}
 		
-		public function getPath(HttpUrl $url)
+		public function getPath(\Onphp\HttpUrl $url)
 		{
 			return parent::getPath($url);
 		}
 		
-		public function match(HttpRequest $request) {/**/}
+		public function match(\Onphp\HttpRequest $request) {/**/}
 		
 		public function assembly(array $data = array(), $reset = false, $encode = false) {/**/}
 	}
@@ -136,15 +138,15 @@
 		{
 			foreach (self::$fixtures as $base => $cases) {
 				$rewriter =
-					RouterRewrite::me()->setBaseUrl(
-						HttpUrl::create()->parse($base)
+					\Onphp\RouterRewrite::me()->setBaseUrl(
+						\Onphp\HttpUrl::create()->parse($base)
 					);
 				
 				foreach ($cases as $requestUri => $pathResult) {
 					$actualResult =
 						RouterBaseRuleStub::create()->
 						getPath(
-							HttpUrl::create()->
+							\Onphp\HttpUrl::create()->
 							parse($requestUri)
 						)->
 						toString();

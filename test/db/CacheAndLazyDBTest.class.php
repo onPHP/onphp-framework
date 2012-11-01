@@ -1,10 +1,12 @@
 <?php
+	namespace Onphp\Test;
+
 	class CacheAndLazyDBTest extends TestCaseDAO
 	{
 		public function testWorkingWithCache()
 		{
 			foreach (DBTestPool::me()->getPool() as $db) {
-				DBPool::me()->setDefault($db);
+				\Onphp\DBPool::me()->setDefault($db);
 				
 				$item =
 					TestItem::create()->
@@ -34,7 +36,7 @@
 				TestSubItem::dao()->add($subItem2);
 				
 				$items =
-					Criteria::create(TestItem::dao())->
+					\Onphp\Criteria::create(TestItem::dao())->
 					getList();
 				
 				foreach ($items as $item) {
@@ -58,7 +60,7 @@
 				TestItem::dao()->dropIdentityMap();
 				
 				$items =
-					Criteria::create(TestItem::dao())->
+					\Onphp\Criteria::create(TestItem::dao())->
 					getList();
 				
 				foreach ($items as $item) {
@@ -88,7 +90,7 @@
 				TestItem::dao()->dropIdentityMap();
 				
 				$subItems =
-					Criteria::create(TestSubItem::dao())->
+					\Onphp\Criteria::create(TestSubItem::dao())->
 					getList();
 				
 				foreach ($subItems as $subItem) {
@@ -103,7 +105,7 @@
 		public function testLazy()
 		{
 			foreach (DBTestPool::me()->getPool() as $db) {
-				DBPool::me()->setDefault($db);
+				\Onphp\DBPool::me()->setDefault($db);
 				
 				$parent = TestParentObject::create();
 				$child = TestChildObject::create()->setParent($parent);
@@ -114,11 +116,11 @@
 
 				$this->assertEquals(
 					$parent->getId(),
-					Criteria::create(TestChildObject::dao())->
+					\Onphp\Criteria::create(TestChildObject::dao())->
 						setProjection(
-							Projection::property('parent.id', 'parentId')
+							\Onphp\Projection::property('parent.id', 'parentId')
 						)->
-						add(Expression::eq('id', $child->getId()))->
+						add(\Onphp\Expression::eq('id', $child->getId()))->
 						getCustom('parentId')
 				);
 			}

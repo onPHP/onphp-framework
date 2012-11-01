@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	final class TypesUtilsTest extends TestCase
 	{
 		/**
@@ -6,7 +8,7 @@
 		**/
 		public function testSignedToUnsigned($signed, $unsigned)
 		{
-			$this->assertEquals(TypesUtils::signedToUnsigned($signed), $unsigned);
+			$this->assertEquals(\Onphp\TypesUtils::signedToUnsigned($signed), $unsigned);
 		}
 
 		/**
@@ -14,7 +16,7 @@
 		**/
 		public function testUnsignedToSigned($signed, $unsigned)
 		{
-			$this->assertEquals($signed, TypesUtils::unsignedToSigned($unsigned));
+			$this->assertEquals($signed, \Onphp\TypesUtils::unsignedToSigned($unsigned));
 		}
 		
 		public static function integers()

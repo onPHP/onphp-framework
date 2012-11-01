@@ -1,23 +1,25 @@
 <?php
+	namespace Onphp\Test;
+
 	final class FileUtilsTest extends TestCase
 	{
 		public function testUniqueNames()
 		{
-			$uniqueName = FileUtils::makeUniqueName('Chasey Lain.jpeg');
+			$uniqueName = \Onphp\FileUtils::makeUniqueName('Chasey Lain.jpeg');
 			
 			$this->assertEquals(
 				substr($uniqueName, strpos($uniqueName, '.')),
 				'.jpeg'
 			);
 
-			$uniqueName = FileUtils::makeUniqueName('Елена Беркова.jpeg');
+			$uniqueName = \Onphp\FileUtils::makeUniqueName('Елена Беркова.jpeg');
 			
 			$this->assertEquals(
 				substr($uniqueName, strpos($uniqueName, '.')),
 				'.jpeg'
 			);
 
-			$uniqueName = FileUtils::makeUniqueLatinName('Елена Беркова.gif'); //animated gif ;)
+			$uniqueName = \Onphp\FileUtils::makeUniqueLatinName('Елена Беркова.gif'); //animated gif ;)
 			
 			$this->assertEquals(
 				substr($uniqueName, strpos($uniqueName, '.')),

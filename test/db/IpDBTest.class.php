@@ -2,16 +2,18 @@
 	/**
 	 * @group ipdb
 	 */
+	namespace Onphp\Test;
+
 	class IpDBTest extends TestCaseDAO
 	{
 		public function testToDialect()
 		{
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
 			$expression =
-				Expression::containsIp(
-					IpRange::create('127.0.0.1-127.0.0.5'),
-					IpAddress::create('127.0.0.3')
+				\Onphp\Expression::containsIp(
+					\Onphp\IpRange::create('127.0.0.1-127.0.0.5'),
+					\Onphp\IpAddress::create('127.0.0.3')
 				);
 			
 			$this->assertEquals(
@@ -20,8 +22,8 @@
 			);
 			
 			$expression =
-				Expression::containsIp(
-					DBField::create('range'),
+				\Onphp\Expression::containsIp(
+					\Onphp\DBField::create('range'),
 					'192.168.1.1'
 				);
 			$this->assertEquals(
@@ -32,15 +34,15 @@
 		
 		public function testWithObjects()
 		{
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
 			$criteria =
-				Criteria::create(TestUser::dao())->
+				\Onphp\Criteria::create(TestUser::dao())->
 				add(
-					Expression::containsIp(
-						IpRange::create('192.168.1.1-192.168.1.255'), 'ip')
+					\Onphp\Expression::containsIp(
+						\Onphp\IpRange::create('192.168.1.1-192.168.1.255'), 'ip')
 				)->
-				addProjection(Projection::property('id'));
+				addProjection(\Onphp\Projection::property('id'));
 			
 			$this->assertEquals(
 				$criteria->toDialectString($dialect),
@@ -48,13 +50,13 @@
 			);
 			
 			$criteria =
-				Criteria::create(TestInternetProvider::dao())->
+				\Onphp\Criteria::create(TestInternetProvider::dao())->
 				add(
-					Expression::containsIp(
+					\Onphp\Expression::containsIp(
 						'range',
-						IpAddress::create('42.42.42.42')
+						\Onphp\IpAddress::create('42.42.42.42')
 					)
-				)->addProjection(Projection::property('id'));
+				)->addProjection(\Onphp\Projection::property('id'));
 			
 			$this->assertEquals(
 				$criteria->toDialectString($dialect),
@@ -66,7 +68,7 @@
 		public function testIpAddressProperty()
 		{
 			foreach (DBTestPool::me()->getPool() as $db) {
-				DBPool::me()->setDefault($db);
+				\Onphp\DBPool::me()->setDefault($db);
 				
 				$city =
 					TestCity::create()->
@@ -81,31 +83,31 @@
 							setNickName('postgreser')->
 							setPassword(sha1('postgreser'))
 						)->
-						setLastLogin(Timestamp::makeNow())->
-						setRegistered(Timestamp::makeNow())->
+						setLastLogin(\Onphp\Timestamp::makeNow())->
+						setRegistered(\Onphp\Timestamp::makeNow())->
 						setCity($city)->
-						setIp(IpAddress::create('127.0.0.1'));
+						setIp(\Onphp\IpAddress::create('127.0.0.1'));
 
 				TestUser::dao()->add($userWithIp);
 
 				$this->assertTrue($userWithIp->getId() >= 1);
 
-				$this->assertTrue($userWithIp->getIp() instanceof IpAddress);
+				$this->assertTrue($userWithIp->getIp() instanceof \Onphp\IpAddress);
 
 				$plainIp =
-					DBPool::me()->getByDao(TestUser::dao())->
+					\Onphp\DBPool::me()->getByDao(TestUser::dao())->
 					queryColumn(
 						OSQL::select()->get('ip')->
 						from(TestUser::dao()->getTable())->
-						where(Expression::eq('id', $userWithIp->getId()))
+						where(\Onphp\Expression::eq('id', $userWithIp->getId()))
 					);
 
 				$this->assertEquals($plainIp[0], $userWithIp->getIp()->toString());
 
 				$count =
-					Criteria::create(TestUser::dao())->
-					add(Expression::eq('ip', IpAddress::create('127.0.0.1')))->
-					addProjection(Projection::count('*', 'count'))->
+					\Onphp\Criteria::create(TestUser::dao())->
+					add(\Onphp\Expression::eq('ip', \Onphp\IpAddress::create('127.0.0.1')))->
+					addProjection(\Onphp\Projection::count('*', 'count'))->
 					getCustom('count');
 
 				$this->assertEquals($count, 1);
@@ -115,15 +117,15 @@
 		public function testIpRangeProperty()
 		{
 			foreach (DBTestPool::me()->getPool() as $db) {
-				DBPool::me()->setDefault($db);
+				\Onphp\DBPool::me()->setDefault($db);
 				
 				$akado =
 					TestInternetProvider::create()->
 					setName('Akada')->
 					setRange(
-						IpRange::create(
-							IpAddress::create('192.168.1.1'),
-							IpAddress::create('192.168.1.42')
+						\Onphp\IpRange::create(
+							\Onphp\IpAddress::create('192.168.1.1'),
+							\Onphp\IpAddress::create('192.168.1.42')
 						)
 					);
 
@@ -131,9 +133,9 @@
 					add($akado);
 
 				$plainRange =
-						Criteria::create(TestInternetProvider::dao())->
-						addProjection(Projection::property('range'))->
-						add(Expression::eq('name', 'Akada'))->
+						\Onphp\Criteria::create(TestInternetProvider::dao())->
+						addProjection(\Onphp\Projection::property('range'))->
+						add(\Onphp\Expression::eq('name', 'Akada'))->
 						getCustom();
 
 				$this->assertEquals(
@@ -146,12 +148,12 @@
 					TestInternetProvider::create()->
 					setName('DomRu')->
 					setRange(
-						IpRange::create('192.168.2.0/24')
+						\Onphp\IpRange::create('192.168.2.0/24')
 					)
 				);
 
 				$list =
-					Criteria::create(TestInternetProvider::dao())->
+					\Onphp\Criteria::create(TestInternetProvider::dao())->
 					addOrder('id')->
 					getList();
 

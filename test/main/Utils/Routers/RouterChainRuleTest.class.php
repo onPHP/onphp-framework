@@ -1,23 +1,25 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	class RouterChainRuleTest extends TestCase
 	{
 		public function setUp()
 		{
 			ServerVarUtils::unsetVars($_SERVER);
-			RouterRewrite::me()->
+			\Onphp\RouterRewrite::me()->
 				setBaseUrl(
-					new HttpUrl()
+					new \Onphp\HttpUrl()
 				);
 		}
 		
 		public function testChainingMatch()
 		{
-			$chain = new RouterChainRule();
+			$chain = new \Onphp\RouterChainRule();
 			
 			$foo =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'www.example.com'
 				)->
 				setDefaults(
@@ -27,7 +29,7 @@
 				);
 			
 			$bar =
-				RouterStaticRule::create(
+				\Onphp\RouterStaticRule::create(
 					'bar'
 				)->
 				setDefaults(
@@ -57,7 +59,7 @@
 		public function testChainingShortcutMatch()
 		{
 			$foo =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'www.example.com'
 				)->
 				setDefaults(
@@ -67,7 +69,7 @@
 				);
 			
 			$bar =
-				RouterStaticRule::create(
+				\Onphp\RouterStaticRule::create(
 					'bar'
 				)->
 				setDefaults(
@@ -91,7 +93,7 @@
 		public function testChainingMatchFailure()
 		{
 			$foo =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'www.example.com'
 				)->
 				setDefaults(
@@ -101,7 +103,7 @@
 				);
 			
 			$bar =
-				RouterStaticRule::create(
+				\Onphp\RouterStaticRule::create(
 					'bar'
 				)->
 				setDefaults(
@@ -124,7 +126,7 @@
 		public function testChainingVariableOverriding()
 		{
 			$foo =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'www.example.com'
 				)->
 				setDefaults(
@@ -136,7 +138,7 @@
 				);
 			
 			$bar =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'bar'
 				)->
 				setDefaults(
@@ -161,13 +163,13 @@
 		{
 			$this->markTestSkipped('Route features not ready');
 			
-			$foo = RouterTransparentRule::create('foo')->
+			$foo = \Onphp\RouterTransparentRule::create('foo')->
 				setDefaults(array('foo' => 1));
 				
-			$bar = RouterTransparentRule::create('bar')->
+			$bar = \Onphp\RouterTransparentRule::create('bar')->
 				setDefaults(array('bar' => 2));
 				
-			$baz = RouterTransparentRule::create('baz')->
+			$baz = \Onphp\RouterTransparentRule::create('baz')->
 				setDefaults(array('baz' => 3));
 			
 			$chain = $foo->chain($bar, '.');
@@ -189,7 +191,7 @@
 			$this->markTestSkipped('Route features not ready');
 			
 			$lang =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':lang'
 				)->
 				setDefaults(
@@ -199,7 +201,7 @@
 				);
 			
 			$profile =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'user/:id'
 				)->
 				setDefaults(
@@ -219,10 +221,10 @@
 		
 		public function testChainingAssemblyWithStatic()
 		{
-			$chain = new RouterChainRule();
+			$chain = new \Onphp\RouterChainRule();
 			
 			$foo =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'www.example.com'
 				)->
 				setDefaults(
@@ -232,7 +234,7 @@
 				);
 			
 			$bar =
-				RouterStaticRule::create(
+				\Onphp\RouterStaticRule::create(
 					'bar'
 				)->
 				setDefaults(
@@ -257,10 +259,10 @@
 		
 		public function testChainingAssemblyWithRegex()
 		{
-			$chain = new RouterChainRule();
+			$chain = new \Onphp\RouterChainRule();
 			
 			$foo =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'www.example.com'
 				)->
 				setDefaults(
@@ -270,7 +272,7 @@
 				);
 			
 			$bar =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'bar'
 				)->
 				setDefaults(
@@ -297,7 +299,7 @@
 		public function testChainingReuse()
 		{
 			$foo =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'www.example.com'
 				)->
 				setDefaults(
@@ -307,7 +309,7 @@
 				);
 			
 			$profile =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'user/:id'
 				)->
 				setDefaults(
@@ -317,7 +319,7 @@
 				);
 			
 			$article =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'article/:id'
 				)->
 				setDefaults(
@@ -346,10 +348,10 @@
 		
 		public function testAssemblyWithHostnameAndTransparent()
 		{
-			$chain = new RouterChainRule();
+			$chain = new \Onphp\RouterChainRule();
 			
 			$host =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					':subdomain.example.com'
 				)->
 				setDefaults(
@@ -359,7 +361,7 @@
 				);
 			
 			$transparent =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':bar/:area/:action'
 				)->
 				setDefaults(
@@ -409,14 +411,14 @@
 		
 		/**
 		 * @param string $url
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		protected function buildRequest($url)
 		{
 			ServerVarUtils::build($_SERVER, $url);
 			
 			return
-				HttpRequest::create()->
+				\Onphp\HttpRequest::create()->
 				setServer($_SERVER);
 		}
 	}

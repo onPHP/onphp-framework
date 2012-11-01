@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	final class CryptoTest extends TestCase
 	{
 		public function runDiffieHellmanExchange(
-			BigNumberFactory $factory,
-			RandomSource $source
+			\Onphp\BigNumberFactory $factory,
+			\Onphp\RandomSource $source
 		)
 		{
-			$parameters = DiffieHellmanParameters::create(
+			$parameters = \Onphp\DiffieHellmanParameters::create(
 				$factory->makeNumber(2),
 				$factory->makeNumber(
 					'155172898181473697471232257763715539915724801'
@@ -29,8 +31,8 @@
 				)
 			);
 			
-			$sideA = DiffieHellmanKeyPair::generate($parameters, $source);
-			$sideB = DiffieHellmanKeyPair::generate($parameters, $source);
+			$sideA = \Onphp\DiffieHellmanKeyPair::generate($parameters, $source);
+			$sideB = \Onphp\DiffieHellmanKeyPair::generate($parameters, $source);
 			
 			$this->assertEquals(
 				$sideA->makeSharedKey($sideB->getPublic())->toString(),
@@ -38,15 +40,15 @@
 			);
 		}
 		
-		public function runDiffieHellmanGeneration(BigNumberFactory $factory)
+		public function runDiffieHellmanGeneration(\Onphp\BigNumberFactory $factory)
 		{
-			$parameters = DiffieHellmanParameters::create(
+			$parameters = \Onphp\DiffieHellmanParameters::create(
 				$factory->makeNumber(2),
 				$factory->makeNumber(126)
 			);
 			
 			$sourceA = new RandomSourceStub("\x02");
-			$pairA = DiffieHellmanKeyPair::generate($parameters, $sourceA);
+			$pairA = \Onphp\DiffieHellmanKeyPair::generate($parameters, $sourceA);
 			$this->assertEquals(
 				$pairA->getPublic()->toString(),
 				'4'
@@ -58,7 +60,7 @@
 			
 			
 			$sourceB = new RandomSourceStub("\x03");
-			$pairB = DiffieHellmanKeyPair::generate($parameters, $sourceB);
+			$pairB = \Onphp\DiffieHellmanKeyPair::generate($parameters, $sourceB);
 			$this->assertEquals(
 				$pairB->getPublic()->toString(),
 				'8'
@@ -85,8 +87,8 @@
 					)->
 					toBinary()
 			);
-			$bigPair = DiffieHellmanKeyPair::generate(
-				DiffieHellmanParameters::create(
+			$bigPair = \Onphp\DiffieHellmanKeyPair::generate(
+				\Onphp\DiffieHellmanParameters::create(
 					$factory->makeNumber(2),
 					$factory->makeNumber(
 						'155172898181473697471232257763715539915724801966915404479707795314057629378541917580651227423698188993727816152646631438561595825688188889951272158842675419950341258706556549803580104870537681476726513255747040765857479291291572334510643245094715007229621094194349783925984760375594985848253359305585439638443'
@@ -120,22 +122,22 @@
 			if (!extension_loaded('gmp')) {
 				try {
 					dl('gmp.so');
-				} catch (BaseException $e) {
+				} catch (\Onphp\BaseException $e) {
 					return $this->markTestSkipped('gmp module not available');
 				}
 			}
 			
-			$this->runDiffieHellmanGeneration(GmpBigIntegerFactory::me());
+			$this->runDiffieHellmanGeneration(\Onphp\GmpBigIntegerFactory::me());
 			
 			$this->runDiffieHellmanExchange(
-				GmpBigIntegerFactory::me(),
-				MtRandomSource::me()
+				\Onphp\GmpBigIntegerFactory::me(),
+				\Onphp\MtRandomSource::me()
 			);
 			
 			if (file_exists('/dev/urandom') && is_readable('/dev/urandom'))
 				$this->runDiffieHellmanExchange(
-					GmpBigIntegerFactory::me(),
-					new FileRandomSource('/dev/urandom')
+					\Onphp\GmpBigIntegerFactory::me(),
+					new \Onphp\FileRandomSource('/dev/urandom')
 				);
 		}
 		
@@ -145,64 +147,64 @@
 		public function testHmacsha1()
 		{
 			$this->assertEquals(
-				TextUtils::hex2Binary('b617318655057264e28bc0b6fb378c8ef146be00'),
-				CryptoFunctions::hmacsha1(
-					TextUtils::hex2Binary('0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b'),
+				\Onphp\TextUtils::hex2Binary('b617318655057264e28bc0b6fb378c8ef146be00'),
+				\Onphp\CryptoFunctions::hmacsha1(
+					\Onphp\TextUtils::hex2Binary('0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b'),
 					"Hi There"
 				)
 			);
 			
 			$this->assertEquals(
-				CryptoFunctions::hmacsha1(
+				\Onphp\CryptoFunctions::hmacsha1(
 					"Jefe",
 					"what do ya want for nothing?"
 				),
-				TextUtils::hex2Binary('effcdf6ae5eb2fa2d27416d5f184df9c259a7c79')
+				\Onphp\TextUtils::hex2Binary('effcdf6ae5eb2fa2d27416d5f184df9c259a7c79')
 			);
 			
 			$this->assertEquals(
-				CryptoFunctions::hmacsha1(
-					TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-					TextUtils::hex2Binary('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
+				\Onphp\CryptoFunctions::hmacsha1(
+					\Onphp\TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+					\Onphp\TextUtils::hex2Binary('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
 				),
-				TextUtils::hex2Binary('125d7342b9ac11cd91a39af48aa17b4f63f175d3')
+				\Onphp\TextUtils::hex2Binary('125d7342b9ac11cd91a39af48aa17b4f63f175d3')
 			);
 			
 			$this->assertEquals(
-				CryptoFunctions::hmacsha1(
-					TextUtils::hex2Binary('0102030405060708090a0b0c0d0e0f10111213141516171819'),
-					TextUtils::hex2Binary('cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd')
+				\Onphp\CryptoFunctions::hmacsha1(
+					\Onphp\TextUtils::hex2Binary('0102030405060708090a0b0c0d0e0f10111213141516171819'),
+					\Onphp\TextUtils::hex2Binary('cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd')
 				),
-				TextUtils::hex2Binary('4c9007f4026250c6bc8414f9bf50c86c2d7235da')
+				\Onphp\TextUtils::hex2Binary('4c9007f4026250c6bc8414f9bf50c86c2d7235da')
 			);
 			
 			$this->assertEquals(
-				CryptoFunctions::hmacsha1(
-					TextUtils::hex2Binary('0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c'),
+				\Onphp\CryptoFunctions::hmacsha1(
+					\Onphp\TextUtils::hex2Binary('0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c'),
 					"Test With Truncation"
 				),
-				TextUtils::hex2Binary('4c1a03424b55e07fe7f27be1d58bb9324a9a5a04')
+				\Onphp\TextUtils::hex2Binary('4c1a03424b55e07fe7f27be1d58bb9324a9a5a04')
 			);
 			
 			$this->assertEquals(
-				CryptoFunctions::hmacsha1(
-					TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+				\Onphp\CryptoFunctions::hmacsha1(
+					\Onphp\TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
 					"Test Using Larger Than Block-Size Key - Hash Key First"
 				),
-				TextUtils::hex2Binary('aa4ae5e15272d00e95705637ce8a3b55ed402112')
+				\Onphp\TextUtils::hex2Binary('aa4ae5e15272d00e95705637ce8a3b55ed402112')
 			);
 			
 			$this->assertEquals(
-				CryptoFunctions::hmacsha1(
-					TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+				\Onphp\CryptoFunctions::hmacsha1(
+					\Onphp\TextUtils::hex2Binary('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
 					"Test Using Larger Than Block-Size Key and Larger Than One Block-Size Data"
 				),
-				TextUtils::hex2Binary('e8e99d0f45237d786d6bbaa7965c7808bbff1a91')
+				\Onphp\TextUtils::hex2Binary('e8e99d0f45237d786d6bbaa7965c7808bbff1a91')
 			);
 		}
 	}
 	
-	class RandomSourceStub implements RandomSource
+	class RandomSourceStub implements \Onphp\RandomSource
 	{
 		private $data = null;
 		

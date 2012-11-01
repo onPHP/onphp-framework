@@ -1,11 +1,13 @@
 <?php
 
+	namespace Onphp\Test;
+
 	final class CalendarDayTest extends TestCase
 	{
 		public function testSleeping()
 		{
 			$calendarDay =
-				CalendarDay::create('1984-03-25')->
+				\Onphp\CalendarDay::create('1984-03-25')->
 					setOutside(true)->
 					setSelected(false);
 

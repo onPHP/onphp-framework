@@ -1,10 +1,12 @@
 <?php
+	namespace Onphp\Test;
+
 	class IdDBTest extends TestCaseDAO
 	{
 		public function testGetByEmptyId()
 		{
 			foreach (DBTestPool::me()->getPool() as $db) {
-				DBPool::me()->setDefault($db);
+				\Onphp\DBPool::me()->setDefault($db);
 				$this->getByEmptyIdTest(0);
 				$this->getByEmptyIdTest(null);
 				$this->getByEmptyIdTest('');
@@ -38,7 +40,7 @@
 			try {
 				TestUser::dao()->getById($id);
 				$this->fail();
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				// pass
 			}
 		}

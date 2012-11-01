@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	class InnerTransactionTest extends TestCase
 	{
 		public function testCommitExt()
@@ -10,14 +12,14 @@
 			));
 			
 			//execute
-			$transaction = InnerTransaction::begin($db);
+			$transaction = \Onphp\InnerTransaction::begin($db);
 			$transaction->commit();
 			
 			//test Exception on second commit
 			try {
 				$transaction->commit();
 				$this->fail('expecting exception on second transaction commit');
-			} catch (WrongStateException $e) {
+			} catch (\Onphp\WrongStateException $e) {
 				/* all ok */
 			}
 		}
@@ -31,14 +33,14 @@
 			));
 			
 			//execute
-			$transaction = InnerTransaction::begin($db);
+			$transaction = \Onphp\InnerTransaction::begin($db);
 			$transaction->rollback();
 			
 			//test Exception on second commit
 			try {
 				$transaction->rollback();
 				$this->fail('expecting exception on second transaction commit');
-			} catch (WrongStateException $e) {
+			} catch (\Onphp\WrongStateException $e) {
 				/* all ok */
 			}
 		}
@@ -53,14 +55,14 @@
 			));
 			
 			//execute
-			$transaction = InnerTransaction::begin($db);
+			$transaction = \Onphp\InnerTransaction::begin($db);
 			$transaction->commit();
 			
 			//test Exception on second commit
 			try {
 				$transaction->rollback();
 				$this->fail('expecting exception on second transaction commit');
-			} catch (WrongStateException $e) {
+			} catch (\Onphp\WrongStateException $e) {
 				/* all ok */
 			}
 		}
@@ -75,14 +77,14 @@
 			));
 			
 			//execute
-			$transaction = InnerTransaction::begin($db);
+			$transaction = \Onphp\InnerTransaction::begin($db);
 			$transaction->rollback();
 			
 			//test Exception on second commit
 			try {
 				$transaction->commit();
 				$this->fail('expecting exception on second transaction commit');
-			} catch (WrongStateException $e) {
+			} catch (\Onphp\WrongStateException $e) {
 				/* all ok */
 			}
 		}
@@ -100,7 +102,7 @@
 				return $foo . $bar;
 			};
 			
-			$wrapper = InnerTransactionWrapper::create()->
+			$wrapper = \Onphp\InnerTransactionWrapper::create()->
 				setDB($db)->
 				setFunction($innerFunction);
 			
@@ -121,7 +123,7 @@
 				return $e->getMessage().' '.$foo.$bar;
 			};
 			
-			$wrapper = InnerTransactionWrapper::create()->
+			$wrapper = \Onphp\InnerTransactionWrapper::create()->
 				setDB($db)->
 				setFunction(array($this, 'wrapExceptionFunction'))->
 				setExceptionFunction($catchExceptionFunc);
@@ -136,29 +138,29 @@
 				'rollback' => 1,
 			));
 			
-			$exception = new DatabaseException('Some database exception');
+			$exception = new \Onphp\DatabaseException('Some database exception');
 			
 			$function = function () use ($exception) {throw $exception;};
 			
-			$wrapper = InnerTransactionWrapper::create()->
+			$wrapper = \Onphp\InnerTransactionWrapper::create()->
 				setDB($db)->
 				setFunction($function);
 			
 			try {
 				$wrapper->run();
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$this->assertEquals($exception, $e);
 			}
 		}
 		
 		public function wrapExceptionFunction($foo, $bar)
 		{
-			throw new UnimplementedFeatureException('some unimplemented feature');
+			throw new \Onphp\UnimplementedFeatureException('some unimplemented feature');
 		}
 		
 		/**
 		 * @param array $options
-		 * @return DB
+		 * @return \Onphp\DB
 		 */
 		private function spawnDb($options = array())
 		{
@@ -172,7 +174,7 @@
 				'inTransaction' => false,
 			);
 			
-			$mock = $this->getMock('PgSQL');
+			$mock = $this->getMock('\Onphp\PgSQL');
 			
 			$countMethods = array(
 				'begin', 'commit', 'rollback',

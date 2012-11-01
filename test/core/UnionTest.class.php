@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	final class UnionTest extends TestCaseDB
 	{
 		private $singleUnion 		= null;
@@ -28,37 +30,37 @@
 				get('d', 'a')->
 				get('c');
 			
-			$this->singleUnion = CombineQuery::union($left, $right);
-			$this->singleUnionAll = CombineQuery::unionAll($left, $right);
+			$this->singleUnion = \Onphp\CombineQuery::union($left, $right);
+			$this->singleUnionAll = \Onphp\CombineQuery::unionAll($left, $right);
 			
-			$this->singleIntersect = CombineQuery::intersect($left, $right);
-			$this->singleIntersectAll = CombineQuery::intersectAll(
+			$this->singleIntersect = \Onphp\CombineQuery::intersect($left, $right);
+			$this->singleIntersectAll = \Onphp\CombineQuery::intersectAll(
 				$left,
 				$right
 			);
 			
-			$this->singleExcept = CombineQuery::except($left, $right);
-			$this->singleExceptAll = CombineQuery::exceptAll($left, $right);
+			$this->singleExcept = \Onphp\CombineQuery::except($left, $right);
+			$this->singleExceptAll = \Onphp\CombineQuery::exceptAll($left, $right);
 			
-			$this->blockUnion = CombineQuery::unionBlock(
-				$left,
-				$middle,
-				$right
-			);
-			$this->blockUnionAll = CombineQuery::unionAllBlock(
+			$this->blockUnion = \Onphp\CombineQuery::unionBlock(
 				$left,
 				$middle,
 				$right
 			);
+			$this->blockUnionAll = \Onphp\CombineQuery::unionAllBlock(
+				$left,
+				$middle,
+				$right
+			);
 			
-			$this->limitedOrderedUnion = CombineQuery::union($left, $right)->
+			$this->limitedOrderedUnion = \Onphp\CombineQuery::union($left, $right)->
 				orderBy('a')->
 				limit(2, 3);
 		}
 			
 		public function testPostgresql()
 		{
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
 			$this->assertEquals(
 				$this->singleUnion->toDialectString($dialect),

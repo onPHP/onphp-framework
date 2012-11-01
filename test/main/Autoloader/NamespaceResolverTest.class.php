@@ -12,12 +12,14 @@
 	/**
 	 * @group ns
 	 */
+	namespace Onphp\Test;
+
 	final class NamespaceResolverTest extends TestCase
 	{
 		public function testOnPHPResolver()
 		{
 			//setup
-			$resolver = NamespaceResolverOnPHP::create()->
+			$resolver = \Onphp\NamespaceResolverOnPHP::create()->
 				addPath($this->getBasePath().'onPHP');
 			//expectation
 			$result = array(
@@ -74,7 +76,7 @@
 		public function testPSR0ResolverEmptyBaseNamespace()
 		{
 			//setup
-			$resolver = NamespaceResolverPSR0::create()->
+			$resolver = \Onphp\NamespaceResolverPSR0::create()->
 				addPath($this->getBasePath());
 			
 			//expectation
@@ -124,7 +126,7 @@
 		public function testPSR0ResolverStartWithNamespace()
 		{
 			//setup
-			$resolver = NamespaceResolverPSR0::create()->
+			$resolver = \Onphp\NamespaceResolverPSR0::create()->
 				addPath($this->getBasePath().'onPHP', '\onPHP\\');
 			//expectation
 			$result = array(
@@ -148,7 +150,7 @@
 		public function testPSR0WithUnderlineNoBaseNamespace()
 		{
 			//setup
-			$resolver = NamespaceResolverPSR0::create()->
+			$resolver = \Onphp\NamespaceResolverPSR0::create()->
 				setAllowedUnderline(true)->
 				addPath($this->getBasePath(true));
 			
@@ -182,7 +184,7 @@
 		public function testPSR0WithUnderlineWithBaseNamespace()
 		{
 			//setup
-			$resolver = NamespaceResolverPSR0::create()->
+			$resolver = \Onphp\NamespaceResolverPSR0::create()->
 				setAllowedUnderline(true)->
 				addPath($this->getBasePath(true), 'My\base_package');
 			

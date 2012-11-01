@@ -2,6 +2,8 @@
 	/**
 	 * @group pgsf
 	 */
+	namespace Onphp\Test;
+
 	class PgSQLFullTextSearchDBTest extends TestCaseDB
 	{
 		/**
@@ -10,7 +12,7 @@
 		public function getPgSQL()
 		{
 			foreach (DBTestPool::me()->getPool() as $db)
-				if ($db instanceof PgSQL)
+				if ($db instanceof \Onphp\PgSQL)
 					return $db;
 				
 			$this->markTestIncomplete('Required PgSQL for testing');
@@ -18,9 +20,9 @@
 		
 		/**
 		 * @depends getPgSQL
-		 * @return PgSQL
+		 * @return \Onphp\PgSQL
 		 */
-		public function testPrepairFullText(PgSQL $db)
+		public function testPrepairFullText(\Onphp\PgSQL $db)
 		{
 			$this->assertEquals(
 				"'новый год' & 'снегурочка' & 'праздник'",

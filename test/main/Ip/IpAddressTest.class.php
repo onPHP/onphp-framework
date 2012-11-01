@@ -1,6 +1,8 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class IpAddressToSignedIntTest extends TestCase
 	{
 		private $ips = 
@@ -22,7 +24,7 @@
 		{
 			foreach ($this->ips as $ip) {
 				$this->assertEquals(
-					IpAddress::create($ip[0])->toSignedInt(),
+					\Onphp\IpAddress::create($ip[0])->toSignedInt(),
 					$ip[1]
 				);
 			}
@@ -33,7 +35,7 @@
 			foreach ($this->ips as $ip) {
 				$this->assertEquals(
 					long2ip(
-						IpAddress::create($ip[0])->toSignedInt()
+						\Onphp\IpAddress::create($ip[0])->toSignedInt()
 					),
 					$ip[0]
 				);
@@ -44,7 +46,7 @@
 		{
 			foreach ($this->ips as $ip) {
 				$this->assertEquals(
-					IpAddress::create(
+					\Onphp\IpAddress::create(
 						long2ip($ip[1])
 					)->toSignedInt(),
 					$ip[1]

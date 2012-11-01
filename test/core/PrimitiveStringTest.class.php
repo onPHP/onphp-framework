@@ -1,10 +1,12 @@
 <?php
 
+	namespace Onphp\Test;
+
 	final class PrimitiveStringTest extends TestCase
 	{
 		public function testImport()
 		{
-			$prm = Primitive::string('name');
+			$prm = \Onphp\Primitive::string('name');
 			
 			$nullValues = array(null, '');
 			
@@ -25,7 +27,7 @@
 
 
 			$prm->setAllowedPattern(
-				PrimitiveString::MAIL_PATTERN
+				\Onphp\PrimitiveString::MAIL_PATTERN
 			);
 
 			$prm->clean();

@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	abstract class TestTables extends TestCase
 	{
 		protected $schema = null;
@@ -7,7 +9,7 @@
 		{
 			require ONPHP_META_AUTO_DIR.'schema.php';
 			
-			Assert::isTrue(isset($schema));
+			\Onphp\Assert::isTrue(isset($schema));
 			
 			$this->schema = $schema;
 			
@@ -20,7 +22,7 @@
 								$db->getDialect()
 							)
 						);
-					} catch (DatabaseException $e) {
+					} catch (\Onphp\DatabaseException $e) {
 						// ok
 					}
 					
@@ -33,7 +35,7 @@
 							try {
 								if ($column->isAutoincrement())
 									$db->queryRaw("DROP SEQUENCE {$name}_id;");
-							} catch (DatabaseException $e) {
+							} catch (\Onphp\DatabaseException $e) {
 								// ok
 							}
 						}

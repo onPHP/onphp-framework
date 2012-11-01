@@ -1,6 +1,8 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	class RouterHostnameRuleTest extends TestCase
 	{
 		public function setUp()
@@ -81,7 +83,7 @@
 			try {
 				$route->assembly();
 				$this->fail('An expected RouterException has not been raised');
-			} catch (RouterException $expected) {
+			} catch (\Onphp\RouterException $expected) {
 				$this->assertContains('subdomain is not specified', $expected->getMessage());
 			}
 		}
@@ -100,7 +102,7 @@
 		{
 			$route =
 				$this->buildHostnameRuleWithDefault()->
-				setScheme(RouterHostnameRule::SCHEME_HTTPS);
+				setScheme(\Onphp\RouterHostnameRule::SCHEME_HTTPS);
 			
 			$this->assertRegexp(
 				'/^https\:\/\/bar\.example\.com$/i',
@@ -137,7 +139,7 @@
 			$request = $this->buildRequest('www.example.com');
 			
 			$route =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'www.example.com'
 				)->
 				setDefaults(
@@ -154,12 +156,12 @@
 		}
 				
 		/**
-		* @return RouterHostnameRule
+		* @return \Onphp\RouterHostnameRule
 		**/
 		protected function buildStaticHostnameRule()
 		{
 			$route =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'www.example.com'
 				)->
 				setDefaults(
@@ -173,12 +175,12 @@
 		}
 		
 		/**
-		* @return RouterHostnameRule
+		* @return \Onphp\RouterHostnameRule
 		**/
 		protected function buildHostnameRule()
 		{
 			$route =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					':subdomain.example.com'
 				)->
 				setDefaults(
@@ -197,12 +199,12 @@
 		}
 		
 		/**
-		 * @return RouterHostnameRule
+		 * @return \Onphp\RouterHostnameRule
 		**/
 		protected function buildHostnameRuleWithDefault()
 		{
 			$route =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					':subdomain.example.com'
 				)->
 				setDefaults(
@@ -223,14 +225,14 @@
 		
 		/**
 		 * @param string $host
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		protected function buildRequest($host, $schema = 'http')
 		{
 			ServerVarUtils::build($_SERVER, $schema.'://'.$host);
 			
 			return
-				HttpRequest::create()->
+				\Onphp\HttpRequest::create()->
 				setServer($_SERVER);
 		}
 	}

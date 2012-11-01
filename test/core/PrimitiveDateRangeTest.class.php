@@ -1,6 +1,8 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class PrimitiveDateRangeTest extends TestCase
 	{
 		public function testImport()
@@ -9,7 +11,7 @@
 			$stop = '1985-01-03';
 			$delimiter = ' - ';
 			
-			$prm = new PrimitiveDateRange('test');
+			$prm = new \Onphp\PrimitiveDateRange('test');
 			
 			$array = array('test' => $start.$delimiter.$stop);
 			
@@ -68,7 +70,7 @@
 			$dottedStart = '1985.01.03';
 			$dottedStop = '1985.01.03';
 			
-			$prm = new PrimitiveDateRange('test');
+			$prm = new \Onphp\PrimitiveDateRange('test');
 			
 			$array = array('test' => $dottedStart.$delimiter.$dottedStop);
 			
@@ -89,7 +91,7 @@
 			$date = '14.02';
 			$array = array('test' => $date);
 			
-			$now = Date::makeToday();
+			$now = \Onphp\Date::makeToday();
 			$result = $now->getYear().'-02-14';
 			
 			$this->assertTrue($prm->import($array));
@@ -102,7 +104,7 @@
 			$date = '02';
 			$array = array('test' => $date);
 			
-			$now = Date::makeToday();
+			$now = \Onphp\Date::makeToday();
 			$result = $now->getYear().'-'.$now->getMonth().'-'.$date;
 			
 			$this->assertTrue($prm->import($array));
@@ -146,12 +148,12 @@
 		
 		public function testUndelimitedDate()
 		{
-			$prm = new PrimitiveDateRange('test');
+			$prm = new \Onphp\PrimitiveDateRange('test');
 			
 			$date = '1402';
 			$array = array('test' => $date);
 			
-			$now = Date::makeToday();
+			$now = \Onphp\Date::makeToday();
 			$result = $now->getYear().'-02-14';
 			
 			$this->assertTrue($prm->import($array));

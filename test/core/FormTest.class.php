@@ -1,20 +1,22 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class FormTest extends TestCase
 	{
 		public function testRange()
 		{
 			$scope = array(
 				'test' => array(
-					PrimitiveRange::MIN => '42',
-					PrimitiveRange::MAX => '64',
+					\Onphp\PrimitiveRange::MIN => '42',
+					\Onphp\PrimitiveRange::MAX => '64',
 				)
 			);
 			
 			$form =
-				Form::create()->add(
-					Primitive::range('test')
+				\Onphp\Form::create()->add(
+					\Onphp\Primitive::range('test')
 				)->
 				import($scope);
 			
@@ -39,8 +41,8 @@
 		
 		public function testSafeValues()
 		{
-			$prm = Primitive::date('date');
-			$date = Date::create('2005-02-19');
+			$prm = \Onphp\Primitive::date('date');
+			$date = \Onphp\Date::create('2005-02-19');
 			
 			$prm->import(
 				array('date' => '2005-02-19')
@@ -52,7 +54,7 @@
 				$prm->getSafeValue() == $date
 			);
 			
-			$prm = Primitive::date('date')->setDefault(
+			$prm = \Onphp\Primitive::date('date')->setDefault(
 				$date
 			);
 			
@@ -69,23 +71,23 @@
 		
 		public function testErrors()
 		{
-			$form = Form::create()->
+			$form = \Onphp\Form::create()->
 				add(
-					Primitive::ternary('flag')->
+					\Onphp\Primitive::ternary('flag')->
 						setFalseValue('0')->
 						setTrueValue('1')
 				)->
-				add(Primitive::integer('old')->required())->
-				addRule('someRule', Expression::between(FormField::create('old'), '18', '35'));
+				add(\Onphp\Primitive::integer('old')->required())->
+				addRule('someRule', \Onphp\Expression::between(\Onphp\FormField::create('old'), '18', '35'));
 			
 			//empty import
 			$form->import(array())->checkRules();
 			
 			//checking
-			$expectingErrors = array('old' => Form::MISSING, 'someRule' => Form::WRONG);
+			$expectingErrors = array('old' => \Onphp\Form::MISSING, 'someRule' => \Onphp\Form::WRONG);
 			$this->assertEquals($expectingErrors, $form->getErrors());
-			$this->assertEquals(Form::MISSING, $form->getError('old'));
-			$this->assertEquals(Form::WRONG, $form->getError('someRule'));
+			$this->assertEquals(\Onphp\Form::MISSING, $form->getError('old'));
+			$this->assertEquals(\Onphp\Form::WRONG, $form->getError('someRule'));
 			$this->assertTrue($form->hasError('old'));
 			$this->assertFalse($form->hasError('flag'));
 			
@@ -97,7 +99,7 @@
 			$form->clean()->importMore(array('flag' => '3', 'old' => '17'))->checkRules();
 			
 			//checking
-			$expectingErrors = array('flag' => Form::WRONG, 'someRule' => Form::WRONG);
+			$expectingErrors = array('flag' => \Onphp\Form::WRONG, 'someRule' => \Onphp\Form::WRONG);
 			$this->assertEquals($expectingErrors, $form->getErrors());
 			$this->assertTrue($form->hasError('someRule'));
 			

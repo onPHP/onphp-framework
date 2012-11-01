@@ -1,13 +1,15 @@
 <?php
-	final class TestSuite extends PHPUnit_Framework_TestSuite
+	namespace Onphp\Test;
+
+	final class TestSuite extends \PHPUnit_Framework_TestSuite
 	{
 		public function setUp()
 		{
 			if (AllTests::$workers) {
 				$worker = array_pop(AllTests::$workers);
 				echo "\nProcessing with {$worker}\n";
-				Cache::dropWorkers();
-				Cache::setDefaultWorker($worker);
+				\Onphp\Cache::dropWorkers();
+				\Onphp\Cache::setDefaultWorker($worker);
 			} else {
 				$this->markTestSuiteSkipped('No more workers available.');
 			}

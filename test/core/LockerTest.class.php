@@ -1,13 +1,15 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class LockerTest extends TestCase
 	{
 		public function testFileLocker()
 		{
 			$directory = ONPHP_TEMP_PATH.'file-locking/';
 			
-			$locker = new FileLocker('file-locking/');
+			$locker = new \Onphp\FileLocker('file-locking/');
 			
 			$this->assertTrue($locker->get('test'));
 			

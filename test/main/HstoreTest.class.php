@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	final class HstoreTest extends TestCase
 	{
 		public function testRun()
@@ -19,8 +21,8 @@
 				'null' => null
 			);
 
-			$test = Hstore::make($array);
-			$test2= Hstore::create($test->toString());
+			$test = \Onphp\Hstore::make($array);
+			$test2= \Onphp\Hstore::create($test->toString());
 
 			$this->assertEquals($test->toString(), $test2->toString());
 

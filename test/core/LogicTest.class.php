@@ -1,257 +1,259 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class LogicTest extends TestCaseDB
 	{
 		public function testBaseSqlGeneration()
 		{
-			$dialect = ImaginaryDialect::me();
-			$pgDialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = \Onphp\ImaginaryDialect::me();
+			$pgDialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			
 			$this->assertRegExp(
 				'/^\(a (AND|and) b\)$/',
-				Expression::expAnd('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::expAnd('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a (OR|or) b\)$/',
-				Expression::expOr('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::expOr('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
-				Expression::eq('a', 'b')->toDialectString($dialect),
+				\Onphp\Expression::eq('a', 'b')->toDialectString($dialect),
 				'(a = b)'
 			);
 			
-			$some = IdentifiableObject::wrap(123);
+			$some = \Onphp\IdentifiableObject::wrap(123);
 			$this->assertEquals(
-				Expression::eqId('a', $some)->toDialectString($dialect),
+				\Onphp\Expression::eqId('a', $some)->toDialectString($dialect),
 				'(a = 123)'
 			);
 			
 			$this->assertEquals(
-				Expression::notEq('a', 'b')->toDialectString($dialect),
+				\Onphp\Expression::notEq('a', 'b')->toDialectString($dialect),
 				'(a != b)'
 			);
 			
 			$this->assertEquals(
-				Expression::gt('a', 'b')->toDialectString($dialect),
+				\Onphp\Expression::gt('a', 'b')->toDialectString($dialect),
 				'(a > b)'
 			);
 			
 			$this->assertEquals(
-				Expression::gtEq('a', 'b')->toDialectString($dialect),
+				\Onphp\Expression::gtEq('a', 'b')->toDialectString($dialect),
 				'(a >= b)'
 			);
 			
 			$this->assertEquals(
-				Expression::lt('a', 'b')->toDialectString($dialect),
+				\Onphp\Expression::lt('a', 'b')->toDialectString($dialect),
 				'(a < b)'
 			);
 			
 			$this->assertEquals(
-				Expression::ltEq('a', 'b')->toDialectString($dialect),
+				\Onphp\Expression::ltEq('a', 'b')->toDialectString($dialect),
 				'(a <= b)'
 			);
 			
 			$this->assertRegExp(
 				'/^\(a ((IS NOT NULL)|(is not null)) *\)$/',
-				Expression::notNull('a')->toDialectString($dialect)
+				\Onphp\Expression::notNull('a')->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a ((IS NULL)|(is null)) *\)$/',
-				Expression::isNull('a')->toDialectString($dialect)
+				\Onphp\Expression::isNull('a')->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a ((IS TRUE)|(is true)) *\)$/',
-				Expression::isTrue('a')->toDialectString($dialect)
+				\Onphp\Expression::isTrue('a')->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a ((IS FALSE)|(is false)) *\)$/',
-				Expression::isFalse('a')->toDialectString($dialect)
+				\Onphp\Expression::isFalse('a')->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a (LIKE|like) b\)$/',
-				Expression::like('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::like('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a ((NOT LIKE)|(not like)) b\)$/',
-				Expression::notLike('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::notLike('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a (ILIKE|ilike) b\)$/',
-				Expression::ilike('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::ilike('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a ((NOT ILIKE)|(not like)) b\)$/',
-				Expression::notIlike('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::notIlike('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a ((SIMILAR TO)|(similar to)) b\)$/',
-				Expression::similar('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::similar('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a ((NOT SIMILAR TO)|(not similar to)) b\)$/',
-				Expression::notSimilar('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::notSimilar('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(lower(a) = b)',
-				Expression::eqLower('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::eqLower('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(lower(a) = lower(b))',
 				
-				Expression::eqLower(new DBValue('a'), new DBValue('b'))->
+				\Onphp\Expression::eqLower(new \Onphp\DBValue('a'), new \Onphp\DBValue('b'))->
 				toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(lower(\'a\') = lower(\'b\'))',
 				
-				Expression::eqLower(new DBValue('a'), new DBValue('b'))->
+				\Onphp\Expression::eqLower(new \Onphp\DBValue('a'), new \Onphp\DBValue('b'))->
 				toDialectString($pgDialect)
 			);
 			
 			$this->assertEquals(
 				'(lower(\'a\') = lower("b"))',
 				
-				Expression::eqLower(new DBValue('a'), new DBField('b'))->
+				\Onphp\Expression::eqLower(new \Onphp\DBValue('a'), new \Onphp\DBField('b'))->
 				toDialectString($pgDialect)
 			);
 			
 			$this->assertEquals(
 				'(lower("a") = lower(\'b\'))',
 				
-				Expression::eqLower(new DBField('a'), new DBValue('b'))->
+				\Onphp\Expression::eqLower(new \Onphp\DBField('a'), new \Onphp\DBValue('b'))->
 				toDialectString($pgDialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a (BETWEEN|between) b (AND|and) c\)$/',
-				Expression::between('a', 'b', 'c')->toDialectString($dialect)
+				\Onphp\Expression::between('a', 'b', 'c')->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(a = 123)',
-				Expression::in('a', 123)->toDialectString($dialect)
+				\Onphp\Expression::in('a', 123)->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(a = 123)',
-				Expression::in('a', array(123))->toDialectString($dialect)
+				\Onphp\Expression::in('a', array(123))->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a (in|IN) \(123, 456\)\)$/',
-				Expression::in('a', array(123, 456))->toDialectString($dialect)
+				\Onphp\Expression::in('a', array(123, 456))->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(a != 123)',
-				Expression::notIn('a', 123)->toDialectString($dialect)
+				\Onphp\Expression::notIn('a', 123)->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(a != 123)',
-				Expression::notIn('a', array(123))->toDialectString($dialect)
+				\Onphp\Expression::notIn('a', array(123))->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a ((not in)|(NOT IN)) \(123, 456\)\)$/',
-				Expression::notIn('a', array(123, 456))->toDialectString($dialect)
+				\Onphp\Expression::notIn('a', array(123, 456))->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(a + b)',
-				Expression::add('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::add('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(a - b)',
-				Expression::sub('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::sub('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(a * b)',
-				Expression::mul('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::mul('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(a / b)',
-				Expression::div('a', 'b')->toDialectString($dialect)
+				\Onphp\Expression::div('a', 'b')->toDialectString($dialect)
 			);
 			
 			$this->assertRegExp(
 				'/^\(a (between|BETWEEN) b (and|AND) c\)$/',
-				Expression::between('a', 'b', 'c')->toDialectString($dialect)
+				\Onphp\Expression::between('a', 'b', 'c')->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(-1 IS NULL)',
-				Expression::isNull(-1)->toDialectString($dialect)
+				\Onphp\Expression::isNull(-1)->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(NOT a)',
-				Expression::not('a')->toDialectString($dialect)
+				\Onphp\Expression::not('a')->toDialectString($dialect)
 			);
 			
 			$this->assertEquals(
 				'(- a)',
-				Expression::minus('a')->toDialectString($dialect)
+				\Onphp\Expression::minus('a')->toDialectString($dialect)
 			);
 			
 			try {
-				Expression::eq('id', null)->toDialectString($dialect);
+				\Onphp\Expression::eq('id', null)->toDialectString($dialect);
 				
 				$this->fail();
-			} catch (WrongArgumentException $e) {
+			} catch (\Onphp\WrongArgumentException $e) {
 				//it's Ok
 			}
 		}
 		
 		public function testPgGeneration()
 		{
-			$dialect = $this->getDbByType('PgSQL')->getDialect();
+			$dialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
 			$this->assertRegExp(
 				'/^\(\(\(\(\'asdf\' = "b"\) (AND|and) \("e" != \("i" \/ \'123\'\)\) (AND|and) \(\(lower\("a"\) += +lower\("b"\)\) ((IS TRUE)|(is true))\) (AND|and) \("g" = \'12\'\) (AND|and) \("j" (BETWEEN|between) \'3\' (AND|and) "p"\)\) (OR|or) \("table"\."c" ((IS NOT NULL)|(is not null))\)\) (AND|and) \("sometable"\."a" ((not in)|(NOT IN)) \(\'q\', \'qwer\', \'xcvzxc\', \'wer\'\)\)\)$/',
- 				Expression::expAnd(
-					Expression::expOr(
-						Expression::andBlock(
-							Expression::eq(
-								new DBValue('asdf'),
-								new DBField('b')
+ 				\Onphp\Expression::expAnd(
+					\Onphp\Expression::expOr(
+						\Onphp\Expression::andBlock(
+							\Onphp\Expression::eq(
+								new \Onphp\DBValue('asdf'),
+								new \Onphp\DBField('b')
 							),
-							Expression::notEq(
-								new DBField('e'),
-								Expression::div(
-									new DBField('i'),
-									new DBValue(123)
+							\Onphp\Expression::notEq(
+								new \Onphp\DBField('e'),
+								\Onphp\Expression::div(
+									new \Onphp\DBField('i'),
+									new \Onphp\DBValue(123)
 								)
 							),
-							Expression::isTrue(
-								Expression::eqLower(new DBField('a'), new DBField('b'))
+							\Onphp\Expression::isTrue(
+								\Onphp\Expression::eqLower(new \Onphp\DBField('a'), new \Onphp\DBField('b'))
 							),
 							
-							Expression::eq(new DBField('g'), new DBValue(12)),
+							\Onphp\Expression::eq(new \Onphp\DBField('g'), new \Onphp\DBValue(12)),
 							
-							Expression::between('j', new DBValue(3), new DBField('p'))
+							\Onphp\Expression::between('j', new \Onphp\DBValue(3), new \Onphp\DBField('p'))
 						),
-						Expression::notNull(new DBField('c', 'table'))
+						\Onphp\Expression::notNull(new \Onphp\DBField('c', 'table'))
 					),
-					Expression::notIn(
-						new DBField('a', 'sometable'),
+					\Onphp\Expression::notIn(
+						new \Onphp\DBField('a', 'sometable'),
 						array('q', 'qwer', 'xcvzxc', 'wer')
 					)
 				)->toDialectString($dialect)
@@ -260,24 +262,24 @@
 		
 		public function testFormCalculation()
 		{
-			$form = Form::create()->
+			$form = \Onphp\Form::create()->
 				add(
-					Primitive::string('a')
+					\Onphp\Primitive::string('a')
 				)->
 				add(
-					Primitive::boolean('b')
+					\Onphp\Primitive::boolean('b')
 				)->
 				add(
-					Primitive::integer('c')
+					\Onphp\Primitive::integer('c')
 				)->
 				add(
-					Primitive::integer('d')
+					\Onphp\Primitive::integer('d')
 				)->
 				add(
-					Primitive::integer('e')
+					\Onphp\Primitive::integer('e')
 				)->
 				add(
-					Primitive::boolean('f')
+					\Onphp\Primitive::boolean('f')
 				)->
 				import(
 					array(
@@ -290,38 +292,38 @@
 				);
 			
 			$this->assertTrue(
-				Expression::isTrue(new FormField('b'))->toBoolean($form)
+				\Onphp\Expression::isTrue(new \Onphp\FormField('b'))->toBoolean($form)
 			);
 			
 			$this->assertFalse(
-				Expression::isTrue(new FormField('f'))->toBoolean($form)
+				\Onphp\Expression::isTrue(new \Onphp\FormField('f'))->toBoolean($form)
 			);
 			
 			$this->assertFalse(
-				Expression::eq('asdf', new FormField('a'))->toBoolean($form)
+				\Onphp\Expression::eq('asdf', new \Onphp\FormField('a'))->toBoolean($form)
 			);
 			
 			$this->assertTrue(
-				Expression::eqLower('asdfg', new FormField('a'))->toBoolean($form)
+				\Onphp\Expression::eqLower('asdfg', new \Onphp\FormField('a'))->toBoolean($form)
 			);
 			
 			$this->assertTrue(
-				Expression::eq('asDfg', new FormField('a'))->toBoolean($form)
+				\Onphp\Expression::eq('asDfg', new \Onphp\FormField('a'))->toBoolean($form)
 			);
 			
 			$this->assertTrue(
-				Expression::andBlock(
-					Expression::expOr(
-						new FormField('b'),
-						new FormField('f')
+				\Onphp\Expression::andBlock(
+					\Onphp\Expression::expOr(
+						new \Onphp\FormField('b'),
+						new \Onphp\FormField('f')
 					),
-					Expression::eq(
+					\Onphp\Expression::eq(
 						7,
-						Expression::add(
-							new FormField('c'),
-							Expression::mul(
-								new FormField('d'),
-								new FormField('e')
+						\Onphp\Expression::add(
+							new \Onphp\FormField('c'),
+							\Onphp\Expression::mul(
+								new \Onphp\FormField('d'),
+								new \Onphp\FormField('e')
 							)
 						)
 					)
@@ -330,19 +332,19 @@
 			);
 			
 			$this->assertTrue(
-				Expression::between(new FormField('d'), new FormField('c'), new FormField('e'))->toBoolean($form)
+				\Onphp\Expression::between(new \Onphp\FormField('d'), new \Onphp\FormField('c'), new \Onphp\FormField('e'))->toBoolean($form)
 			);
 			
 			$this->assertFalse(
-				Expression::between(new FormField('c'), new FormField('d'), new FormField('e'))->toBoolean($form)
+				\Onphp\Expression::between(new \Onphp\FormField('c'), new \Onphp\FormField('d'), new \Onphp\FormField('e'))->toBoolean($form)
 			);
 			
 			$this->assertFalse(
-				Expression::not(new FormField('b'))->toBoolean($form)
+				\Onphp\Expression::not(new \Onphp\FormField('b'))->toBoolean($form)
 			);
 			
 			$this->assertTrue(
-				Expression::not(new FormField('f'))->toBoolean($form)
+				\Onphp\Expression::not(new \Onphp\FormField('f'))->toBoolean($form)
 			);
 			
 		}
@@ -351,58 +353,58 @@
 		{
 			$this->assertRegExp(
 				'/^\(\(a (OR|or) \(b ((IS NOT NULL)|(is not null)) *\)\) (AND|and) \(c = d\) (AND|and) \(e ((IS FALSE)|(is false)) *\)\)$/',
-				Expression::chain()->
+				\Onphp\Expression::chain()->
 					expAnd(
-						Expression::expOr(
+						\Onphp\Expression::expOr(
 							'a',
-							Expression::notNull('b')
+							\Onphp\Expression::notNull('b')
 						)
 					)->
 					expAnd(
-						Expression::eq('c', 'd')
+						\Onphp\Expression::eq('c', 'd')
 					)->
 					expAnd(
-						Expression::isFalse('e')
+						\Onphp\Expression::isFalse('e')
 					)->
-					toDialectString(ImaginaryDialect::me())
+					toDialectString(\Onphp\ImaginaryDialect::me())
 			);
 			
 			$this->assertRegExp(
 				'/^\(\(a = b\) (OR|or) \(d (OR|or) \(c > e\)\) (OR|or) \(f (in|IN) \(qwer, asdf, zxcv\)\)\)$/',
-				Expression::chain()->
+				\Onphp\Expression::chain()->
 					expOr(
-						Expression::eq('a', 'b')
+						\Onphp\Expression::eq('a', 'b')
 					)->
 					expOr(
-						Expression::expOr('d', Expression::gt('c', 'e'))
+						\Onphp\Expression::expOr('d', \Onphp\Expression::gt('c', 'e'))
 					)->
 					expOr(
-						Expression::in('f', array('qwer', 'asdf', 'zxcv'))
+						\Onphp\Expression::in('f', array('qwer', 'asdf', 'zxcv'))
 					)->
-					toDialectString(ImaginaryDialect::me())
+					toDialectString(\Onphp\ImaginaryDialect::me())
 			);
 		}
 
 		public function testChainForm()
 		{
-			$form = Form::create()->
+			$form = \Onphp\Form::create()->
 				add(
-					Primitive::string('a')
+					\Onphp\Primitive::string('a')
 				)->
 				add(
-					Primitive::string('b')
+					\Onphp\Primitive::string('b')
 				)->
 				add(
-					Primitive::integer('c')
+					\Onphp\Primitive::integer('c')
 				)->
 				add(
-					Primitive::integer('d')
+					\Onphp\Primitive::integer('d')
 				)->
 				add(
-					Primitive::boolean('e')
+					\Onphp\Primitive::boolean('e')
 				)->
 				add(
-					Primitive::string('f')
+					\Onphp\Primitive::string('f')
 				)->
 				import(
 					array(
@@ -412,20 +414,20 @@
 					)
 				);
 			
-			$andChain = Expression::chain()->
+			$andChain = \Onphp\Expression::chain()->
 				expAnd(
-					Expression::expOr(
-						new FormField('a'),
-						Expression::notNull(new FormField('b'))
+					\Onphp\Expression::expOr(
+						new \Onphp\FormField('a'),
+						\Onphp\Expression::notNull(new \Onphp\FormField('b'))
 					)
 				)->
 				expAnd(
-					Expression::eq(
-						new FormField('c'),
-						new FormField('d'))
+					\Onphp\Expression::eq(
+						new \Onphp\FormField('c'),
+						new \Onphp\FormField('d'))
 				)->
 				expAnd(
-					Expression::isFalse(new FormField('e'))
+					\Onphp\Expression::isFalse(new \Onphp\FormField('e'))
 				);
 
 			$this->assertTrue($andChain->toBoolean($form));
@@ -433,21 +435,21 @@
 			$form->importMore(array('e' => 'on'));
 			$this->assertFalse($andChain->toBoolean($form));
 
-			$orChain = Expression::chain()->
+			$orChain = \Onphp\Expression::chain()->
 				expOr(
-					Expression::eq(new FormField('a'), new FormField('b'))
+					\Onphp\Expression::eq(new \Onphp\FormField('a'), new \Onphp\FormField('b'))
 				)->
 				expOr(
-					Expression::expOr(
-						new FormField('e'),
-						Expression::gt(
-							new FormField('c'),
-							new FormField('d')
+					\Onphp\Expression::expOr(
+						new \Onphp\FormField('e'),
+						\Onphp\Expression::gt(
+							new \Onphp\FormField('c'),
+							new \Onphp\FormField('d')
 						)
 					)
 				)->
 				expOr(
-					Expression::in(new FormField('f'), array('qwer', 'asdf', 'zxcv'))
+					\Onphp\Expression::in(new \Onphp\FormField('f'), array('qwer', 'asdf', 'zxcv'))
 				);
 
 			$form->import(array());
@@ -489,16 +491,16 @@
 			if (mb_substr(PHP_VERSION, 0, 3) < '5.3') {
 				$this->markTestSkipped('only php 5.3 or later');
 			}
-			$callBack = function(Form $form) {
+			$callBack = function(\Onphp\Form $form) {
 				return $form->getValue('repository') == 'git';
 			};
 			
-			$form = Form::create()->
-				add(Primitive::string('repository'))->
-				addRule('isOurRepository', CallbackLogicalObject::create($callBack));
+			$form = \Onphp\Form::create()->
+				add(\Onphp\Primitive::string('repository'))->
+				addRule('isOurRepository', \Onphp\CallbackLogicalObject::create($callBack));
 			
 			$form->import(array('repository' => 'svn'))->checkRules();
-			$this->assertEquals(array('isOurRepository' => Form::WRONG), $form->getErrors());
+			$this->assertEquals(array('isOurRepository' => \Onphp\Form::WRONG), $form->getErrors());
 			
 			$form->clean()->dropAllErrors();
 			

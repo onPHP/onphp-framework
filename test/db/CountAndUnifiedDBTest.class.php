@@ -1,21 +1,23 @@
 <?php
+	namespace Onphp\Test;
+
 	class CountAndUnifiedDBTest extends TestCaseDAO
 	{
 		public function testUnified()
 		{
 			foreach (DBTestPool::me()->getPool() as $db) {
-				DBPool::me()->setDefault($db);
+				\Onphp\DBPool::me()->setDefault($db);
 				$this->getDBCreator()->fillDB();
 				
 				$this->unified();
 				
-				Cache::me()->clean();
+				\Onphp\Cache::me()->clean();
 				
 				TestUser::dao()->dropById(1);
 				try {
 					TestUser::dao()->dropByIds(array(1, 2));
 					$this->fail();
-				} catch (WrongStateException $e) {
+				} catch (\Onphp\WrongStateException $e) {
 					// ok
 				}
 			}
@@ -24,7 +26,7 @@
 		public function testCount()
 		{
 			foreach (DBTestPool::me()->getPool() as $db) {
-				DBPool::me()->setDefault($db);
+				\Onphp\DBPool::me()->setDefault($db);
 				$this->getDBCreator()->fillDB();
 				
 				$count = TestUser::dao()->getTotalCount();
@@ -44,10 +46,10 @@
 						setPassword(sha1('newuser'))
 					)->
 					setLastLogin(
-						Timestamp::create(time())
+						\Onphp\Timestamp::create(time())
 					)->
 					setRegistered(
-						Timestamp::create(time())
+						\Onphp\Timestamp::create(time())
 					);
 				
 				TestUser::dao()->add($newUser);
@@ -101,9 +103,9 @@
 			
 			$this->assertEquals($user->getEncapsulants()->getCount(), 10);
 			
-			$criteria = Criteria::create(TestEncapsulant::dao())->
+			$criteria = \Onphp\Criteria::create(TestEncapsulant::dao())->
 				add(
-					Expression::in(
+					\Onphp\Expression::in(
 						'cities.id',
 						array($piter->getId(), $moscow->getId())
 					)
@@ -121,7 +123,7 @@
 					setDistinct(true)
 			);
 			
-			if (DBPool::me()->getLink() instanceof SQLite)
+			if (\Onphp\DBPool::me()->getLink() instanceof \Onphp\SQLite)
 				// TODO: sqlite does not support such queries yet
 				return null;
 			

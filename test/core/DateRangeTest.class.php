@@ -1,14 +1,16 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class DateRangeTest extends TestCase
 	{
 		public function testSplit()
 		{
-			$start = new Date('2007-03-26');
-			$end = new Date('2007-04-15');
+			$start = new \Onphp\Date('2007-03-26');
+			$end = new \Onphp\Date('2007-04-15');
 			
-			$range = DateRange::create()->lazySet($start, $end);
+			$range = \Onphp\DateRange::create()->lazySet($start, $end);
 			
 			$dates = $range->split();
 			
@@ -21,27 +23,27 @@
 		public function testOverlaps()
 		{
 			$this->assertTrue(
-				DateRange::create()->lazySet(
-					Date::create('2007-03-28'),
-					Date::create('2008-03-27')
+				\Onphp\DateRange::create()->lazySet(
+					\Onphp\Date::create('2007-03-28'),
+					\Onphp\Date::create('2008-03-27')
 				)->
 				overlaps(
-					DateRange::create()->lazySet(
-						Date::create('2007-05-14'),
-						Date::create('2008-03-29')
+					\Onphp\DateRange::create()->lazySet(
+						\Onphp\Date::create('2007-05-14'),
+						\Onphp\Date::create('2008-03-29')
 					)
 				)
 			);
 			
 			$this->assertFalse(
-				DateRange::create()->lazySet(
-					Date::create('2007-03-28'),
-					Date::create('2008-03-27')
+				\Onphp\DateRange::create()->lazySet(
+					\Onphp\Date::create('2007-03-28'),
+					\Onphp\Date::create('2008-03-27')
 				)->
 				overlaps(
-					DateRange::create()->lazySet(
-						Date::create('2005-05-14'),
-						Date::create('2006-03-29')
+					\Onphp\DateRange::create()->lazySet(
+						\Onphp\Date::create('2005-05-14'),
+						\Onphp\Date::create('2006-03-29')
 					)
 				)
 			);

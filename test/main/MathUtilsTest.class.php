@@ -9,22 +9,24 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	final class MathUtilsTest extends TestCase
 	{
 		public function testCompareFloat()
 		{
 			$this->assertEquals(
-				MathUtils::compareFloat(0.001, 0.001),
+				\Onphp\MathUtils::compareFloat(0.001, 0.001),
 				0
 			);
 
 			$this->assertEquals(
-				MathUtils::compareFloat(0, 0.0001, 0.001),
+				\Onphp\MathUtils::compareFloat(0, 0.0001, 0.001),
 				0
 			);
 
 			$this->assertEquals(
-				MathUtils::compareFloat(0.0001, 0.00001, 0.000001),
+				\Onphp\MathUtils::compareFloat(0.0001, 0.00001, 0.000001),
 				1
 			);
 		}

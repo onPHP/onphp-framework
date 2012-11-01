@@ -9,12 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class EntityProtoConvertersTest extends PHPUnit_Framework_TestCase
+	namespace Onphp\Test;
+
+	final class EntityProtoConvertersTest extends \PHPUnit_Framework_TestCase
 	{
 		public function testDirectoryBinder()
 		{
-			$converter = DirectoryToObjectBinder::create(
-				Singleton::getInstance('EntityProtoDirectoryItem')
+			$converter = \Onphp\DirectoryToObjectBinder::create(
+				\Onphp\Singleton::getInstance('\Onphp\Test\EntityProtoDirectoryItem')
 			);
 			
 			$directoryContext = ONPHP_TEST_PATH.'main/data/directory';
@@ -32,8 +34,8 @@
 			
 			$newDirectoryContext = ONPHP_TEMP_PATH.'tests/main/data/directory';
 			
-			$unconverter = ObjectToDirectoryBinder::create(
-				Singleton::getInstance('EntityProtoDirectoryItem')
+			$unconverter = \Onphp\ObjectToDirectoryBinder::create(
+				\Onphp\Singleton::getInstance('\Onphp\Test\EntityProtoDirectoryItem')
 			)->
 				setDirectory($newDirectoryContext);
 			
@@ -92,8 +94,8 @@
 			
 			$ringDir = ONPHP_TEMP_PATH.'tests/main/data/ring';
 			
-			$converter = DirectoryToObjectBinder::create(
-				Singleton::getInstance('EntityProtoDirectoryItem')
+			$converter = \Onphp\DirectoryToObjectBinder::create(
+				\Onphp\Singleton::getInstance('\Onphp\Test\EntityProtoDirectoryItem')
 			);
 			
 			$result = $converter->make($ringDir);
@@ -131,8 +133,8 @@
 		{
 			$ringDir = ONPHP_TEMP_PATH.'tests/main/data/ring';
 			
-			$converter = ObjectToDirectoryBinder::create(
-				Singleton::getInstance('EntityProtoDirectoryItem')
+			$converter = \Onphp\ObjectToDirectoryBinder::create(
+				\Onphp\Singleton::getInstance('\Onphp\Test\EntityProtoDirectoryItem')
 			)->
 				setDirectory($ringDir);
 			
@@ -172,7 +174,7 @@
 		}
 	}
 	
-	abstract class DirectoryItemBase implements Identifiable
+	abstract class DirectoryItemBase implements \Onphp\Identifiable
 	{
 		protected $textField;
 		protected $fileName;
@@ -257,29 +259,29 @@
 		}
 	}
 	
-	final class EntityProtoDirectoryItem extends EntityProto
+	final class EntityProtoDirectoryItem extends \Onphp\EntityProto
 	{
 		public function className()
 		{
-			return 'DirectoryItem';
+			return '\Onphp\Test\DirectoryItem';
 		}
 		
 		public function getFormMapping()
 		{
 			return array(
-				'items' => Primitive::formsList('items')->
-					of('DirectoryItem')->
+				'items' => \Onphp\Primitive::formsList('items')->
+					of('\Onphp\Test\DirectoryItem')->
 					required(),
 				
-				'textField' => Primitive::string('textField')->
+				'textField' => \Onphp\Primitive::string('textField')->
 					setMax(256)->
 					optional(),
 				
-				'fileName' => Primitive::file('contents')->
+				'fileName' => \Onphp\Primitive::file('contents')->
 					required(),
 				
-				'inner' => Primitive::form('inner')->
-					of('DirectoryItem')->
+				'inner' => \Onphp\Primitive::form('inner')->
+					of('\Onphp\Test\DirectoryItem')->
 					optional(),
 			);
 		}

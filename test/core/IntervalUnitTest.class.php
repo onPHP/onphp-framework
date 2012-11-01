@@ -1,14 +1,16 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class IntervalUnitTest extends TestCase
 	{
 		public function testMicrosecond()
 		{
-			$unit = IntervalUnit::create('microsecond');
+			$unit = \Onphp\IntervalUnit::create('microsecond');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40')
+				\Onphp\Timestamp::create('2001-02-16 20:38:40')
 			);
 			
 			$this->assertEquals(
@@ -24,10 +26,10 @@
 		
 		public function testMillisecond()
 		{
-			$unit = IntervalUnit::create('millisecond');
+			$unit = \Onphp\IntervalUnit::create('millisecond');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40')
+				\Onphp\Timestamp::create('2001-02-16 20:38:40')
 			);
 			
 			$this->assertEquals(
@@ -43,10 +45,10 @@
 		
 		public function testSecond()
 		{
-			$unit = IntervalUnit::create('second');
+			$unit = \Onphp\IntervalUnit::create('second');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40')
+				\Onphp\Timestamp::create('2001-02-16 20:38:40')
 			);
 			
 			$this->assertEquals(
@@ -62,10 +64,10 @@
 		
 		public function testMinute()
 		{
-			$unit = IntervalUnit::create('minute');
+			$unit = \Onphp\IntervalUnit::create('minute');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40')
+				\Onphp\Timestamp::create('2001-02-16 20:38:40')
 			);
 			
 			$this->assertEquals(
@@ -81,10 +83,10 @@
 		
 		public function testHour()
 		{
-			$unit = IntervalUnit::create('hour');
+			$unit = \Onphp\IntervalUnit::create('hour');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40')
+				\Onphp\Timestamp::create('2001-02-16 20:38:40')
 			);
 			
 			$this->assertEquals(
@@ -100,10 +102,10 @@
 		
 		public function testHourFloor()
 		{
-			$unit = IntervalUnit::create('hour');
+			$unit = \Onphp\IntervalUnit::create('hour');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40'),
+				\Onphp\Timestamp::create('2001-02-16 20:38:40'),
 				true
 			);
 			
@@ -120,10 +122,10 @@
 		
 		public function testDay()
 		{
-			$unit = IntervalUnit::create('day');
+			$unit = \Onphp\IntervalUnit::create('day');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40')
+				\Onphp\Timestamp::create('2001-02-16 20:38:40')
 			);
 			
 			$this->assertEquals(
@@ -139,10 +141,10 @@
 		
 		public function testDayFloor()
 		{
-			$unit = IntervalUnit::create('day');
+			$unit = \Onphp\IntervalUnit::create('day');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2008-06-18 15:42:42'),
+				\Onphp\Timestamp::create('2008-06-18 15:42:42'),
 				true
 			);
 			
@@ -159,11 +161,11 @@
 		
 		public function testDayMsdMsk()
 		{
-			$unit = IntervalUnit::create('day');
+			$unit = \Onphp\IntervalUnit::create('day');
 			
 			for ($hour = 1; $hour < 24; ++$hour) {
 				$result = $unit->truncate(
-					Timestamp::create("2008-10-26 00:$hour:00")
+					\Onphp\Timestamp::create("2008-10-26 00:$hour:00")
 				);
 				
 				$this->assertEquals(
@@ -177,7 +179,7 @@
 				);
 				
 				$result = $unit->truncate(
-					Timestamp::create("2008-03-30 00:$hour:00"),
+					\Onphp\Timestamp::create("2008-03-30 00:$hour:00"),
 					true
 				);
 				
@@ -195,10 +197,10 @@
 		
 		public function testWeek()
 		{
-			$unit = IntervalUnit::create('week');
+			$unit = \Onphp\IntervalUnit::create('week');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40')
+				\Onphp\Timestamp::create('2001-02-16 20:38:40')
 			);
 			
 			$this->assertEquals(
@@ -214,10 +216,10 @@
 		
 		public function testWeekFloor()
 		{
-			$unit = IntervalUnit::create('week');
+			$unit = \Onphp\IntervalUnit::create('week');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40'),
+				\Onphp\Timestamp::create('2001-02-16 20:38:40'),
 				true
 			);
 			
@@ -233,10 +235,10 @@
 		}
 		public function testMonth()
 		{
-			$unit = IntervalUnit::create('month');
+			$unit = \Onphp\IntervalUnit::create('month');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40')
+				\Onphp\Timestamp::create('2001-02-16 20:38:40')
 			);
 			
 			$this->assertEquals(
@@ -252,10 +254,10 @@
 		
 		public function testMonthFloor()
 		{
-			$unit = IntervalUnit::create('month');
+			$unit = \Onphp\IntervalUnit::create('month');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40'),
+				\Onphp\Timestamp::create('2001-02-16 20:38:40'),
 				true
 			);
 			
@@ -272,10 +274,10 @@
 		
 		public function testYear()
 		{
-			$unit = IntervalUnit::create('year');
+			$unit = \Onphp\IntervalUnit::create('year');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40')
+				\Onphp\Timestamp::create('2001-02-16 20:38:40')
 			);
 			
 			$this->assertEquals(
@@ -291,10 +293,10 @@
 		
 		public function testYearFloor()
 		{
-			$unit = IntervalUnit::create('year');
+			$unit = \Onphp\IntervalUnit::create('year');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40'),
+				\Onphp\Timestamp::create('2001-02-16 20:38:40'),
 				true
 			);
 			
@@ -311,10 +313,10 @@
 		
 		public function testDecade()
 		{
-			$unit = IntervalUnit::create('decade');
+			$unit = \Onphp\IntervalUnit::create('decade');
 			
 			$result = $unit->truncate(
-				Timestamp::create('2001-02-16 20:38:40')
+				\Onphp\Timestamp::create('2001-02-16 20:38:40')
 			);
 			
 			$this->assertEquals(
@@ -330,14 +332,14 @@
 		
 		public function testCountSeconds()
 		{
-			$unit = IntervalUnit::create('second');
+			$unit = \Onphp\IntervalUnit::create('second');
 			
 			$this->assertEquals(
 				4,
 				$result = $unit->countInRange(
-					TimestampRange::create(
-						$start = Timestamp::create('2008-12-31 23:59:58'),
-						$end = Timestamp::create('2009-01-01 00:00:02')
+					\Onphp\TimestampRange::create(
+						$start = \Onphp\Timestamp::create('2008-12-31 23:59:58'),
+						$end = \Onphp\Timestamp::create('2009-01-01 00:00:02')
 					)
 				)
 			);
@@ -355,16 +357,16 @@
 		
 		public function testCountHoursDST()
 		{
-			$unit = IntervalUnit::create('hour');
+			$unit = \Onphp\IntervalUnit::create('hour');
 			
 			$this->assertEquals(
 				4,
 				$result = $unit->countInRange(
-					TimestampRange::create(
+					\Onphp\TimestampRange::create(
 						// In 2008, March, 30 is a 23h-day because of daylight
 						// saving time
-						$start = Timestamp::create('2008-03-30 01:30:00'),
-						$end = Timestamp::create('2008-03-30 05:30:00')
+						$start = \Onphp\Timestamp::create('2008-03-30 01:30:00'),
+						$end = \Onphp\Timestamp::create('2008-03-30 05:30:00')
 					)
 				)
 			);
@@ -382,14 +384,14 @@
 		
 		public function testCountMonths()
 		{
-			$unit = IntervalUnit::create('month');
+			$unit = \Onphp\IntervalUnit::create('month');
 			
 			$this->assertEquals(
 				6,
 				$result = $unit->countInRange(
-					TimestampRange::create(
-						$start = Timestamp::create('2008-12-31 23:59:58'),
-						$end = Timestamp::create('2009-05-28 03:00:00')
+					\Onphp\TimestampRange::create(
+						$start = \Onphp\Timestamp::create('2008-12-31 23:59:58'),
+						$end = \Onphp\Timestamp::create('2009-05-28 03:00:00')
 					)
 				)
 			);
@@ -407,14 +409,14 @@
 		
 		public function testCountMonthsNotOverlapped()
 		{
-			$unit = IntervalUnit::create('month');
+			$unit = \Onphp\IntervalUnit::create('month');
 			
 			$this->assertEquals(
 				4,
 				$result = $unit->countInRange(
-					TimestampRange::create(
-						$start = Timestamp::create('2008-12-31 23:59:58'),
-						$end = Timestamp::create('2009-05-28 03:00:00')
+					\Onphp\TimestampRange::create(
+						$start = \Onphp\Timestamp::create('2008-12-31 23:59:58'),
+						$end = \Onphp\Timestamp::create('2009-05-28 03:00:00')
 					),
 					false
 				)

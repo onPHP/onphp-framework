@@ -1,10 +1,12 @@
 <?php
 	
+	namespace Onphp\Test;
+
 	final class PrimitiveInetTest extends TestCase
 	{
 		public function testInet()
 		{
-			$prm = Primitive::inet('inet');
+			$prm = \Onphp\Primitive::inet('inet');
 			
 			$this->assertTrue($prm->importValue('127.0.0.1'));
 			$this->assertTrue($prm->importValue('254.254.254.254'));

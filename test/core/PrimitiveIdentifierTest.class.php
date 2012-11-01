@@ -1,11 +1,13 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	final class PrimitiveIdentifierTest extends TestCase
 	{
 		public function testEmpty()
 		{
-			$prm = Primitive::identifier('name')->of('TestCity');
+			$prm = \Onphp\Primitive::identifier('name')->of('\Onphp\Test\TestCity');
 			
 			$nullValues = array(null, '');
 			foreach ($nullValues as $value) {

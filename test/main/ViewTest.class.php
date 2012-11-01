@@ -9,13 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	final class ViewTest extends TestCase
 	{
 		protected static $resolver;
 
 		public static function setUpBeforeClass()
 		{
-			self::$resolver = new PhpViewResolver(ONPHP_TEST_PATH.'main/data/views/', EXT_TPL);
+			self::$resolver = new \Onphp\PhpViewResolver(ONPHP_TEST_PATH.'main/data/views/', EXT_TPL);
 		}
 
 		public static function tearDownAfterClass()
@@ -28,7 +30,7 @@
 			$renderView = self::$resolver->resolveViewName('testView');
 			$toStringView = self::$resolver->resolveViewName('testViewToString');
 
-			$model = Model::create();
+			$model = \Onphp\Model::create();
 
 			$this->assertTrue(
 				$toStringView->toString($model) == $renderView->toString($model)

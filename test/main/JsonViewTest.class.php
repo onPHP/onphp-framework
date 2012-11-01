@@ -9,44 +9,46 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp\Test;
+
 	final class JsonViewTest extends TestCase
 	{
 		protected $array = array('<foo>',"'bar'",'"baz"','&blong&');
 		
 		public function testOptions()
 		{
-			$model = Model::create()->set('array', $this->array);
+			$model = \Onphp\Model::create()->set('array', $this->array);
 			$data = array('array' => $this->array);
 
 			$this->assertEquals(
 				json_encode($data, JSON_HEX_QUOT),
-				JsonView::create()->setHexQuot(true)->toString($model)
+				\Onphp\JsonView::create()->setHexQuot(true)->toString($model)
 			);
 
 			$this->assertEquals(
 				json_encode($data, JSON_HEX_TAG),
-				JsonView::create()->setHexTag(true)->toString($model)
+				\Onphp\JsonView::create()->setHexTag(true)->toString($model)
 			);
 
 			$this->assertEquals(
 				json_encode($data, JSON_HEX_AMP),
-				JsonView::create()->setHexAmp(true)->toString($model)
+				\Onphp\JsonView::create()->setHexAmp(true)->toString($model)
 			);
 
 			$this->assertEquals(
 				json_encode($data, JSON_HEX_APOS),
-				JsonView::create()->setHexApos(true)->toString($model)
+				\Onphp\JsonView::create()->setHexApos(true)->toString($model)
 			);
 
 			$this->assertEquals(
 				json_encode($data, JSON_NUMERIC_CHECK),
-				JsonView::create()->setNumericCheck(true)->toString($model)
+				\Onphp\JsonView::create()->setNumericCheck(true)->toString($model)
 			);
 
 			if (defined("JSON_PRETTY_PRINT")) {
 				$this->assertEquals(
 					json_encode($data, JSON_PRETTY_PRINT),
-					JsonView::create()->
+					\Onphp\JsonView::create()->
 						setPrettyPrint(true)->
 						toString($model)
 				);
@@ -55,7 +57,7 @@
 			if (defined("JSON_UNESCAPED_SLASHES")) {
 				$this->assertEquals(
 					json_encode($data, JSON_UNESCAPED_SLASHES),
-					JsonView::create()->
+					\Onphp\JsonView::create()->
 						setUnescapedSlashes(true)->
 						toString($model)
 				);
@@ -64,7 +66,7 @@
 			//without any flags
 			$this->assertEquals(
 				json_encode($data),
-				JsonView::create()->
+				\Onphp\JsonView::create()->
 					setHexQuot(false)->
 					setHexTag(false)->
 					setHexAmp(false)->
@@ -83,7 +85,7 @@
 						| JSON_HEX_APOS
 						| JSON_NUMERIC_CHECK
 				),
-				JsonView::create()->
+				\Onphp\JsonView::create()->
 					setHexQuot(true)->
 					setHexTag(true)->
 					setHexAmp(true)->
@@ -95,11 +97,11 @@
 		
 		public function testRender()
 		{
-			$model = Model::create()->set('array', $this->array);
+			$model = \Onphp\Model::create()->set('array', $this->array);
 			$data = array('array' => $this->array);
 			
 			ob_start();
-			JsonView::create()->
+			\Onphp\JsonView::create()->
 				setHexQuot(true)->
 				setHexTag(true)->
 				setHexAmp(true)->
@@ -125,7 +127,7 @@
 		
 		public function testNoModel() {
 			//setup
-			$view = JsonView::create()->setHexQuot(true)->setHexApos(true);
+			$view = \Onphp\JsonView::create()->setHexQuot(true)->setHexApos(true);
 			
 			//execution and check
 			$this->assertEquals(

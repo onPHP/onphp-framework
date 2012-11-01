@@ -1,4 +1,6 @@
 <?php
 	// provide fake spooked class
-	class Spook extends IdentifiableObject {/*_*/}
+	namespace Onphp\Test;
+
+	class Spook extends \Onphp\IdentifiableObject {/*_*/}
 ?>

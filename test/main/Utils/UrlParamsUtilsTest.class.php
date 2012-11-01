@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	final class UrlParamsUtilsTest extends TestCase
 	{
 		public function testOneDeepLvl()
@@ -11,15 +13,15 @@
 			
 			$this->assertEquals(
 				'a=1&c=%403&g[1]=1&g[0]=%5B0%5D',
-				UrlParamsUtils::toStringOneDeepLvl($scope)
+				\Onphp\UrlParamsUtils::toStringOneDeepLvl($scope)
 			);
 			
 			$scope['z'] = array('2' => array('8' => '8'));
 			
 			try {
-				UrlParamsUtils::toStringOneDeepLvl($scope);
+				\Onphp\UrlParamsUtils::toStringOneDeepLvl($scope);
 				$this->fail('expected exception');
-			} catch (BaseException $e) {
+			} catch (\Onphp\BaseException $e) {
 				$this->assertEquals(
 					'urlencode() expects parameter 1 to be string, array given',
 					$e->getMessage()
@@ -45,12 +47,12 @@
 					'fo[0][1]' => 'ba',
 					'fo[0][2]' => 'r',
 				),
-				UrlParamsUtils::toParamsList($scope)
+				\Onphp\UrlParamsUtils::toParamsList($scope)
 			);
 			
 			$this->assertEquals(
 				'foo[foo][foo]=%40bar&bar[%40bar][bar]=foo%5B%5D%D1%8F&fo[0][0]=o&fo[0][1]=ba&fo[0][2]=r',
-				UrlParamsUtils::toString($scope)
+				\Onphp\UrlParamsUtils::toString($scope)
 			);
 		}
 	}

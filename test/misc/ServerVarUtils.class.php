@@ -1,7 +1,9 @@
 <?php
 	/** $Id$ **/
 
-	class ServerVarUtils extends StaticFactory
+	namespace Onphp\Test;
+
+	class ServerVarUtils extends \Onphp\StaticFactory
 	{
 		public static function build(&$serverVars, $url)
 		{

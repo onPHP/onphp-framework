@@ -1,15 +1,17 @@
 <?php
 
 
+	namespace Onphp\Test;
+
 	final class MimeMailTest extends TestCase
 	{
 		public function testMimeMail()
 		{
-			$mimeMail = new MimeMail();
+			$mimeMail = new \Onphp\MimeMail();
 			$mimeMail->setBoundary('MIME_MAIL_TEST');
 			$mimeMail->addPart(
-				MimePart::create()->
-					setEncoding(MailEncoding::base64())->
+				\Onphp\MimePart::create()->
+					setEncoding(\Onphp\MailEncoding::base64())->
 					setCharset('UTF-8')->
 					loadBodyFromFile(
 						dirname(__FILE__).'/data/mimeMail/message.html'
@@ -18,9 +20,9 @@
 			);
 			
 			$mimeMail->addPart(
-				MimePart::create()->
+				\Onphp\MimePart::create()->
 					setContentId('picture')->
-					setEncoding(MailEncoding::base64())->
+					setEncoding(\Onphp\MailEncoding::base64())->
 					setFilename('picture.jpg')->
 					loadBodyFromFile(
 						dirname(__FILE__).'/data/mimeMail/picture.jpg'

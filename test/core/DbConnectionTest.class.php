@@ -1,29 +1,31 @@
 <?php
 
+	namespace Onphp\Test;
+
 	final class DbConnectionTest extends TestCase
 	{
 		public function setUp()
 		{
-			DBPool::me()->
+			\Onphp\DBPool::me()->
 				addLink(
 					'badLink',
-					DB::spawn('PinbedPgSQL', 'postgres', '', 'localhost', 'wrongDatabase')
+					DB::spawn('\Onphp\PinbedPgSQL', 'postgres', '', 'localhost', 'wrongDatabase')
 				);
 		}
 		
 		public function testPostgresql()
 		{
 			try {
-				$link = DBPool::me()->getLink('badLink');
+				$link = \Onphp\DBPool::me()->getLink('badLink');
 				$this->fail('Unreachable code');
-			} catch(Exception $e) {
-				$this->assertInstanceOf('DatabaseException', $e);
+			} catch(\Exception $e) {
+				$this->assertInstanceOf('\Onphp\DatabaseException', $e);
 			}
 		}
 		
 		public function tearDown()
 		{
-			DBPool::me()->dropLink('badLink');
+			\Onphp\DBPool::me()->dropLink('badLink');
 		}
 	}
 

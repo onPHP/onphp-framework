@@ -1,19 +1,21 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	class RouterRewriteTest extends TestCase
 	{
 		/**
-		 * @var RouterRewrite
+		 * @var \Onphp\RouterRewrite
 		**/
 		protected $router = null;
 		
 		public function setUp()
 		{
 			$this->router =
-				RouterRewrite::me()->
+				\Onphp\RouterRewrite::me()->
 					resetAll()->
-					setBaseUrl(HttpUrl::create());
+					setBaseUrl(\Onphp\HttpUrl::create());
 			
 			ServerVarUtils::unsetVars($_SERVER);
 		}
@@ -28,7 +30,7 @@
 			$this->router->addRoute(
 				'archive',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'archive/:year'
 				)->
 				setDefaults(
@@ -48,12 +50,12 @@
 			$routes = $this->router->getRoutes();
 			
 			$this->assertEquals(1, count($routes));
-			$this->assertInstanceOf('RouterTransparentRule', $routes['archive']);
+			$this->assertInstanceOf('\Onphp\RouterTransparentRule', $routes['archive']);
 			
 			$this->router->addRoute(
 				'register',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'register/:action'
 				)->
 				setDefaults(
@@ -67,14 +69,14 @@
 			$routes = $this->router->getRoutes();
 			
 			$this->assertEquals(2, count($routes));
-			$this->assertInstanceOf('RouterTransparentRule', $routes['register']);
+			$this->assertInstanceOf('\Onphp\RouterTransparentRule', $routes['register']);
 		}
 		
 		public function testAddRoutes()
 		{
 			$routes = array(
 				'archive' =>
-					RouterTransparentRule::create(
+					\Onphp\RouterTransparentRule::create(
 						'archive/:year'
 					)->
 					setDefaults(
@@ -90,7 +92,7 @@
 						)
 					),
 				'register' =>
-					RouterTransparentRule::create(
+					\Onphp\RouterTransparentRule::create(
 						'register/:action'
 					)->
 					setDefaults(
@@ -106,8 +108,8 @@
 			$values = $this->router->getRoutes();
 			
 			$this->assertEquals(2, count($values));
-			$this->assertInstanceOf('RouterTransparentRule', $values['archive']);
-			$this->assertInstanceOf('RouterTransparentRule', $values['register']);
+			$this->assertInstanceOf('\Onphp\RouterTransparentRule', $values['archive']);
+			$this->assertInstanceOf('\Onphp\RouterTransparentRule', $values['register']);
 		}
 		
 		public function testHasRoute()
@@ -115,7 +117,7 @@
 			$this->router->addRoute(
 				'archive',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'archive/:year'
 				)->
 				setDefaults(
@@ -139,7 +141,7 @@
 		public function testGetRoute()
 		{
 			$archive =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'archive/:year'
 				)->
 				setDefaults(
@@ -159,7 +161,7 @@
 			
 			$route = $this->router->getRoute('archive');
 			
-			$this->assertInstanceOf('RouterTransparentRule', $route);
+			$this->assertInstanceOf('\Onphp\RouterTransparentRule', $route);
 			$this->assertSame($route, $archive);
 		}
 		
@@ -168,7 +170,7 @@
 			$this->router->addRoute(
 				'archive',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'archive/:year'
 				)->
 				setDefaults(
@@ -195,8 +197,8 @@
 			
 			try {
 				$route = $this->router->removeRoute('archive');
-			} catch (RouterException $e) {
-				$this->assertInstanceOf('RouterException', $e);
+			} catch (\Onphp\RouterException $e) {
+				$this->assertInstanceOf('\Onphp\RouterException', $e);
 				return true;
 			}
 			
@@ -207,8 +209,8 @@
 		{
 			try {
 				$route = $this->router->getRoute('bogus');
-			} catch (RouterException $e) {
-				$this->assertInstanceOf('RouterException', $e);
+			} catch (\Onphp\RouterException $e) {
+				$this->assertInstanceOf('\Onphp\RouterException', $e);
 				return true;
 			}
 			
@@ -221,7 +223,7 @@
 			
 			$token = $this->router->route($request);
 			
-			$this->assertInstanceOf('HttpRequest', $token);
+			$this->assertInstanceOf('\Onphp\HttpRequest', $token);
 		}
 				
 		public function testEmptyRoute()
@@ -231,7 +233,7 @@
 			$this->router->addRoute(
 				'empty',
 				
-				RouterTransparentRule::create('')->
+				\Onphp\RouterTransparentRule::create('')->
 				setDefaults(
 					array(
 						'area' => 'ctrl',
@@ -253,7 +255,7 @@
 			$this->router->addRoute(
 				'catch-all',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:action/*'
 				)->
 				setDefaults(
@@ -277,7 +279,7 @@
 			$this->router->addRoute(
 				'catch-all',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'*'
 				)->
 				setDefaults(
@@ -302,7 +304,7 @@
 			
 			$this->router->addRoute(
 				'default',
-				new RouterTransparentRule(':area/:action')
+				new \Onphp\RouterTransparentRule(':area/:action')
 			);
 			
 			$token = $this->router->route($request);
@@ -318,7 +320,7 @@
 			$this->router->addRoute(
 				'archive',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'archive/:year'
 				)->
 				setDefaults(
@@ -338,7 +340,7 @@
 			$this->router->addRoute(
 				'register',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'register/:action'
 				)->
 				setDefaults(
@@ -361,10 +363,10 @@
 				);
 				
 				$this->assertInstanceOf(
-					'RouterTransparentRule',
+					'\Onphp\RouterTransparentRule',
 					$this->router->getCurrentRoute()
 				);
-			} catch (BaseException $e) {
+			} catch (\Onphp\BaseException $e) {
 				$this->fail('Current route is not set');
 			}
 		}
@@ -376,8 +378,8 @@
 			try {
 				$route = $this->router->getCurrentRouteName();
 				$this->fail();
-			} catch (BaseException $e) {
-				$this->assertInstanceOf('RouterException', $e);
+			} catch (\Onphp\BaseException $e) {
+				$this->assertInstanceOf('\Onphp\RouterException', $e);
 			}
 		}
 		
@@ -390,7 +392,7 @@
 			$this->router->addRoute(
 				'test',
 				
-				new RouterTransparentRule(
+				new \Onphp\RouterTransparentRule(
 					':area/:action/*'
 				)
 			);
@@ -409,7 +411,7 @@
 			$this->router->addRoute(
 				'foo',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':lang/foo'
 				)->
 				setDefaults(
@@ -424,7 +426,7 @@
 			$this->router->addRoute(
 				'bar',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':lang/bar'
 				)->
 				setDefaults(
@@ -455,7 +457,7 @@
 			$this->router->addRoute(
 				'foo',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':lang/foo'
 				)->
 				setDefaults(
@@ -470,7 +472,7 @@
 			$this->router->addRoute(
 				'bar',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':lang/bar'
 				)->
 				setDefaults(
@@ -500,7 +502,7 @@
 			$this->router->addRoute(
 				'foo',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':lang/foo'
 				)->
 				setDefaults(
@@ -515,7 +517,7 @@
 			$this->router->addRoute(
 				'bar',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':lang/bar'
 				)->
 				setDefaults(
@@ -547,7 +549,7 @@
 			$request = $this->buildRequest('http://localhost/foo/bar');
 			
 			$foo =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'foo'
 				)->
 				setDefaults(
@@ -557,7 +559,7 @@
 				);
 			
 			$bar =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'bar'
 				)->
 				setDefaults(
@@ -568,7 +570,7 @@
 					)
 				);
 			
-			$chain = new RouterChainRule();
+			$chain = new \Onphp\RouterChainRule();
 			
 			$chain->
 				chain($foo)->
@@ -589,7 +591,7 @@
 			$request = $this->buildRequest('http://www.example.com/bar');
 			
 			$foo =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'nope.example.com'
 				)->
 				setDefaults(
@@ -600,7 +602,7 @@
 				);
 			
 			$bar =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'www.example.com'
 				)->
 				setDefaults(
@@ -610,7 +612,7 @@
 				);
 			
 			$bla =
-				RouterStaticRule::create(
+				\Onphp\RouterStaticRule::create(
 					'bar'
 				)->
 				setDefaults(
@@ -620,13 +622,13 @@
 					)
 				);
 			
-			$chainMatch = new RouterChainRule();
+			$chainMatch = new \Onphp\RouterChainRule();
 			
 			$chainMatch->
 				chain($bar)->
 				chain($bla);
 			
-			$chainNoMatch = new RouterChainRule();
+			$chainNoMatch = new \Onphp\RouterChainRule();
 			
 			$chainNoMatch->
 				chain($foo)->
@@ -647,7 +649,7 @@
 			$request = $this->buildRequest('http://www.example.com/test/123');
 			
 			$host =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'www.example.com'
 				)->
 				setDefaults(
@@ -658,7 +660,7 @@
 				);
 			
 			$transparent =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:contest'
 				)->
 				setRequirements(
@@ -668,7 +670,7 @@
 					)
 				);
 			
-			$chain = new RouterChainRule();
+			$chain = new \Onphp\RouterChainRule();
 			
 			$chain->
 				chain($host)->
@@ -691,7 +693,7 @@
 			$request = $this->buildRequest($base.'test/123');
 			
 			$host =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					'www.example.com'
 				)->
 				setDefaults(
@@ -702,7 +704,7 @@
 				);
 			
 			$transparent =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					':area/:contest'
 				)->
 				setRequirements(
@@ -712,14 +714,14 @@
 					)
 				);
 			
-			$chain = new RouterChainRule();
+			$chain = new \Onphp\RouterChainRule();
 			
 			$chain->
 				chain($host)->
 				chain($transparent);
 			
 			$this->router->setBaseUrl(
-				HttpUrl::create()->parse($base)
+				\Onphp\HttpUrl::create()->parse($base)
 			);
 			
 			$this->router->addRoute('HostnameAndTransparentWithBaseUrl', $chain);
@@ -740,7 +742,7 @@
 			$request = $this->buildRequest('http://test123d.example.com/~user/public_html/www/test/123.html');
 			
 			$host =
-				RouterHostnameRule::create(
+				\Onphp\RouterHostnameRule::create(
 					':subdomain.example.com'
 				)->
 				setDefaults(
@@ -756,7 +758,7 @@
 				);
 			
 			$transparent =
-				RouterRegexpRule::create(
+				\Onphp\RouterRegexpRule::create(
 					'test/(\d+)\.html'
 				)->
 				setDefaults(
@@ -770,14 +772,14 @@
 					)
 				);
 			
-			$chain = new RouterChainRule();
+			$chain = new \Onphp\RouterChainRule();
 			
 			$chain->
 				chain($host)->
 				chain($transparent);
 			
 			$this->router->setBaseUrl(
-				HttpUrl::create()->parse($base)
+				\Onphp\HttpUrl::create()->parse($base)
 			);
 			
 			$this->router->addRoute('HostnameMaskWithRegexp', $chain);
@@ -796,7 +798,7 @@
 			$this->router->addRoute(
 				'contest',
 				
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'contest/:contest/*'
 				)->
 				setDefaults(
@@ -827,7 +829,7 @@
 		
 		public function testAssemblingWithHostnameHttp()
 		{
-			$route = new RouterHostnameRule('www.example.com');
+			$route = new \Onphp\RouterHostnameRule('www.example.com');
 			
 			$this->router->addRoute('hostname-route', $route);
 			
@@ -840,7 +842,7 @@
 		public function testAssemblingWithHostnameHttps()
 		{
 			$route =
-				RouterHostnameRule::create('www.example.com')->
+				\Onphp\RouterHostnameRule::create('www.example.com')->
 				setSecure();
 			
 			$this->router->addRoute('hostname-route', $route);
@@ -853,11 +855,11 @@
 		
 		public function testAssemblingWithHostnameThroughChainHttp()
 		{
-			$foo = new RouterHostnameRule('www.example.com');
-			$bar = new RouterStaticRule('bar');
+			$foo = new \Onphp\RouterHostnameRule('www.example.com');
+			$bar = new \Onphp\RouterStaticRule('bar');
 			
 			$chain =
-				RouterChainRule::create()->
+				\Onphp\RouterChainRule::create()->
 				chain($foo)->
 				chain($bar);
 			
@@ -871,8 +873,8 @@
 		
 		public function testAssemblingWithHostnameWithChainHttp()
 		{
-			$foo = new RouterHostnameRule('www.example.com');
-			$bar = new RouterStaticRule('bar');
+			$foo = new \Onphp\RouterHostnameRule('www.example.com');
+			$bar = new \Onphp\RouterStaticRule('bar');
 			
 			$chain = $foo->chain($bar);
 			
@@ -886,17 +888,17 @@
 		
 		public function testAssemblingWithHostnameThroughChainHttpAndBaseUrl()
 		{
-			$foo = new RouterHostnameRule('www.example.com');
-			$bar = new RouterStaticRule('bar');
+			$foo = new \Onphp\RouterHostnameRule('www.example.com');
+			$bar = new \Onphp\RouterStaticRule('bar');
 			
 			$chain =
-				RouterChainRule::create()->
+				\Onphp\RouterChainRule::create()->
 				chain($foo)->
 				chain($bar);
 			
 			$this->router->
 				setBaseUrl(
-					HttpUrl::create()->
+					\Onphp\HttpUrl::create()->
 					parse('http://www.example.com/~user/public/')
 				)->
 				addRoute('foo-bar', $chain);
@@ -909,17 +911,17 @@
 		
 		public function testAssemblingWithHostnameThroughChainHttpAndBaseUrlAndDiffHost()
 		{
-			$foo = new RouterHostnameRule('www.example.com');
-			$bar = new RouterStaticRule('bar');
+			$foo = new \Onphp\RouterHostnameRule('www.example.com');
+			$bar = new \Onphp\RouterStaticRule('bar');
 			
 			$chain =
-				RouterChainRule::create()->
+				\Onphp\RouterChainRule::create()->
 				chain($foo)->
 				chain($bar);
 			
 			$this->router->
 				setBaseUrl(
-					HttpUrl::create()->
+					\Onphp\HttpUrl::create()->
 					parse('http://qwerty.example.com/~user/public/')
 				)->
 				addRoute('foo-bar', $chain);
@@ -932,17 +934,17 @@
 		
 		public function testAssemblingWithHostnameThroughChainHttpAndBaseUrlAndDiffScheme()
 		{
-			$foo = new RouterHostnameRule('http.example.com');
-			$bar = new RouterStaticRule('bar');
+			$foo = new \Onphp\RouterHostnameRule('http.example.com');
+			$bar = new \Onphp\RouterStaticRule('bar');
 			
 			$chain =
-				RouterChainRule::create()->
+				\Onphp\RouterChainRule::create()->
 				chain($foo)->
 				chain($bar);
 			
 			$this->router->
 				setBaseUrl(
-					HttpUrl::create()->
+					\Onphp\HttpUrl::create()->
 					parse('https://www.example.com/~user/public/')
 				)->
 				addRoute('foo-bar', $chain);
@@ -956,19 +958,19 @@
 		public function testAssemblingWithSettingHostnameThroughChainHttpAndBaseUrlAndDiffScheme()
 		{
 			$foo =
-				RouterHostnameRule::create('https.example.com')->
+				\Onphp\RouterHostnameRule::create('https.example.com')->
 				setSecure();
 				
-			$bar = new RouterStaticRule('bar');
+			$bar = new \Onphp\RouterStaticRule('bar');
 			
 			$chain =
-				RouterChainRule::create()->
+				\Onphp\RouterChainRule::create()->
 				chain($foo)->
 				chain($bar);
 			
 			$this->router->
 				setBaseUrl(
-					HttpUrl::create()->
+					\Onphp\HttpUrl::create()->
 					parse('https://www.example.com/~user/public/')
 				)->
 				addRoute('foo-bar', $chain);
@@ -981,8 +983,8 @@
 					
 		public function testAssemblingWrongChain()
 		{
-			$foo = new RouterStaticRule('bar');
-			$bar = new RouterHostnameRule('mega.example.com');
+			$foo = new \Onphp\RouterStaticRule('bar');
+			$bar = new \Onphp\RouterHostnameRule('mega.example.com');
 			
 			$chain = $foo->chain($bar);
 			
@@ -995,8 +997,8 @@
 			
 			try {
 				$s = $this->router->assembly(array(), 'foobar');
-			} catch (BaseException $e) {
-				$this->assertInstanceOf('RouterException', $e);
+			} catch (\Onphp\BaseException $e) {
+				$this->assertInstanceOf('\Onphp\RouterException', $e);
 				return true;
 			}
 			
@@ -1006,7 +1008,7 @@
 		public function testRouteShouldMatchEvenWithTrailingSlash()
 		{
 			$route =
-				RouterTransparentRule::create(
+				\Onphp\RouterTransparentRule::create(
 					'blog/articles/:id'
 				)->
 				setDefaults(
@@ -1037,7 +1039,7 @@
 			$base = 'http://www.example.com/~users/public/www/';
 			
 			$hostname =
-				RouterHostnameRule::create(':subdomain.example.com')->
+				\Onphp\RouterHostnameRule::create(':subdomain.example.com')->
 					setDefaults(
 						array(
 							'subdomain' => 'mega'
@@ -1045,7 +1047,7 @@
 					);
 			
 			$this->router->setBaseUrl(
-				HttpUrl::create()->parse($base)
+				\Onphp\HttpUrl::create()->parse($base)
 			);
 			
 			$this->router->addRoute('host', $hostname);
@@ -1066,7 +1068,7 @@
 			$base = 'http://www.example.com/~users/public/www/';
 			
 			$hostname =
-				RouterHostnameRule::create(':subdomain.example.com')->
+				\Onphp\RouterHostnameRule::create(':subdomain.example.com')->
 					setDefaults(
 						array(
 							'subdomain' => 'www'
@@ -1074,7 +1076,7 @@
 					);
 			
 			$transparent =
-				RouterTransparentRule::create('/company/:id')->
+				\Onphp\RouterTransparentRule::create('/company/:id')->
 					setRequirements(
 						array(
 							'id' => '\d+'
@@ -1082,12 +1084,12 @@
 					);
 			
 			$chain =
-				RouterChainRule::create()->
+				\Onphp\RouterChainRule::create()->
 				chain($hostname)->
 				chain($transparent);
 			
 			$this->router->setBaseUrl(
-				HttpUrl::create()->parse($base)
+				\Onphp\HttpUrl::create()->parse($base)
 			);
 			
 			$this->router->addRoute('chain', $chain);
@@ -1106,20 +1108,20 @@
 		
 		/**
 		 * @param string $url
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		protected function buildRequest($url = null)
 		{
 			ServerVarUtils::build($_SERVER, $url);
 			
 			return
-				HttpRequest::create()->
+				\Onphp\HttpRequest::create()->
 				setServer($_SERVER);
 		}
 		
 		protected function buildIncorrectRequest()
 		{
-			return HttpRequest::create();
+			return \Onphp\HttpRequest::create();
 		}
 	}
 ?>

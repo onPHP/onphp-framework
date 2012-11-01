@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	final class ArrayUtilsTest extends TestCase
 	{
 		/**
@@ -8,10 +10,10 @@
 		{
 			$this->assertEquals(
 				$result,
-				ArrayUtils::mergeSortedLists(
+				\Onphp\ArrayUtils::mergeSortedLists(
 					$list1,
 					$list2,
-					DateObjectComparator::me(),
+					\Onphp\DateObjectComparator::me(),
 					$method,
 					$limit
 				)
@@ -20,7 +22,7 @@
 
 		public static function dateObjectsSortedLists()
 		{
-			$today = Date::makeToday();
+			$today = \Onphp\Date::makeToday();
 
 			return
 				array(
@@ -128,10 +130,10 @@
 		{
 			$this->assertEquals(
 				$result,
-				ArrayUtils::mergeSortedLists(
+				\Onphp\ArrayUtils::mergeSortedLists(
 					$list1,
 					$list2,
-					StandardComparator::me(),
+					\Onphp\StandardComparator::me(),
 					$method,
 					$limit
 				)
@@ -176,7 +178,7 @@
 			return new self;
 		}
 
-		public function setDate(Date $date)
+		public function setDate(\Onphp\Date $date)
 		{
 			$this->date = $date;
 			

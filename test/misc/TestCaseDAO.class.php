@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp\Test;
+
 	abstract class TestCaseDAO extends TestCaseDB
 	{
 		public function setUp()

@@ -1,6 +1,8 @@
 <?php
 	/* $Id$ */
 	
+	namespace Onphp\Test;
+
 	class RouterStaticRuleTest extends TestCase
 	{
 		public function setUp()
@@ -10,7 +12,7 @@
 		
 		public function testStaticMatch()
 		{
-			$route = new RouterStaticRule('users/all');
+			$route = new \Onphp\RouterStaticRule('users/all');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/all')
 			);
@@ -20,7 +22,7 @@
 		
 		public function testStaticMatchFailure()
 		{
-			$route = new RouterStaticRule('archive/2006');
+			$route = new \Onphp\RouterStaticRule('archive/2006');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/all')
 			);
@@ -31,7 +33,7 @@
 		public function testStaticMatchWithDefaults()
 		{
 			$route =
-				RouterStaticRule::create(
+				\Onphp\RouterStaticRule::create(
 					'users/all'
 				)->
 				setDefaults(
@@ -52,7 +54,7 @@
 		
 		public function testStaticUTFMatch()
 		{
-			$route = new RouterStaticRule('żółć');
+			$route = new \Onphp\RouterStaticRule('żółć');
 			$values = $route->match(
 				$this->buildRequest('http://localhost/'.urlencode('żółć'))
 			);
@@ -62,7 +64,7 @@
 		
 		public function testRootRoute()
 		{
-			$route = new RouterStaticRule('/');
+			$route = new \Onphp\RouterStaticRule('/');
 			$values = $route->match($this->buildRequest('http://localhost/'));
 			
 			$this->assertSame(array(), $values);
@@ -70,7 +72,7 @@
 		
 		public function testAssembly()
 		{
-			$route = new RouterStaticRule('/about');
+			$route = new \Onphp\RouterStaticRule('/about');
 			$url = $route->assembly();
 			
 			$this->assertSame('about', $url);
@@ -79,7 +81,7 @@
 		public function testGetDefaults()
 		{
 			$route =
-				RouterStaticRule::create(
+				\Onphp\RouterStaticRule::create(
 					'users/all'
 				)->
 				setDefaults(
@@ -99,7 +101,7 @@
 		public function testGetDefault()
 		{
 			$route =
-				RouterStaticRule::create(
+				\Onphp\RouterStaticRule::create(
 					'users/all'
 				)->
 				setDefaults(
@@ -116,7 +118,7 @@
 		public function testGetInstance()
 		{
 			$route =
-				RouterStaticRule::create(
+				\Onphp\RouterStaticRule::create(
 					'users/all'
 				)->
 				setDefaults(
@@ -125,7 +127,7 @@
 					)
 				);
 			
-			$this->assertInstanceOf('RouterStaticRule', $route);
+			$this->assertInstanceOf('\Onphp\RouterStaticRule', $route);
 			
 			$values = $route->match(
 				$this->buildRequest('http://localhost/users/all')
@@ -139,7 +141,7 @@
 			ServerVarUtils::build($_SERVER, $url);
 			
 			return
-				HttpRequest::create()->
+				\Onphp\HttpRequest::create()->
 				setServer($_SERVER);
 		}
 	}
