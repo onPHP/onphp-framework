@@ -181,7 +181,7 @@
 				TestUser::dao()->getById(1);
 				TestUser::dao()->getById(2);
 				
-				if ($test instanceof DBDataTest) {
+				if ($test instanceof TestCaseDAO) {
 					$test->getListByIdsTest();
 				}
 				
@@ -225,7 +225,7 @@
 			TestUser::dao()->import($firstClone);
 			TestUser::dao()->import($secondClone);
 			
-			if ($test && $test instanceof DBDataTest) {
+			if ($test && $test instanceof TestCaseDAO) {
 				// cache multi-get
 				$test->getListByIdsTest();
 				$test->getListByIdsTest();
