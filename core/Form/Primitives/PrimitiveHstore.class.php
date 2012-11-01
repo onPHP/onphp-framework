@@ -58,7 +58,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return boolean
 		**/
 		public function importValue($value)

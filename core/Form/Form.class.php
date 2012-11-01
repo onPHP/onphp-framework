@@ -461,7 +461,7 @@
 		 * @param	$name		string	primitive or rule name
 		 * @param	$errorType	enum	Form::(WRONG|MISSING)
 		 * @param	$label		string	YDFB WTF is this :-) (c) /.
-		 * @throws	MissingElementException
+		 * @throws	\Onphp\MissingElementException
 		 * @return	\Onphp\Form
 		**/
 		private function addErrorLabel($name, $errorType, $label)

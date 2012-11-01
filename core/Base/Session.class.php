@@ -43,7 +43,7 @@
 		}
 		
 		/**
-		 * @throws SessionNotStartedException
+		 * @throws \Onphp\SessionNotStartedException
 		**/
 		/* void */ public static function destroy()
 		{
@@ -67,7 +67,7 @@
 		}
 		
 		/**
-		 * @throws SessionNotStartedException
+		 * @throws \Onphp\SessionNotStartedException
 		**/
 		/* void */ public static function assign($var, $val)
 		{
@@ -78,8 +78,8 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
-		 * @throws SessionNotStartedException
+		 * @throws \Onphp\WrongArgumentException
+		 * @throws \Onphp\SessionNotStartedException
 		**/
 		public static function exist(/* ... */)
 		{
@@ -98,7 +98,7 @@
 		}
 		
 		/**
-		 * @throws SessionNotStartedException
+		 * @throws \Onphp\SessionNotStartedException
 		**/
 		public static function get($var)
 		{
@@ -114,8 +114,8 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
-		 * @throws SessionNotStartedException
+		 * @throws \Onphp\WrongArgumentException
+		 * @throws \Onphp\SessionNotStartedException
 		**/
 		/* void */ public static function drop(/* ... */)
 		{
@@ -130,7 +130,7 @@
 		}
 		
 		/**
-		 * @throws SessionNotStartedException
+		 * @throws \Onphp\SessionNotStartedException
 		**/
 		/* void */ public static function dropAll()
 		{
@@ -164,7 +164,7 @@
 		}
 		
 		/**
-		 * @throws SessionNotStartedException
+		 * @throws \Onphp\SessionNotStartedException
 		**/
 		public static function getName()
 		{
@@ -175,7 +175,7 @@
 		}
 		
 		/**
-		 * @throws SessionNotStartedException
+		 * @throws \Onphp\SessionNotStartedException
 		**/
 		public static function getId()
 		{

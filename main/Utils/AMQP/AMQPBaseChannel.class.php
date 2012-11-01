@@ -46,7 +46,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerConnectionException
 		 * @return \Onphp\AMQPBaseChannel
 		**/
 		protected function checkConnection()

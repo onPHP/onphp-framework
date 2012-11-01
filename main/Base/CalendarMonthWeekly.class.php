@@ -116,7 +116,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\CalendarMonthWeekly
 		**/
 		public function setSelected(Date $day)

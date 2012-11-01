@@ -47,7 +47,7 @@
 		}
 
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @param string $string
 		 * @return int
 		**/

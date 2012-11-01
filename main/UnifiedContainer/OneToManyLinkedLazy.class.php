@@ -30,7 +30,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\OneToManyLinkedLazy
 		**/
 		public function sync($insert, $update = array(), $delete)

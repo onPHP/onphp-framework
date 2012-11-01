@@ -46,7 +46,7 @@
 		}
 		
 		/**
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\InsertOrUpdateQuery
 		**/
 		public function drop($field)

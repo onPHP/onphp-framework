@@ -38,7 +38,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\Range
 		**/
 		public function setMin($min = null)
@@ -52,7 +52,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\Range
 		**/
 		public function setMax($max = null)

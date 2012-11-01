@@ -32,7 +32,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\QuerySkeleton
 		**/
 		public function where(LogicalObject $exp, $logic = null)

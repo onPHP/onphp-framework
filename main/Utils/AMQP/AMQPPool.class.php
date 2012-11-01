@@ -48,7 +48,7 @@
 		}
 
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\AMQPPool
 		**/
 		public function addLink($name, AMQP $amqp)
@@ -64,7 +64,7 @@
 		}
 
 		/**
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\AMQPPool
 		**/
 		public function dropLink($name)
@@ -80,7 +80,7 @@
 		}
 
 		/**
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\AMQP
 		**/
 		public function getLink($name = null)

@@ -104,7 +104,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\DataType
 		**/
 		public function setSize($size)
@@ -128,7 +128,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\DataType
 		**/
 		public function setPrecision($precision)
@@ -152,7 +152,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\DataType
 		**/
 		public function setScale($scale)
@@ -166,7 +166,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\DataType
 		**/
 		public function setTimezoned($zoned = false)
@@ -199,7 +199,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\DataType
 		**/
 		public function setUnsigned($unsigned = false)

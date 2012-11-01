@@ -62,7 +62,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerException|AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerException|AMQPServerConnectionException
 		 * @param sting $deliveryTag
 		 * @param bool $multiple
 		 * @return \Onphp\AMQPPeclChannel
@@ -170,7 +170,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerException|AMQPServerConnectionException|ObjectNotFoundException
+		 * @throws \Onphp\AMQPServerException|AMQPServerConnectionException|ObjectNotFoundException
 		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public function basicGet($queue, $autoAck = true)
@@ -268,7 +268,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerException|AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerException|AMQPServerConnectionException
 		 * @param string $destinationName
 		 * @param string $sourceName
 		 * @param string $routingKey
@@ -307,7 +307,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerException|AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerException|AMQPServerConnectionException
 		 * @param string $name
 		 * @param \Onphp\AMQPExchangeConfig $conf
 		 * @return \Onphp\AMQPPeclChannel
@@ -354,7 +354,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerException|AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerException|AMQPServerConnectionException
 		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function exchangeDelete(
@@ -389,7 +389,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerException|AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerException|AMQPServerConnectionException
 		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function queueBind($name, $exchange, $routingKey)
@@ -416,7 +416,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerException|AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerException|AMQPServerConnectionException
 		 * @return integer - the message count in queue
 		**/
 		public function queueDeclare($name, AMQPQueueConfig $conf)
@@ -457,7 +457,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerException|AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerException|AMQPServerConnectionException
 		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function queueDelete($name)
@@ -486,7 +486,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerException|AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerException|AMQPServerConnectionException
 		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function queuePurge($name)
@@ -513,7 +513,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerException|AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerException|AMQPServerConnectionException
 		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function queueUnbind($name, $exchange, $routingKey)
@@ -540,7 +540,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerConnectionException
 		 * @return \AMQPExchange
 		**/
 		protected function lookupExchange($name)
@@ -568,7 +568,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerConnectionException
 		 * @return \AMQPQueue
 		**/
 		protected function lookupQueue($name)
@@ -596,7 +596,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerConnectionException
 		 * @return \Onphp\AMQPPeclChannel
 		**/
 		protected function checkCommandResult($boolean, $message)

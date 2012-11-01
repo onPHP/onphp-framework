@@ -39,7 +39,7 @@
 		}
 		
 		/**
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\Color
 		**/
 		public function getRandomTextColor()

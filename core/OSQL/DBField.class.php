@@ -68,7 +68,7 @@
 		}
 		
 		/**
-		 * @throws WrongStateException
+		 * @throws \Onphp\WrongStateException
 		 * @return \Onphp\DBField
 		**/
 		public function setTable($table)

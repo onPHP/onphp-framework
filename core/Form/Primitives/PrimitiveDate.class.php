@@ -21,7 +21,7 @@
 		const YEAR		= 'year';
 
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveDate
 		**/
 		public function setValue(/* Date */ $object)
@@ -34,7 +34,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveDate
 		**/
 		public function setMin(/* Date */ $object)
@@ -47,7 +47,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveDate
 		**/
 		public function setMax(/* Date */ $object)
@@ -60,7 +60,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveDate
 		**/
 		public function setDefault(/* Date */ $object)

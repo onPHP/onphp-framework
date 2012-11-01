@@ -21,7 +21,7 @@
 		private $composite = false;
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveForm
 		 * 
 		 * @deprecated You should use ofProto() instead
@@ -38,7 +38,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveForm
 		**/
 		public function ofProto(EntityProto $proto)
@@ -83,7 +83,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveForm
 		**/
 		public function setValue($value)
@@ -94,7 +94,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveForm
 		**/
 		public function importValue($value)

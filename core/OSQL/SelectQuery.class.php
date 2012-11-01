@@ -182,7 +182,7 @@
 		}
 		
 		/**
-		 * @throws WrongStateException
+		 * @throws \Onphp\WrongStateException
 		 * @return \Onphp\SelectQuery
 		**/
 		public function desc()
@@ -196,7 +196,7 @@
 		}
 		
 		/**
-		 * @throws WrongStateException
+		 * @throws \Onphp\WrongStateException
 		 * @return \Onphp\SelectQuery
 		**/
 		public function asc()
@@ -253,7 +253,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\SelectQuery
 		**/
 		public function limit($limit = null, $offset = null)
@@ -288,7 +288,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\SelectQuery
 		**/
 		public function get($field, $alias = null)

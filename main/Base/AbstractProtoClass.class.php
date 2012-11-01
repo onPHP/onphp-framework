@@ -178,7 +178,7 @@
 		
 		/**
 		 * @return \Onphp\LightMetaProperty
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		**/
 		public function getPropertyByName($name)
 		{

@@ -42,7 +42,7 @@
 		/**
 		 * @param $id
 		 * @return \Onphp\Enum
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 */
 		protected function setInternalId($id)
 		{

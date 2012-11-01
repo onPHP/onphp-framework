@@ -23,7 +23,7 @@
 		protected $violated		= array(); // rules
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\Form
 		**/
 		public function addRule($name, LogicalObject $rule)
@@ -36,7 +36,7 @@
 		}
 		
 		/**
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\Form
 		**/
 		public function dropRuleByName($name)

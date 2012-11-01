@@ -37,7 +37,7 @@
 		}
 		
 		/**
-		 * @throws BaseException
+		 * @throws \Onphp\BaseException
 		 * @return \Onphp\ModelAndView
 		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)

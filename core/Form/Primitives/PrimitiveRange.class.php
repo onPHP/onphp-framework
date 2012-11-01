@@ -20,7 +20,7 @@
 		const MAX	= 'max';
 
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveRange
 		**/
 		public function setValue(/* BaseRange */ $range)

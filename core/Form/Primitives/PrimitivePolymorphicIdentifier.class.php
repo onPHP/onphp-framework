@@ -35,7 +35,7 @@
 		}
 		
 		/**
-		 * @throws WrongStateException
+		 * @throws \Onphp\WrongStateException
 		**/
 		public function of($class)
 		{
@@ -45,7 +45,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitivePolymorphicIdentifier
 		**/
 		public function ofBase($className)

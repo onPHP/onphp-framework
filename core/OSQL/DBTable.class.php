@@ -68,7 +68,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\DBTable
 		**/
 		public function addColumn(DBColumn $column)
@@ -88,7 +88,7 @@
 		}
 		
 		/**
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\DBColumn
 		**/
 		public function getColumnByName($name)

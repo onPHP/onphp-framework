@@ -133,7 +133,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\UnifiedContainer
 		**/
 		public function setCriteria(Criteria $criteria)
@@ -170,7 +170,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\UnifiedContainer
 		**/
 		public function setList($list)
@@ -219,7 +219,7 @@
 		}
 		
 		/**
-		 * @throws WrongStateException
+		 * @throws \Onphp\WrongStateException
 		 * @return \Onphp\UnifiedContainer
 		**/
 		public function fetch()
@@ -241,7 +241,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\UnifiedContainer
 		**/
 		public function save()

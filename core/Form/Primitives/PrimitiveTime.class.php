@@ -21,7 +21,7 @@
 		const SECONDS	= PrimitiveTimestamp::SECONDS;
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveTime
 		**/
 		public function setValue(/* Time */ $time)
@@ -34,7 +34,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveTime
 		**/
 		public function setMin(/* Time */ $time)
@@ -47,7 +47,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveTime
 		**/
 		public function setMax(/* Time */ $time)
@@ -60,7 +60,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveTime
 		**/
 		public function setDefault(/* Time */ $time)

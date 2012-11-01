@@ -52,7 +52,7 @@
 
 		/**
 		 * @param \Onphp\Dialect $\Onphp\Dialect
-		 * @throws UnimplementedFeatureException 
+		 * @throws \Onphp\UnimplementedFeatureException 
 		 */
 		public function toDialectString(Dialect $dialect)
 		{

@@ -173,7 +173,7 @@
 		}
 		
 		/**
-		 * @throws ObjectNotFoundException
+		 * @throws \Onphp\ObjectNotFoundException
 		 * @return \Onphp\DBTable
 		**/
 		public function getTableInfo($table)

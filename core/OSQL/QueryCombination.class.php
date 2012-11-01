@@ -57,7 +57,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\QueryCombination
 		**/
 		public function limit($limit = null, $offset = null)

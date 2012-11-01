@@ -41,7 +41,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\SelectQuery
 		**/
 		public static function makeFullTextQuery(

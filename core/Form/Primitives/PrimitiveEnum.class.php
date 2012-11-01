@@ -34,7 +34,7 @@
 		}
 
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveEnum
 		**/
 		public function of($class)
@@ -81,7 +81,7 @@
 
 		/**
 		 * @param $list
-		 * @throws UnsupportedMethodException
+		 * @throws \Onphp\UnsupportedMethodException
 		 */
 		public function setList($list)
 		{

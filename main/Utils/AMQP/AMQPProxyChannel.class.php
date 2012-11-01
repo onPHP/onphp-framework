@@ -295,7 +295,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerException
+		 * @throws \Onphp\AMQPServerException
 		 * @param \Exception $e
 		 * @return \Onphp\AMQPProxyChannel
 		 */
@@ -320,7 +320,7 @@
 
 		/**
 		 * @return \Onphp\AMQPProxyChannel
-		 * @throws AMQPServerException
+		 * @throws \Onphp\AMQPServerException
 		 */
 		private function reconnect(\Exception $amqpException)
 		{

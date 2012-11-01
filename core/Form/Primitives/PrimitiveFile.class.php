@@ -46,7 +46,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveFile
 		**/
 		public function setAllowedMimeTypes($mimes)
@@ -59,7 +59,7 @@
 		}
 
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveFile
 		**/
 		public function addAllowedMimeType($mime)

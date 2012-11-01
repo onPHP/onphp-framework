@@ -46,7 +46,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\IdentifiablePrimitive
 		**/
 		public function setValue($value)

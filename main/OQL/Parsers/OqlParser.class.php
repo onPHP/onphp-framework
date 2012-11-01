@@ -216,7 +216,7 @@
 		}
 		
 		/**
-		 * @throws SyntaxErrorException
+		 * @throws \Onphp\SyntaxErrorException
 		**/
 		protected function checkParentheses($message = null)
 		{
@@ -234,7 +234,7 @@
 		}
 		
 		/**
-		 * @throws SyntaxErrorException
+		 * @throws \Onphp\SyntaxErrorException
 		**/
 		protected function openParentheses($required, $message = null)
 		{
@@ -254,7 +254,7 @@
 		}
 		
 		/**
-		 * @throws SyntaxErrorException
+		 * @throws \Onphp\SyntaxErrorException
 		**/
 		protected function closeParentheses($required, $message = null)
 		{
@@ -739,7 +739,7 @@
 		}
 		
 		/**
-		 * @throws SyntaxErrorException
+		 * @throws \Onphp\SyntaxErrorException
 		**/
 		protected function error($message, $extraMessage = null)
 		{

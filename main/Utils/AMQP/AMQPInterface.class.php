@@ -45,13 +45,13 @@
 
 		/**
 		 * @param integer $id
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function createChannel($id);
 
 		/**
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function getChannel($id);
@@ -64,7 +64,7 @@
 
 		/**
 		 * @param integer $id
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function dropChannel($id);

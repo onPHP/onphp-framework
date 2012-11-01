@@ -34,7 +34,7 @@
 		}
 
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveEnumeration
 		**/
 		public function of($class)

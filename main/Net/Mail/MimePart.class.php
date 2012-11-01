@@ -160,7 +160,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\MimePart
 		**/
 		public function loadBodyFromFile($path)

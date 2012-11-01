@@ -792,7 +792,7 @@
 		/**
 		 * Return MimeType object by mime-type string
 		 * @param string $value
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\MimeType
 		 */
 		public static function getByMimeType($value)
@@ -809,7 +809,7 @@
 		/**
 		 * Return MimeType object by extension without [dot] prefix
 		 * @param string $value
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\MimeType
 		 */
 		public static function getByExtension($value)
@@ -835,7 +835,7 @@
 
 		/**
 		 * Return extension without [dot] prefix.
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return string
 		 */
 		public function getExtension()

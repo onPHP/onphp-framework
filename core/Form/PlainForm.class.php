@@ -46,7 +46,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\Form
 		**/
 		public function add(BasePrimitive $prm)
@@ -74,7 +74,7 @@
 		}
 		
 		/**
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\Form
 		**/
 		public function drop($name)
@@ -90,7 +90,7 @@
 		}
 		
 		/**
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\BasePrimitive
 		**/
 		public function get($name)

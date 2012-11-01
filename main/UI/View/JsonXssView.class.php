@@ -46,7 +46,7 @@
 		/**
 		 * @param $value
 		 * @return \Onphp\JsonXssView
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 */
 		public function setPrefix($value)
 		{

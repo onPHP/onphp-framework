@@ -18,7 +18,7 @@
 		 * If no route was possible, an exception is thrown.
 		 * 
 		 * @param  HttpRequest
-		 * @throws RouterException
+		 * @throws \Onphp\RouterException
 		 * @return \Onphp\HttpRequest | boolean
 		**/
 		public function route(HttpRequest $request);
@@ -51,7 +51,7 @@
 		 * ignoring URL params
 		 * 
 		 * @param  bool $encode Tells to encode URL parts on output
-		 * @throws RouterException
+		 * @throws \Onphp\RouterException
 		 * @return string Resulting URL path
 		**/
 		public function assembly(

@@ -49,7 +49,7 @@
 		}
 		
 		/**
-		 * @throws DatabaseException
+		 * @throws \Onphp\DatabaseException
 		 * @return \Onphp\TransactionQueue
 		**/
 		public function flush()

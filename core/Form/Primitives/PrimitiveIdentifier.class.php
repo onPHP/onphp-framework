@@ -19,7 +19,7 @@
 		private $methodName	= 'getById';
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveIdentifier
 		**/
 		public function of($class)

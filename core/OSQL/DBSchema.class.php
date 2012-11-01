@@ -30,7 +30,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\DBSchema
 		**/
 		public function addTable(DBTable $table)
@@ -49,7 +49,7 @@
 		}
 		
 		/**
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\DBTable
 		**/
 		public function getTableByName($name)

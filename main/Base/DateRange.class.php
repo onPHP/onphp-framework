@@ -54,7 +54,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\DateRange
 		**/
 		public function setStart(/* Date */ $start)
@@ -111,7 +111,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\DateRange
 		**/
 		public function setEnd(/* Date */ $end)

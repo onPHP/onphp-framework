@@ -59,7 +59,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\DBPool
 		**/
 		public function addLink($name, DB $db)
@@ -75,7 +75,7 @@
 		}
 		
 		/**
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\DBPool
 		**/
 		public function dropLink($name)
@@ -91,7 +91,7 @@
 		}
 		
 		/**
-		 * @throws MissingElementException
+		 * @throws \Onphp\MissingElementException
 		 * @return \Onphp\DB
 		**/
 		public function getLink($name = null)

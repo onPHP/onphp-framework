@@ -36,7 +36,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerConnectionException
 		 * @return \Onphp\AMQP
 		**/
 		public function connect()
@@ -61,7 +61,7 @@
 		}
 
 		/**
-		 * @throws AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerConnectionException
 		 * @return \Onphp\AMQP
 		**/
 		public function reconnect()
@@ -81,7 +81,7 @@
 		}
 		
 		/**
-		 * @throws AMQPServerConnectionException
+		 * @throws \Onphp\AMQPServerConnectionException
 		 * @return \Onphp\AMQP
 		**/
 		public function disconnect()

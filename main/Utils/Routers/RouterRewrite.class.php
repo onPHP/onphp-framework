@@ -122,7 +122,7 @@
 		}
 		
 		/**
-		 * @throws RouterException
+		 * @throws \Onphp\RouterException
 		 * @return \Onphp\RouterRewrite
 		**/
 		public function removeRoute($name)
@@ -146,7 +146,7 @@
 		}
 		
 		/**
-		 * @throws RouterException
+		 * @throws \Onphp\RouterException
 		 * @return \Onphp\RouterRule
 		**/
 		public function getRoute($name)
@@ -160,7 +160,7 @@
 		}
 		
 		/**
-		 * @throws RouterException
+		 * @throws \Onphp\RouterException
 		 * @return \Onphp\RouterRule
 		**/
 		public function getCurrentRoute()
@@ -174,7 +174,7 @@
 		}
 		
 		/**
-		 * @throws RouterException
+		 * @throws \Onphp\RouterException
 		 * @return \Onphp\RouterRule
 		**/
 		public function getCurrentRouteName()
@@ -229,7 +229,7 @@
 		}
 		
 		/**
-		 * @throws RouterException
+		 * @throws \Onphp\RouterException
 		 * @return string
 		**/
 		public function assembly(

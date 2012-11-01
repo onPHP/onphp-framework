@@ -17,7 +17,7 @@
 	final class LogicUtils extends StaticFactory
 	{
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\LogicalChain
 		**/
 		public static function getOpenRange(
@@ -89,7 +89,7 @@
 		
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\LogicalChain
 		**/
 		public static function getOpenPoint(

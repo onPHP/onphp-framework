@@ -106,7 +106,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\DBColumn
 		**/
 		public function setReference(

@@ -96,7 +96,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\DateRange
 		**/
 		public static function makeRange($string)
@@ -139,7 +139,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\Date
 		**/
 		private static function toDate($date)

@@ -17,7 +17,7 @@
 	final class ManyToManyLinkedLazy extends ManyToManyLinkedWorker
 	{
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\ManyToManyLinkedLazy
 		**/
 		public function sync($insert, $update = array(), $delete)

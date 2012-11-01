@@ -27,7 +27,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveDateRange
 		**/
 		public function of($class)
@@ -42,7 +42,7 @@
 		}
 		
 		/**
-		 * @throws WrongArgumentException
+		 * @throws \Onphp\WrongArgumentException
 		 * @return \Onphp\PrimitiveDateRange
 		**/
 		public function setDefault(/* DateRange */ $object)
