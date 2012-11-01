@@ -1,19 +1,19 @@
 <?php
 	
 	$dbs = array(
-		'PgSQL' => array(
+		'\Onphp\PgSQL' => array(
 			'user'	=> 'onphp',
 			'pass'	=> 'onphp',
 			'host'	=> '127.0.0.1',
 			'base'	=> 'onphp'
 		),
-		'MySQL' => array(
+		'\Onphp\MySQL' => array(
 			'user'	=> 'onphp',
 			'pass'	=> 'onphp',
 			'host'	=> '127.0.0.1',
 			'base'	=> 'onphp'
 		),
-		'SQLitePDO' => array(
+		'\Onphp\SQLitePDO' => array(
 			'user'	=> 'onphp',
 			'pass'	=> 'onphp',
 			'host'	=> '127.0.0.1',
@@ -22,11 +22,11 @@
 	);
 
 	$daoWorkers = array(
-		'NullDaoWorker', 'CommonDaoWorker', 'SmartDaoWorker', 'VoodooDaoWorker',
-		'CacheDaoWorker', 'VoodooDaoWorker', 'SmartDaoWorker', 'CommonDaoWorker', 'NullDaoWorker'
+		'\Onphp\NullDaoWorker', '\Onphp\CommonDaoWorker', '\Onphp\SmartDaoWorker', '\Onphp\VoodooDaoWorker',
+		'\Onphp\CacheDaoWorker', '\Onphp\VoodooDaoWorker', '\Onphp\SmartDaoWorker', '\Onphp\CommonDaoWorker', '\Onphp\NullDaoWorker'
 	);
 	
-	VoodooDaoWorker::setDefaultHandler('CacheSegmentHandler');
+	\Onphp\VoodooDaoWorker::setDefaultHandler('\Onphp\CacheSegmentHandler');
 	
 	define('__LOCAL_DEBUG__', true);
 	define('ONPHP_CURL_TEST_URL', 'http://localhost/curlTest.php'); //set here url to test script test/main/data/curlTest/curlTest.php
