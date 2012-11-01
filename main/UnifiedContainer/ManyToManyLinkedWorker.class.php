@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Containers
 	**/
+	namespace Onphp;
+
 	abstract class ManyToManyLinkedWorker extends UnifiedContainerWorker
 	{
 		/**
-		 * @return InsertQuery
+		 * @return \Onphp\InsertQuery
 		**/
 		protected function makeInsertQuery($childId)
 		{
@@ -33,7 +35,7 @@
 		/**
 		 * only unlinking, we don't want to drop original object
 		 * 
-		 * @return DeleteQuery
+		 * @return \Onphp\DeleteQuery
 		**/
 		protected function makeDeleteQuery($delete)
 		{
@@ -56,7 +58,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		protected function joinHelperTable(SelectQuery $query)
 		{

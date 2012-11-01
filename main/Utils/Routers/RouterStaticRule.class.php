@@ -9,12 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class RouterStaticRule extends RouterBaseRule
 	{
 		protected $route	= null;
 		
 		/**
-		 * @return RouterStaticRule
+		 * @return \Onphp\RouterStaticRule
 		**/
 		public static function create($route)
 		{

@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Ip
 	**/
+	namespace Onphp;
+
 	class IpAddress implements Stringable, DialectString
 	{
 		private $longIp = null;
 		
 		/**
-		 * @return IpAddress
+		 * @return \Onphp\IpAddress
 		**/
 		public static function create($ip)
 		{
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return IpAddress
+		 * @return \Onphp\IpAddress
 		**/
 		public function setIp($ip)
 		{

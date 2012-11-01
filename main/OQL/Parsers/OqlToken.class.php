@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	final class OqlToken
 	{
 		const NEW_LINE				= 1;
@@ -35,7 +37,7 @@
 		private $position	= null;
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		public static function create()
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		public static function make($value, $rawValue, $type, $line, $position)
 		{
@@ -57,7 +59,7 @@
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		public function setValue($value)
 		{
@@ -72,7 +74,7 @@
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		public function setRawValue($rawValue)
 		{
@@ -87,7 +89,7 @@
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		public function setType($type)
 		{
@@ -102,7 +104,7 @@
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		public function setLine($line)
 		{
@@ -117,7 +119,7 @@
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		public function setPosition($position)
 		{

@@ -13,6 +13,8 @@
 	 * Simple wrapper to pinba php extention
 	 * @see http://pinba.org/
 	 */
+	namespace Onphp;
+
 	final class PinbaClient extends Singleton
 	{
 		private static $enabled = null;
@@ -22,7 +24,7 @@
 		
 		
 		/**
-		 * @return PinbaClient
+		 * @return \Onphp\PinbaClient
 		**/
 		public static function me()
 		{

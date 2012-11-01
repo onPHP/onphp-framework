@@ -12,9 +12,11 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	final class OqlPrefixMinusExpression extends OqlQueryExpression
 	{
-		const CLASS_NAME = 'PrefixUnaryExpression';
+		const CLASS_NAME = '\Onphp\PrefixUnaryExpression';
 		
 		public function __construct(OqlQueryParameter $subject)
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Uncachers
 	**/
+	namespace Onphp;
+
 	interface UncacherBase
 	{
 		/**

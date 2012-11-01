@@ -14,6 +14,8 @@
 	 * not only path/query - subdomains may be involved too,
 	 * ex: username.example.com
 	**/
+	namespace Onphp;
+
 	class ApplicationUrl
 	{
 		protected $base				= null;
@@ -29,7 +31,7 @@
 		protected $absolute			= false;
 		
 		/**
-		 * @return ApplicationUrl
+		 * @return \Onphp\ApplicationUrl
 		**/
 		public static function create()
 		{
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return ApplicationUrl
+		 * @return \Onphp\ApplicationUrl
 		**/
 		public function setBase(HttpUrl $base)
 		{
@@ -47,7 +49,7 @@
 		}
 		
 		/**
-		 * @return HttpUrl
+		 * @return \Onphp\HttpUrl
 		**/
 		public function getBase()
 		{
@@ -55,7 +57,7 @@
 		}
 		
 		/**
-		 * @return ApplicationUrl
+		 * @return \Onphp\ApplicationUrl
 		**/
 		public function setAbsolute($absolute)
 		{
@@ -70,7 +72,7 @@
 		}
 		
 		/**
-		 * @return ApplicationUrl
+		 * @return \Onphp\ApplicationUrl
 		**/
 		public function setNavigationSchema(ScopeNavigationSchema $schema)
 		{
@@ -80,7 +82,7 @@
 		}
 		
 		/**
-		 * @return ScopeNavigationSchema
+		 * @return \Onphp\ScopeNavigationSchema
 		**/
 		public function getNavigationSchema()
 		{
@@ -88,7 +90,7 @@
 		}
 		
 		/**
-		 * @return ApplicationUrl
+		 * @return \Onphp\ApplicationUrl
 		**/
 		public function addApplicationScope($scope)
 		{
@@ -102,7 +104,7 @@
 		}
 		
 		/**
-		 * @return ApplicationUrl
+		 * @return \Onphp\ApplicationUrl
 		**/
 		public function addUserScope($userScope)
 		{
@@ -116,7 +118,7 @@
 		}
 
 		/**
-		 * @return ApplicationUrl
+		 * @return \Onphp\ApplicationUrl
 		**/
 		public function dropFromUserScope($key)
 		{
@@ -132,7 +134,7 @@
 		}
 		
 		/**
-		 * @return ApplicationUrl
+		 * @return \Onphp\ApplicationUrl
 		**/
 		public function setPath($path)
 		{
@@ -155,7 +157,7 @@
 		}
 		
 		/**
-		 * @return ApplicationUrl
+		 * @return \Onphp\ApplicationUrl
 		**/
 		public function setPathByRequestUri($requestUri, $normalize = true)
 		{
@@ -206,7 +208,7 @@
 		}
 		
 		/**
-		 * @return ApplicationUrl
+		 * @return \Onphp\ApplicationUrl
 		**/
 		public function setArgSeparator($argSeparator)
 		{

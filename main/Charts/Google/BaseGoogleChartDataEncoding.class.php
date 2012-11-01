@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	abstract class BaseGoogleChartDataEncoding
 		extends BaseGoogleChartParameter
 		implements GoogleChartDataEncoding
@@ -20,7 +22,7 @@
 		protected $delimiter = null;
 		
 		/**
-		 * @return BaseGoogleChartDataEncoding
+		 * @return \Onphp\BaseGoogleChartDataEncoding
 		**/
 		public function setMaxValue($maxValue)
 		{

@@ -9,10 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	interface MessageQueueBrowser
 	{
 		/**
-		 * @return Message
+		 * @return \Onphp\Message
 		**/
 		public function getNextMessage();
 	}

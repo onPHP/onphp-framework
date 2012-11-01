@@ -10,16 +10,18 @@
  *                                                                         *
  ***************************************************************************/
 	
+	namespace Onphp;
+
 	class AutoloaderNoCache implements AutoloaderWithNamespace
 	{
 		/**
-		 * @var NamespaceResolver
+		 * @var \Onphp\NamespaceResolver
 		 */
 		private $namespaceResolver = null;
 		
 		/**
-		 * @param NamespaceResolver $namespaceResolver
-		 * @return AutoloaderClassPathCache
+		 * @param \Onphp\NamespaceResolver $\Onphp\NamespaceResolver
+		 * @return \Onphp\AutoloaderClassPathCache
 		 */
 		public function setNamespaceResolver(NamespaceResolver $namespaceResolver)
 		{
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return NamespaceResolver
+		 * @return \Onphp\NamespaceResolver
 		 */
 		public function getNamespaceResolver()
 		{
@@ -37,7 +39,7 @@
 		
 		/**
 		 * @param string $path
-		 * @return AutoloaderNoCache
+		 * @return \Onphp\AutoloaderNoCache
 		 */
 		public function addPath($path, $namespace = null)
 		{

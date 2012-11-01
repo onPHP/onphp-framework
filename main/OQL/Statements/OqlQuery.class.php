@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	abstract class OqlQuery extends OqlQueryClause
 	{
 		protected $dao = null;
 		
 		/**
-		 * @return ProtoDAO
+		 * @return \Onphp\ProtoDAO
 		**/
 		public function getDao()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return OqlQuery
+		 * @return \Onphp\OqlQuery
 		**/
 		public function setDao(ProtoDAO $dao)
 		{

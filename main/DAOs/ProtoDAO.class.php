@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	abstract class ProtoDAO extends GenericDAO
 	{
 		public function getJoinPrefix($field, $prefix = null)

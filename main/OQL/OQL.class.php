@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	final class OQL extends StaticFactory
 	{
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public static function select($query)
 		{
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectPropertiesClause
+		 * @return \Onphp\OqlSelectPropertiesClause
 		**/
 		public static function properties($clause)
 		{
@@ -31,7 +33,7 @@
 		}
 		
 		/**
-		 * @return OqlWhereClause
+		 * @return \Onphp\OqlWhereClause
 		**/
 		public static function where($clause)
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return OqlProjectionClause
+		 * @return \Onphp\OqlProjectionClause
 		**/
 		public static function groupBy($clause)
 		{
@@ -47,7 +49,7 @@
 		}
 		
 		/**
-		 * @return OqlOrderByClause
+		 * @return \Onphp\OqlOrderByClause
 		**/
 		public static function orderBy($clause)
 		{
@@ -55,7 +57,7 @@
 		}
 		
 		/**
-		 * @return OqlHavingClause
+		 * @return \Onphp\OqlHavingClause
 		**/
 		public static function having($clause)
 		{

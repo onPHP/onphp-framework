@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	abstract class FeedFormat extends Singleton
 	{
 		abstract public function getChannelWorker();
 		abstract public function getItemWorker();
-		abstract public function isAcceptable(SimpleXMLElement $xmlFeed);
+		abstract public function isAcceptable(\SimpleXMLElement $xmlFeed);
 		
-		public function parse(SimpleXMLElement $xmlFeed)
+		public function parse(\SimpleXMLElement $xmlFeed)
 		{
 			$this->checkWorkers();
 			

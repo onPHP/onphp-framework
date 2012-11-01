@@ -26,6 +26,8 @@
 	 * 
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	class DoctypeDeclaration
 	{
 		const SPACER_MASK			= '[ \r\n\t]';
@@ -44,7 +46,7 @@
 		private $uri			= null;
 		
 		/**
-		 * @return DoctypeDeclaration
+		 * @return \Onphp\DoctypeDeclaration
 		**/
 		public static function create()
 		{
@@ -52,7 +54,7 @@
 		}
 		
 		/**
-		 * @return DoctypeDeclaration
+		 * @return \Onphp\DoctypeDeclaration
 		**/
 		public function setRootElement($rootElement)
 		{
@@ -67,7 +69,7 @@
 		}
 		
 		/**
-		 * @return DoctypeDeclaration
+		 * @return \Onphp\DoctypeDeclaration
 		**/
 		public function setInline($isInline)
 		{
@@ -85,7 +87,7 @@
 		}
 		
 		/**
-		 * @return DoctypeDeclaration
+		 * @return \Onphp\DoctypeDeclaration
 		**/
 		public function setPublic($isPublic)
 		{
@@ -108,7 +110,7 @@
 		}
 		
 		/**
-		 * @return DoctypeDeclaration
+		 * @return \Onphp\DoctypeDeclaration
 		**/
 		public function setDeclarations($declarations)
 		{
@@ -123,7 +125,7 @@
 		}
 		
 		/**
-		 * @return DoctypeDeclaration
+		 * @return \Onphp\DoctypeDeclaration
 		**/
 		public function setFpi($fpi)
 		{
@@ -138,7 +140,7 @@
 		}
 		
 		/**
-		 * @return DoctypeDeclaration
+		 * @return \Onphp\DoctypeDeclaration
 		**/
 		public function setUri($uri)
 		{
@@ -153,7 +155,7 @@
 		}
 		
 		/**
-		 * @return DoctypeDeclaration
+		 * @return \Onphp\DoctypeDeclaration
 		 * 
 		 * sample argument: html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 		**/

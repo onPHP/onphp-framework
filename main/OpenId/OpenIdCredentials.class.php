@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OpenId
 	**/
+	namespace Onphp;
+
 	final class OpenIdCredentials
 	{
 		const HEADER_CONT_TYPE = 'application/xrds+xml';
@@ -71,7 +73,7 @@
 		}
 		
 		/**
-		 * @return OpenIdCredentials
+		 * @return \Onphp\OpenIdCredentials
 		**/
 		public static function create(
 			HttpUrl $claimedId,
@@ -82,7 +84,7 @@
 		}
 		
 		/**
-		 * @return HttpUrl
+		 * @return \Onphp\HttpUrl
 		**/
 		public function getRealId()
 		{
@@ -94,7 +96,7 @@
 		}
 		
 		/**
-		 * @return HttpUrl
+		 * @return \Onphp\HttpUrl
 		**/
 		public function getServer()
 		{
@@ -107,7 +109,7 @@
 		}
 		
 		/**
-		 * @return OpenIdCredentials
+		 * @return \Onphp\OpenIdCredentials
 		**/
 		public function setIdentifierSelect($bool)
 		{

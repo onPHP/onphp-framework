@@ -15,6 +15,8 @@
 	 * 
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class CyrillicPairs extends StaticFactory
 	{
 		private static $table = array(

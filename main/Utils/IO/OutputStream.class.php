@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	abstract class OutputStream
 	{
 		/**
@@ -30,7 +32,7 @@
 		abstract public function write($buffer);
 		
 		/**
-		 * @return OutputStream
+		 * @return \Onphp\OutputStream
 		**/
 		public function flush()
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return OutputStream
+		 * @return \Onphp\OutputStream
 		**/
 		public function close()
 		{

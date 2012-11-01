@@ -16,6 +16,8 @@
 	 * setSendmailAdditionalArgs('-f from.addr@example.com').
 	 * See 'man sendmail' for details.
 	**/
+	namespace Onphp;
+
 	final class Mail
 	{
 		private $to				= null;
@@ -30,7 +32,7 @@
 		private $sendmailAdditionalArgs	= null;
 		
 		/**
-		 * @return Mail
+		 * @return \Onphp\Mail
 		**/
 		public static function create()
 		{
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return Mail
+		 * @return \Onphp\Mail
 		**/
 		public function send()
 		{
@@ -127,7 +129,7 @@
 		}
 		
 		/**
-		 * @return Mail
+		 * @return \Onphp\Mail
 		**/
 		public function setTo($to)
 		{
@@ -136,7 +138,7 @@
 		}
 		
 		/**
-		 * @return Mail
+		 * @return \Onphp\Mail
 		**/
 		public function setCc($cc)
 		{
@@ -145,7 +147,7 @@
 		}
 		
 		/**
-		 * @return Mail
+		 * @return \Onphp\Mail
 		**/
 		public function setSubject($subject)
 		{
@@ -154,7 +156,7 @@
 		}
 		
 		/**
-		 * @return Mail
+		 * @return \Onphp\Mail
 		**/
 		public function setText($text)
 		{
@@ -163,7 +165,7 @@
 		}
 		
 		/**
-		 * @return Mail
+		 * @return \Onphp\Mail
 		**/
 		public function setFrom($from)
 		{
@@ -172,7 +174,7 @@
 		}
 		
 		/**
-		 * @return Mail
+		 * @return \Onphp\Mail
 		**/
 		public function setEncoding($encoding)
 		{
@@ -186,7 +188,7 @@
 		}
 		
 		/**
-		 * @return Mail
+		 * @return \Onphp\Mail
 		**/
 		public function setContentType($contentType)
 		{
@@ -200,7 +202,7 @@
 		}
 		
 		/**
-		 * @return Mail
+		 * @return \Onphp\Mail
 		**/
 		public function setSendmailAdditionalArgs($sendmailAdditionalArgs)
 		{
@@ -214,7 +216,7 @@
 		}
 		
 		/**
-		 * @return Mail
+		 * @return \Onphp\Mail
 		**/
 		public function setReturnPath($returnPath)
 		{

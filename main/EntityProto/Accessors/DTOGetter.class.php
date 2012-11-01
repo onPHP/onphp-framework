@@ -9,19 +9,21 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class DTOGetter extends PrototypedGetter
 	{
 		private $soapDto	= true;
 		
 		public function __construct(EntityProto $proto, $object)
 		{
-			Assert::isInstance($object, 'DTOClass');
+			Assert::isInstance($object, '\Onphp\DTOClass');
 			
 			return parent::__construct($proto, $object);
 		}
 		
 		/**
-		 * @return DTOGetter
+		 * @return \Onphp\DTOGetter
 		**/
 		public function setSoapDto($soapDto)
 		{

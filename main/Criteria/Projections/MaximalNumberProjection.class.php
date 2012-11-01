@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	final class MaximalNumberProjection extends AggregateProjection
 	{
 		public function getFunctionName()

@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class TidyValidator
 	{
 		private $content		= null;
@@ -42,7 +44,7 @@
 		private $encoding		= 'utf8';
 		
 		/**
-		 * @return TidyValidator
+		 * @return \Onphp\TidyValidator
 		**/
 		public static function create()
 		{
@@ -55,7 +57,7 @@
 		 * For example: TidyValidator::create()->setContent('<b>blabla</b>');
 		 * 
 		 * @param $content content itself
-		 * @return TidyValidator
+		 * @return \Onphp\TidyValidator
 		**/
 		public function setContent($content)
 		{
@@ -80,7 +82,7 @@
 		 * For example: TidyValidator::create()->setConfig('output-xhtml' => true);
 		 * 
 		 * @param $config array with tidy's configuration
-		 * @return TidyValidator
+		 * @return \Onphp\TidyValidator
 		**/
 		public function setConfig($config)
 		{
@@ -98,7 +100,7 @@
 		 * Sets header for content. There is default header (see code).
 		 * 
 		 * @param $header header string
-		 * @return TidyValidator
+		 * @return \Onphp\TidyValidator
 		**/
 		public function setHeader($header)
 		{
@@ -119,7 +121,7 @@
 		 * For example: TidyValidator::create()->setEncoding('utf8');
 		 * 
 		 * @param $encoding encoding name
-		 * @return TidyValidator
+		 * @return \Onphp\TidyValidator
 		**/
 		public function setEncoding($encoding)
 		{
@@ -160,7 +162,7 @@
 		 * 		getContent();
 		 * 
 		 * @param $content content to validate
-		 * @return TidyValidator
+		 * @return \Onphp\TidyValidator
 		**/
 		public function validateContent($content = null)
 		{

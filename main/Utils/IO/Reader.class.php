@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	abstract class Reader
 	{
 		const BLOCK_SIZE = 16384;

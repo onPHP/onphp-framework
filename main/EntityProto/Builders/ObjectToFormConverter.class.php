@@ -9,10 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class ObjectToFormConverter extends FormBuilder
 	{
 		/**
-		 * @return ObjectToFormConverter
+		 * @return \Onphp\ObjectToFormConverter
 		**/
 		public static function create(EntityProto $proto)
 		{
@@ -20,7 +22,7 @@
 		}
 		
 		/**
-		 * @return ObjectGetter
+		 * @return \Onphp\ObjectGetter
 		**/
 		protected function getGetter($object)
 		{
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return FormSetter
+		 * @return \Onphp\FormSetter
 		**/
 		protected function getSetter(&$object)
 		{

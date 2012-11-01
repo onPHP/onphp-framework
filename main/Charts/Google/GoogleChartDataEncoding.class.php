@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	interface GoogleChartDataEncoding
 	{
 		public function encode(GoogleChartDataSet $set);

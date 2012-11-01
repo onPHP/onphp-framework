@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	final class PropertyProjection extends BaseProjection
 	{
 		/**
-		 * @return JoinCapableQuery
+		 * @return \Onphp\JoinCapableQuery
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{

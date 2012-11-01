@@ -9,28 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 	
+	namespace Onphp;
+
 	interface AutoloaderWithNamespace extends Autoloader
 	{
 		/**
-		 * @param NamespaceResolver $namespaceResolver
-		 * @return Autoloader
+		 * @param \Onphp\NamespaceResolver $\Onphp\NamespaceResolver
+		 * @return \Onphp\Autoloader
 		 */
 		public function setNamespaceResolver(NamespaceResolver $namespaceResolver);
 		
 		/**
-		 * @return Autoloader
+		 * @return \Onphp\Autoloader
 		 */
 		public function getNamespaceResolver();
 		
 		/**
 		 * @param string $path
-		 * @return Autoloader
+		 * @return \Onphp\Autoloader
 		 */
 		public function addPath($path, $namespace = null);
 		
 		/**
 		 * @param array $pathes
-		 * @return Autoloader
+		 * @return \Onphp\Autoloader
 		 */
 		public function addPaths(array $paths, $namespace = null);
 	}

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	final class MessageSegmentHandler implements SegmentHandler
 	{
 		private $id = null;

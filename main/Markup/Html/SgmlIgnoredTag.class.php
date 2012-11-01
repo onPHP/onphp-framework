@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Html
 	**/
+	namespace Onphp;
+
 	final class SgmlIgnoredTag extends SgmlTag
 	{
 		private $cdata		= null;
 		private $endMark	= null;
 		
 		/**
-		 * @return SgmlIgnoredTag
+		 * @return \Onphp\SgmlIgnoredTag
 		**/
 		public static function create()
 		{
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return SgmlIgnoredTag
+		 * @return \Onphp\SgmlIgnoredTag
 		**/
 		public static function comment()
 		{
@@ -34,7 +36,7 @@
 		}
 		
 		/**
-		 * @return SgmlIgnoredTag
+		 * @return \Onphp\SgmlIgnoredTag
 		**/
 		public function setCdata(Cdata $cdata)
 		{
@@ -44,7 +46,7 @@
 		}
 		
 		/**
-		 * @return Cdata
+		 * @return \Onphp\Cdata
 		**/
 		public function getCdata()
 		{
@@ -52,7 +54,7 @@
 		}
 		
 		/**
-		 * @return SgmlIgnoredTag
+		 * @return \Onphp\SgmlIgnoredTag
 		**/
 		public function setEndMark($endMark)
 		{

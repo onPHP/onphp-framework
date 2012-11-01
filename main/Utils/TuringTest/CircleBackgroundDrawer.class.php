@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	final class CircleBackgroundDrawer extends BackgroundDrawer
 	{
 		const VERTEX_COUNT	= 20;
@@ -31,7 +33,7 @@
 		}
 		
 		/**
-		 * @return CircleBackgroundDrawer
+		 * @return \Onphp\CircleBackgroundDrawer
 		**/
 		public function draw()
 		{

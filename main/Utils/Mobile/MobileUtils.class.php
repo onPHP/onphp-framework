@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Mobile
 	**/
+	namespace Onphp;
+
 	final class MobileUtils extends StaticFactory
 	{
 		public static function extractIp(array $headers)

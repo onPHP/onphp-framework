@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	final class ProjectionChain implements ObjectProjection
 	{
 		private $list = array();
 		
 		/**
-		 * @return ProjectionChain
+		 * @return \Onphp\ProjectionChain
 		**/
 		public function add(ObjectProjection $projection, $name = null)
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return JoinCapableQuery
+		 * @return \Onphp\JoinCapableQuery
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
@@ -49,7 +51,7 @@
 		}
 		
 		/**
-		 * @return ProjectionChain
+		 * @return \Onphp\ProjectionChain
 		**/
 		public function dropByType(/* array */ $dropTypes)
 		{

@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup onSPL
 	**/
+	namespace Onphp;
+
 	final class PlainList extends AbstractList
 	{
 		/**
-		 * @return PlainList
+		 * @return \Onphp\PlainList
 		**/
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return PlainList
+		 * @return \Onphp\PlainList
 		**/
 		public function offsetSet($offset, $value)
 		{

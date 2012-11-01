@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class ModelAndView
 	{
 		private $model 	= null;
@@ -19,7 +21,7 @@
 		private $view	= null;
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public static function create()
 		{
@@ -32,7 +34,7 @@
 		}
 		
 		/**
-		 * @return Model
+		 * @return \Onphp\Model
 		**/
 		public function getModel()
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function setModel(Model $model)
 		{
@@ -55,7 +57,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function setView($view)
 		{

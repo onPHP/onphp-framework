@@ -12,13 +12,15 @@
 	/**
 	 * NamespaceDirScanerPSR0 class to scan directories and save which class where
 	 */
+	namespace Onphp;
+
 	class NamespaceDirScanerPSR0 extends NamespaceDirScaner
 	{
 		private $allowedUnderline = false;
 		
 		/**
 		 * @param boolean $allowedUnderline
-		 * @return NamespaceResolverPSR0
+		 * @return \Onphp\NamespaceResolverPSR0
 		 */
 		public function setAllowedUnderline($allowedUnderline) {
 			$this->allowedUnderline = ($allowedUnderline === true);

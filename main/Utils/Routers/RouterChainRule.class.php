@@ -9,13 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class RouterChainRule extends RouterBaseRule
 	{
 		protected $routes		= array();
 		protected $separators	= array();
 		
 		/**
-		 * @return RouterChainRule
+		 * @return \Onphp\RouterChainRule
 		**/
 		public static function create()
 		{
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return RouterChainRule
+		 * @return \Onphp\RouterChainRule
 		**/
 		public function chain(RouterRule $route, $separator = '/')
 		{

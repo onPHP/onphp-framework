@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class PhpViewResolver implements ViewResolver
 	{
 		private $prefix		= null;
@@ -24,7 +26,7 @@
 		}
 		
 		/**
-		 * @return PhpViewResolver
+		 * @return \Onphp\PhpViewResolver
 		**/
 		public static function create($prefix = null, $postfix = null)
 		{
@@ -32,7 +34,7 @@
 		}
 		
 		/**
-		 * @return SimplePhpView
+		 * @return \Onphp\SimplePhpView
 		**/
 		public function resolveViewName($viewName)
 		{
@@ -54,7 +56,7 @@
 		}
 		
 		/**
-		 * @return PhpViewResolver
+		 * @return \Onphp\PhpViewResolver
 		**/
 		public function setPrefix($prefix)
 		{
@@ -69,7 +71,7 @@
 		}
 		
 		/**
-		 * @return PhpViewResolver
+		 * @return \Onphp\PhpViewResolver
 		**/
 		public function setPostfix($postfix)
 		{

@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	final class AtomFeedFormat extends FeedFormat
 	{
 		/**
-		 * @return AtomFeedFormat
+		 * @return \Onphp\AtomFeedFormat
 		**/
 		public static function me()
 		{
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return AtomChannelWorker
+		 * @return \Onphp\AtomChannelWorker
 		**/
 		public function getChannelWorker()
 		{
@@ -31,14 +33,14 @@
 		}
 		
 		/**
-		 * @return AtomItemWorker
+		 * @return \Onphp\AtomItemWorker
 		**/
 		public function getItemWorker()
 		{
 			return AtomItemWorker::me();
 		}
 		
-		public function isAcceptable(SimpleXMLElement $xmlFeed)
+		public function isAcceptable(\SimpleXMLElement $xmlFeed)
 		{
 			return ($xmlFeed->getName() == 'feed');
 		}

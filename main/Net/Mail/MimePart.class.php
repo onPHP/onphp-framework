@@ -14,6 +14,8 @@
 	/**
 	 * @ingroup Mail
 	**/
+	namespace Onphp;
+
 	final class MimePart implements MailBuilder
 	{
 		private $contentId		= null;
@@ -34,7 +36,7 @@
 		private $parts			= array();
 		
 		/**
-		 * @return MimePart
+		 * @return \Onphp\MimePart
 		**/
 		public static function create()
 		{
@@ -50,7 +52,7 @@
 		}
 		
 		/**
-		 * @return MimePart
+		 * @return \Onphp\MimePart
 		**/
 		public function setBoundary($boundary)
 		{
@@ -70,7 +72,7 @@
 		}
 		
 		/**
-		 * @return MimePart
+		 * @return \Onphp\MimePart
 		**/
 		public function setContentId($id)
 		{
@@ -85,7 +87,7 @@
 		}
 		
 		/**
-		 * @return MimePart
+		 * @return \Onphp\MimePart
 		**/
 		public function setContentType($type)
 		{
@@ -95,7 +97,7 @@
 		}
 		
 		/**
-		 * @return MailEncoding
+		 * @return \Onphp\MailEncoding
 		**/
 		public function getEncoding()
 		{
@@ -103,7 +105,7 @@
 		}
 		
 		/**
-		 * @return MimePart
+		 * @return \Onphp\MimePart
 		**/
 		public function setEncoding(MailEncoding $encoding)
 		{
@@ -118,7 +120,7 @@
 		}
 		
 		/**
-		 * @return MimePart
+		 * @return \Onphp\MimePart
 		**/
 		public function setCharset($charset)
 		{
@@ -133,7 +135,7 @@
 		}
 		
 		/**
-		 * @return MimePart
+		 * @return \Onphp\MimePart
 		**/
 		public function setFilename($name)
 		{
@@ -148,7 +150,7 @@
 		}
 		
 		/**
-		 * @return MimePart
+		 * @return \Onphp\MimePart
 		**/
 		public function setDescription($description)
 		{
@@ -159,7 +161,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return MimePart
+		 * @return \Onphp\MimePart
 		**/
 		public function loadBodyFromFile($path)
 		{
@@ -171,7 +173,7 @@
 		}
 		
 		/**
-		 * @return MimePart
+		 * @return \Onphp\MimePart
 		**/
 		public function setBody($body)
 		{
@@ -186,7 +188,7 @@
 		}
 		
 		/**
-		 * @return MimePart
+		 * @return \Onphp\MimePart
 		**/
 		public function addSubPart(MimePart $part)
 		{
@@ -196,7 +198,7 @@
 		}
 		
 		/**
-		 * @return MimePart
+		 * @return \Onphp\MimePart
 		**/
 		public function setInline($inline = true)
 		{

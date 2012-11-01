@@ -12,47 +12,49 @@
 	/**
 	 * @ingroup Math
 	**/
+	namespace Onphp;
+
 	interface BigInteger extends Stringable
 	{
 		/**
-		 * @return BigNumberFactory
+		 * @return \Onphp\BigNumberFactory
 		**/
 		public static function getFactory();
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function add(BigInteger $x);
 		
 		public function compareTo(BigInteger $x);
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function mod(BigInteger $mod);
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function pow(BigInteger $exp);
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function modPow(BigInteger $exp, BigInteger $mod);
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function subtract(BigInteger $x);
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function mul(BigInteger $x);
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function div(BigInteger $x);
 		

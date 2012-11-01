@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	final class CodeGenerator
 	{
 		private	$length				= null;
@@ -24,7 +26,7 @@
 		static private $similarSymbols	= array('0', 'o', '1', 'l');
 		
 		/**
-		 * @return CodeGenerator
+		 * @return \Onphp\CodeGenerator
 		**/
 		public static function create()
 		{
@@ -42,7 +44,7 @@
 		}
 		
 		/**
-		 * @return CodeGenerator
+		 * @return \Onphp\CodeGenerator
 		**/
 		public function setLength($length)
 		{
@@ -52,7 +54,7 @@
 		}
 		
 		/**
-		 * @return CodeGenerator
+		 * @return \Onphp\CodeGenerator
 		**/
 		public function setLowerAllowed($lowerAllowed = true)
 		{
@@ -62,7 +64,7 @@
 		}
 		
 		/**
-		 * @return CodeGenerator
+		 * @return \Onphp\CodeGenerator
 		**/
 		public function setUpperAllowed($upperAllowed = true)
 		{
@@ -72,7 +74,7 @@
 		}
 		
 		/**
-		 * @return CodeGenerator
+		 * @return \Onphp\CodeGenerator
 		**/
 		public function setSimilarAllowed($similarAllowed = true)
 		{
@@ -82,7 +84,7 @@
 		}
 		
 		/**
-		 * @return CodeGenerator
+		 * @return \Onphp\CodeGenerator
 		**/
 		public function setNumbersAllowed($numbersAllowed = true)
 		{
@@ -92,7 +94,7 @@
 		}
 		
 		/**
-		 * @return CodeGenerator
+		 * @return \Onphp\CodeGenerator
 		**/
 		public function setCharactersAllowed($charactersAllowed = true)
 		{

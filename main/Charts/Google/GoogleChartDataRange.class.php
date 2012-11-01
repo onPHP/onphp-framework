@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartDataRange
 	{
 		private static $paramName = 'chxr';

@@ -13,20 +13,22 @@
 	 * AMQP stands for Advanced Message Queue Protocol, which is
 	 * an open standard middleware layer for message routing and queuing.
 	**/
+	namespace Onphp;
+
 	interface AMQPInterface
 	{
 		/**
-		 * @return AMQPInterface
+		 * @return \Onphp\AMQPInterface
 		**/
 		public function connect();
 
 		/**
-		 * @return AMQPInterface
+		 * @return \Onphp\AMQPInterface
 		**/
 		public function disconnect();
 		
 		/**
-		 * @return AMQPInterface
+		 * @return \Onphp\AMQPInterface
 		**/
 		public function reconnect();
 
@@ -36,7 +38,7 @@
 		public function isConnected();
 
 		/**
-		 * @return AMQPInterface
+		 * @return \Onphp\AMQPInterface
 		**/
 		public function getLink();
 
@@ -44,13 +46,13 @@
 		/**
 		 * @param integer $id
 		 * @throws WrongArgumentException
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function createChannel($id);
 
 		/**
 		 * @throws MissingElementException
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function getChannel($id);
 
@@ -63,13 +65,13 @@
 		/**
 		 * @param integer $id
 		 * @throws MissingElementException
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function dropChannel($id);
 
 
 		/**
-		 * @return AMQPCredentials
+		 * @return \Onphp\AMQPCredentials
 		 */
 		public function getCredentials();
 
@@ -82,7 +84,7 @@
 
 		/**
 		 * @param bool $alive
-		 * @return AMQPInterface
+		 * @return \Onphp\AMQPInterface
 		 */
 		//public function setAlive($alive);
 	}

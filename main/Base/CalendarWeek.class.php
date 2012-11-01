@@ -14,12 +14,14 @@
 	 * 
 	 * @ingroup Calendar
 	**/
+	namespace Onphp;
+
 	final class CalendarWeek
 	{
 		private $days = array();
 		
 		/**
-		 * @return CalendarWeek
+		 * @return \Onphp\CalendarWeek
 		**/
 		public static function create()
 		{
@@ -32,7 +34,7 @@
 		}
 		
 		/**
-		 * @return CalendarWeek
+		 * @return \Onphp\CalendarWeek
 		**/
 		public function addDay(CalendarDay $day)
 		{

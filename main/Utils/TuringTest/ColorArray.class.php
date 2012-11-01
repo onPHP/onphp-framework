@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	final class ColorArray
 	{
 		private $colors = array();
 		
 		/**
-		 * @return ColorArray
+		 * @return \Onphp\ColorArray
 		**/
 		public function add(Color $color)
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return ColorArray
+		 * @return \Onphp\ColorArray
 		**/
 		public function clear()
 		{
@@ -38,7 +40,7 @@
 		
 		/**
 		 * @throws MissingElementException
-		 * @return Color
+		 * @return \Onphp\Color
 		**/
 		public function getRandomTextColor()
 		{

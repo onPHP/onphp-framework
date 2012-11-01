@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	interface View
 	{
 		const ERROR_VIEW = 'error';

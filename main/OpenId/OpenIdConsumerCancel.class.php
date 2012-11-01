@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OpenId
 	**/
+	namespace Onphp;
+
 	final class OpenIdConsumerCancel implements OpenIdConsumerResult
 	{
 		public function isOk()

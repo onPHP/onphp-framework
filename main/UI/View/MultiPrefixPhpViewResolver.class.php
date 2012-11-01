@@ -17,6 +17,8 @@
 	 * 
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class MultiPrefixPhpViewResolver implements ViewResolver
 	{
 		private $prefixes	= array();
@@ -25,10 +27,10 @@
 		private $disabled	= array();
 		
 		private $postfix	= EXT_TPL;
-		private $viewClassName	= 'SimplePhpView';
+		private $viewClassName	= '\Onphp\SimplePhpView';
 		
 		/**
-		 * @return MultiPrefixPhpViewResolver
+		 * @return \Onphp\MultiPrefixPhpViewResolver
 		**/
 		public static function create()
 		{
@@ -36,7 +38,7 @@
 		}
 		
 		/**
-		 * @return MultiPrefixPhpViewResolver
+		 * @return \Onphp\MultiPrefixPhpViewResolver
 		**/
 		public function addFirstPrefix($prefix)
 		{
@@ -46,7 +48,7 @@
 		}
 		
 		/**
-		 * @return MultiPrefixPhpViewResolver
+		 * @return \Onphp\MultiPrefixPhpViewResolver
 		**/
 		public function addPrefix($prefix, $alias = null)
 		{
@@ -71,7 +73,7 @@
 		}
 		
 		/**
-		 * @return MultiPrefixPhpViewResolver
+		 * @return \Onphp\MultiPrefixPhpViewResolver
 		**/
 		public function dropPrefixes()
 		{
@@ -91,7 +93,7 @@
 		}
 		
 		/**
-		 * @return MultiPrefixPhpViewResolver
+		 * @return \Onphp\MultiPrefixPhpViewResolver
 		**/
 		public function disablePrefix($alias = null, $disabled = true)
 		{
@@ -121,7 +123,7 @@
 		}
 		
 		/**
-		 * @return MultiPrefixPhpViewResolver
+		 * @return \Onphp\MultiPrefixPhpViewResolver
 		**/
 		public function setPostfix($postfix)
 		{
@@ -130,7 +132,7 @@
 		}
 		
 		/**
-		 * @return SimplePhpView
+		 * @return \Onphp\SimplePhpView
 		**/
 		public function resolveViewName($viewName)
 		{
@@ -156,7 +158,7 @@
 		}
 		
 		/**
-		 * @return MultiPrefixPhpViewResolver
+		 * @return \Onphp\MultiPrefixPhpViewResolver
 		**/
 		public function setViewClassName($viewClassName)
 		{
@@ -188,7 +190,7 @@
 		}
 		
 		/**
-		 * @return View
+		 * @return \Onphp\View
 		**/
 		protected function makeView($prefix, $viewName)
 		{

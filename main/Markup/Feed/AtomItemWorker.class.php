@@ -12,17 +12,19 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	final class AtomItemWorker extends Singleton implements FeedItemWorker
 	{
 		/**
-		 * @return AtomItemWorker
+		 * @return \Onphp\AtomItemWorker
 		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
 		}
 		
-		public function makeItems(SimpleXMLElement $xmlFeed)
+		public function makeItems(\SimpleXMLElement $xmlFeed)
 		{
 			$result = array();
 			

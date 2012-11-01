@@ -15,6 +15,8 @@
 	 *
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	class LightMetaProperty implements Stringable
 	{
 		const UNSIGNED_FLAG = 0x1000;
@@ -74,7 +76,7 @@
 		private $identifier	= null;
 		
 		/**
-		 * @return LightMetaProperty
+		 * @return \Onphp\LightMetaProperty
 		**/
 		public static function create()
 		{
@@ -84,7 +86,7 @@
 		/**
 		 * must by in sync with InnerMetaProperty::make()
 		 *
-		 * @return LightMetaProperty
+		 * @return \Onphp\LightMetaProperty
 		**/
 		public static function fill(
 			LightMetaProperty $property,
@@ -169,7 +171,7 @@
 		}
 		
 		/**
-		 * @return LightMetaProperty
+		 * @return \Onphp\LightMetaProperty
 		**/
 		public function setColumnName($name)
 		{
@@ -204,7 +206,7 @@
 		}
 		
 		/**
-		 * @return LightMetaProperty
+		 * @return \Onphp\LightMetaProperty
 		**/
 		public function setRequired($yrly)
 		{
@@ -234,7 +236,7 @@
 		}
 		
 		/**
-		 * @return LightMetaProperty
+		 * @return \Onphp\LightMetaProperty
 		**/
 		public function setFetchStrategy(FetchStrategy $strategy)
 		{
@@ -244,7 +246,7 @@
 		}
 		
 		/**
-		 * @return LightMetaProperty
+		 * @return \Onphp\LightMetaProperty
 		**/
 		public function dropFetchStrategy()
 		{
@@ -288,13 +290,13 @@
 		}
 		
 		/**
-		 * @return BasePrimitive
+		 * @return \Onphp\BasePrimitive
 		**/
 		public function makePrimitive($name)
 		{
 			$prm =
 				call_user_func(
-					array('Primitive', $this->type),
+					array('\Onphp\Primitive', $this->type),
 					$name
 				);
 			
@@ -332,7 +334,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function fillForm(Form $form, $prefix = null)
 		{
@@ -342,7 +344,7 @@
 		}
 		
 		/**
-		 * @return InsertOrUpdateQuery
+		 * @return \Onphp\InsertOrUpdateQuery
 		**/
 		public function fillQuery(
 			InsertOrUpdateQuery $query,
@@ -410,7 +412,7 @@
 				return DBPool::getByDao($dao)->getDialect()->unquoteBinary($raw);
 			}
 			
-			if ($this->className == 'HttpUrl') {
+			if ($this->className == '\Onphp\HttpUrl') {
 				return HttpUrl::create()->parse($raw);
 			}
 			
@@ -428,8 +430,8 @@
 				Assert::classExists($this->className);
 				
 				if (
-					!is_subclass_of($this->className, 'Enumeration')
-					&& !is_subclass_of($this->className, 'Enum')
+					!is_subclass_of($this->className, '\Onphp\Enumeration')
+					&& !is_subclass_of($this->className, '\Onphp\Enum')
 				) {
 					$remoteDao = call_user_func(array($this->className, 'dao'));
 					

@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Uncachers
 	**/
+	namespace Onphp;
+
 	class UncachersPool implements UncacherBase
 	{
 		private $uncachers = array();
 		
 		/**
-		 * @param UncacherBase $uncacher
-		 * @return UncachersPool
+		 * @param \Onphp\UncacherBase $uncacher
+		 * @return \Onphp\UncachersPool
 		 */
 		public static function create(UncacherBase $uncacher = null) {
 			return new self($uncacher);
@@ -46,7 +48,7 @@
 		
 		public function uncache() {
 			foreach ($this->uncachers as $uncacher) {
-				/* @var $uncacher UncacherBase */
+				/* @var $uncacher \Onphp\UncacherBase */
 				$uncacher->uncache();
 			}
 		}

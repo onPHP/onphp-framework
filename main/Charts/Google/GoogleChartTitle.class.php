@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartTitle extends BaseGoogleChartParameter
 	{
 		protected static $paramName = 'chtt';
@@ -19,7 +21,7 @@
 		private $title = null;
 		
 		/**
-		 * @return GoogleChartTitle
+		 * @return \Onphp\GoogleChartTitle
 		**/
 		public static function create($title)
 		{

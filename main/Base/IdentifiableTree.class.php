@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	abstract class IdentifiableTree
 		extends IdentifiableObject
 		implements Stringable
@@ -21,7 +23,7 @@
 		private $parent	= null;
 		
 		/**
-		 * @return IdentifiableTree
+		 * @return \Onphp\IdentifiableTree
 		**/
 		public function getParent()
 		{
@@ -29,7 +31,7 @@
 		}
 		
 		/**
-		 * @return IdentifiableTree
+		 * @return \Onphp\IdentifiableTree
 		**/
 		public function setParent(IdentifiableTree $parent)
 		{
@@ -41,7 +43,7 @@
 		}
 		
 		/**
-		 * @return IdentifiableTree
+		 * @return \Onphp\IdentifiableTree
 		**/
 		public function dropParent()
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return IdentifiableTree
+		 * @return \Onphp\IdentifiableTree
 		**/
 		public function getRoot()
 		{

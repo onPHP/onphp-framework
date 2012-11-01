@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	class Range extends BaseRange
 	{
 		public function __construct($min = null, $max = null)
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return Range
+		 * @return \Onphp\Range
 		**/
 		public static function create($min = null, $max = null)
 		{
@@ -37,7 +39,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return Range
+		 * @return \Onphp\Range
 		**/
 		public function setMin($min = null)
 		{
@@ -51,7 +53,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return Range
+		 * @return \Onphp\Range
 		**/
 		public function setMax($max = null)
 		{

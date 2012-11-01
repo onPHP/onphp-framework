@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Http
 	**/
+	namespace Onphp;
+
 	final class HttpMethod extends Enumeration
 	{
 		const OPTIONS	= 1;

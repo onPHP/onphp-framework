@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Crypto
 	**/
+	namespace Onphp;
+
 	final class Crypter
 	{
 		private $crResource = null;

@@ -16,6 +16,8 @@
 	 *
 	 * @see javax.mail.internet.InternetAddress
 	**/
+	namespace Onphp;
+
 	final class MailAddress
 	{
 		const RFC_MAX_ENCODED_WORD_LENGTH = 75;

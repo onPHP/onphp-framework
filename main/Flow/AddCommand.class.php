@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class AddCommand extends MakeCommand
 	{
 		/**
-		 * @return AddCommand
+		 * @return \Onphp\AddCommand
 		**/
 		public static function create()
 		{

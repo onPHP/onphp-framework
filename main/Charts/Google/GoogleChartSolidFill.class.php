@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartSolidFill extends BaseGoogleChartParameter
 	{
 		protected static $paramName = 'chf';
@@ -20,7 +22,7 @@
 		private $color 	= null;
 		
 		/**
-		 * @return GoogleChartSolidFill
+		 * @return \Onphp\GoogleChartSolidFill
 		**/
 		public static function create(GoogleChartSolidFillType $type)
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartSolidFill
+		 * @return \Onphp\GoogleChartSolidFill
 		**/
 		public function setColor(Color $color)
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return Color
+		 * @return \Onphp\Color
 		**/
 		public function getColor()
 		{

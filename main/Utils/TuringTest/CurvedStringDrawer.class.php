@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	final class CurvedStringDrawer extends TextDrawer
 	{
 		const MAX_ANGLE_CHANGE 				= 40;
@@ -19,7 +21,7 @@
 		const MAX_VERTIVAL_POSITION_CHANGE 	= 1.5;
 		
 		/**
-		 * @return CurvedStringDrawer
+		 * @return \Onphp\CurvedStringDrawer
 		**/
 		public function draw($string)
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	final class TuringImage
 	{
 		private $textColors			= null;
@@ -42,7 +44,7 @@
 		}
 		
 		/**
-		 * @return TuringImage
+		 * @return \Onphp\TuringImage
 		**/
 		public function setGeneratedCode($code)
 		{
@@ -97,7 +99,7 @@
 		}
 		
 		/**
-		 * @return TuringImage
+		 * @return \Onphp\TuringImage
 		**/
 		public function setTextDrawer(TextDrawer $drawer)
 		{
@@ -108,7 +110,7 @@
 		}
 		
 		/**
-		 * @return TuringImage
+		 * @return \Onphp\TuringImage
 		**/
 		public function setBackgroundDrawer(BackgroundDrawer $drawer)
 		{
@@ -119,7 +121,7 @@
 		}
 		
 		/**
-		 * @return CodeGenerator
+		 * @return \Onphp\CodeGenerator
 		**/
 		public function getCodeGenerator()
 		{
@@ -156,7 +158,7 @@
 		}
 		
 		/**
-		 * @return TuringImage
+		 * @return \Onphp\TuringImage
 		**/
 		public function toImage(ImageType $imageType)
 		{
@@ -177,7 +179,7 @@
 		}
 		
 		/**
-		 * @return TuringImage
+		 * @return \Onphp\TuringImage
 		**/
 		private function init()
 		{
@@ -190,7 +192,7 @@
 		}
 		
 		/**
-		 * @return TuringImage
+		 * @return \Onphp\TuringImage
 		**/
 		private function drawBackGround()
 		{
@@ -218,7 +220,7 @@
 		}
 		
 		/**
-		 * @return TuringImage
+		 * @return \Onphp\TuringImage
 		**/
 		private function outputImage(ImageType $imageType)
 		{

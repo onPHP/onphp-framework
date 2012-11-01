@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Containers
 	**/
+	namespace Onphp;
+
 	final class ManyToManyLinkedFull extends ManyToManyLinkedWorker
 	{
 		/**
-		 * @return ManyToManyLinkedFull
+		 * @return \Onphp\ManyToManyLinkedFull
 		**/
 		public function sync($insert, $update = array(), $delete)
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function makeFetchQuery()
 		{

@@ -14,10 +14,12 @@
 	 *
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	class DaoSynchronizer extends CustomizableDaoSynchronizer
 	{
 		/**
-		 * @return DaoSynchronizer
+		 * @return \Onphp\DaoSynchronizer
 		**/
 		public static function create()
 		{
@@ -25,21 +27,21 @@
 		}
 		
 		/**
-		 * @return DaoSynchronizer
+		 * @return \Onphp\DaoSynchronizer
 		**/
 		public function setMaster(GenericDAO $master)
 		{
-			Assert::isInstance($master, 'ProtoDAO');
+			Assert::isInstance($master, '\Onphp\ProtoDAO');
 			
 			return parent::setMaster($master);
 		}
 		
 		/**
-		 * @return DaoSynchronizer
+		 * @return \Onphp\DaoSynchronizer
 		**/
 		public function setSlave(GenericDAO $slave)
 		{
-			Assert::isInstance($slave, 'ProtoDAO');
+			Assert::isInstance($slave, '\Onphp\ProtoDAO');
 			
 			return parent::setSlave($slave);
 		}

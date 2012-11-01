@@ -9,10 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class FormToScopeExporter extends ObjectBuilder
 	{
 		/**
-		 * @return FormToObjectConverter
+		 * @return \Onphp\FormToObjectConverter
 		**/
 		public static function create(EntityProto $proto)
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return FormGetter
+		 * @return \Onphp\FormGetter
 		**/
 		protected function getGetter($object)
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return ObjectSetter
+		 * @return \Onphp\ObjectSetter
 		**/
 		protected function getSetter(&$object)
 		{

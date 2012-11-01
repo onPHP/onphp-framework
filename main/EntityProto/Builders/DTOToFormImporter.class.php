@@ -9,10 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class DTOToFormImporter extends FormBuilder
 	{
 		/**
-		 * @return DTOToFormImporter
+		 * @return \Onphp\DTOToFormImporter
 		**/
 		public static function create(EntityProto $proto)
 		{
@@ -20,7 +22,7 @@
 		}
 		
 		/**
-		 * @return FormImporter
+		 * @return \Onphp\FormImporter
 		**/
 		protected function getGetter($object)
 		{
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return FormImporter
+		 * @return \Onphp\FormImporter
 		**/
 		protected function getSetter(&$object)
 		{

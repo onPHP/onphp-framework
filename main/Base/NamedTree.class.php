@@ -14,12 +14,14 @@
 	 * 
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	abstract class NamedTree extends NamedObject
 	{
 		private $parent	= null;
 		
 		/**
-		 * @return NamedTree
+		 * @return \Onphp\NamedTree
 		**/
 		public function getParent()
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return NamedTree
+		 * @return \Onphp\NamedTree
 		**/
 		public function setParent(NamedTree $parent)
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return NamedTree
+		 * @return \Onphp\NamedTree
 		**/
 		public function dropParent()
 		{
@@ -49,7 +51,7 @@
 		}
 		
 		/**
-		 * @return NamedTree
+		 * @return \Onphp\NamedTree
 		**/
 		public function getRoot()
 		{

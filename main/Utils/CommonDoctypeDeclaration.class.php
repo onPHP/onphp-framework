@@ -20,6 +20,8 @@
 	 * 
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class CommonDoctypeDeclaration extends DoctypeDeclaration
 	{
 		private $organization	= null;
@@ -31,7 +33,7 @@
 		private $language		= null;
 		
 		/**
-		 * @return CommonDoctypeDeclaration
+		 * @return \Onphp\CommonDoctypeDeclaration
 		**/
 		public static function create()
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return CommonDoctypeDeclaration
+		 * @return \Onphp\CommonDoctypeDeclaration
 		**/
 		public function setOrganization($organization)
 		{
@@ -54,7 +56,7 @@
 		}
 		
 		/**
-		 * @return CommonDoctypeDeclaration
+		 * @return \Onphp\CommonDoctypeDeclaration
 		**/
 		public function setType($type)
 		{
@@ -69,7 +71,7 @@
 		}
 		
 		/**
-		 * @return CommonDoctypeDeclaration
+		 * @return \Onphp\CommonDoctypeDeclaration
 		**/
 		public function setSubtype($subtype)
 		{
@@ -84,7 +86,7 @@
 		}
 		
 		/**
-		 * @return CommonDoctypeDeclaration
+		 * @return \Onphp\CommonDoctypeDeclaration
 		**/
 		public function setVersion($version)
 		{
@@ -99,7 +101,7 @@
 		}
 		
 		/**
-		 * @return CommonDoctypeDeclaration
+		 * @return \Onphp\CommonDoctypeDeclaration
 		**/
 		public function setVariant($variant)
 		{
@@ -114,7 +116,7 @@
 		}
 		
 		/**
-		 * @return CommonDoctypeDeclaration
+		 * @return \Onphp\CommonDoctypeDeclaration
 		**/
 		public function setLanguage($language)
 		{
@@ -129,7 +131,7 @@
 		}
 		
 		/**
-		 * @return CommonDoctypeDeclaration
+		 * @return \Onphp\CommonDoctypeDeclaration
 		**/
 		public function setFpi($fpi)
 		{

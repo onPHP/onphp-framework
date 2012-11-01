@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class Socket
 	{
 		const DEFAULT_TIMEOUT	= 1000; // milliseconds
@@ -62,7 +64,7 @@
 		}
 		
 		/**
-		 * @return Socket
+		 * @return \Onphp\Socket
 		**/
 		public static function create()
 		{
@@ -70,7 +72,7 @@
 		}
 		
 		/**
-		 * @return Socket
+		 * @return \Onphp\Socket
 		**/
 		public function setHost($host)
 		{
@@ -87,7 +89,7 @@
 		}
 		
 		/**
-		 * @return Socket
+		 * @return \Onphp\Socket
 		**/
 		public function setPort($port)
 		{
@@ -109,7 +111,7 @@
 		}
 		
 		/**
-		 * @return SocketInputStream
+		 * @return \Onphp\SocketInputStream
 		**/
 		public function getInputStream()
 		{
@@ -119,7 +121,7 @@
 		}
 		
 		/**
-		 * @return SocketOutputStream
+		 * @return \Onphp\SocketOutputStream
 		**/
 		public function getOutputStream()
 		{
@@ -129,7 +131,7 @@
 		}
 		
 		/**
-		 * @return Socket
+		 * @return \Onphp\Socket
 		**/
 		public function connect($connectTimeout = self::DEFAULT_TIMEOUT)
 		{
@@ -191,7 +193,7 @@
 		}
 		
 		/**
-		 * @return Socket
+		 * @return \Onphp\Socket
 		**/
 		public function setReadTimeout($timeout)
 		{
@@ -208,7 +210,7 @@
 		}
 		
 		/**
-		 * @return Socket
+		 * @return \Onphp\Socket
 		**/
 		public function setWriteTimeout($timeout)
 		{
@@ -225,7 +227,7 @@
 		}
 		
 		/**
-		 * @return Socket
+		 * @return \Onphp\Socket
 		**/
 		public function setTimeout($timeout)
 		{
@@ -313,7 +315,7 @@
 		}
 		
 		/**
-		 * @return Socket
+		 * @return \Onphp\Socket
 		**/
 		public function shutdownInput()
 		{
@@ -327,7 +329,7 @@
 		}
 		
 		/**
-		 * @return Socket
+		 * @return \Onphp\Socket
 		**/
 		public function shutdownOutput()
 		{
@@ -341,7 +343,7 @@
 		}
 		
 		/**
-		 * @return Socket
+		 * @return \Onphp\Socket
 		**/
 		public function close()
 		{

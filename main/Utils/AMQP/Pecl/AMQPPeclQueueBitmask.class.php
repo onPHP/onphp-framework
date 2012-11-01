@@ -12,11 +12,13 @@
 	/**
 	 * @see http://www.php.net/manual/en/amqp.constants.php
 	**/
+	namespace Onphp;
+
 	final class AMQPPeclQueueBitmask extends AMQPPeclBaseBitmask
 	{
 		public function getBitmask($config)
 		{
-			Assert::isInstance($config, 'AMQPQueueConfig');
+			Assert::isInstance($config, '\Onphp\AMQPQueueConfig');
 
 			$bitmask = parent::getBitmask($config);
 

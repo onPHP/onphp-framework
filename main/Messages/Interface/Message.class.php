@@ -9,10 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	interface Message
 	{
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		**/
 		public function getTimestamp();
 	}

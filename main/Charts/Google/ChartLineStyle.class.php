@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class ChartLineStyle
 	{
 		private $thickness 			= 1;
@@ -19,7 +21,7 @@
 		private $blankSegmentLength = 0;
 		
 		/**
-		 * @return ChartLineStyle
+		 * @return \Onphp\ChartLineStyle
 		**/
 		public static function create()
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return ChartLineStyle
+		 * @return \Onphp\ChartLineStyle
 		**/
 		public function setThickness($size)
 		{
@@ -42,7 +44,7 @@
 		}
 		
 		/**
-		 * @return ChartLineStyle
+		 * @return \Onphp\ChartLineStyle
 		**/
 		public function setLineSegmentLength($length)
 		{
@@ -57,7 +59,7 @@
 		}
 		
 		/**
-		 * @return ChartLineStyle
+		 * @return \Onphp\ChartLineStyle
 		**/
 		public function setBlankSegmentLength($length)
 		{

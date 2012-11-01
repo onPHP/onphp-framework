@@ -13,6 +13,8 @@
 	 * @ingroup Flow
 	**/
 
+	namespace Onphp;
+
 	class JsonXssView extends JsonPView
 	{
 		/**
@@ -34,7 +36,7 @@
 
 		/**
 		 * @static
-		 * @return JsonXssView
+		 * @return \Onphp\JsonXssView
 		 */
 		public static function create()
 		{
@@ -43,7 +45,7 @@
 
 		/**
 		 * @param $value
-		 * @return JsonXssView
+		 * @return \Onphp\JsonXssView
 		 * @throws WrongArgumentException
 		 */
 		public function setPrefix($value)
@@ -57,7 +59,7 @@
 		}
 
 		/**
-		 * @param Model $model
+		 * @param \Onphp\Model $\Onphp\Model
 		 * @return string
 		 */
 		public function toString(/* Model */ $model = null)

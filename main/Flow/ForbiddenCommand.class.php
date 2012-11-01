@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	final class ForbiddenCommand implements EditorCommand
 	{
 		/**
-		 * @return ForbiddenCommand
+		 * @return \Onphp\ForbiddenCommand
 		**/
 		public static function create()
 		{
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{

@@ -12,11 +12,13 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class LogicUtils extends StaticFactory
 	{
 		/**
 		 * @throws WrongArgumentException
-		 * @return LogicalChain
+		 * @return \Onphp\LogicalChain
 		**/
 		public static function getOpenRange(
 			$left, $right, $min = null, $max = null
@@ -88,7 +90,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return LogicalChain
+		 * @return \Onphp\LogicalChain
 		**/
 		public static function getOpenPoint(
 			$left, $right, $point

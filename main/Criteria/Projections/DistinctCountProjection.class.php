@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	final class DistinctCountProjection extends CountProjection
 	{
 		/**
-		 * @return SQLFunction
+		 * @return \Onphp\SQLFunction
 		**/
 		protected function getFunction(
 			Criteria $criteria,

@@ -9,10 +9,12 @@
  *                                                                          *
  ****************************************************************************/
 
+	namespace Onphp;
+
 	final class OqlWhereParser extends OqlParser
 	{
 		/**
-		 * @return OqlWhereParser
+		 * @return \Onphp\OqlWhereParser
 		**/
 		public static function create()
 		{
@@ -20,7 +22,7 @@
 		}
 		
 		/**
-		 * @return OqlWhereClause
+		 * @return \Onphp\OqlWhereClause
 		**/
 		protected function makeOqlObject()
 		{

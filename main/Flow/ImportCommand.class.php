@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class ImportCommand extends MakeCommand
 	{
 		/**
-		 * @return ImportCommand
+		 * @return \Onphp\ImportCommand
 		**/
 		public static function create()
 		{

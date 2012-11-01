@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	abstract class BackgroundDrawer extends Drawer
 	{
 		abstract public function draw();
 		
 		/**
-		 * @return Color
+		 * @return \Onphp\Color
 		**/
 		public function makeColor()
 		{

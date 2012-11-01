@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class RouterUrlHelper extends StaticFactory
 	{
 		/**

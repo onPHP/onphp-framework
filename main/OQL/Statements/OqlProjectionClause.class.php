@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	class OqlProjectionClause extends OqlQueryListedClause
 	{
 		/**
-		 * @return OqlProjectionClause
+		 * @return \Onphp\OqlProjectionClause
 		**/
 		public static function create()
 		{
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return ProjectionChain
+		 * @return \Onphp\ProjectionChain
 		**/
 		public function toProjection()
 		{

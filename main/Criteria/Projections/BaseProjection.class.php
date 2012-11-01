@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	abstract class BaseProjection implements ObjectProjection, Aliased
 	{
 		protected $property	= null;

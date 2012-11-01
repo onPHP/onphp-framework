@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	abstract class Drawer
 	{
 		private	$turingImage	= null;
 		
 		/**
-		 * @return Drawer
+		 * @return \Onphp\Drawer
 		**/
 		public function setTuringImage(TuringImage $turingImage)
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return TuringImage
+		 * @return \Onphp\TuringImage
 		**/
 		public function getTuringImage()
 		{

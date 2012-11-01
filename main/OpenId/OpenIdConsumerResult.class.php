@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OpenId
 	**/
+	namespace Onphp;
+
 	interface OpenIdConsumerResult
 	{
 		/**

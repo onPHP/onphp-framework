@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleGridedLineChart extends GoogleNormalizedLineChart
 	{
 		private $grid = null;
 		
 		/**
-		 * @return GoogleGridedLineChart
+		 * @return \Onphp\GoogleGridedLineChart
 		**/
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return GoogleGridedLineChart
+		 * @return \Onphp\GoogleGridedLineChart
 		**/
 		public function setGrid(GoogleChartGrid $grid)
 		{
@@ -35,7 +37,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartGrid
+		 * @return \Onphp\GoogleChartGrid
 		**/
 		public function getGrid()
 		{
@@ -55,7 +57,7 @@
 		}
 		
 		/**
-		 * @return GoogleGridedLineChart
+		 * @return \Onphp\GoogleGridedLineChart
 		**/
 		private function createDefault()
 		{

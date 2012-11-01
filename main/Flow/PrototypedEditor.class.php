@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	abstract class PrototypedEditor extends MethodMappedController
 	{
 		const COMMAND_SUCCEEDED	= 'success';
@@ -41,7 +43,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function doDrop(HttpRequest $request)
 		{
@@ -86,7 +88,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function doTake(HttpRequest $request)
 		{
@@ -139,7 +141,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function doSave(HttpRequest $request)
 		{
@@ -187,7 +189,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function doEdit(HttpRequest $request)
 		{
@@ -211,7 +213,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function doAdd(HttpRequest $request)
 		{
@@ -253,7 +255,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function getForm()
 		{

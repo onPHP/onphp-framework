@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	abstract class OqlQueryListedClause extends OqlQueryClause
 	{
 		protected $list = array();
 		
 		/**
-		 * @return OqlQueryListedClause
+		 * @return \Onphp\OqlQueryListedClause
 		**/
 		public function add(OqlQueryParameter $property)
 		{
@@ -32,7 +34,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryListedClause
+		 * @return \Onphp\OqlQueryListedClause
 		**/
 		public function setList(array $list)
 		{
@@ -42,7 +44,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryListedClause
+		 * @return \Onphp\OqlQueryListedClause
 		**/
 		public function dropList()
 		{

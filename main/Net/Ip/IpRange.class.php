@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Ip
 	**/
+	namespace Onphp;
+
 	class IpRange implements SingleRange, DialectString, Stringable
 	{
 		const MASK_MAX_SIZE = 31;
@@ -24,7 +26,7 @@
 		private $endIp		= null;
 		
 		/**
-		 * @return IpRange
+		 * @return \Onphp\IpRange
 		**/
 		public static function create(/**/)
 		{
@@ -53,7 +55,7 @@
 		}
 		
 		/**
-		 * @return IpAddress
+		 * @return \Onphp\IpAddress
 		**/
 		public function getStart()
 		{
@@ -61,7 +63,7 @@
 		}
 		
 		/**
-		 * @return IpRange
+		 * @return \Onphp\IpRange
 		**/
 		public function setStart(IpAddress $startIp)
 		{
@@ -71,7 +73,7 @@
 		}
 		
 		/**
-		 * @return IpAddress
+		 * @return \Onphp\IpAddress
 		**/
 		public function getEnd()
 		{
@@ -79,7 +81,7 @@
 		}
 		
 		/**
-		 * @return IpRange
+		 * @return \Onphp\IpRange
 		**/
 		public function setEnd(IpAddress $endIp)
 		{
@@ -90,7 +92,7 @@
 		
 		public function contains(/* IpAddress */ $probe)
 		{
-			Assert::isInstance($probe, 'IpAddress');
+			Assert::isInstance($probe, '\Onphp\IpAddress');
 			
 			return (
 				($this->startIp->getLongIp() <= $probe->getLongIp())
@@ -131,7 +133,7 @@
 					IpAddress::create(trim($parts[1]))
 				);
 
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				throw new WrongArgumentException('strange parameters received');
 			}
 			

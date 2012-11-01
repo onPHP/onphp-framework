@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	final class FeedChannel
 	{
 		private $title			= null;
@@ -20,7 +22,7 @@
 		private $feedItems		= array();
 		
 		/**
-		 * @return FeedChannel
+		 * @return \Onphp\FeedChannel
 		**/
 		public static function create($title)
 		{
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return FeedChannel
+		 * @return \Onphp\FeedChannel
 		**/
 		public function setTitle($title)
 		{
@@ -53,7 +55,7 @@
 		}
 		
 		/**
-		 * @return FeedChannel
+		 * @return \Onphp\FeedChannel
 		**/
 		public function setDescription($description)
 		{
@@ -68,7 +70,7 @@
 		}
 		
 		/**
-		 * @return FeedChannel
+		 * @return \Onphp\FeedChannel
 		**/
 		public function setLink($link)
 		{
@@ -83,7 +85,7 @@
 		}
 		
 		/**
-		 * @return FeedChannel
+		 * @return \Onphp\FeedChannel
 		**/
 		public function setFeedItems($feedItems)
 		{
@@ -93,7 +95,7 @@
 		}
 		
 		/**
-		 * @return FeedChannel
+		 * @return \Onphp\FeedChannel
 		**/
 		public function addFeedItem(FeedItem $feedItem)
 		{

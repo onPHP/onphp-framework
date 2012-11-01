@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	final class SharedMemorySegmentHandler implements SegmentHandler
 	{
 		const SEGMENT_SIZE = 2097152; // 2 ^ 21

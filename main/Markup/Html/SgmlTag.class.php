@@ -13,12 +13,14 @@
 	 * @ingroup Html
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	abstract class SgmlTag extends SgmlToken
 	{
 		private $id = null;
 		
 		/**
-		 * @return SgmlTag
+		 * @return \Onphp\SgmlTag
 		**/
 		public function setId($id)
 		{

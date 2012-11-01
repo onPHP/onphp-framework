@@ -9,11 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class FormExporter extends PrototypedGetter
 	{
 		public function __construct(EntityProto $proto, $object)
 		{
-			Assert::isInstance($object, 'Form');
+			Assert::isInstance($object, '\Onphp\Form');
 			
 			return parent::__construct($proto, $object);
 		}

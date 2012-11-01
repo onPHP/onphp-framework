@@ -12,5 +12,7 @@
 	/**
 	 * @ingroup Exceptions
 	**/
+	namespace Onphp;
+
 	class MailException extends BaseException {/*_*/};
 ?>

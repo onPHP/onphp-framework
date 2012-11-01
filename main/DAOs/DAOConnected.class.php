@@ -15,6 +15,8 @@
 	 * @ingroup DAOs
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface DAOConnected extends Identifiable
 	{
 		public static function dao();

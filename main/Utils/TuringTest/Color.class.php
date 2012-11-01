@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	final class Color implements Stringable
 	{
 		private	$red	= 0;
@@ -19,7 +21,7 @@
 		private	$blue	= 0;
 		
 		/**
-		 * @return Color
+		 * @return \Onphp\Color
 		**/
 		public static function create($rgb)
 		{
@@ -54,7 +56,7 @@
 		}
 		
 		/**
-		 * @return Color
+		 * @return \Onphp\Color
 		**/
 		public function setRed($red)
 		{
@@ -69,7 +71,7 @@
 		}
 
 		/**
-		 * @return Color
+		 * @return \Onphp\Color
 		**/
 		public function setGreen($green)
 		{
@@ -84,7 +86,7 @@
 		}
 
 		/**
-		 * @return Color
+		 * @return \Onphp\Color
 		**/
 		public function setBlue($blue)
 		{
@@ -99,7 +101,7 @@
 		}
 	
 		/**
-		 * @return Color
+		 * @return \Onphp\Color
 		**/
 		public function invertColor()
 		{

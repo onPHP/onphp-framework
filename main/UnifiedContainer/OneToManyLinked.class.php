@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Containers
 	**/
+	namespace Onphp;
+
 	abstract class OneToManyLinked extends UnifiedContainer
 	{
 		public function __construct(
@@ -22,8 +24,8 @@
 			
 			$worker =
 				$lazy
-					? 'OneToManyLinkedLazy'
-					: 'OneToManyLinkedFull';
+					? '\Onphp\OneToManyLinkedLazy'
+					: '\Onphp\OneToManyLinkedFull';
 			
 			$this->worker = new $worker($this);
 		}

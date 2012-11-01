@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class UrlParamsUtils extends StaticFactory
 	{
 		/**

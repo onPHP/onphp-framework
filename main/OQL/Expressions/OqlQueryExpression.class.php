@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	class OqlQueryExpression extends OqlQueryParameter
 	{
 		private static $classes = array();
@@ -20,7 +22,7 @@
 		private $parameters	= array();
 		
 		/**
-		 * @return OqlQueryExpression
+		 * @return \Onphp\OqlQueryExpression
 		**/
 		public static function create()
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryExpression
+		 * @return \Onphp\OqlQueryExpression
 		**/
 		public function setClassName($className)
 		{
@@ -53,7 +55,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryParameter
+		 * @return \Onphp\OqlQueryParameter
 		**/
 		public function getParameter($index)
 		{
@@ -61,7 +63,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryExpression
+		 * @return \Onphp\OqlQueryExpression
 		**/
 		public function addParameter(OqlQueryParameter $parameter)
 		{
@@ -71,7 +73,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryExpression
+		 * @return \Onphp\OqlQueryExpression
 		**/
 		public function setParameter($index, OqlQueryParameter $parameter)
 		{
@@ -85,7 +87,7 @@
 			$className = $this->getClassName();
 			
 			if (!isset(self::$classes[$className]))
-				self::$classes[$className] = new ReflectionClass($className);
+				self::$classes[$className] = new \ReflectionClass($className);
 			
 			$class = self::$classes[$className];
 			$parametersCount = count($class->getConstructor()->getParameters());

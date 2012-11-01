@@ -9,6 +9,8 @@
  *                                                                          *
  ****************************************************************************/
 
+	namespace Onphp;
+
 	abstract class ControllersCollection implements Controller
 	{
 		private $innerControllers	= array();
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function handleRequest(HttpRequest $request)
 		{
@@ -73,7 +75,7 @@
 		}
 		
 		/**
-		 * @return ControllersCollection
+		 * @return \Onphp\ControllersCollection
 		**/
 		public function setMav(ModelAndView $mav)
 		{
@@ -83,7 +85,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function getMav()
 		{
@@ -91,7 +93,7 @@
 		}
 		
 		/**
-		 * @return ControllersCollection
+		 * @return \Onphp\ControllersCollection
 		**/
 		public function add(
 			Controller $controller,
@@ -110,7 +112,7 @@
 		}
 		
 		/**
-		 * @return ControllersCollection
+		 * @return \Onphp\ControllersCollection
 		**/
 		public function setDefaultRequestType(RequestType $requestType)
 		{
@@ -120,7 +122,7 @@
 		}
 		
 		/**
-		 * @return Controller
+		 * @return \Onphp\Controller
 		**/
 		private function getActiveController(HttpRequest $request)
 		{

@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class DateUtils extends StaticFactory
 	{
 		public static function getAgeByBirthDate(
@@ -21,7 +23,7 @@
 		)
 		{
 			if ($actualDate)
-				Assert::isInstance($actualDate, 'Date');
+				Assert::isInstance($actualDate, '\Onphp\Date');
 			else
 				$actualDate = Date::makeToday();
 			
@@ -64,7 +66,7 @@
 		{
 			$date = $unit->truncate($range->getStart());
 			
-			if ('Date' == get_class($range->getStart()))
+			if ('\Onphp\Date' == get_class($range->getStart()))
 				$date = Date::create($date->toStamp());
 			
 			$dates = array();
@@ -84,7 +86,7 @@
 		}
 		
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		**/
 		public static function alignToSeconds(Timestamp $stamp, $seconds)
 		{

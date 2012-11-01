@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class AMQPPeclQueueConsumer extends AMQPDefaultConsumer
 	{
 		protected $cancel = false;
@@ -17,7 +19,7 @@
 
 		/**
 		 * @param type $cancel
-		 * @return AMQPPeclQueueConsumer
+		 * @return \Onphp\AMQPPeclQueueConsumer
 		 */
 		public function setCancel($cancel)
 		{
@@ -27,7 +29,7 @@
 
 		/**
 		 * @param int $limit
-		 * @return AMQPPeclQueueConsumer
+		 * @return \Onphp\AMQPPeclQueueConsumer
 		 */
 		public function setLimit($limit)
 		{
@@ -43,7 +45,7 @@
 			return $this->count;
 		}
 
-		public function handlePeclDelivery(AMQPEnvelope $delivery, AMQPQueue $queue = null)
+		public function handlePeclDelivery(\AMQPEnvelope $delivery, \AMQPQueue $queue = null)
 		{
 			$this->count++;
 

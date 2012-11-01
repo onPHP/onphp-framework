@@ -29,6 +29,8 @@
 	 * 
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	final class OqlSelectParser extends OqlParser
 	{
 		// states
@@ -42,7 +44,7 @@
 		const OFFSET_STATE		= 8;
 		
 		/**
-		 * @return OqlSelectParser
+		 * @return \Onphp\OqlSelectParser
 		**/
 		public static function create()
 		{
@@ -50,7 +52,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		protected function makeOqlObject()
 		{
@@ -128,7 +130,7 @@
 				if (!class_exists($className, true))
 					$this->error('class does not exists:', $className);
 				
-				if (!ClassUtils::isInstanceOf($className, 'DAOConnected'))
+				if (!ClassUtils::isInstanceOf($className, '\Onphp\DAOConnected'))
 					$this->error('class must implement DAOConnected interface:', $className);
 				
 				$this->oqlObject->setDao(

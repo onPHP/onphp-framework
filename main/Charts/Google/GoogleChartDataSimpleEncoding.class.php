@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartDataSimpleEncoding
 		extends BaseGoogleChartDataEncoding
 	{
@@ -21,7 +23,7 @@
 		private $length = null;
 		
 		/**
-		 * @return GoogleChartDataSimpleEncoding
+		 * @return \Onphp\GoogleChartDataSimpleEncoding
 		**/
 		public static function create()
 		{

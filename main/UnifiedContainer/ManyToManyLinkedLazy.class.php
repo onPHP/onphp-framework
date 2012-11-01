@@ -12,11 +12,13 @@
 	/**
 	 * @ingroup Containers
 	**/
+	namespace Onphp;
+
 	final class ManyToManyLinkedLazy extends ManyToManyLinkedWorker
 	{
 		/**
 		 * @throws WrongArgumentException
-		 * @return ManyToManyLinkedLazy
+		 * @return \Onphp\ManyToManyLinkedLazy
 		**/
 		public function sync($insert, $update = array(), $delete)
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function makeFetchQuery()
 		{

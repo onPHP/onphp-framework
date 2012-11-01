@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	abstract class MethodMappedController implements Controller
 	{
 		private $methodMap		= array();
 		private $defaultAction	= null;
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function handleRequest(HttpRequest $request)
 		{
@@ -60,7 +62,7 @@
 		}
 		
 		/**
-		 * @return MethodMappedController
+		 * @return \Onphp\MethodMappedController
 		**/
 		public function setMethodMapping($action, $methodName)
 		{
@@ -69,7 +71,7 @@
 		}
 		
 		/**
-		 * @return MethodMappedController
+		 * @return \Onphp\MethodMappedController
 		**/
 		public function dropMethodMapping($action)
 		{
@@ -84,7 +86,7 @@
 		}
 		
 		/**
-		 * @return MethodMappedController
+		 * @return \Onphp\MethodMappedController
 		**/
 		public function setDefaultAction($action)
 		{
@@ -94,7 +96,7 @@
 		}
 		
 		/**
-		 * @return MethodMappedController
+		 * @return \Onphp\MethodMappedController
 		**/
 		public function setMethodMappingList($array)
 		{

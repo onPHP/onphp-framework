@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class ContentTypeHeader
 	{
 		private $mediaType	= null;

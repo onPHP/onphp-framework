@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class DTOBuilder extends PrototypedBuilder
 	{
 		protected function createEmpty()

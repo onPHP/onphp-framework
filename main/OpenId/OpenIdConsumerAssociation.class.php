@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OpenId
 	**/
+	namespace Onphp;
+
 	interface OpenIdConsumerAssociation
 	{
 		public function getHandle();
@@ -21,12 +23,12 @@
 		public function getSecret();
 		
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		**/
 		public function getExpires();
 		
 		/**
-		 * @return HttpUrl
+		 * @return \Onphp\HttpUrl
 		**/
 		public function getServer();
 	}

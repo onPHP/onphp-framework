@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	final class OqlWhereClause extends OqlQueryExpressionClause
 	{
 		/**
-		 * @return OqlWhereClause
+		 * @return \Onphp\OqlWhereClause
 		**/
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		protected static function checkExpression(OqlQueryExpression $expression)
 		{
 			if (!$expression instanceof OqlInExpression)
-				Assert::isInstance($expression->getClassName(), 'LogicalObject');
+				Assert::isInstance($expression->getClassName(), '\Onphp\LogicalObject');
 		}
 	}
 ?>

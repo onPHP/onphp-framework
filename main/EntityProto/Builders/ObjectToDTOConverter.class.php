@@ -9,10 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class ObjectToDTOConverter extends DTOBuilder
 	{
 		/**
-		 * @return ObjectToDTOConverter
+		 * @return \Onphp\ObjectToDTOConverter
 		**/
 		public static function create(EntityProto $proto)
 		{
@@ -20,7 +22,7 @@
 		}
 		
 		/**
-		 * @return ObjectGetter
+		 * @return \Onphp\ObjectGetter
 		**/
 		protected function getGetter($object)
 		{
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return DTOSetter
+		 * @return \Onphp\DTOSetter
 		**/
 		protected function getSetter(&$object)
 		{

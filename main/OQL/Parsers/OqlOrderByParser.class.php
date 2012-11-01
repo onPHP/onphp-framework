@@ -9,10 +9,12 @@
  *                                                                          *
  ****************************************************************************/
 
+	namespace Onphp;
+
 	final class OqlOrderByParser extends OqlParser
 	{
 		/**
-		 * @return OqlOrderByParser
+		 * @return \Onphp\OqlOrderByParser
 		**/
 		public static function create()
 		{
@@ -20,7 +22,7 @@
 		}
 		
 		/**
-		 * @return OqlOrderByClause
+		 * @return \Onphp\OqlOrderByClause
 		**/
 		protected function makeOqlObject()
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return OqlOrderByExpression
+		 * @return \Onphp\OqlOrderByExpression
 		**/
 		protected function getArgumentExpression()
 		{

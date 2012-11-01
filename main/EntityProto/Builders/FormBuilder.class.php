@@ -9,10 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class FormBuilder extends PrototypedBuilder
 	{
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		protected function createEmpty()
 		{
@@ -20,11 +22,11 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function fillOwn($object, &$result)
 		{
-			Assert::isInstance($result, 'Form');
+			Assert::isInstance($result, '\Onphp\Form');
 			
 			foreach ($this->getFormMapping() as $primitive) {
 				if (

@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	final class GroupByClassProjection extends ClassProjection
 	{
 		/**
-		 * @return GroupByClassProjection
+		 * @return \Onphp\GroupByClassProjection
 		**/
 		public static function create($class)
 		{

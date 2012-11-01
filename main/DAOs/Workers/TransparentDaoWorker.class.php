@@ -17,6 +17,8 @@
 	 * 
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	abstract class TransparentDaoWorker extends CommonDaoWorker
 	{
 		abstract protected function gentlyGetByKey($key);

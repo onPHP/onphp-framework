@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	class TextFileQueue implements MessageQueue
 	{
 		private $fileName	= null;

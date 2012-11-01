@@ -9,19 +9,21 @@
  *                                                                         *
  ***************************************************************************/
 	
+	namespace Onphp;
+
 	interface NamespaceResolver
 	{
 		const DS = DIRECTORY_SEPARATOR;
 		
 		/**
 		 * @param string $path
-		 * @return NamespaceResolverOnPHP
+		 * @return \Onphp\NamespaceResolverOnPHP
 		 */
 		public function addPath($path, $namespace = null);
 		
 		/**
 		 * @param array $path
-		 * @return NamespaceResolverOnPHP
+		 * @return \Onphp\NamespaceResolverOnPHP
 		 */
 		public function addPaths(array $pathList, $namespace = null);
 		
@@ -32,7 +34,7 @@
 		
 		/**
 		 * @param string $classExtension
-		 * @return NamespaceResolverOnPHP
+		 * @return \Onphp\NamespaceResolverOnPHP
 		 */
 		public function setClassExtension($classExtension);
 		

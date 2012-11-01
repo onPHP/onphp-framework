@@ -10,12 +10,14 @@
  *                                                                         *
  ***************************************************************************/
 	
+	namespace Onphp;
+
 	class AutoloaderClassPathCache implements AutoloaderRecachable, AutoloaderWithNamespace
 	{
 		const ONPHP_CLASS_CACHE_CHECKSUM = '__occc';
 		
 		/**
-		 * @var NamespaceResolver
+		 * @var \Onphp\NamespaceResolver
 		 */
 		private $namespaceResolver = null;
 		
@@ -26,7 +28,7 @@
 		private $classCachePath = ONPHP_CLASS_CACHE;
 		
 		/**
-		 * @return AutoloaderClassPathCache
+		 * @return \Onphp\AutoloaderClassPathCache
 		 */
 		public static function create()
 		{
@@ -34,8 +36,8 @@
 		}
 		
 		/**
-		 * @param NamespaceResolver $namespaceResolver
-		 * @return AutoloaderClassPathCache
+		 * @param \Onphp\NamespaceResolver $\Onphp\NamespaceResolver
+		 * @return \Onphp\AutoloaderClassPathCache
 		 */
 		public function setNamespaceResolver(NamespaceResolver $namespaceResolver)
 		{
@@ -44,7 +46,7 @@
 		}
 		
 		/**
-		 * @return NamespaceResolver
+		 * @return \Onphp\NamespaceResolver
 		 */
 		public function getNamespaceResolver()
 		{
@@ -53,7 +55,7 @@
 		
 		/**
 		 * @param string $path
-		 * @return AutoloaderClassPathCache
+		 * @return \Onphp\AutoloaderClassPathCache
 		 */
 		public function addPath($path, $namespace = null)
 		{
@@ -64,7 +66,7 @@
 		
 		/**
 		 * @param array $paths
-		 * @return AutoloaderClassPathCache
+		 * @return \Onphp\AutoloaderClassPathCache
 		 */
 		public function addPaths(array $paths, $namespace = null)
 		{
@@ -75,7 +77,7 @@
 		
 		/**
 		 * @param string $path
-		 * @return AutoloaderClassPathCache
+		 * @return \Onphp\AutoloaderClassPathCache
 		 */
 		public function setClassCachePath($path)
 		{

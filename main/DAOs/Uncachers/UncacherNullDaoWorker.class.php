@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Uncachers
 	**/
+	namespace Onphp;
+
 	class UncacherNullDaoWorker implements UncacherBase
 	{
 		public static function create()
@@ -24,7 +26,7 @@
 		 */
 		public function merge(UncacherBase $uncacher)
 		{
-			Assert::isInstance($uncacher, 'UncacherNullDaoWorker');
+			Assert::isInstance($uncacher, '\Onphp\UncacherNullDaoWorker');
 			return $this;
 		}
 		

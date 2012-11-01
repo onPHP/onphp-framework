@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Criteria
 	**/
+	namespace Onphp;
+
 	final class FetchStrategy extends Enumeration
 	{
 		const JOIN		= 1;
@@ -25,7 +27,7 @@
 		);
 		
 		/**
-		 * @return FetchStrategy
+		 * @return \Onphp\FetchStrategy
 		**/
 		public function setId($id)
 		{
@@ -35,7 +37,7 @@
 		}
 		
 		/**
-		 * @return FetchStrategy
+		 * @return \Onphp\FetchStrategy
 		**/
 		public static function join()
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return FetchStrategy
+		 * @return \Onphp\FetchStrategy
 		**/
 		public static function cascade()
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return FetchStrategy
+		 * @return \Onphp\FetchStrategy
 		**/
 		public static function lazy()
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return FetchStrategy
+		 * @return \Onphp\FetchStrategy
 		**/
 		private static function getInstance($id)
 		{

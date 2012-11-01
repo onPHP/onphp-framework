@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class IsoCurrency extends Enumeration
 	{
 		const RUB	= 643;

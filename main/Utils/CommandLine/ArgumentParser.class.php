@@ -9,13 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class ArgumentParser extends Singleton
 	{
 		private $form = null;
 		private $result = null;
 		
 		/**
-		 * @return ArgumentParser
+		 * @return \Onphp\ArgumentParser
 		**/
 		public static function me()
 		{
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return ArgumentParser
+		 * @return \Onphp\ArgumentParser
 		**/
 		public function setForm(Form $form)
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function getForm()
 		{
@@ -41,7 +43,7 @@
 		}
 		
 		/**
-		 * @return ArgumentParser
+		 * @return \Onphp\ArgumentParser
 		**/
 		public function parse()
 		{
@@ -64,7 +66,7 @@
 		}
 		
 		/**
-		 * @return ArgumentParser
+		 * @return \Onphp\ArgumentParser
 		**/
 		public function validate()
 		{

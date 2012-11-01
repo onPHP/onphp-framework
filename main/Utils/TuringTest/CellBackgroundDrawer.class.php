@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	final class CellBackgroundDrawer extends BackgroundDrawer
 	{
 		private $step = null;
@@ -22,7 +24,7 @@
 		}
 		
 		/**
-		 * @return CellBackgroundDrawer
+		 * @return \Onphp\CellBackgroundDrawer
 		**/
 		public function draw()
 		{

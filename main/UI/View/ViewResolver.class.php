@@ -13,11 +13,13 @@
 	 * @ingroup Flow
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface ViewResolver
 	{
 		/**
 		 * @param	$viewName	string
-		 * @return	View
+		 * @return	\Onphp\View
 		**/
 		public function resolveViewName($viewName);
 	}

@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	final class MimeType extends Enum
 	{
 		/*
@@ -779,7 +781,7 @@
 		);
 
 		/**
-		 * @return MimeType
+		 * @return \Onphp\MimeType
 		 */
 		public static function wrap($id)
 		{
@@ -791,7 +793,7 @@
 		 * Return MimeType object by mime-type string
 		 * @param string $value
 		 * @throws MissingElementException
-		 * @return MimeType
+		 * @return \Onphp\MimeType
 		 */
 		public static function getByMimeType($value)
 		{
@@ -808,7 +810,7 @@
 		 * Return MimeType object by extension without [dot] prefix
 		 * @param string $value
 		 * @throws MissingElementException
-		 * @return MimeType
+		 * @return \Onphp\MimeType
 		 */
 		public static function getByExtension($value)
 		{

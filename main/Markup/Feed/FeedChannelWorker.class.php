@@ -12,9 +12,11 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	interface FeedChannelWorker
 	{
-		public function makeChannel(SimpleXMLElement $xmlFeed);
+		public function makeChannel(\SimpleXMLElement $xmlFeed);
 		public function toXml(FeedChannel $channel, $itemsXml);
 	}
 ?>

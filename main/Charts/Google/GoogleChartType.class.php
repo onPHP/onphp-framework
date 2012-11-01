@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartType extends Enumeration
 	{
 		const LINE					= 0x1;

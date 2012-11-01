@@ -13,13 +13,15 @@
 	 * @ingroup Feed
 	 * @see http://partner.news.yandex.ru/tech.pdf
 	**/
+	namespace Onphp;
+
 	final class YandexRssFeedFormat extends FeedFormat
 	{
 		const  YANDEX_NAMESPACE_URI		= 'http://news.yandex.ru';
 		const  YANDEX_NAMESPACE_PREFIX	= 'yandex';
 		
 		/**
-		 * @return YandexRssFeedFormat
+		 * @return \Onphp\YandexRssFeedFormat
 		**/
 		public static function me()
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return RssChannelWorker
+		 * @return \Onphp\RssChannelWorker
 		**/
 		public function getChannelWorker()
 		{
@@ -35,14 +37,14 @@
 		}
 		
 		/**
-		 * @return YandexRssItemWorker
+		 * @return \Onphp\YandexRssItemWorker
 		**/
 		public function getItemWorker()
 		{
 			return YandexRssItemWorker::me();
 		}
 		
-		public function isAcceptable(SimpleXMLElement $xmlFeed)
+		public function isAcceptable(\SimpleXMLElement $xmlFeed)
 		{
 			return (
 				($xmlFeed->getName() == 'rss')

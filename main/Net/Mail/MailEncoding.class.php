@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Mail
 	**/
+	namespace Onphp;
+
 	final class MailEncoding extends Enumeration
 	{
 		const SEVEN_BITS		= 0x01;
@@ -27,7 +29,7 @@
 		);
 		
 		/**
-		 * @return MailEncoding
+		 * @return \Onphp\MailEncoding
 		**/
 		public static function seven()
 		{
@@ -35,7 +37,7 @@
 		}
 		
 		/**
-		 * @return MailEncoding
+		 * @return \Onphp\MailEncoding
 		**/
 		public static function eight()
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return MailEncoding
+		 * @return \Onphp\MailEncoding
 		**/
 		public static function base64()
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return MailEncoding
+		 * @return \Onphp\MailEncoding
 		**/
 		public static function quoted()
 		{

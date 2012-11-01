@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	interface Router
 	{
 		/**
@@ -17,7 +19,7 @@
 		 * 
 		 * @param  HttpRequest
 		 * @throws RouterException
-		 * @return HttpRequest | boolean
+		 * @return \Onphp\HttpRequest | boolean
 		**/
 		public function route(HttpRequest $request);
 		

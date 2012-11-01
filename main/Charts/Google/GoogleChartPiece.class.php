@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	class GoogleChartPiece
 	{
 		private $title	= null;
@@ -19,7 +21,7 @@
 		private $value	= null;
 		
 		/**
-		 * @return GoogleChartPiece
+		 * @return \Onphp\GoogleChartPiece
 		**/
 		public static function create()
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartPiece
+		 * @return \Onphp\GoogleChartPiece
 		**/
 		public function setTitle($title)
 		{
@@ -42,7 +44,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartPiece
+		 * @return \Onphp\GoogleChartPiece
 		**/
 		public function setColor(Color $color)
 		{
@@ -52,7 +54,7 @@
 		}
 		
 		/**
-		 * @return Color
+		 * @return \Onphp\Color
 		**/
 		public function getColor()
 		{
@@ -60,7 +62,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartPiece
+		 * @return \Onphp\GoogleChartPiece
 		**/
 		public function setValue($value)
 		{

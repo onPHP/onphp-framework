@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	interface BaseDAO
 	{
 		/// single object getters
@@ -52,7 +54,7 @@
 		//@{
 		public function uncacheById($id);
 		/**
-		 * @return UncacherBase
+		 * @return \Onphp\UncacherBase
 		 */
 		public function getUncacherById($id);
 		public function uncacheByIds($ids);

@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class DirectoryMutator extends PrototypedSetter
 	{
 		private $getter = null;
@@ -24,7 +26,7 @@
 		}
 		
 		/**
-		 * @return FormGetter
+		 * @return \Onphp\FormGetter
 		**/
 		public function getGetter()
 		{

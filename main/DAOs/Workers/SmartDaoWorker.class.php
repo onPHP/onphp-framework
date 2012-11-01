@@ -17,6 +17,8 @@
 	 * 
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	final class SmartDaoWorker extends TransparentDaoWorker
 	{
 		private $indexKey	= null;

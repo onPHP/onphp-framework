@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	final class NullController implements Controller
 	{
 		private $model = null;
 		
 		/**
-		 * @return NullController
+		 * @return \Onphp\NullController
 		**/
 		public static function create(Model $model = null)
 		{
@@ -30,7 +32,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function handleRequest(HttpRequest $request)
 		{

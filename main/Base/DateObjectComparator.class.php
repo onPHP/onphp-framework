@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class DateObjectComparator extends Singleton
 		implements Comparator, Instantiatable
 	{
@@ -19,8 +21,8 @@
 
 		public function compare(/*Date*/ $one,/*Date*/ $two)
 		{
-			Assert::isInstance($one, 'Date');
-			Assert::isInstance($two, 'Date');
+			Assert::isInstance($one, '\Onphp\Date');
+			Assert::isInstance($two, '\Onphp\Date');
 
 			$stamp1 = $one->toStamp();
 			$stamp2 = $two->toStamp();

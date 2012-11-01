@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	abstract class CountProjection extends BaseProjection
 	{
 		/**
-		 * @return JoinCapableQuery
+		 * @return \Onphp\JoinCapableQuery
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return SQLFunction
+		 * @return \Onphp\SQLFunction
 		**/
 		protected function getFunction(
 			Criteria $criteria,

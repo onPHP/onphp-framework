@@ -57,6 +57,8 @@
 	 * 
 	 * @ingroup Containers
 	**/
+	namespace Onphp;
+
 	abstract class UnifiedContainer
 	{
 		protected $worker	= null;
@@ -89,7 +91,7 @@
 			$this->lazy		= $lazy;
 			$this->dao		= $dao;
 			
-			Assert::isInstance($dao->getObjectName(), 'Identifiable');
+			Assert::isInstance($dao->getObjectName(), '\Onphp\Identifiable');
 
 			$this->comparator = SerializedObjectComparator::me();
 		}
@@ -113,7 +115,7 @@
 		}
 		
 		/**
-		 * @return GenericDAO
+		 * @return \Onphp\GenericDAO
 		**/
 		public function getDao()
 		{
@@ -132,7 +134,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return UnifiedContainer
+		 * @return \Onphp\UnifiedContainer
 		**/
 		public function setCriteria(Criteria $criteria)
 		{
@@ -153,7 +155,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function getCriteria()
 		{
@@ -169,7 +171,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return UnifiedContainer
+		 * @return \Onphp\UnifiedContainer
 		**/
 		public function setList($list)
 		{
@@ -181,7 +183,7 @@
 		}
 		
 		/**
-		 * @return UnifiedContainer
+		 * @return \Onphp\UnifiedContainer
 		**/
 		public function mergeList(array $list)
 		{
@@ -218,7 +220,7 @@
 		
 		/**
 		 * @throws WrongStateException
-		 * @return UnifiedContainer
+		 * @return \Onphp\UnifiedContainer
 		**/
 		public function fetch()
 		{
@@ -240,7 +242,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return UnifiedContainer
+		 * @return \Onphp\UnifiedContainer
 		**/
 		public function save()
 		{
@@ -312,7 +314,7 @@
 		}
 
 		/**
-		 * @return UnifiedContainer
+		 * @return \Onphp\UnifiedContainer
 		**/
 		public function clean()
 		{
@@ -324,7 +326,7 @@
 		}
 		
 		/**
-		 * @return UnifiedContainer
+		 * @return \Onphp\UnifiedContainer
 		**/
 		public function dropList()
 		{
@@ -368,7 +370,7 @@
 		}
 		
 		/**
-		 * @return UnifiedContainer
+		 * @return \Onphp\UnifiedContainer
 		**/
 		private function importList(array $list)
 		{
@@ -380,7 +382,7 @@
 		}
 	
 		/**
-		 * @return UnifiedContainer
+		 * @return \Onphp\UnifiedContainer
 		**/
 		private function syncClones()
 		{

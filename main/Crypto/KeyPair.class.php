@@ -12,15 +12,17 @@
 	/**
 	 * @ingroup Crypto
 	**/
+	namespace Onphp;
+
 	interface KeyPair
 	{
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function getPublic();
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function getPrivate();
 	}

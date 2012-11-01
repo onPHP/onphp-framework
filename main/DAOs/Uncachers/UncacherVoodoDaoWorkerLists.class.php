@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Uncachers
 	**/
+	namespace Onphp;
+
 	class UncacherVoodoDaoWorkerLists implements UncacherBase
 	{
 		private $handlerList = array();
 		
 		/**
-		 * @return UncacherBaseDaoWorker
+		 * @return \Onphp\UncacherBaseDaoWorker
 		 */
 		public static function create($className, SegmentHandler $handler)
 		{
@@ -55,13 +57,13 @@
 			$handler->drop();
 			
 			$dao = ClassUtils::callStaticMethod($className.'::dao');
-			/* @var $dao StorableDAO */
+			/* @var $dao \Onphp\StorableDAO */
 			return Cache::worker($dao)->uncacheByQuery($dao->makeSelectHead());
 		}
 		
 		/**
-		 * @param UncacherVoodoDaoWorkerLists $uncacher
-		 * @return UncacherVoodoDaoWorkerLists
+		 * @param \Onphp\UncacherVoodoDaoWorkerLists $uncacher
+		 * @return \Onphp\UncacherVoodoDaoWorkerLists
 		 */
 		private function mergeSelf(UncacherVoodoDaoWorkerLists $uncacher)
 		{

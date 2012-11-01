@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class FullTextUtils extends StaticFactory
 	{
 		public static function lookup(
@@ -40,7 +42,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public static function makeFullTextQuery(
 			FullTextDAO $dao, Criteria $criteria, $string

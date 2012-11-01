@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class CleanRedirectView implements View
 	{
 		protected $url = null;
@@ -22,7 +24,7 @@
 		}
 		
 		/**
-		 * @return CleanRedirectView
+		 * @return \Onphp\CleanRedirectView
 		**/
 		public static function create($url)
 		{

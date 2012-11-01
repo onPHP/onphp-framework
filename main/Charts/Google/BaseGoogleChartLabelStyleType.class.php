@@ -14,6 +14,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	abstract class BaseGoogleChartLabelStyleType
 	{
 		protected $name = null;

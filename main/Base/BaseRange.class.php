@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	class BaseRange implements Stringable
 	{
 		protected $min = null;
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return BaseRange
+		 * @return \Onphp\BaseRange
 		**/
 		public static function lazyCreate($min = null, $max = null)
 		{
@@ -43,7 +45,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return BaseRange
+		 * @return \Onphp\BaseRange
 		**/
 		public function setMin($min = null)
 		{
@@ -64,7 +66,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return BaseRange
+		 * @return \Onphp\BaseRange
 		**/
 		public function setMax($max = null)
 		{
@@ -93,7 +95,7 @@
 		}
 		
 		/**
-		 * @return BaseRange
+		 * @return \Onphp\BaseRange
 		**/
 		public function divide($factor, $precision = null)
 		{
@@ -107,7 +109,7 @@
 		}
 		
 		/**
-		 * @return BaseRange
+		 * @return \Onphp\BaseRange
 		**/
 		public function multiply($multiplier)
 		{

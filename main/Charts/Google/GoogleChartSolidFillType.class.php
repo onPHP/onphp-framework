@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartSolidFillType extends Enumeration
 	{
 		const CHART_AREA		= 0x1;
@@ -25,7 +27,7 @@
 		);
 		
 		/**
-		 * @return GoogleChartSolidFillType
+		 * @return \Onphp\GoogleChartSolidFillType
 		**/
 		public static function create($id)
 		{

@@ -9,13 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace Onphp;
+
 final class AMQPPeclIncomingMessageAdapter extends StaticFactory
 {
 	/**
-	 * @param AMQPEnvelope $incoming
-	 * @return AMQPIncomingMessage
+	 * @param \AMQPEnvelope $incoming
+	 * @return \Onphp\AMQPIncomingMessage
 	 */
-	public static function convert(AMQPEnvelope $incoming)
+	public static function convert(\AMQPEnvelope $incoming)
 	{
 		$data = array(
 			AMQPIncomingMessage::APP_ID => $incoming->getAppId(),

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartColor extends BaseGoogleChartParameter
 	{
 		protected $name = 'chco';
@@ -19,7 +21,7 @@
 		private $colors = array();
 		
 		/**
-		 * @return GoogleChartColor
+		 * @return \Onphp\GoogleChartColor
 		**/
 		public static function create()
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartColor
+		 * @return \Onphp\GoogleChartColor
 		**/
 		public function addColor(Color $color)
 		{

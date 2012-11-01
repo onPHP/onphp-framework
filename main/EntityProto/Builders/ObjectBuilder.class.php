@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class ObjectBuilder extends PrototypedBuilder
 	{
 		protected function createEmpty()

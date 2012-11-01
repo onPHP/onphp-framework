@@ -13,6 +13,8 @@
 	 * Abstract class to scan directories,
 	 *    see NamespaceDirScanerPSR0 and NamespaceDirScanerOnPHP
 	 */
+	namespace Onphp;
+
 	abstract class NamespaceDirScaner
 	{
 		protected $classExtension = EXT_CLASS;
@@ -27,7 +29,7 @@
 		
 		/**
 		 * @param string $classExtension
-		 * @return NamespaceDirScaner
+		 * @return \Onphp\NamespaceDirScaner
 		 */
 		public function setClassExtension($classExtension)
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Math
 	**/
+	namespace Onphp;
+
 	interface RandomSource
 	{
 		public function getBytes($numberOfBytes);

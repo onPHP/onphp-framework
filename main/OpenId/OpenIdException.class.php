@@ -12,5 +12,7 @@
 	/**
 	 * @ingroup OpenId
 	**/
+	namespace Onphp;
+
 	class OpenIdException extends BaseException {}
 ?>

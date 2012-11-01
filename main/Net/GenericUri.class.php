@@ -14,6 +14,8 @@
 	 * @see http://tools.ietf.org/html/rfc3986
 	 * @todo comparsion
 	**/
+	namespace Onphp;
+
 	class GenericUri implements Stringable
 	{
 		const CHARS_UNRESERVED		= 'a-z0-9-._~';
@@ -31,7 +33,7 @@
 		protected $fragment	= null;
 		
 		/**
-		 * @return GenericUri
+		 * @return \Onphp\GenericUri
 		**/
 		public static function create()
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return GenericUri
+		 * @return \Onphp\GenericUri
 		**/
 		final public static function parse($uri, $guessClass = false)
 		{
@@ -99,7 +101,7 @@
 		
 		/**
 		 * @see http://tools.ietf.org/html/rfc3986#section-5.2.2
-		 * @return GenericUri
+		 * @return \Onphp\GenericUri
 		**/
 		final public function transform(GenericUri $reference, $strict = true)
 		{
@@ -178,7 +180,7 @@
 		}
 		
 		/**
-		 * @return GenericUri
+		 * @return \Onphp\GenericUri
 		**/
 		public function setScheme($scheme)
 		{
@@ -193,7 +195,7 @@
 		}
 		
 		/**
-		 * @return GenericUri
+		 * @return \Onphp\GenericUri
 		**/
 		public function setUserInfo($userInfo)
 		{
@@ -208,7 +210,7 @@
 		}
 		
 		/**
-		 * @return GenericUri
+		 * @return \Onphp\GenericUri
 		**/
 		public function setHost($host)
 		{
@@ -223,7 +225,7 @@
 		}
 		
 		/**
-		 * @return GenericUri
+		 * @return \Onphp\GenericUri
 		**/
 		public function setPort($port)
 		{
@@ -238,7 +240,7 @@
 		}
 		
 		/**
-		 * @return GenericUri
+		 * @return \Onphp\GenericUri
 		**/
 		public function setPath($path)
 		{
@@ -253,7 +255,7 @@
 		}
 		
 		/**
-		 * @return GenericUri
+		 * @return \Onphp\GenericUri
 		**/
 		public function setQuery($query)
 		{
@@ -263,7 +265,7 @@
 		}
 		
 		/**
-		 * @return GenericUri
+		 * @return \Onphp\GenericUri
 		**/
 		public function appendQuery($string, $separator = '&')
 		{
@@ -285,7 +287,7 @@
 		}
 		
 		/**
-		 * @return GenericUri
+		 * @return \Onphp\GenericUri
 		**/
 		public function setFragment($fragment)
 		{
@@ -300,7 +302,7 @@
 		}
 		
 		/**
-		 * @return GenericUri
+		 * @return \Onphp\GenericUri
 		**/
 		public function setAuthority($authority)
 		{
@@ -754,7 +756,7 @@
 		private $unreservedPartChars = null;
 		
 		/**
-		 * @return PercentEncodingNormalizator
+		 * @return \Onphp\PercentEncodingNormalizator
 		**/
 		public static function create()
 		{
@@ -762,7 +764,7 @@
 		}
 		
 		/**
-		 * @return PercentEncodingNormalizator
+		 * @return \Onphp\PercentEncodingNormalizator
 		**/
 		public function setUnreservedPartChars($unreservedPartChars)
 		{

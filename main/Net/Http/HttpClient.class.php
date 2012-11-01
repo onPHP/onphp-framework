@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Http
 	**/
+	namespace Onphp;
+
 	interface HttpClient
 	{
 		/**
@@ -33,7 +35,7 @@
 		public function getMaxRedirects();
 		
 		/**
-		 * @return HttpResponse
+		 * @return \Onphp\HttpResponse
 		**/
 		public function send(HttpRequest $request);
 	}

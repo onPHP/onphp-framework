@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	final class IntegerSet extends Range
 	{
 		public static function create(

@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Containers
 	**/
+	namespace Onphp;
+
 	abstract class OneToManyLinkedWorker extends UnifiedContainerWorker
 	{
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		protected function targetize(SelectQuery $query)
 		{

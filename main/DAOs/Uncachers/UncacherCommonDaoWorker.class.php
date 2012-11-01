@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Uncachers
 	**/
+	namespace Onphp;
+
 	class UncacherCommonDaoWorker extends UncacherBaseDaoWorker
 	{
 		/**
-		 * @return UncacherCommonDaoWorker
+		 * @return \Onphp\UncacherCommonDaoWorker
 		 */
 		public static function create($className, $idKey) {
 			return new self($className, $idKey);

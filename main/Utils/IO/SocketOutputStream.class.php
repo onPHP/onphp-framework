@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class SocketOutputStream extends OutputStream
 	{
 		/**
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return SocketOutputStream
+		 * @return \Onphp\SocketOutputStream
 		**/
 		public function write($buffer)
 		{

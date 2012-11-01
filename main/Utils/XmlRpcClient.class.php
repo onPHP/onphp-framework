@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class XmlRpcClient
 	{
 		private $url 		= null;
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return XmlRpcClient
+		 * @return \Onphp\XmlRpcClient
 		**/
 		public static function create($url = null)
 		{
@@ -36,7 +38,7 @@
 		}
 		
 		/**
-		 * @return XmlRpcClient
+		 * @return \Onphp\XmlRpcClient
 		**/
 		public function setUrl($url)
 		{
@@ -50,7 +52,7 @@
 		}
 		
 		/**
-		 * @return XmlRpcClient
+		 * @return \Onphp\XmlRpcClient
 		**/
 		public function setTimeout($timeout)
 		{

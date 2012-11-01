@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Containers
 	**/
+	namespace Onphp;
+
 	abstract class ManyToManyLinked extends UnifiedContainer
 	{
 		abstract public function getHelperTable();
@@ -29,8 +31,8 @@
 			
 			$worker =
 				$lazy
-					? 'ManyToManyLinkedLazy'
-					: 'ManyToManyLinkedFull';
+					? '\Onphp\ManyToManyLinkedLazy'
+					: '\Onphp\ManyToManyLinkedFull';
 			
 			$this->worker = new $worker($this);
 		}

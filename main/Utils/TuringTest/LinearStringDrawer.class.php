@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	final class LinearStringDrawer extends TextDrawer
 	{
 		/**
-		 * @return LinearStringDrawer
+		 * @return \Onphp\LinearStringDrawer
 		**/
 		public function draw($string)
 		{

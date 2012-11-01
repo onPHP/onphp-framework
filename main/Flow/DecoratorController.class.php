@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	abstract class DecoratorController implements Controller
 	{
 		protected $inner = null;
@@ -22,7 +24,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function handleRequest(HttpRequest $request)
 		{

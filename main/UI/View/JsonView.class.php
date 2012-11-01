@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class JsonView implements View, Stringable
 	{
 		protected $options = 0;
 
 		/**
-		 * @return JsonView
+		 * @return \Onphp\JsonView
 		**/
 		public static function create()
 		{
@@ -26,7 +28,7 @@
 
 		/**
 		 * @param bool $flag
-		 * @return JsonView
+		 * @return \Onphp\JsonView
 		**/
 		public function setHexQuot($flag = false)
 		{
@@ -41,7 +43,7 @@
 
 		/**
 		 * @param bool $flag
-		 * @return JsonView
+		 * @return \Onphp\JsonView
 		**/
 		public function setHexTag($flag = false)
 		{
@@ -56,7 +58,7 @@
 
 		/**
 		 * @param bool $flag
-		 * @return JsonView
+		 * @return \Onphp\JsonView
 		**/
 		public function setHexAmp($flag = false)
 		{
@@ -71,7 +73,7 @@
 
 		/**
 		 * @param bool $flag
-		 * @return JsonView
+		 * @return \Onphp\JsonView
 		**/
 		public function setHexApos($flag = false)
 		{
@@ -86,7 +88,7 @@
 
 		/**
 		 * @param bool $flag
-		 * @return JsonView
+		 * @return \Onphp\JsonView
 		**/
 		public function setForceObject($flag = false)
 		{
@@ -101,7 +103,7 @@
 
 		/**
 		 * @param bool $flag
-		 * @return JsonView
+		 * @return \Onphp\JsonView
 		**/
 		public function setNumericCheck($flag = false)
 		{
@@ -116,7 +118,7 @@
 
 		/**
 		 * @param bool $flag
-		 * @return JsonView
+		 * @return \Onphp\JsonView
 		**/
 		public function setPrettyPrint($flag = false)
 		{
@@ -133,7 +135,7 @@
 
 		/**
 		 * @param bool $flag
-		 * @return JsonView
+		 * @return \Onphp\JsonView
 		**/
 		public function setUnescapedSlashes($flag = false)
 		{
@@ -149,7 +151,7 @@
 		}
 		
 		/**
-		 * @return JsonView
+		 * @return \Onphp\JsonView
 		**/
 		public function render(/* Model */ $model = null)
 		{
@@ -159,7 +161,7 @@
 		}
 		
 		/**
-		 * @param Model $model
+		 * @param \Onphp\Model $\Onphp\Model
 		 * @return string
 		 */
 		public function toString(/* Model */ $model = null)

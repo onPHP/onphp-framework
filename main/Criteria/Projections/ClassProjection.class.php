@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	class ClassProjection implements ObjectProjection
 	{
 		protected $className	= null;
 		
 		/**
-		 * @return ClassProjection
+		 * @return \Onphp\ClassProjection
 		**/
 		public static function create($class)
 		{
@@ -27,7 +29,7 @@
 		public function __construct($class)
 		{
 			Assert::isTrue(
-				ClassUtils::isInstanceOf($class, 'Prototyped')
+				ClassUtils::isInstanceOf($class, '\Onphp\Prototyped')
 			);
 			
 			if (is_object($class))
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return JoinCapableQuery
+		 * @return \Onphp\JoinCapableQuery
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{

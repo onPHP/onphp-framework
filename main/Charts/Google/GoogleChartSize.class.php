@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartSize extends BaseGoogleChartParameter
 	{
 		protected $name = 'chs';
@@ -20,7 +22,7 @@
 		private $height = null;
 		
 		/**
-		 * @return GoogleChartSize
+		 * @return \Onphp\GoogleChartSize
 		**/
 		public static function create()
 		{
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartSize
+		 * @return \Onphp\GoogleChartSize
 		**/
 		public function setWidth($width)
 		{
@@ -45,7 +47,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartSize
+		 * @return \Onphp\GoogleChartSize
 		**/
 		public function setHeight($height)
 		{

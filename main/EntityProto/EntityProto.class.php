@@ -9,9 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	class EntityProto extends Singleton
 	{
-		const PROTO_CLASS_PREFIX = 'EntityProto';
+		const PROTO_CLASS_PREFIX = '\Onphp\EntityProto';
 		
 		public function baseProto()
 		{
@@ -71,7 +73,7 @@
 			}
 			
 			Assert::isInstance($object, $this->className());
-			Assert::isInstance($form, 'Form');
+			Assert::isInstance($form, '\Onphp\Form');
 			
 			if ($previousObject)
 				Assert::isInstance($previousObject, $this->className());
@@ -171,7 +173,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		 * 
 		 * @deprecated you should use PrototypedBuilder to make forms
 		**/
@@ -187,7 +189,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		final public function attachPrimitives(Form $form)
 		{

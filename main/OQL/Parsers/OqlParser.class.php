@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	abstract class OqlParser
 	{
 		const INITIAL_STATE	= 254;
@@ -24,10 +26,10 @@
 		const BETWEEN_EXPRESSION		= 4;
 		
 		private static $classMap = array(
-			self::PREFIX_UNARY_EXPRESSION	=> 'PrefixUnaryExpression',
-			self::POSTFIX_UNARY_EXPRESSION	=> 'PostfixUnaryExpression',
-			self::BINARY_EXPRESSION			=> 'BinaryExpression',
-			self::BETWEEN_EXPRESSION		=> 'LogicalBetween'
+			self::PREFIX_UNARY_EXPRESSION	=> '\Onphp\PrefixUnaryExpression',
+			self::POSTFIX_UNARY_EXPRESSION	=> '\Onphp\PostfixUnaryExpression',
+			self::BINARY_EXPRESSION			=> '\Onphp\BinaryExpression',
+			self::BETWEEN_EXPRESSION		=> '\Onphp\LogicalBetween'
 		);
 		
 		// binary operator map
@@ -90,14 +92,14 @@
 		protected $parentheses	= null;
 		
 		/**
-		 * @return OqlQueryClause
+		 * @return \Onphp\OqlQueryClause
 		**/
 		abstract protected function makeOqlObject();
 		
 		abstract protected function handleState();
 		
 		/**
-		 * @return OqlQueryClause
+		 * @return \Onphp\OqlQueryClause
 		**/
 		public function parse($string = null)
 		{
@@ -122,7 +124,7 @@
 		}
 		
 		/**
-		 * @return OqlTokenizer
+		 * @return \Onphp\OqlTokenizer
 		**/
 		public function getTokenizer()
 		{
@@ -130,7 +132,7 @@
 		}
 		
 		/**
-		 * @return OqlParser
+		 * @return \Onphp\OqlParser
 		**/
 		public function setTokenizer(OqlTokenizer $tokenizer)
 		{
@@ -274,7 +276,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryParameter
+		 * @return \Onphp\OqlQueryParameter
 		**/
 		protected function getIdentifierExpression()
 		{
@@ -293,7 +295,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryParameter
+		 * @return \Onphp\OqlQueryParameter
 		**/
 		protected function getConstantExpression()
 		{
@@ -327,7 +329,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryExpression
+		 * @return \Onphp\OqlQueryExpression
 		**/
 		protected function getLogicExpression(
 			$priority = self::LOGIC_PRIORITY_LOWEST
@@ -585,7 +587,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryExpression
+		 * @return \Onphp\OqlQueryExpression
 		**/
 		protected function getArithmeticExpression(
 			$priority = self::ARITHMETIC_PRIORITY_LOWEST
@@ -683,7 +685,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryExpression
+		 * @return \Onphp\OqlQueryExpression
 		**/
 		protected function makeQueryExpression($className /*, ... */)
 		{
@@ -706,7 +708,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryParameter
+		 * @return \Onphp\OqlQueryParameter
 		**/
 		protected function makeQuerySignedExpression($argument, $isUnaryMinus)
 		{
@@ -718,7 +720,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryParameter
+		 * @return \Onphp\OqlQueryParameter
 		**/
 		protected function makeQueryParameter($argument)
 		{
@@ -776,7 +778,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryParameter
+		 * @return \Onphp\OqlQueryParameter
 		**/
 		private function getArithmeticArgumentExpression()
 		{

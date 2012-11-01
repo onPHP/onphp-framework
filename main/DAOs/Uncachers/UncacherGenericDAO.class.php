@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Uncachers
 	**/
+	namespace Onphp;
+
 	class UncacherGenericDAO implements UncacherBase
 	{
 		private $daoMap = array();
@@ -33,11 +35,11 @@
 		
 		/**
 		 * @param $uncacher UncacherGenericDAO same as self class
-		 * @return UncacherBase (this)
+		 * @return \Onphp\UncacherBase (this)
 		 */
 		public function merge(UncacherBase $uncacher)
 		{
-			Assert::isInstance($uncacher, 'UncacherGenericDAO');
+			Assert::isInstance($uncacher, '\Onphp\UncacherGenericDAO');
 			return $this->mergeSelf($uncacher);
 		}
 		
@@ -45,9 +47,9 @@
 		{
 			foreach ($this->daoMap as $daoClass => $uncacheData) {
 				$dao = GenericDAO::getInstance($daoClass);
-				/* @var $dao GenericDAO */
+				/* @var $dao \Onphp\GenericDAO */
 				list($dropIdentityIds, $workerUncacher) = $uncacheData;
-				/* @var $workerUncacher UncacherBase */
+				/* @var $workerUncacher \Onphp\UncacherBase */
 				
 				foreach ($dropIdentityIds as $id)
 					$dao->dropObjectIdentityMapById($id);

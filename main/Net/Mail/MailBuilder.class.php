@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Mail
 	**/
+	namespace Onphp;
+
 	interface MailBuilder
 	{
 		/// returns encoded body as string

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	final class ErrorDrawer
 	{
 		const FONT_SIZE	= 4;
@@ -34,7 +36,7 @@
 		}
 		
 		/**
-		 * @return ErrorDrawer
+		 * @return \Onphp\ErrorDrawer
 		**/
 		public function draw($string = 'ERROR!')
 		{

@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class FileUtils extends StaticFactory
 	{
 		/**
@@ -153,7 +155,7 @@
 					);
 				}
 
-				$directoryIterator = new DirectoryIterator($directory);
+				$directoryIterator = new \DirectoryIterator($directory);
 				
 				foreach ($directoryIterator as $file) {
 					if ($file->isDot())

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	abstract class BaseLogger
 	{
 		private $level	= null;
@@ -32,7 +34,7 @@
 		}
 		
 		/**
-		 * @return LogLevel
+		 * @return \Onphp\LogLevel
 		**/
 		public function getLevel()
 		{

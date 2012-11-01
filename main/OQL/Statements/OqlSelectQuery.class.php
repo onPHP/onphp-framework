@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	final class OqlSelectQuery extends OqlQuery
 	{
 		private $distinct		= false;
@@ -25,7 +27,7 @@
 		private $offset			= null;
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public static function create()
 		{
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function setDistinct($orly = true)
 		{
@@ -53,7 +55,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function addProperties(OqlSelectPropertiesClause $clause)
 		{
@@ -63,7 +65,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function setProperties(OqlSelectPropertiesClause $clause)
 		{
@@ -74,7 +76,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function dropProperties()
 		{
@@ -94,7 +96,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function where(OqlWhereClause $clause, $logic = null)
 		{
@@ -115,7 +117,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function andWhere(OqlWhereClause $clause)
 		{
@@ -125,7 +127,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function orWhere(OqlWhereClause $clause)
 		{
@@ -135,7 +137,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function setWhere(OqlWhereClause $clause)
 		{
@@ -147,7 +149,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function dropWhere()
 		{
@@ -163,7 +165,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function addGroupBy(OqlProjectionClause $clause)
 		{
@@ -173,7 +175,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function setGroupBy(OqlProjectionClause $clause)
 		{
@@ -184,7 +186,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function dropGroupBy()
 		{
@@ -199,7 +201,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function addOrderBy(OqlOrderByClause $clause)
 		{
@@ -209,7 +211,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function setOrderBy(OqlOrderByClause $clause)
 		{
@@ -220,7 +222,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function dropOrderBy()
 		{
@@ -235,7 +237,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function addHaving(OqlHavingClause $clause)
 		{
@@ -245,7 +247,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function setHaving(OqlHavingClause $clause)
 		{
@@ -256,7 +258,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function dropHaving()
 		{
@@ -265,7 +267,7 @@
 			return $this;
 		}
 		/**
-		 * @return OqlQueryParameter
+		 * @return \Onphp\OqlQueryParameter
 		**/
 		public function getLimit()
 		{
@@ -273,7 +275,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function setLimit(OqlQueryParameter $limit)
 		{
@@ -283,7 +285,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryParameter
+		 * @return \Onphp\OqlQueryParameter
 		**/
 		public function getOffset()
 		{
@@ -291,7 +293,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectQuery
+		 * @return \Onphp\OqlSelectQuery
 		**/
 		public function setOffset(OqlQueryParameter $offset)
 		{
@@ -301,7 +303,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function toCriteria()
 		{

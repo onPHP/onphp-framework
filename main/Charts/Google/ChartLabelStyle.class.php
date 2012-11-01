@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class ChartLabelStyle
 	{
 		private $type			= null;
@@ -21,7 +23,7 @@
 		private $dataPoint		= null;
 		
 		/**
-		 * @return ChartLabelStyle
+		 * @return \Onphp\ChartLabelStyle
 		**/
 		public static function create()
 		{
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return ChartLabelStyle
+		 * @return \Onphp\ChartLabelStyle
 		**/
 		public function setType(BaseGoogleChartLabelStyleType $type)
 		{
@@ -47,7 +49,7 @@
 		}
 		
 		/**
-		 * @return BaseGoogleChartLabelStyleType
+		 * @return \Onphp\BaseGoogleChartLabelStyleType
 		**/
 		public function getType()
 		{
@@ -55,7 +57,7 @@
 		}
 		
 		/**
-		 * @return ChartLabelStyle
+		 * @return \Onphp\ChartLabelStyle
 		**/
 		public function setColor(Color $color)
 		{
@@ -65,7 +67,7 @@
 		}
 		
 		/**
-		 * @return Color
+		 * @return \Onphp\Color
 		**/
 		public function getColor()
 		{

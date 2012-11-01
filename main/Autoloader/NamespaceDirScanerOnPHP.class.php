@@ -12,6 +12,8 @@
 	/**
 	 * NamespaceDirScanerOnPHP class to scan directories and save which class where
 	 */
+	namespace Onphp;
+
 	class NamespaceDirScanerOnPHP extends NamespaceDirScaner
 	{
 		public function scan($directory, $namespace = '')

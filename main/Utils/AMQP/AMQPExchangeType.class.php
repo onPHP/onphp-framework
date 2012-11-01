@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class AMQPExchangeType extends Enumeration
 	{
 		const DIRECT = 1;

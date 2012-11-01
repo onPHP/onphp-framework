@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class SimplePhpView extends EmptyView
 	{
 		protected $templatePath		= null;
@@ -24,7 +26,7 @@
 		}
 		
 		/**
-		 * @return SimplePhpView
+		 * @return \Onphp\SimplePhpView
 		**/
 		public function render(/* Model */ $model = null)
 		{
@@ -50,14 +52,14 @@
 				ob_start();
 				$this->render($model);
 				return ob_get_clean();
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				ob_end_clean();
 				throw $e;
 			}
 		}
 		
 		/**
-		 * @return SimplePhpView
+		 * @return \Onphp\SimplePhpView
 		**/
 		protected function preRender()
 		{
@@ -65,7 +67,7 @@
 		}
 		
 		/**
-		 * @return SimplePhpView
+		 * @return \Onphp\SimplePhpView
 		**/
 		protected function postRender()
 		{

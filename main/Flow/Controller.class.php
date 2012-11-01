@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	interface Controller
 	{
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function handleRequest(HttpRequest $request);
 	}

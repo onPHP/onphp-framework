@@ -12,5 +12,7 @@
 	/**
 	 * @ingroup Exceptions
 	**/
+	namespace Onphp;
+
 	class MailNotSentException extends MailException {/*_*/};
 ?>

@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Http
 	**/
+	namespace Onphp;
+
 	final class HeaderUtils extends StaticFactory
 	{
 		private static $headerSent		= false;

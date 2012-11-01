@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Crypto
 	**/
+	namespace Onphp;
+
 	class Base62Utils extends StaticFactory
 	{
 		protected static $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

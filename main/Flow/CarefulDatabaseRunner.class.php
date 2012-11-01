@@ -12,11 +12,13 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	final class CarefulDatabaseRunner implements CarefulCommand
 	{
 		private $command		= null;
 		/**
-		 * @var InnerTransaction
+		 * @var \Onphp\InnerTransaction
 		 */
 		private $transaction	= null;
 		
@@ -29,7 +31,7 @@
 		
 		/**
 		 * @throws BaseException
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
@@ -54,7 +56,7 @@
 		}
 		
 		/**
-		 * @return CarefulDatabaseRunner
+		 * @return \Onphp\CarefulDatabaseRunner
 		**/
 		public function commit()
 		{
@@ -67,7 +69,7 @@
 		}
 		
 		/**
-		 * @return CarefulDatabaseRunner
+		 * @return \Onphp\CarefulDatabaseRunner
 		**/
 		public function rollback()
 		{

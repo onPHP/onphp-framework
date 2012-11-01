@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	abstract class AbstractProtoClass extends Singleton
 	{
 		private $depth = 0;
@@ -21,7 +23,7 @@
 		abstract protected function makePropertyList();
 		
 		/**
-		 * @return AbstractProtoClass
+		 * @return \Onphp\AbstractProtoClass
 		**/
 		public function beginPrefetch()
 		{
@@ -32,7 +34,7 @@
 		}
 		
 		/**
-		 * @return AbstractProtoClass
+		 * @return \Onphp\AbstractProtoClass
 		**/
 		public function skipObjectPrefetching(Identifiable $object)
 		{
@@ -175,7 +177,7 @@
 		}
 		
 		/**
-		 * @return LightMetaProperty
+		 * @return \Onphp\LightMetaProperty
 		 * @throws MissingElementException
 		**/
 		public function getPropertyByName($name)
@@ -194,7 +196,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function makeForm($prefix = null)
 		{
@@ -208,7 +210,7 @@
 		}
 		
 		/**
-		 * @return InsertOrUpdateQuery
+		 * @return \Onphp\InsertOrUpdateQuery
 		**/
 		public function fillQuery(
 			InsertOrUpdateQuery $query,

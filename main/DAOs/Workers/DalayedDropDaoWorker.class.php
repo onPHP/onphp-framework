@@ -17,6 +17,8 @@
 	 * 
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	final class DalayedDropDaoWorker extends NullDaoWorker
 	{
 		private $modifiedIds = array();
@@ -32,7 +34,7 @@
 		
 		/**
 		 * @param mixed $id
-		 * @return UncacherBase
+		 * @return \Onphp\UncacherBase
 		 */
 		public function getUncacherById($id) {
 			return UncacherNullDaoWorker::create();

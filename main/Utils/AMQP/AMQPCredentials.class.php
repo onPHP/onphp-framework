@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class AMQPCredentials
 	{
 		const DEFAULT_HOST = 'localhost';
@@ -24,7 +26,7 @@
 		protected $password = null;
 		
 		/**
-		 * @return AMQPCredentials
+		 * @return \Onphp\AMQPCredentials
 		**/
 		public static function create()
 		{
@@ -32,7 +34,7 @@
 		}
 
 		/**
-		 * @return AMQPCredentials
+		 * @return \Onphp\AMQPCredentials
 		**/
 		public static function createDefault()
 		{
@@ -51,7 +53,7 @@
 		}
 
 		/**
-		 * @return AMQPCredentials
+		 * @return \Onphp\AMQPCredentials
 		**/
 		public function setHost($host)
 		{
@@ -66,7 +68,7 @@
 		}
 
 		/**
-		 * @return AMQPCredentials
+		 * @return \Onphp\AMQPCredentials
 		**/
 		public function setPort($port)
 		{
@@ -81,7 +83,7 @@
 		}
 
 		/**
-		 * @return AMQPCredentials
+		 * @return \Onphp\AMQPCredentials
 		**/
 		public function setVirtualHost($virtualHost)
 		{
@@ -96,7 +98,7 @@
 		}
 
 		/**
-		 * @return AMQPCredentials
+		 * @return \Onphp\AMQPCredentials
 		**/
 		public function setLogin($login)
 		{
@@ -111,7 +113,7 @@
 		}
 
 		/**
-		 * @return AMQPCredentials
+		 * @return \Onphp\AMQPCredentials
 		**/
 		public function setPassword($password)
 		{

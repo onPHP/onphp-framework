@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class RedirectView extends CleanRedirectView
 	{
 		private $falseAsUnset = null;
 		private $buildArrays = null;
 		
 		/**
-		 * @return RedirectView
+		 * @return \Onphp\RedirectView
 		**/
 		public static function create($url)
 		{
@@ -31,7 +33,7 @@
 		}
 		
 		/**
-		 * @return RedirectView
+		 * @return \Onphp\RedirectView
 		**/
 		public function setFalseAsUnset($really)
 		{
@@ -48,7 +50,7 @@
 		}
 		
 		/**
-		 * @return RedirectView
+		 * @return \Onphp\RedirectView
 		**/
 		public function setBuildArrays($really)
 		{

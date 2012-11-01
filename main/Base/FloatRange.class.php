@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class FloatRange extends BaseRange
 	{
 		public function __construct($min = null, $max = null)
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return FloatRange
+		 * @return \Onphp\FloatRange
 		**/
 		public static function create($min = null, $max = null)
 		{
@@ -32,7 +34,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return FloatRange
+		 * @return \Onphp\FloatRange
 		**/
 		public function setMin($min = null)
 		{
@@ -46,7 +48,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return FloatRange
+		 * @return \Onphp\FloatRange
 		**/
 		public function setMax($max = null)
 		{

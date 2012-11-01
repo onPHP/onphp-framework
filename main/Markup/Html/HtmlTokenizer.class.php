@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Html
 	**/
+	namespace Onphp;
+
 	final class HtmlTokenizer
 	{
 		const INITIAL_STATE				= 1;
@@ -78,7 +80,7 @@
 		}
 		
 		/**
-		 * @return HtmlTokenizer
+		 * @return \Onphp\HtmlTokenizer
 		**/
 		public static function create(InputStream $stream)
 		{
@@ -86,7 +88,7 @@
 		}
 		
 		/**
-		 * @return HtmlTokenizer
+		 * @return \Onphp\HtmlTokenizer
 		**/
 		public function suppressWhitespaces($isSuppressWhitespaces)
 		{
@@ -98,7 +100,7 @@
 		}
 		
 		/**
-		 * @return HtmlTokenizer
+		 * @return \Onphp\HtmlTokenizer
 		**/
 		public function lowercaseAttributes($isLowercaseAttributes)
 		{
@@ -110,7 +112,7 @@
 		}
 		
 		/**
-		 * @return HtmlTokenizer
+		 * @return \Onphp\HtmlTokenizer
 		**/
 		public function lowercaseTags($isLowercaseTags)
 		{
@@ -122,7 +124,7 @@
 		}
 		
 		/**
-		 * @return SgmlToken
+		 * @return \Onphp\SgmlToken
 		**/
 		public function nextToken()
 		{
@@ -247,7 +249,7 @@
 		}
 		
 		/**
-		 * @return HtmlTokenizer
+		 * @return \Onphp\HtmlTokenizer
 		**/
 		private function mark()
 		{
@@ -262,7 +264,7 @@
 		}
 		
 		/**
-		 * @return HtmlTokenizer
+		 * @return \Onphp\HtmlTokenizer
 		**/
 		private function reset()
 		{
@@ -279,7 +281,7 @@
 		}
 		
 		/**
-		 * @return HtmlTokenizer
+		 * @return \Onphp\HtmlTokenizer
 		**/
 		private function skip($count)
 		{
@@ -323,7 +325,7 @@
 		}
 		
 		/**
-		 * @return HtmlTokenizer
+		 * @return \Onphp\HtmlTokenizer
 		**/
 		private function makeTag()
 		{
@@ -347,7 +349,7 @@
 		}
 		
 		/**
-		 * @return SgmlTag
+		 * @return \Onphp\SgmlTag
 		**/
 		private function setupTag(SgmlTag $tag)
 		{
@@ -409,7 +411,7 @@
 		}
 		
 		/**
-		 * @return HtmlTokenizer
+		 * @return \Onphp\HtmlTokenizer
 		**/
 		private function dumpBuffer()
 		{
@@ -518,7 +520,7 @@
 		}
 		
 		/**
-		 * @return SgmlOpenTag
+		 * @return \Onphp\SgmlOpenTag
 		**/
 		private function createOpenTag()
 		{
@@ -617,7 +619,7 @@
 		}
 		
 		/**
-		 * @return HtmlTokenizer
+		 * @return \Onphp\HtmlTokenizer
 		**/
 		private function dumpEndTag()
 		{
@@ -773,7 +775,7 @@
 		}
 		
 		/**
-		 * @return SgmlOpenTag
+		 * @return \Onphp\SgmlOpenTag
 		**/
 		private function dumpAttribute()
 		{
@@ -1310,7 +1312,7 @@
 		}
 		
 		/**
-		 * @return HtmlTokenizer
+		 * @return \Onphp\HtmlTokenizer
 		**/
 		private function warning($message)
 		{
@@ -1321,7 +1323,7 @@
 		}
 		
 		/**
-		 * @return HtmlTokenizer
+		 * @return \Onphp\HtmlTokenizer
 		**/
 		private function error($message)
 		{

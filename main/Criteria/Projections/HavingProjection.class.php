@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	final class HavingProjection implements ObjectProjection
 	{
 		private $logic = null;
@@ -22,7 +24,7 @@
 		}
 		
 		/**
-		 * @return JoinCapableQuery
+		 * @return \Onphp\JoinCapableQuery
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{

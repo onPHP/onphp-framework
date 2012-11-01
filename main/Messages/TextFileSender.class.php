@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class TextFileSender implements MessageQueueSender
 	{
 		private $queue	= null;
@@ -21,7 +23,7 @@
 		
 		public function setQueue(MessageQueue $queue)
 		{
-			Assert::isInstance($queue, 'TextFileQueue');
+			Assert::isInstance($queue, '\Onphp\TextFileQueue');
 			
 			$this->queue = $queue;
 			
@@ -29,7 +31,7 @@
 		}
 		
 		/**
-		 * @return MessageQueue
+		 * @return \Onphp\MessageQueue
 		**/
 		public function getQueue()
 		{
@@ -41,7 +43,7 @@
 			if (!$this->queue)
 				throw new WrongStateException('you must set the queue first');
 			
-			Assert::isInstance($message, 'TextMessage');
+			Assert::isInstance($message, '\Onphp\TextMessage');
 			
 			$this->getStream()->write(
 				$message->getTimestamp()->toString()."\t"

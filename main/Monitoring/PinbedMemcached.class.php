@@ -12,10 +12,12 @@
 	/**
 	 *
 	**/
+	namespace Onphp;
+
 	final class PinbedMemcached extends SocketMemcached
 	{
 		/**
-		 * @return PinbedMemcached 
+		 * @return \Onphp\PinbedMemcached 
 		**/
 		public static function create(
 			$host = SocketMemcached::DEFAULT_HOST,

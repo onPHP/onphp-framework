@@ -26,11 +26,13 @@
 	 * 
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	final class VoodooDaoWorker extends TransparentDaoWorker
 	{
 		private $classKey = null;
 		/**
-		 * @var SegmentHandler
+		 * @var \Onphp\SegmentHandler
 		 */
 		private $handler = null;
 		
@@ -124,18 +126,18 @@
 		{
 			if (!self::$defaultHandler) {
 				if (extension_loaded('sysvshm')) {
-					$handlerName = 'SharedMemorySegmentHandler';
+					$handlerName = '\Onphp\SharedMemorySegmentHandler';
 				} elseif (extension_loaded('sysvmsg')) {
-					$handlerName = 'MessageSegmentHandler';
+					$handlerName = '\Onphp\MessageSegmentHandler';
 				} else {
 					if (extension_loaded('eaccelerator')) {
 						$handlerName = 'eAcceleratorSegmentHandler';
 					} elseif (extension_loaded('apc')) {
-						$handlerName = 'ApcSegmentHandler';
+						$handlerName = '\Onphp\ApcSegmentHandler';
 					} elseif (extension_loaded('xcache')) {
-						$handlerName = 'XCacheSegmentHandler';
+						$handlerName = '\Onphp\XCacheSegmentHandler';
 					} else {
-						$handlerName = 'CacheSegmentHandler';
+						$handlerName = '\Onphp\CacheSegmentHandler';
 					}
 				}
 			} else {

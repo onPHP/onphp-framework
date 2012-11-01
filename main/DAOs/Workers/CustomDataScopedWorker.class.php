@@ -17,6 +17,8 @@
 	 * 
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	final class CustomDataScopedWorker extends CacheDaoWorker
 	{
 		public function __construct($dao)

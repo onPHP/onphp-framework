@@ -9,12 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class TextFileQueueBrowser implements MessageQueueBrowser
 	{
 		private $queue = null;
 		
 		/**
-		 * @return TextFileQueueBrowser
+		 * @return \Onphp\TextFileQueueBrowser
 		**/
 		public static function create()
 		{
@@ -22,7 +24,7 @@
 		}
 		
 		/**
-		 * @return TextFileQueueBrowser
+		 * @return \Onphp\TextFileQueueBrowser
 		**/
 		public function setQueue(MessageQueue $queue)
 		{
@@ -32,7 +34,7 @@
 		}
 		
 		/**
-		 * @return MessageQueue
+		 * @return \Onphp\MessageQueue
 		**/
 		public function getQueue()
 		{

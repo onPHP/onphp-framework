@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 	
+	namespace Onphp;
+
 	interface Autoloader
 	{
 		public function autoload($className);

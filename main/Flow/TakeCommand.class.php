@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	abstract class TakeCommand implements EditorCommand
 	{
 		abstract protected function daoMethod();
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	final class CacheSegmentHandler implements SegmentHandler
 	{
 		private $index = null;

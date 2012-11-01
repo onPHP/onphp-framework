@@ -1,4 +1,6 @@
 <?php
+	namespace Onphp;
+
 	final class WebMoneyUtils extends StaticFactory
 	{
 		// order does matter!

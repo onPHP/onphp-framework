@@ -17,6 +17,8 @@
 	 * 
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	class DateRange implements Stringable, SingleRange
 	{
 		private $start	= null;
@@ -26,7 +28,7 @@
 		private $dayEndStamp	= null;
 		
 		/**
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public static function create($start = null, $end = null)
 		{
@@ -53,7 +55,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function setStart(/* Date */ $start)
 		{
@@ -71,7 +73,7 @@
 		}
 		
 		/**
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function safeSetStart(/* Date */ $start)
 		{
@@ -90,7 +92,7 @@
 		}
 		
 		/**
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function safeSetEnd(/* Date */ $end)
 		{
@@ -110,7 +112,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function setEnd(/* Date */ $end)
 		{
@@ -127,7 +129,7 @@
 		}
 		
 		/**
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function lazySet($start = null, $end = null)
 		{
@@ -151,7 +153,7 @@
 		}
 		
 		/**
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function dropStart()
 		{
@@ -161,7 +163,7 @@
 		}
 		
 		/**
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function dropEnd()
 		{
@@ -178,7 +180,7 @@
 		}
 		
 		/**
-		 * @return Date
+		 * @return \Onphp\Date
 		**/
 		public function getStart()
 		{
@@ -186,7 +188,7 @@
 		}
 		
 		/**
-		 * @return Date
+		 * @return \Onphp\Date
 		**/
 		public function getEnd()
 		{
@@ -370,7 +372,7 @@
 		/**
 		 * enlarges $this by given $range, if last one is wider
 		 * 
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function enlarge(DateRange $range)
 		{
@@ -396,7 +398,7 @@
 		/**
 		 * intersection of $this and given $range
 		 * 
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function clip(DateRange $range)
 		{
@@ -428,7 +430,7 @@
 		/**
 		 * result is read-only, no error checking
 		 * 
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function lightCopyOnClip(DateRange $range)
 		{
@@ -536,7 +538,7 @@
 		}
 		
 		/**
-		 * @return TimestampRange
+		 * @return \Onphp\TimestampRange
 		**/
 		public function toTimestampRange()
 		{
@@ -556,7 +558,7 @@
 		
 		protected function getObjectName()
 		{
-			return 'Date';
+			return '\Onphp\Date';
 		}
 	}
 ?>

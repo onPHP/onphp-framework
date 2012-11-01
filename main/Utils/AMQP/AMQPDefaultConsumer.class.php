@@ -9,10 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class AMQPDefaultConsumer implements AMQPConsumer
 	{
 		/**
-		 * @var AMQPChannelInterface
+		 * @var \Onphp\AMQPChannelInterface
 		**/
 		protected $channel = null;
 		protected $consumerTag = null;
@@ -25,7 +27,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function getChannel()
 		{
@@ -34,7 +36,7 @@
 
 		/**
 		 * @param $consumerTag
-		 * @return AMQPConsumer
+		 * @return \Onphp\AMQPConsumer
 		**/
 		public function setConsumerTag($consumerTag)
 		{
@@ -81,7 +83,7 @@
 		}
 
 		/**
-		 * @return AMQPDefaultConsumer
+		 * @return \Onphp\AMQPDefaultConsumer
 		**/
 		public function setQueueName($name)
 		{
@@ -99,7 +101,7 @@
 		}
 
 		/**
-		 * @return AMQPDefaultConsumer
+		 * @return \Onphp\AMQPDefaultConsumer
 		**/
 		public function setAutoAcknowledge($boolean)
 		{
@@ -114,7 +116,7 @@
 		}
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public function getNextDelivery()
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class SortHelper extends Singleton implements Instantiatable
 	{
 		const ASC 	= 0x1;
@@ -24,7 +26,7 @@
 		
 		public static function me()
 		{
-			return Singleton::getInstance('SortHelper');
+			return Singleton::getInstance('\Onphp\SortHelper');
 		}
 		
 		public function setVector(&$vector)

@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	interface Collection
 	{
 		public function add(CollectionItem $item);

@@ -9,18 +9,20 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class RouterRewrite extends Singleton implements Router, Instantiatable
 	{
 		protected $routes		= array();
 		protected $currentRoute	= null;
 		
 		/**
-		 * @var HttpRequest
+		 * @var \Onphp\HttpRequest
 		**/
 		protected $request		= null;
 		
 		/**
-		 * @var HttpUrl
+		 * @var \Onphp\HttpUrl
 		**/
 		protected $baseUrl		= null;
 		
@@ -30,7 +32,7 @@
 		}
 		
 		/**
-		 * @return RouterRewrite
+		 * @return \Onphp\RouterRewrite
 		**/
 		public static function me()
 		{
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return RouterRewrite
+		 * @return \Onphp\RouterRewrite
 		**/
 		public function setRequest(HttpRequest $request)
 		{
@@ -48,7 +50,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function getRequest()
 		{
@@ -56,7 +58,7 @@
 		}
 		
 		/**
-		 * @return RouterRewrite
+		 * @return \Onphp\RouterRewrite
 		**/
 		public function resetRequest()
 		{
@@ -66,7 +68,7 @@
 		}
 		
 		/**
-		 * @return RouterRewrite
+		 * @return \Onphp\RouterRewrite
 		**/
 		public function setBaseUrl(HttpUrl $url)
 		{
@@ -76,7 +78,7 @@
 		}
 		
 		/**
-		 * @return HttpUrl
+		 * @return \Onphp\HttpUrl
 		**/
 		public function getBaseUrl()
 		{
@@ -84,7 +86,7 @@
 		}
 		
 		/**
-		 * @return RouterRewrite
+		 * @return \Onphp\RouterRewrite
 		**/
 		public function resetBaseUrl()
 		{
@@ -94,7 +96,7 @@
 		}
 		
 		/**
-		 * @return RouterRewrite
+		 * @return \Onphp\RouterRewrite
 		**/
 		public function addRoute($name, RouterRule $route)
 		{
@@ -109,7 +111,7 @@
 		}
 		
 		/**
-		 * @return RouterRewrite
+		 * @return \Onphp\RouterRewrite
 		**/
 		public function addRoutes(array $routes)
 		{
@@ -121,7 +123,7 @@
 		
 		/**
 		 * @throws RouterException
-		 * @return RouterRewrite
+		 * @return \Onphp\RouterRewrite
 		**/
 		public function removeRoute($name)
 		{
@@ -145,7 +147,7 @@
 		
 		/**
 		 * @throws RouterException
-		 * @return RouterRule
+		 * @return \Onphp\RouterRule
 		**/
 		public function getRoute($name)
 		{
@@ -159,7 +161,7 @@
 		
 		/**
 		 * @throws RouterException
-		 * @return RouterRule
+		 * @return \Onphp\RouterRule
 		**/
 		public function getCurrentRoute()
 		{
@@ -173,7 +175,7 @@
 		
 		/**
 		 * @throws RouterException
-		 * @return RouterRule
+		 * @return \Onphp\RouterRule
 		**/
 		public function getCurrentRouteName()
 		{
@@ -194,7 +196,7 @@
 		}
 		
 		/**
-		 * @return RouterRule
+		 * @return \Onphp\RouterRule
 		**/
 		public function resetRoutes()
 		{
@@ -208,7 +210,7 @@
 		 * Find a matching route to the current REQUEST_URI and
 		 * inject returning values to the HttpRequest object.
 		 * 
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function route(HttpRequest $request)
 		{
@@ -254,7 +256,7 @@
 		}
 
 		/**
-		 * @return RouterRewrite
+		 * @return \Onphp\RouterRewrite
 		**/
 		public function resetAll()
 		{
@@ -267,7 +269,7 @@
 		}
 		
 		/**
-		 * @return RouterRewrite
+		 * @return \Onphp\RouterRewrite
 		**/
 		protected function setRequestParams(HttpRequest $request, array $params)
 		{

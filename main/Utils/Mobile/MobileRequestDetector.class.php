@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class MobileRequestDetector
 	{
 		static private $headers = array(
@@ -59,7 +61,7 @@
 		);
 		
 		/**
-		 * @return MobileRequestDetector
+		 * @return \Onphp\MobileRequestDetector
 		**/
 		public static function create()
 		{

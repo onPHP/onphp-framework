@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	final class FeedItemContent
 	{
 		private $type = null;
 		private $body = null;
 		
 		/**
-		 * @return FeedItemContent
+		 * @return \Onphp\FeedItemContent
 		**/
 		public static function create()
 		{
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return FeedItemContentType
+		 * @return \Onphp\FeedItemContentType
 		**/
 		public function getType()
 		{
@@ -34,7 +36,7 @@
 		}
 		
 		/**
-		 * @return FeedItemContent
+		 * @return \Onphp\FeedItemContent
 		**/
 		public function setType(FeedItemContentType $type)
 		{
@@ -49,7 +51,7 @@
 		}
 		
 		/**
-		 * @return FeedItemContent
+		 * @return \Onphp\FeedItemContent
 		**/
 		public function setBody($body)
 		{

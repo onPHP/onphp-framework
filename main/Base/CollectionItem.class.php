@@ -9,5 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	class CollectionItem extends IdentifiableObject {/*_*/}
 ?>

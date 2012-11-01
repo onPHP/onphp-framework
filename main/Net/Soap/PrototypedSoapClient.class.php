@@ -38,6 +38,8 @@
 	 *	5. implement logCall(), if you need debugging output
 	 * 
 	**/
+	namespace Onphp;
+
 	abstract class PrototypedSoapClient
 	{
 		protected $wsdlUrl		= null;
@@ -47,20 +49,20 @@
 		
 		final public static function convertSoapFault(SoapFault $e)
 		{
-			$r = new ReflectionObject($e);
+			$r = new \ReflectionObject($e);
 			
 			if (!$r->hasProperty('detail') || !($e->detail instanceof stdClass))
 				return $e;
 			
-			$r = new ReflectionObject($e->detail);
+			$r = new \ReflectionObject($e->detail);
 			
 			if (
 				$r->hasProperty('exception')
-				&& $e->detail->exception instanceof SoapVar
+				&& $e->detail->exception instanceof \SoapVar
 			) {
 				$exception = $e->detail->exception->enc_value;
 				
-				Assert::isInstance($exception, 'BaseException');
+				Assert::isInstance($exception, '\Onphp\BaseException');
 				
 				return $exception;
 			}
@@ -74,7 +76,7 @@
 			
 			Assert::isNotNull($wsdlUrl);
 			
-			$this->soapClient = new SoapClient(
+			$this->soapClient = new \SoapClient(
 				$wsdlUrl,
 				array(
 					'soap_version'	=> SOAP_1_1,
@@ -106,7 +108,7 @@
 		{
 			$requestDto = $request->makeDto();
 			
-			Assert::isInstance($requestDto, 'DTOClass');
+			Assert::isInstance($requestDto, '\Onphp\DTOClass');
 			
 			if (defined('__LOCAL_DEBUG__') && !defined('SIMPLE_TEST') ) {
 				// self-validation
@@ -130,7 +132,7 @@
 					
 				} catch (BaseException $e) {
 					
-					if (get_class($e) == 'BaseException') {
+					if (get_class($e) == '\Onphp\BaseException') {
 						throw new SoapFault(
 							'Server',
 							get_class($e).': '.$e->getMessage()
@@ -155,7 +157,7 @@
 				$result = null;
 				
 			} else {
-				Assert::isInstance($resultDto, 'DTOClass');
+				Assert::isInstance($resultDto, '\Onphp\DTOClass');
 				
 				Assert::isEqual(
 					$resultDto->entityProto()->className(),
@@ -173,7 +175,7 @@
 				
 				$result = $resultDto->makeObject($form);
 				
-				Assert::isInstance($result, 'DTOMessage');
+				Assert::isInstance($result, '\Onphp\DTOMessage');
 				
 				Assert::isEqual(get_class($result), $resultClass);
 				
@@ -224,7 +226,7 @@
 		**/
 		
 		/**
-		 * @return SoapClient
+		 * @return \SoapClient
 		**/
 		public function getSoapClient()
 		{

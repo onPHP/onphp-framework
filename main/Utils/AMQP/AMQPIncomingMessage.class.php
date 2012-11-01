@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class AMQPIncomingMessage extends AMQPBaseMessage
 	{
 		const COUNT = 'count';
@@ -32,7 +34,7 @@
 		);
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public static function spawn(array $assoc)
 		{
@@ -40,7 +42,7 @@
 		}
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public static function create()
 		{
@@ -53,7 +55,7 @@
 		}
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public function setRedelivered($redelivered)
 		{
@@ -68,7 +70,7 @@
 		}
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public function setConsumerTag($consumerTag)
 		{
@@ -83,7 +85,7 @@
 		}
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public function setCount($count)
 		{
@@ -98,7 +100,7 @@
 		}
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public function setRoutingKey($routingKey)
 		{
@@ -113,7 +115,7 @@
 		}
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public function setExchange($exchange)
 		{
@@ -128,7 +130,7 @@
 		}
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public function setDeliveryTag($deliveryTag)
 		{
@@ -143,7 +145,7 @@
 		}
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		protected function fill(array $assoc)
 		{

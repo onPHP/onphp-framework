@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class StringReader extends Reader
 	{
 		private $string		= null;
@@ -21,7 +23,7 @@
 		private $mark		= 0;
 		
 		/**
-		 * @return StringReader
+		 * @return \Onphp\StringReader
 		**/
 		public static function create($string)
 		{
@@ -35,7 +37,7 @@
 		}
 		
 		/**
-		 * @return StringReader
+		 * @return \Onphp\StringReader
 		**/
 		public function close()
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return StringReader
+		 * @return \Onphp\StringReader
 		**/
 		public function mark()
 		{
@@ -76,7 +78,7 @@
 		}
 		
 		/**
-		 * @return StringReader
+		 * @return \Onphp\StringReader
 		**/
 		public function reset()
 		{

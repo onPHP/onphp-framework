@@ -12,12 +12,14 @@
 	/**
 	 * Not for onPHP but if you want to use it in your project
 	 */
+	namespace Onphp;
+
 	class NamespaceResolverPSR0 extends NamespaceResolverOnPHP
 	{
 		private $allowedUnderline = false;
 		
 		/**
-		 * @return NamespaceResolverPSR0
+		 * @return \Onphp\NamespaceResolverPSR0
 		 */
 		public static function create()
 		{
@@ -26,7 +28,7 @@
 		
 		/**
 		 * @param boolean $allowedUnderline
-		 * @return NamespaceResolverPSR0
+		 * @return \Onphp\NamespaceResolverPSR0
 		 */
 		public function setAllowedUnderline($allowedUnderline) {
 			$this->allowedUnderline = ($allowedUnderline === true);
@@ -62,7 +64,7 @@
 		}
 		
 		/**
-		 * @return NamespaceDirScaner
+		 * @return \Onphp\NamespaceDirScaner
 		 */
 		protected function getDirScaner() {
 			$dirScaner = new NamespaceDirScanerPSR0();

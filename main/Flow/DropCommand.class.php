@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class DropCommand implements EditorCommand
 	{
 		/**
-		 * @return DropCommand
+		 * @return \Onphp\DropCommand
 		**/
 		public static function create()
 		{
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{

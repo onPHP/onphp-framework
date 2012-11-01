@@ -9,12 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class RouterBaseRule implements RouterRule
 	{
 		protected $defaults = array();
 		
 		/**
-		 * @return RouterChainRule
+		 * @return \Onphp\RouterChainRule
 		**/
 		public function chain(RouterRule $route, $separator = '/')
 		{
@@ -52,7 +54,7 @@
 		}
 		
 		/**
-		 * @return HttpUrl
+		 * @return \Onphp\HttpUrl
 		**/
 		protected function getPath(HttpUrl $url)
 		{
@@ -110,7 +112,7 @@
 		}
 		
 		/**
-		 * @return HttpUrl
+		 * @return \Onphp\HttpUrl
 		**/
 		protected function processPath(HttpRequest $request)
 		{

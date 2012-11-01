@@ -13,10 +13,12 @@
 	 * AMQP stands for Advanced Message Queue Protocol, which is
 	 * an open standard middleware layer for message routing and queuing.
 	**/
+	namespace Onphp;
+
 	abstract class AMQP implements AMQPInterface
 	{
 		/**
-		 * @var AMQPCredentials
+		 * @var \Onphp\AMQPCredentials
 		**/
 		protected $credentials = null;
 		protected $link	= null;
@@ -28,17 +30,17 @@
 		protected $channels	= array();
 
 		/**
-		 * @return AMQP
+		 * @return \Onphp\AMQP
 		**/
 		abstract public function connect();
 
 		/**
-		 * @return AMQP
+		 * @return \Onphp\AMQP
 		**/
 		abstract public function disconnect();
 		
 		/**
-		 * @return AMQP
+		 * @return \Onphp\AMQP
 		**/
 		abstract public function reconnect();
 
@@ -48,7 +50,7 @@
 		abstract public function isConnected();
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		 */
 		abstract public function spawnChannel($id, AMQPInterface $transport);
 		
@@ -65,7 +67,7 @@
 		}
 
 		/**
-		 * @return AMQP
+		 * @return \Onphp\AMQP
 		**/
 		public static function spawn($class, AMQPCredentials $credentials)
 		{
@@ -73,7 +75,7 @@
 		}
 
 		/**
-		 * @return AMQP
+		 * @return \Onphp\AMQP
 		**/
 		public function getLink()
 		{
@@ -83,7 +85,7 @@
 		/**
 		 * @param integer $id
 		 * @throws WrongArgumentException
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function createChannel($id)
 		{
@@ -106,7 +108,7 @@
 
 		/**
 		 * @throws MissingElementException
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function getChannel($id)
 		{
@@ -129,7 +131,7 @@
 		/**
 		 * @param integer $id
 		 * @throws MissingElementException
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function dropChannel($id)
 		{
@@ -146,7 +148,7 @@
 		}
 
 		/**
-		 * @return AMQPCredentials
+		 * @return \Onphp\AMQPCredentials
 		 */
 		public function getCredentials()
 		{
@@ -163,7 +165,7 @@
 
 		/**
 		 * @param bool $alive
-		 * @return AMQP
+		 * @return \Onphp\AMQP
 		 */
 		public function setAlive($alive)
 		{

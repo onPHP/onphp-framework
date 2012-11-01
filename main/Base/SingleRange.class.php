@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	interface SingleRange
 	{
 		public function getStart();

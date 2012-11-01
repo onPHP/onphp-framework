@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartLegendPositionType extends Enumeration
 	{
 		const BOTTOM	= 0x1;
@@ -29,7 +31,7 @@
 		private $paramName = 'chdlp';
 		
 		/**
-		 * @return GoogleChartLegendPositionType
+		 * @return \Onphp\GoogleChartLegendPositionType
 		**/
 		public static function create($id)
 		{

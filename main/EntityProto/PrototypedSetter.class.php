@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class PrototypedSetter extends PrototypedMethodCaller
 	{
 		abstract public function set($name, $value);

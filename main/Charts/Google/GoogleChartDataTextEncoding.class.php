@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartDataTextEncoding
 		extends BaseGoogleChartDataEncoding
 		implements GoogleChartDataEncoding
@@ -20,7 +22,7 @@
 		protected $delimiter = ',';
 		
 		/**
-		 * @return GoogleChartDataTextEncoding
+		 * @return \Onphp\GoogleChartDataTextEncoding
 		**/
 		public static function create()
 		{

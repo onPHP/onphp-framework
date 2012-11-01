@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class ScopeSetter extends PrototypedSetter
 	{
 		private $getter = null;
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return ScopeGetter
+		 * @return \Onphp\ScopeGetter
 		**/
 		public function getGetter()
 		{

@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Http
 	**/
+	namespace Onphp;
+
 	interface HttpResponse
 	{
 		/**
-		 * @return HttpStatus
+		 * @return \Onphp\HttpStatus
 		**/
 		public function getStatus();
 		public function getReasonPhrase();

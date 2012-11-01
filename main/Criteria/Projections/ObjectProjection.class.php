@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	interface ObjectProjection
 	{
 		/**
-		 * @return JoinCapableQuery
+		 * @return \Onphp\JoinCapableQuery
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query);
 	}

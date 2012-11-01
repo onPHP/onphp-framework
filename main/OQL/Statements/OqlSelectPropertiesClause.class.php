@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	final class OqlSelectPropertiesClause extends OqlProjectionClause
 	{
 		private $distinct = false;
 		
 		/**
-		 * @return OqlSelectPropertiesClause
+		 * @return \Onphp\OqlSelectPropertiesClause
 		**/
 		public static function create()
 		{
@@ -30,7 +32,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectPropertiesClause
+		 * @return \Onphp\OqlSelectPropertiesClause
 		**/
 		public function setDistinct($orly = true)
 		{

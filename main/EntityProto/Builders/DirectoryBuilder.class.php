@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class DirectoryBuilder extends PrototypedBuilder
 	{
 		protected $directory	= null;
@@ -59,7 +61,7 @@
 		}
 
 		/**
-		 * @return PrototypedBuilder
+		 * @return \Onphp\PrototypedBuilder
 		**/
 		public function cloneBuilder(EntityProto $proto)
 		{

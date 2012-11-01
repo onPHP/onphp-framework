@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	final class AtomChannelWorker extends Singleton implements FeedChannelWorker
 	{
 		/**
-		 * @return AtomChannelWorker
+		 * @return \Onphp\AtomChannelWorker
 		**/
 		public static function me()
 		{
@@ -23,9 +25,9 @@
 		}
 		
 		/**
-		 * @return FeedChannel
+		 * @return \Onphp\FeedChannel
 		**/
-		public function makeChannel(SimpleXMLElement $xmlFeed)
+		public function makeChannel(\SimpleXMLElement $xmlFeed)
 		{
 			$feedChannel = FeedChannel::create((string) $xmlFeed->title);
 			

@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	final class RssChannelWorker extends Singleton implements FeedChannelWorker
 	{
 		/**
-		 * @return RssChannelWorker
+		 * @return \Onphp\RssChannelWorker
 		**/
 		public static function me()
 		{
@@ -23,9 +25,9 @@
 		}
 		
 		/**
-		 * @return FeedChannel
+		 * @return \Onphp\FeedChannel
 		**/
-		public function makeChannel(SimpleXMLElement $xmlFeed)
+		public function makeChannel(\SimpleXMLElement $xmlFeed)
 		{
 			if (
 				(!isset($xmlFeed->channel))

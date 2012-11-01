@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Criteria
 	**/
+	namespace Onphp;
+
 	final class Criteria extends QueryIdentification
 	{
 		private $dao		= null;
@@ -34,7 +36,7 @@
 		private $silent = true;
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public static function create(/* ProtoDAO */ $dao = null)
 		{
@@ -80,7 +82,7 @@
 		}
 		
 		/**
-		 * @return ProtoDAO
+		 * @return \Onphp\ProtoDAO
 		**/
 		public function getDao()
 		{
@@ -88,7 +90,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function setDao(ProtoDAO $dao)
 		{
@@ -106,7 +108,7 @@
 		}
 		
 		/**
-		 * @return LogicalChain
+		 * @return \Onphp\LogicalChain
 		**/
 		public function getLogic()
 		{
@@ -114,7 +116,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function add(LogicalObject $logic)
 		{
@@ -124,7 +126,7 @@
 		}
 		
 		/**
-		 * @return OrderChain
+		 * @return \Onphp\OrderChain
 		**/
 		public function getOrder()
 		{
@@ -132,7 +134,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function addOrder(/* MapableObject */ $order)
 		{
@@ -145,7 +147,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function prependOrder(/* MapableObject */ $order)
 		{
@@ -158,7 +160,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function dropOrder()
 		{
@@ -173,7 +175,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function setLimit($limit)
 		{
@@ -188,7 +190,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function setOffset($offset)
 		{
@@ -198,7 +200,7 @@
 		}
 		
 		/**
-		 * @return FetchStrategy
+		 * @return \Onphp\FetchStrategy
 		**/
 		public function getFetchStrategy()
 		{
@@ -206,7 +208,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function setFetchStrategy(FetchStrategy $strategy)
 		{
@@ -216,7 +218,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function setProjection(ObjectProjection $chain)
 		{
@@ -229,7 +231,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function addProjection(ObjectProjection $projection)
 		{
@@ -243,7 +245,7 @@
 		}
 		
 		/**
-		 * @return ProjectionChain
+		 * @return \Onphp\ProjectionChain
 		**/
 		public function getProjection()
 		{
@@ -251,7 +253,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function dropProjection()
 		{
@@ -261,7 +263,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function setDistinct($orly = true)
 		{
@@ -281,7 +283,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function setSilent($silent)
 		{
@@ -293,7 +295,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function fetchCollection(
 			$path, // to collection
@@ -365,7 +367,7 @@
 		}
 		
 		/**
-		 * @return QueryResult
+		 * @return \Onphp\QueryResult
 		**/
 		public function getResult()
 		{
@@ -453,7 +455,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function toSelectQuery()
 		{
@@ -474,7 +476,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function fillSelectQuery(SelectQuery $query)
 		{
@@ -515,11 +517,11 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function dropProjectionByType(/* array */ $dropTypes)
 		{
-			Assert::isInstance($this->projection, 'ProjectionChain');
+			Assert::isInstance($this->projection, '\Onphp\ProjectionChain');
 			
 			$this->projection->dropByType($dropTypes);
 			
@@ -557,11 +559,11 @@
 					if (
 						is_subclass_of(
 							$property->getClassName(),
-							'Enumeration'
+							'\Onphp\Enumeration'
 						) ||
 						is_subclass_of(
 							$property->getClassName(),
-							'Enum'
+							'\Onphp\Enum'
 						)
 					) {
 						// field already added by makeSelectHead
@@ -637,7 +639,7 @@
 		}
 		
 		/**
-		 * @return AbstractProtoClass
+		 * @return \Onphp\AbstractProtoClass
 		**/
 		private function getProto()
 		{

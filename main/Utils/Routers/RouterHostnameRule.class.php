@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class RouterHostnameRule extends RouterBaseRule
 	{
 		const SCHEME_HTTP			= 'http';
@@ -29,7 +31,7 @@
 		protected $staticCount		= 0;
 		
 		/**
-		 * @return RouterHostnameRule
+		 * @return \Onphp\RouterHostnameRule
 		**/
 		public static function create($route)
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return RouterHostnameRule
+		 * @return \Onphp\RouterHostnameRule
 		**/
 		public function setRequirements(array $reqirements)
 		{
@@ -58,7 +60,7 @@
 		}
 		
 		/**
-		 * @return RouterHostnameRule
+		 * @return \Onphp\RouterHostnameRule
 		**/
 		public function setSecure()
 		{
@@ -73,7 +75,7 @@
 		}
 		
 		/**
-		 * @return RouterHostnameRule
+		 * @return \Onphp\RouterHostnameRule
 		**/
 		public function setScheme($schema)
 		{
@@ -243,7 +245,7 @@
 		}
 		
 		/**
-		 * @return RouterHostnameRule
+		 * @return \Onphp\RouterHostnameRule
 		**/
 		protected function processRoute()
 		{

@@ -9,13 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class TextFileReceiver implements MessageQueueReceiver
 	{
 		private $queue	= null;
 		private $stream	= null;
 		
 		/**
-		 * @return TextFileReceiver
+		 * @return \Onphp\TextFileReceiver
 		**/
 		public static function create()
 		{
@@ -23,11 +25,11 @@
 		}
 		
 		/**
-		 * @return TextFileReceiver
+		 * @return \Onphp\TextFileReceiver
 		**/
 		public function setQueue(MessageQueue $queue)
 		{
-			Assert::isInstance($queue, 'TextFileQueue');
+			Assert::isInstance($queue, '\Onphp\TextFileQueue');
 			
 			$this->queue = $queue;
 			
@@ -35,7 +37,7 @@
 		}
 		
 		/**
-		 * @return MessageQueue
+		 * @return \Onphp\MessageQueue
 		**/
 		public function getQueue()
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return Message
+		 * @return \Onphp\Message
 		**/
 		public function receive($uTimeout = null)
 		{
@@ -76,7 +78,7 @@
 		}
 		
 		/**
-		 * @return FileInputStream
+		 * @return \Onphp\FileInputStream
 		**/
 		private function getStream()
 		{

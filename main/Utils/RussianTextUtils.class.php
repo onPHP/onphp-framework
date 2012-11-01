@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class RussianTextUtils extends StaticFactory
 	{
 		const MALE		= 0;

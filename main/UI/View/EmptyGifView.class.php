@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	final class EmptyGifView implements View
 	{
 		/**
-		 * @return EmptyGifView
+		 * @return \Onphp\EmptyGifView
 		**/
 		public static function create()
 		{
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return EmptyGifView
+		 * @return \Onphp\EmptyGifView
 		**/
 		public function render(/* Model */ $model = null)
 		{

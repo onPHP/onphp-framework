@@ -12,11 +12,13 @@
 	/**
 	 * @see http://www.php.net/manual/en/amqp.constants.php
 	**/
+	namespace Onphp;
+
 	final class AMQPPeclOutgoingMessageBitmask implements AMQPBitmaskResolver
 	{
 		public function getBitmask($config)
 		{
-			Assert::isInstance($config, 'AMQPOutgoingMessage');
+			Assert::isInstance($config, '\Onphp\AMQPOutgoingMessage');
 
 			$bitmask = 0;
 

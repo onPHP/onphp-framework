@@ -14,13 +14,15 @@
 	 * 
 	 * @ingroup Calendar
 	**/
+	namespace Onphp;
+
 	final class CalendarDay extends Date
 	{
 		private $selected	= null;
 		private $outside	= null;
 		
 		/**
-		 * @return CalendarDay
+		 * @return \Onphp\CalendarDay
 		**/
 		public static function create($timestamp)
 		{
@@ -41,7 +43,7 @@
 		}
 		
 		/**
-		 * @return CalendarDay
+		 * @return \Onphp\CalendarDay
 		**/
 		public function setSelected($selected)
 		{
@@ -56,7 +58,7 @@
 		}
 		
 		/**
-		 * @return CalendarDay
+		 * @return \Onphp\CalendarDay
 		**/
 		public function setOutside($outside)
 		{

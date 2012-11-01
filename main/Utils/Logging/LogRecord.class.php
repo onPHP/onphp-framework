@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class LogRecord
 	{
 		private $message 	= null;
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return LogRecord
+		 * @return \Onphp\LogRecord
 		**/
 		public static function create()
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return LogRecord
+		 * @return \Onphp\LogRecord
 		**/
 		public function setMessage($message)
 		{
@@ -50,7 +52,7 @@
 		}
 		
 		/**
-		 * @return LogRecord
+		 * @return \Onphp\LogRecord
 		**/
 		public function setDate(Timestamp $date)
 		{
@@ -60,7 +62,7 @@
 		}
 		
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		**/
 		public function getDate()
 		{
@@ -68,7 +70,7 @@
 		}
 		
 		/**
-		 * @return LogRecord
+		 * @return \Onphp\LogRecord
 		**/
 		public function setLevel(LogLevel $level)
 		{
@@ -78,7 +80,7 @@
 		}
 		
 		/**
-		 * @return LogLevel
+		 * @return \Onphp\LogLevel
 		**/
 		public function getLevel()
 		{

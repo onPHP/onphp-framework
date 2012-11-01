@@ -9,15 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	interface MessageQueueReceiver
 	{
 		/**
-		 * @return Message
+		 * @return \Onphp\Message
 		**/
 		public function receive($uTimeout = null);
 		
 		/**
-		 * @return MessageQueue
+		 * @return \Onphp\MessageQueue
 		**/
 		public function getQueue();
 	}

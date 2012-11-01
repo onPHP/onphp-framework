@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup onSPL
 	**/
+	namespace Onphp;
+
 	interface SimplifiedArrayAccess
 	{
 		public function clean();

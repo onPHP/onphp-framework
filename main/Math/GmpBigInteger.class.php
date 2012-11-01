@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Math
 	**/
+	namespace Onphp;
+
 	final class GmpBigInteger implements BigInteger
 	{
 		private $resource = null;
 		
 		/**
-		 * @return GmpBigInteger
+		 * @return \Onphp\GmpBigInteger
 		**/
 		public static function make($number, $base = 10)
 		{
@@ -30,7 +32,7 @@
 		}
 		
 		/**
-		 * @return GmpBigIntegerFactory
+		 * @return \Onphp\GmpBigIntegerFactory
 		**/
 		public static function getFactory()
 		{
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return GmpBigInteger
+		 * @return \Onphp\GmpBigInteger
 		**/
 		public static function makeFromBinary($binary)
 		{
@@ -65,7 +67,7 @@
 		}
 		
 		/**
-		 * @return GmpBigInteger
+		 * @return \Onphp\GmpBigInteger
 		**/
 		public function add(BigInteger $x)
 		{
@@ -87,7 +89,7 @@
 		}
 		
 		/**
-		 * @return GmpBigInteger
+		 * @return \Onphp\GmpBigInteger
 		**/
 		public function mod(BigInteger $mod)
 		{
@@ -97,7 +99,7 @@
 		}
 		
 		/**
-		 * @return GmpBigInteger
+		 * @return \Onphp\GmpBigInteger
 		**/
 		public function pow(BigInteger $exp)
 		{
@@ -107,7 +109,7 @@
 		}
 		
 		/**
-		 * @return GmpBigInteger
+		 * @return \Onphp\GmpBigInteger
 		**/
 		public function modPow(BigInteger $exp, BigInteger $mod)
 		{
@@ -121,7 +123,7 @@
 		}
 		
 		/**
-		 * @return GmpBigInteger
+		 * @return \Onphp\GmpBigInteger
 		**/
 		public function subtract(BigInteger $x)
 		{
@@ -131,7 +133,7 @@
 		}
 		
 		/**
-		 * @return GmpBigInteger
+		 * @return \Onphp\GmpBigInteger
 		**/
 		public function mul(BigInteger $x)
 		{
@@ -141,7 +143,7 @@
 		}
 		
 		/**
-		 * @return GmpBigInteger
+		 * @return \Onphp\GmpBigInteger
 		**/
 		public function div(BigInteger $x)
 		{

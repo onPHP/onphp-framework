@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class DebugUtils extends StaticFactory
 	{
 		private static $memoryAccumulator = 0;

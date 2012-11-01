@@ -9,10 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class ObjectToObjectCast extends ObjectBuilder
 	{
 		/**
-		 * @return ObjectToObjectCast
+		 * @return \Onphp\ObjectToObjectCast
 		**/
 		public static function create(EntityProto $proto)
 		{
@@ -20,7 +22,7 @@
 		}
 		
 		/**
-		 * @return ObjectGetter
+		 * @return \Onphp\ObjectGetter
 		**/
 		protected function getGetter($object)
 		{
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return ObjectSetter
+		 * @return \Onphp\ObjectSetter
 		**/
 		protected function getSetter(&$object)
 		{

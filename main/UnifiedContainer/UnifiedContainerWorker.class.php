@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Containers
 	**/
+	namespace Onphp;
+
 	abstract class UnifiedContainerWorker
 	{
 		protected $criteria		= null;
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return UnifiedContainerWorker
+		 * @return \Onphp\UnifiedContainerWorker
 		**/
 		public function setCriteria(Criteria $criteria)
 		{
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return Criteria
+		 * @return \Onphp\Criteria
 		**/
 		public function getCriteria()
 		{
@@ -46,7 +48,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function makeCountQuery()
 		{
@@ -98,7 +100,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		protected function makeSelectQuery()
 		{

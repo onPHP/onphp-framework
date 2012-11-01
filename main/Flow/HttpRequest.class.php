@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	final class HttpRequest
 	{
 		// contains all variables from $_GET
@@ -38,12 +40,12 @@
 		private $headers	= array();
 		
 		/**
-		 * @var HttpMethod
+		 * @var \Onphp\HttpMethod
 		 */
 		private $method		= null;
 		
 		/**
-		 * @var HttpUrl
+		 * @var \Onphp\HttpUrl
 		 */
 		private $url		= null;
 		
@@ -51,7 +53,7 @@
 		private $body		= null;
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public static function create()
 		{
@@ -74,7 +76,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setGet(array $get)
 		{
@@ -84,7 +86,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setGetVar($name, $value)
 		{
@@ -108,7 +110,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setPost(array $post)
 		{
@@ -118,7 +120,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setPostVar($name, $value)
 		{
@@ -142,7 +144,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setServer(array $server)
 		{
@@ -152,7 +154,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setServerVar($name, $value)
 		{
@@ -176,7 +178,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setCookie(array $cookie)
 		{
@@ -201,7 +203,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setFiles(array $files)
 		{
@@ -226,7 +228,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setSession(array &$session)
 		{
@@ -236,7 +238,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setAttachedVar($name, $var)
 		{
@@ -256,7 +258,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function unsetAttachedVar($name)
 		{
@@ -291,7 +293,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function unsetHeaderVar($name)
 		{
@@ -300,7 +302,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setHeaderVar($name, $var)
 		{
@@ -309,7 +311,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setHeaders(array $headers)
 		{
@@ -318,7 +320,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setMethod(HttpMethod $method)
 		{
@@ -327,7 +329,7 @@
 		}
 		
 		/**
-		 * @return HttpMethod
+		 * @return \Onphp\HttpMethod
 		**/
 		public function getMethod()
 		{
@@ -335,7 +337,7 @@
 		}
 		
 		/**
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		**/
 		public function setUrl(HttpUrl $url)
 		{
@@ -344,7 +346,7 @@
 		}
 		
 		/**
-		 * @return HttpUrl
+		 * @return \Onphp\HttpUrl
 		**/
 		public function getUrl()
 		{
@@ -363,7 +365,7 @@
 		
 		/**
 		 * @param string $body
-		 * @return HttpRequest
+		 * @return \Onphp\HttpRequest
 		 */
 		public function setBody($body)
 		{

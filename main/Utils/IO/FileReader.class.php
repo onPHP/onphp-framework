@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class FileReader extends Reader
 	{
 		private $fd	= null;
 				
 		/**
-		 * @return FileReader
+		 * @return \Onphp\FileReader
 		**/
 		public static function create($fileName)
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return FileReader
+		 * @return \Onphp\FileReader
 		**/
 		public function __construct($fileName)
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return FileReader
+		 * @return \Onphp\FileReader
 		**/
 		public function mark()
 		{
@@ -69,7 +71,7 @@
 		}
 		
 		/**
-		* @return FileReader
+		* @return \Onphp\FileReader
 		**/
 		public function reset()
 		{
@@ -82,7 +84,7 @@
 		}
 		
 		/**
-		 * @return FileReader
+		 * @return \Onphp\FileReader
 		**/
 		public function close()
 		{

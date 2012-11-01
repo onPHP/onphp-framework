@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	final class CallChain
 	{
 		private $chain = array();
 		
 		/**
-		 * @return CallChain
+		 * @return \Onphp\CallChain
 		**/
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return CallChain
+		 * @return \Onphp\CallChain
 		**/
 		public function add($object)
 		{

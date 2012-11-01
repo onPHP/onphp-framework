@@ -9,5 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	class AMQPQueueConsumer extends AMQPDefaultConsumer {/**/}
 ?>

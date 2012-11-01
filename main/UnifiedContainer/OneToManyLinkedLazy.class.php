@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Containers
 	**/
+	namespace Onphp;
+
 	final class OneToManyLinkedLazy extends OneToManyLinkedWorker
 	{
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function makeFetchQuery()
 		{
@@ -29,7 +31,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return OneToManyLinkedLazy
+		 * @return \Onphp\OneToManyLinkedLazy
 		**/
 		public function sync($insert, $update = array(), $delete)
 		{
@@ -66,7 +68,7 @@
 		}
 		
 		/**
-		 * @return UpdateQuery
+		 * @return \Onphp\UpdateQuery
 		**/
 		private function makeMassUpdateQuery($ids)
 		{

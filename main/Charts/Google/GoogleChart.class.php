@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	class GoogleChart implements Stringable
 	{
 		const BASE_URL = 'http://chart.apis.google.com/chart?';
@@ -26,7 +28,7 @@
 		protected $fillers	= null;
 		
 		/**
-		 * @return GoogleChart
+		 * @return \Onphp\GoogleChart
 		**/
 		public static function create()
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return GoogleChart
+		 * @return \Onphp\GoogleChart
 		**/
 		public function setColor(GoogleChartColor $color)
 		{
@@ -49,7 +51,7 @@
 		}
 		
 		/**
-		 * @return GoogleChart
+		 * @return \Onphp\GoogleChart
 		**/
 		public function setSize(GoogleChartSize $size)
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return GoogleChart
+		 * @return \Onphp\GoogleChart
 		**/
 		public function setType(GoogleChartType $type)
 		{
@@ -69,7 +71,7 @@
 		}
 		
 		/**
-		 * @return GoogleChart
+		 * @return \Onphp\GoogleChart
 		**/
 		public function setLabel(GoogleChartLabel $label)
 		{
@@ -79,7 +81,7 @@
 		}
 		
 		/**
-		 * @return GoogleChart
+		 * @return \Onphp\GoogleChart
 		**/
 		public function setData(GoogleChartData $data)
 		{
@@ -94,7 +96,7 @@
 		}
 		
 		/**
-		 * @return GoogleChart
+		 * @return \Onphp\GoogleChart
 		**/
 		public function setLegend(GoogleChartLegend $legend)
 		{
@@ -104,7 +106,7 @@
 		}
 		
 		/**
-		 * @return GoogleChart
+		 * @return \Onphp\GoogleChart
 		**/
 		public function setTitle($title)
 		{

@@ -9,12 +9,14 @@
  *                                                                          *
  ****************************************************************************/
 
+	namespace Onphp;
+
 	final class OqlGroupByParser extends OqlParser
 	{
-		const CLASS_NAME = 'GroupByPropertyProjection';
+		const CLASS_NAME = '\Onphp\GroupByPropertyProjection';
 		
 		/**
-		 * @return OqlGroupByParser
+		 * @return \Onphp\OqlGroupByParser
 		**/
 		public static function create()
 		{
@@ -22,7 +24,7 @@
 		}
 		
 		/**
-		 * @return OqlProjectionClause
+		 * @return \Onphp\OqlProjectionClause
 		**/
 		protected function makeOqlObject()
 		{

@@ -15,6 +15,8 @@
 	 * @see http://openid.net/specs/openid-simple-registration-extension-1_0.html
 	 *
 	**/
+	namespace Onphp;
+
 	final class OpenIdExtensionSreg implements OpenIdExtension
 	{
 		const NAMESPACE_1_1 = "http://openid.net/extensions/sreg/1.1";
@@ -42,7 +44,7 @@
 		private $timezone		= null;
 		
 		/**
-		 * @return OpenIdExtensionSreg
+		 * @return \Onphp\OpenIdExtensionSreg
 		**/
 		public static function create()
 		{
@@ -50,7 +52,7 @@
 		}
 		
 		/**
-		 * @param Model $model
+		 * @param \Onphp\Model $\Onphp\Model
 		**/
 		public function addParamsToModel(Model $model)
 		{
@@ -63,7 +65,7 @@
 		}
 		
 		/**
-		 * @param HttpRequest $request
+		 * @param \Onphp\HttpRequest $request
 		 * @param array $params
 		**/
 		public function parseResponce(HttpRequest $request, array $params)
@@ -83,7 +85,7 @@
 		
 		/**
 		 * @param string $paramName
-		 * @return OpenIdExtensionSreg
+		 * @return \Onphp\OpenIdExtensionSreg
 		**/
 		public function addParam($paramName)
 		{
@@ -93,7 +95,7 @@
 		}
 		
 		/**
-		 * @return OpenIdExtensionSreg
+		 * @return \Onphp\OpenIdExtensionSreg
 		**/
 		public function dropParams()
 		{
@@ -104,7 +106,7 @@
 		
 		/**
 		 * @param string $version
-		 * @return OpenIdExtensionSreg
+		 * @return \Onphp\OpenIdExtensionSreg
 		**/
 		public function setVersion($version)
 		{

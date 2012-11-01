@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class DTOClass implements PrototypedEntity
 	{
 		final public function makeObject(Form $form)
@@ -19,7 +21,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		final public function toForm()
 		{

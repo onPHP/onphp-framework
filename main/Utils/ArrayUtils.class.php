@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class ArrayUtils extends StaticFactory
 	{
 		/// orders $objects list by $ids order
@@ -52,7 +54,7 @@
 				return $out;
 			
 			Assert::isInstance(
-				current($objectsList), 'Identifiable',
+				current($objectsList), '\Onphp\Identifiable',
 				'only identifiable lists accepted'
 			);
 			

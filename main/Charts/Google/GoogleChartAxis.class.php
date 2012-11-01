@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartAxis
 	{
 		private $type = null;
@@ -23,7 +25,7 @@
 		private $interval = null;
 		
 		/**
-		 * @return GoogleChartAxis
+		 * @return \Onphp\GoogleChartAxis
 		**/
 		public static function create(GoogleChartAxisType $type)
 		{
@@ -36,7 +38,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartAxisType
+		 * @return \Onphp\GoogleChartAxisType
 		**/
 		public function getType()
 		{
@@ -44,7 +46,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartAxis
+		 * @return \Onphp\GoogleChartAxis
 		**/
 		public function setRange(BaseRange $range)
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return IntegerSet
+		 * @return \Onphp\IntegerSet
 		**/
 		public function getRange()
 		{
@@ -67,7 +69,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartAxis
+		 * @return \Onphp\GoogleChartAxis
 		**/
 		public function setLabel(GoogleChartAxisLabel $label)
 		{
@@ -77,7 +79,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartAxisLabel
+		 * @return \Onphp\GoogleChartAxisLabel
 		**/
 		public function getLabel()
 		{
@@ -85,7 +87,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartAxis
+		 * @return \Onphp\GoogleChartAxis
 		**/
 		public function setInterval($interval)
 		{

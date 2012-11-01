@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class ObjectSetter extends PrototypedSetter
 	{
 		private $getter = null;
@@ -35,7 +37,7 @@
 		}
 		
 		/**
-		 * @return ObjectGetter
+		 * @return \Onphp\ObjectGetter
 		**/
 		public function getGetter()
 		{

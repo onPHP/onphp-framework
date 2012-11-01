@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Http
 	**/
+	namespace Onphp;
+
 	final class HeaderParser
 	{
 		private $headers		= array();

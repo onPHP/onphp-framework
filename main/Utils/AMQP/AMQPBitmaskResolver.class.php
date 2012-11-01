@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	interface AMQPBitmaskResolver
 	{
 		public function getBitmask($config);

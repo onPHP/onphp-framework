@@ -15,6 +15,8 @@
 	 * @see http://openid.net/specs/openid-attribute-exchange-1_0.html
 	 * @see http://code.google.com/intl/ru/apis/accounts/docs/OpenID.html
 	**/
+	namespace Onphp;
+
 	final class OpenIdExtensionAttributeExchange implements OpenIdExtension
 	{
 		const NAMESPACE_1_0		= 'http://openid.net/srv/ax/1.0';
@@ -32,7 +34,7 @@
 		private $language		= null;
 		
 		/**
-		 * @return OpenIdExtensionAttributeExchange
+		 * @return \Onphp\OpenIdExtensionAttributeExchange
 		**/
 		public static function create()
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @param Model $model
+		 * @param \Onphp\Model $\Onphp\Model
 		**/
 		public function addParamsToModel(Model $model)
 		{
@@ -71,7 +73,7 @@
 		}
 		
 		/**
-		 * @param HttpRequest $request
+		 * @param \Onphp\HttpRequest $request
 		 * @param array $params
 		**/
 		public function parseResponce(HttpRequest $request, array $params)
@@ -89,7 +91,7 @@
 		}
 		
 		/**
-		 * @return OpenIdExtensionAttributeExchange
+		 * @return \Onphp\OpenIdExtensionAttributeExchange
 		**/
 		public function addParam($paramName)
 		{
@@ -99,7 +101,7 @@
 		}
 		
 		/**
-		 * @return OpenIdExtensionAttributeExchange
+		 * @return \Onphp\OpenIdExtensionAttributeExchange
 		**/
 		public function dropParams()
 		{

@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class StandardComparator extends Singleton
 		implements Comparator, Instantiatable
 	{

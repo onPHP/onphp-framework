@@ -18,6 +18,8 @@
 	 * 
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	class CacheDaoWorker extends TransparentDaoWorker
 	{
 		const MAX_RANDOM_ID = 134217728;

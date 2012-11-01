@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartData extends BaseGoogleChartData
 	{
 		protected $name = 'chd';
@@ -23,7 +25,7 @@
 		private $normalize = false;
 		
 		/**
-		 * @return GoogleChartData
+		 * @return \Onphp\GoogleChartData
 		**/
 		public static function create()
 		{
@@ -31,7 +33,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartData
+		 * @return \Onphp\GoogleChartData
 		**/
 		public function setDataScaling($scale = true)
 		{
@@ -46,7 +48,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartData
+		 * @return \Onphp\GoogleChartData
 		**/
 		public function setNormalize($orly = true)
 		{
@@ -61,7 +63,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartData
+		 * @return \Onphp\GoogleChartData
 		**/
 		public function addDataSet(GoogleChartDataSet $set)
 		{
@@ -130,7 +132,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartData
+		 * @return \Onphp\GoogleChartData
 		**/
 		private function normalize()
 		{

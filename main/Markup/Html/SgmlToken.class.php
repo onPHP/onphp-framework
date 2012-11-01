@@ -13,12 +13,14 @@
 	 * @ingroup Html
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	class SgmlToken
 	{
 		private $value	= null;
 		
 		/**
-		 * @return SgmlToken
+		 * @return \Onphp\SgmlToken
 		**/
 		public function setValue($value)
 		{

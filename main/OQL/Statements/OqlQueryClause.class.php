@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	abstract class OqlQueryClause
 	{
 		protected $parameters = array();
 		
 		/**
-		 * @return OqlQueryClause
+		 * @return \Onphp\OqlQueryClause
 		**/
 		public function bind($index, $value)
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryClause
+		 * @return \Onphp\OqlQueryClause
 		**/
 		public function bindNext($value)
 		{
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryClause
+		 * @return \Onphp\OqlQueryClause
 		**/
 		public function bindAll(array $parameters)
 		{

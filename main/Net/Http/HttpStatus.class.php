@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Http
 	**/	
+	namespace Onphp;
+
 	final class HttpStatus extends Enumeration
 	{
 		const CODE_100	= 100;

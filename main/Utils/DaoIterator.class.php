@@ -12,7 +12,9 @@
 	/**
 	 * @ingroup Utils
 	**/
-	final class DaoIterator implements Iterator
+	namespace Onphp;
+
+	final class DaoIterator implements \Iterator
 	{
 		private $dao			= null;
 		private $projection		= null;
@@ -31,7 +33,7 @@
 		}
 		
 		/**
-		 * @return ProtoDAO
+		 * @return \Onphp\ProtoDAO
 		**/
 		public function getDao()
 		{
@@ -46,7 +48,7 @@
 		}
 		
 		/**
-		 * @return ObjectProjection
+		 * @return \Onphp\ObjectProjection
 		**/
 		public function getProjection()
 		{

@@ -12,10 +12,12 @@
 	/**
 	 * Base class modelling an AMQ channel
 	**/
+	namespace Onphp;
+
 	class AMQPProxyChannel implements AMQPChannelInterface
 	{
 		/**
-		 * @var AMQPChannelInterface
+		 * @var \Onphp\AMQPChannelInterface
 		 */
 		protected $channel = null;
 
@@ -33,7 +35,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function open()
 		{
@@ -41,7 +43,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function close()
 		{
@@ -49,7 +51,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function exchangeDeclare($name, AMQPExchangeConfig $conf)
 		{
@@ -63,7 +65,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function exchangeDelete($name, $ifUnused = false)
 		{
@@ -96,7 +98,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function exchangeUnbind($destinationName, $sourceName, $routingKey)
 		{
@@ -132,7 +134,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function queueBind($name, $exchange, $routingKey)
 		{
@@ -154,7 +156,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function queueUnbind($name, $exchange, $routingKey)
 		{
@@ -176,7 +178,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function queuePurge($name)
 		{
@@ -190,7 +192,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function queueDelete($name)
 		{
@@ -204,7 +206,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function basicPublish($exchange, $routingKey, AMQPOutgoingMessage $msg)
 		{
@@ -222,7 +224,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function basicQos($prefetchSize, $prefetchCount)
 		{
@@ -236,7 +238,7 @@
 		}
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public function basicGet($queue, $autoAck = true)
 		{
@@ -251,7 +253,7 @@
 
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function basicAck($deliveryTag, $multiple = false)
 		{
@@ -265,7 +267,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function basicConsume($queue, $autoAck, AMQPConsumer $callback)
 		{
@@ -279,7 +281,7 @@
 		}
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function basicCancel($consumerTag)
 		{
@@ -294,10 +296,10 @@
 
 		/**
 		 * @throws AMQPServerException
-		 * @param Exception $e
-		 * @return AMQPProxyChannel
+		 * @param \Exception $e
+		 * @return \Onphp\AMQPProxyChannel
 		 */
-		protected function transportReconnect(Exception $e)
+		protected function transportReconnect(\Exception $e)
 		{
 			$this->markAlive(false);
 
@@ -317,10 +319,10 @@
 		}
 
 		/**
-		 * @return AMQPProxyChannel
+		 * @return \Onphp\AMQPProxyChannel
 		 * @throws AMQPServerException
 		 */
-		private function reconnect(Exception $amqpException)
+		private function reconnect(\Exception $amqpException)
 		{
 			try {
 				$this->channel->getTransport()->

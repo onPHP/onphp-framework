@@ -10,13 +10,15 @@
  *                                                                         *
  ***************************************************************************/
 	
+	namespace Onphp;
+
 	class NamespaceResolverOnPHP implements NamespaceResolver
 	{
 		private $paths = array();
 		private $classExtension = EXT_CLASS;
 		
 		/**
-		 * @return NamespaceResolverOnPHP
+		 * @return \Onphp\NamespaceResolverOnPHP
 		 */
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		
 		/**
 		 * @param string $path
-		 * @return NamespaceResolverOnPHP
+		 * @return \Onphp\NamespaceResolverOnPHP
 		 */
 		public function addPath($path, $namespace = null)
 		{
@@ -41,7 +43,7 @@
 		
 		/**
 		 * @param string $path
-		 * @return NamespaceResolverOnPHP
+		 * @return \Onphp\NamespaceResolverOnPHP
 		 */
 		public function addPaths(array $pathList, $namespace = null)
 		{
@@ -58,7 +60,7 @@
 		
 		/**
 		 * @param string $classExtension
-		 * @return NamespaceResolverOnPHP
+		 * @return \Onphp\NamespaceResolverOnPHP
 		 */
 		public function setClassExtension($classExtension)
 		{
@@ -125,7 +127,7 @@
 		}
 		
 		/**
-		 * @return NamespaceDirScaner
+		 * @return \Onphp\NamespaceDirScaner
 		 */
 		protected function getDirScaner() {
 			return new NamespaceDirScanerOnPHP();

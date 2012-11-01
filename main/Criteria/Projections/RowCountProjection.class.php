@@ -12,5 +12,7 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	final class RowCountProjection extends CountProjection {/*_*/}
 ?>

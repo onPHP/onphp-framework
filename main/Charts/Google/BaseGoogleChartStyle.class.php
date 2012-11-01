@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	abstract class BaseGoogleChartStyle extends BaseGoogleChartParameter
 	{
 		protected $styles = array();
 		
 		/**
-		 * @return BaseGoogleChartStyle
+		 * @return \Onphp\BaseGoogleChartStyle
 		**/
 		public function addStyle($style)
 		{

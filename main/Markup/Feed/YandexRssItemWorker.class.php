@@ -12,17 +12,19 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	final class YandexRssItemWorker extends Singleton implements FeedItemWorker
 	{
 		/**
-		 * @return YandexRssItemWorker
+		 * @return \Onphp\YandexRssItemWorker
 		**/
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);
 		}
 		
-		public function makeItems(SimpleXMLElement $xmlFeed)
+		public function makeItems(\SimpleXMLElement $xmlFeed)
 		{
 			$xmlFeed->registerXPathNamespace(
 				YandexRssFeedFormat::YANDEX_NAMESPACE_PREFIX,

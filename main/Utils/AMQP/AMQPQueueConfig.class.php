@@ -12,12 +12,14 @@
 	/**
 	 * @see http://www.rabbitmq.com/amqp-0-9-1-quickref.html#queue.declare
 	**/
+	namespace Onphp;
+
 	final class AMQPQueueConfig extends AMQPBaseConfig
 	{
 		protected $exclusive = false;
 
 		/**
-		 * @return AMQPQueueConfig
+		 * @return \Onphp\AMQPQueueConfig
 		**/
 		public static function create()
 		{
@@ -31,7 +33,7 @@
 
 		/**
 		 * @param boolean $exclusive
-		 * @return AMQPQueueConfig
+		 * @return \Onphp\AMQPQueueConfig
 		**/
 		public function setExclusive($exclusive)
 		{

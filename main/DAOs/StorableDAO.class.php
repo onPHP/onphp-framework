@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	abstract class StorableDAO extends ProtoDAO
 	{
 		public function take(Identifiable $object)
@@ -90,7 +92,7 @@
 		}
 		
 		/**
-		 * @return UpdateQuery
+		 * @return \Onphp\UpdateQuery
 		**/
 		private function targetizeUpdateQuery(
 			UpdateQuery $query,

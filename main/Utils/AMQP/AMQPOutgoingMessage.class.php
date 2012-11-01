@@ -9,13 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class AMQPOutgoingMessage extends AMQPBaseMessage
 	{
 		protected $mandatory = false;
 		protected $immediate = false;
 
 		/**
-		 * @return AMQPOutgoingMessage
+		 * @return \Onphp\AMQPOutgoingMessage
 		**/
 		public static function create()
 		{
@@ -33,7 +35,7 @@
 		}
 
 		/**		 
-		 * @return AMQPOutgoingMessage
+		 * @return \Onphp\AMQPOutgoingMessage
 		**/
 		public function setMandatory($mandatory)
 		{
@@ -48,7 +50,7 @@
 		}
 
 		/**
-		 * @return AMQPOutgoingMessage
+		 * @return \Onphp\AMQPOutgoingMessage
 		**/
 		public function setImmediate($immediate)
 		{

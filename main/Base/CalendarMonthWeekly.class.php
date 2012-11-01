@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Calendar
 	**/
+	namespace Onphp;
+
 	final class CalendarMonthWeekly
 	{
 		private $monthRange	= null;
@@ -73,7 +75,7 @@
 		}
 		
 		/**
-		 * @return CalendarMonthWeekly
+		 * @return \Onphp\CalendarMonthWeekly
 		**/
 		public static function create(
 			Date $base, $weekStart = Timestamp::WEEKDAY_MONDAY
@@ -93,7 +95,7 @@
 		}
 		
 		/**
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function getFullRange()
 		{
@@ -106,7 +108,7 @@
 		}
 		
 		/**
-		 * @return DateRange
+		 * @return \Onphp\DateRange
 		**/
 		public function getMonthRange()
 		{
@@ -115,7 +117,7 @@
 		
 		/**
 		 * @throws WrongArgumentException
-		 * @return CalendarMonthWeekly
+		 * @return \Onphp\CalendarMonthWeekly
 		**/
 		public function setSelected(Date $day)
 		{
@@ -128,7 +130,7 @@
 		}
 		
 		/**
-		 * @return Date
+		 * @return \Onphp\Date
 		**/
 		public function getNextMonthBase()
 		{
@@ -136,7 +138,7 @@
 		}
 		
 		/**
-		 * @return Date
+		 * @return \Onphp\Date
 		**/
 		public function getPrevMonthBase()
 		{
@@ -144,7 +146,7 @@
 		}
 		
 		/**
-		 * @return Date
+		 * @return \Onphp\Date
 		**/
 		public function getBase()
 		{

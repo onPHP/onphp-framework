@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartLegend extends BaseGoogleChartParameter
 	{
 		protected $name = 'chdl';
@@ -20,7 +22,7 @@
 		private $position = null;
 		
 		/**
-		 * @return GoogleChartLegend
+		 * @return \Onphp\GoogleChartLegend
 		**/
 		public static function create()
 		{
@@ -36,7 +38,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartLegend
+		 * @return \Onphp\GoogleChartLegend
 		**/
 		public function setPosition(GoogleChartLegendPositionType $type)
 		{
@@ -46,7 +48,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartLegend
+		 * @return \Onphp\GoogleChartLegend
 		**/
 		public function addItem($item)
 		{

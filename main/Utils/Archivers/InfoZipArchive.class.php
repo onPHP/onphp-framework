@@ -16,6 +16,8 @@
 	 *
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class InfoZipArchive extends FileArchive
 	{
 		private $zipArchive = null;
@@ -24,9 +26,9 @@
 		{
 			$usingCmd = $cmdBinPath;
 			
-			if (class_exists('ZipArchive', false)) {
+			if (class_exists('\ZipArchive', false)) {
 				
-				$this->zipArchive = new ZipArchive();
+				$this->zipArchive = new \ZipArchive();
 				$usingCmd = null;
 				
 			} elseif ($usingCmd === null)

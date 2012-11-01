@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Http
 	**/
+	namespace Onphp;
+
 	final class CurlHttpResponse implements HttpResponse
 	{
 		private $headerParser		= null;
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return CurlHttpResponse
+		 * @return \Onphp\CurlHttpResponse
 		**/
 		public static function create()
 		{
@@ -73,7 +75,7 @@
 		
 		/**
 		 * internal use only for curl client
-		 * @return CurlHttpResponse
+		 * @return \Onphp\CurlHttpResponse
 		**/
 		public function setMaxFileSize($maxFileSize)
 		{
@@ -82,7 +84,7 @@
 		}
 		
 		/**
-		 * @return CurlHttpResponse
+		 * @return \Onphp\CurlHttpResponse
 		**/
 		public function setStatus(HttpStatus $status)
 		{
@@ -91,7 +93,7 @@
 		}
 		
 		/**
-		 * @return HttpStatus
+		 * @return \Onphp\HttpStatus
 		**/
 		public function getStatus()
 		{

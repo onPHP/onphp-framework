@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class AMQPBaseConfig
 	{
 		protected $passive = false;
@@ -73,7 +75,7 @@
 		}
 
 		/**
-		 * @param AMQPBitmaskResolver $resolver
+		 * @param \Onphp\AMQPBitmaskResolver $resolver
 		 * @return integer - it's bitmask
 		**/
 		public function getBitmask(AMQPBitmaskResolver $resolver)

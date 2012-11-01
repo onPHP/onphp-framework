@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class DirectorySetter extends DirectoryMutator
 	{
 		public function set($name, $value)

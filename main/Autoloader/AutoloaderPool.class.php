@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 	
+	namespace Onphp;
+
 	class AutoloaderPool
 	{
 		private static $map = array();
@@ -21,7 +23,7 @@
 		
 		/**
 		 * @param string $name
-		 * @return Autoloader
+		 * @return \Onphp\Autoloader
 		 */
 		public static function get($name)
 		{
@@ -49,7 +51,7 @@
 		public static function autoloadWithRecache($className)
 		{
 			foreach (self::$recacheMap as $autoloader) {
-				/* @var $autoloader AutoloaderRecachable */
+				/* @var $autoloader \Onphp\AutoloaderRecachable */
 				$autoloader->autoloadWithRecache($className);
 				
 				if (class_exists($className, false))

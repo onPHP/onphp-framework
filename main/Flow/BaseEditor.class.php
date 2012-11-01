@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	abstract class BaseEditor implements Controller
 	{
 		const COMMAND_SUCCEEDED	= 'success';
@@ -52,7 +54,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function postHandleRequest(ModelAndView $mav, HttpRequest $request)
 		{
@@ -80,7 +82,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function getForm()
 		{

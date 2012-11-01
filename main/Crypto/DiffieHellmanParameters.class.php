@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Crypto
 	**/
+	namespace Onphp;
+
 	final class DiffieHellmanParameters
 	{
 		private $gen		= null;
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return DiffieHellmanParameters
+		 * @return \Onphp\DiffieHellmanParameters
 		**/
 		public static function create(BigInteger $gen, BigInteger $modulus)
 		{
@@ -36,7 +38,7 @@
 		}
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function getGen()
 		{
@@ -44,7 +46,7 @@
 		}
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function getModulus()
 		{

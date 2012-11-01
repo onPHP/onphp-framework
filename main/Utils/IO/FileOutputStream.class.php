@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class FileOutputStream extends OutputStream
 	{
 		private $fd		= null;
@@ -48,7 +50,7 @@
 		}
 		
 		/**
-		 * @return FileOutputStream
+		 * @return \Onphp\FileOutputStream
 		**/
 		public static function create($nameOrFd, $append = false)
 		{
@@ -56,7 +58,7 @@
 		}
 		
 		/**
-		 * @return FileOutputStream
+		 * @return \Onphp\FileOutputStream
 		**/
 		public function write($buffer)
 		{
@@ -76,7 +78,7 @@
 		}
 		
 		/**
-		 * @return FileOutputStream
+		 * @return \Onphp\FileOutputStream
 		**/
 		public function close()
 		{

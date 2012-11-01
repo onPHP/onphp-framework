@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class LogLevel extends Enumeration
 	{
 		const SEVERE	= 1; // highest value
@@ -33,7 +35,7 @@
 		);
 		
 		/**
-		 * @return LogLevel
+		 * @return \Onphp\LogLevel
 		**/
 		public function setId($id)
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return LogLevel
+		 * @return \Onphp\LogLevel
 		**/
 		public static function severe()
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return LogLevel
+		 * @return \Onphp\LogLevel
 		**/
 		public static function warning()
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return LogLevel
+		 * @return \Onphp\LogLevel
 		**/
 		public static function info()
 		{
@@ -67,7 +69,7 @@
 		}
 		
 		/**
-		 * @return LogLevel
+		 * @return \Onphp\LogLevel
 		**/
 		public static function config()
 		{
@@ -75,7 +77,7 @@
 		}
 		
 		/**
-		 * @return LogLevel
+		 * @return \Onphp\LogLevel
 		**/
 		public static function fine()
 		{
@@ -83,7 +85,7 @@
 		}
 		
 		/**
-		 * @return LogLevel
+		 * @return \Onphp\LogLevel
 		**/
 		public static function finer()
 		{
@@ -91,7 +93,7 @@
 		}
 		
 		/**
-		 * @return LogLevel
+		 * @return \Onphp\LogLevel
 		**/
 		public static function finest()
 		{
@@ -99,7 +101,7 @@
 		}
 		
 		/**
-		 * @return LogLevel
+		 * @return \Onphp\LogLevel
 		**/
 		private static function getInstance($id)
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	class FeedItem
 	{
 		private $id			= null;
@@ -23,7 +25,7 @@
 		private $category	= null;
 		
 		/**
-		 * @return FeedItem
+		 * @return \Onphp\FeedItem
 		**/
 		public static function create($title)
 		{
@@ -41,7 +43,7 @@
 		}
 		
 		/**
-		 * @return FeedItem
+		 * @return \Onphp\FeedItem
 		**/
 		public function setId($id)
 		{
@@ -56,7 +58,7 @@
 		}
 		
 		/**
-		 * @return FeedItem
+		 * @return \Onphp\FeedItem
 		**/
 		public function setTitle($title)
 		{
@@ -71,7 +73,7 @@
 		}
 		
 		/**
-		 * @return FeedItem
+		 * @return \Onphp\FeedItem
 		**/
 		public function setContent($content)
 		{
@@ -86,7 +88,7 @@
 		}
 		
 		/**
-		 * @return FeedItem
+		 * @return \Onphp\FeedItem
 		**/
 		public function setSummary($summary)
 		{
@@ -96,7 +98,7 @@
 		}
 		
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		**/
 		public function getPublished()
 		{
@@ -104,7 +106,7 @@
 		}
 		
 		/**
-		 * @return FeedItem
+		 * @return \Onphp\FeedItem
 		**/
 		public function setPublished(Timestamp $published)
 		{
@@ -119,7 +121,7 @@
 		}
 		
 		/**
-		 * @return FeedItem
+		 * @return \Onphp\FeedItem
 		**/
 		public function setLink($link)
 		{
@@ -134,7 +136,7 @@
 		}
 		
 		/**
-		 * @return FeedItem
+		 * @return \Onphp\FeedItem
 		**/
 		public function setCategory($category)
 		{

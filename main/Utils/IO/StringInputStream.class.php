@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class StringInputStream extends InputStream
 	{
 		private $string		= null;
@@ -29,7 +31,7 @@
 		}
 		
 		/**
-		 * @return StringInputStream
+		 * @return \Onphp\StringInputStream
 		**/
 		public static function create($string)
 		{
@@ -42,7 +44,7 @@
 		}
 		
 		/**
-		 * @return StringInputStream
+		 * @return \Onphp\StringInputStream
 		**/
 		public function mark()
 		{
@@ -57,7 +59,7 @@
 		}
 		
 		/**
-		 * @return StringInputStream
+		 * @return \Onphp\StringInputStream
 		**/
 		public function reset()
 		{
@@ -67,7 +69,7 @@
 		}
 		
 		/**
-		 * @return StringInputStream
+		 * @return \Onphp\StringInputStream
 		**/
 		public function close()
 		{

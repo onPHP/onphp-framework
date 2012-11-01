@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Math
 	**/
+	namespace Onphp;
+
 	final class MathUtils extends StaticFactory
 	{
 		const DEFAULT_PRECISION = 0.00001;

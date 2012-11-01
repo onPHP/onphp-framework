@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	class GoogleChartLabel extends BaseGoogleChartParameter
 	{
 		protected $name = 'chl';
@@ -19,7 +21,7 @@
 		protected $labels = array();
 		
 		/**
-		 * @return GoogleChartLabel
+		 * @return \Onphp\GoogleChartLabel
 		**/
 		public static function create()
 		{
@@ -27,7 +29,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartLabel
+		 * @return \Onphp\GoogleChartLabel
 		**/
 		public function addLabel($label)
 		{
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartLabel
+		 * @return \Onphp\GoogleChartLabel
 		**/
 		public function setLabels($labels)
 		{

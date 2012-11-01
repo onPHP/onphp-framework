@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 	
+	namespace Onphp;
+
 	class AutoloaderClassNotFound implements Autoloader
 	{
 		private static $i = null;
@@ -18,7 +20,7 @@
 		}
 		
 		/**
-		 * @return AutoloaderClassNotFound
+		 * @return \Onphp\AutoloaderClassNotFound
 		 */
 		public static function me()
 		{

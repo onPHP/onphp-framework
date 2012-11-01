@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	class OqlQueryParameter
 	{
 		private $value		= null;
 		private $bindable	= false;
 		
 		/**
-		 * @return OqlQueryParameter
+		 * @return \Onphp\OqlQueryParameter
 		**/
 		public static function create()
 		{
@@ -31,7 +33,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryParameter
+		 * @return \Onphp\OqlQueryParameter
 		**/
 		public function setValue($value)
 		{
@@ -46,7 +48,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryParameter
+		 * @return \Onphp\OqlQueryParameter
 		**/
 		public function setBindable($orly = true)
 		{

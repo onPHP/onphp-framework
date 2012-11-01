@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	abstract class TextDrawer extends Drawer
 	{
 		const SPACE_RATIO = 10;
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return TextDrawer
+		 * @return \Onphp\TextDrawer
 		**/
 		public function drawCraracter($angle, $x, $y, $character)
 		{
@@ -52,7 +54,7 @@
 		}
 		
 		/**
-		 * @return TextDrawer
+		 * @return \Onphp\TextDrawer
 		**/
 		protected function showError()
 		{

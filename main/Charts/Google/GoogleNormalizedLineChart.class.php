@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	class GoogleNormalizedLineChart extends GoogleLineChart
 	{
 		/**
-		 * @return GoogleNormalizedLineChart
+		 * @return \Onphp\GoogleNormalizedLineChart
 		**/
 		public static function create()
 		{

@@ -13,6 +13,8 @@
 	 * @ingroup Ip
 	 * @deprecated use IpRange instead
 	**/
+	namespace Onphp;
+
 	final class IpNetwork implements SingleRange
 	{
 		const MASK_MAX_SIZE = 31;
@@ -23,7 +25,7 @@
 		private $longMask 	= null;
 		
 		/**
-		 * @return IpNetwork
+		 * @return \Onphp\IpNetwork
 		**/
 		public static function create(IpAddress $ip, $mask)
 		{
@@ -53,7 +55,7 @@
 		}
 		
 		/**
-		 * @return IpAddress
+		 * @return \Onphp\IpAddress
 		**/
 		public function getStart()
 		{
@@ -61,7 +63,7 @@
 		}
 		
 		/**
-		 * @return IpAddress
+		 * @return \Onphp\IpAddress
 		**/
 		public function getEnd()
 		{
@@ -77,7 +79,7 @@
 		
 		public function contains(/* IpAddress */ $probe)
 		{
-			Assert::isInstance($probe, 'IpAddress');
+			Assert::isInstance($probe, '\Onphp\IpAddress');
 			
 			return
 				($probe->getLongIp() & $this->longMask)

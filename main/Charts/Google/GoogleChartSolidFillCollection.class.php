@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartSolidFillCollection extends BaseGoogleChartParameter
 	{
 		private $fillers = array();
 		
 		/**
-		 * @return GoogleChartSolidFillCollection
+		 * @return \Onphp\GoogleChartSolidFillCollection
 		**/
 		public static function create()
 		{

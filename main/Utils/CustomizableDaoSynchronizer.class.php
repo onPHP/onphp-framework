@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	class CustomizableDaoSynchronizer
 	{
 		protected $dryRun			= false;
@@ -31,7 +33,7 @@
 		private $totalDeleted		= 0;
 		
 		/**
-		 * @return CustomizableDaoSynchronizer
+		 * @return \Onphp\CustomizableDaoSynchronizer
 		**/
 		public static function create()
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return CustomizableDaoSynchronizer
+		 * @return \Onphp\CustomizableDaoSynchronizer
 		**/
 		public function setDryRun($dryRun)
 		{
@@ -54,7 +56,7 @@
 		}
 		
 		/**
-		 * @return CustomizableDaoSynchronizer
+		 * @return \Onphp\CustomizableDaoSynchronizer
 		**/
 		public function setReallyDelete($reallyDelete)
 		{
@@ -69,7 +71,7 @@
 		}
 		
 		/**
-		 * @return CustomizableDaoSynchronizer
+		 * @return \Onphp\CustomizableDaoSynchronizer
 		**/
 		public function setMaster(GenericDAO $master)
 		{
@@ -79,7 +81,7 @@
 		}
 		
 		/**
-		 * @return GenericDAO
+		 * @return \Onphp\GenericDAO
 		**/
 		public function getMaster()
 		{
@@ -87,7 +89,7 @@
 		}
 		
 		/**
-		 * @return CustomizableDaoSynchronizer
+		 * @return \Onphp\CustomizableDaoSynchronizer
 		**/
 		public function setSlave(GenericDAO $slave)
 		{
@@ -97,7 +99,7 @@
 		}
 		
 		/**
-		 * @return GenericDAO
+		 * @return \Onphp\GenericDAO
 		**/
 		public function getSlave()
 		{
@@ -105,7 +107,7 @@
 		}
 		
 		/**
-		 * @return CustomizableDaoSynchronizer
+		 * @return \Onphp\CustomizableDaoSynchronizer
 		**/
 		public function setMasterKeyProperty($masterKeyProperty)
 		{
@@ -120,7 +122,7 @@
 		}
 		
 		/**
-		 * @return CustomizableDaoSynchronizer
+		 * @return \Onphp\CustomizableDaoSynchronizer
 		**/
 		public function setSlaveKeyProperty($slaveKeyProperty)
 		{
@@ -135,7 +137,7 @@
 		}
 		
 		/**
-		 * @return CustomizableDaoSynchronizer
+		 * @return \Onphp\CustomizableDaoSynchronizer
 		**/
 		public function setMasterProjection(ObjectProjection $masterProjection)
 		{
@@ -145,7 +147,7 @@
 		}
 		
 		/**
-		 * @return ObjectProjection
+		 * @return \Onphp\ObjectProjection
 		**/
 		public function getMasterProjection()
 		{
@@ -153,7 +155,7 @@
 		}
 		
 		/**
-		 * @return CustomizableDaoSynchronizer
+		 * @return \Onphp\CustomizableDaoSynchronizer
 		**/
 		public function setSlaveProjection(ObjectProjection $slaveProjection)
 		{
@@ -163,7 +165,7 @@
 		}
 		
 		/**
-		 * @return ObjectProjection
+		 * @return \Onphp\ObjectProjection
 		**/
 		public function getSlaveProjection()
 		{
@@ -171,7 +173,7 @@
 		}
 		
 		/**
-		 * @return CustomizableDaoSynchronizer
+		 * @return \Onphp\CustomizableDaoSynchronizer
 		**/
 		public function run()
 		{

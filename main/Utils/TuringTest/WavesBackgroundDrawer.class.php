@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	final class WavesBackgroundDrawer extends BackgroundDrawer
 	{
 		const MIN_WAVE_DISTANCE	= 8;
@@ -19,7 +21,7 @@
 		const MAX_WAVE_OFFSET	= 5;
 		
 		/**
-		 * @return WavesBackgroundDrawer
+		 * @return \Onphp\WavesBackgroundDrawer
 		**/
 		public function draw()
 		{

@@ -9,12 +9,14 @@
  *                                                                          *
  ****************************************************************************/
 
+	namespace Onphp;
+
 	final class OqlHavingParser extends OqlParser
 	{
-		const CLASS_NAME = 'HavingProjection';
+		const CLASS_NAME = '\Onphp\HavingProjection';
 		
 		/**
-		 * @return OqlHavingParser
+		 * @return \Onphp\OqlHavingParser
 		**/
 		public static function create()
 		{
@@ -22,7 +24,7 @@
 		}
 		
 		/**
-		 * @return OqlHavingClause
+		 * @return \Onphp\OqlHavingClause
 		**/
 		protected function makeOqlObject()
 		{

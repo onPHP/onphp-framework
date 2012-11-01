@@ -13,10 +13,12 @@
 	 * @ingroup Html
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class SgmlEndTag extends SgmlTag
 	{
 		/**
-		 * @return SgmlEndTag
+		 * @return \Onphp\SgmlEndTag
 		**/
 		public static function create()
 		{

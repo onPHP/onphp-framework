@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class AMQPSelective implements AMQPInterface
 	{
 		/**
@@ -19,7 +21,7 @@
 		/**
 		 * @var string
 		 */
-		protected static $proxy = 'AMQPProxyChannel';
+		protected static $proxy = '\Onphp\AMQPProxyChannel';
 
 		/**
 		 * @var sting
@@ -44,8 +46,8 @@
 		}
 
 		/**
-		 * @param AMQPPool $pool
-		 * @return AMQPSelective
+		 * @param \Onphp\AMQPPool $pool
+		 * @return \Onphp\AMQPSelective
 		 */
 		public function addPool(AMQPPool $pool)
 		{
@@ -61,7 +63,7 @@
 
 		/**
 		 * @throws WrongArgumentException
-		 * @return AMQPPool
+		 * @return \Onphp\AMQPPool
 		**/
 		public function addLink($name, AMQP $amqp)
 		{
@@ -80,7 +82,7 @@
 
 		/**
 		 * @throws MissingElementException
-		 * @return AMQPPool
+		 * @return \Onphp\AMQPPool
 		**/
 		public function dropLink($name)
 		{
@@ -99,7 +101,7 @@
 		/**
 		 * @param integer $id
 		 * @throws WrongArgumentException
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function createChannel($id)
 		{
@@ -127,7 +129,7 @@
 
 		/**
 		 * @throws MissingElementException
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function getChannel($id)
 		{
@@ -150,7 +152,7 @@
 		/**
 		 * @param integer $id
 		 * @throws MissingElementException
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function dropChannel($id)
 		{
@@ -167,7 +169,7 @@
 		}
 
 		/**
-		 * @return AMQPInterface
+		 * @return \Onphp\AMQPInterface
 		 * @throws AMQPServerConnectionException
 		 */
 		public function connect()
@@ -176,7 +178,7 @@
 		}
 
 		/**
-		 * @return AMQPInterface
+		 * @return \Onphp\AMQPInterface
 		**/
 		public function disconnect()
 		{
@@ -184,7 +186,7 @@
 		}
 
 		/**
-		 * @return AMQPInterface
+		 * @return \Onphp\AMQPInterface
 		**/
 		public function reconnect()
 		{
@@ -201,7 +203,7 @@
 
 
 		/**
-		 * @return AMQPInterface
+		 * @return \Onphp\AMQPInterface
 		**/
 		public function getLink()
 		{
@@ -209,7 +211,7 @@
 		}
 
 		/**
-		 * @return AMQPCredentials
+		 * @return \Onphp\AMQPCredentials
 		 */
 		public function getCredentials()
 		{
@@ -227,7 +229,7 @@
 
 		/**
 		 * @param bool $alive
-		 * @return AMQPInterface
+		 * @return \Onphp\AMQPInterface
 		 */
 		public function setAlive($alive)
 		{
@@ -275,7 +277,7 @@
 
 		/**
 		 * @param string $name
-		 * @return AMQPSelective
+		 * @return \Onphp\AMQPSelective
 		 */
 		public function setCurrent($name)
 		{
@@ -288,7 +290,7 @@
 
 		/**
 		 * @thows WrongArgumentException
-		 * @return AMQPInterface
+		 * @return \Onphp\AMQPInterface
 		 */
 		protected function getCurrentItem()
 		{

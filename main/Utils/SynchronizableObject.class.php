@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	interface SynchronizableObject
 	{
 		public static function createFromMasterObject($masterObject);

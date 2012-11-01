@@ -13,6 +13,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	final class ProxyController implements Controller
 	{
 		private $innerController	= null;
@@ -27,7 +29,7 @@
 		);
 		
 		/**
-		 * @return ProxyController
+		 * @return \Onphp\ProxyController
 		**/
 		public static function create()
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return ProxyController
+		 * @return \Onphp\ProxyController
 		**/
 		public function setInner(Controller $controller)
 		{
@@ -50,7 +52,7 @@
 		}
 		
 		/**
-		 * @return Controller
+		 * @return \Onphp\Controller
 		**/
 		public function getInner()
 		{
@@ -63,7 +65,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function handleRequest(HttpRequest $request)
 		{
@@ -71,7 +73,7 @@
 		}
 		
 		/**
-		 * @return ProxyController
+		 * @return \Onphp\ProxyController
 		**/
 		public function setRequestType(RequestType $requestType)
 		{

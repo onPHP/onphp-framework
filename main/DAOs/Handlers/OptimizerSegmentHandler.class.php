@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	abstract class OptimizerSegmentHandler implements SegmentHandler
 	{
 		protected $id		= null;

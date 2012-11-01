@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	final class MinimalNumberProjection extends AggregateProjection
 	{
 		public function getFunctionName()

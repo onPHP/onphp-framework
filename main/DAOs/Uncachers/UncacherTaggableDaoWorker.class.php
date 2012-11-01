@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Uncachers
 	**/
+	namespace Onphp;
+
 	class UncacherTaggableDaoWorker implements UncacherBase
 	{
 		private $classNameMap = array();
 		
 		/**
-		 * @return UncacherTaggableDaoWorker
+		 * @return \Onphp\UncacherTaggableDaoWorker
 		 */
 		public static function create($className, $idKey, $tags, TaggableDaoWorker $worker)
 		{
@@ -42,7 +44,7 @@
 		 */
 		public function merge(UncacherBase $uncacher)
 		{
-			Assert::isInstance($uncacher, 'UncacherTaggableDaoWorker');
+			Assert::isInstance($uncacher, '\Onphp\UncacherTaggableDaoWorker');
 			return $this->mergeSelf($uncacher);
 		}
 		
@@ -50,7 +52,7 @@
 		{
 			foreach ($this->classNameMap as $className => $uncaches) {
 				list($idKeys, $tags, $worker) = $uncaches;
-				/* @var $worker TaggableDaoWorker */
+				/* @var $worker \Onphp\TaggableDaoWorker */
 				$worker->expireTags($tags);
 				
 				foreach ($idKeys as $key)

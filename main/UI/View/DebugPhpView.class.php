@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	final class DebugPhpView extends SimplePhpView
 	{
 		/**
-		 * @return DebugPhpView
+		 * @return \Onphp\DebugPhpView
 		**/
 		public function preRender()
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return DebugPhpView
+		 * @return \Onphp\DebugPhpView
 		**/
 		protected function postRender()
 		{

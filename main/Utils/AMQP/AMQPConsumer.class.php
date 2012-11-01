@@ -9,16 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	interface AMQPConsumer
 	{
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function getChannel();
 
 		/**
 		 * Called when a delivery appears for this consumer.
-		 * @param AMQPIncomingMessage $delivery
+		 * @param \Onphp\AMQPIncomingMessage $delivery
 		 * @return void
 		**/
 		public function handleDelivery(AMQPIncomingMessage $delivery);
@@ -51,7 +53,7 @@
 		public function handleChangeConsumerTag($fromTag, $toTag);
 
 		/**
-		 * @return AMQPConsumer
+		 * @return \Onphp\AMQPConsumer
 		**/
 		public function setQueueName($name);
 
@@ -61,7 +63,7 @@
 		public function getQueueName();
 
 		/**
-		 * @return AMQPConsumer
+		 * @return \Onphp\AMQPConsumer
 		**/
 		public function setAutoAcknowledge($boolean);
 
@@ -71,7 +73,7 @@
 		public function isAutoAcknowledge();
 
 		/**
-		 * @return AMQPConsumer
+		 * @return \Onphp\AMQPConsumer
 		**/
 		public function setConsumerTag($consumerTag);
 
@@ -81,7 +83,7 @@
 		public function getConsumerTag();
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public function getNextDelivery();
 	}

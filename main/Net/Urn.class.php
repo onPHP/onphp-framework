@@ -14,21 +14,23 @@
 	 * 
 	 * @ingroup Net
 	**/
+	namespace Onphp;
+
 	final class Urn extends GenericUri
 	{
 		protected $schemeSpecificPart	= null;
 		
 		protected static $knownSubSchemes	= array(
-			'urn'		=> 'Urn',
-			'mailto'	=> 'Urn',
-			'news'		=> 'Urn',
-			'isbn'		=> 'Urn',
-			'tel'		=> 'Urn',
-			'fax'		=> 'Urn',
+			'urn'		=> '\Onphp\Urn',
+			'mailto'	=> '\Onphp\Urn',
+			'news'		=> '\Onphp\Urn',
+			'isbn'		=> '\Onphp\Urn',
+			'tel'		=> '\Onphp\Urn',
+			'fax'		=> '\Onphp\Urn',
 		);
 		
 		/**
-		 * @return Urn
+		 * @ret\Onphp\Urn \Onphp\Urn
 		**/
 		public static function create()
 		{

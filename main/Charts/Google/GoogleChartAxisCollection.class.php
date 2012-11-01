@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartAxisCollection
 	{
 		private $axes = array();
 		
 		/**
-		 * @return GoogleChartAxisCollection
+		 * @return \Onphp\GoogleChartAxisCollection
 		**/
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartAxisCollection
+		 * @return \Onphp\GoogleChartAxisCollection
 		**/
 		public function addAxis(GoogleChartAxis $axis)
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartAxis
+		 * @return \Onphp\GoogleChartAxis
 		**/
 		public function getAxisByTypeId($typeId)
 		{

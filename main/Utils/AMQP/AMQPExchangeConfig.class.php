@@ -12,17 +12,19 @@
 	/**
 	 * @see http://www.rabbitmq.com/amqp-0-9-1-quickref.html#exchange.declare
 	**/
+	namespace Onphp;
+
 	final class AMQPExchangeConfig extends AMQPBaseConfig
 	{
 		protected $internal = null;
 
 		/**
-		 * @var AMQPExchangeType
+		 * @var \Onphp\AMQPExchangeType
 		**/
 		protected $type = null;
 
 		/**
-		 * @return AMQPExchangeConfig
+		 * @return \Onphp\AMQPExchangeConfig
 		**/
 		public static function create()
 		{
@@ -30,8 +32,8 @@
 		}
 
 		/**
-		 * @param AMQPExchangeType $type
-		 * @return AMQPExchangeConfig
+		 * @param \Onphp\AMQPExchangeType $type
+		 * @return \Onphp\AMQPExchangeConfig
 		**/
 		public function setType(AMQPExchangeType $type)
 		{
@@ -41,7 +43,7 @@
 		}
 
 		/**
-		 * @return AMQPExchangeType
+		 * @return \Onphp\AMQPExchangeType
 		**/
 		public function getType()
 		{
@@ -55,7 +57,7 @@
 
 		/**
 		 * @param boolean $internal
-		 * @return AMQPExchangeConfig
+		 * @return \Onphp\AMQPExchangeConfig
 		**/
 		public function setInternal($internal)
 		{

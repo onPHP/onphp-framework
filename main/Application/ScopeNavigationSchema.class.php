@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class ScopeNavigationSchema extends Singleton
 	{
 		abstract public function extractPath(&$scope);

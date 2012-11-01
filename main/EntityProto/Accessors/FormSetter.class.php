@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class FormSetter extends FormMutator
 	{
 		public function set($name, $value)

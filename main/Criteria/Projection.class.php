@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Criteria
 	**/
+	namespace Onphp;
+
 	final class Projection extends StaticFactory
 	{
 		/**
-		 * @return SumProjection
+		 * @return \Onphp\SumProjection
 		**/
 		public static function sum($property, $alias = null)
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return AverageNumberProjection
+		 * @return \Onphp\AverageNumberProjection
 		**/
 		public static function avg($property, $alias = null)
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return MappableObjectProjection
+		 * @return \Onphp\MappableObjectProjection
 		**/
 		public static function mappable(MappableObject $object, $alias = null)
 		{
@@ -41,7 +43,7 @@
 		}
 		
 		/**
-		 * @return MinimalNumberProjection
+		 * @return \Onphp\MinimalNumberProjection
 		**/
 		public static function min($property, $alias = null)
 		{
@@ -49,7 +51,7 @@
 		}
 		
 		/**
-		 * @return MaximalNumberProjection
+		 * @return \Onphp\MaximalNumberProjection
 		**/
 		public static function max($property, $alias = null)
 		{
@@ -57,7 +59,7 @@
 		}
 		
 		/**
-		 * @return PropertyProjection
+		 * @return \Onphp\PropertyProjection
 		**/
 		public static function property($property, $alias = null)
 		{
@@ -65,7 +67,7 @@
 		}
 		
 		/**
-		 * @return RowCountProjection
+		 * @return \Onphp\RowCountProjection
 		**/
 		public static function count($property = null, $alias = null)
 		{
@@ -73,7 +75,7 @@
 		}
 		
 		/**
-		 * @return DistinctCountProjection
+		 * @return \Onphp\DistinctCountProjection
 		**/
 		public static function distinctCount($property = null, $alias = null)
 		{
@@ -81,7 +83,7 @@
 		}
 		
 		/**
-		 * @return ProjectionChain
+		 * @return \Onphp\ProjectionChain
 		**/
 		public static function chain()
 		{
@@ -89,7 +91,7 @@
 		}
 		
 		/**
-		 * @return GroupByPropertyProjection
+		 * @return \Onphp\GroupByPropertyProjection
 		**/
 		public static function group($property)
 		{
@@ -97,7 +99,7 @@
 		}
 		
 		/**
-		 * @return GroupByClassProjection
+		 * @return \Onphp\GroupByClassProjection
 		**/
 		public static function groupByClass($class)
 		{
@@ -105,7 +107,7 @@
 		}
 		
 		/**
-		 * @return HavingProjection
+		 * @return \Onphp\HavingProjection
 		**/
 		public static function having(LogicalObject $logic)
 		{
@@ -113,7 +115,7 @@
 		}
 		
 		/**
-		 * @return ClassProjection
+		 * @return \Onphp\ClassProjection
 		**/
 		public static function clazz($className)
 		{

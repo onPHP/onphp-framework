@@ -15,6 +15,8 @@
 	 * @ingroup DAOs
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface FullTextDAO extends BaseDAO
 	{
 		// index' field name

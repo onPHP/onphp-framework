@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class AbstractCollection implements Collection
 	{
 		protected $items  = array();
@@ -83,7 +85,7 @@
 		}
 		
 		/**
-		 * @return CollectionItem
+		 * @return \Onphp\CollectionItem
 		**/
 		public function getByName($name)
 		{

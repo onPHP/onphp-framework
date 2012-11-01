@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Html
 	**/
+	namespace Onphp;
+
 	final class HtmlAssembler
 	{
 		private $tags	= null;
@@ -55,11 +57,11 @@
 			return $result;
 		}
 		
-		public static function makeDomNode(DOMNode $node)
+		public static function makeDomNode(\DOMNode $node)
 		{
 				$result = null;
 				
-				if ($node instanceof DOMElement) {
+				if ($node instanceof \DOMElement) {
 						
 						$result = '<'.$node->nodeName;
 						
@@ -84,7 +86,7 @@
 						if ($node->firstChild)
 								$result .= '</'.$node->nodeName.'>';
 						
-				} elseif ($node instanceof DOMCharacterData) {
+				} elseif ($node instanceof \DOMCharacterData) {
 						
 						$result = $node->data;
 						
@@ -125,7 +127,7 @@
 			return implode(' ', $attributes);
 		}
 		
-		private static function getDomAttributes(DOMNode $node)
+		private static function getDomAttributes(\DOMNode $node)
 		{
 			$result = null;
 			

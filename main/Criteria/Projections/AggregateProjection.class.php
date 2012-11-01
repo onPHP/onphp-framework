@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	abstract class AggregateProjection extends BaseProjection
 	{
 		abstract public function getFunctionName();
 		
 		/**
-		 * @return JoinCapableQuery
+		 * @return \Onphp\JoinCapableQuery
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{

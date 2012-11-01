@@ -12,9 +12,11 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	interface FeedItemWorker extends Instantiatable
 	{
-		public function makeItems(SimpleXMLElement $xmlFeed);
+		public function makeItems(\SimpleXMLElement $xmlFeed);
 		public function toXml(FeedItem $item);
 	}
 ?>

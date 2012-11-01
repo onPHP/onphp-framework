@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class BufferedInputStream extends InputStream
 	{
 		private $runAheadBytes	= 0;
@@ -31,7 +33,7 @@
 		}
 		
 		/**
-		 * @return BufferedInputStream
+		 * @return \Onphp\BufferedInputStream
 		**/
 		public static function create(InputStream $in)
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return BufferedInputStream
+		 * @return \Onphp\BufferedInputStream
 		**/
 		public function close()
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return BufferedInputStream
+		 * @return \Onphp\BufferedInputStream
 		**/
 		public function mark()
 		{
@@ -69,7 +71,7 @@
 		}
 		
 		/**
-		 * @return BufferedInputStream
+		 * @return \Onphp\BufferedInputStream
 		**/
 		public function reset()
 		{
@@ -87,7 +89,7 @@
 		}
 		
 		/**
-		 * @return BufferedInputStream
+		 * @return \Onphp\BufferedInputStream
 		**/
 		public function setRunAheadBytes($runAheadBytes)
 		{

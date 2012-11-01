@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	final class YandexRssFeedItem extends FeedItem
 	{
 		private $fullText	= null;
 		
 		/**
-		 * @return YandexRssFeedItem
+		 * @return \Onphp\YandexRssFeedItem
 		**/
 		public static function create($title)
 		{
@@ -30,7 +32,7 @@
 		}
 		
 		/**
-		 * @return YandexRssFeedItem
+		 * @return \Onphp\YandexRssFeedItem
 		**/
 		public function setFullText($fullText)
 		{

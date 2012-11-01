@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class EmptyView implements View, Stringable
 	{
 		/**
-		 * @return EmptyView
+		 * @return \Onphp\EmptyView
 		**/
 		public static function create()
 		{
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return EmptyView
+		 * @return \Onphp\EmptyView
 		**/
 		public function render(/* Model */ $model = null)
 		{

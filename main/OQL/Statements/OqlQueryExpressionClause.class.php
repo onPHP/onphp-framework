@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	abstract class OqlQueryExpressionClause extends OqlQueryClause
 	{
 		protected $expression = null;
 		
 		/**
-		 * @return OqlQueryExpression
+		 * @return \Onphp\OqlQueryExpression
 		**/
 		public function getExpression()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryExpressionClause
+		 * @return \Onphp\OqlQueryExpressionClause
 		**/
 		public function setExpression(OqlQueryExpression $expression)
 		{

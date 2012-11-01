@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartAxisLabel extends GoogleChartLabel
 	{
 		protected static $paramName = 'chxl';
 		
 		/**
-		 * @return GoogleChartLabel
+		 * @return \Onphp\GoogleChartLabel
 		**/
 		public static function create()
 		{

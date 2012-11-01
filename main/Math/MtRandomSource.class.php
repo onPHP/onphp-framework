@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Math
 	**/
+	namespace Onphp;
+
 	final class MtRandomSource extends Singleton implements RandomSource
 	{
 		/**
-		 * @return MtRandomSource
+		 * @return \Onphp\MtRandomSource
 		**/
 		public static function me()
 		{

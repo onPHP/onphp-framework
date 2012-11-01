@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	final class InclinedStringDrawer extends TextDrawer
 	{
 		const MAX_ANGLE	= 70;
 		
 		/**
-		 * @return InclinedStringDrawer
+		 * @return \Onphp\InclinedStringDrawer
 		**/
 		public function draw($string)
 		{

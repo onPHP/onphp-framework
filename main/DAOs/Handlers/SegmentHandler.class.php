@@ -13,6 +13,8 @@
 	 * @ingroup DAOs
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	interface SegmentHandler
 	{
 		public function __construct($segmentId);

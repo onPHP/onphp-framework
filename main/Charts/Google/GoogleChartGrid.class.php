@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartGrid extends BaseGoogleChartParameter
 	{
 		protected $name = 'chg';
@@ -21,7 +23,7 @@
 		private $lineSegmentLength 	= 0;
 		
 		/**
-		 * @return GoogleChartGrid
+		 * @return \Onphp\GoogleChartGrid
 		**/
 		public static function create()
 		{
@@ -29,7 +31,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartGrid
+		 * @return \Onphp\GoogleChartGrid
 		**/
 		public function setHorizontalStepSize($size)
 		{
@@ -44,7 +46,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartGrid
+		 * @return \Onphp\GoogleChartGrid
 		**/
 		public function setVerticalStepSize($size)
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartGrid
+		 * @return \Onphp\GoogleChartGrid
 		**/
 		public function setLineSegmentLength($length)
 		{

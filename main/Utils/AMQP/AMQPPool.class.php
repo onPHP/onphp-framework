@@ -12,13 +12,15 @@
 	/**
 	 * @todo BasePool implementations
 	**/
+	namespace Onphp;
+
 	final class AMQPPool extends Singleton implements Instantiatable
 	{
 		private $default = null;
 		private $pool = array();
 
 		/**
-		 * @return AMQPPool
+		 * @return \Onphp\AMQPPool
 		**/
 		public static function me()
 		{
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return AMQPPool
+		 * @return \Onphp\AMQPPool
 		**/
 		public function setDefault(AMQP $amqp)
 		{
@@ -36,7 +38,7 @@
 		}
 
 		/**
-		 * @return AMQPPool
+		 * @return \Onphp\AMQPPool
 		**/
 		public function dropDefault()
 		{
@@ -47,7 +49,7 @@
 
 		/**
 		 * @throws WrongArgumentException
-		 * @return AMQPPool
+		 * @return \Onphp\AMQPPool
 		**/
 		public function addLink($name, AMQP $amqp)
 		{
@@ -63,7 +65,7 @@
 
 		/**
 		 * @throws MissingElementException
-		 * @return AMQPPool
+		 * @return \Onphp\AMQPPool
 		**/
 		public function dropLink($name)
 		{
@@ -79,7 +81,7 @@
 
 		/**
 		 * @throws MissingElementException
-		 * @return AMQP
+		 * @return \Onphp\AMQP
 		**/
 		public function getLink($name = null)
 		{
@@ -110,7 +112,7 @@
 		}
 
 		/**
-		 * @return AMQPPool
+		 * @return \Onphp\AMQPPool
 		**/
 		public function shutdown()
 		{
@@ -123,7 +125,7 @@
 		}
 
 		/**
-		 * @return AMQPPool
+		 * @return \Onphp\AMQPPool
 		**/
 		public function disconnect()
 		{

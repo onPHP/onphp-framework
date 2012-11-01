@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	interface CarefulCommand extends EditorCommand
 	{
 		public function commit();

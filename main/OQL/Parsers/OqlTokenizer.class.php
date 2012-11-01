@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	final class OqlTokenizer
 	{
 		private $tokens			= array();
@@ -106,7 +108,7 @@
 		}
 		
 		/**
-		 * @return OqlTokenizer
+		 * @return \Onphp\OqlTokenizer
 		**/
 		public function setIndex($index)
 		{
@@ -125,7 +127,7 @@
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		public function get()
 		{
@@ -133,7 +135,7 @@
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		public function next()
 		{
@@ -143,7 +145,7 @@
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		public function back()
 		{
@@ -153,7 +155,7 @@
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		public function peek()
 		{
@@ -164,7 +166,7 @@
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		private function getByIndex($index)
 		{
@@ -172,7 +174,7 @@
 		}
 		
 		/**
-		 * @return OqlTokenizer
+		 * @return \Onphp\OqlTokenizer
 		**/
 		private function tokenize($string)
 		{

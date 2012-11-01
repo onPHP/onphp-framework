@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	final class CommandChain implements EditorCommand
 	{
 		private $chain = array();
 		
 		/**
-		 * @return CommandChain
+		 * @return \Onphp\CommandChain
 		**/
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return CommandChain
+		 * @return \Onphp\CommandChain
 		**/
 		public function add(EditorCommand $command)
 		{
@@ -36,7 +38,7 @@
 		
 		/**
 		 * @throws BaseException
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function run(Prototyped $subject, Form $form, HttpRequest $request)
 		{
@@ -66,7 +68,7 @@
 		}
 		
 		/**
-		 * @return CommandChain
+		 * @return \Onphp\CommandChain
 		**/
 		private function rollback($position)
 		{
@@ -85,7 +87,7 @@
 		}
 		
 		/**
-		 * @return CommandChain
+		 * @return \Onphp\CommandChain
 		**/
 		private function commit()
 		{

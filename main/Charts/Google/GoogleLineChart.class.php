@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	class GoogleLineChart extends GoogleChart
 	{
 		protected $axesCollection 	= null;
@@ -19,7 +21,7 @@
 		protected $labelStyle 		= null;
 		
 		/**
-		 * @return GoogleLineChart
+		 * @return \Onphp\GoogleLineChart
 		**/
 		public static function create()
 		{
@@ -56,7 +58,7 @@
 		}
 		
 		/**
-		 * @return GoogleLineChart
+		 * @return \Onphp\GoogleLineChart
 		**/
 		public function addLine(GoogleChartLine $line)
 		{
@@ -76,7 +78,7 @@
 		}
 		
 		/**
-		 * @return GoogleLineChart
+		 * @return \Onphp\GoogleLineChart
 		**/
 		public function setLegendPosition(GoogleChartLegendPositionType $type)
 		{
@@ -86,7 +88,7 @@
 		}
 		
 		/**
-		 * @return GoogleLineChart
+		 * @return \Onphp\GoogleLineChart
 		**/
 		public function addAxis(GoogleChartAxis $axis)
 		{

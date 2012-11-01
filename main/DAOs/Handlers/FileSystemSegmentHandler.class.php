@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	final class FileSystemSegmentHandler implements SegmentHandler
 	{
 		private $path = null;

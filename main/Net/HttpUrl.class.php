@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Net
 	**/
+	namespace Onphp;
+
 	final class HttpUrl extends Url
 	{
 		protected static $knownSubSchemes	= array();
 		
 		/**
-		 * @return HttpUrl
+		 * @return \Onphp\HttpUrl
 		**/
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return HttpUrl
+		 * @return \Onphp\HttpUrl
 		 * 
 		 * @see rfc2616, sec. 14.23.
 		 * 

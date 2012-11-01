@@ -15,10 +15,12 @@
 	 * 
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	class TimestampRange extends DateRange
 	{
 		/**
-		 * @return TimestampRange
+		 * @return \Onphp\TimestampRange
 		**/
 		public static function create($start = null, $end = null)
 		{
@@ -44,7 +46,7 @@
 		}
 		
 		/**
-		 * @return TimestampRange
+		 * @return \Onphp\TimestampRange
 		**/
 		public function toTimestampRange()
 		{
@@ -53,7 +55,7 @@
 		
 		protected function getObjectName()
 		{
-			return 'Timestamp';
+			return '\Onphp\Timestamp';
 		}
 	}
 ?>

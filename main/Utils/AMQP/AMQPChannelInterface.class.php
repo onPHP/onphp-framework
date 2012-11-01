@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	interface AMQPChannelInterface
 	{
 		/**
@@ -17,24 +19,24 @@
 		public function isOpen();
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function open();
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function close();
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function exchangeDeclare(
 			$name, AMQPExchangeConfig $conf
 		);
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function exchangeDelete(
 			$name, $ifUnused = false
@@ -42,12 +44,12 @@
 
 		/**
 		 * @see http://www.rabbitmq.com/blog/2010/10/19/exchange-to-exchange-bindings/
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function exchangeBind($destinationName, $sourceName, $routingKey);
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function exchangeUnbind($destinationName, $sourceName, $routingKey);
 
@@ -57,54 +59,54 @@
 		public function queueDeclare($name, AMQPQueueConfig $conf);
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function queueBind($name, $exchange, $routingKey);
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function queueUnbind($name, $exchange, $routingKey);
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function queuePurge($name);
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function queueDelete($name);
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function basicPublish(
 			$exchange, $routingKey, AMQPOutgoingMessage $msg
 		);
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function basicQos($prefetchSize, $prefetchCount);
 
 		/**
-		 * @return AMQPIncomingMessage
+		 * @return \Onphp\AMQPIncomingMessage
 		**/
 		public function basicGet($queue, $autoAck = true);
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function basicAck($deliveryTag, $multiple = false);
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function basicConsume($queue, $autoAck, AMQPConsumer $callback);
 
 		/**
-		 * @return AMQPChannelInterface
+		 * @return \Onphp\AMQPChannelInterface
 		**/
 		public function basicCancel($consumerTag);
 	}

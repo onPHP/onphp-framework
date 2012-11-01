@@ -12,20 +12,22 @@
 	/**
 	 * @ingroup OpenId
 	**/
+	namespace Onphp;
+
 	interface OpenIdConsumerAssociationManager
 	{
 		/**
-		 * @return OpenIdConsumerAssociation
+		 * @return \Onphp\OpenIdConsumerAssociation
 		**/
 		public function findByHandle($handle, $type);
 		
 		/**
-		 * @return OpenIdConsumerAssociation
+		 * @return \Onphp\OpenIdConsumerAssociation
 		**/
 		public function findByServer(HttpUrl $server);
 		
 		/**
-		 * @return OpenIdConsumerAssociation
+		 * @return \Onphp\OpenIdConsumerAssociation
 		**/
 		public function makeAndSave(
 			$handle,
@@ -36,12 +38,12 @@
 		);
 		
 		/**
-		 * @return OpenIdConsumerAssociationManager
+		 * @return \Onphp\OpenIdConsumerAssociationManager
 		**/
 		public function purgeExpired();
 		
 		/**
-		 * @return OpenIdConsumerAssociationManager
+		 * @return \Onphp\OpenIdConsumerAssociationManager
 		**/
 		public function purgeByHandle($handle);
 	}

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	final class FeedItemContentType extends Enumeration
 	{
 		const TEXT		= 1;

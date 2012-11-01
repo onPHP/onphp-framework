@@ -13,6 +13,8 @@
 	 * @ingroup Html
 	 * @ingroup Module
 	**/
+	namespace Onphp;
+
 	final class Cdata extends SgmlToken
 	{
 		private $data	= null;
@@ -20,7 +22,7 @@
 		private $strict	= false;
 		
 		/**
-		 * @return Cdata
+		 * @return \Onphp\Cdata
 		**/
 		public static function create()
 		{
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return Cdata
+		 * @return \Onphp\Cdata
 		**/
 		public function setData($data)
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return Cdata
+		 * @return \Onphp\Cdata
 		**/
 		public function setStrict($isStrict)
 		{

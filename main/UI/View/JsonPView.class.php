@@ -13,6 +13,8 @@
 	 * @ingroup Flow
 	**/
 
+	namespace Onphp;
+
 	class JsonPView extends JsonView
 	{
 		/**
@@ -22,7 +24,7 @@
 
 		/**
 		 * @static
-		 * @return JsonPView
+		 * @return \Onphp\JsonPView
 		 */
 		public static function create()
 		{
@@ -38,7 +40,7 @@
 
 		/**
 		 * @param mixed $callback
-		 * @return JsonPView
+		 * @return \Onphp\JsonPView
 		 */
 		public function setCallback($callback)
 		{
@@ -60,7 +62,7 @@
 		}
 
 		/**
-		 * @param Model $model
+		 * @param \Onphp\Model $\Onphp\Model
 		 * @return string
 		 */
 		public function toString(/* Model */ $model = null)

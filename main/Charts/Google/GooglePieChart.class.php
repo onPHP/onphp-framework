@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GooglePieChart extends GoogleChart
 	{
 		/**
-		 * @return GooglePieChart
+		 * @return \Onphp\GooglePieChart
 		**/
 		public static function create()
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return GooglePieChart
+		 * @return \Onphp\GooglePieChart
 		**/
 		public function addPiece(GoogleChartPiece $piece)
 		{

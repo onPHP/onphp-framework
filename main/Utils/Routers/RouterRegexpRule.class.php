@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class RouterRegexpRule extends RouterBaseRule
 	{
 		protected $regexp	= null;
@@ -19,7 +21,7 @@
 		protected $values	= array();
 		
 		/**
-		 * @return RouterRegexpRule
+		 * @return \Onphp\RouterRegexpRule
 		**/
 		public static function create($route)
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return RouterRegexpRule
+		 * @return \Onphp\RouterRegexpRule
 		**/
 		public function setMap(array $map)
 		{
@@ -48,7 +50,7 @@
 		}
 		
 		/**
-		 * @return RouterRegexpRule
+		 * @return \Onphp\RouterRegexpRule
 		**/
 		public function setReverse($reverse)
 		{

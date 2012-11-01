@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	abstract class InputStream
 	{
 		/**
@@ -33,7 +35,7 @@
 		abstract public function isEof();
 		
 		/**
-		 * @return InputStream
+		 * @return \Onphp\InputStream
 		**/
 		public function mark()
 		{
@@ -65,7 +67,7 @@
 		}
 		
 		/**
-		 * @return InputStream
+		 * @return \Onphp\InputStream
 		**/
 		public function close()
 		{

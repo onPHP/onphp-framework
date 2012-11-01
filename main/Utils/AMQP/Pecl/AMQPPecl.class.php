@@ -12,6 +12,8 @@
 	/**
 	 * @see http://www.php.net/manual/en/book.amqp.php
 	**/
+	namespace Onphp;
+
 	final class AMQPPecl extends AMQP
 	{
 		public function __construct(AMQPCredentials $credentials)
@@ -28,14 +30,14 @@
 		{
 			try {
 				return $this->link->isConnected();
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				return false;
 			}
 		}
 
 		/**
 		 * @throws AMQPServerConnectionException
-		 * @return AMQP
+		 * @return \Onphp\AMQP
 		**/
 		public function connect()
 		{
@@ -45,7 +47,7 @@
 
 				$this->link->connect();
 
-			} catch (AMQPConnectionException $e) {
+			} catch (\AMQPConnectionException $e) {
 				$this->alive = false;
 
 				throw new AMQPServerConnectionException(
@@ -60,14 +62,14 @@
 
 		/**
 		 * @throws AMQPServerConnectionException
-		 * @return AMQP
+		 * @return \Onphp\AMQP
 		**/
 		public function reconnect()
 		{
 			try {
 				$this->link->reconnect();
 				return $this;
-			} catch (AMQPConnectionException $e) {
+			} catch (\AMQPConnectionException $e) {
 				$this->alive = false;
 
 				throw new AMQPServerConnectionException(
@@ -80,7 +82,7 @@
 		
 		/**
 		 * @throws AMQPServerConnectionException
-		 * @return AMQP
+		 * @return \Onphp\AMQP
 		**/
 		public function disconnect()
 		{
@@ -89,7 +91,7 @@
 					$this->link->disconnect();
 					return $this;
 				}
-			} catch (AMQPConnectionException $e) {
+			} catch (\AMQPConnectionException $e) {
 				$this->alive = false;
 				
 				throw new AMQPServerConnectionException(
@@ -102,8 +104,8 @@
 
 		/**
 		 * @param mixed $id
-		 * @param AMQPInterface $transport
-		 * @return AMQPPeclChannel
+		 * @param \Onphp\AMQPInterface $transport
+		 * @return \Onphp\AMQPPeclChannel
 		**/
 		public function spawnChannel($id, AMQPInterface $transport)
 		{
@@ -111,11 +113,11 @@
 		}
 
 		/**
-		 * @return AMQPPecl
+		 * @return \Onphp\AMQPPecl
 		**/
 		protected function fillCredentials()
 		{
-			$this->link = new AMQPConnection();
+			$this->link = new \AMQPConnection();
 			$this->link->setHost($this->credentials->getHost());
 			$this->link->setPort($this->credentials->getPort());
 			$this->link->setLogin($this->credentials->getLogin());

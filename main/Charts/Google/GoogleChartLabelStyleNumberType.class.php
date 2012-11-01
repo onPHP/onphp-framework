@@ -14,6 +14,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartLabelStyleNumberType
 		extends BaseGoogleChartLabelStyleType
 	{
@@ -25,7 +27,7 @@
 		
 		
 		/**
-		 * @return GoogleChartLabelStyleNumberType
+		 * @return \Onphp\GoogleChartLabelStyleNumberType
 		**/
 		public static function create()
 		{
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartLabelStyleNumberType
+		 * @return \Onphp\GoogleChartLabelStyleNumberType
 		**/
 		public function setPrecisionLevel($level)
 		{
@@ -53,7 +55,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartLabelStyleNumberType
+		 * @return \Onphp\GoogleChartLabelStyleNumberType
 		**/
 		public function setType(LabelStyleType $type)
 		{
@@ -63,7 +65,7 @@
 		}
 		
 		/**
-		 * @return LabelStyleType
+		 * @return \Onphp\LabelStyleType
 		**/
 		public function getType()
 		{
@@ -71,7 +73,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartLabelStyleNumberType
+		 * @return \Onphp\GoogleChartLabelStyleNumberType
 		**/
 		public function setWithTrailingZero($orly = true)
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Main
 	**/
+	namespace Onphp;
+
 	interface PrototypedEntity
 	{
 		public static function entityProto();

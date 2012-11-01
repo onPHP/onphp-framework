@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Http
 	**/
+	namespace Onphp;
+
 	final class CurlHttpClient implements HttpClient
 	{
 		private $options		= array();
@@ -28,7 +30,7 @@
 		private $oldUrlConstructor = ONPHP_CURL_CLIENT_OLD_TO_STRING;
 		
 		/**
-		 * @return CurlHttpClient
+		 * @return \Onphp\CurlHttpClient
 		**/
 		public static function create()
 		{
@@ -36,7 +38,7 @@
 		}
 		
 		/**
-		 * @return CurlHttpClient
+		 * @return \Onphp\CurlHttpClient
 		**/
 		public function setOption($key, $value)
 		{
@@ -46,7 +48,7 @@
 		}
 		
 		/**
-		 * @return CurlHttpClient
+		 * @return \Onphp\CurlHttpClient
 		**/
 		public function dropOption($key)
 		{
@@ -65,7 +67,7 @@
 		
 		/**
 		 * @param $timeout in seconds
-		 * @return CurlHttpClient
+		 * @return \Onphp\CurlHttpClient
 		**/
 		public function setTimeout($timeout)
 		{
@@ -89,7 +91,7 @@
 		 * whether to follow header Location or not
 		 *
 		 * @param $really boolean
-		 * @return CurlHttpClient
+		 * @return \Onphp\CurlHttpClient
 		**/
 		public function setFollowLocation($really)
 		{
@@ -105,7 +107,7 @@
 		
 		/**
 		 * @param $really boolean
-		 * @return CurlHttpClient
+		 * @return \Onphp\CurlHttpClient
 		**/
 		public function setNoBody($really)
 		{
@@ -120,7 +122,7 @@
 		}
 		
 		/**
-		 * @return CurlHttpClient
+		 * @return \Onphp\CurlHttpClient
 		**/
 		public function setMaxRedirects($maxRedirects)
 		{
@@ -138,7 +140,7 @@
 		}
 		
 		/**
-		 * @return CurlHttpClient
+		 * @return \Onphp\CurlHttpClient
 		**/
 		public function setMaxFileSize($maxFileSize)
 		{
@@ -154,7 +156,7 @@
 		/**
 		 * @deprecated in the future value always false and method will be  removed
 		 * @param bool $oldUrlConstructor
-		 * @return CurlHttpClient 
+		 * @return \Onphp\CurlHttpClient 
 		 */
 		public function setOldUrlConstructor($oldUrlConstructor = false)
 		{
@@ -172,7 +174,7 @@
 		}
 		
 		/**
-		 * @return CurlHttpClient
+		 * @return \Onphp\CurlHttpClient
 		**/
 		public function addRequest(HttpRequest $request, $options = array())
 		{
@@ -192,7 +194,7 @@
 		}
 		
 		/**
-		 * @return CurlHttpResponse
+		 * @return \Onphp\CurlHttpResponse
 		**/
 		public function getResponse(HttpRequest $request)
 		{
@@ -205,7 +207,7 @@
 		}
 		
 		/**
-		 * @return HttpResponse
+		 * @return \Onphp\HttpResponse
 		**/
 		public function send(HttpRequest $request)
 		{
@@ -345,7 +347,7 @@
 		}
 		
 		/**
-		 * @return CurlHttpClient
+		 * @return \Onphp\CurlHttpClient
 		**/
 		protected function makeResponse($handle, CurlHttpResponse $response)
 		{

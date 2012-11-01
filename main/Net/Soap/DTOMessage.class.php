@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class DTOMessage implements PrototypedEntity
 	{
 		final public function makeDto()

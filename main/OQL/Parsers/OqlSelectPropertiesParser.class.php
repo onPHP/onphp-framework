@@ -9,6 +9,8 @@
  *                                                                          *
  ****************************************************************************/
 
+	namespace Onphp;
+
 	final class OqlSelectPropertiesParser extends OqlParser
 	{
 		// class map
@@ -21,17 +23,17 @@
 		const PROPERTY_PROJECTION		= 2;
 		
 		private static $classMap = array(
-			self::SUM_PROJECTION			=> 'SumProjection',
-			self::AVG_PROJECTION			=> 'AverageNumberProjection',
-			self::MIN_PROJECTION			=> 'MinimalNumberProjection',
-			self::MAX_PROJECTION			=> 'MaximalNumberProjection',
-			self::COUNT_PROJECTION			=> 'RowCountProjection',
-			self::DISTINCT_COUNT_PROJECTION	=> 'DistinctCountProjection',
-			self::PROPERTY_PROJECTION		=> 'PropertyProjection'
+			self::SUM_PROJECTION			=> '\Onphp\SumProjection',
+			self::AVG_PROJECTION			=> '\Onphp\AverageNumberProjection',
+			self::MIN_PROJECTION			=> '\Onphp\MinimalNumberProjection',
+			self::MAX_PROJECTION			=> '\Onphp\MaximalNumberProjection',
+			self::COUNT_PROJECTION			=> '\Onphp\RowCountProjection',
+			self::DISTINCT_COUNT_PROJECTION	=> '\Onphp\DistinctCountProjection',
+			self::PROPERTY_PROJECTION		=> '\Onphp\PropertyProjection'
 		);
 		
 		/**
-		 * @return OqlSelectPropertiesParser
+		 * @return \Onphp\OqlSelectPropertiesParser
 		**/
 		public static function create()
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return OqlSelectPropertiesClause
+		 * @return \Onphp\OqlSelectPropertiesClause
 		**/
 		protected function makeOqlObject()
 		{
@@ -62,7 +64,7 @@
 		}
 		
 		/**
-		 * @return OqlQueryParameter
+		 * @return \Onphp\OqlQueryParameter
 		**/
 		protected function getArgumentExpression()
 		{
@@ -112,7 +114,7 @@
 		}
 		
 		/**
-		 * @return OqlToken
+		 * @return \Onphp\OqlToken
 		**/
 		private function getAlias()
 		{

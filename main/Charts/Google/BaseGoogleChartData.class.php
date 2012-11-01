@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	abstract class BaseGoogleChartData extends BaseGoogleChartParameter
 	{
 		protected $encoding = null;
 		
 		/**
-		 * @return BaseGoogleChartData
+		 * @return \Onphp\BaseGoogleChartData
 		**/
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return BaseGoogleChartData
+		 * @return \Onphp\BaseGoogleChartData
 		**/
 		public function setEncoding(GoogleChartDataEncoding $encoding)
 		{

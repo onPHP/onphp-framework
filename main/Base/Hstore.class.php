@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	final class Hstore implements Stringable
 	{
 		protected $properties = array();
@@ -19,7 +21,7 @@
 		/**
 		 * Create Hstore by raw string.
 		 *
-		 * @return Hstore
+		 * @return \Onphp\Hstore
 		**/
 		public static function create($string)
 		{
@@ -31,7 +33,7 @@
 		/**
 		 * Create Hstore by array.
 		 *
-		 * @return Hstore
+		 * @return \Onphp\Hstore
 		**/
 		public static function make($array)
 		{
@@ -41,7 +43,7 @@
 		}
 		
 		/**
-		 * @return Hstore
+		 * @return \Onphp\Hstore
 		**/
 		public function setList($array)
 		{
@@ -64,7 +66,7 @@
 		}
 		
 		/**
-		 * @return Hstore
+		 * @return \Onphp\Hstore
 		**/
 		public function set($key, $value)
 		{
@@ -74,7 +76,7 @@
 		}
 		
 		/**
-		 * @return Hstore
+		 * @return \Onphp\Hstore
 		**/
 		public function drop($key)
 		{
@@ -89,7 +91,7 @@
 		}
 		
 		/**
-		 * @return Hstore
+		 * @return \Onphp\Hstore
 		**/
 		public function toValue($raw)
 		{

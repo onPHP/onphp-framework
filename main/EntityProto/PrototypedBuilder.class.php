@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class PrototypedBuilder
 	{
 		protected $proto		= null;
@@ -18,12 +20,12 @@
 		abstract protected function createEmpty();
 		
 		/**
-		 * @return PrototypedGetter
+		 * @return \Onphp\PrototypedGetter
 		**/
 		abstract protected function getGetter($object);
 		
 		/**
-		 * @return PrototypedSetter
+		 * @return \Onphp\PrototypedSetter
 		**/
 		abstract protected function getSetter(&$object);
 		
@@ -48,7 +50,7 @@
 		}
 		
 		/**
-		 * @return PrototypedBuilder
+		 * @return \Onphp\PrototypedBuilder
 		**/
 		public function cloneBuilder(EntityProto $proto)
 		{
@@ -74,7 +76,7 @@
 			
 			$primitive = $mapping[$property];
 			
-			Assert::isInstance($primitive, 'PrimitiveForm');
+			Assert::isInstance($primitive, '\Onphp\PrimitiveForm');
 			
 			$result = new $this($primitive->getProto());
 			
@@ -93,7 +95,7 @@
 		}
 		
 		/**
-		 * @return PrototypedBuilder
+		 * @return \Onphp\PrototypedBuilder
 		**/
 		public function makeReverseBuilder()
 		{

@@ -14,7 +14,9 @@
 	 * 
 	 * @ingroup onSPL
 	**/
-	abstract class AbstractList implements ArrayAccess, SimplifiedArrayAccess
+	namespace Onphp;
+
+	abstract class AbstractList implements \ArrayAccess, SimplifiedArrayAccess
 	{
 		protected $list = array();
 		
@@ -29,7 +31,7 @@
 		}
 		
 		/**
-		 * @return AbstractList
+		 * @return \Onphp\AbstractList
 		**/
 		public function offsetUnset($offset)
 		{
@@ -46,7 +48,7 @@
 		// SAA goes here
 		
 		/**
-		 * @return AbstractList
+		 * @return \Onphp\AbstractList
 		**/
 		public function clean()
 		{

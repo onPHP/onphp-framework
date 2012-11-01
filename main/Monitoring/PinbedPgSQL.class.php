@@ -12,6 +12,8 @@
 	/**
 	 *  @ingroup DB
 	**/
+	namespace Onphp;
+
 	final class PinbedPgSQL extends PgSQL
 	{
 		public function connect()
@@ -57,7 +59,7 @@
 				
 				return $result;
 				
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				if (PinbaClient::isEnabled())
 					PinbaClient::me()->timerStop('pg_sql_query_'.$this->basename);
 				

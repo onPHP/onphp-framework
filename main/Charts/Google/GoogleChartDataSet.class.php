@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartDataSet
 	{
 		private $data = array();
@@ -21,7 +23,7 @@
 		private $base = null;
 		
 		/**
-		 * @return GoogleChartDataSet
+		 * @return \Onphp\GoogleChartDataSet
 		**/
 		public static function create()
 		{
@@ -34,7 +36,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartDataSet
+		 * @return \Onphp\GoogleChartDataSet
 		**/
 		public function setData(array $data)
 		{
@@ -49,7 +51,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartDataSet
+		 * @return \Onphp\GoogleChartDataSet
 		**/
 		public function addElement($element)
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartDataSet
+		 * @return \Onphp\GoogleChartDataSet
 		**/
 		public function setBase($base)
 		{
@@ -117,7 +119,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartDataSet
+		 * @return \Onphp\GoogleChartDataSet
 		**/
 		private function calculateMax()
 		{

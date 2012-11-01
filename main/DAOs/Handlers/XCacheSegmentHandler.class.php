@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	final class XCacheSegmentHandler extends OptimizerSegmentHandler
 	{
 		public function __construct($segmentId)

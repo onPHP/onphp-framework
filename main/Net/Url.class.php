@@ -15,22 +15,24 @@
 	 * 
 	 * @ingroup Net
 	**/
+	namespace Onphp;
+
 	class Url extends GenericUri
 	{
 		protected static $knownSubSchemes	= array(
-			'http'		=> 'HttpUrl',
-			'https'		=> 'HttpUrl',
-			'ftp'		=> 'Url',
-			'nntp'		=> 'Url',
-			'telnet'	=> 'Url',
-			'gopher'	=> 'Url',
-			'wais'		=> 'Url',
-			'file'		=> 'Url',
-			'prospero'	=> 'Url'
+			'http'		=> '\Onphp\HttpUrl',
+			'https'		=> '\Onphp\HttpUrl',
+			'ftp'		=> '\Onphp\Url',
+			'nntp'		=> '\Onphp\Url',
+			'telnet'	=> '\Onphp\Url',
+			'gopher'	=> '\Onphp\Url',
+			'wais'		=> '\Onphp\Url',
+			'file'		=> '\Onphp\Url',
+			'prospero'	=> '\Onphp\Url'
 		);
 		
 		/**
-		 * @return Url
+		 * @return \Onphp\Url
 		**/
 		public static function create()
 		{

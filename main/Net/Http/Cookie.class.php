@@ -13,6 +13,8 @@
 	/**
 	 * @ingroup Http
 	**/
+	namespace Onphp;
+
 	final class Cookie extends CollectionItem
 	{
 		private $name		= null;
@@ -24,7 +26,7 @@
 		private $httpOnly	= false;
 		
 		/**
-		 * @return Cookie
+		 * @return \Onphp\Cookie
 		**/
 		public static function create($name)
 		{

@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	final class FeedReader
 	{
 		private $xml			= null;
 		private $formats		= array();
 		
 		/**
-		 * @return FeedReader
+		 * @return \Onphp\FeedReader
 		**/
 		public static function create()
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return SimpleXMLElement
+		 * @return \SimpleXMLElement
 		**/
 		public function getXml()
 		{
@@ -41,7 +43,7 @@
 		}
 		
 		/**
-		 * @return FeedChannel
+		 * @return \Onphp\FeedChannel
 		**/
 		public function parseFile($file)
 		{
@@ -60,17 +62,17 @@
 		}
 		
 		/**
-		 * @return FeedReader
+		 * @return \Onphp\FeedReader
 		**/
 		public function parseXml($xml)
 		{
-			$this->xml = new SimpleXMLElement($xml);
+			$this->xml = new \SimpleXMLElement($xml);
 			
 			return $this->parse();
 		}
 		
 		/**
-		 * @return FeedChannel
+		 * @return \Onphp\FeedChannel
 		**/
 		private function parse()
 		{

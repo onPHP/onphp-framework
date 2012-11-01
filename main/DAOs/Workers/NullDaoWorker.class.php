@@ -17,6 +17,8 @@
 	 * 
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	class NullDaoWorker extends CommonDaoWorker
 	{
 		/// single object getters
@@ -127,7 +129,7 @@
 		}
 		
 		/**
-		 * @return UncacherNullDaoWorker
+		 * @return \Onphp\UncacherNullDaoWorker
 		 */
 		public function getUncacherById($id) {
 			return UncacherNullDaoWorker::create();

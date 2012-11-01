@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	final class RequestType extends Enumeration
 	{
 		const GET		= 1;
@@ -33,7 +35,7 @@
 		);
 		
 		/**
-		 * @return RequestType
+		 * @return \Onphp\RequestType
 		**/
 		public function setId($id)
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return RequestType
+		 * @return \Onphp\RequestType
 		**/
 		public static function get()
 		{
@@ -51,7 +53,7 @@
 		}
 		
 		/**
-		 * @return RequestType
+		 * @return \Onphp\RequestType
 		**/
 		public static function post()
 		{
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return RequestType
+		 * @return \Onphp\RequestType
 		**/
 		public static function files()
 		{
@@ -67,7 +69,7 @@
 		}
 		
 		/**
-		 * @return RequestType
+		 * @return \Onphp\RequestType
 		**/
 		public static function cookie()
 		{
@@ -75,7 +77,7 @@
 		}
 		
 		/**
-		 * @return RequestType
+		 * @return \Onphp\RequestType
 		**/
 		public static function session()
 		{
@@ -83,7 +85,7 @@
 		}
 
 		/**
-		 * @return RequestType
+		 * @return \Onphp\RequestType
 		**/
 		public static function attached()
 		{
@@ -91,7 +93,7 @@
 		}
 		
 		/**
-		 * @return RequestType
+		 * @return \Onphp\RequestType
 		**/
 		public static function server()
 		{
@@ -99,7 +101,7 @@
 		}
 		
 		/**
-		 * @return RequestType
+		 * @return \Onphp\RequestType
 		**/
 		private static function getInstance($id)
 		{

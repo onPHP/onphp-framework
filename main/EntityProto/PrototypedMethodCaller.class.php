@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class PrototypedMethodCaller
 	{
 		protected $proto = null;

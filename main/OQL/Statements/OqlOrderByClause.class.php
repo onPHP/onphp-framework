@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	final class OqlOrderByClause extends OqlQueryListedClause
 	{
 		/**
-		 * @return OqlOrderByClause
+		 * @return \Onphp\OqlOrderByClause
 		**/
 		public static function create()
 		{
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return OrderChain
+		 * @return \Onphp\OrderChain
 		**/
 		public function toOrder()
 		{

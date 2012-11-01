@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OpenId
 	**/
+	namespace Onphp;
+
 	final class OpenIdConsumerSetupRequired implements OpenIdConsumerResult
 	{
 		private $url = null;
@@ -22,7 +24,7 @@
 		}
 		
 		/**
-		 * @return HttpUrl
+		 * @return \Onphp\HttpUrl
 		**/
 		public function getUrl()
 		{

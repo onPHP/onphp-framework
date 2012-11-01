@@ -14,6 +14,8 @@
 	 * @see http://tools.ietf.org/html/rfc4180
 	 * @todo implement parse
 	**/
+	namespace Onphp;
+
 	final class Csv
 	{
 		const SEPARATOR					= "\x2C";
@@ -27,7 +29,7 @@
 		private $data	= array();
 		
 		/**
-		 * @return Csv
+		 * @return \Onphp\Csv
 		**/
 		public static function create($header = false)
 		{
@@ -45,7 +47,7 @@
 		}
 		
 		/**
-		 * @return Csv
+		 * @return \Onphp\Csv
 		**/
 		public function setArray($array)
 		{
@@ -57,7 +59,7 @@
 		}
 		
 		/**
-		 * @return Csv
+		 * @return \Onphp\Csv
 		**/
 		public function setSeparator($separator)
 		{
@@ -112,7 +114,7 @@
 		}
 		
 		/**
-		 * @return ContentTypeHeader
+		 * @return \Onphp\ContentTypeHeader
 		**/
 		public function getContentTypeHeader()
 		{

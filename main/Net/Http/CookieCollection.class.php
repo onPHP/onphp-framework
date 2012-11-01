@@ -16,10 +16,12 @@
 	 * 
 	 * @ingroup Http
 	**/
+	namespace Onphp;
+
 	final class CookieCollection extends AbstractCollection
 	{
 		/**
-		 * @return CookieCollection
+		 * @return \Onphp\CookieCollection
 		**/
 		public static function create()
 		{

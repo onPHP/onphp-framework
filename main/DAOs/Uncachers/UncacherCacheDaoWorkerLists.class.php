@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Uncachers
 	**/
+	namespace Onphp;
+
 	class UncacherCacheDaoWorkerLists implements UncacherBase
 	{
 		private $classNameList = array();
 		
 		/**
-		 * @return UncacherBaseDaoWorker
+		 * @return \Onphp\UncacherBaseDaoWorker
 		 */
 		public static function create($className)
 		{
@@ -62,8 +64,8 @@
 		}
 		
 		/**
-		 * @param UncacherCacheDaoWorkerLists $uncacher
-		 * @return UncacherCacheDaoWorkerLists
+		 * @param \Onphp\UncacherCacheDaoWorkerLists $uncacher
+		 * @return \Onphp\UncacherCacheDaoWorkerLists
 		 */
 		private function mergeSelf(UncacherCacheDaoWorkerLists $uncacher)
 		{

@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	abstract class BaseDaoWorker implements BaseDAO
 	{
 		const SUFFIX_LIST	= '_list_';
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return BaseDaoWorker
+		 * @return \Onphp\BaseDaoWorker
 		**/
 		public function setDao(GenericDAO $dao)
 		{
@@ -88,7 +90,7 @@
 		}
 		
 		/**
-		 * @return UncacherBase
+		 * @return \Onphp\UncacherBase
 		 */
 		public function getUncacherById($id)
 		{

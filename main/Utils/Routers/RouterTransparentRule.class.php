@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class RouterTransparentRule extends RouterBaseRule
 	{
 		protected $urlVariable		= ':';
@@ -27,7 +29,7 @@
 		protected $staticCount		= 0;
 		
 		/**
-		 * @return RouterTransparentRule
+		 * @return \Onphp\RouterTransparentRule
 		**/
 		public static function create($route)
 		{
@@ -40,7 +42,7 @@
 		}
 		
 		/**
-		 * @return RouterTransparentRule
+		 * @return \Onphp\RouterTransparentRule
 		**/
 		public function setRequirements(array $reqirements)
 		{
@@ -253,7 +255,7 @@
 		}
 		
 		/**
-		 * @return RouterTransparentRule
+		 * @return \Onphp\RouterTransparentRule
 		**/
 		protected function processRoute()
 		{

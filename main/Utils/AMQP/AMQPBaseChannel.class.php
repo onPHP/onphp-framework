@@ -12,12 +12,14 @@
 	/**
 	 * Base class modelling an AMQ channel
 	**/
+	namespace Onphp;
+
 	abstract class AMQPBaseChannel implements AMQPChannelInterface
 	{
 		protected $id = null;
 
 		/**
-		 * @var AMQPInterface
+		 * @var \Onphp\AMQPInterface
 		**/
 		protected $transport = null;
 
@@ -45,7 +47,7 @@
 
 		/**
 		 * @throws AMQPServerConnectionException
-		 * @return AMQPBaseChannel
+		 * @return \Onphp\AMQPBaseChannel
 		**/
 		protected function checkConnection()
 		{

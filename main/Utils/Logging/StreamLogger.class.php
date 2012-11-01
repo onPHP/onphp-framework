@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class StreamLogger extends BaseLogger
 	{
 		private $stream = null;
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return StreamLogger
+		 * @return \Onphp\StreamLogger
 		**/
 		public static function create()
 		{
@@ -34,7 +36,7 @@
 		}
 		
 		/**
-		 * @return OutputStream
+		 * @return \Onphp\OutputStream
 		**/
 		public function getOutputStream()
 		{
@@ -42,7 +44,7 @@
 		}
 		
 		/**
-		 * @return StreamLogger
+		 * @return \Onphp\StreamLogger
 		**/
 		public function setOutputStream(OutputStream $stream)
 		{
@@ -52,7 +54,7 @@
 		}
 		
 		/**
-		 * @return StreamLogger
+		 * @return \Onphp\StreamLogger
 		**/
 		public function flush()
 		{
@@ -63,7 +65,7 @@
 		}
 		
 		/**
-		 * @return StreamLogger
+		 * @return \Onphp\StreamLogger
 		**/
 		public function close()
 		{
@@ -79,7 +81,7 @@
 		}
 		
 		/**
-		 * @return StreamLogger
+		 * @return \Onphp\StreamLogger
 		**/
 		protected function publish(LogRecord $record)
 		{

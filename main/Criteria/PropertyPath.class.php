@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Criteria
 	**/
+	namespace Onphp;
+
 	final class PropertyPath
 	{
 		private $root		= null;
@@ -70,7 +72,7 @@
 		}
 		
 		/**
-		 * @return AbstractProtoClass
+		 * @return \Onphp\AbstractProtoClass
 		**/
 		public function getFinalProto()
 		{
@@ -78,7 +80,7 @@
 		}
 		
 		/**
-		 * @return ProtoDAO
+		 * @return \Onphp\ProtoDAO
 		**/
 		public function getFinalDao()
 		{
@@ -86,7 +88,7 @@
 		}
 		
 		/**
-		 * @return LightMetaProperty
+		 * @return \Onphp\LightMetaProperty
 		**/
 		public function getFinalProperty()
 		{
@@ -100,7 +102,7 @@
 			
 			self::$protos[$className] = call_user_func(array($className, 'proto'));
 			self::$daos[$className] =
-				ClassUtils::isInstanceOf($className, 'DAOConnected')
+				ClassUtils::isInstanceOf($className, '\Onphp\DAOConnected')
 					? call_user_func(array($className, 'dao'))
 					: null;
 			

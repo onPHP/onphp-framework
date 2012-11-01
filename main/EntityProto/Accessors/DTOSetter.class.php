@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class DTOSetter extends PrototypedSetter
 	{
 		private $getter = null;
@@ -97,7 +99,7 @@
 		}
 		
 		/**
-		 * @return DTOGetter
+		 * @return \Onphp\DTOGetter
 		**/
 		public function getGetter()
 		{

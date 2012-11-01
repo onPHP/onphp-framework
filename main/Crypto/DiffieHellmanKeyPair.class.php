@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup Crypto
 	**/
+	namespace Onphp;
+
 	final class DiffieHellmanKeyPair implements KeyPair
 	{
 		private $private	= null;
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return DiffieHellmanKeyPair
+		 * @return \Onphp\DiffieHellmanKeyPair
 		**/
 		public static function create(DiffieHellmanParameters $parameters)
 		{
@@ -34,7 +36,7 @@
 		}
 		
 		/**
-		 * @return DiffieHellmanKeyPair
+		 * @return \Onphp\DiffieHellmanKeyPair
 		**/
 		public static function generate(
 			DiffieHellmanParameters $parameters,
@@ -59,7 +61,7 @@
 		}
 		
 		/**
-		 * @return DiffieHellmanKeyPair
+		 * @return \Onphp\DiffieHellmanKeyPair
 		**/
 		public function setPrivate(BigInteger $private)
 		{
@@ -68,7 +70,7 @@
 		}
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function getPrivate()
 		{
@@ -76,7 +78,7 @@
 		}
 		
 		/**
-		 * @return DiffieHellmanKeyPair
+		 * @return \Onphp\DiffieHellmanKeyPair
 		**/
 		public function setPublic(BigInteger $public)
 		{
@@ -85,7 +87,7 @@
 		}
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function getPublic()
 		{
@@ -93,7 +95,7 @@
 		}
 		
 		/**
-		 * @return BigInteger
+		 * @return \Onphp\BigInteger
 		**/
 		public function makeSharedKey(BigInteger $otherSitePublic)
 		{

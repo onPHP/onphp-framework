@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	interface HandlerMapping
 	{
 		/**
-		 * @return Controller
+		 * @return \Onphp\Controller
 		**/
 		public function getController(HttpRequest $request);
 	}

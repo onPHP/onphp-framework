@@ -9,15 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	interface MessageQueueSender
 	{
 		/**
-		 * @return MessageQueueReceiver
+		 * @return \Onphp\MessageQueueReceiver
 		**/
 		public function send(Message $message);
 		
 		/**
-		 * @return MessageQueue
+		 * @return \Onphp\MessageQueue
 		**/
 		public function getQueue();
 	}

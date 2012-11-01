@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Crypto
 	**/
+	namespace Onphp;
+
 	final class CryptoFunctions extends StaticFactory
 	{
 		const SHA1_BLOCK_SIZE = 64;

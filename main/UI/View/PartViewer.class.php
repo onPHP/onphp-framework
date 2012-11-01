@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class PartViewer
 	{
 		protected $viewResolver 	= null;
@@ -24,7 +26,7 @@
 		}
 		
 		/**
-		 * @return PartViewer
+		 * @return \Onphp\PartViewer
 		**/
 		public function view($partName, $model = null)
 		{
@@ -63,7 +65,7 @@
 				ob_start();
 				$this->view($partName, $model);
 				return ob_get_clean();
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				ob_end_clean();
 				throw $e;
 			}
@@ -75,7 +77,7 @@
 		}
 		
 		/**
-		 * @return Model
+		 * @return \Onphp\Model
 		**/
 		public function getModel()
 		{

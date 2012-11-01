@@ -14,6 +14,8 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class LabelStyleType extends Enumeration
 	{
 		const FLOAT				= 0x1;
@@ -27,7 +29,7 @@
 		);
 		
 		/**
-		 * @return LabelStyleType
+		 * @return \Onphp\LabelStyleType
 		**/
 		public static function create($id)
 		{

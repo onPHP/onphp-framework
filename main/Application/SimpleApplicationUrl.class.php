@@ -1,8 +1,10 @@
 <?php
+	namespace Onphp;
+
 	final class SimpleApplicationUrl extends ApplicationUrl
 	{
 		/**
-		 * @return SimpleApplicationUrl
+		 * @return \Onphp\SimpleApplicationUrl
 		**/
 		public static function create()
 		{
@@ -10,7 +12,7 @@
 		}
 		
 		/**
-		 * @return SimpleApplicationUrl
+		 * @return \Onphp\SimpleApplicationUrl
 		**/
 		public function setPathByRequestUri($requestUri, $normalize = true)
 		{

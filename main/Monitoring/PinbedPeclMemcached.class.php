@@ -12,14 +12,16 @@
 	/**
 	 *
 	**/
+	namespace Onphp;
+
 	final class PinbedPeclMemcached extends PeclMemcached
 	{
 		/**
-		 * @return PinbedPeclMemcached 
+		 * @return \Onphp\PinbedPeclMemcached 
 		**/
 		public static function create(
-			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT,
+			$host = \Memcached::DEFAULT_HOST,
+			$port = \Memcached::DEFAULT_PORT,
 			$connectTimeout = PeclMemcached::DEFAULT_TIMEOUT
 		)
 		{

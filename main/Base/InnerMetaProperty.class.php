@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup Helpers
 	**/
+	namespace Onphp;
+
 	final class InnerMetaProperty extends LightMetaProperty
 	{
 		/**
-		 * @return InnerMetaProperty
+		 * @return \Onphp\InnerMetaProperty
 		**/
 		public static function create()
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return Form
+		 * @return \Onphp\Form
 		**/
 		public function fillForm(Form $form, $prefix = null)
 		{
@@ -83,7 +85,7 @@
 		}
 		
 		/**
-		 * @return AbstractProtoClass
+		 * @return \Onphp\AbstractProtoClass
 		**/
 		public function getProto()
 		{

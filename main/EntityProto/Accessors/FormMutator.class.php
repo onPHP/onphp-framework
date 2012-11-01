@@ -9,19 +9,21 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class FormMutator extends PrototypedSetter
 	{
 		private $getter = null;
 		
 		public function __construct(EntityProto $proto, &$object)
 		{
-			Assert::isInstance($object, 'Form');
+			Assert::isInstance($object, '\Onphp\Form');
 			
 			return parent::__construct($proto, $object);
 		}
 		
 		/**
-		 * @return FormGetter
+		 * @return \Onphp\FormGetter
 		**/
 		public function getGetter()
 		{

@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartLabelStyle extends BaseGoogleChartStyle
 	{
 		protected $name = 'chm';
 		
 		/**
-		 * @return GoogleChartLabelStyle
+		 * @return \Onphp\GoogleChartLabelStyle
 		**/
 		public static function create()
 		{
@@ -25,11 +27,11 @@
 		}
 		
 		/**
-		 * @return GoogleChartLineStyle
+		 * @return \Onphp\GoogleChartLineStyle
 		**/
 		public function addStyle($style)
 		{
-			Assert::isInstance($style, 'ChartLabelStyle');
+			Assert::isInstance($style, '\Onphp\ChartLabelStyle');
 			
 			return parent::addStyle($style);
 		}

@@ -9,10 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class DTOToScopeConverter extends PrototypedBuilder
 	{
 		/**
-		 * @return DTOToScopeConverter
+		 * @return \Onphp\DTOToScopeConverter
 		**/
 		public static function create(EntityProto $proto)
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return DTOGetter
+		 * @return \Onphp\DTOGetter
 		**/
 		protected function getGetter($object)
 		{
@@ -33,7 +35,7 @@
 		}
 		
 		/**
-		 * @return ScopeSetter
+		 * @return \Onphp\ScopeSetter
 		**/
 		protected function getSetter(&$object)
 		{

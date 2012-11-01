@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Feed
 	**/
+	namespace Onphp;
+
 	final class RssFeedFormat extends FeedFormat
 	{
 		const VERSION = '2.0';
 		
 		/**
-		 * @return RssFeedFormat
+		 * @return \Onphp\RssFeedFormat
 		**/
 		public static function me()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return RssChannelWorker
+		 * @return \Onphp\RssChannelWorker
 		**/
 		public function getChannelWorker()
 		{
@@ -33,14 +35,14 @@
 		}
 		
 		/**
-		 * @return RssItemWorker
+		 * @return \Onphp\RssItemWorker
 		**/
 		public function getItemWorker()
 		{
 			return RssItemWorker::me();
 		}
 		
-		public function isAcceptable(SimpleXMLElement $xmlFeed)
+		public function isAcceptable(\SimpleXMLElement $xmlFeed)
 		{
 			return (
 				($xmlFeed->getName() == 'rss')

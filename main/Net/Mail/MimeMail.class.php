@@ -14,6 +14,8 @@
 	/**
 	 * @ingroup Mail
 	**/
+	namespace Onphp;
+
 	final class MimeMail implements MailBuilder
 	{
 		private $parts = array();
@@ -25,7 +27,7 @@
 		private $boundary	= null;
 		
 		/**
-		 * @return MimeMail
+		 * @return \Onphp\MimeMail
 		**/
 		public function addPart(MimePart $part)
 		{
@@ -80,7 +82,7 @@
 		}
 		
 		/**
-		 * @return MimeMail
+		 * @return \Onphp\MimeMail
 		**/
 		public function setBoundary($boundary)
 		{

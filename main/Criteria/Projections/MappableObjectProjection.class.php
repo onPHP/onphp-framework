@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Projections
 	**/
+	namespace Onphp;
+
 	final class MappableObjectProjection implements ObjectProjection
 	{
 		private $mappable	= null;
@@ -24,7 +26,7 @@
 		}
 		
 		/**
-		 * @return JoinCapableQuery
+		 * @return \Onphp\JoinCapableQuery
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query)
 		{

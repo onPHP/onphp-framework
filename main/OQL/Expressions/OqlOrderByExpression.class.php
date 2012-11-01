@@ -12,9 +12,11 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	final class OqlOrderByExpression extends OqlQueryExpression
 	{
-		const CLASS_NAME = 'OrderBy';
+		const CLASS_NAME = '\Onphp\OrderBy';
 		
 		private $direction = null;
 		
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return OrderBy
+		 * @return \Onphp\OrderBy
 		**/
 		public function evaluate($values)
 		{

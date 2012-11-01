@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	final class OqlInExpression extends OqlQueryExpression
 	{
 		private $logic = null;
@@ -28,7 +30,7 @@
 		}
 		
 		/**
-		 * @return InExpression
+		 * @return \Onphp\InExpression
 		**/
 		public function evaluate($values)
 		{

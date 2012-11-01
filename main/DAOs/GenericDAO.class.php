@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	abstract class GenericDAO extends Singleton implements BaseDAO
 	{
 		private $identityMap	= array();
@@ -85,7 +87,7 @@
 		}
 		
 		/**
-		 * @return AbstractProtoClass
+		 * @return \Onphp\AbstractProtoClass
 		**/
 		public function getProtoClass()
 		{
@@ -116,7 +118,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function makeSelectHead()
 		{
@@ -139,7 +141,7 @@
 		}
 		
 		/**
-		 * @return SelectQuery
+		 * @return \Onphp\SelectQuery
 		**/
 		public function makeTotalCountQuery()
 		{
@@ -305,7 +307,7 @@
 		}
 		
 		/**
-		 * @return UncachersPool
+		 * @return \Onphp\UncachersPool
 		 */
 		public function getUncacherById($id)
 		{
@@ -338,7 +340,7 @@
 		//@}
 		
 		/**
-		 * @return GenericDAO
+		 * @return \Onphp\GenericDAO
 		**/
 		public function dropIdentityMap()
 		{

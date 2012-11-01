@@ -9,5 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class RouterException extends BaseException {/*_*/}
 ?>

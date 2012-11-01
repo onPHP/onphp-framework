@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	final class ApcSegmentHandler extends OptimizerSegmentHandler
 	{
 		public function __construct($segmentId)

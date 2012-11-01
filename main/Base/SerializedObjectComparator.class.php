@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class SerializedObjectComparator extends Singleton
 		implements Comparator, Instantiatable
 	{

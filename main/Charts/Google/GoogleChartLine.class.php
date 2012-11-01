@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	final class GoogleChartLine extends GoogleChartPiece
 	{
 		private $style 		= null;
 		private $labelStyle = null;
 		
 		/**
-		 * @return GoogleChartLine
+		 * @return \Onphp\GoogleChartLine
 		**/
 		public static function create()
 		{
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartLine
+		 * @return \Onphp\GoogleChartLine
 		**/
 		public function setValue(/* GoogleChartDataSet */ $value)
 		{
@@ -34,7 +36,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartLine
+		 * @return \Onphp\GoogleChartLine
 		**/
 		public function setStyle(ChartLineStyle $style)
 		{
@@ -44,7 +46,7 @@
 		}
 		
 		/**
-		 * @return ChartLineStyle
+		 * @return \Onphp\ChartLineStyle
 		**/
 		public function getStyle()
 		{
@@ -52,7 +54,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartLine
+		 * @return \Onphp\GoogleChartLine
 		**/
 		public function setLabelStyle(ChartLabelStyle $style)
 		{
@@ -62,7 +64,7 @@
 		}
 		
 		/**
-		 * @return GoogleChartLabelStyle
+		 * @return \Onphp\GoogleChartLabelStyle
 		**/
 		public function getLabelStyle()
 		{

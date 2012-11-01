@@ -16,6 +16,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class TextUtils extends StaticFactory
 	{
 		public static function friendlyFileSize(

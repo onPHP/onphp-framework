@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Turing
 	**/
+	namespace Onphp;
+
 	final class RandomLinesBackgroundDrawer extends BackgroundDrawer
 	{
 		private $count = null;
@@ -22,7 +24,7 @@
 		}
 		
 		/**
-		 * @return RandomLinesBackgroundDrawer
+		 * @return \Onphp\RandomLinesBackgroundDrawer
 		**/
 		public function draw()
 		{

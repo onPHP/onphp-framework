@@ -16,6 +16,8 @@
 	 *
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class TarArchive extends FileArchive
 	{
 		public function __construct($cmdBinPath = '/bin/tar')

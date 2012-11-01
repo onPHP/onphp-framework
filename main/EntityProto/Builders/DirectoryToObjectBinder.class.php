@@ -9,12 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class DirectoryToObjectBinder extends ObjectBuilder
 	{
 		private $identityMap = null;
 		
 		/**
-		 * @return FormToObjectConverter
+		 * @return \Onphp\FormToObjectConverter
 		**/
 		public static function create(EntityProto $proto)
 		{
@@ -36,7 +38,7 @@
 		}
 		
 		/**
-		 * @return DirectoryContext
+		 * @return \Onphp\DirectoryContext
 		**/
 		public function getIdentityMap()
 		{
@@ -44,7 +46,7 @@
 		}
 		
 		/**
-		 * @return PrototypedBuilder
+		 * @return \Onphp\PrototypedBuilder
 		**/
 		public function cloneBuilder(EntityProto $proto)
 		{
@@ -65,7 +67,7 @@
 		}
 		
 		/**
-		 * @return PrototypedBuilder
+		 * @return \Onphp\PrototypedBuilder
 		**/
 		public function makeReverseBuilder()
 		{
@@ -105,7 +107,7 @@
 		}
 		
 		/**
-		 * @return FormGetter
+		 * @return \Onphp\FormGetter
 		**/
 		protected function getGetter($object)
 		{
@@ -113,7 +115,7 @@
 		}
 		
 		/**
-		 * @return ObjectSetter
+		 * @return \Onphp\ObjectSetter
 		**/
 		protected function getSetter(&$object)
 		{

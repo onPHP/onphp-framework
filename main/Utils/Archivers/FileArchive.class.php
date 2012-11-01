@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	abstract class FileArchive
 	{
 		protected $cmdBinPath	= null;
@@ -32,7 +34,7 @@
 		}
 		
 		/**
-		 * @return FileArchive
+		 * @return \Onphp\FileArchive
 		**/
 		public function open($sourceFile)
 		{

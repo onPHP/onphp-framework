@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Ip
 	**/
+	namespace Onphp;
+
 	final class IpUtils extends StaticFactory
 	{
 		public static function makeRanges(array $ips)

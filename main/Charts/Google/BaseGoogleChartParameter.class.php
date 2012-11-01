@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup GoogleChart
 	**/
+	namespace Onphp;
+
 	abstract class BaseGoogleChartParameter implements Stringable
 	{
 		protected $name = null;
 		
 		/**
-		 * @return BaseGoogleChartParameter
+		 * @return \Onphp\BaseGoogleChartParameter
 		**/
 		public function setName($name)
 		{

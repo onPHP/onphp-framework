@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class FileInputStream extends InputStream
 	{
 		private $fd		= null;
@@ -45,7 +47,7 @@
 		}
 		
 		/**
-		 * @return FileInputStream
+		 * @return \Onphp\FileInputStream
 		**/
 		public static function create($nameOrFd)
 		{
@@ -58,7 +60,7 @@
 		}
 		
 		/**
-		 * @return FileInputStream
+		 * @return \Onphp\FileInputStream
 		**/
 		public function mark()
 		{
@@ -78,7 +80,7 @@
 		}
 		
 		/**
-		 * @return FileInputStream
+		 * @return \Onphp\FileInputStream
 		**/
 		public function reset()
 		{
@@ -86,7 +88,7 @@
 		}
 		
 		/**
-		 * @return FileInputStream
+		 * @return \Onphp\FileInputStream
 		**/
 		public function seek($offset)
 		{
@@ -99,7 +101,7 @@
 		}
 		
 		/**
-		 * @return FileInputStream
+		 * @return \Onphp\FileInputStream
 		**/
 		public function close()
 		{

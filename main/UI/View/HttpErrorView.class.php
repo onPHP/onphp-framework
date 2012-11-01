@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class HttpErrorView implements View
 	{
 		protected $status	= null;

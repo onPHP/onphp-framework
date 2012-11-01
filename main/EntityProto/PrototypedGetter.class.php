@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	abstract class PrototypedGetter extends PrototypedMethodCaller
 	{
 		abstract public function get($name);

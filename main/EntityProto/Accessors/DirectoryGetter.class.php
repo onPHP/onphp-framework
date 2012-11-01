@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class DirectoryGetter extends PrototypedGetter
 	{
 		public function get($name)

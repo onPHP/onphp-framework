@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup OpenId
 	**/
+	namespace Onphp;
+
 	final class OpenIdConsumerPositive implements OpenIdConsumerResult
 	{
 		private $identity = null;
@@ -22,7 +24,7 @@
 		}
 		
 		/**
-		 * @return HttpUrl
+		 * @return \Onphp\HttpUrl
 		**/
 		public function getIdentity()
 		{

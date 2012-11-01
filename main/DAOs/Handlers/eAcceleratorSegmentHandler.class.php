@@ -14,6 +14,8 @@
 	 * 
 	 * @ingroup DAOs
 	**/
+	namespace Onphp;
+
 	final class eAcceleratorSegmentHandler extends OptimizerSegmentHandler
 	{
 		public function __construct($segmentId)

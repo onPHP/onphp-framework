@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	final class RedirectToView extends RedirectView
 	{
 		private $prefix = null;
 		private $suffix = null;
 		
 		/**
-		 * @return RedirectToView
+		 * @return \Onphp\RedirectToView
 		**/
 		public static function create($controllerName)
 		{
@@ -38,7 +40,7 @@
 		}
 		
 		/**
-		 * @return RedirectToView
+		 * @return \Onphp\RedirectToView
 		**/
 		public function setPrefix($prefix)
 		{
@@ -53,7 +55,7 @@
 		}
 		
 		/**
-		 * @return RedirectToView
+		 * @return \Onphp\RedirectToView
 		**/
 		public function setSuffix($suffix)
 		{
@@ -68,7 +70,7 @@
 		}
 		
 		/**
-		 * @return RedirectToView
+		 * @return \Onphp\RedirectToView
 		**/
 		public function setName($name)
 		{

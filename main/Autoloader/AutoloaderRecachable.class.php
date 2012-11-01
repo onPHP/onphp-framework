@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 	
+	namespace Onphp;
+
 	interface AutoloaderRecachable extends Autoloader
 	{
 		public function autoloadWithRecache($className);

@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 	
+	namespace Onphp;
+
 	abstract class AMQPPeclBaseBitmask implements AMQPBitmaskResolver
 	{
 		public function getBitmask($config)

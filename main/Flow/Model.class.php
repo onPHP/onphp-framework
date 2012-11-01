@@ -12,12 +12,14 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	class Model implements SimplifiedArrayAccess
 	{
 		private $vars = array();
 		
 		/**
-		 * @return Model
+		 * @return \Onphp\Model
 		**/
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return Model
+		 * @return \Onphp\Model
 		**/
 		public function clean()
 		{
@@ -45,7 +47,7 @@
 		}
 		
 		/**
-		 * @return Model
+		 * @return \Onphp\Model
 		**/
 		public function set($name, $var)
 		{
@@ -65,7 +67,7 @@
 		}
 		
 		/**
-		 * @return Model
+		 * @return \Onphp\Model
 		**/
 		public function drop($name)
 		{
@@ -75,7 +77,7 @@
 		}
 		
 		/**
-		 * @return Model
+		 * @return \Onphp\Model
 		**/
 		public function merge(Model $model, $overwrite = false)
 		{

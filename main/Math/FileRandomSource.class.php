@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Math
 	**/
+	namespace Onphp;
+
 	final class FileRandomSource implements RandomSource
 	{
 		private $handle = null;

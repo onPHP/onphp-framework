@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class TypesUtils extends StaticFactory
 	{
 		const SIGNED_MAX	= 2147483647;

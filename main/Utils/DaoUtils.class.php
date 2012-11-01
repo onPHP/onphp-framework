@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class DaoUtils extends StaticFactory
 	{
 		private static $nullValue	= 0;

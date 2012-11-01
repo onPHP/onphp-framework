@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class BufferedReader extends Reader
 	{
 		private $in				= null;
@@ -29,7 +31,7 @@
 		}
 		
 		/**
-		 * @return BufferedReader
+		 * @return \Onphp\BufferedReader
 		**/
 		public static function create(Reader $in)
 		{
@@ -37,7 +39,7 @@
 		}
 		
 		/**
-		 * @return BufferedReader
+		 * @return \Onphp\BufferedReader
 		**/
 		public function close()
 		{
@@ -57,7 +59,7 @@
 		}
 		
 		/**
-		 * @return BufferedReader
+		 * @return \Onphp\BufferedReader
 		**/
 		public function mark()
 		{
@@ -67,7 +69,7 @@
 		}
 		
 		/**
-		 * @return BufferedReader
+		 * @return \Onphp\BufferedReader
 		**/
 		public function reset()
 		{

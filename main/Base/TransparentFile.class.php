@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class TransparentFile
 	{
 		private $path		= null;
@@ -17,7 +19,7 @@
 		private $tempFile	= null;
 		
 		/**
-		 * @return TransparentFile
+		 * @return \Onphp\TransparentFile
 		**/
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return TransparentFile
+		 * @return \Onphp\TransparentFile
 		**/
 		public function setPath($path)
 		{
@@ -56,7 +58,7 @@
 		}
 		
 		/**
-		 * @return TransparentFile
+		 * @return \Onphp\TransparentFile
 		**/
 		public function setRawData($rawData)
 		{

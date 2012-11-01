@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	interface Comparator
 	{
 		public function compare($one, $two);

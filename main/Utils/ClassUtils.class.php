@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	final class ClassUtils extends StaticFactory
 	{
 		const CLASS_NAME_PATTERN = '[a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\\\\]*';
@@ -20,7 +22,7 @@
 		{
 			Assert::isEqual(get_class($source), get_class($destination));
 			
-			$class = new ReflectionClass($source);
+			$class = new \ReflectionClass($source);
 			
 			foreach ($class->getProperties() as $property) {
 				$name = ucfirst($property->getName());
@@ -54,7 +56,7 @@
 		{
 			Assert::isTrue(get_class($source) == get_class($destination));
 			
-			$class = new ReflectionClass($source);
+			$class = new \ReflectionClass($source);
 			
 			foreach ($class->getProperties() as $property) {
 				$name = ucfirst($property->getName());
@@ -76,7 +78,7 @@
 		{
 			Assert::isTrue(get_class($source) == get_class($destination));
 			
-			$class = new ReflectionClass($source);
+			$class = new \ReflectionClass($source);
 			
 			foreach ($class->getProperties() as $property) {
 				$name = ucfirst($property->getName());
@@ -183,8 +185,8 @@
 			list($className, $methodName) = $nameParts;
 			
 			try {
-				$class = new ReflectionClass($className);
-			} catch (ReflectionException $e) {
+				$class = new \ReflectionClass($className);
+			} catch (\ReflectionException $e) {
 				throw new ClassNotFoundException($className);
 			}
 			

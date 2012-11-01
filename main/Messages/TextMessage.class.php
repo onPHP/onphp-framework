@@ -10,6 +10,8 @@
  ***************************************************************************/
 
 
+	namespace Onphp;
+
 	final class TextMessage implements Message
 	{
 		private $timestamp	= null;

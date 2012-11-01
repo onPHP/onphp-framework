@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup OQL
 	**/
+	namespace Onphp;
+
 	final class OqlHavingClause extends OqlQueryExpressionClause
 	{
 		/**
-		 * @return OqlHavingClause
+		 * @return \Onphp\OqlHavingClause
 		**/
 		public static function create()
 		{
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return HavingProjection
+		 * @return \Onphp\HavingProjection
 		**/
 		public function toProjection()
 		{
@@ -32,7 +34,7 @@
 		
 		protected static function checkExpression(OqlQueryExpression $expression)
 		{
-			Assert::isInstance($expression->getClassName(), 'HavingProjection');
+			Assert::isInstance($expression->getClassName(), '\Onphp\HavingProjection');
 		}
 	}
 ?>

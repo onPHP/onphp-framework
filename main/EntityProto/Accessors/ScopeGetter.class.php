@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class ScopeGetter extends PrototypedGetter
 	{
 		public function get($name)

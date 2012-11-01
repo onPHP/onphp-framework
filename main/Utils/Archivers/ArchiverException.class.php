@@ -12,5 +12,7 @@
 	/**
 	 * @ingroup Utils
 	**/
+	namespace Onphp;
+
 	class ArchiverException extends BaseException {/*_*/}
 ?>

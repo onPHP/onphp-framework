@@ -14,10 +14,12 @@
 	 * 
 	 * @ingroup onSPL
 	**/
+	namespace Onphp;
+
 	final class IndexedList extends AbstractList
 	{
 		/**
-		 * @return IndexedList
+		 * @return \Onphp\IndexedList
 		**/
 		public static function create()
 		{
@@ -25,7 +27,7 @@
 		}
 		
 		/**
-		 * @return IndexedList
+		 * @return \Onphp\IndexedList
 		**/
 		public function offsetSet($offset, $value)
 		{

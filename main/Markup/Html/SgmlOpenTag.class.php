@@ -12,13 +12,15 @@
 	/**
 	 * @ingroup Html
 	**/
+	namespace Onphp;
+
 	final class SgmlOpenTag extends SgmlTag
 	{
 		private $attributes	= array();
 		private $empty		= false;
 		
 		/**
-		 * @return SgmlOpenTag
+		 * @return \Onphp\SgmlOpenTag
 		**/
 		public static function create()
 		{
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return SgmlOpenTag
+		 * @return \Onphp\SgmlOpenTag
 		**/
 		public function setEmpty($isEmpty)
 		{
@@ -43,7 +45,7 @@
 		}
 		
 		/**
-		 * @return SgmlOpenTag
+		 * @return \Onphp\SgmlOpenTag
 		**/
 		public function setAttribute($name, $value)
 		{
@@ -72,7 +74,7 @@
 		}
 		
 		/**
-		 * @return SgmlOpenTag
+		 * @return \Onphp\SgmlOpenTag
 		**/
 		public function dropAttribute($name)
 		{
@@ -94,7 +96,7 @@
 		}
 		
 		/**
-		 * @return SgmlOpenTag
+		 * @return \Onphp\SgmlOpenTag
 		**/
 		public function dropAttributesList()
 		{

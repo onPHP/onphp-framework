@@ -9,5 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	class AMQPServerException extends BaseException {/**/}
 ?>

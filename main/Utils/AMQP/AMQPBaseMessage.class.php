@@ -12,6 +12,8 @@
 	/**
 	 * http://www.rabbitmq.com/amqp-0-9-1-reference.html#class.basic
 	**/
+	namespace Onphp;
+
 	abstract class AMQPBaseMessage
 	{
 		const CONTENT_TYPE = 'content_type';
@@ -58,7 +60,7 @@
 		}
 
 		/**
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setProperties(array $assoc)
 		{
@@ -77,7 +79,7 @@
 		}
 
 		/**
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setContentType($string)
 		{
@@ -92,7 +94,7 @@
 		}
 
 		/**
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setContentEncoding($string)
 		{
@@ -107,7 +109,7 @@
 		}
 
 		/**
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setMessageId($string)
 		{
@@ -122,7 +124,7 @@
 		}
 
 		/**
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setUserId($string)
 		{
@@ -137,7 +139,7 @@
 		}
 
 		/**
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setAppId($string)
 		{
@@ -154,7 +156,7 @@
 		/**
 		 * Non-persistent (1) or persistent (2).
 		 *
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setDeliveryMode($int)
 		{
@@ -184,7 +186,7 @@
 		/**
 		 * Message priority from 0 to 9.
 		 *
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setPriority($int)
 		{
@@ -206,7 +208,7 @@
 		}
 
 		/**
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setCorrelationId($string)
 		{
@@ -221,7 +223,7 @@
 		}
 
 		/**
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setTimestamp(Timestamp $datetime)
 		{
@@ -232,7 +234,7 @@
 		}
 
 		/**
-		 * @return Timestamp
+		 * @return \Onphp\Timestamp
 		**/
 		public function getTimestamp()
 		{
@@ -240,7 +242,7 @@
 		}
 
 		/**
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setExpiration($string)
 		{
@@ -255,7 +257,7 @@
 		}
 
 		/**
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setType($string)
 		{
@@ -270,7 +272,7 @@
 		}
 
 		/**
-		 * @return AMQPBaseMessage
+		 * @return \Onphp\AMQPBaseMessage
 		**/
 		public function setReplyTo($string)
 		{

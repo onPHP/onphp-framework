@@ -12,10 +12,12 @@
 	/**
 	 * @ingroup Math
 	**/
+	namespace Onphp;
+
 	final class GmpBigIntegerFactory extends BigNumberFactory
 	{
 		/**
-		 * @return GmpBigIntegerFactory
+		 * @return \Onphp\GmpBigIntegerFactory
 		**/
 		public static function me()
 		{
@@ -23,7 +25,7 @@
 		}
 		
 		/**
-		 * @return GmpBigInteger
+		 * @return \Onphp\GmpBigInteger
 		**/
 		public function makeNumber($number, $base = 10)
 		{
@@ -31,7 +33,7 @@
 		}
 		
 		/**
-		 * @return GmpBigInteger
+		 * @return \Onphp\GmpBigInteger
 		**/
 		public function makeFromBinary($binary)
 		{
@@ -39,7 +41,7 @@
 		}
 		
 		/**
-		 * @return GmpBigInteger
+		 * @return \Onphp\GmpBigInteger
 		**/
 		public function makeRandom($stop, RandomSource $source)
 		{

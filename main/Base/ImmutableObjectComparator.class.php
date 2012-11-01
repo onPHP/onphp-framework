@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class ImmutableObjectComparator extends Singleton
 		implements Comparator, Instantiatable
 	{
@@ -19,8 +21,8 @@
 
 		public function compare($one, $two)
 		{
-			Assert::isInstance($one, 'Identifiable');
-			Assert::isInstance($two, 'Identifiable');
+			Assert::isInstance($one, '\Onphp\Identifiable');
+			Assert::isInstance($two, '\Onphp\Identifiable');
 
 			$oneId = $one->getId();
 			$twoId = $two->getId();

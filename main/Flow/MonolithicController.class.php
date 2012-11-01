@@ -12,6 +12,8 @@
 	/**
 	 * @ingroup Flow
 	**/
+	namespace Onphp;
+
 	abstract class MonolithicController extends BaseEditor
 	{
 		public function __construct(Prototyped $subject)
@@ -26,7 +28,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function handleRequest(HttpRequest $request)
 		{
@@ -48,7 +50,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function doImport(
 			Prototyped $subject, Form $form, HttpRequest $request
@@ -58,7 +60,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function doDrop(
 			Prototyped $subject, Form $form, HttpRequest $request
@@ -68,7 +70,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function doSave(
 			Prototyped $subject, Form $form, HttpRequest $request
@@ -78,7 +80,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function doEdit(
 			Prototyped $subject, Form $form, HttpRequest $request
@@ -88,7 +90,7 @@
 		}
 		
 		/**
-		 * @return ModelAndView
+		 * @return \Onphp\ModelAndView
 		**/
 		public function doAdd(
 			Prototyped $subject, Form $form, HttpRequest $request
