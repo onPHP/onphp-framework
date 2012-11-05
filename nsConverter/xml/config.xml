@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE metaconfiguration SYSTEM "meta.dtd">
+<metaconfiguration>
+
+	<classes namespace="NsConverter">
+		<class name="NsClass">
+			<properties>
+				<property name="name" type="String" size="256" required="true" />
+				<property name="namespace" type="String" size="256" required="true" />
+				<property name="newNamespace" type="String" size="256" required="true" />
+			</properties>
+			<pattern name="ValueObject" />
+		</class>
+	</classes>
+	
+	<sources>
+		<source name="con" default="false"/>
+	</sources>
+</metaconfiguration>

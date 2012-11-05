@@ -1,0 +1,20 @@
+<?php
+
+namespace {
+	new \NsConverter\Form();
+	\onPHP \ Model::create();
+	HttpRequest->create();
+}
+
+namespace convert\testclass2;
+
+trait A {
+	function sum($a, $b) {
+		$sum = function ($a, $b) {
+			$command = \CommandChain::create();
+			$command->add($command);
+			return $a + $b;
+		};
+		$sum(2, 3);
+	}
+}

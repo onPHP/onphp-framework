@@ -1,0 +1,10 @@
+<div class="block" style="float: left;">
+	<?
+	/* @var $db DB */
+	/* @var $form Form */
+
+	$db = new DB();
+	print DB::FULL_TEXT_AND ?>
+	<br />
+	<?=OSQL::select()->toString();?>
+</div>

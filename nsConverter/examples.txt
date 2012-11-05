@@ -1,0 +1,2 @@
+php misc/scan.php --path=../onPHP/main/ --namespace=onPHP > replace.config/onPHP.main.txt
+php misc/replace.php --config=.../converter/replace.config/

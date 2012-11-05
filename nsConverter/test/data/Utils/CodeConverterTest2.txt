@@ -1,0 +1,59 @@
+<?php
+
+/* * *************************************************************************
+ *   Copyright (C) 2012 by Alexey Denisov                                  *
+ *   alexeydsov@gmail.com                                                  *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU Lesser General Public License as        *
+ *   published by the Free Software Foundation; either version 3 of the    *
+ *   License, or (at your option) any later version.                       *
+ *                                                                         *
+ * ************************************************************************* */
+
+namespace convert\testclass2;
+
+new \Onphp\Form();
+\Onphp\Model::create();
+HttpRequest->create();
+
+
+trait A {
+	use \converter\B;
+
+	const    VALUE = 'value';
+
+	/**
+	 * @var \Onphp\View
+	 */
+	private $c = null;
+	private $cName = '\Onphp\View';
+	private $cName2 = "\Onphp\View";
+
+	/**
+	 * @param \Onphp\Primitive $newNamespace
+	 * @param string $newNamespace
+	 * @return \Onphp\View
+	 */
+	function sum($a, $b) {
+		$sum = function ($a, $b) {
+			$command = \Onphp\CommandChain::create();
+			$command = \Onphp\CommandChain :: create();
+			/* @var $command \Onphp\CommandChain */
+
+			$command
+				->add($command);
+
+			$c = new $cName();
+			/* @var \Onphp\View $c  */
+
+			return $c->
+				render($a + $b);
+		};
+		$sum(2, 3);
+
+		is_object(parent::run());
+		self ::run();
+		static:: run();
+	}
+}

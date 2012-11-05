@@ -1,0 +1,11 @@
+<?php namespace convert\testclass3;
+?><div class="block" style="float: left;">
+	<?
+	/* @var $db \Onphp\DB */
+	/* @var $form \Onphp\Form */
+
+	$db = new \Onphp\DB();
+	print \Onphp\DB::FULL_TEXT_AND ?>
+	<br />
+	<?=\Onphp\OSQL::select()->toString();?>
+</div>

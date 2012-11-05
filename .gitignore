@@ -1,4 +1,7 @@
 global.inc.php
+nsConverter/conf/config.inc.php
+nsConverter/conf/constants.inc.php
+nsConverter/build_meta.sh
 test/config.inc.php
 test/meta/Auto/
 test/meta/Business/

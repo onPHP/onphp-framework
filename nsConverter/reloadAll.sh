@@ -1,0 +1,1 @@
+php misc/reGenerateDatabase.php && php misc/run.php --command=Parse && php misc/run.php --command=Parse --linker && php misc/run.php --command=Class

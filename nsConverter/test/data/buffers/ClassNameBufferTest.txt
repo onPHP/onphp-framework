@@ -1,0 +1,9 @@
+<?php
+new \NsConverter\Form();
+\onPHP \ Model::create();
+HttpRequest->create();
+(int)'15';
+(float)$g;
+(string)$jkhkj;
+$tt = true == false;
+$bb = null;
