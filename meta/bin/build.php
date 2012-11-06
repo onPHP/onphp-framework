@@ -51,6 +51,8 @@ Possible options:
 				ONPHP_META_PATTERNS,
 				ONPHP_META_TYPES,
 			));
+
+		Assert::isTrue(defined('PATH_CLASSES'), 'constant PATH_CLASSES must be defined');
 		
 		if (!defined('ONPHP_META_DAO_DIR'))
 			define(
