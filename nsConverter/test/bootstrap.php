@@ -7,5 +7,5 @@ require dirname(dirname(__FILE__)).'/conf/config.auto.inc.php';
 	->setNamespaceResolver(\Onphp\NamespaceResolverOnPHP::create())
 	->addPaths([
 		PATH_BASE.'test'.DIRECTORY_SEPARATOR.'utils'.DIRECTORY_SEPARATOR,
-	], 'NsConverter')
+	], 'Onphp\NsConverter')
 	->register();

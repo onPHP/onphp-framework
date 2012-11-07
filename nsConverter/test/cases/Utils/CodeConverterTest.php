@@ -24,13 +24,13 @@ class CodeConverterTest extends TestCase
 	public function testSimpleNoNamespace()
 	{
 		$classStorage = $this->getClassStorage([
-			['\Onphp\Form', '', 'Onphp'],
-			['\Onphp\Model', '', '\\Onphp\\'],
-			['\Onphp\HttpRequest', '', 'convert\testclass2'],
-			['\Onphp\CommandChain', '', 'Onphp\\'],
+			['Form', '', 'Onphp'],
+			['Model', '', '\\Onphp\\'],
+			['HttpRequest', '', 'convert\testclass2'],
+			['CommandChain', '', 'Onphp\\'],
 			['B', '', 'converter'],
-			['\Onphp\View', '', 'Onphp'],
-			['\Onphp\Primitive', '', 'Onphp'],
+			['View', '', 'Onphp'],
+			['Primitive', '', 'Onphp'],
 		]);
 		
 		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath(), 'convert\testclass2');
@@ -43,13 +43,13 @@ class CodeConverterTest extends TestCase
 	public function testSimpleNs2Ns()
 	{
 		$classStorage = $this->getClassStorage([
-			['\Onphp\Form', 'Onphp', 'Onphp\main'],
-			['\Onphp\Model', '\\Onphp\\', 'Onphp\core'],
-			['\Onphp\HttpRequest', '', 'Onphp\main'],
-			['\Onphp\CommandChain', 'Onphp', 'Onphp'],
+			['Form', 'Onphp', 'Onphp\main'],
+			['Model', '\Onphp\\', 'Onphp\core'],
+			['HttpRequest', '', 'Onphp\main'],
+			['CommandChain', 'Onphp', 'Onphp'],
 			['B', 'converter', 'convert\testclass3'],
-			['\Onphp\View', 'Onphp', 'convert\testclass3'],
-			['\Onphp\Primitive', 'Onphp', 'Onphp'],
+			['View', 'Onphp', 'convert\testclass3'],
+			['Primitive', 'Onphp', 'Onphp'],
 		]);
 
 		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath('2'), 'convert\testclass3');
@@ -63,9 +63,9 @@ class CodeConverterTest extends TestCase
 	public function testSimplePHtml()
 	{
 		$classStorage = $this->getClassStorage([
-			['\Onphp\DB', '', 'Onphp'],
-			['\Onphp\OSQL', '', 'Onphp'],
-			['\Onphp\Form', '', 'Onphp'],
+			['DB', '', 'Onphp'],
+			['OSQL', '', 'Onphp'],
+			['Form', '', 'Onphp'],
 		]);
 
 		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath('4'), 'convert\testclass3');

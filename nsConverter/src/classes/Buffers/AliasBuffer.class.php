@@ -24,11 +24,15 @@ class AliasBuffer implements Buffer
 	 */
 	private $classBuffer = null;
 	private $buffer = false;
+	private $bufferStart = null;
+	private $buffers = [];
 	private $aliases = [];
 	/**
 	 * @var \Onphp\NsConverter\ClassNameBuffer
 	 */
 	private $classNameBuffer = null;
+	private $classFrom = null;
+	private $classTo = null;
 	
 	/**
 	 * @param \Onphp\NsConverter\NamespaceBuffer $namespaceBuffer
@@ -55,7 +59,12 @@ class AliasBuffer implements Buffer
 	public function init()
 	{
 		$this->buffer = false;
+		$this->bufferStart = null;
+		$this->buffers = [];
 		$this->aliases = [];
+		$this->classNameBuffer = null;
+		$this->classFrom = null;
+		$this->classTo = null;
 		return $this;
 	}
 
@@ -67,20 +76,21 @@ class AliasBuffer implements Buffer
 		return $this->buffer == true;
 	}
 	
-	public function getRealClassName($className)
+	public function getAliases()
 	{
-		return $className;
+		return $this->aliases;
+	}
+	
+	public function getBuffers()
+	{
+		return $this->buffers;
 	}
 
 	public function process($subject, $i)
 	{
-		if ($this->classNameBuffer) {
-			$this->classNameBuffer->process($subject, $i);
-		}
 		
-		if (is_array($subject) && $subject[0] == T_USE && !$this->classBuffer->isBuffer()) {
-			$this->buffer = true;
-			$this->classNameBuffer = null;
+		if (is_array($subject) && $subject[0] == T_USE && !$this->classBuffer->getClassName()) {
+			$this->startBuffer($i);
 		} elseif ($this->buffer) {
 			if ($this->classNameBuffer) {
 				$this->classNameBuffer->process($subject, $i);
@@ -89,8 +99,56 @@ class AliasBuffer implements Buffer
 				$this->classNameBuffer->process($subject, $i);
 			}
 			if (is_string($subject) && $subject == ';') {
-				$this->buffer = false;
-			} /*elseif ($subject)*/
+				$this->endAlias();
+				$this->endBuffer($i);
+			} elseif (is_string($subject) && $subject == ',') {
+				$this->endAlias();
+			} elseif (is_array($subject) && $subject[0] == T_AS) {
+				$this->storeClassName();
+			} elseif ($this->classNameBuffer && !$this->classNameBuffer->isBuffer()) {
+				throw new \Onphp\UnimplementedFeatureException();
+			}
 		}
+	}
+	
+	private function endAlias()
+	{
+		$this->storeClassName();
+		if (!$this->classTo) {
+			$fromParts = explode('\\', $this->classFrom);
+			$this->classTo = array_pop($fromParts);
+		}
+		$this->aliases[$this->classTo] = $this->classFrom;
+		$this->classFrom = null;
+		$this->classTo = null;
+	}
+	
+	private function startBuffer($i)
+	{
+		$this->buffer = true;
+		$this->classNameBuffer = null;
+		$this->bufferStart = $i;
+	}
+	
+	private function endBuffer($i)
+	{
+		$this->buffers[] = [$this->bufferStart, $i];
+		
+		$this->buffer = false;
+		$this->classNameBuffer = null;
+		$this->bufferStart = null;
+	}
+	
+	private function storeClassName()
+	{
+		\Onphp\Assert::isNotNull($this->classNameBuffer);
+		if (!$this->classFrom)
+			$this->classFrom = $this->classNameBuffer->getClassName();
+		elseif (!$this->classTo)
+			$this->classTo = $this->classNameBuffer->getClassName();
+		else
+			\Onphp\Assert::isUnreachable ('unreachable');
+		
+		$this->classNameBuffer = null;
 	}
 }

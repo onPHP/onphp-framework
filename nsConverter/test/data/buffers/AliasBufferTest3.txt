@@ -1,0 +1,11 @@
+<?php
+
+namespace {
+	use \SomeNs\Sub\Class1,
+		\SomeNs\Sub2 as \SomeNs2\Sub3,
+		\Exception as Exception;
+
+	use \Exception2;
+
+	use \SomeNs\Sub\Class1 as Class2;
+}

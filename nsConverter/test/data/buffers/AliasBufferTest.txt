@@ -1,0 +1,9 @@
+<?php
+
+namespace {
+	use \SomeNs\Sub\Class1 as Class1;
+
+	class Class3 {
+		use \SomeNs\Class5;
+	}
+}
