@@ -86,7 +86,9 @@ EOT;
 				
 				$out .= "}\n";
 			}
-			
+
+			$out .= self::staticCallsBuild($class);
+
 			foreach ($class->getProperties() as $property) {
 				/* @var $property \Onphp\MetaClassProperty */
 				if (!self::doPropertyBuild($class, $property, $isNamed))
@@ -145,6 +147,123 @@ EOT;
 				return false;
 			
 			return true;
+		}
+
+		private static function staticCallsBuild(
+			MetaClass $class
+		)
+		{
+			$out = '';
+			if (
+				$class->getPattern()->daoExists()
+				&& (!$class->getPattern() instanceof AbstractClassPattern)
+			) {
+				$daoName = $class->getFullClassName('', 'DAO');
+				$dao = <<<EOT
+	/**
+	 * @return {$daoName}
+	**/
+	public static function dao()
+	{
+		return \Onphp\Singleton::getInstance('{$daoName}');
+	}
+
+EOT;
+			} else {
+				$dao = null;
+			}
+
+
+			if ($type = $class->getType())
+				$typeName = $type->toString().' ';
+			else
+				$typeName = null;
+
+			if (!$type || $type->getId() !== MetaClassType::CLASS_ABSTRACT) {
+				$customCreate = null;
+
+				if (
+					$class->getFinalParent()->getPattern()
+						instanceof InternalClassPattern
+				) {
+					$parent = $class;
+
+					while ($parent = $parent->getParent()) {
+						/* @var $parent MetaClass */
+						$info = new \ReflectionClass($parent->getFullClassName());
+
+						if (
+							$info->hasMethod('create')
+							&& ($info->getMethod('create')->getParameters() > 0)
+						) {
+							$customCreate = true;
+							break;
+						}
+					}
+				}
+
+				if ($customCreate) {
+					$creator = $info->getMethod('create');
+
+					$declaration = array();
+
+					foreach ($creator->getParameters() as $parameter) {
+						$declaration[] =
+							'$'.$parameter->getName()
+							// no one can live without default value @ ::create
+							.' = '
+							.(
+								$parameter->getDefaultValue()
+									? $parameter->getDefaultValue()
+									: 'null'
+							);
+					}
+
+					$declaration = implode(', ', $declaration);
+
+					$out .= <<<EOT
+
+	/**
+	 * @return {$class->getFullClassName()}
+	**/
+	public static function create({$declaration})
+	{
+		return new static({$declaration});
+	}
+
+EOT;
+				} else {
+					$out .= <<<EOT
+
+	/**
+	 * @return {$class->getFullClassName()}
+	**/
+	public static function create()
+	{
+		return new static;
+	}
+
+EOT;
+				}
+
+				$protoName = $class->getFullClassName('Proto');
+
+				$out .= <<<EOT
+
+{$dao}
+	/**
+	 * @return {$protoName}
+	**/
+	public static function proto()
+	{
+		return \Onphp\Singleton::getInstance('{$protoName}');
+	}
+
+EOT;
+
+			}
+
+			return $out;
 		}
 	}
 ?>
