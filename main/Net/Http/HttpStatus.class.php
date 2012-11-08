@@ -16,7 +16,7 @@
 	**/	
 	namespace Onphp;
 
-	final class HttpStatus extends Enumeration
+	final class HttpStatus extends Enum
 	{
 		const CODE_100	= 100;
 		const CODE_101	= 101;
@@ -60,7 +60,7 @@
 		const CODE_507	= 507;
 		const CODE_510	= 510;
 		
-		protected $names = array(
+		protected static $names = array(
 			self::CODE_100 => 'Continue',
 			self::CODE_101 => 'Switching Protocols',
 			self::CODE_200 => 'OK',
