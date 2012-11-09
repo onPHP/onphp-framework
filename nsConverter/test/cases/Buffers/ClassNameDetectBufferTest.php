@@ -26,12 +26,18 @@ class ClassNameDetectBufferTest extends TestCase
 		$service
 			->setNamespaceBuffer($nsBuffer = new NamespaceBuffer())
 			->setClassBuffer($classBuffer = new ClassBuffer())
+			->setAliasBuffer(
+				$aliasBuffer = (new AliasBuffer())
+					->setClassBuffer($classBuffer)
+					->setNamespaceBuffer($nsBuffer)
+			)
 			->setFunctionBuffer($functionBuffer = new FunctionBuffer());
 		
 		$chain = new ChainBuffer();
 		$chain
 			->addBuffer($nsBuffer)
 			->addBuffer($classBuffer)
+			->addBuffer($aliasBuffer)
 			->addBuffer($functionBuffer)
 			->addBuffer($service);
 
