@@ -28,26 +28,31 @@ class ScanCommand
 		if ($this->processFormError($form)) {
 			return;
 		}
-		
+
 		$classPathList = $this->getPathList($form);
 		$this->scan($classPathList);
 	}
-	
+
 	private function scan(array $pathList)
 	{
 		$classStorage = new ClassStorage();
-		
+
+		$constantBuffer = (new DefineConstantBuffer())
+			->setClassStorage($classStorage);
+
 		$namespaceBuffer = new NamespaceBuffer();
 		$classBuffer = new ClassBuffer();
 		$buffer = (new ClassStorageBuffer())
 			->setClassStorage($classStorage)
 			->setNamespaceBuffer($namespaceBuffer)
 			->setClassBuffer($classBuffer);
+
 		foreach ($pathList as $path => $namespace) {
 			$subjects = token_get_all(file_get_contents($path));
 			$buffer->setNewNamespace($namespace)->init();
 			foreach ($subjects as $i => $subject) {
 				$buffer->process($subject, $i);
+				$constantBuffer->process($subject, $i);
 			}
 		}
 		print $classStorage->export()."\n";
