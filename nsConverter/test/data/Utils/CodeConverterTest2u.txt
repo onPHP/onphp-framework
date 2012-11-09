@@ -11,41 +11,47 @@
  *                                                                         *
  * ************************************************************************* */
 
-	namespace convert\testclass2;
+	namespace convert\testclass3;
 
-	new \Onphp\Form();
-	\Onphp\Model::create();
+	use \Onphp\main\Form as Form;
+	use \Onphp\core\Model as Model;
+	use \Onphp\main\HttpRequest as HttpRequest;
+	use \Onphp\CommandChain as CommandChain;
+	use \Onphp\Primitive as Primitive;
+
+	new Form();
+	Model::create();
 	HttpRequest->create();
 
 
 	trait A {
-		use \converter\B;
+		use B;
 
 		const    VALUE = 'value';
 
 		/**
-		 * @var \Onphp\View
+		 * @var View
 		 */
 		private $c = null;
-		private $cName = '\Onphp\View';
-		private $cName2 = "\Onphp\View";
+		private $cName = '\convert\testclass3\View';
+		private $cName2 = "\convert\testclass3\View";
 
 		/**
-		 * @param \Onphp\Primitive $newNamespace
+		 * @param Primitive $newNamespace
 		 * @param string $newNamespace
-		 * @return \Onphp\View
+		 * @return View
 		 */
 		function sum($a, $b) {
 			$sum = function ($a, $b) {
-				$command = \Onphp\CommandChain::create(SUPER_CONST, CONST, lowconst);
-				$command = \Onphp\CommandChain :: create();
-				/* @var $command \Onphp\CommandChain */
+				$command = CommandChain::create(SUPER_CONST, CONST, lowconst);
+				$command = CommandChain :: create();
+				/* @var $command CommandChain */
 
 				$command
 					->add($command);
 
 				$c = new $cName();
-				/* @var \Onphp\View $c  */
+				/* @var View $c  */
 
 				return $c->
 					render($a + $b);

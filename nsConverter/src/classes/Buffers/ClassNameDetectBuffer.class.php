@@ -27,6 +27,10 @@ class ClassNameDetectBuffer implements Buffer
 	 * @var \Onphp\NsConverter\FunctionBuffer
 	 */
 	private $functionBuffer = null;
+	/**
+	 * @var \Onphp\NsConverter\AliasBuffer
+	 */
+	private $aliasBuffer = null;
 
 	/**
 	 * @var \Onphp\NsConverter\ClassNameBuffer
@@ -62,6 +66,12 @@ class ClassNameDetectBuffer implements Buffer
 	public function setFunctionBuffer(FunctionBuffer $functionBuffer)
 	{
 		$this->functionBuffer = $functionBuffer;
+		return $this;
+	}
+
+	public function setAliasBuffer(\Onphp\NsConverter\AliasBuffer $aliasBuffer)
+	{
+		$this->aliasBuffer = $aliasBuffer;
 		return $this;
 	}
 
@@ -118,7 +128,8 @@ class ClassNameDetectBuffer implements Buffer
 	{
 		return $this->namespaceBuffer->isBuffer()
 			|| $this->classBuffer->isBuffer()
-			|| $this->functionBuffer->isBuffer();
+			|| $this->functionBuffer->isBuffer()
+			|| $this->aliasBuffer->isBuffer();
 	}
 
 	private function pushSubject($subject)

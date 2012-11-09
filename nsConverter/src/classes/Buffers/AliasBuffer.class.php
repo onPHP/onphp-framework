@@ -33,7 +33,7 @@ class AliasBuffer implements Buffer
 	private $classNameBuffer = null;
 	private $classFrom = null;
 	private $classTo = null;
-	
+
 	/**
 	 * @param \Onphp\NsConverter\NamespaceBuffer $namespaceBuffer
 	 * @return \Onphp\NsConverter\AliasBuffer
@@ -52,7 +52,7 @@ class AliasBuffer implements Buffer
 		$this->classBuffer = $classBuffer;
 		return $this;
 	}
-	
+
 	/**
 	 * @return \Onphp\NsConverter\NamespaceBuffer
 	 */
@@ -68,6 +68,12 @@ class AliasBuffer implements Buffer
 		return $this;
 	}
 
+	public function findClass($className)
+	{
+		if (isset($this->aliases[$className]))
+			return $this->aliases[$className];
+	}
+
 	/**
 	 * @return bool
 	 */
@@ -75,12 +81,12 @@ class AliasBuffer implements Buffer
 	{
 		return $this->buffer == true;
 	}
-	
+
 	public function getAliases()
 	{
 		return $this->aliases;
 	}
-	
+
 	public function getBuffers()
 	{
 		return $this->buffers;
@@ -88,7 +94,7 @@ class AliasBuffer implements Buffer
 
 	public function process($subject, $i)
 	{
-		
+
 		if (is_array($subject) && $subject[0] == T_USE && !$this->classBuffer->getClassName()) {
 			$this->startBuffer($i);
 		} elseif ($this->buffer) {
@@ -110,7 +116,7 @@ class AliasBuffer implements Buffer
 			}
 		}
 	}
-	
+
 	private function endAlias()
 	{
 		$this->storeClassName();
@@ -122,33 +128,33 @@ class AliasBuffer implements Buffer
 		$this->classFrom = null;
 		$this->classTo = null;
 	}
-	
+
 	private function startBuffer($i)
 	{
 		$this->buffer = true;
 		$this->classNameBuffer = null;
 		$this->bufferStart = $i;
 	}
-	
+
 	private function endBuffer($i)
 	{
 		$this->buffers[] = [$this->bufferStart, $i];
-		
+
 		$this->buffer = false;
 		$this->classNameBuffer = null;
 		$this->bufferStart = null;
 	}
-	
+
 	private function storeClassName()
 	{
 		\Onphp\Assert::isNotNull($this->classNameBuffer);
 		if (!$this->classFrom)
-			$this->classFrom = $this->classNameBuffer->getClassName();
+			$this->classFrom = '\\'.ltrim($this->classNameBuffer->getClassName(), '\\');
 		elseif (!$this->classTo)
-			$this->classTo = $this->classNameBuffer->getClassName();
+			$this->classTo = trim($this->classNameBuffer->getClassName());
 		else
 			\Onphp\Assert::isUnreachable ('unreachable');
-		
+
 		$this->classNameBuffer = null;
 	}
 }

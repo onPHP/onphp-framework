@@ -28,30 +28,34 @@ class ReplaceCommand
 		if ($this->processFormError($form)) {
 			return;
 		}
-		
+
 		$storage = $this->loadConfig($form);
 		$pathList = $this->getPathList($form);
 		$this->replace($storage, $pathList);
 	}
-	
+
 	private function replace(ClassStorage $storage, array $pathList)
 	{
 		$codeStorage = new CodeStorage();
 		$namespaceBuffer = new NamespaceBuffer();
 		$classBuffer = new ClassBuffer();
+		$aliasBuffer = (new AliasBuffer())
+			->setClassBuffer($classBuffer);
 		$functionBuffer = new FunctionBuffer();
 		$classNameDetectBuffer = (new ClassNameDetectBuffer())
 			->setNamespaceBuffer($namespaceBuffer)
 			->setClassBuffer($classBuffer)
-			->setFunctionBuffer($functionBuffer);
+			->setFunctionBuffer($functionBuffer)
+			->setAliasBuffer($aliasBuffer);
 
 		$chainBuffer = (new ChainBuffer())
 			->addBuffer($codeStorage)
 			->addBuffer($namespaceBuffer)
 			->addBuffer($classBuffer)
+			->addBuffer($aliasBuffer)
 			->addBuffer($functionBuffer)
 			->addBuffer($classNameDetectBuffer);
-		
+
 		foreach ($pathList as $path => $newNamespace) {
 			$subjects = token_get_all(file_get_contents($path));
 
@@ -66,7 +70,8 @@ class ReplaceCommand
 				->setNamespaceBuffer($namespaceBuffer)
 				->setClassStorage($storage)
 				->setCodeStorage($codeStorage)
-				->setClassNameDetectBuffer($classNameDetectBuffer);
+				->setClassNameDetectBuffer($classNameDetectBuffer)
+				->setAliasBuffer($aliasBuffer);
 
 			try {
 				$converter->run();
@@ -82,9 +87,9 @@ class ReplaceCommand
 			file_put_contents($path, $codeStorage->toString());
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param \Onphp\Form $form
 	 * @return \Onphp\NsConverter\ClassStorage
 	 */

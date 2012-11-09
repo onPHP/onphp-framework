@@ -1,59 +1,10 @@
-<?php
+<div class="block" style="float: left;">
+	<?
+	/* @var $db DB */
+	/* @var $form Form */
 
-/* * *************************************************************************
- *   Copyright (C) 2012 by Alexey Denisov                                  *
- *   alexeydsov@gmail.com                                                  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU Lesser General Public License as        *
- *   published by the Free Software Foundation; either version 3 of the    *
- *   License, or (at your option) any later version.                       *
- *                                                                         *
- * ************************************************************************* */
-
-namespace convert\testclass3;
-
-new \Onphp\main\Form();
-\Onphp\core\Model::create();
-\Onphp\main\HttpRequest->create();
-
-
-trait A {
-	use B;
-
-	const    VALUE = 'value';
-
-	/**
-	 * @var \convert\testclass3\View
-	 */
-	private $c = null;
-	private $cName = '\convert\testclass3\View';
-	private $cName2 = "\convert\testclass3\View";
-
-	/**
-	 * @param \Onphp\Primitive $newNamespace
-	 * @param string $newNamespace
-	 * @return \convert\testclass3\View
-	 */
-	function sum($a, $b) {
-		$sum = function ($a, $b) {
-			$command = \Onphp\CommandChain::create(SUPER_CONST, CONST, lowconst);
-			$command = \Onphp\CommandChain :: create();
-			/* @var $command \Onphp\CommandChain */
-
-			$command
-				->add($command);
-
-			$c = new $cName();
-			/* @var \convert\testclass3\View $c  */
-
-			return $c->
-				render($a + $b);
-		};
-		$sum(2, 3);
-
-		is_object(parent::run());
-		self ::run();
-		static:: run();
-	}
-}
+	$db = new DB();
+	print DB::FULL_TEXT_AND ?>
+	<br />
+	<?=OSQL::select()->toString();?>
+</div>

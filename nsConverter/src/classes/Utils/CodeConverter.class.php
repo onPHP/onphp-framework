@@ -40,7 +40,12 @@ class CodeConverter
 	 * @var \Onphp\NsConverter\ClassNameDetectBuffer
 	 */
 	private $classNameDetectBuffer = null;
+	/**
+	 * @var AliasBuffer
+	 */
+	private $aliasBuffer = null;
 	private $newNamespace = null;
+	private $skipUses = false;
 
 	/**
 	 * @param \Onphp\NsConverter\ClassStorage $classStorage
@@ -92,16 +97,42 @@ class CodeConverter
 		return $this;
 	}
 
+	/**
+	 * @param \Onphp\NsConverter\AliasBuffer $aliasBuffer
+	 * @return \Onphp\NsConverter\CodeConverter
+	 */
+	public function setAliasBuffer(AliasBuffer $aliasBuffer)
+	{
+		$this->aliasBuffer = $aliasBuffer;
+		return $this;
+	}
+
+	public function setSkipUses($skipUses = false)
+	{
+		$this->skipUses = $skipUses == true;
+	}
+
 	public function run()
 	{
-		$this->replaceNamespace();
+		$aliasConverter = new CodeConverterAlias();
+		$aliasConverter
+			->setAliasBuffer($this->aliasBuffer)
+			->setSkipUses($this->skipUses);
 
+		$this->classStorage->setAliasConverter($aliasConverter);
+
+		$aliasConverter->clearOldAliases($this->codeStorage);
+		//replacing classnames
 		foreach ($this->classNameDetectBuffer->getClassNameList() as $row) {
 			list($className, $from, $to) = $row;
 			$this->processClassName($className, $from, $to);
 		}
 
 		$this->replaceCommentsStrings();
+
+		$aliases = $aliasConverter->getNewAliases($this->newNamespace);
+		$this->replaceNamespace($aliases);
+
 	}
 
 	private function processClassName($className, $from, $to)
@@ -110,7 +141,8 @@ class CodeConverter
 			/* ok, skip replacing for constants */
 		} elseif ($class = $this->classStorage->findByClassName($className, $this->namespaceBuffer->getNamespace())) {
 			if ($class instanceof NsClass) {
-				$this->codeStorage->addReplace($class->getFullNewName($this->newNamespace), $from, $to);
+				$alias = $this->classStorage->getAliasClassName($class, $this->newNamespace);
+				$this->codeStorage->addReplace($alias, $from, $to);
 			}
 		} else {
 			$msg = 'Could not find something about name "'.$className.'"';
@@ -118,7 +150,7 @@ class CodeConverter
 		}
 	}
 
-	private function replaceNamespace()
+	private function replaceNamespace(array $aliases = [])
 	{
 		if ($this->namespaceBuffer->getBufferStart()) {
 			$this->codeStorage->addReplace(
@@ -126,14 +158,38 @@ class CodeConverter
 				$this->namespaceBuffer->getBufferStart(),
 				$this->namespaceBuffer->getBufferEnd() - 1
 			);
+
+			//adding uses after namespace
+			if (!empty($aliases)) {
+				$tabs = '';
+				$endWhite = $this->codeStorage->get($this->namespaceBuffer->getBufferEnd() + 1);
+				$startWhite = $this->codeStorage->get($this->namespaceBuffer->getBufferStart() - 1);
+				if (
+					is_array($startWhite)
+					&& $startWhite[0] == T_WHITESPACE
+					&& preg_match('~\n(\t*)$~u', $startWhite[1], $matches)
+				) {
+					$tabs = $matches[1];
+				}
+				$postFix = is_array($endWhite) ? $endWhite[1] : $endWhite;
+				$aliasString = "\n\n{$tabs}".implode("\n{$tabs}", $aliases).$postFix;
+
+				$this->codeStorage->addReplace($aliasString, $this->namespaceBuffer->getBufferEnd() + 1);
+			}
+
 			return true;
 		} else {
 			$startSubject = $this->codeStorage->get(0);
 			if (!(is_array($startSubject) && $startSubject[0] == T_OPEN_TAG)) {
 				$startSubject = $this->codeStorage->get(0);
 				$startText = is_array($startSubject) ? $startSubject[1] : $startSubject;
+
+				$ns = 'namespace '.trim($this->newNamespace, '\\').';';
+				if ($aliases) {
+					$ns .= "\n".implode("\n", $aliases);
+				}
 				$this->codeStorage->addReplace(
-					'<?php namespace '.trim($this->newNamespace, '\\').";\n?>".$startText,
+					"<?php\n".$ns."\n?>".$startText,
 					0
 				);
 				return true;
@@ -170,10 +226,12 @@ class CodeConverter
 					}
 				}
 
-				$this->codeStorage->addAppend(
-					'namespace '.trim($this->newNamespace, '\\').";\n\n".$tabs,
-					$codePos - 1
-				);
+				$nsString = 'namespace '.trim($this->newNamespace, '\\').";\n\n".$tabs;
+				if (!empty($aliases)) {
+					$nsString .= implode("\n{$tabs}", $aliases)."\n\n{$tabs}";
+				}
+
+				$this->codeStorage->addAppend($nsString, $codePos - 1);
 				return true;
 			} elseif (!is_null($openPos)) {
 				$tabs = '';
@@ -183,8 +241,13 @@ class CodeConverter
 						$tabs = $matches[1];
 					}
 				}
+
+				$nsString = 'namespace '.trim($this->newNamespace, '\\').";\n".$tabs;
+				if (!empty($aliases)) {
+					$nsString .= implode("\n{$tabs}", $aliases)."\n{$tabs}";
+				}
 				$this->codeStorage->addAppend(
-					"\n{$tabs}".'namespace '.trim($this->newNamespace, '\\').";\n{$tabs}",
+					"\n{$tabs}".$nsString,
 					$openPos
 				);
 				return true;
@@ -192,7 +255,7 @@ class CodeConverter
 				throw new \Onphp\WrongStateException('Php open tag not found');
 			}
 
-			return false;
+			return null;
 		}
 	}
 
@@ -215,7 +278,7 @@ class CodeConverter
 	{
 		$pattern = '~^([\'"])([\\\\A-Z][\\\\A-Za-z0-9]+)([\'"])~';
 		if (preg_match($pattern, $string, $matches) && $matches[1] == $matches[3]) {
-			$class = $this->classStorage->findByClassName($matches[2], $this->namespaceBuffer->getNamespace());
+			$class = $this->classStorage->findByClassName($matches[2], $this->namespaceBuffer->getNamespace(), false);
 			if ($class) {
 				return $matches[1]
 					. $class->getFullNewName()
@@ -242,10 +305,10 @@ class CodeConverter
 				$this->namespaceBuffer->getNamespace()
 			);
 			if ($class) {
-				$newClassName = $class->getFullNewName();
+				$alias = $this->classStorage->getAliasClassName($class, $this->newNamespace);
 				$newCodeString = preg_replace(
 					'~'.$this->regPatternEscape($className).'~u',
-					$newClassName,
+					$alias,
 					$codeString
 				);
 				$newCodeString = preg_replace('~\$~', '\\\$', $newCodeString);

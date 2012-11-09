@@ -19,6 +19,10 @@ class ClassStorage
 
 	private $classStorage = [];
 	private $oldNamesMap = [];
+	/**
+	 * @var CodeConverterAlias
+	 */
+	private $aliasConverter = [];
 
 	/**
 	 * @param \Onphp\NsConverter\NsConstant $constant
@@ -64,6 +68,12 @@ class ClassStorage
 		return $this;
 	}
 
+	public function setAliasConverter(CodeConverterAlias $aliasConverter)
+	{
+		$this->aliasConverter = $aliasConverter;
+		return $this;
+	}
+
 	/**
 	 * @param string $name
 	 * @return NsConstant
@@ -106,14 +116,21 @@ class ClassStorage
 	 * @param string $fullName
 	 * @return \Onphp\NsConverter\NsObject
 	 */
-	public function findByClassName($className, $currentNs)
+	public function findByClassName($className, $currentNs, $aliases = true)
 	{
 		if (mb_strpos($className, '\\') !== 0) {
-			if ($class = $this->findByClassNs($className, $currentNs)) {
+			if ($fullClassName = $this->aliasConverter->getAliasBuffer()->findClass($className)) {
+				$className = $fullClassName;
+			} elseif ($class = $this->findByClassNs($className, $currentNs)) {
 				return $class;
 			}
 		}
 		return $this->findByFullName($className);
+	}
+
+	public function getAliasClassName(NsClass $className, $newNs = null)
+	{
+		return $this->aliasConverter->getClassNameAlias($className->getFullNewName(), $newNs);
 	}
 
 	public function export()

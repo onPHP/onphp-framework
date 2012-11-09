@@ -14,14 +14,8 @@
 			return $this->getNamespace().$this->getName();
 		}
 
-		public function getFullNewName($newNs = null)
+		public function getFullNewName()
 		{
-			if ($newNs) {
-				$newNs = NamespaceUtils::fixNamespace($newNs);
-				if ($newNs == $this->getNewNamespace()) {
-					return $this->getName();
-				}
-			}
 			return $this->getNewNamespace().$this->getName();
 		}
 

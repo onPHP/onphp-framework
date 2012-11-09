@@ -1,10 +1,15 @@
-<div class="block" style="float: left;">
-	<?
-	/* @var $db DB */
-	/* @var $form Form */
+<?php
 
-	$db = new DB();
-	print DB::FULL_TEXT_AND ?>
-	<br />
-	<?=OSQL::select()->toString();?>
-</div>
+namespace Onphp;
+
+use Onphp\Primitives\Primitive;
+use Sub\OSQL;
+use My\Ns\OSQL as OSQL2;
+
+$insert = OSQL::insert();
+$select = OSQL2::create();
+$form = Form::create()
+	->add(Primitive::string('name'))
+	->add(Primitive::integer('name'));
+
+$form->import(\Onphp\Utils\CMDUtils::getOptions());

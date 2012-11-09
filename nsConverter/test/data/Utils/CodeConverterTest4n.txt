@@ -1,0 +1,11 @@
+<?php
+
+namespace My\Ns;
+
+$insert = \Onphp\OSQL\OSQL::insert();
+$select = OSQL::create();
+$form = \Onphp\Form::create()
+	->add(\Onphp\Primitives\Primitive::string('name'))
+	->add(\Onphp\Primitives\Primitive::integer('name'));
+
+$form->import(\OnphpUtils\CMDUtils::getOptions());

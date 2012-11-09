@@ -34,7 +34,10 @@ class CodeConverterTest extends TestCase
 		], [], ['SUPER_CONST', 'CONST', 'lowconst']);
 
 		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath(), 'convert\testclass2');
-		$this->assertEquals(file_get_contents($this->getTestFilePath('2')), $codeStorage->toString());
+		$this->assertEquals(file_get_contents($this->getTestFilePath('1u')), $codeStorage->toString());
+
+		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath(), 'convert\testclass2', true);
+		$this->assertEquals(file_get_contents($this->getTestFilePath('1n')), $codeStorage->toString());
 	}
 
 	/**
@@ -52,9 +55,11 @@ class CodeConverterTest extends TestCase
 			['Primitive', 'Onphp', 'Onphp'],
 		], [], ['SUPER_CONST', 'CONST', 'lowconst']);
 
+		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath('2'), 'convert\testclass3', true);
+		$this->assertEquals(file_get_contents($this->getTestFilePath('2n')), $codeStorage->toString());
+
 		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath('2'), 'convert\testclass3');
-		file_put_contents('result.txt', $codeStorage->toString());
-		$this->assertEquals(file_get_contents($this->getTestFilePath('3')), $codeStorage->toString());
+		$this->assertEquals(file_get_contents($this->getTestFilePath('2u')), $codeStorage->toString());
 	}
 
 	/**
@@ -68,9 +73,31 @@ class CodeConverterTest extends TestCase
 			['Form', '', 'Onphp'],
 		]);
 
-		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath('4'), 'convert\testclass3');
-		file_put_contents('result.txt', $codeStorage->toString());
-		$this->assertEquals(file_get_contents($this->getTestFilePath('4r')), $codeStorage->toString());
+		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath('3'), 'convert\testclass3');
+		$this->assertEquals(file_get_contents($this->getTestFilePath('3u')), $codeStorage->toString());
+
+		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath('3'), 'convert\testclass3', true);
+		$this->assertEquals(file_get_contents($this->getTestFilePath('3n')), $codeStorage->toString());
+	}
+
+	/**
+	 * @group cc4
+	 */
+	public function testAliases()
+	{
+		$classStorage = $this->getClassStorage([
+			['Form', 'Onphp', 'Onphp'],
+			['Primitive', 'Onphp\Primitives', 'Onphp\Primitives'],
+			['OSQL', 'Sub', 'Onphp\OSQL'],
+			['OSQL', 'My\Ns', 'My\Ns'],
+			['CMDUtils', '\Onphp\Utils', 'OnphpUtils'],
+		]);
+
+		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath('4'), 'My\Ns');
+		$this->assertEquals(file_get_contents($this->getTestFilePath('4u')), $codeStorage->toString());
+
+		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath('4'), 'My\Ns', true);
+		$this->assertEquals(file_get_contents($this->getTestFilePath('4n')), $codeStorage->toString());
 	}
 
 	/**
@@ -79,21 +106,26 @@ class CodeConverterTest extends TestCase
 	 * @param type $newNamespace
 	 * @return \Onphp\NsConverter\CodeStorage
 	 */
-	private function runConverter(ClassStorage $storage, $path, $newNamespace = null)
+	private function runConverter(ClassStorage $storage, $path, $newNamespace = null, $skipUses = false)
 	{
 		$codeStorage = new CodeStorage();
 		$namespaceBuffer = new NamespaceBuffer();
 		$classBuffer = new ClassBuffer();
+		$aliasBuffer = (new AliasBuffer())
+			->setClassBuffer($classBuffer);
 		$functionBuffer = new FunctionBuffer();
 		$classNameDetectBuffer = (new ClassNameDetectBuffer())
 			->setNamespaceBuffer($namespaceBuffer)
 			->setClassBuffer($classBuffer)
-			->setFunctionBuffer($functionBuffer);
+			->setFunctionBuffer($functionBuffer)
+			->setAliasBuffer($aliasBuffer);
+
 
 		$chainBuffer = (new ChainBuffer())
 			->addBuffer($codeStorage)
 			->addBuffer($namespaceBuffer)
 			->addBuffer($classBuffer)
+			->addBuffer($aliasBuffer)
 			->addBuffer($functionBuffer)
 			->addBuffer($classNameDetectBuffer);
 
@@ -110,7 +142,9 @@ class CodeConverterTest extends TestCase
 			->setNamespaceBuffer($namespaceBuffer)
 			->setClassStorage($storage)
 			->setCodeStorage($codeStorage)
-			->setClassNameDetectBuffer($classNameDetectBuffer);
+			->setClassNameDetectBuffer($classNameDetectBuffer)
+			->setAliasBuffer($aliasBuffer)
+			->setSkipUses($skipUses);
 
 		$converter->run();
 		return $codeStorage;

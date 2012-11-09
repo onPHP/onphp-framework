@@ -38,5 +38,5 @@ interface NsObject
 
 	public function getFullName();
 
-	public function getFullNewName($newNs = null);
+	public function getFullNewName();
 }
