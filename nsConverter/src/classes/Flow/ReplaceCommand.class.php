@@ -31,10 +31,10 @@ class ReplaceCommand
 
 		$storage = $this->loadConfig($form);
 		$pathList = $this->getPathList($form);
-		$this->replace($storage, $pathList);
+		$this->replace($form, $storage, $pathList);
 	}
 
-	private function replace(ClassStorage $storage, array $pathList)
+	private function replace(\Onphp\Form $form, ClassStorage $storage, array $pathList)
 	{
 		$codeStorage = new CodeStorage();
 		$namespaceBuffer = new NamespaceBuffer();
@@ -71,7 +71,8 @@ class ReplaceCommand
 				->setClassStorage($storage)
 				->setCodeStorage($codeStorage)
 				->setClassNameDetectBuffer($classNameDetectBuffer)
-				->setAliasBuffer($aliasBuffer);
+				->setAliasBuffer($aliasBuffer)
+				->setSkipUses($form->getValue('--noAlias'));
 
 			try {
 				$converter->run();
@@ -117,6 +118,8 @@ class ReplaceCommand
 	{
 		$form = \Onphp\Form::create()
 			->add(\Onphp\Primitive::string('--config')->required())
+			->add($noAlias = \Onphp\Primitive::boolean('--noAlias'))
+			->add(\Onphp\Primitive::alias('--skipAlias', $noAlias))
 			->addRule('configExistsRule', $this->getPathExistsRule('--config'));
 		$this->fillFormWithPath($form);
 		return $form;
