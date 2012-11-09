@@ -37,7 +37,7 @@ trait A {
 	 */
 	function sum($a, $b) {
 		$sum = function ($a, $b) {
-			$command = \Onphp\CommandChain::create();
+			$command = \Onphp\CommandChain::create(SUPER_CONST, CONST, lowconst);
 			$command = \Onphp\CommandChain :: create();
 			/* @var $command \Onphp\CommandChain */
 

@@ -31,8 +31,8 @@ class CodeConverterTest extends TestCase
 			['B', '', 'converter'],
 			['View', '', 'Onphp'],
 			['Primitive', '', 'Onphp'],
-		]);
-		
+		], [], ['SUPER_CONST', 'CONST', 'lowconst']);
+
 		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath(), 'convert\testclass2');
 		$this->assertEquals(file_get_contents($this->getTestFilePath('2')), $codeStorage->toString());
 	}
@@ -50,7 +50,7 @@ class CodeConverterTest extends TestCase
 			['B', 'converter', 'convert\testclass3'],
 			['View', 'Onphp', 'convert\testclass3'],
 			['Primitive', 'Onphp', 'Onphp'],
-		]);
+		], [], ['SUPER_CONST', 'CONST', 'lowconst']);
 
 		$codeStorage = $this->runConverter($classStorage, $this->getTestFilePath('2'), 'convert\testclass3');
 		file_put_contents('result.txt', $codeStorage->toString());
@@ -104,7 +104,7 @@ class CodeConverterTest extends TestCase
 			$chainBuffer->process($subject, $i);
 		}
 
-		$converter = new CodeConverter();
+		$converter = $this->getService();
 		$converter
 			->setNewNamespace($newNamespace)
 			->setNamespaceBuffer($namespaceBuffer)
@@ -120,16 +120,27 @@ class CodeConverterTest extends TestCase
 	 * @param string $classes
 	 * @return \Onphp\NsConverter\ClassStorage
 	 */
-	private function getClassStorage($classes)
+	private function getClassStorage($classes, array $functions = [], array $constants = [])
 	{
 		$classStorage = new ClassStorage();
-		foreach ($classes as $class) {
-			list($className, $oldNamespace, $newNamespace) = $class;
-			$class = NsClass::create()
+		foreach ($classes as $object) {
+			list($objectName, $oldNamespace, $newNamespace) = $object;
+			$object = NsClass::create()
 				->setNamespace($oldNamespace)
 				->setNewNamespace($newNamespace)
-				->setName($className);
-			$classStorage->addClass($class);
+				->setName($objectName);
+			$classStorage->addClass($object);
+		}
+		foreach ($functions as $object) {
+			list($objectName, $oldNamespace, $newNamespace) = $object;
+			$object = NsFunction::create()
+				->setNamespace($oldNamespace)
+				->setNewNamespace($newNamespace)
+				->setName($objectName);
+			$classStorage->addClass($object);
+		}
+		foreach ($constants as $constantName) {
+			$classStorage->addConstant(NsConstant::create()->setName($constantName));
 		}
 		return $classStorage;
 	}

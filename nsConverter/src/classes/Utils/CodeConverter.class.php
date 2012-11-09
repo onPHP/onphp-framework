@@ -106,21 +106,14 @@ class CodeConverter
 
 	private function processClassName($className, $from, $to)
 	{
-		/**
-		 * @hack - really need to scan constants and functions
-		 */
-		if (preg_match('~^[A-Z]+(?:_[A-Z0-9]*)+$~u', $className))
-			return;
-		/**
-		 * @hack - really need to scan constants and functions
-		 */
-		if (in_array($className, self::$constants))
-			return;
-
-		if ($class = $this->classStorage->findByClassName($className, $this->namespaceBuffer->getNamespace())) {
-			$this->codeStorage->addReplace($class->getFullNewName($this->newNamespace), $from, $to);
+		if ($constant = $this->classStorage->findConstant($className)) {
+			/* ok, skip replacing for constants */
+		} elseif ($class = $this->classStorage->findByClassName($className, $this->namespaceBuffer->getNamespace())) {
+			if ($class instanceof NsClass) {
+				$this->codeStorage->addReplace($class->getFullNewName($this->newNamespace), $from, $to);
+			}
 		} else {
-			$msg = 'Could not find something about Class "'.$className.'"';
+			$msg = 'Could not find something about name "'.$className.'"';
 			throw new \Onphp\MissingElementException($msg);
 		}
 	}

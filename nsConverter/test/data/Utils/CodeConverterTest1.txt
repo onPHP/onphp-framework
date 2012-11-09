@@ -35,7 +35,7 @@ trait A {
 	 */
 	function sum($a, $b) {
 		$sum = function ($a, $b) {
-			$command = \CommandChain::create();
+			$command = \CommandChain::create(SUPER_CONST, CONST, lowconst);
 			$command = CommandChain :: create();
 			/* @var $command CommandChain */
 
