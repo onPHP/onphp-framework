@@ -23,7 +23,7 @@ class CodeConverter
 		'MYSQLI_CLIENT_FOUND_ROWS',
 		'SQLITE_NUM',
 	];
-	
+
 	/**
 	 * @var \Onphp\NsConverter\ClassStorage
 	 */
@@ -107,16 +107,16 @@ class CodeConverter
 	private function processClassName($className, $from, $to)
 	{
 		/**
-		 * @hack - really need to scan constants
+		 * @hack - really need to scan constants and functions
 		 */
 		if (preg_match('~^[A-Z]+(?:_[A-Z0-9]*)+$~u', $className))
 			return;
 		/**
-		 * @hack - really need to scan constants
+		 * @hack - really need to scan constants and functions
 		 */
 		if (in_array($className, self::$constants))
 			return;
-		
+
 		if ($class = $this->classStorage->findByClassName($className, $this->namespaceBuffer->getNamespace())) {
 			$this->codeStorage->addReplace($class->getFullNewName($this->newNamespace), $from, $to);
 		} else {
@@ -198,7 +198,7 @@ class CodeConverter
 			} else {
 				throw new \Onphp\WrongStateException('Php open tag not found');
 			}
-			
+
 			return false;
 		}
 	}

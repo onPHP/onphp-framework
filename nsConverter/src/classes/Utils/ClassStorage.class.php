@@ -15,15 +15,31 @@ namespace Onphp\NsConverter;
 
 class ClassStorage
 {
+	private $constants = [];
+
 	private $classStorage = [];
 	private $oldNamesMap = [];
+
+	/**
+	 * @param \Onphp\NsConverter\NsConstant $constant
+	 * @return \Onphp\NsConverter\ClassStorage
+	 * @throws \Onphp\WrongStateException
+	 */
+	public function addConstant(NsConstant $constant)
+	{
+		if (isset($this->constants[$constant->getName()])) {
+			throw new \Onphp\WrongStateException('Constant "'.$fullNewName.'" already added');
+		}
+		$this->constants[$constant->getName()] = $constant;
+		return $this;
+	}
 
 	/**
 	 * @param \Onphp\NsConverter\NsClass $class
 	 * @return \Onphp\NsConverter\ClassStorage
 	 * @throws \Onphp\WrongStateException
 	 */
-	public function addClass(NsClass $class)
+	public function addClass(NsObject $class)
 	{
 		$fullName = $class->getFullName();
 		$fullNewName = $class->getFullNewName();
@@ -37,22 +53,32 @@ class ClassStorage
 			) {
 				return $this;
 			}
-			throw new \Onphp\WrongStateException('Class name '.$fullNewName.' already added');
+			throw new \Onphp\WrongStateException('Class name "'.$fullNewName.'" already added');
 		}
 		if (isset($this->oldNamesMap[$fullName])) {
-//			var_dump($this->oldNamesMap[$fullName]); exit;
-			throw new \Onphp\WrongStateException('Old Class name '.$fullName.' already added');
+			throw new \Onphp\WrongStateException('Old Class name "'.$fullName.'" already added');
 		}
 		$this->oldNamesMap[$fullName] = $fullNewName;
 		$this->classStorage[$fullNewName] = $class;
-		
+
 		return $this;
 	}
-	
+
+	/**
+	 * @param string $name
+	 * @return NsConstant
+	 */
+	public function findConstant($name)
+	{
+		return isset($this->constants[$name])
+			? $this->constants[$name]
+			: null;
+	}
+
 	/**
 	 * @param string $name
 	 * @param string $namespace
-	 * @return \Onphp\NsConverter\NsClass
+	 * @return \Onphp\NsConverter\NsObject
 	 */
 	public function findByClassNs($name, $namespace = null)
 	{
@@ -60,15 +86,15 @@ class ClassStorage
 		if (isset($this->oldNamesMap[$fullName])) {
 			$fullName = $this->oldNamesMap[$fullName];
 		}
-		
+
 		return isset($this->classStorage[$fullName])
 			? $this->classStorage[$fullName]
 			: null;
 	}
-	
+
 	/**
 	 * @param string $fullName
-	 * @return \Onphp\NsConverter\NsClass
+	 * @return \Onphp\NsConverter\NsObject
 	 */
 	public function findByFullName($fullName)
 	{
@@ -78,7 +104,7 @@ class ClassStorage
 
 	/**
 	 * @param string $fullName
-	 * @return \Onphp\NsConverter\NsClass
+	 * @return \Onphp\NsConverter\NsObject
 	 */
 	public function findByClassName($className, $currentNs)
 	{
@@ -89,34 +115,52 @@ class ClassStorage
 		}
 		return $this->findByFullName($className);
 	}
-	
+
 	public function export()
 	{
 		$config = [];
+		foreach ($this->constants as $constant) {
+			/* @var $constant NsConstant */
+			$config[] = implode(':', ['CONST', $constant->getName()]);
+		}
 		foreach ($this->classStorage as $class) {
-			/* @var $class \Onphp\NsConverter\NsClass */
-			$config[] = "{$class->getName()}:{$class->getNamespace()}:{$class->getNewNamespace()}";
+			/* @var $class \Onphp\NsConverter\NsObject */
+			$parts = [
+				$class instanceof NsClass ? 'C' : 'F',
+				$class->getName(),
+				$class->getNamespace(),
+				$class->getNewNamespace(),
+			];
+			$config[] = implode(':', $parts);
 		}
 		return implode("\n", $config);
 	}
-	
+
 	public function import($data)
 	{
-		foreach (explode("\n", $data) as $row) {
+		foreach (explode("\n", $data) as $line => $row) {
 			if (!trim($row))
 				continue;
 			if (mb_strpos($row, ';') === 0)
 				continue;
-			
-			list($classname, $oldNamespace, $newNamespace) = explode(':', $row);
-			
-			$class = NsClass::create()
-				->setName($classname)
-				->setNamespace($oldNamespace)
-				->setNewNamespace($newNamespace);
-			$this->addClass($class);
+
+			$parts = explode(':', $row);
+			if (count($parts) == 2 && $parts[0] == 'CONST') {
+				$constant = NsConstant::create()
+					->setName($parts[1]);
+				$this->addConstant($constant);
+			} elseif (count($parts) == 4 && in_array($parts[0], ['C', 'F'])) {
+				list($type, $name, $oldNamespace, $newNamespace) = $parts;
+				$object = ($type == 'C' ? NsClass::create() : NsFunction::create());
+				/* @var $object NsObject */
+				$class = $object
+					->setName($name)
+					->setNamespace($oldNamespace)
+					->setNewNamespace($newNamespace);
+				$this->addClass($class);
+			} else {
+				throw new \Onphp\WrongStateException("Undefined row at line {$line}: {$row}");
+			}
 		}
 	}
 }
-
-?>

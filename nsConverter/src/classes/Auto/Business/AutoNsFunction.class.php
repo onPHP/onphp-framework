@@ -7,14 +7,14 @@
 
 	namespace Onphp\NsConverter;
 	
-	abstract class AutoNsClass implements \Onphp\NsConverter\NsObject
+	abstract class AutoNsFunction implements \Onphp\NsConverter\NsObject
 	{
 		protected $name = null;
 		protected $namespace = null;
 		protected $newNamespace = null;
 		
 		/**
-		 * @return \Onphp\NsConverter\NsClass
+		 * @return \Onphp\NsConverter\NsFunction
 		**/
 		public static function create()
 		{
@@ -23,11 +23,11 @@
 		
 		
 		/**
-		 * @return \Onphp\NsConverter\ProtoNsClass
+		 * @return \Onphp\NsConverter\ProtoNsFunction
 		**/
 		public static function proto()
 		{
-			return \Onphp\Singleton::getInstance('\Onphp\NsConverter\ProtoNsClass');
+			return \Onphp\Singleton::getInstance('\Onphp\NsConverter\ProtoNsFunction');
 		}
 		
 		public function getName()
@@ -36,7 +36,7 @@
 		}
 		
 		/**
-		 * @return \Onphp\NsConverter\NsClass
+		 * @return \Onphp\NsConverter\NsFunction
 		**/
 		public function setName($name)
 		{
@@ -51,7 +51,7 @@
 		}
 		
 		/**
-		 * @return \Onphp\NsConverter\NsClass
+		 * @return \Onphp\NsConverter\NsFunction
 		**/
 		public function setNamespace($namespace)
 		{
@@ -66,7 +66,7 @@
 		}
 		
 		/**
-		 * @return \Onphp\NsConverter\NsClass
+		 * @return \Onphp\NsConverter\NsFunction
 		**/
 		public function setNewNamespace($newNamespace)
 		{

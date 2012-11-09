@@ -1,0 +1,12 @@
+<?php
+
+define('ABC', $abc);
+define('A2BC5', $abc);
+defined('ABCE');
+
+namespace {
+
+	define( 'ab_cf' , $abc);
+	defined('tg_ff');
+	define( 'ab_cd ' , $abc);
+}

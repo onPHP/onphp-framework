@@ -2,8 +2,9 @@
 <!DOCTYPE metaconfiguration SYSTEM "meta.dtd">
 <metaconfiguration>
 
-	<classes namespace="NsConverter">
+	<classes namespace="Onphp\NsConverter">
 		<class name="NsClass">
+			<implement interface="\Onphp\NsConverter\NsObject" />
 			<properties>
 				<property name="name" type="String" size="256" required="true" />
 				<property name="namespace" type="String" size="256" required="true" />
@@ -11,8 +12,25 @@
 			</properties>
 			<pattern name="ValueObject" />
 		</class>
+
+		<class name="NsFunction">
+			<implement interface="\Onphp\NsConverter\NsObject" />
+			<properties>
+				<property name="name" type="String" size="256" required="true" />
+				<property name="namespace" type="String" size="256" required="true" />
+				<property name="newNamespace" type="String" size="256" required="true" />
+			</properties>
+			<pattern name="ValueObject" />
+		</class>
+
+		<class name="NsConstant">
+			<properties>
+				<property name="name" type="String" size="256" required="true" />
+			</properties>
+			<pattern name="ValueObject" />
+		</class>
 	</classes>
-	
+
 	<sources>
 		<source name="con" default="false"/>
 	</sources>
