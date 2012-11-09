@@ -23,6 +23,8 @@ class CodeConverterAlias
 	private $rAliases = [];
 	private $hidden = [];
 	private $skipUses = false;
+//	private $currentNs = null;
+//	private $currentClassName = null;
 
 	/**
 	 * @return AliasBuffer
@@ -43,7 +45,15 @@ class CodeConverterAlias
 		$this->skipUses = $skipUses == true;
 		return $this;
 	}
-
+	
+	public function setCurrentClassName($currentName)
+	{
+		list($newNs) = NamespaceUtils::explodeFullName($currentName);
+		$this->getClassNameAlias($currentName, $newNs);
+		
+		return $this;
+	}
+	
 	public function getClassNameAlias($fullClassName, $newNs)
 	{
 		$newNs = NamespaceUtils::fixNamespace($newNs);

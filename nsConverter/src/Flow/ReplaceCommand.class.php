@@ -60,12 +60,19 @@ class ReplaceCommand
 			$subjects = token_get_all(file_get_contents($path));
 
 			$chainBuffer->init();
+			$className = null;
 			foreach ($subjects as $i => $subject) {
 				$chainBuffer->process($subject, $i);
+				if ($className == null && $classBuffer->getClassName()) {
+					$className = \Onphp\ClassUtils::normalClassName(
+						trim($newNamespace, '\\').'\\'.$classBuffer->getClassName()
+					);
+				}
 			}
 
 			$converter = new CodeConverter();
 			$converter
+				->setCurrentClassName($className)
 				->setNewNamespace($newNamespace)
 				->setNamespaceBuffer($namespaceBuffer)
 				->setClassStorage($storage)

@@ -32,7 +32,7 @@ class ClassStorage
 	public function addConstant(NsConstant $constant)
 	{
 		if (isset($this->constants[$constant->getName()])) {
-			throw new \Onphp\WrongStateException('Constant "'.$fullNewName.'" already added');
+			throw new \Onphp\WrongStateException('Constant "'.$constant->getName().'" already added');
 		}
 		$this->constants[$constant->getName()] = $constant;
 		return $this;

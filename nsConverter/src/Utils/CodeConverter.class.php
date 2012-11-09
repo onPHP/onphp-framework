@@ -46,6 +46,7 @@ class CodeConverter
 	private $aliasBuffer = null;
 	private $newNamespace = null;
 	private $skipUses = false;
+	private $currentClassName = null;
 
 	/**
 	 * @param \Onphp\NsConverter\ClassStorage $classStorage
@@ -107,17 +108,33 @@ class CodeConverter
 		return $this;
 	}
 
+	/**
+	 * @param type $skipUses
+	 * @return \Onphp\NsConverter\CodeConverter
+	 */
 	public function setSkipUses($skipUses = false)
 	{
 		$this->skipUses = $skipUses == true;
+		return $this;
 	}
-
+	
+	/**
+	 * @param type $currentClassName
+	 * @return \Onphp\NsConverter\CodeConverter
+	 */
+	public function setCurrentClassName($currentClassName)
+	{
+		$this->currentClassName = $currentClassName;
+		return $this;
+	}
+	
 	public function run()
 	{
 		$aliasConverter = new CodeConverterAlias();
 		$aliasConverter
 			->setAliasBuffer($this->aliasBuffer)
-			->setSkipUses($this->skipUses);
+			->setSkipUses($this->skipUses)
+			->setCurrentClassName($this->currentClassName);
 
 		$this->classStorage->setAliasConverter($aliasConverter);
 
