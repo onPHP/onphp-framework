@@ -16,6 +16,7 @@ namespace Onphp\NsConverter;
 use \Onphp\Form;
 use \Onphp\NamespaceResolver;
 use \Onphp\NamespaceResolverOnPHP;
+use \Onphp\NamespaceResolverPSR0;
 use \Onphp\Primitive;
 use \RecursiveDirectoryIterator;
 use \RecursiveIteratorIterator;
@@ -30,6 +31,7 @@ trait PathListGetter
 		$form
 			->add(Primitive::string('--ext'))
 			->add(Primitive::string('--path')->required())
+			->add(Primitive::string('--psr0'))
 			->add(Primitive::string('--namespace')->setAllowedPattern('~^[\w\d\\\\]+$~iu'))
 			->addRule('pathExistsRule', $this->getPathExistsRule('--path'))
 		;
@@ -54,6 +56,11 @@ trait PathListGetter
 	 */
 	protected function getPathList(Form $form)
 	{
+		$path = realpath($form->getValue('--path'));
+		if (is_file($path)) {
+			return [$path => NamespaceUtils::fixNamespace($form->getValue('--namespace'))];
+		}
+		
 		$resolver = $this->getNamespaceResolver($form);
 		
 		$classPathList = $resolver->getClassPathList();
@@ -75,6 +82,16 @@ trait PathListGetter
 	 */
 	private function getNamespaceResolver(Form $form)
 	{
+		if ($form->getValue('--psr0')) {
+			$resolver = NamespaceResolverPSR0::create();
+			if ($ext = $form->getValue('--ext')) {
+				$resolver->setClassExtension($ext);
+			}
+			$resolver->setAllowedUnderline(false);
+			$resolver->addPath(realpath($form->getValue('--path')), $form->getValue('--namespace'));
+			return $resolver;
+		}
+		
 		$resolver = NamespaceResolverOnPHP::create();
 		if ($ext = $form->getValue('--ext')) {
 			$resolver->setClassExtension($ext);
