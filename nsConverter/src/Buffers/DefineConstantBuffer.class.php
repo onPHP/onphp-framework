@@ -11,7 +11,10 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
+
+use \Onphp\NsConverter\Utils\ClassStorage as ClassStorage;
+use \Onphp\NsConverter\Business\NsConstant as NsConstant;
 
 class DefineConstantBuffer implements Buffer
 {
@@ -22,8 +25,8 @@ class DefineConstantBuffer implements Buffer
 	private $buffer = false;
 
 	/**
-	 * @param \Onphp\NsConverter\ClassStorage $classStorage
-	 * @return \Onphp\NsConverter\DefineConstantBuffer
+	 * @param ClassStorage $classStorage
+	 * @return DefineConstantBuffer
 	 */
 	public function setClassStorage(ClassStorage $classStorage)
 	{
@@ -32,7 +35,7 @@ class DefineConstantBuffer implements Buffer
 	}
 
 	/**
-	 * @return \Onphp\NsConverter\NamespaceBuffer
+	 * @return NamespaceBuffer
 	 */
 	public function init()
 	{

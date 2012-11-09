@@ -11,7 +11,7 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
 
 class ClassNameBuffer implements Buffer
 {
@@ -50,7 +50,7 @@ class ClassNameBuffer implements Buffer
 	}
 	
 	/**
-	 * @return \Onphp\NsConverter\NamespaceBuffer
+	 * @return NamespaceBuffer
 	 */
 	public function init()
 	{

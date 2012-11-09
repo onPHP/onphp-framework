@@ -11,28 +11,30 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Utils;
+
+use \Onphp\NsConverter\Business\NsFunction as NsFunction;
 
 interface NsObject
 {
 	public function getName();
 
 	/**
-	 * @return \Onphp\NsConverter\NsFunction
+	 * @return NsFunction
 	**/
 	public function setName($name);
 
 	public function getNamespace();
 
 	/**
-	 * @return \Onphp\NsConverter\NsFunction
+	 * @return NsFunction
 	**/
 	public function setNamespace($namespace);
 
 	public function getNewNamespace();
 
 	/**
-	 * @return \Onphp\NsConverter\NsFunction
+	 * @return NsFunction
 	**/
 	public function setNewNamespace($newNamespace);
 

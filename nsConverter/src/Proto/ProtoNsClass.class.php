@@ -5,7 +5,9 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	namespace Onphp\NsConverter;
+	namespace Onphp\NsConverter\Proto;
+
+	use \Onphp\NsConverter\Auto\Proto\AutoProtoNsClass as AutoProtoNsClass;
 	
 	class ProtoNsClass extends AutoProtoNsClass {/*_*/}
 ?>

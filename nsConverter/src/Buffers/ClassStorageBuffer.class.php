@@ -11,7 +11,10 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
+
+use \Onphp\NsConverter\Utils\ClassStorage as ClassStorage;
+use \Onphp\NsConverter\Business\NsClass as NsClass;
 
 /**
  * To add class names to CodeStorage
@@ -20,23 +23,23 @@ class ClassStorageBuffer
 {
 	private $newNamespace = '';
 	/**
-	 * @var \Onphp\NsConverter\ClassStorage
+	 * @var ClassStorage
 	 */
 	private $classStorage = null;
 	
 	private $currentClass = '';
 	/**
-	 * @var \Onphp\NsConverter\NamespaceBuffer
+	 * @var NamespaceBuffer
 	 */
 	private $namespaceBuffer = null;
 	/**
-	 * @var \Onphp\NsConverter\ClassBuffer
+	 * @var ClassBuffer
 	 */
 	private $classBuffer = null;
 	
 	/**
 	 * @param string $newNamespace
-	 * @return \Onphp\NsConverter\ClassStorageBuffer
+	 * @return ClassStorageBuffer
 	 */
 	public function setNewNamespace($newNamespace)
 	{
@@ -45,8 +48,8 @@ class ClassStorageBuffer
 	}
 	
 	/**
-	 * @param \Onphp\NsConverter\ClassStorage $classStorage
-	 * @return \Onphp\NsConverter\ClassStorageBuffer
+	 * @param ClassStorage $classStorage
+	 * @return ClassStorageBuffer
 	 */
 	public function setClassStorage(ClassStorage $classStorage)
 	{
@@ -55,8 +58,8 @@ class ClassStorageBuffer
 	}
 
 	/**
-	 * @param \Onphp\NsConverter\NamespaceBuffer $namespaceBuffer
-	 * @return \Onphp\NsConverter\ClassStorageBuffer
+	 * @param NamespaceBuffer $namespaceBuffer
+	 * @return ClassStorageBuffer
 	 */
 	public function setNamespaceBuffer(NamespaceBuffer $namespaceBuffer)
 	{
@@ -65,8 +68,8 @@ class ClassStorageBuffer
 	}
 
 	/**
-	 * @param \Onphp\NsConverter\ClassBuffer $classBuffer
-	 * @return \Onphp\NsConverter\ClassStorageBuffer
+	 * @param ClassBuffer $classBuffer
+	 * @return ClassStorageBuffer
 	 */
 	public function setClassBuffer(ClassBuffer $classBuffer)
 	{
@@ -75,7 +78,7 @@ class ClassStorageBuffer
 	}
 		
 	/**
-	 * @return \Onphp\NsConverter\NamespaceBuffer
+	 * @return NamespaceBuffer
 	 */
 	public function init()
 	{

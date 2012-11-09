@@ -40,7 +40,7 @@ require dirname(dirname(__DIR__)).DIRECTORY_SEPARATOR.'global.inc.php.tpl';
 
 //including project classes
 \Onphp\AutoloaderClassPathCache::create()
-	->setNamespaceResolver(\Onphp\NamespaceResolverOnPHP::create())
+	->setNamespaceResolver(\Onphp\NamespaceResolverPSR0::create())
 	->addPaths([
 		PATH_SRC,
 		PATH_SRC.'Auto'.DIRECTORY_SEPARATOR.'Business',

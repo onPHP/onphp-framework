@@ -5,9 +5,13 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	namespace Onphp\NsConverter;
+	namespace Onphp\NsConverter\Business;
 
-	class NsClass extends AutoNsClass implements \Onphp\Prototyped
+	use \Onphp\NsConverter\Auto\Business\AutoNsClass as AutoNsClass;
+	use \Onphp\Prototyped as Prototyped;
+	use \Onphp\NsConverter\Utils\NamespaceUtils as NamespaceUtils;
+
+	class NsClass extends AutoNsClass implements Prototyped
 	{
 		public function getFullName()
 		{
@@ -21,7 +25,7 @@
 
 		/**
 		 * @param string $namespace
-		 * @return \Onphp\NsConverter\NsClass
+		 * @return NsClass
 		 */
 		public function setNamespace($namespace)
 		{

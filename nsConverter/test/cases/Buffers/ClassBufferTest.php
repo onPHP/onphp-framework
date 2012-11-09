@@ -11,7 +11,9 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
+
+use \Onphp\NsConverter\Test\TestCase as TestCase;
 
 class ClassBufferTest extends TestCase
 {
@@ -72,7 +74,7 @@ class ClassBufferTest extends TestCase
 	}
 
 	/**
-	 * @return \Onphp\NsConverter\ClassBuffer
+	 * @return ClassBuffer
 	 */
 	private function getService()
 	{

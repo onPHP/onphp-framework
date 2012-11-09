@@ -11,7 +11,15 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Utils;
+
+use \Onphp\NsConverter\Buffers\CodeStorage as CodeStorage;
+use \Onphp\NsConverter\Buffers\NamespaceBuffer as NamespaceBuffer;
+use \Onphp\NsConverter\Buffers\ClassNameDetectBuffer as ClassNameDetectBuffer;
+use \Onphp\NsConverter\Buffers\AliasBuffer as AliasBuffer;
+use \Onphp\NsConverter\Business\NsClass as NsClass;
+use \Onphp\MissingElementException as MissingElementException;
+use \Onphp\WrongStateException as WrongStateException;
 
 class CodeConverter
 {
@@ -25,19 +33,19 @@ class CodeConverter
 	];
 
 	/**
-	 * @var \Onphp\NsConverter\ClassStorage
+	 * @var ClassStorage
 	 */
 	private $classStorage = null;
 	/**
-	 * @var \Onphp\NsConverter\CodeStorage
+	 * @var CodeStorage
 	 */
 	private $codeStorage = null;
 	/**
-	 * @var \Onphp\NsConverter\NamespaceBuffer
+	 * @var NamespaceBuffer
 	 */
 	private $namespaceBuffer = null;
 	/**
-	 * @var \Onphp\NsConverter\ClassNameDetectBuffer
+	 * @var ClassNameDetectBuffer
 	 */
 	private $classNameDetectBuffer = null;
 	/**
@@ -49,8 +57,8 @@ class CodeConverter
 	private $currentClassName = null;
 
 	/**
-	 * @param \Onphp\NsConverter\ClassStorage $classStorage
-	 * @return \Onphp\NsConverter\CodeConverter
+	 * @param ClassStorage $classStorage
+	 * @return CodeConverter
 	 */
 	public function setClassStorage(ClassStorage $classStorage)
 	{
@@ -59,8 +67,8 @@ class CodeConverter
 	}
 
 	/**
-	 * @param \Onphp\NsConverter\CodeStorage $codeStorage
-	 * @return \Onphp\NsConverter\CodeConverter
+	 * @param CodeStorage $codeStorage
+	 * @return CodeConverter
 	 */
 	public function setCodeStorage(CodeStorage $codeStorage)
 	{
@@ -69,8 +77,8 @@ class CodeConverter
 	}
 
 	/**
-	 * @param \Onphp\NsConverter\NamespaceBuffer $namespaceBuffer
-	 * @return \Onphp\NsConverter\CodeConverter
+	 * @param NamespaceBuffer $namespaceBuffer
+	 * @return CodeConverter
 	 */
 	public function setNamespaceBuffer(NamespaceBuffer $namespaceBuffer)
 	{
@@ -80,7 +88,7 @@ class CodeConverter
 
 	/**
 	 * @param string $newNamespace
-	 * @return \Onphp\NsConverter\CodeConverter
+	 * @return CodeConverter
 	 */
 	public function setNewNamespace($newNamespace)
 	{
@@ -89,8 +97,8 @@ class CodeConverter
 	}
 
 	/**
-	 * @param \Onphp\NsConverter\ClassNameDetectBuffer $classNameDetectBuffer
-	 * @return \Onphp\NsConverter\CodeConverter
+	 * @param ClassNameDetectBuffer $classNameDetectBuffer
+	 * @return CodeConverter
 	 */
 	public function setClassNameDetectBuffer(ClassNameDetectBuffer $classNameDetectBuffer)
 	{
@@ -99,8 +107,8 @@ class CodeConverter
 	}
 
 	/**
-	 * @param \Onphp\NsConverter\AliasBuffer $aliasBuffer
-	 * @return \Onphp\NsConverter\CodeConverter
+	 * @param AliasBuffer $aliasBuffer
+	 * @return CodeConverter
 	 */
 	public function setAliasBuffer(AliasBuffer $aliasBuffer)
 	{
@@ -110,7 +118,7 @@ class CodeConverter
 
 	/**
 	 * @param type $skipUses
-	 * @return \Onphp\NsConverter\CodeConverter
+	 * @return CodeConverter
 	 */
 	public function setSkipUses($skipUses = false)
 	{
@@ -120,7 +128,7 @@ class CodeConverter
 	
 	/**
 	 * @param type $currentClassName
-	 * @return \Onphp\NsConverter\CodeConverter
+	 * @return CodeConverter
 	 */
 	public function setCurrentClassName($currentClassName)
 	{
@@ -163,7 +171,7 @@ class CodeConverter
 			}
 		} else {
 			$msg = 'Could not find something about name "'.$className.'"';
-			throw new \Onphp\MissingElementException($msg);
+			throw new MissingElementException($msg);
 		}
 	}
 
@@ -269,7 +277,7 @@ class CodeConverter
 				);
 				return true;
 			} else {
-				throw new \Onphp\WrongStateException('Php open tag not found');
+				throw new WrongStateException('Php open tag not found');
 			}
 
 			return null;

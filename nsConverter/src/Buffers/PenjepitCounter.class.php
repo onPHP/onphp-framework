@@ -11,7 +11,7 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
 
 class PenjepitCounter implements Buffer
 {
@@ -19,7 +19,7 @@ class PenjepitCounter implements Buffer
 	private $penjepits = 0;
 	
 	/**
-	 * @return \Onphp\NsConverter\PenjepitCounter
+	 * @return PenjepitCounter
 	 */
 	public function init()
 	{

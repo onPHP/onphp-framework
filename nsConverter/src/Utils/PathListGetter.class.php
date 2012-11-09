@@ -11,15 +11,16 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Utils;
 
-use \Onphp\Form;
-use \Onphp\NamespaceResolver;
-use \Onphp\NamespaceResolverOnPHP;
-use \Onphp\NamespaceResolverPSR0;
-use \Onphp\Primitive;
-use \RecursiveDirectoryIterator;
-use \RecursiveIteratorIterator;
+use \Onphp\Form as Form;
+use \Onphp\Primitive as Primitive;
+use \Onphp\NsConverter\AddUtils\CallbackLogicalObjectSuccess as CallbackLogicalObjectSuccess;
+use \Onphp\NamespaceResolverPSR0 as NamespaceResolverPSR0;
+use \Onphp\NamespaceResolverOnPHP as NamespaceResolverOnPHP;
+use \RecursiveIteratorIterator as RecursiveIteratorIterator;
+use \RecursiveDirectoryIterator as RecursiveDirectoryIterator;
+use \Onphp\NamespaceResolver as NamespaceResolver;
 
 trait PathListGetter
 {

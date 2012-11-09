@@ -10,9 +10,11 @@
  *                                                                         *
  ***************************************************************************/
 
-	namespace Onphp\NsConverter;
+	namespace Onphp\NsConverter\Utils;
 
-	class CodeConverterException extends \Onphp\BaseException
+	use \Onphp\BaseException as BaseException;
+
+	class CodeConverterException extends BaseException
 	{
 		
 	}

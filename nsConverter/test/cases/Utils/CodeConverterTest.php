@@ -11,7 +11,19 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Utils;
+
+use \Onphp\NsConverter\Test\TestCase as TestCase;
+use \Onphp\NsConverter\Buffers\CodeStorage as CodeStorage;
+use \Onphp\NsConverter\Buffers\NamespaceBuffer as NamespaceBuffer;
+use \Onphp\NsConverter\Buffers\ClassBuffer as ClassBuffer;
+use \Onphp\NsConverter\Buffers\AliasBuffer as AliasBuffer;
+use \Onphp\NsConverter\Buffers\FunctionBuffer as FunctionBuffer;
+use \Onphp\NsConverter\Buffers\ClassNameDetectBuffer as ClassNameDetectBuffer;
+use \Onphp\NsConverter\Buffers\ChainBuffer as ChainBuffer;
+use \Onphp\NsConverter\Business\NsClass as NsClass;
+use \Onphp\NsConverter\Business\NsFunction as NsFunction;
+use \Onphp\NsConverter\Business\NsConstant as NsConstant;
 
 /**
  * @group cc
@@ -101,10 +113,10 @@ class CodeConverterTest extends TestCase
 	}
 
 	/**
-	 * @param \Onphp\NsConverter\ClassStorage $storage
+	 * @param ClassStorage $storage
 	 * @param type $path
 	 * @param type $newNamespace
-	 * @return \Onphp\NsConverter\CodeStorage
+	 * @return CodeStorage
 	 */
 	private function runConverter(ClassStorage $storage, $path, $newNamespace = null, $skipUses = false)
 	{
@@ -152,7 +164,7 @@ class CodeConverterTest extends TestCase
 
 	/**
 	 * @param string $classes
-	 * @return \Onphp\NsConverter\ClassStorage
+	 * @return ClassStorage
 	 */
 	private function getClassStorage($classes, array $functions = [], array $constants = [])
 	{
@@ -180,7 +192,7 @@ class CodeConverterTest extends TestCase
 	}
 
 	/**
-	 * @return \Onphp\NsConverter\CodeConverter
+	 * @return CodeConverter
 	 */
 	private function getService()
 	{

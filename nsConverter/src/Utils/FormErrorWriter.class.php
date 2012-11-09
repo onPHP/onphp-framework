@@ -11,13 +11,15 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Utils;
+
+use \Onphp\Form as Form;
 
 trait FormErrorWriter
 {
 	use OutputMsg;
 	
-	public function processFormError(\Onphp\Form $form)
+	public function processFormError(Form $form)
 	{
 		if ($errors = $form->getErrors()) {
 			$this->msg(print_r($errors, true));

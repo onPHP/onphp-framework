@@ -11,7 +11,9 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
+
+use \Onphp\MissingElementException as MissingElementException;
 
 class CodeStorage implements Buffer
 {
@@ -30,11 +32,11 @@ class CodeStorage implements Buffer
 		if (isset($this->subjects[$i]))
 			return $this->subjects[$i];
 
-		throw new \Onphp\MissingElementException('not found subject with num "'.$i.'"');
+		throw new MissingElementException('not found subject with num "'.$i.'"');
 	}
 
 	/**
-	 * @return \Onphp\NsConverter\CodeStorage
+	 * @return CodeStorage
 	 */
 	public function init()
 	{
@@ -78,7 +80,7 @@ class CodeStorage implements Buffer
 	 * @param string $code
 	 * @param int $from
 	 * @param int $to
-	 * @return \Onphp\NsConverter\CodeStorage
+	 * @return CodeStorage
 	 */
 	public function addReplace($code, $from, $to = null)
 	{
@@ -92,7 +94,7 @@ class CodeStorage implements Buffer
 	/**
 	 * @param string $code
 	 * @param int $i
-	 * @return \Onphp\NsConverter\CodeStorage
+	 * @return CodeStorage
 	 */
 	public function addAppend($code, $i)
 	{

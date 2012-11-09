@@ -11,7 +11,9 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
+
+use \Onphp\NsConverter\Test\TestCase as TestCase;
 
 /**
  * @group ab
@@ -93,7 +95,7 @@ class AliasBufferTest extends TestCase
 	}
 
 	/**
-	 * @return \Onphp\NsConverter\AliasBuffer
+	 * @return AliasBuffer
 	 */
 	private function getService(NamespaceBuffer $nsBuffer, ClassBuffer $classBuffer)
 	{

@@ -10,30 +10,34 @@
  *                                                                         *
  ***************************************************************************/
 
-	namespace Onphp\NsConverter;
+	namespace Onphp\NsConverter\AddUtils;
+
+	use \Onphp\CallbackLogicalObject as CallbackLogicalObject;
+	use \Closure as Closure;
+	use \Onphp\Form as Form;
 	
 	/**
 	 * Wrapper around given childs of LogicalObject with custom logic-glue's which
 	 * 
 	 * @ingroup Logic
 	**/
-	class CallbackLogicalObjectSuccess extends \Onphp\CallbackLogicalObject
+	class CallbackLogicalObjectSuccess extends CallbackLogicalObject
 	{
 		/**
 		 * @static
-		 * @param \Closure $callback
-		 * @return \Onphp\NsConverter\CallbackLogicalObjectSuccess
+		 * @param Closure $callback
+		 * @return CallbackLogicalObjectSuccess
 		 */
-		static public function create(\Closure $callback)
+		static public function create(Closure $callback)
 		{
 			return new self($callback);
 		}
 
 		/**
-		 * @param \Onphp\Form $form
+		 * @param Form $form
 		 * @return bool
 		 */
-		public function toBoolean(\Onphp\Form $form)
+		public function toBoolean(Form $form)
 		{
 			parent::toBoolean($form);
 			return true;

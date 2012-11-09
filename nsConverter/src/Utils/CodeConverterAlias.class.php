@@ -11,7 +11,11 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Utils;
+
+use \Onphp\NsConverter\Buffers\AliasBuffer as AliasBuffer;
+use \Onphp\WrongStateException as WrongStateException;
+use \Onphp\NsConverter\Buffers\CodeStorage as CodeStorage;
 
 class CodeConverterAlias
 {
@@ -74,7 +78,7 @@ class CodeConverterAlias
 				$alias = $className.$i++;
 			} while (isset($this->aliases[$alias]) && $i < 100);
 			if (isset($this->aliases[$alias])) {
-				throw new \Onphp\WrongStateException();
+				throw new WrongStateException();
 			}
 		}
 		$this->aliases[$alias] = $fullClassName;
@@ -87,7 +91,7 @@ class CodeConverterAlias
 	}
 
 	/**
-	 * @param \Onphp\NsConverter\CodeStorage $codeStorage
+	 * @param CodeStorage $codeStorage
 	 */
 	public function clearOldAliases(CodeStorage $codeStorage)
 	{
@@ -116,7 +120,11 @@ class CodeConverterAlias
 		$aliases = [];
 		foreach ($this->aliases as $to => $from) {
 			if (!isset($this->hidden[$to])) {
-				$aliases[] = "use {$from} as {$to};";
+				if (NamespaceUtils::explodeFullName($from)[1] != $to) {
+					$aliases[] = "use {$from} as {$to};";
+				} else {
+					$aliases[] = "use {$from};";
+				}
 			}
 		}
 		return $aliases;

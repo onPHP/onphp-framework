@@ -11,7 +11,9 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
+
+use \Onphp\NsConverter\Test\TestCase as TestCase;
 
 class NamespaceBufferTest extends TestCase
 {
@@ -74,7 +76,7 @@ class NamespaceBufferTest extends TestCase
 	}
 
 	/**
-	 * @return \Onphp\NsConverter\NamespaceBuffer
+	 * @return NamespaceBuffer
 	 */
 	private function getService()
 	{

@@ -11,16 +11,19 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
+
+use \Onphp\UnimplementedFeatureException as UnimplementedFeatureException;
+use \Onphp\Assert as Assert;
 
 class AliasBuffer implements Buffer
 {
 	/**
-	 * @var \Onphp\NsConverter\NamespaceBuffer
+	 * @var NamespaceBuffer
 	 */
 	private $namespaceBuffer = null;
 	/**
-	 * @var \Onphp\NsConverter\ClassBuffer
+	 * @var ClassBuffer
 	 */
 	private $classBuffer = null;
 	private $buffer = false;
@@ -28,15 +31,15 @@ class AliasBuffer implements Buffer
 	private $buffers = [];
 	private $aliases = [];
 	/**
-	 * @var \Onphp\NsConverter\ClassNameBuffer
+	 * @var ClassNameBuffer
 	 */
 	private $classNameBuffer = null;
 	private $classFrom = null;
 	private $classTo = null;
 
 	/**
-	 * @param \Onphp\NsConverter\NamespaceBuffer $namespaceBuffer
-	 * @return \Onphp\NsConverter\AliasBuffer
+	 * @param NamespaceBuffer $namespaceBuffer
+	 * @return AliasBuffer
 	 */
 	public function setNamespaceBuffer(NamespaceBuffer $namespaceBuffer)
 	{
@@ -44,8 +47,8 @@ class AliasBuffer implements Buffer
 		return $this;
 	}
 	/**
-	 * @param \Onphp\NsConverter\ClassBuffer $classBuffer
-	 * @return \Onphp\NsConverter\AliasBuffer
+	 * @param ClassBuffer $classBuffer
+	 * @return AliasBuffer
 	 */
 	public function setClassBuffer(ClassBuffer $classBuffer)
 	{
@@ -54,7 +57,7 @@ class AliasBuffer implements Buffer
 	}
 
 	/**
-	 * @return \Onphp\NsConverter\NamespaceBuffer
+	 * @return NamespaceBuffer
 	 */
 	public function init()
 	{
@@ -112,7 +115,7 @@ class AliasBuffer implements Buffer
 			} elseif (is_array($subject) && $subject[0] == T_AS) {
 				$this->storeClassName();
 			} elseif ($this->classNameBuffer && !$this->classNameBuffer->isBuffer()) {
-				throw new \Onphp\UnimplementedFeatureException();
+				throw new UnimplementedFeatureException();
 			}
 		}
 	}
@@ -147,13 +150,13 @@ class AliasBuffer implements Buffer
 
 	private function storeClassName()
 	{
-		\Onphp\Assert::isNotNull($this->classNameBuffer);
+		Assert::isNotNull($this->classNameBuffer);
 		if (!$this->classFrom)
 			$this->classFrom = '\\'.ltrim($this->classNameBuffer->getClassName(), '\\');
 		elseif (!$this->classTo)
 			$this->classTo = trim($this->classNameBuffer->getClassName());
 		else
-			\Onphp\Assert::isUnreachable ('unreachable');
+			Assert::isUnreachable ('unreachable');
 
 		$this->classNameBuffer = null;
 	}

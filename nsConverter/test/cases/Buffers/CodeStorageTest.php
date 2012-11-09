@@ -11,7 +11,9 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
+
+use \Onphp\NsConverter\Test\TestCase as TestCase;
 
 class CodeStorageTest extends TestCase
 {
@@ -72,7 +74,7 @@ class CodeStorageTest extends TestCase
 	}
 
 	/**
-	 * @return \Onphp\NsConverter\CodeStorage
+	 * @return CodeStorage
 	 */
 	private function getService()
 	{

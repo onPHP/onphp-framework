@@ -11,9 +11,11 @@
  *                                                                         *
  * ************************************************************************* */
 
-	namespace Onphp\NsConverter;
+	namespace Onphp\NsConverter\AddUtils;
 
-	class CMDUtils extends \Onphp\StaticFactory {
+	use \Onphp\StaticFactory as StaticFactory;
+
+	class CMDUtils extends StaticFactory {
 
 		/**
 		 * Возвращает ассоциативный массив стартовых настроек для скрипта

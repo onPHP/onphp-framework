@@ -5,9 +5,12 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	namespace Onphp\NsConverter;
+	namespace Onphp\NsConverter\Business;
+
+	use \Onphp\NsConverter\Auto\Business\AutoNsConstant as AutoNsConstant;
+	use \Onphp\Prototyped as Prototyped;
 	
-	class NsConstant extends \Onphp\NsConverter\AutoNsConstant implements \Onphp\Prototyped
+	class NsConstant extends AutoNsConstant implements Prototyped
 	{
 		// your brilliant stuff goes here
 	}

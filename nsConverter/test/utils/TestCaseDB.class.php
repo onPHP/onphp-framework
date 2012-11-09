@@ -1,6 +1,6 @@
 <?php
 
-	namespace Onphp\NsConverter;
+	namespace Onphp\NsConverter\Test;
 	
 	abstract class TestCaseDB extends TestCase
 	{

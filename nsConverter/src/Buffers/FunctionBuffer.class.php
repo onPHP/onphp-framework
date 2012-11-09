@@ -11,7 +11,7 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
 
 class FunctionBuffer implements Buffer
 {
@@ -19,12 +19,12 @@ class FunctionBuffer implements Buffer
 	private $inFunction = false;
 	private $functionName = null;
 	/**
-	 * @var \Onphp\NsConverter\PenjepitCounter
+	 * @var PenjepitCounter
 	 */
 	private $penjepitCounter = null;
 
 	/**
-	 * @return \Onphp\NsConverter\NamespaceBuffer
+	 * @return NamespaceBuffer
 	 */
 	public function init()
 	{

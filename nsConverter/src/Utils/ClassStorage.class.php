@@ -11,7 +11,12 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Utils;
+
+use \Onphp\NsConverter\Business\NsConstant as NsConstant;
+use \Onphp\WrongStateException as WrongStateException;
+use \Onphp\NsConverter\Business\NsClass as NsClass;
+use \Onphp\NsConverter\Business\NsFunction as NsFunction;
 
 class ClassStorage
 {
@@ -25,23 +30,23 @@ class ClassStorage
 	private $aliasConverter = [];
 
 	/**
-	 * @param \Onphp\NsConverter\NsConstant $constant
-	 * @return \Onphp\NsConverter\ClassStorage
-	 * @throws \Onphp\WrongStateException
+	 * @param NsConstant $constant
+	 * @return ClassStorage
+	 * @throws WrongStateException
 	 */
 	public function addConstant(NsConstant $constant)
 	{
 		if (isset($this->constants[$constant->getName()])) {
-			throw new \Onphp\WrongStateException('Constant "'.$constant->getName().'" already added');
+			throw new WrongStateException('Constant "'.$constant->getName().'" already added');
 		}
 		$this->constants[$constant->getName()] = $constant;
 		return $this;
 	}
 
 	/**
-	 * @param \Onphp\NsConverter\NsClass $class
-	 * @return \Onphp\NsConverter\ClassStorage
-	 * @throws \Onphp\WrongStateException
+	 * @param NsClass $class
+	 * @return ClassStorage
+	 * @throws WrongStateException
 	 */
 	public function addClass(NsObject $class)
 	{
@@ -49,7 +54,7 @@ class ClassStorage
 		$fullNewName = $class->getFullNewName();
 		if (isset($this->classStorage[$fullNewName])) {
 			$addedClass = $this->classStorage[$fullNewName];
-			/* @var $addedClass \Onphp\NsConverter\NsClass */
+			/* @var $addedClass NsClass */
 			if (
 				$addedClass->getName() == $class->getName()
 				&& $addedClass->getNamespace() == $class->getNamespace()
@@ -57,10 +62,10 @@ class ClassStorage
 			) {
 				return $this;
 			}
-			throw new \Onphp\WrongStateException('Class name "'.$fullNewName.'" already added');
+			throw new WrongStateException('Class name "'.$fullNewName.'" already added');
 		}
 		if (isset($this->oldNamesMap[$fullName])) {
-			throw new \Onphp\WrongStateException('Old Class name "'.$fullName.'" already added');
+			throw new WrongStateException('Old Class name "'.$fullName.'" already added');
 		}
 		$this->oldNamesMap[$fullName] = $fullNewName;
 		$this->classStorage[$fullNewName] = $class;
@@ -88,7 +93,7 @@ class ClassStorage
 	/**
 	 * @param string $name
 	 * @param string $namespace
-	 * @return \Onphp\NsConverter\NsObject
+	 * @return NsObject
 	 */
 	public function findByClassNs($name, $namespace = null)
 	{
@@ -104,7 +109,7 @@ class ClassStorage
 
 	/**
 	 * @param string $fullName
-	 * @return \Onphp\NsConverter\NsObject
+	 * @return NsObject
 	 */
 	public function findByFullName($fullName)
 	{
@@ -114,7 +119,7 @@ class ClassStorage
 
 	/**
 	 * @param string $fullName
-	 * @return \Onphp\NsConverter\NsObject
+	 * @return NsObject
 	 */
 	public function findByClassName($className, $currentNs, $aliases = true)
 	{
@@ -141,7 +146,7 @@ class ClassStorage
 			$config[] = implode(':', ['CONST', $constant->getName()]);
 		}
 		foreach ($this->classStorage as $class) {
-			/* @var $class \Onphp\NsConverter\NsObject */
+			/* @var $class NsObject */
 			$parts = [
 				$class instanceof NsClass ? 'C' : 'F',
 				$class->getName(),
@@ -176,7 +181,7 @@ class ClassStorage
 					->setNewNamespace($newNamespace);
 				$this->addClass($class);
 			} else {
-				throw new \Onphp\WrongStateException("Undefined row at line {$line}: {$row}");
+				throw new WrongStateException("Undefined row at line {$line}: {$row}");
 			}
 		}
 	}

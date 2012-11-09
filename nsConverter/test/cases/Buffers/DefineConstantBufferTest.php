@@ -11,7 +11,10 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
+
+use \Onphp\NsConverter\Test\TestCase as TestCase;
+use \Onphp\NsConverter\Utils\ClassStorage as ClassStorage;
 
 /**
  * @group dc
@@ -56,7 +59,7 @@ class DefineConstantBufferTest extends TestCase
 	}
 
 	/**
-	 * @return \Onphp\NsConverter\DefineConstantBuffer
+	 * @return DefineConstantBuffer
 	 */
 	private function getService($classStorage)
 	{

@@ -11,7 +11,27 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Flow;
+
+use \Onphp\NsConverter\Utils\OutputMsg as OutputMsg;
+use \Onphp\NsConverter\Utils\PathListGetter as PathListGetter;
+use \Onphp\NsConverter\Utils\FormErrorWriter as FormErrorWriter;
+use \Onphp\NsConverter\AddUtils\CMDUtils as CMDUtils;
+use \Onphp\Form as Form;
+use \Onphp\NsConverter\Utils\ClassStorage as ClassStorage;
+use \Onphp\NsConverter\Buffers\CodeStorage as CodeStorage;
+use \Onphp\NsConverter\Buffers\NamespaceBuffer as NamespaceBuffer;
+use \Onphp\NsConverter\Buffers\ClassBuffer as ClassBuffer;
+use \Onphp\NsConverter\Buffers\AliasBuffer as AliasBuffer;
+use \Onphp\NsConverter\Buffers\FunctionBuffer as FunctionBuffer;
+use \Onphp\NsConverter\Buffers\ClassNameDetectBuffer as ClassNameDetectBuffer;
+use \Onphp\NsConverter\Buffers\ChainBuffer as ChainBuffer;
+use \Onphp\ClassUtils as ClassUtils;
+use \Onphp\NsConverter\Utils\CodeConverter as CodeConverter;
+use \Exception as Exception;
+use \Onphp\NsConverter\Utils\CodeConverterException as CodeConverterException;
+use \RecursiveDirectoryIterator as RecursiveDirectoryIterator;
+use \Onphp\Primitive as Primitive;
 
 class ReplaceCommand
 {
@@ -34,7 +54,7 @@ class ReplaceCommand
 		$this->replace($form, $storage, $pathList);
 	}
 
-	private function replace(\Onphp\Form $form, ClassStorage $storage, array $pathList)
+	private function replace(Form $form, ClassStorage $storage, array $pathList)
 	{
 		$codeStorage = new CodeStorage();
 		$namespaceBuffer = new NamespaceBuffer();
@@ -64,7 +84,7 @@ class ReplaceCommand
 			foreach ($subjects as $i => $subject) {
 				$chainBuffer->process($subject, $i);
 				if ($className == null && $classBuffer->getClassName()) {
-					$className = \Onphp\ClassUtils::normalClassName(
+					$className = ClassUtils::normalClassName(
 						trim($newNamespace, '\\').'\\'.$classBuffer->getClassName()
 					);
 				}
@@ -83,7 +103,7 @@ class ReplaceCommand
 
 			try {
 				$converter->run();
-			} catch (\Exception $e) {
+			} catch (Exception $e) {
 				throw new CodeConverterException(
 					'Exception while file ('.$path.') converting: '.
 						print_r([get_class($e), $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getTraceAsString()], true),
@@ -98,17 +118,17 @@ class ReplaceCommand
 
 	/**
 	 *
-	 * @param \Onphp\Form $form
-	 * @return \Onphp\NsConverter\ClassStorage
+	 * @param Form $form
+	 * @return ClassStorage
 	 */
-	private function loadConfig(\Onphp\Form $form)
+	private function loadConfig(Form $form)
 	{
 		$storage = new ClassStorage();
 		$path = $form->getValue('--config');
 		if (is_file($path)) {
 			$storage->import(file_get_contents($path));
 		} elseif (is_dir($path)) {
-			$iterator = new \RecursiveDirectoryIterator($path);
+			$iterator = new RecursiveDirectoryIterator($path);
 			foreach ($iterator as $key => $value) {
 				if (is_file($key)) {
 					$storage->import(file_get_contents($key));
@@ -119,14 +139,14 @@ class ReplaceCommand
 	}
 
 	/**
-	 * @return \Onphp\Form
+	 * @return Form
 	 */
 	private function getForm()
 	{
-		$form = \Onphp\Form::create()
-			->add(\Onphp\Primitive::string('--config')->required())
-			->add($noAlias = \Onphp\Primitive::boolean('--noAlias'))
-			->add(\Onphp\Primitive::alias('--skipAlias', $noAlias))
+		$form = Form::create()
+			->add(Primitive::string('--config')->required())
+			->add($noAlias = Primitive::boolean('--noAlias'))
+			->add(Primitive::alias('--skipAlias', $noAlias))
 			->addRule('configExistsRule', $this->getPathExistsRule('--config'));
 		$this->fillFormWithPath($form);
 		return $form;

@@ -11,18 +11,18 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
 
 class ChainBuffer implements Buffer
 {
 	/**
-	 * @var \Onphp\NsConverter\ClassBuffer
+	 * @var ClassBuffer
 	 */
 	private $buffers = [];
 
 	/**
-	 * @param \Onphp\NsConverter\Buffer $buffer
-	 * @return \Onphp\NsConverter\ChainBuffer
+	 * @param Buffer $buffer
+	 * @return ChainBuffer
 	 */
 	public function addBuffer(Buffer $buffer)
 	{
@@ -31,12 +31,12 @@ class ChainBuffer implements Buffer
 	}
 	
 	/**
-	 * @return \Onphp\NsConverter\ChainBuffer
+	 * @return ChainBuffer
 	 */
 	public function init()
 	{
 		foreach ($this->buffers as $buffer) {
-			/* @var $buffer \Onphp\NsConverter\Buffer */
+			/* @var $buffer Buffer */
 			$buffer->init();
 		}
 		return $this;
@@ -53,7 +53,7 @@ class ChainBuffer implements Buffer
 	public function process($subject, $i)
 	{
 		foreach ($this->buffers as $buffer) {
-			/* @var $buffer \Onphp\NsConverter\Buffer */
+			/* @var $buffer Buffer */
 			$buffer->process($subject, $i);
 		}
 	}

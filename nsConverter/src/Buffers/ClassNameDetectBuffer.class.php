@@ -11,37 +11,37 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Buffers;
 
 class ClassNameDetectBuffer implements Buffer
 {
 	/**
-	 * @var \Onphp\NsConverter\NamespaceBuffer
+	 * @var NamespaceBuffer
 	 */
 	private $namespaceBuffer = null;
 	/**
-	 * @var \Onphp\NsConverter\ClassBuffer
+	 * @var ClassBuffer
 	 */
 	private $classBuffer = null;
 	/**
-	 * @var \Onphp\NsConverter\FunctionBuffer
+	 * @var FunctionBuffer
 	 */
 	private $functionBuffer = null;
 	/**
-	 * @var \Onphp\NsConverter\AliasBuffer
+	 * @var AliasBuffer
 	 */
 	private $aliasBuffer = null;
 
 	/**
-	 * @var \Onphp\NsConverter\ClassNameBuffer
+	 * @var ClassNameBuffer
 	 */
 	private $classNameBuffer = null;
 	private $classNameList = [];
 	private $prevSubject = null;
 
 	/**
-	 * @param \Onphp\NsConverter\NamespaceBuffer $namespaceBuffer
-	 * @return \Onphp\NsConverter\ClassNameDetectBuffer
+	 * @param NamespaceBuffer $namespaceBuffer
+	 * @return ClassNameDetectBuffer
 	 */
 	public function setNamespaceBuffer(NamespaceBuffer $namespaceBuffer)
 	{
@@ -50,8 +50,8 @@ class ClassNameDetectBuffer implements Buffer
 	}
 
 	/**
-	 * @param \Onphp\NsConverter\ClassBuffer $classBuffer
-	 * @return \Onphp\NsConverter\ClassNameDetectBuffer
+	 * @param ClassBuffer $classBuffer
+	 * @return ClassNameDetectBuffer
 	 */
 	public function setClassBuffer(ClassBuffer $classBuffer)
 	{
@@ -60,8 +60,8 @@ class ClassNameDetectBuffer implements Buffer
 	}
 
 	/**
-	 * @param \Onphp\NsConverter\FunctionBuffer $functionBuffer
-	 * @return \Onphp\NsConverter\ClassNameDetectBuffer
+	 * @param FunctionBuffer $functionBuffer
+	 * @return ClassNameDetectBuffer
 	 */
 	public function setFunctionBuffer(FunctionBuffer $functionBuffer)
 	{
@@ -69,7 +69,7 @@ class ClassNameDetectBuffer implements Buffer
 		return $this;
 	}
 
-	public function setAliasBuffer(\Onphp\NsConverter\AliasBuffer $aliasBuffer)
+	public function setAliasBuffer(AliasBuffer $aliasBuffer)
 	{
 		$this->aliasBuffer = $aliasBuffer;
 		return $this;
@@ -81,7 +81,7 @@ class ClassNameDetectBuffer implements Buffer
 	}
 
 	/**
-	 * @return \Onphp\NsConverter\NamespaceBuffer
+	 * @return NamespaceBuffer
 	 */
 	public function init()
 	{

@@ -11,7 +11,18 @@
  *                                                                         *
  * ************************************************************************* */
 
-namespace Onphp\NsConverter;
+namespace Onphp\NsConverter\Flow;
+
+use \Onphp\NsConverter\Utils\OutputMsg as OutputMsg;
+use \Onphp\NsConverter\Utils\PathListGetter as PathListGetter;
+use \Onphp\NsConverter\Utils\FormErrorWriter as FormErrorWriter;
+use \Onphp\NsConverter\AddUtils\CMDUtils as CMDUtils;
+use \Onphp\NsConverter\Utils\ClassStorage as ClassStorage;
+use \Onphp\NsConverter\Buffers\DefineConstantBuffer as DefineConstantBuffer;
+use \Onphp\NsConverter\Buffers\NamespaceBuffer as NamespaceBuffer;
+use \Onphp\NsConverter\Buffers\ClassBuffer as ClassBuffer;
+use \Onphp\NsConverter\Buffers\ClassStorageBuffer as ClassStorageBuffer;
+use \Onphp\Form as Form;
 
 class ScanCommand
 {
@@ -59,11 +70,11 @@ class ScanCommand
 	}
 
 	/**
-	 * @return \Onphp\Form
+	 * @return Form
 	 */
 	private function getForm()
 	{
-		$form = \Onphp\Form::create();
+		$form = Form::create();
 		$this->fillFormWithPath($form);
 		return $form;
 	}
