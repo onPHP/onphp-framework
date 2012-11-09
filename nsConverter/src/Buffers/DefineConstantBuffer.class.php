@@ -13,8 +13,8 @@
 
 namespace Onphp\NsConverter\Buffers;
 
-use \Onphp\NsConverter\Utils\ClassStorage as ClassStorage;
-use \Onphp\NsConverter\Business\NsConstant as NsConstant;
+use \Onphp\NsConverter\Utils\ClassStorage;
+use \Onphp\NsConverter\Business\NsConstant;
 
 class DefineConstantBuffer implements Buffer
 {

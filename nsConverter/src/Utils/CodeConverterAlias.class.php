@@ -13,9 +13,9 @@
 
 namespace Onphp\NsConverter\Utils;
 
-use \Onphp\NsConverter\Buffers\AliasBuffer as AliasBuffer;
-use \Onphp\WrongStateException as WrongStateException;
-use \Onphp\NsConverter\Buffers\CodeStorage as CodeStorage;
+use \Onphp\NsConverter\Buffers\AliasBuffer;
+use \Onphp\WrongStateException;
+use \Onphp\NsConverter\Buffers\CodeStorage;
 
 class CodeConverterAlias
 {

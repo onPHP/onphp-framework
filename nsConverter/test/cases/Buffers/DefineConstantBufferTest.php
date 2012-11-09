@@ -13,8 +13,8 @@
 
 namespace Onphp\NsConverter\Buffers;
 
-use \Onphp\NsConverter\Test\TestCase as TestCase;
-use \Onphp\NsConverter\Utils\ClassStorage as ClassStorage;
+use \Onphp\NsConverter\Test\TestCase;
+use \Onphp\NsConverter\Utils\ClassStorage;
 
 /**
  * @group dc

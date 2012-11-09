@@ -7,9 +7,9 @@
 
 	namespace Onphp\NsConverter\Business;
 
-	use \Onphp\NsConverter\Auto\Business\AutoNsClass as AutoNsClass;
-	use \Onphp\Prototyped as Prototyped;
-	use \Onphp\NsConverter\Utils\NamespaceUtils as NamespaceUtils;
+	use \Onphp\NsConverter\Auto\Business\AutoNsClass;
+	use \Onphp\Prototyped;
+	use \Onphp\NsConverter\Utils\NamespaceUtils;
 
 	class NsClass extends AutoNsClass implements Prototyped
 	{

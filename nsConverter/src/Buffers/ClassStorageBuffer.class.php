@@ -13,8 +13,8 @@
 
 namespace Onphp\NsConverter\Buffers;
 
-use \Onphp\NsConverter\Utils\ClassStorage as ClassStorage;
-use \Onphp\NsConverter\Business\NsClass as NsClass;
+use \Onphp\NsConverter\Utils\ClassStorage;
+use \Onphp\NsConverter\Business\NsClass;
 
 /**
  * To add class names to CodeStorage

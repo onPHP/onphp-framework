@@ -7,10 +7,10 @@
 
 	namespace Onphp\NsConverter\Auto\Business;
 
-	use \Onphp\Singleton as Singleton;
-	use \Onphp\NsConverter\Business\NsConstant as NsConstant;
-	use \Onphp\NsConverter\Proto\ProtoNsConstant as ProtoNsConstant;
-	
+	use \Onphp\Singleton;
+	use \Onphp\NsConverter\Business\NsConstant;
+	use \Onphp\NsConverter\Proto\ProtoNsConstant;
+
 	abstract class AutoNsConstant
 	{
 		protected $name = null;

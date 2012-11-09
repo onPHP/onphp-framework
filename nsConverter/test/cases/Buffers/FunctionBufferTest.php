@@ -13,7 +13,7 @@
 
 namespace Onphp\NsConverter\Buffers;
 
-use \Onphp\NsConverter\Test\TestCase as TestCase;
+use \Onphp\NsConverter\Test\TestCase;
 
 /**
  * @group fb

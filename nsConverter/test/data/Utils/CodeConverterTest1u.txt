@@ -13,12 +13,12 @@
 
 namespace convert\testclass2;
 
-use \Onphp\Form as Form;
-use \Onphp\Model as Model;
-use \converter\B as B;
-use \Onphp\CommandChain as CommandChain;
-use \Onphp\View as View;
-use \Onphp\Primitive as Primitive;
+use \Onphp\Form;
+use \Onphp\Model;
+use \converter\B;
+use \Onphp\CommandChain;
+use \Onphp\View;
+use \Onphp\Primitive;
 
 new Form();
 Model::create();

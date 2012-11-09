@@ -12,10 +12,10 @@
 
 	namespace Onphp\NsConverter\AddUtils;
 
-	use \Onphp\CallbackLogicalObject as CallbackLogicalObject;
-	use \Closure as Closure;
-	use \Onphp\Form as Form;
-	
+	use \Onphp\CallbackLogicalObject;
+	use \Closure;
+	use \Onphp\Form;
+
 	/**
 	 * Wrapper around given childs of LogicalObject with custom logic-glue's which
 	 * 

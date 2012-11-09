@@ -13,7 +13,9 @@
 
 	namespace Onphp\NsConverter\AddUtils;
 
-	use \Onphp\StaticFactory as StaticFactory;
+	use \Onphp\StaticFactory;
+
+	
 
 	class CMDUtils extends StaticFactory {
 

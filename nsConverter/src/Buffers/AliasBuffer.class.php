@@ -13,8 +13,8 @@
 
 namespace Onphp\NsConverter\Buffers;
 
-use \Onphp\UnimplementedFeatureException as UnimplementedFeatureException;
-use \Onphp\Assert as Assert;
+use \Onphp\UnimplementedFeatureException;
+use \Onphp\Assert;
 
 class AliasBuffer implements Buffer
 {

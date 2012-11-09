@@ -7,9 +7,9 @@
 
 	namespace Onphp\NsConverter\Auto\Proto;
 
-	use \Onphp\AbstractProtoClass as AbstractProtoClass;
-	use \Onphp\LightMetaProperty as LightMetaProperty;
-	
+	use \Onphp\AbstractProtoClass;
+	use \Onphp\LightMetaProperty;
+
 	abstract class AutoProtoNsFunction extends AbstractProtoClass
 	{
 		protected function makePropertyList()

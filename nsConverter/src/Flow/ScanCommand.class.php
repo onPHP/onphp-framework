@@ -13,16 +13,16 @@
 
 namespace Onphp\NsConverter\Flow;
 
-use \Onphp\NsConverter\Utils\OutputMsg as OutputMsg;
-use \Onphp\NsConverter\Utils\PathListGetter as PathListGetter;
-use \Onphp\NsConverter\Utils\FormErrorWriter as FormErrorWriter;
-use \Onphp\NsConverter\AddUtils\CMDUtils as CMDUtils;
-use \Onphp\NsConverter\Utils\ClassStorage as ClassStorage;
-use \Onphp\NsConverter\Buffers\DefineConstantBuffer as DefineConstantBuffer;
-use \Onphp\NsConverter\Buffers\NamespaceBuffer as NamespaceBuffer;
-use \Onphp\NsConverter\Buffers\ClassBuffer as ClassBuffer;
-use \Onphp\NsConverter\Buffers\ClassStorageBuffer as ClassStorageBuffer;
-use \Onphp\Form as Form;
+use \Onphp\NsConverter\Utils\OutputMsg;
+use \Onphp\NsConverter\Utils\PathListGetter;
+use \Onphp\NsConverter\Utils\FormErrorWriter;
+use \Onphp\NsConverter\AddUtils\CMDUtils;
+use \Onphp\NsConverter\Utils\ClassStorage;
+use \Onphp\NsConverter\Buffers\DefineConstantBuffer;
+use \Onphp\NsConverter\Buffers\NamespaceBuffer;
+use \Onphp\NsConverter\Buffers\ClassBuffer;
+use \Onphp\NsConverter\Buffers\ClassStorageBuffer;
+use \Onphp\Form;
 
 class ScanCommand
 {

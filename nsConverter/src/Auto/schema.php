@@ -7,7 +7,9 @@
 
 	namespace Onphp\NsConverter\Auto;
 
-	use \Onphp\DBSchema as DBSchema;
+	use \Onphp\DBSchema;
+
+	
 
 	$schema = new DBSchema();
 	

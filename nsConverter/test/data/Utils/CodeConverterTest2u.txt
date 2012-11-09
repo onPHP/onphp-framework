@@ -13,11 +13,11 @@
 
 	namespace convert\testclass3;
 
-	use \Onphp\main\Form as Form;
-	use \Onphp\core\Model as Model;
-	use \Onphp\main\HttpRequest as HttpRequest;
-	use \Onphp\CommandChain as CommandChain;
-	use \Onphp\Primitive as Primitive;
+	use \Onphp\main\Form;
+	use \Onphp\core\Model;
+	use \Onphp\main\HttpRequest;
+	use \Onphp\CommandChain;
+	use \Onphp\Primitive;
 
 	new Form();
 	Model::create();

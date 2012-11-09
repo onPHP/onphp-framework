@@ -7,7 +7,9 @@
 
 	namespace Onphp\NsConverter\Proto;
 
-	use \Onphp\NsConverter\Auto\Proto\AutoProtoNsConstant as AutoProtoNsConstant;
+	use \Onphp\NsConverter\Auto\Proto\AutoProtoNsConstant;
+
+	
 	
 	class ProtoNsConstant extends AutoProtoNsConstant {/*_*/}
 ?>

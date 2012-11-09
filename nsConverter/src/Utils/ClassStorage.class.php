@@ -13,10 +13,10 @@
 
 namespace Onphp\NsConverter\Utils;
 
-use \Onphp\NsConverter\Business\NsConstant as NsConstant;
-use \Onphp\WrongStateException as WrongStateException;
-use \Onphp\NsConverter\Business\NsClass as NsClass;
-use \Onphp\NsConverter\Business\NsFunction as NsFunction;
+use \Onphp\NsConverter\Business\NsConstant;
+use \Onphp\WrongStateException;
+use \Onphp\NsConverter\Business\NsClass;
+use \Onphp\NsConverter\Business\NsFunction;
 
 class ClassStorage
 {

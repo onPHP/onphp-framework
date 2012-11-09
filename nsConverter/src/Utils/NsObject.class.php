@@ -13,7 +13,9 @@
 
 namespace Onphp\NsConverter\Utils;
 
-use \Onphp\NsConverter\Business\NsFunction as NsFunction;
+use \Onphp\NsConverter\Business\NsFunction;
+
+
 
 interface NsObject
 {

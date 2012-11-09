@@ -13,17 +13,17 @@
 
 namespace Onphp\NsConverter\Utils;
 
-use \Onphp\NsConverter\Test\TestCase as TestCase;
-use \Onphp\NsConverter\Buffers\CodeStorage as CodeStorage;
-use \Onphp\NsConverter\Buffers\NamespaceBuffer as NamespaceBuffer;
-use \Onphp\NsConverter\Buffers\ClassBuffer as ClassBuffer;
-use \Onphp\NsConverter\Buffers\AliasBuffer as AliasBuffer;
-use \Onphp\NsConverter\Buffers\FunctionBuffer as FunctionBuffer;
-use \Onphp\NsConverter\Buffers\ClassNameDetectBuffer as ClassNameDetectBuffer;
-use \Onphp\NsConverter\Buffers\ChainBuffer as ChainBuffer;
-use \Onphp\NsConverter\Business\NsClass as NsClass;
-use \Onphp\NsConverter\Business\NsFunction as NsFunction;
-use \Onphp\NsConverter\Business\NsConstant as NsConstant;
+use \Onphp\NsConverter\Test\TestCase;
+use \Onphp\NsConverter\Buffers\CodeStorage;
+use \Onphp\NsConverter\Buffers\NamespaceBuffer;
+use \Onphp\NsConverter\Buffers\ClassBuffer;
+use \Onphp\NsConverter\Buffers\AliasBuffer;
+use \Onphp\NsConverter\Buffers\FunctionBuffer;
+use \Onphp\NsConverter\Buffers\ClassNameDetectBuffer;
+use \Onphp\NsConverter\Buffers\ChainBuffer;
+use \Onphp\NsConverter\Business\NsClass;
+use \Onphp\NsConverter\Business\NsFunction;
+use \Onphp\NsConverter\Business\NsConstant;
 
 /**
  * @group cc

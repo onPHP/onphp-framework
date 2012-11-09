@@ -13,13 +13,13 @@
 
 namespace Onphp\NsConverter\Utils;
 
-use \Onphp\NsConverter\Buffers\CodeStorage as CodeStorage;
-use \Onphp\NsConverter\Buffers\NamespaceBuffer as NamespaceBuffer;
-use \Onphp\NsConverter\Buffers\ClassNameDetectBuffer as ClassNameDetectBuffer;
-use \Onphp\NsConverter\Buffers\AliasBuffer as AliasBuffer;
-use \Onphp\NsConverter\Business\NsClass as NsClass;
-use \Onphp\MissingElementException as MissingElementException;
-use \Onphp\WrongStateException as WrongStateException;
+use \Onphp\NsConverter\Buffers\CodeStorage;
+use \Onphp\NsConverter\Buffers\NamespaceBuffer;
+use \Onphp\NsConverter\Buffers\ClassNameDetectBuffer;
+use \Onphp\NsConverter\Buffers\AliasBuffer;
+use \Onphp\NsConverter\Business\NsClass;
+use \Onphp\MissingElementException;
+use \Onphp\WrongStateException;
 
 class CodeConverter
 {

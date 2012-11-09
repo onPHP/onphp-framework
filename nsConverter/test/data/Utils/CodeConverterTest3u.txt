@@ -1,8 +1,8 @@
 <?php
 namespace convert\testclass3;
-use \Onphp\DB as DB;
-use \Onphp\OSQL as OSQL;
-use \Onphp\Form as Form;
+use \Onphp\DB;
+use \Onphp\OSQL;
+use \Onphp\Form;
 ?><div class="block" style="float: left;">
 	<?
 	/* @var $db DB */

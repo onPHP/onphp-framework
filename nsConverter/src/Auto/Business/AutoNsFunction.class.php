@@ -7,11 +7,11 @@
 
 	namespace Onphp\NsConverter\Auto\Business;
 
-	use \Onphp\NsConverter\Utils\NsObject as NsObject;
-	use \Onphp\Singleton as Singleton;
-	use \Onphp\NsConverter\Business\NsFunction as NsFunction;
-	use \Onphp\NsConverter\Proto\ProtoNsFunction as ProtoNsFunction;
-	
+	use \Onphp\NsConverter\Utils\NsObject;
+	use \Onphp\Singleton;
+	use \Onphp\NsConverter\Business\NsFunction;
+	use \Onphp\NsConverter\Proto\ProtoNsFunction;
+
 	abstract class AutoNsFunction implements NsObject
 	{
 		protected $name = null;

@@ -7,7 +7,9 @@
 
 	namespace Onphp\NsConverter\Proto;
 
-	use \Onphp\NsConverter\Auto\Proto\AutoProtoNsClass as AutoProtoNsClass;
+	use \Onphp\NsConverter\Auto\Proto\AutoProtoNsClass;
+
+	
 	
 	class ProtoNsClass extends AutoProtoNsClass {/*_*/}
 ?>

@@ -2,11 +2,11 @@
 
 namespace My\Ns;
 
-use \Onphp\OSQL\OSQL as OSQL;
+use \Onphp\OSQL\OSQL;
 use \My\Ns\OSQL as OSQL2;
-use \Onphp\Form as Form;
-use \Onphp\Primitives\Primitive as Primitive;
-use \OnphpUtils\CMDUtils as CMDUtils;
+use \Onphp\Form;
+use \Onphp\Primitives\Primitive;
+use \OnphpUtils\CMDUtils;
 
 $insert = OSQL::insert();
 $select = OSQL2::create();

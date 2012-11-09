@@ -7,9 +7,9 @@
 
 	namespace Onphp\NsConverter\Business;
 
-	use \Onphp\NsConverter\Auto\Business\AutoNsConstant as AutoNsConstant;
-	use \Onphp\Prototyped as Prototyped;
-	
+	use \Onphp\NsConverter\Auto\Business\AutoNsConstant;
+	use \Onphp\Prototyped;
+
 	class NsConstant extends AutoNsConstant implements Prototyped
 	{
 		// your brilliant stuff goes here

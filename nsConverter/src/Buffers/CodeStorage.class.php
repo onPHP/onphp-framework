@@ -13,7 +13,9 @@
 
 namespace Onphp\NsConverter\Buffers;
 
-use \Onphp\MissingElementException as MissingElementException;
+use \Onphp\MissingElementException;
+
+
 
 class CodeStorage implements Buffer
 {
