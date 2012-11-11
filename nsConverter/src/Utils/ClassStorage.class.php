@@ -138,7 +138,7 @@ class ClassStorage
 		return $this->aliasConverter->getClassNameAlias($className->getFullNewName(), $newNs);
 	}
 
-	public function export()
+	public function export($currentOnly = false)
 	{
 		$config = [];
 		foreach ($this->constants as $constant) {
@@ -150,9 +150,11 @@ class ClassStorage
 			$parts = [
 				$class instanceof NsClass ? 'C' : 'F',
 				$class->getName(),
-				$class->getNamespace(),
-				$class->getNewNamespace(),
+				$class->getNamespace()
 			];
+			if (!$currentOnly) {
+				$parts[] = $class->getNewNamespace();
+			}
 			$config[] = implode(':', $parts);
 		}
 		return implode("\n", $config);

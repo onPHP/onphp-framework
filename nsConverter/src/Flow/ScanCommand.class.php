@@ -13,16 +13,17 @@
 
 namespace Onphp\NsConverter\Flow;
 
-use \Onphp\NsConverter\Utils\OutputMsg;
-use \Onphp\NsConverter\Utils\PathListGetter;
-use \Onphp\NsConverter\Utils\FormErrorWriter;
+use \Onphp\Form;
 use \Onphp\NsConverter\AddUtils\CMDUtils;
-use \Onphp\NsConverter\Utils\ClassStorage;
-use \Onphp\NsConverter\Buffers\DefineConstantBuffer;
-use \Onphp\NsConverter\Buffers\NamespaceBuffer;
 use \Onphp\NsConverter\Buffers\ClassBuffer;
 use \Onphp\NsConverter\Buffers\ClassStorageBuffer;
-use \Onphp\Form;
+use \Onphp\NsConverter\Buffers\DefineConstantBuffer;
+use \Onphp\NsConverter\Buffers\NamespaceBuffer;
+use \Onphp\NsConverter\Utils\ClassStorage;
+use \Onphp\NsConverter\Utils\FormErrorWriter;
+use \Onphp\NsConverter\Utils\OutputMsg;
+use \Onphp\NsConverter\Utils\PathListGetter;
+use \Onphp\Primitive;
 
 class ScanCommand
 {
@@ -41,10 +42,10 @@ class ScanCommand
 		}
 
 		$classPathList = $this->getPathList($form);
-		$this->scan($classPathList);
+		$this->scan($form, $classPathList);
 	}
 
-	private function scan(array $pathList)
+	private function scan(Form $form, array $pathList)
 	{
 		$classStorage = new ClassStorage();
 
@@ -66,7 +67,7 @@ class ScanCommand
 				$constantBuffer->process($subject, $i);
 			}
 		}
-		print $classStorage->export()."\n";
+		print $classStorage->export($form->getValue('--current'))."\n";
 	}
 
 	/**
@@ -74,7 +75,8 @@ class ScanCommand
 	 */
 	private function getForm()
 	{
-		$form = Form::create();
+		$form = Form::create()
+			->add(Primitive::boolean('--current'));
 		$this->fillFormWithPath($form);
 		return $form;
 	}
