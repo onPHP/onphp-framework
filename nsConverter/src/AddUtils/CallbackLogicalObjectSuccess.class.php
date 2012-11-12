@@ -18,7 +18,7 @@
 
 	/**
 	 * Wrapper around given childs of LogicalObject with custom logic-glue's which
-	 * 
+	 *
 	 * @ingroup Logic
 	**/
 	class CallbackLogicalObjectSuccess extends CallbackLogicalObject
@@ -28,7 +28,7 @@
 		 * @param Closure $callback
 		 * @return CallbackLogicalObjectSuccess
 		 */
-		static public function create(Closure $callback)
+		static public function create($callback)
 		{
 			return new self($callback);
 		}

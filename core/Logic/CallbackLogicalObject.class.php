@@ -11,7 +11,7 @@
 
 	/**
 	 * Wrapper around given childs of LogicalObject with custom logic-glue's.
-	 * 
+	 *
 	 * @ingroup Logic
 	**/
 	namespace Onphp;
@@ -28,16 +28,17 @@
 		 * @param \Closure $callback
 		 * @return \Onphp\CallbackLogicalObject
 		 */
-		static public function create(\Closure $callback)
+		static public function create($callback)
 		{
-			return new self($callback);
+			return new static($callback);
 		}
 
 		/**
 		 * @param \Closure $callback
 		 */
-		public function __construct(\Closure $callback)
+		public function __construct($callback)
 		{
+			Assert::isTrue(is_callable($callback, true), 'callback must be callable');
 			$this->callback = $callback;
 		}
 
@@ -47,12 +48,12 @@
 		 */
 		public function toBoolean(Form $form)
 		{
-			return (bool)$this->callback->__invoke($form);
+			return call_user_func($this->callback, $form);
 		}
 
 		/**
 		 * @param \Onphp\Dialect $\Onphp\Dialect
-		 * @throws \Onphp\UnimplementedFeatureException 
+		 * @throws \Onphp\UnimplementedFeatureException
 		 */
 		public function toDialectString(Dialect $dialect)
 		{
