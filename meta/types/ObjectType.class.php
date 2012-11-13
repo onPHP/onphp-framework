@@ -220,16 +220,18 @@ public function {$methodName}({$property->getType()->getClassName()} \${$name})
 
 EOT;
 			} else {
+				$defaultValue = $property->isOptional() ? ' = null' : '';
+
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$method = <<<EOT
 
 /**
  * @return {$property->getClass()->getName()}
 **/
-public function {$methodName}({$this->className} \${$name})
+public function {$methodName}({$this->className} \${$name}{$defaultValue})
 {
 	\$this->{$name} = \${$name};
-	\$this->{$name}Id = \${$name}->getId();
+	\$this->{$name}Id = \${$name} ? \${$name}->getId() : null;
 
 	return \$this;
 }
@@ -247,7 +249,6 @@ public function {$methodName}Id(\$id)
 
 EOT;
 				} else {
-					$defaultValue = $property->isOptional() ? ' = null' : '';
 					$method = <<<EOT
 
 /**
