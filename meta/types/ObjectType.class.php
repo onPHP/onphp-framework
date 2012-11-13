@@ -239,7 +239,7 @@ public function {$methodName}({$this->className} \${$name}{$defaultValue})
 /**
  * @return {$property->getClass()->getName()}
 **/
-public function {$methodName}Id(\$id)
+public function {$methodName}Id(\$id{$defaultValue})
 {
 	\$this->{$name} = null;
 	\$this->{$name}Id = \$id;
