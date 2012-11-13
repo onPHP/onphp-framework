@@ -204,7 +204,6 @@ EOT;
 			
 			$name = $property->getName();
 			$methodName = 'set'.ucfirst($name);
-			$classHint = $this->getHint();
 			
 			if ($holder) {
 				return <<<EOT
@@ -248,12 +247,13 @@ public function {$methodName}Id(\$id)
 
 EOT;
 				} else {
+					$defaultValue = $property->isOptional() ? ' = null' : '';
 					$method = <<<EOT
 
 /**
  * @return {$property->getClass()->getName()}
 **/
-public function {$methodName}({$this->className} \${$name})
+public function {$methodName}({$this->className} \${$name}{$defaultValue})
 {
 	\$this->{$name} = \${$name};
 
