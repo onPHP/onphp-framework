@@ -212,6 +212,7 @@
 				
 				'ltree'			=> null,
 				'hstore'		=> null,
+				'uuid'			=> DataType::VARCHAR,
 			);
 			
 			try {
