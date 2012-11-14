@@ -13,10 +13,11 @@
 
 namespace Onphp\NsConverter\Utils;
 
-use \Onphp\NsConverter\Business\NsConstant;
-use \Onphp\WrongStateException;
+use \Onphp\Assert;
 use \Onphp\NsConverter\Business\NsClass;
+use \Onphp\NsConverter\Business\NsConstant;
 use \Onphp\NsConverter\Business\NsFunction;
+use \Onphp\WrongStateException;
 
 class ClassStorage
 {
@@ -72,6 +73,20 @@ class ClassStorage
 
 		return $this;
 	}
+	
+	/**
+	 * @param \Onphp\NsConverter\Utils\NsObject $class
+	 * @return \Onphp\NsConverter\Utils\ClassStorage
+	 */
+	public function dropClass(NsObject $class)
+	{
+		$fullName = $class->getFullName();
+		$fullNewName = $class->getFullNewName();
+		unset($this->oldNamesMap[$fullName]);
+		unset($this->classStorage[$fullNewName]);
+		
+		return $this;
+	}
 
 	public function setAliasConverter(CodeConverterAlias $aliasConverter)
 	{
@@ -88,6 +103,46 @@ class ClassStorage
 		return isset($this->constants[$name])
 			? $this->constants[$name]
 			: null;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getListClasses()
+	{
+		$list = [];
+		foreach ($this->classStorage as $class) {
+			$list[] = $class;
+		}
+		return $list;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getListConstants()
+	{
+		$list = [];
+		foreach ($this->constants as $constant) {
+			$list[] = $constant;
+		}
+		return $list;
+	}
+	
+	/**
+	 * @param string $className
+	 * @return array
+	 */
+	public function getListByOldClassName($className)
+	{
+		$list = [];
+		foreach (array_keys($this->oldNamesMap) as $fullOldClassName) {
+			$oldClassName = NamespaceUtils::explodeFullName($fullOldClassName)[1];
+			if ($oldClassName == $className) {
+				$list[] = $this->classStorage[$this->oldNamesMap[$fullOldClassName]];
+			}
+		}
+		return $list;
 	}
 
 	/**
@@ -121,8 +176,9 @@ class ClassStorage
 	 * @param string $fullName
 	 * @return NsObject
 	 */
-	public function findByClassName($className, $currentNs, $aliases = true)
+	public function findByRawClassName($className, $currentNs, $aliases = true)
 	{
+		Assert::isNotNull($this->aliasConverter, 'setAliasConverter first');
 		if (mb_strpos($className, '\\') !== 0) {
 			if ($fullClassName = $this->aliasConverter->getAliasBuffer()->findClass($className)) {
 				$className = $fullClassName;
@@ -135,6 +191,7 @@ class ClassStorage
 
 	public function getAliasClassName(NsClass $className, $newNs = null)
 	{
+		Assert::isNotNull($this->aliasConverter, 'setAliasConverter first');
 		return $this->aliasConverter->getClassNameAlias($className->getFullNewName(), $newNs);
 	}
 

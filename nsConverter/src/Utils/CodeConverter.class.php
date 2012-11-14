@@ -164,7 +164,7 @@ class CodeConverter
 	{
 		if ($constant = $this->classStorage->findConstant($className)) {
 			/* ok, skip replacing for constants */
-		} elseif ($class = $this->classStorage->findByClassName($className, $this->namespaceBuffer->getNamespace())) {
+		} elseif ($class = $this->classStorage->findByRawClassName($className, $this->namespaceBuffer->getNamespace())) {
 			if ($class instanceof NsClass) {
 				$alias = $this->classStorage->getAliasClassName($class, $this->newNamespace);
 				$this->codeStorage->addReplace($alias, $from, $to);
@@ -303,7 +303,7 @@ class CodeConverter
 	{
 		$pattern = '~^([\'"])([\\\\A-Z][\\\\A-Za-z0-9]+)([\'"])~';
 		if (preg_match($pattern, $string, $matches) && $matches[1] == $matches[3]) {
-			$class = $this->classStorage->findByClassName($matches[2], $this->namespaceBuffer->getNamespace(), false);
+			$class = $this->classStorage->findByRawClassName($matches[2], $this->namespaceBuffer->getNamespace(), false);
 			if ($class) {
 				return $matches[1]
 					. $class->getFullNewName()
@@ -325,7 +325,7 @@ class CodeConverter
 		}
 
 		foreach ($parts as $codeString => $className) {
-			$class = $this->classStorage->findByClassName(
+			$class = $this->classStorage->findByRawClassName(
 				$className,
 				$this->namespaceBuffer->getNamespace()
 			);

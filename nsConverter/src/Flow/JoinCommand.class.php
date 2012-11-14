@@ -13,9 +13,11 @@
 
 namespace Onphp\NsConverter\Flow;
 
+use \Onphp\Assert;
 use \Onphp\Form;
 use \Onphp\NsConverter\AddUtils\CallbackLogicalObjectSuccess;
 use \Onphp\NsConverter\AddUtils\CMDUtils;
+use \Onphp\NsConverter\AddUtils\ConsoleValueSelector;
 use \Onphp\NsConverter\Business\NsClass;
 use \Onphp\NsConverter\Business\NsConstant;
 use \Onphp\NsConverter\Utils\ClassStorage;
@@ -40,21 +42,18 @@ class JoinCommand
 			return;
 		}
 
-		list($oldClasses, $oldFuncs, $oldConstants) = $this->readConfig($form->getValue('--old'));
-		list($newClasses, $newFuncs, $newConstants) = $this->readConfig($form->getValue('--new'));
+		$oldStorage = $this->readConfig($form->getValue('--old'));
+		$newStorage = $this->readConfig($form->getValue('--new'));
 		
-		$storage = new ClassStorage();
-		$this->joinConstants($storage, $oldConstants, $newConstants);
-		$this->joinClasses($storage, $oldClasses, $newClasses);
+		$storage = $this->join($oldStorage, $newStorage);
 		
 		print $storage->export()."\n";
 	}
 	
 	private function readConfig($path)
 	{
-		$classes = [];
-		$funcs = [];
-		$constants = [];
+		$storage = new ClassStorage();
+		
 		$data = file_get_contents($path);
 		foreach (explode("\n", $data) as $line0 => $row) {
 			$line = $line0 + 1;
@@ -68,9 +67,13 @@ class JoinCommand
 					continue; //we still not work with functions
 				}
 				list($className, $namespace) = $parts;
-				$classes[$className] = $namespace;
+				$class = NsClass::create()
+					->setName($className)
+					->setNamespace($namespace)
+					->setNewNamespace($namespace);
+				$storage->addClass($class);
 			} elseif ($type == 'CONST' && count($parts) == 1) {
-				$constants[$parts[0]] = true;
+				$storage->addConstant(NsConstant::create()->setName($parts[0]));
 			} else {
 				throw new WrongStateException(
 					"Unknown type at line {$line} , file {$path}"
@@ -78,40 +81,90 @@ class JoinCommand
 			}
 		}
 		
-		return [$classes, $funcs, $constants];
+		return $storage;
 	}
 	
-	private function joinConstants(ClassStorage $storage, array $oldConstants, array $newConstants)
+	/**
+	 * @param ClassStorage $oldStorage
+	 * @param ClassStorage $newStorage
+	 * @return ClassStorage
+	 */
+	private function join(ClassStorage $oldStorage, ClassStorage $newStorage)
 	{
-		foreach (array_keys($oldConstants + $newConstants) as $constant) {
-			$storage->addConstant(NsConstant::create()->setName($constant));
-		}
+		$storage = new ClassStorage();
+		$this->joinConstants($storage, $oldStorage, $newStorage);
+		$this->joinClasses($storage, $oldStorage, $newStorage);
+		
+		return $storage;
 	}
 	
-	private function joinClasses(ClassStorage $storage, array $oldClasses, array $newClasses)
+	private function joinConstants(ClassStorage $storage, ClassStorage $oldStorage, ClassStorage $newStorage)
 	{
-		$classes = [];
-		foreach ($oldClasses as $className => $oldNamespace) {
-			if (isset($newClasses[$className])) {
-				$classes[$className] = [$oldNamespace, $newClasses[$className]];
-				unset($newClasses[$className]);
-			} else {
-				$classes[$className] = [$oldNamespace, $oldNamespace];
-			}
-		}
-		foreach ($newClasses as $className => $newNamespace) {
-			$classes[$className] = [$newNamespace, $newNamespace];
+		foreach ($oldStorage->getListConstants() as $constant) {
+			$storage->addConstant($constant);
 		}
 		
-		foreach ($classes as $className => $nses) {
-			list($oldNs, $newNs) = $nses;
-			$storage->addClass(
-				NsClass::create()
-					->setName($className)
-					->setNamespace($oldNs)
-					->setNewNamespace($newNs)
-			);
+		foreach ($newStorage->getListConstants() as $constant) {
+			try {
+				$storage->addConstant($constant);
+			} catch (WrongStateException $e) {
+				/* do nothing */
+			}
 		}
+	}
+	
+	private function joinClasses(ClassStorage $storage, ClassStorage $oldStorage, ClassStorage $newStorage)
+	{
+		foreach ($oldStorage->getListClasses() as $oldClass) {
+			$oldStorage->dropClass($oldClass);
+			/* @var $oldClass NsClass */
+			if ($newClass = $newStorage->findByFullName($oldClass->getFullName())) {
+				$newStorage->dropClass($newClass);
+				$this->joinClass($storage, $oldClass, $newClass);
+				continue;
+			}
+			
+			$possibleList = $newStorage->getListByOldClassName($oldClass->getName());
+			if (count($possibleList) == 0) {
+				$storage->addClass($oldClass);
+			} elseif (count($possibleList) == 1) {
+				$newStorage->dropClass($possibleList[0]);
+				$this->joinClass($storage, $oldClass, $possibleList[0]);
+			} else {
+				$this->msg("For old class {$oldClass->getFullName()} found some new names:");
+				$list = [];
+				foreach ($possibleList as $newClass) {
+					/* @var $newClass NsClass */
+					$list[] = $newClass->getFullNewName();
+				}
+				$selector = new ConsoleValueSelector();
+				$fullNewClassName = $selector->setList($list)->readValue();
+				foreach ($possibleList as $newClass) {
+					/* @var $newClass NsClass */
+					if ($fullNewClassName == $newClass->getFullNewName()) {
+						$newStorage->dropClass($newClass);
+						$this->joinClass($storage, $oldClass, $newClass);
+						break 2;
+					}
+				}
+				Assert::isUnreachable();
+			}
+		}
+		
+		foreach ($newStorage->getListClasses() as $newClass) {
+			$storage->addClass($newClass);
+		}
+		
+		return $storage;
+	}
+	
+	private function joinClass(ClassStorage $storage, NsClass $oldClass, NsClass $newClass)
+	{
+		$class = NsClass::create()
+			->setName($oldClass->getName())
+			->setNamespace($oldClass->getNamespace())
+			->setNewNamespace($newClass->getNewNamespace());
+		$storage->addClass($class);
 	}
 
 	/**
