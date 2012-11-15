@@ -18,6 +18,7 @@
 		extends PrimitiveInteger // parent class doesn't really matter here
 	{
 		protected $className = null;
+		private $extractMethod = 'getId';
 		
 		/**
 		 * due to historical reasons, by default we're dealing only with
@@ -26,6 +27,29 @@
 		protected $scalar = false;
 		
 		abstract public function of($className);
+		
+		/**
+		 * @param mixed $extractMethod
+		 * @return IdentifiablePrimitive
+		 */
+		public function setExtractMethod($extractMethod)
+		{
+			if (is_callable($extractMethod)) {
+				/* all ok, call what you want */
+			} elseif (strpos($extractMethod, '::') === false) {
+				Assert::isTrue(
+					method_exists($this->className, $extractMethod),
+					"knows nothing about '".$this->className
+					."::{$extractMethod}' method"
+				);
+			} else {
+				ClassUtils::checkStaticMethod($extractMethod);
+			}
+			
+			$this->extractMethod = $extractMethod;
+			
+			return $this;
+		}
 		
 		/**
 		 * @return string
@@ -79,7 +103,7 @@
 			if (!$this->value)
 				return null;
 			
-			return $this->value->getId();
+			return $this->actualExportValue($this->value);
 		}
 		
 		/* void */ protected function checkNumber($number)
@@ -96,6 +120,21 @@
 				return (int) $number;
 			
 			return $number;
+		}
+		
+		protected function actualExportValue($value)
+		{
+			if (!ClassUtils::isInstanceOf($value, $this->className)) {
+				return null;
+			}
+			
+			if (is_callable($this->extractMethod)) {
+				return call_user_func($this->extractMethod, $value);
+			} elseif (strpos($this->extractMethod, '::') === false) {
+				return $value->{$this->extractMethod}($value);
+			} else {
+				ClassUtils::callStaticMethod($this->extractMethod, $value);
+			}
 		}
 	}
 ?>
