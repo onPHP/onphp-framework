@@ -33,6 +33,8 @@
 		
 		private $having			= null;
 
+		private $criteria		= null;
+
 		// Обработчик логики джойна
 		public static $prepareJoinLogic = null;
 
@@ -484,6 +486,20 @@
 					new OrderBy(
 						new DBField($field, $this->getLastTable($table))
 					);
+		}
+
+		/**
+		 * @param $criteria
+		 */
+		public function setCriteria($criteria) {
+			$this->criteria = $criteria;
+		}
+
+		/*
+		 * @return Criteria|null
+		 */
+		public function getCriteria() {
+			return $this->criteria;
 		}
 	}
 ?>
