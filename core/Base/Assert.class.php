@@ -108,12 +108,7 @@
 
 		public static function isInteger($variable, $message = null)
 		{
-			if (
-				!(
-					is_numeric($variable)
-					&& $variable == (int) $variable
-				)
-			)
+			if (!self::checkInteger($variable))
 				throw new WrongArgumentException(
 					$message.', '.self::dumpArgument($variable)
 				);
