@@ -36,6 +36,9 @@
 		// Обработчик критерии перед вызовом
 		public static $prepareCriteriaCallBack = null;
 
+		// Параметры локализации
+		private $localizeData = null;
+
 		// Кастомный запрос
 		private $selectQuery = null;
 
@@ -538,6 +541,8 @@
 			} else
 				$query = $this->checkAndGetDao()->makeSelectHead();
 
+			$query->setCriteria($this);
+
 			if ($this->distinct)
 				$query->distinct();
 
@@ -723,6 +728,22 @@
 				call_user_func(
 					array($this->checkAndGetDao()->getObjectName(), 'proto')
 				);
+		}
+
+		/**
+		 * Устанавливает код языка локализации
+		 * @param $localizeData
+		 */
+		public function setLocalizeData($languageCode) {
+			$this->localizeData = $languageCode;
+		}
+
+		/**
+		 * Возвращает код языка локализации
+		 * @return string|null|false
+		 */
+		public function getLocalizeData() {
+			return $this->localizeData;
 		}
 	}
 ?>
