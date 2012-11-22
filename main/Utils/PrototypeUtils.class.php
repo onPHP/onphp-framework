@@ -209,7 +209,7 @@ class PrototypeUtils
 				} elseif( $property->getType() == 'string' ) {
 					$value = (string)$value;
 					if ($property->getMax() > 0) {
-						$value = substr($value, 0, $property->getMax());
+						$value = mb_substr($value, 0, $property->getMax());
 					}
 					if (empty($value)) {
 						// если false или "", то null
