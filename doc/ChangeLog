@@ -1,3 +1,9 @@
+2012-11-18  Nikita V. Konstantinov
+
+	* meta/types/ObjectType.class.php:
+		update for Business objects - now you can setSomeProperty(null)
+		for Objects properties if it's not required
+
 2012-09-26	Alexey S. Denisov
 
 	* core/Form/Form.class.php:
