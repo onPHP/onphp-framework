@@ -222,16 +222,18 @@ public function {$methodName}({$property->getType()->getClass()->getFullClassNam
 
 EOT;
 			} else {
+				$defaultValue = $property->isOptional() ? ' = null' : '';
+
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$method = <<<EOT
 
 /**
  * @return {$property->getClass()->getFullClassName()}
 **/
-public function {$methodName}({$this->getClass()->getFullClassName()} \${$name})
+public function {$methodName}({{$this->getClass()->getFullClassName()} \${$name}{$defaultValue})
 {
 	\$this->{$name} = \${$name};
-	\$this->{$name}Id = \${$name}->getId();
+	\$this->{$name}Id = \${$name} ? \${$name}->getId() : null;
 
 	return \$this;
 }
@@ -239,7 +241,7 @@ public function {$methodName}({$this->getClass()->getFullClassName()} \${$name})
 /**
  * @return {$property->getClass()->getFullClassName()}
 **/
-public function {$methodName}Id(\$id)
+public function {$methodName}Id(\$id{$defaultValue})
 {
 	\$this->{$name} = null;
 	\$this->{$name}Id = \$id;
@@ -254,7 +256,7 @@ EOT;
 /**
  * @return {$property->getClass()->getFullClassName()}
 **/
-public function {$methodName}({$this->getFullClassName()} \${$name})
+public function {$methodName}({$this->getFullClassName()} \${$name}{$defaultValue})
 {
 	\$this->{$name} = \${$name};
 
