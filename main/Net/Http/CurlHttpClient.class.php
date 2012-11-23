@@ -61,7 +61,7 @@
 		}
 		
 		/**
-		 * @param $timeout in seconds
+		 * @param $timeout int seconds
 		 * @return CurlHttpClient
 		**/
 		public function setTimeout($timeout)
