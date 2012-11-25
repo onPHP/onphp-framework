@@ -1,4 +1,11 @@
+2012-11-25  Nikita V. Konstantinov
+
+	* core/Form/Primitives/PrimitiveIdentifier.class.php
+		core/Form/Primitives/PrimitiveIdentifier.class.php:
+			PrimitiveIdentifier now can export/import objects by custom methods
+
 2012-11-18  Nikita V. Konstantinov
+
 	* meta/types/ObjectType.class.php:
 		update for Business objects - now you can setSomeProperty(null)
 		for Objects properties if it's not required
