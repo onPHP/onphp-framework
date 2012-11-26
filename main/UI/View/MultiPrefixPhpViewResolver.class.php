@@ -28,6 +28,7 @@
 		
 		private $postfix	= EXT_TPL;
 		private $viewClassName	= '\Onphp\SimplePhpView';
+		private $nameAliases = array();
 		
 		/**
 		 * @return \Onphp\MultiPrefixPhpViewResolver
@@ -132,6 +133,16 @@
 		}
 		
 		/**
+		 * @param string $nameAlias
+		 * @return \Onphp\MultiPrefixPhpViewResolver
+		 */
+		public function addNameAlias($viewNameFrom, $viewNameTo)
+		{
+			$this->nameAliases[$viewNameFrom] = $viewNameTo;
+			return $this;
+		}
+
+		/**
 		 * @return \Onphp\SimplePhpView
 		**/
 		public function resolveViewName($viewName)
@@ -141,10 +152,10 @@
 				'specify at least one prefix'
 			);
 			
-			if ($prefix = $this->findPrefix($viewName))
-				return $this->makeView($prefix, $viewName);
+			if ($path = $this->findPath($viewName))
+				return $this->makeView($path);
 			
-			if (!$this->findPrefix($viewName, false))
+			if (!$this->findPath($viewName, false))
 				throw new WrongArgumentException(
 					'can not resolve view: '.$viewName
 				);
@@ -154,7 +165,7 @@
 		
 		public function viewExists($viewName)
 		{
-			return ($this->findPrefix($viewName) !== null);
+			return ($this->findPath($viewName) !== null);
 		}
 		
 		/**
@@ -172,7 +183,7 @@
 			return $this->viewClassName;
 		}
 		
-		protected function findPrefix($viewName, $checkDisabled = true)
+		protected function findPath($viewName, $checkDisabled = true)
 		{
 			foreach ($this->prefixes as $alias => $prefix) {
 				if (
@@ -183,7 +194,14 @@
 					continue;
 				
 				if (file_exists($prefix.$viewName.$this->postfix))
-					return $prefix;
+					return $prefix.$viewName.$this->postfix;
+
+				$aliasedViewName = $viewName;
+				while (isset($this->nameAliases[$aliasedViewName])) {
+					$aliasedViewName = $this->nameAliases[$aliasedViewName];
+					if (file_exists($prefix.$aliasedViewName.$this->postfix))
+						return $prefix.$aliasedViewName.$this->postfix;
+				}
 			}
 			
 			return null;
@@ -192,12 +210,9 @@
 		/**
 		 * @return \Onphp\View
 		**/
-		protected function makeView($prefix, $viewName)
+		protected function makeView($path)
 		{
-			return new $this->viewClassName(
-				$prefix.$viewName.$this->postfix,
-				$this
-			);
+			return new $this->viewClassName($path, $this);
 		}
 		
 		private function getAutoAlias($prefix)
