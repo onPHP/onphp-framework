@@ -40,6 +40,9 @@ class NoSqlResult extends QueryResult {
 
 	public function getCount() {
 		if ($this->count == null && $this->getMongoCursor()) {
+			$this->count = $this->getMongoCursor()->count();
+
+			/* -- плохой вариант, долго считает
 			// пытаемся посчитать количество записей перебором, без использования count()
 			// откидиываем limit и offset
 			$criteria = clone $this->getCriteria();
@@ -67,7 +70,6 @@ class NoSqlResult extends QueryResult {
 				$timeStart = microtime(1);
 				$timeMax = Config::me()->getMongoTimeout() / 2;
 				$this->count = 0;
-				/** @var $db MongoBase */
 				$db = NoSqlPool::me()->getByDao($this->getDao());
 				$cursor = $db->makeCursorByCriteria($criteria);
 				// пересчитываем количество выбранных записей
@@ -87,6 +89,7 @@ class NoSqlResult extends QueryResult {
 			} else {
 				$this->count = $this->getMongoCursor()->count();
 			}
+			*/
 		}
 		return $this->count;
 	}
