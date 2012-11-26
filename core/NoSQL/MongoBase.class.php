@@ -82,7 +82,6 @@ class MongoBase extends NoSQL {
 			if ($safe > 0) {
 				$this->safeOnWrite = $safe;
 			}
-			MongoCursor::$timeout = 120 * 1000; // 2min
 
 		} catch(MongoConnectionException $e) {
 			throw new NoSQLException(
