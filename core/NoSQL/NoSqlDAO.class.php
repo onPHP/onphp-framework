@@ -196,6 +196,7 @@ abstract class NoSqlDAO extends StorableDAO {
 		$criteria->setDao( $this );
 		$cursor = $this->getLink()->makeCursorByCriteria($criteria);
 		return NoSqlResult::create()
+			->setCriteria($criteria)
 			->setDao($this)
 			->setMongoCursor($cursor);
 	}
