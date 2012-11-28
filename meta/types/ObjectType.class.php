@@ -230,7 +230,7 @@ EOT;
 /**
  * @return {$property->getClass()->getFullClassName()}
 **/
-public function {$methodName}({{$this->getClass()->getFullClassName()} \${$name}{$defaultValue})
+public function {$methodName}({$this->getClass()->getFullClassName()} \${$name}{$defaultValue})
 {
 	\$this->{$name} = \${$name};
 	\$this->{$name}Id = \${$name} ? \${$name}->getId() : null;
