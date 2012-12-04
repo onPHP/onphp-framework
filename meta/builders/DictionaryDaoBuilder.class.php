@@ -30,7 +30,6 @@ EOT;
 {$pointers}
 }
 
-
 EOT;
 			
 			return $out.self::getHeel();
