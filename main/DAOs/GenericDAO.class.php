@@ -18,7 +18,7 @@
 	{
 		private $identityMap	= array();
 		
-		private $linkName		= null;
+		protected $linkName		= null;
 		
 		abstract public function getTable();
 		abstract public function getObjectName();
@@ -73,7 +73,7 @@
 		**/
 		public function getLinkName()
 		{
-			return $this->getDefaultLinkName();
+			return $this->linkName;
 		}
 		
 		public function getIdName()
@@ -359,11 +359,6 @@
 		public function registerWorkerUncacher(UncacherBase $uncacher)
 		{
 			DBPool::getByDao($this)->registerUncacher($uncacher);
-		}
-		
-		final protected function getDefaultLinkName()
-		{
-			return $this->linkName;
 		}
 		
 		protected function inject(
