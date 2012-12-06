@@ -458,7 +458,11 @@ class DataGrid extends BaseWidget
 
             case 'enumeration': {
 				return function ($value) {
-					return $value->getName();
+					if( $value instanceof Enumeration ) {
+						return $value->getName();
+					} else {
+						return '';
+					}
 				};
 			}
 
