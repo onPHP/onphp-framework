@@ -119,5 +119,13 @@
 		{
 			return new ClassProjection($className);
 		}
+
+		/**
+		 * @return CrippleClassProjection
+		**/
+		public static function crippleClass($className)
+		{
+			return new CrippleClassProjection($className);
+		}
 	}
 ?>

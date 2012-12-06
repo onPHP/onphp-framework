@@ -133,21 +133,24 @@ class DataGrid extends BaseWidget
         // и через геттеры получаем все параметры, а если
         // это массив, то берем его как есть.
 
-        if (is_object($data) && $data instanceof Prototyped) {
+        if ($data instanceof Prototyped) {
             /** @var $data Prototyped */
             $this->objects[$rowId] = $data;
             $fieldIds = array();
+//			$this->rows[$rowId] = null;
             $row = array();
+			/** @var $property LightMetaProperty */
             foreach ($data->proto()->getPropertyList() as $property) {
-                try {
-					$value = $this->getPropertyValue($rowId, $property);
-                } catch (BadMethodCallException $e) {
-                    continue;
-                } catch (ObjectNotFoundException $e) {
-					$value = null;
-				}
+//                try {
+//					$value = $this->getPropertyValue($rowId, $property);
+//                } catch (BadMethodCallException $e) {
+//                    continue;
+//                } catch (ObjectNotFoundException $e) {
+//					$value = null;
+//				}
                 $fieldIds[] = $property->getName();
-                $row[$property->getName()] = $value;
+                $row[$property->getName()] = null;
+//				$value = null;
             }
         } else if (is_array($data)) {
             $fieldIds = array_keys($data);
@@ -175,7 +178,8 @@ class DataGrid extends BaseWidget
 
         // записываем данные
         foreach($row as $fieldId => $value) {
-            $this->setField($rowId, $fieldId, $value);
+			$property = ($data instanceof Prototyped) ? $data->proto()->getPropertyByName($fieldId) : null;
+            $this->setField($rowId, $fieldId, $value, $property);
         }
 
         return $this;
@@ -215,7 +219,9 @@ class DataGrid extends BaseWidget
 
                 $this->renderers[$fieldId] = $this->getEditRenderer($fieldId, $property);
             } else {
-                if ($value !== null) {
+				if($property instanceof LightMetaProperty) {
+					$this->renderers[$fieldId] = $this->getLazyViewRenderer($fieldId, $property);
+				} elseif($value !== null) {
                     $this->renderers[$fieldId] = $this->getViewRenderer($value);
                 }
             }
@@ -325,6 +331,136 @@ class DataGrid extends BaseWidget
                         return $property->getClassName();
                     //}
                 };
+
+            default:
+                return function ($value) use ($property) {
+                    // DEBUG
+                    $props[] = 'name: ' . $property->getName();
+                    $props[] = 'className: ' . $property->getClassName();
+                    $props[] = 'type: ' . $property->getType();
+                    $props[] = 'min: ' . $property->getMin();
+                    $props[] = 'max: ' . $property->getMax();
+                    $props[] = 'relation: ' . $property->getRelationId();
+                    $props[] = 'fetch: ' . $property->getFetchStrategyId();
+                    //$props[] = 'value: ' . $value;
+                    return  implode(', ', $props);
+                };
+        }
+    }
+
+    /**
+     * @param string $fieldId
+     * @param LightMetaProperty $property
+     * @return closure
+     * @throws ClassNotFoundException
+     */
+    protected function getLazyViewRenderer($fieldId, LightMetaProperty $property) {
+		// переменные для замыканий, т.к. они не биндятся к this
+		$self = $this;
+		$trueName = $this->trueName;
+		$falseName = $this->falseName;
+
+        switch($property->getType()) {
+
+			// OneToOne
+			case 'integerIdentifier':
+			case 'scalarIdentifier': {
+				if( $property->getClassName()=='InternationalString' ) {
+					return function ($value) use ($property) {
+							return $value->__toString();
+					};
+				} elseif( $property->isIdentifier() ) {
+					return function ($value) use ($property) {
+						return $value;
+					};
+				} elseif( is_subclass_of($property->getClassName(), 'Prototyped') ) {
+					return function($value, $object) use ($self) {
+						if ($self->hasParent($object)) {
+							return get_class($value) . ' ID:' . $value->getId();
+						} else {
+							try {
+								return
+									'<b>' . get_class($value) . '</b><br>' .
+									DataGrid::details()->setParent($self)->addRow($value)->ToString();
+							} catch (Exception $e) {
+								return $e->getMessage();
+							}
+						}
+					};
+				} else {
+					return function ($value) {
+						return 'Object is not prototyped!';
+					};
+				}
+			}
+
+			// OneToMany & ManyToMany
+			case 'identifierList': {
+				return function(UnifiedContainer $value, $object) use ($self) {
+					if ($self->hasParent($object)) {
+						return get_class($value) . ' count:' . $value->fetch()->getCount();
+					} else {
+						try {
+							return DataGrid::table()->setParent($self)->addRows($value->fetch()->getList())->ToString();
+						} catch (Exception $e) {
+							return $e->getMessage();
+						}
+					}
+				};
+			}
+
+			case 'boolean': {
+				return function ($value) use ($trueName, $falseName) {
+					return $value ? $trueName : $falseName;
+				};
+			}
+
+			case 'set': {
+				return function($value) use ($self) {
+					try {
+						return DataGrid::table()->setParent($self)->addRows($value)->ToString();
+					} catch (Exception $e) {
+						return $e->getMessage();
+					}
+				};
+			}
+
+            case 'integer': {
+				return function ($value) {
+					return $value;
+				};
+			}
+
+            case 'float': {
+				return function ($value) {
+					return number_format($value, 2, ',', '');
+				};
+			}
+
+            case 'string': {
+				return function ($value) {
+					return nl2br($value);
+				};
+			}
+
+            case 'timestamp':
+			case 'date': {
+				return function ($value) {
+					if( $value instanceof Timestamp ) {
+						return $value->toFormatString('d-m-Y H:i:s');
+					} elseif( $value instanceof Date ) {
+						return $value->toFormatString('d-m-Y');
+					} else {
+						return '';
+					}
+				};
+			}
+
+            case 'enumeration': {
+				return function ($value) {
+					return $value->getName();
+				};
+			}
 
             default:
                 return function ($value) use ($property) {
@@ -681,7 +817,21 @@ class DataGrid extends BaseWidget
         // рендерим данные
         foreach ($this->rows as $rowId => $row) {
             foreach ($this->fields as $fieldId => $fieldName) {
-				$field = isset($row[$fieldId]) ? $row[$fieldId] : null;
+				$object = isset($this->objects[$rowId]) ? $this->objects[$rowId] : $this->rows[$rowId];
+				if( $object instanceof Prototyped ) {
+					try {
+						$field = PrototypeUtils::getValue($object, $fieldId);
+//						$property = $object->proto()->getPropertyByName($fieldId);
+//						$field = $object->{$property->getGetter()}();
+					} catch( Exception $e ) {
+						$field = null;
+					}
+				} elseif( isset($row[$fieldId]) ) {
+					$field = $row[$fieldId];
+				} else {
+					$field = null;
+				}
+
 				if ($this->form instanceof Form	&& $this->form->exists($fieldId)) {
 					if ($this->form->get($fieldId)->isImported())
 						$field = $this->form->get($fieldId)->getValue();
@@ -690,9 +840,10 @@ class DataGrid extends BaseWidget
 				}
 
 				// если есть рендерер, прогоним значение через него
+//				var_dump($this->renderers);
+//				die();
                 if (isset($this->renderers[$fieldId])) {
                     $callback = $this->renderers[$fieldId];
-                    $object = isset($this->objects[$rowId]) ? $this->objects[$rowId] : $this->rows[$rowId];
                     if ($this->renderers[$fieldId] instanceof Closure) {
                         $field = $callback($field, $object);
                     } else {
