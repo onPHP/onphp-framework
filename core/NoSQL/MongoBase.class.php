@@ -47,7 +47,8 @@ class MongoBase extends NoSQL {
 	 * @throws NoSQLException
 	 */
 	public function connect() {
-		$Mongo = class_exists('MongoClient') ? 'MongoClient' : 'Mongo';
+		//$Mongo = class_exists('MongoClient') ? 'MongoClient' : 'Mongo';
+		$Mongo = 'Mongo';
 
 		if (empty($this->connectionString)) {
 			$conn =
