@@ -47,6 +47,8 @@ class MongoBase extends NoSQL {
 	 * @throws NoSQLException
 	 */
 	public function connect() {
+		$Mongo = class_exists('MongoClient') ? 'MongoClient' : 'Mongo';
+
 		if (empty($this->connectionString)) {
 			$conn =
 				'mongodb://'
@@ -69,9 +71,13 @@ class MongoBase extends NoSQL {
 			$options['persist'] = $this->hostname.'-'.$this->basename;
 		}
 		try {
-			$this->link = new Mongo($conn, $options);
+			$this->link = new $Mongo($conn, $options);
 			$this->db = $this->link->selectDB($this->basename);
-			$this->link->setSlaveOkay($options['slaveOkay']);
+			if( method_exists($Mongo, 'setReadPreference') ) {
+				$this->link->setReadPreference($options['slaveOkay'] ? Mongo::RP_SECONDARY_PREFERRED : Mongo::RP_PRIMARY_PREFERRED);
+			} else {
+				$this->link->setSlaveOkay($options['slaveOkay']);
+			}
 			// получаем количество реплик в статусах PRIMARY и SECONDARY в сете
 			$safe = 0;
 			foreach ($this->link->getHosts() as $host) {
