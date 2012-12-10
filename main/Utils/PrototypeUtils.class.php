@@ -121,15 +121,12 @@ class PrototypeUtils
             $object = self::getValue($object, implode('.', $path));
 
         $setter = 'set' . ucfirst($valueName);
-        return $object->$setter($value);
-
-        // old:
-        $property = self::getProperty($object->proto(), $path);
-        $setter = $property->getSetter();
-        if (!method_exists($object, $setter)) {
-            throw new WrongArgumentException;
-        }
-        $object->$setter($value);
+		$dropper = 'drop' . ucfirst($valueName);
+		if (is_null($value) && method_exists($object, $dropper)) {
+			return $object->$dropper();
+		} else {
+			return $object->$setter($value);
+		}
     }
 
 	public static function hasProperty(Prototyped $object, $path) {
