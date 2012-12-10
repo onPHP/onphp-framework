@@ -666,19 +666,33 @@ class DataGrid extends BaseWidget
 
                     $failed = false;
                     foreach ($path as $propertyName) {
-                        if (!$object || !($object instanceof Prototyped)) {
-                            $failed = true;
-                            break;
-                        }
-                        $property = $object->proto()->getPropertyByName($propertyName);
-                        if ($property != null) {
-                            $getter = $property->getGetter();
-                            $object = $object->$getter();
-                        } else {
-                            $failed = true;
-                            break;
-                        }
-                    }
+
+						if ($object instanceof Prototyped) {
+							try {
+								$property = $object->proto()->getPropertyByName($propertyName);
+								$getter = $property->getGetter();
+								$object = $object->$getter();
+								continue;
+							} catch (MissingElementException $e) {
+								// none
+							}
+						}
+
+						if (is_object($object)) {
+							try {
+								// support non-prototyped getters
+								$getter = 'get' . ucfirst($propertyName);
+								Assert::methodExists($object, $getter);
+								$object = $object->$getter();
+								continue;
+							} catch (WrongArgumentException $e) {
+								// none
+							}
+						}
+
+						$failed = true;
+						break;
+					}
 
                     if (!$failed) {
                         $this->setField($rowId, $fieldId, $object, $property);
