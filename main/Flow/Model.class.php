@@ -56,6 +56,9 @@
 		
 		public function get($name)
 		{
+			if (!$this->has($name))
+				throw new MissingElementException('Unknown var "'.$name.'"');
+
 			return $this->vars[$name];
 		}
 		
