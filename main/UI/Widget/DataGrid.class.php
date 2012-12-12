@@ -19,6 +19,9 @@ class DataGrid extends BaseWidget
     /** @var array список 'fieldID' => 'Field name' */
     protected $fields = array();
 
+	/** @var array список локализованных полей */
+	protected $localizedFields = array();
+
     /** @var array список полей, по которым можно сортировать.
      * Фактически, исключает поля, добавленные через addColumn */
     protected $sortingFields = array();
@@ -134,6 +137,14 @@ class DataGrid extends BaseWidget
         // это массив, то берем его как есть.
 
         if ($data instanceof Prototyped) {
+			if ($data instanceof TranslatableFieldsObject) {
+				/** @var $data TranslatableFieldsObject */
+				$localizedFields = $data->getLocalizedFields();
+				$this->localizedFields = array_merge(
+					array_keys($localizedFields),
+					array_values($localizedFields)
+				);
+			}
             /** @var $data Prototyped */
             $this->objects[$rowId] = $data;
             $fieldIds = array();
@@ -898,6 +909,7 @@ class DataGrid extends BaseWidget
 
         $model = parent::makeModel()
             ->set('fields', $this->fields)
+			->set('localizedFields', $this->localizedFields)
             ->set('data', $data)
             ->set('totalId', $this->totalId)
             ->set('htmlOptions', $htmlOptions)
