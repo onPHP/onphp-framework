@@ -116,11 +116,9 @@ Possible options:
 	
 	function stop($message = null)
 	{
-		echo $message."\n\n";
+		fwrite(STDERR, $message."\n\n");
 		
 		help();
-		
-		die();
 	}
 	
 	// paths
@@ -343,4 +341,3 @@ Possible options:
 	
 	$out->getOutput()->resetAll();
 	$out->newLine();
-?>
