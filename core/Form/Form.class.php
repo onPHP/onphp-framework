@@ -427,19 +427,13 @@
 		**/
 		private function checkImportResult(BasePrimitive $prm, $result)
 		{
-			if (
-				$prm instanceof PrimitiveAlias
-				&& $result !== null
-			)
-				$this->markGood($prm->getInner()->getName());
-			
 			$name = $prm->getName();
 			
-			if (null === $result) {
+			if ($result === null) {
 				if ($prm->isRequired())
 					$this->errors[$name] = self::MISSING;
 				
-			} elseif (true === $result) {
+			} elseif ($result === true) {
 				unset($this->errors[$name]);
 				
 			} elseif ($error = $prm->getCustomError()) {
@@ -448,6 +442,14 @@
 				
 			} else
 				$this->errors[$name] = self::WRONG;
+
+			if (
+				$prm instanceof PrimitiveAlias
+				&& $this->primitiveExists($prm->getInner()->getName())
+				&& $result === true
+			) {
+				unset($this->errors[$prm->getInner()->getName()]);
+			}
 			
 			return $this;
 		}
