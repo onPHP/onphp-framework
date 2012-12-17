@@ -68,6 +68,12 @@
 				foreach ($form->getPrimitiveList() as $name => $prm) {
 					if (isset($list[$name])) {
 						$proto->exportPrimitive($name, $prm, $object, $ignoreNull);
+
+					} elseif (
+						$prm instanceof PrimitiveAlias
+						&& isset($list[$prm->getInner()->getName()])
+					) {
+						$proto->exportPrimitive($prm->getInner()->getName(), $prm->getInner(), $object, $ignoreNull);
 					}
 				}
 			} else {
