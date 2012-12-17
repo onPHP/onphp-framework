@@ -124,11 +124,9 @@
 		public static function sendContentLength($length)
 		{
 			Assert::isInteger($length);
-			
-			header(
-				"Content-Length: {$length}"
-			);
-			
+
+			header("Content-Length: {$length}");
+
 			self::$headerSent = true;
 		}
 		
