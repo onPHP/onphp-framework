@@ -74,22 +74,34 @@
 		{
 			return $this->raw;
 		}
+
+		public function getValueOrDefault()
+		{
+			if ($this->value !== null)
+				return $this->value;
+
+			return $this->default;
+		}
 		
+		/**
+		 * @deprecated since version 1.0
+		 * @see getSafeValue, getValueOrDefault
+		 */
 		public function getActualValue()
 		{
-			if (null !== $this->value)
+			if ($this->value !== null)
 				return $this->value;
 			elseif ($this->imported)
 				return $this->raw;
 			
 			return $this->default;
 		}
-		
+
 		public function getSafeValue()
 		{
 			if ($this->imported)
 				return $this->value;
-			
+
 			return $this->default;
 		}
 		
