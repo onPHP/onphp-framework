@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class OqlSelectClauseTest extends TestCase
+	final class OqlSelectClauseTest extends TestCaseDB
 	{
 		public function testEmpty()
 		{
@@ -427,7 +427,7 @@
 		**/
 		private function assertCriteria(OqlQuery $query, Criteria $criteria)
 		{
-			$dialect = PostgresDialect::me();
+			$dialect = $this->getDbByType('PgSQL')->getDialect();
 			
 			$this->assertEquals(
 				$query->toCriteria()->toDialectString($dialect),

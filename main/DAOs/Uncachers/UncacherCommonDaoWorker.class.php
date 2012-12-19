@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008-2009 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2012 by Aleksey S. Denisov                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -9,13 +9,21 @@
  *                                                                         *
  ***************************************************************************/
 
-	class BaseException extends Exception
+	/**
+	 * @ingroup Uncachers
+	**/
+	class UncacherCommonDaoWorker extends UncacherBaseDaoWorker
 	{
-		public function __toString()
-		{
-			return
-				"[$this->message] in: \n".
-				$this->getTraceAsString();
+		/**
+		 * @return UncacherCommonDaoWorker
+		 */
+		public static function create($className, $idKey) {
+			return new self($className, $idKey);
+		}
+		
+		protected function uncacheClassName($className, $idKeys) {
+			ClassUtils::callStaticMethod("$className::dao")->uncacheLists();
+			parent::uncacheClassName($className, $idKeys);
 		}
 	}
 ?>

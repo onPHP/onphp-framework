@@ -18,12 +18,12 @@
 		{
 			return 'time';
 		}
-		
+
 		public function isGeneric()
 		{
 			return true;
 		}
-		
+
 		public function toColumnType()
 		{
 			return 'DataType::create(DataType::TIME)';

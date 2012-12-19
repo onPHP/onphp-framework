@@ -1,6 +1,4 @@
 <?php
-	/* $Id$ */
-	
 	abstract class TestTables extends TestCase
 	{
 		protected $schema = null;

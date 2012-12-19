@@ -100,27 +100,9 @@
 		public function uncacheLists()
 		{
 			$intKey	= $this->keyToInt($this->indexKey);
-			
-			$cache = Cache::me();
-			$pool = SemaphorePool::me();
-			
-			if ($pool->get($intKey)) {
-				$indexList = $cache->mark($this->className)->get($this->indexKey);
-				$cache->mark($this->className)->delete($this->indexKey);
-					
-				if ($indexList) {
-					foreach (array_keys($indexList) as $key)
-						$cache->mark($this->className)->delete($key);
-				}
-				
-				$pool->free($intKey);
-				
-				return true;
-			}
-			
-			$cache->mark($this->className)->delete($this->indexKey);
-			
-			return false;
+			return $this->registerUncacher(
+				UncacherSmartDaoWorkerLists::create($this->className, $this->indexKey, $intKey)
+			);
 		}
 		//@}
 		

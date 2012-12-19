@@ -438,15 +438,15 @@
 				infoLine('Checking sanity of generated files: ')->
 				newLine();
 			
-			set_include_path(
-				get_include_path().PATH_SEPARATOR
-				.ONPHP_META_BUSINESS_DIR.PATH_SEPARATOR
-				.ONPHP_META_DAO_DIR.PATH_SEPARATOR
-				.ONPHP_META_PROTO_DIR.PATH_SEPARATOR
-				.ONPHP_META_AUTO_BUSINESS_DIR.PATH_SEPARATOR
-				.ONPHP_META_AUTO_DAO_DIR.PATH_SEPARATOR
-				.ONPHP_META_AUTO_PROTO_DIR.PATH_SEPARATOR
-			);
+			AutoloaderPool::get('onPHP')->
+				addPaths(array(
+					ONPHP_META_BUSINESS_DIR,
+					ONPHP_META_DAO_DIR,
+					ONPHP_META_PROTO_DIR,
+					ONPHP_META_AUTO_BUSINESS_DIR,
+					ONPHP_META_AUTO_DAO_DIR,
+					ONPHP_META_AUTO_PROTO_DIR,
+				));
 			
 			$out->info("\t");
 			

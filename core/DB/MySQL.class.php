@@ -20,14 +20,6 @@
 	final class MySQL extends Sequenceless
 	{
 		/**
-		 * @return MyDialect
-		**/
-		public static function getDialect()
-		{
-			return MyDialect::me();
-		}
-		
-		/**
 		 * @return MySQL
 		**/
 		public function setDbEncoding()
@@ -263,6 +255,14 @@
 		protected function getInsertId()
 		{
 			return mysql_insert_id($this->link);
+		}
+		
+		/**
+		 * @return MyDialect
+		**/
+		protected function spawnDialect()
+		{
+			return new MyDialect();
 		}
 		
 		private function checkSingle($result)

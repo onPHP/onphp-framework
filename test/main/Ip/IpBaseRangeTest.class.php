@@ -1,7 +1,8 @@
 <?php
-	/* $Id$ */
-	
-	final class IpBaseRangeTest extends TestCase
+	/**
+	 * @group ibr
+	 */
+	final class IpBaseRangeTest extends TestCaseDB
 	{
 		public function testContains()
 		{
@@ -75,7 +76,7 @@
 				
 				$this->assertEquals(
 					'\'192.168.1.1-192.168.255.255\'',
-					$range->toDialectString(PostgresDialect::me())
+					$range->toDialectString($this->getDbByType('PgSQL')->getDialect())
 				);
 				
 				$this->assertEquals(

@@ -8,58 +8,58 @@
 	*   License, or (at your option) any later version.                       *
 	*                                                                         *
 	***************************************************************************/
-	 
+	
 	interface Listable extends Iterator, ArrayAccess, Countable, SeekableIterator
 	{
 		/**
 		 * Push new list item to the tail of list
-		 * 
-		 * @return Listable 
+		 *
+		 * @return Listable
 		 */
 		public function append($value);
 		
 		/**
 		 * Push new list item to the head of list
-		 * 
-		 * @return Listable 
+		 *
+		 * @return Listable
 		 */
 		public function prepend($value);
 		
 		/**
 		 * Trims $length items starting from @start
-		 * 
-		 * @return Listable 
+		 *
+		 * @return Listable
 		 */
 		public function trim($start, $length);
 		
 		/**
 		 * Truncates list
-		 * 
-		 * @return Listable 
+		 *
+		 * @return Listable
 		 */
 		public function clear();
 		
 		/**
-		 * @return mixed 
+		 * @return mixed
 		 */
 		public function get($index);
 		
 		/**
 		 * Returns the last element of list and removing it
-		 * 
-		 * @return mixed 
+		 *
+		 * @return mixed
 		 */
 		public function pop();
 		
 		/**
-		 * @return Listable 
+		 * @return Listable
 		 */
 		public function set($index, $value);
 		
 		/**
 		 * Returns sublist from $start to $start+$length
-		 * 
-		 * @return array 
+		 *
+		 * @return array
 		 */
 		public function range($start, $length);
 	}

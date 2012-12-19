@@ -358,7 +358,8 @@
 		**/
 		public function fillQuery(
 			InsertOrUpdateQuery $query,
-			Prototyped $object
+			Prototyped $object,
+			Prototyped $old = null
 		)
 		{
 			if (
@@ -382,6 +383,26 @@
 				}
 
 				$value = $object->{$getter}();
+				if ($old) {
+					$oldValue = $old->{$getter}();
+					if ($oldValue === null && $value === $oldValue) {
+						return $query;
+					} elseif (
+						$this->relationId
+						&& $this->strategyId == FetchStrategy::LAZY
+						&& ($value === $oldValue)
+					) {
+						return $query;
+					} elseif (
+						$value instanceof Identifiable
+						&& $oldValue instanceof Identifiable
+						&& $value->getId() === $oldValue->getId()
+					) {
+						return $query;
+					} elseif (serialize($value) == serialize($oldValue)) {
+						return $query;
+					}
+				}
 				
 				if ($this->type == 'binary') {
 					$query->set($this->columnName, new DBBinary($value));
@@ -419,8 +440,8 @@
 				Assert::classExists($this->className);
 				
 				if (
-					!is_subclass_of($this->className, 'Enumeration') ||
-					!is_subclass_of($this->className, 'Enum')
+					!is_subclass_of($this->className, 'Enumeration')
+					&& !is_subclass_of($this->className, 'Enum')
 				) {
 					$remoteDao = call_user_func(array($this->className, 'dao'));
 					

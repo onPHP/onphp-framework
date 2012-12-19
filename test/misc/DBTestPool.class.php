@@ -1,10 +1,11 @@
 <?php
-	/* $Id$ */
-	
 	final class DBTestPool extends Singleton implements Instantiatable
 	{
 		private $pool = array();
 		
+		/**
+		 * @return DBTestPool
+		 */
 		public static function me()
 		{
 			return Singleton::getInstance(__CLASS__);

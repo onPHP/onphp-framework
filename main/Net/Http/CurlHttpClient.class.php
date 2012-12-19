@@ -8,7 +8,6 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-/* $Id: CurlHttpClient.class.php 45 2009-05-08 07:41:33Z lom $ */
 
 	/**
 	 * @ingroup Http
@@ -23,6 +22,10 @@
 		private $multiRequests = array();
 		private $multiResponses = array();
 		private $multiThreadOptions = array();
+		/**
+		 * @deprecated in the furure will work like this value is false;
+		 */
+		private $oldUrlConstructor = ONPHP_CURL_CLIENT_OLD_TO_STRING;
 		
 		/**
 		 * @return CurlHttpClient
@@ -146,6 +149,26 @@
 		public function getMaxFileSize()
 		{
 			return $this->maxFileSize;
+		}
+		
+		/**
+		 * @deprecated in the future value always false and method will be  removed
+		 * @param bool $oldUrlConstructor
+		 * @return CurlHttpClient 
+		 */
+		public function setOldUrlConstructor($oldUrlConstructor = false)
+		{
+			$this->oldUrlConstructor = ($oldUrlConstructor == true);
+			return $this;
+		}
+		
+		/**
+		 * @deprecated in the future value always false and method will be removed
+		 * @return bool
+		 */
+		public function isOldUrlConstructor()
+		{
+			return $this->oldUrlConstructor;
 		}
 		
 		/**
@@ -280,9 +303,14 @@
 					break;
 					
 				case HttpMethod::POST:
+					if ($request->getGet())
+						$options[CURLOPT_URL] .=
+							($request->getUrl()->getQuery() ? '&' : '?')
+								.$this->argumentsToString($request->getGet());
+					
 					$options[CURLOPT_POST] = true;
-					$options[CURLOPT_POSTFIELDS] =
-					$this->argumentsToString($request->getPost());
+					$options[CURLOPT_POSTFIELDS] = $this->getPostFields($request);
+					
 					break;
 					
 				default:
@@ -337,23 +365,68 @@
 			return $this;
 		}
 		
-		private function argumentsToString($array)
+		private function argumentsToString($array, $isFile = false)
 		{
-			Assert::isArray($array);
-			$result = array();
-			
-			foreach ($array as $key => $value) {
-				if (is_array($value)) {
-					foreach ($value as $valueKey => $simpleValue) {
-						$result[] =
-							$key.'['.$valueKey.']='.urlencode($simpleValue);
-					}
+			if ($this->oldUrlConstructor)
+				return UrlParamsUtils::toStringOneDeepLvl($array);
+			else
+				return UrlParamsUtils::toString($array);
+		}
+		
+		private function getPostFields(HttpRequest $request)
+		{
+			if ($request->hasBody()) {
+				return $request->getBody();
+			} else {
+				if ($this->oldUrlConstructor) {
+					return UrlParamsUtils::toStringOneDeepLvl($request->getPost());
 				} else {
-					$result[] = $key.'='.urlencode($value);
+					$fileList = array_map(
+						array($this, 'fileFilter'),
+						UrlParamsUtils::toParamsList($request->getFiles())
+					);
+					if (empty($fileList)) {
+						return UrlParamsUtils::toString($request->getPost());
+					} else {
+						$postList = UrlParamsUtils::toParamsList($request->getPost());
+						if (!is_null($atParam = $this->findAtParamInPost($postList)))
+							throw new NetworkException(
+								'Security excepion: not allowed send post param '.$atParam
+									. ' which begins from @ in request which contains files'
+							);
+							
+						return array_merge($postList, $fileList);
+					}
 				}
 			}
-			
-			return implode('&', $result);
+		}
+		
+		/**
+		 * Return param name which start with symbol @ or null
+		 * @param array $postList
+		 * @return string|null
+		 */
+		private function findAtParamInPost($postList)
+		{
+			foreach ($postList as $param)
+				if (mb_stripos($param, '@') === 0)
+					return $param;
+				
+			return null;
+		}
+		
+		/**
+		 * using in getPostFields - array_map func
+		 * @param string $value
+		 * @return string
+		 */
+		private function fileFilter($value)
+		{
+			Assert::isTrue(
+				is_readable($value) && is_file($value),
+				'couldn\'t access to file with path: '.$value
+			);
+			return '@'.$value;
 		}
 	}
 ?>

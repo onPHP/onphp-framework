@@ -20,6 +20,7 @@
 		const FULL_TEXT_OR		= 2;
 
 		protected $link			= null;
+		protected $dialect		= null;
 
 		protected $persistent	= false;
 		
@@ -35,9 +36,18 @@
 		 * flag to indicate whether we're in transaction
 		**/
 		private $transaction	= false;
+		/**
+		 * @var list of all started savepoints
+		 */
+		private $savepointList	= array();
 		
 		private $queue			= array();
 		private $toQueue		= false;
+		/**
+		 * @var UncachersPool
+		 */
+		private $uncacher		= null;
+		private $outOfTransactionCachePeer = null;
 		
 		abstract public function connect();
 		abstract public function disconnect();
@@ -53,6 +63,11 @@
 		
 		// actually set's encoding
 		abstract public function setDbEncoding();
+		
+		/**
+		 * @return Dialect
+		 */
+		abstract protected function spawnDialect();
 
 		public function __destruct()
 		{
@@ -65,9 +80,10 @@
 			}
 		}
 		
-		public static function getDialect()
+		public function getDialect()
 		{
-			throw new UnimplementedFeatureException('implement me, please');
+			return $this->dialect = $this->dialect
+				?: ($this->spawnDialect()->setDB($this));
 		}
 		
 		/**
@@ -126,6 +142,9 @@
 			
 			$this->transaction = true;
 			
+			$this->outOfTransactionCachePeer = Cache::me();
+			Cache::setPeer(new RuntimeMemory());
+			
 			return $this;
 		}
 		
@@ -140,6 +159,10 @@
 				$this->queryRaw("commit;\n");
 			
 			$this->transaction = false;
+			$this->savepointList = array();
+			
+			Cache::setPeer($this->outOfTransactionCachePeer);
+			$this->triggerUncacher();
 			
 			return $this;
 		}
@@ -155,6 +178,10 @@
 				$this->queryRaw("rollback;\n");
 			
 			$this->transaction = false;
+			$this->savepointList = array();
+			
+			Cache::setPeer($this->outOfTransactionCachePeer);
+			$this->triggerUncacher();
 			
 			return $this;
 		}
@@ -221,6 +248,69 @@
 			return $this->toQueue;
 		}
 		//@}
+		
+		/**
+		 * @param string $savepointName
+		 * @return DB 
+		 */
+		public function savepointBegin($savepointName)
+		{
+			$this->assertSavePointName($savepointName);
+			if (!$this->inTransaction())
+				throw new DatabaseException('To use savepoint begin transaction first');
+			
+			$query = 'savepoint '.$savepointName;
+			if ($this->toQueue)
+				$this->queue[] = $query;
+			else
+				$this->queryRaw("{$query};\n");
+				
+			return $this->addSavepoint($savepointName);
+		}
+		
+		/**
+		 * @param string $savepointName
+		 * @return DB 
+		 */
+		public function savepointRelease($savepointName)
+		{
+			$this->assertSavePointName($savepointName);
+			if (!$this->inTransaction())
+				throw new DatabaseException('To release savepoint need first begin transaction');
+			
+			if (!$this->checkSavepointExist($savepointName))
+				throw new DatabaseException("savepoint with name '{$savepointName}' nor registered");
+			
+			$query = 'release savepoint '.$savepointName;
+			if ($this->toQueue)
+				$this->queue[] = $query;
+			else
+				$this->queryRaw("{$query};\n");
+				
+			return $this->dropSavepoint($savepointName);
+		}
+		
+		/**
+		 * @param string $savepointName
+		 * @return DB 
+		 */
+		public function savepointRollback($savepointName)
+		{
+			$this->assertSavePointName($savepointName);
+			if (!$this->inTransaction())
+				throw new DatabaseException('To rollback savepoint need first begin transaction');
+			
+			if (!$this->checkSavepointExist($savepointName))
+				throw new DatabaseException("savepoint with name '{$savepointName}' nor registered");
+			
+			$query = 'rollback to savepoint '.$savepointName;
+			if ($this->toQueue)
+				$this->queue[] = $query;
+			else
+				$this->queryRaw("{$query};\n");
+				
+			return $this->dropSavepoint($savepointName);
+		}
 		
 		/**
 		 * base queries
@@ -330,6 +420,66 @@
 			$this->encoding = $encoding;
 			
 			return $this;
+		}
+		
+		public function registerUncacher(UncacherBase $uncacher)
+		{
+			$uncacher->uncache();
+			if ($this->inTransaction()) {
+				$this->getUncacher()->merge($uncacher);
+			}
+		}
+		
+		/**
+		 * @param string $savepointName 
+		 * @return DB
+		 */
+		private function addSavepoint($savepointName)
+		{
+			if ($this->checkSavepointExist($savepointName))
+				throw new DatabaseException("savepoint with name '{$savepointName}' already marked");
+				
+			$this->savepointList[$savepointName] = true;
+			return $this;
+		}
+		
+		/**
+		 * @param string $savepointName 
+		 * @return DB
+		 */
+		private function dropSavepoint($savepointName)
+		{
+			if (!$this->checkSavepointExist($savepointName))
+				throw new DatabaseException("savepoint with name '{$savepointName}' nor registered");
+				
+			unset($this->savepointList[$savepointName]);
+			return $this;
+		}
+		
+		private function checkSavepointExist($savepointName)
+		{
+			return isset($this->savepointList[$savepointName]);
+		}
+		
+		private function assertSavePointName($savepointName)
+		{
+			Assert::isEqual(1, preg_match('~^[A-Za-z][A-Za-z0-9]*$~iu', $savepointName));
+		}
+		
+		/**
+		 * @return UncachersPool
+		 */
+		private function getUncacher()
+		{
+			return $this->uncacher = $this->uncacher ?: UncachersPool::create();
+		}
+		
+		private function triggerUncacher()
+		{
+			if ($this->uncacher) {
+				$this->uncacher->uncache();
+				$this->uncacher = null;
+			}
 		}
 	}
 ?>

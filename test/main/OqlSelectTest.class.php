@@ -1,7 +1,7 @@
 <?php
 	/* $Id$ */
 	
-	final class OqlSelectTest extends TestCase
+	final class OqlSelectTest extends TestCaseDB
 	{
 		public function testProperty()
 		{
@@ -938,7 +938,7 @@
 			if (is_array($bindings))
 				$oqlQuery->bindAll($bindings);
 			
-			$dialect = PostgresDialect::me();
+			$dialect = $this->getDbByType('PgSQL')->getDialect();
 			
 			$this->assertEquals(
 				$oqlQuery->toCriteria()->toDialectString($dialect),
