@@ -1,0 +1,20 @@
+language: php
+php:
+  - "5.3"
+
+
+services:
+  - rabbitmq
+  - memcached
+  - mysql
+  - postgresql
+  - sqlite3
+
+before_script:
+  - ./.travis/install_extensions.sh
+  - psql -c "DROP DATABASE IF EXISTS onphp;" -U postgres
+  - psql -c 'create database onphp;' -U postgres
+  - mysql -e "create database IF NOT EXISTS onphp;" -uroot;
+
+
+script: ./test/runme.sh

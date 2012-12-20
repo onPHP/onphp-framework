@@ -1,12 +1,12 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov                     *
- *                                                                         *
+ *   Copyright (C) 2004-2008 by Konstantin V. Arkhipov					 *
+ *																		 *
  *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU Lesser General Public License as        *
- *   published by the Free Software Foundation; either version 3 of the    *
- *   License, or (at your option) any later version.                       *
- *                                                                         *
+ *   it under the terms of the GNU Lesser General Public License as		*
+ *   published by the Free Software Foundation; either version 3 of the	*
+ *   License, or (at your option) any later version.					   *
+ *																		 *
  ***************************************************************************/
 
 	/**
@@ -426,21 +426,15 @@
 		
 		public function import($scope)
 		{
-			if (
-				!empty($scope[$this->name])
-				|| (
-					isset($scope[$this->name])
-					&& $scope[$this->name] !== ''
-				)
-			) {
-				$this->raw = $scope[$this->name];
-				
-				return $this->imported = true;
-			}
-			
-			$this->clean();
-			
-			return null;
+            if (isset($scope[$this->name]))
+            {
+                $this->setRawValue(
+                    $scope[$this->name]
+                );
+                $this->imported = true;
+            }
+
+			return $this;
 		}
 	}
 ?>

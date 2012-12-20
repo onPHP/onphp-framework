@@ -2,22 +2,22 @@
 	
 	$dbs = array(
 		'PgSQL' => array(
-			'user'	=> 'onphp',
-			'pass'	=> 'onphp',
+			'user'	=> 'postgres',
+			'pass'	=> '',
 			'host'	=> '127.0.0.1',
 			'base'	=> 'onphp'
 		),
 		'MySQL' => array(
-			'user'	=> 'onphp',
-			'pass'	=> 'onphp',
+			'user'	=> 'root',
+			'pass'	=> '',
 			'host'	=> '127.0.0.1',
 			'base'	=> 'onphp'
 		),
 		'SQLitePDO' => array(
-			'user'	=> 'onphp',
-			'pass'	=> 'onphp',
-			'host'	=> '127.0.0.1',
-			'base'	=> 'onphp'
+			'user'	=> '',
+			'pass'	=> '',
+			'host'	=> '',
+			'base'	=> ':memory:'
 		),
 	);
 
