@@ -8,10 +8,9 @@ services:
   - memcached
   - mysql
   - postgresql
-  - sqlite
+
 
 before_script:
-  - ./.travis/install_extensions.sh
   - psql -c "DROP DATABASE IF EXISTS onphp;" -U postgres
   - psql -c 'create database onphp;' -U postgres
   - mysql -e "create database IF NOT EXISTS onphp;" -uroot;
