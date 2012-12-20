@@ -1,0 +1,26 @@
+language: php
+php:
+  - "5.3"
+
+
+services:
+  - mysql
+  - postgresql
+  - rabbitmq
+  - memcached
+  - redis-server
+
+
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq memcached php5-memcache php5-memcached
+
+
+before_script:
+  - ./.travis/install_pecl_extensions.sh
+  - psql -c "DROP DATABASE IF EXISTS onphp;" -U postgres
+  - psql -c 'create database onphp;' -U postgres
+  - mysql -e "create database IF NOT EXISTS onphp;" -uroot;
+
+
+script: ./test/runme.sh
