@@ -57,7 +57,6 @@
 			return $this->primitive->getRawValue();
 		}
 		
-
 		public function getValueOrDefault()
 		{
 			return $this->primitive->getValueOrDefault();
