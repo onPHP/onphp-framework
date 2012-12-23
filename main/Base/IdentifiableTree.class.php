@@ -80,4 +80,3 @@
 			return implode($delimiter, $ids);
 		}
 	}
-?>

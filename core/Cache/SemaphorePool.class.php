@@ -70,4 +70,3 @@
 			self::$locker->clean();
 		}
 	}
-?>

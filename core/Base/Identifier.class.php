@@ -66,4 +66,3 @@
 			return $this->final;
 		}
 	}
-?>

@@ -194,4 +194,3 @@
 				.$this->namespaceResolver->getClassExtension();
 		}
 	}
-?>

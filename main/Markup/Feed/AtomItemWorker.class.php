@@ -110,4 +110,3 @@
 			return $feedItemContent->setBody((string) $content);
 		}
 	}
-?>

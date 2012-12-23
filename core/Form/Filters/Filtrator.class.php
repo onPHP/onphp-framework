@@ -21,4 +21,3 @@
 	{
 		public function apply($value);
 	}
-?>

@@ -251,4 +251,3 @@
 			return $instances[$id];
 		}
 	}
-?>

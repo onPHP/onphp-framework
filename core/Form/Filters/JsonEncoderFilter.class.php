@@ -27,4 +27,3 @@
 			return json_encode($value);
 		}
 	}
-?>

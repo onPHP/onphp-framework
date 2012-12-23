@@ -50,4 +50,3 @@
 			return ModelAndView::create()->setView('login');
 		}
 	}
-?>

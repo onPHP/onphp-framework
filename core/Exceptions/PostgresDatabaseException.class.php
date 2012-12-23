@@ -20,4 +20,3 @@
 			$this->code = $code;
 		}
 	}
-?>

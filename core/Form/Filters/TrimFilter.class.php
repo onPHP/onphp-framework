@@ -80,4 +80,3 @@
 			return $this;
 		}
 	}
-?>

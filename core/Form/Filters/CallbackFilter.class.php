@@ -37,4 +37,3 @@
 			return $this->callback->__invoke($value);
 		}
 	}
-?>

@@ -40,4 +40,3 @@
 			return new ScopeSetter($this->proto, $object);
 		}
 	}
-?>

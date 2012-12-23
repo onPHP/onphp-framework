@@ -30,4 +30,3 @@
 			++$this->dirCount;
 		}
 	}
-?>

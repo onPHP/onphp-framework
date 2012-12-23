@@ -14,4 +14,3 @@
 	 * @ingroup Module
 	**/
 	class TooManyRowsException extends DatabaseException {/*_*/}
-?>

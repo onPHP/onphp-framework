@@ -31,4 +31,3 @@
 			return !empty($this->styles);
 		}
 	}
-?>

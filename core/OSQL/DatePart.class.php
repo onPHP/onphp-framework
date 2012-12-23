@@ -58,4 +58,3 @@
 			self::YEAR				=> 'YEAR'
 		);
 	}
-?>

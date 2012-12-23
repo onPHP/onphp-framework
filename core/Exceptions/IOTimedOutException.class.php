@@ -14,4 +14,3 @@
 	 * @ingroup Module
 	**/
 	class IOTimedOutException extends IOException {/*_*/}
-?>

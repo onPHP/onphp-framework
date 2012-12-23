@@ -16,4 +16,4 @@
 	{
 		protected $className = 'IpRange';
 	}
-?>
+

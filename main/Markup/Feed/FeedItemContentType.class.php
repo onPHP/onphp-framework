@@ -24,4 +24,3 @@
 			self::XHTML		=> 'xhtml'
 		);
 	}
-?>

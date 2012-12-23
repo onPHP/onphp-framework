@@ -110,4 +110,3 @@
 			return ArrayUtils::getIdsArray($this->value);
 		}
 	}
-?>

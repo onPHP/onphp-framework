@@ -26,4 +26,3 @@
 			self::READ_WRITE	=> 'read write'
 		);
 	}
-?>

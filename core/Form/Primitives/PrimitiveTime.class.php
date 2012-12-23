@@ -173,4 +173,3 @@
 				&& !($this->max && $this->max->toSeconds() < $time->toSeconds());
 		}
 	}
-?>

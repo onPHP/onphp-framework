@@ -31,4 +31,3 @@
 			return ($stamp1 < $stamp2) ? -1 : 1;
 		}
 	}
-?>

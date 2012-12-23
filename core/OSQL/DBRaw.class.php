@@ -40,4 +40,3 @@
 			throw new UnsupportedMethodException();
 		}
 	}
-?>

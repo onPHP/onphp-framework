@@ -127,4 +127,3 @@
 			return $selectedLabel;
 		}
 	}
-?>

@@ -127,4 +127,3 @@
 				.$this->select->toDialectString($dialect).")";
 		}
 	}
-?>

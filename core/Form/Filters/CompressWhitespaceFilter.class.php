@@ -31,4 +31,3 @@
 			return preg_replace('/[ \t]+/', ' ', $value);
 		}
 	}
-?>

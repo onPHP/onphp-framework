@@ -267,4 +267,3 @@
 			return $result;
 		}
 	}
-?>

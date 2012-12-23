@@ -29,4 +29,3 @@
 			return convert_uudecode($value);
 		}
 	}
-?>

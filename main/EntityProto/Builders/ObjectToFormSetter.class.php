@@ -35,4 +35,3 @@
 			return new FormHardenedSetter($this->proto, $object);
 		}
 	}
-?>

@@ -35,4 +35,3 @@
 			return new DTOSetter($this->proto, $object);
 		}
 	}
-?>

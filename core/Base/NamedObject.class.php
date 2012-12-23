@@ -48,4 +48,3 @@
 			return "[{$this->id}] {$this->name}";
 		}
 	}
-?>

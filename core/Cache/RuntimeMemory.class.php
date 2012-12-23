@@ -100,4 +100,3 @@
 			return true;
 		}
 	}
-?>

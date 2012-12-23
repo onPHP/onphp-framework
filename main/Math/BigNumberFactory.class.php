@@ -31,4 +31,3 @@
 		**/
 		abstract public function makeRandom($stop, RandomSource $source);
 	}
-?>

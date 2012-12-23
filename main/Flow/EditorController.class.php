@@ -47,4 +47,3 @@
 			return $this->postHandleRequest($mav, $request);
 		}
 	}
-?>

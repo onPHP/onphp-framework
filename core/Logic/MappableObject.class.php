@@ -20,4 +20,3 @@
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query);
 	}
-?>

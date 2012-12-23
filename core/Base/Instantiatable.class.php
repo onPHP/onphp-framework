@@ -17,4 +17,3 @@
 	{
 		public static function me();
 	}
-?>

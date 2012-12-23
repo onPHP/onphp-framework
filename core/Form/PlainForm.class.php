@@ -160,4 +160,3 @@
 			return $this->primitives;
 		}
 	}
-?>

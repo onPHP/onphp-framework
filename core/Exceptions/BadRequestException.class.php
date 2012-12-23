@@ -20,4 +20,3 @@
 	 * Use this exception instead of View('error')
 	**/
 	class BadRequestException extends BaseException {/* nop */}
-?>

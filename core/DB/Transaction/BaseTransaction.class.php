@@ -79,4 +79,3 @@
 			return $begin.";\n";
 		}
 	}
-?>

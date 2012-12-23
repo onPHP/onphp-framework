@@ -129,4 +129,3 @@
 			return new $this->className($id);
 		}
 	}
-?>

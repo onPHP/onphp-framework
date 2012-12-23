@@ -125,4 +125,3 @@
 			return new DirectorySetter($this->proto, $object);
 		}
 	}
-?>

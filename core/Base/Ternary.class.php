@@ -131,4 +131,3 @@
 			return $this->decide('true', 'false', 'null');
 		}
 	}
-?>

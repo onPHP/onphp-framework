@@ -63,4 +63,3 @@
 			return Cache::me()->delete($this->index);
 		}
 	}
-?>

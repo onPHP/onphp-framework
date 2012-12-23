@@ -36,4 +36,3 @@
 			return (int) $number;
 		}
 	}
-?>

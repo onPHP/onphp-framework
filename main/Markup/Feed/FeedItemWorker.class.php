@@ -17,4 +17,3 @@
 		public function makeItems(SimpleXMLElement $xmlFeed);
 		public function toXml(FeedItem $item);
 	}
-?>

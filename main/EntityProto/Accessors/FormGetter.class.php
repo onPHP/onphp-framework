@@ -30,4 +30,3 @@
 			return $this->object->getValue($primitive->getName());
 		}
 	}
-?>

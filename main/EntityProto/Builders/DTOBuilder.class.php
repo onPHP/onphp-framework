@@ -18,4 +18,3 @@
 			return new $className;
 		}
 	}
-?>

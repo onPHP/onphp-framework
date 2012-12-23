@@ -76,4 +76,3 @@
 			return ($this->id && $this->id[0] == '?');
 		}
 	}
-?>

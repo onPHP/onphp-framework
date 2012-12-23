@@ -36,4 +36,3 @@
 			return sha1($opad.sha1($ipad.$message, true), true);
 		}
 	}
-?>

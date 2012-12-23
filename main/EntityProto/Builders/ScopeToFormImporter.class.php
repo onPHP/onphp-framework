@@ -35,4 +35,3 @@
 			return new FormImporter($this->proto, $object);
 		}
 	}
-?>

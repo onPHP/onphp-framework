@@ -24,4 +24,3 @@
 			return (float) $number;
 		}
 	}
-?>

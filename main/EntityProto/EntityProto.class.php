@@ -225,4 +225,3 @@
 			return $result;
 		}
 	}
-?>

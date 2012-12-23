@@ -44,4 +44,3 @@
 			return strip_tags($value, $this->exclude);
 		}
 	}
-?>

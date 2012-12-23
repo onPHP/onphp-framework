@@ -75,4 +75,3 @@
 			return $this->queue->toDialectString(ImaginaryDialect::me());
 		}
 	}
-?>

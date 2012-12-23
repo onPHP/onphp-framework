@@ -112,4 +112,3 @@
 			return implode(";\n", $out);
 		}
 	}
-?>

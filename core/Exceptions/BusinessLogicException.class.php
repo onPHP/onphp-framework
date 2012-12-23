@@ -14,4 +14,3 @@
 	 * @ingroup Module
 	**/
 	class BusinessLogicException extends Exception {/*_*/}
-?>

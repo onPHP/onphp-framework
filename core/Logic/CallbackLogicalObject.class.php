@@ -57,4 +57,3 @@
 			throw new UnimplementedFeatureException("toDialectString is not needed here");
 		}
 	}
-?>

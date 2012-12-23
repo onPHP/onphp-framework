@@ -51,4 +51,3 @@
 			return $result;
 		}
 	}
-?>

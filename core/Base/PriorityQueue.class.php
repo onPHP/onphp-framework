@@ -159,4 +159,3 @@
 			$this->heap[$index1]	= $tmp;
 		}
 	}
-?>

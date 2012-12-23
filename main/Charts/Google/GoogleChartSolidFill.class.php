@@ -66,4 +66,3 @@
 			return self::$paramName;
 		}
 	}
-?>

@@ -395,4 +395,3 @@
 			return new PrimitiveEnumList($name);
 		}
 	}
-?>

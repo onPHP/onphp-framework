@@ -27,4 +27,3 @@
 			return urldecode($value);
 		}
 	}
-?>

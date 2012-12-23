@@ -15,4 +15,3 @@
 				throw new WrongStateException('everything is b0rked');
 		}
 	}
-?>

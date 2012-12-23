@@ -79,4 +79,3 @@
 				.','.$this->blankSegmentLength;
 		}
 	}
-?>

@@ -22,4 +22,3 @@
 		
 		public function uncache();
 	}
-?>

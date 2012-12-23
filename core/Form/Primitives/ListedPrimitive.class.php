@@ -22,4 +22,3 @@
 		public function getChoiceValue();
 		public function getActualChoiceValue();
 	}
-?>

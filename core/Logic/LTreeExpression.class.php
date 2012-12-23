@@ -58,4 +58,3 @@
 			return new BinaryExpression($ltree, $ltxtquery, self::SEARCH);
 		}
 	}
-?>

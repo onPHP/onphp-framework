@@ -117,4 +117,3 @@
 				.parent::toDialectString($dialect);
 		}
 	}
-?>

@@ -18,4 +18,3 @@
 	abstract class BaseFilter
 		extends Singleton
 		implements Filtrator, Instantiatable {/*_*/}
-?>

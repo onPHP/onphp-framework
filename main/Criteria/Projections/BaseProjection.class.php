@@ -28,4 +28,3 @@
 			return $this->alias;
 		}
 	}
-?>

@@ -66,4 +66,3 @@
 			return $this->name.'='.$this->width.'x'.$this->height;
 		}
 	}
-?>

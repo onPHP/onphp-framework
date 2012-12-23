@@ -29,4 +29,3 @@
 			$query->groupBy($field);
 		}
 	}
-?>

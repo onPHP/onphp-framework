@@ -14,4 +14,3 @@
 	 * @ingroup Module
 	**/
 	class NetworkException extends IOException {/*_*/}
-?>

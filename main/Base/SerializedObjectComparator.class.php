@@ -28,4 +28,4 @@
 			return ($serializedOne < $serializedTwo) ? -1 : 1;
 		}
 	}
-?>
+

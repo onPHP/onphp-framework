@@ -71,4 +71,3 @@
 			return $instances[$id];
 		}
 	}
-?>

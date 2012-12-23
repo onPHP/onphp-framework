@@ -87,4 +87,3 @@
 			return $this->map->getForm();
 		}
 	}
-?>

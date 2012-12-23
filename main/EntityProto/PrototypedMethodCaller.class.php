@@ -24,4 +24,3 @@
 			$this->mapping = $proto->getFormMapping();
 		}
 	}
-?>

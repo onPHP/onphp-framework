@@ -57,4 +57,3 @@
 			return $dialect->quoteValue($this->getId());
 		}
 	}
-?>

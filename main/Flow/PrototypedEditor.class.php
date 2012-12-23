@@ -266,4 +266,3 @@
 			return $object->dao()->add($object);
 		}
 	}
-?>

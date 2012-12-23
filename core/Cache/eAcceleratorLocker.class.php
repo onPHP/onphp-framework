@@ -37,4 +37,3 @@
 			return true;
 		}
 	}
-?>

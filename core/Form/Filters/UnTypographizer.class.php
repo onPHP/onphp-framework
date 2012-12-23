@@ -48,4 +48,3 @@
 			return strtr($value, self::$symbols);
 		}
 	}
-?>

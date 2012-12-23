@@ -17,4 +17,3 @@
 		public function makeChannel(SimpleXMLElement $xmlFeed);
 		public function toXml(FeedChannel $channel, $itemsXml);
 	}
-?>

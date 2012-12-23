@@ -210,4 +210,3 @@
 			return sprintf('%02d', $int);
 		}
 	}
-?>

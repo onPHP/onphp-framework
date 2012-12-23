@@ -19,4 +19,3 @@
 		**/
 		public function handleRequest(HttpRequest $request);
 	}
-?>

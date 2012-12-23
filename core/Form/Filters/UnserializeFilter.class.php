@@ -29,4 +29,3 @@
 			return unserialize($value);
 		}
 	}
-?>

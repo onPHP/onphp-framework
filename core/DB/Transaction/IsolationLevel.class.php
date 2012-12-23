@@ -30,4 +30,3 @@
 			self::SERIALIZABLE		=> 'serializable'
 		);
 	}
-?>

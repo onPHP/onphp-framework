@@ -35,4 +35,3 @@
 			return new FormSetter($this->proto, $object);
 		}
 	}
-?>

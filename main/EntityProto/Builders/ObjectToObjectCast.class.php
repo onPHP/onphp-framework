@@ -35,4 +35,3 @@
 			return new ObjectSetter($this->proto, $object);
 		}
 	}
-?>

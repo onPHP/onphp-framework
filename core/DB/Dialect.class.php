@@ -188,4 +188,3 @@
 			return $this->db->getLink();
 		}
 	}
-?>

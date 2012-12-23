@@ -61,4 +61,3 @@
 			return $both && (mb_strtolower($left) === mb_strtolower($right));
 		}
 	}
-?>

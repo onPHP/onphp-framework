@@ -140,4 +140,3 @@
 			return QueryChain::block($args, self::EXCEPT_ALL);
 		}
 	}
-?>

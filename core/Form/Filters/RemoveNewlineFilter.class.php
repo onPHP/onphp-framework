@@ -29,4 +29,3 @@
 			return preg_replace('/[\n\r]+/', ' ', $value);
 		}
 	}
-?>
