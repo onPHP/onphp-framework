@@ -20,6 +20,8 @@
 	{
 		private $identityMap	= array();
 		
+		protected $linkName		= null;
+		
 		abstract public function getTable();
 		abstract public function getObjectName();
 		
@@ -73,7 +75,7 @@
 		**/
 		public function getLinkName()
 		{
-			return null;
+			return $this->linkName;
 		}
 		
 		public function getIdName()

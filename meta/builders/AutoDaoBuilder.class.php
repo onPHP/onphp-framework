@@ -42,7 +42,7 @@ abstract class {$class->getName('Auto', 'DAO')} extends {$parentName}
 {
 
 EOT;
-
+			
 			$out .= self::buildPointers($class)."\n}\n";
 			
 			return $out.self::getHeel();

@@ -26,6 +26,14 @@
 			$out = null;
 			
 			if (!$class->getPattern() instanceof AbstractClassPattern) {
+				if ($source = $class->getSourceLink()) {
+					$out .= <<<EOT
+	protected \$linkName =  '{$source}';
+	
+
+EOT;
+				}
+				
 				if (
 					$class->getIdentifier()->getColumnName() !== 'id'
 				) {
@@ -79,17 +87,6 @@ public function uncacheLists()
 {$uncachers}
 
 return parent::uncacheLists();
-}
-EOT;
-			}
-			
-			if ($source = $class->getSourceLink()) {
-				$out .= <<<EOT
-
-
-public function getLinkName()
-{
-	return '{$source}';
 }
 EOT;
 			}
