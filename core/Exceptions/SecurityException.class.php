@@ -14,4 +14,3 @@
 	 * @ingroup Module
 	**/
 	class SecurityException extends Exception {/*_*/}
-?>

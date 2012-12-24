@@ -6,4 +6,3 @@
  *****************************************************************************/
 
 	final class ProtoAdministrator extends AutoProtoAdministrator {/*_*/}
-?>

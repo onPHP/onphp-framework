@@ -141,4 +141,3 @@
 			throw new UnsupportedMethodException('You can not change id here, because it is politics for Enum!');
 		}
 	}
-?>

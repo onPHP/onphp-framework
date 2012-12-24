@@ -26,4 +26,3 @@
 			return Singleton::getInstance('ProtoAdministrator');
 		}
 	}
-?>

@@ -10,4 +10,3 @@
  ***************************************************************************/
 
 	class CollectionItem extends IdentifiableObject {/*_*/}
-?>

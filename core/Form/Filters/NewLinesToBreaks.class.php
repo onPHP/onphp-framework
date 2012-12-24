@@ -29,4 +29,3 @@
 			return nl2br($value);
 		}
 	}
-?>

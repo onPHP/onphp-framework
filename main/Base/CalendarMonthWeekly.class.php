@@ -151,4 +151,3 @@
 			return $this->monthRange->getStart();
 		}
 	}
-?>

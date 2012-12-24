@@ -95,4 +95,3 @@
 				($first['mountPoint'] < $second['mountPoint']) ? -1 : 1;
 		}
 	}
-?>

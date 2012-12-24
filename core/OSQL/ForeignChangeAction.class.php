@@ -68,4 +68,3 @@
 			return new self(self::SET_DEFAULT);
 		}
 	}
-?>

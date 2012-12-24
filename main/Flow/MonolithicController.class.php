@@ -97,4 +97,3 @@
 			return AddCommand::create()->run($subject, $form, $request);
 		}
 	}
-?>

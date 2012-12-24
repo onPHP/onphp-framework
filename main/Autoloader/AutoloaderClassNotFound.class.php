@@ -61,4 +61,3 @@
 			spl_autoload_unregister(array($this, 'autoload'));
 		}
 	}
-?>

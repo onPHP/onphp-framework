@@ -57,4 +57,3 @@
 			return $this->name;
 		}
 	}
-?>

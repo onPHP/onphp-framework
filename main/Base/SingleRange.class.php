@@ -19,4 +19,3 @@
 		
 		public function contains($probe);
 	}
-?>

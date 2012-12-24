@@ -64,4 +64,3 @@
 		public function intValue();
 		public function floatValue();
 	}
-?>

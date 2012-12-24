@@ -20,4 +20,3 @@
 		// index' field name
 		public function getIndexField();
 	}
-?>

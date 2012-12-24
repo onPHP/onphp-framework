@@ -41,4 +41,3 @@
 			return $this->paramName.'='.$this->name;
 		}
 	}
-?>

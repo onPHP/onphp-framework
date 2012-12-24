@@ -246,4 +246,3 @@
 			return hexdec(substr(md5($string), 0, 8));
 		}
 	}
-?>

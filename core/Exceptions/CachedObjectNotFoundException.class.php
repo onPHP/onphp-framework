@@ -13,4 +13,3 @@
 	 * @ingroup Exceptions
 	**/
 	class CachedObjectNotFoundException extends ObjectNotFoundException {/*_*/}
-?>

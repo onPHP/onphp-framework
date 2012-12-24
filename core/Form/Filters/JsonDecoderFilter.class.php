@@ -39,4 +39,3 @@
 			return json_decode($value, $this->assoc);
 		}
 	}
-?>

@@ -148,4 +148,3 @@
 			return $result;
 		}
 	}
-?>

@@ -100,4 +100,4 @@
 			return $query->where(Expression::eqId($this->getIdName(), $object));
 		}
 	}
-?>
+

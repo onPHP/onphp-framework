@@ -73,4 +73,3 @@
 			return $result;
 		}
 	}
-?>

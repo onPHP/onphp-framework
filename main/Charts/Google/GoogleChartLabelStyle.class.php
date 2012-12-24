@@ -53,4 +53,3 @@
 			return rtrim($queryString, '|');
 		}
 	}
-?>

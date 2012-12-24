@@ -43,4 +43,3 @@
 			throw new WrongArgumentException();
 		}
 	}
-?>

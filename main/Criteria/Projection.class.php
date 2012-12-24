@@ -120,4 +120,3 @@
 			return new ClassProjection($className);
 		}
 	}
-?>

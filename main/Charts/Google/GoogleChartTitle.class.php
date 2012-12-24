@@ -36,4 +36,3 @@
 			return 'chtt='.$this->title;
 		}
 	}
-?>

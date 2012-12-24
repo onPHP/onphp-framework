@@ -27,4 +27,3 @@
 			return mb_strtoupper($value);
 		}
 	}
-?>

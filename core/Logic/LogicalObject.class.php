@@ -18,4 +18,3 @@
 	{
 		public function toBoolean(Form $form);
 	}
-?>

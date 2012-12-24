@@ -41,4 +41,3 @@
 			return mysqli_real_escape_string(DBPool::me()->getLink()->getLink(), $data);
 		}
 	}
-?>

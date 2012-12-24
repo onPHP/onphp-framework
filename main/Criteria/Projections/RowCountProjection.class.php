@@ -13,4 +13,3 @@
 	 * @ingroup Projections
 	**/
 	final class RowCountProjection extends CountProjection {/*_*/}
-?>

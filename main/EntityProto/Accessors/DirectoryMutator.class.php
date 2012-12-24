@@ -35,4 +35,3 @@
 			return $this->getter;
 		}
 	}
-?>

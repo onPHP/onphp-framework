@@ -19,4 +19,3 @@
 	{
 		final private function __construct() {/*_*/}
 	}
-?>

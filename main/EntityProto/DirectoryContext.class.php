@@ -56,4 +56,4 @@
 			return $this->reverseMap[spl_object_hash($object)];
 		}
 	}
-?>
+

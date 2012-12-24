@@ -69,4 +69,3 @@
 			return $this->labelStyle;
 		}
 	}
-?>

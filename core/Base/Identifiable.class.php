@@ -22,4 +22,3 @@
 		public function getId();
 		public function setId($id);
 	}
-?>

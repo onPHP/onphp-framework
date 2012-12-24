@@ -196,4 +196,4 @@
 				.$this->watermark;
 		}
 	}
-?>
+

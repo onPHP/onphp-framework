@@ -78,4 +78,3 @@
 			return implode($delimiter, $name);
 		}
 	}
-?>

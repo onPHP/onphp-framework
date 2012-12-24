@@ -47,4 +47,3 @@
 				return implode(null, $matches[0]);
 		}
 	}
-?>

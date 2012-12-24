@@ -74,4 +74,3 @@
 			return new DropTableQuery($name, $cascade);
 		}
 	}
-?>

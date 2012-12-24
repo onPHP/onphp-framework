@@ -14,4 +14,3 @@
 		abstract public function extractPath(&$scope);
 		abstract public function getScope($path);
 	}
-?>

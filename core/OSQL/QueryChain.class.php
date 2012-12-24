@@ -86,4 +86,3 @@
 			return $this->exp($query, CombineQuery::EXCEPT_ALL);
 		}
 	}
-?>

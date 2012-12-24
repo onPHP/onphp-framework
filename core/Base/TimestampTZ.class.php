@@ -54,4 +54,3 @@
 			return parent::compare($left, $right);
 		}
 	}
-?>

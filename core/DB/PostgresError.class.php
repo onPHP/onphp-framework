@@ -557,4 +557,3 @@
 			return self::SUCCESSFUL_COMPLETION;
 		}
 	}
-?>

@@ -384,4 +384,3 @@
 			return LogicalChain::block($args, $logic);
 		}
 	}
-?>

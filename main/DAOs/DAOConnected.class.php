@@ -19,4 +19,3 @@
 	{
 		public static function dao();
 	}
-?>

@@ -857,4 +857,3 @@
 			return $this->getName();
 		}
 	}
-?>

@@ -14,4 +14,3 @@
 	 * @ingroup Module
 	**/
 	class FileNotFoundException extends IOException {/*_*/}
-?>

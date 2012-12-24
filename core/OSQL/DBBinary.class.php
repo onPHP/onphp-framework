@@ -30,4 +30,3 @@
 			return $dialect->quoteBinary($this->getValue());
 		}
 	}
-?>

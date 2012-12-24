@@ -62,4 +62,3 @@
 			return $this->name.'='.$items.'&'.$this->position->toString();
 		}
 	}
-?>

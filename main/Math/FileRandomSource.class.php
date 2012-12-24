@@ -35,4 +35,3 @@
 			return fread($this->handle, $numberOfBytes);
 		}
 	}
-?>

@@ -43,4 +43,3 @@
 			return $form->getValue($this->primitiveName);
 		}
 	}
-?>

@@ -169,4 +169,3 @@
 			return new LitePDODialect();
 		}
 	}
-?>

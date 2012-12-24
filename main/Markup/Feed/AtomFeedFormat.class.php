@@ -43,4 +43,3 @@
 			return ($xmlFeed->getName() == 'feed');
 		}
 	}
-?>

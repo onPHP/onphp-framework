@@ -127,4 +127,3 @@
 				setMediaType('text/csv');
 		}
 	}
-?>

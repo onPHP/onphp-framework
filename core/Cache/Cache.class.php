@@ -106,4 +106,3 @@
 			self::$instances = array();
 		}
 	}
-?>

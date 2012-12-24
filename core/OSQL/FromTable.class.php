@@ -86,4 +86,3 @@
 			return $this->alias ? $this->alias : $this->table;
 		}
 	}
-?>

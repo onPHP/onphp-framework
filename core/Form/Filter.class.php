@@ -155,4 +155,3 @@
 			return Singleton::getInstance('SafeUtf8Filter');
 		}
 	}
-?>

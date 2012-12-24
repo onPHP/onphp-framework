@@ -19,4 +19,3 @@
 			return parent::baseToString($dialect, 'LEFT ');
 		}
 	}
-?>

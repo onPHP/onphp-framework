@@ -218,4 +218,3 @@
 			return implode(', ', $fields);
 		}
 	}
-?>

@@ -110,4 +110,3 @@
 			return $string;
 		}
 	}
-?>

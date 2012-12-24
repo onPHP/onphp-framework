@@ -19,4 +19,3 @@
 		**/
 		public function process(Criteria $criteria, JoinCapableQuery $query);
 	}
-?>

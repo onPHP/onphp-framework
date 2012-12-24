@@ -18,4 +18,3 @@
 			return $this->object->$method();
 		}
 	}
-?>

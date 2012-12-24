@@ -14,4 +14,3 @@
 	 * @ingroup Module
 	**/
 	interface Query extends DialectString, Identifiable, Stringable {/*_*/}
-?>

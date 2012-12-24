@@ -76,4 +76,3 @@
 			return substr(md5($secret), 0, $this->keySize);
 		}
 	}
-?>

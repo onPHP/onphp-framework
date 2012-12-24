@@ -97,4 +97,3 @@
 			return $typeString.'&'.$rangeString.$labelsString;
 		}
 	}
-?>

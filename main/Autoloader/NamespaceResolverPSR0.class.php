@@ -69,4 +69,3 @@
 			return $dirScaner->setAllowedUnderline($this->allowedUnderline);
 		}
 	}
-?>

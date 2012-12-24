@@ -29,4 +29,3 @@
 		/// destroys segment
 		public function drop();
 	}
-?>

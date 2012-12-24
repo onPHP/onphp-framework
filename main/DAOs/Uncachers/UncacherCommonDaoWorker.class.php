@@ -26,4 +26,3 @@
 			parent::uncacheClassName($className, $idKeys);
 		}
 	}
-?>

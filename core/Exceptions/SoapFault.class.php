@@ -15,4 +15,3 @@
 	 * @ingroup Exceptions
 	**/
 	class SoapFault extends Exception {/*_*/}
-?>

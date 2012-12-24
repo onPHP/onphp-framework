@@ -41,4 +41,3 @@
 			throw new UnimplementedFeatureException('Author was too lazy to make it');
 		}
 	}
-?>

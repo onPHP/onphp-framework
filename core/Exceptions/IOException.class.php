@@ -14,4 +14,3 @@
 	 * @ingroup Module
 	**/
 	class IOException extends BaseException {/*_*/}
-?>

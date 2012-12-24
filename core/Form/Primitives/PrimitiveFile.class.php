@@ -177,4 +177,3 @@
 			return !$this->checkUploaded || is_uploaded_file($file);
 		}
 	}
-?>

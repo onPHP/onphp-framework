@@ -14,4 +14,3 @@
 	 * @ingroup Module
 	**/
 	class DatabaseException extends BaseException {/*_*/}
-?>

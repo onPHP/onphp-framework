@@ -71,4 +71,3 @@
 			return implode("\n\n", $out);
 		}
 	}
-?>

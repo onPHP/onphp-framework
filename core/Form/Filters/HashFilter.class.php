@@ -41,4 +41,3 @@
 			return sha1($value, $this->binary);
 		}
 	}
-?>

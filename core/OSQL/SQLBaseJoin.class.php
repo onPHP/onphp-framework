@@ -50,4 +50,3 @@
 				.' ON '.$this->logic->toDialectString($dialect);
 		}
 	}
-?>

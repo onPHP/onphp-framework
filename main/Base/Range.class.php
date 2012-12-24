@@ -63,4 +63,3 @@
 			return parent::setMax($max);
 		}
 	}
-?>

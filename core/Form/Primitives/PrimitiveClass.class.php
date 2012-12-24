@@ -79,4 +79,3 @@
 			throw new WrongArgumentException('strange class given - '.$class);
 		}
 	}
-?>

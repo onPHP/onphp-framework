@@ -22,4 +22,3 @@
 			return 'administrator_id';
 		}
 	}
-?>

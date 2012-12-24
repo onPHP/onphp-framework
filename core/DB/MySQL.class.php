@@ -275,4 +275,3 @@
 			return $result;
 		}
 	}
-?>

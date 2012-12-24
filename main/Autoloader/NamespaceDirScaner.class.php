@@ -44,4 +44,3 @@
 			return $this->list;
 		}
 	}
-?>

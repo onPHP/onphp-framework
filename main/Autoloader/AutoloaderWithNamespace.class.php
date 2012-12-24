@@ -34,4 +34,3 @@
 		 */
 		public function addPaths(array $paths, $namespace = null);
 	}
-?>

@@ -59,4 +59,3 @@
 					: mb_strcut($value, $this->start);
 		}
 	}
-?>

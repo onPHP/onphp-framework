@@ -396,4 +396,4 @@
 			return new DBValue($atom);
 		}
 	}
-?>
+

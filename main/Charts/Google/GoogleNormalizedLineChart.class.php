@@ -29,4 +29,3 @@
 			$this->data->setNormalize();
 		}
 	}
-?>

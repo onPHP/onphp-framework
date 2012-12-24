@@ -131,4 +131,3 @@
 			return $unescapedHStore;
 		}
 	}
-?>
