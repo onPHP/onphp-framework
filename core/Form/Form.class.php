@@ -52,11 +52,7 @@
 		
 		public function getError($name)
 		{
-			if ($this->hasError($name)) {
-				return $this->get($name)->getError();
-			}
-
-			return null;
+			return $this->get($name)->getError();
 		}
 		
 		public function getInnerErrors()
@@ -65,17 +61,11 @@
 			
 			foreach ($this->primitives as $name => $prm) {
 				if (
-					(
-						($prm instanceof PrimitiveFormsList)
-						|| ($prm instanceof PrimitiveForm)
-					)
-					&& $prm->getValue()
+                    $prm instanceof PrimitiveFormsList
+					|| $prm instanceof PrimitiveForm
 				) {
-					if ($errors = $prm->getInnerErrors()) {
+					if ($errors = $prm->getInnerErrors())
 						$result[$name] = $errors;
-					} else {
-						unset($result[$name]);
-					}
 				}
 			}
 			
