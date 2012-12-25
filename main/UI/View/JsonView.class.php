@@ -35,7 +35,7 @@
 			} else {
 				$this->options = $this->options & ~JSON_HEX_QUOT;
 			}
-			
+
 			return $this;
 		}
 
@@ -50,7 +50,7 @@
 			} else {
 				$this->options = $this->options & ~JSON_HEX_TAG;
 			}
-			
+
 			return $this;
 		}
 
@@ -65,7 +65,7 @@
 			} else {
 				$this->options = $this->options & ~JSON_HEX_AMP;
 			}
-			
+
 			return $this;
 		}
 
@@ -80,7 +80,7 @@
 			} else {
 				$this->options = $this->options & ~JSON_HEX_APOS;
 			}
-			
+
 			return $this;
 		}
 
@@ -95,7 +95,7 @@
 			} else {
 				$this->options = $this->options & ~JSON_FORCE_OBJECT;
 			}
-			
+
 			return $this;
 		}
 
@@ -110,7 +110,7 @@
 			} else {
 				$this->options = $this->options & ~JSON_NUMERIC_CHECK;
 			}
-			
+
 			return $this;
 		}
 
@@ -127,7 +127,7 @@
 					$this->options = $this->options & ~JSON_PRETTY_PRINT;
 				}
 			}
-			
+
 			return $this;
 		}
 
@@ -144,20 +144,24 @@
 					$this->options = $this->options & ~JSON_UNESCAPED_SLASHES;
 				}
 			}
-			
+
 			return $this;
 		}
-		
+
 		/**
 		 * @return JsonView
 		**/
 		public function render(/* Model */ $model = null)
 		{
+			// @see http://www.php.net/json_encode
+			// function json_encode only works with UTF-8 encoded data.
+			header("Content-type: application/json; charset=utf-8");
+
 			echo $this->toString($model);
 
 			return $this;
 		}
-		
+
 		/**
 		 * @param Model $model
 		 * @return string
@@ -171,5 +175,5 @@
 				return json_encode($model ? $model->getList() : array());
 			}
 		}
+
 	}
-?>
