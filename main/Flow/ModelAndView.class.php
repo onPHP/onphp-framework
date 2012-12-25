@@ -49,6 +49,16 @@
 			return $this;
 		}
 		
+		/**
+		 * @return ModelAndView
+		**/
+		public function setInModel($name, $value)
+		{
+			$this->model->set($name, $value);
+
+			return $this;
+		}
+
 		public function getView()
 		{
 			return $this->view;
