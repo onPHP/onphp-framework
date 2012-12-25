@@ -11,26 +11,26 @@
 
 	/**
 	 * Ideal Identifiable interface implementation. ;-)
-	 * 
+	 *
 	 * @see Identifiable
-	 * 
+	 *
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
 	class /* spirit of */ IdentifiableObject implements Identifiable, DialectString
 	{
 		protected $id = null;
-		
+
 		/**
 		 * @return IdentifiableObject
 		**/
 		public static function wrap($id)
 		{
-			$io = new self;
-			
+			$io = new static;
+
 			return $io->setId($id);
 		}
-		
+
 		public function getId()
 		{
 			if (
@@ -41,20 +41,19 @@
 			else
 				return $this->id;
 		}
-		
+
 		/**
 		 * @return IdentifiableObject
 		**/
 		public function setId($id)
 		{
 			$this->id = $id;
-			
+
 			return $this;
 		}
-		
+
 		public function toDialectString(Dialect $dialect)
 		{
 			return $dialect->quoteValue($this->getId());
 		}
 	}
-?>
