@@ -173,6 +173,10 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 		throw new UnimplementedFeatureException();
 	}
 
+	public function info() {
+		return $this->redis->info();
+	}
+
 	protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
 	{
 		$this->ensureTriedToConnect();
