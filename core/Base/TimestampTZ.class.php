@@ -38,7 +38,7 @@
 					$zone = new \DateTimeZone($zone);
 				}
 
-				return new static($this->toStamp(), $zone);
+				return new Timestamp($this->toStamp(), $zone);
 			}
 
 			return  parent::toTimestamp();
