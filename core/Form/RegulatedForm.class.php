@@ -17,9 +17,6 @@
 	**/
 	abstract class RegulatedForm extends PlainForm
 	{
-		protected $rules		= array(); // forever
-		protected $violated		= array(); // rules
-		
 		/**
 		 * @throws WrongArgumentException
 		 * @return Form
@@ -28,9 +25,9 @@
 		{
 			Assert::isString($name);
 			
-			$this->rules[$name] = $rule;
-			
-			return $this;
+			return $this->add(
+				Primitive::rule($name)->setExpression($rule)
+			);
 		}
 		
 		/**
@@ -39,32 +36,17 @@
 		**/
 		public function dropRuleByName($name)
 		{
-			if (isset($this->rules[$name])) {
-				unset($this->rules[$name]);
-				return $this;
+			$rule = $this->get($name);
+			if (!$rule instanceof PrimitiveRule) {
+				throw new MissingElementException("no such PrimitiveRule with '{$name}' name");
 			}
-			
-			throw new MissingElementException(
-				"no such rule with '{$name}' name"
-			);
+			return $this->drop($name);
 		}
 		
 		public function ruleExists($name)
 		{
-			return isset($this->rules[$name]);
-		}
-		
-		/**
-		 * @return Form
-		**/
-		public function checkRules()
-		{
-			foreach ($this->rules as $name => $logicalObject) {
-				if (!$logicalObject->toBoolean($this))
-					$this->violated[$name] = Form::WRONG;
-			}
-			
-			return $this;
+			return $this->primitiveExists($name)
+				&& $this->get($name) instanceof PrimitiveRule;
 		}
 	}
 ?>
