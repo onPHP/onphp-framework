@@ -1,38 +1,5 @@
 <?php
-	if (!extension_loaded('onphp')) {
-		echo 'Trying to load onPHP extension.. ';
-		
-		if (!@dl('onphp.so')) {
-			echo "failed.\n";
-		} else {
-			echo "done.\n";
-		}
-	}
-	
-	date_default_timezone_set('Europe/Moscow');
-	define('ONPHP_TEST_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
-	
-	require ONPHP_TEST_PATH.'../global.inc.php.tpl';
-	
-	define('ENCODING', 'UTF-8');
-	
-	mb_internal_encoding(ENCODING);
-	mb_regex_encoding(ENCODING);
-	
-	AutoloaderPool::get('onPHP')->addPath(ONPHP_TEST_PATH.'misc');
-	
-	$testPathes = array(
-		ONPHP_TEST_PATH.'core'.DIRECTORY_SEPARATOR,
-		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR,
-		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Autoloader'.DIRECTORY_SEPARATOR,
-		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Ip'.DIRECTORY_SEPARATOR,
-		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Net'.DIRECTORY_SEPARATOR,
-		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR,
-		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR.'Routers'.DIRECTORY_SEPARATOR,
-		ONPHP_TEST_PATH.'main'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR.'AMQP'.DIRECTORY_SEPARATOR,
-		ONPHP_TEST_PATH.'db'.DIRECTORY_SEPARATOR,
-	);
-	
+
 	$config = dirname(__FILE__).'/config.inc.php';
 	
 	include is_readable($config) ? $config : $config.'.tpl';
@@ -131,4 +98,3 @@
 	AllTests::$dbs = $dbs;
 	AllTests::$paths = $testPathes;
 	AllTests::$workers = $daoWorkers;
-?>
