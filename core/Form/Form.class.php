@@ -40,21 +40,18 @@
 		
 		public function getErrors()
 		{
-			return array_merge($this->errors, $this->violated);
+			return $this->errors;
 		}
 		
 		public function hasError($name)
 		{
-			return array_key_exists($name, $this->errors)
-				|| array_key_exists($name, $this->violated);
+			return array_key_exists($name, $this->errors);
 		}
 		
 		public function getError($name)
 		{
 			if (array_key_exists($name, $this->errors)) {
 				return $this->errors[$name];
-			} elseif (array_key_exists($name, $this->violated)) {
-				return $this->violated[$name];
 			}
 			return null;
 		}
@@ -88,7 +85,6 @@
 		public function dropAllErrors()
 		{
 			$this->errors	= array();
-			$this->violated	= array();
 			
 			return $this;
 		}
@@ -134,11 +130,9 @@
 		{
 			if (isset($this->primitives[$name]))
 				$this->errors[$name] = self::WRONG;
-			elseif (isset($this->rules[$name]))
-				$this->violated[$name] = self::WRONG;
 			else
 				throw new MissingElementException(
-					$name.' does not match known primitives or rules'
+					$name.' does not match known primitives'
 				);
 			
 			if ($label !== null)
@@ -154,11 +148,9 @@
 		{
 			if (isset($this->primitives[$primitiveName]))
 				unset($this->errors[$primitiveName]);
-			elseif (isset($this->rules[$primitiveName]))
-				unset($this->violated[$primitiveName]);
 			else
 				throw new MissingElementException(
-					$primitiveName.' does not match known primitives or rules'
+					$primitiveName.' does not match known primitives'
 				);
 			
 			return $this;
@@ -201,13 +193,6 @@
 		{
 			if (
 				isset(
-					$this->violated[$name],
-					$this->labels[$name][$this->violated[$name]]
-				)
-			)
-				return $this->labels[$name][$this->violated[$name]];
-			elseif (
-				isset(
 					$this->errors[$name],
 					$this->labels[$name][$this->errors[$name]]
 				)
@@ -220,13 +205,6 @@
 		public function getErrorDescriptionFor($name)
 		{
 			if (
-				isset(
-					$this->violated[$name],
-					$this->describedLabels[$name][$this->violated[$name]]
-				)
-			)
-				return $this->describedLabels[$name][$this->violated[$name]];
-			elseif (
 				isset(
 					$this->errors[$name],
 					$this->describedLabels[$name][$this->errors[$name]]
@@ -242,14 +220,7 @@
 		**/
 		public function addErrorDescription($name, $errorType, $description)
 		{
-			
-			if (
-				!isset($this->rules[$name])
-				&& !$this->get($name)->getName()
-			)
-				throw new MissingElementException(
-					"knows nothing about '{$name}'"
-				);
+			$this->get($name);
 			
 			$this->describedLabels[$name][$errorType] = $description;
 			
@@ -293,6 +264,24 @@
 		/**
 		 * @return Form
 		**/
+		public function checkRules()
+		{
+			foreach ($this->getPrimitiveList() as $primitiveName => $primitive) {
+				if ($primitive instanceof PrimitiveRule) {
+					if ($primitive->import(null, $this)) {
+						$this->markGood($primitiveName);
+					} else {
+						$this->markWrong($primitiveName);
+					}
+				}
+			}
+			
+			return $this;
+		}
+		
+		/**
+		 * @return Form
+		**/
 		public function import($scope)
 		{
 			foreach ($this->primitives as $prm)
@@ -328,6 +317,9 @@
 		public function importValue($primitiveName, $value)
 		{
 			$prm = $this->get($primitiveName);
+			if ($prm instanceof PrimitiveRule) {
+				return $this;
+			}
 			
 			return $this->checkImportResult($prm, $prm->importValue($value));
 		}
@@ -395,6 +387,10 @@
 		**/
 		private function importPrimitive($scope, BasePrimitive $prm)
 		{
+			if ($prm instanceof PrimitiveRule) {
+				return $this;
+			}
+			
 			if (!$this->importFiltering) {
 				if ($prm instanceof FiltrablePrimitive) {
 					
@@ -464,13 +460,7 @@
 		**/
 		private function addErrorLabel($name, $errorType, $label)
 		{
-			if (
-				!isset($this->rules[$name])
-				&& !$this->get($name)->getName()
-			)
-				throw new MissingElementException(
-					"knows nothing about '{$name}'"
-				);
+			$this->get($name);
 			
 			$this->labels[$name][$errorType] = $label;
 			

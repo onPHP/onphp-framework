@@ -394,5 +394,10 @@
 		{
 			return new PrimitiveEnumList($name);
 		}
+		
+		public static function rule($name)
+		{
+			return new PrimitiveRule($name);
+		}
 	}
 ?>
