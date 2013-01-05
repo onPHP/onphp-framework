@@ -40,6 +40,13 @@
 			return $this;
 		}
 		
+		public function checkPostConstraints(
+			$object, Form $form, $previousObject = null
+		)
+		{
+			return $this;
+		}
+		
 		public function isAbstract()
 		{
 			return false;
@@ -66,14 +73,16 @@
 			$object, $form, $previousObject = null
 		)
 		{
-			if (is_array($object)) {
+			if (($object !== null && is_array($object)) || ($form !== null && is_array($form))) {
 				return $this->validateList($object, $form, $previousObject);
 			}
 			
-			Assert::isInstance($object, $this->className());
+			if ($object && $this->className()) {
+				Assert::isInstance($object, $this->className());
+			}
 			Assert::isInstance($form, 'Form');
 			
-			if ($previousObject)
+			if ($previousObject && $this->className())
 				Assert::isInstance($previousObject, $this->className());
 			
 			if ($this->baseProto())
@@ -88,31 +97,29 @@
 		)
 		{
 			$this->checkConstraints($object, $form, $previousObject);
-			
-			$getter = new ObjectGetter($this, $object);
-			
-			$previousGetter = $previousObject
-				? new ObjectGetter($this, $previousObject)
+			$getter = $object
+				? $this->getValidateObjectGetter($object)
 				: null;
 			
-			foreach ($this->getFormMapping() as $id => $primitive) {
+			$previousGetter = $previousObject
+				? $this->getValidateObjectGetter($previousObject)
+				: null;
+			
+			foreach ($this->getFormMapping() as $primitiveName => $primitive) {
 				
 				if ($primitive instanceof PrimitiveForm) {
 					$proto = $primitive->getProto();
 					
 					$childForm = $form->getValue($primitive->getName());
 					
-					$child = $getter->get($id);
+					$child = $getter ? $getter->get($primitiveName) : null;
 					
 					$previousChild = $previousGetter
-						? $previousGetter->get($id)
+						? $previousGetter->get($primitiveName)
 						: null;
 					
-					$childResult = true;
-					
 					if (
-						$child
-						&& !$proto->validate(
+						!$proto->validate(
 							$child, $childForm, $previousChild
 						)
 					) {
@@ -120,6 +127,8 @@
 					}
 				}
 			}
+			
+			$this->checkPostConstraints($object, $form, $previousObject);
 			
 			$errors = $form->getErrors();
 			
@@ -130,7 +139,8 @@
 			$objectsList, $formsList, $previousObjectsList = null
 		)
 		{
-			Assert::isEqual(count($objectsList), count($formsList));
+			if ($objectsList !== null)
+				Assert::isEqual(count($objectsList), count($formsList));
 			
 			reset($formsList);
 			
@@ -145,11 +155,14 @@
 			$result = true;
 			
 			$previousObject = null;
+			$object = null;
 			
-			foreach ($objectsList as $object) {
+			foreach ($formsList as $form) {
 				
-				$form = current($formsList);
-				next($formsList);
+				if ($objectsList) {
+					$object = current($objectsList);
+					next($formsList);
+				}
 				
 				if ($previousObjectsList) {
 					$previousObject = current($previousObjectsList);
@@ -223,6 +236,14 @@
 			}
 			
 			return $result;
+		}
+		
+		/**
+		 * @param any $object
+		 * @return ObjectGetter
+		 */
+		protected function getValidateObjectGetter($object) {
+			return new ObjectGetter($this, $object);
 		}
 	}
 ?>
