@@ -35,6 +35,18 @@
 			);
 		}
 		
+		public function validate()
+		{
+			$result = true;
+			if ($this->needValidate && $this->value) {
+				foreach ($this->value as $form) {
+					//every form must be validated, do not do 'continue' here if false result
+					$result = $result && $this->valiadateForm($form);
+				}
+			}
+			return $result;
+		}
+		
 		public function getInnerErrors()
 		{
 			$result = array();

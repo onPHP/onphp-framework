@@ -16,7 +16,19 @@
 	{
 		protected $proto = null;
 		
+		protected $needValidate = false;
+		
 		private $composite = false;
+		
+		/**
+		 * @param bool $needValidate
+		 * @return PrimitiveForm
+		 */
+		public function setNeedValidate($needValidate)
+		{
+			$this->needValidate = ($needValidate == true);
+			return $this;
+		}
 		
 		/**
 		 * @throws WrongArgumentException
@@ -80,6 +92,15 @@
 			return $this->proto;
 		}
 		
+		public function validate()
+		{
+			$result = true;
+			if ($this->needValidate && $this->value) {
+				$result = $this->valiadateForm($this->value);
+			}
+			return $result;
+		}
+		
 		/**
 		 * @throws WrongArgumentException
 		 * @return PrimitiveForm
@@ -89,6 +110,18 @@
 			Assert::isTrue($value instanceof Form);
 			
 			return parent::setValue($value);
+		}
+		
+		public function clean()
+		{
+			if (!$this->composite)
+				return parent::clean();
+			
+			$this->raw = null;
+			$this->imported = false;
+			if ($this->value) {
+				$this->value->clean()->dropAllErrors();
+			}
 		}
 		
 		/**
@@ -116,7 +149,8 @@
 			if (!$this->value)
 				return null;
 			
-			return $this->value->export();
+			$default = $this->composite && $this->imported ? array() : null;
+			return $this->value->export() ?: $default;
 		}
 		
 		public function getInnerErrors()
@@ -139,10 +173,7 @@
 		
 		private function actualImport($scope, $importFiltering)
 		{
-			if (!$this->proto)
-				throw new WrongStateException(
-					"no proto defined for PrimitiveForm '{$this->name}'"
-				);
+			$this->assertSettuped();
 			
 			if (!isset($scope[$this->name]))
 				return null;
@@ -167,6 +198,30 @@
 				return false;
 			
 			return true;
+		}
+		
+		protected final function valiadateForm(Form $form)
+		{
+			if ($this->proto instanceof EntityProto) {
+				return $this->proto->validate(null, $form);
+			} else {
+				return !$form->checkRules()->getErrors();
+			}
+		}
+		
+		protected function assertSettuped()
+		{
+			if ($this->composite) {
+				if (!$this->value) 
+					throw new WrongStateException(
+						"setValue(Form) first if you choosed composite PrimitiveForm '{$this->name}'"
+					);
+			} else {
+				if (!$this->proto)
+					throw new WrongStateException(
+						"no proto defined for PrimitiveForm '{$this->name}'"
+					);
+			}
 		}
 	}
 ?>
