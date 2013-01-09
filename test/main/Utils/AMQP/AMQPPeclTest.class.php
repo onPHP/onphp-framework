@@ -125,6 +125,9 @@
 		{
 			parent::__construct();
 
+			if (!extension_loaded('amqp'))
+				return;
+
 			if (!AMQPPool::me()->getList()) {
 				AMQPPool::me()->
 					setDefault(
