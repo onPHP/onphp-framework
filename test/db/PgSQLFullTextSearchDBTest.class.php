@@ -14,15 +14,15 @@
 			foreach (DBTestPool::me()->getPool() as $db)
 				if ($db instanceof \Onphp\PgSQL)
 					return $db;
-				
+
 			$this->markTestIncomplete('Required PgSQL for testing');
 		}
-		
+
 		/**
 		 * @depends getPgSQL
 		 * @return \Onphp\PgSQL
 		 */
-		public function testPrepairFullText(\Onphp\PgSQL $db)
+		public function testPrepareFullText(\Onphp\PgSQL $db)
 		{
 			$this->assertEquals(
 				"'новый год' & 'снегурочка' & 'праздник'",
