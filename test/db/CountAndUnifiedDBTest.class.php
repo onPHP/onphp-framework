@@ -126,6 +126,16 @@
 				return null;
 			
 			$this->assertEquals($user->getEncapsulants()->getCount(), 10);
+
+			// unified container __clone
+			$dao = $user->getEncapsulants();
+			$dao->setCriteria(Criteria::create()); // empty criteria
+			$cloneDao = clone $dao;
+			$cloneDao->setCriteria( // criteria with 1 expression
+				Criteria::create()
+					->add( Expression::gt('id',0) )
+			);
+			$this->assertNotEquals($dao, $cloneDao); // they should be different
 		}
 	}
 ?>
