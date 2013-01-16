@@ -59,6 +59,9 @@ class DataGrid extends BaseWidget
 
 	/** @var string текстовый вывод булевого типа */
 	public $falseName = null;
+    
+    /** @var array аттрибуты строки таблицы */
+    public $rowAttrs = array();
 
     /**
      * Создает таблицу вида сводки (заголовок слева)
@@ -840,16 +843,31 @@ class DataGrid extends BaseWidget
 		$this->form = $form;
 		return $this;
 	}
+    
+    /**
+     *
+     * @param array $rowAttrs
+     * @return DataGrid 
+     */
+    public function setRowAttrs($rowAttrs) {
+        $this->rowAttrs = $rowAttrs;
+        return $this;
+    } 
 
     /**
      * @return Model
      */
     protected function makeModel() {
         $data = array();
+        
+        if (empty($this->rowAttrs['class'])) {
+            $this->rowAttrs['class'] = '';
+        }
+        
         // рендерим данные
         foreach ($this->rows as $rowId => $row) {
+            $object = isset($this->objects[$rowId]) ? $this->objects[$rowId] : $this->rows[$rowId];
             foreach ($this->fields as $fieldId => $fieldName) {
-				$object = isset($this->objects[$rowId]) ? $this->objects[$rowId] : $this->rows[$rowId];
 				if( $object instanceof Prototyped ) {
 					try {
 						$field = PrototypeUtils::getValue($object, $fieldId);
@@ -884,6 +902,19 @@ class DataGrid extends BaseWidget
                 }
                 $data[$rowId][$fieldId] = $field;
             }
+            
+            $attrs = array();
+            
+            foreach ($this->rowAttrs as $key => $value) {
+                if ($value instanceof Closure) {
+                    $value = $value($object);
+                }
+                if ('class' == $key) {
+                    $value = ($rowId % 2 ? 'odd ' : 'even ') . $value;
+                }
+                array_push($attrs, $key . '="' . $value . '"');
+            }
+            $data[$rowId]['attrs'] = implode(' ', $attrs);
         }
 
         // отрендерим аттрибуты html
