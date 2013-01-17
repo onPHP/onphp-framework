@@ -18,7 +18,7 @@
 	**/
 	namespace Onphp;
 
-	final class Mail
+	class Mail
 	{
 		private $to				= null;
 		private $cc				= null;
