@@ -47,12 +47,11 @@
 	if (!defined('ONPHP_CLASS_CACHE_TYPE'))
 		define('ONPHP_CLASS_CACHE_TYPE', 'classPathCache');
 	
-	require
+	include
 		dirname(__FILE__).DIRECTORY_SEPARATOR
 		.'misc'.DIRECTORY_SEPARATOR
-		.'Autoloader'.EXT_MOD;
-	
-	spl_autoload_register(array('Autoloader', ONPHP_CLASS_CACHE_TYPE), false);
+		.'autoload.'
+		.ONPHP_CLASS_CACHE_TYPE.EXT_MOD;
 	
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
