@@ -16,13 +16,25 @@
 
 	final class PrimitiveHttpUrl extends PrimitiveString
 	{
+		private $checkPrivilegedPorts = false;
+		
+		public function setCheckPrivilegedPorts($check = true)
+		{
+			$this->checkPrivilegedPorts = $check ? true : false;
+			
+			return $this;
+		}
+		
 		public function import($scope)
 		{
 			if (!$result = parent::import($scope))
 				return $result;
 			
 			try {
-				$this->value = HttpUrl::create()->parse($this->value);
+				$this->value =
+					HttpUrl::create()->
+						parse($this->value)->
+						setCheckPrivilegedPorts($this->checkPrivilegedPorts);
 			} catch (WrongArgumentException $e) {
 				$this->value = null;
 				
