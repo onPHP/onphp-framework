@@ -267,6 +267,11 @@
 				$property = $this->getPropertyByName($path);
 				$getter = $property->getGetter();
 				
+				if ($path == 'id' && $prm instanceof PrimitiveIdentifier) {
+					$form->importValue($prm->getName(), $object);
+					return $object;
+				}
+
 				if (
 					!$property->isFormless()
 					&& ($property->getFetchStrategyId() == FetchStrategy::LAZY)
