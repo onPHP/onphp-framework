@@ -67,6 +67,11 @@
 			return $this;
 		}
 		
+		public function isScalar()
+		{
+			return $this->scalar;
+		}
+
 		/**
 		 * @throws WrongArgumentException
 		 * @return IdentifiablePrimitive
