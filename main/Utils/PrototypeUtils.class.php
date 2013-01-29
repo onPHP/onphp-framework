@@ -229,4 +229,53 @@ class PrototypeUtils
 		return $entity;
 	}
 
+	/**
+	 * @param Prototyped $a first object
+	 * @param Prototyped $b second object
+	 * @param array $ignore properties to ignore
+	 * @return bool
+	 * @throws WrongArgumentException
+	 */
+	public static function same(Prototyped $a, Prototyped $b, $ignore = array('id')) {
+		// проверим что прото совпадают
+		if (get_class($a->proto()) != get_class($b->proto())) {
+			throw new WrongArgumentException('objects have different protos');
+		}
+
+		// берем первое прото
+		$proto = $a->proto();
+
+		// собираем список геттеров
+		$getters = array();
+		foreach ($proto->getPropertyList() as $property) {
+			/** @var $property LightMetaProperty */
+
+			// исключаем указанные в параметре $ignore
+			if (in_array($property->getName(), $ignore)) {
+				continue;
+			}
+
+			// обычные свойства
+			if ($property->getRelationId() == null) {
+				$getters []= $property->getGetter();
+			}
+
+			// свойства, ссылающиеся на объект - берем ID
+			if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
+				$getters []= $property->getGetter() . 'Id';
+			}
+
+			// one-to-many, many-to-many не проверяем
+		}
+
+		// сравнение
+		foreach ($getters as $getter) {
+			if ($a->{$getter}() != $b->{$getter}()) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 }
