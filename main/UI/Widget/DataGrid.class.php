@@ -42,8 +42,11 @@ class DataGrid extends BaseWidget
     /** @var array аттрибуты <form> */
     protected $formHtmlOptions = array();
 
-    /** @var bool показывать заголовки или нет */
-    protected $showHeader = true;
+	/** @var bool показывать начальный тег */
+	protected $showHeadTag = true;
+
+	/** @var bool показывать заголовки или нет */
+	protected $showHeader = true;
 
     /** @var bool показывать кнопки сортировки */
     protected $showSorting = true;
@@ -757,6 +760,24 @@ class DataGrid extends BaseWidget
     }
 
     /**
+     * Показать начальный тег
+     * @return DataGrid
+     */
+    public function showHeadTag() {
+        $this->showHeadTag = true;
+        return $this;
+    }
+
+    /**
+     * Скрыть начальный тег
+     * @return DataGrid
+     */
+    public function hideHeadTag() {
+        $this->showHeadTag = false;
+        return $this;
+    }
+
+    /**
      * Показать названия колонок
      * @return DataGrid
      */
@@ -948,6 +969,7 @@ class DataGrid extends BaseWidget
             ->set('totalId', $this->totalId)
             ->set('htmlOptions', $htmlOptions)
             ->set('formOptions', $formOptions)
+			->set('showHeadTag', $this->showHeadTag)
             ->set('showHeader', $this->showHeader)
             ->set('showSorting', $this->showSorting)
             ->set('sortingFields', $this->sortingFields)
