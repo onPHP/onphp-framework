@@ -46,8 +46,9 @@
 			
 			foreach ($default as $index)
 				Assert::isTrue(array_key_exists($index, $this->list));
-			
-			return parent::setDefault($default);
+
+			$this->default = $default;
+			return $this;
 		}
 		
 		public function import($scope)
