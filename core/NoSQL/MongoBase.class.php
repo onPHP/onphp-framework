@@ -38,9 +38,9 @@ class MongoBase extends NoSQL {
 	protected $db			= null;
 
 	/**
-	 * @var int параметр safe
+	 * @var int параметр "safe" ("w" в 1.3.0+)
 	 */
-	protected $safeOnWrite	= true;
+	protected $writeConcern	= 1;
 
 	/**
 	 * @return MongoDB
@@ -48,12 +48,7 @@ class MongoBase extends NoSQL {
 	 */
 	public function connect() {
 		// в зависимости от версии драйвера создаем нужного клиента
-		try {
-			Assert::classExists('MongoClient');
-			$Mongo = 'MongoClient';
-		} catch( Exception $e ) {
-			$Mongo = 'Mongo';
-		}
+		$Mongo = self::getClientClass();
 
 		if (empty($this->connectionString)) {
 			$conn =
@@ -80,19 +75,12 @@ class MongoBase extends NoSQL {
 			$this->link = new $Mongo($conn, $options);
 			$this->db = $this->link->selectDB($this->basename);
 			if( method_exists($Mongo, 'setReadPreference') ) {
-				$this->link->setReadPreference($options['slaveOkay'] ? Mongo::RP_SECONDARY_PREFERRED : Mongo::RP_PRIMARY_PREFERRED);
+				$this->link->setReadPreference($options['slaveOkay'] ? $Mongo::RP_SECONDARY_PREFERRED : $Mongo::RP_PRIMARY_PREFERRED);
 			} else {
 				$this->link->setSlaveOkay($options['slaveOkay']);
 			}
-			// получаем количество реплик в статусах PRIMARY и SECONDARY в сете
-			$safe = 0;
-			foreach ($this->link->getHosts() as $host) {
-				if (isset($host['state']) && ($host['state'] == 1 || $host['state'] == 2)) {
-					$safe++;
-				}
-			}
-			if ($safe > 0) {
-				$this->safeOnWrite = $safe;
+			if (isset($options['w'])) {
+				$this->writeConcern = $options['w'];
 			}
 
 		} catch(MongoConnectionException $e) {
@@ -189,7 +177,14 @@ class MongoBase extends NoSQL {
 			array('safe' => true),
 			$options
 		);
-		if ($options['safe']) $options['safe'] = $this->safeOnWrite;
+		if ($options['safe']) {
+			if ($this->checkVersion('1.3.0')) {
+				$options['w'] = $this->writeConcern;
+				unset($options['safe']);
+			} else {
+				$options['safe'] = $this->writeConcern;
+			}
+		}
 		// save
 		$result =
 			$this
@@ -216,7 +211,14 @@ class MongoBase extends NoSQL {
 			array('safe' => true),
 			$options
 		);
-		if ($options['safe']) $options['safe'] = $this->safeOnWrite;
+		if ($options['safe']) {
+			if ($this->checkVersion('1.3.0')) {
+				$options['w'] = $this->writeConcern;
+				unset($options['safe']);
+			} else {
+				$options['safe'] = $this->writeConcern;
+			}
+		}
 
 		$result =
 			$this
@@ -581,6 +583,34 @@ class MongoBase extends NoSQL {
 		}
 		// отдаем результат
 		return $result;
+	}
+
+	/**
+	 * Возвращает актуальное имя класса клиента
+	 * @return string
+	 */
+	public static function getClientClass() {
+		try {
+			Assert::classExists('MongoClient');
+			return 'MongoClient';
+		} catch( Exception $e ) {
+			return 'Mongo';
+		}
+	}
+
+	/**
+	 * Проверяет, что драйвер соответствует или новее версии $lowest
+	 * @param string $lowest версия в виде "1.2.3"
+	 * @return boolean
+	 */
+	public static function checkVersion($lowest) {
+		$Mongo = self::getClientClass();
+		try {
+			$version = constant($Mongo . '::VERSION');
+		} catch (BaseException $e) {
+			return false;
+		}
+		return version_compare($version, $lowest, '>=');
 	}
 
 //@}
