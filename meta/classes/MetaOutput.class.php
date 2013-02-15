@@ -92,7 +92,7 @@
 		**/
 		public function error($text, $bold = false)
 		{
-			return $this->defaultText($text, ConsoleMode::FG_RED, $bold);
+			return $this->errorText($text, ConsoleMode::FG_RED, $bold);
 		}
 		
 		/**
@@ -100,7 +100,7 @@
 		**/
 		public function errorLine($text, $bold = false)
 		{
-			return $this->defaultTextLine($text, ConsoleMode::FG_RED, $bold);
+			return $this->errorTextLine($text, ConsoleMode::FG_RED, $bold);
 		}
 		
 		/**
@@ -156,5 +156,30 @@
 			
 			return $this;
 		}
+
+		/**
+		 * @return MetaOutput
+		**/
+		private function errorText($text, $color, $bold)
+		{
+			if ($this->out instanceof ColoredTextOutput)
+				$text = $this->out->wrapString($text);
+
+			$this->out->writeErr($text);
+
+			return $this;
+		}
+
+		/**
+		 * @return MetaOutput
+		**/
+		private function errorTextLine($text, $color, $bold)
+		{
+			if ($this->out instanceof ColoredTextOutput)
+				$text = $this->out->wrapString($text);
+
+			$this->out->writeErrLine($text);
+
+			return $this;
+		}
 	}
-?>

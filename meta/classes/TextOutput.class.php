@@ -37,6 +37,26 @@
 		/**
 		 * @return TextOutput
 		**/
+		public function writeErr($text)
+		{
+			fwrite(STDERR, $text);
+
+			return $this;
+		}
+
+		/**
+		 * @return TextOutput
+		**/
+		public function writeErrLine($text)
+		{
+			fwrite(STDERR, $text .PHP_EOL);
+
+			return $this;
+		}
+
+		/**
+		 * @return TextOutput
+		**/
 		public function newLine()
 		{
 			echo "\n";

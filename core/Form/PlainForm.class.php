@@ -116,6 +116,15 @@
 			return $this->get($name)->getRawValue();
 		}
 		
+		public function getValueOrDefault($name)
+		{
+			return $this->get($name)->getValueOrDefault();
+		}
+		
+		/**
+		 * @deprecated since version 1.0
+		 * @see getValueOrDefault
+		 */
 		public function getActualValue($name)
 		{
 			return $this->get($name)->getActualValue();
@@ -160,4 +169,4 @@
 			return $this->primitives;
 		}
 	}
-?>
+	

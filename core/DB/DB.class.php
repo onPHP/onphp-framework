@@ -20,6 +20,7 @@
 		const FULL_TEXT_OR		= 2;
 
 		protected $link			= null;
+		protected $dialect		= null;
 
 		protected $persistent	= false;
 		
@@ -62,6 +63,11 @@
 		
 		// actually set's encoding
 		abstract public function setDbEncoding();
+		
+		/**
+		 * @return Dialect
+		 */
+		abstract protected function spawnDialect();
 
 		public function __destruct()
 		{
@@ -74,9 +80,10 @@
 			}
 		}
 		
-		public static function getDialect()
+		public function getDialect()
 		{
-			throw new UnimplementedFeatureException('implement me, please');
+			return $this->dialect = $this->dialect
+				?: ($this->spawnDialect()->setDB($this));
 		}
 		
 		/**

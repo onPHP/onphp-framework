@@ -57,25 +57,23 @@
 			return $this->primitive->getRawValue();
 		}
 		
+		public function getValueOrDefault()
+		{
+			return $this->primitive->getValueOrDefault();
+		}
+
 		/**
 		 * @deprecated by getFormValue
+		 * since version 1.0 by getValueOrDefault
 		**/
 		public function getActualValue()
 		{
-			if (null !== $this->primitive->getValue())
-				return $this->primitive->getValue();
-			elseif ($this->primitive->isImported())
-				return $this->primitive->getRawValue();
-			
-			return $this->primitive->getDefault();
+			return $this->primitive->getActualValue();
 		}
 		
 		public function getSafeValue()
 		{
-			if ($this->primitive->isImported())
-				return $this->primitive->getValue();
-			
-			return $this->primitive->getDefault();
+			return $this->primitive->getSafeValue();
 		}
 		
 		public function getFormValue()
