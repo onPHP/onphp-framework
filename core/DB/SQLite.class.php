@@ -21,14 +21,6 @@
 	final class SQLite extends Sequenceless
 	{
 		/**
-		 * @return LiteDialect
-		**/
-		public static function getDialect()
-		{
-			return LiteDialect::me();
-		}
-		
-		/**
 		 * @return SQLite
 		**/
 		public function connect()
@@ -177,6 +169,14 @@
 		protected function getInsertId()
 		{
 			return sqlite_last_insert_rowid($this->link);
+		}
+		
+		/**
+		 * @return LiteDialect
+		**/
+		protected function spawnDialect()
+		{
+			return new LiteDialect();
 		}
 		
 		private function checkSingle($result)

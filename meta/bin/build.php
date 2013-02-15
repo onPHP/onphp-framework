@@ -45,12 +45,14 @@ Possible options:
 		define('ONPHP_META_PATTERNS', ONPHP_META_PATH.'patterns'.DIRECTORY_SEPARATOR);
 		define('ONPHP_META_TYPES', ONPHP_META_PATH.'types'.DIRECTORY_SEPARATOR);
 		
-		set_include_path(
-			get_include_path().PATH_SEPARATOR
-			.ONPHP_META_BUILDERS.PATH_SEPARATOR
-			.ONPHP_META_PATTERNS.PATH_SEPARATOR
-			.ONPHP_META_TYPES.PATH_SEPARATOR
-		);
+		AutoloaderPool::get('onPHP')->
+			addPaths(array(
+				ONPHP_META_BUILDERS,
+				ONPHP_META_PATTERNS,
+				ONPHP_META_TYPES,
+			));
+
+		Assert::isTrue(defined('PATH_CLASSES'), 'constant PATH_CLASSES must be defined');
 		
 		if (!defined('ONPHP_META_DAO_DIR'))
 			define(
@@ -116,11 +118,9 @@ Possible options:
 	
 	function stop($message = null)
 	{
-		echo $message."\n\n";
+		fwrite(STDERR, $message."\n\n");
 		
 		help();
-		
-		die();
 	}
 	
 	// paths
@@ -343,4 +343,3 @@ Possible options:
 	
 	$out->getOutput()->resetAll();
 	$out->newLine();
-?>

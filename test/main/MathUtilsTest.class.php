@@ -28,5 +28,38 @@
 				1
 			);
 		}
+
+		public function testMatrixMultiplication()
+		{
+			$left = array(
+				array(1, 2),
+				array(3, 5),
+				array(2, 4)
+			);
+
+			$right = array(
+				array(4, 7, 5),
+				array(3, 1, 4)
+			);
+
+			$this->assertEquals(
+				MathUtils::getMmult($left, $right),
+				array(
+					array(10, 9, 13),
+					array(27, 26, 35),
+					array(20, 18, 26),
+				)
+			);
+
+			try {
+				MathUtils::getMmult(array(), $right);
+				$this->fail("Exception expected here");
+			} catch (WrongArgumentException $e) {}
+
+			try {
+				MathUtils::getMmult($left, array());
+				$this->fail("Exception expected here");
+			} catch (WrongArgumentException $e) {}
+		}
 	}
 ?>

@@ -299,34 +299,10 @@
 				}
 			}
 
-			$db = DBPool::getByDao($this->getDao());
-			
-			if (!$db->inTransaction()) {
-				$outerQueue = $db->isQueueActive();
-				
-				if (!$outerQueue)
-					$db->queueStart();
-				
-				$db->begin();
-				
-				try {
-					$this->worker->sync($insert, $update, $delete);
-					
-					$db->commit();
-					
-					if (!$outerQueue)
-						$db->queueFlush();
-				} catch (DatabaseException $e) {
-					if (!$outerQueue)
-						$db->queueDrop()->queueStop();
-					
-					$db->rollback();
-					
-					throw $e;
-				}
-			} else {
-				$this->worker->sync($insert, $update, $delete);
-			}
+			InnerTransactionWrapper::create()->
+				setDao($this->getDao())->
+				setFunction(array($this->worker, 'sync'))->
+				run($insert, $update, $delete);
 			
 			$this->clones = array();
 			$this->syncClones();

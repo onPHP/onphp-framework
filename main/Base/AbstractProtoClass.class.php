@@ -121,9 +121,9 @@
 			return $objectList;
 		}
 		
-		public static function makeOnlyObject($className, $array, $prefix = null)
+		public static function makeOnlyObject($className, $array, $prefix = null, ProtoDAO $parentDao = null)
 		{
-			return self::assemblyObject(new $className, $array, $prefix);
+			return self::assemblyObject(new $className, $array, $prefix, $parentDao);
 		}
 		
 		public static function completeObject(Prototyped $object)
@@ -267,6 +267,11 @@
 				$property = $this->getPropertyByName($path);
 				$getter = $property->getGetter();
 				
+				if ($path == 'id' && $prm instanceof PrimitiveIdentifier) {
+					$form->importValue($prm->getName(), $object);
+					return $object;
+				}
+
 				if (
 					!$property->isFormless()
 					&& ($property->getFetchStrategyId() == FetchStrategy::LAZY)
@@ -383,13 +388,13 @@
 		}
 		
 		private static function assemblyObject(
-			Prototyped $object, $array, $prefix = null
+			Prototyped $object, $array, $prefix = null, ProtoDAO $parentDao = null
 		)
 		{
 			if ($object instanceof DAOConnected)
 				$dao = $object->dao();
 			else
-				$dao = null;
+				$dao = $parentDao ?: null;
 			
 			$proto = $object->proto();
 			

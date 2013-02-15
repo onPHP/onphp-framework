@@ -1,3 +1,146 @@
+2013-01-23  Dmitriy V. Snezhinskiy
+
+	* main/Math/MathUtils.class.php 
+		test/main/MathUtilsTest.class.php:
+			fix matrix multiplication, add test
+
+2012-12-23  Vasily A. Surikov
+
+	* meta/bin/build.php
+		meta/classes/ColoredTextOutput.class.php
+		meta/classes/MetaOutput.class.php
+		meta/classes/TextOutput.class.php:
+			do not forward stderr > stdout
+
+2012-12-23  Vasily A. Surikov
+
+	* core/Form/Primitives/BasePrimitive.class.php
+		core/Form/Primitives/PrimitiveAlias.class.php
+		core/Form/Primitives/TimeList.class.php:
+			getActualValue marked deprecated and not secure,
+				added instead it method getValueOrDefault
+
+2012-12-23  Alexey S. Denisov
+
+	* main/Base/AbstractProtoClass.class.php
+		main/Base/InnerMetaProperty.class.php:
+			InnerMetaProperty (ValueObject) unquoting binary field fix
+
+2012-12-06  Evgeny V. Kokovikhin
+
+	* main/DAOs/GenericDAO.class.php 
+		meta/builders/AutoDaoBuilder.class.php 
+		meta/builders/BaseBuilder.class.php:
+			dbLink became a property
+
+2012-11-25  Alexey S. Denisov
+
+	* core/Form/Primitives/PrimitiveIdentifier.class.php
+		core/Form/Primitives/PrimitiveIdentifier.class.php:
+			PrimitiveIdentifier now can export/import objects by custom methods
+
+2012-11-18  Nikita V. Konstantinov
+
+	* meta/types/ObjectType.class.php:
+		update for Business objects - now you can setSomeProperty(null)
+		for Objects properties if it's not required
+
+2012-10-24  Alexey S. Denisov
+
+	* main/Flow/CarefulDatabaseRunner.class.php
+		main/UnifiedContainer/UnifiedContainer.class.php:
+			CarefulDatabaseRunner and UnifiedContainer will use InnerTransaction
+
+2012-10-24  Alexey S. Denisov
+
+	* global.inc.php.tpl
+		main/Autoloader/Autoloader.class.php
+		main/Autoloader/AutoloaderClassNotFound.class.php
+		main/Autoloader/AutoloaderClassPathCache.class.php
+		main/Autoloader/AutoloaderNoCache.class.php
+		main/Autoloader/AutoloaderPool.class.php
+		main/Autoloader/AutoloaderRecachable.class.php
+		main/Autoloader/AutoloaderWithNamespace.class.php
+		main/Autoloader/NamespaceDirScaner.class.php
+		main/Autoloader/NamespaceDirScanerOnPHP.class.php
+		main/Autoloader/NamespaceDirScanerPSR0.class.php
+		main/Autoloader/NamespaceResolver.class.php
+		main/Autoloader/NamespaceResolverOnPHP.class.php
+		main/Autoloader/NamespaceResolverPSR0.class.php
+		main/Autoloader/require.inc.php
+		meta/bin/build.php
+		meta/classes/MetaConfiguration.class.php
+		misc/Autoloader.inc.php
+		misc/BaseException.inc.php:
+			New Autoloader which work without include_paths and use optional namespaces
+
+2012-09-29	Alexey S. Denisov
+
+	* core/DB/DB.class.php
+		core/DB/Dialect.class.php
+		core/DB/ImaginaryDialect.class.php
+		core/DB/LiteDialect.class.php
+		core/DB/LitePDODialect.class.php
+		core/DB/MyDialect.class.php
+		core/DB/MyImprovedDialect.class.php
+		core/DB/MySQL.class.php
+		core/DB/MySQLim.class.php
+		core/DB/PgSQL.class.php
+		core/DB/PostgresDialect.class.php
+		core/DB/SQLite.class.php
+		core/DB/SQLitePDO.class.php:
+			Dialects not Singletons now. Some methods now unstatic and they use DB for correct quoting
+
+2012-09-26	Alexey S. Denisov
+
+	* core/Form/Form.class.php:
+		added to Form methods markMissing, markWrong, markCustom
+		optional argument "label" to set it without calling special method add*Label
+
+2012-09-19	Evgeny V. Kokovikhin
+
+	* main/Monitoring/PinbedMemcached.class.php: cosmetics
+
+2012-09-18      Evgeniy Tekalin
+
+	* main/Utils/AMQP/AMQP.class.php,
+		main/Utils/AMQP/AMQPBaseChannel.class.php,
+		main/Utils/AMQP/AMQPBaseMessage.class.php,
+		main/Utils/AMQP/AMQPChannelInterface.class.php,
+		main/Utils/AMQP/AMQPPool.class.php,
+		main/Utils/AMQP/Pecl/AMQPPecl.class.php,
+		main/Utils/AMQP/Pecl/AMQPPeclBaseBitmask.class.php,
+		main/Utils/AMQP/Pecl/AMQPPeclChannel.class.php,
+		main/Utils/AMQP/AMQPInterface.class.php,
+		main/Utils/AMQP/Pecl/AMQPPeclIncomingMessageAdapter.class.php,
+		main/Utils/AMQP/Pecl/AMQPPeclQueueConsumer.class.php,
+		main/Utils/AMQP/AMQPProxyChannel.class.php,
+		main/Utils/AMQP/AMQPSelective.class.php,
+		test/main/Utils/AMQP/AMQPPeclTest.class.php:
+				added support for pecl amqp 1.0.4
+
+2012-09-16	Alexey S. Denisov
+	* DAOTest splitted to more Test classes in new db directory
+
+2012-09-12	Alexey S. Denisov
+	* main/Net/GenericUri.class.php
+		main/Net/HttpUrl.class.php
+		main/Net/Url.class.php
+		main/Net/Urn.class.php:
+			GenericUri::parse now static
+
+2012-09-12	Alexey S. Denisov
+
+	* main/Flow/HttpRequest.class.php
+		main/Net/Http/CurlHttpClient.class.php
+		main/Utils/UrlParamsUtils.class.php:
+			allowing curlHttpClient upload files and send post/get arrays with any deep lvl
+
+2012-09-06	Igor V. Gulyaev
+
+	* main/Base/Hstore.class.php
+		test/main/HstoreTest.class.php: fix hstore key exist check
+
 2012-08-28	Artem A. Naumenko
 
 	* main/Net/GenericUri.class.php: utf modifier added to RegExp pattern
@@ -80,7 +223,7 @@
 
 	Introducing Uncachers
 
-2012-06-29	N. Konstantinov
+2012-06-29	Nikita Konstantinov
 
 	* core/DB/PgSQL.class.php
 		test/core/DbConnectionTest.class.php:

@@ -227,11 +227,16 @@
 		{
 			$list1Size = count($list1);
 			$list2Size = count($list2);
+
+			Assert::isGreater($list1Size, 0, "Can't multiply empty matrix");
+			Assert::isGreater($list2Size, 0, "Can't multiply empty matrix");
+
+			$list2Width = count($list2[0]);
 			
 			$result = array();
 			
 			for ($i = 0; $i < $list1Size; $i++) {
-				for ($j = 0; $j < $list2Size; $j++) {
+				for ($j = 0; $j < $list2Width; $j++) {
 					$x = 0;
 					
 					for ($k = 0; $k < $list2Size; $k++) {

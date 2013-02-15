@@ -21,7 +21,7 @@
 			try {
 				$prm->of('InExIsNaNtClass');
 				$this->fail();
-			} catch (ClassNotFoundException $e) {
+			} catch (WrongArgumentException $e) {
 				// pass
 			}
 			

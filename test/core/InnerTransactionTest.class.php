@@ -172,7 +172,8 @@
 				'inTransaction' => false,
 			);
 			
-			$mock = $this->getMock('DB');
+			$mock = $this->getMock('PgSQL');
+			
 			$countMethods = array(
 				'begin', 'commit', 'rollback',
 				'savepointBegin', 'savepointRelease', 'savepointRollback'

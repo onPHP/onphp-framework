@@ -17,7 +17,7 @@
 	**/
 	class Url extends GenericUri
 	{
-		protected $knownSubSchemes	= array(
+		protected static $knownSubSchemes	= array(
 			'http'		=> 'HttpUrl',
 			'https'		=> 'HttpUrl',
 			'ftp'		=> 'Url',
@@ -37,9 +37,9 @@
 			return new self;
 		}
 		
-		public function getKnownSubSchemes()
+		public static function getKnownSubSchemes()
 		{
-			return $this->knownSubSchemes;
+			return static::$knownSubSchemes;
 		}
 		
 		public function isValid()

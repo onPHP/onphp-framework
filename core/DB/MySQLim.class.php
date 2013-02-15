@@ -20,14 +20,6 @@
 	final class MySQLim extends Sequenceless
 	{
 		/**
-		 * @return MyImprovedDialect
-		**/
-		public static function getDialect()
-		{
-			return MyImprovedDialect::me();
-		}
-		
-		/**
 		 * @return MySQLim
 		**/
 		public function setDbEncoding()
@@ -165,6 +157,14 @@
 		protected function getInsertId()
 		{
 			return mysqli_insert_id($this->link);
+		}
+		
+		/**
+		 * @return MyImprovedDialect
+		**/
+		protected function spawnDialect()
+		{
+			return new MyImprovedDialect();
 		}
 		
 		private function checkSingle($result)
