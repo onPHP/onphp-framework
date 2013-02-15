@@ -121,9 +121,9 @@
 			return $objectList;
 		}
 		
-		public static function makeOnlyObject($className, $array, $prefix = null)
+		public static function makeOnlyObject($className, $array, $prefix = null, ProtoDAO $parentDao = null)
 		{
-			return self::assemblyObject(new $className, $array, $prefix);
+			return self::assemblyObject(new $className, $array, $prefix, $parentDao);
 		}
 		
 		public static function completeObject(Prototyped $object)
@@ -184,7 +184,7 @@
 				return $property;
 			
 			throw new MissingElementException(
-				"unknown property requested by name '{$name}'"
+				get_class($this) . ": unknown property requested by name '{$name}'"
 			);
 		}
 		
@@ -211,11 +211,24 @@
 		 * @return InsertOrUpdateQuery
 		**/
 		public function fillQuery(
-			InsertOrUpdateQuery $query, Prototyped $object
+			InsertOrUpdateQuery $query,
+			Prototyped $object,
+			Prototyped $old = null
 		)
 		{
+			if ($old) {
+				if ($object instanceof Identifiable) {
+					Assert::isNotNull($object->getId());
+
+					Assert::isTypelessEqual(
+						$object->getId(), $old->getId(),
+						'cannot merge different objects'
+					);
+				}
+			}
+			
 			foreach ($this->getPropertyList() as $property) {
-				$property->fillQuery($query, $object);
+				$property->fillQuery($query, $object, $old);
 			}
 			
 			return $query;
@@ -254,6 +267,11 @@
 				$property = $this->getPropertyByName($path);
 				$getter = $property->getGetter();
 				
+				if ($path == 'id' && $prm instanceof PrimitiveIdentifier) {
+					$form->importValue($prm->getName(), $object);
+					return $object;
+				}
+
 				if (
 					!$property->isFormless()
 					&& ($property->getFetchStrategyId() == FetchStrategy::LAZY)
@@ -370,13 +388,13 @@
 		}
 		
 		private static function assemblyObject(
-			Prototyped $object, $array, $prefix = null
+			Prototyped $object, $array, $prefix = null, ProtoDAO $parentDao = null
 		)
 		{
 			if ($object instanceof DAOConnected)
 				$dao = $object->dao();
 			else
-				$dao = null;
+				$dao = $parentDao ?: null;
 			
 			$proto = $object->proto();
 			

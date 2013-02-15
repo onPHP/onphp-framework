@@ -14,6 +14,8 @@ A: onphp vs. php:
     0.2     >=5.0
     0.4     >=5.0
     0.6     >=5.1
+    1.0     >=5.2
+    1.1     >=5.3
 
 0.6 (module) - >=php-5.1.4 with built-in SPL
 
@@ -28,7 +30,7 @@ A: Not yet. Feel free to write them yourself.
 Q: I've found a Bug at...
 Q: I can't live without <imagine something cool> feature!
 
-A: 24/7 patch(es) acceptance: onphp-dev-(ru|en)@lists.shadanakar.org
+A: 24/7 patch(es) acceptance: https://github.com/onPHP/onphp-framework/pulls
 
 //
 

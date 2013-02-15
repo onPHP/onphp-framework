@@ -21,14 +21,6 @@
 		private static $tsConfiguration = 'utf8_russian';
 		private static $rankFunction = 'rank';
 		
-		/**
-		 * @return PostgresDialect
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
 		public static function getTsConfiguration()
 		{
 			return self::$tsConfiguration;
@@ -44,9 +36,9 @@
 			self::$rankFunction = $rank;
 		}
 		
-		public static function quoteValue($value)
+		public function quoteValue($value)
 		{
-			return "'".pg_escape_string($value)."'";
+			return "'".pg_escape_string($this->getLink(), $value)."'";
 		}
 		
 		public static function toCasted($field, $type)
@@ -54,18 +46,16 @@
 			return "{$field}::{$type}";
 		}
 		
-		public static function prepareFullText($words, $logic)
+		public function prepareFullText(array $words, $logic)
 		{
-			Assert::isArray($words);
-			
 			$glue = ($logic == DB::FULL_TEXT_AND) ? ' & ' : ' | ';
 			
 			return
-				strtolower(
+				mb_strtolower(
 					implode(
 						$glue,
 						array_map(
-							array('PostgresDialect', 'quoteValue'),
+							array($this, 'quoteValue'),
 							$words
 						)
 					)
@@ -74,7 +64,16 @@
 		
 		public function quoteBinary($data)
 		{
-			return "E'".pg_escape_bytea($data)."'";
+			$esc = pg_escape_bytea($this->getLink(), $data);
+			if (mb_strpos($esc, '\\x') === 0) {
+				// http://www.postgresql.org/docs/9.1/static/datatype-binary.html
+				// if pg_escape_bytea use postgres 9.1+ it's return value like '\x00aabb' (new bytea hex format),
+				// but must return '\\x00aabb'. So we use this fix:'
+				return "E'\\".$esc."'";
+			} else {
+				//if function escape value like '\\000\\123' - all ok
+				return "E'".$esc."'";
+			}
 		}
 		
 		public function unquoteBinary($data)
@@ -116,7 +115,7 @@
 		
 		public function fullTextSearch($field, $words, $logic)
 		{
-			$searchString = self::prepareFullText($words, $logic);
+			$searchString = $this->prepareFullText($words, $logic);
 			$field = $this->fieldToString($field);
 			
 			return
@@ -126,7 +125,7 @@
 		
 		public function fullTextRank($field, $words, $logic)
 		{
-			$searchString = self::prepareFullText($words, $logic);
+			$searchString = $this->prepareFullText($words, $logic);
 			$field = $this->fieldToString($field);
 			
 			return

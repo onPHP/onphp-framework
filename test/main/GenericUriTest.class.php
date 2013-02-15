@@ -3,7 +3,6 @@
  *   Copyright (C) 2007 by Ivan Khvostishkov                               *
  *   dedmajor@oemdesign.ru                                                 *
  ***************************************************************************/
-/* $Id$ */
 	
 	final class GenericUriTest extends TestCase
 	{
@@ -92,11 +91,9 @@
 				
 				if (!$parserClass)
 					$parserClass = 'GenericUri';
-					
-				$parser = new $parserClass;
 				
 				try {
-					$url = $parser->parse($testUrl, true);
+					$url = ClassUtils::callStaticMethod("$parserClass::parse", $testUrl, true);
 				} catch (WrongArgumentException $e) {
 					$exception = $e;
 				}

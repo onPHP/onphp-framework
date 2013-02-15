@@ -29,7 +29,7 @@
 		// reference, not copy
 		private $session	= array();
 		
-		// uploads
+		// uploads and downloads (CurlHttpClient)
 		private $files		= array();
 		
 		// all other sh1t
@@ -37,9 +37,18 @@
 		
 		private $headers	= array();
 		
+		/**
+		 * @var HttpMethod
+		 */
 		private $method		= null;
 		
+		/**
+		 * @var HttpUrl
+		 */
 		private $url		= null;
+		
+		//for CurlHttpClient if you need to send raw CURLOPT_POSTFIELDS
+		private $body		= null;
 		
 		/**
 		 * @return HttpRequest
@@ -340,6 +349,26 @@
 		public function getUrl()
 		{
 			return $this->url;
+		}
+		
+		public function hasBody()
+		{
+			return $this->body !== null;
+		}
+		
+		public function getBody()
+		{
+			return $this->body;
+		}
+		
+		/**
+		 * @param string $body
+		 * @return HttpRequest
+		 */
+		public function setBody($body)
+		{
+			$this->body = $body;
+			return $this;
 		}
 	}
 ?>

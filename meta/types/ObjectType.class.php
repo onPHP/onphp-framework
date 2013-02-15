@@ -100,8 +100,10 @@ EOT;
 					$className = $property->getType()->getClassName();
 					
 					$isEnumeration =
-						$property->getType()->getClass()->getPattern()
-						instanceof EnumerationClassPattern;
+						(
+							$property->getType()->getClass()->getPattern() instanceof EnumerationClassPattern
+							|| $property->getType()->getClass()->getPattern() instanceof EnumClassPattern
+						);
 					
 					$fetchObjectString = $isEnumeration
 						? "new {$className}(\$this->{$name}Id)"
@@ -121,7 +123,9 @@ public function {$methodName}()
 
 public function {$methodName}Id()
 {
-	return \$this->{$name}Id;
+	return \$this->{$name}
+		? \$this->{$name}->getId()
+		: \$this->{$name}Id;
 }
 
 EOT;
@@ -200,7 +204,6 @@ EOT;
 			
 			$name = $property->getName();
 			$methodName = 'set'.ucfirst($name);
-			$classHint = $this->getHint();
 			
 			if ($holder) {
 				return <<<EOT
@@ -217,16 +220,18 @@ public function {$methodName}({$property->getType()->getClassName()} \${$name})
 
 EOT;
 			} else {
+				$defaultValue = $property->isOptional() ? ' = null' : '';
+
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$method = <<<EOT
 
 /**
  * @return {$property->getClass()->getName()}
 **/
-public function {$methodName}({$this->className} \${$name})
+public function {$methodName}({$this->className} \${$name}{$defaultValue})
 {
 	\$this->{$name} = \${$name};
-	\$this->{$name}Id = \${$name}->getId();
+	\$this->{$name}Id = \${$name} ? \${$name}->getId() : null;
 
 	return \$this;
 }
@@ -234,7 +239,7 @@ public function {$methodName}({$this->className} \${$name})
 /**
  * @return {$property->getClass()->getName()}
 **/
-public function {$methodName}Id(\$id)
+public function {$methodName}Id(\$id{$defaultValue})
 {
 	\$this->{$name} = null;
 	\$this->{$name}Id = \$id;
@@ -249,7 +254,7 @@ EOT;
 /**
  * @return {$property->getClass()->getName()}
 **/
-public function {$methodName}({$this->className} \${$name})
+public function {$methodName}({$this->className} \${$name}{$defaultValue})
 {
 	\$this->{$name} = \${$name};
 

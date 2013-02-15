@@ -55,7 +55,9 @@
 		**/
 		public function setMethodName($methodName)
 		{
-			if (strpos($methodName, '::') === false) {
+			if (is_callable($methodName)) {
+				/* all ok, call what you want */
+			} elseif (strpos($methodName, '::') === false) {
 				$dao = $this->dao();
 				
 				Assert::isTrue(
@@ -63,8 +65,9 @@
 					"knows nothing about '".get_class($dao)
 					."::{$methodName}' method"
 				);
-			} else
+			} else {
 				ClassUtils::checkStaticMethod($methodName);
+			}
 			
 			$this->methodName = $methodName;
 			
@@ -79,7 +82,7 @@
 					
 					return
 						$this->import(
-							array($this->getName() => $value->getId())
+							array($this->getName() => $this->actualExportValue($value))
 						);
 				
 				} catch (WrongArgumentException $e) {
@@ -105,7 +108,7 @@
 			) {
 				$value = $scope[$this->name];
 				
-				$this->raw = $value->getId();
+				$this->raw = $this->actualExportValue($value);
 				$this->setValue($value);
 				
 				return $this->imported = true;
@@ -139,12 +142,13 @@
 		
 		protected function actualImportValue($value)
 		{
-			return
-				(strpos($this->methodName, '::') === false)
-					? $this->dao()->{$this->methodName}($value)
-					: ClassUtils::callStaticMethod(
-						$this->methodName, $value
-					);
+			if (is_callable($this->methodName)) {
+				return call_user_func($this->methodName, $value);
+			} elseif (strpos($this->methodName, '::') === false) {
+				return $this->dao()->{$this->methodName}($value);
+			} else {
+				return ClassUtils::callStaticMethod($this->methodName, $value);
+			}
 		}
 	}
 ?>

@@ -6,7 +6,6 @@ PHP:
 /*
 	copyright, license, blah-blah
 */
-/* $Id$ */
 
 	class SomeClassName
 	{

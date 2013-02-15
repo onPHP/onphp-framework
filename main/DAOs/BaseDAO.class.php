@@ -51,6 +51,10 @@
 		/// uncachers
 		//@{
 		public function uncacheById($id);
+		/**
+		 * @return UncacherBase
+		 */
+		public function getUncacherById($id);
 		public function uncacheByIds($ids);
 		public function uncacheLists();
 		//@}

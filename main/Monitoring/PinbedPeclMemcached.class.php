@@ -14,40 +14,16 @@
 	**/
 	final class PinbedPeclMemcached extends PeclMemcached
 	{
-		private $host = null;
-		private $port = null;
-		
 		/**
 		 * @return PinbedPeclMemcached 
 		**/
 		public static function create(
 			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT
+			$port = Memcached::DEFAULT_PORT,
+			$connectTimeout = PeclMemcached::DEFAULT_TIMEOUT
 		)
 		{
 			return new self($host, $port);
-		}
-		
-		public function __construct(
-			$host = Memcached::DEFAULT_HOST,
-			$port = Memcached::DEFAULT_PORT
-		)
-		{
-			$this->host = $host;
-			$this->port = $port;
-			
-			if (PinbaClient::isEnabled())
-				PinbaClient::me()->timerStart(
-					'pecl_memcached_'.$host.'_'.$port.'_connect',
-					array('pecl_memcached_connect' => $host.'_'.$port)
-				);
-			
-			parent::__construct($host, $port);
-			
-			if (PinbaClient::isEnabled())
-				PinbaClient::me()->timerStop(
-					'pecl_memcached_'.$host.'_'.$port.'_connect'
-				);
 		}
 		
 		public function append($key, $data)
@@ -116,6 +92,22 @@
 			
 			return $result;
 			
+		}
+		
+		protected function connect()
+		{
+			if (PinbaClient::isEnabled())
+				PinbaClient::me()->timerStart(
+					'pecl_memcached_'.$this->host.'_'.$this->port.'_connect',
+					array('pecl_memcached_connect' => $this->host.'_'.$this->port)
+				);
+			
+			parent::connect();
+			
+			if (PinbaClient::isEnabled())
+				PinbaClient::me()->timerStop(
+					'pecl_memcached_'.$this->host.'_'.$this->port.'_connect'
+				);
 		}
 		
 		/*void */ private function log($methodName)

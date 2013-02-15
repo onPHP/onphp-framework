@@ -1,6 +1,4 @@
 <?php
-	/* $Id$ */
-	
 	final class CriteriaTest extends TestCase
 	{
 		public function testClassProjection()
@@ -211,6 +209,39 @@
 			$this->assertEquals(
 				$criteria->toDialectString(ImaginaryDialect::me()),
 				'SELECT test_user.id FROM test_user WHERE (test_user.city_id IN (3, 44))'
+			);
+		}
+		
+		public function testSqlFunction()
+		{
+			$criteria = Criteria::create(TestCity::dao())->
+				addProjection(
+					Projection::property(
+						SQLFunction::create(
+							'count',
+							SQLFunction::create(
+								'substring',
+								BinaryExpression::create(
+									'name',
+									BinaryExpression::create(
+										DBValue::create('M....w'),
+										DBValue::create('#'),
+										'for'
+									)->
+									noBrackets(),
+									'from'
+								)->
+								noBrackets()
+							)
+						)->
+						setAggregateDistinct()->
+						setAlias('my_alias')
+					)
+				);
+			
+			$this->assertEquals(
+				$criteria->toDialectString(ImaginaryDialect::me()),
+				'SELECT count(DISTINCT substring(custom_table.name from M....w for #)) AS my_alias FROM custom_table'
 			);
 		}
 		

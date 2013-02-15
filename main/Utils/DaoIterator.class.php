@@ -23,7 +23,7 @@
 		private $chunk			= null;
 		private $offset			= 0;
 		
-		public function setDao(ProtoDao $dao)
+		public function setDao(ProtoDAO $dao)
 		{
 			$this->dao = $dao;
 			
@@ -31,7 +31,7 @@
 		}
 		
 		/**
-		 * @return ProtoDao
+		 * @return ProtoDAO
 		**/
 		public function getDao()
 		{

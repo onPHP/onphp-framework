@@ -11,7 +11,7 @@
 
 	/**
 	 * Wrapper around given childs of LogicalObject with custom logic-glue's.
-	 * 
+	 *
 	 * @ingroup Logic
 	**/
 	class CallbackLogicalObject implements LogicalObject
@@ -26,16 +26,17 @@
 		 * @param Closure $callback
 		 * @return CallbackLogicalObject
 		 */
-		static public function create(Closure $callback)
+		static public function create($callback)
 		{
-			return new self($callback);
+			return new static($callback);
 		}
 
 		/**
 		 * @param Closure $callback
 		 */
-		public function __construct(Closure $callback)
+		public function __construct($callback)
 		{
+			Assert::isTrue(is_callable($callback, true), 'callback must be callable');
 			$this->callback = $callback;
 		}
 
@@ -45,12 +46,12 @@
 		 */
 		public function toBoolean(Form $form)
 		{
-			return (bool)$this->callback->__invoke($form);
+			return call_user_func($this->callback, $form);
 		}
 
 		/**
 		 * @param Dialect $dialect
-		 * @throws UnimplementedFeatureException 
+		 * @throws UnimplementedFeatureException
 		 */
 		public function toDialectString(Dialect $dialect)
 		{

@@ -135,5 +135,19 @@
 
 			return $this;
 		}
+
+		/**
+		 * @return array
+		 */
+		public function getList()
+		{
+			$list = $this->pool;
+
+			try {
+				$list['default'] = $this->getLink();
+			} catch (MissingElementException $e) {/**/}
+
+			return $list;
+		}
 	}
 ?>

@@ -68,7 +68,7 @@
 		
 			abstract public function isAlive()
 	
-	Memcached <- CachePeer:
+	SocketMemcached <- CachePeer:
 	
 		public function __construct(
 			$host = Memcached::DEFAULT_PORT,
@@ -150,7 +150,7 @@
 			
 			foreach ($indexes as $key)
 				if (null !== ($value = $this->get($key)))
-					$out[] = $value;
+					$out[$key] = $value;
 			
 			return $out;
 		}

@@ -67,6 +67,8 @@
 				else
 					$old = Cache::worker($this)->getById($object->getId());
 			}
+			if ($object === $old)
+				return $this->save($object);
 			
 			return $this->unite($object, $old);
 		}
@@ -75,40 +77,16 @@
 			Identifiable $object, Identifiable $old
 		)
 		{
-			Assert::isNotNull($object->getId());
-			
-			Assert::isTypelessEqual(
-				$object->getId(), $old->getId(),
-				'cannot merge different objects'
-			);
-			
-			$query = OSQL::update($this->getTable());
-			
-			foreach ($this->getProtoClass()->getPropertyList() as $property) {
-				$getter = $property->getGetter();
-				
-				if ($property->getClassName() === null) {
-					$changed = ($old->$getter() !== $object->$getter());
-				} else {
-					/**
-					 * way to skip pointless update and hack for recursive
-					 * comparsion.
-					**/
-					$changed =
-						($old->$getter() !== $object->$getter())
-						|| ($old->$getter() != $object->$getter());
-				}
-				
-				if ($changed)
-					$property->fillQuery($query, $object);
-			}
+			$query = $this->getProtoClass()
+				->fillQuery(OSQL::update($this->getTable()), $object, $old);
 			
 			if (!$query->getFieldsCount())
 				return $object;
 			
-			$this->targetizeUpdateQuery($query, $object);
-			
-			return $this->doInject($query, $object);
+			return $this->doInject(
+				$this->targetizeUpdateQuery($query, $object),
+				$object
+			);
 		}
 		
 		/**

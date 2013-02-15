@@ -14,8 +14,8 @@
 	**/
 	abstract class AMQPBaseMessage
 	{
-		const CONTENT_TYPE = 'Content-type';
-		const CONTENT_ENCODING = 'Content-encoding';
+		const CONTENT_TYPE = 'content_type';
+		const CONTENT_ENCODING = 'content_encoding';
 		const MESSAGE_ID = 'message_id';
 		const USER_ID = 'user_id';
 		const APP_ID = 'app_id';
@@ -158,7 +158,7 @@
 		**/
 		public function setDeliveryMode($int)
 		{
-			Assert::isInteger($int, __METHOD__);
+			Assert::isInteger($int, __METHOD__.": requires integer, given {$int}");
 
 			Assert::isTrue(
 				in_array(
@@ -168,7 +168,7 @@
 						self::DELIVERY_MODE_PERISISTENT
 					)
 				),
-				__METHOD__
+				__METHOD__.": unknown mode {$int}"
 			);
 
 			$this->properties[self::DELIVERY_MODE] = $int;

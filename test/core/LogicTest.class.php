@@ -1,11 +1,12 @@
 <?php
 	/* $Id$ */
 	
-	final class LogicTest extends TestCase
+	final class LogicTest extends TestCaseDB
 	{
 		public function testBaseSqlGeneration()
 		{
 			$dialect = ImaginaryDialect::me();
+			$pgDialect = $this->getDbByType('PgSQL')->getDialect();
 			
 			$this->assertRegExp(
 				'/^\(a (AND|and) b\)$/',
@@ -119,21 +120,21 @@
 				'(lower(\'a\') = lower(\'b\'))',
 				
 				Expression::eqLower(new DBValue('a'), new DBValue('b'))->
-				toDialectString(PostgresDialect::me())
+				toDialectString($pgDialect)
 			);
 			
 			$this->assertEquals(
 				'(lower(\'a\') = lower("b"))',
 				
 				Expression::eqLower(new DBValue('a'), new DBField('b'))->
-				toDialectString(PostgresDialect::me())
+				toDialectString($pgDialect)
 			);
 			
 			$this->assertEquals(
 				'(lower("a") = lower(\'b\'))',
 				
 				Expression::eqLower(new DBField('a'), new DBValue('b'))->
-				toDialectString(PostgresDialect::me())
+				toDialectString($pgDialect)
 			);
 			
 			$this->assertRegExp(
@@ -210,11 +211,19 @@
 				'(- a)',
 				Expression::minus('a')->toDialectString($dialect)
 			);
+			
+			try {
+				Expression::eq('id', null)->toDialectString($dialect);
+				
+				$this->fail();
+			} catch (WrongArgumentException $e) {
+				//it's Ok
+			}
 		}
 		
 		public function testPgGeneration()
 		{
-			$dialect = PostgresDialect::me();
+			$dialect = $this->getDbByType('PgSQL')->getDialect();
 			$this->assertRegExp(
 				'/^\(\(\(\(\'asdf\' = "b"\) (AND|and) \("e" != \("i" \/ \'123\'\)\) (AND|and) \(\(lower\("a"\) += +lower\("b"\)\) ((IS TRUE)|(is true))\) (AND|and) \("g" = \'12\'\) (AND|and) \("j" (BETWEEN|between) \'3\' (AND|and) "p"\)\) (OR|or) \("table"\."c" ((IS NOT NULL)|(is not null))\)\) (AND|and) \("sometable"\."a" ((not in)|(NOT IN)) \(\'q\', \'qwer\', \'xcvzxc\', \'wer\'\)\)\)$/',
  				Expression::expAnd(
