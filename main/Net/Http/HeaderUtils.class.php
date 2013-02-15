@@ -38,8 +38,9 @@
 				self::$headerSent = true;
 				self::$redirectSent = true;
 				return $_SERVER['HTTP_REFERER'];
-			} else
-				return false;
+			}
+
+			return false;
 		}
 
 		public static function getRequestHeaderList()
@@ -133,7 +134,7 @@
 		public static function sendHttpStatus(HttpStatus $status)
 		{
 			header($status->toString());
-			
+
 			self::$headerSent = true;
 		}
 
