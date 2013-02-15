@@ -36,8 +36,9 @@
 				self::$headerSent = true;
 				self::$redirectSent = true;
 				return $_SERVER['HTTP_REFERER'];
-			} else
-				return false;
+			}
+
+			return false;
 		}
 
 		public static function getRequestHeaderList()
@@ -123,9 +124,7 @@
 		{
 			Assert::isInteger($length);
 			
-			header(
-				"Content-Length: {$length}"
-			);
+			header("Content-Length: {$length}");
 			
 			self::$headerSent = true;
 		}
