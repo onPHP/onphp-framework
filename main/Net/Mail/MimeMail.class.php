@@ -23,6 +23,8 @@
 		private $headers	= null;
 		
 		private $boundary	= null;
+
+		private $contentType= null;
 		
 		/**
 		 * @return MimeMail
@@ -41,10 +43,10 @@
 			
 			if (!$this->boundary)
 				$this->boundary = '=_'.md5(microtime(true));
-			
+
 			$mail =
 				MimePart::create()->
-				setContentType('multipart/mixed')->
+				setContentType(is_null($this->contentType)?'multipart/mixed':$this->contentType)->
 				setBoundary($this->boundary);
 			
 			$this->headers =
@@ -93,5 +95,13 @@
 		{
 			return $this->boundary;
 		}
+
+		public function setContentType($type) {
+			$this->contentType = $type;
+
+			return $this;
+		}
+
+
 	}
 ?>
