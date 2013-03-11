@@ -66,7 +66,7 @@
 		}
 		
 		/**
-		 * @param collable $function
+		 * @param callable $function
 		 * @return \Onphp\InnerTransactionWrapper
 		 */
 		public function setFunction($function)
@@ -77,7 +77,7 @@
 		}
 		
 		/**
-		 * @param collable $function
+		 * @param callable $function
 		 * @return \Onphp\InnerTransactionWrapper
 		 */
 		public function setExceptionFunction($function)
