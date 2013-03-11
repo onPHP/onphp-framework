@@ -213,7 +213,8 @@
 					
 					if ($column->hasReference()) {
 						$out[] =
-							'CREATE INDEX '.$dialect->quoteField($name.'_idx')
+							'CREATE INDEX '.$dialect->quoteTable($target->getName()).'_'
+							.$dialect->quoteField($name.'_idx')
 							.' ON '.$dialect->quoteTable($target->getName()).
 							'('.$dialect->quoteField($name).');';
 					}
