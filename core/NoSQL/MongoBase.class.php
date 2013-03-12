@@ -42,8 +42,23 @@ class MongoBase extends NoSQL {
 	 */
 	protected $writeConcern	= 1;
 
+	/** @var bool */
+	protected $isRetrying = false;
+
+	protected function reconnectAndRetry($function, $args) {
+		$this->disconnect()->connect();
+		$this->isRetrying = true;
+		try {
+			call_user_func_array(array($this, $function), $args);
+		} catch (Exception $e) {
+			$this->isRetrying = false;
+			throw $e;
+		}
+		$this->isRetrying = false;
+	}
+
 	/**
-	 * @return MongoDB
+	 * @return MongoBase
 	 * @throws NoSQLException
 	 */
 	public function connect() {
@@ -97,7 +112,7 @@ class MongoBase extends NoSQL {
 	}
 
 	/**
-	 * @return MongoDB
+	 * @return MongoBase
 	 */
 	public function disconnect() {
 		if( $this->isConnected() ) {
@@ -185,16 +200,34 @@ class MongoBase extends NoSQL {
 				$options['safe'] = $this->writeConcern;
 			}
 		}
-		// save
-		$result =
-			$this
-				->db
+
+		$isSafe = isset($options['safe']) || isset($options['w']);
+
+		try {
+			$result =
+				$this->db
 					->selectCollection($table)
 						->insert($row, $options);
-		// checking result
-		if( !$result ) {
-			throw new NoSQLException('Could not insert object: '.var_export($row, true));
+
+			if ($isSafe && is_array($result)) {
+				$this->checkResult($result);
+			}
+
+		} catch (Exception $e) {
+			if ($this->isRetrying) {
+				if ($e instanceof MongoCursorException && $e->getCode() == 11000) {
+					// E11000 == duplicate key error index
+					// если это вылезло при повторной попытке, значит первый раз таки вставили
+				} else {
+					throw $e;
+				}
+			} elseif ($e instanceof MongoCursorTimeoutException) {
+				$this->reconnectAndRetry(__FUNCTION__, func_get_args());
+			} else {
+				throw $e;
+			}
 		}
+
 		// return clean row
 		return $this->decodeId($row);
 	}
@@ -220,18 +253,45 @@ class MongoBase extends NoSQL {
 			}
 		}
 
-		$result =
-			$this
-				->db
-					->selectCollection($table)
-						->update(array('_id' => $id), $row, $options);
-		// checking result
-		if( !$result ) {
-			throw new NoSQLException('Could not update object: '.var_export($row, true));
+		$isSafe = isset($options['safe']) || isset($options['w']);
+
+		try {
+
+			$result =
+				$this
+					->db
+						->selectCollection($table)
+							->update(array('_id' => $id), $row, $options);
+
+			if ($isSafe && is_array($result)) {
+				$this->checkResult($result);
+			}
+
+		} catch (Exception $e) {
+			if ($e instanceof MongoCursorTimeoutException && !$this->isRetrying) {
+				$this->reconnectAndRetry(__FUNCTION__, func_get_args());
+			} else {
+				throw $e;
+			}
 		}
+
 		$row['_id'] = $id;
 		// return clean row
 		return $this->decodeId($row);
+	}
+
+	protected function checkResult($result) {
+		if (!isset($result['ok']) || $result['ok'] == 0) {
+			$code = isset($result['code']) ? $result['code'] : 0;
+			$message = '';
+			if (isset($result['err'])) {
+				$message .= 'err: ' . $result['err'] . '. ';
+			}
+			if (isset($result['errmsg'])) {
+				$message .= 'errmsg: ' . $result['errmsg'] . '. ';
+			}
+			throw new MongoException($message, $code);
+		}
 	}
 
 	public function deleteOne($table, $key) {
