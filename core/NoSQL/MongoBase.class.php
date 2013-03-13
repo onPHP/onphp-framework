@@ -46,7 +46,10 @@ class MongoBase extends NoSQL {
 	protected $isRetrying = false;
 
 	protected function reconnectAndRetry($function, $args) {
-		$this->disconnect()->connect();
+		// have you tried turning it off and on again? (c)
+		$this->disconnect();
+		sleep(1);
+		$this->connect();
 		$this->isRetrying = true;
 		try {
 			call_user_func_array(array($this, $function), $args);
