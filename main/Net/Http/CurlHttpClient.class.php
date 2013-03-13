@@ -66,7 +66,7 @@
 		}
 		
 		/**
-		 * @param $timeout in seconds
+		 * @param $timeout int in seconds
 		 * @return \Onphp\CurlHttpClient
 		**/
 		public function setTimeout($timeout)
