@@ -31,13 +31,17 @@
 				if (2 < func_num_args()) {
 					$args = func_get_args();
 					array_shift($args);
-					
-					// can't call protected constructor through reflection
-					eval(
-						'$object = new '.$class
-						.'($args['.implode('],$args[', array_keys($args)).']);'
+
+					// emulation of ReflectionClass->newInstanceWithoutConstructor
+					$object =
+						unserialize(
+							sprintf('O:%d:"%s":0:{}', strlen($class), $class)
+						);
+
+					call_user_func_array(
+						array($object, '__construct'),
+						$args
 					);
-				
 				} else {
 					$object =
 						$args
