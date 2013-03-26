@@ -127,13 +127,21 @@
 		{
 			$cache = Cache::me();
 			
-			if (!$map = $cache->mark($this->className)->get($this->indexKey))
+			$mapExists = true;
+			if (!$map = $cache->mark($this->className)->get($this->indexKey)) {
 				$map = array();
+				$mapExists = false;
+			}
 			
 			$map[$objectKey] = true;
-			
-			$cache->mark($this->className)->
-				set($this->indexKey, $map, Cache::EXPIRES_FOREVER);
+
+			if ($mapExists) {
+				$cache->mark($this->className)->
+					replace($this->indexKey, $map, Cache::EXPIRES_FOREVER);
+			} else {
+				$cache->mark($this->className)->
+					set($this->indexKey, $map, Cache::EXPIRES_FOREVER);
+			}
 			
 			return true;
 		}
