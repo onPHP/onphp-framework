@@ -41,6 +41,7 @@
 		const IP_RANGE			= 0x000011;
 
 		const UUID				= 0x000005;
+		const HSTORE      		= 0x000020;
 
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x000200;
@@ -68,6 +69,7 @@
 			self::BOOLEAN		=> 'BOOLEAN',
 
 			self::UUID			=> 'UUID',
+			self::HSTORE		=> 'HSTORE',
 
 			self::CHAR			=> 'CHARACTER',
 			self::VARCHAR		=> 'CHARACTER VARYING',

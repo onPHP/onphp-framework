@@ -236,12 +236,12 @@
 				'ip4r'			=> DataType::IP_RANGE,
 
 				'uuid'			=> DataType::UUID,
+				'hstore'    	=> DataType::HSTORE,
 
 				// unhandled types, not ours anyway
 				'tsvector'		=> null,
 
 				'ltree'			=> null,
-				'hstore'		=> null,
 			);
 
 			try {
