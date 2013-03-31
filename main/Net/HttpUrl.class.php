@@ -18,6 +18,8 @@
 		
 		private $checkPrivilegedPorts = false;
 		
+		private $checkPrivilegedPorts = false;
+		
 		/**
 		 * @return HttpUrl
 		**/
