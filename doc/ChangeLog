@@ -1,3 +1,11 @@
+2013-03-31  Viatcheslav Y. Tsyrulnik
+
+	* core/Form/Primitives/PrimitiveHttpUrl.class.php
+		main/Net/HttpUrl.class.php
+		test/core/PrimitiveHttpUrlTest.class.php
+		test/main/HttpUrlTest.class.php:
+			HttpUrl::isValid skips privileged ports validation by default
+
 2013-03-31  Nikita V. Konstantinov
 
 	* core/Base/Singleton.class.php:
