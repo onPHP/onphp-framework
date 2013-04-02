@@ -27,7 +27,7 @@
 
 	// overridable constant, don't forget for trailing slash
 	// also you may consider using /dev/shm/ for cache purposes
-	if (!defined('ONPHP_TEMP_PATH'))
+	if (!defined('ONPHP_TEMP_PATH')) {
 		$tempSuffix = 'onPHP';
 		if (isset($_SERVER['USER'])) {
 			$tempSuffix .= '-'.$_SERVER['USER'];
@@ -36,6 +36,7 @@
 			'ONPHP_TEMP_PATH',
 			sys_get_temp_dir().DIRECTORY_SEPARATOR.$tempSuffix.DIRECTORY_SEPARATOR
 		);
+	}
 
 	// system settings
 	error_reporting(E_ALL | E_STRICT);
