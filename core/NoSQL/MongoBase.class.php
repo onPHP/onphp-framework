@@ -454,8 +454,24 @@ class MongoBase extends NoSQL {
 	protected function mongoCount($table, array $query, array $fields=array(), array $order=null, $limit=null, $skip=null) {
 		// quering
 		$cursor = $this->mongoMakeCursor($table, $query, $fields, $order, $limit, $skip);
-		// return result
-		return $cursor->count();
+		// fetch result
+		$count = $cursor->count();
+		// check result
+		self::assertCountResult($count);
+		// return count
+		return $count;
+	}
+
+	public static function assertCountResult($count) {
+		if (!Assert::checkInteger($count) || $count < 0) {
+			if (is_array($count)) {
+				$code = isset($count['code']) ? $count['code'] : null;
+				$text = isset($count['errmsg']) ? $count['errmsg'] : json_encode($count);
+				throw new MongoCursorException($text, $code);
+			} else {
+				throw new UnexpectedValueException($count);
+			}
+		}
 	}
 
 	protected function mongoDelete($table, array $query, array $options) {

@@ -40,7 +40,10 @@ class NoSqlResult extends QueryResult {
 
 	public function getCount() {
 		if ($this->count == null && $this->getMongoCursor()) {
-			$this->count = $this->getMongoCursor()->count();
+			$count = $this->getMongoCursor()->count();
+			MongoBase::assertCountResult($count);
+
+			$this->count = $count;
 
 			/* -- плохой вариант, долго считает
 			// пытаемся посчитать количество записей перебором, без использования count()
