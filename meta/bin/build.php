@@ -211,10 +211,9 @@ Possible options:
 	
 	if (
 		isset($_SERVER['TERM'])
-		&& (
-			$_SERVER['TERM'] == 'xterm'
-			|| $_SERVER['TERM'] == 'linux'
-		)
+		&& in_array($_SERVER['TERM'], array(
+			'xterm', 'linux', 'screen', 'screen-256color'
+		))
 		&& !$metaNoColor
 	) {
 		$out = new ColoredTextOutput();
