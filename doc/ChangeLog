@@ -1,3 +1,8 @@
+2013-03-31  Nikita V. Konstantinov
+	
+	* core/Base/Singleton.class.php:
+		Singleton 2+ constructor arguments now without eval
+
 2013-01-09 Evgeny V. Kokovikhin
 	* test/main/Utils/AMQP/AMQPPeclTest.class.php:
 		test fixed
