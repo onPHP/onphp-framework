@@ -254,14 +254,31 @@
 				default:
 					throw new WrongStateException('unknown mail encoding given');
 			}
-					
+
+			if (!$this->boundary) {
+				throw new UnexpectedValueException('set boundary or call getHeader() first');
+			}
+
+			foreach ($this->parts as $part) {
+				/** @var $part MimePart */
+				$body .=
+					'--' . $this->boundary . "\n"
+					. $part->getHeaders() . "\n\n"
+					. $part->getEncodedBody() . "\n\n"
+				;
+			}
+
 			return $body;
 		}
-		
+
 		public function getHeaders()
 		{
 			$headers = array();
-			
+
+			if ($this->parts && !$this->boundary) {
+				$this->boundary = '=_'.md5(microtime(true));
+			}
+
 			if ($this->contentType) {
 				$header =
 					"Content-Type: {$this->contentType};";
