@@ -172,6 +172,15 @@
 			return $string;
 		}
 
+		public function arrayToString($values)
+		{
+			// add qoutes
+			foreach($values as &$item) {
+				$item = $this->quoteValue($item);
+			}
+			return 'ARRAY['.implode(', ',$values).']';
+		}
+
 		protected function makeSequenceName(DBColumn $column)
 		{
 			return $column->getTable()->getName().'_'.$column->getName();

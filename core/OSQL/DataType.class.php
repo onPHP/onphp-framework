@@ -43,11 +43,14 @@
 		const UUID				= 0x000005;
 		const HSTORE      		= 0x000020;
 
+		const SET_OF_STRINGS	= 0x010121;
+
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x000200;
 		const HAVE_SCALE		= 0x000400;
 		const HAVE_TIMEZONE		= 0x000800;
 		const CAN_BE_UNSIGNED	= 0x001000;
+		const ARRAY_COLUMN		= 0x010000;
 
 		private $size		= null;
 		private $precision	= null;
@@ -83,7 +86,9 @@
 			self::BINARY		=> 'BINARY',
 
 			self::IP			=> 'IP',
-			self::IP_RANGE		=> 'IP_RANGE'
+			self::IP_RANGE		=> 'IP_RANGE',
+
+			self::SET_OF_STRINGS	=> 'CHARACTER VARYING',
 		);
 
 		/**
@@ -217,6 +222,11 @@
 			return $this->unsigned;
 		}
 
+		public function isArrayColumn()
+		{
+			return (bool) ($this->id & self::ARRAY_COLUMN);
+		}
+
 		public function toDialectString(Dialect $dialect)
 		{
 			$out = $dialect->typeToString($this);
@@ -256,6 +266,9 @@
 					);
 
 				$out .= "({$this->size})";
+			}
+			if ($this->isArrayColumn()) {
+				$out .= "[]";
 			}
 
 			if ($this->id & self::HAVE_TIMEZONE)

@@ -404,6 +404,20 @@
 				return HttpUrl::create()->parse($raw);
 			}
 
+			if ($this->type == 'set') {
+				// MongoDB driver compatibility
+				if( is_array($raw) ) {
+					return $raw;
+				}
+				// PgSQL driver compatibility
+				$matches = array();
+				if( preg_match('/^{(.*)}$/', $raw, $matches) ) {
+					return str_getcsv($matches[1]);
+				}
+				// empty array
+				return array();
+			}
+
 			if (
 				!$this->identifier
 				&& $this->generic
