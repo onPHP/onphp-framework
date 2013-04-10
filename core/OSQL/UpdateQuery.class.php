@@ -103,6 +103,9 @@
 				elseif (false === $val)
 					$sets[] = $dialect->quoteField($var).' = '
 						.$dialect->literalToString(Dialect::LITERAL_FALSE);
+				elseif (is_array($val))
+					$sets[] = $dialect->quoteField($var).' = '
+						.$dialect->arrayToString($val);
 				else
 					$sets[] =
 						$dialect->quoteField($var)

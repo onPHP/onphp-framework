@@ -162,5 +162,10 @@
 		{
 			throw new UnimplementedFeatureException();
 		}
+
+		public function arrayToString($values)
+		{
+			throw new UnimplementedFeatureException();
+		}
 	}
 ?>

@@ -238,6 +238,8 @@
 				'uuid'			=> DataType::UUID,
 				'hstore'    	=> DataType::HSTORE,
 
+				'_varchar'    	=> DataType::SET_OF_STRINGS,
+
 				// unhandled types, not ours anyway
 				'tsvector'		=> null,
 

@@ -930,9 +930,9 @@ class DataGrid extends BaseWidget
                 if ($value instanceof Closure) {
                     $value = $value($object);
                 }
-                if ('class' == $key) {
-                    $value = ($rowId % 2 ? 'odd ' : 'even ') . $value;
-                }
+//                if ('class' == $key) {
+//                    $value = ($rowId % 2 ? 'odd ' : 'even ') . $value;
+//                }
                 array_push($attrs, $key . '="' . $value . '"');
             }
             $data[$rowId]['attrs'] = implode(' ', $attrs);
@@ -951,7 +951,7 @@ class DataGrid extends BaseWidget
         // отрендерим аттрибуты формы
 		$selfUrl = null;
 		try {
-			$controller = Application::me()->getRunningController();
+			$controller = Application::me()->getRunningActionController();
 			$selfUrl = $controller->getSelfUrl()->__toString();
 		} catch (UnexpectedValueException $e) {
 			$selfUrl = $_SERVER['REQUEST_URI'];

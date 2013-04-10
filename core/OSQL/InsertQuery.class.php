@@ -83,7 +83,7 @@
 		{
 			$fields = array();
 			$values = array();
-			
+
 			foreach ($this->fields as $var => $val) {
 				$fields[] = $dialect->quoteField($var);
 				
@@ -95,6 +95,8 @@
 					$values[] = $dialect->literalToString(Dialect::LITERAL_FALSE);
 				elseif ($val instanceof DialectString)
 					$values[] = $val->toDialectString($dialect);
+				elseif (is_array($val))
+					$values[] = $dialect->arrayToString($val);
 				else
 					$values[] = $dialect->quoteValue($val);
 			}
