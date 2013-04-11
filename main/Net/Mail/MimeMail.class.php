@@ -42,7 +42,7 @@
 				throw new UnimplementedFeatureException();
 			
 			if (!$this->boundary)
-				$this->boundary = '=_'.md5(microtime(true));
+				$this->boundary = '=_'.md5(microtime(true) . uniqid());
 
 			$mail =
 				MimePart::create()->
@@ -59,7 +59,7 @@
 					.$part->getHeaders()
 					."\n\n"
 					.$part->getEncodedBody()."\n";
-			
+
 			$this->body .= '--'.$this->boundary."--"."\n\n";
 		}
 		

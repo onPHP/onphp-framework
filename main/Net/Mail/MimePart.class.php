@@ -19,7 +19,7 @@
 		private $contentId		= null;
 		private $contentType	= null;
 		private $boundary		= null;
-		
+
 		private $encoding		= null;
 		private $charset		= null;
 		
@@ -63,7 +63,7 @@
 		{
 			return $this->boundary;
 		}
-		
+
 		public function getContentId()
 		{
 			return $this->contentId;
@@ -255,17 +255,21 @@
 					throw new WrongStateException('unknown mail encoding given');
 			}
 
-			if ($this->parts && !$this->boundary) {
-				throw new UnexpectedValueException('set boundary or call getHeader() first');
-			}
+			if ($this->parts) {
+				if (!$this->boundary) {
+					throw new UnexpectedValueException('set boundary or call getHeader() first');
+				}
 
-			foreach ($this->parts as $part) {
-				/** @var $part MimePart */
-				$body .=
-					'--' . $this->boundary . "\n"
-					. $part->getHeaders() . "\n\n"
-					. $part->getEncodedBody() . "\n\n"
-				;
+				foreach ($this->parts as $part) {
+					/** @var $part MimePart */
+					$body .=
+						'--' . $this->boundary . "\n"
+							. $part->getHeaders() . "\n\n"
+							. $part->getEncodedBody() . "\n\n"
+					;
+				}
+
+				$this->body .= '--'.$this->boundary."--"."\n";
 			}
 
 			return $body;
@@ -276,7 +280,7 @@
 			$headers = array();
 
 			if ($this->parts && !$this->boundary) {
-				$this->boundary = '=_'.md5(microtime(true));
+				$this->boundary = '=_'.md5(microtime(true) . uniqid());
 			}
 
 			if ($this->contentType) {
@@ -288,7 +292,7 @@
 				
 				if ($this->boundary)
 					$header .= "\n\tboundary=\"{$this->boundary}\"";
-				
+
 				$headers[] = $header;
 			}
 			
