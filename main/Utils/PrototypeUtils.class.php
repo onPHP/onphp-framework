@@ -89,6 +89,28 @@ class PrototypeUtils
         return $property;
     }
 
+	public static function propertyExists(AbstractProtoClass $proto, $path) {
+		$result = true;
+		$subProto = $proto;
+		foreach (explode('.', $path) as $propertyName) {
+			/** @var $property LightMetaProperty */
+			try {
+				$property = $subProto->getPropertyByName($propertyName);
+			} catch(Exception $e) {
+				$result = false;
+				break;
+			}
+			$class = $property->getClassName();
+			if (strlen($class) && is_subclass_of($class, 'Prototyped')) {
+				$subProto = $class::proto();
+			} else {
+				$result = false;
+				break;
+			}
+		}
+		return $result;
+	}
+
     /**
      * @static
      * @param Prototyped $object
