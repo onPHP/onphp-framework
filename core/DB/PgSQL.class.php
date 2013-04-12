@@ -239,6 +239,7 @@
 				'hstore'    	=> DataType::HSTORE,
 
 				'_varchar'    	=> DataType::SET_OF_STRINGS,
+				'_int4'    		=> DataType::SET_OF_INTEGERS,
 
 				// unhandled types, not ours anyway
 				'tsvector'		=> null,

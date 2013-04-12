@@ -44,6 +44,7 @@
 		const HSTORE      		= 0x000020;
 
 		const SET_OF_STRINGS	= 0x010121;
+		const SET_OF_INTEGERS	= 0x010022;
 
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x000200;
@@ -89,6 +90,7 @@
 			self::IP_RANGE		=> 'IP_RANGE',
 
 			self::SET_OF_STRINGS	=> 'CHARACTER VARYING',
+			self::SET_OF_INTEGERS	=> 'INTEGER',
 		);
 
 		/**
