@@ -176,7 +176,7 @@
 		{
 			// add qoutes
 			foreach($values as &$item) {
-				$item = $this->quoteValue($item);
+				$item = is_numeric($item) ? $item : $this->quoteValue($item);
 			}
 			return 'ARRAY['.implode(', ',$values).']';
 		}
