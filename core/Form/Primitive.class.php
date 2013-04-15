@@ -212,6 +212,22 @@
 		}
 
 		/**
+		 * @return PrimitiveArray
+		**/
+		public static function arrayOfStrings($name)
+		{
+			return new PrimitiveArray($name);
+		}
+
+		/**
+		 * @return PrimitiveArray
+		**/
+		public static function arrayOfIntegers($name)
+		{
+			return new PrimitiveArray($name);
+		}
+
+		/**
 		 * @return PrimitiveHstore
 		**/
 		public static function hstore($name)

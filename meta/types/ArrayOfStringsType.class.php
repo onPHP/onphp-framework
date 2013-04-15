@@ -7,6 +7,10 @@
 
 class ArrayOfStringsType extends ArrayType {
 
+	public function getPrimitiveName() {
+		return 'arrayOfStrings';
+	}
+
 	public function toColumnType() {
 		return 'DataType::create(DataType::SET_OF_STRINGS)';
 	}

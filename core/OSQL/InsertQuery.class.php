@@ -60,7 +60,6 @@
 			}
 			
 			$query .= parent::toDialectString($dialect);
-			
 			return $query;
 		}
 		
@@ -95,8 +94,6 @@
 					$values[] = $dialect->literalToString(Dialect::LITERAL_FALSE);
 				elseif ($val instanceof DialectString)
 					$values[] = $val->toDialectString($dialect);
-				elseif (is_array($val))
-					$values[] = $dialect->arrayToString($val);
 				else
 					$values[] = $dialect->quoteValue($val);
 			}

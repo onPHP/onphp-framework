@@ -163,7 +163,7 @@
 			throw new UnimplementedFeatureException();
 		}
 
-		public function arrayToString($values)
+		public function quoteArray($values, $type)
 		{
 			throw new UnimplementedFeatureException();
 		}

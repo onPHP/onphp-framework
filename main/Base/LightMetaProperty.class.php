@@ -384,6 +384,10 @@
 
 				if ($this->type == 'binary') {
 					$query->set($this->columnName, new DBBinary($value));
+				} elseif($this->type == 'arrayOfIntegers') {
+					$query->set($this->columnName, DBArray::create($value)->integers());
+				} elseif($this->type == 'arrayOfStrings') {
+					$query->set($this->columnName, DBArray::create($value)->strings());
 				} else {
 					$query->lazySet($this->columnName, $value);
 				}
@@ -404,18 +408,33 @@
 				return HttpUrl::create()->parse($raw);
 			}
 
-			if ($this->type == 'set') {
+			if($this->type == 'set') {
 				// MongoDB driver compatibility
 				if( is_array($raw) ) {
 					return $raw;
+				} else {
+					throw new WrongArgumentException('raw data is not array!');
 				}
+			}
+
+			if( $this->type == 'arrayOfIntegers' ) {
 				// PgSQL driver compatibility
 				$matches = array();
 				if( preg_match('/^{(.*)}$/', $raw, $matches) ) {
-					return str_getcsv($matches[1]);
+					return array_map('intval', str_getcsv($matches[1]));
+				} else {
+					throw new WrongArgumentException('raw data is not compatible with PgArray!');
 				}
-				// empty array
-				return array();
+			}
+
+			if ( $this->type == 'arrayOfStrings') {
+				// PgSQL driver compatibility
+				$matches = array();
+				if( preg_match('/^{(.*)}$/', $raw, $matches) ) {
+					return array_map('strval', str_getcsv($matches[1]));
+				} else {
+					throw new WrongArgumentException('raw data is not compatible with PgArray!');
+				}
 			}
 
 			if (

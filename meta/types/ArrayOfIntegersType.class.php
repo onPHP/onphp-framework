@@ -7,6 +7,10 @@
 
 class ArrayOfIntegersType extends ArrayType {
 
+	public function getPrimitiveName() {
+		return 'arrayOfIntegers';
+	}
+
 	public function toColumnType() {
 		return 'DataType::create(DataType::SET_OF_INTEGERS)';
 	}

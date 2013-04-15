@@ -172,11 +172,17 @@
 			return $string;
 		}
 
-		public function arrayToString($values)
+		public function quoteArray($values, $type)
 		{
 			// add qoutes
 			foreach($values as &$item) {
-				$item = is_numeric($item) ? $item : $this->quoteValue($item);
+				if( $type===DataType::INTEGER ) {
+					$item = intval($item);
+				} elseif( $type===DataType::VARCHAR ) {
+					$item = $this->quoteValue($item);
+				} else {
+					throw new WrongArgumentException('unknown type of array!');
+				}
 			}
 			return 'ARRAY['.implode(', ',$values).']';
 		}
