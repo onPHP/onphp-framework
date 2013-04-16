@@ -174,6 +174,9 @@
 
 		public function quoteArray($values, $type)
 		{
+			if( empty($values) ) {
+				return self::LITERAL_NULL;
+			}
 			// add qoutes
 			foreach($values as &$item) {
 				if( $type===DataType::INTEGER ) {
