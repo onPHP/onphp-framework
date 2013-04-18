@@ -9,7 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 	
-	final class HttpUrlTest extends TestCase
+	final class HttpUrlTest extends \Onphp\Test\TestCase
 	{
 		private $urlWithPrivilegedPort = "https://path.to.some.com:444/hey.html";
 		
@@ -19,7 +19,7 @@
 		public function privilegedPortsValidationEnabled()
 		{
 			$url =
-				HttpUrl::create()->
+				\Onphp\HttpUrl::create()->
 					parse($this->urlWithPrivilegedPort)->
 					setCheckPrivilegedPorts();
 			
@@ -32,7 +32,7 @@
 		 */
 		public function privilegdPortsValidationDisabled()
 		{
-			$url = HttpUrl::create()->parse($this->urlWithPrivilegedPort);
+			$url = \Onphp\HttpUrl::create()->parse($this->urlWithPrivilegedPort);
 				
 			$this->assertTrue($url->isValid());
 			$this->assertTrue($url->isPrivilegedPortUsed());
