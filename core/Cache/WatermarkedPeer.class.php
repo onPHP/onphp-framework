@@ -19,6 +19,7 @@
 	final class WatermarkedPeer extends SelectivePeer
 	{
 		private $peer		= null;
+		private $originalWatermark = null;
 		private $watermark	= null;
 		
 		/// map class -> watermark
@@ -46,6 +47,7 @@
 		
 		public function setWatermark($watermark)
 		{
+			$this->originalWatermark = $watermark;
 			$this->watermark = md5($watermark.' ['.ONPHP_VERSION.']::');
 			
 			return $this;
@@ -159,6 +161,19 @@
 		public function append($key, $data)
 		{
 			return $this->peer->append($this->getActualWatermark().$key, $data);
+		}
+
+		/**
+		 * @return CachePeer
+		 */
+		public function getRuntimeCopy()
+		{
+			$newWm = new WatermarkedPeer(
+				$this->peer->getRuntimeCopy(),
+				$this->originalWatermark
+			);
+			$newWm->map = $this->map;
+			return $newWm;
 		}
 		
 		protected function store(

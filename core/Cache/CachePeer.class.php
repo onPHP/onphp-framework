@@ -203,6 +203,14 @@
 			return $this;
 		}
 
+		/**
+		 * @return CachePeer
+		 */
+		public function getRuntimeCopy()
+		{
+			return new RuntimeMemory();
+		}
+
 		protected function prepareData($value)
 		{
 			if ($this->compress)
