@@ -73,15 +73,15 @@
 		{
 			return null;
 		}
-		
+
 		public function getIdName()
 		{
 			return 'id';
 		}
-		
+
 		public function getSequence()
 		{
-			return $this->getTable().'_id';
+			return $this->getTable().'_id_seq';
 		}
 		
 		/**
@@ -157,10 +157,9 @@
 		{
 			Assert::isScalar($id);
 			Assert::isNotEmpty($id);
-			
-			if (isset($this->identityMap[$id]))
+			if (isset($this->identityMap[$id]) && $expires != Cache::DO_NOT_CACHE)// !!??
 				return $this->identityMap[$id];
-			
+
 			return $this->addObjectToMap(
 				Cache::worker($this)->getById($id, $expires)
 			);

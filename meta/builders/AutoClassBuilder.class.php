@@ -23,15 +23,15 @@
 			$isNamed = false;
 			
 			if ($parent = $class->getParent())
-				$out .= " extends {$parent->getName()}";
+				$out .= " extends {$parent->getName()}{$extendsAdd}".((class_exists($parent->getName()."BusinessAuto"))?"BusinessAuto":'');
 			elseif (
 				$class->getPattern() instanceof DictionaryClassPattern
 				&& $class->hasProperty('name')
 			) {
-				$out .= " extends NamedObject";
+				$out .= " extends NamedObject".((class_exists("NamedObjectBusinessAuto"))?"BusinessAuto":'');
 				$isNamed = true;
 			} elseif (!$class->getPattern() instanceof ValueObjectPattern)
-				$out .= " extends IdentifiableObject";
+				$out .= " extends IdentifiableObject".(class_exists("IdentifiableObjectBusinessAuto")?"BusinessAuto":'');
 			
 			if ($interfaces = $class->getInterfaces())
 				$out .= ' implements '.implode(', ', $interfaces);

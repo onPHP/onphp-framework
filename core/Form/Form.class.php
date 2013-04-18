@@ -92,7 +92,20 @@
 			
 			return $this;
 		}
-		
+
+        /**
+         * @throws MissingElementException
+         * @return Form
+         **/
+        public function drop($name) {
+            parent::drop($name);
+            unset(
+                $this->errors[$name],
+                $this->violated[$name],
+                $this->describedLabels[$name]
+            );
+            return $this;
+        }
 		/**
 		 * @return Form
 		**/

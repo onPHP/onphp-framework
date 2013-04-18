@@ -1,0 +1,235 @@
+diff --git a/core/Base/Date.class.php b/core/Base/Date.class.php
+index 4d6cd33..729041c 100644
+--- a/core/Base/Date.class.php
++++ b/core/Base/Date.class.php
+@@ -20,7 +20,19 @@
+ 	**/
+ 	class Date implements Stringable, DialectString
+ 	{
+-		const WEEKDAY_MONDAY 	= 1;
++        protected static $dateDelimiter = '-';
++
++        /**
++         * задает делимер по умолчанию
++         * @param '-' $dateDelimiter
++         */
++        public static function setDelimer($dateDelimiter=null) {
++            if ($dateDelimiter !== null) {
++                static::$dateDelimiter = $dateDelimiter;
++            }
++        }
++
++        const WEEKDAY_MONDAY 	= 1;
+ 		const WEEKDAY_TUESDAY	= 2;
+ 		const WEEKDAY_WEDNESDAY	= 3;
+ 		const WEEKDAY_THURSDAY	= 4;
+@@ -41,8 +53,11 @@
+ 			return new static($date);
+ 		}
+ 		
+-		public static function today($delimiter = '-')
++		public static function today($delimiter = null)
+ 		{
++            if ($dateDelimiter===null) {
++                $delimiter = static::$dateDelimiter;
++            }
+ 			return date("Y{$delimiter}m{$delimiter}d");
+ 		}
+ 		
+@@ -145,13 +160,16 @@
+ 			return $this->getDateTime()->getTimestamp();
+ 		}
+ 		
+-		public function toDate($delimiter = '-')
++		public function toDate($dateDelimiter = null)
+ 		{
++            if ($dateDelimiter===null) {
++                $dateDelimiter = Date::$dateDelimiter;
++            }
+ 			return
+ 				$this->getYear()
+-				.$delimiter
++				.$dateDelimiter
+ 				.$this->getMonth()
+-				.$delimiter
++				.$dateDelimiter
+ 				.$this->getDay();
+ 		}
+ 		
+diff --git a/core/Base/Timestamp.class.php b/core/Base/Timestamp.class.php
+index 85f3f2c..7d17d5b 100644
+--- a/core/Base/Timestamp.class.php
++++ b/core/Base/Timestamp.class.php
+@@ -20,6 +20,25 @@
+ 	**/
+ 	class Timestamp extends Date
+ 	{
++        protected static $timeDelimiter = ':';
++        protected static $secondDelimiter = '.';
++
++        /**
++         * задает делимер по умолчанию
++         * @param '-' $dateDelimiter
++         * @param ':' $timeDelimiter
++         * @param '.' $secondDelimiter
++         */
++        public static function setDelimer($dateDelimiter=null,$timeDelimiter=null,$secondDelimiter=null) {
++            parent::setDelimer($dateDelimiter);
++            if ($timeDelimiter !== null) {
++                static::$timeDelimiter = $timeDelimiter;
++            }
++            if ($secondDelimiter !== null) {
++                static::$secondDelimiter = $secondDelimiter;
++            }
++        }
++
+ 		/**
+ 		 * @return Timestamp
+ 		**/
+@@ -72,8 +91,15 @@
+ 			}
+ 		}
+ 		
+-		public function toTime($timeDelimiter = ':', $secondDelimiter = '.')
+-		{
++		public function toTime($timeDelimiter = null, $secondDelimiter = null)
++		{
++            if ($timeDelimiter !== null) {
++                $timeDelimiter = static::$timeDelimiter;
++            }
++            if ($secondDelimiter !== null) {
++                $secondDelimiter = static::$secondDelimiter;
++            }
++
+ 			return
+ 				$this->getHour()
+ 				.$timeDelimiter
+@@ -82,11 +108,7 @@
+ 				.$this->getSecond();
+ 		}
+ 		
+-		public function toDateTime(
+-			$dateDelimiter = '-',
+-			$timeDelimiter = ':',
+-			$secondDelimiter = '.'
+-		)
++		public function toDateTime($dateDelimiter = null,$timeDelimiter = null,$secondDelimiter = null)
+ 		{
+ 			return
+ 				$this->toDate($dateDelimiter).' '
+diff --git a/core/Form/Form.class.php b/core/Form/Form.class.php
+index f94abc8..c85e97b 100644
+--- a/core/Form/Form.class.php
++++ b/core/Form/Form.class.php
+@@ -92,7 +92,20 @@
+ 			
+ 			return $this;
+ 		}
+-		
++
++        /**
++         * @throws MissingElementException
++         * @return Form
++         **/
++        public function drop($name) {
++            parent::drop($name);
++            unset(
++                $this->errors[$name],
++                $this->violated[$name],
++                $this->describedLabels[$name]
++            );
++            return $this;
++        }
+ 		/**
+ 		 * @return Form
+ 		**/
+diff --git a/core/OSQL/DBTable.class.php b/core/OSQL/DBTable.class.php
+index 2f176b0..2b60abf 100644
+--- a/core/OSQL/DBTable.class.php
++++ b/core/OSQL/DBTable.class.php
+@@ -213,7 +213,12 @@
+ 					
+ 					if ($column->hasReference()) {
+ 						$out[] =
+-							'CREATE INDEX '.$dialect->quoteField($name.'_idx')
++							'CREATE INDEX '
++								.$dialect->quoteField(
++									str_replace('_','',$target->getName())
++									.'_'.str_replace('_','',preg_replace('/_id$/','_',$name))
++									.'_idx'
++								)
+ 							.' ON '.$dialect->quoteTable($target->getName()).
+ 							'('.$dialect->quoteField($name).');';
+ 					}
+diff --git a/main/DAOs/GenericDAO.class.php b/main/DAOs/GenericDAO.class.php
+index 569e771..84fa2a7 100644
+--- a/main/DAOs/GenericDAO.class.php
++++ b/main/DAOs/GenericDAO.class.php
+@@ -73,15 +73,15 @@
+ 		{
+ 			return null;
+ 		}
+-		
++
+ 		public function getIdName()
+ 		{
+ 			return 'id';
+ 		}
+-		
++
+ 		public function getSequence()
+ 		{
+-			return $this->getTable().'_id';
++			return $this->getTable().'_id_seq';
+ 		}
+ 		
+ 		/**
+@@ -157,10 +157,9 @@
+ 		{
+ 			Assert::isScalar($id);
+ 			Assert::isNotEmpty($id);
+-			
+-			if (isset($this->identityMap[$id]))
++			if (isset($this->identityMap[$id]) && $expires != Cache::DO_NOT_CACHE)// !!??
+ 				return $this->identityMap[$id];
+-			
++
+ 			return $this->addObjectToMap(
+ 				Cache::worker($this)->getById($id, $expires)
+ 			);
+diff --git a/meta/builders/AutoClassBuilder.class.php b/meta/builders/AutoClassBuilder.class.php
+index f0995ec..97f597a 100644
+--- a/meta/builders/AutoClassBuilder.class.php
++++ b/meta/builders/AutoClassBuilder.class.php
+@@ -23,15 +23,15 @@
+ 			$isNamed = false;
+ 			
+ 			if ($parent = $class->getParent())
+-				$out .= " extends {$parent->getName()}";
++				$out .= " extends {$parent->getName()}{$extendsAdd}".((class_exists($parent->getName()."BusinessAuto"))?"BusinessAuto":'');
+ 			elseif (
+ 				$class->getPattern() instanceof DictionaryClassPattern
+ 				&& $class->hasProperty('name')
+ 			) {
+-				$out .= " extends NamedObject";
++				$out .= " extends NamedObject".((class_exists("NamedObjectBusinessAuto"))?"BusinessAuto":'');
+ 				$isNamed = true;
+ 			} elseif (!$class->getPattern() instanceof ValueObjectPattern)
+-				$out .= " extends IdentifiableObject";
++				$out .= " extends IdentifiableObject".(class_exists("IdentifiableObjectBusinessAuto")?"BusinessAuto":'');
+ 			
+ 			if ($interfaces = $class->getInterfaces())
+ 				$out .= ' implements '.implode(', ', $interfaces);
+diff --git a/meta/builders/BaseBuilder.class.php b/meta/builders/BaseBuilder.class.php
+index 9efc4c8..cd30aaf 100644
+--- a/meta/builders/BaseBuilder.class.php
++++ b/meta/builders/BaseBuilder.class.php
+@@ -49,7 +49,7 @@ public function getObjectName()
+ 
+ public function getSequence()
+ {
+-	return '{$class->getTableName()}_id';
++	return '{$class->getTableName()}_id_seq';
+ }
+ EOT;
+ 			} elseif ($class->getWithInternalProperties()) {

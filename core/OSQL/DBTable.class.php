@@ -213,7 +213,12 @@
 					
 					if ($column->hasReference()) {
 						$out[] =
-							'CREATE INDEX '.$dialect->quoteField($name.'_idx')
+							'CREATE INDEX '
+								.$dialect->quoteField(
+									str_replace('_','',$target->getName())
+									.'_'.str_replace('_','',preg_replace('/_id$/','_',$name))
+									.'_idx'
+								)
 							.' ON '.$dialect->quoteTable($target->getName()).
 							'('.$dialect->quoteField($name).');';
 					}
