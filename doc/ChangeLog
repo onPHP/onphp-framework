@@ -1,3 +1,10 @@
+2013-04-19 Aleksey S. Denisov
+
+	* core/Cache/CachePeer.class.php
+      core/Cache/WatermarkedPeer.class.php
+      core/DB/DB.class.php:
+        fixed deferent uncache keys with watermark while in db transaction
+
 2013-04-08 Artem V. Titarenko
 
 	* main/DAOs/Workers/SmartDaoWorker.class.php: SmartDaoWorker race condition bug fix
