@@ -30,10 +30,13 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 	public static function create(
 		$host = self::DEFAULT_HOST,
 		$port = self::DEFAULT_PORT,
-		$timeout = self::DEFAULT_TIMEOUT
+		$timeout = self::DEFAULT_TIMEOUT,
+		$db = 0
 	)
 	{
-		return new self($host, $port, $timeout);
+		$instance = new self($host, $port, $timeout);
+		$instance->select($db);
+		return $instance;
 	}
 
 	public function __construct(
@@ -175,6 +178,19 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 
 	public function info() {
 		return $this->redis->info();
+	}
+
+	public function select($db) {
+		$this->ensureTriedToConnect();
+
+		if( is_null($db) || !Assert::checkInteger($db) ) {
+			throw new WrongArgumentException('DB id should be an integer');
+		}
+		$result = $this->redis->select($db);
+		if( !$result ) {
+			throw new WrongStateException('could not change db');
+		}
+		return $result;
 	}
 
 	protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
