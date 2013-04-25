@@ -235,6 +235,9 @@ class PrototypeUtils
 						$value = null;
 					}
 					$entity[ $property->getColumnName() ] = $value;
+				} elseif ($property->getType() == 'hstore') {
+					/** @var $value Hstore */
+					$entity[ $property->getColumnName() ] = $value->getList();
 				} else {
 					$entity[ $property->getColumnName() ] = $value;
 				}
