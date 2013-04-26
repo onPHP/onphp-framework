@@ -472,6 +472,13 @@
 			}
 		}
 
+		/**
+		 * @return Cursor
+		 */
+		public function getCursor() {
+			return Cursor::create($this->getDao(), $this->toSelectQuery());
+		}
+
 		public function getPropertyList()
 		{
 			try {
