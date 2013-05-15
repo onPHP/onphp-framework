@@ -547,6 +547,11 @@
 
 					$dao = $object->dao();
 
+					if (!$dao instanceof GenericDAO) {
+						$out->info(', ');
+						continue;
+					}
+
 					Assert::isEqual(
 						$dao->getIdName(),
 						$class->getIdentifier()->getColumnName(),

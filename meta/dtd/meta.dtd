@@ -52,6 +52,7 @@
 			|ValueObject
 			|InternalClass
 			|NosqlClass
+			|ObjectWithEmptyDAOClass
 		) #REQUIRED
 		fetch		(lazy|cascade) #IMPLIED
 >

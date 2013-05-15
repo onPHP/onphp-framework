@@ -222,9 +222,9 @@ class PrototypeUtils
 						//$value = $value->toString();
 				}
 				if( $property->getType() == 'integer' ) {
-					$entity[ $property->getColumnName() ] = (int)$value;
+					$entity[ $property->getColumnName() ] = ($value === null) ? null : (int)$value;
 				} elseif( $property->getType() == 'float' ) {
-					$entity[ $property->getColumnName() ] = (float)$value;
+					$entity[ $property->getColumnName() ] = ($value === null) ? null : (float)$value;
 				} elseif( $property->getType() == 'string' ) {
 					$value = (string)$value;
 					if ($property->getMax() > 0) {
