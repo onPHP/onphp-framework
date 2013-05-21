@@ -286,7 +286,7 @@ class DataGrid extends BaseWidget
             case 'string':
                 return function ($value) use ($fieldId, $property) {
                     if ($value instanceof Stringable) $value = $value->toString();
-					$value = htmlspecialchars($value);
+                    $value = htmlentities($value, ENT_COMPAT, null, false);
 					if ($property->getType() == 'string' && !$property->getMax()) {
 						return '<textarea rows="4" cols="50" name="'
 							. $property->getName() . '">'
