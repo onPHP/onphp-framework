@@ -49,9 +49,7 @@
 		public function uncache()
 		{
 			foreach ($this->classNameMap as $className => $idKeys) {
-				foreach ($idKeys as $key) {
-					$this->uncacheClassName($className, $idKeys);
-				}
+				$this->uncacheClassName($className, $idKeys);
 			}
 		}
 		
