@@ -230,7 +230,7 @@ class PrototypeUtils
 					if ($property->getMax() > 0) {
 						$value = mb_substr($value, 0, $property->getMax());
 					}
-					if (empty($value)) {
+					if ($value === false || $value === "") {
 						// если false или "", то null
 						$value = null;
 					}
