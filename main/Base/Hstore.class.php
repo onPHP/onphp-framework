@@ -87,6 +87,10 @@
 		{
 			return isset($this->properties[$key]);
 		}
+
+		public function has($key) {
+			return $this->isExists($key);
+		}
 		
 		/**
 		 * @return Hstore
