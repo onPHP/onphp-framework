@@ -47,8 +47,12 @@
 			|AbstractClass
 			|StraightMapping
 			|EnumerationClass
+			|EnumClass
+			|RegistryClass
 			|SpookedClass
 			|SpookedEnumeration
+			|SpookedEnum
+			|SpookedRegistry
 			|ValueObject
 			|InternalClass
 			|NosqlClass

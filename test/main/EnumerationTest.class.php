@@ -18,6 +18,16 @@
 					} catch (MissingElementException $e) {
 						$this->fail($className);
 					}
+				} elseif(is_subclass_of($className, 'Enum')) {
+					try {
+						$enum = new $className(
+							ClassUtils::callStaticMethod($className.'::getAnyId')
+						);
+
+						/* pass */
+					} catch (MissingElementException $e) {
+						$this->fail($className);
+					}
 				}
 			}
 		}

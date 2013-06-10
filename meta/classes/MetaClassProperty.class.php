@@ -348,6 +348,10 @@
 
 				if ($pattern instanceof EnumerationClassPattern) {
 					$primitiveName = 'enumeration';
+				} elseif($pattern instanceof EnumClassPattern) {
+					$primitiveName = 'enum';
+				} elseif($pattern instanceof RegistryClassPattern) {
+					$primitiveName = 'registry';
 				} elseif (
 					$pattern instanceof DictionaryClassPattern
 					&& ($identifier = $this->getType()->getClass()->getIdentifier())
@@ -456,6 +460,11 @@
 				}
 
 				return $out;
+			}
+
+			// hack for string ID length
+			if( $this->getType() instanceof ObjectType && !$this->getType()->isGeneric() ) {
+				$this->size = $this->getType()->getClass()->getIdentifier()->getSize();
 			}
 
 			$column = <<<EOT

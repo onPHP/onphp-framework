@@ -99,9 +99,11 @@ EOT;
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$className = $property->getType()->getClassName();
 					
-					$isEnumeration =
-						$property->getType()->getClass()->getPattern()
-						instanceof EnumerationClassPattern;
+					$isEnumeration = (
+						$property->getType()->getClass()->getPattern() instanceof EnumerationClassPattern
+						|| $property->getType()->getClass()->getPattern() instanceof EnumClassPattern
+						|| $property->getType()->getClass()->getPattern() instanceof RegistryClassPattern
+					);
 					
 					$fetchObjectString = $isEnumeration
 						? "new {$className}(\$this->{$name}Id)"
@@ -332,9 +334,9 @@ EOT;
 			return $method;
 		}
 		
-		public function toColumnType()
+		public function toColumnType($length = null)
 		{
-			return $this->getClass()->getIdentifier()->getType()->toColumnType();
+			return $this->getClass()->getIdentifier()->getType()->toColumnType($length);
 		}
 		
 		public function getHint()

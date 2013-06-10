@@ -652,6 +652,14 @@
 						is_subclass_of(
 							$property->getClassName(),
 							'Enumeration'
+						) ||
+						is_subclass_of(
+							$property->getClassName(),
+							'Enum'
+						) ||
+						is_subclass_of(
+							$property->getClassName(),
+							'Registry'
 						)
 					) {
 						// field already added by makeSelectHead

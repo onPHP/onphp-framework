@@ -426,6 +426,52 @@
 			return new PrimitiveRule($name);
 		}
 
+		/**
+		 * @return PrimitiveEnum
+		 **/
+		public static function enum($name)
+		{
+			return new PrimitiveEnum($name);
+		}
 
+		/**
+		 * @return PrimitiveEnumByValue
+		 **/
+		public static function enumByValue($name)
+		{
+			return new PrimitiveEnumByValue($name);
+		}
+
+		/**
+		 * @return PrimitiveEnumList
+		 **/
+		public static function enumList($name)
+		{
+			return new PrimitiveEnumList($name);
+		}
+
+		/**
+		 * @return PrimitiveRegistry
+		 **/
+		public static function registry($name)
+		{
+			return new PrimitiveRegistry($name);
+		}
+
+		/**
+		 * @return PrimitiveRegistryByValue
+		 **/
+		public static function registryByValue($name)
+		{
+			return new PrimitiveRegistryByValue($name);
+		}
+
+		/**
+		 * @return PrimitiveRegistryList
+		 **/
+		public static function registryList($name)
+		{
+			return new PrimitiveRegistryList($name);
+		}
 	}
 ?>
