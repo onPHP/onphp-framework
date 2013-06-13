@@ -314,7 +314,7 @@ class DataGrid extends BaseWidget
             case 'boolean':
                 return function ($value) use ($fieldId) {
                     return '<input type="checkbox" name="' . $fieldId . '"'
-                        . ($value == true ? ' checked="checked"' : '') .'" />';
+                        . ($value == true ? ' checked="checked"' : '') .' />';
                 };
 
             case 'enumeration':
