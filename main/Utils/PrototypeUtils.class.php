@@ -90,25 +90,11 @@ class PrototypeUtils
     }
 
 	public static function propertyExists(AbstractProtoClass $proto, $path) {
-		$result = true;
-		$subProto = $proto;
-		foreach (explode('.', $path) as $propertyName) {
-			/** @var $property LightMetaProperty */
-			try {
-				$property = $subProto->getPropertyByName($propertyName);
-			} catch(Exception $e) {
-				$result = false;
-				break;
-			}
-			$class = $property->getClassName();
-			if (strlen($class) && is_subclass_of($class, 'Prototyped')) {
-				$subProto = $class::proto();
-			} else {
-				$result = false;
-				break;
-			}
+		try {
+			return self::getProperty($proto, $path) instanceof LightMetaProperty;
+		} catch (MissingElementException $e) {
+			return false;
 		}
-		return $result;
 	}
 
     /**
