@@ -21,25 +21,17 @@
 	{
 		const IN_BOOLEAN_MODE = 1;
 		
-		/**
-		 * @return MyDialect
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public static function quoteValue($value)
+		public function quoteValue($value)
 		{
 			/// @see Sequenceless for this convention
 			
 			if ($value instanceof Identifier && !$value->isFinalized())
 				return "''"; // instead of 'null', to be compatible with v. 4
 			
-			return "'" . mysql_real_escape_string($value) . "'";
+			return "'" . mysql_real_escape_string($value, $this->getLink()) . "'";
 		}
 		
-		public static function quoteField($field)
+		public function quoteField($field)
 		{
 			if (strpos($field, '.') !== false)
 				throw new WrongArgumentException();
@@ -49,7 +41,7 @@
 			return "`{$field}`";
 		}
 		
-		public static function quoteTable($table)
+		public function quoteTable($table)
 		{
 			return "`{$table}`";
 		}

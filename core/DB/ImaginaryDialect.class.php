@@ -17,12 +17,17 @@
 	**/
 	final class ImaginaryDialect extends Dialect
 	{
+		private static $self = null;
+		
 		/**
 		 * @return ImaginaryDialect
 		**/
 		public static function me()
 		{
-			return Singleton::getInstance(__CLASS__);
+			if (!self::$self) {
+				self::$self = new self();
+			}
+			return self::$self;
 		}
 		
 		public function preAutoincrement(DBColumn $column)
@@ -35,17 +40,17 @@
 			return 'AUTOINCREMENT';
 		}
 		
-		public static function quoteValue($value)
+		public function quoteValue($value)
 		{
 			return $value;
 		}
 		
-		public static function quoteField($field)
+		public function quoteField($field)
 		{
 			return $field;
 		}
 		
-		public static function quoteTable($table)
+		public function quoteTable($table)
 		{
 			return $table;
 		}

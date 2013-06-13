@@ -28,6 +28,9 @@
 		**/
 		public static function create(/**/)
 		{
+			/**
+			 * @todo WTF? here need use ReflectionClass::newInstanceArgs
+			 */
 			return new self(func_get_args());
 		}
 		

@@ -133,9 +133,9 @@
 		/**
 		 * @return Form
 		**/
-		public function markMissing($primitiveName)
+		public function markMissing($primitiveName, $label = null)
 		{
-			return $this->markCustom($primitiveName, Form::MISSING);
+			return $this->markCustom($primitiveName, Form::MISSING, $label);
 		}
 		
 		/**
@@ -143,7 +143,7 @@
 		 * 
 		 * @return Form
 		**/
-		public function markWrong($name)
+		public function markWrong($name, $label = null)
 		{
 			if (isset($this->primitives[$name]))
 				$this->errors[$name] = self::WRONG;
@@ -153,6 +153,9 @@
 				throw new MissingElementException(
 					$name.' does not match known primitives or rules'
 				);
+			
+			if ($label !== null)
+				$this->addWrongLabel($name, $label);
 			
 			return $this;
 		}
@@ -179,11 +182,14 @@
 		 * 
 		 * @return Form
 		**/
-		public function markCustom($primitiveName, $customMark)
+		public function markCustom($primitiveName, $customMark, $label = null)
 		{
 			Assert::isInteger($customMark);
 			
 			$this->errors[$this->get($primitiveName)->getName()] = $customMark;
+			
+			if ($label !== null)
+				$this->addCustomLabel($primitiveName, $customMark, $label);
 			
 			return $this;
 		}

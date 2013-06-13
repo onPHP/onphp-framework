@@ -19,14 +19,6 @@
 	class PgSQL extends DB
 	{
 		/**
-		 * @return PostgresDialect
-		**/
-		public static function getDialect()
-		{
-			return PostgresDialect::me();
-		}
-		
-		/**
 		 * @return PgSQL
 		**/
 		public function connect()
@@ -255,6 +247,14 @@
 			}
 			
 			return $table;
+		}
+		
+		/**
+		 * @return PostgresDialect
+		**/
+		protected function spawnDialect()
+		{
+			return new PostgresDialect();
 		}
 		
 		private function checkSingle($result)

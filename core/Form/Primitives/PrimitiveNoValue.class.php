@@ -48,7 +48,7 @@
 		public function import($scope)
 		{
 			if (
-				key_exists($this->name, $scope)
+				array_key_exists($this->name, $scope)
 				&& $scope[$this->name] == null
 			)
 				return $this->imported = true;

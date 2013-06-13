@@ -14,7 +14,9 @@
 	**/
 	final class HttpUrl extends Url
 	{
-		protected $knownSubSchemes	= array();
+		protected static $knownSubSchemes	= array();
+		
+		private $checkPrivilegedPorts = false;
 		
 		/**
 		 * @return HttpUrl
@@ -85,34 +87,10 @@
 			if (!parent::isValidPort())
 				return false;
 			
-			if (
-				$this->port
-				&& !in_array($this->port, array(80, 443))
-				&& $this->port < 1024
-			)
+			if ($this->checkPrivilegedPorts && $this->isPrivilegedPortUsed())
 				return false;
 			
 			return true;
-		}
-		
-		protected function isValidHostName()
-		{
-			if (!parent::isValidHostName())
-				return false;
-			
-			$charPattern = $this->charPattern(null);
-			
-			// using rfc 2396, in order to detect bad ip address ranges like
-			// 666.666.666.666 which are valid hostnames in generic uri syntax
-			
-			$topLabelPattern = '(([a-z])|([a-z]([a-z0-9-])*[a-z0-9]))\.?';
-			
-			return (
-				preg_match(
-					"/^($charPattern*\.)?{$topLabelPattern}$/i",
-					$this->host
-				) == 1
-			);
 		}
 		
 		public function normalize()
@@ -137,6 +115,51 @@
 		public function makeComparable()
 		{
 			return $this->ensureAbsolute()->normalize()->setFragment(null);
+		}
+		
+		public function setCheckPrivilegedPorts($check = true)
+		{
+			$this->checkPrivilegedPorts = $check ? true : false;
+			
+			return $this;
+		}
+		
+		public function isPrivilegedPortsCheckEnabled()
+		{
+			return $this->checkPrivilegedPorts;
+		}
+		
+		public function isPrivilegedPortUsed()
+		{
+			if (
+				$this->port
+				&& !in_array($this->port, array(80, 443))
+				&& ($this->port < 1024)
+			) {
+				return true;
+			}
+			
+			return false;
+		}
+		
+		protected function isValidHostName()
+		{
+			if (!parent::isValidHostName())
+				return false;
+				
+			$charPattern = $this->charPattern(null);
+				
+			// using rfc 2396, in order to detect bad ip address ranges like
+			// 666.666.666.666 which are valid hostnames in generic uri syntax
+				
+			$topLabelPattern = '(([a-z])|([a-z]([a-z0-9-])*[a-z0-9]))\.?';
+				
+			return (
+					preg_match(
+							"/^($charPattern*\.)?{$topLabelPattern}$/i",
+							$this->host
+			) == 1
+			);
 		}
 	}
 ?>

@@ -16,17 +16,9 @@
 	 *
 	 * @ingroup DB
 	**/
-	final class LiteDialect extends Dialect
+	class LiteDialect extends Dialect implements Instantiatable
 	{
-		/**
-		 * @return LiteDialect
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public static function quoteValue($value)
+		public function quoteValue($value)
 		{
 			/// @see Sequenceless for this convention
 			

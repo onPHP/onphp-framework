@@ -27,14 +27,6 @@
 		protected $link = null;
 		
 		/**
-		 * @return LiteDialect
-		**/
-		public static function getDialect()
-		{
-			return LiteDialect::me();
-		}
-		
-		/**
 		 * @return SQLitePDO
 		**/
 		public function connect()
@@ -52,6 +44,7 @@
 					.$e->getMessage()
 				);
 			}
+			$this->link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			
 			return $this;
 		}
@@ -87,20 +80,16 @@
 		public function queryRaw($queryString)
 		{
 			try {
-				$res = $this->link->query($queryString);
-				return $res;
+				return $this->link->query($queryString);
 			} catch (PDOException $e) {
 				$code = $e->getCode();
 				
 				if ($code == self::ERROR_CONSTRAINT)
-					$e = 'DuplicateObjectException';
+					$exc = 'DuplicateObjectException';
 				else
-					$e = 'DatabaseException';
+					$exc = 'DatabaseException';
 				
-				throw new $e(
-					$e->getMessage(),
-					$code
-				);
+				throw new $exc($e->getMessage().': '.$queryString);
 			}
 		}
 		
@@ -170,6 +159,14 @@
 		protected function getInsertId()
 		{
 			return $this->link->lastInsertId();
+		}
+		
+		/**
+		 * @return LitePDODialect
+		**/
+		protected function spawnDialect()
+		{
+			return new LitePDODialect();
 		}
 	}
 ?>
