@@ -433,7 +433,7 @@
 				// PgSQL driver compatibility
 				$matches = array();
 				if( preg_match('/^{(.*)}$/', $raw, $matches) ) {
-					return array_map('strval', str_getcsv($matches[1]));
+					return array_map('stripslashes', str_getcsv($matches[1]));
 				} else {
 					throw new WrongArgumentException('raw data is not compatible with PgArray!');
 				}
