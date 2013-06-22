@@ -1,0 +1,25 @@
+{
+    "name": "onphp/onphp",
+    "description": "onPHP is the mature GPL'ed multi-purpose object-oriented PHP framework.",
+    "keywords": ["framework"],
+    "homepage": "https://github.com/onPHP/onphp-framework",
+    "type": "library",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Konstantin Arkhipov"
+        },
+        {
+            "name": "Anton Lebedevich"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "conflict": {
+        "ext-http": "*"
+    },
+    "autoload": {
+        "classmap": ["core/", "main/", "meta/"]
+    }
+}
