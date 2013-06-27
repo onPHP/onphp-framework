@@ -57,6 +57,10 @@ EOT;
 			foreach ($class->getAllProperties() as $property) {
 				if ($relation = $property->getRelation()) {
 
+					if( !$property->isBuildReference() ) {
+						continue;
+					}
+
 					$foreignClass = $property->getType()->getClass();
 
 					if (

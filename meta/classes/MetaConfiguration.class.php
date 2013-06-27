@@ -1263,6 +1263,13 @@
 								$this->references[$property->getType()->getClassName()][]
 									= $class->getName();
 							}
+
+							if ((string) $xmlProperty['reference'] == 'false') {
+								$property->skipReference();
+							} else {
+								$property->buildReference();
+							}
+
 						}
 					}
 

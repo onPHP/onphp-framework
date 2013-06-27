@@ -38,6 +38,7 @@
 		required	(true|false) "false"
 		relation	(OneToOne|OneToMany|ManyToMany) #IMPLIED
 		fetch		(lazy|cascade) #IMPLIED
+		reference	(true|false) #IMPLIED
 >
 
 <!ELEMENT pattern EMPTY>

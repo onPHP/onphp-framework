@@ -29,6 +29,8 @@
 
 		private $strategy	= null;
 
+		private $reference	= false;
+
 		public function __construct(
 			$name,
 			BasePropertyType $type,
@@ -250,6 +252,33 @@
 
 			return null;
 		}
+
+		/**
+		 * @return MetaClassProperty
+		**/
+		public function buildReference() {
+			$this->reference = true;
+
+			return $this;
+		}
+
+		/**
+		 * @return MetaClassProperty
+		**/
+		public function skipReference() {
+			$this->reference = false;
+
+			return $this;
+		}
+
+		/**
+		 * @return boolean
+		 */
+		public function isBuildReference() {
+			return $this->reference;
+		}
+
+
 
 		public function toMethods(
 			MetaClass $class,
