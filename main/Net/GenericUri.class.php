@@ -285,6 +285,55 @@
 		{
 			return $this->query;
 		}
+
+		/**
+		 * @return array|null
+		 */
+		public function getQueryArray() {
+			if ($this->getQuery()) {
+				parse_str($this->getQuery(), $array);
+				return $array;
+			}
+			return null;
+		}
+
+		/**
+		 * @param $array
+		 * @return $this
+		 */
+		public function setQueryArray($array) {
+			Assert::isArray($array);
+
+			$build = function ($array, $prefix = null) use (&$build) {
+				$pairs = array();
+				foreach ($array as $key => $value) {
+					$key = urlencode($key);
+					if ($prefix) {
+						$key = $prefix . '[' . $key . ']';
+					}
+
+					if (is_object($value)) {
+						throw new WrongArgumentException($key . ' is an object (' . get_class($value) . ')');
+					}
+
+					if (is_array($value)) {
+						foreach ($build($value, $key) as $pair) {
+							$pairs []= $pair;
+						}
+					} else {
+						if (is_string($value)) 	$value = urlencode($value);
+						if (is_bool($value))	$value = $value ? '1' : '0';
+
+						$pairs []= $key . '=' . $value;
+					}
+				}
+				return $pairs;
+			};
+
+			$this->setQuery( implode('&', $build($array)) );
+
+			return $this;
+		}
 		
 		/**
 		 * @return GenericUri
