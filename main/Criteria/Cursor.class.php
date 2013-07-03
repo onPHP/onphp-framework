@@ -45,15 +45,14 @@ final class Cursor implements Iterator {
 		$this->db = DBPool::getByDao($this->dao);
 		$this->selectQuery = $query;
 
-		$this->db->begin();
+		$this->openTransaction();
 		$this->declareCursor();
-		$this->openCursor();
 	}
 
 	function __destruct() {
 		if( $this->db->inTransaction() && is_resource($this->db->getLink()) ) {
 			$this->closeCursor();
-			$this->db->commit();
+			$this->closeTransaction();
 		}
 	}
 
@@ -142,6 +141,11 @@ final class Cursor implements Iterator {
 		$this->iteratorPosition = 0;
 	}
 
+	public function close() {
+		$this->closeCursor();
+		$this->closeTransaction();
+	}
+
 
 	/**
 	 * @return SelectQuery
@@ -164,14 +168,13 @@ final class Cursor implements Iterator {
 		return $this->cursorName;
 	}
 
+	protected function openTransaction() {
+		$this->db->begin();
+	}
+
 	protected function declareCursor() {
 		$queryDeclare = 'DECLARE '.$this->getCursorName().' CURSOR FOR '.$this->getSelectQuery()->toDialectString($this->db->getDialect());
 		$this->db->queryRaw($queryDeclare);
-	}
-
-	protected function openCursor() {
-//		$queryOpen = 'OPEN '.$this->getCursorName();
-//		$this->db->queryRaw($queryOpen);
 	}
 
 	protected function fetchRow() {
@@ -188,6 +191,10 @@ final class Cursor implements Iterator {
 	protected function closeCursor() {
 		$queryOpen = 'CLOSE '.$this->getCursorName();
 		$this->db->queryRaw($queryOpen);
+	}
+
+	protected function closeTransaction() {
+		$this->db->commit();
 	}
 
 	final private function __sleep() {/* restless class */}
