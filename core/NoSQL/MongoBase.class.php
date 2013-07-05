@@ -114,6 +114,12 @@ class MongoBase extends NoSQL {
 		return $this;
 	}
 
+	public function switchToPrimary() {
+		$this->connectionOptions['slaveOkay'] = false;
+		$this->connectionOptions['readPreference'] = 'primary';
+		$this->connect();
+	}
+
 	/**
 	 * @return MongoBase
 	 */
