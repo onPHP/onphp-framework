@@ -2,7 +2,8 @@
 /**
  * <class description>
  * @author Alex Gorbylev <alex@gorbylev.ru>
- * @date 2012.03.30
+ * @tweaks Anton Gurov <trashmailbox@e1.ru>
+ * @date 2013.07.03
  */
 final class NoSQLExpression implements LogicalObject, MappableObject {
 
@@ -60,9 +61,35 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 		$this->unite = (bool)$unite;
 	}
 
+    /**
+     * Замена Assert::checkInteger
+     * @param $variable
+     * @return bool
+     */
+    public static function checkComparable($variable) {
+        if (Assert::checkScalar($variable) || $variable instanceof MongoDate) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Замена Assert::IsInteger
+     * @param $variable
+     * @param $message
+     * @throws WrongArgumentException
+     */
+    public static function assertIsComparable($variable, $message = null) {
+        if (!self::checkComparable($variable)) {
+            throw new WrongArgumentException(
+                $message.', '.Assert::dumpArgument($variable)
+            );
+        }
+    }
 /// field list
 //@{
-	/**
+    /**
 	 * @param string $fieldName
 	 * @return NoSQLExpression
 	 */
@@ -109,48 +136,48 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 	}
 
 	public function addGt($field, $value) {
-		Assert::isInteger($value);
+		self::assertIsComparable($value);
 		$this->conditions[] = array(
 			self::C_TYPE	=> self::EXP_GT,
 			self::C_FIELD	=> (string)$field,
-			self::C_VALUE	=> (int)$value,
+			self::C_VALUE	=> $value,
 		);
 		return $this;
 	}
 
 	public function addGte($field, $value) {
-		Assert::isInteger($value);
+		self::assertIsComparable($value);
 		$this->conditions[] = array(
 			self::C_TYPE	=> self::EXP_GTE,
 			self::C_FIELD	=> (string)$field,
-			self::C_VALUE	=> (int)$value,
+			self::C_VALUE	=> $value,
 		);
 		return $this;
 	}
 
 	public function addLt($field, $value) {
-		Assert::isInteger($value);
+		self::assertIsComparable($value);
 		$this->conditions[] = array(
 			self::C_TYPE	=> self::EXP_LT,
 			self::C_FIELD	=> (string)$field,
-			self::C_VALUE	=> (int)$value,
+			self::C_VALUE	=> $value,
 		);
 		return $this;
 	}
 
 	public function addLte($field, $value) {
-		Assert::isInteger($value);
+        self::assertIsComparable($value);
 		$this->conditions[] = array(
 			self::C_TYPE	=> self::EXP_LTE,
 			self::C_FIELD	=> (string)$field,
-			self::C_VALUE	=> (int)$value,
+			self::C_VALUE	=> $value,
 		);
 		return $this;
 	}
 
 	public function addBetweenStrict($field, $left, $right) {
-		Assert::isInteger($left);
-		Assert::isInteger($right);
+        self::assertIsComparable($left);
+        self::assertIsComparable($right);
 		$this->conditions[] = array(
 			self::C_TYPE	=> self::EXP_BTW_STR,
 			self::C_FIELD	=> (string)$field,
@@ -160,8 +187,8 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 	}
 
 	public function addBetweenSoft($field, $left, $right) {
-		Assert::isInteger($left);
-		Assert::isInteger($right);
+		self::assertIsComparable($left);
+        self::assertIsComparable($right);
 		$this->conditions[] = array(
 			self::C_TYPE	=> self::EXP_BTW_SFT,
 			self::C_FIELD	=> (string)$field,

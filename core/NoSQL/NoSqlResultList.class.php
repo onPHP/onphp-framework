@@ -39,7 +39,11 @@ class NoSqlResultList implements Iterator {
 	 */
 	public function current() {
 		$row = $this->getCursor()->current();
-		$row['id'] = (string)$row['_id'];
+		if ($row['_id'] instanceof MongoId) {
+            $row['id'] = (string)$row['_id'];
+        } else {
+            $row['id'] = $row['_id'];
+        }
 		unset($row['_id']);
 		return $this->result->getDao()->makeNoSqlObject($row);
 	}

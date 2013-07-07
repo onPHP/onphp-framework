@@ -412,8 +412,10 @@
 
 			if($this->type == 'set') {
 				// MongoDB driver compatibility
+
 				if( is_array($raw) ) {
-					return $raw;
+
+                    return $raw;
 				} else {
 					throw new WrongArgumentException('raw data is not array!');
 				}
