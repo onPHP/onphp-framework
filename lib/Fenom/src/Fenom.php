@@ -613,8 +613,13 @@ class Fenom {
      */
     public function getTemplate($template, $options = 0) {
 		$options |= $this->_options;
-        $key = dechex($options)."@".$template;
-        if(isset($this->_storage[ $key ])) {
+
+		if (($options & self::FORCE_COMPILE) === self::FORCE_COMPILE) {
+			return $this->compile($template, ($options & self::DISABLE_CACHE) === self::DISABLE_CACHE, $options);
+		}
+
+		$key = dechex($options)."@".$template;
+		if(isset($this->_storage[ $key ])) {
             /** @var Fenom\Template $tpl  */
             $tpl = $this->_storage[ $key ];
             if(($options & self::AUTO_RELOAD) && !$tpl->isValid()) {
@@ -622,8 +627,6 @@ class Fenom {
             } else {
                 return $tpl;
             }
-        } elseif($options & self::FORCE_COMPILE === self::FORCE_COMPILE) {
-            return $this->compile($template, $options & self::DISABLE_CACHE === self::DISABLE_CACHE, $options);
         } else {
 			return $this->_storage[ $key ] = $this->_load($template, $options);
         }
@@ -645,15 +648,21 @@ class Fenom {
      * @param int $opts
      * @return Fenom\Render
      */
-    protected function _load($tpl, $opts) {
-        $file_name = $this->_getCacheName($tpl, $opts);
-        if(!is_file($this->_compile_dir."/".$file_name)) {
-            return $this->compile($tpl, true, $opts);
-        } else {
-            $fenom = $this;
-            return include($this->_compile_dir."/".$file_name);
-        }
-    }
+	protected function _load($tpl, $opts) {
+		$cachePath = $this->_compile_dir . DIRECTORY_SEPARATOR . $this->_getCacheName($tpl, $opts);
+		$useCache = false;
+		$cached = null;
+		if (is_file($cachePath)) {
+			$fenom = $this;
+			/** @var Fenom\Render $cached */
+			$cached = include($cachePath);
+			if (($opts & self::AUTO_RELOAD) !== self::AUTO_RELOAD || $cached->isValid()) {
+				$useCache = true;
+			}
+		}
+
+		return $useCache ? $cached : $this->compile($tpl, true, $opts);
+	}
 
     /**
      * Generate unique name of compiled template
