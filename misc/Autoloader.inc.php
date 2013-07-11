@@ -62,7 +62,7 @@
 				
 				foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
 					$cache[$dirCount] = realpath($directory).DIRECTORY_SEPARATOR;
-					
+
 					if ($paths = glob($cache[$dirCount].'*'.EXT_CLASS, GLOB_NOSORT)) {
 						foreach ($paths as $class) {
 							$class = basename($class, EXT_CLASS);
@@ -105,13 +105,9 @@
 				}
 			} else {
 				// ok, last chance to find class in non-cached include_path
-				try {
-					include $classname.EXT_CLASS;
-					$cache[ONPHP_CLASS_CACHE_CHECKSUM] = null;
-					return /* void */;
-				} catch (BaseException $e) {
-					__autoload_failed($classname, $e->getMessage());
-				}
+				self::noCache($classname);
+				$cache[ONPHP_CLASS_CACHE_CHECKSUM] = null;
+				return /* void */;
 			}
 		}
 		
@@ -121,12 +117,22 @@
 				/* are you sane? */
 				return;
 			}
-			
-			try {
-				include $classname.EXT_CLASS;
-				return /* void */;
-			} catch (BaseException $e) {
-				return __autoload_failed($classname, $e->getMessage());
+
+			// make namespaces work
+			$classname = str_replace('\\', '/', $classname);
+
+			$errors = array();
+			foreach (array(EXT_CLASS, '.php') as $ext) {
+				try {
+					include $classname.$ext;
+					return /* void */;
+				} catch (BaseException $e) {
+					$errors[] = $e->getMessage();
+				}
+			}
+
+			if (!class_exists($classname)) {
+				__autoload_failed($classname, 'class not found' . PHP_EOL . implode(PHP_EOL, $errors));
 			}
 		}
 		
