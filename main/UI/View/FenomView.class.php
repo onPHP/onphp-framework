@@ -11,6 +11,10 @@ class FenomView implements View, Stringable {
 
 	protected function __construct() {}
 
+	/**
+	 * @param $template
+	 * @return self
+	 */
 	public static function create($template) {
 		$view = new static;
 		$view->template = $template;
