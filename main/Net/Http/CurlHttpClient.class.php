@@ -340,20 +340,33 @@
 		private function argumentsToString($array)
 		{
 			if( is_array($array) ) {
-				$result = array();
-
-				foreach ($array as $key => $value) {
-					if (is_array($value)) {
-						foreach ($value as $valueKey => $simpleValue) {
-							$result[] =
-								$key.'['.$valueKey.']='.urlencode($simpleValue);
+				$build = function ($array, $prefix = null) use (&$build) {
+					$pairs = array();
+					foreach ($array as $key => $value) {
+						$key = urlencode($key);
+						if ($prefix) {
+							$key = $prefix . '[' . $key . ']';
 						}
-					} else {
-						$result[] = $key.'='.urlencode($value);
-					}
-				}
 
-				return implode('&', $result);
+						if (is_object($value)) {
+							throw new WrongArgumentException($key . ' is an object (' . get_class($value) . ')');
+						}
+
+						if (is_array($value)) {
+							foreach ($build($value, $key) as $pair) {
+								$pairs []= $pair;
+							}
+						} else {
+							if (is_string($value)) 	$value = urlencode($value);
+							if (is_bool($value))	$value = $value ? '1' : '0';
+
+							$pairs []= $key . '=' . $value;
+						}
+					}
+					return $pairs;
+				};
+
+				return implode('&', $build($array));
 			} else {
 				return $array;
 			}
