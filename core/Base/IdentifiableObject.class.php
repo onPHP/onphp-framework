@@ -17,7 +17,7 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
-	class /* spirit of */ IdentifiableObject implements Identifiable, DialectString
+	class /* spirit of */ IdentifiableObject implements Identifiable, DialectString, ArrayAccess
 	{
 		protected $id = null;
 		
@@ -56,5 +56,25 @@
 		{
 			return $dialect->quoteValue($this->getId());
 		}
+
+		public function offsetExists($offset) {
+			return isset($this->$offset);
+		}
+
+		public function offsetGet($offset) {
+			return $this->{'get' . ucfirst($offset)}();
+		}
+
+		public function offsetSet($offset, $value) {
+			return $this->{'set' . ucfirst($offset)}($value);
+		}
+
+		public function offsetUnset($offset) {
+			$dropper = 'drop' . ucfirst($offset);
+			if (method_exists($this, $dropper)) {
+				$this->{$dropper}();
+			}
+		}
+
 	}
 ?>
