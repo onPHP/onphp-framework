@@ -31,6 +31,7 @@
 	define('EXT_MOD', '.inc.php');
 	define('EXT_HTML', '.html');
 	define('EXT_UNIT', '.unit.php');
+	define('EXT_FENOM', '.fm');
 
 	// overridable constant, don't forget for trailing slash
 	// also you may consider using /dev/shm/ for cache purposes
