@@ -35,6 +35,7 @@
 		 * flag to indicate whether we're in transaction
 		**/
 		private $transaction	= false;
+		private $afterCommit 	= array();
 		
 		private $queue			= array();
 		private $toQueue		= false;
@@ -126,7 +127,11 @@
 				$this->queryRaw("{$begin};\n");
 			
 			$this->transaction = true;
-			
+
+			if (!$this->toQueue) {
+				$this->afterCommit = array();
+			}
+
 			return $this;
 		}
 		
@@ -141,7 +146,11 @@
 				$this->queryRaw("commit;\n");
 			
 			$this->transaction = false;
-			
+
+			if (!$this->toQueue) {
+				$this->onAfterCommit();
+			}
+
 			return $this;
 		}
 		
@@ -156,13 +165,34 @@
 				$this->queryRaw("rollback;\n");
 			
 			$this->transaction = false;
-			
+
+			if (!$this->toQueue) {
+				$this->afterCommit = array();
+			}
+
 			return $this;
 		}
 		
 		public function inTransaction()
 		{
 			return $this->transaction;
+		}
+
+		public function runAfterCommit($callback) {
+			$this->afterCommit[] = $callback;
+			if (!$this->inTransaction() && !$this->isQueueActive()) {
+				$this->onAfterCommit();
+			}
+			return $this;
+		}
+
+		private function onAfterCommit() {
+			foreach ($this->afterCommit as $callback) {
+				if (is_callable($callback)) {
+					call_user_func($callback);
+				}
+			}
+			$this->afterCommit = array();
 		}
 		//@}
 		
@@ -178,7 +208,9 @@
 		{
 			if ($this->hasQueue())
 				$this->toQueue = true;
-			
+
+			$this->afterCommit = array();
+
 			return $this;
 		}
 		
@@ -188,7 +220,8 @@
 		public function queueStop()
 		{
 			$this->toQueue = false;
-			
+			$this->afterCommit = array();
+
 			return $this;
 		}
 		
@@ -198,7 +231,8 @@
 		public function queueDrop()
 		{
 			$this->queue = array();
-			
+			$this->afterCommit = array();
+
 			return $this;
 		}
 		
@@ -213,6 +247,8 @@
 				);
 			
 			$this->toQueue = false;
+
+			$this->onAfterCommit();
 			
 			return $this->queueDrop();
 		}
