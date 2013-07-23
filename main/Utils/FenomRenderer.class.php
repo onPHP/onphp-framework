@@ -55,6 +55,7 @@ class FenomRenderer extends Singleton {
 	 * @param array $data
 	 */
 	public function render($template, $data = array()) {
-		echo $this->fenom->fetch($template, $data);
+		$result = $this->fenom->fetch($template, $data);
+		echo $result;
 	}
 }
