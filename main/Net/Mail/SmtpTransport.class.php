@@ -10,9 +10,10 @@ class SmtpTransport {
 	const DEFAULT_PORT = 25;
 
 	const DEBUG_DISABLED = 0;
-	const DEBUG_MINIMUM = 1;
-	const DEBUG_MEDIUM = 2;
-	const DEBUG_MAXIMUM = 3;
+	const DEBUG_MINIMUM = 10;
+	const DEBUG_MEDIUM = 20;
+	const DEBUG_MAXIMUM = 30;
+	const DEBUG_TOTAL = 40;
 
 	protected $useSSL = false;
 
@@ -47,6 +48,9 @@ class SmtpTransport {
 
 	/** @var string */
 	protected $serverAuthMethods = null;
+
+	/** @var string */
+	protected $lastRecipient = null;
 
 	/**
 	 * @return SmtpTransport
@@ -235,6 +239,14 @@ class SmtpTransport {
 	}
 
 	/**
+	 * @return SmtpTransport
+	 */
+	public function debugTotal() {
+		$this->debugLevel = self::DEBUG_TOTAL;
+		return $this;
+	}
+
+	/**
 	 * @return callable
 	 */
 	public function getDebugWriter() {
@@ -315,7 +327,7 @@ class SmtpTransport {
 		// get any announcement
 		$announce = $this->execCommand(null, 220);
 
-		$this->debugOut('SMTP connected: ' . $announce['payload'], self::DEBUG_MINIMUM);
+		$this->debugOut('SMTP: connected :: ' . $announce['payload'], self::DEBUG_MINIMUM);
 
 		return $this;
 	}
@@ -370,6 +382,8 @@ class SmtpTransport {
 		$authString = substr($hello['payload'], 5, strpos($hello['payload'], "\n")-6);
 		$this->serverAuthMethods = explode(' ', $authString);
 
+		$this->debugOut('SMTP: hello passed', self::DEBUG_MEDIUM);
+
 		return $this;
 	}
 
@@ -402,6 +416,8 @@ class SmtpTransport {
 		} else {
 			$this->debugOut('STARTTLS not accepted from server', self::DEBUG_MEDIUM);
 		}
+
+		$this->debugOut('SMTP: StarTLS started', self::DEBUG_MEDIUM);
 
 		return $this;
 	}
@@ -452,6 +468,9 @@ class SmtpTransport {
 				}
 			} break;
 		}
+
+		$this->debugOut('SMTP: Authentication passed', self::DEBUG_MINIMUM);
+
 		return $this;
 	}
 
@@ -486,6 +505,8 @@ class SmtpTransport {
 			throw new SmtpTransportException('MAIL not accepted from server', $e->getCode(), $e);
 		}
 
+		$this->debugOut('SMTP: mail from :: ' . $from, self::DEBUG_MEDIUM);
+
 		return $this;
 	}
 
@@ -504,7 +525,7 @@ class SmtpTransport {
 	 * @throws WrongStateException
 	 * @return SmtpTransport
 	 */
-	public function addRecipient($to) {
+	public function setRecipient($to) {
 		$this->assertConnection(__METHOD__);
 		$this->assertValidEmail($to);
 
@@ -513,6 +534,9 @@ class SmtpTransport {
 		} catch(SmtpTransportException $e) {
 			throw new SmtpTransportException('RCPT not accepted from server', $e->getCode(), $e);
 		}
+
+		$this->lastRecipient = $to;
+		$this->debugOut('SMTP: rctp to :: ' . $to, self::DEBUG_MEDIUM);
 
 		return $this;
 	}
@@ -619,6 +643,37 @@ class SmtpTransport {
 			throw new MailNotSentException($e->getMessage(), $e->getCode());
 		}
 
+		$this->debugOut('SMTP: mail sent to :: '.$this->lastRecipient, self::DEBUG_MINIMUM);
+
+		return $this;
+	}
+
+	/**
+	 * Sends the RSET command to abort and transaction that is
+	 * currently in progress. Returns true if successful false
+	 * otherwise.
+	 *
+	 * Implements rfc 821: RSET <CRLF>
+	 *
+	 * SMTP CODE SUCCESS: 250
+	 * SMTP CODE ERROR  : 500, 501, 504, 421
+	 * @throws SmtpTransportException
+	 * @throws WrongStateException
+	 * @return SmtpTransport
+	 */
+	public function reset() {
+		$this->assertConnection(__METHOD__);
+
+		// clear last recipient
+		$this->lastRecipient = null;
+
+		// send the quit command to the server
+		try {
+//			$this->execCommand('RSET', 250);
+		} catch(SmtpTransportException $e) {
+			throw new SmtpTransportException('RSET not accepted from server', $e->getCode(), $e);
+		}
+
 		return $this;
 	}
 
@@ -644,6 +699,8 @@ class SmtpTransport {
 			throw new SmtpTransportException('QUIT not accepted from server', $e->getCode(), $e);
 		}
 
+		$this->debugOut('SMTP: quited', self::DEBUG_MINIMUM);
+
 		return $this;
 	}
 
@@ -651,7 +708,7 @@ class SmtpTransport {
 	 * Closes the socket and cleans up the state of the class.
 	 * It is not considered good to use this function without
 	 * first trying to use QUIT.
-	 * @return void
+	 * @return SmtpTransport
 	 */
 	public function close() {
 		$this->error = null; // so there is no confusion
@@ -661,6 +718,10 @@ class SmtpTransport {
 			fclose($this->connection);
 			$this->connection = null;
 		}
+
+		$this->debugOut('SMTP: connection closed', self::DEBUG_MINIMUM);
+
+		return $this;
 	}
 
 	/**
@@ -672,7 +733,7 @@ class SmtpTransport {
 			$sock_status = stream_get_meta_data($this->connection);
 			if($sock_status['eof']) {
 				// the socket is valid but we are not connected
-				$this->debugOut('SMTP->NOTICE: EOF caught while checking if connected', self::DEBUG_MAXIMUM);
+				$this->debugOut('SMTP->NOTICE: EOF caught while checking if connected', self::DEBUG_TOTAL);
 				$this->close();
 				return false;
 			}
@@ -720,15 +781,15 @@ class SmtpTransport {
 	protected function execCommand($command, $expectedCode) {
 		if( !is_null($command) ) {
 			$this->rawPut($command . $this->crlf);
-			$this->debugOut('', self::DEBUG_MEDIUM);
-			$this->debugOut("Send command {$command}", self::DEBUG_MEDIUM);
+			$this->debugOut('', self::DEBUG_MAXIMUM);
+			$this->debugOut("Send command {$command}", self::DEBUG_MAXIMUM);
 		}
 		$reply = trim($this->rawGet());
 
 		$code = intval( trim(substr($reply, 0, 4)) );
 		$payload = substr($reply, 4);
 
-		$this->debugOut("Got answer with code {$code} and payload: {$payload}", self::DEBUG_MEDIUM);
+		$this->debugOut("Got answer with code {$code} and payload: {$payload}", self::DEBUG_MAXIMUM);
 		if( $code!=$expectedCode ) {
 			throw new SmtpTransportException("Wrong answer code got {$code} but {$expectedCode} expected");
 		}
@@ -780,7 +841,7 @@ class SmtpTransport {
 				}
 			}
 		}
-		$this->debugOut("SMTP get data: \"$data\"", self::DEBUG_MAXIMUM);
+		$this->debugOut("SMTP get data: \"$data\"", self::DEBUG_TOTAL);
 		return $data;
 	}
 
@@ -791,7 +852,7 @@ class SmtpTransport {
 	 * @return int
 	 */
 	protected function rawPut($data) {
-		$this->debugOut("SMTP put data: $data", self::DEBUG_MAXIMUM);
+		$this->debugOut("SMTP put data: $data", self::DEBUG_TOTAL);
 		return fwrite($this->connection, $data);
 	}
 
