@@ -24,6 +24,7 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 	const EXP_BTW_SFT	= 1008;
 	const EXP_IN		= 1009;
 	const EXP_NOT_IN	= 1010;
+	const EXP_TYPE		= 1100;
 
 	/**
 	 * true = объединять условия по И
@@ -230,6 +231,16 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 		);
 		return $this;
 	}
+
+	public function addType($field, $value) {
+		$this->conditions[] = array(
+			self::C_TYPE	=> self::EXP_TYPE,
+			self::C_FIELD	=> (string)$field,
+			self::C_VALUE	=> (int)$value,
+		);
+		return $this;
+	}
+
 //@}
 
 /// helper functions
@@ -327,6 +338,13 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
 						$query[ $condition[self::C_FIELD] ] = array('$nin' => $condition[self::C_VALUE]);
 					} else {
 						$query[] = array( $condition[self::C_FIELD] => array('$nin' => $condition[self::C_VALUE]) );
+					}
+				} break;
+				case self::EXP_TYPE: {
+					if( $this->unite ) {
+						$query[ $condition[self::C_FIELD] ] = array('$type' => $condition[self::C_VALUE]);
+					} else {
+						$query[] = array( $condition[self::C_FIELD] => array('$type' => $condition[self::C_VALUE]) );
 					}
 				} break;
 				default: {
