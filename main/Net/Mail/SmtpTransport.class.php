@@ -791,7 +791,7 @@ class SmtpTransport {
 
 		$this->debugOut("Got answer with code {$code} and payload: {$payload}", self::DEBUG_MAXIMUM);
 		if( $code!=$expectedCode ) {
-			throw new SmtpTransportException("Wrong answer code got {$code} but {$expectedCode} expected");
+			throw new SmtpTransportException("Wrong answer code got {$code} but {$expectedCode} expected; last command: {$command}");
 		}
 
 		return array(
