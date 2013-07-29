@@ -36,15 +36,24 @@ class ExtendedView implements View {
 	 * @return self
 	 **/
 	public function render($model = null) {
+		// begin rendering
+		ob_start();
+
+		// render headers
 		foreach ($this->before as $pre) {
 			$pre->render($model);
 		}
 
+		// render body
 		$this->body->render($model);
 
+		// render footers
 		foreach ($this->after as $post) {
 			$post->render($model);
 		}
+
+		// done rendering
+		ob_end_flush();
 
 		return $this;
 	}
