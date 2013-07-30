@@ -81,7 +81,7 @@ final class NoSQLExpression implements LogicalObject, MappableObject {
      * @param $message
      * @throws WrongArgumentException
      */
-    public static function assertIsComparable($variable, $message = null) {
+    protected static function assertIsComparable($variable, $message = null) {
         if (!self::checkComparable($variable)) {
             throw new WrongArgumentException(
                 $message.', '.Assert::dumpArgument($variable)
