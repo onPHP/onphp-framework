@@ -69,14 +69,29 @@ class FenomMultiProvider implements ProviderInterface {
 	 * @return bool
 	 */
 	public function verify(array $templates) {
-		// TODO: Implement verify() method.
+		// not optimal, but works
+		foreach ($templates as $template_name => $modified) {
+			$verified = false;
+			foreach ($this->providers as $provider) {
+				$verified = $provider->verify(array($template_name => $modified));
+				if ($verified) break;
+			}
+			if (!$verified) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
 	 * @return array
 	 */
 	public function getList() {
-		// TODO: Implement getList() method.
+		$list = array();
+		foreach ($this->providers as $provider) {
+			$list = array_merge($list, $provider->getList());
+		}
+		return $list;
 	}
 
 }
