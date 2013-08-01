@@ -88,7 +88,7 @@
 			if (
 				$this->port
 				&& !in_array($this->port, array(80, 443))
-				&& $this->port < 1024
+				&& $this->port < 65535
 			)
 				return false;
 			
