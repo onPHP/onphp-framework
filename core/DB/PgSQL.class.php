@@ -123,7 +123,8 @@
 			} catch (BaseException $e) {
 				// manual parsing, since pg_send_query() and
 				// pg_get_result() is too slow in our case
-				list($error, ) = explode("\n", pg_errormessage($this->link));
+//				list($error, ) = explode("\n", pg_errormessage($this->link));
+				$error = str_replace(array("\n", "\r"), array('   ', ''), trim(pg_errormessage($this->link)));
 				$code = substr($error, 8, 5);
 
 				if ($code == PostgresError::UNIQUE_VIOLATION) {
