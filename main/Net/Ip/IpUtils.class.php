@@ -40,5 +40,21 @@
 			
 			return $ranges;
 		}
+
+		public static function checkCIDR($ip, $cidr) {
+			if( !preg_match('@(\d+\.\d+\.\d+\.\d+)(?:/(\d+))?@mi', $cidr, $matches) ) {
+				throw new WrongArgumentException('CIDR is not valid');
+			}
+			$net = $matches[1];
+			$mask = isset($matches[2]) ? $matches[2] : 32;
+			// 2 long
+			$int_ip = ip2long($ip);
+			$int_net = ip2long($net);
+			$int_mask = ~((1 << (32 - $mask)) - 1);
+			// bitwise AND
+			$ip_mask = $int_ip & $int_mask;
+			// check
+			return ($ip_mask == $int_net);
+		}
 	}
 ?>
