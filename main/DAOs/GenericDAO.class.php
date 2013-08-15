@@ -160,7 +160,9 @@
 		public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
 		{
 			Assert::isScalar($id);
-			Assert::isNotEmpty($id);
+			if (mb_strlen($id) == 0) {
+				throw new WrongArgumentException("Empty id to getById");
+			}
 			
 			if (isset($this->identityMap[$id]))
 				return $this->identityMap[$id];
