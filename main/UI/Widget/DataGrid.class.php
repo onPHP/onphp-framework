@@ -477,9 +477,20 @@ class DataGrid extends BaseWidget
 				};
 			}
 
+            case 'enum':
             case 'enumeration': {
 				return function ($value) {
-					if( $value instanceof Enumeration ) {
+					if( $value instanceof Enumeration || $value instanceof Enum ) {
+						return $value->getName();
+					} else {
+						return '';
+					}
+				};
+			}
+
+            case 'hstore': {
+				return function ($value) {
+					if( $value instanceof Hstore || $value instanceof Enum ) {
 						return $value->getName();
 					} else {
 						return '';

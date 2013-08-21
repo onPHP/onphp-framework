@@ -138,11 +138,15 @@ class PrototypeUtils
     }
 
 	public static function hasProperty(Prototyped $object, $path) {
-		try {
-			self::getValue($object, $path);
-			return true;
-		} catch (ObjectNotFoundException $e) {
-			return false;
+		if( strpos($path, '.')>0 ) {
+			try {
+				self::getValue($object, $path);
+				return true;
+			} catch (ObjectNotFoundException $e) {
+				return false;
+			}
+		} else {
+			return $object->proto()->isPropertyExists($path);
 		}
 	}
 
