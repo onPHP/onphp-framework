@@ -144,6 +144,7 @@ final class Cursor implements Iterator {
 	public function close() {
 		$this->closeCursor();
 		$this->closeTransaction();
+		$this->cursorName = null;
 	}
 
 
