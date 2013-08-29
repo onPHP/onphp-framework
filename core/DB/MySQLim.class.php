@@ -73,6 +73,11 @@
 			return $this;
 		}
 		
+		public function isConnected()
+		{
+			return parent::isConnected() && mysqli_ping($this->link);
+		}
+		
 		/**
 		 * Same as query, but returns number of
 		 * affected rows in insert/update queries
