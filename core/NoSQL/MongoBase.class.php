@@ -89,11 +89,16 @@ class MongoBase extends NoSQL {
 		if ($this->persistent) {
 			$options['persist'] = $this->hostname.'-'.$this->basename;
 		}
+		$readPreference = isset($options['slaveOkay']) && $options['slaveOkay'];
+		if( $Mongo==='MongoClient' ) {
+			$options['readPreference'] = $readPreference ? $Mongo::RP_SECONDARY_PREFERRED : $Mongo::RP_PRIMARY_PREFERRED;
+			unset($options['slaveOkay']);
+		}
 		try {
 			$this->link = new $Mongo($conn, $options);
 			$this->db = $this->link->selectDB($this->basename);
 			if( method_exists($Mongo, 'setReadPreference') ) {
-				$this->link->setReadPreference($options['slaveOkay'] ? $Mongo::RP_SECONDARY_PREFERRED : $Mongo::RP_PRIMARY_PREFERRED);
+				$this->link->setReadPreference($readPreference ? $Mongo::RP_SECONDARY_PREFERRED : $Mongo::RP_PRIMARY_PREFERRED);
 			} else {
 				$this->link->setSlaveOkay($options['slaveOkay']);
 			}
