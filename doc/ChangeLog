@@ -1,3 +1,9 @@
+2013-09-03 bassta
+
+	* core/DB/MySQL.class.php
+	core/DB/MySQLim.class.php:
+		added (mysqli?_ping) check to isConnected() methods
+
 2013-04-19 Aleksey S. Denisov
 
 	* core/Cache/CachePeer.class.php
