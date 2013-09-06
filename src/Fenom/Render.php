@@ -9,18 +9,21 @@
  */
 namespace Fenom;
 use Fenom;
+use Symfony\Component\Yaml\Exception\RuntimeException;
 
 /**
  * Primitive template
  * @author     Ivan Shalganov <a.cobest@gmail.com>
  */
-class Render extends \ArrayObject {
+class Render extends \ArrayObject
+{
     private static $_props = array(
         "name" => "runtime",
         "base_name" => "",
         "scm" => false,
         "time" => 0,
-        "depends" => array()
+        "depends" => array(),
+        "macros" => array()
     );
     /**
      * @var \Closure
@@ -68,53 +71,86 @@ class Render extends \ArrayObject {
     protected $_provider;
 
     /**
+     * @var \Closure[]
+     */
+    protected $_macros;
+
+    /**
      * @param Fenom $fenom
      * @param callable $code template body
      * @param array $props
      */
-    public function __construct(Fenom $fenom, \Closure $code, $props = array()) {
+    public function __construct(Fenom $fenom, \Closure $code, array $props = array())
+    {
         $this->_fenom = $fenom;
         $props += self::$_props;
         $this->_name = $props["name"];
-//        $this->_provider = $this->_fenom->getProvider($props["scm"]);
         $this->_scm = $props["scm"];
         $this->_time = $props["time"];
         $this->_depends = $props["depends"];
+        $this->_macros = $props["macros"];
         $this->_code = $code;
     }
 
     /**
      * Get template storage
-     * @return Fenom
+     * @return \Fenom
      */
-    public function getStorage() {
+    public function getStorage()
+    {
         return $this->_fenom;
     }
 
-    public function getDepends() {
+    /**
+     * Get depends list
+     * @return array
+     */
+    public function getDepends()
+    {
         return $this->_depends;
     }
 
-    public function getScm() {
+    /**
+     * Get schema name
+     * @return string
+     */
+    public function getScm()
+    {
         return $this->_scm;
     }
 
-    public function getProvider() {
+    /**
+     * Get provider of template source
+     * @return ProviderInterface
+     */
+    public function getProvider()
+    {
         return $this->_fenom->getProvider($this->_scm);
     }
 
-    public function getBaseName() {
+    /**
+     * Get name without schema
+     * @return string
+     */
+    public function getBaseName()
+    {
         return $this->_base_name;
     }
 
-    public function getOptions() {
+    /**
+     * Get parse options
+     * @return int
+     */
+    public function getOptions()
+    {
         return $this->_options;
     }
 
     /**
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->_name;
     }
 
@@ -122,11 +158,13 @@ class Render extends \ArrayObject {
      * Get template name
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->_name;
     }
 
-    public function getTime() {
+    public function getTime()
+    {
         return $this->_time;
     }
 
@@ -135,16 +173,17 @@ class Render extends \ArrayObject {
      * Validate template
      * @return bool
      */
-    public function isValid() {
-        if(count($this->_depends) === 1) { // if no external dependencies, only self
+    public function isValid()
+    {
+        if (count($this->_depends[0]) === 1) { // if no external dependencies, only self
             $provider = $this->_fenom->getProvider($this->_scm);
-            if($provider->getLastModified($this->_name) !== $this->_time) {
+            if ($provider->getLastModified($this->_name) !== $this->_time) {
                 return false;
             }
         } else {
-            foreach($this->_depends as $scm => $templates) {
+            foreach ($this->_depends as $scm => $templates) {
                 $provider = $this->_fenom->getProvider($scm);
-                if(!$provider->verify($templates)) {
+                if (!$provider->verify($templates)) {
                     return false;
                 }
             }
@@ -153,11 +192,25 @@ class Render extends \ArrayObject {
     }
 
     /**
+     * Get internal macro
+     * @param $name
+     * @return mixed
+     */
+    public function getMacro($name)
+    {
+        if (empty($this->_macros[$name])) {
+            throw new RuntimeException('macro not found');
+        }
+        return $this->_macros[$name];
+    }
+
+    /**
      * Execute template and write into output
      * @param array $values for template
      * @return Render
      */
-    public function display(array $values) {
+    public function display(array $values)
+    {
         $this->exchangeArray($values);
         $this->_code->__invoke($this);
         return $this->exchangeArray(array());
@@ -169,7 +222,8 @@ class Render extends \ArrayObject {
      * @return string
      * @throws \Exception
      */
-    public function fetch(array $values) {
+    public function fetch(array $values)
+    {
         ob_start();
         try {
             $this->display($values);
@@ -186,7 +240,26 @@ class Render extends \ArrayObject {
      * @param $args
      * @throws \BadMethodCallException
      */
-    public function __call($method, $args) {
-        throw new \BadMethodCallException("Unknown method ".$method);
+    public function __call($method, $args)
+    {
+        throw new \BadMethodCallException("Unknown method " . $method);
+    }
+
+    public function __get($name)
+    {
+        if ($name == 'info') {
+            return array(
+                'name' => $this->_name,
+                'schema' => $this->_scm,
+                'time' => $this->_time
+            );
+        } else {
+            return null;
+        }
+    }
+
+    public function __isset($name)
+    {
+        return $name == 'info';
     }
 }

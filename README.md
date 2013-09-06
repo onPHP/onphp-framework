@@ -1,7 +1,7 @@
 Fenom - Template Engine for PHP
 ===============================
 
-> Composer package: `{"fenom/fenom": "dev-master"}`. See on [Packagist.org](https://packagist.org/packages/bzick/fenom)
+> Composer package: `{"fenom/fenom": "dev-master"}`. See on [Packagist.org](https://packagist.org/packages/fenom/fenom)
 
 [![Build Status](https://travis-ci.org/bzick/fenom.png?branch=master)](https://travis-ci.org/bzick/fenom)
 ## [Usage](./docs/usage.md) :: [Documentation](./docs/readme.md) :: [Benchmark](./docs/benchmark.md) :: [Articles](./docs/articles.md)
@@ -9,8 +9,8 @@ Fenom - Template Engine for PHP
 * Simple [syntax](./docs/syntax.md)
 * [Fast](./docs/benchmark.md)
 * [Secure](./docs/settings.md)
-* [Simple](./ideology.md)
-* [Flexible](./docs/readme.md#extends)
+* Simple
+* [Flexible](./docs/ext/extensions.md)
 * [Lightweight](./docs/benchmark.md#stats)
 * [Powerful](./docs/readme.md)
 * Easy to use:
