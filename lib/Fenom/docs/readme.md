@@ -6,7 +6,7 @@ Documentation
 * [Install](./install.md)
 * [Usage](./usage.md)
 * [Fenom adapters](./adapters.md)
-* [Develop](./develop.md)
+* [Develop](./dev/readme.md)
 * [Settings](./settings.md)
 * [Callbacks and filters](./callbacks.md)
 * [Syntax](./syntax.md)
@@ -42,9 +42,9 @@ Documentation
 * [if](./tags/if.md), `elseif` and `else`
 * [foreach](./tags/foreach.md), `foreaelse`, `break` and `continue`
 * [for](./tags/for.md), `forelse`, `break` and `continue`
-* [switch](./tags/switch.md), `case`, `default` and `break`
+* [switch](./tags/switch.md), `case`, `default`
 * [cycle](./tags/cycle.md)
-* [include](./tags/include.md)
+* [include](./tags/include.md), `insert`
 * [extends](./tags/extends.md), `use`, `block` and `parent`
 * [filter](./tags/filter.md)
 * [ignore](./tags/ignore.md)
