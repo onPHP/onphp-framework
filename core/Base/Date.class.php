@@ -107,6 +107,11 @@
 					$left->getYear()
 				);
 		}
+
+        public static function secondDifference(Date $left, Date $right)
+        {
+            return $right->toStamp() - $left->toStamp();
+        }
 		
 		public static function compare(Date $left, Date $right)
 		{
