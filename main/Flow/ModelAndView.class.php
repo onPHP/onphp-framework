@@ -12,23 +12,52 @@
 	/**
 	 * @ingroup Flow
 	**/
-	class ModelAndView
+	class ModelAndView implements HttpResponse
 	{
-		private $model 	= null;
-		
-		private $view	= null;
-		
+		/**
+		 * @var Model
+		**/
+		private $model 	          = null;
+
+		/**
+		 * @var View|string
+		**/
+		private $view	          = null;
+
+		/**
+		 * @var HttpStatus
+		**/
+		private $status           = null;
+
+		/**
+		 * @var HttpHeaderCollection
+		**/
+		private $headerCollection = null;
+
+		/**
+		 * @var CookieCollection
+		**/
+		private $cookieCollection = null;
+
+		/**
+		 * @var bool
+		**/
+		private $enabledContentLength = false;
+
 		/**
 		 * @return ModelAndView
 		**/
 		public static function create()
 		{
-			return new self;
+			return new static();
 		}
 		
 		public function __construct()
 		{
 			$this->model = new Model();
+			$this->status = new HttpStatus(HttpStatus::CODE_200);
+			$this->headerCollection = new HttpHeaderCollection();
+			$this->cookieCollection = new CookieCollection();
 		}
 		
 		/**
@@ -68,7 +97,10 @@
 			
 			return $this;
 		}
-		
+
+		/**
+		 * @deprecated
+		**/
 		public function viewIsRedirect()
 		{
 			return
@@ -78,13 +110,149 @@
 					&& strpos($this->view, 'redirect') === 0
 				);
 		}
-		
+
+		/**
+		 * @deprecated
+		**/
 		public function viewIsNormal()
 		{
 			return (
 				!$this->viewIsRedirect()
 				&& $this->view !== View::ERROR_VIEW
 			);
+		}
+
+		/**
+		 * @return HttpHeaderCollection
+		**/
+		public function getHeaderCollection()
+		{
+			return $this->headerCollection;
+		}
+
+		/**
+		 * @return CookieCollection
+		**/
+		public function getCookieCollection()
+		{
+			return $this->cookieCollection;
+		}
+
+		public function enableContentLength()
+		{
+			$this->enabledContentLength = true;
+
+			return $this;
+		}
+
+		public function disableContentLength()
+		{
+			$this->enabledContentLength = false;
+
+			return $this;
+		}
+
+		public function setStatus(HttpStatus $status)
+		{
+			$this->status = $status;
+
+			return $this;
+		}
+
+		/**
+		 * @return HttpStatus
+		 **/
+		public function getStatus()
+		{
+			return $this->status;
+		}
+
+		public function getReasonPhrase()
+		{
+			return $this->status->getName();
+		}
+
+		public function getHeaders()
+		{
+			return $this->headerCollection->getAll();
+		}
+
+		public function hasHeader($name)
+		{
+			return $this->headerCollection->has($name);
+		}
+
+		public function getHeader($name)
+		{
+			return $this->headerCollection->get($name);
+		}
+
+		/**
+		 * @throws RuntimeException
+		**/
+		public function getBody()
+		{
+			if (!$this->view)
+				return null;
+
+			if (is_string($this->view)) {
+				throw new RuntimeException(
+					sprintf('View "%s" must be resolved', $this->view)
+				);
+			}
+
+			ob_start();
+
+			try {
+				$this->view->render($this->model);
+			} catch (Exception $e) {
+				ob_end_clean();
+
+				throw new RuntimeException(
+					'Error while rendering view',
+					(int) $e->getCode(),
+					$e
+				);
+			}
+
+			return ob_get_clean();
+		}
+
+		public function render()
+		{
+			if ($this->enabledContentLength) {
+				$content = $this->getBody();
+				$this->headerCollection->set('Content-Length', strlen($content));
+				$this->sendHeaders();
+
+				echo $content;
+			} else {
+				Assert::isInstance($this->view, 'View');
+
+				$this->sendHeaders();
+				$this->view->render($this->model);
+			}
+
+			return $this;
+		}
+
+		public function sendHeaders()
+		{
+			if (headers_sent($file, $line)) {
+				throw new LogicException(
+					sprintf('Headers are gone at %s:%d', $file, $line)
+				);
+			}
+
+			header($this->status->toString());
+
+			foreach ($this->headerCollection as $name => $valueList)
+				foreach ($valueList as $value)
+					header($name.': '.$value, true);
+
+			$this->cookieCollection->httpSetAll();
+
+			return $this;
 		}
 	}
 ?>

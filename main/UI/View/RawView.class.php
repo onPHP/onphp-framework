@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2009 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2013 by Nikita V. Konstantinov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,39 +10,22 @@
  ***************************************************************************/
 
 	/**
-	 * @deprecated use RedirectResponse instead
 	 * @ingroup Flow
 	**/
-	class CleanRedirectView implements View
+	class RawView implements View
 	{
-		protected $url = null;
-		
-		public function __construct($url)
+		private $content = null;
+
+		public function __construct($content)
 		{
-			$this->url = $url;
+			$this->content = $content;
 		}
-		
-		/**
-		 * @return CleanRedirectView
-		**/
-		public static function create($url)
-		{
-			return new self($url);
-		}
-		
+
 		public function render($model = null)
 		{
-			HeaderUtils::redirectRaw($this->getLocationUrl($model));
-		}
-		
-		public function getUrl()
-		{
-			return $this->url;
-		}
-		
-		protected function getLocationUrl($model = null)
-		{
-			return $this->getUrl();
+			echo $this->content;
+
+			return $this;
 		}
 	}
 ?>

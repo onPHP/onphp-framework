@@ -10,6 +10,7 @@
  ***************************************************************************/
 
 	/**
+	 * @deprecated
 	 * @ingroup Flow
 	**/
 	class RedirectView extends CleanRedirectView

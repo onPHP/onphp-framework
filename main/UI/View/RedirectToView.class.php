@@ -10,6 +10,7 @@
  ***************************************************************************/
 
 	/**
+	 * @deprecated
 	 * @ingroup Flow
 	**/
 	final class RedirectToView extends RedirectView

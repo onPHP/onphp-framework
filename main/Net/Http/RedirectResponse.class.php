@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2009 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2013 by Nikita V. Konstantinov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,39 +10,29 @@
  ***************************************************************************/
 
 	/**
-	 * @deprecated use RedirectResponse instead
-	 * @ingroup Flow
+	 * @ingroup Http
 	**/
-	class CleanRedirectView implements View
+	class RedirectResponse extends ModelAndView
 	{
-		protected $url = null;
-		
-		public function __construct($url)
+		public function __construct()
 		{
-			$this->url = $url;
+			parent::__construct();
+
+			$this->setStatus(new HttpStatus(HttpStatus::CODE_302));
 		}
-		
-		/**
-		 * @return CleanRedirectView
-		**/
-		public static function create($url)
+
+		public function setUrl($url)
 		{
-			return new self($url);
+			$this->getHeaderCollection()->set('Location', $url);
+
+			return $this;
 		}
-		
-		public function render($model = null)
+
+		public function setStatus(HttpStatus $status)
 		{
-			HeaderUtils::redirectRaw($this->getLocationUrl($model));
-		}
-		
-		public function getUrl()
-		{
-			return $this->url;
-		}
-		
-		protected function getLocationUrl($model = null)
-		{
-			return $this->getUrl();
+			Assert::isTrue($status->isRedirection());
+
+			return parent::setStatus($status);
 		}
 	}
 ?>
