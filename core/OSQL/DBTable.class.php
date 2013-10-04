@@ -150,18 +150,27 @@
 			$out = array();
 			
 			$head = 'ALTER TABLE '.$dialect->quoteTable($target->getName());
-			
+
+			/** @var DBColumn[] $sourceColumns */
 			$sourceColumns = $source->getColumns();
+			/** @var DBColumn[] $targetColumns */
 			$targetColumns = $target->getColumns();
 			
 			foreach ($sourceColumns as $name => $column) {
 				if (isset($targetColumns[$name])) {
 					if (
-						$column->getType()->getId()
-						!= $targetColumns[$name]->getType()->getId()
+						$column->getType()->getId() != $targetColumns[$name]->getType()->getId()
+
+						// for vertica: bigint == integer
+						&& !($dialect instanceof VerticaDialect && (
+							($targetColumns[$name]->getType()->getId() == DataType::INTEGER
+								&& $column->getType()->getId() == DataType::BIGINT) ||
+							($targetColumns[$name]->getType()->getId() == DataType::BIGINT
+								&& $column->getType()->getId() == DataType::INTEGER)
+						))
 					) {
 						$targetColumn = $targetColumns[$name];
-						
+
 						$out[] =
 							$head
 							.' ALTER COLUMN '.$dialect->quoteField($name)
