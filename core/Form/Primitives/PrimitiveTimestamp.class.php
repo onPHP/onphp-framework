@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveTimestamp extends PrimitiveDate
+	class PrimitiveTimestamp extends PrimitiveDate
 	{
 		const HOURS		= 'hrs';
 		const MINUTES	= 'min';
@@ -72,6 +72,28 @@
 		protected function getObjectName()
 		{
 			return 'Timestamp';
+		}
+
+		public function exportValue()
+		{
+			$parent = parent::exportValue();
+
+			if(is_array($parent)) {
+
+				if($this->value) {
+					$parent[static::HOURS] = $this->value->getHour();
+					$parent[static::MINUTES] = $this->value->getMinute();
+					$parent[static::SECONDS] = $this->value->getSecond();
+
+				} else {
+
+					$parent[static::HOURS] = null;
+					$parent[static::MINUTES] = null;
+					$parent[static::SECONDS] = null;
+				}
+			}
+
+			return $parent;
 		}
 	}
 ?>

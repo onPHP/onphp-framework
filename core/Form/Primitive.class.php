@@ -148,6 +148,14 @@
 		}
 
 		/**
+		 * @return PrimitiveTimestampTZ
+		 **/
+		public static function timestampTZ($name)
+		{
+			return new PrimitiveTimestampTZ($name);
+		}
+
+		/**
 		 * @return PrimitiveTime
 		**/
 		public static function time($name)

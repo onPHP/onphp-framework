@@ -215,6 +215,10 @@
 				'date'			=> DataType::DATE,
 				'timestamp'		=> DataType::TIMESTAMP,
 
+				'timestamptz'					=> DataType::TIMESTAMPTZ,
+				'timestamp with time zone'   	=> DataType::TIMESTAMPTZ,
+
+
 				'bool'			=> DataType::BOOLEAN,
 
 				'int2'			=> DataType::SMALLINT,

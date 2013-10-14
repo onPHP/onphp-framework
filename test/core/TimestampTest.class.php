@@ -7,17 +7,17 @@
 		{
 			$future = '4683-03-04';
 			$after = new Timestamp($future);
-			
-			$this->assertEquals($after->getDay(), '04');
-			$this->assertEquals($after->getMonth(), '03');
-			$this->assertEquals($after->getYear(), '4683');
+
+			$this->assertEquals('04', $after->getDay());
+			$this->assertEquals('03', $after->getMonth());
+			$this->assertEquals('4683', $after->getYear());
 			
 			$past = '1234-04-03';
 			$before = new Timestamp($past);
-			
-			$this->assertEquals($before->getDay(), '03');
-			$this->assertEquals($before->getMonth(), '04');
-			$this->assertEquals($before->getYear(), '1234');
+
+			$this->assertEquals('03', $before->getDay());
+			$this->assertEquals('04', $before->getMonth());
+			$this->assertEquals('1234', $before->getYear());
 			
 			$this->assertFalse($after->equals($before));
 			
@@ -27,6 +27,36 @@
 			$time = ' 00:00.00';
 			$this->assertEquals($future.$time, $after->toDateTime());
 			$this->assertEquals($past.$time, $before->toDateTime());
+
+			$past = '1-04-03';
+			$before = new Timestamp($past);
+
+			$this->assertEquals('03', $before->getDay());
+			$this->assertEquals('04', $before->getMonth());
+			$this->assertEquals(
+				substr(date('Y', time()), 0, 2).'01',
+				$before->getYear()
+			);
+
+			$past = '14-01-02';
+			$before = new Timestamp($past);
+
+			$this->assertEquals('02', $before->getDay());
+			$this->assertEquals('01', $before->getMonth());
+			$this->assertEquals(
+				substr(date('Y', time()), 0, 2).'14',
+				$before->getYear()
+			);
+
+			$past = '113-01-02';
+			$before = new Timestamp($past);
+
+			$this->assertEquals('02', $before->getDay());
+			$this->assertEquals('01', $before->getMonth());
+			$this->assertEquals(
+				'0113',
+				$before->getYear()
+			);
 		}
 		
 		public function testInvalidTimestamp()
@@ -121,6 +151,32 @@
 			$this->assertEquals($stamp->getMonth(), $unserializedStamp->getMonth());
 			$this->assertEquals($stamp->getYear(), $unserializedStamp->getYear());
 			
+			$this->assertEquals($stamp->getMinute(), $unserializedStamp->getMinute());
+			$this->assertEquals($stamp->getSecond(), $unserializedStamp->getSecond());
+
+			$stamp = Timestamp::create('2039-01-05 12:14:05 Europe/Moscow');
+
+			$serializedStamp = serialize($stamp);
+
+			$unserializedStamp = unserialize($serializedStamp);
+
+			$this->assertEquals($stamp->getDay(), $unserializedStamp->getDay());
+			$this->assertEquals($stamp->getMonth(), $unserializedStamp->getMonth());
+			$this->assertEquals($stamp->getYear(), $unserializedStamp->getYear());
+
+			$this->assertEquals($stamp->getMinute(), $unserializedStamp->getMinute());
+			$this->assertEquals($stamp->getSecond(), $unserializedStamp->getSecond());
+
+			$stamp = Timestamp::create('1899-12-31 16:07:45 Europe/London');
+
+			$serializedStamp = serialize($stamp);
+
+			$unserializedStamp = unserialize($serializedStamp);
+
+			$this->assertEquals($stamp->getDay(), $unserializedStamp->getDay());
+			$this->assertEquals($stamp->getMonth(), $unserializedStamp->getMonth());
+			$this->assertEquals($stamp->getYear(), $unserializedStamp->getYear());
+
 			$this->assertEquals($stamp->getMinute(), $unserializedStamp->getMinute());
 			$this->assertEquals($stamp->getSecond(), $unserializedStamp->getSecond());
 		}
