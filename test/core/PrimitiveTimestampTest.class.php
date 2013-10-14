@@ -48,6 +48,7 @@
 		
 		public function testMarriedOptional()
 		{
+			/** @var PrimitiveTimestamp $prm */
 			$prm =
 				Primitive::timestamp('test')->
 				setComplex()->

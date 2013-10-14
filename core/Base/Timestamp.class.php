@@ -61,8 +61,8 @@ class Timestamp extends Date
 
 	private function getDefaultTimeZone()
 	{
+		$defaultTimeZoneName = date_default_timezone_get();
 		try {
-			$defaultTimeZoneName = date_default_timezone_get();
 			return new DateTimeZone($defaultTimeZoneName);
 		} catch(Exception $e) {
 			throw new WrongStateException(
