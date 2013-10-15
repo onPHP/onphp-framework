@@ -317,13 +317,14 @@ class DataGrid extends BaseWidget
                         . ($value == true ? ' checked="checked"' : '') .' />';
                 };
 
+            case 'enum':
             case 'enumeration':
                 return function ($value) use ($fieldId, $property) {
                     $class = $property->getClassName();
                     if (!class_exists($class, true)) {
                         throw new ClassNotFoundException;
                     }
-                    $list = $class::makeObjectList();
+                    $list = is_subclass_of($class, 'Enum') ? $class::getList() : $class::makeObjectList();
                     $html = '<select name="' . $fieldId . '">';
 					if (!$property->isRequired()) {
 						$html .= '<option value="">' . __('Нет') . '</option>';
