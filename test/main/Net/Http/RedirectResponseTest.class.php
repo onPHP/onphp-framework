@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2009 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2013 by Nikita V. Konstantinov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -9,40 +9,29 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @deprecated use RedirectResponse instead
-	 * @ingroup Flow
-	**/
-	class CleanRedirectView implements View
+	class RedirectResponseTest extends TestCase
 	{
-		protected $url = null;
-		
-		public function __construct($url)
+		public function testRedirectResponse()
 		{
-			$this->url = $url;
+			$response =
+				RedirectResponse::create()->
+					setUrl('http://example.com/')->
+					setStatus(new HttpStatus(HttpStatus::CODE_301))
+				;
+
+			$this->assertEquals('http://example.com/', $response->getHeader('Location'));
 		}
-		
+
 		/**
-		 * @return CleanRedirectView
+		 * @expectedException WrongArgumentException
 		**/
-		public static function create($url)
+		public function testInvalidStatus()
 		{
-			return new self($url);
-		}
-		
-		public function render($model = null)
-		{
-			HeaderUtils::redirectRaw($this->getLocationUrl($model));
-		}
-		
-		public function getUrl()
-		{
-			return $this->url;
-		}
-		
-		protected function getLocationUrl($model = null)
-		{
-			return $this->getUrl();
+			$response =
+				RedirectResponse::create()->
+					setUrl('http://example.com/')->
+					setStatus(new HttpStatus(HttpStatus::CODE_404))
+			;
 		}
 	}
 ?>

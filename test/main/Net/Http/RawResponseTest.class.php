@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Anton E. Lebedevich                             *
+ *   Copyright (C) 2013 by Nikita V. Konstantinov                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -9,27 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Http
-	**/
-	interface HttpResponse
+	class RawResponseTest extends TestCase
 	{
-		/**
-		 * @return HttpStatus
-		**/
-		public function getStatus();
-		public function getReasonPhrase();
-		
-		/**
-		 * @return array of headers
-		**/
-		public function getHeaders();
-		public function hasHeader($name);
-		public function getHeader($name);
+		public function testRawResponse()
+		{
+			$response =
+				RawResponse::create()->
+					setContent('Goodbye, world!');
+			$response->getHeaderCollection()->set('Content-Type', 'text/plain');
 
-		/**
-		 * @throws RuntimeException
-		**/
-		public function getBody();
+			$this->assertEquals('text/plain', $response->getHeader('cOnTeNt-tYpE'));
+			$this->assertEquals('Goodbye, world!', $response->getBody());
+		}
 	}
+
 ?>

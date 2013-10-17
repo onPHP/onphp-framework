@@ -111,5 +111,10 @@
 		{
 			return 'HTTP/1.1 '.$this->id.' '.$this->name;
 		}
+
+		public function isRedirection()
+		{
+			return $this->getId() >= 300 && $this->getId() < 400;
+		}
 	}
 ?>

@@ -9,7 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 
-	abstract class AbstractCollection implements Collection
+	abstract class AbstractCollection implements Collection, IteratorAggregate
 	{
 		protected $items  = array();
 		
@@ -49,7 +49,7 @@
 		{
 			return (count($this->items) == 0);
 		}
-		
+
 		public function size()
 		{
 			return count($this->items);
@@ -93,6 +93,11 @@
 		public function has($name)
 		{
 			return isset($this->items[$name]);
+		}
+
+		public function getIterator()
+		{
+			return new ArrayIterator($this->items);
 		}
 	}
 ?>
