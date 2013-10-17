@@ -13,6 +13,7 @@
 	 * Unserialize string
 	 * 
 	 * @ingroup Filters
+	 * @deprecated Because of the potential security problem.
 	**/
 	namespace Onphp;
 
