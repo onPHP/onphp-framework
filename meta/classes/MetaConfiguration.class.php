@@ -692,6 +692,18 @@
 			return $this->out;
 		}
 		
+		public function makePUML()
+		{
+			$out = "@startuml\n";
+			
+			foreach ($this->classes as $metaclass)
+				$out .= MetaClassPUMLGenerator::generate($metaclass);
+			
+			$out .= MetaClassPUMLGenerator::generateLinks($this->classes);
+			
+			return $out."@enduml\n";
+		}
+		
 		/**
 		 * @return MetaConfiguration
 		**/
