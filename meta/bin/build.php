@@ -35,6 +35,9 @@ Possible options:
 	
 	--with-enum-check-ref-integrity:
 		check enumeration reference integrity [EXPERIMENTAL:for the real nerds].
+		
+	--puml:
+		just create uml diagramm and die.
 
 <?php
 		exit(1);
@@ -131,7 +134,7 @@ Possible options:
 	$metaForce = $metaOnlyContainers = $metaNoSchema =
 	$metaNoSchemaCheck = $metaDropStaleFiles =
 	$metaNoIntegrityCheck = $metaDryRun = 
-	$metaCheckEnumerationRefIntegrity = $metaNoColor = false;
+	$metaCheckEnumerationRefIntegrity = $metaNoColor = $createPUML = false;
 	
 	$args = $_SERVER['argv'];
 	array_shift($args);
@@ -176,6 +179,10 @@ Possible options:
 						$metaCheckEnumerationRefIntegrity = true;
 						break;
 					
+					case '--puml':
+						$createPUML = true;
+						
+						break;
 					default:
 						stop('Unknown switch: '.$arg);
 				}
@@ -299,6 +306,17 @@ Possible options:
 				setDryRun($metaDryRun)->
 				load($pathMeta)->
 				setForcedGeneration($metaForce);
+			
+			if ($createPUML) {
+				$pumlFile = ONPHP_META_AUTO_DIR.DIRECTORY_SEPARATOR."puml.txt";
+				
+				file_put_contents($pumlFile, $meta->makePUML());
+				
+				$out->infoLine('puml saved to '.$pumlFile);
+				
+				exit();
+			}
+				
 			
 			if ($metaOnlyContainers) {
 				$meta->buildContainers();
