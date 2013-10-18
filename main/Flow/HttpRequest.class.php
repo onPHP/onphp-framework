@@ -83,6 +83,11 @@
 				&& $request->getServerVar('CONTENT_TYPE') !== 'application/x-www-form-urlencoded'
 			)
 				$request->setBody(file_get_contents('php://input'));
+			
+			$request->setMethod(
+				HttpMethod::any()->
+				createByName($request->getServerVar('REQUEST_METHOD'))
+			);
 
 			return $request;
 		}
