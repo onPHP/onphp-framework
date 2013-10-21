@@ -35,7 +35,7 @@
 		// all other sh1t
 		private $attached	= array();
 		
-		private $headers	= array();
+		private $headers	= null;
 		
 		/**
 		 * @var HttpMethod
@@ -47,7 +47,6 @@
 		 */
 		private $url		= null;
 
-		//for CurlHttpClient if you need to send raw CURLOPT_POSTFIELDS
 		private $body		= null;
 		
 		/**
@@ -74,9 +73,12 @@
 			if (isset($_SESSION))
 				$request->setSession($_SESSION);
 
-			foreach ($_SERVER as $name => $value)
-				if (substr($name, 0, 5) === 'HTTP_')
-					$request->setHeaderVar(substr($name, 5), $value);
+			foreach ($_SERVER as $name => $value) {
+				if (strpos($name, 'HTTP_') === 0) {
+					$name = str_replace('_', '-', substr($name, 5));
+					$request->setHeaderVar($name, $value);
+				}
+			}
 
 			if (
 				$request->hasServerVar('CONTENT_TYPE')
@@ -85,6 +87,11 @@
 				$request->setBody(file_get_contents('php://input'));
 
 			return $request;
+		}
+
+		public function __construct()
+		{
+			$this->headers = new HttpHeaderCollection();
 		}
 		
 		public function &getGet()
@@ -218,7 +225,11 @@
 		{
 			return $this->session;
 		}
-		
+
+		/**
+		 * @param string $name
+		 * @return mixed
+		 */
 		public function getSessionVar($name)
 		{
 			return $this->session[$name];
@@ -278,7 +289,11 @@
 		{
 			return $this->attached;
 		}
-		
+
+		/**
+		 * @param string $name
+		 * @return mixed
+		 */
 		public function getAttachedVar($name)
 		{
 			return $this->attached[$name];
@@ -306,7 +321,7 @@
 		
 		public function getHeaderList()
 		{
-			return $this->headers;
+			return $this->headers->getAll();
 		}
 		
 		public function hasHeaderVar($name)
@@ -316,7 +331,7 @@
 		
 		public function getHeaderVar($name)
 		{
-			return $this->headers[$name];
+			return $this->headers->get($name);
 		}
 		
 		/**
@@ -333,7 +348,7 @@
 		**/
 		public function setHeaderVar($name, $var)
 		{
-			$this->headers[$name] = $var;
+			$this->headers->set($name, $var);
 			return $this;
 		}
 		
@@ -342,7 +357,7 @@
 		**/
 		public function setHeaders(array $headers)
 		{
-			$this->headers = $headers;
+			$this->headers = new HttpHeaderCollection($headers);
 			return $this;
 		}
 		
