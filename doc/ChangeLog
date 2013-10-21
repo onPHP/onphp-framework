@@ -1,3 +1,9 @@
+2013-10-21 Evgeny V. Kokovikhin
+	
+	* meta/bin/build.php meta/classes/MetaClassPUMLGenerator.class.php
+	meta/classes/MetaConfiguration.class.php:  added schema generator for PlantUML
+	see http://plantuml.sourceforge.net/classes.html
+
 2013-10-17 Nikita V. Konstantinov
 
 	* main/Flow/HttpRequest.class.php
@@ -20,8 +26,8 @@
 2013-04-19  Aleksey S. Denisov
 
 	* core/Cache/CachePeer.class.php
-      core/Cache/WatermarkedPeer.class.php
-      core/DB/DB.class.php:
+	core/Cache/WatermarkedPeer.class.php
+	core/DB/DB.class.php:
         fixed deferent uncache keys with watermark while in db transaction
 
 2013-04-08  Artem V. Titarenko
