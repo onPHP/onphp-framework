@@ -58,15 +58,17 @@
 			return new self(self::POST);
 		}
 		
+		/**
+		 * @return HttpMethod
+		 */
 		public static function any()
 		{
 			return self::get();
 		}
-
-
-		public function createByName($name)
+		
+		public static function createByName($name)
 		{
-			$key = array_search($name, $this->names);
+			$key = array_search($name, self::any()->getNameList());
 			
 			if ($key === false)
 				throw new WrongArgumentException();
