@@ -17,32 +17,6 @@
 	* main/Flow/HttpRequest.class.php:
 		added HttpRequest::createFromGlobals()
 
-2013-09-03 Vasily M. Stashko
-
-	* core/DB/MySQL.class.php
-	core/DB/MySQLim.class.php:
-		added (mysqli?_ping) check to isConnected() methods
-
-2013-04-19  Aleksey S. Denisov
-
-	* core/Cache/CachePeer.class.php
-	core/Cache/WatermarkedPeer.class.php
-	core/DB/DB.class.php:
-        fixed deferent uncache keys with watermark while in db transaction
-
-2013-04-08  Artem V. Titarenko
-
-	* main/DAOs/Workers/SmartDaoWorker.class.php: SmartDaoWorker race condition bug fix
-
-2013-03-31  Viatcheslav Y. Tsyrulnik
-
-	* core/Form/Primitives/PrimitiveHttpUrl.class.php
-		main/Net/HttpUrl.class.php
-		test/core/PrimitiveHttpUrlTest.class.php
-		test/main/HttpUrlTest.class.php:
-			HttpUrl::isValid skips privileged ports validation by default
-
->>>>>>> e99680b... changelog updated
 2013-03-31  Nikita V. Konstantinov
 	
 	* core/Base/Singleton.class.php:
