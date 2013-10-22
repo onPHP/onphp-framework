@@ -40,14 +40,20 @@ class PrimitiveReCaptcha extends BasePrimitive {
 
 		$this->value = (string) $scope[$this->name];
 
+		if ( !isset($_POST[self::RECAPTCHA_CHALLENGE_FIELD]) ) {
+			return false;
+		}
+		$challenge = $_POST[self::RECAPTCHA_CHALLENGE_FIELD];
+
 		if (
 			is_string($this->value)
 			// zero is quite special value here
 			&& !empty($this->value)
+			&& is_string($challenge)
 			&& self::recaptcha_check_answer(
 					$this->reCaptchaPrivateKey,
 					$_SERVER["REMOTE_ADDR"],
-					$_POST[self::RECAPTCHA_CHALLENGE_FIELD],
+					$challenge,
 					$this->value
 				)
 		) {
