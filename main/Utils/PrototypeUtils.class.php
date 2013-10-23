@@ -232,7 +232,7 @@ class PrototypeUtils
 					$entity[ $property->getColumnName() ] = $value;
 				}
 			} // обрабатываем перечисления
-			elseif( $property->getType()=='enumeration' ) {
+			elseif( $property->getType()=='enumeration' || $property->getType()=='enum' ) {
 				$value = call_user_func(array($object, $property->getGetter()));
 				$entity[ $property->getColumnName() ] = is_null($value) ? null : (int)$value->getId();
 			} // обрабатываем связи 1к1
