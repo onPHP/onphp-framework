@@ -223,10 +223,19 @@
 				**/
 				case MailEncoding::QUOTED:
 					
+//					$string =
+//						preg_replace(
+//							'/[^\x21-\x3C\x3E-\x7E\x09\x20]/e',
+//							'sprintf("=%02x", ord ("$0"));',
+//							$this->body
+//						);
 					$string =
-						preg_replace(
-							'/[^\x21-\x3C\x3E-\x7E\x09\x20]/e',
-							'sprintf("=%02x", ord ("$0"));',
+						preg_replace_callback(
+							'/[^\x21-\x3C\x3E-\x7E\x09\x20]/',
+							function($value){
+								$symbol = array_shift($value);
+								return sprintf("=%02x", ord($symbol));
+							},
 							$this->body
 						);
 					
