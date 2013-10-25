@@ -1,3 +1,8 @@
+2013-10-25 Vasily M. Stashko
+
+	* core/DB/MySQLim.class.php:
+		added getTableInfo() method implementation
+
 2013-09-03 Vasily M. Stashko
 
 	* core/DB/MySQL.class.php
