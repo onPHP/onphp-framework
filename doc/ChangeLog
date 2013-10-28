@@ -1,3 +1,8 @@
+2013-10-28 Evgeny V. Kokovikhin
+	
+	*  main/Flow/SimpleFrontController.class.php: added SimpleFrontController
+	this is one of the possible way to use FrontController in your application 
+
 2013-10-21 Evgeny V. Kokovikhin
 	
 	* meta/bin/build.php meta/classes/MetaClassPUMLGenerator.class.php
