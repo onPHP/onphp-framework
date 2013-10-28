@@ -31,7 +31,7 @@
 		/**
 		 * @var HttpRequest
 		 */
-		private $request				= null;
+		protected $request				= null;
 		private $controllerName			= null;
 		
 		private $templatesDirectory		= null;
