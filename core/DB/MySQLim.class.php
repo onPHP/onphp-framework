@@ -28,7 +28,6 @@
 			'query'			=> 'mysqli_query',
 			'errno'			=> 'mysqli_errno',
 			'error'			=> 'mysqli_error',
-			'fetch_array'	=> 'mysqli_fetch_array',
 			'insert_id'		=> 'mysqli_insert_id',
 			'num_rows'		=> 'mysqli_num_rows',
 		);

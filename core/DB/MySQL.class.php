@@ -29,7 +29,6 @@
 			'query'			=> 'mysql_query',
 			'errno'			=> 'mysql_errno',
 			'error'			=> 'mysql_error',
-			'fetch_array'	=> 'mysql_fetch_assoc',
 			'insert_id'		=> 'mysql_insert_id',
 			'num_rows'		=> 'mysql_num_rows',
 		);
