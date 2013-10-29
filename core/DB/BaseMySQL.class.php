@@ -8,26 +8,13 @@
 	 * MySQL DB connector.
 	 * 
 	 * @see http://www.mysql.com/
+	 * @see http://www.php.net/mysql
 	 * @see http://www.php.net/mysqli
 	 * 
 	 * @ingroup DB
 	**/
 	abstract class BaseMySQL extends Sequenceless
 	{
-		static protected $aliases = array(
-			'close'			=> 'mysqli_close',
-			'ping'			=> 'mysqli_ping',
-			'affected_rows'	=> '',
-			'fetch_assoc'	=> '',
-			'fetch_row'		=> '',
-			'query'			=> '',
-			'errno'			=> '',
-			'error'			=> '',
-			'fetch_array'	=> '',
-			'insert_id'		=> '',
-			'num_rows'		=> '',
-		);
-		
 		/**
 		 * @return BaseMySQL
 		**/
@@ -155,7 +142,7 @@
 			
 			$table = new DBTable($table);
 			
-			while ($row = self::$aliases['fetch_array']($result)) {
+			while ($row = self::$aliases['fetch_assoc']($result)) {
 				$name = strtolower($row['Field']);
 				$matches = array();
 				$info = array('type' => null, 'extra' => null);
