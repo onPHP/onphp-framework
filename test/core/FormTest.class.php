@@ -119,5 +119,49 @@
 			//checking
 			$this->assertEquals(array(), $form->getErrors());
 		}
+		
+		public function testFormCollection()
+		{
+			$collection = 
+				FormCollection::create(
+					TestCity::proto()->makeForm()->
+						drop('id')
+				);
+			
+			
+			$url = HttpUrl::create()->parse('http://i.would.like.to.create.cities/?name[77]=Moscow&capital[77]=1&large[77]=1&name[50]=Krasnogorsk&name[78]=Piter&large[78]=1');
+			parse_str($url->getQuery(), $getArray);
+			
+			$collection->import($getArray);
+			
+			foreach ($collection as $number => $form) {
+				switch ($number) {
+					case 77:
+						$this->assertEquals('Moscow', $form->getValue('name'));
+						$this->assertTrue($form->getValue('capital'));
+						$this->assertTrue($form->getValue('large'));
+
+						break;
+					
+					case 78:
+						$this->assertEquals('Piter', $form->getValue('name'));
+						$this->assertFalse($form->getValue('capital'));
+						$this->assertTrue($form->getValue('large'));
+						
+						break;
+					
+					case 50:
+						$this->assertEquals('Krasnogorsk', $form->getValue('name'));
+						$this->assertFalse($form->getValue('capital'));
+						$this->assertFalse($form->getValue('large'));
+						
+						break;
+					
+					default:
+						$this->assertTrue(false);
+						break;
+				}
+			}
+		}
 	}
 ?>

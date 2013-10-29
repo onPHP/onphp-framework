@@ -392,6 +392,13 @@
 			return $this->proto;
 		}
 		
+		public function __clone()
+		{
+			foreach ($this->primitives as $name => $primitive) {
+				$this->primitives[$name] = clone $primitive;
+			}
+		}
+		
 		/**
 		 * @return \Onphp\Form
 		**/
