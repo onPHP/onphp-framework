@@ -65,6 +65,8 @@
 			}
 			
 			reset($this->formList);
+			
+			return $this;
 		}
 		
 		public function current()
