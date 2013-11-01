@@ -1,3 +1,8 @@
+2013-11-01 Evgeny V. Kokovikhin
+	
+	* core/Form/Primitives/PrimitiveIdentifierList.class.php: added ability 
+	to ignore wrong values in list of identifier
+
 2013-10-28 Evgeny V. Kokovikhin
 	
 	*  main/Flow/SimpleFrontController.class.php: added SimpleFrontController
