@@ -29,7 +29,7 @@
 				$class->getPattern()->daoExists()
 				&& (!$class->getPattern() instanceof AbstractClassPattern)
 			) {
-				$interfaces .= ', DAOConnected';
+				$interfaces = ' implements PrototypedDAOConnected';
 				
 				$daoName = $class->getName().'DAO';
 				$dao = <<<EOT

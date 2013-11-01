@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Konstantin V. Arkhipov                     *
+ *   Copyright (C) 2013 by Evgeny V. Kokovikhin                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -10,16 +10,11 @@
  ***************************************************************************/
 
 	/**
-	 * Helper for identifying object's DAO.
-	 * 
-	 * @ingroup DAOs
+	 * @ingroup Base
 	 * @ingroup Module
 	**/
-	interface DAOConnected extends Identifiable
+	interface PrototypedDAOConnected extends Prototyped, DAOConnected
 	{
-		/**
-		 * @return StorableDAO
-		 */
-		public static function dao();
+		/**/
 	}
 ?>
