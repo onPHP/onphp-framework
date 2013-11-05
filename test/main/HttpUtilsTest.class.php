@@ -17,6 +17,7 @@
 				setUrl(
 					HttpUrl::create()->parse('https://github.com/')
 				)->
+				setHeaderVar('User-Agent', 'onphp-test')->
 				setMethod(HttpMethod::get());
 			
 			try {
