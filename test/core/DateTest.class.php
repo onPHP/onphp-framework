@@ -67,16 +67,6 @@
 			return $this;
 		}
 
-		public function testClone()
-		{
-			$date1 = Date::makeToday();
-			$date2 = clone $date1;
-
-			$this->assertFalse(
-				$date1->getDateTime() === $date2->getDateTime()
-			);
-		}
-
 		/**
 		 * @test
 		**/
