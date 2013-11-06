@@ -142,6 +142,12 @@ class Timestamp extends Date
 	 **/
 	public function toIsoString($convertToUtc = true)
 	{
+		$dateTime = $this->getDateTime();
+
+		if (! ($dateTime instanceof DateTime)) {
+			throw new WrongStateException('dateTime is not a DateTime: ' . var_export($dateTime, true));
+		}
+
 		if ($convertToUtc)
 			return date('Y-m-d\TH:i:s\Z', $this->dateTime->getTimestamp() - date('Z', $this->dateTime->getTimestamp()));
 		else
