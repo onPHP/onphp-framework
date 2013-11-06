@@ -128,6 +128,12 @@ class Date implements Stringable, DialectString
 	public function __construct($date)
 	{
 		$this->import($date);
+
+		if ($this->dateTime === null) {
+			throw new WrongArgumentException(
+				"strange input given - '{$date}'"
+			);
+		}
 	}
 
 	public function __clone()
