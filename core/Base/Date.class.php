@@ -129,7 +129,7 @@ class Date implements Stringable, DialectString
 	{
 		$this->import($date);
 
-		if ($this->dateTime === null) {
+		if (! ($this->dateTime instanceof DateTime)) {
 			throw new WrongArgumentException(
 				"strange input given - '{$date}'"
 			);
