@@ -148,7 +148,13 @@ class Date implements Stringable, DialectString
 
 	public function toStamp()
 	{
-		return $this->getDateTime()->getTimestamp();
+		$dateTime = $this->getDateTime();
+
+		if (! ($dateTime instanceof DateTime)) {
+			throw new WrongStateException('dateTime is not a DateTime: ' . var_export($dateTime, true));
+		}
+
+		return $dateTime->getTimestamp();
 	}
 
 	public function toDate($delimiter = '-')
