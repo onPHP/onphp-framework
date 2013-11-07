@@ -218,7 +218,124 @@
 				}
 			}
 		}
-	
-		
+
+		public static function classPathSharedMemCache($classname) {
+			if (strpos($classname, "\0") !== false) {
+				/* are you sane? */
+				return;
+			}
+
+			// make namespaces work
+			$desiredName = str_replace('\\', '/', $classname);
+			if($desiredName{0}=='/') {
+				$desiredName = substr($desiredName, 1);
+			}
+
+			if( $realPath = AutoloaderShmop::get($desiredName) ) {
+				include_once $realPath;
+			} else {
+				foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
+					$directory = realpath($directory);
+					foreach (array(EXT_CLASS, EXT_LIB) as $ext) {
+						$realPath = $directory.DIRECTORY_SEPARATOR.$desiredName.$ext;
+						if( $realPath && file_exists($realPath) && is_readable($realPath) ) {
+							break;
+						} else {
+							$realPath = null;
+						}
+					}
+					if( !is_null($realPath) ) {
+						break;
+					}
+				}
+				if( !is_null($realPath) ) {
+					AutoloaderShmop::set($desiredName, $realPath);
+					include_once $realPath;
+				}
+			}
+
+			if (!class_exists($classname, false) && !interface_exists($classname, false)) {
+				__autoload_failed($classname, 'class not found');
+			}
+		}
+	}
+
+	abstract class AutoloaderShmop {
+
+		const INDEX_SEGMENT		= 23456789; // random int :)
+		const SEGMENT_SIZE		= 4194304; // 128^3 * 2
+		const EXPIRATION_TIME	= 86400; // 24 hours
+
+		private static $attachedId = null;
+
+		public static function get($classname) {
+			if( !self::segment() ) {
+				return null;
+			}
+			if( self::has($classname) ) {
+				try {
+					list($expires, $path) = shm_get_var(self::segment(), self::key($classname));
+				} catch( Exception $e ) {
+					$expires = 0;
+					$path = null;
+				}
+				if( $expires<time() ) {
+					self::drop($classname);
+				}
+				return $path;
+			}
+			return null;
+		}
+
+		public static function set($classname, $classpath) {
+			if( !self::segment() ) {
+				return false;
+			}
+			if( strlen($classpath) > 256 ) {
+				throw new BaseException('Class path is too long (more than 256 symbols)');
+			}
+			if( self::has($classname) ) {
+				self::drop($classname);
+			}
+			return shm_put_var(self::segment(), self::key($classname), array(0=>(time()+self::EXPIRATION_TIME), 1=>$classpath));
+		}
+
+		public static function drop($classname) {
+			if( !self::segment() ) {
+				return false;
+			}
+			return shm_remove_var(self::segment(), self::key($classname));
+		}
+
+		public static function has($classname) {
+			if( !self::segment() ) {
+				return false;
+			}
+			return shm_has_var(self::segment(), self::key($classname));
+		}
+
+		public static function clean() {
+			if( !self::segment() ) {
+				return false;
+			}
+			return shm_remove(self::segment());
+		}
+
+		private static function segment() {
+			if( is_null(self::$attachedId) ) {
+				try {
+					self::$attachedId = @shm_attach(self::INDEX_SEGMENT, self::SEGMENT_SIZE, ONPHP_IPC_PERMS);
+				} catch(Exception $e) {
+					self::$attachedId = false;
+				}
+
+			}
+			return self::$attachedId;
+		}
+
+		private static function key($classname) {
+			return crc32('/cache/'.$classname);
+		}
+
 	}
 ?>
