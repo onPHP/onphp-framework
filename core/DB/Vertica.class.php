@@ -26,6 +26,8 @@ class Vertica extends PgSQL {
 			'time'			=> DataType::TIME,
 			'date'			=> DataType::DATE,
 			'timestamp'		=> DataType::TIMESTAMP,
+			'timestamptz'	=> DataType::TIMESTAMPTZ,
+			'timestamp with time zone'   	=> DataType::TIMESTAMPTZ,
 
 			'boolean'		=> DataType::BOOLEAN,
 

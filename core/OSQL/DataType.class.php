@@ -33,6 +33,7 @@
 		const DATE				= 0x00000B;
 		const TIME				= 0x000A0C;
 		const TIMESTAMP			= 0x000A0D;
+		const TIMESTAMPTZ    	= 0x000A0E;
 		const INTERVAL			= 0x00000F;
 
 		const BINARY			= 0x00000E;
@@ -82,6 +83,7 @@
 			self::DATE			=> 'DATE',
 			self::TIME			=> 'TIME',
 			self::TIMESTAMP		=> 'TIMESTAMP',
+			self::TIMESTAMPTZ	=> 'TIMESTAMP',
 			self::INTERVAL		=> 'INTERVAL',
 
 			self::BINARY		=> 'BINARY',

@@ -60,6 +60,7 @@
 	set_error_handler('error2Exception', E_ALL | E_STRICT);
 	ignore_user_abort(true);
 	define('ONPHP_VERSION', '1.0.10.99');
+	date_default_timezone_set('Europe/Moscow');
 
 	if (!defined('ONPHP_IPC_PERMS'))
 		define('ONPHP_IPC_PERMS', 0660);

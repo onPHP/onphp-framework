@@ -20,11 +20,20 @@
 			
 			$this->assertFalse($prm->import($array));
 			$this->assertEquals($prm->getRawValue(), $array['test']);
-			
+
+			$this->assertEmpty(
+				array_filter($prm->exportValue())
+			);
+
 			$array['test'][PrimitiveDate::YEAR] = '3456';
 			
 			$this->assertTrue($prm->import($array));
 			$this->assertTrue($prm->getValue()->getYear() == 3456);
+
+			$this->assertEquals(
+				$array['test'],
+				$prm->exportValue()
+			);
 			
 			$array['test'][PrimitiveDate::YEAR] = '2006';
 			
@@ -39,6 +48,7 @@
 		
 		public function testMarriedOptional()
 		{
+			/** @var PrimitiveTimestamp $prm */
 			$prm =
 				Primitive::timestamp('test')->
 				setComplex()->
