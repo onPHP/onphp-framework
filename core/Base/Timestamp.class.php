@@ -49,14 +49,15 @@ class Timestamp extends Date
 		return new static(static::today());
 	}
 
-	public function __construct($dateTime, DateTimeZone $zone=null)
+	public function __construct($dateTime, DateTimeZone $zone = null)
 	{
 		parent::__construct($dateTime);
 
-		if($zone) {
-			$this->dateTime->setTimezone($zone);
+		if (is_null($zone)) {
+			$zone = $this->getDefaultTimeZone();
 		}
 
+		$this->dateTime->setTimezone($zone);
 	}
 
 	private function getDefaultTimeZone()
