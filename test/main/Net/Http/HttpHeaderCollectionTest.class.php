@@ -41,15 +41,32 @@
 		 */
 		public function testGetter(HttpHeaderCollection $collection)
 		{
-			$this->assertEquals(42, $collection->get('content-LeNgTh'));
 			$this->assertEquals(array(42), $collection->getRaw('content-LeNgTh'));
-			$this->assertEquals(array('bar', 'baz'), $collection->get('x-foo'));
+			$this->assertEquals(42, $collection->get('content-LeNgTh'));
+			$this->assertEquals(array('bar', 'baz'), $collection->getRaw('x-foo'));
+			$this->assertEquals('baz', $collection->get('x-foo'));
 
 			return $collection;
 		}
 
 		/**
 		 * @depends testGetter
+		 */
+		public function testIterator(HttpHeaderCollection $collection)
+		{
+			$headerList = array(
+				'Content-Length: 42',
+				'X-Foo: bar',
+				'X-Foo: baz'
+			);
+
+			$this->assertEquals($headerList, iterator_to_array($collection));
+
+			return $collection;
+		}
+
+		/**
+		 * @depends testIterator
 		 */
 		public function testRemoving(HttpHeaderCollection $collection)
 		{

@@ -59,8 +59,7 @@
 		public function get($name)
 		{
 			$valueList = $this->getRaw($name);
-
-			return count($valueList) > 1 ? $valueList : $valueList[0];
+			return end($valueList);
 		}
 
 		public function has($name)
@@ -85,12 +84,26 @@
 
 		public function getAll()
 		{
-			return $this->headers;
+			return
+				array_map(
+					function (array $value) {
+						return end($value);
+					},
+					$this->headers
+				);
 		}
 
 		public function getIterator()
 		{
-			return new \ArrayIterator($this->headers);
+			$headerList = array();
+
+			foreach ($this->headers as $header => $valueList) {
+				foreach ($valueList as $value) {
+					$headerList[] = sprintf('%s: %s', $header, $value);
+				}
+			}
+
+			return new \ArrayIterator($headerList);
 		}
 
 		private function normalizeName($name)
