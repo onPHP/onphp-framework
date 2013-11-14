@@ -674,6 +674,10 @@ class DataGrid extends BaseWidget
         return self::$maxNesting;
     }
 
+	public function getFields() {
+		return $this->fields;
+	}
+
     /**
      * Задает массив столбцов таблицы
      * @param array $fields array('fieldID' => 'Field name', ...)
