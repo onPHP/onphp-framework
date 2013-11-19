@@ -16,6 +16,7 @@
 	{
 		protected $value = array();
 		private $ignoreEmpty = false;
+		private $ignoreWrong = false;
 		
 		/**
 		 * @return PrimitiveIdentifierList
@@ -108,8 +109,12 @@
 				if (
 					($this->scalar && !Assert::checkScalar($id))
 					|| (!$this->scalar && !Assert::checkInteger($id))
-				)
-					return false;
+				) {
+					if (!$this->isIgnoreWrong())
+						return false;
+					else
+						continue; //just skip it
+				}
 				
 				$values[] = $id;
 			}
@@ -117,7 +122,10 @@
 			$objectList = $this->dao()->getListByIds($values);
 			
 			if (
-				count($objectList) == count($values)
+				(
+					(count($objectList) == count($values))
+					|| $this->isIgnoreWrong()
+				)
 				&& !($this->min && count($values) < $this->min)
 				&& !($this->max && count($values) > $this->max)
 			) {
@@ -146,6 +154,18 @@
 		public function isIgnoreEmpty()
 		{
 			return $this->ignoreEmpty;
+		}
+		
+		public function setIgnoreWrong($orly = true)
+		{
+			$this->ignoreWrong = ($orly === true);
+			
+			return $this;
+		}
+		
+		public function isIgnoreWrong()
+		{
+			return $this->ignoreWrong;
 		}
 	}
 ?>
