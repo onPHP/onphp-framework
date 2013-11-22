@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup Helpers
 	**/
-	final class Hstore implements Stringable
+	class Hstore implements Stringable
 	{
 		protected $properties = array();
 		

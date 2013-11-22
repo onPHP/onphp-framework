@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2009 by Sergey S. Sergeev                               *
+ *   Copyright (C) 2005-2007 by Alexey Solomonov                           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -9,38 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	 * @see http://www.postgresql.org/docs/8.3/interactive/hstore.html
-	**/
-	class HstoreType extends ObjectType
-	{
-		public function getPrimitiveName()
-		{
-			return 'hstore';
-		}
-		
-		public function isGeneric()
-		{
-			return true;
-		}
-		
-		public function isMeasurable()
-		{
-			return true;
-		}
-		
-		public function getDeclaration()
-		{
-			if ($this->hasDefault())
-				return "'{$this->default}'";
-		
-			return 'null';
-		}
-		
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::HSTORE)';
-		}
-	}
-?>
+/**
+ * Интерфейса класса возвращающего локаль поумолчанию и текущую локаль проекта
+ * Интерфейс необходим при сохраниее и получении TranslatedString свойств
+ *
+ * @ingroup Base
+ * @ingroup Module
+ * @see TranslatedString
+ **/
+interface Translatable {
+
+    public function isDefaultLanguageCode();
+    public function getDefaultLanguageCode();
+    public function getLanguageCode();
+} 

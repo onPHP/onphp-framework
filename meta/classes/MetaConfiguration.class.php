@@ -1161,126 +1161,7 @@
 				// populate properties
 				foreach ($xmlClass->properties[0] as $xmlProperty) {
 
-					$property = $this->makeProperty(
-						(string) $xmlProperty['name'],
-						(string) $xmlProperty['type'],
-						$class,
-						(string) $xmlProperty['size']
-					);
-
-					if (isset($xmlProperty['column'])) {
-						$property->setColumnName(
-							(string) $xmlProperty['column']
-						);
-					} elseif (
-						$property->getType() instanceof ObjectType
-						&& !$property->getType()->isGeneric()
-					) {
-						if (
-							isset(
-								$this->classes[
-									$property->getType()->getClassName()
-								]
-							) && (
-								$property->getType()->getClass()->getPattern()
-									instanceof InternalClassPattern
-							)
-						) {
-							throw new UnimplementedFeatureException(
-								'you can not use internal classes directly atm'
-							);
-						}
-
-						$property->setColumnName($property->getConvertedName().'_id');
-					} else {
-						$property->setColumnName($property->getConvertedName());
-					}
-
-					if ((string) $xmlProperty['required'] == 'true')
-						$property->required();
-
-					if (isset($xmlProperty['identifier'])) {
-						throw new WrongArgumentException(
-							'obsoleted identifier description found in '
-							."{$class->getName()} class;\n"
-							.'you must use <identifier /> instead.'
-						);
-					}
-
-					if (!$property->getType()->isGeneric()) {
-
-						if (!isset($xmlProperty['relation']))
-							throw new MissingElementException(
-								'relation should be set for non-generic '
-								."property '{$property->getName()}' type '"
-								.get_class($property->getType())."'"
-								." of '{$class->getName()}' class"
-							);
-						else {
-							$property->setRelation(
-								MetaRelation::makeFromName(
-									(string) $xmlProperty['relation']
-								)
-							);
-
-							if ($fetch = (string) $xmlProperty['fetch']) {
-								Assert::isTrue(
-									$property->getRelationId()
-									== MetaRelation::ONE_TO_ONE,
-
-									'fetch mode can be specified
-									only for OneToOne relations'
-								);
-
-								if ($fetch == 'lazy')
-									$property->setFetchStrategy(
-										FetchStrategy::lazy()
-									);
-								elseif ($fetch == 'cascade')
-									$property->setFetchStrategy(
-										FetchStrategy::cascade()
-									);
-								else
-									throw new WrongArgumentException(
-										'strange fetch mode found - '.$fetch
-									);
-							}
-
-							if (
-								(
-									(
-										$property->getRelationId()
-											== MetaRelation::ONE_TO_ONE
-									) && (
-										$property->getFetchStrategyId()
-										!= FetchStrategy::LAZY
-									)
-								) && (
-									$property->getType()->getClassName()
-									<> $class->getName()
-								)
-							) {
-								$this->references[$property->getType()->getClassName()][]
-									= $class->getName();
-							}
-
-							if ((string) $xmlProperty['reference'] == 'false') {
-								$property->skipReference();
-							} else {
-								$property->buildReference();
-							}
-
-						}
-					}
-
-					if (isset($xmlProperty['default'])) {
-						// will be correctly autocasted further down the code
-						$property->getType()->setDefault(
-							(string) $xmlProperty['default']
-						);
-					}
-
-					$class->addProperty($property);
+					$this->processProperty($class, $xmlProperty);
 				}
 
 				$class->setBuild($generate);
@@ -1290,6 +1171,154 @@
 
 			return $this;
 		}
+
+        /**
+         * Добавляет свойство в класс
+         * Вынесено в отдельные метод, чтобы в процессе можно было добавлять дополнительные свойства
+         * @param MetaClass $class
+         * @param $xmlProperty
+         * @throws WrongArgumentException
+         * @throws MissingElementException
+         * @throws UnimplementedFeatureException
+         */
+        private function processProperty(MetaClass $class, $xmlProperty) {
+
+            $property = $this->makeProperty(
+                (string) $xmlProperty['name'],
+                (string) $xmlProperty['type'],
+                $class,
+                (string) $xmlProperty['size']
+            );
+
+            if (isset($xmlProperty['column'])) {
+                $property->setColumnName(
+                    (string) $xmlProperty['column']
+                );
+            } elseif (
+                $property->getType() instanceof ObjectType
+                && !$property->getType()->isGeneric()
+            ) {
+                if (
+                    isset(
+                    $this->classes[
+                    $property->getType()->getClassName()
+                    ]
+                    ) && (
+                        $property->getType()->getClass()->getPattern()
+                        instanceof InternalClassPattern
+                    )
+                ) {
+                    throw new UnimplementedFeatureException(
+                        'you can not use internal classes directly atm'
+                    );
+                }
+
+                $property->setColumnName($property->getConvertedName().'_id');
+            } else {
+                $property->setColumnName($property->getConvertedName());
+            }
+
+            if ((string) $xmlProperty['required'] == 'true')
+                $property->required();
+
+            if (isset($xmlProperty['identifier'])) {
+                throw new WrongArgumentException(
+                    'obsoleted identifier description found in '
+                    ."{$class->getName()} class;\n"
+                    .'you must use <identifier /> instead.'
+                );
+            }
+
+            if (!$property->getType()->isGeneric()) {
+
+                if (!isset($xmlProperty['relation']))
+                    throw new MissingElementException(
+                        'relation should be set for non-generic '
+                        ."property '{$property->getName()}' type '"
+                        .get_class($property->getType())."'"
+                        ." of '{$class->getName()}' class"
+                    );
+                else {
+                    $property->setRelation(
+                        MetaRelation::makeFromName(
+                            (string) $xmlProperty['relation']
+                        )
+                    );
+
+                    if ($fetch = (string) $xmlProperty['fetch']) {
+                        Assert::isTrue(
+                            $property->getRelationId()
+                            == MetaRelation::ONE_TO_ONE,
+
+                            'fetch mode can be specified
+                            only for OneToOne relations'
+                        );
+
+                        if ($fetch == 'lazy')
+                            $property->setFetchStrategy(
+                                FetchStrategy::lazy()
+                            );
+                        elseif ($fetch == 'cascade')
+                            $property->setFetchStrategy(
+                                FetchStrategy::cascade()
+                            );
+                        else
+                            throw new WrongArgumentException(
+                                'strange fetch mode found - '.$fetch
+                            );
+                    }
+
+                    if (
+                        (
+                            (
+                                $property->getRelationId()
+                                == MetaRelation::ONE_TO_ONE
+                            ) && (
+                                $property->getFetchStrategyId()
+                                != FetchStrategy::LAZY
+                            )
+                        ) && (
+                            $property->getType()->getClassName()
+                            <> $class->getName()
+                        )
+                    ) {
+                        $this->references[$property->getType()->getClassName()][]
+                            = $class->getName();
+                    }
+
+                    if ((string) $xmlProperty['reference'] == 'false') {
+                        $property->skipReference();
+                    } else {
+                        $property->buildReference();
+                    }
+
+                }
+            }
+
+            if (isset($xmlProperty['default'])) {
+                // will be correctly autocasted further down the code
+                $property->getType()->setDefault(
+                    (string) $xmlProperty['default']
+                );
+            }
+
+            $class->addProperty($property);
+
+            if ($property->getType() instanceof TranslatedStringType) {
+
+                if (!in_array('Translatable', $class->getInterfaces())) {
+                    $class->addInterface('Translatable');
+                }
+
+                $type = 'TranslatedStore';
+                $this->processProperty($class, array(
+                    'name' => $property->getName() . $type,
+                    'type' => $type,
+                    'size' => null,
+                    'required' => false
+                ));
+            }
+        }
 
 		private function loadXml($metafile, $generate)
 		{

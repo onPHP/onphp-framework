@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup Primitives
 	**/
-	final class PrimitiveHstore extends BasePrimitive
+	class PrimitiveHstore extends BasePrimitive
 	{
 		protected $formMapping	= array();
 		
