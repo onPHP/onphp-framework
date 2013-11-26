@@ -7,3 +7,7 @@ test/meta/Proto/
 test/main/data/urls/parser.dump.new
 .idea
 test/onphp
+
+doc/doxy/spl-5.2.3
+doc/www/css
+doc/www/pix
