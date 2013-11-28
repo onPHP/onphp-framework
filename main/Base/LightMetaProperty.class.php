@@ -302,7 +302,7 @@
 		public function makePrimitive($name)
 		{
 
-            if ('TranslatedStore' == $this->className) {
+            if ($this->isTranslated()) {
                 $prm =
                     call_user_func(
                         array('Primitive', 'string'),
@@ -578,5 +578,9 @@
 				)
 			);
 		}
+
+        public function isTranslated() {
+            return 'TranslatedStore' == $this->className;
+        }
 	}
 ?>

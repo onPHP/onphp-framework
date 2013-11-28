@@ -1,11 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: byorty
- * Date: 22.11.13
- * Time: 20:51
- */
+/***************************************************************************
+ *   Copyright (C) 2013 by Alexey Solomonov                           *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU Lesser General Public License as        *
+ *   published by the Free Software Foundation; either version 3 of the    *
+ *   License, or (at your option) any later version.                       *
+ *                                                                         *
+ ***************************************************************************/
 
+/**
+ * Reference for actual DB-table hstore column.
+ *
+ * @ingroup OSQL
+ * @ingroup Module
+ **/
 class DBHstoreField extends DBField {
 
     private $key = null;

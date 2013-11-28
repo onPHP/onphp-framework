@@ -78,6 +78,11 @@
 			$chain = new self;
 
 			foreach ($this->chain as $order) {
+                /**
+                 * если используется сортировка по ключ hstore,
+                 * то необходимо добавить такое же выражение в список выбираемых столбцов,
+                 * иначе получим ошибку от postgres
+                 */
                 if (
                     $query->isDistinct()
                     && $dao->isTranslatedField($order->getField())
