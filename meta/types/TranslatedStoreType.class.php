@@ -10,8 +10,7 @@
  ***************************************************************************/
 
 /**
- * Данный тип необходим для того, чтобы в классе было создано свойство,
- * которое будет хранить переводы этого свойства
+ * Данный тип будет хранить переводы в Hstore
  *
  * @ingroup Types
  **/
@@ -34,13 +33,12 @@ class TranslatedStoreType extends HstoreType {
         $name = $property->getName();
 
         $methodName = 'get'.ucfirst($property->getName());
-
-        $classHint = $property->getType()->getHint();
+        $classHint = $classHint = $property->getType()->getHint();
 
         return <<<EOT
 
 {$classHint}
-public function {$methodName}()
+public function {$methodName}Store()
 {
 	if (!\$this->{$name}) {
 		\$this->{$name} = new {$this->getClassName()}();
@@ -49,15 +47,30 @@ public function {$methodName}()
 }
 
 /**
- * @param \$langCode string
+ * @param string \$langCode
  * @return string|null
  **/
-public function {$methodName}Item(\$langCode)
+public function {$methodName}(\$langCode = null)
 {
-	\$store = \$this->{$methodName}();
+	if (\$this->useTranslatedStore()) {
+		return \$this->{$methodName}Store();
+	}
+
+	if (!\$langCode) {
+		\$langCode = \$this->getLanguageCode();
+	}
+
+	/** @var \$store {$this->getClassName()} */
+	\$store = \$this->{$methodName}Store();
+
 	if (\$store->has(\$langCode)) {
 		return \$store->get(\$langCode);
 	}
+
+	if (\$store->has(\$this->getDefaultLanguageCode())) {
+		return \$store->get(\$this->getDefaultLanguageCode());
+	}
+
 	return null;
 }
 
@@ -71,29 +84,26 @@ EOT;
     ) {
         $name = $property->getName();
         $methodNamePart = ucfirst($name);
-        $methodName = 'set'.$methodNamePart;
         return <<<EOT
 
 /**
- * @param {$name} {$this->getClassName()}
- * @return {$property->getClass()->getName()}
-**/
-public function {$methodName}({$this->getClassName()} \${$name})
-{
-	\$this->{$name} = \${$name};
-
-	return \$this;
-}
-
-/**
+ * @param string \${$name}
  * @param string \$langCode
- * @param string \$value
- * @return {$property->getClass()->getName()}
- **/
-public function {$methodName}Item(\$langCode, \$value)
+ * @return {$class->getName()}
+**/
+public function set{$methodNamePart}(\${$name}, \$langCode = null)
 {
-	\$store = \$this->get{$methodNamePart}();
-	\$store->set(\$langCode, \$value);
+	if (\$this->useTranslatedStore()) {
+		\$this->{$name} = \${$name};
+		return \$this;
+	}
+
+	if (!\$langCode) {
+		\$langCode = \$this->getLanguageCode();
+	}
+
+	\$store = \$this->get{$methodNamePart}Store();
+	\$store->set(\$langCode, \${$name});
 
 	return \$this;
 }

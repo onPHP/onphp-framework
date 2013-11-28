@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup DAOs
 	**/
-	abstract class ProtoDAO extends GenericDAO
+	abstract class ProtoDAO extends TranslatableDAO
 	{
 		public function getJoinPrefix($field, $prefix = null)
 		{
@@ -165,7 +165,7 @@
 			return $this->getProtoClass()->fillQuery($query, $object);
 		}
 		
-		private function processPath(
+		final protected function processPath(
 			AbstractProtoClass $proto,
 			$probablyPath,
 			JoinCapableQuery $query,
@@ -376,7 +376,15 @@
 						$mapping = $this->getMapping()
 					)
 				) {
-					return new DBField($mapping[$atom], $table);
+                    if ($this->isTranslatedField($atom)) {
+                        return DBHstoreField::create(
+                            $mapping[$atom],
+                            $table,
+                            $this->getLanguageCode()
+                        );
+                    } else {
+                        return new DBField($mapping[$atom], $table);
+                    }
 				} elseif (
 					($query instanceof SelectQuery)
 					&& $query->hasAliasInside($atom)

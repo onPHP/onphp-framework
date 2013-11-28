@@ -52,7 +52,7 @@
 		{
 			foreach ($this->list as $projection)
 				$projection->process($criteria, $query);
-			
+
 			return $query;
 		}
 		

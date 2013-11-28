@@ -301,11 +301,20 @@
 		**/
 		public function makePrimitive($name)
 		{
-			$prm =
-				call_user_func(
-					array('Primitive', $this->type),
-					$name
-				);
+
+            if ('TranslatedStore' == $this->className) {
+                $prm =
+                    call_user_func(
+                        array('Primitive', 'string'),
+                        $name
+                    );
+            } else {
+                $prm =
+                    call_user_func(
+                        array('Primitive', $this->type),
+                        $name
+                    );
+            }
 
 			if (null !== ($min = $this->getMin()))
 				$prm->setMin($min);

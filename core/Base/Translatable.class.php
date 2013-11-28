@@ -19,7 +19,8 @@
  **/
 interface Translatable {
 
-    public function isDefaultLanguageCode();
-    public function getDefaultLanguageCode();
-    public function getLanguageCode();
-} 
+    public static function getDefaultLanguageCode();
+    public static function getLanguageCode();
+    public function useTranslatedStore();
+    public function setUseTranslatedStore($useTranslatedStore);
+}

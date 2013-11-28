@@ -76,10 +76,21 @@
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
 			$chain = new self;
-			
-			foreach ($this->chain as $order)
-				$chain->add($order->toMapped($dao, $query));
-			
+
+			foreach ($this->chain as $order) {
+                if (
+                    $query->isDistinct()
+                    && $dao->isTranslatedField($order->getField())
+                ) {
+                    $query->get(DBHstoreField::create(
+                        $dao->getProtoClass()->getPropertyByName($order->getField())->getColumnName(),
+                        $dao->getTable(),
+                        $dao->getLanguageCode()
+                    ));
+                }
+                $chain->add($order->toMapped($dao, $query));
+            }
+
 			return $chain;
 		}
 		

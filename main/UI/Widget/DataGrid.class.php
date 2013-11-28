@@ -297,6 +297,7 @@ class DataGrid extends BaseWidget
             case 'integer':
             case 'float':
             case 'string':
+            case 'hstore':
                 return function ($value) use ($fieldId, $property) {
                     if ($value instanceof Stringable) $value = $value->toString();
                     $value = htmlentities($value, ENT_COMPAT, 'UTF-8', false);
@@ -506,7 +507,9 @@ class DataGrid extends BaseWidget
 				return function ($value) {
 					if( $value instanceof Hstore || $value instanceof Enum ) {
 						return $value->getName();
-					} else {
+					} else if (is_string($value)) {
+                        return $value;
+                    } else {
 						return '';
 					}
 				};

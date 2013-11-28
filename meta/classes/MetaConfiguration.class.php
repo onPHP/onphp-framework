@@ -1174,7 +1174,7 @@
 
         /**
          * Добавляет свойство в класс
-         * Вынесено в отдельные метод, чтобы в процессе можно было добавлять дополнительные свойства
+         *
          * @param MetaClass $class
          * @param $xmlProperty
          * @throws WrongArgumentException
@@ -1304,19 +1304,10 @@
 
             $class->addProperty($property);
 
-            if ($property->getType() instanceof TranslatedStringType) {
-
+            if ($property->getType() instanceof TranslatedStoreType) {
                 if (!in_array('Translatable', $class->getInterfaces())) {
                     $class->addInterface('Translatable');
                 }
-
-                $type = 'TranslatedStore';
-                $this->processProperty($class, array(
-                    'name' => $property->getName() . $type,
-                    'type' => $type,
-                    'size' => null,
-                    'required' => false
-                ));
             }
         }
 
