@@ -57,7 +57,7 @@ public function {$methodName}(\$langCode = null)
 	}
 
 	if (!\$langCode) {
-		\$langCode = \$this->getLanguageCode();
+		\$langCode = self::getLanguageCode();
 	}
 
 	/** @var \$store {$this->getClassName()} */
@@ -67,11 +67,18 @@ public function {$methodName}(\$langCode = null)
 		return \$store->get(\$langCode);
 	}
 
-	if (\$store->has(\$this->getDefaultLanguageCode())) {
-		return \$store->get(\$this->getDefaultLanguageCode());
+	if (\$store->has(self::getDefaultLanguageCode())) {
+		return \$store->get(self::getDefaultLanguageCode());
 	}
 
-	return null;
+	\${$name} = null;
+	foreach (self::getLanguageCodes() as \$code) {
+		if (\$store->has(\$code)) {
+			\${$name} = \$store->get(\$code);
+		}
+	}
+
+	return \${$name};
 }
 
 EOT;
@@ -99,7 +106,7 @@ public function set{$methodNamePart}(\${$name}, \$langCode = null)
 	}
 
 	if (!\$langCode) {
-		\$langCode = \$this->getLanguageCode();
+		\$langCode = self::getLanguageCode();
 	}
 
 	\$store = \$this->get{$methodNamePart}Store();

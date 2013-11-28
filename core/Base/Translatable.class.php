@@ -20,6 +20,7 @@
 interface Translatable {
 
     public static function getDefaultLanguageCode();
+    public static function getLanguageCodes();
     public static function getLanguageCode();
     public function useTranslatedStore();
     public function setUseTranslatedStore($useTranslatedStore);
