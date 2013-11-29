@@ -75,6 +75,7 @@ public function {$methodName}(\$langCode = null)
 	foreach (self::getLanguageCodes() as \$code) {
 		if (\$store->has(\$code)) {
 			\${$name} = \$store->get(\$code);
+			break;
 		}
 	}
 
