@@ -468,7 +468,7 @@
 		{
 			$list = $this->getPropertyList();
 
-			if (isset($list[$name]))
+			if (is_string($name) && isset($list[$name]))
 				return $list[$name];
 
 			return null;
