@@ -6,6 +6,9 @@
  */
 class DataGrid extends BaseWidget
 {
+    /** @var string имя таблицы */
+    protected $name = null;
+
     /** @var DataGrid для вложенных таблиц */
     protected $parent = null;
 
@@ -111,6 +114,16 @@ class DataGrid extends BaseWidget
 		$self->trueName  =  __('Да');
 		$self->falseName =  __('Нет');
         return $self;
+    }
+
+    /**
+     * Добавляем имя таблицы (для get параметров)
+     * @param $name
+     * @return $this
+     */
+    public function setName($name) {
+        $this->name = $name;
+        return $this;
     }
 
     /**
@@ -980,6 +993,7 @@ class DataGrid extends BaseWidget
         ));
 
         $model = parent::makeModel()
+            ->set('name', $this->name)
             ->set('fields', $this->fields)
 			->set('localizedFields', $this->localizedFields ? : array())
             ->set('data', $data)
