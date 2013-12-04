@@ -139,6 +139,11 @@
 		private function createFromSlash($ip, $mask)
 		{
 			$ip = IpAddress::createFromCutted($ip);
+
+            if($mask == 32) {
+                $this->setup($ip, $ip);
+                return;
+            }
 			
 			if ($mask == 0 || self::MASK_MAX_SIZE < $mask)
 				throw new WrongArgumentException('wrong mask given');

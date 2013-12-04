@@ -51,6 +51,12 @@ class IpCidrRange implements SingleRange, DialectString, Stringable {
     {
         $ip = IpAddress::createFromCutted($ip);
 
+        if($mask == 32) {
+            $this->startIp = $this->endIp = $ip;
+            $this->mask = $mask;
+            return;
+        }
+
         if ($mask == 0 || IpRange::MASK_MAX_SIZE < $mask)
             throw new WrongArgumentException('wrong mask given');
 
