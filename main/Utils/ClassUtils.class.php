@@ -137,7 +137,7 @@
 			if (is_object($class)) {
 				$className = self::normalClassName($class);
 			} elseif (is_string($class)) {
-				$className = $class;
+				$className = self::normalClassName($class);
 			} else {
 				throw new WrongArgumentException('strange class given');
 			}
@@ -146,6 +146,7 @@
 				is_string($object)
 				&& self::isClassName($object)
 			) {
+				$object = self::normalClassName($object);
 				if ($object == $className)
 					return true;
 				elseif (is_subclass_of($object, $className))
