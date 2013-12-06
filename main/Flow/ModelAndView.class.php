@@ -71,6 +71,14 @@
 			return $this;
 		}
 		
+		public function dropView()
+		{
+			$this->view = null;
+			
+			return $this;
+		}
+
+
 		public function viewIsRedirect()
 		{
 			return

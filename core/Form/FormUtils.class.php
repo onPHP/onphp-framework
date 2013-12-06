@@ -119,5 +119,26 @@
 			
 			return $form->getErrors();
 		}
+		
+		/**
+		 * @return Form
+		 */
+		public static function removePrefix(Form $form, $prefix)
+		{
+			$newForm = Form::create();
+
+			foreach ($form->getPrimitiveList() as $primitive) {
+				$primitive->setName(
+					strtr(
+						$primitive->getName(),
+						array($prefix => '')
+					)
+				);
+
+				$newForm->add($primitive);
+			}
+			
+			return $newForm;
+		}
 	}
 ?>

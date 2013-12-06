@@ -121,6 +121,14 @@
 			return null;
 		}
 		
+		/**
+		 * @return QuerySkeleton
+		 */
+		public function spawn()
+		{
+			return clone $this;
+		}
+		
 		protected function resolveSelectField($field, $alias, $table)
 		{
 			if (is_object($field)) {
