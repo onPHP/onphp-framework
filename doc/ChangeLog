@@ -1,3 +1,9 @@
+2013-12-06 Evgeny V. Kokovikhin
+	
+	* core/Form/FormUtils.class.php core/OSQL/QuerySkeleton.class.php
+	main/Flow/ModelAndView.class.php main/Utils/ArrayUtils.class.php
+	test/main/Utils/ArrayUtilsTest.class.php: cosmetics and sugar
+
 2013-11-19 Evgeny V. Kokovikhin
 
 	* core/Form/Form.class.php core/Form/FormCollection.class.php 

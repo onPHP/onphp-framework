@@ -31,7 +31,7 @@
 			return $result;
 		}
 		
-		public static function convertObjectList($list = null)
+		public static function convertObjectList($list = null, $getter = 'getId')
 		{
 			$out = array();
 			
@@ -39,7 +39,7 @@
 				return $out;
 			
 			foreach ($list as $obj)
-				$out[$obj->getId()] = $obj;
+				$out[$obj->{$getter}()] = $obj;
 			
 			return $out;
 		}
