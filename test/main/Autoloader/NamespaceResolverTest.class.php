@@ -20,6 +20,7 @@
 		{
 			//setup
 			$resolver = \Onphp\NamespaceResolverOnPHP::create()->
+				setClassExtension('.cass.php')->
 				addPath($this->getBasePath().'onPHP');
 			//expectation
 			$result = array(
@@ -28,7 +29,7 @@
 			);
 			//execution
 			$this->assertEquals($result, $resolver->getClassPathList());
-			$this->assertEquals($this->getBasePath().'onPHP/MyForm.class.php', $resolver->getClassPath('MyForm'));
+			$this->assertEquals($this->getBasePath().'onPHP/MyForm.cass.php', $resolver->getClassPath('MyForm'));
 			$this->assertNull($resolver->getClassPath('MyFormSub'));
 			$this->assertNull($resolver->getClassPath('\onPHP\MyFormSub'));
 			$this->assertNull($resolver->getClassPath('\onPHP\MyFormSup'));
@@ -45,16 +46,16 @@
 			$result['\onPHP\MyFormUp'] = 2;
 			//execution
 			$this->assertEquals($result, $resolver->getClassPathList());
-			$this->assertEquals($this->getBasePath().'onPHP/MyForm.class.php', $resolver->getClassPath('\MyForm'));
+			$this->assertEquals($this->getBasePath().'onPHP/MyForm.cass.php', $resolver->getClassPath('\MyForm'));
 			$this->assertNull($resolver->getClassPath('MyFormSub'));
 			$this->assertEquals(
-				$this->getBasePath().'onPHP/Sub/MyFormSub.class.php',
+				$this->getBasePath().'onPHP/Sub/MyFormSub.cass.php',
 				$resolver->getClassPath('\onPHP\MyFormSub')
 			);
 			$this->assertNull($resolver->getClassPath('\onPHP\MyFormSup'));
 			
 			//setup
-			$resolver->setClassExtension('.clazz.php');
+			$resolver->setClassExtension('.cazz.php');
 			//expecation
 			$result = array(
 				0 => $this->getBasePath().'onPHP/',
@@ -68,15 +69,16 @@
 			$this->assertNull($resolver->getClassPath('MyFormSub'));
 			$this->assertNull($resolver->getClassPath('\onPHP\MyFormSub'));
 			$this->assertEquals(
-				$this->getBasePath().'onPHP/Sub/MyFormSup.clazz.php',
+				$this->getBasePath().'onPHP/Sub/MyFormSup.cazz.php',
 				$resolver->getClassPath('\onPHP\MyFormSup')
 			);
 		}
-		
+
 		public function testPSR0ResolverEmptyBaseNamespace()
 		{
 			//setup
 			$resolver = \Onphp\NamespaceResolverPSR0::create()->
+				setClassExtension('.cass.php')->
 				addPath($this->getBasePath());
 			
 			//expectation
@@ -96,14 +98,14 @@
 			//execution
 			$this->assertEquals($result, $resolver->getClassPathList());
 			$this->assertEquals(
-				$this->getBasePath().'MyNS/Sub/Class2.class.php',
+				$this->getBasePath().'MyNS/Sub/Class2.cass.php',
 				$resolver->getClassPath('\MyNS\\Sub\Class2')
 			);
 			$this->assertNull($resolver->getClassPath('\MyNS\\Sub\Class1'));
 			$this->assertNull($resolver->getClassPath('\onPHP\Sub\MyFormSup'));
 			
 			//setup
-			$resolver->setClassExtension('.clazz.php');
+			$resolver->setClassExtension('.cazz.php');
 			//expectation
 			$result = array(
 				0 => $this->getBasePath(),
@@ -118,15 +120,16 @@
 			$this->assertEquals($result, $resolver->getClassPathList());
 			$this->assertNull($resolver->getClassPath('\MyNS\Sub\Class2'));
 			$this->assertEquals(
-				$this->getBasePath().'onPHP/Sub/MyFormSup.clazz.php',
+				$this->getBasePath().'onPHP/Sub/MyFormSup.cazz.php',
 				$resolver->getClassPath('\onPHP\Sub\MyFormSup')
 			);
 		}
-		
+
 		public function testPSR0ResolverStartWithNamespace()
 		{
 			//setup
 			$resolver = \Onphp\NamespaceResolverPSR0::create()->
+				setClassExtension('.cass.php')->
 				addPath($this->getBasePath().'onPHP', '\onPHP\\');
 			//expectation
 			$result = array(
@@ -140,27 +143,28 @@
 			//execution
 			$this->assertEquals($result, $resolver->getClassPathList());
 			$this->assertEquals(
-				$this->getBasePath().'onPHP/Up/MyFormUp.class.php',
+				$this->getBasePath().'onPHP/Up/MyFormUp.cass.php',
 				$resolver->getClassPath('onPHP\Up\MyFormUp')
 			);
 			$this->assertNull($resolver->getClassPath('\MyNS\\Sub\Class1'));
 			$this->assertNull($resolver->getClassPath('\onPHP\Sub\MyFormSup'));
 		}
-		
+
 		public function testPSR0WithUnderlineNoBaseNamespace()
 		{
 			//setup
 			$resolver = \Onphp\NamespaceResolverPSR0::create()->
 				setAllowedUnderline(true)->
-				addPath($this->getBasePath(true));
+				addPath($this->getBasePath(true))->
+				setClassExtension('.cass.php');
 			
 			//expectation
 			$this->assertEquals(
-				$this->getBasePath(true).'Under/Class.class.php',
+				$this->getBasePath(true).'Under/Class.cass.php',
 				$resolver->getClassPath('\Under_Class')
 			);
 			$this->assertEquals(
-				$this->getBasePath(true).'Under/Class.class.php',
+				$this->getBasePath(true).'Under/Class.cass.php',
 				$resolver->getClassPath('\Under\Class')
 			);
 			
@@ -176,25 +180,26 @@
 			$resolver->setAllowedUnderline(false);
 			$this->assertNull($resolver->getClassPath('\Under_Class'));
 			$this->assertEquals(
-				$this->getBasePath(true).'Under/Class.class.php',
+				$this->getBasePath(true).'Under/Class.cass.php',
 				$resolver->getClassPath('\Under\Class')
 			);
 		}
-		
+
 		public function testPSR0WithUnderlineWithBaseNamespace()
 		{
 			//setup
 			$resolver = \Onphp\NamespaceResolverPSR0::create()->
 				setAllowedUnderline(true)->
-				addPath($this->getBasePath(true), 'My\base_package');
+				addPath($this->getBasePath(true), 'My\base_package')->
+				setClassExtension('.cass.php');
 			
 			//expectation
 			$this->assertEquals(
-				$this->getBasePath(true).'Under/Class.class.php',
+				$this->getBasePath(true).'Under/Class.cass.php',
 				$resolver->getClassPath('\My\base_package\Under_Class')
 			);
 			$this->assertEquals(
-				$this->getBasePath(true).'Under/Class.class.php',
+				$this->getBasePath(true).'Under/Class.cass.php',
 				$resolver->getClassPath('\My\base_package\Under\Class')
 			);
 			$this->assertNull($resolver->getClassPath('\Under\Class'));
@@ -211,7 +216,7 @@
 			$resolver->setAllowedUnderline(false);
 			$this->assertNull($resolver->getClassPath('\My\base_package\Under_Class'));
 			$this->assertEquals(
-				$this->getBasePath(true).'Under/Class.class.php',
+				$this->getBasePath(true).'Under/Class.cass.php',
 				$resolver->getClassPath('\My\base_package\Under\Class')
 			);
 		}
