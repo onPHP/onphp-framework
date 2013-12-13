@@ -9,7 +9,9 @@
  *                                                                          *
  ****************************************************************************/
 
-	final class FormCollection implements Iterator
+	namespace Onphp;
+
+	final class FormCollection implements \Iterator
 	{
 		/**
 		 * @var Form
@@ -19,7 +21,10 @@
 		private $primitiveNames = array();
 		
 		private $imported = false;
-		
+
+		/**
+		 * @var Form[]
+		 */
 		private $formList = array();
 		
 		/**
