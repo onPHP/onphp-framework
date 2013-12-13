@@ -137,7 +137,6 @@
 
 				$newForm->add($primitive);
 			}
-			foreach ($form->getr)
 			
 			return $newForm;
 		}
