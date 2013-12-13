@@ -5,8 +5,7 @@
 	{
 		public function testInnerTransaction()
 		{
-			foreach (DBTestPool::me()->getPool() as $connector => $db) {
-				\Onphp\DBPool::me()->setDefault($db);
+			foreach (DBTestPool::me()->iterator() as $db) {
 				$this->getDBCreator()->fillDB();
 				
 				$moscow = TestCity::dao()->getByLogic(\Onphp\Expression::eq('name', 'Moscow'));

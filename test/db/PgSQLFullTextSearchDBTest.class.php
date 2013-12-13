@@ -11,7 +11,7 @@
 		 */
 		public function getPgSQL()
 		{
-			foreach (DBTestPool::me()->getPool() as $db)
+			foreach (DBTestPool::me()->iterator() as $db)
 				if ($db instanceof \Onphp\PgSQL)
 					return $db;
 

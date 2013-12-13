@@ -40,10 +40,16 @@
 				$connector->setPersistent($persistent)->connect();
 			}
 		}
-		
-		public function getPool()
+
+		/**
+		 * @return \Iterator
+		 */
+		public function iterator()
 		{
-			return $this->pool;
+			if (empty($this->pool)) {
+				throw new \PHPUnit_Framework_AssertionFailedError("for tests requires");
+			}
+			return new DBTestIterator($this->pool);
 		}
 	}
 ?>

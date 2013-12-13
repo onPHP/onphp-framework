@@ -30,7 +30,7 @@
 		 * @return \Onphp\DB
 		 */
 		protected function getDbByType($type) {
-			foreach (DBTestPool::me()->getPool() as $db) {
+			foreach (DBTestPool::me()->iterator() as $db) {
 				if (\Onphp\ClassUtils::normalClassName($db) == $type)
 					return $db;
 			}

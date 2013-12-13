@@ -5,8 +5,7 @@
 	{
 		public function testUnified()
 		{
-			foreach (DBTestPool::me()->getPool() as $db) {
-				\Onphp\DBPool::me()->setDefault($db);
+			foreach (DBTestPool::me()->iterator() as $db) {
 				$this->getDBCreator()->fillDB();
 				
 				$this->unified();
@@ -25,8 +24,7 @@
 		
 		public function testCount()
 		{
-			foreach (DBTestPool::me()->getPool() as $db) {
-				\Onphp\DBPool::me()->setDefault($db);
+			foreach (DBTestPool::me()->iterator() as $db) {
 				$this->getDBCreator()->fillDB();
 				
 				$count = TestUser::dao()->getTotalCount();

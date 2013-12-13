@@ -67,8 +67,7 @@
 		
 		public function testIpAddressProperty()
 		{
-			foreach (DBTestPool::me()->getPool() as $db) {
-				\Onphp\DBPool::me()->setDefault($db);
+			foreach (DBTestPool::me()->iterator() as $db) {
 				
 				$city =
 					TestCity::create()->
@@ -116,9 +115,7 @@
 		
 		public function testIpRangeProperty()
 		{
-			foreach (DBTestPool::me()->getPool() as $db) {
-				\Onphp\DBPool::me()->setDefault($db);
-				
+			foreach (DBTestPool::me()->iterator() as $db) {
 				$akado =
 					TestInternetProvider::create()->
 					setName('Akada')->

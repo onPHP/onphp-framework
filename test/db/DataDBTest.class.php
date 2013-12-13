@@ -5,8 +5,7 @@
 	{
 		public function testData()
 		{
-			foreach (DBTestPool::me()->getPool() as $db) {
-				\Onphp\DBPool::me()->setDefault($db);
+			foreach (DBTestPool::me()->iterator() as $db) {
 				$this->getDBCreator()->fillDB($this);
 				
 				$this->getSome(); // 41!
@@ -23,9 +22,7 @@
 		
 		public function testBoolean()
 		{
-			foreach (DBTestPool::me()->getPool() as $db) {
-				\Onphp\DBPool::me()->setDefault($db);
-				
+			foreach (DBTestPool::me()->iterator() as $db) {
 				//creating moscow
 				$moscow = TestCity::create()->setName('Moscow');
 				$moscow = $moscow->dao()->add($moscow);

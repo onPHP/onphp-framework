@@ -5,9 +5,7 @@
 	{
 		public function testCriteria()
 		{
-			foreach (DBTestPool::me()->getPool() as $db) {
-				/* @var $db \Onphp\DB */
-				\Onphp\DBPool::me()->setDefault($db);
+			foreach (DBTestPool::me()->iterator() as $db) {
 				$this->getDBCreator()->fillDB();
 
 				$queryResult = \Onphp\Criteria::create(TestCity::dao())->getResult();

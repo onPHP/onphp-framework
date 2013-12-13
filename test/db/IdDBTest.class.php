@@ -5,8 +5,7 @@
 	{
 		public function testGetByEmptyId()
 		{
-			foreach (DBTestPool::me()->getPool() as $db) {
-				\Onphp\DBPool::me()->setDefault($db);
+			foreach (DBTestPool::me()->iterator() as $db) {
 				$this->getByEmptyIdTest(0, true);
 				$this->getByEmptyIdTest(null);
 				$this->getByEmptyIdTest('');

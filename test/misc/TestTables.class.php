@@ -14,7 +14,7 @@
 			$this->schema = $schema;
 			
 			// in case of unclean shutdown of previous tests
-			foreach (DBTestPool::me()->getPool() as $name => $db) {
+			foreach (DBTestPool::me()->iterator() as $db) {
 				foreach ($this->schema->getTableNames() as $name) {
 					try {
 						$db->queryRaw(
@@ -46,10 +46,8 @@
 		
 		public function create()
 		{
-			$pool = DBTestPool::me()->getPool();
-			
-			foreach ($pool as $name => $db) {
-				foreach ($this->schema->getTables() as $name => $table) {
+			foreach (DBTestPool::me()->iterator() as $db) {
+				foreach ($this->schema->getTables() as $table) {
 					$db->queryRaw($table->toDialectString($db->getDialect()));
 				}
 			}
@@ -59,9 +57,7 @@
 		
 		public function drop()
 		{
-			$pool = DBTestPool::me()->getPool();
-			
-			foreach ($pool as $name => $db) {
+			foreach (DBTestPool::me()->iterator() as $db) {
 				foreach ($this->schema->getTableNames() as $name) {
 					$db->queryRaw(
 						\Onphp\OSQL::dropTable($name, true)->toDialectString(
@@ -86,8 +82,10 @@
 
 		protected function setUp()
 		{
-			if (!DBTestPool::me()->getPool())
-				$this->markTestSkipped('haven\'t connected database pool');
+			foreach (DBTestPool::me()->iterator() as $db) {
+				return;
+			}
+			$this->markTestSkipped('haven\'t connected database pool');
 		}
 	}
 ?>

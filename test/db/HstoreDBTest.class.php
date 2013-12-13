@@ -9,8 +9,7 @@
 		**/
 		public function testHstore()
 		{
-			foreach (DBTestPool::me()->getPool() as $connector => $db) {
-				\Onphp\DBPool::me()->setDefault($db);
+			foreach (DBTestPool::me()->iterator() as $db) {
 				$properties = array(
 					'age' => '23',
 					'weight' => 80,

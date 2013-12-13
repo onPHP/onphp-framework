@@ -13,8 +13,7 @@
 		{
 			$this->markTestSkipped('wontfix');
 			
-			foreach (DBTestPool::me()->getPool() as $db) {
-				\Onphp\DBPool::me()->setDefault($db);
+			foreach (DBTestPool::me()->iterator() as $db) {
 				TestObject::dao()->import(
 					TestObject::create()->
 					setId(1)->
@@ -48,8 +47,7 @@
 		
 		public function testRecursionObjects()
 		{
-			foreach (DBTestPool::me()->getPool() as $db) {
-				\Onphp\DBPool::me()->setDefault($db);
+			foreach (DBTestPool::me()->iterator() as $db) {
 				
 				$parentProperties =
 					\Onphp\Singleton::getInstance('\Onphp\Test\ProtoTestParentObject')->

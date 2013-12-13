@@ -5,9 +5,7 @@
 	{
 		public function testWorkingWithCache()
 		{
-			foreach (DBTestPool::me()->getPool() as $db) {
-				\Onphp\DBPool::me()->setDefault($db);
-				
+			foreach (DBTestPool::me()->iterator() as $db) {
 				$item =
 					TestItem::create()->
 					setName('testItem1');
@@ -104,9 +102,7 @@
 		
 		public function testLazy()
 		{
-			foreach (DBTestPool::me()->getPool() as $db) {
-				\Onphp\DBPool::me()->setDefault($db);
-				
+			foreach (DBTestPool::me()->iterator() as $db) {
 				$parent = TestParentObject::create();
 				$child = TestChildObject::create()->setParent($parent);
 

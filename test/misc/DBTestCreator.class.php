@@ -55,8 +55,8 @@
 				getColumnByName('root_id')->
 				dropReference();
 			
-			foreach ($this->pool->getPool() as $name => $db) {
-				foreach ($this->schema->getTables() as $name => $table) {
+			foreach ($this->pool->iterator() as $db) {
+				foreach ($this->schema->getTables() as $table) {
 					$db->queryRaw($table->toDialectString($db->getDialect()));
 				}
 			}
@@ -71,7 +71,7 @@
 		 */
 		public function dropDB($clean = false)
 		{
-			foreach ($this->pool->getPool() as $name => $db) {
+			foreach ($this->pool->iterator() as $db) {
 				/* @var $db \Onphp\DB */
 				foreach ($this->schema->getTableNames() as $name) {
 					try {
