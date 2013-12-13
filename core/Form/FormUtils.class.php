@@ -28,7 +28,7 @@
 				$proto = $object->proto();
 				
 				foreach (array_keys($proto->getExpandedPropertyList()) as $name) {
-					if ($form->primitiveExists($name)) {
+					if ($form->exists($name)) {
 						$proto->importPrimitive(
 							$name,
 							$form,
@@ -137,6 +137,7 @@
 
 				$newForm->add($primitive);
 			}
+			foreach ($form->getr)
 			
 			return $newForm;
 		}

@@ -70,7 +70,10 @@
 			
 			return $this;
 		}
-		
+
+		/**
+		 * @return ModelAndView
+		 */
 		public function dropView()
 		{
 			$this->view = null;

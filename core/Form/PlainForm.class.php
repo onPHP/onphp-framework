@@ -19,6 +19,9 @@
 
 	abstract class PlainForm
 	{
+		/**
+		 * @var BasePrimitive[]
+		 */
 		protected $primitives = array();
 		
 		/**
@@ -165,7 +168,10 @@
 		{
 			return array_keys($this->primitives);
 		}
-		
+
+		/**
+		 * @return BasePrimitive[]
+		 */
 		public function getPrimitiveList()
 		{
 			return $this->primitives;
