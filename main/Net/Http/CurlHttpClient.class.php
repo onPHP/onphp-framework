@@ -424,6 +424,9 @@
 		 */
 		private function fileFilter($value)
 		{
+			if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
+				return new \CURLFile($value);
+			}
 			Assert::isTrue(
 				is_readable($value) && is_file($value),
 				'couldn\'t access to file with path: '.$value

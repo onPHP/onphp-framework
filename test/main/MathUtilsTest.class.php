@@ -45,7 +45,7 @@
 			);
 
 			$this->assertEquals(
-				MathUtils::getMmult($left, $right),
+				\Onphp\MathUtils::getMmult($left, $right),
 				array(
 					array(10, 9, 13),
 					array(27, 26, 35),
@@ -54,14 +54,14 @@
 			);
 
 			try {
-				MathUtils::getMmult(array(), $right);
+				\Onphp\MathUtils::getMmult(array(), $right);
 				$this->fail("Exception expected here");
-			} catch (WrongArgumentException $e) {}
+			} catch (\Onphp\WrongArgumentException $e) {}
 
 			try {
-				MathUtils::getMmult($left, array());
+				\Onphp\MathUtils::getMmult($left, array());
 				$this->fail("Exception expected here");
-			} catch (WrongArgumentException $e) {}
+			} catch (\Onphp\WrongArgumentException $e) {}
 		}
 	}
 ?>

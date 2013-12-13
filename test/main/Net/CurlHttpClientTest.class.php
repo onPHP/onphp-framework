@@ -138,7 +138,17 @@
 				$this->spawnClient()->send($request);
 				$this->fail('expected exception about not exists file');
 			} catch (\Onphp\WrongArgumentException $e) {
-				$this->assertStringStartsWith('couldn\'t access to file with path:', $e->getMessage());
+				if (version_compare(PHP_VERSION, '5.5.0', '<')) {
+					$this->assertStringStartsWith('couldn\'t access to file with path:', $e->getMessage());
+				} else {
+					$this->fail('expects NetworkException');
+				}
+			} catch (\Onphp\NetworkException $e) {
+				if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
+					$this->assertStringStartsWith('curl error, code: 26 description: couldn\'t open file "', $e->getMessage());
+				} else {
+					$this->fail('expects WrongArgumentException');
+				}
 			}
 		}
 		
@@ -169,7 +179,7 @@
 		private function generateString($get, $post, $files, $inputString)
 		{
 			ob_start();
-			var_dump($get, $post, $files, $inputString);
+			print_r([$get, $post, $files, $inputString]);
 			return ob_get_clean();
 		}
 		

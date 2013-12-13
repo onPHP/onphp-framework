@@ -5,20 +5,17 @@
 
 	final class TimestampTZTest extends TestCase
 	{
-		/**
-		 * @group ff
-		 */
 		public function testDifferentZones()
 		{
 			$someDate = \Onphp\TimestampTZ::create('2011-01-01 12:10:10 Europe/Moscow');
 			$this->assertEquals(
-				'2011-01-01 12:10:10+0300',
+				'2011-01-01 12:10:10',
 				$someDate->toTimestamp('Europe/Moscow')->toString()
 			);
 
 			$this->assertEquals(
-				$someDate->toTimestamp('Europe/London')->toString(),
-				'2011-01-01 09:10:10+0000'
+				'2011-01-01 09:10:10',
+				$someDate->toTimestamp('Europe/London')->toString()
 			);
 			
 			$moscowTime = \Onphp\TimestampTZ::create('2011-01-01 00:00:00 Europe/Moscow');
@@ -27,14 +24,14 @@
 			$this->assertEquals(0, \Onphp\TimestampTZ::compare($moscowTime, $londonTime));
 			
 			$moscowTime->modify('+ 1 second');
-			$this->assertEquals(\Onphp\TimestampTZ::compare($moscowTime, $londonTime), 1);
+			$this->assertEquals(1, \Onphp\TimestampTZ::compare($moscowTime, $londonTime));
 			$moscowTime->modify('- 2 second');
-			$this->assertEquals(\Onphp\TimestampTZ::compare($moscowTime, $londonTime), -1);
+			$this->assertEquals(-1, \Onphp\TimestampTZ::compare($moscowTime, $londonTime));
 			
 			
 			$this->assertEquals(
-				$moscowTime->toTimestamp('Europe/Moscow')->toString(),
-				'2010-12-31 23:59:59+0300'
+				'2010-12-31 23:59:59',
+				$moscowTime->toTimestamp('Europe/Moscow')->toString()
 			);
 		}
 		

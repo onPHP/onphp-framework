@@ -7,6 +7,12 @@
 	{
 		public function testEmpty()
 		{
+			$dbs = DBTestPool::me()->getPool();
+			if (empty($dbs)) {
+				$this->fail('For test required at least one DB in config');
+			}
+			\Onphp\DBPool::me()->setDefault(reset($dbs));
+
 			$prm = \Onphp\Primitive::identifier('name')->of('\Onphp\Test\TestCity');
 			
 			$nullValues = array(null, '');

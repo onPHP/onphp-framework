@@ -148,8 +148,8 @@
 					TestCity::create()->setId(666)->setName('Moscow')
 				);
 			
-			$this->assertEquals(array(42, 666), array_keys(ArrayUtils::convertObjectList($list)));
-			$this->assertEquals(array('Beldyazki', 'Moscow'), array_keys(ArrayUtils::convertObjectList($list, 'getName')));
+			$this->assertEquals(array(42, 666), array_keys(\Onphp\ArrayUtils::convertObjectList($list)));
+			$this->assertEquals(array('Beldyazki', 'Moscow'), array_keys(\Onphp\ArrayUtils::convertObjectList($list, 'getName')));
 			
 		}
 

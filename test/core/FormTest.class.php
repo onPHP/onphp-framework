@@ -123,13 +123,13 @@
 		public function testFormCollection()
 		{
 			$collection = 
-				FormCollection::create(
+				\Onphp\FormCollection::create(
 					TestCity::proto()->makeForm()->
 						drop('id')
 				);
 			
 			
-			$url = HttpUrl::create()->parse('http://i.would.like.to.create.cities/?name[77]=Moscow&capital[77]=1&large[77]=1&name[50]=Krasnogorsk&name[78]=Piter&large[78]=1');
+			$url = \Onphp\HttpUrl::create()->parse('http://i.would.like.to.create.cities/?name[77]=Moscow&capital[77]=1&large[77]=1&name[50]=Krasnogorsk&name[78]=Piter&large[78]=1');
 			parse_str($url->getQuery(), $getArray);
 			
 			$collection->import($getArray);

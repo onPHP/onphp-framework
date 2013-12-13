@@ -36,9 +36,13 @@
 		ONPHP_TEST_PATH.'db'.DIRECTORY_SEPARATOR,
 	);
 	
-	$config = dirname(__FILE__).'/config.inc.php';
-	
-	include is_readable($config) ? $config : $config.'.tpl';
+	$config = __DIR__.'/config.inc.php';
+
+	require is_readable($config) ? $config : $config.'.tpl';
+
+	AllTests::$dbs = $dbs;
+	AllTests::$paths = $testPathes;
+	AllTests::$workers = $daoWorkers;
 	
 	final class AllTests
 	{
@@ -130,8 +134,4 @@
 			return $suite;
 		}
 	}
-	
-	AllTests::$dbs = $dbs;
-	AllTests::$paths = $testPathes;
-	AllTests::$workers = $daoWorkers;
 ?>

@@ -48,7 +48,7 @@
 				"strange<br />\nthings<br />\nhappens"
 			);
 		}
-		
+
 		public function testRussianTypograf()
 		{
 			$filter = \Onphp\RussianTypograph::me();
