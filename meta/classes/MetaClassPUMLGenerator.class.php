@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+	namespace Onphp;
+
 	final class MetaClassPUMLGenerator extends StaticFactory
 	{
 		public static function generate(MetaClass $class)
