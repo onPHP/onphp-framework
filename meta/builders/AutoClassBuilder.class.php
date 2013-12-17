@@ -48,13 +48,13 @@
 				if (!self::doPropertyBuild($class, $property, $isNamed))
 					continue;
 				
-				$out .=
-					"protected \${$property->getName()} = "
-					."{$property->getType()->getDeclaration()};\n";
-				
 				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
 					$out .=
 						"protected \${$property->getName()}Id = null;\n";
+				} else {
+					$out .=
+						"protected \${$property->getName()} = "
+						."{$property->getType()->getDeclaration()};\n";
 				}
 			}
 			

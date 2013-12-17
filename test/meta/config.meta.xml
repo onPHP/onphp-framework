@@ -117,7 +117,7 @@
 		<properties>
 			<identifier />
 			<property name="item" type="TestItem" relation="OneToOne" required="true" column="test_item_id" />
-			<property name="encapsulant" type="TestEncapsulant" relation="OneToOne" required="true" />
+			<property name="encapsulant" type="TestEncapsulant" relation="OneToOne" required="true" fetch="lazy" />
 			<property name="name" type="String" size="50" required="true" />
 		</properties>
 		<pattern name="DictionaryClass" />

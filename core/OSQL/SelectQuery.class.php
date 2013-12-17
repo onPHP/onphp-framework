@@ -101,6 +101,11 @@
 			return $this->joiner->hasJoinedTable($table);
 		}
 		
+		public function getJoinedTables()
+		{
+			return $this->joiner->getTables();
+		}
+		
 		/**
 		 * @return \Onphp\SelectQuery
 		**/

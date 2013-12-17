@@ -10,18 +10,13 @@
  ***************************************************************************/
 
 	/**
-	 * @ingroup Uncachers
+	 * @ingroup OSQL
+	 * @ingroup Module
 	**/
 	namespace Onphp;
 
-	interface UncacherBase
+	interface SQLRealTableName
 	{
-		/**
-		 * @param $uncacher UncacherBase same as self class
-		 * @return UncacherBase (this)
-		 */
-		public function merge(UncacherBase $uncacher);
-		
-		public function uncache();
+		public function getRealTable();
 	}
 ?>

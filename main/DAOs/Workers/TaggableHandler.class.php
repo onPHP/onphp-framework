@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2012 by Aleksey S. Denisov                              *
+ *   Copyright (C) 2009 by Solomatin Alexandr                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -9,19 +9,24 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Uncachers
-	**/
 	namespace Onphp;
 
-	interface UncacherBase
+	interface TaggableHandler
 	{
-		/**
-		 * @param $uncacher UncacherBase same as self class
-		 * @return UncacherBase (this)
-		 */
-		public function merge(UncacherBase $uncacher);
-		
-		public function uncache();
+		// get tag list for object
+		public function getCacheObjectTags(IdentifiableObject $object, $className);
+
+		// get tag list for object
+		public function getUncacheObjectTags(IdentifiableObject $object, $className);
+
+		// get tag list for query
+		public function getQueryTags(SelectQuery $query, $className);
+
+		// get tag list for null object
+		public function getNullObjectTags($id, $className);
+
+		// get default tag list
+		public function getDefaultTags($className);
+
 	}
 ?>

@@ -17,7 +17,7 @@
 	**/
 	namespace Onphp;
 
-	final class FromTable implements Aliased, SQLTableName
+	final class FromTable implements Aliased, SQLTableName, SQLRealTableName
 	{
 		private $table	= null;
 		private $alias	= null;
@@ -86,6 +86,11 @@
 		public function getTable()
 		{
 			return $this->alias ? $this->alias : $this->table;
+		}
+		
+		public function getRealTable()
+		{
+			return $this->table;
 		}
 	}
 ?>

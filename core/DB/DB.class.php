@@ -424,14 +424,6 @@
 			return $this;
 		}
 		
-		public function registerUncacher(UncacherBase $uncacher)
-		{
-			$uncacher->uncache();
-			if ($this->inTransaction()) {
-				$this->getUncacher()->merge($uncacher);
-			}
-		}
-		
 		/**
 		 * @param string $savepointName 
 		 * @return \Onphp\DB
@@ -443,7 +435,7 @@
 				
 			$this->savepointList[$savepointName] = true;
 			return $this;
-		}
+			}
 		
 		/**
 		 * @param string $savepointName 
@@ -461,11 +453,19 @@
 		private function checkSavepointExist($savepointName)
 		{
 			return isset($this->savepointList[$savepointName]);
-		}
+			}
 		
 		private function assertSavePointName($savepointName)
 		{
 			Assert::isEqual(1, preg_match('~^[A-Za-z][A-Za-z0-9]*$~iu', $savepointName));
+		}
+		
+		public function registerUncacher(UncacherBase $uncacher)
+		{
+			$uncacher->uncache();
+			if ($this->inTransaction()) {
+				$this->getUncacher()->merge($uncacher);
+			}
 		}
 		
 		/**
