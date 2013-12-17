@@ -479,8 +479,9 @@
 		private function triggerUncacher()
 		{
 			if ($this->uncacher) {
-				$this->uncacher->uncache();
+				$uncacher = $this->uncacher;
 				$this->uncacher = null;
+				$uncacher->uncache();
 			}
 		}
 	}

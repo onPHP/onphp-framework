@@ -57,26 +57,38 @@
 		
 		public function dropById($id)
 		{
+			$uncacher = $this->dao->getUncacherById($id);
 			$result =
 				DBPool::getByDao($this->dao)->queryCount(
 					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::eq($this->dao->getIdName(), $id))
 				);
-			
-			$this->dao->uncacheById($id);
+
+			$uncacher->uncache();
 			
 			return $result;
 		}
 		
 		public function dropByIds(array $ids)
 		{
+			$uncacheIds = $ids;
+			$uncacher = null;
+			if (count($uncacheIds)) {
+				$uncacher = $this->dao->getUncacherById(array_shift($uncacheIds));
+				foreach ($uncacheIds as $id) {
+					$uncacher->merge($this->dao->getUncacherById($id));
+				}
+			}
+
 			$result =
 				DBPool::getByDao($this->dao)->queryCount(
 					OSQL::delete()->from($this->dao->getTable())->
 					where(Expression::in($this->dao->getIdName(), $ids))
 				);
-			
-			$this->dao->uncacheByIds($ids);
+
+			if ($uncacher) {
+				$uncacher->uncache();
+			}
 			
 			return $result;
 		}

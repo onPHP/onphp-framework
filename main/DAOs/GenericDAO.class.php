@@ -388,7 +388,7 @@
 			$db = DBPool::getByDao($this);
 			
 			if (!$db->isQueueActive()) {
-				$preUncacher = is_scalar($object->getId())
+				$preUncacher = !($query instanceof InsertQuery )
 					? $this->getUncacherById($object->getId())
 					: null;
 				
@@ -406,7 +406,7 @@
 						.$query->toDialectString($db->getDialect())
 					);
 			} else {
-				$preUncacher = is_scalar($object->getId())
+				$preUncacher = !($query instanceof InsertQuery )
 					? $this->getUncacherById($object->getId())
 					: null;
 				
