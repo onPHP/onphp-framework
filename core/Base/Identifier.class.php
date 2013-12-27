@@ -15,7 +15,7 @@
 	 * @ingroup Base
 	 * @ingroup Module
 	**/
-	final class Identifier implements Identifiable
+	final class Identifier implements Identifiable, Stringable
 	{
 		private $id		= null;
 		private $final	= false;
@@ -65,5 +65,15 @@
 		{
 			return $this->final;
 		}
+
+		public function toString() {
+			return $this->__toString();
+		}
+
+		function __toString() {
+			return strval($this->id);
+		}
+
+
 	}
 ?>
