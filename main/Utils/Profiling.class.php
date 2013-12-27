@@ -72,6 +72,9 @@ class Profiling {
 		if ($time === null) {
 			return $format ? 'never' : 0;
 		}
+		if( strpos($time,'.')===false ) {
+			$time .= '.0';
+		}
 		if ($format) {
 			$time = DateTime::createFromFormat('U.u', $time)->format($format);
 		}
@@ -82,6 +85,9 @@ class Profiling {
 		$time = $this->timeEnd;
 		if ($time === null) {
 			return $format ? 'never' : 0;
+		}
+		if( strpos($time,'.')===false ) {
+			$time .= '.0';
 		}
 		if ($format) {
 			$time = DateTime::createFromFormat('U.u', $time)->format($format);
