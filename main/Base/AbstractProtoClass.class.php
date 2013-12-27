@@ -151,6 +151,7 @@
 			$className = get_class($this);
 
 			if (!isset($lists[$className])) {
+				$lists[$className] = array();
 				foreach ($this->makePropertyList() as $property) {
 					if ($property instanceof InnerMetaProperty) {
 						$lists[$className] =
