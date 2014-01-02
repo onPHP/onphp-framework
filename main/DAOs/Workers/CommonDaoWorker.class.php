@@ -447,7 +447,7 @@
 			
 				Cache::me()->mark($this->className)->
 					add(
-						$this->makeQueryKey($query, self::SUFFIX_QUERY),
+						$this->makeQueryKey($query, $this->getSuffixQuery()),
 						$object,
 						$expires
 					);

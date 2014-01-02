@@ -320,6 +320,14 @@
 
 			return Cache::worker($this)->uncacheLists();
 		}
+
+        public function uncacheByQuery(SelectQuery $query) {
+            $item = Cache::worker($this)->getByQuery($query);
+            if ($item instanceof Identifiable && isset($this->identityMap[$item->getId()])) {
+                unset($this->identityMap[$item->getId()]);
+            }
+            return Cache::worker($this)->uncacheByQuery($query);
+        }
 		//@}
 
 		/**

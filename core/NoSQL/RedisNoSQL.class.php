@@ -232,4 +232,48 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 
 		return $this;
 	}
+
+    public function keys($pattern = null) {
+
+        $this->ensureTriedToConnect();
+
+        if (!$pattern)
+            $pattern = '*';
+
+        try {
+            return $this->redis->getKeys($pattern);
+        } catch (RedisException $e) {
+            $this->alive = false;
+
+            return null;
+        }
+    }
+
+    public function deleteList(array $keys) {
+
+        $this->ensureTriedToConnect();
+
+        try {
+            return $this->redis->delete(implode(' ', $keys));
+        } catch (RedisException $e) {
+            return $this->alive = false;
+        }
+    }
+
+    public function deleteByPattern($pattern) {
+
+        $this->ensureTriedToConnect();
+
+        $keys = $this->keys($pattern);
+        if (!$keys)
+            return false;
+
+        try {
+            return $this->redis->delete(implode(' ', $keys));
+        } catch (RedisException $e) {
+            return $this->alive = false;
+        }
+    }
+
+
 }

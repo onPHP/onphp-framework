@@ -93,8 +93,12 @@
 		{
 			return
 				Cache::me()->mark($this->className)->
-					delete($this->makeQueryKey($query, self::SUFFIX_QUERY));
+					delete($this->makeQueryKey($query, $this->getSuffixQuery()));
 		}
+
+        protected function getSuffixQuery() {
+            return self::SUFFIX_QUERY;
+        }
 		//@}
 		
 		/// cache getters
@@ -110,7 +114,7 @@
 		{
 			return
 				Cache::me()->mark($this->className)->
-					get($this->makeQueryKey($query, self::SUFFIX_QUERY));
+					get($this->makeQueryKey($query, $this->getSuffixQuery()));
 		}
 		//@}
 		

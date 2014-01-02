@@ -406,9 +406,8 @@
 				'SELECT '.($this->distinct ? 'DISTINCT ' : null)
 				.implode(', ', $fieldList)
 				.$this->joiner->toDialectString($dialect);
-				
-			// WHERE
-			$query .= parent::toDialectString($dialect);
+
+			$query .= $this->whereToString($dialect);
 			
 			if ($this->group) {
 				$groupList = array();
@@ -422,19 +421,37 @@
 			
 			if ($this->having)
 				$query .= ' HAVING '.$this->having->toDialectString($dialect);
-			
-			if ($this->order->getCount()) {
-				$query .= ' ORDER BY '.$this->order->toDialectString($dialect);
-			}
-			
-			if ($this->limit)
-				$query .= ' LIMIT '.$this->limit;
-			
-			if ($this->offset)
-				$query .= ' OFFSET '.$this->offset;
+
+            $query .=
+                $this->orderToString($dialect) .
+                $this->limitTotString($dialect) .
+                $this->offsetToString($dialect)
+            ;
 			
 			return $query;
 		}
+
+        public function whereToString(Dialect $dialect) {
+            return parent::toDialectString($dialect);
+        }
+
+        public function orderToString(Dialect $dialect) {
+            return $this->order->getCount()
+                ? ' ORDER BY '.$this->order->toDialectString($dialect)
+                : null;
+        }
+
+        public function limitTotString(Dialect $dialect) {
+            return $this->limit
+                ? ' LIMIT '.$this->limit
+                : null;
+        }
+
+        public function offsetToString(Dialect $dialect) {
+            return $this->offset
+                ? ' OFFSET '.$this->offset
+                : null;
+        }
 		
 		/**
 		 * @return SelectQuery

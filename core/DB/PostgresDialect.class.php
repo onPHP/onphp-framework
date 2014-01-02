@@ -202,5 +202,13 @@
 				&& ($column->getDefault() === null)
 			);
 		}
+
+        public static function quoteField($field)
+        {
+            if (is_string($field) && empty($field)) {
+                return "''";
+            }
+            return self::quoteTable($field);
+        }
 	}
 ?>

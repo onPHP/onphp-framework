@@ -216,5 +216,17 @@
 			else
 				return unserialize($value);
 		}
+
+        public function keys($pattern = null) {
+            throw new UnimplementedFeatureException();
+        }
+
+        public function deleteList(array $keys) {
+            throw new UnimplementedFeatureException();
+        }
+
+        public function deleteByPattern($pattern) {
+            throw new UnimplementedFeatureException();
+        }
 	}
 ?>

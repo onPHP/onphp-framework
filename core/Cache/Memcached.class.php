@@ -141,7 +141,7 @@
 				$this->alive = false;
 				return null;
 			}
-			
+
 			$command = "get {$index}\r\n";
 			
 			if (!$this->sendRequest($command))
@@ -394,5 +394,85 @@
 
 			return $meta['timed_out'];
 		}
-	}
+
+        public function keys($pattern = null) {
+            if (!$this->link) {
+                $this->alive = false;
+                return null;
+            }
+
+            if (is_string($pattern) && strlen($pattern)) {
+                $command = "keys {$pattern}\r\n";
+            } else {
+                $command = "keys\r\n";
+            }
+
+            if (!$this->sendRequest($command))
+                return null;
+
+            $result = array();
+
+            while ($header = fgets($this->link, 8192)) {
+                $result[] = $header;
+            }
+
+            if ($this->isTimeout())
+                return null;
+
+            return $result;
+        }
+
+        public function deleteList(array $keys) {
+
+            if (!$this->link) {
+                $this->alive = false;
+                return false;
+            }
+
+            if (0 == count($keys))
+                return false;
+
+            $keys = implode(' ', $keys);
+            if (!$this->sendRequest("deletes {$keys}\r\n"))
+                return false;
+
+            try {
+                $response = fread($this->link, $this->buffer);
+            } catch (BaseException $e) {
+                return false;
+            }
+
+            if ($this->isTimeout())
+                return false;
+
+            return $response;
+        }
+
+        public function deleteByPattern($pattern) {
+
+            if (!$this->link) {
+                $this->alive = false;
+                return null;
+            }
+
+            if (is_string($pattern) && strlen($pattern)) {
+
+                if (!$this->sendRequest("delete_by_pattern {$pattern}\r\n"))
+                    return false;
+
+                try {
+                    $response = fread($this->link, $this->buffer);
+                } catch (BaseException $e) {
+                    return false;
+                }
+
+                if ($this->isTimeout())
+                    return false;
+
+                return $response;
+            } else {
+                return null;
+            }
+        }
+    }
 ?>
