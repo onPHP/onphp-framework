@@ -212,7 +212,7 @@ Possible options:
 	if (
 		isset($_SERVER['TERM'])
 		&& in_array($_SERVER['TERM'], array(
-			'xterm', 'linux', 'screen', 'screen-256color'
+			'xterm', 'linux', 'screen', 'screen-256color', 'xterm-256color'
 		))
 		&& !$metaNoColor
 	) {

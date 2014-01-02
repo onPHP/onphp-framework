@@ -263,7 +263,7 @@
 	abstract class AutoloaderShmop {
 
 		const INDEX_SEGMENT		= 23456789; // random int :)
-		const SEGMENT_SIZE		= 4194304; // 128^3 * 2
+		const SEGMENT_SIZE		= 16777216; // 256^3
 		const EXPIRATION_TIME	= 86400; // 24 hours
 
 		private static $attachedId = null;
@@ -334,6 +334,7 @@
 		}
 
 		private static function key($classname) {
+//			return hexdec( substr(md5($classname), 0, 8) );
 			return crc32('/cache/'.$classname);
 		}
 
