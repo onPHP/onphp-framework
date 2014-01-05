@@ -254,4 +254,11 @@ class PowerfullDaoWorker extends TrickyDaoWorker {
             ->deleteByPattern(self::SUFFIX_LIST)
         ;
     }
+
+    public function uncacheItems() {
+        return Cache::me()
+            ->mark($this->className)
+            ->deleteByPattern(self::SUFFIX_ITEM)
+        ;
+    }
 }

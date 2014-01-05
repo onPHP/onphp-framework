@@ -322,13 +322,22 @@
 		}
 
         public function uncacheByQuery(SelectQuery $query) {
-            $item = Cache::worker($this)->getByQuery($query);
-            if ($item instanceof Identifiable && isset($this->identityMap[$item->getId()])) {
-                unset($this->identityMap[$item->getId()]);
-            }
+            try {
+                $item = Cache::worker($this)->getByQuery($query);
+                if ($item instanceof Identifiable && isset($this->identityMap[$item->getId()])) {
+                    unset($this->identityMap[$item->getId()]);
+                }
+            } catch (ObjectNotFoundException $e) {}
             return Cache::worker($this)->uncacheByQuery($query);
         }
-		//@}
+
+        public function uncacheItems() {
+
+            $this->dropIdentityMap();
+
+            return Cache::worker($this)->uncacheItems();
+        }
+        //@}
 
 		/**
 		 * @return GenericDAO

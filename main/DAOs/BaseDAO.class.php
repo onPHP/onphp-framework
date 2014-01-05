@@ -53,6 +53,8 @@
 		public function uncacheById($id);
 		public function uncacheByIds($ids);
 		public function uncacheLists();
+        public function uncacheByQuery(SelectQuery $query);
+        public function uncacheItems();
 		//@}
 	}
 ?>

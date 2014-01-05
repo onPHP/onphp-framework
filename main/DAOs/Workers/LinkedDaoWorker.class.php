@@ -43,7 +43,7 @@ class LinkedDaoWorker extends PowerfullDaoWorker {
                 /** @var CacheListLink $link */
                 $link = CacheListLink::create();
                 foreach ($object as $item) {
-                    $idKey = $this->makeIdKey($object->getId());
+                    $idKey = $this->makeIdKey($item->getId());
 
                     Cache::me()
                         ->mark($this->className)
@@ -53,7 +53,7 @@ class LinkedDaoWorker extends PowerfullDaoWorker {
                             $expires
                         );
 
-                    $link->setKey($object->getId(), $idKey);
+                    $link->setKey($item->getId(), $idKey);
                 }
 
                 parent::cacheByQuery($query, $link, $expires);
@@ -80,13 +80,19 @@ class LinkedDaoWorker extends PowerfullDaoWorker {
         if ($object instanceof CacheLink) {
             $object = Cache::me()->get($object->getKey());
         } else if ($object instanceof CacheListLink) {
+
             $keys = $object->getKeys();
             $object = Cache::me()->getList($keys);
-            foreach ($keys as $id => $key) {
-                if (!$object[$id]) {
+            $combineKeys = array_combine(
+                array_values($keys),
+                array_keys($keys)
+            );
+
+            foreach ($combineKeys as $key => $id) {
+                if (!$object[$key]) {
                     try {
                         $item = $this->dao->getById($id);
-                        $object[$id] = $item;
+                        $object[$key] = $item;
                         Cache::me()
                             ->mark($this->className)
                             ->add(
@@ -95,7 +101,7 @@ class LinkedDaoWorker extends PowerfullDaoWorker {
                                 Cache::EXPIRES_MEDIUM
                             );
                     } catch (ObjectNotFoundException $e) {
-                        unset($object[$id]);
+                        unset($object[$key]);
                     }
                 }
             }

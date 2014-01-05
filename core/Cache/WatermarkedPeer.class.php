@@ -168,5 +168,20 @@
 					$this->getActualWatermark().$key, $value, $expires
 				);
 		}
+
+        public function keys($pattern = null) {
+            return $this->peer->keys($this->getActualWatermark() . $pattern);
+        }
+
+        public function deleteList(array $keys) {
+            foreach ($keys as $i => $key) {
+                $keys[$i] = $this->getActualWatermark() . $key;
+            }
+            return $this->peer->deleteList($keys);
+        }
+
+        public function deleteByPattern($pattern) {
+            return $this->peer->deleteByPattern($this->getActualWatermark() . $pattern);
+        }
 	}
 ?>

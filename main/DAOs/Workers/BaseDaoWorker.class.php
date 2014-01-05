@@ -96,6 +96,8 @@
 					delete($this->makeQueryKey($query, $this->getSuffixQuery()));
 		}
 
+        public function uncacheItems() {}
+
         protected function getSuffixQuery() {
             return self::SUFFIX_QUERY;
         }
