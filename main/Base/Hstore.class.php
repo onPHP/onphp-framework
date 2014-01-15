@@ -102,7 +102,7 @@
 			
 			$return = null;
 			try {
-				if (@eval("\$return = array({$raw});")) {
+				if (@eval("\$return = array({$raw});") !== false) {
 					$this->properties = $return;
 				}
 
