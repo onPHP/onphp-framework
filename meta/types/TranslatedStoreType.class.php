@@ -56,6 +56,10 @@ public function {$methodName}(\$langCode = null)
 		return \$this->{$methodName}Store();
 	}
 
+	if (method_exists(\$this, '{$methodName}Translated')) {
+		return \$this->{$methodName}Translated()->toString();
+	}
+
 	if (!\$langCode) {
 		\$langCode = self::getLanguageCode();
 	}
