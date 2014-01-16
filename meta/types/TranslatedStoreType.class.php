@@ -57,7 +57,11 @@ public function {$methodName}(\$langCode = null)
 	}
 
 	if (method_exists(\$this, '{$methodName}Translated')) {
-		return \$this->{$methodName}Translated()->toString();
+		\$internationalString = \$this->{$methodName}Translated();
+		if (\$internationalString instanceof InternationalString) {
+			return \$internationalString->toString();
+		}
+		return null;
 	}
 
 	if (!\$langCode) {
