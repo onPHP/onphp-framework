@@ -307,10 +307,21 @@ class DataGrid extends BaseWidget
 							. $value
 							. '</textarea>';
                     } else {
-						$styleWidth = $property->getType() == 'string' ? 250 : 80;
-						$length = $property->getType() == 'string' ? $property->getMax() : 16;
+						if ($property->getType() == 'string') {
+							$length = $property->getMax();
+							$styleWidth = 250;
+						} else if ($property->getType() == 'hstore') {
+							$length = null;
+							$styleWidth = 250;
+						} else {
+							$length = 16;
+							$styleWidth = 80;
+						}
+
 						return '<input style="width:'.$styleWidth.'px" type="text" name="'. $fieldId
-							.'" value="' . $value . '" length="' . $length . '" />';
+							.'" value="' . $value . '" '
+							. ($length ? 'length="' . $length . '" ' : '')
+							.'/>';
                     }
 
                 };
