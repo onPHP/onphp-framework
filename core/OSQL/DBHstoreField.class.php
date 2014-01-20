@@ -46,6 +46,8 @@ class DBHstoreField extends DBField {
             $field .= '->\'' . $this->key . '\'';
         }
 
+		$field = '(' . $field . ')';
+
         return
             $this->cast
                 ? $dialect->toCasted($field, $this->cast)
