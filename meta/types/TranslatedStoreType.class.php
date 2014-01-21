@@ -52,42 +52,28 @@ public function {$methodName}Store()
  **/
 public function {$methodName}(\$langCode = null)
 {
-	if (\$this->useTranslatedStore()) {
-		return \$this->{$methodName}Store();
-	}
-
-	if (method_exists(\$this, '{$methodName}Translated')) {
-		\$internationalString = \$this->{$methodName}Translated();
-		if (\$internationalString instanceof InternationalString) {
-			return \$internationalString->toString();
-		}
-		return null;
-	}
-
-	if (!\$langCode) {
-		\$langCode = self::getLanguageCode();
-	}
-
 	/** @var \$store {$this->getClassName()} */
 	\$store = \$this->{$methodName}Store();
 
-	if (\$store->has(\$langCode)) {
-		return \$store->get(\$langCode);
+	if (\$this->useTranslatedStore()) {
+		return \$store;
 	}
 
-	if (\$store->has(self::getDefaultLanguageCode())) {
-		return \$store->get(self::getDefaultLanguageCode());
-	}
+	\$languageCodes = array_merge(
+		array(
+			\$langCode ?: self::getLanguageCode(),
+			self::getDefaultLanguageCode()
+		),
+		self::getLanguageCodes()
+	);
 
-	\${$name} = null;
-	foreach (self::getLanguageCodes() as \$code) {
-		if (\$store->has(\$code)) {
-			\${$name} = \$store->get(\$code);
-			break;
+	foreach (\$languageCodes as \$langCode) {
+		if (\$store->has(\$langCode)) {
+			return \$store->get(\$langCode);
 		}
 	}
 
-	return \${$name};
+	return null;
 }
 
 EOT;
