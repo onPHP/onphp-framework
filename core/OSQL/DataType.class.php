@@ -120,7 +120,7 @@
 		public function setSize($size)
 		{
 			Assert::isInteger($size);
-			Assert::isTrue($this->hasSize());
+			Assert::isTrue($this->hasSize() || $this->id == self::HSTORE);
 
 			$this->size = $size;
 
