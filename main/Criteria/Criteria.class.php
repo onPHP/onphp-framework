@@ -33,12 +33,6 @@
 		// dao-like behaviour: will throw ObjectNotFoundException when 'false'
 		private $silent = true;
 
-		// Обработчик критерии перед вызовом
-		public static $prepareCriteriaCallBack = null;
-
-		// Параметры локализации
-		private $localizeData = null;
-
 		// Кастомный запрос
 		private $selectQuery = null;
 
@@ -509,25 +503,6 @@
 		}
 
 		/**
-		 * Вызов before-обработчика
-		 * @param bool $fullQuery обрабатываем всю критерию или нет (только select-часть)
-		 */
-		public function prepareCriteria($fullQuery = true)
-		{
-			if (
-				self::$prepareCriteriaCallBack !== null &&
-				is_callable(self::$prepareCriteriaCallBack)
-			) {
-				try {
-					call_user_func_array( self::$prepareCriteriaCallBack, array($this, $fullQuery) );
-				}
-				catch(Exception $e) {
-					// pass, saving
-					throw $e;
-				}
-			}
-		}
-		/**
 		 * @return SelectQuery
 		**/
 		public function toSelectQuery()
@@ -535,8 +510,6 @@
 			if( !is_null($this->selectQuery) ) {
 				return $this->selectQuery;
 			}
-
-			$this->prepareCriteria(false);
 
 			if (!$this->projection->isEmpty()) {
 				$query =
@@ -561,8 +534,6 @@
 		**/
 		public function fillSelectQuery(SelectQuery $query)
 		{
-			$this->prepareCriteria(true);
-
 			$query->
 				limit($this->limit, $this->offset);
 
@@ -745,20 +716,5 @@
 				);
 		}
 
-		/**
-		 * Устанавливает код языка локализации
-		 * @param $localizeData
-		 */
-		public function setLocalizeData($languageCode) {
-			$this->localizeData = $languageCode;
-		}
-
-		/**
-		 * Возвращает код языка локализации
-		 * @return string|null|false
-		 */
-		public function getLocalizeData() {
-			return $this->localizeData;
-		}
 	}
 ?>
