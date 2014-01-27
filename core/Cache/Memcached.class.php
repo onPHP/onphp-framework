@@ -113,7 +113,9 @@
 				$this->alive = false;
 				return null;
 			}
-			
+
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('cache', get_class($this)))->begin();
 			$command = 'get '.implode(' ', $indexes)."\r\n";
 			
 			if (!$this->sendRequest($command))
@@ -122,7 +124,12 @@
 			// we can't deserialize objects inside parseGetRequest,
 			// because of possibility further requests to memcached
 			// during deserialization - in __wakeup(), for example
-			return unserialize($this->parseGetRequest(false));
+            $list = unserialize($this->parseGetRequest(false));
+            $profiling
+                ->setInfo($command)
+                ->end()
+            ;
+			return $list;
 		}
 		
 		public function increment($key, $value)
@@ -141,18 +148,27 @@
 				$this->alive = false;
 				return null;
 			}
-			
+
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('cache', get_class($this)))->begin();
 			$command = "get {$index}\r\n";
 			
 			if (!$this->sendRequest($command))
 				return null;
-			
-			return $this->parseGetRequest(true);
+
+            $result = $this->parseGetRequest(true);
+            $profiling
+                ->setInfo($command)
+                ->end()
+            ;
+			return $result;
 		}
 		
 		public function delete($index, $time = null)
 		{
-			$command =
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('cache', get_class($this)))->begin();
+            $command =
 				$time
 					? "delete {$index} {$time}\r\n"
 					: "delete {$index}\r\n";
@@ -162,6 +178,10 @@
 			
 			try {
 				$response = fread($this->link, $this->buffer);
+                $profiling
+                    ->setInfo($command)
+                    ->end()
+                ;
 			} catch (BaseException $e) {
 				return false;
 			}
@@ -177,6 +197,8 @@
 		
 		public function append($key, $data)
 		{
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('cache', get_class($this)))->begin();
 			$packed = serialize($data);
 			
 			$length = strlen($packed);
@@ -188,6 +210,10 @@
 				return false;
 			
 			$response = fread($this->link, $this->buffer);
+            $profiling
+                ->setInfo($command)
+                ->end()
+            ;
 
 			if ($this->isTimeout())
 				return false;
@@ -204,7 +230,9 @@
 		{
 			if ($expires === Cache::DO_NOT_CACHE)
 				return false;
-			
+
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('cache', get_class($this)))->begin();
 			$flags = 0;
 			
 			if (!is_numeric($value)) {
@@ -243,6 +271,10 @@
 				return false;
 			
 			$response = fread($this->link, $this->buffer);
+            $profiling
+                ->setInfo($command)
+                ->end()
+            ;
 
 			if ($this->isTimeout())
 				return false;
@@ -328,7 +360,9 @@
 		{
 			if (!$this->link)
 				return null;
-			
+
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('cache', get_class($this)))->begin();
 			$command = "{$command} {$key} {$value}\r\n";
 			
 			if (!$this->sendRequest($command))
@@ -336,6 +370,10 @@
 			
 			try {
 				$response = rtrim(fread($this->link, $this->buffer));
+                $profiling
+                    ->setInfo($command)
+                    ->end()
+                ;
 			} catch (BaseException $e) {
 				return null;
 			}

@@ -103,4 +103,12 @@ class Profiling {
 		return $this->info;
 	}
 
+    /**
+     * @param null $info
+     * @return $this
+     */
+    public function setInfo($info) {
+        $this->info = $info;
+        return $this;
+    }
 } 
