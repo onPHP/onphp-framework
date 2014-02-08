@@ -29,11 +29,14 @@ final class RedisNoSQLList implements Listable
 	 */
 	public function append($value)
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->redis->rpush($this->key, $value);
 
 		if ($this->timeout)
 			$this->redis->setTimeout($this->key, $this->timeout);
 
+        $profiling->setInfo('rpush ' . $this->key)->end();
 		return $this;
 	}
 
@@ -43,11 +46,14 @@ final class RedisNoSQLList implements Listable
 	 */
 	public function prepend($value)
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->redis->lpush($this->key, $value);
 
 		if ($this->timeout)
 			$this->redis->setTimeout($this->key, $this->timeout);
 
+        $profiling->setInfo('lpush ' . $this->key)->end();
 		return $this;
 	}
 
@@ -56,43 +62,65 @@ final class RedisNoSQLList implements Listable
 	 */
 	public function clear()
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->redis->LTrim($this->key, -1, 0);
 
+        $profiling->setInfo('LTrim ' . $this->key)->end();
 		return $this;
 	}
 
 
 	public function count()
 	{
-		return $this->redis->lsize($this->key);
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
+        $result = $this->redis->lsize($this->key);
+        $profiling->setInfo('lsize ' . $this->key)->end();
+        return $result;
 	}
 
 	public function pop()
 	{
-		return $this->redis->lpop($this->key);
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
+        $result = $this->redis->lpop($this->key);
+        $profiling->setInfo('lpop ' . $this->key)->end();
+        return $result;
 	}
 
 	public function range($start, $length = null)
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$end = is_null($length)
 			? -1
 			: $start + $length;
 
-		return $this->redis->lrange($this->key, $start, $end);
+        $result = $this->redis->lrange($this->key, $start, $end);
+        $profiling->setInfo('lrange ' . $this->key . ' ' . $start . ' ' . $end)->end();
+        return $result;
 	}
 
 	public function get($index)
 	{
-		return $this->redis->lget($this->key, $index);
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
+        $result = $this->redis->lget($this->key, $index);
+        $profiling->setInfo('lget ' . $this->key . ' ' . $index)->end();
+        return $result;
 	}
 
 	public function set($index, $value)
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->redis->lset($this->key, $index, $value);
 
 		if ($this->timeout)
 			$this->redis->expire($this->key, $this->timeout);
 
+        $profiling->setInfo('lset ' . $this->key . ' ' . $index)->end();
 		return $this;
 	}
 

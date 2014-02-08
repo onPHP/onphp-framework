@@ -115,7 +115,7 @@
 			}
 
             /** @var Profiling $profiling */
-            $profiling = Profiling::create(array('cache', get_class($this)))->begin();
+            $profiling = Profiling::create(array('cache', 'memcached'))->begin();
 			$command = 'get '.implode(' ', $indexes)."\r\n";
 			
 			if (!$this->sendRequest($command))
@@ -150,7 +150,7 @@
 			}
 
             /** @var Profiling $profiling */
-            $profiling = Profiling::create(array('cache', get_class($this)))->begin();
+            $profiling = Profiling::create(array('cache', 'memcached'))->begin();
 			$command = "get {$index}\r\n";
 			
 			if (!$this->sendRequest($command))
@@ -167,7 +167,7 @@
 		public function delete($index, $time = null)
 		{
             /** @var Profiling $profiling */
-            $profiling = Profiling::create(array('cache', get_class($this)))->begin();
+            $profiling = Profiling::create(array('cache', 'memcached'))->begin();
             $command =
 				$time
 					? "delete {$index} {$time}\r\n"
@@ -177,7 +177,7 @@
 				return false;
 			
 			try {
-				$response = fread($this->link, $this->buffer);
+				$result = fread($this->link, $this->buffer);
                 $profiling
                     ->setInfo($command)
                     ->end()
@@ -189,7 +189,7 @@
 			if ($this->isTimeout())
 				return false;
 
-			if ($response === "DELETED\r\n")
+			if ($result === "DELETED\r\n")
 				return true;
 			else
 				return false;
@@ -198,7 +198,7 @@
 		public function append($key, $data)
 		{
             /** @var Profiling $profiling */
-            $profiling = Profiling::create(array('cache', get_class($this)))->begin();
+            $profiling = Profiling::create(array('cache', 'memcached'))->begin();
 			$packed = serialize($data);
 			
 			$length = strlen($packed);
@@ -209,7 +209,7 @@
 			if (!$this->sendRequest($command))
 				return false;
 			
-			$response = fread($this->link, $this->buffer);
+			$result = fread($this->link, $this->buffer);
             $profiling
                 ->setInfo($command)
                 ->end()
@@ -218,7 +218,7 @@
 			if ($this->isTimeout())
 				return false;
 
-			if ($response === "STORED\r\n")
+			if ($result === "STORED\r\n")
 				return true;
 			
 			return false;
@@ -232,7 +232,7 @@
 				return false;
 
             /** @var Profiling $profiling */
-            $profiling = Profiling::create(array('cache', get_class($this)))->begin();
+            $profiling = Profiling::create(array('cache', 'memcached'))->begin();
 			$flags = 0;
 			
 			if (!is_numeric($value)) {
@@ -270,7 +270,7 @@
 			if (!$this->sendRequest($command))
 				return false;
 			
-			$response = fread($this->link, $this->buffer);
+			$result = fread($this->link, $this->buffer);
             $profiling
                 ->setInfo($command)
                 ->end()
@@ -279,7 +279,7 @@
 			if ($this->isTimeout())
 				return false;
 			
-			if ($response === "STORED\r\n")
+			if ($result === "STORED\r\n")
 				return true;
 			
 			return false;
@@ -362,14 +362,14 @@
 				return null;
 
             /** @var Profiling $profiling */
-            $profiling = Profiling::create(array('cache', get_class($this)))->begin();
+            $profiling = Profiling::create(array('cache', 'memcached'))->begin();
 			$command = "{$command} {$key} {$value}\r\n";
 			
 			if (!$this->sendRequest($command))
 				return null;
 			
 			try {
-				$response = rtrim(fread($this->link, $this->buffer));
+				$result = rtrim(fread($this->link, $this->buffer));
                 $profiling
                     ->setInfo($command)
                     ->end()
@@ -381,8 +381,8 @@
 			if ($this->isTimeout())
 				return null;
 
-			if (is_numeric($response))
-				return (int) $response;
+			if (is_numeric($result))
+				return (int) $result;
 			
 			return null;
 		}

@@ -9,7 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
-    require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR.'Profiling'.EXT_CLASS;
+    require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .
+        'main' . DIRECTORY_SEPARATOR . 'Utils' . DIRECTORY_SEPARATOR . 'Profiling' . EXT_CLASS;
 
 	define('ONPHP_CLASS_CACHE_CHECKSUM', '__occc');
 
@@ -28,7 +29,7 @@
 			}
 
             /** @var Profiling $profiling */
-            $profiling = Profiling::create(array('autoload', 'classPathCache'))->begin();
+            $profiling = Profiling::create(array('autoloader', 'classPathCache'))->begin();
 			$currentPath = get_include_path();
 			
 			if ($currentPath != $path) {
@@ -133,7 +134,7 @@
 			// make namespaces work
 			$classname = str_replace('\\', '/', $classname);
             /** @var Profiling $profiling */
-            $profiling = Profiling::create(array('autoload', 'noCache'))->begin();
+            $profiling = Profiling::create(array('autoloader', 'noCache'))->begin();
 
 			$errors = array();
 			foreach (array(EXT_CLASS, '.php') as $ext) {
@@ -146,10 +147,13 @@
 					return /* void */;
 				} catch (BaseException $e) {
 					$errors[] = $e->getMessage();
+                    $profiling
+                        ->setInfo($e->getMessage())
+                        ->end()
+                    ;
 				}
 			}
 
-            $profiling->end();
 			if (!class_exists($classname)) {
 				__autoload_failed($classname, 'class not found' . PHP_EOL . implode(PHP_EOL, $errors));
 			}
@@ -170,7 +174,7 @@
 			}
 
             /** @var Profiling $profiling */
-            $profiling = Profiling::create(array('autoload', 'wholeClassCache'))->begin();
+            $profiling = Profiling::create(array('autoloader', 'wholeClassCache'))->begin();
 			$currentPath = get_include_path();
 			
 			if ($currentPath != $path) {
@@ -251,7 +255,7 @@
 			}
 
             /** @var Profiling $profiling */
-            $profiling = Profiling::create(array('autoload', 'wholeClassCache'))->begin();
+            $profiling = Profiling::create(array('autoloader', 'wholeClassCache'))->begin();
 			// make namespaces work
 			$desiredName = str_replace('\\', '/', $classname);
 			if($desiredName{0}=='/') {
