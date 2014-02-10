@@ -293,4 +293,14 @@ class PrototypeUtils
 		return true;
 	}
 
+	public static function copy(Prototyped $from, Prototyped $to, array $properties) {
+		foreach ($properties as $property) {
+			/** @var LightMetaProperty $property */
+			if ($from->proto()->isPropertyExists($property->getName()) && $to->proto()->isPropertyExists($property->getName())) {
+				$value = self::getValue($from, $property->getName());
+				self::setValue($to, $property->getName(), $value);
+			}
+		}
+	}
+
 }

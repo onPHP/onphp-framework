@@ -203,7 +203,7 @@
 
 			/** @var $property LightMetaProperty */
 			foreach ($this->getPropertyList() as $property) {
-				if ($property->getRelationId() > MetaRelation::ONE_TO_ONE && !$includeManyRelations) {
+				if ($this->isIgnoreWhenMakeForm($property, $includeManyRelations)) {
 					continue;
 				}
 				$property->fillForm($form, $prefix);
@@ -211,6 +211,17 @@
 
 			return $form;
 		}
+
+        /**
+         * Возвращает true, если свойство не должно быть включено в форму
+         * Вынесено в отдельный метод, чтобы не переопределять весь makeForm
+         * @param LightMetaProperty $property
+         * @param bool $includeManyRelations
+         * @return bool
+         */
+        protected function isIgnoreWhenMakeForm(LightMetaProperty $property, $includeManyRelations = true) {
+            return $property->getRelationId() > MetaRelation::ONE_TO_ONE && !$includeManyRelations;
+        }
 
 		/**
 		 * @return InsertOrUpdateQuery
@@ -377,7 +388,7 @@
 			return $object;
 		}
 
-		private static function assemblyObject(
+		final protected static function assemblyObject(
 			Prototyped $object, $array, $prefix = null
 		)
 		{
@@ -457,7 +468,7 @@
 		{
 			$list = $this->getPropertyList();
 
-			if (isset($list[$name]))
+			if (is_string($name) && isset($list[$name]))
 				return $list[$name];
 
 			return null;

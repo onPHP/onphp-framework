@@ -1281,6 +1281,17 @@
 					}
 
 					$class->addProperty($property);
+
+                    /**
+                     * класс содержащий свойство с TranslatedStoreType
+                     * должен реализовывать Translatable, иначе переводы не будут работать
+                     * добавляем Translatable, если его нет
+                     */
+                    if ($property->getType() instanceof TranslatedStoreType) {
+                        if (!in_array('Translatable', $class->getInterfaces())) {
+                            $class->addInterface('Translatable');
+                        }
+                    }
 				}
 
 				$class->setBuild($generate);

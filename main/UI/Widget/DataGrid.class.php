@@ -139,12 +139,13 @@ class DataGrid extends BaseWidget
         return $this;
     }
 
-    /**
-     * Добавляет строку в таблицу, определяет тип и имена ее полей
-     * @param $data
-     * @return DataGrid
-     * @throws WrongArgumentException
-     */
+	/**
+	 * Добавляет строку в таблицу, определяет тип и имена ее полей
+	 * @param      $data
+	 * @param null $key
+	 * @throws WrongArgumentException
+	 * @return DataGrid
+	 */
     public function addRow($data, $key=null) {
         $rowId = count($this->rows); // id следующей строки
 		if( isset($key) && $key=='total' ) {
@@ -157,16 +158,15 @@ class DataGrid extends BaseWidget
 
         if ($data instanceof Prototyped) {
 			if (
-				$data instanceof TranslatableFieldsObject
+				$data instanceof TranslatableObject
 				&& is_null($this->localizedFields)
 			) {
-				/** @var $data TranslatableFieldsObject */
-				$localizedFields = $data->getLocalizedFields();
-				$this->localizedFields = array_merge(
-					array_keys($localizedFields),
-					array_values($localizedFields)
-				);
+				$dataProto = $data->proto();
+				if ($dataProto instanceof ProtoTranslatableObject) {
+					$this->localizedFields = $dataProto->getTranslatablePropertyNames();
+				}
 			}
+
             /** @var $data Prototyped */
             $this->objects[$rowId] = $data;
             $fieldIds = array();
@@ -297,19 +297,31 @@ class DataGrid extends BaseWidget
             case 'integer':
             case 'float':
             case 'string':
+            case 'hstore':
                 return function ($value) use ($fieldId, $property) {
                     if ($value instanceof Stringable) $value = $value->toString();
                     $value = htmlentities($value, ENT_COMPAT, 'UTF-8', false);
-					if ($property->getType() == 'string' && !$property->getMax()) {
+					if (in_array($property->getType(), array('string', 'hstore')) && !$property->getMax()) {
 						return '<textarea rows="4" cols="50" name="'
 							. $property->getName() . '">'
 							. $value
 							. '</textarea>';
                     } else {
-						$styleWidth = $property->getType() == 'string' ? 250 : 80;
-						$length = $property->getType() == 'string' ? $property->getMax() : 16;
+						if ($property->getType() == 'string') {
+							$length = $property->getMax();
+							$styleWidth = 250;
+						} else if ($property->getType() == 'hstore') {
+							$length = $property->getMax();
+							$styleWidth = 250;
+						} else {
+							$length = 16;
+							$styleWidth = 80;
+						}
+
 						return '<input style="width:'.$styleWidth.'px" type="text" name="'. $fieldId
-							.'" value="' . $value . '" length="' . $length . '" />';
+							.'" value="' . $value . '" '
+							. ($length ? 'length="' . $length . '" ' : '')
+							.'/>';
                     }
 
                 };
@@ -400,11 +412,7 @@ class DataGrid extends BaseWidget
 			// OneToOne
 			case 'integerIdentifier':
 			case 'scalarIdentifier': {
-				if( $property->getClassName()=='InternationalString' ) {
-					return function ($value) use ($property) {
-							return $value->__toString();
-					};
-				} elseif( $property->isIdentifier() ) {
+				if( $property->isIdentifier() ) {
 					return function ($value) use ($property) {
 						return $value;
 					};
@@ -506,7 +514,9 @@ class DataGrid extends BaseWidget
 				return function ($value) {
 					if( $value instanceof Hstore || $value instanceof Enum ) {
 						return $value->getName();
-					} else {
+					} else if (is_string($value)) {
+                        return $value;
+                    } else {
 						return '';
 					}
 				};
@@ -539,11 +549,6 @@ class DataGrid extends BaseWidget
 		$trueName = $this->trueName;
 		$falseName = $this->falseName;
 
-		if ($value instanceof InternationalString) {
-			return function ($value) {
-				return $value->__toString();
-			};
-		}
 		// для прототипированного объекта можно построить
 		// вложенную табличку. Важно запомнить родителя,
 		// чтобы избежать бесконечной рекурсии

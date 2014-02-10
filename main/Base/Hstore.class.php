@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup Helpers
 	**/
-	final class Hstore implements Stringable
+	class Hstore implements Stringable
 	{
 		protected $properties = array();
 		
@@ -101,9 +101,15 @@
 				return $this;
 			
 			$return = null;
-			eval("\$return = array({$raw});");
-			$this->properties = $return;
-			
+			try {
+				if (@eval("\$return = array({$raw});") !== false) {
+					$this->properties = $return;
+				}
+
+			} catch (Exception $e) {
+				// temporary - skip errors on malformed hstore data
+			}
+
 			return $this;
 		}
 		

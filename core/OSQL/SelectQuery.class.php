@@ -35,9 +35,6 @@
 
 		private $criteria		= null;
 
-		// Обработчик логики джойна
-		public static $prepareJoinLogic = null;
-
 		public function __construct()
 		{
 			$this->joiner = new Joiner();
@@ -120,18 +117,6 @@
 		**/
 		public function leftJoin($table, LogicalObject $logic, $alias = null)
 		{
-			if (
-				self::$prepareJoinLogic !== null &&
-				is_callable(self::$prepareJoinLogic)
-			) {
-				try {
-					$logic = call_user_func_array( self::$prepareJoinLogic, array($logic, $this) );
-				}
-				catch(Exception $e) {
-					// pass, saving
-					throw $e;
-				}
-			}
 			$this->joiner->leftJoin(new SQLLeftJoin($table, $logic, $alias));
 			$this->aliases[$alias] = true;
 			
