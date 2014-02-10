@@ -218,15 +218,15 @@
 		}
 
         public function keys($pattern = null) {
-            throw new UnimplementedFeatureException();
+            return array();
         }
 
         public function deleteList(array $keys) {
-            throw new UnimplementedFeatureException();
+            return 0;
         }
 
         public function deleteByPattern($pattern) {
-            throw new UnimplementedFeatureException();
-        }
+			return 0;
+		}
 	}
 ?>
