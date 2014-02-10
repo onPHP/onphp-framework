@@ -412,7 +412,7 @@
 
             $result = array();
 
-            while ($header = fgets($this->link, 8192)) {
+            while ($header = trim(fgets($this->link, $this->buffer))) {
                 $result[] = $header;
             }
 
