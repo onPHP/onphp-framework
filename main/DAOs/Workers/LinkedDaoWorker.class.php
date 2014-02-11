@@ -83,12 +83,8 @@ class LinkedDaoWorker extends PowerfullDaoWorker {
 
             $keys = $object->getKeys();
             $object = Cache::me()->getList($keys);
-            $combineKeys = array_combine(
-                array_values($keys),
-                array_keys($keys)
-            );
 
-            foreach ($combineKeys as $key => $id) {
+			foreach ($keys as $id => $key) {
                 if (!$object[$key]) {
                     try {
                         $item = $this->dao->getById($id);
@@ -105,6 +101,8 @@ class LinkedDaoWorker extends PowerfullDaoWorker {
                     }
                 }
             }
+
+			$object = array_values($object);
         }
 
         return $object;

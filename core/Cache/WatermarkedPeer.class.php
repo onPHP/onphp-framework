@@ -170,7 +170,7 @@
 		}
 
         public function keys($pattern = null) {
-            return $this->peer->keys($this->getActualWatermark() . $pattern);
+            return $this->peer->keys($this->getActualWatermark() . '.*' . $pattern);
         }
 
         public function deleteList(array $keys) {
@@ -181,7 +181,7 @@
         }
 
         public function deleteByPattern($pattern) {
-            return $this->peer->deleteByPattern($this->getActualWatermark() . $pattern);
+            return $this->peer->deleteByPattern($this->getActualWatermark() . '.*' . $pattern);
         }
 	}
 ?>

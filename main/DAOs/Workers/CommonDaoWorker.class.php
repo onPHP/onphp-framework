@@ -199,42 +199,36 @@
 				$toFetch += array_keys($prefixed);
 				
 				if ($toFetch) {
-					try {
-						$list =
-							array_merge(
-								$list,
-								$this->getListByLogic(
-									Expression::in(
-										new DBField(
-											$this->dao->getIdName(),
-											$this->dao->getTable()
-										),
-										$toFetch
-									),
-									Cache::DO_NOT_CACHE
-								)
-							);
-					} catch (ObjectNotFoundException $e) {
-						// nothing to fetch
-					}
-				}
-			} elseif (count($ids)) {
-				try {
 					$list =
-						$this->getListByLogic(
-							Expression::in(
-								new DBField(
-									$this->dao->getIdName(),
-									$this->dao->getTable()
-								),
-								$ids
-							),
-							Cache::DO_NOT_CACHE
+						array_merge(
+							$list,
+							$this->fetchListByIds($toFetch, $expires)
 						);
-				} catch (ObjectNotFoundException $e) {/*_*/}
+				}
+
+			} elseif (count($ids)) {
+				$list = $this->fetchListByIds($ids, $expires);
 			}
 			
 			return $list;
+		}
+
+		protected function fetchListByIds(array $ids, $expires = Cache::DO_NOT_CACHE) {
+			try {
+				return $this->getListByLogic(
+						Expression::in(
+							new DBField(
+								$this->dao->getIdName(),
+								$this->dao->getTable()
+							),
+							$ids
+						),
+						$expires
+					);
+
+			} catch (ObjectNotFoundException $e) {
+				return array();
+			}
 		}
 		
 		public function getListByQuery(
