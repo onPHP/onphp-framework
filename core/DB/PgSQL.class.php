@@ -115,9 +115,6 @@
 
 		public function queryRaw($queryString)
 		{
-			if( defined('DB_PROFILE_LOG') ) {
-				file_put_contents(DB_PROFILE_LOG, date('Y-m-d H:i:s').' :: '.$queryString."\n", FILE_APPEND);
-			}
 			$profiling = Profiling::create(array('db', get_class($this)), $queryString);
 			try {
 				$profiling->begin();

@@ -231,7 +231,13 @@
 				$desiredName = substr($desiredName, 1);
 			}
 
-			if( $realPath = AutoloaderShmop::get($desiredName) ) {
+			try {
+				$realPath = AutoloaderShmop::get($desiredName);
+			} catch(Exception $e) {
+				$realPath = null;
+			}
+
+			if( isset($realPath) && !is_null($realPath) ) {
 				include_once $realPath;
 			} else {
 				foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
@@ -262,81 +268,134 @@
 
 	abstract class AutoloaderShmop {
 
-		const INDEX_SEGMENT		= 23456789; // random int :)
-		const SEGMENT_SIZE		= 16777216; // 256^3
-		const EXPIRATION_TIME	= 86400; // 24 hours
+		/**
+		 * Default shm key, unique enough
+		 * @const string
+		 */
+		const DEFAULT_SHM_KEY = 'onphp-autoloader-shmop-cache';
 
-		private static $attachedId = null;
+		/**
+		 * Default shared memory segment size (16 MB)
+		 * @const int
+		 */
+		const DEFAULT_SHM_SIZE = 16777216;
 
-		public static function get($classname) {
-			if( !self::segment() ) {
-				return null;
-			}
-			if( self::has($classname) ) {
-				try {
-					list($expires, $path) = shm_get_var(self::segment(), self::key($classname));
-				} catch( Exception $e ) {
-					$expires = 0;
-					$path = null;
-				}
-				if( $expires<time() ) {
-					self::drop($classname);
-				}
-				return $path;
-			}
-			return null;
+		/**
+		 * Size of field which stores data array size
+		 * Starts at zero byte of shm segment
+		 * @const int
+		 */
+		const SHM_DATA_OFFSET = 24;
+
+		/**
+		 * Shared segment id
+		 * @var int|null
+		 */
+		protected static $shm = null;
+
+		/**
+		 * Temp storage
+		 * @var array|null
+		 */
+		protected static $storage = null;
+
+		/**
+		 * Get value from storage
+		 * @param string $key
+		 * @return string|null
+		 */
+		public static function get($key) {
+			if(!self::check()) return null;
+			return self::has($key) ? self::$storage[$key] : null;
 		}
 
-		public static function set($classname, $classpath) {
-			if( !self::segment() ) {
-				return false;
-			}
-			if( strlen($classpath) > 256 ) {
-				throw new BaseException('Class path is too long (more than 256 symbols)');
-			}
-			if( self::has($classname) ) {
-				self::drop($classname);
-			}
-			return shm_put_var(self::segment(), self::key($classname), array(0=>(time()+self::EXPIRATION_TIME), 1=>$classpath));
+		/**
+		 * Store data to storage
+		 * @param string $key
+		 * @param string $value
+		 * @return string
+		 */
+		public static function set($key, $value) {
+			if(!self::check()) return null;
+			self::$storage[$key] = $value;
+			return $value;
 		}
 
-		public static function drop($classname) {
-			if( !self::segment() ) {
-				return false;
-			}
-			return shm_remove_var(self::segment(), self::key($classname));
+		/**
+		 * Check if storage has given key
+		 * @param string $key
+		 * @return bool
+		 */
+		public static function has($key) {
+			if(!self::check()) return null;
+			return isset(self::$storage[$key]);
 		}
 
-		public static function has($classname) {
-			if( !self::segment() ) {
-				return false;
-			}
-			return shm_has_var(self::segment(), self::key($classname));
+		public static function save() {
+			if(!self::check()) return null;
+			$size = shmop_write(self::$shm, json_encode(self::$storage), self::SHM_DATA_OFFSET);
+			return self::updateSize($size);
 		}
 
 		public static function clean() {
-			if( !self::segment() ) {
-				return false;
-			}
-			return shm_remove(self::segment());
+			self::$storage = array();
+			self::save();
 		}
 
-		private static function segment() {
-			if( is_null(self::$attachedId) ) {
-				try {
-					self::$attachedId = @shm_attach(self::INDEX_SEGMENT, self::SEGMENT_SIZE, ONPHP_IPC_PERMS);
-				} catch(Exception $e) {
-					self::$attachedId = false;
+		protected static function check() {
+			if( is_null(self::$shm) && is_null(self::$storage) ) {
+				self::initSegment();
+				self::load();
+			}
+			return self::$shm;
+		}
+
+		/**
+		 * @return int|null
+		 * @throws RuntimeException
+		 */
+		protected static function initSegment() {
+			if( is_null(self::$shm) ) {
+				$identifier = crc32( defined('ONPHP_CLASS_CACHE_KEY') ? ONPHP_CLASS_CACHE_KEY : self::DEFAULT_SHM_KEY );
+
+				// Attempt to open shm segment
+				self::$shm = @shmop_open($identifier, 'w', 0777, self::DEFAULT_SHM_SIZE);
+
+				// If segment doesn't exist init new segment
+				if (false === self::$shm) {
+					self::$shm = shmop_open($identifier, 'c', 0777, self::DEFAULT_SHM_SIZE);
+
+					if (false === self::$shm) {
+						throw new RuntimeException('Unable to create shared memory segment with key: '.$identifier);
+					}
+
+					self::updateSize(0);
 				}
-
 			}
-			return self::$attachedId;
+			return self::$shm;
 		}
 
-		private static function key($classname) {
-//			return hexdec( substr(md5($classname), 0, 8) );
-			return crc32('/cache/'.$classname);
+		protected static function load() {
+			$size = intval(shmop_read(self::$shm, 0, self::SHM_DATA_OFFSET));
+			if( $size === 0 ) {
+				self::$storage = array();
+			} else {
+				$data = shmop_read(self::$shm, self::SHM_DATA_OFFSET, $size);
+				self::$storage = json_decode($data, true);
+			}
+
+			return $size;
 		}
 
+		/**
+		 * Update size field
+		 * @param int size
+		 * @return bool
+		 */
+		protected static function updateSize($size) {
+			$size = sprintf('%' . self::SHM_DATA_OFFSET . 'd', intval($size));
+			return shmop_write(self::$shm, $size, 0);
+		}
 	}
+
 ?>
