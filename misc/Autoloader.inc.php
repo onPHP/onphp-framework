@@ -300,6 +300,18 @@
 		protected static $storage = null;
 
 		/**
+		 * storage size after loading
+		 * @var int
+		 */
+		protected static $storageSize = 0;
+
+		/**
+		 * shm segment size on load
+		 * @var int
+		 */
+		protected static $segmentSize = 0;
+
+		/**
 		 * Get value from storage
 		 * @param string $key
 		 * @return string|null
@@ -331,8 +343,11 @@
 			return isset(self::$storage[$key]);
 		}
 
-		public static function save() {
+		public static function save($force = false) {
 			if(!self::check()) return null;
+			if( !$force && count(self::$storage)<=self::$storageSize ) {
+				return self::$segmentSize;
+			}
 			$size = shmop_write(self::$shm, json_encode(self::$storage), self::SHM_DATA_OFFSET);
 			return self::updateSize($size);
 		}
@@ -376,15 +391,17 @@
 		}
 
 		protected static function load() {
-			$size = intval(shmop_read(self::$shm, 0, self::SHM_DATA_OFFSET));
-			if( $size === 0 ) {
+			self::$segmentSize = intval(shmop_read(self::$shm, 0, self::SHM_DATA_OFFSET));
+
+			if( self::$segmentSize === 0 ) {
 				self::$storage = array();
 			} else {
-				$data = shmop_read(self::$shm, self::SHM_DATA_OFFSET, $size);
+				$data = shmop_read(self::$shm, self::SHM_DATA_OFFSET, self::$segmentSize);
 				self::$storage = json_decode($data, true);
 			}
+			self::$storageSize = count(self::$storage);
 
-			return $size;
+			return self::$segmentSize;
 		}
 
 		/**
@@ -393,7 +410,7 @@
 		 * @return bool
 		 */
 		protected static function updateSize($size) {
-			$size = sprintf('%' . self::SHM_DATA_OFFSET . 'd', intval($size));
+			self::$segmentSize = sprintf('%' . self::SHM_DATA_OFFSET . 'd', intval($size));
 			return shmop_write(self::$shm, $size, 0);
 		}
 	}
