@@ -13,8 +13,6 @@
 
 	namespace Onphp\NsConverter\AddUtils;
 
-	use \Onphp\StaticFactory;
-
 	class ConsoleReader
 	{	
 		public function readString()

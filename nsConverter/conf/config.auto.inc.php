@@ -50,6 +50,7 @@ require dirname(dirname(__DIR__)).DIRECTORY_SEPARATOR.'global.inc.php.tpl';
 		PATH_SRC.'AddUtils',
 		PATH_SRC.'Buffers',
 		PATH_SRC.'Business',
+		PATH_SRC.'EntitieProto',
 		PATH_SRC.'DAOs',
 		PATH_SRC.'Flow',
 		PATH_SRC.'Proto',

@@ -13,6 +13,7 @@
 
 namespace Onphp\NsConverter\Buffers;
 
+use Onphp\NsConverter\Utils\AlreadyAddedException;
 use \Onphp\NsConverter\Utils\ClassStorage;
 use \Onphp\NsConverter\Business\NsConstant;
 
@@ -63,7 +64,11 @@ class DefineConstantBuffer implements Buffer
 			} elseif (is_array($subject) && in_array($subject[0], [T_CONSTANT_ENCAPSED_STRING, T_WHITESPACE])) {
 				if (preg_match('~^[\'"]([\w]+)[\'"]$~iu', $subject[1], $match)) {
 					$constant = NsConstant::create()->setName($match[1]);
-					$this->classStorage->addConstant($constant);
+					try {
+						$this->classStorage->addConstant($constant);
+					} catch (AlreadyAddedException $e) {
+						/* nuiladno */
+					}
 					$this->buffer = false;
 				}
 			} else {
