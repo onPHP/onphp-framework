@@ -23,23 +23,33 @@ class CalculatableExpression extends BinaryExpression {
 		return new CalculatableExpression($left, $right, self::MULTIPLY);
 	}
 
-	protected function operandToValue($operand, Form $form) {
+	protected function operandToValue($operand, $dataSource) {
 		if ($operand instanceof CalculatableExpression) {
-			return $operand->toValue($form);
+			return $operand->toValue($dataSource);
 
-		} else if (is_string($operand) && $form->exists($operand)) {
-			return $form->getValue($operand);
+		} else if (is_string($operand)) {
+			if ($dataSource instanceof Form) {
+				return $dataSource->getValue($operand);
+
+			} else if ($dataSource instanceof Prototyped) {
+				return PrototypeUtils::getValue($dataSource, $operand);
+
+			} else if (is_array($dataSource)) {
+				return isset($dataSource[$operand]) ? $dataSource[$operand] : 0;
+
+			} else {
+				throw new WrongArgumentException('$dataSource should be Form or Prototyped or array');
+			}
 
 		} else {
 			return floatval($operand);
 		}
 	}
 
-	public function toValue(Form $form)
+	public function toValue($dataSource)
 	{
-
-		$left  = $this->operandToValue($this->getLeft(),  $form);
-		$right = $this->operandToValue($this->getRight(), $form);
+		$left  = $this->operandToValue($this->getLeft(),  $dataSource);
+		$right = $this->operandToValue($this->getRight(), $dataSource);
 
 		switch ($this->getLogic()) {
 			case self::EQUALS:
