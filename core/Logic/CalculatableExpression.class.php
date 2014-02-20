@@ -46,6 +46,11 @@ class CalculatableExpression extends BinaryExpression {
 		}
 	}
 
+	/**
+	 * @param Form|Prototyped|array $dataSource
+	 * @return float
+	 * @throws UnsupportedMethodException
+	 */
 	public function toValue($dataSource)
 	{
 		$left  = $this->operandToValue($this->getLeft(),  $dataSource);
