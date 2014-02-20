@@ -12,7 +12,7 @@
 	/**
 	 * @ingroup Logic
 	**/
-	final class BinaryExpression implements LogicalObject, MappableObject
+	class BinaryExpression implements LogicalObject, MappableObject
 	{
 		const EQUALS			= '=';
 		const NOT_EQUALS		= '!=';
