@@ -151,11 +151,7 @@ class Date implements Stringable, DialectString
 	}
 
 	public function __wakeup() {
-		if ($this->int) {
-			$this->import($this->int);
-		} else {
-			throw new WrongStateException('int is empty: ' . var_export($this->int, true));
-		}
+		$this->import($this->int);
 	}
 
 	public function toStamp()
