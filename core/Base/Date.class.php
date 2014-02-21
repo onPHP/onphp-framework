@@ -152,7 +152,7 @@ class Date implements Stringable, DialectString
 
 	public function __wakeup() {
 		if ($this->int) {
-			$this->import(date($this->getFormat(), $this->int));
+			$this->import($this->int);
 		}
 	}
 

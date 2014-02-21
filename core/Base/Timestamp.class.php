@@ -74,7 +74,6 @@ class Timestamp extends Date
 		}
 	}
 
-
 	private function getDefaultTimeZone()
 	{
 		$defaultTimeZoneName = date_default_timezone_get();
