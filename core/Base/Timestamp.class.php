@@ -71,6 +71,8 @@ class Timestamp extends Date
 		parent::__wakeup();
 		if ($this->zone) {
 			$this->dateTime->setTimezone(new DateTimeZone($this->zone));
+		} else {
+			throw new WrongStateException('dateTime is ', var_export($this->dateTime, true), ', int=' , var_export($this->int, true));
 		}
 	}
 
