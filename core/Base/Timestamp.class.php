@@ -20,6 +20,8 @@
  **/
 class Timestamp extends Date
 {
+	protected $zone = null;
+
 	/**
 	 * @return Timestamp
 	 **/
@@ -59,6 +61,19 @@ class Timestamp extends Date
 
 		$this->dateTime->setTimezone($zone);
 	}
+
+	public function  __sleep() {
+		$this->zone = $this->dateTime->getTimezone()->getName();
+		return array_merge(parent::__sleep(), array('zone'));
+	}
+
+	public function __wakeup() {
+		parent::__wakeup();
+		if ($this->zone) {
+			$this->dateTime->setTimezone(new DateTimeZone($this->zone));
+		}
+	}
+
 
 	private function getDefaultTimeZone()
 	{
