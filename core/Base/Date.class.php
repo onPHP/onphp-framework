@@ -146,7 +146,8 @@ class Date implements Stringable, DialectString
 
 	public function  __sleep()
 	{
-		return array('int', 'dateTime');
+		$this->int = $this->dateTime->getTimestamp();
+		return array('int');
 	}
 
 	public function __wakeup() {
