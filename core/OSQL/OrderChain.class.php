@@ -54,6 +54,14 @@
 		{
 			return end($this->chain);
 		}
+
+		/**
+		 * @return OrderBy
+		**/
+		public function getFirst()
+		{
+			return reset($this->chain);
+		}
 		
 		public function getList()
 		{
