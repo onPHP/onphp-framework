@@ -474,6 +474,7 @@
 			$formErrors = array();
 
 			foreach ($this->classes as $name => $class) {
+				/** @var $class MetaClass */
 				if (
 					!(
 						$class->getPattern() instanceof SpookedClassPattern
@@ -657,8 +658,13 @@
 						// cloning once again
 						$clone = clone $object;
 
-						FormUtils::object2form($object, $form);
-						FormUtils::form2object($form, $object);
+						try {
+							FormUtils::object2form($object, $form);
+							FormUtils::form2object($form, $object);
+						} catch (ObjectNotFoundException $e) {
+							$clone = null;
+							$out->error('(' . $e->getMessage() . ')');
+						}
 
 						if ($object != $clone) {
 							$out->error('T', true);
