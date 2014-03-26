@@ -100,7 +100,7 @@
 				// manual parsing, since pg_send_query() and
 				// pg_get_result() is too slow in our case
 				list($error, ) = explode("\n", pg_errormessage($this->link));
-				$code = substr($error, 8, 5);
+				sscanf($error, '%*s %[^:]', $code);
 				
 				if ($code == PostgresError::UNIQUE_VIOLATION) {
 					$e = 'DuplicateObjectException';
