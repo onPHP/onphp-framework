@@ -57,5 +57,10 @@
 		{
 			return new self(self::POST);
 		}
+
+		public static function put()
+		{
+			return new self(self::PUT);
+		}
 	}
 ?>
