@@ -144,11 +144,14 @@
 			return $lists[$className];
 		}
 
-		final public function getExpandedPropertyList($prefix = null)
+		final public function getExpandedPropertyList($prefix = null, $classParent = null)
 		{
 			static $lists = array();
 
 			$className = get_class($this);
+			if ($classParent) {
+				$className = $classParent . ':' . $className;
+			}
 
 			if (!isset($lists[$className])) {
 				$lists[$className] = array();
@@ -158,7 +161,8 @@
 							array_merge(
 								$lists[$className],
 								$property->getProto()->getExpandedPropertyList(
-									$property->getName().':'
+									$property->getName().':',
+									$className
 								)
 							);
 					} else {
