@@ -108,7 +108,7 @@ class PrototypeUtils
         foreach ($path as $field) {
             $getter = 'get' . ucfirst($field);
 			if (!method_exists($object, $getter)) {
-				throw new ObjectNotFoundException;
+				throw new ObjectNotFoundException($path . ' at ' . $getter);
 			}
             $object = $object->$getter();
         }
