@@ -104,7 +104,7 @@ class PrototypeUtils
      * @return mixed
      */
     public static function getValue(Prototyped $object, $path) {
-        $path = explode('.', $path);
+        $path = preg_split('/[\\:\\.]/', $path);
         foreach ($path as $field) {
             $getter = 'get' . ucfirst($field);
 			if (!method_exists($object, $getter)) {
@@ -226,16 +226,21 @@ class PrototypeUtils
 					}
 					$entity[ $property->getColumnName() ] = $value;
 				} elseif ($property->getType() == 'hstore') {
-					/** @var $value Hstore */
+					/** @var $value Hstore|null */
 					$entity[ $property->getColumnName() ] = $value instanceof Hstore ? $value->getList() : null;
 				} else {
 					$entity[ $property->getColumnName() ] = $value;
 				}
 			} // обрабатываем перечисления
-			elseif( $property->getType()=='enumeration' || $property->getType()=='enum' ) {
+			elseif (in_array($property->getType(), array('enumeration', 'enum', 'registry'))) {
+				/** @var Identifiable|null $value */
 				$value = call_user_func(array($object, $property->getGetter()));
-				$entity[ $property->getColumnName() ] = is_null($value) ? null : (int)$value->getId();
+				$entity[ $property->getColumnName() ] = $value instanceof Identifiable ? $value->getId() : null;
 			} // обрабатываем связи 1к1
+			elseif($property->isInner()) {
+				$value = call_user_func(array($object, $property->getGetter()));
+				$entity[ $property->getColumnName() ] = $value instanceof Prototyped ? self::toArray($value) : null;
+			}
 			elseif( in_array($property->getType(), self::$identifiers) && $property->getRelationId()==1 ) {
 				$value = call_user_func(array($object, $property->getGetter().'Id'));
 				$entity[ $property->getColumnName() ] = is_numeric($value) ? (int)$value : $value;
