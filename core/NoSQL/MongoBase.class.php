@@ -516,7 +516,6 @@ class MongoBase extends NoSQL {
 		if( !is_null($skip) ) {
 			$cursor->skip( $skip );
 		}
-		$cursor->timeout(Config::me()->getMongoTimeout());
 		return $cursor;
 	}
 
