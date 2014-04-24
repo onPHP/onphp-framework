@@ -8,8 +8,7 @@
 class PrimitiveReCaptcha extends BasePrimitive {
 
 	CONST
-		RECAPTCHA_API_SERVER = 'http://www.google.com/recaptcha/api',
-		RECAPTCHA_API_SECURE_SERVER = 'https://www.google.com/recaptcha/api',
+		RECAPTCHA_API_SERVER = '//www.google.com/recaptcha/api',
 		RECAPTCHA_VERIFY_SERVER = 'www.google.com',
 
 		RECAPTCHA_RESPONSE_FIELD = 'recaptcha_response_field',
@@ -115,19 +114,12 @@ class PrimitiveReCaptcha extends BasePrimitive {
 	 * is embedded within the HTML form it was called from.
 	 * @param string $pubkey A public key for reCAPTCHA
 	 * @param string $error The error given by reCAPTCHA (optional, default is null)
-	 * @param boolean $use_ssl Should the request be made over ssl? (optional, default is false)
 
 	 * @return string - The HTML to be embedded in the user's form.
 	 */
-	public static function getHtmlCode ($pubKey, $lang = null, $error = null, $use_ssl = false) {
+	public static function getHtmlCode ($pubKey, $lang = null, $error = null) {
 		if ($pubKey == null || $pubKey == '') {
 			die ("To use reCAPTCHA you must get an API key from <a href='https://www.google.com/recaptcha/admin/create'>https://www.google.com/recaptcha/admin/create</a>");
-		}
-
-		if ($use_ssl) {
-			$server = self::RECAPTCHA_API_SECURE_SERVER;
-		} else {
-			$server = self::RECAPTCHA_API_SERVER;
 		}
 
 		$langPart = "";
@@ -140,7 +132,7 @@ class PrimitiveReCaptcha extends BasePrimitive {
 			$errorPart = "&amp;error=" . $error;
 		}
 
-		return '<script type="text/javascript" src="'. $server . '/challenge?k=' . $pubKey . $langPart . $errorPart . '"></script>';
+		return '<script type="text/javascript" src="'. self::RECAPTCHA_API_SERVER . '/challenge?k=' . $pubKey . $langPart . $errorPart . '"></script>';
 	}
 
 	/**
