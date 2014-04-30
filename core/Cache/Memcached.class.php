@@ -113,7 +113,9 @@
 				$this->alive = false;
 				return null;
 			}
-			
+
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('cache', 'memcached'))->begin();
 			$command = 'get '.implode(' ', $indexes)."\r\n";
 			
 			if (!$this->sendRequest($command))
@@ -122,7 +124,12 @@
 			// we can't deserialize objects inside parseGetRequest,
 			// because of possibility further requests to memcached
 			// during deserialization - in __wakeup(), for example
-			return unserialize($this->parseGetRequest(false));
+            $list = unserialize($this->parseGetRequest(false));
+            $profiling
+                ->setInfo($command)
+                ->end()
+            ;
+			return $list;
 		}
 		
 		public function increment($key, $value)
@@ -142,17 +149,26 @@
 				return null;
 			}
 
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('cache', 'memcached'))->begin();
 			$command = "get {$index}\r\n";
 			
 			if (!$this->sendRequest($command))
 				return null;
-			
-			return $this->parseGetRequest(true);
+
+            $result = $this->parseGetRequest(true);
+            $profiling
+                ->setInfo($command)
+                ->end()
+            ;
+			return $result;
 		}
 		
 		public function delete($index, $time = null)
 		{
-			$command =
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('cache', 'memcached'))->begin();
+            $command =
 				$time
 					? "delete {$index} {$time}\r\n"
 					: "delete {$index}\r\n";
@@ -161,7 +177,11 @@
 				return false;
 			
 			try {
-				$response = fread($this->link, $this->buffer);
+				$result = fread($this->link, $this->buffer);
+                $profiling
+                    ->setInfo($command)
+                    ->end()
+                ;
 			} catch (BaseException $e) {
 				return false;
 			}
@@ -169,7 +189,7 @@
 			if ($this->isTimeout())
 				return false;
 
-			if ($response === "DELETED\r\n")
+			if ($result === "DELETED\r\n")
 				return true;
 			else
 				return false;
@@ -177,6 +197,8 @@
 		
 		public function append($key, $data)
 		{
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('cache', 'memcached'))->begin();
 			$packed = serialize($data);
 			
 			$length = strlen($packed);
@@ -187,12 +209,16 @@
 			if (!$this->sendRequest($command))
 				return false;
 			
-			$response = fread($this->link, $this->buffer);
+			$result = fread($this->link, $this->buffer);
+            $profiling
+                ->setInfo($command)
+                ->end()
+            ;
 
 			if ($this->isTimeout())
 				return false;
 
-			if ($response === "STORED\r\n")
+			if ($result === "STORED\r\n")
 				return true;
 			
 			return false;
@@ -204,7 +230,9 @@
 		{
 			if ($expires === Cache::DO_NOT_CACHE)
 				return false;
-			
+
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('cache', 'memcached'))->begin();
 			$flags = 0;
 			
 			if (!is_numeric($value)) {
@@ -242,12 +270,16 @@
 			if (!$this->sendRequest($command))
 				return false;
 			
-			$response = fread($this->link, $this->buffer);
+			$result = fread($this->link, $this->buffer);
+            $profiling
+                ->setInfo($command)
+                ->end()
+            ;
 
 			if ($this->isTimeout())
 				return false;
 			
-			if ($response === "STORED\r\n")
+			if ($result === "STORED\r\n")
 				return true;
 			
 			return false;
@@ -328,14 +360,20 @@
 		{
 			if (!$this->link)
 				return null;
-			
+
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('cache', 'memcached'))->begin();
 			$command = "{$command} {$key} {$value}\r\n";
 			
 			if (!$this->sendRequest($command))
 				return null;
 			
 			try {
-				$response = rtrim(fread($this->link, $this->buffer));
+				$result = rtrim(fread($this->link, $this->buffer));
+                $profiling
+                    ->setInfo($command)
+                    ->end()
+                ;
 			} catch (BaseException $e) {
 				return null;
 			}
@@ -343,8 +381,8 @@
 			if ($this->isTimeout())
 				return null;
 
-			if (is_numeric($response))
-				return (int) $response;
+			if (is_numeric($result))
+				return (int) $result;
 			
 			return null;
 		}

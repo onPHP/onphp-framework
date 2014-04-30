@@ -63,10 +63,16 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 
 	public function clean()
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->ensureTriedToConnect();
 
 		try {
 			$this->redis->flushDB();
+            $profiling
+                ->setInfo('clean')
+                ->end()
+            ;
 		} catch (RedisException $e) {
 			$this->alive = false;
 		}
@@ -89,10 +95,17 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 
 	public function append($key, $data)
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->ensureTriedToConnect();
 
 		try {
-			return $this->redis->append($key, $data);
+			$response = $this->redis->append($key, $data);
+            $profiling
+                ->setInfo('append ' . $key)
+                ->end()
+            ;
+			return $response;
 		} catch (RedisException $e) {
 			return $this->alive = false;
 		}
@@ -100,10 +113,17 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 
 	public function decrement($key, $value)
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->ensureTriedToConnect();
 
 		try {
-			return $this->redis->decrBy($key, $value);
+            $response = $this->redis->decrBy($key, $value);
+            $profiling
+                ->setInfo('decrement ' . $key)
+                ->end()
+            ;
+            return $response;
 		} catch (RedisException $e) {
 			return null;
 		}
@@ -111,10 +131,17 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 
 	public function delete($key)
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->ensureTriedToConnect();
 
 		try {
-			return $this->redis->delete($key);
+            $response = $this->redis->delete($key);
+            $profiling
+                ->setInfo('delete ' . $key)
+                ->end()
+            ;
+            return $response;
 		} catch (RedisException $e) {
 			return $this->alive = false;
 		}
@@ -122,10 +149,17 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 
 	public function get($key)
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->ensureTriedToConnect();
 
 		try {
-			return $this->redis->get($key);
+            $response = $this->redis->get($key);
+            $profiling
+                ->setInfo('get ' . $key)
+                ->end()
+            ;
+            return $response;
 		} catch (RedisException $e) {
 			$this->alive = false;
 
@@ -135,13 +169,20 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 
 	public function keys($mask = null)
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->ensureTriedToConnect();
 
         if (!$mask)
             $mask = '*';
 
 		try {
-			return $this->redis->keys($mask);
+            $response = $this->redis->keys($mask);
+            $profiling
+                ->setInfo('keys ' . $mask)
+                ->end()
+            ;
+            return $response;
 		} catch (RedisException $e) {
 			$this->alive = false;
 
@@ -151,10 +192,17 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 
 	public function increment($key, $value)
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->ensureTriedToConnect();
 
 		try {
-			return $this->redis->incrBy($key, $value);
+            $response = $this->redis->incrBy($key, $value);
+            $profiling
+                ->setInfo('increment ' . $key)
+                ->end()
+            ;
+            return $response;
 		} catch (RedisException $e) {
 			return null;
 		}
@@ -193,10 +241,19 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 	}
 
 	public function info() {
-		return $this->redis->info();
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
+        $response = $this->redis->info();
+        $profiling
+            ->setInfo('info')
+            ->end()
+        ;
+        return $response;
 	}
 
 	public function select($db) {
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->ensureTriedToConnect();
 
 		if( is_null($db) || !Assert::checkInteger($db) ) {
@@ -206,11 +263,17 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 		if( !$result ) {
 			throw new WrongStateException('could not change db');
 		}
+        $profiling
+            ->setInfo('select ' . $db)
+            ->end()
+        ;
 		return $result;
 	}
 
 	protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
 	{
+        /** @var Profiling $profiling */
+        $profiling = Profiling::create(array('cache', 'redis'))->begin();
 		$this->ensureTriedToConnect();
 
 		switch ($action) {
@@ -220,6 +283,10 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 				try {
 					$result = $this->redis->set($key, $value);
 					$this->redis->expire($key, $expires);
+                    $profiling
+                        ->setInfo($action . ' ' . $key)
+                        ->end()
+                    ;
 					return $result;
 				} catch (RedisException $e) {
 					return $this->alive = false;

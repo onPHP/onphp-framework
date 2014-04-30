@@ -9,8 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
+    require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .
+        'main' . DIRECTORY_SEPARATOR . 'Utils' . DIRECTORY_SEPARATOR . 'Profiling' . EXT_CLASS;
+
 	define('ONPHP_CLASS_CACHE_CHECKSUM', '__occc');
-	
+
 	abstract class Autoloader
 	{
 		public static function classPathCache($classname)
@@ -24,7 +27,9 @@
 				// we can not avoid fatal error in this case
 				return /* void */;
 			}
-			
+
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('autoloader', 'classPathCache'))->begin();
 			$currentPath = get_include_path();
 			
 			if ($currentPath != $path) {
@@ -47,6 +52,10 @@
 				if (isset($cache[$classname])) {
 					try {
 						include $cache[$cache[$classname]].$classname.EXT_CLASS;
+                        $profiling
+                            ->setInfo($cache[$cache[$classname]].$classname.EXT_CLASS)
+                            ->end()
+                        ;
 						return /* void */;
 					} catch (ClassNotFoundException $e) {
 						throw $e;
@@ -93,6 +102,10 @@
 				
 				try {
 					include $fileName;
+                    $profiling
+                        ->setInfo($fileName)
+                        ->end()
+                    ;
 				} catch (BaseException $e) {
 					if (is_readable($fileName))
 						// class compiling failed
@@ -120,14 +133,24 @@
 
 			// make namespaces work
 			$classname = str_replace('\\', '/', $classname);
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('autoloader', 'noCache'))->begin();
 
 			$errors = array();
 			foreach (array(EXT_CLASS, '.php') as $ext) {
 				try {
 					include $classname.$ext;
+                    $profiling
+                        ->setInfo($classname.$ext)
+                        ->end()
+                    ;
 					return /* void */;
 				} catch (BaseException $e) {
 					$errors[] = $e->getMessage();
+                    $profiling
+                        ->setInfo($e->getMessage())
+                        ->end()
+                    ;
 				}
 			}
 
@@ -149,7 +172,9 @@
 				/* are you sane? */
 				return;
 			}
-			
+
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('autoloader', 'wholeClassCache'))->begin();
 			$currentPath = get_include_path();
 			
 			if ($currentPath != $path) {
@@ -198,6 +223,10 @@
 					$class = file_get_contents($classPath);
 					
 					eval('?>'.$class);
+                    $profiling
+                        ->setInfo($classPath)
+                        ->end()
+                    ;
 				} catch (BaseException $e) {
 					return __autoload_failed($classname, $e->getMessage());
 				}
@@ -225,6 +254,8 @@
 				return;
 			}
 
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('autoloader', 'wholeClassCache'))->begin();
 			// make namespaces work
 			$desiredName = str_replace('\\', '/', $classname);
 			if($desiredName{0}=='/') {
@@ -239,6 +270,10 @@
 
 			if( isset($realPath) && !is_null($realPath) ) {
 				include_once $realPath;
+                $profiling
+                    ->setInfo($realPath)
+                    ->end()
+                ;
 			} else {
 				foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
 					$directory = realpath($directory);
@@ -257,6 +292,10 @@
 				if( !is_null($realPath) ) {
 					AutoloaderShmop::set($desiredName, $realPath);
 					include_once $realPath;
+                    $profiling
+                        ->setInfo($realPath)
+                        ->end()
+                    ;
 				}
 			}
 
