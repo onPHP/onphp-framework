@@ -34,6 +34,14 @@ class Profiling {
 		return array();
 	}
 
+	public static function getTotalTime($tag) {
+		$time = 0;
+		foreach (self::getHistory($tag) as $profiling) {
+			$time += $profiling->getTimeMs();
+		}
+		return $time;
+	}
+
 	public function begin() {
 		$this->timeStart = microtime(true);
 		return $this;
@@ -64,7 +72,7 @@ class Profiling {
 	}
 
 	public function getTimeMs(){
-		return round($this->getTime() * 100, 3);
+		return round($this->getTime() * 1000, 3);
 	}
 
 	public function getTimeStart($format = 'Y-m-d H:i:s.u') {
