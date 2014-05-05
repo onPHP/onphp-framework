@@ -425,6 +425,15 @@ class MongoBase extends NoSQL {
 			$options
 		);
 
+		if ($options['safe']) {
+			if ($this->checkVersion('1.3.0')) {
+				$options['w'] = $this->writeConcern;
+				unset($options['safe']);
+			} else {
+				$options['safe'] = $this->writeConcern;
+			}
+		}
+
 		$this->mongoDelete($query[self::C_TABLE], $query[self::C_QUERY], $options);
 	}
 
