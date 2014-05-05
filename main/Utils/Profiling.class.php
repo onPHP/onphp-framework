@@ -7,6 +7,7 @@
 
 class Profiling {
 	protected static $history = array();
+	protected static $historyEnabled = true;
 
 	protected $timeStart = null;
 	protected $timeEnd = null;
@@ -34,6 +35,14 @@ class Profiling {
 		return array();
 	}
 
+	public static function isHistoryEnabled() {
+		return self::$historyEnabled;
+	}
+
+	public static function setHistoryEnabled($bool) {
+		self::$historyEnabled = ($bool === true);
+	}
+
 	public static function getTotalTime($tag) {
 		$time = 0;
 		foreach (self::getHistory($tag) as $profiling) {
@@ -47,8 +56,12 @@ class Profiling {
 		return $this;
 	}
 
-	public function end($saveToHistory = true) {
+	public function end($saveToHistory = null) {
 		$this->timeEnd = microtime(true);
+
+		if (is_null($saveToHistory)) {
+			$saveToHistory = self::isHistoryEnabled();
+		}
 
 		if ($saveToHistory) {
 			foreach ($this->getTags() as $tag) {
