@@ -255,7 +255,7 @@
 			}
 
             /** @var Profiling $profiling */
-            $profiling = Profiling::create(array('autoloader', 'wholeClassCache'))->begin();
+            $profiling = Profiling::create(array('autoloader', 'classPathSharedMemCache'))->begin();
 			// make namespaces work
 			$desiredName = str_replace('\\', '/', $classname);
 			if($desiredName{0}=='/') {
@@ -268,7 +268,7 @@
 				$realPath = null;
 			}
 
-			if( isset($realPath) && !is_null($realPath) ) {
+			if( isset($realPath) && !is_null($realPath) && file_exists($realPath) ) {
 				include_once $realPath;
                 $profiling
                     ->setInfo($realPath)
