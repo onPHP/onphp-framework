@@ -303,6 +303,70 @@
 				__autoload_failed($classname, 'class not found');
 			}
 		}
+
+		protected static $memcahe = null;
+
+		public static function classPathLocalMemcached($classname) {
+			if (strpos($classname, "\0") !== false) {
+				/* are you sane? */
+				return;
+			}
+
+            /** @var Profiling $profiling */
+            $profiling = Profiling::create(array('autoloader', 'classPathLocalMemcached'))->begin();
+
+			if( is_null(self::$memcahe) ) {
+				self::$memcahe = new Memcache();
+				self::$memcahe->pconnect('localhost', 11211);
+			}
+
+			// make namespaces work
+			$desiredName = str_replace('\\', '/', $classname);
+			if($desiredName{0}=='/') {
+				$desiredName = substr($desiredName, 1);
+			}
+
+			try {
+				$realPath = self::$memcahe->get($desiredName);
+			} catch(Exception $e) {
+				$realPath = null;
+			}
+
+			if( isset($realPath) && !is_null($realPath) && file_exists($realPath) ) {
+				include_once $realPath;
+                $profiling
+                    ->setInfo($realPath)
+                    ->end()
+                ;
+			} else {
+				foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
+					$directory = realpath($directory);
+					foreach (array(EXT_CLASS, EXT_LIB) as $ext) {
+						$realPath = $directory.DIRECTORY_SEPARATOR.$desiredName.$ext;
+						if( $realPath && file_exists($realPath) && is_readable($realPath) ) {
+							break;
+						} else {
+							$realPath = null;
+						}
+					}
+					if( !is_null($realPath) ) {
+						break;
+					}
+				}
+				if( !is_null($realPath) ) {
+					self::$memcahe->set($desiredName, $realPath, 0, 300);
+					include_once $realPath;
+                    $profiling
+                        ->setInfo($realPath)
+                        ->end()
+                    ;
+				}
+			}
+
+			if (!class_exists($classname, false) && !interface_exists($classname, false)) {
+				__autoload_failed($classname, 'class not found');
+			}
+		}
 	}
 
 	abstract class AutoloaderShmop {
