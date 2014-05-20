@@ -18,6 +18,8 @@
 	{
 		private $identityMap	= array();
 
+        private $triggersAllowed = true;
+
 		abstract public function getTable();
 		abstract public function getObjectName();
 
@@ -276,9 +278,14 @@
 
 		public function dropById($id)
 		{
+            call_user_func($this->prepareTrigger($id, 'onBeforeDrop'));
+            $after = $this->prepareTrigger($id, 'onAfterDrop');
+
 			unset($this->identityMap[$id]);
 
 			$count = Cache::worker($this)->dropById($id);
+
+            call_user_func($after);
 
 			if (1 != $count)
 				throw new WrongStateException('no object were dropped');
@@ -288,10 +295,15 @@
 
 		public function dropByIds(array $ids)
 		{
+            call_user_func($this->prepareTrigger($ids, 'onBeforeDrop'));
+            $after = $this->prepareTrigger($ids, 'onAfterDrop');
+
 			foreach ($ids as $id)
 				unset($this->identityMap[$id]);
 
 			$count = Cache::worker($this)->dropByIds($ids);
+
+            call_user_func($after);
 
 			if ($count != count($ids))
 				throw new WrongStateException('not all objects were dropped');
@@ -356,6 +368,16 @@
 			return $this;
 		}
 
+        public function disableTriggers() {
+            $this->triggersAllowed = false;
+            return $this;
+        }
+
+        public function enableTriggers() {
+            $this->triggersAllowed = true;
+            return $this;
+        }
+
 		protected function inject(
 			InsertOrUpdateQuery $query,
 			Identifiable $object
@@ -363,7 +385,9 @@
 		{
 			$this->checkObjectType($object);
 
-			return $this->doInject(
+            $this->runTrigger($object, 'onBeforeSave');
+
+            return $this->doInject(
 				$this->setQueryFields(
 					$query->setTable($this->getTable()), $object
 				),
@@ -395,7 +419,11 @@
 			}
 
 			// clean out Identifier, if any
-			return $this->addObjectToMap($object->setId($object->getId()));
+			$result = $this->addObjectToMap($object->setId($object->getId()));
+
+            $this->runTrigger($object, 'onAfterSave');
+
+            return $result;
 		}
 
 		/* void */ protected function checkObjectType(Identifiable $object)
@@ -419,5 +447,39 @@
 
 			return $list;
 		}
+
+        protected final function runTrigger($input, $triggerName) {
+            call_user_func($this->prepareTrigger($input, $triggerName));
+            return $this;
+        }
+
+        protected final function prepareTrigger($input, $triggerName) {
+            if(
+                !$this->triggersAllowed ||
+                !in_array($triggerName, class_implements($objName = $this->getObjectName()))
+                ) {
+                return (function(){ });
+            }
+
+            $self = $this;
+            $check = function($obj) use ($objName, $self) {
+                if(!($obj instanceof $objName)) {
+                    $obj = $self->getById($obj);
+                }
+                return $obj;
+            };
+
+            if(is_array($input)) {
+                $input = array_map($check, $input);
+            } else {
+                $input = array($check($input));
+            }
+
+            return function() use ($input, $triggerName) {
+                foreach($input as $obj) {
+                    call_user_func(array($obj, $triggerName));
+                }
+            };
+        }
 	}
 ?>
