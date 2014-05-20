@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-	
+
 	function help()
 	{
 ?>
@@ -208,11 +208,11 @@ Possible options:
 	include_once $metaRoot.'MetaOutput.class.php';
 	include_once $metaRoot.'TextOutput.class.php';
 	include_once $metaRoot.'ColoredTextOutput.class.php';
-	
+
 	if (
 		isset($_SERVER['TERM'])
 		&& in_array($_SERVER['TERM'], array(
-			'xterm', 'linux', 'screen', 'screen-256color', 'xterm-256color'
+			'xterm', 'linux', 'screen', 'screen-256color', 'xterm-256color', 'cygwin'
 		))
 		&& !$metaNoColor
 	) {
