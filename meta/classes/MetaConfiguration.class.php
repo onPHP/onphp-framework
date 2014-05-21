@@ -905,6 +905,7 @@
 					)
 				)
 				&& (!$class->getPattern() instanceof ValueObjectPattern)
+				&& (!$class->getPattern() instanceof AbstractClassPattern)
 				&& (!$class->getPattern() instanceof InternalClassPattern)
 			) {
 				Assert::isTrue(
