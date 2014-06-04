@@ -79,4 +79,27 @@
 		
 		<pattern name="InternalClass" />
 	</class>
+
+    <class name="StorableFile">
+        <properties>
+            <identifier />
+            <property name="fileName" type="String" size="255" required="true" />
+            <property name="mimeType" type="String" size="100" required="true" />
+            <property name="originalFileName" type="String" size="255" required="false" />
+            <property name="size" type="Integer" required="true" />
+            <property name="createDate" type="Timestamp" required="true" />
+            <property name="engineType" type="StorageEngineType" relation="OneToOne" fetch="lazy" required="true" />
+            <property name="engineConfig" type="String" size="50" required="false"/>
+        </properties>
+        <pattern name="InternalClass"/>
+    </class>
+
+    <!-- Тип хранилища  -->
+    <class name="StorageEngineType">
+        <properties>
+            <identifier />
+        </properties>
+        <pattern name="InternalClass" />
+    </class>
+
 </classes></metaconfiguration>

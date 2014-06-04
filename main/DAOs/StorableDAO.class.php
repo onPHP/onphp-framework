@@ -81,8 +81,10 @@
 				$object->getId(), $old->getId(),
 				'cannot merge different objects'
 			);
-			
-			$query = OSQL::update($this->getTable());
+
+            $this->runTrigger($object, 'onBeforeSave');
+
+            $query = OSQL::update($this->getTable());
 			
 			foreach ($this->getProtoClass()->getPropertyList() as $property) {
 				$getter = $property->getGetter();

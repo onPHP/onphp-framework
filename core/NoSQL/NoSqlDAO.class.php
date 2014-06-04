@@ -221,13 +221,28 @@ abstract class NoSqlDAO extends StorableDAO {
 	}
 
 	public function dropById($id) {
-		$link = NoSqlPool::getByDao( $this );
-		return $link->deleteOne($this->getTable(), $id);
+        $this->runTrigger($id, 'onBeforeDrop');
+        $after = $this->prepareTrigger($id, 'onAfterDrop');
+
+        $link = NoSqlPool::getByDao( $this );
+		$result = $link->deleteOne($this->getTable(), $id);
+
+        call_user_func($after);
+
+        return $result;
 	}
 
 	public function dropByIds(array $ids) {
+        $this->runTrigger($ids, 'onBeforeDrop');
+        $after = $this->prepareTrigger($ids, 'onAfterDrop');
+
 		$link = NoSqlPool::getByDao( $this );
-		return $link->deleteList($this->getTable(), $ids);
+
+		$result = $link->deleteList($this->getTable(), $ids);
+
+        call_user_func($after);
+
+        return $result;
 	}
 
 	public function dropByCriteria(Criteria $criteria) {
@@ -313,7 +328,9 @@ abstract class NoSqlDAO extends StorableDAO {
 	protected function doAdd(NoSqlObject $object, $safe = true) {
 		$this->checkNoSqlObject($object);
 
-		$row = NoSqlPool::getByDao($this)
+        $this->runTrigger($object, 'onBeforeSave');
+
+        $row = NoSqlPool::getByDao($this)
 			->insert(
 				$this->getTable(),
 				$object->toArray(),
@@ -322,7 +339,9 @@ abstract class NoSqlDAO extends StorableDAO {
 
 		$object->setId($row['id']);
 
-		return $object;
+        $this->runTrigger($object, 'onAfterSave');
+
+        return $object;
 	}
 
 	public function saveUnsafe(NoSqlObject $object) {
@@ -337,12 +356,16 @@ abstract class NoSqlDAO extends StorableDAO {
 	protected function doSave(NoSqlObject $object, $safe = true) {
 		$this->checkNoSqlObject($object);
 
+        $this->runTrigger($object, 'onBeforeSave');
+
 		$row = NoSqlPool::getByDao($this)
 			->update(
 				$this->getTable(),
 				$object->toArray(),
 				array('safe' => $safe)
 			);
+
+        $this->runTrigger($object, 'onAfterSave');
 
 		//$object->setId($row['id']);
 

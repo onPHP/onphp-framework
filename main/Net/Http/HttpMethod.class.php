@@ -62,5 +62,10 @@
 		{
 			return new self(self::PUT);
 		}
+
+		public static function delete()
+		{
+			return new self(self::DELETE);
+		}
 	}
 ?>
