@@ -311,7 +311,6 @@ abstract class StorableFile extends IdentifiableObject implements onBeforeSave, 
     }
 
     public function applyStorageChanges() {
-
         if (
             !$this->storageChanged       // Если хранилище не изменилось
             && !$this->isCloned()       // не было копирования
