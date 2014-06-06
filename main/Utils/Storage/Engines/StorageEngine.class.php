@@ -15,7 +15,7 @@ class StorageEngine
     protected $unAllowedName = '/[\/\:\*\?\"\<\>\|\\\]/iu';
     protected $unAllowedPath = '/[\.\/\:\*\?\"\<\>\|\\\]/iu';
 
-    protected $link_id = 'default';
+    protected $linkId = 'default';
 
     protected static $tempFiles = array();
 
@@ -37,76 +37,79 @@ class StorageEngine
 	protected $folderShardingNameBucketSize = 2;
 	protected $folderShardingEmptyKey = '0';
 
-    public static final function create(StorageEngineType $type = null, $link_id = null){
-        if(!$type)
-            return new self($link_id);
+    public static final function create(StorageEngineType $type = null, $linkId = null) {
+        if (!$type) {
+			return new self($linkId);
+		}
 
         $className = $type->toString();
         Assert::classExists($className);
 
-        return new $className($link_id);
+        return new $className($linkId);
     }
 
-    public final function __construct($link_id){
-        if($link_id){
-            $this->link_id = $link_id;
+    public final function __construct($linkId) {
+        if ($linkId) {
+            $this->linkId = $linkId;
         }
-        $config = StorageConfig::me()->getConfig( StorageEngineType::getByClass(get_class($this)), $this->link_id);
+        $config = StorageConfig::me()->getConfig( StorageEngineType::getByClass(get_class($this)), $this->linkId);
         $this->parseConfig($config);
-        if( isset($config['keepFiles']) && $config['keepFiles'] ) {
+        if ( isset($config['keepFiles']) && $config['keepFiles'] ) {
             $this->keepFiles = true;
         }
 
-        if( isset($config['retries']) && ($config['retries'] > 1) ) {
+        if ( isset($config['retries']) && ($config['retries'] > 1) ) {
             $this->retries = $config['retries'];
         }
 
-        if( isset($config['timeout']) ) {
+        if ( isset($config['timeout']) ) {
             $this->timeout = $config['timeout'];
         }
     }
 
-    protected function parseConfig($data){
+    protected function parseConfig($data) {
         return $this;
     }
 
-    public function hasHttpLink(){
+    public function hasHttpLink() {
         return $this->hasHttpLink;
     }
 
-    public function hasOwnNamingPolicy(){
+    public function hasOwnNamingPolicy() {
         return $this->ownNamingPolicy;
     }
 
-    public function canReadRemote(){
+    public function canReadRemote() {
         return $this->canReadRemote;
     }
 
-    public function canCopy(){
+    public function canCopy() {
         return $this->canCopy;
     }
 
-    public function canRename(){
+    public function canRename() {
         return $this->canRename;
     }
 
-    public function getHttpLink($file){
-        if($this->hasHttpLink())
-            return $this->httpLink.$this->generateSubPath($file).$file;
+    public function getHttpLink($file) {
+        if ($this->hasHttpLink()) {
+			return $this->httpLink.$this->generateSubPath($file).$file;
+		}
+
         throw new UnsupportedMethodException('Don`t know how to return http link');
     }
 
-	protected function generateSubPath($fileName){
-		if( !$this->folderShardingDepth ) {
+	protected function generateSubPath($fileName) {
+		if ( !$this->folderShardingDepth ) {
 			return '';
 		}
 
 		$fileName = preg_replace($this->unAllowedPath, '', $fileName);
 		$path = '';
-		for( $i = 0; $i < $this->folderShardingDepth; $i++ ){
+		for( $i = 0; $i < $this->folderShardingDepth; $i++ ) {
 
 			$delta = $this->folderShardingNameBucketSize - mb_strlen($fileName);
-			if( $delta > 0 ){
+			if ( $delta > 0 ) {
 				$key = str_pad($fileName, $this->folderShardingNameBucketSize, $this->folderShardingEmptyKey);
 				$fileName = '';
 			}else{
@@ -119,21 +122,21 @@ class StorageEngine
 		return $path;
 	}
 
-	public function isTrusted(){
+	public function isTrusted() {
         return $this->trusted;
     }
 
-    public function storeRemote($link, $desiredName=null){
+    public function storeRemote($link, $desiredName=null) {
 
-        if(!$desiredName){
+        if (!$desiredName) {
             $desiredName = $this->generateName('');
         }
 
         $source = fopen($link, 'r');
         $path   = $this->getTmpFile($desiredName);
-        $dest   = fopen($path, 'w');
+        $destination   = fopen($path, 'w');
 
-        stream_copy_to_stream($source, $dest);
+        stream_copy_to_stream($source, $destination);
 
         return $path;
     }
@@ -143,7 +146,7 @@ class StorageEngine
      * @param $to String
      * @return String
      */
-    public function copy($from, $to=null){
+    public function copy($from, $to=null) {
         throw new Exception('Don`t want to copy temporary files!');
     }
 
@@ -152,7 +155,7 @@ class StorageEngine
      * @param $to String
      * @return String
      */
-    public function rename($from, $to){
+    public function rename($from, $to) {
         throw new Exception('Don`t want to rename temporary files!');
     }
 
@@ -160,23 +163,25 @@ class StorageEngine
      * @param $file String
      * @return String
      */
-    public function get($file){
-        if(is_uploaded_file($file))
+    public function get($file) {
+        if (is_uploaded_file($file)) {
             return $file;
+		}
+
         return $this->getTmpFile($file);
     }
 
-    /**
-     * @param $file String
-     * @param $desiredName String
-     * @return String
-     */
-    public function store($local_file, $desiredName){
+	/**
+	 * @param $localFile String
+	 * @param $desiredName String
+	 * @return String
+	 */
+    public function store($localFile, $desiredName) {
         throw new Exception('Can not store temporary file');
     }
 
-    public final function remove($file){
-        if($this->keepFiles){
+    public final function remove($file) {
+        if ($this->keepFiles) {
             return true;
         }
         else{
@@ -184,23 +189,25 @@ class StorageEngine
         }
     }
 
-    protected function unlink($file){
+    protected function unlink($file) {
         return true;
     }
 
-    public function exists($file){
+    public function exists($file) {
         return false;
     }
 
-    protected function generateName($name){
+    protected function generateName($name) {
         return uniqid().$name;
     }
 
-    protected function getTmpFile($file, $create = true){
-        if(!is_scalar($file))
+    protected function getTmpFile($file, $create = true) {
+        if (!is_scalar($file)) {
             throw new InvalidArgumentException('Got filename of type: '.gettype($file));
-        if(!isset(self::$tempFiles[$file])){
-            if($create){
+		}
+
+        if (!isset(self::$tempFiles[$file])) {
+            if ($create) {
                 self::$tempFiles[$file] = new TempFile();
             }
             else{
@@ -211,78 +218,81 @@ class StorageEngine
         return self::$tempFiles[$file]->getPath();
     }
 
-    public function stat($file){
-        $result = array('mime'=>'','size'=>0);
-        if($this->hasHttpLink()){
+    public function stat($file) {
+        $result = array('mime'=>'', 'size'=>0);
+        if ($this->hasHttpLink()) {
             $result = array_merge($result, $this->httpStat($this->getHttpLink($file)));
         }
+
         return $result;
     }
 
-    protected function httpExists($url){
-        try{
-            $send_req = HttpRequest::create()
+    protected function httpExists($url) {
+        try {
+			$sendRequest = HttpRequest::create()
                 ->setMethod(HttpMethod::get())
                 ->setUrl(
-                HttpUrl::create()
-                    ->parse($url)
-            );
+					HttpUrl::create()
+						->parse($url)
+				);
 
             $status = CurlHttpClient::create()
                 ->setOption(CURLOPT_RETURNTRANSFER,true)
                 ->setOption(CURLOPT_NOBODY, true)
-                ->send($send_req)
+                ->send($sendRequest)
                 ->getStatus()
                 ->getId();
 
-            if($status>=200 && $status<400)
+            if ( $status>=200 && $status<400 ) {
                 return true;
+			}
         }
-        catch(Exception $e){
-
-        }
+        catch(Exception $e) {}
 
         return false;
     }
 
-    protected function httpStat($url){
+    protected function httpStat($url) {
         $result = array();
         try{
-            $send_req = HttpRequest::create()
+			$sendRequest = HttpRequest::create()
                 ->setMethod(HttpMethod::get())
                 ->setUrl(
-                HttpUrl::create()
-                ->parse($url)
-            );
+					HttpUrl::create()
+					->parse($url)
+				);
+
             $res = CurlHttpClient::create()
                 ->setOption(CURLOPT_RETURNTRANSFER,true)
                 ->setOption(CURLOPT_NOBODY, true)
-                ->send($send_req);
+                ->send($sendRequest);
+
             $result['mime'] = $res->getHeader('content-type');
             $result['size'] = $res->getHeader('content-length');
         }
-        catch(Exception $e){
+        catch(Exception $e) {}
 
-        }
         return $result;
     }
 
     protected function tryToDo($action, $exceptionMessage) {
-        try{
-            if( $this->retries > 1 ) {
-                $retryer = Retryer::create( $action )
+        try {
+            if ( $this->retries > 1 ) {
+                $reTryer = Retryer::create( $action )
                     ->setTimeout($this->timeout)
                     ->setRetries($this->retries);
 
-                $result = $retryer->exec();
+                $result = $reTryer->exec();
             } else {
                 $result = $action();
             }
 
-        } catch (Exception $e) {
-            $message = ($e instanceof RetryerException) ? $e->getExceptionsReadable() : $e->getMessage();
+        }
+		catch (Exception $e) {
+            $message = ($e instanceof RetryerException) ? $e->getMessageReadable() : $e->getMessage();
+
             throw new Exception(sprintf($exceptionMessage, $message));
-        };
+        }
 
         return $result;
     }
@@ -290,12 +300,13 @@ class StorageEngine
     protected function closeHandles() {
         $handles = func_get_args();
         foreach($handles as $handle) {
-            if(!is_resource($handle)) {
+            if (!is_resource($handle)) {
                 continue;
             }
             try{
                 fclose($handle);
-            } catch (Exception $e) { }
+            }
+			catch (Exception $e) { }
         }
 
         return $this;

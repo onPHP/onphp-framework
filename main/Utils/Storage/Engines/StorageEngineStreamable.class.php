@@ -19,25 +19,25 @@ class StorageEngineStreamable extends StorageEngine
 
     protected $resolveNameConflicts = true;
     
-    protected function getPath($file, $createPath = false){
-		if( substr($this->dsn, strlen($this->dsn)-1, 1) != self::DS ) {
+    protected function getPath($file, $createPath = false) {
+		if ( substr($this->dsn, strlen($this->dsn)-1, 1) != self::DS ) {
 			$this->dsn .= self::DS;
 		}
 
         $path = $this->dsn;
 
-        if($this->folderShardingDepth){
+        if ($this->folderShardingDepth) {
 
             $path .= $this->generateSubPath($file);
 
             clearstatcache( true );
 
-            if(!is_dir($path)){
-                if($createPath){
+            if (!is_dir($path)) {
+                if ($createPath) {
                     try{
                         mkdir($path, 0777, true, $this->context);
                     } catch (Exception $e) {
-                        if($e->getMessage() !== 'mkdir(): File exists') { // на самый крайний случай
+                        if ($e->getMessage() !== 'mkdir(): File exists') { // на самый крайний случай
                             throw $e;
                         }
                     }
@@ -48,63 +48,63 @@ class StorageEngineStreamable extends StorageEngine
         return $path . $file;
     }
 
-    protected function parseConfig($data){
-        if(!isset($data['dsn']))
-            throw new Exception('No DSN configured for streamable storage: '.$this->link_id);
+    protected function parseConfig($data) {
+        if (!isset($data['dsn']))
+            throw new Exception('No DSN configured for streamable storage: '.$this->linkId);
 
         $this->dsn = $data['dsn'];
 
-        if(isset($data['httpLink'])){
+        if (isset($data['httpLink'])) {
             $this->hasHttpLink = true;
             $this->httpLink = $data['httpLink'];
         }
 
         $context = array();
 
-        if(isset($data['context'])&&is_array($data['context'])){
+        if (isset($data['context'])&&is_array($data['context'])) {
             $context = $data['context'];
         }
 
         $this->context = stream_context_create($context);
 
-        if(isset($data['folderSharding'])){
+        if (isset($data['folderSharding'])) {
             $depth = 1;
-            if(isset($data['folderShardingDepth']) && is_integer($data['folderShardingDepth'])){
+            if (isset($data['folderShardingDepth']) && is_integer($data['folderShardingDepth'])) {
                 $depth = $data['folderShardingDepth'];
             }
             $this->folderShardingDepth = $depth;
         }
 
-        if(isset($data['resolveNameConflicts'])){
+        if (isset($data['resolveNameConflicts'])) {
             $this->resolveNameConflicts = (bool)$data['resolveNameConflicts'];
         }
 
         return $this;
     }
 
-    public function get($file){
-        $local_file = $this->getTmpFile($file);
-        $dst = fopen($local_file,'wb');
+    public function get($file) {
+		$localFile = $this->getTmpFile($file);
+        $dst = fopen($localFile,'wb');
         $src = fopen($this->getPath($file),'rb', false, $this->context);
-        if(!stream_copy_to_stream($src, $dst)){
+        if (!stream_copy_to_stream($src, $dst)) {
             throw new Exception('Couldn`t get file '.$file);
         };
 
         $this->closeHandles($dst, $src);
 
-        return $local_file;
+        return $localFile;
     }
 
-    public function rename($from, $to){
+    public function rename ($from, $to) {
         return rename($this->getPath($from), $this->getPath($to), $this->context);
     }
 
-    public function store($local_file, $desiredName){
-        if(!is_readable($local_file)||!is_file($local_file)){
-            throw new WrongArgumentException('Wrong file: '.$local_file);
+    public function store ($localFile, $desiredName) {
+        if (!is_readable($localFile)||!is_file($localFile)) {
+            throw new WrongArgumentException('Wrong file: ' . $localFile);
         }
 
-        if(preg_match($this->unAllowedName,$desiredName)){
+        if (preg_match($this->unAllowedName,$desiredName)) {
             throw new WrongArgumentException('Wrong desired name: '.$desiredName);
         }
 
@@ -112,25 +112,25 @@ class StorageEngineStreamable extends StorageEngine
 
         $desiredNameFull = $this->getPath($desiredName, true);
 
-        if($this->exists($desiredName) && $this->resolveNameConflicts){
+        if ($this->exists($desiredName) && $this->resolveNameConflicts) {
             $desiredName = $this->generateName( $desiredName );
             $desiredNameFull = $this->getPath( $desiredName, true );
         }
-        if($this->exists($desiredName)){
+        if ($this->exists($desiredName)) {
             throw new Exception('File name conflict:'.$origDesiredName.'"');
         }
         
         $context = $this->context;
 
-        $upload = function() use ($local_file, $desiredNameFull, $desiredName, $context){
-            $src = fopen( $local_file,'rb' );
-            $dst = fopen( $desiredNameFull,'wb', false, $context );
-            Assert::isEqual( stream_copy_to_stream($src, $dst) , filesize($local_file), 'Bytes copied mismatch' );
+        $upload = function() use ($localFile, $desiredNameFull, $desiredName, $context) {
+            $src = fopen( $localFile, 'rb' );
+            $dst = fopen( $desiredNameFull, 'wb', false, $context );
+            Assert::isEqual( stream_copy_to_stream($src, $dst) , filesize($localFile), 'Bytes copied mismatch' );
 
             $this->closeHandles($src, $dst);
 
-            if(!$this->exists($desiredName)){
-                throw new Exception('Could not find file after upload"' . $desiredName . '", link_id: ' . $this->link_id);
+            if (!$this->exists($desiredName)) {
+                throw new Exception('Could not find file after upload"' . $desiredName . '", linkId: ' . $this->linkId);
             }
         };
 
@@ -139,8 +139,8 @@ class StorageEngineStreamable extends StorageEngine
         return $desiredName;
     }
 
-    public function exists($file){
-        try{
+    public function exists ($file) {
+        try {
             $handle = fopen($this->getPath($file),'rb', false, $this->context);
             $result = $handle !== false;
 
@@ -148,16 +148,16 @@ class StorageEngineStreamable extends StorageEngine
 
             return $result;
         }
-        catch(Exception $e){
+        catch (Exception $e) {
             return false;
         }
     }
 
-    protected function unlink($file){
-        try{
+    protected function unlink($file) {
+        try {
             return unlink($this->getPath($file),$this->context);
         }
-        catch(Exception $e){
+        catch (Exception $e) {
             return false;
         }
     }

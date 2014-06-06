@@ -8,6 +8,4 @@ class StorageEngineFTP extends StorageEngineStreamable{
 
 	protected $canRename = true;
 
-//	protected $keepFiles = true;
-
 }

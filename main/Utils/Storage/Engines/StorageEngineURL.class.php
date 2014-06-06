@@ -14,36 +14,35 @@ class StorageEngineURL extends StorageEngine{
 
     protected $trusted = false;
 
-    protected function checkUrl($url){
+    protected function checkUrl ($url) {
 
-//        if(filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED) === false){
-        if(!preg_match(RegexFactory::makeHttpUrlWithAuth(), $url)){
+        if (!preg_match(RegexFactory::makeHttpUrlWithAuth(), $url)) {
             throw new InvalidArgumentException('Expected url but got: '.$url);
         };
 
         return $this;
     }
 
-    public function getHttpLink($url){
+    public function getHttpLink ($url) {
         $this->checkUrl($url);
         return $url;
     }
 
-    public function storeRemote($link, $desiredName=null){
+    public function storeRemote ($link, $desiredName=null) {
         $this->checkUrl($link);
         return $link;
     }
 
-    public function get($url){
+    public function get ($url) {
         $this->checkUrl($url);
         return parent::storeRemote($url);
     }
 
-    public function store($local_file, $desiredName){
+    public function store ($local_file, $desiredName) {
         throw new Exception('Can not store temporary file');
     }
 
-    public function exists($url){
+    public function exists ($url) {
         $this->checkUrl($url);
         $this->httpExists($url);
     }

@@ -8,12 +8,12 @@ class StorageEngineImageShack extends StorageEngineHTTP
 {
     protected $hasHttpLink = true;
 
-    public function store($file, $desiredName){
+    public function store($localFile, $desiredName) {
 
-        $xml = simplexml_load_string(parent::store($file, $desiredName));
+        $xml = simplexml_load_string(parent::store($localFile, $desiredName));
 
-        if(isset($xml->error)) {
-            throw new Exception('Couldn`t save file to ImageShack: '.$xml->error);
+        if (isset($xml->error)) {
+            throw new Exception('Couldn`t save file to ImageShack: ' . $xml->error);
         }
 
         return (string)$xml->links->image_link;

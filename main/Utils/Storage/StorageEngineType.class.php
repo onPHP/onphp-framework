@@ -45,11 +45,14 @@
             if( gettype($var) == 'object' ){
                 $var = get_class($var);
             }
+
             if( is_scalar($var) ){
                 $id = array_search( $var, self::makeNameList(), true);
             }
-            if(!$id)
-                throw new MissingElementException('No such Storage Engine: '.$var);
+
+            if($id === false) {
+                throw new MissingElementException('No such Storage Engine: ' . $var);
+			}
 
             return self::create($id);
         }

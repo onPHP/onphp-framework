@@ -21,12 +21,13 @@ class RetryerException extends Exception{
         return $e;
     }
 
-    public function getExceptionsReadable() {
+    public function getMessageReadable() {
         $result = array();
         $try = 1;
         foreach ($this->exceptions as $exception) {
             $result[] = ($try++) . '. (' .get_class($exception) .') ' . $exception->getMessage() . ' @' . $exception->getFile() . ':' . $exception->getLine();
         }
+
         return implode("\n", $result);
     }
 

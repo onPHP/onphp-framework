@@ -450,6 +450,7 @@
 
         protected final function runTrigger($input, $triggerName) {
             call_user_func($this->prepareTrigger($input, $triggerName));
+
             return $this;
         }
 

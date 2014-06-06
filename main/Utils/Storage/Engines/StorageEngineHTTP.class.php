@@ -18,40 +18,40 @@ class StorageEngineHTTP extends StorageEngine{
     protected $uploadFieldName = 'file';
     protected $urlFieldName = 'url';
 
-    protected function parseConfig($data){
+    protected function parseConfig($data) {
 
-        if(isset($data['uploadUrl'])){
+        if (isset($data['uploadUrl'])) {
             $this->uploadUrl = $data['uploadUrl'];
         }
 
-        if(isset($data['httpLink'])){
+        if (isset($data['httpLink'])) {
             $this->hasHttpLink = true;
             $this->httpLink = $data['httpLink'];
         }
 
-        if(isset($data['uploadOptions'])&&is_array($data['uploadOptions'])){
+        if (isset($data['uploadOptions'])&&is_array($data['uploadOptions'])) {
             $this->uploadOptions = $data['uploadOptions'];
         }
 
-        if(isset($data['uploadFieldName'])){
+        if (isset($data['uploadFieldName'])) {
             $this->uploadFieldName = $data['uploadFieldName'];
         }
 
-        if(isset($data['urlFieldName'])){
+        if (isset($data['urlFieldName'])) {
             $this->urlFieldName = $data['urlFieldName'];
         }
     }
 
-    public function get($file){
+    public function get($file) {
         return parent::storeRemote($this->getHttpLink($file));
     }
 
-    public function store($file, $desiredName){
-        if(!$this->uploadUrl){
+    public function store($file, $desiredName) {
+        if (!$this->uploadUrl) {
             throw new UnsupportedMethodException('Don`t know how to store file!');
         }
 
-        $send_req = HttpRequest::create()
+		$sendRequest = HttpRequest::create()
             ->setMethod(HttpMethod::post())
             ->setUrl(
             HttpUrl::create()
@@ -68,8 +68,8 @@ class StorageEngineHTTP extends StorageEngine{
         $curl = CurlHttpClient::create()
             ->setOption(CURLOPT_POSTFIELDS,$options);
 
-        $upload = function() use ($curl, $send_req) {
-            $resp = $curl->send($send_req);
+        $upload = function() use ($curl, $sendRequest) {
+            $resp = $curl->send($sendRequest);
             return $resp;
         };
 
@@ -78,8 +78,8 @@ class StorageEngineHTTP extends StorageEngine{
         return $resp->getBody();
     }
 
-    public function exists($file){
-        if($this->hasHttpLink()){
+    public function exists($file) {
+        if ($this->hasHttpLink()) {
             return $this->httpExists($this->getHttpLink($file));
         }
 

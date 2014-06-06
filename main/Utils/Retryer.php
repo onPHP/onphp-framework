@@ -9,8 +9,9 @@ class Retryer {
 
     protected $code;
     protected $retries = 3;
-    /** @var int|callable */
-    protected $timeout = 1000000; //1 microsecond
+
+    /** @var int */
+    protected $timeout = 1000000; //1 second (in microseconds)
     protected $exceptions = array();
 
     public static function create( $code ) {
@@ -62,35 +63,42 @@ class Retryer {
 
     /** @return true|false */
     public function exec() {
-        if( !$this->retries ) {
+        if ( !$this->retries ) {
             return false;
         }
+
         $exceptions = array();
         $code = $this->code;
         $result = null;
         $success = false;
+
         for( $try = 1; $try <= $this->retries; $try++ ) {
             $success = true;
-            try{
+            try {
                 $result = $code();
-            } catch (Exception $e) {
+            }
+			catch (Exception $e) {
                 $success = false;
                 $exceptions[] = $e;
             }
-            if($success) {
+
+            if ($success) {
                 break;
             }
-            if( ($timeout = $this->timeout) && ($try < $this->retries) ) {
-                if(is_callable($timeout)) {
+
+            if ( ($timeout = $this->timeout) && ($try < $this->retries) ) {
+                if (is_callable($timeout)) {
                     $timeout = $timeout($try);
                 }
                 usleep($timeout);
             }
         }
+
         $this->exceptions = $exceptions;
-        if(!$success) {
+        if ( !$success ) {
             throw RetryerException::create('Failed after retries limit reached!', $this->exceptions);
         }
+
         return $result;
     }
 } 
