@@ -423,9 +423,7 @@ abstract class StorableFile extends IdentifiableObject implements onBeforeSave, 
                 $storage = StorageEngine::create( StorageEngineType::create($engine), $config );
                 $storage->remove($this->getFileName());
             }
-            catch(Exception $e) {
-
-            }
+            catch(Exception $e) {}
         }
     }
 
