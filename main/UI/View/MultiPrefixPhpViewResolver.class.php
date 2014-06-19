@@ -128,10 +128,12 @@
 			$this->postfix = $postfix;
 			return $this;
 		}
-		
+
 		/**
-		 * @return SimplePhpView
-		**/
+		 * @param string $viewName
+		 * @return View
+		 * @throws WrongArgumentException
+		 */
 		public function resolveViewName($viewName)
 		{
 			Assert::isFalse(
@@ -139,12 +141,12 @@
 				'specify at least one prefix'
 			);
 			
-			if ($prefix = $this->findPrefix($viewName))
-				return $this->makeView($prefix, $viewName);
+			if ($path = $this->findPath($viewName))
+				return $this->makeView($path);
 			
-			if (!$this->findPrefix($viewName, false))
+			if (!$this->findPath($viewName, false))
 				throw new WrongArgumentException(
-					'can not resolve view: '.$viewName
+					'can not resolve view: '.is_array($viewName) ? implode($viewName) : $viewName
 				);
 			
 			return EmptyView::create();
@@ -152,7 +154,7 @@
 		
 		public function viewExists($viewName)
 		{
-			return ($this->findPrefix($viewName) !== null);
+			return ($this->findPath($viewName) !== null);
 		}
 		
 		/**
@@ -169,19 +171,22 @@
 		{
 			return $this->viewClassName;
 		}
-		
-		protected function findPrefix($viewName, $checkDisabled = true)
+
+		protected function findPath($viewNameList, $checkDisabled = true)
 		{
-			foreach ($this->prefixes as $alias => $prefix) {
-				if (
-					$checkDisabled
-					&& isset($this->disabled[$alias])
-					&& $this->disabled[$alias]
-				)
-					continue;
-				
-				if (file_exists($prefix.$viewName.$this->postfix))
-					return $prefix;
+			$viewNameList = is_array($viewNameList) ? $viewNameList : [$viewNameList];
+			foreach ($viewNameList as $viewName) {
+				foreach ($this->prefixes as $alias => $prefix) {
+					if (
+						$checkDisabled
+						&& isset($this->disabled[$alias])
+						&& $this->disabled[$alias]
+					)
+						continue;
+
+					if (file_exists($prefix.$viewName.$this->postfix))
+						return $prefix.$viewName.$this->postfix;
+				}
 			}
 			
 			return null;
@@ -190,12 +195,9 @@
 		/**
 		 * @return View
 		**/
-		protected function makeView($prefix, $viewName)
+		protected function makeView($path)
 		{
-			return new $this->viewClassName(
-				$prefix.$viewName.$this->postfix,
-				$this
-			);
+			return new $this->viewClassName($path, $this);
 		}
 		
 		private function getAutoAlias($prefix)

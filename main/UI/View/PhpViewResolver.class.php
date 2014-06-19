@@ -32,20 +32,33 @@
 		}
 		
 		/**
+		 * @param $viewNameList string|string[]
 		 * @return SimplePhpView
+		 * @throws WrongArgumentException
 		**/
-		public function resolveViewName($viewName)
+		public function resolveViewName($viewNameList)
 		{
-			return
-				new SimplePhpView(
-					$this->prefix.$viewName.$this->postfix,
-					$this
-				);
+			foreach ($this->getViewNameList($viewNameList) as $viewName) {
+				if ($this->isViewNameExists($viewName)) {
+					return new SimplePhpView(
+						$this->prefix.$viewName.$this->postfix,
+						$this
+					);
+				}
+			}
+			throw new WrongArgumentException(
+				'can not resolve views: '.implode($this->getViewNameList($viewNameList))
+			);
 		}
 		
-		public function viewExists($viewName)
+		public function viewExists($viewNameList)
 		{
-			return is_readable($this->prefix.$viewName.$this->postfix);
+			foreach ($this->getViewNameList($viewNameList) as $viewName) {
+				if ($this->isViewNameExists($viewName)) {
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		public function getPrefix()
@@ -76,6 +89,16 @@
 			$this->postfix = $postfix;
 			
 			return $this;
+		}
+
+		private function isViewNameExists($viewName)
+		{
+			return is_readable($this->prefix.$viewName.$this->postfix);
+		}
+
+		private function getViewNameList($viewNameOrList)
+		{
+			return is_array($viewNameOrList) ? $viewNameOrList : [$viewNameOrList];
 		}
 	}
 ?>
