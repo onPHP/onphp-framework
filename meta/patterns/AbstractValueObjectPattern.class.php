@@ -12,11 +12,17 @@
 	/**
 	 * @ingroup Patterns
 	**/
-	class AbstractClassPattern extends BasePattern
+	final class AbstractValueObjectPattern extends AbstractClassPattern
 	{
-		public function tableExists()
+		/**
+		 * @param MetaClass $class
+		 * @return AbstractValueObjectPattern
+		 */
+		protected function fullBuild(MetaClass $class)
 		{
-			return false;
+			return $this->
+				buildBusiness($class)->
+				buildProto($class);
 		}
 	}
 ?>

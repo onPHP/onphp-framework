@@ -46,6 +46,7 @@
 		name		(
 			DictionaryClass
 			|AbstractClass
+			|AbstractValueObject
 			|StraightMapping
 			|EnumerationClass
 			|EnumClass
