@@ -465,8 +465,9 @@
 		{
 			$result = parent::dropById($id);
 			
-			$this->dao->uncacheLists();
-			
+//			$this->dao->uncacheLists();
+			$this->uncacheLists();
+
 			return $result;
 		}
 		//@}
@@ -475,7 +476,8 @@
 		//@{
 		public function uncacheById($id)
 		{
-			$this->dao->uncacheLists();
+//			$this->dao->uncacheLists();
+			$this->uncacheLists();
 			
 			return parent::uncacheById($id);
 		}

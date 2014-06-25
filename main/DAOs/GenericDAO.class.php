@@ -462,10 +462,9 @@
                 return (function(){ });
             }
 
-            $self = $this;
-            $check = function($obj) use ($objName, $self) {
+            $check = function($obj) use ($objName) {
                 if(!($obj instanceof $objName)) {
-                    $obj = $self->getById($obj);
+                    $obj = $this->getById($obj);
                 }
                 return $obj;
             };
@@ -476,7 +475,7 @@
                 $input = array($check($input));
             }
 
-            return function() use ($input, $triggerName) {
+            return function() use (&$input, $triggerName) {
                 foreach($input as $obj) {
                     call_user_func(array($obj, $triggerName));
                 }

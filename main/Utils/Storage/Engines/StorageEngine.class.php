@@ -132,7 +132,12 @@ class StorageEngine
             $desiredName = $this->generateName('');
         }
 
-        $source = fopen($link, 'r');
+		try {
+			$source = fopen($link, 'r');
+		} catch(Exception $e) {
+			throw new FileNotFoundException($e->getMessage(), $e->getCode(), $e);
+		}
+
         $path   = $this->getTmpFile($desiredName);
         $destination   = fopen($path, 'w');
 
