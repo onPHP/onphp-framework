@@ -11,15 +11,44 @@ abstract class BaseWidget implements IWidget
 	protected $templateName			= null;
 	protected $list					= null;
 
+	protected static $templatePathPrefixes = array();
+	protected static $viewer = null;
+
 	/**
 	 * @var PartViewer
 	 */
-	protected $viewer = null;
 
 	public function __construct($name = null)
 	{
 		$this->name = $name;
-		$this->viewer = Viewer::get();
+	}
+
+	protected static function getViewer() {
+		if (!self::$viewer) {
+			$viewResolver = MultiPrefixPhpViewResolver::create()
+				->setViewClassName('SimplePhpView');
+
+			foreach (self::$templatePathPrefixes as $prefix) {
+				$viewResolver->addPrefix($prefix);
+			}
+			self::$viewer = new PartViewer($viewResolver, Model::create());
+		}
+		return self::$viewer;
+	}
+
+	/**
+	 * @param PartViewer $viewer
+	 * @return $this
+	 */
+	public static function setViewer(PartViewer $viewer)
+	{
+		self::$viewer = $viewer;
+	}
+
+
+	public static function addTemplatePrefix($prefix) {
+		self::$templatePathPrefixes []= $prefix;
+		self::$viewer = null;
 	}
 
 	/**
@@ -57,21 +86,11 @@ abstract class BaseWidget implements IWidget
 	}
 
 	/**
-	 * @return BaseWidget
-	 */
-	public function setViewer(PartViewer $viewer)
-	{
-		$this->viewer = $viewer;
-
-		return $this;
-	}
-
-	/**
 	 * @return Model
 	 */
 	protected function makeModel()
 	{
-		$model = $this->viewer->getModel();
+		$model = $this->getViewer()->getModel();
 		$model->set('_name', $this->name);
 
 		if(
@@ -88,6 +107,7 @@ abstract class BaseWidget implements IWidget
 
 	/** (non-PHPdoc)
 	 * @see core/Base/Stringable::toString()
+	 * @throws Exception
 	 * @return string
 	 */
 	public function toString()
@@ -97,7 +117,7 @@ abstract class BaseWidget implements IWidget
 
 			ob_start();
 
-			$this->viewer->view(
+			$this->getViewer()->view(
 				$this->templatePath. DIRECTORY_SEPARATOR. $this->templateName
 			);
 
@@ -112,14 +132,6 @@ abstract class BaseWidget implements IWidget
 		}
 
 		return (string) $source;
-	}
-
-	/**
-	 * @return PartViewer
-	 */
-	public function getViewer()
-	{
-		return $this->viewer;
 	}
 
 	/** (non-PHPdoc)
