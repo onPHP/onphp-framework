@@ -26,6 +26,7 @@
 		private $encoding		= null;
 		private $contentType	= null;
 		private $returnPath		= null;
+		private $headers        = null;
 		
 		private $sendmailAdditionalArgs	= null;
 		
@@ -104,17 +105,21 @@
 			
 			if ($this->cc != null)
 				$headers .= "Cc: ".$this->cc."\n";
-			
-			if ($this->contentType === null)
-				$this->contentType = 'text/plain';
-			
-			$headers .=
-				"Content-type: ".$this->contentType
-				."; charset=".$encoding."\n";
-			
-			$headers .= "Content-Transfer-Encoding: 8bit\n";
-			$headers .= "Date: ".date('r')."\n";
-			
+
+			if (!$this->getHeaders()) {
+				if ($this->contentType === null)
+					$this->contentType = 'text/plain';
+
+				$headers .=
+					"Content-type: ".$this->contentType
+					."; charset=".$encoding."\n";
+
+				$headers .= "Content-Transfer-Encoding: 8bit\n";
+				$headers .= "Date: ".date('r')."\n";
+			} else {
+				$headers .= $this->getHeaders();
+			}
+
 			if (
 				!mail(
 					$to, $subject, $body, $headers,
@@ -220,6 +225,20 @@
 		{
 			$this->returnPath = $returnPath;
 			return $this;
+		}
+
+		public function setHeaders($headers)
+		{
+			$this->headers = $headers;
+			return $this;
+		}
+
+		/**
+		 * @return null
+		 */
+		public function getHeaders()
+		{
+			return $this->headers;
 		}
 	}
 ?>
