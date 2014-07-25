@@ -188,7 +188,11 @@ class DataGrid extends BaseWidget
         } else if (is_array($data)) {
             $fieldIds = array_keys($data);
             $row = $data;
-        } else {
+        } else if ($data instanceof NamedObject) {
+			$this->objects[$rowId] = $data;
+			$row = array('id' => $data->getId(), 'name' => $data->getName());
+			$fieldIds = array_keys($row);
+		} else {
             throw new WrongArgumentException('$data should be either array or prototyped object');
         }
         // сохраним в список сортируемых полей
