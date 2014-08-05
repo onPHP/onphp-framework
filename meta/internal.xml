@@ -86,7 +86,7 @@
             <property name="fileName" type="String" size="255" required="true" />
             <property name="mimeType" type="String" size="100" required="true" />
             <property name="originalFileName" type="String" size="255" required="false" />
-            <property name="size" type="Integer" required="true" />
+            <property name="size" type="BigInteger" required="true" />
             <property name="createDate" type="Timestamp" required="true" />
             <property name="engineType" type="StorageEngineType" relation="OneToOne" fetch="lazy" required="true" />
             <property name="engineConfig" type="String" size="50" required="false"/>
