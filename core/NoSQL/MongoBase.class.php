@@ -294,7 +294,17 @@ class MongoBase extends NoSQL {
 			if ($isSafe && is_array($result)) {
 				$this->checkResult($result);
 				if (isset($result['upserted'])) {
-					$id = $result['upserted'];
+					$upserted = $result['upserted'];
+					if (is_array($upserted)) {
+						/**
+						 * in mongo >=2.6 with driver <1.5.3 we would get an array of ids
+						 * @see https://jira.mongodb.org/browse/PHP-1109
+						 */
+						$upserted = array_pop($upserted);
+					}
+					if ($upserted instanceof MongoId) {
+						$id = $upserted;
+					}
 				}
 			}
 
