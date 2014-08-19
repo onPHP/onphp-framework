@@ -38,6 +38,16 @@
 			return $this->chain;
 		}
 
+		/**
+		 * @param array $chain
+		 * @return SQLChain
+		 */
+		public function setChain($chain)
+		{
+			$this->chain = $chain;
+			return $this;
+		}
+
 		public function dropChain()
 		{
 			$this->chain = array();
