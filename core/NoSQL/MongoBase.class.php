@@ -252,7 +252,7 @@ class MongoBase extends NoSQL {
 
 	public function update($table, array $row, $options = array()) {
 		$row = $this->encodeId($row);
-		$id = $row['_id'];
+		$id = isset($row['_id']) ? $row['_id'] : null;
 		//unset($row['_id']);
 		$options = array_merge(
 			array('safe' => true),
@@ -269,16 +269,43 @@ class MongoBase extends NoSQL {
 
 		$isSafe = isset($options['safe']) || isset($options['w']);
 
+		if (isset($options['where'])) {
+			if (is_array($options['where'])) {
+				$where = $options['where'];
+			}
+			unset($options['where']);
+
+		} else if ($id !== null) {
+			$where = array('_id' => $id);
+		}
+
+		if (empty($where)) {
+			throw new NoSQLException('empty "where" clause for update');
+		}
+
 		try {
 
 			$result =
 				$this
 					->db
 						->selectCollection($table)
-							->update(array('_id' => $id), $row, $options);
+							->update($where, $row, $options);
 
 			if ($isSafe && is_array($result)) {
 				$this->checkResult($result);
+				if (isset($result['upserted'])) {
+					$upserted = $result['upserted'];
+					if (is_array($upserted)) {
+						/**
+						 * in mongo >=2.6 with driver <1.5.3 we would get an array of ids
+						 * @see https://jira.mongodb.org/browse/PHP-1109
+						 */
+						$upserted = array_pop($upserted);
+					}
+					if ($upserted instanceof MongoId) {
+						$id = $upserted;
+					}
+				}
 			}
 
 		} catch (Exception $e) {
