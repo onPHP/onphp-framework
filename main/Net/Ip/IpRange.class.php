@@ -19,7 +19,8 @@
 		const SINGLE_IP_PATTERN = '/^(\d{1,3}\.){3}\d{1,3}$/';
 		const INTERVAL_PATTERN = '/^\d{1,3}(\.\d{1,3}){3}\s*-\s*\d{1,3}(\.\d{1,3}){3}$/';
 		const IP_SLASH_PATTERN = '/^(\d{1,3}\.){0,3}\d{1,3}\/\d{1,2}$/';
-		
+		const IP_WILDCARD_PATTERN = '/^(\d{1,3}\.){0,3}\*$/';
+
 		private $startIp 	= null;
 		private $endIp		= null;
 		
@@ -138,6 +139,11 @@
 		private function createFromSlash($ip, $mask)
 		{
 			$ip = IpAddress::createFromCutted($ip);
+
+            if($mask == 32) {
+                $this->setup($ip, $ip);
+                return;
+            }
 			
 			if ($mask == 0 || self::MASK_MAX_SIZE < $mask)
 				throw new WrongArgumentException('wrong mask given');
@@ -166,10 +172,17 @@
 				list($ip, $mask) = explode('/', $string);
 				$this->createFromSlash($ip, $mask);
 				
-			} elseif (preg_match(self::INTERVAL_PATTERN, $string))
-				$this->createFromInterval($string);
-			else
+			} elseif (preg_match(self::INTERVAL_PATTERN, $string)) {
+                $this->createFromInterval($string);
+
+            } elseif (preg_match(self::IP_WILDCARD_PATTERN, $string)) {
+                $ip = substr($string, 0, -2);
+                $mask = substr_count($string, '.') * 8;
+                $this->createFromSlash($ip, $mask);
+
+            } else
 				throw new WrongArgumentException('strange parameters received');
 		}
+
 	}
 ?>

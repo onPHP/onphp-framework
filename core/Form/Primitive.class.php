@@ -387,6 +387,14 @@
 			return new PrimitiveIpRange($name);
 		}
 
+        /**
+         * @return PrimitiveCidr
+         */
+        public static function ipCidrRange($name)
+        {
+            return new PrimitiveCidr($name);
+        }
+
 		/**
 		 * @static
 		 * @param $name

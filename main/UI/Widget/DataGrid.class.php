@@ -298,6 +298,9 @@ class DataGrid extends BaseWidget
      */
     protected function getEditRenderer($fieldId, LightMetaProperty $property) {
         switch($property->getType()) {
+            case 'IpCidrRange':
+            case 'IpRange':
+            case 'IpAddress':
             case 'integer':
             case 'float':
             case 'string':
@@ -471,6 +474,14 @@ class DataGrid extends BaseWidget
 					}
 				};
 			}
+
+            case 'IpCidrRange':
+            case 'IpRange':
+            case 'IpAddress': {
+                return function ($value) {
+                    return $value ? $value->toString() : '';
+                };
+            }
 
             case 'integer': {
 				return function ($value) {
