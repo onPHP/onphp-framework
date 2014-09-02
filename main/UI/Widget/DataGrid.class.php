@@ -957,8 +957,8 @@ class DataGrid extends BaseWidget
 					if ($this->form->hasError($fieldId)) {
 						$field = $this->form->get($fieldId)->getRawValue();
 					}
-					else {
-						$field = $this->form->get($fieldId)->getSafeValue();
+					else if ($this->form->get($fieldId)->isImported()) {
+						$field = $this->form->get($fieldId)->getValue();
 					}
 				}
 
