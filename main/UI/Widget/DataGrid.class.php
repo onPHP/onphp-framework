@@ -954,10 +954,12 @@ class DataGrid extends BaseWidget
 				}
 
 				if ($this->form instanceof Form	&& $this->form->exists($fieldId)) {
-					if ($this->form->get($fieldId)->isImported())
-						$field = $this->form->get($fieldId)->getValue();
-					else if ($this->form->hasError($fieldId))
+					if ($this->form->hasError($fieldId)) {
 						$field = $this->form->get($fieldId)->getRawValue();
+					}
+					else {
+						$field = $this->form->get($fieldId)->getSafeValue();
+					}
 				}
 
 				// если есть рендерер, прогоним значение через него

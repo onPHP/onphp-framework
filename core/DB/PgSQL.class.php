@@ -243,6 +243,8 @@
 
 				'ip4r'			=> DataType::IP_RANGE,
 
+				'cidr'			=> DataType::CIDR,
+
 				'uuid'			=> DataType::UUID,
 				'hstore'    	=> DataType::HSTORE,
 
