@@ -281,8 +281,7 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 			case 'replace':
 			case 'add':
 				try {
-					$result = $this->redis->set($key, $value);
-					$this->redis->expire($key, $expires);
+					$result = $this->redis->set($key, $value, $expires);
                     $profiling
                         ->setInfo($action . ' ' . $key)
                         ->end()
@@ -342,5 +341,31 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
         }
     }
 
+	public function multi() {
+		$this->ensureTriedToConnect();
+		try {
+			return $this->redis->multi();
+		} catch (RedisException $e) {
+			return $this->alive = false;
+		}
+	}
+
+	public function exec() {
+		$this->ensureTriedToConnect();
+		try {
+			return $this->redis->exec();
+		} catch (RedisException $e) {
+			return $this->alive = false;
+		}
+	}
+
+	public function discard() {
+		$this->ensureTriedToConnect();
+		try {
+			return $this->redis->discard();
+		} catch (RedisException $e) {
+			return $this->alive = false;
+		}
+	}
 
 }
