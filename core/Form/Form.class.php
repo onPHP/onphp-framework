@@ -186,13 +186,17 @@
 		/**
 		 * Returns plain list of error's labels
 		**/
-		public function getTextualErrors()
-		{
+		public function getTextualErrors($withName = false) {
 			$list = array();
 
 			foreach (array_keys($this->labels) as $name) {
-				if ($label = $this->getTextualErrorFor($name))
-					$list[] = $label;
+				if ($label = $this->getTextualErrorFor($name)) {
+					if ($withName) {
+						$list[$name] = $label;
+					} else {
+						$list[] = $label;
+					}
+				}
 			}
 
 			return $list;
