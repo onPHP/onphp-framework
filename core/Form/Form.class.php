@@ -44,11 +44,12 @@
 		}
 
 		public function check() {
-			if( $this->getErrors() ) {
+			if ($this->getErrors()) {
 				throw new FormValidationException($this);
 			}
+			return $this;
 		}
-
+		
 		public function hasError($name)
 		{
 			return array_key_exists($name, $this->errors)
