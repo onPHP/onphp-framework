@@ -43,6 +43,12 @@
 			return array_merge($this->errors, $this->violated);
 		}
 
+		public function check() {
+			if( $this->getErrors() ) {
+				throw new FormValidationException($this);
+			}
+		}
+
 		public function hasError($name)
 		{
 			return array_key_exists($name, $this->errors)
