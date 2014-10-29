@@ -224,13 +224,13 @@
 				 * @see http://www.php.net/quoted_printable_decode
 				**/
 				case MailEncoding::QUOTED:
-					
-					$string =
-						preg_replace(
-							'/[^\x21-\x3C\x3E-\x7E\x09\x20]/e',
-							'sprintf("=%02x", ord ("$0"));',
-							$this->body
-						);
+					$string = preg_replace_callback(
+						'/[^\x21-\x3C\x3E-\x7E\x09\x20]/',
+						function ($matches) {
+							return sprintf("=%02x", ord($matches[0]));
+						},
+						$this->body
+					);
 					
 					$matches = array();
 					
