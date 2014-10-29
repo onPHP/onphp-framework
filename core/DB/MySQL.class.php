@@ -16,6 +16,7 @@
 	 * @see http://www.php.net/mysql
 	 * 
 	 * @ingroup DB
+	 * @deprecated use MySQLim
 	**/
 	namespace Onphp;
 
