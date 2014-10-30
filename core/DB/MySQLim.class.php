@@ -11,15 +11,28 @@
 
 	/**
 	 * MySQL DB connector.
-	 * 
+	 *
 	 * @see http://www.mysql.com/
 	 * @see http://www.php.net/mysqli
-	 * 
+	 *
 	 * @ingroup DB
 	**/
-	final class MySQLim extends Sequenceless
+	final class MySQLim extends BaseMySQL
 	{
 		private $needAutoCommit = false;
+
+		protected $aliases = array(
+			'close'			=> 'mysqli_close',
+			'ping'			=> 'mysqli_ping',
+			'affected_rows'	=> 'mysqli_affected_rows',
+			'fetch_assoc'	=> 'mysqli_fetch_assoc',
+			'fetch_row'		=> 'mysqli_fetch_row',
+			'query'			=> 'mysqli_query',
+			'errno'			=> 'mysqli_errno',
+			'error'			=> 'mysqli_error',
+			'insert_id'		=> 'mysqli_insert_id',
+			'num_rows'		=> 'mysqli_num_rows',
+		);
 
 		/**
 		 * @return MySQLim
@@ -27,7 +40,7 @@
 		public function setDbEncoding()
 		{
 			mysqli_set_charset($this->link, $this->encoding);
-			
+
 			return $this;
 		}
 
@@ -51,9 +64,9 @@
 		{
 			if ($this->persistent)
 				throw new UnsupportedMethodException();
-			
+
 			$this->link = mysqli_init();
-			
+
 			try {
 				mysqli_real_connect(
 					$this->link,
@@ -70,133 +83,21 @@
 					'can not connect to MySQL server: '.$e->getMessage()
 				);
 			}
-			
+
 			if ($this->encoding)
 				$this->setDbEncoding();
 
 			$this->setupAutoCommit();
-			
-			return $this;
-		}
-		
-		/**
-		 * @return MySQLim
-		**/
-		public function disconnect()
-		{
-			if ($this->isConnected())
-				mysqli_close($this->link);
 
 			return $this;
 		}
-		
-		public function isConnected()
-		{
-			return parent::isConnected() && mysqli_ping($this->link);
-		}
-		
-		/**
-		 * Same as query, but returns number of
-		 * affected rows in insert/update queries
-		**/
-		public function queryCount(Query $query)
-		{
-			$this->queryNull($query);
-			
-			return mysqli_affected_rows($this->link);
-		}
-		
-		public function queryRow(Query $query)
-		{
-			$res = $this->query($query);
-			
-			if ($this->checkSingle($res))
-				return mysqli_fetch_assoc($res);
-			else
-				return null;
-		}
-		
-		public function queryColumn(Query $query)
-		{
-			$res = $this->query($query);
-			
-			if ($res) {
-				$array = array();
 
-				while ($row = mysqli_fetch_row($res))
-					$array[] = $row[0];
-
-				return $array;
-			} else
-				return null;
-		}
-		
-		public function querySet(Query $query)
-		{
-			$res = $this->query($query);
-			
-			if ($res) {
-				$array = array();
-
-				while ($row = mysqli_fetch_assoc($res))
-					$array[] = $row;
-
-				return $array;
-			} else
-				return null;
-		}
-		
-		public function queryRaw($queryString)
-		{
-			if (!$result = mysqli_query($this->link, $queryString)) {
-				
-				$code = mysqli_errno($this->link);
-				
-				if ($code == 1062)
-					$e = 'DuplicateObjectException';
-				else
-					$e = 'DatabaseException';
-				
-				throw new $e(
-					mysqli_error($this->link).' - '.$queryString,
-					$code
-				);
-			}
-			
-			return $result;
-		}
-		
-		public function getTableInfo($table)
-		{
-			throw new UnimplementedFeatureException();
-		}
-		
-		public function hasQueue()
-		{
-			return false;
-		}
-		
-		protected function getInsertId()
-		{
-			return mysqli_insert_id($this->link);
-		}
-		
 		/**
 		 * @return MyImprovedDialect
 		**/
 		protected function spawnDialect()
 		{
 			return new MyImprovedDialect();
-		}
-		
-		private function checkSingle($result)
-		{
-			if (mysqli_num_rows($result) > 1)
-				throw new TooManyRowsException(
-					'query returned too many rows (we need only one)'
-				);
-			
-			return $result;
 		}
 
 		private function setupAutoCommit()
