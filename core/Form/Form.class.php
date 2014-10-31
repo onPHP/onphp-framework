@@ -1,12 +1,12 @@
 <?php
 /****************************************************************************
  *   Copyright (C) 2004-2009 by Konstantin V. Arkhipov, Anton E. Lebedevich *
- *                                                                          *
+ *																		  *
  *   This program is free software; you can redistribute it and/or modify   *
- *   it under the terms of the GNU Lesser General Public License as         *
- *   published by the Free Software Foundation; either version 3 of the     *
- *   License, or (at your option) any later version.                        *
- *                                                                          *
+ *   it under the terms of the GNU Lesser General Public License as		 *
+ *   published by the Free Software Foundation; either version 3 of the	 *
+ *   License, or (at your option) any later version.						*
+ *																		  *
  ****************************************************************************/
 
 	/**
@@ -19,12 +19,8 @@
 	**/
 	final class Form extends RegulatedForm
 	{
-		const WRONG			= 0x0001;
-		const MISSING		= 0x0002;
-		
-		private $errors				= array();
-		private $labels				= array();
-		private $describedLabels	= array();
+		const WRONG			= BasePrimitive::WRONG;
+		const MISSING		= BasePrimitive::MISSING;
 		
 		private $proto				= null;
 		
@@ -40,23 +36,23 @@
 		
 		public function getErrors()
 		{
-			return array_merge($this->errors, $this->violated);
+			$errors = array();
+			foreach($this->primitives as $name => $prm) {
+				if (null !== $prm->getError())
+					$errors[$name] = $prm->getError();
+			}
+
+			return $errors;
 		}
 		
 		public function hasError($name)
 		{
-			return array_key_exists($name, $this->errors)
-				|| array_key_exists($name, $this->violated);
+			return $this->get($name)->getError() !== null;
 		}
 		
 		public function getError($name)
 		{
-			if (array_key_exists($name, $this->errors)) {
-				return $this->errors[$name];
-			} elseif (array_key_exists($name, $this->violated)) {
-				return $this->violated[$name];
-			}
-			return null;
+			return $this->get($name)->getError();
 		}
 		
 		public function getInnerErrors()
@@ -65,17 +61,11 @@
 			
 			foreach ($this->primitives as $name => $prm) {
 				if (
-					(
-						($prm instanceof PrimitiveFormsList)
-						|| ($prm instanceof PrimitiveForm)
-					)
-					&& $prm->getValue()
+                    $prm instanceof PrimitiveFormsList
+					|| $prm instanceof PrimitiveForm
 				) {
-					if ($errors = $prm->getInnerErrors()) {
+					if ($errors = $prm->getInnerErrors())
 						$result[$name] = $errors;
-					} else {
-						unset($result[$name]);
-					}
 				}
 			}
 			
@@ -87,9 +77,10 @@
 		**/
 		public function dropAllErrors()
 		{
-			$this->errors	= array();
-			$this->violated	= array();
-			
+			foreach($this->primitives as $name => $prm) {
+				$prm->dropError();
+			}
+
 			return $this;
 		}
 		
@@ -122,7 +113,7 @@
 		**/
 		public function markMissing($primitiveName, $label = null)
 		{
-			return $this->markCustom($primitiveName, Form::MISSING, $label);
+			return $this->markCustom($primitiveName, BasePrimitive::MISSING, $label);
 		}
 		
 		/**
@@ -132,17 +123,11 @@
 		**/
 		public function markWrong($name, $label = null)
 		{
-			if (isset($this->primitives[$name]))
-				$this->errors[$name] = self::WRONG;
-			elseif (isset($this->rules[$name]))
-				$this->violated[$name] = self::WRONG;
-			else
-				throw new MissingElementException(
-					$name.' does not match known primitives or rules'
-				);
+			$prm = $this->get($name);
+			$prm->markWrong();
 			
 			if ($label !== null)
-				$this->addWrongLabel($name, $label);
+				$prm->setWrongLabel($label);
 			
 			return $this;
 		}
@@ -152,14 +137,7 @@
 		**/
 		public function markGood($primitiveName)
 		{
-			if (isset($this->primitives[$primitiveName]))
-				unset($this->errors[$primitiveName]);
-			elseif (isset($this->rules[$primitiveName]))
-				unset($this->violated[$primitiveName]);
-			else
-				throw new MissingElementException(
-					$primitiveName.' does not match known primitives or rules'
-				);
+			$this->get($primitiveName)->markGood();
 			
 			return $this;
 		}
@@ -171,12 +149,7 @@
 		**/
 		public function markCustom($primitiveName, $customMark, $label = null)
 		{
-			Assert::isInteger($customMark);
-			
-			$this->errors[$this->get($primitiveName)->getName()] = $customMark;
-			
-			if ($label !== null)
-				$this->addCustomLabel($primitiveName, $customMark, $label);
+			$this->get($primitiveName)->setErrorLabel($customMark, $label);
 			
 			return $this;
 		}
@@ -189,9 +162,9 @@
 		{
 			$list = array();
 			
-			foreach (array_keys($this->labels) as $name) {
+			foreach ($this->primitives as $name => $prm) {
 				if ($label = $this->getTextualErrorFor($name))
-					$list[] = $label;
+					$list[$name] = $label;
 			}
 			
 			return $list;
@@ -199,42 +172,12 @@
 		
 		public function getTextualErrorFor($name)
 		{
-			if (
-				isset(
-					$this->violated[$name],
-					$this->labels[$name][$this->violated[$name]]
-				)
-			)
-				return $this->labels[$name][$this->violated[$name]];
-			elseif (
-				isset(
-					$this->errors[$name],
-					$this->labels[$name][$this->errors[$name]]
-				)
-			)
-				return $this->labels[$name][$this->errors[$name]];
-			else
-				return null;
+			return $this->get($name)->getActualErrorLabel();
 		}
 		
 		public function getErrorDescriptionFor($name)
 		{
-			if (
-				isset(
-					$this->violated[$name],
-					$this->describedLabels[$name][$this->violated[$name]]
-				)
-			)
-				return $this->describedLabels[$name][$this->violated[$name]];
-			elseif (
-				isset(
-					$this->errors[$name],
-					$this->describedLabels[$name][$this->errors[$name]]
-				)
-			)
-				return $this->describedLabels[$name][$this->errors[$name]];
-			else
-				return null;
+			return $this->get($name)->getActualErrorDescription();
 		}
 		
 		/**
@@ -242,17 +185,8 @@
 		**/
 		public function addErrorDescription($name, $errorType, $description)
 		{
-			
-			if (
-				!isset($this->rules[$name])
-				&& !$this->get($name)->getName()
-			)
-				throw new MissingElementException(
-					"knows nothing about '{$name}'"
-				);
-			
-			$this->describedLabels[$name][$errorType] = $description;
-			
+			$this->get($name)->setErrorDescription($errorType, $description);
+
 			return $this;
 		}
 		
@@ -261,7 +195,7 @@
 		**/
 		public function addWrongLabel($primitiveName, $label)
 		{
-			return $this->addErrorLabel($primitiveName, Form::WRONG, $label);
+			return $this->addErrorLabel($primitiveName, BasePrimitive::WRONG, $label);
 		}
 		
 		/**
@@ -269,7 +203,7 @@
 		**/
 		public function addMissingLabel($primitiveName, $label)
 		{
-			return $this->addErrorLabel($primitiveName, Form::MISSING, $label);
+			return $this->addErrorLabel($primitiveName, BasePrimitive::MISSING, $label);
 		}
 		
 		/**
@@ -282,12 +216,12 @@
 		
 		public function getWrongLabel($primitiveName)
 		{
-			return $this->getErrorLabel($primitiveName, Form::WRONG);
+			return $this->getErrorLabel($primitiveName, BasePrimitive::WRONG);
 		}
 		
 		public function getMissingLabel($primitiveName)
 		{
-			return $this->getErrorLabel($primitiveName, Form::MISSING);
+			return $this->getErrorLabel($primitiveName, BasePrimitive::MISSING);
 		}
 		
 		/**
@@ -327,9 +261,9 @@
 		**/
 		public function importValue($primitiveName, $value)
 		{
-			$prm = $this->get($primitiveName);
-			
-			return $this->checkImportResult($prm, $prm->importValue($value));
+			$this->get($primitiveName)->importValue($value);
+
+			return $this;
 		}
 		
 		/**
@@ -402,60 +336,8 @@
 		**/
 		private function importPrimitive($scope, BasePrimitive $prm)
 		{
-			if (!$this->importFiltering) {
-				if ($prm instanceof FiltrablePrimitive) {
-					
-					$chain = $prm->getImportFilter();
-					
-					$prm->dropImportFilters();
-					
-					$result = $this->checkImportResult(
-						$prm,
-						$prm->import($scope)
-					);
-					
-					$prm->setImportFilter($chain);
-					
-					return $result;
-					
-				} elseif ($prm instanceof PrimitiveForm) {
-					return $this->checkImportResult(
-						$prm,
-						$prm->unfilteredImport($scope)
-					);
-				}
-			}
-			
-			return $this->checkImportResult($prm, $prm->import($scope));
-		}
-		
-		/**
-		 * @return Form
-		**/
-		private function checkImportResult(BasePrimitive $prm, $result)
-		{
-			if (
-				$prm instanceof PrimitiveAlias
-				&& $result !== null
-			)
-				$this->markGood($prm->getInner()->getName());
-			
-			$name = $prm->getName();
-			
-			if (null === $result) {
-				if ($prm->isRequired())
-					$this->errors[$name] = self::MISSING;
-				
-			} elseif (true === $result) {
-				unset($this->errors[$name]);
-				
-			} elseif ($error = $prm->getCustomError()) {
-				
-				$this->errors[$name] = $error;
-				
-			} else
-				$this->errors[$name] = self::WRONG;
-			
+			$prm->import($scope);
+
 			return $this;
 		}
 		
@@ -471,28 +353,14 @@
 		**/
 		private function addErrorLabel($name, $errorType, $label)
 		{
-			if (
-				!isset($this->rules[$name])
-				&& !$this->get($name)->getName()
-			)
-				throw new MissingElementException(
-					"knows nothing about '{$name}'"
-				);
-			
-			$this->labels[$name][$errorType] = $label;
+			$this->get($name)->setErrorLabel($errorType, $label);
 			
 			return $this;
 		}
 		
 		private function getErrorLabel($name, $errorType)
 		{
-			// checks for primitive's existence
-			$this->get($name);
-			
-			if (isset($this->labels[$name][$errorType]))
-				return $this->labels[$name][$errorType];
-			
-			return null;
+			return $this->get($name)->getErrorLabel($errorType);
 		}
 	}
 ?>

@@ -798,7 +798,7 @@
 		/**
 		 * @return MetaClassProperty
 		**/
-		private function makeProperty($name, $type, MetaClass $class, $size)
+		private function makeProperty($name, $type, MetaClass $class, $size, $label=null, $description=null)
 		{
 			Assert::isFalse(
 				strpos($name, '_'),
@@ -835,6 +835,9 @@
 					'size is required for "'.$property->getName().'"'
 				);
 			}
+
+			$property->setLabel($label);
+			$property->setDescription($description);
 			
 			return $property;
 		}
@@ -1132,7 +1135,9 @@
 						(string) $xmlProperty['name'],
 						(string) $xmlProperty['type'],
 						$class,
-						(string) $xmlProperty['size']
+						(string) $xmlProperty['size'],
+						(string) $xmlProperty['label'],
+						(string) $xmlProperty['description']
 					);
 					
 					if (isset($xmlProperty['column'])) {

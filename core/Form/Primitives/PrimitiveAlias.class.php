@@ -142,19 +142,29 @@
 		{
 			return $this->primitive->exportValue();
 		}
-		
-		public function getCustomError()
-		{
-			return $this->primitive->getCustomError();
-		}
-		
+
 		public function import($scope)
 		{
 			if (array_key_exists($this->name, $scope))
-				return
+			{
+				$result =
 					$this->primitive->import(
-						array($this->primitive->getName() => $scope[$this->name])
+						array(
+							$this->primitive->getName() => $scope[$this->name]
+						)
 					);
+
+				if(
+					($error = $this->primitive->getError())
+					&& $error !== null
+				) {
+					$this->setError($error);
+				}
+
+
+				return $result;
+			}
+
 
 			return null;
 		}

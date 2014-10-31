@@ -7,7 +7,7 @@
 
 	<class name="Credentials" type="final">
 		<properties>
-			<property name="nickname" type="String" size="255" required="true" />
+			<property name="nickname" type="String" size="255" required="true" label="Nick name" description="This is description for nick name" />
 			<property name="password" type="FixedLengthString" size="40" required="true" />
 		</properties>
 		

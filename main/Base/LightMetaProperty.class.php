@@ -46,32 +46,35 @@
 			)
 		);
 		
-		private $name		= null;
-		private $columnName	= null;
+		private $name			= null;
+		private $columnName		= null;
 		
-		private $type		= null;
-		private $className	= null;
+		private $type			= null;
+		private $className		= null;
 		
-		private $size		= null;
+		private $size			= null;
 		
-		private $min		= null;
-		private $max		= null;
+		private $min			= null;
+		private $max			= null;
 		
-		private $required	= false;
-		private $generic	= false;
-		private $inner		= false;
+		private $required		= false;
+		private $generic		= false;
+		private $inner			= false;
 		
 		/// @see MetaRelation
-		private $relationId	= null;
+		private $relationId		= null;
 		
 		/// @see FetchStrategy
-		private $strategyId	= null;
+		private $strategyId		= null;
 		
-		private $getter		= null;
-		private $setter		= null;
-		private $dropper	= null;
+		private $getter			= null;
+		private $setter			= null;
+		private $dropper		= null;
 		
-		private $identifier	= null;
+		private $identifier		= null;
+
+		private $label			= null;
+		private $description 	= null;
 		
 		/**
 		 * @return LightMetaProperty
@@ -89,10 +92,13 @@
 		public static function fill(
 			LightMetaProperty $property,
 			$name, $columnName, $type, $className, $size,
-			$required, $generic, $inner, $relationId, $strategyId
+			$required, $generic, $inner, $relationId, $strategyId, $label=null, $description=null
 		)
 		{
 			$property->name = $name;
+
+			$property->label = $label;
+			$property->description = $description;
 			
 			$methodSuffix = ucfirst($name);
 			$property->getter = 'get'.$methodSuffix;
@@ -309,6 +315,12 @@
 			
 			if ($this->required)
 				$prm->required();
+
+			if($this->label)
+				$prm->setLabel($this->label);
+
+			if($this->description)
+				$prm->setDescription($this->description);
 			
 			return $prm;
 		}
@@ -524,6 +536,18 @@
 				.(
 					$this->strategyId
 						? $this->strategyId
+						: 'null'
+				)
+				.', '
+				.(
+					$this->label
+						? '\''.$this->label.'\''
+						: 'null'
+				)
+				.', '
+				.(
+					$this->description
+						? '\''.$this->description.'\''
 						: 'null'
 				)
 				.')';
